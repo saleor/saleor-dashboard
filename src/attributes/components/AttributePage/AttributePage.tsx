@@ -60,14 +60,14 @@ export interface AttributePageFormData extends MetadataFormData {
   slug: string;
   storefrontSearchPosition: string;
   valueRequired: boolean;
-  unit: MeasurementUnitsEnum;
+  unit: MeasurementUnitsEnum | null | undefined;
   visibleInStorefront: boolean;
 }
 
 const AttributePage: React.FC<AttributePageProps> = ({
   attribute,
   disabled,
-  errors,
+  errors: apiErrors,
   saveButtonBarState,
   values,
   onBack,
@@ -120,8 +120,7 @@ const AttributePage: React.FC<AttributePageProps> = ({
           type: attribute?.type || AttributeTypeEnum.PRODUCT_TYPE,
           valueRequired: attribute?.valueRequired ?? true,
           visibleInStorefront: attribute?.visibleInStorefront ?? true,
-
-          unit: attribute?.unit
+          unit: attribute?.unit || null
         };
 
   const handleSubmit = (data: AttributePageFormData) => {
@@ -144,7 +143,16 @@ const AttributePage: React.FC<AttributePageProps> = ({
 
   return (
     <Form initial={initialForm} onSubmit={handleSubmit}>
-      {({ change, set, data, hasChanged, submit, triggerChange }) => {
+      {({
+        change,
+        set,
+        data,
+        hasChanged,
+        submit,
+        errors,
+        setError,
+        clearErrors
+      }) => {
         const changeMetadata = makeMetadataChangeHandler(change);
 
         return (
@@ -168,10 +176,12 @@ const AttributePage: React.FC<AttributePageProps> = ({
                   canChangeType={attribute === null}
                   data={data}
                   disabled={disabled}
-                  errors={errors}
+                  apiErrors={apiErrors}
                   onChange={change}
                   set={set}
-                  triggerChange={triggerChange}
+                  errors={errors}
+                  setError={setError}
+                  clearErrors={clearErrors}
                 />
                 {ATTRIBUTE_TYPES_WITH_DEDICATED_VALUES.includes(
                   data.inputType
@@ -201,7 +211,7 @@ const AttributePage: React.FC<AttributePageProps> = ({
                 <CardSpacer />
                 <AttributeProperties
                   data={data}
-                  errors={errors}
+                  errors={apiErrors}
                   disabled={disabled}
                   onChange={change}
                 />

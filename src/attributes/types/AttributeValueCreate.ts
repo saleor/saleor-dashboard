@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { AttributeValueCreateInput, AttributeTypeEnum, AttributeInputTypeEnum, AttributeEntityTypeEnum, MeasurementUnitsEnum, AttributeErrorCode } from "./../../types/globalTypes";
+import { AttributeValueCreateInput, AttributeTypeEnum, MeasurementUnitsEnum, AttributeInputTypeEnum, AttributeEntityTypeEnum, AttributeErrorCode } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: AttributeValueCreate
@@ -46,12 +46,12 @@ export interface AttributeValueCreate_attributeValueCreate_attribute {
   visibleInStorefront: boolean;
   filterableInDashboard: boolean;
   filterableInStorefront: boolean;
+  unit: MeasurementUnitsEnum | null;
   metadata: (AttributeValueCreate_attributeValueCreate_attribute_metadata | null)[];
   privateMetadata: (AttributeValueCreate_attributeValueCreate_attribute_privateMetadata | null)[];
   availableInGrid: boolean;
   inputType: AttributeInputTypeEnum | null;
   entityType: AttributeEntityTypeEnum | null;
-  unit: MeasurementUnitsEnum | null;
   storefrontSearchPosition: number;
   valueRequired: boolean;
   values: (AttributeValueCreate_attributeValueCreate_attribute_values | null)[] | null;

@@ -40,7 +40,7 @@ interface SingleSelectFieldProps {
   className?: string;
   disabled?: boolean;
   error?: boolean;
-  hint?: string;
+  hint?: string | React.ReactNode;
   label?: string | React.ReactNode;
   name?: string;
   selectProps?: SelectProps;

@@ -703,7 +703,8 @@ export const productType: ProductTypeDetails_productType = {
       name: "Author",
       slug: "author",
       type: AttributeTypeEnum.PRODUCT_TYPE,
-      visibleInStorefront: true
+      visibleInStorefront: true,
+      unit: null
     },
     {
       __typename: "Attribute" as "Attribute",
@@ -713,7 +714,8 @@ export const productType: ProductTypeDetails_productType = {
       name: "Language",
       slug: "language",
       type: AttributeTypeEnum.PRODUCT_TYPE,
-      visibleInStorefront: true
+      visibleInStorefront: true,
+      unit: null
     },
     {
       __typename: "Attribute" as "Attribute",
@@ -723,7 +725,8 @@ export const productType: ProductTypeDetails_productType = {
       name: "Publisher",
       slug: "publisher",
       type: AttributeTypeEnum.PRODUCT_TYPE,
-      visibleInStorefront: true
+      visibleInStorefront: true,
+      unit: null
     }
   ],
   taxType: {
@@ -737,14 +740,16 @@ export const productType: ProductTypeDetails_productType = {
       filterableInDashboard: true,
       filterableInStorefront: false,
       type: AttributeTypeEnum.PRODUCT_TYPE,
-      visibleInStorefront: true
+      visibleInStorefront: true,
+      unit: null
     },
     {
       ...attributes[6],
       filterableInDashboard: true,
       filterableInStorefront: false,
       type: AttributeTypeEnum.PRODUCT_TYPE,
-      visibleInStorefront: true
+      visibleInStorefront: true,
+      unit: null
     }
   ],
   weight: {

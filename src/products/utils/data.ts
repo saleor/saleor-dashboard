@@ -88,6 +88,7 @@ export function getAttributeInputFromAttributes(
       inputType: attribute.inputType,
       isRequired: attribute.valueRequired,
       values: attribute.values,
+      unit: attribute.unit,
       variantAttributeScope
     },
     id: attribute.id,
@@ -107,6 +108,7 @@ export function getAttributeInputFromSelectedAttributes(
       isRequired: attribute.attribute.valueRequired,
       selectedValues: attribute.values,
       values: attribute.attribute.values,
+      unit: attribute.attribute.unit,
       variantAttributeScope
     },
     id: attribute.attribute.id,

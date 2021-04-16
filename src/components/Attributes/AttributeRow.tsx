@@ -1,5 +1,6 @@
-import { TextField } from "@material-ui/core";
+import { InputAdornment, TextField } from "@material-ui/core";
 import makeStyles from "@material-ui/core/styles/makeStyles";
+import { getMeasurementUnitMessage } from "@saleor/attributes/components/AttributeDetails/utils";
 import { AttributeInput } from "@saleor/components/Attributes/Attributes";
 import BasicAttributeRow from "@saleor/components/Attributes/BasicAttributeRow";
 import ExtendedAttributeRow from "@saleor/components/Attributes/ExtendedAttributeRow";
@@ -170,8 +171,15 @@ const AttributeRow: React.FC<AttributeRowProps> = ({
             label={intl.formatMessage(messages.valueLabel)}
             name={`attribute:${attribute.label}`}
             onChange={event => onChange(attribute.id, event.target.value)}
-            type="numeric"
+            type="number"
             value={attribute.value[0]}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  {getMeasurementUnitMessage(attribute.data.unit)}
+                </InputAdornment>
+              )
+            }}
           />
         </BasicAttributeRow>
       );

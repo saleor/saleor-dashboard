@@ -7,6 +7,7 @@ import ControlledCheckbox from "@saleor/components/ControlledCheckbox";
 import FormSpacer from "@saleor/components/FormSpacer";
 import SingleSelectField from "@saleor/components/SingleSelectField";
 import { AttributeErrorFragment } from "@saleor/fragments/types/AttributeErrorFragment";
+import { UseFormResult } from "@saleor/hooks/useForm";
 import { commonMessages } from "@saleor/intl";
 import { makeStyles } from "@saleor/theme";
 import {
@@ -48,25 +49,28 @@ const useStyles = makeStyles(
   { name: "AttributeDetails" }
 );
 
-export interface AttributeDetailsProps {
+export interface AttributeDetailsProps
+  extends Pick<
+    UseFormResult<AttributePageFormData>,
+    "set" | "setError" | "data" | "clearErrors" | "errors"
+  > {
   canChangeType: boolean;
-  data: AttributePageFormData;
   disabled: boolean;
-  errors: AttributeErrorFragment[];
+  apiErrors: AttributeErrorFragment[];
   onChange: (event: React.ChangeEvent<any>) => void;
-  set: (data: Partial<AttributePageFormData>) => void;
-  triggerChange: () => void;
 }
 
 const AttributeDetails: React.FC<AttributeDetailsProps> = props => {
   const {
     canChangeType,
+    errors,
+    clearErrors,
+    setError,
     data,
     disabled,
-    errors,
+    apiErrors,
     onChange,
-    set,
-    triggerChange
+    set
   } = props;
   const classes = useStyles(props);
   const intl = useIntl();
@@ -107,9 +111,9 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = props => {
     }
   ];
 
-  const formErrors = getFormErrors(
+  const formApiErrors = getFormErrors(
     ["name", "slug", "inputType", "entityType", "unit"],
-    errors
+    apiErrors
   );
 
   return (
@@ -120,24 +124,24 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = props => {
       <CardContent>
         <TextField
           disabled={disabled}
-          error={!!formErrors.name}
+          error={!!formApiErrors.name}
           label={intl.formatMessage(messages.attributeLabel)}
           name={"name" as keyof AttributePageFormData}
           fullWidth
-          helperText={getAttributeErrorMessage(formErrors.name, intl)}
+          helperText={getAttributeErrorMessage(formApiErrors.name, intl)}
           value={data.name}
           onChange={onChange}
         />
         <FormSpacer />
         <TextField
           disabled={disabled}
-          error={!!formErrors.slug}
+          error={!!formApiErrors.slug}
           label={intl.formatMessage(messages.attributeSlug)}
           name={"slug" as keyof AttributePageFormData}
           placeholder={slugify(data.name).toLowerCase()}
           fullWidth
           helperText={
-            getAttributeSlugErrorMessage(formErrors.slug, intl) ||
+            getAttributeSlugErrorMessage(formApiErrors.slug, intl) ||
             intl.formatMessage(messages.attributeSlugHelperText)
           }
           value={data.slug}
@@ -148,8 +152,8 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = props => {
           <SingleSelectField
             choices={inputTypeChoices}
             disabled={disabled || !canChangeType}
-            error={!!formErrors.inputType}
-            hint={getAttributeErrorMessage(formErrors.inputType, intl)}
+            error={!!formApiErrors.inputType}
+            hint={getAttributeErrorMessage(formApiErrors.inputType, intl)}
             label={intl.formatMessage(messages.inputType)}
             name="inputType"
             onChange={onChange}
@@ -159,8 +163,8 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = props => {
             <SingleSelectField
               choices={entityTypeChoices}
               disabled={disabled || !canChangeType}
-              error={!!formErrors.entityType}
-              hint={getAttributeErrorMessage(formErrors.entityType, intl)}
+              error={!!formApiErrors.entityType}
+              hint={getAttributeErrorMessage(formApiErrors.entityType, intl)}
               label={intl.formatMessage(messages.entityType)}
               name="entityType"
               onChange={onChange}
@@ -179,11 +183,11 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = props => {
         {data.inputType === AttributeInputTypeEnum.NUMERIC && (
           <NumericUnits
             data={data}
+            errors={errors}
             disabled={disabled}
-            onChange={onChange}
+            clearErrors={clearErrors}
+            setError={setError}
             set={set}
-            triggerChange={triggerChange}
-            error={getAttributeErrorMessage(formErrors.unit, intl)}
           />
         )}
       </CardContent>

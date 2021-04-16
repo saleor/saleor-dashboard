@@ -6,6 +6,39 @@ import * as M from "./messages";
 export type UnitSystem = "imperial" | "metric";
 export type UnitType = "volume" | "weight" | "area" | "distance";
 
+export const getMeasurementUnitMessage = (unit: MeasurementUnitsEnum) =>
+  ({
+    [MeasurementUnitsEnum.CUBIC_FOOT]: M.cubicFoot,
+    [MeasurementUnitsEnum.CUBIC_INCH]: M.cubicInch,
+    [MeasurementUnitsEnum.CUBIC_YARD]: M.cubicYard,
+    [MeasurementUnitsEnum.QT]: M.qt,
+    [MeasurementUnitsEnum.FL_OZ]: M.flOz,
+    [MeasurementUnitsEnum.PINT]: M.pint,
+    [MeasurementUnitsEnum.ACRE_IN]: M.acreInch,
+    [MeasurementUnitsEnum.ACRE_FT]: M.acreFt,
+    [MeasurementUnitsEnum.FT]: M.ft,
+    [MeasurementUnitsEnum.YD]: M.yd,
+    [MeasurementUnitsEnum.INCH]: M.inch,
+    [MeasurementUnitsEnum.LB]: M.lbs,
+    [MeasurementUnitsEnum.OZ]: M.oz,
+    [MeasurementUnitsEnum.SQ_FT]: M.squareFt,
+    [MeasurementUnitsEnum.SQ_YD]: M.squareYd,
+    [MeasurementUnitsEnum.SQ_INCH]: M.squareInch,
+    [MeasurementUnitsEnum.CUBIC_CENTIMETER]: M.cubicCentimeter,
+    [MeasurementUnitsEnum.CUBIC_DECIMETER]: M.cubicDecimeter,
+    [MeasurementUnitsEnum.CUBIC_METER]: M.cubicMeter,
+    [MeasurementUnitsEnum.LITER]: M.liter,
+    [MeasurementUnitsEnum.CM]: M.centimeter,
+    [MeasurementUnitsEnum.M]: M.meter,
+    [MeasurementUnitsEnum.KM]: M.kilometer,
+    [MeasurementUnitsEnum.G]: M.gram,
+    [MeasurementUnitsEnum.KG]: M.kilogram,
+    [MeasurementUnitsEnum.TONNE]: M.tonne,
+    [MeasurementUnitsEnum.SQ_CM]: M.squareCentimeter,
+    [MeasurementUnitsEnum.SQ_M]: M.squareMeter,
+    [MeasurementUnitsEnum.SQ_KM]: M.squareKilometer
+  }[unit]);
+
 export const unitSystemChoices: Array<Choice<UnitSystem>> = [
   {
     label: M.metric,
@@ -36,61 +69,73 @@ export const unitTypeChoices: Array<Choice<UnitType>> = [
   }
 ];
 
-export const unitChoices: {
-  [key in UnitSystem]: {
-    [key in UnitType]: Array<Choice<MeasurementUnitsEnum>>;
-  };
-} = {
+export const unitMapping = {
   imperial: {
     volume: [
-      { label: M.cubicFoot, value: MeasurementUnitsEnum.CUBIC_FOOT },
-      { label: M.cubicInch, value: MeasurementUnitsEnum.CUBIC_INCH },
-      { label: M.cubicYard, value: MeasurementUnitsEnum.CUBIC_YARD },
-      { label: M.qt, value: MeasurementUnitsEnum.QT },
-      { label: M.flOz, value: MeasurementUnitsEnum.FL_OZ },
-      { label: M.pint, value: MeasurementUnitsEnum.PINT },
-      { label: M.acreInch, value: MeasurementUnitsEnum.ACRE_IN },
-      { label: M.acreFt, value: MeasurementUnitsEnum.ACRE_FT }
+      MeasurementUnitsEnum.CUBIC_FOOT,
+      MeasurementUnitsEnum.CUBIC_INCH,
+      MeasurementUnitsEnum.CUBIC_YARD,
+      MeasurementUnitsEnum.QT,
+      MeasurementUnitsEnum.FL_OZ,
+      MeasurementUnitsEnum.PINT,
+      MeasurementUnitsEnum.ACRE_IN,
+      MeasurementUnitsEnum.ACRE_FT
     ],
     distance: [
-      { label: M.ft, value: MeasurementUnitsEnum.FT },
-      { label: M.yd, value: MeasurementUnitsEnum.YD },
-      { label: M.inch, value: MeasurementUnitsEnum.INCH }
+      MeasurementUnitsEnum.FT,
+      MeasurementUnitsEnum.YD,
+      MeasurementUnitsEnum.INCH
     ],
-    weight: [
-      { label: M.lbs, value: MeasurementUnitsEnum.LB },
-      { label: M.oz, value: MeasurementUnitsEnum.OZ }
-    ],
+    weight: [MeasurementUnitsEnum.LB, MeasurementUnitsEnum.OZ],
     area: [
-      { label: M.squareFt, value: MeasurementUnitsEnum.SQ_FT },
-      { label: M.squareYd, value: MeasurementUnitsEnum.SQ_YD },
-      { label: M.squareInch, value: MeasurementUnitsEnum.SQ_INCH }
+      MeasurementUnitsEnum.SQ_FT,
+      MeasurementUnitsEnum.SQ_YD,
+      MeasurementUnitsEnum.SQ_INCH
     ]
   },
   metric: {
     volume: [
-      {
-        label: M.cubicCentimeter,
-        value: MeasurementUnitsEnum.CUBIC_CENTIMETER
-      },
-      { label: M.cubicDecimeter, value: MeasurementUnitsEnum.CUBIC_DECIMETER },
-      { label: M.cubicMeter, value: MeasurementUnitsEnum.CUBIC_METER },
-      { label: M.liter, value: MeasurementUnitsEnum.LITER }
+      MeasurementUnitsEnum.CUBIC_CENTIMETER,
+      MeasurementUnitsEnum.CUBIC_DECIMETER,
+      MeasurementUnitsEnum.CUBIC_METER,
+      MeasurementUnitsEnum.LITER
     ],
     distance: [
-      { label: M.centimeter, value: MeasurementUnitsEnum.CM },
-      { label: M.meter, value: MeasurementUnitsEnum.M },
-      { label: M.kilometer, value: MeasurementUnitsEnum.KM }
+      MeasurementUnitsEnum.CM,
+      MeasurementUnitsEnum.M,
+      MeasurementUnitsEnum.KM
     ],
     weight: [
-      { label: M.gram, value: MeasurementUnitsEnum.G },
-      { label: M.kilogram, value: MeasurementUnitsEnum.KG },
-      { label: M.tonne, value: MeasurementUnitsEnum.TONNE }
+      MeasurementUnitsEnum.G,
+      MeasurementUnitsEnum.KG,
+      MeasurementUnitsEnum.TONNE
     ],
     area: [
-      { label: M.squareCentimeter, value: MeasurementUnitsEnum.SQ_CM },
-      { label: M.squareMeter, value: MeasurementUnitsEnum.SQ_M },
-      { label: M.squareKilometer, value: MeasurementUnitsEnum.SQ_KM }
+      MeasurementUnitsEnum.SQ_CM,
+      MeasurementUnitsEnum.SQ_M,
+      MeasurementUnitsEnum.SQ_KM
     ]
   }
+};
+
+export const unitChoices = (() =>
+  Object.entries(unitMapping).reduce(
+    (acc, [system, type]) => ({
+      ...acc,
+      [system]: Object.entries(type).reduce(
+        (acc, [type, units]) => ({
+          ...acc,
+          [type]: units.map(unit => ({
+            value: unit,
+            label: getMeasurementUnitMessage(unit)
+          }))
+        }),
+        {}
+      )
+    }),
+    {}
+  ))() as {
+  [key in UnitSystem]: {
+    [key in UnitType]: Array<Choice<MeasurementUnitsEnum>>;
+  };
 };

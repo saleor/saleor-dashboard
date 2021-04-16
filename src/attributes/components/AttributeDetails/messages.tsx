@@ -1,3 +1,4 @@
+import { commonMessages } from "@saleor/intl";
 import React from "react";
 import { defineMessages, FormattedMessage } from "react-intl";
 
@@ -82,6 +83,8 @@ export const unit = (
     description="numeric attribute unit"
   />
 );
+
+export const required = <FormattedMessage {...commonMessages.requiredField} />;
 
 /**
  * Unit System

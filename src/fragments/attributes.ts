@@ -26,6 +26,7 @@ export const attributeFragment = gql`
     visibleInStorefront
     filterableInDashboard
     filterableInStorefront
+    unit
   }
 `;
 

@@ -1,11 +1,20 @@
 import { AttributePageFormData } from "@saleor/attributes/components/AttributePage";
 import ControlledCheckbox from "@saleor/components/ControlledCheckbox";
 import SingleSelectField from "@saleor/components/SingleSelectField";
+import { UseFormResult } from "@saleor/hooks/useForm";
 import { makeStyles } from "@saleor/theme";
-import React, { useEffect, useRef, useState } from "react";
+import { MeasurementUnitsEnum } from "@saleor/types/globalTypes";
+import React, { useEffect, useState } from "react";
 
 import * as M from "./messages";
-import { unitChoices, unitSystemChoices, unitTypeChoices } from "./utils";
+import {
+  unitChoices,
+  unitMapping,
+  UnitSystem,
+  unitSystemChoices,
+  UnitType,
+  unitTypeChoices
+} from "./utils";
 
 const useStyles = makeStyles(
   theme => ({
@@ -28,45 +37,67 @@ const useStyles = makeStyles(
   { name: "NumericUnits" }
 );
 
-interface NumericUnitsProps {
-  data: AttributePageFormData;
+interface UnitData {
+  unit: MeasurementUnitsEnum;
+  system: UnitSystem;
+  type: UnitType;
+}
+
+interface NumericUnitsProps
+  extends Pick<
+    UseFormResult<AttributePageFormData>,
+    "set" | "setError" | "data" | "errors" | "clearErrors"
+  > {
   disabled: boolean;
-  error: string;
-  onChange: (event: React.ChangeEvent<any>) => void;
-  set: (data: Partial<AttributePageFormData>) => void;
-  triggerChange: () => void;
 }
 
 export const NumericUnits: React.FC<NumericUnitsProps> = ({
   data,
   disabled,
-  onChange,
+  errors,
   set,
-  triggerChange,
-  error
+  setError,
+  clearErrors
 }) => {
   const classes = useStyles();
-  const unitRef = useRef(data.unit);
-  const [system, setSystem] = useState(null);
-  const [type, setType] = useState(null);
+  const [unitData, setUnitData] = useState<Partial<UnitData>>({
+    unit: data.unit
+  });
+
+  const { unit, system, type } = unitData;
+  const errorProps = { error: !!errors.unit, hint: M.required };
+
+  useEffect(() => set({ unit }), [unit]);
 
   useEffect(() => {
     if (data.unit) {
+      const initialData = { unit: data.unit } as UnitData;
+
       Object.entries(unitChoices).find(([system, types]) => {
         const systemMatch = Object.entries(types).find(([type, units]) => {
           const unitMatch = units.find(({ value }) => value === data.unit);
           if (unitMatch) {
-            setType(type);
+            initialData.type = type as UnitType;
           }
           return unitMatch;
         });
         if (systemMatch) {
-          setSystem(system);
+          initialData.system = system as UnitSystem;
         }
         return systemMatch;
       });
+      setUnitData(initialData);
     }
   }, []);
+
+  useEffect(() => {
+    if (unit === undefined && !errors.unit) {
+      setError("unit", M.required);
+    }
+    if (errors.unit && (unit || unit === null)) {
+      clearErrors("unit");
+    }
+  }, [unitData, errors]);
 
   return (
     <div>
@@ -76,43 +107,47 @@ export const NumericUnits: React.FC<NumericUnitsProps> = ({
         name="selectUnit"
         label={M.selectUnit}
         checked={data.unit !== null}
-        onChange={({ target }) => {
-          triggerChange();
-          set({ unit: target.value ? unitRef.current ?? undefined : null });
-        }}
+        onChange={({ target }) =>
+          setUnitData({ unit: target.value ? undefined : null })
+        }
         disabled={disabled}
       />
       {data.unit !== null && (
         <div className={classes.unitsRow}>
           <SingleSelectField
+            {...(!system && errorProps)}
             testId="unit-system"
             label={M.unitSystem}
             choices={unitSystemChoices}
-            onChange={({ target }) => setSystem(target.value)}
+            onChange={({ target }) => setUnitData({ system: target.value })}
             value={system}
             disabled={disabled}
           />
           <SingleSelectField
+            {...(system && !type && errorProps)}
             testId="unit-of"
             label={M.unitOf}
             choices={unitTypeChoices}
-            onChange={({ target }) => setType(target.value)}
+            onChange={({ target }) =>
+              setUnitData(({ system }) => ({ system, type: target.value }))
+            }
             disabled={!system || disabled}
             value={type}
           />
           <SingleSelectField
+            {...(type && !unit && errorProps)}
             testId="unit"
-            name={"unit" as keyof AttributePageFormData}
             label={M.unit}
             choices={type ? unitChoices[system][type] : []}
-            onChange={evt => {
-              onChange(evt);
-              unitRef.current = evt.target.value;
-            }}
+            onChange={({ target }) =>
+              setUnitData(p => ({ ...p, unit: target.value }))
+            }
             disabled={!type || disabled}
-            value={type ? data.unit : undefined}
-            hint={error}
-            error={!!error}
+            value={
+              type && unitMapping[system][type].includes(unit)
+                ? unit
+                : undefined
+            }
           />
         </div>
       )}
