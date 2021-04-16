@@ -16,7 +16,6 @@ import Grid from "@saleor/components/Grid";
 import Metadata from "@saleor/components/Metadata";
 import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
-import { ProductChannelListingErrorFragment } from "@saleor/fragments/types/ProductChannelListingErrorFragment";
 import { ProductErrorWithAttributesFragment } from "@saleor/fragments/types/ProductErrorWithAttributesFragment";
 import { SearchPages_search_edges_node } from "@saleor/searches/types/SearchPages";
 import { SearchProducts_search_edges_node } from "@saleor/searches/types/SearchProducts";
@@ -56,7 +55,6 @@ const messages = defineMessages({
 
 interface ProductVariantCreatePageProps {
   channels: ChannelPriceData[];
-  channelErrors: ProductChannelListingErrorFragment[] | undefined;
   disabled: boolean;
   errors: ProductErrorWithAttributesFragment[];
   header: string;
@@ -82,7 +80,6 @@ interface ProductVariantCreatePageProps {
 
 const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
   channels,
-  channelErrors = [],
   disabled,
   errors,
   header,
@@ -208,17 +205,7 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
                 onChange={change}
               />
               <CardSpacer />
-              <ProductVariantPrice
-                ProductVariantChannelListings={data.channelListings.map(
-                  channel => ({
-                    ...channel.data,
-                    ...channel.value
-                  })
-                )}
-                errors={channelErrors}
-                loading={disabled}
-                onChange={handlers.changeChannels}
-              />
+              <ProductVariantPrice />
               <CardSpacer />
               <ProductStocks
                 data={data}

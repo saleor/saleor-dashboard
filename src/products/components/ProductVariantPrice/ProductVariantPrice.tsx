@@ -1,5 +1,4 @@
 import {
-  Divider,
   TableBody,
   TableCell,
   TableHead,
@@ -14,7 +13,6 @@ import PriceField from "@saleor/components/PriceField";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
 import { ProductChannelListingErrorFragment } from "@saleor/fragments/types/ProductChannelListingErrorFragment";
-import { ProductVariant } from "@saleor/fragments/types/ProductVariant";
 import { renderCollection } from "@saleor/misc";
 import { makeStyles } from "@saleor/theme";
 import {
@@ -64,20 +62,20 @@ const useStyles = makeStyles(
 );
 
 interface ProductVariantPriceProps {
-  ProductVariantChannelListings: ChannelData[];
-  errors: ProductChannelListingErrorFragment[];
-  variant: ProductVariant;
+  ProductVariantChannelListings?: ChannelData[];
+  errors?: ProductChannelListingErrorFragment[];
   loading?: boolean;
-  onChange: (id: string, data: ChannelPriceArgs) => void;
+  disabled?: boolean;
+  onChange?: (id: string, data: ChannelPriceArgs) => void;
 }
 
 const numberOfColumns = 2;
 
 const ProductVariantPrice: React.FC<ProductVariantPriceProps> = props => {
   const {
-    variant,
+    disabled = false,
     errors = [],
-    ProductVariantChannelListings,
+    ProductVariantChannelListings = [],
     loading,
     onChange
   } = props;
@@ -85,7 +83,7 @@ const ProductVariantPrice: React.FC<ProductVariantPriceProps> = props => {
   const intl = useIntl();
   const formErrors = getFormChannelErrors(["price", "costPrice"], errors);
 
-  if (!variant?.id || !ProductVariantChannelListings.length) {
+  if (disabled || !ProductVariantChannelListings.length) {
     return (
       <Card>
         <CardTitle
