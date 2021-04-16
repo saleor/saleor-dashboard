@@ -72,6 +72,7 @@ export const NumericUnits: React.FC<NumericUnitsProps> = ({
     <div>
       <div className={classes.hr} />
       <ControlledCheckbox
+        data-test="numeric-with-unit"
         name="selectUnit"
         label={M.selectUnit}
         checked={data.unit !== null}
@@ -84,6 +85,7 @@ export const NumericUnits: React.FC<NumericUnitsProps> = ({
       {data.unit !== null && (
         <div className={classes.unitsRow}>
           <SingleSelectField
+            testId="unit-system"
             label={M.unitSystem}
             choices={unitSystemChoices}
             onChange={({ target }) => setSystem(target.value)}
@@ -91,6 +93,7 @@ export const NumericUnits: React.FC<NumericUnitsProps> = ({
             disabled={disabled}
           />
           <SingleSelectField
+            testId="unit-of"
             label={M.unitOf}
             choices={unitTypeChoices}
             onChange={({ target }) => setType(target.value)}
@@ -98,6 +101,7 @@ export const NumericUnits: React.FC<NumericUnitsProps> = ({
             value={type}
           />
           <SingleSelectField
+            testId="unit"
             name={"unit" as keyof AttributePageFormData}
             label={M.unit}
             choices={type ? unitChoices[system][type] : []}
