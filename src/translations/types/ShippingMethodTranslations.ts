@@ -29,13 +29,15 @@ export interface ShippingMethodTranslations_translations_edges_node_ShippingMeth
   id: string;
   language: ShippingMethodTranslations_translations_edges_node_ShippingMethodTranslatableContent_translation_language;
   name: string | null;
+  description: any | null;
 }
 
 export interface ShippingMethodTranslations_translations_edges_node_ShippingMethodTranslatableContent {
   __typename: "ShippingMethodTranslatableContent";
-  shippingMethod: ShippingMethodTranslations_translations_edges_node_ShippingMethodTranslatableContent_shippingMethod | null;
   id: string;
   name: string;
+  description: any | null;
+  shippingMethod: ShippingMethodTranslations_translations_edges_node_ShippingMethodTranslatableContent_shippingMethod | null;
   translation: ShippingMethodTranslations_translations_edges_node_ShippingMethodTranslatableContent_translation | null;
 }
 

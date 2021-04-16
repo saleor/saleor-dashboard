@@ -30,6 +30,7 @@ export interface VoucherTranslationFragment_translation {
 
 export interface VoucherTranslationFragment {
   __typename: "VoucherTranslatableContent";
+  name: string | null;
   voucher: VoucherTranslationFragment_voucher | null;
   translation: VoucherTranslationFragment_translation | null;
 }

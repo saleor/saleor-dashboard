@@ -104,6 +104,7 @@ export interface ShippingZoneDetailsFragment_shippingMethods {
   minimumDeliveryDays: number | null;
   maximumDeliveryDays: number | null;
   name: string;
+  description: any | null;
   type: ShippingMethodTypeEnum | null;
   channelListings: ShippingZoneDetailsFragment_shippingMethods_channelListings[] | null;
 }

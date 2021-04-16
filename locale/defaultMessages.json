@@ -5804,6 +5804,10 @@
   "src_dot_shipping_dot_components_dot_ShippingMethodProducts_dot_4190792473": {
     "string": "Actions"
   },
+  "src_dot_shipping_dot_components_dot_ShippingRateInfo_dot_description": {
+    "context": "label",
+    "string": "Shipping Rate Description"
+  },
   "src_dot_shipping_dot_components_dot_ShippingRateInfo_dot_maxDays": {
     "context": "label",
     "string": "Max Delivery Time"
@@ -6604,12 +6608,17 @@
   "src_dot_translations_dot_components_dot_TranslationsSalesPage_dot_898281424": {
     "string": "Sale Name"
   },
+  "src_dot_translations_dot_components_dot_TranslationsShippingMethodPage_dot_3374163063": {
+    "context": "shipping method description",
+    "string": "Description"
+  },
   "src_dot_translations_dot_components_dot_TranslationsShippingMethodPage_dot_3498202636": {
     "context": "header",
     "string": "Translation ShippingMethod \"{shippingMethodName}\" - {languageCode}"
   },
-  "src_dot_translations_dot_components_dot_TranslationsShippingMethodPage_dot_99732714": {
-    "string": "ShippingMethod Name"
+  "src_dot_translations_dot_components_dot_TranslationsShippingMethodPage_dot_636461959": {
+    "context": "shipping method name",
+    "string": "Name"
   },
   "src_dot_translations_dot_components_dot_TranslationsVouchersPage_dot_2447510181": {
     "context": "header",

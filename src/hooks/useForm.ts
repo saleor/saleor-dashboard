@@ -19,7 +19,7 @@ export interface UseFormResult<T> {
   data: T;
   hasChanged: boolean;
   reset: () => void;
-  set: (data: T) => void;
+  set: (data: Partial<T>) => void;
   submit: () => void;
   triggerChange: () => void;
   toggleValue: FormChange;

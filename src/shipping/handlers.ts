@@ -13,6 +13,7 @@ import {
   ShippingMethodTypeEnum,
   ShippingPostalCodeRulesCreateInputRange
 } from "@saleor/types/globalTypes";
+import { getParsedDataForJsonStringField } from "@saleor/utils/richText/misc";
 import { diff } from "fast-array-diff";
 import { useIntl } from "react-intl";
 
@@ -76,7 +77,8 @@ export function getCreateShippingPriceRateVariables(
       minimumDeliveryDays: parsedMinDays,
       name: data.name,
       shippingZone: id,
-      type: ShippingMethodTypeEnum.PRICE
+      type: ShippingMethodTypeEnum.PRICE,
+      description: getParsedDataForJsonStringField(data.description)
     }
   };
 }
@@ -103,7 +105,8 @@ export function getCreateShippingWeightRateVariables(
       minimumOrderWeight: isWeightSet ? parsedMinValue : null,
       name: data.name,
       shippingZone: id,
-      type: ShippingMethodTypeEnum.WEIGHT
+      type: ShippingMethodTypeEnum.WEIGHT,
+      description: getParsedDataForJsonStringField(data.description)
     }
   };
 }
@@ -130,7 +133,8 @@ export function getUpdateShippingPriceRateVariables(
       minimumDeliveryDays: parsedMinDays,
       name: data.name,
       shippingZone: id,
-      type: ShippingMethodTypeEnum.PRICE
+      type: ShippingMethodTypeEnum.PRICE,
+      description: getParsedDataForJsonStringField(data.description)
     }
   };
 }
@@ -162,7 +166,8 @@ export function getUpdateShippingWeightRateVariables(
       minimumOrderWeight: isWeightSet ? parsedMinValue : null,
       name: data.name,
       shippingZone: id,
-      type: ShippingMethodTypeEnum.WEIGHT
+      type: ShippingMethodTypeEnum.WEIGHT,
+      description: getParsedDataForJsonStringField(data.description)
     }
   };
 }
