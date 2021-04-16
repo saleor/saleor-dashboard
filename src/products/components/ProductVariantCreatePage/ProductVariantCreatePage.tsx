@@ -50,6 +50,11 @@ const messages = defineMessages({
   saveVariant: {
     defaultMessage: "Save variant",
     description: "button"
+  },
+  pricingCardSubtitle: {
+    defaultMessage:
+      "There is no channel to define prices for. You need to first add variant to channels to define prices.",
+    description: "variant pricing section subtitle"
   }
 });
 
@@ -205,7 +210,9 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
                 onChange={change}
               />
               <CardSpacer />
-              <ProductVariantPrice />
+              <ProductVariantPrice
+                disabledMessage={messages.pricingCardSubtitle}
+              />
               <CardSpacer />
               <ProductStocks
                 data={data}
