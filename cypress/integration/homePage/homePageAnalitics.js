@@ -32,7 +32,7 @@ describe("Homepage analytics", () => {
 
   const productPrice = 22;
   const shippingPrice = 12;
-  const randomName = startsWith + faker.random.number();
+  const randomName = startsWith + faker.datatype.number();
   const randomEmail = randomName + "@example.com";
 
   before(() => {
@@ -161,7 +161,7 @@ describe("Homepage analytics", () => {
     homePageUtils
       .getProductsOutOfStock(defaultChannel.slug)
       .as("productsOutOfStock");
-    const productOutOfStockRandomName = startsWith + faker.random.number();
+    const productOutOfStockRandomName = startsWith + faker.datatype.number();
 
     productsUtils.createProductInChannel({
       name: productOutOfStockRandomName,

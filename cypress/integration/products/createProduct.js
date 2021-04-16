@@ -20,9 +20,9 @@ import * as productUtils from "../../utils/products/productsUtils";
 
 describe("Create product", () => {
   const startsWith = "CyCreateProduct-";
-  const name = `${startsWith}${faker.random.number()}`;
+  const name = `${startsWith}${faker.datatype.number()}`;
   const generalInfo = {
-    name: `${startsWith}${faker.random.number()}`,
+    name: `${startsWith}${faker.datatype.number()}`,
     description: faker.lorem.sentence(),
     rating: 2
   };
@@ -59,7 +59,7 @@ describe("Create product", () => {
   });
 
   it("should create product with variants", () => {
-    const randomName = `${startsWith}${faker.random.number()}`;
+    const randomName = `${startsWith}${faker.datatype.number()}`;
     productUtils.createTypeProduct(randomName, attribute.id);
     seo.slug = randomName;
     const productData = {
@@ -86,7 +86,7 @@ describe("Create product", () => {
   });
   it("should create product without variants", () => {
     const prices = { sellingPrice: 6, costPrice: 3 };
-    const randomName = `${startsWith}${faker.random.number()}`;
+    const randomName = `${startsWith}${faker.datatype.number()}`;
     seo.slug = randomName;
     productUtils.createTypeProduct(randomName, attribute.id, false);
     const productData = {

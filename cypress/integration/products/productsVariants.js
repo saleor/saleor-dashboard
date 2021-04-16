@@ -5,7 +5,6 @@ import {
   createProduct,
   updateChannelInProduct
 } from "../../apiRequests/Product";
-import { BUTTON_SELECTORS } from "../../elements/shared/button-selectors";
 import {
   createFirstVariant,
   createVariant,
@@ -38,7 +37,7 @@ describe("Creating variants", () => {
     productUtils.deleteProductsStartsWith(startsWith);
     deleteChannelsStartsWith(startsWith);
 
-    const name = `${startsWith}${faker.random.number()}`;
+    const name = `${startsWith}${faker.datatype.number()}`;
     getDefaultChannel()
       .then(channel => {
         defaultChannel = channel;
@@ -73,7 +72,7 @@ describe("Creating variants", () => {
   });
 
   it("should create variant visible on frontend", () => {
-    const name = `${startsWith}${faker.random.number()}`;
+    const name = `${startsWith}${faker.datatype.number()}`;
     const price = 10;
     let createdProduct;
 
@@ -100,9 +99,9 @@ describe("Creating variants", () => {
         expect(variant).to.have.property("price", price);
       });
   });
-  xit("should create several variants", () => {
-    const name = `${startsWith}${faker.random.number()}`;
-    const secondVariantSku = `${startsWith}${faker.random.number()}`;
+  it("should create several variants", () => {
+    const name = `${startsWith}${faker.datatype.number()}`;
+    const secondVariantSku = `${startsWith}${faker.datatype.number()}`;
     const variants = [{ price: 7 }, { name: attributeValues[1], price: 16 }];
     let createdProduct;
 
@@ -130,7 +129,7 @@ describe("Creating variants", () => {
         selectChannelInHeader(defaultChannel.name);
         variantsShouldBeVisible({
           name: variants[1].name,
-          price: variants.price
+          price: variants[1].price
         });
         getProductVariants(createdProduct.id, defaultChannel.slug);
       })
@@ -141,7 +140,7 @@ describe("Creating variants", () => {
       });
   });
   it("should create variant for many channels", () => {
-    const name = `${startsWith}${faker.random.number()}`;
+    const name = `${startsWith}${faker.datatype.number()}`;
     const variantsPrice = 10;
     let newChannel;
     let createdProduct;

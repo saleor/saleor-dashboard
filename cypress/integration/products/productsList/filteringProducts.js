@@ -22,7 +22,7 @@ import {
 
 describe("Products", () => {
   const startsWith = "CyFilterProducts-";
-  const name = `${startsWith}${faker.random.number()}`;
+  const name = `${startsWith}${faker.datatype.number()}`;
   const stockQuantity = 747;
   const price = 342;
   let attribute;
@@ -95,7 +95,7 @@ describe("Products", () => {
   });
 
   it("should filter products out of stock", () => {
-    const productOutOfStock = `${startsWith}${faker.random.number()}`;
+    const productOutOfStock = `${startsWith}${faker.datatype.number()}`;
     createProductInChannel({
       name: productOutOfStock,
       channelId: channel.id,
