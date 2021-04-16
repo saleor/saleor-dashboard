@@ -142,6 +142,7 @@ const VariantDetailsChannelsAvailabilityCard: React.FC<VariantDetailsChannelsAva
         <ExpansionPanelSummary
           expandIcon={<IconChevronDown />}
           classes={summaryClasses}
+          data-test-id="channels-variant-availability-summary"
         >
           <>
             <Typography variant="caption">
@@ -157,8 +158,15 @@ const VariantDetailsChannelsAvailabilityCard: React.FC<VariantDetailsChannelsAva
           <>
             <Divider />
             <CardContent>
-              <Typography>{channel.name}</Typography>
-              <Typography variant="caption">
+              <Typography
+                data-test-id={`channels-variant-availability-item-title-${channel.id}`}
+              >
+                {channel.name}
+              </Typography>
+              <Typography
+                variant="caption"
+                data-test-id={`channels-variant-availability-item-subtitle-${channel.id}`}
+              >
                 {getItemSubtitle(channel.id)}
               </Typography>
             </CardContent>
