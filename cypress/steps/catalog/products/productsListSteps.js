@@ -9,8 +9,9 @@ export function isNumberOfProductsSameAsInSelectResultsOnPage() {
     .should("be.visible")
     .get(PRODUCTS_LIST.emptyProductRow)
     .should("not.exist")
-    .get(PRODUCTS_LIST.resultsOnPageSelect)
-    .invoke("text")
+    .then(() => {
+      cy.get(PRODUCTS_LIST.resultsOnPageSelect).invoke("text");
+    })
     .then(text => {
       numberOfResults = text;
       getDisplayedColumnArray("name");
