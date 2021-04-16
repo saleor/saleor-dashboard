@@ -5310,6 +5310,10 @@
     "context": "button",
     "string": "Delete Variant"
   },
+  "src_dot_products_dot_components_dot_ProductVariantCreatePage_dot_pricingCardSubtitle": {
+    "context": "variant pricing section subtitle",
+    "string": "There is no channel to define prices for. You need to first add variant to channels to define prices."
+  },
   "src_dot_products_dot_components_dot_ProductVariantCreatePage_dot_saveVariant": {
     "context": "button",
     "string": "Save variant"
@@ -5496,10 +5500,6 @@
   },
   "src_dot_products_dot_components_dot_ProductVariantPrice_dot_1134347598": {
     "string": "Price"
-  },
-  "src_dot_products_dot_components_dot_ProductVariantPrice_dot_1309465788": {
-    "context": "variant pricing section subtitle",
-    "string": "There is no channel to define prices for"
   },
   "src_dot_products_dot_components_dot_ProductVariantPrice_dot_1387754199": {
     "context": "tabel column header",
