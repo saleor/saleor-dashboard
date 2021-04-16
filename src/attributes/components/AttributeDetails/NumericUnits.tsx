@@ -82,37 +82,35 @@ export const NumericUnits: React.FC<NumericUnitsProps> = ({
         disabled={disabled}
       />
       {data.unit !== null && (
-        <>
-          <div className={classes.unitsRow}>
-            <SingleSelectField
-              label={M.unitSystem}
-              choices={unitSystemChoices}
-              onChange={({ target }) => setSystem(target.value)}
-              value={system}
-              disabled={disabled}
-            />
-            <SingleSelectField
-              label={M.unitOf}
-              choices={unitTypeChoices}
-              onChange={({ target }) => setType(target.value)}
-              disabled={!system || disabled}
-              value={type}
-            />
-            <SingleSelectField
-              name={"unit" as keyof AttributePageFormData}
-              label={M.unit}
-              choices={type ? unitChoices[system][type] : []}
-              onChange={evt => {
-                onChange(evt);
-                unitRef.current = evt.target.value;
-              }}
-              disabled={!type || disabled}
-              value={type ? data.unit : undefined}
-              hint={error}
-              error={!!error}
-            />
-          </div>
-        </>
+        <div className={classes.unitsRow}>
+          <SingleSelectField
+            label={M.unitSystem}
+            choices={unitSystemChoices}
+            onChange={({ target }) => setSystem(target.value)}
+            value={system}
+            disabled={disabled}
+          />
+          <SingleSelectField
+            label={M.unitOf}
+            choices={unitTypeChoices}
+            onChange={({ target }) => setType(target.value)}
+            disabled={!system || disabled}
+            value={type}
+          />
+          <SingleSelectField
+            name={"unit" as keyof AttributePageFormData}
+            label={M.unit}
+            choices={type ? unitChoices[system][type] : []}
+            onChange={evt => {
+              onChange(evt);
+              unitRef.current = evt.target.value;
+            }}
+            disabled={!type || disabled}
+            value={type ? data.unit : undefined}
+            hint={error}
+            error={!!error}
+          />
+        </div>
       )}
     </div>
   );
