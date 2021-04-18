@@ -122,142 +122,38 @@ export const area = (
   <FormattedMessage defaultMessage="Area" description="area units type" />
 );
 
-/**
- * Units
- */
-export const cubicCentimeter = (
-  <FormattedMessage
-    defaultMessage="Cubic centimeter"
-    description="Cubic centimeter unit"
-  />
-);
-
-export const cubicDecimeter = (
-  <FormattedMessage
-    defaultMessage="Cubic decimeter"
-    description="Cubic decimeter unit"
-  />
-);
-
-export const cubicMeter = (
-  <FormattedMessage
-    defaultMessage="Cubic meter"
-    description="Cubic meter unit"
-  />
-);
-
-export const liter = (
-  <FormattedMessage defaultMessage="Liter" description="liter unit" />
-);
-
-export const centimeter = (
-  <FormattedMessage defaultMessage="Centimeter" description="centimeter unit" />
-);
-
-export const meter = (
-  <FormattedMessage defaultMessage="Meter" description="meter unit" />
-);
-
-export const kilometer = (
-  <FormattedMessage defaultMessage="Kilometer" description="kilometer unit" />
-);
-
-export const gram = (
-  <FormattedMessage defaultMessage="Gram" description="gram unit" />
-);
-
-export const kilogram = (
-  <FormattedMessage defaultMessage="Kilogram" description="kilogram unit" />
-);
-
-export const tonne = (
-  <FormattedMessage defaultMessage="Tonne" description="tonne unit" />
-);
-
-export const squareCentimeter = (
-  <FormattedMessage
-    defaultMessage="Square centimeter"
-    description="square centimeter unit"
-  />
-);
-
-export const squareMeter = (
-  <FormattedMessage
-    defaultMessage="Square meter"
-    description="square meter unit"
-  />
-);
-
-export const squareKilometer = (
-  <FormattedMessage
-    defaultMessage="Square kilometer"
-    description="square kilometer unit"
-  />
-);
-
-export const cubicFoot = (
-  <FormattedMessage defaultMessage="Cubic foot" description="cubic foot unit" />
-);
-
-export const cubicInch = (
-  <FormattedMessage defaultMessage="Cubic inch" description="cubic inch unit" />
-);
-
-export const cubicYard = (
-  <FormattedMessage defaultMessage="Cubic yard" description="cubic yard unit" />
-);
-
-export const qt = (
-  <FormattedMessage defaultMessage="Qt" description="qt unit" />
-);
-
-export const flOz = (
-  <FormattedMessage defaultMessage="Fl.Oz" description="fl.oz unit" />
-);
-
-export const pint = (
-  <FormattedMessage defaultMessage="Pint" description="pint unit" />
-);
-
-export const acreInch = (
-  <FormattedMessage defaultMessage="Acre-inch" description="acre-inch unit" />
-);
-
-export const acreFt = (
-  <FormattedMessage defaultMessage="Acre-ft" description="acre-ft unit" />
-);
-
-export const ft = (
-  <FormattedMessage defaultMessage="Ft" description="ft unit" />
-);
-
-export const yd = (
-  <FormattedMessage defaultMessage="Yd" description="yd unit" />
-);
-
-export const inch = (
-  <FormattedMessage defaultMessage="Inch" description="inch unit" />
-);
-
-export const oz = (
-  <FormattedMessage defaultMessage="Oz" description="oz unit" />
-);
-
-export const lbs = (
-  <FormattedMessage defaultMessage="Lbs" description="lbs unit" />
-);
-
-export const squareFt = (
-  <FormattedMessage defaultMessage="Square-Ft" description="square-ft unit" />
-);
-
-export const squareYd = (
-  <FormattedMessage defaultMessage="Square-Yd" description="square-yd unit" />
-);
-
-export const squareInch = (
-  <FormattedMessage
-    defaultMessage="Square-Inch"
-    description="square-inch unit"
-  />
-);
+export const units = {
+  cubicCentimeter: <>cm&sup3;</>,
+  cubicDecimeter: <>dm&sup3;</>,
+  cubicMeter: <>m&sup3;</>,
+  liter: "l",
+  centimeter: "cm",
+  meter: "m",
+  kilometer: "km",
+  gram: "g",
+  kilogram: "kg",
+  tonne: "t",
+  squareCentimeter: <>cm&sup2;</>,
+  squareMeter: <>m&sup2;</>,
+  squareKilometer: <>km&sup2;</>,
+  cubicFoot: <>ft&sup3;</>,
+  cubicInch: <>in&sup3;</>,
+  cubicYard: <>yd&sup3;</>,
+  qt: "qt",
+  flOz: "fl. oz",
+  pint: <FormattedMessage defaultMessage="pint" description="pint unit" />,
+  acreInch: (
+    <FormattedMessage defaultMessage="acre-inch" description="acre-inch unit" />
+  ),
+  acreFt: (
+    <FormattedMessage defaultMessage="acre-ft" description="acre-ft unit" />
+  ),
+  ft: "ft",
+  yd: "yd",
+  inch: "in",
+  oz: "oz",
+  lbs: "lbs",
+  squareFt: <>ft&sup2;</>,
+  squareYd: <>yd&sup2;</>,
+  squareInch: <>in&sup2;</>
+};

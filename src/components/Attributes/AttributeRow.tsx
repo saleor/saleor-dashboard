@@ -173,13 +173,15 @@ const AttributeRow: React.FC<AttributeRowProps> = ({
             onChange={event => onChange(attribute.id, event.target.value)}
             type="number"
             value={attribute.value[0]}
-            InputProps={{
-              endAdornment: (
-                <InputAdornment position="end">
-                  {getMeasurementUnitMessage(attribute.data.unit)}
-                </InputAdornment>
-              )
-            }}
+            InputProps={
+              attribute.data.unit && {
+                endAdornment: (
+                  <InputAdornment position="end">
+                    {getMeasurementUnitMessage(attribute.data.unit)}
+                  </InputAdornment>
+                )
+              }
+            }
           />
         </BasicAttributeRow>
       );

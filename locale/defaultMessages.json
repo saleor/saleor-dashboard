@@ -853,37 +853,13 @@
     "context": "dialog content",
     "string": "Are you sure you want to delete {attributeName}?"
   },
-  "src_dot_attributes_dot_components_dot_AttributeDetails_dot_1147307135": {
-    "context": "tonne unit",
-    "string": "Tonne"
-  },
-  "src_dot_attributes_dot_components_dot_AttributeDetails_dot_1221523190": {
-    "context": "ft unit",
-    "string": "Ft"
-  },
   "src_dot_attributes_dot_components_dot_AttributeDetails_dot_125992234": {
     "context": "numeric attribute unit",
     "string": "Unit"
   },
-  "src_dot_attributes_dot_components_dot_AttributeDetails_dot_1324086021": {
-    "context": "pint unit",
-    "string": "Pint"
-  },
-  "src_dot_attributes_dot_components_dot_AttributeDetails_dot_1375243004": {
-    "context": "square-ft unit",
-    "string": "Square-Ft"
-  },
   "src_dot_attributes_dot_components_dot_AttributeDetails_dot_1390397602": {
     "context": "numeric attribute unit system",
     "string": "System"
-  },
-  "src_dot_attributes_dot_components_dot_AttributeDetails_dot_1419215975": {
-    "context": "yd unit",
-    "string": "Yd"
-  },
-  "src_dot_attributes_dot_components_dot_AttributeDetails_dot_1452812742": {
-    "context": "liter unit",
-    "string": "Liter"
   },
   "src_dot_attributes_dot_components_dot_AttributeDetails_dot_157021805": {
     "context": "numeric attribute units of",
@@ -893,117 +869,37 @@
     "context": "area units type",
     "string": "Area"
   },
-  "src_dot_attributes_dot_components_dot_AttributeDetails_dot_17940089": {
-    "context": "kilometer unit",
-    "string": "Kilometer"
-  },
-  "src_dot_attributes_dot_components_dot_AttributeDetails_dot_1925361915": {
-    "context": "square-yd unit",
-    "string": "Square-Yd"
-  },
-  "src_dot_attributes_dot_components_dot_AttributeDetails_dot_1938778503": {
-    "context": "centimeter unit",
-    "string": "Centimeter"
-  },
   "src_dot_attributes_dot_components_dot_AttributeDetails_dot_1963548912": {
     "context": "imperial unit system",
     "string": "Imperial"
   },
-  "src_dot_attributes_dot_components_dot_AttributeDetails_dot_2171375311": {
-    "context": "oz unit",
-    "string": "Oz"
-  },
-  "src_dot_attributes_dot_components_dot_AttributeDetails_dot_2342608399": {
-    "context": "square kilometer unit",
-    "string": "Square kilometer"
-  },
-  "src_dot_attributes_dot_components_dot_AttributeDetails_dot_2456311770": {
-    "context": "kilogram unit",
-    "string": "Kilogram"
-  },
-  "src_dot_attributes_dot_components_dot_AttributeDetails_dot_2649599491": {
-    "context": "lbs unit",
-    "string": "Lbs"
-  },
-  "src_dot_attributes_dot_components_dot_AttributeDetails_dot_2664450042": {
+  "src_dot_attributes_dot_components_dot_AttributeDetails_dot_2262354018": {
     "context": "acre-ft unit",
-    "string": "Acre-ft"
-  },
-  "src_dot_attributes_dot_components_dot_AttributeDetails_dot_2674419647": {
-    "context": "square centimeter unit",
-    "string": "Square centimeter"
+    "string": "acre-ft"
   },
   "src_dot_attributes_dot_components_dot_AttributeDetails_dot_2947839983": {
     "context": "metric unit system",
     "string": "Metric"
   },
-  "src_dot_attributes_dot_components_dot_AttributeDetails_dot_3270643849": {
-    "context": "Cubic decimeter unit",
-    "string": "Cubic decimeter"
-  },
-  "src_dot_attributes_dot_components_dot_AttributeDetails_dot_3356185531": {
-    "context": "gram unit",
-    "string": "Gram"
-  },
-  "src_dot_attributes_dot_components_dot_AttributeDetails_dot_3478830201": {
-    "context": "cubic foot unit",
-    "string": "Cubic foot"
-  },
-  "src_dot_attributes_dot_components_dot_AttributeDetails_dot_3508697999": {
-    "context": "inch unit",
-    "string": "Inch"
-  },
   "src_dot_attributes_dot_components_dot_AttributeDetails_dot_3595883383": {
     "context": "volume units types",
     "string": "Volume"
   },
-  "src_dot_attributes_dot_components_dot_AttributeDetails_dot_3677139172": {
-    "context": "meter unit",
-    "string": "Meter"
+  "src_dot_attributes_dot_components_dot_AttributeDetails_dot_3723486670": {
+    "context": "pint unit",
+    "string": "pint"
   },
-  "src_dot_attributes_dot_components_dot_AttributeDetails_dot_3689623941": {
-    "context": "cubic yard unit",
-    "string": "Cubic yard"
-  },
-  "src_dot_attributes_dot_components_dot_AttributeDetails_dot_3741974768": {
-    "context": "Cubic meter unit",
-    "string": "Cubic meter"
-  },
-  "src_dot_attributes_dot_components_dot_AttributeDetails_dot_3751057141": {
-    "context": "qt unit",
-    "string": "Qt"
-  },
-  "src_dot_attributes_dot_components_dot_AttributeDetails_dot_3839343241": {
-    "context": "square-inch unit",
-    "string": "Square-Inch"
-  },
-  "src_dot_attributes_dot_components_dot_AttributeDetails_dot_387759205": {
-    "context": "cubic inch unit",
-    "string": "Cubic inch"
+  "src_dot_attributes_dot_components_dot_AttributeDetails_dot_3863978694": {
+    "context": "acre-inch unit",
+    "string": "acre-inch"
   },
   "src_dot_attributes_dot_components_dot_AttributeDetails_dot_3889193046": {
     "context": "distance units type",
     "string": "Distance"
   },
-  "src_dot_attributes_dot_components_dot_AttributeDetails_dot_4086814772": {
-    "context": "acre-inch unit",
-    "string": "Acre-inch"
-  },
   "src_dot_attributes_dot_components_dot_AttributeDetails_dot_746695941": {
     "context": "weight units type",
     "string": "Weight"
-  },
-  "src_dot_attributes_dot_components_dot_AttributeDetails_dot_76684322": {
-    "context": "Cubic centimeter unit",
-    "string": "Cubic centimeter"
-  },
-  "src_dot_attributes_dot_components_dot_AttributeDetails_dot_825583211": {
-    "context": "fl.oz unit",
-    "string": "Fl.Oz"
-  },
-  "src_dot_attributes_dot_components_dot_AttributeDetails_dot_921106469": {
-    "context": "square meter unit",
-    "string": "Square meter"
   },
   "src_dot_attributes_dot_components_dot_AttributeDetails_dot_935262293": {
     "context": "check to require numeric attribute unit",
