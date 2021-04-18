@@ -192,6 +192,11 @@ export interface ProductVariantSetDefault_productVariantSetDefault_product_media
   oembedData: any;
 }
 
+export interface ProductVariantSetDefault_productVariantSetDefault_product_variants_media {
+  __typename: "ProductMedia";
+  url: string;
+}
+
 export interface ProductVariantSetDefault_productVariantSetDefault_product_variants_stocks_warehouse {
   __typename: "Warehouse";
   id: string;
@@ -238,6 +243,7 @@ export interface ProductVariantSetDefault_productVariantSetDefault_product_varia
   sku: string;
   name: string;
   margin: number | null;
+  media: ProductVariantSetDefault_productVariantSetDefault_product_variants_media[] | null;
   stocks: (ProductVariantSetDefault_productVariantSetDefault_product_variants_stocks | null)[] | null;
   trackInventory: boolean;
   channelListings: ProductVariantSetDefault_productVariantSetDefault_product_variants_channelListings[] | null;

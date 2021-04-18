@@ -7,6 +7,7 @@ export const SHIPPING_ZONE_DETAILS = {
   addWeightRateButton: "[data-test-id='add-weight-rate']",
   nameInput: "[name='name']",
   shippingRatePriceTableCell: "[data-test-id='shipping-rate-price']",
-  warehouseOption: "[data-test='multiautocomplete-select-option']",
-  warehouseSelector: "[placeholder*='Warehouse']"
+  option: "[data-test='multiautocomplete-select-option']",
+  warehouseSelector: "[placeholder*='Warehouse']",
+  channelSelector: "[placeholder*='Channel']"
 };

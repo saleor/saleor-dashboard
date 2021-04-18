@@ -2,8 +2,6 @@ import { LEFT_MENU_SELECTORS } from "../elements/account/left-menu/left-menu-sel
 import { SHARED_ELEMENTS } from "../elements/shared/sharedElements";
 import { urlList } from "../url/urlList";
 
-/* eslint-disable no-unused-expressions */
-
 export function navigateToAllAvailablePageAndCheckIfDisplayed({
   user,
   permissions

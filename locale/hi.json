@@ -6599,7 +6599,7 @@
   },
   "src_dot_webhooks_dot_components_dot_WebhookInfo_dot_3995417850": {
     "context": "webhook",
-    "string": "Secrect Key"
+    "string": "Secret Key"
   },
   "src_dot_webhooks_dot_components_dot_WebhookInfo_dot_4194304040": {
     "context": "webhook specific information",

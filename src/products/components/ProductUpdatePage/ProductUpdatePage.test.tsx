@@ -14,10 +14,6 @@ import ProductUpdatePage, { ProductUpdatePageProps } from "./ProductUpdatePage";
 
 const product = productFixture(placeholderImage);
 const channels = createChannelsData(channelsList);
-const channelChoices = product.channelListings.map(listing => ({
-  label: listing.channel.name,
-  value: listing.channel.id
-}));
 
 import Adapter from "enzyme-adapter-react-16";
 configure({ adapter: new Adapter() });
@@ -28,7 +24,10 @@ const props: ProductUpdatePageProps = {
   ...listActionsProps,
   allChannelsCount: 5,
   categories: [product.category],
-  channelChoices,
+  channelsData: [],
+  channelsWithVariantsData: {},
+  isSimpleProduct: false,
+  setChannelsData: () => undefined,
   channelsErrors: [],
   collections,
   currentChannels: channels,

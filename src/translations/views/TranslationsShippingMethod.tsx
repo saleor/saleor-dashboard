@@ -6,21 +6,18 @@ import { stringify as stringifyQs } from "qs";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import {
-  LanguageCodeEnum,
-  NameTranslationInput
-} from "../../types/globalTypes";
-import TranslationsShippingMethodPage, {
-  fieldNames
-} from "../components/TranslationsShippingMethodPage";
+import { LanguageCodeEnum } from "../../types/globalTypes";
+import TranslationsShippingMethodPage from "../components/TranslationsShippingMethodPage";
 import { TypedUpdateShippingMethodTranslations } from "../mutations";
 import { useShippingMethodTranslationDetails } from "../queries";
+import { TranslationInputFieldName } from "../types";
 import { UpdateShippingMethodTranslations } from "../types/UpdateShippingMethodTranslations";
 import {
   languageEntitiesUrl,
   languageEntityUrl,
   TranslatableEntities
 } from "../urls";
+import { getParsedTranslationInputData } from "../utils";
 
 export interface TranslationsShippingMethodQueryParams {
   activeField: string;
@@ -70,15 +67,14 @@ const TranslationsShippingMethod: React.FC<TranslationsShippingMethodProps> = ({
   return (
     <TypedUpdateShippingMethodTranslations onCompleted={onUpdate}>
       {(updateTranslations, updateTranslationsOpts) => {
-        const handleSubmit = (field: string, data: string) => {
-          const input: NameTranslationInput = {};
-          if (field === fieldNames.name) {
-            input.name = data;
-          }
+        const handleSubmit = (
+          field: TranslationInputFieldName,
+          data: string
+        ) => {
           updateTranslations({
             variables: {
               id,
-              input,
+              input: getParsedTranslationInputData({ fieldName: field, data }),
               language: languageCode
             }
           });

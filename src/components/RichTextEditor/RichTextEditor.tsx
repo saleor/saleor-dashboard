@@ -34,10 +34,11 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
   const editor = React.useRef<EditorJS>();
   const editorContainer = React.useRef<HTMLDivElement>();
   const prevTogglePromise = React.useRef<Promise<boolean>>(); // used to await subsequent toggle invocations
+  const initialMount = React.useRef(true);
 
   React.useEffect(
     () => {
-      if (data) {
+      if (data !== undefined) {
         editor.current = new EditorJS({
           data,
           holder: editorContainer.current,
@@ -68,6 +69,11 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
 
   React.useEffect(() => {
     const toggle = async () => {
+      if (!editor.current) {
+        return;
+      }
+
+      await editor.current.isReady;
       if (editor.current?.readOnly) {
         // readOnly.toggle() by itself does not enqueue the events and will result in a broken output if invocations overlap
         // Remove this logic when this is fixed in EditorJS
@@ -75,10 +81,21 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
           await prevTogglePromise.current;
         }
         prevTogglePromise.current = editor.current.readOnly.toggle(disabled);
+
+        // Switching to readOnly with empty blocks present causes the editor to freeze
+        // Remove this logic when this is fixed in EditorJS
+        if (!disabled && !data?.blocks?.length) {
+          await prevTogglePromise.current;
+          editor.current.clear();
+        }
       }
     };
 
-    toggle();
+    if (!initialMount.current) {
+      toggle();
+    } else {
+      initialMount.current = false;
+    }
   }, [disabled]);
 
   return (

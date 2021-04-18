@@ -23,12 +23,12 @@ import useNotifier from "@saleor/hooks/useNotifier";
 import { commonMessages } from "@saleor/intl";
 import usePageSearch from "@saleor/searches/usePageSearch";
 import useProductSearch from "@saleor/searches/useProductSearch";
-import { getParsedDataForJsonStringField } from "@saleor/translations/utils";
 import createMetadataUpdateHandler from "@saleor/utils/handlers/metadataUpdateHandler";
 import {
   useMetadataUpdate,
   usePrivateMetadataUpdate
 } from "@saleor/utils/metadata/updateMetadata";
+import { getParsedDataForJsonStringField } from "@saleor/utils/richText/misc";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

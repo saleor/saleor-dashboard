@@ -37,14 +37,14 @@ import {
   VariantCreateVariables
 } from "@saleor/products/types/VariantCreate";
 import { getAvailabilityVariables } from "@saleor/products/utils/handlers";
-import { getParsedDataForJsonStringField } from "@saleor/translations/utils";
+import { getParsedDataForJsonStringField } from "@saleor/utils/richText/misc";
 import { MutationFetchResult } from "react-apollo";
 
 const getChannelsVariables = (productId: string, channels: ChannelData[]) => ({
   variables: {
     id: productId,
     input: {
-      addChannels: getAvailabilityVariables(channels)
+      updateChannels: getAvailabilityVariables(channels)
     }
   }
 });

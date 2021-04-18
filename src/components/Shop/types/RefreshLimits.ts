@@ -41,9 +41,9 @@ export interface RefreshLimits {
 }
 
 export interface RefreshLimitsVariables {
-  channels?: boolean | null;
-  orders?: boolean | null;
-  productVariants?: boolean | null;
-  staffUsers?: boolean | null;
-  warehouses?: boolean | null;
+  channels: boolean;
+  orders: boolean;
+  productVariants: boolean;
+  staffUsers: boolean;
+  warehouses: boolean;
 }

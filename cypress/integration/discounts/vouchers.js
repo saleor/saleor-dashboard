@@ -16,7 +16,7 @@ import {
 } from "../../utils/shippingUtils";
 
 describe("Vouchers discounts", () => {
-  const startsWith = "Cy-";
+  const startsWith = "CyVou-";
   const productPrice = 100;
   const shippingPrice = 100;
 

@@ -41,6 +41,7 @@ export function createProductInChannel({
       createVariant({
         productId: product.id,
         sku: name,
+        attributeId,
         warehouseId,
         quantityInWarehouse,
         channelId,
@@ -116,6 +117,7 @@ export function updateProduct(productId, input) {
 export function createVariant({
   productId,
   sku,
+  attributeId,
   warehouseId,
   quantityInWarehouse,
   channelId,
@@ -125,6 +127,7 @@ export function createVariant({
     .createVariant({
       productId,
       sku,
+      attributeId,
       warehouseId,
       quantity: quantityInWarehouse,
       channelId,

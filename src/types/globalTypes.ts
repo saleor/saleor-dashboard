@@ -121,6 +121,7 @@ export enum ChannelErrorCode {
   CHANNELS_CURRENCY_MUST_BE_THE_SAME = "CHANNELS_CURRENCY_MUST_BE_THE_SAME",
   CHANNEL_TARGET_ID_MUST_BE_DIFFERENT = "CHANNEL_TARGET_ID_MUST_BE_DIFFERENT",
   CHANNEL_WITH_ORDERS = "CHANNEL_WITH_ORDERS",
+  DUPLICATED_INPUT_ITEM = "DUPLICATED_INPUT_ITEM",
   GRAPHQL_ERROR = "GRAPHQL_ERROR",
   INVALID = "INVALID",
   NOT_FOUND = "NOT_FOUND",
@@ -1183,6 +1184,7 @@ export interface ChannelCreateInput {
   name: string;
   slug: string;
   currencyCode: string;
+  addShippingZones?: string[] | null;
 }
 
 export interface ChannelDeleteInput {
@@ -1193,6 +1195,8 @@ export interface ChannelUpdateInput {
   isActive?: boolean | null;
   name?: string | null;
   slug?: string | null;
+  addShippingZones?: string[] | null;
+  removeShippingZones?: string[] | null;
 }
 
 export interface CollectionChannelListingUpdateInput {
@@ -1588,10 +1592,12 @@ export interface ProductChannelListingAddInput {
   visibleInListings?: boolean | null;
   isAvailableForPurchase?: boolean | null;
   availableForPurchaseDate?: any | null;
+  addVariants?: string[] | null;
+  removeVariants?: string[] | null;
 }
 
 export interface ProductChannelListingUpdateInput {
-  addChannels?: ProductChannelListingAddInput[] | null;
+  updateChannels?: ProductChannelListingAddInput[] | null;
   removeChannels?: string[] | null;
 }
 
@@ -1783,6 +1789,7 @@ export interface ShippingPriceExcludeProductsInput {
 
 export interface ShippingPriceInput {
   name?: string | null;
+  description?: any | null;
   minimumOrderWeight?: any | null;
   maximumOrderWeight?: any | null;
   maximumDeliveryDays?: number | null;
@@ -1794,12 +1801,18 @@ export interface ShippingPriceInput {
   inclusionType?: PostalCodeRuleInclusionTypeEnum | null;
 }
 
+export interface ShippingPriceTranslationInput {
+  name?: string | null;
+  description?: any | null;
+}
+
 export interface ShippingZoneCreateInput {
   name?: string | null;
   description?: string | null;
   countries?: (string | null)[] | null;
   default?: boolean | null;
   addWarehouses?: (string | null)[] | null;
+  addChannels?: string[] | null;
 }
 
 export interface ShippingZoneUpdateInput {
@@ -1808,7 +1821,9 @@ export interface ShippingZoneUpdateInput {
   countries?: (string | null)[] | null;
   default?: boolean | null;
   addWarehouses?: (string | null)[] | null;
+  addChannels?: string[] | null;
   removeWarehouses?: (string | null)[] | null;
+  removeChannels?: string[] | null;
 }
 
 export interface ShopSettingsInput {

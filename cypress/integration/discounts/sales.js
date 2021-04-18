@@ -19,7 +19,7 @@ import {
 import { getProductPrice } from "../../utils/storeFront/storeFrontProductUtils";
 
 describe("Sales discounts", () => {
-  const startsWith = "Cy-";
+  const startsWith = "CySales-";
 
   let productType;
   let attribute;
