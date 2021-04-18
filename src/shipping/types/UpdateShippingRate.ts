@@ -92,6 +92,7 @@ export interface UpdateShippingRate_shippingPriceUpdate_shippingMethod {
   minimumDeliveryDays: number | null;
   maximumDeliveryDays: number | null;
   name: string;
+  description: any | null;
   type: ShippingMethodTypeEnum | null;
   channelListings: UpdateShippingRate_shippingPriceUpdate_shippingMethod_channelListings[] | null;
 }

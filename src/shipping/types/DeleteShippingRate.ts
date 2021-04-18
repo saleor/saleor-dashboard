@@ -110,6 +110,7 @@ export interface DeleteShippingRate_shippingPriceDelete_shippingZone_shippingMet
   minimumDeliveryDays: number | null;
   maximumDeliveryDays: number | null;
   name: string;
+  description: any | null;
   type: ShippingMethodTypeEnum | null;
   channelListings: DeleteShippingRate_shippingPriceDelete_shippingZone_shippingMethods_channelListings[] | null;
 }

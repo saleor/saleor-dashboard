@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { NameTranslationInput, LanguageCodeEnum } from "./../../types/globalTypes";
+import { ShippingPriceTranslationInput, LanguageCodeEnum } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: UpdateShippingMethodTranslations
@@ -25,12 +25,14 @@ export interface UpdateShippingMethodTranslations_shippingPriceTranslate_shippin
   id: string;
   language: UpdateShippingMethodTranslations_shippingPriceTranslate_shippingMethod_translation_language;
   name: string | null;
+  description: any | null;
 }
 
 export interface UpdateShippingMethodTranslations_shippingPriceTranslate_shippingMethod {
   __typename: "ShippingMethod";
   id: string;
   name: string;
+  description: any | null;
   translation: UpdateShippingMethodTranslations_shippingPriceTranslate_shippingMethod_translation | null;
 }
 
@@ -46,6 +48,6 @@ export interface UpdateShippingMethodTranslations {
 
 export interface UpdateShippingMethodTranslationsVariables {
   id: string;
-  input: NameTranslationInput;
+  input: ShippingPriceTranslationInput;
   language: LanguageCodeEnum;
 }

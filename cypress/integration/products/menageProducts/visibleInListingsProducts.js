@@ -9,7 +9,7 @@ import { isProductVisibleInSearchResult } from "../../../utils/storeFront/storeF
 
 // <reference types="cypress" />
 describe("Products displayed in listings", () => {
-  const startsWith = "Cy-";
+  const startsWith = "CyVisibleInListings-";
   const name = `${startsWith}${faker.random.number()}`;
   let productType;
   let attribute;

@@ -33,6 +33,9 @@ dist/
 /media/
 /node_modules/
 /static/
+/videos/
+/screenshots/
+/results/
 /saleor/static/assets/
 webpack-bundle.json
 /templates/templated_email/compiled/*

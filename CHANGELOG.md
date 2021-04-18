@@ -34,6 +34,7 @@ All notable, unreleased changes to this project will be documented in this file.
 - Handle limit reached error - #990 by @dominik-zeglen
 - Display Cloud limits - #1004 by @dominik-zeglen
 - Introducing numeric attributes - #1065 by @piotrgrundas
+- Add shipping method description - #1058 by @jwm0
 
 # 2.11.1
 

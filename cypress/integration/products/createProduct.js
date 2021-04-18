@@ -19,7 +19,7 @@ import {
 import * as productUtils from "../../utils/products/productsUtils";
 
 describe("Create product", () => {
-  const startsWith = "Cy-";
+  const startsWith = "CyCreateProduct-";
   const name = `${startsWith}${faker.random.number()}`;
   const generalInfo = {
     name: `${startsWith}${faker.random.number()}`,
