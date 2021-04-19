@@ -75,7 +75,7 @@ export const SaleList: React.FC<SaleListProps> = ({ params }) => {
     () => ({
       ...paginationState,
       filter: getFilterVariables(params),
-      sort: getSortQueryVariables(params)
+      sort: getSortQueryVariables(params, channel?.slug)
     }),
     [params]
   );
