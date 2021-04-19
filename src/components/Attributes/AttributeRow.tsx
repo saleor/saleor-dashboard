@@ -177,7 +177,10 @@ const AttributeRow: React.FC<AttributeRowProps> = ({
               attribute.data.unit && {
                 endAdornment: (
                   <InputAdornment position="end">
-                    {getMeasurementUnitMessage(attribute.data.unit)}
+                    {getMeasurementUnitMessage(
+                      attribute.data.unit,
+                      intl.formatMessage
+                    )}
                   </InputAdornment>
                 )
               }

@@ -1,6 +1,5 @@
-import { commonMessages } from "@saleor/intl";
 import React from "react";
-import { defineMessages, FormattedMessage } from "react-intl";
+import { defineMessages } from "react-intl";
 
 export const messages = defineMessages({
   attributeLabel: {
@@ -26,6 +25,25 @@ export const messages = defineMessages({
   valueRequired: {
     defaultMessage: "Value Required",
     description: "check to require attribute to have value"
+  },
+  selectUnit: {
+    defaultMessage: "Select unit",
+    description: "check to require numeric attribute unit"
+  },
+
+  unitSystem: {
+    defaultMessage: "System",
+    description: "numeric attribute unit system"
+  },
+
+  unitOf: {
+    defaultMessage: "Units of",
+    description: "numeric attribute units of"
+  },
+
+  unit: {
+    defaultMessage: "Unit",
+    description: "numeric attribute unit"
   }
 });
 
@@ -56,71 +74,42 @@ export const inputTypeMessages = defineMessages({
   }
 });
 
-export const selectUnit = (
-  <FormattedMessage
-    defaultMessage="Select unit"
-    description="check to require numeric attribute unit"
-  />
-);
+export const unitSystemMessages = defineMessages({
+  metric: {
+    defaultMessage: "Metric",
+    description: "metric unit system"
+  },
+  imperial: {
+    defaultMessage: "Imperial",
+    description: "imperial unit system"
+  }
+});
 
-export const unitSystem = (
-  <FormattedMessage
-    defaultMessage="System"
-    description="numeric attribute unit system"
-  />
-);
+export const unitTypeMessages = defineMessages({
+  volume: {
+    defaultMessage: "Volume",
+    description: "volume units types"
+  },
 
-export const unitOf = (
-  <FormattedMessage
-    defaultMessage="Units of"
-    description="numeric attribute units of"
-  />
-);
+  distance: {
+    defaultMessage: "Distance",
+    description: "distance units type"
+  },
+  weight: {
+    defaultMessage: "Weight",
+    description: "weight units type"
+  },
+  area: {
+    defaultMessage: "Area",
+    description: "area units type"
+  }
+});
 
-export const unit = (
-  <FormattedMessage
-    defaultMessage="Unit"
-    description="numeric attribute unit"
-  />
-);
-
-export const required = <FormattedMessage {...commonMessages.requiredField} />;
-
-/**
- * Unit System
- */
-export const metric = (
-  <FormattedMessage defaultMessage="Metric" description="metric unit system" />
-);
-
-export const imperial = (
-  <FormattedMessage
-    defaultMessage="Imperial"
-    description="imperial unit system"
-  />
-);
-
-/**
- * Unit type
- */
-export const volume = (
-  <FormattedMessage defaultMessage="Volume" description="volume units types" />
-);
-
-export const distance = (
-  <FormattedMessage
-    defaultMessage="Distance"
-    description="distance units type"
-  />
-);
-
-export const weight = (
-  <FormattedMessage defaultMessage="Weight" description="weight units type" />
-);
-
-export const area = (
-  <FormattedMessage defaultMessage="Area" description="area units type" />
-);
+export const unitMessages = defineMessages({
+  pint: { defaultMessage: "pint", description: "pint unit" },
+  acreInch: { defaultMessage: "acre-inch", description: "acre-inch unit" },
+  acreFt: { defaultMessage: "acre-ft", description: "acre-ft unit" }
+});
 
 export const units = {
   cubicCentimeter: <>cm&sup3;</>,
@@ -141,13 +130,9 @@ export const units = {
   cubicYard: <>yd&sup3;</>,
   qt: "qt",
   flOz: "fl. oz",
-  pint: <FormattedMessage defaultMessage="pint" description="pint unit" />,
-  acreInch: (
-    <FormattedMessage defaultMessage="acre-inch" description="acre-inch unit" />
-  ),
-  acreFt: (
-    <FormattedMessage defaultMessage="acre-ft" description="acre-ft unit" />
-  ),
+  pint: unitMessages.pint,
+  acreInch: unitMessages.acreInch,
+  acreFt: unitMessages.acreFt,
   ft: "ft",
   yd: "yd",
   inch: "in",

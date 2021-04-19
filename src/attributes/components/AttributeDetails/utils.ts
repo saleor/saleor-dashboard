@@ -1,70 +1,81 @@
 import { Choice } from "@saleor/components/SingleSelectField";
 import { MeasurementUnitsEnum } from "@saleor/types/globalTypes";
+import React from "react";
+import { IntlShape, MessageDescriptor } from "react-intl";
 
 import * as M from "./messages";
 
 export type UnitSystem = "imperial" | "metric";
 export type UnitType = "volume" | "weight" | "area" | "distance";
 
-export const getMeasurementUnitMessage = (unit: MeasurementUnitsEnum) =>
-  ({
-    [MeasurementUnitsEnum.CUBIC_FOOT]: M.units.cubicFoot,
-    [MeasurementUnitsEnum.CUBIC_INCH]: M.units.cubicInch,
-    [MeasurementUnitsEnum.CUBIC_YARD]: M.units.cubicYard,
-    [MeasurementUnitsEnum.QT]: M.units.qt,
-    [MeasurementUnitsEnum.FL_OZ]: M.units.flOz,
-    [MeasurementUnitsEnum.PINT]: M.units.pint,
-    [MeasurementUnitsEnum.ACRE_IN]: M.units.acreInch,
-    [MeasurementUnitsEnum.ACRE_FT]: M.units.acreFt,
-    [MeasurementUnitsEnum.FT]: M.units.ft,
-    [MeasurementUnitsEnum.YD]: M.units.yd,
-    [MeasurementUnitsEnum.INCH]: M.units.inch,
-    [MeasurementUnitsEnum.LB]: M.units.lbs,
-    [MeasurementUnitsEnum.OZ]: M.units.oz,
-    [MeasurementUnitsEnum.SQ_FT]: M.units.squareFt,
-    [MeasurementUnitsEnum.SQ_YD]: M.units.squareYd,
-    [MeasurementUnitsEnum.SQ_INCH]: M.units.squareInch,
-    [MeasurementUnitsEnum.CUBIC_CENTIMETER]: M.units.cubicCentimeter,
-    [MeasurementUnitsEnum.CUBIC_DECIMETER]: M.units.cubicDecimeter,
-    [MeasurementUnitsEnum.CUBIC_METER]: M.units.cubicMeter,
-    [MeasurementUnitsEnum.LITER]: M.units.liter,
-    [MeasurementUnitsEnum.CM]: M.units.centimeter,
-    [MeasurementUnitsEnum.M]: M.units.meter,
-    [MeasurementUnitsEnum.KM]: M.units.kilometer,
-    [MeasurementUnitsEnum.G]: M.units.gram,
-    [MeasurementUnitsEnum.KG]: M.units.kilogram,
-    [MeasurementUnitsEnum.TONNE]: M.units.tonne,
-    [MeasurementUnitsEnum.SQ_CM]: M.units.squareCentimeter,
-    [MeasurementUnitsEnum.SQ_M]: M.units.squareMeter,
-    [MeasurementUnitsEnum.SQ_KM]: M.units.squareKilometer
-  }[unit]);
+const UNIT_MESSAGES_MAPPING = {
+  [MeasurementUnitsEnum.CUBIC_FOOT]: M.units.cubicFoot,
+  [MeasurementUnitsEnum.CUBIC_INCH]: M.units.cubicInch,
+  [MeasurementUnitsEnum.CUBIC_YARD]: M.units.cubicYard,
+  [MeasurementUnitsEnum.QT]: M.units.qt,
+  [MeasurementUnitsEnum.FL_OZ]: M.units.flOz,
+  [MeasurementUnitsEnum.PINT]: M.units.pint,
+  [MeasurementUnitsEnum.ACRE_IN]: M.units.acreInch,
+  [MeasurementUnitsEnum.ACRE_FT]: M.units.acreFt,
+  [MeasurementUnitsEnum.FT]: M.units.ft,
+  [MeasurementUnitsEnum.YD]: M.units.yd,
+  [MeasurementUnitsEnum.INCH]: M.units.inch,
+  [MeasurementUnitsEnum.LB]: M.units.lbs,
+  [MeasurementUnitsEnum.OZ]: M.units.oz,
+  [MeasurementUnitsEnum.SQ_FT]: M.units.squareFt,
+  [MeasurementUnitsEnum.SQ_YD]: M.units.squareYd,
+  [MeasurementUnitsEnum.SQ_INCH]: M.units.squareInch,
+  [MeasurementUnitsEnum.CUBIC_CENTIMETER]: M.units.cubicCentimeter,
+  [MeasurementUnitsEnum.CUBIC_DECIMETER]: M.units.cubicDecimeter,
+  [MeasurementUnitsEnum.CUBIC_METER]: M.units.cubicMeter,
+  [MeasurementUnitsEnum.LITER]: M.units.liter,
+  [MeasurementUnitsEnum.CM]: M.units.centimeter,
+  [MeasurementUnitsEnum.M]: M.units.meter,
+  [MeasurementUnitsEnum.KM]: M.units.kilometer,
+  [MeasurementUnitsEnum.G]: M.units.gram,
+  [MeasurementUnitsEnum.KG]: M.units.kilogram,
+  [MeasurementUnitsEnum.TONNE]: M.units.tonne,
+  [MeasurementUnitsEnum.SQ_CM]: M.units.squareCentimeter,
+  [MeasurementUnitsEnum.SQ_M]: M.units.squareMeter,
+  [MeasurementUnitsEnum.SQ_KM]: M.units.squareKilometer
+};
 
-export const unitSystemChoices: Array<Choice<UnitSystem>> = [
+export const getMeasurementUnitMessage = (
+  unit: MeasurementUnitsEnum,
+  formatMessage: IntlShape["formatMessage"]
+): MessageDescriptor | React.ReactNode => {
+  const message = UNIT_MESSAGES_MAPPING[unit];
+  return typeof message === "string" || React.isValidElement(message)
+    ? message
+    : formatMessage(message);
+};
+
+export const unitSystemChoices: Array<Choice<UnitSystem, MessageDescriptor>> = [
   {
-    label: M.metric,
+    label: M.unitSystemMessages.metric,
     value: "metric"
   },
   {
-    label: M.imperial,
+    label: M.unitSystemMessages.imperial,
     value: "imperial"
   }
 ];
 
-export const unitTypeChoices: Array<Choice<UnitType>> = [
+export const unitTypeChoices: Array<Choice<UnitType, MessageDescriptor>> = [
   {
-    label: M.volume,
+    label: M.unitTypeMessages.volume,
     value: "volume"
   },
   {
-    label: M.distance,
+    label: M.unitTypeMessages.distance,
     value: "distance"
   },
   {
-    label: M.weight,
+    label: M.unitTypeMessages.weight,
     value: "weight"
   },
   {
-    label: M.area,
+    label: M.unitTypeMessages.area,
     value: "area"
   }
 ];
@@ -118,24 +129,38 @@ export const unitMapping = {
   }
 };
 
-export const unitChoices = (() =>
-  Object.entries(unitMapping).reduce(
-    (acc, [system, type]) => ({
+const extractTypeChoices = (
+  typeEnums: {
+    [key in UnitType]: MeasurementUnitsEnum[];
+  },
+  formatMessage: IntlShape["formatMessage"]
+) =>
+  Object.entries(typeEnums).reduce(
+    (acc, [type, units]) => ({
       ...acc,
-      [system]: Object.entries(type).reduce(
-        (acc, [type, units]) => ({
-          ...acc,
-          [type]: units.map(unit => ({
-            value: unit,
-            label: getMeasurementUnitMessage(unit)
-          }))
-        }),
-        {}
-      )
+      [type]: units.map(unit => ({
+        value: unit,
+        label: getMeasurementUnitMessage(unit, formatMessage)
+      }))
     }),
     {}
-  ))() as {
+  );
+
+export const getUnitChoices = (
+  formatMessage: IntlShape["formatMessage"]
+): {
   [key in UnitSystem]: {
     [key in UnitType]: Array<Choice<MeasurementUnitsEnum>>;
   };
-};
+} =>
+  Object.entries(unitMapping).reduce(
+    (acc, [system, typeEnums]) => ({
+      ...acc,
+      [system]: extractTypeChoices(typeEnums, formatMessage)
+    }),
+    {}
+  ) as {
+    [key in UnitSystem]: {
+      [key in UnitType]: Array<Choice<MeasurementUnitsEnum>>;
+    };
+  };

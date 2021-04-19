@@ -1,5 +1,6 @@
 import { toggle } from "@saleor/utils/lists";
 import isEqual from "lodash-es/isEqual";
+import omit from "lodash/omit";
 import React from "react";
 import { useState } from "react";
 
@@ -136,16 +137,13 @@ function useForm<T extends FormData>(
   const setError = (field: keyof T, error: string | React.ReactNode) =>
     setErrors(e => ({ ...e, [field]: error }));
 
-  const clearErrors = (field: keyof T | Array<keyof T>) => {
+  const clearErrors = (field?: keyof T | Array<keyof T>) => {
     if (!field) {
       setErrors({});
     } else {
-      setErrors(e => {
-        (Array.isArray(field) ? field : [field]).forEach(name => {
-          delete e[name];
-        });
-        return e;
-      });
+      setErrors(errors =>
+        omit<FormErrors<T>>(errors, Array.isArray(field) ? field : [field])
+      );
     }
   };
 

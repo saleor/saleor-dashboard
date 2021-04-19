@@ -118,7 +118,7 @@ const AttributePage: React.FC<AttributePageProps> = ({
           storefrontSearchPosition:
             attribute?.storefrontSearchPosition.toString() ?? "",
           type: attribute?.type || AttributeTypeEnum.PRODUCT_TYPE,
-          valueRequired: attribute?.valueRequired ?? true,
+          valueRequired: !!attribute?.valueRequired ?? true,
           visibleInStorefront: attribute?.visibleInStorefront ?? true,
           unit: attribute?.unit || null
         };
