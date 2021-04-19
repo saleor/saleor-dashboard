@@ -22,7 +22,6 @@ storiesOf("Views / Products / Create product variant", module)
   .add("default", () => (
     <ProductVariantCreatePage
       channels={channels}
-      channelErrors={[]}
       weightUnit="kg"
       disabled={false}
       errors={[]}
@@ -44,7 +43,6 @@ storiesOf("Views / Products / Create product variant", module)
   .add("with errors", () => (
     <ProductVariantCreatePage
       channels={channels}
-      channelErrors={[]}
       weightUnit="kg"
       disabled={false}
       errors={[
@@ -85,7 +83,6 @@ storiesOf("Views / Products / Create product variant", module)
   .add("when loading data", () => (
     <ProductVariantCreatePage
       channels={channels}
-      channelErrors={[]}
       weightUnit="kg"
       disabled={true}
       errors={[]}
@@ -107,7 +104,6 @@ storiesOf("Views / Products / Create product variant", module)
   .add("add first variant", () => (
     <ProductVariantCreatePage
       channels={channels}
-      channelErrors={[]}
       weightUnit="kg"
       disabled={false}
       errors={[]}
@@ -132,7 +128,6 @@ storiesOf("Views / Products / Create product variant", module)
   .add("no warehouses", () => (
     <ProductVariantCreatePage
       channels={channels}
-      channelErrors={[]}
       weightUnit="kg"
       disabled={false}
       errors={[]}

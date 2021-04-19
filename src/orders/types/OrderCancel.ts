@@ -477,6 +477,7 @@ export interface OrderCancel_orderCancel_order_channel {
   id: string;
   name: string;
   currencyCode: string;
+  slug: string;
 }
 
 export interface OrderCancel_orderCancel_order {

@@ -471,6 +471,7 @@ export interface OrderDetails_order_channel {
   id: string;
   name: string;
   currencyCode: string;
+  slug: string;
 }
 
 export interface OrderDetails_order {

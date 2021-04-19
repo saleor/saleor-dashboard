@@ -196,6 +196,8 @@ export interface VariantCreate_productVariantCreate_productVariant_product_chann
 
 export interface VariantCreate_productVariantCreate_productVariant_product_channelListings {
   __typename: "ProductChannelListing";
+  publicationDate: any | null;
+  isPublished: boolean;
   channel: VariantCreate_productVariantCreate_productVariant_product_channelListings_channel;
   pricing: VariantCreate_productVariantCreate_productVariant_product_channelListings_pricing | null;
 }

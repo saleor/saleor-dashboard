@@ -164,8 +164,18 @@ export const useOrderQuery = makeQuery<OrderDetails, OrderDetailsVariables>(
 );
 
 export const searchOrderVariant = gql`
-  query SearchOrderVariant($first: Int!, $query: String!, $after: String) {
-    search: products(first: $first, after: $after, filter: { search: $query }) {
+  query SearchOrderVariant(
+    $channel: String!
+    $first: Int!
+    $query: String!
+    $after: String
+  ) {
+    search: products(
+      first: $first
+      after: $after
+      filter: { search: $query }
+      channel: $channel
+    ) {
       edges {
         node {
           id

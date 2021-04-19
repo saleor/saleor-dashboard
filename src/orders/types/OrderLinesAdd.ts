@@ -477,6 +477,7 @@ export interface OrderLinesAdd_orderLinesCreate_order_channel {
   id: string;
   name: string;
   currencyCode: string;
+  slug: string;
 }
 
 export interface OrderLinesAdd_orderLinesCreate_order {
