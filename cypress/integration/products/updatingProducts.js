@@ -113,7 +113,7 @@ describe("Update products", () => {
             cy.loginUserViaRequest("token");
           })
           .then(() => {
-            getProductDetails(product.id, defaultChannel.slug).its(
+            getProductDetails(product.id, defaultChannel.slug, "auth").its(
               "body.data.product"
             );
           })

@@ -21,7 +21,7 @@ import { isProductVisibleInSearchResult } from "../utils/storeFront/storeFrontPr
 
 describe("Collections", () => {
   const startsWith = "CyCollections-";
-  const name = `${startsWith}${faker.random.number()}`;
+  const name = `${startsWith}${faker.datatype.number()}`;
 
   let attribute;
   let productType;
@@ -35,6 +35,7 @@ describe("Collections", () => {
     productsUtils.deleteProductsStartsWith(startsWith);
     deleteCollectionsStartsWith(startsWith);
     deleteShippingStartsWith(startsWith);
+    channelsUtils.deleteChannelsStartsWith(startsWith);
 
     channelsUtils
       .getDefaultChannel()

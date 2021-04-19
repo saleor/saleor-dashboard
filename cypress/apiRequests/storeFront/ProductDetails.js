@@ -1,4 +1,10 @@
-export function getProductDetails(productId, channelId) {
+import { getValueWithDefault } from "../utils/Utils";
+
+export function getProductDetails(productId, channelId, auth = "token") {
+  const privateMetadataLine = getValueWithDefault(
+    auth === "auth",
+    `privateMetadata{key value}`
+  );
   const query = `fragment BasicProductFields on Product {
     id
     name
@@ -25,10 +31,7 @@ export function getProductDetails(productId, channelId) {
       key
       value
     }
-    privateMetadata{
-      key
-      value
-    }
+    ${privateMetadataLine}
     productType{
       id
       name
@@ -64,5 +67,5 @@ export function getProductDetails(productId, channelId) {
       availableForPurchase
     }
   }`;
-  return cy.sendRequestWithQuery(query, "token");
+  return cy.sendRequestWithQuery(query, auth);
 }
