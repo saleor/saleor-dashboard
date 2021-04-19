@@ -363,7 +363,7 @@ const OrderProductAddDialog: React.FC<OrderProductAddDialogProps> = props => {
                 () => (
                   <TableRow>
                     <TableCell colSpan={4}>
-                      <FormattedMessage defaultMessage="No products matching given query" />
+                      <FormattedMessage defaultMessage="No products available in order channel matching given query" />
                     </TableCell>
                   </TableRow>
                 )

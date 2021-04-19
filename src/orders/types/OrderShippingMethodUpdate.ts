@@ -485,6 +485,7 @@ export interface OrderShippingMethodUpdate_orderUpdateShipping_order_channel {
   id: string;
   name: string;
   currencyCode: string;
+  slug: string;
 }
 
 export interface OrderShippingMethodUpdate_orderUpdateShipping_order {

@@ -480,6 +480,8 @@ export interface SimpleProductUpdate_productVariantUpdate_productVariant_product
 
 export interface SimpleProductUpdate_productVariantUpdate_productVariant_product_channelListings {
   __typename: "ProductChannelListing";
+  publicationDate: any | null;
+  isPublished: boolean;
   channel: SimpleProductUpdate_productVariantUpdate_productVariant_product_channelListings_channel;
   pricing: SimpleProductUpdate_productVariantUpdate_productVariant_product_channelListings_pricing | null;
 }
@@ -767,6 +769,8 @@ export interface SimpleProductUpdate_productVariantStocksCreate_productVariant_p
 
 export interface SimpleProductUpdate_productVariantStocksCreate_productVariant_product_channelListings {
   __typename: "ProductChannelListing";
+  publicationDate: any | null;
+  isPublished: boolean;
   channel: SimpleProductUpdate_productVariantStocksCreate_productVariant_product_channelListings_channel;
   pricing: SimpleProductUpdate_productVariantStocksCreate_productVariant_product_channelListings_pricing | null;
 }
@@ -1053,6 +1057,8 @@ export interface SimpleProductUpdate_productVariantStocksDelete_productVariant_p
 
 export interface SimpleProductUpdate_productVariantStocksDelete_productVariant_product_channelListings {
   __typename: "ProductChannelListing";
+  publicationDate: any | null;
+  isPublished: boolean;
   channel: SimpleProductUpdate_productVariantStocksDelete_productVariant_product_channelListings_channel;
   pricing: SimpleProductUpdate_productVariantStocksDelete_productVariant_product_channelListings_pricing | null;
 }
@@ -1340,6 +1346,8 @@ export interface SimpleProductUpdate_productVariantStocksUpdate_productVariant_p
 
 export interface SimpleProductUpdate_productVariantStocksUpdate_productVariant_product_channelListings {
   __typename: "ProductChannelListing";
+  publicationDate: any | null;
+  isPublished: boolean;
   channel: SimpleProductUpdate_productVariantStocksUpdate_productVariant_product_channelListings_channel;
   pricing: SimpleProductUpdate_productVariantStocksUpdate_productVariant_product_channelListings_pricing | null;
 }
