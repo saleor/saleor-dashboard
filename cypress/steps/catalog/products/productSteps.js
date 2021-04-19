@@ -40,11 +40,27 @@ function updateProductMenageInChannel(productUrl, menageSelector) {
     .click()
     .wait("@ProductChannelListingUpdate");
 }
-export function fillUpCommonFieldsForAllProductTypes({
+export function fillUpCommonFieldsForAllProductTypes(
+  { generalInfo, seo, metadata, productOrganization },
+  createMode = true
+) {
+  return fillUpAllCommonFieldsInCreateAndUpdate({ generalInfo, seo, metadata })
+    .then(() => {
+      if (createMode) {
+        fillUpProductOrganization(productOrganization);
+      } else {
+        fillUpCollectionAndCategory({
+          category: productOrganization.category,
+          collection: productOrganization.collection
+        });
+      }
+    })
+    .then(productOrgResp => productOrgResp);
+}
+export function fillUpAllCommonFieldsInCreateAndUpdate({
   generalInfo,
   seo,
-  metadata,
-  productOrganization
+  metadata
 }) {
   return fillUpProductGeneralInfo(generalInfo)
     .then(() => {
@@ -55,11 +71,7 @@ export function fillUpCommonFieldsForAllProductTypes({
     })
     .then(() => {
       addMetadataField(metadata.private);
-    })
-    .then(() => {
-      fillUpProductOrganization(productOrganization);
-    })
-    .then(productOrgResp => productOrgResp);
+    });
 }
 export function fillUpProductGeneralInfo({ name, description, rating }) {
   return cy
@@ -77,39 +89,26 @@ export function fillUpProductOrganization({
   collection
 }) {
   const organization = {};
-  if (productType) {
-    fillAutocompleteSelect(PRODUCT_DETAILS.productTypeInput, productType).then(
-      selected => {
-        organization.productType = cy.wrap(selected);
-      }
-    );
-  }
-  if (category) {
-    fillAutocompleteSelect(PRODUCT_DETAILS.categoryInput, category).then(
-      selected => {
-        organization.category = cy.wrap(selected);
-      }
-    );
-  }
-  if (collection) {
-    fillAutocompleteSelect(PRODUCT_DETAILS.collectionInput, collection).then(
-      selected => {
-        organization.collection = cy.wrap(selected);
-      }
-    );
-  }
-  return organization;
-  // return fillAutocompleteSelect(PRODUCT_DETAILS.productTypeInput, productType)
-  //   .then(selected => {
-  //     organization.productType = selected;
-  //     fillAutocompleteSelect(PRODUCT_DETAILS.categoryInput, category);
-  //   })
-  //   .then(selected => {
-  //     organization.category = selected;
-  //     fillAutocompleteSelect(PRODUCT_DETAILS.collectionInput, collection);
-  //   })
-  //   .then(selected => {
-  //     organization.collection = selected;
-  //     return organization;
-  //   });
+  return fillAutocompleteSelect(PRODUCT_DETAILS.productTypeInput, productType)
+    .then(selected => {
+      organization.productType = selected;
+      fillUpCollectionAndCategory({ category, collection });
+    })
+    .then(collectionAndCategoryResp => {
+      organization.category = collectionAndCategoryResp.category;
+      organization.collection = collectionAndCategoryResp.collection;
+      return organization;
+    });
+}
+export function fillUpCollectionAndCategory({ category, collection }) {
+  const organization = {};
+  return fillAutocompleteSelect(PRODUCT_DETAILS.categoryInput, category)
+    .then(selected => {
+      organization.category = selected;
+      fillAutocompleteSelect(PRODUCT_DETAILS.collectionInput, collection);
+    })
+    .then(selected => {
+      organization.collection = selected;
+      return organization;
+    });
 }

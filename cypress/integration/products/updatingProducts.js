@@ -97,7 +97,7 @@ describe("Update products", () => {
         };
         cy.visit(productDetailsUrl(product.id));
         cy.get(PRODUCT_DETAILS.collectionRemoveButtons).click();
-        fillUpCommonFieldsForAllProductTypes(productData);
+        fillUpCommonFieldsForAllProductTypes(productData, false);
         cy.addAliasToGraphRequest("UpdatePrivateMetadata");
         cy.addAliasToGraphRequest("UpdateMetadata");
         cy.addAliasToGraphRequest("ProductUpdate");
