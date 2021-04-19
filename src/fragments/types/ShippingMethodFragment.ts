@@ -86,6 +86,7 @@ export interface ShippingMethodFragment {
   minimumDeliveryDays: number | null;
   maximumDeliveryDays: number | null;
   name: string;
+  description: any | null;
   type: ShippingMethodTypeEnum | null;
   channelListings: ShippingMethodFragment_channelListings[] | null;
 }

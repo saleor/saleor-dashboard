@@ -1,7 +1,8 @@
+import { OutputData } from "@editorjs/editorjs";
 import { ChannelShippingData } from "@saleor/channels/utils";
 import AppHeader from "@saleor/components/AppHeader";
 import CardSpacer from "@saleor/components/CardSpacer";
-import ChannelsAvailability from "@saleor/components/ChannelsAvailability";
+import ChannelsAvailabilityCard from "@saleor/components/ChannelsAvailabilityCard";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
 import Container from "@saleor/components/Container";
 import Form from "@saleor/components/Form";
@@ -29,6 +30,7 @@ import ShippingZonePostalCodes from "../ShippingZonePostalCodes";
 export interface FormData {
   channelListings: ChannelShippingData[];
   name: string;
+  description: OutputData;
   noLimits: boolean;
   minValue: string;
   maxValue: string;
@@ -87,13 +89,14 @@ export const ShippingZoneRatesCreatePage: React.FC<ShippingZoneRatesCreatePagePr
     minDays: "",
     minValue: "",
     name: "",
+    description: null,
     noLimits: false,
     type: null
   };
 
   return (
     <Form initial={initialForm} onSubmit={onSubmit}>
-      {({ change, data, hasChanged, submit, triggerChange }) => {
+      {({ change, data, hasChanged, submit, triggerChange, set }) => {
         const handleChannelsChange = createChannelsChangeHandler(
           shippingChannels,
           onChannelsChange,
@@ -102,6 +105,10 @@ export const ShippingZoneRatesCreatePage: React.FC<ShippingZoneRatesCreatePagePr
         const formDisabled = data.channelListings?.some(channel =>
           validatePrice(channel.price)
         );
+        const onDescriptionChange = (description: OutputData) => {
+          set({ description });
+          triggerChange();
+        };
 
         return (
           <Container>
@@ -128,6 +135,7 @@ export const ShippingZoneRatesCreatePage: React.FC<ShippingZoneRatesCreatePagePr
                   disabled={disabled}
                   errors={errors}
                   onChange={change}
+                  onDescriptionChange={onDescriptionChange}
                 />
                 <CardSpacer />
                 {isPriceVariant ? (
@@ -166,13 +174,10 @@ export const ShippingZoneRatesCreatePage: React.FC<ShippingZoneRatesCreatePagePr
                 />
               </div>
               <div>
-                <ChannelsAvailability
+                <ChannelsAvailabilityCard
                   allChannelsCount={allChannelsCount}
                   selectedChannelsCount={shippingChannels?.length}
-                  channelsList={data.channelListings.map(channel => ({
-                    id: channel.id,
-                    name: channel.name
-                  }))}
+                  channelsList={data.channelListings}
                   openModal={openChannelsModal}
                 />
               </div>

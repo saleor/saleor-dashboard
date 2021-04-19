@@ -32,6 +32,7 @@ export function createProductInChannel({
       createVariant({
         productId: product.id,
         sku: name,
+        attributeId,
         warehouseId,
         quantityInWarehouse,
         channelId,
@@ -85,9 +86,15 @@ export function createProduct(attributeId, name, productTypeId, categoryId) {
     .createProduct(attributeId, name, productTypeId, categoryId)
     .its("body.data.productCreate.product");
 }
+export function updateProduct(productId, input) {
+  return productRequest
+    .updateProduct(productId, input)
+    .its("body.data.productUpdate.product");
+}
 export function createVariant({
   productId,
   sku,
+  attributeId,
   warehouseId,
   quantityInWarehouse,
   channelId,
@@ -97,6 +104,7 @@ export function createVariant({
     .createVariant({
       productId,
       sku,
+      attributeId,
       warehouseId,
       quantity: quantityInWarehouse,
       channelId,

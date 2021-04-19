@@ -64,6 +64,10 @@ const inputTypeMessages = defineMessages({
   references: {
     defaultMessage: "References",
     description: "references attribute type"
+  },
+  text: {
+    defaultMessage: "Text",
+    description: "text attribute type"
   }
 });
 
@@ -120,6 +124,10 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = props => {
     {
       label: intl.formatMessage(inputTypeMessages.references),
       value: AttributeInputTypeEnum.REFERENCE
+    },
+    {
+      label: intl.formatMessage(inputTypeMessages.text),
+      value: AttributeInputTypeEnum.RICH_TEXT
     }
   ];
   const entityTypeChoices = [

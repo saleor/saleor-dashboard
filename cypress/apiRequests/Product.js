@@ -1,3 +1,4 @@
+import { stringify } from "../support/format/formatJson";
 import { getValueWithDefault } from "./utils/Utils";
 
 export function getFirstProducts(first, search) {
@@ -22,10 +23,27 @@ export function getFirstProducts(first, search) {
     .sendRequestWithQuery(query)
     .then(resp => resp.body.data.products.edges);
 }
+export function updateProduct(productId, input) {
+  const mutation = `mutation {
+    productUpdate(id:"${productId}", input:${stringify(input)} ){
+      productErrors{
+        field
+        message
+      }
+      product{
+        id
+      }
+    }
+  }
+  `;
+  return cy.sendRequestWithQuery(mutation);
+}
 
 export function updateChannelInProduct({
   productId,
   channelId,
+  variantsIdsToAdd = "[]",
+  variantsIdsToRemove = "[]",
   isPublished = true,
   isAvailableForPurchase = true,
   visibleInListings = true
@@ -33,11 +51,13 @@ export function updateChannelInProduct({
   const mutation = `mutation{
     productChannelListingUpdate(id:"${productId}",
     input:{
-      addChannels:{ 
+      updateChannels:{ 
         channelId:"${channelId}"
         isPublished:${isPublished}
         isAvailableForPurchase:${isAvailableForPurchase}
         visibleInListings:${visibleInListings}
+        addVariants:${variantsIdsToAdd}
+        removeVariants:${variantsIdsToRemove}
       }
     }){
       product{
@@ -92,6 +112,7 @@ export function createVariant({
   warehouseId,
   quantity,
   channelId,
+  attributeId,
   price = 1,
   costPrice = 1
 }) {
@@ -114,7 +135,10 @@ export function createVariant({
 
   const mutation = `mutation{
     productVariantBulkCreate(product: "${productId}", variants: {
-      attributes: []
+      attributes: [{
+        id:"${attributeId}"
+        values: ["value"]
+      }]
       sku: "${sku}"
       ${channelListings}
       ${stocks}

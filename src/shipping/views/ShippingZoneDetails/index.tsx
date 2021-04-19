@@ -1,4 +1,5 @@
 import DialogContentText from "@material-ui/core/DialogContentText";
+import { useChannelsList } from "@saleor/channels/queries";
 import ActionDialog from "@saleor/components/ActionDialog";
 import useAppChannel from "@saleor/components/AppLayout/AppChannelContext";
 import NotFoundPage from "@saleor/components/NotFoundPage";
@@ -32,9 +33,8 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import { findValueInEnum, getStringOrPlaceholder } from "../../../misc";
 import { CountryCode } from "../../../types/globalTypes";
-import ShippingZoneDetailsPage, {
-  FormData
-} from "../../components/ShippingZoneDetailsPage";
+import ShippingZoneDetailsPage from "../../components/ShippingZoneDetailsPage";
+import { FormData } from "../../components/ShippingZoneDetailsPage/types";
 import { useShippingZone } from "../../queries";
 import {
   shippingPriceRatesEditUrl,
@@ -68,6 +68,8 @@ const ShippingZoneDetails: React.FC<ShippingZoneDetailsProps> = ({
       variables: DEFAULT_INITIAL_SEARCH_DATA
     }
   );
+
+  const { data: channelsList } = useChannelsList({});
 
   const { data, loading } = useShippingZone({
     displayLoader: true,
@@ -138,11 +140,18 @@ const ShippingZoneDetails: React.FC<ShippingZoneDetailsProps> = ({
       submitData.warehouses
     );
 
+    const channelsDiff = diff(
+      data.shippingZone.channels.map(channel => channel.id),
+      submitData.channels
+    );
+
     const result = await updateShippingZone({
       variables: {
         id,
         input: {
           addWarehouses: warehouseDiff.added,
+          addChannels: channelsDiff.added,
+          removeChannels: channelsDiff.removed,
           description: submitData.description,
           name: submitData.name,
           removeWarehouses: warehouseDiff.removed
@@ -187,6 +196,7 @@ const ShippingZoneDetails: React.FC<ShippingZoneDetailsProps> = ({
           })
         }
         onSubmit={handleSubmit}
+        allChannels={channelsList?.channels}
         onWarehouseAdd={() => openModal("add-warehouse")}
         onWeightRateAdd={() => navigate(shippingWeightRatesUrl(id))}
         onWeightRateEdit={rateId =>

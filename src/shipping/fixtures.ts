@@ -1304,6 +1304,11 @@ export const shippingZones: ShippingZoneFragment[] = [
 
 export const shippingZone: ShippingZone_shippingZone = {
   __typename: "ShippingZone",
+  channels: [
+    { __typename: "Channel", id: "channel1", name: "GBP", currencyCode: "GBP" },
+
+    { __typename: "Channel", id: "channel2", name: "PLN", currencyCode: "PLN" }
+  ],
   countries: [
     {
       __typename: "CountryDisplay",
@@ -1636,6 +1641,7 @@ export const shippingZone: ShippingZone_shippingZone = {
         value: 0
       },
       name: "DB Schenker",
+      description: `{"time": 1618487908762, "blocks": [{"data": {"text": "General shipping method"}, "type": "paragraph"}], "version": "2.20.0"}`,
       postalCodeRules: [
         {
           __typename: "ShippingMethodPostalCodeRule",
@@ -1700,6 +1706,7 @@ export const shippingZone: ShippingZone_shippingZone = {
         value: 0
       },
       name: "Registred priority",
+      description: `{"time": 1618487908762, "blocks": [{"data": {"text": "Priority shipping method"}, "type": "paragraph"}], "version": "2.20.0"}`,
       postalCodeRules: [
         {
           __typename: "ShippingMethodPostalCodeRule",
@@ -1764,6 +1771,7 @@ export const shippingZone: ShippingZone_shippingZone = {
         value: 0
       },
       name: "UPS",
+      description: `{"time": 1618487908762, "blocks": [{"data": {"text": "Different shipping method"}, "type": "paragraph"}], "version": "2.20.0"}`,
       postalCodeRules: [
         {
           __typename: "ShippingMethodPostalCodeRule",
@@ -1815,6 +1823,7 @@ export const shippingZone: ShippingZone_shippingZone = {
         value: 0
       },
       name: "DHL",
+      description: `{"time": 1618487908762, "blocks": [{"data": {"text": "Different shipping method"}, "type": "paragraph"}], "version": "2.20.0"}`,
       postalCodeRules: [
         {
           __typename: "ShippingMethodPostalCodeRule",

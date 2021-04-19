@@ -22,6 +22,7 @@ export interface ProductChannelListingUpdate_productChannelListingUpdate_product
   slug: string | null;
   file: ProductChannelListingUpdate_productChannelListingUpdate_product_attributes_attribute_values_file | null;
   reference: string | null;
+  richText: any | null;
 }
 
 export interface ProductChannelListingUpdate_productChannelListingUpdate_product_attributes_attribute {
@@ -48,6 +49,7 @@ export interface ProductChannelListingUpdate_productChannelListingUpdate_product
   slug: string | null;
   file: ProductChannelListingUpdate_productChannelListingUpdate_product_attributes_values_file | null;
   reference: string | null;
+  richText: any | null;
 }
 
 export interface ProductChannelListingUpdate_productChannelListingUpdate_product_attributes {
@@ -69,6 +71,7 @@ export interface ProductChannelListingUpdate_productChannelListingUpdate_product
   slug: string | null;
   file: ProductChannelListingUpdate_productChannelListingUpdate_product_productType_variantAttributes_values_file | null;
   reference: string | null;
+  richText: any | null;
 }
 
 export interface ProductChannelListingUpdate_productChannelListingUpdate_product_productType_variantAttributes {
@@ -183,6 +186,11 @@ export interface ProductChannelListingUpdate_productChannelListingUpdate_product
   oembedData: any;
 }
 
+export interface ProductChannelListingUpdate_productChannelListingUpdate_product_variants_media {
+  __typename: "ProductMedia";
+  url: string;
+}
+
 export interface ProductChannelListingUpdate_productChannelListingUpdate_product_variants_stocks_warehouse {
   __typename: "Warehouse";
   id: string;
@@ -229,6 +237,7 @@ export interface ProductChannelListingUpdate_productChannelListingUpdate_product
   sku: string;
   name: string;
   margin: number | null;
+  media: ProductChannelListingUpdate_productChannelListingUpdate_product_variants_media[] | null;
   stocks: (ProductChannelListingUpdate_productChannelListingUpdate_product_variants_stocks | null)[] | null;
   trackInventory: boolean;
   channelListings: ProductChannelListingUpdate_productChannelListingUpdate_product_variants_channelListings[] | null;

@@ -1,6 +1,7 @@
 import messages from "@saleor/containers/BackgroundTasks/messages";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
+import getOrderErrorMessage from "@saleor/utils/errors/order";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -174,7 +175,7 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
     }
   };
   const handleOrderLineDelete = (data: OrderLineDelete) => {
-    const errs = data.draftOrderLineDelete?.errors;
+    const errs = data.orderLineDelete?.errors;
     if (errs.length === 0) {
       pushMessage({
         status: "success",
@@ -185,7 +186,7 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
     }
   };
   const handleOrderLinesAdd = (data: OrderLinesAdd) => {
-    const errs = data.draftOrderLinesCreate?.errors;
+    const errs = data.orderLinesCreate?.errors;
     if (errs.length === 0) {
       pushMessage({
         status: "success",
@@ -197,7 +198,7 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
     }
   };
   const handleOrderLineUpdate = (data: OrderLineUpdate) => {
-    const errs = data.draftOrderLineUpdate?.errors;
+    const errs = data.orderLineUpdate?.errors;
     if (errs.length === 0) {
       pushMessage({
         status: "success",
@@ -205,6 +206,13 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
           defaultMessage: "Order line updated"
         })
       });
+    } else {
+      errs.forEach(error =>
+        pushMessage({
+          status: "error",
+          text: getOrderErrorMessage(error, intl)
+        })
+      );
     }
   };
   const handleOrderFulfillmentCancel = (data: OrderFulfillmentCancel) => {

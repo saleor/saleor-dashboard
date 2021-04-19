@@ -22,6 +22,7 @@ export interface PageDetails_page_attributes_attribute_values {
   slug: string | null;
   file: PageDetails_page_attributes_attribute_values_file | null;
   reference: string | null;
+  richText: any | null;
 }
 
 export interface PageDetails_page_attributes_attribute {
@@ -48,6 +49,7 @@ export interface PageDetails_page_attributes_values {
   slug: string | null;
   file: PageDetails_page_attributes_values_file | null;
   reference: string | null;
+  richText: any | null;
 }
 
 export interface PageDetails_page_attributes {
@@ -69,6 +71,7 @@ export interface PageDetails_page_pageType_attributes_values {
   slug: string | null;
   file: PageDetails_page_pageType_attributes_values_file | null;
   reference: string | null;
+  richText: any | null;
 }
 
 export interface PageDetails_page_pageType_attributes {

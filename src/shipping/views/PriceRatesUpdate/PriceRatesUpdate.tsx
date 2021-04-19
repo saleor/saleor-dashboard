@@ -1,5 +1,4 @@
 import Button from "@material-ui/core/Button";
-import { useChannelsList } from "@saleor/channels/queries";
 import {
   createShippingChannelsFromRate,
   createSortedShippingChannels
@@ -90,6 +89,8 @@ export const PriceRatesUpdate: React.FC<PriceRatesUpdateProps> = ({
     variables: { id, ...paginationState }
   });
 
+  const channelsData = data?.shippingZone?.channels;
+
   const rate = data?.shippingZone?.shippingMethods?.find(getById(rateId));
 
   const {
@@ -112,8 +113,6 @@ export const PriceRatesUpdate: React.FC<PriceRatesUpdateProps> = ({
     paginationState,
     params
   );
-
-  const { data: channelsData } = useChannelsList({});
 
   const [
     updateShippingMethodChannelListing,
@@ -145,7 +144,7 @@ export const PriceRatesUpdate: React.FC<PriceRatesUpdateProps> = ({
   const shippingChannels = createShippingChannelsFromRate(
     rate?.channelListings
   );
-  const allChannels = createSortedShippingChannels(channelsData?.channels);
+  const allChannels = createSortedShippingChannels(channelsData);
 
   const {
     channelListElements,
@@ -194,7 +193,7 @@ export const PriceRatesUpdate: React.FC<PriceRatesUpdateProps> = ({
     !loading &&
     !state.postalCodeRules?.length &&
     !state.codesToDelete?.length &&
-    rate.postalCodeRules?.length;
+    rate?.postalCodeRules?.length;
 
   if (postalCodeRulesLoaded) {
     dispatch({ postalCodeRules: rate.postalCodeRules });

@@ -72,6 +72,15 @@ export const plugin: Plugin_plugin = {
       name: "Use sandbox",
       type: ConfigurationTypeFieldEnum.BOOLEAN,
       value: "true"
+    },
+    {
+      __typename: "ConfigurationItem",
+      helpText: "This is a multiline field",
+      label: "Multiline Field",
+      name: "multiline-field",
+      type: ConfigurationTypeFieldEnum.MULTILINE,
+      value:
+        "Lorem ipsum\ndolor sit\namet enim.\nEtiam ullamcorper.\nSuspendisse a\npellentesque dui,\nnon felis."
     }
   ],
   description:

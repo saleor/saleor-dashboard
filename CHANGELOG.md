@@ -25,9 +25,15 @@ All notable, unreleased changes to this project will be documented in this file.
 - Fix trigger form change when collections are being added to list of product collections - #987 by @gax97
 - Add product variant webhooks - #1006 by @piotrgrundas
 - Use default sort for search products list - #997 by @orzechdev
+- Add text attribute input - #1023 by @piotrgrundas
 - Update CollectionBulkDelete error type - #1030 by @d-wysocki
 - Remove mailing settings - #1027 by @dominik-zeglen
 - Update schema to contain email plugin changes - #1029 by @dominik-zeglen
+- Unconfirmed order manipulation - #967 by @tomaszszymanski129
+- Add multiline field plugins - #974 by @dominik-zeglen
+- Handle limit reached error - #990 by @dominik-zeglen
+- Display Cloud limits - #1004 by @dominik-zeglen
+- Add shipping method description - #1058 by @jwm0
 
 # 2.11.1
 

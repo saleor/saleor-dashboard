@@ -9,7 +9,7 @@ import { isProductVisible } from "../../../utils/storeFront/storeFrontProductUti
 
 // <reference types="cypress" />
 describe("Published products", () => {
-  const startsWith = "Cy-";
+  const startsWith = "CyPublishedProducts-";
   const name = `${startsWith}${faker.random.number()}`;
   let productType;
   let attribute;

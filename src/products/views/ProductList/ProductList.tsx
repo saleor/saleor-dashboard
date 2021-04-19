@@ -7,6 +7,7 @@ import DeleteFilterTabDialog from "@saleor/components/DeleteFilterTabDialog";
 import SaveFilterTabDialog, {
   SaveFilterTabDialogFormData
 } from "@saleor/components/SaveFilterTabDialog";
+import { useShopLimitsQuery } from "@saleor/components/Shop/query";
 import {
   DEFAULT_INITIAL_PAGINATION_DATA,
   DEFAULT_INITIAL_SEARCH_DATA,
@@ -32,7 +33,10 @@ import {
 import {
   useAvailableInGridAttributesQuery,
   useCountAllProducts,
-  useInitialProductFilterDataQuery,
+  useInitialProductFilterAttributesQuery,
+  useInitialProductFilterCategoriesQuery,
+  useInitialProductFilterCollectionsQuery,
+  useInitialProductFilterProductTypesQuery,
   useProductListQuery
 } from "@saleor/products/queries";
 import { ProductListVariables } from "@saleor/products/types/ProductList";
@@ -89,12 +93,32 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
     ListViews.PRODUCT_LIST
   );
   const intl = useIntl();
-  const { data: initialFilterData } = useInitialProductFilterDataQuery({
+  const {
+    data: initialFilterAttributes
+  } = useInitialProductFilterAttributesQuery({});
+  const {
+    data: initialFilterCategories
+  } = useInitialProductFilterCategoriesQuery({
     variables: {
-      categories: params.categories,
-      collections: params.collections,
+      categories: params.categories
+    },
+    skip: !params.categories?.length
+  });
+  const {
+    data: initialFilterCollections
+  } = useInitialProductFilterCollectionsQuery({
+    variables: {
+      collections: params.collections
+    },
+    skip: !params.collections?.length
+  });
+  const {
+    data: initialFilterProductTypes
+  } = useInitialProductFilterProductTypesQuery({
+    variables: {
       productTypes: params.productTypes
-    }
+    },
+    skip: !params.productTypes?.length
   });
   const searchCategories = useCategorySearch({
     variables: {
@@ -123,9 +147,15 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
   const warehouses = useWarehouseList({
     variables: {
       first: 100
-    }
+    },
+    skip: params.action !== "export"
   });
   const { availableChannels, channel } = useAppChannel();
+  const limitOpts = useShopLimitsQuery({
+    variables: {
+      productVariants: true
+    }
+  });
 
   const noChannel = !channel && typeof channel !== "undefined";
 
@@ -156,7 +186,9 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
         : 0
       : parseInt(params.activeTab, 0);
 
-  const countAllProducts = useCountAllProducts({});
+  const countAllProducts = useCountAllProducts({
+    skip: params.action !== "export"
+  });
 
   const [exportProducts, exportProductsOpts] = useProductExport({
     onCompleted: data => {
@@ -277,26 +309,31 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
         });
         reset();
         refetch();
+        limitOpts.refetch();
       }
     }
   });
 
   const filterOpts = getFilterOpts(
     params,
-    initialFilterData?.attributes?.edges?.map(edge => edge.node) || [],
+    initialFilterAttributes?.attributes?.edges?.map(edge => edge.node) || [],
     {
       initial:
-        initialFilterData?.categories?.edges?.map(edge => edge.node) || [],
+        initialFilterCategories?.categories?.edges?.map(edge => edge.node) ||
+        [],
       search: searchCategories
     },
     {
       initial:
-        initialFilterData?.collections?.edges?.map(edge => edge.node) || [],
+        initialFilterCollections?.collections?.edges?.map(edge => edge.node) ||
+        [],
       search: searchCollections
     },
     {
       initial:
-        initialFilterData?.productTypes?.edges?.map(edge => edge.node) || [],
+        initialFilterProductTypes?.productTypes?.edges?.map(
+          edge => edge.node
+        ) || [],
       search: searchProductTypes
     }
   );
@@ -340,6 +377,7 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
         )}
         onAdd={() => navigate(productAddUrl())}
         disabled={loading}
+        limits={limitOpts.data?.shop.limits}
         products={maybe(() => data.products.edges.map(edge => edge.node))}
         onFetchMore={() =>
           attributes.loadMore(
@@ -431,7 +469,11 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
           edge => edge.node
         )}
         hasMore={searchAttributes.result.data?.search.pageInfo.hasNextPage}
-        loading={searchAttributes.result.loading}
+        loading={
+          searchAttributes.result.loading ||
+          countAllProducts.loading ||
+          warehouses.loading
+        }
         onFetch={searchAttributes.search}
         onFetchMore={searchAttributes.loadMore}
         open={params.action === "export"}
