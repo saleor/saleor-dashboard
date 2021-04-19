@@ -1,10 +1,12 @@
 import { getDefaultAddress } from "./utils/Utils";
+
 export function createCheckout({
   channelSlug,
   email,
   productQuantity = 1,
   variantsList,
   address,
+  billingAddress,
   auth = "auth"
 }) {
   const lines = variantsList.map(
@@ -12,6 +14,7 @@ export function createCheckout({
                     variantId:"${variant.id}"}`
   );
   const shippingAddress = getDefaultAddress(address, "shippingAddress");
+  const billingAddressLines = getDefaultAddress(address, "billingAddress");
 
   const mutation = `mutation{
     checkoutCreate(input:{
@@ -19,6 +22,7 @@ export function createCheckout({
       email:"${email}"
       lines: [${lines.join()}]
       ${shippingAddress}
+      ${billingAddressLines}
     }){
       checkoutErrors{
         field

@@ -5,7 +5,6 @@ import {
   createProduct,
   updateChannelInProduct
 } from "../../apiRequests/Product";
-import { BUTTON_SELECTORS } from "../../elements/shared/button-selectors";
 import {
   createFirstVariant,
   createVariant,

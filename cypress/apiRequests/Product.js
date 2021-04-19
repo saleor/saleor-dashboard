@@ -83,7 +83,7 @@ export function updateChannelPriceInVariant(variantId, channelId) {
   } `;
   return cy.sendRequestWithQuery(mutation);
 }
-export function createProduct(attributeId, name, productType, category) {
+export function createProduct({ attributeId, name, productType, category }) {
   const mutation = `mutation{
     productCreate(input:{
       attributes:[{
@@ -103,7 +103,9 @@ export function createProduct(attributeId, name, productType, category) {
       }
     }
   }`;
-  return cy.sendRequestWithQuery(mutation);
+  return cy
+    .sendRequestWithQuery(mutation)
+    .its("body.data.productCreate.product");
 }
 
 export function createVariant({
@@ -153,23 +155,26 @@ export function createVariant({
       }
     }
   }`;
-  return cy.sendRequestWithQuery(mutation);
+  return cy
+    .sendRequestWithQuery(mutation)
+    .its("body.data.productVariantBulkCreate.productVariants");
 }
 
-export function createTypeProduct(
+export function createTypeProduct({
   name,
   attributeId,
   hasVariants = true,
-  slug = name
-) {
+  slug = name,
+  shippable = true
+}) {
   const mutation = `mutation{
     productTypeCreate(input: {
       name: "${name}"
       slug: "${slug}"
-      isShippingRequired: true
       productAttributes: "${attributeId}"
       variantAttributes: "${attributeId}"
       hasVariants: ${hasVariants}
+      isShippingRequired:${shippable}
     }){
       productErrors{
         field
@@ -180,7 +185,9 @@ export function createTypeProduct(
       }
     }
   } `;
-  return cy.sendRequestWithQuery(mutation);
+  return cy
+    .sendRequestWithQuery(mutation)
+    .its("body.data.productTypeCreate.productType");
 }
 
 export function deleteProduct(productId) {

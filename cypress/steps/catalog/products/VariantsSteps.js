@@ -7,8 +7,11 @@ import { SHARED_ELEMENTS } from "../../../elements/shared/sharedElements";
 import { fillUpPriceList } from "./priceList";
 
 export function variantsShouldBeVisible({ name, price }) {
-  cy.contains(PRODUCT_DETAILS.variantRow, name).should("be.visible");
-  cy.contains(PRODUCT_DETAILS.variantRow, price).should("be.visible");
+  cy.contains(PRODUCT_DETAILS.variantRow, name)
+    .should("be.visible")
+    .find(PRODUCT_DETAILS.variantPrice)
+    .invoke("text")
+    .then(text => expect(text).to.includes(price));
 }
 export function createFirstVariant({ sku, warehouseId, price, attribute }) {
   cy.get(PRODUCT_DETAILS.addVariantsButton).click();

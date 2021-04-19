@@ -17,7 +17,8 @@ export function createProductInChannel({
 }) {
   let product;
   let variants;
-  return createProduct(attributeId, name, productTypeId, categoryId)
+  return productRequest
+    .createProduct({ attributeId, name, productTypeId, categoryId })
     .then(productResp => {
       product = productResp;
       productRequest.updateChannelInProduct({
@@ -29,7 +30,7 @@ export function createProductInChannel({
       });
     })
     .then(() => {
-      createVariant({
+      productRequest.createVariant({
         productId: product.id,
         sku: name,
         attributeId,
@@ -55,7 +56,7 @@ export function createTypeAttributeAndCategoryForProduct(
   return createAttribute(name, attributeValues)
     .then(attributeResp => {
       attribute = attributeResp;
-      createTypeProduct(name, attributeResp.id);
+      productRequest.createTypeProduct({ name, attributeId: attributeResp.id });
     })
     .then(productTypeResp => {
       productType = productTypeResp;
@@ -71,47 +72,46 @@ export function createAttribute(name, attributeValues) {
     .createAttribute(name, attributeValues)
     .its("body.data.attributeCreate.attribute");
 }
-export function createTypeProduct(name, attributeId, hasVariants) {
-  return productRequest
-    .createTypeProduct(name, attributeId, hasVariants)
-    .its("body.data.productTypeCreate.productType");
-}
+// export function createTypeProduct(name, attributeId, hasVariants) {
+//   return productRequest
+//     .createTypeProduct(name, attributeId, hasVariants)
+//     .its("body.data.productTypeCreate.productType");
+// }
 export function createCategory(name) {
   return categoryRequest
     .createCategory(name)
     .its("body.data.categoryCreate.category");
 }
-export function createProduct(attributeId, name, productTypeId, categoryId) {
-  return productRequest
-    .createProduct(attributeId, name, productTypeId, categoryId)
-    .its("body.data.productCreate.product");
-}
+// export function createProduct(attributeId, name, productTypeId, categoryId) {
+//   return productRequest
+//     .createProduct(attributeId, name, productTypeId, categoryId);
+// }
 export function updateProduct(productId, input) {
   return productRequest
     .updateProduct(productId, input)
     .its("body.data.productUpdate.product");
 }
-export function createVariant({
-  productId,
-  sku,
-  attributeId,
-  warehouseId,
-  quantityInWarehouse,
-  channelId,
-  price
-}) {
-  return productRequest
-    .createVariant({
-      productId,
-      sku,
-      attributeId,
-      warehouseId,
-      quantity: quantityInWarehouse,
-      channelId,
-      price
-    })
-    .its("body.data.productVariantBulkCreate.productVariants");
-}
+// export function createVariant({
+//   productId,
+//   sku,
+//   attributeId,
+//   warehouseId,
+//   quantityInWarehouse,
+//   channelId,
+//   price
+// }) {
+//   return productRequest
+//     .createVariant({
+//       productId,
+//       sku,
+//       attributeId,
+//       warehouseId,
+//       quantity: quantityInWarehouse,
+//       channelId,
+//       price
+//     })
+//     .its("body.data.productVariantBulkCreate.productVariants");
+// }
 
 export function deleteProductsStartsWith(startsWith) {
   cy.deleteElementsStartsWith(

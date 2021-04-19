@@ -13,5 +13,6 @@ export const PRODUCT_DETAILS = {
   descriptionInput: "[data-test-id='description']",
   ratingInput: "[name='rating']",
   skuInput: "[name='sku']",
-  variantRow: "[data-test-id='product-variant-row']"
+  variantRow: "[data-test-id='product-variant-row']",
+  variantPrice: '[data-test="price"]'
 };

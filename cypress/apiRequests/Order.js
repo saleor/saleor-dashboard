@@ -54,3 +54,14 @@ export function completeOrder(orderId) {
   }`;
   return cy.sendRequestWithQuery(mutation);
 }
+export function getOrder(orderId) {
+  const query = `query getOrder{
+    order(id:""){
+      status
+      shippingMethod{
+        id
+      }
+    }
+  }`;
+  cy.sendRequestWithQuery(query).its("body.data.order");
+}
