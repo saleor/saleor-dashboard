@@ -192,6 +192,11 @@ export interface ProductMediaUpdate_productMediaUpdate_product_media {
   oembedData: any;
 }
 
+export interface ProductMediaUpdate_productMediaUpdate_product_variants_media {
+  __typename: "ProductMedia";
+  url: string;
+}
+
 export interface ProductMediaUpdate_productMediaUpdate_product_variants_stocks_warehouse {
   __typename: "Warehouse";
   id: string;
@@ -238,6 +243,7 @@ export interface ProductMediaUpdate_productMediaUpdate_product_variants {
   sku: string;
   name: string;
   margin: number | null;
+  media: ProductMediaUpdate_productMediaUpdate_product_variants_media[] | null;
   stocks: (ProductMediaUpdate_productMediaUpdate_product_variants_stocks | null)[] | null;
   trackInventory: boolean;
   channelListings: ProductMediaUpdate_productMediaUpdate_product_variants_channelListings[] | null;

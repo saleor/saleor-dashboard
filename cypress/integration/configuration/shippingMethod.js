@@ -1,7 +1,10 @@
 // <reference types="cypress" />
 import faker from "faker";
 
-import { addChannelToShippingMethod } from "../../apiRequests/ShippingMethod";
+import {
+  addChannelToShippingMethod,
+  addChannelToShippingZone
+} from "../../apiRequests/ShippingMethod";
 import { SHIPPING_ZONE_DETAILS } from "../../elements/shipping/shipping-zone-details";
 import { selectChannelInHeader } from "../../steps/channelsSteps";
 import {
@@ -18,7 +21,7 @@ import * as shippingUtils from "../../utils/shippingUtils";
 import { isShippingAvailableInCheckout } from "../../utils/storeFront/checkoutUtils";
 
 describe("Shipping methods", () => {
-  const startsWith = "Cy-";
+  const startsWith = "CyShippingMethods-";
   const name = `${startsWith}${faker.random.number()}`;
   const price = 8;
   let defaultChannel;
@@ -104,10 +107,14 @@ describe("Shipping methods", () => {
         }) => {
           shippingZone = shippingZoneResp;
           shippingMethod = shippingMethodResp;
-          addChannelToShippingMethod(
-            shippingMethod.id,
-            createdChannel.id,
-            createdChannelPrice
+          addChannelToShippingZone(shippingZone.id, createdChannel.id).then(
+            () => {
+              addChannelToShippingMethod(
+                shippingMethod.id,
+                createdChannel.id,
+                createdChannelPrice
+              );
+            }
           );
         }
       )
@@ -143,7 +150,12 @@ describe("Shipping methods", () => {
   it("should create price based shipping method", () => {
     const shippingName = `${startsWith}${faker.random.number()}`;
 
-    createShippingZone(shippingName, warehouse.name, plAddress.countryFullName);
+    createShippingZone(
+      shippingName,
+      warehouse.name,
+      plAddress.countryFullName,
+      defaultChannel.name
+    );
     createShippingRate(shippingName, price, rateOptions.PRICE_OPTION);
 
     createCheckout({
@@ -164,7 +176,12 @@ describe("Shipping methods", () => {
   it("should create weight based shipping method", () => {
     const shippingName = `${startsWith}${faker.random.number()}`;
 
-    createShippingZone(shippingName, warehouse.name, plAddress.countryFullName);
+    createShippingZone(
+      shippingName,
+      warehouse.name,
+      plAddress.countryFullName,
+      defaultChannel.name
+    );
     createShippingRate(shippingName, price, rateOptions.WEIGHT_OPTION);
     createCheckout({
       channelSlug: defaultChannel.slug,

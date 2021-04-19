@@ -34,6 +34,7 @@ export interface VoucherTranslationDetails_translation_VoucherTranslatableConten
 
 export interface VoucherTranslationDetails_translation_VoucherTranslatableContent {
   __typename: "VoucherTranslatableContent";
+  name: string | null;
   voucher: VoucherTranslationDetails_translation_VoucherTranslatableContent_voucher | null;
   translation: VoucherTranslationDetails_translation_VoucherTranslatableContent_translation | null;
 }

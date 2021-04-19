@@ -32,6 +32,9 @@ interface TranslationsEntitiesProps {
   params: LanguageEntitiesUrlQueryParams;
 }
 
+const sumCompleted = (list: any[]) =>
+  list.reduce((acc, field) => acc + (field ? 1 : 0), 0);
+
 const TranslationsEntities: React.FC<TranslationsEntitiesProps> = ({
   language,
   params
@@ -145,17 +148,12 @@ const TranslationsEntities: React.FC<TranslationsEntitiesProps> = ({
                     node =>
                       node.__typename === "CategoryTranslatableContent" && {
                         completion: {
-                          current: node.translation
-                            ? [
-                                node.translation.description,
-                                node.translation.name,
-                                node.translation.seoDescription,
-                                node.translation.seoTitle
-                              ].reduce(
-                                (acc, field) => acc + (field !== null ? 1 : 0),
-                                0
-                              )
-                            : 0,
+                          current: sumCompleted([
+                            node.translation?.description,
+                            node.translation?.name,
+                            node.translation?.seoDescription,
+                            node.translation?.seoTitle
+                          ]),
                           max: 4
                         },
                         id: node?.category?.id,
@@ -195,17 +193,12 @@ const TranslationsEntities: React.FC<TranslationsEntitiesProps> = ({
                     node =>
                       node.__typename === "ProductTranslatableContent" && {
                         completion: {
-                          current: node.translation
-                            ? [
-                                node.translation.description,
-                                node.translation.name,
-                                node.translation.seoDescription,
-                                node.translation.seoTitle
-                              ].reduce(
-                                (acc, field) => acc + (field !== null ? 1 : 0),
-                                0
-                              )
-                            : 0,
+                          current: sumCompleted([
+                            node.translation?.description,
+                            node.translation?.name,
+                            node.translation?.seoDescription,
+                            node.translation?.seoTitle
+                          ]),
                           max: 4
                         },
                         id: node?.product?.id,
@@ -246,17 +239,12 @@ const TranslationsEntities: React.FC<TranslationsEntitiesProps> = ({
                     node =>
                       node.__typename === "CollectionTranslatableContent" && {
                         completion: {
-                          current: node.translation
-                            ? [
-                                node.translation.description,
-                                node.translation.name,
-                                node.translation.seoDescription,
-                                node.translation.seoTitle
-                              ].reduce(
-                                (acc, field) => acc + (field !== null ? 1 : 0),
-                                0
-                              )
-                            : 0,
+                          current: sumCompleted([
+                            node.translation?.description,
+                            node.translation?.name,
+                            node.translation?.seoDescription,
+                            node.translation?.seoTitle
+                          ]),
                           max: 4
                         },
                         id: node.collection.id,
@@ -297,9 +285,7 @@ const TranslationsEntities: React.FC<TranslationsEntitiesProps> = ({
                     node =>
                       node.__typename === "SaleTranslatableContent" && {
                         completion: {
-                          current: node.translation
-                            ? +!!node.translation.name
-                            : 0,
+                          current: sumCompleted([node.translation?.name]),
                           max: 1
                         },
                         id: node.sale?.id,
@@ -340,9 +326,7 @@ const TranslationsEntities: React.FC<TranslationsEntitiesProps> = ({
                     node =>
                       node.__typename === "VoucherTranslatableContent" && {
                         completion: {
-                          current: node.translation
-                            ? +!!node.translation.name
-                            : 0,
+                          current: sumCompleted([node.translation?.name]),
                           max: 1
                         },
                         id: node.voucher?.id,
@@ -383,17 +367,12 @@ const TranslationsEntities: React.FC<TranslationsEntitiesProps> = ({
                     node =>
                       node.__typename === "PageTranslatableContent" && {
                         completion: {
-                          current: node.translation
-                            ? [
-                                node.translation.content,
-                                node.translation.seoDescription,
-                                node.translation.seoTitle,
-                                node.translation.title
-                              ].reduce(
-                                (acc, field) => acc + (field !== null ? 1 : 0),
-                                0
-                              )
-                            : 0,
+                          current: sumCompleted([
+                            node.translation?.content,
+                            node.translation?.seoDescription,
+                            node.translation?.seoTitle,
+                            node.translation?.title
+                          ]),
                           max: 4
                         },
                         id: node?.page.id,
@@ -429,14 +408,12 @@ const TranslationsEntities: React.FC<TranslationsEntitiesProps> = ({
                     node =>
                       node.__typename === "AttributeTranslatableContent" && {
                         completion: {
-                          current: node.translation
-                            ? +!!node.translation.name +
-                              node.attribute.values.reduce(
-                                (acc, attr) =>
-                                  acc + (!!attr.translation?.name ? 1 : 0),
-                                0
-                              )
-                            : 0,
+                          current: sumCompleted([
+                            node.translation?.name,
+                            ...(node.attribute?.values.map(
+                              attr => attr.translation?.name
+                            ) || [])
+                          ]),
                           max: node.attribute
                             ? node.attribute.values.length + 1
                             : 0
@@ -479,10 +456,11 @@ const TranslationsEntities: React.FC<TranslationsEntitiesProps> = ({
                       node.__typename ===
                         "ShippingMethodTranslatableContent" && {
                         completion: {
-                          current: node.translation
-                            ? +!!node.translation.name
-                            : 0,
-                          max: 1
+                          current: sumCompleted([
+                            node.translation?.name,
+                            node.translation?.description
+                          ]),
+                          max: 2
                         },
                         id: node?.shippingMethod.id,
                         name: node?.name

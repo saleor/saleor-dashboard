@@ -192,6 +192,11 @@ export interface ProductMediaCreate_productMediaCreate_product_media {
   oembedData: any;
 }
 
+export interface ProductMediaCreate_productMediaCreate_product_variants_media {
+  __typename: "ProductMedia";
+  url: string;
+}
+
 export interface ProductMediaCreate_productMediaCreate_product_variants_stocks_warehouse {
   __typename: "Warehouse";
   id: string;
@@ -238,6 +243,7 @@ export interface ProductMediaCreate_productMediaCreate_product_variants {
   sku: string;
   name: string;
   margin: number | null;
+  media: ProductMediaCreate_productMediaCreate_product_variants_media[] | null;
   stocks: (ProductMediaCreate_productMediaCreate_product_variants_stocks | null)[] | null;
   trackInventory: boolean;
   channelListings: ProductMediaCreate_productMediaCreate_product_variants_channelListings[] | null;

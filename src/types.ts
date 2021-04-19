@@ -176,6 +176,7 @@ export type ReorderAction = (event: ReorderEvent) => void;
 export interface FetchMoreProps {
   loading: boolean;
   hasMore: boolean;
+  totalCount?: number;
   onFetchMore: () => void;
 }
 

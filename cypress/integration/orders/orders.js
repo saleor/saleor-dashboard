@@ -18,7 +18,7 @@ import {
 } from "../../utils/shippingUtils";
 
 describe("Orders", () => {
-  const startsWith = "Cy-";
+  const startsWith = "CyOrders-";
   const randomName = startsWith + faker.random.number();
 
   let customer;
