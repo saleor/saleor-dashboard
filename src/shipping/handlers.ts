@@ -14,7 +14,7 @@ import {
   ShippingPostalCodeRulesCreateInputRange
 } from "@saleor/types/globalTypes";
 import { getParsedDataForJsonStringField } from "@saleor/utils/richText/misc";
-import { diff } from "fast-array-diff";
+import { differenceBy } from "lodash";
 import { useIntl } from "react-intl";
 
 import {
@@ -178,9 +178,7 @@ export function getShippingMethodChannelVariables(
   prevChannels?: ChannelShippingData[]
 ): ShippingMethodChannelListingUpdateVariables {
   const removeChannels = prevChannels
-    ? diff(prevChannels, formChannels, (a, b) => a.id === b.id).removed?.map(
-        removedChannel => removedChannel.id
-      )
+    ? differenceBy(prevChannels, formChannels, "id").map(({ id }) => id)
     : [];
 
   return {
