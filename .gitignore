@@ -34,8 +34,8 @@ dist/
 /node_modules/
 /static/
 /videos/
-/screenshots/
-/results/
+/cypress/screenshots/
+/cypress/results
 /cypress/reports
 /saleor/static/assets/
 webpack-bundle.json
