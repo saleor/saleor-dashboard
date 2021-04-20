@@ -106,6 +106,12 @@ jobs:
         with:
           name: cypress-videos
           path: cypress/videos
+      - name: Merge test results into one
+        run: npm run report:merge
+      - name: Generate HTML report
+        run: npm run report:generate
+      - name: Copy test execution videos
+        run: npm run report:copyScreenshots
 
   translation-messages:
     runs-on: ubuntu-latest
