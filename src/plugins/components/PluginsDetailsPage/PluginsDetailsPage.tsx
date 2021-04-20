@@ -10,6 +10,7 @@ import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
 import { PluginErrorFragment } from "@saleor/fragments/types/PluginErrorFragment";
 import { ChangeEvent } from "@saleor/hooks/useForm";
+import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { sectionNames } from "@saleor/intl";
 import { getStringOrPlaceholder } from "@saleor/misc";
 import { isSecretField } from "@saleor/plugins/utils";
@@ -22,6 +23,9 @@ import { Plugin_plugin } from "../../types/Plugin";
 import PluginAuthorization from "../PluginAuthorization";
 import PluginInfo from "../PluginInfo";
 import PluginSettings from "../PluginSettings";
+import { isPluginGlobal } from "../PluginsList/utils";
+import PluginDetailsChannelsCard from "./PluginDetailsChannelsCard";
+import { getConfigByChannelId } from "./utils";
 
 export interface PluginDetailsPageFormData {
   active: boolean;
@@ -64,18 +68,46 @@ const PluginsDetailsPage: React.FC<PluginsDetailsPageProps> = props => {
 
   const classes = useStyles(props);
   const intl = useIntl();
-  const initialForm: PluginDetailsPageFormData = {
-    active: plugin?.active || false,
-    configuration: plugin?.configuration
-      ?.filter(field => !isSecretField(plugin?.configuration || [], field.name))
+
+  const initialSelectedChannelValue =
+    plugin && !isPluginGlobal(plugin.globalConfiguration)
+      ? plugin.channelConfigurations[0].channel.id
+      : null;
+
+  const [selectedChannelId, setSelectedChannelId] = useStateFromProps(
+    initialSelectedChannelValue
+  );
+
+  const selectedConfig = isPluginGlobal(plugin?.globalConfiguration)
+    ? plugin?.globalConfiguration
+    : plugin?.channelConfigurations.find(
+        getConfigByChannelId(selectedChannelId)
+      );
+
+  const initialFormData = (): PluginDetailsPageFormData => ({
+    active: selectedConfig?.active,
+    configuration: selectedConfig?.configuration
+      ?.filter(
+        field => !isSecretField(selectedConfig?.configuration || [], field.name)
+      )
       .map(field => ({
         ...field,
         value: field.value || ""
       }))
-  };
+  });
+
+  console.log(
+    111,
+    selectedConfig?.channel.id
+    // initialFormData?.configuration?.[0]
+  );
 
   return (
-    <Form initial={initialForm} onSubmit={onSubmit}>
+    <Form
+      initial={initialFormData()}
+      onSubmit={onSubmit}
+      key={selectedChannelId}
+    >
       {({ data, hasChanged, submit, set }) => {
         const onChange = (event: ChangeEvent) => {
           const { name, value } = event.target;
@@ -91,7 +123,7 @@ const PluginsDetailsPage: React.FC<PluginsDetailsPageProps> = props => {
               }
             });
 
-            plugin.configuration.map(item => {
+            selectedConfig.configuration.map(item => {
               if (item.name === name) {
                 item.value = value;
               }
@@ -118,18 +150,11 @@ const PluginsDetailsPage: React.FC<PluginsDetailsPageProps> = props => {
             />
             <Grid variant="inverted">
               <div>
-                <Typography variant="h6">
-                  {intl.formatMessage({
-                    defaultMessage: "Plugin Information and Status",
-                    description: "section header"
-                  })}
-                </Typography>
-                <Typography>
-                  {intl.formatMessage({
-                    defaultMessage:
-                      "These are general information about your store. They define what is the URL of your store and what is shown in browsers taskbar."
-                  })}
-                </Typography>
+                <PluginDetailsChannelsCard
+                  plugin={plugin}
+                  selectedChannelId={selectedChannelId}
+                  setSelectedChannelId={setSelectedChannelId}
+                />
               </div>
               <PluginInfo
                 data={data}
@@ -152,18 +177,18 @@ const PluginsDetailsPage: React.FC<PluginsDetailsPageProps> = props => {
                   <div>
                     <PluginSettings
                       data={data}
-                      fields={plugin?.configuration || []}
+                      fields={selectedConfig?.configuration || []}
                       errors={errors}
                       disabled={disabled}
                       onChange={onChange}
                     />
-                    {plugin?.configuration.some(field =>
-                      isSecretField(plugin.configuration, field.name)
+                    {selectedConfig?.configuration.some(field =>
+                      isSecretField(selectedConfig?.configuration, field.name)
                     ) && (
                       <>
                         <CardSpacer />
                         <PluginAuthorization
-                          fields={plugin.configuration}
+                          fields={selectedConfig?.configuration}
                           onClear={onClear}
                           onEdit={onEdit}
                         />
