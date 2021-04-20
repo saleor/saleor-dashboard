@@ -1,0 +1,153 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 3,
+    "passes": 1,
+    "pending": 0,
+    "failures": 2,
+    "start": "2021-04-19T21:24:00.159Z",
+    "end": "2021-04-19T21:24:18.360Z",
+    "duration": 18201,
+    "testsRegistered": 3,
+    "passPercent": 33.33333333333333,
+    "pendingPercent": 0,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 0,
+    "hasSkipped": false
+  },
+  "results": [
+    {
+      "uuid": "acdaaf67-e17d-4ef8-ab21-accc5e3e52a3",
+      "title": "",
+      "fullFile": "cypress/integration/login_form.js",
+      "file": "cypress/integration/login_form.js",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "5e095d3b-fe53-4ad0-996c-30ae4cd5e08f",
+          "title": "User authorization",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "should successfully log in an user",
+              "fullTitle": "User authorization should successfully log in an user",
+              "timedOut": null,
+              "duration": 1835,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": "[\n  \"-- before all hook (failed).png\",\n  {\n    \"title\": \"Failed screenshot\",\n    \"value\": \"screenshots/login_form.js/User authorization -- should successfully log in an user (failed) (attempt 3).png\"\n  }\n]",
+              "code": "return itCallback(func);",
+              "err": {
+                "message": "CypressError: `cy.type()` can only accept a string or number. You passed in: `undefined`\n\nhttps://on.cypress.io/type",
+                "estack": "CypressError: `cy.type()` can only accept a string or number. You passed in: `undefined`\n\nhttps://on.cypress.io/type\n    at Context.type (http://localhost:9000/__cypress/runner/cypress_runner.js:154981:17)\n    at Context.<anonymous> (http://localhost:9000/__cypress/runner/cypress_runner.js:171546:21)\nFrom Your Spec Code:\n    at Assertion../cypress/support/softAssertions/index.js.chai.Assertion.assert (http://localhost:9000/__cypress/tests?p=cypress/support/index.js:469:21)",
+                "diff": null
+              },
+              "uuid": "65c16c5f-e3e8-4e48-991f-8d5f2e7f59f1",
+              "parentUUID": "5e095d3b-fe53-4ad0-996c-30ae4cd5e08f",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "should fail for wrong password",
+              "fullTitle": "User authorization should fail for wrong password",
+              "timedOut": null,
+              "duration": 3847,
+              "state": "passed",
+              "speed": "slow",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "return itCallback(func);",
+              "err": {},
+              "uuid": "6ede51e2-8b38-4b08-afd5-0958178c319d",
+              "parentUUID": "5e095d3b-fe53-4ad0-996c-30ae4cd5e08f",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "should successfully log out an user",
+              "fullTitle": "User authorization should successfully log out an user",
+              "timedOut": null,
+              "duration": 1731,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": "[\n  \"-- before all hook (failed).png\",\n  {\n    \"title\": \"Failed screenshot\",\n    \"value\": \"screenshots/login_form.js/User authorization -- should successfully log out an user (failed) (attempt 3).png\"\n  }\n]",
+              "code": "return itCallback(func);",
+              "err": {
+                "message": "CypressError: `cy.type()` can only accept a string or number. You passed in: `undefined`\n\nhttps://on.cypress.io/type",
+                "estack": "CypressError: `cy.type()` can only accept a string or number. You passed in: `undefined`\n\nhttps://on.cypress.io/type\n    at Context.type (http://localhost:9000/__cypress/runner/cypress_runner.js:154981:17)\n    at Context.<anonymous> (http://localhost:9000/__cypress/runner/cypress_runner.js:171546:21)\nFrom Your Spec Code:\n    at Assertion../cypress/support/softAssertions/index.js.chai.Assertion.assert (http://localhost:9000/__cypress/tests?p=cypress/support/index.js:469:21)",
+                "diff": null
+              },
+              "uuid": "4122204c-5179-4aa1-a991-cca426a38b08",
+              "parentUUID": "5e095d3b-fe53-4ad0-996c-30ae4cd5e08f",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "6ede51e2-8b38-4b08-afd5-0958178c319d"
+          ],
+          "failures": [
+            "65c16c5f-e3e8-4e48-991f-8d5f2e7f59f1",
+            "4122204c-5179-4aa1-a991-cca426a38b08"
+          ],
+          "pending": [],
+          "skipped": [],
+          "duration": 7413,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "7.0.1"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": false,
+        "reportFilename": "mochawesome",
+        "saveHtml": false,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false,
+        "code": true
+      },
+      "version": "6.2.2"
+    },
+    "marge": {
+      "options": {
+        "id": "default",
+        "reportDir": "cypress/results/json",
+        "overwrite": false,
+        "html": false,
+        "json": true
+      },
+      "version": "5.2.0"
+    }
+  }
+}

@@ -36,6 +36,7 @@ dist/
 /videos/
 /screenshots/
 /results/
+/cypress/reports
 /saleor/static/assets/
 webpack-bundle.json
 /templates/templated_email/compiled/*

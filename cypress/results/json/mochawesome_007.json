@@ -1,0 +1,206 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 1,
+    "passes": 0,
+    "pending": 0,
+    "failures": 1,
+    "start": "2021-04-19T21:23:53.810Z",
+    "end": "2021-04-19T21:23:57.327Z",
+    "duration": 3517,
+    "testsRegistered": 6,
+    "passPercent": 0,
+    "pendingPercent": 0,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 5,
+    "hasSkipped": true
+  },
+  "results": [
+    {
+      "uuid": "50423c72-5c0a-437c-8d45-67323e63398d",
+      "title": "",
+      "fullFile": "cypress/integration/homePage/homePageAnalitics.js",
+      "file": "cypress/integration/homePage/homePageAnalitics.js",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "f13e119a-3096-4010-b95c-6bdcbfec60b8",
+          "title": "Homepage analytics",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "should all elements be visible on the dashboard",
+              "fullTitle": "Homepage analytics should all elements be visible on the dashboard",
+              "timedOut": null,
+              "duration": 3468,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": "[\n  \"-- before all hook (failed).png\",\n  {\n    \"title\": \"Failed screenshot\",\n    \"value\": \"screenshots/homePage/homePageAnalitics.js/Homepage analytics -- should all elements be visible on the dashboard -- before all hook (failed).png\"\n  }\n]",
+              "code": "return itCallback(func);",
+              "err": {
+                "message": "CypressError: `cy.request()` requires a `url`. You did not provide a `url`.\n\nhttps://on.cypress.io/request\n\nBecause this error occurred during a `before all` hook we are skipping the remaining tests in the current suite: `Homepage analytics`\n\nAlthough you have test retries enabled, we do not retry tests when `before all` or `after all` hooks fail",
+                "estack": "CypressError: `cy.request()` requires a `url`. You did not provide a `url`.\n\nhttps://on.cypress.io/request\n\nBecause this error occurred during a `before all` hook we are skipping the remaining tests in the current suite: `Homepage analytics`\n\nAlthough you have test retries enabled, we do not retry tests when `before all` or `after all` hooks fail\n    at Context.request (http://localhost:9000/__cypress/runner/cypress_runner.js:160140:19)\nFrom Your Spec Code:\n    at Context.eval (http://localhost:9000/__cypress/tests?p=cypress/support/index.js:400:13)",
+                "diff": null
+              },
+              "uuid": "3058364b-61c8-4885-a68d-928446df5a50",
+              "parentUUID": "f13e119a-3096-4010-b95c-6bdcbfec60b8",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "should correct amount of ready to fullfil orders be displayed",
+              "fullTitle": "Homepage analytics should correct amount of ready to fullfil orders be displayed",
+              "timedOut": null,
+              "duration": 0,
+              "state": "skipped",
+              "speed": null,
+              "pass": false,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "return itCallback(func);",
+              "err": {},
+              "uuid": "b38c7300-1809-4716-ba44-e3ecc8c35c14",
+              "parentUUID": "f13e119a-3096-4010-b95c-6bdcbfec60b8",
+              "isHook": false,
+              "skipped": true
+            },
+            {
+              "title": "should correct amount of payments waiting for capture be displayed",
+              "fullTitle": "Homepage analytics should correct amount of payments waiting for capture be displayed",
+              "timedOut": null,
+              "duration": 0,
+              "state": "skipped",
+              "speed": null,
+              "pass": false,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "return itCallback(func);",
+              "err": {},
+              "uuid": "5f2f3846-276d-45f9-9390-b25bf704d265",
+              "parentUUID": "f13e119a-3096-4010-b95c-6bdcbfec60b8",
+              "isHook": false,
+              "skipped": true
+            },
+            {
+              "title": "should correct amount of products out of stock be displayed",
+              "fullTitle": "Homepage analytics should correct amount of products out of stock be displayed",
+              "timedOut": null,
+              "duration": 0,
+              "state": "skipped",
+              "speed": null,
+              "pass": false,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "return itCallback(func);",
+              "err": {},
+              "uuid": "8cddbd2d-c208-4105-a7e6-1c0509ae1e71",
+              "parentUUID": "f13e119a-3096-4010-b95c-6bdcbfec60b8",
+              "isHook": false,
+              "skipped": true
+            },
+            {
+              "title": "should correct amount of sales be displayed",
+              "fullTitle": "Homepage analytics should correct amount of sales be displayed",
+              "timedOut": null,
+              "duration": 0,
+              "state": "skipped",
+              "speed": null,
+              "pass": false,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "return itCallback(func);",
+              "err": {},
+              "uuid": "458e627f-41f7-489e-b6e5-2e834efbbc0a",
+              "parentUUID": "f13e119a-3096-4010-b95c-6bdcbfec60b8",
+              "isHook": false,
+              "skipped": true
+            },
+            {
+              "title": "should correct amount of orders be displayed",
+              "fullTitle": "Homepage analytics should correct amount of orders be displayed",
+              "timedOut": null,
+              "duration": 0,
+              "state": "skipped",
+              "speed": null,
+              "pass": false,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "return itCallback(func);",
+              "err": {},
+              "uuid": "5faf02a7-6046-4a87-8a7d-336c7f114508",
+              "parentUUID": "f13e119a-3096-4010-b95c-6bdcbfec60b8",
+              "isHook": false,
+              "skipped": true
+            }
+          ],
+          "suites": [],
+          "passes": [],
+          "failures": [
+            "3058364b-61c8-4885-a68d-928446df5a50"
+          ],
+          "pending": [],
+          "skipped": [
+            "b38c7300-1809-4716-ba44-e3ecc8c35c14",
+            "5f2f3846-276d-45f9-9390-b25bf704d265",
+            "8cddbd2d-c208-4105-a7e6-1c0509ae1e71",
+            "458e627f-41f7-489e-b6e5-2e834efbbc0a",
+            "5faf02a7-6046-4a87-8a7d-336c7f114508"
+          ],
+          "duration": 3468,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "7.0.1"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": false,
+        "reportFilename": "mochawesome",
+        "saveHtml": false,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false,
+        "code": true
+      },
+      "version": "6.2.2"
+    },
+    "marge": {
+      "options": {
+        "id": "default",
+        "reportDir": "cypress/results/json",
+        "overwrite": false,
+        "html": false,
+        "json": true
+      },
+      "version": "5.2.0"
+    }
+  }
+}

@@ -1,0 +1,169 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 1,
+    "passes": 0,
+    "pending": 0,
+    "failures": 1,
+    "start": "2021-04-19T21:23:39.513Z",
+    "end": "2021-04-19T21:23:43.000Z",
+    "duration": 3487,
+    "testsRegistered": 4,
+    "passPercent": 0,
+    "pendingPercent": 0,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 3,
+    "hasSkipped": true
+  },
+  "results": [
+    {
+      "uuid": "ea8c609a-23aa-46cc-baf4-d02691d06108",
+      "title": "",
+      "fullFile": "cypress/integration/discounts/vouchers.js",
+      "file": "cypress/integration/discounts/vouchers.js",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "7b3dbdb1-b348-4389-bd33-c0b9662406d3",
+          "title": "Vouchers discounts",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "should create percentage voucher",
+              "fullTitle": "Vouchers discounts should create percentage voucher",
+              "timedOut": null,
+              "duration": 3446,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": "[\n  \"-- before all hook (failed).png\",\n  {\n    \"title\": \"Failed screenshot\",\n    \"value\": \"screenshots/discounts/vouchers.js/Vouchers discounts -- should create percentage voucher -- before all hook (failed).png\"\n  }\n]",
+              "code": "return itCallback(func);",
+              "err": {
+                "message": "CypressError: `cy.request()` requires a `url`. You did not provide a `url`.\n\nhttps://on.cypress.io/request\n\nBecause this error occurred during a `before all` hook we are skipping the remaining tests in the current suite: `Vouchers discounts`\n\nAlthough you have test retries enabled, we do not retry tests when `before all` or `after all` hooks fail",
+                "estack": "CypressError: `cy.request()` requires a `url`. You did not provide a `url`.\n\nhttps://on.cypress.io/request\n\nBecause this error occurred during a `before all` hook we are skipping the remaining tests in the current suite: `Vouchers discounts`\n\nAlthough you have test retries enabled, we do not retry tests when `before all` or `after all` hooks fail\n    at Context.request (http://localhost:9000/__cypress/runner/cypress_runner.js:160140:19)\nFrom Your Spec Code:\n    at Context.eval (http://localhost:9000/__cypress/tests?p=cypress/support/index.js:400:13)",
+                "diff": null
+              },
+              "uuid": "72cebb13-1f1f-4abf-b9fe-c41aa2456660",
+              "parentUUID": "7b3dbdb1-b348-4389-bd33-c0b9662406d3",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "should create fixed price voucher",
+              "fullTitle": "Vouchers discounts should create fixed price voucher",
+              "timedOut": null,
+              "duration": 0,
+              "state": "skipped",
+              "speed": null,
+              "pass": false,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "return itCallback(func);",
+              "err": {},
+              "uuid": "c095f1c1-b03f-41f7-bc6a-a17d737ad1d6",
+              "parentUUID": "7b3dbdb1-b348-4389-bd33-c0b9662406d3",
+              "isHook": false,
+              "skipped": true
+            },
+            {
+              "title": "should create free shipping voucher",
+              "fullTitle": "Vouchers discounts should create free shipping voucher",
+              "timedOut": null,
+              "duration": 0,
+              "state": "skipped",
+              "speed": null,
+              "pass": false,
+              "fail": false,
+              "pending": true,
+              "context": null,
+              "code": "",
+              "err": {},
+              "uuid": "f95bc255-f465-4217-ad7a-01d8d9126cf5",
+              "parentUUID": "7b3dbdb1-b348-4389-bd33-c0b9662406d3",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "should create voucher not available for selected channel",
+              "fullTitle": "Vouchers discounts should create voucher not available for selected channel",
+              "timedOut": null,
+              "duration": 0,
+              "state": "skipped",
+              "speed": null,
+              "pass": false,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "return itCallback(func);",
+              "err": {},
+              "uuid": "a5ca6928-4624-4964-a524-56e86aea0af3",
+              "parentUUID": "7b3dbdb1-b348-4389-bd33-c0b9662406d3",
+              "isHook": false,
+              "skipped": true
+            }
+          ],
+          "suites": [],
+          "passes": [],
+          "failures": [
+            "72cebb13-1f1f-4abf-b9fe-c41aa2456660"
+          ],
+          "pending": [
+            "f95bc255-f465-4217-ad7a-01d8d9126cf5"
+          ],
+          "skipped": [
+            "c095f1c1-b03f-41f7-bc6a-a17d737ad1d6",
+            "a5ca6928-4624-4964-a524-56e86aea0af3"
+          ],
+          "duration": 3446,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "7.0.1"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": false,
+        "reportFilename": "mochawesome",
+        "saveHtml": false,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false,
+        "code": true
+      },
+      "version": "6.2.2"
+    },
+    "marge": {
+      "options": {
+        "id": "default",
+        "reportDir": "cypress/results/json",
+        "overwrite": false,
+        "html": false,
+        "json": true
+      },
+      "version": "5.2.0"
+    }
+  }
+}

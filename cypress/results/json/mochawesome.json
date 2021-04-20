@@ -1,0 +1,168 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 1,
+    "passes": 0,
+    "pending": 0,
+    "failures": 1,
+    "start": "2021-04-19T21:22:56.912Z",
+    "end": "2021-04-19T21:23:01.164Z",
+    "duration": 4252,
+    "testsRegistered": 4,
+    "passPercent": 0,
+    "pendingPercent": 0,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 3,
+    "hasSkipped": true
+  },
+  "results": [
+    {
+      "uuid": "d3a7057f-8368-44c8-a7b9-6c3f38d267bf",
+      "title": "",
+      "fullFile": "cypress/integration/collections.js",
+      "file": "cypress/integration/collections.js",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "9dbe0434-3364-47e1-90d1-8bd2c9fcde90",
+          "title": "Collections",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "should not display hidden collections",
+              "fullTitle": "Collections should not display hidden collections",
+              "timedOut": null,
+              "duration": 4193,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": "[\n  \"-- before all hook (failed).png\",\n  {\n    \"title\": \"Failed screenshot\",\n    \"value\": \"screenshots/collections.js/Collections -- should not display hidden collections -- before all hook (failed).png\"\n  }\n]",
+              "code": "return itCallback(func);",
+              "err": {
+                "message": "CypressError: `cy.request()` requires a `url`. You did not provide a `url`.\n\nhttps://on.cypress.io/request\n\nBecause this error occurred during a `before all` hook we are skipping the remaining tests in the current suite: `Collections`\n\nAlthough you have test retries enabled, we do not retry tests when `before all` or `after all` hooks fail",
+                "estack": "CypressError: `cy.request()` requires a `url`. You did not provide a `url`.\n\nhttps://on.cypress.io/request\n\nBecause this error occurred during a `before all` hook we are skipping the remaining tests in the current suite: `Collections`\n\nAlthough you have test retries enabled, we do not retry tests when `before all` or `after all` hooks fail\n    at Context.request (http://localhost:9000/__cypress/runner/cypress_runner.js:160140:19)\nFrom Your Spec Code:\n    at Context.eval (http://localhost:9000/__cypress/tests?p=cypress/support/index.js:400:13)",
+                "diff": null
+              },
+              "uuid": "45654705-1e2d-4753-b77b-4ce36c7b45c7",
+              "parentUUID": "9dbe0434-3364-47e1-90d1-8bd2c9fcde90",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "should display collections",
+              "fullTitle": "Collections should display collections",
+              "timedOut": null,
+              "duration": 0,
+              "state": "skipped",
+              "speed": null,
+              "pass": false,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "return itCallback(func);",
+              "err": {},
+              "uuid": "ac979966-4de9-4ba8-bc00-3b0a9898dfdf",
+              "parentUUID": "9dbe0434-3364-47e1-90d1-8bd2c9fcde90",
+              "isHook": false,
+              "skipped": true
+            },
+            {
+              "title": "should not display collection not set as available in channel",
+              "fullTitle": "Collections should not display collection not set as available in channel",
+              "timedOut": null,
+              "duration": 0,
+              "state": "skipped",
+              "speed": null,
+              "pass": false,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "return itCallback(func);",
+              "err": {},
+              "uuid": "3cacadd7-6ea7-4c9e-af93-b855b9df77ed",
+              "parentUUID": "9dbe0434-3364-47e1-90d1-8bd2c9fcde90",
+              "isHook": false,
+              "skipped": true
+            },
+            {
+              "title": "should display products hidden in listing",
+              "fullTitle": "Collections should display products hidden in listing",
+              "timedOut": null,
+              "duration": 0,
+              "state": "skipped",
+              "speed": null,
+              "pass": false,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "return itCallback(func);",
+              "err": {},
+              "uuid": "7b52882b-1a88-4a2c-bb4b-8c736efdcba0",
+              "parentUUID": "9dbe0434-3364-47e1-90d1-8bd2c9fcde90",
+              "isHook": false,
+              "skipped": true
+            }
+          ],
+          "suites": [],
+          "passes": [],
+          "failures": [
+            "45654705-1e2d-4753-b77b-4ce36c7b45c7"
+          ],
+          "pending": [],
+          "skipped": [
+            "ac979966-4de9-4ba8-bc00-3b0a9898dfdf",
+            "3cacadd7-6ea7-4c9e-af93-b855b9df77ed",
+            "7b52882b-1a88-4a2c-bb4b-8c736efdcba0"
+          ],
+          "duration": 4193,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "7.0.1"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": false,
+        "reportFilename": "mochawesome",
+        "saveHtml": false,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false,
+        "code": true
+      },
+      "version": "6.2.2"
+    },
+    "marge": {
+      "options": {
+        "id": "default",
+        "reportDir": "cypress/results/json",
+        "overwrite": false,
+        "html": false,
+        "json": true
+      },
+      "version": "5.2.0"
+    }
+  }
+}

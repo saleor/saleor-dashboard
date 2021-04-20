@@ -1,0 +1,149 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 1,
+    "passes": 0,
+    "pending": 0,
+    "failures": 1,
+    "start": "2021-04-19T21:25:13.187Z",
+    "end": "2021-04-19T21:25:16.742Z",
+    "duration": 3555,
+    "testsRegistered": 3,
+    "passPercent": 0,
+    "pendingPercent": 0,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 2,
+    "hasSkipped": true
+  },
+  "results": [
+    {
+      "uuid": "84fcf88d-5cfb-44a2-803b-fa6e5c0ede52",
+      "title": "",
+      "fullFile": "cypress/integration/orders/channelsInDraftOrders.js",
+      "file": "cypress/integration/orders/channelsInDraftOrders.js",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "bdb30d8d-5123-468e-aa44-52089012428f",
+          "title": "Channels in draft orders",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "Draft order channel should be taken from global channel picker",
+              "fullTitle": "Channels in draft orders Draft order channel should be taken from global channel picker",
+              "timedOut": null,
+              "duration": 3506,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": "[\n  \"-- before all hook (failed).png\",\n  {\n    \"title\": \"Failed screenshot\",\n    \"value\": \"screenshots/orders/channelsInDraftOrders.js/Channels in draft orders -- Draft order channel should be taken from global channel picker -- before all hook (failed).png\"\n  }\n]",
+              "code": "return itCallback(func);",
+              "err": {
+                "message": "CypressError: `cy.request()` requires a `url`. You did not provide a `url`.\n\nhttps://on.cypress.io/request\n\nBecause this error occurred during a `before all` hook we are skipping the remaining tests in the current suite: `Channels in draft orders`\n\nAlthough you have test retries enabled, we do not retry tests when `before all` or `after all` hooks fail",
+                "estack": "CypressError: `cy.request()` requires a `url`. You did not provide a `url`.\n\nhttps://on.cypress.io/request\n\nBecause this error occurred during a `before all` hook we are skipping the remaining tests in the current suite: `Channels in draft orders`\n\nAlthough you have test retries enabled, we do not retry tests when `before all` or `after all` hooks fail\n    at Context.request (http://localhost:9000/__cypress/runner/cypress_runner.js:160140:19)\nFrom Your Spec Code:\n    at Context.eval (http://localhost:9000/__cypress/tests?p=cypress/support/index.js:400:13)",
+                "diff": null
+              },
+              "uuid": "231322bb-1df4-4440-9b20-e6defd9f0e03",
+              "parentUUID": "bdb30d8d-5123-468e-aa44-52089012428f",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "Draft order channel should be taken from global channel picker when changed",
+              "fullTitle": "Channels in draft orders Draft order channel should be taken from global channel picker when changed",
+              "timedOut": null,
+              "duration": 0,
+              "state": "skipped",
+              "speed": null,
+              "pass": false,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "return itCallback(func);",
+              "err": {},
+              "uuid": "00524ed4-cd9b-4c5b-8eb4-a512dcf41528",
+              "parentUUID": "bdb30d8d-5123-468e-aa44-52089012428f",
+              "isHook": false,
+              "skipped": true
+            },
+            {
+              "title": "should create draft order with chosen channel",
+              "fullTitle": "Channels in draft orders should create draft order with chosen channel",
+              "timedOut": null,
+              "duration": 0,
+              "state": "skipped",
+              "speed": null,
+              "pass": false,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "return itCallback(func);",
+              "err": {},
+              "uuid": "99f9a874-adff-45e5-9d63-100437e7133c",
+              "parentUUID": "bdb30d8d-5123-468e-aa44-52089012428f",
+              "isHook": false,
+              "skipped": true
+            }
+          ],
+          "suites": [],
+          "passes": [],
+          "failures": [
+            "231322bb-1df4-4440-9b20-e6defd9f0e03"
+          ],
+          "pending": [],
+          "skipped": [
+            "00524ed4-cd9b-4c5b-8eb4-a512dcf41528",
+            "99f9a874-adff-45e5-9d63-100437e7133c"
+          ],
+          "duration": 3506,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "7.0.1"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": false,
+        "reportFilename": "mochawesome",
+        "saveHtml": false,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false,
+        "code": true
+      },
+      "version": "6.2.2"
+    },
+    "marge": {
+      "options": {
+        "id": "default",
+        "reportDir": "cypress/results/json",
+        "overwrite": false,
+        "html": false,
+        "json": true
+      },
+      "version": "5.2.0"
+    }
+  }
+}
