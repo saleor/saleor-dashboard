@@ -189,6 +189,8 @@ export interface ProductVariantDetails_productVariant_product_channelListings_pr
 
 export interface ProductVariantDetails_productVariant_product_channelListings {
   __typename: "ProductChannelListing";
+  publicationDate: any | null;
+  isPublished: boolean;
   channel: ProductVariantDetails_productVariant_product_channelListings_channel;
   pricing: ProductVariantDetails_productVariant_product_channelListings_pricing | null;
 }

@@ -572,6 +572,7 @@ export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_o
   id: string;
   name: string;
   currencyCode: string;
+  slug: string;
 }
 
 export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order {

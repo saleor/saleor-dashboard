@@ -89,7 +89,7 @@ export const OrderUnconfirmedDetails: React.FC<OrderUnconfirmedDetailsProps> = (
     search: variantSearch,
     result: variantSearchOpts
   } = useOrderVariantSearch({
-    variables: DEFAULT_INITIAL_SEARCH_DATA
+    variables: { ...DEFAULT_INITIAL_SEARCH_DATA, channel: order.channel.slug }
   });
   const warehouses = useWarehouseList({
     displayLoader: true,

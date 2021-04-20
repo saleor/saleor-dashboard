@@ -479,6 +479,7 @@ export interface FulfillOrder_orderFulfill_order_channel {
   id: string;
   name: string;
   currencyCode: string;
+  slug: string;
 }
 
 export interface FulfillOrder_orderFulfill_order {

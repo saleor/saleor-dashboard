@@ -477,6 +477,7 @@ export interface OrderCapture_orderCapture_order_channel {
   id: string;
   name: string;
   currencyCode: string;
+  slug: string;
 }
 
 export interface OrderCapture_orderCapture_order {
