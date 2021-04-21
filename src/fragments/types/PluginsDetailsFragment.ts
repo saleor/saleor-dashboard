@@ -13,6 +13,7 @@ export interface PluginsDetailsFragment_globalConfiguration_channel {
   __typename: "Channel";
   id: string;
   name: string;
+  slug: string;
 }
 
 export interface PluginsDetailsFragment_globalConfiguration_configuration {
@@ -35,6 +36,7 @@ export interface PluginsDetailsFragment_channelConfigurations_channel {
   __typename: "Channel";
   id: string;
   name: string;
+  slug: string;
 }
 
 export interface PluginsDetailsFragment_channelConfigurations_configuration {
@@ -56,8 +58,8 @@ export interface PluginsDetailsFragment_channelConfigurations {
 export interface PluginsDetailsFragment {
   __typename: "Plugin";
   id: string;
-  name: string | null;
-  description: string | null;
+  name: string;
+  description: string;
   globalConfiguration: PluginsDetailsFragment_globalConfiguration | null;
-  channelConfigurations: PluginsDetailsFragment_channelConfigurations[] | null;
+  channelConfigurations: PluginsDetailsFragment_channelConfigurations[];
 }

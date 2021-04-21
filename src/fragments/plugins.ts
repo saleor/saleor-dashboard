@@ -17,6 +17,7 @@ export const pluginConfigurationFragment = gql`
     channel {
       id
       name
+      slug
     }
     configuration {
       ...ConfigurationItemFragment

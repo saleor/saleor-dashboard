@@ -53,6 +53,7 @@ const pluginsDetails = gql`
     }
   }
 `;
-export const TypedPluginsDetailsQuery = TypedQuery<Plugin, PluginVariables>(
+
+export const usePluginDetails = makeQuery<Plugin, PluginVariables>(
   pluginsDetails
 );

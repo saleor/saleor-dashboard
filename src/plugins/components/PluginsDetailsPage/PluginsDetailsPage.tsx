@@ -23,9 +23,8 @@ import { Plugin_plugin } from "../../types/Plugin";
 import PluginAuthorization from "../PluginAuthorization";
 import PluginInfo from "../PluginInfo";
 import PluginSettings from "../PluginSettings";
-import { isPluginGlobal } from "../PluginsList/utils";
 import PluginDetailsChannelsCard from "./PluginDetailsChannelsCard";
-import { getConfigByChannelId } from "./utils";
+import { PluginConfiguration } from "./types";
 
 export interface PluginDetailsPageFormData {
   active: boolean;
@@ -41,6 +40,8 @@ export interface PluginsDetailsPageProps {
   onClear: (field: string) => void;
   onEdit: (field: string) => void;
   onSubmit: (data: PluginDetailsPageFormData) => void;
+  selectedConfig?: PluginConfiguration;
+  setSelectedChannelId: (channelId: string) => void;
 }
 
 const useStyles = makeStyles(
@@ -54,35 +55,20 @@ const useStyles = makeStyles(
   }
 );
 
-const PluginsDetailsPage: React.FC<PluginsDetailsPageProps> = props => {
-  const {
-    disabled,
-    errors,
-    plugin,
-    saveButtonBarState,
-    onBack,
-    onClear,
-    onEdit,
-    onSubmit
-  } = props;
-
-  const classes = useStyles(props);
+const PluginsDetailsPage: React.FC<PluginsDetailsPageProps> = ({
+  disabled,
+  errors,
+  plugin,
+  saveButtonBarState,
+  onBack,
+  onClear,
+  onEdit,
+  onSubmit,
+  selectedConfig,
+  setSelectedChannelId
+}) => {
+  const classes = useStyles({});
   const intl = useIntl();
-
-  const initialSelectedChannelValue =
-    plugin && !isPluginGlobal(plugin.globalConfiguration)
-      ? plugin.channelConfigurations[0].channel.id
-      : null;
-
-  const [selectedChannelId, setSelectedChannelId] = useStateFromProps(
-    initialSelectedChannelValue
-  );
-
-  const selectedConfig = isPluginGlobal(plugin?.globalConfiguration)
-    ? plugin?.globalConfiguration
-    : plugin?.channelConfigurations.find(
-        getConfigByChannelId(selectedChannelId)
-      );
 
   const initialFormData = (): PluginDetailsPageFormData => ({
     active: selectedConfig?.active,
@@ -96,11 +82,7 @@ const PluginsDetailsPage: React.FC<PluginsDetailsPageProps> = props => {
       }))
   });
 
-  console.log(
-    111,
-    selectedConfig?.channel.id
-    // initialFormData?.configuration?.[0]
-  );
+  const selectedChannelId = selectedConfig?.channel.id;
 
   return (
     <Form

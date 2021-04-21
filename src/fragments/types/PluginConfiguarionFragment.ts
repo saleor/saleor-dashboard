@@ -13,6 +13,7 @@ export interface PluginConfiguarionFragment_channel {
   __typename: "Channel";
   id: string;
   name: string;
+  slug: string;
 }
 
 export interface PluginConfiguarionFragment_configuration {

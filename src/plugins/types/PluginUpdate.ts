@@ -19,6 +19,7 @@ export interface PluginUpdate_pluginUpdate_plugin_globalConfiguration_channel {
   __typename: "Channel";
   id: string;
   name: string;
+  slug: string;
 }
 
 export interface PluginUpdate_pluginUpdate_plugin_globalConfiguration_configuration {
@@ -41,6 +42,7 @@ export interface PluginUpdate_pluginUpdate_plugin_channelConfigurations_channel 
   __typename: "Channel";
   id: string;
   name: string;
+  slug: string;
 }
 
 export interface PluginUpdate_pluginUpdate_plugin_channelConfigurations_configuration {
@@ -62,10 +64,10 @@ export interface PluginUpdate_pluginUpdate_plugin_channelConfigurations {
 export interface PluginUpdate_pluginUpdate_plugin {
   __typename: "Plugin";
   id: string;
-  name: string | null;
-  description: string | null;
+  name: string;
+  description: string;
   globalConfiguration: PluginUpdate_pluginUpdate_plugin_globalConfiguration | null;
-  channelConfigurations: PluginUpdate_pluginUpdate_plugin_channelConfigurations[] | null;
+  channelConfigurations: PluginUpdate_pluginUpdate_plugin_channelConfigurations[];
 }
 
 export interface PluginUpdate_pluginUpdate {
@@ -79,6 +81,7 @@ export interface PluginUpdate {
 }
 
 export interface PluginUpdateVariables {
+  channel: string;
   id: string;
   input: PluginUpdateInput;
 }

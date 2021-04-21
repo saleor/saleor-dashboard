@@ -13,6 +13,7 @@ export interface Plugins_plugins_edges_node_globalConfiguration_channel {
   __typename: "Channel";
   id: string;
   name: string;
+  slug: string;
 }
 
 export interface Plugins_plugins_edges_node_globalConfiguration_configuration {
@@ -35,6 +36,7 @@ export interface Plugins_plugins_edges_node_channelConfigurations_channel {
   __typename: "Channel";
   id: string;
   name: string;
+  slug: string;
 }
 
 export interface Plugins_plugins_edges_node_channelConfigurations_configuration {
@@ -56,10 +58,10 @@ export interface Plugins_plugins_edges_node_channelConfigurations {
 export interface Plugins_plugins_edges_node {
   __typename: "Plugin";
   id: string;
-  name: string | null;
-  description: string | null;
+  name: string;
+  description: string;
   globalConfiguration: Plugins_plugins_edges_node_globalConfiguration | null;
-  channelConfigurations: Plugins_plugins_edges_node_channelConfigurations[] | null;
+  channelConfigurations: Plugins_plugins_edges_node_channelConfigurations[];
 }
 
 export interface Plugins_plugins_edges {

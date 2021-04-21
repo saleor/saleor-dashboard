@@ -13,6 +13,7 @@ export interface Plugin_plugin_globalConfiguration_channel {
   __typename: "Channel";
   id: string;
   name: string;
+  slug: string;
 }
 
 export interface Plugin_plugin_globalConfiguration_configuration {
@@ -35,6 +36,7 @@ export interface Plugin_plugin_channelConfigurations_channel {
   __typename: "Channel";
   id: string;
   name: string;
+  slug: string;
 }
 
 export interface Plugin_plugin_channelConfigurations_configuration {
@@ -56,10 +58,10 @@ export interface Plugin_plugin_channelConfigurations {
 export interface Plugin_plugin {
   __typename: "Plugin";
   id: string;
-  name: string | null;
-  description: string | null;
+  name: string;
+  description: string;
   globalConfiguration: Plugin_plugin_globalConfiguration | null;
-  channelConfigurations: Plugin_plugin_channelConfigurations[] | null;
+  channelConfigurations: Plugin_plugin_channelConfigurations[];
 }
 
 export interface Plugin {

@@ -1,21 +1,24 @@
 import DialogContentText from "@material-ui/core/DialogContentText";
 import ActionDialog from "@saleor/components/ActionDialog";
 import { WindowTitle } from "@saleor/components/WindowTitle";
+import { PluginConfiguarionFragment_configuration } from "@saleor/fragments/types/PluginConfiguarionFragment";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
+import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { commonMessages } from "@saleor/intl";
 import { ConfigurationItemInput } from "@saleor/types/globalTypes";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
-import React from "react";
+import React, { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import PluginsDetailsPage, {
   PluginDetailsPageFormData
 } from "../components/PluginsDetailsPage";
+import { getConfigByChannelId } from "../components/PluginsDetailsPage/utils";
 import PluginSecretFieldDialog from "../components/PluginSecretFieldDialog";
+import { isPluginGlobal } from "../components/PluginsList/utils";
 import { TypedPluginUpdate } from "../mutations";
-import { TypedPluginsDetailsQuery } from "../queries";
-import { Plugin_plugin_configuration } from "../types/Plugin";
+import { usePluginDetails } from "../queries";
 import { PluginUpdate } from "../types/PluginUpdate";
 import {
   pluginListUrl,
@@ -31,7 +34,7 @@ export interface PluginsDetailsProps {
 }
 
 export function getConfigurationInput(
-  config: Plugin_plugin_configuration[] | null,
+  config: PluginConfiguarionFragment_configuration[] | null,
   input: ConfigurationItemInput[] | null
 ): ConfigurationItemInput[] | null {
   if (config === null || input === null) {
@@ -54,6 +57,32 @@ export const PluginsDetails: React.FC<PluginsDetailsProps> = ({
   const notify = useNotifier();
   const intl = useIntl();
 
+  const { data: pluginData, loading } = usePluginDetails({
+    displayLoader: true,
+    variables: { id }
+  });
+
+  const plugin = pluginData?.plugin;
+
+  const initialSelectedChannelValue =
+    plugin && !isPluginGlobal(plugin.globalConfiguration)
+      ? plugin.channelConfigurations[0].channel.id
+      : null;
+
+  const [selectedChannelId, setSelectedChannelId] = useStateFromProps(
+    initialSelectedChannelValue
+  );
+
+  const selectedChannelSlug = plugin?.channelConfigurations?.find(
+    getConfigByChannelId(selectedChannelId)
+  )?.channel.slug;
+
+  const selectedConfig = isPluginGlobal(plugin?.globalConfiguration)
+    ? plugin?.globalConfiguration
+    : plugin?.channelConfigurations.find(
+        getConfigByChannelId(selectedChannelId)
+      );
+
   const [openModal, closeModal] = createDialogActionHandlers<
     PluginUrlDialog,
     PluginUrlQueryParams
@@ -70,106 +99,104 @@ export const PluginsDetails: React.FC<PluginsDetailsProps> = ({
   };
 
   return (
-    <TypedPluginsDetailsQuery variables={{ id }}>
-      {pluginDetails => (
-        <TypedPluginUpdate onCompleted={handleUpdate}>
-          {(pluginUpdate, pluginUpdateOpts) => {
-            const formErrors = pluginUpdateOpts.data?.pluginUpdate.errors || [];
+    <TypedPluginUpdate onCompleted={handleUpdate}>
+      {(pluginUpdate, pluginUpdateOpts) => {
+        const formErrors = pluginUpdateOpts.data?.pluginUpdate.errors || [];
 
-            const handleFieldUpdate = (value: string) =>
-              pluginUpdate({
-                variables: {
-                  id,
-                  input: {
-                    configuration: [
-                      {
-                        name: params.id,
-                        value
-                      }
-                    ]
+        const handleFieldUpdate = (value: string) =>
+          pluginUpdate({
+            variables: {
+              channel: selectedChannelSlug,
+              id,
+              input: {
+                configuration: [
+                  {
+                    name: params.id,
+                    value
                   }
-                }
-              });
+                ]
+              }
+            }
+          });
 
-            const handleSubmit = async (
-              formData: PluginDetailsPageFormData
-            ) => {
-              const result = await pluginUpdate({
-                variables: {
-                  id,
-                  input: {
-                    active: formData.active,
-                    configuration: getConfigurationInput(
-                      pluginDetails.data.plugin.configuration,
-                      formData.configuration
-                    )
-                  }
-                }
-              });
+        const handleSubmit = async (formData: PluginDetailsPageFormData) => {
+          const result = await pluginUpdate({
+            variables: {
+              channel: selectedChannelSlug,
+              id,
+              input: {
+                active: formData.active,
+                configuration: getConfigurationInput(
+                  selectedConfig?.configuration,
+                  formData.configuration
+                )
+              }
+            }
+          });
 
-              return result.data.pluginUpdate.errors;
-            };
+          return result.data.pluginUpdate.errors;
+        };
 
-            return (
+        return (
+          <>
+            <WindowTitle title={plugin?.name} />
+            <PluginsDetailsPage
+              disabled={loading}
+              errors={formErrors}
+              saveButtonBarState={
+                !params.action ? pluginUpdateOpts.status : "default"
+              }
+              plugin={plugin}
+              onBack={() => navigate(pluginListUrl())}
+              onClear={id =>
+                openModal("clear", {
+                  id
+                })
+              }
+              onEdit={id =>
+                openModal("edit", {
+                  id
+                })
+              }
+              onSubmit={handleSubmit}
+              selectedConfig={selectedConfig}
+              setSelectedChannelId={setSelectedChannelId}
+            />
+            {selectedConfig && (
               <>
-                <WindowTitle title={pluginDetails.data?.plugin?.name} />
-                <PluginsDetailsPage
-                  disabled={pluginDetails.loading}
-                  errors={formErrors}
-                  saveButtonBarState={
-                    !params.action ? pluginUpdateOpts.status : "default"
+                <ActionDialog
+                  confirmButtonState={
+                    !!params.action ? pluginUpdateOpts.status : "default"
                   }
-                  plugin={pluginDetails.data?.plugin}
-                  onBack={() => navigate(pluginListUrl())}
-                  onClear={id =>
-                    openModal("clear", {
-                      id
-                    })
+                  onClose={closeModal}
+                  open={params.action === "clear" && !!params.id}
+                  title={intl.formatMessage({
+                    defaultMessage: "Authorization Field Delete",
+                    description: "header"
+                  })}
+                  onConfirm={() => handleFieldUpdate(null)}
+                >
+                  <DialogContentText>
+                    <FormattedMessage defaultMessage="The plugin may stop working after this field is cleared. Are you sure you want to proceed?" />
+                  </DialogContentText>
+                </ActionDialog>
+                <PluginSecretFieldDialog
+                  confirmButtonState={
+                    !!params.action ? pluginUpdateOpts.status : "default"
                   }
-                  onEdit={id =>
-                    openModal("edit", {
-                      id
-                    })
-                  }
-                  onSubmit={handleSubmit}
+                  field={selectedConfig?.configuration.find(
+                    field => field.name === params.id
+                  )}
+                  onClose={closeModal}
+                  onConfirm={formData => handleFieldUpdate(formData.value)}
+                  open={params.action === "edit" && !!params.id}
                 />
-                {pluginDetails.data?.plugin?.configuration && (
-                  <>
-                    <ActionDialog
-                      confirmButtonState={
-                        !!params.action ? pluginUpdateOpts.status : "default"
-                      }
-                      onClose={closeModal}
-                      open={params.action === "clear" && !!params.id}
-                      title={intl.formatMessage({
-                        defaultMessage: "Authorization Field Delete",
-                        description: "header"
-                      })}
-                      onConfirm={() => handleFieldUpdate(null)}
-                    >
-                      <DialogContentText>
-                        <FormattedMessage defaultMessage="The plugin may stop working after this field is cleared. Are you sure you want to proceed?" />
-                      </DialogContentText>
-                    </ActionDialog>
-                    <PluginSecretFieldDialog
-                      confirmButtonState={
-                        !!params.action ? pluginUpdateOpts.status : "default"
-                      }
-                      field={pluginDetails.data?.plugin?.configuration.find(
-                        field => field.name === params.id
-                      )}
-                      onClose={closeModal}
-                      onConfirm={formData => handleFieldUpdate(formData.value)}
-                      open={params.action === "edit" && !!params.id}
-                    />
-                  </>
-                )}
               </>
-            );
-          }}
-        </TypedPluginUpdate>
-      )}
-    </TypedPluginsDetailsQuery>
+            )}
+          </>
+        );
+      }}
+    </TypedPluginUpdate>
   );
 };
 PluginsDetails.displayName = "PluginsDetails";
