@@ -195,6 +195,8 @@ export interface VariantMediaAssign_variantMediaAssign_productVariant_product_ch
 
 export interface VariantMediaAssign_variantMediaAssign_productVariant_product_channelListings {
   __typename: "ProductChannelListing";
+  publicationDate: any | null;
+  isPublished: boolean;
   channel: VariantMediaAssign_variantMediaAssign_productVariant_product_channelListings_channel;
   pricing: VariantMediaAssign_variantMediaAssign_productVariant_product_channelListings_pricing | null;
 }

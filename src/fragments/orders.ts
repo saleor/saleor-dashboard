@@ -272,6 +272,7 @@ export const fragmentOrderDetails = gql`
       id
       name
       currencyCode
+      slug
     }
     isPaid
   }

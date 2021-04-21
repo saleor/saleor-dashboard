@@ -3938,8 +3938,8 @@
   "src_dot_orders_dot_components_dot_OrderProductAddDialog_dot_2850255786": {
     "string": "Search Products"
   },
-  "src_dot_orders_dot_components_dot_OrderProductAddDialog_dot_353369701": {
-    "string": "No products matching given query"
+  "src_dot_orders_dot_components_dot_OrderProductAddDialog_dot_3284796469": {
+    "string": "No products available in order channel matching given query"
   },
   "src_dot_orders_dot_components_dot_OrderProductsCardElements_dot_1134347598": {
     "context": "product price",
@@ -5310,6 +5310,10 @@
     "context": "button",
     "string": "Delete Variant"
   },
+  "src_dot_products_dot_components_dot_ProductVariantCreatePage_dot_pricingCardSubtitle": {
+    "context": "variant pricing section subtitle",
+    "string": "There is no channel to define prices for. You need to first add variant to channels to define prices."
+  },
   "src_dot_products_dot_components_dot_ProductVariantCreatePage_dot_saveVariant": {
     "context": "button",
     "string": "Save variant"
@@ -5462,6 +5466,18 @@
     "context": "variant name",
     "string": "New Variant"
   },
+  "src_dot_products_dot_components_dot_ProductVariantPage_dot_itemSubtitleHidden": {
+    "context": "VariantDetailsChannelsAvailabilityCard item subtitle hidden",
+    "string": "Hidden"
+  },
+  "src_dot_products_dot_components_dot_ProductVariantPage_dot_itemSubtitlePublished": {
+    "context": "VariantDetailsChannelsAvailabilityCard item subtitle published",
+    "string": "Published since {publicationDate}"
+  },
+  "src_dot_products_dot_components_dot_ProductVariantPage_dot_noItemsAvailable": {
+    "context": "VariantDetailsChannelsAvailabilityCard no items available",
+    "string": "This variant is not available at any of the channels"
+  },
   "src_dot_products_dot_components_dot_ProductVariantPage_dot_nonSelectionAttributes": {
     "context": "attributes, section header",
     "string": "Variant Attributes"
@@ -5469,6 +5485,14 @@
   "src_dot_products_dot_components_dot_ProductVariantPage_dot_selectionAttributesHeader": {
     "context": "attributes, section header",
     "string": "Variant Selection Attributes"
+  },
+  "src_dot_products_dot_components_dot_ProductVariantPage_dot_subtitle": {
+    "context": "VariantDetailsChannelsAvailabilityCard subtitle",
+    "string": "Available in {publishedInChannelsCount} out of {availableChannelsCount}"
+  },
+  "src_dot_products_dot_components_dot_ProductVariantPage_dot_title": {
+    "context": "VariantDetailsChannelsAvailabilityCard title",
+    "string": "Availability"
   },
   "src_dot_products_dot_components_dot_ProductVariantPrice_dot_1099355007": {
     "context": "product pricing, section header",

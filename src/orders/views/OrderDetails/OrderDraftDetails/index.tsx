@@ -61,7 +61,7 @@ export const OrderDraftDetails: React.FC<OrderDraftDetailsProps> = ({
     search: variantSearch,
     result: variantSearchOpts
   } = useOrderVariantSearch({
-    variables: DEFAULT_INITIAL_SEARCH_DATA
+    variables: { ...DEFAULT_INITIAL_SEARCH_DATA, channel: order.channel.slug }
   });
 
   const {

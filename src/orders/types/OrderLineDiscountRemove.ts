@@ -477,6 +477,7 @@ export interface OrderLineDiscountRemove_orderLineDiscountRemove_order_channel {
   id: string;
   name: string;
   currencyCode: string;
+  slug: string;
 }
 
 export interface OrderLineDiscountRemove_orderLineDiscountRemove_order {

@@ -35,6 +35,7 @@ describe("Collections", () => {
     productsUtils.deleteProductsStartsWith(startsWith);
     deleteCollectionsStartsWith(startsWith);
     deleteShippingStartsWith(startsWith);
+    channelsUtils.deleteChannelsStartsWith(startsWith);
 
     channelsUtils
       .getDefaultChannel()

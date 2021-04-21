@@ -134,7 +134,7 @@
     "codecov": "^3.7.1",
     "core-js": "^3.7.0",
     "cross-env": "^6.0.3",
-    "cypress": "^6.4.0",
+    "cypress": "^6.9.1",
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.5",
     "enzyme-to-json": "^3.6.1",
@@ -238,5 +238,6 @@
     "lint": "npx eslint \"src/**/*.@(tsx|ts|jsx|js)\" --fix ; npx prettier --check \"src/**/*.@(tsx|ts|jsx|js)\" --write",
     "postbuild": "rimraf ./build/**/*.js.map",
     "release": "release-it"
-  }
+  },
+  "description": "![Saleor Dashboard](https://user-images.githubusercontent.com/249912/82305745-5c52fd00-99be-11ea-9ac6-cc04a6f28c91.png)"
 }

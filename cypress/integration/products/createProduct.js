@@ -9,7 +9,7 @@ import {
   fillUpPriceList,
   priceInputLists
 } from "../../steps/catalog/products/priceList";
-import { fillUpCommonFieldsForProductType } from "../../steps/catalog/products/productSteps";
+import { fillUpCommonFieldsForAllProductTypes } from "../../steps/catalog/products/productSteps";
 import { selectChannelInDetailsPages } from "../../steps/channelsSteps";
 import { urlList } from "../../url/urlList";
 import {
@@ -69,7 +69,7 @@ describe("Create product", () => {
       productOrganization: { productType: randomName },
       attribute
     };
-    fillUpCommonFieldsForProductType(productData).then(
+    fillUpCommonFieldsForAllProductTypes(productData).then(
       productOrgResp => (productData.productOrganization = productOrgResp)
     );
     cy.addAliasToGraphRequest("ProductDetails");
@@ -96,7 +96,7 @@ describe("Create product", () => {
       productOrganization: { productType: randomName },
       attribute
     };
-    fillUpCommonFieldsForProductType(productData).then(
+    fillUpCommonFieldsForAllProductTypes(productData).then(
       productOrgResp => (productData.productOrganization = productOrgResp)
     );
     selectChannelInDetailsPages();
