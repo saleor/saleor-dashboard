@@ -122,7 +122,8 @@ describe("Creating variants", () => {
           sku: secondVariantSku,
           warehouseName: warehouse.name,
           attributeName: variants[1].name,
-          price: variants[1].price
+          price: variants[1].price,
+          channelName: defaultChannel.name
         });
       })
       .then(() => {

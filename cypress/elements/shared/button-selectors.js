@@ -6,5 +6,6 @@ export const BUTTON_SELECTORS = {
   checkbox: "[type='checkbox']",
   selectOption: "[data-test*='select-option']",
   notSelectedOption: ":not([aria-selected])",
-  deleteButton: '[data-test="button-bar-delete"]'
+  deleteButton: '[data-test="button-bar-delete"]',
+  expandIcon: `[class*="expandIcon"]`
 };
