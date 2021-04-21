@@ -3,7 +3,19 @@ export const PRODUCTS_LIST = {
   productsNames: "[data-test='name']",
   createProductBtn: "[data-test='add-product']",
   searchProducts: "[placeholder='Search Products...']",
-  emptyProductRow: "[data-test-id='skeleton']",
+  emptyProductRow: "[class*='Skeleton']",
+  productRowElements: {
+    name: '[data-test="name"]',
+    type: '[data-test="product-type"]',
+    availability: '[data-test="availability"]',
+    price: '[data-test="price"]'
+  },
+  tableHeaders: {
+    name: "[data-test-id='colNameHeader']",
+    type: "[data-test-id='colTypeHeader']",
+    availability: "[data-test-id='colAvailabilityHeader']",
+    price: "[data-test-id='colPriceHeader']"
+  },
   showFiltersButton: '[data-test-id="show-filters-button"]',
   filters: {
     filterOption: '[data-test-id="filterOption"]',
