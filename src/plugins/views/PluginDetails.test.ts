@@ -1,12 +1,13 @@
+import { PluginConfiguarionFragment_configuration } from "@saleor/fragments/types/PluginConfiguarionFragment";
+
 import {
   ConfigurationItemInput,
   ConfigurationTypeFieldEnum
 } from "../../types/globalTypes";
-import { Plugin_plugin_configuration } from "../types/Plugin";
 import { getConfigurationInput } from "./PluginsDetails";
 
 const baseConfig: Omit<
-  Plugin_plugin_configuration,
+  PluginConfiguarionFragment_configuration,
   "name" | "type" | "value"
 > = {
   __typename: "ConfigurationItem",
@@ -14,7 +15,7 @@ const baseConfig: Omit<
   label: ""
 };
 
-const config: Plugin_plugin_configuration[] = [
+const config: PluginConfiguarionFragment_configuration[] = [
   {
     ...baseConfig,
     name: "field-1",

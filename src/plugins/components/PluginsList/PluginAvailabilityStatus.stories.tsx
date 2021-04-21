@@ -14,12 +14,14 @@ const channels: Plugins_plugins_edges_node_globalConfiguration_channel[] = [
   {
     __typename: "Channel",
     id: "channel-1",
-    name: "Default channel"
+    name: "Default channel",
+    slug: "channel-1"
   },
   {
     __typename: "Channel",
     id: "channel-2",
-    name: "Facebook channel"
+    name: "Facebook channel",
+    slug: "channel-2"
   }
 ];
 

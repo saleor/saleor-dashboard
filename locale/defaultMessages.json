@@ -138,6 +138,10 @@
     "context": "Fixed amount subtitle",
     "string": "Fixed amount"
   },
+  "globalConfigPluginMessages title": {
+    "context": "global config plugin status popup title",
+    "string": "Global Plugin"
+  },
   "homeActivityCardHeader": {
     "context": "header",
     "string": "Activity"
@@ -2250,6 +2254,14 @@
   },
   "src_dot_components_dot_SingleSelectField_dot_4205644805": {
     "string": "No results found"
+  },
+  "src_dot_components_dot_StatusLabel_dot_active": {
+    "context": "status label active",
+    "string": "Active"
+  },
+  "src_dot_components_dot_StatusLabel_dot_inactive": {
+    "context": "status label inactive",
+    "string": "Inactive"
   },
   "src_dot_components_dot_TableHead_dot_868570480": {
     "string": "Selected {number} items"
@@ -4782,12 +4794,9 @@
     "context": "header",
     "string": "{pluginName} Details"
   },
-  "src_dot_plugins_dot_components_dot_PluginsDetailsPage_dot_3425535100": {
-    "context": "section header",
-    "string": "Plugin Information and Status"
-  },
-  "src_dot_plugins_dot_components_dot_PluginsDetailsPage_dot_3799756739": {
-    "string": "These are general information about your store. They define what is the URL of your store and what is shown in browsers taskbar."
+  "src_dot_plugins_dot_components_dot_PluginsDetailsPage_dot_noChannelsSubtitle": {
+    "context": "PluginDetailsChannelsCard no channels subtitle",
+    "string": "Plugin’s settings are set common across all channels"
   },
   "src_dot_plugins_dot_components_dot_PluginsListPage_dot_3233248823": {
     "string": "Search Plugins..."
@@ -4818,6 +4827,22 @@
   },
   "src_dot_plugins_dot_components_dot_PluginsList_dot_666641390": {
     "string": "No plugins found"
+  },
+  "src_dot_plugins_dot_components_dot_PluginsList_dot_channelTitle": {
+    "context": "plugin channel availability status title",
+    "string": "Assigned to {activeChannelsCount}"
+  },
+  "src_dot_plugins_dot_components_dot_PluginsList_dot_description": {
+    "context": "global config plugin status popup description",
+    "string": "Global plugins are set across all channels in your ecommerce. Only status is shown for those types of plugins"
+  },
+  "src_dot_plugins_dot_components_dot_PluginsList_dot_globalTitle": {
+    "context": "plugin global availability status title",
+    "string": "Global plugin"
+  },
+  "src_dot_plugins_dot_components_dot_PluginsList_dot_title": {
+    "context": "channel config plugin status popup title",
+    "string": "Assigned to {activeChannelsCount} of {allChannelsCount} channels"
   },
   "src_dot_plugins_dot_views_dot_1096544448": {
     "context": "header",

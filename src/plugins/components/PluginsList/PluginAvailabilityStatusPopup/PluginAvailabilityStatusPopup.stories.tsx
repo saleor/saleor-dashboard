@@ -4,10 +4,16 @@ import React from "react";
 
 import PluginAvailabilityStatusPopup from "./index";
 
+const commonProps = {
+  isOpen: true,
+  anchor: null
+};
+
 storiesOf("Plugins list / Plugin availability status popup", module)
   .addDecorator(CommonDecorator)
   .add("Global config (active)", () => (
     <PluginAvailabilityStatusPopup
+      {...commonProps}
       plugin={{
         __typename: "Plugin",
         id: "plugin-1",
@@ -25,6 +31,7 @@ storiesOf("Plugins list / Plugin availability status popup", module)
   ))
   .add("Global config (inactive)", () => (
     <PluginAvailabilityStatusPopup
+      {...commonProps}
       plugin={{
         __typename: "Plugin",
         id: "plugin-1",
@@ -42,6 +49,7 @@ storiesOf("Plugins list / Plugin availability status popup", module)
   ))
   .add("Channel config", () => (
     <PluginAvailabilityStatusPopup
+      {...commonProps}
       plugin={{
         __typename: "Plugin",
         id: "plugin-1",
@@ -55,7 +63,8 @@ storiesOf("Plugins list / Plugin availability status popup", module)
             channel: {
               __typename: "Channel",
               id: "channel-1",
-              name: "Poland channel"
+              name: "Poland channel",
+              slug: "channel-1"
             },
             configuration: null
           },
@@ -65,7 +74,8 @@ storiesOf("Plugins list / Plugin availability status popup", module)
             channel: {
               __typename: "Channel",
               id: "channel-2",
-              name: "China channel"
+              name: "China channel",
+              slug: "channel-2"
             },
             configuration: null
           }

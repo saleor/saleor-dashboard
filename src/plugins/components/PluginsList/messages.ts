@@ -22,7 +22,8 @@ export const channelConfigPluginMessages = defineMessages({
 export const globalConfigPluginMessages = defineMessages({
   title: {
     defaultMessage: "Global Plugin",
-    description: "global config plugin status popup title"
+    description: "global config plugin status popup title",
+    id: "globalConfigPluginMessages title"
   },
   description: {
     defaultMessage:
