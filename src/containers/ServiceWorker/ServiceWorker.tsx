@@ -1,0 +1,30 @@
+import useNotifier from "@saleor/hooks/useNotifier";
+import React from "react";
+import { useIntl } from "react-intl";
+import { useServiceWorker } from "src/hooks/useServiceWorker";
+
+import messages from "./messages";
+
+const ServiceWorker: React.FC = () => {
+  const { updateAvailable } = useServiceWorker(60 * 1000);
+  const notify = useNotifier();
+  const { formatMessage } = useIntl();
+
+  React.useEffect(() => {
+    if (updateAvailable) {
+      notify({
+        title: formatMessage(messages.newVersionTitle),
+        text: formatMessage(messages.newVersionContent),
+        actionBtn: {
+          label: formatMessage(messages.refresh),
+          action: () => window.location.reload()
+        },
+        autohide: null
+      });
+    }
+  }, [updateAvailable]);
+
+  return null;
+};
+
+export default ServiceWorker;
