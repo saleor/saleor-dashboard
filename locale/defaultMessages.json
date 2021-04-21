@@ -484,13 +484,13 @@
     "context": "dialog header",
     "string": "Activate App"
   },
+  "src_dot_apps_dot_components_dot_AppActivateDialog_dot_2449960665": {
+    "context": "activate app",
+    "string": "Are you sure you want to activate this app? Activating will start gathering events."
+  },
   "src_dot_apps_dot_components_dot_AppActivateDialog_dot_3356885734": {
     "context": "activate app",
     "string": "Are you sure you want to activate {name}? Activating will start gathering events."
-  },
-  "src_dot_apps_dot_components_dot_AppActivateDialog_dot_3761045983": {
-    "context": "activate app",
-    "string": "Are you sure you want to activate this app? Activating will start gathering events"
   },
   "src_dot_apps_dot_components_dot_AppActivateDialog_dot_3865193889": {
     "context": "button label",
@@ -504,12 +504,20 @@
     "context": "dialog header",
     "string": "Dectivate App"
   },
-  "src_dot_apps_dot_components_dot_AppDeactivateDialog_dot_2955925498": {
+  "src_dot_apps_dot_components_dot_AppDeactivateDialog_dot_deactivateApp": {
     "context": "deactivate app",
     "string": "Are you sure you want to disable this app? Your data will be kept until you reactivate the app. You will be still billed for the app."
   },
-  "src_dot_apps_dot_components_dot_AppDeactivateDialog_dot_329373780": {
-    "context": "deactivate app",
+  "src_dot_apps_dot_components_dot_AppDeactivateDialog_dot_deactivateLocalApp": {
+    "context": "deactivate local app",
+    "string": "Are you sure you want to disable this app? Your data will be kept until you reactivate the app."
+  },
+  "src_dot_apps_dot_components_dot_AppDeactivateDialog_dot_deactivateLocalNamedApp": {
+    "context": "deactivate local named app",
+    "string": "Are you sure you want to disable {name}? Your data will be kept until you reactivate the app."
+  },
+  "src_dot_apps_dot_components_dot_AppDeactivateDialog_dot_deactivateNamedApp": {
+    "context": "deactivate named app",
     "string": "Are you sure you want to disable {name}? Your data will be kept until you reactivate the app. You will be still billed for the app."
   },
   "src_dot_apps_dot_components_dot_AppDeleteDialog_dot_1347203024": {
@@ -656,10 +664,6 @@
     "context": "header",
     "string": "Create New App"
   },
-  "src_dot_apps_dot_components_dot_CustomAppCreatePage_dot_570656367": {
-    "context": "checkbox label",
-    "string": "App is active"
-  },
   "src_dot_apps_dot_components_dot_CustomAppDefaultToken_dot_1336855942": {
     "string": "Generated Token"
   },
@@ -681,13 +685,17 @@
     "context": "checkbox label",
     "string": "Grant this app full access to the store"
   },
+  "src_dot_apps_dot_components_dot_CustomAppDetailsPage_dot_1782042241": {
+    "context": "link",
+    "string": "Deactivate"
+  },
   "src_dot_apps_dot_components_dot_CustomAppDetailsPage_dot_3076071936": {
     "context": "card description",
     "string": "Expand or restrict app permissions to access certain part of Saleor system."
   },
-  "src_dot_apps_dot_components_dot_CustomAppDetailsPage_dot_570656367": {
-    "context": "checkbox label",
-    "string": "App is active"
+  "src_dot_apps_dot_components_dot_CustomAppDetailsPage_dot_3865193889": {
+    "context": "link",
+    "string": "Activate"
   },
   "src_dot_apps_dot_components_dot_CustomAppInformation_dot_2860466085": {
     "context": "header",
@@ -826,6 +834,14 @@
   "src_dot_apps_dot_views_dot_CustomAppCreate_dot_3230241731": {
     "context": "window title",
     "string": "Create App"
+  },
+  "src_dot_apps_dot_views_dot_CustomAppDetails_dot_2021043385": {
+    "context": "snackbar text",
+    "string": "App activated"
+  },
+  "src_dot_apps_dot_views_dot_CustomAppDetails_dot_3791371350": {
+    "context": "snackbar text",
+    "string": "App deactivated"
   },
   "src_dot_attributes": {
     "context": "attributes section name",
@@ -3877,6 +3893,10 @@
     "context": "vat included in order price",
     "string": "VAT included"
   },
+  "src_dot_orders_dot_components_dot_OrderPayment_dot_1934027242": {
+    "context": "voucher type order discount",
+    "string": "Voucher"
+  },
   "src_dot_orders_dot_components_dot_OrderPayment_dot_2183023165": {
     "context": "ordered products",
     "string": "{quantity} items"
@@ -3884,6 +3904,10 @@
   "src_dot_orders_dot_components_dot_OrderPayment_dot_2320183694": {
     "context": "order payment",
     "string": "Captured amount"
+  },
+  "src_dot_orders_dot_components_dot_OrderPayment_dot_2392156856": {
+    "context": "staff added type order discount",
+    "string": "Staff added"
   },
   "src_dot_orders_dot_components_dot_OrderPayment_dot_2444197639": {
     "context": "void payment, button",
