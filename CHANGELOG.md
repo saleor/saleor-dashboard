@@ -35,6 +35,7 @@ All notable, unreleased changes to this project will be documented in this file.
 - Display Cloud limits - #1004 by @dominik-zeglen
 - Add shipping method description - #1058 by @jwm0
 - Fix voucher and sales sorting errors - #1063 by @orzechdev
+- Fix custom currency formatting - #1067 by @orzechdev
 
 # 2.11.1
 
