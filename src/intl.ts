@@ -164,6 +164,10 @@ export const buttonMessages = defineMessages({
     defaultMessage: "Save",
     description: "button"
   },
+  select: {
+    defaultMessage: "Select",
+    description: "select option, button"
+  },
   selectAll: {
     defaultMessage: "Select All",
     description: "select all options, button"
