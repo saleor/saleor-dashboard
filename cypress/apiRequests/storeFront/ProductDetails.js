@@ -1,7 +1,41 @@
-export function getProductDetails(productId, channelId) {
+import { getValueWithDefault } from "../utils/Utils";
+
+export function getProductDetails(productId, channelId, auth = "token") {
+  const privateMetadataLine = getValueWithDefault(
+    auth === "auth",
+    `privateMetadata{key value}`
+  );
   const query = `fragment BasicProductFields on Product {
     id
     name
+    attributes{
+      attribute{
+        id
+        name
+      }
+    }
+    category{
+      id
+      name
+    }
+    collections{
+      id
+      name
+    }
+    description
+    seoTitle
+    slug
+    seoDescription
+    rating
+    metadata{
+      key
+      value
+    }
+    ${privateMetadataLine}
+    productType{
+      id
+      name
+    }
   }
   
   fragment Price on TaxedMoney {
@@ -33,5 +67,5 @@ export function getProductDetails(productId, channelId) {
       availableForPurchase
     }
   }`;
-  return cy.sendRequestWithQuery(query, "token");
+  return cy.sendRequestWithQuery(query, auth);
 }

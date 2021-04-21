@@ -6,7 +6,8 @@ export const metadataForms = {
 };
 
 export function addMetadataField({ metadataForm, name, value }) {
-  cy.get(metadataForm)
+  return cy
+    .get(metadataForm)
     .find(METADATA_FORM.addFieldButton)
     .click()
     .get(metadataForm)

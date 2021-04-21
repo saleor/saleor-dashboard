@@ -40,28 +40,48 @@ function updateProductMenageInChannel(productUrl, menageSelector) {
     .click()
     .wait("@ProductChannelListingUpdate");
 }
-export function fillUpCommonFieldsForProductType({
+export function fillUpCommonFieldsForAllProductTypes(
+  { generalInfo, seo, metadata, productOrganization },
+  createMode = true
+) {
+  return fillUpAllCommonFieldsInCreateAndUpdate({ generalInfo, seo, metadata })
+    .then(() => {
+      if (createMode) {
+        fillUpProductOrganization(productOrganization);
+      } else {
+        fillUpCollectionAndCategory({
+          category: productOrganization.category,
+          collection: productOrganization.collection
+        });
+      }
+    })
+    .then(productOrgResp => productOrgResp);
+}
+export function fillUpAllCommonFieldsInCreateAndUpdate({
   generalInfo,
   seo,
-  metadata,
-  productOrganization
+  metadata
 }) {
-  fillUpProductGeneralInfo(generalInfo);
-  editSeoSettings(seo);
-  addMetadataField(metadata.public);
-  addMetadataField(metadata.private);
-  return fillUpProductOrganization(productOrganization).then(
-    productOrgResp => productOrgResp
-  );
+  return fillUpProductGeneralInfo(generalInfo)
+    .then(() => {
+      editSeoSettings(seo);
+    })
+    .then(() => {
+      addMetadataField(metadata.public);
+    })
+    .then(() => {
+      addMetadataField(metadata.private);
+    });
 }
 export function fillUpProductGeneralInfo({ name, description, rating }) {
-  cy.get(PRODUCT_DETAILS.productNameInput)
+  return cy
+    .get(PRODUCT_DETAILS.productNameInput)
     .click()
-    .type(name)
+    .clearAndType(name)
     .get(PRODUCT_DETAILS.descriptionInput)
-    .type(description)
+    .clearAndType(description)
     .get(PRODUCT_DETAILS.ratingInput)
-    .type(rating);
+    .clearAndType(rating);
 }
 export function fillUpProductOrganization({
   productType,
@@ -72,8 +92,17 @@ export function fillUpProductOrganization({
   return fillAutocompleteSelect(PRODUCT_DETAILS.productTypeInput, productType)
     .then(selected => {
       organization.productType = selected;
-      fillAutocompleteSelect(PRODUCT_DETAILS.categoryInput, category);
+      fillUpCollectionAndCategory({ category, collection });
     })
+    .then(collectionAndCategoryResp => {
+      organization.category = collectionAndCategoryResp.category;
+      organization.collection = collectionAndCategoryResp.collection;
+      return organization;
+    });
+}
+export function fillUpCollectionAndCategory({ category, collection }) {
+  const organization = {};
+  return fillAutocompleteSelect(PRODUCT_DETAILS.categoryInput, category)
     .then(selected => {
       organization.category = selected;
       fillAutocompleteSelect(PRODUCT_DETAILS.collectionInput, collection);
