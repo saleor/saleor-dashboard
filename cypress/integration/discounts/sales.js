@@ -34,7 +34,7 @@ describe("Sales discounts", () => {
     productsUtils.deleteProductsStartsWith(startsWith);
     deleteShippingStartsWith(startsWith);
 
-    const name = `${startsWith}${faker.random.number()}`;
+    const name = `${startsWith}${faker.datatype.number()}`;
     productsUtils
       .createTypeAttributeAndCategoryForProduct(name)
       .then(
@@ -72,7 +72,7 @@ describe("Sales discounts", () => {
   });
 
   it("should create percentage discount", () => {
-    const saleName = `${startsWith}${faker.random.number()}`;
+    const saleName = `${startsWith}${faker.datatype.number()}`;
     const discountValue = 50;
     const productPrice = 100;
 
@@ -105,7 +105,7 @@ describe("Sales discounts", () => {
   });
 
   it("should create fixed price discount", () => {
-    const saleName = `${startsWith}${faker.random.number()}`;
+    const saleName = `${startsWith}${faker.datatype.number()}`;
     const discountValue = 50;
     const productPrice = 100;
 
@@ -138,7 +138,7 @@ describe("Sales discounts", () => {
   });
 
   it("should not displayed discount not assign to channel", () => {
-    const saleName = `${startsWith}${faker.random.number()}`;
+    const saleName = `${startsWith}${faker.datatype.number()}`;
     let channel;
     let product;
     const discountValue = 50;

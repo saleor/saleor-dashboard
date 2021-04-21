@@ -35,7 +35,7 @@ describe("Vouchers discounts", () => {
     deleteShippingStartsWith(startsWith);
     deleteVouchersStartsWith(startsWith);
 
-    const name = `${startsWith}${faker.random.number()}`;
+    const name = `${startsWith}${faker.datatype.number()}`;
 
     productsUtils
       .createTypeAttributeAndCategoryForProduct(name)
@@ -86,7 +86,7 @@ describe("Vouchers discounts", () => {
   });
 
   it("should create percentage voucher", () => {
-    const voucherCode = `${startsWith}${faker.random.number()}`;
+    const voucherCode = `${startsWith}${faker.datatype.number()}`;
     const voucherValue = 50;
 
     createVoucher({
@@ -104,7 +104,7 @@ describe("Vouchers discounts", () => {
       });
   });
   it("should create fixed price voucher", () => {
-    const voucherCode = `${startsWith}${faker.random.number()}`;
+    const voucherCode = `${startsWith}${faker.datatype.number()}`;
     const voucherValue = 50;
 
     createVoucher({
@@ -123,7 +123,7 @@ describe("Vouchers discounts", () => {
 
   // Test should pass after fixing - SALEOR-1629 bug
   xit("should create free shipping voucher", () => {
-    const voucherCode = `${startsWith}${faker.random.number()}`;
+    const voucherCode = `${startsWith}${faker.datatype.number()}`;
 
     createVoucher({
       voucherCode,
@@ -139,7 +139,7 @@ describe("Vouchers discounts", () => {
   });
 
   it("should create voucher not available for selected channel", () => {
-    const randomName = `${startsWith}${faker.random.number()}`;
+    const randomName = `${startsWith}${faker.datatype.number()}`;
     const voucherValue = 50;
 
     channelsUtils

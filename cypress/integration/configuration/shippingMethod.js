@@ -22,7 +22,7 @@ import { isShippingAvailableInCheckout } from "../../utils/storeFront/checkoutUt
 
 describe("Shipping methods", () => {
   const startsWith = "CyShippingMethods-";
-  const name = `${startsWith}${faker.random.number()}`;
+  const name = `${startsWith}${faker.datatype.number()}`;
   const price = 8;
   let defaultChannel;
   let plAddress;
@@ -77,7 +77,7 @@ describe("Shipping methods", () => {
   });
 
   it("should display different price for each channel", () => {
-    const shippingName = `${startsWith}${faker.random.number()}`;
+    const shippingName = `${startsWith}${faker.datatype.number()}`;
     const defaultChannelPrice = 11;
     const createdChannelPrice = 7;
     const createdChannelCurrency = "PLN";
@@ -148,7 +148,7 @@ describe("Shipping methods", () => {
       });
   });
   it("should create price based shipping method", () => {
-    const shippingName = `${startsWith}${faker.random.number()}`;
+    const shippingName = `${startsWith}${faker.datatype.number()}`;
 
     createShippingZone(
       shippingName,
@@ -174,7 +174,7 @@ describe("Shipping methods", () => {
   });
 
   it("should create weight based shipping method", () => {
-    const shippingName = `${startsWith}${faker.random.number()}`;
+    const shippingName = `${startsWith}${faker.datatype.number()}`;
 
     createShippingZone(
       shippingName,

@@ -19,7 +19,7 @@ import {
 
 describe("Orders", () => {
   const startsWith = "CyOrders-";
-  const randomName = startsWith + faker.random.number();
+  const randomName = startsWith + faker.datatype.number();
 
   let customer;
   let defaultChannel;

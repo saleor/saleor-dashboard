@@ -1,5 +1,4 @@
 import { PRODUCTS_LIST } from "../../elements/catalog/products/products-list";
-/* eslint-disable no-unused-expressions*/
 export function getDisplayedColumnArray(columnName) {
   let productsList = new Array();
   return cy
@@ -18,9 +17,10 @@ export function expectProductsSortedBy(columnName, inAscOrder = true) {
   getDisplayedColumnArray(columnName).then(productsArray => {
     let sortedProductsArray = productsArray.slice();
     if (columnName !== "price") {
-      inAscOrder
-        ? sortedProductsArray.sort()
-        : sortedProductsArray.sort().reverse();
+      sortedProductsArray.sort();
+      if (!inAscOrder) {
+        sortedProductsArray.reverse();
+      }
     } else {
       sortedProductsArray = getSortedPriceColumn(
         sortedProductsArray,
