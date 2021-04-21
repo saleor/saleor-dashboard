@@ -1049,7 +1049,6 @@ export interface AppFilterInput {
 
 export interface AppInput {
   name?: string | null;
-  isActive?: boolean | null;
   permissions?: (PermissionEnum | null)[] | null;
 }
 
@@ -1104,7 +1103,6 @@ export interface AttributeFilterInput {
 
 export interface AttributeInput {
   slug: string;
-  value?: string | null;
   values?: (string | null)[] | null;
 }
 
@@ -1623,7 +1621,6 @@ export interface ProductFilterInput {
   hasCategory?: boolean | null;
   attributes?: (AttributeInput | null)[] | null;
   stockAvailability?: StockAvailability | null;
-  productType?: string | null;
   stocks?: ProductStockFilterInput | null;
   search?: string | null;
   metadata?: (MetadataInput | null)[] | null;

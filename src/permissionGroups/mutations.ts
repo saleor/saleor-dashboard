@@ -20,7 +20,7 @@ export const permissionGroupDelete = gql`
   ${permissionGroupErrorFragment}
   mutation PermissionGroupDelete($id: ID!) {
     permissionGroupDelete(id: $id) {
-      errors: permissionGroupErrors {
+      errors {
         ...PermissionGroupErrorFragment
       }
     }
@@ -37,7 +37,7 @@ export const permissionGroupCreate = gql`
 
   mutation PermissionGroupCreate($input: PermissionGroupCreateInput!) {
     permissionGroupCreate(input: $input) {
-      errors: permissionGroupErrors {
+      errors {
         ...PermissionGroupErrorFragment
       }
       group {
@@ -61,7 +61,7 @@ export const permissionGroupUpdate = gql`
     $input: PermissionGroupUpdateInput!
   ) {
     permissionGroupUpdate(id: $id, input: $input) {
-      errors: permissionGroupErrors {
+      errors {
         ...PermissionGroupErrorFragment
       }
       group {

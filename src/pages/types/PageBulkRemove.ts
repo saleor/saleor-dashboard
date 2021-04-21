@@ -8,7 +8,7 @@
 // ====================================================
 
 export interface PageBulkRemove_pageBulkDelete_errors {
-  __typename: "Error";
+  __typename: "PageError";
   field: string | null;
   message: string | null;
 }
