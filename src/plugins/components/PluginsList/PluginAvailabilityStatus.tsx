@@ -1,6 +1,7 @@
 import { Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import StatusLabel from "@saleor/components/StatusLabel";
+import { statusLabelMessages } from "@saleor/components/StatusLabel/messages";
 import { Plugins_plugins_edges_node } from "@saleor/plugins/types/Plugins";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -42,11 +43,17 @@ const PluginAvailabilityStatus: React.FC<PluginAvailabilityStatusProps> = ({
     ? globalConfiguration.active
     : !!activeChannelsCount;
 
+  const globalPluginLabel = intl.formatMessage(
+    isStatusActive
+      ? statusLabelMessages.active
+      : statusLabelMessages.deactivated
+  );
+
   return (
     <StatusLabel
       label={
         isGlobalPlugin ? (
-          intl.formatMessage(messages.globalTitle)
+          globalPluginLabel
         ) : (
           <div className={classes.horizontalContainer}>
             <Typography>

@@ -8,5 +8,9 @@ export const statusLabelMessages = defineMessages({
   inactive: {
     defaultMessage: "Inactive",
     description: "status label inactive"
+  },
+  deactivated: {
+    defaultMessage: "Deactivated",
+    description: "status label deactivated"
   }
 });

@@ -1,12 +1,8 @@
 import { defineMessages } from "react-intl";
 
 export const pluginAvailabilityStatusMessages = defineMessages({
-  globalTitle: {
-    defaultMessage: "Global plugin",
-    description: "plugin global availability status title"
-  },
   channelTitle: {
-    defaultMessage: "Assigned to {activeChannelsCount}",
+    defaultMessage: "Active in {activeChannelsCount}",
     description: "plugin channel availability status title"
   }
 });
@@ -29,5 +25,31 @@ export const globalConfigPluginMessages = defineMessages({
     defaultMessage:
       "Global plugins are set across all channels in your ecommerce. Only status is shown for those types of plugins",
     description: "global config plugin status popup description"
+  }
+});
+
+export const pluginsListTableHeadMessages = defineMessages({
+  nameLabel: {
+    defaultMessage: "Name",
+    description: "table header name col label"
+  },
+  confLabel: {
+    defaultMessage: "Configuration",
+    description: "table header configuration col label"
+  },
+  channelLabel: {
+    defaultMessage: "Channel",
+    description: "table header channel col label"
+  }
+});
+
+export const pluginChannelConfigurationCellMessages = defineMessages({
+  globalLabel: {
+    defaultMessage: "Global",
+    description: "PluginChannelConfigurationCell global title"
+  },
+  channelLabel: {
+    defaultMessage: "Per channel",
+    description: "PluginChannelConfigurationCell channel title"
   }
 });

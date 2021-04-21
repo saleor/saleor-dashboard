@@ -22,6 +22,7 @@ const PluginChannelAvailabilityCell: React.FC<PluginChannelAvailabilityCellProps
 
   return (
     <TableCell
+      colSpan={2}
       ref={popupAnchor}
       onMouseOver={handleMouseOver}
       onMouseLeave={handleMouseLeave}
