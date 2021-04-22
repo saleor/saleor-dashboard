@@ -1,33 +1,29 @@
-import { useEffect, useState } from "react";
-import { register, unregister } from "register-service-worker";
+import { useEffect, useRef, useState } from "react";
+import { register } from "register-service-worker";
 
 export const useServiceWorker = (timeout: number) => {
   const [updateAvailable, setUpdateAvailable] = useState<boolean>(false);
-  const [registration, setRegistration] = useState<ServiceWorkerRegistration>();
+  const registrationRef = useRef<ServiceWorkerRegistration>();
 
   useEffect(() => {
-    const interval = (setInterval(() => {
-      if (registration) {
-        registration.update();
+    setInterval(() => {
+      if (registrationRef.current) {
+        registrationRef.current.update();
       }
-    }, timeout) as unknown) as number;
-    return () => clearInterval(interval);
-  }, [registration, timeout]);
+    }, timeout);
+  }, [timeout]);
 
-  const onRegistered = (registration: ServiceWorkerRegistration) =>
-    setRegistration(registration);
-
-  const onUpdate = () => setUpdateAvailable(false);
+  const onRegistered = (registration: ServiceWorkerRegistration) => {
+    registrationRef.current = registration;
+  };
 
   const onUpdateFound = () => setUpdateAvailable(true);
 
   useEffect(() => {
     register("/sw.js", {
       registered: onRegistered,
-      updated: onUpdate,
       updatefound: onUpdateFound
     });
-    return () => unregister();
   }, []);
 
   return { updateAvailable };

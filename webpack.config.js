@@ -30,7 +30,8 @@ const environmentPlugin = new webpack.EnvironmentPlugin({
   DEMO_MODE: false,
   ENVIRONMENT: "",
   GTM_ID: "",
-  SENTRY_DSN: ""
+  SENTRY_DSN: "",
+  SW_INTERVAL: "300" // Fetch SW every 300 seconds
 });
 
 const dashboardBuildPath = "build/dashboard/";

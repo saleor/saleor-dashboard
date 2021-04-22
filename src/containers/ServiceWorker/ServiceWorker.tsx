@@ -1,3 +1,4 @@
+import { SW_INTERVAL } from "@saleor/config";
 import useNotifier from "@saleor/hooks/useNotifier";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -6,7 +7,7 @@ import { useServiceWorker } from "src/hooks/useServiceWorker";
 import messages from "./messages";
 
 const ServiceWorker: React.FC = () => {
-  const { updateAvailable } = useServiceWorker(60 * 1000);
+  const { updateAvailable } = useServiceWorker(SW_INTERVAL * 1000);
   const notify = useNotifier();
   const { formatMessage } = useIntl();
 
