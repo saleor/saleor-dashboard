@@ -2394,11 +2394,11 @@
   },
   "src_dot_containers_dot_ServiceWorker_dot_newVersionContent": {
     "context": "new version notification content",
-    "string": "To update the application to the latest version, please refresh the page"
+    "string": "You need to update your system to the newest version. Before doing so - save all  changes to prevent losing that data. To update use the button below."
   },
   "src_dot_containers_dot_ServiceWorker_dot_newVersionTitle": {
     "context": "notification title",
-    "string": "New version is available"
+    "string": "System update required"
   },
   "src_dot_containers_dot_ServiceWorker_dot_refresh": {
     "context": "button",

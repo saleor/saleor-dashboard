@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { register } from "register-service-worker";
 
 export const useServiceWorker = (timeout: number) => {
@@ -20,6 +20,12 @@ export const useServiceWorker = (timeout: number) => {
 
   const onUpdateFound = () => setUpdateAvailable(true);
 
+  const update = useCallback(() => {
+    if (updateAvailable) {
+      registrationRef.current.waiting.postMessage("update");
+    }
+  }, [updateAvailable]);
+
   useEffect(() => {
     register("/sw.js", {
       registered: onRegistered,
@@ -27,5 +33,5 @@ export const useServiceWorker = (timeout: number) => {
     });
   }, []);
 
-  return { updateAvailable };
+  return { update, updateAvailable };
 };

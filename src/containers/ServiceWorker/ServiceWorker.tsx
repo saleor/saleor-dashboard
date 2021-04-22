@@ -7,7 +7,7 @@ import { useServiceWorker } from "src/hooks/useServiceWorker";
 import messages from "./messages";
 
 const ServiceWorker: React.FC = () => {
-  const { updateAvailable } = useServiceWorker(SW_INTERVAL * 1000);
+  const { update, updateAvailable } = useServiceWorker(SW_INTERVAL * 1000);
   const notify = useNotifier();
   const { formatMessage } = useIntl();
 
@@ -18,9 +18,10 @@ const ServiceWorker: React.FC = () => {
         text: formatMessage(messages.newVersionContent),
         actionBtn: {
           label: formatMessage(messages.refresh),
-          action: () => window.location.reload()
+          action: update
         },
-        autohide: null
+        autohide: null,
+        status: "warning"
       });
     }
   }, [updateAvailable]);

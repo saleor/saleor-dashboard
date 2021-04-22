@@ -62,4 +62,15 @@ registerFontStyles(/^https:\/\/rsms\.me\/.+\/.+\.css/, "rsms-stylesheet");
 registerFont(/^https:\/\/fonts\.gstatic\.com/, "google-fonts-webfonts");
 registerFont(/^https:\/\/rsms\.me\/.+\/font-files.+/, "rsms-webfonts");
 
-self.addEventListener("install", () => self.skipWaiting());
+self.addEventListener("message", event => {
+  if (event.data === "update") {
+    self.skipWaiting();
+  }
+});
+
+self.addEventListener("activate", async () => {
+  const tabs = await self.clients.matchAll({ type: "window" });
+  tabs.forEach(tab => {
+    tab.navigate(tab.url);
+  });
+});
