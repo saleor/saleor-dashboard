@@ -5,6 +5,7 @@ import React from "react";
 
 import { countries, order as orderFixture } from "../../fixtures";
 import OrderCustomerAddressesEditDialog, {
+  AddressInputOptionEnum,
   OrderCustomerAddressesEditDialogData,
   OrderCustomerAddressesEditDialogProps
 } from "./OrderCustomerAddressesEditDialog";
@@ -12,9 +13,13 @@ import OrderCustomerAddressesEditDialog, {
 const order = orderFixture("");
 
 const data: OrderCustomerAddressesEditDialogData = {
+  billingSameAsShipping: false,
+  shippingAddressInputOption: AddressInputOptionEnum.CUSTOMER_ADDRESS,
+  billingAddressInputOption: AddressInputOptionEnum.NEW_ADDRESS,
   shippingAddress: transformAddressToForm(order.shippingAddress),
   billingAddress: transformAddressToForm(order.billingAddress),
-  userAddresses: [order.shippingAddress, order.billingAddress]
+  userShippingAddress: order.shippingAddress,
+  userBillingAddress: order.billingAddress
 };
 
 const props: OrderCustomerAddressesEditDialogProps = {
@@ -34,6 +39,10 @@ storiesOf("Orders / OrderCustomerAddressesEditDialog", module)
       confirmButtonState="default"
       data={data}
       countries={countries}
+      userAddresses={[
+        order.shippingAddress,
+        { ...order.billingAddress, id: "asdfghjfuunie" }
+      ]}
       errors={[]}
       onClose={() => undefined}
       onConfirm={() => undefined}
