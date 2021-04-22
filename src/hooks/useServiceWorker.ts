@@ -6,11 +6,12 @@ export const useServiceWorker = (timeout: number) => {
   const registrationRef = useRef<ServiceWorkerRegistration>();
 
   useEffect(() => {
-    setInterval(() => {
+    const interval = (setInterval(() => {
       if (registrationRef.current) {
         registrationRef.current.update();
       }
-    }, timeout);
+    }, timeout) as unknown) as number;
+    return () => clearInterval(interval);
   }, [timeout]);
 
   const onRegistered = (registration: ServiceWorkerRegistration) => {
