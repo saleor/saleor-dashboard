@@ -97,7 +97,7 @@ module.exports = (env, argv) => {
       hot: true,
       port: 9000
     },
-    devtool: devMode ? "cheap-module-source-map" : "cheap-module-source-map",
+    devtool: devMode ? "cheap-module-source-map" : "source-map",
     entry: {
       dashboard: "./src/index.tsx"
     },
