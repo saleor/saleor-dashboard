@@ -17,7 +17,11 @@ import Form from "@saleor/components/Form";
 import FormSpacer from "@saleor/components/FormSpacer";
 import CustomerAddressChoice from "@saleor/customers/components/CustomerAddressChoice";
 import { AddressTypeInput } from "@saleor/customers/types";
-import { CustomerAddresses_user_addresses } from "@saleor/customers/types/CustomerAddresses";
+import {
+  CustomerAddresses_user_addresses,
+  CustomerAddresses_user_defaultBillingAddress,
+  CustomerAddresses_user_defaultShippingAddress
+} from "@saleor/customers/types/CustomerAddresses";
 import { OrderErrorFragment } from "@saleor/fragments/types/OrderErrorFragment";
 import useAddressValidation from "@saleor/hooks/useAddressValidation";
 import useModalDialogErrors from "@saleor/hooks/useModalDialogErrors";
@@ -27,7 +31,7 @@ import { maybe } from "@saleor/misc";
 import { makeStyles } from "@saleor/theme";
 import { AddressInput } from "@saleor/types/globalTypes";
 import createSingleAutocompleteSelectHandler from "@saleor/utils/handlers/singleAutocompleteSelectChangeHandler";
-import React from "react";
+import React, { useState } from "react";
 import { defineMessages, FormattedMessage, useIntl } from "react-intl";
 
 const messages = defineMessages({
@@ -82,46 +86,47 @@ export interface OrderCustomerAddressesEditDialogData {
   billingSameAsShipping: boolean;
   shippingAddressInputOption: AddressInputOptionEnum;
   billingAddressInputOption: AddressInputOptionEnum;
-  userShippingAddress: CustomerAddresses_user_addresses;
-  userBillingAddress: CustomerAddresses_user_addresses;
+  customerShippingAddress: CustomerAddresses_user_defaultShippingAddress;
+  customerBillingAddress: CustomerAddresses_user_defaultBillingAddress;
   shippingAddress: AddressTypeInput;
   billingAddress: AddressTypeInput;
 }
 
 export interface OrderCustomerAddressesEditDialogProps {
-  confirmButtonState: ConfirmButtonTransitionState;
-  data: OrderCustomerAddressesEditDialogData;
   open: boolean;
+  confirmButtonState: ConfirmButtonTransitionState;
   errors: OrderErrorFragment[];
   countries?: Array<{
     code: string;
     label: string;
   }>;
-  userAddresses?: CustomerAddresses_user_addresses[];
+  customerAddresses?: CustomerAddresses_user_addresses[];
+  defaultShippingAddress?: CustomerAddresses_user_defaultShippingAddress;
+  defaultBillingAddress?: CustomerAddresses_user_defaultBillingAddress;
   onClose();
   onConfirm(data: AddressInput);
 }
 
 const OrderCustomerAddressesEditDialog: React.FC<OrderCustomerAddressesEditDialogProps> = props => {
   const {
-    data,
-    confirmButtonState,
     open,
+    confirmButtonState,
     errors = [],
     countries = [],
-    userAddresses = [],
+    customerAddresses = [],
+    defaultShippingAddress,
+    defaultBillingAddress,
     onClose,
     onConfirm
   } = props;
 
   const classes = useStyles(props);
   const intl = useIntl();
-  const [countryDisplayName, setCountryDisplayName] = useStateFromProps(
-    maybe(
-      () =>
-        countries.find(country => data.shippingAddress.country === country.code)
-          .label
-    )
+  const [shippingCountryDisplayName, setShippingCountryDisplayName] = useState(
+    ""
+  );
+  const [billingCountryDisplayName, setBillingCountryDisplayName] = useState(
+    ""
   );
   const {
     errors: validationErrors,
@@ -137,13 +142,48 @@ const OrderCustomerAddressesEditDialog: React.FC<OrderCustomerAddressesEditDialo
     value: country.code
   }));
 
+  const initialAddress: AddressTypeInput = {
+    city: "",
+    country: "",
+    phone: "",
+    postalCode: "",
+    streetAddress1: ""
+  };
+
+  const initialData: OrderCustomerAddressesEditDialogData = {
+    billingSameAsShipping: true,
+    shippingAddressInputOption: AddressInputOptionEnum.CUSTOMER_ADDRESS,
+    billingAddressInputOption: AddressInputOptionEnum.CUSTOMER_ADDRESS,
+    customerShippingAddress: defaultShippingAddress,
+    customerBillingAddress: defaultBillingAddress,
+    shippingAddress: initialAddress,
+    billingAddress: initialAddress
+  };
+
   return (
     <Dialog onClose={onClose} open={open}>
-      <Form initial={data} onSubmit={handleSubmit}>
+      <Form initial={initialData} onSubmit={handleSubmit}>
         {({ change, data }) => {
-          const handleCountrySelect = createSingleAutocompleteSelectHandler(
-            change,
-            setCountryDisplayName,
+          const handleShippingCountrySelect = createSingleAutocompleteSelectHandler(
+            event =>
+              change({
+                target: {
+                  name: "shippingAddress",
+                  value: event.target.value
+                }
+              }),
+            setShippingCountryDisplayName,
+            countryChoices
+          );
+          const handleBillingCountrySelect = createSingleAutocompleteSelectHandler(
+            event =>
+              change({
+                target: {
+                  name: "billingAddress",
+                  value: event.target.value
+                }
+              }),
+            setBillingCountryDisplayName,
             countryChoices
           );
 
@@ -172,24 +212,25 @@ const OrderCustomerAddressesEditDialog: React.FC<OrderCustomerAddressesEditDialo
                   {data.shippingAddressInputOption ===
                     AddressInputOptionEnum.CUSTOMER_ADDRESS && (
                     <>
-                      {userAddresses.map(userAddress => (
-                        <>
+                      {customerAddresses.map(customerAddress => (
+                        <React.Fragment key={customerAddress.id}>
                           <CardSpacer />
                           <CustomerAddressChoice
-                            address={userAddress}
+                            address={customerAddress}
                             selected={
-                              userAddress.id === data.userShippingAddress.id
+                              customerAddress.id ===
+                              data.customerShippingAddress?.id
                             }
                             onSelect={() =>
                               change({
                                 target: {
-                                  name: "userShippingAddress",
-                                  value: userAddress
+                                  name: "customerShippingAddress",
+                                  value: customerAddress
                                 }
                               })
                             }
                           />
-                        </>
+                        </React.Fragment>
                       ))}
                       <FormSpacer />
                     </>
@@ -206,11 +247,21 @@ const OrderCustomerAddressesEditDialog: React.FC<OrderCustomerAddressesEditDialo
                       <FormSpacer />
                       <AddressEdit
                         countries={countryChoices}
-                        countryDisplayValue={countryDisplayName}
+                        countryDisplayValue={shippingCountryDisplayName}
                         data={data.shippingAddress}
                         errors={dialogErrors}
-                        onChange={change}
-                        onCountryChange={handleCountrySelect}
+                        onChange={event =>
+                          change({
+                            target: {
+                              name: "shippingAddress",
+                              value: {
+                                ...data.shippingAddress,
+                                [event.target.name]: event.target.value
+                              }
+                            }
+                          })
+                        }
+                        onCountryChange={handleShippingCountrySelect}
                       />
                     </>
                   )}
@@ -248,24 +299,25 @@ const OrderCustomerAddressesEditDialog: React.FC<OrderCustomerAddressesEditDialo
                       {data.billingAddressInputOption ===
                         AddressInputOptionEnum.CUSTOMER_ADDRESS && (
                         <>
-                          {userAddresses.map(userAddress => (
-                            <>
+                          {customerAddresses.map(customerAddress => (
+                            <React.Fragment key={customerAddress.id}>
                               <CardSpacer />
                               <CustomerAddressChoice
-                                address={userAddress}
+                                address={customerAddress}
                                 selected={
-                                  userAddress.id === data.userBillingAddress.id
+                                  customerAddress.id ===
+                                  data.customerBillingAddress?.id
                                 }
                                 onSelect={() =>
                                   change({
                                     target: {
-                                      name: "userBillingAddress",
-                                      value: userAddress
+                                      name: "customerBillingAddress",
+                                      value: customerAddress
                                     }
                                   })
                                 }
                               />
-                            </>
+                            </React.Fragment>
                           ))}
                           <FormSpacer />
                         </>
@@ -282,11 +334,21 @@ const OrderCustomerAddressesEditDialog: React.FC<OrderCustomerAddressesEditDialo
                           <FormSpacer />
                           <AddressEdit
                             countries={countryChoices}
-                            countryDisplayValue={countryDisplayName}
+                            countryDisplayValue={billingCountryDisplayName}
                             data={data.billingAddress}
                             errors={dialogErrors}
-                            onChange={change}
-                            onCountryChange={handleCountrySelect}
+                            onChange={event =>
+                              change({
+                                target: {
+                                  name: "billingAddress",
+                                  value: {
+                                    ...data.billingAddress,
+                                    [event.target.name]: event.target.value
+                                  }
+                                }
+                              })
+                            }
+                            onCountryChange={handleBillingCountrySelect}
                           />
                         </>
                       )}

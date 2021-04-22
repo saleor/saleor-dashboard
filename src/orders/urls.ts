@@ -105,6 +105,7 @@ export type OrderUrlDialog =
   | "cancel"
   | "cancel-fulfillment"
   | "capture"
+  | "edit-customer-addresses"
   | "edit-billing-address"
   | "edit-fulfillment"
   | "edit-shipping"

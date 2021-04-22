@@ -18,8 +18,8 @@ const data: OrderCustomerAddressesEditDialogData = {
   billingAddressInputOption: AddressInputOptionEnum.NEW_ADDRESS,
   shippingAddress: transformAddressToForm(order.shippingAddress),
   billingAddress: transformAddressToForm(order.billingAddress),
-  userShippingAddress: order.shippingAddress,
-  userBillingAddress: order.billingAddress
+  customerShippingAddress: order.shippingAddress,
+  customerBillingAddress: order.billingAddress
 };
 
 const props: OrderCustomerAddressesEditDialogProps = {
@@ -27,7 +27,6 @@ const props: OrderCustomerAddressesEditDialogProps = {
   onClose: () => undefined,
   onConfirm: () => undefined,
   open: true,
-  data,
   errors: undefined
 };
 
@@ -37,9 +36,8 @@ storiesOf("Orders / OrderCustomerAddressesEditDialog", module)
     <OrderCustomerAddressesEditDialog
       {...props}
       confirmButtonState="default"
-      data={data}
       countries={countries}
-      userAddresses={[
+      customerAddresses={[
         order.shippingAddress,
         { ...order.billingAddress, id: "asdfghjfuunie" }
       ]}
