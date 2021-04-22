@@ -2,6 +2,7 @@
 
 import faker from "faker";
 
+import { createChannel } from "../../apiRequests/Channels";
 import { updateChannelInProduct } from "../../apiRequests/Product";
 import {
   assignProducts,
@@ -34,7 +35,7 @@ describe("Sales discounts", () => {
     productsUtils.deleteProductsStartsWith(startsWith);
     deleteShippingStartsWith(startsWith);
 
-    const name = `${startsWith}${faker.random.number()}`;
+    const name = `${startsWith}${faker.datatype.number()}`;
     productsUtils
       .createTypeAttributeAndCategoryForProduct(name)
       .then(
@@ -72,7 +73,7 @@ describe("Sales discounts", () => {
   });
 
   it("should create percentage discount", () => {
-    const saleName = `${startsWith}${faker.random.number()}`;
+    const saleName = `${startsWith}${faker.datatype.number()}`;
     const discountValue = 50;
     const productPrice = 100;
 
@@ -105,7 +106,7 @@ describe("Sales discounts", () => {
   });
 
   it("should create fixed price discount", () => {
-    const saleName = `${startsWith}${faker.random.number()}`;
+    const saleName = `${startsWith}${faker.datatype.number()}`;
     const discountValue = 50;
     const productPrice = 100;
 
@@ -138,15 +139,15 @@ describe("Sales discounts", () => {
   });
 
   it("should not displayed discount not assign to channel", () => {
-    const saleName = `${startsWith}${faker.random.number()}`;
+    const saleName = `${startsWith}${faker.datatype.number()}`;
     let channel;
     let product;
     const discountValue = 50;
     const productPrice = 100;
 
-    channelsUtils
-      .createChannel({ name: saleName })
-      .then(channelResp => (channel = channelResp));
+    createChannel({ name: saleName }).then(
+      channelResp => (channel = channelResp)
+    );
     productsUtils
       .createProductInChannel({
         name: saleName,

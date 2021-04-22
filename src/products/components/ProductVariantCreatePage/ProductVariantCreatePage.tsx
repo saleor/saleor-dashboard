@@ -16,7 +16,6 @@ import Grid from "@saleor/components/Grid";
 import Metadata from "@saleor/components/Metadata";
 import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
-import { ProductChannelListingErrorFragment } from "@saleor/fragments/types/ProductChannelListingErrorFragment";
 import { ProductErrorWithAttributesFragment } from "@saleor/fragments/types/ProductErrorWithAttributesFragment";
 import { SearchPages_search_edges_node } from "@saleor/searches/types/SearchPages";
 import { SearchProducts_search_edges_node } from "@saleor/searches/types/SearchProducts";
@@ -51,12 +50,16 @@ const messages = defineMessages({
   saveVariant: {
     defaultMessage: "Save variant",
     description: "button"
+  },
+  pricingCardSubtitle: {
+    defaultMessage:
+      "There is no channel to define prices for. You need to first add variant to channels to define prices.",
+    description: "variant pricing section subtitle"
   }
 });
 
 interface ProductVariantCreatePageProps {
   channels: ChannelPriceData[];
-  channelErrors: ProductChannelListingErrorFragment[] | undefined;
   disabled: boolean;
   errors: ProductErrorWithAttributesFragment[];
   header: string;
@@ -82,7 +85,6 @@ interface ProductVariantCreatePageProps {
 
 const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
   channels,
-  channelErrors = [],
   disabled,
   errors,
   header,
@@ -209,15 +211,7 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
               />
               <CardSpacer />
               <ProductVariantPrice
-                ProductVariantChannelListings={data.channelListings.map(
-                  channel => ({
-                    ...channel.data,
-                    ...channel.value
-                  })
-                )}
-                errors={channelErrors}
-                loading={disabled}
-                onChange={handlers.changeChannels}
+                disabledMessage={messages.pricingCardSubtitle}
               />
               <CardSpacer />
               <ProductStocks

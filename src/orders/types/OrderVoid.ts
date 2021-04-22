@@ -477,6 +477,7 @@ export interface OrderVoid_orderVoid_order_channel {
   id: string;
   name: string;
   currencyCode: string;
+  slug: string;
 }
 
 export interface OrderVoid_orderVoid_order {

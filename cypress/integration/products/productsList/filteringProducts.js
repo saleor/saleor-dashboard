@@ -1,6 +1,7 @@
 import faker from "faker";
 
 import { createCollection } from "../../../apiRequests/Collections";
+import { updateProduct } from "../../../apiRequests/Product";
 import { PRODUCTS_LIST } from "../../../elements/catalog/products/products-list";
 import {
   selectFilterOption,
@@ -12,8 +13,7 @@ import { getDefaultChannel } from "../../../utils/channelsUtils";
 import {
   createProductInChannel,
   createTypeAttributeAndCategoryForProduct,
-  deleteProductsStartsWith,
-  updateProduct
+  deleteProductsStartsWith
 } from "../../../utils/products/productsUtils";
 import {
   createShipping,
@@ -22,7 +22,7 @@ import {
 
 describe("Products", () => {
   const startsWith = "CyFilterProducts-";
-  const name = `${startsWith}${faker.random.number()}`;
+  const name = `${startsWith}${faker.datatype.number()}`;
   const stockQuantity = 747;
   const price = 342;
   let attribute;
@@ -95,7 +95,7 @@ describe("Products", () => {
   });
 
   it("should filter products out of stock", () => {
-    const productOutOfStock = `${startsWith}${faker.random.number()}`;
+    const productOutOfStock = `${startsWith}${faker.datatype.number()}`;
     createProductInChannel({
       name: productOutOfStock,
       channelId: channel.id,

@@ -53,13 +53,18 @@ const RowNumberSelect: React.FC<RowNumberSelectProps> = ({
         <FormattedMessage defaultMessage="No of Rows:" />
       </span>
       <Select
+        data-test-id="rowNumberSelect"
         className={classes.select}
         value={settings.rowNumber}
         onChange={event => onChange("rowNumber", event.target.value)}
       >
         {choices.length > 0 &&
           choices.map(choice => (
-            <MenuItem value={choice} key={choice}>
+            <MenuItem
+              value={choice}
+              key={choice}
+              data-test-id="rowNumberOption"
+            >
               {choice}
             </MenuItem>
           ))}

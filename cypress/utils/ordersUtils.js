@@ -11,14 +11,15 @@ export function createWaitingForCaptureOrder(
   let checkout;
   const auth = "token";
   cy.loginInShop();
-  return createCheckout({ channelSlug, email, variantsList, address, auth })
+  return checkoutRequest
+    .createCheckout({ channelSlug, email, variantsList, address, auth })
     .then(checkoutResp => {
       checkout = checkoutResp;
       checkoutRequest.addShippingMethod(checkout.id, shippingMethodId);
     })
     .then(() => addPayment(checkout.id))
     .then(() => checkoutRequest.completeCheckout(checkout.id))
-    .then(() => checkout);
+    .then(order => ({ checkout, order }));
 }
 export function createCheckoutWithVoucher({
   channelSlug,
@@ -30,7 +31,8 @@ export function createCheckoutWithVoucher({
   auth
 }) {
   let checkout;
-  return createCheckout({ channelSlug, email, variantsList, address, auth })
+  return checkoutRequest
+    .createCheckout({ channelSlug, email, variantsList, address, auth })
     .then(checkoutResp => {
       checkout = checkoutResp;
       checkoutRequest.addShippingMethod(checkout.id, shippingMethodId);
@@ -48,7 +50,8 @@ export function createReadyToFulfillOrder(
   variantsList
 ) {
   let order;
-  return createDraftOrder(customerId, shippingMethodId, channelId)
+  return orderRequest
+    .createDraftOrder(customerId, shippingMethodId, channelId)
     .then(orderResp => {
       order = orderResp;
       assignVariantsToOrder(order, variantsList);
@@ -64,7 +67,8 @@ export function createOrder({
   variantsList
 }) {
   let order;
-  return createDraftOrder(customerId, shippingMethodId, channelId)
+  return orderRequest
+    .createDraftOrder(customerId, shippingMethodId, channelId)
     .then(orderResp => {
       order = orderResp;
       assignVariantsToOrder(order, variantsList);
@@ -78,34 +82,27 @@ function assignVariantsToOrder(order, variantsList) {
     orderRequest.addProductToOrder(order.id, variantElement.id);
   });
 }
-
-export function createDraftOrder(customerId, shippingMethodId, channelId) {
-  return orderRequest
-    .createDraftOrder(customerId, shippingMethodId, channelId)
-    .its("body.data.draftOrderCreate.order");
-}
-export function createCheckout({
-  channelSlug,
-  email,
-  variantsList,
-  address,
-  auth
-}) {
-  return checkoutRequest
-    .createCheckout({
-      channelSlug,
-      email,
-      productQuantity: 1,
-      variantsList,
-      address,
-      auth
-    })
-    .its("body.data.checkoutCreate.checkout");
-}
 export function addPayment(checkoutId) {
   return checkoutRequest.addPayment(
     checkoutId,
     "mirumee.payments.dummy",
     "not-charged"
   );
+}
+export function createAndCompleteCheckoutWithoutShipping({
+  channelSlug,
+  email,
+  variantsList,
+  billingAddress,
+  auth
+}) {
+  let checkout;
+  return checkoutRequest
+    .createCheckout({ channelSlug, email, variantsList, billingAddress, auth })
+    .then(checkoutResp => {
+      checkout = checkoutResp;
+      addPayment(checkout.id);
+    })
+    .then(() => checkoutRequest.completeCheckout(checkout.id))
+    .then(order => ({ checkout, order }));
 }

@@ -39,7 +39,9 @@ export function createDraftOrder(customerId, shippingMethodId, channelId) {
       }
     }
   }`;
-  return cy.sendRequestWithQuery(mutation);
+  return cy
+    .sendRequestWithQuery(mutation)
+    .its("body.data.draftOrderCreate.order");
 }
 export function completeOrder(orderId) {
   const mutation = `mutation{
@@ -56,7 +58,7 @@ export function completeOrder(orderId) {
 }
 export function getOrder(orderId) {
   const query = `query getOrder{
-    order(id:""){
+    order(id:"${orderId}"){
       status
       shippingMethod{
         id

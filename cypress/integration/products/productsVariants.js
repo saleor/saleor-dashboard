@@ -37,7 +37,7 @@ describe("Creating variants", () => {
     productUtils.deleteProductsStartsWith(startsWith);
     deleteChannelsStartsWith(startsWith);
 
-    const name = `${startsWith}${faker.random.number()}`;
+    const name = `${startsWith}${faker.datatype.number()}`;
     getDefaultChannel()
       .then(channel => {
         defaultChannel = channel;
@@ -72,13 +72,18 @@ describe("Creating variants", () => {
   });
 
   it("should create variant visible on frontend", () => {
-    const name = `${startsWith}${faker.random.number()}`;
+    const name = `${startsWith}${faker.datatype.number()}`;
     const price = 10;
     let createdProduct;
 
-    createProduct(attribute.id, name, productType.id, category.id)
+    createProduct({
+      attributeId: attribute.id,
+      name,
+      productTypeId: productType.id,
+      categoryId: category.id
+    })
       .then(resp => {
-        createdProduct = resp.body.data.productCreate.product;
+        createdProduct = resp;
         updateChannelInProduct({
           productId: createdProduct.id,
           channelId: defaultChannel.id
@@ -99,9 +104,9 @@ describe("Creating variants", () => {
         expect(variant).to.have.property("price", price);
       });
   });
-  xit("should create several variants", () => {
-    const name = `${startsWith}${faker.random.number()}`;
-    const secondVariantSku = `${startsWith}${faker.random.number()}`;
+  it("should create several variants", () => {
+    const name = `${startsWith}${faker.datatype.number()}`;
+    const secondVariantSku = `${startsWith}${faker.datatype.number()}`;
     const variants = [{ price: 7 }, { name: attributeValues[1], price: 16 }];
     let createdProduct;
 
@@ -122,14 +127,15 @@ describe("Creating variants", () => {
           sku: secondVariantSku,
           warehouseName: warehouse.name,
           attributeName: variants[1].name,
-          price: variants[1].price
+          price: variants[1].price,
+          channelName: defaultChannel.name
         });
       })
       .then(() => {
         selectChannelInHeader(defaultChannel.name);
         variantsShouldBeVisible({
           name: variants[1].name,
-          price: variants.price
+          price: variants[1].price
         });
         getProductVariants(createdProduct.id, defaultChannel.slug);
       })
@@ -140,19 +146,19 @@ describe("Creating variants", () => {
       });
   });
   it("should create variant for many channels", () => {
-    const name = `${startsWith}${faker.random.number()}`;
+    const name = `${startsWith}${faker.datatype.number()}`;
     const variantsPrice = 10;
     let newChannel;
     let createdProduct;
-    createChannel(true, name, name, "PLN")
+    createChannel({ isActive: true, name, currencyCode: "PLN" })
       .then(resp => {
-        newChannel = resp.body.data.channelCreate.channel;
-        productUtils.createProduct(
-          attribute.id,
+        newChannel = resp;
+        createProduct({
+          attributeId: attribute.id,
           name,
-          productType.id,
-          category.id
-        );
+          productTypeId: productType.id,
+          categoryId: category.id
+        });
       })
       .then(productResp => {
         createdProduct = productResp;

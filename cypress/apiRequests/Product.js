@@ -36,7 +36,9 @@ export function updateProduct(productId, input) {
     }
   }
   `;
-  return cy.sendRequestWithQuery(mutation);
+  return cy
+    .sendRequestWithQuery(mutation)
+    .its("body.data.productUpdate.product");
 }
 
 export function updateChannelInProduct({
@@ -83,15 +85,34 @@ export function updateChannelPriceInVariant(variantId, channelId) {
   } `;
   return cy.sendRequestWithQuery(mutation);
 }
-export function createProduct({ attributeId, name, productType, category }) {
+export function createProduct({
+  attributeId,
+  name,
+  productTypeId,
+  categoryId,
+  collectionId,
+  description
+}) {
+  const collection = getValueWithDefault(
+    collectionId,
+    `collections:["${collectionId}"]`
+  );
+  const descriptionLine = getValueWithDefault(
+    description,
+    `description:"{\\"blocks\\":[{\\"type\\":\\"paragraph\\",\\"data\\":{\\"text\\":\\"${description}\\"}}]}"`
+  );
   const mutation = `mutation{
     productCreate(input:{
       attributes:[{
         id:"${attributeId}"
       }]
       name:"${name}"
-      productType:"${productType}"
-      category:"${category}"
+      slug:"${name}"
+      seo:{title:"${name}" description:""}
+      productType:"${productTypeId}"
+      category:"${categoryId}"
+      ${collection}
+      ${descriptionLine}
     }){
       product{
         id
@@ -112,7 +133,7 @@ export function createVariant({
   productId,
   sku,
   warehouseId,
-  quantity,
+  quantityInWarehouse,
   channelId,
   attributeId,
   price = 1,
@@ -131,7 +152,7 @@ export function createVariant({
     warehouseId,
     `stocks:{
       warehouse:"${warehouseId}"
-      quantity:${quantity}
+      quantity:${quantityInWarehouse}
     }`
   );
 
@@ -182,6 +203,7 @@ export function createTypeProduct({
       }
       productType{
         id
+        name
       }
     }
   } `;

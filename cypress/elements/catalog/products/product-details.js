@@ -14,5 +14,7 @@ export const PRODUCT_DETAILS = {
   ratingInput: "[name='rating']",
   skuInput: "[name='sku']",
   variantRow: "[data-test-id='product-variant-row']",
-  variantPrice: '[data-test="price"]'
+  variantPrice: '[data-test="price"]',
+  collectionRemoveButtons: '[data-test-id="collectionRemove"]',
+  variantRow: "[data-test-id='product-variant-row']"
 };

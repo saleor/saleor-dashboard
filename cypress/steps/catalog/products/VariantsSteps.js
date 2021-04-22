@@ -4,6 +4,7 @@ import { VARIANTS_SELECTORS } from "../../../elements/catalog/products/variants-
 import { AVAILABLE_CHANNELS_FORM } from "../../../elements/channels/available-channels-form";
 import { BUTTON_SELECTORS } from "../../../elements/shared/button-selectors";
 import { SHARED_ELEMENTS } from "../../../elements/shared/sharedElements";
+import { selectChannelVariantInDetailsPage } from "../../channelsSteps";
 import { fillUpPriceList } from "./priceList";
 
 export function variantsShouldBeVisible({ name, price }) {
@@ -19,6 +20,9 @@ export function createFirstVariant({ sku, warehouseId, price, attribute }) {
     .contains(attribute)
     .find(VARIANTS_SELECTORS.attributeCheckbox)
     .click()
+    .get(VARIANTS_SELECTORS.valueContainer)
+    .find(BUTTON_SELECTORS.checked)
+    .should("exist")
     .get(VARIANTS_SELECTORS.nextButton)
     .click();
   fillUpPriceList(price);
@@ -41,7 +45,8 @@ export function createVariant({
   warehouseName,
   attributeName,
   price,
-  costPrice = price
+  costPrice = price,
+  channelName
 }) {
   cy.get(PRODUCT_DETAILS.addVariantsButton)
     .click()
@@ -50,18 +55,23 @@ export function createVariant({
     .get(VARIANTS_SELECTORS.attributeOption)
     .contains(attributeName)
     .click()
-    .get(PRICE_LIST.priceInput)
-    .type(price)
-    .get(PRICE_LIST.costPriceInput)
-    .type(costPrice)
     .get(VARIANTS_SELECTORS.skuInputInAddVariant)
     .type(sku)
     .get(VARIANTS_SELECTORS.addWarehouseButton)
     .click();
   cy.contains(VARIANTS_SELECTORS.warehouseOption, warehouseName).click();
-  cy.addAliasToGraphRequest("ProductVariantDetails");
   cy.get(VARIANTS_SELECTORS.saveButton).click();
-  cy.wait("@ProductVariantDetails");
+  cy.get(BUTTON_SELECTORS.back).click();
+  selectChannelVariantInDetailsPage(channelName, attributeName);
+  cy.get(BUTTON_SELECTORS.confirm).click();
+  cy.contains(PRODUCT_DETAILS.variantRow, attributeName).click();
+  cy.get(PRICE_LIST.priceInput)
+    .type(price)
+    .get(PRICE_LIST.costPriceInput)
+    .type(costPrice);
+  cy.addAliasToGraphRequest("ProductVariantChannelListingUpdate");
+  cy.get(VARIANTS_SELECTORS.saveButton).click();
+  cy.wait("@ProductVariantChannelListingUpdate");
   cy.get(BUTTON_SELECTORS.back)
     .click()
     .get(SHARED_ELEMENTS.progressBar)

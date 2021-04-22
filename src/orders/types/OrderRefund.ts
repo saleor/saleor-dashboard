@@ -477,6 +477,7 @@ export interface OrderRefund_orderRefund_order_channel {
   id: string;
   name: string;
   currencyCode: string;
+  slug: string;
 }
 
 export interface OrderRefund_orderRefund_order {

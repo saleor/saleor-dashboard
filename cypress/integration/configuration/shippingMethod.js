@@ -1,10 +1,13 @@
 // <reference types="cypress" />
 import faker from "faker";
 
+import { createChannel } from "../../apiRequests/Channels";
+import { createCheckout } from "../../apiRequests/Checkout";
 import {
   addChannelToShippingMethod,
   addChannelToShippingZone
 } from "../../apiRequests/ShippingMethod";
+import { createWarehouse } from "../../apiRequests/Warehouse";
 import { SHIPPING_ZONE_DETAILS } from "../../elements/shipping/shipping-zone-details";
 import { selectChannelInHeader } from "../../steps/channelsSteps";
 import {
@@ -15,14 +18,13 @@ import {
 import { getFormattedCurrencyAmount } from "../../support/format/formatCurrencyAmount";
 import { urlList } from "../../url/urlList";
 import * as channelsUtils from "../../utils/channelsUtils";
-import { createCheckout } from "../../utils/ordersUtils";
 import * as productsUtils from "../../utils/products/productsUtils";
 import * as shippingUtils from "../../utils/shippingUtils";
 import { isShippingAvailableInCheckout } from "../../utils/storeFront/checkoutUtils";
 
 describe("Shipping methods", () => {
   const startsWith = "CyShippingMethods-";
-  const name = `${startsWith}${faker.random.number()}`;
+  const name = `${startsWith}${faker.datatype.number()}`;
   const price = 8;
   let defaultChannel;
   let plAddress;
@@ -43,7 +45,7 @@ describe("Shipping methods", () => {
       })
       .then(addresses => {
         plAddress = addresses.plAddress;
-        shippingUtils.createWarehouse({ name, address: plAddress });
+        createWarehouse({ name, address: plAddress });
       })
       .then(warehouseResp => {
         warehouse = warehouseResp;
@@ -66,7 +68,7 @@ describe("Shipping methods", () => {
           });
         }
       )
-      .then(({ variants: variantsListResp }) => {
+      .then(({ variantsList: variantsListResp }) => {
         variantsList = variantsListResp;
       });
   });
@@ -77,7 +79,7 @@ describe("Shipping methods", () => {
   });
 
   it("should display different price for each channel", () => {
-    const shippingName = `${startsWith}${faker.random.number()}`;
+    const shippingName = `${startsWith}${faker.datatype.number()}`;
     const defaultChannelPrice = 11;
     const createdChannelPrice = 7;
     const createdChannelCurrency = "PLN";
@@ -86,11 +88,10 @@ describe("Shipping methods", () => {
     let shippingZone;
     let createdChannel;
 
-    channelsUtils
-      .createChannel({
-        name: shippingName,
-        currencyCode: createdChannelCurrency
-      })
+    createChannel({
+      name: shippingName,
+      currencyCode: createdChannelCurrency
+    })
       .then(channel => {
         createdChannel = channel;
         shippingUtils.createShipping({
@@ -148,7 +149,7 @@ describe("Shipping methods", () => {
       });
   });
   it("should create price based shipping method", () => {
-    const shippingName = `${startsWith}${faker.random.number()}`;
+    const shippingName = `${startsWith}${faker.datatype.number()}`;
 
     createShippingZone(
       shippingName,
@@ -174,7 +175,7 @@ describe("Shipping methods", () => {
   });
 
   it("should create weight based shipping method", () => {
-    const shippingName = `${startsWith}${faker.random.number()}`;
+    const shippingName = `${startsWith}${faker.datatype.number()}`;
 
     createShippingZone(
       shippingName,

@@ -471,6 +471,7 @@ export interface OrderDetailsFragment_channel {
   id: string;
   name: string;
   currencyCode: string;
+  slug: string;
 }
 
 export interface OrderDetailsFragment {

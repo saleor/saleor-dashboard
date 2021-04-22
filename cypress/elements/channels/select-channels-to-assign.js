@@ -4,5 +4,7 @@ export const SELECT_CHANNELS_TO_ASSIGN = {
   allChannelsCheckbox: "[name='allChannels']",
   selectChannelsForm: "[role='dialog']",
   channelRow: "[data-test-id='channel-row']",
+  expandChannelRow: "[data-test-id='expand-channel-row']",
+  channelVariantRow: '[data-test-id="channel-variant-row"]',
   channelCheckbox: "[class*='MuiCheckbox']"
 };

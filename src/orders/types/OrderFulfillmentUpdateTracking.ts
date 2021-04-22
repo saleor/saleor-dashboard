@@ -477,6 +477,7 @@ export interface OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_o
   id: string;
   name: string;
   currencyCode: string;
+  slug: string;
 }
 
 export interface OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_order {

@@ -1,6 +1,7 @@
 // <reference types="cypress" />
 import faker from "faker";
 
+import { createChannel } from "../../apiRequests/Channels";
 import { CHANNEL_FORM_SELECTORS } from "../../elements/channels/channel-form-selectors";
 import { HEADER_SELECTORS } from "../../elements/header/header-selectors";
 import { DRAFT_ORDER_SELECTORS } from "../../elements/orders/draft-order-selectors";
@@ -14,7 +15,7 @@ import * as channelsUtils from "../../utils/channelsUtils";
 
 describe("Channels in draft orders", () => {
   const startsWith = "CyChannelInDraftOrders-";
-  const randomName = startsWith + faker.random.number();
+  const randomName = startsWith + faker.datatype.number();
 
   let defaultChannel;
   let otherChannel;
@@ -26,7 +27,7 @@ describe("Channels in draft orders", () => {
       .getDefaultChannel()
       .then(channel => {
         defaultChannel = channel;
-        channelsUtils.createChannel({ name: randomName });
+        createChannel({ name: randomName });
       })
       .then(channelResp => {
         otherChannel = channelResp;

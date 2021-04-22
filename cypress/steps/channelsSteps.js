@@ -58,3 +58,16 @@ export function selectChannelInDetailsPages(channelName) {
     .find(BUTTON_SELECTORS.submit)
     .click();
 }
+export function selectChannelVariantInDetailsPage(channelName, attributeName) {
+  cy.get(AVAILABLE_CHANNELS_FORM.menageChannelsButton).click();
+  cy.contains(SELECT_CHANNELS_TO_ASSIGN.expandChannelRow, channelName)
+    .find(BUTTON_SELECTORS.expandIcon)
+    .click();
+  cy.contains(SELECT_CHANNELS_TO_ASSIGN.expandChannelRow, channelName)
+    .contains(SELECT_CHANNELS_TO_ASSIGN.channelVariantRow, attributeName)
+    .find(BUTTON_SELECTORS.checkbox)
+    .click();
+  cy.get(SELECT_CHANNELS_TO_ASSIGN.selectChannelsForm)
+    .find(BUTTON_SELECTORS.submit)
+    .click();
+}

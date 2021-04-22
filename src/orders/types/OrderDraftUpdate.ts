@@ -477,6 +477,7 @@ export interface OrderDraftUpdate_draftOrderUpdate_order_channel {
   id: string;
   name: string;
   currencyCode: string;
+  slug: string;
 }
 
 export interface OrderDraftUpdate_draftOrderUpdate_order {
