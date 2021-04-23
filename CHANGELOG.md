@@ -36,6 +36,10 @@ All notable, unreleased changes to this project will be documented in this file.
 - Add shipping method description - #1058 by @jwm0
 - Fix voucher and sales sorting errors - #1063 by @orzechdev
 - Fix custom currency formatting - #1067 by @orzechdev
+- Fixes - #1077 by @piotrgrundas:
+    - rich text field updates, 
+    - multiselect empty chip upon creation of a product/variant,
+    - useFormset.setItemValue wrong updates,
 
 # 2.11.1
 
