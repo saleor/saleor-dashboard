@@ -53,6 +53,7 @@ export function addShippingMethod(checkoutId, shippingMethodId) {
   }`;
   return cy.sendRequestWithQuery(mutation);
 }
+
 export function addPayment(checkoutId, gateway, token) {
   const mutation = `mutation{
     checkoutPaymentCreate(checkoutId:"${checkoutId}",
@@ -70,6 +71,7 @@ export function addPayment(checkoutId, gateway, token) {
     .sendRequestWithQuery(mutation)
     .its("body.data.checkoutPaymentCreate");
 }
+
 export function completeCheckout(checkoutId) {
   const mutation = `mutation{
     checkoutComplete(checkoutId:"${checkoutId}"){
@@ -109,6 +111,7 @@ export function addVoucher(checkoutId, voucherCode) {
   }`;
   return cy.sendRequestWithQuery(mutation);
 }
+
 export function checkoutVariantsUpdate(checkoutId, variantsList) {
   const lines = getVariantsLines(variantsList, 1);
   const mutation = `mutation{
@@ -122,6 +125,7 @@ export function checkoutVariantsUpdate(checkoutId, variantsList) {
   }`;
   return cy.sendRequestWithQuery(mutation);
 }
+
 export function checkoutShippingMethodUpdate(checkoutId, shippingMethodId) {
   const mutation = `mutation{
     checkoutShippingMethodUpdate(checkoutId:"${checkoutId}" shippingMethodId:"${shippingMethodId}"){
@@ -135,6 +139,7 @@ export function checkoutShippingMethodUpdate(checkoutId, shippingMethodId) {
     .sendRequestWithQuery(mutation)
     .its("body.data.checkoutShippingMethodUpdate");
 }
+
 export function checkoutShippingAddressUpdate(checkoutId, address) {
   const shippingAddress = getDefaultAddress(address, "shippingAddress");
   const mutation = `mutation{

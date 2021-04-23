@@ -60,6 +60,7 @@ export function getOrder(orderId) {
   const query = `query getOrder{
     order(id:"${orderId}"){
       status
+      isShippingRequired
       shippingMethod{
         id
       }

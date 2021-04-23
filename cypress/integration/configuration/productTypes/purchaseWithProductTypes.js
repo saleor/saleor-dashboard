@@ -30,6 +30,8 @@ describe("Purchase products with all products types", () => {
   const startsWith = `CyPurchaseByType`;
   const name = `${startsWith}${faker.datatype.number()}`;
   const email = `${startsWith}@example.com`;
+  const testsMessage = "Check order status";
+  const { softExpect } = chai;
 
   let defaultChannel;
   let address;
@@ -107,7 +109,11 @@ describe("Purchase products with all products types", () => {
         getOrder(order.id);
       })
       .then(order => {
-        expect(order.status).to.be.eq("UNFULFILLED");
+        softExpect(
+          order.isShippingRequired,
+          "Check if is shipping required in order"
+        ).to.eq(false);
+        expect(order.status, testsMessage).to.be.eq("UNFULFILLED");
       });
   });
 
@@ -136,7 +142,11 @@ describe("Purchase products with all products types", () => {
         getOrder(order.id);
       })
       .then(order => {
-        expect(order.status).to.be.eq("UNFULFILLED");
+        softExpect(
+          order.isShippingRequired,
+          "Check if is shipping required in order"
+        ).to.eq(true);
+        expect(order.status, testsMessage).to.be.eq("UNFULFILLED");
       });
   });
   it("should purchase multiple products with all product types", () => {
@@ -213,7 +223,11 @@ describe("Purchase products with all products types", () => {
         getOrder(order.id);
       })
       .then(order => {
-        expect(order.status).to.be.eq("UNFULFILLED");
+        softExpect(
+          order.isShippingRequired,
+          "Check if is shipping required in order"
+        ).to.eq(true);
+        expect(order.status, testsMessage).to.be.eq("UNFULFILLED");
       });
   });
 });
