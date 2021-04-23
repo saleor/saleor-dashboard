@@ -1,4 +1,5 @@
 import { removeAtIndex } from "@saleor/utils/lists";
+import { useEffect } from "react";
 
 import useStateFromProps from "./useStateFromProps";
 
@@ -57,6 +58,9 @@ function useFormset<TData = {}, TValue = any>(
     ]);
   }
 
+  useEffect(() => {
+    console.log(data);
+  }, [data]);
   return {
     add: addItem,
     change: setItemValue,

@@ -153,7 +153,10 @@ const AttributeRow: React.FC<AttributeRowProps> = ({
             error={!!error}
             label={intl.formatMessage(messages.valueLabel)}
             helperText={getErrorMessage(error, intl)}
-            onChange={data => onChange(attribute.id, JSON.stringify(data))}
+            onChange={data => {
+              console.log({ data });
+              onChange(attribute.id, JSON.stringify(data));
+            }}
             data={getRichTextData(attribute)}
           />
         </BasicAttributeRow>
