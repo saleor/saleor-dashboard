@@ -1,5 +1,4 @@
 import { removeAtIndex } from "@saleor/utils/lists";
-import { useEffect } from "react";
 
 import useStateFromProps from "./useStateFromProps";
 
@@ -47,20 +46,19 @@ function useFormset<TData = {}, TValue = any>(
   }
 
   function setItemValue(id: string, value: TValue) {
-    const itemIndex = data.findIndex(item => item.id === id);
-    setData([
-      ...data.slice(0, itemIndex),
-      {
-        ...data[itemIndex],
-        value
-      },
-      ...data.slice(itemIndex + 1)
-    ]);
+    setData(data => {
+      const itemIndex = data.findIndex(item => item.id === id);
+      return [
+        ...data.slice(0, itemIndex),
+        {
+          ...data[itemIndex],
+          value
+        },
+        ...data.slice(itemIndex + 1)
+      ];
+    });
   }
 
-  useEffect(() => {
-    console.log(data);
-  }, [data]);
   return {
     add: addItem,
     change: setItemValue,
