@@ -33,6 +33,10 @@ All notable, unreleased changes to this project will be documented in this file.
 - Add multiline field plugins - #974 by @dominik-zeglen
 - Handle limit reached error - #990 by @dominik-zeglen
 - Display Cloud limits - #1004 by @dominik-zeglen
+- Fixes - #1077 by @piotrgrundas:
+    - rich text field updates, 
+    - multiselect empty chip upon creation of a product/variant,
+    - useFormset.setItemValue wrong updates,
 
 # 2.11.1
 
