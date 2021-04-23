@@ -10,13 +10,18 @@ describe("Sorting products", () => {
       cy.clearSessionData()
         .loginUserViaRequest()
         .visit(urlList.products);
+      cy.get(SHARED_ELEMENTS.header).should("be.visible");
       if (sortBy !== "name") {
         cy.get(PRODUCTS_LIST.tableHeaders[sortBy]).click();
         cy.get(SHARED_ELEMENTS.progressBar).should("not.exist");
       }
       expectProductsSortedBy(sortBy);
-      cy.get(PRODUCTS_LIST.tableHeaders[sortBy]).click();
-      cy.get(SHARED_ELEMENTS.progressBar).should("not.exist");
+      cy.addAliasToGraphRequest("ProductList")
+        .get(PRODUCTS_LIST.tableHeaders[sortBy])
+        .click()
+        .get(SHARED_ELEMENTS.progressBar)
+        .should("not.exist")
+        .wait("@ProductList");
       expectProductsSortedBy(sortBy, false);
     });
   });
