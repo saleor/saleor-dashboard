@@ -101,6 +101,9 @@ export const commonMessages = defineMessages({
   },
   yes: {
     defaultMessage: "Yes"
+  },
+  mainProductList: {
+    defaultMessage: "Main Product List"
   }
 });
 
