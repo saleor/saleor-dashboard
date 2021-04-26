@@ -17,7 +17,6 @@ import { FetchMoreProps, UserPermissionProps } from "@saleor/types";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import { DraftOrderInput } from "../../../types/globalTypes";
 import { OrderDetails_order } from "../../types/OrderDetails";
 import OrderCustomer from "../OrderCustomer";
 import OrderDraftDetails from "../OrderDraftDetails/OrderDraftDetails";

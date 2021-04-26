@@ -13,7 +13,6 @@ import ConfirmButton, {
   ConfirmButtonTransitionState
 } from "@saleor/components/ConfirmButton";
 import ControlledCheckbox from "@saleor/components/ControlledCheckbox";
-import Form from "@saleor/components/Form";
 import FormSpacer from "@saleor/components/FormSpacer";
 import CustomerAddressChoice from "@saleor/customers/components/CustomerAddressChoice";
 import { AddressTypeInput } from "@saleor/customers/types";
@@ -24,43 +23,18 @@ import {
 } from "@saleor/customers/types/CustomerAddresses";
 import { OrderErrorFragment } from "@saleor/fragments/types/OrderErrorFragment";
 import useAddressValidation from "@saleor/hooks/useAddressValidation";
+import { SubmitPromise } from "@saleor/hooks/useForm";
 import useModalDialogErrors from "@saleor/hooks/useModalDialogErrors";
-import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { buttonMessages } from "@saleor/intl";
-import { maybe } from "@saleor/misc";
+import { transformAddressToForm } from "@saleor/misc";
 import { makeStyles } from "@saleor/theme";
-import { AddressInput } from "@saleor/types/globalTypes";
-import createSingleAutocompleteSelectHandler from "@saleor/utils/handlers/singleAutocompleteSelectChangeHandler";
-import React, { useState } from "react";
-import { defineMessages, FormattedMessage, useIntl } from "react-intl";
-
-const messages = defineMessages({
-  title: {
-    defaultMessage: "Shipping address for order",
-    description: "dialog header"
-  },
-  customerAddress: {
-    defaultMessage: "Use one of customer addresses",
-    description: "address type"
-  },
-  newAddress: {
-    defaultMessage: "Add new address",
-    description: "address type"
-  },
-  billingSameAsShipping: {
-    defaultMessage: "Billing address same as shipping address",
-    description: "checkbox label"
-  },
-  shippingAddressDescription: {
-    defaultMessage:
-      "Which address would you like to use as shipping address for selected customer:",
-    description: "dialog content"
-  },
-  billingAddressDescription: {
-    defaultMessage: "Select one of customer addresses or add a new address:",
-    description: "dialog content"
-  }
-});
+import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
+import OrderCustomerAddressesEditForm, {
+  AddressInputOptionEnum,
+  OrderCustomerAddressesEditFormData
+} from "./form";
+import messages from "./messages";
 
 const useStyles = makeStyles(
   {
@@ -77,17 +51,7 @@ const useStyles = makeStyles(
   { name: "OrderCustomerAddressesEditDialog" }
 );
 
-export enum AddressInputOptionEnum {
-  CUSTOMER_ADDRESS = "customerAddress",
-  NEW_ADDRESS = "newAddress"
-}
-
-export interface OrderCustomerAddressesEditDialogData {
-  billingSameAsShipping: boolean;
-  shippingAddressInputOption: AddressInputOptionEnum;
-  billingAddressInputOption: AddressInputOptionEnum;
-  customerShippingAddress: CustomerAddresses_user_defaultShippingAddress;
-  customerBillingAddress: CustomerAddresses_user_defaultBillingAddress;
+export interface OrderCustomerAddressesEditDialogOutput {
   shippingAddress: AddressTypeInput;
   billingAddress: AddressTypeInput;
 }
@@ -104,7 +68,7 @@ export interface OrderCustomerAddressesEditDialogProps {
   defaultShippingAddress?: CustomerAddresses_user_defaultShippingAddress;
   defaultBillingAddress?: CustomerAddresses_user_defaultBillingAddress;
   onClose();
-  onConfirm(data: AddressInput);
+  onConfirm(data: OrderCustomerAddressesEditDialogOutput): SubmitPromise;
 }
 
 const OrderCustomerAddressesEditDialog: React.FC<OrderCustomerAddressesEditDialogProps> = props => {
@@ -122,254 +86,251 @@ const OrderCustomerAddressesEditDialog: React.FC<OrderCustomerAddressesEditDialo
 
   const classes = useStyles(props);
   const intl = useIntl();
-  const [shippingCountryDisplayName, setShippingCountryDisplayName] = useState(
-    ""
-  );
-  const [billingCountryDisplayName, setBillingCountryDisplayName] = useState(
-    ""
-  );
   const {
-    errors: validationErrors,
-    submit: handleSubmit
-  } = useAddressValidation(onConfirm);
+    errors: shippingValidationErrors,
+    submit: handleShippingSubmit
+  } = useAddressValidation(address => address);
+  const {
+    errors: billingValidationErrors,
+    submit: handleBillingSubmit
+  } = useAddressValidation(address => address);
   const dialogErrors = useModalDialogErrors(
-    [...errors, ...validationErrors],
+    [...errors, ...shippingValidationErrors, ...billingValidationErrors],
     open
   );
+
+  const handleSubmit = async (data: OrderCustomerAddressesEditFormData) => {
+    let shippingAddress;
+    let billingAddress;
+    if (
+      data.shippingAddressInputOption ===
+      AddressInputOptionEnum.CUSTOMER_ADDRESS
+    ) {
+      shippingAddress = transformAddressToForm(
+        customerAddresses.find(
+          customerAddress =>
+            customerAddress.id === data.customerShippingAddress.id
+        )
+      );
+    } else {
+      shippingAddress = handleShippingSubmit(data.shippingAddress);
+    }
+    if (data.billingSameAsShipping) {
+      billingAddress = shippingAddress;
+    } else if (
+      data.billingAddressInputOption === AddressInputOptionEnum.CUSTOMER_ADDRESS
+    ) {
+      billingAddress = transformAddressToForm(
+        customerAddresses.find(
+          customerAddress =>
+            customerAddress.id === data.customerBillingAddress.id
+        )
+      );
+    } else {
+      billingAddress = handleBillingSubmit(data.billingAddress);
+    }
+    if (shippingAddress && billingAddress) {
+      const errors = await onConfirm({
+        shippingAddress,
+        billingAddress
+      });
+      return !errors.length;
+    }
+  };
 
   const countryChoices = countries.map(country => ({
     label: country.label,
     value: country.code
   }));
 
-  const initialAddress: AddressTypeInput = {
-    city: "",
-    country: "",
-    phone: "",
-    postalCode: "",
-    streetAddress1: ""
-  };
-
-  const initialData: OrderCustomerAddressesEditDialogData = {
-    billingSameAsShipping: true,
-    shippingAddressInputOption: AddressInputOptionEnum.CUSTOMER_ADDRESS,
-    billingAddressInputOption: AddressInputOptionEnum.CUSTOMER_ADDRESS,
-    customerShippingAddress: defaultShippingAddress,
-    customerBillingAddress: defaultBillingAddress,
-    shippingAddress: initialAddress,
-    billingAddress: initialAddress
-  };
-
   return (
     <Dialog onClose={onClose} open={open}>
-      <Form initial={initialData} onSubmit={handleSubmit}>
-        {({ change, data }) => {
-          const handleShippingCountrySelect = createSingleAutocompleteSelectHandler(
-            event =>
-              change({
-                target: {
-                  name: "shippingAddress",
-                  value: event.target.value
-                }
-              }),
-            setShippingCountryDisplayName,
-            countryChoices
-          );
-          const handleBillingCountrySelect = createSingleAutocompleteSelectHandler(
-            event =>
-              change({
-                target: {
-                  name: "billingAddress",
-                  value: event.target.value
-                }
-              }),
-            setBillingCountryDisplayName,
-            countryChoices
-          );
-
-          return (
-            <>
-              <DialogTitle>
-                <FormattedMessage {...messages.title} />
-              </DialogTitle>
-              <DialogContent className={classes.overflow}>
-                <Typography>
-                  <FormattedMessage {...messages.shippingAddressDescription} />
-                </Typography>
-                <FormSpacer />
-                <RadioGroup
-                  className={classes.container}
-                  value={data.shippingAddressInputOption}
-                  name="shippingAddressInputOption"
-                  onChange={event => change(event)}
-                >
-                  <FormControlLabel
-                    value={AddressInputOptionEnum.CUSTOMER_ADDRESS}
-                    control={<Radio color="primary" />}
-                    label={intl.formatMessage(messages.customerAddress)}
-                    className={classes.optionLabel}
-                  />
-                  {data.shippingAddressInputOption ===
-                    AddressInputOptionEnum.CUSTOMER_ADDRESS && (
-                    <>
-                      {customerAddresses.map(customerAddress => (
-                        <React.Fragment key={customerAddress.id}>
-                          <CardSpacer />
-                          <CustomerAddressChoice
-                            address={customerAddress}
-                            selected={
-                              customerAddress.id ===
-                              data.customerShippingAddress?.id
-                            }
-                            onSelect={() =>
-                              change({
-                                target: {
-                                  name: "customerShippingAddress",
-                                  value: customerAddress
-                                }
-                              })
-                            }
-                          />
-                        </React.Fragment>
-                      ))}
-                      <FormSpacer />
-                    </>
-                  )}
-                  <FormControlLabel
-                    value={AddressInputOptionEnum.NEW_ADDRESS}
-                    control={<Radio color="primary" />}
-                    label={intl.formatMessage(messages.newAddress)}
-                    className={classes.optionLabel}
-                  />
-                  {data.shippingAddressInputOption ===
-                    AddressInputOptionEnum.NEW_ADDRESS && (
-                    <>
-                      <FormSpacer />
-                      <AddressEdit
-                        countries={countryChoices}
-                        countryDisplayValue={shippingCountryDisplayName}
-                        data={data.shippingAddress}
-                        errors={dialogErrors}
-                        onChange={event =>
-                          change({
-                            target: {
-                              name: "shippingAddress",
-                              value: {
-                                ...data.shippingAddress,
-                                [event.target.name]: event.target.value
-                              }
-                            }
-                          })
-                        }
-                        onCountryChange={handleShippingCountrySelect}
-                      />
-                    </>
-                  )}
-                </RadioGroup>
-                <FormSpacer />
-                <Divider />
-                <FormSpacer />
-                <ControlledCheckbox
-                  checked={data.billingSameAsShipping}
-                  name="billingSameAsShipping"
-                  label={intl.formatMessage(messages.billingSameAsShipping)}
-                  onChange={change}
+      <OrderCustomerAddressesEditForm
+        countryChoices={countryChoices}
+        defaultShippingAddress={defaultShippingAddress}
+        defaultBillingAddress={defaultBillingAddress}
+        onSubmit={handleSubmit}
+      >
+        {({ change, data, handlers }) => (
+          <>
+            <DialogTitle>
+              <FormattedMessage {...messages.title} />
+            </DialogTitle>
+            <DialogContent className={classes.overflow}>
+              <Typography>
+                <FormattedMessage {...messages.shippingAddressDescription} />
+              </Typography>
+              <FormSpacer />
+              <RadioGroup
+                className={classes.container}
+                value={data.shippingAddressInputOption}
+                name="shippingAddressInputOption"
+                onChange={event => change(event)}
+              >
+                <FormControlLabel
+                  value={AddressInputOptionEnum.CUSTOMER_ADDRESS}
+                  control={<Radio color="primary" />}
+                  label={intl.formatMessage(messages.customerAddress)}
+                  className={classes.optionLabel}
                 />
-                {!data.billingSameAsShipping && (
+                {data.shippingAddressInputOption ===
+                  AddressInputOptionEnum.CUSTOMER_ADDRESS && (
                   <>
+                    {customerAddresses.map(customerAddress => (
+                      <React.Fragment key={customerAddress.id}>
+                        <CardSpacer />
+                        <CustomerAddressChoice
+                          address={customerAddress}
+                          selected={
+                            customerAddress.id ===
+                            data.customerShippingAddress?.id
+                          }
+                          onSelect={() =>
+                            change({
+                              target: {
+                                name: "customerShippingAddress",
+                                value: customerAddress
+                              }
+                            })
+                          }
+                        />
+                      </React.Fragment>
+                    ))}
                     <FormSpacer />
-                    <Typography>
-                      <FormattedMessage
-                        {...messages.billingAddressDescription}
-                      />
-                    </Typography>
-                    <FormSpacer />
-                    <RadioGroup
-                      className={classes.container}
-                      value={data.billingAddressInputOption}
-                      name="billingAddressInputOption"
-                      onChange={event => change(event)}
-                    >
-                      <FormControlLabel
-                        value={AddressInputOptionEnum.CUSTOMER_ADDRESS}
-                        control={<Radio color="primary" />}
-                        label={intl.formatMessage(messages.customerAddress)}
-                        className={classes.optionLabel}
-                      />
-                      {data.billingAddressInputOption ===
-                        AddressInputOptionEnum.CUSTOMER_ADDRESS && (
-                        <>
-                          {customerAddresses.map(customerAddress => (
-                            <React.Fragment key={customerAddress.id}>
-                              <CardSpacer />
-                              <CustomerAddressChoice
-                                address={customerAddress}
-                                selected={
-                                  customerAddress.id ===
-                                  data.customerBillingAddress?.id
-                                }
-                                onSelect={() =>
-                                  change({
-                                    target: {
-                                      name: "customerBillingAddress",
-                                      value: customerAddress
-                                    }
-                                  })
-                                }
-                              />
-                            </React.Fragment>
-                          ))}
-                          <FormSpacer />
-                        </>
-                      )}
-                      <FormControlLabel
-                        value={AddressInputOptionEnum.NEW_ADDRESS}
-                        control={<Radio color="primary" />}
-                        label={intl.formatMessage(messages.newAddress)}
-                        className={classes.optionLabel}
-                      />
-                      {data.billingAddressInputOption ===
-                        AddressInputOptionEnum.NEW_ADDRESS && (
-                        <>
-                          <FormSpacer />
-                          <AddressEdit
-                            countries={countryChoices}
-                            countryDisplayValue={billingCountryDisplayName}
-                            data={data.billingAddress}
-                            errors={dialogErrors}
-                            onChange={event =>
-                              change({
-                                target: {
-                                  name: "billingAddress",
-                                  value: {
-                                    ...data.billingAddress,
-                                    [event.target.name]: event.target.value
-                                  }
-                                }
-                              })
-                            }
-                            onCountryChange={handleBillingCountrySelect}
-                          />
-                        </>
-                      )}
-                    </RadioGroup>
                   </>
                 )}
-              </DialogContent>
-              <DialogActions>
-                <ConfirmButton
-                  transitionState={confirmButtonState}
-                  color="primary"
-                  variant="contained"
-                  type="submit"
-                >
-                  <FormattedMessage {...buttonMessages.select} />
-                </ConfirmButton>
-              </DialogActions>
-            </>
-          );
-        }}
-      </Form>
+                <FormControlLabel
+                  value={AddressInputOptionEnum.NEW_ADDRESS}
+                  control={<Radio color="primary" />}
+                  label={intl.formatMessage(messages.newAddress)}
+                  className={classes.optionLabel}
+                />
+                {data.shippingAddressInputOption ===
+                  AddressInputOptionEnum.NEW_ADDRESS && (
+                  <>
+                    <FormSpacer />
+                    <AddressEdit
+                      countries={countryChoices}
+                      countryDisplayValue={data.shippingCountryDisplayName}
+                      data={data.shippingAddress}
+                      errors={dialogErrors}
+                      onChange={event =>
+                        change({
+                          target: {
+                            name: "shippingAddress",
+                            value: {
+                              ...data.shippingAddress,
+                              [event.target.name]: event.target.value
+                            }
+                          }
+                        })
+                      }
+                      onCountryChange={handlers.selectShippingCountry}
+                    />
+                  </>
+                )}
+              </RadioGroup>
+              <FormSpacer />
+              <Divider />
+              <FormSpacer />
+              <ControlledCheckbox
+                checked={data.billingSameAsShipping}
+                name="billingSameAsShipping"
+                label={intl.formatMessage(messages.billingSameAsShipping)}
+                onChange={change}
+              />
+              {!data.billingSameAsShipping && (
+                <>
+                  <FormSpacer />
+                  <Typography>
+                    <FormattedMessage {...messages.billingAddressDescription} />
+                  </Typography>
+                  <FormSpacer />
+                  <RadioGroup
+                    className={classes.container}
+                    value={data.billingAddressInputOption}
+                    name="billingAddressInputOption"
+                    onChange={event => change(event)}
+                  >
+                    <FormControlLabel
+                      value={AddressInputOptionEnum.CUSTOMER_ADDRESS}
+                      control={<Radio color="primary" />}
+                      label={intl.formatMessage(messages.customerAddress)}
+                      className={classes.optionLabel}
+                    />
+                    {data.billingAddressInputOption ===
+                      AddressInputOptionEnum.CUSTOMER_ADDRESS && (
+                      <>
+                        {customerAddresses.map(customerAddress => (
+                          <React.Fragment key={customerAddress.id}>
+                            <CardSpacer />
+                            <CustomerAddressChoice
+                              address={customerAddress}
+                              selected={
+                                customerAddress.id ===
+                                data.customerBillingAddress?.id
+                              }
+                              onSelect={() =>
+                                change({
+                                  target: {
+                                    name: "customerBillingAddress",
+                                    value: customerAddress
+                                  }
+                                })
+                              }
+                            />
+                          </React.Fragment>
+                        ))}
+                        <FormSpacer />
+                      </>
+                    )}
+                    <FormControlLabel
+                      value={AddressInputOptionEnum.NEW_ADDRESS}
+                      control={<Radio color="primary" />}
+                      label={intl.formatMessage(messages.newAddress)}
+                      className={classes.optionLabel}
+                    />
+                    {data.billingAddressInputOption ===
+                      AddressInputOptionEnum.NEW_ADDRESS && (
+                      <>
+                        <FormSpacer />
+                        <AddressEdit
+                          countries={countryChoices}
+                          countryDisplayValue={data.billingCountryDisplayName}
+                          data={data.billingAddress}
+                          errors={dialogErrors}
+                          onChange={event =>
+                            change({
+                              target: {
+                                name: "billingAddress",
+                                value: {
+                                  ...data.billingAddress,
+                                  [event.target.name]: event.target.value
+                                }
+                              }
+                            })
+                          }
+                          onCountryChange={handlers.selectBillingCountry}
+                        />
+                      </>
+                    )}
+                  </RadioGroup>
+                </>
+              )}
+            </DialogContent>
+            <DialogActions>
+              <ConfirmButton
+                transitionState={confirmButtonState}
+                color="primary"
+                variant="contained"
+                type="submit"
+              >
+                <FormattedMessage {...buttonMessages.select} />
+              </ConfirmButton>
+            </DialogActions>
+          </>
+        )}
+      </OrderCustomerAddressesEditForm>
     </Dialog>
   );
 };

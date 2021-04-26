@@ -2,7 +2,6 @@ import { WindowTitle } from "@saleor/components/WindowTitle";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@saleor/config";
 import { useCustomerAddressesQuery } from "@saleor/customers/queries";
 import useNavigator from "@saleor/hooks/useNavigator";
-import useShop from "@saleor/hooks/useShop";
 import useUser from "@saleor/hooks/useUser";
 import OrderCustomerAddressesEditDialog from "@saleor/orders/components/OrderCustomerAddressesEditDialog";
 import { OrderDiscountProvider } from "@saleor/products/components/OrderDiscountProviders/OrderDiscountProvider";
@@ -12,7 +11,10 @@ import React from "react";
 import { useIntl } from "react-intl";
 
 import { customerUrl } from "../../../../customers/urls";
-import { getStringOrPlaceholder } from "../../../../misc";
+import {
+  getStringOrPlaceholder,
+  transformFormToAddress
+} from "../../../../misc";
 import { productUrl } from "../../../../products/urls";
 import OrderDraftCancelDialog from "../../../components/OrderDraftCancelDialog/OrderDraftCancelDialog";
 import OrderDraftPage from "../../../components/OrderDraftPage";
@@ -197,21 +199,26 @@ export const OrderDraftDetails: React.FC<OrderDraftDetailsProps> = ({
       />
       <OrderCustomerAddressesEditDialog
         open={params.action === "edit-customer-addresses"}
-        confirmButtonState={undefined}
-        errors={undefined}
+        confirmButtonState={orderDraftUpdate.opts.status}
+        errors={orderDraftUpdate.opts.data?.draftOrderUpdate?.errors || []}
         countries={countries}
         customerAddresses={customerAddresses?.user?.addresses}
         defaultShippingAddress={customerAddresses?.user?.defaultShippingAddress}
         defaultBillingAddress={customerAddresses?.user?.defaultBillingAddress}
-        onClose={() => null}
-        onConfirm={() => {
-          orderDraftUpdate.mutate({
+        onClose={closeModal}
+        onConfirm={async data => {
+          const result = await orderDraftUpdate.mutate({
             id,
             input: {
-              user: params.id
+              user: params.id,
+              shippingAddress: transformFormToAddress(data.shippingAddress),
+              billingAddress: transformFormToAddress(data.billingAddress)
             }
           });
-          closeModal();
+          if (!result?.data?.draftOrderUpdate?.errors?.length) {
+            closeModal();
+          }
+          return result;
         }}
       />
     </>

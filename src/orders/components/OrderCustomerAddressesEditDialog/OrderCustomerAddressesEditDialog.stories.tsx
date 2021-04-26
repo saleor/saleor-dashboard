@@ -1,26 +1,13 @@
-import { transformAddressToForm } from "@saleor/misc";
 import Decorator from "@saleor/storybook/Decorator";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
 import { countries, order as orderFixture } from "../../fixtures";
 import OrderCustomerAddressesEditDialog, {
-  AddressInputOptionEnum,
-  OrderCustomerAddressesEditDialogData,
   OrderCustomerAddressesEditDialogProps
 } from "./OrderCustomerAddressesEditDialog";
 
 const order = orderFixture("");
-
-const data: OrderCustomerAddressesEditDialogData = {
-  billingSameAsShipping: false,
-  shippingAddressInputOption: AddressInputOptionEnum.CUSTOMER_ADDRESS,
-  billingAddressInputOption: AddressInputOptionEnum.NEW_ADDRESS,
-  shippingAddress: transformAddressToForm(order.shippingAddress),
-  billingAddress: transformAddressToForm(order.billingAddress),
-  customerShippingAddress: order.shippingAddress,
-  customerBillingAddress: order.billingAddress
-};
 
 const props: OrderCustomerAddressesEditDialogProps = {
   confirmButtonState: "default",
