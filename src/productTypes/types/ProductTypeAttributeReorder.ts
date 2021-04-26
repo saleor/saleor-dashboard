@@ -10,7 +10,7 @@ import { ReorderInput, ProductAttributeType, AttributeTypeEnum, WeightUnitsEnum 
 // ====================================================
 
 export interface ProductTypeAttributeReorder_productTypeReorderAttributes_errors {
-  __typename: "Error";
+  __typename: "ProductError";
   field: string | null;
   message: string | null;
 }

@@ -456,12 +456,6 @@ export interface OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_o
   price: OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_order_availableShippingMethods_price | null;
 }
 
-export interface OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_order_discount {
-  __typename: "Money";
-  amount: number;
-  currency: string;
-}
-
 export interface OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_order_invoices {
   __typename: "Invoice";
   id: string;
@@ -510,7 +504,6 @@ export interface OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_o
   user: OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_order_user | null;
   userEmail: string | null;
   availableShippingMethods: (OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_order_availableShippingMethods | null)[] | null;
-  discount: OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_order_discount | null;
   invoices: (OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_order_invoices | null)[] | null;
   channel: OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_order_channel;
   isPaid: boolean;

@@ -40,6 +40,7 @@ All notable, unreleased changes to this project will be documented in this file.
     - rich text field updates, 
     - multiselect empty chip upon creation of a product/variant,
     - useFormset.setItemValue wrong updates,
+- Drop deprecated fields - #1071 by @jwm0
 
 # 2.11.1
 

@@ -45,7 +45,7 @@ const updateCustomer = gql`
   ${customerDetailsFragment}
   mutation UpdateCustomer($id: ID!, $input: CustomerInput!) {
     customerUpdate(id: $id, input: $input) {
-      errors: accountErrors {
+      errors {
         ...AccountErrorFragment
       }
       user {
@@ -63,7 +63,7 @@ const createCustomer = gql`
   ${accountErrorFragment}
   mutation CreateCustomer($input: UserCreateInput!) {
     customerCreate(input: $input) {
-      errors: accountErrors {
+      errors {
         ...AccountErrorFragment
       }
       user {
@@ -81,7 +81,7 @@ const removeCustomer = gql`
   ${accountErrorFragment}
   mutation RemoveCustomer($id: ID!) {
     customerDelete(id: $id) {
-      errors: accountErrors {
+      errors {
         ...AccountErrorFragment
       }
     }
@@ -101,7 +101,7 @@ const setCustomerDefaultAddress = gql`
     $type: AddressTypeEnum!
   ) {
     addressSetDefault(addressId: $addressId, userId: $userId, type: $type) {
-      errors: accountErrors {
+      errors {
         ...AccountErrorFragment
       }
       user {
@@ -121,7 +121,7 @@ const createCustomerAddress = gql`
   ${fragmentAddress}
   mutation CreateCustomerAddress($id: ID!, $input: AddressInput!) {
     addressCreate(userId: $id, input: $input) {
-      errors: accountErrors {
+      errors {
         ...AccountErrorFragment
       }
       address {
@@ -143,7 +143,7 @@ const updateCustomerAddress = gql`
   ${fragmentAddress}
   mutation UpdateCustomerAddress($id: ID!, $input: AddressInput!) {
     addressUpdate(id: $id, input: $input) {
-      errors: accountErrors {
+      errors {
         ...AccountErrorFragment
       }
       address {
@@ -162,7 +162,7 @@ const removeCustomerAddress = gql`
   ${customerAddressesFragment}
   mutation RemoveCustomerAddress($id: ID!) {
     addressDelete(id: $id) {
-      errors: accountErrors {
+      errors {
         ...AccountErrorFragment
       }
       user {
@@ -180,7 +180,7 @@ export const bulkRemoveCustomers = gql`
   ${accountErrorFragment}
   mutation BulkRemoveCustomers($ids: [ID]!) {
     customerBulkDelete(ids: $ids) {
-      errors: accountErrors {
+      errors {
         ...AccountErrorFragment
       }
     }

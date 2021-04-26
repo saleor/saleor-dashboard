@@ -12,7 +12,11 @@ import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { maybe, transformPaymentStatus } from "../../../misc";
-import { OrderAction, OrderStatus } from "../../../types/globalTypes";
+import {
+  OrderAction,
+  OrderDiscountType,
+  OrderStatus
+} from "../../../types/globalTypes";
 import { OrderDetails_order } from "../../types/OrderDetails";
 
 const useStyles = makeStyles(
@@ -163,7 +167,7 @@ const OrderPayment: React.FC<OrderPaymentProps> = props => {
                 )}
               </td>
             </tr>
-            {order?.discount?.amount > 0 && (
+            {order?.discounts?.map(discount => (
               <tr>
                 <td>
                   <FormattedMessage
@@ -171,12 +175,24 @@ const OrderPayment: React.FC<OrderPaymentProps> = props => {
                     description="order discount"
                   />
                 </td>
-                <td />
+                <td>
+                  {discount.type === OrderDiscountType.MANUAL ? (
+                    <FormattedMessage
+                      defaultMessage="Staff added"
+                      description="staff added type order discount"
+                    />
+                  ) : (
+                    <FormattedMessage
+                      defaultMessage="Voucher"
+                      description="voucher type order discount"
+                    />
+                  )}
+                </td>
                 <td className={classes.textRight}>
-                  -<Money money={order.discount} />
+                  -<Money money={discount.amount} />
                 </td>
               </tr>
-            )}
+            ))}
             <tr className={classes.totalRow}>
               <td>
                 <FormattedMessage

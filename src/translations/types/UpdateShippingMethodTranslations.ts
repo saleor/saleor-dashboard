@@ -10,7 +10,7 @@ import { ShippingPriceTranslationInput, LanguageCodeEnum } from "./../../types/g
 // ====================================================
 
 export interface UpdateShippingMethodTranslations_shippingPriceTranslate_errors {
-  __typename: "Error";
+  __typename: "TranslationError";
   field: string | null;
   message: string | null;
 }

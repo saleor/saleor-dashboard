@@ -14,21 +14,31 @@ export function getDisplayedColumnArray(columnName) {
     .then(() => productsList);
 }
 export function expectProductsSortedBy(columnName, inAscOrder = true) {
-  getDisplayedColumnArray(columnName).then(productsArray => {
-    let sortedProductsArray = productsArray.slice();
-    if (columnName !== "price") {
-      sortedProductsArray.sort();
-      if (!inAscOrder) {
-        sortedProductsArray.reverse();
+  let sortedProductsArray;
+  let productsArray;
+  getDisplayedColumnArray(columnName)
+    .then(productsArrayResp => {
+      productsArray = productsArrayResp;
+      sortedProductsArray = productsArray.slice();
+      if (columnName !== "price") {
+        sortedProductsArray = sortedProductsArray.sort((a, b) =>
+          a.localeCompare(b, undefined, { ignorePunctuation: true })
+        );
+        if (!inAscOrder) {
+          sortedProductsArray.reverse();
+        }
+      } else {
+        sortedProductsArray = getSortedPriceColumn(
+          sortedProductsArray,
+          inAscOrder
+        );
       }
-    } else {
-      sortedProductsArray = getSortedPriceColumn(
-        sortedProductsArray,
-        inAscOrder
-      );
-    }
-    expect(productsArray).to.be.deep.eq(sortedProductsArray);
-  });
+    })
+    .then(() => {
+      expect(
+        JSON.stringify(productsArray) === JSON.stringify(sortedProductsArray)
+      ).to.be.eq(true);
+    });
 }
 function getSortedPriceColumn(productsArray, inAscOrder) {
   return inAscOrder

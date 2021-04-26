@@ -456,12 +456,6 @@ export interface OrderFulfillmentCancel_orderFulfillmentCancel_order_availableSh
   price: OrderFulfillmentCancel_orderFulfillmentCancel_order_availableShippingMethods_price | null;
 }
 
-export interface OrderFulfillmentCancel_orderFulfillmentCancel_order_discount {
-  __typename: "Money";
-  amount: number;
-  currency: string;
-}
-
 export interface OrderFulfillmentCancel_orderFulfillmentCancel_order_invoices {
   __typename: "Invoice";
   id: string;
@@ -510,7 +504,6 @@ export interface OrderFulfillmentCancel_orderFulfillmentCancel_order {
   user: OrderFulfillmentCancel_orderFulfillmentCancel_order_user | null;
   userEmail: string | null;
   availableShippingMethods: (OrderFulfillmentCancel_orderFulfillmentCancel_order_availableShippingMethods | null)[] | null;
-  discount: OrderFulfillmentCancel_orderFulfillmentCancel_order_discount | null;
   invoices: (OrderFulfillmentCancel_orderFulfillmentCancel_order_invoices | null)[] | null;
   channel: OrderFulfillmentCancel_orderFulfillmentCancel_order_channel;
   isPaid: boolean;

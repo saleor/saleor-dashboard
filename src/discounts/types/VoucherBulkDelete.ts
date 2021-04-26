@@ -8,7 +8,7 @@
 // ====================================================
 
 export interface VoucherBulkDelete_voucherBulkDelete_errors {
-  __typename: "Error";
+  __typename: "DiscountError";
   field: string | null;
   message: string | null;
 }

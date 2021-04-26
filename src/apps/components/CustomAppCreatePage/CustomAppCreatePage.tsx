@@ -1,7 +1,5 @@
 import AccountPermissions from "@saleor/components/AccountPermissions";
 import AppHeader from "@saleor/components/AppHeader";
-import AppStatus from "@saleor/components/AppStatus";
-import CardSpacer from "@saleor/components/CardSpacer";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
 import Container from "@saleor/components/Container";
 import Form from "@saleor/components/Form";
@@ -21,7 +19,6 @@ import CustomAppInformation from "../CustomAppInformation";
 
 export interface CustomAppCreatePageFormData {
   hasFullAccess: boolean;
-  isActive: boolean;
   name: string;
   permissions: PermissionEnum[];
 }
@@ -47,7 +44,6 @@ const CustomAppCreatePage: React.FC<CustomAppCreatePageProps> = props => {
 
   const initialForm: CustomAppCreatePageFormData = {
     hasFullAccess: false,
-    isActive: false,
     name: "",
     permissions: []
   };
@@ -93,16 +89,6 @@ const CustomAppCreatePage: React.FC<CustomAppCreatePageProps> = props => {
                   "Expand or restrict app permissions to access certain part of Saleor system.",
                 description: "card description"
               })}
-            />
-            <CardSpacer />
-            <AppStatus
-              data={data}
-              disabled={disabled}
-              label={intl.formatMessage({
-                defaultMessage: "App is active",
-                description: "checkbox label"
-              })}
-              onChange={change}
             />
           </Grid>
           <SaveButtonBar

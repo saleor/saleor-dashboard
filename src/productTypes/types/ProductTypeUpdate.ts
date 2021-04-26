@@ -10,7 +10,7 @@ import { ProductTypeInput, AttributeTypeEnum, WeightUnitsEnum } from "./../../ty
 // ====================================================
 
 export interface ProductTypeUpdate_productTypeUpdate_errors {
-  __typename: "Error";
+  __typename: "ProductError";
   field: string | null;
   message: string | null;
 }

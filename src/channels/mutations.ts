@@ -25,7 +25,7 @@ export const channelCreateMutation = gql`
       channel {
         ...ChannelDetailsFragment
       }
-      errors: channelErrors {
+      errors {
         ...ChannelErrorFragment
       }
     }
@@ -40,7 +40,7 @@ export const channelUpdateMutation = gql`
       channel {
         ...ChannelDetailsFragment
       }
-      errors: channelErrors {
+      errors {
         ...ChannelErrorFragment
       }
     }
@@ -51,7 +51,7 @@ export const channelDeleteMutation = gql`
   ${channelErrorFragment}
   mutation ChannelDelete($id: ID!, $input: ChannelDeleteInput) {
     channelDelete(id: $id, input: $input) {
-      errors: channelErrors {
+      errors {
         ...ChannelErrorFragment
       }
     }
@@ -66,7 +66,7 @@ export const channelActivateMutation = gql`
       channel {
         ...ChannelDetailsFragment
       }
-      errors: channelErrors {
+      errors {
         ...ChannelErrorFragment
       }
     }
@@ -81,7 +81,7 @@ export const channelDeactivateMutation = gql`
       channel {
         ...ChannelDetailsFragment
       }
-      errors: channelErrors {
+      errors {
         ...ChannelErrorFragment
       }
     }
