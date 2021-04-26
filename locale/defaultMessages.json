@@ -2392,6 +2392,18 @@
     "context": "dialog header, title",
     "string": "Invoice Generation"
   },
+  "src_dot_containers_dot_ServiceWorker_dot_newVersionContent": {
+    "context": "new version notification content",
+    "string": "You need to update Saleor to the newest version. Before doing so - save all changes to prevent loss of data. To update use the button below."
+  },
+  "src_dot_containers_dot_ServiceWorker_dot_newVersionTitle": {
+    "context": "notification title",
+    "string": "System update required"
+  },
+  "src_dot_containers_dot_ServiceWorker_dot_refresh": {
+    "context": "button",
+    "string": "Refresh"
+  },
   "src_dot_create": {
     "context": "button",
     "string": "Create"
