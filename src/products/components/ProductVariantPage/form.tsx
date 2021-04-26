@@ -135,8 +135,6 @@ function useProductVariantUpdateForm(
     makeChangeHandler: makeMetadataChangeHandler
   } = useMetadataChangeTrigger();
 
-  // console.log({ attributes, initial });
-
   const handleChange: FormChange = (event, cb) => {
     form.change(event, cb);
     triggerChange();

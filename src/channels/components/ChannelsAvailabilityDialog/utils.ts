@@ -1,11 +1,13 @@
 import { useChannelsList } from "@saleor/channels/queries";
+import { Channel_channel } from "@saleor/channels/types/Channel";
+import { FetchMoreProps, Search, SearchProps } from "@saleor/types";
 import { filter } from "fuzzaldrin";
 import { compact } from "lodash-es";
 import chunk from "lodash-es/chunk";
 import concat from "lodash-es/concat";
 import React, { useEffect, useState } from "react";
 
-const DEFAULT_ITEMS_PER_PAGE = 2;
+const DEFAULT_ITEMS_PER_PAGE = 6;
 const INITIAL_INDEX = 0;
 
 export const useChannelsSearch = function<T extends { name: string }>(
@@ -18,14 +20,23 @@ export const useChannelsSearch = function<T extends { name: string }>(
   return { query, onQueryChange, filteredChannels };
 };
 
+export interface ChannelsWithLoadMoreProps
+  extends FetchMoreProps,
+    Search,
+    SearchProps {
+  channels: Channel_channel[];
+}
+
 export const useChannelsSearchWithLoadMore = (
   itemsPerPage: number = DEFAULT_ITEMS_PER_PAGE
-) => {
+): ChannelsWithLoadMoreProps => {
   const { data, loading } = useChannelsList({});
 
-  const { query, onQueryChange, filteredChannels } = useChannelsSearch(
-    data?.channels
-  );
+  const {
+    query,
+    onQueryChange: onSearchChange,
+    filteredChannels
+  } = useChannelsSearch(data?.channels);
 
   const allChannelsChunks = chunk(filteredChannels, itemsPerPage);
 
@@ -60,7 +71,7 @@ export const useChannelsSearchWithLoadMore = (
 
   return {
     query,
-    onQueryChange,
+    onSearchChange,
     channels,
     hasMore,
     totalCount,

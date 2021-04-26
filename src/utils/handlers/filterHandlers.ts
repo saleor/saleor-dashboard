@@ -29,6 +29,9 @@ function createFilterHandlers<
       cleanupFn();
     }
 
+    console.log(111, filter, {
+      ...getFilterQueryParams(filter, getFilterQueryParam)
+    });
     navigate(
       createUrl({
         ...params,

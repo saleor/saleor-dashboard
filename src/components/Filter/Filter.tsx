@@ -120,7 +120,7 @@ const Filter: React.FC<FilterProps> = props => {
             <>
               <span className={classes.separator} />
               <Typography className={classes.addFilterText}>
-                {menu.reduce(
+                {data.reduce(
                   (acc, filterElement) => acc + (filterElement.active ? 1 : 0),
                   0
                 )}
@@ -157,6 +157,7 @@ const Filter: React.FC<FilterProps> = props => {
               }}
             >
               <FilterContent
+                dataStructure={menu}
                 currencySymbol={currencySymbol}
                 filters={data}
                 onClear={reset}

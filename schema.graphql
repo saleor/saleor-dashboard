@@ -2640,7 +2640,7 @@ type Mutation {
   shippingPriceDelete(id: ID!): ShippingPriceDelete
   shippingPriceBulkDelete(ids: [ID]!): ShippingPriceBulkDelete
   shippingPriceUpdate(id: ID!, input: ShippingPriceInput!): ShippingPriceUpdate
-  shippingPriceTranslate(id: ID!, input: NameTranslationInput!, languageCode: LanguageCodeEnum!): ShippingPriceTranslate
+  shippingPriceTranslate(id: ID!, input: ShippingPriceTranslationInput!, languageCode: LanguageCodeEnum!): ShippingPriceTranslate
   shippingPriceExcludeProducts(id: ID!, input: ShippingPriceExcludeProductsInput!): ShippingPriceExcludeProducts
   shippingPriceRemoveProductFromExclude(id: ID!, products: [ID]!): ShippingPriceRemoveProductFromExclude
   shippingZoneCreate(input: ShippingZoneCreateInput!): ShippingZoneCreate
@@ -2771,7 +2771,7 @@ type Mutation {
   giftCardCreate(input: GiftCardCreateInput!): GiftCardCreate
   giftCardDeactivate(id: ID!): GiftCardDeactivate
   giftCardUpdate(id: ID!, input: GiftCardUpdateInput!): GiftCardUpdate
-  pluginUpdate(channel: String, id: ID!, input: PluginUpdateInput!): PluginUpdate
+  pluginUpdate(channelId: ID, id: ID!, input: PluginUpdateInput!): PluginUpdate
   saleCreate(input: SaleInput!): SaleCreate
   saleDelete(id: ID!): SaleDelete
   saleBulkDelete(ids: [ID]!): SaleBulkDelete
@@ -3920,6 +3920,11 @@ type PluginConfiguration {
   configuration: [ConfigurationItem]
 }
 
+enum PluginConfigurationType {
+  PER_CHANNEL
+  GLOBAL
+}
+
 type PluginCountableConnection {
   pageInfo: PageInfo!
   edges: [PluginCountableEdge!]!
@@ -3947,8 +3952,9 @@ enum PluginErrorCode {
 }
 
 input PluginFilterInput {
-  active: Boolean
+  statusInChannels: PluginStatusInChannelsInput
   search: String
+  type: PluginConfigurationType
 }
 
 enum PluginSortField {
@@ -3959,6 +3965,11 @@ enum PluginSortField {
 input PluginSortingInput {
   direction: OrderDirection!
   field: PluginSortField!
+}
+
+input PluginStatusInChannelsInput {
+  active: Boolean!
+  channels: [ID!]!
 }
 
 type PluginUpdate {
@@ -4635,7 +4646,7 @@ type Query {
   shop: Shop!
   orderSettings: OrderSettings
   shippingZone(id: ID!, channel: String): ShippingZone
-  shippingZones(channel: String, before: String, after: String, first: Int, last: Int): ShippingZoneCountableConnection
+  shippingZones(filter: ShippingZoneFilterInput, channel: String, before: String, after: String, first: Int, last: Int): ShippingZoneCountableConnection
   digitalContent(id: ID!): DigitalContent
   digitalContents(before: String, after: String, first: Int, last: Int): DigitalContentCountableConnection
   categories(filter: CategoryFilterInput, sortBy: CategorySortingInput, level: Int, before: String, after: String, first: Int, last: Int): CategoryCountableConnection

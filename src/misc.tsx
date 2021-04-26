@@ -1,5 +1,7 @@
+import { Divider } from "@material-ui/core";
 import initial from "lodash-es/initial";
 import moment from "moment-timezone";
+import React from "react";
 import { MutationFunction, MutationResult } from "react-apollo";
 import { defineMessages, IntlShape } from "react-intl";
 import urlJoin from "url-join";
@@ -35,6 +37,8 @@ export type RequireOnlyOne<T, Keys extends keyof T = keyof T> = Pick<
       Partial<Record<Exclude<Keys, K>, undefined>>;
   }[Keys];
 
+const defaultRenderDivider = () => <Divider />;
+
 export function renderCollectionWithDividers<T>({
   collection,
   renderItem,
@@ -47,12 +51,12 @@ export function renderCollectionWithDividers<T>({
     index: number | undefined,
     collection: T[]
   ) => any;
-  renderDivider: () => React.ReactNode;
+  renderDivider?: () => React.ReactNode;
   renderEmpty?: (collection: T[]) => any;
 }) {
   const hasNoItemsAndPlaceholder = !renderEmpty && !collection.length;
 
-  if (!renderDivider || hasNoItemsAndPlaceholder) {
+  if (hasNoItemsAndPlaceholder) {
     return null;
   }
 
@@ -60,12 +64,14 @@ export function renderCollectionWithDividers<T>({
     return !!renderEmpty ? renderEmpty(collection) : null;
   }
 
+  const renderDividerFunction = renderDivider || defaultRenderDivider;
+
   return initial(
     collection.reduce(
       (result, item, index) => [
         ...result,
         renderItem(item, index, collection),
-        renderDivider()
+        renderDividerFunction()
       ],
       []
     )

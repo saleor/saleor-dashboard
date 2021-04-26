@@ -9,15 +9,31 @@ export type UseFilter<T extends string> = [
   () => void
 ];
 
+function getParsedInitialFilter<T extends string>(
+  initialFilter: IFilter<T>
+): IFilter<T> {
+  return initialFilter.reduce((resultFilter, filterField) => {
+    if (filterField.multipleFields) {
+      return resultFilter
+        .concat(filterField.multipleFields)
+        .concat([filterField]);
+    }
+
+    return resultFilter.concat(filterField);
+  }, []);
+}
+
 function useFilter<T extends string>(initialFilter: IFilter<T>): UseFilter<T> {
+  const parsedInitialFilter = getParsedInitialFilter(initialFilter);
+
   const [data, dispatchFilterAction] = useReducer<
     React.Reducer<IFilter<T>, FilterReducerAction<T>>
-  >(reduceFilter, initialFilter);
+  >(reduceFilter, parsedInitialFilter);
 
   const reset = () =>
     dispatchFilterAction({
       payload: {
-        new: initialFilter.map(each => ({
+        new: parsedInitialFilter.map(each => ({
           ...each,
           active: false,
           value: []
@@ -29,7 +45,7 @@ function useFilter<T extends string>(initialFilter: IFilter<T>): UseFilter<T> {
   const refresh = () =>
     dispatchFilterAction({
       payload: {
-        new: initialFilter
+        new: parsedInitialFilter
       },
       type: "merge"
     });

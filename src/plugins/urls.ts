@@ -14,10 +14,14 @@ import {
 export const pluginSection = "/plugins/";
 
 export const pluginListPath = pluginSection;
+
 export enum PluginListUrlFiltersEnum {
+  query = "query",
   active = "active",
-  query = "query"
+  channels = "channels",
+  type = "type"
 }
+
 export type PluginListUrlFilters = Filters<PluginListUrlFiltersEnum>;
 export type PluginListUrlDialog = TabActionDialog;
 export enum PluginListUrlSortField {
