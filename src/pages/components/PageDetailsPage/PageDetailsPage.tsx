@@ -26,6 +26,7 @@ import React from "react";
 import { useIntl } from "react-intl";
 
 import { PageDetails_page } from "../../types/PageDetails";
+import { MainProductList } from "../MainProductList/MainProductList";
 import PageInfo from "../PageInfo";
 import PageOrganizeContent from "../PageOrganizeContent";
 import PageForm, { PageData, PageUpdateHandlers } from "./form";
@@ -134,6 +135,8 @@ const PageDetailsPage: React.FC<PageDetailsPageProps> = ({
                 onChange={change}
                 onContentChange={handlers.changeContent}
               />
+              <CardSpacer />
+              <MainProductList />
               <CardSpacer />
               <SeoForm
                 errors={errors}
