@@ -28,8 +28,10 @@ import useModalDialogErrors from "@saleor/hooks/useModalDialogErrors";
 import { buttonMessages } from "@saleor/intl";
 import { transformAddressToForm } from "@saleor/misc";
 import { makeStyles } from "@saleor/theme";
+import { AddressTypeEnum } from "@saleor/types/globalTypes";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
+
 import OrderCustomerAddressesEditForm, {
   AddressInputOptionEnum,
   OrderCustomerAddressesEditFormData
@@ -89,11 +91,11 @@ const OrderCustomerAddressesEditDialog: React.FC<OrderCustomerAddressesEditDialo
   const {
     errors: shippingValidationErrors,
     submit: handleShippingSubmit
-  } = useAddressValidation(address => address);
+  } = useAddressValidation(address => address, AddressTypeEnum.SHIPPING);
   const {
     errors: billingValidationErrors,
     submit: handleBillingSubmit
-  } = useAddressValidation(address => address);
+  } = useAddressValidation(address => address, AddressTypeEnum.BILLING);
   const dialogErrors = useModalDialogErrors(
     [...errors, ...shippingValidationErrors, ...billingValidationErrors],
     open
@@ -213,7 +215,9 @@ const OrderCustomerAddressesEditDialog: React.FC<OrderCustomerAddressesEditDialo
                       countries={countryChoices}
                       countryDisplayValue={data.shippingCountryDisplayName}
                       data={data.shippingAddress}
-                      errors={dialogErrors}
+                      errors={dialogErrors.filter(
+                        error => error.addressType === AddressTypeEnum.SHIPPING
+                      )}
                       onChange={event =>
                         change({
                           target: {
@@ -298,7 +302,10 @@ const OrderCustomerAddressesEditDialog: React.FC<OrderCustomerAddressesEditDialo
                           countries={countryChoices}
                           countryDisplayValue={data.billingCountryDisplayName}
                           data={data.billingAddress}
-                          errors={dialogErrors}
+                          errors={dialogErrors.filter(
+                            error =>
+                              error.addressType === AddressTypeEnum.BILLING
+                          )}
                           onChange={event =>
                             change({
                               target: {

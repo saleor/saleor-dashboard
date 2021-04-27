@@ -25,7 +25,8 @@ storiesOf("Orders / OrderPaymentVoidDialog", module)
         {
           __typename: "OrderError",
           code: OrderErrorCode.VOID_INACTIVE_PAYMENT,
-          field: null
+          field: null,
+          addressType: null
         }
       ]}
     />

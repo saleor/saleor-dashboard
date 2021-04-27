@@ -11,12 +11,6 @@ export interface AddressTypeInput {
   streetAddress1: string;
   streetAddress2?: string;
 }
-export type ShippingAddressTypeInput = {
-    [K in keyof AddressTypeInput as `shipping_${K}`]: AddressTypeInput[K]
-}
-export type BillingAddressTypeInput = {
-    [K in keyof AddressTypeInput as `billing_${K}`]: AddressTypeInput[K]
-}
 
 export interface AddressType {
   id: string;
@@ -34,10 +28,4 @@ export interface AddressType {
   postalCode: string;
   streetAddress1: string;
   streetAddress2?: string;
-}
-export type ShippingAddressType = {
-  [K in keyof AddressType as `shipping_${K}`]: AddressType[K]
-}
-export type BillingAddressType = {
-  [K in keyof AddressType as `billing_${K}`]: AddressType[K]
 }

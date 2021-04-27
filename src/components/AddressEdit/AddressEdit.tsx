@@ -75,13 +75,6 @@ const AddressEdit: React.FC<AddressEditProps> = props => {
     "streetAddress2"
   ];
 
-  const getPrefixedField = (fieldName: keyof AddressTypeInput) => {
-    // if (fieldsPrefix) {
-    //   return `${fieldsPrefix}_${fieldName}`;
-    // }
-    return fieldName;
-  };
-
   const formErrors = getFormErrors<
     keyof AddressTypeInput,
     AccountErrorFragment | OrderErrorFragment
@@ -96,7 +89,7 @@ const AddressEdit: React.FC<AddressEditProps> = props => {
             error={!!formErrors.firstName}
             helperText={getErrorMessage(formErrors.firstName, intl)}
             label={intl.formatMessage(commonMessages.firstName)}
-            name={getPrefixedField("firstName")}
+            name="firstName"
             onChange={onChange}
             value={data.firstName}
             fullWidth
@@ -108,7 +101,7 @@ const AddressEdit: React.FC<AddressEditProps> = props => {
             error={!!formErrors.lastName}
             helperText={getErrorMessage(formErrors.lastName, intl)}
             label={intl.formatMessage(commonMessages.lastName)}
-            name={getPrefixedField("lastName")}
+            name="lastName"
             onChange={onChange}
             value={data.lastName}
             fullWidth
@@ -125,7 +118,7 @@ const AddressEdit: React.FC<AddressEditProps> = props => {
             label={intl.formatMessage({
               defaultMessage: "Company"
             })}
-            name={getPrefixedField("companyName")}
+            name="companyName"
             onChange={onChange}
             value={data.companyName}
             fullWidth
@@ -140,7 +133,7 @@ const AddressEdit: React.FC<AddressEditProps> = props => {
             label={intl.formatMessage({
               defaultMessage: "Phone"
             })}
-            name={getPrefixedField("phone")}
+            name="phone"
             value={data.phone}
             onChange={onChange}
           />
@@ -154,7 +147,7 @@ const AddressEdit: React.FC<AddressEditProps> = props => {
         label={intl.formatMessage({
           defaultMessage: "Address line 1"
         })}
-        name={getPrefixedField("streetAddress1")}
+        name="streetAddress1"
         onChange={onChange}
         value={data.streetAddress1}
         fullWidth
@@ -167,7 +160,7 @@ const AddressEdit: React.FC<AddressEditProps> = props => {
         label={intl.formatMessage({
           defaultMessage: "Address line 2"
         })}
-        name={getPrefixedField("streetAddress2")}
+        name="streetAddress2"
         onChange={onChange}
         value={data.streetAddress2}
         fullWidth
@@ -182,7 +175,7 @@ const AddressEdit: React.FC<AddressEditProps> = props => {
             label={intl.formatMessage({
               defaultMessage: "City"
             })}
-            name={getPrefixedField("city")}
+            name="city"
             onChange={onChange}
             value={data.city}
             fullWidth
@@ -196,7 +189,7 @@ const AddressEdit: React.FC<AddressEditProps> = props => {
             label={intl.formatMessage({
               defaultMessage: "ZIP / Postal code"
             })}
-            name={getPrefixedField("postalCode")}
+            name="postalCode"
             onChange={onChange}
             value={data.postalCode}
             fullWidth
@@ -215,7 +208,7 @@ const AddressEdit: React.FC<AddressEditProps> = props => {
             label={intl.formatMessage({
               defaultMessage: "Country"
             })}
-            name={getPrefixedField("country")}
+            name="country"
             onChange={onCountryChange}
             value={data.country}
             choices={countries}
@@ -232,7 +225,7 @@ const AddressEdit: React.FC<AddressEditProps> = props => {
             label={intl.formatMessage({
               defaultMessage: "Country area"
             })}
-            name={getPrefixedField("countryArea")}
+            name="countryArea"
             onChange={onChange}
             value={data.countryArea}
             fullWidth
