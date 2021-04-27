@@ -49,7 +49,6 @@ const PluginsListPage: React.FC<PluginsListPageProps> = ({
   const intl = useIntl();
 
   const filterStructure = createFilterStructure(intl, filterOpts);
-  console.log({ filterStructure });
 
   return (
     <Container>
