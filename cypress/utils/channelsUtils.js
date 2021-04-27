@@ -32,13 +32,3 @@ export function getDefaultChannel() {
     });
   });
 }
-export function createChannel({
-  isActive = true,
-  name,
-  slug = name,
-  currencyCode = "PLN"
-}) {
-  return channels
-    .createChannel(isActive, name, slug, currencyCode)
-    .its("body.data.channelCreate.channel");
-}

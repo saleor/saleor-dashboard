@@ -1,6 +1,7 @@
 import faker from "faker";
 
 import { createCollection } from "../../../apiRequests/Collections";
+import { updateProduct } from "../../../apiRequests/Product";
 import { PRODUCTS_LIST } from "../../../elements/catalog/products/products-list";
 import {
   selectFilterOption,
@@ -12,8 +13,7 @@ import { getDefaultChannel } from "../../../utils/channelsUtils";
 import {
   createProductInChannel,
   createTypeAttributeAndCategoryForProduct,
-  deleteProductsStartsWith,
-  updateProduct
+  deleteProductsStartsWith
 } from "../../../utils/products/productsUtils";
 import {
   createShipping,

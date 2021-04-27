@@ -1,4 +1,9 @@
-export function createChannel(isActive, name, slug, currencyCode) {
+export function createChannel({
+  isActive = true,
+  name,
+  slug = name,
+  currencyCode = "PLN"
+}) {
   const createChannelMutation = `mutation{
     channelCreate(input: {
       isActive: ${isActive}
@@ -17,7 +22,9 @@ export function createChannel(isActive, name, slug, currencyCode) {
       }
     }
   }`;
-  return cy.sendRequestWithQuery(createChannelMutation);
+  return cy
+    .sendRequestWithQuery(createChannelMutation)
+    .its("body.data.channelCreate.channel");
 }
 export function getChannels() {
   const getChannelsInfoQuery = `query{

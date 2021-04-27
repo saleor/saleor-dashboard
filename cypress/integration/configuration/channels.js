@@ -83,7 +83,12 @@ describe("Channels", () => {
 
   it("should validate slug name", () => {
     const randomChannel = `${channelStartsWith} ${faker.datatype.number()}`;
-    createChannel(false, randomChannel, randomChannel, currency);
+    createChannel({
+      isActive: false,
+      name: randomChannel,
+      slug: randomChannel,
+      currencyCode: currency
+    });
     cy.visit(urlList.channels);
     createChannelByView(randomChannel, currency);
     cy.get(ADD_CHANNEL_FORM_SELECTORS.slugValidationMessage).should(
@@ -102,12 +107,12 @@ describe("Channels", () => {
 
   it("should delete channel", () => {
     const randomChannelToDelete = `${channelStartsWith} ${faker.datatype.number()}`;
-    createChannel(
-      false,
-      randomChannelToDelete,
-      randomChannelToDelete,
-      currency
-    );
+    createChannel({
+      isActive: false,
+      name: randomChannelToDelete,
+      slug: randomChannelToDelete,
+      currencyCode: currency
+    });
     cy.addAliasToGraphRequest("Channels");
     cy.visit(urlList.channels);
     cy.wait("@Channels");
@@ -126,7 +131,12 @@ describe("Channels", () => {
 
   it("should not be possible to add products to order with inactive channel", () => {
     const randomChannel = `${channelStartsWith} ${faker.datatype.number()}`;
-    createChannel(false, randomChannel, randomChannel, currency);
+    createChannel({
+      isActive: false,
+      name: randomChannel,
+      slug: randomChannel,
+      currencyCode: currency
+    });
     cy.visit(urlList.orders)
       .get(ORDERS_SELECTORS.createOrder)
       .click()

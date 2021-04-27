@@ -39,7 +39,9 @@ export function createDraftOrder(customerId, shippingMethodId, channelId) {
       }
     }
   }`;
-  return cy.sendRequestWithQuery(mutation);
+  return cy
+    .sendRequestWithQuery(mutation)
+    .its("body.data.draftOrderCreate.order");
 }
 export function completeOrder(orderId) {
   const mutation = `mutation{
@@ -53,4 +55,16 @@ export function completeOrder(orderId) {
     }
   }`;
   return cy.sendRequestWithQuery(mutation);
+}
+export function getOrder(orderId) {
+  const query = `query getOrder{
+    order(id:"${orderId}"){
+      status
+      isShippingRequired
+      shippingMethod{
+        id
+      }
+    }
+  }`;
+  cy.sendRequestWithQuery(query).its("body.data.order");
 }

@@ -1,6 +1,7 @@
 // <reference types="cypress" />
 import faker from "faker";
 
+import { createChannel } from "../../apiRequests/Channels";
 import {
   createVoucher,
   discountOptions
@@ -77,7 +78,7 @@ describe("Vouchers discounts", () => {
           price: productPrice
         });
       })
-      .then(({ variants: variantsResp }) => (variants = variantsResp));
+      .then(({ variantsList: variantsResp }) => (variants = variantsResp));
   });
 
   beforeEach(() => {
@@ -142,8 +143,7 @@ describe("Vouchers discounts", () => {
     const randomName = `${startsWith}${faker.datatype.number()}`;
     const voucherValue = 50;
 
-    channelsUtils
-      .createChannel({ name: randomName })
+    createChannel({ name: randomName })
       .then(channel => {
         createVoucher({
           voucherCode: randomName,

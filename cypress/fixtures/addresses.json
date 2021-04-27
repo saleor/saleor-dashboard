@@ -10,5 +10,17 @@
         "phone": "123456787",
         "currency": "PLN",
         "countryFullName": "Poland"
-    }
+    },
+    "usAddress": {
+      "companyName": "Test3",
+      "streetAddress1": "Amber Prairie",
+      "streetAddress2": "483",
+      "city": "KIRKSHIRE",
+      "postalCode": "52216",
+      "country": "US",
+      "countryArea": "IA",
+      "currency": "USD",
+      "phone": "+12025550180",
+      "countryFullName": "United States of America"
+  }
 }
