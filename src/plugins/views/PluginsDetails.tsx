@@ -1,6 +1,7 @@
 import DialogContentText from "@material-ui/core/DialogContentText";
 import ActionDialog from "@saleor/components/ActionDialog";
 import { WindowTitle } from "@saleor/components/WindowTitle";
+import { PluginConfigurationFragment_configuration } from "@saleor/fragments/types/PluginConfigurationFragment";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { commonMessages } from "@saleor/intl";
@@ -15,7 +16,6 @@ import PluginsDetailsPage, {
 import PluginSecretFieldDialog from "../components/PluginSecretFieldDialog";
 import { TypedPluginUpdate } from "../mutations";
 import { TypedPluginsDetailsQuery } from "../queries";
-import { Plugin_plugin_configuration } from "../types/Plugin";
 import { PluginUpdate } from "../types/PluginUpdate";
 import {
   pluginListUrl,
@@ -31,7 +31,7 @@ export interface PluginsDetailsProps {
 }
 
 export function getConfigurationInput(
-  config: Plugin_plugin_configuration[] | null,
+  config: PluginConfigurationFragment_configuration[] | null,
   input: ConfigurationItemInput[] | null
 ): ConfigurationItemInput[] | null {
   if (config === null || input === null) {
