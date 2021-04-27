@@ -12,6 +12,7 @@ import {
   getActiveChannelConfigsCount,
   getAllChannelConfigsCount
 } from "../utils";
+import ScrollableContent from "./ScrollableContent";
 
 interface ChannelConfigPluginPopupBodyProps {
   plugin: Plugin_plugin;
@@ -35,24 +36,26 @@ const ChannelConfigPluginPopupBody: React.FC<ChannelConfigPluginPopupBodyProps> 
         </Typography>
       </CardContent>
       <Divider />
-      <CardContent>
-        {renderCollectionWithDividers({
-          collection: channelConfigurations,
-          renderDivider: () => <CardSpacer />,
-          renderItem: ({ channel, active }) => (
-            <StatusLabel
-              key={channel.id}
-              label={channel.name}
-              status={active ? "success" : "error"}
-              subtitle={intl.formatMessage(
-                active
-                  ? statusLabelMessages.active
-                  : statusLabelMessages.inactive
-              )}
-            />
-          )
-        })}
-      </CardContent>
+      <ScrollableContent>
+        <CardContent>
+          {renderCollectionWithDividers({
+            collection: channelConfigurations,
+            renderDivider: () => <CardSpacer />,
+            renderItem: ({ channel, active }) => (
+              <StatusLabel
+                key={channel.id}
+                label={channel.name}
+                status={active ? "success" : "error"}
+                subtitle={intl.formatMessage(
+                  active
+                    ? statusLabelMessages.active
+                    : statusLabelMessages.inactive
+                )}
+              />
+            )
+          })}
+        </CardContent>
+      </ScrollableContent>
     </>
   );
 };

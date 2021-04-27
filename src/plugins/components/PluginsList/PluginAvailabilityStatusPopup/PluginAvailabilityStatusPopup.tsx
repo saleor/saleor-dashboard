@@ -33,7 +33,7 @@ const PluginAvailabilityStatusPopup: React.FC<PluginAvailabilityStatusPopupProps
 
   return (
     <Popper
-      placement="left-end"
+      placement="left"
       open={isOpen}
       className={classes.container}
       anchorEl={anchor.current}
