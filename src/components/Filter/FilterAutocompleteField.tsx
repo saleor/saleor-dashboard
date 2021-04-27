@@ -29,7 +29,8 @@ const useStyles = makeStyles(
       padding: "12px 0 9px 12px"
     },
     inputContainer: {
-      marginBottom: theme.spacing(1)
+      marginBottom: theme.spacing(1),
+      paddingTop: theme.spacing(1)
     },
     noResults: {
       marginTop: theme.spacing(1)

@@ -28,7 +28,8 @@ export interface IFilterElement<T extends string = string>
   group?: T;
   label: string;
   name: T;
-  type: FieldType;
+  type?: FieldType;
+  multipleFields?: IFilterElement[];
 }
 
 export interface FilterBaseFieldProps<T extends string = string> {
