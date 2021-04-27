@@ -10,14 +10,16 @@ export function getIsFilterMultipleChoices(
     {
       label: intl.formatMessage({
         defaultMessage: "equal to",
-        description: "is filter range or value"
+        description: "is filter range or value",
+        id: "is filter range or value equal to"
       }),
       value: FilterType.SINGULAR
     },
     {
       label: intl.formatMessage({
         defaultMessage: "between",
-        description: "is filter range or value"
+        description: "is filter range or value",
+        id: "is filter range or value equal to between"
       }),
       value: FilterType.MULTIPLE
     }

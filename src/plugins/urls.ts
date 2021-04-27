@@ -22,7 +22,9 @@ export enum PluginListUrlFiltersEnum {
   type = "type"
 }
 
-export type PluginListUrlFilters = Filters<PluginListUrlFiltersEnum>;
+export type PluginListUrlFilters = Filters<PluginListUrlFiltersEnum> & {
+  channels?: string[];
+};
 export type PluginListUrlDialog = TabActionDialog;
 export enum PluginListUrlSortField {
   name = "name",

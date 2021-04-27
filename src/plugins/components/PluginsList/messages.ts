@@ -50,6 +50,7 @@ export const pluginChannelConfigurationCellMessages = defineMessages({
   },
   channelLabel: {
     defaultMessage: "Per channel",
-    description: "PluginChannelConfigurationCell channel title"
+    description: "PluginChannelConfigurationCell channel title",
+    id: "pluginChannelConfigurationCellMessages per channel"
   }
 });

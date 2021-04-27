@@ -66,9 +66,8 @@ export function getFilterOpts(
   };
 }
 
-const getParsedConfigType = (configTypeString?: string) => {
-  return PluginConfigurationType[configTypeString] || undefined;
-};
+const getParsedConfigType = (configTypeString?: string) =>
+  PluginConfigurationType[configTypeString] || undefined;
 
 export function getFilterVariables(
   params: PluginListUrlFilters

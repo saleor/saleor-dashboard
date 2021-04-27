@@ -73,10 +73,6 @@ export const PluginsDetails: React.FC<PluginsDetailsProps> = ({
     initialSelectedChannelValue
   );
 
-  const selectedChannelSlug = plugin?.channelConfigurations?.find(
-    getConfigByChannelId(selectedChannelId)
-  )?.channel.slug;
-
   const selectedConfig = isPluginGlobal(plugin?.globalConfiguration)
     ? plugin?.globalConfiguration
     : plugin?.channelConfigurations.find(
@@ -106,7 +102,7 @@ export const PluginsDetails: React.FC<PluginsDetailsProps> = ({
         const handleFieldUpdate = (value: string) =>
           pluginUpdate({
             variables: {
-              channel: selectedChannelSlug,
+              channelId: selectedChannelId,
               id,
               input: {
                 configuration: [
@@ -122,7 +118,7 @@ export const PluginsDetails: React.FC<PluginsDetailsProps> = ({
         const handleSubmit = async (formData: PluginDetailsPageFormData) => {
           const result = await pluginUpdate({
             variables: {
-              channel: selectedChannelSlug,
+              channelId: selectedChannelId,
               id,
               input: {
                 active: formData.active,

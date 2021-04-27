@@ -1,5 +1,6 @@
 import { createFilterStructure } from "@saleor/plugins/components/PluginsListPage";
 import { PluginListUrlFilters } from "@saleor/plugins/urls";
+import { PluginConfigurationType } from "@saleor/types/globalTypes";
 import { getFilterQueryParams } from "@saleor/utils/filters";
 import { getExistingKeys, setFilterOptsStatus } from "@test/filters";
 import { config } from "@test/intl";
@@ -33,6 +34,25 @@ describe("Filtering URL params", () => {
     isActive: {
       active: false,
       value: true
+    },
+    channels: {
+      active: false,
+      choices: [],
+      displayValues: [],
+      initialSearch: "",
+      hasMore: false,
+      loading: false,
+      onFetchMore: () => undefined,
+      onSearchChange: () => undefined,
+      value: []
+    },
+    status: {
+      active: false,
+      value: false
+    },
+    type: {
+      active: false,
+      value: PluginConfigurationType.GLOBAL
     }
   });
 
