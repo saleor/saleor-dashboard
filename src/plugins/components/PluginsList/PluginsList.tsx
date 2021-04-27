@@ -6,10 +6,10 @@ import TableRow from "@material-ui/core/TableRow";
 import EditIcon from "@material-ui/icons/Edit";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
-import StatusLabel from "@saleor/components/StatusLabel";
+// import StatusLabel from "@saleor/components/StatusLabel";
 import TableCellHeader from "@saleor/components/TableCellHeader";
 import TablePagination from "@saleor/components/TablePagination";
-import { translateBoolean } from "@saleor/intl";
+// import { translateBoolean } from "@saleor/intl";
 import { maybe, renderCollection } from "@saleor/misc";
 import { PluginListUrlSortField } from "@saleor/plugins/urls";
 import { makeStyles } from "@saleor/theme";
@@ -132,7 +132,7 @@ const PluginList: React.FC<PluginListProps> = props => {
                 {maybe<React.ReactNode>(() => plugin.name, <Skeleton />)}
               </TableCell>
               <TableCell className={classes.colActive}>
-                {maybe<React.ReactNode>(
+                {/* {maybe<React.ReactNode>(
                   () => (
                     <StatusLabel
                       label={translateBoolean(plugin.active, intl)}
@@ -140,7 +140,7 @@ const PluginList: React.FC<PluginListProps> = props => {
                     />
                   ),
                   <Skeleton />
-                )}
+                )} */}
               </TableCell>
               <TableCell className={classes.colAction}>
                 <div onClick={plugin ? onRowClick(plugin.id) : undefined}>

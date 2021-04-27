@@ -1,3 +1,3 @@
-import { PluginConfiguarionFragment } from "@saleor/fragments/types/PluginConfiguarionFragment";
+import { PluginConfigurationFragment } from "@saleor/fragments/types/PluginConfigurationFragment";
 
-export type PluginConfiguration = PluginConfiguarionFragment;
+export type PluginConfiguration = PluginConfigurationFragment;

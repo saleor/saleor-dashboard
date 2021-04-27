@@ -6,17 +6,17 @@
 import { ConfigurationTypeFieldEnum } from "./../../types/globalTypes";
 
 // ====================================================
-// GraphQL fragment: PluginConfiguarionFragment
+// GraphQL fragment: PluginConfigurationFragment
 // ====================================================
 
-export interface PluginConfiguarionFragment_channel {
+export interface PluginConfigurationFragment_channel {
   __typename: "Channel";
   id: string;
   name: string;
   slug: string;
 }
 
-export interface PluginConfiguarionFragment_configuration {
+export interface PluginConfigurationFragment_configuration {
   __typename: "ConfigurationItem";
   name: string;
   value: string | null;
@@ -25,9 +25,9 @@ export interface PluginConfiguarionFragment_configuration {
   label: string | null;
 }
 
-export interface PluginConfiguarionFragment {
+export interface PluginConfigurationFragment {
   __typename: "PluginConfiguration";
   active: boolean;
-  channel: PluginConfiguarionFragment_channel | null;
-  configuration: (PluginConfiguarionFragment_configuration | null)[] | null;
+  channel: PluginConfigurationFragment_channel | null;
+  configuration: (PluginConfigurationFragment_configuration | null)[] | null;
 }

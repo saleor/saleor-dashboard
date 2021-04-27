@@ -12,7 +12,7 @@ export const configurationItemFragment = gql`
 
 export const pluginConfigurationFragment = gql`
   ${configurationItemFragment}
-  fragment PluginConfiguarionFragment on PluginConfiguration {
+  fragment PluginConfigurationFragment on PluginConfiguration {
     active
     channel {
       id
@@ -32,10 +32,10 @@ export const pluginsFragment = gql`
     name
     description
     globalConfiguration {
-      ...PluginConfiguarionFragment
+      ...PluginConfigurationFragment
     }
     channelConfigurations {
-      ...PluginConfiguarionFragment
+      ...PluginConfigurationFragment
     }
   }
 `;

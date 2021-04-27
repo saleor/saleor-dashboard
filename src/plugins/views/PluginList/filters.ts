@@ -35,10 +35,10 @@ export function getFilterVariables(
   params: PluginListUrlFilters
 ): PluginFilterInput {
   return {
-    active:
-      params.active !== undefined
-        ? parseBoolean(params.active, true)
-        : undefined,
+    // active:
+    //   params.active !== undefined
+    //     ? parseBoolean(params.active, true)
+    //     : undefined,
     search: params.query
   };
 }

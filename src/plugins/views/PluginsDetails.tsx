@@ -1,7 +1,7 @@
 import DialogContentText from "@material-ui/core/DialogContentText";
 import ActionDialog from "@saleor/components/ActionDialog";
 import { WindowTitle } from "@saleor/components/WindowTitle";
-import { PluginConfiguarionFragment_configuration } from "@saleor/fragments/types/PluginConfiguarionFragment";
+import { PluginConfigurationFragment_configuration } from "@saleor/fragments/types/PluginConfigurationFragment";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
@@ -34,7 +34,7 @@ export interface PluginsDetailsProps {
 }
 
 export function getConfigurationInput(
-  config: PluginConfiguarionFragment_configuration[] | null,
+  config: PluginConfigurationFragment_configuration[] | null,
   input: ConfigurationItemInput[] | null
 ): ConfigurationItemInput[] | null {
   if (config === null || input === null) {
