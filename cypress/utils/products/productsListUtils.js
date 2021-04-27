@@ -1,5 +1,4 @@
 import { PRODUCTS_LIST } from "../../elements/catalog/products/products-list";
-/* eslint-disable no-unused-expressions*/
 export function getDisplayedColumnArray(columnName) {
   let productsList = new Array();
   return cy
@@ -15,20 +14,31 @@ export function getDisplayedColumnArray(columnName) {
     .then(() => productsList);
 }
 export function expectProductsSortedBy(columnName, inAscOrder = true) {
-  getDisplayedColumnArray(columnName).then(productsArray => {
-    let sortedProductsArray = productsArray.slice();
-    if (columnName !== "price") {
-      inAscOrder
-        ? sortedProductsArray.sort()
-        : sortedProductsArray.sort().reverse();
-    } else {
-      sortedProductsArray = getSortedPriceColumn(
-        sortedProductsArray,
-        inAscOrder
-      );
-    }
-    expect(productsArray).to.be.deep.eq(sortedProductsArray);
-  });
+  let sortedProductsArray;
+  let productsArray;
+  getDisplayedColumnArray(columnName)
+    .then(productsArrayResp => {
+      productsArray = productsArrayResp;
+      sortedProductsArray = productsArray.slice();
+      if (columnName !== "price") {
+        sortedProductsArray = sortedProductsArray.sort((a, b) =>
+          a.localeCompare(b, undefined, { ignorePunctuation: true })
+        );
+        if (!inAscOrder) {
+          sortedProductsArray.reverse();
+        }
+      } else {
+        sortedProductsArray = getSortedPriceColumn(
+          sortedProductsArray,
+          inAscOrder
+        );
+      }
+    })
+    .then(() => {
+      expect(
+        JSON.stringify(productsArray) === JSON.stringify(sortedProductsArray)
+      ).to.be.eq(true);
+    });
 }
 function getSortedPriceColumn(productsArray, inAscOrder) {
   return inAscOrder

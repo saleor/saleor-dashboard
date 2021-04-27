@@ -10,7 +10,7 @@ import { isProductVisibleInSearchResult } from "../../../utils/storeFront/storeF
 // <reference types="cypress" />
 describe("Products displayed in listings", () => {
   const startsWith = "CyVisibleInListings-";
-  const name = `${startsWith}${faker.random.number()}`;
+  const name = `${startsWith}${faker.datatype.number()}`;
   let productType;
   let attribute;
   let category;
@@ -37,7 +37,7 @@ describe("Products displayed in listings", () => {
     cy.clearSessionData().loginUserViaRequest();
   });
   it("should update product to visible in listings", () => {
-    const productName = `${startsWith}${faker.random.number()}`;
+    const productName = `${startsWith}${faker.datatype.number()}`;
     let defaultChannel;
     getDefaultChannel()
       .then(channel => {
@@ -67,7 +67,7 @@ describe("Products displayed in listings", () => {
       });
   });
   it("should update product to not visible in listings", () => {
-    const productName = `${startsWith}${faker.random.number()}`;
+    const productName = `${startsWith}${faker.datatype.number()}`;
     let defaultChannel;
     getDefaultChannel()
       .then(channel => {

@@ -261,9 +261,6 @@ export const fragmentOrderDetails = gql`
         ...Money
       }
     }
-    discount {
-      ...Money
-    }
     invoices {
       ...InvoiceFragment
     }

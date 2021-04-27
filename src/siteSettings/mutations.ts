@@ -19,7 +19,7 @@ const shopSettingsUpdate = gql`
     $addressInput: AddressInput
   ) {
     shopSettingsUpdate(input: $shopSettingsInput) {
-      errors: shopErrors {
+      errors {
         ...ShopErrorFragment
       }
       shop {
@@ -27,7 +27,7 @@ const shopSettingsUpdate = gql`
       }
     }
     shopDomainUpdate(input: $shopDomainInput) {
-      errors: shopErrors {
+      errors {
         ...ShopErrorFragment
       }
       shop {
@@ -38,7 +38,7 @@ const shopSettingsUpdate = gql`
       }
     }
     shopAddressUpdate(input: $addressInput) {
-      errors: shopErrors {
+      errors {
         ...ShopErrorFragment
       }
       shop {

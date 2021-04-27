@@ -3,7 +3,7 @@ export const PRODUCTS_LIST = {
   productsNames: "[data-test='name']",
   createProductBtn: "[data-test='add-product']",
   searchProducts: "[placeholder='Search Products...']",
-  emptyProductRow: "[class*='Skeleton']",
+  emptyProductRow: "[data-test-id='skeleton']",
   productRowElements: {
     name: '[data-test="name"]',
     type: '[data-test="product-type"]',
@@ -27,5 +27,9 @@ export const PRODUCTS_LIST = {
       stock: '[data-test-id="stock"]'
     },
     filterBySearchInput: '[data-test*="filterField"][data-test*="Input"]'
-  }
+  },
+  nextPageButton: "[data-test='button-pagination-next']",
+  previousPagePagination: "[data-test='button-pagination-back']",
+  resultsOnPageSelect: "[data-test-id='rowNumberSelect']",
+  rowNumberOption: "[data-test-id='rowNumberOption']"
 };

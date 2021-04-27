@@ -456,12 +456,6 @@ export interface OrderLineDelete_orderLineDelete_order_availableShippingMethods 
   price: OrderLineDelete_orderLineDelete_order_availableShippingMethods_price | null;
 }
 
-export interface OrderLineDelete_orderLineDelete_order_discount {
-  __typename: "Money";
-  amount: number;
-  currency: string;
-}
-
 export interface OrderLineDelete_orderLineDelete_order_invoices {
   __typename: "Invoice";
   id: string;
@@ -510,7 +504,6 @@ export interface OrderLineDelete_orderLineDelete_order {
   user: OrderLineDelete_orderLineDelete_order_user | null;
   userEmail: string | null;
   availableShippingMethods: (OrderLineDelete_orderLineDelete_order_availableShippingMethods | null)[] | null;
-  discount: OrderLineDelete_orderLineDelete_order_discount | null;
   invoices: (OrderLineDelete_orderLineDelete_order_invoices | null)[] | null;
   channel: OrderLineDelete_orderLineDelete_order_channel;
   isPaid: boolean;

@@ -18,6 +18,7 @@ import {
 import {
   AddressInput,
   CountryCode,
+  DateRangeInput,
   OrderStatus,
   PaymentChargeStatusEnum
 } from "./types/globalTypes";
@@ -465,3 +466,18 @@ export function transformFormToAddress<T>(
 export function getStringOrPlaceholder(s: string | undefined): string {
   return s || "...";
 }
+
+export const getDatePeriod = (days: number): DateRangeInput => {
+  if (days < 1) {
+    return {};
+  }
+
+  const end = moment().startOf("day");
+  const start = end.subtract(days - 1);
+  const format = "YYYY-MM-DD";
+
+  return {
+    gte: start.format(format),
+    lte: end.format(format)
+  };
+};

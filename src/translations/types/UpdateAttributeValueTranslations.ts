@@ -10,7 +10,7 @@ import { AttributeValueTranslationInput, LanguageCodeEnum } from "./../../types/
 // ====================================================
 
 export interface UpdateAttributeValueTranslations_attributeValueTranslate_errors {
-  __typename: "Error";
+  __typename: "TranslationError";
   field: string | null;
   message: string | null;
 }

@@ -10,7 +10,7 @@ import { isProductVisible } from "../../../utils/storeFront/storeFrontProductUti
 // <reference types="cypress" />
 describe("Published products", () => {
   const startsWith = "CyPublishedProducts-";
-  const name = `${startsWith}${faker.random.number()}`;
+  const name = `${startsWith}${faker.datatype.number()}`;
   let productType;
   let attribute;
   let category;
@@ -37,7 +37,7 @@ describe("Published products", () => {
     cy.clearSessionData().loginUserViaRequest();
   });
   it("should update product to published", () => {
-    const productName = `${startsWith}${faker.random.number()}`;
+    const productName = `${startsWith}${faker.datatype.number()}`;
     let defaultChannel;
     getDefaultChannel()
       .then(channel => {
@@ -64,7 +64,7 @@ describe("Published products", () => {
       });
   });
   it("should update product to not published", () => {
-    const productName = `${startsWith}${faker.random.number()}`;
+    const productName = `${startsWith}${faker.datatype.number()}`;
     let defaultChannel;
     let product;
 

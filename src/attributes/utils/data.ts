@@ -80,6 +80,9 @@ export function getSelectedAttributeValues(
   if (attribute.attribute.inputType === AttributeInputTypeEnum.REFERENCE) {
     return attribute.values.map(value => value.reference);
   }
+  if (attribute.attribute.inputType === AttributeInputTypeEnum.RICH_TEXT) {
+    return [attribute.values[0]?.richText];
+  }
   return attribute.values.map(value => value.slug);
 }
 
@@ -107,7 +110,7 @@ export const mergeFileUploadErrors = (
   uploadFilesResult: Array<MutationFetchResult<FileUpload>>
 ): UploadErrorFragment[] =>
   uploadFilesResult.reduce((errors, uploadFileResult) => {
-    const uploadErrors = uploadFileResult?.data?.fileUpload?.uploadErrors;
+    const uploadErrors = uploadFileResult?.data?.fileUpload?.errors;
     if (uploadErrors) {
       return [...errors, ...uploadErrors];
     }

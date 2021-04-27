@@ -145,7 +145,10 @@ const ChannelsWithVariantsAvailabilityDialogContent: React.FC<ChannelsWithVarian
           placeholderImage;
 
         return (
-          <ExpansionPanel classes={expanderClasses}>
+          <ExpansionPanel
+            classes={expanderClasses}
+            data-test-id="expand-channel-row"
+          >
             <ExpansionPanelSummary
               expandIcon={<IconChevronDown />}
               classes={summaryClasses}
@@ -182,9 +185,9 @@ const ChannelsWithVariantsAvailabilityDialogContent: React.FC<ChannelsWithVarian
             {allVariants.map(({ id: variantId, name }) => (
               <>
                 <div
+                  data-test-id="channel-variant-row"
                   key={variantId}
                   className={classes.variantContainer}
-                  data-test-id="channel-row"
                 >
                   <ControlledCheckbox
                     checked={isVariantSelected(variantId)}

@@ -1,6 +1,6 @@
+import Button from "@material-ui/core/Button";
 import AccountPermissions from "@saleor/components/AccountPermissions";
 import AppHeader from "@saleor/components/AppHeader";
-import AppStatus from "@saleor/components/AppStatus";
 import CardSpacer from "@saleor/components/CardSpacer";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
 import Container from "@saleor/components/Container";
@@ -17,8 +17,10 @@ import { getFormErrors } from "@saleor/utils/errors";
 import getAppErrorMessage from "@saleor/utils/errors/app";
 import WebhooksList from "@saleor/webhooks/components/WebhooksList";
 import React from "react";
-import { useIntl } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 
+import activateIcon from "../../../../assets/images/activate-icon.svg";
+import { useStyles } from "../../styles";
 import { AppUpdate_appUpdate_app } from "../../types/AppUpdate";
 import CustomAppDefaultToken from "../CustomAppDefaultToken";
 import CustomAppInformation from "../CustomAppInformation";
@@ -47,6 +49,8 @@ export interface CustomAppDetailsPageProps {
   onWebhookCreate: () => void;
   onWebhookRemove: (id: string) => void;
   navigateToWebhookDetails: (id: string) => () => void;
+  onAppActivateOpen: () => void;
+  onAppDeactivateOpen: () => void;
 }
 
 const CustomAppDetailsPage: React.FC<CustomAppDetailsPageProps> = props => {
@@ -66,9 +70,12 @@ const CustomAppDetailsPage: React.FC<CustomAppDetailsPageProps> = props => {
     onTokenDelete,
     onSubmit,
     onWebhookCreate,
-    onWebhookRemove
+    onWebhookRemove,
+    onAppActivateOpen,
+    onAppDeactivateOpen
   } = props;
   const intl = useIntl();
+  const classes = useStyles({});
 
   const webhooks = app?.webhooks;
 
@@ -94,7 +101,28 @@ const CustomAppDetailsPage: React.FC<CustomAppDetailsPageProps> = props => {
           <AppHeader onBack={onBack}>
             {intl.formatMessage(sectionNames.apps)}
           </AppHeader>
-          <PageHeader title={app?.name} />
+          <PageHeader title={app?.name}>
+            <Button
+              variant="text"
+              color="primary"
+              className={classes.activateButton}
+              disableFocusRipple
+              onClick={data.isActive ? onAppDeactivateOpen : onAppActivateOpen}
+            >
+              <img src={activateIcon} alt="" />
+              {data?.isActive ? (
+                <FormattedMessage
+                  defaultMessage="Deactivate"
+                  description="link"
+                />
+              ) : (
+                <FormattedMessage
+                  defaultMessage="Activate"
+                  description="link"
+                />
+              )}
+            </Button>
+          </PageHeader>
           <Grid>
             <div>
               {token && (
@@ -145,16 +173,6 @@ const CustomAppDetailsPage: React.FC<CustomAppDetailsPageProps> = props => {
                     "Expand or restrict app permissions to access certain part of Saleor system.",
                   description: "card description"
                 })}
-              />
-              <CardSpacer />
-              <AppStatus
-                data={data}
-                disabled={disabled}
-                label={intl.formatMessage({
-                  defaultMessage: "App is active",
-                  description: "checkbox label"
-                })}
-                onChange={change}
               />
             </div>
           </Grid>

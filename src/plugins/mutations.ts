@@ -10,7 +10,7 @@ const pluginUpdate = gql`
   ${pluginErrorFragment}
   mutation PluginUpdate($channelId: ID!, $id: ID!, $input: PluginUpdateInput!) {
     pluginUpdate(channelId: $channelId, id: $id, input: $input) {
-      errors: pluginsErrors {
+      errors {
         ...PluginErrorFragment
       }
       plugin {
