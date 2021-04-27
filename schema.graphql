@@ -2762,7 +2762,7 @@ type Mutation {
   giftCardCreate(input: GiftCardCreateInput!): GiftCardCreate
   giftCardDeactivate(id: ID!): GiftCardDeactivate
   giftCardUpdate(id: ID!, input: GiftCardUpdateInput!): GiftCardUpdate
-  pluginUpdate(id: ID!, input: PluginUpdateInput!): PluginUpdate
+  pluginUpdate(channelId: ID, id: ID!, input: PluginUpdateInput!): PluginUpdate
   saleCreate(input: SaleInput!): SaleCreate
   saleDelete(id: ID!): SaleDelete
   saleBulkDelete(ids: [ID]!): SaleBulkDelete
@@ -3753,6 +3753,7 @@ enum PaymentErrorCode {
   SHIPPING_METHOD_NOT_SET
   PAYMENT_ERROR
   NOT_SUPPORTED_GATEWAY
+  CHANNEL_INACTIVE
 }
 
 input PaymentFilterInput {
@@ -3891,12 +3892,23 @@ input PermissionGroupUpdateInput {
   removeUsers: [ID!]
 }
 
-type Plugin implements Node {
+type Plugin {
   id: ID!
   name: String!
   description: String!
+  globalConfiguration: PluginConfiguration
+  channelConfigurations: [PluginConfiguration!]!
+}
+
+type PluginConfiguration {
   active: Boolean!
+  channel: Channel
   configuration: [ConfigurationItem]
+}
+
+enum PluginConfigurationType {
+  PER_CHANNEL
+  GLOBAL
 }
 
 type PluginCountableConnection {
@@ -3926,8 +3938,9 @@ enum PluginErrorCode {
 }
 
 input PluginFilterInput {
-  active: Boolean
+  statusInChannels: PluginStatusInChannelsInput
   search: String
+  type: PluginConfigurationType
 }
 
 enum PluginSortField {
@@ -3938,6 +3951,11 @@ enum PluginSortField {
 input PluginSortingInput {
   direction: OrderDirection!
   field: PluginSortField!
+}
+
+input PluginStatusInChannelsInput {
+  active: Boolean!
+  channels: [ID!]!
 }
 
 type PluginUpdate {
