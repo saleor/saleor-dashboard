@@ -4,6 +4,9 @@ import { useCustomerAddressesQuery } from "@saleor/customers/queries";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useUser from "@saleor/hooks/useUser";
 import OrderCustomerAddressesEditDialog from "@saleor/orders/components/OrderCustomerAddressesEditDialog";
+import { CustomerChangeActionEnum } from "@saleor/orders/components/OrderCustomerChangeDialog/form";
+import OrderCustomerChangeDialog from "@saleor/orders/components/OrderCustomerChangeDialog/OrderCustomerChangeDialog";
+import { OrderDetails } from "@saleor/orders/types/OrderDetails";
 import { OrderDiscountProvider } from "@saleor/products/components/OrderDiscountProviders/OrderDiscountProvider";
 import { OrderLineDiscountProvider } from "@saleor/products/components/OrderDiscountProviders/OrderLineDiscountProvider";
 import useCustomerSearch from "@saleor/searches/useCustomerSearch";
@@ -28,7 +31,7 @@ interface OrderDraftDetailsProps {
   id: string;
   params: OrderUrlQueryParams;
   loading: any;
-  data: any;
+  data: OrderDetails;
   orderAddNote: any;
   orderLineUpdate: any;
   orderLineDelete: any;
@@ -79,7 +82,7 @@ export const OrderDraftDetails: React.FC<OrderDraftDetailsProps> = ({
 
   const { data: customerAddresses } = useCustomerAddressesQuery({
     variables: {
-      id: params.id
+      id: order.user.id
     },
     skip: params.action !== "edit-customer-addresses"
   });
@@ -121,11 +124,19 @@ export const OrderDraftDetails: React.FC<OrderDraftDetailsProps> = ({
             fetchUsers={searchUsers}
             loading={users.loading}
             usersLoading={users.loading}
-            onCustomerEdit={data =>
-              openModal("edit-customer-addresses", {
-                id: data.user
-              })
-            }
+            onCustomerEdit={async data => {
+              const result = await orderDraftUpdate.mutate({
+                id,
+                input: {
+                  user: data.user
+                }
+              });
+              if (!result?.data?.draftOrderUpdate?.errors?.length) {
+                openModal("customer-change");
+              } else {
+                closeModal();
+              }
+            }}
             onDraftFinalize={() => orderDraftFinalize.mutate({ id })}
             onDraftRemove={() => openModal("cancel")}
             onOrderLineAdd={() => openModal("add-order-line")}
@@ -197,6 +208,19 @@ export const OrderDraftDetails: React.FC<OrderDraftDetailsProps> = ({
           })
         }
       />
+      <OrderCustomerChangeDialog
+        open={params.action === "customer-change"}
+        onClose={closeModal}
+        onConfirm={data => {
+          if (
+            data.changeActionOption === CustomerChangeActionEnum.CHANGE_ADDRESS
+          ) {
+            openModal("edit-customer-addresses");
+          } else {
+            closeModal();
+          }
+        }}
+      />
       <OrderCustomerAddressesEditDialog
         open={params.action === "edit-customer-addresses"}
         confirmButtonState={orderDraftUpdate.opts.status}
@@ -210,7 +234,6 @@ export const OrderDraftDetails: React.FC<OrderDraftDetailsProps> = ({
           const result = await orderDraftUpdate.mutate({
             id,
             input: {
-              user: params.id,
               shippingAddress: transformFormToAddress(data.shippingAddress),
               billingAddress: transformFormToAddress(data.billingAddress)
             }
