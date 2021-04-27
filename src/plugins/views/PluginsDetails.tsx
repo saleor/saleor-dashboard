@@ -1,5 +1,5 @@
-import DialogContentText from "@material-ui/core/DialogContentText";
-import ActionDialog from "@saleor/components/ActionDialog";
+// import DialogContentText from "@material-ui/core/DialogContentText";
+// import ActionDialog from "@saleor/components/ActionDialog";
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import { PluginConfigurationFragment_configuration } from "@saleor/fragments/types/PluginConfigurationFragment";
 import useNavigator from "@saleor/hooks/useNavigator";
@@ -10,10 +10,8 @@ import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandl
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import PluginsDetailsPage, {
-  PluginDetailsPageFormData
-} from "../components/PluginsDetailsPage";
-import PluginSecretFieldDialog from "../components/PluginSecretFieldDialog";
+import PluginsDetailsPage from "../components/PluginsDetailsPage"; // PluginDetailsPageFormData
+// import PluginSecretFieldDialog from "../components/PluginSecretFieldDialog";
 import { TypedPluginUpdate } from "../mutations";
 import { TypedPluginsDetailsQuery } from "../queries";
 import { PluginUpdate } from "../types/PluginUpdate";
@@ -76,39 +74,38 @@ export const PluginsDetails: React.FC<PluginsDetailsProps> = ({
           {(pluginUpdate, pluginUpdateOpts) => {
             const formErrors = pluginUpdateOpts.data?.pluginUpdate.errors || [];
 
-            const handleFieldUpdate = (value: string) =>
-              pluginUpdate({
-                variables: {
-                  id,
-                  input: {
-                    configuration: [
-                      {
-                        name: params.id,
-                        value
-                      }
-                    ]
-                  }
-                }
-              });
+            // const handleFieldUpdate = (value: string) =>
+            //   pluginUpdate({
+            //     variables: {
+            //       id,
+            //       input: {
+            //         configuration: [
+            //           {
+            //             name: params.id,
+            //             value
+            //           }
+            //         ]
+            //       }
+            //     }
+            //   });
 
-            const handleSubmit = async (
-              formData: PluginDetailsPageFormData
-            ) => {
-              const result = await pluginUpdate({
-                variables: {
-                  id,
-                  input: {
-                    active: formData.active,
-                    configuration: getConfigurationInput(
-                      pluginDetails.data.plugin.configuration,
-                      formData.configuration
-                    )
-                  }
-                }
-              });
-
-              return result.data.pluginUpdate.errors;
-            };
+            const handleSubmit = async () =>
+              /* formData: PluginDetailsPageFormData */
+              {
+                // const result = await pluginUpdate({
+                //   variables: {
+                //     id,
+                //     input: {
+                //       active: formData.active,
+                //       configuration: getConfigurationInput(
+                //         pluginDetails.data.plugin.configuration,
+                //         formData.configuration
+                //       )
+                //     }
+                //   }
+                // });
+                // return result.data.pluginUpdate.errors;
+              };
 
             return (
               <>
@@ -133,7 +130,7 @@ export const PluginsDetails: React.FC<PluginsDetailsProps> = ({
                   }
                   onSubmit={handleSubmit}
                 />
-                {pluginDetails.data?.plugin?.configuration && (
+                {/* {pluginDetails.data?.plugin?.configuration && (
                   <>
                     <ActionDialog
                       confirmButtonState={
@@ -163,7 +160,7 @@ export const PluginsDetails: React.FC<PluginsDetailsProps> = ({
                       open={params.action === "edit" && !!params.id}
                     />
                   </>
-                )}
+                )} */}
               </>
             );
           }}

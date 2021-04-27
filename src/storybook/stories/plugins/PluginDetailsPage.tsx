@@ -49,8 +49,8 @@ storiesOf("Views / Plugins / Plugin details", module)
     <PluginsDetailsPage
       {...props}
       plugin={{
-        ...plugin,
-        configuration: null
+        ...plugin
+        // configuration: null
       }}
     />
   ));
