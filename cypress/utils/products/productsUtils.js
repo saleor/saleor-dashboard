@@ -13,11 +13,20 @@ export function createProductInChannel({
   price = 1,
   isPublished = true,
   isAvailableForPurchase = true,
-  visibleInListings = true
+  visibleInListings = true,
+  collectionId = null,
+  description = null
 }) {
   let product;
   let variants;
-  return createProduct(attributeId, name, productTypeId, categoryId)
+  return createProduct(
+    attributeId,
+    name,
+    productTypeId,
+    categoryId,
+    collectionId,
+    description
+  )
     .then(productResp => {
       product = productResp;
       productRequest.updateChannelInProduct({
@@ -32,6 +41,7 @@ export function createProductInChannel({
       createVariant({
         productId: product.id,
         sku: name,
+        attributeId,
         warehouseId,
         quantityInWarehouse,
         channelId,
@@ -80,9 +90,23 @@ export function createCategory(name) {
     .createCategory(name)
     .its("body.data.categoryCreate.category");
 }
-export function createProduct(attributeId, name, productTypeId, categoryId) {
+export function createProduct(
+  attributeId,
+  name,
+  productTypeId,
+  categoryId,
+  collectionId,
+  description
+) {
   return productRequest
-    .createProduct(attributeId, name, productTypeId, categoryId)
+    .createProduct(
+      attributeId,
+      name,
+      productTypeId,
+      categoryId,
+      collectionId,
+      description
+    )
     .its("body.data.productCreate.product");
 }
 export function updateProduct(productId, input) {
@@ -93,6 +117,7 @@ export function updateProduct(productId, input) {
 export function createVariant({
   productId,
   sku,
+  attributeId,
   warehouseId,
   quantityInWarehouse,
   channelId,
@@ -102,6 +127,7 @@ export function createVariant({
     .createVariant({
       productId,
       sku,
+      attributeId,
       warehouseId,
       quantity: quantityInWarehouse,
       channelId,

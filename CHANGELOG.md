@@ -33,10 +33,15 @@ All notable, unreleased changes to this project will be documented in this file.
 - Add multiline field plugins - #974 by @dominik-zeglen
 - Handle limit reached error - #990 by @dominik-zeglen
 - Display Cloud limits - #1004 by @dominik-zeglen
+- Add shipping method description - #1058 by @jwm0
+- Fix voucher and sales sorting errors - #1063 by @orzechdev
+- Fix custom currency formatting - #1067 by @orzechdev
 - Fixes - #1077 by @piotrgrundas:
-    - rich text field updates, 
-    - multiselect empty chip upon creation of a product/variant,
-    - useFormset.setItemValue wrong updates,
+  - rich text field updates,
+  - multiselect empty chip upon creation of a product/variant,
+  - useFormset.setItemValue wrong updates,
+- Drop deprecated fields - #1071 by @jwm0
+- Add service worker - #1073 by @dominik-zeglen
 
 # 2.11.1
 

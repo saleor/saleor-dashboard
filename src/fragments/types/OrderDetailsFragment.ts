@@ -450,12 +450,6 @@ export interface OrderDetailsFragment_availableShippingMethods {
   price: OrderDetailsFragment_availableShippingMethods_price | null;
 }
 
-export interface OrderDetailsFragment_discount {
-  __typename: "Money";
-  amount: number;
-  currency: string;
-}
-
 export interface OrderDetailsFragment_invoices {
   __typename: "Invoice";
   id: string;
@@ -504,7 +498,6 @@ export interface OrderDetailsFragment {
   user: OrderDetailsFragment_user | null;
   userEmail: string | null;
   availableShippingMethods: (OrderDetailsFragment_availableShippingMethods | null)[] | null;
-  discount: OrderDetailsFragment_discount | null;
   invoices: (OrderDetailsFragment_invoices | null)[] | null;
   channel: OrderDetailsFragment_channel;
   isPaid: boolean;

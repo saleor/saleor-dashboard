@@ -12,5 +12,7 @@ export const PRODUCT_DETAILS = {
   addVariantsButton: "[data-test*='button-add-variant']",
   descriptionInput: "[data-test-id='description']",
   ratingInput: "[name='rating']",
-  skuInput: "[name='sku']"
+  skuInput: "[name='sku']",
+  collectionRemoveButtons: '[data-test-id="collectionRemove"]',
+  variantRow: "[data-test-id='product-variant-row']"
 };

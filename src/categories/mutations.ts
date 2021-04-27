@@ -24,7 +24,7 @@ export const categoryDeleteMutation = gql`
   ${productErrorFragment}
   mutation CategoryDelete($id: ID!) {
     categoryDelete(id: $id) {
-      errors: productErrors {
+      errors {
         ...ProductErrorFragment
       }
     }
@@ -43,7 +43,7 @@ export const categoryCreateMutation = gql`
       category {
         ...CategoryDetailsFragment
       }
-      errors: productErrors {
+      errors {
         ...ProductErrorFragment
       }
     }
@@ -62,7 +62,7 @@ export const categoryUpdateMutation = gql`
       category {
         ...CategoryDetailsFragment
       }
-      errors: productErrors {
+      errors {
         ...ProductErrorFragment
       }
     }
@@ -77,7 +77,7 @@ export const categoryBulkDeleteMutation = gql`
   ${productErrorFragment}
   mutation CategoryBulkDelete($ids: [ID]!) {
     categoryBulkDelete(ids: $ids) {
-      errors: productErrors {
+      errors {
         ...ProductErrorFragment
       }
     }

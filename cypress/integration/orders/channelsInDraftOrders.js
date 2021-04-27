@@ -13,8 +13,8 @@ import { urlList } from "../../url/urlList";
 import * as channelsUtils from "../../utils/channelsUtils";
 
 describe("Channels in draft orders", () => {
-  const startsWith = "Cy-";
-  const randomName = startsWith + faker.random.number();
+  const startsWith = "CyChannelInDraftOrders-";
+  const randomName = startsWith + faker.datatype.number();
 
   let defaultChannel;
   let otherChannel;

@@ -21,12 +21,12 @@ const updateMetadata = gql`
     $keysToDelete: [String!]!
   ) {
     updateMetadata(id: $id, input: $input) {
-      errors: metadataErrors {
+      errors {
         ...MetadataErrorFragment
       }
     }
     deleteMetadata(id: $id, keys: $keysToDelete) {
-      errors: metadataErrors {
+      errors {
         ...MetadataErrorFragment
       }
       item {
@@ -52,12 +52,12 @@ const updatePrivateMetadata = gql`
     $keysToDelete: [String!]!
   ) {
     updatePrivateMetadata(id: $id, input: $input) {
-      errors: metadataErrors {
+      errors {
         ...MetadataErrorFragment
       }
     }
     deletePrivateMetadata(id: $id, keys: $keysToDelete) {
-      errors: metadataErrors {
+      errors {
         ...MetadataErrorFragment
       }
       item {

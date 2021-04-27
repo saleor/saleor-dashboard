@@ -13,7 +13,7 @@ const fileUploadMutation = gql`
       uploadedFile {
         ...FileFragment
       }
-      uploadErrors {
+      errors {
         ...UploadErrorFragment
       }
     }

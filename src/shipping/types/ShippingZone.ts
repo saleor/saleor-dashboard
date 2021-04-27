@@ -135,6 +135,7 @@ export interface ShippingZone_shippingZone_shippingMethods {
   minimumDeliveryDays: number | null;
   maximumDeliveryDays: number | null;
   name: string;
+  description: any | null;
   type: ShippingMethodTypeEnum | null;
   channelListings: ShippingZone_shippingZone_shippingMethods_channelListings[] | null;
   excludedProducts: ShippingZone_shippingZone_shippingMethods_excludedProducts | null;

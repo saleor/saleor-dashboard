@@ -72,7 +72,7 @@ type GetSortQueryField<TUrlField extends string, TSortField extends string> = (
 type GetSortQueryVariables<
   TSortField extends string,
   TParams extends Record<any, any>
-> = (params: TParams) => SortingInput<TSortField>;
+> = (params: TParams, channelSlug?: string) => SortingInput<TSortField>;
 export function createGetSortQueryVariables<
   TUrlField extends string,
   TSortField extends string,
@@ -80,13 +80,14 @@ export function createGetSortQueryVariables<
 >(
   getSortQueryField: GetSortQueryField<TUrlField, TSortField>
 ): GetSortQueryVariables<TSortField, TParams> {
-  return (params: TParams) => {
+  return (params: TParams, channelSlug?: string) => {
     const field = getSortQueryField(params.sort);
 
     if (!!field) {
       return {
         direction: getOrderDirection(params.asc),
-        field
+        field,
+        channel: channelSlug
       };
     }
 

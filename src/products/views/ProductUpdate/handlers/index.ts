@@ -54,9 +54,9 @@ import {
   VariantCreateVariables
 } from "@saleor/products/types/VariantCreate";
 import { mapFormsetStockToStockInput } from "@saleor/products/utils/data";
-import { getParsedDataForJsonStringField } from "@saleor/translations/utils";
 import { ReorderEvent } from "@saleor/types";
 import { move } from "@saleor/utils/lists";
+import { getParsedDataForJsonStringField } from "@saleor/utils/richText/misc";
 import { MutationFetchResult } from "react-apollo";
 import { arrayMove } from "react-sortable-hoc";
 

@@ -25,12 +25,14 @@ export interface ShippingMethodTranslationFragment_translation {
   id: string;
   language: ShippingMethodTranslationFragment_translation_language;
   name: string | null;
+  description: any | null;
 }
 
 export interface ShippingMethodTranslationFragment {
   __typename: "ShippingMethodTranslatableContent";
-  shippingMethod: ShippingMethodTranslationFragment_shippingMethod | null;
   id: string;
   name: string;
+  description: any | null;
+  shippingMethod: ShippingMethodTranslationFragment_shippingMethod | null;
   translation: ShippingMethodTranslationFragment_translation | null;
 }

@@ -358,6 +358,7 @@ export const ProductVariants: React.FC<ProductVariantsProps> = props => {
 
               return (
                 <SortableTableRow
+                  data-test-id="product-variant-row"
                   selected={isSelected}
                   hover={!!variant}
                   onClick={onRowClick(variant.id)}

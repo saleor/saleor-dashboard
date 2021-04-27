@@ -82,6 +82,7 @@ export const saleTranslationFragment = gql`
 `;
 export const voucherTranslationFragment = gql`
   fragment VoucherTranslationFragment on VoucherTranslatableContent {
+    name
     voucher {
       id
       name
@@ -98,11 +99,12 @@ export const voucherTranslationFragment = gql`
 `;
 export const shippingMethodTranslationFragment = gql`
   fragment ShippingMethodTranslationFragment on ShippingMethodTranslatableContent {
+    id
+    name
+    description
     shippingMethod {
       id
     }
-    id
-    name
     translation(languageCode: $language) {
       id
       language {
@@ -110,6 +112,7 @@ export const shippingMethodTranslationFragment = gql`
         language
       }
       name
+      description
     }
   }
 `;

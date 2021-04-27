@@ -1,4 +1,5 @@
 import { OutputData } from "@editorjs/editorjs";
+import { getParsedDataForJsonStringField } from "@saleor/utils/richText/misc";
 
 import {
   PageTranslationInputFieldName,
@@ -25,7 +26,3 @@ export const getParsedTranslationInputData = ({
 
   return { [fieldName]: data as string };
 };
-
-export const getParsedDataForJsonStringField = (
-  data: OutputData
-): string | null => (!!data.blocks?.length ? JSON.stringify(data) : null);

@@ -1,3 +1,5 @@
+import AppActivateDialog from "@saleor/apps/components/AppActivateDialog";
+import AppDeactivateDialog from "@saleor/apps/components/AppDeactivateDialog";
 import TokenCreateDialog from "@saleor/apps/components/TokenCreateDialog";
 import TokenDeleteDialog from "@saleor/apps/components/TokenDeleteDialog";
 import NotFoundPage from "@saleor/components/NotFoundPage";
@@ -8,6 +10,7 @@ import useNotifier from "@saleor/hooks/useNotifier";
 import useShop from "@saleor/hooks/useShop";
 import { commonMessages } from "@saleor/intl";
 import { getStringOrPlaceholder } from "@saleor/misc";
+import getAppErrorMessage from "@saleor/utils/errors/app";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import WebhookDeleteDialog from "@saleor/webhooks/components/WebhookDeleteDialog";
 import { useWebhookDeleteMutation } from "@saleor/webhooks/mutations";
@@ -20,6 +23,8 @@ import CustomAppDetailsPage, {
   CustomAppDetailsPageFormData
 } from "../../components/CustomAppDetailsPage";
 import {
+  useAppActivateMutation,
+  useAppDeactivateMutation,
   useAppTokenCreateMutation,
   useAppTokenDeleteMutation,
   useAppUpdateMutation
@@ -63,6 +68,52 @@ export const CustomAppDetails: React.FC<OrderListProps> = ({
   const { data, loading, refetch } = useAppDetails({
     displayLoader: true,
     variables: { id }
+  });
+  const [activateApp, activateAppResult] = useAppActivateMutation({
+    onCompleted: data => {
+      const errors = data?.appActivate?.errors;
+      if (errors?.length === 0) {
+        notify({
+          status: "success",
+          text: intl.formatMessage({
+            defaultMessage: "App activated",
+            description: "snackbar text"
+          })
+        });
+        refetch();
+        closeModal();
+      } else {
+        errors.forEach(error =>
+          notify({
+            status: "error",
+            text: getAppErrorMessage(error, intl)
+          })
+        );
+      }
+    }
+  });
+  const [deactivateApp, deactivateAppResult] = useAppDeactivateMutation({
+    onCompleted: data => {
+      const errors = data?.appDeactivate?.errors;
+      if (errors.length === 0) {
+        notify({
+          status: "success",
+          text: intl.formatMessage({
+            defaultMessage: "App deactivated",
+            description: "snackbar text"
+          })
+        });
+        refetch();
+        closeModal();
+      } else {
+        errors.forEach(error =>
+          notify({
+            status: "error",
+            text: getAppErrorMessage(error, intl)
+          })
+        );
+      }
+    }
   });
 
   const onWebhookDelete = (data: WebhookDelete) => {
@@ -135,7 +186,6 @@ export const CustomAppDetails: React.FC<OrderListProps> = ({
       variables: {
         id,
         input: {
-          isActive: data.isActive,
           name: data.name,
           permissions: data.hasFullAccess
             ? shop.permissions.map(permission => permission.code)
@@ -164,6 +214,13 @@ export const CustomAppDetails: React.FC<OrderListProps> = ({
       }
     });
 
+  const handleActivateConfirm = () => {
+    activateApp({ variables: { id } });
+  };
+  const handleDeactivateConfirm = () => {
+    deactivateApp({ variables: { id } });
+  };
+
   const currentToken = data?.app?.tokens?.find(token => token.id === params.id);
 
   return (
@@ -191,6 +248,8 @@ export const CustomAppDetails: React.FC<OrderListProps> = ({
             id
           })
         }
+        onAppActivateOpen={() => openModal("app-activate")}
+        onAppDeactivateOpen={() => openModal("app-deactivate")}
         permissions={shop?.permissions}
         app={data?.app}
         saveButtonBarState={updateAppOpts.status}
@@ -221,6 +280,21 @@ export const CustomAppDetails: React.FC<OrderListProps> = ({
         onClose={closeModal}
         onConfirm={handleRemoveWebhookConfirm}
         open={params.action === "remove-webhook"}
+      />
+      <AppActivateDialog
+        confirmButtonState={activateAppResult.status}
+        name={data?.app.name}
+        onClose={closeModal}
+        onConfirm={handleActivateConfirm}
+        open={params.action === "app-activate"}
+      />
+      <AppDeactivateDialog
+        confirmButtonState={deactivateAppResult.status}
+        name={data?.app.name}
+        onClose={closeModal}
+        onConfirm={handleDeactivateConfirm}
+        thirdParty={false}
+        open={params.action === "app-deactivate"}
       />
     </>
   );

@@ -76,7 +76,7 @@ export const VoucherList: React.FC<VoucherListProps> = ({ params }) => {
     () => ({
       ...paginationState,
       filter: getFilterVariables(params),
-      sort: getSortQueryVariables(params)
+      sort: getSortQueryVariables(params, channel?.slug)
     }),
     [params]
   );

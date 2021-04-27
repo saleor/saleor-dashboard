@@ -41,7 +41,7 @@ const AppActivateDialog: React.FC<AppActivateDialogProps> = ({
       <DialogContentText>
         {["", null].includes(name) ? (
           <FormattedMessage
-            defaultMessage="Are you sure you want to activate this app? Activating will start gathering events"
+            defaultMessage="Are you sure you want to activate this app? Activating will start gathering events."
             description="activate app"
           />
         ) : (

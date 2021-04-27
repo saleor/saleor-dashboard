@@ -86,6 +86,7 @@ export interface ShippingMethodChannelListingUpdate_shippingMethodChannelListing
   minimumDeliveryDays: number | null;
   maximumDeliveryDays: number | null;
   name: string;
+  description: any | null;
   type: ShippingMethodTypeEnum | null;
   channelListings: ShippingMethodChannelListingUpdate_shippingMethodChannelListingUpdate_shippingMethod_channelListings[] | null;
 }

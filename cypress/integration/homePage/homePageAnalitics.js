@@ -18,7 +18,7 @@ import * as shippingUtils from "../../utils/shippingUtils";
 
 // <reference types="cypress" />
 describe("Homepage analytics", () => {
-  const startsWith = "Cy-";
+  const startsWith = "CyHomeAnalytics-";
 
   let customerId;
   let defaultChannel;
@@ -28,10 +28,11 @@ describe("Homepage analytics", () => {
   let category;
   let warehouse;
   let shippingMethod;
+  let addresses;
 
   const productPrice = 22;
   const shippingPrice = 12;
-  const randomName = startsWith + faker.random.number();
+  const randomName = startsWith + faker.datatype.number();
   const randomEmail = randomName + "@example.com";
 
   before(() => {
@@ -39,7 +40,6 @@ describe("Homepage analytics", () => {
     productsUtils.deleteProductsStartsWith(startsWith);
     deleteCustomersStartsWith(startsWith);
     shippingUtils.deleteShippingStartsWith(startsWith);
-    let addresses;
 
     getDefaultChannel()
       .then(channel => {
@@ -139,7 +139,8 @@ describe("Homepage analytics", () => {
       defaultChannel.slug,
       randomEmail,
       createdVariants,
-      shippingMethod.id
+      shippingMethod.id,
+      addresses.plAddress
     );
 
     cy.get("@ordersReadyForCapture").then(ordersReadyForCaptureBefore => {
@@ -160,7 +161,7 @@ describe("Homepage analytics", () => {
     homePageUtils
       .getProductsOutOfStock(defaultChannel.slug)
       .as("productsOutOfStock");
-    const productOutOfStockRandomName = startsWith + faker.random.number();
+    const productOutOfStockRandomName = startsWith + faker.datatype.number();
 
     productsUtils.createProductInChannel({
       name: productOutOfStockRandomName,

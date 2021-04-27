@@ -1,12 +1,12 @@
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
-import { getParsedDataForJsonStringField } from "@saleor/translations/utils";
 import createMetadataCreateHandler from "@saleor/utils/handlers/metadataCreateHandler";
 import {
   useMetadataUpdate,
   usePrivateMetadataUpdate
 } from "@saleor/utils/metadata/updateMetadata";
+import { getParsedDataForJsonStringField } from "@saleor/utils/richText/misc";
 import React from "react";
 import { useIntl } from "react-intl";
 
