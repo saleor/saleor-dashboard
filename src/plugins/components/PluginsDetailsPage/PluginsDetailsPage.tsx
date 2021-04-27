@@ -1,11 +1,9 @@
-import Typography from "@material-ui/core/Typography";
 import AppHeader from "@saleor/components/AppHeader";
 import CardSpacer from "@saleor/components/CardSpacer";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
 import Container from "@saleor/components/Container";
 import Form from "@saleor/components/Form";
 import Grid from "@saleor/components/Grid";
-import Hr from "@saleor/components/Hr";
 import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
 import { PluginErrorFragment } from "@saleor/fragments/types/PluginErrorFragment";
@@ -43,17 +41,6 @@ export interface PluginsDetailsPageProps {
   setSelectedChannelId: (channelId: string) => void;
 }
 
-const useStyles = makeStyles(
-  {
-    spacer: {
-      gridColumnEnd: "span 2"
-    }
-  },
-  {
-    name: "PluginsDetailsPage"
-  }
-);
-
 const PluginsDetailsPage: React.FC<PluginsDetailsPageProps> = ({
   disabled,
   errors,
@@ -66,7 +53,6 @@ const PluginsDetailsPage: React.FC<PluginsDetailsPageProps> = ({
   selectedConfig,
   setSelectedChannelId
 }) => {
-  const classes = useStyles({});
   const intl = useIntl();
 
   const initialFormData = (): PluginDetailsPageFormData => ({
@@ -81,7 +67,7 @@ const PluginsDetailsPage: React.FC<PluginsDetailsPageProps> = ({
       }))
   });
 
-  const selectedChannelId = selectedConfig?.channel.id;
+  const selectedChannelId = selectedConfig?.channel?.id;
 
   return (
     <Form
@@ -137,24 +123,16 @@ const PluginsDetailsPage: React.FC<PluginsDetailsPageProps> = ({
                   setSelectedChannelId={setSelectedChannelId}
                 />
               </div>
-              <PluginInfo
-                data={data}
-                description={plugin?.description || ""}
-                errors={errors}
-                name={plugin?.name || ""}
-                onChange={onChange}
-              />
-              {data.configuration && (
-                <>
-                  <Hr className={classes.spacer} />
-                  <div>
-                    <Typography variant="h6">
-                      {intl.formatMessage({
-                        defaultMessage: "Plugin Settings",
-                        description: "section header"
-                      })}
-                    </Typography>
-                  </div>
+              <div>
+                <PluginInfo
+                  data={data}
+                  description={plugin?.description || ""}
+                  errors={errors}
+                  name={plugin?.name || ""}
+                  onChange={onChange}
+                />
+                <CardSpacer />
+                {data.configuration && (
                   <div>
                     <PluginSettings
                       data={data}
@@ -176,8 +154,8 @@ const PluginsDetailsPage: React.FC<PluginsDetailsPageProps> = ({
                       </>
                     )}
                   </div>
-                </>
-              )}
+                )}
+              </div>
             </Grid>
             <SaveButtonBar
               disabled={disabled || !hasChanged}
