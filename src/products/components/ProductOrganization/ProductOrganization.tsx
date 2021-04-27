@@ -196,6 +196,7 @@ const ProductOrganization: React.FC<ProductOrganizationProps> = props => {
           onChange={onCollectionChange}
           fetchChoices={fetchCollections}
           data-test="collections"
+          testId="collection"
           {...fetchMoreCollections}
         />
       </CardContent>

@@ -10,7 +10,7 @@ import { ProductTypeInput, AttributeTypeEnum, MeasurementUnitsEnum, WeightUnitsE
 // ====================================================
 
 export interface ProductTypeCreate_productTypeCreate_errors {
-  __typename: "Error";
+  __typename: "ProductError";
   field: string | null;
   message: string | null;
 }

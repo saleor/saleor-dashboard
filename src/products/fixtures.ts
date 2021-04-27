@@ -2822,6 +2822,8 @@ export const variant = (placeholderImage: string): ProductVariant => ({
     channelListings: [
       {
         __typename: "ProductChannelListing",
+        isPublished: false,
+        publicationDate: null,
         channel: {
           __typename: "Channel",
           currencyCode: "USD",
@@ -2853,6 +2855,8 @@ export const variant = (placeholderImage: string): ProductVariant => ({
       },
       {
         __typename: "ProductChannelListing",
+        isPublished: true,
+        publicationDate: "2022-01-21",
         channel: {
           __typename: "Channel",
           currencyCode: "USD",

@@ -3,9 +3,9 @@ export function editSeoSettings({ slug, title, description }) {
   cy.get(SEO_FORM.editSeoSettings)
     .click()
     .get(SEO_FORM.slugInput)
-    .type(slug)
+    .clearAndType(slug)
     .get(SEO_FORM.titleInput)
-    .type(title)
+    .clearAndType(title)
     .get(SEO_FORM.descriptionInput)
-    .type(description, { delay: 0 });
+    .clearAndType(description, { delay: 0 });
 }

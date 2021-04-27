@@ -21,7 +21,7 @@ import { isProductVisibleInSearchResult } from "../utils/storeFront/storeFrontPr
 
 describe("Collections", () => {
   const startsWith = "CyCollections-";
-  const name = `${startsWith}${faker.random.number()}`;
+  const name = `${startsWith}${faker.datatype.number()}`;
 
   let attribute;
   let productType;
@@ -35,6 +35,7 @@ describe("Collections", () => {
     productsUtils.deleteProductsStartsWith(startsWith);
     deleteCollectionsStartsWith(startsWith);
     deleteShippingStartsWith(startsWith);
+    channelsUtils.deleteChannelsStartsWith(startsWith);
 
     channelsUtils
       .getDefaultChannel()
@@ -68,7 +69,7 @@ describe("Collections", () => {
   });
 
   it("should not display hidden collections", () => {
-    const collectionName = `${startsWith}${faker.random.number()}`;
+    const collectionName = `${startsWith}${faker.datatype.number()}`;
     cy.visit(urlList.collections);
     let collection;
 
@@ -87,7 +88,7 @@ describe("Collections", () => {
   });
 
   it("should display collections", () => {
-    const collectionName = `${startsWith}${faker.random.number()}`;
+    const collectionName = `${startsWith}${faker.datatype.number()}`;
     let collection;
     cy.visit(urlList.collections);
 
@@ -103,7 +104,7 @@ describe("Collections", () => {
       });
   });
   it("should not display collection not set as available in channel", () => {
-    const collectionName = `${startsWith}${faker.random.number()}`;
+    const collectionName = `${startsWith}${faker.datatype.number()}`;
     let collection;
     let channel;
 
@@ -130,7 +131,7 @@ describe("Collections", () => {
   it("should display products hidden in listing", () => {
     // Products "hidden in listings" are not displayed in Category listings or search results,
     // but are listed on Collections
-    const randomName = `${startsWith}${faker.random.number()}`;
+    const randomName = `${startsWith}${faker.datatype.number()}`;
     let collection;
     let createdProduct;
 

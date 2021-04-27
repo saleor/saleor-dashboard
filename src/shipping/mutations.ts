@@ -63,7 +63,7 @@ const deleteShippingZone = gql`
   ${shippingErrorFragment}
   mutation DeleteShippingZone($id: ID!) {
     shippingZoneDelete(id: $id) {
-      errors: shippingErrors {
+      errors {
         ...ShippingErrorFragment
       }
     }
@@ -78,7 +78,7 @@ const bulkDeleteShippingZone = gql`
   ${shippingErrorFragment}
   mutation BulkDeleteShippingZone($ids: [ID]!) {
     shippingZoneBulkDelete(ids: $ids) {
-      errors: shippingErrors {
+      errors {
         ...ShippingErrorFragment
       }
     }
@@ -112,7 +112,7 @@ const createShippingZone = gql`
   ${shippingErrorFragment}
   mutation CreateShippingZone($input: ShippingZoneCreateInput!) {
     shippingZoneCreate(input: $input) {
-      errors: shippingErrors {
+      errors {
         ...ShippingErrorFragment
       }
       shippingZone {
@@ -136,7 +136,7 @@ const updateShippingZone = gql`
   ${shippingErrorFragment}
   mutation UpdateShippingZone($id: ID!, $input: ShippingZoneUpdateInput!) {
     shippingZoneUpdate(id: $id, input: $input) {
-      errors: shippingErrors {
+      errors {
         ...ShippingErrorFragment
       }
       shippingZone {
@@ -160,7 +160,7 @@ const updateShippingRate = gql`
   ${shippingMethodFragment}
   mutation UpdateShippingRate($id: ID!, $input: ShippingPriceInput!) {
     shippingPriceUpdate(id: $id, input: $input) {
-      errors: shippingErrors {
+      errors {
         ...ShippingErrorFragment
       }
       shippingMethod {
@@ -180,7 +180,7 @@ const createShippingRate = gql`
   ${shippingZoneDetailsFragment}
   mutation CreateShippingRate($input: ShippingPriceInput!) {
     shippingPriceCreate(input: $input) {
-      errors: shippingErrors {
+      errors {
         ...ShippingErrorFragment
       }
       shippingZone {
@@ -202,7 +202,7 @@ const deleteShippingRate = gql`
   ${shippingZoneDetailsFragment}
   mutation DeleteShippingRate($id: ID!) {
     shippingPriceDelete(id: $id) {
-      errors: shippingErrors {
+      errors {
         ...ShippingErrorFragment
       }
       shippingZone {
@@ -220,7 +220,7 @@ const bulkDeleteShippingRate = gql`
   ${shippingErrorFragment}
   mutation BulkDeleteShippingRate($ids: [ID]!) {
     shippingPriceBulkDelete(ids: $ids) {
-      errors: shippingErrors {
+      errors {
         ...ShippingErrorFragment
       }
     }
@@ -242,7 +242,7 @@ export const shippingMethodChannelListingUpdate = gql`
       shippingMethod {
         ...ShippingMethodFragment
       }
-      errors: shippingErrors {
+      errors {
         ...ShippingChannelsErrorFragment
       }
     }
@@ -261,7 +261,7 @@ export const shippingPriceExcludeProducts = gql`
     $input: ShippingPriceExcludeProductsInput!
   ) {
     shippingPriceExcludeProducts(id: $id, input: $input) {
-      errors: shippingErrors {
+      errors {
         ...ShippingErrorFragment
       }
     }
@@ -277,7 +277,7 @@ export const shippingPriceRemoveProductsFromExclude = gql`
   ${shippingErrorFragment}
   mutation ShippingPriceRemoveProductFromExclude($id: ID!, $products: [ID]!) {
     shippingPriceRemoveProductFromExclude(id: $id, products: $products) {
-      errors: shippingErrors {
+      errors {
         ...ShippingErrorFragment
       }
     }

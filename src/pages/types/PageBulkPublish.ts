@@ -8,7 +8,7 @@
 // ====================================================
 
 export interface PageBulkPublish_pageBulkPublish_errors {
-  __typename: "Error";
+  __typename: "PageError";
   field: string | null;
   message: string | null;
 }

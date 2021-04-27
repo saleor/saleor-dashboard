@@ -7,6 +7,7 @@ export function createCategory(name, slug = name) {
       }
       category{
         id
+        name
       }
     }
   }`;

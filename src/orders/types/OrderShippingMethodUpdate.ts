@@ -464,12 +464,6 @@ export interface OrderShippingMethodUpdate_orderUpdateShipping_order_user {
   email: string;
 }
 
-export interface OrderShippingMethodUpdate_orderUpdateShipping_order_discount {
-  __typename: "Money";
-  amount: number;
-  currency: string;
-}
-
 export interface OrderShippingMethodUpdate_orderUpdateShipping_order_invoices {
   __typename: "Invoice";
   id: string;
@@ -485,6 +479,7 @@ export interface OrderShippingMethodUpdate_orderUpdateShipping_order_channel {
   id: string;
   name: string;
   currencyCode: string;
+  slug: string;
 }
 
 export interface OrderShippingMethodUpdate_orderUpdateShipping_order {
@@ -517,7 +512,6 @@ export interface OrderShippingMethodUpdate_orderUpdateShipping_order {
   undiscountedTotal: OrderShippingMethodUpdate_orderUpdateShipping_order_undiscountedTotal;
   user: OrderShippingMethodUpdate_orderUpdateShipping_order_user | null;
   userEmail: string | null;
-  discount: OrderShippingMethodUpdate_orderUpdateShipping_order_discount | null;
   invoices: (OrderShippingMethodUpdate_orderUpdateShipping_order_invoices | null)[] | null;
   channel: OrderShippingMethodUpdate_orderUpdateShipping_order_channel;
   isPaid: boolean;

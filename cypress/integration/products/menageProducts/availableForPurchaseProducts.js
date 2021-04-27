@@ -11,7 +11,7 @@ import { isProductAvailableForPurchase } from "../../../utils/storeFront/storeFr
 // <reference types="cypress" />
 describe("Products available in listings", () => {
   const startsWith = "CyAvailForPurchase-";
-  const name = `${startsWith}${faker.random.number()}`;
+  const name = `${startsWith}${faker.datatype.number()}`;
   let productType;
   let attribute;
   let category;
@@ -59,7 +59,7 @@ describe("Products available in listings", () => {
   });
 
   it("should update product to available for purchase", () => {
-    const productName = `${startsWith}${faker.random.number()}`;
+    const productName = `${startsWith}${faker.datatype.number()}`;
     let product;
 
     productsUtils
@@ -85,7 +85,7 @@ describe("Products available in listings", () => {
       });
   });
   it("should update product to not available for purchase", () => {
-    const productName = `${startsWith}${faker.random.number()}`;
+    const productName = `${startsWith}${faker.datatype.number()}`;
     let product;
 
     productsUtils

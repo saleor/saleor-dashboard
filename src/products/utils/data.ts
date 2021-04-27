@@ -95,7 +95,7 @@ export function getAttributeInputFromAttributes(
     },
     id: attribute.id,
     label: attribute.name,
-    value: [""]
+    value: []
   }));
 }
 

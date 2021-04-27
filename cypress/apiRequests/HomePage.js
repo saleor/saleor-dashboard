@@ -8,9 +8,9 @@ export function getSalesForChannel(channelSlug, period) {
   }`;
   return cy.sendRequestWithQuery(query);
 }
-export function getOrdersForChannel(channelSlug, created) {
+export function getOrdersForChannel(channelSlug, { gte, lte }) {
   const query = `query{
-    orders(created: ${created}, channel:"${channelSlug}"){
+    orders(filter: { created: { gte: "${gte}", lte: "${lte}" } }, channel:"${channelSlug}"){
       totalCount
     }
   }`;
@@ -18,7 +18,7 @@ export function getOrdersForChannel(channelSlug, created) {
 }
 export function getOrdersWithStatus(status, channelSlug) {
   const query = `query{
-    orders(status: ${status}, channel:"${channelSlug}"){
+    orders(filter: { status: ${status} }, channel:"${channelSlug}"){
       totalCount
     }
   }`;
@@ -26,7 +26,7 @@ export function getOrdersWithStatus(status, channelSlug) {
 }
 export function getProductsOutOfStock(channelSlug) {
   const query = `query{
-    products(stockAvailability: OUT_OF_STOCK, channel:"${channelSlug}"){
+    products(filter: { stockAvailability: OUT_OF_STOCK, channel:"${channelSlug}" }){
       totalCount
     }
   }`;

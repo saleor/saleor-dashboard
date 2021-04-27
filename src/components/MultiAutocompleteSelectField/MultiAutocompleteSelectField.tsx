@@ -84,6 +84,7 @@ export interface MultiAutocompleteSelectFieldProps
   helperText?: string;
   label?: string;
   disabled?: boolean;
+  testId?: string;
   fetchChoices?: (value: string) => void;
   onChange: (event: React.ChangeEvent<any>) => void;
 }
@@ -107,6 +108,7 @@ const MultiAutocompleteSelectFieldComponent: React.FC<MultiAutocompleteSelectFie
     placeholder,
     value,
     disabled,
+    testId,
     fetchChoices,
     onChange,
     onFetchMore,
@@ -212,6 +214,7 @@ const MultiAutocompleteSelectFieldComponent: React.FC<MultiAutocompleteSelectFie
               </Typography>
 
               <IconButton
+                data-test-id={testId ? `${testId}Remove` : "remove"}
                 className={classes.chipClose}
                 disabled={value.disabled}
                 onClick={() => handleSelect(value.value)}
@@ -229,6 +232,7 @@ const MultiAutocompleteSelectFieldComponent: React.FC<MultiAutocompleteSelectFie
 const MultiAutocompleteSelectField: React.FC<MultiAutocompleteSelectFieldProps> = ({
   choices,
   fetchChoices,
+  testId,
   ...props
 }) => {
   const [query, setQuery] = React.useState("");
@@ -238,6 +242,7 @@ const MultiAutocompleteSelectField: React.FC<MultiAutocompleteSelectFieldProps> 
       <DebounceAutocomplete debounceFn={fetchChoices}>
         {debounceFn => (
           <MultiAutocompleteSelectFieldComponent
+            testId={testId}
             choices={choices}
             {...props}
             fetchChoices={debounceFn}

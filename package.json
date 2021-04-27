@@ -134,7 +134,7 @@
     "codecov": "^3.7.1",
     "core-js": "^3.7.0",
     "cross-env": "^6.0.3",
-    "cypress": "^6.4.0",
+    "cypress": "^6.9.1",
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.5",
     "enzyme-to-json": "^3.6.1",
@@ -169,7 +169,15 @@
     "tsconfig-paths-webpack-plugin": "^3.2.0",
     "webpack": "^4.35.3",
     "webpack-cli": "^3.3.6",
-    "webpack-dev-server": "^3.11.0"
+    "webpack-dev-server": "^3.11.0",
+    "webpack-manifest-plugin": "2.2.0",
+    "workbox-cacheable-response": "^6.1.2",
+    "workbox-expiration": "^6.1.2",
+    "workbox-precaching": "^6.1.2",
+    "workbox-routing": "^6.1.2",
+    "workbox-strategies": "^6.1.2",
+    "workbox-webpack-plugin": "^6.1.2",
+    "register-service-worker": "^1.7.2"
   },
   "optionalDependencies": {
     "fsevents": "^1.2.9"
@@ -238,5 +246,6 @@
     "lint": "npx eslint \"src/**/*.@(tsx|ts|jsx|js)\" --fix ; npx prettier --check \"src/**/*.@(tsx|ts|jsx|js)\" --write",
     "postbuild": "rimraf ./build/**/*.js.map",
     "release": "release-it"
-  }
+  },
+  "description": "![Saleor Dashboard](https://user-images.githubusercontent.com/249912/82305745-5c52fd00-99be-11ea-9ac6-cc04a6f28c91.png)"
 }

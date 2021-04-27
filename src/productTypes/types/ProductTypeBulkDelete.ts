@@ -8,7 +8,7 @@
 // ====================================================
 
 export interface ProductTypeBulkDelete_productTypeBulkDelete_errors {
-  __typename: "Error";
+  __typename: "ProductError";
   field: string | null;
   message: string | null;
 }

@@ -4,6 +4,7 @@ const CheckerPlugin = require("fork-ts-checker-webpack-plugin");
 const webpack = require("webpack");
 const TsconfigPathsPlugin = require("tsconfig-paths-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const { InjectManifest } = require("workbox-webpack-plugin");
 const SentryWebpackPlugin = require("@sentry/webpack-plugin");
 
 require("dotenv").config();
@@ -29,7 +30,8 @@ const environmentPlugin = new webpack.EnvironmentPlugin({
   DEMO_MODE: false,
   ENVIRONMENT: "",
   GTM_ID: "",
-  SENTRY_DSN: ""
+  SENTRY_DSN: "",
+  SW_INTERVAL: "300" // Fetch SW every 300 seconds
 });
 
 const dashboardBuildPath = "build/dashboard/";
@@ -78,6 +80,16 @@ module.exports = (env, argv) => {
     });
   }
 
+  let manifestPlugin;
+  if (!devMode) {
+    manifestPlugin = new InjectManifest({
+      swSrc: "./src/sw.js",
+      swDest: "sw.js",
+      maximumFileSizeToCacheInBytes: 5000000,
+      webpackCompilationPlugins: [checkerPlugin]
+    });
+  }
+
   return {
     devServer: {
       compress: true,
@@ -122,7 +134,8 @@ module.exports = (env, argv) => {
       checkerPlugin,
       environmentPlugin,
       htmlWebpackPlugin,
-      sentryPlugin
+      sentryPlugin,
+      manifestPlugin
     ].filter(Boolean),
     resolve: {
       extensions: [".js", ".jsx", ".ts", ".tsx"],

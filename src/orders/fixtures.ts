@@ -814,6 +814,7 @@ export const order = (placeholder: string): OrderDetails_order => ({
   canFinalize: true,
   channel: {
     __typename: "Channel",
+    slug: "channel-default",
     currencyCode: "USD",
     id: "123454",
     isActive: true,
@@ -821,7 +822,6 @@ export const order = (placeholder: string): OrderDetails_order => ({
   },
   created: "2018-09-11T09:37:28.185874+00:00",
   customerNote: "Lorem ipsum dolor sit amet",
-  discount: null,
   discounts: [],
   events: [
     {
@@ -1371,6 +1371,7 @@ export const draftOrder = (placeholder: string): OrderDetails_order => ({
   canFinalize: true,
   channel: {
     __typename: "Channel",
+    slug: "channel-default",
     currencyCode: "USD",
     id: "123454",
     isActive: true,
@@ -1378,9 +1379,7 @@ export const draftOrder = (placeholder: string): OrderDetails_order => ({
   },
   created: "2018-09-20T23:23:39.811428+00:00",
   customerNote: "Lorem ipsum dolor sit",
-  discount: null,
   discounts: [],
-
   events: [],
   fulfillments: [],
   id: "T3JkZXI6MjQ=",

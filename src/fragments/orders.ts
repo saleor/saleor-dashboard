@@ -261,9 +261,6 @@ export const fragmentOrderDetails = gql`
         ...Money
       }
     }
-    discount {
-      ...Money
-    }
     invoices {
       ...InvoiceFragment
     }
@@ -272,6 +269,7 @@ export const fragmentOrderDetails = gql`
       id
       name
       currencyCode
+      slug
     }
     isPaid
   }

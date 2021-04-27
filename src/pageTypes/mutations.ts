@@ -37,7 +37,7 @@ export const pageTypeUpdateMutation = gql`
   ${pageErrorFragment}
   mutation PageTypeUpdate($id: ID!, $input: PageTypeUpdateInput!) {
     pageTypeUpdate(id: $id, input: $input) {
-      errors: pageErrors {
+      errors {
         ...PageErrorFragment
       }
       pageType {
@@ -56,7 +56,7 @@ export const pageTypeCreateMutation = gql`
   ${pageErrorFragment}
   mutation PageTypeCreate($input: PageTypeCreateInput!) {
     pageTypeCreate(input: $input) {
-      errors: pageErrors {
+      errors {
         ...PageErrorFragment
       }
       pageType {
@@ -75,7 +75,7 @@ export const assignPageAttributeMutation = gql`
   ${pageErrorFragment}
   mutation AssignPageAttribute($id: ID!, $ids: [ID!]!) {
     pageAttributeAssign(pageTypeId: $id, attributeIds: $ids) {
-      errors: pageErrors {
+      errors {
         ...PageErrorFragment
       }
       pageType {
@@ -94,7 +94,7 @@ export const unassignPageAttributeMutation = gql`
   ${pageErrorFragment}
   mutation UnassignPageAttribute($id: ID!, $ids: [ID!]!) {
     pageAttributeUnassign(pageTypeId: $id, attributeIds: $ids) {
-      errors: pageErrors {
+      errors {
         ...PageErrorFragment
       }
       pageType {
@@ -111,7 +111,7 @@ export const useUnassignPageAttributeMutation = makeMutation<
 export const pageTypeDeleteMutation = gql`
   mutation PageTypeDelete($id: ID!) {
     pageTypeDelete(id: $id) {
-      errors: pageErrors {
+      errors {
         field
         message
       }
@@ -129,7 +129,7 @@ export const usePageTypeDeleteMutation = makeMutation<
 export const pageTypeBulkDeleteMutation = gql`
   mutation PageTypeBulkDelete($ids: [ID!]!) {
     pageTypeBulkDelete(ids: $ids) {
-      errors: pageErrors {
+      errors {
         field
         message
       }
@@ -146,7 +146,7 @@ export const pageTypeAttributeReorder = gql`
   ${pageErrorFragment}
   mutation PageTypeAttributeReorder($move: ReorderInput!, $pageTypeId: ID!) {
     pageTypeReorderAttributes(moves: [$move], pageTypeId: $pageTypeId) {
-      errors: pageErrors {
+      errors {
         ...PageErrorFragment
       }
       pageType {

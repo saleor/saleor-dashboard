@@ -8,7 +8,7 @@
 // ====================================================
 
 export interface FetchTaxes_shopFetchTaxRates_errors {
-  __typename: "Error";
+  __typename: "ShopError";
   field: string | null;
   message: string | null;
 }

@@ -24,7 +24,7 @@ const pageCreate = gql`
   ${pageErrorWithAttributesFragment}
   mutation PageCreate($input: PageCreateInput!) {
     pageCreate(input: $input) {
-      errors: pageErrors {
+      errors {
         ...PageErrorWithAttributesFragment
         message
       }
@@ -43,7 +43,7 @@ const pageUpdate = gql`
   ${pageErrorWithAttributesFragment}
   mutation PageUpdate($id: ID!, $input: PageInput!) {
     pageUpdate(id: $id, input: $input) {
-      errors: pageErrors {
+      errors {
         ...PageErrorWithAttributesFragment
       }
       page {
@@ -61,7 +61,7 @@ const pageRemove = gql`
   ${pageErrorFragment}
   mutation PageRemove($id: ID!) {
     pageDelete(id: $id) {
-      errors: pageErrors {
+      errors {
         ...PageErrorFragment
       }
     }

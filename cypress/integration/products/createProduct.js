@@ -9,7 +9,7 @@ import {
   fillUpPriceList,
   priceInputLists
 } from "../../steps/catalog/products/priceList";
-import { fillUpCommonFieldsForProductType } from "../../steps/catalog/products/productSteps";
+import { fillUpCommonFieldsForAllProductTypes } from "../../steps/catalog/products/productSteps";
 import { selectChannelInDetailsPages } from "../../steps/channelsSteps";
 import { urlList } from "../../url/urlList";
 import {
@@ -20,9 +20,9 @@ import * as productUtils from "../../utils/products/productsUtils";
 
 describe("Create product", () => {
   const startsWith = "CyCreateProduct-";
-  const name = `${startsWith}${faker.random.number()}`;
+  const name = `${startsWith}${faker.datatype.number()}`;
   const generalInfo = {
-    name: `${startsWith}${faker.random.number()}`,
+    name: `${startsWith}${faker.datatype.number()}`,
     description: faker.lorem.sentence(),
     rating: 2
   };
@@ -59,7 +59,7 @@ describe("Create product", () => {
   });
 
   it("should create product with variants", () => {
-    const randomName = `${startsWith}${faker.random.number()}`;
+    const randomName = `${startsWith}${faker.datatype.number()}`;
     productUtils.createTypeProduct(randomName, attribute.id);
     seo.slug = randomName;
     const productData = {
@@ -69,7 +69,7 @@ describe("Create product", () => {
       productOrganization: { productType: randomName },
       attribute
     };
-    fillUpCommonFieldsForProductType(productData).then(
+    fillUpCommonFieldsForAllProductTypes(productData).then(
       productOrgResp => (productData.productOrganization = productOrgResp)
     );
     cy.addAliasToGraphRequest("ProductDetails");
@@ -86,7 +86,7 @@ describe("Create product", () => {
   });
   it("should create product without variants", () => {
     const prices = { sellingPrice: 6, costPrice: 3 };
-    const randomName = `${startsWith}${faker.random.number()}`;
+    const randomName = `${startsWith}${faker.datatype.number()}`;
     seo.slug = randomName;
     productUtils.createTypeProduct(randomName, attribute.id, false);
     const productData = {
@@ -96,7 +96,7 @@ describe("Create product", () => {
       productOrganization: { productType: randomName },
       attribute
     };
-    fillUpCommonFieldsForProductType(productData).then(
+    fillUpCommonFieldsForAllProductTypes(productData).then(
       productOrgResp => (productData.productOrganization = productOrgResp)
     );
     selectChannelInDetailsPages();

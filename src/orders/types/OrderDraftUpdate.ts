@@ -456,12 +456,6 @@ export interface OrderDraftUpdate_draftOrderUpdate_order_availableShippingMethod
   price: OrderDraftUpdate_draftOrderUpdate_order_availableShippingMethods_price | null;
 }
 
-export interface OrderDraftUpdate_draftOrderUpdate_order_discount {
-  __typename: "Money";
-  amount: number;
-  currency: string;
-}
-
 export interface OrderDraftUpdate_draftOrderUpdate_order_invoices {
   __typename: "Invoice";
   id: string;
@@ -477,6 +471,7 @@ export interface OrderDraftUpdate_draftOrderUpdate_order_channel {
   id: string;
   name: string;
   currencyCode: string;
+  slug: string;
 }
 
 export interface OrderDraftUpdate_draftOrderUpdate_order {
@@ -509,7 +504,6 @@ export interface OrderDraftUpdate_draftOrderUpdate_order {
   user: OrderDraftUpdate_draftOrderUpdate_order_user | null;
   userEmail: string | null;
   availableShippingMethods: (OrderDraftUpdate_draftOrderUpdate_order_availableShippingMethods | null)[] | null;
-  discount: OrderDraftUpdate_draftOrderUpdate_order_discount | null;
   invoices: (OrderDraftUpdate_draftOrderUpdate_order_invoices | null)[] | null;
   channel: OrderDraftUpdate_draftOrderUpdate_order_channel;
   isPaid: boolean;

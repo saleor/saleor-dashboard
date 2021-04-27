@@ -43,7 +43,7 @@ describe("Channels", () => {
   });
 
   it("should create new channel", () => {
-    const randomChannel = `${channelStartsWith} ${faker.random.number()}`;
+    const randomChannel = `${channelStartsWith} ${faker.datatype.number()}`;
     cy.addAliasToGraphRequest("Channels");
     cy.visit(urlList.channels);
     cy.wait("@Channels");
@@ -82,7 +82,7 @@ describe("Channels", () => {
   });
 
   it("should validate slug name", () => {
-    const randomChannel = `${channelStartsWith} ${faker.random.number()}`;
+    const randomChannel = `${channelStartsWith} ${faker.datatype.number()}`;
     createChannel(false, randomChannel, randomChannel, currency);
     cy.visit(urlList.channels);
     createChannelByView(randomChannel, currency);
@@ -92,7 +92,7 @@ describe("Channels", () => {
   });
 
   it("should validate duplicated currency", () => {
-    const randomChannel = `${channelStartsWith} ${faker.random.number()}`;
+    const randomChannel = `${channelStartsWith} ${faker.datatype.number()}`;
     cy.visit(urlList.channels);
     createChannelByView(randomChannel, "notExistingCurrency");
     cy.get(ADD_CHANNEL_FORM_SELECTORS.currencyValidationMessage).should(
@@ -101,7 +101,7 @@ describe("Channels", () => {
   });
 
   it("should delete channel", () => {
-    const randomChannelToDelete = `${channelStartsWith} ${faker.random.number()}`;
+    const randomChannelToDelete = `${channelStartsWith} ${faker.datatype.number()}`;
     createChannel(
       false,
       randomChannelToDelete,
@@ -125,7 +125,7 @@ describe("Channels", () => {
   });
 
   it("should not be possible to add products to order with inactive channel", () => {
-    const randomChannel = `${channelStartsWith} ${faker.random.number()}`;
+    const randomChannel = `${channelStartsWith} ${faker.datatype.number()}`;
     createChannel(false, randomChannel, randomChannel, currency);
     cy.visit(urlList.orders)
       .get(ORDERS_SELECTORS.createOrder)

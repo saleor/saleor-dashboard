@@ -1,4 +1,5 @@
 import * as homePage from "../apiRequests/HomePage";
+import { getDatePeriod } from "./misc";
 
 export function getOrdersReadyToFulfill(channelSlug) {
   return homePage
@@ -21,7 +22,9 @@ export function getSalesAmount(channelSlug) {
     .its("body.data.ordersTotal.gross.amount");
 }
 export function getTodaysOrders(channelSlug) {
+  const today = getDatePeriod(1);
+
   return homePage
-    .getOrdersForChannel(channelSlug, "TODAY")
+    .getOrdersForChannel(channelSlug, today)
     .its("body.data.orders.totalCount");
 }
