@@ -1,11 +1,11 @@
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import AddressFormatter from "@saleor/components/AddressFormatter";
-import { makeStyles } from "@saleor/theme";
 import classNames from "classnames";
 import React from "react";
 
 import { CustomerAddresses_user_addresses } from "../../types/CustomerAddresses";
+import { useStyles } from "./styles";
 
 export interface CustomerAddressChoiceProps {
   address: CustomerAddresses_user_addresses;
@@ -13,20 +13,6 @@ export interface CustomerAddressChoiceProps {
   onSelect: () => void;
 }
 
-const useStyles = makeStyles(
-  theme => ({
-    card: {
-      cursor: "pointer",
-      padding: "1px"
-    },
-    cardSelected: {
-      borderColor: theme.palette.primary.main,
-      borderWidth: "2px",
-      padding: "0"
-    }
-  }),
-  { name: "CustomerAddressChoice" }
-);
 const CustomerAddressChoice: React.FC<CustomerAddressChoiceProps> = props => {
   const { address, selected, onSelect } = props;
   const classes = useStyles(props);

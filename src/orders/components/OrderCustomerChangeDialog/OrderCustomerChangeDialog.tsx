@@ -9,7 +9,6 @@ import Typography from "@material-ui/core/Typography";
 import ConfirmButton from "@saleor/components/ConfirmButton";
 import FormSpacer from "@saleor/components/FormSpacer";
 import { buttonMessages } from "@saleor/intl";
-import { makeStyles } from "@saleor/theme";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -18,21 +17,7 @@ import OrderCustomerChangeForm, {
   OrderCustomerChangeData
 } from "./form";
 import messages from "./messages";
-
-const useStyles = makeStyles(
-  {
-    container: {
-      display: "block"
-    },
-    optionLabel: {
-      display: "block"
-    },
-    overflow: {
-      overflowY: "visible"
-    }
-  },
-  { name: "OrderCustomerChangeDialog" }
-);
+import { useStyles } from "./styles";
 
 export interface OrderCustomerChangeDialogProps {
   open: boolean;

@@ -26,7 +26,6 @@ import { SubmitPromise } from "@saleor/hooks/useForm";
 import useModalDialogErrors from "@saleor/hooks/useModalDialogErrors";
 import { buttonMessages } from "@saleor/intl";
 import { transformAddressToAddressInput } from "@saleor/misc";
-import { makeStyles } from "@saleor/theme";
 import { AddressInput, AddressTypeEnum } from "@saleor/types/globalTypes";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -36,21 +35,7 @@ import OrderCustomerAddressesEditForm, {
   OrderCustomerAddressesEditFormData
 } from "./form";
 import messages from "./messages";
-
-const useStyles = makeStyles(
-  {
-    container: {
-      display: "block"
-    },
-    optionLabel: {
-      display: "block"
-    },
-    overflow: {
-      overflowY: "visible"
-    }
-  },
-  { name: "OrderCustomerAddressesEditDialog" }
-);
+import { useStyles } from "./styles";
 
 export interface OrderCustomerAddressesEditDialogOutput {
   shippingAddress: AddressInput;
