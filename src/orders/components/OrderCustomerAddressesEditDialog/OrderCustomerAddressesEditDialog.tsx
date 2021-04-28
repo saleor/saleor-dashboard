@@ -15,7 +15,6 @@ import ConfirmButton, {
 import ControlledCheckbox from "@saleor/components/ControlledCheckbox";
 import FormSpacer from "@saleor/components/FormSpacer";
 import CustomerAddressChoice from "@saleor/customers/components/CustomerAddressChoice";
-import { AddressTypeInput } from "@saleor/customers/types";
 import {
   CustomerAddresses_user_addresses,
   CustomerAddresses_user_defaultBillingAddress,
@@ -26,9 +25,9 @@ import useAddressValidation from "@saleor/hooks/useAddressValidation";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import useModalDialogErrors from "@saleor/hooks/useModalDialogErrors";
 import { buttonMessages } from "@saleor/intl";
-import { transformAddressToForm } from "@saleor/misc";
+import { transformAddressToForm, transformFormToAddress } from "@saleor/misc";
 import { makeStyles } from "@saleor/theme";
-import { AddressTypeEnum } from "@saleor/types/globalTypes";
+import { AddressInput, AddressTypeEnum } from "@saleor/types/globalTypes";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -54,8 +53,8 @@ const useStyles = makeStyles(
 );
 
 export interface OrderCustomerAddressesEditDialogOutput {
-  shippingAddress: AddressTypeInput;
-  billingAddress: AddressTypeInput;
+  shippingAddress: AddressInput;
+  billingAddress: AddressInput;
 }
 
 export interface OrderCustomerAddressesEditDialogProps {
@@ -101,42 +100,45 @@ const OrderCustomerAddressesEditDialog: React.FC<OrderCustomerAddressesEditDialo
     open
   );
 
-  const handleSubmit = async (data: OrderCustomerAddressesEditFormData) => {
-    let shippingAddress;
-    let billingAddress;
-    if (
+  const getCustomerAddress = (customerAddressId: string): AddressInput =>
+    transformFormToAddress(
+      transformAddressToForm(
+        customerAddresses.find(
+          customerAddress => customerAddress.id === customerAddressId
+        )
+      )
+    );
+
+  const handleAddressesSubmit = (data: OrderCustomerAddressesEditFormData) => {
+    const shippingAddress =
       data.shippingAddressInputOption ===
       AddressInputOptionEnum.CUSTOMER_ADDRESS
-    ) {
-      shippingAddress = transformAddressToForm(
-        customerAddresses.find(
-          customerAddress =>
-            customerAddress.id === data.customerShippingAddress.id
-        )
-      );
-    } else {
-      shippingAddress = handleShippingSubmit(data.shippingAddress);
-    }
+        ? getCustomerAddress(data.customerShippingAddress.id)
+        : handleShippingSubmit(data.shippingAddress);
+
     if (data.billingSameAsShipping) {
-      billingAddress = shippingAddress;
-    } else if (
-      data.billingAddressInputOption === AddressInputOptionEnum.CUSTOMER_ADDRESS
-    ) {
-      billingAddress = transformAddressToForm(
-        customerAddresses.find(
-          customerAddress =>
-            customerAddress.id === data.customerBillingAddress.id
-        )
-      );
-    } else {
-      billingAddress = handleBillingSubmit(data.billingAddress);
-    }
-    if (shippingAddress && billingAddress) {
-      const errors = await onConfirm({
+      return {
         shippingAddress,
-        billingAddress
-      });
-      return !errors.length;
+        billingAddress: shippingAddress
+      };
+    }
+
+    const billingAddress =
+      data.billingAddressInputOption === AddressInputOptionEnum.CUSTOMER_ADDRESS
+        ? getCustomerAddress(data.customerBillingAddress.id)
+        : handleBillingSubmit(data.billingAddress);
+
+    return {
+      shippingAddress,
+      billingAddress
+    };
+  };
+
+  const handleSubmit = (data: OrderCustomerAddressesEditFormData) => {
+    const adressesInput = handleAddressesSubmit(data);
+
+    if (adressesInput.shippingAddress && adressesInput.billingAddress) {
+      onConfirm(adressesInput);
     }
   };
 

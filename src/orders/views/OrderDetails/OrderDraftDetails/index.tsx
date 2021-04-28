@@ -14,10 +14,7 @@ import React from "react";
 import { useIntl } from "react-intl";
 
 import { customerUrl } from "../../../../customers/urls";
-import {
-  getStringOrPlaceholder,
-  transformFormToAddress
-} from "../../../../misc";
+import { getStringOrPlaceholder } from "../../../../misc";
 import { productUrl } from "../../../../products/urls";
 import OrderDraftCancelDialog from "../../../components/OrderDraftCancelDialog/OrderDraftCancelDialog";
 import OrderDraftPage from "../../../components/OrderDraftPage";
@@ -128,7 +125,8 @@ export const OrderDraftDetails: React.FC<OrderDraftDetailsProps> = ({
               const result = await orderDraftUpdate.mutate({
                 id,
                 input: {
-                  user: data.user
+                  user: data.user,
+                  userEmail: data.userEmail
                 }
               });
               if (!result?.data?.draftOrderUpdate?.errors?.length) {
@@ -234,8 +232,8 @@ export const OrderDraftDetails: React.FC<OrderDraftDetailsProps> = ({
           const result = await orderDraftUpdate.mutate({
             id,
             input: {
-              shippingAddress: transformFormToAddress(data.shippingAddress),
-              billingAddress: transformFormToAddress(data.billingAddress)
+              shippingAddress: data.shippingAddress,
+              billingAddress: data.billingAddress
             }
           });
           if (!result?.data?.draftOrderUpdate?.errors?.length) {

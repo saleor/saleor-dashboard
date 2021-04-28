@@ -35,7 +35,7 @@ interface OrderCustomerAddressesEditHandlers {
 }
 
 interface UseOrderCustomerAddressesEditFormResult {
-  submit: (event: React.FormEvent<any>) => Promise<boolean>;
+  submit: (event: React.FormEvent<any>) => void;
   change: FormChange;
   hasChanged: boolean;
   data: OrderCustomerAddressesEditData;
@@ -52,12 +52,12 @@ export interface OrderCustomerAddressesEditFormProps
   extends UseOrderCustomerAddressesEditFormOpts {
   children: (props: UseOrderCustomerAddressesEditFormResult) => React.ReactNode;
   initial?: Partial<OrderCustomerAddressesEditFormData>;
-  onSubmit: (data: OrderCustomerAddressesEditData) => Promise<boolean>;
+  onSubmit: (data: OrderCustomerAddressesEditData) => void;
 }
 
 function useOrderCustomerAddressesEditForm(
   initial: Partial<OrderCustomerAddressesEditFormData>,
-  onSubmit: (data: OrderCustomerAddressesEditData) => Promise<boolean>,
+  onSubmit: (data: OrderCustomerAddressesEditData) => void,
   opts: UseOrderCustomerAddressesEditFormOpts
 ): UseOrderCustomerAddressesEditFormResult {
   const initialAddress: AddressTypeInput = {

@@ -370,10 +370,6 @@
     "context": "product field",
     "string": "Export Variant Weight"
   },
-  "productExportFieldVisibility": {
-    "context": "product field",
-    "string": "Visibility"
-  },
   "productStockHeader": {
     "context": "product stock, section header",
     "string": "Inventory"
