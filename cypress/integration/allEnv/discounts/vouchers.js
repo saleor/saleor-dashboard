@@ -1,20 +1,20 @@
 // <reference types="cypress" />
 import faker from "faker";
 
-import { createChannel } from "../../apiRequests/Channels";
+import { createChannel } from "../../../apiRequests/Channels";
 import {
   createVoucher,
   discountOptions
-} from "../../steps/discounts/vouchersSteps";
-import { urlList } from "../../url/urlList";
-import * as channelsUtils from "../../utils/channelsUtils";
-import { deleteVouchersStartsWith } from "../../utils/discounts/vouchersUtils";
-import { createCheckoutWithVoucher } from "../../utils/ordersUtils";
-import * as productsUtils from "../../utils/products/productsUtils";
+} from "../../../steps/discounts/vouchersSteps";
+import { urlList } from "../../../url/urlList";
+import * as channelsUtils from "../../../utils/channelsUtils";
+import { deleteVouchersStartsWith } from "../../../utils/discounts/vouchersUtils";
+import { createCheckoutWithVoucher } from "../../../utils/ordersUtils";
+import * as productsUtils from "../../../utils/products/productsUtils";
 import {
   createShipping,
   deleteShippingStartsWith
-} from "../../utils/shippingUtils";
+} from "../../../utils/shippingUtils";
 
 describe("Vouchers discounts", () => {
   const startsWith = "CyVou-";

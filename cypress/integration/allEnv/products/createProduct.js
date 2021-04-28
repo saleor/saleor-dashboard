@@ -1,24 +1,24 @@
 // <reference types="cypress" />
 import faker from "faker";
 
-import { createAttribute } from "../../apiRequests/Attribute";
-import { createTypeProduct } from "../../apiRequests/Product";
-import { PRODUCT_DETAILS } from "../../elements/catalog/products/product-details";
-import { PRODUCTS_LIST } from "../../elements/catalog/products/products-list";
-import { BUTTON_SELECTORS } from "../../elements/shared/button-selectors";
-import { metadataForms } from "../../steps/catalog/metadataSteps";
+import { createAttribute } from "../../../apiRequests/Attribute";
+import { createTypeProduct } from "../../../apiRequests/Product";
+import { PRODUCT_DETAILS } from "../../../elements/catalog/products/product-details";
+import { PRODUCTS_LIST } from "../../../elements/catalog/products/products-list";
+import { BUTTON_SELECTORS } from "../../../elements/shared/button-selectors";
+import { metadataForms } from "../../../steps/catalog/metadataSteps";
 import {
   fillUpPriceList,
   priceInputLists
-} from "../../steps/catalog/products/priceList";
-import { fillUpCommonFieldsForAllProductTypes } from "../../steps/catalog/products/productSteps";
-import { selectChannelInDetailsPages } from "../../steps/channelsSteps";
-import { urlList } from "../../url/urlList";
+} from "../../../steps/catalog/products/priceList";
+import { fillUpCommonFieldsForAllProductTypes } from "../../../steps/catalog/products/productSteps";
+import { selectChannelInDetailsPages } from "../../../steps/channelsSteps";
+import { urlList } from "../../../url/urlList";
 import {
   expectCorrectProductInformation,
   expectCorrectProductVariantInformation
-} from "../../utils/products/checkProductInfo";
-import * as productUtils from "../../utils/products/productsUtils";
+} from "../../../utils/products/checkProductInfo";
+import * as productUtils from "../../../utils/products/productsUtils";
 
 describe("Create product", () => {
   const startsWith = "CyCreateProduct-";

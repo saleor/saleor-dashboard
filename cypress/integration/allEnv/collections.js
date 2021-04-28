@@ -1,24 +1,24 @@
 // <reference types="cypress" />
 import faker from "faker";
 
-import { createChannel } from "../apiRequests/Channels";
-import { updateChannelInProduct } from "../apiRequests/Product";
-import { getCollection } from "../apiRequests/storeFront/Collections";
-import { searchInShop } from "../apiRequests/storeFront/Search";
+import { createChannel } from "../../apiRequests/Channels";
+import { updateChannelInProduct } from "../../apiRequests/Product";
+import { getCollection } from "../../apiRequests/storeFront/Collections";
+import { searchInShop } from "../../apiRequests/storeFront/Search";
 import {
   assignProductsToCollection,
   createCollection
-} from "../steps/collectionsSteps";
-import { urlList } from "../url/urlList";
-import * as channelsUtils from "../utils/channelsUtils";
-import { deleteCollectionsStartsWith } from "../utils/collectionsUtils";
-import * as productsUtils from "../utils/products/productsUtils";
-import { deleteShippingStartsWith } from "../utils/shippingUtils";
+} from "../../steps/collectionsSteps";
+import { urlList } from "../../url/urlList";
+import * as channelsUtils from "../../utils/channelsUtils";
+import { deleteCollectionsStartsWith } from "../../utils/collectionsUtils";
+import * as productsUtils from "../../utils/products/productsUtils";
+import { deleteShippingStartsWith } from "../../utils/shippingUtils";
 import {
   isCollectionVisible,
   isProductInCollectionVisible
-} from "../utils/storeFront/collectionsUtils";
-import { isProductVisibleInSearchResult } from "../utils/storeFront/storeFrontProductUtils";
+} from "../../utils/storeFront/collectionsUtils";
+import { isProductVisibleInSearchResult } from "../../utils/storeFront/storeFrontProductUtils";
 
 describe("Collections", () => {
   const startsWith = "CyCollections-";

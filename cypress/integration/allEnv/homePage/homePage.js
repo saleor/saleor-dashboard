@@ -1,6 +1,6 @@
-import { TEST_ADMIN_USER, USER_WITHOUT_NAME } from "../../Data/users";
-import { HOMEPAGE_SELECTORS } from "../../elements/homePage/homePage-selectors";
-import { urlList } from "../../url/urlList";
+import { TEST_ADMIN_USER, USER_WITHOUT_NAME } from "../../../Data/users";
+import { HOMEPAGE_SELECTORS } from "../../../elements/homePage/homePage-selectors";
+import { urlList } from "../../../url/urlList";
 
 describe("Displaying welcome message on home page", () => {
   it("should display user name on home page", () => {

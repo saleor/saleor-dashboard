@@ -1,5 +1,5 @@
-import { PERMISSIONS_OPTIONS } from "../Data/permissionsUsers";
-import * as permissionsSteps from "../steps/permissions";
+import { PERMISSIONS_OPTIONS } from "../../Data/permissionsUsers";
+import * as permissionsSteps from "../../steps/permissions";
 
 describe("Navigation for users with different permissions", () => {
   Object.keys(PERMISSIONS_OPTIONS).forEach(key => {

@@ -1,6 +1,6 @@
 // <reference types="cypress" />
-import { LOGIN_SELECTORS } from "../elements/account/login-selectors";
-import { urlList } from "../url/urlList";
+import { LOGIN_SELECTORS } from "../../elements/account/login-selectors";
+import { urlList } from "../../url/urlList";
 
 describe("User authorization", () => {
   beforeEach(() => {

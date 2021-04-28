@@ -1,17 +1,17 @@
 // <reference types="cypress" />
 import faker from "faker";
 
-import { createChannel } from "../../apiRequests/Channels";
-import { CHANNEL_FORM_SELECTORS } from "../../elements/channels/channel-form-selectors";
-import { HEADER_SELECTORS } from "../../elements/header/header-selectors";
-import { DRAFT_ORDER_SELECTORS } from "../../elements/orders/draft-order-selectors";
-import { ORDERS_SELECTORS } from "../../elements/orders/orders-selectors";
+import { createChannel } from "../../../apiRequests/Channels";
+import { CHANNEL_FORM_SELECTORS } from "../../../elements/channels/channel-form-selectors";
+import { HEADER_SELECTORS } from "../../../elements/header/header-selectors";
+import { DRAFT_ORDER_SELECTORS } from "../../../elements/orders/draft-order-selectors";
+import { ORDERS_SELECTORS } from "../../../elements/orders/orders-selectors";
 import {
   selectChannelInHeader,
   selectChannelInPicker
-} from "../../steps/channelsSteps";
-import { urlList } from "../../url/urlList";
-import * as channelsUtils from "../../utils/channelsUtils";
+} from "../../../steps/channelsSteps";
+import { urlList } from "../../../url/urlList";
+import * as channelsUtils from "../../../utils/channelsUtils";
 
 describe("Channels in draft orders", () => {
   const startsWith = "CyChannelInDraftOrders-";

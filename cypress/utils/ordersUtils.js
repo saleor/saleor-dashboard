@@ -19,7 +19,7 @@ export function createWaitingForCaptureOrder(
     })
     .then(() => addPayment(checkout.id))
     .then(() => checkoutRequest.completeCheckout(checkout.id))
-    .then(order => ({ checkout, order }));
+    .then(({ order }) => ({ checkout, order }));
 }
 export function createCheckoutWithVoucher({
   channelSlug,
@@ -83,11 +83,18 @@ function assignVariantsToOrder(order, variantsList) {
   });
 }
 export function addPayment(checkoutId) {
-  return checkoutRequest.addPayment(
+  return checkoutRequest.addPayment({
     checkoutId,
-    "mirumee.payments.dummy",
-    "not-charged"
-  );
+    gateway: "mirumee.payments.dummy",
+    token: "not-charged"
+  });
+}
+export function addAdyenPayment(checkoutId, amount) {
+  return checkoutRequest.addPayment({
+    checkoutId,
+    gateway: "mirumee.payments.adyen",
+    amount
+  });
 }
 export function createAndCompleteCheckoutWithoutShipping({
   channelSlug,
@@ -104,5 +111,5 @@ export function createAndCompleteCheckoutWithoutShipping({
       addPayment(checkout.id);
     })
     .then(() => checkoutRequest.completeCheckout(checkout.id))
-    .then(order => ({ checkout, order }));
+    .then(({ order }) => ({ checkout, order }));
 }
