@@ -10,6 +10,7 @@ import { page } from "../../../pages/fixtures";
 import Decorator from "../../Decorator";
 
 const props: PageDetailsPageProps = {
+  onImageDelete: () => undefined,
   errors: [],
   loading: false,
   onAssignReferencesClick: () => undefined,
@@ -17,10 +18,13 @@ const props: PageDetailsPageProps = {
   onCloseDialog: () => undefined,
   onRemove: () => undefined,
   onSubmit: () => undefined,
+  onImageUpload: () => undefined,
   page,
   referencePages: [],
   referenceProducts: [],
-  saveButtonBarState: "default"
+  saveButtonBarState: "default",
+  placeholderImage: "",
+  caroulsel: []
 };
 
 storiesOf("Views / Pages / Page details", module)

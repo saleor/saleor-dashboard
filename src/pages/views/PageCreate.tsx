@@ -159,7 +159,7 @@ export const PageCreate: React.FC<PageCreateProps> = ({ params }) => {
                 description: "header"
               })}
             />
-            {/* <PageDetailsPage
+            <PageDetailsPage
               loading={pageCreateOpts.loading || uploadFileOpts.loading}
               errors={pageCreateOpts.data?.pageCreate.errors || []}
               saveButtonBarState={pageCreateOpts.status}
@@ -187,7 +187,7 @@ export const PageCreate: React.FC<PageCreateProps> = ({ params }) => {
               fetchReferenceProducts={searchProducts}
               fetchMoreReferenceProducts={fetchMoreReferenceProducts}
               onCloseDialog={() => navigate(pageCreateUrl())}
-            /> */}
+            />
           </>
         );
       }}
