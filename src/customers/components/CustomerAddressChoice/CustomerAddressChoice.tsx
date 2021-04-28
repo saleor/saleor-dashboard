@@ -1,7 +1,6 @@
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import AddressFormatter from "@saleor/components/AddressFormatter";
-import useTheme from "@saleor/hooks/useTheme";
 import { makeStyles } from "@saleor/theme";
 import classNames from "classnames";
 import React from "react";
@@ -17,29 +16,25 @@ export interface CustomerAddressChoiceProps {
 const useStyles = makeStyles(
   theme => ({
     card: {
-      cursor: "pointer"
+      cursor: "pointer",
+      padding: "1px"
     },
-    cardSelectedLight: {
-      borderColor: theme.palette.primary.light,
-      borderWidth: "2px"
-    },
-    cardSelectedDark: {
-      borderColor: theme.palette.primary.dark,
-      borderWidth: "2px"
+    cardSelected: {
+      borderColor: theme.palette.primary.main,
+      borderWidth: "2px",
+      padding: "0"
     }
   }),
   { name: "CustomerAddressChoice" }
 );
 const CustomerAddressChoice: React.FC<CustomerAddressChoiceProps> = props => {
   const { address, selected, onSelect } = props;
-  const { isDark } = useTheme();
   const classes = useStyles(props);
 
   return (
     <Card
       className={classNames(classes.card, {
-        [classes.cardSelectedLight]: selected && !isDark,
-        [classes.cardSelectedDark]: selected && isDark
+        [classes.cardSelected]: selected
       })}
       onClick={onSelect}
     >
