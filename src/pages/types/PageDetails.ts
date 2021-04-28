@@ -1,6 +1,3 @@
-/* tslint:disable */
-/* eslint-disable */
-// @generated
 // This file was automatically generated and should not be edited.
 
 import { AttributeInputTypeEnum, AttributeEntityTypeEnum } from "./../../types/globalTypes";
@@ -114,6 +111,7 @@ export interface PageDetails_page {
   seoTitle: string | null;
   seoDescription: string | null;
   publicationDate: any | null;
+  carousel: PageDetails_carousel_media[] | null;
 }
 
 export interface PageDetails {
@@ -122,4 +120,13 @@ export interface PageDetails {
 
 export interface PageDetailsVariables {
   id: string;
+}
+
+export interface PageDetails_carousel_media {
+  __typename: "PageCarousel";
+  id: string;
+  alt: string;
+  sortOrder: number | null;
+  url: string;
+  oembedData: any;
 }

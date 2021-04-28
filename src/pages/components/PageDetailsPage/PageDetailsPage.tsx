@@ -25,12 +25,17 @@ import { FetchMoreProps } from "@saleor/types";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import { PageDetails_page } from "../../types/PageDetails";
+import {
+  PageDetails_carousel_media,
+  PageDetails_page
+} from "../../types/PageDetails";
+import PageCaroulsel from "../PageCarousel";
 import PageInfo from "../PageInfo";
 import PageOrganizeContent from "../PageOrganizeContent";
 import PageForm, { PageData, PageUpdateHandlers } from "./form";
 
 export interface PageDetailsPageProps {
+  onImageDelete: (id: string) => void;
   loading: boolean;
   errors: PageErrorWithAttributesFragment[];
   page: PageDetails_page;
@@ -51,6 +56,9 @@ export interface PageDetailsPageProps {
   fetchReferenceProducts?: (data: string) => void;
   fetchMoreReferenceProducts?: FetchMoreProps;
   onCloseDialog: () => void;
+  caroulsel: PageDetails_carousel_media[];
+  placeholderImage: string;
+  onImageUpload(file: File);
 }
 
 const PageDetailsPage: React.FC<PageDetailsPageProps> = ({
@@ -72,7 +80,11 @@ const PageDetailsPage: React.FC<PageDetailsPageProps> = ({
   fetchMoreReferencePages,
   fetchReferenceProducts,
   fetchMoreReferenceProducts,
-  onCloseDialog
+  onCloseDialog,
+  caroulsel,
+  placeholderImage,
+  onImageUpload,
+  onImageDelete
 }) => {
   const intl = useIntl();
   const localizeDate = useDateLocalize();
@@ -133,6 +145,13 @@ const PageDetailsPage: React.FC<PageDetailsPageProps> = ({
                 errors={errors}
                 onChange={change}
                 onContentChange={handlers.changeContent}
+              />
+              <CardSpacer />
+              <PageCaroulsel
+                caroulsel={caroulsel}
+                placeholderImage={placeholderImage}
+                onImageDelete={onImageDelete}
+                onImageUpload={onImageUpload}
               />
               <CardSpacer />
               <SeoForm

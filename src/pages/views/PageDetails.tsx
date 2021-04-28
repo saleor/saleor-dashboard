@@ -1,3 +1,4 @@
+import placeholderImg from "@assets/images/placeholder255x255.png";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import { useAttributeValueDeleteMutation } from "@saleor/attributes/mutations";
 import {
@@ -36,8 +37,14 @@ import { getStringOrPlaceholder, maybe } from "../../misc";
 import { AttributeValueInput, PageInput } from "../../types/globalTypes";
 import PageDetailsPage from "../components/PageDetailsPage";
 import { PageData, PageSubmitData } from "../components/PageDetailsPage/form";
-import { usePageRemoveMutation, usePageUpdateMutation } from "../mutations";
+import {
+  usePageCarouselCreateMutation,
+  usePageCarouselDeleteMutation,
+  usePageRemoveMutation,
+  usePageUpdateMutation
+} from "../mutations";
 import { usePageDetailsQuery } from "../queries";
+import { PageCarouselVariables } from "../types/PageCarousel";
 import { PageRemove } from "../types/PageRemove";
 import { pageListUrl, pageUrl, PageUrlQueryParams } from "../urls";
 
@@ -180,6 +187,43 @@ export const PageDetails: React.FC<PageDetailsProps> = ({ id, params }) => {
     onFetchMore: loadMoreProducts
   };
 
+  const createImageUploadHandler = (
+    id: string,
+    createCarouselImage: (variables: PageCarouselVariables) => void
+  ) => (file: File) =>
+    createCarouselImage({
+      alt: "",
+      image: file,
+      carousel: id
+    });
+
+  const [createCarouselImage] = usePageCarouselCreateMutation({
+    onCompleted: data => {
+      const imageError = data.pageCarouselCreate.errors.find(
+        error => error.field === ("image" as keyof PageCarouselVariables)
+      );
+      if (imageError) {
+        notify({
+          status: "error",
+          text: intl.formatMessage(commonMessages.somethingWentWrong)
+        });
+      }
+    }
+  });
+
+  const handleImageUpload = createImageUploadHandler(id, variables =>
+    createCarouselImage({ variables })
+  );
+  const [deletePageCarouselImage] = usePageCarouselDeleteMutation({
+    onCompleted: () =>
+      notify({
+        status: "success",
+        text: intl.formatMessage(commonMessages.savedChanges)
+      })
+  });
+  const handleImageDelete = (id: string) => () =>
+    deletePageCarouselImage({ variables: { id } });
+
   return (
     <>
       <WindowTitle title={maybe(() => pageDetails.data.page.title)} />
@@ -217,6 +261,10 @@ export const PageDetails: React.FC<PageDetailsProps> = ({ id, params }) => {
         fetchReferenceProducts={searchProducts}
         fetchMoreReferenceProducts={fetchMoreReferenceProducts}
         onCloseDialog={() => navigate(pageUrl(id))}
+        placeholderImage={placeholderImg}
+        caroulsel={pageDetails.data?.page.carousel}
+        onImageUpload={handleImageUpload}
+        onImageDelete={handleImageDelete}
       />
       <ActionDialog
         open={params.action === "remove"}
