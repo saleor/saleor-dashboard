@@ -30,7 +30,6 @@ export const messages = defineMessages({
     defaultMessage: "Select unit",
     description: "check to require numeric attribute unit"
   },
-
   unitSystem: {
     defaultMessage: "System",
     description: "numeric attribute unit system"
@@ -40,7 +39,6 @@ export const messages = defineMessages({
     defaultMessage: "Units of",
     description: "numeric attribute units of"
   },
-
   unit: {
     defaultMessage: "Unit",
     description: "numeric attribute unit"

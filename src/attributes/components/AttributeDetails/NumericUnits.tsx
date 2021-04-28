@@ -64,7 +64,7 @@ export const NumericUnits: React.FC<NumericUnitsProps> = ({
   const { formatMessage } = useIntl();
   const classes = useStyles();
   const [unitData, setUnitData] = useState<UnitData>({
-    unit: data.unit
+    unit: data.unit ?? null
   });
 
   const { unit, system, type } = unitData;
