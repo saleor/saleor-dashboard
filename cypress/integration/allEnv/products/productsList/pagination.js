@@ -1,11 +1,11 @@
-import { PRODUCTS_LIST } from "../../../elements/catalog/products/products-list";
-import { BUTTON_SELECTORS } from "../../../elements/shared/button-selectors";
-import { SHARED_ELEMENTS } from "../../../elements/shared/sharedElements";
+import { PRODUCTS_LIST } from "../../../../elements/catalog/products/products-list";
+import { BUTTON_SELECTORS } from "../../../../elements/shared/button-selectors";
+import { SHARED_ELEMENTS } from "../../../../elements/shared/sharedElements";
 import {
   getDisplayedColumnArray,
   isNumberOfProductsSameAsInSelectResultsOnPage
-} from "../../../steps/catalog/products/productsListSteps";
-import { urlList } from "../../../url/urlList";
+} from "../../../../steps/catalog/products/productsListSteps";
+import { urlList } from "../../../../url/urlList";
 
 describe("Products", () => {
   beforeEach(() => {

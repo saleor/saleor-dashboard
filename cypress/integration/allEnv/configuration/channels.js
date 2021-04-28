@@ -3,7 +3,7 @@ import faker from "faker";
 
 import { createChannel } from "../../../apiRequests/Channels";
 import { LEFT_MENU_SELECTORS } from "../../../elements/account/left-menu/left-menu-selectors";
-import { PRODUCTS_LIST } from "../../../elements/catalog/products/products-list";
+import { PRODUCTS_LIST } from "../../../elements/catalog/products/price-list";
 import { ADD_CHANNEL_FORM_SELECTORS } from "../../../elements/channels/add-channel-form-selectors";
 import { AVAILABLE_CHANNELS_FORM } from "../../../elements/channels/available-channels-form";
 import { CHANNEL_FORM_SELECTORS } from "../../../elements/channels/channel-form-selectors";

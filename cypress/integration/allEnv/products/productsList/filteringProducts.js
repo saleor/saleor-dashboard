@@ -1,24 +1,24 @@
 import faker from "faker";
 
-import { createCollection } from "../../../apiRequests/Collections";
-import { updateProduct } from "../../../apiRequests/Product";
-import { PRODUCTS_LIST } from "../../../elements/catalog/products/products-list";
+import { createCollection } from "../../../../apiRequests/Collections";
+import { updateProduct } from "../../../../apiRequests/Product";
+import { PRODUCTS_LIST } from "../../../../elements/catalog/products/products-list";
 import {
   selectFilterOption,
   selectProductsOutOfStock
-} from "../../../steps/catalog/products/productsListSteps";
-import { selectChannelInHeader } from "../../../steps/channelsSteps";
-import { urlList } from "../../../url/urlList";
-import { getDefaultChannel } from "../../../utils/channelsUtils";
+} from "../../../../steps/catalog/products/productsListSteps";
+import { selectChannelInHeader } from "../../../../steps/channelsSteps";
+import { urlList } from "../../../../url/urlList";
+import { getDefaultChannel } from "../../../../utils/channelsUtils";
 import {
   createProductInChannel,
   createTypeAttributeAndCategoryForProduct,
   deleteProductsStartsWith
-} from "../../../utils/products/productsUtils";
+} from "../../../../utils/products/productsUtils";
 import {
   createShipping,
   deleteShippingStartsWith
-} from "../../../utils/shippingUtils";
+} from "../../../../utils/shippingUtils";
 
 describe("Products", () => {
   const startsWith = "CyFilterProducts-";

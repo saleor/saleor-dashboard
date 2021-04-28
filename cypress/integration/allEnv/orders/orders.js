@@ -4,18 +4,18 @@ import faker from "faker";
 import {
   createCustomer,
   deleteCustomersStartsWith
-} from "../../apiRequests/Customer";
-import { ORDERS_SELECTORS } from "../../elements/orders/orders-selectors";
-import { selectChannelInPicker } from "../../steps/channelsSteps";
-import { finalizeDraftOrder } from "../../steps/draftOrderSteps";
-import { urlList } from "../../url/urlList";
-import { getDefaultChannel } from "../../utils/channelsUtils";
-import { createOrder } from "../../utils/ordersUtils";
-import * as productsUtils from "../../utils/products/productsUtils";
+} from "../../../apiRequests/Customer";
+import { ORDERS_SELECTORS } from "../../../elements/orders/orders-selectors";
+import { selectChannelInPicker } from "../../../steps/channelsSteps";
+import { finalizeDraftOrder } from "../../../steps/draftOrderSteps";
+import { urlList } from "../../../url/urlList";
+import { getDefaultChannel } from "../../../utils/channelsUtils";
+import { createOrder } from "../../../utils/ordersUtils";
+import * as productsUtils from "../../../utils/products/productsUtils";
 import {
   createShipping,
   deleteShippingStartsWith
-} from "../../utils/shippingUtils";
+} from "../../../utils/shippingUtils";
 
 describe("Orders", () => {
   const startsWith = "CyOrders-";

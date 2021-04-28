@@ -1,12 +1,12 @@
 import faker from "faker";
 
-import { getProductDetails } from "../../../apiRequests/storeFront/ProductDetails";
-import { updateProductIsAvailableForPurchase } from "../../../steps/catalog/products/productSteps";
-import { productDetailsUrl } from "../../../url/urlList";
-import { getDefaultChannel } from "../../../utils/channelsUtils";
-import * as productsUtils from "../../../utils/products/productsUtils";
-import * as shippingUtils from "../../../utils/shippingUtils";
-import { isProductAvailableForPurchase } from "../../../utils/storeFront/storeFrontProductUtils";
+import { getProductDetails } from "../../../../apiRequests/storeFront/ProductDetails";
+import { updateProductIsAvailableForPurchase } from "../../../../steps/catalog/products/productSteps";
+import { productDetailsUrl } from "../../../../url/urlList";
+import { getDefaultChannel } from "../../../../utils/channelsUtils";
+import * as productsUtils from "../../../../utils/products/productsUtils";
+import * as shippingUtils from "../../../../utils/shippingUtils";
+import { isProductAvailableForPurchase } from "../../../../utils/storeFront/storeFrontProductUtils";
 
 // <reference types="cypress" />
 describe("Products available in listings", () => {

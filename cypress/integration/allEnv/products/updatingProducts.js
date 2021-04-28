@@ -1,21 +1,21 @@
 import faker from "faker";
 
-import { createCategory } from "../../apiRequests/Category";
-import { createCollection } from "../../apiRequests/Collections";
-import { getProductDetails } from "../../apiRequests/storeFront/ProductDetails";
-import { PRODUCT_DETAILS } from "../../elements/catalog/products/product-details";
-import { BUTTON_SELECTORS } from "../../elements/shared/button-selectors";
-import { metadataForms } from "../../steps/catalog/metadataSteps";
-import { fillUpCommonFieldsForAllProductTypes } from "../../steps/catalog/products/productSteps";
-import { productDetailsUrl } from "../../url/urlList";
-import { getDefaultChannel } from "../../utils/channelsUtils";
-import { deleteCollectionsStartsWith } from "../../utils/collectionsUtils";
-import { expectCorrectProductInformation } from "../../utils/products/checkProductInfo";
+import { createCategory } from "../../../apiRequests/Category";
+import { createCollection } from "../../../apiRequests/Collections";
+import { getProductDetails } from "../../../apiRequests/storeFront/ProductDetails";
+import { PRODUCT_DETAILS } from "../../../elements/catalog/products/product-details";
+import { BUTTON_SELECTORS } from "../../../elements/shared/button-selectors";
+import { metadataForms } from "../../../steps/catalog/metadataSteps";
+import { fillUpCommonFieldsForAllProductTypes } from "../../../steps/catalog/products/productSteps";
+import { productDetailsUrl } from "../../../url/urlList";
+import { getDefaultChannel } from "../../../utils/channelsUtils";
+import { deleteCollectionsStartsWith } from "../../../utils/collectionsUtils";
+import { expectCorrectProductInformation } from "../../../utils/products/checkProductInfo";
 import {
   createProductInChannel,
   createTypeAttributeAndCategoryForProduct,
   deleteProductsStartsWith
-} from "../../utils/products/productsUtils";
+} from "../../../utils/products/productsUtils";
 
 describe("Update products", () => {
   const startsWith = "Cy-";

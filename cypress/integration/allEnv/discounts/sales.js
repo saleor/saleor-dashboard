@@ -2,22 +2,22 @@
 
 import faker from "faker";
 
-import { createChannel } from "../../apiRequests/Channels";
-import { updateChannelInProduct } from "../../apiRequests/Product";
+import { createChannel } from "../../../apiRequests/Channels";
+import { updateChannelInProduct } from "../../../apiRequests/Product";
 import {
   assignProducts,
   createSale,
   discountOptions
-} from "../../steps/discounts/salesSteps";
-import { urlList } from "../../url/urlList";
-import * as channelsUtils from "../../utils/channelsUtils";
-import { deleteSalesStartsWith } from "../../utils/discounts/salesUtils";
-import * as productsUtils from "../../utils/products/productsUtils";
+} from "../../../steps/discounts/salesSteps";
+import { urlList } from "../../../url/urlList";
+import * as channelsUtils from "../../../utils/channelsUtils";
+import { deleteSalesStartsWith } from "../../../utils/discounts/salesUtils";
+import * as productsUtils from "../../../utils/products/productsUtils";
 import {
   createShipping,
   deleteShippingStartsWith
-} from "../../utils/shippingUtils";
-import { getProductPrice } from "../../utils/storeFront/storeFrontProductUtils";
+} from "../../../utils/shippingUtils";
+import { getProductPrice } from "../../../utils/storeFront/storeFrontProductUtils";
 
 describe("Sales discounts", () => {
   const startsWith = "CySales-";

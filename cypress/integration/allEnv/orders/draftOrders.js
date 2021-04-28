@@ -4,18 +4,18 @@ import faker from "faker";
 import {
   createCustomer,
   deleteCustomersStartsWith
-} from "../../apiRequests/Customer";
-import { DRAFT_ORDERS_LIST_SELECTORS } from "../../elements/orders/draft-orders-list-selectors";
-import { ORDERS_SELECTORS } from "../../elements/orders/orders-selectors";
-import { selectChannelInPicker } from "../../steps/channelsSteps";
-import { finalizeDraftOrder } from "../../steps/draftOrderSteps";
-import { urlList } from "../../url/urlList";
-import { getDefaultChannel } from "../../utils/channelsUtils";
-import * as productsUtils from "../../utils/products/productsUtils";
+} from "../../../apiRequests/Customer";
+import { DRAFT_ORDERS_LIST_SELECTORS } from "../../../elements/orders/draft-orders-list-selectors";
+import { ORDERS_SELECTORS } from "../../../elements/orders/orders-selectors";
+import { selectChannelInPicker } from "../../../steps/channelsSteps";
+import { finalizeDraftOrder } from "../../../steps/draftOrderSteps";
+import { urlList } from "../../../url/urlList";
+import { getDefaultChannel } from "../../../utils/channelsUtils";
+import * as productsUtils from "../../../utils/products/productsUtils";
 import {
   createShipping,
   deleteShippingStartsWith
-} from "../../utils/shippingUtils";
+} from "../../../utils/shippingUtils";
 
 describe("Draft orders", () => {
   const startsWith = "CyDraftOrders-";

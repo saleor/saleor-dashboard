@@ -1,24 +1,24 @@
 import faker from "faker";
 
-import { createChannel } from "../../apiRequests/Channels";
+import { createChannel } from "../../../apiRequests/Channels";
 import {
   createProduct,
   updateChannelInProduct
-} from "../../apiRequests/Product";
+} from "../../../apiRequests/Product";
 import {
   createFirstVariant,
   createVariant,
   variantsShouldBeVisible
-} from "../../steps/catalog/products/VariantsSteps";
-import { selectChannelInHeader } from "../../steps/channelsSteps";
-import { urlList } from "../../url/urlList";
+} from "../../../steps/catalog/products/VariantsSteps";
+import { selectChannelInHeader } from "../../../steps/channelsSteps";
+import { urlList } from "../../../url/urlList";
 import {
   deleteChannelsStartsWith,
   getDefaultChannel
-} from "../../utils/channelsUtils";
-import * as productUtils from "../../utils/products/productsUtils";
-import * as shippingUtils from "../../utils/shippingUtils";
-import { getProductVariants } from "../../utils/storeFront/storeFrontProductUtils";
+} from "../../../utils/channelsUtils";
+import * as productUtils from "../../../utils/products/productsUtils";
+import * as shippingUtils from "../../../utils/shippingUtils";
+import { getProductVariants } from "../../../utils/storeFront/storeFrontProductUtils";
 
 // <reference types="cypress" />
 describe("Creating variants", () => {
