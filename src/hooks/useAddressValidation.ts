@@ -1,6 +1,6 @@
 import { AddressTypeInput } from "@saleor/customers/types";
 import { AccountErrorFragment } from "@saleor/fragments/types/AccountErrorFragment";
-import { transformFormToAddress } from "@saleor/misc";
+import { transformFormToAddressInput } from "@saleor/misc";
 import {
   AccountErrorCode,
   AddressInput,
@@ -40,7 +40,7 @@ function useAddressValidation<TInput, TOutput>(
             (a, b) => a.field === b.field
           )
         );
-        return onSubmit(transformFormToAddress(data));
+        return onSubmit(transformFormToAddressInput(data));
       } catch {
         setValidationErrors(add(countryRequiredError, validationErrors));
       }

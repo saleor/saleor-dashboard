@@ -25,7 +25,7 @@ import useAddressValidation from "@saleor/hooks/useAddressValidation";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import useModalDialogErrors from "@saleor/hooks/useModalDialogErrors";
 import { buttonMessages } from "@saleor/intl";
-import { transformAddressToForm, transformFormToAddress } from "@saleor/misc";
+import { transformAddressToAddressInput } from "@saleor/misc";
 import { makeStyles } from "@saleor/theme";
 import { AddressInput, AddressTypeEnum } from "@saleor/types/globalTypes";
 import React from "react";
@@ -101,11 +101,9 @@ const OrderCustomerAddressesEditDialog: React.FC<OrderCustomerAddressesEditDialo
   );
 
   const getCustomerAddress = (customerAddressId: string): AddressInput =>
-    transformFormToAddress(
-      transformAddressToForm(
-        customerAddresses.find(
-          customerAddress => customerAddress.id === customerAddressId
-        )
+    transformAddressToAddressInput(
+      customerAddresses.find(
+        customerAddress => customerAddress.id === customerAddressId
       )
     );
 
