@@ -41,11 +41,10 @@ export interface FilterBaseFieldProps<T extends string = string> {
 
 export type FilterErrors = string[];
 
-export interface FilterErrorMessage {
-  description?: string;
-}
-
-export type FilterErrorMessages = Record<string, FilterErrorMessage>;
+export type FilterErrorMessages<T extends string> = Record<
+  T,
+  MessageDescriptor
+>;
 
 export type IFilter<T extends string = string> = Array<IFilterElement<T>>;
 

@@ -52,6 +52,7 @@ export function createFilterStructure(
       label: intl.formatMessage(messages.channelStatusSectionTitle),
       multipleFields: [
         {
+          required: true,
           ...createBooleanField(
             PluginFilterKeys.active,
             intl.formatMessage(messages.channelStatusSectionSubtitle),

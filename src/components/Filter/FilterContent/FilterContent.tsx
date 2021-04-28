@@ -17,6 +17,7 @@ import {
 import FilterContentBody, { FilterContentBodyProps } from "./FilterContentBody";
 import FilterContentBodyNameField from "./FilterContentBodyNameField";
 import FilterContentHeader from "./FilterContentHeader";
+import FilterErrorsList from "./FilterErrorsList";
 
 export interface FilterContentProps<T extends string = string> {
   filters: IFilter<T>;
@@ -25,8 +26,8 @@ export interface FilterContentProps<T extends string = string> {
   onSubmit: () => void;
   currencySymbol?: string;
   dataStructure: IFilter<T>;
-  errors: FilterErrors;
-  errorMessages?: FilterErrorMessages;
+  errors?: FilterErrors;
+  errorMessages?: FilterErrorMessages<T>;
 }
 
 type FilterAutocompleteDisplayValues = Record<
@@ -83,8 +84,6 @@ const FilterContent: React.FC<FilterContentProps> = ({
     FilterContentBodyProps,
     "filter" | "onFilterPropertyChange"
   > = {
-    // errorMessages,
-    errors,
     currencySymbol,
     autocompleteDisplayValues,
     setAutocompleteDisplayValues
@@ -107,10 +106,6 @@ const FilterContent: React.FC<FilterContentProps> = ({
     return filters.find(({ name }) => filter.name === name);
   };
 
-  const isError = function<T extends string>(filter: IFilterElement<T>) {
-    return errors.find(name => filter.name === name);
-  };
-
   return (
     <Paper>
       <form
@@ -128,6 +123,11 @@ const FilterContent: React.FC<FilterContentProps> = ({
               <FilterContentBodyNameField
                 filter={getFilterFromCurrentData(filter)}
                 onFilterPropertyChange={onFilterPropertyChange}
+              />
+              <FilterErrorsList
+                errors={errors}
+                errorMessages={errorMessages}
+                filter={filter}
               />
               {filter.multipleFields ? (
                 renderCollectionWithDividers({

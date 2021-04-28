@@ -6,7 +6,7 @@ import { makeStyles } from "@saleor/theme";
 import classNames from "classnames";
 import React from "react";
 
-const useStyles = makeStyles(
+export const useStyles = makeStyles(
   theme => {
     const dot = {
       borderRadius: "100%",
@@ -15,6 +15,7 @@ const useStyles = makeStyles(
     };
 
     return {
+      dot,
       container: {
         display: "flex",
         flexDirection: "row",

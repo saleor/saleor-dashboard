@@ -12,11 +12,11 @@ import { FormattedMessage } from "react-intl";
 import { FilterContent } from ".";
 import { FilterErrorMessages, IFilter, IFilterElement } from "./types";
 import useFilter from "./useFilter";
-import { isFilterValid } from "./utils";
+import { extractInvalidFilters } from "./utils";
 
 export interface FilterProps<TFilterKeys extends string = string> {
   currencySymbol?: string;
-  errorMessages?: FilterErrorMessages;
+  errorMessages?: FilterErrorMessages<TFilterKeys>;
   menu: IFilter<TFilterKeys>;
   onFilterAdd: (filter: Array<IFilterElement<string>>) => void;
 }
@@ -100,17 +100,17 @@ const Filter: React.FC<FilterProps> = props => {
   const isFilterActive = menu.some(filterElement => filterElement.active);
 
   const handleSubmit = () => {
-    const invalidFilters = data.filter(filter => !isFilterValid(filter));
+    const invalidFilters = extractInvalidFilters(data, menu);
 
-    if (!invalidFilters.length) {
-      setFilterErrors([]);
-      onFilterAdd(data);
-      setFilterMenuOpened(false);
+    if (!!invalidFilters.length) {
+      const parsedFilterErrors = invalidFilters.map(({ name }) => name);
+      setFilterErrors(parsedFilterErrors);
+      return;
     }
 
-    const parsedFilterErrors = invalidFilters.map(({ name }) => name);
-
-    setFilterErrors(parsedFilterErrors);
+    setFilterErrors([]);
+    onFilterAdd(data);
+    setFilterMenuOpened(false);
   };
 
   return (

@@ -13,7 +13,7 @@ import FilterTabs, { FilterTab } from "../TableFilter";
 export interface FilterBarProps<TKeys extends string = string>
   extends FilterProps<TKeys>,
     SearchBarProps {
-  errorMessages?: FilterErrorMessages;
+  errorMessages?: FilterErrorMessages<TKeys>;
   filterStructure: IFilter<TKeys>;
 }
 

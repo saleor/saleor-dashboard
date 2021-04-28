@@ -16,13 +16,7 @@ import Arrow from "../Arrow";
 import FilterAutocompleteField from "../FilterAutocompleteField";
 import FilterOptionField from "../FilterOptionField";
 import { FilterReducerAction } from "../reducer";
-import {
-  FieldType,
-  FilterErrorMessages,
-  FilterErrors,
-  FilterType,
-  IFilterElement
-} from "../types";
+import { FieldType, FilterType, IFilterElement } from "../types";
 import { getIsFilterMultipleChoices } from "./utils";
 
 const useStyles = makeStyles(
@@ -34,7 +28,7 @@ const useStyles = makeStyles(
       marginRight: theme.spacing(2)
     },
     filterSettings: {
-      background: fade(theme.palette.primary.main, 0.2),
+      background: fade(theme.palette.primary.main, 0.1),
       padding: theme.spacing(2, 3)
     },
     input: {
