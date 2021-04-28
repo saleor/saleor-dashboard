@@ -9,10 +9,10 @@ import RadioGroup from "@material-ui/core/RadioGroup";
 import Typography from "@material-ui/core/Typography";
 import AddressEdit from "@saleor/components/AddressEdit";
 import CardSpacer from "@saleor/components/CardSpacer";
+import Checkbox from "@saleor/components/Checkbox";
 import ConfirmButton, {
   ConfirmButtonTransitionState
 } from "@saleor/components/ConfirmButton";
-import ControlledCheckbox from "@saleor/components/ControlledCheckbox";
 import FormSpacer from "@saleor/components/FormSpacer";
 import CustomerAddressChoice from "@saleor/customers/components/CustomerAddressChoice";
 import {
@@ -171,7 +171,13 @@ const OrderCustomerAddressesEditDialog: React.FC<OrderCustomerAddressesEditDialo
               >
                 <FormControlLabel
                   value={AddressInputOptionEnum.CUSTOMER_ADDRESS}
-                  control={<Radio color="primary" />}
+                  control={
+                    <Radio
+                      color="primary"
+                      data-test="shippingAddressInputOption"
+                      data-test-id={AddressInputOptionEnum.CUSTOMER_ADDRESS}
+                    />
+                  }
                   label={intl.formatMessage(messages.customerAddress)}
                   className={classes.optionLabel}
                 />
@@ -203,7 +209,13 @@ const OrderCustomerAddressesEditDialog: React.FC<OrderCustomerAddressesEditDialo
                 )}
                 <FormControlLabel
                   value={AddressInputOptionEnum.NEW_ADDRESS}
-                  control={<Radio color="primary" />}
+                  control={
+                    <Radio
+                      color="primary"
+                      data-test="shippingAddressInputOption"
+                      data-test-id={AddressInputOptionEnum.NEW_ADDRESS}
+                    />
+                  }
                   label={intl.formatMessage(messages.newAddress)}
                   className={classes.optionLabel}
                 />
@@ -237,11 +249,23 @@ const OrderCustomerAddressesEditDialog: React.FC<OrderCustomerAddressesEditDialo
               <FormSpacer />
               <Divider />
               <FormSpacer />
-              <ControlledCheckbox
-                checked={data.billingSameAsShipping}
-                name="billingSameAsShipping"
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={data.billingSameAsShipping}
+                    name="billingSameAsShipping"
+                    onChange={() =>
+                      change({
+                        target: {
+                          name: "billingSameAsShipping",
+                          value: !data.billingSameAsShipping
+                        }
+                      })
+                    }
+                    data-test="billingSameAsShipping"
+                  />
+                }
                 label={intl.formatMessage(messages.billingSameAsShipping)}
-                onChange={change}
               />
               {!data.billingSameAsShipping && (
                 <>
@@ -258,7 +282,13 @@ const OrderCustomerAddressesEditDialog: React.FC<OrderCustomerAddressesEditDialo
                   >
                     <FormControlLabel
                       value={AddressInputOptionEnum.CUSTOMER_ADDRESS}
-                      control={<Radio color="primary" />}
+                      control={
+                        <Radio
+                          color="primary"
+                          data-test="billingAddressInputOption"
+                          data-test-id={AddressInputOptionEnum.CUSTOMER_ADDRESS}
+                        />
+                      }
                       label={intl.formatMessage(messages.customerAddress)}
                       className={classes.optionLabel}
                     />
@@ -290,7 +320,13 @@ const OrderCustomerAddressesEditDialog: React.FC<OrderCustomerAddressesEditDialo
                     )}
                     <FormControlLabel
                       value={AddressInputOptionEnum.NEW_ADDRESS}
-                      control={<Radio color="primary" />}
+                      control={
+                        <Radio
+                          color="primary"
+                          data-test="billingAddressInputOption"
+                          data-test-id={AddressInputOptionEnum.NEW_ADDRESS}
+                        />
+                      }
                       label={intl.formatMessage(messages.newAddress)}
                       className={classes.optionLabel}
                     />

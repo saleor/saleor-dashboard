@@ -79,7 +79,7 @@ export const OrderDraftDetails: React.FC<OrderDraftDetailsProps> = ({
 
   const { data: customerAddresses } = useCustomerAddressesQuery({
     variables: {
-      id: order.user.id
+      id: order?.user?.id
     },
     skip: params.action !== "edit-customer-addresses"
   });
