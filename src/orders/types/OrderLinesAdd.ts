@@ -456,12 +456,6 @@ export interface OrderLinesAdd_orderLinesCreate_order_availableShippingMethods {
   price: OrderLinesAdd_orderLinesCreate_order_availableShippingMethods_price | null;
 }
 
-export interface OrderLinesAdd_orderLinesCreate_order_discount {
-  __typename: "Money";
-  amount: number;
-  currency: string;
-}
-
 export interface OrderLinesAdd_orderLinesCreate_order_invoices {
   __typename: "Invoice";
   id: string;
@@ -510,7 +504,6 @@ export interface OrderLinesAdd_orderLinesCreate_order {
   user: OrderLinesAdd_orderLinesCreate_order_user | null;
   userEmail: string | null;
   availableShippingMethods: (OrderLinesAdd_orderLinesCreate_order_availableShippingMethods | null)[] | null;
-  discount: OrderLinesAdd_orderLinesCreate_order_discount | null;
   invoices: (OrderLinesAdd_orderLinesCreate_order_invoices | null)[] | null;
   channel: OrderLinesAdd_orderLinesCreate_order_channel;
   isPaid: boolean;

@@ -10,7 +10,7 @@ import { PageTranslationInput, LanguageCodeEnum } from "./../../types/globalType
 // ====================================================
 
 export interface UpdatePageTranslations_pageTranslate_errors {
-  __typename: "Error";
+  __typename: "TranslationError";
   field: string | null;
   message: string | null;
 }

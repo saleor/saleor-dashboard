@@ -45,7 +45,6 @@ export const CustomAppCreate: React.FC<CustomAppCreateProps> = ({
     createApp({
       variables: {
         input: {
-          isActive: data.isActive,
           name: data.name,
           permissions: data.hasFullAccess
             ? shop.permissions.map(permission => permission.code)

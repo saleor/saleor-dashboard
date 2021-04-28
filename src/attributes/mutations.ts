@@ -40,7 +40,7 @@ const attributeBulkDelete = gql`
   ${attributeErrorFragment}
   mutation AttributeBulkDelete($ids: [ID!]!) {
     attributeBulkDelete(ids: $ids) {
-      errors: attributeErrors {
+      errors {
         ...AttributeErrorFragment
       }
     }
@@ -55,7 +55,7 @@ const attributeDelete = gql`
   ${attributeErrorFragment}
   mutation AttributeDelete($id: ID!) {
     attributeDelete(id: $id) {
-      errors: attributeErrors {
+      errors {
         ...AttributeErrorFragment
       }
     }
@@ -74,7 +74,7 @@ export const attributeUpdateMutation = gql`
       attribute {
         ...AttributeDetailsFragment
       }
-      errors: attributeErrors {
+      errors {
         ...AttributeErrorFragment
       }
     }
@@ -93,7 +93,7 @@ const attributeValueDelete = gql`
       attribute {
         ...AttributeDetailsFragment
       }
-      errors: attributeErrors {
+      errors {
         ...AttributeErrorFragment
       }
     }
@@ -112,7 +112,7 @@ export const attributeValueUpdateMutation = gql`
       attribute {
         ...AttributeDetailsFragment
       }
-      errors: attributeErrors {
+      errors {
         ...AttributeErrorFragment
       }
     }
@@ -131,7 +131,7 @@ export const attributeValueCreateMutation = gql`
       attribute {
         ...AttributeDetailsFragment
       }
-      errors: attributeErrors {
+      errors {
         ...AttributeErrorFragment
       }
     }
@@ -150,7 +150,7 @@ export const attributeCreateMutation = gql`
       attribute {
         ...AttributeDetailsFragment
       }
-      errors: attributeErrors {
+      errors {
         ...AttributeErrorFragment
       }
     }
@@ -171,7 +171,7 @@ const attributeValueReorderMutation = gql`
           id
         }
       }
-      errors: attributeErrors {
+      errors {
         ...AttributeErrorFragment
       }
     }

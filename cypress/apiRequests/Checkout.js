@@ -1,4 +1,3 @@
-import { stringify } from "../support/format/formatJson";
 import {
   getDefaultAddress,
   getPaymentDataLine,

@@ -110,7 +110,7 @@ export const mergeFileUploadErrors = (
   uploadFilesResult: Array<MutationFetchResult<FileUpload>>
 ): UploadErrorFragment[] =>
   uploadFilesResult.reduce((errors, uploadFileResult) => {
-    const uploadErrors = uploadFileResult?.data?.fileUpload?.uploadErrors;
+    const uploadErrors = uploadFileResult?.data?.fileUpload?.errors;
     if (uploadErrors) {
       return [...errors, ...uploadErrors];
     }

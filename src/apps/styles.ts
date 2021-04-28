@@ -198,6 +198,11 @@ export const useStyles = makeStyles(
       flex: 1,
       fontWeight: 500,
       lineHeight: 1
+    },
+    activateButton: {
+      "& img": {
+        marginRight: theme.spacing(1)
+      }
     }
   }),
   { name: "AppList" }

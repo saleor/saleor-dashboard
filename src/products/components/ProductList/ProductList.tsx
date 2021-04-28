@@ -313,11 +313,10 @@ export const ProductList: React.FC<ProductListProps> = props => {
                   <TableCellAvatar
                     className={classes.colName}
                     thumbnail={maybe(() => product.thumbnail.url)}
-                    data-test="name"
                   >
                     {product?.productType ? (
                       <div className={classes.colNameWrapper}>
-                        <span>{product.name}</span>
+                        <span data-test="name">{product.name}</span>
                         {product?.productType && (
                           <Typography variant="caption">
                             {product.productType.hasVariants ? (

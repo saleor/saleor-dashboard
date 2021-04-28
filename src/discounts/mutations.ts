@@ -53,7 +53,7 @@ const saleUpdate = gql`
   ${saleFragment}
   mutation SaleUpdate($input: SaleInput!, $id: ID!) {
     saleUpdate(id: $id, input: $input) {
-      errors: discountErrors {
+      errors {
         ...DiscountErrorFragment
       }
       sale {
@@ -78,7 +78,7 @@ const saleCataloguesAdd = gql`
     $last: Int
   ) {
     saleCataloguesAdd(id: $id, input: $input) {
-      errors: discountErrors {
+      errors {
         ...DiscountErrorFragment
       }
       sale {
@@ -104,7 +104,7 @@ const saleCataloguesRemove = gql`
     $last: Int
   ) {
     saleCataloguesRemove(id: $id, input: $input) {
-      errors: discountErrors {
+      errors {
         ...DiscountErrorFragment
       }
       sale {
@@ -123,7 +123,7 @@ const saleCreate = gql`
   ${saleFragment}
   mutation SaleCreate($input: SaleInput!) {
     saleCreate(input: $input) {
-      errors: discountErrors {
+      errors {
         ...DiscountErrorFragment
       }
       sale {
@@ -140,7 +140,7 @@ const saleDelete = gql`
   ${discountErrorFragment}
   mutation SaleDelete($id: ID!) {
     saleDelete(id: $id) {
-      errors: discountErrors {
+      errors {
         ...DiscountErrorFragment
       }
     }
@@ -173,7 +173,7 @@ const saleChannelListingUpdate = gql`
     $input: SaleChannelListingInput!
   ) {
     saleChannelListingUpdate(id: $id, input: $input) {
-      errors: discountErrors {
+      errors {
         ...DiscountErrorFragment
       }
       sale {
@@ -195,7 +195,7 @@ const voucherChannelListingUpdate = gql`
     $input: VoucherChannelListingInput!
   ) {
     voucherChannelListingUpdate(id: $id, input: $input) {
-      errors: discountErrors {
+      errors {
         ...DiscountErrorFragment
       }
       voucher {
@@ -214,7 +214,7 @@ const voucherUpdate = gql`
   ${voucherFragment}
   mutation VoucherUpdate($input: VoucherInput!, $id: ID!) {
     voucherUpdate(id: $id, input: $input) {
-      errors: discountErrors {
+      errors {
         ...DiscountErrorFragment
       }
       voucher {
@@ -240,7 +240,7 @@ const voucherCataloguesAdd = gql`
     $last: Int
   ) {
     voucherCataloguesAdd(id: $id, input: $input) {
-      errors: discountErrors {
+      errors {
         ...DiscountErrorFragment
       }
       voucher {
@@ -266,7 +266,7 @@ const voucherCataloguesRemove = gql`
     $last: Int
   ) {
     voucherCataloguesRemove(id: $id, input: $input) {
-      errors: discountErrors {
+      errors {
         ...DiscountErrorFragment
       }
       voucher {
@@ -285,7 +285,7 @@ const voucherCreate = gql`
   ${voucherFragment}
   mutation VoucherCreate($input: VoucherInput!) {
     voucherCreate(input: $input) {
-      errors: discountErrors {
+      errors {
         ...DiscountErrorFragment
       }
       voucher {
@@ -303,7 +303,7 @@ const voucherDelete = gql`
   ${discountErrorFragment}
   mutation VoucherDelete($id: ID!) {
     voucherDelete(id: $id) {
-      errors: discountErrors {
+      errors {
         ...DiscountErrorFragment
       }
     }

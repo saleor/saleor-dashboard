@@ -456,12 +456,6 @@ export interface OrderLineDiscountUpdate_orderLineDiscountUpdate_order_available
   price: OrderLineDiscountUpdate_orderLineDiscountUpdate_order_availableShippingMethods_price | null;
 }
 
-export interface OrderLineDiscountUpdate_orderLineDiscountUpdate_order_discount {
-  __typename: "Money";
-  amount: number;
-  currency: string;
-}
-
 export interface OrderLineDiscountUpdate_orderLineDiscountUpdate_order_invoices {
   __typename: "Invoice";
   id: string;
@@ -510,7 +504,6 @@ export interface OrderLineDiscountUpdate_orderLineDiscountUpdate_order {
   user: OrderLineDiscountUpdate_orderLineDiscountUpdate_order_user | null;
   userEmail: string | null;
   availableShippingMethods: (OrderLineDiscountUpdate_orderLineDiscountUpdate_order_availableShippingMethods | null)[] | null;
-  discount: OrderLineDiscountUpdate_orderLineDiscountUpdate_order_discount | null;
   invoices: (OrderLineDiscountUpdate_orderLineDiscountUpdate_order_invoices | null)[] | null;
   channel: OrderLineDiscountUpdate_orderLineDiscountUpdate_order_channel;
   isPaid: boolean;

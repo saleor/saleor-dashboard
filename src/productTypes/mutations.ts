@@ -91,7 +91,7 @@ export const assignProductAttributeMutation = gql`
     $operations: [ProductAttributeAssignInput!]!
   ) {
     productAttributeAssign(productTypeId: $id, operations: $operations) {
-      errors: productErrors {
+      errors {
         field
         message
       }
@@ -110,7 +110,7 @@ export const unassignProductAttributeMutation = gql`
   ${productTypeDetailsFragment}
   mutation UnassignProductAttribute($id: ID!, $ids: [ID]!) {
     productAttributeUnassign(productTypeId: $id, attributeIds: $ids) {
-      errors: productErrors {
+      errors {
         field
         message
       }

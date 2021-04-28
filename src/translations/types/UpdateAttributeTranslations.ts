@@ -10,7 +10,7 @@ import { NameTranslationInput, LanguageCodeEnum } from "./../../types/globalType
 // ====================================================
 
 export interface UpdateAttributeTranslations_attributeTranslate_errors {
-  __typename: "Error";
+  __typename: "TranslationError";
   field: string | null;
   message: string | null;
 }

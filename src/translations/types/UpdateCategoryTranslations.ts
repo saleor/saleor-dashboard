@@ -10,7 +10,7 @@ import { TranslationInput, LanguageCodeEnum } from "./../../types/globalTypes";
 // ====================================================
 
 export interface UpdateCategoryTranslations_categoryTranslate_errors {
-  __typename: "Error";
+  __typename: "TranslationError";
   field: string | null;
   message: string | null;
 }
