@@ -1,27 +1,27 @@
 import Typography from "@material-ui/core/Typography";
 import AppHeader from "@saleor/components/AppHeader";
-import CardSpacer from "@saleor/components/CardSpacer";
+// import CardSpacer from "@saleor/components/CardSpacer";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
 import Container from "@saleor/components/Container";
 import Form from "@saleor/components/Form";
 import Grid from "@saleor/components/Grid";
-import Hr from "@saleor/components/Hr";
+// import Hr from "@saleor/components/Hr";
 import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
 import { PluginErrorFragment } from "@saleor/fragments/types/PluginErrorFragment";
 import { ChangeEvent } from "@saleor/hooks/useForm";
 import { sectionNames } from "@saleor/intl";
 import { getStringOrPlaceholder } from "@saleor/misc";
-import { isSecretField } from "@saleor/plugins/utils";
-import { makeStyles } from "@saleor/theme";
+// import { isSecretField } from "@saleor/plugins/utils";
+// import { makeStyles } from "@saleor/theme";
 import { ConfigurationItemInput } from "@saleor/types/globalTypes";
 import React from "react";
 import { useIntl } from "react-intl";
 
 import { Plugin_plugin } from "../../types/Plugin";
-import PluginAuthorization from "../PluginAuthorization";
+// import PluginAuthorization from "../PluginAuthorization";
 import PluginInfo from "../PluginInfo";
-import PluginSettings from "../PluginSettings";
+// import PluginSettings from "../PluginSettings";
 
 export interface PluginDetailsPageFormData {
   active: boolean;
@@ -39,16 +39,16 @@ export interface PluginsDetailsPageProps {
   onSubmit: (data: PluginDetailsPageFormData) => void;
 }
 
-const useStyles = makeStyles(
-  {
-    spacer: {
-      gridColumnEnd: "span 2"
-    }
-  },
-  {
-    name: "PluginsDetailsPage"
-  }
-);
+// const useStyles = makeStyles(
+//   {
+//     spacer: {
+//       gridColumnEnd: "span 2"
+//     }
+//   },
+//   {
+//     name: "PluginsDetailsPage"
+//   }
+// );
 
 const PluginsDetailsPage: React.FC<PluginsDetailsPageProps> = props => {
   const {
@@ -57,25 +57,25 @@ const PluginsDetailsPage: React.FC<PluginsDetailsPageProps> = props => {
     plugin,
     saveButtonBarState,
     onBack,
-    onClear,
-    onEdit,
+    // onClear,
+    // onEdit,
     onSubmit
   } = props;
 
-  const classes = useStyles(props);
+  // const classes = useStyles(props);
   const intl = useIntl();
-  const initialForm: PluginDetailsPageFormData = {
-    active: plugin?.active || false,
-    configuration: plugin?.configuration
-      ?.filter(field => !isSecretField(plugin?.configuration || [], field.name))
-      .map(field => ({
-        ...field,
-        value: field.value || ""
-      }))
-  };
+  // const initialForm: PluginDetailsPageFormData = {
+  //   active: plugin?.active || false,
+  //   configuration: plugin?.configuration
+  //     ?.filter(field => !isSecretField(plugin?.configuration || [], field.name))
+  //     .map(field => ({
+  //       ...field,
+  //       value: field.value || ""
+  //     }))
+  // };
 
   return (
-    <Form initial={initialForm} onSubmit={onSubmit}>
+    <Form /* initial={initialForm} */ onSubmit={onSubmit}>
       {({ data, hasChanged, submit, set }) => {
         const onChange = (event: ChangeEvent) => {
           const { name, value } = event.target;
@@ -91,11 +91,11 @@ const PluginsDetailsPage: React.FC<PluginsDetailsPageProps> = props => {
               }
             });
 
-            plugin.configuration.map(item => {
-              if (item.name === name) {
-                item.value = value;
-              }
-            });
+            // plugin.configuration.map(item => {
+            //   if (item.name === name) {
+            //     item.value = value;
+            //   }
+            // });
           }
 
           set(newData);
@@ -138,7 +138,7 @@ const PluginsDetailsPage: React.FC<PluginsDetailsPageProps> = props => {
                 name={plugin?.name || ""}
                 onChange={onChange}
               />
-              {data.configuration && (
+              {/* {data.configuration && (
                 <>
                   <Hr className={classes.spacer} />
                   <div>
@@ -171,7 +171,7 @@ const PluginsDetailsPage: React.FC<PluginsDetailsPageProps> = props => {
                     )}
                   </div>
                 </>
-              )}
+              )} */}
             </Grid>
             <SaveButtonBar
               disabled={disabled || !hasChanged}

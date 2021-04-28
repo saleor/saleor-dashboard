@@ -8,7 +8,7 @@ import { commonMessages } from "@saleor/intl";
 import { ConfigurationItemInput } from "@saleor/types/globalTypes";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+import { /* FormattedMessage,*/ useIntl } from "react-intl";
 
 import PluginsDetailsPage from "../components/PluginsDetailsPage"; // PluginDetailsPageFormData
 // import PluginSecretFieldDialog from "../components/PluginSecretFieldDialog";
@@ -71,7 +71,7 @@ export const PluginsDetails: React.FC<PluginsDetailsProps> = ({
     <TypedPluginsDetailsQuery variables={{ id }}>
       {pluginDetails => (
         <TypedPluginUpdate onCompleted={handleUpdate}>
-          {(pluginUpdate, pluginUpdateOpts) => {
+          {(/* pluginUpdate */ _, pluginUpdateOpts) => {
             const formErrors = pluginUpdateOpts.data?.pluginUpdate.errors || [];
 
             // const handleFieldUpdate = (value: string) =>

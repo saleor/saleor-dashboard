@@ -65,7 +65,7 @@ export const useChannelsSearchWithLoadMore = (
 
   const hasMore = allChannelsChunks.length > currentChannelsChunks.length;
 
-  const channels = compact(concat(...currentChannelsChunks));
+  const channels = compact(concat([], ...currentChannelsChunks));
 
   const totalCount = data?.channels.length;
 

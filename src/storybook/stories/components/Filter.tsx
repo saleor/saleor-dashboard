@@ -10,21 +10,42 @@ import React from "react";
 
 import Decorator from "../../Decorator";
 
-const props: FilterContentProps = {
-  filters: [
-    createPriceField("price", "Price", {
-      max: "100.00",
-      min: "20.00"
+const filtersData = [
+  createPriceField("price", "Price", {
+    max: "100.00",
+    min: "20.00"
+  }),
+  {
+    ...createDateField("createdAt", "Created At", {
+      max: "2019-10-23",
+      min: "2019-09-09"
     }),
-    {
-      ...createDateField("createdAt", "Created At", {
-        max: "2019-10-23",
-        min: "2019-09-09"
-      }),
-      active: true
-    },
-    {
-      ...createOptionsField("status", "Status", ["val1"], false, [
+    active: true
+  },
+  {
+    ...createOptionsField("status", "Status", ["val1"], false, [
+      {
+        label: "Value 1",
+        value: "val1"
+      },
+      {
+        label: "Value 2",
+        value: "val2"
+      },
+      {
+        label: "Value 3",
+        value: "val3"
+      }
+    ]),
+    active: true
+  },
+  {
+    ...createOptionsField(
+      "multiplOptions",
+      "Multiple Options",
+      ["val1", "val2"],
+      true,
+      [
         {
           label: "Value 1",
           value: "val1"
@@ -37,33 +58,15 @@ const props: FilterContentProps = {
           label: "Value 3",
           value: "val3"
         }
-      ]),
-      active: true
-    },
-    {
-      ...createOptionsField(
-        "multiplOptions",
-        "Multiple Options",
-        ["val1", "val2"],
-        true,
-        [
-          {
-            label: "Value 1",
-            value: "val1"
-          },
-          {
-            label: "Value 2",
-            value: "val2"
-          },
-          {
-            label: "Value 3",
-            value: "val3"
-          }
-        ]
-      ),
-      active: false
-    }
-  ],
+      ]
+    ),
+    active: false
+  }
+];
+
+const props: FilterContentProps = {
+  filters: filtersData,
+  dataStructure: filtersData,
   onClear: () => undefined,
   onFilterPropertyChange: () => undefined,
   onSubmit: () => undefined

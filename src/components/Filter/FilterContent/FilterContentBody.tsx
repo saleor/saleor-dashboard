@@ -3,8 +3,7 @@ import {
   FormControlLabel,
   makeStyles,
   Radio,
-  TextField,
-  Typography
+  TextField
 } from "@material-ui/core";
 import FormSpacer from "@saleor/components/FormSpacer";
 import { MultiAutocompleteChoiceType } from "@saleor/components/MultiAutocompleteSelectField";
