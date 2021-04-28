@@ -39,6 +39,7 @@ import ProductShipping from "../ProductShipping/ProductShipping";
 import ProductStocks, { ProductStockInput } from "../ProductStocks";
 import ProductTaxes from "../ProductTaxes";
 import ProductVariants from "../ProductVariants";
+import ProductMegaPack from "../ProductMegaPack";
 import ProductUpdateForm from "./form";
 
 export interface ProductUpdatePageProps extends ListActions {
@@ -188,6 +189,15 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                   onImageEdit={onImageEdit}
                   onImageUpload={onImageUpload}
                 />
+                <CardSpacer />
+                {product?.productType?.name === "Mega Paka" && (
+                    <ProductMegaPack
+                      data={data}
+                      disabled={disabled}
+                      errors={errors}
+                      onChange={change}
+                    />
+                  )}
                 <CardSpacer />
                 {data.attributes.length > 0 && (
                   <ProductAttributes

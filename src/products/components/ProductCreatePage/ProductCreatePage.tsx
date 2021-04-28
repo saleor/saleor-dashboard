@@ -31,6 +31,7 @@ import ProductPricing from "../ProductPricing";
 import ProductShipping from "../ProductShipping/ProductShipping";
 import ProductStocks from "../ProductStocks";
 import ProductTaxes from "../ProductTaxes";
+import ProductMegaPack from "../ProductMegaPack";
 import ProductCreateForm, {
   ProductCreateData,
   ProductCreateFormData
@@ -157,6 +158,14 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
                     onMultiChange={handlers.selectAttributeMultiple}
                   />
                 )}
+                {data.productType?.name === "Mega Paka" && (
+                    <ProductMegaPack
+                      data={data}
+                      disabled={disabled}
+                      errors={errors}
+                      onChange={change}
+                    />
+                  )}
                 <CardSpacer />
                 {isSimpleProduct && (
                   <>

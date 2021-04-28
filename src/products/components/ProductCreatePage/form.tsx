@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { MetadataFormData } from "@saleor/components/Metadata";
 import { MultiAutocompleteChoiceType } from "@saleor/components/MultiAutocompleteSelectField";
 import { SingleAutocompleteChoiceType } from "@saleor/components/SingleAutocompleteSelectField";
@@ -50,6 +51,7 @@ export interface ProductCreateFormData extends MetadataFormData {
   trackInventory: boolean;
   visibleInListings: boolean;
   weight: string;
+  megaPackProduct: string;
 }
 export interface ProductCreateData extends ProductCreateFormData {
   attributes: ProductAttributeInput[];
@@ -110,6 +112,7 @@ const defaultInitialFormData: ProductCreateFormData &
   isAvailable: false,
   isAvailableForPurchase: false,
   isPublished: false,
+  megaPackProduct: null,
   metadata: [],
   name: "",
   privateMetadata: [],
@@ -210,6 +213,21 @@ function useProductCreateForm(
     opts.taxTypes
   );
   const changeMetadata = makeMetadataChangeHandler(handleChange);
+
+  const makeMegaPackProductsList = (megaPackProducts) => {
+    const productsList: string[] | string = megaPackProducts.split('\n')
+    return productsList
+  }
+
+  const updateDataFromMegaPackValues = (data, megaPackProducts) => {
+      if(megaPackProducts !== null) {
+        const skusAlreadyInPrivateMetadata: boolean = data.privateMetadata.find(x => x.key === 'skus')
+        skusAlreadyInPrivateMetadata ? data.privateMetadata.find(x => x.key === 'skus').value = makeMegaPackProductsList(megaPackProducts) :  data.privateMetadata.push({"key": "skus","value":makeMegaPackProductsList(megaPackProducts)})
+      }
+      return data
+  }
+
+  updateDataFromMegaPackValues(form.data, form.data.megaPackProduct)
 
   const data: ProductCreateData = {
     ...form.data,

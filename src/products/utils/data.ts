@@ -18,6 +18,7 @@ import { ProductAttributeInput } from "../components/ProductAttributes";
 import { ProductStockInput } from "../components/ProductStocks";
 import { VariantAttributeInput } from "../components/ProductVariantAttributes";
 import { ProductVariantCreateData_product } from "../types/ProductVariantCreateData";
+import {MetadataItem} from "@saleor/fragments/types/MetadataItem";
 
 export interface Collection {
   id: string;
@@ -179,6 +180,7 @@ export interface ProductUpdatePageFormData extends MetadataFormData {
   isAvailable: boolean;
   isAvailableForPurchase: boolean;
   isPublished: boolean;
+  megaPackProduct: string;
   name: string;
   slug: string;
   publicationDate: string;
@@ -189,6 +191,15 @@ export interface ProductUpdatePageFormData extends MetadataFormData {
   trackInventory: boolean;
   visibleInListings: boolean;
   weight: string;
+}
+
+function getSkusFromMetadata(metadata:MetadataItem[]): string {
+  return metadata.find(item => item.key === "skus").value
+      .replace("[", "")
+      .replace("]", "")
+      .replace(/'/g, "")
+      .replace(/ /g, "\n")
+      .replace(/,/g, "")
 }
 
 export function getProductUpdatePageFormData(
@@ -209,6 +220,7 @@ export function getProductUpdatePageFormData(
     isAvailable: !!product?.isAvailable,
     isAvailableForPurchase: !!product?.isAvailableForPurchase,
     isPublished: maybe(() => product.isPublished, false),
+    megaPackProduct: maybe(() => getSkusFromMetadata(product?.privateMetadata)),
     metadata: product?.metadata?.map(mapMetadataItemToInput),
     name: maybe(() => product.name, ""),
     privateMetadata: product?.privateMetadata?.map(mapMetadataItemToInput),
@@ -240,3 +252,16 @@ export function mapFormsetStockToStockInput(
     warehouse: stock.id
   };
 }
+
+const makeMegaPackProductsList = (megaPackProducts) => {
+    const productsList: string[] | string = megaPackProducts.split('\n')
+    return productsList
+  }
+
+export const updateDataFromMegaPackValues = (data, megaPackProducts) => {
+      if(megaPackProducts !== null) {
+        const skusAlreadyInPrivateMetadata: boolean = data.privateMetadata.find(x => x.key === 'skus')
+        skusAlreadyInPrivateMetadata ? data.privateMetadata.find(x => x.key === 'skus').value = makeMegaPackProductsList(megaPackProducts) :  data.privateMetadata.push({"key": "skus","value":makeMegaPackProductsList(megaPackProducts)})
+      }
+      return data
+  }

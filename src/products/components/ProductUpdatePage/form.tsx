@@ -39,6 +39,7 @@ export interface ProductUpdateFormData extends MetadataFormData {
   isAvailable: boolean;
   isAvailableForPurchase: boolean;
   isPublished: boolean;
+  megaPackProduct: string;
   name: string;
   slug: string;
   publicationDate: string;
@@ -156,7 +157,7 @@ function useProductUpdateForm(
   const attributes = useFormset(getAttributeInputFromProduct(product));
   const stocks = useFormset(getStockInputFromProduct(product));
 
-  const {
+  let {
     isMetadataModified,
     isPrivateMetadataModified,
     makeChangeHandler: makeMetadataChangeHandler
@@ -208,6 +209,24 @@ function useProductUpdateForm(
     opts.setSelectedTaxType,
     opts.taxTypes
   );
+
+  const makeMegaPackProductsList = (megaPackProducts) => {
+    let productsList: string[] | string;
+    megaPackProducts === undefined ? productsList = null : productsList = megaPackProducts.split('\n')
+    return productsList
+  }
+
+  const updateDataFromMegaPackValues = (data, megaPackProducts) => {
+      if(megaPackProducts !== null && data.privateMetadata !== undefined) {
+        const skusAlreadyInPrivateMetadata: boolean = data.privateMetadata.find(x => x.key === 'skus')
+        skusAlreadyInPrivateMetadata ? data.privateMetadata.find(x => x.key === 'skus').value = makeMegaPackProductsList(megaPackProducts) :  data.privateMetadata.push({"key": "skus","value":makeMegaPackProductsList(megaPackProducts)})
+        isPrivateMetadataModified = true
+      }
+      return data
+  }
+
+  updateDataFromMegaPackValues(form.data, form.data.megaPackProduct)
+
   const changeMetadata = makeMetadataChangeHandler(handleChange);
 
   const data: ProductUpdateData = {
