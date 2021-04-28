@@ -57,7 +57,11 @@ export interface OrderCustomerProps
   canEditAddresses: boolean;
   canEditCustomer: boolean;
   fetchUsers?: (query: string) => void;
-  onCustomerEdit?: (data: { user?: string; userEmail?: string }) => void;
+  onCustomerEdit?: (data: {
+    user?: string;
+    userEmail?: string;
+    prevUser?: string;
+  }) => void;
   onProfileView: () => void;
   onBillingAddressEdit?: () => void;
   onShippingAddressEdit?: () => void;
@@ -132,6 +136,7 @@ const OrderCustomer: React.FC<OrderCustomerProps> = props => {
                 const value = event.target.value;
 
                 onCustomerEdit({
+                  prevUser: user?.id,
                   [value.includes("@") ? "userEmail" : "user"]: value
                 });
                 toggleEditMode();

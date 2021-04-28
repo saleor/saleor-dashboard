@@ -129,10 +129,16 @@ export const OrderDraftDetails: React.FC<OrderDraftDetailsProps> = ({
                   userEmail: data.userEmail
                 }
               });
-              if (!result?.data?.draftOrderUpdate?.errors?.length) {
+              if (
+                data.prevUser &&
+                !result?.data?.draftOrderUpdate?.errors?.length
+              ) {
                 openModal("customer-change");
-              } else {
-                closeModal();
+              } else if (
+                !data.prevUser &&
+                !result?.data?.draftOrderUpdate?.errors?.length
+              ) {
+                openModal("edit-customer-addresses");
               }
             }}
             onDraftFinalize={() => orderDraftFinalize.mutate({ id })}

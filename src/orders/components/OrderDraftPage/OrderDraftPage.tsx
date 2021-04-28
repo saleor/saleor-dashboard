@@ -51,7 +51,11 @@ export interface OrderDraftPageProps
   fetchUsers: (query: string) => void;
   onBack: () => void;
   onBillingAddressEdit: () => void;
-  onCustomerEdit: (data: { user?: string; userEmail?: string }) => void;
+  onCustomerEdit: (data: {
+    user?: string;
+    userEmail?: string;
+    prevUser?: string;
+  }) => void;
   onDraftFinalize: () => void;
   onDraftRemove: () => void;
   onNoteAdd: (data: HistoryFormData) => void;
