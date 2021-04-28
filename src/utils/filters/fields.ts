@@ -105,7 +105,7 @@ export function createTextField<T extends string>(
 export function createBooleanField<T extends string>(
   name: T,
   label: string,
-  defaultValue: boolean,
+  defaultValue: boolean | undefined,
   labels: Record<"positive" | "negative", string>
 ): IFilterElement<T> {
   return {
@@ -124,6 +124,6 @@ export function createBooleanField<T extends string>(
       }
     ],
     type: FieldType.boolean,
-    value: [defaultValue.toString()]
+    value: [defaultValue?.toString()]
   };
 }

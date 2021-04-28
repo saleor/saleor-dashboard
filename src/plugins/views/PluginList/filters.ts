@@ -41,7 +41,9 @@ export function getFilterOpts(
     isActive: {
       active: maybe(() => params.active !== undefined, false),
       value:
-        params.active !== undefined ? parseBoolean(params.active, true) : true
+        params.active === undefined
+          ? undefined
+          : parseBoolean(params.active, true)
     },
     channels: {
       active: !!params.channels,
@@ -76,9 +78,7 @@ export function getFilterVariables(
     type: getParsedConfigType(params.type)
   };
 
-  console.log({ params });
   if (!!params.active && !!params.channels?.length) {
-    console.log("MLEEEEM");
     return {
       ...baseParams,
       statusInChannels: {

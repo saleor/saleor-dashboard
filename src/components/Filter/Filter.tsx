@@ -103,7 +103,6 @@ const Filter: React.FC<FilterProps> = props => {
     const invalidFilters = data.filter(filter => !isFilterValid(filter));
 
     if (!invalidFilters.length) {
-      console.log("LOL");
       setFilterErrors([]);
       onFilterAdd(data);
       setFilterMenuOpened(false);
@@ -138,10 +137,13 @@ const Filter: React.FC<FilterProps> = props => {
             <>
               <span className={classes.separator} />
               <Typography className={classes.addFilterText}>
-                {data.reduce(
-                  (acc, filterElement) => acc + (filterElement.active ? 1 : 0),
-                  0
-                )}
+                {menu.reduce((acc, filterElement) => {
+                  const dataFilterElement = data.find(
+                    ({ name }) => name === filterElement.name
+                  );
+
+                  return acc + (dataFilterElement.active ? 1 : 0);
+                }, 0)}
               </Typography>
             </>
           )}
