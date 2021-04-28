@@ -36,7 +36,9 @@ export function updateProduct(productId, input) {
     }
   }
   `;
-  return cy.sendRequestWithQuery(mutation);
+  return cy
+    .sendRequestWithQuery(mutation)
+    .its("body.data.productUpdate.product");
 }
 
 export function updateChannelInProduct({
@@ -83,14 +85,14 @@ export function updateChannelPriceInVariant(variantId, channelId) {
   } `;
   return cy.sendRequestWithQuery(mutation);
 }
-export function createProduct(
+export function createProduct({
   attributeId,
   name,
-  productType,
-  category,
+  productTypeId,
+  categoryId,
   collectionId,
   description
-) {
+}) {
   const collection = getValueWithDefault(
     collectionId,
     `collections:["${collectionId}"]`
@@ -107,8 +109,8 @@ export function createProduct(
       name:"${name}"
       slug:"${name}"
       seo:{title:"${name}" description:""}
-      productType:"${productType}"
-      category:"${category}"
+      productType:"${productTypeId}"
+      category:"${categoryId}"
       ${collection}
       ${descriptionLine}
     }){
@@ -122,14 +124,16 @@ export function createProduct(
       }
     }
   }`;
-  return cy.sendRequestWithQuery(mutation);
+  return cy
+    .sendRequestWithQuery(mutation)
+    .its("body.data.productCreate.product");
 }
 
 export function createVariant({
   productId,
   sku,
   warehouseId,
-  quantity,
+  quantityInWarehouse,
   channelId,
   attributeId,
   price = 1,
@@ -148,7 +152,7 @@ export function createVariant({
     warehouseId,
     `stocks:{
       warehouse:"${warehouseId}"
-      quantity:${quantity}
+      quantity:${quantityInWarehouse}
     }`
   );
 
@@ -172,23 +176,26 @@ export function createVariant({
       }
     }
   }`;
-  return cy.sendRequestWithQuery(mutation);
+  return cy
+    .sendRequestWithQuery(mutation)
+    .its("body.data.productVariantBulkCreate.productVariants");
 }
 
-export function createTypeProduct(
+export function createTypeProduct({
   name,
   attributeId,
   hasVariants = true,
-  slug = name
-) {
+  slug = name,
+  shippable = true
+}) {
   const mutation = `mutation{
     productTypeCreate(input: {
       name: "${name}"
       slug: "${slug}"
-      isShippingRequired: true
       productAttributes: "${attributeId}"
       variantAttributes: "${attributeId}"
       hasVariants: ${hasVariants}
+      isShippingRequired:${shippable}
     }){
       productErrors{
         field
@@ -200,7 +207,9 @@ export function createTypeProduct(
       }
     }
   } `;
-  return cy.sendRequestWithQuery(mutation);
+  return cy
+    .sendRequestWithQuery(mutation)
+    .its("body.data.productTypeCreate.productType");
 }
 
 export function deleteProduct(productId) {

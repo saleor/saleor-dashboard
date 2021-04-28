@@ -19,3 +19,9 @@ export function getDefaultAddress(address, addressType, withName = true) {
   }
   return `${addressType}:{${defaultAddress}}`;
 }
+export function getVariantsLines(variantsList, quantity) {
+  return variantsList.map(
+    variant => `{quantity:${quantity}
+                    variantId:"${variant.id}"}`
+  );
+}

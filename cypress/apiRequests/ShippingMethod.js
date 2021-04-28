@@ -26,7 +26,9 @@ export function createShippingZone(name, country, channelId) {
       }
     }
   }`;
-  return cy.sendRequestWithQuery(mutation);
+  return cy
+    .sendRequestWithQuery(mutation)
+    .its("body.data.shippingZoneCreate.shippingZone");
 }
 export function addChannelToShippingZone(shippingZoneId, channelId) {
   const mutation = `mutation addCh{

@@ -1,10 +1,13 @@
 // <reference types="cypress" />
 import faker from "faker";
 
+import { createChannel } from "../../apiRequests/Channels";
+import { createCheckout } from "../../apiRequests/Checkout";
 import {
   addChannelToShippingMethod,
   addChannelToShippingZone
 } from "../../apiRequests/ShippingMethod";
+import { createWarehouse } from "../../apiRequests/Warehouse";
 import { SHIPPING_ZONE_DETAILS } from "../../elements/shipping/shipping-zone-details";
 import { selectChannelInHeader } from "../../steps/channelsSteps";
 import {
@@ -15,7 +18,6 @@ import {
 import { getFormattedCurrencyAmount } from "../../support/format/formatCurrencyAmount";
 import { urlList } from "../../url/urlList";
 import * as channelsUtils from "../../utils/channelsUtils";
-import { createCheckout } from "../../utils/ordersUtils";
 import * as productsUtils from "../../utils/products/productsUtils";
 import * as shippingUtils from "../../utils/shippingUtils";
 import { isShippingAvailableInCheckout } from "../../utils/storeFront/checkoutUtils";
@@ -43,7 +45,7 @@ describe("Shipping methods", () => {
       })
       .then(addresses => {
         plAddress = addresses.plAddress;
-        shippingUtils.createWarehouse({ name, address: plAddress });
+        createWarehouse({ name, address: plAddress });
       })
       .then(warehouseResp => {
         warehouse = warehouseResp;
@@ -66,7 +68,7 @@ describe("Shipping methods", () => {
           });
         }
       )
-      .then(({ variants: variantsListResp }) => {
+      .then(({ variantsList: variantsListResp }) => {
         variantsList = variantsListResp;
       });
   });
@@ -86,11 +88,10 @@ describe("Shipping methods", () => {
     let shippingZone;
     let createdChannel;
 
-    channelsUtils
-      .createChannel({
-        name: shippingName,
-        currencyCode: createdChannelCurrency
-      })
+    createChannel({
+      name: shippingName,
+      currencyCode: createdChannelCurrency
+    })
       .then(channel => {
         createdChannel = channel;
         shippingUtils.createShipping({
