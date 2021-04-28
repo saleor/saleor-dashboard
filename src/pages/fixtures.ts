@@ -243,5 +243,6 @@ export const page: PageDetails_page = {
   seoDescription: "About",
   seoTitle: "About",
   slug: "about",
-  title: "About"
+  title: "About",
+  carousel: []
 };
