@@ -63,6 +63,7 @@ export function createFilterStructure(
           )
         },
         {
+          required: true,
           ...createAutocompleteField(
             PluginFilterKeys.channels,
             intl.formatMessage(sectionNames.channels),

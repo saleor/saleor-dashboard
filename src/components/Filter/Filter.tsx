@@ -6,15 +6,17 @@ import { fade } from "@material-ui/core/styles/colorManipulator";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@saleor/theme";
 import classNames from "classnames";
-import React from "react";
+import React, { useState } from "react";
 import { FormattedMessage } from "react-intl";
 
 import { FilterContent } from ".";
-import { IFilter, IFilterElement } from "./types";
+import { FilterErrorMessages, IFilter, IFilterElement } from "./types";
 import useFilter from "./useFilter";
+import { isFilterValid } from "./utils";
 
 export interface FilterProps<TFilterKeys extends string = string> {
   currencySymbol?: string;
+  errorMessages?: FilterErrorMessages;
   menu: IFilter<TFilterKeys>;
   onFilterAdd: (filter: Array<IFilterElement<string>>) => void;
 }
@@ -87,14 +89,30 @@ const useStyles = makeStyles(
   { name: "Filter" }
 );
 const Filter: React.FC<FilterProps> = props => {
-  const { currencySymbol, menu, onFilterAdd } = props;
+  const { currencySymbol, menu, onFilterAdd, errorMessages } = props;
   const classes = useStyles(props);
 
   const anchor = React.useRef<HTMLDivElement>();
-  const [isFilterMenuOpened, setFilterMenuOpened] = React.useState(false);
+  const [isFilterMenuOpened, setFilterMenuOpened] = useState(false);
+  const [filterErrors, setFilterErrors] = useState<string[]>([]);
   const [data, dispatch, reset] = useFilter(menu);
 
   const isFilterActive = menu.some(filterElement => filterElement.active);
+
+  const handleSubmit = () => {
+    const invalidFilters = data.filter(filter => !isFilterValid(filter));
+
+    if (!invalidFilters.length) {
+      console.log("LOL");
+      setFilterErrors([]);
+      onFilterAdd(data);
+      setFilterMenuOpened(false);
+    }
+
+    const parsedFilterErrors = invalidFilters.map(({ name }) => name);
+
+    setFilterErrors(parsedFilterErrors);
+  };
 
   return (
     <ClickAwayListener
@@ -157,15 +175,14 @@ const Filter: React.FC<FilterProps> = props => {
               }}
             >
               <FilterContent
+                errorMessages={errorMessages}
+                errors={filterErrors}
                 dataStructure={menu}
                 currencySymbol={currencySymbol}
                 filters={data}
                 onClear={reset}
                 onFilterPropertyChange={dispatch}
-                onSubmit={() => {
-                  onFilterAdd(data);
-                  setFilterMenuOpened(false);
-                }}
+                onSubmit={handleSubmit}
               />
             </Grow>
           )}

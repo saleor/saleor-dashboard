@@ -76,7 +76,9 @@ export function getFilterVariables(
     type: getParsedConfigType(params.type)
   };
 
+  console.log({ params });
   if (!!params.active && !!params.channels?.length) {
+    console.log("MLEEEEM");
     return {
       ...baseParams,
       statusInChannels: {

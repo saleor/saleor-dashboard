@@ -16,7 +16,13 @@ import Arrow from "../Arrow";
 import FilterAutocompleteField from "../FilterAutocompleteField";
 import FilterOptionField from "../FilterOptionField";
 import { FilterReducerAction } from "../reducer";
-import { FieldType, FilterType, IFilterElement } from "../types";
+import {
+  FieldType,
+  FilterErrorMessages,
+  FilterErrors,
+  FilterType,
+  IFilterElement
+} from "../types";
 import { getIsFilterMultipleChoices } from "./utils";
 
 const useStyles = makeStyles(
