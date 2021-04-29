@@ -20,7 +20,7 @@ const useStyles = makeStyles(
 );
 
 interface BasicAttributeRowProps {
-  label: string;
+  label: string | React.ReactNode;
 }
 
 const BasicAttributeRow: React.FC<BasicAttributeRowProps> = props => {

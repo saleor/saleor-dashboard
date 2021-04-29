@@ -1,4 +1,6 @@
+import { InputAdornment, TextField } from "@material-ui/core";
 import makeStyles from "@material-ui/core/styles/makeStyles";
+import { getMeasurementUnitMessage } from "@saleor/attributes/components/AttributeDetails/utils";
 import { AttributeInput } from "@saleor/components/Attributes/Attributes";
 import BasicAttributeRow from "@saleor/components/Attributes/BasicAttributeRow";
 import ExtendedAttributeRow from "@saleor/components/Attributes/ExtendedAttributeRow";
@@ -155,6 +157,34 @@ const AttributeRow: React.FC<AttributeRowProps> = ({
             helperText={getErrorMessage(error, intl)}
             onChange={data => onChange(attribute.id, JSON.stringify(data))}
             data={getRichTextData(attribute)}
+          />
+        </BasicAttributeRow>
+      );
+    case AttributeInputTypeEnum.NUMERIC:
+      return (
+        <BasicAttributeRow label={attribute.label}>
+          <TextField
+            fullWidth
+            disabled={disabled}
+            error={!!error}
+            helperText={getErrorMessage(error, intl)}
+            label={intl.formatMessage(messages.valueLabel)}
+            name={`attribute:${attribute.label}`}
+            onChange={event => onChange(attribute.id, event.target.value)}
+            type="number"
+            value={attribute.value[0]}
+            InputProps={
+              attribute.data.unit && {
+                endAdornment: (
+                  <InputAdornment position="end">
+                    {getMeasurementUnitMessage(
+                      attribute.data.unit,
+                      intl.formatMessage
+                    )}
+                  </InputAdornment>
+                )
+              }
+            }
           />
         </BasicAttributeRow>
       );

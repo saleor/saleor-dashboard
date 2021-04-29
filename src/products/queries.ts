@@ -219,6 +219,7 @@ const productTypeQuery = gql`
         slug
         name
         valueRequired
+        unit
         values {
           ...AttributeValueFragment
         }

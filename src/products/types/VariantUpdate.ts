@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { StockInput, AttributeValueInput, ProductErrorCode, AttributeInputTypeEnum, AttributeEntityTypeEnum, ProductMediaType, WeightUnitsEnum, StockErrorCode } from "./../../types/globalTypes";
+import { StockInput, AttributeValueInput, ProductErrorCode, AttributeInputTypeEnum, AttributeEntityTypeEnum, MeasurementUnitsEnum, ProductMediaType, WeightUnitsEnum, StockErrorCode } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: VariantUpdate
@@ -52,6 +52,7 @@ export interface VariantUpdate_productVariantUpdate_productVariant_selectionAttr
   inputType: AttributeInputTypeEnum | null;
   entityType: AttributeEntityTypeEnum | null;
   valueRequired: boolean;
+  unit: MeasurementUnitsEnum | null;
   values: (VariantUpdate_productVariantUpdate_productVariant_selectionAttributes_attribute_values | null)[] | null;
 }
 
@@ -101,6 +102,7 @@ export interface VariantUpdate_productVariantUpdate_productVariant_nonSelectionA
   inputType: AttributeInputTypeEnum | null;
   entityType: AttributeEntityTypeEnum | null;
   valueRequired: boolean;
+  unit: MeasurementUnitsEnum | null;
   values: (VariantUpdate_productVariantUpdate_productVariant_nonSelectionAttributes_attribute_values | null)[] | null;
 }
 
@@ -341,6 +343,7 @@ export interface VariantUpdate_productVariantStocksUpdate_productVariant_selecti
   inputType: AttributeInputTypeEnum | null;
   entityType: AttributeEntityTypeEnum | null;
   valueRequired: boolean;
+  unit: MeasurementUnitsEnum | null;
   values: (VariantUpdate_productVariantStocksUpdate_productVariant_selectionAttributes_attribute_values | null)[] | null;
 }
 
@@ -390,6 +393,7 @@ export interface VariantUpdate_productVariantStocksUpdate_productVariant_nonSele
   inputType: AttributeInputTypeEnum | null;
   entityType: AttributeEntityTypeEnum | null;
   valueRequired: boolean;
+  unit: MeasurementUnitsEnum | null;
   values: (VariantUpdate_productVariantStocksUpdate_productVariant_nonSelectionAttributes_attribute_values | null)[] | null;
 }
 

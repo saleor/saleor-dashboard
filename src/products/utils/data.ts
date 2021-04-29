@@ -52,7 +52,8 @@ export function getAttributeInputFromProduct(
           inputType: attribute.attribute.inputType,
           isRequired: attribute.attribute.valueRequired,
           selectedValues: attribute.values,
-          values: attribute.attribute.values
+          values: attribute.attribute.values,
+          unit: attribute.attribute.unit
         },
         id: attribute.attribute.id,
         label: attribute.attribute.name,
@@ -70,7 +71,8 @@ export function getAttributeInputFromProductType(
       entityType: attribute.entityType,
       inputType: attribute.inputType,
       isRequired: attribute.valueRequired,
-      values: attribute.values
+      values: attribute.values,
+      unit: attribute.unit
     },
     id: attribute.id,
     label: attribute.name,
@@ -88,6 +90,7 @@ export function getAttributeInputFromAttributes(
       inputType: attribute.inputType,
       isRequired: attribute.valueRequired,
       values: attribute.values,
+      unit: attribute.unit,
       variantAttributeScope
     },
     id: attribute.id,
@@ -107,6 +110,7 @@ export function getAttributeInputFromSelectedAttributes(
       isRequired: attribute.attribute.valueRequired,
       selectedValues: attribute.values,
       values: attribute.attribute.values,
+      unit: attribute.attribute.unit,
       variantAttributeScope
     },
     id: attribute.attribute.id,

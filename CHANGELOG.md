@@ -33,6 +33,7 @@ All notable, unreleased changes to this project will be documented in this file.
 - Add multiline field plugins - #974 by @dominik-zeglen
 - Handle limit reached error - #990 by @dominik-zeglen
 - Display Cloud limits - #1004 by @dominik-zeglen
+- Introducing numeric attributes - #1065 by @piotrgrundas
 - Add shipping method description - #1058 by @jwm0
 - Fix voucher and sales sorting errors - #1063 by @orzechdev
 - Fix custom currency formatting - #1067 by @orzechdev
