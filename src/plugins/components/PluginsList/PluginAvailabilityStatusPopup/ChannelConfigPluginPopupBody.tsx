@@ -1,8 +1,8 @@
 import { CardContent, Divider, Typography } from "@material-ui/core";
 import CardSpacer from "@saleor/components/CardSpacer";
+import CollectionWithDividers from "@saleor/components/CollectionWithDividers";
 import StatusLabel from "@saleor/components/StatusLabel";
 import { statusLabelMessages } from "@saleor/components/StatusLabel/messages";
-import { renderCollectionWithDividers } from "@saleor/misc";
 import { Plugin_plugin } from "@saleor/plugins/types/Plugin";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -38,10 +38,10 @@ const ChannelConfigPluginPopupBody: React.FC<ChannelConfigPluginPopupBodyProps> 
       <Divider />
       <ScrollableContent>
         <CardContent>
-          {renderCollectionWithDividers({
-            collection: channelConfigurations,
-            renderDivider: () => <CardSpacer />,
-            renderItem: ({ channel, active }) => (
+          <CollectionWithDividers
+            collection={channelConfigurations}
+            renderDivider={() => <CardSpacer />}
+            renderItem={({ channel, active }) => (
               <StatusLabel
                 key={channel.id}
                 label={channel.name}
@@ -52,8 +52,8 @@ const ChannelConfigPluginPopupBody: React.FC<ChannelConfigPluginPopupBodyProps> 
                     : statusLabelMessages.inactive
                 )}
               />
-            )
-          })}
+            )}
+          />
         </CardContent>
       </ScrollableContent>
     </>

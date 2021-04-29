@@ -1,9 +1,9 @@
 import { Typography } from "@material-ui/core";
 import Paper from "@material-ui/core/Paper";
+import CollectionWithDividers from "@saleor/components/CollectionWithDividers";
 import Hr from "@saleor/components/Hr";
 import { MultiAutocompleteChoiceType } from "@saleor/components/MultiAutocompleteSelectField";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
-import { renderCollectionWithDividers } from "@saleor/misc";
 import React from "react";
 
 import { FilterReducerAction } from "../reducer";
@@ -130,9 +130,9 @@ const FilterContent: React.FC<FilterContentProps> = ({
                 filter={filter}
               />
               {filter.multipleFields ? (
-                renderCollectionWithDividers({
-                  collection: filter.multipleFields,
-                  renderItem: filterField => (
+                <CollectionWithDividers
+                  collection={filter.multipleFields}
+                  renderItem={filterField => (
                     <FilterContentBody
                       {...commonFilterBodyProps}
                       onFilterPropertyChange={handleMultipleFieldPropertyChange}
@@ -143,8 +143,8 @@ const FilterContent: React.FC<FilterContentProps> = ({
                     >
                       <Typography>{filterField.label}</Typography>
                     </FilterContentBody>
-                  )
-                })
+                  )}
+                />
               ) : (
                 <FilterContentBody
                   {...commonFilterBodyProps}
