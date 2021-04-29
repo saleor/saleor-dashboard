@@ -23,6 +23,7 @@ export interface ProductVariantAttributesFragment_attributes_attribute_values {
   file: ProductVariantAttributesFragment_attributes_attribute_values_file | null;
   reference: string | null;
   richText: any | null;
+  boolean: boolean | null;
 }
 
 export interface ProductVariantAttributesFragment_attributes_attribute {
@@ -51,6 +52,7 @@ export interface ProductVariantAttributesFragment_attributes_values {
   file: ProductVariantAttributesFragment_attributes_values_file | null;
   reference: string | null;
   richText: any | null;
+  boolean: boolean | null;
 }
 
 export interface ProductVariantAttributesFragment_attributes {
@@ -73,6 +75,7 @@ export interface ProductVariantAttributesFragment_productType_variantAttributes_
   file: ProductVariantAttributesFragment_productType_variantAttributes_values_file | null;
   reference: string | null;
   richText: any | null;
+  boolean: boolean | null;
 }
 
 export interface ProductVariantAttributesFragment_productType_variantAttributes {

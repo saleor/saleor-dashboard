@@ -98,6 +98,10 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = props => {
     {
       label: intl.formatMessage(inputTypeMessages.numeric),
       value: AttributeInputTypeEnum.NUMERIC
+    },
+    {
+      label: intl.formatMessage(inputTypeMessages.boolean),
+      value: AttributeInputTypeEnum.BOOLEAN
     }
   ];
   const entityTypeChoices = [

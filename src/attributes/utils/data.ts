@@ -87,6 +87,9 @@ export function getSelectedAttributeValues(
     case AttributeInputTypeEnum.NUMERIC:
       return [attribute.values[0]?.name];
 
+    case AttributeInputTypeEnum.BOOLEAN:
+      return [attribute.values[0]?.boolean || "false"];
+
     default:
       return attribute.values.map(value => value.slug);
   }

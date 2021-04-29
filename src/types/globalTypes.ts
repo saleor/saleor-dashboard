@@ -86,6 +86,7 @@ export enum AttributeErrorCode {
 }
 
 export enum AttributeInputTypeEnum {
+  BOOLEAN = "BOOLEAN",
   DROPDOWN = "DROPDOWN",
   FILE = "FILE",
   MULTISELECT = "MULTISELECT",
@@ -1176,6 +1177,7 @@ export interface AttributeValueInput {
   contentType?: string | null;
   references?: string[] | null;
   richText?: any | null;
+  boolean?: boolean | null;
 }
 
 export interface AttributeValueTranslationInput {

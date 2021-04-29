@@ -23,6 +23,7 @@ export interface ProductChannelListingUpdate_productChannelListingUpdate_product
   file: ProductChannelListingUpdate_productChannelListingUpdate_product_attributes_attribute_values_file | null;
   reference: string | null;
   richText: any | null;
+  boolean: boolean | null;
 }
 
 export interface ProductChannelListingUpdate_productChannelListingUpdate_product_attributes_attribute {
@@ -51,6 +52,7 @@ export interface ProductChannelListingUpdate_productChannelListingUpdate_product
   file: ProductChannelListingUpdate_productChannelListingUpdate_product_attributes_values_file | null;
   reference: string | null;
   richText: any | null;
+  boolean: boolean | null;
 }
 
 export interface ProductChannelListingUpdate_productChannelListingUpdate_product_attributes {
@@ -73,6 +75,7 @@ export interface ProductChannelListingUpdate_productChannelListingUpdate_product
   file: ProductChannelListingUpdate_productChannelListingUpdate_product_productType_variantAttributes_values_file | null;
   reference: string | null;
   richText: any | null;
+  boolean: boolean | null;
 }
 
 export interface ProductChannelListingUpdate_productChannelListingUpdate_product_productType_variantAttributes {

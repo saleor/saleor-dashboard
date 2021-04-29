@@ -23,6 +23,7 @@ export interface ProductType_productType_productAttributes_values {
   file: ProductType_productType_productAttributes_values_file | null;
   reference: string | null;
   richText: any | null;
+  boolean: boolean | null;
 }
 
 export interface ProductType_productType_productAttributes {

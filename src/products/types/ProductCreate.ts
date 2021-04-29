@@ -30,6 +30,7 @@ export interface ProductCreate_productCreate_product_attributes_attribute_values
   file: ProductCreate_productCreate_product_attributes_attribute_values_file | null;
   reference: string | null;
   richText: any | null;
+  boolean: boolean | null;
 }
 
 export interface ProductCreate_productCreate_product_attributes_attribute {
@@ -58,6 +59,7 @@ export interface ProductCreate_productCreate_product_attributes_values {
   file: ProductCreate_productCreate_product_attributes_values_file | null;
   reference: string | null;
   richText: any | null;
+  boolean: boolean | null;
 }
 
 export interface ProductCreate_productCreate_product_attributes {
@@ -80,6 +82,7 @@ export interface ProductCreate_productCreate_product_productType_variantAttribut
   file: ProductCreate_productCreate_product_productType_variantAttributes_values_file | null;
   reference: string | null;
   richText: any | null;
+  boolean: boolean | null;
 }
 
 export interface ProductCreate_productCreate_product_productType_variantAttributes {

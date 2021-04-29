@@ -21,4 +21,5 @@ export interface AttributeValueFragment {
   file: AttributeValueFragment_file | null;
   reference: string | null;
   richText: any | null;
+  boolean: boolean | null;
 }

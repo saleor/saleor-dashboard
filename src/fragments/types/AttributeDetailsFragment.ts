@@ -35,6 +35,7 @@ export interface AttributeDetailsFragment_values {
   file: AttributeDetailsFragment_values_file | null;
   reference: string | null;
   richText: any | null;
+  boolean: boolean | null;
 }
 
 export interface AttributeDetailsFragment {

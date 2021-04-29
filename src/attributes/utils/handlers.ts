@@ -180,39 +180,49 @@ export const prepareAttributesInput = ({
   updatedFileAttributes
 }: AttributesArgs): AttributeValueInput[] =>
   attributes.map(attribute => {
-    if (attribute.data.inputType === AttributeInputTypeEnum.FILE) {
-      const updatedFileAttribute = updatedFileAttributes.find(
-        attributeWithNewFile => attribute.id === attributeWithNewFile.id
-      );
-      if (updatedFileAttribute) {
+    switch (attribute.data.inputType) {
+      case AttributeInputTypeEnum.FILE:
+        const updatedFileAttribute = updatedFileAttributes.find(
+          attributeWithNewFile => attribute.id === attributeWithNewFile.id
+        );
+
+        if (updatedFileAttribute) {
+          return {
+            file: updatedFileAttribute.file,
+            id: updatedFileAttribute.id
+          };
+        }
         return {
-          file: updatedFileAttribute.file,
-          id: updatedFileAttribute.id
+          file:
+            attribute.data.selectedValues &&
+            attribute.data.selectedValues[0]?.file?.url,
+          id: attribute.id
         };
-      }
-      return {
-        file:
-          attribute.data.selectedValues &&
-          attribute.data.selectedValues[0]?.file?.url,
-        id: attribute.id
-      };
+
+      case AttributeInputTypeEnum.REFERENCE:
+        return {
+          id: attribute.id,
+          references: attribute.value
+        };
+
+      case AttributeInputTypeEnum.RICH_TEXT:
+        return {
+          id: attribute.id,
+          richText: attribute.value[0]
+        };
+
+      case AttributeInputTypeEnum.BOOLEAN:
+        return {
+          id: attribute.id,
+          boolean: JSON.parse(attribute.value[0])
+        };
+
+      default:
+        return {
+          id: attribute.id,
+          values: attribute.value[0] === "" ? [] : attribute.value
+        };
     }
-    if (attribute.data.inputType === AttributeInputTypeEnum.REFERENCE) {
-      return {
-        id: attribute.id,
-        references: attribute.value
-      };
-    }
-    if (attribute.data.inputType === AttributeInputTypeEnum.RICH_TEXT) {
-      return {
-        id: attribute.id,
-        richText: attribute.value[0]
-      };
-    }
-    return {
-      id: attribute.id,
-      values: attribute.value[0] === "" ? [] : attribute.value
-    };
   });
 
 export const handleUploadMultipleFiles = async (

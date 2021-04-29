@@ -1,4 +1,5 @@
 import { InputAdornment, TextField } from "@material-ui/core";
+import FormHelperText from "@material-ui/core/FormHelperText";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import { getMeasurementUnitMessage } from "@saleor/attributes/components/AttributeDetails/utils";
 import { AttributeInput } from "@saleor/components/Attributes/Attributes";
@@ -13,6 +14,7 @@ import {
   getRichTextData,
   getSingleChoices
 } from "@saleor/components/Attributes/utils";
+import Checkbox from "@saleor/components/Checkbox";
 import FileUploadField from "@saleor/components/FileUploadField";
 import MultiAutocompleteSelectField from "@saleor/components/MultiAutocompleteSelectField";
 import RichTextEditor from "@saleor/components/RichTextEditor";
@@ -39,8 +41,14 @@ const messages = defineMessages({
 
 const useStyles = makeStyles(
   () => ({
-    fileField: {
+    pullRight: {
       float: "right"
+    },
+    alignRight: {
+      "& > *": {
+        float: "right",
+        clear: "right"
+      }
     }
   }),
   { name: "AttributeRow" }
@@ -108,7 +116,7 @@ const AttributeRow: React.FC<AttributeRowProps> = ({
       return (
         <BasicAttributeRow label={attribute.label}>
           <FileUploadField
-            className={classes.fileField}
+            className={classes.pullRight}
             disabled={disabled}
             loading={loading}
             file={getFileChoice(attribute)}
@@ -185,6 +193,22 @@ const AttributeRow: React.FC<AttributeRowProps> = ({
                 )
               }
             }
+          />
+        </BasicAttributeRow>
+      );
+    case AttributeInputTypeEnum.BOOLEAN:
+      return (
+        <BasicAttributeRow label={attribute.label}>
+          <Checkbox
+            disabled={disabled}
+            name={`attribute:${attribute.label}`}
+            onChange={event =>
+              onChange(attribute.id, JSON.stringify(event.target.checked))
+            }
+            checked={JSON.parse(attribute.value[0])}
+            className={classes.alignRight}
+            helperText={getErrorMessage(error, intl)}
+            error={!!error}
           />
         </BasicAttributeRow>
       );

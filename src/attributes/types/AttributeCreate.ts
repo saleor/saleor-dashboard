@@ -35,6 +35,7 @@ export interface AttributeCreate_attributeCreate_attribute_values {
   file: AttributeCreate_attributeCreate_attribute_values_file | null;
   reference: string | null;
   richText: any | null;
+  boolean: boolean | null;
 }
 
 export interface AttributeCreate_attributeCreate_attribute {

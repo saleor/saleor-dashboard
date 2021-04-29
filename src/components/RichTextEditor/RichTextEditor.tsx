@@ -44,8 +44,10 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
           holder: editorContainer.current,
           logLevel: "ERROR" as LogLevels,
           onChange: async api => {
-            const savedData = await api.saver.save();
-            onChange(savedData);
+            if (!api.readOnly) {
+              const savedData = await api.saver.save();
+              onChange(savedData);
+            }
           },
           onReady: () => {
             // FIXME: This throws an error and is not working
@@ -68,34 +70,37 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
   );
 
   React.useEffect(() => {
-    const toggle = async () => {
-      if (!editor.current) {
-        return;
-      }
-
-      await editor.current.isReady;
-      if (editor.current?.readOnly) {
-        // readOnly.toggle() by itself does not enqueue the events and will result in a broken output if invocations overlap
-        // Remove this logic when this is fixed in EditorJS
-        if (prevTogglePromise.current instanceof Promise) {
-          await prevTogglePromise.current;
+    (async () => {
+      const toggle = async () => {
+        if (!editor.current) {
+          return;
         }
-        prevTogglePromise.current = editor.current.readOnly.toggle(disabled);
 
-        // Switching to readOnly with empty blocks present causes the editor to freeze
-        // Remove this logic when this is fixed in EditorJS
-        if (!disabled && !data?.blocks?.length) {
-          await prevTogglePromise.current;
-          editor.current.clear();
+        await editor.current.isReady;
+        if (editor.current?.readOnly) {
+          // readOnly.toggle() by itself does not enqueue the events and will result in a broken output if invocations overlap
+          // Remove this logic when this is fixed in EditorJS
+          if (prevTogglePromise.current instanceof Promise) {
+            await prevTogglePromise.current;
+          }
+          prevTogglePromise.current = editor.current.readOnly.toggle(disabled);
+
+          // Switching to readOnly with empty blocks present causes the editor to freeze
+          // Remove this logic when this is fixed in EditorJS
+          if (!disabled && !data?.blocks?.length) {
+            await prevTogglePromise.current;
+            editor.current.clear();
+          }
         }
-      }
-    };
+      };
 
-    if (!initialMount.current) {
-      toggle();
-    } else {
-      initialMount.current = false;
-    }
+      if (!initialMount.current) {
+        await editor.current?.render(data);
+        await toggle();
+      } else {
+        initialMount.current = false;
+      }
+    })();
   }, [disabled]);
 
   return (

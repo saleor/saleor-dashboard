@@ -9,7 +9,8 @@ const useStyles = makeStyles(
       "&:last-of-type": {
         paddingBottom: 0
       },
-      padding: theme.spacing(2, 0)
+      padding: theme.spacing(2, 0),
+      wordBreak: "break-word"
     },
     attributeSectionLabel: {
       alignItems: "center",
