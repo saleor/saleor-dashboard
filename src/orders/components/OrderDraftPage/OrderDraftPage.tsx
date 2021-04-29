@@ -43,10 +43,6 @@ export interface OrderDraftPageProps
   order: OrderDetails_order;
   users: SearchCustomers_search_edges_node[];
   usersLoading: boolean;
-  countries: Array<{
-    code: string;
-    label: string;
-  }>;
   saveButtonBarState: ConfirmButtonTransitionState;
   fetchUsers: (query: string) => void;
   onBack: () => void;

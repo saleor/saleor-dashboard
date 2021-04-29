@@ -7,13 +7,13 @@ import React from "react";
 import { CustomerAddresses_user_addresses } from "../../types/CustomerAddresses";
 import { useStyles } from "./styles";
 
-export interface CustomerAddressChoiceProps {
+export interface CustomerAddressChoiceCardProps {
   address: CustomerAddresses_user_addresses;
   selected: boolean;
   onSelect: () => void;
 }
 
-const CustomerAddressChoice: React.FC<CustomerAddressChoiceProps> = props => {
+const CustomerAddressChoiceCard: React.FC<CustomerAddressChoiceCardProps> = props => {
   const { address, selected, onSelect } = props;
   const classes = useStyles(props);
 
@@ -30,5 +30,5 @@ const CustomerAddressChoice: React.FC<CustomerAddressChoiceProps> = props => {
     </Card>
   );
 };
-CustomerAddressChoice.displayName = "CustomerAddressChoice";
-export default CustomerAddressChoice;
+CustomerAddressChoiceCard.displayName = "CustomerAddressChoiceCard";
+export default CustomerAddressChoiceCard;

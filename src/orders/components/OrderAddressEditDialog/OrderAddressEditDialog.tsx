@@ -8,16 +8,17 @@ import ConfirmButton, {
   ConfirmButtonTransitionState
 } from "@saleor/components/ConfirmButton";
 import Form from "@saleor/components/Form";
+import { ShopInfo_shop_countries } from "@saleor/components/Shop/types/ShopInfo";
 import { AddressTypeInput } from "@saleor/customers/types";
 import { OrderErrorFragment } from "@saleor/fragments/types/OrderErrorFragment";
 import useAddressValidation from "@saleor/hooks/useAddressValidation";
 import useModalDialogErrors from "@saleor/hooks/useModalDialogErrors";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { buttonMessages } from "@saleor/intl";
-import { maybe } from "@saleor/misc";
 import { makeStyles } from "@saleor/theme";
 import { AddressInput } from "@saleor/types/globalTypes";
 import createSingleAutocompleteSelectHandler from "@saleor/utils/handlers/singleAutocompleteSelectChangeHandler";
+import { mapCountriesToChoices } from "@saleor/utils/maps";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -36,10 +37,7 @@ interface OrderAddressEditDialogProps {
   open: boolean;
   errors: OrderErrorFragment[];
   variant: "billing" | "shipping" | string;
-  countries?: Array<{
-    code: string;
-    label: string;
-  }>;
+  countries?: ShopInfo_shop_countries[];
   onClose();
   onConfirm(data: AddressInput);
 }
@@ -59,9 +57,7 @@ const OrderAddressEditDialog: React.FC<OrderAddressEditDialogProps> = props => {
   const classes = useStyles(props);
   const intl = useIntl();
   const [countryDisplayName, setCountryDisplayName] = useStateFromProps(
-    maybe(
-      () => countries.find(country => address.country === country.code).label
-    )
+    countries.find(country => address?.country === country.code)?.country
   );
   const {
     errors: validationErrors,
@@ -72,10 +68,7 @@ const OrderAddressEditDialog: React.FC<OrderAddressEditDialogProps> = props => {
     open
   );
 
-  const countryChoices = countries.map(country => ({
-    label: country.label,
-    value: country.code
-  }));
+  const countryChoices = mapCountriesToChoices(countries);
 
   return (
     <Dialog onClose={onClose} open={open} classes={{ paper: classes.overflow }}>

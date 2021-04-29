@@ -14,7 +14,8 @@ import ConfirmButton, {
   ConfirmButtonTransitionState
 } from "@saleor/components/ConfirmButton";
 import FormSpacer from "@saleor/components/FormSpacer";
-import CustomerAddressChoice from "@saleor/customers/components/CustomerAddressChoice";
+import { ShopInfo_shop_countries } from "@saleor/components/Shop/types/ShopInfo";
+import CustomerAddressChoiceCard from "@saleor/customers/components/CustomerAddressChoiceCard";
 import {
   CustomerAddresses_user_addresses,
   CustomerAddresses_user_defaultBillingAddress,
@@ -27,9 +28,11 @@ import useModalDialogErrors from "@saleor/hooks/useModalDialogErrors";
 import { buttonMessages } from "@saleor/intl";
 import { transformAddressToAddressInput } from "@saleor/misc";
 import { AddressInput, AddressTypeEnum } from "@saleor/types/globalTypes";
+import { mapCountriesToChoices } from "@saleor/utils/maps";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
+import { getById } from "../OrderReturnPage/utils";
 import OrderCustomerAddressesEditForm, {
   AddressInputOptionEnum,
   OrderCustomerAddressesEditFormData
@@ -46,10 +49,7 @@ export interface OrderCustomerAddressesEditDialogProps {
   open: boolean;
   confirmButtonState: ConfirmButtonTransitionState;
   errors: OrderErrorFragment[];
-  countries?: Array<{
-    code: string;
-    label: string;
-  }>;
+  countries?: ShopInfo_shop_countries[];
   customerAddresses?: CustomerAddresses_user_addresses[];
   defaultShippingAddress?: CustomerAddresses_user_defaultShippingAddress;
   defaultBillingAddress?: CustomerAddresses_user_defaultBillingAddress;
@@ -87,9 +87,7 @@ const OrderCustomerAddressesEditDialog: React.FC<OrderCustomerAddressesEditDialo
 
   const getCustomerAddress = (customerAddressId: string): AddressInput =>
     transformAddressToAddressInput(
-      customerAddresses.find(
-        customerAddress => customerAddress.id === customerAddressId
-      )
+      customerAddresses.find(getById(customerAddressId))
     );
 
   const handleAddressesSubmit = (data: OrderCustomerAddressesEditFormData) => {
@@ -125,10 +123,7 @@ const OrderCustomerAddressesEditDialog: React.FC<OrderCustomerAddressesEditDialo
     }
   };
 
-  const countryChoices = countries.map(country => ({
-    label: country.label,
-    value: country.code
-  }));
+  const countryChoices = mapCountriesToChoices(countries);
 
   return (
     <Dialog onClose={onClose} open={open}>
@@ -172,7 +167,7 @@ const OrderCustomerAddressesEditDialog: React.FC<OrderCustomerAddressesEditDialo
                     {customerAddresses.map(customerAddress => (
                       <React.Fragment key={customerAddress.id}>
                         <CardSpacer />
-                        <CustomerAddressChoice
+                        <CustomerAddressChoiceCard
                           address={customerAddress}
                           selected={
                             customerAddress.id ===
@@ -283,7 +278,7 @@ const OrderCustomerAddressesEditDialog: React.FC<OrderCustomerAddressesEditDialo
                         {customerAddresses.map(customerAddress => (
                           <React.Fragment key={customerAddress.id}>
                             <CardSpacer />
-                            <CustomerAddressChoice
+                            <CustomerAddressChoiceCard
                               address={customerAddress}
                               selected={
                                 customerAddress.id ===
