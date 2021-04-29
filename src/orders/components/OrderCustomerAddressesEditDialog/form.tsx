@@ -1,6 +1,7 @@
 import { SingleAutocompleteChoiceType } from "@saleor/components/SingleAutocompleteSelectField";
 import { AddressTypeInput } from "@saleor/customers/types";
 import {
+  CustomerAddresses_user_addresses,
   CustomerAddresses_user_defaultBillingAddress,
   CustomerAddresses_user_defaultShippingAddress
 } from "@saleor/customers/types/CustomerAddresses";
@@ -23,13 +24,21 @@ export interface OrderCustomerAddressesEditFormData {
   billingAddress: AddressTypeInput;
 }
 
-interface OrderCustomerAddressesEditData
+export interface OrderCustomerAddressesEditData
   extends OrderCustomerAddressesEditFormData {
   shippingCountryDisplayName: string;
   billingCountryDisplayName: string;
 }
 
-interface OrderCustomerAddressesEditHandlers {
+export interface OrderCustomerAddressesEditHandlers {
+  changeFormAddress: (
+    event: React.ChangeEvent<any>,
+    addressType: "shippingAddress" | "billingAddress"
+  ) => void;
+  changeCustomerAddress: (
+    customerAddress: CustomerAddresses_user_addresses,
+    addressType: "customerShippingAddress" | "customerBillingAddress"
+  ) => void;
   selectShippingCountry: FormChange;
   selectBillingCountry: FormChange;
 }
@@ -96,6 +105,29 @@ function useOrderCustomerAddressesEditForm(
     form.change(event, cb);
     triggerChange();
   };
+  const handleFormAddressChange = (
+    event: React.ChangeEvent<any>,
+    addressType: "shippingAddress" | "billingAddress"
+  ) =>
+    form.change({
+      target: {
+        name: addressType,
+        value: {
+          ...form.data[addressType],
+          [event.target.name]: event.target.value
+        }
+      }
+    });
+  const handleCustomerAddressChange = (
+    customerAddress: CustomerAddresses_user_addresses,
+    addressType: "customerShippingAddress" | "customerBillingAddress"
+  ) =>
+    form.change({
+      target: {
+        name: addressType,
+        value: customerAddress
+      }
+    });
   const handleShippingCountrySelect = createSingleAutocompleteSelectHandler(
     event =>
       form.change({
@@ -143,6 +175,8 @@ function useOrderCustomerAddressesEditForm(
     hasChanged: changed,
     data,
     handlers: {
+      changeCustomerAddress: handleCustomerAddressChange,
+      changeFormAddress: handleFormAddressChange,
       selectShippingCountry: handleShippingCountrySelect,
       selectBillingCountry: handleBillingCountrySelect
     }

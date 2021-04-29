@@ -1,17 +1,9 @@
 import { defineMessages } from "react-intl";
 
-const messages = defineMessages({
+export const dialogMessages = defineMessages({
   title: {
     defaultMessage: "Shipping address for order",
     description: "dialog header"
-  },
-  customerAddress: {
-    defaultMessage: "Use one of customer addresses",
-    description: "address type"
-  },
-  newAddress: {
-    defaultMessage: "Add new address",
-    description: "address type"
   },
   billingSameAsShipping: {
     defaultMessage: "Billing address same as shipping address",
@@ -28,4 +20,13 @@ const messages = defineMessages({
   }
 });
 
-export default messages;
+export const addressEditMessages = defineMessages({
+  customerAddress: {
+    defaultMessage: "Use one of customer addresses",
+    description: "address type"
+  },
+  newAddress: {
+    defaultMessage: "Add new address",
+    description: "address type"
+  }
+});

@@ -215,7 +215,7 @@ export const transformOrderStatus = (
   };
 };
 
-export const transformAddressToForm = (data: AddressType) => ({
+export const transformAddressToForm = (data?: AddressType) => ({
   city: data?.city || "",
   cityArea: data?.cityArea || "",
   companyName: data?.companyName || "",
@@ -438,7 +438,7 @@ export const getDatePeriod = (days: number): DateRangeInput => {
   };
 };
 
-export const transformAddressToAddressInput = (data: AddressType) => ({
+export const transformAddressToAddressInput = (data?: AddressType) => ({
   city: data?.city || "",
   cityArea: data?.cityArea || "",
   companyName: data?.companyName || "",
