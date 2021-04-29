@@ -234,6 +234,9 @@ export const PageDetails: React.FC<PageDetailsProps> = ({ id, params }) => {
           const dataCarousel =
             data &&
             data.data?.pages?.edges?.reduce((acc, key) => {
+              if (key.node.id !== id) {
+                return acc;
+              }
               const listImage = key.node.media.map(item => ({
                 ...item,
                 url: `http://thachsanh.store:8080/media/${item.image}`
