@@ -1,4 +1,3 @@
-import placeholderImg from "@assets/images/placeholder255x255.png";
 import { getAttributesAfterFileAttributesUpdate } from "@saleor/attributes/utils/data";
 import {
   handleUploadMultipleFiles,
@@ -10,7 +9,6 @@ import { DEFAULT_INITIAL_SEARCH_DATA } from "@saleor/config";
 import { useFileUploadMutation } from "@saleor/files/mutations";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
-import { commonMessages } from "@saleor/intl";
 import usePageSearch from "@saleor/searches/usePageSearch";
 import usePageTypeSearch from "@saleor/searches/usePageTypeSearch";
 import useProductSearch from "@saleor/searches/useProductSearch";
@@ -25,12 +23,7 @@ import { useIntl } from "react-intl";
 
 import PageDetailsPage from "../components/PageDetailsPage";
 import { PageSubmitData } from "../components/PageDetailsPage/form";
-import {
-  TypedPageCreate,
-  usePageCarouselCreateMutation,
-  usePageCarouselDeleteMutation
-} from "../mutations";
-import { PageCarouselVariables } from "../types/PageCarousel";
+import { TypedPageCreate } from "../mutations";
 import { PageCreate as PageCreateData } from "../types/PageCreate";
 import {
   pageCreateUrl,
