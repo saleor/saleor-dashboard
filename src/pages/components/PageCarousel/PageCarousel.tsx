@@ -194,7 +194,8 @@ const PageCarousel: React.FC<PageCarouselProps> = props => {
           <>
             <Button
               variant="text"
-              color="primary"
+              color={carousel && carousel.length > 4 ? "default" : "primary"}
+              disabled={carousel && carousel.length > 4}
               onClick={handleImageUploadButtonClick}
             >
               <FormattedMessage {...commonMessages.uploadImage} />
@@ -249,7 +250,14 @@ const PageCarousel: React.FC<PageCarouselProps> = props => {
             </ImageUpload>
           </>
         ) : (
-          <ImageUpload onImageUpload={handleImageUpload} />
+          // <ImageUpload onImageUpload={handleImageUpload} />
+          <CardContent>
+            <div className={classes.root}>
+              <div className={classes.imageContainer}>
+                <img className={classes.image} src={placeholderImage} />
+              </div>
+            </div>
+          </CardContent>
         )}
       </div>
     </Card>
