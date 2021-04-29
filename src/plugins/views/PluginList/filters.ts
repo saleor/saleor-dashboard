@@ -1,5 +1,5 @@
-import { ChannelsWithLoadMoreProps } from "@saleor/channels/components/ChannelsAvailabilityDialog/utils";
 import { IFilterElement } from "@saleor/components/Filter";
+import { ChannelsWithLoadMoreProps } from "@saleor/hooks/useChannelsSearch";
 import { maybe, parseBoolean } from "@saleor/misc";
 import {
   PluginFilterKeys,

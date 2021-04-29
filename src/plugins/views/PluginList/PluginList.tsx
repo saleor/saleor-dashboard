@@ -1,9 +1,9 @@
-import { useChannelsSearchWithLoadMore } from "@saleor/channels/components/ChannelsAvailabilityDialog/utils";
 import DeleteFilterTabDialog from "@saleor/components/DeleteFilterTabDialog";
 import SaveFilterTabDialog, {
   SaveFilterTabDialogFormData
 } from "@saleor/components/SaveFilterTabDialog";
 import { configurationMenuUrl } from "@saleor/configuration";
+import { useChannelsSearchWithLoadMore } from "@saleor/hooks/useChannelsSearchWithLoadMore";
 import useListSettings from "@saleor/hooks/useListSettings";
 import useNavigator from "@saleor/hooks/useNavigator";
 import usePaginator, {
