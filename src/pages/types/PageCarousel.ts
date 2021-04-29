@@ -18,10 +18,9 @@ export interface PageCarouselCreate {
 }
 
 export interface PageCarouselVariables {
-    carousel: string;
     image?: any | null;
     alt?: string | null;
-    carouselUrl?: string | null;
+    page:string,
 }
 export interface PageCarouselDelete_pageCarouselDelete_errors {
   __typename: "ProductError";
@@ -50,4 +49,26 @@ export interface PageCarouselDelete {
 
 export interface PageCarouselDeleteVariables {
   id: string;
+}
+
+export interface ListCarouselRes{
+  pages: {
+    edges:DataListCarouselEdges[]
+  }
+}
+export interface DataListCarouselEdges{
+  node:{
+    id:string
+    title:string
+    content:string
+    media:DataListCarouselMedia[]
+  }
+}
+
+export interface DataListCarouselMedia{
+  id:string
+  alt:string
+  image:string
+  __typename:string
+  sortOrder:number
 }

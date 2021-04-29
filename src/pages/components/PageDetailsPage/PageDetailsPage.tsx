@@ -29,13 +29,13 @@ import {
   PageDetails_carousel_media,
   PageDetails_page
 } from "../../types/PageDetails";
-import PageCaroulsel from "../PageCarousel";
+import PageCarousel from "../PageCarousel";
 import PageInfo from "../PageInfo";
 import PageOrganizeContent from "../PageOrganizeContent";
 import PageForm, { PageData, PageUpdateHandlers } from "./form";
 
 export interface PageDetailsPageProps {
-  onImageDelete: (id: string) => void;
+  onImageDelete?: (id: string) => void;
   loading: boolean;
   errors: PageErrorWithAttributesFragment[];
   page: PageDetails_page;
@@ -56,9 +56,9 @@ export interface PageDetailsPageProps {
   fetchReferenceProducts?: (data: string) => void;
   fetchMoreReferenceProducts?: FetchMoreProps;
   onCloseDialog: () => void;
-  caroulsel: PageDetails_carousel_media[];
-  placeholderImage: string;
-  onImageUpload(file: File);
+  carousel?: PageDetails_carousel_media[];
+  placeholderImage?: string;
+  onImageUpload?(file: File);
 }
 
 const PageDetailsPage: React.FC<PageDetailsPageProps> = ({
@@ -81,7 +81,7 @@ const PageDetailsPage: React.FC<PageDetailsPageProps> = ({
   fetchReferenceProducts,
   fetchMoreReferenceProducts,
   onCloseDialog,
-  caroulsel,
+  carousel,
   placeholderImage,
   onImageUpload,
   onImageDelete
@@ -147,12 +147,14 @@ const PageDetailsPage: React.FC<PageDetailsPageProps> = ({
                 onContentChange={handlers.changeContent}
               />
               <CardSpacer />
-              <PageCaroulsel
-                caroulsel={caroulsel}
-                placeholderImage={placeholderImage}
-                onImageDelete={onImageDelete}
-                onImageUpload={onImageUpload}
-              />
+              {pageExists && (
+                <PageCarousel
+                  carousel={carousel}
+                  placeholderImage={placeholderImage}
+                  onImageDelete={onImageDelete}
+                  onImageUpload={onImageUpload}
+                />
+              )}
               <CardSpacer />
               <SeoForm
                 errors={errors}

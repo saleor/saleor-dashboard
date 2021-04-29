@@ -115,43 +115,6 @@ export const PageCreate: React.FC<PageCreateProps> = ({ params }) => {
     onFetchMore: loadMoreProducts
   };
 
-  const carousel = [];
-  const createImageUploadHandler = (
-    createCarouselImage: (variables: PageCarouselVariables) => void
-  ) => (file: File) =>
-    createCarouselImage({
-      alt: "",
-      image: file,
-      carousel: ""
-    });
-
-  const [createCarouselImage] = usePageCarouselCreateMutation({
-    onCompleted: data => {
-      const imageError = data.pageCarouselCreate.errors.find(
-        error => error.field === ("image" as keyof PageCarouselVariables)
-      );
-      if (imageError) {
-        notify({
-          status: "error",
-          text: intl.formatMessage(commonMessages.somethingWentWrong)
-        });
-      }
-    }
-  });
-
-  const handleImageUpload = createImageUploadHandler(variables =>
-    createCarouselImage({ variables })
-  );
-  const [deletePageCarouselImage] = usePageCarouselDeleteMutation({
-    onCompleted: () =>
-      notify({
-        status: "success",
-        text: intl.formatMessage(commonMessages.savedChanges)
-      })
-  });
-  const handleImageDelete = (id: string) => () =>
-    deletePageCarouselImage({ variables: { id } });
-
   return (
     <TypedPageCreate onCompleted={handlePageCreate}>
       {(pageCreate, pageCreateOpts) => {
@@ -231,10 +194,6 @@ export const PageCreate: React.FC<PageCreateProps> = ({ params }) => {
               fetchReferenceProducts={searchProducts}
               fetchMoreReferenceProducts={fetchMoreReferenceProducts}
               onCloseDialog={() => navigate(pageCreateUrl())}
-              placeholderImage={placeholderImg}
-              caroulsel={carousel}
-              onImageUpload={handleImageUpload}
-              onImageDelete={handleImageDelete}
             />
           </>
         );

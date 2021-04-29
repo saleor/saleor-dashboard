@@ -24,7 +24,7 @@ const props: PageDetailsPageProps = {
   referenceProducts: [],
   saveButtonBarState: "default",
   placeholderImage: "",
-  caroulsel: []
+  carousel: []
 };
 
 storiesOf("Views / Pages / Page details", module)

@@ -103,7 +103,7 @@ const useStyles = makeStyles(
   { name: "PageCarousel" }
 );
 interface SortableCarouselProps {
-  caroulsel: {
+  carousel: {
     id: string;
     alt?: string;
     url: string;
@@ -112,25 +112,25 @@ interface SortableCarouselProps {
 }
 
 const SortableCarousel = SortableElement<SortableCarouselProps>(
-  ({ caroulsel, onDelete }) => (
-    <CarouselTile carousel={caroulsel} onDelete={onDelete} />
+  ({ carousel, onDelete }) => (
+    <CarouselTile carousel={carousel} onDelete={onDelete} />
   )
 );
 
 interface CarouselListContainerProps {
   className: string;
-  caroulsel: PageCarouselFragment[];
+  carousel: PageCarouselFragment[];
   preview: PageCarouselFragment[];
   onDelete: (id: string) => void;
 }
 const CarouselListContainer = SortableContainer<CarouselListContainerProps>(
-  ({ caroulsel, preview, onDelete, ...props }) => (
+  ({ carousel, preview, onDelete, ...props }) => (
     <div {...props}>
-      {caroulsel.map((carouselObj, index) => (
+      {carousel.map((carouselObj, index) => (
         <SortableCarousel
           key={`item-${index}`}
           index={index}
-          caroulsel={carouselObj}
+          carousel={carouselObj}
           onDelete={onDelete(carouselObj.id)}
         />
       ))}
@@ -143,15 +143,15 @@ const CarouselListContainer = SortableContainer<CarouselListContainerProps>(
   )
 );
 
-interface PageCaroulselProps {
+interface PageCarouselProps {
   placeholderImage?: string;
-  caroulsel: PageCarouselFragment[];
+  carousel: PageCarouselFragment[];
   onImageDelete: (id: string) => void;
   onImageUpload: (file: File) => any;
 }
 
-const PageCaroulsel: React.FC<PageCaroulselProps> = props => {
-  const { onImageDelete, onImageUpload, caroulsel, placeholderImage } = props;
+const PageCarousel: React.FC<PageCarouselProps> = props => {
+  const { onImageDelete, onImageUpload, carousel, placeholderImage } = props;
   const classes = useStyles(props);
   const intl = useIntl();
   const imagesUpload = React.useRef<HTMLInputElement>(null);
@@ -171,12 +171,11 @@ const PageCaroulsel: React.FC<PageCaroulselProps> = props => {
           setImagesToUpload(prevImagesToUpload => [
             ...prevImagesToUpload,
             {
-              __typename: "PageCarousel",
+              __typename: "PageMedia",
               alt: "",
               id: "",
               sortOrder: fileIndex,
-              url: event.target.result as string,
-              oembedData: null
+              url: event.target.result as string
             }
           ]);
         };
@@ -188,7 +187,7 @@ const PageCaroulsel: React.FC<PageCaroulselProps> = props => {
     <Card className={classes.card}>
       <CardTitle
         title={intl.formatMessage({
-          defaultMessage: "Caroulsel Images",
+          defaultMessage: "Carousel Images",
           description: "section header"
         })}
         toolbar={
@@ -213,7 +212,7 @@ const PageCaroulsel: React.FC<PageCaroulselProps> = props => {
         }
       />
       <div className={classes.imageGridContainer}>
-        {caroulsel === undefined ? (
+        {carousel === undefined ? (
           <CardContent>
             <div className={classes.root}>
               <div className={classes.imageContainer}>
@@ -221,7 +220,7 @@ const PageCaroulsel: React.FC<PageCaroulselProps> = props => {
               </div>
             </div>
           </CardContent>
-        ) : caroulsel.length > 0 ? (
+        ) : carousel.length > 0 ? (
           <>
             <ImageUpload
               className={classes.imageUpload}
@@ -237,7 +236,7 @@ const PageCaroulsel: React.FC<PageCaroulselProps> = props => {
                     distance={20}
                     helperClass="dragged"
                     axis="xy"
-                    caroulsel={caroulsel}
+                    carousel={carousel}
                     preview={imagesToUpload}
                     className={classNames({
                       [classes.root]: true,
@@ -256,5 +255,5 @@ const PageCaroulsel: React.FC<PageCaroulselProps> = props => {
     </Card>
   );
 };
-PageCaroulsel.displayName = "PageCaroulsel";
-export default PageCaroulsel;
+PageCarousel.displayName = "PageCarousel";
+export default PageCarousel;

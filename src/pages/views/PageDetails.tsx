@@ -38,6 +38,7 @@ import { AttributeValueInput, PageInput } from "../../types/globalTypes";
 import PageDetailsPage from "../components/PageDetailsPage";
 import { PageData, PageSubmitData } from "../components/PageDetailsPage/form";
 import {
+  TypedListCarousel,
   usePageCarouselCreateMutation,
   usePageCarouselDeleteMutation,
   usePageRemoveMutation,
@@ -190,12 +191,13 @@ export const PageDetails: React.FC<PageDetailsProps> = ({ id, params }) => {
   const createImageUploadHandler = (
     id: string,
     createCarouselImage: (variables: PageCarouselVariables) => void
-  ) => (file: File) =>
+  ) => (file: File) => {
     createCarouselImage({
       alt: "",
       image: file,
-      carousel: id
+      page: id
     });
+  };
 
   const [createCarouselImage] = usePageCarouselCreateMutation({
     onCompleted: data => {
@@ -227,45 +229,62 @@ export const PageDetails: React.FC<PageDetailsProps> = ({ id, params }) => {
   return (
     <>
       <WindowTitle title={maybe(() => pageDetails.data.page.title)} />
-      <PageDetailsPage
-        loading={
-          pageDetails.loading ||
-          pageUpdateOpts.loading ||
-          uploadFileOpts.loading ||
-          deleteAttributeValueOpts.loading
-        }
-        errors={pageUpdateOpts.data?.pageUpdate.errors || []}
-        saveButtonBarState={pageUpdateOpts.status}
-        page={pageDetails.data?.page}
-        onBack={() => navigate(pageListUrl())}
-        onRemove={() =>
-          navigate(
-            pageUrl(id, {
-              action: "remove"
-            })
-          )
-        }
-        onSubmit={handleSubmit}
-        assignReferencesAttributeId={
-          params.action === "assign-attribute-value" && params.id
-        }
-        onAssignReferencesClick={handleAssignAttributeReferenceClick}
-        referencePages={searchPagesOpts.data?.search.edges.map(
-          edge => edge.node
-        )}
-        referenceProducts={searchProductsOpts.data?.search.edges.map(
-          edge => edge.node
-        )}
-        fetchReferencePages={searchPages}
-        fetchMoreReferencePages={fetchMoreReferencePages}
-        fetchReferenceProducts={searchProducts}
-        fetchMoreReferenceProducts={fetchMoreReferenceProducts}
-        onCloseDialog={() => navigate(pageUrl(id))}
-        placeholderImage={placeholderImg}
-        caroulsel={pageDetails.data?.page.carousel}
-        onImageUpload={handleImageUpload}
-        onImageDelete={handleImageDelete}
-      />
+      <TypedListCarousel>
+        {data => {
+          const dataCarousel =
+            data &&
+            data.data?.pages?.edges?.reduce((acc, key) => {
+              const listImage = key.node.media.map(item => ({
+                ...item,
+                url: `http://thachsanh.store:8080/media/${item.image}`
+              }));
+
+              return [...acc, ...listImage];
+            }, []);
+
+          return (
+            <PageDetailsPage
+              loading={
+                pageDetails.loading ||
+                pageUpdateOpts.loading ||
+                uploadFileOpts.loading ||
+                deleteAttributeValueOpts.loading
+              }
+              errors={pageUpdateOpts.data?.pageUpdate.errors || []}
+              saveButtonBarState={pageUpdateOpts.status}
+              page={pageDetails.data?.page}
+              onBack={() => navigate(pageListUrl())}
+              onRemove={() =>
+                navigate(
+                  pageUrl(id, {
+                    action: "remove"
+                  })
+                )
+              }
+              onSubmit={handleSubmit}
+              assignReferencesAttributeId={
+                params.action === "assign-attribute-value" && params.id
+              }
+              onAssignReferencesClick={handleAssignAttributeReferenceClick}
+              referencePages={searchPagesOpts.data?.search.edges.map(
+                edge => edge.node
+              )}
+              referenceProducts={searchProductsOpts.data?.search.edges.map(
+                edge => edge.node
+              )}
+              fetchReferencePages={searchPages}
+              fetchMoreReferencePages={fetchMoreReferencePages}
+              fetchReferenceProducts={searchProducts}
+              fetchMoreReferenceProducts={fetchMoreReferenceProducts}
+              onCloseDialog={() => navigate(pageUrl(id))}
+              placeholderImage={placeholderImg}
+              carousel={dataCarousel}
+              onImageUpload={handleImageUpload}
+              onImageDelete={handleImageDelete}
+            />
+          );
+        }}
+      </TypedListCarousel>
       <ActionDialog
         open={params.action === "remove"}
         confirmButtonState={pageRemoveOpts.status}

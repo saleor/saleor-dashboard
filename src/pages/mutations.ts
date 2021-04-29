@@ -4,6 +4,7 @@ import {
 } from "@saleor/fragments/errors";
 import { pageDetailsFragment } from "@saleor/fragments/pages";
 import makeMutation from "@saleor/hooks/makeMutation";
+import { TypedQuery } from "@saleor/queries";
 import gql from "graphql-tag";
 
 import { TypedMutation } from "../mutations";
@@ -16,6 +17,7 @@ import {
   PageBulkRemoveVariables
 } from "./types/PageBulkRemove";
 import {
+  ListCarouselRes,
   PageCarouselCreate,
   PageCarouselDelete,
   PageCarouselDeleteVariables,
@@ -26,27 +28,15 @@ import { PageRemove, PageRemoveVariables } from "./types/PageRemove";
 import { PageUpdate, PageUpdateVariables } from "./types/PageUpdate";
 
 export const pageCarouselCreateMutation = gql`
-  ${pageErrorFragment}
-  ${pageDetailsFragment}
-  mutation PageCarouselCreate(
-    $carousel: ID!
-    $image: Upload
-    $alt: String
-    $carouselUrl: String
-  ) {
-    pageCarouselCreate(
-      input: {
-        alt: $alt
-        image: $image
-        carousel: $carousel
-        carouselUrl: $carouselUrl
+  mutation createPageMedia($page: ID!, $image: Upload, $alt: String) {
+    pageMediaCreate(input: { page: $page, alt: $alt, image: $image }) {
+      page {
+        id
       }
-    ) {
-      errors: pageErrors {
-        ...pageErrorFragment
-      }
-      carousel {
-        ...Carousel
+
+      pageErrors {
+        code
+        field
       }
     }
   }
@@ -160,3 +150,22 @@ export const TypedPageBulkRemove = TypedMutation<
   PageBulkRemove,
   PageBulkRemoveVariables
 >(pageBulkRemove);
+
+const getListCarousel = gql`
+  query pages {
+    pages(first: 10) {
+      edges {
+        node {
+          id
+          media {
+            id
+            image
+          }
+        }
+      }
+    }
+  }
+`;
+export const TypedListCarousel = TypedQuery<ListCarouselRes, {}>(
+  getListCarousel
+);

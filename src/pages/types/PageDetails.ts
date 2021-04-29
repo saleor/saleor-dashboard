@@ -123,10 +123,9 @@ export interface PageDetailsVariables {
 }
 
 export interface PageDetails_carousel_media {
-  __typename: "PageCarousel";
+  __typename: "PageMedia";
   id: string;
   alt: string;
   sortOrder: number | null;
   url: string;
-  oembedData: any;
 }

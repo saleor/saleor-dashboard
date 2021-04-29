@@ -1,6 +1,5 @@
-//@ts-ignore
 export interface PageCarouselFragment {
-  __typename: "PageCarousel";
+  __typename: "PageMedia";
   id: string;
   alt: string;
   sortOrder: number | null;
