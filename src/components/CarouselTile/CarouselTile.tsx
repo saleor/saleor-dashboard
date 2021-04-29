@@ -1,7 +1,6 @@
 import CircularProgress from "@material-ui/core/CircularProgress";
 import IconButton from "@material-ui/core/IconButton";
 import DeleteIcon from "@material-ui/icons/Delete";
-import EditIcon from "@material-ui/icons/Edit";
 import { makeStyles } from "@saleor/theme";
 import classNames from "classnames";
 import React from "react";
@@ -16,7 +15,7 @@ const useStyles = makeStyles(
     },
     carouselContainer: {
       "&:hover, &.dragged": {
-        "& $mediaOverlay": {
+        "& $carouselOverlay": {
           display: "block"
         }
       },
@@ -51,7 +50,7 @@ const useStyles = makeStyles(
       justifyContent: "flex-end"
     }
   }),
-  { name: "MediaTile" }
+  { name: "CarouselTile" }
 );
 
 interface CarouselTileProps {
@@ -63,11 +62,10 @@ interface CarouselTileProps {
   };
   loading?: boolean;
   onDelete?: () => void;
-  onEdit?: (event: React.ChangeEvent<any>) => void;
 }
 
 const CarouselTile: React.FC<CarouselTileProps> = props => {
-  const { loading, onDelete, onEdit, carousel } = props;
+  const { loading, onDelete, carousel } = props;
   const classes = useStyles(props);
   const parsedCarouselOembedData = carousel?.oembedData
     ? JSON.parse(carousel.oembedData)
@@ -85,11 +83,6 @@ const CarouselTile: React.FC<CarouselTileProps> = props => {
           <CircularProgress size={32} />
         ) : (
           <div className={classes.carouselOverlayToolbar}>
-            {onEdit && (
-              <IconButton color="primary" onClick={onEdit}>
-                <EditIcon />
-              </IconButton>
-            )}
             {onDelete && (
               <IconButton color="primary" onClick={onDelete}>
                 <DeleteIcon />
