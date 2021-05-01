@@ -41,10 +41,10 @@ const messages = defineMessages({
 
 const useStyles = makeStyles(
   () => ({
-    pullRight: {
+    fileField: {
       float: "right"
     },
-    alignRight: {
+    pullRight: {
       "& > *": {
         float: "right",
         clear: "right"
@@ -116,7 +116,7 @@ const AttributeRow: React.FC<AttributeRowProps> = ({
       return (
         <BasicAttributeRow label={attribute.label}>
           <FileUploadField
-            className={classes.pullRight}
+            className={classes.fileField}
             disabled={disabled}
             loading={loading}
             file={getFileChoice(attribute)}
@@ -199,17 +199,19 @@ const AttributeRow: React.FC<AttributeRowProps> = ({
     case AttributeInputTypeEnum.BOOLEAN:
       return (
         <BasicAttributeRow label={attribute.label}>
-          <Checkbox
-            disabled={disabled}
-            name={`attribute:${attribute.label}`}
-            onChange={event =>
-              onChange(attribute.id, JSON.stringify(event.target.checked))
-            }
-            checked={JSON.parse(attribute.value[0])}
-            className={classes.alignRight}
-            helperText={getErrorMessage(error, intl)}
-            error={!!error}
-          />
+          <div className={classes.pullRight}>
+            <Checkbox
+              disabled={disabled}
+              name={`attribute:${attribute.label}`}
+              onChange={event =>
+                onChange(attribute.id, JSON.stringify(event.target.checked))
+              }
+              checked={JSON.parse(attribute.value[0])}
+              className={classes.alignRight}
+              helperText={getErrorMessage(error, intl)}
+              error={!!error}
+            />
+          </div>
         </BasicAttributeRow>
       );
     default:

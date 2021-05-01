@@ -34,7 +34,8 @@ export const attributes: ProductType_productType_productAttributes[] = [
           sortOrder: 0,
           type: "STRING",
           value: "",
-          richText: null
+          richText: null,
+          boolean: null
         },
         {
           __typename: "AttributeValue" as "AttributeValue",
@@ -46,7 +47,8 @@ export const attributes: ProductType_productType_productAttributes[] = [
           sortOrder: 1,
           type: "STRING",
           value: "",
-          richText: null
+          richText: null,
+          boolean: null
         }
       ]
     }
@@ -72,7 +74,8 @@ export const attributes: ProductType_productType_productAttributes[] = [
           sortOrder: 0,
           type: "STRING",
           value: "",
-          richText: null
+          richText: null,
+          boolean: null
         },
         {
           __typename: "AttributeValue" as "AttributeValue",
@@ -84,7 +87,8 @@ export const attributes: ProductType_productType_productAttributes[] = [
           sortOrder: 1,
           type: "STRING",
           value: "",
-          richText: null
+          richText: null,
+          boolean: null
         },
         {
           __typename: "AttributeValue" as "AttributeValue",
@@ -96,7 +100,8 @@ export const attributes: ProductType_productType_productAttributes[] = [
           sortOrder: 2,
           type: "STRING",
           value: "",
-          richText: null
+          richText: null,
+          boolean: null
         },
         {
           __typename: "AttributeValue" as "AttributeValue",
@@ -108,7 +113,8 @@ export const attributes: ProductType_productType_productAttributes[] = [
           sortOrder: 3,
           type: "STRING",
           value: "",
-          richText: null
+          richText: null,
+          boolean: null
         }
       ]
     }
@@ -134,7 +140,8 @@ export const attributes: ProductType_productType_productAttributes[] = [
           sortOrder: 0,
           type: "STRING",
           value: "",
-          richText: null
+          richText: null,
+          boolean: null
         }
       ]
     }
@@ -160,7 +167,8 @@ export const attributes: ProductType_productType_productAttributes[] = [
           sortOrder: 0,
           type: "STRING",
           value: "",
-          richText: null
+          richText: null,
+          boolean: null
         },
         {
           __typename: "AttributeValue" as "AttributeValue",
@@ -172,7 +180,8 @@ export const attributes: ProductType_productType_productAttributes[] = [
           sortOrder: 1,
           type: "STRING",
           value: "",
-          richText: null
+          richText: null,
+          boolean: null
         },
         {
           __typename: "AttributeValue" as "AttributeValue",
@@ -184,7 +193,8 @@ export const attributes: ProductType_productType_productAttributes[] = [
           sortOrder: 2,
           type: "STRING",
           value: "",
-          richText: null
+          richText: null,
+          boolean: null
         }
       ]
     }
@@ -210,7 +220,8 @@ export const attributes: ProductType_productType_productAttributes[] = [
           sortOrder: 0,
           type: "STRING",
           value: "",
-          richText: null
+          richText: null,
+          boolean: null
         },
         {
           __typename: "AttributeValue" as "AttributeValue",
@@ -222,7 +233,8 @@ export const attributes: ProductType_productType_productAttributes[] = [
           sortOrder: 1,
           type: "STRING",
           value: "",
-          richText: null
+          richText: null,
+          boolean: null
         }
       ]
     }
@@ -248,7 +260,8 @@ export const attributes: ProductType_productType_productAttributes[] = [
           sortOrder: 0,
           type: "STRING",
           value: "",
-          richText: null
+          richText: null,
+          boolean: null
         },
         {
           __typename: "AttributeValue" as "AttributeValue",
@@ -260,7 +273,8 @@ export const attributes: ProductType_productType_productAttributes[] = [
           sortOrder: 1,
           type: "STRING",
           value: "",
-          richText: null
+          richText: null,
+          boolean: null
         },
         {
           __typename: "AttributeValue" as "AttributeValue",
@@ -272,7 +286,8 @@ export const attributes: ProductType_productType_productAttributes[] = [
           sortOrder: 2,
           type: "STRING",
           value: "",
-          richText: null
+          richText: null,
+          boolean: null
         }
       ]
     }
@@ -298,7 +313,8 @@ export const attributes: ProductType_productType_productAttributes[] = [
           sortOrder: 0,
           type: "STRING",
           value: "",
-          richText: null
+          richText: null,
+          boolean: null
         },
         {
           __typename: "AttributeValue" as "AttributeValue",
@@ -310,7 +326,8 @@ export const attributes: ProductType_productType_productAttributes[] = [
           sortOrder: 1,
           type: "STRING",
           value: "",
-          richText: null
+          richText: null,
+          boolean: null
         }
       ]
     }
@@ -336,7 +353,8 @@ export const attributes: ProductType_productType_productAttributes[] = [
           sortOrder: 0,
           type: "STRING",
           value: "",
-          richText: null
+          richText: null,
+          boolean: null
         },
         {
           __typename: "AttributeValue" as "AttributeValue",
@@ -348,7 +366,8 @@ export const attributes: ProductType_productType_productAttributes[] = [
           sortOrder: 1,
           type: "STRING",
           value: "",
-          richText: null
+          richText: null,
+          boolean: null
         },
         {
           __typename: "AttributeValue" as "AttributeValue",
@@ -360,7 +379,8 @@ export const attributes: ProductType_productType_productAttributes[] = [
           sortOrder: 2,
           type: "STRING",
           value: "",
-          richText: null
+          richText: null,
+          boolean: null
         },
         {
           __typename: "AttributeValue" as "AttributeValue",
@@ -372,7 +392,8 @@ export const attributes: ProductType_productType_productAttributes[] = [
           sortOrder: 3,
           type: "STRING",
           value: "",
-          richText: null
+          richText: null,
+          boolean: null
         },
         {
           __typename: "AttributeValue" as "AttributeValue",
@@ -384,7 +405,8 @@ export const attributes: ProductType_productType_productAttributes[] = [
           sortOrder: 4,
           type: "STRING",
           value: "",
-          richText: null
+          richText: null,
+          boolean: null
         },
         {
           __typename: "AttributeValue" as "AttributeValue",
@@ -396,7 +418,8 @@ export const attributes: ProductType_productType_productAttributes[] = [
           sortOrder: 5,
           type: "STRING",
           value: "",
-          richText: null
+          richText: null,
+          boolean: null
         }
       ]
     }
@@ -422,7 +445,8 @@ export const attributes: ProductType_productType_productAttributes[] = [
           sortOrder: 0,
           type: "STRING",
           value: "",
-          richText: null
+          richText: null,
+          boolean: null
         },
         {
           __typename: "AttributeValue" as "AttributeValue",
@@ -434,7 +458,8 @@ export const attributes: ProductType_productType_productAttributes[] = [
           sortOrder: 1,
           type: "STRING",
           value: "",
-          richText: null
+          richText: null,
+          boolean: null
         }
       ]
     }
@@ -460,7 +485,8 @@ export const attributes: ProductType_productType_productAttributes[] = [
           sortOrder: 0,
           type: "STRING",
           value: "",
-          richText: null
+          richText: null,
+          boolean: null
         },
         {
           __typename: "AttributeValue" as "AttributeValue",
@@ -472,7 +498,8 @@ export const attributes: ProductType_productType_productAttributes[] = [
           sortOrder: 1,
           type: "STRING",
           value: "",
-          richText: null
+          richText: null,
+          boolean: null
         }
       ]
     }
@@ -498,7 +525,8 @@ export const attributes: ProductType_productType_productAttributes[] = [
           sortOrder: 0,
           type: "STRING",
           value: "",
-          richText: null
+          richText: null,
+          boolean: null
         },
         {
           __typename: "AttributeValue" as "AttributeValue",
@@ -510,7 +538,8 @@ export const attributes: ProductType_productType_productAttributes[] = [
           sortOrder: 1,
           type: "STRING",
           value: "",
-          richText: null
+          richText: null,
+          boolean: null
         }
       ]
     }
@@ -536,7 +565,8 @@ export const attributes: ProductType_productType_productAttributes[] = [
           sortOrder: 0,
           type: "STRING",
           value: "",
-          richText: null
+          richText: null,
+          boolean: null
         },
         {
           __typename: "AttributeValue" as "AttributeValue",
@@ -548,7 +578,8 @@ export const attributes: ProductType_productType_productAttributes[] = [
           sortOrder: 1,
           type: "STRING",
           value: "",
-          richText: null
+          richText: null,
+          boolean: null
         },
         {
           __typename: "AttributeValue" as "AttributeValue",
@@ -560,7 +591,8 @@ export const attributes: ProductType_productType_productAttributes[] = [
           sortOrder: 2,
           type: "STRING",
           value: "",
-          richText: null
+          richText: null,
+          boolean: null
         },
         {
           __typename: "AttributeValue" as "AttributeValue",
@@ -572,7 +604,8 @@ export const attributes: ProductType_productType_productAttributes[] = [
           sortOrder: 3,
           type: "STRING",
           value: "",
-          richText: null
+          richText: null,
+          boolean: null
         },
         {
           __typename: "AttributeValue" as "AttributeValue",
@@ -584,7 +617,8 @@ export const attributes: ProductType_productType_productAttributes[] = [
           sortOrder: 4,
           type: "STRING",
           value: "",
-          richText: null
+          richText: null,
+          boolean: null
         },
         {
           __typename: "AttributeValue" as "AttributeValue",
@@ -596,7 +630,8 @@ export const attributes: ProductType_productType_productAttributes[] = [
           sortOrder: 5,
           type: "STRING",
           value: "",
-          richText: null
+          richText: null,
+          boolean: null
         }
       ]
     }

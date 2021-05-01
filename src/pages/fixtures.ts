@@ -57,7 +57,8 @@ export const page: PageDetails_page = {
             reference: null,
             __typename: "AttributeValue",
             file: null,
-            richText: null
+            richText: null,
+            boolean: null
           },
           {
             id: "QXR0cmlidXRlVmFsdWU6ODg=",
@@ -66,7 +67,8 @@ export const page: PageDetails_page = {
             reference: null,
             __typename: "AttributeValue",
             file: null,
-            richText: null
+            richText: null,
+            boolean: null
           },
           {
             id: "QXR0cmlidXRlVmFsdWU6ODk=",
@@ -75,7 +77,8 @@ export const page: PageDetails_page = {
             reference: null,
             __typename: "AttributeValue",
             file: null,
-            richText: null
+            richText: null,
+            boolean: null
           }
         ],
         __typename: "Attribute"
@@ -88,7 +91,8 @@ export const page: PageDetails_page = {
           reference: null,
           __typename: "AttributeValue",
           file: null,
-          richText: null
+          richText: null,
+          boolean: null
         }
       ],
       __typename: "SelectedAttribute"
@@ -110,7 +114,8 @@ export const page: PageDetails_page = {
             reference: null,
             __typename: "AttributeValue",
             file: null,
-            richText: null
+            richText: null,
+            boolean: null
           },
           {
             id: "QXR0cmlidXRlVmFsdWU6OTE=",
@@ -119,7 +124,8 @@ export const page: PageDetails_page = {
             reference: null,
             __typename: "AttributeValue",
             file: null,
-            richText: null
+            richText: null,
+            boolean: null
           },
           {
             id: "QXR0cmlidXRlVmFsdWU6OTI=",
@@ -128,7 +134,8 @@ export const page: PageDetails_page = {
             reference: null,
             __typename: "AttributeValue",
             file: null,
-            richText: null
+            richText: null,
+            boolean: null
           },
           {
             id: "QXR0cmlidXRlVmFsdWU6OTM=",
@@ -137,7 +144,8 @@ export const page: PageDetails_page = {
             reference: null,
             __typename: "AttributeValue",
             file: null,
-            richText: null
+            richText: null,
+            boolean: null
           }
         ],
         __typename: "Attribute"
@@ -150,7 +158,8 @@ export const page: PageDetails_page = {
           reference: null,
           __typename: "AttributeValue",
           file: null,
-          richText: null
+          richText: null,
+          boolean: null
         }
       ],
       __typename: "SelectedAttribute"
@@ -185,7 +194,8 @@ export const page: PageDetails_page = {
             reference: null,
             __typename: "AttributeValue",
             file: null,
-            richText: null
+            richText: null,
+            boolean: null
           },
           {
             id: "QXR0cmlidXRlVmFsdWU6ODg=",
@@ -194,7 +204,8 @@ export const page: PageDetails_page = {
             reference: null,
             __typename: "AttributeValue",
             file: null,
-            richText: null
+            richText: null,
+            boolean: null
           },
           {
             id: "QXR0cmlidXRlVmFsdWU6ODk=",
@@ -203,7 +214,8 @@ export const page: PageDetails_page = {
             reference: null,
             __typename: "AttributeValue",
             file: null,
-            richText: null
+            richText: null,
+            boolean: null
           }
         ],
         __typename: "Attribute"
@@ -222,7 +234,8 @@ export const page: PageDetails_page = {
             reference: null,
             __typename: "AttributeValue",
             file: null,
-            richText: null
+            richText: null,
+            boolean: null
           },
           {
             id: "QXR0cmlidXRlVmFsdWU6OTE=",
@@ -231,7 +244,8 @@ export const page: PageDetails_page = {
             reference: null,
             __typename: "AttributeValue",
             file: null,
-            richText: null
+            richText: null,
+            boolean: null
           },
           {
             id: "QXR0cmlidXRlVmFsdWU6OTI=",
@@ -240,7 +254,8 @@ export const page: PageDetails_page = {
             reference: null,
             __typename: "AttributeValue",
             file: null,
-            richText: null
+            richText: null,
+            boolean: null
           },
           {
             id: "QXR0cmlidXRlVmFsdWU6OTM=",
@@ -249,7 +264,8 @@ export const page: PageDetails_page = {
             reference: null,
             __typename: "AttributeValue",
             file: null,
-            richText: null
+            richText: null,
+            boolean: null
           }
         ],
         __typename: "Attribute"

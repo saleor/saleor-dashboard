@@ -37,7 +37,8 @@ export const attribute: AttributeDetailsFragment = {
       name: "John Doe",
       reference: null,
       slug: "john-doe",
-      richText: null
+      richText: null,
+      boolean: null
     },
     {
       __typename: "AttributeValue" as "AttributeValue",
@@ -46,7 +47,8 @@ export const attribute: AttributeDetailsFragment = {
       name: "Milionare Pirate",
       reference: null,
       slug: "milionare-pirate",
-      richText: null
+      richText: null,
+      boolean: null
     }
   ],
   visibleInStorefront: true
