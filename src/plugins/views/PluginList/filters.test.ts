@@ -1,4 +1,7 @@
-import { createFilterStructure } from "@saleor/plugins/components/PluginsListPage";
+import {
+  createFilterStructure,
+  PluginFilterKeys
+} from "@saleor/plugins/components/PluginsListPage";
 import { PluginListUrlFilters } from "@saleor/plugins/urls";
 import { PluginConfigurationType } from "@saleor/types/globalTypes";
 import { getFilterQueryParams } from "@saleor/utils/filters";
@@ -19,7 +22,7 @@ describe("Filtering query params", () => {
 
   it("should not be empty object if params given", () => {
     const params: PluginListUrlFilters = {
-      active: true.toString()
+      type: PluginConfigurationType.GLOBAL
     };
     const filterVariables = getFilterVariables(params);
 
@@ -67,7 +70,22 @@ describe("Filtering URL params", () => {
 
   it("should not be empty if active filters are present", () => {
     const filterQueryParams = getFilterQueryParams(
-      setFilterOptsStatus(filters, true),
+      [
+        {
+          name: PluginFilterKeys.active,
+          label: "Active",
+          multiple: false,
+          active: true,
+          value: ["true"]
+        },
+        {
+          name: PluginFilterKeys.type,
+          label: "Configuration type",
+          multiple: false,
+          active: true,
+          value: [PluginConfigurationType.GLOBAL]
+        }
+      ],
       getFilterQueryParam
     );
 

@@ -37,7 +37,7 @@ interface FilterErrorsListProps<T extends string = string> {
 
 const FilterErrorsList: React.FC<FilterErrorsListProps> = ({
   filter: { name, multipleFields },
-  errors,
+  errors = [],
   errorMessages
 }) => {
   const classes = useStyles({});
