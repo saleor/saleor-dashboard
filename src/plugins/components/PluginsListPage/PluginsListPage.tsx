@@ -21,6 +21,7 @@ import {
   PluginFilterKeys,
   PluginListFilterOpts
 } from "./filters";
+import { pluginsFilterErrorMessages } from "./messages";
 
 export interface PluginsListPageProps
   extends PageListProps,
@@ -58,6 +59,7 @@ const PluginsListPage: React.FC<PluginsListPageProps> = ({
       <PageHeader title={intl.formatMessage(sectionNames.plugins)} />
       <Card>
         <FilterBar
+          errorMessages={pluginsFilterErrorMessages}
           currentTab={currentTab}
           initialSearch={initialSearch}
           onAll={onAll}

@@ -13,7 +13,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import PluginsDetailsPage, {
   PluginDetailsPageFormData
-} from "../components/PluginsDetailsPage";
+} from "../components/PluginsDetailsPage"; // PluginDetailsPageFormData
 import PluginSecretFieldDialog from "../components/PluginSecretFieldDialog";
 import { TypedPluginUpdate } from "../mutations";
 import { usePluginDetails } from "../queries";

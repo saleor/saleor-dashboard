@@ -3,6 +3,7 @@ import SaveFilterTabDialog, {
   SaveFilterTabDialogFormData
 } from "@saleor/components/SaveFilterTabDialog";
 import { configurationMenuUrl } from "@saleor/configuration";
+import { useChannelsSearchWithLoadMore } from "@saleor/hooks/useChannelsSearchWithLoadMore";
 import useListSettings from "@saleor/hooks/useListSettings";
 import useNavigator from "@saleor/hooks/useNavigator";
 import usePaginator, {
@@ -112,13 +113,16 @@ export const PluginsList: React.FC<PluginsListProps> = ({ params }) => {
   );
 
   const handleSort = createSortHandler(navigate, pluginListUrl, params);
+  const channelsSearchWithLoadMoreProps = useChannelsSearchWithLoadMore();
+
+  const filterOpts = getFilterOpts(params, channelsSearchWithLoadMoreProps);
 
   return (
     <>
       <PluginsListPage
         currentTab={currentTab}
         disabled={loading}
-        filterOpts={getFilterOpts(params)}
+        filterOpts={filterOpts}
         initialSearch={params.query || ""}
         settings={settings}
         plugins={maybe(() => data.plugins.edges.map(edge => edge.node))}

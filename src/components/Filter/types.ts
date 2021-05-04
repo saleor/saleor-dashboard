@@ -1,4 +1,5 @@
 import { FetchMoreProps, SearchPageProps } from "@saleor/types";
+import { MessageDescriptor } from "react-intl";
 
 import { MultiAutocompleteChoiceType } from "../MultiAutocompleteSelectField";
 import { FilterReducerAction } from "./reducer";
@@ -28,13 +29,22 @@ export interface IFilterElement<T extends string = string>
   group?: T;
   label: string;
   name: T;
-  type: FieldType;
+  type?: FieldType;
+  required?: boolean;
+  multipleFields?: IFilterElement[];
 }
 
 export interface FilterBaseFieldProps<T extends string = string> {
   filterField: IFilterElement<T>;
   onFilterPropertyChange: React.Dispatch<FilterReducerAction<T>>;
 }
+
+export type FilterErrors = string[];
+
+export type FilterErrorMessages<T extends string> = Record<
+  T,
+  MessageDescriptor
+>;
 
 export type IFilter<T extends string = string> = Array<IFilterElement<T>>;
 
