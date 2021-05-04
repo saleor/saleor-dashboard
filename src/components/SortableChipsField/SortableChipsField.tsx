@@ -11,7 +11,7 @@ import SortableContainer from "./SortableContainer";
 const useStyles = makeStyles(
   theme => ({
     chip: {
-      background: "#fff",
+      background: theme.palette.background.paper,
       color: theme.palette.primary.dark,
       marginBottom: theme.spacing(1)
     },
