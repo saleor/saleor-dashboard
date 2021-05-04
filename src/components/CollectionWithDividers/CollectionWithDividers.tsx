@@ -3,7 +3,7 @@ import initial from "lodash-es/initial";
 import React from "react";
 
 interface CollectionWithDividersProps<T> {
-  renderDivider?: () => React.ReactNode;
+  DividerComponent?: React.FunctionComponent;
   renderEmpty?: (collection: T[]) => any;
   collection: T[];
   renderItem: (
@@ -16,7 +16,7 @@ interface CollectionWithDividersProps<T> {
 function CollectionWithDividers<T>({
   collection,
   renderItem,
-  renderDivider,
+  DividerComponent,
   renderEmpty
 }: CollectionWithDividersProps<T>) {
   const hasNoItemsAndPlaceholder = !renderEmpty && !collection.length;
@@ -29,16 +29,14 @@ function CollectionWithDividers<T>({
     return !!renderEmpty ? renderEmpty(collection) : null;
   }
 
-  const defaultRenderDivider = () => <Divider />;
-
-  const renderDividerFunction = renderDivider || defaultRenderDivider;
+  const SelectedDividerComponent = DividerComponent || Divider;
 
   return initial(
     collection.reduce(
       (result, item, index) => [
         ...result,
         renderItem(item, index, collection),
-        renderDividerFunction()
+        <SelectedDividerComponent />
       ],
       []
     )

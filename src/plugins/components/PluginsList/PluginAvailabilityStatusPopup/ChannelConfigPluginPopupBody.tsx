@@ -4,6 +4,7 @@ import CollectionWithDividers from "@saleor/components/CollectionWithDividers";
 import StatusLabel from "@saleor/components/StatusLabel";
 import { statusLabelMessages } from "@saleor/components/StatusLabel/messages";
 import { Plugin_plugin } from "@saleor/plugins/types/Plugin";
+import { makeStyles } from "@saleor/theme";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -14,6 +15,15 @@ import {
 } from "../utils";
 import ScrollableContent from "./ScrollableContent";
 
+const useStyles = makeStyles(
+  theme => ({
+    itemContainer: {
+      padding: theme.spacing(0, 1)
+    }
+  }),
+  { name: "ChannelConfigPluginPopupBody" }
+);
+
 interface ChannelConfigPluginPopupBodyProps {
   plugin: Plugin_plugin;
 }
@@ -22,6 +32,7 @@ const ChannelConfigPluginPopupBody: React.FC<ChannelConfigPluginPopupBodyProps> 
   plugin: { channelConfigurations }
 }) => {
   const intl = useIntl();
+  const classes = useStyles({});
 
   return (
     <>
@@ -37,11 +48,12 @@ const ChannelConfigPluginPopupBody: React.FC<ChannelConfigPluginPopupBodyProps> 
       </CardContent>
       <Divider />
       <ScrollableContent>
-        <CardContent>
-          <CollectionWithDividers
-            collection={channelConfigurations}
-            renderDivider={() => <CardSpacer />}
-            renderItem={({ channel, active }) => (
+        <CardSpacer />
+        <CollectionWithDividers
+          collection={channelConfigurations}
+          DividerComponent={CardSpacer}
+          renderItem={({ channel, active }) => (
+            <div className={classes.itemContainer}>
               <StatusLabel
                 key={channel.id}
                 label={channel.name}
@@ -52,9 +64,10 @@ const ChannelConfigPluginPopupBody: React.FC<ChannelConfigPluginPopupBodyProps> 
                     : statusLabelMessages.inactive
                 )}
               />
-            )}
-          />
-        </CardContent>
+            </div>
+          )}
+        />
+        <CardSpacer />
       </ScrollableContent>
     </>
   );
