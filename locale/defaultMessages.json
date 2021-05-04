@@ -4807,6 +4807,10 @@
     "context": "section header",
     "string": "Authorization"
   },
+  "src_dot_plugins_dot_components_dot_PluginDetailsChannelsCard_dot_noChannelsSubtitle": {
+    "context": "PluginDetailsChannelsCard no channels subtitle",
+    "string": "Plugin’s settings are set common across all channels"
+  },
   "src_dot_plugins_dot_components_dot_PluginInfo_dot_1049131348": {
     "context": "plugin name",
     "string": "Plugin Name"
@@ -4837,13 +4841,6 @@
   "src_dot_plugins_dot_components_dot_PluginsDetailsPage_dot_3352026836": {
     "context": "header",
     "string": "{pluginName} Details"
-  },
-  "src_dot_plugins_dot_components_dot_PluginsDetailsPage_dot_3425535100": {
-    "context": "section header",
-    "string": "Plugin Information and Status"
-  },
-  "src_dot_plugins_dot_components_dot_PluginsDetailsPage_dot_3799756739": {
-    "string": "These are general information about your store. They define what is the URL of your store and what is shown in browsers taskbar."
   },
   "src_dot_plugins_dot_components_dot_PluginsListPage_dot_3233248823": {
     "string": "Search Plugins..."
@@ -4902,6 +4899,13 @@
   "src_dot_plugins_dot_components_dot_PluginsList_dot_title": {
     "context": "channel config plugin status popup title",
     "string": "Assigned to {activeChannelsCount} of {allChannelsCount} channels"
+  },
+  "src_dot_plugins_dot_views_dot_1096544448": {
+    "context": "header",
+    "string": "Authorization Field Delete"
+  },
+  "src_dot_plugins_dot_views_dot_955370043": {
+    "string": "The plugin may stop working after this field is cleared. Are you sure you want to proceed?"
   },
   "src_dot_productTypes": {
     "context": "product types section name",
