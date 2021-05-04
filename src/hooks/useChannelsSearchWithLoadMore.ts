@@ -1,4 +1,4 @@
-import { useChannelsList } from "@saleor/channels/queries";
+import { useBaseChannelsList } from "@saleor/channels/queries";
 import chunk from "lodash-es/chunk";
 import compact from "lodash-es/compact";
 import concat from "lodash-es/concat";
@@ -15,7 +15,7 @@ const INITIAL_INDEX = 0;
 export const useChannelsSearchWithLoadMore = (
   itemsPerPage: number = DEFAULT_ITEMS_PER_PAGE
 ): ChannelsWithLoadMoreProps => {
-  const { data, loading } = useChannelsList({});
+  const { data, loading } = useBaseChannelsList({});
 
   const {
     query,
