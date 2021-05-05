@@ -5,6 +5,7 @@ import AddressEdit from "@saleor/components/AddressEdit";
 import CardSpacer from "@saleor/components/CardSpacer";
 import FormSpacer from "@saleor/components/FormSpacer";
 import { SingleAutocompleteChoiceType } from "@saleor/components/SingleAutocompleteSelectField";
+import Skeleton from "@saleor/components/Skeleton";
 import CustomerAddressChoiceCard from "@saleor/customers/components/CustomerAddressChoiceCard";
 import { AddressTypeInput } from "@saleor/customers/types";
 import { CustomerAddresses_user_addresses } from "@saleor/customers/types/CustomerAddresses";
@@ -19,6 +20,7 @@ import { addressEditMessages } from "./messages";
 import { useStyles } from "./styles";
 
 export interface OrderCustomerAddressEditProps {
+  loading: boolean;
   customerAddresses: CustomerAddresses_user_addresses[];
   countryChoices: SingleAutocompleteChoiceType[];
   addressInputOption: AddressInputOptionEnum;
@@ -37,6 +39,7 @@ export interface OrderCustomerAddressEditProps {
 
 const OrderCustomerAddressEdit: React.FC<OrderCustomerAddressEditProps> = props => {
   const {
+    loading,
     customerAddresses,
     countryChoices,
     addressInputOption,
@@ -53,6 +56,23 @@ const OrderCustomerAddressEdit: React.FC<OrderCustomerAddressEditProps> = props 
 
   const classes = useStyles(props);
   const intl = useIntl();
+
+  if (loading) {
+    return <Skeleton />;
+  }
+
+  if (!customerAddresses.length) {
+    return (
+      <AddressEdit
+        countries={countryChoices}
+        countryDisplayValue={formAddressCountryDisplayName}
+        data={formAddress}
+        errors={formErrors}
+        onChange={onChangeFormAddress}
+        onCountryChange={onChangeFormAddressCountry}
+      />
+    );
+  }
 
   return (
     <RadioGroup

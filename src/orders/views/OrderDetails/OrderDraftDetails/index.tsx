@@ -83,7 +83,10 @@ export const OrderDraftDetails: React.FC<OrderDraftDetailsProps> = ({
     variables: DEFAULT_INITIAL_SEARCH_DATA
   });
 
-  const { data: customerAddresses } = useCustomerAddressesQuery({
+  const {
+    data: customerAddresses,
+    loading: customerAddressesLoading
+  } = useCustomerAddressesQuery({
     variables: {
       id: order?.user?.id
     },
@@ -252,6 +255,7 @@ export const OrderDraftDetails: React.FC<OrderDraftDetailsProps> = ({
       />
       <OrderCustomerAddressesEditDialog
         open={params.action === "edit-customer-addresses"}
+        loading={customerAddressesLoading}
         confirmButtonState={orderDraftUpdate.opts.status}
         errors={orderDraftUpdate.opts.data?.draftOrderUpdate?.errors || []}
         countries={data?.shop?.countries}

@@ -11,6 +11,7 @@ const order = orderFixture("");
 
 const props: OrderCustomerAddressesEditDialogProps = {
   confirmButtonState: "default",
+  loading: false,
   onClose: () => undefined,
   onConfirm: () => undefined,
   open: true,
@@ -22,15 +23,24 @@ storiesOf("Orders / OrderCustomerAddressesEditDialog", module)
   .add("default", () => (
     <OrderCustomerAddressesEditDialog
       {...props}
-      confirmButtonState="default"
       countries={countries}
       customerAddresses={[
         order.shippingAddress,
         { ...order.billingAddress, id: "asdfghjfuunie" }
       ]}
-      errors={[]}
-      onClose={() => undefined}
-      onConfirm={() => undefined}
-      open={true}
+    />
+  ))
+  .add("no customer addresses", () => (
+    <OrderCustomerAddressesEditDialog
+      {...props}
+      countries={countries}
+      customerAddresses={[]}
+    />
+  ))
+  .add("loading", () => (
+    <OrderCustomerAddressesEditDialog
+      {...props}
+      loading={true}
+      confirmButtonState="loading"
     />
   ));

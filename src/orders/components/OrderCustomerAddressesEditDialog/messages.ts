@@ -11,10 +11,19 @@ export const dialogMessages = defineMessages({
   },
   shippingAddressDescription: {
     defaultMessage:
-      "Which address would you like to use as shipping address for selected customer:",
+      "This customer doesn’t have any shipping addresses. Provide address for order:",
     description: "dialog content"
   },
   billingAddressDescription: {
+    defaultMessage: "Add a new address:",
+    description: "dialog content"
+  },
+  customerShippingAddressDescription: {
+    defaultMessage:
+      "Which address would you like to use as shipping address for selected customer:",
+    description: "dialog content"
+  },
+  customerBillingAddressDescription: {
     defaultMessage: "Select one of customer addresses or add a new address:",
     description: "dialog content"
   }

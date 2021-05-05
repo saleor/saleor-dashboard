@@ -43,6 +43,7 @@ export interface OrderCustomerAddressesEditDialogOutput {
 
 export interface OrderCustomerAddressesEditDialogProps {
   open: boolean;
+  loading: boolean;
   confirmButtonState: ConfirmButtonTransitionState;
   errors: OrderErrorFragment[];
   countries?: ShopInfo_shop_countries[];
@@ -56,6 +57,7 @@ export interface OrderCustomerAddressesEditDialogProps {
 const OrderCustomerAddressesEditDialog: React.FC<OrderCustomerAddressesEditDialogProps> = props => {
   const {
     open,
+    loading,
     confirmButtonState,
     errors = [],
     countries = [],
@@ -88,8 +90,9 @@ const OrderCustomerAddressesEditDialog: React.FC<OrderCustomerAddressesEditDialo
 
   const handleAddressesSubmit = (data: OrderCustomerAddressesEditFormData) => {
     const shippingAddress =
+      customerAddresses.length > 0 &&
       data.shippingAddressInputOption ===
-      AddressInputOptionEnum.CUSTOMER_ADDRESS
+        AddressInputOptionEnum.CUSTOMER_ADDRESS
         ? getCustomerAddress(data.customerShippingAddress.id)
         : handleShippingSubmit(data.shippingAddress);
 
@@ -101,6 +104,7 @@ const OrderCustomerAddressesEditDialog: React.FC<OrderCustomerAddressesEditDialo
     }
 
     const billingAddress =
+      customerAddresses.length > 0 &&
       data.billingAddressInputOption === AddressInputOptionEnum.CUSTOMER_ADDRESS
         ? getCustomerAddress(data.customerBillingAddress.id)
         : handleBillingSubmit(data.billingAddress);
@@ -136,12 +140,19 @@ const OrderCustomerAddressesEditDialog: React.FC<OrderCustomerAddressesEditDialo
             </DialogTitle>
             <DialogContent className={classes.overflow}>
               <Typography>
-                <FormattedMessage
-                  {...dialogMessages.shippingAddressDescription}
-                />
+                {customerAddresses.length > 0 ? (
+                  <FormattedMessage
+                    {...dialogMessages.customerShippingAddressDescription}
+                  />
+                ) : (
+                  <FormattedMessage
+                    {...dialogMessages.shippingAddressDescription}
+                  />
+                )}
               </Typography>
               <FormSpacer />
               <OrderCustomerAddressEdit
+                loading={loading}
                 countryChoices={countryChoices}
                 addressInputOption={data.shippingAddressInputOption}
                 addressInputName="shippingAddressInputOption"
@@ -189,12 +200,19 @@ const OrderCustomerAddressesEditDialog: React.FC<OrderCustomerAddressesEditDialo
                 <>
                   <FormSpacer />
                   <Typography>
-                    <FormattedMessage
-                      {...dialogMessages.billingAddressDescription}
-                    />
+                    {customerAddresses.length > 0 ? (
+                      <FormattedMessage
+                        {...dialogMessages.customerBillingAddressDescription}
+                      />
+                    ) : (
+                      <FormattedMessage
+                        {...dialogMessages.billingAddressDescription}
+                      />
+                    )}
                   </Typography>
                   <FormSpacer />
                   <OrderCustomerAddressEdit
+                    loading={loading}
                     countryChoices={countryChoices}
                     addressInputOption={data.billingAddressInputOption}
                     addressInputName="billingAddressInputOption"
