@@ -2,10 +2,10 @@ import { Typography } from "@material-ui/core";
 import Paper from "@material-ui/core/Paper";
 import CollectionWithDividers from "@saleor/components/CollectionWithDividers";
 import Hr from "@saleor/components/Hr";
-import { MultiAutocompleteChoiceType } from "@saleor/components/MultiAutocompleteSelectField";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import React from "react";
 
+import { FilterAutocompleteDisplayValues } from "../FilterAutocompleteField";
 import { FilterReducerAction } from "../reducer";
 import {
   FieldType,
@@ -30,11 +30,6 @@ export interface FilterContentProps<T extends string = string> {
   errorMessages?: FilterErrorMessages<T>;
 }
 
-type FilterAutocompleteDisplayValues = Record<
-  string,
-  MultiAutocompleteChoiceType[]
->;
-
 const FilterContent: React.FC<FilterContentProps> = ({
   currencySymbol,
   errors,
@@ -52,7 +47,7 @@ const FilterContent: React.FC<FilterContentProps> = ({
     if (filterField.type === FieldType.autocomplete) {
       return {
         ...autocompleteDisplayValues,
-        [filterField.name]: filterField.displayValues
+        [filterField.name]: filterField.options
       };
     }
 
@@ -86,7 +81,8 @@ const FilterContent: React.FC<FilterContentProps> = ({
   > = {
     currencySymbol,
     autocompleteDisplayValues,
-    setAutocompleteDisplayValues
+    setAutocompleteDisplayValues,
+    initialAutocompleteDisplayValues
   };
 
   const handleMultipleFieldPropertyChange = function<T extends string>(

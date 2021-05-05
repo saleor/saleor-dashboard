@@ -27,6 +27,10 @@ const FilterContentBodyNameField: React.FC<FilterContentBodyNameFieldProps> = ({
 }) => {
   const classes = useStyles({});
 
+  if (!filter) {
+    return null;
+  }
+
   return (
     <div className={classes.container}>
       <FormControlLabel

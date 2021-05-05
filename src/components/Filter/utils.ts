@@ -50,7 +50,7 @@ export const extractInvalidFilters = function<T extends string>(
       const filter = filtersData.find(getByName(name));
 
       const shouldExtractChildrenFields =
-        filter.active && !!multipleFields.length;
+        filter.active && !!multipleFields?.length;
 
       if (shouldExtractChildrenFields) {
         return multipleFields

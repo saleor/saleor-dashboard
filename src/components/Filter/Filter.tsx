@@ -142,6 +142,10 @@ const Filter: React.FC<FilterProps> = props => {
                     ({ name }) => name === filterElement.name
                   );
 
+                  if (!dataFilterElement) {
+                    return acc;
+                  }
+
                   return acc + (dataFilterElement.active ? 1 : 0);
                 }, 0)}
               </Typography>

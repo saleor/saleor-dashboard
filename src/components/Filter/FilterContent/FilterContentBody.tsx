@@ -13,7 +13,9 @@ import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import Arrow from "../Arrow";
-import FilterAutocompleteField from "../FilterAutocompleteField";
+import FilterAutocompleteField, {
+  FilterAutocompleteDisplayValues
+} from "../FilterAutocompleteField";
 import FilterOptionField from "../FilterOptionField";
 import { FilterReducerAction } from "../reducer";
 import { FieldType, FilterType, IFilterElement } from "../types";
@@ -56,8 +58,9 @@ export interface FilterContentBodyProps<T extends string = string> {
   children?: React.ReactNode;
   filter: IFilterElement<T>;
   currencySymbol?: string;
+  initialAutocompleteDisplayValues: FilterAutocompleteDisplayValues;
   onFilterPropertyChange: React.Dispatch<FilterReducerAction<T>>;
-  autocompleteDisplayValues: Record<string, MultiAutocompleteChoiceType[]>;
+  autocompleteDisplayValues: FilterAutocompleteDisplayValues;
   setAutocompleteDisplayValues: React.Dispatch<
     React.SetStateAction<Record<string, MultiAutocompleteChoiceType[]>>
   >;
@@ -69,7 +72,8 @@ const FilterContentBody: React.FC<FilterContentBodyProps> = ({
   currencySymbol,
   onFilterPropertyChange,
   autocompleteDisplayValues,
-  setAutocompleteDisplayValues
+  setAutocompleteDisplayValues,
+  initialAutocompleteDisplayValues
 }) => {
   const intl = useIntl();
   const classes = useStyles({});
@@ -284,6 +288,7 @@ const FilterContentBody: React.FC<FilterContentBodyProps> = ({
           filterField={filter}
           setDisplayValues={setAutocompleteDisplayValues}
           onFilterPropertyChange={onFilterPropertyChange}
+          initialDisplayValues={initialAutocompleteDisplayValues}
         />
       )}
     </div>
