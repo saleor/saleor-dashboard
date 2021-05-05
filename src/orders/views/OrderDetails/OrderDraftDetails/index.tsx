@@ -3,6 +3,7 @@ import { DEFAULT_INITIAL_SEARCH_DATA } from "@saleor/config";
 import { useCustomerAddressesQuery } from "@saleor/customers/queries";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useUser from "@saleor/hooks/useUser";
+import { CustomerEditData } from "@saleor/orders/components/OrderCustomer";
 import OrderCustomerAddressesEditDialog, {
   OrderCustomerAddressesEditDialogOutput
 } from "@saleor/orders/components/OrderCustomerAddressesEditDialog";
@@ -94,12 +95,15 @@ export const OrderDraftDetails: React.FC<OrderDraftDetailsProps> = ({
   const handleCustomerChange = async ({
     user,
     userEmail,
-    prevUser
-  }: {
-    user?: string;
-    userEmail?: string;
-    prevUser?: string;
-  }) => {
+    prevUser,
+    prevUserEmail
+  }: CustomerEditData) => {
+    const sameUser = user && user === prevUser;
+    const sameUserEmail = userEmail && userEmail === prevUserEmail;
+    if (sameUser || sameUserEmail) {
+      return;
+    }
+
     const result = await orderDraftUpdate.mutate({
       id,
       input: {

@@ -18,7 +18,7 @@ import React from "react";
 import { useIntl } from "react-intl";
 
 import { OrderDetails_order } from "../../types/OrderDetails";
-import OrderCustomer from "../OrderCustomer";
+import OrderCustomer, { CustomerEditData } from "../OrderCustomer";
 import OrderDraftDetails from "../OrderDraftDetails/OrderDraftDetails";
 import { FormData as OrderDraftDetailsProductsFormData } from "../OrderDraftDetailsProducts";
 import OrderHistory, { FormData as HistoryFormData } from "../OrderHistory";
@@ -47,11 +47,7 @@ export interface OrderDraftPageProps
   fetchUsers: (query: string) => void;
   onBack: () => void;
   onBillingAddressEdit: () => void;
-  onCustomerEdit: (data: {
-    user?: string;
-    userEmail?: string;
-    prevUser?: string;
-  }) => void;
+  onCustomerEdit: (data: CustomerEditData) => void;
   onDraftFinalize: () => void;
   onDraftRemove: () => void;
   onNoteAdd: (data: HistoryFormData) => void;
