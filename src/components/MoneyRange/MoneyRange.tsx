@@ -2,18 +2,12 @@ import React from "react";
 import { useIntl } from "react-intl";
 
 import { LocaleConsumer } from "../Locale";
-import { IMoney } from "../Money";
+import { formatMoney, IMoney } from "../Money";
 
 export interface MoneyRangeProps {
   from?: IMoney;
   to?: IMoney;
 }
-
-const formatMoney = (money: IMoney, locale: string) =>
-  money.amount.toLocaleString(locale, {
-    currency: money.currency,
-    style: "currency"
-  });
 
 export const MoneyRange: React.FC<MoneyRangeProps> = ({ from, to }) => {
   const intl = useIntl();

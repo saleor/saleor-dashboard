@@ -8,9 +8,8 @@ import Checkbox from "@saleor/components/Checkbox";
 import MoneyRange from "@saleor/components/MoneyRange";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
-import TableCellAvatar, {
-  AVATAR_MARGIN
-} from "@saleor/components/TableCellAvatar";
+import TableCellAvatar from "@saleor/components/TableCellAvatar";
+import { AVATAR_MARGIN } from "@saleor/components/TableCellAvatar/Avatar";
 import TableCellHeader from "@saleor/components/TableCellHeader";
 import TableHead from "@saleor/components/TableHead";
 import TablePagination from "@saleor/components/TablePagination";
@@ -168,6 +167,7 @@ export const ProductList: React.FC<ProductListProps> = props => {
           toolbar={toolbar}
         >
           <TableCellHeader
+            data-test-id="colNameHeader"
             arrowPosition="right"
             className={classNames(classes.colName, {
               [classes.colNameFixed]: settings.columns.length > 4
@@ -185,6 +185,7 @@ export const ProductList: React.FC<ProductListProps> = props => {
           </TableCellHeader>
           <DisplayColumn column="productType" displayColumns={settings.columns}>
             <TableCellHeader
+              data-test-id="colTypeHeader"
               className={classes.colType}
               direction={
                 sort.sort === ProductListUrlSortField.productType
@@ -204,6 +205,7 @@ export const ProductList: React.FC<ProductListProps> = props => {
             displayColumns={settings.columns}
           >
             <TableCellHeader
+              data-test-id="colAvailabilityHeader"
               className={classes.colPublished}
               direction={
                 sort.sort === ProductListUrlSortField.status
@@ -249,6 +251,7 @@ export const ProductList: React.FC<ProductListProps> = props => {
           })}
           <DisplayColumn column="price" displayColumns={settings.columns}>
             <TableCellHeader
+              data-test-id="colPriceHeader"
               className={classes.colPrice}
               direction={
                 sort.sort === ProductListUrlSortField.price
@@ -297,7 +300,7 @@ export const ProductList: React.FC<ProductListProps> = props => {
                   onClick={product && onRowClick(product.id)}
                   className={classes.link}
                   data-test="id"
-                  data-test-id={product?.id}
+                  data-test-id={product ? product?.id : "skeleton"}
                 >
                   <TableCell padding="checkbox">
                     <Checkbox
@@ -310,11 +313,10 @@ export const ProductList: React.FC<ProductListProps> = props => {
                   <TableCellAvatar
                     className={classes.colName}
                     thumbnail={maybe(() => product.thumbnail.url)}
-                    data-test="name"
                   >
                     {product?.productType ? (
                       <div className={classes.colNameWrapper}>
-                        <span>{product.name}</span>
+                        <span data-test="name">{product.name}</span>
                         {product?.productType && (
                           <Typography variant="caption">
                             {product.productType.hasVariants ? (
@@ -398,7 +400,7 @@ export const ProductList: React.FC<ProductListProps> = props => {
                     column="price"
                     displayColumns={settings.columns}
                   >
-                    <TableCell className={classes.colPrice}>
+                    <TableCell className={classes.colPrice} data-test="price">
                       {product?.channelListings ? (
                         <MoneyRange
                           from={channel?.pricing?.priceRange?.start?.net}

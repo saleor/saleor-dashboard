@@ -25,10 +25,25 @@ All notable, unreleased changes to this project will be documented in this file.
 - Fix trigger form change when collections are being added to list of product collections - #987 by @gax97
 - Add product variant webhooks - #1006 by @piotrgrundas
 - Use default sort for search products list - #997 by @orzechdev
+- Add text attribute input - #1023 by @piotrgrundas
 - Update CollectionBulkDelete error type - #1030 by @d-wysocki
 - Remove mailing settings - #1027 by @dominik-zeglen
 - Update schema to contain email plugin changes - #1029 by @dominik-zeglen
 - Fix creating shipping voucher - #1031 by @orzechdev
+- Unconfirmed order manipulation - #967 by @tomaszszymanski129
+- Add multiline field plugins - #974 by @dominik-zeglen
+- Handle limit reached error - #990 by @dominik-zeglen
+- Display Cloud limits - #1004 by @dominik-zeglen
+- Introducing numeric attributes - #1065 by @piotrgrundas
+- Add shipping method description - #1058 by @jwm0
+- Fix voucher and sales sorting errors - #1063 by @orzechdev
+- Fix custom currency formatting - #1067 by @orzechdev
+- Fixes - #1077 by @piotrgrundas:
+  - rich text field updates,
+  - multiselect empty chip upon creation of a product/variant,
+  - useFormset.setItemValue wrong updates,
+- Drop deprecated fields - #1071 by @jwm0
+- Add service worker - #1073 by @dominik-zeglen
 
 # 2.11.1
 

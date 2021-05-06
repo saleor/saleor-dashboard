@@ -107,6 +107,12 @@ const PluginSettings: React.FC<PluginSettingsProps> = ({
                   helperText={fieldData.helpText}
                   label={fieldData.label}
                   name={field.name}
+                  multiline={
+                    fieldData.type === ConfigurationTypeFieldEnum.MULTILINE
+                  }
+                  InputProps={{
+                    rowsMax: 6
+                  }}
                   fullWidth
                   value={field.value}
                   onChange={onChange}

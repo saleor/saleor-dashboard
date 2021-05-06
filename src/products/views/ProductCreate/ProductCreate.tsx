@@ -17,6 +17,7 @@ import {
   useVariantCreateMutation
 } from "@saleor/products/mutations";
 import { useProductCreateMutation } from "@saleor/products/mutations";
+import { useProductTypeQuery } from "@saleor/products/queries";
 import {
   productAddUrl,
   ProductCreateUrlDialog,
@@ -56,6 +57,9 @@ export const ProductCreateView: React.FC<ProductCreateProps> = ({ params }) => {
   const [productCreateComplete, setProductCreateComplete] = React.useState(
     false
   );
+  const [selectedProductTypeId, setSelectedProductTypeId] = React.useState<
+    string
+  >();
 
   const [openModal, closeModal] = createDialogActionHandlers<
     ProductCreateUrlDialog,
@@ -106,6 +110,12 @@ export const ProductCreateView: React.FC<ProductCreateProps> = ({ params }) => {
   const [updateMetadata] = useMetadataUpdate({});
   const [updatePrivateMetadata] = usePrivateMetadataUpdate({});
   const taxTypes = useTaxTypeList({});
+  const { data: selectedProductType } = useProductTypeQuery({
+    variables: {
+      id: selectedProductTypeId
+    },
+    skip: !selectedProductTypeId
+  });
 
   const productTypes = searchProductTypesOpts?.data?.search?.edges?.map(
     edge => edge.node
@@ -176,7 +186,7 @@ export const ProductCreateView: React.FC<ProductCreateProps> = ({ params }) => {
   const handleSubmit = async data => {
     const result = await createMetadataCreateHandler(
       createHandler(
-        productTypes,
+        selectedProductType.productType,
         variables => uploadFile({ variables }),
         variables => productCreate({ variables }),
         variables => productVariantCreate({ variables }),
@@ -322,6 +332,8 @@ export const ProductCreateView: React.FC<ProductCreateProps> = ({ params }) => {
         fetchReferenceProducts={searchProducts}
         fetchMoreReferenceProducts={fetchMoreReferenceProducts}
         onCloseDialog={() => navigate(productAddUrl())}
+        selectedProductType={selectedProductType?.productType}
+        onSelectProductType={id => setSelectedProductTypeId(id)}
       />
     </>
   );

@@ -10,11 +10,7 @@ import { WindowTitle } from "@saleor/components/WindowTitle";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@saleor/config";
 import { useFileUploadMutation } from "@saleor/files/mutations";
 import useNavigator from "@saleor/hooks/useNavigator";
-import useNotifier from "@saleor/hooks/useNotifier";
 import useShop from "@saleor/hooks/useShop";
-import { commonMessages } from "@saleor/intl";
-import { useProductVariantChannelListingUpdate } from "@saleor/products/mutations";
-import { ProductVariantChannelListingUpdate } from "@saleor/products/types/ProductVariantChannelListingUpdate";
 import usePageSearch from "@saleor/searches/usePageSearch";
 import useProductSearch from "@saleor/searches/useProductSearch";
 import createMetadataCreateHandler from "@saleor/utils/handlers/metadataCreateHandler";
@@ -54,7 +50,6 @@ export const ProductVariant: React.FC<ProductVariantCreateProps> = ({
   params
 }) => {
   const navigate = useNavigator();
-  const notify = useNotifier();
   const shop = useShop();
   const intl = useIntl();
   const warehouses = useWarehouseList({
@@ -63,20 +58,6 @@ export const ProductVariant: React.FC<ProductVariantCreateProps> = ({
       first: 50
     }
   });
-  const handleCreateSuccess = (data: ProductVariantChannelListingUpdate) => {
-    if (data.productVariantChannelListingUpdate.errors.length === 0) {
-      notify({
-        status: "success",
-        text: intl.formatMessage(commonMessages.savedChanges)
-      });
-      navigate(
-        productVariantEditUrl(
-          productId,
-          data.productVariantChannelListingUpdate.variant.id
-        )
-      );
-    }
-  };
 
   const { data, loading: productLoading } = useProductVariantCreateQuery({
     displayLoader: true,
@@ -84,13 +65,6 @@ export const ProductVariant: React.FC<ProductVariantCreateProps> = ({
   });
 
   const [uploadFile, uploadFileOpts] = useFileUploadMutation({});
-
-  const [
-    updateChannels,
-    updateChannelsOpts
-  ] = useProductVariantChannelListingUpdate({
-    onCompleted: handleCreateSuccess
-  });
 
   const product = data?.product;
 
@@ -103,21 +77,6 @@ export const ProductVariant: React.FC<ProductVariantCreateProps> = ({
       price: null
     })
   );
-
-  const handleSubmitChannels = (
-    data: ProductVariantCreateData,
-    variantId: string
-  ) =>
-    updateChannels({
-      variables: {
-        id: variantId,
-        input: data.channelListings.map(listing => ({
-          channelId: listing.id,
-          costPrice: listing.value.costPrice || null,
-          price: listing.value.price
-        }))
-      }
-    });
 
   const [variantCreate, variantCreateResult] = useVariantCreateMutation({});
 
@@ -170,9 +129,6 @@ export const ProductVariant: React.FC<ProductVariantCreateProps> = ({
       }
     });
     const id = result.data?.productVariantCreate?.productVariant?.id;
-    if (id) {
-      await handleSubmitChannels(formData, id);
-    }
 
     return id || null;
   };
@@ -234,9 +190,6 @@ export const ProductVariant: React.FC<ProductVariantCreateProps> = ({
       />
       <ProductVariantCreatePage
         channels={channels}
-        channelErrors={
-          updateChannelsOpts?.data?.productVariantChannelListingUpdate?.errors
-        }
         disabled={disableForm}
         errors={variantCreateResult.data?.productVariantCreate.errors || []}
         header={intl.formatMessage({

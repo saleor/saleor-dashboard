@@ -1,17 +1,17 @@
 import faker from "faker";
 
 import { getProductDetails } from "../../../apiRequests/storeFront/ProductDetails";
-import { updateProductIsAvailableForPurchase } from "../../../steps/products/productSteps";
+import { updateProductIsAvailableForPurchase } from "../../../steps/catalog/products/productSteps";
 import { productDetailsUrl } from "../../../url/urlList";
 import { getDefaultChannel } from "../../../utils/channelsUtils";
-import * as productsUtils from "../../../utils/productsUtils";
+import * as productsUtils from "../../../utils/products/productsUtils";
 import * as shippingUtils from "../../../utils/shippingUtils";
 import { isProductAvailableForPurchase } from "../../../utils/storeFront/storeFrontProductUtils";
 
 // <reference types="cypress" />
 describe("Products available in listings", () => {
-  const startsWith = "Cy-";
-  const name = `${startsWith}${faker.random.number()}`;
+  const startsWith = "CyAvailForPurchase-";
+  const name = `${startsWith}${faker.datatype.number()}`;
   let productType;
   let attribute;
   let category;
@@ -59,7 +59,7 @@ describe("Products available in listings", () => {
   });
 
   it("should update product to available for purchase", () => {
-    const productName = `${startsWith}${faker.random.number()}`;
+    const productName = `${startsWith}${faker.datatype.number()}`;
     let product;
 
     productsUtils
@@ -85,7 +85,7 @@ describe("Products available in listings", () => {
       });
   });
   it("should update product to not available for purchase", () => {
-    const productName = `${startsWith}${faker.random.number()}`;
+    const productName = `${startsWith}${faker.datatype.number()}`;
     let product;
 
     productsUtils

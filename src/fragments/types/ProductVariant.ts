@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { AttributeInputTypeEnum, AttributeEntityTypeEnum, ProductMediaType, WeightUnitsEnum } from "./../../types/globalTypes";
+import { AttributeInputTypeEnum, AttributeEntityTypeEnum, MeasurementUnitsEnum, ProductMediaType, WeightUnitsEnum } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL fragment: ProductVariant
@@ -34,6 +34,7 @@ export interface ProductVariant_selectionAttributes_attribute_values {
   slug: string | null;
   file: ProductVariant_selectionAttributes_attribute_values_file | null;
   reference: string | null;
+  richText: any | null;
 }
 
 export interface ProductVariant_selectionAttributes_attribute {
@@ -44,6 +45,7 @@ export interface ProductVariant_selectionAttributes_attribute {
   inputType: AttributeInputTypeEnum | null;
   entityType: AttributeEntityTypeEnum | null;
   valueRequired: boolean;
+  unit: MeasurementUnitsEnum | null;
   values: (ProductVariant_selectionAttributes_attribute_values | null)[] | null;
 }
 
@@ -60,6 +62,7 @@ export interface ProductVariant_selectionAttributes_values {
   slug: string | null;
   file: ProductVariant_selectionAttributes_values_file | null;
   reference: string | null;
+  richText: any | null;
 }
 
 export interface ProductVariant_selectionAttributes {
@@ -81,6 +84,7 @@ export interface ProductVariant_nonSelectionAttributes_attribute_values {
   slug: string | null;
   file: ProductVariant_nonSelectionAttributes_attribute_values_file | null;
   reference: string | null;
+  richText: any | null;
 }
 
 export interface ProductVariant_nonSelectionAttributes_attribute {
@@ -91,6 +95,7 @@ export interface ProductVariant_nonSelectionAttributes_attribute {
   inputType: AttributeInputTypeEnum | null;
   entityType: AttributeEntityTypeEnum | null;
   valueRequired: boolean;
+  unit: MeasurementUnitsEnum | null;
   values: (ProductVariant_nonSelectionAttributes_attribute_values | null)[] | null;
 }
 
@@ -107,6 +112,7 @@ export interface ProductVariant_nonSelectionAttributes_values {
   slug: string | null;
   file: ProductVariant_nonSelectionAttributes_values_file | null;
   reference: string | null;
+  richText: any | null;
 }
 
 export interface ProductVariant_nonSelectionAttributes {
@@ -185,6 +191,8 @@ export interface ProductVariant_product_channelListings_pricing {
 
 export interface ProductVariant_product_channelListings {
   __typename: "ProductChannelListing";
+  publicationDate: any | null;
+  isPublished: boolean;
   channel: ProductVariant_product_channelListings_channel;
   pricing: ProductVariant_product_channelListings_pricing | null;
 }

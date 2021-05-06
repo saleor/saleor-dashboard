@@ -1,11 +1,15 @@
-import { getDefaultAddress } from "./utils/Utils";
+import { getDefaultAddress, getValueWithDefault } from "./utils/Utils";
 
-export function createWarehouse(name, shippingZone, address, slug = name) {
+export function createWarehouse({ name, shippingZone, address, slug = name }) {
+  const shippingZoneLine = getValueWithDefault(
+    shippingZone,
+    `shippingZones:"${shippingZone}"`
+  );
   const mutation = `mutation{
     createWarehouse(input:{
       name:"${name}"
       slug:"${slug}"
-      shippingZones:"${shippingZone}"
+      ${shippingZoneLine}
       ${getDefaultAddress(address, "address", false)}
     }){
       warehouseErrors{
@@ -18,7 +22,9 @@ export function createWarehouse(name, shippingZone, address, slug = name) {
       }
     }
   }`;
-  return cy.sendRequestWithQuery(mutation);
+  return cy
+    .sendRequestWithQuery(mutation)
+    .its("body.data.createWarehouse.warehouse");
 }
 export function getWarehouses(first, search) {
   const query = `query{

@@ -77,10 +77,19 @@ export function getSelectedAttributeValues(
     | ProductDetails_product_attributes
     | SelectedVariantAttributeFragment
 ) {
-  if (attribute.attribute.inputType === AttributeInputTypeEnum.REFERENCE) {
-    return attribute.values.map(value => value.reference);
+  switch (attribute.attribute.inputType) {
+    case AttributeInputTypeEnum.REFERENCE:
+      return attribute.values.map(value => value.reference);
+
+    case AttributeInputTypeEnum.RICH_TEXT:
+      return [attribute.values[0]?.richText];
+
+    case AttributeInputTypeEnum.NUMERIC:
+      return [attribute.values[0]?.name];
+
+    default:
+      return attribute.values.map(value => value.slug);
   }
-  return attribute.values.map(value => value.slug);
 }
 
 export const isFileValueUnused = (
@@ -107,7 +116,7 @@ export const mergeFileUploadErrors = (
   uploadFilesResult: Array<MutationFetchResult<FileUpload>>
 ): UploadErrorFragment[] =>
   uploadFilesResult.reduce((errors, uploadFileResult) => {
-    const uploadErrors = uploadFileResult?.data?.fileUpload?.uploadErrors;
+    const uploadErrors = uploadFileResult?.data?.fileUpload?.errors;
     if (uploadErrors) {
       return [...errors, ...uploadErrors];
     }
@@ -281,7 +290,6 @@ export const getAttributesDisplayData = (
     if (attribute.data.inputType === AttributeInputTypeEnum.FILE) {
       return getFileAttributeDisplayData(attribute, attributesWithNewFileValue);
     }
-
     return attribute;
   });
 

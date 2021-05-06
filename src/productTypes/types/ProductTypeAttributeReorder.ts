@@ -3,14 +3,14 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { ReorderInput, ProductAttributeType, AttributeTypeEnum, WeightUnitsEnum } from "./../../types/globalTypes";
+import { ReorderInput, ProductAttributeType, AttributeTypeEnum, MeasurementUnitsEnum, WeightUnitsEnum } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: ProductTypeAttributeReorder
 // ====================================================
 
 export interface ProductTypeAttributeReorder_productTypeReorderAttributes_errors {
-  __typename: "Error";
+  __typename: "ProductError";
   field: string | null;
   message: string | null;
 }
@@ -42,6 +42,7 @@ export interface ProductTypeAttributeReorder_productTypeReorderAttributes_produc
   visibleInStorefront: boolean;
   filterableInDashboard: boolean;
   filterableInStorefront: boolean;
+  unit: MeasurementUnitsEnum | null;
 }
 
 export interface ProductTypeAttributeReorder_productTypeReorderAttributes_productType_variantAttributes {
@@ -53,6 +54,7 @@ export interface ProductTypeAttributeReorder_productTypeReorderAttributes_produc
   visibleInStorefront: boolean;
   filterableInDashboard: boolean;
   filterableInStorefront: boolean;
+  unit: MeasurementUnitsEnum | null;
 }
 
 export interface ProductTypeAttributeReorder_productTypeReorderAttributes_productType_weight {

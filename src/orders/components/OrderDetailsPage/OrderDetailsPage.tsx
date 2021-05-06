@@ -26,6 +26,8 @@ import { OrderStatus } from "../../../types/globalTypes";
 import { OrderDetails_order } from "../../types/OrderDetails";
 import OrderCustomer from "../OrderCustomer";
 import OrderCustomerNote from "../OrderCustomerNote";
+import OrderDraftDetails from "../OrderDraftDetails/OrderDraftDetails";
+import { FormData as OrderDraftDetailsProductsFormData } from "../OrderDraftDetailsProducts";
 import OrderFulfilledProductsCard from "../OrderFulfilledProductsCard";
 import OrderHistory, { FormData as HistoryFormData } from "../OrderHistory";
 import OrderInvoiceList from "../OrderInvoiceList";
@@ -62,6 +64,13 @@ export interface OrderDetailsPageProps extends UserPermissionProps {
   }>;
   disabled: boolean;
   saveButtonBarState: ConfirmButtonTransitionState;
+  onOrderLineAdd?: () => void;
+  onOrderLineChange?: (
+    id: string,
+    data: OrderDraftDetailsProductsFormData
+  ) => void;
+  onOrderLineRemove?: (id: string) => void;
+  onShippingMethodEdit?: () => void;
   onBack();
   onBillingAddressEdit();
   onFulfillmentCancel(id: string);
@@ -121,6 +130,10 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
     onInvoiceGenerate,
     onInvoiceSend,
     onOrderReturn,
+    onOrderLineAdd,
+    onOrderLineChange,
+    onOrderLineRemove,
+    onShippingMethodEdit,
     onSubmit
   } = props;
   const classes = useStyles(props);
@@ -132,10 +145,11 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
     makeChangeHandler: makeMetadataChangeHandler
   } = useMetadataChangeTrigger();
 
-  const canCancel = maybe(() => order.status) !== OrderStatus.CANCELED;
-  const canEditAddresses = maybe(() => order.status) !== OrderStatus.CANCELED;
-  const canFulfill = maybe(() => order.status) !== OrderStatus.CANCELED;
-  const unfulfilled = maybe(() => order.lines, []).filter(
+  const isOrderUnconfirmed = order?.status === OrderStatus.UNCONFIRMED;
+  const canCancel = order?.status !== OrderStatus.CANCELED;
+  const canEditAddresses = order?.status !== OrderStatus.CANCELED;
+  const canFulfill = order?.status !== OrderStatus.CANCELED;
+  const unfulfilled = (order?.lines || []).filter(
     line => line.quantityFulfilled < line.quantity
   );
 
@@ -156,16 +170,16 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
     privateMetadata: order?.privateMetadata.map(mapMetadataItemToInput)
   };
 
-  const saveLabel =
-    order?.status === OrderStatus.UNCONFIRMED
-      ? intl.formatMessage(messages.confirmOrder)
-      : undefined;
+  const saveLabel = isOrderUnconfirmed
+    ? intl.formatMessage(messages.confirmOrder)
+    : undefined;
 
   const allowSave = (hasChanged: boolean) => {
-    if (order?.status !== OrderStatus.UNCONFIRMED) {
+    if (!isOrderUnconfirmed) {
       return disabled || !hasChanged;
+    } else if (!order?.lines?.length) {
+      return true;
     }
-
     return disabled;
   };
 
@@ -214,11 +228,24 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
             </div>
             <Grid>
               <div>
-                <OrderUnfulfilledProductsCard
-                  canFulfill={canFulfill}
-                  lines={unfulfilled}
-                  onFulfill={onOrderFulfill}
-                />
+                {!isOrderUnconfirmed ? (
+                  <OrderUnfulfilledProductsCard
+                    canFulfill={canFulfill}
+                    lines={unfulfilled}
+                    onFulfill={onOrderFulfill}
+                  />
+                ) : (
+                  <>
+                    <OrderDraftDetails
+                      order={order}
+                      onOrderLineAdd={onOrderLineAdd}
+                      onOrderLineChange={onOrderLineChange}
+                      onOrderLineRemove={onOrderLineRemove}
+                      onShippingMethodEdit={onShippingMethodEdit}
+                    />
+                    <CardSpacer />
+                  </>
+                )}
                 {order?.fulfillments?.map(fulfillment => (
                   <React.Fragment key={fulfillment.id}>
                     <OrderFulfilledProductsCard
@@ -234,15 +261,19 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
                     />
                   </React.Fragment>
                 ))}
-                <OrderPayment
-                  order={order}
-                  onCapture={onPaymentCapture}
-                  onMarkAsPaid={onPaymentPaid}
-                  onRefund={onPaymentRefund}
-                  onVoid={onPaymentVoid}
-                />
-                <CardSpacer />
-                <Metadata data={data} onChange={changeMetadata} />
+                {!isOrderUnconfirmed && (
+                  <>
+                    <OrderPayment
+                      order={order}
+                      onCapture={onPaymentCapture}
+                      onMarkAsPaid={onPaymentPaid}
+                      onRefund={onPaymentRefund}
+                      onVoid={onPaymentVoid}
+                    />
+                    <CardSpacer />
+                    <Metadata data={data} onChange={changeMetadata} />
+                  </>
+                )}
                 <OrderHistory
                   history={order?.events}
                   orderCurrency={order?.total?.gross.currency}
@@ -264,7 +295,7 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
                   selectedChannelName={order?.channel?.name}
                 />
                 <CardSpacer />
-                {order?.status !== OrderStatus.UNCONFIRMED && (
+                {!isOrderUnconfirmed && (
                   <>
                     <OrderInvoiceList
                       invoices={order?.invoices}

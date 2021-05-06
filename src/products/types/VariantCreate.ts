@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { ProductVariantCreateInput, ProductErrorCode, AttributeInputTypeEnum, AttributeEntityTypeEnum, ProductMediaType, WeightUnitsEnum } from "./../../types/globalTypes";
+import { ProductVariantCreateInput, ProductErrorCode, AttributeInputTypeEnum, AttributeEntityTypeEnum, MeasurementUnitsEnum, ProductMediaType, WeightUnitsEnum } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: VariantCreate
@@ -41,6 +41,7 @@ export interface VariantCreate_productVariantCreate_productVariant_selectionAttr
   slug: string | null;
   file: VariantCreate_productVariantCreate_productVariant_selectionAttributes_attribute_values_file | null;
   reference: string | null;
+  richText: any | null;
 }
 
 export interface VariantCreate_productVariantCreate_productVariant_selectionAttributes_attribute {
@@ -51,6 +52,7 @@ export interface VariantCreate_productVariantCreate_productVariant_selectionAttr
   inputType: AttributeInputTypeEnum | null;
   entityType: AttributeEntityTypeEnum | null;
   valueRequired: boolean;
+  unit: MeasurementUnitsEnum | null;
   values: (VariantCreate_productVariantCreate_productVariant_selectionAttributes_attribute_values | null)[] | null;
 }
 
@@ -67,6 +69,7 @@ export interface VariantCreate_productVariantCreate_productVariant_selectionAttr
   slug: string | null;
   file: VariantCreate_productVariantCreate_productVariant_selectionAttributes_values_file | null;
   reference: string | null;
+  richText: any | null;
 }
 
 export interface VariantCreate_productVariantCreate_productVariant_selectionAttributes {
@@ -88,6 +91,7 @@ export interface VariantCreate_productVariantCreate_productVariant_nonSelectionA
   slug: string | null;
   file: VariantCreate_productVariantCreate_productVariant_nonSelectionAttributes_attribute_values_file | null;
   reference: string | null;
+  richText: any | null;
 }
 
 export interface VariantCreate_productVariantCreate_productVariant_nonSelectionAttributes_attribute {
@@ -98,6 +102,7 @@ export interface VariantCreate_productVariantCreate_productVariant_nonSelectionA
   inputType: AttributeInputTypeEnum | null;
   entityType: AttributeEntityTypeEnum | null;
   valueRequired: boolean;
+  unit: MeasurementUnitsEnum | null;
   values: (VariantCreate_productVariantCreate_productVariant_nonSelectionAttributes_attribute_values | null)[] | null;
 }
 
@@ -114,6 +119,7 @@ export interface VariantCreate_productVariantCreate_productVariant_nonSelectionA
   slug: string | null;
   file: VariantCreate_productVariantCreate_productVariant_nonSelectionAttributes_values_file | null;
   reference: string | null;
+  richText: any | null;
 }
 
 export interface VariantCreate_productVariantCreate_productVariant_nonSelectionAttributes {
@@ -192,6 +198,8 @@ export interface VariantCreate_productVariantCreate_productVariant_product_chann
 
 export interface VariantCreate_productVariantCreate_productVariant_product_channelListings {
   __typename: "ProductChannelListing";
+  publicationDate: any | null;
+  isPublished: boolean;
   channel: VariantCreate_productVariantCreate_productVariant_product_channelListings_channel;
   pricing: VariantCreate_productVariantCreate_productVariant_product_channelListings_pricing | null;
 }

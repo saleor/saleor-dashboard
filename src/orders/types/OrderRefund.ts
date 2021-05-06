@@ -456,12 +456,6 @@ export interface OrderRefund_orderRefund_order_availableShippingMethods {
   price: OrderRefund_orderRefund_order_availableShippingMethods_price | null;
 }
 
-export interface OrderRefund_orderRefund_order_discount {
-  __typename: "Money";
-  amount: number;
-  currency: string;
-}
-
 export interface OrderRefund_orderRefund_order_invoices {
   __typename: "Invoice";
   id: string;
@@ -477,6 +471,7 @@ export interface OrderRefund_orderRefund_order_channel {
   id: string;
   name: string;
   currencyCode: string;
+  slug: string;
 }
 
 export interface OrderRefund_orderRefund_order {
@@ -509,7 +504,6 @@ export interface OrderRefund_orderRefund_order {
   user: OrderRefund_orderRefund_order_user | null;
   userEmail: string | null;
   availableShippingMethods: (OrderRefund_orderRefund_order_availableShippingMethods | null)[] | null;
-  discount: OrderRefund_orderRefund_order_discount | null;
   invoices: (OrderRefund_orderRefund_order_invoices | null)[] | null;
   channel: OrderRefund_orderRefund_order_channel;
   isPaid: boolean;

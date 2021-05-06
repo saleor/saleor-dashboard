@@ -45,7 +45,7 @@ const buttonOverrides = (colors: IThemeColors): Overrides => ({
       }
     },
     textPrimary: {
-      "& span": {
+      "&:not($disabled) span": {
         color: colors.primary
       }
     }

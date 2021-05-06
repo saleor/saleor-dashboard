@@ -13,6 +13,7 @@ export const attributeValueFragment = gql`
       ...FileFragment
     }
     reference
+    richText
   }
 `;
 
@@ -25,6 +26,7 @@ export const attributeFragment = gql`
     visibleInStorefront
     filterableInDashboard
     filterableInStorefront
+    unit
   }
 `;
 
@@ -38,6 +40,7 @@ export const attributeDetailsFragment = gql`
     availableInGrid
     inputType
     entityType
+    unit
     storefrontSearchPosition
     valueRequired
     values {

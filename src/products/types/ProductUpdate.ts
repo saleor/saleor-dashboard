@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { ProductInput, ProductErrorCode, AttributeInputTypeEnum, AttributeEntityTypeEnum, ProductMediaType, WeightUnitsEnum } from "./../../types/globalTypes";
+import { ProductInput, ProductErrorCode, AttributeInputTypeEnum, AttributeEntityTypeEnum, MeasurementUnitsEnum, ProductMediaType, WeightUnitsEnum } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: ProductUpdate
@@ -29,6 +29,7 @@ export interface ProductUpdate_productUpdate_product_attributes_attribute_values
   slug: string | null;
   file: ProductUpdate_productUpdate_product_attributes_attribute_values_file | null;
   reference: string | null;
+  richText: any | null;
 }
 
 export interface ProductUpdate_productUpdate_product_attributes_attribute {
@@ -39,6 +40,7 @@ export interface ProductUpdate_productUpdate_product_attributes_attribute {
   inputType: AttributeInputTypeEnum | null;
   entityType: AttributeEntityTypeEnum | null;
   valueRequired: boolean;
+  unit: MeasurementUnitsEnum | null;
   values: (ProductUpdate_productUpdate_product_attributes_attribute_values | null)[] | null;
 }
 
@@ -55,6 +57,7 @@ export interface ProductUpdate_productUpdate_product_attributes_values {
   slug: string | null;
   file: ProductUpdate_productUpdate_product_attributes_values_file | null;
   reference: string | null;
+  richText: any | null;
 }
 
 export interface ProductUpdate_productUpdate_product_attributes {
@@ -76,6 +79,7 @@ export interface ProductUpdate_productUpdate_product_productType_variantAttribut
   slug: string | null;
   file: ProductUpdate_productUpdate_product_productType_variantAttributes_values_file | null;
   reference: string | null;
+  richText: any | null;
 }
 
 export interface ProductUpdate_productUpdate_product_productType_variantAttributes {
@@ -190,6 +194,11 @@ export interface ProductUpdate_productUpdate_product_media {
   oembedData: any;
 }
 
+export interface ProductUpdate_productUpdate_product_variants_media {
+  __typename: "ProductMedia";
+  url: string;
+}
+
 export interface ProductUpdate_productUpdate_product_variants_stocks_warehouse {
   __typename: "Warehouse";
   id: string;
@@ -236,6 +245,7 @@ export interface ProductUpdate_productUpdate_product_variants {
   sku: string;
   name: string;
   margin: number | null;
+  media: ProductUpdate_productUpdate_product_variants_media[] | null;
   stocks: (ProductUpdate_productUpdate_product_variants_stocks | null)[] | null;
   trackInventory: boolean;
   channelListings: ProductUpdate_productUpdate_product_variants_channelListings[] | null;

@@ -4,12 +4,10 @@ import {
   ProductFilterKeys,
   ProductListFilterOpts
 } from "@saleor/products/components/ProductListPage";
-import {
-  InitialProductFilterData_attributes_edges_node,
-  InitialProductFilterData_categories_edges_node,
-  InitialProductFilterData_collections_edges_node,
-  InitialProductFilterData_productTypes_edges_node
-} from "@saleor/products/types/InitialProductFilterData";
+import { InitialProductFilterAttributes_attributes_edges_node } from "@saleor/products/types/InitialProductFilterAttributes";
+import { InitialProductFilterCategories_categories_edges_node } from "@saleor/products/types/InitialProductFilterCategories";
+import { InitialProductFilterCollections_collections_edges_node } from "@saleor/products/types/InitialProductFilterCollections";
+import { InitialProductFilterProductTypes_productTypes_edges_node } from "@saleor/products/types/InitialProductFilterProductTypes";
 import {
   SearchCategories,
   SearchCategoriesVariables
@@ -50,17 +48,17 @@ export const PRODUCT_FILTERS_KEY = "productFilters";
 
 export function getFilterOpts(
   params: ProductListUrlFilters,
-  attributes: InitialProductFilterData_attributes_edges_node[],
+  attributes: InitialProductFilterAttributes_attributes_edges_node[],
   categories: {
-    initial: InitialProductFilterData_categories_edges_node[];
+    initial: InitialProductFilterCategories_categories_edges_node[];
     search: UseSearchResult<SearchCategories, SearchCategoriesVariables>;
   },
   collections: {
-    initial: InitialProductFilterData_collections_edges_node[];
+    initial: InitialProductFilterCollections_collections_edges_node[];
     search: UseSearchResult<SearchCollections, SearchCollectionsVariables>;
   },
   productTypes: {
-    initial: InitialProductFilterData_productTypes_edges_node[];
+    initial: InitialProductFilterProductTypes_productTypes_edges_node[];
     search: UseSearchResult<SearchProductTypes, SearchProductTypesVariables>;
   }
 ): ProductListFilterOpts {

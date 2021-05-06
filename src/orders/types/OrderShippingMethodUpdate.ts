@@ -15,6 +15,68 @@ export interface OrderShippingMethodUpdate_orderUpdateShipping_errors {
   field: string | null;
 }
 
+export interface OrderShippingMethodUpdate_orderUpdateShipping_order_availableShippingMethods_price {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderShippingMethodUpdate_orderUpdateShipping_order_availableShippingMethods {
+  __typename: "ShippingMethod";
+  id: string;
+  name: string;
+  price: OrderShippingMethodUpdate_orderUpdateShipping_order_availableShippingMethods_price | null;
+}
+
+export interface OrderShippingMethodUpdate_orderUpdateShipping_order_total_tax {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderShippingMethodUpdate_orderUpdateShipping_order_total_gross {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderShippingMethodUpdate_orderUpdateShipping_order_total_net {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderShippingMethodUpdate_orderUpdateShipping_order_total {
+  __typename: "TaxedMoney";
+  tax: OrderShippingMethodUpdate_orderUpdateShipping_order_total_tax;
+  gross: OrderShippingMethodUpdate_orderUpdateShipping_order_total_gross;
+  net: OrderShippingMethodUpdate_orderUpdateShipping_order_total_net;
+}
+
+export interface OrderShippingMethodUpdate_orderUpdateShipping_order_shippingMethod_price {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderShippingMethodUpdate_orderUpdateShipping_order_shippingMethod {
+  __typename: "ShippingMethod";
+  id: string;
+  name: string;
+  price: OrderShippingMethodUpdate_orderUpdateShipping_order_shippingMethod_price | null;
+}
+
+export interface OrderShippingMethodUpdate_orderUpdateShipping_order_shippingPrice_gross {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderShippingMethodUpdate_orderUpdateShipping_order_shippingPrice {
+  __typename: "TaxedMoney";
+  gross: OrderShippingMethodUpdate_orderUpdateShipping_order_shippingPrice_gross;
+}
+
 export interface OrderShippingMethodUpdate_orderUpdateShipping_order_metadata {
   __typename: "MetadataItem";
   key: string;
@@ -348,22 +410,6 @@ export interface OrderShippingMethodUpdate_orderUpdateShipping_order_shippingAdd
   streetAddress2: string;
 }
 
-export interface OrderShippingMethodUpdate_orderUpdateShipping_order_shippingMethod {
-  __typename: "ShippingMethod";
-  id: string;
-}
-
-export interface OrderShippingMethodUpdate_orderUpdateShipping_order_shippingPrice_gross {
-  __typename: "Money";
-  amount: number;
-  currency: string;
-}
-
-export interface OrderShippingMethodUpdate_orderUpdateShipping_order_shippingPrice {
-  __typename: "TaxedMoney";
-  gross: OrderShippingMethodUpdate_orderUpdateShipping_order_shippingPrice_gross;
-}
-
 export interface OrderShippingMethodUpdate_orderUpdateShipping_order_subtotal_gross {
   __typename: "Money";
   amount: number;
@@ -380,31 +426,6 @@ export interface OrderShippingMethodUpdate_orderUpdateShipping_order_subtotal {
   __typename: "TaxedMoney";
   gross: OrderShippingMethodUpdate_orderUpdateShipping_order_subtotal_gross;
   net: OrderShippingMethodUpdate_orderUpdateShipping_order_subtotal_net;
-}
-
-export interface OrderShippingMethodUpdate_orderUpdateShipping_order_total_gross {
-  __typename: "Money";
-  amount: number;
-  currency: string;
-}
-
-export interface OrderShippingMethodUpdate_orderUpdateShipping_order_total_net {
-  __typename: "Money";
-  amount: number;
-  currency: string;
-}
-
-export interface OrderShippingMethodUpdate_orderUpdateShipping_order_total_tax {
-  __typename: "Money";
-  amount: number;
-  currency: string;
-}
-
-export interface OrderShippingMethodUpdate_orderUpdateShipping_order_total {
-  __typename: "TaxedMoney";
-  gross: OrderShippingMethodUpdate_orderUpdateShipping_order_total_gross;
-  net: OrderShippingMethodUpdate_orderUpdateShipping_order_total_net;
-  tax: OrderShippingMethodUpdate_orderUpdateShipping_order_total_tax;
 }
 
 export interface OrderShippingMethodUpdate_orderUpdateShipping_order_totalAuthorized {
@@ -443,25 +464,6 @@ export interface OrderShippingMethodUpdate_orderUpdateShipping_order_user {
   email: string;
 }
 
-export interface OrderShippingMethodUpdate_orderUpdateShipping_order_availableShippingMethods_price {
-  __typename: "Money";
-  amount: number;
-  currency: string;
-}
-
-export interface OrderShippingMethodUpdate_orderUpdateShipping_order_availableShippingMethods {
-  __typename: "ShippingMethod";
-  id: string;
-  name: string;
-  price: OrderShippingMethodUpdate_orderUpdateShipping_order_availableShippingMethods_price | null;
-}
-
-export interface OrderShippingMethodUpdate_orderUpdateShipping_order_discount {
-  __typename: "Money";
-  amount: number;
-  currency: string;
-}
-
 export interface OrderShippingMethodUpdate_orderUpdateShipping_order_invoices {
   __typename: "Invoice";
   id: string;
@@ -477,11 +479,17 @@ export interface OrderShippingMethodUpdate_orderUpdateShipping_order_channel {
   id: string;
   name: string;
   currencyCode: string;
+  slug: string;
 }
 
 export interface OrderShippingMethodUpdate_orderUpdateShipping_order {
   __typename: "Order";
+  availableShippingMethods: (OrderShippingMethodUpdate_orderUpdateShipping_order_availableShippingMethods | null)[] | null;
+  total: OrderShippingMethodUpdate_orderUpdateShipping_order_total;
   id: string;
+  shippingMethod: OrderShippingMethodUpdate_orderUpdateShipping_order_shippingMethod | null;
+  shippingMethodName: string | null;
+  shippingPrice: OrderShippingMethodUpdate_orderUpdateShipping_order_shippingPrice;
   metadata: (OrderShippingMethodUpdate_orderUpdateShipping_order_metadata | null)[];
   privateMetadata: (OrderShippingMethodUpdate_orderUpdateShipping_order_privateMetadata | null)[];
   billingAddress: OrderShippingMethodUpdate_orderUpdateShipping_order_billingAddress | null;
@@ -496,20 +504,14 @@ export interface OrderShippingMethodUpdate_orderUpdateShipping_order {
   number: string | null;
   paymentStatus: PaymentChargeStatusEnum;
   shippingAddress: OrderShippingMethodUpdate_orderUpdateShipping_order_shippingAddress | null;
-  shippingMethod: OrderShippingMethodUpdate_orderUpdateShipping_order_shippingMethod | null;
-  shippingMethodName: string | null;
-  shippingPrice: OrderShippingMethodUpdate_orderUpdateShipping_order_shippingPrice;
   status: OrderStatus;
   subtotal: OrderShippingMethodUpdate_orderUpdateShipping_order_subtotal;
-  total: OrderShippingMethodUpdate_orderUpdateShipping_order_total;
   actions: (OrderAction | null)[];
   totalAuthorized: OrderShippingMethodUpdate_orderUpdateShipping_order_totalAuthorized;
   totalCaptured: OrderShippingMethodUpdate_orderUpdateShipping_order_totalCaptured;
   undiscountedTotal: OrderShippingMethodUpdate_orderUpdateShipping_order_undiscountedTotal;
   user: OrderShippingMethodUpdate_orderUpdateShipping_order_user | null;
   userEmail: string | null;
-  availableShippingMethods: (OrderShippingMethodUpdate_orderUpdateShipping_order_availableShippingMethods | null)[] | null;
-  discount: OrderShippingMethodUpdate_orderUpdateShipping_order_discount | null;
   invoices: (OrderShippingMethodUpdate_orderUpdateShipping_order_invoices | null)[] | null;
   channel: OrderShippingMethodUpdate_orderUpdateShipping_order_channel;
   isPaid: boolean;

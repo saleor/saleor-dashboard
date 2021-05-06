@@ -11,15 +11,15 @@ import { finalizeDraftOrder } from "../../steps/draftOrderSteps";
 import { urlList } from "../../url/urlList";
 import { getDefaultChannel } from "../../utils/channelsUtils";
 import { createOrder } from "../../utils/ordersUtils";
-import * as productsUtils from "../../utils/productsUtils";
+import * as productsUtils from "../../utils/products/productsUtils";
 import {
   createShipping,
   deleteShippingStartsWith
 } from "../../utils/shippingUtils";
 
 describe("Orders", () => {
-  const startsWith = "Cy-";
-  const randomName = startsWith + faker.random.number();
+  const startsWith = "CyOrders-";
+  const randomName = startsWith + faker.datatype.number();
 
   let customer;
   let defaultChannel;
@@ -77,7 +77,7 @@ describe("Orders", () => {
           });
         }
       )
-      .then(({ variants: variantsResp }) => {
+      .then(({ variantsList: variantsResp }) => {
         variantsList = variantsResp;
       });
   });

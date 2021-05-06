@@ -6,6 +6,7 @@ import { Home, HomeVariables } from "./types/Home";
 const home = gql`
   query Home(
     $channel: String!
+    $datePeriod: DateRangeInput!
     $PERMISSION_MANAGE_PRODUCTS: Boolean!
     $PERMISSION_MANAGE_ORDERS: Boolean!
   ) {
@@ -16,21 +17,24 @@ const home = gql`
         currency
       }
     }
-    ordersToday: orders(created: TODAY, channel: $channel)
+    ordersToday: orders(filter: { created: $datePeriod }, channel: $channel)
       @include(if: $PERMISSION_MANAGE_ORDERS) {
       totalCount
     }
-    ordersToFulfill: orders(status: READY_TO_FULFILL, channel: $channel)
-      @include(if: $PERMISSION_MANAGE_ORDERS) {
+    ordersToFulfill: orders(
+      filter: { status: READY_TO_FULFILL }
+      channel: $channel
+    ) @include(if: $PERMISSION_MANAGE_ORDERS) {
       totalCount
     }
-    ordersToCapture: orders(status: READY_TO_CAPTURE, channel: $channel)
-      @include(if: $PERMISSION_MANAGE_ORDERS) {
+    ordersToCapture: orders(
+      filter: { status: READY_TO_CAPTURE }
+      channel: $channel
+    ) @include(if: $PERMISSION_MANAGE_ORDERS) {
       totalCount
     }
     productsOutOfStock: products(
-      stockAvailability: OUT_OF_STOCK
-      channel: $channel
+      filter: { stockAvailability: OUT_OF_STOCK, channel: $channel }
     ) {
       totalCount
     }

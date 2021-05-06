@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { AttributeInputTypeEnum, AttributeEntityTypeEnum } from "./../../types/globalTypes";
+import { AttributeInputTypeEnum, AttributeEntityTypeEnum, MeasurementUnitsEnum } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL fragment: VariantAttributeFragment
@@ -22,6 +22,7 @@ export interface VariantAttributeFragment_values {
   slug: string | null;
   file: VariantAttributeFragment_values_file | null;
   reference: string | null;
+  richText: any | null;
 }
 
 export interface VariantAttributeFragment {
@@ -32,5 +33,6 @@ export interface VariantAttributeFragment {
   inputType: AttributeInputTypeEnum | null;
   entityType: AttributeEntityTypeEnum | null;
   valueRequired: boolean;
+  unit: MeasurementUnitsEnum | null;
   values: (VariantAttributeFragment_values | null)[] | null;
 }

@@ -40,6 +40,7 @@ import { API_URI, APP_MOUNT_URI, GTM_ID } from "./config";
 import ConfigurationSection, { createConfigurationMenu } from "./configuration";
 import AppStateProvider from "./containers/AppState";
 import BackgroundTasksProvider from "./containers/BackgroundTasks";
+import ServiceWorker from "./containers/ServiceWorker/ServiceWorker";
 import { CustomerSection } from "./customers";
 import DiscountSection from "./discounts";
 import HomePage from "./home";
@@ -113,6 +114,7 @@ const App: React.FC = () => {
           <DateProvider>
             <LocaleProvider>
               <MessageManagerProvider>
+                <ServiceWorker />
                 <BackgroundTasksProvider>
                   <AppStateProvider>
                     <ShopProvider>

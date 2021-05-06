@@ -13,7 +13,8 @@ import {
   ShippingMethodTypeEnum,
   ShippingPostalCodeRulesCreateInputRange
 } from "@saleor/types/globalTypes";
-import { diff } from "fast-array-diff";
+import { getParsedDataForJsonStringField } from "@saleor/utils/richText/misc";
+import { differenceBy } from "lodash";
 import { useIntl } from "react-intl";
 
 import {
@@ -76,7 +77,8 @@ export function getCreateShippingPriceRateVariables(
       minimumDeliveryDays: parsedMinDays,
       name: data.name,
       shippingZone: id,
-      type: ShippingMethodTypeEnum.PRICE
+      type: ShippingMethodTypeEnum.PRICE,
+      description: getParsedDataForJsonStringField(data.description)
     }
   };
 }
@@ -103,7 +105,8 @@ export function getCreateShippingWeightRateVariables(
       minimumOrderWeight: isWeightSet ? parsedMinValue : null,
       name: data.name,
       shippingZone: id,
-      type: ShippingMethodTypeEnum.WEIGHT
+      type: ShippingMethodTypeEnum.WEIGHT,
+      description: getParsedDataForJsonStringField(data.description)
     }
   };
 }
@@ -130,7 +133,8 @@ export function getUpdateShippingPriceRateVariables(
       minimumDeliveryDays: parsedMinDays,
       name: data.name,
       shippingZone: id,
-      type: ShippingMethodTypeEnum.PRICE
+      type: ShippingMethodTypeEnum.PRICE,
+      description: getParsedDataForJsonStringField(data.description)
     }
   };
 }
@@ -162,7 +166,8 @@ export function getUpdateShippingWeightRateVariables(
       minimumOrderWeight: isWeightSet ? parsedMinValue : null,
       name: data.name,
       shippingZone: id,
-      type: ShippingMethodTypeEnum.WEIGHT
+      type: ShippingMethodTypeEnum.WEIGHT,
+      description: getParsedDataForJsonStringField(data.description)
     }
   };
 }
@@ -173,9 +178,7 @@ export function getShippingMethodChannelVariables(
   prevChannels?: ChannelShippingData[]
 ): ShippingMethodChannelListingUpdateVariables {
   const removeChannels = prevChannels
-    ? diff(prevChannels, formChannels, (a, b) => a.id === b.id).removed?.map(
-        removedChannel => removedChannel.id
-      )
+    ? differenceBy(prevChannels, formChannels, "id").map(({ id }) => id)
     : [];
 
   return {

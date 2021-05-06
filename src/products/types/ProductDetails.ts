@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { AttributeInputTypeEnum, AttributeEntityTypeEnum, ProductMediaType, WeightUnitsEnum } from "./../../types/globalTypes";
+import { AttributeInputTypeEnum, AttributeEntityTypeEnum, MeasurementUnitsEnum, ProductMediaType, WeightUnitsEnum } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL query operation: ProductDetails
@@ -22,6 +22,7 @@ export interface ProductDetails_product_attributes_attribute_values {
   slug: string | null;
   file: ProductDetails_product_attributes_attribute_values_file | null;
   reference: string | null;
+  richText: any | null;
 }
 
 export interface ProductDetails_product_attributes_attribute {
@@ -32,6 +33,7 @@ export interface ProductDetails_product_attributes_attribute {
   inputType: AttributeInputTypeEnum | null;
   entityType: AttributeEntityTypeEnum | null;
   valueRequired: boolean;
+  unit: MeasurementUnitsEnum | null;
   values: (ProductDetails_product_attributes_attribute_values | null)[] | null;
 }
 
@@ -48,6 +50,7 @@ export interface ProductDetails_product_attributes_values {
   slug: string | null;
   file: ProductDetails_product_attributes_values_file | null;
   reference: string | null;
+  richText: any | null;
 }
 
 export interface ProductDetails_product_attributes {
@@ -69,6 +72,7 @@ export interface ProductDetails_product_productType_variantAttributes_values {
   slug: string | null;
   file: ProductDetails_product_productType_variantAttributes_values_file | null;
   reference: string | null;
+  richText: any | null;
 }
 
 export interface ProductDetails_product_productType_variantAttributes {
@@ -183,6 +187,11 @@ export interface ProductDetails_product_media {
   oembedData: any;
 }
 
+export interface ProductDetails_product_variants_media {
+  __typename: "ProductMedia";
+  url: string;
+}
+
 export interface ProductDetails_product_variants_stocks_warehouse {
   __typename: "Warehouse";
   id: string;
@@ -229,6 +238,7 @@ export interface ProductDetails_product_variants {
   sku: string;
   name: string;
   margin: number | null;
+  media: ProductDetails_product_variants_media[] | null;
   stocks: (ProductDetails_product_variants_stocks | null)[] | null;
   trackInventory: boolean;
   channelListings: ProductDetails_product_variants_channelListings[] | null;

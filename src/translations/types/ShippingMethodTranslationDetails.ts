@@ -29,13 +29,15 @@ export interface ShippingMethodTranslationDetails_translation_ShippingMethodTran
   id: string;
   language: ShippingMethodTranslationDetails_translation_ShippingMethodTranslatableContent_translation_language;
   name: string | null;
+  description: any | null;
 }
 
 export interface ShippingMethodTranslationDetails_translation_ShippingMethodTranslatableContent {
   __typename: "ShippingMethodTranslatableContent";
-  shippingMethod: ShippingMethodTranslationDetails_translation_ShippingMethodTranslatableContent_shippingMethod | null;
   id: string;
   name: string;
+  description: any | null;
+  shippingMethod: ShippingMethodTranslationDetails_translation_ShippingMethodTranslatableContent_shippingMethod | null;
   translation: ShippingMethodTranslationDetails_translation_ShippingMethodTranslatableContent_translation | null;
 }
 

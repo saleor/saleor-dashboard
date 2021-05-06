@@ -8,7 +8,7 @@
 // ====================================================
 
 export interface SaleBulkDelete_saleBulkDelete_errors {
-  __typename: "Error";
+  __typename: "DiscountError";
   field: string | null;
   message: string | null;
 }

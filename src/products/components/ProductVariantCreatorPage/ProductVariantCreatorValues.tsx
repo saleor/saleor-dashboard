@@ -1,5 +1,6 @@
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
+import Alert from "@saleor/components/Alert/Alert";
 import CardSpacer from "@saleor/components/CardSpacer";
 import CardTitle from "@saleor/components/CardTitle";
 import ControlledCheckbox from "@saleor/components/ControlledCheckbox";
@@ -9,12 +10,21 @@ import { ProductDetails_product_productType_variantAttributes } from "@saleor/pr
 import { makeStyles } from "@saleor/theme";
 import { isSelected } from "@saleor/utils/lists";
 import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import { ProductVariantCreateFormData } from "./form";
+
+export function getVariantsNumber(data: ProductVariantCreateFormData): number {
+  return data.attributes.reduce(
+    (variants, attribute) => variants * attribute.values.length,
+    1
+  );
+}
 
 export interface ProductVariantCreatorValuesProps {
   attributes: ProductDetails_product_productType_variantAttributes[];
   data: ProductVariantCreateFormData;
+  variantsLeft: number | null;
   onValueClick: (attributeId: string, valueId: string) => void;
 }
 
@@ -30,11 +40,30 @@ const useStyles = makeStyles(
 );
 
 const ProductVariantCreatorValues: React.FC<ProductVariantCreatorValuesProps> = props => {
-  const { attributes, data, onValueClick } = props;
+  const { attributes, data, variantsLeft, onValueClick } = props;
   const classes = useStyles(props);
+  const intl = useIntl();
+  const variantsNumber = getVariantsNumber(data);
 
   return (
     <>
+      {variantsLeft !== null && (
+        <Alert
+          show={variantsNumber > variantsLeft}
+          title={intl.formatMessage({
+            defaultMessage: "SKU limit reached",
+            description: "alert"
+          })}
+        >
+          <FormattedMessage
+            defaultMessage="You choices will add {variantsNumber} SKUs to your catalog which will exceed your limit by {aboveLimitVariantsNumber}. If you would like to up your limit, contact your administration staff about raising your limits."
+            values={{
+              variantsNumber,
+              aboveLimitVariantsNumber: variantsNumber - variantsLeft
+            }}
+          />
+        </Alert>
+      )}
       {attributes.map(attribute => (
         <React.Fragment key={attribute.id}>
           <Card>

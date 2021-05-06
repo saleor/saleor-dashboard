@@ -8,6 +8,8 @@ import React from "react";
 
 import {
   filterPageProps,
+  limits,
+  limitsReached,
   listActionsProps,
   pageListProps,
   sortPageProps
@@ -46,6 +48,7 @@ const props: OrderListPageProps = {
       value: [OrderStatusFilter.CANCELED, OrderStatusFilter.FULFILLED]
     }
   },
+  limits,
   onSettingsOpen: () => undefined,
   orders,
   sort: {
@@ -65,4 +68,8 @@ storiesOf("Views / Orders / Order list", module)
       disabled={true}
     />
   ))
-  .add("when no data", () => <OrderListPage {...props} orders={[]} />);
+  .add("when no data", () => <OrderListPage {...props} orders={[]} />)
+  .add("no limits", () => <OrderListPage {...props} limits={undefined} />)
+  .add("limits reached", () => (
+    <OrderListPage {...props} limits={limitsReached} />
+  ));

@@ -1,6 +1,7 @@
 // <reference types="cypress" />
 import faker from "faker";
 
+import { createChannel } from "../../apiRequests/Channels";
 import {
   createVoucher,
   discountOptions
@@ -9,14 +10,14 @@ import { urlList } from "../../url/urlList";
 import * as channelsUtils from "../../utils/channelsUtils";
 import { deleteVouchersStartsWith } from "../../utils/discounts/vouchersUtils";
 import { createCheckoutWithVoucher } from "../../utils/ordersUtils";
-import * as productsUtils from "../../utils/productsUtils";
+import * as productsUtils from "../../utils/products/productsUtils";
 import {
   createShipping,
   deleteShippingStartsWith
 } from "../../utils/shippingUtils";
 
 describe("Vouchers discounts", () => {
-  const startsWith = "Cy-";
+  const startsWith = "CyVou-";
   const productPrice = 100;
   const shippingPrice = 100;
 
@@ -35,7 +36,7 @@ describe("Vouchers discounts", () => {
     deleteShippingStartsWith(startsWith);
     deleteVouchersStartsWith(startsWith);
 
-    const name = `${startsWith}${faker.random.number()}`;
+    const name = `${startsWith}${faker.datatype.number()}`;
 
     productsUtils
       .createTypeAttributeAndCategoryForProduct(name)
@@ -77,7 +78,7 @@ describe("Vouchers discounts", () => {
           price: productPrice
         });
       })
-      .then(({ variants: variantsResp }) => (variants = variantsResp));
+      .then(({ variantsList: variantsResp }) => (variants = variantsResp));
   });
 
   beforeEach(() => {
@@ -86,7 +87,7 @@ describe("Vouchers discounts", () => {
   });
 
   it("should create percentage voucher", () => {
-    const voucherCode = `${startsWith}${faker.random.number()}`;
+    const voucherCode = `${startsWith}${faker.datatype.number()}`;
     const voucherValue = 50;
 
     createVoucher({
@@ -104,7 +105,7 @@ describe("Vouchers discounts", () => {
       });
   });
   it("should create fixed price voucher", () => {
-    const voucherCode = `${startsWith}${faker.random.number()}`;
+    const voucherCode = `${startsWith}${faker.datatype.number()}`;
     const voucherValue = 50;
 
     createVoucher({
@@ -123,7 +124,7 @@ describe("Vouchers discounts", () => {
 
   // Test should pass after fixing - SALEOR-1629 bug
   xit("should create free shipping voucher", () => {
-    const voucherCode = `${startsWith}${faker.random.number()}`;
+    const voucherCode = `${startsWith}${faker.datatype.number()}`;
 
     createVoucher({
       voucherCode,
@@ -139,11 +140,10 @@ describe("Vouchers discounts", () => {
   });
 
   it("should create voucher not available for selected channel", () => {
-    const randomName = `${startsWith}${faker.random.number()}`;
+    const randomName = `${startsWith}${faker.datatype.number()}`;
     const voucherValue = 50;
 
-    channelsUtils
-      .createChannel({ name: randomName })
+    createChannel({ name: randomName })
       .then(channel => {
         createVoucher({
           voucherCode: randomName,

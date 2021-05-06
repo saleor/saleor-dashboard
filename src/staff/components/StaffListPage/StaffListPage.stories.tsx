@@ -1,5 +1,7 @@
 import {
   filterPageProps,
+  limits,
+  limitsReached,
   pageListProps,
   searchPageProps,
   sortPageProps,
@@ -26,6 +28,7 @@ const props: StaffListPageProps = {
       value: StaffMemberStatus.ACTIVE
     }
   },
+  limits,
   onAdd: undefined,
   onBack: () => undefined,
   sort: {
@@ -40,4 +43,8 @@ storiesOf("Views / Staff / Staff members", module)
   .add("default", () => <StaffListPage {...props} />)
   .add("when loading", () => (
     <StaffListPage {...props} disabled={true} staffMembers={undefined} />
+  ))
+  .add("no limits", () => <StaffListPage {...props} limits={undefined} />)
+  .add("limits reached", () => (
+    <StaffListPage {...props} limits={limitsReached} />
   ));

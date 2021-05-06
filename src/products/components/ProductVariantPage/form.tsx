@@ -177,6 +177,7 @@ function useProductVariantUpdateForm(
     attributes.data,
     triggerChange
   );
+
   const handleStockAdd = (id: string) => {
     triggerChange();
     stocks.add({

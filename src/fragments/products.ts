@@ -127,6 +127,7 @@ export const productVariantAttributesFragment = gql`
         inputType
         entityType
         valueRequired
+        unit
         values {
           ...AttributeValueFragment
         }
@@ -202,6 +203,9 @@ export const productFragmentDetails = gql`
       sku
       name
       margin
+      media {
+        url(size: 200)
+      }
       stocks {
         ...StockFragment
       }
@@ -236,6 +240,7 @@ export const variantAttributeFragment = gql`
     inputType
     entityType
     valueRequired
+    unit
     values {
       ...AttributeValueFragment
     }
@@ -256,6 +261,7 @@ export const selectedVariantAttributeFragment = gql`
 `;
 
 export const fragmentVariant = gql`
+  ${fragmentProductMedia}
   ${selectedVariantAttributeFragment}
   ${priceRangeFragment}
   ${fragmentProductMedia}
@@ -294,6 +300,8 @@ export const fragmentVariant = gql`
         url
       }
       channelListings {
+        publicationDate
+        isPublished
         channel {
           id
           name

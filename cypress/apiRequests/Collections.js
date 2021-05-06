@@ -1,3 +1,23 @@
+export function createCollection(name, slug = name) {
+  const mutation = `mutation {
+    collectionCreate(input:{
+      name:"${name}",
+      slug:"${name}"
+    }){
+      collectionErrors{
+        field
+        message
+      }
+      collection{
+        name
+        id
+      }
+    }
+  }`;
+  return cy
+    .sendRequestWithQuery(mutation)
+    .its("body.data.collectionCreate.collection");
+}
 export function getCollections(search) {
   const filter = search
     ? `, filter:{

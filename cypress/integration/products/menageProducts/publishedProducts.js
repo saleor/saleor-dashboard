@@ -1,16 +1,16 @@
 import faker from "faker";
 
 import { getProductDetails } from "../../../apiRequests/storeFront/ProductDetails";
-import { updateProductPublish } from "../../../steps/products/productSteps";
+import { updateProductPublish } from "../../../steps/catalog/products/productSteps";
 import { productDetailsUrl } from "../../../url/urlList";
 import { getDefaultChannel } from "../../../utils/channelsUtils";
-import * as productsUtils from "../../../utils/productsUtils";
+import * as productsUtils from "../../../utils/products/productsUtils";
 import { isProductVisible } from "../../../utils/storeFront/storeFrontProductUtils";
 
 // <reference types="cypress" />
 describe("Published products", () => {
-  const startsWith = "Cy-";
-  const name = `${startsWith}${faker.random.number()}`;
+  const startsWith = "CyPublishedProducts-";
+  const name = `${startsWith}${faker.datatype.number()}`;
   let productType;
   let attribute;
   let category;
@@ -37,7 +37,7 @@ describe("Published products", () => {
     cy.clearSessionData().loginUserViaRequest();
   });
   it("should update product to published", () => {
-    const productName = `${startsWith}${faker.random.number()}`;
+    const productName = `${startsWith}${faker.datatype.number()}`;
     let defaultChannel;
     getDefaultChannel()
       .then(channel => {
@@ -64,7 +64,7 @@ describe("Published products", () => {
       });
   });
   it("should update product to not published", () => {
-    const productName = `${startsWith}${faker.random.number()}`;
+    const productName = `${startsWith}${faker.datatype.number()}`;
     let defaultChannel;
     let product;
 

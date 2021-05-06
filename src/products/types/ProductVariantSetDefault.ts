@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { ProductErrorCode, AttributeInputTypeEnum, AttributeEntityTypeEnum, ProductMediaType, WeightUnitsEnum } from "./../../types/globalTypes";
+import { ProductErrorCode, AttributeInputTypeEnum, AttributeEntityTypeEnum, MeasurementUnitsEnum, ProductMediaType, WeightUnitsEnum } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: ProductVariantSetDefault
@@ -28,6 +28,7 @@ export interface ProductVariantSetDefault_productVariantSetDefault_product_attri
   slug: string | null;
   file: ProductVariantSetDefault_productVariantSetDefault_product_attributes_attribute_values_file | null;
   reference: string | null;
+  richText: any | null;
 }
 
 export interface ProductVariantSetDefault_productVariantSetDefault_product_attributes_attribute {
@@ -38,6 +39,7 @@ export interface ProductVariantSetDefault_productVariantSetDefault_product_attri
   inputType: AttributeInputTypeEnum | null;
   entityType: AttributeEntityTypeEnum | null;
   valueRequired: boolean;
+  unit: MeasurementUnitsEnum | null;
   values: (ProductVariantSetDefault_productVariantSetDefault_product_attributes_attribute_values | null)[] | null;
 }
 
@@ -54,6 +56,7 @@ export interface ProductVariantSetDefault_productVariantSetDefault_product_attri
   slug: string | null;
   file: ProductVariantSetDefault_productVariantSetDefault_product_attributes_values_file | null;
   reference: string | null;
+  richText: any | null;
 }
 
 export interface ProductVariantSetDefault_productVariantSetDefault_product_attributes {
@@ -75,6 +78,7 @@ export interface ProductVariantSetDefault_productVariantSetDefault_product_produ
   slug: string | null;
   file: ProductVariantSetDefault_productVariantSetDefault_product_productType_variantAttributes_values_file | null;
   reference: string | null;
+  richText: any | null;
 }
 
 export interface ProductVariantSetDefault_productVariantSetDefault_product_productType_variantAttributes {
@@ -189,6 +193,11 @@ export interface ProductVariantSetDefault_productVariantSetDefault_product_media
   oembedData: any;
 }
 
+export interface ProductVariantSetDefault_productVariantSetDefault_product_variants_media {
+  __typename: "ProductMedia";
+  url: string;
+}
+
 export interface ProductVariantSetDefault_productVariantSetDefault_product_variants_stocks_warehouse {
   __typename: "Warehouse";
   id: string;
@@ -235,6 +244,7 @@ export interface ProductVariantSetDefault_productVariantSetDefault_product_varia
   sku: string;
   name: string;
   margin: number | null;
+  media: ProductVariantSetDefault_productVariantSetDefault_product_variants_media[] | null;
   stocks: (ProductVariantSetDefault_productVariantSetDefault_product_variants_stocks | null)[] | null;
   trackInventory: boolean;
   channelListings: ProductVariantSetDefault_productVariantSetDefault_product_variants_channelListings[] | null;

@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { AttributeValueCreateInput, AttributeTypeEnum, AttributeInputTypeEnum, AttributeEntityTypeEnum, AttributeErrorCode } from "./../../types/globalTypes";
+import { AttributeValueCreateInput, AttributeTypeEnum, MeasurementUnitsEnum, AttributeInputTypeEnum, AttributeEntityTypeEnum, AttributeErrorCode } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: AttributeValueUpdate
@@ -34,6 +34,7 @@ export interface AttributeValueUpdate_attributeValueUpdate_attribute_values {
   slug: string | null;
   file: AttributeValueUpdate_attributeValueUpdate_attribute_values_file | null;
   reference: string | null;
+  richText: any | null;
 }
 
 export interface AttributeValueUpdate_attributeValueUpdate_attribute {
@@ -45,6 +46,7 @@ export interface AttributeValueUpdate_attributeValueUpdate_attribute {
   visibleInStorefront: boolean;
   filterableInDashboard: boolean;
   filterableInStorefront: boolean;
+  unit: MeasurementUnitsEnum | null;
   metadata: (AttributeValueUpdate_attributeValueUpdate_attribute_metadata | null)[];
   privateMetadata: (AttributeValueUpdate_attributeValueUpdate_attribute_privateMetadata | null)[];
   availableInGrid: boolean;

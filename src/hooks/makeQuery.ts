@@ -42,7 +42,7 @@ export interface LoadMore<TData, TVariables> {
 
 export type UseQueryResult<TData, TVariables> = QueryResult<TData, TVariables> &
   LoadMore<TData, TVariables>;
-type UseQueryOpts<TVariables> = Partial<{
+export type UseQueryOpts<TVariables> = Partial<{
   displayLoader: boolean;
   skip: boolean;
   variables: TVariables;
