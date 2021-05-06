@@ -38,6 +38,7 @@ import {
   InitialProductFilterProductTypes,
   InitialProductFilterProductTypesVariables
 } from "./types/InitialProductFilterProductTypes";
+import { ProductCount, ProductCountVariables } from "./types/ProductCount";
 import {
   ProductDetails,
   ProductDetailsVariables

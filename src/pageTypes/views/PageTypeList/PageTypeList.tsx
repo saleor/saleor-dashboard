@@ -4,6 +4,7 @@ import DeleteFilterTabDialog from "@saleor/components/DeleteFilterTabDialog";
 import SaveFilterTabDialog, {
   SaveFilterTabDialogFormData
 } from "@saleor/components/SaveFilterTabDialog";
+import TypeDeleteWarningDialog from "@saleor/components/TypeDeleteWarningDialog";
 import useBulkActions from "@saleor/hooks/useBulkActions";
 import useListSettings from "@saleor/hooks/useListSettings";
 import useNavigator from "@saleor/hooks/useNavigator";
@@ -13,7 +14,9 @@ import usePaginator, {
 } from "@saleor/hooks/usePaginator";
 import { commonMessages } from "@saleor/intl";
 import { getStringOrPlaceholder } from "@saleor/misc";
-import PageTypeBulkDeleteDialog from "@saleor/pageTypes/components/PageTypeBulkDeleteDialog";
+import { usePageCountQuery } from "@saleor/pages/queries";
+import { PageCountVariables } from "@saleor/pages/types/PageCount";
+import { pageListUrl } from "@saleor/pages/urls";
 import { usePageTypeBulkDeleteMutation } from "@saleor/pageTypes/mutations";
 import { ListViews } from "@saleor/types";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
@@ -41,6 +44,7 @@ import {
   getFilterVariables,
   saveFilterTab
 } from "./filters";
+import * as deletePageTypesMessages from "./PageTypeDeleteWarningDialogMessages";
 import { getSortQueryVariables } from "./sort";
 
 interface PageTypeListProps {
@@ -51,9 +55,13 @@ export const PageTypeList: React.FC<PageTypeListProps> = ({ params }) => {
   const navigate = useNavigator();
   const paginate = usePaginator();
   const notify = useNotifier();
-  const { isSelected, listElements, reset, toggle, toggleAll } = useBulkActions(
-    params.ids
-  );
+  const {
+    isSelected,
+    listElements: selectedPageTypes,
+    reset,
+    toggle,
+    toggleAll
+  } = useBulkActions(params.ids);
   const intl = useIntl();
   const { settings } = useListSettings(ListViews.PAGES_LIST);
 
@@ -155,10 +163,35 @@ export const PageTypeList: React.FC<PageTypeListProps> = ({ params }) => {
       }
     });
 
-  const selectedPageTypesHasPages = data?.pageTypes.edges.some(
-    pageType =>
-      pageType.node.hasPages && params.ids?.some(id => id === pageType.node.id)
+  const pagesAssignedToSelectedTypesQueryVars = React.useMemo<
+    PageCountVariables
+  >(
+    () => ({
+      filter: {
+        pageTypes: selectedPageTypes
+      }
+    }),
+    [selectedPageTypes]
   );
+
+  const isDeleteDialogOpen = params.action === "remove";
+
+  const shouldSkipPageListQuery =
+    !selectedPageTypes.length || !isDeleteDialogOpen;
+
+  const {
+    data: pagesAssignedToSelectedTypes,
+    loading: loadingPagesAssignedToSelectedTypes
+  } = usePageCountQuery({
+    variables: pagesAssignedToSelectedTypesQueryVars,
+    skip: shouldSkipPageListQuery
+  });
+
+  const selectedPagesAssignedToDeleteUrl = pageListUrl({
+    pageTypes: selectedPageTypes
+  });
+
+  const pageTypesData = data?.pageTypes?.edges.map(edge => edge.node) || [];
 
   return (
     <>
@@ -181,7 +214,7 @@ export const PageTypeList: React.FC<PageTypeListProps> = ({ params }) => {
         onRowClick={id => () => navigate(pageTypeUrl(id))}
         onSort={handleSort}
         isChecked={isSelected}
-        selected={listElements.length}
+        selected={selectedPageTypes.length}
         sort={getSortParams(params)}
         toggle={toggle}
         toggleAll={toggleAll}
@@ -190,7 +223,7 @@ export const PageTypeList: React.FC<PageTypeListProps> = ({ params }) => {
             color="primary"
             onClick={() =>
               openModal("remove", {
-                ids: listElements
+                ids: selectedPageTypes
               })
             }
           >
@@ -198,13 +231,17 @@ export const PageTypeList: React.FC<PageTypeListProps> = ({ params }) => {
           </IconButton>
         }
       />
-      <PageTypeBulkDeleteDialog
-        confirmButtonState={pageTypeBulkDeleteOpts.status}
-        quantity={params.ids?.length}
-        hasPages={selectedPageTypesHasPages}
-        open={params.action === "remove"}
+      <TypeDeleteWarningDialog
+        {...deletePageTypesMessages}
+        typesData={pageTypesData}
+        isLoading={loadingPagesAssignedToSelectedTypes}
+        typesToDelete={selectedPageTypes}
+        viewAssignedItemsUrl={selectedPagesAssignedToDeleteUrl}
         onClose={closeModal}
-        onConfirm={hanldePageTypeBulkDelete}
+        onDelete={hanldePageTypeBulkDelete}
+        deleteButtonState={pageTypeBulkDeleteOpts.status}
+        isOpen={isDeleteDialogOpen}
+        assignedItemsCount={pagesAssignedToSelectedTypes?.pages?.totalCount}
       />
       <SaveFilterTabDialog
         open={params.action === "save-search"}

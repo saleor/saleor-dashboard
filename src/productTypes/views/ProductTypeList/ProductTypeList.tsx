@@ -168,6 +168,7 @@ export const ProductTypeList: React.FC<ProductTypeListProps> = ({ params }) => {
   );
 
   const isDeleteDialogOpen = params.action === "remove";
+
   const shouldSkipProductListQuery =
     !selectedProductTypes.length || !isDeleteDialogOpen;
 

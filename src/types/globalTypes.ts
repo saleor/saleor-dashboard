@@ -1529,6 +1529,12 @@ export interface PageCreateInput {
   pageType: string;
 }
 
+export interface PageFilterInput {
+  pageTypes?: string[] | null;
+  search?: string | null;
+  metadata?: (MetadataInput | null)[] | null;
+}
+
 export interface PageInput {
   slug?: string | null;
   title?: string | null;
