@@ -176,6 +176,19 @@ export const useProductListQuery = makeQuery<ProductList, ProductListVariables>(
   productListQuery
 );
 
+const productCountQuery = gql`
+  query ProductCount($filter: ProductFilterInput) {
+    products(filter: $filter) {
+      totalCount
+    }
+  }
+`;
+
+export const useProductCountQuery = makeQuery<
+  ProductCount,
+  ProductCountVariables
+>(productCountQuery);
+
 const countAllProductsQuery = gql`
   query CountAllProducts {
     products {
