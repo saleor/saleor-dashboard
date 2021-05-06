@@ -11,6 +11,7 @@ import useAddressValidation from "@saleor/hooks/useAddressValidation";
 import { sectionNames } from "@saleor/intl";
 import { AddressInput } from "@saleor/types/globalTypes";
 import createSingleAutocompleteSelectHandler from "@saleor/utils/handlers/singleAutocompleteSelectChangeHandler";
+import { mapCountriesToChoices } from "@saleor/utils/maps";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -69,10 +70,7 @@ const CustomerCreatePage: React.FC<CustomerCreatePageProps> = ({
   const intl = useIntl();
 
   const [countryDisplayName, setCountryDisplayName] = React.useState("");
-  const countryChoices = countries.map(country => ({
-    label: country.country,
-    value: country.code
-  }));
+  const countryChoices = mapCountriesToChoices(countries);
   const {
     errors: validationErrors,
     submit: handleSubmitWithAddress

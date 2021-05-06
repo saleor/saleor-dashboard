@@ -31,12 +31,14 @@ storiesOf("Orders / OrderFulfillmentDialog", module)
         {
           __typename: "OrderError",
           code: OrderErrorCode.FULFILL_ORDER_LINE,
-          field: null
+          field: null,
+          addressType: null
         },
         {
           __typename: "OrderError",
           code: OrderErrorCode.INVALID,
-          field: "trackingNumber"
+          field: "trackingNumber",
+          addressType: null
         }
       ]}
     />

@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { AccountErrorCode } from "./../../types/globalTypes";
+import { AccountErrorCode, AddressTypeEnum } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: ExternalAuthenticationUrl
@@ -13,6 +13,7 @@ export interface ExternalAuthenticationUrl_externalAuthenticationUrl_errors {
   __typename: "AccountError";
   code: AccountErrorCode;
   field: string | null;
+  addressType: AddressTypeEnum | null;
 }
 
 export interface ExternalAuthenticationUrl_externalAuthenticationUrl {

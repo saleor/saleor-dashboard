@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { AddressInput, AccountErrorCode } from "./../../types/globalTypes";
+import { AddressInput, AccountErrorCode, AddressTypeEnum } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: CreateCustomerAddress
@@ -13,6 +13,7 @@ export interface CreateCustomerAddress_addressCreate_errors {
   __typename: "AccountError";
   code: AccountErrorCode;
   field: string | null;
+  addressType: AddressTypeEnum | null;
 }
 
 export interface CreateCustomerAddress_addressCreate_address_country {

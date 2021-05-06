@@ -1,6 +1,7 @@
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import AddressEdit from "@saleor/components/AddressEdit";
+import { mapCountriesToChoices } from "@saleor/utils/maps";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
@@ -22,10 +23,7 @@ storiesOf("Generics / AddressEdit", module)
         <AddressEdit
           errors={[]}
           data={transformAddressToForm(customer.defaultBillingAddress)}
-          countries={countries.map(c => ({
-            label: c.label,
-            value: c.code
-          }))}
+          countries={mapCountriesToChoices(countries)}
           countryDisplayValue={customer.defaultBillingAddress.country.country}
           onChange={undefined}
           onCountryChange={() => undefined}

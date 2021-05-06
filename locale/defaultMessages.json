@@ -370,10 +370,6 @@
     "context": "product field",
     "string": "Export Variant Weight"
   },
-  "productExportFieldVisibility": {
-    "context": "product field",
-    "string": "Visibility"
-  },
   "productStockHeader": {
     "context": "product stock, section header",
     "string": "Inventory"
@@ -2460,6 +2456,10 @@
     "context": "button",
     "string": "Refresh"
   },
+  "src_dot_continue": {
+    "context": "button",
+    "string": "Continue"
+  },
   "src_dot_create": {
     "context": "button",
     "string": "Create"
@@ -3376,6 +3376,54 @@
   "src_dot_orders_dot_components_dot_OrderChannelSectionCard_dot_1243773440": {
     "context": "section header",
     "string": "Sales channel"
+  },
+  "src_dot_orders_dot_components_dot_OrderCustomerAddressesEditDialog_dot_billingAddressDescription": {
+    "context": "dialog content",
+    "string": "Add a new address:"
+  },
+  "src_dot_orders_dot_components_dot_OrderCustomerAddressesEditDialog_dot_billingSameAsShipping": {
+    "context": "checkbox label",
+    "string": "Billing address same as shipping address"
+  },
+  "src_dot_orders_dot_components_dot_OrderCustomerAddressesEditDialog_dot_customerAddress": {
+    "context": "address type",
+    "string": "Use one of customer addresses"
+  },
+  "src_dot_orders_dot_components_dot_OrderCustomerAddressesEditDialog_dot_customerBillingAddressDescription": {
+    "context": "dialog content",
+    "string": "Select one of customer addresses or add a new address:"
+  },
+  "src_dot_orders_dot_components_dot_OrderCustomerAddressesEditDialog_dot_customerShippingAddressDescription": {
+    "context": "dialog content",
+    "string": "Which address would you like to use as shipping address for selected customer:"
+  },
+  "src_dot_orders_dot_components_dot_OrderCustomerAddressesEditDialog_dot_newAddress": {
+    "context": "address type",
+    "string": "Add new address"
+  },
+  "src_dot_orders_dot_components_dot_OrderCustomerAddressesEditDialog_dot_shippingAddressDescription": {
+    "context": "dialog content",
+    "string": "This customer doesn’t have any shipping addresses. Provide address for order:"
+  },
+  "src_dot_orders_dot_components_dot_OrderCustomerAddressesEditDialog_dot_title": {
+    "context": "dialog header",
+    "string": "Shipping address for order"
+  },
+  "src_dot_orders_dot_components_dot_OrderCustomerChangeDialog_dot_changeAddress": {
+    "context": "option label",
+    "string": "Change address"
+  },
+  "src_dot_orders_dot_components_dot_OrderCustomerChangeDialog_dot_description": {
+    "context": "dialog description",
+    "string": "You have changed customer assigned to this order. What would you like to do with the shipping address?"
+  },
+  "src_dot_orders_dot_components_dot_OrderCustomerChangeDialog_dot_keepAddress": {
+    "context": "option label",
+    "string": "Keep address"
+  },
+  "src_dot_orders_dot_components_dot_OrderCustomerChangeDialog_dot_title": {
+    "context": "dialog header",
+    "string": "Changed Customer"
   },
   "src_dot_orders_dot_components_dot_OrderCustomerNote_dot_1505053535": {
     "string": "No notes from customer"
@@ -5801,6 +5849,10 @@
   },
   "src_dot_savedChanges": {
     "string": "Saved changes"
+  },
+  "src_dot_select": {
+    "context": "select option, button",
+    "string": "Select"
   },
   "src_dot_selectAll": {
     "context": "select all options, button",

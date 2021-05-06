@@ -43,6 +43,7 @@ All notable, unreleased changes to this project will be documented in this file.
   - useFormset.setItemValue wrong updates,
 - Drop deprecated fields - #1071 by @jwm0
 - Add service worker - #1073 by @dominik-zeglen
+- Choosing user shipping and billing addresses for draft order - #1082 by @orzechdev
 
 # 2.11.1
 

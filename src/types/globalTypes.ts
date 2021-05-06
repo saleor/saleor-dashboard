@@ -849,7 +849,6 @@ export enum ProductFieldEnum {
   VARIANT_MEDIA = "VARIANT_MEDIA",
   VARIANT_SKU = "VARIANT_SKU",
   VARIANT_WEIGHT = "VARIANT_WEIGHT",
-  VISIBLE = "VISIBLE",
 }
 
 export enum ProductMediaType {

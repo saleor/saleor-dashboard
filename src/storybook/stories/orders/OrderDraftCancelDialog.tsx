@@ -26,7 +26,8 @@ storiesOf("Orders / OrderDraftCancelDialog", module)
         {
           __typename: "OrderError",
           code: OrderErrorCode.GRAPHQL_ERROR,
-          field: null
+          field: null,
+          addressType: null
         }
       ]}
     />

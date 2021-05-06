@@ -101,11 +101,7 @@ const CustomerAddresses: React.FC<CustomerAddressesProps> = ({
                   {(removeCustomerAddress, removeCustomerAddressOpts) => (
                     <TypedCustomerAddressesQuery variables={{ id }}>
                       {customerData => {
-                        const countryChoices =
-                          shop?.countries?.map(country => ({
-                            code: country.code,
-                            label: country.country
-                          })) || [];
+                        const countryChoices = shop?.countries || [];
 
                         return (
                           <>
