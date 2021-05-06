@@ -81,7 +81,7 @@ export interface PluginUpdate {
 }
 
 export interface PluginUpdateVariables {
-  channelId: string;
+  channel: string;
   id: string;
   input: PluginUpdateInput;
 }
