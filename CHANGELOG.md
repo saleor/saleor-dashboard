@@ -29,6 +29,7 @@ All notable, unreleased changes to this project will be documented in this file.
 - Update CollectionBulkDelete error type - #1030 by @d-wysocki
 - Remove mailing settings - #1027 by @dominik-zeglen
 - Update schema to contain email plugin changes - #1029 by @dominik-zeglen
+- Fix creating shipping voucher - #1031 by @orzechdev
 - Unconfirmed order manipulation - #967 by @tomaszszymanski129
 - Add multiline field plugins - #974 by @dominik-zeglen
 - Handle limit reached error - #990 by @dominik-zeglen

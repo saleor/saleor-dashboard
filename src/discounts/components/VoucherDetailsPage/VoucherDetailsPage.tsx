@@ -11,8 +11,11 @@ import Grid from "@saleor/components/Grid";
 import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
 import { Tab, TabContainer } from "@saleor/components/Tab";
-import { createChannelsChangeHandler } from "@saleor/discounts/handlers";
-import { RequirementsPicker } from "@saleor/discounts/types";
+import {
+  createChannelsChangeHandler,
+  createDiscountTypeChangeHandler
+} from "@saleor/discounts/handlers";
+import { DiscountTypeEnum, RequirementsPicker } from "@saleor/discounts/types";
 import { DiscountErrorFragment } from "@saleor/fragments/types/DiscountErrorFragment";
 import { sectionNames } from "@saleor/intl";
 import { validatePrice } from "@saleor/products/utils/validation";
@@ -56,7 +59,7 @@ export interface VoucherDetailsPageFormData {
   applyOncePerOrder: boolean;
   channelListings: ChannelVoucherData[];
   code: string;
-  discountType: DiscountValueTypeEnum;
+  discountType: DiscountTypeEnum;
   endDate: string;
   endTime: string;
   hasEndDate: boolean;
@@ -156,15 +159,19 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
     requirementsPickerInitValue = RequirementsPicker.NONE;
   }
 
+  const discountType =
+    voucher?.type === VoucherTypeEnum.SHIPPING
+      ? DiscountTypeEnum.SHIPPING
+      : voucher?.discountValueType === DiscountValueTypeEnum.PERCENTAGE
+      ? DiscountTypeEnum.VALUE_PERCENTAGE
+      : DiscountTypeEnum.VALUE_FIXED;
+
   const initialForm: VoucherDetailsPageFormData = {
     applyOncePerCustomer: voucher?.applyOncePerCustomer || false,
     applyOncePerOrder: voucher?.applyOncePerOrder || false,
     channelListings,
     code: voucher?.code || "",
-    discountType: maybe(
-      () => voucher.discountValueType,
-      DiscountValueTypeEnum.FIXED
-    ),
+    discountType,
     endDate: splitDateTime(maybe(() => voucher.endDate, "")).date,
     endTime: splitDateTime(maybe(() => voucher.endDate, "")).time,
     hasEndDate: maybe(() => !!voucher.endDate),
@@ -183,17 +190,22 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
   return (
     <Form initial={initialForm} onSubmit={onSubmit}>
       {({ change, data, hasChanged, submit, triggerChange }) => {
+        const handleDiscountTypeChange = createDiscountTypeChangeHandler(
+          change
+        );
         const handleChannelChange = createChannelsChangeHandler(
           data.channelListings,
           onChannelsChange,
           triggerChange
         );
-        const formDisabled = data.channelListings?.some(
-          channel =>
-            validatePrice(channel.discountValue) ||
-            (data.requirementsPicker === RequirementsPicker.ORDER &&
-              validatePrice(channel.minSpent))
-        );
+        const formDisabled =
+          data.discountType.toString() !== "SHIPPING" &&
+          data.channelListings?.some(
+            channel =>
+              validatePrice(channel.discountValue) ||
+              (data.requirementsPicker === RequirementsPicker.ORDER &&
+                validatePrice(channel.minSpent))
+          );
         return (
           <Container>
             <AppHeader onBack={onBack}>
@@ -214,7 +226,7 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
                   data={data}
                   disabled={disabled}
                   errors={errors}
-                  onChange={change}
+                  onChange={event => handleDiscountTypeChange(data, event)}
                 />
                 <CardSpacer />
                 {data.discountType.toString() !== "SHIPPING" ? (

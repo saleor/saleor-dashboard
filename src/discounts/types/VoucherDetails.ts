@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { DiscountValueTypeEnum, VoucherTypeEnum } from "./../../types/globalTypes";
+import { VoucherTypeEnum, DiscountValueTypeEnum } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL query operation: VoucherDetails
@@ -165,11 +165,11 @@ export interface VoucherDetails_voucher {
   startDate: any;
   endDate: any | null;
   usageLimit: number | null;
+  type: VoucherTypeEnum;
   discountValueType: DiscountValueTypeEnum;
   countries: (VoucherDetails_voucher_countries | null)[] | null;
   minCheckoutItemsQuantity: number | null;
   channelListings: VoucherDetails_voucher_channelListings[] | null;
-  type: VoucherTypeEnum;
   used: number;
   applyOncePerOrder: boolean;
   applyOncePerCustomer: boolean;
