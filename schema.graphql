@@ -5146,6 +5146,7 @@ type ShippingZoneDelete {
 
 input ShippingZoneFilterInput {
   search: String
+  channel: ID
 }
 
 type ShippingZoneUpdate {

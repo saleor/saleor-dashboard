@@ -6,29 +6,29 @@
 import { ShippingZoneFilterInput } from "./../../types/globalTypes";
 
 // ====================================================
-// GraphQL query operation: ShippingZoneChannels
+// GraphQL query operation: ChannelShippingZones
 // ====================================================
 
-export interface ShippingZoneChannels_shippingZones_edges_node {
+export interface ChannelShippingZones_shippingZones_edges_node {
   __typename: "ShippingZone";
   id: string;
   name: string;
 }
 
-export interface ShippingZoneChannels_shippingZones_edges {
+export interface ChannelShippingZones_shippingZones_edges {
   __typename: "ShippingZoneCountableEdge";
-  node: ShippingZoneChannels_shippingZones_edges_node;
+  node: ChannelShippingZones_shippingZones_edges_node;
 }
 
-export interface ShippingZoneChannels_shippingZones {
+export interface ChannelShippingZones_shippingZones {
   __typename: "ShippingZoneCountableConnection";
-  edges: ShippingZoneChannels_shippingZones_edges[];
+  edges: ChannelShippingZones_shippingZones_edges[];
 }
 
-export interface ShippingZoneChannels {
-  shippingZones: ShippingZoneChannels_shippingZones | null;
+export interface ChannelShippingZones {
+  shippingZones: ChannelShippingZones_shippingZones | null;
 }
 
-export interface ShippingZoneChannelsVariables {
+export interface ChannelShippingZonesVariables {
   filter?: ShippingZoneFilterInput | null;
 }

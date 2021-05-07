@@ -6,11 +6,11 @@ import {
 import makeQuery from "@saleor/hooks/makeQuery";
 import gql from "graphql-tag";
 
-import { ShippingZone, ShippingZoneVariables } from "./types/ShippingZone";
 import {
-  ShippingZoneChannels,
-  ShippingZoneChannelsVariables
-} from "./types/ShippingZoneChannels";
+  ChannelShippingZones,
+  ChannelShippingZonesVariables
+} from "./types/ChannelShippingZones";
+import { ShippingZone, ShippingZoneVariables } from "./types/ShippingZone";
 import { ShippingZones, ShippingZonesVariables } from "./types/ShippingZones";
 
 const shippingZones = gql`
@@ -71,20 +71,20 @@ export const useShippingZone = makeQuery<ShippingZone, ShippingZoneVariables>(
   shippingZone
 );
 
-const shippingZoneChannels = gql`
-  query ShippingZoneChannels($id: ID!) {
-    shippingZone(id: $id) {
-      id
-      channels {
-        id
-        name
-        currencyCode
+const channelShippingZones = gql`
+  query ChannelShippingZones($filter: ShippingZoneFilterInput) {
+    shippingZones(filter: $filter) {
+      edges {
+        node {
+          id
+          name
+        }
       }
     }
   }
 `;
 
-export const useShippingZoneChannels = makeQuery<
-  ShippingZoneChannels,
-  ShippingZoneChannelsVariables
->(shippingZoneChannels);
+export const useChannelShippingZones = makeQuery<
+  ChannelShippingZones,
+  ChannelShippingZonesVariables
+>(channelShippingZones);
