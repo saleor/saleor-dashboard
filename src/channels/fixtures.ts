@@ -18,7 +18,6 @@ export const channelsList: Channels_channels[] = [
   {
     __typename: "Channel",
     currencyCode: "euro",
-    shippingZones: [],
     hasOrders: false,
     id: "Q2hhbm5lcDoy",
     isActive: true,
@@ -28,7 +27,6 @@ export const channelsList: Channels_channels[] = [
   {
     __typename: "Channel",
     currencyCode: "euro",
-    shippingZones: [],
     hasOrders: false,
     id: "Q2hhbm7lbDoy213",
     isActive: true,
@@ -39,7 +37,6 @@ export const channelsList: Channels_channels[] = [
     __typename: "Channel",
     currencyCode: "euro",
     hasOrders: false,
-    shippingZones: [],
     id: "Q2hhbn5lbDoytr",
     isActive: true,
     name: "Channel test",
@@ -48,7 +45,6 @@ export const channelsList: Channels_channels[] = [
   {
     __typename: "Channel",
     currencyCode: "euro",
-    shippingZones: [],
     hasOrders: false,
     id: "Q2hhbm5lbDo5bot",
     isActive: true,
@@ -58,7 +54,6 @@ export const channelsList: Channels_channels[] = [
   {
     __typename: "Channel",
     currencyCode: "euro",
-    shippingZones: [],
     hasOrders: false,
     id: "Q2hhbm7lbDoyr0tr",
     isActive: true,
@@ -68,7 +63,6 @@ export const channelsList: Channels_channels[] = [
   {
     __typename: "Channel",
     currencyCode: "euro",
-    shippingZones: [],
     hasOrders: false,
     id: "Q2hhbn5lbDoyya",
     isActive: true,
@@ -78,7 +72,6 @@ export const channelsList: Channels_channels[] = [
   {
     __typename: "Channel",
     currencyCode: "euro",
-    shippingZones: [],
     hasOrders: false,
     id: "Q2hhbm5lbDo5w0z",
     isActive: true,
@@ -90,7 +83,6 @@ export const channelsList: Channels_channels[] = [
 export const channel: Channel_channel = {
   __typename: "Channel",
   currencyCode: "zl",
-  shippingZones: [],
   hasOrders: false,
   id: "Q2hhbm5lbDov78",
   isActive: true,

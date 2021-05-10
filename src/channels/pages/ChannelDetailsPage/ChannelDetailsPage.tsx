@@ -38,7 +38,7 @@ export interface ChannelDetailsPageProps {
   searchShippingZones: (query: string) => void;
   searchShippingZonesData?: SearchData;
   fetchMoreShippingZones: FetchMoreProps;
-  channelShippingZones: ChannelShippingZones;
+  channelShippingZones?: ChannelShippingZones;
 }
 
 export const ChannelDetailsPage: React.FC<ChannelDetailsPageProps> = ({
@@ -55,13 +55,13 @@ export const ChannelDetailsPage: React.FC<ChannelDetailsPageProps> = ({
   searchShippingZones,
   searchShippingZonesData,
   fetchMoreShippingZones,
-  channelShippingZones
+  channelShippingZones = []
 }) => {
   const [selectedCurrencyCode, setSelectedCurrencyCode] = useState("");
 
   const [shippingZonesToDisplay, setShippingZonesToDisplay] = useStateFromProps<
     ChannelShippingZones
-  >(channelShippingZones || []);
+  >(channelShippingZones);
 
   const initialData: FormData = {
     currencyCode: "",

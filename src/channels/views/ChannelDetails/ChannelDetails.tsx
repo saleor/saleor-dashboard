@@ -185,7 +185,9 @@ export const ChannelDetails: React.FC<ChannelDetailsProps> = ({
         </AppHeader>
         <PageHeader title={data?.channel?.name} />
         <ChannelDetailsPage
-          channelShippingZones={channelShippingZonesData?.shippingZones?.edges}
+          channelShippingZones={channelShippingZonesData?.shippingZones?.edges?.map(
+            ({ node }) => node
+          )}
           searchShippingZones={searchShippingZones}
           searchShippingZonesData={searchShippingZonesResult.data}
           fetchMoreShippingZones={getSearchFetchMoreProps(

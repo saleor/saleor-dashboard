@@ -11,6 +11,10 @@ import {
   ChannelShippingZonesVariables
 } from "./types/ChannelShippingZones";
 import { ShippingZone, ShippingZoneVariables } from "./types/ShippingZone";
+import {
+  ShippingZoneChannels,
+  ShippingZoneChannelsVariables
+} from "./types/ShippingZoneChannels";
 import { ShippingZones, ShippingZonesVariables } from "./types/ShippingZones";
 
 const shippingZones = gql`
@@ -70,6 +74,24 @@ const shippingZone = gql`
 export const useShippingZone = makeQuery<ShippingZone, ShippingZoneVariables>(
   shippingZone
 );
+
+const shippingZoneChannels = gql`
+  query ShippingZoneChannels($id: ID!) {
+    shippingZone(id: $id) {
+      id
+      channels {
+        id
+        name
+        currencyCode
+      }
+    }
+  }
+`;
+
+export const useShippingZoneChannels = makeQuery<
+  ShippingZoneChannels,
+  ShippingZoneChannelsVariables
+>(shippingZoneChannels);
 
 const channelShippingZones = gql`
   query ChannelShippingZones($filter: ShippingZoneFilterInput) {

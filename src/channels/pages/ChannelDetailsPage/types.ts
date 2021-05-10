@@ -1,3 +1,5 @@
-import { ShippingZoneChannels_shippingZones_edges_node } from "@saleor/shipping/types/ShippingZoneChannels";
+import { ChannelShippingZones_shippingZones_edges_node } from "@saleor/shipping/types/ChannelShippingZones";
 
-export type ChannelShippingZones = ShippingZoneChannels_shippingZones_edges_node[];
+export type ChannelShippingZone = ChannelShippingZones_shippingZones_edges_node;
+
+export type ChannelShippingZones = ChannelShippingZone[];
