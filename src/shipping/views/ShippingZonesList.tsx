@@ -16,6 +16,7 @@ import { commonMessages } from "@saleor/intl";
 import { getStringOrPlaceholder, maybe } from "@saleor/misc";
 import { ListViews } from "@saleor/types";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
+import { mapEdgesToItems } from "@saleor/utils/maps";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -125,9 +126,7 @@ export const ShippingZonesList: React.FC<ShippingZonesListProps> = ({
           deleteShippingZoneOpts.loading ||
           updateDefaultWeightUnitOpts.loading
         }
-        shippingZones={maybe(() =>
-          data.shippingZones.edges.map(edge => edge.node)
-        )}
+        shippingZones={mapEdgesToItems(data?.shippingZones)}
         pageInfo={pageInfo}
         onAdd={() => navigate(shippingZoneAddUrl)}
         onBack={() => navigate(configurationMenuUrl)}

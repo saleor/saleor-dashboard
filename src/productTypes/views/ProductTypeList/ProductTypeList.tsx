@@ -18,6 +18,7 @@ import { ListViews } from "@saleor/types";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import createFilterHandlers from "@saleor/utils/handlers/filterHandlers";
 import createSortHandler from "@saleor/utils/handlers/sortHandler";
+import { mapEdgesToItems } from "@saleor/utils/maps";
 import { getSortParams } from "@saleor/utils/sort";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -174,9 +175,7 @@ export const ProductTypeList: React.FC<ProductTypeListProps> = ({ params }) => {
               onTabSave={() => openModal("save-search")}
               tabs={tabs.map(tab => tab.name)}
               disabled={loading}
-              productTypes={maybe(() =>
-                data.productTypes.edges.map(edge => edge.node)
-              )}
+              productTypes={mapEdgesToItems(data?.productTypes)}
               pageInfo={pageInfo}
               onAdd={() => navigate(productTypeAddUrl)}
               onBack={() => navigate(configurationMenuUrl)}

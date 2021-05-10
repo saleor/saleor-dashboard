@@ -20,7 +20,7 @@ import { ListViews } from "@saleor/types";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import createFilterHandlers from "@saleor/utils/handlers/filterHandlers";
 import createSortHandler from "@saleor/utils/handlers/sortHandler";
-import { mapNodeToChoice } from "@saleor/utils/maps";
+import { mapEdgesToItems, mapNodeToChoice } from "@saleor/utils/maps";
 import { getSortParams } from "@saleor/utils/sort";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -194,9 +194,7 @@ export const OrderDraftList: React.FC<OrderDraftListProps> = ({ params }) => {
                 tabs={tabs.map(tab => tab.name)}
                 disabled={loading}
                 settings={settings}
-                orders={maybe(() =>
-                  data.draftOrders.edges.map(edge => edge.node)
-                )}
+                orders={mapEdgesToItems(data?.draftOrders)}
                 pageInfo={pageInfo}
                 onAdd={() => openModal("create-order")}
                 onNextPage={loadNextPage}

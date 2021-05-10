@@ -6,6 +6,7 @@ import { maybe } from "@saleor/misc";
 import { useOrderDraftCreateMutation } from "@saleor/orders/mutations";
 import { orderUrl } from "@saleor/orders/urls";
 import useCustomerSearch from "@saleor/searches/useCustomerSearch";
+import { mapEdgesToItems } from "@saleor/utils/maps";
 import { RefObject, useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 
@@ -107,10 +108,7 @@ function useQuickSearch(
       intl,
       {
         catalog,
-        customers: maybe(
-          () => customers.data.search.edges.map(edge => edge.node),
-          []
-        ),
+        customers: mapEdgesToItems(customers?.data?.search),
         order: maybe(() => orderData.order)
       },
       {
