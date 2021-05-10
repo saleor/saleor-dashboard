@@ -1,3 +1,5 @@
+import { getDefaultAddress } from "./utils/Utils";
+
 export function markOrderAsPaid(orderId) {
   const mutation = `mutation{
     orderMarkAsPaid(id:"${orderId}"){
@@ -23,12 +25,24 @@ export function addProductToOrder(orderId, variantId, quantity = 1) {
   return cy.sendRequestWithQuery(mutation);
 }
 
-export function createDraftOrder(customerId, shippingMethodId, channelId) {
+export function createDraftOrder(
+  customerId,
+  shippingMethodId,
+  channelId,
+  address
+) {
+  const addressLine = address
+    ? `
+  ${getDefaultAddress(address, "shippingAddress")}
+  ${getDefaultAddress(address, "billingAddress")}
+  `
+    : "";
   const mutation = `mutation{
     draftOrderCreate(input:{
       user:"${customerId}"
       shippingMethod:"${shippingMethodId}"
       channel: "${channelId}"
+      ${addressLine}
     }){
       orderErrors{
         message

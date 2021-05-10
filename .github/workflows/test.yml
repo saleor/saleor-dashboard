@@ -101,6 +101,9 @@ jobs:
           start: npx local-web-server --spa index.html
           wait-on: http://localhost:9000/
           wait-on-timeout: 120
+        if: steps.api_uri.outputs.custom_api_uri != 'https://qa.staging.saleor.cloud/graphql/'
+          with:
+            spec: cypress/integration/allEnv/**/*.js
       - uses: actions/upload-artifact@v1
         if: always()
         with:

@@ -114,7 +114,8 @@ describe("Homepage analytics", () => {
       customerId,
       shippingMethod.id,
       defaultChannel.id,
-      createdVariants
+      createdVariants,
+      addresses.usAddress
     );
     cy.get("@ordersReadyToFulfill").then(ordersReadyToFulfillBefore => {
       const allOrdersReadyToFulfill = ordersReadyToFulfillBefore + 1;

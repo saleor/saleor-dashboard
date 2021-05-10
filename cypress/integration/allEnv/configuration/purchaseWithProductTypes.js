@@ -219,7 +219,7 @@ describe("Purchase products with all products types", () => {
       .then(() => {
         completeCheckout(checkout.id);
       })
-      .then(order => {
+      .then(({ order }) => {
         getOrder(order.id);
       })
       .then(order => {
