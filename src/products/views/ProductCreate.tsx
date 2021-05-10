@@ -60,7 +60,19 @@ export const ProductCreateView: React.FC = () => {
     }
   });
   const [updateMetadata] = useMetadataUpdate({});
-  const [updatePrivateMetadata] = usePrivateMetadataUpdate({});
+  const [updatePrivateMetadata] = usePrivateMetadataUpdate({
+      onCompleted: data => {
+      const megaPackError = data.updatePrivateMetadata.errors.find(
+          error => error.code === "MEGAPACK_ASSIGNED"
+      );
+      if (megaPackError) {
+        notify({
+          status: "error",
+          text: error.message
+        })
+      }
+    }
+  });
   const taxTypes = useTaxTypeList({});
 
   const handleBack = () => navigate(productListUrl());

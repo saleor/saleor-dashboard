@@ -190,12 +190,12 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                   onImageUpload={onImageUpload}
                 />
                 <CardSpacer />
-                {product?.productType?.name === "Mega Paka" && (
+                {product?.productType?.slug === "mega-paka" && (
                     <ProductMegaPack
                       data={data}
                       disabled={disabled}
                       errors={errors}
-                      onChange={change}
+                      onChange={handlers.changeMetadata}
                     />
                   )}
                 <CardSpacer />

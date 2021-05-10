@@ -19,6 +19,7 @@ import { ProductStockInput } from "../components/ProductStocks";
 import { VariantAttributeInput } from "../components/ProductVariantAttributes";
 import { ProductVariantCreateData_product } from "../types/ProductVariantCreateData";
 import {MetadataItem} from "@saleor/fragments/types/MetadataItem";
+import { UserWithMetadataData } from "../types/UserWithMetadata";
 
 export interface Collection {
   id: string;
@@ -253,15 +254,51 @@ export function mapFormsetStockToStockInput(
   };
 }
 
-const makeMegaPackProductsList = (megaPackProducts) => {
-    const productsList: string[] | string = megaPackProducts.split('\n')
-    return productsList
-  }
+    const makeMegaPackProductsList = (megaPackProducts:string) => {
+      let productsList: string[] | string;
+      megaPackProducts === undefined ? productsList = null : productsList = megaPackProducts.split('\n')
+      return productsList
+    }
 
-export const updateDataFromMegaPackValues = (data, megaPackProducts) => {
-      if(megaPackProducts !== null) {
+export const updateDataFromMegaPackValues = (data, megaPackProducts:string) => {
+    if (megaPackProducts !== null && data.privateMetadata !== undefined) {
         const skusAlreadyInPrivateMetadata: boolean = data.privateMetadata.find(x => x.key === 'skus')
-        skusAlreadyInPrivateMetadata ? data.privateMetadata.find(x => x.key === 'skus').value = makeMegaPackProductsList(megaPackProducts) :  data.privateMetadata.push({"key": "skus","value":makeMegaPackProductsList(megaPackProducts)})
+        skusAlreadyInPrivateMetadata ? data.privateMetadata.find(x => x.key === 'skus').value = makeMegaPackProductsList(megaPackProducts) : data.privateMetadata.push({
+            "key": "skus",
+            "value": makeMegaPackProductsList(megaPackProducts)
+        })
+    }
+
+    return data
+    }
+
+function findUserUID(data):string{
+      if (data){
+        const uid:MetadataItem = data.user.privateMetadata.find(item => item.key === "uid")
+        return uid.value;
       }
-      return data
-  }
+      return "00";
+    }
+
+export function generateSkuNumberToQuery(data):string{
+
+    const date = new Date()
+    const day = String(date.getDate()).padStart(2, '0');
+    const month= String(date.getMonth() + 1).padStart(2, '0');
+    const year = String(date.getFullYear()).slice(2);
+    const userId:string = findUserUID(data);
+
+    const today = year + month + day
+
+
+
+    return `00${userId}${today}1`
+
+}
+
+export function generateSkuCode(productCount:number, data):string{
+  const firstLetters = generateSkuNumberToQuery(data)
+  productCount += 1
+  let productNumber:string = ("000" + String(productCount)).slice(-4)
+  return firstLetters + productNumber
+}

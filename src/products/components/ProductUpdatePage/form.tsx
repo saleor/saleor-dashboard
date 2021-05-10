@@ -10,7 +10,7 @@ import { ProductDetails_product } from "@saleor/products/types/ProductDetails";
 import {
   getAttributeInputFromProduct,
   getProductUpdatePageFormData,
-  getStockInputFromProduct
+  getStockInputFromProduct, updateDataFromMegaPackValues, generateSkuNumberToQuery
 } from "@saleor/products/utils/data";
 import {
   createAttributeChangeHandler,
@@ -23,7 +23,7 @@ import createSingleAutocompleteSelectHandler from "@saleor/utils/handlers/single
 import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
 import { RawDraftContentState } from "draft-js";
 import { diff } from "fast-array-diff";
-import React from "react";
+import React, { useEffect } from "react";
 
 import { ProductAttributeInput } from "../ProductAttributes";
 import { ProductStockInput } from "../ProductStocks";
@@ -157,7 +157,7 @@ function useProductUpdateForm(
   const attributes = useFormset(getAttributeInputFromProduct(product));
   const stocks = useFormset(getStockInputFromProduct(product));
 
-  let {
+  const {
     isMetadataModified,
     isPrivateMetadataModified,
     makeChangeHandler: makeMetadataChangeHandler
@@ -210,22 +210,11 @@ function useProductUpdateForm(
     opts.taxTypes
   );
 
-  const makeMegaPackProductsList = (megaPackProducts) => {
-    let productsList: string[] | string;
-    megaPackProducts === undefined ? productsList = null : productsList = megaPackProducts.split('\n')
-    return productsList
-  }
-
-  const updateDataFromMegaPackValues = (data, megaPackProducts) => {
-      if(megaPackProducts !== null && data.privateMetadata !== undefined) {
-        const skusAlreadyInPrivateMetadata: boolean = data.privateMetadata.find(x => x.key === 'skus')
-        skusAlreadyInPrivateMetadata ? data.privateMetadata.find(x => x.key === 'skus').value = makeMegaPackProductsList(megaPackProducts) :  data.privateMetadata.push({"key": "skus","value":makeMegaPackProductsList(megaPackProducts)})
-        isPrivateMetadataModified = true
-      }
-      return data
-  }
-
-  updateDataFromMegaPackValues(form.data, form.data.megaPackProduct)
+  useEffect(
+      () => {
+        updateDataFromMegaPackValues(form.data, form.data.megaPackProduct)
+      }, [form.data.megaPackProduct]
+  )
 
   const changeMetadata = makeMetadataChangeHandler(handleChange);
 

@@ -7,6 +7,8 @@ import { ProductErrorFragment } from "@saleor/fragments/types/ProductErrorFragme
 import React from "react";
 import { useIntl } from "react-intl";
 import { FormChange } from "@saleor/hooks/useForm";
+import {errors} from "@saleor/categories/fixtures";
+import { getFormErrors, getProductErrorMessage } from "@saleor/utils/errors";
 
 interface ProductMegaPackProps {
   data: [];
@@ -16,10 +18,11 @@ interface ProductMegaPackProps {
 }
 
 const ProductMegaPack: React.FC<ProductMegaPackProps> = props => {
-  const { data, disabled, onChange } = props;
+  const { data, disabled, onChange, errors } = props;
   const intl = useIntl();
   const handleChange = onChange;
 
+  const formErrors = getFormErrors(["sku"], errors);
 
   return (
     <Card>
@@ -47,6 +50,7 @@ const ProductMegaPack: React.FC<ProductMegaPackProps> = props => {
             multiline
             rowsMax = "10"
             value={data.megaPackProduct}
+            error={formErrors.sku}
           />
         </Grid>
       </CardContent>

@@ -1,13 +1,17 @@
-/* eslint-disable */
+import { getTokens } from "@saleor/auth";
 import { MetadataFormData } from "@saleor/components/Metadata";
 import { MultiAutocompleteChoiceType } from "@saleor/components/MultiAutocompleteSelectField";
 import { SingleAutocompleteChoiceType } from "@saleor/components/SingleAutocompleteSelectField";
 import useForm, { FormChange } from "@saleor/hooks/useForm";
 import useFormset, { FormsetChange } from "@saleor/hooks/useFormset";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
+import { useProductVariantsSkus, useUserWithMetadata } from "@saleor/products/queries";
+import { ProductVariantsSkusData } from "@saleor/products/types/ProductVariantSkus";
+import { UserWithMetadataData } from "@saleor/products/types/UserWithMetadata";
 import {
+  generateSkuNumberToQuery,
   getAttributeInputFromProductType,
-  ProductType
+  ProductType, updateDataFromMegaPackValues
 } from "@saleor/products/utils/data";
 import {
   createAttributeChangeHandler,
@@ -112,7 +116,7 @@ const defaultInitialFormData: ProductCreateFormData &
   isAvailable: false,
   isAvailableForPurchase: false,
   isPublished: false,
-  megaPackProduct: null,
+  megaPackProduct: "",
   metadata: [],
   name: "",
   privateMetadata: [],
@@ -131,6 +135,8 @@ const defaultInitialFormData: ProductCreateFormData &
 
 function useProductCreateForm(
   initial: Partial<ProductCreateFormData>,
+  skusCount: ProductVariantsSkusData,
+  userData: UserWithMetadataData,
   onSubmit: (data: ProductCreateData) => Promise<boolean>,
   opts: UseProductCreateFormOpts
 ): UseProductCreateFormResult {
@@ -156,6 +162,7 @@ function useProductCreateForm(
     initialProductType || null
   );
 
+  const [sku, setSkuCode] = React.useState(form?.data?.sku)
   const {
     makeChangeHandler: makeMetadataChangeHandler
   } = useMetadataChangeTrigger();
@@ -188,6 +195,9 @@ function useProductCreateForm(
     attributes.set,
     setProductType,
     opts.productTypes,
+    setSkuCode,
+    skusCount,
+    userData,
     triggerChange
   );
   const handleStockChange: FormsetChange<string> = (id, value) => {
@@ -214,21 +224,9 @@ function useProductCreateForm(
   );
   const changeMetadata = makeMetadataChangeHandler(handleChange);
 
-  const makeMegaPackProductsList = (megaPackProducts) => {
-    const productsList: string[] | string = megaPackProducts.split('\n')
-    return productsList
-  }
-
-  const updateDataFromMegaPackValues = (data, megaPackProducts) => {
-      if(megaPackProducts !== null) {
-        const skusAlreadyInPrivateMetadata: boolean = data.privateMetadata.find(x => x.key === 'skus')
-        skusAlreadyInPrivateMetadata ? data.privateMetadata.find(x => x.key === 'skus').value = makeMegaPackProductsList(megaPackProducts) :  data.privateMetadata.push({"key": "skus","value":makeMegaPackProductsList(megaPackProducts)})
-      }
-      return data
-  }
-
   updateDataFromMegaPackValues(form.data, form.data.megaPackProduct)
-
+  
+  form.data.sku = sku
   const data: ProductCreateData = {
     ...form.data,
     attributes: attributes.data,
@@ -263,7 +261,24 @@ const ProductCreateForm: React.FC<ProductCreateFormProps> = ({
   onSubmit,
   ...rest
 }) => {
-  const props = useProductCreateForm(initial || {}, onSubmit, rest);
+  console.log(getTokens().id)
+  const {...values} = useUserWithMetadata({
+    displayLoader: true,
+    variables: {
+      id: getTokens().id}
+
+    
+  })
+  
+  const {loading, error, data} = useProductVariantsSkus({
+    displayLoader: true,
+    variables: { sku: generateSkuNumberToQuery() }
+  });
+
+
+
+
+  const props = useProductCreateForm(initial || {}, data, values.data, onSubmit, rest);
 
   return <form onSubmit={props.submit}>{children(props)}</form>;
 };

@@ -2548,6 +2548,7 @@ enum MetadataErrorCode {
   INVALID
   NOT_FOUND
   REQUIRED
+  MEGAPACK_ASSIGNED
 }
 
 input MetadataInput {

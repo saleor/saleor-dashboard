@@ -68,6 +68,7 @@ export function useAuthProvider(
         setTokens(
           result.tokenCreate.token,
           result.tokenCreate.csrfToken,
+          user.id,
           persistToken
         );
       }
@@ -141,7 +142,7 @@ export function useAuthProvider(
 
   const loginByToken = (auth: string, refresh: string, user: User) => {
     setUserContext(user);
-    setTokens(auth, refresh, persistToken);
+    setTokens(auth, refresh, user.id, persistToken);
   };
 
   const refreshToken = (): Promise<boolean> => {
