@@ -13,7 +13,6 @@ import {
   permissionsDiff,
   usersDiff
 } from "@saleor/permissionGroups/utils";
-import { searchProducts } from "@saleor/searches/useProductSearch";
 import useStaffMemberSearch from "@saleor/searches/useStaffMemberSearch";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import createSortHandler from "@saleor/utils/handlers/sortHandler";

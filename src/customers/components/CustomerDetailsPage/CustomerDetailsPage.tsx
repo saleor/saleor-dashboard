@@ -16,7 +16,7 @@ import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTr
 import React from "react";
 import { useIntl } from "react-intl";
 
-import { getUserName, maybe } from "../../../misc";
+import { getUserName } from "../../../misc";
 import { CustomerDetails_user } from "../../types/CustomerDetails";
 import CustomerAddresses from "../CustomerAddresses";
 import CustomerDetails from "../CustomerDetails";

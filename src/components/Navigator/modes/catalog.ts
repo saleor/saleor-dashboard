@@ -1,7 +1,6 @@
 import { categoryUrl } from "@saleor/categories/urls";
 import { collectionUrl } from "@saleor/collections/urls";
 import { UseNavigatorResult } from "@saleor/hooks/useNavigator";
-import { maybe } from "@saleor/misc";
 import { productUrl } from "@saleor/products/urls";
 import { mapEdgesToItems } from "@saleor/utils/maps";
 import { score } from "fuzzaldrin";

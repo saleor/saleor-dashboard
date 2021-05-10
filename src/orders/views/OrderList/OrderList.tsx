@@ -11,7 +11,7 @@ import useNotifier from "@saleor/hooks/useNotifier";
 import usePaginator, {
   createPaginationState
 } from "@saleor/hooks/usePaginator";
-import { getStringOrPlaceholder, maybe } from "@saleor/misc";
+import { getStringOrPlaceholder } from "@saleor/misc";
 import { ListViews } from "@saleor/types";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import createFilterHandlers from "@saleor/utils/handlers/filterHandlers";
