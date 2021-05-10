@@ -122,7 +122,7 @@ const useStyles = makeStyles(
       },
       bottom: 0,
       cursor: "pointer",
-      fontSize: "1rem",
+      fontSize: theme.typography.body1.fontSize,
       fontWeight: 500,
       left: 30,
       opacity: 1,

@@ -19,7 +19,7 @@ export const ICONBUTTON_SIZE = 48;
 const fontFamily = '"Inter", "roboto", "sans-serif"';
 
 const createTheme = (colors: IThemeColors): SaleorTheme =>
-  createMuiTheme({
+  (createMuiTheme({
     overrides: {
       ...inputOverrides(colors),
       ...tableOverrides(colors, fontFamily),
@@ -93,6 +93,12 @@ const createTheme = (colors: IThemeColors): SaleorTheme =>
           "&&$focused:not($error)": {
             color: colors.font.gray
           }
+        }
+      },
+      MuiSvgIcon: {
+        root: {
+          height: "2.4rem",
+          width: "2.4rem"
         }
       },
       MuiList: {
@@ -205,22 +211,40 @@ const createTheme = (colors: IThemeColors): SaleorTheme =>
       }
     },
     shadows,
+    spacing: (value: number = 1) => `${(value * 8) / 10}rem`,
     typography: {
       allVariants: {
         fontFamily
       },
       body1: {
-        color: colors.font.default
+        color: colors.font.default,
+        fontSize: "1.6rem"
+      },
+      body2: {
+        fontSize: "1.4rem"
+      },
+      button: {
+        fontSize: "1.4rem"
+      },
+      caption: {
+        fontSize: "1.2rem"
       },
       fontFamily,
       h4: {
         color: colors.font.default
       },
       h5: {
-        fontSize: "1.3125rem",
+        fontSize: "2.1rem",
         fontWeight: 500
+      },
+      h6: {
+        fontSize: "2rem",
+        fontWeight: 500
+      },
+      subtitle2: {
+        fontSize: "1.4rem"
       }
     }
-  });
+  }) as unknown) as SaleorTheme;
 
 export default createTheme;

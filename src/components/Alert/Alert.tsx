@@ -22,7 +22,7 @@ const useStyles = makeStyles(
     },
     content: {
       color: theme.palette.getContrastText(theme.palette.alert.paper.warning),
-      columnGap: theme.spacing(2) + "px",
+      columnGap: theme.spacing(2),
       display: "grid",
       gridTemplateColumns: "40px 1fr"
     },

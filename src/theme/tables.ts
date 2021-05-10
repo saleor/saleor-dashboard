@@ -14,12 +14,12 @@ const tableOverrides = (
   },
   MuiTableCell: {
     body: {
-      fontSize: "1rem",
+      fontSize: "1.6rem",
       paddingBottom: 8,
       paddingTop: 8
     },
     head: {
-      fontSize: "1rem"
+      fontSize: "1.6rem"
     },
     paddingCheckbox: {
       "&:first-child": {

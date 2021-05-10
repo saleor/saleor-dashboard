@@ -15,7 +15,7 @@ const useStyles = makeStyles(
         color: theme.typography.body1.color
       },
       color: theme.typography.caption.color,
-      fontSize: "1rem",
+      fontSize: theme.typography.body1.fontSize,
       fontWeight: 400
     },
     tabRoot: {

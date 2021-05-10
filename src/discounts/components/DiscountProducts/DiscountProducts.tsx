@@ -40,14 +40,14 @@ const useStyles = makeStyles(
       "&:last-child": {
         paddingRight: 0
       },
-      width: 76 + theme.spacing(0.5)
+      width: `calc(76px + ${theme.spacing(0.5)})`
     },
     colName: {
       paddingLeft: 0,
       width: "auto"
     },
     colNameLabel: {
-      marginLeft: AVATAR_MARGIN + theme.spacing(3)
+      marginLeft: `calc(${AVATAR_MARGIN}px + ${theme.spacing(3)})`
     },
     colPublished: {
       width: 150

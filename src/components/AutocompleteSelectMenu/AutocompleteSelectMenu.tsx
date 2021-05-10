@@ -45,7 +45,7 @@ const useStyles = makeStyles(
       position: "relative"
     },
     menuBack: {
-      marginLeft: -theme.spacing(0.5),
+      marginLeft: theme.spacing(-0.5),
       marginRight: theme.spacing(1)
     },
     paper: {

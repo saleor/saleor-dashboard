@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/unified-signatures */
 import { Theme } from "@material-ui/core/styles";
 import { ThemeOptions } from "@material-ui/core/styles/createMuiTheme";
 import {
@@ -24,8 +25,17 @@ export interface SaleorPaletteOptions
   extends PaletteOptions,
     ExtraPaletteOptions {}
 
-export interface SaleorTheme extends Theme {
+export interface SaleorSpacing {
+  (): string;
+  (value: number): string;
+  (topBottom: number, rightLeft: number): string;
+  (top: number, rightLeft: number, bottom: number): string;
+  (top: number, right: number, bottom: number, left: number): string;
+}
+
+export interface SaleorTheme extends Omit<Theme, "spacing"> {
   palette: SaleorPalette;
+  spacing: SaleorSpacing;
 }
 
 export interface SaleorThemeOptions extends ThemeOptions {

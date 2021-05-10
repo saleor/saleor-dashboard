@@ -70,11 +70,11 @@ const useStyles = makeStyles(
       fontWeight: 600
     },
     option: {
-      left: -theme.spacing(0.5),
+      left: theme.spacing(-0.5),
       position: "relative"
     },
     optionRadio: {
-      left: -theme.spacing(0.25)
+      left: theme.spacing(-0.25)
     }
   }),
   { name: "FilterContent" }
