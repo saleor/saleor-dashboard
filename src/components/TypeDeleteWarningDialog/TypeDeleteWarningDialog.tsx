@@ -15,34 +15,36 @@ import {
   TypeDeleteWarningMessages
 } from "./types";
 
-export interface BaseTypeDeleteWarningDialogProps {
-  isOpen: boolean;
-  deleteButtonState: ConfirmButtonTransitionState;
-  onClose: () => void;
-  onDelete: () => void;
-}
-
 interface TypeBaseData {
   id: string;
   name: string;
 }
 
-interface TypeDeleteWarningDialogProps<T extends TypeBaseData>
-  extends BaseTypeDeleteWarningDialogProps {
+export interface TypeDeleteMessages {
   baseMessages: CommonTypeDeleteWarningMessages;
   singleWithItemsMessages: TypeDeleteWarningMessages;
   singleWithoutItemsMessages: TypeDeleteWarningMessages;
   multipleWithItemsMessages: TypeDeleteWarningMessages;
   multipleWithoutItemsMessages: TypeDeleteWarningMessages;
+}
+
+interface TypeDeleteWarningDialogProps<T extends TypeBaseData>
+  extends TypeDeleteMessages {
+  isOpen: boolean;
+  deleteButtonState: ConfirmButtonTransitionState;
+  onClose: () => void;
+  onDelete: () => void;
   viewAssignedItemsUrl: string;
   typesToDelete: string[];
   assignedItemsCount: number | undefined;
-  isLoading: boolean;
+  isLoading?: boolean;
   typesData: T[];
+  // temporary, until we add filters to pages list - SALEOR-3279
+  showViewAssignedItemsButton?: boolean;
 }
 
 function TypeDeleteWarningDialog<T extends TypeBaseData>({
-  isLoading,
+  isLoading = false,
   isOpen,
   baseMessages,
   singleWithItemsMessages,
@@ -54,7 +56,8 @@ function TypeDeleteWarningDialog<T extends TypeBaseData>({
   assignedItemsCount,
   viewAssignedItemsUrl,
   typesToDelete,
-  typesData
+  typesData,
+  showViewAssignedItemsButton = true
 }: TypeDeleteWarningDialogProps<T>) {
   const intl = useIntl();
   const classes = useStyles({});
@@ -107,6 +110,7 @@ function TypeDeleteWarningDialog<T extends TypeBaseData>({
             </CardContent>
           ) : (
             <ProductTypeDeleteWarningDialogContent
+              showViewAssignedItemsButton={showViewAssignedItemsButton}
               assignedItemsCount={assignedItemsCount}
               hasAssignedItems={hasAssignedItems}
               singleItemSelectedName={singleItemSelectedName}

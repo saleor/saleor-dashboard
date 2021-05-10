@@ -11,10 +11,8 @@ import useNotifier from "@saleor/hooks/useNotifier";
 import usePaginator, {
   createPaginationState
 } from "@saleor/hooks/usePaginator";
+import useProductTypeDelete from "@saleor/hooks/useProductTypeDelete";
 import { commonMessages } from "@saleor/intl";
-import { useProductCountQuery } from "@saleor/products/queries";
-import { ProductCountVariables } from "@saleor/products/types/ProductCount";
-import { productListUrl } from "@saleor/products/urls";
 import { ListViews } from "@saleor/types";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import createFilterHandlers from "@saleor/utils/handlers/filterHandlers";
@@ -47,7 +45,6 @@ import {
   getFilterVariables,
   saveFilterTab
 } from "./filters";
-import * as deleteWarningDialogMessages from "./productTypeDeleteWarningDialogMessages";
 import { getSortQueryVariables } from "./sort";
 
 interface ProductTypeListProps {
@@ -156,32 +153,9 @@ export const ProductTypeList: React.FC<ProductTypeListProps> = ({ params }) => {
 
   const handleSort = createSortHandler(navigate, productTypeListUrl, params);
 
-  const productsAssignedToSelectedTypesQueryVars = React.useMemo<
-    ProductCountVariables
-  >(
-    () => ({
-      filter: {
-        productTypes: selectedProductTypes
-      }
-    }),
-    [selectedProductTypes]
-  );
-
-  const isDeleteDialogOpen = params.action === "remove";
-
-  const shouldSkipProductListQuery =
-    !selectedProductTypes.length || !isDeleteDialogOpen;
-
-  const {
-    data: productsAssignedToSelectedTypesData,
-    loading: loadingProductsAssignedToSelectedTypes
-  } = useProductCountQuery({
-    variables: productsAssignedToSelectedTypesQueryVars,
-    skip: shouldSkipProductListQuery
-  });
-
-  const selectedProductsAssignedToDeleteUrl = productListUrl({
-    productTypes: selectedProductTypes
+  const productTypeDeleteData = useProductTypeDelete({
+    selectedTypes: selectedProductTypes,
+    params
   });
 
   const productTypesData =
@@ -240,18 +214,12 @@ export const ProductTypeList: React.FC<ProductTypeListProps> = ({ params }) => {
               }
             />
             <TypeDeleteWarningDialog
-              {...deleteWarningDialogMessages}
+              {...productTypeDeleteData}
               typesData={productTypesData}
-              isLoading={loadingProductsAssignedToSelectedTypes}
               typesToDelete={selectedProductTypes}
-              viewAssignedItemsUrl={selectedProductsAssignedToDeleteUrl}
               onClose={closeModal}
               onDelete={onProductTypeBulkDelete}
               deleteButtonState={productTypeBulkDeleteOpts.status}
-              isOpen={isDeleteDialogOpen}
-              assignedItemsCount={
-                productsAssignedToSelectedTypesData?.products?.totalCount
-              }
             />
             <SaveFilterTabDialog
               open={params.action === "save-search"}

@@ -20,6 +20,8 @@ interface TypeDeleteWarningDialogContentProps {
   hasAssignedItems: boolean;
   assignedItemsCount: number | undefined;
   onDelete: () => void;
+  // temporary, until we add filters to pages list - SALEOR-3279
+  showViewAssignedItemsButton?: boolean;
 }
 
 const TypeDeleteWarningDialogContent: React.FC<TypeDeleteWarningDialogContentProps> = ({
@@ -30,7 +32,8 @@ const TypeDeleteWarningDialogContent: React.FC<TypeDeleteWarningDialogContentPro
   singleItemSelectedName,
   hasAssignedItems,
   assignedItemsCount,
-  onDelete
+  onDelete,
+  showViewAssignedItemsButton
 }) => {
   const classes = useStyles({});
   const intl = useIntl();
@@ -44,6 +47,9 @@ const TypeDeleteWarningDialogContent: React.FC<TypeDeleteWarningDialogContentPro
   const handleViewAssignedItems = () => navigate(viewAssignedItemsUrl);
 
   const isDisbled = hasAssignedItems ? !isConsentChecked : false;
+
+  const shouldShowViewAssignedItemsButton =
+    showViewAssignedItemsButton && hasAssignedItems;
 
   return (
     <CardContent>
@@ -68,7 +74,7 @@ const TypeDeleteWarningDialogContent: React.FC<TypeDeleteWarningDialogContentPro
       )}
       <CardSpacer />
       <div className={classes.buttonsSection}>
-        {hasAssignedItems && (
+        {shouldShowViewAssignedItemsButton && (
           <>
             <ConfirmButton
               onClick={handleViewAssignedItems}

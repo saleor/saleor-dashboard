@@ -19,7 +19,7 @@ export const baseMessages = defineMessages({
 export const singleWithItemsMessages = defineMessages({
   description: {
     defaultMessage:
-      'You are about to delete page type "{typeName}". It is assigned to {assignedItemsCount} pages. Deleting this page type will also delete those pages. Are you sure you want to do this?',
+      "You are about to delete page type {typeName}. It is assigned to {assignedItemsCount} pages. Deleting this page type will also delete those pages. Are you sure you want to do this?",
     description:
       "ProductTypeDeleteWarningDialog single assigned items description"
   },
