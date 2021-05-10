@@ -1,11 +1,8 @@
 import placeholderImage from "@assets/images/placeholder60x60.png";
-import {
-  Divider,
-  ExpansionPanel,
-  ExpansionPanelSummary,
-  makeStyles,
-  Typography
-} from "@material-ui/core";
+import Divider from "@material-ui/core/Divider";
+import ExpansionPanel from "@material-ui/core/ExpansionPanel";
+import ExpansionPanelSummary from "@material-ui/core/ExpansionPanelSummary";
+import Typography from "@material-ui/core/Typography";
 import { ChannelData } from "@saleor/channels/utils";
 import IconCheckboxChecked from "@saleor/icons/CheckboxChecked";
 import IconCheckboxSemiChecked from "@saleor/icons/CheckboxSemiChecked";
@@ -15,7 +12,8 @@ import { getById } from "@saleor/orders/components/OrderReturnPage/utils";
 import { ProductDetails_product_variants } from "@saleor/products/types/ProductDetails";
 import { ChannelsWithVariantsData } from "@saleor/products/views/ProductUpdate/types";
 import { areAllChannelVariantsSelected } from "@saleor/products/views/ProductUpdate/utils";
-import map from "lodash-es/map";
+import { makeStyles } from "@saleor/theme";
+import map from "lodash/map";
 import React, { ChangeEvent } from "react";
 import { defineMessages, useIntl } from "react-intl";
 

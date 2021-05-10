@@ -1,8 +1,10 @@
-import { CardContent, makeStyles, Typography } from "@material-ui/core";
+import CardContent from "@material-ui/core/CardContent";
+import Typography from "@material-ui/core/Typography";
 import CollectionWithDividers from "@saleor/components/CollectionWithDividers";
 import Skeleton from "@saleor/components/Skeleton";
 import { Plugin_plugin } from "@saleor/plugins/types/Plugin";
 import { isPluginGlobal } from "@saleor/plugins/views/utils";
+import { makeStyles } from "@saleor/theme";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 

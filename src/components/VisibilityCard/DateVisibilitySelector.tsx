@@ -1,5 +1,5 @@
 import closeIcon from "@assets/images/close-thin.svg";
-import { Typography } from "@material-ui/core";
+import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@saleor/theme";
 import React, { useState } from "react";
 

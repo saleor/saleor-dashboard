@@ -1,4 +1,4 @@
-import { Button } from "@material-ui/core";
+import Button from "@material-ui/core/Button";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@saleor/config";
 import useBulkActions from "@saleor/hooks/useBulkActions";
 import useNavigator from "@saleor/hooks/useNavigator";

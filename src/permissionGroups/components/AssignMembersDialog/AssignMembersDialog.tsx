@@ -1,5 +1,5 @@
-import { Checkbox, Typography } from "@material-ui/core";
 import Button from "@material-ui/core/Button";
+import Checkbox from "@material-ui/core/Checkbox";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
@@ -9,6 +9,7 @@ import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableRow from "@material-ui/core/TableRow";
 import TextField from "@material-ui/core/TextField";
+import Typography from "@material-ui/core/Typography";
 import CardSpacer from "@saleor/components/CardSpacer";
 import ConfirmButton, {
   ConfirmButtonTransitionState

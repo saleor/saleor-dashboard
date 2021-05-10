@@ -1,12 +1,10 @@
-import {
-  Card,
-  CardContent,
-  Divider,
-  makeStyles,
-  Typography
-} from "@material-ui/core";
+import Card from "@material-ui/core/Card";
+import CardContent from "@material-ui/core/CardContent";
+import Divider from "@material-ui/core/Divider";
 import ExpansionPanel from "@material-ui/core/ExpansionPanel";
+import Typography from "@material-ui/core/Typography";
 import CardTitle from "@saleor/components/CardTitle";
+import { makeStyles } from "@saleor/theme";
 import React from "react";
 import { defineMessages, useIntl } from "react-intl";
 

@@ -1,4 +1,3 @@
-import { makeStyles } from "@material-ui/core";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
@@ -7,6 +6,7 @@ import SingleAutocompleteSelectField from "@saleor/components/SingleAutocomplete
 import { PageErrorFragment } from "@saleor/fragments/types/PageErrorFragment";
 import { PageTypeFragment } from "@saleor/fragments/types/PageTypeFragment";
 import { FormChange } from "@saleor/hooks/useForm";
+import { makeStyles } from "@saleor/theme";
 import { FetchMoreProps } from "@saleor/types";
 import { getFormErrors } from "@saleor/utils/errors";
 import getPageErrorMessage from "@saleor/utils/errors/page";

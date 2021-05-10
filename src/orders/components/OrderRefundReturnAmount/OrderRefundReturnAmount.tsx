@@ -1,9 +1,9 @@
-import { makeStyles, RadioGroup } from "@material-ui/core";
 import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Radio from "@material-ui/core/Radio";
+import RadioGroup from "@material-ui/core/RadioGroup";
 import Typography from "@material-ui/core/Typography";
 import CardSpacer from "@saleor/components/CardSpacer";
 import CardTitle from "@saleor/components/CardTitle";
@@ -12,6 +12,7 @@ import Hr from "@saleor/components/Hr";
 import { OrderErrorFragment } from "@saleor/fragments/types/OrderErrorFragment";
 import { OrderDetails_order } from "@saleor/orders/types/OrderDetails";
 import { OrderRefundData_order } from "@saleor/orders/types/OrderRefundData";
+import { makeStyles } from "@saleor/theme";
 import React from "react";
 import { defineMessages, FormattedMessage, useIntl } from "react-intl";
 

@@ -1,5 +1,5 @@
 import { IFilter } from "@saleor/components/Filter";
-import clone from "lodash-es/clone";
+import clone from "lodash/clone";
 
 export function getExistingKeys(o: {}): string[] {
   return Object.keys(o).filter(key => o[key] !== undefined && o[key] !== null);

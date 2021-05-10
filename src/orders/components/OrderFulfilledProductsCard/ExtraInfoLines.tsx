@@ -1,5 +1,8 @@
-import { makeStyles, TableCell, TableRow, Typography } from "@material-ui/core";
+import TableCell from "@material-ui/core/TableCell";
+import TableRow from "@material-ui/core/TableRow";
+import Typography from "@material-ui/core/Typography";
 import { getStringOrPlaceholder } from "@saleor/misc";
+import { makeStyles } from "@saleor/theme";
 import { FulfillmentStatus } from "@saleor/types/globalTypes";
 import classNames from "classnames";
 import React from "react";

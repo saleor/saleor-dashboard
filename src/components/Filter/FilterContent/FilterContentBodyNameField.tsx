@@ -1,4 +1,6 @@
-import { Checkbox, FormControlLabel, makeStyles } from "@material-ui/core";
+import Checkbox from "@material-ui/core/Checkbox";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import { makeStyles } from "@saleor/theme";
 import React from "react";
 
 import { FilterReducerAction } from "../reducer";

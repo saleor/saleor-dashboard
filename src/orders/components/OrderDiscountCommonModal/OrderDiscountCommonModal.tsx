@@ -1,12 +1,9 @@
-/* eslint-disable sort-keys */
-import {
-  Card,
-  CardContent,
-  Popper,
-  TextField,
-  Typography
-} from "@material-ui/core";
+import Card from "@material-ui/core/Card";
+import CardContent from "@material-ui/core/CardContent";
+import Popper from "@material-ui/core/Popper";
 import { PopperPlacementType } from "@material-ui/core/Popper";
+import TextField from "@material-ui/core/TextField";
+import Typography from "@material-ui/core/Typography";
 import DialogButtons from "@saleor/components/ActionDialog/DialogButtons";
 import CardSpacer from "@saleor/components/CardSpacer";
 import ConfirmButton, {

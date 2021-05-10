@@ -1,5 +1,5 @@
-import { CardContent } from "@material-ui/core";
 import Card from "@material-ui/core/Card";
+import CardContent from "@material-ui/core/CardContent";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import Modal from "@material-ui/core/Modal";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";

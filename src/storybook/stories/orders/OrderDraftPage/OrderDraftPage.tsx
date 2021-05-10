@@ -1,5 +1,4 @@
 import placeholderImage from "@assets/images/placeholder60x60.png";
-import { Omit } from "@material-ui/core";
 import { adminUserPermissions, fetchMoreProps } from "@saleor/fixtures";
 import { storiesOf } from "@storybook/react";
 import React from "react";

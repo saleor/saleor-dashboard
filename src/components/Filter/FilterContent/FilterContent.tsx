@@ -1,5 +1,5 @@
-import { Typography } from "@material-ui/core";
 import Paper from "@material-ui/core/Paper";
+import Typography from "@material-ui/core/Typography";
 import CollectionWithDividers from "@saleor/components/CollectionWithDividers";
 import Hr from "@saleor/components/Hr";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";

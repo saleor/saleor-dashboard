@@ -1,4 +1,3 @@
-import { Omit } from "@material-ui/core";
 import ErrorPage, { ErrorPageProps } from "@saleor/components/ErrorPage";
 import { storiesOf } from "@storybook/react";
 import React from "react";

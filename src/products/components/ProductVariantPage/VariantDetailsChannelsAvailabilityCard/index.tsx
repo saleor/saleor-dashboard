@@ -1,15 +1,13 @@
-import {
-  CardContent,
-  Divider,
-  ExpansionPanel,
-  ExpansionPanelSummary,
-  makeStyles,
-  Typography
-} from "@material-ui/core";
+import CardContent from "@material-ui/core/CardContent";
+import Divider from "@material-ui/core/Divider";
+import ExpansionPanel from "@material-ui/core/ExpansionPanel";
+import ExpansionPanelSummary from "@material-ui/core/ExpansionPanelSummary";
+import Typography from "@material-ui/core/Typography";
 import Skeleton from "@saleor/components/Skeleton";
 import { ProductVariant } from "@saleor/fragments/types/ProductVariant";
 import useDateLocalize from "@saleor/hooks/useDateLocalize";
 import IconChevronDown from "@saleor/icons/ChevronDown";
+import { makeStyles } from "@saleor/theme";
 import React from "react";
 import { useIntl } from "react-intl";
 

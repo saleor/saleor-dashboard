@@ -1,6 +1,8 @@
-import { Card, makeStyles, Popper } from "@material-ui/core";
+import Card from "@material-ui/core/Card";
+import Popper from "@material-ui/core/Popper";
 import { Plugin_plugin } from "@saleor/plugins/types/Plugin";
 import { isPluginGlobal } from "@saleor/plugins/views/utils";
+import { makeStyles } from "@saleor/theme";
 import React from "react";
 
 import ChannelConfigPluginPopupBody from "./ChannelConfigPluginPopupBody";

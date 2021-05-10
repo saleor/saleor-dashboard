@@ -1,4 +1,4 @@
-import isEqual from "lodash-es/isEqual";
+import isEqual from "lodash/isEqual";
 import { Dispatch, SetStateAction, useState } from "react";
 
 export interface UseStateFromPropsOpts<T> {

@@ -1,4 +1,6 @@
-import { Card, CardContent, Typography } from "@material-ui/core";
+import Card from "@material-ui/core/Card";
+import CardContent from "@material-ui/core/CardContent";
+import Typography from "@material-ui/core/Typography";
 import AccountPermissionGroups from "@saleor/components/AccountPermissionGroups";
 import AppHeader from "@saleor/components/AppHeader";
 import AccountStatus from "@saleor/components/AppStatus";

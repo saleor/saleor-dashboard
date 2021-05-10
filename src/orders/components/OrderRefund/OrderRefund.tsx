@@ -1,8 +1,8 @@
-import { makeStyles } from "@material-ui/core";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import CardTitle from "@saleor/components/CardTitle";
 import RadioGroupField from "@saleor/components/RadioGroupField";
+import { makeStyles } from "@saleor/theme";
 import React from "react";
 import { defineMessages, useIntl } from "react-intl";
 

@@ -1,8 +1,9 @@
-import { ExpansionPanelSummary, Typography } from "@material-ui/core";
-import { makeStyles } from "@material-ui/core/styles";
+import ExpansionPanelSummary from "@material-ui/core/ExpansionPanelSummary";
+import Typography from "@material-ui/core/Typography";
 import HorizontalSpacer from "@saleor/apps/components/HorizontalSpacer";
 import { ChannelShippingZones } from "@saleor/channels/pages/ChannelDetailsPage/types";
 import IconChevronDown from "@saleor/icons/ChevronDown";
+import { makeStyles } from "@saleor/theme";
 import React from "react";
 import { defineMessages, useIntl } from "react-intl";
 

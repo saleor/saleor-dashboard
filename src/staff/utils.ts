@@ -1,4 +1,4 @@
-import difference from "lodash-es/difference";
+import difference from "lodash/difference";
 
 import { StaffDetailsFormData } from "./components/StaffDetailsPage";
 import { StaffMemberDetails_user } from "./types/StaffMemberDetails";
