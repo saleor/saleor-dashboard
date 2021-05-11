@@ -108,6 +108,7 @@ const OrderAddressEditDialog: React.FC<OrderAddressEditDialogProps> = props => {
                   <FormattedMessage {...buttonMessages.back} />
                 </Button>
                 <ConfirmButton
+                  data-test-id="order-address-edit-dialog-confirm-button"
                   transitionState={confirmButtonState}
                   color="primary"
                   variant="contained"
