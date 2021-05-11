@@ -3,9 +3,57 @@
     "context": "dialog header",
     "string": "Cancel Order"
   },
+  "PageTypeDeleteWarningDialog multiple assigned items description": {
+    "context": "PageTypeDeleteWarningDialog multiple assigned items description",
+    "string": "Are you sure you want to delete selected page types? If you remove them you won’t be able to assign them to created pages."
+  },
+  "PageTypeDeleteWarningDialog multiple consent label": {
+    "context": "PageTypeDeleteWarningDialog multiple consent label",
+    "string": "Yes, I want to delete those pages types and assigned pages"
+  },
+  "PageTypeDeleteWarningDialog single assigned items description": {
+    "context": "PageTypeDeleteWarningDialog single assigned items description",
+    "string": "You are about to delete page type <b>{typeName}</b>. It is assigned to {assignedItemsCount} {assignedItemsCount,plural,one{page} other{pages}}. Deleting this page type will also delete those pages. Are you sure you want to do this?"
+  },
+  "PageTypeDeleteWarningDialog single consent label": {
+    "context": "PageTypeDeleteWarningDialog single consent label",
+    "string": "Yes, I want to delete this page type and assigned pages"
+  },
+  "PageTypeDeleteWarningDialog single no assigned items description": {
+    "context": "PageTypeDeleteWarningDialog single no assigned items description",
+    "string": "Are you sure you want to delete <b>{typeName}</b>? If you remove it you won’t be able to assign it to created pages."
+  },
+  "PageTypeDeleteWarningDialog with items multiple description": {
+    "context": "PageTypeDeleteWarningDialog with items multiple description",
+    "string": "You are about to delete multiple page types. Some of them are assigned to pages. Deleting those page types will also delete those pages"
+  },
   "Previous discount label id": {
     "context": "Previous discount label",
     "string": "Previous discount value"
+  },
+  "ProductTypeDeleteWarningDialog multiple assigned items description": {
+    "context": "ProductTypeDeleteWarningDialog multiple assigned items description",
+    "string": "Are you sure you want to delete selected product types? If you remove them you won’t be able to assign them to created products."
+  },
+  "ProductTypeDeleteWarningDialog multiple consent label": {
+    "context": "ProductTypeDeleteWarningDialog multiple consent label",
+    "string": "Yes, I want to delete those products types and assigned products"
+  },
+  "ProductTypeDeleteWarningDialog single assigned items description": {
+    "context": "ProductTypeDeleteWarningDialog single assigned items description",
+    "string": "You are about to delete product type <b>{typeName}</b>. It is assigned to {assignedItemsCount} {assignedItemsCount,plural,one{product} other{products}}. Deleting this product type will also delete those products. Are you sure you want to do this?"
+  },
+  "ProductTypeDeleteWarningDialog single consent label": {
+    "context": "ProductTypeDeleteWarningDialog single consent label",
+    "string": "Yes, I want to delete this product type and assigned products"
+  },
+  "ProductTypeDeleteWarningDialog single no assigned items description": {
+    "context": "ProductTypeDeleteWarningDialog single no assigned items description",
+    "string": "Are you sure you want to delete <b>{typeName}</b>? If you remove it you won’t be able to assign it to created products."
+  },
+  "ProductTypeDeleteWarningDialog with items multiple description": {
+    "context": "ProductTypeDeleteWarningDialog with items multiple description",
+    "string": "You are about to delete multiple product types. Some of them are assigned to products. Deleting those product types will also delete those products"
   },
   "amount title": {
     "context": "amount title",
@@ -4556,18 +4604,6 @@
     "context": "header",
     "string": "Create Page Type"
   },
-  "src_dot_pageTypes_dot_components_dot_PageTypeDeleteDialog_dot_2364900868": {
-    "context": "delete page type with its pages",
-    "string": "Page Type you want to delete is used by some pages. Deleting this page type will also delete those pages. Are you sure you want to delete {name}? After doing so you won’t be able to revert changes."
-  },
-  "src_dot_pageTypes_dot_components_dot_PageTypeDeleteDialog_dot_3120835055": {
-    "context": "dialog header",
-    "string": "Delete Page Type"
-  },
-  "src_dot_pageTypes_dot_components_dot_PageTypeDeleteDialog_dot_3734861990": {
-    "context": "delete page type",
-    "string": "Are you sure you want to delete {name}? After doing so you won’t be able to revert changes."
-  },
   "src_dot_pageTypes_dot_components_dot_PageTypeDetailsPage_dot_1105469372": {
     "string": "These are general information about this Content Type."
   },
@@ -4602,6 +4638,14 @@
   },
   "src_dot_pageTypes_dot_components_dot_PageTypeList_dot_2965257236": {
     "string": "No page types found"
+  },
+  "src_dot_pageTypes_dot_hooks_dot_usePageTypeDelete_dot_title": {
+    "context": "PageTypeDeleteWarningDialog title",
+    "string": "Delete page {selectedTypesCount,plural,one{type} other{types}}"
+  },
+  "src_dot_pageTypes_dot_hooks_dot_usePageTypeDelete_dot_viewAssignedItemsButtonLabel": {
+    "context": "PageTypeDeleteWarningDialog single assigned items button label",
+    "string": "View pages"
   },
   "src_dot_pageTypes_dot_views_dot_2634056946": {
     "context": "dialog header",
@@ -5037,14 +5081,6 @@
     "context": "section header",
     "string": "Variant Attributes"
   },
-  "src_dot_productTypes_dot_components_dot_ProductTypeDeleteDialog_dot_2297471173": {
-    "context": "delete product type",
-    "string": "Are you sure you want to delete {name}?"
-  },
-  "src_dot_productTypes_dot_components_dot_ProductTypeDeleteDialog_dot_924066985": {
-    "context": "dialog header",
-    "string": "Delete Product Type"
-  },
   "src_dot_productTypes_dot_components_dot_ProductTypeDetailsPage_dot_1217376589": {
     "context": "switch button",
     "string": "Product type uses Variant Attributes"
@@ -5124,16 +5160,16 @@
   "src_dot_productTypes_dot_components_dot_ProductTypeShipping_dot_746695941": {
     "string": "Weight"
   },
+  "src_dot_productTypes_dot_hooks_dot_useProductTypeDelete_dot_title": {
+    "context": "ProductTypeDeleteWarningDialog title",
+    "string": "Delete product {selectedTypesCount,plural,one{type} other{types}}"
+  },
+  "src_dot_productTypes_dot_hooks_dot_useProductTypeDelete_dot_viewAssignedItemsButtonLabel": {
+    "context": "ProductTypeDeleteWarningDialog single assigned items button label",
+    "string": "View products"
+  },
   "src_dot_productTypes_dot_views_dot_3822478981": {
     "string": "Successfully created product type"
-  },
-  "src_dot_productTypes_dot_views_dot_ProductTypeList_dot_4080551769": {
-    "context": "dialog header",
-    "string": "Delete Product Types"
-  },
-  "src_dot_productTypes_dot_views_dot_ProductTypeList_dot_4269954457": {
-    "context": "dialog content",
-    "string": "{counter,plural,one{Are you sure you want to delete this product type?} other{Are you sure you want to delete {displayQuantity} product types?}}"
   },
   "src_dot_productTypes_dot_views_dot_ProductTypeUpdate_dot_3512959355": {
     "string": "Product type deleted"
