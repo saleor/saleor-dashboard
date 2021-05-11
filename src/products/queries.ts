@@ -16,7 +16,6 @@ import {
 } from "@saleor/products/types/ProductMediaById";
 import gql from "graphql-tag";
 
-import { CountAllProducts } from "./types/CountAllProducts";
 import {
   CreateMultipleVariantsData,
   CreateMultipleVariantsDataVariables
