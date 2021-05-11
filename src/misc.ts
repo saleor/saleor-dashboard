@@ -38,47 +38,6 @@ export type RequireOnlyOne<T, Keys extends keyof T = keyof T> = Pick<
       Partial<Record<Exclude<Keys, K>, undefined>>;
   }[Keys];
 
-const defaultRenderDivider = () => <Divider />;
-
-export function renderCollectionWithDividers<T>({
-  collection,
-  renderItem,
-  renderEmpty,
-  renderDivider
-}: {
-  collection: T[];
-  renderItem: (
-    item: T | undefined,
-    index: number | undefined,
-    collection: T[]
-  ) => any;
-  renderDivider?: () => React.ReactNode;
-  renderEmpty?: (collection: T[]) => any;
-}) {
-  const hasNoItemsAndPlaceholder = !renderEmpty && !collection.length;
-
-  if (hasNoItemsAndPlaceholder) {
-    return null;
-  }
-
-  if (!collection.length) {
-    return !!renderEmpty ? renderEmpty(collection) : null;
-  }
-
-  const renderDividerFunction = renderDivider || defaultRenderDivider;
-
-  return initial(
-    collection.reduce(
-      (result, item, index) => [
-        ...result,
-        renderItem(item, index, collection),
-        renderDividerFunction()
-      ],
-      []
-    )
-  );
-}
-
 export function renderCollection<T>(
   collection: T[],
   renderItem: (
