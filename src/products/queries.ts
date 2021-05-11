@@ -190,17 +190,6 @@ export const useProductCountQuery = makeQuery<
   ProductCountVariables
 >(productCountQuery);
 
-const countAllProductsQuery = gql`
-  query CountAllProducts {
-    products {
-      totalCount
-    }
-  }
-`;
-export const useCountAllProducts = makeQuery<CountAllProducts, null>(
-  countAllProductsQuery
-);
-
 const productDetailsQuery = gql`
   ${productFragmentDetails}
   ${taxTypeFragment}
