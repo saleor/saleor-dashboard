@@ -45,10 +45,11 @@ export function createReadyToFulfillOrder(
   customerId,
   shippingMethodId,
   channelId,
-  variantsList
+  variantsList,
+  address
 ) {
   let order;
-  return createDraftOrder(customerId, shippingMethodId, channelId)
+  return createDraftOrder(customerId, shippingMethodId, channelId, address)
     .then(orderResp => {
       order = orderResp;
       assignVariantsToOrder(order, variantsList);
@@ -61,10 +62,11 @@ export function createOrder({
   customerId,
   shippingMethodId,
   channelId,
-  variantsList
+  variantsList,
+  address
 }) {
   let order;
-  return createDraftOrder(customerId, shippingMethodId, channelId)
+  return createDraftOrder(customerId, shippingMethodId, channelId, address)
     .then(orderResp => {
       order = orderResp;
       assignVariantsToOrder(order, variantsList);
@@ -79,9 +81,14 @@ function assignVariantsToOrder(order, variantsList) {
   });
 }
 
-export function createDraftOrder(customerId, shippingMethodId, channelId) {
+export function createDraftOrder(
+  customerId,
+  shippingMethodId,
+  channelId,
+  address
+) {
   return orderRequest
-    .createDraftOrder(customerId, shippingMethodId, channelId)
+    .createDraftOrder(customerId, shippingMethodId, channelId, address)
     .its("body.data.draftOrderCreate.order");
 }
 export function createCheckout({
