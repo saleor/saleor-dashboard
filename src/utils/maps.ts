@@ -7,7 +7,7 @@ import { Node } from "@saleor/types";
 import { MetadataInput } from "@saleor/types/globalTypes";
 
 interface EdgesType<T> {
-  edges?: { node: T }[];
+  edges?: Array<{ node: T }>;
 }
 
 export function mapEdgesToItems<T>(data?: EdgesType<T>): T[] {
