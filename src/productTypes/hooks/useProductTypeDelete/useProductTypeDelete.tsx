@@ -1,3 +1,7 @@
+import {
+  UseTypeDeleteData,
+  UseTypeDeleteProps
+} from "@saleor/pageTypes/hooks/usePageTypeDelete/types";
 import { useProductCountQuery } from "@saleor/products/queries";
 import { ProductCountVariables } from "@saleor/products/types/ProductCount";
 import { productListUrl } from "@saleor/products/urls";
@@ -7,10 +11,6 @@ import {
 } from "@saleor/productTypes/urls";
 import React from "react";
 
-import {
-  UseTypeDeleteData,
-  UseTypeDeleteProps
-} from "../usePageTypeDelete/types";
 import * as messages from "./messages";
 
 type UseProductTypeDeleteProps<
