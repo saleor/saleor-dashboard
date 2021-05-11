@@ -43,7 +43,8 @@ storiesOf("Views / Customers / Customer details", module)
       >).map(field => ({
         __typename: "AccountError",
         code: AccountErrorCode.INVALID,
-        field
+        field,
+        addressType: null
       }))}
     />
   ))

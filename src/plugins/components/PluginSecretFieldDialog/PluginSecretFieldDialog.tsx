@@ -9,9 +9,9 @@ import ConfirmButton, {
 } from "@saleor/components/ConfirmButton";
 import Form from "@saleor/components/Form";
 import Skeleton from "@saleor/components/Skeleton";
+import { PluginConfigurationFragment_configuration } from "@saleor/fragments/types/PluginConfigurationFragment";
 import { buttonMessages } from "@saleor/intl";
 import { maybe } from "@saleor/misc";
-import { Plugin_plugin_configuration } from "@saleor/plugins/types/Plugin";
 import { DialogProps } from "@saleor/types";
 import { ConfigurationTypeFieldEnum } from "@saleor/types/globalTypes";
 import React from "react";
@@ -22,7 +22,7 @@ export interface PluginSecretFieldDialogFormData {
 }
 export interface PluginSecretFieldDialogProps extends DialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
-  field: Plugin_plugin_configuration;
+  field: PluginConfigurationFragment_configuration;
   onConfirm: (data: PluginSecretFieldDialogFormData) => void;
 }
 

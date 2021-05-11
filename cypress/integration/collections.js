@@ -1,6 +1,7 @@
 // <reference types="cypress" />
 import faker from "faker";
 
+import { createChannel } from "../apiRequests/Channels";
 import { updateChannelInProduct } from "../apiRequests/Product";
 import { getCollection } from "../apiRequests/storeFront/Collections";
 import { searchInShop } from "../apiRequests/storeFront/Search";
@@ -108,8 +109,7 @@ describe("Collections", () => {
     let collection;
     let channel;
 
-    channelsUtils
-      .createChannel({ name: collectionName })
+    createChannel({ name: collectionName })
       .then(channelResp => {
         channel = channelResp;
         updateChannelInProduct(product.id, channel.id);

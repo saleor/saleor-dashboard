@@ -11,7 +11,9 @@ export function createCategory(name, slug = name) {
       }
     }
   }`;
-  return cy.sendRequestWithQuery(mutation);
+  return cy
+    .sendRequestWithQuery(mutation)
+    .its("body.data.categoryCreate.category");
 }
 export function getCategories(first, search) {
   const mutation = `query{

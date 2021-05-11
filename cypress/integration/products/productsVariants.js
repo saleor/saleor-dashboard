@@ -76,9 +76,14 @@ describe("Creating variants", () => {
     const price = 10;
     let createdProduct;
 
-    createProduct(attribute.id, name, productType.id, category.id)
+    createProduct({
+      attributeId: attribute.id,
+      name,
+      productTypeId: productType.id,
+      categoryId: category.id
+    })
       .then(resp => {
-        createdProduct = resp.body.data.productCreate.product;
+        createdProduct = resp;
         updateChannelInProduct({
           productId: createdProduct.id,
           channelId: defaultChannel.id
@@ -145,15 +150,15 @@ describe("Creating variants", () => {
     const variantsPrice = 10;
     let newChannel;
     let createdProduct;
-    createChannel(true, name, name, "PLN")
+    createChannel({ isActive: true, name, currencyCode: "PLN" })
       .then(resp => {
-        newChannel = resp.body.data.channelCreate.channel;
-        productUtils.createProduct(
-          attribute.id,
+        newChannel = resp;
+        createProduct({
+          attributeId: attribute.id,
           name,
-          productType.id,
-          category.id
-        );
+          productTypeId: productType.id,
+          categoryId: category.id
+        });
       })
       .then(productResp => {
         createdProduct = productResp;

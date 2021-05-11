@@ -48,6 +48,13 @@ const useStyles = makeStyles(
   { name: "OrderCustomer" }
 );
 
+export interface CustomerEditData {
+  user?: string;
+  userEmail?: string;
+  prevUser?: string;
+  prevUserEmail?: string;
+}
+
 export interface OrderCustomerProps
   extends Partial<FetchMoreProps>,
     UserPermissionProps {
@@ -57,7 +64,7 @@ export interface OrderCustomerProps
   canEditAddresses: boolean;
   canEditCustomer: boolean;
   fetchUsers?: (query: string) => void;
-  onCustomerEdit?: (data: { user?: string; userEmail?: string }) => void;
+  onCustomerEdit?: (data: CustomerEditData) => void;
   onProfileView: () => void;
   onBillingAddressEdit?: () => void;
   onShippingAddressEdit?: () => void;
@@ -132,6 +139,8 @@ const OrderCustomer: React.FC<OrderCustomerProps> = props => {
                 const value = event.target.value;
 
                 onCustomerEdit({
+                  prevUser: user?.id,
+                  prevUserEmail: userEmail,
                   [value.includes("@") ? "userEmail" : "user"]: value
                 });
                 toggleEditMode();
@@ -175,7 +184,12 @@ const OrderCustomer: React.FC<OrderCustomerProps> = props => {
           )
         ) : (
           <>
-            <Typography className={classes.userEmail}>{user.email}</Typography>
+            <Typography
+              className={classes.userEmail}
+              data-test-id="customer-email"
+            >
+              {user.email}
+            </Typography>
             <RequirePermissions
               userPermissions={userPermissions}
               requiredPermissions={[PermissionEnum.MANAGE_USERS]}
@@ -248,6 +262,7 @@ const OrderCustomer: React.FC<OrderCustomerProps> = props => {
           {canEditAddresses && (
             <div className={classes.sectionHeaderToolbar}>
               <Button
+                data-test-id="edit-shipping-address"
                 color="primary"
                 variant="text"
                 onClick={onShippingAddressEdit}
@@ -305,6 +320,7 @@ const OrderCustomer: React.FC<OrderCustomerProps> = props => {
           {canEditAddresses && (
             <div className={classes.sectionHeaderToolbar}>
               <Button
+                data-test-id="edit-billing-address"
                 color="primary"
                 variant="text"
                 onClick={onBillingAddressEdit}

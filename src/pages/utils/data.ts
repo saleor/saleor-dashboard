@@ -15,7 +15,8 @@ export function getAttributeInputFromPage(
       inputType: attribute.attribute.inputType,
       isRequired: attribute.attribute.valueRequired,
       selectedValues: attribute.values,
-      values: attribute.attribute.values
+      values: attribute.attribute.values,
+      unit: attribute.attribute.unit
     },
     id: attribute.attribute.id,
     label: attribute.attribute.name,

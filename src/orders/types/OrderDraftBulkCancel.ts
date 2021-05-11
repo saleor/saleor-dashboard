@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { OrderErrorCode } from "./../../types/globalTypes";
+import { OrderErrorCode, AddressTypeEnum } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: OrderDraftBulkCancel
@@ -13,6 +13,7 @@ export interface OrderDraftBulkCancel_draftOrderBulkDelete_errors {
   __typename: "OrderError";
   code: OrderErrorCode;
   field: string | null;
+  addressType: AddressTypeEnum | null;
 }
 
 export interface OrderDraftBulkCancel_draftOrderBulkDelete {

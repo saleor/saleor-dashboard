@@ -1,8 +1,9 @@
 import { ASSIGN_PRODUCTS_SELECTORS } from "../elements/catalog/products/assign-products-selectors";
 import { DRAFT_ORDER_SELECTORS } from "../elements/orders/draft-order-selectors";
 import { SELECT_SHIPPING_METHOD_FORM } from "../elements/shipping/select-shipping-method-form";
+import { fillUpAddressForm } from "./shared/addressForm";
 
-export function finalizeDraftOrder(name) {
+export function finalizeDraftOrder(name, address) {
   cy.get(DRAFT_ORDER_SELECTORS.addProducts)
     .click()
     .get(ASSIGN_PRODUCTS_SELECTORS.searchInput)
@@ -18,7 +19,14 @@ export function finalizeDraftOrder(name) {
     .type(name);
   cy.contains(DRAFT_ORDER_SELECTORS.selectCustomerOption, name)
     .click()
-    .get(DRAFT_ORDER_SELECTORS.addShippingCarrierLink)
+    .get(DRAFT_ORDER_SELECTORS.customerEmail)
+    .should("be.visible")
+    .get(DRAFT_ORDER_SELECTORS.editShippingAddress)
+    .click();
+  fillUpAddressForm(address);
+  cy.get(DRAFT_ORDER_SELECTORS.editBillingAddress).click();
+  fillUpAddressForm(address);
+  cy.get(DRAFT_ORDER_SELECTORS.addShippingCarrierLink)
     .click()
     .get(SELECT_SHIPPING_METHOD_FORM.selectShippingMethod)
     .click()

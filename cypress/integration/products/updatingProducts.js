@@ -1,5 +1,6 @@
 import faker from "faker";
 
+import { createCategory } from "../../apiRequests/Category";
 import { createCollection } from "../../apiRequests/Collections";
 import { getProductDetails } from "../../apiRequests/storeFront/ProductDetails";
 import { PRODUCT_DETAILS } from "../../elements/catalog/products/product-details";
@@ -11,7 +12,6 @@ import { getDefaultChannel } from "../../utils/channelsUtils";
 import { deleteCollectionsStartsWith } from "../../utils/collectionsUtils";
 import { expectCorrectProductInformation } from "../../utils/products/checkProductInfo";
 import {
-  createCategory,
   createProductInChannel,
   createTypeAttributeAndCategoryForProduct,
   deleteProductsStartsWith

@@ -22,7 +22,9 @@ export function createWarehouse({ name, shippingZone, address, slug = name }) {
       }
     }
   }`;
-  return cy.sendRequestWithQuery(mutation);
+  return cy
+    .sendRequestWithQuery(mutation)
+    .its("body.data.createWarehouse.warehouse");
 }
 export function getWarehouses(first, search) {
   const query = `query{

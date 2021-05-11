@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { AttributeTypeEnum } from "./../../types/globalTypes";
+import { AttributeTypeEnum, MeasurementUnitsEnum } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL query operation: PageTypeDetails
@@ -30,6 +30,7 @@ export interface PageTypeDetails_pageType_attributes {
   visibleInStorefront: boolean;
   filterableInDashboard: boolean;
   filterableInStorefront: boolean;
+  unit: MeasurementUnitsEnum | null;
 }
 
 export interface PageTypeDetails_pageType {

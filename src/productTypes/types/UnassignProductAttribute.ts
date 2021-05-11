@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { AttributeTypeEnum, WeightUnitsEnum } from "./../../types/globalTypes";
+import { AttributeTypeEnum, MeasurementUnitsEnum, WeightUnitsEnum } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: UnassignProductAttribute
@@ -42,6 +42,7 @@ export interface UnassignProductAttribute_productAttributeUnassign_productType_p
   visibleInStorefront: boolean;
   filterableInDashboard: boolean;
   filterableInStorefront: boolean;
+  unit: MeasurementUnitsEnum | null;
 }
 
 export interface UnassignProductAttribute_productAttributeUnassign_productType_variantAttributes {
@@ -53,6 +54,7 @@ export interface UnassignProductAttribute_productAttributeUnassign_productType_v
   visibleInStorefront: boolean;
   filterableInDashboard: boolean;
   filterableInStorefront: boolean;
+  unit: MeasurementUnitsEnum | null;
 }
 
 export interface UnassignProductAttribute_productAttributeUnassign_productType_weight {

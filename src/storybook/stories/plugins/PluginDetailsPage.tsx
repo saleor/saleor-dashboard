@@ -17,7 +17,8 @@ const props: PluginsDetailsPageProps = {
   onEdit: () => undefined,
   onSubmit: () => undefined,
   plugin,
-  saveButtonBarState: "default"
+  saveButtonBarState: "default",
+  setSelectedChannelId: () => undefined
 };
 
 storiesOf("Views / Plugins / Plugin details", module)
@@ -49,8 +50,7 @@ storiesOf("Views / Plugins / Plugin details", module)
     <PluginsDetailsPage
       {...props}
       plugin={{
-        ...plugin,
-        configuration: null
+        ...plugin
       }}
     />
   ));

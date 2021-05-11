@@ -127,6 +127,7 @@ export const productVariantAttributesFragment = gql`
         inputType
         entityType
         valueRequired
+        unit
         values {
           ...AttributeValueFragment
         }
@@ -239,6 +240,7 @@ export const variantAttributeFragment = gql`
     inputType
     entityType
     valueRequired
+    unit
     values {
       ...AttributeValueFragment
     }

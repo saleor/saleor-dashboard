@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { PageCreateInput, PageErrorCode, AttributeInputTypeEnum, AttributeEntityTypeEnum } from "./../../types/globalTypes";
+import { PageCreateInput, PageErrorCode, AttributeInputTypeEnum, AttributeEntityTypeEnum, MeasurementUnitsEnum } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: PageCreate
@@ -41,6 +41,7 @@ export interface PageCreate_pageCreate_page_attributes_attribute {
   inputType: AttributeInputTypeEnum | null;
   entityType: AttributeEntityTypeEnum | null;
   valueRequired: boolean;
+  unit: MeasurementUnitsEnum | null;
   values: (PageCreate_pageCreate_page_attributes_attribute_values | null)[] | null;
 }
 

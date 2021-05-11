@@ -1,17 +1,20 @@
-import { getDefaultAddress } from "./utils/Utils";
+import { getDefaultAddress, getVariantsLines } from "./utils/Utils";
+
 export function createCheckout({
   channelSlug,
   email,
   productQuantity = 1,
   variantsList,
   address,
+  billingAddress,
   auth = "auth"
 }) {
-  const lines = variantsList.map(
-    variant => `{quantity:${productQuantity}
-                    variantId:"${variant.id}"}`
-  );
+  const lines = getVariantsLines(variantsList, productQuantity);
   const shippingAddress = getDefaultAddress(address, "shippingAddress");
+  const billingAddressLines = getDefaultAddress(
+    billingAddress,
+    "billingAddress"
+  );
 
   const mutation = `mutation{
     checkoutCreate(input:{
@@ -19,6 +22,7 @@ export function createCheckout({
       email:"${email}"
       lines: [${lines.join()}]
       ${shippingAddress}
+      ${billingAddressLines}
     }){
       checkoutErrors{
         field
@@ -33,7 +37,9 @@ export function createCheckout({
       }
     }
   }`;
-  return cy.sendRequestWithQuery(mutation, auth);
+  return cy
+    .sendRequestWithQuery(mutation, auth)
+    .its("body.data.checkoutCreate.checkout");
 }
 export function addShippingMethod(checkoutId, shippingMethodId) {
   const mutation = `mutation{
@@ -47,6 +53,7 @@ export function addShippingMethod(checkoutId, shippingMethodId) {
   }`;
   return cy.sendRequestWithQuery(mutation);
 }
+
 export function addPayment(checkoutId, gateway, token) {
   const mutation = `mutation{
     checkoutPaymentCreate(checkoutId:"${checkoutId}",
@@ -60,8 +67,11 @@ export function addPayment(checkoutId, gateway, token) {
       }
     }
   }`;
-  return cy.sendRequestWithQuery(mutation);
+  return cy
+    .sendRequestWithQuery(mutation)
+    .its("body.data.checkoutPaymentCreate");
 }
+
 export function completeCheckout(checkoutId) {
   const mutation = `mutation{
     checkoutComplete(checkoutId:"${checkoutId}"){
@@ -76,7 +86,9 @@ export function completeCheckout(checkoutId) {
       }
     }
   }`;
-  return cy.sendRequestWithQuery(mutation);
+  return cy
+    .sendRequestWithQuery(mutation)
+    .its("body.data.checkoutComplete.order");
 }
 
 export function addVoucher(checkoutId, voucherCode) {
@@ -94,6 +106,49 @@ export function addVoucher(checkoutId, voucherCode) {
             amount
           }
         }
+      }
+    }
+  }`;
+  return cy.sendRequestWithQuery(mutation);
+}
+
+export function checkoutVariantsUpdate(checkoutId, variantsList) {
+  const lines = getVariantsLines(variantsList, 1);
+  const mutation = `mutation{
+    checkoutLinesUpdate(checkoutId:"${checkoutId}", 
+    lines: [${lines.join()}]){
+      checkoutErrors{
+        field
+        message
+      }
+    }
+  }`;
+  return cy.sendRequestWithQuery(mutation);
+}
+
+export function checkoutShippingMethodUpdate(checkoutId, shippingMethodId) {
+  const mutation = `mutation{
+    checkoutShippingMethodUpdate(checkoutId:"${checkoutId}" shippingMethodId:"${shippingMethodId}"){
+      checkoutErrors{
+        field
+        message
+      }
+    }
+  }`;
+  return cy
+    .sendRequestWithQuery(mutation)
+    .its("body.data.checkoutShippingMethodUpdate");
+}
+
+export function checkoutShippingAddressUpdate(checkoutId, address) {
+  const shippingAddress = getDefaultAddress(address, "shippingAddress");
+  const mutation = `mutation{
+    checkoutShippingAddressUpdate(checkoutId:"${checkoutId}", 
+    ${shippingAddress}
+    ){
+      checkoutErrors{
+        field
+        message
       }
     }
   }`;

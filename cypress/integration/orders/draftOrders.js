@@ -23,6 +23,7 @@ describe("Draft orders", () => {
 
   let defaultChannel;
   let warehouse;
+  let address;
 
   before(() => {
     cy.clearSessionData().loginUserViaRequest();
@@ -38,6 +39,7 @@ describe("Draft orders", () => {
         cy.fixture("addresses");
       })
       .then(addresses => {
+        address = addresses.plAddress;
         createCustomer(
           `${randomName}@example.com`,
           randomName,
@@ -81,7 +83,7 @@ describe("Draft orders", () => {
       .get(ORDERS_SELECTORS.createOrder)
       .click();
     selectChannelInPicker(defaultChannel.name);
-    finalizeDraftOrder(randomName).then(draftOrderNumber => {
+    finalizeDraftOrder(randomName, address).then(draftOrderNumber => {
       cy.visit(urlList.orders);
       cy.contains(ORDERS_SELECTORS.orderRow, draftOrderNumber).should(
         $order => {

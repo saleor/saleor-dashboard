@@ -23,6 +23,7 @@ export const pageAttributesFragment = gql`
         inputType
         entityType
         valueRequired
+        unit
         values {
           ...AttributeValueFragment
         }

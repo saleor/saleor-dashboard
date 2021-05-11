@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { AccountErrorCode } from "./../../types/globalTypes";
+import { AccountErrorCode, AddressTypeEnum } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: RemoveCustomerAddress
@@ -13,6 +13,7 @@ export interface RemoveCustomerAddress_addressDelete_errors {
   __typename: "AccountError";
   code: AccountErrorCode;
   field: string | null;
+  addressType: AddressTypeEnum | null;
 }
 
 export interface RemoveCustomerAddress_addressDelete_user_addresses_country {

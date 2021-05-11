@@ -107,6 +107,10 @@ export const TypedCustomerAddressesQuery = TypedQuery<
   CustomerAddresses,
   CustomerAddressesVariables
 >(customerAddresses);
+export const useCustomerAddressesQuery = makeQuery<
+  CustomerAddresses,
+  CustomerAddressesVariables
+>(customerAddresses);
 
 const customerCreateData = gql`
   query CustomerCreateData {

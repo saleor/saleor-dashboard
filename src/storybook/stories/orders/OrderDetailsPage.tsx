@@ -7,7 +7,7 @@ import React from "react";
 import OrderDetailsPage, {
   OrderDetailsPageProps
 } from "../../../orders/components/OrderDetailsPage";
-import { countries, order as orderFixture } from "../../../orders/fixtures";
+import { order as orderFixture } from "../../../orders/fixtures";
 import {
   FulfillmentStatus,
   OrderStatus,
@@ -18,7 +18,6 @@ import Decorator from "../../Decorator";
 const order = orderFixture(placeholderImage);
 
 const props: Omit<OrderDetailsPageProps, "classes"> = {
-  countries,
   disabled: false,
   onBack: () => undefined,
   onBillingAddressEdit: undefined,
