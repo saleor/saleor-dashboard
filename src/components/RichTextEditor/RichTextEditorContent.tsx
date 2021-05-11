@@ -6,6 +6,7 @@ import EditorJS, {
 } from "@editorjs/editorjs";
 import Header from "@editorjs/header";
 import List from "@editorjs/list";
+import Paragraph from "@editorjs/paragraph";
 import Quote from "@editorjs/quote";
 import strikethroughIcon from "@saleor/icons/StrikethroughIcon";
 import classNames from "classnames";
@@ -20,16 +21,29 @@ export interface RichTextEditorContentProps {
   onReady?: () => void;
 }
 
+const inlineToolbar = ["link", "bold", "italic", "strikethrough"];
+
 export const tools: Record<string, ToolConstructable | ToolSettings> = {
   header: {
     class: Header,
     config: {
       defaultLevel: 1,
       levels: [1, 2, 3]
-    }
+    },
+    inlineToolbar
   },
-  list: List,
-  quote: Quote,
+  list: {
+    class: List,
+    inlineToolbar
+  },
+  quote: {
+    class: Quote,
+    inlineToolbar
+  },
+  paragraph: {
+    class: Paragraph,
+    inlineToolbar
+  },
   strikethrough: createGenericInlineTool({
     sanitize: {
       s: {}

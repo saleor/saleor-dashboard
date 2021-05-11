@@ -22,6 +22,7 @@ export const attributes: ProductType_productType_productAttributes[] = [
       name: "Author",
       slug: "author",
       valueRequired: true,
+      unit: null,
       values: [
         {
           __typename: "AttributeValue" as "AttributeValue",
@@ -59,6 +60,7 @@ export const attributes: ProductType_productType_productAttributes[] = [
       name: "Box Size",
       slug: "box-size",
       valueRequired: true,
+      unit: null,
       values: [
         {
           __typename: "AttributeValue" as "AttributeValue",
@@ -120,6 +122,7 @@ export const attributes: ProductType_productType_productAttributes[] = [
       name: "Brand",
       slug: "brand",
       valueRequired: true,
+      unit: null,
       values: [
         {
           __typename: "AttributeValue" as "AttributeValue",
@@ -145,6 +148,7 @@ export const attributes: ProductType_productType_productAttributes[] = [
       name: "Candy Box Size",
       slug: "candy-box-size",
       valueRequired: true,
+      unit: null,
       values: [
         {
           __typename: "AttributeValue" as "AttributeValue",
@@ -194,6 +198,7 @@ export const attributes: ProductType_productType_productAttributes[] = [
       name: "Coffee Genre",
       slug: "coffee-genre",
       valueRequired: true,
+      unit: null,
       values: [
         {
           __typename: "AttributeValue" as "AttributeValue",
@@ -231,6 +236,7 @@ export const attributes: ProductType_productType_productAttributes[] = [
       name: "Collar",
       slug: "collar",
       valueRequired: true,
+      unit: null,
       values: [
         {
           __typename: "AttributeValue" as "AttributeValue",
@@ -280,6 +286,7 @@ export const attributes: ProductType_productType_productAttributes[] = [
       name: "Color",
       slug: "color",
       valueRequired: true,
+      unit: null,
       values: [
         {
           __typename: "AttributeValue" as "AttributeValue",
@@ -317,6 +324,7 @@ export const attributes: ProductType_productType_productAttributes[] = [
       name: "Cover",
       slug: "cover",
       valueRequired: true,
+      unit: null,
       values: [
         {
           __typename: "AttributeValue" as "AttributeValue",
@@ -402,6 +410,7 @@ export const attributes: ProductType_productType_productAttributes[] = [
       name: "Flavor",
       slug: "flavor",
       valueRequired: true,
+      unit: null,
       values: [
         {
           __typename: "AttributeValue" as "AttributeValue",
@@ -439,6 +448,7 @@ export const attributes: ProductType_productType_productAttributes[] = [
       name: "Language",
       slug: "language",
       valueRequired: true,
+      unit: null,
       values: [
         {
           __typename: "AttributeValue" as "AttributeValue",
@@ -476,6 +486,7 @@ export const attributes: ProductType_productType_productAttributes[] = [
       name: "Publisher",
       slug: "publisher",
       valueRequired: true,
+      unit: null,
       values: [
         {
           __typename: "AttributeValue" as "AttributeValue",
@@ -513,6 +524,7 @@ export const attributes: ProductType_productType_productAttributes[] = [
       name: "Size",
       slug: "size",
       valueRequired: true,
+      unit: null,
       values: [
         {
           __typename: "AttributeValue" as "AttributeValue",
@@ -680,6 +692,7 @@ export const productTypes: Array<SearchProductTypes_search_edges_node &
   __typename: "ProductType" as "ProductType",
   ...productType
 }));
+
 export const productType: ProductTypeDetails_productType = {
   __typename: "ProductType" as "ProductType",
   hasVariants: false,
@@ -703,7 +716,8 @@ export const productType: ProductTypeDetails_productType = {
       name: "Author",
       slug: "author",
       type: AttributeTypeEnum.PRODUCT_TYPE,
-      visibleInStorefront: true
+      visibleInStorefront: true,
+      unit: null
     },
     {
       __typename: "Attribute" as "Attribute",
@@ -713,7 +727,8 @@ export const productType: ProductTypeDetails_productType = {
       name: "Language",
       slug: "language",
       type: AttributeTypeEnum.PRODUCT_TYPE,
-      visibleInStorefront: true
+      visibleInStorefront: true,
+      unit: null
     },
     {
       __typename: "Attribute" as "Attribute",
@@ -723,7 +738,8 @@ export const productType: ProductTypeDetails_productType = {
       name: "Publisher",
       slug: "publisher",
       type: AttributeTypeEnum.PRODUCT_TYPE,
-      visibleInStorefront: true
+      visibleInStorefront: true,
+      unit: null
     }
   ],
   taxType: {
@@ -737,14 +753,16 @@ export const productType: ProductTypeDetails_productType = {
       filterableInDashboard: true,
       filterableInStorefront: false,
       type: AttributeTypeEnum.PRODUCT_TYPE,
-      visibleInStorefront: true
+      visibleInStorefront: true,
+      unit: null
     },
     {
       ...attributes[6],
       filterableInDashboard: true,
       filterableInStorefront: false,
       type: AttributeTypeEnum.PRODUCT_TYPE,
-      visibleInStorefront: true
+      visibleInStorefront: true,
+      unit: null
     }
   ],
   weight: {

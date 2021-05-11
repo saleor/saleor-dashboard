@@ -76,7 +76,7 @@ describe("Orders", () => {
           });
         }
       )
-      .then(({ variants: variantsResp }) => {
+      .then(({ variantsList: variantsResp }) => {
         variantsList = variantsResp;
       });
   });

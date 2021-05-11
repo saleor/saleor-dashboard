@@ -1,7 +1,18 @@
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@saleor/config";
+import { useCustomerAddressesQuery } from "@saleor/customers/queries";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useUser from "@saleor/hooks/useUser";
+import { CustomerEditData } from "@saleor/orders/components/OrderCustomer";
+import OrderCustomerAddressesEditDialog, {
+  OrderCustomerAddressesEditDialogOutput
+} from "@saleor/orders/components/OrderCustomerAddressesEditDialog";
+import {
+  CustomerChangeActionEnum,
+  OrderCustomerChangeData
+} from "@saleor/orders/components/OrderCustomerChangeDialog/form";
+import OrderCustomerChangeDialog from "@saleor/orders/components/OrderCustomerChangeDialog/OrderCustomerChangeDialog";
+import { OrderDetails } from "@saleor/orders/types/OrderDetails";
 import { OrderDiscountProvider } from "@saleor/products/components/OrderDiscountProviders/OrderDiscountProvider";
 import { OrderLineDiscountProvider } from "@saleor/products/components/OrderDiscountProviders/OrderLineDiscountProvider";
 import useCustomerSearch from "@saleor/searches/useCustomerSearch";
@@ -16,14 +27,14 @@ import OrderDraftPage from "../../../components/OrderDraftPage";
 import OrderProductAddDialog from "../../../components/OrderProductAddDialog";
 import OrderShippingMethodEditDialog from "../../../components/OrderShippingMethodEditDialog";
 import { useOrderVariantSearch } from "../../../queries";
-import { OrderUrlQueryParams } from "../../../urls";
+import { OrderUrlDialog, OrderUrlQueryParams } from "../../../urls";
 import { orderDraftListUrl } from "../../../urls";
 
 interface OrderDraftDetailsProps {
   id: string;
   params: OrderUrlQueryParams;
   loading: any;
-  data: any;
+  data: OrderDetails;
   orderAddNote: any;
   orderLineUpdate: any;
   orderLineDelete: any;
@@ -32,7 +43,7 @@ interface OrderDraftDetailsProps {
   orderDraftUpdate: any;
   orderDraftCancel: any;
   orderDraftFinalize: any;
-  openModal: any;
+  openModal: (action: OrderUrlDialog, newParams?: OrderUrlQueryParams) => void;
   closeModal: any;
 }
 
@@ -72,7 +83,69 @@ export const OrderDraftDetails: React.FC<OrderDraftDetailsProps> = ({
     variables: DEFAULT_INITIAL_SEARCH_DATA
   });
 
+  const {
+    data: customerAddresses,
+    loading: customerAddressesLoading
+  } = useCustomerAddressesQuery({
+    variables: {
+      id: order?.user?.id
+    },
+    skip: params.action !== "edit-customer-addresses"
+  });
+
   const intl = useIntl();
+
+  const handleCustomerChange = async ({
+    user,
+    userEmail,
+    prevUser,
+    prevUserEmail
+  }: CustomerEditData) => {
+    const sameUser = user && user === prevUser;
+    const sameUserEmail = userEmail && userEmail === prevUserEmail;
+    if (sameUser || sameUserEmail) {
+      return;
+    }
+
+    const result = await orderDraftUpdate.mutate({
+      id,
+      input: {
+        user,
+        userEmail
+      }
+    });
+
+    if (result?.data?.draftOrderUpdate?.errors?.length) {
+      return;
+    }
+
+    const modalUri = prevUser ? "customer-change" : "edit-customer-addresses";
+    openModal(modalUri);
+  };
+
+  const handleCustomerChangeAction = (data: OrderCustomerChangeData) => {
+    if (data.changeActionOption === CustomerChangeActionEnum.CHANGE_ADDRESS) {
+      openModal("edit-customer-addresses");
+    } else {
+      closeModal();
+    }
+  };
+
+  const handleCustomerChangeAdresses = async (
+    data: OrderCustomerAddressesEditDialogOutput
+  ) => {
+    const result = await orderDraftUpdate.mutate({
+      id,
+      input: {
+        shippingAddress: data.shippingAddress,
+        billingAddress: data.billingAddress
+      }
+    });
+    if (!result?.data?.draftOrderUpdate?.errors?.length) {
+      closeModal();
+    }
+    return result;
+  };
 
   return (
     <>
@@ -104,21 +177,12 @@ export const OrderDraftDetails: React.FC<OrderDraftDetailsProps> = ({
             fetchUsers={searchUsers}
             loading={users.loading}
             usersLoading={users.loading}
-            onCustomerEdit={data =>
-              orderDraftUpdate.mutate({
-                id,
-                input: data
-              })
-            }
+            onCustomerEdit={handleCustomerChange}
             onDraftFinalize={() => orderDraftFinalize.mutate({ id })}
             onDraftRemove={() => openModal("cancel")}
             onOrderLineAdd={() => openModal("add-order-line")}
             onBack={() => navigate(orderDraftListUrl())}
             order={order}
-            countries={(data?.shop?.countries || []).map(country => ({
-              code: country.code,
-              label: country.country
-            }))}
             onProductClick={id => () =>
               navigate(productUrl(encodeURIComponent(id)))}
             onBillingAddressEdit={() => openModal("edit-billing-address")}
@@ -183,6 +247,23 @@ export const OrderDraftDetails: React.FC<OrderDraftDetailsProps> = ({
             }))
           })
         }
+      />
+      <OrderCustomerChangeDialog
+        open={params.action === "customer-change"}
+        onClose={closeModal}
+        onConfirm={handleCustomerChangeAction}
+      />
+      <OrderCustomerAddressesEditDialog
+        open={params.action === "edit-customer-addresses"}
+        loading={customerAddressesLoading}
+        confirmButtonState={orderDraftUpdate.opts.status}
+        errors={orderDraftUpdate.opts.data?.draftOrderUpdate?.errors || []}
+        countries={data?.shop?.countries}
+        customerAddresses={customerAddresses?.user?.addresses}
+        defaultShippingAddress={customerAddresses?.user?.defaultShippingAddress}
+        defaultBillingAddress={customerAddresses?.user?.defaultBillingAddress}
+        onClose={closeModal}
+        onConfirm={handleCustomerChangeAdresses}
       />
     </>
   );

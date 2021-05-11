@@ -11,14 +11,15 @@ export function createWaitingForCaptureOrder(
   let checkout;
   const auth = "token";
   cy.loginInShop();
-  return createCheckout({ channelSlug, email, variantsList, address, auth })
+  return checkoutRequest
+    .createCheckout({ channelSlug, email, variantsList, address, auth })
     .then(checkoutResp => {
       checkout = checkoutResp;
       checkoutRequest.addShippingMethod(checkout.id, shippingMethodId);
     })
     .then(() => addPayment(checkout.id))
     .then(() => checkoutRequest.completeCheckout(checkout.id))
-    .then(() => checkout);
+    .then(order => ({ checkout, order }));
 }
 export function createCheckoutWithVoucher({
   channelSlug,
@@ -30,7 +31,8 @@ export function createCheckoutWithVoucher({
   auth
 }) {
   let checkout;
-  return createCheckout({ channelSlug, email, variantsList, address, auth })
+  return checkoutRequest
+    .createCheckout({ channelSlug, email, variantsList, address, auth })
     .then(checkoutResp => {
       checkout = checkoutResp;
       checkoutRequest.addShippingMethod(checkout.id, shippingMethodId);
@@ -91,28 +93,20 @@ export function createDraftOrder(
     .createDraftOrder(customerId, shippingMethodId, channelId, address)
     .its("body.data.draftOrderCreate.order");
 }
-export function createCheckout({
+export function createAndCompleteCheckoutWithoutShipping({
   channelSlug,
   email,
   variantsList,
-  address,
+  billingAddress,
   auth
 }) {
+  let checkout;
   return checkoutRequest
-    .createCheckout({
-      channelSlug,
-      email,
-      productQuantity: 1,
-      variantsList,
-      address,
-      auth
+    .createCheckout({ channelSlug, email, variantsList, billingAddress, auth })
+    .then(checkoutResp => {
+      checkout = checkoutResp;
+      addPayment(checkout.id);
     })
-    .its("body.data.checkoutCreate.checkout");
-}
-export function addPayment(checkoutId) {
-  return checkoutRequest.addPayment(
-    checkoutId,
-    "mirumee.payments.dummy",
-    "not-charged"
-  );
+    .then(() => checkoutRequest.completeCheckout(checkout.id))
+    .then(order => ({ checkout, order }));
 }

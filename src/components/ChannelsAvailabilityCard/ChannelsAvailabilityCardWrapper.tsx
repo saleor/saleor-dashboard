@@ -53,7 +53,7 @@ export const ChannelsAvailabilityWrapper: React.FC<ChannelsAvailabilityWrapperPr
           toolbar={
             <RequirePermissions
               userPermissions={user?.userPermissions || []}
-              requiredPermissions={[PermissionEnum.MANAGE_CHANNELS]}
+              requiredPermissions={[PermissionEnum.MANAGE_PRODUCTS]}
             >
               <Button
                 color="primary"

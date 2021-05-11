@@ -18,7 +18,9 @@ export function createAttribute(name, attributeValues = ["value"]) {
       }
     }
   }`;
-  return cy.sendRequestWithQuery(mutation);
+  return cy
+    .sendRequestWithQuery(mutation)
+    .its("body.data.attributeCreate.attribute");
 }
 
 export function getAttributes(first, search) {

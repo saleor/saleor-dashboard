@@ -1,6 +1,7 @@
 // <reference types="cypress" />
 import faker from "faker";
 
+import { createChannel } from "../../apiRequests/Channels";
 import { CHANNEL_FORM_SELECTORS } from "../../elements/channels/channel-form-selectors";
 import { HEADER_SELECTORS } from "../../elements/header/header-selectors";
 import { DRAFT_ORDER_SELECTORS } from "../../elements/orders/draft-order-selectors";
@@ -26,7 +27,7 @@ describe("Channels in draft orders", () => {
       .getDefaultChannel()
       .then(channel => {
         defaultChannel = channel;
-        channelsUtils.createChannel({ name: randomName });
+        createChannel({ name: randomName });
       })
       .then(channelResp => {
         otherChannel = channelResp;

@@ -45,7 +45,8 @@ storiesOf("Views / Customers / Create customer", module)
       ] as Array<keyof CustomerCreatePageFormData>).map(field => ({
         __typename: "AccountError",
         code: AccountErrorCode.INVALID,
-        field
+        field,
+        addressType: null
       }))}
     />
   ));

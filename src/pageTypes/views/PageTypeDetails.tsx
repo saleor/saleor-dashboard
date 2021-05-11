@@ -4,6 +4,7 @@ import AssignAttributeDialog from "@saleor/components/AssignAttributeDialog";
 import AttributeUnassignDialog from "@saleor/components/AttributeUnassignDialog";
 import BulkAttributeUnassignDialog from "@saleor/components/BulkAttributeUnassignDialog";
 import NotFoundPage from "@saleor/components/NotFoundPage";
+import TypeDeleteWarningDialog from "@saleor/components/TypeDeleteWarningDialog";
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@saleor/config";
 import useBulkActions from "@saleor/hooks/useBulkActions";
@@ -11,7 +12,6 @@ import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { commonMessages } from "@saleor/intl";
 import { getStringOrPlaceholder } from "@saleor/misc";
-import PageTypeDeleteDialog from "@saleor/pageTypes/components/PageTypeDeleteDialog";
 import {
   useAssignPageAttributeMutation,
   usePageTypeAttributeReorderMutation,
@@ -33,6 +33,7 @@ import PageTypeDetailsPage, {
   PageTypeForm
 } from "../components/PageTypeDetailsPage";
 import useAvailablePageAttributeSearch from "../hooks/useAvailablePageAttributeSearch";
+import usePageTypeDelete from "../hooks/usePageTypeDelete";
 import { usePageTypeDetailsQuery } from "../queries";
 import { pageTypeListUrl, pageTypeUrl, PageTypeUrlQueryParams } from "../urls";
 
@@ -184,6 +185,11 @@ export const PageTypeDetails: React.FC<PageTypeDetailsProps> = ({
 
   const loading = updatePageTypeOpts.loading || dataLoading;
 
+  const pageTypeDeleteData = usePageTypeDelete({
+    singleId: id,
+    params
+  });
+
   return (
     <>
       <WindowTitle title={data?.pageType.name} />
@@ -245,50 +251,55 @@ export const PageTypeDetails: React.FC<PageTypeDetailsProps> = ({
           )
         }}
       />
-      <PageTypeDeleteDialog
-        confirmButtonState={deletePageTypeOpts.status}
-        name={getStringOrPlaceholder(data?.pageType.name)}
-        hasPages={data?.pageType.hasPages}
-        open={params.action === "remove"}
-        onClose={() => navigate(pageTypeUrl(id))}
-        onConfirm={handlePageTypeDelete}
-      />
+
       {!dataLoading && (
-        <AssignAttributeDialog
-          attributes={result.data?.pageType.availableAttributes.edges.map(
-            edge => edge.node
-          )}
-          confirmButtonState={assignAttributeOpts.status}
-          errors={
-            assignAttributeOpts.data?.pageAttributeAssign.errors
-              ? assignAttributeOpts.data.pageAttributeAssign.errors.map(err =>
-                  getPageErrorMessage(err, intl)
-                )
-              : []
-          }
-          loading={result.loading}
-          onClose={closeModal}
-          onSubmit={handleAssignAttribute}
-          onFetch={search}
-          onFetchMore={loadMore}
-          onOpen={result.refetch}
-          hasMore={
-            !!result.data?.pageType.availableAttributes.pageInfo.hasNextPage
-          }
-          open={params.action === "assign-attribute"}
-          selected={params.ids || []}
-          onToggle={attributeId => {
-            const ids = params.ids || [];
-            navigate(
-              pageTypeUrl(id, {
-                ...params,
-                ids: ids.includes(attributeId)
-                  ? params.ids.filter(selectedId => selectedId !== attributeId)
-                  : [...ids, attributeId]
-              })
-            );
-          }}
-        />
+        <>
+          <TypeDeleteWarningDialog
+            {...pageTypeDeleteData}
+            typesData={[pageType]}
+            typesToDelete={[id]}
+            onClose={closeModal}
+            onDelete={handlePageTypeDelete}
+            deleteButtonState={deletePageTypeOpts.status}
+          />
+          <AssignAttributeDialog
+            attributes={result.data?.pageType.availableAttributes.edges.map(
+              edge => edge.node
+            )}
+            confirmButtonState={assignAttributeOpts.status}
+            errors={
+              assignAttributeOpts.data?.pageAttributeAssign.errors
+                ? assignAttributeOpts.data.pageAttributeAssign.errors.map(err =>
+                    getPageErrorMessage(err, intl)
+                  )
+                : []
+            }
+            loading={result.loading}
+            onClose={closeModal}
+            onSubmit={handleAssignAttribute}
+            onFetch={search}
+            onFetchMore={loadMore}
+            onOpen={result.refetch}
+            hasMore={
+              !!result.data?.pageType.availableAttributes.pageInfo.hasNextPage
+            }
+            open={params.action === "assign-attribute"}
+            selected={params.ids || []}
+            onToggle={attributeId => {
+              const ids = params.ids || [];
+              navigate(
+                pageTypeUrl(id, {
+                  ...params,
+                  ids: ids.includes(attributeId)
+                    ? params.ids.filter(
+                        selectedId => selectedId !== attributeId
+                      )
+                    : [...ids, attributeId]
+                })
+              );
+            }}
+          />
+        </>
       )}
       <BulkAttributeUnassignDialog
         title={intl.formatMessage({

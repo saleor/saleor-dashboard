@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { OrderAddNoteInput, OrderErrorCode, OrderEventsEmailsEnum, DiscountValueTypeEnum, OrderEventsEnum } from "./../../types/globalTypes";
+import { OrderAddNoteInput, OrderErrorCode, AddressTypeEnum, OrderEventsEmailsEnum, DiscountValueTypeEnum, OrderEventsEnum } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: OrderAddNote
@@ -13,6 +13,7 @@ export interface OrderAddNote_orderAddNote_errors {
   __typename: "OrderError";
   code: OrderErrorCode;
   field: string | null;
+  addressType: AddressTypeEnum | null;
 }
 
 export interface OrderAddNote_orderAddNote_order_events_discount_amount {

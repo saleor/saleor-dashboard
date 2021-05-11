@@ -58,10 +58,6 @@ export interface OrderDetailsPageProps extends UserPermissionProps {
     id: string;
     name: string;
   }>;
-  countries?: Array<{
-    code: string;
-    label: string;
-  }>;
   disabled: boolean;
   saveButtonBarState: ConfirmButtonTransitionState;
   onOrderLineAdd?: () => void;

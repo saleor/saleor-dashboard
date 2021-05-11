@@ -386,10 +386,6 @@
     "context": "product field",
     "string": "Export Variant Weight"
   },
-  "productExportFieldVisibility": {
-    "context": "product field",
-    "string": "Visibility"
-  },
   "productStockHeader": {
     "context": "product stock, section header",
     "string": "Inventory"
@@ -885,6 +881,18 @@
     "context": "dialog content",
     "string": "Are you sure you want to delete {attributeName}?"
   },
+  "src_dot_attributes_dot_components_dot_AttributeDetails_dot_acreFt": {
+    "context": "acre-ft unit",
+    "string": "acre-ft"
+  },
+  "src_dot_attributes_dot_components_dot_AttributeDetails_dot_acreInch": {
+    "context": "acre-inch unit",
+    "string": "acre-inch"
+  },
+  "src_dot_attributes_dot_components_dot_AttributeDetails_dot_area": {
+    "context": "area units type",
+    "string": "Area"
+  },
   "src_dot_attributes_dot_components_dot_AttributeDetails_dot_attributeLabel": {
     "context": "attribute's label",
     "string": "Default Label"
@@ -896,6 +904,10 @@
   "src_dot_attributes_dot_components_dot_AttributeDetails_dot_attributeSlugHelperText": {
     "context": "attribute slug input field helper text",
     "string": "This is used internally. Make sure you don’t use spaces"
+  },
+  "src_dot_attributes_dot_components_dot_AttributeDetails_dot_distance": {
+    "context": "distance units type",
+    "string": "Distance"
   },
   "src_dot_attributes_dot_components_dot_AttributeDetails_dot_dropdown": {
     "context": "product attribute type",
@@ -909,17 +921,33 @@
     "context": "file attribute type",
     "string": "File"
   },
+  "src_dot_attributes_dot_components_dot_AttributeDetails_dot_imperial": {
+    "context": "imperial unit system",
+    "string": "Imperial"
+  },
   "src_dot_attributes_dot_components_dot_AttributeDetails_dot_inputType": {
     "context": "attribute's editor component",
     "string": "Catalog Input type for Store Owner"
+  },
+  "src_dot_attributes_dot_components_dot_AttributeDetails_dot_metric": {
+    "context": "metric unit system",
+    "string": "Metric"
   },
   "src_dot_attributes_dot_components_dot_AttributeDetails_dot_multiselect": {
     "context": "product attribute type",
     "string": "Multiple Select"
   },
+  "src_dot_attributes_dot_components_dot_AttributeDetails_dot_numeric": {
+    "context": "numeric attribute type",
+    "string": "Numeric"
+  },
   "src_dot_attributes_dot_components_dot_AttributeDetails_dot_page": {
     "context": "page attribute entity type",
     "string": "Pages"
+  },
+  "src_dot_attributes_dot_components_dot_AttributeDetails_dot_pint": {
+    "context": "pint unit",
+    "string": "pint"
   },
   "src_dot_attributes_dot_components_dot_AttributeDetails_dot_product": {
     "context": "product attribute entity type",
@@ -929,13 +957,37 @@
     "context": "references attribute type",
     "string": "References"
   },
+  "src_dot_attributes_dot_components_dot_AttributeDetails_dot_selectUnit": {
+    "context": "check to require numeric attribute unit",
+    "string": "Select unit"
+  },
   "src_dot_attributes_dot_components_dot_AttributeDetails_dot_text": {
     "context": "text attribute type",
     "string": "Text"
   },
+  "src_dot_attributes_dot_components_dot_AttributeDetails_dot_unit": {
+    "context": "numeric attribute unit",
+    "string": "Unit"
+  },
+  "src_dot_attributes_dot_components_dot_AttributeDetails_dot_unitOf": {
+    "context": "numeric attribute units of",
+    "string": "Units of"
+  },
+  "src_dot_attributes_dot_components_dot_AttributeDetails_dot_unitSystem": {
+    "context": "numeric attribute unit system",
+    "string": "System"
+  },
   "src_dot_attributes_dot_components_dot_AttributeDetails_dot_valueRequired": {
     "context": "check to require attribute to have value",
     "string": "Value Required"
+  },
+  "src_dot_attributes_dot_components_dot_AttributeDetails_dot_volume": {
+    "context": "volume units types",
+    "string": "Volume"
+  },
+  "src_dot_attributes_dot_components_dot_AttributeDetails_dot_weight": {
+    "context": "weight units type",
+    "string": "Weight"
   },
   "src_dot_attributes_dot_components_dot_AttributeListPage_dot_2417065806": {
     "context": "tab name",
@@ -2428,6 +2480,10 @@
     "context": "button",
     "string": "Refresh"
   },
+  "src_dot_continue": {
+    "context": "button",
+    "string": "Continue"
+  },
   "src_dot_create": {
     "context": "button",
     "string": "Create"
@@ -3344,6 +3400,54 @@
   "src_dot_orders_dot_components_dot_OrderChannelSectionCard_dot_1243773440": {
     "context": "section header",
     "string": "Sales channel"
+  },
+  "src_dot_orders_dot_components_dot_OrderCustomerAddressesEditDialog_dot_billingAddressDescription": {
+    "context": "dialog content",
+    "string": "Add a new address:"
+  },
+  "src_dot_orders_dot_components_dot_OrderCustomerAddressesEditDialog_dot_billingSameAsShipping": {
+    "context": "checkbox label",
+    "string": "Billing address same as shipping address"
+  },
+  "src_dot_orders_dot_components_dot_OrderCustomerAddressesEditDialog_dot_customerAddress": {
+    "context": "address type",
+    "string": "Use one of customer addresses"
+  },
+  "src_dot_orders_dot_components_dot_OrderCustomerAddressesEditDialog_dot_customerBillingAddressDescription": {
+    "context": "dialog content",
+    "string": "Select one of customer addresses or add a new address:"
+  },
+  "src_dot_orders_dot_components_dot_OrderCustomerAddressesEditDialog_dot_customerShippingAddressDescription": {
+    "context": "dialog content",
+    "string": "Which address would you like to use as shipping address for selected customer:"
+  },
+  "src_dot_orders_dot_components_dot_OrderCustomerAddressesEditDialog_dot_newAddress": {
+    "context": "address type",
+    "string": "Add new address"
+  },
+  "src_dot_orders_dot_components_dot_OrderCustomerAddressesEditDialog_dot_shippingAddressDescription": {
+    "context": "dialog content",
+    "string": "This customer doesn’t have any shipping addresses. Provide address for order:"
+  },
+  "src_dot_orders_dot_components_dot_OrderCustomerAddressesEditDialog_dot_title": {
+    "context": "dialog header",
+    "string": "Shipping address for order"
+  },
+  "src_dot_orders_dot_components_dot_OrderCustomerChangeDialog_dot_changeAddress": {
+    "context": "option label",
+    "string": "Change address"
+  },
+  "src_dot_orders_dot_components_dot_OrderCustomerChangeDialog_dot_description": {
+    "context": "dialog description",
+    "string": "You have changed customer assigned to this order. What would you like to do with the shipping address?"
+  },
+  "src_dot_orders_dot_components_dot_OrderCustomerChangeDialog_dot_keepAddress": {
+    "context": "option label",
+    "string": "Keep address"
+  },
+  "src_dot_orders_dot_components_dot_OrderCustomerChangeDialog_dot_title": {
+    "context": "dialog header",
+    "string": "Changed Customer"
   },
   "src_dot_orders_dot_components_dot_OrderCustomerNote_dot_1505053535": {
     "string": "No notes from customer"
@@ -5790,6 +5894,10 @@
   },
   "src_dot_savedChanges": {
     "string": "Saved changes"
+  },
+  "src_dot_select": {
+    "context": "select option, button",
+    "string": "Select"
   },
   "src_dot_selectAll": {
     "context": "select all options, button",

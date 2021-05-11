@@ -13,7 +13,8 @@ import { FormsetAtomicData } from "@saleor/hooks/useFormset";
 import { makeStyles } from "@saleor/theme";
 import {
   AttributeEntityTypeEnum,
-  AttributeInputTypeEnum
+  AttributeInputTypeEnum,
+  MeasurementUnitsEnum
 } from "@saleor/types/globalTypes";
 import classNames from "classnames";
 import React from "react";
@@ -25,6 +26,7 @@ import { VariantAttributeScope } from "./types";
 export interface AttributeInputData {
   inputType: AttributeInputTypeEnum;
   entityType?: AttributeEntityTypeEnum;
+  unit?: MeasurementUnitsEnum | null;
   variantAttributeScope?: VariantAttributeScope;
   isRequired: boolean;
   values: AttributeValueFragment[];

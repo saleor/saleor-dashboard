@@ -28,9 +28,9 @@ const useStyles = makeStyles(
   { name: "SingleSelectField" }
 );
 
-export interface Choice {
-  value: string;
-  label: string | React.ReactNode;
+export interface Choice<T = string, L = string | React.ReactNode> {
+  value: T;
+  label: L;
 }
 
 export type Choices = Choice[];
@@ -40,8 +40,8 @@ interface SingleSelectFieldProps {
   className?: string;
   disabled?: boolean;
   error?: boolean;
-  hint?: string;
-  label?: string;
+  hint?: string | React.ReactNode;
+  label?: string | React.ReactNode;
   name?: string;
   selectProps?: SelectProps;
   placeholder?: string;

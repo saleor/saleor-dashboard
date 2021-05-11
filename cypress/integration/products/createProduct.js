@@ -1,6 +1,8 @@
 // <reference types="cypress" />
 import faker from "faker";
 
+import { createAttribute } from "../../apiRequests/Attribute";
+import { createTypeProduct } from "../../apiRequests/Product";
 import { PRODUCT_DETAILS } from "../../elements/catalog/products/product-details";
 import { PRODUCTS_LIST } from "../../elements/catalog/products/products-list";
 import { BUTTON_SELECTORS } from "../../elements/shared/button-selectors";
@@ -47,7 +49,7 @@ describe("Create product", () => {
   before(() => {
     cy.clearSessionData().loginUserViaRequest();
     productUtils.deleteProductsStartsWith(startsWith);
-    productUtils.createAttribute(name).then(attributeResp => {
+    createAttribute(name).then(attributeResp => {
       attribute = attributeResp;
     });
   });
@@ -60,7 +62,7 @@ describe("Create product", () => {
 
   it("should create product with variants", () => {
     const randomName = `${startsWith}${faker.datatype.number()}`;
-    productUtils.createTypeProduct(randomName, attribute.id);
+    createTypeProduct({ name: randomName, attributeId: attribute.id });
     seo.slug = randomName;
     const productData = {
       generalInfo,
@@ -88,7 +90,11 @@ describe("Create product", () => {
     const prices = { sellingPrice: 6, costPrice: 3 };
     const randomName = `${startsWith}${faker.datatype.number()}`;
     seo.slug = randomName;
-    productUtils.createTypeProduct(randomName, attribute.id, false);
+    createTypeProduct({
+      name: randomName,
+      attributeId: attribute.id,
+      hasVariants: false
+    });
     const productData = {
       generalInfo,
       seo,

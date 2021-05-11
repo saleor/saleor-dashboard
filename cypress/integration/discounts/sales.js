@@ -2,6 +2,7 @@
 
 import faker from "faker";
 
+import { createChannel } from "../../apiRequests/Channels";
 import { updateChannelInProduct } from "../../apiRequests/Product";
 import {
   assignProducts,
@@ -144,9 +145,9 @@ describe("Sales discounts", () => {
     const discountValue = 50;
     const productPrice = 100;
 
-    channelsUtils
-      .createChannel({ name: saleName })
-      .then(channelResp => (channel = channelResp));
+    createChannel({ name: saleName }).then(
+      channelResp => (channel = channelResp)
+    );
     productsUtils
       .createProductInChannel({
         name: saleName,

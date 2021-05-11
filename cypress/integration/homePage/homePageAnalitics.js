@@ -85,7 +85,7 @@ describe("Homepage analytics", () => {
           });
         }
       )
-      .then(({ variants: variantsResp }) => {
+      .then(({ variantsList: variantsResp }) => {
         createdVariants = variantsResp;
       });
   });
