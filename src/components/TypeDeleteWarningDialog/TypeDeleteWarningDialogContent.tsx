@@ -56,7 +56,8 @@ const TypeDeleteWarningDialogContent: React.FC<TypeDeleteWarningDialogContentPro
       <Typography>
         {intl.formatMessage(description, {
           typeName: singleItemSelectedName,
-          assignedItemsCount
+          assignedItemsCount,
+          b: (...chunks) => <b>{chunks}</b>
         })}
       </Typography>
       <CardSpacer />

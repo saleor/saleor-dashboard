@@ -1,7 +1,7 @@
 import { MessageDescriptor } from "react-intl";
 
 export type CommonTypeDeleteWarningMessages = Record<
-  "singleTitle" | "multipleTitle" | "viewAssignedItemsButtonLabel",
+  "title" | "viewAssignedItemsButtonLabel",
   MessageDescriptor
 >;
 

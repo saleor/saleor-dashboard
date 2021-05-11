@@ -73,7 +73,6 @@ function TypeDeleteWarningDialog<T extends TypeBaseData>({
         : multipleWithoutItemsMessages;
 
       return {
-        title: baseMessages.multipleTitle,
         ...multipleMessages
       };
     }
@@ -83,12 +82,11 @@ function TypeDeleteWarningDialog<T extends TypeBaseData>({
       : singleWithoutItemsMessages;
 
     return {
-      title: baseMessages.singleTitle,
       ...singleMessages
     };
   };
 
-  const { title, description, consentLabel } = selectMessages();
+  const { description, consentLabel } = selectMessages();
 
   const singleItemSelectedId = typesToDelete[0];
 
@@ -100,7 +98,9 @@ function TypeDeleteWarningDialog<T extends TypeBaseData>({
       <div className={classes.centerContainer}>
         <Card className={classes.content}>
           <ModalTitle
-            title={intl.formatMessage(title)}
+            title={intl.formatMessage(baseMessages.title, {
+              selectedTypesCount: typesToDelete.length
+            })}
             withBorder
             onClose={onClose}
           />

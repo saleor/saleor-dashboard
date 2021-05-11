@@ -1,13 +1,10 @@
 import { defineMessages } from "react-intl";
 
 export const baseMessages = defineMessages({
-  singleTitle: {
-    defaultMessage: "Delete product type",
-    description: "ProductTypeDeleteWarningDialog single title"
-  },
-  multipleTitle: {
-    defaultMessage: "Delete product types",
-    description: "ProductTypeDeleteWarningDialog multiple title"
+  title: {
+    defaultMessage:
+      "Delete product {selectedTypesCount,plural,one{type} other{types}}",
+    description: "ProductTypeDeleteWarningDialog title"
   },
   viewAssignedItemsButtonLabel: {
     defaultMessage: "View products",
@@ -19,7 +16,7 @@ export const baseMessages = defineMessages({
 export const singleWithItemsMessages = defineMessages({
   description: {
     defaultMessage:
-      "You are about to delete product type {typeName}. It is assigned to {assignedItemsCount} products. Deleting this product type will also delete those products. Are you sure you want to do this?",
+      "You are about to delete product type <b>{typeName}</b>. It is assigned to {assignedItemsCount} {assignedItemsCount,plural,one{product} other{products}}. Deleting this product type will also delete those products. Are you sure you want to do this?",
     description:
       "ProductTypeDeleteWarningDialog single assigned items description"
   },
