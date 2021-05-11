@@ -1,6 +1,6 @@
 import Typography from "@material-ui/core/Typography";
 import useNavigator from "@saleor/hooks/useNavigator";
-import { makeStyles } from "@saleor/theme";
+import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 
 import { DateTime } from "../Date";

@@ -1,4 +1,4 @@
-import useTheme from "@saleor/hooks/useTheme";
+import { useTheme } from "@saleor/macaw-ui";
 import React from "react";
 
 const ChevronDown: React.FC = () => {

@@ -2,7 +2,7 @@ import Popper from "@material-ui/core/Popper";
 import TableCell from "@material-ui/core/TableCell";
 import Typography from "@material-ui/core/Typography";
 import ErrorExclamationCircleIcon from "@saleor/icons/ErrorExclamationCircle";
-import { makeStyles } from "@saleor/theme";
+import { makeStyles } from "@saleor/macaw-ui";
 import React, { useState } from "react";
 import { defineMessages } from "react-intl";
 import { useIntl } from "react-intl";

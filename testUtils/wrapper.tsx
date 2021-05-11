@@ -1,7 +1,7 @@
 import { Provider as DateProvider } from "@saleor/components/Date/DateContext";
 import { Locale, RawLocaleProvider } from "@saleor/components/Locale";
-import ThemeProvider from "@saleor/components/Theme";
 import { TimezoneProvider } from "@saleor/components/Timezone";
+import { ThemeProvider } from "@saleor/macaw-ui";
 import React from "react";
 import { IntlProvider } from "react-intl";
 

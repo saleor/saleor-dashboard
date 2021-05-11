@@ -4,7 +4,7 @@ import CardContent from "@material-ui/core/CardContent";
 import deepPurple from "@material-ui/core/colors/deepPurple";
 import TextField from "@material-ui/core/TextField";
 import PersonIcon from "@material-ui/icons/Person";
-import { makeStyles } from "@saleor/theme";
+import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

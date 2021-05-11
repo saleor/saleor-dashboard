@@ -7,7 +7,7 @@ import SingleAutocompleteSelectField from "@saleor/components/SingleAutocomplete
 import { TaxTypeFragment } from "@saleor/fragments/types/TaxTypeFragment";
 import { FormChange } from "@saleor/hooks/useForm";
 import { sectionNames } from "@saleor/intl";
-import { makeStyles } from "@saleor/theme";
+import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import { useIntl } from "react-intl";
 

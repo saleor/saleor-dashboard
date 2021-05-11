@@ -6,7 +6,7 @@ import TableRow from "@material-ui/core/TableRow";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import { ShopInfo_shop_languages } from "@saleor/components/Shop/types/ShopInfo";
 import Skeleton from "@saleor/components/Skeleton";
-import { makeStyles } from "@saleor/theme";
+import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 

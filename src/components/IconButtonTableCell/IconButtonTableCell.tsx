@@ -1,11 +1,11 @@
 import IconButton from "@material-ui/core/IconButton";
 import TableCell from "@material-ui/core/TableCell";
-import { makeStyles } from "@saleor/theme";
+import { makeStyles } from "@saleor/macaw-ui";
+import { ICONBUTTON_SIZE } from "@saleor/macaw-ui";
 import classNames from "classnames";
 import React from "react";
 
 import { stopPropagation } from "../../misc";
-import { ICONBUTTON_SIZE } from "../../theme";
 
 export interface IconButtonTableCellProps {
   children: React.ReactNode;

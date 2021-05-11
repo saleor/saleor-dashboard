@@ -1,5 +1,5 @@
 import Typography from "@material-ui/core/Typography";
-import { makeStyles } from "@saleor/theme";
+import { makeStyles } from "@saleor/macaw-ui";
 import { ReorderAction } from "@saleor/types";
 import React from "react";
 import { SortableContainerProps } from "react-sortable-hoc";

@@ -1,6 +1,6 @@
 import MenuItem from "@material-ui/core/MenuItem";
 import Typography from "@material-ui/core/Typography";
-import { makeStyles } from "@saleor/theme";
+import { makeStyles } from "@saleor/macaw-ui";
 import { GetItemPropsOptions } from "downshift";
 import React from "react";
 

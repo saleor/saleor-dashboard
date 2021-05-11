@@ -8,6 +8,7 @@ import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
 import TableCellHeader from "@saleor/components/TableCellHeader";
 import TablePagination from "@saleor/components/TablePagination";
+import { makeStyles } from "@saleor/macaw-ui";
 import {
   getUserInitials,
   getUserName,
@@ -15,7 +16,6 @@ import {
   renderCollection
 } from "@saleor/misc";
 import { StaffListUrlSortField } from "@saleor/staff/urls";
-import { makeStyles } from "@saleor/theme";
 import { ListProps, SortPage } from "@saleor/types";
 import { getArrowDirection } from "@saleor/utils/sort";
 import classNames from "classnames";

@@ -1,11 +1,11 @@
 import { Locale, RawLocaleProvider } from "@saleor/components/Locale";
+import { ThemeProvider } from "@saleor/macaw-ui";
 import React from "react";
 import { IntlProvider } from "react-intl";
 import { BrowserRouter } from "react-router-dom";
 
 import { Provider as DateProvider } from "../components/Date/DateContext";
 import MessageManagerProvider from "../components/messages";
-import ThemeProvider from "../components/Theme";
 import { TimezoneProvider } from "../components/Timezone";
 import { APP_MOUNT_URI } from "../config";
 
