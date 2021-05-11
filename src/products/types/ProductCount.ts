@@ -3,15 +3,21 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
+import { ProductFilterInput } from "./../../types/globalTypes";
+
 // ====================================================
-// GraphQL query operation: CountAllProducts
+// GraphQL query operation: ProductCount
 // ====================================================
 
-export interface CountAllProducts_products {
+export interface ProductCount_products {
   __typename: "ProductCountableConnection";
   totalCount: number | null;
 }
 
-export interface CountAllProducts {
-  products: CountAllProducts_products | null;
+export interface ProductCount {
+  products: ProductCount_products | null;
+}
+
+export interface ProductCountVariables {
+  filter?: ProductFilterInput | null;
 }

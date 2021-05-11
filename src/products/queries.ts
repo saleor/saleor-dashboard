@@ -16,7 +16,6 @@ import {
 } from "@saleor/products/types/ProductMediaById";
 import gql from "graphql-tag";
 
-import { CountAllProducts } from "./types/CountAllProducts";
 import {
   CreateMultipleVariantsData,
   CreateMultipleVariantsDataVariables
@@ -38,6 +37,7 @@ import {
   InitialProductFilterProductTypes,
   InitialProductFilterProductTypesVariables
 } from "./types/InitialProductFilterProductTypes";
+import { ProductCount, ProductCountVariables } from "./types/ProductCount";
 import {
   ProductDetails,
   ProductDetailsVariables
@@ -176,16 +176,18 @@ export const useProductListQuery = makeQuery<ProductList, ProductListVariables>(
   productListQuery
 );
 
-const countAllProductsQuery = gql`
-  query CountAllProducts {
-    products {
+const productCountQuery = gql`
+  query ProductCount($filter: ProductFilterInput) {
+    products(filter: $filter) {
       totalCount
     }
   }
 `;
-export const useCountAllProducts = makeQuery<CountAllProducts, null>(
-  countAllProductsQuery
-);
+
+export const useProductCountQuery = makeQuery<
+  ProductCount,
+  ProductCountVariables
+>(productCountQuery);
 
 const productDetailsQuery = gql`
   ${productFragmentDetails}

@@ -203,3 +203,5 @@ export interface AutocompleteFilterOpts
   choices: MultiAutocompleteChoiceType[];
   displayValues: MultiAutocompleteChoiceType[];
 }
+
+export type Ids = string[];
