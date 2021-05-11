@@ -1,11 +1,6 @@
-import {
-  CardContent,
-  Divider,
-  makeStyles,
-  Typography
-} from "@material-ui/core";
+import { CardContent, makeStyles, Typography } from "@material-ui/core";
+import CollectionWithDividers from "@saleor/components/CollectionWithDividers";
 import Skeleton from "@saleor/components/Skeleton";
-import { renderCollectionWithDividers } from "@saleor/misc";
 import { Plugin_plugin } from "@saleor/plugins/types/Plugin";
 import { isPluginGlobal } from "@saleor/plugins/views/utils";
 import React from "react";
@@ -64,10 +59,9 @@ const PluginDetailsChannelsCardContent: React.FC<PluginDetailsChannelsCardProps>
 
   return (
     <>
-      {renderCollectionWithDividers({
-        collection: plugin.channelConfigurations,
-        renderDivider: () => <Divider />,
-        renderItem: ({ channel }) => (
+      <CollectionWithDividers
+        collection={plugin.channelConfigurations}
+        renderItem={({ channel }) => (
           <div
             className={classes.itemContainer}
             key={channel.id}
@@ -80,8 +74,8 @@ const PluginDetailsChannelsCardContent: React.FC<PluginDetailsChannelsCardProps>
               <Typography>{channel.name}</Typography>
             </CardContent>
           </div>
-        )
-      })}
+        )}
+      />
     </>
   );
 };
