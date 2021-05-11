@@ -1,7 +1,4 @@
-import Divider from "@material-ui/core/Divider";
-import initial from "lodash-es/initial";
 import moment from "moment-timezone";
-import React from "react";
 import { MutationFunction, MutationResult } from "react-apollo";
 import { defineMessages, IntlShape } from "react-intl";
 import urlJoin from "url-join";
