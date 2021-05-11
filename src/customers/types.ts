@@ -11,6 +11,7 @@ export interface AddressTypeInput {
   streetAddress1: string;
   streetAddress2?: string;
 }
+
 export interface AddressType {
   id: string;
   city: string;

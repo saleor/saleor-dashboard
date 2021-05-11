@@ -77,13 +77,19 @@ export function getSelectedAttributeValues(
     | ProductDetails_product_attributes
     | SelectedVariantAttributeFragment
 ) {
-  if (attribute.attribute.inputType === AttributeInputTypeEnum.REFERENCE) {
-    return attribute.values.map(value => value.reference);
+  switch (attribute.attribute.inputType) {
+    case AttributeInputTypeEnum.REFERENCE:
+      return attribute.values.map(value => value.reference);
+
+    case AttributeInputTypeEnum.RICH_TEXT:
+      return [attribute.values[0]?.richText];
+
+    case AttributeInputTypeEnum.NUMERIC:
+      return [attribute.values[0]?.name];
+
+    default:
+      return attribute.values.map(value => value.slug);
   }
-  if (attribute.attribute.inputType === AttributeInputTypeEnum.RICH_TEXT) {
-    return [attribute.values[0]?.richText];
-  }
-  return attribute.values.map(value => value.slug);
 }
 
 export const isFileValueUnused = (

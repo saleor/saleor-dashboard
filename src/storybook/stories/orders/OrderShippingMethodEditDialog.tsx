@@ -29,12 +29,14 @@ storiesOf("Orders / OrderShippingMethodEditDialog", module)
         {
           __typename: "OrderError",
           code: OrderErrorCode.SHIPPING_METHOD_NOT_APPLICABLE,
-          field: "shippingMethod"
+          field: "shippingMethod",
+          addressType: null
         },
         {
           __typename: "OrderError",
           code: OrderErrorCode.GRAPHQL_ERROR,
-          field: null
+          field: null,
+          addressType: null
         }
       ]}
     />

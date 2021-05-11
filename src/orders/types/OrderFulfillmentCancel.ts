@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { FulfillmentCancelInput, OrderErrorCode, OrderDiscountType, DiscountValueTypeEnum, OrderEventsEmailsEnum, OrderEventsEnum, FulfillmentStatus, PaymentChargeStatusEnum, OrderStatus, OrderAction, JobStatusEnum } from "./../../types/globalTypes";
+import { FulfillmentCancelInput, OrderErrorCode, AddressTypeEnum, OrderDiscountType, DiscountValueTypeEnum, OrderEventsEmailsEnum, OrderEventsEnum, FulfillmentStatus, PaymentChargeStatusEnum, OrderStatus, OrderAction, JobStatusEnum } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: OrderFulfillmentCancel
@@ -13,6 +13,7 @@ export interface OrderFulfillmentCancel_orderFulfillmentCancel_errors {
   __typename: "OrderError";
   code: OrderErrorCode;
   field: string | null;
+  addressType: AddressTypeEnum | null;
 }
 
 export interface OrderFulfillmentCancel_orderFulfillmentCancel_order_metadata {

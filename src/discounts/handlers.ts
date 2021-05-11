@@ -1,8 +1,10 @@
 import { ChannelSaleData, ChannelVoucherData } from "@saleor/channels/utils";
 import { SaleDetailsPageFormData } from "@saleor/discounts/components/SaleDetailsPage";
 import { VoucherDetailsPageFormData } from "@saleor/discounts/components/VoucherDetailsPage";
-import { RequirementsPicker } from "@saleor/discounts/types";
+import { DiscountTypeEnum, RequirementsPicker } from "@saleor/discounts/types";
+import { ChangeEvent, FormChange } from "@saleor/hooks/useForm";
 import { RequireOnlyOne } from "@saleor/misc";
+import { VoucherTypeEnum } from "@saleor/types/globalTypes";
 import { diff } from "fast-array-diff";
 export interface ChannelArgs {
   discountValue: string;
@@ -13,6 +15,29 @@ export type ChannelInput = RequireOnlyOne<
   ChannelArgs,
   "discountValue" | "minSpent"
 >;
+
+export function createDiscountTypeChangeHandler(change: FormChange) {
+  return (formData: VoucherDetailsPageFormData, event: ChangeEvent) => {
+    if (formData.type === VoucherTypeEnum.SHIPPING) {
+      // if previously type was shipping
+      change({
+        target: {
+          name: "type",
+          value: VoucherTypeEnum.ENTIRE_ORDER
+        }
+      });
+    } else if (event.target.value === DiscountTypeEnum.SHIPPING) {
+      // if currently type should be shipping
+      change({
+        target: {
+          name: "type",
+          value: VoucherTypeEnum.ENTIRE_ORDER
+        }
+      });
+    }
+    change(event);
+  };
+}
 
 export function createChannelsChangeHandler(
   channelListings: ChannelVoucherData[],

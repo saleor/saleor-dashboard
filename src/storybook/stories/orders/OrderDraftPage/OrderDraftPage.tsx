@@ -7,7 +7,7 @@ import React from "react";
 import OrderDraftPage, {
   OrderDraftPageProps
 } from "../../../../orders/components/OrderDraftPage";
-import { clients, countries, draftOrder } from "../../../../orders/fixtures";
+import { clients, draftOrder } from "../../../../orders/fixtures";
 import Decorator from "../../../Decorator";
 import { getDiscountsProvidersWrapper } from "./utils";
 
@@ -15,7 +15,6 @@ const order = draftOrder(placeholderImage);
 
 const props: Omit<OrderDraftPageProps, "classes"> = {
   ...fetchMoreProps,
-  countries,
   disabled: false,
   fetchUsers: () => undefined,
   onBack: () => undefined,

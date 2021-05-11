@@ -48,6 +48,7 @@ export const page: PageDetails_page = {
         entityType: null,
         inputType: AttributeInputTypeEnum.DROPDOWN,
         valueRequired: false,
+        unit: null,
         values: [
           {
             id: "QXR0cmlidXRlVmFsdWU6ODc=",
@@ -100,6 +101,7 @@ export const page: PageDetails_page = {
         entityType: null,
         inputType: AttributeInputTypeEnum.MULTISELECT,
         valueRequired: false,
+        unit: null,
         values: [
           {
             id: "QXR0cmlidXRlVmFsdWU6OTA=",

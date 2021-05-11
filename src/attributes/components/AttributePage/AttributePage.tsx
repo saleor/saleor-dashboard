@@ -20,7 +20,8 @@ import { ReorderAction } from "@saleor/types";
 import {
   AttributeEntityTypeEnum,
   AttributeInputTypeEnum,
-  AttributeTypeEnum
+  AttributeTypeEnum,
+  MeasurementUnitsEnum
 } from "@saleor/types/globalTypes";
 import { mapMetadataItemToInput } from "@saleor/utils/maps";
 import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
@@ -59,13 +60,14 @@ export interface AttributePageFormData extends MetadataFormData {
   slug: string;
   storefrontSearchPosition: string;
   valueRequired: boolean;
+  unit: MeasurementUnitsEnum | null | undefined;
   visibleInStorefront: boolean;
 }
 
 const AttributePage: React.FC<AttributePageProps> = ({
   attribute,
   disabled,
-  errors,
+  errors: apiErrors,
   saveButtonBarState,
   values,
   onBack,
@@ -98,36 +100,27 @@ const AttributePage: React.FC<AttributePageProps> = ({
           storefrontSearchPosition: "",
           type: AttributeTypeEnum.PRODUCT_TYPE,
           valueRequired: true,
-          visibleInStorefront: true
+          visibleInStorefront: true,
+          unit: undefined
         }
       : {
-          availableInGrid: maybe(() => attribute.availableInGrid, true),
+          availableInGrid: attribute?.availableInGrid ?? true,
           entityType: attribute?.entityType ?? null,
-          filterableInDashboard: maybe(
-            () => attribute.filterableInDashboard,
-            true
-          ),
-          filterableInStorefront: maybe(
-            () => attribute.filterableInStorefront,
-            true
-          ),
-          inputType: maybe(
-            () => attribute.inputType,
-            AttributeInputTypeEnum.DROPDOWN
-          ),
+          filterableInDashboard: attribute?.filterableInDashboard ?? true,
+          filterableInStorefront: attribute?.filterableInStorefront ?? true,
+          inputType: attribute?.inputType ?? AttributeInputTypeEnum.DROPDOWN,
           metadata: attribute?.metadata?.map(mapMetadataItemToInput),
-          name: maybe(() => attribute.name, ""),
+          name: attribute?.name ?? "",
           privateMetadata: attribute?.privateMetadata?.map(
             mapMetadataItemToInput
           ),
-          slug: maybe(() => attribute.slug, ""),
-          storefrontSearchPosition: maybe(
-            () => attribute.storefrontSearchPosition.toString(),
-            ""
-          ),
+          slug: attribute?.slug ?? "",
+          storefrontSearchPosition:
+            attribute?.storefrontSearchPosition.toString() ?? "",
           type: attribute?.type || AttributeTypeEnum.PRODUCT_TYPE,
-          valueRequired: maybe(() => attribute.valueRequired, true),
-          visibleInStorefront: maybe(() => attribute.visibleInStorefront, true)
+          valueRequired: !!attribute?.valueRequired ?? true,
+          visibleInStorefront: attribute?.visibleInStorefront ?? true,
+          unit: attribute?.unit || null
         };
 
   const handleSubmit = (data: AttributePageFormData) => {
@@ -150,7 +143,16 @@ const AttributePage: React.FC<AttributePageProps> = ({
 
   return (
     <Form initial={initialForm} onSubmit={handleSubmit}>
-      {({ change, data, hasChanged, submit }) => {
+      {({
+        change,
+        set,
+        data,
+        hasChanged,
+        submit,
+        errors,
+        setError,
+        clearErrors
+      }) => {
         const changeMetadata = makeMetadataChangeHandler(change);
 
         return (
@@ -174,8 +176,12 @@ const AttributePage: React.FC<AttributePageProps> = ({
                   canChangeType={attribute === null}
                   data={data}
                   disabled={disabled}
-                  errors={errors}
+                  apiErrors={apiErrors}
                   onChange={change}
+                  set={set}
+                  errors={errors}
+                  setError={setError}
+                  clearErrors={clearErrors}
                 />
                 {ATTRIBUTE_TYPES_WITH_DEDICATED_VALUES.includes(
                   data.inputType
@@ -205,7 +211,7 @@ const AttributePage: React.FC<AttributePageProps> = ({
                 <CardSpacer />
                 <AttributeProperties
                   data={data}
-                  errors={errors}
+                  errors={apiErrors}
                   disabled={disabled}
                   onChange={change}
                 />

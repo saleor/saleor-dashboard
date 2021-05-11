@@ -22,6 +22,7 @@ import { buttonMessages } from "@saleor/intl";
 import { makeStyles } from "@saleor/theme";
 import { DialogProps } from "@saleor/types";
 import createSingleAutocompleteSelectHandler from "@saleor/utils/handlers/singleAutocompleteSelectChangeHandler";
+import { mapCountriesToChoices } from "@saleor/utils/maps";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -85,10 +86,7 @@ const ShippingZoneAddWarehouseDialog: React.FC<ShippingZoneAddWarehouseDialogPro
   useModalDialogOpen(open, {});
   const intl = useIntl();
 
-  const countryChoices = countries.map(country => ({
-    label: country.country,
-    value: country.code
-  }));
+  const countryChoices = mapCountriesToChoices(countries);
 
   return (
     <Dialog

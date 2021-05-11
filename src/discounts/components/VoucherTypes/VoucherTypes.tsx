@@ -3,13 +3,13 @@ import CardContent from "@material-ui/core/CardContent";
 import CardTitle from "@saleor/components/CardTitle";
 import Grid from "@saleor/components/Grid";
 import RadioGroupField from "@saleor/components/RadioGroupField";
+import { DiscountTypeEnum } from "@saleor/discounts/types";
 import { DiscountErrorFragment } from "@saleor/fragments/types/DiscountErrorFragment";
 import { getFormErrors } from "@saleor/utils/errors";
 import getDiscountErrorMessage from "@saleor/utils/errors/discounts";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import { DiscountValueTypeEnum } from "../../../types/globalTypes";
 import { VoucherDetailsPageFormData } from "../VoucherDetailsPage";
 
 interface VoucherTypesProps {
@@ -35,21 +35,21 @@ const VoucherTypes = ({
         defaultMessage: "Fixed Amount",
         description: "voucher discount type"
       }),
-      value: DiscountValueTypeEnum.FIXED
+      value: DiscountTypeEnum.VALUE_FIXED
     },
     {
       label: intl.formatMessage({
         defaultMessage: "Percentage",
         description: "voucher discount type"
       }),
-      value: DiscountValueTypeEnum.PERCENTAGE
+      value: DiscountTypeEnum.VALUE_PERCENTAGE
     },
     {
       label: intl.formatMessage({
         defaultMessage: "Free Shipping",
         description: "voucher discount type"
       }),
-      value: "SHIPPING"
+      value: DiscountTypeEnum.SHIPPING
     }
   ];
 

@@ -74,6 +74,7 @@ const AddressEdit: React.FC<AddressEditProps> = props => {
     "streetAddress1",
     "streetAddress2"
   ];
+
   const formErrors = getFormErrors<
     keyof AddressTypeInput,
     AccountErrorFragment | OrderErrorFragment
@@ -201,6 +202,7 @@ const AddressEdit: React.FC<AddressEditProps> = props => {
         <div>
           <SingleAutocompleteSelectField
             disabled={disabled}
+            data-test-id="address-edit-country-select-field"
             displayValue={countryDisplayValue}
             error={!!formErrors.country}
             helperText={getErrorMessage(formErrors.country, intl)}

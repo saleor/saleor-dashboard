@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { AttributeUpdateInput, AttributeTypeEnum, AttributeInputTypeEnum, AttributeEntityTypeEnum, AttributeErrorCode } from "./../../types/globalTypes";
+import { AttributeUpdateInput, AttributeTypeEnum, MeasurementUnitsEnum, AttributeInputTypeEnum, AttributeEntityTypeEnum, AttributeErrorCode } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: AttributeUpdate
@@ -46,6 +46,7 @@ export interface AttributeUpdate_attributeUpdate_attribute {
   visibleInStorefront: boolean;
   filterableInDashboard: boolean;
   filterableInStorefront: boolean;
+  unit: MeasurementUnitsEnum | null;
   metadata: (AttributeUpdate_attributeUpdate_attribute_metadata | null)[];
   privateMetadata: (AttributeUpdate_attributeUpdate_attribute_privateMetadata | null)[];
   availableInGrid: boolean;

@@ -17,9 +17,8 @@ import { FetchMoreProps, UserPermissionProps } from "@saleor/types";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import { DraftOrderInput } from "../../../types/globalTypes";
 import { OrderDetails_order } from "../../types/OrderDetails";
-import OrderCustomer from "../OrderCustomer";
+import OrderCustomer, { CustomerEditData } from "../OrderCustomer";
 import OrderDraftDetails from "../OrderDraftDetails/OrderDraftDetails";
 import { FormData as OrderDraftDetailsProductsFormData } from "../OrderDraftDetailsProducts";
 import OrderHistory, { FormData as HistoryFormData } from "../OrderHistory";
@@ -44,15 +43,11 @@ export interface OrderDraftPageProps
   order: OrderDetails_order;
   users: SearchCustomers_search_edges_node[];
   usersLoading: boolean;
-  countries: Array<{
-    code: string;
-    label: string;
-  }>;
   saveButtonBarState: ConfirmButtonTransitionState;
   fetchUsers: (query: string) => void;
   onBack: () => void;
   onBillingAddressEdit: () => void;
-  onCustomerEdit: (data: DraftOrderInput) => void;
+  onCustomerEdit: (data: CustomerEditData) => void;
   onDraftFinalize: () => void;
   onDraftRemove: () => void;
   onNoteAdd: (data: HistoryFormData) => void;

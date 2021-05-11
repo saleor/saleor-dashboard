@@ -1,7 +1,7 @@
 import { ChannelVoucherData } from "@saleor/channels/utils";
 import { VoucherDetailsPageFormData } from "@saleor/discounts/components/VoucherDetailsPage";
 import { getChannelsVariables } from "@saleor/discounts/handlers";
-import { RequirementsPicker } from "@saleor/discounts/types";
+import { DiscountTypeEnum, RequirementsPicker } from "@saleor/discounts/types";
 import {
   VoucherChannelListingUpdate,
   VoucherChannelListingUpdateVariables
@@ -28,17 +28,19 @@ export function createUpdateHandler(
     variables: VoucherChannelListingUpdateVariables;
   }) => Promise<MutationFetchResult<VoucherChannelListingUpdate>>
 ) {
-  return (formData: VoucherDetailsPageFormData) => {
+  return async (formData: VoucherDetailsPageFormData) => {
     const { id } = voucher;
-    updateVoucher({
+    await updateVoucher({
       id,
       input: {
         applyOncePerCustomer: formData.applyOncePerCustomer,
         applyOncePerOrder: formData.applyOncePerOrder,
         discountValueType:
-          formData.discountType.toString() === "SHIPPING"
+          formData.discountType === DiscountTypeEnum.VALUE_PERCENTAGE
             ? DiscountValueTypeEnum.PERCENTAGE
-            : formData.discountType,
+            : formData.discountType === DiscountTypeEnum.VALUE_FIXED
+            ? DiscountValueTypeEnum.FIXED
+            : DiscountValueTypeEnum.PERCENTAGE,
         endDate: formData.hasEndDate
           ? joinDateTime(formData.endDate, formData.endTime)
           : null,
@@ -48,7 +50,7 @@ export function createUpdateHandler(
             : parseFloat(formData.minCheckoutItemsQuantity),
         startDate: joinDateTime(formData.startDate, formData.startTime),
         type:
-          formData.discountType.toString() === "SHIPPING"
+          formData.discountType === DiscountTypeEnum.SHIPPING
             ? VoucherTypeEnum.SHIPPING
             : formData.type,
         usageLimit: formData.hasUsageLimit

@@ -14,6 +14,7 @@ import Skeleton from "@saleor/components/Skeleton";
 import TableHead from "@saleor/components/TableHead";
 import TextFieldWithChoice from "@saleor/components/TextFieldWithChoice";
 import { ChannelInput } from "@saleor/discounts/handlers";
+import { DiscountTypeEnum } from "@saleor/discounts/types";
 import { DiscountErrorFragment } from "@saleor/fragments/types/DiscountErrorFragment";
 import { renderCollection } from "@saleor/misc";
 import { getFormErrors } from "@saleor/utils/errors";
@@ -21,7 +22,6 @@ import getDiscountErrorMessage from "@saleor/utils/errors/discounts";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { DiscountValueTypeEnum } from "../../../types/globalTypes";
 import { translateVoucherTypes } from "../../translations";
 import { VoucherDetailsPageFormData } from "../VoucherDetailsPage";
 import { useStyles } from "./styles";
@@ -108,7 +108,7 @@ const VoucherValue: React.FC<VoucherValueProps> = props => {
                             ChoiceProps={{
                               label:
                                 data.discountType ===
-                                DiscountValueTypeEnum.FIXED
+                                DiscountTypeEnum.VALUE_FIXED
                                   ? listing.currency
                                   : "%",
                               name: "discountType" as keyof FormData,

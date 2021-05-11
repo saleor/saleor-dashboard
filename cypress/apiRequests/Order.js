@@ -31,18 +31,13 @@ export function createDraftOrder(
   channelId,
   address
 ) {
-  const addressLine = address
-    ? `
-  ${getDefaultAddress(address, "shippingAddress")}
-  ${getDefaultAddress(address, "billingAddress")}
-  `
-    : "";
   const mutation = `mutation{
     draftOrderCreate(input:{
       user:"${customerId}"
       shippingMethod:"${shippingMethodId}"
       channel: "${channelId}"
-      ${addressLine}
+      ${getDefaultAddress(address, "shippingAddress")}
+      ${getDefaultAddress(address, "billingAddress")}
     }){
       orderErrors{
         message

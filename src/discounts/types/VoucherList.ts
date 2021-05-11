@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { VoucherFilterInput, VoucherSortingInput, DiscountValueTypeEnum } from "./../../types/globalTypes";
+import { VoucherFilterInput, VoucherSortingInput, VoucherTypeEnum, DiscountValueTypeEnum } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL query operation: VoucherList
@@ -44,6 +44,7 @@ export interface VoucherList_vouchers_edges_node {
   startDate: any;
   endDate: any | null;
   usageLimit: number | null;
+  type: VoucherTypeEnum;
   discountValueType: DiscountValueTypeEnum;
   countries: (VoucherList_vouchers_edges_node_countries | null)[] | null;
   minCheckoutItemsQuantity: number | null;

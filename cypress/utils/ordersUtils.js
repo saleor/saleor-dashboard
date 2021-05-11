@@ -51,8 +51,7 @@ export function createReadyToFulfillOrder(
   address
 ) {
   let order;
-  return orderRequest
-    .createDraftOrder(customerId, shippingMethodId, channelId, address)
+  return createDraftOrder(customerId, shippingMethodId, channelId, address)
     .then(orderResp => {
       order = orderResp;
       assignVariantsToOrder(order, variantsList);
@@ -65,11 +64,11 @@ export function createOrder({
   customerId,
   shippingMethodId,
   channelId,
-  variantsList
+  variantsList,
+  address
 }) {
   let order;
-  return orderRequest
-    .createDraftOrder(customerId, shippingMethodId, channelId)
+  return createDraftOrder(customerId, shippingMethodId, channelId, address)
     .then(orderResp => {
       order = orderResp;
       assignVariantsToOrder(order, variantsList);

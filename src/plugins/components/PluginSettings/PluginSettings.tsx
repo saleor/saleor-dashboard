@@ -6,7 +6,7 @@ import Typography from "@material-ui/core/Typography";
 import InfoIcon from "@material-ui/icons/Info";
 import CardTitle from "@saleor/components/CardTitle";
 import ControlledSwitch from "@saleor/components/ControlledSwitch";
-import { Plugin_plugin_configuration } from "@saleor/plugins/types/Plugin";
+import { PluginConfigurationFragment_configuration } from "@saleor/fragments/types/PluginConfigurationFragment";
 import { makeStyles } from "@saleor/theme";
 import { UserError } from "@saleor/types";
 import { ConfigurationTypeFieldEnum } from "@saleor/types/globalTypes";
@@ -21,7 +21,7 @@ interface PluginSettingsProps {
   errors: UserError[];
   disabled: boolean;
   onChange: (event: React.ChangeEvent<any>) => void;
-  fields: Plugin_plugin_configuration[];
+  fields: PluginConfigurationFragment_configuration[];
 }
 
 const useStyles = makeStyles(

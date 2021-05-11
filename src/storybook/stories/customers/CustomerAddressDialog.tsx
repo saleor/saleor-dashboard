@@ -12,8 +12,9 @@ const props: CustomerAddressDialogProps = {
   address: customer.addresses[0],
   confirmButtonState: "default",
   countries: countries.map(c => ({
+    __typename: "CountryDisplay",
     code: c.code,
-    label: c.name
+    country: c.name
   })),
   errors: [],
   onClose: () => undefined,

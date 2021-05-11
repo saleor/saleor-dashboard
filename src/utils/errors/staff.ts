@@ -10,7 +10,8 @@ function getStaffErrorMessage(
   return getAccountErrorMessage(
     err && {
       ...err,
-      __typename: "AccountError"
+      __typename: "AccountError",
+      addressType: null
     },
     intl
   );

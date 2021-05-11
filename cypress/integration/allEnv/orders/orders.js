@@ -26,14 +26,13 @@ describe("Orders", () => {
   let warehouse;
   let shippingMethod;
   let variantsList;
+  let address;
 
   before(() => {
     cy.clearSessionData().loginUserViaRequest();
     deleteCustomersStartsWith(startsWith);
     deleteShippingStartsWith(startsWith);
     productsUtils.deleteProductsStartsWith(startsWith);
-
-    let address;
 
     getDefaultChannel()
       .then(channel => {
@@ -91,7 +90,7 @@ describe("Orders", () => {
       .get(ORDERS_SELECTORS.createOrder)
       .click();
     selectChannelInPicker(defaultChannel.name);
-    finalizeDraftOrder(randomName).then(draftOrderNumber => {
+    finalizeDraftOrder(randomName, address).then(draftOrderNumber => {
       cy.visit(urlList.orders);
       cy.contains(ORDERS_SELECTORS.orderRow, draftOrderNumber).click();
       cy.contains(ORDERS_SELECTORS.salesChannel, defaultChannel.name).should(
@@ -104,7 +103,8 @@ describe("Orders", () => {
       customerId: customer.id,
       channelId: defaultChannel.id,
       shippingMethodId: shippingMethod.id,
-      variantsList
+      variantsList,
+      address
     }).then(order => {
       cy.visit(urlList.orders);
       cy.contains(ORDERS_SELECTORS.orderRow, order.number).click();

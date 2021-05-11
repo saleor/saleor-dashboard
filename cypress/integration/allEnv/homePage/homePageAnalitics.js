@@ -109,13 +109,12 @@ describe("Homepage analytics", () => {
     homePageUtils
       .getOrdersReadyToFulfill(defaultChannel.slug)
       .as("ordersReadyToFulfill");
-
     createReadyToFulfillOrder(
       customerId,
       shippingMethod.id,
       defaultChannel.id,
       createdVariants,
-      addresses.usAddress
+      addresses.plAddress
     );
     cy.get("@ordersReadyToFulfill").then(ordersReadyToFulfillBefore => {
       const allOrdersReadyToFulfill = ordersReadyToFulfillBefore + 1;
@@ -196,7 +195,8 @@ describe("Homepage analytics", () => {
       customerId,
       shippingMethod.id,
       defaultChannel.id,
-      createdVariants
+      createdVariants,
+      addresses.plAddress
     );
 
     cy.get("@salesAmount").then(salesAmount => {
@@ -228,7 +228,8 @@ describe("Homepage analytics", () => {
       customerId,
       shippingMethod.id,
       defaultChannel.id,
-      createdVariants
+      createdVariants,
+      addresses.plAddress
     );
 
     cy.get("@todaysOrders").then(ordersBefore => {

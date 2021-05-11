@@ -34,7 +34,8 @@ storiesOf("Orders / OrderProductAddDialog", module)
         {
           __typename: "OrderError",
           code: OrderErrorCode.GRAPHQL_ERROR,
-          field: null
+          field: null,
+          addressType: null
         }
       ]}
     />

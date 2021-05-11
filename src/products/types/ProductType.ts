@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { AttributeInputTypeEnum, AttributeEntityTypeEnum } from "./../../types/globalTypes";
+import { AttributeInputTypeEnum, AttributeEntityTypeEnum, MeasurementUnitsEnum } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL query operation: ProductType
@@ -33,6 +33,7 @@ export interface ProductType_productType_productAttributes {
   slug: string | null;
   name: string | null;
   valueRequired: boolean;
+  unit: MeasurementUnitsEnum | null;
   values: (ProductType_productType_productAttributes_values | null)[] | null;
 }
 

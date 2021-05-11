@@ -1,7 +1,14 @@
 import { stringify as stringifyQs } from "qs";
 import urlJoin from "url-join";
 
-import { BulkAction, Dialog, Pagination, SingleAction, Sort } from "../types";
+import {
+  BulkAction,
+  Dialog,
+  FiltersWithMultipleValues,
+  Pagination,
+  SingleAction,
+  Sort
+} from "../types";
 
 export const pagesSection = "/pages/";
 
@@ -12,8 +19,17 @@ export enum PageListUrlSortField {
   slug = "slug",
   visible = "visible"
 }
+
+export enum PageListUrlFiltersWithMultipleValues {
+  pageTypes = "pageTypes"
+}
+
+export type PageListUrlFilters = FiltersWithMultipleValues<
+  PageListUrlFiltersWithMultipleValues
+>;
 export type PageListUrlSort = Sort<PageListUrlSortField>;
 export type PageListUrlQueryParams = BulkAction &
+  PageListUrlFilters &
   Dialog<PageListUrlDialog> &
   PageListUrlSort &
   Pagination;

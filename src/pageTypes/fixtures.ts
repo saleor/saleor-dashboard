@@ -46,7 +46,8 @@ export const pageType: PageTypeDetails_pageType = {
       visibleInStorefront: true,
       filterableInDashboard: true,
       filterableInStorefront: true,
-      type: AttributeTypeEnum.PAGE_TYPE
+      type: AttributeTypeEnum.PAGE_TYPE,
+      unit: null
     },
     {
       __typename: "Attribute" as "Attribute",
@@ -56,7 +57,8 @@ export const pageType: PageTypeDetails_pageType = {
       visibleInStorefront: true,
       filterableInDashboard: true,
       filterableInStorefront: true,
-      type: AttributeTypeEnum.PAGE_TYPE
+      type: AttributeTypeEnum.PAGE_TYPE,
+      unit: null
     },
     {
       __typename: "Attribute" as "Attribute",
@@ -66,7 +68,8 @@ export const pageType: PageTypeDetails_pageType = {
       visibleInStorefront: true,
       filterableInDashboard: true,
       filterableInStorefront: true,
-      type: AttributeTypeEnum.PAGE_TYPE
+      type: AttributeTypeEnum.PAGE_TYPE,
+      unit: null
     }
   ],
   privateMetadata: []

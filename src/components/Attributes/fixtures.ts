@@ -193,12 +193,34 @@ const RICH_TEXT_ATTRIBUTE: AttributeInput = {
   value: []
 };
 
+const NUMERIC_ATTRIBUTE: AttributeInput = {
+  data: {
+    inputType: AttributeInputTypeEnum.NUMERIC,
+    isRequired: true,
+    values: [
+      {
+        __typename: "AttributeValue",
+        file: null,
+        id: "QXR0cmlidXRlVmFsdWU6MTAx",
+        name: "12cm",
+        reference: null,
+        richText: null,
+        slug: "319_35"
+      }
+    ]
+  },
+  id: "QXR0cmlidXRlOjM1",
+  label: "Numeric Attribute",
+  value: []
+};
+
 export const ATTRIBUTES: AttributeInput[] = [
   DROPDOWN_ATTRIBUTE,
   MULTISELECT_ATTRIBUTE,
   FILE_ATTRIBUTE,
   REFERENCE_ATTRIBUTE,
-  RICH_TEXT_ATTRIBUTE
+  RICH_TEXT_ATTRIBUTE,
+  NUMERIC_ATTRIBUTE
 ];
 
 export const ATTRIBUTES_SELECTED: AttributeInput[] = [
@@ -228,5 +250,9 @@ export const ATTRIBUTES_SELECTED: AttributeInput[] = [
   {
     ...RICH_TEXT_ATTRIBUTE,
     value: [RICH_TEXT_ATTRIBUTE.data.values[0].richText]
+  },
+  {
+    ...NUMERIC_ATTRIBUTE,
+    value: [NUMERIC_ATTRIBUTE.data.values[0].name]
   }
 ];
