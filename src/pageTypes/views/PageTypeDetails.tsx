@@ -10,7 +10,6 @@ import { DEFAULT_INITIAL_SEARCH_DATA } from "@saleor/config";
 import useBulkActions from "@saleor/hooks/useBulkActions";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
-import usePageTypeDelete from "@saleor/hooks/usePageTypeDelete";
 import { commonMessages } from "@saleor/intl";
 import { getStringOrPlaceholder } from "@saleor/misc";
 import {
@@ -34,6 +33,7 @@ import PageTypeDetailsPage, {
   PageTypeForm
 } from "../components/PageTypeDetailsPage";
 import useAvailablePageAttributeSearch from "../hooks/useAvailablePageAttributeSearch";
+import usePageTypeDelete from "../hooks/usePageTypeDelete";
 import { usePageTypeDetailsQuery } from "../queries";
 import { pageTypeListUrl, pageTypeUrl, PageTypeUrlQueryParams } from "../urls";
 

@@ -44,7 +44,7 @@ export const multipleWithItemsMessages = defineMessages({
 export const singleWithoutItemsMessages = defineMessages({
   description: {
     defaultMessage:
-      "Are you sure you want to delete {typeName}? If you remove it you won’t be able to assign it to created products.",
+      "Are you sure you want to delete <b>{typeName}</b>? If you remove it you won’t be able to assign it to created products.",
     description:
       "ProductTypeDeleteWarningDialog single assigned items description"
   }

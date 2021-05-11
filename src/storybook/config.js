@@ -130,7 +130,6 @@ function loadStories() {
 
   // Product types
   require("./stories/productTypes/ProductTypeCreatePage");
-  require("./stories/productTypes/ProductTypeDeleteDialog");
   require("./stories/productTypes/ProductTypeDetailsPage");
   require("./stories/productTypes/ProductTypeListPage");
 

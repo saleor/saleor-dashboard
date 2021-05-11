@@ -11,8 +11,8 @@ import useNotifier from "@saleor/hooks/useNotifier";
 import usePaginator, {
   createPaginationState
 } from "@saleor/hooks/usePaginator";
-import useProductTypeDelete from "@saleor/hooks/useProductTypeDelete";
 import { commonMessages } from "@saleor/intl";
+import useProductTypeDelete from "@saleor/productTypes/hooks/useProductTypeDelete";
 import { ListViews } from "@saleor/types";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import createFilterHandlers from "@saleor/utils/handlers/filterHandlers";

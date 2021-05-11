@@ -15,7 +15,7 @@ import {
   TypeDeleteWarningMessages
 } from "./types";
 
-interface TypeBaseData {
+export interface TypeBaseData {
   id: string;
   name: string;
 }
@@ -28,7 +28,7 @@ export interface TypeDeleteMessages {
   multipleWithoutItemsMessages: TypeDeleteWarningMessages;
 }
 
-interface TypeDeleteWarningDialogProps<T extends TypeBaseData>
+export interface TypeDeleteWarningDialogProps<T extends TypeBaseData>
   extends TypeDeleteMessages {
   isOpen: boolean;
   deleteButtonState: ConfirmButtonTransitionState;
