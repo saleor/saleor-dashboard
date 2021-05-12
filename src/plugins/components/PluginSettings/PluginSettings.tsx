@@ -111,7 +111,14 @@ const PluginSettings: React.FC<PluginSettingsProps> = ({
                     fieldData.type === ConfigurationTypeFieldEnum.MULTILINE
                   }
                   InputProps={{
-                    rowsMax: 6
+                    rowsMax: 6,
+                    readOnly:
+                      fieldData.type === ConfigurationTypeFieldEnum.OUTPUT
+                  }}
+                  onFocus={event => {
+                    if (fieldData.type === ConfigurationTypeFieldEnum.OUTPUT) {
+                      event.target.select();
+                    }
                   }}
                   fullWidth
                   value={field.value}
