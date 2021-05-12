@@ -3,7 +3,6 @@ import { DRAFT_ORDER_SELECTORS } from "../elements/orders/draft-order-selectors"
 import { BUTTON_SELECTORS } from "../elements/shared/button-selectors";
 import { SHARED_ELEMENTS } from "../elements/shared/sharedElements";
 import { SELECT_SHIPPING_METHOD_FORM } from "../elements/shipping/select-shipping-method-form";
-import { fillUpAddressForm } from "./shared/addressForm";
 
 export function finalizeDraftOrder(name, address) {
   cy.get(DRAFT_ORDER_SELECTORS.addProducts)
@@ -29,9 +28,6 @@ export function finalizeDraftOrder(name, address) {
     .should("not.exist")
     .get(BUTTON_SELECTORS.submit)
     .click()
-    // fillUpAddressForm(address);
-    // cy.get(DRAFT_ORDER_SELECTORS.editBillingAddress).click();
-    // fillUpAddressForm(address);
     .get(DRAFT_ORDER_SELECTORS.addShippingCarrierLink)
     .click()
     .get(SELECT_SHIPPING_METHOD_FORM.selectShippingMethod)
