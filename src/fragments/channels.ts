@@ -1,7 +1,5 @@
 import gql from "graphql-tag";
 
-import { shippingZoneFragment } from "./shipping";
-
 export const channelErrorFragment = gql`
   fragment ChannelErrorFragment on ChannelError {
     code
@@ -22,12 +20,8 @@ export const channelFragment = gql`
 
 export const channelDetailsFragment = gql`
   ${channelFragment}
-  ${shippingZoneFragment}
   fragment ChannelDetailsFragment on Channel {
     ...ChannelFragment
     hasOrders
-    shippingZones {
-      ...ShippingZoneFragment
-    }
   }
 `;

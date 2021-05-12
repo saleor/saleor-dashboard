@@ -14,6 +14,7 @@ import useNotifier from "@saleor/hooks/useNotifier";
 import { getDefaultNotifierSuccessErrorData } from "@saleor/hooks/useNotifier/utils";
 import { sectionNames } from "@saleor/intl";
 import useShippingZonesSearch from "@saleor/searches/useShippingZonesSearch";
+import { useChannelShippingZones } from "@saleor/shipping/queries";
 import getChannelsErrorMessage from "@saleor/utils/errors/channels";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import React from "react";
@@ -152,6 +153,17 @@ export const ChannelDetails: React.FC<ChannelDetailsProps> = ({
   };
 
   const {
+    data: channelShippingZonesData,
+    loading: channelsShippingZonesLoading
+  } = useChannelShippingZones({
+    variables: {
+      filter: {
+        channels: [id]
+      }
+    }
+  });
+
+  const {
     loadMore: fetchMoreShippingZones,
     search: searchShippingZones,
     result: searchShippingZonesResult
@@ -173,6 +185,9 @@ export const ChannelDetails: React.FC<ChannelDetailsProps> = ({
         </AppHeader>
         <PageHeader title={data?.channel?.name} />
         <ChannelDetailsPage
+          channelShippingZones={channelShippingZonesData?.shippingZones?.edges?.map(
+            ({ node }) => node
+          )}
           searchShippingZones={searchShippingZones}
           searchShippingZonesData={searchShippingZonesResult.data}
           fetchMoreShippingZones={getSearchFetchMoreProps(
@@ -180,7 +195,9 @@ export const ChannelDetails: React.FC<ChannelDetailsProps> = ({
             fetchMoreShippingZones
           )}
           channel={data?.channel}
-          disabled={updateChannelOpts.loading || loading}
+          disabled={
+            updateChannelOpts.loading || loading || channelsShippingZonesLoading
+          }
           disabledStatus={
             activateChannelOpts.loading || deactivateChannelOpts.loading
           }
