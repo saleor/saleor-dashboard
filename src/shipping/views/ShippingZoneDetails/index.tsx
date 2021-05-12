@@ -206,11 +206,11 @@ const ShippingZoneDetails: React.FC<ShippingZoneDetailsProps> = ({
         saveButtonBarState={updateShippingZoneOpts.status}
         shippingZone={data?.shippingZone}
         warehouses={mapEdgesToItems(searchWarehousesOpts?.data?.search)}
-        hasMore={searchWarehousesOpts.data?.search.pageInfo.hasNextPage}
+        hasMore={searchWarehousesOpts.data?.search?.pageInfo?.hasNextPage}
         loading={searchWarehousesOpts.loading}
         onFetchMore={loadMore}
         onSearchChange={search}
-        selectedChannelId={channel.id}
+        selectedChannelId={channel?.id}
       />
       <DeleteShippingRateDialog
         confirmButtonState={deleteShippingRateOpts.status}
