@@ -107,8 +107,8 @@ jobs:
         with:
           name: cypress-videos
           path: cypress/videos
-
-cypress-run:
+          
+  cypress-run:
     if: github.event.pull_request.head.repo.full_name == 'mirumee/saleor-dashboard' && steps.api_uri.outputs.custom_api_uri == 'https://qa.staging.saleor.cloud/graphql/'
     runs-on: ubuntu-16.04
     steps:
