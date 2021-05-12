@@ -32,11 +32,11 @@ import {
 } from "@saleor/products/components/ProductListPage/utils";
 import {
   useAvailableInGridAttributesQuery,
-  useCountAllProducts,
   useInitialProductFilterAttributesQuery,
   useInitialProductFilterCategoriesQuery,
   useInitialProductFilterCollectionsQuery,
   useInitialProductFilterProductTypesQuery,
+  useProductCountQuery,
   useProductListQuery
 } from "@saleor/products/queries";
 import { ProductListVariables } from "@saleor/products/types/ProductList";
@@ -187,7 +187,7 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
         : 0
       : parseInt(params.activeTab, 0);
 
-  const countAllProducts = useCountAllProducts({
+  const countAllProducts = useProductCountQuery({
     skip: params.action !== "export"
   });
 

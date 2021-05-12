@@ -793,6 +793,11 @@ export enum PermissionGroupSortField {
   NAME = "NAME",
 }
 
+export enum PluginConfigurationType {
+  GLOBAL = "GLOBAL",
+  PER_CHANNEL = "PER_CHANNEL",
+}
+
 export enum PluginErrorCode {
   GRAPHQL_ERROR = "GRAPHQL_ERROR",
   INVALID = "INVALID",
@@ -1528,6 +1533,12 @@ export interface PageCreateInput {
   pageType: string;
 }
 
+export interface PageFilterInput {
+  pageTypes?: string[] | null;
+  search?: string | null;
+  metadata?: (MetadataInput | null)[] | null;
+}
+
 export interface PageInput {
   slug?: string | null;
   title?: string | null;
@@ -1596,13 +1607,19 @@ export interface PermissionGroupUpdateInput {
 }
 
 export interface PluginFilterInput {
-  active?: boolean | null;
+  statusInChannels?: PluginStatusInChannelsInput | null;
   search?: string | null;
+  type?: PluginConfigurationType | null;
 }
 
 export interface PluginSortingInput {
   direction: OrderDirection;
   field: PluginSortField;
+}
+
+export interface PluginStatusInChannelsInput {
+  active: boolean;
+  channels: string[];
 }
 
 export interface PluginUpdateInput {

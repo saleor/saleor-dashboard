@@ -1,4 +1,5 @@
 import { PluginListUrlSortField } from "@saleor/plugins/urls";
+import { PluginConfigurationType } from "@saleor/types/globalTypes";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
@@ -21,6 +22,25 @@ const props: PluginsListPageProps = {
     isActive: {
       active: false,
       value: true
+    },
+    channels: {
+      active: false,
+      choices: [],
+      displayValues: [],
+      initialSearch: "",
+      hasMore: false,
+      loading: false,
+      onFetchMore: () => undefined,
+      onSearchChange: () => undefined,
+      value: []
+    },
+    status: {
+      active: false,
+      value: false
+    },
+    type: {
+      active: false,
+      value: PluginConfigurationType.GLOBAL
     }
   },
   onBack: () => undefined,

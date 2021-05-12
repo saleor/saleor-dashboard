@@ -68,6 +68,7 @@ export const ProductDetailsForm: React.FC<ProductDetailsFormProps> = ({
           name="description"
           onChange={onDescriptionChange}
         />
+        <FormSpacer />
         <Hr />
         <FormSpacer />
         <Grid variant="uniform">

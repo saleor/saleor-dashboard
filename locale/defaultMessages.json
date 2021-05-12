@@ -3,9 +3,57 @@
     "context": "dialog header",
     "string": "Cancel Order"
   },
+  "PageTypeDeleteWarningDialog multiple assigned items description": {
+    "context": "PageTypeDeleteWarningDialog multiple assigned items description",
+    "string": "Are you sure you want to delete selected page types? If you remove them you won’t be able to assign them to created pages."
+  },
+  "PageTypeDeleteWarningDialog multiple consent label": {
+    "context": "PageTypeDeleteWarningDialog multiple consent label",
+    "string": "Yes, I want to delete those pages types and assigned pages"
+  },
+  "PageTypeDeleteWarningDialog single assigned items description": {
+    "context": "PageTypeDeleteWarningDialog single assigned items description",
+    "string": "You are about to delete page type <b>{typeName}</b>. It is assigned to {assignedItemsCount} {assignedItemsCount,plural,one{page} other{pages}}. Deleting this page type will also delete those pages. Are you sure you want to do this?"
+  },
+  "PageTypeDeleteWarningDialog single consent label": {
+    "context": "PageTypeDeleteWarningDialog single consent label",
+    "string": "Yes, I want to delete this page type and assigned pages"
+  },
+  "PageTypeDeleteWarningDialog single no assigned items description": {
+    "context": "PageTypeDeleteWarningDialog single no assigned items description",
+    "string": "Are you sure you want to delete <b>{typeName}</b>? If you remove it you won’t be able to assign it to created pages."
+  },
+  "PageTypeDeleteWarningDialog with items multiple description": {
+    "context": "PageTypeDeleteWarningDialog with items multiple description",
+    "string": "You are about to delete multiple page types. Some of them are assigned to pages. Deleting those page types will also delete those pages"
+  },
   "Previous discount label id": {
     "context": "Previous discount label",
     "string": "Previous discount value"
+  },
+  "ProductTypeDeleteWarningDialog multiple assigned items description": {
+    "context": "ProductTypeDeleteWarningDialog multiple assigned items description",
+    "string": "Are you sure you want to delete selected product types? If you remove them you won’t be able to assign them to created products."
+  },
+  "ProductTypeDeleteWarningDialog multiple consent label": {
+    "context": "ProductTypeDeleteWarningDialog multiple consent label",
+    "string": "Yes, I want to delete those products types and assigned products"
+  },
+  "ProductTypeDeleteWarningDialog single assigned items description": {
+    "context": "ProductTypeDeleteWarningDialog single assigned items description",
+    "string": "You are about to delete product type <b>{typeName}</b>. It is assigned to {assignedItemsCount} {assignedItemsCount,plural,one{product} other{products}}. Deleting this product type will also delete those products. Are you sure you want to do this?"
+  },
+  "ProductTypeDeleteWarningDialog single consent label": {
+    "context": "ProductTypeDeleteWarningDialog single consent label",
+    "string": "Yes, I want to delete this product type and assigned products"
+  },
+  "ProductTypeDeleteWarningDialog single no assigned items description": {
+    "context": "ProductTypeDeleteWarningDialog single no assigned items description",
+    "string": "Are you sure you want to delete <b>{typeName}</b>? If you remove it you won’t be able to assign it to created products."
+  },
+  "ProductTypeDeleteWarningDialog with items multiple description": {
+    "context": "ProductTypeDeleteWarningDialog with items multiple description",
+    "string": "You are about to delete multiple product types. Some of them are assigned to products. Deleting those product types will also delete those products"
   },
   "amount title": {
     "context": "amount title",
@@ -138,6 +186,10 @@
     "context": "Fixed amount subtitle",
     "string": "Fixed amount"
   },
+  "globalConfigPluginMessages title": {
+    "context": "global config plugin status popup title",
+    "string": "Global Plugin"
+  },
   "homeActivityCardHeader": {
     "context": "header",
     "string": "Activity"
@@ -198,6 +250,14 @@
   "homeScreenHeader": {
     "context": "header",
     "string": "Hello there, {userName}"
+  },
+  "is filter range between value": {
+    "context": "is filter range or value",
+    "string": "between"
+  },
+  "is filter range equal to value": {
+    "context": "is filter range or value",
+    "string": "equal to"
   },
   "menuCreateDialogHeader": {
     "context": "dialog header",
@@ -321,6 +381,10 @@
   },
   "pageTypeInputLabel": {
     "string": "Select content type"
+  },
+  "pluginChannelConfigurationCellMessages per channel": {
+    "context": "PluginChannelConfigurationCell channel title",
+    "string": "Per channel"
   },
   "product available for purchase": {
     "context": "product availability",
@@ -2027,23 +2091,19 @@
     "context": "search",
     "string": "No results"
   },
-  "src_dot_components_dot_Filter_dot_2683154806": {
-    "context": "is filter range or value",
-    "string": "equal to"
-  },
-  "src_dot_components_dot_Filter_dot_2779594451": {
-    "context": "filter range separator",
-    "string": "and"
-  },
   "src_dot_components_dot_Filter_dot_4190318230": {
     "context": "search results",
     "string": "Show more"
   },
-  "src_dot_components_dot_Filter_dot_773313536": {
-    "context": "is filter range or value",
-    "string": "between"
-  },
   "src_dot_components_dot_Filter_dot_996289613": {
+    "context": "button",
+    "string": "Filters"
+  },
+  "src_dot_components_dot_Filter_dot_FilterContent_dot_2779594451": {
+    "context": "filter range separator",
+    "string": "and"
+  },
+  "src_dot_components_dot_Filter_dot_FilterContent_dot_996289613": {
     "string": "Filters"
   },
   "src_dot_components_dot_ImageUpload_dot_1731007575": {
@@ -2318,6 +2378,18 @@
   },
   "src_dot_components_dot_SingleSelectField_dot_4205644805": {
     "string": "No results found"
+  },
+  "src_dot_components_dot_StatusLabel_dot_active": {
+    "context": "status label active",
+    "string": "Active"
+  },
+  "src_dot_components_dot_StatusLabel_dot_deactivated": {
+    "context": "status label deactivated",
+    "string": "Deactivated"
+  },
+  "src_dot_components_dot_StatusLabel_dot_inactive": {
+    "context": "status label inactive",
+    "string": "Inactive"
   },
   "src_dot_components_dot_TableHead_dot_868570480": {
     "string": "Selected {number} items"
@@ -4532,18 +4604,6 @@
     "context": "header",
     "string": "Create Page Type"
   },
-  "src_dot_pageTypes_dot_components_dot_PageTypeDeleteDialog_dot_2364900868": {
-    "context": "delete page type with its pages",
-    "string": "Page Type you want to delete is used by some pages. Deleting this page type will also delete those pages. Are you sure you want to delete {name}? After doing so you won’t be able to revert changes."
-  },
-  "src_dot_pageTypes_dot_components_dot_PageTypeDeleteDialog_dot_3120835055": {
-    "context": "dialog header",
-    "string": "Delete Page Type"
-  },
-  "src_dot_pageTypes_dot_components_dot_PageTypeDeleteDialog_dot_3734861990": {
-    "context": "delete page type",
-    "string": "Are you sure you want to delete {name}? After doing so you won’t be able to revert changes."
-  },
   "src_dot_pageTypes_dot_components_dot_PageTypeDetailsPage_dot_1105469372": {
     "string": "These are general information about this Content Type."
   },
@@ -4578,6 +4638,14 @@
   },
   "src_dot_pageTypes_dot_components_dot_PageTypeList_dot_2965257236": {
     "string": "No page types found"
+  },
+  "src_dot_pageTypes_dot_hooks_dot_usePageTypeDelete_dot_title": {
+    "context": "PageTypeDeleteWarningDialog title",
+    "string": "Delete page {selectedTypesCount,plural,one{type} other{types}}"
+  },
+  "src_dot_pageTypes_dot_hooks_dot_usePageTypeDelete_dot_viewAssignedItemsButtonLabel": {
+    "context": "PageTypeDeleteWarningDialog single assigned items button label",
+    "string": "View pages"
   },
   "src_dot_pageTypes_dot_views_dot_2634056946": {
     "context": "dialog header",
@@ -4887,6 +4955,10 @@
     "context": "section header",
     "string": "Authorization"
   },
+  "src_dot_plugins_dot_components_dot_PluginDetailsChannelsCard_dot_noChannelsSubtitle": {
+    "context": "PluginDetailsChannelsCard no channels subtitle",
+    "string": "Plugin’s settings are set common across all channels"
+  },
   "src_dot_plugins_dot_components_dot_PluginInfo_dot_1049131348": {
     "context": "plugin name",
     "string": "Plugin Name"
@@ -4914,20 +4986,9 @@
     "context": "section header",
     "string": "Plugin Settings"
   },
-  "src_dot_plugins_dot_components_dot_PluginsDetailsPage_dot_1970881031": {
-    "context": "section header",
-    "string": "Plugin Settings"
-  },
   "src_dot_plugins_dot_components_dot_PluginsDetailsPage_dot_3352026836": {
     "context": "header",
     "string": "{pluginName} Details"
-  },
-  "src_dot_plugins_dot_components_dot_PluginsDetailsPage_dot_3425535100": {
-    "context": "section header",
-    "string": "Plugin Information and Status"
-  },
-  "src_dot_plugins_dot_components_dot_PluginsDetailsPage_dot_3799756739": {
-    "string": "These are general information about your store. They define what is the URL of your store and what is shown in browsers taskbar."
   },
   "src_dot_plugins_dot_components_dot_PluginsListPage_dot_3233248823": {
     "string": "Search Plugins..."
@@ -4937,27 +4998,55 @@
     "string": "All Plugins"
   },
   "src_dot_plugins_dot_components_dot_PluginsListPage_dot_active": {
-    "context": "plugin",
-    "string": "Active"
+    "context": "plugin filters error messages active",
+    "string": "Active is not selected"
   },
-  "src_dot_plugins_dot_components_dot_PluginsListPage_dot_deactivated": {
-    "context": "plugin",
-    "string": "Inactive"
+  "src_dot_plugins_dot_components_dot_PluginsListPage_dot_channelStatusSectionSubtitle": {
+    "context": "status section subtitle",
+    "string": "Channel status"
   },
-  "src_dot_plugins_dot_components_dot_PluginsList_dot_3247064221": {
-    "context": "plugin status",
-    "string": "Active"
+  "src_dot_plugins_dot_components_dot_PluginsListPage_dot_channelStatusSectionTitle": {
+    "context": "status section title",
+    "string": "Status in channel"
   },
-  "src_dot_plugins_dot_components_dot_PluginsList_dot_4120604650": {
-    "context": "user action bar",
-    "string": "Action"
+  "src_dot_plugins_dot_components_dot_PluginsListPage_dot_channels": {
+    "context": "plugin filters error messages channels",
+    "string": "No channels selected"
   },
-  "src_dot_plugins_dot_components_dot_PluginsList_dot_636461959": {
-    "context": "plugin name",
-    "string": "Name"
+  "src_dot_plugins_dot_components_dot_PluginsListPage_dot_configTypeSectionTitle": {
+    "context": "config type section title",
+    "string": "Configuration Type"
   },
   "src_dot_plugins_dot_components_dot_PluginsList_dot_666641390": {
     "string": "No plugins found"
+  },
+  "src_dot_plugins_dot_components_dot_PluginsList_dot_channelLabel": {
+    "context": "table header channel col label",
+    "string": "Channel"
+  },
+  "src_dot_plugins_dot_components_dot_PluginsList_dot_channelTitle": {
+    "context": "plugin channel availability status title",
+    "string": "Active in {activeChannelsCount}"
+  },
+  "src_dot_plugins_dot_components_dot_PluginsList_dot_confLabel": {
+    "context": "table header configuration col label",
+    "string": "Configuration"
+  },
+  "src_dot_plugins_dot_components_dot_PluginsList_dot_description": {
+    "context": "global config plugin status popup description",
+    "string": "Global plugins are set across all channels in your ecommerce. Only status is shown for those types of plugins"
+  },
+  "src_dot_plugins_dot_components_dot_PluginsList_dot_globalLabel": {
+    "context": "PluginChannelConfigurationCell global title",
+    "string": "Global"
+  },
+  "src_dot_plugins_dot_components_dot_PluginsList_dot_nameLabel": {
+    "context": "table header name col label",
+    "string": "Name"
+  },
+  "src_dot_plugins_dot_components_dot_PluginsList_dot_title": {
+    "context": "channel config plugin status popup title",
+    "string": "Assigned to {activeChannelsCount} of {allChannelsCount} channels"
   },
   "src_dot_plugins_dot_views_dot_1096544448": {
     "context": "header",
@@ -4991,14 +5080,6 @@
   "src_dot_productTypes_dot_components_dot_ProductTypeAttributes_dot_888493112": {
     "context": "section header",
     "string": "Variant Attributes"
-  },
-  "src_dot_productTypes_dot_components_dot_ProductTypeDeleteDialog_dot_2297471173": {
-    "context": "delete product type",
-    "string": "Are you sure you want to delete {name}?"
-  },
-  "src_dot_productTypes_dot_components_dot_ProductTypeDeleteDialog_dot_924066985": {
-    "context": "dialog header",
-    "string": "Delete Product Type"
   },
   "src_dot_productTypes_dot_components_dot_ProductTypeDetailsPage_dot_1217376589": {
     "context": "switch button",
@@ -5079,16 +5160,16 @@
   "src_dot_productTypes_dot_components_dot_ProductTypeShipping_dot_746695941": {
     "string": "Weight"
   },
+  "src_dot_productTypes_dot_hooks_dot_useProductTypeDelete_dot_title": {
+    "context": "ProductTypeDeleteWarningDialog title",
+    "string": "Delete product {selectedTypesCount,plural,one{type} other{types}}"
+  },
+  "src_dot_productTypes_dot_hooks_dot_useProductTypeDelete_dot_viewAssignedItemsButtonLabel": {
+    "context": "ProductTypeDeleteWarningDialog single assigned items button label",
+    "string": "View products"
+  },
   "src_dot_productTypes_dot_views_dot_3822478981": {
     "string": "Successfully created product type"
-  },
-  "src_dot_productTypes_dot_views_dot_ProductTypeList_dot_4080551769": {
-    "context": "dialog header",
-    "string": "Delete Product Types"
-  },
-  "src_dot_productTypes_dot_views_dot_ProductTypeList_dot_4269954457": {
-    "context": "dialog content",
-    "string": "{counter,plural,one{Are you sure you want to delete this product type?} other{Are you sure you want to delete {displayQuantity} product types?}}"
   },
   "src_dot_productTypes_dot_views_dot_ProductTypeUpdate_dot_3512959355": {
     "string": "Product type deleted"

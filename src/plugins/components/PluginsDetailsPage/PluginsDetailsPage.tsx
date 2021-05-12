@@ -1,11 +1,10 @@
-import Typography from "@material-ui/core/Typography";
 import AppHeader from "@saleor/components/AppHeader";
 import CardSpacer from "@saleor/components/CardSpacer";
+// import CardSpacer from "@saleor/components/CardSpacer";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
 import Container from "@saleor/components/Container";
 import Form from "@saleor/components/Form";
 import Grid from "@saleor/components/Grid";
-import Hr from "@saleor/components/Hr";
 import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
 import { PluginErrorFragment } from "@saleor/fragments/types/PluginErrorFragment";
@@ -13,15 +12,16 @@ import { ChangeEvent } from "@saleor/hooks/useForm";
 import { sectionNames } from "@saleor/intl";
 import { getStringOrPlaceholder } from "@saleor/misc";
 import { isSecretField } from "@saleor/plugins/utils";
-import { makeStyles } from "@saleor/theme";
 import { ConfigurationItemInput } from "@saleor/types/globalTypes";
 import React from "react";
 import { useIntl } from "react-intl";
 
 import { Plugin_plugin } from "../../types/Plugin";
 import PluginAuthorization from "../PluginAuthorization";
+import PluginDetailsChannelsCard from "../PluginDetailsChannelsCard";
 import PluginInfo from "../PluginInfo";
 import PluginSettings from "../PluginSettings";
+import { PluginConfiguration } from "./types";
 
 export interface PluginDetailsPageFormData {
   active: boolean;
@@ -31,51 +31,50 @@ export interface PluginDetailsPageFormData {
 export interface PluginsDetailsPageProps {
   disabled: boolean;
   errors: PluginErrorFragment[];
-  plugin: Plugin_plugin;
+  plugin?: Plugin_plugin;
   saveButtonBarState: ConfirmButtonTransitionState;
   onBack: () => void;
   onClear: (field: string) => void;
   onEdit: (field: string) => void;
   onSubmit: (data: PluginDetailsPageFormData) => void;
+  selectedConfig?: PluginConfiguration;
+  setSelectedChannelId: (channelId: string) => void;
 }
 
-const useStyles = makeStyles(
-  {
-    spacer: {
-      gridColumnEnd: "span 2"
-    }
-  },
-  {
-    name: "PluginsDetailsPage"
-  }
-);
-
-const PluginsDetailsPage: React.FC<PluginsDetailsPageProps> = props => {
-  const {
-    disabled,
-    errors,
-    plugin,
-    saveButtonBarState,
-    onBack,
-    onClear,
-    onEdit,
-    onSubmit
-  } = props;
-
-  const classes = useStyles(props);
+const PluginsDetailsPage: React.FC<PluginsDetailsPageProps> = ({
+  disabled,
+  errors,
+  plugin,
+  saveButtonBarState,
+  onBack,
+  onClear,
+  onEdit,
+  onSubmit,
+  selectedConfig,
+  setSelectedChannelId
+}) => {
   const intl = useIntl();
-  const initialForm: PluginDetailsPageFormData = {
-    active: plugin?.active || false,
-    configuration: plugin?.configuration
-      ?.filter(field => !isSecretField(plugin?.configuration || [], field.name))
+
+  const initialFormData = (): PluginDetailsPageFormData => ({
+    active: selectedConfig?.active,
+    configuration: selectedConfig?.configuration
+      ?.filter(
+        field => !isSecretField(selectedConfig?.configuration || [], field.name)
+      )
       .map(field => ({
         ...field,
         value: field.value || ""
       }))
-  };
+  });
+
+  const selectedChannelId = selectedConfig?.channel?.id;
 
   return (
-    <Form initial={initialForm} onSubmit={onSubmit}>
+    <Form
+      initial={initialFormData()}
+      onSubmit={onSubmit}
+      key={selectedChannelId}
+    >
       {({ data, hasChanged, submit, set }) => {
         const onChange = (event: ChangeEvent) => {
           const { name, value } = event.target;
@@ -91,7 +90,7 @@ const PluginsDetailsPage: React.FC<PluginsDetailsPageProps> = props => {
               }
             });
 
-            plugin.configuration.map(item => {
+            selectedConfig.configuration.map(item => {
               if (item.name === name) {
                 item.value = value;
               }
@@ -118,60 +117,45 @@ const PluginsDetailsPage: React.FC<PluginsDetailsPageProps> = props => {
             />
             <Grid variant="inverted">
               <div>
-                <Typography variant="h6">
-                  {intl.formatMessage({
-                    defaultMessage: "Plugin Information and Status",
-                    description: "section header"
-                  })}
-                </Typography>
-                <Typography>
-                  {intl.formatMessage({
-                    defaultMessage:
-                      "These are general information about your store. They define what is the URL of your store and what is shown in browsers taskbar."
-                  })}
-                </Typography>
+                <PluginDetailsChannelsCard
+                  plugin={plugin}
+                  selectedChannelId={selectedChannelId}
+                  setSelectedChannelId={setSelectedChannelId}
+                />
               </div>
-              <PluginInfo
-                data={data}
-                description={plugin?.description || ""}
-                errors={errors}
-                name={plugin?.name || ""}
-                onChange={onChange}
-              />
-              {data.configuration && (
-                <>
-                  <Hr className={classes.spacer} />
-                  <div>
-                    <Typography variant="h6">
-                      {intl.formatMessage({
-                        defaultMessage: "Plugin Settings",
-                        description: "section header"
-                      })}
-                    </Typography>
-                  </div>
+              <div>
+                <PluginInfo
+                  data={data}
+                  description={plugin?.description || ""}
+                  errors={errors}
+                  name={plugin?.name || ""}
+                  onChange={onChange}
+                />
+                <CardSpacer />
+                {data.configuration && (
                   <div>
                     <PluginSettings
                       data={data}
-                      fields={plugin?.configuration || []}
+                      fields={selectedConfig?.configuration || []}
                       errors={errors}
                       disabled={disabled}
                       onChange={onChange}
                     />
-                    {plugin?.configuration.some(field =>
-                      isSecretField(plugin.configuration, field.name)
+                    {selectedConfig?.configuration.some(field =>
+                      isSecretField(selectedConfig?.configuration, field.name)
                     ) && (
                       <>
                         <CardSpacer />
                         <PluginAuthorization
-                          fields={plugin.configuration}
+                          fields={selectedConfig?.configuration}
                           onClear={onClear}
                           onEdit={onEdit}
                         />
                       </>
                     )}
                   </div>
-                </>
-              )}
+                )}
+              </div>
             </Grid>
             <SaveButtonBar
               disabled={disabled || !hasChanged}
@@ -185,5 +169,5 @@ const PluginsDetailsPage: React.FC<PluginsDetailsPageProps> = props => {
     </Form>
   );
 };
-PluginsDetailsPage.displayName = "PluginsDetailsPage";
+
 export default PluginsDetailsPage;

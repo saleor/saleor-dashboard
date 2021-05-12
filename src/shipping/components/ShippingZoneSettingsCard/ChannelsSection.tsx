@@ -1,9 +1,9 @@
-import { useChannelsSearch } from "@saleor/channels/components/ChannelsAvailabilityDialog/utils";
 import { Channels_channels } from "@saleor/channels/types/Channels";
 import CardSpacer from "@saleor/components/CardSpacer";
 import MultiAutocompleteSelectField, {
   MultiAutocompleteChoiceType
 } from "@saleor/components/MultiAutocompleteSelectField";
+import { useChannelsSearch } from "@saleor/hooks/useChannelsSearch";
 import { FormChange } from "@saleor/hooks/useForm";
 import { mapNodeToChoice } from "@saleor/utils/maps";
 import React from "react";
