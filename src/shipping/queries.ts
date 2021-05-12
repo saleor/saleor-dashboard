@@ -93,9 +93,10 @@ export const useShippingZoneChannels = makeQuery<
   ShippingZoneChannelsVariables
 >(shippingZoneChannels);
 
+// first: 100 - to be removed when we implement pagintion in ui for this query
 const channelShippingZones = gql`
   query ChannelShippingZones($filter: ShippingZoneFilterInput) {
-    shippingZones(filter: $filter) {
+    shippingZones(filter: $filter, first: 100) {
       edges {
         node {
           id
