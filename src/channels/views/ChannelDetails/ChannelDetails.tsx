@@ -158,7 +158,7 @@ export const ChannelDetails: React.FC<ChannelDetailsProps> = ({
   } = useChannelShippingZones({
     variables: {
       filter: {
-        channel: id
+        channels: [id]
       }
     }
   });

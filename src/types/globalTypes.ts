@@ -1851,7 +1851,7 @@ export interface ShippingZoneCreateInput {
 
 export interface ShippingZoneFilterInput {
   search?: string | null;
-  channel?: string | null;
+  channels?: (string | null)[] | null;
 }
 
 export interface ShippingZoneUpdateInput {
