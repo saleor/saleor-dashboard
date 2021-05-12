@@ -28,6 +28,7 @@ module.exports = ({ config }) => {
   // to make it work with npm link
   config.resolve.alias = {
     react: path.resolve("./node_modules/react"),
+    "react-dom": path.resolve("./node_modules/react-dom"),
     "@material-ui/core": path.resolve("./node_modules/@material-ui/core"),
     "@material-ui/icons": path.resolve("./node_modules/@material-ui/icons")
   };
