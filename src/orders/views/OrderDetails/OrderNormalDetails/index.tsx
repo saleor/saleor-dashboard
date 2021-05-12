@@ -3,6 +3,7 @@ import useNavigator from "@saleor/hooks/useNavigator";
 import useUser from "@saleor/hooks/useUser";
 import OrderCannotCancelOrderDialog from "@saleor/orders/components/OrderCannotCancelOrderDialog";
 import OrderInvoiceEmailSendDialog from "@saleor/orders/components/OrderInvoiceEmailSendDialog";
+import { mapEdgesToItems } from "@saleor/utils/maps";
 import { useWarehouseList } from "@saleor/warehouses/queries";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -224,9 +225,7 @@ export const OrderNormalDetails: React.FC<OrderNormalDetailsProps> = ({
           orderFulfillmentCancel.opts.data?.orderFulfillmentCancel.errors || []
         }
         open={params.action === "cancel-fulfillment"}
-        warehouses={
-          warehouses.data?.warehouses.edges.map(edge => edge.node) || []
-        }
+        warehouses={mapEdgesToItems(warehouses?.data?.warehouses)}
         onConfirm={variables =>
           orderFulfillmentCancel.mutate({
             id: params.id,

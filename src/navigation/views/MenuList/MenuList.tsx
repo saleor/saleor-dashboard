@@ -11,8 +11,10 @@ import usePaginator, {
 } from "@saleor/hooks/usePaginator";
 import { buttonMessages, commonMessages } from "@saleor/intl";
 import { maybe } from "@saleor/misc";
+import { getById } from "@saleor/orders/components/OrderReturnPage/utils";
 import { ListViews } from "@saleor/types";
 import createSortHandler from "@saleor/utils/handlers/sortHandler";
+import { mapEdgesToItems } from "@saleor/utils/maps";
 import { getSortParams } from "@saleor/utils/sort";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -127,7 +129,7 @@ const MenuList: React.FC<MenuListProps> = ({ params }) => {
                 <>
                   <MenuListPage
                     disabled={loading}
-                    menus={maybe(() => data.menus.edges.map(edge => edge.node))}
+                    menus={mapEdgesToItems(data?.menus)}
                     settings={settings}
                     onAdd={() =>
                       navigate(
@@ -208,13 +210,10 @@ const MenuList: React.FC<MenuListProps> = ({ params }) => {
                         defaultMessage="Are you sure you want to delete {menuName}?"
                         id="menuListDeleteMenuContent"
                         values={{
-                          menuName: maybe(
-                            () =>
-                              data.menus.edges.find(
-                                edge => edge.node.id === params.id
-                              ).node.name,
-                            "..."
-                          )
+                          menuName:
+                            mapEdgesToItems(data?.menus).find(
+                              getById(params.id)
+                            )?.name || "..."
                         }}
                       />
                     </DialogContentText>

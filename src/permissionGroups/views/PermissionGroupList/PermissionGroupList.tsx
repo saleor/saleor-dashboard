@@ -14,6 +14,7 @@ import { PermissionGroupDelete } from "@saleor/permissionGroups/types/Permission
 import { ListViews } from "@saleor/types";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import createSortHandler from "@saleor/utils/handlers/sortHandler";
+import { mapEdgesToItems } from "@saleor/utils/maps";
 import { getSortParams } from "@saleor/utils/sort";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -73,7 +74,7 @@ export const PermissionGroupList: React.FC<PermissionGroupListProps> = ({
     PermissionGroupListUrlQueryParams
   >(navigate, permissionGroupListUrl, params);
 
-  const permissionGroups = data?.permissionGroups?.edges.map(edge => edge.node);
+  const permissionGroups = mapEdgesToItems(data?.permissionGroups);
   const [deleteError, setDeleteError] = React.useState<
     PermissionGroupErrorFragment
   >();

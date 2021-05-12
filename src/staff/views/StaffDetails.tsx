@@ -9,6 +9,7 @@ import useUser from "@saleor/hooks/useUser";
 import { commonMessages } from "@saleor/intl";
 import { getStringOrPlaceholder, maybe } from "@saleor/misc";
 import usePermissionGroupSearch from "@saleor/searches/usePermissionGroupSearch";
+import { mapEdgesToItems } from "@saleor/utils/maps";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -207,8 +208,8 @@ export const StaffDetails: React.FC<OrderListProps> = ({ id, params }) => {
                                       })
                                     )
                                   }
-                                  availablePermissionGroups={searchPermissionGroupsOpts.data?.search.edges.map(
-                                    edge => edge.node
+                                  availablePermissionGroups={mapEdgesToItems(
+                                    searchPermissionGroupsOpts?.data?.search
                                   )}
                                   staffMember={staffMember}
                                   saveButtonBarState={updateResult.status}
