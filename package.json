@@ -203,9 +203,13 @@
     "moduleNameMapper": {
       "@assets(.*)$": "<rootDir>/assets/$1",
       "@locale(.*)$": "<rootDir>/locale/$1",
-      "@saleor(?!.*macaw)(.*)$": "<rootDir>/src/$1",
+      "@saleor/(?!.*macaw)(.*)$": "<rootDir>/src/$1",
       "@test/(.*)$": "<rootDir>/testUtils/$1",
-      "^lodash-es(.*)$": "lodash/$1"
+      "^lodash-es(.*)$": "lodash/$1",
+      "^@material-ui/core$": "<rootDir>/node_modules/@material-ui/core",
+      "^@material-ui/styles$": "<rootDir>/node_modules/@material-ui/styles",
+      "^react$": "<rootDir>/node_modules/react",
+      "^react-dom$": "<rootDir>/node_modules/react-dom"
     }
   },
   "husky": {

@@ -144,7 +144,10 @@ module.exports = (env, argv) => {
         react: path.resolve("./node_modules/react"),
         "react-dom": path.resolve("./node_modules/react-dom"),
         "@material-ui/core": path.resolve("./node_modules/@material-ui/core"),
-        "@material-ui/icons": path.resolve("./node_modules/@material-ui/icons")
+        "@material-ui/icons": path.resolve("./node_modules/@material-ui/icons"),
+        "@material-ui/styles": path.resolve(
+          "./node_modules/@material-ui/styles"
+        )
       },
       extensions: [".js", ".jsx", ".ts", ".tsx"],
       plugins: [pathsPlugin]
