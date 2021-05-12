@@ -1,3 +1,4 @@
+import { addProductToCheckout } from "../../apiRequests/Checkout";
 import { createWaitingForCaptureOrder } from "../../utils/ordersUtils";
 import { createProductInChannel } from "../../utils/products/productsUtils";
 import {
@@ -10,7 +11,6 @@ describe("Products stocks in checkout", () => {
   const name = `${startsWith}${faker.random.number()}`;
 
   let defaultChannel;
-  let product;
   let address;
   let warehouse;
   let attribute;
@@ -59,12 +59,45 @@ describe("Products stocks in checkout", () => {
       name,
       warehouseId: warehouse.id,
       quantityInWarehouse: 1
-    }).then(({ variantsList }) => {
-      createWaitingForCaptureOrder(
-        defaultChannel.slug,
-        "email@example.com",
-        variantsList
-      );
-    });
+    })
+      .then(({ variantsList }) => {
+        createWaitingForCaptureOrder(
+          defaultChannel.slug,
+          "email@example.com",
+          variantsList,
+          address
+        );
+      })
+      .then(({ order }) => {
+        expect(order).to.be.not.null;
+      });
+  });
+  it("should not be possible to add product with quantity greater than stock", () => {
+    let variants;
+
+    createProductInChannel({
+      attributeId: attribute.id,
+      categoryId: category.id,
+      productTypeId: productType.id,
+      channelId: defaultChannel.id,
+      name,
+      warehouseId: warehouse.id,
+      quantityInWarehouse: 1
+    })
+      .then(({ variantsList }) => {
+        variants = variantsList;
+        createWaitingForCaptureOrder(
+          defaultChannel.slug,
+          "email@example.com",
+          variantsList,
+          address
+        );
+      })
+      .then(({ checkout }) => {
+        addProductsToCheckout(checkout.id, variants, 1);
+      })
+      .then(({ errors }) => {
+        expect(errors.filed).to.be.not.null;
+      });
   });
 });
