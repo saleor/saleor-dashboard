@@ -69,7 +69,7 @@ jobs:
         run: |
           npm run test
 
-  cypress-run-all-env:
+  cypress-run:
     if: github.event.pull_request.head.repo.full_name == 'mirumee/saleor-dashboard'
     runs-on: ubuntu-16.04
     steps:

@@ -75,7 +75,8 @@ export function getFilterVariables(
   params: PluginListUrlFilters
 ): PluginFilterInput {
   const baseParams = {
-    type: getParsedConfigType(params.type)
+    type: getParsedConfigType(params.type),
+    search: params.query
   };
 
   if (!!params.active && !!params.channels?.length) {
