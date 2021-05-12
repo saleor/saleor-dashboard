@@ -20,9 +20,7 @@ export function finalizeDraftOrder(name, address) {
   cy.contains(DRAFT_ORDER_SELECTORS.selectCustomerOption, name)
     .click()
     .get(DRAFT_ORDER_SELECTORS.customerEmail)
-    .should("be.visible")
-    .get(DRAFT_ORDER_SELECTORS.editShippingAddress)
-    .click();
+    .should("be.visible");
   fillUpAddressForm(address);
   cy.get(DRAFT_ORDER_SELECTORS.editBillingAddress).click();
   fillUpAddressForm(address);
