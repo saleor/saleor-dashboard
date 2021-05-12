@@ -10,6 +10,7 @@
 export enum AccountErrorCode {
   ACTIVATE_OWN_ACCOUNT = "ACTIVATE_OWN_ACCOUNT",
   ACTIVATE_SUPERUSER_ACCOUNT = "ACTIVATE_SUPERUSER_ACCOUNT",
+  CHANNEL_INACTIVE = "CHANNEL_INACTIVE",
   DEACTIVATE_OWN_ACCOUNT = "DEACTIVATE_OWN_ACCOUNT",
   DEACTIVATE_SUPERUSER_ACCOUNT = "DEACTIVATE_SUPERUSER_ACCOUNT",
   DELETE_NON_STAFF_USER = "DELETE_NON_STAFF_USER",
@@ -28,6 +29,7 @@ export enum AccountErrorCode {
   JWT_MISSING_TOKEN = "JWT_MISSING_TOKEN",
   JWT_SIGNATURE_EXPIRED = "JWT_SIGNATURE_EXPIRED",
   LEFT_NOT_MANAGEABLE_PERMISSION = "LEFT_NOT_MANAGEABLE_PERMISSION",
+  MISSING_CHANNEL_SLUG = "MISSING_CHANNEL_SLUG",
   NOT_FOUND = "NOT_FOUND",
   OUT_OF_SCOPE_GROUP = "OUT_OF_SCOPE_GROUP",
   OUT_OF_SCOPE_PERMISSION = "OUT_OF_SCOPE_PERMISSION",
@@ -155,6 +157,7 @@ export enum CollectionSortField {
 export enum ConfigurationTypeFieldEnum {
   BOOLEAN = "BOOLEAN",
   MULTILINE = "MULTILINE",
+  OUTPUT = "OUTPUT",
   PASSWORD = "PASSWORD",
   SECRET = "SECRET",
   SECRETMULTILINE = "SECRETMULTILINE",
@@ -1534,9 +1537,9 @@ export interface PageCreateInput {
 }
 
 export interface PageFilterInput {
-  pageTypes?: string[] | null;
   search?: string | null;
   metadata?: (MetadataInput | null)[] | null;
+  pageTypes?: (string | null)[] | null;
 }
 
 export interface PageInput {
@@ -1945,6 +1948,7 @@ export interface UserCreateInput {
   note?: string | null;
   languageCode?: LanguageCodeEnum | null;
   redirectUrl?: string | null;
+  channel?: string | null;
 }
 
 export interface UserSortingInput {
