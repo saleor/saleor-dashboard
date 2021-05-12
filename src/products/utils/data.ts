@@ -19,7 +19,6 @@ import { ProductStockInput } from "../components/ProductStocks";
 import { VariantAttributeInput } from "../components/ProductVariantAttributes";
 import { ProductVariantCreateData_product } from "../types/ProductVariantCreateData";
 import {MetadataItem} from "@saleor/fragments/types/MetadataItem";
-import { UserWithMetadataData } from "../types/UserWithMetadata";
 
 export interface Collection {
   id: string;
@@ -35,6 +34,7 @@ export interface ProductType {
   hasVariants: boolean;
   id: string;
   name: string;
+  slug: string;
   productAttributes: SearchProductTypes_search_edges_node_productAttributes[];
 }
 
@@ -256,6 +256,7 @@ export function mapFormsetStockToStockInput(
 
     const makeMegaPackProductsList = (megaPackProducts:string) => {
       let productsList: string[] | string;
+      /* eslint no-unused-expressions: ["error", { "allowTernary": true }]*/ 
       megaPackProducts === undefined ? productsList = null : productsList = megaPackProducts.split('\n')
       return productsList
     }
@@ -263,6 +264,7 @@ export function mapFormsetStockToStockInput(
 export const updateDataFromMegaPackValues = (data, megaPackProducts:string) => {
     if (megaPackProducts !== null && data.privateMetadata !== undefined) {
         const skusAlreadyInPrivateMetadata: boolean = data.privateMetadata.find(x => x.key === 'skus')
+        /* eslint no-unused-expressions: ["error", { "allowTernary": true }]*/ 
         skusAlreadyInPrivateMetadata ? data.privateMetadata.find(x => x.key === 'skus').value = makeMegaPackProductsList(megaPackProducts) : data.privateMetadata.push({
             "key": "skus",
             "value": makeMegaPackProductsList(megaPackProducts)
@@ -299,6 +301,6 @@ export function generateSkuNumberToQuery(data):string{
 export function generateSkuCode(productCount:number, data):string{
   const firstLetters = generateSkuNumberToQuery(data)
   productCount += 1
-  let productNumber:string = ("000" + String(productCount)).slice(-4)
+  const productNumber:string = ("000" + String(productCount)).slice(-4)
   return firstLetters + productNumber
 }

@@ -478,6 +478,7 @@ export const productTypes: Array<SearchProductTypes_search_edges_node &
     isShippingRequired: true,
     name: "Candy",
     productAttributes: [attributes[0]],
+    slug: "candy",
     taxType: {
       __typename: "TaxType" as "TaxType",
       description: "PB100000",
@@ -492,6 +493,7 @@ export const productTypes: Array<SearchProductTypes_search_edges_node &
     isShippingRequired: false,
     name: "E-books",
     productAttributes: [attributes[5]],
+    slug: "e-books",
     taxType: {
       __typename: "TaxType" as "TaxType",
       description: "PH403682",
@@ -506,6 +508,7 @@ export const productTypes: Array<SearchProductTypes_search_edges_node &
     isShippingRequired: true,
     name: "Mugs",
     productAttributes: [attributes[7]],
+    slug: "mugs",
     taxType: {
       __typename: "TaxType" as "TaxType",
       description: "PC077426",
@@ -520,6 +523,7 @@ export const productTypes: Array<SearchProductTypes_search_edges_node &
     isShippingRequired: true,
     name: "Coffee",
     productAttributes: [attributes[8]],
+    slug:"coffee"
     taxType: {
       __typename: "TaxType" as "TaxType",
       description: "PB100000",
@@ -534,6 +538,7 @@ export const productTypes: Array<SearchProductTypes_search_edges_node &
     isShippingRequired: true,
     name: "T-Shirt",
     productAttributes: [attributes[4]],
+    slug: "t-shirt",
     taxType: {
       __typename: "TaxType" as "TaxType",
       description: "PH403970",

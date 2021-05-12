@@ -42,7 +42,7 @@ import {
   ProductVariantDetailsVariables
 } from "./types/ProductVariantDetails";
 import {ProductVariantsSkusData, ProductVariantsSkusDataVariables} from "@saleor/products/types/ProductVariantSkus";
-import { UserWithMetadataData } from "./types/UserWithMetadata";
+import { UserWithMetadataData, UserWithMetadataDataVariables } from "./types/UserWithMetadata";
 
 const initialProductFilterDataQuery = gql`
   query InitialProductFilterData(
@@ -343,4 +343,4 @@ query getUserPrivateMetadata($id: ID!){
 }
 `;
 
-export const useUserWithMetadata = makeQuery<UserWithMetadataData, null>(userWithMetadata);
+export const useUserWithMetadata = makeQuery<UserWithMetadataData, UserWithMetadataDataVariables>(userWithMetadata);

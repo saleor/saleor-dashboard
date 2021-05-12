@@ -40,7 +40,7 @@ export function createProductTypeSelectHandler(
   setAttributes: (data: FormsetData<ProductAttributeInputData>) => void,
   setProductType: (productType: ProductType) => void,
   productTypeChoiceList: ProductType[],
-  setSkuCode: (sku: String) => void,
+  setSkuCode: (sku: string) => void,
   skusCount: any,
   userData: any,
   triggerChange: () => void
@@ -52,6 +52,7 @@ export function createProductTypeSelectHandler(
     );
     triggerChange();
     setProductType(selectedProductType);
+    /* eslint no-unused-expressions: ["error", { "allowTernary": true }]*/ 
     selectedProductType.slug === "mega-paka" ? setSkuCode(generateSkuCode(skusCount.productVariantsSkus.totalCount, userData)) : setSkuCode("");
     setAttributes(getAttributeInputFromProductType(selectedProductType));
   };

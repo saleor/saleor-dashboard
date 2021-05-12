@@ -194,7 +194,6 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                     <ProductMegaPack
                       data={data}
                       disabled={disabled}
-                      errors={errors}
                       onChange={handlers.changeMetadata}
                     />
                   )}

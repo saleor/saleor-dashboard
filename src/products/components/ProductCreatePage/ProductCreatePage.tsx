@@ -14,7 +14,7 @@ import { TaxTypeFragment } from "@saleor/fragments/types/TaxTypeFragment";
 import useDateLocalize from "@saleor/hooks/useDateLocalize";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { sectionNames } from "@saleor/intl";
-import { getChoices, generateSkuNumberToQuery } from "@saleor/products/utils/data";
+import { getChoices } from "@saleor/products/utils/data";
 import { SearchCategories_search_edges_node } from "@saleor/searches/types/SearchCategories";
 import { SearchCollections_search_edges_node } from "@saleor/searches/types/SearchCollections";
 import { SearchProductTypes_search_edges_node } from "@saleor/searches/types/SearchProductTypes";
@@ -22,8 +22,6 @@ import { SearchWarehouses_search_edges_node } from "@saleor/searches/types/Searc
 import { ContentState, convertToRaw } from "draft-js";
 import React from "react";
 import { useIntl } from "react-intl";
-import { useProductVariantsSkus } from "../../queries"
-
 
 import { FetchMoreProps } from "../../../types";
 import ProductAttributes from "../ProductAttributes";
@@ -166,7 +164,6 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
                     <ProductMegaPack
                       data={data}
                       disabled={disabled}
-                      errors={errors}
                       onChange={change}
                     />
                   )}

@@ -16,12 +16,12 @@ export const getTokens = () => ({
   auth:
     localStorage.getItem(TOKEN_STORAGE_KEY.AUTH) ||
     sessionStorage.getItem(TOKEN_STORAGE_KEY.AUTH),
-  refresh:
-    localStorage.getItem(TOKEN_STORAGE_KEY.CSRF) ||
-    sessionStorage.getItem(TOKEN_STORAGE_KEY.CSRF),
   id:
     localStorage.getItem(TOKEN_STORAGE_KEY.ID) ||
     sessionStorage.getItem(TOKEN_STORAGE_KEY.ID),
+  refresh:
+    localStorage.getItem(TOKEN_STORAGE_KEY.CSRF) ||
+    sessionStorage.getItem(TOKEN_STORAGE_KEY.CSRF),
 });
 
 export const setTokens = (auth: string, csrf: string, id:string, persist: boolean) => {

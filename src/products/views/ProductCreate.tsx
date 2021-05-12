@@ -68,7 +68,7 @@ export const ProductCreateView: React.FC = () => {
       if (megaPackError) {
         notify({
           status: "error",
-          text: error.message
+          text: megaPackError.message
         })
       }
     }

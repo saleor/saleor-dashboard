@@ -516,6 +516,7 @@ export enum MetadataErrorCode {
   INVALID = "INVALID",
   NOT_FOUND = "NOT_FOUND",
   REQUIRED = "REQUIRED",
+  MEGAPACK_ASSIGNED = "MEGAPACK_ASSIGNED",
 }
 
 export enum OrderAction {

@@ -36,9 +36,9 @@ export interface SearchProductTypes_search_edges_node {
   id: string;
   name: string;
   hasVariants: boolean;
-  slug: string;
   productAttributes: (SearchProductTypes_search_edges_node_productAttributes | null)[] | null;
   taxType: SearchProductTypes_search_edges_node_taxType | null;
+  slug: string;
 }
 
 export interface SearchProductTypes_search_edges {

@@ -10,7 +10,7 @@ import { ProductDetails_product } from "@saleor/products/types/ProductDetails";
 import {
   getAttributeInputFromProduct,
   getProductUpdatePageFormData,
-  getStockInputFromProduct, updateDataFromMegaPackValues, generateSkuNumberToQuery
+  getStockInputFromProduct, updateDataFromMegaPackValues
 } from "@saleor/products/utils/data";
 import {
   createAttributeChangeHandler,

@@ -207,6 +207,7 @@ export const product: (
     hasVariants: true,
     id: "pt76406",
     name: "Versatile",
+    slug:"versatile",
     taxType: {
       __typename: "TaxType",
       description: "standard",

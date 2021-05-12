@@ -224,9 +224,14 @@ function useProductCreateForm(
   );
   const changeMetadata = makeMetadataChangeHandler(handleChange);
 
-  updateDataFromMegaPackValues(form.data, form.data.megaPackProduct)
-  
+  React.useEffect(
+    () => {
+      updateDataFromMegaPackValues(form.data, form.data.megaPackProduct)
+    }, [form.data.megaPackProduct]
+)
+
   form.data.sku = sku
+  
   const data: ProductCreateData = {
     ...form.data,
     attributes: attributes.data,
@@ -261,7 +266,6 @@ const ProductCreateForm: React.FC<ProductCreateFormProps> = ({
   onSubmit,
   ...rest
 }) => {
-  console.log(getTokens().id)
   const {...values} = useUserWithMetadata({
     displayLoader: true,
     variables: {
@@ -270,9 +274,9 @@ const ProductCreateForm: React.FC<ProductCreateFormProps> = ({
     
   })
   
-  const {loading, error, data} = useProductVariantsSkus({
+  const {data} = useProductVariantsSkus({
     displayLoader: true,
-    variables: { sku: generateSkuNumberToQuery() }
+    variables: { sku: generateSkuNumberToQuery(values.data) }
   });
 
 

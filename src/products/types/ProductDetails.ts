@@ -65,6 +65,7 @@ export interface ProductDetails_product_productType {
   name: string;
   hasVariants: boolean;
   taxType: ProductDetails_product_productType_taxType | null;
+  slug: string;
 }
 
 export interface ProductDetails_product_pricing_priceRangeUndiscounted_start_gross {
