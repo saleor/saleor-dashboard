@@ -317,24 +317,17 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
 
   const filterOpts = getFilterOpts(
     params,
-    initialFilterAttributes?.attributes?.edges?.map(edge => edge.node) || [],
+    mapEdgesToItems(initialFilterAttributes?.attributes),
     {
-      initial:
-        initialFilterCategories?.categories?.edges?.map(edge => edge.node) ||
-        [],
+      initial: mapEdgesToItems(initialFilterCategories?.categories),
       search: searchCategories
     },
     {
-      initial:
-        initialFilterCollections?.collections?.edges?.map(edge => edge.node) ||
-        [],
+      initial: mapEdgesToItems(initialFilterCollections?.collections),
       search: searchCollections
     },
     {
-      initial:
-        initialFilterProductTypes?.productTypes?.edges?.map(
-          edge => edge.node
-        ) || [],
+      initial: mapEdgesToItems(initialFilterProductTypes?.productTypes),
       search: searchProductTypes
     }
   );
@@ -462,9 +455,7 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
         </DialogContentText>
       </ActionDialog>
       <ProductExportDialog
-        attributes={(searchAttributes.result.data?.search.edges || []).map(
-          edge => edge.node
-        )}
+        attributes={mapEdgesToItems(searchAttributes?.result?.data?.search)}
         hasMore={searchAttributes.result.data?.search.pageInfo.hasNextPage}
         loading={
           searchAttributes.result.loading ||

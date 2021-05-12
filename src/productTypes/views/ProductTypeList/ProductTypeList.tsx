@@ -159,8 +159,7 @@ export const ProductTypeList: React.FC<ProductTypeListProps> = ({ params }) => {
     params
   });
 
-  const productTypesData =
-    data?.productTypes?.edges.map(edge => edge.node) || [];
+  const productTypesData = mapEdgesToItems(data?.productTypes);
 
   return (
     <TypedProductTypeBulkDeleteMutation

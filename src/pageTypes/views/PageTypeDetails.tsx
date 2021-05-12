@@ -264,8 +264,8 @@ export const PageTypeDetails: React.FC<PageTypeDetailsProps> = ({
             deleteButtonState={deletePageTypeOpts.status}
           />
           <AssignAttributeDialog
-            attributes={result.data?.pageType.availableAttributes.edges.map(
-              edge => edge.node
+            attributes={mapEdgesToItems(
+              result?.data?.pageType?.availableAttributes
             )}
             confirmButtonState={assignAttributeOpts.status}
             errors={

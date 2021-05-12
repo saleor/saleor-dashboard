@@ -346,10 +346,8 @@ export const ProductTypeUpdate: React.FC<ProductTypeUpdateProps> = ({
                     <>
                       {Object.keys(ProductAttributeType).map(key => (
                         <AssignAttributeDialog
-                          attributes={maybe(() =>
-                            result.data.productType.availableAttributes.edges.map(
-                              edge => edge.node
-                            )
+                          attributes={mapEdgesToItems(
+                            result?.data?.productType?.availableAttributes
                           )}
                           confirmButtonState={assignAttribute.opts.status}
                           errors={maybe(

@@ -426,12 +426,10 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
     createProductMediaOpts.data?.productMediaCreate.errors
   );
 
-  const categories = (searchCategoriesOpts?.data?.search?.edges || []).map(
-    edge => edge.node
-  );
-  const collections = (searchCollectionsOpts?.data?.search?.edges || []).map(
-    edge => edge.node
-  );
+  const categories = mapEdgesToItems(searchCategoriesOpts?.data?.search);
+
+  const collections = mapEdgesToItems(searchCollectionsOpts?.data?.search);
+
   const errors = [
     ...(updateProductOpts.data?.productUpdate.errors || []),
     ...(updateSimpleProductOpts.data?.productUpdate.errors || []),

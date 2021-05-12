@@ -1,7 +1,7 @@
 import placeholderImage from "@assets/images/placeholder255x255.png";
 import { Omit } from "@material-ui/core";
 import { ProductErrorCode } from "@saleor/types/globalTypes";
-import { mapEdgesToItems } from "@saleor/utils/maps";
+import { mapEdgesToItems, mapNodeToChoice } from "@saleor/utils/maps";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
@@ -15,12 +15,7 @@ import Decorator from "../../Decorator";
 
 const category = categoryFixture(placeholderImage);
 
-const channelChoices = category.products.edges[0].node.channelListings.map(
-  listing => ({
-    label: listing.channel.name,
-    value: listing.channel.id
-  })
-);
+const channelChoices = mapNodeToChoice(mapEdgesToItems(category?.products));
 
 const updateProps: Omit<CategoryUpdatePageProps, "classes"> = {
   category,

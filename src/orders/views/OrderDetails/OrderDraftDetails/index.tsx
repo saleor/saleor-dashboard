@@ -172,7 +172,7 @@ export const OrderDraftDetails: React.FC<OrderDraftDetailsProps> = ({
                 order: id
               })
             }
-            users={users?.data?.search?.edges?.map(edge => edge.node) || []}
+            users={mapEdgesToItems(users?.data?.search)}
             hasMore={users?.data?.search?.pageInfo?.hasNextPage || false}
             onFetchMore={loadMoreCustomers}
             fetchUsers={searchUsers}
