@@ -8,7 +8,7 @@ import { PluginUpdate, PluginUpdateVariables } from "./types/PluginUpdate";
 const pluginUpdate = gql`
   ${pluginsDetailsFragment}
   ${pluginErrorFragment}
-  mutation PluginUpdate($channel: ID!, $id: ID!, $input: PluginUpdateInput!) {
+  mutation PluginUpdate($channel: ID, $id: ID!, $input: PluginUpdateInput!) {
     pluginUpdate(channel: $channel, id: $id, input: $input) {
       errors {
         ...PluginErrorFragment
