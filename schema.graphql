@@ -68,6 +68,8 @@ enum AccountErrorCode {
   JWT_DECODE_ERROR
   JWT_MISSING_TOKEN
   JWT_INVALID_CSRF_TOKEN
+  CHANNEL_INACTIVE
+  MISSING_CHANNEL_SLUG
 }
 
 input AccountInput {
@@ -91,6 +93,7 @@ input AccountRegisterInput {
   redirectUrl: String
   languageCode: LanguageCodeEnum
   metadata: [MetadataInput!]
+  channel: String
 }
 
 type AccountRequestDeletion {
@@ -887,7 +890,6 @@ type Checkout implements Node & ObjectWithMetadata {
   created: DateTime!
   lastChange: DateTime!
   user: User
-  quantity: Int!
   channel: Channel!
   billingAddress: Address
   shippingAddress: Address
@@ -904,6 +906,7 @@ type Checkout implements Node & ObjectWithMetadata {
   availablePaymentGateways: [PaymentGateway!]!
   email: String!
   isShippingRequired: Boolean!
+  quantity: Int!
   lines: [CheckoutLine]
   shippingPrice: TaxedMoney
   shippingMethod: ShippingMethod
@@ -1299,6 +1302,7 @@ enum ConfigurationTypeFieldEnum {
   SECRET
   PASSWORD
   SECRETMULTILINE
+  OUTPUT
 }
 
 type ConfirmAccount {
@@ -2751,7 +2755,7 @@ type Mutation {
   paymentCapture(amount: PositiveDecimal, paymentId: ID!): PaymentCapture
   paymentRefund(amount: PositiveDecimal, paymentId: ID!): PaymentRefund
   paymentVoid(paymentId: ID!): PaymentVoid
-  paymentInitialize(gateway: String!, paymentData: JSONString): PaymentInitialize
+  paymentInitialize(channel: String, gateway: String!, paymentData: JSONString): PaymentInitialize
   pageCreate(input: PageCreateInput!): PageCreate
   pageDelete(id: ID!): PageDelete
   pageBulkDelete(ids: [ID]!): PageBulkDelete
@@ -2891,19 +2895,19 @@ type Mutation {
   externalRefresh(input: JSONString!, pluginId: String!): ExternalRefresh
   externalLogout(input: JSONString!, pluginId: String!): ExternalLogout
   externalVerify(input: JSONString!, pluginId: String!): ExternalVerify
-  requestPasswordReset(email: String!, redirectUrl: String!): RequestPasswordReset
+  requestPasswordReset(channel: String, email: String!, redirectUrl: String!): RequestPasswordReset
   confirmAccount(email: String!, token: String!): ConfirmAccount
   setPassword(email: String!, password: String!, token: String!): SetPassword
   passwordChange(newPassword: String!, oldPassword: String!): PasswordChange
-  requestEmailChange(newEmail: String!, password: String!, redirectUrl: String!): RequestEmailChange
-  confirmEmailChange(token: String!): ConfirmEmailChange
+  requestEmailChange(channel: String, newEmail: String!, password: String!, redirectUrl: String!): RequestEmailChange
+  confirmEmailChange(channel: String, token: String!): ConfirmEmailChange
   accountAddressCreate(input: AddressInput!, type: AddressTypeEnum): AccountAddressCreate
   accountAddressUpdate(id: ID!, input: AddressInput!): AccountAddressUpdate
   accountAddressDelete(id: ID!): AccountAddressDelete
   accountSetDefaultAddress(id: ID!, type: AddressTypeEnum!): AccountSetDefaultAddress
   accountRegister(input: AccountRegisterInput!): AccountRegister
   accountUpdate(input: AccountInput!): AccountUpdate
-  accountRequestDeletion(redirectUrl: String!): AccountRequestDeletion
+  accountRequestDeletion(channel: String, redirectUrl: String!): AccountRequestDeletion
   accountDelete(token: String!): AccountDelete
   addressCreate(input: AddressInput!, userId: ID!): AddressCreate
   addressUpdate(id: ID!, input: AddressInput!): AddressUpdate
@@ -3579,9 +3583,9 @@ enum PageErrorCode {
 }
 
 input PageFilterInput {
-  pageTypes: [ID!]
   search: String
   metadata: [MetadataInput]
+  pageTypes: [ID]
 }
 
 type PageInfo {
@@ -5185,7 +5189,7 @@ input ShippingZoneUpdateInput {
 }
 
 type Shop {
-  availablePaymentGateways(currency: String): [PaymentGateway!]!
+  availablePaymentGateways(currency: String, channel: String): [PaymentGateway!]!
   availableExternalAuthentications: [ExternalAuthentication!]!
   availableShippingMethods(channel: String!, address: AddressInput): [ShippingMethod]
   countries(languageCode: LanguageCodeEnum): [CountryDisplay!]!
@@ -5609,7 +5613,7 @@ type User implements Node & ObjectWithMetadata {
   editableGroups: [Group]
   avatar(size: Int): Image
   events: [CustomerEvent]
-  storedPaymentSources: [PaymentSource]
+  storedPaymentSources(channel: String): [PaymentSource]
   languageCode: LanguageCodeEnum!
 }
 
@@ -5652,6 +5656,7 @@ input UserCreateInput {
   note: String
   languageCode: LanguageCodeEnum
   redirectUrl: String
+  channel: String
 }
 
 type UserPermission {
