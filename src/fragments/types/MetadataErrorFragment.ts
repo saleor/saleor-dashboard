@@ -8,7 +8,6 @@ import { MetadataErrorCode } from "./../../types/globalTypes";
 // GraphQL fragment: MetadataErrorFragment
 // ====================================================
 
-
 export interface MetadataErrorFragment {
   __typename: "MetadataError";
   code: MetadataErrorCode;
