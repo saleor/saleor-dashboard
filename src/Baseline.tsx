@@ -1,23 +1,28 @@
 import { CssBaseline } from "@material-ui/core";
 import { fade } from "@material-ui/core/styles/colorManipulator";
-import { createStyles, SaleorTheme, withStyles } from "@saleor/theme";
+import { makeStyles } from "@saleor/theme";
 import React from "react";
 
-const styles = createStyles((theme: SaleorTheme) => ({
-  "@global": {
-    "@import": "url('https://rsms.me/inter/inter.css')",
+const useStyles = makeStyles(
+  theme => ({
+    "@global": {
+      "@import": "url('https://rsms.me/inter/inter.css')",
 
-    // For some reason @import clause must be put on top
-    // eslint-disable-next-line sort-keys
-    "::selection": {
-      background: fade(theme.palette.primary.main, 0.2)
+      // For some reason @import clause must be put on top
+      // eslint-disable-next-line sort-keys
+      "::selection": {
+        background: fade(theme.palette.primary.main, 0.2)
+      }
     }
-  }
-}));
+  }),
+  { name: "Baseline" }
+);
 
-const Baseline = withStyles(styles, {
-  name: "Baseline"
-})(() => <CssBaseline />);
+const Baseline: React.FC = () => {
+  useStyles();
+
+  return <CssBaseline />;
+};
 Baseline.displayName = "Baseline";
 
 export default Baseline;

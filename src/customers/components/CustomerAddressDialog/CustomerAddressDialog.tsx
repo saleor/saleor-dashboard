@@ -16,7 +16,7 @@ import useAddressValidation from "@saleor/hooks/useAddressValidation";
 import useModalDialogErrors from "@saleor/hooks/useModalDialogErrors";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { buttonMessages } from "@saleor/intl";
-import { createStyles, WithStyles, withStyles } from "@saleor/theme";
+import { makeStyles } from "@saleor/theme";
 import { AddressInput } from "@saleor/types/globalTypes";
 import createSingleAutocompleteSelectHandler from "@saleor/utils/handlers/singleAutocompleteSelectChangeHandler";
 import { mapCountriesToChoices } from "@saleor/utils/maps";
@@ -37,116 +37,114 @@ export interface CustomerAddressDialogProps {
   onConfirm: (data: AddressInput) => void;
 }
 
-const styles = createStyles({
-  overflow: {
-    overflowY: "visible"
-  }
-});
-
-const CustomerAddressDialog = withStyles(
-  styles,
-  {}
-)(
-  ({
-    address,
-    classes,
-    confirmButtonState,
-    countries,
-    errors,
-    open,
-    variant,
-    onClose,
-    onConfirm
-  }: CustomerAddressDialogProps & WithStyles<typeof styles>) => {
-    const [countryDisplayName, setCountryDisplayName] = useStateFromProps(
-      address?.country.country || ""
-    );
-    const {
-      errors: validationErrors,
-      submit: handleSubmit
-    } = useAddressValidation(onConfirm);
-    const dialogErrors = useModalDialogErrors(
-      [...errors, ...validationErrors],
-      open
-    );
-
-    const initialForm: AddressTypeInput = {
-      city: address?.city || "",
-      cityArea: address?.cityArea || "",
-      companyName: address?.companyName || "",
-      country: address?.country.code || "",
-      countryArea: address?.countryArea || "",
-      firstName: address?.firstName || "",
-      lastName: address?.lastName || "",
-      phone: address?.phone || "",
-      postalCode: address?.postalCode || "",
-      streetAddress1: address?.streetAddress1 || "",
-      streetAddress2: address?.streetAddress2 || ""
-    };
-
-    const countryChoices = mapCountriesToChoices(countries || []);
-
-    return (
-      <Dialog
-        onClose={onClose}
-        open={open}
-        classes={{ paper: classes.overflow }}
-        fullWidth
-        maxWidth="sm"
-      >
-        <Form initial={initialForm} onSubmit={handleSubmit}>
-          {({ change, data }) => {
-            const handleCountrySelect = createSingleAutocompleteSelectHandler(
-              change,
-              setCountryDisplayName,
-              countryChoices
-            );
-
-            return (
-              <>
-                <DialogTitle>
-                  {variant === "create" ? (
-                    <FormattedMessage
-                      defaultMessage="Add Address"
-                      description="dialog title"
-                    />
-                  ) : (
-                    <FormattedMessage
-                      defaultMessage="Edit Address"
-                      description="dialog title"
-                    />
-                  )}
-                </DialogTitle>
-                <DialogContent className={classes.overflow}>
-                  <AddressEdit
-                    countries={countryChoices}
-                    data={data}
-                    countryDisplayValue={countryDisplayName}
-                    errors={dialogErrors}
-                    onChange={change}
-                    onCountryChange={handleCountrySelect}
-                  />
-                </DialogContent>
-                <DialogActions>
-                  <Button onClick={onClose}>
-                    <FormattedMessage {...buttonMessages.back} />
-                  </Button>
-                  <ConfirmButton
-                    transitionState={confirmButtonState}
-                    color="primary"
-                    variant="contained"
-                    type="submit"
-                  >
-                    <FormattedMessage {...buttonMessages.save} />
-                  </ConfirmButton>
-                </DialogActions>
-              </>
-            );
-          }}
-        </Form>
-      </Dialog>
-    );
-  }
+const useStyles = makeStyles(
+  {
+    overflow: {
+      overflowY: "visible"
+    }
+  },
+  { name: "CustomerAddressDialog" }
 );
+
+const CustomerAddressDialog: React.FC<CustomerAddressDialogProps> = ({
+  address,
+  confirmButtonState,
+  countries,
+  errors,
+  open,
+  variant,
+  onClose,
+  onConfirm
+}) => {
+  const classes = useStyles();
+  const [countryDisplayName, setCountryDisplayName] = useStateFromProps(
+    address?.country.country || ""
+  );
+  const {
+    errors: validationErrors,
+    submit: handleSubmit
+  } = useAddressValidation(onConfirm);
+  const dialogErrors = useModalDialogErrors(
+    [...errors, ...validationErrors],
+    open
+  );
+
+  const initialForm: AddressTypeInput = {
+    city: address?.city || "",
+    cityArea: address?.cityArea || "",
+    companyName: address?.companyName || "",
+    country: address?.country.code || "",
+    countryArea: address?.countryArea || "",
+    firstName: address?.firstName || "",
+    lastName: address?.lastName || "",
+    phone: address?.phone || "",
+    postalCode: address?.postalCode || "",
+    streetAddress1: address?.streetAddress1 || "",
+    streetAddress2: address?.streetAddress2 || ""
+  };
+
+  const countryChoices = mapCountriesToChoices(countries || []);
+
+  return (
+    <Dialog
+      onClose={onClose}
+      open={open}
+      classes={{ paper: classes.overflow }}
+      fullWidth
+      maxWidth="sm"
+    >
+      <Form initial={initialForm} onSubmit={handleSubmit}>
+        {({ change, data }) => {
+          const handleCountrySelect = createSingleAutocompleteSelectHandler(
+            change,
+            setCountryDisplayName,
+            countryChoices
+          );
+
+          return (
+            <>
+              <DialogTitle>
+                {variant === "create" ? (
+                  <FormattedMessage
+                    defaultMessage="Add Address"
+                    description="dialog title"
+                  />
+                ) : (
+                  <FormattedMessage
+                    defaultMessage="Edit Address"
+                    description="dialog title"
+                  />
+                )}
+              </DialogTitle>
+              <DialogContent className={classes.overflow}>
+                <AddressEdit
+                  countries={countryChoices}
+                  data={data}
+                  countryDisplayValue={countryDisplayName}
+                  errors={dialogErrors}
+                  onChange={change}
+                  onCountryChange={handleCountrySelect}
+                />
+              </DialogContent>
+              <DialogActions>
+                <Button onClick={onClose}>
+                  <FormattedMessage {...buttonMessages.back} />
+                </Button>
+                <ConfirmButton
+                  transitionState={confirmButtonState}
+                  color="primary"
+                  variant="contained"
+                  type="submit"
+                >
+                  <FormattedMessage {...buttonMessages.save} />
+                </ConfirmButton>
+              </DialogActions>
+            </>
+          );
+        }}
+      </Form>
+    </Dialog>
+  );
+};
 CustomerAddressDialog.displayName = "CustomerAddressDialog";
 export default CustomerAddressDialog;
