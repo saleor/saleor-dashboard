@@ -300,7 +300,7 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
   const [updateChannels, updateChannelsOpts] = useProductChannelListingUpdate({
     onCompleted: data => {
       if (!!data.productChannelListingUpdate.errors.length) {
-        data.productChannelListingUpdate.errors.map(error =>
+        data.productChannelListingUpdate.errors.forEach(error =>
           notify({
             status: "error",
             text: getProductErrorMessage(error, intl)
