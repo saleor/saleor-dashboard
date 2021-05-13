@@ -21,6 +21,7 @@ export function createWaitingForCaptureOrder(
     .then(() => checkoutRequest.completeCheckout(checkout.id))
     .then(({ order }) => ({ checkout, order }));
 }
+
 export function createCheckoutWithVoucher({
   channelSlug,
   email = "email@example.com",
@@ -83,6 +84,7 @@ function assignVariantsToOrder(order, variantsList) {
     orderRequest.addProductToOrder(order.id, variantElement.id);
   });
 }
+
 export function addPayment(checkoutId) {
   return checkoutRequest.addPayment({
     checkoutId,
@@ -90,6 +92,7 @@ export function addPayment(checkoutId) {
     token: "not-charged"
   });
 }
+
 export function addAdyenPayment(checkoutId, amount) {
   return checkoutRequest.addPayment({
     checkoutId,
@@ -97,6 +100,7 @@ export function addAdyenPayment(checkoutId, amount) {
     amount
   });
 }
+
 export function createAndCompleteCheckoutWithoutShipping({
   channelSlug,
   email,
