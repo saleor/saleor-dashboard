@@ -195,9 +195,6 @@ const AttributeList: React.FC<AttributeListProps> = ({
                 className={classes.link}
                 data-test="id"
                 data-test-id={maybe(() => attribute.id)}
-                data-test-values={JSON.stringify(
-                  maybe(() => attribute.values, [])
-                )}
               >
                 <TableCell padding="checkbox">
                   <Checkbox
