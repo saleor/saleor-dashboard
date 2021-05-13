@@ -7005,6 +7005,10 @@
   "src_dot_utils_dot_errors_dot_nameAlreadyTaken": {
     "string": "This name is already taken. Please provide another."
   },
+  "src_dot_utils_dot_errors_dot_noCategorySet": {
+    "context": "no category set error",
+    "string": "Product category not set"
+  },
   "src_dot_utils_dot_errors_dot_noShippingAddress": {
     "context": "error message",
     "string": "Cannot choose a shipping method for an order without the shipping address"
