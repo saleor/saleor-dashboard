@@ -173,7 +173,7 @@
     "no-restricted-imports": [
       "error",
       {
-        "paths": ["@material-ui/core", "lodash"]
+        "paths": ["lodash"]
       }
     ]
   },
