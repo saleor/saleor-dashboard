@@ -300,7 +300,12 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
   const [updateChannels, updateChannelsOpts] = useProductChannelListingUpdate({
     onCompleted: data => {
       if (!!data.productChannelListingUpdate.errors.length) {
-        return;
+        data.productChannelListingUpdate.errors.map(error =>
+          notify({
+            status: "error",
+            text: getProductErrorMessage(error, intl)
+          })
+        );
       }
     }
   });
