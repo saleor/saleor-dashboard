@@ -70,7 +70,8 @@ export function createOrder({
   address
 }) {
   let order;
-  return createDraftOrder(customerId, shippingMethodId, channelId, address)
+  return orderRequest
+    .createDraftOrder(customerId, shippingMethodId, channelId, address)
     .then(orderResp => {
       order = orderResp;
       assignVariantsToOrder(order, variantsList);
