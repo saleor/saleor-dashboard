@@ -26,12 +26,12 @@ import { useIntl } from "react-intl";
 import { FetchMoreProps } from "../../../types";
 import ProductAttributes from "../ProductAttributes";
 import ProductDetailsForm from "../ProductDetailsForm";
+import ProductMegaPack from "../ProductMegaPack";
 import ProductOrganization from "../ProductOrganization";
 import ProductPricing from "../ProductPricing";
 import ProductShipping from "../ProductShipping/ProductShipping";
 import ProductStocks from "../ProductStocks";
 import ProductTaxes from "../ProductTaxes";
-import ProductMegaPack from "../ProductMegaPack";
 import ProductCreateForm, {
   ProductCreateData,
   ProductCreateFormData
@@ -92,8 +92,6 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
   const initialDescription = React.useRef(
     convertToRaw(ContentState.createFromText(""))
   );
-
-
 
   // Display values
   const [selectedCategory, setSelectedCategory] = useStateFromProps(
@@ -161,12 +159,12 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
                   />
                 )}
                 {data.productType?.slug === "mega-paka" && (
-                    <ProductMegaPack
-                      data={data}
-                      disabled={disabled}
-                      onChange={change}
-                    />
-                  )}
+                  <ProductMegaPack
+                    data={data}
+                    disabled={disabled}
+                    onChange={change}
+                  />
+                )}
                 <CardSpacer />
                 {isSimpleProduct && (
                   <>

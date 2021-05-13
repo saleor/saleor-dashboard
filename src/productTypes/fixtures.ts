@@ -523,7 +523,7 @@ export const productTypes: Array<SearchProductTypes_search_edges_node &
     isShippingRequired: true,
     name: "Coffee",
     productAttributes: [attributes[8]],
-    slug:"coffee"
+    slug: "coffee",
     taxType: {
       __typename: "TaxType" as "TaxType",
       description: "PB100000",

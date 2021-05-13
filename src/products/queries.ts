@@ -9,6 +9,10 @@ import {
 import { taxTypeFragment } from "@saleor/fragments/taxes";
 import { warehouseFragment } from "@saleor/fragments/warehouses";
 import makeQuery from "@saleor/hooks/makeQuery";
+import {
+  ProductVariantsSkusData,
+  ProductVariantsSkusDataVariables
+} from "@saleor/products/types/ProductVariantSkus";
 import gql from "graphql-tag";
 
 import { CountAllProducts } from "./types/CountAllProducts";
@@ -41,8 +45,10 @@ import {
   ProductVariantDetails,
   ProductVariantDetailsVariables
 } from "./types/ProductVariantDetails";
-import {ProductVariantsSkusData, ProductVariantsSkusDataVariables} from "@saleor/products/types/ProductVariantSkus";
-import { UserWithMetadataData, UserWithMetadataDataVariables } from "./types/UserWithMetadata";
+import {
+  UserWithMetadataData,
+  UserWithMetadataDataVariables
+} from "./types/UserWithMetadata";
 
 const initialProductFilterDataQuery = gql`
   query InitialProductFilterData(
@@ -117,15 +123,15 @@ const productListQuery = gql`
       edges {
         node {
           ...ProductFragment
-#          attributes {  commented out for optimization, not neede in the main product list
-#            attribute {
-#              id
-#            }
-#            values {
-#              id
-#              name
-#            }
-#          }
+          #          attributes {  commented out for optimization, not neede in the main product list
+          #            attribute {
+          #              id
+          #            }
+          #            values {
+          #              id
+          #              name
+          #            }
+          #          }
           pricing {
             priceRangeUndiscounted {
               start {
@@ -321,26 +327,30 @@ export const useCreateMultipleVariantsData = makeQuery<
 >(createMultipleVariantsData);
 
 const productVariantsSkus = gql`
-  query($sku: String!){
-   productVariantsSkus(sku: $sku, first: 100){
-    totalCount
-  } 
+  query($sku: String!) {
+    productVariantsSkus(sku: $sku, first: 100) {
+      totalCount
+    }
   }
 `;
 
 export const useProductVariantsSkus = makeQuery<
-    ProductVariantsSkusData,
-    ProductVariantsSkusDataVariables>(productVariantsSkus);
+  ProductVariantsSkusData,
+  ProductVariantsSkusDataVariables
+>(productVariantsSkus);
 
 const userWithMetadata = gql`
-query getUserPrivateMetadata($id: ID!){
-  user(id:$id){
-  	privateMetadata{
-      key
-      value
+  query getUserPrivateMetadata($id: ID!) {
+    user(id: $id) {
+      privateMetadata {
+        key
+        value
+      }
     }
   }
-}
 `;
 
-export const useUserWithMetadata = makeQuery<UserWithMetadataData, UserWithMetadataDataVariables>(userWithMetadata);
+export const useUserWithMetadata = makeQuery<
+  UserWithMetadataData,
+  UserWithMetadataDataVariables
+>(userWithMetadata);
