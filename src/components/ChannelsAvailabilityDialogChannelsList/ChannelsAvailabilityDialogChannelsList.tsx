@@ -1,4 +1,4 @@
-import Typography from "@material-ui/core/Typography";
+import { Typography } from "@material-ui/core";
 import { Channel } from "@saleor/channels/utils";
 import { ControlledCheckbox } from "@saleor/components/ControlledCheckbox";
 import Hr from "@saleor/components/Hr";

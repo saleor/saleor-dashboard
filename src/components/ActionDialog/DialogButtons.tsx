@@ -1,5 +1,4 @@
-import Button from "@material-ui/core/Button";
-import DialogActions from "@material-ui/core/DialogActions";
+import { Button, DialogActions } from "@material-ui/core";
 import { buttonMessages } from "@saleor/intl";
 import { makeStyles } from "@saleor/theme";
 import classNames from "classnames";

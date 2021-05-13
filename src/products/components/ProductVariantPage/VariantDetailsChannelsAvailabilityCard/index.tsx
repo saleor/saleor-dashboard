@@ -1,8 +1,10 @@
-import CardContent from "@material-ui/core/CardContent";
-import Divider from "@material-ui/core/Divider";
-import ExpansionPanel from "@material-ui/core/ExpansionPanel";
-import ExpansionPanelSummary from "@material-ui/core/ExpansionPanelSummary";
-import Typography from "@material-ui/core/Typography";
+import {
+  CardContent,
+  Divider,
+  ExpansionPanel,
+  ExpansionPanelSummary,
+  Typography
+} from "@material-ui/core";
 import Skeleton from "@saleor/components/Skeleton";
 import { ProductVariant } from "@saleor/fragments/types/ProductVariant";
 import useDateLocalize from "@saleor/hooks/useDateLocalize";

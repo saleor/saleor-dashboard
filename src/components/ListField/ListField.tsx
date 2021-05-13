@@ -1,5 +1,5 @@
-import Button from "@material-ui/core/Button";
-import TextField, { StandardTextFieldProps } from "@material-ui/core/TextField";
+import { Button, TextField } from "@material-ui/core";
+import { StandardTextFieldProps } from "@material-ui/core/TextField";
 import {
   createStyles,
   SaleorTheme,

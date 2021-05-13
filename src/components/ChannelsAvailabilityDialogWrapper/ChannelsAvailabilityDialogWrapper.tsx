@@ -1,5 +1,4 @@
-import TextField from "@material-ui/core/TextField";
-import Typography from "@material-ui/core/Typography";
+import { TextField, Typography } from "@material-ui/core";
 import { ControlledCheckbox } from "@saleor/components/ControlledCheckbox";
 import Hr from "@saleor/components/Hr";
 import Label from "@saleor/orders/components/OrderHistory/Label";

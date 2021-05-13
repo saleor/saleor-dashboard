@@ -1,11 +1,13 @@
-import Card from "@material-ui/core/Card";
-import ClickAwayListener from "@material-ui/core/ClickAwayListener";
-import Grow from "@material-ui/core/Grow";
-import MenuItem from "@material-ui/core/MenuItem";
-import Menu from "@material-ui/core/MenuList";
-import Paper from "@material-ui/core/Paper";
-import Popper from "@material-ui/core/Popper";
-import Typography from "@material-ui/core/Typography";
+import {
+  Card,
+  ClickAwayListener,
+  Grow,
+  MenuItem,
+  MenuList as Menu,
+  Paper,
+  Popper,
+  Typography
+} from "@material-ui/core";
 import ArrowDropDown from "@material-ui/icons/ArrowDropDown";
 import { makeStyles } from "@saleor/theme";
 import classNames from "classnames";

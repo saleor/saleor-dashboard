@@ -1,5 +1,4 @@
-import CardContent from "@material-ui/core/CardContent";
-import Typography from "@material-ui/core/Typography";
+import { CardContent, Typography } from "@material-ui/core";
 import CardSpacer from "@saleor/components/CardSpacer";
 import StatusLabel from "@saleor/components/StatusLabel";
 import { statusLabelMessages } from "@saleor/components/StatusLabel/messages";

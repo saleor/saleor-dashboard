@@ -1,6 +1,8 @@
-import ExpansionPanel from "@material-ui/core/ExpansionPanel";
-import ExpansionPanelSummary from "@material-ui/core/ExpansionPanelSummary";
-import Typography from "@material-ui/core/Typography";
+import {
+  ExpansionPanel,
+  ExpansionPanelSummary,
+  Typography
+} from "@material-ui/core";
 import { ChannelData } from "@saleor/channels/utils";
 import { Messages } from "@saleor/components/ChannelsAvailabilityCard/types";
 import IconChevronDown from "@saleor/icons/ChevronDown";

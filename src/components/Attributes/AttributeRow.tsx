@@ -1,6 +1,5 @@
-import InputAdornment from "@material-ui/core/InputAdornment";
+import { InputAdornment, TextField } from "@material-ui/core";
 import makeStyles from "@material-ui/core/styles/makeStyles";
-import TextField from "@material-ui/core/TextField";
 import { getMeasurementUnitMessage } from "@saleor/attributes/components/AttributeDetails/utils";
 import { AttributeInput } from "@saleor/components/Attributes/Attributes";
 import BasicAttributeRow from "@saleor/components/Attributes/BasicAttributeRow";

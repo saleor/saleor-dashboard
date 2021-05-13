@@ -1,4 +1,4 @@
-import Divider from "@material-ui/core/Divider";
+import { Divider } from "@material-ui/core";
 import initial from "lodash/initial";
 import React from "react";
 

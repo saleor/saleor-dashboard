@@ -1,4 +1,4 @@
-import TableHead from "@material-ui/core/TableHead";
+import { TableHead } from "@material-ui/core";
 import TableCellHeader from "@saleor/components/TableCellHeader";
 import { PluginListUrlSortField } from "@saleor/plugins/urls";
 import { SortPage } from "@saleor/types";

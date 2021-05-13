@@ -1,8 +1,5 @@
-import Avatar from "@material-ui/core/Avatar";
-import Card from "@material-ui/core/Card";
-import CardContent from "@material-ui/core/CardContent";
+import { Avatar, Card, CardContent, Typography } from "@material-ui/core";
 import * as colors from "@material-ui/core/colors";
-import Typography from "@material-ui/core/Typography";
 import PersonIcon from "@material-ui/icons/Person";
 import { makeStyles } from "@saleor/theme";
 import CRC from "crc-32";

@@ -1,5 +1,4 @@
-import Button from "@material-ui/core/Button";
-import CardActions from "@material-ui/core/CardActions";
+import { Button, CardActions } from "@material-ui/core";
 import { FulfillmentStatus } from "@saleor/types/globalTypes";
 import React from "react";
 import { FormattedMessage } from "react-intl";

@@ -1,4 +1,4 @@
-import Typography from "@material-ui/core/Typography";
+import { Typography } from "@material-ui/core";
 import Money from "@saleor/components/Money";
 import { TimelineEvent } from "@saleor/components/Timeline";
 import { makeStyles } from "@saleor/theme";

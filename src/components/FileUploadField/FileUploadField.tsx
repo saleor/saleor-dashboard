@@ -1,6 +1,4 @@
-import Button from "@material-ui/core/Button";
-import IconButton from "@material-ui/core/IconButton";
-import Typography from "@material-ui/core/Typography";
+import { Button, IconButton, Typography } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
 import { FileFragment } from "@saleor/fragments/types/FileFragment";
 import { commonMessages } from "@saleor/intl";

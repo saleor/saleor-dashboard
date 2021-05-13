@@ -1,4 +1,4 @@
-import TableCell from "@material-ui/core/TableCell";
+import { TableCell } from "@material-ui/core";
 import Draggable from "@saleor/icons/Draggable";
 import { makeStyles } from "@saleor/theme";
 import React from "react";

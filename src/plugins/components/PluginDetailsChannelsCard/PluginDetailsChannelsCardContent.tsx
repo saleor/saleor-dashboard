@@ -1,5 +1,3 @@
-import CardContent from "@material-ui/core/CardContent";
-import Typography from "@material-ui/core/Typography";
 import CollectionWithDividers from "@saleor/components/CollectionWithDividers";
 import Skeleton from "@saleor/components/Skeleton";
 import { Plugin_plugin } from "@saleor/plugins/types/Plugin";
@@ -30,6 +28,8 @@ export interface PluginDetailsChannelsCardProps {
   selectedChannelId: string;
   plugin: Plugin_plugin;
 }
+
+import { CardContent, Typography } from "@material-ui/core";
 
 import { pluginDetailsChannelsCardMessages as messages } from "./messages";
 

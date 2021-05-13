@@ -1,5 +1,4 @@
-import ExpansionPanelSummary from "@material-ui/core/ExpansionPanelSummary";
-import Typography from "@material-ui/core/Typography";
+import { ExpansionPanelSummary, Typography } from "@material-ui/core";
 import HorizontalSpacer from "@saleor/apps/components/HorizontalSpacer";
 import { ChannelShippingZones } from "@saleor/channels/pages/ChannelDetailsPage/types";
 import IconChevronDown from "@saleor/icons/ChevronDown";

@@ -1,5 +1,4 @@
-import Portal from "@material-ui/core/Portal";
-import Typography from "@material-ui/core/Typography";
+import { Portal, Typography } from "@material-ui/core";
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 import { makeStyles } from "@saleor/theme";
 import React from "react";

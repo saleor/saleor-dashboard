@@ -1,8 +1,10 @@
 import placeholderImage from "@assets/images/placeholder60x60.png";
-import Divider from "@material-ui/core/Divider";
-import ExpansionPanel from "@material-ui/core/ExpansionPanel";
-import ExpansionPanelSummary from "@material-ui/core/ExpansionPanelSummary";
-import Typography from "@material-ui/core/Typography";
+import {
+  Divider,
+  ExpansionPanel,
+  ExpansionPanelSummary,
+  Typography
+} from "@material-ui/core";
 import { ChannelData } from "@saleor/channels/utils";
 import IconCheckboxChecked from "@saleor/icons/CheckboxChecked";
 import IconCheckboxSemiChecked from "@saleor/icons/CheckboxSemiChecked";

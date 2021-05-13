@@ -1,8 +1,6 @@
 import navigatorIcon from "@assets/images/navigator.svg";
-import Grow from "@material-ui/core/Grow";
-import IconButton, { IconButtonProps } from "@material-ui/core/IconButton";
-import Paper from "@material-ui/core/Paper";
-import Popper from "@material-ui/core/Popper";
+import { Grow, IconButton, Paper, Popper } from "@material-ui/core";
+import { IconButtonProps } from "@material-ui/core/IconButton";
 import { makeStyles } from "@saleor/theme";
 import classNames from "classnames";
 import React from "react";

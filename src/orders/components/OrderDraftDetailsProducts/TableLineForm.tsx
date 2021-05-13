@@ -1,4 +1,4 @@
-import TextField from "@material-ui/core/TextField";
+import { TextField } from "@material-ui/core";
 import DebounceForm from "@saleor/components/DebounceForm";
 import Form from "@saleor/components/Form";
 import { OrderDetails_order_lines } from "@saleor/orders/types/OrderDetails";

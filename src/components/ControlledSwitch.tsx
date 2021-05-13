@@ -1,5 +1,4 @@
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Switch from "@material-ui/core/Switch";
+import { FormControlLabel, Switch } from "@material-ui/core";
 import { makeStyles } from "@saleor/theme";
 import React from "react";
 

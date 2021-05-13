@@ -1,9 +1,11 @@
 import { OutputData } from "@editorjs/editorjs";
-import Button from "@material-ui/core/Button";
-import Card from "@material-ui/core/Card";
-import CardContent from "@material-ui/core/CardContent";
-import IconButton from "@material-ui/core/IconButton";
-import Typography from "@material-ui/core/Typography";
+import {
+  Button,
+  Card,
+  CardContent,
+  IconButton,
+  Typography
+} from "@material-ui/core";
 import ArrowIcon from "@material-ui/icons/ArrowDropDown";
 import CardTitle from "@saleor/components/CardTitle";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";

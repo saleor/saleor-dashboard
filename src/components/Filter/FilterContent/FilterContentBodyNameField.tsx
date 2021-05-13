@@ -1,5 +1,4 @@
-import Checkbox from "@material-ui/core/Checkbox";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
+import { Checkbox, FormControlLabel } from "@material-ui/core";
 import { makeStyles } from "@saleor/theme";
 import React from "react";
 

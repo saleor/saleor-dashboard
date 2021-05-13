@@ -1,4 +1,4 @@
-import ClickAwayListener from "@material-ui/core/ClickAwayListener";
+import { ClickAwayListener } from "@material-ui/core";
 import { ChannelShippingZones } from "@saleor/channels/pages/ChannelDetailsPage/types";
 import SingleAutocompleteSelectField from "@saleor/components/SingleAutocompleteSelectField";
 import CardAddItemsFooter from "@saleor/products/components/ProductStocks/CardAddItemsFooter";

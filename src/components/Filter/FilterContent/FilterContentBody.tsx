@@ -1,7 +1,5 @@
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Radio from "@material-ui/core/Radio";
+import { FormControlLabel, Radio, TextField } from "@material-ui/core";
 import { fade } from "@material-ui/core/styles/colorManipulator";
-import TextField from "@material-ui/core/TextField";
 import FormSpacer from "@saleor/components/FormSpacer";
 import { MultiAutocompleteChoiceType } from "@saleor/components/MultiAutocompleteSelectField";
 import SingleSelectField from "@saleor/components/SingleSelectField";
