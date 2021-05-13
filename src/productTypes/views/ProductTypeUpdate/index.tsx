@@ -17,6 +17,7 @@ import { useProductTypeUpdateMutation } from "@saleor/productTypes/mutations";
 import { ReorderEvent } from "@saleor/types";
 import { ProductAttributeType } from "@saleor/types/globalTypes";
 import createMetadataUpdateHandler from "@saleor/utils/handlers/metadataUpdateHandler";
+import { mapEdgesToItems } from "@saleor/utils/maps";
 import {
   useMetadataUpdate,
   usePrivateMetadataUpdate
@@ -345,10 +346,8 @@ export const ProductTypeUpdate: React.FC<ProductTypeUpdateProps> = ({
                     <>
                       {Object.keys(ProductAttributeType).map(key => (
                         <AssignAttributeDialog
-                          attributes={maybe(() =>
-                            result.data.productType.availableAttributes.edges.map(
-                              edge => edge.node
-                            )
+                          attributes={mapEdgesToItems(
+                            result?.data?.productType?.availableAttributes
                           )}
                           confirmButtonState={assignAttribute.opts.status}
                           errors={maybe(

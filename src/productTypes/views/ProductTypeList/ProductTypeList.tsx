@@ -17,6 +17,7 @@ import { ListViews } from "@saleor/types";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import createFilterHandlers from "@saleor/utils/handlers/filterHandlers";
 import createSortHandler from "@saleor/utils/handlers/sortHandler";
+import { mapEdgesToItems } from "@saleor/utils/maps";
 import { getSortParams } from "@saleor/utils/sort";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -158,8 +159,7 @@ export const ProductTypeList: React.FC<ProductTypeListProps> = ({ params }) => {
     params
   });
 
-  const productTypesData =
-    data?.productTypes?.edges.map(edge => edge.node) || [];
+  const productTypesData = mapEdgesToItems(data?.productTypes);
 
   return (
     <TypedProductTypeBulkDeleteMutation

@@ -20,6 +20,7 @@ import {
   SearchProductTypes,
   SearchProductTypesVariables
 } from "@saleor/searches/types/SearchProductTypes";
+import { mapEdgesToItems, mapNodeToChoice } from "@saleor/utils/maps";
 import isArray from "lodash-es/isArray";
 
 import { IFilterElement } from "../../../components/Filter";
@@ -80,13 +81,8 @@ export function getFilterOpts(
       })),
     categories: {
       active: !!params.categories,
-      choices: maybe(
-        () =>
-          categories.search.result.data.search.edges.map(edge => ({
-            label: edge.node.name,
-            value: edge.node.id
-          })),
-        []
+      choices: mapNodeToChoice(
+        mapEdgesToItems(categories?.search?.result?.data?.search)
       ),
       displayValues: !!params.categories
         ? maybe(
@@ -110,13 +106,8 @@ export function getFilterOpts(
     },
     collections: {
       active: !!params.collections,
-      choices: maybe(
-        () =>
-          collections.search.result.data.search.edges.map(edge => ({
-            label: edge.node.name,
-            value: edge.node.id
-          })),
-        []
+      choices: mapNodeToChoice(
+        mapEdgesToItems(collections?.search?.result?.data?.search)
       ),
       displayValues: !!params.collections
         ? maybe(
@@ -151,13 +142,8 @@ export function getFilterOpts(
     },
     productType: {
       active: !!params.productTypes,
-      choices: maybe(
-        () =>
-          productTypes.search.result.data.search.edges.map(edge => ({
-            label: edge.node.name,
-            value: edge.node.id
-          })),
-        []
+      choices: mapNodeToChoice(
+        mapEdgesToItems(productTypes?.search?.result?.data?.search)
       ),
       displayValues: !!params.productTypes
         ? maybe(

@@ -16,6 +16,7 @@ import {
 import useStaffMemberSearch from "@saleor/searches/useStaffMemberSearch";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import createSortHandler from "@saleor/utils/handlers/sortHandler";
+import { mapEdgesToItems } from "@saleor/utils/maps";
 import { getSortParams } from "@saleor/utils/sort";
 import React, { useState } from "react";
 import { useIntl } from "react-intl";
@@ -185,7 +186,7 @@ export const PermissionGroupDetails: React.FC<PermissionGroupDetailsProps> = ({
       />
       <AssignMembersDialog
         loading={searchResult.loading}
-        staffMembers={searchResult?.data?.search.edges.map(edge => edge.node)}
+        staffMembers={mapEdgesToItems(searchResult?.data?.search)}
         onSearchChange={search}
         onFetchMore={loadMore}
         disabled={disabled}

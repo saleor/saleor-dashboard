@@ -55,6 +55,7 @@ import useProductTypeSearch from "@saleor/searches/useProductTypeSearch";
 import { ListViews } from "@saleor/types";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import createFilterHandlers from "@saleor/utils/handlers/filterHandlers";
+import { mapEdgesToItems } from "@saleor/utils/maps";
 import { getSortUrlVariables } from "@saleor/utils/sort";
 import { useWarehouseList } from "@saleor/warehouses/queries";
 import React, { useEffect } from "react";
@@ -316,24 +317,17 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
 
   const filterOpts = getFilterOpts(
     params,
-    initialFilterAttributes?.attributes?.edges?.map(edge => edge.node) || [],
+    mapEdgesToItems(initialFilterAttributes?.attributes),
     {
-      initial:
-        initialFilterCategories?.categories?.edges?.map(edge => edge.node) ||
-        [],
+      initial: mapEdgesToItems(initialFilterCategories?.categories),
       search: searchCategories
     },
     {
-      initial:
-        initialFilterCollections?.collections?.edges?.map(edge => edge.node) ||
-        [],
+      initial: mapEdgesToItems(initialFilterCollections?.collections),
       search: searchCollections
     },
     {
-      initial:
-        initialFilterProductTypes?.productTypes?.edges?.map(
-          edge => edge.node
-        ) || [],
+      initial: mapEdgesToItems(initialFilterProductTypes?.productTypes),
       search: searchProductTypes
     }
   );
@@ -353,18 +347,14 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
           sort: params.sort
         }}
         onSort={handleSort}
-        availableInGridAttributes={maybe(
-          () => attributes.data.availableInGrid.edges.map(edge => edge.node),
-          []
+        availableInGridAttributes={mapEdgesToItems(
+          attributes?.data?.availableInGrid
         )}
         currencySymbol={channel?.currencyCode || ""}
         currentTab={currentTab}
         defaultSettings={defaultListSettings[ListViews.PRODUCT_LIST]}
         filterOpts={filterOpts}
-        gridAttributes={maybe(
-          () => attributes.data.grid.edges.map(edge => edge.node),
-          []
-        )}
+        gridAttributes={mapEdgesToItems(attributes?.data?.grid)}
         totalGridAttributes={maybe(
           () => attributes.data.availableInGrid.totalCount,
           0
@@ -378,7 +368,7 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
         onAdd={() => navigate(productAddUrl())}
         disabled={loading}
         limits={limitOpts.data?.shop.limits}
-        products={maybe(() => data.products.edges.map(edge => edge.node))}
+        products={mapEdgesToItems(data?.products)}
         onFetchMore={() =>
           attributes.loadMore(
             (prev, next) => {
@@ -465,9 +455,7 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
         </DialogContentText>
       </ActionDialog>
       <ProductExportDialog
-        attributes={(searchAttributes.result.data?.search.edges || []).map(
-          edge => edge.node
-        )}
+        attributes={mapEdgesToItems(searchAttributes?.result?.data?.search)}
         hasMore={searchAttributes.result.data?.search.pageInfo.hasNextPage}
         loading={
           searchAttributes.result.loading ||
@@ -484,9 +472,7 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
           filter: data?.products.totalCount
         }}
         selectedProducts={listElements.length}
-        warehouses={
-          warehouses.data?.warehouses.edges.map(edge => edge.node) || []
-        }
+        warehouses={mapEdgesToItems(warehouses?.data?.warehouses)}
         channels={availableChannels}
         onClose={closeModal}
         onSubmit={data =>

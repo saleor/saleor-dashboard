@@ -16,6 +16,7 @@ import { AVATAR_MARGIN } from "@saleor/components/TableCellAvatar/Avatar";
 import TableHead from "@saleor/components/TableHead";
 import TablePagination from "@saleor/components/TablePagination";
 import { makeStyles } from "@saleor/theme";
+import { mapEdgesToItems } from "@saleor/utils/maps";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -125,7 +126,7 @@ const CollectionProducts: React.FC<CollectionProductsProps> = props => {
           colSpan={numberOfColumns}
           selected={selected}
           disabled={disabled}
-          items={maybe(() => collection.products.edges.map(edge => edge.node))}
+          items={mapEdgesToItems(collection?.products)}
           toggleAll={toggleAll}
           toolbar={toolbar}
         >
@@ -164,7 +165,7 @@ const CollectionProducts: React.FC<CollectionProductsProps> = props => {
         </TableFooter>
         <TableBody>
           {renderCollection(
-            maybe(() => collection.products.edges.map(edge => edge.node)),
+            mapEdgesToItems(collection?.products),
             product => {
               const isSelected = product ? isChecked(product.id) : false;
               const channel =

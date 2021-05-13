@@ -5,6 +5,7 @@ import useNotifier from "@saleor/hooks/useNotifier";
 import { useProductVariantBulkCreateMutation } from "@saleor/products/mutations";
 import { useCreateMultipleVariantsData } from "@saleor/products/queries";
 import { productUrl } from "@saleor/products/urls";
+import { mapEdgesToItems } from "@saleor/utils/maps";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -73,7 +74,7 @@ const ProductVariantCreator: React.FC<ProductVariantCreatorProps> = ({
             variables: { id, inputs }
           })
         }
-        warehouses={data?.warehouses.edges.map(edge => edge.node) || []}
+        warehouses={mapEdgesToItems(data?.warehouses)}
       />
     </>
   );

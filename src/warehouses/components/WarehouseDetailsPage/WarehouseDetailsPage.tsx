@@ -17,7 +17,7 @@ import { sectionNames } from "@saleor/intl";
 import { findValueInEnum, maybe } from "@saleor/misc";
 import { CountryCode } from "@saleor/types/globalTypes";
 import createSingleAutocompleteSelectHandler from "@saleor/utils/handlers/singleAutocompleteSelectChangeHandler";
-import { mapCountriesToChoices } from "@saleor/utils/maps";
+import { mapCountriesToChoices, mapEdgesToItems } from "@saleor/utils/maps";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -116,7 +116,7 @@ const WarehouseDetailsPage: React.FC<WarehouseDetailsPageProps> = ({
               </div>
               <div>
                 <WarehouseZones
-                  zones={warehouse?.shippingZones?.edges.map(edge => edge.node)}
+                  zones={mapEdgesToItems(warehouse?.shippingZones)}
                   onShippingZoneClick={onShippingZoneClick}
                 />
               </div>

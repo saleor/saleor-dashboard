@@ -1,4 +1,4 @@
-import { Channel_channel_shippingZones } from "@saleor/channels/types/Channel";
+import { ChannelShippingZones } from "@saleor/channels/pages/ChannelDetailsPage/types";
 import CommonDecorator from "@saleor/storybook/Decorator";
 import { storiesOf } from "@storybook/react";
 import React from "react";
@@ -28,7 +28,7 @@ const baseProps = {
     onFetchMore: () => undefined
   },
   shippingZones: [],
-  shippingZonesChoices: shippingZones as Channel_channel_shippingZones[]
+  shippingZonesChoices: shippingZones as ChannelShippingZones
 };
 
 storiesOf("Shipping zones card", module)
@@ -37,6 +37,6 @@ storiesOf("Shipping zones card", module)
   .add("with options selected", () => (
     <ShippingZonesCard
       {...baseProps}
-      shippingZones={shippingZones as Channel_channel_shippingZones[]}
+      shippingZones={shippingZones as ChannelShippingZones}
     />
   ));

@@ -6,6 +6,10 @@ import {
 import makeQuery from "@saleor/hooks/makeQuery";
 import gql from "graphql-tag";
 
+import {
+  ChannelShippingZones,
+  ChannelShippingZonesVariables
+} from "./types/ChannelShippingZones";
 import { ShippingZone, ShippingZoneVariables } from "./types/ShippingZone";
 import {
   ShippingZoneChannels,
@@ -88,3 +92,22 @@ export const useShippingZoneChannels = makeQuery<
   ShippingZoneChannels,
   ShippingZoneChannelsVariables
 >(shippingZoneChannels);
+
+// first: 100 - to be removed when we implement pagintion in ui for this query
+const channelShippingZones = gql`
+  query ChannelShippingZones($filter: ShippingZoneFilterInput) {
+    shippingZones(filter: $filter, first: 100) {
+      edges {
+        node {
+          id
+          name
+        }
+      }
+    }
+  }
+`;
+
+export const useChannelShippingZones = makeQuery<
+  ChannelShippingZones,
+  ChannelShippingZonesVariables
+>(channelShippingZones);

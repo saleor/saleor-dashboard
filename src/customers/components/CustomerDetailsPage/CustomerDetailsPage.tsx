@@ -11,12 +11,12 @@ import SaveButtonBar from "@saleor/components/SaveButtonBar";
 import { AccountErrorFragment } from "@saleor/fragments/types/AccountErrorFragment";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import { sectionNames } from "@saleor/intl";
-import { mapMetadataItemToInput } from "@saleor/utils/maps";
+import { mapEdgesToItems, mapMetadataItemToInput } from "@saleor/utils/maps";
 import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import { getUserName, maybe } from "../../../misc";
+import { getUserName } from "../../../misc";
 import { CustomerDetails_user } from "../../types/CustomerDetails";
 import CustomerAddresses from "../CustomerAddresses";
 import CustomerDetails from "../CustomerDetails";
@@ -102,9 +102,7 @@ const CustomerDetailsPage: React.FC<CustomerDetailsPageProps> = ({
                 />
                 <CardSpacer />
                 <CustomerOrders
-                  orders={maybe(() =>
-                    customer.orders.edges.map(edge => edge.node)
-                  )}
+                  orders={mapEdgesToItems(customer?.orders)}
                   onViewAllOrdersClick={onViewAllOrdersClick}
                   onRowClick={onRowClick}
                 />
