@@ -46,6 +46,7 @@ All notable, unreleased changes to this project will be documented in this file.
 - Add service worker - #1073 by @dominik-zeglen
 - Choosing user shipping and billing addresses for draft order - #1082 by @orzechdev
 - Fix EditorJS inline formatting - #1096 by @orzechdev
+- Add pagination on attribute values - #1111 by @orzechdev
 
 # 2.11.1
 
