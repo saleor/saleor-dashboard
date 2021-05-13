@@ -147,5 +147,6 @@ export const metadataErrorFragment = gql`
   fragment MetadataErrorFragment on MetadataError {
     code
     field
+    message
   }
 `;

@@ -8,25 +8,31 @@ import { isJwtError, isTokenExpired } from "./errors";
 
 export enum TOKEN_STORAGE_KEY {
   AUTH = "auth",
-  CSRF = "csrf"
+  CSRF = "csrf",
+  ID = "id"
 }
 
 export const getTokens = () => ({
   auth:
     localStorage.getItem(TOKEN_STORAGE_KEY.AUTH) ||
     sessionStorage.getItem(TOKEN_STORAGE_KEY.AUTH),
+  id:
+    localStorage.getItem(TOKEN_STORAGE_KEY.ID) ||
+    sessionStorage.getItem(TOKEN_STORAGE_KEY.ID),
   refresh:
     localStorage.getItem(TOKEN_STORAGE_KEY.CSRF) ||
-    sessionStorage.getItem(TOKEN_STORAGE_KEY.CSRF)
+    sessionStorage.getItem(TOKEN_STORAGE_KEY.CSRF),
 });
 
-export const setTokens = (auth: string, csrf: string, persist: boolean) => {
+export const setTokens = (auth: string, csrf: string, id:string, persist: boolean) => {
   if (persist) {
     localStorage.setItem(TOKEN_STORAGE_KEY.AUTH, auth);
     localStorage.setItem(TOKEN_STORAGE_KEY.CSRF, csrf);
+    localStorage.setItem(TOKEN_STORAGE_KEY.ID, id);
   } else {
     sessionStorage.setItem(TOKEN_STORAGE_KEY.AUTH, auth);
     sessionStorage.setItem(TOKEN_STORAGE_KEY.CSRF, csrf);
+    sessionStorage.setItem(TOKEN_STORAGE_KEY.ID, id);
   }
 };
 

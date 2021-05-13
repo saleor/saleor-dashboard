@@ -10,7 +10,7 @@ import { ProductDetails_product } from "@saleor/products/types/ProductDetails";
 import {
   getAttributeInputFromProduct,
   getProductUpdatePageFormData,
-  getStockInputFromProduct
+  getStockInputFromProduct, updateDataFromMegaPackValues
 } from "@saleor/products/utils/data";
 import {
   createAttributeChangeHandler,
@@ -23,7 +23,7 @@ import createSingleAutocompleteSelectHandler from "@saleor/utils/handlers/single
 import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
 import { RawDraftContentState } from "draft-js";
 import { diff } from "fast-array-diff";
-import React from "react";
+import React, { useEffect } from "react";
 
 import { ProductAttributeInput } from "../ProductAttributes";
 import { ProductStockInput } from "../ProductStocks";
@@ -39,6 +39,7 @@ export interface ProductUpdateFormData extends MetadataFormData {
   isAvailable: boolean;
   isAvailableForPurchase: boolean;
   isPublished: boolean;
+  megaPackProduct: string;
   name: string;
   slug: string;
   publicationDate: string;
@@ -208,6 +209,13 @@ function useProductUpdateForm(
     opts.setSelectedTaxType,
     opts.taxTypes
   );
+
+  useEffect(
+      () => {
+        updateDataFromMegaPackValues(form.data, form.data.megaPackProduct)
+      }, [form.data.megaPackProduct]
+  )
+
   const changeMetadata = makeMetadataChangeHandler(handleChange);
 
   const data: ProductUpdateData = {

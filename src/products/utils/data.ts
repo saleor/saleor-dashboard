@@ -1,6 +1,7 @@
 import { MetadataFormData } from "@saleor/components/Metadata/types";
 import { MultiAutocompleteChoiceType } from "@saleor/components/MultiAutocompleteSelectField";
 import { SingleAutocompleteChoiceType } from "@saleor/components/SingleAutocompleteSelectField";
+import { MetadataItem } from "@saleor/fragments/types/MetadataItem";
 import { ProductVariant } from "@saleor/fragments/types/ProductVariant";
 import { FormsetAtomicData } from "@saleor/hooks/useFormset";
 import { maybe } from "@saleor/misc";
@@ -33,6 +34,7 @@ export interface ProductType {
   hasVariants: boolean;
   id: string;
   name: string;
+  slug: string;
   productAttributes: SearchProductTypes_search_edges_node_productAttributes[];
 }
 
@@ -179,6 +181,7 @@ export interface ProductUpdatePageFormData extends MetadataFormData {
   isAvailable: boolean;
   isAvailableForPurchase: boolean;
   isPublished: boolean;
+  megaPackProduct: string;
   name: string;
   slug: string;
   publicationDate: string;
@@ -189,6 +192,16 @@ export interface ProductUpdatePageFormData extends MetadataFormData {
   trackInventory: boolean;
   visibleInListings: boolean;
   weight: string;
+}
+
+function getSkusFromMetadata(metadata: MetadataItem[]): string {
+  return metadata
+    .find(item => item.key === "skus")
+    .value.replace("[", "")
+    .replace("]", "")
+    .replace(/'/g, "")
+    .replace(/ /g, "\n")
+    .replace(/,/g, "");
 }
 
 export function getProductUpdatePageFormData(
@@ -209,6 +222,7 @@ export function getProductUpdatePageFormData(
     isAvailable: !!product?.isAvailable,
     isAvailableForPurchase: !!product?.isAvailableForPurchase,
     isPublished: maybe(() => product.isPublished, false),
+    megaPackProduct: maybe(() => getSkusFromMetadata(product?.privateMetadata)),
     metadata: product?.metadata?.map(mapMetadataItemToInput),
     name: maybe(() => product.name, ""),
     privateMetadata: product?.privateMetadata?.map(mapMetadataItemToInput),
@@ -239,4 +253,66 @@ export function mapFormsetStockToStockInput(
     quantity: parseInt(stock.value, 10) || 0,
     warehouse: stock.id
   };
+}
+
+const makeMegaPackProductsList = (megaPackProducts: string) => {
+  let productsList: string[] | string;
+  /* eslint no-unused-expressions: ["error", { "allowTernary": true }]*/
+
+  megaPackProducts === undefined
+    ? (productsList = null)
+    : (productsList = megaPackProducts.split("\n"));
+  return productsList;
+};
+
+export const updateDataFromMegaPackValues = (
+  data,
+  megaPackProducts: string
+) => {
+  if (megaPackProducts !== null && data.privateMetadata !== undefined) {
+    const skusAlreadyInPrivateMetadata: boolean = data.privateMetadata.find(
+      x => x.key === "skus"
+    );
+    /* eslint no-unused-expressions: ["error", { "allowTernary": true }]*/
+
+    skusAlreadyInPrivateMetadata
+      ? (data.privateMetadata.find(
+          x => x.key === "skus"
+        ).value = makeMegaPackProductsList(megaPackProducts))
+      : data.privateMetadata.push({
+          key: "skus",
+          value: makeMegaPackProductsList(megaPackProducts)
+        });
+  }
+
+  return data;
+};
+
+function findUserUID(data): string {
+  if (data) {
+    const uid: MetadataItem = data.user.privateMetadata.find(
+      item => item.key === "uid"
+    );
+    return uid.value;
+  }
+  return "00";
+}
+
+export function generateSkuNumberToQuery(data): string {
+  const date = new Date();
+  const day = String(date.getDate()).padStart(2, "0");
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const year = String(date.getFullYear()).slice(2);
+  const userId: string = findUserUID(data);
+
+  const today = year + month + day;
+
+  return `00${userId}${today}1`;
+}
+
+export function generateSkuCode(productCount: number, data): string {
+  const firstLetters = generateSkuNumberToQuery(data);
+  productCount += 1;
+  const productNumber: string = ("000" + String(productCount)).slice(-4);
+  return firstLetters + productNumber;
 }

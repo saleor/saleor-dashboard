@@ -26,6 +26,7 @@ import { useIntl } from "react-intl";
 import { FetchMoreProps } from "../../../types";
 import ProductAttributes from "../ProductAttributes";
 import ProductDetailsForm from "../ProductDetailsForm";
+import ProductMegaPack from "../ProductMegaPack";
 import ProductOrganization from "../ProductOrganization";
 import ProductPricing from "../ProductPricing";
 import ProductShipping from "../ProductShipping/ProductShipping";
@@ -155,6 +156,13 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
                     errors={errors}
                     onChange={handlers.selectAttribute}
                     onMultiChange={handlers.selectAttributeMultiple}
+                  />
+                )}
+                {data.productType?.slug === "mega-paka" && (
+                  <ProductMegaPack
+                    data={data}
+                    disabled={disabled}
+                    onChange={change}
                   />
                 )}
                 <CardSpacer />

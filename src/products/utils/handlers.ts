@@ -3,7 +3,7 @@ import { FormsetChange, FormsetData } from "@saleor/hooks/useFormset";
 import { toggle } from "@saleor/utils/lists";
 
 import { ProductAttributeInputData } from "../components/ProductAttributes";
-import { getAttributeInputFromProductType, ProductType } from "./data";
+import { generateSkuCode, getAttributeInputFromProductType, ProductType } from "./data";
 
 export function createAttributeChangeHandler(
   changeAttributeData: FormsetChange<string[]>,
@@ -40,6 +40,9 @@ export function createProductTypeSelectHandler(
   setAttributes: (data: FormsetData<ProductAttributeInputData>) => void,
   setProductType: (productType: ProductType) => void,
   productTypeChoiceList: ProductType[],
+  setSkuCode: (sku: string) => void,
+  skusCount: any,
+  userData: any,
   triggerChange: () => void
 ): FormChange {
   return (event: React.ChangeEvent<any>) => {
@@ -49,6 +52,8 @@ export function createProductTypeSelectHandler(
     );
     triggerChange();
     setProductType(selectedProductType);
+    /* eslint no-unused-expressions: ["error", { "allowTernary": true }]*/ 
+    selectedProductType.slug === "mega-paka" ? setSkuCode(generateSkuCode(skusCount.productVariantsSkus.totalCount, userData)) : setSkuCode("");
     setAttributes(getAttributeInputFromProductType(selectedProductType));
   };
 }

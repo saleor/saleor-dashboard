@@ -38,6 +38,7 @@ export interface SearchProductTypes_search_edges_node {
   hasVariants: boolean;
   productAttributes: (SearchProductTypes_search_edges_node_productAttributes | null)[] | null;
   taxType: SearchProductTypes_search_edges_node_taxType | null;
+  slug: string;
 }
 
 export interface SearchProductTypes_search_edges {

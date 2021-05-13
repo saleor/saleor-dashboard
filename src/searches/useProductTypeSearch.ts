@@ -22,6 +22,7 @@ export const searchProductTypes = gql`
           id
           name
           hasVariants
+          slug
           productAttributes {
             id
             inputType

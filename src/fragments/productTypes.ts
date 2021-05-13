@@ -9,6 +9,7 @@ export const productTypeFragment = gql`
     name
     hasVariants
     isShippingRequired
+    slug
     taxType {
       description
       taxCode
