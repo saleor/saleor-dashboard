@@ -19,6 +19,7 @@ import { usePageTypeBulkDeleteMutation } from "@saleor/pageTypes/mutations";
 import { ListViews } from "@saleor/types";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import createSortHandler from "@saleor/utils/handlers/sortHandler";
+import { mapEdgesToItems } from "@saleor/utils/maps";
 import { getSortParams } from "@saleor/utils/sort";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -165,7 +166,7 @@ export const PageTypeList: React.FC<PageTypeListProps> = ({ params }) => {
     params
   });
 
-  const pageTypesData = data?.pageTypes?.edges.map(edge => edge.node) || [];
+  const pageTypesData = mapEdgesToItems(data?.pageTypes);
 
   return (
     <>
@@ -179,7 +180,7 @@ export const PageTypeList: React.FC<PageTypeListProps> = ({ params }) => {
         onTabSave={() => openModal("save-search")}
         tabs={tabs.map(tab => tab.name)}
         disabled={loading}
-        pageTypes={data?.pageTypes?.edges?.map(edge => edge.node)}
+        pageTypes={pageTypesData}
         pageInfo={pageInfo}
         onAdd={() => navigate(pageTypeAddUrl)}
         onBack={() => navigate(configurationMenuUrl)}

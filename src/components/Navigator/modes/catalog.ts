@@ -1,8 +1,8 @@
 import { categoryUrl } from "@saleor/categories/urls";
 import { collectionUrl } from "@saleor/collections/urls";
 import { UseNavigatorResult } from "@saleor/hooks/useNavigator";
-import { maybe } from "@saleor/misc";
 import { productUrl } from "@saleor/products/urls";
+import { mapEdgesToItems } from "@saleor/utils/maps";
 import { score } from "fuzzaldrin";
 import { IntlShape } from "react-intl";
 
@@ -19,9 +19,8 @@ export function searchInCatalog(
   navigate: UseNavigatorResult,
   catalog: SearchCatalog
 ): QuickSearchAction[] {
-  const categories: QuickSearchActionInput[] = maybe(
-    () => catalog.categories.edges.map(edge => edge.node),
-    []
+  const categories: QuickSearchActionInput[] = mapEdgesToItems(
+    catalog?.categories
   )
     .map<QuickSearchActionInput>(category => ({
       caption: intl.formatMessage(messages.category),
@@ -36,9 +35,8 @@ export function searchInCatalog(
     }))
     .sort(sortScores);
 
-  const collections: QuickSearchActionInput[] = maybe(
-    () => catalog.collections.edges.map(edge => edge.node),
-    []
+  const collections: QuickSearchActionInput[] = mapEdgesToItems(
+    catalog?.collections
   )
     .map<QuickSearchActionInput>(collection => ({
       caption: intl.formatMessage(messages.collection),
@@ -53,10 +51,7 @@ export function searchInCatalog(
     }))
     .sort(sortScores);
 
-  const products: QuickSearchActionInput[] = maybe(
-    () => catalog.products.edges.map(edge => edge.node),
-    []
-  )
+  const products: QuickSearchActionInput[] = mapEdgesToItems(catalog?.products)
     .map<QuickSearchActionInput>(product => ({
       caption: intl.formatMessage(messages.product),
       extraInfo: product.category.name,

@@ -16,6 +16,7 @@ import { maybe } from "@saleor/misc";
 import { ListViews } from "@saleor/types";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import createSortHandler from "@saleor/utils/handlers/sortHandler";
+import { mapEdgesToItems } from "@saleor/utils/maps";
 import { getSortParams } from "@saleor/utils/sort";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -143,10 +144,7 @@ export const CategoryList: React.FC<CategoryListProps> = ({ params }) => {
   return (
     <>
       <CategoryListPage
-        categories={maybe(
-          () => data.categories.edges.map(edge => edge.node),
-          []
-        )}
+        categories={mapEdgesToItems(data?.categories)}
         currentTab={currentTab}
         initialSearch={params.query || ""}
         onSearchChange={query => changeFilterField({ query })}

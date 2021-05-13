@@ -22,6 +22,7 @@ import {
 import { ReorderEvent } from "@saleor/types";
 import getPageErrorMessage from "@saleor/utils/errors/page";
 import createMetadataUpdateHandler from "@saleor/utils/handlers/metadataUpdateHandler";
+import { mapEdgesToItems } from "@saleor/utils/maps";
 import {
   useMetadataUpdate,
   usePrivateMetadataUpdate
@@ -263,8 +264,8 @@ export const PageTypeDetails: React.FC<PageTypeDetailsProps> = ({
             deleteButtonState={deletePageTypeOpts.status}
           />
           <AssignAttributeDialog
-            attributes={result.data?.pageType.availableAttributes.edges.map(
-              edge => edge.node
+            attributes={mapEdgesToItems(
+              result?.data?.pageType?.availableAttributes
             )}
             confirmButtonState={assignAttributeOpts.status}
             errors={

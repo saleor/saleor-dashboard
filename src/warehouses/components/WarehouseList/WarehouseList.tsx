@@ -14,6 +14,7 @@ import { WarehouseWithShippingFragment } from "@saleor/fragments/types/Warehouse
 import { maybe, renderCollection, stopPropagation } from "@saleor/misc";
 import { makeStyles } from "@saleor/theme";
 import { ListProps, SortPage } from "@saleor/types";
+import { mapEdgesToItems } from "@saleor/utils/maps";
 import { getArrowDirection } from "@saleor/utils/sort";
 import { WarehouseListUrlSortField } from "@saleor/warehouses/urls";
 import React from "react";
@@ -137,13 +138,9 @@ const WarehouseList: React.FC<WarehouseListProps> = props => {
                 {maybe<React.ReactNode>(() => warehouse.name, <Skeleton />)}
               </TableCell>
               <TableCell className={classes.colZones} data-test="zones">
-                {maybe<React.ReactNode>(
-                  () =>
-                    warehouse.shippingZones.edges
-                      .map(edge => edge.node.name)
-                      .join(", "),
-                  <Skeleton />
-                )}
+                {mapEdgesToItems(warehouse?.shippingZones)
+                  .map(({ name }) => name)
+                  .join(", ") || <Skeleton />}
               </TableCell>
               <TableCell className={classes.colActions}>
                 <div className={classes.actions}>

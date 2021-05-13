@@ -22,6 +22,7 @@ import {
 } from "@saleor/shipping/mutations";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import createMetadataUpdateHandler from "@saleor/utils/handlers/metadataUpdateHandler";
+import { mapEdgesToItems } from "@saleor/utils/maps";
 import {
   useMetadataUpdate,
   usePrivateMetadataUpdate
@@ -204,14 +205,12 @@ const ShippingZoneDetails: React.FC<ShippingZoneDetailsProps> = ({
         }
         saveButtonBarState={updateShippingZoneOpts.status}
         shippingZone={data?.shippingZone}
-        warehouses={
-          searchWarehousesOpts.data?.search.edges.map(edge => edge.node) || []
-        }
-        hasMore={searchWarehousesOpts.data?.search.pageInfo.hasNextPage}
+        warehouses={mapEdgesToItems(searchWarehousesOpts?.data?.search)}
+        hasMore={searchWarehousesOpts.data?.search?.pageInfo?.hasNextPage}
         loading={searchWarehousesOpts.loading}
         onFetchMore={loadMore}
         onSearchChange={search}
-        selectedChannelId={channel.id}
+        selectedChannelId={channel?.id}
       />
       <DeleteShippingRateDialog
         confirmButtonState={deleteShippingRateOpts.status}

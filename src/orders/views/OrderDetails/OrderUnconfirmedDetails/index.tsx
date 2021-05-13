@@ -6,6 +6,7 @@ import OrderCannotCancelOrderDialog from "@saleor/orders/components/OrderCannotC
 import OrderInvoiceEmailSendDialog from "@saleor/orders/components/OrderInvoiceEmailSendDialog";
 import { OrderDiscountProvider } from "@saleor/products/components/OrderDiscountProviders/OrderDiscountProvider";
 import { OrderLineDiscountProvider } from "@saleor/products/components/OrderDiscountProviders/OrderLineDiscountProvider";
+import { mapEdgesToItems } from "@saleor/utils/maps";
 import { useWarehouseList } from "@saleor/warehouses/queries";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -240,7 +241,7 @@ export const OrderUnconfirmedDetails: React.FC<OrderUnconfirmedDetailsProps> = (
         loading={variantSearchOpts.loading}
         open={params.action === "add-order-line"}
         hasMore={variantSearchOpts.data?.search.pageInfo.hasNextPage}
-        products={variantSearchOpts.data?.search.edges.map(edge => edge.node)}
+        products={mapEdgesToItems(variantSearchOpts?.data?.search)}
         selectedChannelId={order?.channel?.id}
         onClose={closeModal}
         onFetch={variantSearch}
@@ -297,9 +298,7 @@ export const OrderUnconfirmedDetails: React.FC<OrderUnconfirmedDetailsProps> = (
           orderFulfillmentCancel.opts.data?.orderFulfillmentCancel.errors || []
         }
         open={params.action === "cancel-fulfillment"}
-        warehouses={
-          warehouses.data?.warehouses.edges.map(edge => edge.node) || []
-        }
+        warehouses={mapEdgesToItems(warehouses?.data?.warehouses)}
         onConfirm={variables =>
           orderFulfillmentCancel.mutate({
             id: params.id,

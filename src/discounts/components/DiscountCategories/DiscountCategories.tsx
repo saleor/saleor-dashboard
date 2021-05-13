@@ -13,6 +13,7 @@ import Skeleton from "@saleor/components/Skeleton";
 import TableHead from "@saleor/components/TableHead";
 import TablePagination from "@saleor/components/TablePagination";
 import { makeStyles } from "@saleor/theme";
+import { mapEdgesToItems } from "@saleor/utils/maps";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -98,7 +99,7 @@ const DiscountCategories: React.FC<DiscountCategoriesProps> = props => {
           colSpan={numberOfColumns}
           selected={selected}
           disabled={disabled}
-          items={maybe(() => discount.categories.edges.map(edge => edge.node))}
+          items={mapEdgesToItems(discount?.categories)}
           toggleAll={toggleAll}
           toolbar={toolbar}
         >
@@ -130,7 +131,7 @@ const DiscountCategories: React.FC<DiscountCategoriesProps> = props => {
         </TableFooter>
         <TableBody>
           {renderCollection(
-            maybe(() => discount.categories.edges.map(edge => edge.node)),
+            mapEdgesToItems(discount?.categories),
             category => {
               const isSelected = category ? isChecked(category.id) : false;
 

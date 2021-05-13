@@ -16,6 +16,7 @@ import { OrderDetails } from "@saleor/orders/types/OrderDetails";
 import { OrderDiscountProvider } from "@saleor/products/components/OrderDiscountProviders/OrderDiscountProvider";
 import { OrderLineDiscountProvider } from "@saleor/products/components/OrderDiscountProviders/OrderLineDiscountProvider";
 import useCustomerSearch from "@saleor/searches/useCustomerSearch";
+import { mapEdgesToItems } from "@saleor/utils/maps";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -171,7 +172,7 @@ export const OrderDraftDetails: React.FC<OrderDraftDetailsProps> = ({
                 order: id
               })
             }
-            users={users?.data?.search?.edges?.map(edge => edge.node) || []}
+            users={mapEdgesToItems(users?.data?.search)}
             hasMore={users?.data?.search?.pageInfo?.hasNextPage || false}
             onFetchMore={loadMoreCustomers}
             fetchUsers={searchUsers}
@@ -233,7 +234,7 @@ export const OrderDraftDetails: React.FC<OrderDraftDetailsProps> = ({
         loading={variantSearchOpts.loading}
         open={params.action === "add-order-line"}
         hasMore={variantSearchOpts.data?.search.pageInfo.hasNextPage}
-        products={variantSearchOpts.data?.search.edges.map(edge => edge.node)}
+        products={mapEdgesToItems(variantSearchOpts?.data?.search)}
         selectedChannelId={order?.channel?.id}
         onClose={closeModal}
         onFetch={variantSearch}

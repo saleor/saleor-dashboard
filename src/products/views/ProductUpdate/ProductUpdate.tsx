@@ -47,6 +47,7 @@ import useProductSearch from "@saleor/searches/useProductSearch";
 import { getProductErrorMessage } from "@saleor/utils/errors";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import createMetadataUpdateHandler from "@saleor/utils/handlers/metadataUpdateHandler";
+import { mapEdgesToItems } from "@saleor/utils/maps";
 import {
   useMetadataUpdate,
   usePrivateMetadataUpdate
@@ -425,12 +426,10 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
     createProductMediaOpts.data?.productMediaCreate.errors
   );
 
-  const categories = (searchCategoriesOpts?.data?.search?.edges || []).map(
-    edge => edge.node
-  );
-  const collections = (searchCollectionsOpts?.data?.search?.edges || []).map(
-    edge => edge.node
-  );
+  const categories = mapEdgesToItems(searchCategoriesOpts?.data?.search);
+
+  const collections = mapEdgesToItems(searchCollectionsOpts?.data?.search);
+
   const errors = [
     ...(updateProductOpts.data?.productUpdate.errors || []),
     ...(updateSimpleProductOpts.data?.productUpdate.errors || []),
@@ -525,9 +524,7 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
         header={product?.name}
         placeholderImage={placeholderImg}
         product={product}
-        warehouses={
-          warehouses.data?.warehouses.edges.map(edge => edge.node) || []
-        }
+        warehouses={mapEdgesToItems(warehouses?.data?.warehouses)}
         taxTypes={data?.taxTypes}
         variants={product?.variants}
         onBack={handleBack}
@@ -570,12 +567,8 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
           params.action === "assign-attribute-value" && params.id
         }
         onAssignReferencesClick={handleAssignAttributeReferenceClick}
-        referencePages={searchPagesOpts.data?.search.edges.map(
-          edge => edge.node
-        )}
-        referenceProducts={searchProductsOpts.data?.search.edges.map(
-          edge => edge.node
-        )}
+        referencePages={mapEdgesToItems(searchPagesOpts?.data?.search)}
+        referenceProducts={mapEdgesToItems(searchProductsOpts?.data?.search)}
         fetchReferencePages={searchPages}
         fetchMoreReferencePages={fetchMoreReferencePages}
         fetchReferenceProducts={searchProducts}
