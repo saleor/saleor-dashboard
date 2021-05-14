@@ -14,7 +14,13 @@ import { AttributeList, AttributeListVariables } from "./types/AttributeList";
 
 const attributeDetails = gql`
   ${attributeDetailsFragment}
-  query AttributeDetails($id: ID!) {
+  query AttributeDetails(
+    $id: ID!
+    $firstValues: Int
+    $afterValues: String
+    $lastValues: Int
+    $beforeValues: String
+  ) {
     attribute(id: $id) {
       ...AttributeDetailsFragment
     }

@@ -2,6 +2,7 @@ import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
 import IconButton from "@material-ui/core/IconButton";
 import TableCell from "@material-ui/core/TableCell";
+import TableFooter from "@material-ui/core/TableFooter";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import DeleteIcon from "@material-ui/icons/Delete";
@@ -12,16 +13,18 @@ import {
   SortableTableBody,
   SortableTableRow
 } from "@saleor/components/SortableTable";
-import { AttributeDetailsFragment_values } from "@saleor/fragments/types/AttributeDetailsFragment";
+import TablePagination from "@saleor/components/TablePagination";
+import { AttributeDetailsFragment_values_edges_node } from "@saleor/fragments/types/AttributeDetailsFragment";
 import { maybe, renderCollection, stopPropagation } from "@saleor/misc";
 import { makeStyles } from "@saleor/theme";
-import { ReorderAction } from "@saleor/types";
+import { ListProps, ReorderAction } from "@saleor/types";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-export interface AttributeValuesProps {
+export interface AttributeValuesProps
+  extends Pick<ListProps, Exclude<keyof ListProps, "onRowClick">> {
   disabled: boolean;
-  values: AttributeDetailsFragment_values[];
+  values: AttributeDetailsFragment_values_edges_node[];
   onValueAdd: () => void;
   onValueDelete: (id: string) => void;
   onValueReorder: ReorderAction;
@@ -55,13 +58,18 @@ const useStyles = makeStyles(
   { name: "AttributeValues" }
 );
 
+const numberOfColumns = 4;
+
 const AttributeValues: React.FC<AttributeValuesProps> = ({
   disabled,
   onValueAdd,
   onValueDelete,
   onValueReorder,
   onValueUpdate,
-  values
+  values,
+  pageInfo,
+  onNextPage,
+  onPreviousPage
 }) => {
   const classes = useStyles({});
   const intl = useIntl();
@@ -101,6 +109,19 @@ const AttributeValues: React.FC<AttributeValuesProps> = ({
             <TableCell className={classes.iconCell} />
           </TableRow>
         </TableHead>
+        <TableFooter>
+          <TableRow>
+            <TablePagination
+              colSpan={numberOfColumns}
+              hasNextPage={pageInfo && !disabled ? pageInfo.hasNextPage : false}
+              onNextPage={onNextPage}
+              hasPreviousPage={
+                pageInfo && !disabled ? pageInfo.hasPreviousPage : false
+              }
+              onPreviousPage={onPreviousPage}
+            />
+          </TableRow>
+        </TableFooter>
         <SortableTableBody onSortEnd={onValueReorder}>
           {renderCollection(
             values,

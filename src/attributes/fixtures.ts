@@ -29,26 +29,44 @@ export const attribute: AttributeDetailsFragment = {
   type: AttributeTypeEnum.PRODUCT_TYPE,
   valueRequired: true,
   unit: null,
-  values: [
-    {
-      __typename: "AttributeValue" as "AttributeValue",
-      file: null,
-      id: "UHJvZHVjdEF0dHJpYnV0ZVZhbHVlOjI0",
-      name: "John Doe",
-      reference: null,
-      slug: "john-doe",
-      richText: null
+  values: {
+    __typename: "AttributeValueCountableConnection" as "AttributeValueCountableConnection",
+    pageInfo: {
+      __typename: "PageInfo" as "PageInfo",
+      endCursor: "",
+      hasNextPage: false,
+      hasPreviousPage: false,
+      startCursor: ""
     },
-    {
-      __typename: "AttributeValue" as "AttributeValue",
-      file: null,
-      id: "UHJvZHVjdEF0dHJpYnV0ZVZhbHVlOjI1",
-      name: "Milionare Pirate",
-      reference: null,
-      slug: "milionare-pirate",
-      richText: null
-    }
-  ],
+    edges: [
+      {
+        __typename: "AttributeValueCountableEdge" as "AttributeValueCountableEdge",
+        cursor: "1",
+        node: {
+          __typename: "AttributeValue" as "AttributeValue",
+          file: null,
+          id: "UHJvZHVjdEF0dHJpYnV0ZVZhbHVlOjI0",
+          name: "John Doe",
+          reference: null,
+          slug: "john-doe",
+          richText: null
+        }
+      },
+      {
+        __typename: "AttributeValueCountableEdge" as "AttributeValueCountableEdge",
+        cursor: "2",
+        node: {
+          __typename: "AttributeValue" as "AttributeValue",
+          file: null,
+          id: "UHJvZHVjdEF0dHJpYnV0ZVZhbHVlOjI1",
+          name: "Milionare Pirate",
+          reference: null,
+          slug: "milionare-pirate",
+          richText: null
+        }
+      }
+    ]
+  },
   visibleInStorefront: true
 };
 

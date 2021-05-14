@@ -21,20 +21,40 @@ export interface AttributeUpdate_attributeUpdate_attribute_privateMetadata {
   value: string;
 }
 
-export interface AttributeUpdate_attributeUpdate_attribute_values_file {
+export interface AttributeUpdate_attributeUpdate_attribute_values_pageInfo {
+  __typename: "PageInfo";
+  endCursor: string | null;
+  hasNextPage: boolean;
+  hasPreviousPage: boolean;
+  startCursor: string | null;
+}
+
+export interface AttributeUpdate_attributeUpdate_attribute_values_edges_node_file {
   __typename: "File";
   url: string;
   contentType: string | null;
 }
 
-export interface AttributeUpdate_attributeUpdate_attribute_values {
+export interface AttributeUpdate_attributeUpdate_attribute_values_edges_node {
   __typename: "AttributeValue";
   id: string;
   name: string | null;
   slug: string | null;
-  file: AttributeUpdate_attributeUpdate_attribute_values_file | null;
+  file: AttributeUpdate_attributeUpdate_attribute_values_edges_node_file | null;
   reference: string | null;
   richText: any | null;
+}
+
+export interface AttributeUpdate_attributeUpdate_attribute_values_edges {
+  __typename: "AttributeValueCountableEdge";
+  cursor: string;
+  node: AttributeUpdate_attributeUpdate_attribute_values_edges_node;
+}
+
+export interface AttributeUpdate_attributeUpdate_attribute_values {
+  __typename: "AttributeValueCountableConnection";
+  pageInfo: AttributeUpdate_attributeUpdate_attribute_values_pageInfo;
+  edges: AttributeUpdate_attributeUpdate_attribute_values_edges[];
 }
 
 export interface AttributeUpdate_attributeUpdate_attribute {
@@ -54,7 +74,7 @@ export interface AttributeUpdate_attributeUpdate_attribute {
   entityType: AttributeEntityTypeEnum | null;
   storefrontSearchPosition: number;
   valueRequired: boolean;
-  values: (AttributeUpdate_attributeUpdate_attribute_values | null)[] | null;
+  values: AttributeUpdate_attributeUpdate_attribute_values | null;
 }
 
 export interface AttributeUpdate_attributeUpdate_errors {
@@ -76,4 +96,8 @@ export interface AttributeUpdate {
 export interface AttributeUpdateVariables {
   id: string;
   input: AttributeUpdateInput;
+  firstValues?: number | null;
+  afterValues?: string | null;
+  lastValues?: number | null;
+  beforeValues?: string | null;
 }

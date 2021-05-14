@@ -21,20 +21,40 @@ export interface AttributeValueDelete_attributeValueDelete_attribute_privateMeta
   value: string;
 }
 
-export interface AttributeValueDelete_attributeValueDelete_attribute_values_file {
+export interface AttributeValueDelete_attributeValueDelete_attribute_values_pageInfo {
+  __typename: "PageInfo";
+  endCursor: string | null;
+  hasNextPage: boolean;
+  hasPreviousPage: boolean;
+  startCursor: string | null;
+}
+
+export interface AttributeValueDelete_attributeValueDelete_attribute_values_edges_node_file {
   __typename: "File";
   url: string;
   contentType: string | null;
 }
 
-export interface AttributeValueDelete_attributeValueDelete_attribute_values {
+export interface AttributeValueDelete_attributeValueDelete_attribute_values_edges_node {
   __typename: "AttributeValue";
   id: string;
   name: string | null;
   slug: string | null;
-  file: AttributeValueDelete_attributeValueDelete_attribute_values_file | null;
+  file: AttributeValueDelete_attributeValueDelete_attribute_values_edges_node_file | null;
   reference: string | null;
   richText: any | null;
+}
+
+export interface AttributeValueDelete_attributeValueDelete_attribute_values_edges {
+  __typename: "AttributeValueCountableEdge";
+  cursor: string;
+  node: AttributeValueDelete_attributeValueDelete_attribute_values_edges_node;
+}
+
+export interface AttributeValueDelete_attributeValueDelete_attribute_values {
+  __typename: "AttributeValueCountableConnection";
+  pageInfo: AttributeValueDelete_attributeValueDelete_attribute_values_pageInfo;
+  edges: AttributeValueDelete_attributeValueDelete_attribute_values_edges[];
 }
 
 export interface AttributeValueDelete_attributeValueDelete_attribute {
@@ -54,7 +74,7 @@ export interface AttributeValueDelete_attributeValueDelete_attribute {
   entityType: AttributeEntityTypeEnum | null;
   storefrontSearchPosition: number;
   valueRequired: boolean;
-  values: (AttributeValueDelete_attributeValueDelete_attribute_values | null)[] | null;
+  values: AttributeValueDelete_attributeValueDelete_attribute_values | null;
 }
 
 export interface AttributeValueDelete_attributeValueDelete_errors {
@@ -75,4 +95,8 @@ export interface AttributeValueDelete {
 
 export interface AttributeValueDeleteVariables {
   id: string;
+  firstValues?: number | null;
+  afterValues?: string | null;
+  lastValues?: number | null;
+  beforeValues?: string | null;
 }

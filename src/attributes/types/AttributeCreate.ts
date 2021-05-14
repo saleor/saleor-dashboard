@@ -21,20 +21,40 @@ export interface AttributeCreate_attributeCreate_attribute_privateMetadata {
   value: string;
 }
 
-export interface AttributeCreate_attributeCreate_attribute_values_file {
+export interface AttributeCreate_attributeCreate_attribute_values_pageInfo {
+  __typename: "PageInfo";
+  endCursor: string | null;
+  hasNextPage: boolean;
+  hasPreviousPage: boolean;
+  startCursor: string | null;
+}
+
+export interface AttributeCreate_attributeCreate_attribute_values_edges_node_file {
   __typename: "File";
   url: string;
   contentType: string | null;
 }
 
-export interface AttributeCreate_attributeCreate_attribute_values {
+export interface AttributeCreate_attributeCreate_attribute_values_edges_node {
   __typename: "AttributeValue";
   id: string;
   name: string | null;
   slug: string | null;
-  file: AttributeCreate_attributeCreate_attribute_values_file | null;
+  file: AttributeCreate_attributeCreate_attribute_values_edges_node_file | null;
   reference: string | null;
   richText: any | null;
+}
+
+export interface AttributeCreate_attributeCreate_attribute_values_edges {
+  __typename: "AttributeValueCountableEdge";
+  cursor: string;
+  node: AttributeCreate_attributeCreate_attribute_values_edges_node;
+}
+
+export interface AttributeCreate_attributeCreate_attribute_values {
+  __typename: "AttributeValueCountableConnection";
+  pageInfo: AttributeCreate_attributeCreate_attribute_values_pageInfo;
+  edges: AttributeCreate_attributeCreate_attribute_values_edges[];
 }
 
 export interface AttributeCreate_attributeCreate_attribute {
@@ -54,7 +74,7 @@ export interface AttributeCreate_attributeCreate_attribute {
   entityType: AttributeEntityTypeEnum | null;
   storefrontSearchPosition: number;
   valueRequired: boolean;
-  values: (AttributeCreate_attributeCreate_attribute_values | null)[] | null;
+  values: AttributeCreate_attributeCreate_attribute_values | null;
 }
 
 export interface AttributeCreate_attributeCreate_errors {
@@ -75,4 +95,8 @@ export interface AttributeCreate {
 
 export interface AttributeCreateVariables {
   input: AttributeCreateInput;
+  firstValues?: number | null;
+  afterValues?: string | null;
+  lastValues?: number | null;
+  beforeValues?: string | null;
 }

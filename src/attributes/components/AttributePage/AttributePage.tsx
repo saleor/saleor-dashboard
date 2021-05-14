@@ -23,7 +23,7 @@ import {
   AttributeTypeEnum,
   MeasurementUnitsEnum
 } from "@saleor/types/globalTypes";
-import { mapMetadataItemToInput } from "@saleor/utils/maps";
+import { mapEdgesToItems, mapMetadataItemToInput } from "@saleor/utils/maps";
 import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -39,7 +39,7 @@ export interface AttributePageProps {
   disabled: boolean;
   errors: AttributeErrorFragment[];
   saveButtonBarState: ConfirmButtonTransitionState;
-  values: AttributeDetailsFragment_values[];
+  values: AttributeDetailsFragment_values;
   onBack: () => void;
   onDelete: () => void;
   onSubmit: (data: AttributePageFormData) => void;
@@ -47,6 +47,12 @@ export interface AttributePageProps {
   onValueDelete: (id: string) => void;
   onValueReorder: ReorderAction;
   onValueUpdate: (id: string) => void;
+  pageInfo: {
+    hasNextPage: boolean;
+    hasPreviousPage: boolean;
+  };
+  onNextPage: () => void;
+  onPreviousPage: () => void;
 }
 
 export interface AttributePageFormData extends MetadataFormData {
@@ -76,7 +82,10 @@ const AttributePage: React.FC<AttributePageProps> = ({
   onValueAdd,
   onValueDelete,
   onValueReorder,
-  onValueUpdate
+  onValueUpdate,
+  pageInfo,
+  onNextPage,
+  onPreviousPage
 }) => {
   const intl = useIntl();
   const {
@@ -190,11 +199,14 @@ const AttributePage: React.FC<AttributePageProps> = ({
                     <CardSpacer />
                     <AttributeValues
                       disabled={disabled}
-                      values={values}
+                      values={mapEdgesToItems(values)}
                       onValueAdd={onValueAdd}
                       onValueDelete={onValueDelete}
                       onValueReorder={onValueReorder}
                       onValueUpdate={onValueUpdate}
+                      pageInfo={pageInfo}
+                      onNextPage={onNextPage}
+                      onPreviousPage={onPreviousPage}
                     />
                   </>
                 )}

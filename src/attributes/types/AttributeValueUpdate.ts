@@ -21,20 +21,40 @@ export interface AttributeValueUpdate_attributeValueUpdate_attribute_privateMeta
   value: string;
 }
 
-export interface AttributeValueUpdate_attributeValueUpdate_attribute_values_file {
+export interface AttributeValueUpdate_attributeValueUpdate_attribute_values_pageInfo {
+  __typename: "PageInfo";
+  endCursor: string | null;
+  hasNextPage: boolean;
+  hasPreviousPage: boolean;
+  startCursor: string | null;
+}
+
+export interface AttributeValueUpdate_attributeValueUpdate_attribute_values_edges_node_file {
   __typename: "File";
   url: string;
   contentType: string | null;
 }
 
-export interface AttributeValueUpdate_attributeValueUpdate_attribute_values {
+export interface AttributeValueUpdate_attributeValueUpdate_attribute_values_edges_node {
   __typename: "AttributeValue";
   id: string;
   name: string | null;
   slug: string | null;
-  file: AttributeValueUpdate_attributeValueUpdate_attribute_values_file | null;
+  file: AttributeValueUpdate_attributeValueUpdate_attribute_values_edges_node_file | null;
   reference: string | null;
   richText: any | null;
+}
+
+export interface AttributeValueUpdate_attributeValueUpdate_attribute_values_edges {
+  __typename: "AttributeValueCountableEdge";
+  cursor: string;
+  node: AttributeValueUpdate_attributeValueUpdate_attribute_values_edges_node;
+}
+
+export interface AttributeValueUpdate_attributeValueUpdate_attribute_values {
+  __typename: "AttributeValueCountableConnection";
+  pageInfo: AttributeValueUpdate_attributeValueUpdate_attribute_values_pageInfo;
+  edges: AttributeValueUpdate_attributeValueUpdate_attribute_values_edges[];
 }
 
 export interface AttributeValueUpdate_attributeValueUpdate_attribute {
@@ -54,7 +74,7 @@ export interface AttributeValueUpdate_attributeValueUpdate_attribute {
   entityType: AttributeEntityTypeEnum | null;
   storefrontSearchPosition: number;
   valueRequired: boolean;
-  values: (AttributeValueUpdate_attributeValueUpdate_attribute_values | null)[] | null;
+  values: AttributeValueUpdate_attributeValueUpdate_attribute_values | null;
 }
 
 export interface AttributeValueUpdate_attributeValueUpdate_errors {
@@ -76,4 +96,8 @@ export interface AttributeValueUpdate {
 export interface AttributeValueUpdateVariables {
   id: string;
   input: AttributeValueCreateInput;
+  firstValues?: number | null;
+  afterValues?: string | null;
+  lastValues?: number | null;
+  beforeValues?: string | null;
 }
