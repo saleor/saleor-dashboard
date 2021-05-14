@@ -137,7 +137,8 @@ export function createVariant({
   channelId,
   attributeId,
   price = 1,
-  costPrice = 1
+  costPrice = 1,
+  trackInventory = true
 }) {
   const channelListings = getValueWithDefault(
     channelId,
@@ -164,6 +165,7 @@ export function createVariant({
       }]
       sku: "${sku}"
       ${channelListings}
+      trackInventory:${trackInventory}
       ${stocks}
     }) {
       productVariants{

@@ -1,6 +1,16 @@
-import { addProductToCheckout } from "../../apiRequests/Checkout";
+import faker from "faker";
+
+import {
+  addProductsToCheckout,
+  createCheckout
+} from "../../apiRequests/Checkout";
+import { getDefaultChannel } from "../../utils/channelsUtils";
 import { createWaitingForCaptureOrder } from "../../utils/ordersUtils";
-import { createProductInChannel } from "../../utils/products/productsUtils";
+import {
+  createProductInChannel,
+  createTypeAttributeAndCategoryForProduct,
+  deleteProductsStartsWith
+} from "../../utils/products/productsUtils";
 import {
   createShipping,
   deleteShippingStartsWith
@@ -8,7 +18,7 @@ import {
 
 describe("Products stocks in checkout", () => {
   const startsWith = "CyStocksCheckout-";
-  const name = `${startsWith}${faker.random.number()}`;
+  const name = `${startsWith}${faker.datatype.number()}`;
 
   let defaultChannel;
   let address;
@@ -16,6 +26,7 @@ describe("Products stocks in checkout", () => {
   let attribute;
   let category;
   let productType;
+  let shippingMethod;
 
   before(() => {
     cy.clearSessionData().loginUserViaRequest();
@@ -34,10 +45,13 @@ describe("Products stocks in checkout", () => {
           address
         });
       })
-      .then(({ warehouse: warehouseResp }) => {
-        warehouse = warehouseResp;
-        createTypeAttributeAndCategoryForProduct(name);
-      })
+      .then(
+        ({ warehouse: warehouseResp, shippingMethod: shippingMethodResp }) => {
+          warehouse = warehouseResp;
+          shippingMethod = shippingMethodResp;
+          createTypeAttributeAndCategoryForProduct(name);
+        }
+      )
       .then(
         ({
           attribute: attributeResp,
@@ -51,12 +65,13 @@ describe("Products stocks in checkout", () => {
       );
   });
   it("should create checkout with last product in stock", () => {
+    const productName = `${startsWith}${faker.datatype.number()}`;
     createProductInChannel({
       attributeId: attribute.id,
       categoryId: category.id,
       productTypeId: productType.id,
       channelId: defaultChannel.id,
-      name,
+      name: productName,
       warehouseId: warehouse.id,
       quantityInWarehouse: 1
     })
@@ -65,14 +80,16 @@ describe("Products stocks in checkout", () => {
           defaultChannel.slug,
           "email@example.com",
           variantsList,
+          shippingMethod.id,
           address
         );
       })
       .then(({ order }) => {
-        expect(order).to.be.not.null;
+        expect(order, "order should be created").to.be.ok;
       });
   });
   it("should not be possible to add product with quantity greater than stock", () => {
+    const productName = `${startsWith}${faker.datatype.number()}`;
     let variants;
 
     createProductInChannel({
@@ -80,24 +97,56 @@ describe("Products stocks in checkout", () => {
       categoryId: category.id,
       productTypeId: productType.id,
       channelId: defaultChannel.id,
-      name,
+      name: productName,
       warehouseId: warehouse.id,
       quantityInWarehouse: 1
     })
       .then(({ variantsList }) => {
         variants = variantsList;
+        createCheckout({
+          channelSlug: defaultChannel.slug,
+          address,
+          billingAddress: address,
+          email: "email@example.com",
+          variantsList,
+          auth: "token"
+        });
+      })
+      .then(checkout => {
+        addProductsToCheckout(checkout.id, variants, 2);
+      })
+      .then(({ errors }) => {
+        expect(
+          errors[0],
+          "should return error on field quantity"
+        ).to.have.property("field", "quantity");
+      });
+  });
+
+  it("should buy product with no quantity if tracking is not set", () => {
+    const productName = `${startsWith}${faker.datatype.number()}`;
+
+    createProductInChannel({
+      attributeId: attribute.id,
+      categoryId: category.id,
+      productTypeId: productType.id,
+      channelId: defaultChannel.id,
+      name: productName,
+      warehouseId: warehouse.id,
+      quantityInWarehouse: 0,
+      trackInventory: false
+    })
+      .then(({ variantsList }) => {
         createWaitingForCaptureOrder(
           defaultChannel.slug,
           "email@example.com",
           variantsList,
+          shippingMethod.id,
           address
         );
       })
-      .then(({ checkout }) => {
-        addProductsToCheckout(checkout.id, variants, 1);
-      })
-      .then(({ errors }) => {
-        expect(errors.filed).to.be.not.null;
+      .then(({ order }) => {
+        expect(order, "order should be created").to.be.ok;
       });
   });
 });
