@@ -1,5 +1,4 @@
 import { DialogContentText } from "@material-ui/core";
-import { useChannelsList } from "@saleor/channels/queries";
 import ActionDialog from "@saleor/components/ActionDialog";
 import useAppChannel from "@saleor/components/AppLayout/AppChannelContext";
 import NotFoundPage from "@saleor/components/NotFoundPage";
@@ -70,13 +69,11 @@ const ShippingZoneDetails: React.FC<ShippingZoneDetailsProps> = ({
     }
   );
 
-  const { data: channelsList } = useChannelsList({});
-
   const { data, loading } = useShippingZone({
     displayLoader: true,
     variables: { id, ...paginationState }
   });
-  const { channel } = useAppChannel();
+  const { availableChannels, channel } = useAppChannel();
 
   const [openModal, closeModal] = createDialogActionHandlers<
     ShippingZoneUrlDialog,
@@ -197,7 +194,7 @@ const ShippingZoneDetails: React.FC<ShippingZoneDetailsProps> = ({
           })
         }
         onSubmit={handleSubmit}
-        allChannels={channelsList?.channels}
+        allChannels={availableChannels}
         onWarehouseAdd={() => openModal("add-warehouse")}
         onWeightRateAdd={() => navigate(shippingWeightRatesUrl(id))}
         onWeightRateEdit={rateId =>

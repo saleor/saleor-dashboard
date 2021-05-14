@@ -1,6 +1,6 @@
-import { useChannelsList } from "@saleor/channels/queries";
 import { ChannelsAction } from "@saleor/channels/urls";
 import { ChannelSaleData, createSortedSaleData } from "@saleor/channels/utils";
+import useAppChannel from "@saleor/components/AppLayout/AppChannelContext";
 import ChannelsAvailabilityDialog from "@saleor/components/ChannelsAvailabilityDialog";
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import SaleCreatePage from "@saleor/discounts/components/SaleCreatePage";
@@ -39,9 +39,9 @@ export const SaleCreateView: React.FC<SaleCreateProps> = ({ params }) => {
     SaleCreateUrlQueryParams
   >(navigate, params => saleAddUrl(params), params);
 
-  const { data: channelsData } = useChannelsList({});
+  const { availableChannels } = useAppChannel(false);
   const allChannels: ChannelSaleData[] = createSortedSaleData(
-    channelsData?.channels
+    availableChannels
   );
 
   const {
