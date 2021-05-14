@@ -165,7 +165,7 @@ describe("Shipping methods", () => {
       variantsList,
       address: plAddress,
       auth: "token"
-    }).then(checkout => {
+    }).then(({ checkout }) => {
       const isShippingAvailable = isShippingAvailableInCheckout(
         checkout,
         shippingName
@@ -190,7 +190,7 @@ describe("Shipping methods", () => {
       variantsList,
       address: plAddress,
       auth: "token"
-    }).then(checkout => {
+    }).then(({ checkout }) => {
       const isShippingAvailable = isShippingAvailableInCheckout(
         checkout,
         shippingName

@@ -1,23 +1,29 @@
-import { cycleErrorMessage } from "graphql/validation/rules/NoFragmentCycles";
+import faker from "faker";
 
 import { createCheckout } from "../../../apiRequests/Checkout";
 import { getDefaultChannel } from "../../../utils/channelsUtils";
 import {
   createProductInChannel,
-  createTypeAttributeAndCategoryForProduct
+  createTypeAttributeAndCategoryForProduct,
+  deleteProductsStartsWith
 } from "../../../utils/products/productsUtils";
-import { createShipping } from "../../../utils/shippingUtils";
+import {
+  createShipping,
+  deleteShippingStartsWith
+} from "../../../utils/shippingUtils";
 
 describe("Warehouses in checkout", () => {
-  const channelStartsWith = `CyWarehouseInCheckout:`;
+  const startsWith = `CyWarehouseCheckout`;
   let defaultChannel;
   let usAddress;
   let plAddress;
   let warehouse;
   it("should not be possible to buy product for country not listed in warehouse", () => {
-    const name = `${channelStartsWith} ${faker.datatype.number(2)}`;
-    cycleErrorMessage
-      .fixture("addresses")
+    cy.clearSessionData().loginUserViaRequest();
+    deleteShippingStartsWith(startsWith);
+    deleteProductsStartsWith(startsWith);
+    const name = `${startsWith}${faker.datatype.number()}`;
+    cy.fixture("addresses")
       .then(addresses => {
         usAddress = addresses.usAddress;
         plAddress = addresses.plAddress;
@@ -28,7 +34,7 @@ describe("Warehouses in checkout", () => {
         createShipping({
           channelId: defaultChannel.id,
           name,
-          usAddress
+          address: usAddress
         });
       })
       .then(({ warehouse: warehouseResp }) => {
@@ -42,7 +48,8 @@ describe("Warehouses in checkout", () => {
           categoryId: category.id,
           channelId: defaultChannel.id,
           productTypeId: productType.id,
-          warehouseId: warehouse.id
+          warehouseId: warehouse.id,
+          quantityInWarehouse: 100
         });
       })
       .then(({ variantsList }) => {
@@ -53,8 +60,8 @@ describe("Warehouses in checkout", () => {
           address: plAddress
         });
       })
-      .then(checkout => {
-        expect(checkout.availableShippingMethods).to.be.null;
+      .then(({ errors }) => {
+        expect(errors[0]).to.have.property("field", "quantity");
       });
   });
 });

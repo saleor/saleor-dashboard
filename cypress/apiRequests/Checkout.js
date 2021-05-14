@@ -29,7 +29,7 @@ export function createCheckout({
       ${shippingAddress}
       ${billingAddressLines}
     }){
-      checkoutErrors{
+      errors{
         field
         message
       }
@@ -44,7 +44,7 @@ export function createCheckout({
   }`;
   return cy
     .sendRequestWithQuery(mutation, auth)
-    .its("body.data.checkoutCreate.checkout");
+    .its("body.data.checkoutCreate");
 }
 export function addShippingMethod(checkoutId, shippingMethodId) {
   const mutation = `mutation{
