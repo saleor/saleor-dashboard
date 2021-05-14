@@ -1,4 +1,5 @@
-import TableRow, { TableRowProps } from "@material-ui/core/TableRow";
+import { TableRow } from "@material-ui/core";
+import { TableRowProps } from "@material-ui/core/TableRow";
 import React from "react";
 import { SortableElement } from "react-sortable-hoc";
 

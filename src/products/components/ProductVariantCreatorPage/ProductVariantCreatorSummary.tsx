@@ -1,11 +1,9 @@
-import Card from "@material-ui/core/Card";
+import { Card, IconButton, TextField } from "@material-ui/core";
 import blue from "@material-ui/core/colors/blue";
 import cyan from "@material-ui/core/colors/cyan";
 import green from "@material-ui/core/colors/green";
 import purple from "@material-ui/core/colors/purple";
 import yellow from "@material-ui/core/colors/yellow";
-import IconButton from "@material-ui/core/IconButton";
-import TextField from "@material-ui/core/TextField";
 import DeleteIcon from "@material-ui/icons/Delete";
 import { ChannelPriceData } from "@saleor/channels/utils";
 import CardTitle from "@saleor/components/CardTitle";

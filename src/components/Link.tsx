@@ -1,4 +1,5 @@
-import Typography, { TypographyProps } from "@material-ui/core/Typography";
+import { Typography } from "@material-ui/core";
+import { TypographyProps } from "@material-ui/core/Typography";
 import { makeStyles } from "@saleor/theme";
 import classNames from "classnames";
 import React from "react";

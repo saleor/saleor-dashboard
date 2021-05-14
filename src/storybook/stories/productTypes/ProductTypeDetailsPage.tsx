@@ -1,4 +1,3 @@
-import { Omit } from "@material-ui/core";
 import { listActionsProps } from "@saleor/fixtures";
 import { formError } from "@saleor/storybook/misc";
 import { storiesOf } from "@storybook/react";

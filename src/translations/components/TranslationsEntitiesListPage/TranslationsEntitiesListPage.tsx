@@ -1,4 +1,4 @@
-import Card from "@material-ui/core/Card";
+import { Card } from "@material-ui/core";
 import AppHeader from "@saleor/components/AppHeader";
 import Container from "@saleor/components/Container";
 import PageHeader from "@saleor/components/PageHeader";

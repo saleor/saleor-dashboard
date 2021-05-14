@@ -1,4 +1,4 @@
-import Card from "@material-ui/core/Card";
+import { Card } from "@material-ui/core";
 import { makeStyles } from "@saleor/theme";
 import React from "react";
 

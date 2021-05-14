@@ -3,7 +3,6 @@ import {
   Divider,
   ExpansionPanel,
   ExpansionPanelSummary,
-  makeStyles,
   Typography
 } from "@material-ui/core";
 import { ChannelData } from "@saleor/channels/utils";
@@ -15,7 +14,8 @@ import { getById } from "@saleor/orders/components/OrderReturnPage/utils";
 import { ProductDetails_product_variants } from "@saleor/products/types/ProductDetails";
 import { ChannelsWithVariantsData } from "@saleor/products/views/ProductUpdate/types";
 import { areAllChannelVariantsSelected } from "@saleor/products/views/ProductUpdate/utils";
-import map from "lodash-es/map";
+import { makeStyles } from "@saleor/theme";
+import map from "lodash/map";
 import React, { ChangeEvent } from "react";
 import { defineMessages, useIntl } from "react-intl";
 

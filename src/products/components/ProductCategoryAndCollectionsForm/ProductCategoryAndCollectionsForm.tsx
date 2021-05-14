@@ -1,5 +1,4 @@
-import Card from "@material-ui/core/Card";
-import CardContent from "@material-ui/core/CardContent";
+import { Card, CardContent } from "@material-ui/core";
 import FormSpacer from "@saleor/components/FormSpacer";
 import MultiSelectField from "@saleor/components/MultiSelectField";
 import PageHeader from "@saleor/components/PageHeader";

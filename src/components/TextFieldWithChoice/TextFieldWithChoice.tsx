@@ -1,11 +1,14 @@
-import ClickAwayListener from "@material-ui/core/ClickAwayListener";
-import Grow from "@material-ui/core/Grow";
-import MenuItem from "@material-ui/core/MenuItem";
-import Menu from "@material-ui/core/MenuList";
-import Paper from "@material-ui/core/Paper";
-import Popper from "@material-ui/core/Popper";
-import TextField, { TextFieldProps } from "@material-ui/core/TextField";
-import Typography from "@material-ui/core/Typography";
+import {
+  ClickAwayListener,
+  Grow,
+  MenuItem,
+  MenuList as Menu,
+  Paper,
+  Popper,
+  TextField,
+  Typography
+} from "@material-ui/core";
+import { TextFieldProps } from "@material-ui/core/TextField";
 import DropdownIcon from "@material-ui/icons/ArrowDropDown";
 import { makeStyles } from "@saleor/theme";
 import React from "react";

@@ -1,4 +1,4 @@
-import DialogContentText from "@material-ui/core/DialogContentText";
+import { DialogContentText } from "@material-ui/core";
 import { useAttributeValueDeleteMutation } from "@saleor/attributes/mutations";
 import {
   getAttributesAfterFileAttributesUpdate,

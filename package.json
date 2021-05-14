@@ -55,7 +55,6 @@
     "jss": "^9.8.7",
     "keycode": "^2.2.0",
     "lodash": "^4.17.20",
-    "lodash-es": "^4.17.14",
     "moment-timezone": "^0.5.32",
     "qs": "^6.9.0",
     "react": "^16.12.0",
@@ -161,14 +160,17 @@
     "react-intl-translations-manager": "^5.0.3",
     "react-test-renderer": "^16.12.0",
     "regenerator-runtime": "^0.11.1",
+    "register-service-worker": "^1.7.2",
     "release-it": "^14.5.0",
     "require-context.macro": "^1.1.1",
     "rimraf": "^3.0.0",
     "setup-polly-jest": "^0.9.1",
+    "speed-measure-webpack-plugin": "^1.5.0",
     "start-server-and-test": "^1.11.0",
     "ts-jest": "^24.2.0",
     "tsconfig-paths-webpack-plugin": "^3.2.0",
     "webpack": "^4.35.3",
+    "webpack-bundle-analyzer": "^4.4.1",
     "webpack-cli": "^3.3.6",
     "webpack-dev-server": "^3.11.0",
     "webpack-manifest-plugin": "2.2.0",
@@ -177,8 +179,7 @@
     "workbox-precaching": "^6.1.2",
     "workbox-routing": "^6.1.2",
     "workbox-strategies": "^6.1.2",
-    "workbox-webpack-plugin": "^6.1.2",
-    "register-service-worker": "^1.7.2"
+    "workbox-webpack-plugin": "^6.1.2"
   },
   "optionalDependencies": {
     "fsevents": "^1.2.9"
@@ -204,8 +205,7 @@
       "@assets(.*)$": "<rootDir>/assets/$1",
       "@locale(.*)$": "<rootDir>/locale/$1",
       "@saleor(?!.*macaw)(.*)$": "<rootDir>/src/$1",
-      "@test/(.*)$": "<rootDir>/testUtils/$1",
-      "^lodash-es(.*)$": "lodash/$1"
+      "@test/(.*)$": "<rootDir>/testUtils/$1"
     }
   },
   "husky": {

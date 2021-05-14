@@ -1,7 +1,9 @@
-import CircularProgress from "@material-ui/core/CircularProgress";
-import MenuItem from "@material-ui/core/MenuItem";
-import Paper from "@material-ui/core/Paper";
-import TextField from "@material-ui/core/TextField";
+import {
+  CircularProgress,
+  MenuItem,
+  Paper,
+  TextField
+} from "@material-ui/core";
 import ArrowBack from "@material-ui/icons/ArrowBack";
 import { buttonMessages } from "@saleor/intl";
 import { makeStyles } from "@saleor/theme";

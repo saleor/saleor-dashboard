@@ -1,4 +1,5 @@
-import TableBody, { TableBodyProps } from "@material-ui/core/TableBody";
+import { TableBody } from "@material-ui/core";
+import { TableBodyProps } from "@material-ui/core/TableBody";
 import { makeStyles } from "@saleor/theme";
 import { ReorderAction } from "@saleor/types";
 import React from "react";

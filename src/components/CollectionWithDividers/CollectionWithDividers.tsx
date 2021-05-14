@@ -1,5 +1,5 @@
-import Divider from "@material-ui/core/Divider";
-import initial from "lodash-es/initial";
+import { Divider } from "@material-ui/core";
+import initial from "lodash/initial";
 import React from "react";
 
 interface CollectionWithDividersProps<T> {

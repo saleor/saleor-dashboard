@@ -14,7 +14,7 @@ import {
   ShippingPostalCodeRulesCreateInputRange
 } from "@saleor/types/globalTypes";
 import { getParsedDataForJsonStringField } from "@saleor/utils/richText/misc";
-import { differenceBy } from "lodash";
+import differenceBy from "lodash/differenceBy";
 import { useIntl } from "react-intl";
 
 import {

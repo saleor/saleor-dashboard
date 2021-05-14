@@ -1,4 +1,3 @@
-import { Omit } from "@material-ui/core";
 import { PageErrorCode } from "@saleor/types/globalTypes";
 import { storiesOf } from "@storybook/react";
 import React from "react";

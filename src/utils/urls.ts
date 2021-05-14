@@ -1,4 +1,4 @@
-import isArray from "lodash-es/isArray";
+import isArray from "lodash/isArray";
 import { stringify } from "qs";
 
 export function stringifyQs(params: {}): string {

@@ -1,5 +1,4 @@
 import placeholderImage from "@assets/images/placeholder60x60.png";
-import { Omit } from "@material-ui/core";
 import { adminUserPermissions } from "@saleor/fixtures";
 import { PermissionEnum } from "@saleor/types/globalTypes";
 import { mapEdgesToItems } from "@saleor/utils/maps";

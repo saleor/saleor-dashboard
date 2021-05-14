@@ -1,6 +1,5 @@
 import menuArrowIcon from "@assets/images/menu-arrow-icon.svg";
-import Hidden from "@material-ui/core/Hidden";
-import Typography from "@material-ui/core/Typography";
+import { Hidden, Typography } from "@material-ui/core";
 import useTheme from "@saleor/hooks/useTheme";
 import { createHref } from "@saleor/misc";
 import { makeStyles } from "@saleor/theme";
