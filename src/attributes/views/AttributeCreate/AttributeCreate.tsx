@@ -137,7 +137,9 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ params }) => {
 
     const result = await attributeCreate({
       variables: {
-        input
+        input,
+        firstValues: PAGINATE_BY,
+        afterValues: params.after
       }
     });
 
