@@ -19,8 +19,9 @@ export function createWaitingForCaptureOrder(
     })
     .then(() => addPayment(checkout.id))
     .then(() => checkoutRequest.completeCheckout(checkout.id))
-    .then(order => ({ checkout, order }));
+    .then(({ order }) => ({ checkout, order }));
 }
+
 export function createCheckoutWithVoucher({
   channelSlug,
   email = "email@example.com",
@@ -51,7 +52,8 @@ export function createReadyToFulfillOrder(
   address
 ) {
   let order;
-  return createDraftOrder(customerId, shippingMethodId, channelId, address)
+  return orderRequest
+    .createDraftOrder(customerId, shippingMethodId, channelId, address)
     .then(orderResp => {
       order = orderResp;
       assignVariantsToOrder(order, variantsList);
@@ -68,7 +70,8 @@ export function createOrder({
   address
 }) {
   let order;
-  return createDraftOrder(customerId, shippingMethodId, channelId, address)
+  return orderRequest
+    .createDraftOrder(customerId, shippingMethodId, channelId, address)
     .then(orderResp => {
       order = orderResp;
       assignVariantsToOrder(order, variantsList);
@@ -83,16 +86,22 @@ function assignVariantsToOrder(order, variantsList) {
   });
 }
 
-export function createDraftOrder(
-  customerId,
-  shippingMethodId,
-  channelId,
-  address
-) {
-  return orderRequest
-    .createDraftOrder(customerId, shippingMethodId, channelId, address)
-    .its("body.data.draftOrderCreate.order");
+export function addPayment(checkoutId) {
+  return checkoutRequest.addPayment({
+    checkoutId,
+    gateway: "mirumee.payments.dummy",
+    token: "not-charged"
+  });
 }
+
+export function addAdyenPayment(checkoutId, amount) {
+  return checkoutRequest.addPayment({
+    checkoutId,
+    gateway: "mirumee.payments.adyen",
+    amount
+  });
+}
+
 export function createAndCompleteCheckoutWithoutShipping({
   channelSlug,
   email,
@@ -108,5 +117,5 @@ export function createAndCompleteCheckoutWithoutShipping({
       addPayment(checkout.id);
     })
     .then(() => checkoutRequest.completeCheckout(checkout.id))
-    .then(order => ({ checkout, order }));
+    .then(({ order }) => ({ checkout, order }));
 }

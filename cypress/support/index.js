@@ -54,3 +54,10 @@ Cypress.Commands.add("sendRequestWithQuery", (query, authorization = "auth") =>
     url: urlList.apiUri
   })
 );
+Cypress.on(
+  "uncaught:exception",
+  (err, runnable) =>
+    // returning false here prevents Cypress from
+    // failing the test
+    false
+);

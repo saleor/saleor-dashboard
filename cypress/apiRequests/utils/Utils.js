@@ -25,3 +25,7 @@ export function getVariantsLines(variantsList, quantity) {
                     variantId:"${variant.id}"}`
   );
 }
+export const getPaymentDataLine = paymentData =>
+  paymentData
+    ? `, paymentData:"{\\"riskData\\":{\\"clientData\\":\\"${paymentData.clientData}\\"}, \\"paymentMethod\\":{\\"type\\":\\"scheme\\", \\"encryptedCardNumber\\":\\"${paymentData.encryptedCardNumber}\\", \\"encryptedExpiryMonth\\":\\"${paymentData.encryptedExpiryMonth}\\", \\"encryptedExpiryYear\\":\\"${paymentData.encryptedExpiryYear}\\", \\"encryptedSecurityCode\\":\\"${paymentData.encryptedSecurityCode}\\", \\"brand\\":\\"${paymentData.brand}\\"}}"`
+    : "";

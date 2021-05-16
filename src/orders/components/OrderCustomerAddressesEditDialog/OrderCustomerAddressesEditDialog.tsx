@@ -248,6 +248,7 @@ const OrderCustomerAddressesEditDialog: React.FC<OrderCustomerAddressesEditDialo
                 color="primary"
                 variant="contained"
                 type="submit"
+                data-test="submit"
               >
                 <FormattedMessage {...buttonMessages.select} />
               </ConfirmButton>

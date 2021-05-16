@@ -42,6 +42,7 @@ const Skeleton: React.FC<SkeletonProps> = props => {
 
   return (
     <span
+      data-test-id="skeleton"
       className={classNames(classes.skeleton, className, {
         [classes.primary]: primary
       })}
