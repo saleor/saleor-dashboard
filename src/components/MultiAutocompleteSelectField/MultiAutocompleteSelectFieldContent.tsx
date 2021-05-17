@@ -30,6 +30,7 @@ export interface MultiAutocompleteChoiceType {
   label: string;
   value: any;
   disabled?: boolean;
+  boolean?: boolean;
 }
 export interface MultiAutocompleteSelectFieldContentProps
   extends Partial<FetchMoreProps> {

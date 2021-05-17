@@ -1,10 +1,14 @@
 import { IFilter } from "@saleor/components/Filter";
 import { MultiAutocompleteChoiceType } from "@saleor/components/MultiAutocompleteSelectField";
-import { sectionNames } from "@saleor/intl";
+import { commonMessages, sectionNames } from "@saleor/intl";
 import { AutocompleteFilterOpts, FilterOpts, MinMax } from "@saleor/types";
-import { StockAvailability } from "@saleor/types/globalTypes";
+import {
+  AttributeInputTypeEnum,
+  StockAvailability
+} from "@saleor/types/globalTypes";
 import {
   createAutocompleteField,
+  createBooleanField,
   createOptionsField,
   createPriceField
 } from "@saleor/utils/filters/fields";
@@ -25,6 +29,7 @@ export interface ProductListFilterOpts {
       choices: MultiAutocompleteChoiceType[];
       name: string;
       slug: string;
+      inputType: AttributeInputTypeEnum;
     }
   >;
   categories: FilterOpts<string[]> & AutocompleteFilterOpts;
@@ -68,6 +73,12 @@ export function createFilterStructure(
   intl: IntlShape,
   opts: ProductListFilterOpts
 ): IFilter<ProductFilterKeys> {
+  const booleanAttributes = opts.attributes.filter(
+    ({ inputType }) => inputType === AttributeInputTypeEnum.BOOLEAN
+  );
+  const normalAttributes = opts.attributes.filter(
+    ({ inputType }) => !inputType.includes(AttributeInputTypeEnum.BOOLEAN)
+  );
   return [
     {
       ...createOptionsField(
@@ -150,7 +161,26 @@ export function createFilterStructure(
       ),
       active: opts.productType.active
     },
-    ...opts.attributes.map(attr => ({
+    {
+      ...createBooleanField(
+        ProductFilterKeys.productType,
+        "TESTTES",
+        "asdad" as any,
+        {
+          negative: intl.formatMessage(commonMessages.no),
+          positive: intl.formatMessage(commonMessages.yes)
+        }
+      ),
+      active: true
+    },
+    ...booleanAttributes.map(attr => ({
+      ...createBooleanField(attr.slug as any, attr.name, attr.value as any, {
+        negative: intl.formatMessage(commonMessages.no),
+        positive: intl.formatMessage(commonMessages.yes)
+      }),
+      active: attr.active
+    })),
+    ...normalAttributes.map(attr => ({
       ...createOptionsField(
         attr.slug as any,
         attr.name,

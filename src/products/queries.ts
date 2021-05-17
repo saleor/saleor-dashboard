@@ -62,12 +62,14 @@ const initialProductFilterAttributesQuery = gql`
       edges {
         node {
           id
+          inputType
           name
           slug
           values {
             id
             name
             slug
+            boolean
           }
         }
       }

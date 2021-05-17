@@ -25,7 +25,8 @@ import { AttributeValueDelete } from "../types/AttributeValueDelete";
 
 export const ATTRIBUTE_TYPES_WITH_DEDICATED_VALUES = [
   AttributeInputTypeEnum.DROPDOWN,
-  AttributeInputTypeEnum.MULTISELECT
+  AttributeInputTypeEnum.MULTISELECT,
+  AttributeInputTypeEnum.BOOLEAN
 ];
 
 export interface AttributeReference {

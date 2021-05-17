@@ -69,8 +69,10 @@ export function getFilterOpts(
         active: maybe(() => params.attributes[attr.slug].length > 0, false),
         choices: attr.values.map(val => ({
           label: val.name,
-          value: val.slug
+          value: val.slug,
+          boolean: val.boolean
         })),
+        inputType: attr.inputType,
         name: attr.name,
         slug: attr.slug,
         value:
