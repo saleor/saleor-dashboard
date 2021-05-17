@@ -109,13 +109,13 @@ describe("Homepage analytics", () => {
     homePageUtils
       .getOrdersReadyToFulfill(defaultChannel.slug)
       .as("ordersReadyToFulfill");
-    createReadyToFulfillOrder(
+    createReadyToFulfillOrder({
       customerId,
-      shippingMethod.id,
-      defaultChannel.id,
-      createdVariants,
-      addresses.plAddress
-    );
+      shippingMethodId: shippingMethod.id,
+      channelId: defaultChannel.id,
+      variantsList: createdVariants,
+      address: addresses.plAddress
+    });
     cy.get("@ordersReadyToFulfill").then(ordersReadyToFulfillBefore => {
       const allOrdersReadyToFulfill = ordersReadyToFulfillBefore + 1;
       const notANumberRegex = "\\D*";
@@ -191,13 +191,13 @@ describe("Homepage analytics", () => {
   it("should correct amount of sales be displayed", () => {
     homePageUtils.getSalesAmount(defaultChannel.slug).as("salesAmount");
 
-    createReadyToFulfillOrder(
+    createReadyToFulfillOrder({
       customerId,
-      shippingMethod.id,
-      defaultChannel.id,
-      createdVariants,
-      addresses.plAddress
-    );
+      shippingMethodId: shippingMethod.id,
+      channelId: defaultChannel.id,
+      variantsList: createdVariants,
+      address: addresses.plAddress
+    });
 
     cy.get("@salesAmount").then(salesAmount => {
       const totalAmount = salesAmount + productPrice;
@@ -224,13 +224,13 @@ describe("Homepage analytics", () => {
   it("should correct amount of orders be displayed", () => {
     homePageUtils.getTodaysOrders(defaultChannel.slug).as("todaysOrders");
 
-    createReadyToFulfillOrder(
+    createReadyToFulfillOrder({
       customerId,
-      shippingMethod.id,
-      defaultChannel.id,
-      createdVariants,
-      addresses.plAddress
-    );
+      shippingMethodId: shippingMethod.id,
+      channelId: defaultChannel.id,
+      variantsList: createdVariants,
+      address: addresses.plAddress
+    });
 
     cy.get("@todaysOrders").then(ordersBefore => {
       const allOrders = ordersBefore + 1;

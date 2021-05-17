@@ -57,6 +57,7 @@ export function completeOrder(orderId) {
     draftOrderComplete(id:"${orderId}"){
       order{
         id
+        number
         lines{
           id
         }

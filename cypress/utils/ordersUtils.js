@@ -44,13 +44,13 @@ export function createCheckoutWithVoucher({
     .its("body.data.checkoutAddPromoCode");
 }
 
-export function createReadyToFulfillOrder(
+export function createReadyToFulfillOrder({
   customerId,
   shippingMethodId,
   channelId,
   variantsList,
   address
-) {
+}) {
   let order;
   return orderRequest
     .createDraftOrder(customerId, shippingMethodId, channelId, address)
@@ -70,13 +70,13 @@ export function createFulfilledOrder({
   warehouse,
   quantity = 1
 }) {
-  return createReadyToFulfillOrder(
+  return createReadyToFulfillOrder({
     customerId,
     shippingMethodId,
     channelId,
     variantsList,
     address
-  ).then(({ order }) => {
+  }).then(({ order }) => {
     orderRequest.fulfillOrder({
       orderId: order.id,
       warehouse,
