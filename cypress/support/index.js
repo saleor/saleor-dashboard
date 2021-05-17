@@ -2,6 +2,7 @@ import "./user";
 import "./softAssertions";
 import "./deleteElement/index.js";
 import "./elements/index";
+import "cypress-mailhog";
 
 import { urlList } from "../url/urlList";
 
