@@ -12,7 +12,14 @@ export function createWaitingForCaptureOrder(
   const auth = "token";
   cy.loginInShop();
   return checkoutRequest
-    .createCheckout({ channelSlug, email, variantsList, address, auth })
+    .createCheckout({
+      channelSlug,
+      email,
+      variantsList,
+      address,
+      billingAddress: address,
+      auth
+    })
     .then(checkoutResp => {
       checkout = checkoutResp;
       checkoutRequest.addShippingMethod(checkout.id, shippingMethodId);
