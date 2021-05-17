@@ -140,9 +140,7 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ params }) => {
 
     const result = await attributeCreate({
       variables: {
-        input,
-        firstValues: settings.rowNumber,
-        afterValues: params.after
+        input
       }
     });
 

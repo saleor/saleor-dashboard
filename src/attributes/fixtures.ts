@@ -1,13 +1,13 @@
-import { AttributeDetailsFragment } from "@saleor/fragments/types/AttributeDetailsFragment";
 import { ProductDetails_product_productType_variantAttributes } from "@saleor/products/types/ProductDetails";
 import {
   AttributeInputTypeEnum,
   AttributeTypeEnum
 } from "@saleor/types/globalTypes";
 
+import { AttributeDetails_attribute } from "./types/AttributeDetails";
 import { AttributeList_attributes_edges_node } from "./types/AttributeList";
 
-export const attribute: AttributeDetailsFragment = {
+export const attribute: AttributeDetails_attribute = {
   __typename: "Attribute" as "Attribute",
   availableInGrid: true,
   entityType: null,

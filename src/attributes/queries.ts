@@ -1,6 +1,7 @@
 import {
   attributeDetailsFragment,
-  attributeFragment
+  attributeFragment,
+  attributeValueListFragment
 } from "@saleor/fragments/attributes";
 import { pageInfoFragment } from "@saleor/fragments/pageInfo";
 import makeQuery from "@saleor/hooks/makeQuery";
@@ -14,6 +15,7 @@ import { AttributeList, AttributeListVariables } from "./types/AttributeList";
 
 const attributeDetails = gql`
   ${attributeDetailsFragment}
+  ${attributeValueListFragment}
   query AttributeDetails(
     $id: ID!
     $firstValues: Int
@@ -23,6 +25,14 @@ const attributeDetails = gql`
   ) {
     attribute(id: $id) {
       ...AttributeDetailsFragment
+      values(
+        first: $firstValues
+        after: $afterValues
+        last: $lastValues
+        before: $beforeValues
+      ) {
+        ...AttributeValueListFragment
+      }
     }
   }
 `;

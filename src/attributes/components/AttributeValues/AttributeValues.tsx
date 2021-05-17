@@ -14,7 +14,7 @@ import {
   SortableTableRow
 } from "@saleor/components/SortableTable";
 import TablePagination from "@saleor/components/TablePagination";
-import { AttributeDetailsFragment_values_edges_node } from "@saleor/fragments/types/AttributeDetailsFragment";
+import { AttributeValueListFragment_edges_node } from "@saleor/fragments/types/AttributeValueListFragment";
 import { maybe, renderCollection, stopPropagation } from "@saleor/misc";
 import { makeStyles } from "@saleor/theme";
 import { ListProps, ReorderAction } from "@saleor/types";
@@ -24,7 +24,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 export interface AttributeValuesProps
   extends Pick<ListProps, Exclude<keyof ListProps, "onRowClick">> {
   disabled: boolean;
-  values: AttributeDetailsFragment_values_edges_node[];
+  values: AttributeValueListFragment_edges_node[];
   onValueAdd: () => void;
   onValueDelete: (id: string) => void;
   onValueReorder: ReorderAction;

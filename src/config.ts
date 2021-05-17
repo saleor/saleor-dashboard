@@ -46,7 +46,7 @@ export const defaultListSettings: AppListViewSettings = {
     rowNumber: 10
   },
   [ListViews.ATTRIBUTE_VALUE_LIST]: {
-    rowNumber: PAGINATE_BY
+    rowNumber: 10
   },
   [ListViews.CATEGORY_LIST]: {
     rowNumber: PAGINATE_BY

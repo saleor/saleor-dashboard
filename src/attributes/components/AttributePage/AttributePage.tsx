@@ -1,3 +1,4 @@
+import { AttributeDetails_attribute_values } from "@saleor/attributes/types/AttributeDetails";
 import { ATTRIBUTE_TYPES_WITH_DEDICATED_VALUES } from "@saleor/attributes/utils/data";
 import AppHeader from "@saleor/components/AppHeader";
 import CardSpacer from "@saleor/components/CardSpacer";
@@ -9,10 +10,7 @@ import Metadata from "@saleor/components/Metadata/Metadata";
 import { MetadataFormData } from "@saleor/components/Metadata/types";
 import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
-import {
-  AttributeDetailsFragment,
-  AttributeDetailsFragment_values
-} from "@saleor/fragments/types/AttributeDetailsFragment";
+import { AttributeDetailsFragment } from "@saleor/fragments/types/AttributeDetailsFragment";
 import { AttributeErrorFragment } from "@saleor/fragments/types/AttributeErrorFragment";
 import { sectionNames } from "@saleor/intl";
 import { maybe } from "@saleor/misc";
@@ -39,7 +37,7 @@ export interface AttributePageProps {
   disabled: boolean;
   errors: AttributeErrorFragment[];
   saveButtonBarState: ConfirmButtonTransitionState;
-  values: AttributeDetailsFragment_values;
+  values: AttributeDetails_attribute_values;
   onBack: () => void;
   onDelete: () => void;
   onSubmit: (data: AttributePageFormData) => void;

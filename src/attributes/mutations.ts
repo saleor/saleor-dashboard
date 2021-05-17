@@ -1,4 +1,7 @@
-import { attributeDetailsFragment } from "@saleor/fragments/attributes";
+import {
+  attributeDetailsFragment,
+  attributeValueListFragment
+} from "@saleor/fragments/attributes";
 import { attributeErrorFragment } from "@saleor/fragments/errors";
 import { pageInfoFragment } from "@saleor/fragments/pageInfo";
 import makeMutation from "@saleor/hooks/makeMutation";
@@ -70,14 +73,7 @@ export const useAttributeDeleteMutation = makeMutation<
 export const attributeUpdateMutation = gql`
   ${attributeDetailsFragment}
   ${attributeErrorFragment}
-  mutation AttributeUpdate(
-    $id: ID!
-    $input: AttributeUpdateInput!
-    $firstValues: Int
-    $afterValues: String
-    $lastValues: Int
-    $beforeValues: String
-  ) {
+  mutation AttributeUpdate($id: ID!, $input: AttributeUpdateInput!) {
     attributeUpdate(id: $id, input: $input) {
       attribute {
         ...AttributeDetailsFragment
@@ -95,6 +91,7 @@ export const useAttributeUpdateMutation = makeMutation<
 
 const attributeValueDelete = gql`
   ${attributeDetailsFragment}
+  ${attributeValueListFragment}
   ${attributeErrorFragment}
   mutation AttributeValueDelete(
     $id: ID!
@@ -106,6 +103,14 @@ const attributeValueDelete = gql`
     attributeValueDelete(id: $id) {
       attribute {
         ...AttributeDetailsFragment
+        values(
+          first: $firstValues
+          after: $afterValues
+          last: $lastValues
+          before: $beforeValues
+        ) {
+          ...AttributeValueListFragment
+        }
       }
       errors {
         ...AttributeErrorFragment
@@ -120,6 +125,7 @@ export const useAttributeValueDeleteMutation = makeMutation<
 
 export const attributeValueUpdateMutation = gql`
   ${attributeDetailsFragment}
+  ${attributeValueListFragment}
   ${attributeErrorFragment}
   mutation AttributeValueUpdate(
     $id: ID!
@@ -132,6 +138,14 @@ export const attributeValueUpdateMutation = gql`
     attributeValueUpdate(id: $id, input: $input) {
       attribute {
         ...AttributeDetailsFragment
+        values(
+          first: $firstValues
+          after: $afterValues
+          last: $lastValues
+          before: $beforeValues
+        ) {
+          ...AttributeValueListFragment
+        }
       }
       errors {
         ...AttributeErrorFragment
@@ -146,6 +160,7 @@ export const useAttributeValueUpdateMutation = makeMutation<
 
 export const attributeValueCreateMutation = gql`
   ${attributeDetailsFragment}
+  ${attributeValueListFragment}
   ${attributeErrorFragment}
   mutation AttributeValueCreate(
     $id: ID!
@@ -158,6 +173,14 @@ export const attributeValueCreateMutation = gql`
     attributeValueCreate(attribute: $id, input: $input) {
       attribute {
         ...AttributeDetailsFragment
+        values(
+          first: $firstValues
+          after: $afterValues
+          last: $lastValues
+          before: $beforeValues
+        ) {
+          ...AttributeValueListFragment
+        }
       }
       errors {
         ...AttributeErrorFragment
@@ -171,18 +194,11 @@ export const useAttributeValueCreateMutation = makeMutation<
 >(attributeValueCreateMutation);
 
 export const attributeCreateMutation = gql`
-  ${attributeDetailsFragment}
   ${attributeErrorFragment}
-  mutation AttributeCreate(
-    $input: AttributeCreateInput!
-    $firstValues: Int
-    $afterValues: String
-    $lastValues: Int
-    $beforeValues: String
-  ) {
+  mutation AttributeCreate($input: AttributeCreateInput!) {
     attributeCreate(input: $input) {
       attribute {
-        ...AttributeDetailsFragment
+        id
       }
       errors {
         ...AttributeErrorFragment

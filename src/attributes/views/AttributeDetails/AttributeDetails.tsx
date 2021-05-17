@@ -215,9 +215,7 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ id, params }) => {
     const result = await attributeUpdate({
       variables: {
         id,
-        input,
-        firstValues: settings.rowNumber,
-        afterValues: params.after
+        input
       }
     });
 

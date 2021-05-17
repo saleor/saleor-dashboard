@@ -34,8 +34,6 @@ export const attributeFragment = gql`
 export const attributeDetailsFragment = gql`
   ${attributeFragment}
   ${metadataFragment}
-  ${attributeValueFragment}
-  ${pageInfoFragment}
   fragment AttributeDetailsFragment on Attribute {
     ...AttributeFragment
     ...MetadataFragment
@@ -45,20 +43,20 @@ export const attributeDetailsFragment = gql`
     unit
     storefrontSearchPosition
     valueRequired
-    values(
-      first: $firstValues
-      after: $afterValues
-      last: $lastValues
-      before: $beforeValues
-    ) {
-      pageInfo {
-        ...PageInfoFragment
-      }
-      edges {
-        cursor
-        node {
-          ...AttributeValueFragment
-        }
+  }
+`;
+
+export const attributeValueListFragment = gql`
+  ${attributeValueFragment}
+  ${pageInfoFragment}
+  fragment AttributeValueListFragment on AttributeValueCountableConnection {
+    pageInfo {
+      ...PageInfoFragment
+    }
+    edges {
+      cursor
+      node {
+        ...AttributeValueFragment
       }
     }
   }
