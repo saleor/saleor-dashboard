@@ -1,4 +1,4 @@
-import Typography from "@material-ui/core/Typography";
+import { Typography } from "@material-ui/core";
 import AppHeader from "@saleor/components/AppHeader";
 import CardMenu from "@saleor/components/CardMenu";
 import { CardSpacer } from "@saleor/components/CardSpacer";
@@ -57,10 +57,6 @@ export interface OrderDetailsPageProps extends UserPermissionProps {
   shippingMethods?: Array<{
     id: string;
     name: string;
-  }>;
-  countries?: Array<{
-    code: string;
-    label: string;
   }>;
   disabled: boolean;
   saveButtonBarState: ConfirmButtonTransitionState;

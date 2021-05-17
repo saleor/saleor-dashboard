@@ -1,5 +1,4 @@
-import Card from "@material-ui/core/Card";
-import CardContent from "@material-ui/core/CardContent";
+import { Card, CardContent } from "@material-ui/core";
 import { makeStyles } from "@saleor/theme";
 import classNames from "classnames";
 import React from "react";

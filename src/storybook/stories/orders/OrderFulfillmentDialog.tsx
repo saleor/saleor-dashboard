@@ -1,5 +1,4 @@
 import placeholderImage from "@assets/images/placeholder60x60.png";
-import { Omit } from "@material-ui/core";
 import { OrderErrorCode } from "@saleor/types/globalTypes";
 import { storiesOf } from "@storybook/react";
 import React from "react";
@@ -31,12 +30,14 @@ storiesOf("Orders / OrderFulfillmentDialog", module)
         {
           __typename: "OrderError",
           code: OrderErrorCode.FULFILL_ORDER_LINE,
-          field: null
+          field: null,
+          addressType: null
         },
         {
           __typename: "OrderError",
           code: OrderErrorCode.INVALID,
-          field: "trackingNumber"
+          field: "trackingNumber",
+          addressType: null
         }
       ]}
     />

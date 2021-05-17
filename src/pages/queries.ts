@@ -2,6 +2,7 @@ import { pageDetailsFragment, pageFragment } from "@saleor/fragments/pages";
 import makeQuery from "@saleor/hooks/makeQuery";
 import gql from "graphql-tag";
 
+import { PageCount, PageCountVariables } from "./types/PageCount";
 import { PageDetails, PageDetailsVariables } from "./types/PageDetails";
 import { PageList, PageListVariables } from "./types/PageList";
 
@@ -49,4 +50,16 @@ const pageDetails = gql`
 `;
 export const usePageDetailsQuery = makeQuery<PageDetails, PageDetailsVariables>(
   pageDetails
+);
+
+const pageCountQuery = gql`
+  query PageCount($filter: PageFilterInput) {
+    pages(filter: $filter) {
+      totalCount
+    }
+  }
+`;
+
+export const usePageCountQuery = makeQuery<PageCount, PageCountVariables>(
+  pageCountQuery
 );

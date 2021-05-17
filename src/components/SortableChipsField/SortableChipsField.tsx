@@ -1,4 +1,4 @@
-import Typography from "@material-ui/core/Typography";
+import { Typography } from "@material-ui/core";
 import { makeStyles } from "@saleor/theme";
 import { ReorderAction } from "@saleor/types";
 import React from "react";
@@ -11,7 +11,7 @@ import SortableContainer from "./SortableContainer";
 const useStyles = makeStyles(
   theme => ({
     chip: {
-      background: "#fff",
+      background: theme.palette.background.paper,
       color: theme.palette.primary.dark,
       marginBottom: theme.spacing(1)
     },

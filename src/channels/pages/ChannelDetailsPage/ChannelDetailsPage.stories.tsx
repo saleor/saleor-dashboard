@@ -21,6 +21,18 @@ const props: ChannelDetailsPageProps = {
   updateChannelStatus: () => undefined,
   searchShippingZones: () => undefined,
   searchShippingZonesData: undefined,
+  channelShippingZones: [
+    {
+      __typename: "ShippingZone",
+      id: "zone-1",
+      name: "Europe"
+    },
+    {
+      __typename: "ShippingZone",
+      id: "zone-2",
+      name: "USA"
+    }
+  ],
   fetchMoreShippingZones: {
     loading: false,
     hasMore: false,

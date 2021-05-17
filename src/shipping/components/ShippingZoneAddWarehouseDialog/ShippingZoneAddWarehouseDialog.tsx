@@ -1,9 +1,11 @@
-import Button from "@material-ui/core/Button";
-import Dialog from "@material-ui/core/Dialog";
-import DialogActions from "@material-ui/core/DialogActions";
-import DialogContent from "@material-ui/core/DialogContent";
-import DialogTitle from "@material-ui/core/DialogTitle";
-import TextField from "@material-ui/core/TextField";
+import {
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  TextField
+} from "@material-ui/core";
 import CompanyAddressForm from "@saleor/components/CompanyAddressInput/CompanyAddressForm";
 import ConfirmButton, {
   ConfirmButtonTransitionState
@@ -22,6 +24,7 @@ import { buttonMessages } from "@saleor/intl";
 import { makeStyles } from "@saleor/theme";
 import { DialogProps } from "@saleor/types";
 import createSingleAutocompleteSelectHandler from "@saleor/utils/handlers/singleAutocompleteSelectChangeHandler";
+import { mapCountriesToChoices } from "@saleor/utils/maps";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -85,10 +88,7 @@ const ShippingZoneAddWarehouseDialog: React.FC<ShippingZoneAddWarehouseDialogPro
   useModalDialogOpen(open, {});
   const intl = useIntl();
 
-  const countryChoices = countries.map(country => ({
-    label: country.country,
-    value: country.code
-  }));
+  const countryChoices = mapCountriesToChoices(countries);
 
   return (
     <Dialog

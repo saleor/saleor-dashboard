@@ -1,5 +1,4 @@
-import LinearProgress from "@material-ui/core/LinearProgress";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
+import { LinearProgress, useMediaQuery } from "@material-ui/core";
 import { createConfigurationMenu } from "@saleor/configuration";
 import useAppState from "@saleor/hooks/useAppState";
 import useNavigator from "@saleor/hooks/useNavigator";

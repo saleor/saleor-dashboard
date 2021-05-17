@@ -59,11 +59,6 @@ function useProductExportFieldMessages() {
       defaultMessage: "Export Variant Weight",
       description: "product field",
       id: "productExportFieldVariantWeight"
-    }),
-    [ProductFieldEnum.VISIBLE]: intl.formatMessage({
-      defaultMessage: "Visibility",
-      description: "product field",
-      id: "productExportFieldVisibility"
     })
   };
 

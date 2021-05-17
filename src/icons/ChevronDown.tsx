@@ -6,6 +6,7 @@ const ChevronDown: React.FC = () => {
 
   return (
     <svg
+      data-test-id="expand-icon"
       width="10"
       height="7"
       viewBox="0 0 10 7"

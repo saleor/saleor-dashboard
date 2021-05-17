@@ -1,6 +1,6 @@
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
-import isEmpty from "lodash-es/isEmpty";
-import reduce from "lodash-es/reduce";
+import isEmpty from "lodash/isEmpty";
+import reduce from "lodash/reduce";
 import { useEffect, useRef, useState } from "react";
 
 import {

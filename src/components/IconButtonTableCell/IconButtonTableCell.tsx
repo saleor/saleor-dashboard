@@ -1,5 +1,4 @@
-import IconButton from "@material-ui/core/IconButton";
-import TableCell from "@material-ui/core/TableCell";
+import { IconButton, TableCell } from "@material-ui/core";
 import { makeStyles } from "@saleor/theme";
 import classNames from "classnames";
 import React from "react";

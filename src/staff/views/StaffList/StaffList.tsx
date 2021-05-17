@@ -19,6 +19,7 @@ import { ListViews } from "@saleor/types";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import createFilterHandlers from "@saleor/utils/handlers/filterHandlers";
 import createSortHandler from "@saleor/utils/handlers/sortHandler";
+import { mapEdgesToItems } from "@saleor/utils/maps";
 import { getSortParams } from "@saleor/utils/sort";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -187,7 +188,7 @@ export const StaffList: React.FC<StaffListProps> = ({ params }) => {
         settings={settings}
         pageInfo={pageInfo}
         sort={getSortParams(params)}
-        staffMembers={staffQueryData?.staffUsers.edges.map(edge => edge.node)}
+        staffMembers={mapEdgesToItems(staffQueryData?.staffUsers)}
         onAdd={() => openModal("add")}
         onBack={() => navigate(configurationMenuUrl)}
         onNextPage={loadNextPage}
@@ -197,8 +198,8 @@ export const StaffList: React.FC<StaffListProps> = ({ params }) => {
         onSort={handleSort}
       />
       <StaffAddMemberDialog
-        availablePermissionGroups={searchPermissionGroupsOpts.data?.search.edges.map(
-          edge => edge.node
+        availablePermissionGroups={mapEdgesToItems(
+          searchPermissionGroupsOpts?.data?.search
         )}
         confirmButtonState={addStaffMemberData.status}
         initialSearch=""

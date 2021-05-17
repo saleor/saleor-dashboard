@@ -1,4 +1,4 @@
-import CircularProgress from "@material-ui/core/CircularProgress";
+import { CircularProgress } from "@material-ui/core";
 import { makeStyles } from "@saleor/theme";
 import React from "react";
 

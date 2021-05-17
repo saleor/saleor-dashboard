@@ -1,5 +1,4 @@
-import DialogContentText from "@material-ui/core/DialogContentText";
-import IconButton from "@material-ui/core/IconButton";
+import { DialogContentText, IconButton } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
 import ActionDialog from "@saleor/components/ActionDialog";
 import useAppChannel from "@saleor/components/AppLayout/AppChannelContext";
@@ -21,6 +20,7 @@ import { ListViews } from "@saleor/types";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import createFilterHandlers from "@saleor/utils/handlers/filterHandlers";
 import createSortHandler from "@saleor/utils/handlers/sortHandler";
+import { mapEdgesToItems } from "@saleor/utils/maps";
 import { getSortParams } from "@saleor/utils/sort";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -174,7 +174,7 @@ export const VoucherList: React.FC<VoucherListProps> = ({ params }) => {
               onTabSave={() => openModal("save-search")}
               tabs={tabs.map(tab => tab.name)}
               settings={settings}
-              vouchers={maybe(() => data.vouchers.edges.map(edge => edge.node))}
+              vouchers={mapEdgesToItems(data?.vouchers)}
               disabled={loading}
               pageInfo={pageInfo}
               onAdd={() => navigate(voucherAddUrl())}

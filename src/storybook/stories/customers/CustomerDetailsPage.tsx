@@ -1,4 +1,3 @@
-import { Omit } from "@material-ui/core";
 import { AccountErrorCode } from "@saleor/types/globalTypes";
 import { storiesOf } from "@storybook/react";
 import React from "react";
@@ -43,7 +42,8 @@ storiesOf("Views / Customers / Customer details", module)
       >).map(field => ({
         __typename: "AccountError",
         code: AccountErrorCode.INVALID,
-        field
+        field,
+        addressType: null
       }))}
     />
   ))

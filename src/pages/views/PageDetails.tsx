@@ -1,4 +1,4 @@
-import DialogContentText from "@material-ui/core/DialogContentText";
+import { DialogContentText } from "@material-ui/core";
 import { useAttributeValueDeleteMutation } from "@saleor/attributes/mutations";
 import {
   getAttributesAfterFileAttributesUpdate,
@@ -24,6 +24,7 @@ import { commonMessages } from "@saleor/intl";
 import usePageSearch from "@saleor/searches/usePageSearch";
 import useProductSearch from "@saleor/searches/useProductSearch";
 import createMetadataUpdateHandler from "@saleor/utils/handlers/metadataUpdateHandler";
+import { mapEdgesToItems } from "@saleor/utils/maps";
 import {
   useMetadataUpdate,
   usePrivateMetadataUpdate
@@ -206,12 +207,8 @@ export const PageDetails: React.FC<PageDetailsProps> = ({ id, params }) => {
           params.action === "assign-attribute-value" && params.id
         }
         onAssignReferencesClick={handleAssignAttributeReferenceClick}
-        referencePages={searchPagesOpts.data?.search.edges.map(
-          edge => edge.node
-        )}
-        referenceProducts={searchProductsOpts.data?.search.edges.map(
-          edge => edge.node
-        )}
+        referencePages={mapEdgesToItems(searchPagesOpts?.data?.search)}
+        referenceProducts={mapEdgesToItems(searchProductsOpts?.data?.search)}
         fetchReferencePages={searchPages}
         fetchMoreReferencePages={fetchMoreReferencePages}
         fetchReferenceProducts={searchProducts}

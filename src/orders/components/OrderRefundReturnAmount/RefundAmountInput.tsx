@@ -1,7 +1,7 @@
-import { makeStyles } from "@material-ui/core";
 import { IMoney } from "@saleor/components/Money";
 import PriceField from "@saleor/components/PriceField";
 import { OrderErrorFragment } from "@saleor/fragments/types/OrderErrorFragment";
+import { makeStyles } from "@saleor/theme";
 import { getFormErrors } from "@saleor/utils/errors";
 import getOrderErrorMessage from "@saleor/utils/errors/order";
 import React from "react";

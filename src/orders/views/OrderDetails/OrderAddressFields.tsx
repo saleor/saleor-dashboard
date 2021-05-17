@@ -57,10 +57,7 @@ const OrderAddressFields = ({
     confirmButtonState: isDraft
       ? orderDraftUpdate.opts.status
       : orderUpdate.opts.status,
-    countries: data?.shop?.countries.map(country => ({
-      code: country.code,
-      label: country.country
-    })),
+    countries: data?.shop?.countries,
     errors: isDraft
       ? orderDraftUpdate.opts.data?.draftOrderUpdate.errors
       : orderUpdate.opts.data?.orderUpdate.errors,

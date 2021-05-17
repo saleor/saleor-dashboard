@@ -1,4 +1,4 @@
-import Card from "@material-ui/core/Card";
+import { Card } from "@material-ui/core";
 import AppHeader from "@saleor/components/AppHeader";
 import Container from "@saleor/components/Container";
 import FilterBar from "@saleor/components/FilterBar";
@@ -21,6 +21,7 @@ import {
   PluginFilterKeys,
   PluginListFilterOpts
 } from "./filters";
+import { pluginsFilterErrorMessages } from "./messages";
 
 export interface PluginsListPageProps
   extends PageListProps,
@@ -58,6 +59,7 @@ const PluginsListPage: React.FC<PluginsListPageProps> = ({
       <PageHeader title={intl.formatMessage(sectionNames.plugins)} />
       <Card>
         <FilterBar
+          errorMessages={pluginsFilterErrorMessages}
           currentTab={currentTab}
           initialSearch={initialSearch}
           onAll={onAll}

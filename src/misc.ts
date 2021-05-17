@@ -215,7 +215,7 @@ export const transformOrderStatus = (
   };
 };
 
-export const transformAddressToForm = (data: AddressType) => ({
+export const transformAddressToForm = (data?: AddressType) => ({
   city: data?.city || "",
   cityArea: data?.cityArea || "",
   companyName: data?.companyName || "",
@@ -410,7 +410,7 @@ export function capitalize(s: string) {
   return s.charAt(0).toLocaleUpperCase() + s.slice(1);
 }
 
-export function transformFormToAddress<T>(
+export function transformFormToAddressInput<T>(
   address: T & AddressTypeInput
 ): T & AddressInput {
   return {
@@ -437,3 +437,17 @@ export const getDatePeriod = (days: number): DateRangeInput => {
     lte: end.format(format)
   };
 };
+
+export const transformAddressToAddressInput = (data?: AddressType) => ({
+  city: data?.city || "",
+  cityArea: data?.cityArea || "",
+  companyName: data?.companyName || "",
+  country: findInEnum(data?.country?.code || "", CountryCode),
+  countryArea: data?.countryArea || "",
+  firstName: data?.firstName || "",
+  lastName: data?.lastName || "",
+  phone: data?.phone || "",
+  postalCode: data?.postalCode || "",
+  streetAddress1: data?.streetAddress1 || "",
+  streetAddress2: data?.streetAddress2 || ""
+});

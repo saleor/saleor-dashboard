@@ -1,4 +1,5 @@
 import { FetchMoreProps } from "@saleor/types";
+import { mapEdgesToItems } from "@saleor/utils/maps";
 
 import { ResultSearchData } from "./makeTopLevelSearch";
 import { CommonSearchOpts } from "./types";
@@ -14,4 +15,4 @@ export const getSearchFetchMoreProps = (
 });
 
 export const getParsedSearchData = ({ data }: ResultSearchData) =>
-  data?.search?.edges?.map(({ node }) => node) || [];
+  mapEdgesToItems(data?.search);

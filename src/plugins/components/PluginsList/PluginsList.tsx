@@ -1,44 +1,22 @@
-import TableBody from "@material-ui/core/TableBody";
-import TableCell from "@material-ui/core/TableCell";
-import TableFooter from "@material-ui/core/TableFooter";
-import TableHead from "@material-ui/core/TableHead";
-import TableRow from "@material-ui/core/TableRow";
+import { TableBody, TableCell, TableFooter, TableRow } from "@material-ui/core";
 import EditIcon from "@material-ui/icons/Edit";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
-import StatusLabel from "@saleor/components/StatusLabel";
-import TableCellHeader from "@saleor/components/TableCellHeader";
 import TablePagination from "@saleor/components/TablePagination";
-import { translateBoolean } from "@saleor/intl";
-import { maybe, renderCollection } from "@saleor/misc";
+import { renderCollection } from "@saleor/misc";
 import { PluginListUrlSortField } from "@saleor/plugins/urls";
 import { makeStyles } from "@saleor/theme";
 import { ListProps, SortPage } from "@saleor/types";
-import { getArrowDirection } from "@saleor/utils/sort";
 import React from "react";
 import { useIntl } from "react-intl";
 
 import { Plugins_plugins_edges_node } from "../../types/Plugins";
+import PluginChannelAvailabilityCell from "./PluginChannelAvailabilityCell";
+import PluginChannelConfigurationCell from "./PluginChannelConfigurationCell";
+import PluginListTableHead from "./PluginListTableHead";
 
-export interface PluginListProps
-  extends ListProps,
-    SortPage<PluginListUrlSortField> {
-  plugins: Plugins_plugins_edges_node[];
-}
-
-const useStyles = makeStyles(
-  theme => ({
-    colAction: {
-      "& svg": {
-        color: theme.palette.primary.main
-      },
-      textAlign: "right",
-      width: 200
-    },
-    colActive: {
-      width: 200
-    },
-    colName: {},
+export const useStyles = makeStyles(
+  () => ({
     link: {
       cursor: "pointer"
     }
@@ -46,7 +24,13 @@ const useStyles = makeStyles(
   { name: "PluginsList" }
 );
 
-const numberOfColumns = 3;
+export interface PluginListProps
+  extends ListProps,
+    SortPage<PluginListUrlSortField> {
+  plugins: Plugins_plugins_edges_node[];
+}
+
+const totalColSpan = 10;
 
 const PluginList: React.FC<PluginListProps> = props => {
   const {
@@ -66,47 +50,11 @@ const PluginList: React.FC<PluginListProps> = props => {
 
   return (
     <ResponsiveTable>
-      <TableHead>
-        <TableCellHeader
-          direction={
-            sort.sort === PluginListUrlSortField.name
-              ? getArrowDirection(sort.asc)
-              : undefined
-          }
-          arrowPosition="right"
-          onClick={() => onSort(PluginListUrlSortField.name)}
-          className={classes.colName}
-        >
-          {intl.formatMessage({
-            defaultMessage: "Name",
-            description: "plugin name"
-          })}
-        </TableCellHeader>
-        <TableCellHeader
-          direction={
-            sort.sort === PluginListUrlSortField.active
-              ? getArrowDirection(sort.asc)
-              : undefined
-          }
-          onClick={() => onSort(PluginListUrlSortField.active)}
-          className={classes.colActive}
-        >
-          {intl.formatMessage({
-            defaultMessage: "Active",
-            description: "plugin status"
-          })}
-        </TableCellHeader>
-        <TableCell className={classes.colAction}>
-          {intl.formatMessage({
-            defaultMessage: "Action",
-            description: "user action bar"
-          })}
-        </TableCell>
-      </TableHead>
+      <PluginListTableHead sort={sort} onSort={onSort} />
       <TableFooter>
         <TableRow>
           <TablePagination
-            colSpan={numberOfColumns}
+            colSpan={totalColSpan}
             settings={settings}
             hasNextPage={pageInfo && !disabled ? pageInfo.hasNextPage : false}
             onNextPage={onNextPage}
@@ -121,37 +69,33 @@ const PluginList: React.FC<PluginListProps> = props => {
       <TableBody>
         {renderCollection(
           plugins,
-          plugin => (
-            <TableRow
-              hover={!!plugin}
-              className={!!plugin ? classes.link : undefined}
-              onClick={plugin ? onRowClick(plugin.id) : undefined}
-              key={plugin ? plugin.id : "skeleton"}
-            >
-              <TableCell className={classes.colName}>
-                {maybe<React.ReactNode>(() => plugin.name, <Skeleton />)}
-              </TableCell>
-              <TableCell className={classes.colActive}>
-                {maybe<React.ReactNode>(
-                  () => (
-                    <StatusLabel
-                      label={translateBoolean(plugin.active, intl)}
-                      status={plugin.active ? "success" : "error"}
-                    />
-                  ),
+          plugin =>
+            plugin ? (
+              <TableRow
+                hover={!!plugin}
+                className={!!plugin ? classes.link : undefined}
+                onClick={plugin ? onRowClick(plugin.id) : undefined}
+                key={plugin ? plugin.id : "skeleton"}
+              >
+                <TableCell colSpan={5}>{plugin.name}</TableCell>
+                <PluginChannelConfigurationCell plugin={plugin} />
+                <PluginChannelAvailabilityCell plugin={plugin} />
+                <TableCell align="right">
+                  <div onClick={plugin ? onRowClick(plugin.id) : undefined}>
+                    <EditIcon />
+                  </div>
+                </TableCell>
+              </TableRow>
+            ) : (
+              <TableRow>
+                <TableCell colSpan={totalColSpan}>
                   <Skeleton />
-                )}
-              </TableCell>
-              <TableCell className={classes.colAction}>
-                <div onClick={plugin ? onRowClick(plugin.id) : undefined}>
-                  <EditIcon />
-                </div>
-              </TableCell>
-            </TableRow>
-          ),
+                </TableCell>
+              </TableRow>
+            ),
           () => (
             <TableRow>
-              <TableCell colSpan={numberOfColumns}>
+              <TableCell colSpan={totalColSpan}>
                 {intl.formatMessage({
                   defaultMessage: "No plugins found"
                 })}

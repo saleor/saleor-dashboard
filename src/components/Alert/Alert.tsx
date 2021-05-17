@@ -1,9 +1,6 @@
 import alertIconDark from "@assets/images/alert-dark.svg";
 import alertIcon from "@assets/images/alert.svg";
-import Card from "@material-ui/core/Card";
-import CardContent from "@material-ui/core/CardContent";
-import IconButton from "@material-ui/core/IconButton";
-import Typography from "@material-ui/core/Typography";
+import { Card, CardContent, IconButton, Typography } from "@material-ui/core";
 import CloseIcon from "@material-ui/icons/Close";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import useTheme from "@saleor/hooks/useTheme";

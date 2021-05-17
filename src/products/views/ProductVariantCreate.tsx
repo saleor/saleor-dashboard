@@ -14,6 +14,7 @@ import useShop from "@saleor/hooks/useShop";
 import usePageSearch from "@saleor/searches/usePageSearch";
 import useProductSearch from "@saleor/searches/useProductSearch";
 import createMetadataCreateHandler from "@saleor/utils/handlers/metadataCreateHandler";
+import { mapEdgesToItems } from "@saleor/utils/maps";
 import {
   useMetadataUpdate,
   usePrivateMetadataUpdate
@@ -203,20 +204,14 @@ export const ProductVariant: React.FC<ProductVariantCreateProps> = ({
         onWarehouseConfigure={() => navigate(warehouseAddPath)}
         onVariantReorder={handleVariantReorder}
         saveButtonBarState={variantCreateResult.status}
-        warehouses={
-          warehouses.data?.warehouses.edges.map(edge => edge.node) || []
-        }
+        warehouses={mapEdgesToItems(warehouses?.data?.warehouses)}
         weightUnit={shop?.defaultWeightUnit}
         assignReferencesAttributeId={
           params.action === "assign-attribute-value" && params.id
         }
         onAssignReferencesClick={handleAssignAttributeReferenceClick}
-        referencePages={searchPagesOpts.data?.search.edges.map(
-          edge => edge.node
-        )}
-        referenceProducts={searchProductsOpts.data?.search.edges.map(
-          edge => edge.node
-        )}
+        referencePages={mapEdgesToItems(searchPagesOpts?.data?.search)}
+        referenceProducts={mapEdgesToItems(searchProductsOpts?.data?.search)}
         fetchReferencePages={searchPages}
         fetchMoreReferencePages={fetchMoreReferencePages}
         fetchReferenceProducts={searchProducts}

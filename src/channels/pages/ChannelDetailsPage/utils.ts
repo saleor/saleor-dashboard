@@ -1,4 +1,4 @@
-import uniq from "lodash-es/uniq";
+import uniq from "lodash/uniq";
 
 export const getUpdatedIdsWithNewId = (ids: string[], newId: string) =>
   uniq([...ids, newId]);

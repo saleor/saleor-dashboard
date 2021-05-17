@@ -1,4 +1,4 @@
-import DialogContentText from "@material-ui/core/DialogContentText";
+import { DialogContentText } from "@material-ui/core";
 import ActionDialog from "@saleor/components/ActionDialog";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@saleor/config";
 import useNavigator from "@saleor/hooks/useNavigator";
@@ -6,6 +6,7 @@ import useNotifier from "@saleor/hooks/useNotifier";
 import useCategorySearch from "@saleor/searches/useCategorySearch";
 import useCollectionSearch from "@saleor/searches/useCollectionSearch";
 import usePageSearch from "@saleor/searches/usePageSearch";
+import { mapEdgesToItems } from "@saleor/utils/maps";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -112,21 +113,15 @@ const MenuDetails: React.FC<MenuDetailsProps> = ({ id, params }) => {
           pageSearch.search(query);
         };
 
-        const categories = maybe(
-          () => categorySearch.result.data.search.edges.map(edge => edge.node),
-          []
+        const categories = mapEdgesToItems(
+          categorySearch?.result?.data?.search
         );
 
-        const collections = maybe(
-          () =>
-            collectionSearch.result.data.search.edges.map(edge => edge.node),
-          []
+        const collections = mapEdgesToItems(
+          collectionSearch?.result?.data?.search
         );
 
-        const pages = maybe(
-          () => pageSearch.result.data.search.edges.map(edge => edge.node),
-          []
-        );
+        const pages = mapEdgesToItems(pageSearch?.result?.data?.search);
 
         return (
           <MenuDeleteMutation

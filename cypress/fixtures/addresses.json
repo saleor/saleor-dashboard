@@ -1,26 +1,30 @@
 {
-    "plAddress": {
-        "companyName": "Test3",
-        "streetAddress1": "Smolna",
-        "streetAddress2": "13/1",
-        "city": "Wrocław",
-        "postalCode": "53-346",
-        "country": "PL",
-        "countryArea": "Dolny Śląsk",
-        "phone": "123456787",
-        "currency": "PLN",
-        "countryFullName": "Poland"
-    },
-    "usAddress": {
-      "companyName": "Test3",
-      "streetAddress1": "Amber Prairie",
-      "streetAddress2": "483",
-      "city": "KIRKSHIRE",
-      "postalCode": "52216",
-      "country": "US",
-      "countryArea": "IA",
-      "currency": "USD",
-      "phone": "+12025550180",
-      "countryFullName": "United States of America"
+  "plAddress": {
+    "firstName": "test",
+    "lastName": "test",
+    "companyName": "Test3",
+    "streetAddress1": "Smolna",
+    "streetAddress2": "13/1",
+    "city": "Wrocław",
+    "postalCode": "53-346",
+    "country": "PL",
+    "countryArea": "Dolny Śląsk",
+    "phone": "123456787",
+    "currency": "PLN",
+    "countryFullName": "Poland"
+  },
+  "usAddress": {
+    "firstName": "test",
+    "lastName": "test",
+    "companyName": "Test2",
+    "streetAddress1": "Antonio Ridge",
+    "streetAddress2": "34930",
+    "city": "North Patrickfort",
+    "postalCode": "70957",
+    "country": "US",
+    "countryArea": "LA",
+    "phone": "2025550189",
+    "currency": "USD",
+    "countryFullName": "United States of America"
   }
 }

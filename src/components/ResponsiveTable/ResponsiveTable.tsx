@@ -1,4 +1,4 @@
-import Table from "@material-ui/core/Table";
+import { Table } from "@material-ui/core";
 import { makeStyles } from "@saleor/theme";
 import React from "react";
 

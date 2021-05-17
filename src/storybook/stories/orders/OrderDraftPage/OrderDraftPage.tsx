@@ -1,5 +1,4 @@
 import placeholderImage from "@assets/images/placeholder60x60.png";
-import { Omit } from "@material-ui/core";
 import { adminUserPermissions, fetchMoreProps } from "@saleor/fixtures";
 import { storiesOf } from "@storybook/react";
 import React from "react";
@@ -7,7 +6,7 @@ import React from "react";
 import OrderDraftPage, {
   OrderDraftPageProps
 } from "../../../../orders/components/OrderDraftPage";
-import { clients, countries, draftOrder } from "../../../../orders/fixtures";
+import { clients, draftOrder } from "../../../../orders/fixtures";
 import Decorator from "../../../Decorator";
 import { getDiscountsProvidersWrapper } from "./utils";
 
@@ -15,7 +14,6 @@ const order = draftOrder(placeholderImage);
 
 const props: Omit<OrderDraftPageProps, "classes"> = {
   ...fetchMoreProps,
-  countries,
   disabled: false,
   fetchUsers: () => undefined,
   onBack: () => undefined,

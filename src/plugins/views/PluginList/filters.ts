@@ -1,14 +1,22 @@
 import { IFilterElement } from "@saleor/components/Filter";
+import { ChannelsWithLoadMoreProps } from "@saleor/hooks/useChannelsSearch";
 import { maybe, parseBoolean } from "@saleor/misc";
 import {
   PluginFilterKeys,
   PluginListFilterOpts
 } from "@saleor/plugins/components/PluginsListPage";
-import { PluginFilterInput } from "@saleor/types/globalTypes";
+import {
+  PluginConfigurationType,
+  PluginFilterInput
+} from "@saleor/types/globalTypes";
+import { mapNodeToChoice } from "@saleor/utils/maps";
 
 import {
   createFilterTabUtils,
   createFilterUtils,
+  dedupeFilter,
+  getMultipleValueQueryParam,
+  getSingleEnumValueQueryParam,
   getSingleValueQueryParam
 } from "../../../utils/filters";
 import {
@@ -20,27 +28,68 @@ import {
 export const PLUGIN_FILTERS_KEY = "pluginFilters";
 
 export function getFilterOpts(
-  params: PluginListUrlFilters
+  params: PluginListUrlFilters,
+  {
+    channels,
+    hasMore,
+    onFetchMore,
+    onSearchChange,
+    loading
+  }: ChannelsWithLoadMoreProps
 ): PluginListFilterOpts {
   return {
     isActive: {
       active: maybe(() => params.active !== undefined, false),
       value:
-        params.active !== undefined ? parseBoolean(params.active, true) : true
+        params.active === undefined
+          ? undefined
+          : parseBoolean(params.active, true)
+    },
+    channels: {
+      active: !!params.channels,
+      choices: mapNodeToChoice(channels),
+      displayValues: mapNodeToChoice(channels),
+      initialSearch: "",
+      hasMore,
+      loading,
+      onFetchMore,
+      onSearchChange,
+      value: maybe(() => dedupeFilter(params.channels), [])
+    },
+    type: {
+      active: !!params.type,
+      value: getParsedConfigType(params.type)
+    },
+    status: {
+      active: !!params.channels?.length && params.active !== undefined,
+      value:
+        !!dedupeFilter(params.channels)?.length && params.active !== undefined
     }
   };
 }
 
+const getParsedConfigType = (configTypeString?: string) =>
+  PluginConfigurationType[configTypeString] || undefined;
+
 export function getFilterVariables(
   params: PluginListUrlFilters
 ): PluginFilterInput {
-  return {
-    active:
-      params.active !== undefined
-        ? parseBoolean(params.active, true)
-        : undefined,
+  const baseParams = {
+    type: getParsedConfigType(params.type),
     search: params.query
   };
+
+  if (!!params.active && !!params.channels?.length) {
+    return {
+      ...baseParams,
+      statusInChannels: {
+        active: parseBoolean(params.active, true),
+        channels: params.channels
+      }
+    };
+  }
+
+  return baseParams;
 }
 
 export function getFilterQueryParam(
@@ -49,8 +98,21 @@ export function getFilterQueryParam(
   const { name } = filter;
 
   switch (name) {
+    case PluginFilterKeys.channels:
+      return getMultipleValueQueryParam(
+        filter,
+        PluginListUrlFiltersEnum.channels
+      );
+
     case PluginFilterKeys.active:
       return getSingleValueQueryParam(filter, PluginListUrlFiltersEnum.active);
+
+    case PluginFilterKeys.type:
+      return getSingleEnumValueQueryParam(
+        filter,
+        PluginListUrlFiltersEnum.type,
+        PluginConfigurationType
+      );
   }
 }
 

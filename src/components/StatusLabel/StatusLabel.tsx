@@ -1,43 +1,55 @@
+import { Typography } from "@material-ui/core";
 import grey from "@material-ui/core/colors/grey";
 import yellow from "@material-ui/core/colors/yellow";
-import Typography, { TypographyProps } from "@material-ui/core/Typography";
+import Label from "@saleor/orders/components/OrderHistory/Label";
 import { makeStyles } from "@saleor/theme";
 import classNames from "classnames";
 import React from "react";
 
-const useStyles = makeStyles(
+export const useStyles = makeStyles(
   theme => {
     const dot = {
       borderRadius: "100%",
-      content: "''",
-      display: "block",
       height: 8,
-      left: -theme.spacing(2),
-      position: "absolute" as "absolute",
-      top: "calc(50% - 5px)",
       width: 8
     };
 
     return {
+      dot,
+      container: {
+        display: "flex",
+        flexDirection: "row",
+        alignItems: "center"
+      },
+      containerVertical: {
+        alignItems: "flex-start"
+      },
+      textContainer: {
+        marginLeft: theme.spacing(1),
+        display: "flex",
+        flexDirection: "column"
+      },
+      dotVertical: {
+        marginTop: theme.spacing(1)
+      },
       alertDot: {
-        "&:before": { backgroundColor: yellow[500], ...dot }
+        backgroundColor: yellow[500],
+        ...dot
       },
       errorDot: {
-        "&:before": { backgroundColor: theme.palette.error.main, ...dot }
+        backgroundColor: theme.palette.error.main,
+        ...dot
       },
       neutralDot: {
-        "&:before": { backgroundColor: grey[300], ...dot }
+        backgroundColor: grey[300],
+        ...dot
       },
-      root: {
-        display: "inline-block",
-        marginLeft: theme.spacing(1) + 8,
-        position: "relative"
+      successDot: {
+        backgroundColor: theme.palette.primary.main,
+        ...dot
       },
       span: {
         display: "inline"
-      },
-      successDot: {
-        "&:before": { backgroundColor: theme.palette.primary.main, ...dot }
       }
     };
   },
@@ -45,41 +57,43 @@ const useStyles = makeStyles(
 );
 
 interface StatusLabelProps {
-  className?: string;
   label: string | React.ReactNode;
   status: "success" | "alert" | "neutral" | "error" | string;
-  typographyProps?: TypographyProps;
+  subtitle?: string;
+  className?: string;
 }
 
-const StatusLabel: React.FC<StatusLabelProps> = props => {
-  const { className, label, status, typographyProps } = props;
-
-  const classes = useStyles(props);
+const StatusLabel: React.FC<StatusLabelProps> = ({
+  className,
+  label,
+  status,
+  subtitle
+}) => {
+  const classes = useStyles({});
 
   return (
     <div
       className={classNames({
-        [classes.root]: true,
-        [className]: true,
-        [classes.successDot]: status === "success",
-        [classes.alertDot]: status === "alert",
-        [classes.neutralDot]: status === "neutral",
-        [classes.errorDot]: status === "error"
+        [classes.container]: true,
+        [classes.containerVertical]: !!subtitle
       })}
     >
-      {typographyProps ? (
-        <Typography
-          component="span"
-          className={classes.span}
-          {...typographyProps}
-        >
-          {label}
-        </Typography>
-      ) : (
-        label
-      )}
+      <div
+        className={classNames({
+          [className]: true,
+          [classes.dotVertical]: !!subtitle,
+          [classes.successDot]: status === "success",
+          [classes.alertDot]: status === "alert",
+          [classes.neutralDot]: status === "neutral",
+          [classes.errorDot]: status === "error"
+        })}
+      ></div>
+      <div className={classes.textContainer}>
+        <Typography>{label}</Typography>
+        {subtitle && <Label text={subtitle} />}
+      </div>
     </div>
   );
 };
-StatusLabel.displayName = "StatusLabel";
+
 export default StatusLabel;

@@ -1,8 +1,10 @@
-import Card from "@material-ui/core/Card";
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemText from "@material-ui/core/ListItemText";
-import Typography from "@material-ui/core/Typography";
+import {
+  Card,
+  List,
+  ListItem,
+  ListItemText,
+  Typography
+} from "@material-ui/core";
 import CardTitle from "@saleor/components/CardTitle";
 import { DateTime } from "@saleor/components/Date";
 import Skeleton from "@saleor/components/Skeleton";

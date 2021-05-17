@@ -16,6 +16,7 @@ export function getDisplayedColumnArray(columnName) {
 export function expectProductsSortedBy(columnName, inAscOrder = true) {
   let sortedProductsArray;
   let productsArray;
+  cy.get(PRODUCTS_LIST.emptyProductRow).should("not.exist");
   getDisplayedColumnArray(columnName)
     .then(productsArrayResp => {
       productsArray = productsArrayResp;

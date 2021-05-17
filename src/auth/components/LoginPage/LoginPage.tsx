@@ -1,8 +1,10 @@
-import Button from "@material-ui/core/Button";
-import CircularProgress from "@material-ui/core/CircularProgress";
-import Divider from "@material-ui/core/Divider";
-import TextField from "@material-ui/core/TextField";
-import Typography from "@material-ui/core/Typography";
+import {
+  Button,
+  CircularProgress,
+  Divider,
+  TextField,
+  Typography
+} from "@material-ui/core";
 import { AvailableExternalAuthentications_shop_availableExternalAuthentications } from "@saleor/auth/types/AvailableExternalAuthentications";
 import { FormSpacer } from "@saleor/components/FormSpacer";
 import { SubmitPromise } from "@saleor/hooks/useForm";

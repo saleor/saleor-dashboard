@@ -20,10 +20,8 @@ import React, { useState } from "react";
 
 import { ChannelForm, FormData } from "../../components/ChannelForm";
 import { ChannelStatus } from "../../components/ChannelStatus/ChannelStatus";
-import {
-  Channel_channel,
-  Channel_channel_shippingZones
-} from "../../types/Channel";
+import { Channel_channel } from "../../types/Channel";
+import { ChannelShippingZones } from "./types";
 import { getUpdatedIdsWithNewId, getUpdatedIdsWithoutNewId } from "./utils";
 
 export interface ChannelDetailsPageProps {
@@ -40,6 +38,7 @@ export interface ChannelDetailsPageProps {
   searchShippingZones: (query: string) => void;
   searchShippingZonesData?: SearchData;
   fetchMoreShippingZones: FetchMoreProps;
+  channelShippingZones?: ChannelShippingZones;
 }
 
 export const ChannelDetailsPage: React.FC<ChannelDetailsPageProps> = ({
@@ -55,13 +54,14 @@ export const ChannelDetailsPage: React.FC<ChannelDetailsPageProps> = ({
   updateChannelStatus,
   searchShippingZones,
   searchShippingZonesData,
-  fetchMoreShippingZones
+  fetchMoreShippingZones,
+  channelShippingZones = []
 }) => {
   const [selectedCurrencyCode, setSelectedCurrencyCode] = useState("");
 
   const [shippingZonesToDisplay, setShippingZonesToDisplay] = useStateFromProps<
-    Channel_channel_shippingZones[]
-  >(channel?.shippingZones || []);
+    ChannelShippingZones
+  >(channelShippingZones);
 
   const initialData: FormData = {
     currencyCode: "",

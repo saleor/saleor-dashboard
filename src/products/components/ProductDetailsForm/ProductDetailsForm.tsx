@@ -1,7 +1,5 @@
 import { OutputData } from "@editorjs/editorjs";
-import Card from "@material-ui/core/Card";
-import CardContent from "@material-ui/core/CardContent";
-import TextField from "@material-ui/core/TextField";
+import { Card, CardContent, TextField } from "@material-ui/core";
 import CardTitle from "@saleor/components/CardTitle";
 import FormSpacer from "@saleor/components/FormSpacer";
 import Grid from "@saleor/components/Grid";
@@ -68,6 +66,7 @@ export const ProductDetailsForm: React.FC<ProductDetailsFormProps> = ({
           name="description"
           onChange={onDescriptionChange}
         />
+        <FormSpacer />
         <Hr />
         <FormSpacer />
         <Grid variant="uniform">

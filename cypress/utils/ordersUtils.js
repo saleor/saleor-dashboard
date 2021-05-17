@@ -19,8 +19,9 @@ export function createWaitingForCaptureOrder(
     })
     .then(() => addPayment(checkout.id))
     .then(() => checkoutRequest.completeCheckout(checkout.id))
-    .then(order => ({ checkout, order }));
+    .then(({ order }) => ({ checkout, order }));
 }
+
 export function createCheckoutWithVoucher({
   channelSlug,
   email = "email@example.com",
@@ -47,11 +48,12 @@ export function createReadyToFulfillOrder(
   customerId,
   shippingMethodId,
   channelId,
-  variantsList
+  variantsList,
+  address
 ) {
   let order;
   return orderRequest
-    .createDraftOrder(customerId, shippingMethodId, channelId)
+    .createDraftOrder(customerId, shippingMethodId, channelId, address)
     .then(orderResp => {
       order = orderResp;
       assignVariantsToOrder(order, variantsList);
@@ -64,11 +66,12 @@ export function createOrder({
   customerId,
   shippingMethodId,
   channelId,
-  variantsList
+  variantsList,
+  address
 }) {
   let order;
   return orderRequest
-    .createDraftOrder(customerId, shippingMethodId, channelId)
+    .createDraftOrder(customerId, shippingMethodId, channelId, address)
     .then(orderResp => {
       order = orderResp;
       assignVariantsToOrder(order, variantsList);
@@ -82,13 +85,23 @@ function assignVariantsToOrder(order, variantsList) {
     orderRequest.addProductToOrder(order.id, variantElement.id);
   });
 }
+
 export function addPayment(checkoutId) {
-  return checkoutRequest.addPayment(
+  return checkoutRequest.addPayment({
     checkoutId,
-    "mirumee.payments.dummy",
-    "not-charged"
-  );
+    gateway: "mirumee.payments.dummy",
+    token: "not-charged"
+  });
 }
+
+export function addAdyenPayment(checkoutId, amount) {
+  return checkoutRequest.addPayment({
+    checkoutId,
+    gateway: "mirumee.payments.adyen",
+    amount
+  });
+}
+
 export function createAndCompleteCheckoutWithoutShipping({
   channelSlug,
   email,
@@ -104,5 +117,5 @@ export function createAndCompleteCheckoutWithoutShipping({
       addPayment(checkout.id);
     })
     .then(() => checkoutRequest.completeCheckout(checkout.id))
-    .then(order => ({ checkout, order }));
+    .then(({ order }) => ({ checkout, order }));
 }

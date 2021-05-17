@@ -1,8 +1,10 @@
-import Button from "@material-ui/core/Button";
-import CircularProgress from "@material-ui/core/CircularProgress";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import TextField from "@material-ui/core/TextField";
-import Typography from "@material-ui/core/Typography";
+import {
+  Button,
+  CircularProgress,
+  FormControlLabel,
+  TextField,
+  Typography
+} from "@material-ui/core";
 import Accordion, { AccordionProps } from "@saleor/components/Accordion";
 import { useChannelsSearch } from "@saleor/components/ChannelsAvailabilityDialog/utils";
 import ChannelsAvailabilityDialogChannelsList from "@saleor/components/ChannelsAvailabilityDialogChannelsList";

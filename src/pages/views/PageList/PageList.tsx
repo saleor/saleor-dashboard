@@ -1,6 +1,4 @@
-import Button from "@material-ui/core/Button";
-import DialogContentText from "@material-ui/core/DialogContentText";
-import IconButton from "@material-ui/core/IconButton";
+import { Button, DialogContentText, IconButton } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
 import ActionDialog from "@saleor/components/ActionDialog";
 import { configurationMenuUrl } from "@saleor/configuration";
@@ -15,6 +13,7 @@ import { maybe } from "@saleor/misc";
 import { ListViews } from "@saleor/types";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import createSortHandler from "@saleor/utils/handlers/sortHandler";
+import { mapEdgesToItems } from "@saleor/utils/maps";
 import { getSortParams } from "@saleor/utils/sort";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -114,7 +113,7 @@ export const PageList: React.FC<PageListProps> = ({ params }) => {
               <PageListPage
                 disabled={loading}
                 settings={settings}
-                pages={maybe(() => data.pages.edges.map(edge => edge.node))}
+                pages={mapEdgesToItems(data?.pages)}
                 pageInfo={pageInfo}
                 onAdd={() => navigate(pageCreateUrl())}
                 onBack={() => navigate(configurationMenuUrl)}

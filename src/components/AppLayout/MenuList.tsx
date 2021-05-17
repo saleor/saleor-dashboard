@@ -1,5 +1,5 @@
 import configureIcon from "@assets/images/menu-configure-icon.svg";
-import Typography from "@material-ui/core/Typography";
+import { Typography } from "@material-ui/core";
 import { User } from "@saleor/fragments/types/User";
 import useTheme from "@saleor/hooks/useTheme";
 import { sectionNames } from "@saleor/intl";

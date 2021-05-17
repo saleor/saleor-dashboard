@@ -91,6 +91,7 @@ export const voucherFragment = gql`
     startDate
     endDate
     usageLimit
+    type
     discountValueType
     countries {
       code
@@ -120,7 +121,6 @@ export const voucherDetailsFragment = gql`
   ${channelListingProductWithoutPricingFragment}
   fragment VoucherDetailsFragment on Voucher {
     ...VoucherFragment
-    type
     code
     usageLimit
     used

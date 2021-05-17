@@ -1,5 +1,4 @@
 import placeholderImage from "@assets/images/placeholder60x60.png";
-import { Omit } from "@material-ui/core";
 import { adminUserPermissions } from "@saleor/fixtures";
 import { storiesOf } from "@storybook/react";
 import React from "react";
@@ -7,7 +6,7 @@ import React from "react";
 import OrderDetailsPage, {
   OrderDetailsPageProps
 } from "../../../orders/components/OrderDetailsPage";
-import { countries, order as orderFixture } from "../../../orders/fixtures";
+import { order as orderFixture } from "../../../orders/fixtures";
 import {
   FulfillmentStatus,
   OrderStatus,
@@ -18,7 +17,6 @@ import Decorator from "../../Decorator";
 const order = orderFixture(placeholderImage);
 
 const props: Omit<OrderDetailsPageProps, "classes"> = {
-  countries,
   disabled: false,
   onBack: () => undefined,
   onBillingAddressEdit: undefined,

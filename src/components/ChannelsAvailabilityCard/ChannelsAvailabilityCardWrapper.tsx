@@ -1,7 +1,4 @@
-import Button from "@material-ui/core/Button";
-import Card from "@material-ui/core/Card";
-import CardContent from "@material-ui/core/CardContent";
-import Typography from "@material-ui/core/Typography";
+import { Button, Card, CardContent, Typography } from "@material-ui/core";
 import CardTitle from "@saleor/components/CardTitle";
 import Hr from "@saleor/components/Hr";
 import RequirePermissions from "@saleor/components/RequirePermissions";
@@ -53,7 +50,7 @@ export const ChannelsAvailabilityWrapper: React.FC<ChannelsAvailabilityWrapperPr
           toolbar={
             <RequirePermissions
               userPermissions={user?.userPermissions || []}
-              requiredPermissions={[PermissionEnum.MANAGE_CHANNELS]}
+              requiredPermissions={[PermissionEnum.MANAGE_PRODUCTS]}
             >
               <Button
                 color="primary"

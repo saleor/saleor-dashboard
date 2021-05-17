@@ -20,7 +20,8 @@ storiesOf("Views / Authentication / Set up a new password", module)
       errors={["password"].map(field => ({
         __typename: "AccountError",
         code: AccountErrorCode.PASSWORD_TOO_SHORT,
-        field
+        field,
+        addressType: null
       }))}
       disabled={false}
       onSubmit={() => undefined}

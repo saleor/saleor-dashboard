@@ -1,13 +1,16 @@
-import Button from "@material-ui/core/Button";
-import Dialog from "@material-ui/core/Dialog";
-import DialogActions from "@material-ui/core/DialogActions";
-import DialogContent from "@material-ui/core/DialogContent";
-import DialogTitle from "@material-ui/core/DialogTitle";
+import {
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle
+} from "@material-ui/core";
 import AddressEdit from "@saleor/components/AddressEdit";
 import ConfirmButton, {
   ConfirmButtonTransitionState
 } from "@saleor/components/ConfirmButton";
 import Form from "@saleor/components/Form";
+import { ShopInfo_shop_countries } from "@saleor/components/Shop/types/ShopInfo";
 import { AccountErrorFragment } from "@saleor/fragments/types/AccountErrorFragment";
 import useAddressValidation from "@saleor/hooks/useAddressValidation";
 import useModalDialogErrors from "@saleor/hooks/useModalDialogErrors";
@@ -16,6 +19,7 @@ import { buttonMessages } from "@saleor/intl";
 import { createStyles, WithStyles, withStyles } from "@saleor/theme";
 import { AddressInput } from "@saleor/types/globalTypes";
 import createSingleAutocompleteSelectHandler from "@saleor/utils/handlers/singleAutocompleteSelectChangeHandler";
+import { mapCountriesToChoices } from "@saleor/utils/maps";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
@@ -25,10 +29,7 @@ import { CustomerAddresses_user_addresses } from "../../types/CustomerAddresses"
 export interface CustomerAddressDialogProps {
   address: CustomerAddresses_user_addresses;
   confirmButtonState: ConfirmButtonTransitionState;
-  countries: Array<{
-    code: string;
-    label: string;
-  }>;
+  countries: ShopInfo_shop_countries[];
   errors: AccountErrorFragment[];
   open: boolean;
   variant: "create" | "edit";
@@ -83,11 +84,7 @@ const CustomerAddressDialog = withStyles(
       streetAddress2: address?.streetAddress2 || ""
     };
 
-    const countryChoices =
-      countries?.map(country => ({
-        label: country.label,
-        value: country.code
-      })) || [];
+    const countryChoices = mapCountriesToChoices(countries || []);
 
     return (
       <Dialog

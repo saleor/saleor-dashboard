@@ -1,6 +1,4 @@
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import TextField from "@material-ui/core/TextField";
-import Typography from "@material-ui/core/Typography";
+import { FormControlLabel, TextField, Typography } from "@material-ui/core";
 import { makeStyles } from "@saleor/theme";
 import { toggle } from "@saleor/utils/lists";
 import React from "react";
@@ -13,11 +11,15 @@ import { MultiAutocompleteChoiceType } from "../MultiAutocompleteSelectField";
 import { FilterBaseFieldProps } from "./types";
 
 interface FilterAutocompleteFieldProps extends FilterBaseFieldProps {
-  displayValues: Record<string, MultiAutocompleteChoiceType[]>;
-  setDisplayValues: (
-    values: Record<string, MultiAutocompleteChoiceType[]>
-  ) => void;
+  displayValues: FilterAutocompleteDisplayValues;
+  setDisplayValues: (values: FilterAutocompleteDisplayValues) => void;
+  initialDisplayValues: FilterAutocompleteDisplayValues;
 }
+
+export type FilterAutocompleteDisplayValues = Record<
+  string,
+  MultiAutocompleteChoiceType[]
+>;
 
 const useStyles = makeStyles(
   theme => ({
@@ -29,7 +31,8 @@ const useStyles = makeStyles(
       padding: "12px 0 9px 12px"
     },
     inputContainer: {
-      marginBottom: theme.spacing(1)
+      marginBottom: theme.spacing(1),
+      paddingTop: theme.spacing(1)
     },
     noResults: {
       marginTop: theme.spacing(1)
@@ -51,11 +54,13 @@ const FilterAutocompleteField: React.FC<FilterAutocompleteFieldProps> = ({
   filterField,
   setDisplayValues,
   onFilterPropertyChange,
+  initialDisplayValues,
   ...rest
 }) => {
   const classes = useStyles({});
 
   const fieldDisplayValues = displayValues[filterField.name];
+  const initialFieldDisplayValues = initialDisplayValues[filterField.name];
   const availableOptions = filterField.options.filter(option =>
     fieldDisplayValues.every(
       displayValue => displayValue.value !== option.value
@@ -63,11 +68,6 @@ const FilterAutocompleteField: React.FC<FilterAutocompleteFieldProps> = ({
   );
   const displayNoResults =
     availableOptions.length === 0 && fieldDisplayValues.length === 0;
-  const displayHr = !(
-    (fieldDisplayValues.length === 0 && availableOptions.length > 0) ||
-    (availableOptions.length === 0 && fieldDisplayValues.length > 0) ||
-    displayNoResults
-  );
 
   const handleChange = (option: MultiAutocompleteChoiceType) => {
     onFilterPropertyChange({
@@ -90,6 +90,19 @@ const FilterAutocompleteField: React.FC<FilterAutocompleteFieldProps> = ({
     });
   };
 
+  const isValueChecked = (displayValue: MultiAutocompleteChoiceType) =>
+    filterField.value.includes(displayValue.value);
+
+  const filteredValuesChecked = initialFieldDisplayValues.filter(
+    isValueChecked
+  );
+
+  const filteredValuesUnchecked = fieldDisplayValues.filter(
+    displayValue => !isValueChecked(displayValue)
+  );
+
+  const displayHr = !!filteredValuesChecked.length;
+
   return (
     <div {...rest}>
       <TextField
@@ -104,7 +117,7 @@ const FilterAutocompleteField: React.FC<FilterAutocompleteFieldProps> = ({
         }}
         onChange={event => filterField.onSearchChange(event.target.value)}
       />
-      {fieldDisplayValues.map(displayValue => (
+      {filteredValuesChecked.map(displayValue => (
         <div className={classes.option} key={displayValue.value}>
           <FormControlLabel
             control={
@@ -130,7 +143,7 @@ const FilterAutocompleteField: React.FC<FilterAutocompleteFieldProps> = ({
           <FormattedMessage defaultMessage="No results" description="search" />
         </Typography>
       )}
-      {availableOptions.map(option => (
+      {filteredValuesUnchecked.map(option => (
         <div
           className={classes.option}
           key={option.value}

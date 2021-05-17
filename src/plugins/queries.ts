@@ -5,7 +5,6 @@ import {
 import makeQuery from "@saleor/hooks/makeQuery";
 import gql from "graphql-tag";
 
-import { TypedQuery } from "../queries";
 import { Plugin, PluginVariables } from "./types/Plugin";
 import { Plugins, PluginsVariables } from "./types/Plugins";
 
@@ -53,6 +52,7 @@ const pluginsDetails = gql`
     }
   }
 `;
-export const TypedPluginsDetailsQuery = TypedQuery<Plugin, PluginVariables>(
+
+export const usePluginDetails = makeQuery<Plugin, PluginVariables>(
   pluginsDetails
 );

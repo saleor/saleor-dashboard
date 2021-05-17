@@ -5,6 +5,7 @@ import OrderFulfillPage from "@saleor/orders/components/OrderFulfillPage";
 import { useOrderFulfill } from "@saleor/orders/mutations";
 import { useOrderFulfillData } from "@saleor/orders/queries";
 import { orderUrl } from "@saleor/orders/urls";
+import { mapEdgesToItems } from "@saleor/utils/maps";
 import { useWarehouseList } from "@saleor/warehouses/queries";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -86,7 +87,7 @@ const OrderFulfill: React.FC<OrderFulfillProps> = ({ orderId }) => {
         }
         order={data?.order}
         saveButtonBar="default"
-        warehouses={warehouseData?.warehouses.edges.map(edge => edge.node)}
+        warehouses={mapEdgesToItems(warehouseData?.warehouses)}
       />
     </>
   );

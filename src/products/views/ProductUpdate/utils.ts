@@ -4,8 +4,8 @@ import {
 } from "@saleor/channels/pages/ChannelDetailsPage/utils";
 import { ChannelData } from "@saleor/channels/utils";
 import { ProductDetails_product_variants } from "@saleor/products/types/ProductDetails";
-import { reduce } from "lodash";
-import every from "lodash-es/every";
+import every from "lodash/every";
+import reduce from "lodash/reduce";
 
 import {
   ChannelsWithVariantsData,

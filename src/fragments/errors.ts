@@ -44,6 +44,7 @@ export const accountErrorFragment = gql`
   fragment AccountErrorFragment on AccountError {
     code
     field
+    addressType
   }
 `;
 
@@ -66,6 +67,7 @@ export const orderErrorFragment = gql`
   fragment OrderErrorFragment on OrderError {
     code
     field
+    addressType
   }
 `;
 

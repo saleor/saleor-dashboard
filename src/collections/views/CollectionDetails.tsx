@@ -1,5 +1,4 @@
-import Button from "@material-ui/core/Button";
-import DialogContentText from "@material-ui/core/DialogContentText";
+import { Button, DialogContentText } from "@material-ui/core";
 import { useChannelsList } from "@saleor/channels/queries";
 import {
   createCollectionChannels,
@@ -23,6 +22,7 @@ import { commonMessages } from "@saleor/intl";
 import useProductSearch from "@saleor/searches/useProductSearch";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import createMetadataUpdateHandler from "@saleor/utils/handlers/metadataUpdateHandler";
+import { mapEdgesToItems } from "@saleor/utils/maps";
 import {
   useMetadataUpdate,
   usePrivateMetadataUpdate
@@ -361,10 +361,8 @@ export const CollectionDetails: React.FC<CollectionDetailsProps> = ({
                   }
                 })
               }
-              products={maybe(() =>
-                result.data.search.edges
-                  .map(edge => edge.node)
-                  .filter(suggestedProduct => suggestedProduct.id)
+              products={mapEdgesToItems(result?.data?.search).filter(
+                suggestedProduct => suggestedProduct.id
               )}
             />
             <ActionDialog

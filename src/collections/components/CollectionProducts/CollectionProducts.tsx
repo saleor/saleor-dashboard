@@ -1,10 +1,12 @@
-import Button from "@material-ui/core/Button";
-import Card from "@material-ui/core/Card";
-import IconButton from "@material-ui/core/IconButton";
-import TableBody from "@material-ui/core/TableBody";
-import TableCell from "@material-ui/core/TableCell";
-import TableFooter from "@material-ui/core/TableFooter";
-import TableRow from "@material-ui/core/TableRow";
+import {
+  Button,
+  Card,
+  IconButton,
+  TableBody,
+  TableCell,
+  TableFooter,
+  TableRow
+} from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
 import CardTitle from "@saleor/components/CardTitle";
 import { ChannelsAvailabilityDropdown } from "@saleor/components/ChannelsAvailabilityDropdown";
@@ -16,6 +18,7 @@ import { AVATAR_MARGIN } from "@saleor/components/TableCellAvatar/Avatar";
 import TableHead from "@saleor/components/TableHead";
 import TablePagination from "@saleor/components/TablePagination";
 import { makeStyles } from "@saleor/theme";
+import { mapEdgesToItems } from "@saleor/utils/maps";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -125,7 +128,7 @@ const CollectionProducts: React.FC<CollectionProductsProps> = props => {
           colSpan={numberOfColumns}
           selected={selected}
           disabled={disabled}
-          items={maybe(() => collection.products.edges.map(edge => edge.node))}
+          items={mapEdgesToItems(collection?.products)}
           toggleAll={toggleAll}
           toolbar={toolbar}
         >
@@ -164,7 +167,7 @@ const CollectionProducts: React.FC<CollectionProductsProps> = props => {
         </TableFooter>
         <TableBody>
           {renderCollection(
-            maybe(() => collection.products.edges.map(edge => edge.node)),
+            mapEdgesToItems(collection?.products),
             product => {
               const isSelected = product ? isChecked(product.id) : false;
               const channel =

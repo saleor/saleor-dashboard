@@ -1,5 +1,4 @@
-import Card from "@material-ui/core/Card";
-import CardContent from "@material-ui/core/CardContent";
+import { Card, CardContent } from "@material-ui/core";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import React from "react";
 

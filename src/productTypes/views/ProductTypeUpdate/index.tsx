@@ -1,9 +1,10 @@
-import Button from "@material-ui/core/Button";
+import { Button } from "@material-ui/core";
 import { attributeUrl } from "@saleor/attributes/urls";
 import AssignAttributeDialog from "@saleor/components/AssignAttributeDialog";
 import AttributeUnassignDialog from "@saleor/components/AttributeUnassignDialog";
 import BulkAttributeUnassignDialog from "@saleor/components/BulkAttributeUnassignDialog";
 import NotFoundPage from "@saleor/components/NotFoundPage";
+import TypeDeleteWarningDialog from "@saleor/components/TypeDeleteWarningDialog";
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@saleor/config";
 import useBulkActions from "@saleor/hooks/useBulkActions";
@@ -11,10 +12,12 @@ import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { commonMessages } from "@saleor/intl";
 import { getStringOrPlaceholder, maybe } from "@saleor/misc";
+import useProductTypeDelete from "@saleor/productTypes/hooks/useProductTypeDelete";
 import { useProductTypeUpdateMutation } from "@saleor/productTypes/mutations";
 import { ReorderEvent } from "@saleor/types";
 import { ProductAttributeType } from "@saleor/types/globalTypes";
 import createMetadataUpdateHandler from "@saleor/utils/handlers/metadataUpdateHandler";
+import { mapEdgesToItems } from "@saleor/utils/maps";
 import {
   useMetadataUpdate,
   usePrivateMetadataUpdate
@@ -22,7 +25,6 @@ import {
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import ProductTypeDeleteDialog from "../../components/ProductTypeDeleteDialog";
 import ProductTypeDetailsPage, {
   ProductTypeForm
 } from "../../components/ProductTypeDetailsPage";
@@ -116,6 +118,11 @@ export const ProductTypeUpdate: React.FC<ProductTypeUpdateProps> = ({
 
     return result.data.productTypeUpdate.errors;
   };
+
+  const productTypeDeleteData = useProductTypeDelete({
+    singleId: id,
+    params
+  });
 
   return (
     <TypedProductTypeDetailsQuery displayLoader variables={{ id }}>
@@ -335,62 +342,65 @@ export const ProductTypeUpdate: React.FC<ProductTypeUpdateProps> = ({
                       )
                     }}
                   />
-                  {!dataLoading &&
-                    Object.keys(ProductAttributeType).map(key => (
-                      <AssignAttributeDialog
-                        attributes={maybe(() =>
-                          result.data.productType.availableAttributes.edges.map(
-                            edge => edge.node
-                          )
-                        )}
-                        confirmButtonState={assignAttribute.opts.status}
-                        errors={maybe(
-                          () =>
-                            assignAttribute.opts.data.productAttributeAssign.errors.map(
-                              err => err.message
-                            ),
-                          []
-                        )}
-                        loading={result.loading}
+                  {!dataLoading && (
+                    <>
+                      {Object.keys(ProductAttributeType).map(key => (
+                        <AssignAttributeDialog
+                          attributes={mapEdgesToItems(
+                            result?.data?.productType?.availableAttributes
+                          )}
+                          confirmButtonState={assignAttribute.opts.status}
+                          errors={maybe(
+                            () =>
+                              assignAttribute.opts.data.productAttributeAssign.errors.map(
+                                err => err.message
+                              ),
+                            []
+                          )}
+                          loading={result.loading}
+                          onClose={closeModal}
+                          onSubmit={handleAssignAttribute}
+                          onFetch={search}
+                          onFetchMore={loadMore}
+                          onOpen={result.refetch}
+                          hasMore={maybe(
+                            () =>
+                              result.data.productType.availableAttributes
+                                .pageInfo.hasNextPage,
+                            false
+                          )}
+                          open={
+                            params.action === "assign-attribute" &&
+                            params.type === ProductAttributeType[key]
+                          }
+                          selected={maybe(() => params.ids, [])}
+                          onToggle={attributeId => {
+                            const ids = maybe(() => params.ids, []);
+                            navigate(
+                              productTypeUrl(id, {
+                                ...params,
+                                ids: ids.includes(attributeId)
+                                  ? params.ids.filter(
+                                      selectedId => selectedId !== attributeId
+                                    )
+                                  : [...ids, attributeId]
+                              })
+                            );
+                          }}
+                          key={key}
+                        />
+                      ))}
+                      <TypeDeleteWarningDialog
+                        {...productTypeDeleteData}
+                        typesData={[productType]}
+                        typesToDelete={[id]}
                         onClose={closeModal}
-                        onSubmit={handleAssignAttribute}
-                        onFetch={search}
-                        onFetchMore={loadMore}
-                        onOpen={result.refetch}
-                        hasMore={maybe(
-                          () =>
-                            result.data.productType.availableAttributes.pageInfo
-                              .hasNextPage,
-                          false
-                        )}
-                        open={
-                          params.action === "assign-attribute" &&
-                          params.type === ProductAttributeType[key]
-                        }
-                        selected={maybe(() => params.ids, [])}
-                        onToggle={attributeId => {
-                          const ids = maybe(() => params.ids, []);
-                          navigate(
-                            productTypeUrl(id, {
-                              ...params,
-                              ids: ids.includes(attributeId)
-                                ? params.ids.filter(
-                                    selectedId => selectedId !== attributeId
-                                  )
-                                : [...ids, attributeId]
-                            })
-                          );
-                        }}
-                        key={key}
+                        onDelete={handleProductTypeDelete}
+                        deleteButtonState={deleteProductType.opts.status}
                       />
-                    ))}
-                  <ProductTypeDeleteDialog
-                    confirmButtonState={deleteProductType.opts.status}
-                    name={maybe(() => data.productType.name, "...")}
-                    open={params.action === "remove"}
-                    onClose={() => navigate(productTypeUrl(id))}
-                    onConfirm={handleProductTypeDelete}
-                  />
+                    </>
+                  )}
+
                   <BulkAttributeUnassignDialog
                     title={intl.formatMessage({
                       defaultMessage: "Unassign Attribute from Product Type",

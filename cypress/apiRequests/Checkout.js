@@ -1,4 +1,9 @@
-import { getDefaultAddress, getVariantsLines } from "./utils/Utils";
+import {
+  getDefaultAddress,
+  getPaymentDataLine,
+  getValueWithDefault,
+  getVariantsLines
+} from "./utils/Utils";
 
 export function createCheckout({
   channelSlug,
@@ -45,21 +50,33 @@ export function addShippingMethod(checkoutId, shippingMethodId) {
   const mutation = `mutation{
     checkoutShippingMethodUpdate(checkoutId:"${checkoutId}",
     shippingMethodId:"${shippingMethodId}"){
-      checkoutErrors{
-        message
+      errors{
+      	message
         field
-      }
+    	}
+    	checkout{
+     		totalPrice{
+        	gross{
+         	 amount
+        	}
+      	}
+    	}
     }
   }`;
-  return cy.sendRequestWithQuery(mutation);
+  return cy
+    .sendRequestWithQuery(mutation)
+    .its("body.data.checkoutShippingMethodUpdate");
 }
 
-export function addPayment(checkoutId, gateway, token) {
+export function addPayment({ checkoutId, gateway, token, amount }) {
+  const tokenLine = getValueWithDefault(token, `token:"${token}"`);
+  const amountLine = getValueWithDefault(amount, `amount: ${amount}`);
   const mutation = `mutation{
     checkoutPaymentCreate(checkoutId:"${checkoutId}",
     input:{
       gateway: "${gateway}"
-      token:"${token}"
+      ${tokenLine}
+      ${amountLine}
     }){
       paymentErrors{
         field
@@ -72,9 +89,10 @@ export function addPayment(checkoutId, gateway, token) {
     .its("body.data.checkoutPaymentCreate");
 }
 
-export function completeCheckout(checkoutId) {
+export function completeCheckout(checkoutId, paymentData) {
+  const paymentDataLine = getPaymentDataLine(paymentData);
   const mutation = `mutation{
-    checkoutComplete(checkoutId:"${checkoutId}"){
+    checkoutComplete(checkoutId:"${checkoutId}" ${paymentDataLine}){
       order{
         id
       }
@@ -86,9 +104,7 @@ export function completeCheckout(checkoutId) {
       }
     }
   }`;
-  return cy
-    .sendRequestWithQuery(mutation)
-    .its("body.data.checkoutComplete.order");
+  return cy.sendRequestWithQuery(mutation).its("body.data.checkoutComplete");
 }
 
 export function addVoucher(checkoutId, voucherCode) {

@@ -1,7 +1,5 @@
-import DialogContentText from "@material-ui/core/DialogContentText";
-import IconButton from "@material-ui/core/IconButton";
+import { IconButton } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
-import ActionDialog from "@saleor/components/ActionDialog";
 import DeleteFilterTabDialog from "@saleor/components/DeleteFilterTabDialog";
 import SaveFilterTabDialog, {
   SaveFilterTabDialogFormData
@@ -14,14 +12,17 @@ import usePaginator, {
   createPaginationState
 } from "@saleor/hooks/usePaginator";
 import { commonMessages } from "@saleor/intl";
+import useProductTypeDelete from "@saleor/productTypes/hooks/useProductTypeDelete";
 import { ListViews } from "@saleor/types";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import createFilterHandlers from "@saleor/utils/handlers/filterHandlers";
 import createSortHandler from "@saleor/utils/handlers/sortHandler";
+import { mapEdgesToItems } from "@saleor/utils/maps";
 import { getSortParams } from "@saleor/utils/sort";
 import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+import { useIntl } from "react-intl";
 
+import TypeDeleteWarningDialog from "../../../components/TypeDeleteWarningDialog/TypeDeleteWarningDialog";
 import { configurationMenuUrl } from "../../../configuration";
 import { maybe } from "../../../misc";
 import ProductTypeListPage from "../../components/ProductTypeListPage";
@@ -55,9 +56,14 @@ export const ProductTypeList: React.FC<ProductTypeListProps> = ({ params }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const paginate = usePaginator();
-  const { isSelected, listElements, reset, toggle, toggleAll } = useBulkActions(
-    params.ids
-  );
+  const {
+    isSelected,
+    listElements: selectedProductTypes,
+    reset,
+    toggle,
+    toggleAll
+  } = useBulkActions(params.ids);
+
   const { settings } = useListSettings(ListViews.PRODUCT_LIST);
   const intl = useIntl();
 
@@ -148,6 +154,13 @@ export const ProductTypeList: React.FC<ProductTypeListProps> = ({ params }) => {
 
   const handleSort = createSortHandler(navigate, productTypeListUrl, params);
 
+  const productTypeDeleteData = useProductTypeDelete({
+    selectedTypes: selectedProductTypes,
+    params
+  });
+
+  const productTypesData = mapEdgesToItems(data?.productTypes);
+
   return (
     <TypedProductTypeBulkDeleteMutation
       onCompleted={handleProductTypeBulkDelete}
@@ -174,9 +187,7 @@ export const ProductTypeList: React.FC<ProductTypeListProps> = ({ params }) => {
               onTabSave={() => openModal("save-search")}
               tabs={tabs.map(tab => tab.name)}
               disabled={loading}
-              productTypes={maybe(() =>
-                data.productTypes.edges.map(edge => edge.node)
-              )}
+              productTypes={productTypesData}
               pageInfo={pageInfo}
               onAdd={() => navigate(productTypeAddUrl)}
               onBack={() => navigate(configurationMenuUrl)}
@@ -185,7 +196,7 @@ export const ProductTypeList: React.FC<ProductTypeListProps> = ({ params }) => {
               onRowClick={id => () => navigate(productTypeUrl(id))}
               onSort={handleSort}
               isChecked={isSelected}
-              selected={listElements.length}
+              selected={selectedProductTypes.length}
               sort={getSortParams(params)}
               toggle={toggle}
               toggleAll={toggleAll}
@@ -194,7 +205,7 @@ export const ProductTypeList: React.FC<ProductTypeListProps> = ({ params }) => {
                   color="primary"
                   onClick={() =>
                     openModal("remove", {
-                      ids: listElements
+                      ids: selectedProductTypes
                     })
                   }
                 >
@@ -202,30 +213,14 @@ export const ProductTypeList: React.FC<ProductTypeListProps> = ({ params }) => {
                 </IconButton>
               }
             />
-            <ActionDialog
-              confirmButtonState={productTypeBulkDeleteOpts.status}
+            <TypeDeleteWarningDialog
+              {...productTypeDeleteData}
+              typesData={productTypesData}
+              typesToDelete={selectedProductTypes}
               onClose={closeModal}
-              onConfirm={onProductTypeBulkDelete}
-              open={params.action === "remove"}
-              title={intl.formatMessage({
-                defaultMessage: "Delete Product Types",
-                description: "dialog header"
-              })}
-              variant="delete"
-            >
-              <DialogContentText>
-                <FormattedMessage
-                  defaultMessage="{counter,plural,one{Are you sure you want to delete this product type?} other{Are you sure you want to delete {displayQuantity} product types?}}"
-                  description="dialog content"
-                  values={{
-                    counter: maybe(() => params.ids.length),
-                    displayQuantity: (
-                      <strong>{maybe(() => params.ids.length)}</strong>
-                    )
-                  }}
-                />
-              </DialogContentText>
-            </ActionDialog>
+              onDelete={onProductTypeBulkDelete}
+              deleteButtonState={productTypeBulkDeleteOpts.status}
+            />
             <SaveFilterTabDialog
               open={params.action === "save-search"}
               confirmButtonState="default"

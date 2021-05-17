@@ -1,5 +1,4 @@
-import MenuItem from "@material-ui/core/MenuItem";
-import Select from "@material-ui/core/Select";
+import { MenuItem, Select } from "@material-ui/core";
 import { makeStyles } from "@saleor/theme";
 import React from "react";
 import { FormattedMessage } from "react-intl";

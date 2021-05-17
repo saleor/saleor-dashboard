@@ -1,5 +1,5 @@
+import { Typography } from "@material-ui/core";
 import { fade } from "@material-ui/core/styles/colorManipulator";
-import Typography from "@material-ui/core/Typography";
 import CloseIcon from "@material-ui/icons/Close";
 import { makeStyles } from "@saleor/theme";
 import classNames from "classnames";

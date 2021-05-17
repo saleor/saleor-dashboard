@@ -8,18 +8,18 @@ import Form from "@saleor/components/Form";
 import Grid from "@saleor/components/Grid";
 import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
-import { createChannelsChangeHandler } from "@saleor/discounts/handlers";
+import {
+  createChannelsChangeHandler,
+  createDiscountTypeChangeHandler
+} from "@saleor/discounts/handlers";
 import { DiscountErrorFragment } from "@saleor/fragments/types/DiscountErrorFragment";
 import { sectionNames } from "@saleor/intl";
 import { validatePrice } from "@saleor/products/utils/validation";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import {
-  DiscountValueTypeEnum,
-  VoucherTypeEnum
-} from "../../../types/globalTypes";
-import { RequirementsPicker } from "../../types";
+import { VoucherTypeEnum } from "../../../types/globalTypes";
+import { DiscountTypeEnum, RequirementsPicker } from "../../types";
 import VoucherDates from "../VoucherDates";
 import VoucherInfo from "../VoucherInfo";
 import VoucherLimits from "../VoucherLimits";
@@ -32,7 +32,7 @@ export interface FormData {
   applyOncePerOrder: boolean;
   channelListings: ChannelVoucherData[];
   code: string;
-  discountType: DiscountValueTypeEnum;
+  discountType: DiscountTypeEnum;
   endDate: string;
   endTime: string;
   hasEndDate: boolean;
@@ -78,7 +78,7 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
     applyOncePerOrder: false,
     channelListings,
     code: "",
-    discountType: DiscountValueTypeEnum.FIXED,
+    discountType: DiscountTypeEnum.VALUE_FIXED,
     endDate: "",
     endTime: "",
     hasEndDate: false,
@@ -95,17 +95,22 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
   return (
     <Form initial={initialForm} onSubmit={onSubmit}>
       {({ change, data, hasChanged, submit, triggerChange }) => {
+        const handleDiscountTypeChange = createDiscountTypeChangeHandler(
+          change
+        );
         const handleChannelChange = createChannelsChangeHandler(
           data.channelListings,
           onChannelsChange,
           triggerChange
         );
-        const formDisabled = data.channelListings?.some(
-          channel =>
-            validatePrice(channel.discountValue) ||
-            (data.requirementsPicker === RequirementsPicker.ORDER &&
-              validatePrice(channel.minSpent))
-        );
+        const formDisabled =
+          data.discountType.toString() !== "SHIPPING" &&
+          data.channelListings?.some(
+            channel =>
+              validatePrice(channel.discountValue) ||
+              (data.requirementsPicker === RequirementsPicker.ORDER &&
+                validatePrice(channel.minSpent))
+          );
         return (
           <Container>
             <AppHeader onBack={onBack}>
@@ -123,7 +128,7 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
                   data={data}
                   errors={errors}
                   disabled={disabled}
-                  onChange={change}
+                  onChange={event => handleDiscountTypeChange(data, event)}
                   variant="create"
                 />
                 <CardSpacer />

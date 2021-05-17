@@ -1,9 +1,10 @@
-import IconButton from "@material-ui/core/IconButton";
+import { IconButton } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
 import DeleteFilterTabDialog from "@saleor/components/DeleteFilterTabDialog";
 import SaveFilterTabDialog, {
   SaveFilterTabDialogFormData
 } from "@saleor/components/SaveFilterTabDialog";
+import TypeDeleteWarningDialog from "@saleor/components/TypeDeleteWarningDialog";
 import useBulkActions from "@saleor/hooks/useBulkActions";
 import useListSettings from "@saleor/hooks/useListSettings";
 import useNavigator from "@saleor/hooks/useNavigator";
@@ -13,11 +14,12 @@ import usePaginator, {
 } from "@saleor/hooks/usePaginator";
 import { commonMessages } from "@saleor/intl";
 import { getStringOrPlaceholder } from "@saleor/misc";
-import PageTypeBulkDeleteDialog from "@saleor/pageTypes/components/PageTypeBulkDeleteDialog";
+import usePageTypeDelete from "@saleor/pageTypes/hooks/usePageTypeDelete";
 import { usePageTypeBulkDeleteMutation } from "@saleor/pageTypes/mutations";
 import { ListViews } from "@saleor/types";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import createSortHandler from "@saleor/utils/handlers/sortHandler";
+import { mapEdgesToItems } from "@saleor/utils/maps";
 import { getSortParams } from "@saleor/utils/sort";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -51,9 +53,13 @@ export const PageTypeList: React.FC<PageTypeListProps> = ({ params }) => {
   const navigate = useNavigator();
   const paginate = usePaginator();
   const notify = useNotifier();
-  const { isSelected, listElements, reset, toggle, toggleAll } = useBulkActions(
-    params.ids
-  );
+  const {
+    isSelected,
+    listElements: selectedPageTypes,
+    reset,
+    toggle,
+    toggleAll
+  } = useBulkActions(params.ids);
   const intl = useIntl();
   const { settings } = useListSettings(ListViews.PAGES_LIST);
 
@@ -155,10 +161,12 @@ export const PageTypeList: React.FC<PageTypeListProps> = ({ params }) => {
       }
     });
 
-  const selectedPageTypesHasPages = data?.pageTypes.edges.some(
-    pageType =>
-      pageType.node.hasPages && params.ids?.some(id => id === pageType.node.id)
-  );
+  const pageTypeDeleteData = usePageTypeDelete({
+    selectedTypes: selectedPageTypes,
+    params
+  });
+
+  const pageTypesData = mapEdgesToItems(data?.pageTypes);
 
   return (
     <>
@@ -172,7 +180,7 @@ export const PageTypeList: React.FC<PageTypeListProps> = ({ params }) => {
         onTabSave={() => openModal("save-search")}
         tabs={tabs.map(tab => tab.name)}
         disabled={loading}
-        pageTypes={data?.pageTypes?.edges?.map(edge => edge.node)}
+        pageTypes={pageTypesData}
         pageInfo={pageInfo}
         onAdd={() => navigate(pageTypeAddUrl)}
         onBack={() => navigate(configurationMenuUrl)}
@@ -181,7 +189,7 @@ export const PageTypeList: React.FC<PageTypeListProps> = ({ params }) => {
         onRowClick={id => () => navigate(pageTypeUrl(id))}
         onSort={handleSort}
         isChecked={isSelected}
-        selected={listElements.length}
+        selected={selectedPageTypes.length}
         sort={getSortParams(params)}
         toggle={toggle}
         toggleAll={toggleAll}
@@ -190,7 +198,7 @@ export const PageTypeList: React.FC<PageTypeListProps> = ({ params }) => {
             color="primary"
             onClick={() =>
               openModal("remove", {
-                ids: listElements
+                ids: selectedPageTypes
               })
             }
           >
@@ -198,13 +206,14 @@ export const PageTypeList: React.FC<PageTypeListProps> = ({ params }) => {
           </IconButton>
         }
       />
-      <PageTypeBulkDeleteDialog
-        confirmButtonState={pageTypeBulkDeleteOpts.status}
-        quantity={params.ids?.length}
-        hasPages={selectedPageTypesHasPages}
-        open={params.action === "remove"}
+      <TypeDeleteWarningDialog
+        {...pageTypeDeleteData}
+        typesData={pageTypesData}
+        typesToDelete={selectedPageTypes}
         onClose={closeModal}
-        onConfirm={hanldePageTypeBulkDelete}
+        onDelete={hanldePageTypeBulkDelete}
+        deleteButtonState={pageTypeBulkDeleteOpts.status}
+        showViewAssignedItemsButton={false}
       />
       <SaveFilterTabDialog
         open={params.action === "save-search"}

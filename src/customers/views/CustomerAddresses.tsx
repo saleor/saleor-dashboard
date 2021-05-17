@@ -1,4 +1,4 @@
-import DialogContentText from "@material-ui/core/DialogContentText";
+import { DialogContentText } from "@material-ui/core";
 import ActionDialog from "@saleor/components/ActionDialog";
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import useNavigator from "@saleor/hooks/useNavigator";
@@ -101,11 +101,7 @@ const CustomerAddresses: React.FC<CustomerAddressesProps> = ({
                   {(removeCustomerAddress, removeCustomerAddressOpts) => (
                     <TypedCustomerAddressesQuery variables={{ id }}>
                       {customerData => {
-                        const countryChoices =
-                          shop?.countries?.map(country => ({
-                            code: country.code,
-                            label: country.country
-                          })) || [];
+                        const countryChoices = shop?.countries || [];
 
                         return (
                           <>

@@ -10,6 +10,7 @@
 export enum AccountErrorCode {
   ACTIVATE_OWN_ACCOUNT = "ACTIVATE_OWN_ACCOUNT",
   ACTIVATE_SUPERUSER_ACCOUNT = "ACTIVATE_SUPERUSER_ACCOUNT",
+  CHANNEL_INACTIVE = "CHANNEL_INACTIVE",
   DEACTIVATE_OWN_ACCOUNT = "DEACTIVATE_OWN_ACCOUNT",
   DEACTIVATE_SUPERUSER_ACCOUNT = "DEACTIVATE_SUPERUSER_ACCOUNT",
   DELETE_NON_STAFF_USER = "DELETE_NON_STAFF_USER",
@@ -28,6 +29,7 @@ export enum AccountErrorCode {
   JWT_MISSING_TOKEN = "JWT_MISSING_TOKEN",
   JWT_SIGNATURE_EXPIRED = "JWT_SIGNATURE_EXPIRED",
   LEFT_NOT_MANAGEABLE_PERMISSION = "LEFT_NOT_MANAGEABLE_PERMISSION",
+  MISSING_CHANNEL_SLUG = "MISSING_CHANNEL_SLUG",
   NOT_FOUND = "NOT_FOUND",
   OUT_OF_SCOPE_GROUP = "OUT_OF_SCOPE_GROUP",
   OUT_OF_SCOPE_PERMISSION = "OUT_OF_SCOPE_PERMISSION",
@@ -155,6 +157,7 @@ export enum CollectionSortField {
 export enum ConfigurationTypeFieldEnum {
   BOOLEAN = "BOOLEAN",
   MULTILINE = "MULTILINE",
+  OUTPUT = "OUTPUT",
   PASSWORD = "PASSWORD",
   SECRET = "SECRET",
   SECRETMULTILINE = "SECRETMULTILINE",
@@ -793,6 +796,11 @@ export enum PermissionGroupSortField {
   NAME = "NAME",
 }
 
+export enum PluginConfigurationType {
+  GLOBAL = "GLOBAL",
+  PER_CHANNEL = "PER_CHANNEL",
+}
+
 export enum PluginErrorCode {
   GRAPHQL_ERROR = "GRAPHQL_ERROR",
   INVALID = "INVALID",
@@ -849,7 +857,6 @@ export enum ProductFieldEnum {
   VARIANT_MEDIA = "VARIANT_MEDIA",
   VARIANT_SKU = "VARIANT_SKU",
   VARIANT_WEIGHT = "VARIANT_WEIGHT",
-  VISIBLE = "VISIBLE",
 }
 
 export enum ProductMediaType {
@@ -1529,6 +1536,12 @@ export interface PageCreateInput {
   pageType: string;
 }
 
+export interface PageFilterInput {
+  search?: string | null;
+  metadata?: (MetadataInput | null)[] | null;
+  pageTypes?: (string | null)[] | null;
+}
+
 export interface PageInput {
   slug?: string | null;
   title?: string | null;
@@ -1597,13 +1610,19 @@ export interface PermissionGroupUpdateInput {
 }
 
 export interface PluginFilterInput {
-  active?: boolean | null;
+  statusInChannels?: PluginStatusInChannelsInput | null;
   search?: string | null;
+  type?: PluginConfigurationType | null;
 }
 
 export interface PluginSortingInput {
   direction: OrderDirection;
   field: PluginSortField;
+}
+
+export interface PluginStatusInChannelsInput {
+  active: boolean;
+  channels: string[];
 }
 
 export interface PluginUpdateInput {
@@ -1850,6 +1869,11 @@ export interface ShippingZoneCreateInput {
   addChannels?: string[] | null;
 }
 
+export interface ShippingZoneFilterInput {
+  search?: string | null;
+  channels?: (string | null)[] | null;
+}
+
 export interface ShippingZoneUpdateInput {
   name?: string | null;
   description?: string | null;
@@ -1929,6 +1953,7 @@ export interface UserCreateInput {
   note?: string | null;
   languageCode?: LanguageCodeEnum | null;
   redirectUrl?: string | null;
+  channel?: string | null;
 }
 
 export interface UserSortingInput {

@@ -1,6 +1,5 @@
-import MuiCheckbox, {
-  CheckboxProps as MuiCheckboxProps
-} from "@material-ui/core/Checkbox";
+import { Checkbox as MuiCheckbox } from "@material-ui/core";
+import { CheckboxProps as MuiCheckboxProps } from "@material-ui/core/Checkbox";
 import React from "react";
 
 export type CheckboxProps = Omit<

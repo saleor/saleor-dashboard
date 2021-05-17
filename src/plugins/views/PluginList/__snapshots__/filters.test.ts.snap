@@ -3,7 +3,8 @@
 exports[`Filtering URL params should not be empty if active filters are present 1`] = `
 Object {
   "active": "true",
+  "type": "GLOBAL",
 }
 `;
 
-exports[`Filtering URL params should not be empty if active filters are present 2`] = `"active=true"`;
+exports[`Filtering URL params should not be empty if active filters are present 2`] = `"active=true&type=GLOBAL"`;

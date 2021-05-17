@@ -1,6 +1,6 @@
 import { Divider, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import { Channel_channel_shippingZones } from "@saleor/channels/types/Channel";
+import { ChannelShippingZone } from "@saleor/channels/pages/ChannelDetailsPage/types";
 import DeletableItem from "@saleor/components/DeletableItem";
 import React from "react";
 
@@ -18,7 +18,7 @@ const useStyles = makeStyles(
 );
 
 interface ShippingZoneItemProps {
-  zone: Channel_channel_shippingZones;
+  zone: ChannelShippingZone;
   onDelete: (id: string) => void;
 }
 
