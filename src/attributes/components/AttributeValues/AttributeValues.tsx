@@ -67,6 +67,8 @@ const AttributeValues: React.FC<AttributeValuesProps> = ({
   onValueReorder,
   onValueUpdate,
   values,
+  settings,
+  onUpdateListSettings,
   pageInfo,
   onNextPage,
   onPreviousPage
@@ -119,6 +121,8 @@ const AttributeValues: React.FC<AttributeValuesProps> = ({
                 pageInfo && !disabled ? pageInfo.hasPreviousPage : false
               }
               onPreviousPage={onPreviousPage}
+              settings={settings}
+              onUpdateListSettings={onUpdateListSettings}
             />
           </TableRow>
         </TableFooter>

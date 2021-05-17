@@ -1,4 +1,4 @@
-import { PAGINATE_BY } from "@saleor/config";
+import useListSettings from "@saleor/hooks/useListSettings";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import usePaginator, {
@@ -6,7 +6,7 @@ import usePaginator, {
 } from "@saleor/hooks/usePaginator";
 import { commonMessages } from "@saleor/intl";
 import { maybe } from "@saleor/misc";
-import { ReorderEvent } from "@saleor/types";
+import { ListViews, ReorderEvent } from "@saleor/types";
 import getAttributeErrorMessage from "@saleor/utils/errors/attribute";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import createMetadataUpdateHandler from "@saleor/utils/handlers/metadataUpdateHandler";
@@ -58,15 +58,20 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ id, params }) => {
     AttributeUrlQueryParams
   >(navigate, params => attributeUrl(id, params), params);
 
+  const { updateListSettings, settings } = useListSettings(
+    ListViews.ATTRIBUTE_VALUE_LIST
+  );
+
   const { data, loading } = useAttributeDetailsQuery({
     variables: {
       id,
-      firstValues: PAGINATE_BY,
+      firstValues: settings?.rowNumber,
       afterValues: params.after
-    }
+    },
+    skip: !settings
   });
 
-  const paginationState = createPaginationState(PAGINATE_BY, params);
+  const paginationState = createPaginationState(settings?.rowNumber, params);
   const { loadNextPage, loadPreviousPage, pageInfo } = paginate(
     data?.attribute?.values?.pageInfo,
     paginationState,
@@ -192,7 +197,7 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ id, params }) => {
           id: data.attribute.values.edges[oldIndex].node.id,
           sortOrder: newIndex - oldIndex
         },
-        firstValues: PAGINATE_BY,
+        firstValues: settings.rowNumber,
         afterValues: params.after
       }
     });
@@ -211,7 +216,7 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ id, params }) => {
       variables: {
         id,
         input,
-        firstValues: PAGINATE_BY,
+        firstValues: settings.rowNumber,
         afterValues: params.after
       }
     });
@@ -249,6 +254,8 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ id, params }) => {
         }
         saveButtonBarState={attributeUpdateOpts.status}
         values={maybe(() => data.attribute.values)}
+        settings={settings}
+        onUpdateListSettings={updateListSettings}
         pageInfo={pageInfo}
         onNextPage={loadNextPage}
         onPreviousPage={loadPreviousPage}
@@ -283,7 +290,7 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ id, params }) => {
           attributeValueDelete({
             variables: {
               id: params.id,
-              firstValues: PAGINATE_BY,
+              firstValues: settings.rowNumber,
               afterValues: params.after
             }
           })
@@ -303,7 +310,7 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ id, params }) => {
             variables: {
               id,
               input,
-              firstValues: PAGINATE_BY,
+              firstValues: settings.rowNumber,
               afterValues: params.after
             }
           })
@@ -330,7 +337,7 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ id, params }) => {
                 value => params.id === value.node.id
               ).node.id,
               input,
-              firstValues: PAGINATE_BY,
+              firstValues: settings.rowNumber,
               afterValues: params.after
             }
           })

@@ -16,7 +16,7 @@ import {
 import { AttributeErrorFragment } from "@saleor/fragments/types/AttributeErrorFragment";
 import { sectionNames } from "@saleor/intl";
 import { maybe } from "@saleor/misc";
-import { ReorderAction } from "@saleor/types";
+import { ListSettings, ReorderAction } from "@saleor/types";
 import {
   AttributeEntityTypeEnum,
   AttributeInputTypeEnum,
@@ -47,6 +47,8 @@ export interface AttributePageProps {
   onValueDelete: (id: string) => void;
   onValueReorder: ReorderAction;
   onValueUpdate: (id: string) => void;
+  settings?: ListSettings;
+  onUpdateListSettings?: (key: keyof ListSettings, value: any) => void;
   pageInfo: {
     hasNextPage: boolean;
     hasPreviousPage: boolean;
@@ -83,6 +85,8 @@ const AttributePage: React.FC<AttributePageProps> = ({
   onValueDelete,
   onValueReorder,
   onValueUpdate,
+  settings,
+  onUpdateListSettings,
   pageInfo,
   onNextPage,
   onPreviousPage
@@ -204,6 +208,8 @@ const AttributePage: React.FC<AttributePageProps> = ({
                       onValueDelete={onValueDelete}
                       onValueReorder={onValueReorder}
                       onValueUpdate={onValueUpdate}
+                      settings={settings}
+                      onUpdateListSettings={onUpdateListSettings}
                       pageInfo={pageInfo}
                       onNextPage={onNextPage}
                       onPreviousPage={onPreviousPage}

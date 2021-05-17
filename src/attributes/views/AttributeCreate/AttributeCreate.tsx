@@ -1,13 +1,13 @@
 import { getAttributeData } from "@saleor/attributes/utils/data";
-import { PAGINATE_BY } from "@saleor/config";
 import { AttributeErrorFragment } from "@saleor/fragments/types/AttributeErrorFragment";
+import useListSettings from "@saleor/hooks/useListSettings";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import usePaginator, {
   createPaginationState
 } from "@saleor/hooks/usePaginator";
 import { getStringOrPlaceholder } from "@saleor/misc";
-import { ReorderEvent } from "@saleor/types";
+import { ListViews, ReorderEvent } from "@saleor/types";
 import { AttributeErrorCode } from "@saleor/types/globalTypes";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import createMetadataCreateHandler from "@saleor/utils/handlers/metadataCreateHandler";
@@ -72,7 +72,10 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ params }) => {
     AttributeErrorFragment[]
   >([]);
 
-  const paginationState = createPaginationState(PAGINATE_BY, params);
+  const { updateListSettings, settings } = useListSettings(
+    ListViews.ATTRIBUTE_VALUE_LIST
+  );
+  const paginationState = createPaginationState(settings?.rowNumber, params);
   const { loadNextPage, loadPreviousPage, pageInfo } = paginate(
     {
       endCursor: "",
@@ -138,7 +141,7 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ params }) => {
     const result = await attributeCreate({
       variables: {
         input,
-        firstValues: PAGINATE_BY,
+        firstValues: settings.rowNumber,
         afterValues: params.after
       }
     });
@@ -198,6 +201,8 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ params }) => {
             }
           }))
         }}
+        settings={settings}
+        onUpdateListSettings={updateListSettings}
         pageInfo={pageInfo}
         onNextPage={loadNextPage}
         onPreviousPage={loadPreviousPage}
