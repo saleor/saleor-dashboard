@@ -14,3 +14,4 @@ export const urlList = {
   staffMembers: "staff/"
 };
 export const productDetailsUrl = productId => `${urlList.products}${productId}`;
+export const userDetailsUrl = userId => `${urlList.staffMembers}${userId}`;
