@@ -1,9 +1,11 @@
-import Button from "@material-ui/core/Button";
-import Card from "@material-ui/core/Card";
-import CardContent from "@material-ui/core/CardContent";
-import IconButton from "@material-ui/core/IconButton";
-import Paper from "@material-ui/core/Paper";
-import Typography from "@material-ui/core/Typography";
+import {
+  Button,
+  Card,
+  CardContent,
+  IconButton,
+  Paper,
+  Typography
+} from "@material-ui/core";
 import CloseIcon from "@material-ui/icons/Close";
 import Link from "@saleor/components/Link";
 import useClipboard from "@saleor/hooks/useClipboard";

@@ -1,6 +1,4 @@
-import Menu from "@material-ui/core/Menu";
-import MenuItem from "@material-ui/core/MenuItem";
-import Typography from "@material-ui/core/Typography";
+import { Menu, MenuItem, Typography } from "@material-ui/core";
 import { CollectionList_collections_edges_node_channelListings } from "@saleor/collections/types/CollectionList";
 import Hr from "@saleor/components/Hr";
 import StatusLabel from "@saleor/components/StatusLabel";

@@ -1,7 +1,8 @@
-import { makeStyles, Typography } from "@material-ui/core";
+import { Typography } from "@material-ui/core";
 import DefaultCardTitle from "@saleor/components/CardTitle";
 import { StatusType } from "@saleor/components/StatusChip/types";
 import StatusLabel from "@saleor/components/StatusLabel";
+import { makeStyles } from "@saleor/theme";
 import { FulfillmentStatus } from "@saleor/types/globalTypes";
 import camelCase from "lodash/camelCase";
 import React from "react";

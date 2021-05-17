@@ -1,4 +1,4 @@
-import List from "@material-ui/core/List";
+import { List } from "@material-ui/core";
 import { makeStyles } from "@saleor/theme";
 import React from "react";
 

@@ -1,5 +1,5 @@
 import { toggle } from "@saleor/utils/lists";
-import isEqual from "lodash-es/isEqual";
+import isEqual from "lodash/isEqual";
 import omit from "lodash/omit";
 import React from "react";
 import { useState } from "react";

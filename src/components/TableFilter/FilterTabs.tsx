@@ -1,4 +1,4 @@
-import Tabs from "@material-ui/core/Tabs";
+import { Tabs } from "@material-ui/core";
 import { makeStyles } from "@saleor/theme";
 import React from "react";
 

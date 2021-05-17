@@ -1,4 +1,4 @@
-import Typography from "@material-ui/core/Typography";
+import { Typography } from "@material-ui/core";
 import { Channel as ChannelList, ChannelData } from "@saleor/channels/utils";
 import Hr from "@saleor/components/Hr";
 import useDateLocalize from "@saleor/hooks/useDateLocalize";

@@ -1,4 +1,4 @@
-import Typography from "@material-ui/core/Typography";
+import { Typography } from "@material-ui/core";
 import Form from "@saleor/components/Form";
 import Hr from "@saleor/components/Hr";
 import Skeleton from "@saleor/components/Skeleton";

@@ -13,7 +13,7 @@ import {
   ShippingZone_shippingZone_shippingMethods_channelListings
 } from "@saleor/shipping/types/ShippingZone";
 import { mapNodeToChoice } from "@saleor/utils/maps";
-import uniqBy from "lodash-es/uniqBy";
+import uniqBy from "lodash/uniqBy";
 
 export interface Channel {
   id: string;

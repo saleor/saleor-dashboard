@@ -1,8 +1,10 @@
-import Card from "@material-ui/core/Card";
-import TableBody from "@material-ui/core/TableBody";
-import TableCell from "@material-ui/core/TableCell";
-import TableRow from "@material-ui/core/TableRow";
-import Typography from "@material-ui/core/Typography";
+import {
+  Card,
+  TableBody,
+  TableCell,
+  TableRow,
+  Typography
+} from "@material-ui/core";
 import CardTitle from "@saleor/components/CardTitle";
 import Money from "@saleor/components/Money";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";

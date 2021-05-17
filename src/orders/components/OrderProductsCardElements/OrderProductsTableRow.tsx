@@ -1,4 +1,4 @@
-import { makeStyles, TableCell, TableRow } from "@material-ui/core";
+import { TableCell, TableRow } from "@material-ui/core";
 import Money from "@saleor/components/Money";
 import Skeleton from "@saleor/components/Skeleton";
 import TableCellAvatar from "@saleor/components/TableCellAvatar";
@@ -8,6 +8,7 @@ import {
   OrderDetails_order_fulfillments_lines,
   OrderDetails_order_lines
 } from "@saleor/orders/types/OrderDetails";
+import { makeStyles } from "@saleor/theme";
 import React from "react";
 
 const useStyles = makeStyles(

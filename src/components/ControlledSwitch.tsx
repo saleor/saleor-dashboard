@@ -1,6 +1,5 @@
-import { makeStyles } from "@material-ui/core";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Switch from "@material-ui/core/Switch";
+import { FormControlLabel, Switch } from "@material-ui/core";
+import { makeStyles } from "@saleor/theme";
 import React from "react";
 
 const useStyles = makeStyles(

@@ -6,10 +6,22 @@ const TsconfigPathsPlugin = require("tsconfig-paths-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const { InjectManifest } = require("workbox-webpack-plugin");
 const SentryWebpackPlugin = require("@sentry/webpack-plugin");
+const BundleAnalyzerPlugin = require("webpack-bundle-analyzer")
+  .BundleAnalyzerPlugin;
+const SpeedMeasurePlugin = require("speed-measure-webpack-plugin");
 
 require("dotenv").config();
 
 const resolve = path.resolve.bind(path, __dirname);
+
+let bundleAnalyzerPlugin;
+let speedMeasureWrapper = fn => fn;
+const analyze = process.env.ANALYZE;
+if (!!analyze) {
+  const smp = new SpeedMeasurePlugin();
+  speedMeasureWrapper = smp.wrap;
+  bundleAnalyzerPlugin = new BundleAnalyzerPlugin();
+}
 
 const pathsPlugin = new TsconfigPathsPlugin({
   configFile: "./tsconfig.json"
@@ -36,7 +48,7 @@ const environmentPlugin = new webpack.EnvironmentPlugin({
 
 const dashboardBuildPath = "build/dashboard/";
 
-module.exports = (env, argv) => {
+module.exports = speedMeasureWrapper((env, argv) => {
   const devMode = argv.mode !== "production";
 
   let fileLoaderPath;
@@ -135,11 +147,12 @@ module.exports = (env, argv) => {
       environmentPlugin,
       htmlWebpackPlugin,
       sentryPlugin,
-      manifestPlugin
+      manifestPlugin,
+      bundleAnalyzerPlugin
     ].filter(Boolean),
     resolve: {
       extensions: [".js", ".jsx", ".ts", ".tsx"],
       plugins: [pathsPlugin]
     }
   };
-};
+});

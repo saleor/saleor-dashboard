@@ -1,4 +1,4 @@
-import Typography from "@material-ui/core/Typography";
+import { Typography } from "@material-ui/core";
 import { makeStyles } from "@saleor/theme";
 import { ReorderAction } from "@saleor/types";
 import React from "react";

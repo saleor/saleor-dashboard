@@ -1,4 +1,4 @@
-import Button from "@material-ui/core/Button";
+import { Button } from "@material-ui/core";
 import { makeStyles } from "@saleor/theme";
 import { SearchPageProps, TabPageProps } from "@saleor/types";
 import React from "react";

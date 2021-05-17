@@ -1,4 +1,4 @@
-import DialogContentText from "@material-ui/core/DialogContentText";
+import { DialogContentText } from "@material-ui/core";
 import { useChannelsList } from "@saleor/channels/queries";
 import ActionDialog from "@saleor/components/ActionDialog";
 import useAppChannel from "@saleor/components/AppLayout/AppChannelContext";

@@ -1,5 +1,4 @@
-import Button from "@material-ui/core/Button";
-import DialogContentText from "@material-ui/core/DialogContentText";
+import { Button, DialogContentText } from "@material-ui/core";
 import { useChannelsList } from "@saleor/channels/queries";
 import {
   createCollectionChannels,

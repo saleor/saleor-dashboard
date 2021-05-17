@@ -1,7 +1,5 @@
 import EditorJS, { LogLevels, OutputData } from "@editorjs/editorjs";
-import FormControl from "@material-ui/core/FormControl";
-import FormHelperText from "@material-ui/core/FormHelperText";
-import InputLabel from "@material-ui/core/InputLabel";
+import { FormControl, FormHelperText, InputLabel } from "@material-ui/core";
 import classNames from "classnames";
 import React from "react";
 

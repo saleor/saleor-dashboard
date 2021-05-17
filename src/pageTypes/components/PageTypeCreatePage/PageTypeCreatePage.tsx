@@ -1,5 +1,4 @@
-import { makeStyles } from "@material-ui/core";
-import Typography from "@material-ui/core/Typography";
+import { Typography } from "@material-ui/core";
 import AppHeader from "@saleor/components/AppHeader";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
 import Container from "@saleor/components/Container";
@@ -11,6 +10,7 @@ import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
 import { PageErrorFragment } from "@saleor/fragments/types/PageErrorFragment";
 import { commonMessages, sectionNames } from "@saleor/intl";
+import { makeStyles } from "@saleor/theme";
 import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";

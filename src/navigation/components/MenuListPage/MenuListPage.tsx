@@ -1,4 +1,4 @@
-import Button from "@material-ui/core/Button";
+import { Button } from "@material-ui/core";
 import AppHeader from "@saleor/components/AppHeader";
 import Container from "@saleor/components/Container";
 import PageHeader from "@saleor/components/PageHeader";
