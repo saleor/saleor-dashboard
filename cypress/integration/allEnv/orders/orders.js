@@ -94,7 +94,7 @@ describe("Orders", () => {
     cy.clearSessionData().loginUserViaRequest();
   });
 
-  xit("should create order with selected channel", () => {
+  it("should create order with selected channel", () => {
     cy.visit(urlList.orders)
       .get(ORDERS_SELECTORS.createOrder)
       .click();
@@ -107,7 +107,7 @@ describe("Orders", () => {
       );
     });
   });
-  xit("should not be possible to change channel in order", () => {
+  it("should not be possible to change channel in order", () => {
     createOrder({
       customerId: customer.id,
       channelId: defaultChannel.id,
@@ -122,7 +122,7 @@ describe("Orders", () => {
         .should("not.exist");
     });
   });
-  xit("should cancel fulfillment", () => {
+  it("should cancel fulfillment", () => {
     let order;
     createFulfilledOrder({
       customerId: customer.id,
