@@ -1,5 +1,4 @@
 import placeholderImage from "@assets/images/placeholder255x255.png";
-import { Omit } from "@material-ui/core";
 import { ProductErrorCode } from "@saleor/types/globalTypes";
 import { mapEdgesToItems, mapNodeToChoice } from "@saleor/utils/maps";
 import { storiesOf } from "@storybook/react";

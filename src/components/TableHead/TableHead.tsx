@@ -1,10 +1,11 @@
+import {
+  TableCell,
+  TableHead as MuiTableHead,
+  TableRow,
+  Typography
+} from "@material-ui/core";
 import { fade } from "@material-ui/core/styles/colorManipulator";
-import TableCell from "@material-ui/core/TableCell";
-import MuiTableHead, {
-  TableHeadProps as MuiTableHeadProps
-} from "@material-ui/core/TableHead";
-import TableRow from "@material-ui/core/TableRow";
-import Typography from "@material-ui/core/Typography";
+import { TableHeadProps as MuiTableHeadProps } from "@material-ui/core/TableHead";
 import { makeStyles } from "@saleor/theme";
 import classNames from "classnames";
 import React from "react";

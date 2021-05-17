@@ -1,8 +1,8 @@
-import { makeStyles } from "@material-ui/core";
 import Money, { IMoney } from "@saleor/components/Money";
 import Skeleton from "@saleor/components/Skeleton";
+import { makeStyles } from "@saleor/theme";
 import classNames from "classnames";
-import { reduce } from "lodash";
+import reduce from "lodash/reduce";
 import React from "react";
 import { useIntl } from "react-intl";
 import { defineMessages } from "react-intl";

@@ -1,9 +1,11 @@
-import ButtonBase from "@material-ui/core/ButtonBase";
-import ClickAwayListener from "@material-ui/core/ClickAwayListener";
-import Grow from "@material-ui/core/Grow";
-import Popper from "@material-ui/core/Popper";
+import {
+  ButtonBase,
+  ClickAwayListener,
+  Grow,
+  Popper,
+  Typography
+} from "@material-ui/core";
 import { fade } from "@material-ui/core/styles/colorManipulator";
-import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@saleor/theme";
 import classNames from "classnames";
 import React, { useState } from "react";

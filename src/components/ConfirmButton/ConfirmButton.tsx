@@ -1,5 +1,5 @@
-import Button, { ButtonProps } from "@material-ui/core/Button";
-import CircularProgress from "@material-ui/core/CircularProgress";
+import { Button, CircularProgress } from "@material-ui/core";
+import { ButtonProps } from "@material-ui/core/Button";
 import CheckIcon from "@material-ui/icons/Check";
 import { DEFAULT_NOTIFICATION_SHOW_TIME } from "@saleor/config";
 import { buttonMessages } from "@saleor/intl";

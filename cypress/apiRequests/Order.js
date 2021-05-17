@@ -57,13 +57,16 @@ export function completeOrder(orderId) {
     draftOrderComplete(id:"${orderId}"){
       order{
         id
+        lines{
+          id
+        }
       }
       orderErrors{
         message
       }
     }
   }`;
-  return cy.sendRequestWithQuery(mutation);
+  return cy.sendRequestWithQuery(mutation).its("body.data.draftOrderComplete");
 }
 export function getOrder(orderId) {
   const query = `query getOrder{
@@ -77,4 +80,31 @@ export function getOrder(orderId) {
     }
   }`;
   cy.sendRequestWithQuery(query).its("body.data.order");
+}
+
+export function fulfillOrder({ orderId, warehouse, quantity, linesId }) {
+  let lines = "";
+  linesId.forEach(lineId => {
+    lines += `{orderLineId:"${lineId.id}"
+      stocks:{
+        quantity:${quantity}
+        warehouse:"${warehouse}"
+      }
+    }`;
+  });
+  const mutation = `mutation fulfill{
+  orderFulfill(order:"${orderId}" input:{
+    lines:[${lines}]
+  }){
+    errors{
+      field
+      message
+    }
+    order{
+      id
+      number
+    }
+  }
+}`;
+  return cy.sendRequestWithQuery(mutation).its("body.data.orderFulfill");
 }

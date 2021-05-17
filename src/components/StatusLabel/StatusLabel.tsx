@@ -1,6 +1,6 @@
+import { Typography } from "@material-ui/core";
 import grey from "@material-ui/core/colors/grey";
 import yellow from "@material-ui/core/colors/yellow";
-import Typography from "@material-ui/core/Typography";
 import Label from "@saleor/orders/components/OrderHistory/Label";
 import { makeStyles } from "@saleor/theme";
 import classNames from "classnames";

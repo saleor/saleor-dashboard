@@ -1,14 +1,16 @@
-import Avatar from "@material-ui/core/Avatar";
-import Chip from "@material-ui/core/Chip";
-import ClickAwayListener from "@material-ui/core/ClickAwayListener";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Grow from "@material-ui/core/Grow";
-import Hidden from "@material-ui/core/Hidden";
-import MenuItem from "@material-ui/core/MenuItem";
-import Menu from "@material-ui/core/MenuList";
-import Paper from "@material-ui/core/Paper";
-import Popper from "@material-ui/core/Popper";
-import Switch from "@material-ui/core/Switch";
+import {
+  Avatar,
+  Chip,
+  ClickAwayListener,
+  FormControlLabel,
+  Grow,
+  Hidden,
+  MenuItem,
+  MenuList as Menu,
+  Paper,
+  Popper,
+  Switch
+} from "@material-ui/core";
 import { User } from "@saleor/fragments/types/User";
 import ArrowDropdown from "@saleor/icons/ArrowDropdown";
 import { getUserInitials, getUserName } from "@saleor/misc";

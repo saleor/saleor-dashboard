@@ -1,4 +1,4 @@
-import Button from "@material-ui/core/Button";
+import { Button } from "@material-ui/core";
 import { buttonMessages } from "@saleor/intl";
 import { makeStyles } from "@saleor/theme";
 import React from "react";

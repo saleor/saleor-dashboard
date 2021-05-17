@@ -1,10 +1,12 @@
-import ClickAwayListener from "@material-ui/core/ClickAwayListener";
-import Grow from "@material-ui/core/Grow";
-import IconButton from "@material-ui/core/IconButton";
-import MenuItem from "@material-ui/core/MenuItem";
-import MenuList from "@material-ui/core/MenuList";
-import Paper from "@material-ui/core/Paper";
-import Popper from "@material-ui/core/Popper";
+import {
+  ClickAwayListener,
+  Grow,
+  IconButton,
+  MenuItem,
+  MenuList,
+  Paper,
+  Popper
+} from "@material-ui/core";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import { makeStyles } from "@saleor/theme";
 import React from "react";
@@ -88,6 +90,7 @@ const CardMenu: React.FC<CardMenuProps> = props => {
   return (
     <div className={className} {...rest}>
       <IconButton
+        data-test-id="showMoreButton"
         aria-label="More"
         aria-owns={open ? "long-menu" : null}
         aria-haspopup="true"
@@ -123,6 +126,7 @@ const CardMenu: React.FC<CardMenuProps> = props => {
                 >
                   {menuItems.map((menuItem, menuItemIndex) => (
                     <MenuItem
+                      data-test-id={menuItem.testId}
                       disabled={menuItem.disabled}
                       onClick={() => handleMenuClick(menuItemIndex)}
                       key={menuItem.label}

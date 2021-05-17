@@ -3,13 +3,13 @@ import {
   Divider,
   ExpansionPanel,
   ExpansionPanelSummary,
-  makeStyles,
   Typography
 } from "@material-ui/core";
 import Skeleton from "@saleor/components/Skeleton";
 import { ProductVariant } from "@saleor/fragments/types/ProductVariant";
 import useDateLocalize from "@saleor/hooks/useDateLocalize";
 import IconChevronDown from "@saleor/icons/ChevronDown";
+import { makeStyles } from "@saleor/theme";
 import React from "react";
 import { useIntl } from "react-intl";
 

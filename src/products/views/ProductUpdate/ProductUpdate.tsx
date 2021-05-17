@@ -1,6 +1,5 @@
 import placeholderImg from "@assets/images/placeholder255x255.png";
-import DialogContentText from "@material-ui/core/DialogContentText";
-import IconButton from "@material-ui/core/IconButton";
+import { DialogContentText, IconButton } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
 import { useAttributeValueDeleteMutation } from "@saleor/attributes/mutations";
 import ChannelsWithVariantsAvailabilityDialog from "@saleor/channels/components/ChannelsWithVariantsAvailabilityDialog";
@@ -300,7 +299,12 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
   const [updateChannels, updateChannelsOpts] = useProductChannelListingUpdate({
     onCompleted: data => {
       if (!!data.productChannelListingUpdate.errors.length) {
-        return;
+        data.productChannelListingUpdate.errors.forEach(error =>
+          notify({
+            status: "error",
+            text: getProductErrorMessage(error, intl)
+          })
+        );
       }
     }
   });

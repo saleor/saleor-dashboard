@@ -21,7 +21,7 @@ import {
   SearchProductTypesVariables
 } from "@saleor/searches/types/SearchProductTypes";
 import { mapEdgesToItems, mapNodeToChoice } from "@saleor/utils/maps";
-import isArray from "lodash-es/isArray";
+import isArray from "lodash/isArray";
 
 import { IFilterElement } from "../../../components/Filter";
 import {

@@ -1,5 +1,4 @@
-import DialogContentText from "@material-ui/core/DialogContentText";
-import IconButton from "@material-ui/core/IconButton";
+import { DialogContentText, IconButton } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
 import ChannelPickerDialog from "@saleor/channels/components/ChannelPickerDialog";
 import ActionDialog from "@saleor/components/ActionDialog";

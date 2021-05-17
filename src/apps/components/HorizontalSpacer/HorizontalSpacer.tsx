@@ -1,4 +1,4 @@
-import { makeStyles } from "@material-ui/core";
+import { makeStyles } from "@saleor/theme";
 import React from "react";
 
 export interface HorizontalSpacerProps {

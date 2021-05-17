@@ -2,7 +2,6 @@ import {
   Card,
   CardContent,
   Checkbox,
-  makeStyles,
   Table,
   TableBody,
   TableCell,
@@ -20,6 +19,7 @@ import {
   OrderDetails_order,
   OrderDetails_order_lines
 } from "@saleor/orders/types/OrderDetails";
+import { makeStyles } from "@saleor/theme";
 import React, { CSSProperties } from "react";
 import { defineMessages, FormattedMessage, useIntl } from "react-intl";
 

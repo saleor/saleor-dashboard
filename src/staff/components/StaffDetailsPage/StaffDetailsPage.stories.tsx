@@ -1,4 +1,3 @@
-import { Omit } from "@material-ui/core";
 import { userPermissionGroups } from "@saleor/permissionGroups/fixtures";
 import StaffDetailsPage, {
   StaffDetailsPageProps

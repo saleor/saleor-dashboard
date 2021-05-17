@@ -1,5 +1,6 @@
-import { Button, makeStyles, Typography } from "@material-ui/core";
+import { Button, Typography } from "@material-ui/core";
 import { buttonMessages } from "@saleor/intl";
+import { makeStyles } from "@saleor/theme";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 

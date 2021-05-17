@@ -1,4 +1,5 @@
-import { makeStyles, TableCell, TableHead, TableRow } from "@material-ui/core";
+import { TableCell, TableHead, TableRow } from "@material-ui/core";
+import { makeStyles } from "@saleor/theme";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 

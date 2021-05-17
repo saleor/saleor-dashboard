@@ -5,12 +5,16 @@ import {
   createCustomer,
   deleteCustomersStartsWith
 } from "../../../apiRequests/Customer";
+import { getOrder } from "../../../apiRequests/Order";
 import { ORDERS_SELECTORS } from "../../../elements/orders/orders-selectors";
+import { BUTTON_SELECTORS } from "../../../elements/shared/button-selectors";
+import { SHARED_ELEMENTS } from "../../../elements/shared/sharedElements";
 import { selectChannelInPicker } from "../../../steps/channelsSteps";
 import { finalizeDraftOrder } from "../../../steps/draftOrderSteps";
+import { fillAutocompleteSelect } from "../../../steps/shared/autocompleteSelect";
 import { urlList } from "../../../url/urlList";
 import { getDefaultChannel } from "../../../utils/channelsUtils";
-import { createOrder } from "../../../utils/ordersUtils";
+import { createFulfilledOrder, createOrder } from "../../../utils/ordersUtils";
 import * as productsUtils from "../../../utils/products/productsUtils";
 import {
   createShipping,
@@ -85,7 +89,7 @@ describe("Orders", () => {
     cy.clearSessionData().loginUserViaRequest();
   });
 
-  it("should create order with selected channel", () => {
+  xit("should create order with selected channel", () => {
     cy.visit(urlList.orders)
       .get(ORDERS_SELECTORS.createOrder)
       .click();
@@ -98,7 +102,7 @@ describe("Orders", () => {
       );
     });
   });
-  it("should not be possible to change channel in order", () => {
+  xit("should not be possible to change channel in order", () => {
     createOrder({
       customerId: customer.id,
       channelId: defaultChannel.id,
@@ -112,5 +116,41 @@ describe("Orders", () => {
         .find("[button]")
         .should("not.exist");
     });
+  });
+  it("should cancel fulfillment", () => {
+    let order;
+    createFulfilledOrder({
+      customerId: customer.id,
+      channelId: defaultChannel.id,
+      shippingMethodId: shippingMethod.id,
+      variantsList,
+      address,
+      warehouse: warehouse.id
+    })
+      .then(({ order: orderResp }) => {
+        order = orderResp;
+        cy.visit(urlList.orders);
+        cy.contains(ORDERS_SELECTORS.orderRow, order.number).click();
+        cy.get(SHARED_ELEMENTS.skeleton)
+          .should("not.exist")
+          .get(ORDERS_SELECTORS.orderFulfillmentFrame)
+          .find(BUTTON_SELECTORS.showMoreButton)
+          .click()
+          .get(ORDERS_SELECTORS.cancelFulfillment)
+          .click();
+      })
+      .then(() => {
+        fillAutocompleteSelect(
+          ORDERS_SELECTORS.cancelFulfillmentSelectField,
+          warehouse.name
+        );
+        cy.addAliasToGraphRequest("OrderFulfillmentCancel");
+        cy.get(BUTTON_SELECTORS.submit).click();
+        cy.wait("@OrderFulfillmentCancel");
+        getOrder(order.id);
+      })
+      .then(orderResp => {
+        expect(orderResp.status).to.be.eq("UNFULFILLED");
+      });
   });
 });

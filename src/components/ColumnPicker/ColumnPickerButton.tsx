@@ -1,4 +1,4 @@
-import Button from "@material-ui/core/Button";
+import { Button } from "@material-ui/core";
 import { fade } from "@material-ui/core/styles/colorManipulator";
 import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
 import { makeStyles } from "@saleor/theme";

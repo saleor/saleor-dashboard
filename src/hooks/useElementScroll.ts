@@ -1,4 +1,4 @@
-import throttle from "lodash-es/throttle";
+import throttle from "lodash/throttle";
 import { MutableRefObject, useEffect, useState } from "react";
 
 export type Position = Record<"x" | "y", number>;

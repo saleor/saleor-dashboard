@@ -1,9 +1,11 @@
-import Button from "@material-ui/core/Button";
-import Dialog from "@material-ui/core/Dialog";
-import DialogActions from "@material-ui/core/DialogActions";
-import DialogContent from "@material-ui/core/DialogContent";
-import DialogContentText from "@material-ui/core/DialogContentText";
-import DialogTitle from "@material-ui/core/DialogTitle";
+import {
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle
+} from "@material-ui/core";
 import ConfirmButton, {
   ConfirmButtonTransitionState
 } from "@saleor/components/ConfirmButton";
@@ -95,7 +97,10 @@ const OrderFulfillmentCancelDialog: React.FC<OrderFulfillmentCancelDialogProps> 
                 <DialogContentText className={classes.paragraph}>
                   <FormattedMessage defaultMessage="Are you sure you want to cancel fulfillment? Canceling a fulfillment will restock products at a selected warehouse." />
                 </DialogContentText>
-                <div className={classes.selectCcontainer}>
+                <div
+                  className={classes.selectCcontainer}
+                  data-test-id="cancelFulfillmentSelectField"
+                >
                   <SingleAutocompleteSelectField
                     choices={choices}
                     displayValue={displayValue}
@@ -124,6 +129,7 @@ const OrderFulfillmentCancelDialog: React.FC<OrderFulfillmentCancelDialogProps> 
                   <FormattedMessage {...buttonMessages.back} />
                 </Button>
                 <ConfirmButton
+                  data-test="submit"
                   disabled={formData.warehouseId === null}
                   transitionState={confirmButtonState}
                   variant="contained"

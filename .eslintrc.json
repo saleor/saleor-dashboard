@@ -169,7 +169,13 @@
     "space-before-function-paren": "off",
     "spaced-comment": "error",
     "use-isnan": "error",
-    "valid-typeof": "off"
+    "valid-typeof": "off",
+    "no-restricted-imports": [
+      "error",
+      {
+        "paths": ["lodash"]
+      }
+    ]
   },
   "ignorePatterns": ["node_modules/", "**/types/**/*"]
 }

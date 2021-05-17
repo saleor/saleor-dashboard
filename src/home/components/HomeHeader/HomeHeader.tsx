@@ -1,4 +1,4 @@
-import Typography from "@material-ui/core/Typography";
+import { Typography } from "@material-ui/core";
 import Skeleton from "@saleor/components/Skeleton";
 import { makeStyles } from "@saleor/theme";
 import React from "react";

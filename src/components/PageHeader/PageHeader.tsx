@@ -1,4 +1,4 @@
-import Typography from "@material-ui/core/Typography";
+import { Typography } from "@material-ui/core";
 import { LimitInfoFragment } from "@saleor/fragments/types/LimitInfoFragment";
 import { makeStyles } from "@saleor/theme";
 import React from "react";

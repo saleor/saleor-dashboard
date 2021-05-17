@@ -2,11 +2,11 @@ import {
   Card,
   CardContent,
   Divider,
-  makeStyles,
+  ExpansionPanel,
   Typography
 } from "@material-ui/core";
-import ExpansionPanel from "@material-ui/core/ExpansionPanel";
 import CardTitle from "@saleor/components/CardTitle";
+import { makeStyles } from "@saleor/theme";
 import React from "react";
 import { defineMessages, useIntl } from "react-intl";
 

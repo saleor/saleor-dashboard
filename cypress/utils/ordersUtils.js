@@ -61,7 +61,30 @@ export function createReadyToFulfillOrder(
     .then(() => orderRequest.markOrderAsPaid(order.id))
     .then(() => orderRequest.completeOrder(order.id));
 }
-
+export function createFulfilledOrder({
+  customerId,
+  shippingMethodId,
+  channelId,
+  variantsList,
+  address,
+  warehouse,
+  quantity = 1
+}) {
+  return createReadyToFulfillOrder(
+    customerId,
+    shippingMethodId,
+    channelId,
+    variantsList,
+    address
+  ).then(({ order }) => {
+    orderRequest.fulfillOrder({
+      orderId: order.id,
+      warehouse,
+      quantity,
+      linesId: order.lines
+    });
+  });
+}
 export function createOrder({
   customerId,
   shippingMethodId,

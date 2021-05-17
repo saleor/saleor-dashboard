@@ -1,7 +1,9 @@
-import Button from "@material-ui/core/Button";
-import IconButton from "@material-ui/core/IconButton";
-import SnackbarContent from "@material-ui/core/SnackbarContent";
-import Typography from "@material-ui/core/Typography";
+import {
+  Button,
+  IconButton,
+  SnackbarContent,
+  Typography
+} from "@material-ui/core";
 import CloseIcon from "@material-ui/icons/Close";
 import classNames from "classnames";
 import React, { useState } from "react";
