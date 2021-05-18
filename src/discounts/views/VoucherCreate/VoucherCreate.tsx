@@ -1,9 +1,9 @@
-import { useChannelsList } from "@saleor/channels/queries";
 import { ChannelsAction } from "@saleor/channels/urls";
 import {
   ChannelVoucherData,
   createSortedVoucherData
 } from "@saleor/channels/utils";
+import useAppChannel from "@saleor/components/AppLayout/AppChannelContext";
 import ChannelsAvailabilityDialog from "@saleor/components/ChannelsAvailabilityDialog";
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import useChannels from "@saleor/hooks/useChannels";
@@ -42,9 +42,9 @@ export const VoucherCreateView: React.FC<VoucherCreateProps> = ({ params }) => {
     VoucherCreateUrlQueryParams
   >(navigate, params => voucherAddUrl(params), params);
 
-  const { data: channelsData } = useChannelsList({});
+  const { availableChannels } = useAppChannel(false);
   const allChannels: ChannelVoucherData[] = createSortedVoucherData(
-    channelsData?.channels
+    availableChannels
   );
 
   const {

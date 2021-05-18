@@ -1,6 +1,5 @@
 import { Button, DialogContentText } from "@material-ui/core";
 import { categoryUrl } from "@saleor/categories/urls";
-import { useChannelsList } from "@saleor/channels/queries";
 import {
   ChannelSaleData,
   createChannelsDataWithSaleDiscountPrice,
@@ -8,6 +7,7 @@ import {
 } from "@saleor/channels/utils";
 import { collectionUrl } from "@saleor/collections/urls";
 import ActionDialog from "@saleor/components/ActionDialog";
+import useAppChannel from "@saleor/components/AppLayout/AppChannelContext";
 import AssignCategoriesDialog from "@saleor/components/AssignCategoryDialog";
 import AssignCollectionDialog from "@saleor/components/AssignCollectionDialog";
 import AssignProductDialog from "@saleor/components/AssignProductDialog";
@@ -91,7 +91,7 @@ export const SaleDetails: React.FC<SaleDetailsProps> = ({ id, params }) => {
     variables: DEFAULT_INITIAL_SEARCH_DATA
   });
 
-  const { data: channelsData } = useChannelsList({});
+  const { availableChannels } = useAppChannel(false);
 
   const paginationState = createPaginationState(PAGINATE_BY, params);
   const changeTab = (tab: SaleDetailsPageTab) => {
@@ -118,7 +118,7 @@ export const SaleDetails: React.FC<SaleDetailsProps> = ({ id, params }) => {
 
   const allChannels: ChannelSaleData[] = createChannelsDataWithSaleDiscountPrice(
     data?.sale,
-    channelsData?.channels
+    availableChannels
   );
   const saleChannelsChoices: ChannelSaleData[] = createSortedChannelsDataFromSale(
     data?.sale

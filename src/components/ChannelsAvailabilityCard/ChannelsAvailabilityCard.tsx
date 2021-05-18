@@ -3,6 +3,7 @@ import { Channel as ChannelList, ChannelData } from "@saleor/channels/utils";
 import Hr from "@saleor/components/Hr";
 import useDateLocalize from "@saleor/hooks/useDateLocalize";
 import { RequireOnlyOne } from "@saleor/misc";
+import { PermissionEnum } from "@saleor/types/globalTypes";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -22,6 +23,7 @@ export interface ChannelsAvailability
   errors?: ChannelsAvailabilityError[];
   disabled?: boolean;
   messages?: Messages;
+  managePermissions: PermissionEnum[];
   onChange?: (id: string, data: ChannelOpts) => void;
 }
 
@@ -38,6 +40,7 @@ export const ChannelsAvailability: React.FC<ChannelsAvailabilityCardProps> = pro
     allChannelsCount = 0,
     channels,
     messages,
+    managePermissions,
     onChange,
     openModal
   } = props;
@@ -56,6 +59,7 @@ export const ChannelsAvailability: React.FC<ChannelsAvailabilityCardProps> = pro
     <ChannelsAvailabilityCardWrapper
       selectedChannelsCount={selectedChannelsCount}
       allChannelsCount={allChannelsCount}
+      managePermissions={managePermissions}
       openModal={openModal}
     >
       {channels

@@ -1,4 +1,4 @@
-import { Channels_channels } from "@saleor/channels/types/Channels";
+import { BaseChannels_channels } from "@saleor/channels/types/BaseChannels";
 import AppHeader from "@saleor/components/AppHeader";
 import CardSpacer from "@saleor/components/CardSpacer";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
@@ -70,7 +70,7 @@ export interface ShippingZoneDetailsPageProps
   onWarehouseAdd: () => void;
   onWeightRateAdd: () => void;
   onWeightRateEdit: (id: string) => void;
-  allChannels?: Channels_channels[];
+  allChannels?: BaseChannels_channels[];
 }
 
 function warehouseToChoice(

@@ -3,7 +3,6 @@ import { DialogContentText, IconButton } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
 import { useAttributeValueDeleteMutation } from "@saleor/attributes/mutations";
 import ChannelsWithVariantsAvailabilityDialog from "@saleor/channels/components/ChannelsWithVariantsAvailabilityDialog";
-import { useChannelsList } from "@saleor/channels/queries";
 import {
   ChannelData,
   createChannelsDataWithPrice,
@@ -155,13 +154,11 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
     productVariantCreateOpts
   ] = useVariantCreateMutation({});
 
-  const { data: channelsListData } = useChannelsList({});
-
+  const { availableChannels, channel } = useAppChannel();
   const { data, loading, refetch } = useProductDetails({
     displayLoader: true,
     variables: { id }
   });
-  const { channel } = useAppChannel();
   const limitOpts = useShopLimitsQuery({
     variables: {
       productVariants: true
@@ -253,7 +250,7 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
 
   const allChannels: ChannelData[] = createChannelsDataWithPrice(
     product,
-    channelsListData?.channels
+    availableChannels
   ).sort((channel, nextChannel) =>
     channel.name.localeCompare(nextChannel.name)
   );

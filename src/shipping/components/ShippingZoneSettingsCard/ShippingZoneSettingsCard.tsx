@@ -1,5 +1,5 @@
 import { Card, CardContent, Divider } from "@material-ui/core";
-import { Channels_channels } from "@saleor/channels/types/Channels";
+import { BaseChannels_channels } from "@saleor/channels/types/BaseChannels";
 import CardTitle from "@saleor/components/CardTitle";
 import { MultiAutocompleteChoiceType } from "@saleor/components/MultiAutocompleteSelectField";
 import Skeleton from "@saleor/components/Skeleton";
@@ -29,7 +29,7 @@ export interface ShippingZoneSettingsCardProps {
   onWarehousesSearchChange: (query: string) => void;
   channelsDisplayValues: MultiAutocompleteChoiceType[];
   onChannelChange: FormChange;
-  allChannels?: Channels_channels[];
+  allChannels?: BaseChannels_channels[];
   loading: boolean;
 }
 

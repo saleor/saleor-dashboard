@@ -1,5 +1,5 @@
-import { useChannelsList } from "@saleor/channels/queries";
 import { ChannelData, createSortedChannelsData } from "@saleor/channels/utils";
+import useAppChannel from "@saleor/components/AppLayout/AppChannelContext";
 import { AttributeInput } from "@saleor/components/Attributes";
 import ChannelsAvailabilityDialog from "@saleor/components/ChannelsAvailabilityDialog";
 import { WindowTitle } from "@saleor/components/WindowTitle";
@@ -120,9 +120,9 @@ export const ProductCreateView: React.FC<ProductCreateProps> = ({ params }) => {
 
   const productTypes = mapEdgesToItems(searchProductTypesOpts?.data?.search);
 
-  const { data: channelsData } = useChannelsList({});
+  const { availableChannels } = useAppChannel(false);
   const allChannels: ChannelData[] = createSortedChannelsData(
-    channelsData?.channels
+    availableChannels
   );
 
   const {
