@@ -12,16 +12,18 @@ import { useStyles } from "./styles";
 export interface ChannelsAvailabilityWrapperProps {
   selectedChannelsCount: number;
   allChannelsCount: number;
-  openModal: () => void;
   children: React.ReactNode;
+  managePermissions: PermissionEnum[];
+  openModal: () => void;
 }
 
 export const ChannelsAvailabilityWrapper: React.FC<ChannelsAvailabilityWrapperProps> = props => {
   const {
     selectedChannelsCount,
     allChannelsCount,
-    openModal,
-    children
+    children,
+    managePermissions,
+    openModal
   } = props;
   const intl = useIntl();
   const classes = useStyles({});
@@ -50,7 +52,7 @@ export const ChannelsAvailabilityWrapper: React.FC<ChannelsAvailabilityWrapperPr
           toolbar={
             <RequirePermissions
               userPermissions={user?.userPermissions || []}
-              requiredPermissions={[PermissionEnum.MANAGE_PRODUCTS]}
+              requiredPermissions={managePermissions}
             >
               <Button
                 color="primary"

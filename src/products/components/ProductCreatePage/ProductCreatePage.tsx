@@ -31,6 +31,7 @@ import { SearchPages_search_edges_node } from "@saleor/searches/types/SearchPage
 import { SearchProducts_search_edges_node } from "@saleor/searches/types/SearchProducts";
 import { SearchProductTypes_search_edges_node } from "@saleor/searches/types/SearchProductTypes";
 import { SearchWarehouses_search_edges_node } from "@saleor/searches/types/SearchWarehouses";
+import { PermissionEnum } from "@saleor/types/globalTypes";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -310,6 +311,7 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
                 <CardSpacer />
                 {isSimpleProduct ? (
                   <ChannelsAvailabilityCard
+                    managePermissions={[PermissionEnum.MANAGE_PRODUCTS]}
                     messages={{
                       hiddenLabel: intl.formatMessage({
                         defaultMessage: "Not published",

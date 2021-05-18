@@ -1,6 +1,6 @@
-import { useChannelsList } from "@saleor/channels/queries";
 import { ChannelsAction } from "@saleor/channels/urls";
 import { createCollectionChannels } from "@saleor/channels/utils";
+import useAppChannel from "@saleor/components/AppLayout/AppChannelContext";
 import ChannelsAvailabilityDialog from "@saleor/components/ChannelsAvailabilityDialog";
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import useChannels from "@saleor/hooks/useChannels";
@@ -53,10 +53,10 @@ export const CollectionCreate: React.FC<CollectionCreateProps> = ({
     updateChannels,
     updateChannelsOpts
   ] = useCollectionChannelListingUpdate({});
-  const { data: channelsData } = useChannelsList({});
+  const { availableChannels } = useAppChannel(false);
 
   const allChannels = createCollectionChannels(
-    channelsData?.channels
+    availableChannels
   )?.sort((channel, nextChannel) =>
     channel.name.localeCompare(nextChannel.name)
   );
@@ -170,7 +170,7 @@ export const CollectionCreate: React.FC<CollectionCreateProps> = ({
           updateChannelsOpts?.data?.collectionChannelListingUpdate.errors || []
         }
         currentChannels={currentChannels}
-        channelsCount={channelsData?.channels?.length}
+        channelsCount={availableChannels.length}
         openChannelsModal={handleChannelsModalOpen}
         onChannelsChange={setCurrentChannels}
         onBack={() => navigate(collectionListUrl())}
