@@ -15,7 +15,10 @@ import { validatePrice } from "@saleor/products/utils/validation";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import { SaleType as SaleTypeEnum } from "../../../types/globalTypes";
+import {
+  PermissionEnum,
+  SaleType as SaleTypeEnum
+} from "../../../types/globalTypes";
 import DiscountDates from "../DiscountDates";
 import SaleInfo from "../SaleInfo";
 import SaleType from "../SaleType";
@@ -118,6 +121,7 @@ const SaleCreatePage: React.FC<SaleCreatePageProps> = ({
               </div>
               <div>
                 <ChannelsAvailabilityCard
+                  managePermissions={[PermissionEnum.MANAGE_DISCOUNTS]}
                   selectedChannelsCount={data.channelListings.length}
                   allChannelsCount={allChannelsCount}
                   channelsList={data.channelListings.map(channel => ({

@@ -39,6 +39,7 @@ import {
   ListActions,
   ReorderAction
 } from "@saleor/types";
+import { PermissionEnum } from "@saleor/types/globalTypes";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -404,6 +405,7 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                 <CardSpacer />
                 {isSimpleProduct ? (
                   <ChannelsAvailabilityCard
+                    managePermissions={[PermissionEnum.MANAGE_PRODUCTS]}
                     messages={{
                       hiddenLabel: intl.formatMessage({
                         defaultMessage: "Not published",

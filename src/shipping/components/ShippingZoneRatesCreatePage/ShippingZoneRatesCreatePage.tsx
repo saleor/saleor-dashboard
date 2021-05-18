@@ -19,6 +19,7 @@ import PricingCard from "@saleor/shipping/components/PricingCard";
 import ShippingRateInfo from "@saleor/shipping/components/ShippingRateInfo";
 import { createChannelsChangeHandler } from "@saleor/shipping/handlers";
 import {
+  PermissionEnum,
   PostalCodeRuleInclusionTypeEnum,
   ShippingMethodTypeEnum
 } from "@saleor/types/globalTypes";
@@ -175,6 +176,7 @@ export const ShippingZoneRatesCreatePage: React.FC<ShippingZoneRatesCreatePagePr
               </div>
               <div>
                 <ChannelsAvailabilityCard
+                  managePermissions={[PermissionEnum.MANAGE_SHIPPING]}
                   allChannelsCount={allChannelsCount}
                   selectedChannelsCount={shippingChannels?.length}
                   channelsList={data.channelListings}
