@@ -33,13 +33,13 @@ import { getChoices, ProductUpdatePageFormData } from "../../utils/data";
 import ProductAttributes, { ProductAttributeInput } from "../ProductAttributes";
 import ProductDetailsForm from "../ProductDetailsForm";
 import ProductImages from "../ProductImages";
+import ProductMegaPack from "../ProductMegaPack";
 import ProductOrganization from "../ProductOrganization";
 import ProductPricing from "../ProductPricing";
 import ProductShipping from "../ProductShipping/ProductShipping";
 import ProductStocks, { ProductStockInput } from "../ProductStocks";
 import ProductTaxes from "../ProductTaxes";
 import ProductVariants from "../ProductVariants";
-import ProductMegaPack from "../ProductMegaPack";
 import ProductUpdateForm from "./form";
 
 export interface ProductUpdatePageProps extends ListActions {
@@ -82,6 +82,7 @@ export interface ProductUpdatePageSubmitData extends ProductUpdatePageFormData {
   addStocks: ProductStockInput[];
   updateStocks: ProductStockInput[];
   removeStocks: string[];
+  stocks: ProductStockInput[];
 }
 
 export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
@@ -191,12 +192,12 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                 />
                 <CardSpacer />
                 {product?.productType?.slug === "mega-paka" && (
-                    <ProductMegaPack
-                      data={data}
-                      disabled={disabled}
-                      onChange={handlers.changeMetadata}
-                    />
-                  )}
+                  <ProductMegaPack
+                    data={data}
+                    disabled={disabled}
+                    onChange={handlers.changeMetadata}
+                  />
+                )}
                 <CardSpacer />
                 {data.attributes.length > 0 && (
                   <ProductAttributes
