@@ -130,6 +130,7 @@ describe("Homepage analytics", () => {
       ).should("be.visible");
     });
   });
+
   it("should correct amount of payments waiting for capture be displayed", () => {
     homePageUtils
       .getOrdersReadyForCapture(defaultChannel.slug)
@@ -157,6 +158,7 @@ describe("Homepage analytics", () => {
       ).should("be.visible");
     });
   });
+
   it("should correct amount of products out of stock be displayed", () => {
     homePageUtils
       .getProductsOutOfStock(defaultChannel.slug)
@@ -188,6 +190,7 @@ describe("Homepage analytics", () => {
       ).should("be.visible");
     });
   });
+
   it("should correct amount of sales be displayed", () => {
     homePageUtils.getSalesAmount(defaultChannel.slug).as("salesAmount");
 
@@ -205,9 +208,11 @@ describe("Homepage analytics", () => {
       const totalAmountIntegerValue = totalAmountString.split(".")[0];
       const totalAmountDecimalValue = totalAmountString.split(".")[1];
       const decimalSeparator = "[,.]";
-      const totalAmountIntegerWithThousandsSeparator = totalAmountIntegerValue
-        .toLocaleString("en")
-        .replaceAll(",", "[,.]");
+      const totalAmountIntegerWithThousandsSeparator = new Intl.NumberFormat(
+        "en"
+      )
+        .format(totalAmountIntegerValue)
+        .replaceAll(",", "[,.]*");
       const totalAmountWithSeparators = `${totalAmountIntegerWithThousandsSeparator}${decimalSeparator}${totalAmountDecimalValue}`;
       const notANumberRegex = "\\D*";
       const salesAmountRegexp = new RegExp(
@@ -220,6 +225,7 @@ describe("Homepage analytics", () => {
       );
     });
   });
+
   it("should correct amount of orders be displayed", () => {
     homePageUtils.getTodaysOrders(defaultChannel.slug).as("todaysOrders");
 
