@@ -1,6 +1,5 @@
 {
   "baseUrl": "http://localhost:9000/dashboard/",
-  "mailHogUrl": "https://mailhog:yH%5E7%40MZ2HJMe@mailhog.staging.saleor.cloud/",
   "defaultCommandTimeout": 15000,
   "requestTimeout": 15000,
   "viewportWidth": 1400,

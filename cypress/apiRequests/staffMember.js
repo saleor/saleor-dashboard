@@ -1,10 +1,11 @@
 export function getStaffMembersStartsWith(startsWith) {
   const query = `query{
-    staffUsers(filter:{
+    staffUsers(first:100 filter:{
       search:"${startsWith}"
     }){
       edges{
         node{
+          id
           email
         }
       }
@@ -59,13 +60,25 @@ export function updateStaffMember({ userId, isActive }) {
   return cy.sendRequestWithQuery(mutation).its("body.data.staffUpdate");
 }
 
+export function deleteStaffMember(staffId) {
+  const mutation = `mutation{
+    staffDelete(id:"${staffId}"){
+      errors{
+        field
+        message
+      }
+    }
+  }`;
+  return cy.sendRequestWithQuery(mutation).its("body.data.staffDelete");
+}
+
 export function deleteStaffMembersStartsWith(startsWith) {
   getStaffMembersStartsWith(startsWith).then(resp => {
     if (resp.body.data.staffUsers) {
       const staffMembers = resp.body.data.staffUsers.edges;
       staffMembers.forEach(element => {
         if (element.node.email.includes(startsWith)) {
-          deleteCustomer(element.node.id);
+          deleteStaffMember(element.node.id);
         }
       });
     }
