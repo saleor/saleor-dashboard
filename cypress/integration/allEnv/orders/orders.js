@@ -107,6 +107,7 @@ describe("Orders", () => {
       );
     });
   });
+
   it("should not be possible to change channel in order", () => {
     createOrder({
       customerId: customer.id,
@@ -122,6 +123,7 @@ describe("Orders", () => {
         .should("not.exist");
     });
   });
+
   it("should cancel fulfillment", () => {
     let order;
     createFulfilledOrder({
@@ -158,6 +160,7 @@ describe("Orders", () => {
         expect(orderResp.status).to.be.eq("UNFULFILLED");
       });
   });
+
   it("should make a refund", () => {
     let order;
     createReadyToFulfillOrder({

@@ -18,7 +18,7 @@ import * as shippingUtils from "../../../utils/shippingUtils";
 
 // <reference types="cypress" />
 describe("Homepage analytics", () => {
-  const startsWith = "CyHomeAnalytics-";
+  const startsWith = "CyHomeAnalytics";
 
   let customerId;
   let defaultChannel;
@@ -33,7 +33,7 @@ describe("Homepage analytics", () => {
   const productPrice = 22;
   const shippingPrice = 12;
   const randomName = startsWith + faker.datatype.number();
-  const randomEmail = randomName + "@example.com";
+  const randomEmail = `${startsWith}${randomName}@example.com`;
 
   before(() => {
     cy.clearSessionData().loginUserViaRequest();
@@ -94,7 +94,7 @@ describe("Homepage analytics", () => {
     cy.clearSessionData().loginUserViaRequest();
   });
 
-  xit("should all elements be visible on the dashboard", () => {
+  it("should all elements be visible on the dashboard", () => {
     cy.visit(urlList.homePage)
       .softAssertVisibility(HOMEPAGE_SELECTORS.sales)
       .softAssertVisibility(HOMEPAGE_SELECTORS.orders)
@@ -105,7 +105,7 @@ describe("Homepage analytics", () => {
       .softAssertVisibility(HOMEPAGE_SELECTORS.productsOutOfStock);
   });
 
-  xit("should correct amount of ready to fullfil orders be displayed", () => {
+  it("should correct amount of ready to fullfil orders be displayed", () => {
     homePageUtils
       .getOrdersReadyToFulfill(defaultChannel.slug)
       .as("ordersReadyToFulfill");
@@ -130,7 +130,7 @@ describe("Homepage analytics", () => {
       ).should("be.visible");
     });
   });
-  xit("should correct amount of payments waiting for capture be displayed", () => {
+  it("should correct amount of payments waiting for capture be displayed", () => {
     homePageUtils
       .getOrdersReadyForCapture(defaultChannel.slug)
       .as("ordersReadyForCapture");
@@ -157,7 +157,7 @@ describe("Homepage analytics", () => {
       ).should("be.visible");
     });
   });
-  xit("should correct amount of products out of stock be displayed", () => {
+  it("should correct amount of products out of stock be displayed", () => {
     homePageUtils
       .getProductsOutOfStock(defaultChannel.slug)
       .as("productsOutOfStock");
@@ -220,7 +220,7 @@ describe("Homepage analytics", () => {
       );
     });
   });
-  xit("should correct amount of orders be displayed", () => {
+  it("should correct amount of orders be displayed", () => {
     homePageUtils.getTodaysOrders(defaultChannel.slug).as("todaysOrders");
 
     createReadyToFulfillOrder({

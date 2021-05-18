@@ -52,6 +52,7 @@ export function createDraftOrder(
     .sendRequestWithQuery(mutation)
     .its("body.data.draftOrderCreate.order");
 }
+
 export function completeOrder(orderId) {
   const mutation = `mutation{
     draftOrderComplete(id:"${orderId}"){
@@ -69,6 +70,7 @@ export function completeOrder(orderId) {
   }`;
   return cy.sendRequestWithQuery(mutation).its("body.data.draftOrderComplete");
 }
+
 export function getOrder(orderId) {
   const query = `query getOrder{
     order(id:"${orderId}"){
