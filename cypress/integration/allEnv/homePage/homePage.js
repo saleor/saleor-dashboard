@@ -1,5 +1,4 @@
 import { TEST_ADMIN_USER, USER_WITHOUT_NAME } from "../../../Data/users";
-import { HOMEPAGE_SELECTORS } from "../../../elements/homePage/homePage-selectors";
 import { expectWelcomeMessageIncludes } from "../../../steps/homePageSteps";
 import { urlList } from "../../../url/urlList";
 
