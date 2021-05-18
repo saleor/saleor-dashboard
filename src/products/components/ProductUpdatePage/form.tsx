@@ -10,7 +10,8 @@ import { ProductDetails_product } from "@saleor/products/types/ProductDetails";
 import {
   getAttributeInputFromProduct,
   getProductUpdatePageFormData,
-  getStockInputFromProduct, updateDataFromMegaPackValues
+  getStockInputFromProduct,
+  updateDataFromMegaPackValues
 } from "@saleor/products/utils/data";
 import {
   createAttributeChangeHandler,
@@ -210,11 +211,9 @@ function useProductUpdateForm(
     opts.taxTypes
   );
 
-  useEffect(
-      () => {
-        updateDataFromMegaPackValues(form.data, form.data.megaPackProduct)
-      }, [form.data.megaPackProduct]
-  )
+  useEffect(() => {
+    updateDataFromMegaPackValues(form.data, form.data.megaPackProduct);
+  }, [form.data.megaPackProduct]);
 
   const changeMetadata = makeMetadataChangeHandler(handleChange);
 

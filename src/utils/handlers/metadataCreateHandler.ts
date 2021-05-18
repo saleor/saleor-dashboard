@@ -52,8 +52,8 @@ function createMetadataCreateHandler<T extends MetadataFormData>(
       });
 
       const updatePrivateMetaErrors = [
-        ...(updatePrivateMetaResult.data.deletePrivateMetadata.errors || []),
-        ...(updatePrivateMetaResult.data.updatePrivateMetadata.errors || [])
+        ...(updatePrivateMetaResult.data?.deletePrivateMetadata.errors || []),
+        ...(updatePrivateMetaResult.data?.updatePrivateMetadata.errors || [])
       ];
 
       if (updatePrivateMetaErrors.length > 0) {

@@ -5,13 +5,17 @@ import { SingleAutocompleteChoiceType } from "@saleor/components/SingleAutocompl
 import useForm, { FormChange } from "@saleor/hooks/useForm";
 import useFormset, { FormsetChange } from "@saleor/hooks/useFormset";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
-import { useProductVariantsSkus, useUserWithMetadata } from "@saleor/products/queries";
+import {
+  useProductVariantsSkus,
+  useUserWithMetadata
+} from "@saleor/products/queries";
 import { ProductVariantsSkusData } from "@saleor/products/types/ProductVariantSkus";
 import { UserWithMetadataData } from "@saleor/products/types/UserWithMetadata";
 import {
   generateSkuNumberToQuery,
   getAttributeInputFromProductType,
-  ProductType, updateDataFromMegaPackValues
+  ProductType,
+  updateDataFromMegaPackValues
 } from "@saleor/products/utils/data";
 import {
   createAttributeChangeHandler,
@@ -162,7 +166,7 @@ function useProductCreateForm(
     initialProductType || null
   );
 
-  const [sku, setSkuCode] = React.useState(form?.data?.sku)
+  const [sku, setSkuCode] = React.useState(form?.data?.sku);
   const {
     makeChangeHandler: makeMetadataChangeHandler
   } = useMetadataChangeTrigger();
@@ -224,14 +228,12 @@ function useProductCreateForm(
   );
   const changeMetadata = makeMetadataChangeHandler(handleChange);
 
-  React.useEffect(
-    () => {
-      updateDataFromMegaPackValues(form.data, form.data.megaPackProduct)
-    }, [form.data.megaPackProduct]
-)
+  React.useEffect(() => {
+    updateDataFromMegaPackValues(form.data, form.data.megaPackProduct);
+  }, [form.data.megaPackProduct]);
 
-  form.data.sku = sku
-  
+  form.data.sku = sku;
+
   const data: ProductCreateData = {
     ...form.data,
     attributes: attributes.data,
@@ -266,23 +268,25 @@ const ProductCreateForm: React.FC<ProductCreateFormProps> = ({
   onSubmit,
   ...rest
 }) => {
-  const {...values} = useUserWithMetadata({
+  const { ...values } = useUserWithMetadata({
     displayLoader: true,
     variables: {
-      id: getTokens().id}
+      id: getTokens().id
+    }
+  });
 
-    
-  })
-  
-  const {data} = useProductVariantsSkus({
+  const { data } = useProductVariantsSkus({
     displayLoader: true,
     variables: { sku: generateSkuNumberToQuery(values.data) }
   });
 
-
-
-
-  const props = useProductCreateForm(initial || {}, data, values.data, onSubmit, rest);
+  const props = useProductCreateForm(
+    initial || {},
+    data,
+    values.data,
+    onSubmit,
+    rest
+  );
 
   return <form onSubmit={props.submit}>{children(props)}</form>;
 };
