@@ -86,15 +86,15 @@ export function getOrder(orderId) {
 }
 
 export function fulfillOrder({ orderId, warehouse, quantity, linesId }) {
-  let lines = "";
-  linesId.forEach(lineId => {
-    lines += `{orderLineId:"${lineId.id}"
+  const lines = linesId.reduce((lines, lineId) => {
+    const line = `{orderLineId:"${lineId.id}"
       stocks:{
         quantity:${quantity}
         warehouse:"${warehouse}"
       }
     }`;
-  });
+    return lines + line;
+  }, "");
   const mutation = `mutation fulfill{
   orderFulfill(order:"${orderId}" input:{
     lines:[${lines}]
