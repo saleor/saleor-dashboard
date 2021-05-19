@@ -3,23 +3,11 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { AttributeTypeEnum, MeasurementUnitsEnum, AttributeInputTypeEnum, AttributeEntityTypeEnum, AttributeErrorCode } from "./../../types/globalTypes";
+import { AttributeErrorCode } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: AttributeValueDelete
 // ====================================================
-
-export interface AttributeValueDelete_attributeValueDelete_attribute_metadata {
-  __typename: "MetadataItem";
-  key: string;
-  value: string;
-}
-
-export interface AttributeValueDelete_attributeValueDelete_attribute_privateMetadata {
-  __typename: "MetadataItem";
-  key: string;
-  value: string;
-}
 
 export interface AttributeValueDelete_attributeValueDelete_attribute_values_pageInfo {
   __typename: "PageInfo";
@@ -60,20 +48,6 @@ export interface AttributeValueDelete_attributeValueDelete_attribute_values {
 export interface AttributeValueDelete_attributeValueDelete_attribute {
   __typename: "Attribute";
   id: string;
-  name: string | null;
-  slug: string | null;
-  type: AttributeTypeEnum | null;
-  visibleInStorefront: boolean;
-  filterableInDashboard: boolean;
-  filterableInStorefront: boolean;
-  unit: MeasurementUnitsEnum | null;
-  metadata: (AttributeValueDelete_attributeValueDelete_attribute_metadata | null)[];
-  privateMetadata: (AttributeValueDelete_attributeValueDelete_attribute_privateMetadata | null)[];
-  availableInGrid: boolean;
-  inputType: AttributeInputTypeEnum | null;
-  entityType: AttributeEntityTypeEnum | null;
-  storefrontSearchPosition: number;
-  valueRequired: boolean;
   values: AttributeValueDelete_attributeValueDelete_attribute_values | null;
 }
 

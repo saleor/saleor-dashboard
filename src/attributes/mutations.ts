@@ -90,7 +90,6 @@ export const useAttributeUpdateMutation = makeMutation<
 >(attributeUpdateMutation);
 
 const attributeValueDelete = gql`
-  ${attributeDetailsFragment}
   ${attributeValueListFragment}
   ${attributeErrorFragment}
   mutation AttributeValueDelete(
@@ -102,7 +101,7 @@ const attributeValueDelete = gql`
   ) {
     attributeValueDelete(id: $id) {
       attribute {
-        ...AttributeDetailsFragment
+        id
         values(
           first: $firstValues
           after: $afterValues
@@ -124,7 +123,6 @@ export const useAttributeValueDeleteMutation = makeMutation<
 >(attributeValueDelete);
 
 export const attributeValueUpdateMutation = gql`
-  ${attributeDetailsFragment}
   ${attributeValueListFragment}
   ${attributeErrorFragment}
   mutation AttributeValueUpdate(
@@ -137,7 +135,7 @@ export const attributeValueUpdateMutation = gql`
   ) {
     attributeValueUpdate(id: $id, input: $input) {
       attribute {
-        ...AttributeDetailsFragment
+        id
         values(
           first: $firstValues
           after: $afterValues
@@ -159,7 +157,6 @@ export const useAttributeValueUpdateMutation = makeMutation<
 >(attributeValueUpdateMutation);
 
 export const attributeValueCreateMutation = gql`
-  ${attributeDetailsFragment}
   ${attributeValueListFragment}
   ${attributeErrorFragment}
   mutation AttributeValueCreate(
@@ -172,7 +169,7 @@ export const attributeValueCreateMutation = gql`
   ) {
     attributeValueCreate(attribute: $id, input: $input) {
       attribute {
-        ...AttributeDetailsFragment
+        id
         values(
           first: $firstValues
           after: $afterValues
