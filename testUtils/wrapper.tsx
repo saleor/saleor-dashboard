@@ -15,7 +15,7 @@ const Wrapper: React.FC = ({ children }) => (
     >
       <DateProvider value={+new Date("2018-08-07T14:30:44+00:00")}>
         <TimezoneProvider value="America/New_York">
-          <ThemeProvider isDefaultDark={false}>{children}</ThemeProvider>
+          <ThemeProvider>{children}</ThemeProvider>
         </TimezoneProvider>
       </DateProvider>
     </RawLocaleProvider>
