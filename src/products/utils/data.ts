@@ -52,7 +52,7 @@ export function getAttributeInputFromProduct(
           inputType: attribute.attribute.inputType,
           isRequired: attribute.attribute.valueRequired,
           selectedValues: attribute.values,
-          values: attribute.attribute.values,
+          values: attribute.attribute.values.edges.map(value => value.node),
           unit: attribute.attribute.unit
         },
         id: attribute.attribute.id,
@@ -89,7 +89,7 @@ export function getAttributeInputFromAttributes(
       entityType: attribute.entityType,
       inputType: attribute.inputType,
       isRequired: attribute.valueRequired,
-      values: attribute.values,
+      values: attribute.values.edges.map(value => value.node),
       unit: attribute.unit,
       variantAttributeScope
     },
@@ -109,7 +109,7 @@ export function getAttributeInputFromSelectedAttributes(
       inputType: attribute.attribute.inputType,
       isRequired: attribute.attribute.valueRequired,
       selectedValues: attribute.values,
-      values: attribute.attribute.values,
+      values: attribute.attribute.values.edges.map(value => value.node),
       unit: attribute.attribute.unit,
       variantAttributeScope
     },

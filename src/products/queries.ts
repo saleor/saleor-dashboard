@@ -214,7 +214,14 @@ export const useProductCountQuery = makeQuery<
 const productDetailsQuery = gql`
   ${productFragmentDetails}
   ${taxTypeFragment}
-  query ProductDetails($id: ID!, $channel: String) {
+  query ProductDetails(
+    $id: ID!
+    $channel: String
+    $firstValues: Int
+    $afterValues: String
+    $lastValues: Int
+    $beforeValues: String
+  ) {
     product(id: $id, channel: $channel) {
       ...Product
     }
@@ -260,7 +267,13 @@ export const useProductTypeQuery = makeQuery<ProductType, ProductTypeVariables>(
 
 const productVariantQuery = gql`
   ${fragmentVariant}
-  query ProductVariantDetails($id: ID!) {
+  query ProductVariantDetails(
+    $id: ID!
+    $firstValues: Int
+    $afterValues: String
+    $lastValues: Int
+    $beforeValues: String
+  ) {
     productVariant(id: $id) {
       ...ProductVariant
     }
@@ -273,7 +286,13 @@ export const useProductVariantQuery = makeQuery<
 
 const productVariantCreateQuery = gql`
   ${variantAttributeFragment}
-  query ProductVariantCreateData($id: ID!) {
+  query ProductVariantCreateData(
+    $id: ID!
+    $firstValues: Int
+    $afterValues: String
+    $lastValues: Int
+    $beforeValues: String
+  ) {
     product(id: $id) {
       id
       media {
@@ -392,7 +411,13 @@ export const useAvailableInGridAttributesQuery = makeQuery<
 const createMultipleVariantsData = gql`
   ${productVariantAttributesFragment}
   ${warehouseFragment}
-  query CreateMultipleVariantsData($id: ID!) {
+  query CreateMultipleVariantsData(
+    $id: ID!
+    $firstValues: Int
+    $afterValues: String
+    $lastValues: Int
+    $beforeValues: String
+  ) {
     product(id: $id) {
       ...ProductVariantAttributesFragment
     }

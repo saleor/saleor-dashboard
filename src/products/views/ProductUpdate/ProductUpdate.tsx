@@ -160,7 +160,10 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
 
   const { data, loading, refetch } = useProductDetails({
     displayLoader: true,
-    variables: { id }
+    variables: {
+      id,
+      firstValues: 100
+    }
   });
   const { channel } = useAppChannel();
   const limitOpts = useShopLimitsQuery({

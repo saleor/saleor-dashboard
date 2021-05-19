@@ -10,8 +10,8 @@ import SingleAutocompleteSelectField, {
 import Skeleton from "@saleor/components/Skeleton";
 import { ProductErrorWithAttributesFragment } from "@saleor/fragments/types/ProductErrorWithAttributesFragment";
 import {
-  ProductVariant_nonSelectionAttributes_attribute_values,
-  ProductVariant_selectionAttributes_attribute_values
+  ProductVariant_nonSelectionAttributes_attribute_values_edges,
+  ProductVariant_selectionAttributes_attribute_values_edges
 } from "@saleor/fragments/types/ProductVariant";
 import { FormsetAtomicData, FormsetChange } from "@saleor/hooks/useFormset";
 import { commonMessages } from "@saleor/intl";
@@ -21,8 +21,8 @@ import { useIntl } from "react-intl";
 
 export interface VariantAttributeInputData {
   values: Array<
-    | ProductVariant_selectionAttributes_attribute_values
-    | ProductVariant_nonSelectionAttributes_attribute_values
+    | ProductVariant_selectionAttributes_attribute_values_edges
+    | ProductVariant_nonSelectionAttributes_attribute_values_edges
   >;
 }
 export type VariantAttributeInput = FormsetAtomicData<
@@ -44,10 +44,10 @@ function getAttributeDisplayValue(
 ): string {
   const attribute = attributes.find(attr => attr.id === id);
   const attributeValue = attribute.data.values.find(
-    value => value.slug === slug
+    value => value.node.slug === slug
   );
   if (!!attributeValue) {
-    return attributeValue.name;
+    return attributeValue.node.name;
   }
 
   return slug || "";
@@ -67,8 +67,8 @@ function getAttributeValueChoices(
 ): SingleAutocompleteChoiceType[] {
   const attribute = attributes.find(attr => attr.id === id);
   return attribute.data.values.map(attributeValue => ({
-    label: attributeValue.name,
-    value: attributeValue.slug
+    label: attributeValue.node.name,
+    value: attributeValue.node.slug
   }));
 }
 
