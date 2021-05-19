@@ -24,7 +24,10 @@ import {
   GridAttributes,
   GridAttributesVariables
 } from "./types/GridAttributes";
-import { InitialProductFilterAttributes } from "./types/InitialProductFilterAttributes";
+import {
+  InitialProductFilterAttributes,
+  InitialProductFilterAttributesVariables
+} from "./types/InitialProductFilterAttributes";
 import {
   InitialProductFilterCategories,
   InitialProductFilterCategoriesVariables
@@ -54,7 +57,13 @@ import {
 } from "./types/ProductVariantDetails";
 
 const initialProductFilterAttributesQuery = gql`
-  query InitialProductFilterAttributes {
+  ${pageInfoFragment}
+  query InitialProductFilterAttributes(
+    $firstValues: Int
+    $afterValues: String
+    $lastValues: Int
+    $beforeValues: String
+  ) {
     attributes(
       first: 100
       filter: { filterableInDashboard: true, type: PRODUCT_TYPE }
@@ -64,11 +73,24 @@ const initialProductFilterAttributesQuery = gql`
           id
           name
           slug
-          # values {
-          #   id
-          #   name
-          #   slug
-          # }
+          values(
+            first: $firstValues
+            after: $afterValues
+            last: $lastValues
+            before: $beforeValues
+          ) {
+            pageInfo {
+              ...PageInfoFragment
+            }
+            edges {
+              cursor
+              node {
+                id
+                name
+                slug
+              }
+            }
+          }
         }
       }
     }
@@ -76,7 +98,7 @@ const initialProductFilterAttributesQuery = gql`
 `;
 export const useInitialProductFilterAttributesQuery = makeQuery<
   InitialProductFilterAttributes,
-  null
+  InitialProductFilterAttributesVariables
 >(initialProductFilterAttributesQuery);
 
 const initialProductFilterCategoriesQuery = gql`
