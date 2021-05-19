@@ -72,7 +72,7 @@ const Layout: React.FC = props => {
   const { children } = props;
 
   const classes = useStyles(props);
-  const { isDark } = useTheme();
+  const { themeType } = useTheme();
 
   return (
     <div className={classes.root}>
@@ -83,7 +83,7 @@ const Layout: React.FC = props => {
         <div className={classes.mainPanelContent}>
           <SVG
             className={classes.logo}
-            src={isDark ? saleorDarkLogo : saleorLightLogo}
+            src={themeType === "dark" ? saleorDarkLogo : saleorLightLogo}
           />
           {children}
         </div>

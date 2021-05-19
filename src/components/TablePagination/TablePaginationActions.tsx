@@ -74,7 +74,9 @@ export const TablePaginationActions: React.FC<TablePaginationActionsProps> = pro
   } = props;
   const classes = useStyles(props);
 
-  const { direction, isDark } = useTheme();
+  const { direction, themeType } = useTheme();
+
+  const isDark = themeType === "dark";
 
   return (
     <div className={classNames(classes.root, className)} {...other}>

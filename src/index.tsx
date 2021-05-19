@@ -104,36 +104,32 @@ const apolloClient = new ApolloClient({
   link: authLink.concat(link)
 });
 
-const App: React.FC = () => {
-  const isDark = localStorage.getItem("theme") === "true";
-
-  return (
-    <ApolloProvider client={apolloClient}>
-      <BrowserRouter basename={APP_MOUNT_URI}>
-        <ThemeProvider isDefaultDark={isDark}>
-          <DateProvider>
-            <LocaleProvider>
-              <MessageManagerProvider>
-                <ServiceWorker />
-                <BackgroundTasksProvider>
-                  <AppStateProvider>
-                    <ShopProvider>
-                      <AuthProvider>
-                        <AppChannelProvider>
-                          <Routes />
-                        </AppChannelProvider>
-                      </AuthProvider>
-                    </ShopProvider>
-                  </AppStateProvider>
-                </BackgroundTasksProvider>
-              </MessageManagerProvider>
-            </LocaleProvider>
-          </DateProvider>
-        </ThemeProvider>
-      </BrowserRouter>
-    </ApolloProvider>
-  );
-};
+const App: React.FC = () => (
+  <ApolloProvider client={apolloClient}>
+    <BrowserRouter basename={APP_MOUNT_URI}>
+      <ThemeProvider>
+        <DateProvider>
+          <LocaleProvider>
+            <MessageManagerProvider>
+              <ServiceWorker />
+              <BackgroundTasksProvider>
+                <AppStateProvider>
+                  <ShopProvider>
+                    <AuthProvider>
+                      <AppChannelProvider>
+                        <Routes />
+                      </AppChannelProvider>
+                    </AuthProvider>
+                  </ShopProvider>
+                </AppStateProvider>
+              </BackgroundTasksProvider>
+            </MessageManagerProvider>
+          </LocaleProvider>
+        </DateProvider>
+      </ThemeProvider>
+    </BrowserRouter>
+  </ApolloProvider>
+);
 
 const Routes: React.FC = () => {
   const intl = useIntl();

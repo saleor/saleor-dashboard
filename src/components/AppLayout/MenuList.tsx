@@ -186,7 +186,7 @@ const MenuList: React.FC<MenuListProps> = props => {
 
   const classes = useStyles(props);
 
-  const { isDark } = useTheme();
+  const { themeType } = useTheme();
   const [activeSubMenu, setActiveSubMenu] = React.useState<IActiveSubMenu>({
     isActive: false,
     label: null
@@ -218,6 +218,8 @@ const MenuList: React.FC<MenuListProps> = props => {
       event.preventDefault();
     }
   };
+
+  const isDark = themeType === "dark";
 
   return (
     <div

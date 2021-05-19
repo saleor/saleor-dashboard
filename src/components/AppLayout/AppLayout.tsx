@@ -118,7 +118,7 @@ interface AppLayoutProps {
 
 const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
   const classes = useStyles({});
-  const { isDark, toggleTheme } = useTheme();
+  const { themeType, setTheme } = useTheme();
   const appActionAnchor = React.useRef<HTMLDivElement>();
   const appHeaderAnchor = React.useRef<HTMLDivElement>();
   const { logout, user } = useUser();
@@ -160,6 +160,9 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
       type: "displayError"
     });
   };
+
+  const isDark = themeType === "dark";
+  const toggleTheme = () => setTheme(isDark ? "light" : "dark");
 
   return (
     <>

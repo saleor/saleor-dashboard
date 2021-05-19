@@ -50,7 +50,7 @@ export interface AlertProps {
 const Alert: React.FC<AlertProps> = ({ children, className, show, title }) => {
   const classes = useStyles({});
   const [visible, setVisible] = useStateFromProps(show);
-  const { isDark } = useTheme();
+  const { themeType } = useTheme();
 
   return visible ? (
     <Card elevation={0} className={classNames(classes.root, className)}>
@@ -59,7 +59,7 @@ const Alert: React.FC<AlertProps> = ({ children, className, show, title }) => {
           <div>
             <SVG
               className={classes.icon}
-              src={isDark ? alertIconDark : alertIcon}
+              src={themeType === "dark" ? alertIconDark : alertIcon}
             />
           </div>
           <div>

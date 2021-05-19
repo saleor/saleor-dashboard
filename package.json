@@ -161,6 +161,7 @@
     "react-intl-translations-manager": "^5.0.3",
     "react-test-renderer": "^16.12.0",
     "regenerator-runtime": "^0.11.1",
+    "register-service-worker": "^1.7.2",
     "release-it": "^14.5.0",
     "require-context.macro": "^1.1.1",
     "rimraf": "^3.0.0",
@@ -177,8 +178,7 @@
     "workbox-precaching": "^6.1.2",
     "workbox-routing": "^6.1.2",
     "workbox-strategies": "^6.1.2",
-    "workbox-webpack-plugin": "^6.1.2",
-    "register-service-worker": "^1.7.2"
+    "workbox-webpack-plugin": "^6.1.2"
   },
   "optionalDependencies": {
     "fsevents": "^1.2.9"

@@ -211,7 +211,7 @@ const MenuItems: React.FC<MenuItemsProps> = props => {
   const classes = useStyles(props);
 
   const intl = useIntl();
-  const { isDark } = useTheme();
+  const { themeType } = useTheme();
 
   return (
     <Card>
@@ -229,7 +229,7 @@ const MenuItems: React.FC<MenuItemsProps> = props => {
       />
       <div
         className={classNames(classes.container, {
-          [classes.darkContainer]: isDark
+          [classes.darkContainer]: themeType === "dark"
         })}
         style={{
           minHeight: (items ? getNodeQuantity(items) - 1 : 1) * NODE_HEIGHT,

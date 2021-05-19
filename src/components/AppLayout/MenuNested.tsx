@@ -124,7 +124,7 @@ const MenuNested: React.FC<MenuNestedProps> = props => {
   const classes = useStyles(props);
 
   const menuItems = menuItem.children;
-  const { isDark } = useTheme();
+  const { themeType } = useTheme();
   const closeMenu = (menuItemUrl, event) => {
     onMenuItemClick(menuItemUrl, event);
     closeSubMenu({
@@ -134,6 +134,9 @@ const MenuNested: React.FC<MenuNestedProps> = props => {
     event.stopPropagation();
     event.preventDefault();
   };
+
+  const isDark = themeType === "dark";
+
   return (
     <>
       <div
