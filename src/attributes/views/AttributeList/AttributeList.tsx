@@ -1,4 +1,4 @@
-import IconButton from "@material-ui/core/IconButton";
+import { IconButton } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
 import {
   areFiltersApplied,
@@ -22,6 +22,7 @@ import usePaginator, {
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import createFilterHandlers from "@saleor/utils/handlers/filterHandlers";
 import createSortHandler from "@saleor/utils/handlers/sortHandler";
+import { mapEdgesToItems } from "@saleor/utils/maps";
 import { getSortParams } from "@saleor/utils/sort";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -147,7 +148,7 @@ const AttributeList: React.FC<AttributeListProps> = ({ params }) => {
   return (
     <>
       <AttributeListPage
-        attributes={maybe(() => data.attributes.edges.map(edge => edge.node))}
+        attributes={mapEdgesToItems(data?.attributes)}
         currentTab={currentTab}
         disabled={loading || attributeBulkDeleteOpts.loading}
         filterOpts={getFilterOpts(params)}

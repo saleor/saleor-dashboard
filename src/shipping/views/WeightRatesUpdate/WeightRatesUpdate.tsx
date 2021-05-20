@@ -1,4 +1,4 @@
-import Button from "@material-ui/core/Button";
+import { Button } from "@material-ui/core";
 import {
   createShippingChannelsFromRate,
   createSortedShippingChannels
@@ -59,6 +59,7 @@ import {
 } from "@saleor/types/globalTypes";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import createMetadataUpdateHandler from "@saleor/utils/handlers/metadataUpdateHandler";
+import { mapEdgesToItems } from "@saleor/utils/maps";
 import {
   useMetadataUpdate,
   usePrivateMetadataUpdate
@@ -342,9 +343,9 @@ export const WeightRatesUpdate: React.FC<WeightRatesUpdateProps> = ({
         loading={productsSearchOpts.loading}
         open={params.action === "assign-product"}
         hasMore={productsSearchOpts.data?.search?.pageInfo.hasNextPage}
-        products={productsSearchOpts.data?.search?.edges
-          .map(edge => edge.node)
-          .filter(suggestedProduct => suggestedProduct.id)}
+        products={mapEdgesToItems(productsSearchOpts?.data?.search).filter(
+          suggestedProduct => suggestedProduct.id
+        )}
         onClose={closeModal}
         onFetch={productsSearch}
         onFetchMore={loadMore}

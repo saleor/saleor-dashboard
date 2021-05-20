@@ -1,10 +1,8 @@
 import placeholderImg from "@assets/images/placeholder255x255.png";
-import DialogContentText from "@material-ui/core/DialogContentText";
-import IconButton from "@material-ui/core/IconButton";
+import { DialogContentText, IconButton } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
 import { useAttributeValueDeleteMutation } from "@saleor/attributes/mutations";
 import ChannelsWithVariantsAvailabilityDialog from "@saleor/channels/components/ChannelsWithVariantsAvailabilityDialog";
-import { useChannelsList } from "@saleor/channels/queries";
 import {
   ChannelData,
   createChannelsDataWithPrice,
@@ -47,6 +45,7 @@ import useProductSearch from "@saleor/searches/useProductSearch";
 import { getProductErrorMessage } from "@saleor/utils/errors";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import createMetadataUpdateHandler from "@saleor/utils/handlers/metadataUpdateHandler";
+import { mapEdgesToItems } from "@saleor/utils/maps";
 import {
   useMetadataUpdate,
   usePrivateMetadataUpdate
@@ -155,13 +154,11 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
     productVariantCreateOpts
   ] = useVariantCreateMutation({});
 
-  const { data: channelsListData } = useChannelsList({});
-
+  const { availableChannels, channel } = useAppChannel();
   const { data, loading, refetch } = useProductDetails({
     displayLoader: true,
     variables: { id }
   });
-  const { channel } = useAppChannel();
   const limitOpts = useShopLimitsQuery({
     variables: {
       productVariants: true
@@ -253,7 +250,7 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
 
   const allChannels: ChannelData[] = createChannelsDataWithPrice(
     product,
-    channelsListData?.channels
+    availableChannels
   ).sort((channel, nextChannel) =>
     channel.name.localeCompare(nextChannel.name)
   );
@@ -299,7 +296,12 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
   const [updateChannels, updateChannelsOpts] = useProductChannelListingUpdate({
     onCompleted: data => {
       if (!!data.productChannelListingUpdate.errors.length) {
-        return;
+        data.productChannelListingUpdate.errors.forEach(error =>
+          notify({
+            status: "error",
+            text: getProductErrorMessage(error, intl)
+          })
+        );
       }
     }
   });
@@ -425,12 +427,10 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
     createProductMediaOpts.data?.productMediaCreate.errors
   );
 
-  const categories = (searchCategoriesOpts?.data?.search?.edges || []).map(
-    edge => edge.node
-  );
-  const collections = (searchCollectionsOpts?.data?.search?.edges || []).map(
-    edge => edge.node
-  );
+  const categories = mapEdgesToItems(searchCategoriesOpts?.data?.search);
+
+  const collections = mapEdgesToItems(searchCollectionsOpts?.data?.search);
+
   const errors = [
     ...(updateProductOpts.data?.productUpdate.errors || []),
     ...(updateSimpleProductOpts.data?.productUpdate.errors || []),
@@ -525,9 +525,7 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
         header={product?.name}
         placeholderImage={placeholderImg}
         product={product}
-        warehouses={
-          warehouses.data?.warehouses.edges.map(edge => edge.node) || []
-        }
+        warehouses={mapEdgesToItems(warehouses?.data?.warehouses)}
         taxTypes={data?.taxTypes}
         variants={product?.variants}
         onBack={handleBack}
@@ -570,12 +568,8 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
           params.action === "assign-attribute-value" && params.id
         }
         onAssignReferencesClick={handleAssignAttributeReferenceClick}
-        referencePages={searchPagesOpts.data?.search.edges.map(
-          edge => edge.node
-        )}
-        referenceProducts={searchProductsOpts.data?.search.edges.map(
-          edge => edge.node
-        )}
+        referencePages={mapEdgesToItems(searchPagesOpts?.data?.search)}
+        referenceProducts={mapEdgesToItems(searchProductsOpts?.data?.search)}
         fetchReferencePages={searchPages}
         fetchMoreReferencePages={fetchMoreReferencePages}
         fetchReferenceProducts={searchProducts}

@@ -1,4 +1,4 @@
-import Typography from "@material-ui/core/Typography";
+import { Typography } from "@material-ui/core";
 import { StaffErrorFragment } from "@saleor/fragments/types/StaffErrorFragment";
 import { FormChange } from "@saleor/hooks/useForm";
 import { SearchPermissionGroups_search_edges_node } from "@saleor/searches/types/SearchPermissionGroups";

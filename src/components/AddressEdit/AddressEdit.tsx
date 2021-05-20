@@ -1,4 +1,4 @@
-import TextField from "@material-ui/core/TextField";
+import { TextField } from "@material-ui/core";
 import { AddressTypeInput } from "@saleor/customers/types";
 import { AccountErrorFragment } from "@saleor/fragments/types/AccountErrorFragment";
 import { OrderErrorFragment } from "@saleor/fragments/types/OrderErrorFragment";

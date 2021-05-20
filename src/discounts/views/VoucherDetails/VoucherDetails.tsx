@@ -1,6 +1,4 @@
-import Button from "@material-ui/core/Button";
-import DialogContentText from "@material-ui/core/DialogContentText";
-import { useChannelsList } from "@saleor/channels/queries";
+import { Button, DialogContentText } from "@material-ui/core";
 import {
   ChannelVoucherData,
   createChannelsDataWithDiscountPrice,
@@ -49,6 +47,7 @@ import useCategorySearch from "@saleor/searches/useCategorySearch";
 import useCollectionSearch from "@saleor/searches/useCollectionSearch";
 import useProductSearch from "@saleor/searches/useProductSearch";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
+import { mapEdgesToItems } from "@saleor/utils/maps";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -120,11 +119,11 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
     VoucherUrlQueryParams
   >(navigate, params => voucherUrl(id, params), params);
 
-  const { data: channelsData } = useChannelsList({});
+  const { channel, availableChannels } = useAppChannel();
 
   const allChannels: ChannelVoucherData[] = createChannelsDataWithDiscountPrice(
     data?.voucher,
-    channelsData?.channels
+    availableChannels
   );
   const voucherChannelsChoices: ChannelVoucherData[] = createSortedChannelsDataFromVoucher(
     data?.voucher
@@ -154,7 +153,6 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
   const [updateChannels, updateChannelsOpts] = useVoucherChannelListingUpdate(
     {}
   );
-  const { channel } = useAppChannel();
 
   const handleVoucherDelete = (data: VoucherDelete) => {
     if (data.voucherDelete.errors.length === 0) {
@@ -426,13 +424,9 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
                             toggleAll={toggleAll}
                           />
                           <AssignCategoriesDialog
-                            categories={maybe(() =>
-                              searchCategoriesOpts.data.search.edges
-                                .map(edge => edge.node)
-                                .filter(
-                                  suggestedCategory => suggestedCategory.id
-                                )
-                            )}
+                            categories={mapEdgesToItems(
+                              searchCategoriesOpts?.data?.search
+                            ).filter(suggestedCategory => suggestedCategory.id)}
                             confirmButtonState={voucherCataloguesAddOpts.status}
                             hasMore={
                               searchCategoriesOpts.data?.search.pageInfo
@@ -456,13 +450,9 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
                             }
                           />
                           <AssignCollectionDialog
-                            collections={maybe(() =>
-                              searchCollectionsOpts.data.search.edges
-                                .map(edge => edge.node)
-                                .filter(
-                                  suggestedCategory => suggestedCategory.id
-                                )
-                            )}
+                            collections={mapEdgesToItems(
+                              searchCollectionsOpts?.data?.search
+                            ).filter(suggestedCategory => suggestedCategory.id)}
                             confirmButtonState={voucherCataloguesAddOpts.status}
                             hasMore={
                               searchCollectionsOpts.data?.search.pageInfo
@@ -532,11 +522,9 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
                                 }
                               })
                             }
-                            products={maybe(() =>
-                              searchProductsOpts.data.search.edges
-                                .map(edge => edge.node)
-                                .filter(suggestedProduct => suggestedProduct.id)
-                            )}
+                            products={mapEdgesToItems(
+                              searchProductsOpts?.data?.search
+                            ).filter(suggestedProduct => suggestedProduct.id)}
                           />
                           <ActionDialog
                             open={

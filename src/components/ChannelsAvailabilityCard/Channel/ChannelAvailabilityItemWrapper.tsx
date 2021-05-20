@@ -1,11 +1,11 @@
 import {
   ExpansionPanel,
   ExpansionPanelSummary,
-  makeStyles
+  Typography
 } from "@material-ui/core";
-import Typography from "@material-ui/core/Typography";
 import { ChannelData } from "@saleor/channels/utils";
 import IconChevronDown from "@saleor/icons/ChevronDown";
+import { makeStyles } from "@saleor/theme";
 import React from "react";
 
 import { Messages } from "../types";

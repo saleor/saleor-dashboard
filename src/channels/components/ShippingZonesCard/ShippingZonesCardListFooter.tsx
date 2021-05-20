@@ -1,5 +1,5 @@
 import { ClickAwayListener } from "@material-ui/core";
-import { Channel_channel_shippingZones } from "@saleor/channels/types/Channel";
+import { ChannelShippingZones } from "@saleor/channels/pages/ChannelDetailsPage/types";
 import SingleAutocompleteSelectField from "@saleor/components/SingleAutocompleteSelectField";
 import CardAddItemsFooter from "@saleor/products/components/ProductStocks/CardAddItemsFooter";
 import { mapNodeToChoice } from "@saleor/utils/maps";
@@ -25,9 +25,7 @@ const ShippingZonesCardListFooter: React.FC<ShippingZonesCardListFooterProps> = 
   shippingZones
 }) => {
   const [isChoicesSelectShown, setIsChoicesSelectShown] = useState(false);
-  const shippingZonesRef = useRef<Channel_channel_shippingZones[]>(
-    shippingZones
-  );
+  const shippingZonesRef = useRef<ChannelShippingZones>(shippingZones);
 
   // select holds value and displays it so it needs remounting
   // to display empty input after adding new zone

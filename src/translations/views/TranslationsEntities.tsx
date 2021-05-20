@@ -3,6 +3,7 @@ import usePaginator, {
   createPaginationState
 } from "@saleor/hooks/usePaginator";
 import useShop from "@saleor/hooks/useShop";
+import { mapEdgesToItems } from "@saleor/utils/maps";
 import { stringify as stringifyQs } from "qs";
 import React from "react";
 
@@ -142,24 +143,22 @@ const TranslationsEntities: React.FC<TranslationsEntitiesProps> = ({
             return (
               <TranslationsEntitiesList
                 disabled={loading}
-                entities={data?.translations?.edges
-                  .map(edge => edge.node)
-                  .map(
-                    node =>
-                      node.__typename === "CategoryTranslatableContent" && {
-                        completion: {
-                          current: sumCompleted([
-                            node.translation?.description,
-                            node.translation?.name,
-                            node.translation?.seoDescription,
-                            node.translation?.seoTitle
-                          ]),
-                          max: 4
-                        },
-                        id: node?.category?.id,
-                        name: node?.category?.name
-                      }
-                  )}
+                entities={mapEdgesToItems(data?.translations).map(
+                  node =>
+                    node.__typename === "CategoryTranslatableContent" && {
+                      completion: {
+                        current: sumCompleted([
+                          node.translation?.description,
+                          node.translation?.name,
+                          node.translation?.seoDescription,
+                          node.translation?.seoTitle
+                        ]),
+                        max: 4
+                      },
+                      id: node?.category?.id,
+                      name: node?.category?.name
+                    }
+                )}
                 onRowClick={id =>
                   navigate(
                     languageEntityUrl(
@@ -187,24 +186,22 @@ const TranslationsEntities: React.FC<TranslationsEntitiesProps> = ({
             return (
               <TranslationsEntitiesList
                 disabled={loading}
-                entities={data?.translations?.edges
-                  .map(edge => edge.node)
-                  .map(
-                    node =>
-                      node.__typename === "ProductTranslatableContent" && {
-                        completion: {
-                          current: sumCompleted([
-                            node.translation?.description,
-                            node.translation?.name,
-                            node.translation?.seoDescription,
-                            node.translation?.seoTitle
-                          ]),
-                          max: 4
-                        },
-                        id: node?.product?.id,
-                        name: node?.product?.name
-                      }
-                  )}
+                entities={mapEdgesToItems(data?.translations).map(
+                  node =>
+                    node.__typename === "ProductTranslatableContent" && {
+                      completion: {
+                        current: sumCompleted([
+                          node.translation?.description,
+                          node.translation?.name,
+                          node.translation?.seoDescription,
+                          node.translation?.seoTitle
+                        ]),
+                        max: 4
+                      },
+                      id: node?.product?.id,
+                      name: node?.product?.name
+                    }
+                )}
                 onRowClick={id =>
                   navigate(
                     languageEntityUrl(
@@ -233,24 +230,22 @@ const TranslationsEntities: React.FC<TranslationsEntitiesProps> = ({
             return (
               <TranslationsEntitiesList
                 disabled={loading}
-                entities={data?.translations?.edges
-                  .map(edge => edge.node)
-                  .map(
-                    node =>
-                      node.__typename === "CollectionTranslatableContent" && {
-                        completion: {
-                          current: sumCompleted([
-                            node.translation?.description,
-                            node.translation?.name,
-                            node.translation?.seoDescription,
-                            node.translation?.seoTitle
-                          ]),
-                          max: 4
-                        },
-                        id: node.collection.id,
-                        name: node.collection.name
-                      }
-                  )}
+                entities={mapEdgesToItems(data?.translations).map(
+                  node =>
+                    node.__typename === "CollectionTranslatableContent" && {
+                      completion: {
+                        current: sumCompleted([
+                          node.translation?.description,
+                          node.translation?.name,
+                          node.translation?.seoDescription,
+                          node.translation?.seoTitle
+                        ]),
+                        max: 4
+                      },
+                      id: node.collection.id,
+                      name: node.collection.name
+                    }
+                )}
                 onRowClick={id =>
                   navigate(
                     languageEntityUrl(
@@ -279,19 +274,17 @@ const TranslationsEntities: React.FC<TranslationsEntitiesProps> = ({
             return (
               <TranslationsEntitiesList
                 disabled={loading}
-                entities={data?.translations?.edges
-                  .map(edge => edge.node)
-                  .map(
-                    node =>
-                      node.__typename === "SaleTranslatableContent" && {
-                        completion: {
-                          current: sumCompleted([node.translation?.name]),
-                          max: 1
-                        },
-                        id: node.sale?.id,
-                        name: node.sale?.name
-                      }
-                  )}
+                entities={mapEdgesToItems(data?.translations).map(
+                  node =>
+                    node.__typename === "SaleTranslatableContent" && {
+                      completion: {
+                        current: sumCompleted([node.translation?.name]),
+                        max: 1
+                      },
+                      id: node.sale?.id,
+                      name: node.sale?.name
+                    }
+                )}
                 onRowClick={id =>
                   navigate(
                     languageEntityUrl(language, TranslatableEntities.sales, id)
@@ -320,19 +313,17 @@ const TranslationsEntities: React.FC<TranslationsEntitiesProps> = ({
             return (
               <TranslationsEntitiesList
                 disabled={loading}
-                entities={data?.translations?.edges
-                  .map(edge => edge.node)
-                  .map(
-                    node =>
-                      node.__typename === "VoucherTranslatableContent" && {
-                        completion: {
-                          current: sumCompleted([node.translation?.name]),
-                          max: 1
-                        },
-                        id: node.voucher?.id,
-                        name: node.voucher?.name || "-"
-                      }
-                  )}
+                entities={mapEdgesToItems(data?.translations).map(
+                  node =>
+                    node.__typename === "VoucherTranslatableContent" && {
+                      completion: {
+                        current: sumCompleted([node.translation?.name]),
+                        max: 1
+                      },
+                      id: node.voucher?.id,
+                      name: node.voucher?.name || "-"
+                    }
+                )}
                 onRowClick={id =>
                   navigate(
                     languageEntityUrl(
@@ -361,24 +352,22 @@ const TranslationsEntities: React.FC<TranslationsEntitiesProps> = ({
             return (
               <TranslationsEntitiesList
                 disabled={loading}
-                entities={data?.translations?.edges
-                  .map(edge => edge.node)
-                  .map(
-                    node =>
-                      node.__typename === "PageTranslatableContent" && {
-                        completion: {
-                          current: sumCompleted([
-                            node.translation?.content,
-                            node.translation?.seoDescription,
-                            node.translation?.seoTitle,
-                            node.translation?.title
-                          ]),
-                          max: 4
-                        },
-                        id: node?.page.id,
-                        name: node?.page.title
-                      }
-                  )}
+                entities={mapEdgesToItems(data?.translations).map(
+                  node =>
+                    node.__typename === "PageTranslatableContent" && {
+                      completion: {
+                        current: sumCompleted([
+                          node.translation?.content,
+                          node.translation?.seoDescription,
+                          node.translation?.seoTitle,
+                          node.translation?.title
+                        ]),
+                        max: 4
+                      },
+                      id: node?.page.id,
+                      name: node?.page.title
+                    }
+                )}
                 onRowClick={id =>
                   navigate(
                     languageEntityUrl(language, TranslatableEntities.pages, id)
@@ -402,26 +391,24 @@ const TranslationsEntities: React.FC<TranslationsEntitiesProps> = ({
             return (
               <TranslationsEntitiesList
                 disabled={loading}
-                entities={data?.translations?.edges
-                  .map(edge => edge.node)
-                  .map(
-                    node =>
-                      node.__typename === "AttributeTranslatableContent" && {
-                        completion: {
-                          current: sumCompleted([
-                            node.translation?.name,
-                            ...(node.attribute?.values.map(
-                              attr => attr.translation?.name
-                            ) || [])
-                          ]),
-                          max: node.attribute
-                            ? node.attribute.values.length + 1
-                            : 0
-                        },
-                        id: node?.attribute.id,
-                        name: node?.attribute.name
-                      }
-                  )}
+                entities={mapEdgesToItems(data?.translations).map(
+                  node =>
+                    node.__typename === "AttributeTranslatableContent" && {
+                      completion: {
+                        current: sumCompleted([
+                          node.translation?.name,
+                          ...(node.attribute?.values.map(
+                            attr => attr.translation?.name
+                          ) || [])
+                        ]),
+                        max: node.attribute
+                          ? node.attribute.values.length + 1
+                          : 0
+                      },
+                      id: node?.attribute.id,
+                      name: node?.attribute.name
+                    }
+                )}
                 onRowClick={id =>
                   navigate(
                     languageEntityUrl(
@@ -449,23 +436,20 @@ const TranslationsEntities: React.FC<TranslationsEntitiesProps> = ({
             return (
               <TranslationsEntitiesList
                 disabled={loading}
-                entities={data?.translations?.edges
-                  .map(edge => edge.node)
-                  .map(
-                    node =>
-                      node.__typename ===
-                        "ShippingMethodTranslatableContent" && {
-                        completion: {
-                          current: sumCompleted([
-                            node.translation?.name,
-                            node.translation?.description
-                          ]),
-                          max: 2
-                        },
-                        id: node?.shippingMethod.id,
-                        name: node?.name
-                      }
-                  )}
+                entities={mapEdgesToItems(data?.translations).map(
+                  node =>
+                    node.__typename === "ShippingMethodTranslatableContent" && {
+                      completion: {
+                        current: sumCompleted([
+                          node.translation?.name,
+                          node.translation?.description
+                        ]),
+                        max: 2
+                      },
+                      id: node?.shippingMethod.id,
+                      name: node?.name
+                    }
+                )}
                 onRowClick={id =>
                   navigate(
                     languageEntityUrl(

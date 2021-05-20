@@ -1,7 +1,7 @@
 import { useBaseChannelsList } from "@saleor/channels/queries";
-import chunk from "lodash-es/chunk";
-import compact from "lodash-es/compact";
-import concat from "lodash-es/concat";
+import chunk from "lodash/chunk";
+import compact from "lodash/compact";
+import concat from "lodash/concat";
 import { useEffect, useState } from "react";
 
 import {

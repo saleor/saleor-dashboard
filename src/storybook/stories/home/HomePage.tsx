@@ -1,7 +1,7 @@
 import placeholderImage from "@assets/images/placeholder60x60.png";
-import { Omit } from "@material-ui/core";
 import { adminUserPermissions } from "@saleor/fixtures";
 import { PermissionEnum } from "@saleor/types/globalTypes";
+import { mapEdgesToItems } from "@saleor/utils/maps";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
@@ -12,7 +12,7 @@ import Decorator from "../../Decorator";
 const shop = shopFixture(placeholderImage);
 
 const homePageProps: Omit<HomePageProps, "classes"> = {
-  activities: shop.activities.edges.map(edge => edge.node),
+  activities: mapEdgesToItems(shop.activities),
   noChannel: false,
   onCreateNewChannelClick: () => undefined,
   onOrdersToCaptureClick: () => undefined,
@@ -24,7 +24,7 @@ const homePageProps: Omit<HomePageProps, "classes"> = {
   ordersToFulfill: shop.ordersToFulfill.totalCount,
   productsOutOfStock: shop.productsOutOfStock.totalCount,
   sales: shop.salesToday.gross,
-  topProducts: shop.productTopToday.edges.map(edge => edge.node),
+  topProducts: mapEdgesToItems(shop.productTopToday),
   userName: "admin@example.com",
   userPermissions: adminUserPermissions
 };

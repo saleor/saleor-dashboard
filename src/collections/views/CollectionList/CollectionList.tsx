@@ -1,5 +1,4 @@
-import DialogContentText from "@material-ui/core/DialogContentText";
-import IconButton from "@material-ui/core/IconButton";
+import { DialogContentText, IconButton } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
 import ActionDialog from "@saleor/components/ActionDialog";
 import useAppChannel from "@saleor/components/AppLayout/AppChannelContext";
@@ -19,6 +18,7 @@ import { maybe } from "@saleor/misc";
 import { ListViews } from "@saleor/types";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import createSortHandler from "@saleor/utils/handlers/sortHandler";
+import { mapEdgesToItems } from "@saleor/utils/maps";
 import { getSortParams } from "@saleor/utils/sort";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -158,7 +158,7 @@ export const CollectionList: React.FC<CollectionListProps> = ({ params }) => {
         onTabSave={() => openModal("save-search")}
         tabs={tabs.map(tab => tab.name)}
         disabled={loading}
-        collections={maybe(() => data.collections.edges.map(edge => edge.node))}
+        collections={mapEdgesToItems(data?.collections)}
         settings={settings}
         onNextPage={loadNextPage}
         onPreviousPage={loadPreviousPage}

@@ -1,5 +1,5 @@
-import { useChannelsList } from "@saleor/channels/queries";
 import { ChannelData, createSortedChannelsData } from "@saleor/channels/utils";
+import useAppChannel from "@saleor/components/AppLayout/AppChannelContext";
 import { AttributeInput } from "@saleor/components/Attributes";
 import ChannelsAvailabilityDialog from "@saleor/components/ChannelsAvailabilityDialog";
 import { WindowTitle } from "@saleor/components/WindowTitle";
@@ -34,6 +34,7 @@ import { useTaxTypeList } from "@saleor/taxes/queries";
 import { getProductErrorMessage } from "@saleor/utils/errors";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import createMetadataCreateHandler from "@saleor/utils/handlers/metadataCreateHandler";
+import { mapEdgesToItems } from "@saleor/utils/maps";
 import {
   useMetadataUpdate,
   usePrivateMetadataUpdate
@@ -117,13 +118,11 @@ export const ProductCreateView: React.FC<ProductCreateProps> = ({ params }) => {
     skip: !selectedProductTypeId
   });
 
-  const productTypes = searchProductTypesOpts?.data?.search?.edges?.map(
-    edge => edge.node
-  );
+  const productTypes = mapEdgesToItems(searchProductTypesOpts?.data?.search);
 
-  const { data: channelsData } = useChannelsList({});
+  const { availableChannels } = useAppChannel(false);
   const allChannels: ChannelData[] = createSortedChannelsData(
-    channelsData?.channels
+    availableChannels
   );
 
   const {
@@ -280,12 +279,8 @@ export const ProductCreateView: React.FC<ProductCreateProps> = ({ params }) => {
       <ProductCreatePage
         allChannelsCount={allChannels?.length}
         currentChannels={currentChannels}
-        categories={(searchCategoryOpts?.data?.search?.edges || []).map(
-          edge => edge.node
-        )}
-        collections={(searchCollectionOpts?.data?.search?.edges || []).map(
-          edge => edge.node
-        )}
+        categories={mapEdgesToItems(searchCategoryOpts?.data?.search)}
+        collections={mapEdgesToItems(searchCollectionOpts?.data?.search)}
         loading={loading}
         channelsErrors={
           updateVariantChannelsOpts.data?.productVariantChannelListingUpdate
@@ -310,9 +305,7 @@ export const ProductCreateView: React.FC<ProductCreateProps> = ({ params }) => {
         fetchMoreCategories={fetchMoreCategories}
         fetchMoreCollections={fetchMoreCollections}
         fetchMoreProductTypes={fetchMoreProductTypes}
-        warehouses={
-          warehouses.data?.warehouses.edges.map(edge => edge.node) || []
-        }
+        warehouses={mapEdgesToItems(warehouses?.data?.warehouses)}
         taxTypes={taxTypes.data?.taxTypes || []}
         weightUnit={shop?.defaultWeightUnit}
         openChannelsModal={handleChannelsModalOpen}
@@ -321,12 +314,8 @@ export const ProductCreateView: React.FC<ProductCreateProps> = ({ params }) => {
           params.action === "assign-attribute-value" && params.id
         }
         onAssignReferencesClick={handleAssignAttributeReferenceClick}
-        referencePages={searchPagesOpts.data?.search.edges.map(
-          edge => edge.node
-        )}
-        referenceProducts={searchProductsOpts.data?.search.edges.map(
-          edge => edge.node
-        )}
+        referencePages={mapEdgesToItems(searchPagesOpts?.data?.search)}
+        referenceProducts={mapEdgesToItems(searchProductsOpts?.data?.search)}
         fetchReferencePages={searchPages}
         fetchMoreReferencePages={fetchMoreReferencePages}
         fetchReferenceProducts={searchProducts}

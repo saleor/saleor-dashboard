@@ -1,8 +1,10 @@
 import chevronDown from "@assets/images/ChevronDown.svg";
-import CircularProgress from "@material-ui/core/CircularProgress";
-import MenuItem from "@material-ui/core/MenuItem";
-import Paper from "@material-ui/core/Paper";
-import Typography from "@material-ui/core/Typography";
+import {
+  CircularProgress,
+  MenuItem,
+  Paper,
+  Typography
+} from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
 import Checkbox from "@saleor/components/Checkbox";
 import useElementScroll, {

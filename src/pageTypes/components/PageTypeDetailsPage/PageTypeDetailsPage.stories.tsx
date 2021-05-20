@@ -1,4 +1,3 @@
-import { Omit } from "@material-ui/core";
 import { listActionsProps } from "@saleor/fixtures";
 import { PageErrorCode } from "@saleor/types/globalTypes";
 import { storiesOf } from "@storybook/react";

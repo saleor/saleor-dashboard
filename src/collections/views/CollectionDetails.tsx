@@ -1,11 +1,10 @@
-import Button from "@material-ui/core/Button";
-import DialogContentText from "@material-ui/core/DialogContentText";
-import { useChannelsList } from "@saleor/channels/queries";
+import { Button, DialogContentText } from "@material-ui/core";
 import {
   createCollectionChannels,
   createCollectionChannelsData
 } from "@saleor/channels/utils";
 import ActionDialog from "@saleor/components/ActionDialog";
+import useAppChannel from "@saleor/components/AppLayout/AppChannelContext";
 import AssignProductDialog from "@saleor/components/AssignProductDialog";
 import ChannelsAvailabilityDialog from "@saleor/components/ChannelsAvailabilityDialog";
 import NotFoundPage from "@saleor/components/NotFoundPage";
@@ -23,6 +22,7 @@ import { commonMessages } from "@saleor/intl";
 import useProductSearch from "@saleor/searches/useProductSearch";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import createMetadataUpdateHandler from "@saleor/utils/handlers/metadataUpdateHandler";
+import { mapEdgesToItems } from "@saleor/utils/maps";
 import {
   useMetadataUpdate,
   usePrivateMetadataUpdate
@@ -84,7 +84,7 @@ export const CollectionDetails: React.FC<CollectionDetailsProps> = ({
     updateChannels,
     updateChannelsOpts
   ] = useCollectionChannelListingUpdate({});
-  const { data: channelsData } = useChannelsList({});
+  const { availableChannels } = useAppChannel(false);
 
   const handleCollectionUpdate = (data: CollectionUpdate) => {
     if (data.collectionUpdate.errors.length === 0) {
@@ -173,7 +173,7 @@ export const CollectionDetails: React.FC<CollectionDetailsProps> = ({
           return <NotFoundPage onBack={handleBack} />;
         }
         const allChannels = createCollectionChannels(
-          channelsData?.channels
+          availableChannels
         )?.sort((channel, nextChannel) =>
           channel.name.localeCompare(nextChannel.name)
         );
@@ -339,7 +339,7 @@ export const CollectionDetails: React.FC<CollectionDetailsProps> = ({
               hasChannelChanged={
                 collectionChannelsChoices?.length !== currentChannels?.length
               }
-              channelsCount={channelsData?.channels?.length}
+              channelsCount={availableChannels.length}
               selectedChannelId={selectedChannel}
               openChannelsModal={handleChannelsModalOpen}
               onChannelsChange={setCurrentChannels}
@@ -361,10 +361,8 @@ export const CollectionDetails: React.FC<CollectionDetailsProps> = ({
                   }
                 })
               }
-              products={maybe(() =>
-                result.data.search.edges
-                  .map(edge => edge.node)
-                  .filter(suggestedProduct => suggestedProduct.id)
+              products={mapEdgesToItems(result?.data?.search).filter(
+                suggestedProduct => suggestedProduct.id
               )}
             />
             <ActionDialog

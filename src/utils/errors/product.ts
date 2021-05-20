@@ -50,6 +50,10 @@ const messages = defineMessages({
   variantUnique: {
     defaultMessage: "This variant already exists",
     description: "product attribute error"
+  },
+  noCategorySet: {
+    defaultMessage: "Product category not set",
+    description: "no category set error"
   }
 });
 
@@ -79,6 +83,8 @@ function getProductErrorMessage(
         return intl.formatMessage(messages.variantNoDigitalContent);
       case ProductErrorCode.UNSUPPORTED_MEDIA_PROVIDER:
         return intl.formatMessage(messages.unsupportedMediaProvider);
+      case ProductErrorCode.PRODUCT_WITHOUT_CATEGORY:
+        return intl.formatMessage(messages.noCategorySet);
       case ProductErrorCode.INVALID:
         if (err.field === "price") {
           return intl.formatMessage(messages.priceInvalid);

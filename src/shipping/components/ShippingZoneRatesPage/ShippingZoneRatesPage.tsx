@@ -27,10 +27,11 @@ import {
 } from "@saleor/shipping/types/ShippingZone";
 import { ListActions, ListProps } from "@saleor/types";
 import {
+  PermissionEnum,
   PostalCodeRuleInclusionTypeEnum,
   ShippingMethodTypeEnum
 } from "@saleor/types/globalTypes";
-import { mapMetadataItemToInput } from "@saleor/utils/maps";
+import { mapEdgesToItems, mapMetadataItemToInput } from "@saleor/utils/maps";
 import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
 import React from "react";
 import { FormattedMessage } from "react-intl";
@@ -192,9 +193,7 @@ export const ShippingZoneRatesPage: React.FC<ShippingZoneRatesPageProps> = ({
                 />
                 <CardSpacer />
                 <ShippingMethodProducts
-                  products={rate?.excludedProducts?.edges.map(
-                    edge => edge.node
-                  )}
+                  products={mapEdgesToItems(rate?.excludedProducts)}
                   onProductAssign={onProductAssign}
                   onProductUnassign={onProductUnassign}
                   disabled={disabled}
@@ -205,6 +204,7 @@ export const ShippingZoneRatesPage: React.FC<ShippingZoneRatesPageProps> = ({
               </div>
               <div>
                 <ChannelsAvailabilityCard
+                  managePermissions={[PermissionEnum.MANAGE_SHIPPING]}
                   allChannelsCount={allChannelsCount}
                   selectedChannelsCount={shippingChannels?.length}
                   channelsList={data.channelListings.map(channel => ({

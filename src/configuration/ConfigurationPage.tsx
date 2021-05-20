@@ -1,7 +1,5 @@
-import Card from "@material-ui/core/Card";
-import CardContent from "@material-ui/core/CardContent";
+import { Card, CardContent, Typography } from "@material-ui/core";
 import { IconProps } from "@material-ui/core/Icon";
-import Typography from "@material-ui/core/Typography";
 import { User } from "@saleor/fragments/types/User";
 import { sectionNames } from "@saleor/intl";
 import { makeStyles } from "@saleor/theme";

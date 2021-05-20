@@ -33,6 +33,7 @@ const productChannels = createChannelsDataFromProduct(product(""));
 
 const props: ChannelsAvailabilityCardProps = {
   allChannelsCount: 4,
+  managePermissions: [PermissionEnum.MANAGE_CHANNELS],
   channelsList: productChannels.map(channel => ({
     id: channel.id,
     name: channel.name

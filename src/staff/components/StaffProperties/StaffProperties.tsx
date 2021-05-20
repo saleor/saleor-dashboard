@@ -1,8 +1,5 @@
 import photoIcon from "@assets/images/photo-icon.svg";
-import Card from "@material-ui/core/Card";
-import CardContent from "@material-ui/core/CardContent";
-import TextField from "@material-ui/core/TextField";
-import Typography from "@material-ui/core/Typography";
+import { Card, CardContent, TextField, Typography } from "@material-ui/core";
 import CardTitle from "@saleor/components/CardTitle";
 import { StaffErrorFragment } from "@saleor/fragments/types/StaffErrorFragment";
 import { commonMessages } from "@saleor/intl";

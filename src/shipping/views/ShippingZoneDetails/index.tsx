@@ -1,5 +1,4 @@
-import DialogContentText from "@material-ui/core/DialogContentText";
-import { useChannelsList } from "@saleor/channels/queries";
+import { DialogContentText } from "@material-ui/core";
 import ActionDialog from "@saleor/components/ActionDialog";
 import useAppChannel from "@saleor/components/AppLayout/AppChannelContext";
 import NotFoundPage from "@saleor/components/NotFoundPage";
@@ -22,6 +21,7 @@ import {
 } from "@saleor/shipping/mutations";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import createMetadataUpdateHandler from "@saleor/utils/handlers/metadataUpdateHandler";
+import { mapEdgesToItems } from "@saleor/utils/maps";
 import {
   useMetadataUpdate,
   usePrivateMetadataUpdate
@@ -69,13 +69,11 @@ const ShippingZoneDetails: React.FC<ShippingZoneDetailsProps> = ({
     }
   );
 
-  const { data: channelsList } = useChannelsList({});
-
   const { data, loading } = useShippingZone({
     displayLoader: true,
     variables: { id, ...paginationState }
   });
-  const { channel } = useAppChannel();
+  const { availableChannels, channel } = useAppChannel();
 
   const [openModal, closeModal] = createDialogActionHandlers<
     ShippingZoneUrlDialog,
@@ -196,7 +194,7 @@ const ShippingZoneDetails: React.FC<ShippingZoneDetailsProps> = ({
           })
         }
         onSubmit={handleSubmit}
-        allChannels={channelsList?.channels}
+        allChannels={availableChannels}
         onWarehouseAdd={() => openModal("add-warehouse")}
         onWeightRateAdd={() => navigate(shippingWeightRatesUrl(id))}
         onWeightRateEdit={rateId =>
@@ -204,14 +202,12 @@ const ShippingZoneDetails: React.FC<ShippingZoneDetailsProps> = ({
         }
         saveButtonBarState={updateShippingZoneOpts.status}
         shippingZone={data?.shippingZone}
-        warehouses={
-          searchWarehousesOpts.data?.search.edges.map(edge => edge.node) || []
-        }
-        hasMore={searchWarehousesOpts.data?.search.pageInfo.hasNextPage}
+        warehouses={mapEdgesToItems(searchWarehousesOpts?.data?.search)}
+        hasMore={searchWarehousesOpts.data?.search?.pageInfo?.hasNextPage}
         loading={searchWarehousesOpts.loading}
         onFetchMore={loadMore}
         onSearchChange={search}
-        selectedChannelId={channel.id}
+        selectedChannelId={channel?.id}
       />
       <DeleteShippingRateDialog
         confirmButtonState={deleteShippingRateOpts.status}

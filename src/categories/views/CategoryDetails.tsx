@@ -1,5 +1,4 @@
-import DialogContentText from "@material-ui/core/DialogContentText";
-import IconButton from "@material-ui/core/IconButton";
+import { DialogContentText, IconButton } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
 import ActionDialog from "@saleor/components/ActionDialog";
 import useAppChannel from "@saleor/components/AppLayout/AppChannelContext";
@@ -15,7 +14,7 @@ import usePaginator, {
 import { commonMessages } from "@saleor/intl";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import createMetadataUpdateHandler from "@saleor/utils/handlers/metadataUpdateHandler";
-import { mapNodeToChoice } from "@saleor/utils/maps";
+import { mapEdgesToItems, mapNodeToChoice } from "@saleor/utils/maps";
 import {
   useMetadataUpdate,
   usePrivateMetadataUpdate
@@ -258,14 +257,10 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
         pageInfo={pageInfo}
         onProductClick={id => () => navigate(productUrl(id))}
         onSubmit={handleSubmit}
-        products={maybe(() =>
-          data.category.products.edges.map(edge => edge.node)
-        )}
+        products={mapEdgesToItems(data?.category?.products)}
         saveButtonBarState={updateResult.status}
         selectedChannelId={channel?.id}
-        subcategories={maybe(() =>
-          data.category.children.edges.map(edge => edge.node)
-        )}
+        subcategories={mapEdgesToItems(data?.category?.children)}
         subcategoryListToolbar={
           <IconButton
             color="primary"

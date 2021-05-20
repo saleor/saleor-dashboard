@@ -1,12 +1,12 @@
 import {
+  Card,
+  CardContent,
   TableBody,
   TableCell,
   TableHead,
   TableRow,
   Typography
 } from "@material-ui/core";
-import Card from "@material-ui/core/Card";
-import CardContent from "@material-ui/core/CardContent";
 import { ChannelData, ChannelPriceArgs } from "@saleor/channels/utils";
 import CardTitle from "@saleor/components/CardTitle";
 import PriceField from "@saleor/components/PriceField";

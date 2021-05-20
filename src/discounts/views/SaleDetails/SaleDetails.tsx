@@ -1,7 +1,5 @@
-import Button from "@material-ui/core/Button";
-import DialogContentText from "@material-ui/core/DialogContentText";
+import { Button, DialogContentText } from "@material-ui/core";
 import { categoryUrl } from "@saleor/categories/urls";
-import { useChannelsList } from "@saleor/channels/queries";
 import {
   ChannelSaleData,
   createChannelsDataWithSaleDiscountPrice,
@@ -9,6 +7,7 @@ import {
 } from "@saleor/channels/utils";
 import { collectionUrl } from "@saleor/collections/urls";
 import ActionDialog from "@saleor/components/ActionDialog";
+import useAppChannel from "@saleor/components/AppLayout/AppChannelContext";
 import AssignCategoriesDialog from "@saleor/components/AssignCategoryDialog";
 import AssignCollectionDialog from "@saleor/components/AssignCollectionDialog";
 import AssignProductDialog from "@saleor/components/AssignProductDialog";
@@ -51,6 +50,7 @@ import useCategorySearch from "@saleor/searches/useCategorySearch";
 import useCollectionSearch from "@saleor/searches/useCollectionSearch";
 import useProductSearch from "@saleor/searches/useProductSearch";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
+import { mapEdgesToItems } from "@saleor/utils/maps";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -91,7 +91,7 @@ export const SaleDetails: React.FC<SaleDetailsProps> = ({ id, params }) => {
     variables: DEFAULT_INITIAL_SEARCH_DATA
   });
 
-  const { data: channelsData } = useChannelsList({});
+  const { availableChannels } = useAppChannel(false);
 
   const paginationState = createPaginationState(PAGINATE_BY, params);
   const changeTab = (tab: SaleDetailsPageTab) => {
@@ -118,7 +118,7 @@ export const SaleDetails: React.FC<SaleDetailsProps> = ({ id, params }) => {
 
   const allChannels: ChannelSaleData[] = createChannelsDataWithSaleDiscountPrice(
     data?.sale,
-    channelsData?.channels
+    availableChannels
   );
   const saleChannelsChoices: ChannelSaleData[] = createSortedChannelsDataFromSale(
     data?.sale
@@ -393,20 +393,14 @@ export const SaleDetails: React.FC<SaleDetailsProps> = ({ id, params }) => {
                                 }
                               })
                             }
-                            products={maybe(() =>
-                              searchProductsOpts.data.search.edges
-                                .map(edge => edge.node)
-                                .filter(suggestedProduct => suggestedProduct.id)
-                            )}
+                            products={mapEdgesToItems(
+                              searchProductsOpts?.data?.search
+                            ).filter(suggestedProduct => suggestedProduct.id)}
                           />
                           <AssignCategoriesDialog
-                            categories={maybe(() =>
-                              searchCategoriesOpts.data.search.edges
-                                .map(edge => edge.node)
-                                .filter(
-                                  suggestedCategory => suggestedCategory.id
-                                )
-                            )}
+                            categories={mapEdgesToItems(
+                              searchCategoriesOpts?.data?.search
+                            ).filter(suggestedCategory => suggestedCategory.id)}
                             confirmButtonState={saleCataloguesAddOpts.status}
                             hasMore={
                               searchCategoriesOpts.data?.search.pageInfo
@@ -430,13 +424,9 @@ export const SaleDetails: React.FC<SaleDetailsProps> = ({ id, params }) => {
                             }
                           />
                           <AssignCollectionDialog
-                            collections={maybe(() =>
-                              searchCollectionsOpts.data.search.edges
-                                .map(edge => edge.node)
-                                .filter(
-                                  suggestedCategory => suggestedCategory.id
-                                )
-                            )}
+                            collections={mapEdgesToItems(
+                              searchCollectionsOpts?.data?.search
+                            ).filter(suggestedCategory => suggestedCategory.id)}
                             confirmButtonState={saleCataloguesAddOpts.status}
                             hasMore={
                               searchCollectionsOpts.data?.search.pageInfo

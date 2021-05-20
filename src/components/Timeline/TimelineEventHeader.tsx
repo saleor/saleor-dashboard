@@ -1,4 +1,4 @@
-import Typography from "@material-ui/core/Typography";
+import { Typography } from "@material-ui/core";
 import useNavigator from "@saleor/hooks/useNavigator";
 import { makeStyles } from "@saleor/theme";
 import React from "react";

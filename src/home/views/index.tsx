@@ -2,6 +2,7 @@ import { channelsListUrl } from "@saleor/channels/urls";
 import useAppChannel from "@saleor/components/AppLayout/AppChannelContext";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useUser from "@saleor/hooks/useUser";
+import { mapEdgesToItems } from "@saleor/utils/maps";
 import React from "react";
 
 import { getDatePeriod, getUserName } from "../../misc";
@@ -26,10 +27,10 @@ const HomeSection = () => {
 
   return (
     <HomePage
-      activities={data?.activities?.edges.map(edge => edge.node).reverse()}
+      activities={mapEdgesToItems(data?.activities)}
       orders={data?.ordersToday?.totalCount}
       sales={data?.salesToday?.gross}
-      topProducts={data?.productTopToday?.edges.map(edge => edge.node)}
+      topProducts={mapEdgesToItems(data?.productTopToday)}
       onProductClick={(productId, variantId) =>
         navigate(productVariantEditUrl(productId, variantId))
       }

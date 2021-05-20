@@ -4,6 +4,7 @@ import EditorJS, {
   ToolConstructable,
   ToolSettings
 } from "@editorjs/editorjs";
+import Embed from "@editorjs/embed";
 import Header from "@editorjs/header";
 import List from "@editorjs/list";
 import Paragraph from "@editorjs/paragraph";
@@ -24,6 +25,7 @@ export interface RichTextEditorContentProps {
 const inlineToolbar = ["link", "bold", "italic", "strikethrough"];
 
 export const tools: Record<string, ToolConstructable | ToolSettings> = {
+  embed: Embed,
   header: {
     class: Header,
     config: {
