@@ -11,7 +11,7 @@ const useStyles = makeStyles(
         paddingRight: theme.spacing(2)
       },
       cursor: "grab",
-      width: 48 + theme.spacing(1.5)
+      width: `calc(48px + ${theme.spacing(1.5)})`
     }
   }),
   { name: "SortableHandle" }

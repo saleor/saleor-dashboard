@@ -31,7 +31,7 @@ const useStyles = makeStyles(
       marginTop: theme.spacing(2)
     },
     titleElement: {
-      marginRight: "0.5rem"
+      marginRight: theme.spacing(0.5)
     }
   }),
   { name: "TimelineEventHeader" }

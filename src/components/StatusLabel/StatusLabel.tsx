@@ -12,7 +12,7 @@ const useStyles = makeStyles(
       content: "''",
       display: "block",
       height: 8,
-      left: -theme.spacing(2),
+      left: theme.spacing(-2),
       position: "absolute" as "absolute",
       top: "calc(50% - 5px)",
       width: 8
@@ -30,7 +30,7 @@ const useStyles = makeStyles(
       },
       root: {
         display: "inline-block",
-        marginLeft: theme.spacing(1) + 8,
+        marginLeft: theme.spacing(2),
         position: "relative"
       },
       span: {
