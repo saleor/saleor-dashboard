@@ -87,6 +87,7 @@ export interface MultiAutocompleteSelectFieldProps
   testId?: string;
   fetchChoices?: (value: string) => void;
   onChange: (event: React.ChangeEvent<any>) => void;
+  onClick?: () => void;
 }
 
 const DebounceAutocomplete: React.ComponentType<DebounceProps<
@@ -111,6 +112,7 @@ const MultiAutocompleteSelectFieldComponent: React.FC<MultiAutocompleteSelectFie
     testId,
     fetchChoices,
     onChange,
+    onClick,
     onFetchMore,
     ...rest
   } = props;
@@ -165,7 +167,10 @@ const MultiAutocompleteSelectFieldComponent: React.FC<MultiAutocompleteSelectFie
                     </div>
                   ),
                   id: undefined,
-                  onClick: toggleMenu
+                  onClick: (cb: () => void) => {
+                    toggleMenu(cb);
+                    onClick();
+                  }
                 }}
                 error={error}
                 helperText={helperText}
