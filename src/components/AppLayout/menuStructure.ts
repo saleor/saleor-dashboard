@@ -1,11 +1,19 @@
 import appsIcon from "@assets/images/menu-apps-icon.svg";
 import catalogIcon from "@assets/images/menu-catalog-icon.svg";
+import configurationIcon from "@assets/images/menu-configure-icon.svg";
 import customerIcon from "@assets/images/menu-customers-icon.svg";
 import discountsIcon from "@assets/images/menu-discounts-icon.svg";
 import homeIcon from "@assets/images/menu-home-icon.svg";
 import ordersIcon from "@assets/images/menu-orders-icon.svg";
 import translationIcon from "@assets/images/menu-translation-icon.svg";
+import {
+  configurationMenuUrl,
+  createConfigurationMenu
+} from "@saleor/configuration";
+import { MenuItem } from "@saleor/configuration/ConfigurationPage";
+import { User } from "@saleor/fragments/types/User";
 import { commonMessages, sectionNames } from "@saleor/intl";
+import { IMenuItem } from "@saleor/macaw-ui";
 import { IntlShape } from "react-intl";
 
 import { appsListPath } from "../../apps/urls";
@@ -18,23 +26,20 @@ import { productListUrl } from "../../products/urls";
 import { languageListUrl } from "../../translations/urls";
 import { PermissionEnum } from "../../types/globalTypes";
 
-export interface IMenuItem {
-  ariaLabel: string;
-  children?: IMenuItem[];
-  icon?: any;
-  label: string;
-  permission?: PermissionEnum;
-  testingContextId: string;
-  url?: string;
+interface FilterableMenuItem extends Omit<IMenuItem, "children"> {
+  children?: FilterableMenuItem[];
+  permissions?: PermissionEnum[];
 }
 
-function createMenuStructure(intl: IntlShape): IMenuItem[] {
-  return [
+function createMenuStructure(intl: IntlShape, user: User): IMenuItem[] {
+  const configurationMenu = createConfigurationMenu(intl);
+
+  const menuItems: FilterableMenuItem[] = [
     {
       ariaLabel: "home",
-      icon: homeIcon,
+      iconSrc: homeIcon,
       label: intl.formatMessage(sectionNames.home),
-      testingContextId: "home",
+      id: "home",
       url: "/"
     },
     {
@@ -43,26 +48,26 @@ function createMenuStructure(intl: IntlShape): IMenuItem[] {
         {
           ariaLabel: "products",
           label: intl.formatMessage(sectionNames.products),
-          testingContextId: "products",
+          id: "products",
           url: productListUrl()
         },
         {
           ariaLabel: "categories",
           label: intl.formatMessage(sectionNames.categories),
-          testingContextId: "categories",
+          id: "categories",
           url: categoryListUrl()
         },
         {
           ariaLabel: "collections",
           label: intl.formatMessage(sectionNames.collections),
-          testingContextId: "collections",
+          id: "collections",
           url: collectionListUrl()
         }
       ],
-      icon: catalogIcon,
+      iconSrc: catalogIcon,
       label: intl.formatMessage(commonMessages.catalog),
-      permission: PermissionEnum.MANAGE_PRODUCTS,
-      testingContextId: "catalogue"
+      permissions: [PermissionEnum.MANAGE_PRODUCTS],
+      id: "catalogue"
     },
     {
       ariaLabel: "orders",
@@ -70,29 +75,29 @@ function createMenuStructure(intl: IntlShape): IMenuItem[] {
         {
           ariaLabel: "orders",
           label: intl.formatMessage(sectionNames.orders),
-          permission: PermissionEnum.MANAGE_ORDERS,
-          testingContextId: "orders",
+          permissions: [PermissionEnum.MANAGE_ORDERS],
+          id: "orders",
           url: orderListUrl()
         },
         {
           ariaLabel: "order drafts",
           label: intl.formatMessage(commonMessages.drafts),
-          permission: PermissionEnum.MANAGE_ORDERS,
-          testingContextId: "order drafts",
+          permissions: [PermissionEnum.MANAGE_ORDERS],
+          id: "order drafts",
           url: orderDraftListUrl()
         }
       ],
-      icon: ordersIcon,
+      iconSrc: ordersIcon,
       label: intl.formatMessage(sectionNames.orders),
-      permission: PermissionEnum.MANAGE_ORDERS,
-      testingContextId: "orders"
+      permissions: [PermissionEnum.MANAGE_ORDERS],
+      id: "orders"
     },
     {
       ariaLabel: "customers",
-      icon: customerIcon,
+      iconSrc: customerIcon,
       label: intl.formatMessage(sectionNames.customers),
-      permission: PermissionEnum.MANAGE_USERS,
-      testingContextId: "customers",
+      permissions: [PermissionEnum.MANAGE_USERS],
+      id: "customers",
       url: customerListUrl()
     },
 
@@ -102,38 +107,59 @@ function createMenuStructure(intl: IntlShape): IMenuItem[] {
         {
           ariaLabel: "sales",
           label: intl.formatMessage(sectionNames.sales),
-          testingContextId: "sales",
+          id: "sales",
           url: saleListUrl()
         },
         {
           ariaLabel: "vouchers",
           label: intl.formatMessage(sectionNames.vouchers),
-          testingContextId: "vouchers",
+          id: "vouchers",
           url: voucherListUrl()
         }
       ],
-      icon: discountsIcon,
+      iconSrc: discountsIcon,
       label: intl.formatMessage(commonMessages.discounts),
-      permission: PermissionEnum.MANAGE_DISCOUNTS,
-      testingContextId: "discounts"
+      permissions: [PermissionEnum.MANAGE_DISCOUNTS],
+      id: "discounts"
     },
     {
       ariaLabel: "apps",
-      icon: appsIcon,
+      iconSrc: appsIcon,
       label: intl.formatMessage(sectionNames.apps),
-      permission: PermissionEnum.MANAGE_APPS,
-      testingContextId: "apps",
+      permissions: [PermissionEnum.MANAGE_APPS],
+      id: "apps",
       url: appsListPath
     },
     {
       ariaLabel: "translations",
-      icon: translationIcon,
+      iconSrc: translationIcon,
       label: intl.formatMessage(sectionNames.translations),
-      permission: PermissionEnum.MANAGE_TRANSLATIONS,
-      testingContextId: "translations",
+      permissions: [PermissionEnum.MANAGE_TRANSLATIONS],
+      id: "translations",
       url: languageListUrl
+    },
+    {
+      ariaLabel: "configure",
+      iconSrc: configurationIcon,
+      label: intl.formatMessage(sectionNames.configuration),
+      permissions: configurationMenu
+        .reduce(
+          (sections, section) => [...sections, ...section.menuItems],
+          [] as MenuItem[]
+        )
+        .map(section => section.permission),
+      id: "configure",
+      url: configurationMenuUrl
     }
   ];
+
+  return menuItems.filter(
+    menuItem =>
+      !menuItem.permissions ||
+      (user?.userPermissions || []).some(permission =>
+        menuItem.permissions.includes(permission.code)
+      )
+  );
 }
 
 export default createMenuStructure;
