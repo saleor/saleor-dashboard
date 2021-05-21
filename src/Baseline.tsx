@@ -12,6 +12,9 @@ const useStyles = makeStyles(
       // eslint-disable-next-line sort-keys
       "::selection": {
         background: fade(theme.palette.primary.main, 0.2)
+      },
+      html: {
+        fontSize: "62.5%"
       }
     }
   }),

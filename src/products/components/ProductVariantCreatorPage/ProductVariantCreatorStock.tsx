@@ -29,11 +29,11 @@ import { getStockAttributeValues } from "./utils";
 const useStyles = makeStyles(
   theme => ({
     attributeStockContainer: {
-      columnGap: theme.spacing(3) + "px",
+      columnGap: theme.spacing(3),
       display: "grid",
       gridTemplateColumns: ({ data }: ProductVariantCreatorStockProps) =>
         `150px repeat(${data.warehouses.length}, 288px)`,
-      rowGap: theme.spacing(2) + "px"
+      rowGap: theme.spacing(2)
     },
     attributeStockScroll: {
       overflowX: "scroll",
@@ -53,20 +53,20 @@ const useStyles = makeStyles(
       width: "33%"
     },
     stockContainer: {
-      columnGap: theme.spacing(3) + "px",
+      columnGap: theme.spacing(3),
       display: "grid",
       gridTemplateColumns: "repeat(3, 288px)",
       marginTop: theme.spacing(2),
-      rowGap: theme.spacing(2) + "px"
+      rowGap: theme.spacing(2)
     },
     stockHeader: {
       marginBottom: theme.spacing()
     },
     warehouseContainer: {
-      columnGap: theme.spacing(3) + "px",
+      columnGap: theme.spacing(3),
       display: "grid",
       gridTemplateColumns: "repeat(4, 1fr)",
-      rowGap: theme.spacing(2) + "px"
+      rowGap: theme.spacing(2)
     },
     warehouseHeader: {
       marginBottom: theme.spacing()

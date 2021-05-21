@@ -36,11 +36,11 @@ const entityTypeMessages = defineMessages({
 const useStyles = makeStyles(
   theme => ({
     inputTypeSection: {
-      columnGap: theme.spacing(2) + "px",
+      columnGap: theme.spacing(2),
       display: "flex",
       [theme.breakpoints.down("md")]: {
         flexFlow: "wrap",
-        rowGap: theme.spacing(3) + "px"
+        rowGap: theme.spacing(3)
       }
     }
   }),

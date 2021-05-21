@@ -47,7 +47,7 @@ const useStyles = makeStyles(
     },
     checkbox: {
       position: "relative",
-      right: -theme.spacing(1.5)
+      right: theme.spacing(-1.5)
     },
     chip: {
       marginBottom: theme.spacing(1),

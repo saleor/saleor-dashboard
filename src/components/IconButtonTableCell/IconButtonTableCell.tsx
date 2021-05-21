@@ -20,7 +20,7 @@ const useStyles = makeStyles(
         paddingRight: 0
       },
       paddingRight: 0,
-      width: ICONBUTTON_SIZE + theme.spacing(0.5)
+      width: `calc(${ICONBUTTON_SIZE}px + ${theme.spacing(0.5)})`
     }
   }),
   { name: "IconButtonTableCell" }

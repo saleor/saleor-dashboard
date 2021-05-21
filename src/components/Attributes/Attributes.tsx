@@ -95,7 +95,7 @@ const useStyles = makeStyles(
     uploadFileContent: {
       color: theme.palette.primary.main,
       float: "right",
-      fontSize: "1rem"
+      fontSize: theme.typography.body1.fontSize
     }
   }),
   { name: "Attributes" }

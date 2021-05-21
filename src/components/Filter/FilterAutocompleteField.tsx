@@ -38,7 +38,7 @@ const useStyles = makeStyles(
       marginTop: theme.spacing(1)
     },
     option: {
-      left: -theme.spacing(0.5),
+      left: theme.spacing(-0.5),
       position: "relative"
     },
     showMore: {

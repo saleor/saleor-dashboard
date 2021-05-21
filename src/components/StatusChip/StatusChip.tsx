@@ -40,7 +40,7 @@ const StatusChipStyles = {
 const useStyles = makeStyles(
   theme => ({
     label: {
-      fontSize: "1rem",
+      fontSize: theme.typography.body1.fontSize,
       fontWeight: theme.typography.fontWeightBold,
       textTransform: "uppercase"
     },

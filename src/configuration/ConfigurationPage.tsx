@@ -56,7 +56,7 @@ const useStyles = makeStyles(
       },
       borderTop: `solid 1px ${theme.palette.divider}`,
       display: "grid",
-      gridColumnGap: theme.spacing(4) + "px",
+      gridColumnGap: theme.spacing(4),
       gridTemplateColumns: "1fr 3fr",
       paddingTop: theme.spacing(3)
     },

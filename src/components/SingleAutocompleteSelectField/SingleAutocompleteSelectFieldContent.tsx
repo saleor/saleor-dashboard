@@ -76,7 +76,9 @@ const useStyles = makeStyles(
       width: "100%"
     },
     content: {
-      maxHeight: menuItemHeight * maxMenuItems + theme.spacing(2),
+      maxHeight: `calc(${menuItemHeight * maxMenuItems}px + ${theme.spacing(
+        2
+      )})`,
       overflow: "scroll",
       padding: 8
     },

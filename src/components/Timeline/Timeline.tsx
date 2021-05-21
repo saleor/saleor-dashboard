@@ -34,10 +34,10 @@ const useStyles = makeStyles(
       background: theme.palette.background.paper
     },
     noteRoot: {
-      left: -theme.spacing(8.5) - 1,
+      left: theme.spacing(-8.5),
       marginBottom: theme.spacing(3),
       position: "relative",
-      width: `calc(100% + ${theme.spacing(8.5)}px)`
+      width: `calc(100% + ${theme.spacing(8.5)})`
     },
     noteTitle: {
       "&:last-child": {

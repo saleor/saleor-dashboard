@@ -78,8 +78,8 @@ const useStyles = makeStyles(
       alignContent: "flex-end",
       display: "flex",
       position: "relative",
-      right: -theme.spacing(3),
-      top: -theme.spacing(2)
+      right: theme.spacing(-3),
+      top: theme.spacing(-2)
     },
     imageUpload: {
       height: "100%",

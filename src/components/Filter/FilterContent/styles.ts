@@ -19,11 +19,11 @@ const useStyles = makeStyles(
     },
 
     option: {
-      left: -theme.spacing(0.5),
+      left: theme.spacing(-0.5),
       position: "relative"
     },
     optionRadio: {
-      left: -theme.spacing(0.25)
+      left: theme.spacing(-0.25)
     },
 
     fieldInput: {

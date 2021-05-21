@@ -48,6 +48,10 @@ const useStyles = makeStyles(
       display: "flex",
       justifyContent: "center"
     },
+    labelContainer: {
+      display: "inline-flex",
+      alignItems: "center"
+    },
     popover: {
       marginTop: theme.spacing(2),
       zIndex: 10
@@ -131,14 +135,14 @@ const UserChip: React.FC<UserChipProps> = ({
         }}
         className={classes.userChip}
         label={
-          <>
+          <div className={classes.labelContainer}>
             <Hidden smDown>{getUserName(user, true)}</Hidden>
             <ArrowDropdown
               className={classNames(classes.arrow, {
                 [classes.rotate]: isMenuOpened
               })}
             />
-          </>
+          </div>
         }
         onClick={() => setMenuState(!isMenuOpened)}
         data-test="userMenu"

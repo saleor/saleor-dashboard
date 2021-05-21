@@ -28,7 +28,7 @@ const useStyles = makeStyles(
   theme => ({
     attrInputsContainer: {
       display: "grid",
-      gap: theme.spacing(2) + "px",
+      gap: theme.spacing(2),
       gridTemplateColumns:
         "minmax(80px, 150px) repeat(auto-fit, minmax(150px, 250px))"
     },
@@ -47,7 +47,7 @@ const useStyles = makeStyles(
     },
     inputsContainer: {
       display: "grid",
-      gap: theme.spacing(2) + "px",
+      gap: theme.spacing(2),
       gridTemplateColumns: "repeat(auto-fit, minmax(150px, 250px))"
     },
     label: {

@@ -45,7 +45,7 @@ const useStyles = makeStyles(
       alignItems: "center",
       color: theme.palette.primary.main,
       display: "flex",
-      fontSize: "1rem"
+      fontSize: theme.typography.body1.fontSize
     },
     uploadFileName: {
       minWidth: "6rem"

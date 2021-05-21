@@ -35,7 +35,7 @@ const useStyles = makeStyles(
       "&:last-child": {
         paddingRight: 0
       },
-      width: 48 + theme.spacing(2)
+      width: `calc(48px + ${theme.spacing(2)})`
     },
     indicator: {
       color: theme.palette.text.disabled,

@@ -30,7 +30,7 @@ const useStyles = makeStyles(
       overflow: "visible"
     },
     cardSubtitle: {
-      fontSize: "1rem",
+      fontSize: theme.typography.body1.fontSize,
       marginBottom: theme.spacing(0.5)
     },
     label: {

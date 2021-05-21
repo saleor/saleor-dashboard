@@ -36,7 +36,7 @@ const useStyles = makeStyles(
       alignItems: "center",
       display: "flex",
       height: 47,
-      marginRight: -theme.spacing(2)
+      marginRight: theme.spacing(-2)
     },
     dragRows: {
       padding: 0,

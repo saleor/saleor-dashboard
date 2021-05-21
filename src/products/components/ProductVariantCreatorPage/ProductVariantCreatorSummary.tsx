@@ -103,7 +103,7 @@ const useStyles = makeStyles<ProductVariantCreatorSummaryProps, ClassKey>(
           props.data.variants[0].stocks
             .length}, minmax(180px, auto)) 140px 64px`,
       overflowX: "scroll",
-      rowGap: theme.spacing() + "px"
+      rowGap: theme.spacing()
     }
   }),
   {

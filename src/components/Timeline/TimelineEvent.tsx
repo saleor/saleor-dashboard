@@ -60,7 +60,7 @@ const useStyles = makeStyles(
         background: theme.palette.background.default,
         content: "''",
         height: "calc(50% - 4px)",
-        left: -theme.spacing(3) - 2,
+        left: -26,
         position: "absolute",
         top: "calc(50% + 4px)",
         width: "2px"

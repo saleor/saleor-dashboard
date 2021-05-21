@@ -27,7 +27,7 @@ const useStyles = makeStyles(
       position: "fixed"
     },
     logo: {
-      margin: `36px 0 ${theme.spacing(3)}px ${theme.spacing(3)}px`
+      margin: `36px 0 ${theme.spacing(3)} ${theme.spacing(3)}`
     },
     root: {
       transition: "width 0.5s ease",

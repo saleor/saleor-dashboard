@@ -39,16 +39,16 @@ const useStyles = makeStyles(
         "&:after": {
           ...triangle(theme.palette.background.paper, 7),
           content: "''",
-          left: theme.spacing(2) + 2,
+          left: 18,
           position: "absolute",
-          top: -theme.spacing() + 1
+          top: -7
         },
         "&:before": {
           ...triangle(theme.palette.divider, 8),
           content: "''",
-          left: theme.spacing(2) + 1,
+          left: `calc(1px + ${theme.spacing(2)})`,
           position: "absolute",
-          top: -theme.spacing()
+          top: theme.spacing(-1)
         },
         border: `1px solid ${theme.palette.divider}`,
         borderRadius: 6,

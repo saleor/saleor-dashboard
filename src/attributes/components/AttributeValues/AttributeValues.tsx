@@ -39,7 +39,7 @@ const useStyles = makeStyles(
       width: 300
     },
     columnDrag: {
-      width: 48 + theme.spacing(1.5)
+      width: theme.spacing(6 + 1.5)
     },
     columnStore: {
       width: "auto"

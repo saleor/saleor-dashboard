@@ -23,7 +23,7 @@ const useStyles = makeStyles(
       "&:last-child": {
         paddingRight: 0
       },
-      width: 76 + theme.spacing(0.5)
+      width: theme.spacing(10)
     },
     colName: {
       width: "auto"

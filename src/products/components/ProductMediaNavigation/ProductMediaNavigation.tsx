@@ -43,7 +43,7 @@ const useStyles = makeStyles(
       gridRowGap: theme.spacing(1),
       gridTemplateColumns: "repeat(4, 1fr)"
     },
-    toolbar: { marginTop: -theme.spacing(0.5) }
+    toolbar: { marginTop: theme.spacing(-0.5) }
   }),
   { name: "ProductMediaNavigation" }
 );

@@ -38,7 +38,7 @@ const useStyles = makeStyles(
   theme => ({
     alignRight: {
       paddingRight: 24,
-      width: ICONBUTTON_SIZE + theme.spacing(0.5)
+      width: `calc(${ICONBUTTON_SIZE}px + ${theme.spacing(0.5)})`
     },
     buttonColumn: {
       padding: "4px 0",

@@ -218,7 +218,7 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
             </PageHeader>
             <div className={classes.date}>
               {order && order.created ? (
-                <Typography variant="caption">
+                <Typography variant="body2">
                   <DateTime date={order.created} />
                 </Typography>
               ) : (

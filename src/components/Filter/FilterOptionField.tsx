@@ -10,11 +10,11 @@ import { FilterBaseFieldProps } from "./types";
 const useStyles = makeStyles(
   theme => ({
     option: {
-      left: -theme.spacing(0.5),
+      left: theme.spacing(-0.5),
       position: "relative"
     },
     optionRadio: {
-      left: -theme.spacing(0.25)
+      left: theme.spacing(-0.25)
     },
     root: {}
   }),
