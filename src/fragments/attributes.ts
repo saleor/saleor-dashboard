@@ -2,6 +2,7 @@ import gql from "graphql-tag";
 
 import { fileFragment } from "./file";
 import { metadataFragment } from "./metadata";
+import { pageInfoFragment } from "./pageInfo";
 
 export const attributeValueFragment = gql`
   ${fileFragment}
@@ -33,7 +34,6 @@ export const attributeFragment = gql`
 export const attributeDetailsFragment = gql`
   ${attributeFragment}
   ${metadataFragment}
-  ${attributeValueFragment}
   fragment AttributeDetailsFragment on Attribute {
     ...AttributeFragment
     ...MetadataFragment
@@ -43,8 +43,21 @@ export const attributeDetailsFragment = gql`
     unit
     storefrontSearchPosition
     valueRequired
-    values {
-      ...AttributeValueFragment
+  }
+`;
+
+export const attributeValueListFragment = gql`
+  ${attributeValueFragment}
+  ${pageInfoFragment}
+  fragment AttributeValueListFragment on AttributeValueCountableConnection {
+    pageInfo {
+      ...PageInfoFragment
+    }
+    edges {
+      cursor
+      node {
+        ...AttributeValueFragment
+      }
     }
   }
 `;

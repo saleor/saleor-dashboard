@@ -1,13 +1,13 @@
-import { AttributeDetailsFragment } from "@saleor/fragments/types/AttributeDetailsFragment";
 import { ProductDetails_product_productType_variantAttributes } from "@saleor/products/types/ProductDetails";
 import {
   AttributeInputTypeEnum,
   AttributeTypeEnum
 } from "@saleor/types/globalTypes";
 
+import { AttributeDetails_attribute } from "./types/AttributeDetails";
 import { AttributeList_attributes_edges_node } from "./types/AttributeList";
 
-export const attribute: AttributeDetailsFragment = {
+export const attribute: AttributeDetails_attribute = {
   __typename: "Attribute" as "Attribute",
   availableInGrid: true,
   entityType: null,
@@ -29,26 +29,44 @@ export const attribute: AttributeDetailsFragment = {
   type: AttributeTypeEnum.PRODUCT_TYPE,
   valueRequired: true,
   unit: null,
-  values: [
-    {
-      __typename: "AttributeValue" as "AttributeValue",
-      file: null,
-      id: "UHJvZHVjdEF0dHJpYnV0ZVZhbHVlOjI0",
-      name: "John Doe",
-      reference: null,
-      slug: "john-doe",
-      richText: null
+  values: {
+    __typename: "AttributeValueCountableConnection" as "AttributeValueCountableConnection",
+    pageInfo: {
+      __typename: "PageInfo" as "PageInfo",
+      endCursor: "",
+      hasNextPage: false,
+      hasPreviousPage: false,
+      startCursor: ""
     },
-    {
-      __typename: "AttributeValue" as "AttributeValue",
-      file: null,
-      id: "UHJvZHVjdEF0dHJpYnV0ZVZhbHVlOjI1",
-      name: "Milionare Pirate",
-      reference: null,
-      slug: "milionare-pirate",
-      richText: null
-    }
-  ],
+    edges: [
+      {
+        __typename: "AttributeValueCountableEdge" as "AttributeValueCountableEdge",
+        cursor: "1",
+        node: {
+          __typename: "AttributeValue" as "AttributeValue",
+          file: null,
+          id: "UHJvZHVjdEF0dHJpYnV0ZVZhbHVlOjI0",
+          name: "John Doe",
+          reference: null,
+          slug: "john-doe",
+          richText: null
+        }
+      },
+      {
+        __typename: "AttributeValueCountableEdge" as "AttributeValueCountableEdge",
+        cursor: "2",
+        node: {
+          __typename: "AttributeValue" as "AttributeValue",
+          file: null,
+          id: "UHJvZHVjdEF0dHJpYnV0ZVZhbHVlOjI1",
+          name: "Milionare Pirate",
+          reference: null,
+          slug: "milionare-pirate",
+          richText: null
+        }
+      }
+    ]
+  },
   visibleInStorefront: true
 };
 

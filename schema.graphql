@@ -413,7 +413,7 @@ type Attribute implements Node & ObjectWithMetadata {
   slug: String
   type: AttributeTypeEnum
   unit: MeasurementUnitsEnum
-  values: [AttributeValue]
+  values(before: String, after: String, first: Int, last: Int): AttributeValueCountableConnection
   valueRequired: Boolean!
   visibleInStorefront: Boolean!
   filterableInStorefront: Boolean!
@@ -606,6 +606,17 @@ type AttributeValueBulkDelete {
   errors: [AttributeError!]!
 }
 
+type AttributeValueCountableConnection {
+  pageInfo: PageInfo!
+  edges: [AttributeValueCountableEdge!]!
+  totalCount: Int
+}
+
+type AttributeValueCountableEdge {
+  node: AttributeValue!
+  cursor: String!
+}
+
 type AttributeValueCreate {
   attribute: Attribute
   attributeErrors: [AttributeError!]! @deprecated(reason: "Use errors field instead. This field will be removed in Saleor 4.0.")
@@ -699,9 +710,9 @@ input CatalogueInput {
 }
 
 type Category implements Node & ObjectWithMetadata {
+  id: ID!
   seoTitle: String
   seoDescription: String
-  id: ID!
   name: String!
   description: JSONString
   slug: String!
@@ -774,9 +785,9 @@ input CategorySortingInput {
 }
 
 type CategoryTranslatableContent implements Node {
+  id: ID!
   seoTitle: String
   seoDescription: String
-  id: ID!
   name: String!
   description: JSONString
   descriptionJson: JSONString @deprecated(reason: "Will be removed in Saleor 4.0. Use the `description` field instead.")
@@ -791,9 +802,9 @@ type CategoryTranslate {
 }
 
 type CategoryTranslation implements Node {
+  id: ID!
   seoTitle: String
   seoDescription: String
-  id: ID!
   name: String!
   description: JSONString
   language: LanguageDisplay!
@@ -813,7 +824,6 @@ type Channel implements Node {
   slug: String!
   currencyCode: String!
   hasOrders: Boolean!
-  shippingZones: [ShippingZone!]!
 }
 
 type ChannelActivate {
@@ -1094,9 +1104,9 @@ type ChoiceValue {
 }
 
 type Collection implements Node & ObjectWithMetadata {
+  id: ID!
   seoTitle: String
   seoDescription: String
-  id: ID!
   name: String!
   description: JSONString
   slug: String!
@@ -1122,9 +1132,9 @@ type CollectionBulkDelete {
 }
 
 type CollectionChannelListing implements Node {
+  id: ID!
   publicationDate: Date
   isPublished: Boolean!
-  id: ID!
   channel: Channel!
 }
 
@@ -1250,9 +1260,9 @@ input CollectionSortingInput {
 }
 
 type CollectionTranslatableContent implements Node {
+  id: ID!
   seoTitle: String
   seoDescription: String
-  id: ID!
   name: String!
   description: JSONString
   descriptionJson: JSONString @deprecated(reason: "Will be removed in Saleor 4.0. Use the `description` field instead.")
@@ -1267,9 +1277,9 @@ type CollectionTranslate {
 }
 
 type CollectionTranslation implements Node {
+  id: ID!
   seoTitle: String
   seoDescription: String
-  id: ID!
   name: String!
   description: JSONString
   language: LanguageDisplay!
@@ -1302,7 +1312,6 @@ enum ConfigurationTypeFieldEnum {
   SECRET
   PASSWORD
   SECRETMULTILINE
-  OUTPUT
 }
 
 type ConfirmAccount {
@@ -2975,6 +2984,8 @@ type Order implements Node & ObjectWithMetadata {
   availableShippingMethods: [ShippingMethod]
   invoices: [Invoice]
   number: String
+  original: ID
+  origin: OrderOriginEnum!
   isPaid: Boolean!
   paymentStatus: PaymentChargeStatusEnum!
   paymentStatusDisplay: String!
@@ -3359,6 +3370,12 @@ type OrderMarkAsPaid {
   errors: [OrderError!]!
 }
 
+enum OrderOriginEnum {
+  CHECKOUT
+  DRAFT
+  REISSUE
+}
+
 type OrderRefund {
   order: Order
   orderErrors: [OrderError!]! @deprecated(reason: "Use errors field instead. This field will be removed in Saleor 4.0.")
@@ -3489,9 +3506,9 @@ type OrderVoid {
 }
 
 type Page implements Node & ObjectWithMetadata {
+  id: ID!
   seoTitle: String
   seoDescription: String
-  id: ID!
   title: String!
   content: JSONString
   publicationDate: Date
@@ -3625,9 +3642,9 @@ input PageSortingInput {
 }
 
 type PageTranslatableContent implements Node {
+  id: ID!
   seoTitle: String
   seoDescription: String
-  id: ID!
   title: String!
   content: JSONString
   contentJson: JSONString @deprecated(reason: "Will be removed in Saleor 4.0. Use the `content` field instead.")
@@ -3642,9 +3659,9 @@ type PageTranslate {
 }
 
 type PageTranslation implements Node {
+  id: ID!
   seoTitle: String
   seoDescription: String
-  id: ID!
   title: String!
   content: JSONString
   language: LanguageDisplay!

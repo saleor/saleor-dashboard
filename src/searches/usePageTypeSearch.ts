@@ -28,9 +28,9 @@ export const searchPageTypes = gql`
             slug
             name
             valueRequired
-            values {
-              ...AttributeValueFragment
-            }
+            # values {
+            #   ...AttributeValueFragment
+            # }
           }
         }
       }

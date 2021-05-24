@@ -1,9 +1,13 @@
 import { getAttributeData } from "@saleor/attributes/utils/data";
 import { AttributeErrorFragment } from "@saleor/fragments/types/AttributeErrorFragment";
+import useListSettings from "@saleor/hooks/useListSettings";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
+import usePaginator, {
+  createPaginationState
+} from "@saleor/hooks/usePaginator";
 import { getStringOrPlaceholder } from "@saleor/misc";
-import { ReorderEvent } from "@saleor/types";
+import { ListViews, ReorderEvent } from "@saleor/types";
 import { AttributeErrorCode } from "@saleor/types/globalTypes";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import createMetadataCreateHandler from "@saleor/utils/handlers/metadataCreateHandler";
@@ -57,6 +61,7 @@ function areValuesEqual(
 
 const AttributeDetails: React.FC<AttributeDetailsProps> = ({ params }) => {
   const navigate = useNavigator();
+  const paginate = usePaginator();
   const notify = useNotifier();
   const intl = useIntl();
 
@@ -66,6 +71,21 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ params }) => {
   const [valueErrors, setValueErrors] = React.useState<
     AttributeErrorFragment[]
   >([]);
+
+  const { updateListSettings, settings } = useListSettings(
+    ListViews.ATTRIBUTE_VALUE_LIST
+  );
+  const paginationState = createPaginationState(settings?.rowNumber, params);
+  const { loadNextPage, loadPreviousPage, pageInfo } = paginate(
+    {
+      endCursor: "",
+      hasNextPage: false,
+      hasPreviousPage: false,
+      startCursor: ""
+    },
+    paginationState,
+    params
+  );
 
   const [attributeCreate, attributeCreateOpts] = useAttributeCreateMutation({
     onCompleted: data => {
@@ -154,17 +174,36 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ params }) => {
           })
         }
         saveButtonBarState={attributeCreateOpts.status}
-        values={values.map((value, valueIndex) => ({
-          __typename: "AttributeValue" as "AttributeValue",
-          file: null,
-          id: valueIndex.toString(),
-          reference: null,
-          slug: slugify(value.name).toLowerCase(),
-          sortOrder: valueIndex,
-          value: null,
-          richText: null,
-          ...value
-        }))}
+        values={{
+          __typename: "AttributeValueCountableConnection" as "AttributeValueCountableConnection",
+          pageInfo: {
+            __typename: "PageInfo" as "PageInfo",
+            endCursor: "",
+            hasNextPage: false,
+            hasPreviousPage: false,
+            startCursor: ""
+          },
+          edges: values.map((value, valueIndex) => ({
+            __typename: "AttributeValueCountableEdge" as "AttributeValueCountableEdge",
+            cursor: "1",
+            node: {
+              __typename: "AttributeValue" as "AttributeValue",
+              file: null,
+              id: valueIndex.toString(),
+              reference: null,
+              slug: slugify(value.name).toLowerCase(),
+              sortOrder: valueIndex,
+              value: null,
+              richText: null,
+              ...value
+            }
+          }))
+        }}
+        settings={settings}
+        onUpdateListSettings={updateListSettings}
+        pageInfo={pageInfo}
+        onNextPage={loadNextPage}
+        onPreviousPage={loadPreviousPage}
       />
       <AttributeValueEditDialog
         attributeValue={null}
