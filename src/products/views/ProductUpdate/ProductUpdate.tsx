@@ -175,7 +175,7 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
     displayLoader: true,
     variables: {
       id,
-      firstValues: 100
+      firstValues: 10
     }
   });
   const { channel } = useAppChannel();
