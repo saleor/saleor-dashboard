@@ -4,7 +4,7 @@ import { ExtendedFormHelperTextProps } from "@saleor/channels/components/Channel
 import { makeStyles } from "@saleor/theme";
 import { FetchMoreProps } from "@saleor/types";
 import classNames from "classnames";
-import Downshift, { ControllerStateAndHelpers } from "downshift";
+import Downshift from "downshift";
 import { filter } from "fuzzaldrin";
 import React from "react";
 
@@ -81,13 +81,7 @@ const SingleAutocompleteSelectFieldComponent: React.FC<SingleAutocompleteSelectF
   } = props;
   const classes = useStyles(props);
 
-  const handleChange = (
-    item: string,
-    stateAndHelpers: ControllerStateAndHelpers
-  ) => {
-    stateAndHelpers.reset({
-      inputValue: ""
-    });
+  const handleChange = (item: string) => {
     onChange({
       target: {
         name,
@@ -104,7 +98,7 @@ const SingleAutocompleteSelectFieldComponent: React.FC<SingleAutocompleteSelectF
           itemToString={() => displayValue || ""}
           onInputValueChange={value => debounceFn(value)}
           onSelect={handleChange}
-          selectedItem={value}
+          selectedItem={value || ""}
         >
           {({
             getInputProps,
@@ -156,11 +150,6 @@ const SingleAutocompleteSelectFieldComponent: React.FC<SingleAutocompleteSelectF
               ensureProperValues(true);
               closeMenu();
             };
-
-            // fix for bug where input value is returned from debounce as id instead of label
-            if (value === inputValue && !!inputValue) {
-              ensureProperValues();
-            }
 
             const TextFieldComponent = nakedInput ? InputBase : TextField;
 

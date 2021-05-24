@@ -6562,118 +6562,18 @@
   "src_dot_taxes_dot_components_dot_CountryList_dot_577035076": {
     "string": "Country Name"
   },
-  "src_dot_taxes_dot_components_dot_CountryTaxesPage_dot_1040021611": {
-    "context": "tax rate",
-    "string": "Accommodation"
-  },
-  "src_dot_taxes_dot_components_dot_CountryTaxesPage_dot_1260218997": {
-    "context": "tax rate",
-    "string": "Social housing"
-  },
-  "src_dot_taxes_dot_components_dot_CountryTaxesPage_dot_1323923780": {
-    "context": "tax rate",
-    "string": "Bikes"
-  },
-  "src_dot_taxes_dot_components_dot_CountryTaxesPage_dot_1451721797": {
-    "context": "tax rate",
-    "string": "Newspapers"
-  },
   "src_dot_taxes_dot_components_dot_CountryTaxesPage_dot_1755013298": {
     "string": "Category"
   },
   "src_dot_taxes_dot_components_dot_CountryTaxesPage_dot_2022558114": {
     "string": "Tax Rate"
   },
-  "src_dot_taxes_dot_components_dot_CountryTaxesPage_dot_2185495435": {
-    "context": "tax rate",
-    "string": "Admission to cultural events"
-  },
-  "src_dot_taxes_dot_components_dot_CountryTaxesPage_dot_2201910191": {
-    "context": "tax rate",
-    "string": "Baby foodstuffs"
-  },
-  "src_dot_taxes_dot_components_dot_CountryTaxesPage_dot_231341634": {
-    "context": "tax rate",
-    "string": "Domestic services"
-  },
-  "src_dot_taxes_dot_components_dot_CountryTaxesPage_dot_2332795012": {
-    "context": "tax rate",
-    "string": "Foodstuffs"
-  },
-  "src_dot_taxes_dot_components_dot_CountryTaxesPage_dot_2394675125": {
-    "context": "tax rate",
-    "string": "Books"
-  },
-  "src_dot_taxes_dot_components_dot_CountryTaxesPage_dot_2465450918": {
-    "context": "tax rate",
-    "string": "Agricultural supplies"
-  },
-  "src_dot_taxes_dot_components_dot_CountryTaxesPage_dot_2482229874": {
-    "context": "tax rate",
-    "string": "Standard"
-  },
-  "src_dot_taxes_dot_components_dot_CountryTaxesPage_dot_2553129615": {
-    "context": "tax rate",
-    "string": "Passenger transport"
-  },
-  "src_dot_taxes_dot_components_dot_CountryTaxesPage_dot_2557534380": {
-    "context": "tax rate",
-    "string": "Admission to entertainment events"
-  },
-  "src_dot_taxes_dot_components_dot_CountryTaxesPage_dot_2584490289": {
-    "context": "tax rate",
-    "string": "Children's clothing"
-  },
-  "src_dot_taxes_dot_components_dot_CountryTaxesPage_dot_2616794607": {
-    "context": "tax rate",
-    "string": "Admission to sporting events"
-  },
   "src_dot_taxes_dot_components_dot_CountryTaxesPage_dot_2737618795": {
     "context": "header",
     "string": "Tax Rates in {countryName}"
   },
-  "src_dot_taxes_dot_components_dot_CountryTaxesPage_dot_2948462144": {
-    "context": "tax rate",
-    "string": "Medical"
-  },
   "src_dot_taxes_dot_components_dot_CountryTaxesPage_dot_3066312070": {
     "string": "No reduced tax categories found"
-  },
-  "src_dot_taxes_dot_components_dot_CountryTaxesPage_dot_331632763": {
-    "context": "tax rate",
-    "string": "Hotels"
-  },
-  "src_dot_taxes_dot_components_dot_CountryTaxesPage_dot_331757068": {
-    "context": "tax rate",
-    "string": "E-books"
-  },
-  "src_dot_taxes_dot_components_dot_CountryTaxesPage_dot_3500730003": {
-    "context": "tax rate",
-    "string": "Domestic fuel"
-  },
-  "src_dot_taxes_dot_components_dot_CountryTaxesPage_dot_3525010870": {
-    "context": "tax rate",
-    "string": "Water"
-  },
-  "src_dot_taxes_dot_components_dot_CountryTaxesPage_dot_3911019760": {
-    "context": "tax rate",
-    "string": "Advertising"
-  },
-  "src_dot_taxes_dot_components_dot_CountryTaxesPage_dot_4199760668": {
-    "context": "tax rate",
-    "string": "Property renovations"
-  },
-  "src_dot_taxes_dot_components_dot_CountryTaxesPage_dot_752780599": {
-    "context": "tax rate",
-    "string": "Wine"
-  },
-  "src_dot_taxes_dot_components_dot_CountryTaxesPage_dot_776474251": {
-    "context": "tax rate",
-    "string": "Restaurants"
-  },
-  "src_dot_taxes_dot_components_dot_CountryTaxesPage_dot_815189256": {
-    "context": "tax rate",
-    "string": "Pharmaceuticals"
   },
   "src_dot_taxes_dot_components_dot_TaxConfiguration_dot_142803418": {
     "string": "All products prices are entered with tax included"
