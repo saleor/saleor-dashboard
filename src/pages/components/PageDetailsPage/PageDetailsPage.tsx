@@ -155,6 +155,7 @@ const PageDetailsPage: React.FC<PageDetailsPageProps> = ({
               {data.attributes.length > 0 && (
                 <Attributes
                   attributes={data.attributes}
+                  attributeValues={[]}
                   disabled={loading}
                   loading={loading}
                   errors={errors}
@@ -164,6 +165,9 @@ const PageDetailsPage: React.FC<PageDetailsPageProps> = ({
                   onReferencesRemove={handlers.selectAttributeReference}
                   onReferencesAddClick={onAssignReferencesClick}
                   onReferencesReorder={handlers.reorderAttributeValue}
+                  fetchAttributeValues={() => undefined}
+                  fetchMoreAttributeValues={undefined}
+                  onAttributeSelect={() => undefined}
                 />
               )}
               <CardSpacer />

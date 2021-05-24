@@ -1,6 +1,6 @@
 import {
   ProductDetails_product_productType_variantAttributes,
-  ProductDetails_product_productType_variantAttributes_values
+  ProductDetails_product_productType_variantAttributes_values_edges_node
 } from "@saleor/products/types/ProductDetails";
 
 import { ProductVariantCreateFormData } from "./form";
@@ -8,33 +8,35 @@ import { ProductVariantCreateFormData } from "./form";
 export function getPriceAttributeValues(
   data: ProductVariantCreateFormData,
   attributes: ProductDetails_product_productType_variantAttributes[]
-): ProductDetails_product_productType_variantAttributes_values[] {
+): ProductDetails_product_productType_variantAttributes_values_edges_node[] {
   return data.price.mode === "all"
     ? null
     : data.price.attribute
     ? attributes
         .find(attribute => attribute.id === data.price.attribute)
-        .values.filter(value =>
+        .values.edges.filter(value =>
           data.attributes
             .find(attribute => attribute.id === data.price.attribute)
-            .values.includes(value.slug)
+            .values.includes(value.node.slug)
         )
+        .map(value => value.node)
     : [];
 }
 
 export function getStockAttributeValues(
   data: ProductVariantCreateFormData,
   attributes: ProductDetails_product_productType_variantAttributes[]
-): ProductDetails_product_productType_variantAttributes_values[] {
+): ProductDetails_product_productType_variantAttributes_values_edges_node[] {
   return data.stock.mode === "all"
     ? null
     : data.stock.attribute
     ? attributes
         .find(attribute => attribute.id === data.stock.attribute)
-        .values.filter(value =>
+        .values.edges.filter(value =>
           data.attributes
             .find(attribute => attribute.id === data.stock.attribute)
-            .values.includes(value.slug)
+            .values.includes(value.node.slug)
         )
+        .map(value => value.node)
     : [];
 }
