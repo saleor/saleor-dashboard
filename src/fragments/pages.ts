@@ -24,9 +24,9 @@ export const pageAttributesFragment = gql`
         entityType
         valueRequired
         unit
-        values {
-          ...AttributeValueFragment
-        }
+        # values {
+        #   ...AttributeValueFragment
+        # }
       }
       values {
         ...AttributeValueFragment
@@ -41,9 +41,9 @@ export const pageAttributesFragment = gql`
         inputType
         entityType
         valueRequired
-        values {
-          ...AttributeValueFragment
-        }
+        # values {
+        #   ...AttributeValueFragment
+        # }
       }
     }
   }

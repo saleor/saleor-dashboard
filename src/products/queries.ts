@@ -64,11 +64,11 @@ const initialProductFilterAttributesQuery = gql`
           id
           name
           slug
-          values {
-            id
-            name
-            slug
-          }
+          # values {
+          #   id
+          #   name
+          #   slug
+          # }
         }
       }
     }
@@ -222,9 +222,9 @@ const productTypeQuery = gql`
         name
         valueRequired
         unit
-        values {
-          ...AttributeValueFragment
-        }
+        # values {
+        #   ...AttributeValueFragment
+        # }
       }
       taxType {
         ...TaxTypeFragment

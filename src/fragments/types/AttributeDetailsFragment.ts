@@ -21,22 +21,6 @@ export interface AttributeDetailsFragment_privateMetadata {
   value: string;
 }
 
-export interface AttributeDetailsFragment_values_file {
-  __typename: "File";
-  url: string;
-  contentType: string | null;
-}
-
-export interface AttributeDetailsFragment_values {
-  __typename: "AttributeValue";
-  id: string;
-  name: string | null;
-  slug: string | null;
-  file: AttributeDetailsFragment_values_file | null;
-  reference: string | null;
-  richText: any | null;
-}
-
 export interface AttributeDetailsFragment {
   __typename: "Attribute";
   id: string;
@@ -54,5 +38,4 @@ export interface AttributeDetailsFragment {
   entityType: AttributeEntityTypeEnum | null;
   storefrontSearchPosition: number;
   valueRequired: boolean;
-  values: (AttributeDetailsFragment_values | null)[] | null;
 }

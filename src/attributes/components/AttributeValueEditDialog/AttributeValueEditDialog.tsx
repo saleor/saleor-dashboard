@@ -19,13 +19,13 @@ import { getFormErrors } from "@saleor/utils/errors";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { AttributeDetails_attribute_values } from "../../types/AttributeDetails";
+import { AttributeDetails_attribute_values_edges_node } from "../../types/AttributeDetails";
 
 export interface AttributeValueEditDialogFormData {
   name: string;
 }
 export interface AttributeValueEditDialogProps {
-  attributeValue: AttributeDetails_attribute_values | null;
+  attributeValue: AttributeDetails_attribute_values_edges_node | null;
   confirmButtonState: ConfirmButtonTransitionState;
   disabled: boolean;
   errors: AttributeErrorFragment[];
