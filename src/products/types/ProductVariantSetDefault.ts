@@ -18,12 +18,20 @@ export interface ProductVariantSetDefault_productVariantSetDefault_errors {
 export interface ProductVariantSetDefault_productVariantSetDefault_product_defaultVariant {
   __typename: "ProductVariant";
   id: string;
+  name: string;
+}
+
+export interface ProductVariantSetDefault_productVariantSetDefault_product_variants {
+  __typename: "ProductVariant";
+  id: string;
+  name: string;
 }
 
 export interface ProductVariantSetDefault_productVariantSetDefault_product {
   __typename: "Product";
   id: string;
   defaultVariant: ProductVariantSetDefault_productVariantSetDefault_product_defaultVariant | null;
+  variants: (ProductVariantSetDefault_productVariantSetDefault_product_variants | null)[] | null;
 }
 
 export interface ProductVariantSetDefault_productVariantSetDefault {

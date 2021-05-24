@@ -1,4 +1,7 @@
-import { attributeValueFragment } from "@saleor/fragments/attributes";
+import {
+  attributeValueFragment,
+  attributeValueListFragment
+} from "@saleor/fragments/attributes";
 import { pageInfoFragment } from "@saleor/fragments/pageInfo";
 import {
   fragmentVariant,
@@ -237,8 +240,14 @@ export const useProductDetails = makeQuery<
 
 const productTypeQuery = gql`
   ${taxTypeFragment}
-  ${attributeValueFragment}
-  query ProductType($id: ID!) {
+  ${attributeValueListFragment}
+  query ProductType(
+    $id: ID!
+    $firstValues: Int
+    $afterValues: String
+    $lastValues: Int
+    $beforeValues: String
+  ) {
     productType(id: $id) {
       id
       name
@@ -251,9 +260,14 @@ const productTypeQuery = gql`
         name
         valueRequired
         unit
-        # values {
-        #   ...AttributeValueFragment
-        # }
+        values(
+          first: $firstValues
+          after: $afterValues
+          last: $lastValues
+          before: $beforeValues
+        ) {
+          ...AttributeValueListFragment
+        }
       }
       taxType {
         ...TaxTypeFragment
@@ -268,11 +282,7 @@ export const useProductTypeQuery = makeQuery<ProductType, ProductTypeVariables>(
 const productVariantQuery = gql`
   ${fragmentVariant}
   query ProductVariantDetails(
-    $id: ID!
-    $firstValues: Int
-    $afterValues: String
-    $lastValues: Int
-    $beforeValues: String
+    $id: ID! # $firstValues: Int # $afterValues: String # $lastValues: Int # $beforeValues: String
   ) {
     productVariant(id: $id) {
       ...ProductVariant
@@ -287,11 +297,7 @@ export const useProductVariantQuery = makeQuery<
 const productVariantCreateQuery = gql`
   ${variantAttributeFragment}
   query ProductVariantCreateData(
-    $id: ID!
-    $firstValues: Int
-    $afterValues: String
-    $lastValues: Int
-    $beforeValues: String
+    $id: ID! # $firstValues: Int # $afterValues: String # $lastValues: Int # $beforeValues: String
   ) {
     product(id: $id) {
       id

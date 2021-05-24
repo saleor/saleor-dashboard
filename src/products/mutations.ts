@@ -169,6 +169,11 @@ const productVariantSetDefault = gql`
         id
         defaultVariant {
           id
+          name
+        }
+        variants {
+          id
+          name
         }
       }
     }
@@ -283,20 +288,13 @@ export const useSimpleProductUpdateMutation = makeMutation<
 
 export const productCreateMutation = gql`
   ${productErrorWithAttributesFragment}
-  ${productFragmentDetails}
-  mutation ProductCreate(
-    $input: ProductCreateInput!
-    $firstValues: Int
-    $afterValues: String
-    $lastValues: Int
-    $beforeValues: String
-  ) {
+  mutation ProductCreate($input: ProductCreateInput!) {
     productCreate(input: $input) {
       errors {
         ...ProductErrorWithAttributesFragment
       }
       product {
-        ...Product
+        id
       }
     }
   }
@@ -336,11 +334,7 @@ export const variantUpdateMutation = gql`
     $sku: String
     $trackInventory: Boolean!
     $stocks: [StockInput!]!
-    $weight: WeightScalar
-    $firstValues: Int
-    $afterValues: String
-    $lastValues: Int
-    $beforeValues: String
+    $weight: WeightScalar # $firstValues: Int # $afterValues: String # $lastValues: Int # $beforeValues: String
   ) {
     productVariantUpdate(
       id: $id
@@ -400,11 +394,7 @@ export const variantCreateMutation = gql`
   ${fragmentVariant}
   ${productErrorWithAttributesFragment}
   mutation VariantCreate(
-    $input: ProductVariantCreateInput!
-    $firstValues: Int
-    $afterValues: String
-    $lastValues: Int
-    $beforeValues: String
+    $input: ProductVariantCreateInput! # $firstValues: Int # $afterValues: String # $lastValues: Int # $beforeValues: String
   ) {
     productVariantCreate(input: $input) {
       errors {

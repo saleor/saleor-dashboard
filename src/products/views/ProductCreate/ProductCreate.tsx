@@ -25,6 +25,7 @@ import {
   productListUrl,
   productUrl
 } from "@saleor/products/urls";
+import useAttributeValueSearch from "@saleor/searches/useAttributeValueSearch";
 import useCategorySearch from "@saleor/searches/useCategorySearch";
 import useCollectionSearch from "@saleor/searches/useCollectionSearch";
 import usePageSearch from "@saleor/searches/usePageSearch";
@@ -41,7 +42,7 @@ import {
 } from "@saleor/utils/metadata/updateMetadata";
 import { useWarehouseList } from "@saleor/warehouses/queries";
 import { warehouseAddPath } from "@saleor/warehouses/urls";
-import React from "react";
+import React, { useState } from "react";
 import { useIntl } from "react-intl";
 
 import { createHandler } from "./handlers";
@@ -102,6 +103,18 @@ export const ProductCreateView: React.FC<ProductCreateProps> = ({ params }) => {
   } = useProductSearch({
     variables: DEFAULT_INITIAL_SEARCH_DATA
   });
+  const [selectedAttribute, setSelectedAttribute] = useState<string>();
+  const {
+    loadMore: loadMoreAttributeValues,
+    search: searchAttributeValues,
+    result: searchAttributeValuesOpts
+  } = useAttributeValueSearch({
+    variables: {
+      id: selectedAttribute,
+      ...DEFAULT_INITIAL_SEARCH_DATA
+    },
+    skip: !selectedAttribute
+  });
   const warehouses = useWarehouseList({
     displayLoader: true,
     variables: {
@@ -113,7 +126,8 @@ export const ProductCreateView: React.FC<ProductCreateProps> = ({ params }) => {
   const taxTypes = useTaxTypeList({});
   const { data: selectedProductType } = useProductTypeQuery({
     variables: {
-      id: selectedProductTypeId
+      id: selectedProductTypeId,
+      firstValues: 10
     },
     skip: !selectedProductTypeId
   });
@@ -243,6 +257,12 @@ export const ProductCreateView: React.FC<ProductCreateProps> = ({ params }) => {
     loading: searchProductsOpts.loading,
     onFetchMore: loadMoreProducts
   };
+  const fetchMoreAttributeValues = {
+    hasMore: !!searchAttributeValuesOpts.data?.attribute?.values?.pageInfo
+      ?.hasNextPage,
+    loading: !!searchAttributeValuesOpts.loading,
+    onFetchMore: loadMoreAttributeValues
+  };
 
   const loading =
     uploadFileOpts.loading ||
@@ -281,6 +301,9 @@ export const ProductCreateView: React.FC<ProductCreateProps> = ({ params }) => {
         currentChannels={currentChannels}
         categories={mapEdgesToItems(searchCategoryOpts?.data?.search)}
         collections={mapEdgesToItems(searchCollectionOpts?.data?.search)}
+        attributeValues={mapEdgesToItems(
+          searchAttributeValuesOpts?.data?.attribute.values
+        )}
         loading={loading}
         channelsErrors={
           updateVariantChannelsOpts.data?.productVariantChannelListingUpdate
@@ -293,6 +316,7 @@ export const ProductCreateView: React.FC<ProductCreateProps> = ({ params }) => {
         fetchCategories={searchCategory}
         fetchCollections={searchCollection}
         fetchProductTypes={searchProductTypes}
+        fetchAttributeValues={searchAttributeValues}
         header={intl.formatMessage({
           defaultMessage: "New Product",
           description: "page header"
@@ -320,9 +344,11 @@ export const ProductCreateView: React.FC<ProductCreateProps> = ({ params }) => {
         fetchMoreReferencePages={fetchMoreReferencePages}
         fetchReferenceProducts={searchProducts}
         fetchMoreReferenceProducts={fetchMoreReferenceProducts}
+        fetchMoreAttributeValues={fetchMoreAttributeValues}
         onCloseDialog={() => navigate(productAddUrl())}
         selectedProductType={selectedProductType?.productType}
         onSelectProductType={id => setSelectedProductTypeId(id)}
+        onAttributeSelect={setSelectedAttribute}
       />
     </>
   );

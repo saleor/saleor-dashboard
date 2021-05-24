@@ -182,7 +182,9 @@ const SingleAutocompleteSelectFieldComponent: React.FC<SingleAutocompleteSelectF
               onBlur: handleBlur,
               onClick: (cb: () => void) => {
                 toggleMenu(cb);
-                onClick();
+                if (onClick) {
+                  onClick();
+                }
               }
             };
 

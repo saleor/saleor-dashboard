@@ -169,7 +169,9 @@ const MultiAutocompleteSelectFieldComponent: React.FC<MultiAutocompleteSelectFie
                   id: undefined,
                   onClick: (cb: () => void) => {
                     toggleMenu(cb);
-                    onClick();
+                    if (onClick) {
+                      onClick();
+                    }
                   }
                 }}
                 error={error}

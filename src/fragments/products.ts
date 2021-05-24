@@ -246,7 +246,6 @@ export const productFragmentDetails = gql`
 `;
 
 export const variantAttributeFragment = gql`
-  ${attributeValueFragment}
   fragment VariantAttributeFragment on Attribute {
     id
     name
@@ -255,14 +254,14 @@ export const variantAttributeFragment = gql`
     entityType
     valueRequired
     unit
-    values(
-      first: $firstValues
-      after: $afterValues
-      last: $lastValues
-      before: $beforeValues
-    ) {
-      ...AttributeValueListFragment
-    }
+    # values(
+    #   first: $firstValues
+    #   after: $afterValues
+    #   last: $lastValues
+    #   before: $beforeValues
+    # ) {
+    #   ...AttributeValueListFragment
+    # }
   }
 `;
 
