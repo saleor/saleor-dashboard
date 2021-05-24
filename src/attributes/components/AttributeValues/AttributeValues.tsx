@@ -3,6 +3,7 @@ import {
   Card,
   IconButton,
   TableCell,
+  TableFooter,
   TableHead,
   TableRow
 } from "@material-ui/core";
@@ -14,16 +15,18 @@ import {
   SortableTableBody,
   SortableTableRow
 } from "@saleor/components/SortableTable";
-import { AttributeDetailsFragment_values } from "@saleor/fragments/types/AttributeDetailsFragment";
+import TablePagination from "@saleor/components/TablePagination";
+import { AttributeValueListFragment_edges_node } from "@saleor/fragments/types/AttributeValueListFragment";
 import { maybe, renderCollection, stopPropagation } from "@saleor/misc";
 import { makeStyles } from "@saleor/theme";
-import { ReorderAction } from "@saleor/types";
+import { ListProps, ReorderAction } from "@saleor/types";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-export interface AttributeValuesProps {
+export interface AttributeValuesProps
+  extends Pick<ListProps, Exclude<keyof ListProps, "onRowClick">> {
   disabled: boolean;
-  values: AttributeDetailsFragment_values[];
+  values: AttributeValueListFragment_edges_node[];
   onValueAdd: () => void;
   onValueDelete: (id: string) => void;
   onValueReorder: ReorderAction;
@@ -57,13 +60,20 @@ const useStyles = makeStyles(
   { name: "AttributeValues" }
 );
 
+const numberOfColumns = 4;
+
 const AttributeValues: React.FC<AttributeValuesProps> = ({
   disabled,
   onValueAdd,
   onValueDelete,
   onValueReorder,
   onValueUpdate,
-  values
+  values,
+  settings,
+  onUpdateListSettings,
+  pageInfo,
+  onNextPage,
+  onPreviousPage
 }) => {
   const classes = useStyles({});
   const intl = useIntl();
@@ -103,6 +113,21 @@ const AttributeValues: React.FC<AttributeValuesProps> = ({
             <TableCell className={classes.iconCell} />
           </TableRow>
         </TableHead>
+        <TableFooter>
+          <TableRow>
+            <TablePagination
+              colSpan={numberOfColumns}
+              hasNextPage={pageInfo && !disabled ? pageInfo.hasNextPage : false}
+              onNextPage={onNextPage}
+              hasPreviousPage={
+                pageInfo && !disabled ? pageInfo.hasPreviousPage : false
+              }
+              onPreviousPage={onPreviousPage}
+              settings={settings}
+              onUpdateListSettings={onUpdateListSettings}
+            />
+          </TableRow>
+        </TableFooter>
         <SortableTableBody onSortEnd={onValueReorder}>
           {renderCollection(
             values,

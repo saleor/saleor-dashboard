@@ -117,6 +117,7 @@ export const productFragment = gql`
 export const productVariantAttributesFragment = gql`
   ${priceRangeFragment}
   ${attributeValueFragment}
+
   fragment ProductVariantAttributesFragment on Product {
     id
     attributes {
@@ -128,9 +129,9 @@ export const productVariantAttributesFragment = gql`
         entityType
         valueRequired
         unit
-        values {
-          ...AttributeValueFragment
-        }
+        # values {
+        #   ...AttributeValueFragment
+        # }
       }
       values {
         ...AttributeValueFragment
@@ -141,9 +142,9 @@ export const productVariantAttributesFragment = gql`
       variantAttributes(variantSelection: VARIANT_SELECTION) {
         id
         name
-        values {
-          ...AttributeValueFragment
-        }
+        # values {
+        #   ...AttributeValueFragment
+        # }
       }
     }
     channelListings {
@@ -241,9 +242,9 @@ export const variantAttributeFragment = gql`
     entityType
     valueRequired
     unit
-    values {
-      ...AttributeValueFragment
-    }
+    # values {
+    #   ...AttributeValueFragment
+    # }
   }
 `;
 

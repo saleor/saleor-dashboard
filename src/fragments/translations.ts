@@ -171,17 +171,17 @@ export const attributeTranslationFragment = gql`
       id
       name
       inputType
-      values {
-        id
-        name
-        richText
-        inputType
-        translation(languageCode: $language) {
-          id
-          name
-          richText
-        }
-      }
+      # values {
+      #   id
+      #   name
+      #   richText
+      #   inputType
+      #   translation(languageCode: $language) {
+      #     id
+      #     name
+      #     richText
+      #   }
+      # }
     }
   }
 `;

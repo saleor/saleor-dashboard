@@ -9,15 +9,35 @@ import { ReorderInput, AttributeErrorCode } from "./../../types/globalTypes";
 // GraphQL mutation operation: AttributeValueReorder
 // ====================================================
 
-export interface AttributeValueReorder_attributeReorderValues_attribute_values {
+export interface AttributeValueReorder_attributeReorderValues_attribute_values_pageInfo {
+  __typename: "PageInfo";
+  endCursor: string | null;
+  hasNextPage: boolean;
+  hasPreviousPage: boolean;
+  startCursor: string | null;
+}
+
+export interface AttributeValueReorder_attributeReorderValues_attribute_values_edges_node {
   __typename: "AttributeValue";
   id: string;
+}
+
+export interface AttributeValueReorder_attributeReorderValues_attribute_values_edges {
+  __typename: "AttributeValueCountableEdge";
+  cursor: string;
+  node: AttributeValueReorder_attributeReorderValues_attribute_values_edges_node;
+}
+
+export interface AttributeValueReorder_attributeReorderValues_attribute_values {
+  __typename: "AttributeValueCountableConnection";
+  pageInfo: AttributeValueReorder_attributeReorderValues_attribute_values_pageInfo;
+  edges: AttributeValueReorder_attributeReorderValues_attribute_values_edges[];
 }
 
 export interface AttributeValueReorder_attributeReorderValues_attribute {
   __typename: "Attribute";
   id: string;
-  values: (AttributeValueReorder_attributeReorderValues_attribute_values | null)[] | null;
+  values: AttributeValueReorder_attributeReorderValues_attribute_values | null;
 }
 
 export interface AttributeValueReorder_attributeReorderValues_errors {
@@ -39,4 +59,8 @@ export interface AttributeValueReorder {
 export interface AttributeValueReorderVariables {
   id: string;
   move: ReorderInput;
+  firstValues?: number | null;
+  afterValues?: string | null;
+  lastValues?: number | null;
+  beforeValues?: string | null;
 }
