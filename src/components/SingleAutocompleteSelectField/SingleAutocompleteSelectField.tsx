@@ -98,7 +98,7 @@ const SingleAutocompleteSelectFieldComponent: React.FC<SingleAutocompleteSelectF
           itemToString={() => displayValue || ""}
           onInputValueChange={value => debounceFn(value)}
           onSelect={handleChange}
-          selectedItem={value}
+          selectedItem={value || ""}
         >
           {({
             getInputProps,
