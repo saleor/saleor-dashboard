@@ -1,4 +1,3 @@
-import logo from "@assets/images/logo-sidebar-light.svg";
 import LinearProgress from "@material-ui/core/LinearProgress";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import useAppState from "@saleor/hooks/useAppState";
@@ -169,7 +168,6 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
         {isMdUp && (
           <SideBar
             active={activeMenu}
-            logoSrc={{ light: logo }}
             menuItems={menuStructure}
             onMenuItemClick={navigate}
           />
@@ -188,7 +186,6 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
                   <div className={classes.headerToolbar}>
                     {!isMdUp && (
                       <SideBarDrawer
-                        logoSrc={{ light: logo }}
                         menuItems={menuStructure}
                         onMenuItemClick={navigate}
                       />
