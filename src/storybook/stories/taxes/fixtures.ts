@@ -1,7 +1,6 @@
 import { TaxTypeFragment } from "@saleor/fragments/types/TaxTypeFragment";
 
 import { CountryList_shop_countries } from "../../../taxes/types/CountryList";
-import { TaxRateType } from "../../../types/globalTypes";
 
 type CountryList = CountryList_shop_countries[];
 
@@ -82,42 +81,42 @@ export const countries: CountryList = [
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 10,
-          rateType: "ADMISSION_TO_CULTURAL_EVENTS" as TaxRateType
+          rateType: "ADMISSION_TO_CULTURAL_EVENTS"
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 10,
-          rateType: "ADMISSION_TO_ENTERTAINMENT_EVENTS" as TaxRateType
+          rateType: "ADMISSION_TO_ENTERTAINMENT_EVENTS"
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 10,
-          rateType: "BOOKS" as TaxRateType
+          rateType: "BOOKS"
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 10,
-          rateType: "FOODSTUFFS" as TaxRateType
+          rateType: "FOODSTUFFS"
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 10,
-          rateType: "HOTELS" as TaxRateType
+          rateType: "HOTELS"
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 10,
-          rateType: "NEWSPAPERS" as TaxRateType
+          rateType: "NEWSPAPERS"
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 10,
-          rateType: "PASSENGER_TRANSPORT" as TaxRateType
+          rateType: "PASSENGER_TRANSPORT"
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 10,
-          rateType: "PHARMACEUTICALS" as TaxRateType
+          rateType: "PHARMACEUTICALS"
         }
       ],
       standardRate: 20
@@ -175,52 +174,52 @@ export const countries: CountryList = [
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 12,
-          rateType: "RESTAURANTS" as TaxRateType
+          rateType: "RESTAURANTS"
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 6,
-          rateType: "ADMISSION_TO_CULTURAL_EVENTS" as TaxRateType
+          rateType: "ADMISSION_TO_CULTURAL_EVENTS"
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 6,
-          rateType: "ADMISSION_TO_ENTERTAINMENT_EVENTS" as TaxRateType
+          rateType: "ADMISSION_TO_ENTERTAINMENT_EVENTS"
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 6,
-          rateType: "BOOKS" as TaxRateType
+          rateType: "BOOKS"
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 6,
-          rateType: "FOODSTUFFS" as TaxRateType
+          rateType: "FOODSTUFFS"
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 6,
-          rateType: "HOTELS" as TaxRateType
+          rateType: "HOTELS"
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 6,
-          rateType: "MEDICAL" as TaxRateType
+          rateType: "MEDICAL"
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 6,
-          rateType: "NEWSPAPERS" as TaxRateType
+          rateType: "NEWSPAPERS"
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 6,
-          rateType: "PHARMACEUTICALS" as TaxRateType
+          rateType: "PHARMACEUTICALS"
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 6,
-          rateType: "WATER" as TaxRateType
+          rateType: "WATER"
         }
       ],
       standardRate: 21
@@ -242,7 +241,7 @@ export const countries: CountryList = [
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 9,
-          rateType: "HOTELS" as TaxRateType
+          rateType: "HOTELS"
         }
       ],
       standardRate: 20
@@ -450,57 +449,57 @@ export const countries: CountryList = [
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 5,
-          rateType: "ADMISSION_TO_CULTURAL_EVENTS" as TaxRateType
+          rateType: "ADMISSION_TO_CULTURAL_EVENTS"
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 5,
-          rateType: "ADMISSION_TO_ENTERTAINMENT_EVENTS" as TaxRateType
+          rateType: "ADMISSION_TO_ENTERTAINMENT_EVENTS"
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 5,
-          rateType: "ADMISSION_TO_SPORTING_EVENTS" as TaxRateType
+          rateType: "ADMISSION_TO_SPORTING_EVENTS"
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 5,
-          rateType: "BOOKS" as TaxRateType
+          rateType: "BOOKS"
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 5,
-          rateType: "FOODSTUFFS" as TaxRateType
+          rateType: "FOODSTUFFS"
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 5,
-          rateType: "MEDICAL" as TaxRateType
+          rateType: "MEDICAL"
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 5,
-          rateType: "NEWSPAPERS" as TaxRateType
+          rateType: "NEWSPAPERS"
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 5,
-          rateType: "PASSENGER_TRANSPORT" as TaxRateType
+          rateType: "PASSENGER_TRANSPORT"
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 5,
-          rateType: "PHARMACEUTICALS" as TaxRateType
+          rateType: "PHARMACEUTICALS"
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 9,
-          rateType: "HOTELS" as TaxRateType
+          rateType: "HOTELS"
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 9,
-          rateType: "RESTAURANTS" as TaxRateType
+          rateType: "RESTAURANTS"
         }
       ],
       standardRate: 19
@@ -516,57 +515,57 @@ export const countries: CountryList = [
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 10,
-          rateType: "BABY_FOODSTUFFS" as TaxRateType
+          rateType: "BABY_FOODSTUFFS"
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 10,
-          rateType: "BOOKS" as TaxRateType
+          rateType: "BOOKS"
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 10,
-          rateType: "MEDICAL" as TaxRateType
+          rateType: "MEDICAL"
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 10,
-          rateType: "PHARMACEUTICALS" as TaxRateType
+          rateType: "PHARMACEUTICALS"
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 15,
-          rateType: "ADMISSION_TO_CULTURAL_EVENTS" as TaxRateType
+          rateType: "ADMISSION_TO_CULTURAL_EVENTS"
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 15,
-          rateType: "ADMISSION_TO_ENTERTAINMENT_EVENTS" as TaxRateType
+          rateType: "ADMISSION_TO_ENTERTAINMENT_EVENTS"
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 15,
-          rateType: "ADMISSION_TO_SPORTING_EVENTS" as TaxRateType
+          rateType: "ADMISSION_TO_SPORTING_EVENTS"
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 15,
-          rateType: "FOODSTUFFS" as TaxRateType
+          rateType: "FOODSTUFFS"
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 15,
-          rateType: "HOTELS" as TaxRateType
+          rateType: "HOTELS"
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 15,
-          rateType: "NEWSPAPERS" as TaxRateType
+          rateType: "NEWSPAPERS"
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 15,
-          rateType: "PASSENGER_TRANSPORT" as TaxRateType
+          rateType: "PASSENGER_TRANSPORT"
         }
       ],
       standardRate: 21
@@ -582,42 +581,42 @@ export const countries: CountryList = [
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 7,
-          rateType: "ADMISSION_TO_CULTURAL_EVENTS" as TaxRateType
+          rateType: "ADMISSION_TO_CULTURAL_EVENTS"
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 7,
-          rateType: "ADMISSION_TO_ENTERTAINMENT_EVENTS" as TaxRateType
+          rateType: "ADMISSION_TO_ENTERTAINMENT_EVENTS"
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 7,
-          rateType: "BOOKS" as TaxRateType
+          rateType: "BOOKS"
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 7,
-          rateType: "FOODSTUFFS" as TaxRateType
+          rateType: "FOODSTUFFS"
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 7,
-          rateType: "HOTELS" as TaxRateType
+          rateType: "HOTELS"
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 7,
-          rateType: "MEDICAL" as TaxRateType
+          rateType: "MEDICAL"
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 7,
-          rateType: "NEWSPAPERS" as TaxRateType
+          rateType: "NEWSPAPERS"
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 7,
-          rateType: "PASSENGER_TRANSPORT" as TaxRateType
+          rateType: "PASSENGER_TRANSPORT"
         }
       ],
       standardRate: 19
@@ -673,22 +672,22 @@ export const countries: CountryList = [
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 9,
-          rateType: "BOOKS" as TaxRateType
+          rateType: "BOOKS"
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 9,
-          rateType: "HOTELS" as TaxRateType
+          rateType: "HOTELS"
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 9,
-          rateType: "MEDICAL" as TaxRateType
+          rateType: "MEDICAL"
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 9,
-          rateType: "PHARMACEUTICALS" as TaxRateType
+          rateType: "PHARMACEUTICALS"
         }
       ],
       standardRate: 20
@@ -722,42 +721,42 @@ export const countries: CountryList = [
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 10,
-          rateType: "ADMISSION_TO_CULTURAL_EVENTS" as TaxRateType
+          rateType: "ADMISSION_TO_CULTURAL_EVENTS"
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 10,
-          rateType: "ADMISSION_TO_ENTERTAINMENT_EVENTS" as TaxRateType
+          rateType: "ADMISSION_TO_ENTERTAINMENT_EVENTS"
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 10,
-          rateType: "ADMISSION_TO_SPORTING_EVENTS" as TaxRateType
+          rateType: "ADMISSION_TO_SPORTING_EVENTS"
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 10,
-          rateType: "MEDICAL" as TaxRateType
+          rateType: "MEDICAL"
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 10,
-          rateType: "PASSENGER_TRANSPORT" as TaxRateType
+          rateType: "PASSENGER_TRANSPORT"
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 10,
-          rateType: "PHARMACEUTICALS" as TaxRateType
+          rateType: "PHARMACEUTICALS"
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 4,
-          rateType: "FOODSTUFFS" as TaxRateType
+          rateType: "FOODSTUFFS"
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 4,
-          rateType: "NEWSPAPERS" as TaxRateType
+          rateType: "NEWSPAPERS"
         }
       ],
       standardRate: 21
@@ -785,52 +784,52 @@ export const countries: CountryList = [
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 10,
-          rateType: "ADMISSION_TO_CULTURAL_EVENTS" as TaxRateType
+          rateType: "ADMISSION_TO_CULTURAL_EVENTS"
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 10,
-          rateType: "ADMISSION_TO_ENTERTAINMENT_EVENTS" as TaxRateType
+          rateType: "ADMISSION_TO_ENTERTAINMENT_EVENTS"
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 10,
-          rateType: "ADMISSION_TO_SPORTING_EVENTS" as TaxRateType
+          rateType: "ADMISSION_TO_SPORTING_EVENTS"
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 10,
-          rateType: "BOOKS" as TaxRateType
+          rateType: "BOOKS"
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 10,
-          rateType: "HOTELS" as TaxRateType
+          rateType: "HOTELS"
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 10,
-          rateType: "NEWSPAPERS" as TaxRateType
+          rateType: "NEWSPAPERS"
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 10,
-          rateType: "PASSENGER_TRANSPORT" as TaxRateType
+          rateType: "PASSENGER_TRANSPORT"
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 10,
-          rateType: "PHARMACEUTICALS" as TaxRateType
+          rateType: "PHARMACEUTICALS"
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 14,
-          rateType: "FOODSTUFFS" as TaxRateType
+          rateType: "FOODSTUFFS"
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 14,
-          rateType: "RESTAURANTS" as TaxRateType
+          rateType: "RESTAURANTS"
         }
       ],
       standardRate: 24
@@ -870,67 +869,67 @@ export const countries: CountryList = [
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 10,
-          rateType: "ACCOMMODATION" as TaxRateType
+          rateType: "ACCOMMODATION"
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 10,
-          rateType: "ADMISSION_TO_CULTURAL_EVENTS" as TaxRateType
+          rateType: "ADMISSION_TO_CULTURAL_EVENTS"
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 10,
-          rateType: "ADMISSION_TO_ENTERTAINMENT_EVENTS" as TaxRateType
+          rateType: "ADMISSION_TO_ENTERTAINMENT_EVENTS"
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 10,
-          rateType: "ADMISSION_TO_SPORTING_EVENTS" as TaxRateType
+          rateType: "ADMISSION_TO_SPORTING_EVENTS"
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 10,
-          rateType: "HOTELS" as TaxRateType
+          rateType: "HOTELS"
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 10,
-          rateType: "PASSENGER_TRANSPORT" as TaxRateType
+          rateType: "PASSENGER_TRANSPORT"
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 10,
-          rateType: "RESTAURANTS" as TaxRateType
+          rateType: "RESTAURANTS"
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 2.1,
-          rateType: "NEWSPAPERS" as TaxRateType
+          rateType: "NEWSPAPERS"
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 2.1,
-          rateType: "PHARMACEUTICALS" as TaxRateType
+          rateType: "PHARMACEUTICALS"
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 5.5,
-          rateType: "BOOKS" as TaxRateType
+          rateType: "BOOKS"
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 5.5,
-          rateType: "E_BOOKS" as TaxRateType
+          rateType: "E_BOOKS"
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 5.5,
-          rateType: "FOODSTUFFS" as TaxRateType
+          rateType: "FOODSTUFFS"
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 5.5,
-          rateType: "MEDICAL" as TaxRateType
+          rateType: "MEDICAL"
         }
       ],
       standardRate: 20
@@ -952,42 +951,42 @@ export const countries: CountryList = [
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 0,
-          rateType: "BOOKS" as TaxRateType
+          rateType: "BOOKS"
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 0,
-          rateType: "CHILDRENS_CLOTHING" as TaxRateType
+          rateType: "CHILDRENS_CLOTHING"
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 0,
-          rateType: "FOODSTUFFS" as TaxRateType
+          rateType: "FOODSTUFFS"
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 0,
-          rateType: "MEDICAL" as TaxRateType
+          rateType: "MEDICAL"
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 0,
-          rateType: "NEWSPAPERS" as TaxRateType
+          rateType: "NEWSPAPERS"
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 0,
-          rateType: "PASSENGER_TRANSPORT" as TaxRateType
+          rateType: "PASSENGER_TRANSPORT"
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 0,
-          rateType: "PHARMACEUTICALS" as TaxRateType
+          rateType: "PHARMACEUTICALS"
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 5,
-          rateType: "PROPERTY_RENOVATIONS" as TaxRateType
+          rateType: "PROPERTY_RENOVATIONS"
         }
       ],
       standardRate: 20
@@ -1069,47 +1068,47 @@ export const countries: CountryList = [
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 13,
-          rateType: "ADMISSION_TO_CULTURAL_EVENTS" as TaxRateType
+          rateType: "ADMISSION_TO_CULTURAL_EVENTS"
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 13,
-          rateType: "ADMISSION_TO_ENTERTAINMENT_EVENTS" as TaxRateType
+          rateType: "ADMISSION_TO_ENTERTAINMENT_EVENTS"
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 13,
-          rateType: "ADMISSION_TO_SPORTING_EVENTS" as TaxRateType
+          rateType: "ADMISSION_TO_SPORTING_EVENTS"
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 13,
-          rateType: "FOODSTUFFS" as TaxRateType
+          rateType: "FOODSTUFFS"
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 13,
-          rateType: "MEDICAL" as TaxRateType
+          rateType: "MEDICAL"
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 13,
-          rateType: "PHARMACEUTICALS" as TaxRateType
+          rateType: "PHARMACEUTICALS"
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 6.5,
-          rateType: "BOOKS" as TaxRateType
+          rateType: "BOOKS"
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 6.5,
-          rateType: "HOTELS" as TaxRateType
+          rateType: "HOTELS"
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 6.5,
-          rateType: "NEWSPAPERS" as TaxRateType
+          rateType: "NEWSPAPERS"
         }
       ],
       standardRate: 24
@@ -1173,12 +1172,12 @@ export const countries: CountryList = [
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 13,
-          rateType: "HOTELS" as TaxRateType
+          rateType: "HOTELS"
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 13,
-          rateType: "NEWSPAPERS" as TaxRateType
+          rateType: "NEWSPAPERS"
         }
       ],
       standardRate: 25
@@ -1200,27 +1199,27 @@ export const countries: CountryList = [
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 18,
-          rateType: "FOODSTUFFS" as TaxRateType
+          rateType: "FOODSTUFFS"
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 18,
-          rateType: "HOTELS" as TaxRateType
+          rateType: "HOTELS"
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 5,
-          rateType: "BOOKS" as TaxRateType
+          rateType: "BOOKS"
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 5,
-          rateType: "MEDICAL" as TaxRateType
+          rateType: "MEDICAL"
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 5,
-          rateType: "PHARMACEUTICALS" as TaxRateType
+          rateType: "PHARMACEUTICALS"
         }
       ],
       standardRate: 27
@@ -1242,52 +1241,52 @@ export const countries: CountryList = [
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 0,
-          rateType: "BOOKS" as TaxRateType
+          rateType: "BOOKS"
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 0,
-          rateType: "CHILDRENS_CLOTHING" as TaxRateType
+          rateType: "CHILDRENS_CLOTHING"
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 0,
-          rateType: "MEDICAL" as TaxRateType
+          rateType: "MEDICAL"
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 4.8,
-          rateType: "FOODSTUFFS" as TaxRateType
+          rateType: "FOODSTUFFS"
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 9,
-          rateType: "ADMISSION_TO_CULTURAL_EVENTS" as TaxRateType
+          rateType: "ADMISSION_TO_CULTURAL_EVENTS"
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 9,
-          rateType: "ADMISSION_TO_ENTERTAINMENT_EVENTS" as TaxRateType
+          rateType: "ADMISSION_TO_ENTERTAINMENT_EVENTS"
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 9,
-          rateType: "ADMISSION_TO_SPORTING_EVENTS" as TaxRateType
+          rateType: "ADMISSION_TO_SPORTING_EVENTS"
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 9,
-          rateType: "HOTELS" as TaxRateType
+          rateType: "HOTELS"
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 9,
-          rateType: "NEWSPAPERS" as TaxRateType
+          rateType: "NEWSPAPERS"
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 9,
-          rateType: "RESTAURANTS" as TaxRateType
+          rateType: "RESTAURANTS"
         }
       ],
       standardRate: 23
@@ -1345,52 +1344,52 @@ export const countries: CountryList = [
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 10,
-          rateType: "ADMISSION_TO_CULTURAL_EVENTS" as TaxRateType
+          rateType: "ADMISSION_TO_CULTURAL_EVENTS"
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 10,
-          rateType: "ADMISSION_TO_ENTERTAINMENT_EVENTS" as TaxRateType
+          rateType: "ADMISSION_TO_ENTERTAINMENT_EVENTS"
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 10,
-          rateType: "HOTELS" as TaxRateType
+          rateType: "HOTELS"
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 10,
-          rateType: "PASSENGER_TRANSPORT" as TaxRateType
+          rateType: "PASSENGER_TRANSPORT"
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 10,
-          rateType: "PHARMACEUTICALS" as TaxRateType
+          rateType: "PHARMACEUTICALS"
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 10,
-          rateType: "RESTAURANTS" as TaxRateType
+          rateType: "RESTAURANTS"
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 4,
-          rateType: "BOOKS" as TaxRateType
+          rateType: "BOOKS"
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 4,
-          rateType: "E_BOOKS" as TaxRateType
+          rateType: "E_BOOKS"
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 4,
-          rateType: "FOODSTUFFS" as TaxRateType
+          rateType: "FOODSTUFFS"
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 4,
-          rateType: "MEDICAL" as TaxRateType
+          rateType: "MEDICAL"
         }
       ],
       standardRate: 22
@@ -1538,17 +1537,17 @@ export const countries: CountryList = [
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 5,
-          rateType: "MEDICAL" as TaxRateType
+          rateType: "MEDICAL"
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 5,
-          rateType: "PHARMACEUTICALS" as TaxRateType
+          rateType: "PHARMACEUTICALS"
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 9,
-          rateType: "BOOKS" as TaxRateType
+          rateType: "BOOKS"
         }
       ],
       standardRate: 21
@@ -1564,87 +1563,87 @@ export const countries: CountryList = [
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 14,
-          rateType: "ADVERTISING" as TaxRateType
+          rateType: "ADVERTISING"
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 14,
-          rateType: "DOMESTIC_FUEL" as TaxRateType
+          rateType: "DOMESTIC_FUEL"
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 14,
-          rateType: "WINE" as TaxRateType
+          rateType: "WINE"
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 3,
-          rateType: "ADMISSION_TO_CULTURAL_EVENTS" as TaxRateType
+          rateType: "ADMISSION_TO_CULTURAL_EVENTS"
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 3,
-          rateType: "ADMISSION_TO_ENTERTAINMENT_EVENTS" as TaxRateType
+          rateType: "ADMISSION_TO_ENTERTAINMENT_EVENTS"
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 3,
-          rateType: "ADMISSION_TO_SPORTING_EVENTS" as TaxRateType
+          rateType: "ADMISSION_TO_SPORTING_EVENTS"
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 3,
-          rateType: "BOOKS" as TaxRateType
+          rateType: "BOOKS"
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 3,
-          rateType: "E_BOOKS" as TaxRateType
+          rateType: "E_BOOKS"
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 3,
-          rateType: "FOODSTUFFS" as TaxRateType
+          rateType: "FOODSTUFFS"
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 3,
-          rateType: "HOTELS" as TaxRateType
+          rateType: "HOTELS"
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 3,
-          rateType: "MEDICAL" as TaxRateType
+          rateType: "MEDICAL"
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 3,
-          rateType: "NEWSPAPERS" as TaxRateType
+          rateType: "NEWSPAPERS"
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 3,
-          rateType: "PASSENGER_TRANSPORT" as TaxRateType
+          rateType: "PASSENGER_TRANSPORT"
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 3,
-          rateType: "PHARMACEUTICALS" as TaxRateType
+          rateType: "PHARMACEUTICALS"
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 3,
-          rateType: "RESTAURANTS" as TaxRateType
+          rateType: "RESTAURANTS"
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 8,
-          rateType: "BIKES" as TaxRateType
+          rateType: "BIKES"
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 8,
-          rateType: "DOMESTIC_SERVICES" as TaxRateType
+          rateType: "DOMESTIC_SERVICES"
         }
       ],
       standardRate: 17
@@ -1660,27 +1659,27 @@ export const countries: CountryList = [
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 12,
-          rateType: "BOOKS" as TaxRateType
+          rateType: "BOOKS"
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 12,
-          rateType: "HOTELS" as TaxRateType
+          rateType: "HOTELS"
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 12,
-          rateType: "MEDICAL" as TaxRateType
+          rateType: "MEDICAL"
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 12,
-          rateType: "NEWSPAPERS" as TaxRateType
+          rateType: "NEWSPAPERS"
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 12,
-          rateType: "PHARMACEUTICALS" as TaxRateType
+          rateType: "PHARMACEUTICALS"
         }
       ],
       standardRate: 21
@@ -1798,42 +1797,42 @@ export const countries: CountryList = [
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 0,
-          rateType: "FOODSTUFFS" as TaxRateType
+          rateType: "FOODSTUFFS"
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 0,
-          rateType: "PHARMACEUTICALS" as TaxRateType
+          rateType: "PHARMACEUTICALS"
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 5,
-          rateType: "ADMISSION_TO_CULTURAL_EVENTS" as TaxRateType
+          rateType: "ADMISSION_TO_CULTURAL_EVENTS"
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 5,
-          rateType: "BOOKS" as TaxRateType
+          rateType: "BOOKS"
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 5,
-          rateType: "E_BOOKS" as TaxRateType
+          rateType: "E_BOOKS"
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 5,
-          rateType: "MEDICAL" as TaxRateType
+          rateType: "MEDICAL"
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 5,
-          rateType: "NEWSPAPERS" as TaxRateType
+          rateType: "NEWSPAPERS"
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 7,
-          rateType: "HOTELS" as TaxRateType
+          rateType: "HOTELS"
         }
       ],
       standardRate: 18
@@ -1921,47 +1920,47 @@ export const countries: CountryList = [
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 9,
-          rateType: "ACCOMMODATION" as TaxRateType
+          rateType: "ACCOMMODATION"
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 9,
-          rateType: "ADMISSION_TO_CULTURAL_EVENTS" as TaxRateType
+          rateType: "ADMISSION_TO_CULTURAL_EVENTS"
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 9,
-          rateType: "ADMISSION_TO_ENTERTAINMENT_EVENTS" as TaxRateType
+          rateType: "ADMISSION_TO_ENTERTAINMENT_EVENTS"
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 9,
-          rateType: "BOOKS" as TaxRateType
+          rateType: "BOOKS"
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 9,
-          rateType: "FOODSTUFFS" as TaxRateType
+          rateType: "FOODSTUFFS"
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 9,
-          rateType: "HOTELS" as TaxRateType
+          rateType: "HOTELS"
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 9,
-          rateType: "MEDICAL" as TaxRateType
+          rateType: "MEDICAL"
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 9,
-          rateType: "PASSENGER_TRANSPORT" as TaxRateType
+          rateType: "PASSENGER_TRANSPORT"
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 9,
-          rateType: "PHARMACEUTICALS" as TaxRateType
+          rateType: "PHARMACEUTICALS"
         }
       ],
       standardRate: 21
@@ -2049,52 +2048,52 @@ export const countries: CountryList = [
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 5,
-          rateType: "FOODSTUFFS" as TaxRateType
+          rateType: "FOODSTUFFS"
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 8,
-          rateType: "ADMISSION_TO_CULTURAL_EVENTS" as TaxRateType
+          rateType: "ADMISSION_TO_CULTURAL_EVENTS"
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 8,
-          rateType: "ADMISSION_TO_ENTERTAINMENT_EVENTS" as TaxRateType
+          rateType: "ADMISSION_TO_ENTERTAINMENT_EVENTS"
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 8,
-          rateType: "ADMISSION_TO_SPORTING_EVENTS" as TaxRateType
+          rateType: "ADMISSION_TO_SPORTING_EVENTS"
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 8,
-          rateType: "HOTELS" as TaxRateType
+          rateType: "HOTELS"
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 8,
-          rateType: "MEDICAL" as TaxRateType
+          rateType: "MEDICAL"
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 8,
-          rateType: "NEWSPAPERS" as TaxRateType
+          rateType: "NEWSPAPERS"
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 8,
-          rateType: "PASSENGER_TRANSPORT" as TaxRateType
+          rateType: "PASSENGER_TRANSPORT"
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 8,
-          rateType: "PHARMACEUTICALS" as TaxRateType
+          rateType: "PHARMACEUTICALS"
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 8,
-          rateType: "RESTAURANTS" as TaxRateType
+          rateType: "RESTAURANTS"
         }
       ],
       standardRate: 23
@@ -2134,42 +2133,42 @@ export const countries: CountryList = [
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 13,
-          rateType: "AGRICULTURAL_SUPPLIES" as TaxRateType
+          rateType: "AGRICULTURAL_SUPPLIES"
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 6,
-          rateType: "BOOKS" as TaxRateType
+          rateType: "BOOKS"
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 6,
-          rateType: "FOODSTUFFS" as TaxRateType
+          rateType: "FOODSTUFFS"
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 6,
-          rateType: "HOTELS" as TaxRateType
+          rateType: "HOTELS"
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 6,
-          rateType: "MEDICAL" as TaxRateType
+          rateType: "MEDICAL"
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 6,
-          rateType: "NEWSPAPERS" as TaxRateType
+          rateType: "NEWSPAPERS"
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 6,
-          rateType: "PASSENGER_TRANSPORT" as TaxRateType
+          rateType: "PASSENGER_TRANSPORT"
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 6,
-          rateType: "PHARMACEUTICALS" as TaxRateType
+          rateType: "PHARMACEUTICALS"
         }
       ],
       standardRate: 23
@@ -2209,47 +2208,47 @@ export const countries: CountryList = [
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 5,
-          rateType: "SOCIAL_HOUSING" as TaxRateType
+          rateType: "SOCIAL_HOUSING"
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 9,
-          rateType: "ADMISSION_TO_CULTURAL_EVENTS" as TaxRateType
+          rateType: "ADMISSION_TO_CULTURAL_EVENTS"
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 9,
-          rateType: "ADMISSION_TO_ENTERTAINMENT_EVENTS" as TaxRateType
+          rateType: "ADMISSION_TO_ENTERTAINMENT_EVENTS"
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 9,
-          rateType: "BOOKS" as TaxRateType
+          rateType: "BOOKS"
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 9,
-          rateType: "FOODSTUFFS" as TaxRateType
+          rateType: "FOODSTUFFS"
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 9,
-          rateType: "HOTELS" as TaxRateType
+          rateType: "HOTELS"
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 9,
-          rateType: "MEDICAL" as TaxRateType
+          rateType: "MEDICAL"
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 9,
-          rateType: "NEWSPAPERS" as TaxRateType
+          rateType: "NEWSPAPERS"
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 9,
-          rateType: "PHARMACEUTICALS" as TaxRateType
+          rateType: "PHARMACEUTICALS"
         }
       ],
       standardRate: 19
@@ -2307,12 +2306,12 @@ export const countries: CountryList = [
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 12,
-          rateType: "FOODSTUFFS" as TaxRateType
+          rateType: "FOODSTUFFS"
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 6,
-          rateType: "BOOKS" as TaxRateType
+          rateType: "BOOKS"
         }
       ],
       standardRate: 25
@@ -2340,47 +2339,47 @@ export const countries: CountryList = [
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 9.5,
-          rateType: "ADMISSION_TO_CULTURAL_EVENTS" as TaxRateType
+          rateType: "ADMISSION_TO_CULTURAL_EVENTS"
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 9.5,
-          rateType: "ADMISSION_TO_ENTERTAINMENT_EVENTS" as TaxRateType
+          rateType: "ADMISSION_TO_ENTERTAINMENT_EVENTS"
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 9.5,
-          rateType: "ADMISSION_TO_SPORTING_EVENTS" as TaxRateType
+          rateType: "ADMISSION_TO_SPORTING_EVENTS"
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 9.5,
-          rateType: "BOOKS" as TaxRateType
+          rateType: "BOOKS"
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 9.5,
-          rateType: "FOODSTUFFS" as TaxRateType
+          rateType: "FOODSTUFFS"
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 9.5,
-          rateType: "HOTELS" as TaxRateType
+          rateType: "HOTELS"
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 9.5,
-          rateType: "MEDICAL" as TaxRateType
+          rateType: "MEDICAL"
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 9.5,
-          rateType: "NEWSPAPERS" as TaxRateType
+          rateType: "NEWSPAPERS"
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 9.5,
-          rateType: "PHARMACEUTICALS" as TaxRateType
+          rateType: "PHARMACEUTICALS"
         }
       ],
       standardRate: 22
@@ -2402,32 +2401,32 @@ export const countries: CountryList = [
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 10,
-          rateType: "ADMISSION_TO_CULTURAL_EVENTS" as TaxRateType
+          rateType: "ADMISSION_TO_CULTURAL_EVENTS"
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 10,
-          rateType: "ADMISSION_TO_ENTERTAINMENT_EVENTS" as TaxRateType
+          rateType: "ADMISSION_TO_ENTERTAINMENT_EVENTS"
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 10,
-          rateType: "BOOKS" as TaxRateType
+          rateType: "BOOKS"
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 10,
-          rateType: "FOODSTUFFS" as TaxRateType
+          rateType: "FOODSTUFFS"
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 10,
-          rateType: "MEDICAL" as TaxRateType
+          rateType: "MEDICAL"
         },
         {
           __typename: "ReducedRate" as "ReducedRate",
           rate: 10,
-          rateType: "PHARMACEUTICALS" as TaxRateType
+          rateType: "PHARMACEUTICALS"
         }
       ],
       standardRate: 20
