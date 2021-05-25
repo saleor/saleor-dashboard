@@ -647,6 +647,8 @@ export const useProductChannelListingUpdate = makeMutation<
 >(ProductChannelListingUpdateMutation);
 
 export const ProductVariantChannelListingUpdateMutation = gql`
+  ${channelListingProductVariantFragment}
+  ${channelListingProductFragment}
   ${productChannelListingErrorFragment}
   mutation ProductVariantChannelListingUpdate(
     $id: ID!
