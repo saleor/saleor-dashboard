@@ -1,11 +1,9 @@
 import { getAttributeData } from "@saleor/attributes/utils/data";
 import { AttributeErrorFragment } from "@saleor/fragments/types/AttributeErrorFragment";
 import useListSettings from "@saleor/hooks/useListSettings";
+import useLocalPageInfo, { getMaxPage } from "@saleor/hooks/useLocalPageInfo";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
-import usePaginator, {
-  createPaginationState
-} from "@saleor/hooks/usePaginator";
 import { getStringOrPlaceholder } from "@saleor/misc";
 import { ListViews, ReorderEvent } from "@saleor/types";
 import { AttributeErrorCode } from "@saleor/types/globalTypes";
@@ -22,7 +20,7 @@ import {
   useMetadataUpdate,
   usePrivateMetadataUpdate
 } from "@saleor/utils/metadata/updateMetadata";
-import React, { useState } from "react";
+import React from "react";
 import { useIntl } from "react-intl";
 import slugify from "slugify";
 
@@ -61,7 +59,6 @@ function areValuesEqual(
 
 const AttributeDetails: React.FC<AttributeDetailsProps> = ({ params }) => {
   const navigate = useNavigator();
-  const paginate = usePaginator();
   const notify = useNotifier();
   const intl = useIntl();
 
@@ -75,23 +72,14 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ params }) => {
   const { updateListSettings, settings } = useListSettings(
     ListViews.ATTRIBUTE_VALUE_LIST
   );
-  const [pageInfoState, setPageInfoState] = useState({
-    endCursor: 0,
-    hasNextPage: false,
-    hasPreviousPage: false,
-    startCursor: 0
-  });
-  const paginationState = createPaginationState(settings?.rowNumber, params);
-  const { loadNextPage, loadPreviousPage, pageInfo } = paginate(
-    {
-      ...pageInfoState,
-      endCursor: pageInfoState.endCursor.toString(),
-      startCursor: pageInfoState.startCursor.toString()
-    },
-    paginationState,
-    params
-  );
-  // console.log(pageInfoState);
+
+  const {
+    pageInfo,
+    pageValues,
+    loadNextPage,
+    loadPreviousPage,
+    loadPage
+  } = useLocalPageInfo(values, settings?.rowNumber);
 
   const [attributeCreate, attributeCreateOpts] = useAttributeCreateMutation({
     onCompleted: data => {
@@ -110,7 +98,7 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ params }) => {
   const [updatePrivateMetadata] = usePrivateMetadataUpdate({});
 
   const id = params.id
-    ? pageInfoState.startCursor + parseInt(params.id, 0)
+    ? parseInt(params.id, 0) + pageInfo.startCursor
     : undefined;
 
   const [openModal, closeModal] = createDialogActionHandlers<
@@ -123,20 +111,6 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ params }) => {
   const handleValueDelete = () => {
     const newValues = remove(values[id], values, areValuesEqual);
     setValues(newValues);
-    const removedLastFromPage = !(newValues.length % settings.rowNumber);
-    if (removedLastFromPage) {
-      setPageInfoState({
-        ...pageInfoState,
-        hasPreviousPage: newValues.length - settings.rowNumber > 0,
-        startCursor: newValues.length - settings.rowNumber,
-        endCursor: newValues.length - 1
-      });
-    } else {
-      setPageInfoState({
-        ...pageInfoState,
-        endCursor: newValues.length - 1
-      });
-    }
     closeModal();
   };
   const handleValueUpdate = (input: AttributeValueEditDialogFormData) => {
@@ -153,19 +127,11 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ params }) => {
     } else {
       const newValues = add(input, values);
       setValues(newValues);
-      const addedToNewPage = !(newValues.length % (settings.rowNumber + 1));
-      if (addedToNewPage) {
-        setPageInfoState({
-          ...pageInfoState,
-          hasPreviousPage: true,
-          startCursor: newValues.length - 1,
-          endCursor: newValues.length - 1
-        });
-      } else {
-        setPageInfoState({
-          ...pageInfoState,
-          endCursor: newValues.length - 1
-        });
+      const addedToNotVisibleLastPage =
+        newValues.length - pageInfo.startCursor > settings.rowNumber;
+      if (addedToNotVisibleLastPage) {
+        const maxPage = getMaxPage(newValues.length, settings.rowNumber);
+        loadPage(maxPage);
       }
       closeModal();
     }
@@ -173,10 +139,10 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ params }) => {
   const handleValueReorder = ({ newIndex, oldIndex }: ReorderEvent) =>
     setValues(
       move(
-        values[pageInfoState.startCursor + oldIndex],
+        values[pageInfo.startCursor + oldIndex],
         values,
         areValuesEqual,
-        pageInfoState.startCursor + newIndex
+        pageInfo.startCursor + newIndex
       )
     );
 
@@ -228,23 +194,21 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ params }) => {
             hasPreviousPage: false,
             startCursor: ""
           },
-          edges: values
-            .slice(pageInfoState.startCursor, pageInfoState.endCursor + 1)
-            .map((value, valueIndex) => ({
-              __typename: "AttributeValueCountableEdge" as "AttributeValueCountableEdge",
-              cursor: "1",
-              node: {
-                __typename: "AttributeValue" as "AttributeValue",
-                file: null,
-                id: valueIndex.toString(),
-                reference: null,
-                slug: slugify(value.name).toLowerCase(),
-                sortOrder: valueIndex,
-                value: null,
-                richText: null,
-                ...value
-              }
-            }))
+          edges: pageValues.map((value, valueIndex) => ({
+            __typename: "AttributeValueCountableEdge" as "AttributeValueCountableEdge",
+            cursor: "1",
+            node: {
+              __typename: "AttributeValue" as "AttributeValue",
+              file: null,
+              id: valueIndex.toString(),
+              reference: null,
+              slug: slugify(value.name).toLowerCase(),
+              sortOrder: valueIndex,
+              value: null,
+              richText: null,
+              ...value
+            }
+          }))
         }}
         settings={settings}
         onUpdateListSettings={updateListSettings}
@@ -272,7 +236,7 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ params }) => {
             onConfirm={handleValueDelete}
           />
           <AttributeValueEditDialog
-            attributeValue={values[params.id]}
+            attributeValue={values[id]}
             confirmButtonState="default"
             disabled={false}
             errors={valueErrors}
