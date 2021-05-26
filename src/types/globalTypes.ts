@@ -955,6 +955,34 @@ export enum StockErrorCode {
   UNIQUE = "UNIQUE",
 }
 
+export enum TaxRateType {
+  ACCOMMODATION = "ACCOMMODATION",
+  ADMISSION_TO_CULTURAL_EVENTS = "ADMISSION_TO_CULTURAL_EVENTS",
+  ADMISSION_TO_ENTERTAINMENT_EVENTS = "ADMISSION_TO_ENTERTAINMENT_EVENTS",
+  ADMISSION_TO_SPORTING_EVENTS = "ADMISSION_TO_SPORTING_EVENTS",
+  ADVERTISING = "ADVERTISING",
+  AGRICULTURAL_SUPPLIES = "AGRICULTURAL_SUPPLIES",
+  BABY_FOODSTUFFS = "BABY_FOODSTUFFS",
+  BIKES = "BIKES",
+  BOOKS = "BOOKS",
+  CHILDRENS_CLOTHING = "CHILDRENS_CLOTHING",
+  DOMESTIC_FUEL = "DOMESTIC_FUEL",
+  DOMESTIC_SERVICES = "DOMESTIC_SERVICES",
+  E_BOOKS = "E_BOOKS",
+  FOODSTUFFS = "FOODSTUFFS",
+  HOTELS = "HOTELS",
+  MEDICAL = "MEDICAL",
+  NEWSPAPERS = "NEWSPAPERS",
+  PASSENGER_TRANSPORT = "PASSENGER_TRANSPORT",
+  PHARMACEUTICALS = "PHARMACEUTICALS",
+  PROPERTY_RENOVATIONS = "PROPERTY_RENOVATIONS",
+  RESTAURANTS = "RESTAURANTS",
+  SOCIAL_HOUSING = "SOCIAL_HOUSING",
+  STANDARD = "STANDARD",
+  WATER = "WATER",
+  WINE = "WINE",
+}
+
 export enum UploadErrorCode {
   GRAPHQL_ERROR = "GRAPHQL_ERROR",
 }
@@ -1124,7 +1152,6 @@ export interface AttributeFilterInput {
   type?: AttributeTypeEnum | null;
   inCollection?: string | null;
   inCategory?: string | null;
-  channel?: string | null;
 }
 
 export interface AttributeInput {
@@ -1203,7 +1230,6 @@ export interface CategoryInput {
 
 export interface CategorySortingInput {
   direction: OrderDirection;
-  channel?: string | null;
   field: CategorySortField;
 }
 
@@ -1249,7 +1275,6 @@ export interface CollectionFilterInput {
   search?: string | null;
   metadata?: (MetadataInput | null)[] | null;
   ids?: (string | null)[] | null;
-  channel?: string | null;
 }
 
 export interface CollectionInput {
@@ -1265,7 +1290,6 @@ export interface CollectionInput {
 
 export interface CollectionSortingInput {
   direction: OrderDirection;
-  channel?: string | null;
   field: CollectionSortField;
 }
 
@@ -1672,7 +1696,6 @@ export interface ProductFilterInput {
   minimalPrice?: PriceRangeInput | null;
   productTypes?: (string | null)[] | null;
   ids?: (string | null)[] | null;
-  channel?: string | null;
 }
 
 export interface ProductInput {
@@ -1691,7 +1714,6 @@ export interface ProductInput {
 
 export interface ProductOrder {
   direction: OrderDirection;
-  channel?: string | null;
   attributeId?: string | null;
   field?: ProductOrderField | null;
 }
@@ -1798,7 +1820,6 @@ export interface SaleInput {
 
 export interface SaleSortingInput {
   direction: OrderDirection;
-  channel?: string | null;
   field: SaleSortField;
 }
 
@@ -1987,7 +2008,6 @@ export interface VoucherInput {
 
 export interface VoucherSortingInput {
   direction: OrderDirection;
-  channel?: string | null;
   field: VoucherSortField;
 }
 

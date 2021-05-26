@@ -25,8 +25,7 @@ export function getSortQueryField(
 }
 
 export function getSortQueryVariables(
-  params: ProductListUrlQueryParams,
-  channel: string
+  params: ProductListUrlQueryParams
 ): ProductOrder {
   const direction = getOrderDirection(params.asc);
   if (params.sort === ProductListUrlSortField.attribute) {
@@ -37,7 +36,6 @@ export function getSortQueryVariables(
   }
   const field = getSortQueryField(params.sort);
   return {
-    channel,
     direction,
     field
   };

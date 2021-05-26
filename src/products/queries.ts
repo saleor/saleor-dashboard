@@ -139,6 +139,7 @@ const productListQuery = gql`
     $last: Int
     $before: String
     $filter: ProductFilterInput
+    $channel: String
     $sort: ProductOrder
   ) {
     products(
@@ -148,6 +149,7 @@ const productListQuery = gql`
       last: $last
       filter: $filter
       sortBy: $sort
+      channel: $channel
     ) {
       edges {
         node {
@@ -177,8 +179,8 @@ export const useProductListQuery = makeQuery<ProductList, ProductListVariables>(
 );
 
 const productCountQuery = gql`
-  query ProductCount($filter: ProductFilterInput) {
-    products(filter: $filter) {
+  query ProductCount($filter: ProductFilterInput, $channel: String) {
+    products(filter: $filter, channel: $channel) {
       totalCount
     }
   }

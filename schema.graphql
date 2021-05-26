@@ -512,7 +512,6 @@ input AttributeFilterInput {
   type: AttributeTypeEnum
   inCollection: ID
   inCategory: ID
-  channel: String
 }
 
 input AttributeInput {
@@ -798,7 +797,6 @@ enum CategorySortField {
 
 input CategorySortingInput {
   direction: OrderDirection!
-  channel: String
   field: CategorySortField!
 }
 
@@ -1232,7 +1230,6 @@ input CollectionFilterInput {
   search: String
   metadata: [MetadataInput]
   ids: [ID]
-  channel: String
 }
 
 input CollectionInput {
@@ -1272,7 +1269,6 @@ enum CollectionSortField {
 
 input CollectionSortingInput {
   direction: OrderDirection!
-  channel: String
   field: CollectionSortField!
 }
 
@@ -4289,7 +4285,6 @@ input ProductFilterInput {
   minimalPrice: PriceRangeInput
   productTypes: [ID]
   ids: [ID]
-  channel: String
 }
 
 type ProductImage {
@@ -4374,7 +4369,6 @@ input ProductMediaUpdateInput {
 
 input ProductOrder {
   direction: OrderDirection!
-  channel: String
   attributeId: ID
   field: ProductOrderField
 }
@@ -4781,7 +4775,7 @@ type Query {
   checkoutLines(before: String, after: String, first: Int, last: Int): CheckoutLineCountableConnection
   channel(id: ID): Channel
   channels: [Channel!]
-  attributes(filter: AttributeFilterInput, sortBy: AttributeSortingInput, before: String, after: String, first: Int, last: Int): AttributeCountableConnection
+  attributes(filter: AttributeFilterInput, sortBy: AttributeSortingInput, channel: String, before: String, after: String, first: Int, last: Int): AttributeCountableConnection
   attribute(id: ID, slug: String): Attribute
   appsInstallations: [AppInstallation!]!
   apps(filter: AppFilterInput, sortBy: AppSortingInput, before: String, after: String, first: Int, last: Int): AppCountableConnection
@@ -4800,7 +4794,7 @@ type Query {
 
 type ReducedRate {
   rate: Float!
-  rateType: String!
+  rateType: TaxRateType!
 }
 
 type RefreshToken {
@@ -4938,7 +4932,6 @@ enum SaleSortField {
 
 input SaleSortingInput {
   direction: OrderDirection!
-  channel: String
   field: SaleSortField!
 }
 
@@ -5484,6 +5477,34 @@ input StockInput {
   quantity: Int!
 }
 
+enum TaxRateType {
+  ACCOMMODATION
+  ADMISSION_TO_CULTURAL_EVENTS
+  ADMISSION_TO_ENTERTAINMENT_EVENTS
+  ADMISSION_TO_SPORTING_EVENTS
+  ADVERTISING
+  AGRICULTURAL_SUPPLIES
+  BABY_FOODSTUFFS
+  BIKES
+  BOOKS
+  CHILDRENS_CLOTHING
+  DOMESTIC_FUEL
+  DOMESTIC_SERVICES
+  E_BOOKS
+  FOODSTUFFS
+  HOTELS
+  MEDICAL
+  NEWSPAPERS
+  PASSENGER_TRANSPORT
+  PHARMACEUTICALS
+  PROPERTY_RENOVATIONS
+  RESTAURANTS
+  SOCIAL_HOUSING
+  STANDARD
+  WATER
+  WINE
+}
+
 type TaxType {
   description: String
   taxCode: String
@@ -5885,7 +5906,6 @@ enum VoucherSortField {
 
 input VoucherSortingInput {
   direction: OrderDirection!
-  channel: String
   field: VoucherSortField!
 }
 

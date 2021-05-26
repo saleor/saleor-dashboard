@@ -140,5 +140,6 @@ export interface ProductListVariables {
   last?: number | null;
   before?: string | null;
   filter?: ProductFilterInput | null;
+  channel?: string | null;
   sort?: ProductOrder | null;
 }

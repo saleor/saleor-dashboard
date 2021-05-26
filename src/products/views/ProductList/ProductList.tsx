@@ -283,12 +283,13 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
   const paginationState = createPaginationState(settings.rowNumber, params);
   const channelSlug = noChannel ? null : channel.slug;
   const filter = getFilterVariables(params, channelSlug);
-  const sort = getSortQueryVariables(params, channelSlug);
+  const sort = getSortQueryVariables(params);
   const queryVariables = React.useMemo<ProductListVariables>(
     () => ({
       ...paginationState,
       filter,
-      sort
+      sort,
+      channel: channelSlug
     }),
     [params, settings.rowNumber]
   );
