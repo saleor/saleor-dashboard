@@ -3,13 +3,15 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
+import { TaxRateType } from "./../../types/globalTypes";
+
 // ====================================================
 // GraphQL fragment: CountryWithTaxesFragment
 // ====================================================
 
 export interface CountryWithTaxesFragment_vat_reducedRates {
   __typename: "ReducedRate";
-  rateType: string;
+  rateType: TaxRateType;
   rate: number;
 }
 
