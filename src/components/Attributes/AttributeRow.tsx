@@ -146,7 +146,7 @@ const AttributeRow: React.FC<AttributeRowProps> = ({
             label={intl.formatMessage(messages.valueLabel)}
             value={attribute.value[0]}
             onChange={event => onChange(attribute.id, event.target.value)}
-            allowCustomValues={!attribute.data.isRequired}
+            allowCustomValues={true}
             fetchChoices={fetchAttributeValues}
             {...fetchMoreAttributeValues}
             onClick={() => onAttributeSelect(attribute.id)}
@@ -208,7 +208,7 @@ const AttributeRow: React.FC<AttributeRowProps> = ({
             name={`attribute:${attribute.label}`}
             value={attribute.value}
             onChange={event => onMultiChange(attribute.id, event.target.value)}
-            allowCustomValues={!attribute.data.isRequired}
+            allowCustomValues={true}
             fetchChoices={fetchAttributeValues}
             {...fetchMoreAttributeValues}
             onClick={() => onAttributeSelect(attribute.id)}
