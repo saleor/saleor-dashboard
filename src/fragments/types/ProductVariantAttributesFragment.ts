@@ -9,20 +9,40 @@ import { AttributeInputTypeEnum, AttributeEntityTypeEnum, MeasurementUnitsEnum }
 // GraphQL fragment: ProductVariantAttributesFragment
 // ====================================================
 
-export interface ProductVariantAttributesFragment_attributes_attribute_values_file {
+export interface ProductVariantAttributesFragment_attributes_attribute_values_pageInfo {
+  __typename: "PageInfo";
+  endCursor: string | null;
+  hasNextPage: boolean;
+  hasPreviousPage: boolean;
+  startCursor: string | null;
+}
+
+export interface ProductVariantAttributesFragment_attributes_attribute_values_edges_node_file {
   __typename: "File";
   url: string;
   contentType: string | null;
 }
 
-export interface ProductVariantAttributesFragment_attributes_attribute_values {
+export interface ProductVariantAttributesFragment_attributes_attribute_values_edges_node {
   __typename: "AttributeValue";
   id: string;
   name: string | null;
   slug: string | null;
-  file: ProductVariantAttributesFragment_attributes_attribute_values_file | null;
+  file: ProductVariantAttributesFragment_attributes_attribute_values_edges_node_file | null;
   reference: string | null;
   richText: any | null;
+}
+
+export interface ProductVariantAttributesFragment_attributes_attribute_values_edges {
+  __typename: "AttributeValueCountableEdge";
+  cursor: string;
+  node: ProductVariantAttributesFragment_attributes_attribute_values_edges_node;
+}
+
+export interface ProductVariantAttributesFragment_attributes_attribute_values {
+  __typename: "AttributeValueCountableConnection";
+  pageInfo: ProductVariantAttributesFragment_attributes_attribute_values_pageInfo;
+  edges: ProductVariantAttributesFragment_attributes_attribute_values_edges[];
 }
 
 export interface ProductVariantAttributesFragment_attributes_attribute {
@@ -34,7 +54,7 @@ export interface ProductVariantAttributesFragment_attributes_attribute {
   entityType: AttributeEntityTypeEnum | null;
   valueRequired: boolean;
   unit: MeasurementUnitsEnum | null;
-  values: (ProductVariantAttributesFragment_attributes_attribute_values | null)[] | null;
+  values: ProductVariantAttributesFragment_attributes_attribute_values | null;
 }
 
 export interface ProductVariantAttributesFragment_attributes_values_file {
@@ -59,27 +79,47 @@ export interface ProductVariantAttributesFragment_attributes {
   values: (ProductVariantAttributesFragment_attributes_values | null)[];
 }
 
-export interface ProductVariantAttributesFragment_productType_variantAttributes_values_file {
+export interface ProductVariantAttributesFragment_productType_variantAttributes_values_pageInfo {
+  __typename: "PageInfo";
+  endCursor: string | null;
+  hasNextPage: boolean;
+  hasPreviousPage: boolean;
+  startCursor: string | null;
+}
+
+export interface ProductVariantAttributesFragment_productType_variantAttributes_values_edges_node_file {
   __typename: "File";
   url: string;
   contentType: string | null;
 }
 
-export interface ProductVariantAttributesFragment_productType_variantAttributes_values {
+export interface ProductVariantAttributesFragment_productType_variantAttributes_values_edges_node {
   __typename: "AttributeValue";
   id: string;
   name: string | null;
   slug: string | null;
-  file: ProductVariantAttributesFragment_productType_variantAttributes_values_file | null;
+  file: ProductVariantAttributesFragment_productType_variantAttributes_values_edges_node_file | null;
   reference: string | null;
   richText: any | null;
+}
+
+export interface ProductVariantAttributesFragment_productType_variantAttributes_values_edges {
+  __typename: "AttributeValueCountableEdge";
+  cursor: string;
+  node: ProductVariantAttributesFragment_productType_variantAttributes_values_edges_node;
+}
+
+export interface ProductVariantAttributesFragment_productType_variantAttributes_values {
+  __typename: "AttributeValueCountableConnection";
+  pageInfo: ProductVariantAttributesFragment_productType_variantAttributes_values_pageInfo;
+  edges: ProductVariantAttributesFragment_productType_variantAttributes_values_edges[];
 }
 
 export interface ProductVariantAttributesFragment_productType_variantAttributes {
   __typename: "Attribute";
   id: string;
   name: string | null;
-  values: (ProductVariantAttributesFragment_productType_variantAttributes_values | null)[] | null;
+  values: ProductVariantAttributesFragment_productType_variantAttributes_values | null;
 }
 
 export interface ProductVariantAttributesFragment_productType {

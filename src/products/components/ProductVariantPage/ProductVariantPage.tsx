@@ -226,6 +226,7 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
                         attribute.data.variantAttributeScope ===
                         VariantAttributeScope.NOT_VARIANT_SELECTION
                     )}
+                    attributeValues={[]}
                     loading={loading}
                     disabled={loading}
                     errors={errors}
@@ -235,6 +236,9 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
                     onReferencesRemove={handlers.selectAttributeReference}
                     onReferencesAddClick={onAssignReferencesClick}
                     onReferencesReorder={handlers.reorderAttributeValue}
+                    fetchAttributeValues={() => undefined}
+                    fetchMoreAttributeValues={undefined}
+                    onAttributeSelect={() => undefined}
                   />
                   <CardSpacer />
                   <Attributes
@@ -246,6 +250,7 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
                         attribute.data.variantAttributeScope ===
                         VariantAttributeScope.VARIANT_SELECTION
                     )}
+                    attributeValues={[]}
                     loading={loading}
                     disabled={loading}
                     errors={errors}
@@ -255,6 +260,9 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
                     onReferencesRemove={handlers.selectAttributeReference}
                     onReferencesAddClick={onAssignReferencesClick}
                     onReferencesReorder={handlers.reorderAttributeValue}
+                    fetchAttributeValues={() => undefined}
+                    fetchMoreAttributeValues={undefined}
+                    onAttributeSelect={() => undefined}
                   />
                   <CardSpacer />
                   <ProductVariantMedia
