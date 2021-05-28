@@ -34,8 +34,8 @@ const price: Price = {
   attribute: selectedAttributes[0].id,
   channels,
   mode: "attribute",
-  values: selectedAttributes[0].values.map(attribute => ({
-    slug: attribute.slug,
+  values: selectedAttributes[0].values.edges.map(attribute => ({
+    slug: attribute.node.slug,
     value: channels
   }))
 };
@@ -46,19 +46,21 @@ const stock: Stock = {
   value: selectedWarehouses.map(
     (_, warehouseIndex) => (warehouseIndex + 2) * 3
   ),
-  values: selectedAttributes[0].values.map((attribute, attributeIndex) => ({
-    slug: attribute.slug,
-    value: selectedWarehouses.map(
-      (_, warehouseIndex) =>
-        selectedAttributes.length * 10 - attributeIndex - warehouseIndex * 3
-    )
-  }))
+  values: selectedAttributes[0].values.edges.map(
+    (attribute, attributeIndex) => ({
+      slug: attribute.node.slug,
+      value: selectedWarehouses.map(
+        (_, warehouseIndex) =>
+          selectedAttributes.length * 10 - attributeIndex - warehouseIndex * 3
+      )
+    })
+  )
 };
 
 const dataAttributes = selectedAttributes.map(attribute => ({
   id: attribute.id,
-  values: attribute.values
-    .map(value => value.slug)
+  values: attribute.values.edges
+    .map(value => value.node.slug)
     .filter((_, valueIndex) => valueIndex % 2 !== 1)
 }));
 

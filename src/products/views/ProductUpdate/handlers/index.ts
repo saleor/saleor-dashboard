@@ -145,7 +145,8 @@ export function createUpdateHandler(
         },
         slug: data.slug,
         taxCode: data.changeTaxCode ? data.taxCode : null
-      }
+      },
+      firstValues: 10
     };
 
     if (product.productType.hasVariants) {
@@ -161,7 +162,7 @@ export function createUpdateHandler(
               attributes:
                 product.productType.variantAttributes?.map(attribute => ({
                   id: attribute.id,
-                  values: attribute.values.map(value => value.slug)
+                  values: attribute.values.edges.map(value => value.node.slug)
                 })) || [],
               product: product.id,
               sku: data.sku,

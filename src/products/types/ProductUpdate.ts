@@ -16,20 +16,40 @@ export interface ProductUpdate_productUpdate_errors {
   attributes: string[] | null;
 }
 
-export interface ProductUpdate_productUpdate_product_attributes_attribute_values_file {
+export interface ProductUpdate_productUpdate_product_attributes_attribute_values_pageInfo {
+  __typename: "PageInfo";
+  endCursor: string | null;
+  hasNextPage: boolean;
+  hasPreviousPage: boolean;
+  startCursor: string | null;
+}
+
+export interface ProductUpdate_productUpdate_product_attributes_attribute_values_edges_node_file {
   __typename: "File";
   url: string;
   contentType: string | null;
 }
 
-export interface ProductUpdate_productUpdate_product_attributes_attribute_values {
+export interface ProductUpdate_productUpdate_product_attributes_attribute_values_edges_node {
   __typename: "AttributeValue";
   id: string;
   name: string | null;
   slug: string | null;
-  file: ProductUpdate_productUpdate_product_attributes_attribute_values_file | null;
+  file: ProductUpdate_productUpdate_product_attributes_attribute_values_edges_node_file | null;
   reference: string | null;
   richText: any | null;
+}
+
+export interface ProductUpdate_productUpdate_product_attributes_attribute_values_edges {
+  __typename: "AttributeValueCountableEdge";
+  cursor: string;
+  node: ProductUpdate_productUpdate_product_attributes_attribute_values_edges_node;
+}
+
+export interface ProductUpdate_productUpdate_product_attributes_attribute_values {
+  __typename: "AttributeValueCountableConnection";
+  pageInfo: ProductUpdate_productUpdate_product_attributes_attribute_values_pageInfo;
+  edges: ProductUpdate_productUpdate_product_attributes_attribute_values_edges[];
 }
 
 export interface ProductUpdate_productUpdate_product_attributes_attribute {
@@ -41,7 +61,7 @@ export interface ProductUpdate_productUpdate_product_attributes_attribute {
   entityType: AttributeEntityTypeEnum | null;
   valueRequired: boolean;
   unit: MeasurementUnitsEnum | null;
-  values: (ProductUpdate_productUpdate_product_attributes_attribute_values | null)[] | null;
+  values: ProductUpdate_productUpdate_product_attributes_attribute_values | null;
 }
 
 export interface ProductUpdate_productUpdate_product_attributes_values_file {
@@ -66,27 +86,47 @@ export interface ProductUpdate_productUpdate_product_attributes {
   values: (ProductUpdate_productUpdate_product_attributes_values | null)[];
 }
 
-export interface ProductUpdate_productUpdate_product_productType_variantAttributes_values_file {
+export interface ProductUpdate_productUpdate_product_productType_variantAttributes_values_pageInfo {
+  __typename: "PageInfo";
+  endCursor: string | null;
+  hasNextPage: boolean;
+  hasPreviousPage: boolean;
+  startCursor: string | null;
+}
+
+export interface ProductUpdate_productUpdate_product_productType_variantAttributes_values_edges_node_file {
   __typename: "File";
   url: string;
   contentType: string | null;
 }
 
-export interface ProductUpdate_productUpdate_product_productType_variantAttributes_values {
+export interface ProductUpdate_productUpdate_product_productType_variantAttributes_values_edges_node {
   __typename: "AttributeValue";
   id: string;
   name: string | null;
   slug: string | null;
-  file: ProductUpdate_productUpdate_product_productType_variantAttributes_values_file | null;
+  file: ProductUpdate_productUpdate_product_productType_variantAttributes_values_edges_node_file | null;
   reference: string | null;
   richText: any | null;
+}
+
+export interface ProductUpdate_productUpdate_product_productType_variantAttributes_values_edges {
+  __typename: "AttributeValueCountableEdge";
+  cursor: string;
+  node: ProductUpdate_productUpdate_product_productType_variantAttributes_values_edges_node;
+}
+
+export interface ProductUpdate_productUpdate_product_productType_variantAttributes_values {
+  __typename: "AttributeValueCountableConnection";
+  pageInfo: ProductUpdate_productUpdate_product_productType_variantAttributes_values_pageInfo;
+  edges: ProductUpdate_productUpdate_product_productType_variantAttributes_values_edges[];
 }
 
 export interface ProductUpdate_productUpdate_product_productType_variantAttributes {
   __typename: "Attribute";
   id: string;
   name: string | null;
-  values: (ProductUpdate_productUpdate_product_productType_variantAttributes_values | null)[] | null;
+  values: ProductUpdate_productUpdate_product_productType_variantAttributes_values | null;
 }
 
 export interface ProductUpdate_productUpdate_product_productType_taxType {
@@ -301,4 +341,8 @@ export interface ProductUpdate {
 export interface ProductUpdateVariables {
   id: string;
   input: ProductInput;
+  firstValues?: number | null;
+  afterValues?: string | null;
+  lastValues?: number | null;
+  beforeValues?: string | null;
 }

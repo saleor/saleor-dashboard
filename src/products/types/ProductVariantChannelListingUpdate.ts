@@ -3,150 +3,36 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { ProductVariantChannelListingAddInput, AttributeInputTypeEnum, AttributeEntityTypeEnum, MeasurementUnitsEnum, ProductMediaType, WeightUnitsEnum, ProductErrorCode } from "./../../types/globalTypes";
+import { ProductVariantChannelListingAddInput, ProductErrorCode } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: ProductVariantChannelListingUpdate
 // ====================================================
 
-export interface ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_metadata {
-  __typename: "MetadataItem";
-  key: string;
-  value: string;
-}
-
-export interface ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_privateMetadata {
-  __typename: "MetadataItem";
-  key: string;
-  value: string;
-}
-
-export interface ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_selectionAttributes_attribute_values_file {
-  __typename: "File";
-  url: string;
-  contentType: string | null;
-}
-
-export interface ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_selectionAttributes_attribute_values {
-  __typename: "AttributeValue";
+export interface ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_channelListings_channel {
+  __typename: "Channel";
   id: string;
-  name: string | null;
-  slug: string | null;
-  file: ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_selectionAttributes_attribute_values_file | null;
-  reference: string | null;
-  richText: any | null;
+  name: string;
+  currencyCode: string;
 }
 
-export interface ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_selectionAttributes_attribute {
-  __typename: "Attribute";
-  id: string;
-  name: string | null;
-  slug: string | null;
-  inputType: AttributeInputTypeEnum | null;
-  entityType: AttributeEntityTypeEnum | null;
-  valueRequired: boolean;
-  unit: MeasurementUnitsEnum | null;
-  values: (ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_selectionAttributes_attribute_values | null)[] | null;
+export interface ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_channelListings_price {
+  __typename: "Money";
+  amount: number;
+  currency: string;
 }
 
-export interface ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_selectionAttributes_values_file {
-  __typename: "File";
-  url: string;
-  contentType: string | null;
+export interface ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_channelListings_costPrice {
+  __typename: "Money";
+  amount: number;
+  currency: string;
 }
 
-export interface ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_selectionAttributes_values {
-  __typename: "AttributeValue";
-  id: string;
-  name: string | null;
-  slug: string | null;
-  file: ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_selectionAttributes_values_file | null;
-  reference: string | null;
-  richText: any | null;
-}
-
-export interface ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_selectionAttributes {
-  __typename: "SelectedAttribute";
-  attribute: ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_selectionAttributes_attribute;
-  values: (ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_selectionAttributes_values | null)[];
-}
-
-export interface ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_nonSelectionAttributes_attribute_values_file {
-  __typename: "File";
-  url: string;
-  contentType: string | null;
-}
-
-export interface ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_nonSelectionAttributes_attribute_values {
-  __typename: "AttributeValue";
-  id: string;
-  name: string | null;
-  slug: string | null;
-  file: ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_nonSelectionAttributes_attribute_values_file | null;
-  reference: string | null;
-  richText: any | null;
-}
-
-export interface ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_nonSelectionAttributes_attribute {
-  __typename: "Attribute";
-  id: string;
-  name: string | null;
-  slug: string | null;
-  inputType: AttributeInputTypeEnum | null;
-  entityType: AttributeEntityTypeEnum | null;
-  valueRequired: boolean;
-  unit: MeasurementUnitsEnum | null;
-  values: (ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_nonSelectionAttributes_attribute_values | null)[] | null;
-}
-
-export interface ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_nonSelectionAttributes_values_file {
-  __typename: "File";
-  url: string;
-  contentType: string | null;
-}
-
-export interface ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_nonSelectionAttributes_values {
-  __typename: "AttributeValue";
-  id: string;
-  name: string | null;
-  slug: string | null;
-  file: ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_nonSelectionAttributes_values_file | null;
-  reference: string | null;
-  richText: any | null;
-}
-
-export interface ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_nonSelectionAttributes {
-  __typename: "SelectedAttribute";
-  attribute: ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_nonSelectionAttributes_attribute;
-  values: (ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_nonSelectionAttributes_values | null)[];
-}
-
-export interface ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_media {
-  __typename: "ProductMedia";
-  id: string;
-  url: string;
-  type: ProductMediaType;
-  oembedData: any;
-}
-
-export interface ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_product_defaultVariant {
-  __typename: "ProductVariant";
-  id: string;
-}
-
-export interface ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_product_media {
-  __typename: "ProductMedia";
-  id: string;
-  alt: string;
-  sortOrder: number | null;
-  url: string;
-  type: ProductMediaType;
-  oembedData: any;
-}
-
-export interface ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_product_thumbnail {
-  __typename: "Image";
-  url: string;
+export interface ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_channelListings {
+  __typename: "ProductVariantChannelListing";
+  channel: ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_channelListings_channel;
+  price: ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_channelListings_price | null;
+  costPrice: ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_channelListings_costPrice | null;
 }
 
 export interface ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_product_channelListings_channel {
@@ -191,100 +77,25 @@ export interface ProductVariantChannelListingUpdate_productVariantChannelListing
 
 export interface ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_product_channelListings {
   __typename: "ProductChannelListing";
-  publicationDate: any | null;
   isPublished: boolean;
+  publicationDate: any | null;
+  isAvailableForPurchase: boolean | null;
+  availableForPurchase: any | null;
+  visibleInListings: boolean;
   channel: ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_product_channelListings_channel;
   pricing: ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_product_channelListings_pricing | null;
 }
 
-export interface ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_product_variants_media {
-  __typename: "ProductMedia";
-  id: string;
-  url: string;
-  type: ProductMediaType;
-  oembedData: any;
-}
-
-export interface ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_product_variants {
-  __typename: "ProductVariant";
-  id: string;
-  name: string;
-  sku: string;
-  media: ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_product_variants_media[] | null;
-}
-
 export interface ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_product {
   __typename: "Product";
-  id: string;
-  defaultVariant: ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_product_defaultVariant | null;
-  media: ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_product_media[] | null;
-  name: string;
-  thumbnail: ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_product_thumbnail | null;
   channelListings: ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_product_channelListings[] | null;
-  variants: (ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_product_variants | null)[] | null;
-}
-
-export interface ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_channelListings_channel {
-  __typename: "Channel";
-  id: string;
-  name: string;
-  currencyCode: string;
-}
-
-export interface ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_channelListings_price {
-  __typename: "Money";
-  amount: number;
-  currency: string;
-}
-
-export interface ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_channelListings_costPrice {
-  __typename: "Money";
-  amount: number;
-  currency: string;
-}
-
-export interface ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_channelListings {
-  __typename: "ProductVariantChannelListing";
-  channel: ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_channelListings_channel;
-  price: ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_channelListings_price | null;
-  costPrice: ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_channelListings_costPrice | null;
-}
-
-export interface ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_stocks_warehouse {
-  __typename: "Warehouse";
-  id: string;
-  name: string;
-}
-
-export interface ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_stocks {
-  __typename: "Stock";
-  id: string;
-  quantity: number;
-  quantityAllocated: number;
-  warehouse: ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_stocks_warehouse;
-}
-
-export interface ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_weight {
-  __typename: "Weight";
-  unit: WeightUnitsEnum;
-  value: number;
 }
 
 export interface ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant {
   __typename: "ProductVariant";
   id: string;
-  metadata: (ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_metadata | null)[];
-  privateMetadata: (ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_privateMetadata | null)[];
-  selectionAttributes: ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_selectionAttributes[];
-  nonSelectionAttributes: ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_nonSelectionAttributes[];
-  media: ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_media[] | null;
-  name: string;
-  product: ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_product;
   channelListings: ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_channelListings[] | null;
-  sku: string;
-  stocks: (ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_stocks | null)[] | null;
-  trackInventory: boolean;
-  weight: ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_weight | null;
+  product: ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_product;
 }
 
 export interface ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_errors {

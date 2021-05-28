@@ -9,20 +9,40 @@ import { AttributeInputTypeEnum, AttributeEntityTypeEnum, MeasurementUnitsEnum, 
 // GraphQL query operation: ProductDetails
 // ====================================================
 
-export interface ProductDetails_product_attributes_attribute_values_file {
+export interface ProductDetails_product_attributes_attribute_values_pageInfo {
+  __typename: "PageInfo";
+  endCursor: string | null;
+  hasNextPage: boolean;
+  hasPreviousPage: boolean;
+  startCursor: string | null;
+}
+
+export interface ProductDetails_product_attributes_attribute_values_edges_node_file {
   __typename: "File";
   url: string;
   contentType: string | null;
 }
 
-export interface ProductDetails_product_attributes_attribute_values {
+export interface ProductDetails_product_attributes_attribute_values_edges_node {
   __typename: "AttributeValue";
   id: string;
   name: string | null;
   slug: string | null;
-  file: ProductDetails_product_attributes_attribute_values_file | null;
+  file: ProductDetails_product_attributes_attribute_values_edges_node_file | null;
   reference: string | null;
   richText: any | null;
+}
+
+export interface ProductDetails_product_attributes_attribute_values_edges {
+  __typename: "AttributeValueCountableEdge";
+  cursor: string;
+  node: ProductDetails_product_attributes_attribute_values_edges_node;
+}
+
+export interface ProductDetails_product_attributes_attribute_values {
+  __typename: "AttributeValueCountableConnection";
+  pageInfo: ProductDetails_product_attributes_attribute_values_pageInfo;
+  edges: ProductDetails_product_attributes_attribute_values_edges[];
 }
 
 export interface ProductDetails_product_attributes_attribute {
@@ -34,7 +54,7 @@ export interface ProductDetails_product_attributes_attribute {
   entityType: AttributeEntityTypeEnum | null;
   valueRequired: boolean;
   unit: MeasurementUnitsEnum | null;
-  values: (ProductDetails_product_attributes_attribute_values | null)[] | null;
+  values: ProductDetails_product_attributes_attribute_values | null;
 }
 
 export interface ProductDetails_product_attributes_values_file {
@@ -59,27 +79,47 @@ export interface ProductDetails_product_attributes {
   values: (ProductDetails_product_attributes_values | null)[];
 }
 
-export interface ProductDetails_product_productType_variantAttributes_values_file {
+export interface ProductDetails_product_productType_variantAttributes_values_pageInfo {
+  __typename: "PageInfo";
+  endCursor: string | null;
+  hasNextPage: boolean;
+  hasPreviousPage: boolean;
+  startCursor: string | null;
+}
+
+export interface ProductDetails_product_productType_variantAttributes_values_edges_node_file {
   __typename: "File";
   url: string;
   contentType: string | null;
 }
 
-export interface ProductDetails_product_productType_variantAttributes_values {
+export interface ProductDetails_product_productType_variantAttributes_values_edges_node {
   __typename: "AttributeValue";
   id: string;
   name: string | null;
   slug: string | null;
-  file: ProductDetails_product_productType_variantAttributes_values_file | null;
+  file: ProductDetails_product_productType_variantAttributes_values_edges_node_file | null;
   reference: string | null;
   richText: any | null;
+}
+
+export interface ProductDetails_product_productType_variantAttributes_values_edges {
+  __typename: "AttributeValueCountableEdge";
+  cursor: string;
+  node: ProductDetails_product_productType_variantAttributes_values_edges_node;
+}
+
+export interface ProductDetails_product_productType_variantAttributes_values {
+  __typename: "AttributeValueCountableConnection";
+  pageInfo: ProductDetails_product_productType_variantAttributes_values_pageInfo;
+  edges: ProductDetails_product_productType_variantAttributes_values_edges[];
 }
 
 export interface ProductDetails_product_productType_variantAttributes {
   __typename: "Attribute";
   id: string;
   name: string | null;
-  values: (ProductDetails_product_productType_variantAttributes_values | null)[] | null;
+  values: ProductDetails_product_productType_variantAttributes_values | null;
 }
 
 export interface ProductDetails_product_productType_taxType {
@@ -295,4 +335,8 @@ export interface ProductDetails {
 export interface ProductDetailsVariables {
   id: string;
   channel?: string | null;
+  firstValues?: number | null;
+  afterValues?: string | null;
+  lastValues?: number | null;
+  beforeValues?: string | null;
 }

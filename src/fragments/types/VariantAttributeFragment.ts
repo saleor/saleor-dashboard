@@ -9,20 +9,40 @@ import { AttributeInputTypeEnum, AttributeEntityTypeEnum, MeasurementUnitsEnum }
 // GraphQL fragment: VariantAttributeFragment
 // ====================================================
 
-export interface VariantAttributeFragment_values_file {
+export interface VariantAttributeFragment_values_pageInfo {
+  __typename: "PageInfo";
+  endCursor: string | null;
+  hasNextPage: boolean;
+  hasPreviousPage: boolean;
+  startCursor: string | null;
+}
+
+export interface VariantAttributeFragment_values_edges_node_file {
   __typename: "File";
   url: string;
   contentType: string | null;
 }
 
-export interface VariantAttributeFragment_values {
+export interface VariantAttributeFragment_values_edges_node {
   __typename: "AttributeValue";
   id: string;
   name: string | null;
   slug: string | null;
-  file: VariantAttributeFragment_values_file | null;
+  file: VariantAttributeFragment_values_edges_node_file | null;
   reference: string | null;
   richText: any | null;
+}
+
+export interface VariantAttributeFragment_values_edges {
+  __typename: "AttributeValueCountableEdge";
+  cursor: string;
+  node: VariantAttributeFragment_values_edges_node;
+}
+
+export interface VariantAttributeFragment_values {
+  __typename: "AttributeValueCountableConnection";
+  pageInfo: VariantAttributeFragment_values_pageInfo;
+  edges: VariantAttributeFragment_values_edges[];
 }
 
 export interface VariantAttributeFragment {
@@ -34,5 +54,5 @@ export interface VariantAttributeFragment {
   entityType: AttributeEntityTypeEnum | null;
   valueRequired: boolean;
   unit: MeasurementUnitsEnum | null;
-  values: (VariantAttributeFragment_values | null)[] | null;
+  values: VariantAttributeFragment_values | null;
 }

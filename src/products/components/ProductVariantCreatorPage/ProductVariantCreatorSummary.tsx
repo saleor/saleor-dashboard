@@ -118,13 +118,13 @@ function getVariantName(
   return attributes.reduce(
     (acc, attribute) => [
       ...acc,
-      attribute.values.find(
+      attribute.values.edges.find(
         value =>
-          value.slug ===
+          value.node.slug ===
           variant.attributes.find(
             variantAttribute => variantAttribute.id === attribute.id
           ).values[0]
-      ).name
+      ).node.name
     ],
     []
   );
