@@ -24,6 +24,7 @@ export type ProductListUrlDialog =
   | "unpublish"
   | "delete"
   | "export"
+  | "addToMegaPack"
   | TabActionDialog;
 export enum ProductListUrlFiltersEnum {
   priceFrom = "priceFrom",
@@ -33,7 +34,9 @@ export enum ProductListUrlFiltersEnum {
   query = "query",
   allegroStatus = "allegroStatus",
   updatedAtFrom = "updatedAtFrom",
-  updatedAtTo = "updatedAtTo"
+  updatedAtTo = "updatedAtTo",
+  warehouseFrom = "warehouseFrom",
+  warehouseTo = "warehouseTo"
 }
 export enum ProductListUrlFiltersWithMultipleValues {
   categories = "categories",

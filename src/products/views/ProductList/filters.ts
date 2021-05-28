@@ -202,6 +202,19 @@ export function getFilterOpts(
         max: maybe(() => params.updatedAtTo, ""),
         min: maybe(() => params.updatedAtFrom, "")
       }
+    },
+    warehouseLocation: {
+      active: maybe(
+        () =>
+          [params.warehouseFrom, params.warehouseTo].some(
+            field => field !== undefined
+          ),
+        false
+      ),
+      value: {
+        max: maybe(() => params.warehouseTo, "0"),
+        min: maybe(() => params.warehouseFrom, "0")
+      }
     }
   };
 }
@@ -241,6 +254,10 @@ export function getFilterVariables(
     updatedAt: getGteLteVariables({
       gte: params.updatedAtFrom,
       lte: params.updatedAtTo
+    }),
+    warehouseLocation: getGteLteVariables({
+      gte: params.warehouseFrom,
+      lte: params.warehouseTo
     })
   };
 }
@@ -309,6 +326,13 @@ export function getFilterQueryParam(
         filter,
         ProductListUrlFiltersEnum.stockStatus,
         StockAvailability
+      );
+
+    case ProductFilterKeys.warehouseLocation:
+      return getMinMaxQueryParam(
+        filter,
+        ProductListUrlFiltersEnum.warehouseTo,
+        ProductListUrlFiltersEnum.warehouseFrom
       );
   }
 }

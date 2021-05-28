@@ -38,6 +38,15 @@ import {
 } from "./types/ProductImageById";
 import { ProductList, ProductListVariables } from "./types/ProductList";
 import {
+  ProductPrivateMetadataData,
+  ProductPrivateMetadataDataVariables
+} from "./types/ProductPrivateMetadata";
+import {
+  ProductsSkusData,
+  ProductsSkusDataVariables
+} from "./types/ProductSkus";
+import { ProductTypeData, ProductTypeDataVariables } from "./types/ProductType";
+import {
   ProductVariantCreateData,
   ProductVariantCreateDataVariables
 } from "./types/ProductVariantCreateData";
@@ -354,3 +363,58 @@ export const useUserWithMetadata = makeQuery<
   UserWithMetadataData,
   UserWithMetadataDataVariables
 >(userWithMetadata);
+
+const productSkus = gql`
+  query getSkusFromProducts($ids: [ID]) {
+    products(first: 100, filter: { ids: $ids }) {
+      edges {
+        node {
+          name
+          defaultVariant {
+            sku
+          }
+        }
+      }
+    }
+  }
+`;
+
+export const useProductSkus = makeQuery<
+  ProductsSkusData,
+  ProductsSkusDataVariables
+>(productSkus);
+
+const productPrivateMetadata = gql`
+  query getProductPrivateMetadata($id: ID!) {
+    product(id: $id) {
+      privateMetadata {
+        key
+        value
+      }
+    }
+  }
+`;
+
+export const useProductPrivateMetadata = makeQuery<
+  ProductPrivateMetadataData,
+  ProductPrivateMetadataDataVariables
+>(productPrivateMetadata);
+
+const getProductTypeId = gql`
+  query SearchProductTypes($first: Int!, $query: String!) {
+    search: productTypes(first: $first, filter: { search: $query }) {
+      edges {
+        node {
+          id
+          name
+          slug
+        }
+      }
+    }
+  }
+`;
+
+export const useProductType = makeQuery<
+  ProductTypeData,
+  ProductTypeDataVariables
+>(getProductTypeId);

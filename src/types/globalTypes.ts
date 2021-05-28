@@ -1352,6 +1352,11 @@ export interface PriceRangeInput {
   lte?: number | null;
 }
 
+export interface WarehouseLocationRangeInput {
+  gte?: string | null;
+  lte?: string | null;
+}
+
 export interface ProductCreateInput {
   attributes?: (AttributeValueInput | null)[] | null;
   publicationDate?: any | null;
@@ -1390,6 +1395,7 @@ export interface ProductFilterInput {
   minimalPrice?: PriceRangeInput | null;
   productTypes?: (string | null)[] | null;
   ids?: (string | null)[] | null;
+  warehouseLocation?: WarehouseLocationRangeInput | null;
 }
 
 export interface ProductInput {

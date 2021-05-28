@@ -61,15 +61,15 @@ export const ProductCreateView: React.FC = () => {
   });
   const [updateMetadata] = useMetadataUpdate({});
   const [updatePrivateMetadata] = usePrivateMetadataUpdate({
-      onCompleted: data => {
+    onCompleted: data => {
       const megaPackError = data.updatePrivateMetadata.errors.find(
-          error => error.code === "MEGAPACK_ASSIGNED"
+        error => error.code === "MEGAPACK_ASSIGNED"
       );
       if (megaPackError) {
         notify({
           status: "error",
           text: megaPackError.message
-        })
+        });
       }
     }
   });
