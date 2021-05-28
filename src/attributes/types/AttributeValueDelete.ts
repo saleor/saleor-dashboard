@@ -9,7 +9,7 @@ import { AttributeErrorCode } from "./../../types/globalTypes";
 // GraphQL mutation operation: AttributeValueDelete
 // ====================================================
 
-export interface AttributeValueDelete_attributeValueDelete_attribute_values_pageInfo {
+export interface AttributeValueDelete_attributeValueDelete_attribute_choices_pageInfo {
   __typename: "PageInfo";
   endCursor: string | null;
   hasNextPage: boolean;
@@ -17,38 +17,38 @@ export interface AttributeValueDelete_attributeValueDelete_attribute_values_page
   startCursor: string | null;
 }
 
-export interface AttributeValueDelete_attributeValueDelete_attribute_values_edges_node_file {
+export interface AttributeValueDelete_attributeValueDelete_attribute_choices_edges_node_file {
   __typename: "File";
   url: string;
   contentType: string | null;
 }
 
-export interface AttributeValueDelete_attributeValueDelete_attribute_values_edges_node {
+export interface AttributeValueDelete_attributeValueDelete_attribute_choices_edges_node {
   __typename: "AttributeValue";
   id: string;
   name: string | null;
   slug: string | null;
-  file: AttributeValueDelete_attributeValueDelete_attribute_values_edges_node_file | null;
+  file: AttributeValueDelete_attributeValueDelete_attribute_choices_edges_node_file | null;
   reference: string | null;
   richText: any | null;
 }
 
-export interface AttributeValueDelete_attributeValueDelete_attribute_values_edges {
+export interface AttributeValueDelete_attributeValueDelete_attribute_choices_edges {
   __typename: "AttributeValueCountableEdge";
   cursor: string;
-  node: AttributeValueDelete_attributeValueDelete_attribute_values_edges_node;
+  node: AttributeValueDelete_attributeValueDelete_attribute_choices_edges_node;
 }
 
-export interface AttributeValueDelete_attributeValueDelete_attribute_values {
+export interface AttributeValueDelete_attributeValueDelete_attribute_choices {
   __typename: "AttributeValueCountableConnection";
-  pageInfo: AttributeValueDelete_attributeValueDelete_attribute_values_pageInfo;
-  edges: AttributeValueDelete_attributeValueDelete_attribute_values_edges[];
+  pageInfo: AttributeValueDelete_attributeValueDelete_attribute_choices_pageInfo;
+  edges: AttributeValueDelete_attributeValueDelete_attribute_choices_edges[];
 }
 
 export interface AttributeValueDelete_attributeValueDelete_attribute {
   __typename: "Attribute";
   id: string;
-  values: AttributeValueDelete_attributeValueDelete_attribute_values | null;
+  choices: AttributeValueDelete_attributeValueDelete_attribute_choices | null;
 }
 
 export interface AttributeValueDelete_attributeValueDelete_errors {

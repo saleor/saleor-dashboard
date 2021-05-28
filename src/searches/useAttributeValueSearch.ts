@@ -19,7 +19,7 @@ export const searchAttributeValues = gql`
   ) {
     attribute(id: $id) {
       id
-      values(after: $after, first: $first, filter: { search: $query }) {
+      choices(after: $after, first: $first, filter: { search: $query }) {
         edges {
           node {
             ...AttributeValueFragment
@@ -37,12 +37,12 @@ export default makeSearch<
   SearchAttributeValues,
   SearchAttributeValuesVariables
 >(searchAttributeValues, result => {
-  if (result.data?.attribute.values.pageInfo.hasNextPage) {
+  if (result.data?.attribute.choices.pageInfo.hasNextPage) {
     result.loadMore(
       (prev, next) => {
         if (
-          prev.attribute.values.pageInfo.endCursor ===
-          next.attribute.values.pageInfo.endCursor
+          prev.attribute.choices.pageInfo.endCursor ===
+          next.attribute.choices.pageInfo.endCursor
         ) {
           return prev;
         }
@@ -51,20 +51,20 @@ export default makeSearch<
           ...prev,
           attribute: {
             ...prev.attribute,
-            values: {
-              ...prev.attribute.values,
+            choices: {
+              ...prev.attribute.choices,
               edges: [
-                ...prev.attribute.values.edges,
-                ...next.attribute.values.edges
+                ...prev.attribute.choices.edges,
+                ...next.attribute.choices.edges
               ],
-              pageInfo: next.attribute.values.pageInfo
+              pageInfo: next.attribute.choices.pageInfo
             }
           }
         };
       },
       {
         ...result.variables,
-        after: result.data.attribute.values.pageInfo.endCursor
+        after: result.data.attribute.choices.pageInfo.endCursor
       }
     );
   }

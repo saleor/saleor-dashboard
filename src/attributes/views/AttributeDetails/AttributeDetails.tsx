@@ -73,7 +73,7 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ id, params }) => {
 
   const paginationState = createPaginationState(settings?.rowNumber, params);
   const { loadNextPage, loadPreviousPage, pageInfo } = paginate(
-    data?.attribute?.values?.pageInfo,
+    data?.attribute?.choices?.pageInfo,
     paginationState,
     params
   );
@@ -175,14 +175,14 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ id, params }) => {
           __typename: "AttributeReorderValues",
           attribute: {
             ...data.attribute,
-            values: {
+            choices: {
               __typename: "AttributeValueCountableConnection",
               pageInfo: {
-                ...data.attribute.values.pageInfo
+                ...data.attribute.choices.pageInfo
               },
               edges: move(
-                data.attribute.values.edges[oldIndex],
-                data.attribute.values.edges,
+                data.attribute.choices.edges[oldIndex],
+                data.attribute.choices.edges,
                 (a, b) => a.node.id === b.node.id,
                 newIndex
               )
@@ -194,7 +194,7 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ id, params }) => {
       variables: {
         id,
         move: {
-          id: data.attribute.values.edges[oldIndex].node.id,
+          id: data.attribute.choices.edges[oldIndex].node.id,
           sortOrder: newIndex - oldIndex
         },
         firstValues: settings.rowNumber,
@@ -251,7 +251,7 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ id, params }) => {
           })
         }
         saveButtonBarState={attributeUpdateOpts.status}
-        values={maybe(() => data.attribute.values)}
+        values={maybe(() => data.attribute.choices)}
         settings={settings}
         onUpdateListSettings={updateListSettings}
         pageInfo={pageInfo}
@@ -276,7 +276,7 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ id, params }) => {
         open={params.action === "remove-value"}
         name={maybe(
           () =>
-            data.attribute.values.edges.find(
+            data.attribute.choices.edges.find(
               value => params.id === value.node.id
             ).node.name,
           "..."
@@ -317,7 +317,7 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ id, params }) => {
       <AttributeValueEditDialog
         attributeValue={maybe(
           () =>
-            data.attribute.values.edges.find(
+            data.attribute.choices.edges.find(
               value => params.id === value.node.id
             ).node
         )}
@@ -331,7 +331,7 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ id, params }) => {
         onSubmit={input =>
           attributeValueUpdate({
             variables: {
-              id: data.attribute.values.edges.find(
+              id: data.attribute.choices.edges.find(
                 value => params.id === value.node.id
               ).node.id,
               input,

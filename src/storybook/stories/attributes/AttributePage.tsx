@@ -23,7 +23,7 @@ const props: AttributePageProps = {
   onValueReorder: () => undefined,
   onValueUpdate: () => undefined,
   saveButtonBarState: "default",
-  values: attribute.values,
+  values: attribute.choices,
   pageInfo: {
     hasNextPage: false,
     hasPreviousPage: false

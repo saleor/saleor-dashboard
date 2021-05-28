@@ -448,7 +448,7 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
   const collections = mapEdgesToItems(searchCollectionsOpts?.data?.search);
 
   const attributeValues = mapEdgesToItems(
-    searchAttributeValuesOpts?.data?.attribute.values
+    searchAttributeValuesOpts?.data?.attribute.choices
   );
 
   const errors = [
@@ -488,7 +488,7 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
   );
 
   const fetchMoreAttributeValues = {
-    hasMore: !!searchAttributeValuesOpts.data?.attribute?.values?.pageInfo
+    hasMore: !!searchAttributeValuesOpts.data?.attribute?.choices?.pageInfo
       ?.hasNextPage,
     loading: !!searchAttributeValuesOpts.loading,
     onFetchMore: loadMoreAttributeValues

@@ -76,7 +76,7 @@ const initialProductFilterAttributesQuery = gql`
           id
           name
           slug
-          values(
+          choices(
             first: $firstValues
             after: $afterValues
             last: $lastValues
@@ -260,7 +260,7 @@ const productTypeQuery = gql`
         name
         valueRequired
         unit
-        values(
+        choices(
           first: $firstValues
           after: $afterValues
           last: $lastValues

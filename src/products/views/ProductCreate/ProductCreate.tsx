@@ -258,7 +258,7 @@ export const ProductCreateView: React.FC<ProductCreateProps> = ({ params }) => {
     onFetchMore: loadMoreProducts
   };
   const fetchMoreAttributeValues = {
-    hasMore: !!searchAttributeValuesOpts.data?.attribute?.values?.pageInfo
+    hasMore: !!searchAttributeValuesOpts.data?.attribute?.choices?.pageInfo
       ?.hasNextPage,
     loading: !!searchAttributeValuesOpts.loading,
     onFetchMore: loadMoreAttributeValues
@@ -302,7 +302,7 @@ export const ProductCreateView: React.FC<ProductCreateProps> = ({ params }) => {
         categories={mapEdgesToItems(searchCategoryOpts?.data?.search)}
         collections={mapEdgesToItems(searchCollectionOpts?.data?.search)}
         attributeValues={mapEdgesToItems(
-          searchAttributeValuesOpts?.data?.attribute.values
+          searchAttributeValuesOpts?.data?.attribute.choices
         )}
         loading={loading}
         channelsErrors={

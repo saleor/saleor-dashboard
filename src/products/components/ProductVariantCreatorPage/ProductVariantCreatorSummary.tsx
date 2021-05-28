@@ -118,7 +118,7 @@ function getVariantName(
   return attributes.reduce(
     (acc, attribute) => [
       ...acc,
-      attribute.values.edges.find(
+      attribute.choices.edges.find(
         value =>
           value.node.slug ===
           variant.attributes.find(

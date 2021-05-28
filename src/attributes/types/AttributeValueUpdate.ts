@@ -9,7 +9,7 @@ import { AttributeValueCreateInput, AttributeErrorCode } from "./../../types/glo
 // GraphQL mutation operation: AttributeValueUpdate
 // ====================================================
 
-export interface AttributeValueUpdate_attributeValueUpdate_attribute_values_pageInfo {
+export interface AttributeValueUpdate_attributeValueUpdate_attribute_choices_pageInfo {
   __typename: "PageInfo";
   endCursor: string | null;
   hasNextPage: boolean;
@@ -17,38 +17,38 @@ export interface AttributeValueUpdate_attributeValueUpdate_attribute_values_page
   startCursor: string | null;
 }
 
-export interface AttributeValueUpdate_attributeValueUpdate_attribute_values_edges_node_file {
+export interface AttributeValueUpdate_attributeValueUpdate_attribute_choices_edges_node_file {
   __typename: "File";
   url: string;
   contentType: string | null;
 }
 
-export interface AttributeValueUpdate_attributeValueUpdate_attribute_values_edges_node {
+export interface AttributeValueUpdate_attributeValueUpdate_attribute_choices_edges_node {
   __typename: "AttributeValue";
   id: string;
   name: string | null;
   slug: string | null;
-  file: AttributeValueUpdate_attributeValueUpdate_attribute_values_edges_node_file | null;
+  file: AttributeValueUpdate_attributeValueUpdate_attribute_choices_edges_node_file | null;
   reference: string | null;
   richText: any | null;
 }
 
-export interface AttributeValueUpdate_attributeValueUpdate_attribute_values_edges {
+export interface AttributeValueUpdate_attributeValueUpdate_attribute_choices_edges {
   __typename: "AttributeValueCountableEdge";
   cursor: string;
-  node: AttributeValueUpdate_attributeValueUpdate_attribute_values_edges_node;
+  node: AttributeValueUpdate_attributeValueUpdate_attribute_choices_edges_node;
 }
 
-export interface AttributeValueUpdate_attributeValueUpdate_attribute_values {
+export interface AttributeValueUpdate_attributeValueUpdate_attribute_choices {
   __typename: "AttributeValueCountableConnection";
-  pageInfo: AttributeValueUpdate_attributeValueUpdate_attribute_values_pageInfo;
-  edges: AttributeValueUpdate_attributeValueUpdate_attribute_values_edges[];
+  pageInfo: AttributeValueUpdate_attributeValueUpdate_attribute_choices_pageInfo;
+  edges: AttributeValueUpdate_attributeValueUpdate_attribute_choices_edges[];
 }
 
 export interface AttributeValueUpdate_attributeValueUpdate_attribute {
   __typename: "Attribute";
   id: string;
-  values: AttributeValueUpdate_attributeValueUpdate_attribute_values | null;
+  choices: AttributeValueUpdate_attributeValueUpdate_attribute_choices | null;
 }
 
 export interface AttributeValueUpdate_attributeValueUpdate_errors {

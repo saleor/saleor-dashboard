@@ -23,7 +23,7 @@ export const attributes: ProductType_productType_productAttributes[] = [
       slug: "author",
       valueRequired: true,
       unit: null,
-      values: {
+      choices: {
         __typename: "AttributeValueCountableConnection" as "AttributeValueCountableConnection",
         pageInfo: {
           endCursor: "WyI4IiwgIjMiXQ==",
@@ -79,7 +79,7 @@ export const attributes: ProductType_productType_productAttributes[] = [
       slug: "box-size",
       valueRequired: true,
       unit: null,
-      values: {
+      choices: {
         __typename: "AttributeValueCountableConnection" as "AttributeValueCountableConnection",
         pageInfo: {
           endCursor: "WyI4IiwgIjMiXQ==",
@@ -167,7 +167,7 @@ export const attributes: ProductType_productType_productAttributes[] = [
       slug: "brand",
       valueRequired: true,
       unit: null,
-      values: {
+      choices: {
         __typename: "AttributeValueCountableConnection" as "AttributeValueCountableConnection",
         pageInfo: {
           endCursor: "WyI4IiwgIjMiXQ==",
@@ -207,7 +207,7 @@ export const attributes: ProductType_productType_productAttributes[] = [
       slug: "candy-box-size",
       valueRequired: true,
       unit: null,
-      values: {
+      choices: {
         __typename: "AttributeValueCountableConnection" as "AttributeValueCountableConnection",
         pageInfo: {
           endCursor: "WyI4IiwgIjMiXQ==",
@@ -279,7 +279,7 @@ export const attributes: ProductType_productType_productAttributes[] = [
       slug: "coffee-genre",
       valueRequired: true,
       unit: null,
-      values: {
+      choices: {
         __typename: "AttributeValueCountableConnection" as "AttributeValueCountableConnection",
         pageInfo: {
           endCursor: "WyI4IiwgIjMiXQ==",
@@ -335,7 +335,7 @@ export const attributes: ProductType_productType_productAttributes[] = [
       slug: "collar",
       valueRequired: true,
       unit: null,
-      values: {
+      choices: {
         __typename: "AttributeValueCountableConnection" as "AttributeValueCountableConnection",
         pageInfo: {
           endCursor: "WyI4IiwgIjMiXQ==",
@@ -407,7 +407,7 @@ export const attributes: ProductType_productType_productAttributes[] = [
       slug: "color",
       valueRequired: true,
       unit: null,
-      values: {
+      choices: {
         __typename: "AttributeValueCountableConnection" as "AttributeValueCountableConnection",
         pageInfo: {
           endCursor: "WyI4IiwgIjMiXQ==",
@@ -463,7 +463,7 @@ export const attributes: ProductType_productType_productAttributes[] = [
       slug: "cover",
       valueRequired: true,
       unit: null,
-      values: {
+      choices: {
         __typename: "AttributeValueCountableConnection" as "AttributeValueCountableConnection",
         pageInfo: {
           endCursor: "WyI4IiwgIjMiXQ==",
@@ -583,7 +583,7 @@ export const attributes: ProductType_productType_productAttributes[] = [
       slug: "flavor",
       valueRequired: true,
       unit: null,
-      values: {
+      choices: {
         __typename: "AttributeValueCountableConnection" as "AttributeValueCountableConnection",
         pageInfo: {
           endCursor: "WyI4IiwgIjMiXQ==",
@@ -639,7 +639,7 @@ export const attributes: ProductType_productType_productAttributes[] = [
       slug: "language",
       valueRequired: true,
       unit: null,
-      values: {
+      choices: {
         __typename: "AttributeValueCountableConnection" as "AttributeValueCountableConnection",
         pageInfo: {
           endCursor: "WyI4IiwgIjMiXQ==",
@@ -695,7 +695,7 @@ export const attributes: ProductType_productType_productAttributes[] = [
       slug: "publisher",
       valueRequired: true,
       unit: null,
-      values: {
+      choices: {
         __typename: "AttributeValueCountableConnection" as "AttributeValueCountableConnection",
         pageInfo: {
           endCursor: "WyI4IiwgIjMiXQ==",
@@ -751,7 +751,7 @@ export const attributes: ProductType_productType_productAttributes[] = [
       slug: "size",
       valueRequired: true,
       unit: null,
-      values: {
+      choices: {
         __typename: "AttributeValueCountableConnection" as "AttributeValueCountableConnection",
         pageInfo: {
           endCursor: "WyI4IiwgIjMiXQ==",
