@@ -1,3 +1,5 @@
+import { urlList } from "../url/urlList";
+
 export function getStaffMembersStartsWith(startsWith) {
   const query = `query{
     staffUsers(first:100 filter:{
@@ -28,7 +30,7 @@ export function inviteStaffMember({
       email: "${email}",
       isActive: ${isActive},
       addGroups:"${permissionId}"
-      redirectUrl: "http://localhost:9000/dashboard/new-password/"
+      redirectUrl: "${Cypress.config().baseUrl}${urlList.newPassword}"
     }){
       user{
         id

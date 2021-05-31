@@ -11,7 +11,8 @@ export const urlList = {
   sales: "discounts/sales/",
   collections: "collections/",
   vouchers: "discounts/vouchers/",
-  staffMembers: "staff/"
+  staffMembers: "staff/",
+  newPassword: "new-password/"
 };
 export const productDetailsUrl = productId => `${urlList.products}${productId}`;
 export const userDetailsUrl = userId => `${urlList.staffMembers}${userId}`;
