@@ -10,6 +10,7 @@ export const urlList = {
   shippingMethods: "shipping/",
   sales: "discounts/sales/",
   collections: "collections/",
-  vouchers: "discounts/vouchers/"
+  vouchers: "discounts/vouchers/",
+  permissionsGroups: "permission-groups/"
 };
 export const productDetailsUrl = productId => `${urlList.products}${productId}`;

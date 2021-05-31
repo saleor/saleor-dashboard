@@ -124,6 +124,7 @@ const PermissionGroupMemberList: React.FC<PermissionGroupProps> = props => {
         })}
         toolbar={
           <Button
+            data-test-id="assign-members"
             color={disabled ? "secondary" : "primary"}
             onClick={onAssign}
             disabled={disabled}
