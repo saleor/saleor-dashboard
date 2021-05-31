@@ -122,7 +122,6 @@ export enum CategorySortField {
 export enum ChannelErrorCode {
   ALREADY_EXISTS = "ALREADY_EXISTS",
   CHANNELS_CURRENCY_MUST_BE_THE_SAME = "CHANNELS_CURRENCY_MUST_BE_THE_SAME",
-  CHANNEL_TARGET_ID_MUST_BE_DIFFERENT = "CHANNEL_TARGET_ID_MUST_BE_DIFFERENT",
   CHANNEL_WITH_ORDERS = "CHANNEL_WITH_ORDERS",
   DUPLICATED_INPUT_ITEM = "DUPLICATED_INPUT_ITEM",
   GRAPHQL_ERROR = "GRAPHQL_ERROR",
@@ -1203,7 +1202,7 @@ export interface ChannelCreateInput {
 }
 
 export interface ChannelDeleteInput {
-  targetChannel: string;
+  channelId: string;
 }
 
 export interface ChannelUpdateInput {
@@ -1298,7 +1297,7 @@ export interface DraftOrderCreateInput {
   shippingMethod?: string | null;
   voucher?: string | null;
   customerNote?: string | null;
-  channel?: string | null;
+  channelId?: string | null;
   redirectUrl?: string | null;
   lines?: (OrderLineCreateInput | null)[] | null;
 }
@@ -1312,7 +1311,7 @@ export interface DraftOrderInput {
   shippingMethod?: string | null;
   voucher?: string | null;
   customerNote?: string | null;
-  channel?: string | null;
+  channelId?: string | null;
   redirectUrl?: string | null;
 }
 
