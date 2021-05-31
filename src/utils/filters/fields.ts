@@ -17,6 +17,21 @@ export function createPriceField<T extends string>(
   };
 }
 
+export function createWarehouseField<T extends string>(
+  name: T,
+  label: string,
+  defaultValue: MinMax
+): IFilterElement<T> {
+  return {
+    active: false,
+    label,
+    multiple: defaultValue.min !== defaultValue.max,
+    name,
+    type: FieldType.text,
+    value: [defaultValue.min, defaultValue.max]
+  };
+}
+
 export function createDateField<T extends string>(
   name: T,
   label: string,

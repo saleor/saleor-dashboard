@@ -76,7 +76,7 @@ export function createUpdateHandler(
     } else {
       const result = await updateSimpleProduct({
         ...productVariables,
-        addStocks: data.stocks.map(mapFormsetStockToStockInput),
+        addStocks: data.addStocks.map(mapFormsetStockToStockInput),
         deleteStocks: data.removeStocks,
         input: {
           ...productVariables.input,
@@ -87,7 +87,7 @@ export function createUpdateHandler(
           sku: data.sku,
           trackInventory: data.trackInventory
         },
-        updateStocks: data.stocks.map(mapFormsetStockToStockInput)
+        updateStocks: data.updateStocks.map(mapFormsetStockToStockInput)
       });
       errors = [
         ...result.data.productUpdate.errors,

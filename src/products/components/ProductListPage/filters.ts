@@ -4,9 +4,11 @@ import { sectionNames } from "@saleor/intl";
 import { AutocompleteFilterOpts, FilterOpts, MinMax } from "@saleor/types";
 import { StockAvailability } from "@saleor/types/globalTypes";
 import {
-  createAutocompleteField, createDateField,
+  createAutocompleteField,
+  createDateField,
   createOptionsField,
-  createPriceField
+  createPriceField,
+  createWarehouseField
 } from "@saleor/utils/filters/fields";
 import { defineMessages, IntlShape } from "react-intl";
 
@@ -18,7 +20,8 @@ export enum ProductFilterKeys {
   status = "status",
   price = "price",
   productType = "productType",
-  stock = "stock"
+  stock = "stock",
+  warehouseLocation = "warehouseLocation"
 }
 
 export interface ProductListFilterOpts {
@@ -36,6 +39,7 @@ export interface ProductListFilterOpts {
   productType: FilterOpts<string[]> & AutocompleteFilterOpts;
   status: FilterOpts<ProductStatus>;
   stockStatus: FilterOpts<StockAvailability>;
+  warehouseLocation: FilterOpts<MinMax>;
 }
 
 export enum ProductStatus {
@@ -74,6 +78,10 @@ const messages = defineMessages({
   visible: {
     defaultMessage: "Visible",
     description: "product is visible"
+  },
+  warehouseLocation: {
+    defaultMessage: "Lokacja magazynowa",
+    description: "Find product by warehouse location"
   }
 });
 
@@ -127,6 +135,14 @@ export function createFilterStructure(
         opts.price.value
       ),
       active: opts.price.active
+    },
+    {
+      ...createWarehouseField(
+        ProductFilterKeys.warehouseLocation,
+        intl.formatMessage(messages.warehouseLocation),
+        opts.warehouseLocation.value
+      ),
+      active: opts.warehouseLocation.active
     },
     {
       ...createAutocompleteField(

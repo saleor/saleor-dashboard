@@ -37,6 +37,7 @@ import usePaginator, {
 import useShop from "@saleor/hooks/useShop";
 import { buttonMessages, commonMessages } from "@saleor/intl";
 import { maybe } from "@saleor/misc";
+import ProductAddToMegaPackDialog from "@saleor/products/components/ProductAddToMegaPackDialog";
 import ProductExportDialog from "@saleor/products/components/ProductExportDialog";
 import {
   getAttributeIdFromColumnValue,
@@ -438,6 +439,19 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
             <Button
               color="primary"
               onClick={() =>
+                openModal("addToMegaPack", {
+                  ids: listElements
+                })
+              }
+            >
+              <FormattedMessage
+                defaultMessage="Dodaj do megapaki"
+                description="dodaj do megapaki, button"
+              />
+            </Button>
+            <Button
+              color="primary"
+              onClick={() =>
                 openModal("unpublish", {
                   ids: listElements
                 })
@@ -587,6 +601,14 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
           </ConfirmButton>
         </DialogActions>
       </Dialog>
+      <ProductAddToMegaPackDialog
+        params={params}
+        onClose={closeModal}
+        open={params.action === "addToMegaPack"}
+        hasMore={searchAttributes.result.data?.search.pageInfo.hasNextPage}
+        loading={searchAttributes.result.loading}
+        onFetchMore={searchAttributes.loadMore}
+      />
       <ActionDialog
         open={params.action === "unpublish"}
         confirmButtonState={productBulkPublishOpts.status}
