@@ -12,12 +12,8 @@ export interface ProductTypeData_edges {
     edges: ProductTypeData_edge[];
 }
 
-export interface ProductTypeData_search {
-    search: ProductTypeData_edges;
-}
-
 export interface ProductTypeData {
-    data: ProductTypeData_search
+    search: ProductTypeData_edges;
 }
 
 

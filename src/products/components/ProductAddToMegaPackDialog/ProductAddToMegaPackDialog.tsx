@@ -1,24 +1,13 @@
-import {
-  Button,
-  DialogActions,
-  TableFooter,
-  TextField
-} from "@material-ui/core";
+import { Button, DialogActions, TextField } from "@material-ui/core";
 import { Dialog, DialogContent, DialogContentText } from "@material-ui/core";
-import { yellow } from "@material-ui/core/colors";
-import Paper from "@material-ui/core/Paper";
-import Table from "@material-ui/core/Table";
+import { makeStyles } from "@material-ui/core/styles";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
-import { makeStyles } from "@material-ui/styles";
 import ConfirmButton from "@saleor/components/ConfirmButton";
 import FormSpacer from "@saleor/components/FormSpacer";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
-import TablePagination from "@saleor/components/TablePagination";
-import { MegaPackListColumns } from "@saleor/config";
-import useListSettings from "@saleor/hooks/useListSettings";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { buttonMessages, commonMessages } from "@saleor/intl";
 import { maybe } from "@saleor/misc";
@@ -34,22 +23,20 @@ import {
   ProductPrivateMetadataData_privateMetadata
 } from "@saleor/products/types/ProductPrivateMetadata";
 import { ProductsSkusData } from "@saleor/products/types/ProductSkus";
-import useProductTypeSearch from "@saleor/searches/useProductTypeSearch";
-import theme from "@saleor/theme";
 import { DialogProps, FetchMoreProps } from "@saleor/types";
 import { usePrivateMetadataUpdate } from "@saleor/utils/metadata/updateMetadata";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 const useStyles = makeStyles(
-  {
+  theme => ({
     selectedProduct: {
-      background: "grey"
+      background: theme.palette.primary.main
     },
     table: {
       minWidth: 650
     }
-  },
+  }),
   { name: "ProductAddToMegaPackDialog" }
 );
 
@@ -70,7 +57,7 @@ const getSkusToUpdatePrivateMetadata = (
     privateMetadataField => privateMetadataField.key === "skus"
   );
 
-  const oldProducts: string[] =
+  const oldProducts: any[] =
     findOldProducts.value !== undefined
       ? JSON.parse(findOldProducts.value.replaceAll("'", '"'))
       : [""];
@@ -117,10 +104,10 @@ const ProductAddToMegaPackDialog: React.FC<ProductAddToMegaPackDialogProps> = ({
       },
       first: 100
     }),
-    [params]
+    [params, searchValue]
   );
 
-  const { data, loading, refetch } = useProductListQuery({
+  const { data } = useProductListQuery({
     displayLoader: true,
     variables: queryVariables
   });
@@ -143,8 +130,8 @@ const ProductAddToMegaPackDialog: React.FC<ProductAddToMegaPackDialogProps> = ({
     setSelectedProduct(id);
   };
 
-  const handleSearch = () => {
-    setSearchValue(event.target.value);
+  const handleSearch = value => {
+    setSearchValue(value);
   };
 
   const [updatePrivateMetadata] = usePrivateMetadataUpdate({
@@ -166,7 +153,7 @@ const ProductAddToMegaPackDialog: React.FC<ProductAddToMegaPackDialogProps> = ({
       onClose();
     }
   });
-  const classes = useStyles();
+  const classes = useStyles(params);
 
   return (
     <Dialog
@@ -195,7 +182,7 @@ const ProductAddToMegaPackDialog: React.FC<ProductAddToMegaPackDialogProps> = ({
           label="Szukaj"
           variant="outlined"
           fullWidth
-          onChange={handleSearch}
+          onChange={event => handleSearch(event.target.value)}
         />
         <FormSpacer />
         <ResponsiveTable className={classes.table} aria-label="simple table">
@@ -229,6 +216,7 @@ const ProductAddToMegaPackDialog: React.FC<ProductAddToMegaPackDialogProps> = ({
           <FormattedMessage {...buttonMessages.back} />
         </Button>
         <ConfirmButton
+          transitionState={params}
           color="primary"
           variant="contained"
           onClick={() =>
