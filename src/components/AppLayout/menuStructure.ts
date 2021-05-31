@@ -15,6 +15,7 @@ import { customerListUrl } from "../../customers/urls";
 import { saleListUrl, voucherListUrl } from "../../discounts/urls";
 import { orderDraftListUrl, orderListUrl } from "../../orders/urls";
 import { productListUrl } from "../../products/urls";
+import { stockTransferRequestUrl } from "../../stocks/urls";
 import { languageListUrl } from "../../translations/urls";
 import { PermissionEnum } from "../../types/globalTypes";
 
@@ -132,6 +133,22 @@ function createMenuStructure(intl: IntlShape): IMenuItem[] {
       permission: PermissionEnum.MANAGE_TRANSLATIONS,
       testingContextId: "translations",
       url: languageListUrl
+    },
+    {
+      ariaLabel: "stocks",
+      children: [
+        {
+          ariaLabel: "transfer request",
+          label: intl.formatMessage(sectionNames.transferRequests),
+          permission: PermissionEnum.MANAGE_ORDERS,
+          testingContextId: "transfer request",
+          url: stockTransferRequestUrl()
+        }
+      ],
+      icon: ordersIcon,
+      label: intl.formatMessage(sectionNames.stocks),
+      permission: PermissionEnum.MANAGE_ORDERS,
+      testingContextId: "stocks"
     }
   ];
 }

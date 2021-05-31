@@ -59,6 +59,7 @@ import errorTracker from "./services/errorTracking";
 import ShippingSection from "./shipping";
 import SiteSettingsSection from "./siteSettings";
 import StaffSection from "./staff";
+import StocksSection from "./stocks";
 import TaxesSection from "./taxes";
 import TranslationsSection from "./translations";
 import { PermissionEnum } from "./types/globalTypes";
@@ -286,6 +287,11 @@ const Routes: React.FC = () => {
                 permissions={[PermissionEnum.MANAGE_CHANNELS]}
                 path={channelsSection}
                 component={ChannelsSection}
+              />
+              <SectionRoute
+                permissions={[PermissionEnum.MANAGE_ORDERS]}
+                path="/stocks"
+                component={StocksSection}
               />
               {createConfigurationMenu(intl).filter(menu =>
                 menu.menuItems.map(item => hasPermission(item.permission, user))

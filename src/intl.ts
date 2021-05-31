@@ -302,6 +302,14 @@ export const sectionNames = defineMessages({
   webhooks: {
     defaultMessage: "Webhooks",
     description: "webhooks section name"
+  },
+  stocks: {
+    defaultMessage: "Stocks",
+    description: "Stock section name"
+  },
+  transferRequests: {
+    defaultMessage: "Transfer Requests",
+    description: "Stock transfer requests section name"
   }
 });
 
