@@ -97,7 +97,10 @@ const OrderFulfillmentCancelDialog: React.FC<OrderFulfillmentCancelDialogProps> 
                 <DialogContentText className={classes.paragraph}>
                   <FormattedMessage defaultMessage="Are you sure you want to cancel fulfillment? Canceling a fulfillment will restock products at a selected warehouse." />
                 </DialogContentText>
-                <div className={classes.selectCcontainer}>
+                <div
+                  className={classes.selectCcontainer}
+                  data-test-id="cancelFulfillmentSelectField"
+                >
                   <SingleAutocompleteSelectField
                     choices={choices}
                     displayValue={displayValue}
@@ -126,6 +129,7 @@ const OrderFulfillmentCancelDialog: React.FC<OrderFulfillmentCancelDialogProps> 
                   <FormattedMessage {...buttonMessages.back} />
                 </Button>
                 <ConfirmButton
+                  data-test="submit"
                   disabled={formData.warehouseId === null}
                   transitionState={confirmButtonState}
                   variant="contained"

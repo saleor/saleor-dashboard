@@ -13,9 +13,8 @@ import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
 import { sectionNames } from "@saleor/intl";
 import { makeStyles } from "@saleor/theme";
-import { TaxRateType } from "@saleor/types/globalTypes";
 import React from "react";
-import { FormattedMessage, IntlShape, useIntl } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import { maybe, renderCollection } from "../../../misc";
 import { CountryList_shop_countries_vat_reducedRates } from "../../types/CountryList";
@@ -29,111 +28,6 @@ const useStyles = makeStyles(
   { name: "CountryTaxesPage" }
 );
 
-function translateTaxRates(intl: IntlShape): Record<TaxRateType, string> {
-  return {
-    [TaxRateType.ACCOMMODATION]: intl.formatMessage({
-      defaultMessage: "Accommodation",
-      description: "tax rate"
-    }),
-    [TaxRateType.ADMISSION_TO_CULTURAL_EVENTS]: intl.formatMessage({
-      defaultMessage: "Admission to cultural events",
-      description: "tax rate"
-    }),
-    [TaxRateType.ADMISSION_TO_ENTERTAINMENT_EVENTS]: intl.formatMessage({
-      defaultMessage: "Admission to entertainment events",
-      description: "tax rate"
-    }),
-    [TaxRateType.ADMISSION_TO_SPORTING_EVENTS]: intl.formatMessage({
-      defaultMessage: "Admission to sporting events",
-      description: "tax rate"
-    }),
-    [TaxRateType.ADVERTISING]: intl.formatMessage({
-      defaultMessage: "Advertising",
-      description: "tax rate"
-    }),
-    [TaxRateType.AGRICULTURAL_SUPPLIES]: intl.formatMessage({
-      defaultMessage: "Agricultural supplies",
-      description: "tax rate"
-    }),
-    [TaxRateType.BABY_FOODSTUFFS]: intl.formatMessage({
-      defaultMessage: "Baby foodstuffs",
-      description: "tax rate"
-    }),
-    [TaxRateType.BIKES]: intl.formatMessage({
-      defaultMessage: "Bikes",
-      description: "tax rate"
-    }),
-    [TaxRateType.BOOKS]: intl.formatMessage({
-      defaultMessage: "Books",
-      description: "tax rate"
-    }),
-    [TaxRateType.CHILDRENS_CLOTHING]: intl.formatMessage({
-      defaultMessage: "Children's clothing",
-      description: "tax rate"
-    }),
-    [TaxRateType.DOMESTIC_FUEL]: intl.formatMessage({
-      defaultMessage: "Domestic fuel",
-      description: "tax rate"
-    }),
-    [TaxRateType.DOMESTIC_SERVICES]: intl.formatMessage({
-      defaultMessage: "Domestic services",
-      description: "tax rate"
-    }),
-    [TaxRateType.E_BOOKS]: intl.formatMessage({
-      defaultMessage: "E-books",
-      description: "tax rate"
-    }),
-    [TaxRateType.FOODSTUFFS]: intl.formatMessage({
-      defaultMessage: "Foodstuffs",
-      description: "tax rate"
-    }),
-    [TaxRateType.HOTELS]: intl.formatMessage({
-      defaultMessage: "Hotels",
-      description: "tax rate"
-    }),
-    [TaxRateType.MEDICAL]: intl.formatMessage({
-      defaultMessage: "Medical",
-      description: "tax rate"
-    }),
-    [TaxRateType.NEWSPAPERS]: intl.formatMessage({
-      defaultMessage: "Newspapers",
-      description: "tax rate"
-    }),
-    [TaxRateType.PASSENGER_TRANSPORT]: intl.formatMessage({
-      defaultMessage: "Passenger transport",
-      description: "tax rate"
-    }),
-    [TaxRateType.PHARMACEUTICALS]: intl.formatMessage({
-      defaultMessage: "Pharmaceuticals",
-      description: "tax rate"
-    }),
-    [TaxRateType.PROPERTY_RENOVATIONS]: intl.formatMessage({
-      defaultMessage: "Property renovations",
-      description: "tax rate"
-    }),
-    [TaxRateType.RESTAURANTS]: intl.formatMessage({
-      defaultMessage: "Restaurants",
-      description: "tax rate"
-    }),
-    [TaxRateType.SOCIAL_HOUSING]: intl.formatMessage({
-      defaultMessage: "Social housing",
-      description: "tax rate"
-    }),
-    [TaxRateType.STANDARD]: intl.formatMessage({
-      defaultMessage: "Standard",
-      description: "tax rate"
-    }),
-    [TaxRateType.WATER]: intl.formatMessage({
-      defaultMessage: "Water",
-      description: "tax rate"
-    }),
-    [TaxRateType.WINE]: intl.formatMessage({
-      defaultMessage: "Wine",
-      description: "tax rate"
-    })
-  };
-}
-
 export interface CountryTaxesPageProps {
   countryName: string;
   taxCategories: CountryList_shop_countries_vat_reducedRates[];
@@ -145,7 +39,6 @@ const CountryTaxesPage: React.FC<CountryTaxesPageProps> = props => {
 
   const classes = useStyles(props);
   const intl = useIntl();
-  const translatedTaxRates = translateTaxRates(intl);
 
   return (
     <Container>
@@ -189,10 +82,7 @@ const CountryTaxesPage: React.FC<CountryTaxesPageProps> = props => {
                       key={taxCategory ? taxCategory.rateType : "skeleton"}
                     >
                       <TableCell>
-                        {maybe<React.ReactNode>(
-                          () => translatedTaxRates[taxCategory.rateType],
-                          <Skeleton />
-                        )}
+                        {taxCategory?.rateType ?? <Skeleton />}
                       </TableCell>
                       <TableCell>
                         {maybe<React.ReactNode>(

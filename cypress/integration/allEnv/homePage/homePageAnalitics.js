@@ -18,7 +18,7 @@ import * as shippingUtils from "../../../utils/shippingUtils";
 
 // <reference types="cypress" />
 describe("Homepage analytics", () => {
-  const startsWith = "CyHomeAnalytics-";
+  const startsWith = "CyHomeAnalytics";
 
   let customerId;
   let defaultChannel;
@@ -33,7 +33,7 @@ describe("Homepage analytics", () => {
   const productPrice = 22;
   const shippingPrice = 12;
   const randomName = startsWith + faker.datatype.number();
-  const randomEmail = randomName + "@example.com";
+  const randomEmail = `${startsWith}${randomName}@example.com`;
 
   before(() => {
     cy.clearSessionData().loginUserViaRequest();
@@ -109,13 +109,13 @@ describe("Homepage analytics", () => {
     homePageUtils
       .getOrdersReadyToFulfill(defaultChannel.slug)
       .as("ordersReadyToFulfill");
-    createReadyToFulfillOrder(
+    createReadyToFulfillOrder({
       customerId,
-      shippingMethod.id,
-      defaultChannel.id,
-      createdVariants,
-      addresses.plAddress
-    );
+      shippingMethodId: shippingMethod.id,
+      channelId: defaultChannel.id,
+      variantsList: createdVariants,
+      address: addresses.plAddress
+    });
     cy.get("@ordersReadyToFulfill").then(ordersReadyToFulfillBefore => {
       const allOrdersReadyToFulfill = ordersReadyToFulfillBefore + 1;
       const notANumberRegex = "\\D*";
@@ -130,6 +130,7 @@ describe("Homepage analytics", () => {
       ).should("be.visible");
     });
   });
+
   it("should correct amount of payments waiting for capture be displayed", () => {
     homePageUtils
       .getOrdersReadyForCapture(defaultChannel.slug)
@@ -157,6 +158,7 @@ describe("Homepage analytics", () => {
       ).should("be.visible");
     });
   });
+
   it("should correct amount of products out of stock be displayed", () => {
     homePageUtils
       .getProductsOutOfStock(defaultChannel.slug)
@@ -188,16 +190,17 @@ describe("Homepage analytics", () => {
       ).should("be.visible");
     });
   });
+
   it("should correct amount of sales be displayed", () => {
     homePageUtils.getSalesAmount(defaultChannel.slug).as("salesAmount");
 
-    createReadyToFulfillOrder(
+    createReadyToFulfillOrder({
       customerId,
-      shippingMethod.id,
-      defaultChannel.id,
-      createdVariants,
-      addresses.plAddress
-    );
+      shippingMethodId: shippingMethod.id,
+      channelId: defaultChannel.id,
+      variantsList: createdVariants,
+      address: addresses.plAddress
+    });
 
     cy.get("@salesAmount").then(salesAmount => {
       const totalAmount = salesAmount + productPrice;
@@ -205,10 +208,11 @@ describe("Homepage analytics", () => {
       const totalAmountIntegerValue = totalAmountString.split(".")[0];
       const totalAmountDecimalValue = totalAmountString.split(".")[1];
       const decimalSeparator = "[,.]";
-      const totalAmountIntegerWithThousandsSeparator = totalAmountIntegerValue.replace(
-        /(\d)(?=(\d{3})+(?!\d))/g,
-        "1[,.]*"
-      );
+      const totalAmountIntegerWithThousandsSeparator = new Intl.NumberFormat(
+        "en"
+      )
+        .format(totalAmountIntegerValue)
+        .replaceAll(",", "[,.]*");
       const totalAmountWithSeparators = `${totalAmountIntegerWithThousandsSeparator}${decimalSeparator}${totalAmountDecimalValue}`;
       const notANumberRegex = "\\D*";
       const salesAmountRegexp = new RegExp(
@@ -221,16 +225,17 @@ describe("Homepage analytics", () => {
       );
     });
   });
+
   it("should correct amount of orders be displayed", () => {
     homePageUtils.getTodaysOrders(defaultChannel.slug).as("todaysOrders");
 
-    createReadyToFulfillOrder(
+    createReadyToFulfillOrder({
       customerId,
-      shippingMethod.id,
-      defaultChannel.id,
-      createdVariants,
-      addresses.plAddress
-    );
+      shippingMethodId: shippingMethod.id,
+      channelId: defaultChannel.id,
+      variantsList: createdVariants,
+      address: addresses.plAddress
+    });
 
     cy.get("@todaysOrders").then(ordersBefore => {
       const allOrders = ordersBefore + 1;

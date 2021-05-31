@@ -52,19 +52,25 @@ export function createDraftOrder(
     .sendRequestWithQuery(mutation)
     .its("body.data.draftOrderCreate.order");
 }
+
 export function completeOrder(orderId) {
   const mutation = `mutation{
     draftOrderComplete(id:"${orderId}"){
       order{
         id
+        number
+        lines{
+          id
+        }
       }
       orderErrors{
         message
       }
     }
   }`;
-  return cy.sendRequestWithQuery(mutation);
+  return cy.sendRequestWithQuery(mutation).its("body.data.draftOrderComplete");
 }
+
 export function getOrder(orderId) {
   const query = `query getOrder{
     order(id:"${orderId}"){
@@ -77,4 +83,31 @@ export function getOrder(orderId) {
     }
   }`;
   cy.sendRequestWithQuery(query).its("body.data.order");
+}
+
+export function fulfillOrder({ orderId, warehouse, quantity, linesId }) {
+  const lines = linesId.reduce((lines, lineId) => {
+    const line = `{orderLineId:"${lineId.id}"
+      stocks:{
+        quantity:${quantity}
+        warehouse:"${warehouse}"
+      }
+    }`;
+    return lines + line;
+  }, "");
+  const mutation = `mutation fulfill{
+  orderFulfill(order:"${orderId}" input:{
+    lines:[${lines}]
+  }){
+    errors{
+      field
+      message
+    }
+    order{
+      id
+      number
+    }
+  }
+}`;
+  return cy.sendRequestWithQuery(mutation).its("body.data.orderFulfill");
 }

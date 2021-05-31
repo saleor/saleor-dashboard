@@ -90,6 +90,7 @@ const CardMenu: React.FC<CardMenuProps> = props => {
   return (
     <div className={className} {...rest}>
       <IconButton
+        data-test-id="showMoreButton"
         aria-label="More"
         aria-owns={open ? "long-menu" : null}
         aria-haspopup="true"
@@ -125,6 +126,7 @@ const CardMenu: React.FC<CardMenuProps> = props => {
                 >
                   {menuItems.map((menuItem, menuItemIndex) => (
                     <MenuItem
+                      data-test-id={menuItem.testId}
                       disabled={menuItem.disabled}
                       onClick={() => handleMenuClick(menuItemIndex)}
                       key={menuItem.label}
