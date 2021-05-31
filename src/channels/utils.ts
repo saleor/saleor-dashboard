@@ -15,6 +15,8 @@ import {
 import { mapNodeToChoice } from "@saleor/utils/maps";
 import uniqBy from "lodash/uniqBy";
 
+import { BaseChannels_channels } from "./types/BaseChannels";
+
 export interface Channel {
   id: string;
   name: string;
@@ -73,7 +75,7 @@ export interface ChannelCollectionData {
   publicationDate: string | null;
 }
 
-export const createCollectionChannels = (data?: Channels_channels[]) =>
+export const createCollectionChannels = (data?: BaseChannels_channels[]) =>
   data?.map(channel => ({
     id: channel.id,
     isPublished: false,
@@ -81,7 +83,7 @@ export const createCollectionChannels = (data?: Channels_channels[]) =>
     publicationDate: null
   }));
 
-export const createVoucherChannels = (data?: Channels_channels[]) =>
+export const createVoucherChannels = (data?: BaseChannels_channels[]) =>
   data?.map(channel => ({
     currency: channel.currencyCode,
     discountValue: "",
@@ -90,7 +92,7 @@ export const createVoucherChannels = (data?: Channels_channels[]) =>
     name: channel.name
   }));
 
-export const createSaleChannels = (data?: Channels_channels[]) =>
+export const createSaleChannels = (data?: BaseChannels_channels[]) =>
   data?.map(channel => ({
     currency: channel.currencyCode,
     discountValue: "",
@@ -115,7 +117,7 @@ export const createVariantChannels = (
 
 export const createChannelsDataWithSaleDiscountPrice = (
   saleData?: SaleDetails_sale,
-  data?: Channels_channels[]
+  data?: BaseChannels_channels[]
 ): ChannelSaleData[] => {
   if (data && saleData?.channelListings) {
     const dataArr = createSaleChannels(data);
@@ -128,7 +130,7 @@ export const createChannelsDataWithSaleDiscountPrice = (
 
 export const createChannelsDataWithDiscountPrice = (
   voucherData?: VoucherDetails_voucher,
-  data?: Channels_channels[]
+  data?: BaseChannels_channels[]
 ): ChannelVoucherData[] => {
   if (data && voucherData?.channelListings) {
     const dataArr = createVoucherChannels(data);
@@ -139,7 +141,9 @@ export const createChannelsDataWithDiscountPrice = (
   return [];
 };
 
-export const createChannelsData = (data?: Channels_channels[]): ChannelData[] =>
+export const createChannelsData = (
+  data?: BaseChannels_channels[]
+): ChannelData[] =>
   data?.map(channel => ({
     availableForPurchase: null,
     costPrice: "",
@@ -156,7 +160,7 @@ export const createChannelsData = (data?: Channels_channels[]): ChannelData[] =>
 
 export const createChannelsDataWithPrice = (
   productData?: ProductDetails_product,
-  data?: Channels_channels[]
+  data?: BaseChannels_channels[]
 ): ChannelData[] => {
   if (data && productData?.channelListings) {
     const dataArr = createChannelsData(data);
@@ -292,7 +296,7 @@ export const createSortedChannelsDataFromProduct = (
     channel.name.localeCompare(nextChannel.name)
   );
 
-export const createSortedChannelsData = (data?: Channels_channels[]) =>
+export const createSortedChannelsData = (data?: BaseChannels_channels[]) =>
   createChannelsData(data)?.sort((channel, nextChannel) =>
     channel.name.localeCompare(nextChannel.name)
   );
@@ -311,12 +315,12 @@ export const createSortedShippingChannelsFromRate = (
     channel.name.localeCompare(nextChannel.name)
   );
 
-export const createSortedVoucherData = (data?: Channels_channels[]) =>
+export const createSortedVoucherData = (data?: BaseChannels_channels[]) =>
   createVoucherChannels(data)?.sort((channel, nextChannel) =>
     channel.name.localeCompare(nextChannel.name)
   );
 
-export const createSortedSaleData = (data?: Channels_channels[]) =>
+export const createSortedSaleData = (data?: BaseChannels_channels[]) =>
   createSaleChannels(data)?.sort((channel, nextChannel) =>
     channel.name.localeCompare(nextChannel.name)
   );

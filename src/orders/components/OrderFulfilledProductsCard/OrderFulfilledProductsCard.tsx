@@ -82,7 +82,8 @@ const OrderFulfilledProductsCard: React.FC<OrderFulfilledProductsCardProps> = pr
                       defaultMessage: "Cancel Fulfillment",
                       description: "button"
                     }),
-                    onSelect: onOrderFulfillmentCancel
+                    onSelect: onOrderFulfillmentCancel,
+                    testId: "cancelFulfillmentButton"
                   }
                 ]}
               />

@@ -1,4 +1,4 @@
-import { Channels_channels } from "@saleor/channels/types/Channels";
+import { BaseChannels_channels } from "@saleor/channels/types/BaseChannels";
 import CardSpacer from "@saleor/components/CardSpacer";
 import MultiAutocompleteSelectField, {
   MultiAutocompleteChoiceType
@@ -30,7 +30,7 @@ const messages = defineMessages({
 interface ChannelsSectionProps {
   onChange: FormChange;
   selectedChannels: string[];
-  allChannels?: Channels_channels[];
+  allChannels?: BaseChannels_channels[];
   channelsDisplayValues: MultiAutocompleteChoiceType[];
 }
 

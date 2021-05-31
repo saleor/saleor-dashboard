@@ -18,7 +18,10 @@ import { useIntl } from "react-intl";
 
 import { maybe, splitDateTime } from "../../../misc";
 import { ChannelProps, ListProps, TabListActions } from "../../../types";
-import { SaleType as SaleTypeEnum } from "../../../types/globalTypes";
+import {
+  PermissionEnum,
+  SaleType as SaleTypeEnum
+} from "../../../types/globalTypes";
 import { SaleDetails_sale } from "../../types/SaleDetails";
 import DiscountCategories from "../DiscountCategories";
 import DiscountCollections from "../DiscountCollections";
@@ -294,6 +297,7 @@ const SaleDetailsPage: React.FC<SaleDetailsPageProps> = ({
                 />
                 <CardSpacer />
                 <ChannelsAvailabilityCard
+                  managePermissions={[PermissionEnum.MANAGE_DISCOUNTS]}
                   selectedChannelsCount={data.channelListings.length}
                   allChannelsCount={allChannelsCount}
                   channelsList={data.channelListings.map(channel => ({

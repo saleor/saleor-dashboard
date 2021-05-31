@@ -18,6 +18,7 @@ import {
   areAnyChannelVariantsSelected,
   getTotalSelectedChannelsCount
 } from "@saleor/products/views/ProductUpdate/utils";
+import { PermissionEnum } from "@saleor/types/globalTypes";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -25,7 +26,10 @@ import ChannelWithVariantsAvailabilityItemWrapper from "./ChannelWithVariantAvai
 
 type CommonChannelsAvailabilityProps = Omit<
   ChannelsAvailabilityWrapperProps,
-  "children" | "selectedChannelsCount" | "allChannelsCount"
+  | "children"
+  | "selectedChannelsCount"
+  | "allChannelsCount"
+  | "managePermissions"
 >;
 
 export interface ChannelsWithVariantsAvailabilityCardProps
@@ -69,6 +73,7 @@ const ChannelsWithVariantsAvailabilityCard: React.FC<ChannelsWithVariantsAvailab
 
   return (
     <ChannelsAvailabilityCardWrapper
+      managePermissions={[PermissionEnum.MANAGE_PRODUCTS]}
       selectedChannelsCount={selectedChannelsCount}
       allChannelsCount={allChannelsCount}
       openModal={openModal}

@@ -27,6 +27,7 @@ import {
 } from "@saleor/shipping/types/ShippingZone";
 import { ListActions, ListProps } from "@saleor/types";
 import {
+  PermissionEnum,
   PostalCodeRuleInclusionTypeEnum,
   ShippingMethodTypeEnum
 } from "@saleor/types/globalTypes";
@@ -203,6 +204,7 @@ export const ShippingZoneRatesPage: React.FC<ShippingZoneRatesPageProps> = ({
               </div>
               <div>
                 <ChannelsAvailabilityCard
+                  managePermissions={[PermissionEnum.MANAGE_SHIPPING]}
                   allChannelsCount={allChannelsCount}
                   selectedChannelsCount={shippingChannels?.length}
                   channelsList={data.channelListings.map(channel => ({
