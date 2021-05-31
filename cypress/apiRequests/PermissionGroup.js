@@ -56,3 +56,16 @@ export function createPermissionGroup({
     .sendRequestWithQuery(mutation)
     .its("body.data.permissionGroupCreate");
 }
+
+export function getPermissionGroup(permissionGroupId) {
+  const query = `query{
+    permissionGroup(id:"${permissionGroupId}"){
+      id
+      name
+      users{
+        email
+      }
+    }
+  }`;
+  return cy.sendRequestWithQuery(query).its("body.data.permissionGroup");
+}

@@ -1,6 +1,9 @@
 import faker from "faker";
 
-import { createPermissionGroup } from "../../../apiRequests/PermissionGroup.js";
+import {
+  createPermissionGroup,
+  getPermissionGroup
+} from "../../../apiRequests/PermissionGroup.js";
 import { getStaffMembersStartsWith } from "../../../apiRequests/StaffMembers";
 import { USER_WITHOUT_NAME } from "../../../Data/users";
 import { PERMISSION_GROUP_DETAILS } from "../../../elements/permissionGroup/permissionGroupDetails";
@@ -25,7 +28,7 @@ describe("Permissions groups", () => {
     cy.clearSessionData().loginUserViaRequest();
   });
 
-  xit("should create permission group", () => {
+  it("should create permission group", () => {
     const permissionName = `${startsWith}${faker.datatype.number()}`;
 
     cy.visit(urlList.permissionsGroups)
@@ -53,7 +56,7 @@ describe("Permissions groups", () => {
     ).should("be.visible");
   });
 
-  xit("should delete permission group", () => {
+  it("should delete permission group", () => {
     const permissionName = `${startsWith}${faker.datatype.number()}`;
     let staffMember;
     getStaffMembersStartsWith(USER_WITHOUT_NAME.email)
@@ -85,11 +88,28 @@ describe("Permissions groups", () => {
     createPermissionGroup({
       name: permissionName,
       permissionsArray: "[MANAGE_PRODUCTS]"
-    }).then(({ group }) => {
-      cy.visit(permissionGroupDetails(group.id))
-        .get(PERMISSION_GROUP_DETAILS.assignMemberButton)
-        .click();
-    });
+    })
+      .then(({ group }) => {
+        cy.visit(permissionGroupDetails(group.id))
+          .get(PERMISSION_GROUP_DETAILS.assignMemberButton)
+          .click()
+          .get(PERMISSION_GROUP_DETAILS.searchField)
+          .type(USER_WITHOUT_NAME.email)
+          .get(PERMISSION_GROUP_DETAILS.userRow)
+          .find(BUTTON_SELECTORS.checkbox)
+          .click()
+          .get(BUTTON_SELECTORS.submit)
+          .click()
+          .addAliasToGraphRequest("PermissionGroupUpdate")
+          .get(BUTTON_SELECTORS.confirm)
+          .click()
+          .wait("@PermissionGroupUpdate");
+        getPermissionGroup(group.id);
+      })
+      .then(resp => {
+        expect(resp.users).to.have.length(1);
+        expect(resp.users[0].email).to.be.eq(USER_WITHOUT_NAME.email);
+      });
   });
 
   // it("should remove user from permission group", () => {
