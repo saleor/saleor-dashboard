@@ -112,7 +112,22 @@ describe("Permissions groups", () => {
       });
   });
 
-  // it("should remove user from permission group", () => {
-
-  // });
+  it("should remove user from permission group", () => {
+    const permissionName = `${startsWith}${faker.datatype.number()}`;
+    let staffMember;
+    getStaffMembersStartsWith(USER_WITHOUT_NAME.email)
+      .its("body.data.staffUsers.edges")
+      .then(staffMemberResp => {
+        staffMember = staffMemberResp[0].node;
+        createPermissionGroup({
+          name: permissionName,
+          userIdsArray: `["${staffMember.id}"]`,
+          permissionsArray: "[MANAGE_PRODUCTS]"
+        });
+        //
+        cy.visit(staffMemberDetailsUrl(staffMember.id));
+        cy.get(SHARED_ELEMENTS.header).should("be.visible");
+        cy.contains(permissionName).should("not.exist");
+      });
+  });
 });
