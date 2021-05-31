@@ -4,7 +4,7 @@ import { IconProps } from "@material-ui/core/Icon";
 import Typography from "@material-ui/core/Typography";
 import { User } from "@saleor/fragments/types/User";
 import { sectionNames } from "@saleor/intl";
-import { makeStyles } from "@saleor/theme";
+import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import { useIntl } from "react-intl";
 

@@ -14,6 +14,7 @@ import TableCellHeader from "@saleor/components/TableCellHeader";
 import TableHead from "@saleor/components/TableHead";
 import TablePagination from "@saleor/components/TablePagination";
 import { ProductListColumns } from "@saleor/config";
+import { makeStyles } from "@saleor/macaw-ui";
 import { maybe, renderCollection } from "@saleor/misc";
 import {
   getAttributeIdFromColumnValue,
@@ -22,7 +23,6 @@ import {
 import { GridAttributes_grid_edges_node } from "@saleor/products/types/GridAttributes";
 import { ProductList_products_edges_node } from "@saleor/products/types/ProductList";
 import { ProductListUrlSortField } from "@saleor/products/urls";
-import { makeStyles } from "@saleor/theme";
 import { ChannelProps, ListActions, ListProps, SortPage } from "@saleor/types";
 import TDisplayColumn, {
   DisplayColumnProps

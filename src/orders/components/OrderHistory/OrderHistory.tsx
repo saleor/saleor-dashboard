@@ -9,8 +9,8 @@ import {
   TimelineEventProps,
   TimelineNote
 } from "@saleor/components/Timeline";
+import { makeStyles } from "@saleor/macaw-ui";
 import { OrderDetails_order_events } from "@saleor/orders/types/OrderDetails";
-import { makeStyles } from "@saleor/theme";
 import {
   OrderEventsEmailsEnum,
   OrderEventsEnum

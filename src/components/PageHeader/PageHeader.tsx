@@ -1,6 +1,6 @@
 import Typography from "@material-ui/core/Typography";
 import { LimitInfoFragment } from "@saleor/fragments/types/LimitInfoFragment";
-import { makeStyles } from "@saleor/theme";
+import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 
 import ExtendedPageHeader from "../ExtendedPageHeader";

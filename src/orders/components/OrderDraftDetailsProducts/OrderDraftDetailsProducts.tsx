@@ -4,11 +4,11 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import { AVATAR_MARGIN } from "@saleor/components/TableCellAvatar/Avatar";
+import { makeStyles } from "@saleor/macaw-ui";
 import {
   OrderLineDiscountConsumer,
   OrderLineDiscountContextConsumerProps
 } from "@saleor/products/components/OrderDiscountProviders/OrderLineDiscountProvider";
-import { makeStyles } from "@saleor/theme";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 

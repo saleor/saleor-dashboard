@@ -1,9 +1,9 @@
 import menuArrowIcon from "@assets/images/menu-arrow-icon.svg";
 import Hidden from "@material-ui/core/Hidden";
 import Typography from "@material-ui/core/Typography";
-import useTheme from "@saleor/hooks/useTheme";
+import { useTheme } from "@saleor/macaw-ui";
+import { makeStyles } from "@saleor/macaw-ui";
 import { createHref } from "@saleor/misc";
-import { makeStyles } from "@saleor/theme";
 import classNames from "classnames";
 import React from "react";
 import SVG from "react-inlinesvg";
@@ -124,7 +124,7 @@ const MenuNested: React.FC<MenuNestedProps> = props => {
   const classes = useStyles(props);
 
   const menuItems = menuItem.children;
-  const { isDark } = useTheme();
+  const { themeType } = useTheme();
   const closeMenu = (menuItemUrl, event) => {
     onMenuItemClick(menuItemUrl, event);
     closeSubMenu({
@@ -134,6 +134,9 @@ const MenuNested: React.FC<MenuNestedProps> = props => {
     event.stopPropagation();
     event.preventDefault();
   };
+
+  const isDark = themeType === "dark";
+
   return (
     <>
       <div

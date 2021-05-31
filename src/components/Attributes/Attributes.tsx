@@ -10,7 +10,7 @@ import { AttributeValueFragment } from "@saleor/fragments/types/AttributeValueFr
 import { PageErrorWithAttributesFragment } from "@saleor/fragments/types/PageErrorWithAttributesFragment";
 import { ProductErrorWithAttributesFragment } from "@saleor/fragments/types/ProductErrorWithAttributesFragment";
 import { FormsetAtomicData } from "@saleor/hooks/useFormset";
-import { makeStyles } from "@saleor/theme";
+import { makeStyles } from "@saleor/macaw-ui";
 import {
   AttributeEntityTypeEnum,
   AttributeInputTypeEnum,

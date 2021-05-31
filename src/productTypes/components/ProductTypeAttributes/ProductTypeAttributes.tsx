@@ -13,8 +13,8 @@ import {
   SortableTableRow
 } from "@saleor/components/SortableTable";
 import TableHead from "@saleor/components/TableHead";
+import { makeStyles } from "@saleor/macaw-ui";
 import { maybe, renderCollection, stopPropagation } from "@saleor/misc";
-import { makeStyles } from "@saleor/theme";
 import { ListActions, ReorderAction } from "@saleor/types";
 import { ProductAttributeType } from "@saleor/types/globalTypes";
 import React from "react";

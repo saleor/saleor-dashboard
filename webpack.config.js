@@ -138,6 +138,17 @@ module.exports = (env, argv) => {
       manifestPlugin
     ].filter(Boolean),
     resolve: {
+      // Resolve macaw ui's peer dependencies to our own node_modules
+      // to make it work with npm link
+      alias: {
+        react: path.resolve("./node_modules/react"),
+        "react-dom": path.resolve("./node_modules/react-dom"),
+        "@material-ui/core": path.resolve("./node_modules/@material-ui/core"),
+        "@material-ui/icons": path.resolve("./node_modules/@material-ui/icons"),
+        "@material-ui/styles": path.resolve(
+          "./node_modules/@material-ui/styles"
+        )
+      },
       extensions: [".js", ".jsx", ".ts", ".tsx"],
       plugins: [pathsPlugin]
     }

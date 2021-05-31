@@ -13,8 +13,8 @@ import {
   SortableTableRow
 } from "@saleor/components/SortableTable";
 import { AttributeDetailsFragment_values } from "@saleor/fragments/types/AttributeDetailsFragment";
+import { makeStyles } from "@saleor/macaw-ui";
 import { maybe, renderCollection, stopPropagation } from "@saleor/misc";
-import { makeStyles } from "@saleor/theme";
 import { ReorderAction } from "@saleor/types";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";

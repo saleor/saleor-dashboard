@@ -3,7 +3,7 @@ import Grow from "@material-ui/core/Grow";
 import IconButton, { IconButtonProps } from "@material-ui/core/IconButton";
 import Paper from "@material-ui/core/Paper";
 import Popper from "@material-ui/core/Popper";
-import { makeStyles } from "@saleor/theme";
+import { makeStyles } from "@saleor/macaw-ui";
 import classNames from "classnames";
 import React from "react";
 import ReactSVG from "react-inlinesvg";

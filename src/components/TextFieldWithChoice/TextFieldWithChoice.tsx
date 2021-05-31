@@ -7,7 +7,7 @@ import Popper from "@material-ui/core/Popper";
 import TextField, { TextFieldProps } from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
 import DropdownIcon from "@material-ui/icons/ArrowDropDown";
-import { makeStyles } from "@saleor/theme";
+import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 
 import MenuToggle from "../MenuToggle";

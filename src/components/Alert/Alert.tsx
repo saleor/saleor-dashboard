@@ -6,8 +6,8 @@ import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
 import CloseIcon from "@material-ui/icons/Close";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
-import useTheme from "@saleor/hooks/useTheme";
-import { makeStyles } from "@saleor/theme";
+import { useTheme } from "@saleor/macaw-ui";
+import { makeStyles } from "@saleor/macaw-ui";
 import classNames from "classnames";
 import React from "react";
 import SVG from "react-inlinesvg";
@@ -50,7 +50,7 @@ export interface AlertProps {
 const Alert: React.FC<AlertProps> = ({ children, className, show, title }) => {
   const classes = useStyles({});
   const [visible, setVisible] = useStateFromProps(show);
-  const { isDark } = useTheme();
+  const { themeType } = useTheme();
 
   return visible ? (
     <Card elevation={0} className={classNames(classes.root, className)}>
@@ -59,7 +59,7 @@ const Alert: React.FC<AlertProps> = ({ children, className, show, title }) => {
           <div>
             <SVG
               className={classes.icon}
-              src={isDark ? alertIconDark : alertIcon}
+              src={themeType === "dark" ? alertIconDark : alertIcon}
             />
           </div>
           <div>

@@ -4,7 +4,7 @@ import Typography from "@material-ui/core/Typography";
 import { SetPassword_setPassword_errors } from "@saleor/auth/types/SetPassword";
 import Form from "@saleor/components/Form";
 import FormSpacer from "@saleor/components/FormSpacer";
-import { makeStyles } from "@saleor/theme";
+import { makeStyles } from "@saleor/macaw-ui";
 import getAccountErrorMessage from "@saleor/utils/errors/account";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";

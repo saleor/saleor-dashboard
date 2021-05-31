@@ -1,5 +1,5 @@
 import Draggable from "@saleor/icons/Draggable";
-import { makeStyles } from "@saleor/theme";
+import { makeStyles } from "@saleor/macaw-ui";
 import classNames from "classnames";
 import React from "react";
 import { SortableHandle as SortableHandleHoc } from "react-sortable-hoc";

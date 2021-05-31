@@ -11,12 +11,12 @@ import PageHeader from "@saleor/components/PageHeader";
 import { RefreshLimits_shop_limits } from "@saleor/components/Shop/types/RefreshLimits";
 import { ProductListColumns } from "@saleor/config";
 import { sectionNames } from "@saleor/intl";
+import { makeStyles } from "@saleor/macaw-ui";
 import {
   GridAttributes_availableInGrid_edges_node,
   GridAttributes_grid_edges_node
 } from "@saleor/products/types/GridAttributes";
 import { ProductList_products_edges_node } from "@saleor/products/types/ProductList";
-import { makeStyles } from "@saleor/theme";
 import {
   ChannelProps,
   FetchMoreProps,

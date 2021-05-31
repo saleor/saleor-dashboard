@@ -3,7 +3,7 @@ import { AddressTypeInput } from "@saleor/customers/types";
 import { AccountErrorFragment } from "@saleor/fragments/types/AccountErrorFragment";
 import { OrderErrorFragment } from "@saleor/fragments/types/OrderErrorFragment";
 import { commonMessages } from "@saleor/intl";
-import { makeStyles } from "@saleor/theme";
+import { makeStyles } from "@saleor/macaw-ui";
 import { getFormErrors } from "@saleor/utils/errors";
 import getAccountErrorMessage from "@saleor/utils/errors/account";
 import getOrderErrorMessage from "@saleor/utils/errors/order";

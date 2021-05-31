@@ -13,8 +13,8 @@ import SingleAutocompleteSelectField, {
 } from "@saleor/components/SingleAutocompleteSelectField";
 import { ProductErrorFragment } from "@saleor/fragments/types/ProductErrorFragment";
 import { ChangeEvent } from "@saleor/hooks/useForm";
+import { makeStyles } from "@saleor/macaw-ui";
 import { maybe } from "@saleor/misc";
-import { makeStyles } from "@saleor/theme";
 import { FetchMoreProps } from "@saleor/types";
 import { getFormErrors, getProductErrorMessage } from "@saleor/utils/errors";
 import React from "react";

@@ -7,7 +7,7 @@ import FormSpacer from "@saleor/components/FormSpacer";
 import Hr from "@saleor/components/Hr";
 import { PluginErrorFragment } from "@saleor/fragments/types/PluginErrorFragment";
 import { commonMessages } from "@saleor/intl";
-import { makeStyles } from "@saleor/theme";
+import { makeStyles } from "@saleor/macaw-ui";
 import { PluginErrorCode } from "@saleor/types/globalTypes";
 import getPluginErrorMessage from "@saleor/utils/errors/plugins";
 import React from "react";

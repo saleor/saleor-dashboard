@@ -10,7 +10,7 @@ import PageHeader from "@saleor/components/PageHeader";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
 import { sectionNames } from "@saleor/intl";
-import { makeStyles } from "@saleor/theme";
+import { makeStyles } from "@saleor/macaw-ui";
 import { TaxRateType } from "@saleor/types/globalTypes";
 import React from "react";
 import { FormattedMessage, IntlShape, useIntl } from "react-intl";

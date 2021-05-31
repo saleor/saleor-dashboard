@@ -25,9 +25,9 @@ import { ProductErrorFragment } from "@saleor/fragments/types/ProductErrorFragme
 import { WarehouseFragment } from "@saleor/fragments/types/WarehouseFragment";
 import { FormChange } from "@saleor/hooks/useForm";
 import { FormsetAtomicData, FormsetChange } from "@saleor/hooks/useFormset";
+import { makeStyles } from "@saleor/macaw-ui";
+import { ICONBUTTON_SIZE } from "@saleor/macaw-ui";
 import { renderCollection } from "@saleor/misc";
-import { makeStyles } from "@saleor/theme";
-import { ICONBUTTON_SIZE } from "@saleor/theme";
 import { getFormErrors, getProductErrorMessage } from "@saleor/utils/errors";
 import createNonNegativeValueChangeHandler from "@saleor/utils/handlers/nonNegativeValueChangeHandler";
 import React from "react";

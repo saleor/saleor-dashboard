@@ -3,7 +3,7 @@ import infoIcon from "@assets/images/info-icon.svg";
 import successIcon from "@assets/images/success-icon.svg";
 import warningIcon from "@assets/images/warning-icon.svg";
 import { darken } from "@material-ui/core/styles/colorManipulator";
-import { makeStyles } from "@saleor/theme";
+import { makeStyles } from "@saleor/macaw-ui";
 
 const successColor = "#60DAA0";
 const warningColor = "#FFB84E";

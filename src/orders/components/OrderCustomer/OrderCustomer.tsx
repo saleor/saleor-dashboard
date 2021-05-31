@@ -12,8 +12,8 @@ import SingleAutocompleteSelectField from "@saleor/components/SingleAutocomplete
 import Skeleton from "@saleor/components/Skeleton";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { buttonMessages } from "@saleor/intl";
+import { makeStyles } from "@saleor/macaw-ui";
 import { SearchCustomers_search_edges_node } from "@saleor/searches/types/SearchCustomers";
-import { makeStyles } from "@saleor/theme";
 import { FetchMoreProps, UserPermissionProps } from "@saleor/types";
 import { PermissionEnum } from "@saleor/types/globalTypes";
 import createSingleAutocompleteSelectHandler from "@saleor/utils/handlers/singleAutocompleteSelectChangeHandler";
