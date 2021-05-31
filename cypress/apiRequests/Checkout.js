@@ -46,6 +46,7 @@ export function createCheckout({
     .sendRequestWithQuery(mutation, auth)
     .its("body.data.checkoutCreate");
 }
+
 export function addShippingMethod(checkoutId, shippingMethodId) {
   const mutation = `mutation{
     checkoutShippingMethodUpdate(checkoutId:"${checkoutId}",

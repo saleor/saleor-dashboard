@@ -18,6 +18,7 @@ describe("Warehouses in checkout", () => {
   let usAddress;
   let plAddress;
   let warehouse;
+
   it("should not be possible to buy product for country not listed in warehouse", () => {
     cy.clearSessionData().loginUserViaRequest();
     deleteShippingStartsWith(startsWith);

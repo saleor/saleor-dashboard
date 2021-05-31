@@ -13,7 +13,7 @@ export function createWaitingForCaptureOrder(
   cy.loginInShop();
   return checkoutRequest
     .createCheckout({ channelSlug, email, variantsList, address, auth })
-    .then(checkoutResp => {
+    .then(({ checkout: checkoutResp }) => {
       checkout = checkoutResp;
       checkoutRequest.addShippingMethod(checkout.id, shippingMethodId);
     })
@@ -110,6 +110,7 @@ function assignVariantsToOrder(order, variantsList) {
     orderRequest.addProductToOrder(order.id, variantElement.id);
   });
 }
+
 export function addPayment(checkoutId) {
   return checkoutRequest.addPayment({
     checkoutId,
