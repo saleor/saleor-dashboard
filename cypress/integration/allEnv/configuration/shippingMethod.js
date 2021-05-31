@@ -8,6 +8,8 @@ import {
   addChannelToShippingZone
 } from "../../../apiRequests/ShippingMethod";
 import { createWarehouse } from "../../../apiRequests/Warehouse";
+import { BUTTON_SELECTORS } from "../../../elements/shared/button-selectors";
+import { SHARED_ELEMENTS } from "../../../elements/shared/sharedElements";
 import { SHIPPING_ZONE_DETAILS } from "../../../elements/shipping/shipping-zone-details";
 import { selectChannelInHeader } from "../../../steps/channelsSteps";
 import {
@@ -121,6 +123,12 @@ describe("Shipping methods", () => {
       )
       .then(() => {
         cy.addAliasToGraphRequest("ShippingZone");
+        cy.getTextFromElement(SHARED_ELEMENTS.table);
+      })
+      .then(tableText => {
+        if (!tableText.includes(shippingZone.name)) {
+          cy.get(BUTTON_SELECTORS.nextPaginationButton).click();
+        }
         cy.contains(shippingZone.name).click();
         cy.wait("@ShippingZone");
         selectChannelInHeader(defaultChannel.name);

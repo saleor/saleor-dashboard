@@ -93,6 +93,7 @@
     "@babel/preset-react": "^7.7.4",
     "@babel/preset-typescript": "^7.13.0",
     "@babel/runtime": "^7.7.6",
+    "@editorjs/embed": "^2.4.6",
     "@pollyjs/adapter-node-http": "^5.0.0",
     "@pollyjs/core": "^5.0.0",
     "@pollyjs/persister-fs": "^5.0.0",

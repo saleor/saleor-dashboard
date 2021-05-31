@@ -1,5 +1,4 @@
 import { Button, DialogContentText } from "@material-ui/core";
-import { useChannelsList } from "@saleor/channels/queries";
 import {
   ChannelVoucherData,
   createChannelsDataWithDiscountPrice,
@@ -120,11 +119,11 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
     VoucherUrlQueryParams
   >(navigate, params => voucherUrl(id, params), params);
 
-  const { data: channelsData } = useChannelsList({});
+  const { channel, availableChannels } = useAppChannel();
 
   const allChannels: ChannelVoucherData[] = createChannelsDataWithDiscountPrice(
     data?.voucher,
-    channelsData?.channels
+    availableChannels
   );
   const voucherChannelsChoices: ChannelVoucherData[] = createSortedChannelsDataFromVoucher(
     data?.voucher
@@ -154,7 +153,6 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
   const [updateChannels, updateChannelsOpts] = useVoucherChannelListingUpdate(
     {}
   );
-  const { channel } = useAppChannel();
 
   const handleVoucherDelete = (data: VoucherDelete) => {
     if (data.voucherDelete.errors.length === 0) {

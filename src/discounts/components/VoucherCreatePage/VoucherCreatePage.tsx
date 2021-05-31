@@ -18,7 +18,7 @@ import { validatePrice } from "@saleor/products/utils/validation";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import { VoucherTypeEnum } from "../../../types/globalTypes";
+import { PermissionEnum, VoucherTypeEnum } from "../../../types/globalTypes";
 import { DiscountTypeEnum, RequirementsPicker } from "../../types";
 import VoucherDates from "../VoucherDates";
 import VoucherInfo from "../VoucherInfo";
@@ -176,6 +176,7 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
               </div>
               <div>
                 <ChannelsAvailabilityCard
+                  managePermissions={[PermissionEnum.MANAGE_DISCOUNTS]}
                   selectedChannelsCount={data.channelListings.length}
                   allChannelsCount={allChannelsCount}
                   channelsList={data.channelListings.map(channel => ({
