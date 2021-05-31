@@ -21,7 +21,7 @@ export interface ProductVariantDetails_productVariant_privateMetadata {
   value: string;
 }
 
-export interface ProductVariantDetails_productVariant_selectionAttributes_attribute_values_pageInfo {
+export interface ProductVariantDetails_productVariant_selectionAttributes_attribute_choices_pageInfo {
   __typename: "PageInfo";
   endCursor: string | null;
   hasNextPage: boolean;
@@ -29,32 +29,32 @@ export interface ProductVariantDetails_productVariant_selectionAttributes_attrib
   startCursor: string | null;
 }
 
-export interface ProductVariantDetails_productVariant_selectionAttributes_attribute_values_edges_node_file {
+export interface ProductVariantDetails_productVariant_selectionAttributes_attribute_choices_edges_node_file {
   __typename: "File";
   url: string;
   contentType: string | null;
 }
 
-export interface ProductVariantDetails_productVariant_selectionAttributes_attribute_values_edges_node {
+export interface ProductVariantDetails_productVariant_selectionAttributes_attribute_choices_edges_node {
   __typename: "AttributeValue";
   id: string;
   name: string | null;
   slug: string | null;
-  file: ProductVariantDetails_productVariant_selectionAttributes_attribute_values_edges_node_file | null;
+  file: ProductVariantDetails_productVariant_selectionAttributes_attribute_choices_edges_node_file | null;
   reference: string | null;
   richText: any | null;
 }
 
-export interface ProductVariantDetails_productVariant_selectionAttributes_attribute_values_edges {
+export interface ProductVariantDetails_productVariant_selectionAttributes_attribute_choices_edges {
   __typename: "AttributeValueCountableEdge";
   cursor: string;
-  node: ProductVariantDetails_productVariant_selectionAttributes_attribute_values_edges_node;
+  node: ProductVariantDetails_productVariant_selectionAttributes_attribute_choices_edges_node;
 }
 
-export interface ProductVariantDetails_productVariant_selectionAttributes_attribute_values {
+export interface ProductVariantDetails_productVariant_selectionAttributes_attribute_choices {
   __typename: "AttributeValueCountableConnection";
-  pageInfo: ProductVariantDetails_productVariant_selectionAttributes_attribute_values_pageInfo;
-  edges: ProductVariantDetails_productVariant_selectionAttributes_attribute_values_edges[];
+  pageInfo: ProductVariantDetails_productVariant_selectionAttributes_attribute_choices_pageInfo;
+  edges: ProductVariantDetails_productVariant_selectionAttributes_attribute_choices_edges[];
 }
 
 export interface ProductVariantDetails_productVariant_selectionAttributes_attribute {
@@ -66,7 +66,7 @@ export interface ProductVariantDetails_productVariant_selectionAttributes_attrib
   entityType: AttributeEntityTypeEnum | null;
   valueRequired: boolean;
   unit: MeasurementUnitsEnum | null;
-  values: ProductVariantDetails_productVariant_selectionAttributes_attribute_values | null;
+  choices: ProductVariantDetails_productVariant_selectionAttributes_attribute_choices | null;
 }
 
 export interface ProductVariantDetails_productVariant_selectionAttributes_values_file {
@@ -91,7 +91,7 @@ export interface ProductVariantDetails_productVariant_selectionAttributes {
   values: (ProductVariantDetails_productVariant_selectionAttributes_values | null)[];
 }
 
-export interface ProductVariantDetails_productVariant_nonSelectionAttributes_attribute_values_pageInfo {
+export interface ProductVariantDetails_productVariant_nonSelectionAttributes_attribute_choices_pageInfo {
   __typename: "PageInfo";
   endCursor: string | null;
   hasNextPage: boolean;
@@ -99,32 +99,32 @@ export interface ProductVariantDetails_productVariant_nonSelectionAttributes_att
   startCursor: string | null;
 }
 
-export interface ProductVariantDetails_productVariant_nonSelectionAttributes_attribute_values_edges_node_file {
+export interface ProductVariantDetails_productVariant_nonSelectionAttributes_attribute_choices_edges_node_file {
   __typename: "File";
   url: string;
   contentType: string | null;
 }
 
-export interface ProductVariantDetails_productVariant_nonSelectionAttributes_attribute_values_edges_node {
+export interface ProductVariantDetails_productVariant_nonSelectionAttributes_attribute_choices_edges_node {
   __typename: "AttributeValue";
   id: string;
   name: string | null;
   slug: string | null;
-  file: ProductVariantDetails_productVariant_nonSelectionAttributes_attribute_values_edges_node_file | null;
+  file: ProductVariantDetails_productVariant_nonSelectionAttributes_attribute_choices_edges_node_file | null;
   reference: string | null;
   richText: any | null;
 }
 
-export interface ProductVariantDetails_productVariant_nonSelectionAttributes_attribute_values_edges {
+export interface ProductVariantDetails_productVariant_nonSelectionAttributes_attribute_choices_edges {
   __typename: "AttributeValueCountableEdge";
   cursor: string;
-  node: ProductVariantDetails_productVariant_nonSelectionAttributes_attribute_values_edges_node;
+  node: ProductVariantDetails_productVariant_nonSelectionAttributes_attribute_choices_edges_node;
 }
 
-export interface ProductVariantDetails_productVariant_nonSelectionAttributes_attribute_values {
+export interface ProductVariantDetails_productVariant_nonSelectionAttributes_attribute_choices {
   __typename: "AttributeValueCountableConnection";
-  pageInfo: ProductVariantDetails_productVariant_nonSelectionAttributes_attribute_values_pageInfo;
-  edges: ProductVariantDetails_productVariant_nonSelectionAttributes_attribute_values_edges[];
+  pageInfo: ProductVariantDetails_productVariant_nonSelectionAttributes_attribute_choices_pageInfo;
+  edges: ProductVariantDetails_productVariant_nonSelectionAttributes_attribute_choices_edges[];
 }
 
 export interface ProductVariantDetails_productVariant_nonSelectionAttributes_attribute {
@@ -136,7 +136,7 @@ export interface ProductVariantDetails_productVariant_nonSelectionAttributes_att
   entityType: AttributeEntityTypeEnum | null;
   valueRequired: boolean;
   unit: MeasurementUnitsEnum | null;
-  values: ProductVariantDetails_productVariant_nonSelectionAttributes_attribute_values | null;
+  choices: ProductVariantDetails_productVariant_nonSelectionAttributes_attribute_choices | null;
 }
 
 export interface ProductVariantDetails_productVariant_nonSelectionAttributes_values_file {
