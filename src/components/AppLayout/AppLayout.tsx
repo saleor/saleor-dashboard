@@ -2,10 +2,10 @@ import { LinearProgress, useMediaQuery } from "@material-ui/core";
 import { createConfigurationMenu } from "@saleor/configuration";
 import useAppState from "@saleor/hooks/useAppState";
 import useNavigator from "@saleor/hooks/useNavigator";
-import useTheme from "@saleor/hooks/useTheme";
 import useUser from "@saleor/hooks/useUser";
+import { useTheme } from "@saleor/macaw-ui";
+import { makeStyles, SaleorTheme } from "@saleor/macaw-ui";
 import { staffMemberDetailsUrl } from "@saleor/staff/urls";
-import { makeStyles, SaleorTheme } from "@saleor/theme";
 import classNames from "classnames";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -117,7 +117,7 @@ interface AppLayoutProps {
 
 const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
   const classes = useStyles({});
-  const { isDark, toggleTheme } = useTheme();
+  const { themeType, setTheme } = useTheme();
   const appActionAnchor = React.useRef<HTMLDivElement>();
   const appHeaderAnchor = React.useRef<HTMLDivElement>();
   const { logout, user } = useUser();
@@ -159,6 +159,9 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
       type: "displayError"
     });
   };
+
+  const isDark = themeType === "dark";
+  const toggleTheme = () => setTheme(isDark ? "light" : "dark");
 
   return (
     <>

@@ -14,6 +14,7 @@ import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
 import TableCellHeader from "@saleor/components/TableCellHeader";
 import TableHead from "@saleor/components/TableHead";
+import { makeStyles } from "@saleor/macaw-ui";
 import {
   getUserInitials,
   getUserName,
@@ -23,7 +24,6 @@ import {
 import { sortMembers } from "@saleor/permissionGroups/sort";
 import { PermissionGroupDetails_permissionGroup_users } from "@saleor/permissionGroups/types/PermissionGroupDetails";
 import { MembersListUrlSortField } from "@saleor/permissionGroups/urls";
-import { makeStyles } from "@saleor/theme";
 import { ListActions, SortPage } from "@saleor/types";
 import { getArrowDirection } from "@saleor/utils/sort";
 import classNames from "classnames";

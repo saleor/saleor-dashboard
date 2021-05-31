@@ -13,8 +13,8 @@ import {
 } from "@material-ui/core";
 import { User } from "@saleor/fragments/types/User";
 import ArrowDropdown from "@saleor/icons/ArrowDropdown";
+import { makeStyles } from "@saleor/macaw-ui";
 import { getUserInitials, getUserName } from "@saleor/misc";
-import { makeStyles } from "@saleor/theme";
 import classNames from "classnames";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";

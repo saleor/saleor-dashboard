@@ -26,7 +26,7 @@
     "@material-ui/core": "^4.11.4",
     "@material-ui/icons": "^4.11.2",
     "@material-ui/styles": "^4.11.4",
-    "@saleor/macaw-ui": "^0.1.1-9",
+    "@saleor/macaw-ui": "git+https://github.com/mirumee/macaw-ui.git#374c7e4",
     "@sentry/react": "^6.0.0",
     "@types/faker": "^5.1.6",
     "apollo": "^2.32.5",
@@ -207,7 +207,13 @@
       "@assets(.*)$": "<rootDir>/assets/$1",
       "@locale(.*)$": "<rootDir>/locale/$1",
       "@saleor(?!.*macaw)(.*)$": "<rootDir>/src/$1",
-      "@test/(.*)$": "<rootDir>/testUtils/$1"
+      "@test/(.*)$": "<rootDir>/testUtils/$1",
+      "^lodash-es(.*)$": "lodash/$1",
+      "^@material-ui/core$": "<rootDir>/node_modules/@material-ui/core",
+      "^@material-ui/icons$": "<rootDir>/node_modules/@material-ui/icons",
+      "^@material-ui/styles$": "<rootDir>/node_modules/@material-ui/styles",
+      "^react$": "<rootDir>/node_modules/react",
+      "^react-dom$": "<rootDir>/node_modules/react-dom"
     }
   },
   "husky": {

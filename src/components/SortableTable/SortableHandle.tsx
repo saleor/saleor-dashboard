@@ -1,6 +1,6 @@
 import { TableCell } from "@material-ui/core";
 import Draggable from "@saleor/icons/Draggable";
-import { makeStyles } from "@saleor/theme";
+import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import { SortableHandle as SortableHandleHoc } from "react-sortable-hoc";
 

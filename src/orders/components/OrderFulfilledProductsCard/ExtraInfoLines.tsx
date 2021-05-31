@@ -1,6 +1,6 @@
 import { TableCell, TableRow, Typography } from "@material-ui/core";
 import { getStringOrPlaceholder } from "@saleor/misc";
-import { makeStyles } from "@saleor/theme";
+import { makeStyles } from "@saleor/macaw-ui";
 import { FulfillmentStatus } from "@saleor/types/globalTypes";
 import classNames from "classnames";
 import React from "react";

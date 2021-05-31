@@ -6,7 +6,7 @@ import SingleAutocompleteSelectField, {
 import { PageErrorFragment } from "@saleor/fragments/types/PageErrorFragment";
 import { PageTypeFragment } from "@saleor/fragments/types/PageTypeFragment";
 import { FormChange } from "@saleor/hooks/useForm";
-import { makeStyles } from "@saleor/theme";
+import { makeStyles } from "@saleor/macaw-ui";
 import { FetchMoreProps } from "@saleor/types";
 import { getFormErrors } from "@saleor/utils/errors";
 import getPageErrorMessage from "@saleor/utils/errors/page";

@@ -1,7 +1,7 @@
 import { Divider, Typography } from "@material-ui/core";
 import CloseIcon from "@material-ui/icons/Close";
 import CardSpacer from "@saleor/components/CardSpacer";
-import { makeStyles } from "@saleor/theme";
+import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 
 const useStyles = makeStyles(

@@ -6,7 +6,7 @@ import {
 } from "@material-ui/core";
 import { fade } from "@material-ui/core/styles/colorManipulator";
 import { UseNavigatorResult } from "@saleor/hooks/useNavigator";
-import { makeStyles } from "@saleor/theme";
+import { makeStyles } from "@saleor/macaw-ui";
 import classNames from "classnames";
 import React from "react";
 import SVG from "react-inlinesvg";

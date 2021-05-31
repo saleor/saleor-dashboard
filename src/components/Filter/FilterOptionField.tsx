@@ -1,5 +1,5 @@
 import { FormControlLabel, Radio } from "@material-ui/core";
-import { makeStyles } from "@saleor/theme";
+import { makeStyles } from "@saleor/macaw-ui";
 import { toggle } from "@saleor/utils/lists";
 import classNames from "classnames";
 import React from "react";

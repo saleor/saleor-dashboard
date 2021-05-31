@@ -5,7 +5,7 @@ import Hr from "@saleor/components/Hr";
 import RadioSwitchField from "@saleor/components/RadioSwitchField";
 import useDateLocalize from "@saleor/hooks/useDateLocalize";
 import { ChangeEvent } from "@saleor/hooks/useForm";
-import { makeStyles } from "@saleor/theme";
+import { makeStyles } from "@saleor/macaw-ui";
 import { UserError } from "@saleor/types";
 import { getFieldError } from "@saleor/utils/errors";
 import classNames from "classnames";

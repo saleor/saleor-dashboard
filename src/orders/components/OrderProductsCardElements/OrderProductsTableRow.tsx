@@ -8,7 +8,7 @@ import {
   OrderDetails_order_fulfillments_lines,
   OrderDetails_order_lines
 } from "@saleor/orders/types/OrderDetails";
-import { makeStyles } from "@saleor/theme";
+import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 
 const useStyles = makeStyles(

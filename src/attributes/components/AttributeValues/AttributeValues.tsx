@@ -17,8 +17,8 @@ import {
 } from "@saleor/components/SortableTable";
 import TablePagination from "@saleor/components/TablePagination";
 import { AttributeValueListFragment_edges_node } from "@saleor/fragments/types/AttributeValueListFragment";
+import { makeStyles } from "@saleor/macaw-ui";
 import { maybe, renderCollection, stopPropagation } from "@saleor/misc";
-import { makeStyles } from "@saleor/theme";
 import { ListProps, ReorderAction } from "@saleor/types";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";

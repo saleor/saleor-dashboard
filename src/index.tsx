@@ -1,4 +1,5 @@
 import useAppState from "@saleor/hooks/useAppState";
+import { ThemeProvider } from "@saleor/macaw-ui";
 import { defaultDataIdFromObject, InMemoryCache } from "apollo-cache-inmemory";
 import { ApolloClient } from "apollo-client";
 import { ApolloLink } from "apollo-link";
@@ -34,7 +35,6 @@ import { DateProvider } from "./components/Date";
 import { LocaleProvider } from "./components/Locale";
 import MessageManagerProvider from "./components/messages";
 import { ShopProvider } from "./components/Shop";
-import ThemeProvider from "./components/Theme";
 import { WindowTitle } from "./components/WindowTitle";
 import { API_URI, APP_MOUNT_URI, GTM_ID } from "./config";
 import ConfigurationSection, { createConfigurationMenu } from "./configuration";
@@ -104,36 +104,32 @@ const apolloClient = new ApolloClient({
   link: authLink.concat(link)
 });
 
-const App: React.FC = () => {
-  const isDark = localStorage.getItem("theme") === "true";
-
-  return (
-    <ApolloProvider client={apolloClient}>
-      <BrowserRouter basename={APP_MOUNT_URI}>
-        <ThemeProvider isDefaultDark={isDark}>
-          <DateProvider>
-            <LocaleProvider>
-              <MessageManagerProvider>
-                <ServiceWorker />
-                <BackgroundTasksProvider>
-                  <AppStateProvider>
-                    <ShopProvider>
-                      <AuthProvider>
-                        <AppChannelProvider>
-                          <Routes />
-                        </AppChannelProvider>
-                      </AuthProvider>
-                    </ShopProvider>
-                  </AppStateProvider>
-                </BackgroundTasksProvider>
-              </MessageManagerProvider>
-            </LocaleProvider>
-          </DateProvider>
-        </ThemeProvider>
-      </BrowserRouter>
-    </ApolloProvider>
-  );
-};
+const App: React.FC = () => (
+  <ApolloProvider client={apolloClient}>
+    <BrowserRouter basename={APP_MOUNT_URI}>
+      <ThemeProvider>
+        <DateProvider>
+          <LocaleProvider>
+            <MessageManagerProvider>
+              <ServiceWorker />
+              <BackgroundTasksProvider>
+                <AppStateProvider>
+                  <ShopProvider>
+                    <AuthProvider>
+                      <AppChannelProvider>
+                        <Routes />
+                      </AppChannelProvider>
+                    </AuthProvider>
+                  </ShopProvider>
+                </AppStateProvider>
+              </BackgroundTasksProvider>
+            </MessageManagerProvider>
+          </LocaleProvider>
+        </DateProvider>
+      </ThemeProvider>
+    </BrowserRouter>
+  </ApolloProvider>
+);
 
 const Routes: React.FC = () => {
   const intl = useIntl();

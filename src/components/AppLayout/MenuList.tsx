@@ -1,9 +1,9 @@
 import configureIcon from "@assets/images/menu-configure-icon.svg";
 import { Typography } from "@material-ui/core";
 import { User } from "@saleor/fragments/types/User";
-import useTheme from "@saleor/hooks/useTheme";
 import { sectionNames } from "@saleor/intl";
-import { makeStyles } from "@saleor/theme";
+import { useTheme } from "@saleor/macaw-ui";
+import { makeStyles } from "@saleor/macaw-ui";
 import classNames from "classnames";
 import React from "react";
 import SVG from "react-inlinesvg";
@@ -186,7 +186,7 @@ const MenuList: React.FC<MenuListProps> = props => {
 
   const classes = useStyles(props);
 
-  const { isDark } = useTheme();
+  const { themeType } = useTheme();
   const [activeSubMenu, setActiveSubMenu] = React.useState<IActiveSubMenu>({
     isActive: false,
     label: null
@@ -218,6 +218,8 @@ const MenuList: React.FC<MenuListProps> = props => {
       event.preventDefault();
     }
   };
+
+  const isDark = themeType === "dark";
 
   return (
     <div

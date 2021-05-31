@@ -1,7 +1,7 @@
 import { Button, Card, CardContent, Portal } from "@material-ui/core";
 import useWindowScroll from "@saleor/hooks/useWindowScroll";
 import { buttonMessages } from "@saleor/intl";
-import { makeStyles } from "@saleor/theme";
+import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import { useIntl } from "react-intl";
 

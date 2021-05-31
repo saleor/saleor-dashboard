@@ -14,7 +14,7 @@ import Hr from "@saleor/components/Hr";
 import { OrderErrorFragment } from "@saleor/fragments/types/OrderErrorFragment";
 import { OrderDetails_order } from "@saleor/orders/types/OrderDetails";
 import { OrderRefundData_order } from "@saleor/orders/types/OrderRefundData";
-import { makeStyles } from "@saleor/theme";
+import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import { defineMessages, FormattedMessage, useIntl } from "react-intl";
 

@@ -1,6 +1,6 @@
 import { ButtonBase } from "@material-ui/core";
 import { ButtonBaseProps } from "@material-ui/core/ButtonBase";
-import { makeStyles } from "@saleor/theme";
+import { makeStyles } from "@saleor/macaw-ui";
 import classNames from "classnames";
 import React from "react";
 
