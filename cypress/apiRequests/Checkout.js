@@ -170,6 +170,7 @@ export function checkoutShippingAddressUpdate(checkoutId, address) {
   }`;
   return cy.sendRequestWithQuery(mutation);
 }
+
 export function addProductsToCheckout(
   checkoutId,
   variantsList,
