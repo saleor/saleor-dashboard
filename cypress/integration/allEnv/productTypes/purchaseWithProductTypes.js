@@ -174,7 +174,7 @@ describe("Purchase products with all products types", () => {
           auth: "token"
         });
       })
-      .then(checkoutResp => {
+      .then(({ checkout: checkoutResp }) => {
         checkout = checkoutResp;
         addPayment(checkout.id);
       })
