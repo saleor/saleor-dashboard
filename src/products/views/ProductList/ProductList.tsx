@@ -55,7 +55,7 @@ import useProductTypeSearch from "@saleor/searches/useProductTypeSearch";
 import { ListViews } from "@saleor/types";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import createFilterHandlers from "@saleor/utils/handlers/filterHandlers";
-import { mapEdgesToItems } from "@saleor/utils/maps";
+import { mapEdgesToItems, mapNodeToChoice } from "@saleor/utils/maps";
 import { getSortUrlVariables } from "@saleor/utils/sort";
 import { useWarehouseList } from "@saleor/warehouses/queries";
 import React, { useEffect, useState } from "react";
@@ -282,6 +282,9 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
 
   const paginationState = createPaginationState(settings.rowNumber, params);
   const channelSlug = noChannel ? null : channel.slug;
+  const channelOpts = availableChannels
+    ? mapNodeToChoice(availableChannels, channel => channel.slug)
+    : null;
   const filter = getFilterVariables(params, channelSlug);
   const sort = getSortQueryVariables(params);
   const queryVariables = React.useMemo<ProductListVariables>(
@@ -289,7 +292,7 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
       ...paginationState,
       filter,
       sort,
-      channel: channelSlug
+      channel: params.channel
     }),
     [params, settings.rowNumber]
   );
@@ -340,7 +343,8 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
     {
       initial: mapEdgesToItems(initialFilterProductTypes?.productTypes),
       search: searchProductTypes
-    }
+    },
+    channelOpts
   );
 
   const { loadNextPage, loadPreviousPage, pageInfo } = paginate(

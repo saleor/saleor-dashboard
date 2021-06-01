@@ -23,9 +23,9 @@ const menuItemHeight = 46;
 const maxMenuItems = 5;
 const offset = 24;
 
-export interface SingleAutocompleteChoiceType {
+export interface SingleAutocompleteChoiceType<T = any> {
   label: string;
-  value: any;
+  value: T;
 }
 export interface SingleAutocompleteActionType {
   label: string;

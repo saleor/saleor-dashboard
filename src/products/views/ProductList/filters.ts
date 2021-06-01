@@ -1,3 +1,4 @@
+import { SingleAutocompleteChoiceType } from "@saleor/components/SingleAutocompleteSelectField";
 import { UseSearchResult } from "@saleor/hooks/makeSearch";
 import { findValueInEnum, maybe } from "@saleor/misc";
 import {
@@ -43,7 +44,8 @@ import {
   getGteLteVariables,
   getMinMaxQueryParam,
   getMultipleValueQueryParam,
-  getSingleEnumValueQueryParam
+  getSingleEnumValueQueryParam,
+  getSingleValueQueryParam
 } from "../../../utils/filters";
 import {
   ProductListUrlFilters,
@@ -73,7 +75,8 @@ export function getFilterOpts(
   productTypes: {
     initial: InitialProductFilterProductTypes_productTypes_edges_node[];
     search: UseSearchResult<SearchProductTypes, SearchProductTypesVariables>;
-  }
+  },
+  channels: SingleAutocompleteChoiceType[]
 ): ProductListFilterOpts {
   return {
     attributes: attributes
@@ -130,6 +133,11 @@ export function getFilterOpts(
       onFetchMore: categories.search.loadMore,
       onSearchChange: categories.search.search,
       value: maybe(() => dedupeFilter(params.categories), [])
+    },
+    channel: {
+      active: params?.channel !== undefined,
+      choices: channels,
+      value: params?.channel
     },
     collections: {
       active: !!params.collections,
@@ -296,6 +304,12 @@ export function getFilterQueryParam(
         filter,
         ProductListUrlFiltersEnum.stockStatus,
         StockAvailability
+      );
+
+    case ProductFilterKeys.channel:
+      return getSingleValueQueryParam(
+        filter,
+        ProductListUrlFiltersEnum.channel
       );
   }
 }
