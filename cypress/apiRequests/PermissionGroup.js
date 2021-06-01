@@ -1,8 +1,8 @@
 import { getValueWithDefault } from "./utils/Utils";
 
-export function getPermissionGroups(startsWith) {
+export function getPermissionGroups(first, startsWith) {
   const query = `query{
-    permissionGroups(first:100 filter:{
+    permissionGroups(first:${first} filter:{
       search:"${startsWith}"
     }){
       edges{
