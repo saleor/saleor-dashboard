@@ -1,17 +1,27 @@
 import { Card, CardContent } from "@material-ui/core";
 import Alert from "@saleor/components/Alert/Alert";
+import { getMultiChoices } from "@saleor/components/Attributes/utils";
 import CardSpacer from "@saleor/components/CardSpacer";
 import CardTitle from "@saleor/components/CardTitle";
-import ControlledCheckbox from "@saleor/components/ControlledCheckbox";
-import Debounce from "@saleor/components/Debounce";
+import MultiAutocompleteSelectField from "@saleor/components/MultiAutocompleteSelectField";
 import Skeleton from "@saleor/components/Skeleton";
+import { getById } from "@saleor/orders/components/OrderReturnPage/utils";
 import { ProductDetails_product_productType_variantAttributes } from "@saleor/products/types/ProductDetails";
+import { SearchAttributeValues_attribute_choices_edges_node } from "@saleor/searches/types/SearchAttributeValues";
 import { makeStyles } from "@saleor/theme";
-import { isSelected } from "@saleor/utils/lists";
+import { FetchMoreProps } from "@saleor/types";
+import { mapSlugNodeToChoice } from "@saleor/utils/maps";
 import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+import { defineMessages, FormattedMessage, useIntl } from "react-intl";
 
-import { ProductVariantCreateFormData } from "./form";
+import { Attribute, ProductVariantCreateFormData } from "./form";
+
+const messages = defineMessages({
+  multipleValueLabel: {
+    defaultMessage: "Values",
+    description: "attribute values"
+  }
+});
 
 export function getVariantsNumber(data: ProductVariantCreateFormData): number {
   return data.attributes.reduce(
@@ -20,11 +30,34 @@ export function getVariantsNumber(data: ProductVariantCreateFormData): number {
   );
 }
 
+export function getMultiValues(
+  attributes: Attribute[],
+  attribute: ProductDetails_product_productType_variantAttributes
+) {
+  return attributes
+    .find(getById(attribute.id))
+    ?.values?.map(value => value.slug);
+}
+
+export function getMultiDisplayValues(
+  attributes: Attribute[],
+  attribute: ProductDetails_product_productType_variantAttributes
+) {
+  return mapSlugNodeToChoice(attributes.find(getById(attribute.id))?.values);
+}
+
 export interface ProductVariantCreatorValuesProps {
   attributes: ProductDetails_product_productType_variantAttributes[];
+  attributeValues: SearchAttributeValues_attribute_choices_edges_node[];
+  fetchAttributeValues: (query: string) => void;
+  fetchMoreAttributeValues?: FetchMoreProps;
   data: ProductVariantCreateFormData;
   variantsLeft: number | null;
-  onValueClick: (attributeId: string, valueId: string) => void;
+  onValueClick: (
+    attributeId: string,
+    value: SearchAttributeValues_attribute_choices_edges_node
+  ) => void;
+  onAttributeSelect: (id: string) => void;
 }
 
 const useStyles = makeStyles(
@@ -39,10 +72,26 @@ const useStyles = makeStyles(
 );
 
 const ProductVariantCreatorValues: React.FC<ProductVariantCreatorValuesProps> = props => {
-  const { attributes, data, variantsLeft, onValueClick } = props;
+  const {
+    attributes,
+    attributeValues,
+    fetchAttributeValues,
+    fetchMoreAttributeValues,
+    data,
+    variantsLeft,
+    onValueClick,
+    onAttributeSelect
+  } = props;
   const classes = useStyles(props);
   const intl = useIntl();
   const variantsNumber = getVariantsNumber(data);
+
+  const handleValueClick = (attributeId: string, valueSlug: string) => {
+    onValueClick(
+      attributeId,
+      attributeValues.find(value => value.slug === valueSlug)
+    );
+  };
 
   return (
     <>
@@ -71,28 +120,23 @@ const ProductVariantCreatorValues: React.FC<ProductVariantCreatorValuesProps> = 
               className={classes.valueContainer}
               data-test-id="value-container"
             >
-              {attribute.choices.edges.map(({ node: value }) => (
-                <Debounce
-                  debounceFn={() => onValueClick(attribute.id, value.slug)}
-                  time={100}
-                  key={value.slug}
-                >
-                  {change => (
-                    <ControlledCheckbox
-                      checked={isSelected(
-                        value.slug,
-                        data.attributes.find(
-                          dataAttribute => attribute.id === dataAttribute.id
-                        )?.values || [],
-                        (a, b) => a === b
-                      )}
-                      name={`value:${value.slug}`}
-                      label={value.name}
-                      onChange={change}
-                    />
-                  )}
-                </Debounce>
-              ))}
+              <MultiAutocompleteSelectField
+                choices={getMultiChoices(attributeValues)}
+                displayValues={getMultiDisplayValues(
+                  data.attributes,
+                  attribute
+                )}
+                name={`attribute:${attribute.name}`}
+                label={intl.formatMessage(messages.multipleValueLabel)}
+                value={getMultiValues(data.attributes, attribute)}
+                onChange={event =>
+                  handleValueClick(attribute.id, event.target.value)
+                }
+                allowCustomValues={true}
+                fetchChoices={fetchAttributeValues}
+                {...fetchMoreAttributeValues}
+                onClick={() => onAttributeSelect(attribute.id)}
+              />
             </CardContent>
           </Card>
           <CardSpacer />

@@ -13,6 +13,10 @@ export interface AttributeValue<T> {
   slug: string;
   value: T;
 }
+export interface ProductVariantValue {
+  slug: string;
+  name: string;
+}
 export type VariantCreatorPricesAndSkuMode = "all" | "attribute" | "skip";
 export interface Price {
   mode: VariantCreatorPricesAndSkuMode;
@@ -28,7 +32,7 @@ export interface Stock {
 }
 export interface Attribute {
   id: string;
-  values: string[];
+  values: ProductVariantValue[];
 }
 export interface ProductVariantCreateFormData {
   attributes: Attribute[];

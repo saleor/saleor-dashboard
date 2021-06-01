@@ -17,7 +17,9 @@ export function getPriceAttributeValues(
         .choices.edges.filter(value =>
           data.attributes
             .find(attribute => attribute.id === data.price.attribute)
-            .values.includes(value.node.slug)
+            .values.some(
+              attributeValue => attributeValue.slug === value.node.slug
+            )
         )
         .map(value => value.node)
     : [];
@@ -35,7 +37,9 @@ export function getStockAttributeValues(
         .choices.edges.filter(value =>
           data.attributes
             .find(attribute => attribute.id === data.stock.attribute)
-            .values.includes(value.node.slug)
+            .values.some(
+              attributeValue => attributeValue.slug === value.node.slug
+            )
         )
         .map(value => value.node)
     : [];

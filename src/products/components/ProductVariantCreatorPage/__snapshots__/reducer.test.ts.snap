@@ -6,22 +6,40 @@ Object {
     Object {
       "id": "attr-1",
       "values": Array [
-        "val-1-1",
-        "val-1-7",
+        Object {
+          "name": "val-1-1",
+          "slug": "val-1-1",
+        },
+        Object {
+          "name": "val-1-7",
+          "slug": "val-1-7",
+        },
       ],
     },
     Object {
       "id": "attr-2",
       "values": Array [
-        "val-2-2",
-        "val-2-4",
+        Object {
+          "name": "val-2-2",
+          "slug": "val-2-2",
+        },
+        Object {
+          "name": "val-2-4",
+          "slug": "val-2-4",
+        },
       ],
     },
     Object {
       "id": "attr-4",
       "values": Array [
-        "val-4-1",
-        "val-4-5",
+        Object {
+          "name": "val-4-1",
+          "slug": "val-4-1",
+        },
+        Object {
+          "name": "val-4-5",
+          "slug": "val-4-5",
+        },
       ],
     },
   ],
@@ -561,22 +579,40 @@ Object {
     Object {
       "id": "attr-1",
       "values": Array [
-        "val-1-1",
-        "val-1-7",
+        Object {
+          "name": "val-1-1",
+          "slug": "val-1-1",
+        },
+        Object {
+          "name": "val-1-7",
+          "slug": "val-1-7",
+        },
       ],
     },
     Object {
       "id": "attr-2",
       "values": Array [
-        "val-2-2",
-        "val-2-4",
+        Object {
+          "name": "val-2-2",
+          "slug": "val-2-2",
+        },
+        Object {
+          "name": "val-2-4",
+          "slug": "val-2-4",
+        },
       ],
     },
     Object {
       "id": "attr-4",
       "values": Array [
-        "val-4-1",
-        "val-4-5",
+        Object {
+          "name": "val-4-1",
+          "slug": "val-4-1",
+        },
+        Object {
+          "name": "val-4-5",
+          "slug": "val-4-5",
+        },
       ],
     },
   ],
@@ -1116,22 +1152,40 @@ Object {
     Object {
       "id": "attr-1",
       "values": Array [
-        "val-1-1",
-        "val-1-7",
+        Object {
+          "name": "val-1-1",
+          "slug": "val-1-1",
+        },
+        Object {
+          "name": "val-1-7",
+          "slug": "val-1-7",
+        },
       ],
     },
     Object {
       "id": "attr-2",
       "values": Array [
-        "val-2-2",
-        "val-2-4",
+        Object {
+          "name": "val-2-2",
+          "slug": "val-2-2",
+        },
+        Object {
+          "name": "val-2-4",
+          "slug": "val-2-4",
+        },
       ],
     },
     Object {
       "id": "attr-4",
       "values": Array [
-        "val-4-1",
-        "val-4-5",
+        Object {
+          "name": "val-4-1",
+          "slug": "val-4-1",
+        },
+        Object {
+          "name": "val-4-5",
+          "slug": "val-4-5",
+        },
       ],
     },
   ],
@@ -1171,22 +1225,40 @@ Object {
     Object {
       "id": "attr-1",
       "values": Array [
-        "val-1-1",
-        "val-1-7",
+        Object {
+          "name": "val-1-1",
+          "slug": "val-1-1",
+        },
+        Object {
+          "name": "val-1-7",
+          "slug": "val-1-7",
+        },
       ],
     },
     Object {
       "id": "attr-2",
       "values": Array [
-        "val-2-2",
-        "val-2-4",
+        Object {
+          "name": "val-2-2",
+          "slug": "val-2-2",
+        },
+        Object {
+          "name": "val-2-4",
+          "slug": "val-2-4",
+        },
       ],
     },
     Object {
       "id": "attr-4",
       "values": Array [
-        "val-4-1",
-        "val-4-5",
+        Object {
+          "name": "val-4-1",
+          "slug": "val-4-1",
+        },
+        Object {
+          "name": "val-4-5",
+          "slug": "val-4-5",
+        },
       ],
     },
   ],
@@ -1677,22 +1749,40 @@ Object {
     Object {
       "id": "attr-1",
       "values": Array [
-        "val-1-1",
-        "val-1-7",
+        Object {
+          "name": "val-1-1",
+          "slug": "val-1-1",
+        },
+        Object {
+          "name": "val-1-7",
+          "slug": "val-1-7",
+        },
       ],
     },
     Object {
       "id": "attr-2",
       "values": Array [
-        "val-2-2",
-        "val-2-4",
+        Object {
+          "name": "val-2-2",
+          "slug": "val-2-2",
+        },
+        Object {
+          "name": "val-2-4",
+          "slug": "val-2-4",
+        },
       ],
     },
     Object {
       "id": "attr-4",
       "values": Array [
-        "val-4-1",
-        "val-4-5",
+        Object {
+          "name": "val-4-1",
+          "slug": "val-4-1",
+        },
+        Object {
+          "name": "val-4-5",
+          "slug": "val-4-5",
+        },
       ],
     },
   ],
@@ -2138,22 +2228,40 @@ Object {
     Object {
       "id": "attr-1",
       "values": Array [
-        "val-1-1",
-        "val-1-7",
+        Object {
+          "name": "val-1-1",
+          "slug": "val-1-1",
+        },
+        Object {
+          "name": "val-1-7",
+          "slug": "val-1-7",
+        },
       ],
     },
     Object {
       "id": "attr-2",
       "values": Array [
-        "val-2-2",
-        "val-2-4",
+        Object {
+          "name": "val-2-2",
+          "slug": "val-2-2",
+        },
+        Object {
+          "name": "val-2-4",
+          "slug": "val-2-4",
+        },
       ],
     },
     Object {
       "id": "attr-4",
       "values": Array [
-        "val-4-1",
-        "val-4-5",
+        Object {
+          "name": "val-4-1",
+          "slug": "val-4-1",
+        },
+        Object {
+          "name": "val-4-5",
+          "slug": "val-4-5",
+        },
       ],
     },
   ],
@@ -2644,22 +2752,40 @@ Object {
     Object {
       "id": "attr-1",
       "values": Array [
-        "val-1-1",
-        "val-1-7",
+        Object {
+          "name": "val-1-1",
+          "slug": "val-1-1",
+        },
+        Object {
+          "name": "val-1-7",
+          "slug": "val-1-7",
+        },
       ],
     },
     Object {
       "id": "attr-2",
       "values": Array [
-        "val-2-2",
-        "val-2-4",
+        Object {
+          "name": "val-2-2",
+          "slug": "val-2-2",
+        },
+        Object {
+          "name": "val-2-4",
+          "slug": "val-2-4",
+        },
       ],
     },
     Object {
       "id": "attr-4",
       "values": Array [
-        "val-4-1",
-        "val-4-5",
+        Object {
+          "name": "val-4-1",
+          "slug": "val-4-1",
+        },
+        Object {
+          "name": "val-4-5",
+          "slug": "val-4-5",
+        },
       ],
     },
   ],
@@ -3067,22 +3193,40 @@ Object {
     Object {
       "id": "attr-1",
       "values": Array [
-        "val-1-1",
-        "val-1-7",
+        Object {
+          "name": "val-1-1",
+          "slug": "val-1-1",
+        },
+        Object {
+          "name": "val-1-7",
+          "slug": "val-1-7",
+        },
       ],
     },
     Object {
       "id": "attr-2",
       "values": Array [
-        "val-2-2",
-        "val-2-4",
+        Object {
+          "name": "val-2-2",
+          "slug": "val-2-2",
+        },
+        Object {
+          "name": "val-2-4",
+          "slug": "val-2-4",
+        },
       ],
     },
     Object {
       "id": "attr-4",
       "values": Array [
-        "val-4-1",
-        "val-4-5",
+        Object {
+          "name": "val-4-1",
+          "slug": "val-4-1",
+        },
+        Object {
+          "name": "val-4-5",
+          "slug": "val-4-5",
+        },
       ],
     },
   ],
