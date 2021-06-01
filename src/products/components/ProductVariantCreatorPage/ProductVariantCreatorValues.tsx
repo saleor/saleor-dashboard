@@ -8,7 +8,6 @@ import Skeleton from "@saleor/components/Skeleton";
 import { getById } from "@saleor/orders/components/OrderReturnPage/utils";
 import { ProductDetails_product_productType_variantAttributes } from "@saleor/products/types/ProductDetails";
 import { SearchAttributeValues_attribute_choices_edges_node } from "@saleor/searches/types/SearchAttributeValues";
-import { makeStyles } from "@saleor/theme";
 import { FetchMoreProps } from "@saleor/types";
 import { mapSlugNodeToChoice } from "@saleor/utils/maps";
 import React from "react";
@@ -60,17 +59,6 @@ export interface ProductVariantCreatorValuesProps {
   onAttributeSelect: (id: string) => void;
 }
 
-const useStyles = makeStyles(
-  theme => ({
-    valueContainer: {
-      display: "grid",
-      gridColumnGap: theme.spacing(3),
-      gridTemplateColumns: "repeat(5, 1fr)"
-    }
-  }),
-  { name: "ProductVariantCreatorValues" }
-);
-
 const ProductVariantCreatorValues: React.FC<ProductVariantCreatorValuesProps> = props => {
   const {
     attributes,
@@ -82,7 +70,6 @@ const ProductVariantCreatorValues: React.FC<ProductVariantCreatorValuesProps> = 
     onValueClick,
     onAttributeSelect
   } = props;
-  const classes = useStyles(props);
   const intl = useIntl();
   const variantsNumber = getVariantsNumber(data);
 
@@ -116,10 +103,7 @@ const ProductVariantCreatorValues: React.FC<ProductVariantCreatorValuesProps> = 
         <React.Fragment key={attribute.id}>
           <Card>
             <CardTitle title={attribute?.name || <Skeleton />} />
-            <CardContent
-              className={classes.valueContainer}
-              data-test-id="value-container"
-            >
+            <CardContent data-test-id="value-container">
               <MultiAutocompleteSelectField
                 choices={getMultiChoices(attributeValues)}
                 displayValues={getMultiDisplayValues(
