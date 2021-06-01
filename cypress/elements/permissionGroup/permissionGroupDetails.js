@@ -5,5 +5,6 @@ export const PERMISSION_GROUP_DETAILS = {
     '[id="MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES"]',
   assignMemberButton: '[data-test-id="assign-members"]',
   searchField: '[name="query"]',
+  removeUserButton: '[data-test-id="removeUser"]',
   userRow: '[data-test-id="userRow"]'
 };

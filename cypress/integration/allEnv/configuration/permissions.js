@@ -21,6 +21,7 @@ describe("Permissions groups", () => {
   const startsWith = "CyPermissions-";
 
   before(() => {
+    cy.clearSessionData().loginUserViaRequest();
     deletePermissionGroupsStartsWith(startsWith);
   });
 
@@ -96,6 +97,7 @@ describe("Permissions groups", () => {
           .get(PERMISSION_GROUP_DETAILS.searchField)
           .type(USER_WITHOUT_NAME.email)
           .get(PERMISSION_GROUP_DETAILS.userRow)
+          .should("have.length", 1)
           .find(BUTTON_SELECTORS.checkbox)
           .click()
           .get(BUTTON_SELECTORS.submit)
@@ -124,7 +126,17 @@ describe("Permissions groups", () => {
           userIdsArray: `["${staffMember.id}"]`,
           permissionsArray: "[MANAGE_PRODUCTS]"
         });
-        //
+      })
+      .then(({ group }) => {
+        cy.visit(permissionGroupDetails(group.id))
+          .get(PERMISSION_GROUP_DETAILS.removeUserButton)
+          .click()
+          .get(BUTTON_SELECTORS.submit)
+          .click()
+          .addAliasToGraphRequest("PermissionGroupUpdate")
+          .get(BUTTON_SELECTORS.confirm)
+          .click()
+          .wait("@PermissionGroupUpdate");
         cy.visit(staffMemberDetailsUrl(staffMember.id));
         cy.get(SHARED_ELEMENTS.header).should("be.visible");
         cy.contains(permissionName).should("not.exist");

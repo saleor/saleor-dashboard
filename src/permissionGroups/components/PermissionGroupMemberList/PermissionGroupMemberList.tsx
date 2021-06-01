@@ -257,6 +257,7 @@ const PermissionGroupMemberList: React.FC<PermissionGroupProps> = props => {
                       {user ? (
                         <>
                           <IconButton
+                            data-test-id="removeUser"
                             disabled={disabled}
                             color="primary"
                             onClick={stopPropagation(() =>

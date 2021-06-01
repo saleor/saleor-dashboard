@@ -286,6 +286,7 @@ const AssignMembersDialog: React.FC<AssignMembersDialogProps> = ({
           <FormattedMessage {...buttonMessages.back} />
         </Button>
         <ConfirmButton
+          data-test="submit"
           color="primary"
           variant="contained"
           type="submit"
