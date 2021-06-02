@@ -3,7 +3,7 @@ import { ShopInfo_shop_countries } from "@saleor/components/Shop/types/ShopInfo"
 import { SingleAutocompleteChoiceType } from "@saleor/components/SingleAutocompleteSelectField";
 import { MetadataItem } from "@saleor/fragments/types/MetadataItem";
 import { SearchPages_search_edges_node } from "@saleor/searches/types/SearchPages";
-import { Node, SlugNode } from "@saleor/types";
+import { Node } from "@saleor/types";
 import { MetadataInput } from "@saleor/types/globalTypes";
 
 interface EdgesType<T> {
@@ -46,19 +46,6 @@ export function mapNodeToChoice(
   return nodes.map(node => ({
     label: node.name,
     value: node.id
-  }));
-}
-
-export function mapSlugNodeToChoice(
-  nodes: Array<SlugNode & Record<"name", string>>
-) {
-  if (!nodes) {
-    return [];
-  }
-
-  return nodes.map(node => ({
-    label: node.name,
-    value: node.slug
   }));
 }
 

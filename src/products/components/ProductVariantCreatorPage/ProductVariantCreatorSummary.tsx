@@ -124,7 +124,7 @@ function getVariantName(
           variant.attributes.find(
             variantAttribute => variantAttribute.id === attribute.id
           ).values[0]
-      )?.name
+      )?.value?.name
     ],
     []
   );

@@ -133,9 +133,6 @@ export interface PartialMutationProviderOutput<
 export interface Node {
   id: string;
 }
-export interface SlugNode {
-  slug: string;
-}
 
 export type Pagination = Partial<{
   after: string;

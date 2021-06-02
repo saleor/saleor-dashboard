@@ -5,18 +5,18 @@ import CardSpacer from "@saleor/components/CardSpacer";
 import CardTitle from "@saleor/components/CardTitle";
 import MultiAutocompleteSelectField from "@saleor/components/MultiAutocompleteSelectField";
 import Skeleton from "@saleor/components/Skeleton";
+import { AttributeValueFragment } from "@saleor/fragments/types/AttributeValueFragment";
 import { getById } from "@saleor/orders/components/OrderReturnPage/utils";
 import { ProductDetails_product_productType_variantAttributes } from "@saleor/products/types/ProductDetails";
 import { SearchAttributeValues_attribute_choices_edges_node } from "@saleor/searches/types/SearchAttributeValues";
 import { FetchMoreProps } from "@saleor/types";
-import { mapSlugNodeToChoice } from "@saleor/utils/maps";
 import React from "react";
 import { defineMessages, FormattedMessage, useIntl } from "react-intl";
 
 import {
   Attribute,
-  ProductVariantCreateFormData,
-  ProductVariantValue
+  AttributeValue,
+  ProductVariantCreateFormData
 } from "./form";
 
 const messages = defineMessages({
@@ -46,7 +46,10 @@ export function getMultiDisplayValues(
   attributes: Attribute[],
   attribute: ProductDetails_product_productType_variantAttributes
 ) {
-  return mapSlugNodeToChoice(attributes.find(getById(attribute.id))?.values);
+  return attributes.find(getById(attribute.id))?.values.map(value => ({
+    label: value.value?.name,
+    value: value.slug
+  }));
 }
 
 export interface ProductVariantCreatorValuesProps {
@@ -56,7 +59,10 @@ export interface ProductVariantCreatorValuesProps {
   fetchMoreAttributeValues?: FetchMoreProps;
   data: ProductVariantCreateFormData;
   variantsLeft: number | null;
-  onValueClick: (attributeId: string, value: ProductVariantValue) => void;
+  onValueClick: (
+    attributeId: string,
+    value: AttributeValue<AttributeValueFragment>
+  ) => void;
   onAttributeSelect: (id: string) => void;
 }
 
@@ -79,9 +85,9 @@ const ProductVariantCreatorValues: React.FC<ProductVariantCreatorValuesProps> = 
 
     onValueClick(attributeId, {
       slug: valueSlug,
-      name:
-        dataAttribute?.values.find(value => value.slug === valueSlug)?.name ||
-        attributeValues.find(value => value.slug === valueSlug)?.name
+      value:
+        dataAttribute?.values.find(value => value.slug === valueSlug)?.value ||
+        attributeValues.find(value => value.slug === valueSlug)
     });
   };
 

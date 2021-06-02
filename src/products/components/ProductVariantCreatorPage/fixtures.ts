@@ -22,7 +22,15 @@ export const attributes = [
       .fill(0)
       .map((_, index) => ({
         slug: `val-1-${index + 1}`,
-        name: `val-1-${index + 1}`
+        value: {
+          __typename: "AttributeValue" as "AttributeValue",
+          id: `val-1-${index + 1}`,
+          name: `val-1-${index + 1}`,
+          slug: `val-1-${index + 1}`,
+          file: null,
+          reference: null,
+          richText: null
+        }
       }))
   },
   {
@@ -31,7 +39,15 @@ export const attributes = [
       .fill(0)
       .map((_, index) => ({
         slug: `val-2-${index + 1}`,
-        name: `val-2-${index + 1}`
+        value: {
+          __typename: "AttributeValue" as "AttributeValue",
+          id: `val-2-${index + 1}`,
+          name: `val-2-${index + 1}`,
+          slug: `val-2-${index + 1}`,
+          file: null,
+          reference: null,
+          richText: null
+        }
       }))
   },
   {
@@ -40,7 +56,15 @@ export const attributes = [
       .fill(0)
       .map((_, index) => ({
         slug: `val-3-${index + 1}`,
-        name: `val-3-${index + 1}`
+        value: {
+          __typename: "AttributeValue" as "AttributeValue",
+          id: `val-3-${index + 1}`,
+          name: `val-3-${index + 1}`,
+          slug: `val-3-${index + 1}`,
+          file: null,
+          reference: null,
+          richText: null
+        }
       }))
   },
   {
@@ -49,7 +73,15 @@ export const attributes = [
       .fill(0)
       .map((_, index) => ({
         slug: `val-4-${index + 1}`,
-        name: `val-4-${index + 1}`
+        value: {
+          __typename: "AttributeValue" as "AttributeValue",
+          id: `val-4-${index + 1}`,
+          name: `val-4-${index + 1}`,
+          slug: `val-4-${index + 1}`,
+          file: null,
+          reference: null,
+          richText: null
+        }
       }))
   }
 ];

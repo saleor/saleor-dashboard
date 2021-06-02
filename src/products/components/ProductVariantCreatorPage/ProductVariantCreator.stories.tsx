@@ -60,7 +60,10 @@ const stock: Stock = {
 const dataAttributes = selectedAttributes.map(attribute => ({
   id: attribute.id,
   values: attribute.choices.edges
-    .map(value => value.node)
+    .map(value => ({
+      slug: value.node.slug,
+      value: value.node
+    }))
     .filter((_, valueIndex) => valueIndex % 2 !== 1)
 }));
 

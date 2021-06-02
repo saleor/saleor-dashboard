@@ -1,3 +1,4 @@
+import { AttributeValueFragment } from "@saleor/fragments/types/AttributeValueFragment";
 import { StockInput } from "@saleor/types/globalTypes";
 import {
   add,
@@ -10,8 +11,8 @@ import {
 
 import { createVariants } from "./createVariants";
 import {
+  AttributeValue,
   ProductVariantCreateFormData,
-  ProductVariantValue,
   VariantCreatorPricesAndSkuMode
 } from "./form";
 
@@ -75,7 +76,7 @@ export interface ProductVariantCreateReducerAction {
   };
   selectValue?: {
     attributeId: string;
-    value: ProductVariantValue;
+    value: AttributeValue<AttributeValueFragment>;
   };
   type: ProductVariantCreateReducerActionType;
 }
@@ -83,7 +84,7 @@ export interface ProductVariantCreateReducerAction {
 function selectValue(
   prevState: ProductVariantCreateFormData,
   attributeId: string,
-  value: ProductVariantValue
+  value: AttributeValue<AttributeValueFragment>
 ): ProductVariantCreateFormData {
   const attribute = prevState.attributes.find(
     attribute => attribute.id === attributeId

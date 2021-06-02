@@ -1,4 +1,5 @@
 import { ChannelPriceData } from "@saleor/channels/utils";
+import { AttributeValueFragment } from "@saleor/fragments/types/AttributeValueFragment";
 import { WarehouseFragment } from "@saleor/fragments/types/WarehouseFragment";
 import { ProductDetails_product_productType_variantAttributes } from "@saleor/products/types/ProductDetails";
 
@@ -12,10 +13,6 @@ export interface ChannelPrice {
 export interface AttributeValue<T> {
   slug: string;
   value: T;
-}
-export interface ProductVariantValue {
-  slug: string;
-  name: string;
 }
 export type VariantCreatorPricesAndSkuMode = "all" | "attribute" | "skip";
 export interface Price {
@@ -32,7 +29,7 @@ export interface Stock {
 }
 export interface Attribute {
   id: string;
-  values: ProductVariantValue[];
+  values: Array<AttributeValue<AttributeValueFragment>>;
 }
 export interface ProductVariantCreateFormData {
   attributes: Attribute[];
