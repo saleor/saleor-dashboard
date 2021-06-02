@@ -68,7 +68,7 @@ export function getFilterOpts(
       .sort((a, b) => (a.name > b.name ? 1 : -1))
       .map(attr => ({
         active: maybe(() => params.attributes[attr.slug].length > 0, false),
-        choices: attr.values?.edges?.map(val => ({
+        choices: attr.choices?.edges?.map(val => ({
           label: val.node.name,
           value: val.node.slug
         })),

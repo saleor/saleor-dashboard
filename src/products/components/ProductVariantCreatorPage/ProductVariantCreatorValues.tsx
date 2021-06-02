@@ -71,7 +71,7 @@ const ProductVariantCreatorValues: React.FC<ProductVariantCreatorValuesProps> = 
               className={classes.valueContainer}
               data-test-id="value-container"
             >
-              {attribute.values.edges.map(({ node: value }) => (
+              {attribute.choices.edges.map(({ node: value }) => (
                 <Debounce
                   debounceFn={() => onValueClick(attribute.id, value.slug)}
                   time={100}

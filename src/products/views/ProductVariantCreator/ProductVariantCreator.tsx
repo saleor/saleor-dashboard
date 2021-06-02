@@ -67,7 +67,12 @@ const ProductVariantCreator: React.FC<ProductVariantCreatorProps> = ({
           name: listing.channel.name,
           price: ""
         }))}
-        attributes={data?.product?.productType?.variantAttributes || []}
+        attributes={
+          data?.product?.productType?.variantAttributes?.map(attr => ({
+            ...attr,
+            choices: attr.values
+          })) || []
+        }
         limits={limitOpts.data?.shop?.limits}
         onSubmit={inputs =>
           bulkProductVariantCreate({

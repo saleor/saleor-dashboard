@@ -9,7 +9,7 @@ import { AttributeInputTypeEnum, AttributeEntityTypeEnum, MeasurementUnitsEnum, 
 // GraphQL fragment: Product
 // ====================================================
 
-export interface Product_attributes_attribute_values_pageInfo {
+export interface Product_attributes_attribute_choices_pageInfo {
   __typename: "PageInfo";
   endCursor: string | null;
   hasNextPage: boolean;
@@ -17,32 +17,32 @@ export interface Product_attributes_attribute_values_pageInfo {
   startCursor: string | null;
 }
 
-export interface Product_attributes_attribute_values_edges_node_file {
+export interface Product_attributes_attribute_choices_edges_node_file {
   __typename: "File";
   url: string;
   contentType: string | null;
 }
 
-export interface Product_attributes_attribute_values_edges_node {
+export interface Product_attributes_attribute_choices_edges_node {
   __typename: "AttributeValue";
   id: string;
   name: string | null;
   slug: string | null;
-  file: Product_attributes_attribute_values_edges_node_file | null;
+  file: Product_attributes_attribute_choices_edges_node_file | null;
   reference: string | null;
   richText: any | null;
 }
 
-export interface Product_attributes_attribute_values_edges {
+export interface Product_attributes_attribute_choices_edges {
   __typename: "AttributeValueCountableEdge";
   cursor: string;
-  node: Product_attributes_attribute_values_edges_node;
+  node: Product_attributes_attribute_choices_edges_node;
 }
 
-export interface Product_attributes_attribute_values {
+export interface Product_attributes_attribute_choices {
   __typename: "AttributeValueCountableConnection";
-  pageInfo: Product_attributes_attribute_values_pageInfo;
-  edges: Product_attributes_attribute_values_edges[];
+  pageInfo: Product_attributes_attribute_choices_pageInfo;
+  edges: Product_attributes_attribute_choices_edges[];
 }
 
 export interface Product_attributes_attribute {
@@ -54,7 +54,7 @@ export interface Product_attributes_attribute {
   entityType: AttributeEntityTypeEnum | null;
   valueRequired: boolean;
   unit: MeasurementUnitsEnum | null;
-  values: Product_attributes_attribute_values | null;
+  choices: Product_attributes_attribute_choices | null;
 }
 
 export interface Product_attributes_values_file {
@@ -79,7 +79,7 @@ export interface Product_attributes {
   values: (Product_attributes_values | null)[];
 }
 
-export interface Product_productType_variantAttributes_values_pageInfo {
+export interface Product_productType_variantAttributes_choices_pageInfo {
   __typename: "PageInfo";
   endCursor: string | null;
   hasNextPage: boolean;
@@ -87,39 +87,39 @@ export interface Product_productType_variantAttributes_values_pageInfo {
   startCursor: string | null;
 }
 
-export interface Product_productType_variantAttributes_values_edges_node_file {
+export interface Product_productType_variantAttributes_choices_edges_node_file {
   __typename: "File";
   url: string;
   contentType: string | null;
 }
 
-export interface Product_productType_variantAttributes_values_edges_node {
+export interface Product_productType_variantAttributes_choices_edges_node {
   __typename: "AttributeValue";
   id: string;
   name: string | null;
   slug: string | null;
-  file: Product_productType_variantAttributes_values_edges_node_file | null;
+  file: Product_productType_variantAttributes_choices_edges_node_file | null;
   reference: string | null;
   richText: any | null;
 }
 
-export interface Product_productType_variantAttributes_values_edges {
+export interface Product_productType_variantAttributes_choices_edges {
   __typename: "AttributeValueCountableEdge";
   cursor: string;
-  node: Product_productType_variantAttributes_values_edges_node;
+  node: Product_productType_variantAttributes_choices_edges_node;
 }
 
-export interface Product_productType_variantAttributes_values {
+export interface Product_productType_variantAttributes_choices {
   __typename: "AttributeValueCountableConnection";
-  pageInfo: Product_productType_variantAttributes_values_pageInfo;
-  edges: Product_productType_variantAttributes_values_edges[];
+  pageInfo: Product_productType_variantAttributes_choices_pageInfo;
+  edges: Product_productType_variantAttributes_choices_edges[];
 }
 
 export interface Product_productType_variantAttributes {
   __typename: "Attribute";
   id: string;
   name: string | null;
-  values: Product_productType_variantAttributes_values | null;
+  choices: Product_productType_variantAttributes_choices | null;
 }
 
 export interface Product_productType_taxType {

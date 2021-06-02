@@ -7,7 +7,7 @@
 // GraphQL query operation: InitialProductFilterAttributes
 // ====================================================
 
-export interface InitialProductFilterAttributes_attributes_edges_node_values_pageInfo {
+export interface InitialProductFilterAttributes_attributes_edges_node_choices_pageInfo {
   __typename: "PageInfo";
   endCursor: string | null;
   hasNextPage: boolean;
@@ -15,23 +15,23 @@ export interface InitialProductFilterAttributes_attributes_edges_node_values_pag
   startCursor: string | null;
 }
 
-export interface InitialProductFilterAttributes_attributes_edges_node_values_edges_node {
+export interface InitialProductFilterAttributes_attributes_edges_node_choices_edges_node {
   __typename: "AttributeValue";
   id: string;
   name: string | null;
   slug: string | null;
 }
 
-export interface InitialProductFilterAttributes_attributes_edges_node_values_edges {
+export interface InitialProductFilterAttributes_attributes_edges_node_choices_edges {
   __typename: "AttributeValueCountableEdge";
   cursor: string;
-  node: InitialProductFilterAttributes_attributes_edges_node_values_edges_node;
+  node: InitialProductFilterAttributes_attributes_edges_node_choices_edges_node;
 }
 
-export interface InitialProductFilterAttributes_attributes_edges_node_values {
+export interface InitialProductFilterAttributes_attributes_edges_node_choices {
   __typename: "AttributeValueCountableConnection";
-  pageInfo: InitialProductFilterAttributes_attributes_edges_node_values_pageInfo;
-  edges: InitialProductFilterAttributes_attributes_edges_node_values_edges[];
+  pageInfo: InitialProductFilterAttributes_attributes_edges_node_choices_pageInfo;
+  edges: InitialProductFilterAttributes_attributes_edges_node_choices_edges[];
 }
 
 export interface InitialProductFilterAttributes_attributes_edges_node {
@@ -39,7 +39,7 @@ export interface InitialProductFilterAttributes_attributes_edges_node {
   id: string;
   name: string | null;
   slug: string | null;
-  values: InitialProductFilterAttributes_attributes_edges_node_values | null;
+  choices: InitialProductFilterAttributes_attributes_edges_node_choices | null;
 }
 
 export interface InitialProductFilterAttributes_attributes_edges {

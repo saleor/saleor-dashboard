@@ -7,28 +7,28 @@
 // GraphQL query operation: SearchAttributeValues
 // ====================================================
 
-export interface SearchAttributeValues_attribute_values_edges_node_file {
+export interface SearchAttributeValues_attribute_choices_edges_node_file {
   __typename: "File";
   url: string;
   contentType: string | null;
 }
 
-export interface SearchAttributeValues_attribute_values_edges_node {
+export interface SearchAttributeValues_attribute_choices_edges_node {
   __typename: "AttributeValue";
   id: string;
   name: string | null;
   slug: string | null;
-  file: SearchAttributeValues_attribute_values_edges_node_file | null;
+  file: SearchAttributeValues_attribute_choices_edges_node_file | null;
   reference: string | null;
   richText: any | null;
 }
 
-export interface SearchAttributeValues_attribute_values_edges {
+export interface SearchAttributeValues_attribute_choices_edges {
   __typename: "AttributeValueCountableEdge";
-  node: SearchAttributeValues_attribute_values_edges_node;
+  node: SearchAttributeValues_attribute_choices_edges_node;
 }
 
-export interface SearchAttributeValues_attribute_values_pageInfo {
+export interface SearchAttributeValues_attribute_choices_pageInfo {
   __typename: "PageInfo";
   endCursor: string | null;
   hasNextPage: boolean;
@@ -36,16 +36,16 @@ export interface SearchAttributeValues_attribute_values_pageInfo {
   startCursor: string | null;
 }
 
-export interface SearchAttributeValues_attribute_values {
+export interface SearchAttributeValues_attribute_choices {
   __typename: "AttributeValueCountableConnection";
-  edges: SearchAttributeValues_attribute_values_edges[];
-  pageInfo: SearchAttributeValues_attribute_values_pageInfo;
+  edges: SearchAttributeValues_attribute_choices_edges[];
+  pageInfo: SearchAttributeValues_attribute_choices_pageInfo;
 }
 
 export interface SearchAttributeValues_attribute {
   __typename: "Attribute";
   id: string;
-  values: SearchAttributeValues_attribute_values | null;
+  choices: SearchAttributeValues_attribute_choices | null;
 }
 
 export interface SearchAttributeValues {

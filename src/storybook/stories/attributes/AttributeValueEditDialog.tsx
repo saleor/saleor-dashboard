@@ -9,7 +9,7 @@ import AttributeValueEditDialog, {
 import Decorator from "../../Decorator";
 
 const props: AttributeValueEditDialogProps = {
-  attributeValue: attribute.values[0],
+  attributeValue: attribute.choices[0],
   confirmButtonState: "default",
   disabled: false,
   errors: [],

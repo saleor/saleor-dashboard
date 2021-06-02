@@ -132,7 +132,7 @@ export const productVariantAttributesFragment = gql`
         entityType
         valueRequired
         unit
-        values(
+        choices(
           first: $firstValues
           after: $afterValues
           last: $lastValues
@@ -150,7 +150,7 @@ export const productVariantAttributesFragment = gql`
       variantAttributes(variantSelection: VARIANT_SELECTION) {
         id
         name
-        values(
+        choices(
           first: $firstValues
           after: $afterValues
           last: $lastValues

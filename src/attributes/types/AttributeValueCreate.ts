@@ -9,7 +9,7 @@ import { AttributeValueCreateInput, AttributeErrorCode } from "./../../types/glo
 // GraphQL mutation operation: AttributeValueCreate
 // ====================================================
 
-export interface AttributeValueCreate_attributeValueCreate_attribute_values_pageInfo {
+export interface AttributeValueCreate_attributeValueCreate_attribute_choices_pageInfo {
   __typename: "PageInfo";
   endCursor: string | null;
   hasNextPage: boolean;
@@ -17,38 +17,38 @@ export interface AttributeValueCreate_attributeValueCreate_attribute_values_page
   startCursor: string | null;
 }
 
-export interface AttributeValueCreate_attributeValueCreate_attribute_values_edges_node_file {
+export interface AttributeValueCreate_attributeValueCreate_attribute_choices_edges_node_file {
   __typename: "File";
   url: string;
   contentType: string | null;
 }
 
-export interface AttributeValueCreate_attributeValueCreate_attribute_values_edges_node {
+export interface AttributeValueCreate_attributeValueCreate_attribute_choices_edges_node {
   __typename: "AttributeValue";
   id: string;
   name: string | null;
   slug: string | null;
-  file: AttributeValueCreate_attributeValueCreate_attribute_values_edges_node_file | null;
+  file: AttributeValueCreate_attributeValueCreate_attribute_choices_edges_node_file | null;
   reference: string | null;
   richText: any | null;
 }
 
-export interface AttributeValueCreate_attributeValueCreate_attribute_values_edges {
+export interface AttributeValueCreate_attributeValueCreate_attribute_choices_edges {
   __typename: "AttributeValueCountableEdge";
   cursor: string;
-  node: AttributeValueCreate_attributeValueCreate_attribute_values_edges_node;
+  node: AttributeValueCreate_attributeValueCreate_attribute_choices_edges_node;
 }
 
-export interface AttributeValueCreate_attributeValueCreate_attribute_values {
+export interface AttributeValueCreate_attributeValueCreate_attribute_choices {
   __typename: "AttributeValueCountableConnection";
-  pageInfo: AttributeValueCreate_attributeValueCreate_attribute_values_pageInfo;
-  edges: AttributeValueCreate_attributeValueCreate_attribute_values_edges[];
+  pageInfo: AttributeValueCreate_attributeValueCreate_attribute_choices_pageInfo;
+  edges: AttributeValueCreate_attributeValueCreate_attribute_choices_edges[];
 }
 
 export interface AttributeValueCreate_attributeValueCreate_attribute {
   __typename: "Attribute";
   id: string;
-  values: AttributeValueCreate_attributeValueCreate_attribute_values | null;
+  choices: AttributeValueCreate_attributeValueCreate_attribute_choices | null;
 }
 
 export interface AttributeValueCreate_attributeValueCreate_errors {
