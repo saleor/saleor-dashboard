@@ -13,7 +13,11 @@ import { mapSlugNodeToChoice } from "@saleor/utils/maps";
 import React from "react";
 import { defineMessages, FormattedMessage, useIntl } from "react-intl";
 
-import { Attribute, ProductVariantCreateFormData } from "./form";
+import {
+  Attribute,
+  ProductVariantCreateFormData,
+  ProductVariantValue
+} from "./form";
 
 const messages = defineMessages({
   multipleValueLabel: {
@@ -52,10 +56,7 @@ export interface ProductVariantCreatorValuesProps {
   fetchMoreAttributeValues?: FetchMoreProps;
   data: ProductVariantCreateFormData;
   variantsLeft: number | null;
-  onValueClick: (
-    attributeId: string,
-    value: SearchAttributeValues_attribute_choices_edges_node
-  ) => void;
+  onValueClick: (attributeId: string, value: ProductVariantValue) => void;
   onAttributeSelect: (id: string) => void;
 }
 
@@ -74,10 +75,14 @@ const ProductVariantCreatorValues: React.FC<ProductVariantCreatorValuesProps> = 
   const variantsNumber = getVariantsNumber(data);
 
   const handleValueClick = (attributeId: string, valueSlug: string) => {
-    onValueClick(
-      attributeId,
-      attributeValues.find(value => value.slug === valueSlug)
-    );
+    const dataAttribute = data.attributes.find(getById(attributeId));
+
+    onValueClick(attributeId, {
+      slug: valueSlug,
+      name:
+        dataAttribute?.values.find(value => value.slug === valueSlug)?.name ||
+        attributeValues.find(value => value.slug === valueSlug)?.name
+    });
   };
 
   return (
