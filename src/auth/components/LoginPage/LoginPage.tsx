@@ -29,7 +29,7 @@ const useStyles = makeStyles(
     loading: {
       alignItems: "center",
       display: "flex",
-      height: "100vh",
+      minHeight: "80vh",
       justifyContent: "center"
     },
     loginButton: {
