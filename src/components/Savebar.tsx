@@ -1,16 +1,17 @@
 import { buttonMessages, commonMessages } from "@saleor/intl";
-import { Savebar, SavebarLabels, SavebarProps } from "@saleor/macaw-ui";
+import {
+  Savebar as MacawSavebar,
+  SavebarLabels,
+  SavebarProps as MacawSavebarProps
+} from "@saleor/macaw-ui";
 import React from "react";
 import { useIntl } from "react-intl";
 
-export interface SaveButtonBarProps extends Omit<SavebarProps, "labels"> {
-  labels?: SavebarLabels;
+export interface SavebarProps extends Omit<MacawSavebarProps, "labels"> {
+  labels?: Partial<SavebarLabels>;
 }
 
-export const SaveButtonBar: React.FC<SaveButtonBarProps> = ({
-  labels = {},
-  ...rest
-}) => {
+export const Savebar: React.FC<SavebarProps> = ({ labels = {}, ...rest }) => {
   const intl = useIntl();
 
   const defaultLabels: SavebarLabels = {
@@ -24,7 +25,7 @@ export const SaveButtonBar: React.FC<SaveButtonBarProps> = ({
     ...labels
   };
 
-  return <Savebar labels={componentLabels} {...rest} />;
+  return <MacawSavebar labels={componentLabels} {...rest} />;
 };
-SaveButtonBar.displayName = "SaveButtonBar";
-export default SaveButtonBar;
+Savebar.displayName = "SaveBar";
+export default Savebar;
