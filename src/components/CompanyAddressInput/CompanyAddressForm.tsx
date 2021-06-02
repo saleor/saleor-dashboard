@@ -147,6 +147,7 @@ const CompanyAddressForm: React.FC<CompanyAddressFormProps> = props => {
       <FormSpacer />
       <Grid>
         <SingleAutocompleteSelectField
+          data-test-id="address-edit-country-select-field"
           disabled={disabled}
           displayValue={displayCountry}
           error={!!formErrors.country}
