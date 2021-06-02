@@ -102,7 +102,7 @@ const attributeValueDelete = gql`
     attributeValueDelete(id: $id) {
       attribute {
         id
-        values(
+        choices(
           first: $firstValues
           after: $afterValues
           last: $lastValues
@@ -136,7 +136,7 @@ export const attributeValueUpdateMutation = gql`
     attributeValueUpdate(id: $id, input: $input) {
       attribute {
         id
-        values(
+        choices(
           first: $firstValues
           after: $afterValues
           last: $lastValues
@@ -170,7 +170,7 @@ export const attributeValueCreateMutation = gql`
     attributeValueCreate(attribute: $id, input: $input) {
       attribute {
         id
-        values(
+        choices(
           first: $firstValues
           after: $afterValues
           last: $lastValues
@@ -222,7 +222,7 @@ const attributeValueReorderMutation = gql`
     attributeReorderValues(attributeId: $id, moves: [$move]) {
       attribute {
         id
-        values(
+        choices(
           first: $firstValues
           after: $afterValues
           last: $lastValues

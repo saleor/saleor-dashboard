@@ -29,7 +29,7 @@ export const attribute: AttributeDetails_attribute = {
   type: AttributeTypeEnum.PRODUCT_TYPE,
   valueRequired: true,
   unit: null,
-  values: {
+  choices: {
     __typename: "AttributeValueCountableConnection" as "AttributeValueCountableConnection",
     pageInfo: {
       __typename: "PageInfo" as "PageInfo",
@@ -82,7 +82,7 @@ export const attributes: Array<AttributeList_attributes_edges_node &
       slug: "author",
       type: AttributeTypeEnum.PRODUCT_TYPE,
       unit: null,
-      values: {
+      choices: {
         __typename: "AttributeValueCountableConnection" as "AttributeValueCountableConnection",
         pageInfo: {
           endCursor: "WyI4IiwgIjMiXQ==",
@@ -137,7 +137,7 @@ export const attributes: Array<AttributeList_attributes_edges_node &
       slug: "box-size",
       type: AttributeTypeEnum.PRODUCT_TYPE,
       unit: null,
-      values: {
+      choices: {
         __typename: "AttributeValueCountableConnection" as "AttributeValueCountableConnection",
         pageInfo: {
           endCursor: "WyI4IiwgIjMiXQ==",
@@ -222,7 +222,7 @@ export const attributes: Array<AttributeList_attributes_edges_node &
       slug: "brand",
       type: AttributeTypeEnum.PRODUCT_TYPE,
       unit: null,
-      values: {
+      choices: {
         __typename: "AttributeValueCountableConnection" as "AttributeValueCountableConnection",
         pageInfo: {
           endCursor: "WyI4IiwgIjMiXQ==",
@@ -262,7 +262,7 @@ export const attributes: Array<AttributeList_attributes_edges_node &
       slug: "candy-box-size",
       type: AttributeTypeEnum.PRODUCT_TYPE,
       unit: null,
-      values: {
+      choices: {
         __typename: "AttributeValueCountableConnection" as "AttributeValueCountableConnection",
         pageInfo: {
           endCursor: "WyI4IiwgIjMiXQ==",
@@ -332,7 +332,7 @@ export const attributes: Array<AttributeList_attributes_edges_node &
       slug: "coffee-genre",
       type: AttributeTypeEnum.PRODUCT_TYPE,
       unit: null,
-      values: {
+      choices: {
         __typename: "AttributeValueCountableConnection" as "AttributeValueCountableConnection",
         pageInfo: {
           endCursor: "WyI4IiwgIjMiXQ==",
@@ -387,7 +387,7 @@ export const attributes: Array<AttributeList_attributes_edges_node &
       slug: "collar",
       type: AttributeTypeEnum.PRODUCT_TYPE,
       unit: null,
-      values: {
+      choices: {
         __typename: "AttributeValueCountableConnection" as "AttributeValueCountableConnection",
         pageInfo: {
           endCursor: "WyI4IiwgIjMiXQ==",
@@ -457,7 +457,7 @@ export const attributes: Array<AttributeList_attributes_edges_node &
       slug: "color",
       type: AttributeTypeEnum.PRODUCT_TYPE,
       unit: null,
-      values: {
+      choices: {
         __typename: "AttributeValueCountableConnection" as "AttributeValueCountableConnection",
         pageInfo: {
           endCursor: "WyI4IiwgIjMiXQ==",
@@ -512,7 +512,7 @@ export const attributes: Array<AttributeList_attributes_edges_node &
       slug: "cover",
       type: AttributeTypeEnum.PRODUCT_TYPE,
       unit: null,
-      values: {
+      choices: {
         __typename: "AttributeValueCountableConnection" as "AttributeValueCountableConnection",
         pageInfo: {
           endCursor: "WyI4IiwgIjMiXQ==",
@@ -627,7 +627,7 @@ export const attributes: Array<AttributeList_attributes_edges_node &
       slug: "flavor",
       type: AttributeTypeEnum.PRODUCT_TYPE,
       unit: null,
-      values: {
+      choices: {
         __typename: "AttributeValueCountableConnection" as "AttributeValueCountableConnection",
         pageInfo: {
           endCursor: "WyI4IiwgIjMiXQ==",
@@ -682,7 +682,7 @@ export const attributes: Array<AttributeList_attributes_edges_node &
       slug: "language",
       type: AttributeTypeEnum.PRODUCT_TYPE,
       unit: null,
-      values: {
+      choices: {
         __typename: "AttributeValueCountableConnection" as "AttributeValueCountableConnection",
         pageInfo: {
           endCursor: "WyI4IiwgIjMiXQ==",
@@ -737,7 +737,7 @@ export const attributes: Array<AttributeList_attributes_edges_node &
       slug: "publisher",
       type: AttributeTypeEnum.PRODUCT_TYPE,
       unit: null,
-      values: {
+      choices: {
         __typename: "AttributeValueCountableConnection" as "AttributeValueCountableConnection",
         pageInfo: {
           endCursor: "WyI4IiwgIjMiXQ==",
@@ -792,7 +792,7 @@ export const attributes: Array<AttributeList_attributes_edges_node &
       slug: "size",
       type: AttributeTypeEnum.PRODUCT_TYPE,
       unit: null,
-      values: {
+      choices: {
         __typename: "AttributeValueCountableConnection" as "AttributeValueCountableConnection",
         pageInfo: {
           endCursor: "WyI4IiwgIjMiXQ==",

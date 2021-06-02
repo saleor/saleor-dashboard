@@ -9,7 +9,7 @@ import { ReorderInput, AttributeErrorCode } from "./../../types/globalTypes";
 // GraphQL mutation operation: AttributeValueReorder
 // ====================================================
 
-export interface AttributeValueReorder_attributeReorderValues_attribute_values_pageInfo {
+export interface AttributeValueReorder_attributeReorderValues_attribute_choices_pageInfo {
   __typename: "PageInfo";
   endCursor: string | null;
   hasNextPage: boolean;
@@ -17,27 +17,27 @@ export interface AttributeValueReorder_attributeReorderValues_attribute_values_p
   startCursor: string | null;
 }
 
-export interface AttributeValueReorder_attributeReorderValues_attribute_values_edges_node {
+export interface AttributeValueReorder_attributeReorderValues_attribute_choices_edges_node {
   __typename: "AttributeValue";
   id: string;
 }
 
-export interface AttributeValueReorder_attributeReorderValues_attribute_values_edges {
+export interface AttributeValueReorder_attributeReorderValues_attribute_choices_edges {
   __typename: "AttributeValueCountableEdge";
   cursor: string;
-  node: AttributeValueReorder_attributeReorderValues_attribute_values_edges_node;
+  node: AttributeValueReorder_attributeReorderValues_attribute_choices_edges_node;
 }
 
-export interface AttributeValueReorder_attributeReorderValues_attribute_values {
+export interface AttributeValueReorder_attributeReorderValues_attribute_choices {
   __typename: "AttributeValueCountableConnection";
-  pageInfo: AttributeValueReorder_attributeReorderValues_attribute_values_pageInfo;
-  edges: AttributeValueReorder_attributeReorderValues_attribute_values_edges[];
+  pageInfo: AttributeValueReorder_attributeReorderValues_attribute_choices_pageInfo;
+  edges: AttributeValueReorder_attributeReorderValues_attribute_choices_edges[];
 }
 
 export interface AttributeValueReorder_attributeReorderValues_attribute {
   __typename: "Attribute";
   id: string;
-  values: AttributeValueReorder_attributeReorderValues_attribute_values | null;
+  choices: AttributeValueReorder_attributeReorderValues_attribute_choices | null;
 }
 
 export interface AttributeValueReorder_attributeReorderValues_errors {

@@ -25,7 +25,7 @@ const attributeDetails = gql`
   ) {
     attribute(id: $id) {
       ...AttributeDetailsFragment
-      values(
+      choices(
         first: $firstValues
         after: $afterValues
         last: $lastValues

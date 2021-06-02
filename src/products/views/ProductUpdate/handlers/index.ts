@@ -162,7 +162,7 @@ export function createUpdateHandler(
               attributes:
                 product.productType.variantAttributes?.map(attribute => ({
                   id: attribute.id,
-                  values: attribute.values.edges.map(value => value.node.slug)
+                  values: attribute.choices.edges.map(value => value.node.slug)
                 })) || [],
               product: product.id,
               sku: data.sku,

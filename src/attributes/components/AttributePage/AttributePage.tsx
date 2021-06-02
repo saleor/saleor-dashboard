@@ -1,4 +1,4 @@
-import { AttributeDetails_attribute_values } from "@saleor/attributes/types/AttributeDetails";
+import { AttributeDetails_attribute_choices } from "@saleor/attributes/types/AttributeDetails";
 import { ATTRIBUTE_TYPES_WITH_DEDICATED_VALUES } from "@saleor/attributes/utils/data";
 import AppHeader from "@saleor/components/AppHeader";
 import CardSpacer from "@saleor/components/CardSpacer";
@@ -37,7 +37,7 @@ export interface AttributePageProps {
   disabled: boolean;
   errors: AttributeErrorFragment[];
   saveButtonBarState: ConfirmButtonTransitionState;
-  values: AttributeDetails_attribute_values;
+  values: AttributeDetails_attribute_choices;
   onBack: () => void;
   onDelete: () => void;
   onSubmit: (data: AttributePageFormData) => void;

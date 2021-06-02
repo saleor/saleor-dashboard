@@ -30,7 +30,7 @@ export const product: (
         slug: "Borders",
         valueRequired: false,
         unit: null,
-        values: {
+        choices: {
           __typename: "AttributeValueCountableConnection",
           pageInfo: {
             endCursor: "WyI4IiwgIjMiXQ==",
@@ -92,7 +92,7 @@ export const product: (
         slug: "Legacy",
         valueRequired: true,
         unit: null,
-        values: {
+        choices: {
           __typename: "AttributeValueCountableConnection",
           pageInfo: {
             endCursor: "WyI4IiwgIjMiXQ==",
@@ -426,11 +426,8 @@ export const product: (
       {
         __typename: "Attribute",
         id: "isdugfhud",
-        inputType: AttributeInputTypeEnum.FILE,
         name: "Attachment",
-        slug: "attachment",
-        valueRequired: true,
-        values: {
+        choices: {
           __typename: "AttributeValueCountableConnection",
           pageInfo: {
             endCursor: "WyI4IiwgIjMiXQ==",
@@ -463,11 +460,8 @@ export const product: (
       {
         __typename: "Attribute",
         id: "pta18161",
-        inputType: AttributeInputTypeEnum.DROPDOWN,
         name: "Color",
-        slug: "color",
-        valueRequired: true,
-        values: {
+        choices: {
           __typename: "AttributeValueCountableConnection",
           pageInfo: {
             endCursor: "WyI4IiwgIjMiXQ==",
