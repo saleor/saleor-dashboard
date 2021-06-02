@@ -145,10 +145,8 @@ export const ChannelDetails: React.FC<ChannelDetailsProps> = ({
     channelsListData?.data?.channels
   );
 
-  const handleRemoveConfirm = (targetChannelId?: string) => {
-    const data = targetChannelId
-      ? { id, input: { targetChannel: targetChannelId } }
-      : { id };
+  const handleRemoveConfirm = (channelId?: string) => {
+    const data = channelId ? { id, input: { channelId } } : { id };
     deleteChannel({ variables: data });
   };
 

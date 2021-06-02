@@ -93,7 +93,7 @@ describe("Adyen payments", () => {
       billingAddress: address,
       auth: "token"
     })
-      .then(checkoutResp => {
+      .then(({ checkout: checkoutResp }) => {
         checkout = checkoutResp;
         addShippingMethod(checkout.id, shippingMethod.id);
       })

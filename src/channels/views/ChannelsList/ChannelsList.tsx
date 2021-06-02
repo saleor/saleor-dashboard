@@ -80,16 +80,15 @@ export const ChannelsList: React.FC<ChannelsListProps> = ({ params }) => {
 
   const navigateToChannelCreate = () => navigate(channelAddUrl);
 
-  const handleRemoveConfirm = (targetChannelId?: string) => {
-    if (targetChannelId) {
-      deleteChannel({
-        variables: { id: params.id, input: { targetChannel: targetChannelId } }
-      });
-    } else {
-      deleteChannel({
-        variables: { id: params.id }
-      });
-    }
+  const handleRemoveConfirm = (channelId?: string) => {
+    const inputVariables = channelId ? { input: { channelId } } : {};
+
+    deleteChannel({
+      variables: {
+        id: params.id,
+        ...inputVariables
+      }
+    });
   };
 
   return (

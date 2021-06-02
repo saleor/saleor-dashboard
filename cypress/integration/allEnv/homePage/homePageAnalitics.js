@@ -95,7 +95,9 @@ describe("Homepage analytics", () => {
   });
 
   it("should all elements be visible on the dashboard", () => {
-    cy.visit(urlList.homePage)
+    cy.pause();
+    cy.visit(urlList.homePage);
+    cy.pause()
       .softAssertVisibility(HOMEPAGE_SELECTORS.sales)
       .softAssertVisibility(HOMEPAGE_SELECTORS.orders)
       .softAssertVisibility(HOMEPAGE_SELECTORS.activity)
