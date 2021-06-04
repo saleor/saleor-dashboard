@@ -24,6 +24,7 @@ import {
 import { GridAttributes_grid_edges_node } from "@saleor/products/types/GridAttributes";
 import { ProductList_products_edges_node } from "@saleor/products/types/ProductList";
 import { ProductListUrlSortField } from "@saleor/products/urls";
+import { canBeSorted } from "@saleor/products/views/ProductList/sort";
 import { makeStyles } from "@saleor/theme";
 import { ChannelProps, ListActions, ListProps, SortPage } from "@saleor/types";
 import TDisplayColumn, {
@@ -215,6 +216,12 @@ export const ProductList: React.FC<ProductListProps> = props => {
                   : undefined
               }
               onClick={() => onSort(ProductListUrlSortField.status)}
+              disabled={
+                !canBeSorted(
+                  ProductListUrlSortField.status,
+                  !!selectedChannelId
+                )
+              }
             >
               <FormattedMessage
                 defaultMessage="Availability"
@@ -262,6 +269,9 @@ export const ProductList: React.FC<ProductListProps> = props => {
               }
               textAlign="right"
               onClick={() => onSort(ProductListUrlSortField.price)}
+              disabled={
+                !canBeSorted(ProductListUrlSortField.price, !!selectedChannelId)
+              }
             >
               <FormattedMessage
                 defaultMessage="Price"

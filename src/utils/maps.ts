@@ -1,5 +1,8 @@
 import { ShopInfo_shop_countries } from "@saleor/components/Shop/types/ShopInfo";
-import { SingleAutocompleteChoiceType } from "@saleor/components/SingleAutocompleteSelectField";
+import {
+  ChoiceValue,
+  SingleAutocompleteChoiceType
+} from "@saleor/components/SingleAutocompleteSelectField";
 import { MetadataItem } from "@saleor/fragments/types/MetadataItem";
 import { SearchPages_search_edges_node } from "@saleor/searches/types/SearchPages";
 import { Node } from "@saleor/types";
@@ -35,7 +38,7 @@ type ExtendedNode = Node & Record<"name", string>;
 export function mapNodeToChoice<T extends ExtendedNode>(
   nodes: T[]
 ): Array<SingleAutocompleteChoiceType<string>>;
-export function mapNodeToChoice<T extends ExtendedNode, K>(
+export function mapNodeToChoice<T extends ExtendedNode, K extends ChoiceValue>(
   nodes: T[],
   getterFn: (node: T) => K
 ): Array<SingleAutocompleteChoiceType<K>>;

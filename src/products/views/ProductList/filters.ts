@@ -232,13 +232,13 @@ function getFilteredAttributeValue(
 
 export function getFilterVariables(
   params: ProductListUrlFilters,
-  channel: string | undefined
+  isChannelSelected: boolean
 ): ProductFilterInput {
   return {
     attributes: getFilteredAttributeValue(params),
     categories: params.categories !== undefined ? params.categories : null,
     collections: params.collections !== undefined ? params.collections : null,
-    price: channel
+    price: isChannelSelected
       ? getGteLteVariables({
           gte: parseFloat(params.priceFrom),
           lte: parseFloat(params.priceTo)
