@@ -1,4 +1,5 @@
 import { IFilterElement } from "@saleor/components/Filter";
+import { SingleAutocompleteChoiceType } from "@saleor/components/SingleAutocompleteSelectField";
 import {
   VoucherFilterKeys,
   VoucherListFilterOpts
@@ -28,9 +29,15 @@ import {
 export const VOUCHER_FILTERS_KEY = "voucherFilters";
 
 export function getFilterOpts(
-  params: VoucherListUrlFilters
+  params: VoucherListUrlFilters,
+  channels: SingleAutocompleteChoiceType[]
 ): VoucherListFilterOpts {
   return {
+    channel: {
+      active: params?.channel !== undefined,
+      choices: channels,
+      value: params?.channel
+    },
     saleType: {
       active: !!maybe(() => params.type),
       value: maybe(

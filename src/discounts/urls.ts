@@ -23,7 +23,8 @@ export enum SaleListUrlFiltersEnum {
   type = "type",
   startedFrom = "startedFrom",
   startedTo = "startedTo",
-  query = "query"
+  query = "query",
+  channel = "channel"
 }
 export enum SaleListUrlFiltersWithMultipleValues {
   status = "status"
@@ -75,7 +76,8 @@ export enum VoucherListUrlFiltersEnum {
   startedTo = "startedTo",
   timesUsedFrom = "timesUsedFrom",
   timesUsedTo = "timesUsedTo",
-  query = "query"
+  query = "query",
+  channel = "channel"
 }
 export enum VoucherListUrlFiltersWithMultipleValues {
   status = "status",

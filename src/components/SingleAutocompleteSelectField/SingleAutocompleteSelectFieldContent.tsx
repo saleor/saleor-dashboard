@@ -23,7 +23,7 @@ const menuItemHeight = 46;
 const maxMenuItems = 5;
 const offset = 24;
 
-export type ChoiceValue = boolean | string | number;
+export type ChoiceValue = string;
 export interface SingleAutocompleteChoiceType<
   T extends ChoiceValue = ChoiceValue
 > {
