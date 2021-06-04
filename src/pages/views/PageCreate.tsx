@@ -9,6 +9,7 @@ import { DEFAULT_INITIAL_SEARCH_DATA } from "@saleor/config";
 import { useFileUploadMutation } from "@saleor/files/mutations";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
+import useAttributeValueSearch from "@saleor/searches/useAttributeValueSearch";
 import usePageSearch from "@saleor/searches/usePageSearch";
 import usePageTypeSearch from "@saleor/searches/usePageTypeSearch";
 import useProductSearch from "@saleor/searches/useProductSearch";
@@ -19,12 +20,13 @@ import {
   usePrivateMetadataUpdate
 } from "@saleor/utils/metadata/updateMetadata";
 import { getParsedDataForJsonStringField } from "@saleor/utils/richText/misc";
-import React from "react";
+import React, { useState } from "react";
 import { useIntl } from "react-intl";
 
 import PageDetailsPage from "../components/PageDetailsPage";
 import { PageSubmitData } from "../components/PageDetailsPage/form";
 import { TypedPageCreate } from "../mutations";
+import { usePageTypeQuery } from "../queries";
 import { PageCreate as PageCreateData } from "../types/PageCreate";
 import {
   pageCreateUrl,
@@ -45,6 +47,8 @@ export const PageCreate: React.FC<PageCreateProps> = ({ params }) => {
   const [updateMetadata] = useMetadataUpdate({});
   const [updatePrivateMetadata] = usePrivateMetadataUpdate({});
 
+  const [selectedPageTypeId, setSelectedPageTypeId] = React.useState<string>();
+
   const {
     loadMore: loadMorePageTypes,
     search: searchPageTypes,
@@ -52,7 +56,6 @@ export const PageCreate: React.FC<PageCreateProps> = ({ params }) => {
   } = usePageTypeSearch({
     variables: DEFAULT_INITIAL_SEARCH_DATA
   });
-
   const {
     loadMore: loadMorePages,
     search: searchPages,
@@ -60,7 +63,6 @@ export const PageCreate: React.FC<PageCreateProps> = ({ params }) => {
   } = usePageSearch({
     variables: DEFAULT_INITIAL_SEARCH_DATA
   });
-
   const {
     loadMore: loadMoreProducts,
     search: searchProducts,
@@ -68,6 +70,30 @@ export const PageCreate: React.FC<PageCreateProps> = ({ params }) => {
   } = useProductSearch({
     variables: DEFAULT_INITIAL_SEARCH_DATA
   });
+  const [selectedAttribute, setSelectedAttribute] = useState<string>();
+  const {
+    loadMore: loadMoreAttributeValues,
+    search: searchAttributeValues,
+    result: searchAttributeValuesOpts
+  } = useAttributeValueSearch({
+    variables: {
+      id: selectedAttribute,
+      ...DEFAULT_INITIAL_SEARCH_DATA
+    },
+    skip: !selectedAttribute
+  });
+
+  const { data: selectedPageType } = usePageTypeQuery({
+    variables: {
+      id: selectedPageTypeId,
+      firstValues: 10
+    },
+    skip: !selectedPageTypeId
+  });
+
+  const attributeValues = mapEdgesToItems(
+    searchAttributeValuesOpts?.data?.attribute.choices
+  );
 
   const [uploadFile, uploadFileOpts] = useFileUploadMutation({});
 
@@ -96,17 +122,21 @@ export const PageCreate: React.FC<PageCreateProps> = ({ params }) => {
     loading: searchPageTypesOpts.loading,
     onFetchMore: loadMorePageTypes
   };
-
   const fetchMoreReferencePages = {
     hasMore: searchPagesOpts.data?.search?.pageInfo?.hasNextPage,
     loading: searchPagesOpts.loading,
     onFetchMore: loadMorePages
   };
-
   const fetchMoreReferenceProducts = {
     hasMore: searchProductsOpts.data?.search?.pageInfo?.hasNextPage,
     loading: searchProductsOpts.loading,
     onFetchMore: loadMoreProducts
+  };
+  const fetchMoreAttributeValues = {
+    hasMore: !!searchAttributeValuesOpts.data?.attribute?.choices?.pageInfo
+      ?.hasNextPage,
+    loading: !!searchAttributeValuesOpts.loading,
+    onFetchMore: loadMoreAttributeValues
   };
 
   return (
@@ -132,7 +162,7 @@ export const PageCreate: React.FC<PageCreateProps> = ({ params }) => {
                 }),
                 content: getParsedDataForJsonStringField(formData.content),
                 isPublished: formData.isPublished,
-                pageType: formData.pageType,
+                pageType: formData.pageType?.id,
                 publicationDate: formData.publicationDate,
                 seo: {
                   description: formData.seoDescription,
@@ -165,6 +195,7 @@ export const PageCreate: React.FC<PageCreateProps> = ({ params }) => {
               errors={pageCreateOpts.data?.pageCreate.errors || []}
               saveButtonBarState={pageCreateOpts.status}
               page={null}
+              attributeValues={attributeValues}
               pageTypes={mapEdgesToItems(searchPageTypesOpts?.data?.search)}
               onBack={() => navigate(pageListUrl())}
               onRemove={() => undefined}
@@ -183,7 +214,12 @@ export const PageCreate: React.FC<PageCreateProps> = ({ params }) => {
               fetchMoreReferencePages={fetchMoreReferencePages}
               fetchReferenceProducts={searchProducts}
               fetchMoreReferenceProducts={fetchMoreReferenceProducts}
+              fetchAttributeValues={searchAttributeValues}
+              fetchMoreAttributeValues={fetchMoreAttributeValues}
               onCloseDialog={() => navigate(pageCreateUrl())}
+              selectedPageType={selectedPageType?.pageType}
+              onSelectPageType={id => setSelectedPageTypeId(id)}
+              onAttributeSelect={setSelectedAttribute}
             />
           </>
         );

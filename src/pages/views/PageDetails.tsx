@@ -21,6 +21,7 @@ import { UploadErrorFragment } from "@saleor/fragments/types/UploadErrorFragment
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { commonMessages } from "@saleor/intl";
+import useAttributeValueSearch from "@saleor/searches/useAttributeValueSearch";
 import usePageSearch from "@saleor/searches/usePageSearch";
 import useProductSearch from "@saleor/searches/useProductSearch";
 import createMetadataUpdateHandler from "@saleor/utils/handlers/metadataUpdateHandler";
@@ -30,7 +31,7 @@ import {
   usePrivateMetadataUpdate
 } from "@saleor/utils/metadata/updateMetadata";
 import { getParsedDataForJsonStringField } from "@saleor/utils/richText/misc";
-import React from "react";
+import React, { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { getStringOrPlaceholder, maybe } from "../../misc";
@@ -75,7 +76,8 @@ export const PageDetails: React.FC<PageDetailsProps> = ({ id, params }) => {
 
   const pageDetails = usePageDetailsQuery({
     variables: {
-      id
+      id,
+      firstValues: 10
     }
   });
 
@@ -132,7 +134,8 @@ export const PageDetails: React.FC<PageDetailsProps> = ({ id, params }) => {
     const updateResult = await pageUpdate({
       variables: {
         id,
-        input: createPageInput(data, updatedFileAttributes)
+        input: createPageInput(data, updatedFileAttributes),
+        firstValues: 10
       }
     });
 
@@ -160,7 +163,6 @@ export const PageDetails: React.FC<PageDetailsProps> = ({ id, params }) => {
   } = usePageSearch({
     variables: DEFAULT_INITIAL_SEARCH_DATA
   });
-
   const {
     loadMore: loadMoreProducts,
     search: searchProducts,
@@ -168,17 +170,38 @@ export const PageDetails: React.FC<PageDetailsProps> = ({ id, params }) => {
   } = useProductSearch({
     variables: DEFAULT_INITIAL_SEARCH_DATA
   });
+  const [selectedAttribute, setSelectedAttribute] = useState<string>();
+  const {
+    loadMore: loadMoreAttributeValues,
+    search: searchAttributeValues,
+    result: searchAttributeValuesOpts
+  } = useAttributeValueSearch({
+    variables: {
+      id: selectedAttribute,
+      ...DEFAULT_INITIAL_SEARCH_DATA
+    },
+    skip: !selectedAttribute
+  });
+
+  const attributeValues = mapEdgesToItems(
+    searchAttributeValuesOpts?.data?.attribute.choices
+  );
 
   const fetchMoreReferencePages = {
     hasMore: searchPagesOpts.data?.search?.pageInfo?.hasNextPage,
     loading: searchPagesOpts.loading,
     onFetchMore: loadMorePages
   };
-
   const fetchMoreReferenceProducts = {
     hasMore: searchProductsOpts.data?.search?.pageInfo?.hasNextPage,
     loading: searchProductsOpts.loading,
     onFetchMore: loadMoreProducts
+  };
+  const fetchMoreAttributeValues = {
+    hasMore: !!searchAttributeValuesOpts.data?.attribute?.choices?.pageInfo
+      ?.hasNextPage,
+    loading: !!searchAttributeValuesOpts.loading,
+    onFetchMore: loadMoreAttributeValues
   };
 
   return (
@@ -194,6 +217,7 @@ export const PageDetails: React.FC<PageDetailsProps> = ({ id, params }) => {
         errors={pageUpdateOpts.data?.pageUpdate.errors || []}
         saveButtonBarState={pageUpdateOpts.status}
         page={pageDetails.data?.page}
+        attributeValues={attributeValues}
         onBack={() => navigate(pageListUrl())}
         onRemove={() =>
           navigate(
@@ -213,7 +237,10 @@ export const PageDetails: React.FC<PageDetailsProps> = ({ id, params }) => {
         fetchMoreReferencePages={fetchMoreReferencePages}
         fetchReferenceProducts={searchProducts}
         fetchMoreReferenceProducts={fetchMoreReferenceProducts}
+        fetchAttributeValues={searchAttributeValues}
+        fetchMoreAttributeValues={fetchMoreAttributeValues}
         onCloseDialog={() => navigate(pageUrl(id))}
+        onAttributeSelect={setSelectedAttribute}
       />
       <ActionDialog
         open={params.action === "remove"}
