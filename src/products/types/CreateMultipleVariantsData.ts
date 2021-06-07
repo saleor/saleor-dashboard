@@ -23,6 +23,7 @@ export interface CreateMultipleVariantsData_product_attributes_attribute_values 
   file: CreateMultipleVariantsData_product_attributes_attribute_values_file | null;
   reference: string | null;
   richText: any | null;
+  value: string | null;
 }
 
 export interface CreateMultipleVariantsData_product_attributes_attribute {
@@ -51,6 +52,7 @@ export interface CreateMultipleVariantsData_product_attributes_values {
   file: CreateMultipleVariantsData_product_attributes_values_file | null;
   reference: string | null;
   richText: any | null;
+  value: string | null;
 }
 
 export interface CreateMultipleVariantsData_product_attributes {
@@ -73,6 +75,7 @@ export interface CreateMultipleVariantsData_product_productType_variantAttribute
   file: CreateMultipleVariantsData_product_productType_variantAttributes_values_file | null;
   reference: string | null;
   richText: any | null;
+  value: string | null;
 }
 
 export interface CreateMultipleVariantsData_product_productType_variantAttributes {

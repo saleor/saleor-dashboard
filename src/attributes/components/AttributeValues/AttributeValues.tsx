@@ -90,14 +90,20 @@ const AttributeValues: React.FC<AttributeValuesProps> = ({
             <TableCell className={classes.columnDrag} />
             <TableCell className={classes.columnAdmin}>
               <FormattedMessage
-                defaultMessage="Admin"
+                defaultMessage="Admin Name"
                 description="attribute values list: slug column header"
               />
             </TableCell>
             <TableCell className={classes.columnStore}>
               <FormattedMessage
-                defaultMessage="Default Store View"
+                defaultMessage="Storefront Name"
                 description="attribute values list: name column header"
+              />
+            </TableCell>
+            <TableCell className={classes.columnStore}>
+              <FormattedMessage
+                defaultMessage="Value"
+                description="attribute values list: value column header"
               />
             </TableCell>
             <TableCell className={classes.iconCell} />
@@ -115,10 +121,13 @@ const AttributeValues: React.FC<AttributeValuesProps> = ({
                 index={valueIndex || 0}
               >
                 <TableCell className={classes.columnAdmin}>
-                  {maybe(() => value.slug) ? value.slug : <Skeleton />}
+                  {value?.slug ?? <Skeleton />}
                 </TableCell>
                 <TableCell className={classes.columnStore}>
-                  {maybe(() => value.name) ? value.name : <Skeleton />}
+                  {value?.name ?? <Skeleton />}
+                </TableCell>
+                <TableCell className={classes.columnStore}>
+                  {value?.value ?? <Skeleton />}
                 </TableCell>
                 <TableCell className={classes.iconCell}>
                   <IconButton

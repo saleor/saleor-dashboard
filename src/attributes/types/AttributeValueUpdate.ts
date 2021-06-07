@@ -35,6 +35,7 @@ export interface AttributeValueUpdate_attributeValueUpdate_attribute_values {
   file: AttributeValueUpdate_attributeValueUpdate_attribute_values_file | null;
   reference: string | null;
   richText: any | null;
+  value: string | null;
 }
 
 export interface AttributeValueUpdate_attributeValueUpdate_attribute {

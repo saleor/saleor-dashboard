@@ -17,7 +17,8 @@ const DROPDOWN_ATTRIBUTE: AttributeInput = {
         name: "Dropdown First Value",
         reference: null,
         slug: "dropdown-first-value",
-        richText: null
+        richText: null,
+        value: null
       },
       {
         __typename: "AttributeValue",
@@ -26,7 +27,8 @@ const DROPDOWN_ATTRIBUTE: AttributeInput = {
         name: "Dropdown Second Value",
         reference: null,
         slug: "dropdown-second-value",
-        richText: null
+        richText: null,
+        value: null
       }
     ]
   },
@@ -47,7 +49,8 @@ const MULTISELECT_ATTRIBUTE: AttributeInput = {
         name: "Multiselect First Value",
         reference: null,
         slug: "multiselect-first-value",
-        richText: null
+        richText: null,
+        value: null
       },
       {
         __typename: "AttributeValue",
@@ -56,7 +59,8 @@ const MULTISELECT_ATTRIBUTE: AttributeInput = {
         name: "Multiselect Second Value",
         reference: null,
         slug: "multiselect-second-value",
-        richText: null
+        richText: null,
+        value: null
       },
       {
         __typename: "AttributeValue",
@@ -65,7 +69,8 @@ const MULTISELECT_ATTRIBUTE: AttributeInput = {
         name: "Multiselect Third Value",
         reference: null,
         slug: "multiselect-third-value",
-        richText: null
+        richText: null,
+        value: null
       }
     ]
   },
@@ -90,7 +95,8 @@ const FILE_ATTRIBUTE: AttributeInput = {
         name: "File First Value",
         reference: null,
         slug: "file-first-value",
-        richText: null
+        richText: null,
+        value: null
       }
     ]
   },
@@ -126,7 +132,8 @@ const REFERENCE_ATTRIBUTE: AttributeInput = {
         name: "References First Value",
         reference: null,
         slug: "references-first-value",
-        richText: null
+        richText: null,
+        value: null
       },
       {
         __typename: "AttributeValue",
@@ -135,7 +142,8 @@ const REFERENCE_ATTRIBUTE: AttributeInput = {
         name: "References Second Value",
         reference: null,
         slug: "references-second-value",
-        richText: null
+        richText: null,
+        value: null
       },
       {
         __typename: "AttributeValue",
@@ -144,7 +152,8 @@ const REFERENCE_ATTRIBUTE: AttributeInput = {
         name: "References Third Value",
         reference: null,
         slug: "references-third-value",
-        richText: null
+        richText: null,
+        value: null
       }
     ]
   },
@@ -169,7 +178,8 @@ const RICH_TEXT_ATTRIBUTE: AttributeInput = {
           time: 1617788754145,
           blocks: [{ data: { text: "Some cool text" }, type: "paragraph" }],
           version: "2.19.3"
-        })
+        }),
+        value: null
       }
     ],
     selectedValues: [
@@ -184,7 +194,8 @@ const RICH_TEXT_ATTRIBUTE: AttributeInput = {
           time: 1617788754145,
           blocks: [{ data: { text: "Some cool text" }, type: "paragraph" }],
           version: "2.19.3"
-        })
+        }),
+        value: null
       }
     ]
   },
@@ -205,6 +216,7 @@ const NUMERIC_ATTRIBUTE: AttributeInput = {
         name: "12cm",
         reference: null,
         richText: null,
+        value: null,
         slug: "319_35"
       }
     ]

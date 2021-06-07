@@ -41,6 +41,7 @@ export interface VariantMediaUnassign_variantMediaUnassign_productVariant_select
   file: VariantMediaUnassign_variantMediaUnassign_productVariant_selectionAttributes_attribute_values_file | null;
   reference: string | null;
   richText: any | null;
+  value: string | null;
 }
 
 export interface VariantMediaUnassign_variantMediaUnassign_productVariant_selectionAttributes_attribute {
@@ -69,6 +70,7 @@ export interface VariantMediaUnassign_variantMediaUnassign_productVariant_select
   file: VariantMediaUnassign_variantMediaUnassign_productVariant_selectionAttributes_values_file | null;
   reference: string | null;
   richText: any | null;
+  value: string | null;
 }
 
 export interface VariantMediaUnassign_variantMediaUnassign_productVariant_selectionAttributes {
@@ -91,6 +93,7 @@ export interface VariantMediaUnassign_variantMediaUnassign_productVariant_nonSel
   file: VariantMediaUnassign_variantMediaUnassign_productVariant_nonSelectionAttributes_attribute_values_file | null;
   reference: string | null;
   richText: any | null;
+  value: string | null;
 }
 
 export interface VariantMediaUnassign_variantMediaUnassign_productVariant_nonSelectionAttributes_attribute {
@@ -119,6 +122,7 @@ export interface VariantMediaUnassign_variantMediaUnassign_productVariant_nonSel
   file: VariantMediaUnassign_variantMediaUnassign_productVariant_nonSelectionAttributes_values_file | null;
   reference: string | null;
   richText: any | null;
+  value: string | null;
 }
 
 export interface VariantMediaUnassign_variantMediaUnassign_productVariant_nonSelectionAttributes {

@@ -23,6 +23,7 @@ export interface PageDetailsFragment_attributes_attribute_values {
   file: PageDetailsFragment_attributes_attribute_values_file | null;
   reference: string | null;
   richText: any | null;
+  value: string | null;
 }
 
 export interface PageDetailsFragment_attributes_attribute {
@@ -51,6 +52,7 @@ export interface PageDetailsFragment_attributes_values {
   file: PageDetailsFragment_attributes_values_file | null;
   reference: string | null;
   richText: any | null;
+  value: string | null;
 }
 
 export interface PageDetailsFragment_attributes {
@@ -73,6 +75,7 @@ export interface PageDetailsFragment_pageType_attributes_values {
   file: PageDetailsFragment_pageType_attributes_values_file | null;
   reference: string | null;
   richText: any | null;
+  value: string | null;
 }
 
 export interface PageDetailsFragment_pageType_attributes {

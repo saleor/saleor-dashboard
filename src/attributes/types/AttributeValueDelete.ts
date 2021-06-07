@@ -35,6 +35,7 @@ export interface AttributeValueDelete_attributeValueDelete_attribute_values {
   file: AttributeValueDelete_attributeValueDelete_attribute_values_file | null;
   reference: string | null;
   richText: any | null;
+  value: string | null;
 }
 
 export interface AttributeValueDelete_attributeValueDelete_attribute {

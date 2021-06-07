@@ -29,6 +29,7 @@ export interface ProductMediaUpdate_productMediaUpdate_product_attributes_attrib
   file: ProductMediaUpdate_productMediaUpdate_product_attributes_attribute_values_file | null;
   reference: string | null;
   richText: any | null;
+  value: string | null;
 }
 
 export interface ProductMediaUpdate_productMediaUpdate_product_attributes_attribute {
@@ -57,6 +58,7 @@ export interface ProductMediaUpdate_productMediaUpdate_product_attributes_values
   file: ProductMediaUpdate_productMediaUpdate_product_attributes_values_file | null;
   reference: string | null;
   richText: any | null;
+  value: string | null;
 }
 
 export interface ProductMediaUpdate_productMediaUpdate_product_attributes {
@@ -79,6 +81,7 @@ export interface ProductMediaUpdate_productMediaUpdate_product_productType_varia
   file: ProductMediaUpdate_productMediaUpdate_product_productType_variantAttributes_values_file | null;
   reference: string | null;
   richText: any | null;
+  value: string | null;
 }
 
 export interface ProductMediaUpdate_productMediaUpdate_product_productType_variantAttributes {

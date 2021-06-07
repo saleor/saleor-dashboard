@@ -35,6 +35,7 @@ export interface AttributeDetails_attribute_values {
   file: AttributeDetails_attribute_values_file | null;
   reference: string | null;
   richText: any | null;
+  value: string | null;
 }
 
 export interface AttributeDetails_attribute {

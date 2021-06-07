@@ -23,6 +23,7 @@ export interface VariantAttributeFragment_values {
   file: VariantAttributeFragment_values_file | null;
   reference: string | null;
   richText: any | null;
+  value: string | null;
 }
 
 export interface VariantAttributeFragment {
