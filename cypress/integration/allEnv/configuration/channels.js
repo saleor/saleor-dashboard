@@ -2,6 +2,7 @@
 import faker from "faker";
 
 import { createChannel } from "../../../apiRequests/Channels";
+import { ONE_PERMISSION_USERS } from "../../../Data/users";
 import { LEFT_MENU_SELECTORS } from "../../../elements/account/left-menu/left-menu-selectors";
 import { PRODUCTS_LIST } from "../../../elements/catalog/products/products-list";
 import { ADD_CHANNEL_FORM_SELECTORS } from "../../../elements/channels/add-channel-form-selectors";
@@ -29,17 +30,7 @@ describe("Channels", () => {
   });
 
   beforeEach(() => {
-    cy.clearSessionData().loginUserViaRequest();
-  });
-
-  it("should navigate to channels page", () => {
-    cy.visit(urlList.homePage)
-      .get(LEFT_MENU_SELECTORS.configuration)
-      .click()
-      .get(CONFIGURATION_SELECTORS.channels)
-      .click()
-      .location("pathname")
-      .should("contain", "channels");
+    cy.clearSessionData().loginUserViaRequest(ONE_PERMISSION_USERS.channel);
   });
 
   it("should create new channel", () => {
@@ -65,6 +56,7 @@ describe("Channels", () => {
       .click();
 
     // new channel should be visible at product availability form
+    cy.clearSessionData().loginUserViaRequest();
     cy.addAliasToGraphRequest("InitialProductFilterAttributes");
     cy.visit(urlList.products);
     cy.wait("@InitialProductFilterAttributes");
