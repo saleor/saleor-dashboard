@@ -1,9 +1,9 @@
 import useListSettings from "@saleor/hooks/useListSettings";
+import useLocalPaginator, {
+  useLocalPaginationState
+} from "@saleor/hooks/useLocalPaginator";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
-import usePaginator, {
-  createPaginationState
-} from "@saleor/hooks/usePaginator";
 import { commonMessages } from "@saleor/intl";
 import { maybe } from "@saleor/misc";
 import { ListViews, ReorderEvent } from "@saleor/types";
@@ -47,7 +47,6 @@ interface AttributeDetailsProps {
 
 const AttributeDetails: React.FC<AttributeDetailsProps> = ({ id, params }) => {
   const navigate = useNavigator();
-  const paginate = usePaginator();
   const notify = useNotifier();
   const intl = useIntl();
   const [updateMetadata] = useMetadataUpdate({});
@@ -62,20 +61,26 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ id, params }) => {
     ListViews.ATTRIBUTE_VALUE_LIST
   );
 
+  const [
+    valuesPaginationState,
+    setValuesPaginationState
+  ] = useLocalPaginationState(settings?.rowNumber);
+
   const { data, loading } = useAttributeDetailsQuery({
     variables: {
       id,
-      firstValues: settings?.rowNumber,
-      afterValues: params.after
+      firstValues: valuesPaginationState.first,
+      lastValues: valuesPaginationState.last,
+      afterValues: valuesPaginationState.after,
+      beforeValues: valuesPaginationState.before
     },
     skip: !settings
   });
 
-  const paginationState = createPaginationState(settings?.rowNumber, params);
-  const { loadNextPage, loadPreviousPage, pageInfo } = paginate(
+  const paginateValues = useLocalPaginator(setValuesPaginationState);
+  const { loadNextPage, loadPreviousPage, pageInfo } = paginateValues(
     data?.attribute?.choices?.pageInfo,
-    paginationState,
-    params
+    valuesPaginationState
   );
 
   const [attributeDelete, attributeDeleteOpts] = useAttributeDeleteMutation({
@@ -197,8 +202,10 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ id, params }) => {
           id: data.attribute.choices.edges[oldIndex].node.id,
           sortOrder: newIndex - oldIndex
         },
-        firstValues: settings.rowNumber,
-        afterValues: params.after
+        firstValues: valuesPaginationState.first,
+        lastValues: valuesPaginationState.last,
+        afterValues: valuesPaginationState.after,
+        beforeValues: valuesPaginationState.before
       }
     });
 
@@ -288,8 +295,10 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ id, params }) => {
           attributeValueDelete({
             variables: {
               id: params.id,
-              firstValues: settings.rowNumber,
-              afterValues: params.after
+              firstValues: valuesPaginationState.first,
+              lastValues: valuesPaginationState.last,
+              afterValues: valuesPaginationState.after,
+              beforeValues: valuesPaginationState.before
             }
           })
         }
@@ -308,8 +317,10 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ id, params }) => {
             variables: {
               id,
               input,
-              firstValues: settings.rowNumber,
-              afterValues: params.after
+              firstValues: valuesPaginationState.first,
+              lastValues: valuesPaginationState.last,
+              afterValues: valuesPaginationState.after,
+              beforeValues: valuesPaginationState.before
             }
           })
         }
@@ -335,8 +346,10 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ id, params }) => {
                 value => params.id === value.node.id
               ).node.id,
               input,
-              firstValues: settings.rowNumber,
-              afterValues: params.after
+              firstValues: valuesPaginationState.first,
+              lastValues: valuesPaginationState.last,
+              afterValues: valuesPaginationState.after,
+              beforeValues: valuesPaginationState.before
             }
           })
         }

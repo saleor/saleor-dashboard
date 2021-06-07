@@ -60,8 +60,7 @@ export type AttributeUrlDialog =
   | "remove"
   | "remove-value"
   | "remove-values";
-export type AttributeUrlQueryParams = Pagination &
-  BulkAction &
+export type AttributeUrlQueryParams = BulkAction &
   Dialog<AttributeUrlDialog> &
   SingleAction;
 export const attributePath = (id: string) => urlJoin(attributeSection, id);
