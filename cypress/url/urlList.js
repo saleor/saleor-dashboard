@@ -15,7 +15,15 @@ export const urlList = {
   permissionsGroups: "permission-groups/"
 };
 export const productDetailsUrl = productId => `${urlList.products}${productId}`;
+
 export const staffMemberDetailsUrl = staffMemberId =>
   `${urlList.staffMembers}${staffMemberId}`;
+
 export const permissionGroupDetails = permissionGroupId =>
   `${urlList.permissionsGroups}${permissionGroupId}`;
+
+export const shippingZoneDetailsUrl = shippingZoneId =>
+  `${urlList.shippingMethods}${shippingZoneId}`;
+
+export const warehouseDetailsUrl = warehouseId =>
+  `${urlList.warehouses}${warehouseId}`;
