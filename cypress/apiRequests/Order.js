@@ -35,11 +35,11 @@ export function createDraftOrder(
     draftOrderCreate(input:{
       user:"${customerId}"
       shippingMethod:"${shippingMethodId}"
-      channel: "${channelId}"
+      channelId: "${channelId}"
       ${getDefaultAddress(address, "shippingAddress")}
       ${getDefaultAddress(address, "billingAddress")}
     }){
-      orderErrors{
+      errors{
         message
       }
       order{
