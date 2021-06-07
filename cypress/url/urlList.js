@@ -12,10 +12,15 @@ export const urlList = {
   collections: "collections/",
   vouchers: "discounts/vouchers/",
   staffMembers: "staff/",
+  newPassword: "new-password/",
   permissionsGroups: "permission-groups/"
 };
 export const productDetailsUrl = productId => `${urlList.products}${productId}`;
+
+export const userDetailsUrl = userId => `${urlList.staffMembers}${userId}`;
+
 export const staffMemberDetailsUrl = staffMemberId =>
   `${urlList.staffMembers}${staffMemberId}`;
+
 export const permissionGroupDetails = permissionGroupId =>
   `${urlList.permissionsGroups}${permissionGroupId}`;
