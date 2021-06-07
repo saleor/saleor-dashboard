@@ -5,7 +5,10 @@ import {
 } from "@saleor/attributes/utils/handlers";
 import { AttributeInput } from "@saleor/components/Attributes";
 import { WindowTitle } from "@saleor/components/WindowTitle";
-import { DEFAULT_INITIAL_SEARCH_DATA } from "@saleor/config";
+import {
+  DEFAULT_INITIAL_SEARCH_DATA,
+  VALUES_PAGINATE_BY
+} from "@saleor/config";
 import { useFileUploadMutation } from "@saleor/files/mutations";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
@@ -86,7 +89,7 @@ export const PageCreate: React.FC<PageCreateProps> = ({ params }) => {
   const { data: selectedPageType } = usePageTypeQuery({
     variables: {
       id: selectedPageTypeId,
-      firstValues: 10
+      firstValues: VALUES_PAGINATE_BY
     },
     skip: !selectedPageTypeId
   });

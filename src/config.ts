@@ -19,6 +19,7 @@ export const DEFAULT_INITIAL_PAGINATION_DATA: Pagination = {
 };
 
 export const PAGINATE_BY = 20;
+export const VALUES_PAGINATE_BY = 10;
 
 export type ProductListColumns = "productType" | "availability" | "price";
 export interface AppListViewSettings {

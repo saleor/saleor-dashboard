@@ -3,7 +3,10 @@ import useAppChannel from "@saleor/components/AppLayout/AppChannelContext";
 import { AttributeInput } from "@saleor/components/Attributes";
 import ChannelsAvailabilityDialog from "@saleor/components/ChannelsAvailabilityDialog";
 import { WindowTitle } from "@saleor/components/WindowTitle";
-import { DEFAULT_INITIAL_SEARCH_DATA } from "@saleor/config";
+import {
+  DEFAULT_INITIAL_SEARCH_DATA,
+  VALUES_PAGINATE_BY
+} from "@saleor/config";
 import { useFileUploadMutation } from "@saleor/files/mutations";
 import useChannels from "@saleor/hooks/useChannels";
 import useNavigator from "@saleor/hooks/useNavigator";
@@ -127,7 +130,7 @@ export const ProductCreateView: React.FC<ProductCreateProps> = ({ params }) => {
   const { data: selectedProductType } = useProductTypeQuery({
     variables: {
       id: selectedProductTypeId,
-      firstValues: 10
+      firstValues: VALUES_PAGINATE_BY
     },
     skip: !selectedProductTypeId
   });

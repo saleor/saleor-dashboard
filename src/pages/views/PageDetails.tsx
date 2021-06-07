@@ -13,7 +13,10 @@ import {
 import ActionDialog from "@saleor/components/ActionDialog";
 import { AttributeInput } from "@saleor/components/Attributes";
 import { WindowTitle } from "@saleor/components/WindowTitle";
-import { DEFAULT_INITIAL_SEARCH_DATA } from "@saleor/config";
+import {
+  DEFAULT_INITIAL_SEARCH_DATA,
+  VALUES_PAGINATE_BY
+} from "@saleor/config";
 import { useFileUploadMutation } from "@saleor/files/mutations";
 import { AttributeErrorFragment } from "@saleor/fragments/types/AttributeErrorFragment";
 import { PageErrorFragment } from "@saleor/fragments/types/PageErrorFragment";
@@ -77,7 +80,7 @@ export const PageDetails: React.FC<PageDetailsProps> = ({ id, params }) => {
   const pageDetails = usePageDetailsQuery({
     variables: {
       id,
-      firstValues: 10
+      firstValues: VALUES_PAGINATE_BY
     }
   });
 
@@ -135,7 +138,7 @@ export const PageDetails: React.FC<PageDetailsProps> = ({ id, params }) => {
       variables: {
         id,
         input: createPageInput(data, updatedFileAttributes),
-        firstValues: 10
+        firstValues: VALUES_PAGINATE_BY
       }
     });
 
