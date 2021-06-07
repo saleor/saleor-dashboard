@@ -25,7 +25,7 @@ const props: PageDetailsPageProps = {
   saveButtonBarState: "default",
   fetchAttributeValues: () => undefined,
   fetchMoreAttributeValues: fetchMoreProps,
-  onAttributeSelect: () => undefined
+  onAttributeFocus: () => undefined
 };
 
 storiesOf("Views / Pages / Page details", module)

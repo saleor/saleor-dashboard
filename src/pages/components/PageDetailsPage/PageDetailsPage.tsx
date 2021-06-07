@@ -59,7 +59,7 @@ export interface PageDetailsPageProps {
   fetchMoreAttributeValues?: FetchMoreProps;
   onCloseDialog: () => void;
   onSelectPageType?: (pageTypeId: string) => void;
-  onAttributeSelect: (id: string) => void;
+  onAttributeFocus: (id: string) => void;
 }
 
 const PageDetailsPage: React.FC<PageDetailsPageProps> = ({
@@ -87,7 +87,7 @@ const PageDetailsPage: React.FC<PageDetailsPageProps> = ({
   fetchMoreAttributeValues,
   onCloseDialog,
   onSelectPageType,
-  onAttributeSelect
+  onAttributeFocus
 }) => {
   const intl = useIntl();
   const localizeDate = useDateLocalize();
@@ -191,7 +191,7 @@ const PageDetailsPage: React.FC<PageDetailsPageProps> = ({
                   onReferencesReorder={handlers.reorderAttributeValue}
                   fetchAttributeValues={fetchAttributeValues}
                   fetchMoreAttributeValues={fetchMoreAttributeValues}
-                  onAttributeFocus={onAttributeSelect}
+                  onAttributeFocus={onAttributeFocus}
                 />
               )}
               <CardSpacer />

@@ -73,17 +73,17 @@ export const PageCreate: React.FC<PageCreateProps> = ({ params }) => {
   } = useProductSearch({
     variables: DEFAULT_INITIAL_SEARCH_DATA
   });
-  const [selectedAttribute, setSelectedAttribute] = useState<string>();
+  const [focusedAttribute, setFocusedAttribute] = useState<string>();
   const {
     loadMore: loadMoreAttributeValues,
     search: searchAttributeValues,
     result: searchAttributeValuesOpts
   } = useAttributeValueSearch({
     variables: {
-      id: selectedAttribute,
+      id: focusedAttribute,
       ...DEFAULT_INITIAL_SEARCH_DATA
     },
-    skip: !selectedAttribute
+    skip: !focusedAttribute
   });
 
   const { data: selectedPageType } = usePageTypeQuery({
@@ -222,7 +222,7 @@ export const PageCreate: React.FC<PageCreateProps> = ({ params }) => {
               onCloseDialog={() => navigate(pageCreateUrl())}
               selectedPageType={selectedPageType?.pageType}
               onSelectPageType={id => setSelectedPageTypeId(id)}
-              onAttributeSelect={setSelectedAttribute}
+              onAttributeFocus={setFocusedAttribute}
             />
           </>
         );
