@@ -47,6 +47,7 @@ All notable, unreleased changes to this project will be documented in this file.
 - Add service worker - #1073 by @dominik-zeglen
 - Choosing user shipping and billing addresses for draft order - #1082 by @orzechdev
 - Fix EditorJS inline formatting - #1096 by @orzechdev
+- Support setting attribute values for dropdown & multiselect - #1145 by @piotrgrundas
 
 # 2.11.1
 
