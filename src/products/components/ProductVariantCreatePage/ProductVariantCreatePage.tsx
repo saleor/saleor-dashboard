@@ -78,7 +78,7 @@ interface ProductVariantCreatePageProps {
   onWarehouseConfigure: () => void;
   assignReferencesAttributeId?: string;
   onAssignReferencesClick: (attribute: AttributeInput) => void;
-  onAttributeSelect: (id: string) => void;
+  onAttributeFocus: (id: string) => void;
   fetchReferencePages?: (data: string) => void;
   fetchReferenceProducts?: (data: string) => void;
   fetchAttributeValues: (query: string) => void;
@@ -105,7 +105,7 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
   onVariantClick,
   onVariantReorder,
   onWarehouseConfigure,
-  onAttributeSelect,
+  onAttributeFocus,
   assignReferencesAttributeId,
   onAssignReferencesClick,
   fetchReferencePages,
@@ -194,7 +194,7 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
                 onReferencesReorder={handlers.reorderAttributeValue}
                 fetchAttributeValues={fetchAttributeValues}
                 fetchMoreAttributeValues={fetchMoreAttributeValues}
-                onAttributeSelect={onAttributeSelect}
+                onAttributeFocus={onAttributeFocus}
               />
               <CardSpacer />
               <Attributes
@@ -216,7 +216,7 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
                 onReferencesReorder={handlers.reorderAttributeValue}
                 fetchAttributeValues={fetchAttributeValues}
                 fetchMoreAttributeValues={fetchMoreAttributeValues}
-                onAttributeSelect={onAttributeSelect}
+                onAttributeFocus={onAttributeFocus}
               />
               <CardSpacer />
               <ProductShipping

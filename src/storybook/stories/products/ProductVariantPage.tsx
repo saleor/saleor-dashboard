@@ -39,7 +39,7 @@ storiesOf("Views / Products / Product variant details", module)
       fetchAttributeValues={() => undefined}
       onAssignReferencesClick={() => undefined}
       onCloseDialog={() => undefined}
-      onAttributeSelect={() => undefined}
+      onAttributeFocus={() => undefined}
     />
   ))
   .add("when loading data", () => (
@@ -68,7 +68,7 @@ storiesOf("Views / Products / Product variant details", module)
       fetchAttributeValues={() => undefined}
       onAssignReferencesClick={() => undefined}
       onCloseDialog={() => undefined}
-      onAttributeSelect={() => undefined}
+      onAttributeFocus={() => undefined}
     />
   ))
   .add("no warehouses", () => (
@@ -96,7 +96,7 @@ storiesOf("Views / Products / Product variant details", module)
       fetchAttributeValues={() => undefined}
       onAssignReferencesClick={() => undefined}
       onCloseDialog={() => undefined}
-      onAttributeSelect={() => undefined}
+      onAttributeFocus={() => undefined}
     />
   ))
   .add("attribute errors", () => (
@@ -152,6 +152,6 @@ storiesOf("Views / Products / Product variant details", module)
       fetchAttributeValues={() => undefined}
       onAssignReferencesClick={() => undefined}
       onCloseDialog={() => undefined}
-      onAttributeSelect={() => undefined}
+      onAttributeFocus={() => undefined}
     />
   ));

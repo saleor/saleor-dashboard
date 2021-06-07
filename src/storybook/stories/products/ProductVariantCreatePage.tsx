@@ -40,7 +40,7 @@ storiesOf("Views / Products / Create product variant", module)
       fetchAttributeValues={() => undefined}
       onAssignReferencesClick={() => undefined}
       onCloseDialog={() => undefined}
-      onAttributeSelect={() => undefined}
+      onAttributeFocus={() => undefined}
     />
   ))
   .add("with errors", () => (
@@ -83,7 +83,7 @@ storiesOf("Views / Products / Create product variant", module)
       fetchAttributeValues={() => undefined}
       onAssignReferencesClick={() => undefined}
       onCloseDialog={() => undefined}
-      onAttributeSelect={() => undefined}
+      onAttributeFocus={() => undefined}
     />
   ))
   .add("when loading data", () => (
@@ -107,7 +107,7 @@ storiesOf("Views / Products / Create product variant", module)
       fetchAttributeValues={() => undefined}
       onAssignReferencesClick={() => undefined}
       onCloseDialog={() => undefined}
-      onAttributeSelect={() => undefined}
+      onAttributeFocus={() => undefined}
     />
   ))
   .add("add first variant", () => (
@@ -134,7 +134,7 @@ storiesOf("Views / Products / Create product variant", module)
       fetchAttributeValues={() => undefined}
       onAssignReferencesClick={() => undefined}
       onCloseDialog={() => undefined}
-      onAttributeSelect={() => undefined}
+      onAttributeFocus={() => undefined}
     />
   ))
   .add("no warehouses", () => (
@@ -158,6 +158,6 @@ storiesOf("Views / Products / Create product variant", module)
       fetchAttributeValues={() => undefined}
       onAssignReferencesClick={() => undefined}
       onCloseDialog={() => undefined}
-      onAttributeSelect={() => undefined}
+      onAttributeFocus={() => undefined}
     />
   ));

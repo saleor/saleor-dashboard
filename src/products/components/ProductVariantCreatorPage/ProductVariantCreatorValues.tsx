@@ -63,7 +63,7 @@ export interface ProductVariantCreatorValuesProps {
     attributeId: string,
     value: AttributeValue<AttributeValueFragment>
   ) => void;
-  onAttributeSelect: (id: string) => void;
+  onAttributeFocus: (id: string) => void;
 }
 
 const ProductVariantCreatorValues: React.FC<ProductVariantCreatorValuesProps> = props => {
@@ -75,7 +75,7 @@ const ProductVariantCreatorValues: React.FC<ProductVariantCreatorValuesProps> = 
     data,
     variantsLeft,
     onValueClick,
-    onAttributeSelect
+    onAttributeFocus
   } = props;
   const intl = useIntl();
   const variantsNumber = getVariantsNumber(data);
@@ -130,7 +130,7 @@ const ProductVariantCreatorValues: React.FC<ProductVariantCreatorValuesProps> = 
                 allowCustomValues={true}
                 fetchChoices={fetchAttributeValues}
                 {...fetchMoreAttributeValues}
-                onFocus={() => onAttributeSelect(attribute.id)}
+                onFocus={() => onAttributeFocus(attribute.id)}
               />
             </CardContent>
           </Card>

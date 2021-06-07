@@ -96,7 +96,7 @@ interface ProductVariantPageProps {
   fetchReferenceProducts?: (data: string) => void;
   fetchAttributeValues: (query: string) => void;
   onAssignReferencesClick: (attribute: AttributeInput) => void;
-  onAttributeSelect: (id: string) => void;
+  onAttributeFocus: (id: string) => void;
   onCloseDialog: () => void;
   onVariantReorder: ReorderAction;
   onAdd();
@@ -133,7 +133,7 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
   onVariantReorder,
   onSetDefaultVariant,
   onWarehouseConfigure,
-  onAttributeSelect,
+  onAttributeFocus,
   assignReferencesAttributeId,
   onAssignReferencesClick,
   fetchReferencePages,
@@ -247,7 +247,7 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
                     onReferencesReorder={handlers.reorderAttributeValue}
                     fetchAttributeValues={fetchAttributeValues}
                     fetchMoreAttributeValues={fetchMoreAttributeValues}
-                    onAttributeSelect={onAttributeSelect}
+                    onAttributeFocus={onAttributeFocus}
                   />
                   <CardSpacer />
                   <Attributes
@@ -271,7 +271,7 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
                     onReferencesReorder={handlers.reorderAttributeValue}
                     fetchAttributeValues={fetchAttributeValues}
                     fetchMoreAttributeValues={fetchMoreAttributeValues}
-                    onAttributeSelect={onAttributeSelect}
+                    onAttributeFocus={onAttributeFocus}
                   />
                   <CardSpacer />
                   <ProductVariantMedia

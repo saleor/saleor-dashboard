@@ -53,17 +53,17 @@ const ProductVariantCreator: React.FC<ProductVariantCreatorProps> = ({
     }
   });
 
-  const [selectedAttribute, setSelectedAttribute] = useState<string>();
+  const [focusedAttribute, setFocusedAttribute] = useState<string>();
   const {
     loadMore: loadMoreAttributeValues,
     search: searchAttributeValues,
     result: searchAttributeValuesOpts
   } = useAttributeValueSearch({
     variables: {
-      id: selectedAttribute,
+      id: focusedAttribute,
       ...DEFAULT_INITIAL_SEARCH_DATA
     },
-    skip: !selectedAttribute
+    skip: !focusedAttribute
   });
 
   const fetchMoreAttributeValues = {
@@ -107,7 +107,7 @@ const ProductVariantCreator: React.FC<ProductVariantCreatorProps> = ({
           })
         }
         warehouses={mapEdgesToItems(data?.warehouses)}
-        onAttributeSelect={setSelectedAttribute}
+        onAttributeFocus={setFocusedAttribute}
       />
     </>
   );

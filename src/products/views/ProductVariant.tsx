@@ -300,17 +300,17 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
   } = useProductSearch({
     variables: DEFAULT_INITIAL_SEARCH_DATA
   });
-  const [selectedAttribute, setSelectedAttribute] = useState<string>();
+  const [focusedAttribute, setFocusedAttribute] = useState<string>();
   const {
     loadMore: loadMoreAttributeValues,
     search: searchAttributeValues,
     result: searchAttributeValuesOpts
   } = useAttributeValueSearch({
     variables: {
-      id: selectedAttribute,
+      id: focusedAttribute,
       ...DEFAULT_INITIAL_SEARCH_DATA
     },
-    skip: !selectedAttribute
+    skip: !focusedAttribute
   });
 
   const fetchMoreReferencePages = {
@@ -382,7 +382,7 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
         onCloseDialog={() =>
           navigate(productVariantEditUrl(productId, variantId))
         }
-        onAttributeSelect={setSelectedAttribute}
+        onAttributeFocus={setFocusedAttribute}
       />
       <ProductVariantDeleteDialog
         confirmButtonState={deleteVariantOpts.status}

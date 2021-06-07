@@ -168,17 +168,17 @@ export const ProductVariant: React.FC<ProductVariantCreateProps> = ({
   } = useProductSearch({
     variables: DEFAULT_INITIAL_SEARCH_DATA
   });
-  const [selectedAttribute, setSelectedAttribute] = useState<string>();
+  const [focusedAttribute, setFocusedAttribute] = useState<string>();
   const {
     loadMore: loadMoreAttributeValues,
     search: searchAttributeValues,
     result: searchAttributeValuesOpts
   } = useAttributeValueSearch({
     variables: {
-      id: selectedAttribute,
+      id: focusedAttribute,
       ...DEFAULT_INITIAL_SEARCH_DATA
     },
-    skip: !selectedAttribute
+    skip: !focusedAttribute
   });
 
   const fetchMoreReferencePages = {
@@ -247,7 +247,7 @@ export const ProductVariant: React.FC<ProductVariantCreateProps> = ({
         fetchAttributeValues={searchAttributeValues}
         fetchMoreAttributeValues={fetchMoreAttributeValues}
         onCloseDialog={() => navigate(productVariantAddUrl(productId))}
-        onAttributeSelect={setSelectedAttribute}
+        onAttributeFocus={setFocusedAttribute}
       />
     </>
   );

@@ -29,7 +29,7 @@ export interface ProductVariantCreatorContentProps {
   warehouses: WarehouseFragment[];
   fetchAttributeValues: (query: string) => void;
   fetchMoreAttributeValues?: FetchMoreProps;
-  onAttributeSelect: (id: string) => void;
+  onAttributeFocus: (id: string) => void;
 }
 
 const ProductVariantCreatorContent: React.FC<ProductVariantCreatorContentProps> = ({
@@ -44,7 +44,7 @@ const ProductVariantCreatorContent: React.FC<ProductVariantCreatorContentProps> 
   step,
   variantsLeft,
   warehouses,
-  onAttributeSelect
+  onAttributeFocus
 }) => {
   const selectedAttributes = attributes.filter(attribute =>
     isSelected(
@@ -73,7 +73,7 @@ const ProductVariantCreatorContent: React.FC<ProductVariantCreatorContentProps> 
               type: ProductVariantCreateReducerActionType.selectValue
             })
           }
-          onAttributeSelect={onAttributeSelect}
+          onAttributeFocus={onAttributeFocus}
         />
       )}
       {step === ProductVariantCreatorStep.prices && (
