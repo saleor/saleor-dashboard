@@ -1,5 +1,6 @@
 import * as checkoutRequest from "../apiRequests/Checkout";
 import * as orderRequest from "../apiRequests/Order";
+import { createProductInChannel } from "./products/productsUtils";
 
 export function createWaitingForCaptureOrder(
   channelSlug,
@@ -20,7 +21,7 @@ export function createWaitingForCaptureOrder(
       billingAddress: address,
       auth
     })
-    .then(checkoutResp => {
+    .then(({ checkout: checkoutResp }) => {
       checkout = checkoutResp;
       checkoutRequest.addShippingMethod(checkout.id, shippingMethodId);
     })
@@ -41,7 +42,7 @@ export function createCheckoutWithVoucher({
   let checkout;
   return checkoutRequest
     .createCheckout({ channelSlug, email, variantsList, address, auth })
-    .then(checkoutResp => {
+    .then(({ checkout: checkoutResp }) => {
       checkout = checkoutResp;
       checkoutRequest.addShippingMethod(checkout.id, shippingMethodId);
     })
@@ -144,10 +145,42 @@ export function createAndCompleteCheckoutWithoutShipping({
   let checkout;
   return checkoutRequest
     .createCheckout({ channelSlug, email, variantsList, billingAddress, auth })
-    .then(checkoutResp => {
+    .then(({ checkout: checkoutResp }) => {
       checkout = checkoutResp;
       addPayment(checkout.id);
     })
     .then(() => checkoutRequest.completeCheckout(checkout.id))
     .then(({ order }) => ({ checkout, order }));
+}
+
+export function createOrderWithNewProduct({
+  attributeId,
+  categoryId,
+  productTypeId,
+  channel,
+  name,
+  warehouseId,
+  quantityInWarehouse = 1,
+  trackInventory = true,
+  shippingMethodId,
+  address
+}) {
+  return createProductInChannel({
+    attributeId,
+    categoryId,
+    productTypeId,
+    channelId: channel.id,
+    name,
+    warehouseId,
+    quantityInWarehouse,
+    trackInventory
+  }).then(({ variantsList }) =>
+    createWaitingForCaptureOrder(
+      channel.slug,
+      "email@example.com",
+      variantsList,
+      shippingMethodId,
+      address
+    )
+  );
 }

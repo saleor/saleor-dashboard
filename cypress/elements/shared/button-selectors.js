@@ -10,5 +10,6 @@ export const BUTTON_SELECTORS = {
   deleteButton: '[data-test="button-bar-delete"]',
   expandIcon: '[data-test-id="expand-icon"]',
   nextPaginationButton: '[data-test="button-pagination-next"]',
+  deleteIcon: '[data-test-id="deleteIcon"]',
   showMoreButton: '[data-test-id="showMoreButton"]'
 };
