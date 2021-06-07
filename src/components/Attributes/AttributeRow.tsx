@@ -149,7 +149,7 @@ const AttributeRow: React.FC<AttributeRowProps> = ({
             allowCustomValues={true}
             fetchChoices={fetchAttributeValues}
             {...fetchMoreAttributeValues}
-            onClick={() => onAttributeSelect(attribute.id)}
+            onFocus={() => onAttributeSelect(attribute.id)}
           />
         </BasicAttributeRow>
       );
@@ -211,7 +211,7 @@ const AttributeRow: React.FC<AttributeRowProps> = ({
             allowCustomValues={true}
             fetchChoices={fetchAttributeValues}
             {...fetchMoreAttributeValues}
-            onClick={() => onAttributeSelect(attribute.id)}
+            onFocus={() => onAttributeSelect(attribute.id)}
           />
         </BasicAttributeRow>
       );

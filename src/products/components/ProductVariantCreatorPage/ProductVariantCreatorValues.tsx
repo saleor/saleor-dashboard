@@ -130,7 +130,7 @@ const ProductVariantCreatorValues: React.FC<ProductVariantCreatorValuesProps> = 
                 allowCustomValues={true}
                 fetchChoices={fetchAttributeValues}
                 {...fetchMoreAttributeValues}
-                onClick={() => onAttributeSelect(attribute.id)}
+                onFocus={() => onAttributeSelect(attribute.id)}
               />
             </CardContent>
           </Card>

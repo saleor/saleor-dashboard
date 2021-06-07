@@ -46,7 +46,7 @@ export interface SingleAutocompleteSelectFieldProps
   InputProps?: InputProps;
   fetchChoices?: (value: string) => void;
   onChange: (event: React.ChangeEvent<any>) => void;
-  onClick?: () => void;
+  onFocus?: () => void;
   FormHelperTextProps?: ExtendedFormHelperTextProps;
   nakedInput?: boolean;
 }
@@ -76,7 +76,7 @@ const SingleAutocompleteSelectFieldComponent: React.FC<SingleAutocompleteSelectF
     fetchChoices,
     onChange,
     onFetchMore,
-    onClick,
+    onFocus,
     FormHelperTextProps,
     nakedInput = false,
     ...rest
@@ -168,10 +168,10 @@ const SingleAutocompleteSelectFieldComponent: React.FC<SingleAutocompleteSelectF
               error,
               id: undefined,
               onBlur: handleBlur,
-              onClick: (cb: () => void) => {
-                toggleMenu(cb);
-                if (onClick) {
-                  onClick();
+              onClick: toggleMenu,
+              onFocus: () => {
+                if (onFocus) {
+                  onFocus();
                 }
               }
             };

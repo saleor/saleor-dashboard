@@ -31,8 +31,10 @@ const useStyles = makeStyles(
       overflowX: "visible",
       [theme.breakpoints.up("md")]: {
         position: "absolute",
-        width: `calc(100vw - ${drawerWidthExpanded + theme.spacing(6)}px)`,
-        maxWidth: theme.breakpoints.width("lg") - theme.spacing(6)
+        width: `calc(100vw - ${drawerWidthExpanded}px + ${theme.spacing(6)}px)`,
+        maxWidth: `calc(${theme.breakpoints.width("lg")}px - ${theme.spacing(
+          6
+        )}px)`
       }
     },
     description: {
