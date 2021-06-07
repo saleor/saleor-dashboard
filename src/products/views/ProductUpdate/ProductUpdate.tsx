@@ -1,8 +1,16 @@
 import placeholderImg from "@assets/images/placeholder255x255.png";
+import {
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent
+} from "@material-ui/core";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import IconButton from "@material-ui/core/IconButton";
 import DeleteIcon from "@material-ui/icons/Delete";
 import ActionDialog from "@saleor/components/ActionDialog";
+import ConfirmButton from "@saleor/components/ConfirmButton";
+import FormSpacer from "@saleor/components/FormSpacer";
 import NotFoundPage from "@saleor/components/NotFoundPage";
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@saleor/config";
@@ -12,7 +20,7 @@ import useNotifier from "@saleor/hooks/useNotifier";
 import useOnSetDefaultVariant from "@saleor/hooks/useOnSetDefaultVariant";
 import useShop from "@saleor/hooks/useShop";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
-import { commonMessages } from "@saleor/intl";
+import { buttonMessages, commonMessages } from "@saleor/intl";
 import {
   useProductDeleteMutation,
   useProductImageCreateMutation,
@@ -220,6 +228,10 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
 
   const [product, setProduct] = useStateFromProps(data?.product);
 
+  const [visibleInListing] = useStateFromProps(data?.product.visibleInListings);
+
+  const [published] = useStateFromProps(data?.product.isPublished);
+
   if (product === null) {
     return <NotFoundPage onBack={handleBack} />;
   }
@@ -291,6 +303,10 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
     null
   );
 
+  const checkIfProductPublished = () => {
+    console.log("dupa");
+  };
+
   return (
     <>
       <WindowTitle title={maybe(() => data.product.name)} />
@@ -316,6 +332,7 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
         onBack={handleBack}
         onDelete={() => openModal("remove")}
         onImageReorder={handleImageReorder}
+        //onSubmit={published ? () => openModal("submit") : handleSubmit}
         onSubmit={handleSubmit}
         onWarehouseConfigure={() => navigate(warehouseAddPath)}
         onVariantAdd={handleVariantAdd}
@@ -406,6 +423,44 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
           />
         </DialogContentText>
       </ActionDialog>
+      <Dialog
+        open={params.action === "submit"}
+        onClose={closeModal}
+        title={intl.formatMessage({
+          defaultMessage: "Publish Products",
+          description: "dialog header"
+        })}
+      >
+        <DialogContent>
+          <DialogContentText>
+            <FormattedMessage
+              defaultMessage="Opublikowanie produktu wyczyści lokacje magazynowe produktów Mega Paki. Czy na pewno chcesz kontynuuować?"
+              description="dialog content"
+              values={{
+                counter: maybe(() => params.ids.length),
+                displayQuantity: (
+                  <strong>{maybe(() => params.ids.length)}</strong>
+                )
+              }}
+            />
+          </DialogContentText>
+          <FormSpacer />
+          <FormSpacer />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={closeModal}>
+            <FormattedMessage {...buttonMessages.back} />
+          </Button>
+          <ConfirmButton
+            transitionState={bulkProductVariantDeleteOpts.status}
+            color="primary"
+            variant="contained"
+            onClick={() => console.log(handleSubmit(data))}
+          >
+            {intl.formatMessage(buttonMessages.confirm)}
+          </ConfirmButton>
+        </DialogActions>
+      </Dialog>
     </>
   );
 };

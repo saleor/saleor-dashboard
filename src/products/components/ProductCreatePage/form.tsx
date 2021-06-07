@@ -232,7 +232,9 @@ function useProductCreateForm(
     updateDataFromMegaPackValues(form.data, form.data.megaPackProduct);
   }, [form.data.megaPackProduct]);
 
-  form.data.sku = sku;
+  if (productType?.slug === "mega-paka") {
+    form.data.sku = sku;
+  }
 
   const data: ProductCreateData = {
     ...form.data,

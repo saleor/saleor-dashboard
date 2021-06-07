@@ -64,7 +64,7 @@ export interface ProductUpdatePageProps extends ListActions {
   onVariantShow: (id: string) => () => void;
   onVariantReorder: ReorderAction;
   onImageDelete: (id: string) => () => void;
-  onSubmit: (data: ProductUpdatePageSubmitData) => SubmitPromise;
+  onSubmit: any;
   onBack?();
   onDelete();
   onImageEdit?(id: string);
