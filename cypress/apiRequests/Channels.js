@@ -42,7 +42,7 @@ export function getChannels() {
 export function deleteChannel(channelId, targetChannelId) {
   const deleteChannelMutation = `mutation{
     channelDelete(id: "${channelId}", input:{
-      targetChannel: "${targetChannelId}"
+      channelId: "${targetChannelId}"
     }){
       channel{
         name
