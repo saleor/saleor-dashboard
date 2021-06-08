@@ -1,7 +1,7 @@
 import { attributes } from "@saleor/attributes/fixtures";
 import { productChannels } from "@saleor/channels/fixtures";
 import Container from "@saleor/components/Container";
-import { limitsReached } from "@saleor/fixtures";
+import { fetchMoreProps, limitsReached } from "@saleor/fixtures";
 import { ProductVariantBulkCreate_productVariantBulkCreate_errors } from "@saleor/products/types/ProductVariantBulkCreate";
 import { ProductErrorCode } from "@saleor/types/globalTypes";
 import { warehouseList } from "@saleor/warehouses/fixtures";
@@ -60,7 +60,10 @@ const stock: Stock = {
 const dataAttributes = selectedAttributes.map(attribute => ({
   id: attribute.id,
   values: attribute.choices.edges
-    .map(value => value.node.slug)
+    .map(value => ({
+      slug: value.node.slug,
+      value: value.node
+    }))
     .filter((_, valueIndex) => valueIndex % 2 !== 1)
 }));
 
@@ -89,6 +92,9 @@ const data: ProductVariantCreateFormData = {
 };
 const props: ProductVariantCreatorContentProps = {
   attributes: [0, 1, 4, 6].map(index => attributes[index]),
+  attributeValues: [],
+  fetchAttributeValues: () => undefined,
+  fetchMoreAttributeValues: fetchMoreProps,
   channelListings: productChannels.map(listing => ({
     currency: listing.pricing?.priceRange?.start?.net.currency,
     id: listing.channel.id,
@@ -103,7 +109,8 @@ const props: ProductVariantCreatorContentProps = {
   errors: [],
   variantsLeft: 6,
   step: ProductVariantCreatorStep.values,
-  warehouses: warehouseList
+  warehouses: warehouseList,
+  onAttributeFocus: () => undefined
 };
 
 storiesOf("Views / Products / Create multiple variants", module)

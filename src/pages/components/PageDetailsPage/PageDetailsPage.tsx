@@ -167,7 +167,7 @@ const PageDetailsPage: React.FC<PageDetailsPageProps> = ({
                   onReferencesReorder={handlers.reorderAttributeValue}
                   fetchAttributeValues={() => undefined}
                   fetchMoreAttributeValues={undefined}
-                  onAttributeSelect={() => undefined}
+                  onAttributeFocus={() => undefined}
                 />
               )}
               <CardSpacer />

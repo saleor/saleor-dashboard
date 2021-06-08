@@ -23,14 +23,14 @@ describe("Reducer is able to", () => {
       {
         selectValue: {
           attributeId: attributes[0].id,
-          valueId: attributes[0].values[0]
+          value: attributes[0].values[0]
         },
         type: ProductVariantCreateReducerActionType.selectValue
       },
       {
         selectValue: {
           attributeId: attributes[0].id,
-          valueId: attributes[0].values[6]
+          value: attributes[0].values[6]
         },
 
         type: ProductVariantCreateReducerActionType.selectValue
@@ -38,28 +38,28 @@ describe("Reducer is able to", () => {
       {
         selectValue: {
           attributeId: attributes[1].id,
-          valueId: attributes[1].values[1]
+          value: attributes[1].values[1]
         },
         type: ProductVariantCreateReducerActionType.selectValue
       },
       {
         selectValue: {
           attributeId: attributes[1].id,
-          valueId: attributes[1].values[3]
+          value: attributes[1].values[3]
         },
         type: ProductVariantCreateReducerActionType.selectValue
       },
       {
         selectValue: {
           attributeId: attributes[3].id,
-          valueId: attributes[3].values[0]
+          value: attributes[3].values[0]
         },
         type: ProductVariantCreateReducerActionType.selectValue
       },
       {
         selectValue: {
           attributeId: attributes[3].id,
-          valueId: attributes[3].values[4]
+          value: attributes[3].values[4]
         },
         type: ProductVariantCreateReducerActionType.selectValue
       }
@@ -164,7 +164,7 @@ describe("Reducer is able to", () => {
         changeAttributeValuePrice: {
           channelId: channels[0].id,
           price: value.toString(),
-          valueId: attribute.values[0]
+          valueId: attribute.values[0].slug
         },
         type: ProductVariantCreateReducerActionType.changeAttributeValuePrice
       },
@@ -172,7 +172,7 @@ describe("Reducer is able to", () => {
         changeAttributeValuePrice: {
           channelId: channels[1].id,
           price: (value + 6).toString(),
-          valueId: attribute.values[1]
+          valueId: attribute.values[1].slug
         },
         type: ProductVariantCreateReducerActionType.changeAttributeValuePrice
       },
@@ -209,7 +209,7 @@ describe("Reducer is able to", () => {
       {
         changeAttributeValueStock: {
           quantity,
-          valueId: attribute.values[0],
+          valueId: attribute.values[0].slug,
           warehouseIndex: 0
         },
         type: ProductVariantCreateReducerActionType.changeAttributeValueStock
@@ -217,7 +217,7 @@ describe("Reducer is able to", () => {
       {
         changeAttributeValueStock: {
           quantity: quantity + 6,
-          valueId: attribute.values[1],
+          valueId: attribute.values[1].slug,
           warehouseIndex: 0
         },
         type: ProductVariantCreateReducerActionType.changeAttributeValueStock

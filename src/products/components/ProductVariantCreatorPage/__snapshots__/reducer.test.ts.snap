@@ -6,22 +6,88 @@ Object {
     Object {
       "id": "attr-1",
       "values": Array [
-        "val-1-1",
-        "val-1-7",
+        Object {
+          "slug": "val-1-1",
+          "value": Object {
+            "__typename": "AttributeValue",
+            "file": null,
+            "id": "val-1-1",
+            "name": "val-1-1",
+            "reference": null,
+            "richText": null,
+            "slug": "val-1-1",
+          },
+        },
+        Object {
+          "slug": "val-1-7",
+          "value": Object {
+            "__typename": "AttributeValue",
+            "file": null,
+            "id": "val-1-7",
+            "name": "val-1-7",
+            "reference": null,
+            "richText": null,
+            "slug": "val-1-7",
+          },
+        },
       ],
     },
     Object {
       "id": "attr-2",
       "values": Array [
-        "val-2-2",
-        "val-2-4",
+        Object {
+          "slug": "val-2-2",
+          "value": Object {
+            "__typename": "AttributeValue",
+            "file": null,
+            "id": "val-2-2",
+            "name": "val-2-2",
+            "reference": null,
+            "richText": null,
+            "slug": "val-2-2",
+          },
+        },
+        Object {
+          "slug": "val-2-4",
+          "value": Object {
+            "__typename": "AttributeValue",
+            "file": null,
+            "id": "val-2-4",
+            "name": "val-2-4",
+            "reference": null,
+            "richText": null,
+            "slug": "val-2-4",
+          },
+        },
       ],
     },
     Object {
       "id": "attr-4",
       "values": Array [
-        "val-4-1",
-        "val-4-5",
+        Object {
+          "slug": "val-4-1",
+          "value": Object {
+            "__typename": "AttributeValue",
+            "file": null,
+            "id": "val-4-1",
+            "name": "val-4-1",
+            "reference": null,
+            "richText": null,
+            "slug": "val-4-1",
+          },
+        },
+        Object {
+          "slug": "val-4-5",
+          "value": Object {
+            "__typename": "AttributeValue",
+            "file": null,
+            "id": "val-4-5",
+            "name": "val-4-5",
+            "reference": null,
+            "richText": null,
+            "slug": "val-4-5",
+          },
+        },
       ],
     },
   ],
@@ -561,22 +627,88 @@ Object {
     Object {
       "id": "attr-1",
       "values": Array [
-        "val-1-1",
-        "val-1-7",
+        Object {
+          "slug": "val-1-1",
+          "value": Object {
+            "__typename": "AttributeValue",
+            "file": null,
+            "id": "val-1-1",
+            "name": "val-1-1",
+            "reference": null,
+            "richText": null,
+            "slug": "val-1-1",
+          },
+        },
+        Object {
+          "slug": "val-1-7",
+          "value": Object {
+            "__typename": "AttributeValue",
+            "file": null,
+            "id": "val-1-7",
+            "name": "val-1-7",
+            "reference": null,
+            "richText": null,
+            "slug": "val-1-7",
+          },
+        },
       ],
     },
     Object {
       "id": "attr-2",
       "values": Array [
-        "val-2-2",
-        "val-2-4",
+        Object {
+          "slug": "val-2-2",
+          "value": Object {
+            "__typename": "AttributeValue",
+            "file": null,
+            "id": "val-2-2",
+            "name": "val-2-2",
+            "reference": null,
+            "richText": null,
+            "slug": "val-2-2",
+          },
+        },
+        Object {
+          "slug": "val-2-4",
+          "value": Object {
+            "__typename": "AttributeValue",
+            "file": null,
+            "id": "val-2-4",
+            "name": "val-2-4",
+            "reference": null,
+            "richText": null,
+            "slug": "val-2-4",
+          },
+        },
       ],
     },
     Object {
       "id": "attr-4",
       "values": Array [
-        "val-4-1",
-        "val-4-5",
+        Object {
+          "slug": "val-4-1",
+          "value": Object {
+            "__typename": "AttributeValue",
+            "file": null,
+            "id": "val-4-1",
+            "name": "val-4-1",
+            "reference": null,
+            "richText": null,
+            "slug": "val-4-1",
+          },
+        },
+        Object {
+          "slug": "val-4-5",
+          "value": Object {
+            "__typename": "AttributeValue",
+            "file": null,
+            "id": "val-4-5",
+            "name": "val-4-5",
+            "reference": null,
+            "richText": null,
+            "slug": "val-4-5",
+          },
+        },
       ],
     },
   ],
@@ -1116,22 +1248,88 @@ Object {
     Object {
       "id": "attr-1",
       "values": Array [
-        "val-1-1",
-        "val-1-7",
+        Object {
+          "slug": "val-1-1",
+          "value": Object {
+            "__typename": "AttributeValue",
+            "file": null,
+            "id": "val-1-1",
+            "name": "val-1-1",
+            "reference": null,
+            "richText": null,
+            "slug": "val-1-1",
+          },
+        },
+        Object {
+          "slug": "val-1-7",
+          "value": Object {
+            "__typename": "AttributeValue",
+            "file": null,
+            "id": "val-1-7",
+            "name": "val-1-7",
+            "reference": null,
+            "richText": null,
+            "slug": "val-1-7",
+          },
+        },
       ],
     },
     Object {
       "id": "attr-2",
       "values": Array [
-        "val-2-2",
-        "val-2-4",
+        Object {
+          "slug": "val-2-2",
+          "value": Object {
+            "__typename": "AttributeValue",
+            "file": null,
+            "id": "val-2-2",
+            "name": "val-2-2",
+            "reference": null,
+            "richText": null,
+            "slug": "val-2-2",
+          },
+        },
+        Object {
+          "slug": "val-2-4",
+          "value": Object {
+            "__typename": "AttributeValue",
+            "file": null,
+            "id": "val-2-4",
+            "name": "val-2-4",
+            "reference": null,
+            "richText": null,
+            "slug": "val-2-4",
+          },
+        },
       ],
     },
     Object {
       "id": "attr-4",
       "values": Array [
-        "val-4-1",
-        "val-4-5",
+        Object {
+          "slug": "val-4-1",
+          "value": Object {
+            "__typename": "AttributeValue",
+            "file": null,
+            "id": "val-4-1",
+            "name": "val-4-1",
+            "reference": null,
+            "richText": null,
+            "slug": "val-4-1",
+          },
+        },
+        Object {
+          "slug": "val-4-5",
+          "value": Object {
+            "__typename": "AttributeValue",
+            "file": null,
+            "id": "val-4-5",
+            "name": "val-4-5",
+            "reference": null,
+            "richText": null,
+            "slug": "val-4-5",
+          },
+        },
       ],
     },
   ],
@@ -1171,22 +1369,88 @@ Object {
     Object {
       "id": "attr-1",
       "values": Array [
-        "val-1-1",
-        "val-1-7",
+        Object {
+          "slug": "val-1-1",
+          "value": Object {
+            "__typename": "AttributeValue",
+            "file": null,
+            "id": "val-1-1",
+            "name": "val-1-1",
+            "reference": null,
+            "richText": null,
+            "slug": "val-1-1",
+          },
+        },
+        Object {
+          "slug": "val-1-7",
+          "value": Object {
+            "__typename": "AttributeValue",
+            "file": null,
+            "id": "val-1-7",
+            "name": "val-1-7",
+            "reference": null,
+            "richText": null,
+            "slug": "val-1-7",
+          },
+        },
       ],
     },
     Object {
       "id": "attr-2",
       "values": Array [
-        "val-2-2",
-        "val-2-4",
+        Object {
+          "slug": "val-2-2",
+          "value": Object {
+            "__typename": "AttributeValue",
+            "file": null,
+            "id": "val-2-2",
+            "name": "val-2-2",
+            "reference": null,
+            "richText": null,
+            "slug": "val-2-2",
+          },
+        },
+        Object {
+          "slug": "val-2-4",
+          "value": Object {
+            "__typename": "AttributeValue",
+            "file": null,
+            "id": "val-2-4",
+            "name": "val-2-4",
+            "reference": null,
+            "richText": null,
+            "slug": "val-2-4",
+          },
+        },
       ],
     },
     Object {
       "id": "attr-4",
       "values": Array [
-        "val-4-1",
-        "val-4-5",
+        Object {
+          "slug": "val-4-1",
+          "value": Object {
+            "__typename": "AttributeValue",
+            "file": null,
+            "id": "val-4-1",
+            "name": "val-4-1",
+            "reference": null,
+            "richText": null,
+            "slug": "val-4-1",
+          },
+        },
+        Object {
+          "slug": "val-4-5",
+          "value": Object {
+            "__typename": "AttributeValue",
+            "file": null,
+            "id": "val-4-5",
+            "name": "val-4-5",
+            "reference": null,
+            "richText": null,
+            "slug": "val-4-5",
+          },
+        },
       ],
     },
   ],
@@ -1677,22 +1941,88 @@ Object {
     Object {
       "id": "attr-1",
       "values": Array [
-        "val-1-1",
-        "val-1-7",
+        Object {
+          "slug": "val-1-1",
+          "value": Object {
+            "__typename": "AttributeValue",
+            "file": null,
+            "id": "val-1-1",
+            "name": "val-1-1",
+            "reference": null,
+            "richText": null,
+            "slug": "val-1-1",
+          },
+        },
+        Object {
+          "slug": "val-1-7",
+          "value": Object {
+            "__typename": "AttributeValue",
+            "file": null,
+            "id": "val-1-7",
+            "name": "val-1-7",
+            "reference": null,
+            "richText": null,
+            "slug": "val-1-7",
+          },
+        },
       ],
     },
     Object {
       "id": "attr-2",
       "values": Array [
-        "val-2-2",
-        "val-2-4",
+        Object {
+          "slug": "val-2-2",
+          "value": Object {
+            "__typename": "AttributeValue",
+            "file": null,
+            "id": "val-2-2",
+            "name": "val-2-2",
+            "reference": null,
+            "richText": null,
+            "slug": "val-2-2",
+          },
+        },
+        Object {
+          "slug": "val-2-4",
+          "value": Object {
+            "__typename": "AttributeValue",
+            "file": null,
+            "id": "val-2-4",
+            "name": "val-2-4",
+            "reference": null,
+            "richText": null,
+            "slug": "val-2-4",
+          },
+        },
       ],
     },
     Object {
       "id": "attr-4",
       "values": Array [
-        "val-4-1",
-        "val-4-5",
+        Object {
+          "slug": "val-4-1",
+          "value": Object {
+            "__typename": "AttributeValue",
+            "file": null,
+            "id": "val-4-1",
+            "name": "val-4-1",
+            "reference": null,
+            "richText": null,
+            "slug": "val-4-1",
+          },
+        },
+        Object {
+          "slug": "val-4-5",
+          "value": Object {
+            "__typename": "AttributeValue",
+            "file": null,
+            "id": "val-4-5",
+            "name": "val-4-5",
+            "reference": null,
+            "richText": null,
+            "slug": "val-4-5",
+          },
+        },
       ],
     },
   ],
@@ -2138,22 +2468,88 @@ Object {
     Object {
       "id": "attr-1",
       "values": Array [
-        "val-1-1",
-        "val-1-7",
+        Object {
+          "slug": "val-1-1",
+          "value": Object {
+            "__typename": "AttributeValue",
+            "file": null,
+            "id": "val-1-1",
+            "name": "val-1-1",
+            "reference": null,
+            "richText": null,
+            "slug": "val-1-1",
+          },
+        },
+        Object {
+          "slug": "val-1-7",
+          "value": Object {
+            "__typename": "AttributeValue",
+            "file": null,
+            "id": "val-1-7",
+            "name": "val-1-7",
+            "reference": null,
+            "richText": null,
+            "slug": "val-1-7",
+          },
+        },
       ],
     },
     Object {
       "id": "attr-2",
       "values": Array [
-        "val-2-2",
-        "val-2-4",
+        Object {
+          "slug": "val-2-2",
+          "value": Object {
+            "__typename": "AttributeValue",
+            "file": null,
+            "id": "val-2-2",
+            "name": "val-2-2",
+            "reference": null,
+            "richText": null,
+            "slug": "val-2-2",
+          },
+        },
+        Object {
+          "slug": "val-2-4",
+          "value": Object {
+            "__typename": "AttributeValue",
+            "file": null,
+            "id": "val-2-4",
+            "name": "val-2-4",
+            "reference": null,
+            "richText": null,
+            "slug": "val-2-4",
+          },
+        },
       ],
     },
     Object {
       "id": "attr-4",
       "values": Array [
-        "val-4-1",
-        "val-4-5",
+        Object {
+          "slug": "val-4-1",
+          "value": Object {
+            "__typename": "AttributeValue",
+            "file": null,
+            "id": "val-4-1",
+            "name": "val-4-1",
+            "reference": null,
+            "richText": null,
+            "slug": "val-4-1",
+          },
+        },
+        Object {
+          "slug": "val-4-5",
+          "value": Object {
+            "__typename": "AttributeValue",
+            "file": null,
+            "id": "val-4-5",
+            "name": "val-4-5",
+            "reference": null,
+            "richText": null,
+            "slug": "val-4-5",
+          },
+        },
       ],
     },
   ],
@@ -2644,22 +3040,88 @@ Object {
     Object {
       "id": "attr-1",
       "values": Array [
-        "val-1-1",
-        "val-1-7",
+        Object {
+          "slug": "val-1-1",
+          "value": Object {
+            "__typename": "AttributeValue",
+            "file": null,
+            "id": "val-1-1",
+            "name": "val-1-1",
+            "reference": null,
+            "richText": null,
+            "slug": "val-1-1",
+          },
+        },
+        Object {
+          "slug": "val-1-7",
+          "value": Object {
+            "__typename": "AttributeValue",
+            "file": null,
+            "id": "val-1-7",
+            "name": "val-1-7",
+            "reference": null,
+            "richText": null,
+            "slug": "val-1-7",
+          },
+        },
       ],
     },
     Object {
       "id": "attr-2",
       "values": Array [
-        "val-2-2",
-        "val-2-4",
+        Object {
+          "slug": "val-2-2",
+          "value": Object {
+            "__typename": "AttributeValue",
+            "file": null,
+            "id": "val-2-2",
+            "name": "val-2-2",
+            "reference": null,
+            "richText": null,
+            "slug": "val-2-2",
+          },
+        },
+        Object {
+          "slug": "val-2-4",
+          "value": Object {
+            "__typename": "AttributeValue",
+            "file": null,
+            "id": "val-2-4",
+            "name": "val-2-4",
+            "reference": null,
+            "richText": null,
+            "slug": "val-2-4",
+          },
+        },
       ],
     },
     Object {
       "id": "attr-4",
       "values": Array [
-        "val-4-1",
-        "val-4-5",
+        Object {
+          "slug": "val-4-1",
+          "value": Object {
+            "__typename": "AttributeValue",
+            "file": null,
+            "id": "val-4-1",
+            "name": "val-4-1",
+            "reference": null,
+            "richText": null,
+            "slug": "val-4-1",
+          },
+        },
+        Object {
+          "slug": "val-4-5",
+          "value": Object {
+            "__typename": "AttributeValue",
+            "file": null,
+            "id": "val-4-5",
+            "name": "val-4-5",
+            "reference": null,
+            "richText": null,
+            "slug": "val-4-5",
+          },
+        },
       ],
     },
   ],
@@ -3067,22 +3529,88 @@ Object {
     Object {
       "id": "attr-1",
       "values": Array [
-        "val-1-1",
-        "val-1-7",
+        Object {
+          "slug": "val-1-1",
+          "value": Object {
+            "__typename": "AttributeValue",
+            "file": null,
+            "id": "val-1-1",
+            "name": "val-1-1",
+            "reference": null,
+            "richText": null,
+            "slug": "val-1-1",
+          },
+        },
+        Object {
+          "slug": "val-1-7",
+          "value": Object {
+            "__typename": "AttributeValue",
+            "file": null,
+            "id": "val-1-7",
+            "name": "val-1-7",
+            "reference": null,
+            "richText": null,
+            "slug": "val-1-7",
+          },
+        },
       ],
     },
     Object {
       "id": "attr-2",
       "values": Array [
-        "val-2-2",
-        "val-2-4",
+        Object {
+          "slug": "val-2-2",
+          "value": Object {
+            "__typename": "AttributeValue",
+            "file": null,
+            "id": "val-2-2",
+            "name": "val-2-2",
+            "reference": null,
+            "richText": null,
+            "slug": "val-2-2",
+          },
+        },
+        Object {
+          "slug": "val-2-4",
+          "value": Object {
+            "__typename": "AttributeValue",
+            "file": null,
+            "id": "val-2-4",
+            "name": "val-2-4",
+            "reference": null,
+            "richText": null,
+            "slug": "val-2-4",
+          },
+        },
       ],
     },
     Object {
       "id": "attr-4",
       "values": Array [
-        "val-4-1",
-        "val-4-5",
+        Object {
+          "slug": "val-4-1",
+          "value": Object {
+            "__typename": "AttributeValue",
+            "file": null,
+            "id": "val-4-1",
+            "name": "val-4-1",
+            "reference": null,
+            "richText": null,
+            "slug": "val-4-1",
+          },
+        },
+        Object {
+          "slug": "val-4-5",
+          "value": Object {
+            "__typename": "AttributeValue",
+            "file": null,
+            "id": "val-4-5",
+            "name": "val-4-5",
+            "reference": null,
+            "richText": null,
+            "slug": "val-4-5",
+          },
+        },
       ],
     },
   ],

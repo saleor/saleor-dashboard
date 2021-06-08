@@ -336,7 +336,7 @@ export const product: (
         slug: "attachment",
         valueRequired: true,
         unit: null,
-        values: {
+        choices: {
           __typename: "AttributeValueCountableConnection",
           pageInfo: {
             endCursor: "WyI4IiwgIjMiXQ==",
@@ -377,7 +377,7 @@ export const product: (
         slug: "color",
         valueRequired: true,
         unit: null,
-        values: {
+        choices: {
           __typename: "AttributeValueCountableConnection",
           pageInfo: {
             endCursor: "WyI4IiwgIjMiXQ==",
@@ -2885,7 +2885,7 @@ export const variant = (placeholderImage: string): ProductVariant => ({
         slug: "attachment",
         valueRequired: true,
         unit: null,
-        values: {
+        choices: {
           __typename: "AttributeValueCountableConnection",
           pageInfo: {
             endCursor: "WyI4IiwgIjMiXQ==",
@@ -3168,7 +3168,7 @@ export const variant = (placeholderImage: string): ProductVariant => ({
         slug: "Borders",
         valueRequired: true,
         unit: null,
-        values: {
+        choices: {
           __typename: "AttributeValueCountableConnection",
           pageInfo: {
             endCursor: "WyI4IiwgIjMiXQ==",
@@ -3230,7 +3230,7 @@ export const variant = (placeholderImage: string): ProductVariant => ({
         slug: "Legacy",
         valueRequired: true,
         unit: null,
-        values: {
+        choices: {
           __typename: "AttributeValueCountableConnection",
           pageInfo: {
             endCursor: "WyI4IiwgIjMiXQ==",

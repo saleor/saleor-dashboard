@@ -10,7 +10,13 @@ export function createAttribute(name, attributeValues = ["value"]) {
       attribute{
         id
         name
-        values{name}
+        choices(first: 100){
+          edges{
+            node{
+              name
+            }
+          }
+        }
       }
       attributeErrors{
         field
