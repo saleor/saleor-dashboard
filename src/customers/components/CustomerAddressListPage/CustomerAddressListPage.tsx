@@ -1,8 +1,8 @@
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
-import AppHeader from "@saleor/components/AppHeader";
 import Container from "@saleor/components/Container";
 import PageHeader from "@saleor/components/PageHeader";
+import { Backlink } from "@saleor/macaw-ui";
 import { makeStyles } from "@saleor/macaw-ui";
 import { renderCollection } from "@saleor/misc";
 import React from "react";
@@ -91,9 +91,9 @@ const CustomerAddressListPage: React.FC<CustomerAddressListPageProps> = props =>
 
   return (
     <Container>
-      <AppHeader onBack={onBack}>
+      <Backlink onBack={onBack}>
         {intl.formatMessage(messages.fullNameDetail, { fullName })}
-      </AppHeader>
+      </Backlink>
       {!isEmpty && (
         <PageHeader
           title={intl.formatMessage(messages.fullNameAddress, { fullName })}

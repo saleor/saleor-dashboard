@@ -1,5 +1,4 @@
 import Typography from "@material-ui/core/Typography";
-import AppHeader from "@saleor/components/AppHeader";
 import CardSpacer from "@saleor/components/CardSpacer";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
 import Container from "@saleor/components/Container";
@@ -11,6 +10,7 @@ import Savebar from "@saleor/components/Savebar";
 import { PluginErrorFragment } from "@saleor/fragments/types/PluginErrorFragment";
 import { ChangeEvent } from "@saleor/hooks/useForm";
 import { sectionNames } from "@saleor/intl";
+import { Backlink } from "@saleor/macaw-ui";
 import { makeStyles } from "@saleor/macaw-ui";
 import { getStringOrPlaceholder } from "@saleor/misc";
 import { isSecretField } from "@saleor/plugins/utils";
@@ -102,9 +102,9 @@ const PluginsDetailsPage: React.FC<PluginsDetailsPageProps> = props => {
         };
         return (
           <Container>
-            <AppHeader onBack={onBack}>
+            <Backlink onBack={onBack}>
               {intl.formatMessage(sectionNames.plugins)}
-            </AppHeader>
+            </Backlink>
             <PageHeader
               title={intl.formatMessage(
                 {

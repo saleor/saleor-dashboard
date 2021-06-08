@@ -1,7 +1,6 @@
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import TextField from "@material-ui/core/TextField";
-import AppHeader from "@saleor/components/AppHeader";
 import CardTitle from "@saleor/components/CardTitle";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
 import Container from "@saleor/components/Container";
@@ -11,6 +10,7 @@ import PageHeader from "@saleor/components/PageHeader";
 import Savebar from "@saleor/components/Savebar";
 import Skeleton from "@saleor/components/Skeleton";
 import { commonMessages } from "@saleor/intl";
+import { Backlink } from "@saleor/macaw-ui";
 import { makeStyles } from "@saleor/macaw-ui";
 import { ProductMediaType } from "@saleor/types/globalTypes";
 import React from "react";
@@ -105,7 +105,7 @@ const ProductMediaPage: React.FC<ProductMediaPageProps> = props => {
     >
       {({ change, data, hasChanged, submit }) => (
         <Container>
-          <AppHeader onBack={onBack}>{product}</AppHeader>
+          <Backlink onBack={onBack}>{product}</Backlink>
           <PageHeader title={intl.formatMessage(messages.editMedia)} />
           <Grid variant="inverted">
             <div>

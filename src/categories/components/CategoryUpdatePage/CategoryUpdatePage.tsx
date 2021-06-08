@@ -1,6 +1,5 @@
 import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
-import AppHeader from "@saleor/components/AppHeader";
 import { CardSpacer } from "@saleor/components/CardSpacer";
 import CardTitle from "@saleor/components/CardTitle";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
@@ -14,6 +13,7 @@ import { Tab, TabContainer } from "@saleor/components/Tab";
 import { ProductErrorFragment } from "@saleor/fragments/types/ProductErrorFragment";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import { sectionNames } from "@saleor/intl";
+import { Backlink } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -105,9 +105,9 @@ export const CategoryUpdatePage: React.FC<CategoryUpdatePageProps> = ({
     <CategoryUpdateForm category={category} onSubmit={onSubmit}>
       {({ data, change, handlers, submit, hasChanged }) => (
         <Container>
-          <AppHeader onBack={onBack}>
+          <Backlink onBack={onBack}>
             {intl.formatMessage(sectionNames.categories)}
-          </AppHeader>
+          </Backlink>
           <PageHeader title={category?.name} />
           <CategoryDetailsForm
             data={data}

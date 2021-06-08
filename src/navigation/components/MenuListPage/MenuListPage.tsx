@@ -1,8 +1,8 @@
 import Button from "@material-ui/core/Button";
-import AppHeader from "@saleor/components/AppHeader";
 import Container from "@saleor/components/Container";
 import PageHeader from "@saleor/components/PageHeader";
 import { sectionNames } from "@saleor/intl";
+import { Backlink } from "@saleor/macaw-ui";
 import { MenuListUrlSortField } from "@saleor/navigation/urls";
 import { ListActions, PageListProps, SortPage } from "@saleor/types";
 import React from "react";
@@ -28,9 +28,9 @@ const MenuListPage: React.FC<MenuListPageProps> = ({
   const intl = useIntl();
   return (
     <Container>
-      <AppHeader onBack={onBack}>
+      <Backlink onBack={onBack}>
         {intl.formatMessage(sectionNames.configuration)}
-      </AppHeader>
+      </Backlink>
       <PageHeader title={intl.formatMessage(sectionNames.navigation)}>
         <Button color="primary" variant="contained" onClick={onAdd}>
           <FormattedMessage

@@ -1,11 +1,11 @@
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
-import AppHeader from "@saleor/components/AppHeader";
 import CardSpacer from "@saleor/components/CardSpacer";
 import Container from "@saleor/components/Container";
 import Grid from "@saleor/components/Grid";
 import Hr from "@saleor/components/Hr";
 import { sectionNames } from "@saleor/intl";
+import { Backlink } from "@saleor/macaw-ui";
 import { useTheme } from "@saleor/macaw-ui";
 import classNames from "classnames";
 import React, { useEffect, useRef } from "react";
@@ -73,9 +73,9 @@ export const AppDetailsSettingsPage: React.FC<AppDetailsSettingsPageProps> = ({
 
   return (
     <Container>
-      <AppHeader onBack={onBack}>
+      <Backlink onBack={onBack}>
         {intl.formatMessage(sectionNames.apps)}
-      </AppHeader>
+      </Backlink>
       <Grid variant="uniform">
         <div className={classes.breadcrumbContainer}>
           <div className={classes.breadcrumbs}>
