@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export interface PageInfo {
   endCursor: string;
@@ -38,6 +38,10 @@ export function useLocalPaginationState(
       });
     }
   };
+
+  useEffect(() => {
+    setPaginationState(state);
+  }, [paginateBy]);
 
   return [state, setPaginationState];
 }
