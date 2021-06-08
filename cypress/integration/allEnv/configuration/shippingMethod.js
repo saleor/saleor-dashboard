@@ -8,7 +8,10 @@ import {
   addChannelToShippingZone
 } from "../../../apiRequests/ShippingMethod";
 import { createWarehouse } from "../../../apiRequests/Warehouse";
+import { BUTTON_SELECTORS } from "../../../elements/shared/button-selectors";
+import { SHARED_ELEMENTS } from "../../../elements/shared/sharedElements";
 import { SHIPPING_ZONE_DETAILS } from "../../../elements/shipping/shipping-zone-details";
+import { SHIPPING_ZONES_LIST } from "../../../elements/shipping/shipping-zones-list";
 import { selectChannelInHeader } from "../../../steps/channelsSteps";
 import {
   createShippingRate,
@@ -121,6 +124,12 @@ describe("Shipping methods", () => {
       )
       .then(() => {
         cy.addAliasToGraphRequest("ShippingZone");
+        cy.getTextFromElement(SHARED_ELEMENTS.table);
+      })
+      .then(tableText => {
+        if (!tableText.includes(shippingZone.name)) {
+          cy.get(BUTTON_SELECTORS.nextPaginationButton).click();
+        }
         cy.contains(shippingZone.name).click();
         cy.wait("@ShippingZone");
         selectChannelInHeader(defaultChannel.name);
@@ -165,7 +174,7 @@ describe("Shipping methods", () => {
       variantsList,
       address: plAddress,
       auth: "token"
-    }).then(checkout => {
+    }).then(({ checkout }) => {
       const isShippingAvailable = isShippingAvailableInCheckout(
         checkout,
         shippingName
@@ -190,7 +199,7 @@ describe("Shipping methods", () => {
       variantsList,
       address: plAddress,
       auth: "token"
-    }).then(checkout => {
+    }).then(({ checkout }) => {
       const isShippingAvailable = isShippingAvailableInCheckout(
         checkout,
         shippingName

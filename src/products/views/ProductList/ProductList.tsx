@@ -95,7 +95,11 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
   const intl = useIntl();
   const {
     data: initialFilterAttributes
-  } = useInitialProductFilterAttributesQuery({});
+  } = useInitialProductFilterAttributesQuery({
+    variables: {
+      firstValues: 100
+    }
+  });
   const {
     data: initialFilterCategories
   } = useInitialProductFilterCategoriesQuery({

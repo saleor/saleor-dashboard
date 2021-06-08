@@ -12,6 +12,8 @@ import {
   FormsetData
 } from "@saleor/hooks/useFormset";
 import { PageDetails_page_attributes } from "@saleor/pages/types/PageDetails";
+import { ProductDetails_product_attributes } from "@saleor/products/types/ProductDetails";
+import { ProductVariantDetails_productVariant_nonSelectionAttributes } from "@saleor/products/types/ProductVariantDetails";
 import { FetchMoreProps, ReorderEvent } from "@saleor/types";
 import {
   AttributeEntityTypeEnum,
@@ -232,7 +234,11 @@ export const handleUploadMultipleFiles = async (
 
 export const handleDeleteMultipleAttributeValues = async (
   attributesWithNewFileValue: FormsetData<null, File>,
-  attributes: PageDetails_page_attributes[],
+  attributes: Array<
+    | PageDetails_page_attributes
+    | ProductDetails_product_attributes
+    | ProductVariantDetails_productVariant_nonSelectionAttributes
+  >,
   deleteAttributeValue: (
     variables: AttributeValueDeleteVariables
   ) => Promise<MutationFetchResult<AttributeValueDelete>>

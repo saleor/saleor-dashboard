@@ -63,7 +63,7 @@ describe("Creates variant matrix", () => {
         attribute: attribute.id,
         mode: "attribute",
         values: attribute.values.map((attributeValue, index) => ({
-          slug: attributeValue,
+          slug: attributeValue.slug,
           value: channels.map(channel => ({
             channelId: channel.id,
             price: (channel.price + index).toString()
@@ -97,7 +97,7 @@ describe("Creates variant matrix", () => {
           variant =>
             variant.attributes.find(
               variantAttribute => variantAttribute.id === attribute.id
-            ).values[0] === attributeValue
+            ).values[0] === attributeValue.slug
         )
         .forEach(variant => {
           variant.channelListings.map((channel, index) => {
@@ -128,7 +128,7 @@ describe("Creates variant matrix", () => {
         attribute: attribute.id,
         mode: "attribute",
         values: attribute.values.map((attributeValue, attributeValueIndex) => ({
-          slug: attributeValue,
+          slug: attributeValue.slug,
           value: stock.map(
             (_, stockIndex) => stock[stockIndex] * (attributeValueIndex + 1)
           )
@@ -154,7 +154,7 @@ describe("Creates variant matrix", () => {
           variant =>
             variant.attributes.find(
               variantAttribute => variantAttribute.id === attribute.id
-            ).values[0] === attributeValue
+            ).values[0] === attributeValue.slug
         )
         .forEach(variant => {
           variant.stocks.forEach((_, stockIndex) => {
@@ -179,7 +179,7 @@ describe("Creates variant matrix", () => {
         attribute: attribute.id,
         mode: "attribute",
         values: attribute.values.map((attributeValue, index) => ({
-          slug: attributeValue,
+          slug: attributeValue.slug,
           value: channels.map(channel => ({
             channelId: channel.id,
             price: (channel.price + index).toString()
@@ -191,7 +191,7 @@ describe("Creates variant matrix", () => {
         attribute: attribute.id,
         mode: "attribute",
         values: attribute.values.map((attributeValue, attributeValueIndex) => ({
-          slug: attributeValue,
+          slug: attributeValue.slug,
           value: stock.map(
             (_, stockIndex) => stock[stockIndex] * (attributeValueIndex + 1)
           )
@@ -213,7 +213,7 @@ describe("Creates variant matrix", () => {
           variant =>
             variant.attributes.find(
               variantAttribute => variantAttribute.id === attribute.id
-            ).values[0] === attributeValue
+            ).values[0] === attributeValue.slug
         )
         .forEach(variant => {
           variant.channelListings.map((channel, index) => {
@@ -230,7 +230,7 @@ describe("Creates variant matrix", () => {
           variant =>
             variant.attributes.find(
               variantAttribute => variantAttribute.id === attribute.id
-            ).values[0] === attributeValue
+            ).values[0] === attributeValue.slug
         )
         .forEach(variant => {
           variant.stocks.forEach((_, stockIndex) => {

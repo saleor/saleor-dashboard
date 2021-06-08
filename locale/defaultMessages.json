@@ -5643,6 +5643,10 @@
     "context": "variant name",
     "string": "Variant"
   },
+  "src_dot_products_dot_components_dot_ProductVariantCreatorPage_dot_multipleValueLabel": {
+    "context": "attribute values",
+    "string": "Values"
+  },
   "src_dot_products_dot_components_dot_ProductVariantDeleteDialog_dot_1583616500": {
     "context": "button",
     "string": "Delete variant"
@@ -7092,6 +7096,10 @@
     "context": "dialog header",
     "string": "Delete Webhook"
   },
+  "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_1013231747": {
+    "context": "event",
+    "string": "Confirm payment"
+  },
   "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_1087314240": {
     "context": "event",
     "string": "Checkout updated"
@@ -7119,6 +7127,10 @@
   "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_1616635110": {
     "context": "event",
     "string": "User notified"
+  },
+  "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_1624692657": {
+    "context": "event",
+    "string": "Refund payment"
   },
   "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_2126893364": {
     "context": "event",
@@ -7160,6 +7172,10 @@
     "context": "event",
     "string": "Order fully paid"
   },
+  "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_337693660": {
+    "context": "event",
+    "string": "Void payment"
+  },
   "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_3400883706": {
     "context": "event",
     "string": "Order created"
@@ -7176,6 +7192,10 @@
     "context": "event",
     "string": "Product deleted"
   },
+  "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_3742472683": {
+    "context": "event",
+    "string": "Capture payment"
+  },
   "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_3907151399": {
     "context": "event",
     "string": "Order fulfilled"
@@ -7183,6 +7203,10 @@
   "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_3970234993": {
     "context": "event",
     "string": "Customer created"
+  },
+  "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_4053089191": {
+    "context": "event",
+    "string": "List payment gateways"
   },
   "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_4186057882": {
     "context": "event",
@@ -7192,9 +7216,17 @@
     "context": "event",
     "string": "Fulfillment created"
   },
+  "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_4292269645": {
+    "context": "event",
+    "string": "Process payment"
+  },
   "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_679080833": {
     "context": "event",
     "string": "Page created"
+  },
+  "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_759562905": {
+    "context": "event",
+    "string": "Authorize payment"
   },
   "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_787792649": {
     "context": "event",

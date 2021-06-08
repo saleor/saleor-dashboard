@@ -1,4 +1,5 @@
 import { BUTTON_SELECTORS } from "../elements/shared/button-selectors";
+import { SHARED_ELEMENTS } from "../elements/shared/sharedElements";
 import { SHIPPING_RATE_DETAILS } from "../elements/shipping/shipping-rate-details";
 import { SHIPPING_ZONE_DETAILS } from "../elements/shipping/shipping-zone-details";
 import { SHIPPING_ZONES_LIST } from "../elements/shipping/shipping-zones-list";
@@ -42,6 +43,8 @@ export function createShippingZone(
 export function createShippingRate(rateName, price, rateOption) {
   cy.get(rateOption)
     .click()
+    .get(SHARED_ELEMENTS.progressBar)
+    .should("not.be.visible")
     .get(SHIPPING_RATE_DETAILS.inputName)
     .type(rateName)
     .get(SHIPPING_RATE_DETAILS.priceInput)

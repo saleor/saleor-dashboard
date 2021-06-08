@@ -10,6 +10,17 @@ export const urlList = {
   shippingMethods: "shipping/",
   sales: "discounts/sales/",
   collections: "collections/",
-  vouchers: "discounts/vouchers/"
+  vouchers: "discounts/vouchers/",
+  staffMembers: "staff/",
+  newPassword: "new-password/",
+  permissionsGroups: "permission-groups/"
 };
 export const productDetailsUrl = productId => `${urlList.products}${productId}`;
+
+export const userDetailsUrl = userId => `${urlList.staffMembers}${userId}`;
+
+export const staffMemberDetailsUrl = staffMemberId =>
+  `${urlList.staffMembers}${staffMemberId}`;
+
+export const permissionGroupDetails = permissionGroupId =>
+  `${urlList.permissionsGroups}${permissionGroupId}`;

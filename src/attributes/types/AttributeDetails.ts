@@ -21,20 +21,40 @@ export interface AttributeDetails_attribute_privateMetadata {
   value: string;
 }
 
-export interface AttributeDetails_attribute_values_file {
+export interface AttributeDetails_attribute_choices_pageInfo {
+  __typename: "PageInfo";
+  endCursor: string | null;
+  hasNextPage: boolean;
+  hasPreviousPage: boolean;
+  startCursor: string | null;
+}
+
+export interface AttributeDetails_attribute_choices_edges_node_file {
   __typename: "File";
   url: string;
   contentType: string | null;
 }
 
-export interface AttributeDetails_attribute_values {
+export interface AttributeDetails_attribute_choices_edges_node {
   __typename: "AttributeValue";
   id: string;
   name: string | null;
   slug: string | null;
-  file: AttributeDetails_attribute_values_file | null;
+  file: AttributeDetails_attribute_choices_edges_node_file | null;
   reference: string | null;
   richText: any | null;
+}
+
+export interface AttributeDetails_attribute_choices_edges {
+  __typename: "AttributeValueCountableEdge";
+  cursor: string;
+  node: AttributeDetails_attribute_choices_edges_node;
+}
+
+export interface AttributeDetails_attribute_choices {
+  __typename: "AttributeValueCountableConnection";
+  pageInfo: AttributeDetails_attribute_choices_pageInfo;
+  edges: AttributeDetails_attribute_choices_edges[];
 }
 
 export interface AttributeDetails_attribute {
@@ -54,7 +74,7 @@ export interface AttributeDetails_attribute {
   entityType: AttributeEntityTypeEnum | null;
   storefrontSearchPosition: number;
   valueRequired: boolean;
-  values: (AttributeDetails_attribute_values | null)[] | null;
+  choices: AttributeDetails_attribute_choices | null;
 }
 
 export interface AttributeDetails {
@@ -63,4 +83,8 @@ export interface AttributeDetails {
 
 export interface AttributeDetailsVariables {
   id: string;
+  firstValues?: number | null;
+  afterValues?: string | null;
+  lastValues?: number | null;
+  beforeValues?: string | null;
 }

@@ -89,17 +89,35 @@ export function getMultiChoices(
   }));
 }
 
+export function getSingleDisplayValue(
+  attribute: AttributeInput,
+  attributeValues: AttributeValueFragment[]
+): string {
+  return (
+    attributeValues.find(value => value.slug === attribute.value[0])?.name ||
+    attribute.data.values.find(value => value.slug === attribute.value[0])
+      ?.name ||
+    attribute.value[0] ||
+    ""
+  );
+}
+
 export function getMultiDisplayValue(
-  attribute: AttributeInput
+  attribute: AttributeInput,
+  attributeValues: AttributeValueFragment[]
 ): MultiAutocompleteChoiceType[] {
   if (!attribute.value) {
     return [];
   }
 
   return attribute.value.map(attributeValue => {
-    const definedAttributeValue = attribute.data.values.find(
-      definedValue => definedValue.slug === attributeValue
-    );
+    const definedAttributeValue =
+      attributeValues.find(
+        definedValue => definedValue.slug === attributeValue
+      ) ||
+      attribute.data.values.find(
+        definedValue => definedValue.slug === attributeValue
+      );
     if (!!definedAttributeValue) {
       return {
         label: definedAttributeValue.name,

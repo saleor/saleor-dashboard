@@ -96,6 +96,7 @@ export const isFileValueUnused = (
   attributesWithNewFileValue: FormsetData<null, File>,
   existingAttribute:
     | PageDetails_page_attributes
+    | ProductDetails_product_attributes
     | SelectedVariantAttributeFragment
 ) => {
   if (existingAttribute.attribute.inputType !== AttributeInputTypeEnum.FILE) {

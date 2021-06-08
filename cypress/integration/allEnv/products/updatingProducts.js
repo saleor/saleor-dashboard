@@ -18,8 +18,8 @@ import {
 } from "../../../utils/products/productsUtils";
 
 describe("Update products", () => {
-  const startsWith = "Cy-";
-  const name = `${startsWith}${faker.random.number()}`;
+  const startsWith = "CyUpdateProducts-";
+  const name = `${startsWith}${faker.datatype.number()}`;
   const description = faker.lorem.sentences(2);
 
   let defaultChannel;

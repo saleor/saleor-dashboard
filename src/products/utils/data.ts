@@ -17,7 +17,7 @@ import {
   ProductDetails_product_variants
 } from "@saleor/products/types/ProductDetails";
 import { StockInput } from "@saleor/types/globalTypes";
-import { mapMetadataItemToInput } from "@saleor/utils/maps";
+import { mapEdgesToItems, mapMetadataItemToInput } from "@saleor/utils/maps";
 
 import { ProductStockInput } from "../components/ProductStocks";
 import { ProductType_productType_productAttributes } from "../types/ProductType";
@@ -52,7 +52,7 @@ export function getAttributeInputFromProduct(
           inputType: attribute.attribute.inputType,
           isRequired: attribute.attribute.valueRequired,
           selectedValues: attribute.values,
-          values: attribute.attribute.values,
+          values: mapEdgesToItems(attribute.attribute.choices),
           unit: attribute.attribute.unit
         },
         id: attribute.attribute.id,
@@ -71,7 +71,7 @@ export function getAttributeInputFromProductType(
       entityType: attribute.entityType,
       inputType: attribute.inputType,
       isRequired: attribute.valueRequired,
-      values: attribute.values,
+      values: mapEdgesToItems(attribute.choices),
       unit: attribute.unit
     },
     id: attribute.id,
@@ -89,7 +89,7 @@ export function getAttributeInputFromAttributes(
       entityType: attribute.entityType,
       inputType: attribute.inputType,
       isRequired: attribute.valueRequired,
-      values: attribute.values,
+      values: mapEdgesToItems(attribute.choices),
       unit: attribute.unit,
       variantAttributeScope
     },
@@ -109,7 +109,7 @@ export function getAttributeInputFromSelectedAttributes(
       inputType: attribute.attribute.inputType,
       isRequired: attribute.attribute.valueRequired,
       selectedValues: attribute.values,
-      values: attribute.attribute.values,
+      values: mapEdgesToItems(attribute.attribute.choices),
       unit: attribute.attribute.unit,
       variantAttributeScope
     },

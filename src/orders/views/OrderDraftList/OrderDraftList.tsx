@@ -262,10 +262,10 @@ export const OrderDraftList: React.FC<OrderDraftListProps> = ({ params }) => {
                 defaultChoice={channel?.id}
                 open={params.action === "create-order"}
                 onClose={closeModal}
-                onConfirm={channel =>
+                onConfirm={channelId =>
                   createOrder({
                     variables: {
-                      input: { channel }
+                      input: { channelId }
                     }
                   })
                 }

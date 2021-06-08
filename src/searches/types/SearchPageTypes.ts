@@ -3,44 +3,14 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { AttributeInputTypeEnum, AttributeEntityTypeEnum } from "./../../types/globalTypes";
-
 // ====================================================
 // GraphQL query operation: SearchPageTypes
 // ====================================================
-
-export interface SearchPageTypes_search_edges_node_attributes_values_file {
-  __typename: "File";
-  url: string;
-  contentType: string | null;
-}
-
-export interface SearchPageTypes_search_edges_node_attributes_values {
-  __typename: "AttributeValue";
-  id: string;
-  name: string | null;
-  slug: string | null;
-  file: SearchPageTypes_search_edges_node_attributes_values_file | null;
-  reference: string | null;
-  richText: any | null;
-}
-
-export interface SearchPageTypes_search_edges_node_attributes {
-  __typename: "Attribute";
-  id: string;
-  inputType: AttributeInputTypeEnum | null;
-  entityType: AttributeEntityTypeEnum | null;
-  slug: string | null;
-  name: string | null;
-  valueRequired: boolean;
-  values: (SearchPageTypes_search_edges_node_attributes_values | null)[] | null;
-}
 
 export interface SearchPageTypes_search_edges_node {
   __typename: "PageType";
   id: string;
   name: string;
-  attributes: (SearchPageTypes_search_edges_node_attributes | null)[] | null;
 }
 
 export interface SearchPageTypes_search_edges {

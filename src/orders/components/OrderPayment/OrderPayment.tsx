@@ -297,7 +297,12 @@ const OrderPayment: React.FC<OrderPaymentProps> = props => {
                 </Button>
               )}
               {canRefund && (
-                <Button color="primary" variant="text" onClick={onRefund}>
+                <Button
+                  color="primary"
+                  variant="text"
+                  onClick={onRefund}
+                  data-test-id="refund-button"
+                >
                   <FormattedMessage
                     defaultMessage="Refund"
                     description="button"

@@ -151,7 +151,8 @@ const SingleAutocompleteSelectFieldContent: React.FC<SingleAutocompleteSelectFie
   const anchor = React.useRef<HTMLDivElement>();
   const scrollPosition = useElementScroll(anchor);
   const [calledForMore, setCalledForMore] = React.useState(false);
-  const [slice, setSlice] = React.useState(sliceSize);
+  const [slice, setSlice] = React.useState(onFetchMore ? 10000 : sliceSize);
+  const [initialized, setInitialized] = React.useState(false);
 
   const scrolledToBottom = isScrolledToBottom(anchor, scrollPosition, offset);
 
@@ -159,19 +160,26 @@ const SingleAutocompleteSelectFieldContent: React.FC<SingleAutocompleteSelectFie
     if (!calledForMore && onFetchMore && scrolledToBottom) {
       onFetchMore();
       setCalledForMore(true);
-    } else if (scrolledToBottom) {
+    } else if (scrolledToBottom && !onFetchMore) {
       setSlice(slice => slice + sliceSize);
     }
   }, [scrolledToBottom]);
 
   React.useEffect(() => {
-    setSlice(sliceSize);
-    if (anchor.current?.scrollTo) {
+    if (!onFetchMore) {
+      setSlice(sliceSize);
+    }
+    if (anchor.current?.scrollTo && !initialized) {
       anchor.current.scrollTo({
         top: 0
       });
+      setInitialized(true);
     }
   }, [choices?.length]);
+
+  React.useEffect(() => {
+    setInitialized(false);
+  }, [inputValue]);
 
   React.useEffect(() => {
     if (calledForMore && !loading) {
@@ -182,6 +190,8 @@ const SingleAutocompleteSelectFieldContent: React.FC<SingleAutocompleteSelectFie
   const emptyOptionProps = getItemProps({
     item: ""
   });
+
+  const choicesToDisplay = choices.slice(0, slice);
 
   return (
     <Paper className={classes.root}>
@@ -244,7 +254,7 @@ const SingleAutocompleteSelectFieldContent: React.FC<SingleAutocompleteSelectFie
             {choices.length > 0 && (!!add || displayCustomValue) && (
               <Hr className={classes.hr} />
             )}
-            {choices.slice(0, slice).map((suggestion, index) => {
+            {choicesToDisplay.map((suggestion, index) => {
               const choiceIndex = getChoiceIndex(
                 index,
                 emptyOption,

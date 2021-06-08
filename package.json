@@ -41,6 +41,7 @@
     "classnames": "^2.2.6",
     "crc-32": "^1.2.0",
     "currency-codes": "^2.1.0",
+    "cypress-mailhog": "^1.3.0",
     "downshift": "^1.31.16",
     "editorjs-inline-tool": "^0.4.0",
     "editorjs-undo": "^0.1.4",

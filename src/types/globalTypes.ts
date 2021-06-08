@@ -122,7 +122,6 @@ export enum CategorySortField {
 export enum ChannelErrorCode {
   ALREADY_EXISTS = "ALREADY_EXISTS",
   CHANNELS_CURRENCY_MUST_BE_THE_SAME = "CHANNELS_CURRENCY_MUST_BE_THE_SAME",
-  CHANNEL_TARGET_ID_MUST_BE_DIFFERENT = "CHANNEL_TARGET_ID_MUST_BE_DIFFERENT",
   CHANNEL_WITH_ORDERS = "CHANNEL_WITH_ORDERS",
   DUPLICATED_INPUT_ITEM = "DUPLICATED_INPUT_ITEM",
   GRAPHQL_ERROR = "GRAPHQL_ERROR",
@@ -771,6 +770,7 @@ export enum PermissionEnum {
   MANAGE_ORDERS = "MANAGE_ORDERS",
   MANAGE_PAGES = "MANAGE_PAGES",
   MANAGE_PAGE_TYPES_AND_ATTRIBUTES = "MANAGE_PAGE_TYPES_AND_ATTRIBUTES",
+  HANDLE_PAYMENTS = "HANDLE_PAYMENTS",
   MANAGE_PLUGINS = "MANAGE_PLUGINS",
   MANAGE_PRODUCTS = "MANAGE_PRODUCTS",
   MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES = "MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES",
@@ -1025,6 +1025,13 @@ export enum WebhookEventTypeEnum {
   PAGE_CREATED = "PAGE_CREATED",
   PAGE_DELETED = "PAGE_DELETED",
   PAGE_UPDATED = "PAGE_UPDATED",
+  PAYMENT_AUTHORIZE = "PAYMENT_AUTHORIZE",
+  PAYMENT_CAPTURE = "PAYMENT_CAPTURE",
+  PAYMENT_CONFIRM = "PAYMENT_CONFIRM",
+  PAYMENT_LIST_GATEWAYS = "PAYMENT_LIST_GATEWAYS",
+  PAYMENT_PROCESS = "PAYMENT_PROCESS",
+  PAYMENT_REFUND = "PAYMENT_REFUND",
+  PAYMENT_VOID = "PAYMENT_VOID",
   PRODUCT_CREATED = "PRODUCT_CREATED",
   PRODUCT_DELETED = "PRODUCT_DELETED",
   PRODUCT_UPDATED = "PRODUCT_UPDATED",
@@ -1203,7 +1210,7 @@ export interface ChannelCreateInput {
 }
 
 export interface ChannelDeleteInput {
-  targetChannel: string;
+  channelId: string;
 }
 
 export interface ChannelUpdateInput {
@@ -1298,7 +1305,7 @@ export interface DraftOrderCreateInput {
   shippingMethod?: string | null;
   voucher?: string | null;
   customerNote?: string | null;
-  channel?: string | null;
+  channelId?: string | null;
   redirectUrl?: string | null;
   lines?: (OrderLineCreateInput | null)[] | null;
 }
@@ -1312,7 +1319,7 @@ export interface DraftOrderInput {
   shippingMethod?: string | null;
   voucher?: string | null;
   customerNote?: string | null;
-  channel?: string | null;
+  channelId?: string | null;
   redirectUrl?: string | null;
 }
 

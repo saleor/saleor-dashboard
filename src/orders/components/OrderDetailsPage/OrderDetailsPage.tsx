@@ -223,7 +223,7 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
               )}
             </div>
             <Grid>
-              <div>
+              <div data-test-id="orderFulfillment">
                 {!isOrderUnconfirmed ? (
                   <OrderUnfulfilledProductsCard
                     canFulfill={canFulfill}

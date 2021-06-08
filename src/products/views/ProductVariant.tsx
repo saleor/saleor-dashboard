@@ -23,6 +23,7 @@ import useShop from "@saleor/hooks/useShop";
 import { commonMessages } from "@saleor/intl";
 import { useProductVariantChannelListingUpdate } from "@saleor/products/mutations";
 import { ProductVariantDetails_productVariant } from "@saleor/products/types/ProductVariantDetails";
+import useAttributeValueSearch from "@saleor/searches/useAttributeValueSearch";
 import usePageSearch from "@saleor/searches/usePageSearch";
 import useProductSearch from "@saleor/searches/useProductSearch";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
@@ -92,7 +93,8 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
   const { data, loading } = useProductVariantQuery({
     displayLoader: true,
     variables: {
-      id: variantId
+      id: variantId,
+      firstValues: 10
     }
   });
   const [updateMetadata] = useMetadataUpdate({});
@@ -254,7 +256,8 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
         sku: data.sku,
         stocks: data.updateStocks.map(mapFormsetStockToStockInput),
         trackInventory: data.trackInventory,
-        weight: weight(data.weight)
+        weight: weight(data.weight),
+        firstValues: 10
       }
     });
     await handleSubmitChannels(data, variant);
@@ -297,6 +300,18 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
   } = useProductSearch({
     variables: DEFAULT_INITIAL_SEARCH_DATA
   });
+  const [focusedAttribute, setFocusedAttribute] = useState<string>();
+  const {
+    loadMore: loadMoreAttributeValues,
+    search: searchAttributeValues,
+    result: searchAttributeValuesOpts
+  } = useAttributeValueSearch({
+    variables: {
+      id: focusedAttribute,
+      ...DEFAULT_INITIAL_SEARCH_DATA
+    },
+    skip: !focusedAttribute
+  });
 
   const fetchMoreReferencePages = {
     hasMore: searchPagesOpts.data?.search?.pageInfo?.hasNextPage,
@@ -308,6 +323,16 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
     loading: searchProductsOpts.loading,
     onFetchMore: loadMoreProducts
   };
+  const fetchMoreAttributeValues = {
+    hasMore: !!searchAttributeValuesOpts.data?.attribute?.choices?.pageInfo
+      ?.hasNextPage,
+    loading: !!searchAttributeValuesOpts.loading,
+    onFetchMore: loadMoreAttributeValues
+  };
+
+  const attributeValues = mapEdgesToItems(
+    searchAttributeValuesOpts?.data?.attribute.choices
+  );
 
   return (
     <>
@@ -316,6 +341,7 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
         defaultWeightUnit={shop?.defaultWeightUnit}
         defaultVariantId={data?.productVariant.product.defaultVariant?.id}
         errors={errors}
+        attributeValues={attributeValues}
         channels={channels}
         channelErrors={
           updateChannelsOpts?.data?.productVariantChannelListingUpdate
@@ -351,9 +377,12 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
         fetchMoreReferencePages={fetchMoreReferencePages}
         fetchReferenceProducts={searchProducts}
         fetchMoreReferenceProducts={fetchMoreReferenceProducts}
+        fetchAttributeValues={searchAttributeValues}
+        fetchMoreAttributeValues={fetchMoreAttributeValues}
         onCloseDialog={() =>
           navigate(productVariantEditUrl(productId, variantId))
         }
+        onAttributeFocus={setFocusedAttribute}
       />
       <ProductVariantDeleteDialog
         confirmButtonState={deleteVariantOpts.status}

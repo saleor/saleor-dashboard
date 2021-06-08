@@ -413,7 +413,7 @@ type Attribute implements Node & ObjectWithMetadata {
   slug: String
   type: AttributeTypeEnum
   unit: MeasurementUnitsEnum
-  values: [AttributeValue]
+  choices(sortBy: AttributeChoicesSortingInput, filter: AttributeValueFilterInput, before: String, after: String, first: Int, last: Int): AttributeValueCountableConnection
   valueRequired: Boolean!
   visibleInStorefront: Boolean!
   filterableInStorefront: Boolean!
@@ -427,6 +427,16 @@ type AttributeBulkDelete {
   count: Int!
   attributeErrors: [AttributeError!]! @deprecated(reason: "Use errors field instead. This field will be removed in Saleor 4.0.")
   errors: [AttributeError!]!
+}
+
+enum AttributeChoicesSortField {
+  NAME
+  SLUG
+}
+
+input AttributeChoicesSortingInput {
+  direction: OrderDirection!
+  field: AttributeChoicesSortField!
 }
 
 type AttributeCountableConnection {
@@ -606,6 +616,17 @@ type AttributeValueBulkDelete {
   errors: [AttributeError!]!
 }
 
+type AttributeValueCountableConnection {
+  pageInfo: PageInfo!
+  edges: [AttributeValueCountableEdge!]!
+  totalCount: Int
+}
+
+type AttributeValueCountableEdge {
+  node: AttributeValue!
+  cursor: String!
+}
+
 type AttributeValueCreate {
   attribute: Attribute
   attributeErrors: [AttributeError!]! @deprecated(reason: "Use errors field instead. This field will be removed in Saleor 4.0.")
@@ -624,6 +645,10 @@ type AttributeValueDelete {
   attributeErrors: [AttributeError!]! @deprecated(reason: "Use errors field instead. This field will be removed in Saleor 4.0.")
   errors: [AttributeError!]!
   attributeValue: AttributeValue
+}
+
+input AttributeValueFilterInput {
+  search: String
 }
 
 input AttributeValueInput {
@@ -794,7 +819,7 @@ type CategoryTranslation implements Node {
   id: ID!
   seoTitle: String
   seoDescription: String
-  name: String!
+  name: String
   description: JSONString
   language: LanguageDisplay!
   descriptionJson: JSONString @deprecated(reason: "Will be removed in Saleor 4.0. Use the `description` field instead.")
@@ -848,7 +873,7 @@ type ChannelDelete {
 }
 
 input ChannelDeleteInput {
-  targetChannel: ID!
+  channelId: ID!
 }
 
 type ChannelError {
@@ -865,7 +890,6 @@ enum ChannelErrorCode {
   NOT_FOUND
   REQUIRED
   UNIQUE
-  CHANNEL_TARGET_ID_MUST_BE_DIFFERENT
   CHANNELS_CURRENCY_MUST_BE_THE_SAME
   CHANNEL_WITH_ORDERS
   DUPLICATED_INPUT_ITEM
@@ -1269,7 +1293,7 @@ type CollectionTranslation implements Node {
   id: ID!
   seoTitle: String
   seoDescription: String
-  name: String!
+  name: String
   description: JSONString
   language: LanguageDisplay!
   descriptionJson: JSONString @deprecated(reason: "Will be removed in Saleor 4.0. Use the `description` field instead.")
@@ -1842,7 +1866,7 @@ input DraftOrderCreateInput {
   shippingMethod: ID
   voucher: ID
   customerNote: String
-  channel: ID
+  channelId: ID
   redirectUrl: String
   lines: [OrderLineCreateInput]
 }
@@ -1862,7 +1886,7 @@ input DraftOrderInput {
   shippingMethod: ID
   voucher: ID
   customerNote: String
-  channel: ID
+  channelId: ID
   redirectUrl: String
 }
 
@@ -2823,7 +2847,7 @@ type Mutation {
   giftCardCreate(input: GiftCardCreateInput!): GiftCardCreate
   giftCardDeactivate(id: ID!): GiftCardDeactivate
   giftCardUpdate(id: ID!, input: GiftCardUpdateInput!): GiftCardUpdate
-  pluginUpdate(channel: ID, id: ID!, input: PluginUpdateInput!): PluginUpdate
+  pluginUpdate(channelId: ID, id: ID!, input: PluginUpdateInput!): PluginUpdate
   saleCreate(input: SaleInput!): SaleCreate
   saleDelete(id: ID!): SaleDelete
   saleBulkDelete(ids: [ID]!): SaleBulkDelete
@@ -3593,6 +3617,7 @@ input PageFilterInput {
   search: String
   metadata: [MetadataInput]
   pageTypes: [ID]
+  ids: [ID]
 }
 
 type PageInfo {
@@ -3652,7 +3677,7 @@ type PageTranslation implements Node {
   id: ID!
   seoTitle: String
   seoDescription: String
-  title: String!
+  title: String
   content: JSONString
   language: LanguageDisplay!
   contentJson: JSONString @deprecated(reason: "Will be removed in Saleor 4.0. Use the `content` field instead.")
@@ -3891,6 +3916,7 @@ enum PermissionEnum {
   MANAGE_ORDERS
   MANAGE_PAGES
   MANAGE_PAGE_TYPES_AND_ATTRIBUTES
+  HANDLE_PAYMENTS
   MANAGE_PRODUCTS
   MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES
   MANAGE_SHIPPING
@@ -4398,7 +4424,7 @@ type ProductTranslation implements Node {
   id: ID!
   seoTitle: String
   seoDescription: String
-  name: String!
+  name: String
   description: JSONString
   language: LanguageDisplay!
   descriptionJson: JSONString @deprecated(reason: "Will be removed in Saleor 4.0. Use the `description` field instead.")
@@ -6070,6 +6096,13 @@ enum WebhookEventTypeEnum {
   PAGE_CREATED
   PAGE_UPDATED
   PAGE_DELETED
+  PAYMENT_AUTHORIZE
+  PAYMENT_CAPTURE
+  PAYMENT_CONFIRM
+  PAYMENT_LIST_GATEWAYS
+  PAYMENT_PROCESS
+  PAYMENT_REFUND
+  PAYMENT_VOID
 }
 
 enum WebhookSampleEventTypeEnum {
@@ -6097,6 +6130,12 @@ enum WebhookSampleEventTypeEnum {
   PAGE_CREATED
   PAGE_UPDATED
   PAGE_DELETED
+  PAYMENT_AUTHORIZE
+  PAYMENT_CAPTURE
+  PAYMENT_REFUND
+  PAYMENT_VOID
+  PAYMENT_CONFIRM
+  PAYMENT_PROCESS
 }
 
 type WebhookUpdate {

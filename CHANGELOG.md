@@ -49,6 +49,7 @@ All notable, unreleased changes to this project will be documented in this file.
 - Fix EditorJS inline formatting - #1096 by @orzechdev
 - Add product / page delete warning - #1095 by @mmarkusik
 - Channels per plugin - #1093 by @mmarkusik
+- Add pagination on attribute values - #1112 by @orzechdev
 
 # 2.11.1
 

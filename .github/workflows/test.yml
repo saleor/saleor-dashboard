@@ -103,6 +103,7 @@ jobs:
           wait-on: http://localhost:9000/
           wait-on-timeout: 120
           spec: cypress/integration/allEnv/**/*.js
+
       - name: Cypress run
         if: ${{ steps.api_uri.outputs.custom_api_uri}} == 'https://qa.staging.saleor.cloud/graphql/'
         uses: cypress-io/github-action@v2
@@ -114,6 +115,7 @@ jobs:
           CYPRESS_SECOND_USER_NAME: ${{ secrets.CYPRESS_SECOND_USER_NAME }}
           CYPRESS_USER_PASSWORD: ${{ secrets.CYPRESS_USER_PASSWORD }}
           CYPRESS_PERMISSIONS_USERS_PASSWORD: ${{ secrets.CYPRESS_PERMISSIONS_USERS_PASSWORD }}
+          CYPRESS_MAILHOG: ${{ secrets.CYPRESS_MAILHOG }}
         with:
           build: npm run build
           start: npx local-web-server --spa index.html
@@ -124,7 +126,7 @@ jobs:
         with:
           name: cypress-videos
           path: cypress/videos
-          
+
   translation-messages:
     runs-on: ubuntu-latest
     steps:

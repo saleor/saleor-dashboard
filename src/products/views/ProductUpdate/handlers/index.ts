@@ -13,6 +13,7 @@ import {
   prepareAttributesInput
 } from "@saleor/attributes/utils/handlers";
 import { ChannelData } from "@saleor/channels/utils";
+import { VALUES_PAGINATE_BY } from "@saleor/config";
 import {
   FileUpload,
   FileUploadVariables
@@ -145,7 +146,8 @@ export function createUpdateHandler(
         },
         slug: data.slug,
         taxCode: data.changeTaxCode ? data.taxCode : null
-      }
+      },
+      firstValues: VALUES_PAGINATE_BY
     };
 
     if (product.productType.hasVariants) {
@@ -161,7 +163,7 @@ export function createUpdateHandler(
               attributes:
                 product.productType.variantAttributes?.map(attribute => ({
                   id: attribute.id,
-                  values: attribute.values.map(value => value.slug)
+                  values: attribute.choices.edges.map(value => value.node.slug)
                 })) || [],
               product: product.id,
               sku: data.sku,

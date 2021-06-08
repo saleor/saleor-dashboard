@@ -23,7 +23,13 @@ const props: AttributePageProps = {
   onValueReorder: () => undefined,
   onValueUpdate: () => undefined,
   saveButtonBarState: "default",
-  values: attribute.values
+  values: attribute.choices,
+  pageInfo: {
+    hasNextPage: false,
+    hasPreviousPage: false
+  },
+  onNextPage: () => undefined,
+  onPreviousPage: () => undefined
 };
 
 storiesOf("Views / Attributes / Attribute details", module)

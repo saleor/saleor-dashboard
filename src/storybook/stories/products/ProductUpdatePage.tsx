@@ -47,8 +47,10 @@ const props: ProductUpdatePageProps = {
   errors: [],
   fetchCategories: () => undefined,
   fetchCollections: () => undefined,
+  fetchAttributeValues: () => undefined,
   fetchMoreCategories: fetchMoreProps,
   fetchMoreCollections: fetchMoreProps,
+  fetchMoreAttributeValues: fetchMoreProps,
   hasChannelChanged: false,
   header: product.name,
   media: product.media,
@@ -68,6 +70,7 @@ const props: ProductUpdatePageProps = {
   onVariantsAdd: () => undefined,
   onWarehouseConfigure: () => undefined,
   openChannelsModal: () => undefined,
+  onAttributeFocus: () => undefined,
   placeholderImage,
   product,
   referencePages: [],
@@ -76,7 +79,8 @@ const props: ProductUpdatePageProps = {
   selectedChannelId: "123",
   taxTypes,
   variants: product.variants,
-  warehouses: warehouseList
+  warehouses: warehouseList,
+  attributeValues: []
 };
 
 storiesOf("Views / Products / Product edit", module)
