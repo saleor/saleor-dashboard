@@ -103,17 +103,17 @@ export const ProductCreateView: React.FC<ProductCreateProps> = ({ params }) => {
   } = useProductSearch({
     variables: DEFAULT_INITIAL_SEARCH_DATA
   });
-  const [selectedAttribute, setSelectedAttribute] = useState<string>();
+  const [focusedAttribute, setFocusedAttribute] = useState<string>();
   const {
     loadMore: loadMoreAttributeValues,
     search: searchAttributeValues,
     result: searchAttributeValuesOpts
   } = useAttributeValueSearch({
     variables: {
-      id: selectedAttribute,
+      id: focusedAttribute,
       ...DEFAULT_INITIAL_SEARCH_DATA
     },
-    skip: !selectedAttribute
+    skip: !focusedAttribute
   });
   const warehouses = useWarehouseList({
     displayLoader: true,
@@ -348,7 +348,7 @@ export const ProductCreateView: React.FC<ProductCreateProps> = ({ params }) => {
         onCloseDialog={() => navigate(productAddUrl())}
         selectedProductType={selectedProductType?.productType}
         onSelectProductType={id => setSelectedProductTypeId(id)}
-        onAttributeSelect={setSelectedAttribute}
+        onAttributeFocus={setFocusedAttribute}
       />
     </>
   );

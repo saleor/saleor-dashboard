@@ -56,7 +56,7 @@ storiesOf("Views / Products / Create product", module)
       onAssignReferencesClick={() => undefined}
       onCloseDialog={() => undefined}
       onSelectProductType={() => undefined}
-      onAttributeSelect={() => undefined}
+      onAttributeFocus={() => undefined}
     />
   ))
   .add("When loading", () => (
@@ -93,7 +93,7 @@ storiesOf("Views / Products / Create product", module)
       onAssignReferencesClick={() => undefined}
       onCloseDialog={() => undefined}
       onSelectProductType={() => undefined}
-      onAttributeSelect={() => undefined}
+      onAttributeFocus={() => undefined}
     />
   ))
   .add("form errors", () => (
@@ -145,6 +145,6 @@ storiesOf("Views / Products / Create product", module)
       onAssignReferencesClick={() => undefined}
       onCloseDialog={() => undefined}
       onSelectProductType={() => undefined}
-      onAttributeSelect={() => undefined}
+      onAttributeFocus={() => undefined}
     />
   ));

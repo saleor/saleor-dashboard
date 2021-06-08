@@ -60,7 +60,7 @@ const props: ProductUpdatePageProps = {
   onVariantsAdd: () => undefined,
   onWarehouseConfigure: () => undefined,
   openChannelsModal: () => undefined,
-  onAttributeSelect: () => undefined,
+  onAttributeFocus: () => undefined,
   placeholderImage,
   product,
   referencePages: [],

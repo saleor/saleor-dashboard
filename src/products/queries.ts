@@ -282,7 +282,11 @@ export const useProductTypeQuery = makeQuery<ProductType, ProductTypeVariables>(
 const productVariantQuery = gql`
   ${fragmentVariant}
   query ProductVariantDetails(
-    $id: ID! # $firstValues: Int # $afterValues: String # $lastValues: Int # $beforeValues: String
+    $id: ID!
+    $firstValues: Int
+    $afterValues: String
+    $lastValues: Int
+    $beforeValues: String
   ) {
     productVariant(id: $id) {
       ...ProductVariant
@@ -297,7 +301,11 @@ export const useProductVariantQuery = makeQuery<
 const productVariantCreateQuery = gql`
   ${variantAttributeFragment}
   query ProductVariantCreateData(
-    $id: ID! # $firstValues: Int # $afterValues: String # $lastValues: Int # $beforeValues: String
+    $id: ID!
+    $firstValues: Int
+    $afterValues: String
+    $lastValues: Int
+    $beforeValues: String
   ) {
     product(id: $id) {
       id

@@ -44,7 +44,7 @@ export interface AttributesProps extends AttributeRowHandlers {
     ProductErrorWithAttributesFragment | PageErrorWithAttributesFragment
   >;
   title?: React.ReactNode;
-  onAttributeSelect: (id: string) => void;
+  onAttributeFocus: (id: string) => void;
 }
 
 const useStyles = makeStyles(

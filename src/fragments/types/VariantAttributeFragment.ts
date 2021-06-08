@@ -9,7 +9,7 @@ import { AttributeInputTypeEnum, AttributeEntityTypeEnum, MeasurementUnitsEnum }
 // GraphQL fragment: VariantAttributeFragment
 // ====================================================
 
-export interface VariantAttributeFragment_values_pageInfo {
+export interface VariantAttributeFragment_choices_pageInfo {
   __typename: "PageInfo";
   endCursor: string | null;
   hasNextPage: boolean;
@@ -17,32 +17,32 @@ export interface VariantAttributeFragment_values_pageInfo {
   startCursor: string | null;
 }
 
-export interface VariantAttributeFragment_values_edges_node_file {
+export interface VariantAttributeFragment_choices_edges_node_file {
   __typename: "File";
   url: string;
   contentType: string | null;
 }
 
-export interface VariantAttributeFragment_values_edges_node {
+export interface VariantAttributeFragment_choices_edges_node {
   __typename: "AttributeValue";
   id: string;
   name: string | null;
   slug: string | null;
-  file: VariantAttributeFragment_values_edges_node_file | null;
+  file: VariantAttributeFragment_choices_edges_node_file | null;
   reference: string | null;
   richText: any | null;
 }
 
-export interface VariantAttributeFragment_values_edges {
+export interface VariantAttributeFragment_choices_edges {
   __typename: "AttributeValueCountableEdge";
   cursor: string;
-  node: VariantAttributeFragment_values_edges_node;
+  node: VariantAttributeFragment_choices_edges_node;
 }
 
-export interface VariantAttributeFragment_values {
+export interface VariantAttributeFragment_choices {
   __typename: "AttributeValueCountableConnection";
-  pageInfo: VariantAttributeFragment_values_pageInfo;
-  edges: VariantAttributeFragment_values_edges[];
+  pageInfo: VariantAttributeFragment_choices_pageInfo;
+  edges: VariantAttributeFragment_choices_edges[];
 }
 
 export interface VariantAttributeFragment {
@@ -54,5 +54,5 @@ export interface VariantAttributeFragment {
   entityType: AttributeEntityTypeEnum | null;
   valueRequired: boolean;
   unit: MeasurementUnitsEnum | null;
-  values: VariantAttributeFragment_values | null;
+  choices: VariantAttributeFragment_choices | null;
 }
