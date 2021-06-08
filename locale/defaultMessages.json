@@ -5643,6 +5643,10 @@
     "context": "variant name",
     "string": "Variant"
   },
+  "src_dot_products_dot_components_dot_ProductVariantCreatorPage_dot_multipleValueLabel": {
+    "context": "attribute values",
+    "string": "Values"
+  },
   "src_dot_products_dot_components_dot_ProductVariantDeleteDialog_dot_1583616500": {
     "context": "button",
     "string": "Delete variant"

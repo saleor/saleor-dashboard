@@ -18,10 +18,13 @@ import { PageErrorWithAttributesFragment } from "@saleor/fragments/types/PageErr
 import useDateLocalize from "@saleor/hooks/useDateLocalize";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import { sectionNames } from "@saleor/intl";
+import { PageType_pageType } from "@saleor/pages/types/PageType";
+import { SearchAttributeValues_attribute_choices_edges_node } from "@saleor/searches/types/SearchAttributeValues";
 import { SearchPages_search_edges_node } from "@saleor/searches/types/SearchPages";
 import { SearchPageTypes_search_edges_node } from "@saleor/searches/types/SearchPageTypes";
 import { SearchProducts_search_edges_node } from "@saleor/searches/types/SearchProducts";
 import { FetchMoreProps } from "@saleor/types";
+import { mapNodeToChoice } from "@saleor/utils/maps";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -39,6 +42,8 @@ export interface PageDetailsPageProps {
   referenceProducts?: SearchProducts_search_edges_node[];
   allowEmptySlug?: boolean;
   saveButtonBarState: ConfirmButtonTransitionState;
+  selectedPageType?: PageType_pageType;
+  attributeValues: SearchAttributeValues_attribute_choices_edges_node[];
   onBack: () => void;
   onRemove: () => void;
   onSubmit: (data: PageData) => SubmitPromise;
@@ -50,17 +55,23 @@ export interface PageDetailsPageProps {
   fetchMoreReferencePages?: FetchMoreProps;
   fetchReferenceProducts?: (data: string) => void;
   fetchMoreReferenceProducts?: FetchMoreProps;
+  fetchAttributeValues: (query: string) => void;
+  fetchMoreAttributeValues?: FetchMoreProps;
   onCloseDialog: () => void;
+  onSelectPageType?: (pageTypeId: string) => void;
+  onAttributeFocus: (id: string) => void;
 }
 
 const PageDetailsPage: React.FC<PageDetailsPageProps> = ({
   loading,
   errors,
   page,
-  pageTypes,
+  pageTypes: pageTypeChoiceList,
   referencePages = [],
   referenceProducts = [],
   saveButtonBarState,
+  selectedPageType,
+  attributeValues,
   onBack,
   onRemove,
   onSubmit,
@@ -72,7 +83,11 @@ const PageDetailsPage: React.FC<PageDetailsPageProps> = ({
   fetchMoreReferencePages,
   fetchReferenceProducts,
   fetchMoreReferenceProducts,
-  onCloseDialog
+  fetchAttributeValues,
+  fetchMoreAttributeValues,
+  onCloseDialog,
+  onSelectPageType,
+  onAttributeFocus
 }) => {
   const intl = useIntl();
   const localizeDate = useDateLocalize();
@@ -80,6 +95,10 @@ const PageDetailsPage: React.FC<PageDetailsPageProps> = ({
   const pageExists = page !== null;
 
   const canOpenAssignReferencesAttributeDialog = !!assignReferencesAttributeId;
+
+  const pageTypes = pageTypeChoiceList
+    ? mapNodeToChoice(pageTypeChoiceList)
+    : [];
 
   const handleAssignReferenceAttribute = (
     attributeValues: string[],
@@ -97,10 +116,15 @@ const PageDetailsPage: React.FC<PageDetailsPageProps> = ({
     onCloseDialog();
   };
 
+  const handleSelectPageType = (pageTypeId: string) =>
+    onSelectPageType && onSelectPageType(pageTypeId);
+
   return (
     <PageForm
       page={page}
-      pageTypes={pageTypes}
+      pageTypes={pageTypeChoiceList}
+      selectedPageType={selectedPageType}
+      onSelectPageType={handleSelectPageType}
       referencePages={referencePages}
       referenceProducts={referenceProducts}
       fetchReferencePages={fetchReferencePages}
@@ -110,7 +134,7 @@ const PageDetailsPage: React.FC<PageDetailsPageProps> = ({
       assignReferencesAttributeId={assignReferencesAttributeId}
       onSubmit={onSubmit}
     >
-      {({ change, data, pageType, handlers, hasChanged, submit }) => (
+      {({ change, data, handlers, hasChanged, submit }) => (
         <Container>
           <AppHeader onBack={onBack}>
             {intl.formatMessage(sectionNames.pages)}
@@ -155,6 +179,7 @@ const PageDetailsPage: React.FC<PageDetailsPageProps> = ({
               {data.attributes.length > 0 && (
                 <Attributes
                   attributes={data.attributes}
+                  attributeValues={attributeValues}
                   disabled={loading}
                   loading={loading}
                   errors={errors}
@@ -164,6 +189,9 @@ const PageDetailsPage: React.FC<PageDetailsPageProps> = ({
                   onReferencesRemove={handlers.selectAttributeReference}
                   onReferencesAddClick={onAssignReferencesClick}
                   onReferencesReorder={handlers.reorderAttributeValue}
+                  fetchAttributeValues={fetchAttributeValues}
+                  fetchMoreAttributeValues={fetchMoreAttributeValues}
+                  onAttributeFocus={onAttributeFocus}
                 />
               )}
               <CardSpacer />
@@ -202,8 +230,8 @@ const PageDetailsPage: React.FC<PageDetailsPageProps> = ({
                 errors={errors}
                 disabled={loading}
                 pageTypes={pageTypes}
-                pageType={pageType}
-                pageTypeInputDisplayValue={pageType?.name || ""}
+                pageType={data.pageType}
+                pageTypeInputDisplayValue={data.pageType?.name || ""}
                 onPageTypeChange={handlers.selectPageType}
                 fetchPageTypes={fetchPageTypes}
                 fetchMorePageTypes={fetchMorePageTypes}

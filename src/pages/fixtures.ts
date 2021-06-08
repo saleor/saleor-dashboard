@@ -49,35 +49,57 @@ export const page: PageDetails_page = {
         inputType: AttributeInputTypeEnum.DROPDOWN,
         valueRequired: false,
         unit: null,
-        values: [
-          {
-            id: "QXR0cmlidXRlVmFsdWU6ODc=",
-            name: "Suzanne Ellison",
-            slug: "suzanne-ellison",
-            reference: null,
-            __typename: "AttributeValue",
-            file: null,
-            richText: null
+        choices: {
+          __typename: "AttributeValueCountableConnection",
+          pageInfo: {
+            __typename: "PageInfo",
+            endCursor: "",
+            hasNextPage: false,
+            hasPreviousPage: false,
+            startCursor: ""
           },
-          {
-            id: "QXR0cmlidXRlVmFsdWU6ODg=",
-            name: "Dennis Perkins",
-            slug: "dennis-perkins",
-            reference: null,
-            __typename: "AttributeValue",
-            file: null,
-            richText: null
-          },
-          {
-            id: "QXR0cmlidXRlVmFsdWU6ODk=",
-            name: "Dylan Lamb",
-            slug: "dylan-lamb",
-            reference: null,
-            __typename: "AttributeValue",
-            file: null,
-            richText: null
-          }
-        ],
+          edges: [
+            {
+              __typename: "AttributeValueCountableEdge",
+              cursor: "",
+              node: {
+                id: "QXR0cmlidXRlVmFsdWU6ODc=",
+                name: "Suzanne Ellison",
+                slug: "suzanne-ellison",
+                reference: null,
+                __typename: "AttributeValue",
+                file: null,
+                richText: null
+              }
+            },
+            {
+              __typename: "AttributeValueCountableEdge",
+              cursor: "",
+              node: {
+                id: "QXR0cmlidXRlVmFsdWU6ODg=",
+                name: "Dennis Perkins",
+                slug: "dennis-perkins",
+                reference: null,
+                __typename: "AttributeValue",
+                file: null,
+                richText: null
+              }
+            },
+            {
+              __typename: "AttributeValueCountableEdge",
+              cursor: "",
+              node: {
+                id: "QXR0cmlidXRlVmFsdWU6ODk=",
+                name: "Dylan Lamb",
+                slug: "dylan-lamb",
+                reference: null,
+                __typename: "AttributeValue",
+                file: null,
+                richText: null
+              }
+            }
+          ]
+        },
         __typename: "Attribute"
       },
       values: [
@@ -102,44 +124,70 @@ export const page: PageDetails_page = {
         inputType: AttributeInputTypeEnum.MULTISELECT,
         valueRequired: false,
         unit: null,
-        values: [
-          {
-            id: "QXR0cmlidXRlVmFsdWU6OTA=",
-            name: "Security",
-            slug: "security",
-            reference: null,
-            __typename: "AttributeValue",
-            file: null,
-            richText: null
+        choices: {
+          __typename: "AttributeValueCountableConnection",
+          pageInfo: {
+            __typename: "PageInfo",
+            endCursor: "",
+            hasNextPage: false,
+            hasPreviousPage: false,
+            startCursor: ""
           },
-          {
-            id: "QXR0cmlidXRlVmFsdWU6OTE=",
-            name: "Support",
-            slug: "support",
-            reference: null,
-            __typename: "AttributeValue",
-            file: null,
-            richText: null
-          },
-          {
-            id: "QXR0cmlidXRlVmFsdWU6OTI=",
-            name: "Medical",
-            slug: "medical",
-            reference: null,
-            __typename: "AttributeValue",
-            file: null,
-            richText: null
-          },
-          {
-            id: "QXR0cmlidXRlVmFsdWU6OTM=",
-            name: "General",
-            slug: "general",
-            reference: null,
-            __typename: "AttributeValue",
-            file: null,
-            richText: null
-          }
-        ],
+          edges: [
+            {
+              __typename: "AttributeValueCountableEdge",
+              cursor: "",
+              node: {
+                id: "QXR0cmlidXRlVmFsdWU6OTA=",
+                name: "Security",
+                slug: "security",
+                reference: null,
+                __typename: "AttributeValue",
+                file: null,
+                richText: null
+              }
+            },
+            {
+              __typename: "AttributeValueCountableEdge",
+              cursor: "",
+              node: {
+                id: "QXR0cmlidXRlVmFsdWU6OTE=",
+                name: "Support",
+                slug: "support",
+                reference: null,
+                __typename: "AttributeValue",
+                file: null,
+                richText: null
+              }
+            },
+            {
+              __typename: "AttributeValueCountableEdge",
+              cursor: "",
+              node: {
+                id: "QXR0cmlidXRlVmFsdWU6OTI=",
+                name: "Medical",
+                slug: "medical",
+                reference: null,
+                __typename: "AttributeValue",
+                file: null,
+                richText: null
+              }
+            },
+            {
+              __typename: "AttributeValueCountableEdge",
+              cursor: "",
+              node: {
+                id: "QXR0cmlidXRlVmFsdWU6OTM=",
+                name: "General",
+                slug: "general",
+                reference: null,
+                __typename: "AttributeValue",
+                file: null,
+                richText: null
+              }
+            }
+          ]
+        },
         __typename: "Attribute"
       },
       values: [
@@ -177,35 +225,57 @@ export const page: PageDetails_page = {
         entityType: null,
         inputType: AttributeInputTypeEnum.DROPDOWN,
         valueRequired: false,
-        values: [
-          {
-            id: "QXR0cmlidXRlVmFsdWU6ODc=",
-            name: "Suzanne Ellison",
-            slug: "suzanne-ellison",
-            reference: null,
-            __typename: "AttributeValue",
-            file: null,
-            richText: null
+        choices: {
+          __typename: "AttributeValueCountableConnection",
+          pageInfo: {
+            __typename: "PageInfo",
+            endCursor: "",
+            hasNextPage: false,
+            hasPreviousPage: false,
+            startCursor: ""
           },
-          {
-            id: "QXR0cmlidXRlVmFsdWU6ODg=",
-            name: "Dennis Perkins",
-            slug: "dennis-perkins",
-            reference: null,
-            __typename: "AttributeValue",
-            file: null,
-            richText: null
-          },
-          {
-            id: "QXR0cmlidXRlVmFsdWU6ODk=",
-            name: "Dylan Lamb",
-            slug: "dylan-lamb",
-            reference: null,
-            __typename: "AttributeValue",
-            file: null,
-            richText: null
-          }
-        ],
+          edges: [
+            {
+              __typename: "AttributeValueCountableEdge",
+              cursor: "",
+              node: {
+                id: "QXR0cmlidXRlVmFsdWU6ODc=",
+                name: "Suzanne Ellison",
+                slug: "suzanne-ellison",
+                reference: null,
+                __typename: "AttributeValue",
+                file: null,
+                richText: null
+              }
+            },
+            {
+              __typename: "AttributeValueCountableEdge",
+              cursor: "",
+              node: {
+                id: "QXR0cmlidXRlVmFsdWU6ODg=",
+                name: "Dennis Perkins",
+                slug: "dennis-perkins",
+                reference: null,
+                __typename: "AttributeValue",
+                file: null,
+                richText: null
+              }
+            },
+            {
+              __typename: "AttributeValueCountableEdge",
+              cursor: "",
+              node: {
+                id: "QXR0cmlidXRlVmFsdWU6ODk=",
+                name: "Dylan Lamb",
+                slug: "dylan-lamb",
+                reference: null,
+                __typename: "AttributeValue",
+                file: null,
+                richText: null
+              }
+            }
+          ]
+        },
         __typename: "Attribute"
       },
       {
@@ -214,44 +284,70 @@ export const page: PageDetails_page = {
         entityType: null,
         inputType: AttributeInputTypeEnum.MULTISELECT,
         valueRequired: false,
-        values: [
-          {
-            id: "QXR0cmlidXRlVmFsdWU6OTA=",
-            name: "Security",
-            slug: "security",
-            reference: null,
-            __typename: "AttributeValue",
-            file: null,
-            richText: null
+        choices: {
+          __typename: "AttributeValueCountableConnection",
+          pageInfo: {
+            __typename: "PageInfo",
+            endCursor: "",
+            hasNextPage: false,
+            hasPreviousPage: false,
+            startCursor: ""
           },
-          {
-            id: "QXR0cmlidXRlVmFsdWU6OTE=",
-            name: "Support",
-            slug: "support",
-            reference: null,
-            __typename: "AttributeValue",
-            file: null,
-            richText: null
-          },
-          {
-            id: "QXR0cmlidXRlVmFsdWU6OTI=",
-            name: "Medical",
-            slug: "medical",
-            reference: null,
-            __typename: "AttributeValue",
-            file: null,
-            richText: null
-          },
-          {
-            id: "QXR0cmlidXRlVmFsdWU6OTM=",
-            name: "General",
-            slug: "general",
-            reference: null,
-            __typename: "AttributeValue",
-            file: null,
-            richText: null
-          }
-        ],
+          edges: [
+            {
+              __typename: "AttributeValueCountableEdge",
+              cursor: "",
+              node: {
+                id: "QXR0cmlidXRlVmFsdWU6OTA=",
+                name: "Security",
+                slug: "security",
+                reference: null,
+                __typename: "AttributeValue",
+                file: null,
+                richText: null
+              }
+            },
+            {
+              __typename: "AttributeValueCountableEdge",
+              cursor: "",
+              node: {
+                id: "QXR0cmlidXRlVmFsdWU6OTE=",
+                name: "Support",
+                slug: "support",
+                reference: null,
+                __typename: "AttributeValue",
+                file: null,
+                richText: null
+              }
+            },
+            {
+              __typename: "AttributeValueCountableEdge",
+              cursor: "",
+              node: {
+                id: "QXR0cmlidXRlVmFsdWU6OTI=",
+                name: "Medical",
+                slug: "medical",
+                reference: null,
+                __typename: "AttributeValue",
+                file: null,
+                richText: null
+              }
+            },
+            {
+              __typename: "AttributeValueCountableEdge",
+              cursor: "",
+              node: {
+                id: "QXR0cmlidXRlVmFsdWU6OTM=",
+                name: "General",
+                slug: "general",
+                reference: null,
+                __typename: "AttributeValue",
+                file: null,
+                richText: null
+              }
+            }
+          ]
+        },
         __typename: "Attribute"
       }
     ]

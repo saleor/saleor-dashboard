@@ -1,3 +1,4 @@
+import { AttributeValueFragment } from "@saleor/fragments/types/AttributeValueFragment";
 import { StockInput } from "@saleor/types/globalTypes";
 import {
   add,
@@ -10,6 +11,7 @@ import {
 
 import { createVariants } from "./createVariants";
 import {
+  AttributeValue,
   ProductVariantCreateFormData,
   VariantCreatorPricesAndSkuMode
 } from "./form";
@@ -72,19 +74,22 @@ export interface ProductVariantCreateReducerAction {
   reload?: {
     data?: ProductVariantCreateFormData;
   };
-  selectValue?: Record<"attributeId" | "valueId", string>;
+  selectValue?: {
+    attributeId: string;
+    value: AttributeValue<AttributeValueFragment>;
+  };
   type: ProductVariantCreateReducerActionType;
 }
 
 function selectValue(
   prevState: ProductVariantCreateFormData,
   attributeId: string,
-  valueSlug: string
+  value: AttributeValue<AttributeValueFragment>
 ): ProductVariantCreateFormData {
   const attribute = prevState.attributes.find(
     attribute => attribute.id === attributeId
   );
-  const values = toggle(valueSlug, attribute.values, (a, b) => a === b);
+  const values = toggle(value, attribute.values, (a, b) => a.slug === b.slug);
   const updatedAttributes = add(
     {
       id: attributeId,
@@ -97,7 +102,7 @@ function selectValue(
     prevState.price.attribute === attributeId
       ? toggle(
           {
-            slug: valueSlug,
+            slug: value.slug,
             value: []
           },
           prevState.price.values,
@@ -109,7 +114,7 @@ function selectValue(
     prevState.stock.attribute === attributeId
       ? toggle(
           {
-            slug: valueSlug,
+            slug: value.slug,
             value: []
           },
           prevState.stock.values,
@@ -237,8 +242,8 @@ function changeApplyPriceToAttributeId(
   const attribute = state.attributes.find(
     attribute => attribute.id === attributeId
   );
-  const values = attribute.values.map(slug => ({
-    slug,
+  const values = attribute.values.map(value => ({
+    slug: value.slug,
     value: []
   }));
 
@@ -259,8 +264,8 @@ function changeApplyStockToAttributeId(
   const attribute = state.attributes.find(
     attribute => attribute.id === attributeId
   );
-  const values = attribute.values.map(slug => ({
-    slug,
+  const values = attribute.values.map(value => ({
+    slug: value.slug,
     value: []
   }));
 
@@ -435,7 +440,7 @@ function reduceProductVariantCreateFormData(
       return selectValue(
         prevState,
         action.selectValue.attributeId,
-        action.selectValue.valueId
+        action.selectValue.value
       );
     case ProductVariantCreateReducerActionType.applyPriceToAll:
       return applyPriceToAll(prevState, action.applyPriceOrStockToAll.mode);

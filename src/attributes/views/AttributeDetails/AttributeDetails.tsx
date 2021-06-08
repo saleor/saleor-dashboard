@@ -1,8 +1,12 @@
+import useListSettings from "@saleor/hooks/useListSettings";
+import useLocalPaginator, {
+  useLocalPaginationState
+} from "@saleor/hooks/useLocalPaginator";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { commonMessages } from "@saleor/intl";
 import { maybe } from "@saleor/misc";
-import { ReorderEvent } from "@saleor/types";
+import { ListViews, ReorderEvent } from "@saleor/types";
 import getAttributeErrorMessage from "@saleor/utils/errors/attribute";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import createMetadataUpdateHandler from "@saleor/utils/handlers/metadataUpdateHandler";
@@ -53,11 +57,31 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ id, params }) => {
     AttributeUrlQueryParams
   >(navigate, params => attributeUrl(id, params), params);
 
+  const { updateListSettings, settings } = useListSettings(
+    ListViews.ATTRIBUTE_VALUE_LIST
+  );
+
+  const [
+    valuesPaginationState,
+    setValuesPaginationState
+  ] = useLocalPaginationState(settings?.rowNumber);
+
   const { data, loading } = useAttributeDetailsQuery({
     variables: {
-      id
-    }
+      id,
+      firstValues: valuesPaginationState.first,
+      lastValues: valuesPaginationState.last,
+      afterValues: valuesPaginationState.after,
+      beforeValues: valuesPaginationState.before
+    },
+    skip: !settings
   });
+
+  const paginateValues = useLocalPaginator(setValuesPaginationState);
+  const { loadNextPage, loadPreviousPage, pageInfo } = paginateValues(
+    data?.attribute?.choices?.pageInfo,
+    valuesPaginationState
+  );
 
   const [attributeDelete, attributeDeleteOpts] = useAttributeDeleteMutation({
     onCompleted: data => {
@@ -156,12 +180,18 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ id, params }) => {
           __typename: "AttributeReorderValues",
           attribute: {
             ...data.attribute,
-            values: move(
-              data.attribute.values[oldIndex],
-              data.attribute.values,
-              (a, b) => a.id === b.id,
-              newIndex
-            )
+            choices: {
+              __typename: "AttributeValueCountableConnection",
+              pageInfo: {
+                ...data.attribute.choices.pageInfo
+              },
+              edges: move(
+                data.attribute.choices.edges[oldIndex],
+                data.attribute.choices.edges,
+                (a, b) => a.node.id === b.node.id,
+                newIndex
+              )
+            }
           },
           errors: []
         }
@@ -169,9 +199,13 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ id, params }) => {
       variables: {
         id,
         move: {
-          id: data.attribute.values[oldIndex].id,
+          id: data.attribute.choices.edges[oldIndex].node.id,
           sortOrder: newIndex - oldIndex
-        }
+        },
+        firstValues: valuesPaginationState.first,
+        lastValues: valuesPaginationState.last,
+        afterValues: valuesPaginationState.after,
+        beforeValues: valuesPaginationState.before
       }
     });
 
@@ -224,7 +258,12 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ id, params }) => {
           })
         }
         saveButtonBarState={attributeUpdateOpts.status}
-        values={maybe(() => data.attribute.values)}
+        values={maybe(() => data.attribute.choices)}
+        settings={settings}
+        onUpdateListSettings={updateListSettings}
+        pageInfo={pageInfo}
+        onNextPage={loadNextPage}
+        onPreviousPage={loadPreviousPage}
       />
       <AttributeDeleteDialog
         open={params.action === "remove"}
@@ -244,7 +283,9 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ id, params }) => {
         open={params.action === "remove-value"}
         name={maybe(
           () =>
-            data.attribute.values.find(value => params.id === value.id).name,
+            data.attribute.choices.edges.find(
+              value => params.id === value.node.id
+            ).node.name,
           "..."
         )}
         useName={true}
@@ -253,7 +294,11 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ id, params }) => {
         onConfirm={() =>
           attributeValueDelete({
             variables: {
-              id: params.id
+              id: params.id,
+              firstValues: valuesPaginationState.first,
+              lastValues: valuesPaginationState.last,
+              afterValues: valuesPaginationState.after,
+              beforeValues: valuesPaginationState.before
             }
           })
         }
@@ -271,14 +316,21 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ id, params }) => {
           attributeValueCreate({
             variables: {
               id,
-              input
+              input,
+              firstValues: valuesPaginationState.first,
+              lastValues: valuesPaginationState.last,
+              afterValues: valuesPaginationState.after,
+              beforeValues: valuesPaginationState.before
             }
           })
         }
       />
       <AttributeValueEditDialog
-        attributeValue={maybe(() =>
-          data.attribute.values.find(value => params.id === value.id)
+        attributeValue={maybe(
+          () =>
+            data.attribute.choices.edges.find(
+              value => params.id === value.node.id
+            ).node
         )}
         confirmButtonState={attributeValueUpdateOpts.status}
         disabled={loading}
@@ -290,9 +342,14 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ id, params }) => {
         onSubmit={input =>
           attributeValueUpdate({
             variables: {
-              id: data.attribute.values.find(value => params.id === value.id)
-                .id,
-              input
+              id: data.attribute.choices.edges.find(
+                value => params.id === value.node.id
+              ).node.id,
+              input,
+              firstValues: valuesPaginationState.first,
+              lastValues: valuesPaginationState.last,
+              afterValues: valuesPaginationState.after,
+              beforeValues: valuesPaginationState.before
             }
           })
         }

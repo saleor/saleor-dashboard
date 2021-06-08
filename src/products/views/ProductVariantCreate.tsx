@@ -11,6 +11,7 @@ import { DEFAULT_INITIAL_SEARCH_DATA } from "@saleor/config";
 import { useFileUploadMutation } from "@saleor/files/mutations";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useShop from "@saleor/hooks/useShop";
+import useAttributeValueSearch from "@saleor/searches/useAttributeValueSearch";
 import usePageSearch from "@saleor/searches/usePageSearch";
 import useProductSearch from "@saleor/searches/useProductSearch";
 import createMetadataCreateHandler from "@saleor/utils/handlers/metadataCreateHandler";
@@ -21,7 +22,7 @@ import {
 } from "@saleor/utils/metadata/updateMetadata";
 import { useWarehouseList } from "@saleor/warehouses/queries";
 import { warehouseAddPath } from "@saleor/warehouses/urls";
-import React from "react";
+import React, { useState } from "react";
 import { useIntl } from "react-intl";
 
 import { weight } from "../../misc";
@@ -62,7 +63,10 @@ export const ProductVariant: React.FC<ProductVariantCreateProps> = ({
 
   const { data, loading: productLoading } = useProductVariantCreateQuery({
     displayLoader: true,
-    variables: { id: productId }
+    variables: {
+      id: productId,
+      firstValues: 10
+    }
   });
 
   const [uploadFile, uploadFileOpts] = useFileUploadMutation({});
@@ -126,7 +130,8 @@ export const ProductVariant: React.FC<ProductVariantCreateProps> = ({
           })),
           trackInventory: true,
           weight: weight(formData.weight)
-        }
+        },
+        firstValues: 10
       }
     });
     const id = result.data?.productVariantCreate?.productVariant?.id;
@@ -163,6 +168,18 @@ export const ProductVariant: React.FC<ProductVariantCreateProps> = ({
   } = useProductSearch({
     variables: DEFAULT_INITIAL_SEARCH_DATA
   });
+  const [focusedAttribute, setFocusedAttribute] = useState<string>();
+  const {
+    loadMore: loadMoreAttributeValues,
+    search: searchAttributeValues,
+    result: searchAttributeValuesOpts
+  } = useAttributeValueSearch({
+    variables: {
+      id: focusedAttribute,
+      ...DEFAULT_INITIAL_SEARCH_DATA
+    },
+    skip: !focusedAttribute
+  });
 
   const fetchMoreReferencePages = {
     hasMore: searchPagesOpts.data?.search?.pageInfo?.hasNextPage,
@@ -174,6 +191,16 @@ export const ProductVariant: React.FC<ProductVariantCreateProps> = ({
     loading: searchProductsOpts.loading,
     onFetchMore: loadMoreProducts
   };
+  const fetchMoreAttributeValues = {
+    hasMore: !!searchAttributeValuesOpts.data?.attribute?.choices?.pageInfo
+      ?.hasNextPage,
+    loading: !!searchAttributeValuesOpts.loading,
+    onFetchMore: loadMoreAttributeValues
+  };
+
+  const attributeValues = mapEdgesToItems(
+    searchAttributeValuesOpts?.data?.attribute.choices
+  );
 
   const disableForm =
     productLoading ||
@@ -198,6 +225,7 @@ export const ProductVariant: React.FC<ProductVariantCreateProps> = ({
           description: "header"
         })}
         product={data?.product}
+        attributeValues={attributeValues}
         onBack={handleBack}
         onSubmit={handleSubmit}
         onVariantClick={handleVariantClick}
@@ -216,7 +244,10 @@ export const ProductVariant: React.FC<ProductVariantCreateProps> = ({
         fetchMoreReferencePages={fetchMoreReferencePages}
         fetchReferenceProducts={searchProducts}
         fetchMoreReferenceProducts={fetchMoreReferenceProducts}
+        fetchAttributeValues={searchAttributeValues}
+        fetchMoreAttributeValues={fetchMoreAttributeValues}
         onCloseDialog={() => navigate(productVariantAddUrl(productId))}
+        onAttributeFocus={setFocusedAttribute}
       />
     </>
   );
