@@ -25,6 +25,7 @@ import { sectionNames } from "@saleor/intl";
 import ProductVariantPrice from "@saleor/products/components/ProductVariantPrice";
 import { ProductType_productType } from "@saleor/products/types/ProductType";
 import { getChoices } from "@saleor/products/utils/data";
+import { SearchAttributeValues_attribute_choices_edges_node } from "@saleor/searches/types/SearchAttributeValues";
 import { SearchCategories_search_edges_node } from "@saleor/searches/types/SearchCategories";
 import { SearchCollections_search_edges_node } from "@saleor/searches/types/SearchCollections";
 import { SearchPages_search_edges_node } from "@saleor/searches/types/SearchPages";
@@ -54,10 +55,12 @@ interface ProductCreatePageProps {
   currentChannels: ChannelData[];
   collections: SearchCollections_search_edges_node[];
   categories: SearchCategories_search_edges_node[];
+  attributeValues: SearchAttributeValues_attribute_choices_edges_node[];
   loading: boolean;
   fetchMoreCategories: FetchMoreProps;
   fetchMoreCollections: FetchMoreProps;
   fetchMoreProductTypes: FetchMoreProps;
+  fetchMoreAttributeValues?: FetchMoreProps;
   initial?: Partial<ProductCreateFormData>;
   productTypes?: SearchProductTypes_search_edges_node[];
   referencePages?: SearchPages_search_edges_node[];
@@ -71,6 +74,8 @@ interface ProductCreatePageProps {
   fetchCategories: (data: string) => void;
   fetchCollections: (data: string) => void;
   fetchProductTypes: (data: string) => void;
+  fetchAttributeValues: (query: string) => void;
+  onAttributeFocus: (id: string) => void;
   onWarehouseConfigure: () => void;
   openChannelsModal: () => void;
   onChannelsChange: (data: ChannelData[]) => void;
@@ -93,6 +98,7 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
   loading,
   categories: categoryChoiceList,
   collections: collectionChoiceList,
+  attributeValues,
   errors,
   fetchCategories,
   fetchCollections,
@@ -121,8 +127,11 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
   fetchMoreReferencePages,
   fetchReferenceProducts,
   fetchMoreReferenceProducts,
+  fetchAttributeValues,
+  fetchMoreAttributeValues,
   onCloseDialog,
-  onSelectProductType
+  onSelectProductType,
+  onAttributeFocus
 }: ProductCreatePageProps) => {
   const intl = useIntl();
 
@@ -185,7 +194,6 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
       taxTypes={taxTypeChoices}
       warehouses={warehouses}
       currentChannels={currentChannels}
-      productTypeChoiceList={productTypeChoiceList}
       fetchReferencePages={fetchReferencePages}
       fetchMoreReferencePages={fetchMoreReferencePages}
       fetchReferenceProducts={fetchReferenceProducts}
@@ -222,6 +230,7 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
                 {data.attributes.length > 0 && (
                   <Attributes
                     attributes={data.attributes}
+                    attributeValues={attributeValues}
                     loading={loading}
                     disabled={loading}
                     errors={errors}
@@ -231,6 +240,9 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
                     onReferencesRemove={handlers.selectAttributeReference}
                     onReferencesAddClick={onAssignReferencesClick}
                     onReferencesReorder={handlers.reorderAttributeValue}
+                    fetchAttributeValues={fetchAttributeValues}
+                    fetchMoreAttributeValues={fetchMoreAttributeValues}
+                    onAttributeFocus={onAttributeFocus}
                   />
                 )}
                 <CardSpacer />

@@ -3,58 +3,52 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { AttributeValueCreateInput, AttributeTypeEnum, MeasurementUnitsEnum, AttributeInputTypeEnum, AttributeEntityTypeEnum, AttributeErrorCode } from "./../../types/globalTypes";
+import { AttributeValueCreateInput, AttributeErrorCode } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: AttributeValueCreate
 // ====================================================
 
-export interface AttributeValueCreate_attributeValueCreate_attribute_metadata {
-  __typename: "MetadataItem";
-  key: string;
-  value: string;
+export interface AttributeValueCreate_attributeValueCreate_attribute_choices_pageInfo {
+  __typename: "PageInfo";
+  endCursor: string | null;
+  hasNextPage: boolean;
+  hasPreviousPage: boolean;
+  startCursor: string | null;
 }
 
-export interface AttributeValueCreate_attributeValueCreate_attribute_privateMetadata {
-  __typename: "MetadataItem";
-  key: string;
-  value: string;
-}
-
-export interface AttributeValueCreate_attributeValueCreate_attribute_values_file {
+export interface AttributeValueCreate_attributeValueCreate_attribute_choices_edges_node_file {
   __typename: "File";
   url: string;
   contentType: string | null;
 }
 
-export interface AttributeValueCreate_attributeValueCreate_attribute_values {
+export interface AttributeValueCreate_attributeValueCreate_attribute_choices_edges_node {
   __typename: "AttributeValue";
   id: string;
   name: string | null;
   slug: string | null;
-  file: AttributeValueCreate_attributeValueCreate_attribute_values_file | null;
+  file: AttributeValueCreate_attributeValueCreate_attribute_choices_edges_node_file | null;
   reference: string | null;
   richText: any | null;
+}
+
+export interface AttributeValueCreate_attributeValueCreate_attribute_choices_edges {
+  __typename: "AttributeValueCountableEdge";
+  cursor: string;
+  node: AttributeValueCreate_attributeValueCreate_attribute_choices_edges_node;
+}
+
+export interface AttributeValueCreate_attributeValueCreate_attribute_choices {
+  __typename: "AttributeValueCountableConnection";
+  pageInfo: AttributeValueCreate_attributeValueCreate_attribute_choices_pageInfo;
+  edges: AttributeValueCreate_attributeValueCreate_attribute_choices_edges[];
 }
 
 export interface AttributeValueCreate_attributeValueCreate_attribute {
   __typename: "Attribute";
   id: string;
-  name: string | null;
-  slug: string | null;
-  type: AttributeTypeEnum | null;
-  visibleInStorefront: boolean;
-  filterableInDashboard: boolean;
-  filterableInStorefront: boolean;
-  unit: MeasurementUnitsEnum | null;
-  metadata: (AttributeValueCreate_attributeValueCreate_attribute_metadata | null)[];
-  privateMetadata: (AttributeValueCreate_attributeValueCreate_attribute_privateMetadata | null)[];
-  availableInGrid: boolean;
-  inputType: AttributeInputTypeEnum | null;
-  entityType: AttributeEntityTypeEnum | null;
-  storefrontSearchPosition: number;
-  valueRequired: boolean;
-  values: (AttributeValueCreate_attributeValueCreate_attribute_values | null)[] | null;
+  choices: AttributeValueCreate_attributeValueCreate_attribute_choices | null;
 }
 
 export interface AttributeValueCreate_attributeValueCreate_errors {
@@ -76,4 +70,8 @@ export interface AttributeValueCreate {
 export interface AttributeValueCreateVariables {
   id: string;
   input: AttributeValueCreateInput;
+  firstValues?: number | null;
+  afterValues?: string | null;
+  lastValues?: number | null;
+  beforeValues?: string | null;
 }

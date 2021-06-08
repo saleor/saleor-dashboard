@@ -112,11 +112,11 @@ function addAttributeToVariant(
   attribute: Attribute,
   variant: CreateVariantInput
 ): CreateVariantInput[] {
-  return attribute.values.map(attributeValueSlug => [
+  return attribute.values.map(attributeValue => [
     ...variant,
     {
       attributeId: attribute.id,
-      attributeValueSlug
+      attributeValueSlug: attributeValue.slug
     }
   ]);
 }

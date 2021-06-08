@@ -1,4 +1,5 @@
 import { Button, Typography } from "@material-ui/core";
+import { drawerWidthExpanded } from "@saleor/components/AppLayout/consts";
 import Container from "@saleor/components/Container";
 import Hr from "@saleor/components/Hr";
 import PageHeader from "@saleor/components/PageHeader";
@@ -28,8 +29,13 @@ const useStyles = makeStyles(
     },
     content: {
       overflowX: "visible",
-      overflowY: "hidden",
-      width: 800
+      [theme.breakpoints.up("md")]: {
+        position: "absolute",
+        width: `calc(100vw - ${drawerWidthExpanded}px + ${theme.spacing(6)}px)`,
+        maxWidth: `calc(${theme.breakpoints.width("lg")}px - ${theme.spacing(
+          6
+        )}px)`
+      }
     },
     description: {
       marginTop: theme.spacing()
@@ -185,7 +191,7 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = props 
 
   React.useEffect(reloadForm, [attributes.length, warehouses.length]);
 
-  const variantsLeft = limits.allowedUsage.productVariants
+  const variantsLeft = limits?.allowedUsage.productVariants
     ? limits.allowedUsage.productVariants - limits.currentUsage.productVariants
     : null;
 
@@ -237,17 +243,19 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = props 
         )}
       </PageHeader>
       <Hr className={classes.hr} />
-      <ProductVariantCreatorContent
-        {...contentProps}
-        attributes={attributes}
-        channelListings={channelListings}
-        data={wizardData}
-        dispatchFormDataAction={dispatchFormDataAction}
-        errors={errors}
-        variantsLeft={variantsLeft}
-        step={step}
-        warehouses={warehouses}
-      />
+      <div className={classes.content}>
+        <ProductVariantCreatorContent
+          {...contentProps}
+          attributes={attributes}
+          channelListings={channelListings}
+          data={wizardData}
+          dispatchFormDataAction={dispatchFormDataAction}
+          errors={errors}
+          variantsLeft={variantsLeft}
+          step={step}
+          warehouses={warehouses}
+        />
+      </div>
     </Container>
   );
 };

@@ -23,6 +23,7 @@ export interface ListSettings<TColumn extends string = string> {
 export enum ListViews {
   APPS_LIST = "APPS_LIST",
   ATTRIBUTE_LIST = "ATTRIBUTE_LIST",
+  ATTRIBUTE_VALUE_LIST = "ATTRIBUTE_VALUE_LIST",
   CATEGORY_LIST = "CATEGORY_LIST",
   COLLECTION_LIST = "COLLECTION_LIST",
   CUSTOMER_LIST = "CUSTOMER_LIST",

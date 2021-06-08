@@ -29,6 +29,7 @@ import { maybe } from "@saleor/misc";
 import ProductExternalMediaDialog from "@saleor/products/components/ProductExternalMediaDialog";
 import ProductVariantPrice from "@saleor/products/components/ProductVariantPrice";
 import { ChannelsWithVariantsData } from "@saleor/products/views/ProductUpdate/types";
+import { SearchAttributeValues_attribute_choices_edges_node } from "@saleor/searches/types/SearchAttributeValues";
 import { SearchCategories_search_edges_node } from "@saleor/searches/types/SearchCategories";
 import { SearchCollections_search_edges_node } from "@saleor/searches/types/SearchCollections";
 import { SearchPages_search_edges_node } from "@saleor/searches/types/SearchPages";
@@ -75,6 +76,7 @@ export interface ProductUpdatePageProps extends ListActions, ChannelProps {
   placeholderImage: string;
   collections: SearchCollections_search_edges_node[];
   categories: SearchCategories_search_edges_node[];
+  attributeValues: SearchAttributeValues_attribute_choices_edges_node[];
   disabled: boolean;
   fetchMoreCategories: FetchMoreProps;
   fetchMoreCollections: FetchMoreProps;
@@ -93,11 +95,14 @@ export interface ProductUpdatePageProps extends ListActions, ChannelProps {
   assignReferencesAttributeId?: string;
   fetchMoreReferencePages?: FetchMoreProps;
   fetchMoreReferenceProducts?: FetchMoreProps;
+  fetchMoreAttributeValues?: FetchMoreProps;
   isSimpleProduct: boolean;
   fetchCategories: (query: string) => void;
   fetchCollections: (query: string) => void;
   fetchReferencePages?: (data: string) => void;
   fetchReferenceProducts?: (data: string) => void;
+  fetchAttributeValues: (query: string) => void;
+  onAttributeFocus: (id: string) => void;
   onAssignReferencesClick: (attribute: AttributeInput) => void;
   onCloseDialog: () => void;
   onVariantsAdd: () => void;
@@ -134,6 +139,7 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
   categories: categoryChoiceList,
   channelsErrors,
   collections: collectionChoiceList,
+  attributeValues,
   isSimpleProduct,
   errors,
   fetchCategories,
@@ -185,9 +191,12 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
   fetchMoreReferencePages,
   fetchReferenceProducts,
   fetchMoreReferenceProducts,
+  fetchAttributeValues,
+  fetchMoreAttributeValues,
   onCloseDialog,
   channelsWithVariantsData,
-  onChannelsChange
+  onChannelsChange,
+  onAttributeFocus
 }) => {
   const intl = useIntl();
 
@@ -298,6 +307,7 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                 {data.attributes.length > 0 && (
                   <Attributes
                     attributes={data.attributes}
+                    attributeValues={attributeValues}
                     errors={errors}
                     loading={disabled}
                     disabled={disabled}
@@ -307,6 +317,9 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                     onReferencesRemove={handlers.selectAttributeReference}
                     onReferencesAddClick={onAssignReferencesClick}
                     onReferencesReorder={handlers.reorderAttributeValue}
+                    fetchAttributeValues={fetchAttributeValues}
+                    fetchMoreAttributeValues={fetchMoreAttributeValues}
+                    onAttributeFocus={onAttributeFocus}
                   />
                 )}
                 <CardSpacer />

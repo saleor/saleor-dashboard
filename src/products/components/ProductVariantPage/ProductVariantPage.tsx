@@ -22,6 +22,7 @@ import { ProductErrorWithAttributesFragment } from "@saleor/fragments/types/Prod
 import { ProductVariant } from "@saleor/fragments/types/ProductVariant";
 import { WarehouseFragment } from "@saleor/fragments/types/WarehouseFragment";
 import { VariantUpdate_productVariantUpdate_errors } from "@saleor/products/types/VariantUpdate";
+import { SearchAttributeValues_attribute_choices_edges_node } from "@saleor/searches/types/SearchAttributeValues";
 import { SearchPages_search_edges_node } from "@saleor/searches/types/SearchPages";
 import { SearchProducts_search_edges_node } from "@saleor/searches/types/SearchProducts";
 import { FetchMoreProps, ReorderAction } from "@saleor/types";
@@ -87,11 +88,15 @@ interface ProductVariantPageProps {
   warehouses: WarehouseFragment[];
   referencePages?: SearchPages_search_edges_node[];
   referenceProducts?: SearchProducts_search_edges_node[];
+  attributeValues: SearchAttributeValues_attribute_choices_edges_node[];
   fetchMoreReferencePages?: FetchMoreProps;
   fetchMoreReferenceProducts?: FetchMoreProps;
+  fetchMoreAttributeValues?: FetchMoreProps;
   fetchReferencePages?: (data: string) => void;
   fetchReferenceProducts?: (data: string) => void;
+  fetchAttributeValues: (query: string) => void;
   onAssignReferencesClick: (attribute: AttributeInput) => void;
+  onAttributeFocus: (id: string) => void;
   onCloseDialog: () => void;
   onVariantReorder: ReorderAction;
   onAdd();
@@ -118,6 +123,7 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
   warehouses,
   referencePages = [],
   referenceProducts = [],
+  attributeValues,
   onAdd,
   onBack,
   onDelete,
@@ -127,12 +133,15 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
   onVariantReorder,
   onSetDefaultVariant,
   onWarehouseConfigure,
+  onAttributeFocus,
   assignReferencesAttributeId,
   onAssignReferencesClick,
   fetchReferencePages,
   fetchReferenceProducts,
+  fetchAttributeValues,
   fetchMoreReferencePages,
   fetchMoreReferenceProducts,
+  fetchMoreAttributeValues,
   onCloseDialog
 }) => {
   const intl = useIntl();
@@ -226,6 +235,7 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
                         attribute.data.variantAttributeScope ===
                         VariantAttributeScope.NOT_VARIANT_SELECTION
                     )}
+                    attributeValues={attributeValues}
                     loading={loading}
                     disabled={loading}
                     errors={errors}
@@ -235,6 +245,9 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
                     onReferencesRemove={handlers.selectAttributeReference}
                     onReferencesAddClick={onAssignReferencesClick}
                     onReferencesReorder={handlers.reorderAttributeValue}
+                    fetchAttributeValues={fetchAttributeValues}
+                    fetchMoreAttributeValues={fetchMoreAttributeValues}
+                    onAttributeFocus={onAttributeFocus}
                   />
                   <CardSpacer />
                   <Attributes
@@ -246,6 +259,7 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
                         attribute.data.variantAttributeScope ===
                         VariantAttributeScope.VARIANT_SELECTION
                     )}
+                    attributeValues={attributeValues}
                     loading={loading}
                     disabled={loading}
                     errors={errors}
@@ -255,6 +269,9 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
                     onReferencesRemove={handlers.selectAttributeReference}
                     onReferencesAddClick={onAssignReferencesClick}
                     onReferencesReorder={handlers.reorderAttributeValue}
+                    fetchAttributeValues={fetchAttributeValues}
+                    fetchMoreAttributeValues={fetchMoreAttributeValues}
+                    onAttributeFocus={onAttributeFocus}
                   />
                   <CardSpacer />
                   <ProductVariantMedia

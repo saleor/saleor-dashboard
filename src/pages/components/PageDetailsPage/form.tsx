@@ -12,20 +12,23 @@ import {
 import { AttributeInput } from "@saleor/components/Attributes";
 import { MetadataFormData } from "@saleor/components/Metadata";
 import { RichTextEditorChange } from "@saleor/components/RichTextEditor";
-import { PageTypeFragment } from "@saleor/fragments/types/PageTypeFragment";
 import useForm, { FormChange, SubmitPromise } from "@saleor/hooks/useForm";
 import useFormset, {
   FormsetChange,
   FormsetData
 } from "@saleor/hooks/useFormset";
-import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import {
   PageDetails_page,
   PageDetails_page_pageType
 } from "@saleor/pages/types/PageDetails";
-import { getAttributeInputFromPage } from "@saleor/pages/utils/data";
+import { PageType_pageType } from "@saleor/pages/types/PageType";
+import {
+  getAttributeInputFromPage,
+  getAttributeInputFromPageType
+} from "@saleor/pages/utils/data";
 import { createPageTypeSelectHandler } from "@saleor/pages/utils/handlers";
 import { SearchPages_search_edges_node } from "@saleor/searches/types/SearchPages";
+import { SearchPageTypes_search_edges_node } from "@saleor/searches/types/SearchPageTypes";
 import { SearchProducts_search_edges_node } from "@saleor/searches/types/SearchProducts";
 import { FetchMoreProps, ReorderEvent } from "@saleor/types";
 import getPublicationData from "@saleor/utils/data/getPublicationData";
@@ -43,7 +46,7 @@ export interface PageFormData extends MetadataFormData {
   seoTitle: string;
   slug: string;
   title: string;
-  pageType: string;
+  pageType: PageType_pageType | PageDetails_page_pageType;
 }
 export interface PageData extends PageFormData {
   attributes: AttributeInput[];
@@ -71,14 +74,13 @@ export interface PageUpdateHandlers {
 export interface UsePageUpdateFormResult {
   change: FormChange;
   data: PageData;
-  pageType: PageTypeFragment;
   handlers: PageUpdateHandlers;
   hasChanged: boolean;
   submit: () => void;
 }
 
 export interface UsePageFormOpts {
-  pageTypes?: PageDetails_page_pageType[];
+  pageTypes?: SearchPageTypes_search_edges_node[];
   referencePages: SearchPages_search_edges_node[];
   referenceProducts: SearchProducts_search_edges_node[];
   fetchReferencePages?: (data: string) => void;
@@ -86,12 +88,13 @@ export interface UsePageFormOpts {
   fetchReferenceProducts?: (data: string) => void;
   fetchMoreReferenceProducts?: FetchMoreProps;
   assignReferencesAttributeId?: string;
+  selectedPageType?: PageType_pageType;
+  onSelectPageType: (pageTypeId: string) => void;
 }
 
 export interface PageFormProps extends UsePageFormOpts {
   children: (props: UsePageUpdateFormResult) => React.ReactNode;
   page: PageDetails_page;
-  pageTypes?: PageDetails_page_pageType[];
   onSubmit: (data: PageData) => SubmitPromise;
 }
 
@@ -105,13 +108,19 @@ function usePageForm(
 
   const pageExists = page !== null;
 
-  const attributes = useFormset(getAttributeInputFromPage(page));
+  const attributes = useFormset(
+    pageExists
+      ? getAttributeInputFromPage(page)
+      : opts.selectedPageType
+      ? getAttributeInputFromPageType(opts.selectedPageType)
+      : []
+  );
   const attributesWithNewFileValue = useFormset<null, File>([]);
 
   const form = useForm<PageFormData>({
     isPublished: page?.isPublished,
     metadata: pageExists ? page?.metadata?.map(mapMetadataItemToInput) : [],
-    pageType: page?.pageType.id || "",
+    pageType: null,
     privateMetadata: pageExists
       ? page?.privateMetadata?.map(mapMetadataItemToInput)
       : [],
@@ -126,10 +135,6 @@ function usePageForm(
     triggerChange
   });
 
-  const [pageType, setPageType] = useStateFromProps<PageTypeFragment>(
-    page?.pageType || null
-  );
-
   const {
     isMetadataModified,
     isPrivateMetadataModified,
@@ -141,11 +146,9 @@ function usePageForm(
     triggerChange();
   };
   const changeMetadata = makeMetadataChangeHandler(handleChange);
-  const selectPageType = createPageTypeSelectHandler(
-    handleChange,
-    attributes.set,
-    setPageType,
-    opts.pageTypes
+  const handlePageTypeSelect = createPageTypeSelectHandler(
+    opts.onSelectPageType,
+    triggerChange
   );
   const handleAttributeChange = createAttributeChangeHandler(
     attributes.change,
@@ -194,7 +197,8 @@ function usePageForm(
       opts.referencePages,
       opts.referenceProducts
     ),
-    content: content.current
+    content: content.current,
+    pageType: pageExists ? page?.pageType : opts.selectedPageType
   });
 
   const getSubmitData = (): PageSubmitData => ({
@@ -232,10 +236,9 @@ function usePageForm(
       selectAttributeFile: handleAttributeFileChange,
       selectAttributeMulti: handleAttributeMultiChange,
       selectAttributeReference: handleAttributeReferenceChange,
-      selectPageType
+      selectPageType: handlePageTypeSelect
     },
     hasChanged: changed,
-    pageType,
     submit
   };
 }

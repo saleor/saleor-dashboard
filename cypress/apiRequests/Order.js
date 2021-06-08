@@ -39,7 +39,7 @@ export function createDraftOrder(
       ${getDefaultAddress(address, "shippingAddress")}
       ${getDefaultAddress(address, "billingAddress")}
     }){
-      orderErrors{
+      errors{
         message
       }
       order{

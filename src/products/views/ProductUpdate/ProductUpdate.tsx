@@ -15,7 +15,10 @@ import ChannelsAvailabilityDialog from "@saleor/components/ChannelsAvailabilityD
 import NotFoundPage from "@saleor/components/NotFoundPage";
 import { useShopLimitsQuery } from "@saleor/components/Shop/query";
 import { WindowTitle } from "@saleor/components/WindowTitle";
-import { DEFAULT_INITIAL_SEARCH_DATA } from "@saleor/config";
+import {
+  DEFAULT_INITIAL_SEARCH_DATA,
+  VALUES_PAGINATE_BY
+} from "@saleor/config";
 import { useFileUploadMutation } from "@saleor/files/mutations";
 import { getSearchFetchMoreProps } from "@saleor/hooks/makeTopLevelSearch/utils";
 import useBulkActions from "@saleor/hooks/useBulkActions";
@@ -38,6 +41,7 @@ import {
   useSimpleProductUpdateMutation,
   useVariantCreateMutation
 } from "@saleor/products/mutations";
+import useAttributeValueSearch from "@saleor/searches/useAttributeValueSearch";
 import useCategorySearch from "@saleor/searches/useCategorySearch";
 import useCollectionSearch from "@saleor/searches/useCollectionSearch";
 import usePageSearch from "@saleor/searches/usePageSearch";
@@ -52,7 +56,7 @@ import {
 } from "@saleor/utils/metadata/updateMetadata";
 import { useWarehouseList } from "@saleor/warehouses/queries";
 import { warehouseAddPath } from "@saleor/warehouses/urls";
-import React from "react";
+import React, { useState } from "react";
 import { defineMessages, FormattedMessage, useIntl } from "react-intl";
 
 import { getMutationState } from "../../../misc";
@@ -140,6 +144,18 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
   } = useProductSearch({
     variables: DEFAULT_INITIAL_SEARCH_DATA
   });
+  const [focusedAttribute, setFocusedAttribute] = useState<string>();
+  const {
+    loadMore: loadMoreAttributeValues,
+    search: searchAttributeValues,
+    result: searchAttributeValuesOpts
+  } = useAttributeValueSearch({
+    variables: {
+      id: focusedAttribute,
+      ...DEFAULT_INITIAL_SEARCH_DATA
+    },
+    skip: !focusedAttribute
+  });
   const warehouses = useWarehouseList({
     displayLoader: true,
     variables: {
@@ -157,7 +173,10 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
   const { availableChannels, channel } = useAppChannel();
   const { data, loading, refetch } = useProductDetails({
     displayLoader: true,
-    variables: { id }
+    variables: {
+      id,
+      firstValues: VALUES_PAGINATE_BY
+    }
   });
   const limitOpts = useShopLimitsQuery({
     variables: {
@@ -431,6 +450,10 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
 
   const collections = mapEdgesToItems(searchCollectionsOpts?.data?.search);
 
+  const attributeValues = mapEdgesToItems(
+    searchAttributeValuesOpts?.data?.attribute.choices
+  );
+
   const errors = [
     ...(updateProductOpts.data?.productUpdate.errors || []),
     ...(updateSimpleProductOpts.data?.productUpdate.errors || []),
@@ -466,6 +489,13 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
     searchProductsOpts,
     loadMoreProducts
   );
+
+  const fetchMoreAttributeValues = {
+    hasMore: !!searchAttributeValuesOpts.data?.attribute?.choices?.pageInfo
+      ?.hasNextPage,
+    loading: !!searchAttributeValuesOpts.loading,
+    onFetchMore: loadMoreAttributeValues
+  };
 
   return (
     <>
@@ -512,6 +542,7 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
         setChannelsData={setChannelsData}
         categories={categories}
         collections={collections}
+        attributeValues={attributeValues}
         channelsWithVariantsData={channelsWithVariantsData}
         defaultWeightUnit={shop?.defaultWeightUnit}
         disabled={disableFormSave}
@@ -519,6 +550,7 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
         errors={errors}
         fetchCategories={searchCategories}
         fetchCollections={searchCollections}
+        fetchAttributeValues={searchAttributeValues}
         limits={limitOpts.data?.shop.limits}
         saveButtonBarState={formTransitionState}
         media={data?.product?.media}
@@ -574,7 +606,9 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
         fetchMoreReferencePages={fetchMoreReferencePages}
         fetchReferenceProducts={searchProducts}
         fetchMoreReferenceProducts={fetchMoreReferenceProducts}
+        fetchMoreAttributeValues={fetchMoreAttributeValues}
         onCloseDialog={() => navigate(productUrl(id))}
+        onAttributeFocus={setFocusedAttribute}
       />
       <ActionDialog
         open={params.action === "remove"}

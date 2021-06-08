@@ -9,20 +9,40 @@ import { AttributeInputTypeEnum, AttributeEntityTypeEnum, MeasurementUnitsEnum }
 // GraphQL query operation: PageDetails
 // ====================================================
 
-export interface PageDetails_page_attributes_attribute_values_file {
+export interface PageDetails_page_attributes_attribute_choices_pageInfo {
+  __typename: "PageInfo";
+  endCursor: string | null;
+  hasNextPage: boolean;
+  hasPreviousPage: boolean;
+  startCursor: string | null;
+}
+
+export interface PageDetails_page_attributes_attribute_choices_edges_node_file {
   __typename: "File";
   url: string;
   contentType: string | null;
 }
 
-export interface PageDetails_page_attributes_attribute_values {
+export interface PageDetails_page_attributes_attribute_choices_edges_node {
   __typename: "AttributeValue";
   id: string;
   name: string | null;
   slug: string | null;
-  file: PageDetails_page_attributes_attribute_values_file | null;
+  file: PageDetails_page_attributes_attribute_choices_edges_node_file | null;
   reference: string | null;
   richText: any | null;
+}
+
+export interface PageDetails_page_attributes_attribute_choices_edges {
+  __typename: "AttributeValueCountableEdge";
+  cursor: string;
+  node: PageDetails_page_attributes_attribute_choices_edges_node;
+}
+
+export interface PageDetails_page_attributes_attribute_choices {
+  __typename: "AttributeValueCountableConnection";
+  pageInfo: PageDetails_page_attributes_attribute_choices_pageInfo;
+  edges: PageDetails_page_attributes_attribute_choices_edges[];
 }
 
 export interface PageDetails_page_attributes_attribute {
@@ -34,7 +54,7 @@ export interface PageDetails_page_attributes_attribute {
   entityType: AttributeEntityTypeEnum | null;
   valueRequired: boolean;
   unit: MeasurementUnitsEnum | null;
-  values: (PageDetails_page_attributes_attribute_values | null)[] | null;
+  choices: PageDetails_page_attributes_attribute_choices | null;
 }
 
 export interface PageDetails_page_attributes_values_file {
@@ -59,20 +79,40 @@ export interface PageDetails_page_attributes {
   values: (PageDetails_page_attributes_values | null)[];
 }
 
-export interface PageDetails_page_pageType_attributes_values_file {
+export interface PageDetails_page_pageType_attributes_choices_pageInfo {
+  __typename: "PageInfo";
+  endCursor: string | null;
+  hasNextPage: boolean;
+  hasPreviousPage: boolean;
+  startCursor: string | null;
+}
+
+export interface PageDetails_page_pageType_attributes_choices_edges_node_file {
   __typename: "File";
   url: string;
   contentType: string | null;
 }
 
-export interface PageDetails_page_pageType_attributes_values {
+export interface PageDetails_page_pageType_attributes_choices_edges_node {
   __typename: "AttributeValue";
   id: string;
   name: string | null;
   slug: string | null;
-  file: PageDetails_page_pageType_attributes_values_file | null;
+  file: PageDetails_page_pageType_attributes_choices_edges_node_file | null;
   reference: string | null;
   richText: any | null;
+}
+
+export interface PageDetails_page_pageType_attributes_choices_edges {
+  __typename: "AttributeValueCountableEdge";
+  cursor: string;
+  node: PageDetails_page_pageType_attributes_choices_edges_node;
+}
+
+export interface PageDetails_page_pageType_attributes_choices {
+  __typename: "AttributeValueCountableConnection";
+  pageInfo: PageDetails_page_pageType_attributes_choices_pageInfo;
+  edges: PageDetails_page_pageType_attributes_choices_edges[];
 }
 
 export interface PageDetails_page_pageType_attributes {
@@ -82,7 +122,7 @@ export interface PageDetails_page_pageType_attributes {
   inputType: AttributeInputTypeEnum | null;
   entityType: AttributeEntityTypeEnum | null;
   valueRequired: boolean;
-  values: (PageDetails_page_pageType_attributes_values | null)[] | null;
+  choices: PageDetails_page_pageType_attributes_choices | null;
 }
 
 export interface PageDetails_page_pageType {
@@ -126,4 +166,8 @@ export interface PageDetails {
 
 export interface PageDetailsVariables {
   id: string;
+  firstValues?: number | null;
+  afterValues?: string | null;
+  lastValues?: number | null;
+  beforeValues?: string | null;
 }

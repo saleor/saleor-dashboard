@@ -1,4 +1,5 @@
 import { ChannelPriceData } from "@saleor/channels/utils";
+import { AttributeValueFragment } from "@saleor/fragments/types/AttributeValueFragment";
 import { WarehouseFragment } from "@saleor/fragments/types/WarehouseFragment";
 import { ProductDetails_product_productType_variantAttributes } from "@saleor/products/types/ProductDetails";
 
@@ -28,7 +29,7 @@ export interface Stock {
 }
 export interface Attribute {
   id: string;
-  values: string[];
+  values: Array<AttributeValue<AttributeValueFragment>>;
 }
 export interface ProductVariantCreateFormData {
   attributes: Attribute[];
