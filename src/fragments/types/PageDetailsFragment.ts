@@ -9,20 +9,40 @@ import { AttributeInputTypeEnum, AttributeEntityTypeEnum, MeasurementUnitsEnum }
 // GraphQL fragment: PageDetailsFragment
 // ====================================================
 
-export interface PageDetailsFragment_attributes_attribute_values_file {
+export interface PageDetailsFragment_attributes_attribute_choices_pageInfo {
+  __typename: "PageInfo";
+  endCursor: string | null;
+  hasNextPage: boolean;
+  hasPreviousPage: boolean;
+  startCursor: string | null;
+}
+
+export interface PageDetailsFragment_attributes_attribute_choices_edges_node_file {
   __typename: "File";
   url: string;
   contentType: string | null;
 }
 
-export interface PageDetailsFragment_attributes_attribute_values {
+export interface PageDetailsFragment_attributes_attribute_choices_edges_node {
   __typename: "AttributeValue";
   id: string;
   name: string | null;
   slug: string | null;
-  file: PageDetailsFragment_attributes_attribute_values_file | null;
+  file: PageDetailsFragment_attributes_attribute_choices_edges_node_file | null;
   reference: string | null;
   richText: any | null;
+}
+
+export interface PageDetailsFragment_attributes_attribute_choices_edges {
+  __typename: "AttributeValueCountableEdge";
+  cursor: string;
+  node: PageDetailsFragment_attributes_attribute_choices_edges_node;
+}
+
+export interface PageDetailsFragment_attributes_attribute_choices {
+  __typename: "AttributeValueCountableConnection";
+  pageInfo: PageDetailsFragment_attributes_attribute_choices_pageInfo;
+  edges: PageDetailsFragment_attributes_attribute_choices_edges[];
 }
 
 export interface PageDetailsFragment_attributes_attribute {
@@ -34,7 +54,7 @@ export interface PageDetailsFragment_attributes_attribute {
   entityType: AttributeEntityTypeEnum | null;
   valueRequired: boolean;
   unit: MeasurementUnitsEnum | null;
-  values: (PageDetailsFragment_attributes_attribute_values | null)[] | null;
+  choices: PageDetailsFragment_attributes_attribute_choices | null;
 }
 
 export interface PageDetailsFragment_attributes_values_file {
@@ -59,20 +79,40 @@ export interface PageDetailsFragment_attributes {
   values: (PageDetailsFragment_attributes_values | null)[];
 }
 
-export interface PageDetailsFragment_pageType_attributes_values_file {
+export interface PageDetailsFragment_pageType_attributes_choices_pageInfo {
+  __typename: "PageInfo";
+  endCursor: string | null;
+  hasNextPage: boolean;
+  hasPreviousPage: boolean;
+  startCursor: string | null;
+}
+
+export interface PageDetailsFragment_pageType_attributes_choices_edges_node_file {
   __typename: "File";
   url: string;
   contentType: string | null;
 }
 
-export interface PageDetailsFragment_pageType_attributes_values {
+export interface PageDetailsFragment_pageType_attributes_choices_edges_node {
   __typename: "AttributeValue";
   id: string;
   name: string | null;
   slug: string | null;
-  file: PageDetailsFragment_pageType_attributes_values_file | null;
+  file: PageDetailsFragment_pageType_attributes_choices_edges_node_file | null;
   reference: string | null;
   richText: any | null;
+}
+
+export interface PageDetailsFragment_pageType_attributes_choices_edges {
+  __typename: "AttributeValueCountableEdge";
+  cursor: string;
+  node: PageDetailsFragment_pageType_attributes_choices_edges_node;
+}
+
+export interface PageDetailsFragment_pageType_attributes_choices {
+  __typename: "AttributeValueCountableConnection";
+  pageInfo: PageDetailsFragment_pageType_attributes_choices_pageInfo;
+  edges: PageDetailsFragment_pageType_attributes_choices_edges[];
 }
 
 export interface PageDetailsFragment_pageType_attributes {
@@ -82,7 +122,7 @@ export interface PageDetailsFragment_pageType_attributes {
   inputType: AttributeInputTypeEnum | null;
   entityType: AttributeEntityTypeEnum | null;
   valueRequired: boolean;
-  values: (PageDetailsFragment_pageType_attributes_values | null)[] | null;
+  choices: PageDetailsFragment_pageType_attributes_choices | null;
 }
 
 export interface PageDetailsFragment_pageType {

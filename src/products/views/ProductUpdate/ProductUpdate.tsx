@@ -15,7 +15,10 @@ import ChannelsAvailabilityDialog from "@saleor/components/ChannelsAvailabilityD
 import NotFoundPage from "@saleor/components/NotFoundPage";
 import { useShopLimitsQuery } from "@saleor/components/Shop/query";
 import { WindowTitle } from "@saleor/components/WindowTitle";
-import { DEFAULT_INITIAL_SEARCH_DATA } from "@saleor/config";
+import {
+  DEFAULT_INITIAL_SEARCH_DATA,
+  VALUES_PAGINATE_BY
+} from "@saleor/config";
 import { useFileUploadMutation } from "@saleor/files/mutations";
 import { getSearchFetchMoreProps } from "@saleor/hooks/makeTopLevelSearch/utils";
 import useBulkActions from "@saleor/hooks/useBulkActions";
@@ -172,7 +175,7 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
     displayLoader: true,
     variables: {
       id,
-      firstValues: 10
+      firstValues: VALUES_PAGINATE_BY
     }
   });
   const limitOpts = useShopLimitsQuery({

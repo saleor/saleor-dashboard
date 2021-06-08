@@ -194,7 +194,6 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
       taxTypes={taxTypeChoices}
       warehouses={warehouses}
       currentChannels={currentChannels}
-      productTypeChoiceList={productTypeChoiceList}
       fetchReferencePages={fetchReferencePages}
       fetchMoreReferencePages={fetchMoreReferencePages}
       fetchReferenceProducts={fetchReferenceProducts}

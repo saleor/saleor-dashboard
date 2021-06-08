@@ -13,6 +13,7 @@ import {
   prepareAttributesInput
 } from "@saleor/attributes/utils/handlers";
 import { ChannelData } from "@saleor/channels/utils";
+import { VALUES_PAGINATE_BY } from "@saleor/config";
 import {
   FileUpload,
   FileUploadVariables
@@ -146,7 +147,7 @@ export function createUpdateHandler(
         slug: data.slug,
         taxCode: data.changeTaxCode ? data.taxCode : null
       },
-      firstValues: 10
+      firstValues: VALUES_PAGINATE_BY
     };
 
     if (product.productType.hasVariants) {
