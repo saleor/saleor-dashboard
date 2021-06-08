@@ -73,6 +73,7 @@ const StaffListPage: React.FC<StaffListPageProps> = ({
         }
       >
         <Button
+          data-test-id="inviteStaffMember"
           color="primary"
           disabled={reachedLimit}
           variant="contained"

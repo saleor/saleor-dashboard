@@ -139,6 +139,7 @@ const StaffAddMemberDialog: React.FC<StaffAddMemberDialogProps> = props => {
                 <FormattedMessage {...buttonMessages.back} />
               </Button>
               <ConfirmButton
+                data-test="submit"
                 color="primary"
                 disabled={!hasChanged}
                 variant="contained"

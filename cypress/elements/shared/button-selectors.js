@@ -9,6 +9,7 @@ export const BUTTON_SELECTORS = {
   notSelectedOption: ":not([aria-selected])",
   deleteButton: '[data-test="button-bar-delete"]',
   expandIcon: '[data-test-id="expand-icon"]',
+  nextPaginationButton: '[data-test="button-pagination-next"]',
   deleteIcon: '[data-test-id="deleteIcon"]',
   showMoreButton: '[data-test-id="showMoreButton"]'
 };

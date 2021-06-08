@@ -171,3 +171,23 @@ export function checkoutShippingAddressUpdate(checkoutId, address) {
   }`;
   return cy.sendRequestWithQuery(mutation);
 }
+
+export function addProductsToCheckout(
+  checkoutId,
+  variantsList,
+  productQuantity
+) {
+  const lines = getVariantsLines(variantsList, productQuantity);
+  const mutation = `mutation{
+    checkoutLinesUpdate(checkoutId:"${checkoutId}" lines:[${lines.join()}]){
+      checkout{
+        id
+      }
+      errors{
+        field
+        message
+      }
+    }
+  }`;
+  return cy.sendRequestWithQuery(mutation).its("body.data.checkoutLinesUpdate");
+}
