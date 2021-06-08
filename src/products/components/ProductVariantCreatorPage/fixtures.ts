@@ -20,25 +20,69 @@ export const attributes = [
     id: "attr-1",
     values: Array(9)
       .fill(0)
-      .map((_, index) => `val-1-${index + 1}`)
+      .map((_, index) => ({
+        slug: `val-1-${index + 1}`,
+        value: {
+          __typename: "AttributeValue" as "AttributeValue",
+          id: `val-1-${index + 1}`,
+          name: `val-1-${index + 1}`,
+          slug: `val-1-${index + 1}`,
+          file: null,
+          reference: null,
+          richText: null
+        }
+      }))
   },
   {
     id: "attr-2",
     values: Array(6)
       .fill(0)
-      .map((_, index) => `val-2-${index + 1}`)
+      .map((_, index) => ({
+        slug: `val-2-${index + 1}`,
+        value: {
+          __typename: "AttributeValue" as "AttributeValue",
+          id: `val-2-${index + 1}`,
+          name: `val-2-${index + 1}`,
+          slug: `val-2-${index + 1}`,
+          file: null,
+          reference: null,
+          richText: null
+        }
+      }))
   },
   {
     id: "attr-3",
     values: Array(4)
       .fill(0)
-      .map((_, index) => `val-3-${index + 1}`)
+      .map((_, index) => ({
+        slug: `val-3-${index + 1}`,
+        value: {
+          __typename: "AttributeValue" as "AttributeValue",
+          id: `val-3-${index + 1}`,
+          name: `val-3-${index + 1}`,
+          slug: `val-3-${index + 1}`,
+          file: null,
+          reference: null,
+          richText: null
+        }
+      }))
   },
   {
     id: "attr-4",
     values: Array(11)
       .fill(0)
-      .map((_, index) => `val-4-${index + 1}`)
+      .map((_, index) => ({
+        slug: `val-4-${index + 1}`,
+        value: {
+          __typename: "AttributeValue" as "AttributeValue",
+          id: `val-4-${index + 1}`,
+          name: `val-4-${index + 1}`,
+          slug: `val-4-${index + 1}`,
+          file: null,
+          reference: null,
+          richText: null
+        }
+      }))
   }
 ];
 
@@ -116,7 +160,7 @@ const price: Price = {
   mode: "attribute",
   values: [
     {
-      slug: thirdStep.attributes[1].values[0],
+      slug: thirdStep.attributes[1].values[0].slug,
       value: [
         { channelId: channels[0].id, price: "0" },
         { channelId: channels[1].id, price: "2" },
@@ -124,7 +168,7 @@ const price: Price = {
       ]
     },
     {
-      slug: thirdStep.attributes[1].values[1],
+      slug: thirdStep.attributes[1].values[1].slug,
       value: [
         { channelId: channels[0].id, price: "0" },
         { channelId: channels[1].id, price: "2" },
@@ -139,11 +183,11 @@ const stock: Stock = {
   value: [],
   values: [
     {
-      slug: thirdStep.attributes[2].values[0],
+      slug: thirdStep.attributes[2].values[0].slug,
       value: [50, 20, 45, 75]
     },
     {
-      slug: thirdStep.attributes[2].values[1],
+      slug: thirdStep.attributes[2].values[1].slug,
       value: [80, 50, 85, 105]
     }
   ]

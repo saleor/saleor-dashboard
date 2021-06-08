@@ -1,3 +1,4 @@
+import { fetchMoreProps } from "@saleor/fixtures";
 import { PageData } from "@saleor/pages/components/PageDetailsPage/form";
 import { PageErrorCode } from "@saleor/types/globalTypes";
 import { storiesOf } from "@storybook/react";
@@ -20,7 +21,11 @@ const props: PageDetailsPageProps = {
   page,
   referencePages: [],
   referenceProducts: [],
-  saveButtonBarState: "default"
+  attributeValues: [],
+  saveButtonBarState: "default",
+  fetchAttributeValues: () => undefined,
+  fetchMoreAttributeValues: fetchMoreProps,
+  onAttributeFocus: () => undefined
 };
 
 storiesOf("Views / Pages / Page details", module)

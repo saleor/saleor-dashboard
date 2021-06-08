@@ -1,5 +1,6 @@
 import { getSelectedAttributeValues } from "@saleor/attributes/utils/data";
 import { AttributeInput } from "@saleor/components/Attributes";
+import { mapEdgesToItems } from "@saleor/utils/maps";
 
 import {
   PageDetails_page,
@@ -15,7 +16,7 @@ export function getAttributeInputFromPage(
       inputType: attribute.attribute.inputType,
       isRequired: attribute.attribute.valueRequired,
       selectedValues: attribute.values,
-      values: attribute.attribute.values,
+      values: mapEdgesToItems(attribute.attribute.choices),
       unit: attribute.attribute.unit
     },
     id: attribute.attribute.id,
@@ -32,7 +33,7 @@ export function getAttributeInputFromPageType(
       entityType: attribute.entityType,
       inputType: attribute.inputType,
       isRequired: attribute.valueRequired,
-      values: attribute.values
+      values: mapEdgesToItems(attribute.choices)
     },
     id: attribute.id,
     label: attribute.name,

@@ -20,7 +20,7 @@ import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { ProductDetails_product_productType_variantAttributes } from "../../types/ProductDetails";
-import { ChannelPrice, ProductVariantCreateFormData } from "./form";
+import { Attribute, ChannelPrice, ProductVariantCreateFormData } from "./form";
 
 export interface ProductVariantCreatorSummaryProps {
   attributes: ProductDetails_product_productType_variantAttributes[];
@@ -113,18 +113,18 @@ const useStyles = makeStyles<ProductVariantCreatorSummaryProps, ClassKey>(
 
 function getVariantName(
   variant: ProductVariantBulkCreateInput,
-  attributes: ProductDetails_product_productType_variantAttributes[]
+  attributes: Attribute[]
 ): string[] {
   return attributes.reduce(
     (acc, attribute) => [
       ...acc,
-      attribute.values.find(
+      attribute.values?.find(
         value =>
-          value.slug ===
+          value?.slug ===
           variant.attributes.find(
             variantAttribute => variantAttribute.id === attribute.id
           ).values[0]
-      ).name
+      )?.value?.name
     ],
     []
   );
@@ -132,7 +132,6 @@ function getVariantName(
 
 const ProductVariantCreatorSummary: React.FC<ProductVariantCreatorSummaryProps> = props => {
   const {
-    attributes,
     channelListings,
     data,
     errors,
@@ -220,7 +219,7 @@ const ProductVariantCreatorSummary: React.FC<ProductVariantCreatorSummaryProps> 
                 .join(":")}
             >
               <div className={classNames(classes.col, classes.colName)}>
-                {getVariantName(variant, attributes).map(
+                {getVariantName(variant, data.attributes).map(
                   (value, valueIndex) => (
                     <span
                       className={classes.attributeValue}

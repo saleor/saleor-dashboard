@@ -15,7 +15,8 @@ export function createProductInChannel({
   isAvailableForPurchase = true,
   visibleInListings = true,
   collectionId = null,
-  description = null
+  description = null,
+  trackInventory = true
 }) {
   let product;
   let variantsList;
@@ -46,7 +47,8 @@ export function createProductInChannel({
         warehouseId,
         quantityInWarehouse,
         channelId,
-        price
+        price,
+        trackInventory
       });
     })
     .then(variantsResp => {

@@ -1,3 +1,4 @@
+import { AttributeDetails_attribute_choices } from "@saleor/attributes/types/AttributeDetails";
 import { ATTRIBUTE_TYPES_WITH_DEDICATED_VALUES } from "@saleor/attributes/utils/data";
 import AppHeader from "@saleor/components/AppHeader";
 import CardSpacer from "@saleor/components/CardSpacer";
@@ -9,21 +10,18 @@ import Metadata from "@saleor/components/Metadata/Metadata";
 import { MetadataFormData } from "@saleor/components/Metadata/types";
 import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
-import {
-  AttributeDetailsFragment,
-  AttributeDetailsFragment_values
-} from "@saleor/fragments/types/AttributeDetailsFragment";
+import { AttributeDetailsFragment } from "@saleor/fragments/types/AttributeDetailsFragment";
 import { AttributeErrorFragment } from "@saleor/fragments/types/AttributeErrorFragment";
 import { sectionNames } from "@saleor/intl";
 import { maybe } from "@saleor/misc";
-import { ReorderAction } from "@saleor/types";
+import { ListSettings, ReorderAction } from "@saleor/types";
 import {
   AttributeEntityTypeEnum,
   AttributeInputTypeEnum,
   AttributeTypeEnum,
   MeasurementUnitsEnum
 } from "@saleor/types/globalTypes";
-import { mapMetadataItemToInput } from "@saleor/utils/maps";
+import { mapEdgesToItems, mapMetadataItemToInput } from "@saleor/utils/maps";
 import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -39,7 +37,7 @@ export interface AttributePageProps {
   disabled: boolean;
   errors: AttributeErrorFragment[];
   saveButtonBarState: ConfirmButtonTransitionState;
-  values: AttributeDetailsFragment_values[];
+  values: AttributeDetails_attribute_choices;
   onBack: () => void;
   onDelete: () => void;
   onSubmit: (data: AttributePageFormData) => void;
@@ -47,6 +45,14 @@ export interface AttributePageProps {
   onValueDelete: (id: string) => void;
   onValueReorder: ReorderAction;
   onValueUpdate: (id: string) => void;
+  settings?: ListSettings;
+  onUpdateListSettings?: (key: keyof ListSettings, value: any) => void;
+  pageInfo: {
+    hasNextPage: boolean;
+    hasPreviousPage: boolean;
+  };
+  onNextPage: () => void;
+  onPreviousPage: () => void;
 }
 
 export interface AttributePageFormData extends MetadataFormData {
@@ -76,7 +82,12 @@ const AttributePage: React.FC<AttributePageProps> = ({
   onValueAdd,
   onValueDelete,
   onValueReorder,
-  onValueUpdate
+  onValueUpdate,
+  settings,
+  onUpdateListSettings,
+  pageInfo,
+  onNextPage,
+  onPreviousPage
 }) => {
   const intl = useIntl();
   const {
@@ -190,11 +201,16 @@ const AttributePage: React.FC<AttributePageProps> = ({
                     <CardSpacer />
                     <AttributeValues
                       disabled={disabled}
-                      values={values}
+                      values={mapEdgesToItems(values)}
                       onValueAdd={onValueAdd}
                       onValueDelete={onValueDelete}
                       onValueReorder={onValueReorder}
                       onValueUpdate={onValueUpdate}
+                      settings={settings}
+                      onUpdateListSettings={onUpdateListSettings}
+                      pageInfo={pageInfo}
+                      onNextPage={onNextPage}
+                      onPreviousPage={onPreviousPage}
                     />
                   </>
                 )}

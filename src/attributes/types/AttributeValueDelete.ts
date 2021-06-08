@@ -3,58 +3,52 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { AttributeTypeEnum, MeasurementUnitsEnum, AttributeInputTypeEnum, AttributeEntityTypeEnum, AttributeErrorCode } from "./../../types/globalTypes";
+import { AttributeErrorCode } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: AttributeValueDelete
 // ====================================================
 
-export interface AttributeValueDelete_attributeValueDelete_attribute_metadata {
-  __typename: "MetadataItem";
-  key: string;
-  value: string;
+export interface AttributeValueDelete_attributeValueDelete_attribute_choices_pageInfo {
+  __typename: "PageInfo";
+  endCursor: string | null;
+  hasNextPage: boolean;
+  hasPreviousPage: boolean;
+  startCursor: string | null;
 }
 
-export interface AttributeValueDelete_attributeValueDelete_attribute_privateMetadata {
-  __typename: "MetadataItem";
-  key: string;
-  value: string;
-}
-
-export interface AttributeValueDelete_attributeValueDelete_attribute_values_file {
+export interface AttributeValueDelete_attributeValueDelete_attribute_choices_edges_node_file {
   __typename: "File";
   url: string;
   contentType: string | null;
 }
 
-export interface AttributeValueDelete_attributeValueDelete_attribute_values {
+export interface AttributeValueDelete_attributeValueDelete_attribute_choices_edges_node {
   __typename: "AttributeValue";
   id: string;
   name: string | null;
   slug: string | null;
-  file: AttributeValueDelete_attributeValueDelete_attribute_values_file | null;
+  file: AttributeValueDelete_attributeValueDelete_attribute_choices_edges_node_file | null;
   reference: string | null;
   richText: any | null;
+}
+
+export interface AttributeValueDelete_attributeValueDelete_attribute_choices_edges {
+  __typename: "AttributeValueCountableEdge";
+  cursor: string;
+  node: AttributeValueDelete_attributeValueDelete_attribute_choices_edges_node;
+}
+
+export interface AttributeValueDelete_attributeValueDelete_attribute_choices {
+  __typename: "AttributeValueCountableConnection";
+  pageInfo: AttributeValueDelete_attributeValueDelete_attribute_choices_pageInfo;
+  edges: AttributeValueDelete_attributeValueDelete_attribute_choices_edges[];
 }
 
 export interface AttributeValueDelete_attributeValueDelete_attribute {
   __typename: "Attribute";
   id: string;
-  name: string | null;
-  slug: string | null;
-  type: AttributeTypeEnum | null;
-  visibleInStorefront: boolean;
-  filterableInDashboard: boolean;
-  filterableInStorefront: boolean;
-  unit: MeasurementUnitsEnum | null;
-  metadata: (AttributeValueDelete_attributeValueDelete_attribute_metadata | null)[];
-  privateMetadata: (AttributeValueDelete_attributeValueDelete_attribute_privateMetadata | null)[];
-  availableInGrid: boolean;
-  inputType: AttributeInputTypeEnum | null;
-  entityType: AttributeEntityTypeEnum | null;
-  storefrontSearchPosition: number;
-  valueRequired: boolean;
-  values: (AttributeValueDelete_attributeValueDelete_attribute_values | null)[] | null;
+  choices: AttributeValueDelete_attributeValueDelete_attribute_choices | null;
 }
 
 export interface AttributeValueDelete_attributeValueDelete_errors {
@@ -75,4 +69,8 @@ export interface AttributeValueDelete {
 
 export interface AttributeValueDeleteVariables {
   id: string;
+  firstValues?: number | null;
+  afterValues?: string | null;
+  lastValues?: number | null;
+  beforeValues?: string | null;
 }

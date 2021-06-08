@@ -17,6 +17,7 @@ import Metadata from "@saleor/components/Metadata";
 import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
 import { ProductErrorWithAttributesFragment } from "@saleor/fragments/types/ProductErrorWithAttributesFragment";
+import { SearchAttributeValues_attribute_choices_edges_node } from "@saleor/searches/types/SearchAttributeValues";
 import { SearchPages_search_edges_node } from "@saleor/searches/types/SearchPages";
 import { SearchProducts_search_edges_node } from "@saleor/searches/types/SearchProducts";
 import { SearchWarehouses_search_edges_node } from "@saleor/searches/types/SearchWarehouses";
@@ -69,6 +70,7 @@ interface ProductVariantCreatePageProps {
   weightUnit: string;
   referencePages?: SearchPages_search_edges_node[];
   referenceProducts?: SearchProducts_search_edges_node[];
+  attributeValues: SearchAttributeValues_attribute_choices_edges_node[];
   onBack: () => void;
   onSubmit: (data: ProductVariantCreateData) => void;
   onVariantClick: (variantId: string) => void;
@@ -76,10 +78,13 @@ interface ProductVariantCreatePageProps {
   onWarehouseConfigure: () => void;
   assignReferencesAttributeId?: string;
   onAssignReferencesClick: (attribute: AttributeInput) => void;
+  onAttributeFocus: (id: string) => void;
   fetchReferencePages?: (data: string) => void;
   fetchReferenceProducts?: (data: string) => void;
+  fetchAttributeValues: (query: string) => void;
   fetchMoreReferencePages?: FetchMoreProps;
   fetchMoreReferenceProducts?: FetchMoreProps;
+  fetchMoreAttributeValues?: FetchMoreProps;
   onCloseDialog: () => void;
 }
 
@@ -94,17 +99,21 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
   weightUnit,
   referencePages = [],
   referenceProducts = [],
+  attributeValues,
   onBack,
   onSubmit,
   onVariantClick,
   onVariantReorder,
   onWarehouseConfigure,
+  onAttributeFocus,
   assignReferencesAttributeId,
   onAssignReferencesClick,
   fetchReferencePages,
   fetchReferenceProducts,
+  fetchAttributeValues,
   fetchMoreReferencePages,
   fetchMoreReferenceProducts,
+  fetchMoreAttributeValues,
   onCloseDialog
 }) => {
   const intl = useIntl();
@@ -173,6 +182,7 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
                     attribute.data.variantAttributeScope ===
                     VariantAttributeScope.NOT_VARIANT_SELECTION
                 )}
+                attributeValues={attributeValues}
                 loading={disabled}
                 disabled={disabled}
                 errors={errors}
@@ -182,6 +192,9 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
                 onReferencesRemove={handlers.selectAttributeReference}
                 onReferencesAddClick={onAssignReferencesClick}
                 onReferencesReorder={handlers.reorderAttributeValue}
+                fetchAttributeValues={fetchAttributeValues}
+                fetchMoreAttributeValues={fetchMoreAttributeValues}
+                onAttributeFocus={onAttributeFocus}
               />
               <CardSpacer />
               <Attributes
@@ -191,6 +204,7 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
                     attribute.data.variantAttributeScope ===
                     VariantAttributeScope.VARIANT_SELECTION
                 )}
+                attributeValues={attributeValues}
                 loading={disabled}
                 disabled={disabled}
                 errors={errors}
@@ -200,6 +214,9 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
                 onReferencesRemove={handlers.selectAttributeReference}
                 onReferencesAddClick={onAssignReferencesClick}
                 onReferencesReorder={handlers.reorderAttributeValue}
+                fetchAttributeValues={fetchAttributeValues}
+                fetchMoreAttributeValues={fetchMoreAttributeValues}
+                onAttributeFocus={onAttributeFocus}
               />
               <CardSpacer />
               <ProductShipping

@@ -8,6 +8,7 @@ import { PageErrorWithAttributesFragment } from "@saleor/fragments/types/PageErr
 import { ProductErrorWithAttributesFragment } from "@saleor/fragments/types/ProductErrorWithAttributesFragment";
 import { FormsetAtomicData } from "@saleor/hooks/useFormset";
 import { makeStyles } from "@saleor/theme";
+import { FetchMoreProps } from "@saleor/types";
 import {
   AttributeEntityTypeEnum,
   AttributeInputTypeEnum,
@@ -34,12 +35,16 @@ export type AttributeInput = FormsetAtomicData<AttributeInputData, string[]>;
 export type AttributeFileInput = FormsetAtomicData<AttributeInputData, File[]>;
 export interface AttributesProps extends AttributeRowHandlers {
   attributes: AttributeInput[];
+  attributeValues: AttributeValueFragment[];
+  fetchAttributeValues: (query: string) => void;
+  fetchMoreAttributeValues: FetchMoreProps;
   disabled: boolean;
   loading: boolean;
   errors: Array<
     ProductErrorWithAttributesFragment | PageErrorWithAttributesFragment
   >;
   title?: React.ReactNode;
+  onAttributeFocus: (id: string) => void;
 }
 
 const useStyles = makeStyles(
@@ -109,6 +114,7 @@ const messages = defineMessages({
 
 const Attributes: React.FC<AttributesProps> = ({
   attributes,
+  attributeValues,
   errors,
   title,
   ...props
@@ -158,6 +164,7 @@ const Attributes: React.FC<AttributesProps> = ({
                   {attributeIndex > 0 && <Hr />}
                   <AttributeRow
                     attribute={attribute}
+                    attributeValues={attributeValues}
                     error={error}
                     {...props}
                   />

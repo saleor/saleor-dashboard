@@ -129,7 +129,6 @@ export interface UseProductCreateFormOpts
   productTypes: SearchProductTypes_search_edges_node[];
   warehouses: SearchWarehouses_search_edges_node[];
   currentChannels: ChannelData[];
-  productTypeChoiceList: SearchProductTypes_search_edges_node[];
   referencePages: SearchPages_search_edges_node[];
   referenceProducts: SearchProducts_search_edges_node[];
   fetchReferencePages?: (data: string) => void;

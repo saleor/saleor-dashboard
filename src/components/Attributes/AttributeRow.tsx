@@ -11,17 +11,19 @@ import {
   getMultiDisplayValue,
   getReferenceDisplayValue,
   getRichTextData,
-  getSingleChoices
+  getSingleChoices,
+  getSingleDisplayValue
 } from "@saleor/components/Attributes/utils";
 import FileUploadField from "@saleor/components/FileUploadField";
 import MultiAutocompleteSelectField from "@saleor/components/MultiAutocompleteSelectField";
 import RichTextEditor from "@saleor/components/RichTextEditor";
 import SingleAutocompleteSelectField from "@saleor/components/SingleAutocompleteSelectField";
 import SortableChipsField from "@saleor/components/SortableChipsField";
+import { AttributeValueFragment } from "@saleor/fragments/types/AttributeValueFragment";
 import { PageErrorWithAttributesFragment } from "@saleor/fragments/types/PageErrorWithAttributesFragment";
 import { ProductErrorWithAttributesFragment } from "@saleor/fragments/types/ProductErrorWithAttributesFragment";
 import { FormsetChange } from "@saleor/hooks/useFormset";
-import { ReorderEvent } from "@saleor/types";
+import { FetchMoreProps, ReorderEvent } from "@saleor/types";
 import { AttributeInputTypeEnum } from "@saleor/types/globalTypes";
 import React from "react";
 import { defineMessages, useIntl } from "react-intl";
@@ -53,10 +55,14 @@ export interface AttributeRowHandlers {
   onReferencesAddClick: (attribute: AttributeInput) => void;
   onReferencesRemove: FormsetChange<string[]>;
   onReferencesReorder: FormsetChange<ReorderEvent>;
+  fetchAttributeValues: (query: string) => void;
+  fetchMoreAttributeValues: FetchMoreProps;
+  onAttributeFocus: (id: string) => void;
 }
 
 interface AttributeRowProps extends AttributeRowHandlers {
   attribute: AttributeInput;
+  attributeValues: AttributeValueFragment[];
   disabled: boolean;
   error: ProductErrorWithAttributesFragment | PageErrorWithAttributesFragment;
   loading: boolean;
@@ -64,6 +70,7 @@ interface AttributeRowProps extends AttributeRowHandlers {
 
 const AttributeRow: React.FC<AttributeRowProps> = ({
   attribute,
+  attributeValues,
   disabled,
   error,
   loading,
@@ -72,7 +79,10 @@ const AttributeRow: React.FC<AttributeRowProps> = ({
   onReferencesAddClick,
   onReferencesRemove,
   onReferencesReorder,
-  onChange
+  onChange,
+  fetchAttributeValues,
+  fetchMoreAttributeValues,
+  onAttributeFocus
 }) => {
   const intl = useIntl();
   const classes = useStyles({});
@@ -126,15 +136,9 @@ const AttributeRow: React.FC<AttributeRowProps> = ({
       return (
         <BasicAttributeRow label={attribute.label}>
           <SingleAutocompleteSelectField
-            choices={getSingleChoices(attribute.data.values)}
+            choices={getSingleChoices(attributeValues)}
             disabled={disabled}
-            displayValue={
-              attribute.data.values.find(
-                value => value.slug === attribute.value[0]
-              )?.name ||
-              attribute.value[0] ||
-              ""
-            }
+            displayValue={getSingleDisplayValue(attribute, attributeValues)}
             emptyOption={!attribute.data.isRequired}
             error={!!error}
             helperText={getErrorMessage(error, intl)}
@@ -142,7 +146,10 @@ const AttributeRow: React.FC<AttributeRowProps> = ({
             label={intl.formatMessage(messages.valueLabel)}
             value={attribute.value[0]}
             onChange={event => onChange(attribute.id, event.target.value)}
-            allowCustomValues={!attribute.data.isRequired}
+            allowCustomValues={true}
+            fetchChoices={fetchAttributeValues}
+            {...fetchMoreAttributeValues}
+            onFocus={() => onAttributeFocus(attribute.id)}
           />
         </BasicAttributeRow>
       );
@@ -192,8 +199,8 @@ const AttributeRow: React.FC<AttributeRowProps> = ({
       return (
         <BasicAttributeRow label={attribute.label}>
           <MultiAutocompleteSelectField
-            choices={getMultiChoices(attribute.data.values)}
-            displayValues={getMultiDisplayValue(attribute)}
+            choices={getMultiChoices(attributeValues)}
+            displayValues={getMultiDisplayValue(attribute, attributeValues)}
             disabled={disabled}
             error={!!error}
             helperText={getErrorMessage(error, intl)}
@@ -201,7 +208,10 @@ const AttributeRow: React.FC<AttributeRowProps> = ({
             name={`attribute:${attribute.label}`}
             value={attribute.value}
             onChange={event => onMultiChange(attribute.id, event.target.value)}
-            allowCustomValues={!attribute.data.isRequired}
+            allowCustomValues={true}
+            fetchChoices={fetchAttributeValues}
+            {...fetchMoreAttributeValues}
+            onFocus={() => onAttributeFocus(attribute.id)}
           />
         </BasicAttributeRow>
       );

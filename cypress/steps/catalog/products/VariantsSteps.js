@@ -59,7 +59,9 @@ export function createVariant({
     .type(sku)
     .get(VARIANTS_SELECTORS.addWarehouseButton)
     .click();
-  cy.contains(VARIANTS_SELECTORS.warehouseOption, warehouseName).click();
+  cy.contains(VARIANTS_SELECTORS.warehouseOption, warehouseName).click({
+    force: true
+  });
   cy.get(VARIANTS_SELECTORS.saveButton).click();
   cy.get(BUTTON_SELECTORS.back).click();
   selectChannelVariantInDetailsPage(channelName, attributeName);

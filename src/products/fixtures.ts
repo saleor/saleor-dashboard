@@ -30,26 +30,44 @@ export const product: (
         slug: "Borders",
         valueRequired: false,
         unit: null,
-        values: [
-          {
-            __typename: "AttributeValue",
-            file: null,
-            id: "ptav47282",
-            name: "portals",
-            reference: null,
-            slug: "portals",
-            richText: null
+        choices: {
+          __typename: "AttributeValueCountableConnection",
+          pageInfo: {
+            endCursor: "WyI4IiwgIjMiXQ==",
+            hasNextPage: false,
+            hasPreviousPage: false,
+            startCursor: "WyIwIiwgIjQ5Il0=",
+            __typename: "PageInfo"
           },
-          {
-            __typename: "AttributeValue",
-            file: null,
-            id: "ptav17253",
-            name: "Baht",
-            reference: null,
-            slug: "Baht",
-            richText: null
-          }
-        ]
+          edges: [
+            {
+              __typename: "AttributeValueCountableEdge",
+              cursor: "",
+              node: {
+                __typename: "AttributeValue",
+                file: null,
+                id: "ptav47282",
+                name: "portals",
+                reference: null,
+                slug: "portals",
+                richText: null
+              }
+            },
+            {
+              __typename: "AttributeValueCountableEdge",
+              cursor: "",
+              node: {
+                __typename: "AttributeValue",
+                file: null,
+                id: "ptav17253",
+                name: "Baht",
+                reference: null,
+                slug: "Baht",
+                richText: null
+              }
+            }
+          ]
+        }
       },
       values: [
         {
@@ -74,44 +92,70 @@ export const product: (
         slug: "Legacy",
         valueRequired: true,
         unit: null,
-        values: [
-          {
-            __typename: "AttributeValue",
-            file: null,
-            id: "ptav31282",
-            name: "payment",
-            reference: null,
-            slug: "payment",
-            richText: null
+        choices: {
+          __typename: "AttributeValueCountableConnection",
+          pageInfo: {
+            endCursor: "WyI4IiwgIjMiXQ==",
+            hasNextPage: false,
+            hasPreviousPage: false,
+            startCursor: "WyIwIiwgIjQ5Il0=",
+            __typename: "PageInfo"
           },
-          {
-            __typename: "AttributeValue",
-            file: null,
-            id: "ptav14907",
-            name: "Auto Loan Account",
-            reference: null,
-            slug: "Auto-Loan-Account",
-            richText: null
-          },
-          {
-            __typename: "AttributeValue",
-            file: null,
-            id: "ptav27366",
-            name: "Garden",
-            reference: null,
-            slug: "Garden",
-            richText: null
-          },
-          {
-            __typename: "AttributeValue",
-            file: null,
-            id: "ptav11873",
-            name: "override",
-            reference: null,
-            slug: "override",
-            richText: null
-          }
-        ]
+          edges: [
+            {
+              __typename: "AttributeValueCountableEdge",
+              cursor: "",
+              node: {
+                __typename: "AttributeValue",
+                file: null,
+                id: "ptav31282",
+                name: "payment",
+                reference: null,
+                slug: "payment",
+                richText: null
+              }
+            },
+            {
+              __typename: "AttributeValueCountableEdge",
+              cursor: "",
+              node: {
+                __typename: "AttributeValue",
+                file: null,
+                id: "ptav14907",
+                name: "Auto Loan Account",
+                reference: null,
+                slug: "Auto-Loan-Account",
+                richText: null
+              }
+            },
+            {
+              __typename: "AttributeValueCountableEdge",
+              cursor: "",
+              node: {
+                __typename: "AttributeValue",
+                file: null,
+                id: "ptav27366",
+                name: "Garden",
+                reference: null,
+                slug: "Garden",
+                richText: null
+              }
+            },
+            {
+              __typename: "AttributeValueCountableEdge",
+              cursor: "",
+              node: {
+                __typename: "AttributeValue",
+                file: null,
+                id: "ptav11873",
+                name: "override",
+                reference: null,
+                slug: "override",
+                richText: null
+              }
+            }
+          ]
+        }
       },
       values: [
         {
@@ -292,21 +336,35 @@ export const product: (
         slug: "attachment",
         valueRequired: true,
         unit: null,
-        values: [
-          {
-            __typename: "AttributeValue",
-            file: {
-              __typename: "File",
-              contentType: "image/png",
-              url: "some-non-existing-url"
-            },
-            id: "gdghdgdhkkdae",
-            name: "File First Value",
-            reference: null,
-            slug: "file-first-value",
-            richText: null
-          }
-        ]
+        choices: {
+          __typename: "AttributeValueCountableConnection",
+          pageInfo: {
+            endCursor: "WyI4IiwgIjMiXQ==",
+            hasNextPage: false,
+            hasPreviousPage: false,
+            startCursor: "WyIwIiwgIjQ5Il0=",
+            __typename: "PageInfo"
+          },
+          edges: [
+            {
+              __typename: "AttributeValueCountableEdge",
+              cursor: "",
+              node: {
+                __typename: "AttributeValue",
+                file: {
+                  __typename: "File",
+                  contentType: "image/png",
+                  url: "some-non-existing-url"
+                },
+                id: "gdghdgdhkkdae",
+                name: "File First Value",
+                reference: null,
+                slug: "file-first-value",
+                richText: null
+              }
+            }
+          ]
+        }
       }
     ],
     selectionVariantAttributes: [
@@ -319,26 +377,44 @@ export const product: (
         slug: "color",
         valueRequired: true,
         unit: null,
-        values: [
-          {
-            __typename: "AttributeValue",
-            file: null,
-            id: "ptvav47282",
-            name: "Black",
-            reference: null,
-            slug: "black",
-            richText: null
+        choices: {
+          __typename: "AttributeValueCountableConnection",
+          pageInfo: {
+            endCursor: "WyI4IiwgIjMiXQ==",
+            hasNextPage: false,
+            hasPreviousPage: false,
+            startCursor: "WyIwIiwgIjQ5Il0=",
+            __typename: "PageInfo"
           },
-          {
-            __typename: "AttributeValue",
-            file: null,
-            id: "ptvav17253",
-            name: "White",
-            reference: null,
-            slug: "white",
-            richText: null
-          }
-        ]
+          edges: [
+            {
+              __typename: "AttributeValueCountableEdge",
+              cursor: "",
+              node: {
+                __typename: "AttributeValue",
+                file: null,
+                id: "ptvav47282",
+                name: "Black",
+                reference: null,
+                slug: "black",
+                richText: null
+              }
+            },
+            {
+              __typename: "AttributeValueCountableEdge",
+              cursor: "",
+              node: {
+                __typename: "AttributeValue",
+                file: null,
+                id: "ptvav17253",
+                name: "White",
+                reference: null,
+                slug: "white",
+                richText: null
+              }
+            }
+          ]
+        }
       }
     ],
     taxType: {
@@ -350,53 +426,79 @@ export const product: (
       {
         __typename: "Attribute",
         id: "isdugfhud",
-        inputType: AttributeInputTypeEnum.FILE,
         name: "Attachment",
-        slug: "attachment",
-        valueRequired: true,
-        values: [
-          {
-            __typename: "AttributeValue",
-            file: {
-              __typename: "File",
-              contentType: "image/png",
-              url: "some-non-existing-url"
-            },
-            id: "gdghdgdhkkdae",
-            name: "File First Value",
-            reference: null,
-            slug: "file-first-value",
-            richText: null
-          }
-        ]
+        choices: {
+          __typename: "AttributeValueCountableConnection",
+          pageInfo: {
+            endCursor: "WyI4IiwgIjMiXQ==",
+            hasNextPage: false,
+            hasPreviousPage: false,
+            startCursor: "WyIwIiwgIjQ5Il0=",
+            __typename: "PageInfo"
+          },
+          edges: [
+            {
+              __typename: "AttributeValueCountableEdge",
+              cursor: "",
+              node: {
+                __typename: "AttributeValue",
+                file: {
+                  __typename: "File",
+                  contentType: "image/png",
+                  url: "some-non-existing-url"
+                },
+                id: "gdghdgdhkkdae",
+                name: "File First Value",
+                reference: null,
+                slug: "file-first-value",
+                richText: null
+              }
+            }
+          ]
+        }
       },
       {
         __typename: "Attribute",
         id: "pta18161",
-        inputType: AttributeInputTypeEnum.DROPDOWN,
         name: "Color",
-        slug: "color",
-        valueRequired: true,
-        values: [
-          {
-            __typename: "AttributeValue",
-            file: null,
-            id: "ptvav47282",
-            name: "Black",
-            reference: null,
-            slug: "black",
-            richText: null
+        choices: {
+          __typename: "AttributeValueCountableConnection",
+          pageInfo: {
+            endCursor: "WyI4IiwgIjMiXQ==",
+            hasNextPage: false,
+            hasPreviousPage: false,
+            startCursor: "WyIwIiwgIjQ5Il0=",
+            __typename: "PageInfo"
           },
-          {
-            __typename: "AttributeValue",
-            file: null,
-            id: "ptvav17253",
-            name: "White",
-            reference: null,
-            slug: "white",
-            richText: null
-          }
-        ]
+          edges: [
+            {
+              __typename: "AttributeValueCountableEdge",
+              cursor: "",
+              node: {
+                __typename: "AttributeValue",
+                file: null,
+                id: "ptvav47282",
+                name: "Black",
+                reference: null,
+                slug: "black",
+                richText: null
+              }
+            },
+            {
+              __typename: "AttributeValueCountableEdge",
+              cursor: "",
+              node: {
+                __typename: "AttributeValue",
+                file: null,
+                id: "ptvav17253",
+                name: "White",
+                reference: null,
+                slug: "white",
+                richText: null
+              }
+            }
+          ]
+        }
       }
     ]
   },
@@ -2783,21 +2885,35 @@ export const variant = (placeholderImage: string): ProductVariant => ({
         slug: "attachment",
         valueRequired: true,
         unit: null,
-        values: [
-          {
-            __typename: "AttributeValue",
-            file: {
-              __typename: "File",
-              contentType: "image/png",
-              url: "some-non-existing-url"
-            },
-            id: "gdghdgdhkkdae",
-            name: "File First Value",
-            reference: null,
-            slug: "file-first-value",
-            richText: null
-          }
-        ]
+        choices: {
+          __typename: "AttributeValueCountableConnection",
+          pageInfo: {
+            endCursor: "WyI4IiwgIjMiXQ==",
+            hasNextPage: false,
+            hasPreviousPage: false,
+            startCursor: "WyIwIiwgIjQ5Il0=",
+            __typename: "PageInfo"
+          },
+          edges: [
+            {
+              __typename: "AttributeValueCountableEdge",
+              cursor: "",
+              node: {
+                __typename: "AttributeValue",
+                file: {
+                  __typename: "File",
+                  contentType: "image/png",
+                  url: "some-non-existing-url"
+                },
+                id: "gdghdgdhkkdae",
+                name: "File First Value",
+                reference: null,
+                slug: "file-first-value",
+                richText: null
+              }
+            }
+          ]
+        }
       },
       values: [
         {
@@ -3052,26 +3168,44 @@ export const variant = (placeholderImage: string): ProductVariant => ({
         slug: "Borders",
         valueRequired: true,
         unit: null,
-        values: [
-          {
-            __typename: "AttributeValue",
-            file: null,
-            id: "ptav47282",
-            name: "portals",
-            reference: null,
-            slug: "portals",
-            richText: null
+        choices: {
+          __typename: "AttributeValueCountableConnection",
+          pageInfo: {
+            endCursor: "WyI4IiwgIjMiXQ==",
+            hasNextPage: false,
+            hasPreviousPage: false,
+            startCursor: "WyIwIiwgIjQ5Il0=",
+            __typename: "PageInfo"
           },
-          {
-            __typename: "AttributeValue",
-            file: null,
-            id: "ptav17253",
-            name: "Baht",
-            reference: null,
-            slug: "Baht",
-            richText: null
-          }
-        ]
+          edges: [
+            {
+              __typename: "AttributeValueCountableEdge",
+              cursor: "",
+              node: {
+                __typename: "AttributeValue",
+                file: null,
+                id: "ptav47282",
+                name: "portals",
+                reference: null,
+                slug: "portals",
+                richText: null
+              }
+            },
+            {
+              __typename: "AttributeValueCountableEdge",
+              cursor: "",
+              node: {
+                __typename: "AttributeValue",
+                file: null,
+                id: "ptav17253",
+                name: "Baht",
+                reference: null,
+                slug: "Baht",
+                richText: null
+              }
+            }
+          ]
+        }
       },
       values: [
         {
@@ -3096,44 +3230,70 @@ export const variant = (placeholderImage: string): ProductVariant => ({
         slug: "Legacy",
         valueRequired: true,
         unit: null,
-        values: [
-          {
-            __typename: "AttributeValue",
-            file: null,
-            id: "ptav31282",
-            name: "payment",
-            reference: null,
-            slug: "payment",
-            richText: null
+        choices: {
+          __typename: "AttributeValueCountableConnection",
+          pageInfo: {
+            endCursor: "WyI4IiwgIjMiXQ==",
+            hasNextPage: false,
+            hasPreviousPage: false,
+            startCursor: "WyIwIiwgIjQ5Il0=",
+            __typename: "PageInfo"
           },
-          {
-            __typename: "AttributeValue",
-            file: null,
-            id: "ptav14907",
-            name: "Auto Loan Account",
-            reference: null,
-            slug: "Auto-Loan-Account",
-            richText: null
-          },
-          {
-            __typename: "AttributeValue",
-            file: null,
-            id: "ptav27366",
-            name: "Garden",
-            reference: null,
-            slug: "Garden",
-            richText: null
-          },
-          {
-            __typename: "AttributeValue",
-            file: null,
-            id: "ptav11873",
-            name: "override",
-            reference: null,
-            slug: "override",
-            richText: null
-          }
-        ]
+          edges: [
+            {
+              __typename: "AttributeValueCountableEdge",
+              cursor: "",
+              node: {
+                __typename: "AttributeValue",
+                file: null,
+                id: "ptav31282",
+                name: "payment",
+                reference: null,
+                slug: "payment",
+                richText: null
+              }
+            },
+            {
+              __typename: "AttributeValueCountableEdge",
+              cursor: "",
+              node: {
+                __typename: "AttributeValue",
+                file: null,
+                id: "ptav14907",
+                name: "Auto Loan Account",
+                reference: null,
+                slug: "Auto-Loan-Account",
+                richText: null
+              }
+            },
+            {
+              __typename: "AttributeValueCountableEdge",
+              cursor: "",
+              node: {
+                __typename: "AttributeValue",
+                file: null,
+                id: "ptav27366",
+                name: "Garden",
+                reference: null,
+                slug: "Garden",
+                richText: null
+              }
+            },
+            {
+              __typename: "AttributeValueCountableEdge",
+              cursor: "",
+              node: {
+                __typename: "AttributeValue",
+                file: null,
+                id: "ptav11873",
+                name: "override",
+                reference: null,
+                slug: "override",
+                richText: null
+              }
+            }
+          ]
+        }
       },
       values: [
         {

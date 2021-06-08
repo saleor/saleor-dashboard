@@ -1,4 +1,5 @@
 import Attributes, { AttributesProps } from "@saleor/components/Attributes";
+import { fetchMoreProps } from "@saleor/fixtures";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
@@ -7,6 +8,7 @@ import { ATTRIBUTES, ATTRIBUTES_SELECTED } from "./fixtures";
 
 const props: AttributesProps = {
   attributes: ATTRIBUTES,
+  attributeValues: [],
   disabled: false,
   errors: [],
   loading: false,
@@ -15,7 +17,10 @@ const props: AttributesProps = {
   onMultiChange: () => undefined,
   onReferencesAddClick: () => undefined,
   onReferencesRemove: () => undefined,
-  onReferencesReorder: () => undefined
+  onReferencesReorder: () => undefined,
+  onAttributeFocus: () => undefined,
+  fetchAttributeValues: () => undefined,
+  fetchMoreAttributeValues: fetchMoreProps
 };
 
 storiesOf("Attributes / Attributes", module)

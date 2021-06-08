@@ -1,3 +1,4 @@
+import { attributeValueListFragment } from "@saleor/fragments/attributes";
 import { pageDetailsFragment, pageFragment } from "@saleor/fragments/pages";
 import makeQuery from "@saleor/hooks/makeQuery";
 import gql from "graphql-tag";
@@ -5,6 +6,7 @@ import gql from "graphql-tag";
 import { PageCount, PageCountVariables } from "./types/PageCount";
 import { PageDetails, PageDetailsVariables } from "./types/PageDetails";
 import { PageList, PageListVariables } from "./types/PageList";
+import { PageType, PageTypeVariables } from "./types/PageType";
 
 const pageList = gql`
   ${pageFragment}
@@ -42,7 +44,13 @@ export const usePageListQuery = makeQuery<PageList, PageListVariables>(
 
 const pageDetails = gql`
   ${pageDetailsFragment}
-  query PageDetails($id: ID!) {
+  query PageDetails(
+    $id: ID!
+    $firstValues: Int
+    $afterValues: String
+    $lastValues: Int
+    $beforeValues: String
+  ) {
     page(id: $id) {
       ...PageDetailsFragment
     }
@@ -50,6 +58,41 @@ const pageDetails = gql`
 `;
 export const usePageDetailsQuery = makeQuery<PageDetails, PageDetailsVariables>(
   pageDetails
+);
+
+const pageTypeQuery = gql`
+  ${attributeValueListFragment}
+  query PageType(
+    $id: ID!
+    $firstValues: Int
+    $afterValues: String
+    $lastValues: Int
+    $beforeValues: String
+  ) {
+    pageType(id: $id) {
+      id
+      name
+      attributes {
+        id
+        inputType
+        entityType
+        slug
+        name
+        valueRequired
+        choices(
+          first: $firstValues
+          after: $afterValues
+          last: $lastValues
+          before: $beforeValues
+        ) {
+          ...AttributeValueListFragment
+        }
+      }
+    }
+  }
+`;
+export const usePageTypeQuery = makeQuery<PageType, PageTypeVariables>(
+  pageTypeQuery
 );
 
 const pageCountQuery = gql`

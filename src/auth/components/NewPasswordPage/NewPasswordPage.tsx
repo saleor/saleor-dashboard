@@ -112,6 +112,7 @@ const NewPasswordPage: React.FC<NewPasswordPageProps> = props => {
             />
             <FormSpacer />
             <Button
+              data-test="button-bar-confirm"
               className={classes.submit}
               color="primary"
               disabled={(passwordError && data.password.length > 0) || disabled}

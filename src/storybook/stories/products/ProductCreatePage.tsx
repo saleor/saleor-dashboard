@@ -34,9 +34,11 @@ storiesOf("Views / Products / Create product", module)
       fetchCategories={() => undefined}
       fetchCollections={() => undefined}
       fetchProductTypes={() => undefined}
+      fetchAttributeValues={() => undefined}
       fetchMoreCategories={fetchMoreProps}
       fetchMoreCollections={fetchMoreProps}
       fetchMoreProductTypes={fetchMoreProps}
+      fetchMoreAttributeValues={fetchMoreProps}
       productTypes={productTypes}
       categories={[product.category]}
       onBack={() => undefined}
@@ -50,9 +52,11 @@ storiesOf("Views / Products / Create product", module)
       weightUnit="kg"
       referencePages={[]}
       referenceProducts={[]}
+      attributeValues={[]}
       onAssignReferencesClick={() => undefined}
       onCloseDialog={() => undefined}
       onSelectProductType={() => undefined}
+      onAttributeFocus={() => undefined}
     />
   ))
   .add("When loading", () => (
@@ -67,9 +71,11 @@ storiesOf("Views / Products / Create product", module)
       fetchCategories={() => undefined}
       fetchCollections={() => undefined}
       fetchProductTypes={() => undefined}
+      fetchAttributeValues={() => undefined}
       fetchMoreCategories={fetchMoreProps}
       fetchMoreCollections={fetchMoreProps}
       fetchMoreProductTypes={fetchMoreProps}
+      fetchMoreAttributeValues={fetchMoreProps}
       productTypes={productTypes}
       categories={[product.category]}
       onBack={() => undefined}
@@ -83,9 +89,11 @@ storiesOf("Views / Products / Create product", module)
       weightUnit="kg"
       referencePages={[]}
       referenceProducts={[]}
+      attributeValues={[]}
       onAssignReferencesClick={() => undefined}
       onCloseDialog={() => undefined}
       onSelectProductType={() => undefined}
+      onAttributeFocus={() => undefined}
     />
   ))
   .add("form errors", () => (
@@ -114,10 +122,12 @@ storiesOf("Views / Products / Create product", module)
       fetchCategories={() => undefined}
       fetchCollections={() => undefined}
       fetchProductTypes={() => undefined}
+      fetchAttributeValues={() => undefined}
       fetchMoreCategories={fetchMoreProps}
       fetchMoreCollections={fetchMoreProps}
       fetchMoreProductTypes={fetchMoreProps}
       selectedProductType={productTypeSearch}
+      fetchMoreAttributeValues={fetchMoreProps}
       productTypes={productTypes}
       categories={[product.category]}
       onBack={() => undefined}
@@ -131,8 +141,10 @@ storiesOf("Views / Products / Create product", module)
       weightUnit="kg"
       referencePages={[]}
       referenceProducts={[]}
+      attributeValues={[]}
       onAssignReferencesClick={() => undefined}
       onCloseDialog={() => undefined}
       onSelectProductType={() => undefined}
+      onAttributeFocus={() => undefined}
     />
   ));

@@ -122,8 +122,7 @@ describe("Vouchers discounts", () => {
       });
   });
 
-  // Test should pass after fixing - SALEOR-1629 bug
-  xit("should create free shipping voucher", () => {
+  it("should create free shipping voucher", () => {
     const voucherCode = `${startsWith}${faker.datatype.number()}`;
 
     createVoucher({

@@ -9,20 +9,40 @@ import { AttributeInputTypeEnum, AttributeEntityTypeEnum, MeasurementUnitsEnum }
 // GraphQL query operation: ProductType
 // ====================================================
 
-export interface ProductType_productType_productAttributes_values_file {
+export interface ProductType_productType_productAttributes_choices_pageInfo {
+  __typename: "PageInfo";
+  endCursor: string | null;
+  hasNextPage: boolean;
+  hasPreviousPage: boolean;
+  startCursor: string | null;
+}
+
+export interface ProductType_productType_productAttributes_choices_edges_node_file {
   __typename: "File";
   url: string;
   contentType: string | null;
 }
 
-export interface ProductType_productType_productAttributes_values {
+export interface ProductType_productType_productAttributes_choices_edges_node {
   __typename: "AttributeValue";
   id: string;
   name: string | null;
   slug: string | null;
-  file: ProductType_productType_productAttributes_values_file | null;
+  file: ProductType_productType_productAttributes_choices_edges_node_file | null;
   reference: string | null;
   richText: any | null;
+}
+
+export interface ProductType_productType_productAttributes_choices_edges {
+  __typename: "AttributeValueCountableEdge";
+  cursor: string;
+  node: ProductType_productType_productAttributes_choices_edges_node;
+}
+
+export interface ProductType_productType_productAttributes_choices {
+  __typename: "AttributeValueCountableConnection";
+  pageInfo: ProductType_productType_productAttributes_choices_pageInfo;
+  edges: ProductType_productType_productAttributes_choices_edges[];
 }
 
 export interface ProductType_productType_productAttributes {
@@ -34,7 +54,7 @@ export interface ProductType_productType_productAttributes {
   name: string | null;
   valueRequired: boolean;
   unit: MeasurementUnitsEnum | null;
-  values: (ProductType_productType_productAttributes_values | null)[] | null;
+  choices: ProductType_productType_productAttributes_choices | null;
 }
 
 export interface ProductType_productType_taxType {
@@ -58,4 +78,8 @@ export interface ProductType {
 
 export interface ProductTypeVariables {
   id: string;
+  firstValues?: number | null;
+  afterValues?: string | null;
+  lastValues?: number | null;
+  beforeValues?: string | null;
 }
