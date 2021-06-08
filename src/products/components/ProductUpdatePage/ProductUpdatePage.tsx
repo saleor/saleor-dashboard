@@ -13,10 +13,14 @@ import { TaxTypeFragment } from "@saleor/fragments/types/TaxTypeFragment";
 import { WarehouseFragment } from "@saleor/fragments/types/WarehouseFragment";
 import useDateLocalize from "@saleor/hooks/useDateLocalize";
 import { SubmitPromise } from "@saleor/hooks/useForm";
+import useNotifier from "@saleor/hooks/useNotifier";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
-import { sectionNames } from "@saleor/intl";
+import { commonMessages, sectionNames } from "@saleor/intl";
 import { maybe } from "@saleor/misc";
 import ProductBundleContent from "@saleor/products/components/ProductBundleContent";
+import { useProductBulkClearWarehouseLocation } from "@saleor/products/mutations";
+import { ProductPrivateMetadataData_privateMetadata } from "@saleor/products/types/ProductPrivateMetadata";
+import { ProductUrlQueryParams } from "@saleor/products/urls";
 import { SearchCategories_search_edges_node } from "@saleor/searches/types/SearchCategories";
 import { SearchCollections_search_edges_node } from "@saleor/searches/types/SearchCollections";
 import { FetchMoreProps, ListActions, ReorderAction } from "@saleor/types";
@@ -58,6 +62,8 @@ export interface ProductUpdatePageProps extends ListActions {
   saveButtonBarState: ConfirmButtonTransitionState;
   warehouses: WarehouseFragment[];
   taxTypes: TaxTypeFragment[];
+  params: ProductUrlQueryParams;
+  id: string;
   fetchCategories: (query: string) => void;
   fetchCollections: (query: string) => void;
   onVariantsAdd: () => void;
@@ -84,6 +90,17 @@ export interface ProductUpdatePageSubmitData extends ProductUpdatePageFormData {
   removeStocks: string[];
   stocks: ProductStockInput[];
 }
+
+const getPrivateMetadataFromProduct = product => {
+  const findProducts: ProductPrivateMetadataData_privateMetadata = product?.privateMetadata.find(
+    privateMetadataField => privateMetadataField.key === "skus"
+  );
+  const products: any[] =
+    findProducts.value !== undefined
+      ? JSON.parse(findProducts.value.replaceAll("'", '"'))
+      : [""];
+  return products;
+};
 
 export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
   defaultWeightUnit,
@@ -121,10 +138,13 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
   selected,
   toggle,
   toggleAll,
-  toolbar
+  toolbar,
+  params,
+  id
 }) => {
   const intl = useIntl();
   const localizeDate = useDateLocalize();
+  const notify = useNotifier();
 
   const [selectedCategory, setSelectedCategory] = useStateFromProps(
     product?.category?.name || ""
@@ -141,6 +161,18 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
   const initialDescription = maybe<RawDraftContentState>(() =>
     JSON.parse(product.descriptionJson)
   );
+
+  console.log(product);
+  console.log(getPrivateMetadataFromProduct(product));
+
+  const [clearWarehouseLocations] = useProductBulkClearWarehouseLocation({
+    onCompleted: data => {
+      notify({
+        status: "success",
+        text: intl.formatMessage(commonMessages.savedChanges)
+      });
+    }
+  });
 
   const categories = getChoices(categoryChoiceList);
   const collections = getChoices(collectionChoiceList);
@@ -341,6 +373,15 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                     () =>
                       JSON.parse(product.jsonPrivateMetadata)["bundle.content"]
                   )}
+                  id={id}
+                  params={params}
+                  on_modal_click={() =>
+                    clearWarehouseLocations({
+                      variables: {
+                        skus: ["1111"]
+                      }
+                    })
+                  }
                 />
                 <ProductTaxes
                   data={data}
