@@ -5,6 +5,7 @@ import {
   createProduct,
   updateChannelInProduct
 } from "../../../apiRequests/Product";
+import { ONE_PERMISSION_USERS } from "../../../Data/users";
 import {
   createFirstVariant,
   createVariant,
@@ -30,6 +31,7 @@ describe("Creating variants", () => {
   let attribute;
   let productType;
   let category;
+  let newChannel;
 
   before(() => {
     cy.clearSessionData().loginUserViaRequest();
@@ -50,7 +52,11 @@ describe("Creating variants", () => {
           address: fixtureAddresses.plAddress
         })
       )
-      .then(({ warehouse: warehouseResp }) => (warehouse = warehouseResp));
+      .then(({ warehouse: warehouseResp }) => {
+        warehouse = warehouseResp;
+        createChannel({ isActive: true, name, currencyCode: "PLN" });
+      })
+      .then(resp => (newChannel = resp));
 
     productUtils
       .createTypeAttributeAndCategoryForProduct(name, attributeValues)
@@ -68,7 +74,10 @@ describe("Creating variants", () => {
   });
 
   beforeEach(() => {
-    cy.clearSessionData().loginUserViaRequest();
+    cy.clearSessionData().loginUserViaRequest(
+      "auth",
+      ONE_PERMISSION_USERS.product
+    );
   });
 
   it("should create variant visible on frontend", () => {
@@ -104,6 +113,7 @@ describe("Creating variants", () => {
         expect(variant).to.have.property("price", price);
       });
   });
+
   it("should create several variants", () => {
     const name = `${startsWith}${faker.datatype.number()}`;
     const secondVariantSku = `${startsWith}${faker.datatype.number()}`;
@@ -145,21 +155,21 @@ describe("Creating variants", () => {
         expect(secondVariant).to.have.property("price", variants[1].price);
       });
   });
+
   it("should create variant for many channels", () => {
     const name = `${startsWith}${faker.datatype.number()}`;
     const variantsPrice = 10;
-    let newChannel;
     let createdProduct;
-    createChannel({ isActive: true, name, currencyCode: "PLN" })
-      .then(resp => {
-        newChannel = resp;
-        createProduct({
-          attributeId: attribute.id,
-          name,
-          productTypeId: productType.id,
-          categoryId: category.id
-        });
-      })
+    // createChannel({ isActive: true, name, currencyCode: "PLN" })
+    // .then(resp => {
+    //   newChannel = resp;
+    createProduct({
+      attributeId: attribute.id,
+      name,
+      productTypeId: productType.id,
+      categoryId: category.id
+    })
+      // })
       .then(productResp => {
         createdProduct = productResp;
         updateChannelInProduct({
