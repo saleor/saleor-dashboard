@@ -12,7 +12,6 @@ import { ProductErrorWithAttributesFragment } from "@saleor/fragments/types/Prod
 import { TaxTypeFragment } from "@saleor/fragments/types/TaxTypeFragment";
 import { WarehouseFragment } from "@saleor/fragments/types/WarehouseFragment";
 import useDateLocalize from "@saleor/hooks/useDateLocalize";
-import { SubmitPromise } from "@saleor/hooks/useForm";
 import useNotifier from "@saleor/hooks/useNotifier";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { commonMessages, sectionNames } from "@saleor/intl";
@@ -96,7 +95,7 @@ const getPrivateMetadataFromProduct = product => {
     privateMetadataField => privateMetadataField.key === "skus"
   );
   const products: any[] =
-    findProducts.value !== undefined
+    findProducts?.value !== undefined
       ? JSON.parse(findProducts.value.replaceAll("'", '"'))
       : [""];
   return products;
@@ -162,11 +161,8 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
     JSON.parse(product.descriptionJson)
   );
 
-  console.log(product);
-  console.log(getPrivateMetadataFromProduct(product));
-
   const [clearWarehouseLocations] = useProductBulkClearWarehouseLocation({
-    onCompleted: data => {
+    onCompleted: () => {
       notify({
         status: "success",
         text: intl.formatMessage(commonMessages.savedChanges)
@@ -378,7 +374,7 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                   on_modal_click={() =>
                     clearWarehouseLocations({
                       variables: {
-                        skus: ["1111"]
+                        skus: getPrivateMetadataFromProduct(product)
                       }
                     })
                   }

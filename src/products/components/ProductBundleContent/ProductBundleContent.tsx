@@ -18,9 +18,7 @@ import CardTitle from "@saleor/components/CardTitle";
 import ConfirmButton from "@saleor/components/ConfirmButton";
 import FormSpacer from "@saleor/components/FormSpacer";
 import useNavigator from "@saleor/hooks/useNavigator";
-import useNotifier from "@saleor/hooks/useNotifier";
-import { buttonMessages, commonMessages } from "@saleor/intl";
-import { useProductBulkClearWarehouseLocation } from "@saleor/products/mutations";
+import { buttonMessages } from "@saleor/intl";
 import {
   productUrl,
   ProductUrlDialog,
@@ -181,7 +179,11 @@ const ProductBundleContent: React.FC<ProductBundleContentProps> = props => {
           <ConfirmButton
             color="primary"
             variant="contained"
-            onClick={() => on_modal_click()}
+            onClick={() => {
+              on_modal_click();
+              closeModal();
+            }}
+            transitionState="success"
           >
             {intl.formatMessage(buttonMessages.confirm)}
           </ConfirmButton>

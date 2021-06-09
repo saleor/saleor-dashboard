@@ -13,8 +13,11 @@ import {
 } from "@saleor/fragments/products";
 import makeMutation from "@saleor/hooks/makeMutation";
 import gql from "graphql-tag";
-import { ProductBulkClearWarehouseLocation, ProductBulkClearWarehouseLocationVariables, ProductBulkClearWarehouseLocation_ProductBulkClearWarehouseLocation_errors } from "./types/ProductBulkClearWarehouseLocation";
 
+import {
+  ProductBulkClearWarehouseLocation,
+  ProductBulkClearWarehouseLocationVariables
+} from "./types/ProductBulkClearWarehouseLocation";
 import {
   productBulkDelete,
   productBulkDeleteVariables
@@ -484,7 +487,8 @@ export const productBulkPublishMutation = gql`
       isPublished: $isPublished
       offerType: $offerType
       startingAt: $startingAt
-    ) {useProductBulkPublishMutation
+    ) {
+      useProductBulkPublishMutation
       errors: productErrors {
         ...ProductErrorFragment
       }
@@ -597,23 +601,18 @@ export const useProductVariantReorderMutation = makeMutation<
   ProductVariantReorderVariables
 >(productVariantReorder);
 
-
 export const productBulkClearWarehouseLocation = gql`
   ${productErrorFragment}
-  mutation productBulkWarehouseLocation(
-    $skus: [String!]!
-  ) {
-    productBulkClearWarehouseLocation(
-      skus: $skus
-    ) {
+  mutation productBulkWarehouseLocation($skus: [String!]!) {
+    productBulkClearWarehouseLocation(skus: $skus) {
       errors: productErrors {
         ...ProductErrorFragment
       }
     }
   }
-`
+`;
 
 export const useProductBulkClearWarehouseLocation = makeMutation<
-ProductBulkClearWarehouseLocation,
-ProductBulkClearWarehouseLocationVariables
->(productBulkClearWarehouseLocation)
+  ProductBulkClearWarehouseLocation,
+  ProductBulkClearWarehouseLocationVariables
+>(productBulkClearWarehouseLocation);
