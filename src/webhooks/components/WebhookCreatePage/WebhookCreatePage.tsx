@@ -5,7 +5,7 @@ import Form from "@saleor/components/Form";
 import FormSpacer from "@saleor/components/FormSpacer";
 import Grid from "@saleor/components/Grid";
 import PageHeader from "@saleor/components/PageHeader";
-import SaveButtonBar from "@saleor/components/SaveButtonBar";
+import Savebar from "@saleor/components/Savebar";
 import { WebhookErrorFragment } from "@saleor/fragments/types/WebhookErrorFragment";
 import { WebhookEventTypeEnum } from "@saleor/types/globalTypes";
 import WebhookEvents from "@saleor/webhooks/components/WebhookEvents";
@@ -84,11 +84,11 @@ const WebhookCreatePage: React.FC<WebhookCreatePageProps> = ({
               />
             </div>
           </Grid>
-          <SaveButtonBar
+          <Savebar
             disabled={disabled || !hasChanged}
             state={saveButtonBarState}
             onCancel={onBack}
-            onSave={submit}
+            onSubmit={submit}
           />
         </Container>
       )}

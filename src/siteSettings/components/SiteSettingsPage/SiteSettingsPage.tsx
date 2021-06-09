@@ -7,7 +7,7 @@ import Form from "@saleor/components/Form";
 import Grid from "@saleor/components/Grid";
 import Hr from "@saleor/components/Hr";
 import PageHeader from "@saleor/components/PageHeader";
-import SaveButtonBar from "@saleor/components/SaveButtonBar";
+import Savebar from "@saleor/components/Savebar";
 import { ShopErrorFragment } from "@saleor/fragments/types/ShopErrorFragment";
 import useAddressValidation from "@saleor/hooks/useAddressValidation";
 import { SubmitPromise } from "@saleor/hooks/useForm";
@@ -184,11 +184,11 @@ const SiteSettingsPage: React.FC<SiteSettingsPageProps> = props => {
                 onCountryChange={handleCountryChange}
               />
             </Grid>
-            <SaveButtonBar
+            <Savebar
               state={saveButtonBarState}
               disabled={disabled || !hasChanged}
               onCancel={onBack}
-              onSave={submit}
+              onSubmit={submit}
             />
           </Container>
         );

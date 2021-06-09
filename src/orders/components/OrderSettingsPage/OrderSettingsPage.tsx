@@ -4,7 +4,7 @@ import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
 import Container from "@saleor/components/Container";
 import Grid from "@saleor/components/Grid";
 import PageHeader from "@saleor/components/PageHeader";
-import SaveButtonBar from "@saleor/components/SaveButtonBar";
+import Savebar from "@saleor/components/Savebar";
 import { OrderSettingsFragment } from "@saleor/fragments/types/OrderSettingsFragment";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import { sectionNames } from "@saleor/intl";
@@ -47,9 +47,9 @@ const OrderSettingsPage: React.FC<OrderSettingsPageProps> = props => {
             </div>
             <OrderSettings data={data} disabled={disabled} onChange={change} />
           </Grid>
-          <SaveButtonBar
+          <Savebar
             onCancel={onBack}
-            onSave={submit}
+            onSubmit={submit}
             disabled={disabled || !hasChanged}
             state={saveButtonBarState}
           />

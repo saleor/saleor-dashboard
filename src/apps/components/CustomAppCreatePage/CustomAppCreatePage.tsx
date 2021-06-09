@@ -5,7 +5,7 @@ import Container from "@saleor/components/Container";
 import Form from "@saleor/components/Form";
 import Grid from "@saleor/components/Grid";
 import PageHeader from "@saleor/components/PageHeader";
-import SaveButtonBar from "@saleor/components/SaveButtonBar";
+import Savebar from "@saleor/components/Savebar";
 import { ShopInfo_shop_permissions } from "@saleor/components/Shop/types/ShopInfo";
 import { AppErrorFragment } from "@saleor/fragments/types/AppErrorFragment";
 import { sectionNames } from "@saleor/intl";
@@ -91,11 +91,11 @@ const CustomAppCreatePage: React.FC<CustomAppCreatePageProps> = props => {
               })}
             />
           </Grid>
-          <SaveButtonBar
+          <Savebar
             disabled={disabled || !hasChanged}
             state={saveButtonBarState}
             onCancel={onBack}
-            onSave={submit}
+            onSubmit={submit}
           />
         </Container>
       )}

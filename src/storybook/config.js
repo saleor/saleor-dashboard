@@ -33,7 +33,6 @@ function loadStories() {
   require("./stories/components/Percent");
   require("./stories/components/PhoneField");
   require("./stories/components/PriceField");
-  require("./stories/components/SaveButtonBar");
   require("./stories/components/SaveFilterTabDialog");
   require("./stories/components/SingleSelectField");
   require("./stories/components/Skeleton");
