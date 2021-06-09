@@ -21,7 +21,7 @@ const useStyles = makeStyles(
       width: "100%"
     },
     imageContainer: {
-      background: "#ffffff",
+      background: "transparent",
       border: "1px solid #eaeaea",
       borderRadius: theme.spacing(),
       cursor: "pointer",
@@ -43,7 +43,8 @@ const useStyles = makeStyles(
       }
     },
     selectedImageContainer: {
-      borderColor: theme.palette.primary.main
+      borderColor: theme.palette.primary.main,
+      borderWidth: "2px"
     }
   }),
   { name: "ProductVariantImageSelectDialog" }
