@@ -1,4 +1,5 @@
 import { Typography } from "@material-ui/core";
+import CloseIcon from "@material-ui/icons/Close";
 import { makeStyles } from "@saleor/macaw-ui";
 import classNames from "classnames";
 import React from "react";
@@ -19,9 +20,15 @@ const useStyles = makeStyles(
     },
     root: theme.mixins.gutters({
       alignItems: "center",
+      justifyContent: "space-between",
       display: "flex",
-      minHeight: 56
+      minHeight: 70
     }),
+    closeIcon: {
+      cursor: "pointer",
+      display: "flex",
+      alignItems: "flex-end"
+    },
     title: {
       flex: 1,
       fontWeight: 500,
@@ -41,6 +48,7 @@ interface CardTitleProps {
   title: string | React.ReactNode;
   toolbar?: React.ReactNode;
   onClick?: (event: React.MouseEvent<any>) => void;
+  onClose?: () => void;
 }
 
 const CardTitle: React.FC<CardTitleProps> = props => {
@@ -51,6 +59,7 @@ const CardTitle: React.FC<CardTitleProps> = props => {
     title,
     toolbar,
     onClick,
+    onClose,
     ...rest
   } = props;
 
@@ -74,6 +83,11 @@ const CardTitle: React.FC<CardTitleProps> = props => {
           {title}
         </Typography>
         <div className={classes.toolbar}>{toolbar}</div>
+        {onClose && (
+          <div className={classes.closeIcon}>
+            <CloseIcon onClick={onClose} />
+          </div>
+        )}
       </div>
       <div className={classes.children}>{children}</div>
       <hr className={classes.hr} />

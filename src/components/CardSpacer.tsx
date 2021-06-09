@@ -5,9 +5,9 @@ const useStyles = makeStyles(
   theme => ({
     spacer: {
       [theme.breakpoints.down("sm")]: {
-        marginTop: theme.spacing(1)
+        height: theme.spacing(1)
       },
-      marginTop: theme.spacing(3)
+      height: theme.spacing(3)
     }
   }),
   { name: "CardSpacer" }
