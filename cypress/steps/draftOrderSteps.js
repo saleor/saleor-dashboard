@@ -9,8 +9,9 @@ export function finalizeDraftOrder(name, address) {
     .click()
     .get(ASSIGN_PRODUCTS_SELECTORS.searchInput)
     .type(name)
-    .get(SHARED_ELEMENTS.progressBar)
-    .should("not.be.visible");
+    .get(ASSIGN_PRODUCTS_SELECTORS.dialogContent)
+    .find(SHARED_ELEMENTS.progressBar)
+    .should("not.exist");
   cy.contains(ASSIGN_PRODUCTS_SELECTORS.tableRow, name)
     .find(ASSIGN_PRODUCTS_SELECTORS.checkbox)
     .click()
