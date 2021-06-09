@@ -14,7 +14,7 @@ import Container from "@saleor/components/Container";
 import Grid from "@saleor/components/Grid";
 import Metadata from "@saleor/components/Metadata/Metadata";
 import PageHeader from "@saleor/components/PageHeader";
-import SaveButtonBar from "@saleor/components/SaveButtonBar";
+import Savebar from "@saleor/components/Savebar";
 import SeoForm from "@saleor/components/SeoForm";
 import { RefreshLimits_shop_limits } from "@saleor/components/Shop/types/RefreshLimits";
 import { ProductChannelListingErrorFragment } from "@saleor/fragments/types/ProductChannelListingErrorFragment";
@@ -469,10 +469,10 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                 />
               </div>
             </Grid>
-            <SaveButtonBar
+            <Savebar
               onCancel={onBack}
               onDelete={onDelete}
-              onSave={submit}
+              onSubmit={submit}
               state={saveButtonBarState}
               disabled={
                 disabled || formDisabled || (!hasChanged && !hasChannelChanged)

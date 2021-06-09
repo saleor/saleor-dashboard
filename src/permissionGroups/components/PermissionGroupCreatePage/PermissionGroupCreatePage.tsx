@@ -4,7 +4,7 @@ import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
 import Container from "@saleor/components/Container";
 import Form from "@saleor/components/Form";
 import Grid from "@saleor/components/Grid";
-import SaveButtonBar from "@saleor/components/SaveButtonBar";
+import Savebar from "@saleor/components/Savebar";
 import { PermissionGroupErrorFragment } from "@saleor/fragments/types/PermissionGroupErrorFragment";
 import { sectionNames } from "@saleor/intl";
 import { PermissionEnum } from "@saleor/types/globalTypes";
@@ -92,9 +92,9 @@ const PermissionGroupCreatePage: React.FC<PermissionGroupCreatePageProps> = ({
             </div>
           </Grid>
           <div>
-            <SaveButtonBar
+            <Savebar
               onCancel={onBack}
-              onSave={submit}
+              onSubmit={submit}
               state={saveButtonBarState}
               disabled={disabled || !hasChanged}
             />

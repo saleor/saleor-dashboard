@@ -21,9 +21,7 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import { FormattedMessage } from "react-intl";
 
 import Checkbox from "../Checkbox";
-import ConfirmButton, {
-  ConfirmButtonTransitionState
-} from "../ConfirmButton/ConfirmButton";
+import ConfirmButton, { ConfirmButtonTransitionState } from "../ConfirmButton";
 
 export interface FormData {
   containers: string[];

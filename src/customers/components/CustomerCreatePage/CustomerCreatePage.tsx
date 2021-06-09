@@ -5,7 +5,7 @@ import Container from "@saleor/components/Container";
 import Form from "@saleor/components/Form";
 import Grid from "@saleor/components/Grid";
 import PageHeader from "@saleor/components/PageHeader";
-import SaveButtonBar from "@saleor/components/SaveButtonBar";
+import Savebar from "@saleor/components/Savebar";
 import { AccountErrorFragment } from "@saleor/fragments/types/AccountErrorFragment";
 import useAddressValidation from "@saleor/hooks/useAddressValidation";
 import { sectionNames } from "@saleor/intl";
@@ -176,10 +176,10 @@ const CustomerCreatePage: React.FC<CustomerCreatePageProps> = ({
                 />
               </div>
             </Grid>
-            <SaveButtonBar
+            <Savebar
               disabled={disabled || !hasChanged}
               state={saveButtonBar}
-              onSave={submit}
+              onSubmit={submit}
               onCancel={onBack}
             />
           </Container>

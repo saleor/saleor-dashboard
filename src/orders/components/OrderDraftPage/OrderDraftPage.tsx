@@ -7,7 +7,7 @@ import { Container } from "@saleor/components/Container";
 import { DateTime } from "@saleor/components/Date";
 import Grid from "@saleor/components/Grid";
 import PageHeader from "@saleor/components/PageHeader";
-import SaveButtonBar from "@saleor/components/SaveButtonBar";
+import Savebar from "@saleor/components/Savebar";
 import Skeleton from "@saleor/components/Skeleton";
 import { sectionNames } from "@saleor/intl";
 import { makeStyles } from "@saleor/macaw-ui";
@@ -157,13 +157,13 @@ const OrderDraftPage: React.FC<OrderDraftPageProps> = props => {
           <DraftOrderChannelSectionCard channelName={order?.channel?.name} />
         </div>
       </Grid>
-      <SaveButtonBar
+      <Savebar
         state={saveButtonBarState}
         disabled={disabled || !order?.canFinalize}
         onCancel={onBack}
-        onSave={onDraftFinalize}
+        onSubmit={onDraftFinalize}
         labels={{
-          save: intl.formatMessage({
+          confirm: intl.formatMessage({
             defaultMessage: "Finalize",
             description: "button"
           })

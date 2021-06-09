@@ -15,7 +15,7 @@ import Grid from "@saleor/components/Grid";
 import Metadata from "@saleor/components/Metadata";
 import { MultiAutocompleteChoiceType } from "@saleor/components/MultiAutocompleteSelectField";
 import PageHeader from "@saleor/components/PageHeader";
-import SaveButtonBar from "@saleor/components/SaveButtonBar";
+import Savebar from "@saleor/components/Savebar";
 import SeoForm from "@saleor/components/SeoForm";
 import { ProductChannelListingErrorFragment } from "@saleor/fragments/types/ProductChannelListingErrorFragment";
 import { ProductErrorWithAttributesFragment } from "@saleor/fragments/types/ProductErrorWithAttributesFragment";
@@ -354,9 +354,9 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
                 />
               </div>
             </Grid>
-            <SaveButtonBar
+            <Savebar
               onCancel={onBack}
-              onSave={submit}
+              onSubmit={submit}
               state={saveButtonBarState}
               disabled={loading || !onSubmit || formDisabled || !hasChanged}
             />

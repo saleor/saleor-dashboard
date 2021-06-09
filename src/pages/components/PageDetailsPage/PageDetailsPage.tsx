@@ -11,7 +11,7 @@ import Container from "@saleor/components/Container";
 import Grid from "@saleor/components/Grid";
 import Metadata from "@saleor/components/Metadata";
 import PageHeader from "@saleor/components/PageHeader";
-import SaveButtonBar from "@saleor/components/SaveButtonBar";
+import Savebar from "@saleor/components/Savebar";
 import SeoForm from "@saleor/components/SeoForm";
 import VisibilityCard from "@saleor/components/VisibilityCard";
 import { PageErrorWithAttributesFragment } from "@saleor/fragments/types/PageErrorWithAttributesFragment";
@@ -236,12 +236,12 @@ const PageDetailsPage: React.FC<PageDetailsPageProps> = ({
               />
             </div>
           </Grid>
-          <SaveButtonBar
+          <Savebar
             disabled={loading || !hasChanged || !valid}
             state={saveButtonBarState}
             onCancel={onBack}
             onDelete={page === null ? undefined : onRemove}
-            onSave={submit}
+            onSubmit={submit}
           />
           {canOpenAssignReferencesAttributeDialog && (
             <AssignAttributeValueDialog

@@ -10,7 +10,7 @@ import Form from "@saleor/components/Form";
 import Grid from "@saleor/components/Grid";
 import { MultiAutocompleteChoiceType } from "@saleor/components/MultiAutocompleteSelectField";
 import PageHeader from "@saleor/components/PageHeader";
-import SaveButtonBar from "@saleor/components/SaveButtonBar";
+import Savebar from "@saleor/components/Savebar";
 import { StaffErrorFragment } from "@saleor/fragments/types/StaffErrorFragment";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import useLocale from "@saleor/hooks/useLocale";
@@ -185,11 +185,11 @@ const StaffDetailsPage: React.FC<StaffDetailsPageProps> = ({
                 )}
               </div>
             </Grid>
-            <SaveButtonBar
+            <Savebar
               disabled={disabled || !hasChanged}
               state={saveButtonBarState}
               onCancel={onBack}
-              onSave={submit}
+              onSubmit={submit}
               onDelete={canRemove ? onDelete : undefined}
             />
           </Container>

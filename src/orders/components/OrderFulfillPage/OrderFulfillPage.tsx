@@ -17,7 +17,7 @@ import ControlledCheckbox from "@saleor/components/ControlledCheckbox";
 import Form from "@saleor/components/Form";
 import PageHeader from "@saleor/components/PageHeader";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
-import SaveButtonBar from "@saleor/components/SaveButtonBar";
+import Savebar from "@saleor/components/Savebar";
 import Skeleton from "@saleor/components/Skeleton";
 import TableCellAvatar from "@saleor/components/TableCellAvatar";
 import { WarehouseFragment } from "@saleor/fragments/types/WarehouseFragment";
@@ -503,16 +503,16 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
                 />
               </CardActions>
             </Card>
-            <SaveButtonBar
+            <Savebar
               disabled={!shouldEnableSave()}
               labels={{
-                save: intl.formatMessage({
+                confirm: intl.formatMessage({
                   defaultMessage: "Fulfill",
                   description: "fulfill order, button"
                 })
               }}
               state={saveButtonBar}
-              onSave={submit}
+              onSubmit={submit}
               onCancel={onBack}
             />
           </>

@@ -16,7 +16,7 @@ import Grid from "@saleor/components/Grid";
 import { MetadataFormData } from "@saleor/components/Metadata";
 import Metadata from "@saleor/components/Metadata/Metadata";
 import PageHeader from "@saleor/components/PageHeader";
-import SaveButtonBar from "@saleor/components/SaveButtonBar";
+import Savebar from "@saleor/components/Savebar";
 import { ProductChannelListingErrorFragment } from "@saleor/fragments/types/ProductChannelListingErrorFragment";
 import { ProductErrorWithAttributesFragment } from "@saleor/fragments/types/ProductErrorWithAttributesFragment";
 import { ProductVariant } from "@saleor/fragments/types/ProductVariant";
@@ -317,12 +317,12 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
                   <Metadata data={data} onChange={handlers.changeMetadata} />
                 </div>
               </Grid>
-              <SaveButtonBar
+              <Savebar
                 disabled={loading || formDisabled || !hasChanged}
                 state={saveButtonBarState}
                 onCancel={onBack}
                 onDelete={onDelete}
-                onSave={submit}
+                onSubmit={submit}
               />
               {canOpenAssignReferencesAttributeDialog && (
                 <AssignAttributeValueDialog

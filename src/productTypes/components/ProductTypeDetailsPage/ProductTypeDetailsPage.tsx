@@ -8,7 +8,7 @@ import Grid from "@saleor/components/Grid";
 import Metadata from "@saleor/components/Metadata/Metadata";
 import { MetadataFormData } from "@saleor/components/Metadata/types";
 import PageHeader from "@saleor/components/PageHeader";
-import SaveButtonBar from "@saleor/components/SaveButtonBar";
+import Savebar from "@saleor/components/Savebar";
 import { ChangeEvent, FormChange, SubmitPromise } from "@saleor/hooks/useForm";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { sectionNames } from "@saleor/intl";
@@ -240,10 +240,10 @@ const ProductTypeDetailsPage: React.FC<ProductTypeDetailsPageProps> = ({
                 />
               </div>
             </Grid>
-            <SaveButtonBar
+            <Savebar
               onCancel={onBack}
               onDelete={onDelete}
-              onSave={submit}
+              onSubmit={submit}
               disabled={disabled || !hasChanged}
               state={saveButtonBarState}
             />

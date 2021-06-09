@@ -9,7 +9,7 @@ import Grid from "@saleor/components/Grid";
 import Metadata from "@saleor/components/Metadata/Metadata";
 import { MetadataFormData } from "@saleor/components/Metadata/types";
 import PageHeader from "@saleor/components/PageHeader";
-import SaveButtonBar from "@saleor/components/SaveButtonBar";
+import Savebar from "@saleor/components/Savebar";
 import { ListSettingsUpdate } from "@saleor/components/TablePagination";
 import { AttributeDetailsFragment } from "@saleor/fragments/types/AttributeDetailsFragment";
 import { AttributeErrorFragment } from "@saleor/fragments/types/AttributeErrorFragment";
@@ -234,11 +234,11 @@ const AttributePage: React.FC<AttributePageProps> = ({
                 />
               </div>
             </Grid>
-            <SaveButtonBar
+            <Savebar
               disabled={disabled || !hasChanged}
               state={saveButtonBarState}
               onCancel={onBack}
-              onSave={submit}
+              onSubmit={submit}
               onDelete={attribute === null ? undefined : onDelete}
             />
           </Container>

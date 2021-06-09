@@ -7,7 +7,7 @@ import Grid from "@saleor/components/Grid";
 import Metadata from "@saleor/components/Metadata/Metadata";
 import { MetadataFormData } from "@saleor/components/Metadata/types";
 import PageHeader from "@saleor/components/PageHeader";
-import SaveButtonBar from "@saleor/components/SaveButtonBar";
+import Savebar from "@saleor/components/Savebar";
 import { AccountErrorFragment } from "@saleor/fragments/types/AccountErrorFragment";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import { sectionNames } from "@saleor/intl";
@@ -119,10 +119,10 @@ const CustomerDetailsPage: React.FC<CustomerDetailsPageProps> = ({
                 <CustomerStats customer={customer} />
               </div>
             </Grid>
-            <SaveButtonBar
+            <Savebar
               disabled={disabled || !hasChanged}
               state={saveButtonBar}
-              onSave={submit}
+              onSubmit={submit}
               onCancel={onBack}
               onDelete={onDelete}
             />

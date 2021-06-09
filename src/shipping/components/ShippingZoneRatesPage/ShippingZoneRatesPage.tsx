@@ -10,7 +10,7 @@ import Grid from "@saleor/components/Grid";
 import Metadata from "@saleor/components/Metadata/Metadata";
 import { MetadataFormData } from "@saleor/components/Metadata/types";
 import PageHeader from "@saleor/components/PageHeader";
-import SaveButtonBar from "@saleor/components/SaveButtonBar";
+import Savebar from "@saleor/components/Savebar";
 import { ShippingChannelsErrorFragment } from "@saleor/fragments/types/ShippingChannelsErrorFragment";
 import { ShippingErrorFragment } from "@saleor/fragments/types/ShippingErrorFragment";
 import { ShippingMethodFragment_postalCodeRules } from "@saleor/fragments/types/ShippingMethodFragment";
@@ -215,11 +215,11 @@ export const ShippingZoneRatesPage: React.FC<ShippingZoneRatesPageProps> = ({
                 />
               </div>
             </Grid>
-            <SaveButtonBar
+            <Savebar
               disabled={disabled || formDisabled || formIsUnchanged}
               onCancel={onBack}
               onDelete={onDelete}
-              onSave={submit}
+              onSubmit={submit}
               state={saveButtonBarState}
             />
           </Container>

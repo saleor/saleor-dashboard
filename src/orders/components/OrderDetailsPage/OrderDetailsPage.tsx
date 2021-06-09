@@ -9,7 +9,7 @@ import Form from "@saleor/components/Form";
 import Grid from "@saleor/components/Grid";
 import Metadata, { MetadataFormData } from "@saleor/components/Metadata";
 import PageHeader from "@saleor/components/PageHeader";
-import SaveButtonBar from "@saleor/components/SaveButtonBar";
+import Savebar from "@saleor/components/Savebar";
 import Skeleton from "@saleor/components/Skeleton";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import { sectionNames } from "@saleor/intl";
@@ -308,10 +308,10 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
                 <OrderCustomerNote note={maybe(() => order.customerNote)} />
               </div>
             </Grid>
-            <SaveButtonBar
-              labels={{ save: saveLabel }}
+            <Savebar
+              labels={{ confirm: saveLabel }}
               onCancel={onBack}
-              onSave={submit}
+              onSubmit={submit}
               state={saveButtonBarState}
               disabled={allowSave(hasChanged)}
             />

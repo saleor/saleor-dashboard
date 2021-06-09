@@ -7,7 +7,7 @@ import { Container } from "@saleor/components/Container";
 import Grid from "@saleor/components/Grid";
 import Metadata from "@saleor/components/Metadata";
 import PageHeader from "@saleor/components/PageHeader";
-import SaveButtonBar from "@saleor/components/SaveButtonBar";
+import Savebar from "@saleor/components/Savebar";
 import SeoForm from "@saleor/components/SeoForm";
 import { CollectionChannelListingErrorFragment } from "@saleor/fragments/types/CollectionChannelListingErrorFragment";
 import { CollectionErrorFragment } from "@saleor/fragments/types/CollectionErrorFragment";
@@ -153,11 +153,11 @@ const CollectionCreatePage: React.FC<CollectionCreatePageProps> = ({
               />
             </div>
           </Grid>
-          <SaveButtonBar
+          <Savebar
             state={saveButtonBarState}
             disabled={disabled || !hasChanged}
             onCancel={onBack}
-            onSave={submit}
+            onSubmit={submit}
           />
         </Container>
       )}

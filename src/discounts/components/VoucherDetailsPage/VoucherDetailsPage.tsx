@@ -9,7 +9,7 @@ import CountryList from "@saleor/components/CountryList";
 import Form from "@saleor/components/Form";
 import Grid from "@saleor/components/Grid";
 import PageHeader from "@saleor/components/PageHeader";
-import SaveButtonBar from "@saleor/components/SaveButtonBar";
+import Savebar from "@saleor/components/Savebar";
 import { Tab, TabContainer } from "@saleor/components/Tab";
 import {
   createChannelsChangeHandler,
@@ -421,13 +421,13 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
                 />
               </div>
             </Grid>
-            <SaveButtonBar
+            <Savebar
               disabled={
                 disabled || formDisabled || (!hasChanged && !hasChannelChanged)
               }
               onCancel={onBack}
               onDelete={onRemove}
-              onSave={submit}
+              onSubmit={submit}
               state={saveButtonBarState}
             />
           </Container>

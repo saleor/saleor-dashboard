@@ -43,6 +43,9 @@ export const commonMessages = defineMessages({
   endHour: {
     defaultMessage: "End Hour"
   },
+  error: {
+    defaultMessage: "Error"
+  },
   firstName: {
     defaultMessage: "First Name"
   },

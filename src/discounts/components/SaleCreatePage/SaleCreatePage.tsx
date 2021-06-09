@@ -7,7 +7,7 @@ import Container from "@saleor/components/Container";
 import Form from "@saleor/components/Form";
 import Grid from "@saleor/components/Grid";
 import PageHeader from "@saleor/components/PageHeader";
-import SaveButtonBar from "@saleor/components/SaveButtonBar";
+import Savebar from "@saleor/components/Savebar";
 import { createSaleChannelsChangeHandler } from "@saleor/discounts/handlers";
 import { DiscountErrorFragment } from "@saleor/fragments/types/DiscountErrorFragment";
 import { sectionNames } from "@saleor/intl";
@@ -133,10 +133,10 @@ const SaleCreatePage: React.FC<SaleCreatePageProps> = ({
                 />
               </div>
             </Grid>
-            <SaveButtonBar
+            <Savebar
               disabled={disabled || formDisabled || !hasChanged}
               onCancel={onBack}
-              onSave={submit}
+              onSubmit={submit}
               state={saveButtonBarState}
             />
           </Container>

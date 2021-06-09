@@ -15,7 +15,7 @@ import Container from "@saleor/components/Container";
 import Grid from "@saleor/components/Grid";
 import Metadata from "@saleor/components/Metadata";
 import PageHeader from "@saleor/components/PageHeader";
-import SaveButtonBar from "@saleor/components/SaveButtonBar";
+import Savebar from "@saleor/components/Savebar";
 import { ProductErrorWithAttributesFragment } from "@saleor/fragments/types/ProductErrorWithAttributesFragment";
 import { SearchAttributeValues_attribute_choices_edges_node } from "@saleor/searches/types/SearchAttributeValues";
 import { SearchPages_search_edges_node } from "@saleor/searches/types/SearchPages";
@@ -244,15 +244,15 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
               <Metadata data={data} onChange={handlers.changeMetadata} />
             </div>
           </Grid>
-          <SaveButtonBar
+          <Savebar
             disabled={disabled || formDisabled || !onSubmit || !hasChanged}
             labels={{
-              delete: intl.formatMessage(messages.deleteVariant),
-              save: intl.formatMessage(messages.saveVariant)
+              confirm: intl.formatMessage(messages.saveVariant),
+              delete: intl.formatMessage(messages.deleteVariant)
             }}
             state={saveButtonBarState}
             onCancel={onBack}
-            onSave={submit}
+            onSubmit={submit}
           />
           {canOpenAssignReferencesAttributeDialog && (
             <AssignAttributeValueDialog

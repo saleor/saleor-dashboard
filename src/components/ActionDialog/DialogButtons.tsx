@@ -5,9 +5,7 @@ import classNames from "classnames";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import ConfirmButton, {
-  ConfirmButtonTransitionState
-} from "../ConfirmButton/ConfirmButton";
+import ConfirmButton, { ConfirmButtonTransitionState } from "../ConfirmButton";
 import { ActionDialogVariant } from "./types";
 
 const useStyles = makeStyles(

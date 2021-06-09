@@ -6,7 +6,7 @@ import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
 import Container from "@saleor/components/Container";
 import Metadata from "@saleor/components/Metadata/Metadata";
 import PageHeader from "@saleor/components/PageHeader";
-import SaveButtonBar from "@saleor/components/SaveButtonBar";
+import Savebar from "@saleor/components/Savebar";
 import SeoForm from "@saleor/components/SeoForm";
 import { SingleAutocompleteChoiceType } from "@saleor/components/SingleAutocompleteSelectField";
 import { Tab, TabContainer } from "@saleor/components/Tab";
@@ -224,10 +224,10 @@ export const CategoryUpdatePage: React.FC<CategoryUpdatePageProps> = ({
               toolbar={productListToolbar}
             />
           )}
-          <SaveButtonBar
+          <Savebar
             onCancel={onBack}
             onDelete={onDelete}
-            onSave={submit}
+            onSubmit={submit}
             state={saveButtonBarState}
             disabled={disabled || !hasChanged}
           />

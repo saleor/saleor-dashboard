@@ -6,7 +6,7 @@ import Form from "@saleor/components/Form";
 import FormSpacer from "@saleor/components/FormSpacer";
 import Grid from "@saleor/components/Grid";
 import PageHeader from "@saleor/components/PageHeader";
-import SaveButtonBar from "@saleor/components/SaveButtonBar";
+import Savebar from "@saleor/components/Savebar";
 import { ShopInfo_shop_permissions } from "@saleor/components/Shop/types/ShopInfo";
 import { PermissionGroupErrorFragment } from "@saleor/fragments/types/PermissionGroupErrorFragment";
 import { SubmitPromise } from "@saleor/hooks/useForm";
@@ -134,9 +134,9 @@ const PermissionGroupDetailsPage: React.FC<PermissionGroupDetailsPageProps> = ({
             </div>
           </Grid>
           <div>
-            <SaveButtonBar
+            <Savebar
               onCancel={onBack}
-              onSave={submit}
+              onSubmit={submit}
               state={saveButtonBarState}
               disabled={disabled || !(hasChanged || membersModified)}
             />

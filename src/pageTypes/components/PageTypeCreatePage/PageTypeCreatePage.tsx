@@ -7,7 +7,7 @@ import Grid from "@saleor/components/Grid";
 import Hr from "@saleor/components/Hr";
 import Metadata, { MetadataFormData } from "@saleor/components/Metadata";
 import PageHeader from "@saleor/components/PageHeader";
-import SaveButtonBar from "@saleor/components/SaveButtonBar";
+import Savebar from "@saleor/components/Savebar";
 import { PageErrorFragment } from "@saleor/fragments/types/PageErrorFragment";
 import { commonMessages, sectionNames } from "@saleor/intl";
 import { makeStyles } from "@saleor/macaw-ui";
@@ -98,9 +98,9 @@ const PageTypeCreatePage: React.FC<PageTypeCreatePageProps> = props => {
               <Metadata data={data} onChange={changeMetadata} />
               <div></div>
             </Grid>
-            <SaveButtonBar
+            <Savebar
               onCancel={onBack}
-              onSave={submit}
+              onSubmit={submit}
               disabled={disabled || !hasChanged}
               state={saveButtonBarState}
             />
