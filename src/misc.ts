@@ -274,7 +274,7 @@ export function getMutationState(
   return "default";
 }
 
-interface SaleorMutationResult {
+export interface SaleorMutationResult {
   errors?: UserError[];
 }
 export function getMutationErrors<
