@@ -190,13 +190,17 @@ export function createTypeProduct({
   slug = name,
   shippable = true
 }) {
+  const variantAttributesLine = getValueWithDefault(
+    hasVariants,
+    `variantAttributes: "${attributeId}"`
+  );
   const mutation = `mutation{
     productTypeCreate(input: {
       name: "${name}"
       slug: "${slug}"
       productAttributes: "${attributeId}"
-      variantAttributes: "${attributeId}"
       hasVariants: ${hasVariants}
+      ${variantAttributesLine}
       isShippingRequired:${shippable}
     }){
       productErrors{
