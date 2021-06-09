@@ -6,8 +6,8 @@ import useUser from "@saleor/hooks/useUser";
 import {
   makeStyles,
   SaleorTheme,
-  SideBar,
-  SideBarDrawer,
+  Sidebar,
+  SidebarDrawer,
   useBacklink,
   useSavebar,
   useTheme
@@ -166,7 +166,7 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
       />
       <div className={classes.root}>
         {isMdUp && (
-          <SideBar
+          <Sidebar
             active={activeMenu}
             menuItems={menuStructure}
             onMenuItemClick={navigate}
@@ -185,7 +185,7 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
                   <div className={classes.headerAnchor} ref={appHeaderAnchor} />
                   <div className={classes.headerToolbar}>
                     {!isMdUp && (
-                      <SideBarDrawer
+                      <SidebarDrawer
                         menuItems={menuStructure}
                         onMenuItemClick={navigate}
                       />
