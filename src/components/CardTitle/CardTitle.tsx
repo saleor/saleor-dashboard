@@ -9,6 +9,7 @@ interface CardTitleProps {
   subtitle?: string | React.ReactNode;
   toolbar?: React.ReactNode;
   onClick?: (event: React.MouseEvent<any>) => void;
+  onClose?: () => void;
 }
 
 const CardTitle: React.FC<CardTitleProps> = ({
