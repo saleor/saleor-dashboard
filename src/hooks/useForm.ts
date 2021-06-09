@@ -1,3 +1,4 @@
+import { getMutationErrors, SaleorMutationResult } from "@saleor/misc";
 import { toggle } from "@saleor/utils/lists";
 import isEqual from "lodash/isEqual";
 import omit from "lodash/omit";
@@ -12,7 +13,7 @@ export interface ChangeEvent<TData = any> {
     value: TData;
   };
 }
-export type SubmitPromise = Promise<any[]>;
+export type SubmitPromise = Promise<Record<string, SaleorMutationResult>>;
 
 export type FormChange = (event: ChangeEvent, cb?: () => void) => void;
 
@@ -123,10 +124,14 @@ function useForm<T extends FormData>(
     if (typeof onSubmit === "function" && !Object.keys(errors).length) {
       const result = onSubmit(data);
       if (result) {
-        const errors = await result;
+        const resultData = await result;
+        const errors = getMutationErrors(resultData);
         if (errors?.length === 0) {
           setChanged(false);
+          return { isError: false };
         }
+
+        return { isError: true };
       }
     }
   }
