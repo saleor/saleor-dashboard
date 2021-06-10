@@ -110,7 +110,7 @@ const OrderCustomer: React.FC<OrderCustomerProps> = props => {
           !!canEditCustomer && (
             <RequirePermissions
               userPermissions={userPermissions}
-              requiredPermissions={[PermissionEnum.MANAGE_USERS]}
+              requiredPermissions={[PermissionEnum.MANAGE_ORDERS]}
             >
               <Button
                 data-test-id="edit-customer"
