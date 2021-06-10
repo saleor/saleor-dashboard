@@ -22,11 +22,12 @@ export enum ProductFilterKeys {
 export interface ProductListFilterOpts {
   attributes: Array<
     FilterOpts<string[]> & {
-      choices: MultiAutocompleteChoiceType[];
+      id: string;
       name: string;
       slug: string;
     }
   >;
+  attributeChoices: FilterOpts<string[]> & AutocompleteFilterOpts;
   categories: FilterOpts<string[]> & AutocompleteFilterOpts;
   collections: FilterOpts<string[]> & AutocompleteFilterOpts;
   price: FilterOpts<MinMax>;
@@ -156,7 +157,8 @@ export function createFilterStructure(
         attr.name,
         attr.value,
         true,
-        attr.choices
+        opts.attributeChoices.choices,
+        attr.id
       ),
       active: attr.active,
       group: ProductFilterKeys.attributes

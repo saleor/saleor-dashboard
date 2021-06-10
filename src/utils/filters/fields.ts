@@ -52,7 +52,8 @@ export function createOptionsField<T extends string>(
   label: string,
   defaultValue: string[],
   multiple: boolean,
-  options: MultiAutocompleteChoiceType[]
+  options: MultiAutocompleteChoiceType[],
+  id?: string
 ): IFilterElement<T> {
   return {
     active: false,
@@ -61,7 +62,8 @@ export function createOptionsField<T extends string>(
     name,
     options,
     type: FieldType.options,
-    value: defaultValue
+    value: defaultValue,
+    id
   };
 }
 

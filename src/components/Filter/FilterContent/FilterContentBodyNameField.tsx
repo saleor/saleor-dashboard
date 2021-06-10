@@ -43,6 +43,7 @@ const FilterContentBodyNameField: React.FC<FilterContentBodyNameFieldProps> = ({
           />
         }
         label={filter.label}
+        onClick={event => event.stopPropagation()}
         onChange={() =>
           onFilterPropertyChange({
             payload: {

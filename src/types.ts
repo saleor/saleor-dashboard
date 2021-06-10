@@ -1,7 +1,7 @@
 import { MutationResult } from "react-apollo";
 
 import { ConfirmButtonTransitionState } from "./components/ConfirmButton";
-import { IFilter } from "./components/Filter";
+import { IFilter, IFilterElement } from "./components/Filter";
 import { MultiAutocompleteChoiceType } from "./components/MultiAutocompleteSelectField";
 import { User_userPermissions } from "./fragments/types/User";
 
@@ -107,6 +107,7 @@ export interface FilterPageProps<TKeys extends string, TOpts extends {}>
 export interface FilterProps<TKeys extends string> {
   currencySymbol?: string;
   onFilterChange: (filter: IFilter<TKeys>) => void;
+  onFilterAttributeFocus: (id: string) => void;
 }
 
 export interface TabPageProps {

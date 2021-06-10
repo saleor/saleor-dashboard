@@ -9,6 +9,10 @@ import { InitialProductFilterCategories_categories_edges_node } from "@saleor/pr
 import { InitialProductFilterCollections_collections_edges_node } from "@saleor/products/types/InitialProductFilterCollections";
 import { InitialProductFilterProductTypes_productTypes_edges_node } from "@saleor/products/types/InitialProductFilterProductTypes";
 import {
+  SearchAttributeValues,
+  SearchAttributeValuesVariables
+} from "@saleor/searches/types/SearchAttributeValues";
+import {
   SearchCategories,
   SearchCategoriesVariables
 } from "@saleor/searches/types/SearchCategories";
@@ -50,6 +54,10 @@ export const PRODUCT_FILTERS_KEY = "productFilters";
 export function getFilterOpts(
   params: ProductListUrlFilters,
   attributes: InitialProductFilterAttributes_attributes_edges_node[],
+  attributeChoices: UseSearchResult<
+    SearchAttributeValues,
+    SearchAttributeValuesVariables
+  >,
   categories: {
     initial: InitialProductFilterCategories_categories_edges_node[];
     search: UseSearchResult<SearchCategories, SearchCategoriesVariables>;
@@ -68,10 +76,7 @@ export function getFilterOpts(
       .sort((a, b) => (a.name > b.name ? 1 : -1))
       .map(attr => ({
         active: maybe(() => params.attributes[attr.slug].length > 0, false),
-        choices: attr.choices?.edges?.map(val => ({
-          label: val.node.name,
-          value: val.node.slug
-        })),
+        id: attr.id,
         name: attr.name,
         slug: attr.slug,
         value:
@@ -79,6 +84,26 @@ export function getFilterOpts(
             ? params.attributes[attr.slug]
             : []
       })),
+    attributeChoices: {
+      active: true,
+      choices: mapEdgesToItems(
+        attributeChoices.result.data?.attribute?.choices
+      )?.map(choice => ({
+        label: choice.name,
+        value: choice.slug
+      })),
+      displayValues: mapNodeToChoice(
+        mapEdgesToItems(attributeChoices.result.data?.attribute?.choices)
+      ),
+      hasMore:
+        attributeChoices.result.data?.attribute?.choices?.pageInfo
+          ?.hasNextPage || false,
+      initialSearch: "",
+      loading: attributeChoices.result.loading,
+      onFetchMore: attributeChoices.loadMore,
+      onSearchChange: attributeChoices.search,
+      value: null
+    },
     categories: {
       active: !!params.categories,
       choices: mapNodeToChoice(
