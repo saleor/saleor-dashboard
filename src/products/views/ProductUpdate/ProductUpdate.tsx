@@ -326,6 +326,8 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
         onImageUpload={handleImageUpload}
         onImageEdit={handleImageEdit}
         onImageDelete={handleImageDelete}
+        params={params}
+        id={id}
         toolbar={
           <IconButton
             color="primary"
