@@ -54,7 +54,7 @@ export const PRODUCT_FILTERS_KEY = "productFilters";
 export function getFilterOpts(
   params: ProductListUrlFilters,
   attributes: InitialProductFilterAttributes_attributes_edges_node[],
-  attributeChoices: UseSearchResult<
+  focusedAttributeChoices: UseSearchResult<
     SearchAttributeValues,
     SearchAttributeValuesVariables
   >,
@@ -81,27 +81,27 @@ export function getFilterOpts(
         slug: attr.slug,
         value:
           !!params.attributes && params.attributes[attr.slug]
-            ? params.attributes[attr.slug]
+            ? dedupeFilter(params.attributes[attr.slug])
             : []
       })),
     attributeChoices: {
       active: true,
       choices: mapEdgesToItems(
-        attributeChoices.result.data?.attribute?.choices
+        focusedAttributeChoices.result.data?.attribute?.choices
       )?.map(choice => ({
         label: choice.name,
         value: choice.slug
       })),
       displayValues: mapNodeToChoice(
-        mapEdgesToItems(attributeChoices.result.data?.attribute?.choices)
+        mapEdgesToItems(focusedAttributeChoices.result.data?.attribute?.choices)
       ),
       hasMore:
-        attributeChoices.result.data?.attribute?.choices?.pageInfo
+        focusedAttributeChoices.result.data?.attribute?.choices?.pageInfo
           ?.hasNextPage || false,
       initialSearch: "",
-      loading: attributeChoices.result.loading,
-      onFetchMore: attributeChoices.loadMore,
-      onSearchChange: attributeChoices.search,
+      loading: focusedAttributeChoices.result.loading,
+      onFetchMore: focusedAttributeChoices.loadMore,
+      onSearchChange: focusedAttributeChoices.search,
       value: null
     },
     categories: {
