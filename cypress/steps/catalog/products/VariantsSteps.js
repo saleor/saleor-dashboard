@@ -17,12 +17,9 @@ export function variantsShouldBeVisible({ name, price }) {
 export function createFirstVariant({ sku, warehouseId, price, attribute }) {
   cy.get(PRODUCT_DETAILS.addVariantsButton).click();
   cy.get(VARIANTS_SELECTORS.valueContainer)
-    .contains(attribute)
-    .find(VARIANTS_SELECTORS.attributeCheckbox)
     .click()
-    .get(VARIANTS_SELECTORS.valueContainer)
-    .find(BUTTON_SELECTORS.checked)
-    .should("exist")
+    .contains(attribute)
+    .click()
     .get(VARIANTS_SELECTORS.nextButton)
     .click();
   fillUpPriceList(price);
