@@ -1,6 +1,7 @@
 import faker from "faker";
 
 import { searchInShop } from "../../../../apiRequests/storeFront/Search";
+import { ONE_PERMISSION_USERS } from "../../../../Data/users";
 import { updateProductVisibleInListings } from "../../../../steps/catalog/products/productSteps";
 import { productDetailsUrl } from "../../../../url/urlList";
 import { getDefaultChannel } from "../../../../utils/channelsUtils";
@@ -14,6 +15,7 @@ describe("Products displayed in listings", () => {
   let productType;
   let attribute;
   let category;
+  let defaultChannel;
 
   before(() => {
     cy.clearSessionData().loginUserViaRequest();
@@ -29,28 +31,33 @@ describe("Products displayed in listings", () => {
           productType = productTypeResp;
           attribute = attributeResp;
           category = categoryResp;
+          getDefaultChannel();
         }
-      );
+      )
+      .then(channel => {
+        defaultChannel = channel;
+      });
   });
 
   beforeEach(() => {
-    cy.clearSessionData().loginUserViaRequest();
+    cy.clearSessionData().loginUserViaRequest(
+      "auth",
+      ONE_PERMISSION_USERS.product
+    );
   });
+
   it("should update product to visible in listings", () => {
     const productName = `${startsWith}${faker.datatype.number()}`;
-    let defaultChannel;
-    getDefaultChannel()
-      .then(channel => {
-        defaultChannel = channel;
-        productsUtils.createProductInChannel({
-          name: productName,
-          channelId: defaultChannel.id,
-          productTypeId: productType.id,
-          attributeId: attribute.id,
-          categoryId: category.id,
-          visibleInListings: false,
-          isAvailableForPurchase: false
-        });
+
+    productsUtils
+      .createProductInChannel({
+        name: productName,
+        channelId: defaultChannel.id,
+        productTypeId: productType.id,
+        attributeId: attribute.id,
+        categoryId: category.id,
+        visibleInListings: false,
+        isAvailableForPurchase: false
       })
       .then(({ product: productResp }) => {
         const product = productResp;
@@ -66,20 +73,18 @@ describe("Products displayed in listings", () => {
         expect(isProductVisible).to.be.eq(true);
       });
   });
+
   it("should update product to not visible in listings", () => {
     const productName = `${startsWith}${faker.datatype.number()}`;
-    let defaultChannel;
-    getDefaultChannel()
-      .then(channel => {
-        defaultChannel = channel;
-        productsUtils.createProductInChannel({
-          name: productName,
-          channelId: defaultChannel.id,
-          productTypeId: productType.id,
-          attributeId: attribute.id,
-          categoryId: category.id,
-          visibleInListings: true
-        });
+
+    productsUtils
+      .createProductInChannel({
+        name: productName,
+        channelId: defaultChannel.id,
+        productTypeId: productType.id,
+        attributeId: attribute.id,
+        categoryId: category.id,
+        visibleInListings: true
       })
       .then(({ product: productResp }) => {
         const product = productResp;

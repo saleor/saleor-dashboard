@@ -8,10 +8,10 @@ import {
   addChannelToShippingZone
 } from "../../../apiRequests/ShippingMethod";
 import { createWarehouse } from "../../../apiRequests/Warehouse";
+import { ONE_PERMISSION_USERS } from "../../../Data/users";
 import { BUTTON_SELECTORS } from "../../../elements/shared/button-selectors";
 import { SHARED_ELEMENTS } from "../../../elements/shared/sharedElements";
 import { SHIPPING_ZONE_DETAILS } from "../../../elements/shipping/shipping-zone-details";
-import { SHIPPING_ZONES_LIST } from "../../../elements/shipping/shipping-zones-list";
 import { selectChannelInHeader } from "../../../steps/channelsSteps";
 import {
   createShippingRate,
@@ -78,7 +78,6 @@ describe("Shipping methods", () => {
 
   beforeEach(() => {
     cy.clearSessionData().loginUserViaRequest();
-    cy.visit(urlList.shippingMethods);
   });
 
   it("should display different price for each channel", () => {
@@ -123,6 +122,13 @@ describe("Shipping methods", () => {
         }
       )
       .then(() => {
+        cy.clearSessionData()
+          .loginUserViaRequest("auth", ONE_PERMISSION_USERS.shipping)
+          .visit(urlList.shippingMethods)
+          .get(SHARED_ELEMENTS.header)
+          .should("be.visible")
+          .get(SHARED_ELEMENTS.progressBar)
+          .should("not.exist");
         cy.addAliasToGraphRequest("ShippingZone");
         cy.getTextFromElement(SHARED_ELEMENTS.table);
       })
@@ -159,7 +165,11 @@ describe("Shipping methods", () => {
   });
   it("should create price based shipping method", () => {
     const shippingName = `${startsWith}${faker.datatype.number()}`;
-
+    cy.clearSessionData().loginUserViaRequest(
+      "auth",
+      ONE_PERMISSION_USERS.shipping
+    );
+    cy.visit(urlList.shippingMethods);
     createShippingZone(
       shippingName,
       warehouse.name,
@@ -185,7 +195,11 @@ describe("Shipping methods", () => {
 
   it("should create weight based shipping method", () => {
     const shippingName = `${startsWith}${faker.datatype.number()}`;
-
+    cy.clearSessionData().loginUserViaRequest(
+      "auth",
+      ONE_PERMISSION_USERS.shipping
+    );
+    cy.visit(urlList.shippingMethods);
     createShippingZone(
       shippingName,
       warehouse.name,
