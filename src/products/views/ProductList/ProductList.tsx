@@ -149,7 +149,8 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
   const searchAttributeValues = useAttributeValueSearch({
     variables: {
       id: focusedAttribute,
-      ...DEFAULT_INITIAL_SEARCH_DATA
+      ...DEFAULT_INITIAL_SEARCH_DATA,
+      first: 10
     },
     skip: !focusedAttribute
   });

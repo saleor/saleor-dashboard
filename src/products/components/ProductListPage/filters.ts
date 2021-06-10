@@ -151,12 +151,20 @@ export function createFilterStructure(
       active: opts.productType.active
     },
     ...opts.attributes.map(attr => ({
-      ...createOptionsField(
+      ...createAutocompleteField(
         attr.slug as any,
         attr.name,
         attr.value,
+        opts.attributeChoices.displayValues,
         true,
         opts.attributeChoices.choices,
+        {
+          hasMore: opts.attributeChoices.hasMore,
+          initialSearch: "",
+          loading: opts.attributeChoices.loading,
+          onFetchMore: opts.attributeChoices.onFetchMore,
+          onSearchChange: opts.attributeChoices.onSearchChange
+        },
         attr.id
       ),
       active: attr.active,
