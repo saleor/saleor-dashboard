@@ -248,7 +248,7 @@ const OrderProductAddDialog: React.FC<OrderProductAddDialogProps> = props => {
           description="dialog header"
         />
       </DialogTitle>
-      <DialogContent className={classes.overflow}>
+      <DialogContent className={classes.overflow} data-test-id="searchQuery">
         <TextField
           name="query"
           value={query}
