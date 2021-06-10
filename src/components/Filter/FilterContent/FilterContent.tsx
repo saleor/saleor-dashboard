@@ -75,7 +75,7 @@ const useSummaryStyles = makeStyles(
 export interface FilterContentProps<T extends string = string> {
   filters: IFilter<T>;
   onFilterPropertyChange: React.Dispatch<FilterReducerAction<T>>;
-  onFilterAttributeFocus: (id: string) => void;
+  onFilterAttributeFocus?: (id?: string) => void;
   onClear: () => void;
   onSubmit: () => void;
   currencySymbol?: string;
@@ -145,13 +145,16 @@ const FilterContent: React.FC<FilterContentProps> = ({
     initialAutocompleteDisplayValues
   };
 
+  const handleFilterAttributeFocus = (id?: string) =>
+    onFilterAttributeFocus && onFilterAttributeFocus(id);
+
   const handleFilterOpen = (filter: IFilterElement<string>) => {
     if (filter.name !== openedFilter?.name) {
       setOpenedFilter(filter);
-      onFilterAttributeFocus(filter.id);
+      handleFilterAttributeFocus(filter.id);
     } else {
       setOpenedFilter(undefined);
-      onFilterAttributeFocus(undefined);
+      handleFilterAttributeFocus(undefined);
     }
   };
 
@@ -163,10 +166,10 @@ const FilterContent: React.FC<FilterContentProps> = ({
 
     if (swicthToActive && filter.name !== openedFilter?.name) {
       setOpenedFilter(filter);
-      onFilterAttributeFocus(filter.id);
+      handleFilterAttributeFocus(filter.id);
     } else if (!swicthToActive && filter.name === openedFilter?.name) {
       setOpenedFilter(undefined);
-      onFilterAttributeFocus(undefined);
+      handleFilterAttributeFocus(undefined);
     }
 
     onFilterPropertyChange(action);

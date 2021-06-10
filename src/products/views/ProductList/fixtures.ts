@@ -8,11 +8,8 @@ import { StockAvailability } from "@saleor/types/globalTypes";
 
 export const productListFilterOpts: ProductListFilterOpts = {
   attributes: attributes.map(attr => ({
+    id: attr.id,
     active: false,
-    choices: attr.choices.edges.map(val => ({
-      label: val.node.name,
-      value: val.node.slug
-    })),
     name: attr.name,
     slug: attr.slug,
     value: [
@@ -20,6 +17,20 @@ export const productListFilterOpts: ProductListFilterOpts = {
       attr.choices.edges.length > 2 && attr.choices.edges[2].node.slug
     ]
   })),
+  attributeChoices: {
+    ...fetchMoreProps,
+    ...searchPageProps,
+    active: false,
+    value: null,
+    choices: attributes[0].choices.edges.map(edge => ({
+      value: edge.node.slug,
+      label: edge.node.name
+    })),
+    displayValues: attributes[0].choices.edges.map(edge => ({
+      value: edge.node.slug,
+      label: edge.node.name
+    }))
+  },
   categories: {
     ...fetchMoreProps,
     ...searchPageProps,

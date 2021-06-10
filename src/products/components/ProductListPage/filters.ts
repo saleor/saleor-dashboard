@@ -1,5 +1,4 @@
 import { IFilter } from "@saleor/components/Filter";
-import { MultiAutocompleteChoiceType } from "@saleor/components/MultiAutocompleteSelectField";
 import { sectionNames } from "@saleor/intl";
 import { AutocompleteFilterOpts, FilterOpts, MinMax } from "@saleor/types";
 import { StockAvailability } from "@saleor/types/globalTypes";

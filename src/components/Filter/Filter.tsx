@@ -21,7 +21,7 @@ export interface FilterProps<TFilterKeys extends string = string> {
   errorMessages?: FilterErrorMessages<TFilterKeys>;
   menu: IFilter<TFilterKeys>;
   onFilterAdd: (filter: Array<IFilterElement<string>>) => void;
-  onFilterAttributeFocus: (id: string) => void;
+  onFilterAttributeFocus?: (id?: string) => void;
 }
 
 const useStyles = makeStyles(
