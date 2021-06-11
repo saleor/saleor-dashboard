@@ -5,6 +5,7 @@ import { fetchMoreProps, searchPageProps } from "@saleor/fixtures";
 import { ProductListFilterOpts } from "@saleor/products/components/ProductListPage";
 import { productTypes } from "@saleor/productTypes/fixtures";
 import { StockAvailability } from "@saleor/types/globalTypes";
+import { mapEdgesToItems, mapSlugNodeToChoice } from "@saleor/utils/maps";
 
 export const productListFilterOpts: ProductListFilterOpts = {
   attributes: attributes.map(attr => ({
@@ -22,14 +23,8 @@ export const productListFilterOpts: ProductListFilterOpts = {
     ...searchPageProps,
     active: false,
     value: null,
-    choices: attributes[0].choices.edges.map(edge => ({
-      value: edge.node.slug,
-      label: edge.node.name
-    })),
-    displayValues: attributes[0].choices.edges.map(edge => ({
-      value: edge.node.slug,
-      label: edge.node.name
-    }))
+    choices: mapSlugNodeToChoice(mapEdgesToItems(attributes[0].choices)),
+    displayValues: mapSlugNodeToChoice(mapEdgesToItems(attributes[0].choices))
   },
   categories: {
     ...fetchMoreProps,

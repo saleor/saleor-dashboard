@@ -145,15 +145,17 @@ const FilterContent: React.FC<FilterContentProps> = ({
     initialAutocompleteDisplayValues
   };
 
-  const handleFilterAttributeFocus = (id?: string) =>
-    onFilterAttributeFocus && onFilterAttributeFocus(id);
+  const handleFilterAttributeFocus = (filter?: IFilterElement<string>) => {
+    setOpenedFilter(filter);
+    if (onFilterAttributeFocus) {
+      onFilterAttributeFocus(filter?.id);
+    }
+  };
 
   const handleFilterOpen = (filter: IFilterElement<string>) => {
     if (filter.name !== openedFilter?.name) {
-      setOpenedFilter(filter);
-      handleFilterAttributeFocus(filter.id);
+      handleFilterAttributeFocus(filter);
     } else {
-      setOpenedFilter(undefined);
       handleFilterAttributeFocus(undefined);
     }
   };
@@ -162,13 +164,11 @@ const FilterContent: React.FC<FilterContentProps> = ({
     action: FilterReducerAction<T>,
     filter: IFilterElement<string>
   ) {
-    const swicthToActive = action.payload.update.active;
+    const switchToActive = action.payload.update.active;
 
-    if (swicthToActive && filter.name !== openedFilter?.name) {
-      setOpenedFilter(filter);
-      handleFilterAttributeFocus(filter.id);
-    } else if (!swicthToActive && filter.name === openedFilter?.name) {
-      setOpenedFilter(undefined);
+    if (switchToActive && filter.name !== openedFilter?.name) {
+      handleFilterAttributeFocus(filter);
+    } else if (!switchToActive && filter.name === openedFilter?.name) {
       handleFilterAttributeFocus(undefined);
     }
 

@@ -24,7 +24,11 @@ import {
   SearchProductTypes,
   SearchProductTypesVariables
 } from "@saleor/searches/types/SearchProductTypes";
-import { mapEdgesToItems, mapNodeToChoice } from "@saleor/utils/maps";
+import {
+  mapEdgesToItems,
+  mapNodeToChoice,
+  mapSlugNodeToChoice
+} from "@saleor/utils/maps";
 import isArray from "lodash/isArray";
 
 import { IFilterElement } from "../../../components/Filter";
@@ -86,12 +90,9 @@ export function getFilterOpts(
       })),
     attributeChoices: {
       active: true,
-      choices: mapEdgesToItems(
-        focusedAttributeChoices.result.data?.attribute?.choices
-      )?.map(choice => ({
-        label: choice.name,
-        value: choice.slug
-      })),
+      choices: mapSlugNodeToChoice(
+        mapEdgesToItems(focusedAttributeChoices.result.data?.attribute?.choices)
+      ),
       displayValues: mapNodeToChoice(
         mapEdgesToItems(focusedAttributeChoices.result.data?.attribute?.choices)
       ),
