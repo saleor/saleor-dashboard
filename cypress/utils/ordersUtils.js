@@ -2,13 +2,13 @@ import * as checkoutRequest from "../apiRequests/Checkout";
 import * as orderRequest from "../apiRequests/Order";
 import { createProductInChannel } from "./products/productsUtils";
 
-export function createWaitingForCaptureOrder(
+export function createWaitingForCaptureOrder({
   channelSlug,
   email,
   variantsList,
   shippingMethodId,
   address
-) {
+}) {
   let checkout;
   const auth = "token";
   cy.loginInShop();

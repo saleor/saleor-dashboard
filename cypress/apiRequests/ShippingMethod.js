@@ -1,12 +1,16 @@
-export function createShippingRate(name, shippingZone) {
+export function createShippingRate({ name, shippingZoneId }) {
   const mutation = `mutation{
     shippingPriceCreate(input:{
       name: "${name}"
-      shippingZone: "${shippingZone}"
+      shippingZone: "${shippingZoneId}"
       type: PRICE
     }){
       shippingMethod{
         id
+      }
+      errors{
+        field
+        message
       }
     }
   }`;
@@ -23,6 +27,10 @@ export function createShippingZone(name, country, channelId) {
       shippingZone{
         id
         name
+      }
+      errors{
+        field
+        message
       }
     }
   }`;
@@ -43,18 +51,24 @@ export function addChannelToShippingZone(shippingZoneId, channelId) {
   }`;
   return cy.sendRequestWithQuery(mutation);
 }
-export function addChannelToShippingMethod(shippingRateId, channelId, price) {
+export function addChannelToShippingMethod(
+  shippingRateId,
+  channelId,
+  price,
+  minProductPrice = 0
+) {
   const mutation = `mutation{
     shippingMethodChannelListingUpdate(id:"${shippingRateId}", input:{
       addChannels: {
         channelId:"${channelId}"
         price: ${price}
+        minimumOrderPrice:${minProductPrice}
       }
     }){
       shippingMethod{
         id
       }
-      shippingErrors{
+      errors{
         code
         message
       }
