@@ -74,8 +74,7 @@ interface ProductCreatePageProps {
   fetchCategories: (data: string) => void;
   fetchCollections: (data: string) => void;
   fetchProductTypes: (data: string) => void;
-  fetchAttributeValues: (query: string) => void;
-  onAttributeFocus: (id: string) => void;
+  fetchAttributeValues: (query: string, attributeId: string) => void;
   onWarehouseConfigure: () => void;
   openChannelsModal: () => void;
   onChannelsChange: (data: ChannelData[]) => void;
@@ -130,8 +129,7 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
   fetchAttributeValues,
   fetchMoreAttributeValues,
   onCloseDialog,
-  onSelectProductType,
-  onAttributeFocus
+  onSelectProductType
 }: ProductCreatePageProps) => {
   const intl = useIntl();
 
@@ -242,7 +240,6 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
                     onReferencesReorder={handlers.reorderAttributeValue}
                     fetchAttributeValues={fetchAttributeValues}
                     fetchMoreAttributeValues={fetchMoreAttributeValues}
-                    onAttributeFocus={onAttributeFocus}
                   />
                 )}
                 <CardSpacer />

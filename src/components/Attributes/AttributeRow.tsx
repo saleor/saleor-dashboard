@@ -55,9 +55,8 @@ export interface AttributeRowHandlers {
   onReferencesAddClick: (attribute: AttributeInput) => void;
   onReferencesRemove: FormsetChange<string[]>;
   onReferencesReorder: FormsetChange<ReorderEvent>;
-  fetchAttributeValues: (query: string) => void;
+  fetchAttributeValues: (query: string, attributeId: string) => void;
   fetchMoreAttributeValues: FetchMoreProps;
-  onAttributeFocus: (id: string) => void;
 }
 
 interface AttributeRowProps extends AttributeRowHandlers {
@@ -81,8 +80,7 @@ const AttributeRow: React.FC<AttributeRowProps> = ({
   onReferencesReorder,
   onChange,
   fetchAttributeValues,
-  fetchMoreAttributeValues,
-  onAttributeFocus
+  fetchMoreAttributeValues
 }) => {
   const intl = useIntl();
   const classes = useStyles({});
@@ -147,9 +145,9 @@ const AttributeRow: React.FC<AttributeRowProps> = ({
             value={attribute.value[0]}
             onChange={event => onChange(attribute.id, event.target.value)}
             allowCustomValues={true}
-            fetchChoices={fetchAttributeValues}
+            fetchOnFocus={true}
+            fetchChoices={value => fetchAttributeValues(value, attribute.id)}
             {...fetchMoreAttributeValues}
-            onFocus={() => onAttributeFocus(attribute.id)}
           />
         </BasicAttributeRow>
       );
@@ -209,9 +207,9 @@ const AttributeRow: React.FC<AttributeRowProps> = ({
             value={attribute.value}
             onChange={event => onMultiChange(attribute.id, event.target.value)}
             allowCustomValues={true}
-            fetchChoices={fetchAttributeValues}
+            fetchOnFocus={true}
+            fetchChoices={value => fetchAttributeValues(value, attribute.id)}
             {...fetchMoreAttributeValues}
-            onFocus={() => onAttributeFocus(attribute.id)}
           />
         </BasicAttributeRow>
       );

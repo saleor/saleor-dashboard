@@ -12,10 +12,10 @@ import {
 import { useFileUploadMutation } from "@saleor/files/mutations";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
-import useAttributeValueSearch from "@saleor/searches/useAttributeValueSearch";
 import usePageSearch from "@saleor/searches/usePageSearch";
 import usePageTypeSearch from "@saleor/searches/usePageTypeSearch";
 import useProductSearch from "@saleor/searches/useProductSearch";
+import createAttributeValueSearchHandler from "@saleor/utils/handlers/attributeValueSearchHandler";
 import createMetadataCreateHandler from "@saleor/utils/handlers/metadataCreateHandler";
 import { mapEdgesToItems } from "@saleor/utils/maps";
 import {
@@ -23,7 +23,7 @@ import {
   usePrivateMetadataUpdate
 } from "@saleor/utils/metadata/updateMetadata";
 import { getParsedDataForJsonStringField } from "@saleor/utils/richText/misc";
-import React, { useState } from "react";
+import React from "react";
 import { useIntl } from "react-intl";
 
 import PageDetailsPage from "../components/PageDetailsPage";
@@ -73,18 +73,11 @@ export const PageCreate: React.FC<PageCreateProps> = ({ params }) => {
   } = useProductSearch({
     variables: DEFAULT_INITIAL_SEARCH_DATA
   });
-  const [focusedAttribute, setFocusedAttribute] = useState<string>();
   const {
     loadMore: loadMoreAttributeValues,
     search: searchAttributeValues,
     result: searchAttributeValuesOpts
-  } = useAttributeValueSearch({
-    variables: {
-      id: focusedAttribute,
-      ...DEFAULT_INITIAL_SEARCH_DATA
-    },
-    skip: !focusedAttribute
-  });
+  } = createAttributeValueSearchHandler(DEFAULT_INITIAL_SEARCH_DATA);
 
   const { data: selectedPageType } = usePageTypeQuery({
     variables: {
@@ -222,7 +215,6 @@ export const PageCreate: React.FC<PageCreateProps> = ({ params }) => {
               onCloseDialog={() => navigate(pageCreateUrl())}
               selectedPageType={selectedPageType?.pageType}
               onSelectPageType={id => setSelectedPageTypeId(id)}
-              onAttributeFocus={setFocusedAttribute}
             />
           </>
         );
