@@ -19,11 +19,28 @@ export interface AttributeTranslationDetails_translation_AttributeTranslatableCo
   name: string;
 }
 
+export interface AttributeTranslationDetails_translation_AttributeTranslatableContent_attribute_values_translation {
+  __typename: "AttributeValueTranslation";
+  id: string;
+  name: string;
+  richText: any | null;
+}
+
+export interface AttributeTranslationDetails_translation_AttributeTranslatableContent_attribute_values {
+  __typename: "AttributeValue";
+  id: string;
+  name: string | null;
+  richText: any | null;
+  inputType: AttributeInputTypeEnum | null;
+  translation: AttributeTranslationDetails_translation_AttributeTranslatableContent_attribute_values_translation | null;
+}
+
 export interface AttributeTranslationDetails_translation_AttributeTranslatableContent_attribute {
   __typename: "Attribute";
   id: string;
   name: string | null;
   inputType: AttributeInputTypeEnum | null;
+  values: (AttributeTranslationDetails_translation_AttributeTranslatableContent_attribute_values | null)[] | null;
 }
 
 export interface AttributeTranslationDetails_translation_AttributeTranslatableContent {
