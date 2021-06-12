@@ -43,6 +43,12 @@ const useStyles = makeStyles(
   () => ({
     fileField: {
       float: "right"
+    },
+    pullRight: {
+      "& > *": {
+        float: "right",
+        clear: "right"
+      }
     }
   }),
   { name: "AttributeRow" }
@@ -193,6 +199,24 @@ const AttributeRow: React.FC<AttributeRowProps> = ({
               }
             }
           />
+        </BasicAttributeRow>
+      );
+    case AttributeInputTypeEnum.BOOLEAN:
+      return (
+        <BasicAttributeRow label={attribute.label}>
+          <div className={classes.pullRight}>
+            <Checkbox
+              disabled={disabled}
+              name={`attribute:${attribute.label}`}
+              onChange={event =>
+                onChange(attribute.id, JSON.stringify(event.target.checked))
+              }
+              checked={JSON.parse(attribute.value[0])}
+              className={classes.alignRight}
+              helperText={getErrorMessage(error, intl)}
+              error={!!error}
+            />
+          </div>
         </BasicAttributeRow>
       );
     default:

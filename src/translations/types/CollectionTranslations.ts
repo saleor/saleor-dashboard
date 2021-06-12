@@ -32,7 +32,7 @@ export interface CollectionTranslations_translations_edges_node_CollectionTransl
   id: string;
   description: any | null;
   language: CollectionTranslations_translations_edges_node_CollectionTranslatableContent_translation_language;
-  name: string;
+  name: string | null;
   seoDescription: string | null;
   seoTitle: string | null;
 }

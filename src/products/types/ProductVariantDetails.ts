@@ -43,6 +43,7 @@ export interface ProductVariantDetails_productVariant_selectionAttributes_attrib
   file: ProductVariantDetails_productVariant_selectionAttributes_attribute_choices_edges_node_file | null;
   reference: string | null;
   richText: any | null;
+  boolean: boolean | null;
 }
 
 export interface ProductVariantDetails_productVariant_selectionAttributes_attribute_choices_edges {
@@ -83,6 +84,7 @@ export interface ProductVariantDetails_productVariant_selectionAttributes_values
   file: ProductVariantDetails_productVariant_selectionAttributes_values_file | null;
   reference: string | null;
   richText: any | null;
+  boolean: boolean | null;
 }
 
 export interface ProductVariantDetails_productVariant_selectionAttributes {
@@ -113,6 +115,7 @@ export interface ProductVariantDetails_productVariant_nonSelectionAttributes_att
   file: ProductVariantDetails_productVariant_nonSelectionAttributes_attribute_choices_edges_node_file | null;
   reference: string | null;
   richText: any | null;
+  boolean: boolean | null;
 }
 
 export interface ProductVariantDetails_productVariant_nonSelectionAttributes_attribute_choices_edges {
@@ -153,6 +156,7 @@ export interface ProductVariantDetails_productVariant_nonSelectionAttributes_val
   file: ProductVariantDetails_productVariant_nonSelectionAttributes_values_file | null;
   reference: string | null;
   richText: any | null;
+  boolean: boolean | null;
 }
 
 export interface ProductVariantDetails_productVariant_nonSelectionAttributes {

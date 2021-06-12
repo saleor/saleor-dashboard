@@ -3,6 +3,8 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
+import { AttributeInputTypeEnum } from "./../../types/globalTypes";
+
 // ====================================================
 // GraphQL query operation: InitialProductFilterAttributes
 // ====================================================
@@ -20,6 +22,7 @@ export interface InitialProductFilterAttributes_attributes_edges_node_choices_ed
   id: string;
   name: string | null;
   slug: string | null;
+  boolean: boolean | null;
 }
 
 export interface InitialProductFilterAttributes_attributes_edges_node_choices_edges {
@@ -39,6 +42,7 @@ export interface InitialProductFilterAttributes_attributes_edges_node {
   id: string;
   name: string | null;
   slug: string | null;
+  inputType: AttributeInputTypeEnum | null;
   choices: InitialProductFilterAttributes_attributes_edges_node_choices | null;
 }
 

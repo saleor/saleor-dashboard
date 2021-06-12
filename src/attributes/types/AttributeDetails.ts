@@ -43,6 +43,7 @@ export interface AttributeDetails_attribute_choices_edges_node {
   file: AttributeDetails_attribute_choices_edges_node_file | null;
   reference: string | null;
   richText: any | null;
+  boolean: boolean | null;
 }
 
 export interface AttributeDetails_attribute_choices_edges {

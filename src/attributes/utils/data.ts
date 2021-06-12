@@ -25,7 +25,8 @@ import { AttributeValueDelete } from "../types/AttributeValueDelete";
 
 export const ATTRIBUTE_TYPES_WITH_DEDICATED_VALUES = [
   AttributeInputTypeEnum.DROPDOWN,
-  AttributeInputTypeEnum.MULTISELECT
+  AttributeInputTypeEnum.MULTISELECT,
+  AttributeInputTypeEnum.BOOLEAN
 ];
 
 export interface AttributeReference {
@@ -86,6 +87,9 @@ export function getSelectedAttributeValues(
 
     case AttributeInputTypeEnum.NUMERIC:
       return [attribute.values[0]?.name];
+
+    case AttributeInputTypeEnum.BOOLEAN:
+      return [attribute.values[0]?.boolean || "false"];
 
     default:
       return attribute.values.map(value => value.slug);

@@ -15,6 +15,7 @@ export const attributeValueFragment = gql`
     }
     reference
     richText
+    boolean
   }
 `;
 

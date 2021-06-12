@@ -76,6 +76,7 @@ const initialProductFilterAttributesQuery = gql`
           id
           name
           slug
+          inputType
           choices(
             first: $firstValues
             after: $afterValues
@@ -91,6 +92,7 @@ const initialProductFilterAttributesQuery = gql`
                 id
                 name
                 slug
+                boolean
               }
             }
           }

@@ -50,6 +50,7 @@ export interface VariantUpdate_productVariantUpdate_productVariant_selectionAttr
   file: VariantUpdate_productVariantUpdate_productVariant_selectionAttributes_attribute_choices_edges_node_file | null;
   reference: string | null;
   richText: any | null;
+  boolean: boolean | null;
 }
 
 export interface VariantUpdate_productVariantUpdate_productVariant_selectionAttributes_attribute_choices_edges {
@@ -90,6 +91,7 @@ export interface VariantUpdate_productVariantUpdate_productVariant_selectionAttr
   file: VariantUpdate_productVariantUpdate_productVariant_selectionAttributes_values_file | null;
   reference: string | null;
   richText: any | null;
+  boolean: boolean | null;
 }
 
 export interface VariantUpdate_productVariantUpdate_productVariant_selectionAttributes {
@@ -120,6 +122,7 @@ export interface VariantUpdate_productVariantUpdate_productVariant_nonSelectionA
   file: VariantUpdate_productVariantUpdate_productVariant_nonSelectionAttributes_attribute_choices_edges_node_file | null;
   reference: string | null;
   richText: any | null;
+  boolean: boolean | null;
 }
 
 export interface VariantUpdate_productVariantUpdate_productVariant_nonSelectionAttributes_attribute_choices_edges {
@@ -160,6 +163,7 @@ export interface VariantUpdate_productVariantUpdate_productVariant_nonSelectionA
   file: VariantUpdate_productVariantUpdate_productVariant_nonSelectionAttributes_values_file | null;
   reference: string | null;
   richText: any | null;
+  boolean: boolean | null;
 }
 
 export interface VariantUpdate_productVariantUpdate_productVariant_nonSelectionAttributes {
@@ -381,6 +385,7 @@ export interface VariantUpdate_productVariantStocksUpdate_productVariant_selecti
   file: VariantUpdate_productVariantStocksUpdate_productVariant_selectionAttributes_attribute_choices_edges_node_file | null;
   reference: string | null;
   richText: any | null;
+  boolean: boolean | null;
 }
 
 export interface VariantUpdate_productVariantStocksUpdate_productVariant_selectionAttributes_attribute_choices_edges {
@@ -421,6 +426,7 @@ export interface VariantUpdate_productVariantStocksUpdate_productVariant_selecti
   file: VariantUpdate_productVariantStocksUpdate_productVariant_selectionAttributes_values_file | null;
   reference: string | null;
   richText: any | null;
+  boolean: boolean | null;
 }
 
 export interface VariantUpdate_productVariantStocksUpdate_productVariant_selectionAttributes {
@@ -451,6 +457,7 @@ export interface VariantUpdate_productVariantStocksUpdate_productVariant_nonSele
   file: VariantUpdate_productVariantStocksUpdate_productVariant_nonSelectionAttributes_attribute_choices_edges_node_file | null;
   reference: string | null;
   richText: any | null;
+  boolean: boolean | null;
 }
 
 export interface VariantUpdate_productVariantStocksUpdate_productVariant_nonSelectionAttributes_attribute_choices_edges {
@@ -491,6 +498,7 @@ export interface VariantUpdate_productVariantStocksUpdate_productVariant_nonSele
   file: VariantUpdate_productVariantStocksUpdate_productVariant_nonSelectionAttributes_values_file | null;
   reference: string | null;
   richText: any | null;
+  boolean: boolean | null;
 }
 
 export interface VariantUpdate_productVariantStocksUpdate_productVariant_nonSelectionAttributes {

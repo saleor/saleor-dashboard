@@ -31,6 +31,7 @@ export interface AttributeValueUpdate_attributeValueUpdate_attribute_choices_edg
   file: AttributeValueUpdate_attributeValueUpdate_attribute_choices_edges_node_file | null;
   reference: string | null;
   richText: any | null;
+  boolean: boolean | null;
 }
 
 export interface AttributeValueUpdate_attributeValueUpdate_attribute_choices_edges {

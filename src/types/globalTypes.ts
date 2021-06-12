@@ -88,6 +88,7 @@ export enum AttributeErrorCode {
 }
 
 export enum AttributeInputTypeEnum {
+  BOOLEAN = "BOOLEAN",
   DROPDOWN = "DROPDOWN",
   FILE = "FILE",
   MULTISELECT = "MULTISELECT",
@@ -761,6 +762,7 @@ export enum PaymentChargeStatusEnum {
 }
 
 export enum PermissionEnum {
+  HANDLE_PAYMENTS = "HANDLE_PAYMENTS",
   MANAGE_APPS = "MANAGE_APPS",
   MANAGE_CHANNELS = "MANAGE_CHANNELS",
   MANAGE_CHECKOUTS = "MANAGE_CHECKOUTS",
@@ -770,7 +772,6 @@ export enum PermissionEnum {
   MANAGE_ORDERS = "MANAGE_ORDERS",
   MANAGE_PAGES = "MANAGE_PAGES",
   MANAGE_PAGE_TYPES_AND_ATTRIBUTES = "MANAGE_PAGE_TYPES_AND_ATTRIBUTES",
-  HANDLE_PAYMENTS = "HANDLE_PAYMENTS",
   MANAGE_PLUGINS = "MANAGE_PLUGINS",
   MANAGE_PRODUCTS = "MANAGE_PRODUCTS",
   MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES = "MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES",
@@ -1162,6 +1163,7 @@ export interface AttributeValueInput {
   contentType?: string | null;
   references?: string[] | null;
   richText?: any | null;
+  boolean?: boolean | null;
 }
 
 export interface AttributeValueTranslationInput {
@@ -1519,6 +1521,7 @@ export interface PageFilterInput {
   search?: string | null;
   metadata?: (MetadataInput | null)[] | null;
   pageTypes?: (string | null)[] | null;
+  ids?: (string | null)[] | null;
 }
 
 export interface PageInput {
