@@ -488,7 +488,6 @@ export const productBulkPublishMutation = gql`
       offerType: $offerType
       startingAt: $startingAt
     ) {
-      useProductBulkPublishMutation
       errors: productErrors {
         ...ProductErrorFragment
       }

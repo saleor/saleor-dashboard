@@ -40,7 +40,6 @@ export function createUpdateHandler(
   ) => Promise<MutationFetchResult<ProductSetAvailabilityForPurchase>>
 ) {
   return async (data: ProductUpdatePageSubmitData) => {
-    console.log(data)
     const productVariables: ProductUpdateVariables = {
       id: product.id,
       input: {
