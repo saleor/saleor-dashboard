@@ -68,10 +68,10 @@ export interface AttributeDetails_attribute {
   filterableInDashboard: boolean;
   filterableInStorefront: boolean;
   unit: MeasurementUnitsEnum | null;
+  inputType: AttributeInputTypeEnum | null;
   metadata: (AttributeDetails_attribute_metadata | null)[];
   privateMetadata: (AttributeDetails_attribute_privateMetadata | null)[];
   availableInGrid: boolean;
-  inputType: AttributeInputTypeEnum | null;
   entityType: AttributeEntityTypeEnum | null;
   storefrontSearchPosition: number;
   valueRequired: boolean;

@@ -1128,6 +1128,7 @@ export interface AttributeInput {
   slug: string;
   values?: (string | null)[] | null;
   valuesRange?: IntRangeInput | null;
+  boolean?: boolean | null;
 }
 
 export interface AttributeSortingInput {

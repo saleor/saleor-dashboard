@@ -180,13 +180,23 @@ export function getFilterVariables(
 ): ProductFilterInput {
   return {
     attributes: !!params.attributes
-      ? Object.keys(params.attributes).map(key => ({
-          slug: key,
-          // It is possible for qs to parse values not as string[] but string
-          values: isArray(params.attributes[key])
-            ? params.attributes[key]
-            : (([params.attributes[key]] as unknown) as string[])
-        }))
+      ? Object.keys(params.attributes).map(key => {
+          const value = params.attributes[key];
+          const isMulti = isArray(params.attributes[key]);
+          const isBooleanValue =
+            !isMulti &&
+            ["true", "false"].includes((value as unknown) as string);
+
+          return {
+            slug: key,
+            ...(isBooleanValue
+              ? { boolean: JSON.parse((value as unknown) as string) }
+              : {
+                  // It is possible for qs to parse values not as string[] but string
+                  values: isMulti ? value : (([value] as unknown) as string[])
+                })
+          };
+        })
       : null,
     categories: params.categories !== undefined ? params.categories : null,
     channel: channel || null,

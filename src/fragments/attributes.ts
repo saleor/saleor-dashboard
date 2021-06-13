@@ -29,6 +29,7 @@ export const attributeFragment = gql`
     filterableInDashboard
     filterableInStorefront
     unit
+    inputType
   }
 `;
 

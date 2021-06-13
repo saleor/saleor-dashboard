@@ -11,8 +11,10 @@ export const productListFilterOpts: ProductListFilterOpts = {
     active: false,
     choices: attr.choices.edges.map(val => ({
       label: val.node.name,
-      value: val.node.slug
+      value: val.node.slug,
+      boolean: val.node.boolean
     })),
+    inputType: attr.inputType,
     name: attr.name,
     slug: attr.slug,
     value: [

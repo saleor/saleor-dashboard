@@ -1011,6 +1011,7 @@ export const productType: ProductTypeDetails_productType = {
       name: "Author",
       slug: "author",
       type: AttributeTypeEnum.PRODUCT_TYPE,
+      inputType: AttributeInputTypeEnum.DROPDOWN,
       visibleInStorefront: true,
       unit: null
     },
@@ -1022,6 +1023,7 @@ export const productType: ProductTypeDetails_productType = {
       name: "Language",
       slug: "language",
       type: AttributeTypeEnum.PRODUCT_TYPE,
+      inputType: AttributeInputTypeEnum.DROPDOWN,
       visibleInStorefront: true,
       unit: null
     },
@@ -1033,6 +1035,7 @@ export const productType: ProductTypeDetails_productType = {
       name: "Publisher",
       slug: "publisher",
       type: AttributeTypeEnum.PRODUCT_TYPE,
+      inputType: AttributeInputTypeEnum.DROPDOWN,
       visibleInStorefront: true,
       unit: null
     }

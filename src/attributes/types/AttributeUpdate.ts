@@ -31,10 +31,10 @@ export interface AttributeUpdate_attributeUpdate_attribute {
   filterableInDashboard: boolean;
   filterableInStorefront: boolean;
   unit: MeasurementUnitsEnum | null;
+  inputType: AttributeInputTypeEnum | null;
   metadata: (AttributeUpdate_attributeUpdate_attribute_metadata | null)[];
   privateMetadata: (AttributeUpdate_attributeUpdate_attribute_privateMetadata | null)[];
   availableInGrid: boolean;
-  inputType: AttributeInputTypeEnum | null;
   entityType: AttributeEntityTypeEnum | null;
   storefrontSearchPosition: number;
   valueRequired: boolean;
