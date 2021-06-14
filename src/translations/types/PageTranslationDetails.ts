@@ -34,7 +34,7 @@ export interface PageTranslationDetails_translation_PageTranslatableContent_tran
   content: any | null;
   seoDescription: string | null;
   seoTitle: string | null;
-  title: string;
+  title: string | null;
   language: PageTranslationDetails_translation_PageTranslatableContent_translation_language;
 }
 

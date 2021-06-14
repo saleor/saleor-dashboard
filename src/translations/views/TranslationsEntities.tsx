@@ -394,17 +394,7 @@ const TranslationsEntities: React.FC<TranslationsEntitiesProps> = ({
                 entities={mapEdgesToItems(data?.translations).map(
                   node =>
                     node.__typename === "AttributeTranslatableContent" && {
-                      completion: {
-                        current: sumCompleted([
-                          node.translation?.name,
-                          ...(node.attribute?.values.map(
-                            attr => attr.translation?.name
-                          ) || [])
-                        ]),
-                        max: node.attribute
-                          ? node.attribute.values.length + 1
-                          : 0
-                      },
+                      completion: null,
                       id: node?.attribute.id,
                       name: node?.attribute.name
                     }

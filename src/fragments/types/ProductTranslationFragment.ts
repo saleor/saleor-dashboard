@@ -29,7 +29,7 @@ export interface ProductTranslationFragment_translation {
   id: string;
   description: any | null;
   language: ProductTranslationFragment_translation_language;
-  name: string;
+  name: string | null;
   seoDescription: string | null;
   seoTitle: string | null;
 }

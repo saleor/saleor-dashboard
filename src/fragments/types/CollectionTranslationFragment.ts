@@ -26,7 +26,7 @@ export interface CollectionTranslationFragment_translation {
   id: string;
   description: any | null;
   language: CollectionTranslationFragment_translation_language;
-  name: string;
+  name: string | null;
   seoDescription: string | null;
   seoTitle: string | null;
 }
