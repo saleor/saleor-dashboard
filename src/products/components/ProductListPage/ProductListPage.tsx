@@ -87,6 +87,7 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
     onExport,
     onFetchMore,
     onFilterChange,
+    onFilterAttributeFocus,
     onSearchChange,
     onTabChange,
     onTabDelete,
@@ -196,6 +197,7 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
           initialSearch={initialSearch}
           onAll={onAll}
           onFilterChange={onFilterChange}
+          onFilterAttributeFocus={onFilterAttributeFocus}
           onSearchChange={onSearchChange}
           onTabChange={onTabChange}
           onTabDelete={onTabDelete}

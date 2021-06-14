@@ -107,6 +107,7 @@ export interface FilterPageProps<TKeys extends string, TOpts extends {}>
 export interface FilterProps<TKeys extends string> {
   currencySymbol?: string;
   onFilterChange: (filter: IFilter<TKeys>) => void;
+  onFilterAttributeFocus?: (id?: string) => void;
 }
 
 export interface TabPageProps {
@@ -132,6 +133,9 @@ export interface PartialMutationProviderOutput<
 
 export interface Node {
   id: string;
+}
+export interface SlugNode {
+  slug: string;
 }
 
 export type Pagination = Partial<{

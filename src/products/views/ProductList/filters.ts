@@ -9,6 +9,10 @@ import { InitialProductFilterCategories_categories_edges_node } from "@saleor/pr
 import { InitialProductFilterCollections_collections_edges_node } from "@saleor/products/types/InitialProductFilterCollections";
 import { InitialProductFilterProductTypes_productTypes_edges_node } from "@saleor/products/types/InitialProductFilterProductTypes";
 import {
+  SearchAttributeValues,
+  SearchAttributeValuesVariables
+} from "@saleor/searches/types/SearchAttributeValues";
+import {
   SearchCategories,
   SearchCategoriesVariables
 } from "@saleor/searches/types/SearchCategories";
@@ -20,7 +24,11 @@ import {
   SearchProductTypes,
   SearchProductTypesVariables
 } from "@saleor/searches/types/SearchProductTypes";
-import { mapEdgesToItems, mapNodeToChoice } from "@saleor/utils/maps";
+import {
+  mapEdgesToItems,
+  mapNodeToChoice,
+  mapSlugNodeToChoice
+} from "@saleor/utils/maps";
 import isArray from "lodash/isArray";
 
 import { IFilterElement } from "../../../components/Filter";
@@ -50,6 +58,10 @@ export const PRODUCT_FILTERS_KEY = "productFilters";
 export function getFilterOpts(
   params: ProductListUrlFilters,
   attributes: InitialProductFilterAttributes_attributes_edges_node[],
+  focusedAttributeChoices: UseSearchResult<
+    SearchAttributeValues,
+    SearchAttributeValuesVariables
+  >,
   categories: {
     initial: InitialProductFilterCategories_categories_edges_node[];
     search: UseSearchResult<SearchCategories, SearchCategoriesVariables>;
@@ -68,17 +80,31 @@ export function getFilterOpts(
       .sort((a, b) => (a.name > b.name ? 1 : -1))
       .map(attr => ({
         active: maybe(() => params.attributes[attr.slug].length > 0, false),
-        choices: attr.choices?.edges?.map(val => ({
-          label: val.node.name,
-          value: val.node.slug
-        })),
+        id: attr.id,
         name: attr.name,
         slug: attr.slug,
         value:
           !!params.attributes && params.attributes[attr.slug]
-            ? params.attributes[attr.slug]
+            ? dedupeFilter(params.attributes[attr.slug])
             : []
       })),
+    attributeChoices: {
+      active: true,
+      choices: mapSlugNodeToChoice(
+        mapEdgesToItems(focusedAttributeChoices.result.data?.attribute?.choices)
+      ),
+      displayValues: mapNodeToChoice(
+        mapEdgesToItems(focusedAttributeChoices.result.data?.attribute?.choices)
+      ),
+      hasMore:
+        focusedAttributeChoices.result.data?.attribute?.choices?.pageInfo
+          ?.hasNextPage || false,
+      initialSearch: "",
+      loading: focusedAttributeChoices.result.loading,
+      onFetchMore: focusedAttributeChoices.loadMore,
+      onSearchChange: focusedAttributeChoices.search,
+      value: null
+    },
     categories: {
       active: !!params.categories,
       choices: mapNodeToChoice(

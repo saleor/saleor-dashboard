@@ -72,7 +72,8 @@ export function createAutocompleteField<T extends string>(
   displayValues: MultiAutocompleteChoiceType[],
   multiple: boolean,
   options: MultiAutocompleteChoiceType[],
-  opts: FetchMoreProps & SearchPageProps
+  opts: FetchMoreProps & SearchPageProps,
+  id?: string
 ): IFilterElement<T> {
   return {
     ...opts,
@@ -83,7 +84,8 @@ export function createAutocompleteField<T extends string>(
     name,
     options,
     type: FieldType.autocomplete,
-    value: defaultValue
+    value: defaultValue,
+    id
   };
 }
 
