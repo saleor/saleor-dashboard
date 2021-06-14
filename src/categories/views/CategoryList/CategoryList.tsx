@@ -143,7 +143,7 @@ export const CategoryList: React.FC<CategoryListProps> = ({ params }) => {
   return (
     <>
       <CategoryListPage
-        categories={mapEdgesToItems(data?.categories)}
+        categories={mapEdgesToItems(data?.categories) || []}
         currentTab={currentTab}
         initialSearch={params.query || ""}
         onSearchChange={query => changeFilterField({ query })}

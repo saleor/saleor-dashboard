@@ -439,13 +439,13 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
     createProductMediaOpts.data?.productMediaCreate.errors
   );
 
-  const categories = mapEdgesToItems(searchCategoriesOpts?.data?.search);
+  const categories = mapEdgesToItems(searchCategoriesOpts?.data?.search) || [];
 
-  const collections = mapEdgesToItems(searchCollectionsOpts?.data?.search);
+  const collections =
+    mapEdgesToItems(searchCollectionsOpts?.data?.search) || [];
 
-  const attributeValues = mapEdgesToItems(
-    searchAttributeValuesOpts?.data?.attribute.choices
-  );
+  const attributeValues =
+    mapEdgesToItems(searchAttributeValuesOpts?.data?.attribute.choices) || [];
 
   const errors = [
     ...(updateProductOpts.data?.productUpdate.errors || []),
@@ -550,7 +550,7 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
         header={product?.name}
         placeholderImage={placeholderImg}
         product={product}
-        warehouses={mapEdgesToItems(warehouses?.data?.warehouses)}
+        warehouses={mapEdgesToItems(warehouses?.data?.warehouses) || []}
         taxTypes={data?.taxTypes}
         variants={product?.variants}
         onBack={handleBack}

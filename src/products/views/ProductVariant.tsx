@@ -346,7 +346,7 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
         placeholderImage={placeholderImg}
         variant={variant}
         header={variant?.name || variant?.sku}
-        warehouses={mapEdgesToItems(warehouses?.data?.warehouses)}
+        warehouses={mapEdgesToItems(warehouses?.data?.warehouses) || []}
         onAdd={() => navigate(productVariantAddUrl(productId))}
         onBack={handleBack}
         onDelete={() => openModal("remove")}

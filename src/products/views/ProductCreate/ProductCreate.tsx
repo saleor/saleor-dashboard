@@ -295,8 +295,8 @@ export const ProductCreateView: React.FC<ProductCreateProps> = ({ params }) => {
       <ProductCreatePage
         allChannelsCount={allChannels?.length}
         currentChannels={currentChannels}
-        categories={mapEdgesToItems(searchCategoryOpts?.data?.search)}
-        collections={mapEdgesToItems(searchCollectionOpts?.data?.search)}
+        categories={mapEdgesToItems(searchCategoryOpts?.data?.search) || []}
+        collections={mapEdgesToItems(searchCollectionOpts?.data?.search) || []}
         attributeValues={mapEdgesToItems(
           searchAttributeValuesOpts?.data?.attribute.choices
         )}
@@ -325,7 +325,7 @@ export const ProductCreateView: React.FC<ProductCreateProps> = ({ params }) => {
         fetchMoreCategories={fetchMoreCategories}
         fetchMoreCollections={fetchMoreCollections}
         fetchMoreProductTypes={fetchMoreProductTypes}
-        warehouses={mapEdgesToItems(warehouses?.data?.warehouses)}
+        warehouses={mapEdgesToItems(warehouses?.data?.warehouses) || []}
         taxTypes={taxTypes.data?.taxTypes || []}
         weightUnit={shop?.defaultWeightUnit}
         openChannelsModal={handleChannelsModalOpen}

@@ -99,7 +99,7 @@ const ProductVariantCreator: React.FC<ProductVariantCreatorProps> = ({
             variables: { id, inputs }
           })
         }
-        warehouses={mapEdgesToItems(data?.warehouses)}
+        warehouses={mapEdgesToItems(data?.warehouses) || []}
       />
     </>
   );
