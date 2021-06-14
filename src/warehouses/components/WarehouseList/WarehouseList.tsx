@@ -132,7 +132,7 @@ const WarehouseList: React.FC<WarehouseListProps> = props => {
               className={classes.tableRow}
               hover={!!warehouse}
               onClick={warehouse ? onRowClick(warehouse.id) : undefined}
-              key={warehouse ? warehouse.id : "n/a"}
+              key={warehouse ? warehouse.id : "skeleton"}
               data-test="warehouseEntry"
               data-testid={warehouse?.name.toLowerCase().replace(" ", "")}
             >
@@ -140,9 +140,13 @@ const WarehouseList: React.FC<WarehouseListProps> = props => {
                 {maybe<React.ReactNode>(() => warehouse.name, <Skeleton />)}
               </TableCell>
               <TableCell className={classes.colZones} data-test="zones">
-                {mapEdgesToItems(warehouse?.shippingZones)
-                  .map(({ name }) => name)
-                  .join(", ") || "-"}
+                {disabled ? (
+                  <Skeleton />
+                ) : (
+                  mapEdgesToItems(warehouse?.shippingZones)
+                    ?.map(({ name }) => name)
+                    .join(", ") || "-"
+                )}
               </TableCell>
               <TableCell className={classes.colActions}>
                 <div className={classes.actions}>
