@@ -36,7 +36,7 @@ export interface UpdatePageTranslations_pageTranslate_page_translation {
   content: any | null;
   seoDescription: string | null;
   seoTitle: string | null;
-  title: string;
+  title: string | null;
   language: UpdatePageTranslations_pageTranslate_page_translation_language;
 }
 

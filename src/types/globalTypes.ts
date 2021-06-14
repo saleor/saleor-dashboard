@@ -761,6 +761,7 @@ export enum PaymentChargeStatusEnum {
 }
 
 export enum PermissionEnum {
+  HANDLE_PAYMENTS = "HANDLE_PAYMENTS",
   MANAGE_APPS = "MANAGE_APPS",
   MANAGE_CHANNELS = "MANAGE_CHANNELS",
   MANAGE_CHECKOUTS = "MANAGE_CHECKOUTS",
@@ -770,7 +771,6 @@ export enum PermissionEnum {
   MANAGE_ORDERS = "MANAGE_ORDERS",
   MANAGE_PAGES = "MANAGE_PAGES",
   MANAGE_PAGE_TYPES_AND_ATTRIBUTES = "MANAGE_PAGE_TYPES_AND_ATTRIBUTES",
-  HANDLE_PAYMENTS = "HANDLE_PAYMENTS",
   MANAGE_PLUGINS = "MANAGE_PLUGINS",
   MANAGE_PRODUCTS = "MANAGE_PRODUCTS",
   MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES = "MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES",
@@ -1273,6 +1273,7 @@ export interface CustomerFilterInput {
   numberOfOrders?: IntRangeInput | null;
   placedOrders?: DateRangeInput | null;
   search?: string | null;
+  metadata?: (MetadataInput | null)[] | null;
 }
 
 export interface CustomerInput {
@@ -1519,6 +1520,7 @@ export interface PageFilterInput {
   search?: string | null;
   metadata?: (MetadataInput | null)[] | null;
   pageTypes?: (string | null)[] | null;
+  ids?: (string | null)[] | null;
 }
 
 export interface PageInput {
@@ -1982,23 +1984,11 @@ export interface VoucherSortingInput {
   field: VoucherSortField;
 }
 
-export interface WarehouseAddressInput {
-  streetAddress1: string;
-  streetAddress2?: string | null;
-  city: string;
-  cityArea?: string | null;
-  postalCode?: string | null;
-  country: CountryCode;
-  countryArea?: string | null;
-  phone?: string | null;
-}
-
 export interface WarehouseCreateInput {
   slug?: string | null;
-  companyName?: string | null;
   email?: string | null;
   name: string;
-  address: WarehouseAddressInput;
+  address: AddressInput;
   shippingZones?: (string | null)[] | null;
 }
 
@@ -2014,10 +2004,9 @@ export interface WarehouseSortingInput {
 
 export interface WarehouseUpdateInput {
   slug?: string | null;
-  companyName?: string | null;
   email?: string | null;
   name?: string | null;
-  address?: WarehouseAddressInput | null;
+  address?: AddressInput | null;
 }
 
 export interface WebhookCreateInput {
