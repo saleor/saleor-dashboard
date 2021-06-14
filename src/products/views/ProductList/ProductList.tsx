@@ -154,7 +154,7 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
     },
     skip: params.action !== "export"
   });
-  const { availableChannels, channel } = useAppChannel();
+  const { availableChannels, channel } = useAppChannel(false);
   const limitOpts = useShopLimitsQuery({
     variables: {
       productVariants: true

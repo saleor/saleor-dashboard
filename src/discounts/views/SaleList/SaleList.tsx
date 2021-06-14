@@ -63,7 +63,7 @@ export const SaleList: React.FC<SaleListProps> = ({ params }) => {
     ListViews.SALES_LIST
   );
   const intl = useIntl();
-  const { channel } = useAppChannel();
+  const { channel } = useAppChannel(false);
 
   const [openModal, closeModal] = createDialogActionHandlers<
     SaleListUrlDialog,

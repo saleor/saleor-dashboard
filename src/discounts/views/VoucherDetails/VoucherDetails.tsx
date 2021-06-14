@@ -119,7 +119,7 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
     VoucherUrlQueryParams
   >(navigate, params => voucherUrl(id, params), params);
 
-  const { channel, availableChannels } = useAppChannel();
+  const { channel, availableChannels } = useAppChannel(false);
 
   const allChannels: ChannelVoucherData[] = createChannelsDataWithDiscountPrice(
     data?.voucher,

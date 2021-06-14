@@ -90,7 +90,7 @@ export const CollectionList: React.FC<CollectionListProps> = ({ params }) => {
     }
   });
 
-  const { availableChannels, channel } = useAppChannel();
+  const { availableChannels, channel } = useAppChannel(false);
 
   const tabs = getFilterTabs();
 

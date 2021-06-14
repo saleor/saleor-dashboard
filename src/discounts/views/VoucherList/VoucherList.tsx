@@ -64,7 +64,7 @@ export const VoucherList: React.FC<VoucherListProps> = ({ params }) => {
   );
   const intl = useIntl();
 
-  const { channel } = useAppChannel();
+  const { channel } = useAppChannel(false);
 
   const [openModal, closeModal] = createDialogActionHandlers<
     VoucherListUrlDialog,

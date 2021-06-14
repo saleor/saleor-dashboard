@@ -170,7 +170,7 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
     productVariantCreateOpts
   ] = useVariantCreateMutation({});
 
-  const { availableChannels, channel } = useAppChannel();
+  const { availableChannels, channel } = useAppChannel(false);
   const { data, loading, refetch } = useProductDetails({
     displayLoader: true,
     variables: {

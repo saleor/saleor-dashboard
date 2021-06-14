@@ -81,7 +81,7 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
     variables: { ...paginationState, id }
   });
 
-  const { availableChannels, channel } = useAppChannel();
+  const { availableChannels, channel } = useAppChannel(false);
 
   const channelChoices = mapNodeToChoice(availableChannels);
 
