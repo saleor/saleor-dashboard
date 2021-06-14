@@ -3,15 +3,15 @@ import useAttributeValueSearch from "@saleor/searches/useAttributeValueSearch";
 import { useEffect, useState } from "react";
 
 interface AttributeValueSearchHandlerState {
-  id?: string;
-  query?: string;
+  id: string | null;
+  query: string;
 }
 
 function createAttributeValueSearchHandler(
   variables: SearchAttributeValuesVariables
 ) {
   const [state, setState] = useState<AttributeValueSearchHandlerState>({
-    id: variables.id,
+    id: null,
     query: variables.query
   });
 
@@ -23,7 +23,7 @@ function createAttributeValueSearchHandler(
     skip: !state.id
   });
 
-  const handleSearch = (query: string, id: string) => {
+  const handleSearch = (query: string, id: string | null) => {
     if (query !== state.query) {
       search(query);
     }
