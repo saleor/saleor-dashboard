@@ -137,6 +137,8 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
     setChannel
   } = useAppChannel(false);
 
+  const isHomepage = location.pathname === "/";
+
   const menuStructure = createMenuStructure(intl);
   const configurationMenu = createConfigurationMenu(intl);
   const userPermissions = user?.userPermissions || [];
@@ -216,7 +218,7 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
                               .includes("mac")}
                             onClick={() => setNavigatorVisibility(true)}
                           />
-                          {channel && (
+                          {channel && isHomepage && (
                             <AppChannelSelect
                               channels={availableChannels}
                               disabled={!isPickerActive}
