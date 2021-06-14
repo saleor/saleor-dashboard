@@ -64,6 +64,7 @@ export const WarehouseListPage: React.FC<WarehouseListPageProps> = ({
         <FormattedMessage {...sectionNames.configuration} />
       </AppHeader>
       <PageHeader
+        inline
         title={intl.formatMessage(sectionNames.warehouses)}
         limit={
           hasLimits(limits, "warehouses") && {
