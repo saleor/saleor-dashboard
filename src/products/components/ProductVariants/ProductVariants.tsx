@@ -5,9 +5,9 @@ import Hidden from "@material-ui/core/Hidden";
 import { fade } from "@material-ui/core/styles/colorManipulator";
 import TableCell from "@material-ui/core/TableCell";
 import Typography from "@material-ui/core/Typography";
-import Alert from "@saleor/components/Alert/Alert";
 import CardTitle from "@saleor/components/CardTitle";
 import Checkbox from "@saleor/components/Checkbox";
+import FormSpacer from "@saleor/components/FormSpacer";
 import LinkChoice from "@saleor/components/LinkChoice";
 import Money from "@saleor/components/Money";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
@@ -19,7 +19,7 @@ import {
   SortableTableRow
 } from "@saleor/components/SortableTable";
 import TableHead from "@saleor/components/TableHead";
-import { makeStyles } from "@saleor/macaw-ui";
+import { Alert, makeStyles } from "@saleor/macaw-ui";
 import { isLimitReached } from "@saleor/utils/limits";
 import React from "react";
 import { FormattedMessage, IntlShape, useIntl } from "react-intl";
@@ -261,16 +261,21 @@ export const ProductVariants: React.FC<ProductVariantsProps> = props => {
         }
       />
 
-      <Alert
-        className={classes.alert}
-        show={limitReached}
-        title={intl.formatMessage({
-          defaultMessage: "SKU limit reached",
-          description: "alert"
-        })}
-      >
-        <FormattedMessage defaultMessage="You have reached your SKU limit, you will be no longer able to add SKUs to your store. If you would like to up your limit, contact your administration staff about raising your limits." />
-      </Alert>
+      {limitReached && (
+        <>
+          <Alert
+            className={classes.alert}
+            title={intl.formatMessage({
+              defaultMessage: "SKU limit reached",
+              description: "alert"
+            })}
+            variant="warning"
+          >
+            <FormattedMessage defaultMessage="You have reached your SKU limit, you will be no longer able to add SKUs to your store. If you would like to up your limit, contact your administration staff about raising your limits." />
+          </Alert>
+          <FormSpacer />
+        </>
+      )}
 
       {variants.length > 0 ? (
         <CardContent className={classes.warehouseSelectContainer}>

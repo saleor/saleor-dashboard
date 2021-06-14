@@ -6,15 +6,16 @@ import TableCell from "@material-ui/core/TableCell";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import DeleteIcon from "@material-ui/icons/Delete";
-import Alert from "@saleor/components/Alert/Alert";
 import AppHeader from "@saleor/components/AppHeader";
 import Container from "@saleor/components/Container";
+import FormSpacer from "@saleor/components/FormSpacer";
 import PageHeader from "@saleor/components/PageHeader";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import { RefreshLimits_shop_limits } from "@saleor/components/Shop/types/RefreshLimits";
 import Skeleton from "@saleor/components/Skeleton";
 import TableCellHeader from "@saleor/components/TableCellHeader";
 import { sectionNames } from "@saleor/intl";
+import { Alert } from "@saleor/macaw-ui";
 import { renderCollection, stopPropagation } from "@saleor/misc";
 import { hasLimits, isLimitReached } from "@saleor/utils/limits";
 import React from "react";
@@ -75,15 +76,20 @@ export const ChannelsListPage: React.FC<ChannelsListPageProps> = ({
           />
         </Button>
       </PageHeader>
-      <Alert
-        show={limitReached}
-        title={intl.formatMessage({
-          defaultMessage: "Channel limit reached",
-          description: "alert"
-        })}
-      >
-        <FormattedMessage defaultMessage="You have reached your channel limit, you will be no longer able to add channels to your store. If you would like to up your limit, contact your administration staff about raising your limits." />
-      </Alert>
+      {limitReached && (
+        <>
+          <Alert
+            title={intl.formatMessage({
+              defaultMessage: "Channel limit reached",
+              description: "alert"
+            })}
+            variant="warning"
+          >
+            <FormattedMessage defaultMessage="You have reached your channel limit, you will be no longer able to add channels to your store. If you would like to up your limit, contact your administration staff about raising your limits." />
+          </Alert>
+          <FormSpacer />
+        </>
+      )}
       <Card>
         <ResponsiveTable>
           <TableHead>

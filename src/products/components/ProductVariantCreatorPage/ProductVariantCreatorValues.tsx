@@ -1,12 +1,12 @@
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
-import Alert from "@saleor/components/Alert/Alert";
 import CardSpacer from "@saleor/components/CardSpacer";
 import CardTitle from "@saleor/components/CardTitle";
 import ControlledCheckbox from "@saleor/components/ControlledCheckbox";
 import Debounce from "@saleor/components/Debounce";
+import FormSpacer from "@saleor/components/FormSpacer";
 import Skeleton from "@saleor/components/Skeleton";
-import { makeStyles } from "@saleor/macaw-ui";
+import { Alert, makeStyles } from "@saleor/macaw-ui";
 import { ProductDetails_product_productType_variantAttributes } from "@saleor/products/types/ProductDetails";
 import { isSelected } from "@saleor/utils/lists";
 import React from "react";
@@ -47,22 +47,25 @@ const ProductVariantCreatorValues: React.FC<ProductVariantCreatorValuesProps> = 
 
   return (
     <>
-      {variantsLeft !== null && (
-        <Alert
-          show={variantsNumber > variantsLeft}
-          title={intl.formatMessage({
-            defaultMessage: "SKU limit reached",
-            description: "alert"
-          })}
-        >
-          <FormattedMessage
-            defaultMessage="You choices will add {variantsNumber} SKUs to your catalog which will exceed your limit by {aboveLimitVariantsNumber}. If you would like to up your limit, contact your administration staff about raising your limits."
-            values={{
-              variantsNumber,
-              aboveLimitVariantsNumber: variantsNumber - variantsLeft
-            }}
-          />
-        </Alert>
+      {variantsLeft !== null && variantsNumber > variantsLeft && (
+        <>
+          <Alert
+            title={intl.formatMessage({
+              defaultMessage: "SKU limit reached",
+              description: "alert"
+            })}
+            variant="warning"
+          >
+            <FormattedMessage
+              defaultMessage="You choices will add {variantsNumber} SKUs to your catalog which will exceed your limit by {aboveLimitVariantsNumber}. If you would like to up your limit, contact your administration staff about raising your limits."
+              values={{
+                variantsNumber,
+                aboveLimitVariantsNumber: variantsNumber - variantsLeft
+              }}
+            />
+          </Alert>
+          <FormSpacer />
+        </>
       )}
       {attributes.map(attribute => (
         <React.Fragment key={attribute.id}>
