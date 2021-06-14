@@ -55,7 +55,7 @@ export function getMultiDisplayValues(
 export interface ProductVariantCreatorValuesProps {
   attributes: ProductDetails_product_productType_variantAttributes[];
   attributeValues: SearchAttributeValues_attribute_choices_edges_node[];
-  fetchAttributeValues: (query: string) => void;
+  fetchAttributeValues: (query: string, attributeId: string) => void;
   fetchMoreAttributeValues?: FetchMoreProps;
   data: ProductVariantCreateFormData;
   variantsLeft: number | null;
@@ -63,7 +63,6 @@ export interface ProductVariantCreatorValuesProps {
     attributeId: string,
     value: AttributeValue<AttributeValueFragment>
   ) => void;
-  onAttributeFocus: (id: string) => void;
 }
 
 const ProductVariantCreatorValues: React.FC<ProductVariantCreatorValuesProps> = props => {
@@ -74,8 +73,7 @@ const ProductVariantCreatorValues: React.FC<ProductVariantCreatorValuesProps> = 
     fetchMoreAttributeValues,
     data,
     variantsLeft,
-    onValueClick,
-    onAttributeFocus
+    onValueClick
   } = props;
   const intl = useIntl();
   const variantsNumber = getVariantsNumber(data);
@@ -128,9 +126,10 @@ const ProductVariantCreatorValues: React.FC<ProductVariantCreatorValuesProps> = 
                   handleValueClick(attribute.id, event.target.value)
                 }
                 allowCustomValues={true}
-                fetchChoices={fetchAttributeValues}
+                fetchChoices={value =>
+                  fetchAttributeValues(value, attribute.id)
+                }
                 {...fetchMoreAttributeValues}
-                onFocus={() => onAttributeFocus(attribute.id)}
               />
             </CardContent>
           </Card>

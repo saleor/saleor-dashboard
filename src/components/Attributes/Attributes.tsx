@@ -36,7 +36,7 @@ export type AttributeFileInput = FormsetAtomicData<AttributeInputData, File[]>;
 export interface AttributesProps extends AttributeRowHandlers {
   attributes: AttributeInput[];
   attributeValues: AttributeValueFragment[];
-  fetchAttributeValues: (query: string) => void;
+  fetchAttributeValues: (query: string, attributeId: string) => void;
   fetchMoreAttributeValues: FetchMoreProps;
   disabled: boolean;
   loading: boolean;
@@ -44,7 +44,6 @@ export interface AttributesProps extends AttributeRowHandlers {
     ProductErrorWithAttributesFragment | PageErrorWithAttributesFragment
   >;
   title?: React.ReactNode;
-  onAttributeFocus: (id: string) => void;
 }
 
 const useStyles = makeStyles(
