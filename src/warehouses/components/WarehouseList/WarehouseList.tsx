@@ -140,7 +140,7 @@ const WarehouseList: React.FC<WarehouseListProps> = props => {
                 {maybe<React.ReactNode>(() => warehouse.name, <Skeleton />)}
               </TableCell>
               <TableCell className={classes.colZones} data-test="zones">
-                {disabled ? (
+                {warehouse?.shippingZones === undefined ? (
                   <Skeleton />
                 ) : (
                   mapEdgesToItems(warehouse?.shippingZones)
