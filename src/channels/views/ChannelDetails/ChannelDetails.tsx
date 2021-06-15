@@ -107,7 +107,7 @@ export const ChannelDetails: React.FC<ChannelDetailsProps> = ({
   }: FormData) =>
     updateChannel({
       variables: {
-        id: "lol",
+        id: data?.channel.id,
         input: {
           name,
           slug,
