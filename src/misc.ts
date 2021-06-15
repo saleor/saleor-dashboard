@@ -3,6 +3,7 @@ import { MutationFunction, MutationResult } from "react-apollo";
 import { defineMessages, IntlShape } from "react-intl";
 import urlJoin from "url-join";
 
+import { getRichTextData } from "./components/Attributes/utils";
 import { ConfirmButtonTransitionState } from "./components/ConfirmButton/ConfirmButton";
 import { StatusType } from "./components/StatusChip/types";
 import { APP_MOUNT_URI } from "./config";
@@ -275,16 +276,19 @@ export function getMutationState(
 }
 
 export interface SaleorMutationResult {
-  errors?: UserError[];
+  errors?: any[];
 }
+
 export function getMutationErrors<
-  TData extends Record<string, SaleorMutationResult>
->(data: TData): UserError[] {
+  TData extends SaleorMutationResult,
+  TErrors extends Pick<TData, "errors">
+>(data: TData): TErrors[] {
   return Object.values(data).reduce(
-    (acc: UserError[], mut) => [...acc, ...maybe(() => mut.errors, [])],
+    (acc: TErrors[], mut) => [...acc, ...maybe(() => mut.errors, [])],
     []
   );
 }
+
 export function getMutationStatus<
   TData extends Record<string, SaleorMutationResult | any>
 >(opts: MutationResult<TData>): ConfirmButtonTransitionState {

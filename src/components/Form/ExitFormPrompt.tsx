@@ -1,4 +1,12 @@
-import { Button, Card, CardContent, Modal } from "@material-ui/core";
+import {
+  Button,
+  Card,
+  CardContent,
+  Dialog,
+  DialogContent,
+  DialogTitle,
+  Modal
+} from "@material-ui/core";
 import HorizontalSpacer from "@saleor/apps/components/HorizontalSpacer";
 import CardSpacer from "@saleor/components/CardSpacer";
 import CardTitle from "@saleor/components/CardTitle";
@@ -45,13 +53,24 @@ const ExitFormPrompt: React.FC<ExitFormPromptProps> = ({
   const intl = useIntl();
 
   return (
-    <Modal className={classes.container} open={isOpen}>
-      <Card className={classes.content}>
-        <CardTitle
-          title={intl.formatMessage(messages.title)}
-          onClose={onClose}
-        />
-        <CardContent>
+    <Dialog className={classes.container} open={isOpen} onClose={onClose}>
+      {/* <Card className={classes.content}> */}
+      <DialogTitle>{intl.formatMessage(messages.title)}</DialogTitle>
+      <DialogContent>
+        <FormattedMessage {...messages.description} />
+        <CardSpacer />
+        <CardSpacer />
+        <div className={classes.buttonsContainer}>
+          <Button onClick={onLeave}>
+            {intl.formatMessage(messages.cancelButton)}
+          </Button>
+          <HorizontalSpacer />
+          <Button variant="contained" color="primary" onClick={onSubmit}>
+            {intl.formatMessage(messages.confirmButton)}
+          </Button>
+        </div>
+      </DialogContent>
+      {/* <CardContent>
           <FormattedMessage {...messages.description} />
           <CardSpacer />
           <CardSpacer />
@@ -64,9 +83,9 @@ const ExitFormPrompt: React.FC<ExitFormPromptProps> = ({
               {intl.formatMessage(messages.confirmButton)}
             </Button>
           </div>
-        </CardContent>
-      </Card>
-    </Modal>
+        </CardContent> */}
+      {/* </Card> */}
+    </Dialog>
   );
 };
 
