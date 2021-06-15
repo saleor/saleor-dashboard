@@ -4,6 +4,7 @@ import faker from "faker";
 
 import { createChannel } from "../../../apiRequests/Channels";
 import { updateChannelInProduct } from "../../../apiRequests/Product";
+import { ONE_PERMISSION_USERS } from "../../../Data/users";
 import {
   assignProducts,
   createSale,
@@ -88,7 +89,9 @@ describe("Sales discounts", () => {
         price: productPrice
       })
       .then(({ product: productResp }) => {
-        cy.visit(urlList.sales);
+        cy.clearSessionData()
+          .loginUserViaRequest("auth", ONE_PERMISSION_USERS.discount)
+          .visit(urlList.sales);
         const product = productResp;
         createSale({
           saleName,
@@ -121,7 +124,9 @@ describe("Sales discounts", () => {
         price: productPrice
       })
       .then(({ product: productResp }) => {
-        cy.visit(urlList.sales);
+        cy.clearSessionData()
+          .loginUserViaRequest("auth", ONE_PERMISSION_USERS.discount)
+          .visit(urlList.sales);
         const product = productResp;
         createSale({
           saleName,
@@ -166,7 +171,9 @@ describe("Sales discounts", () => {
         });
       })
       .then(() => {
-        cy.visit(urlList.sales);
+        cy.clearSessionData()
+          .loginUserViaRequest("auth", ONE_PERMISSION_USERS.discount)
+          .visit(urlList.sales);
         createSale({
           saleName,
           channelName: channel.name,

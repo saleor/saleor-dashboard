@@ -21,7 +21,7 @@ export interface PageTranslatableFragment_translation {
   content: any | null;
   seoDescription: string | null;
   seoTitle: string | null;
-  title: string;
+  title: string | null;
   language: PageTranslatableFragment_translation_language;
 }
 

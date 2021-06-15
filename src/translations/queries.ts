@@ -1,5 +1,6 @@
 import { pageInfoFragment } from "@saleor/fragments/pageInfo";
 import {
+  attributeTranslationDetailsFragment,
   attributeTranslationFragment,
   categoryTranslationFragment,
   collectionTranslationFragment,
@@ -421,10 +422,17 @@ export const useVoucherTranslationDetails = makeQuery<
 >(voucherTranslationDetails);
 
 const attributeTranslationDetails = gql`
-  ${attributeTranslationFragment}
-  query AttributeTranslationDetails($id: ID!, $language: LanguageCodeEnum!) {
+  ${attributeTranslationDetailsFragment}
+  query AttributeTranslationDetails(
+    $id: ID!
+    $language: LanguageCodeEnum!
+    $firstValues: Int
+    $afterValues: String
+    $lastValues: Int
+    $beforeValues: String
+  ) {
     translation(kind: ATTRIBUTE, id: $id) {
-      ...AttributeTranslationFragment
+      ...AttributeTranslationDetailsFragment
     }
   }
 `;

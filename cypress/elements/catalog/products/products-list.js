@@ -21,10 +21,11 @@ export const PRODUCTS_LIST = {
     filterOption: '[data-test-id="filterOption"]',
     productsOutOfStockOption: '[data-test-id="OUT_OF_STOCK"]',
     filterBy: {
-      category: '[data-test-id="categories"]',
-      collection: '[data-test-id="collections"]',
-      productType: '[data-test-id="productType"]',
-      stock: '[data-test-id="stock"]'
+      category: '[data-test="filterGroupActive"][data-test-id="categories"]',
+      collection: '[data-test="filterGroupActive"][data-test-id="collections"]',
+      productType:
+        '[data-test="filterGroupActive"][data-test-id="productType"]',
+      stock: '[data-test="filterGroupActive"][data-test-id="stock"]'
     },
     filterBySearchInput: '[data-test*="filterField"][data-test*="Input"]'
   },

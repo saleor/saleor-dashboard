@@ -102,17 +102,18 @@ const TranslationsEntitiesList: React.FC<TranslationsEntitiesListProps> = props 
             >
               <TableCell>{entity?.name || <Skeleton />}</TableCell>
               <TableCell className={classes.textRight}>
-                {maybe<React.ReactNode>(
-                  () =>
-                    intl.formatMessage(
-                      {
-                        defaultMessage: "{current} of {max}",
-                        description: "translation progress"
-                      },
-                      entity.completion
-                    ),
-                  <Skeleton />
-                )}
+                {entity.completion !== null &&
+                  maybe<React.ReactNode>(
+                    () =>
+                      intl.formatMessage(
+                        {
+                          defaultMessage: "{current} of {max}",
+                          description: "translation progress"
+                        },
+                        entity.completion
+                      ),
+                    <Skeleton />
+                  )}
               </TableCell>
             </TableRow>
           ),

@@ -12,8 +12,10 @@ import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
 import Grid from "@saleor/components/Grid";
 import Hr from "@saleor/components/Hr";
 import Skeleton from "@saleor/components/Skeleton";
+import TablePagination from "@saleor/components/TablePagination";
 import { buttonMessages } from "@saleor/intl";
 import { makeStyles } from "@saleor/theme";
+import { ListProps } from "@saleor/types";
 import classNames from "classnames";
 import React from "react";
 import { FormattedMessage } from "react-intl";
@@ -30,6 +32,11 @@ export interface TranslationField {
   value: string;
 }
 
+type Pagination = Pick<
+  ListProps,
+  Exclude<keyof ListProps, "onRowClick" | "disabled">
+>;
+
 export interface TranslationFieldsProps {
   activeField: string;
   disabled: boolean;
@@ -37,6 +44,7 @@ export interface TranslationFieldsProps {
   fields: TranslationField[];
   initialState: boolean;
   saveButtonState: ConfirmButtonTransitionState;
+  pagination?: Pagination;
   onEdit: (field: string) => void;
   onDiscard: () => void;
   onSubmit: (field: string, data: string | OutputData) => void;
@@ -107,6 +115,9 @@ const useStyles = makeStyles(
   }),
   { name: "TranslationFields" }
 );
+
+const numberOfColumns = 2;
+
 const TranslationFields: React.FC<TranslationFieldsProps> = props => {
   const {
     activeField,
@@ -115,6 +126,7 @@ const TranslationFields: React.FC<TranslationFieldsProps> = props => {
     initialState,
     title,
     saveButtonState,
+    pagination,
     onEdit,
     onDiscard,
     onSubmit
@@ -231,6 +243,26 @@ const TranslationFields: React.FC<TranslationFieldsProps> = props => {
               </React.Fragment>
             ))}
           </Grid>
+          {pagination && (
+            <TablePagination
+              colSpan={numberOfColumns}
+              hasNextPage={
+                pagination.pageInfo && !disabled
+                  ? pagination.pageInfo.hasNextPage
+                  : false
+              }
+              onNextPage={pagination.onNextPage}
+              hasPreviousPage={
+                pagination.pageInfo && !disabled
+                  ? pagination.pageInfo.hasPreviousPage
+                  : false
+              }
+              onPreviousPage={pagination.onPreviousPage}
+              settings={pagination.settings}
+              onUpdateListSettings={pagination.onUpdateListSettings}
+              component="div"
+            />
+          )}
         </CardContent>
       ) : (
         <CardContent>

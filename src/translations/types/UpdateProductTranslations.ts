@@ -26,7 +26,7 @@ export interface UpdateProductTranslations_productTranslate_product_translation 
   id: string;
   description: any | null;
   language: UpdateProductTranslations_productTranslate_product_translation_language;
-  name: string;
+  name: string | null;
   seoDescription: string | null;
   seoTitle: string | null;
 }

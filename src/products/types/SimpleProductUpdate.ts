@@ -353,6 +353,42 @@ export interface SimpleProductUpdate_productVariantUpdate_productVariant_private
   value: string;
 }
 
+export interface SimpleProductUpdate_productVariantUpdate_productVariant_selectionAttributes_attribute_choices_pageInfo {
+  __typename: "PageInfo";
+  endCursor: string | null;
+  hasNextPage: boolean;
+  hasPreviousPage: boolean;
+  startCursor: string | null;
+}
+
+export interface SimpleProductUpdate_productVariantUpdate_productVariant_selectionAttributes_attribute_choices_edges_node_file {
+  __typename: "File";
+  url: string;
+  contentType: string | null;
+}
+
+export interface SimpleProductUpdate_productVariantUpdate_productVariant_selectionAttributes_attribute_choices_edges_node {
+  __typename: "AttributeValue";
+  id: string;
+  name: string | null;
+  slug: string | null;
+  file: SimpleProductUpdate_productVariantUpdate_productVariant_selectionAttributes_attribute_choices_edges_node_file | null;
+  reference: string | null;
+  richText: any | null;
+}
+
+export interface SimpleProductUpdate_productVariantUpdate_productVariant_selectionAttributes_attribute_choices_edges {
+  __typename: "AttributeValueCountableEdge";
+  cursor: string;
+  node: SimpleProductUpdate_productVariantUpdate_productVariant_selectionAttributes_attribute_choices_edges_node;
+}
+
+export interface SimpleProductUpdate_productVariantUpdate_productVariant_selectionAttributes_attribute_choices {
+  __typename: "AttributeValueCountableConnection";
+  pageInfo: SimpleProductUpdate_productVariantUpdate_productVariant_selectionAttributes_attribute_choices_pageInfo;
+  edges: SimpleProductUpdate_productVariantUpdate_productVariant_selectionAttributes_attribute_choices_edges[];
+}
+
 export interface SimpleProductUpdate_productVariantUpdate_productVariant_selectionAttributes_attribute {
   __typename: "Attribute";
   id: string;
@@ -362,6 +398,7 @@ export interface SimpleProductUpdate_productVariantUpdate_productVariant_selecti
   entityType: AttributeEntityTypeEnum | null;
   valueRequired: boolean;
   unit: MeasurementUnitsEnum | null;
+  choices: SimpleProductUpdate_productVariantUpdate_productVariant_selectionAttributes_attribute_choices | null;
 }
 
 export interface SimpleProductUpdate_productVariantUpdate_productVariant_selectionAttributes_values_file {
@@ -386,6 +423,42 @@ export interface SimpleProductUpdate_productVariantUpdate_productVariant_selecti
   values: (SimpleProductUpdate_productVariantUpdate_productVariant_selectionAttributes_values | null)[];
 }
 
+export interface SimpleProductUpdate_productVariantUpdate_productVariant_nonSelectionAttributes_attribute_choices_pageInfo {
+  __typename: "PageInfo";
+  endCursor: string | null;
+  hasNextPage: boolean;
+  hasPreviousPage: boolean;
+  startCursor: string | null;
+}
+
+export interface SimpleProductUpdate_productVariantUpdate_productVariant_nonSelectionAttributes_attribute_choices_edges_node_file {
+  __typename: "File";
+  url: string;
+  contentType: string | null;
+}
+
+export interface SimpleProductUpdate_productVariantUpdate_productVariant_nonSelectionAttributes_attribute_choices_edges_node {
+  __typename: "AttributeValue";
+  id: string;
+  name: string | null;
+  slug: string | null;
+  file: SimpleProductUpdate_productVariantUpdate_productVariant_nonSelectionAttributes_attribute_choices_edges_node_file | null;
+  reference: string | null;
+  richText: any | null;
+}
+
+export interface SimpleProductUpdate_productVariantUpdate_productVariant_nonSelectionAttributes_attribute_choices_edges {
+  __typename: "AttributeValueCountableEdge";
+  cursor: string;
+  node: SimpleProductUpdate_productVariantUpdate_productVariant_nonSelectionAttributes_attribute_choices_edges_node;
+}
+
+export interface SimpleProductUpdate_productVariantUpdate_productVariant_nonSelectionAttributes_attribute_choices {
+  __typename: "AttributeValueCountableConnection";
+  pageInfo: SimpleProductUpdate_productVariantUpdate_productVariant_nonSelectionAttributes_attribute_choices_pageInfo;
+  edges: SimpleProductUpdate_productVariantUpdate_productVariant_nonSelectionAttributes_attribute_choices_edges[];
+}
+
 export interface SimpleProductUpdate_productVariantUpdate_productVariant_nonSelectionAttributes_attribute {
   __typename: "Attribute";
   id: string;
@@ -395,6 +468,7 @@ export interface SimpleProductUpdate_productVariantUpdate_productVariant_nonSele
   entityType: AttributeEntityTypeEnum | null;
   valueRequired: boolean;
   unit: MeasurementUnitsEnum | null;
+  choices: SimpleProductUpdate_productVariantUpdate_productVariant_nonSelectionAttributes_attribute_choices | null;
 }
 
 export interface SimpleProductUpdate_productVariantUpdate_productVariant_nonSelectionAttributes_values_file {
@@ -610,6 +684,42 @@ export interface SimpleProductUpdate_productVariantStocksCreate_productVariant_p
   value: string;
 }
 
+export interface SimpleProductUpdate_productVariantStocksCreate_productVariant_selectionAttributes_attribute_choices_pageInfo {
+  __typename: "PageInfo";
+  endCursor: string | null;
+  hasNextPage: boolean;
+  hasPreviousPage: boolean;
+  startCursor: string | null;
+}
+
+export interface SimpleProductUpdate_productVariantStocksCreate_productVariant_selectionAttributes_attribute_choices_edges_node_file {
+  __typename: "File";
+  url: string;
+  contentType: string | null;
+}
+
+export interface SimpleProductUpdate_productVariantStocksCreate_productVariant_selectionAttributes_attribute_choices_edges_node {
+  __typename: "AttributeValue";
+  id: string;
+  name: string | null;
+  slug: string | null;
+  file: SimpleProductUpdate_productVariantStocksCreate_productVariant_selectionAttributes_attribute_choices_edges_node_file | null;
+  reference: string | null;
+  richText: any | null;
+}
+
+export interface SimpleProductUpdate_productVariantStocksCreate_productVariant_selectionAttributes_attribute_choices_edges {
+  __typename: "AttributeValueCountableEdge";
+  cursor: string;
+  node: SimpleProductUpdate_productVariantStocksCreate_productVariant_selectionAttributes_attribute_choices_edges_node;
+}
+
+export interface SimpleProductUpdate_productVariantStocksCreate_productVariant_selectionAttributes_attribute_choices {
+  __typename: "AttributeValueCountableConnection";
+  pageInfo: SimpleProductUpdate_productVariantStocksCreate_productVariant_selectionAttributes_attribute_choices_pageInfo;
+  edges: SimpleProductUpdate_productVariantStocksCreate_productVariant_selectionAttributes_attribute_choices_edges[];
+}
+
 export interface SimpleProductUpdate_productVariantStocksCreate_productVariant_selectionAttributes_attribute {
   __typename: "Attribute";
   id: string;
@@ -619,6 +729,7 @@ export interface SimpleProductUpdate_productVariantStocksCreate_productVariant_s
   entityType: AttributeEntityTypeEnum | null;
   valueRequired: boolean;
   unit: MeasurementUnitsEnum | null;
+  choices: SimpleProductUpdate_productVariantStocksCreate_productVariant_selectionAttributes_attribute_choices | null;
 }
 
 export interface SimpleProductUpdate_productVariantStocksCreate_productVariant_selectionAttributes_values_file {
@@ -643,6 +754,42 @@ export interface SimpleProductUpdate_productVariantStocksCreate_productVariant_s
   values: (SimpleProductUpdate_productVariantStocksCreate_productVariant_selectionAttributes_values | null)[];
 }
 
+export interface SimpleProductUpdate_productVariantStocksCreate_productVariant_nonSelectionAttributes_attribute_choices_pageInfo {
+  __typename: "PageInfo";
+  endCursor: string | null;
+  hasNextPage: boolean;
+  hasPreviousPage: boolean;
+  startCursor: string | null;
+}
+
+export interface SimpleProductUpdate_productVariantStocksCreate_productVariant_nonSelectionAttributes_attribute_choices_edges_node_file {
+  __typename: "File";
+  url: string;
+  contentType: string | null;
+}
+
+export interface SimpleProductUpdate_productVariantStocksCreate_productVariant_nonSelectionAttributes_attribute_choices_edges_node {
+  __typename: "AttributeValue";
+  id: string;
+  name: string | null;
+  slug: string | null;
+  file: SimpleProductUpdate_productVariantStocksCreate_productVariant_nonSelectionAttributes_attribute_choices_edges_node_file | null;
+  reference: string | null;
+  richText: any | null;
+}
+
+export interface SimpleProductUpdate_productVariantStocksCreate_productVariant_nonSelectionAttributes_attribute_choices_edges {
+  __typename: "AttributeValueCountableEdge";
+  cursor: string;
+  node: SimpleProductUpdate_productVariantStocksCreate_productVariant_nonSelectionAttributes_attribute_choices_edges_node;
+}
+
+export interface SimpleProductUpdate_productVariantStocksCreate_productVariant_nonSelectionAttributes_attribute_choices {
+  __typename: "AttributeValueCountableConnection";
+  pageInfo: SimpleProductUpdate_productVariantStocksCreate_productVariant_nonSelectionAttributes_attribute_choices_pageInfo;
+  edges: SimpleProductUpdate_productVariantStocksCreate_productVariant_nonSelectionAttributes_attribute_choices_edges[];
+}
+
 export interface SimpleProductUpdate_productVariantStocksCreate_productVariant_nonSelectionAttributes_attribute {
   __typename: "Attribute";
   id: string;
@@ -652,6 +799,7 @@ export interface SimpleProductUpdate_productVariantStocksCreate_productVariant_n
   entityType: AttributeEntityTypeEnum | null;
   valueRequired: boolean;
   unit: MeasurementUnitsEnum | null;
+  choices: SimpleProductUpdate_productVariantStocksCreate_productVariant_nonSelectionAttributes_attribute_choices | null;
 }
 
 export interface SimpleProductUpdate_productVariantStocksCreate_productVariant_nonSelectionAttributes_values_file {
@@ -866,6 +1014,42 @@ export interface SimpleProductUpdate_productVariantStocksDelete_productVariant_p
   value: string;
 }
 
+export interface SimpleProductUpdate_productVariantStocksDelete_productVariant_selectionAttributes_attribute_choices_pageInfo {
+  __typename: "PageInfo";
+  endCursor: string | null;
+  hasNextPage: boolean;
+  hasPreviousPage: boolean;
+  startCursor: string | null;
+}
+
+export interface SimpleProductUpdate_productVariantStocksDelete_productVariant_selectionAttributes_attribute_choices_edges_node_file {
+  __typename: "File";
+  url: string;
+  contentType: string | null;
+}
+
+export interface SimpleProductUpdate_productVariantStocksDelete_productVariant_selectionAttributes_attribute_choices_edges_node {
+  __typename: "AttributeValue";
+  id: string;
+  name: string | null;
+  slug: string | null;
+  file: SimpleProductUpdate_productVariantStocksDelete_productVariant_selectionAttributes_attribute_choices_edges_node_file | null;
+  reference: string | null;
+  richText: any | null;
+}
+
+export interface SimpleProductUpdate_productVariantStocksDelete_productVariant_selectionAttributes_attribute_choices_edges {
+  __typename: "AttributeValueCountableEdge";
+  cursor: string;
+  node: SimpleProductUpdate_productVariantStocksDelete_productVariant_selectionAttributes_attribute_choices_edges_node;
+}
+
+export interface SimpleProductUpdate_productVariantStocksDelete_productVariant_selectionAttributes_attribute_choices {
+  __typename: "AttributeValueCountableConnection";
+  pageInfo: SimpleProductUpdate_productVariantStocksDelete_productVariant_selectionAttributes_attribute_choices_pageInfo;
+  edges: SimpleProductUpdate_productVariantStocksDelete_productVariant_selectionAttributes_attribute_choices_edges[];
+}
+
 export interface SimpleProductUpdate_productVariantStocksDelete_productVariant_selectionAttributes_attribute {
   __typename: "Attribute";
   id: string;
@@ -875,6 +1059,7 @@ export interface SimpleProductUpdate_productVariantStocksDelete_productVariant_s
   entityType: AttributeEntityTypeEnum | null;
   valueRequired: boolean;
   unit: MeasurementUnitsEnum | null;
+  choices: SimpleProductUpdate_productVariantStocksDelete_productVariant_selectionAttributes_attribute_choices | null;
 }
 
 export interface SimpleProductUpdate_productVariantStocksDelete_productVariant_selectionAttributes_values_file {
@@ -899,6 +1084,42 @@ export interface SimpleProductUpdate_productVariantStocksDelete_productVariant_s
   values: (SimpleProductUpdate_productVariantStocksDelete_productVariant_selectionAttributes_values | null)[];
 }
 
+export interface SimpleProductUpdate_productVariantStocksDelete_productVariant_nonSelectionAttributes_attribute_choices_pageInfo {
+  __typename: "PageInfo";
+  endCursor: string | null;
+  hasNextPage: boolean;
+  hasPreviousPage: boolean;
+  startCursor: string | null;
+}
+
+export interface SimpleProductUpdate_productVariantStocksDelete_productVariant_nonSelectionAttributes_attribute_choices_edges_node_file {
+  __typename: "File";
+  url: string;
+  contentType: string | null;
+}
+
+export interface SimpleProductUpdate_productVariantStocksDelete_productVariant_nonSelectionAttributes_attribute_choices_edges_node {
+  __typename: "AttributeValue";
+  id: string;
+  name: string | null;
+  slug: string | null;
+  file: SimpleProductUpdate_productVariantStocksDelete_productVariant_nonSelectionAttributes_attribute_choices_edges_node_file | null;
+  reference: string | null;
+  richText: any | null;
+}
+
+export interface SimpleProductUpdate_productVariantStocksDelete_productVariant_nonSelectionAttributes_attribute_choices_edges {
+  __typename: "AttributeValueCountableEdge";
+  cursor: string;
+  node: SimpleProductUpdate_productVariantStocksDelete_productVariant_nonSelectionAttributes_attribute_choices_edges_node;
+}
+
+export interface SimpleProductUpdate_productVariantStocksDelete_productVariant_nonSelectionAttributes_attribute_choices {
+  __typename: "AttributeValueCountableConnection";
+  pageInfo: SimpleProductUpdate_productVariantStocksDelete_productVariant_nonSelectionAttributes_attribute_choices_pageInfo;
+  edges: SimpleProductUpdate_productVariantStocksDelete_productVariant_nonSelectionAttributes_attribute_choices_edges[];
+}
+
 export interface SimpleProductUpdate_productVariantStocksDelete_productVariant_nonSelectionAttributes_attribute {
   __typename: "Attribute";
   id: string;
@@ -908,6 +1129,7 @@ export interface SimpleProductUpdate_productVariantStocksDelete_productVariant_n
   entityType: AttributeEntityTypeEnum | null;
   valueRequired: boolean;
   unit: MeasurementUnitsEnum | null;
+  choices: SimpleProductUpdate_productVariantStocksDelete_productVariant_nonSelectionAttributes_attribute_choices | null;
 }
 
 export interface SimpleProductUpdate_productVariantStocksDelete_productVariant_nonSelectionAttributes_values_file {
@@ -1123,6 +1345,42 @@ export interface SimpleProductUpdate_productVariantStocksUpdate_productVariant_p
   value: string;
 }
 
+export interface SimpleProductUpdate_productVariantStocksUpdate_productVariant_selectionAttributes_attribute_choices_pageInfo {
+  __typename: "PageInfo";
+  endCursor: string | null;
+  hasNextPage: boolean;
+  hasPreviousPage: boolean;
+  startCursor: string | null;
+}
+
+export interface SimpleProductUpdate_productVariantStocksUpdate_productVariant_selectionAttributes_attribute_choices_edges_node_file {
+  __typename: "File";
+  url: string;
+  contentType: string | null;
+}
+
+export interface SimpleProductUpdate_productVariantStocksUpdate_productVariant_selectionAttributes_attribute_choices_edges_node {
+  __typename: "AttributeValue";
+  id: string;
+  name: string | null;
+  slug: string | null;
+  file: SimpleProductUpdate_productVariantStocksUpdate_productVariant_selectionAttributes_attribute_choices_edges_node_file | null;
+  reference: string | null;
+  richText: any | null;
+}
+
+export interface SimpleProductUpdate_productVariantStocksUpdate_productVariant_selectionAttributes_attribute_choices_edges {
+  __typename: "AttributeValueCountableEdge";
+  cursor: string;
+  node: SimpleProductUpdate_productVariantStocksUpdate_productVariant_selectionAttributes_attribute_choices_edges_node;
+}
+
+export interface SimpleProductUpdate_productVariantStocksUpdate_productVariant_selectionAttributes_attribute_choices {
+  __typename: "AttributeValueCountableConnection";
+  pageInfo: SimpleProductUpdate_productVariantStocksUpdate_productVariant_selectionAttributes_attribute_choices_pageInfo;
+  edges: SimpleProductUpdate_productVariantStocksUpdate_productVariant_selectionAttributes_attribute_choices_edges[];
+}
+
 export interface SimpleProductUpdate_productVariantStocksUpdate_productVariant_selectionAttributes_attribute {
   __typename: "Attribute";
   id: string;
@@ -1132,6 +1390,7 @@ export interface SimpleProductUpdate_productVariantStocksUpdate_productVariant_s
   entityType: AttributeEntityTypeEnum | null;
   valueRequired: boolean;
   unit: MeasurementUnitsEnum | null;
+  choices: SimpleProductUpdate_productVariantStocksUpdate_productVariant_selectionAttributes_attribute_choices | null;
 }
 
 export interface SimpleProductUpdate_productVariantStocksUpdate_productVariant_selectionAttributes_values_file {
@@ -1156,6 +1415,42 @@ export interface SimpleProductUpdate_productVariantStocksUpdate_productVariant_s
   values: (SimpleProductUpdate_productVariantStocksUpdate_productVariant_selectionAttributes_values | null)[];
 }
 
+export interface SimpleProductUpdate_productVariantStocksUpdate_productVariant_nonSelectionAttributes_attribute_choices_pageInfo {
+  __typename: "PageInfo";
+  endCursor: string | null;
+  hasNextPage: boolean;
+  hasPreviousPage: boolean;
+  startCursor: string | null;
+}
+
+export interface SimpleProductUpdate_productVariantStocksUpdate_productVariant_nonSelectionAttributes_attribute_choices_edges_node_file {
+  __typename: "File";
+  url: string;
+  contentType: string | null;
+}
+
+export interface SimpleProductUpdate_productVariantStocksUpdate_productVariant_nonSelectionAttributes_attribute_choices_edges_node {
+  __typename: "AttributeValue";
+  id: string;
+  name: string | null;
+  slug: string | null;
+  file: SimpleProductUpdate_productVariantStocksUpdate_productVariant_nonSelectionAttributes_attribute_choices_edges_node_file | null;
+  reference: string | null;
+  richText: any | null;
+}
+
+export interface SimpleProductUpdate_productVariantStocksUpdate_productVariant_nonSelectionAttributes_attribute_choices_edges {
+  __typename: "AttributeValueCountableEdge";
+  cursor: string;
+  node: SimpleProductUpdate_productVariantStocksUpdate_productVariant_nonSelectionAttributes_attribute_choices_edges_node;
+}
+
+export interface SimpleProductUpdate_productVariantStocksUpdate_productVariant_nonSelectionAttributes_attribute_choices {
+  __typename: "AttributeValueCountableConnection";
+  pageInfo: SimpleProductUpdate_productVariantStocksUpdate_productVariant_nonSelectionAttributes_attribute_choices_pageInfo;
+  edges: SimpleProductUpdate_productVariantStocksUpdate_productVariant_nonSelectionAttributes_attribute_choices_edges[];
+}
+
 export interface SimpleProductUpdate_productVariantStocksUpdate_productVariant_nonSelectionAttributes_attribute {
   __typename: "Attribute";
   id: string;
@@ -1165,6 +1460,7 @@ export interface SimpleProductUpdate_productVariantStocksUpdate_productVariant_n
   entityType: AttributeEntityTypeEnum | null;
   valueRequired: boolean;
   unit: MeasurementUnitsEnum | null;
+  choices: SimpleProductUpdate_productVariantStocksUpdate_productVariant_nonSelectionAttributes_attribute_choices | null;
 }
 
 export interface SimpleProductUpdate_productVariantStocksUpdate_productVariant_nonSelectionAttributes_values_file {

@@ -1,6 +1,7 @@
 import faker from "faker";
 
 import { getProductDetails } from "../../../../apiRequests/storeFront/ProductDetails";
+import { ONE_PERMISSION_USERS } from "../../../../Data/users";
 import { updateProductIsAvailableForPurchase } from "../../../../steps/catalog/products/productSteps";
 import { productDetailsUrl } from "../../../../url/urlList";
 import { getDefaultChannel } from "../../../../utils/channelsUtils";
@@ -55,7 +56,10 @@ describe("Products available in listings", () => {
   });
 
   beforeEach(() => {
-    cy.clearSessionData().loginUserViaRequest();
+    cy.clearSessionData().loginUserViaRequest(
+      "auth",
+      ONE_PERMISSION_USERS.product
+    );
   });
 
   it("should update product to available for purchase", () => {
@@ -84,6 +88,7 @@ describe("Products available in listings", () => {
         expect(isProductAvailableForPurchase(resp)).to.be.eq(true);
       });
   });
+
   it("should update product to not available for purchase", () => {
     const productName = `${startsWith}${faker.datatype.number()}`;
     let product;

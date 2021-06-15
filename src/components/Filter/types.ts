@@ -32,6 +32,7 @@ export interface IFilterElement<T extends string = string>
   type?: FieldType;
   required?: boolean;
   multipleFields?: IFilterElement[];
+  id?: string;
 }
 
 export interface FilterBaseFieldProps<T extends string = string> {

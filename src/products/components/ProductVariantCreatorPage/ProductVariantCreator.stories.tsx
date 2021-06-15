@@ -109,8 +109,7 @@ const props: ProductVariantCreatorContentProps = {
   errors: [],
   variantsLeft: 6,
   step: ProductVariantCreatorStep.values,
-  warehouses: warehouseList,
-  onAttributeFocus: () => undefined
+  warehouses: warehouseList
 };
 
 storiesOf("Views / Products / Create multiple variants", module)

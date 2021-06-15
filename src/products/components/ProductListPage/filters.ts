@@ -1,5 +1,4 @@
 import { IFilter } from "@saleor/components/Filter";
-import { MultiAutocompleteChoiceType } from "@saleor/components/MultiAutocompleteSelectField";
 import { sectionNames } from "@saleor/intl";
 import { AutocompleteFilterOpts, FilterOpts, MinMax } from "@saleor/types";
 import { StockAvailability } from "@saleor/types/globalTypes";
@@ -22,11 +21,12 @@ export enum ProductFilterKeys {
 export interface ProductListFilterOpts {
   attributes: Array<
     FilterOpts<string[]> & {
-      choices: MultiAutocompleteChoiceType[];
+      id: string;
       name: string;
       slug: string;
     }
   >;
+  attributeChoices: FilterOpts<string[]> & AutocompleteFilterOpts;
   categories: FilterOpts<string[]> & AutocompleteFilterOpts;
   collections: FilterOpts<string[]> & AutocompleteFilterOpts;
   price: FilterOpts<MinMax>;
@@ -151,12 +151,21 @@ export function createFilterStructure(
       active: opts.productType.active
     },
     ...opts.attributes.map(attr => ({
-      ...createOptionsField(
+      ...createAutocompleteField(
         attr.slug as any,
         attr.name,
         attr.value,
+        opts.attributeChoices.displayValues,
         true,
-        attr.choices
+        opts.attributeChoices.choices,
+        {
+          hasMore: opts.attributeChoices.hasMore,
+          initialSearch: "",
+          loading: opts.attributeChoices.loading,
+          onFetchMore: opts.attributeChoices.onFetchMore,
+          onSearchChange: opts.attributeChoices.onSearchChange
+        },
+        attr.id
       ),
       active: attr.active,
       group: ProductFilterKeys.attributes

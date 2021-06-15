@@ -21,6 +21,7 @@ export interface FilterProps<TFilterKeys extends string = string> {
   errorMessages?: FilterErrorMessages<TFilterKeys>;
   menu: IFilter<TFilterKeys>;
   onFilterAdd: (filter: Array<IFilterElement<string>>) => void;
+  onFilterAttributeFocus?: (id?: string) => void;
 }
 
 const useStyles = makeStyles(
@@ -91,7 +92,13 @@ const useStyles = makeStyles(
   { name: "Filter" }
 );
 const Filter: React.FC<FilterProps> = props => {
-  const { currencySymbol, menu, onFilterAdd, errorMessages } = props;
+  const {
+    currencySymbol,
+    menu,
+    onFilterAdd,
+    onFilterAttributeFocus,
+    errorMessages
+  } = props;
   const classes = useStyles(props);
 
   const anchor = React.useRef<HTMLDivElement>();
@@ -190,6 +197,7 @@ const Filter: React.FC<FilterProps> = props => {
                 filters={data}
                 onClear={reset}
                 onFilterPropertyChange={dispatch}
+                onFilterAttributeFocus={onFilterAttributeFocus}
                 onSubmit={handleSubmit}
               />
             </Grow>

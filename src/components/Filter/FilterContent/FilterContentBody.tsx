@@ -74,10 +74,6 @@ const FilterContentBody: React.FC<FilterContentBodyProps> = ({
   const intl = useIntl();
   const classes = useStyles({});
 
-  if (!filter?.active) {
-    return null;
-  }
-
   return (
     <div className={classes.filterSettings}>
       {children}

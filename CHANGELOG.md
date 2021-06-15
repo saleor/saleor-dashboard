@@ -50,6 +50,9 @@ All notable, unreleased changes to this project will be documented in this file.
 - Add product / page delete warning - #1095 by @mmarkusik
 - Channels per plugin - #1093 by @mmarkusik
 - Add pagination on attribute values - #1112 by @orzechdev
+- Paginate attribute values in filters - #1152 by @orzechdev
+- Fix attribute values input display - #1156 by @orzechdev
+- Fix product type translations - #1163 by @orzechdev
 
 # 2.11.1
 
