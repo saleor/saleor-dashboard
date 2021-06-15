@@ -175,12 +175,12 @@ export function createOrderWithNewProduct({
     quantityInWarehouse,
     trackInventory
   }).then(({ variantsList }) =>
-    createWaitingForCaptureOrder(
-      channel.slug,
-      "email@example.com",
+    createWaitingForCaptureOrder({
+      channelSlug: channel.slug,
+      email: "email@example.com",
       variantsList,
       shippingMethodId,
       address
-    )
+    })
   );
 }
