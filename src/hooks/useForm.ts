@@ -63,16 +63,13 @@ function handleRefresh<T extends FormData>(
   }
 }
 
-function useForm<
-  TData extends FormData,
-  TMutation extends { data: { errors: any[] } }
->(
-  initial: TData,
-  onSubmit?: (data: TData) => SubmitPromise<TMutation> | void,
+function useForm<T extends FormData>(
+  initial: T,
+  onSubmit?: (data: T) => SubmitPromise | void,
   confirmLeave = false
-): UseFormResult<TData> {
+): UseFormResult<T> {
   const [hasChanged, setChanged] = useState(false);
-  const [errors, setErrors] = useState<FormErrors<TData>>({});
+  const [errors, setErrors] = useState<FormErrors<T>>({});
   const [data, setData] = useStateFromProps(initial, {
     mergeFunc: merge,
     onRefresh: newData => handleRefresh(data, newData, handleSetChanged)
@@ -97,7 +94,7 @@ function useForm<
 
   function toggleValue(event: ChangeEvent, cb?: () => void) {
     const { name, value } = event.target;
-    const field = data[name as keyof TData];
+    const field = data[name as keyof T];
 
     if (Array.isArray(field)) {
       if (!hasChanged) {
@@ -136,7 +133,7 @@ function useForm<
     setData(initial);
   }
 
-  function set(newData: Partial<TData>, setHasChanged = true) {
+  function set(newData: Partial<T>, setHasChanged = true) {
     setData(data => ({
       ...data,
       ...newData
@@ -165,15 +162,15 @@ function useForm<
     handleSetChanged(true);
   }
 
-  const setError = (field: keyof TData, error: string | React.ReactNode) =>
+  const setError = (field: keyof T, error: string | React.ReactNode) =>
     setErrors(e => ({ ...e, [field]: error }));
 
-  const clearErrors = (field?: keyof TData | Array<keyof TData>) => {
+  const clearErrors = (field?: keyof T | Array<keyof T>) => {
     if (!field) {
       setErrors({});
     } else {
       setErrors(errors =>
-        omit<FormErrors<TData>>(errors, Array.isArray(field) ? field : [field])
+        omit<FormErrors<T>>(errors, Array.isArray(field) ? field : [field])
       );
     }
   };
