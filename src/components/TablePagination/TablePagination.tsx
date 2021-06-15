@@ -52,6 +52,11 @@ const useStyles = makeStyles(
   { name: "TablePagination" }
 );
 
+export type ListSettingsUpdate = <T extends keyof ListSettings>(
+  key: T,
+  value: ListSettings[T]
+) => void;
+
 interface TablePaginationProps {
   backIconButtonProps?: Partial<IconButtonProps>;
   colSpan: number;
@@ -60,9 +65,9 @@ interface TablePaginationProps {
   hasNextPage: boolean;
   hasPreviousPage: boolean;
   nextIconButtonProps?: Partial<IconButtonProps>;
+  onUpdateListSettings?: ListSettingsUpdate;
   onNextPage(event);
   onPreviousPage(event);
-  onUpdateListSettings?(key: keyof ListSettings, value: any): void;
 }
 
 const TablePagination: React.FC<TablePaginationProps> = props => {
@@ -94,8 +99,8 @@ const TablePagination: React.FC<TablePaginationProps> = props => {
           {maybe(() => settings.rowNumber) && (
             <RowNumberSelect
               choices={[10, 20, 30, 50, 100]}
-              settings={settings}
-              onChange={onUpdateListSettings}
+              rowNumber={settings.rowNumber}
+              onChange={value => onUpdateListSettings("rowNumber", value)}
             />
           )}
         </div>

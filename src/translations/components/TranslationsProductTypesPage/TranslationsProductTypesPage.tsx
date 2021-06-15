@@ -3,6 +3,7 @@ import CardSpacer from "@saleor/components/CardSpacer";
 import Container from "@saleor/components/Container";
 import LanguageSwitch from "@saleor/components/LanguageSwitch";
 import PageHeader from "@saleor/components/PageHeader";
+import { ListSettingsUpdate } from "@saleor/components/TablePagination";
 import { AttributeTranslationDetailsFragment } from "@saleor/fragments/types/AttributeTranslationDetailsFragment";
 import { commonMessages, sectionNames } from "@saleor/intl";
 import { TranslationsEntitiesPageProps } from "@saleor/translations/types";
@@ -27,7 +28,7 @@ export interface TranslationsProductTypesPageProps
   extends TranslationsEntitiesPageProps {
   data: AttributeTranslationDetailsFragment;
   settings?: ListSettings;
-  onUpdateListSettings?: (key: keyof ListSettings, value: any) => void;
+  onUpdateListSettings?: ListSettingsUpdate;
   pageInfo: {
     hasNextPage: boolean;
     hasPreviousPage: boolean;

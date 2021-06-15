@@ -6,7 +6,10 @@ import { ListSettings, ListViews } from "./../types";
 
 export interface UseListSettings<TColumns extends string = string> {
   settings: ListSettings<TColumns>;
-  updateListSettings: (key: keyof ListSettings<TColumns>, value: any) => void;
+  updateListSettings: <T extends keyof ListSettings<TColumns>>(
+    key: T,
+    value: ListSettings<TColumns>[T]
+  ) => void;
 }
 export default function useListSettings<TColumns extends string = string>(
   listName: ListViews
@@ -25,7 +28,10 @@ export default function useListSettings<TColumns extends string = string>(
     }
   }, []);
 
-  const updateListSettings = (key: keyof ListSettings, value: any) =>
+  const updateListSettings = <T extends keyof ListSettings>(
+    key: T,
+    value: ListSettings[T]
+  ) =>
     setListSettings(settings => ({
       ...settings,
       [listName]: {
