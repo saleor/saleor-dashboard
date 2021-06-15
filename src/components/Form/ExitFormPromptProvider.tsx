@@ -1,12 +1,13 @@
+import { SubmitPromise } from "@saleor/hooks/useForm";
 import useNavigator from "@saleor/hooks/useNavigator";
-import React, { Ref, useEffect, useRef, useState } from "react";
+import React, { MutableRefObject, useEffect, useRef, useState } from "react";
 import { useHistory } from "react-router";
 
 import ExitFormPrompt from "./ExitFormPrompt";
 
 export interface ExitFormPromptData {
   setIsDirty: (isDirty: boolean) => void;
-  submitRef: Ref<() => Promise<{ isError: boolean }>>;
+  submitRef: MutableRefObject<() => SubmitPromise<{ isError: boolean }>>;
 }
 
 export const ExitFormPromptContext = React.createContext<ExitFormPromptData>({
@@ -24,7 +25,7 @@ const defaultValues = {
 const ExitFormPromptProvider = ({ children }) => {
   const history = useHistory();
   const navigate = useNavigator();
-  const submitRef = useRef(null);
+  const submitRef = useRef<() => SubmitPromise<{ isError: boolean }>>(null);
 
   const [showPrompt, setShowPrompt] = useState(defaultValues.showPrompt);
   const [blockNav, setBlockNav] = useState(defaultValues.blockNav);

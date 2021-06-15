@@ -1,11 +1,10 @@
 import { ExitFormPromptContext } from "@saleor/components/Form/ExitFormPromptProvider";
-import { getMutationErrors, SaleorMutationResult } from "@saleor/misc";
+import { getMutationErrors } from "@saleor/misc";
 import { toggle } from "@saleor/utils/lists";
 import isEqual from "lodash/isEqual";
 import omit from "lodash/omit";
 import React, { useContext, useEffect } from "react";
 import { useState } from "react";
-import { MutationFetchResult } from "react-apollo";
 
 import useStateFromProps from "./useStateFromProps";
 
@@ -15,12 +14,7 @@ export interface ChangeEvent<TData = any> {
     value: TData;
   };
 }
-export type SubmitPromise<
-  TMutationResult extends Record<keyof TMutationResult, SaleorMutationResult>
-> = Promise<MutationFetchResult<TMutationResult>>;
-
-// Promise<Record<string, SaleorMutationResult>>;
-// export type SubmitPromise = Promise<Record<string, SaleorMutationResult>>;
+export type SubmitPromise<TData = any> = Promise<TData>;
 
 export type FormChange = (event: ChangeEvent, cb?: () => void) => void;
 
@@ -69,7 +63,10 @@ function handleRefresh<T extends FormData>(
   }
 }
 
-function useForm<TData extends FormData, TMutation>(
+function useForm<
+  TData extends FormData,
+  TMutation extends { data: { errors: any[] } }
+>(
   initial: TData,
   onSubmit?: (data: TData) => SubmitPromise<TMutation> | void,
   confirmLeave = false
@@ -139,7 +136,7 @@ function useForm<TData extends FormData, TMutation>(
     setData(initial);
   }
 
-  function set(newData: Partial<T>, setHasChanged = true) {
+  function set(newData: Partial<TData>, setHasChanged = true) {
     setData(data => ({
       ...data,
       ...newData
@@ -149,11 +146,10 @@ function useForm<TData extends FormData, TMutation>(
 
   async function submit() {
     if (typeof onSubmit === "function" && !Object.keys(errors).length) {
-      const result = onSubmit(data);
+      const result = await onSubmit(data);
 
       if (result) {
-        const resultData = await result;
-        const errors = getMutationErrors(resultData.data);
+        const errors = getMutationErrors(result.data);
 
         if (errors?.length === 0) {
           handleSetChanged(false);
