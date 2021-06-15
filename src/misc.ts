@@ -3,7 +3,6 @@ import { MutationFunction, MutationResult } from "react-apollo";
 import { defineMessages, IntlShape } from "react-intl";
 import urlJoin from "url-join";
 
-import { getRichTextData } from "./components/Attributes/utils";
 import { ConfirmButtonTransitionState } from "./components/ConfirmButton/ConfirmButton";
 import { StatusType } from "./components/StatusChip/types";
 import { APP_MOUNT_URI } from "./config";
