@@ -1,5 +1,7 @@
 import gql from "graphql-tag";
 
+import { pageInfoFragment } from "./pageInfo";
+
 export const categoryTranslationFragment = gql`
   fragment CategoryTranslationFragment on CategoryTranslatableContent {
     translation(languageCode: $language) {
@@ -161,6 +163,29 @@ export const pageTranslatableFragment = gql`
   }
 `;
 
+export const attributeChoicesTranslationFragment = gql`
+  ${pageInfoFragment}
+  fragment AttributeChoicesTranslationFragment on AttributeValueCountableConnection {
+    pageInfo {
+      ...PageInfoFragment
+    }
+    edges {
+      cursor
+      node {
+        id
+        name
+        richText
+        inputType
+        translation(languageCode: $language) {
+          id
+          name
+          richText
+        }
+      }
+    }
+  }
+`;
+
 export const attributeTranslationFragment = gql`
   fragment AttributeTranslationFragment on AttributeTranslatableContent {
     translation(languageCode: $language) {
@@ -171,17 +196,29 @@ export const attributeTranslationFragment = gql`
       id
       name
       inputType
-      # values {
-      #   id
-      #   name
-      #   richText
-      #   inputType
-      #   translation(languageCode: $language) {
-      #     id
-      #     name
-      #     richText
-      #   }
-      # }
+    }
+  }
+`;
+
+export const attributeTranslationDetailsFragment = gql`
+  ${attributeChoicesTranslationFragment}
+  fragment AttributeTranslationDetailsFragment on AttributeTranslatableContent {
+    translation(languageCode: $language) {
+      id
+      name
+    }
+    attribute {
+      id
+      name
+      inputType
+      choices(
+        first: $firstValues
+        after: $afterValues
+        last: $lastValues
+        before: $beforeValues
+      ) {
+        ...AttributeChoicesTranslationFragment
+      }
     }
   }
 `;

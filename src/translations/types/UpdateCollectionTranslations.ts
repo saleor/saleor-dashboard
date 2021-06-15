@@ -25,7 +25,7 @@ export interface UpdateCollectionTranslations_collectionTranslate_collection_tra
   id: string;
   description: any | null;
   language: UpdateCollectionTranslations_collectionTranslate_collection_translation_language;
-  name: string;
+  name: string | null;
   seoDescription: string | null;
   seoTitle: string | null;
 }
