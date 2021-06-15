@@ -92,7 +92,7 @@ export const ChannelDetailsPage: React.FC<ChannelDetailsPageProps> = ({
     );
 
   return (
-    <Form onSubmit={onSubmit} initial={initialData}>
+    <Form confirmLeave onSubmit={onSubmit} initial={initialData}>
       {({ change, data, hasChanged, submit, set }) => {
         const handleCurrencyCodeSelect = createSingleAutocompleteSelectHandler(
           change,
