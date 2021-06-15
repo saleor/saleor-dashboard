@@ -45,7 +45,7 @@ export interface CollectionCreateFormProps {
   currentChannels: ChannelCollectionData[];
   setChannels: (data: ChannelCollectionData[]) => void;
   children: (props: UseCollectionCreateFormResult) => React.ReactNode;
-  onSubmit: (data: CollectionCreateData) => SubmitPromise<CollectionCreate>;
+  onSubmit: (data: CollectionCreateData) => SubmitPromise;
 }
 
 function useCollectionCreateForm(

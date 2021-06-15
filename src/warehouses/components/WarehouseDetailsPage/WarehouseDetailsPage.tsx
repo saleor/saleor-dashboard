@@ -22,7 +22,6 @@ import {
 } from "@saleor/types/globalTypes";
 import createSingleAutocompleteSelectHandler from "@saleor/utils/handlers/singleAutocompleteSelectChangeHandler";
 import { mapCountriesToChoices, mapEdgesToItems } from "@saleor/utils/maps";
-import { WarehouseUpdate } from "@saleor/warehouses/types/WarehouseUpdate";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -43,9 +42,7 @@ export interface WarehouseDetailsPageProps {
   onBack: () => void;
   onDelete: () => void;
   onShippingZoneClick: (id: string) => void;
-  onSubmit: (
-    data: WarehouseDetailsPageFormData
-  ) => SubmitPromise<WarehouseUpdate>;
+  onSubmit: (data: WarehouseDetailsPageFormData) => SubmitPromise;
 }
 
 const WarehouseDetailsPage: React.FC<WarehouseDetailsPageProps> = ({
