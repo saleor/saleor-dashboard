@@ -57,7 +57,12 @@ export interface ProductListPageProps
 const useStyles = makeStyles(
   theme => ({
     columnPicker: {
-      marginRight: theme.spacing(3)
+      marginRight: theme.spacing(3),
+      [theme.breakpoints.down("xs")]: {
+        "& > button": {
+          width: "100%"
+        }
+      }
     },
     settings: {
       marginRight: theme.spacing(2)
