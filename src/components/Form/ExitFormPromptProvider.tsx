@@ -6,12 +6,12 @@ import ExitFormPrompt from "./ExitFormPrompt";
 
 export interface ExitFormPromptData {
   setIsDirty: (isDirty: boolean) => void;
-  formRef: Ref<HTMLFormElement>;
+  submitRef: Ref<() => Promise<{ isError: boolean }>>;
 }
 
 export const ExitFormPromptContext = React.createContext<ExitFormPromptData>({
   setIsDirty: () => undefined,
-  formRef: null
+  submitRef: null
 });
 
 const defaultValues = {
@@ -24,7 +24,7 @@ const defaultValues = {
 const ExitFormPromptProvider = ({ children }) => {
   const history = useHistory();
   const navigate = useNavigator();
-  const formRef = useRef(null);
+  const submitRef = useRef(null);
 
   const [showPrompt, setShowPrompt] = useState(defaultValues.showPrompt);
   const [blockNav, setBlockNav] = useState(defaultValues.blockNav);
@@ -75,7 +75,13 @@ const ExitFormPromptProvider = ({ children }) => {
   };
 
   const handleSubmit = async () => {
-    const { isError } = await formRef.current.submit();
+    if (!submitRef) {
+      return;
+    }
+
+    setShowPrompt(false);
+
+    const { isError } = await submitRef.current();
 
     if (!isError) {
       continueNavigation();
@@ -92,7 +98,7 @@ const ExitFormPromptProvider = ({ children }) => {
 
   const providerData = {
     setIsDirty,
-    formRef
+    submitRef
   };
 
   return (

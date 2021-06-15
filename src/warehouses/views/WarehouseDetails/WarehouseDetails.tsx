@@ -78,8 +78,8 @@ const WarehouseDetails: React.FC<WarehouseDetailsProps> = ({ id, params }) => {
     return <NotFoundPage onBack={() => navigate(warehouseListUrl())} />;
   }
 
-  const handleSubmit = async (data: WarehouseDetailsPageFormData) => {
-    const result = await updateWarehouse({
+  const handleSubmit = (data: WarehouseDetailsPageFormData) =>
+    updateWarehouse({
       variables: {
         id,
         input: {
@@ -101,8 +101,6 @@ const WarehouseDetails: React.FC<WarehouseDetailsProps> = ({ id, params }) => {
       }
     });
 
-    return result.data.updateWarehouse.errors;
-  };
   return (
     <>
       <WindowTitle title={data?.warehouse?.name} />
