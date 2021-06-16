@@ -7,7 +7,6 @@ import TableCell from "@material-ui/core/TableCell";
 import Typography from "@material-ui/core/Typography";
 import CardTitle from "@saleor/components/CardTitle";
 import Checkbox from "@saleor/components/Checkbox";
-import FormSpacer from "@saleor/components/FormSpacer";
 import LimitReachedAlert from "@saleor/components/LimitReachedAlert";
 import LinkChoice from "@saleor/components/LinkChoice";
 import Money from "@saleor/components/Money";
@@ -20,7 +19,7 @@ import {
   SortableTableRow
 } from "@saleor/components/SortableTable";
 import TableHead from "@saleor/components/TableHead";
-import { Alert, makeStyles } from "@saleor/macaw-ui";
+import { makeStyles } from "@saleor/macaw-ui";
 import { isLimitReached } from "@saleor/utils/limits";
 import React from "react";
 import { FormattedMessage, IntlShape, useIntl } from "react-intl";
