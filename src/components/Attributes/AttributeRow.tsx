@@ -210,7 +210,7 @@ const AttributeRow: React.FC<AttributeRowProps> = ({
               onChange={event =>
                 onChange(attribute.id, JSON.stringify(event.target.checked))
               }
-              checked={JSON.parse(attribute.value[0])}
+              checked={JSON.parse(attribute.value[0] ?? "false")}
               className={classes.pullRight}
               helperText={getErrorMessage(error, intl)}
               error={!!error}

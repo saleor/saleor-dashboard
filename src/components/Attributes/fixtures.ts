@@ -1,6 +1,7 @@
 import {
   AttributeEntityTypeEnum,
-  AttributeInputTypeEnum
+  AttributeInputTypeEnum,
+  MeasurementUnitsEnum
 } from "@saleor/types/globalTypes";
 
 import { AttributeInput } from "./Attributes";
@@ -182,22 +183,7 @@ const RICH_TEXT_ATTRIBUTE: AttributeInput = {
         boolean: null
       }
     ],
-    selectedValues: [
-      {
-        __typename: "AttributeValue",
-        file: null,
-        id: "asdfafd",
-        name: "Some cool text",
-        reference: null,
-        slug: "text",
-        richText: JSON.stringify({
-          time: 1617788754145,
-          blocks: [{ data: { text: "Some cool text" }, type: "paragraph" }],
-          version: "2.19.3"
-        }),
-        boolean: null
-      }
-    ]
+    selectedValues: []
   },
   id: "asdfafd",
   label: "Text Attribute",
@@ -208,12 +194,13 @@ const NUMERIC_ATTRIBUTE: AttributeInput = {
   data: {
     inputType: AttributeInputTypeEnum.NUMERIC,
     isRequired: true,
+    unit: MeasurementUnitsEnum.CM,
     values: [
       {
         __typename: "AttributeValue",
         file: null,
         id: "QXR0cmlidXRlVmFsdWU6MTAx",
-        name: "12cm",
+        name: "12",
         reference: null,
         richText: null,
         boolean: null,
@@ -226,13 +213,36 @@ const NUMERIC_ATTRIBUTE: AttributeInput = {
   value: []
 };
 
+const BOOLEAN_ATTRIBUTE: AttributeInput = {
+  data: {
+    inputType: AttributeInputTypeEnum.BOOLEAN,
+    isRequired: true,
+    values: [
+      {
+        __typename: "AttributeValue",
+        file: null,
+        id: "asdfasdfasdfasdf",
+        name: "Boolean Attribute: Yes",
+        reference: null,
+        richText: null,
+        boolean: true,
+        slug: "319_True"
+      }
+    ]
+  },
+  id: "QXR0cmlidXRlOjMasdfasdf1",
+  label: "Boolean Attribute",
+  value: []
+};
+
 export const ATTRIBUTES: AttributeInput[] = [
   DROPDOWN_ATTRIBUTE,
   MULTISELECT_ATTRIBUTE,
   FILE_ATTRIBUTE,
   REFERENCE_ATTRIBUTE,
   RICH_TEXT_ATTRIBUTE,
-  NUMERIC_ATTRIBUTE
+  NUMERIC_ATTRIBUTE,
+  BOOLEAN_ATTRIBUTE
 ];
 
 export const ATTRIBUTES_SELECTED: AttributeInput[] = [
@@ -261,10 +271,18 @@ export const ATTRIBUTES_SELECTED: AttributeInput[] = [
   },
   {
     ...RICH_TEXT_ATTRIBUTE,
-    value: [RICH_TEXT_ATTRIBUTE.data.values[0].richText]
+    data: {
+      ...RICH_TEXT_ATTRIBUTE.data,
+      selectedValues: [RICH_TEXT_ATTRIBUTE.data.values[0]]
+    },
+    value: []
   },
   {
     ...NUMERIC_ATTRIBUTE,
     value: [NUMERIC_ATTRIBUTE.data.values[0].name]
+  },
+  {
+    ...BOOLEAN_ATTRIBUTE,
+    value: [JSON.stringify(BOOLEAN_ATTRIBUTE.data.values[0].boolean)]
   }
 ];
