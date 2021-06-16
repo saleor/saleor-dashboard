@@ -167,6 +167,7 @@ All notable, unreleased changes to this project will be documented in this file.
 - Update product stock management to newest design - #515 by @dominik-zeglen
 - Handle untracked products - #523 by @dominik-zeglen
 - Display correct error if there were no graphql errors - #525 by @dominik-zeglen
+- Add boolean attributes - #1157 by @piotrgrundas
 
 ## 2.0.0
 
