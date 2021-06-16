@@ -108,6 +108,7 @@ describe("Vouchers discounts", () => {
     const voucherCode = `${startsWith}${faker.datatype.number()}`;
     const voucherValue = 50;
 
+    cy.softExpectSkeletonIsVisible();
     createVoucher({
       voucherCode,
       voucherValue,
@@ -125,6 +126,7 @@ describe("Vouchers discounts", () => {
   it("should create free shipping voucher", () => {
     const voucherCode = `${startsWith}${faker.datatype.number()}`;
 
+    cy.softExpectSkeletonIsVisible();
     createVoucher({
       voucherCode,
       discountOption: discountOptions.SHIPPING,
@@ -142,6 +144,7 @@ describe("Vouchers discounts", () => {
     const randomName = `${startsWith}${faker.datatype.number()}`;
     const voucherValue = 50;
 
+    cy.softExpectSkeletonIsVisible();
     createChannel({ name: randomName })
       .then(channel => {
         createVoucher({

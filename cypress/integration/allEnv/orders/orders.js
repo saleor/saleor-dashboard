@@ -137,6 +137,7 @@ describe("Orders", () => {
       .then(({ order: orderResp }) => {
         order = orderResp;
         cy.visit(urlList.orders);
+        cy.softExpectSkeletonIsVisible();
         cy.contains(ORDERS_SELECTORS.orderRow, order.number).click();
         cy.get(SHARED_ELEMENTS.skeleton)
           .should("not.exist")
@@ -173,6 +174,7 @@ describe("Orders", () => {
       .then(({ order: orderResp }) => {
         order = orderResp;
         cy.visit(urlList.orders);
+        cy.softExpectSkeletonIsVisible();
         cy.contains(ORDERS_SELECTORS.orderRow, order.number).click();
         cy.get(ORDERS_SELECTORS.refundButton)
           .click()

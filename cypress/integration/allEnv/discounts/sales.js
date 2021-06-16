@@ -89,6 +89,7 @@ describe("Sales discounts", () => {
       })
       .then(({ product: productResp }) => {
         cy.visit(urlList.sales);
+        cy.softExpectSkeletonIsVisible();
         const product = productResp;
         createSale({
           saleName,
@@ -122,6 +123,7 @@ describe("Sales discounts", () => {
       })
       .then(({ product: productResp }) => {
         cy.visit(urlList.sales);
+        cy.softExpectSkeletonIsVisible();
         const product = productResp;
         createSale({
           saleName,
@@ -167,6 +169,7 @@ describe("Sales discounts", () => {
       })
       .then(() => {
         cy.visit(urlList.sales);
+        cy.softExpectSkeletonIsVisible();
         createSale({
           saleName,
           channelName: channel.name,

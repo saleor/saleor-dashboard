@@ -10,6 +10,7 @@ describe("Sorting products", () => {
       cy.clearSessionData()
         .loginUserViaRequest()
         .visit(urlList.products);
+      cy.softExpectSkeletonIsVisible();
       cy.get(SHARED_ELEMENTS.header).should("be.visible");
       if (sortBy !== "name") {
         cy.get(PRODUCTS_LIST.tableHeaders[sortBy]).click();
