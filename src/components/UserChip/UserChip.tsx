@@ -41,14 +41,6 @@ const UserChip: React.FC<UserChipProps> = ({
   const classes = useStyles({});
   const intl = useIntl();
 
-  const handleLogout = () => {
-    onLogout();
-  };
-
-  const handleViewerProfile = () => {
-    onProfileClick();
-  };
-
   return (
     <MacawUserChip
       initials={getUserInitials(user)}
@@ -56,7 +48,7 @@ const UserChip: React.FC<UserChipProps> = ({
       avatar={user?.avatar?.url}
     >
       <UserChipMenuItem
-        onClick={handleViewerProfile}
+        onClick={onProfileClick}
         data-test="accountSettingsButton"
       >
         <FormattedMessage
@@ -64,7 +56,7 @@ const UserChip: React.FC<UserChipProps> = ({
           description="button"
         />
       </UserChipMenuItem>
-      <UserChipMenuItem onClick={handleLogout} data-test="logOutButton">
+      <UserChipMenuItem onClick={onLogout} data-test="logOutButton">
         <FormattedMessage defaultMessage="Log out" description="button" />
       </UserChipMenuItem>
       <UserChipMenuItem
