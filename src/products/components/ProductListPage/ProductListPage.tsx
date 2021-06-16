@@ -6,12 +6,12 @@ import ColumnPicker, {
 } from "@saleor/components/ColumnPicker";
 import Container from "@saleor/components/Container";
 import FilterBar from "@saleor/components/FilterBar";
-import FormSpacer from "@saleor/components/FormSpacer";
+import LimitReachedAlert from "@saleor/components/LimitReachedAlert";
 import PageHeader from "@saleor/components/PageHeader";
 import { RefreshLimits_shop_limits } from "@saleor/components/Shop/types/RefreshLimits";
 import { ProductListColumns } from "@saleor/config";
 import { sectionNames } from "@saleor/intl";
-import { Alert, makeStyles } from "@saleor/macaw-ui";
+import { makeStyles } from "@saleor/macaw-ui";
 import {
   GridAttributes_availableInGrid_edges_node,
   GridAttributes_grid_edges_node
@@ -182,18 +182,14 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
         </Button>
       </PageHeader>
       {limitReached && (
-        <>
-          <Alert
-            title={intl.formatMessage({
-              defaultMessage: "SKU limit reached",
-              description: "alert"
-            })}
-            variant="warning"
-          >
-            <FormattedMessage defaultMessage="You have reached your SKU limit, you will be no longer able to add SKUs to your store. If you would like to up your limit, contact your administration staff about raising your limits." />
-          </Alert>
-          <FormSpacer />
-        </>
+        <LimitReachedAlert
+          title={intl.formatMessage({
+            defaultMessage: "SKU limit reached",
+            description: "alert"
+          })}
+        >
+          <FormattedMessage defaultMessage="You have reached your SKU limit, you will be no longer able to add SKUs to your store. If you would like to up your limit, contact your administration staff about raising your limits." />
+        </LimitReachedAlert>
       )}
       <Card>
         <FilterBar

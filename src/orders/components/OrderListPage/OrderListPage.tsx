@@ -3,11 +3,11 @@ import Card from "@material-ui/core/Card";
 import CardMenu from "@saleor/components/CardMenu";
 import Container from "@saleor/components/Container";
 import FilterBar from "@saleor/components/FilterBar";
-import FormSpacer from "@saleor/components/FormSpacer";
+import LimitReachedAlert from "@saleor/components/LimitReachedAlert";
 import PageHeader from "@saleor/components/PageHeader";
 import { RefreshLimits_shop_limits } from "@saleor/components/Shop/types/RefreshLimits";
 import { sectionNames } from "@saleor/intl";
-import { Alert, makeStyles } from "@saleor/macaw-ui";
+import { makeStyles } from "@saleor/macaw-ui";
 import { OrderListUrlSortField } from "@saleor/orders/urls";
 import { FilterPageProps, PageListProps, SortPage } from "@saleor/types";
 import { isLimitReached } from "@saleor/utils/limits";
@@ -90,18 +90,14 @@ const OrderListPage: React.FC<OrderListPageProps> = ({
         </Button>
       </PageHeader>
       {isLimitReached(limits, "orders") && (
-        <>
-          <Alert
-            title={intl.formatMessage({
-              defaultMessage: "Order limit reached",
-              description: "alert"
-            })}
-            variant="warning"
-          >
-            <FormattedMessage defaultMessage="You have reached your order limit, you will be billed extra for orders above limit. If you would like to up your limit, contact your administration staff about raising your limits." />
-          </Alert>
-          <FormSpacer />
-        </>
+        <LimitReachedAlert
+          title={intl.formatMessage({
+            defaultMessage: "Order limit reached",
+            description: "alert"
+          })}
+        >
+          <FormattedMessage defaultMessage="You have reached your order limit, you will be billed extra for orders above limit. If you would like to up your limit, contact your administration staff about raising your limits." />
+        </LimitReachedAlert>
       )}
       <Card>
         <FilterBar

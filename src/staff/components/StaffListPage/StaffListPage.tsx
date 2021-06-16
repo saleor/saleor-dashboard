@@ -3,11 +3,10 @@ import Card from "@material-ui/core/Card";
 import AppHeader from "@saleor/components/AppHeader";
 import { Container } from "@saleor/components/Container";
 import FilterBar from "@saleor/components/FilterBar";
-import FormSpacer from "@saleor/components/FormSpacer";
+import LimitReachedAlert from "@saleor/components/LimitReachedAlert";
 import PageHeader from "@saleor/components/PageHeader";
 import { RefreshLimits_shop_limits } from "@saleor/components/Shop/types/RefreshLimits";
 import { sectionNames } from "@saleor/intl";
-import { Alert } from "@saleor/macaw-ui";
 import { StaffListUrlSortField } from "@saleor/staff/urls";
 import {
   FilterPageProps,
@@ -87,18 +86,14 @@ const StaffListPage: React.FC<StaffListPageProps> = ({
         </Button>
       </PageHeader>
       {reachedLimit && (
-        <>
-          <Alert
-            title={intl.formatMessage({
-              defaultMessage: "Staff Member limit reached",
-              description: "alert"
-            })}
-            variant="warning"
-          >
-            <FormattedMessage defaultMessage="You have reached your staff member limit, you will be no longer able to add staff members to your store. If you would like to up your limit, contact your administration staff about raising your limits." />
-          </Alert>
-          <FormSpacer />
-        </>
+        <LimitReachedAlert
+          title={intl.formatMessage({
+            defaultMessage: "Staff Member limit reached",
+            description: "alert"
+          })}
+        >
+          <FormattedMessage defaultMessage="You have reached your staff member limit, you will be no longer able to add staff members to your store. If you would like to up your limit, contact your administration staff about raising your limits." />
+        </LimitReachedAlert>
       )}
       <Card>
         <FilterBar

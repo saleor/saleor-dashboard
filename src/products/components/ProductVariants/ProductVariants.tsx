@@ -8,6 +8,7 @@ import Typography from "@material-ui/core/Typography";
 import CardTitle from "@saleor/components/CardTitle";
 import Checkbox from "@saleor/components/Checkbox";
 import FormSpacer from "@saleor/components/FormSpacer";
+import LimitReachedAlert from "@saleor/components/LimitReachedAlert";
 import LinkChoice from "@saleor/components/LinkChoice";
 import Money from "@saleor/components/Money";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
@@ -262,19 +263,15 @@ export const ProductVariants: React.FC<ProductVariantsProps> = props => {
       />
 
       {limitReached && (
-        <>
-          <Alert
-            className={classes.alert}
-            title={intl.formatMessage({
-              defaultMessage: "SKU limit reached",
-              description: "alert"
-            })}
-            variant="warning"
-          >
-            <FormattedMessage defaultMessage="You have reached your SKU limit, you will be no longer able to add SKUs to your store. If you would like to up your limit, contact your administration staff about raising your limits." />
-          </Alert>
-          <FormSpacer />
-        </>
+        <LimitReachedAlert
+          className={classes.alert}
+          title={intl.formatMessage({
+            defaultMessage: "SKU limit reached",
+            description: "alert"
+          })}
+        >
+          <FormattedMessage defaultMessage="You have reached your SKU limit, you will be no longer able to add SKUs to your store. If you would like to up your limit, contact your administration staff about raising your limits." />
+        </LimitReachedAlert>
       )}
 
       {variants.length > 0 ? (

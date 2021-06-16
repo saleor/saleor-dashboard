@@ -2,13 +2,12 @@ import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
 import AppHeader from "@saleor/components/AppHeader";
 import Container from "@saleor/components/Container";
-import FormSpacer from "@saleor/components/FormSpacer";
+import LimitReachedAlert from "@saleor/components/LimitReachedAlert";
 import PageHeader from "@saleor/components/PageHeader";
 import SearchBar from "@saleor/components/SearchBar";
 import { RefreshLimits_shop_limits } from "@saleor/components/Shop/types/RefreshLimits";
 import { WarehouseWithShippingFragment } from "@saleor/fragments/types/WarehouseWithShippingFragment";
 import { sectionNames } from "@saleor/intl";
-import { Alert } from "@saleor/macaw-ui";
 import {
   PageListProps,
   SearchPageProps,
@@ -88,18 +87,14 @@ export const WarehouseListPage: React.FC<WarehouseListPageProps> = ({
         </Button>
       </PageHeader>
       {limitReached && (
-        <>
-          <Alert
-            title={intl.formatMessage({
-              defaultMessage: "Warehouse limit reached",
-              description: "alert"
-            })}
-            variant="warning"
-          >
-            <FormattedMessage defaultMessage="You have reached your warehouse limit, you will be no longer able to add warehouses to your store. If you would like to up your limit, contact your administration staff about raising your limits." />
-          </Alert>
-          <FormSpacer />
-        </>
+        <LimitReachedAlert
+          title={intl.formatMessage({
+            defaultMessage: "Warehouse limit reached",
+            description: "alert"
+          })}
+        >
+          <FormattedMessage defaultMessage="You have reached your warehouse limit, you will be no longer able to add warehouses to your store. If you would like to up your limit, contact your administration staff about raising your limits." />
+        </LimitReachedAlert>
       )}
       <Card>
         <SearchBar
