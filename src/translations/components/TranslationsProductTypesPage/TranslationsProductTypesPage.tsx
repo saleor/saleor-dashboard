@@ -1,12 +1,15 @@
 import AppHeader from "@saleor/components/AppHeader";
+import CardSpacer from "@saleor/components/CardSpacer";
 import Container from "@saleor/components/Container";
 import LanguageSwitch from "@saleor/components/LanguageSwitch";
 import PageHeader from "@saleor/components/PageHeader";
-import { AttributeTranslationFragment } from "@saleor/fragments/types/AttributeTranslationFragment";
+import { ListSettingsUpdate } from "@saleor/components/TablePagination";
+import { AttributeTranslationDetailsFragment } from "@saleor/fragments/types/AttributeTranslationDetailsFragment";
 import { commonMessages, sectionNames } from "@saleor/intl";
 import { TranslationsEntitiesPageProps } from "@saleor/translations/types";
+import { ListSettings } from "@saleor/types";
 import React from "react";
-import { useIntl } from "react-intl";
+import { defineMessages, useIntl } from "react-intl";
 
 import {
   AttributeInputTypeEnum,
@@ -14,9 +17,24 @@ import {
 } from "../../../types/globalTypes";
 import TranslationFields, { TranslationField } from "../TranslationFields";
 
+export const messages = defineMessages({
+  values: {
+    defaultMessage: "Values",
+    description: "section name"
+  }
+});
+
 export interface TranslationsProductTypesPageProps
   extends TranslationsEntitiesPageProps {
-  data: AttributeTranslationFragment;
+  data: AttributeTranslationDetailsFragment;
+  settings?: ListSettings;
+  onUpdateListSettings?: ListSettingsUpdate;
+  pageInfo: {
+    hasNextPage: boolean;
+    hasPreviousPage: boolean;
+  };
+  onNextPage: () => void;
+  onPreviousPage: () => void;
 }
 
 export const fieldNames = {
@@ -36,7 +54,12 @@ const TranslationsProductTypesPage: React.FC<TranslationsProductTypesPageProps> 
   onDiscard,
   onEdit,
   onLanguageChange,
-  onSubmit
+  onSubmit,
+  settings,
+  onUpdateListSettings,
+  pageInfo,
+  onNextPage,
+  onPreviousPage
 }) => {
   const intl = useIntl();
 
@@ -78,9 +101,22 @@ const TranslationsProductTypesPage: React.FC<TranslationsProductTypesPageProps> 
             translation: data?.translation?.name || null,
             type: "short" as "short",
             value: data?.attribute?.name
-          },
-          ...(data?.attribute?.values?.map(
-            (attributeValue, attributeValueIndex) => {
+          }
+        ]}
+        saveButtonState={saveButtonState}
+        onEdit={onEdit}
+        onDiscard={onDiscard}
+        onSubmit={onSubmit}
+      />
+      <CardSpacer />
+      <TranslationFields
+        activeField={activeField}
+        disabled={disabled}
+        initialState={true}
+        title={intl.formatMessage(messages.values)}
+        fields={
+          data?.attribute?.choices?.edges?.map(
+            ({ node: attributeValue }, attributeValueIndex) => {
               const isRichText =
                 attributeValue?.inputType === AttributeInputTypeEnum.RICH_TEXT;
               const displayName = isRichText
@@ -115,9 +151,16 @@ const TranslationsProductTypesPage: React.FC<TranslationsProductTypesPageProps> 
                   : attributeValue?.name
               };
             }
-          ) || [])
-        ]}
+          ) || []
+        }
         saveButtonState={saveButtonState}
+        pagination={{
+          settings,
+          onUpdateListSettings,
+          pageInfo,
+          onNextPage,
+          onPreviousPage
+        }}
         onEdit={onEdit}
         onDiscard={onDiscard}
         onSubmit={onSubmit}

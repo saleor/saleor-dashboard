@@ -101,8 +101,7 @@ export interface ProductUpdatePageProps extends ListActions, ChannelProps {
   fetchCollections: (query: string) => void;
   fetchReferencePages?: (data: string) => void;
   fetchReferenceProducts?: (data: string) => void;
-  fetchAttributeValues: (query: string) => void;
-  onAttributeFocus: (id: string) => void;
+  fetchAttributeValues: (query: string, attributeId: string) => void;
   onAssignReferencesClick: (attribute: AttributeInput) => void;
   onCloseDialog: () => void;
   onVariantsAdd: () => void;
@@ -195,8 +194,7 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
   fetchMoreAttributeValues,
   onCloseDialog,
   channelsWithVariantsData,
-  onChannelsChange,
-  onAttributeFocus
+  onChannelsChange
 }) => {
   const intl = useIntl();
 
@@ -319,7 +317,6 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                     onReferencesReorder={handlers.reorderAttributeValue}
                     fetchAttributeValues={fetchAttributeValues}
                     fetchMoreAttributeValues={fetchMoreAttributeValues}
-                    onAttributeFocus={onAttributeFocus}
                   />
                 )}
                 <CardSpacer />

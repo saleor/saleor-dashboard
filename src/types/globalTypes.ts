@@ -1276,6 +1276,7 @@ export interface CustomerFilterInput {
   numberOfOrders?: IntRangeInput | null;
   placedOrders?: DateRangeInput | null;
   search?: string | null;
+  metadata?: (MetadataInput | null)[] | null;
 }
 
 export interface CustomerInput {

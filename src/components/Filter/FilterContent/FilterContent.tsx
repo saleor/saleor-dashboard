@@ -1,8 +1,15 @@
-import { Paper, Typography } from "@material-ui/core";
+import {
+  ExpansionPanel,
+  ExpansionPanelSummary,
+  makeStyles,
+  Paper,
+  Typography
+} from "@material-ui/core";
 import CollectionWithDividers from "@saleor/components/CollectionWithDividers";
 import Hr from "@saleor/components/Hr";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
-import React from "react";
+import IconChevronDown from "@saleor/icons/ChevronDown";
+import React, { useState } from "react";
 
 import { FilterAutocompleteDisplayValues } from "../FilterAutocompleteField";
 import { FilterReducerAction } from "../reducer";
@@ -18,9 +25,57 @@ import FilterContentBodyNameField from "./FilterContentBodyNameField";
 import FilterContentHeader from "./FilterContentHeader";
 import FilterErrorsList from "./FilterErrorsList";
 
+const useExpanderStyles = makeStyles(
+  () => ({
+    expanded: {},
+    root: {
+      boxShadow: "none",
+      margin: 0,
+      padding: 0,
+
+      "&:before": {
+        content: "none"
+      },
+
+      "&$expanded": {
+        margin: 0,
+        border: "none"
+      }
+    }
+  }),
+  { name: "FilterContentExpander" }
+);
+
+const useSummaryStyles = makeStyles(
+  theme => ({
+    expanded: {},
+    root: {
+      width: "100%",
+      border: "none",
+      margin: 0,
+      padding: 0,
+      minHeight: 0,
+      paddingRight: theme.spacing(2),
+
+      "&$expanded": {
+        minHeight: 0
+      }
+    },
+    content: {
+      margin: 0,
+
+      "&$expanded": {
+        margin: 0
+      }
+    }
+  }),
+  { name: "FilterContentExpanderSummary" }
+);
+
 export interface FilterContentProps<T extends string = string> {
   filters: IFilter<T>;
   onFilterPropertyChange: React.Dispatch<FilterReducerAction<T>>;
+  onFilterAttributeFocus?: (id?: string) => void;
   onClear: () => void;
   onSubmit: () => void;
   currencySymbol?: string;
@@ -36,9 +91,15 @@ const FilterContent: React.FC<FilterContentProps> = ({
   filters,
   onClear,
   onFilterPropertyChange,
+  onFilterAttributeFocus,
   onSubmit,
   dataStructure
 }) => {
+  const expanderClasses = useExpanderStyles({});
+  const summaryClasses = useSummaryStyles({});
+
+  const [openedFilter, setOpenedFilter] = useState<IFilterElement<string>>();
+
   const getAutocompleteValuesWithNewValues = (
     autocompleteDisplayValues: FilterAutocompleteDisplayValues,
     filterField: IFilterElement<string>
@@ -84,6 +145,36 @@ const FilterContent: React.FC<FilterContentProps> = ({
     initialAutocompleteDisplayValues
   };
 
+  const handleFilterAttributeFocus = (filter?: IFilterElement<string>) => {
+    setOpenedFilter(filter);
+    if (onFilterAttributeFocus) {
+      onFilterAttributeFocus(filter?.id);
+    }
+  };
+
+  const handleFilterOpen = (filter: IFilterElement<string>) => {
+    if (filter.name !== openedFilter?.name) {
+      handleFilterAttributeFocus(filter);
+    } else {
+      handleFilterAttributeFocus(undefined);
+    }
+  };
+
+  const handleFilterPropertyGroupChange = function<T extends string>(
+    action: FilterReducerAction<T>,
+    filter: IFilterElement<string>
+  ) {
+    const switchToActive = action.payload.update.active;
+
+    if (switchToActive && filter.name !== openedFilter?.name) {
+      handleFilterAttributeFocus(filter);
+    } else if (!switchToActive && filter.name === openedFilter?.name) {
+      handleFilterAttributeFocus(undefined);
+    }
+
+    onFilterPropertyChange(action);
+  };
+
   const handleMultipleFieldPropertyChange = function<T extends string>(
     action: FilterReducerAction<T>
   ) {
@@ -114,11 +205,24 @@ const FilterContent: React.FC<FilterContentProps> = ({
         {dataStructure
           .sort((a, b) => (a.name > b.name ? 1 : -1))
           .map(filter => (
-            <React.Fragment key={filter.name}>
-              <FilterContentBodyNameField
-                filter={getFilterFromCurrentData(filter)}
-                onFilterPropertyChange={onFilterPropertyChange}
-              />
+            <ExpansionPanel
+              key={filter.name}
+              classes={expanderClasses}
+              data-test="channel-availability-item"
+              expanded={filter.name === openedFilter?.name}
+            >
+              <ExpansionPanelSummary
+                expandIcon={<IconChevronDown />}
+                classes={summaryClasses}
+                onClick={() => handleFilterOpen(filter)}
+              >
+                <FilterContentBodyNameField
+                  filter={getFilterFromCurrentData(filter)}
+                  onFilterPropertyChange={action =>
+                    handleFilterPropertyGroupChange(action, filter)
+                  }
+                />
+              </ExpansionPanelSummary>
               <FilterErrorsList
                 errors={errors}
                 errorMessages={errorMessages}
@@ -147,7 +251,7 @@ const FilterContent: React.FC<FilterContentProps> = ({
                   filter={getFilterFromCurrentData(filter)}
                 />
               )}
-            </React.Fragment>
+            </ExpansionPanel>
           ))}
       </form>
     </Paper>

@@ -1670,6 +1670,7 @@ input CustomerFilterInput {
   numberOfOrders: IntRangeInput
   placedOrders: DateRangeInput
   search: String
+  metadata: [MetadataInput]
 }
 
 input CustomerInput {
@@ -6136,10 +6137,11 @@ enum WebhookSampleEventTypeEnum {
   PAGE_DELETED
   PAYMENT_AUTHORIZE
   PAYMENT_CAPTURE
+  PAYMENT_CONFIRM
+  PAYMENT_LIST_GATEWAYS
+  PAYMENT_PROCESS
   PAYMENT_REFUND
   PAYMENT_VOID
-  PAYMENT_CONFIRM
-  PAYMENT_PROCESS
 }
 
 type WebhookUpdate {

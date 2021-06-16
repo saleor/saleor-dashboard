@@ -48,6 +48,7 @@ import {
   productUrl
 } from "@saleor/products/urls";
 import useAttributeSearch from "@saleor/searches/useAttributeSearch";
+import useAttributeValueSearch from "@saleor/searches/useAttributeValueSearch";
 import useCategorySearch from "@saleor/searches/useCategorySearch";
 import useCollectionSearch from "@saleor/searches/useCollectionSearch";
 import useProductTypeSearch from "@saleor/searches/useProductTypeSearch";
@@ -57,7 +58,7 @@ import createFilterHandlers from "@saleor/utils/handlers/filterHandlers";
 import { mapEdgesToItems } from "@saleor/utils/maps";
 import { getSortUrlVariables } from "@saleor/utils/sort";
 import { useWarehouseList } from "@saleor/warehouses/queries";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import ProductListPage from "../../components/ProductListPage";
@@ -95,11 +96,7 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
   const intl = useIntl();
   const {
     data: initialFilterAttributes
-  } = useInitialProductFilterAttributesQuery({
-    variables: {
-      firstValues: 100
-    }
-  });
+  } = useInitialProductFilterAttributesQuery({});
   const {
     data: initialFilterCategories
   } = useInitialProductFilterCategoriesQuery({
@@ -147,6 +144,15 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
       ...DEFAULT_INITIAL_SEARCH_DATA,
       first: 10
     }
+  });
+  const [focusedAttribute, setFocusedAttribute] = useState<string>();
+  const searchAttributeValues = useAttributeValueSearch({
+    variables: {
+      id: focusedAttribute,
+      ...DEFAULT_INITIAL_SEARCH_DATA,
+      first: 10
+    },
+    skip: !focusedAttribute
   });
   const warehouses = useWarehouseList({
     variables: {
@@ -321,6 +327,7 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
   const filterOpts = getFilterOpts(
     params,
     mapEdgesToItems(initialFilterAttributes?.attributes),
+    searchAttributeValues,
     {
       initial: mapEdgesToItems(initialFilterCategories?.categories),
       search: searchCategories
@@ -422,6 +429,7 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
         toggleAll={toggleAll}
         onSearchChange={handleSearchChange}
         onFilterChange={changeFilters}
+        onFilterAttributeFocus={setFocusedAttribute}
         onTabSave={() => openModal("save-search")}
         onTabDelete={() => openModal("delete-search")}
         onTabChange={handleTabChange}

@@ -48,6 +48,9 @@ All notable, unreleased changes to this project will be documented in this file.
 - Choosing user shipping and billing addresses for draft order - #1082 by @orzechdev
 - Fix EditorJS inline formatting - #1096 by @orzechdev
 - Add pagination on attribute values - #1112 by @orzechdev
+- Paginate attribute values in filters - #1152 by @orzechdev
+- Fix attribute values input display - #1156 by @orzechdev
+- Fix product type translations - #1163 by @orzechdev
 
 # 2.11.1
 

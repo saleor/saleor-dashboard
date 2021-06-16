@@ -6735,6 +6735,10 @@
     "context": "header",
     "string": "Translation Attribute \"{attribute}\" - {languageCode}"
   },
+  "src_dot_translations_dot_components_dot_TranslationsProductTypesPage_dot_values": {
+    "context": "section name",
+    "string": "Values"
+  },
   "src_dot_translations_dot_components_dot_TranslationsProductsPage_dot_1406947243": {
     "string": "Search Engine Description"
   },
