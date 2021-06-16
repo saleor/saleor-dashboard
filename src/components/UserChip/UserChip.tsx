@@ -1,8 +1,11 @@
 import FormControlLabel from "@material-ui/core/FormControlLabel";
-import MenuItem from "@material-ui/core/MenuItem";
 import Switch from "@material-ui/core/Switch";
 import { User } from "@saleor/fragments/types/User";
-import { makeStyles, UserChip as MacawUserChip } from "@saleor/macaw-ui";
+import {
+  makeStyles,
+  UserChip as MacawUserChip,
+  UserChipMenuItem
+} from "@saleor/macaw-ui";
 import { getUserInitials, getUserName } from "@saleor/misc";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -52,16 +55,23 @@ const UserChip: React.FC<UserChipProps> = ({
       name={getUserName(user, true)}
       avatar={user?.avatar?.url}
     >
-      <MenuItem onClick={handleViewerProfile} data-test="accountSettingsButton">
+      <UserChipMenuItem
+        onClick={handleViewerProfile}
+        data-test="accountSettingsButton"
+      >
         <FormattedMessage
           defaultMessage="Account Settings"
           description="button"
         />
-      </MenuItem>
-      <MenuItem onClick={handleLogout} data-test="logOutButton">
+      </UserChipMenuItem>
+      <UserChipMenuItem onClick={handleLogout} data-test="logOutButton">
         <FormattedMessage defaultMessage="Log out" description="button" />
-      </MenuItem>
-      <MenuItem data-test="themeSwitch" data-test-is-dark={isDarkThemeEnabled}>
+      </UserChipMenuItem>
+      <UserChipMenuItem
+        leaveOpen
+        data-test="themeSwitch"
+        data-test-is-dark={isDarkThemeEnabled}
+      >
         <FormControlLabel
           control={
             <Switch
@@ -79,7 +89,7 @@ const UserChip: React.FC<UserChipProps> = ({
           })}
           onChange={onThemeToggle}
         />
-      </MenuItem>
+      </UserChipMenuItem>
     </MacawUserChip>
   );
 };
