@@ -1984,23 +1984,11 @@ export interface VoucherSortingInput {
   field: VoucherSortField;
 }
 
-export interface WarehouseAddressInput {
-  streetAddress1: string;
-  streetAddress2?: string | null;
-  city: string;
-  cityArea?: string | null;
-  postalCode?: string | null;
-  country: CountryCode;
-  countryArea?: string | null;
-  phone?: string | null;
-}
-
 export interface WarehouseCreateInput {
   slug?: string | null;
-  companyName?: string | null;
   email?: string | null;
   name: string;
-  address: WarehouseAddressInput;
+  address: AddressInput;
   shippingZones?: (string | null)[] | null;
 }
 
@@ -2016,10 +2004,9 @@ export interface WarehouseSortingInput {
 
 export interface WarehouseUpdateInput {
   slug?: string | null;
-  companyName?: string | null;
   email?: string | null;
   name?: string | null;
-  address?: WarehouseAddressInput | null;
+  address?: AddressInput | null;
 }
 
 export interface WebhookCreateInput {
