@@ -4,3 +4,5 @@ export const SHARED_ELEMENTS = {
   skeleton: '[data-test-id="skeleton"]',
   table: 'table[class*="Table"]'
 };
+
+export const selectorWithDataValue = value => `[data-value="${value}"]`;

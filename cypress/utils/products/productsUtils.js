@@ -16,7 +16,8 @@ export function createProductInChannel({
   visibleInListings = true,
   collectionId = null,
   description = null,
-  trackInventory = true
+  trackInventory = true,
+  weight = 1
 }) {
   let product;
   let variantsList;
@@ -48,7 +49,8 @@ export function createProductInChannel({
         quantityInWarehouse,
         channelId,
         price,
-        trackInventory
+        trackInventory,
+        weight
       });
     })
     .then(variantsResp => {

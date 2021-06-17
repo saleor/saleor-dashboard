@@ -1,16 +1,35 @@
-export function createShippingRate(name, shippingZone) {
+import { getValueWithDefault } from "./utils/Utils";
+
+export function createShippingRate({
+  name,
+  shippingZone,
+  type = "PRICE",
+  maxWeight,
+  minWeight
+}) {
+  const maxOrderWeight = getValueWithDefault(
+    maxWeight,
+    `maximumOrderWeight: ${maxWeight}`
+  );
+  const minOrderWeight = getValueWithDefault(
+    minWeight,
+    `minimumOrderWeight: ${minWeight}`
+  );
+
   const mutation = `mutation{
     shippingPriceCreate(input:{
       name: "${name}"
       shippingZone: "${shippingZone}"
-      type: PRICE
+      type: ${type}
+      ${minOrderWeight}
+      ${maxOrderWeight}
     }){
       shippingMethod{
         id
       }
     }
   }`;
-  return cy.sendRequestWithQuery(mutation);
+  return cy.sendRequestWithQuery(mutation).its("body.data.shippingPriceCreate");
 }
 
 export function createShippingZone(name, country, channelId) {

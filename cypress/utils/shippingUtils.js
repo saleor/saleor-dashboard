@@ -18,9 +18,12 @@ export function createShipping({ channelId, name, address, price = 1 }) {
     })
     .then(warehouseResp => {
       warehouse = warehouseResp;
-      createShippingRate(name, shippingZone.id);
+      shippingMethodRequest.createShippingRate({
+        name,
+        shippingZone: shippingZone.id
+      });
     })
-    .then(sippingMethodResp => {
+    .then(({ shippingMethod: sippingMethodResp }) => {
       shippingMethod = sippingMethodResp;
       shippingMethodRequest.addChannelToShippingMethod(
         shippingMethod.id,
@@ -29,11 +32,6 @@ export function createShipping({ channelId, name, address, price = 1 }) {
       );
     })
     .then(() => ({ shippingMethod, shippingZone, warehouse }));
-}
-export function createShippingRate(name, shippingZoneId) {
-  return shippingMethodRequest
-    .createShippingRate(name, shippingZoneId)
-    .its("body.data.shippingPriceCreate.shippingMethod");
 }
 
 export function deleteShippingStartsWith(startsWith) {
