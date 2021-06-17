@@ -1,8 +1,8 @@
 import { Button, Card } from "@material-ui/core";
-import Alert from "@saleor/components/Alert/Alert";
 import AppHeader from "@saleor/components/AppHeader";
 import { Container } from "@saleor/components/Container";
 import FilterBar from "@saleor/components/FilterBar";
+import LimitReachedAlert from "@saleor/components/LimitReachedAlert";
 import PageHeader from "@saleor/components/PageHeader";
 import { RefreshLimits_shop_limits } from "@saleor/components/Shop/types/RefreshLimits";
 import { sectionNames } from "@saleor/intl";
@@ -85,15 +85,16 @@ const StaffListPage: React.FC<StaffListPageProps> = ({
           />
         </Button>
       </PageHeader>
-      <Alert
-        title={intl.formatMessage({
-          defaultMessage: "Staff Member limit reached",
-          description: "alert"
-        })}
-        show={reachedLimit}
-      >
-        <FormattedMessage defaultMessage="You have reached your staff member limit, you will be no longer able to add staff members to your store. If you would like to up your limit, contact your administration staff about raising your limits." />
-      </Alert>
+      {reachedLimit && (
+        <LimitReachedAlert
+          title={intl.formatMessage({
+            defaultMessage: "Staff Member limit reached",
+            description: "alert"
+          })}
+        >
+          <FormattedMessage defaultMessage="You have reached your staff member limit, you will be no longer able to add staff members to your store. If you would like to up your limit, contact your administration staff about raising your limits." />
+        </LimitReachedAlert>
+      )}
       <Card>
         <FilterBar
           allTabLabel={intl.formatMessage({
