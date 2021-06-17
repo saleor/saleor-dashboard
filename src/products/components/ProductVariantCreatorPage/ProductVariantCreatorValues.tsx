@@ -1,10 +1,10 @@
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
-import Alert from "@saleor/components/Alert/Alert";
 import CardSpacer from "@saleor/components/CardSpacer";
 import CardTitle from "@saleor/components/CardTitle";
 import ControlledCheckbox from "@saleor/components/ControlledCheckbox";
 import Debounce from "@saleor/components/Debounce";
+import LimitReachedAlert from "@saleor/components/LimitReachedAlert";
 import Skeleton from "@saleor/components/Skeleton";
 import { makeStyles } from "@saleor/macaw-ui";
 import { ProductDetails_product_productType_variantAttributes } from "@saleor/products/types/ProductDetails";
@@ -47,9 +47,8 @@ const ProductVariantCreatorValues: React.FC<ProductVariantCreatorValuesProps> = 
 
   return (
     <>
-      {variantsLeft !== null && (
-        <Alert
-          show={variantsNumber > variantsLeft}
+      {variantsLeft !== null && variantsNumber > variantsLeft && (
+        <LimitReachedAlert
           title={intl.formatMessage({
             defaultMessage: "SKU limit reached",
             description: "alert"
@@ -62,7 +61,7 @@ const ProductVariantCreatorValues: React.FC<ProductVariantCreatorValuesProps> = 
               aboveLimitVariantsNumber: variantsNumber - variantsLeft
             }}
           />
-        </Alert>
+        </LimitReachedAlert>
       )}
       {attributes.map(attribute => (
         <React.Fragment key={attribute.id}>
