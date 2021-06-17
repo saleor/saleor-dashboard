@@ -34,7 +34,7 @@ const Checkbox: React.FC<CheckboxProps> = ({ helperText, error, ...props }) => {
         onClick={
           disableClickPropagation ? event => event.stopPropagation() : undefined
         }
-      />{" "}
+      />
       {helperText && (
         <FormHelperText classes={{ root: error && classes.error }}>
           {helperText}

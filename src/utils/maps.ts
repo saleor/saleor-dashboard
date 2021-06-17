@@ -50,7 +50,7 @@ export function mapNodeToChoice(
 }
 
 export function mapSlugNodeToChoice(
-  nodes: Array<SlugNode & Record<"name", string> & Record<"boolean", boolean>>
+  nodes: Array<SlugNode & Record<"name", string>>
 ): Array<SingleAutocompleteChoiceType | MultiAutocompleteChoiceType> {
   if (!nodes) {
     return [];
@@ -58,8 +58,7 @@ export function mapSlugNodeToChoice(
 
   return nodes.map(node => ({
     label: node.name,
-    value: node.slug,
-    boolean: node.boolean
+    value: node.slug
   }));
 }
 

@@ -46,10 +46,8 @@ const useStyles = makeStyles(
       float: "right"
     },
     pullRight: {
-      "& > *": {
-        float: "right",
-        clear: "right"
-      }
+      display: "flex",
+      justifyContent: "flex-end"
     }
   }),
   { name: "AttributeRow" }

@@ -177,6 +177,54 @@ interface AttributesArgs {
   updatedFileAttributes: AttributeValueInput[];
 }
 
+function getFileInput(
+  attribute: AttributeInput,
+  updatedFileAttributes: AttributeValueInput[]
+) {
+  const updatedFileAttribute = updatedFileAttributes.find(
+    attributeWithNewFile => attribute.id === attributeWithNewFile.id
+  );
+
+  if (updatedFileAttribute) {
+    return {
+      file: updatedFileAttribute.file,
+      id: updatedFileAttribute.id
+    };
+  }
+  return {
+    file: updatedFileAttribute.file,
+    id: updatedFileAttribute.id
+  };
+}
+
+function getReferenceInput(attribute: AttributeInput) {
+  return {
+    id: attribute.id,
+    references: attribute.value
+  };
+}
+
+function getRichTextInput(attribute: AttributeInput) {
+  return {
+    id: attribute.id,
+    richText: attribute.value[0]
+  };
+}
+
+function getBooleanInput(attribute: AttributeInput) {
+  return {
+    id: attribute.id,
+    boolean: JSON.parse(attribute.value[0])
+  };
+}
+
+function getDefaultInput(attribute: AttributeInput) {
+  return {
+    id: attribute.id,
+    values: attribute.value[0] === "" ? [] : attribute.value
+  };
+}
+
 export const prepareAttributesInput = ({
   attributes,
   updatedFileAttributes
@@ -184,46 +232,19 @@ export const prepareAttributesInput = ({
   attributes.map(attribute => {
     switch (attribute.data.inputType) {
       case AttributeInputTypeEnum.FILE:
-        const updatedFileAttribute = updatedFileAttributes.find(
-          attributeWithNewFile => attribute.id === attributeWithNewFile.id
-        );
-
-        if (updatedFileAttribute) {
-          return {
-            file: updatedFileAttribute.file,
-            id: updatedFileAttribute.id
-          };
-        }
-        return {
-          file:
-            attribute.data.selectedValues &&
-            attribute.data.selectedValues[0]?.file?.url,
-          id: attribute.id
-        };
+        return getFileInput(attribute, updatedFileAttributes);
 
       case AttributeInputTypeEnum.REFERENCE:
-        return {
-          id: attribute.id,
-          references: attribute.value
-        };
+        return getReferenceInput(attribute);
 
       case AttributeInputTypeEnum.RICH_TEXT:
-        return {
-          id: attribute.id,
-          richText: attribute.value[0]
-        };
+        return getRichTextInput(attribute);
 
       case AttributeInputTypeEnum.BOOLEAN:
-        return {
-          id: attribute.id,
-          boolean: JSON.parse(attribute.value[0])
-        };
+        return getBooleanInput(attribute);
 
       default:
-        return {
-          id: attribute.id,
-          values: attribute.value[0] === "" ? [] : attribute.value
-        };
+        return getDefaultInput(attribute);
     }
   });
 

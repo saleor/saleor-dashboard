@@ -72,7 +72,7 @@ const messages = defineMessages({
 export function createFilterStructure(
   intl: IntlShape,
   opts: ProductListFilterOpts
-): IFilter<ProductFilterKeys> {
+): IFilter<string> {
   const booleanAttributes = opts.attributes.filter(
     ({ inputType }) => inputType === AttributeInputTypeEnum.BOOLEAN
   );
@@ -164,7 +164,7 @@ export function createFilterStructure(
     },
     ...booleanAttributes.map(attr => ({
       ...createBooleanField(
-        attr.slug as any,
+        attr.slug,
         attr.name,
         Array.isArray(attr.value)
           ? undefined
