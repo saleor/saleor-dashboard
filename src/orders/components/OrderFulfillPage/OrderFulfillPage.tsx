@@ -430,7 +430,7 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
                                     !!errors?.find(
                                       err =>
                                         err.warehouse === warehouse.id &&
-                                        err.orderLine === line.id &&
+                                        err.orderLines[0] === line.id &&
                                         err.code ===
                                           OrderErrorCode.INSUFFICIENT_STOCK
                                     )
