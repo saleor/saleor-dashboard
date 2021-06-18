@@ -1,5 +1,5 @@
 import { AppFragment } from "@saleor/fragments/types/AppFragment";
-import { MutableRefObject, useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import urlJoin from "url-join";
 
 export type UseAppConfigLoaderCallbacks = Record<
@@ -17,17 +17,17 @@ function fixRelativeScriptSrc(origin: string) {
   };
 }
 
-async function _fetchAndSetContent(
-  frameContainer: MutableRefObject<HTMLDivElement>,
+async function fetchAndSetContent(
+  frameContainer: HTMLDivElement,
   data: AppFragment,
-  backendHost: string,
+  backendHostname: string,
   { onError, onLoad }: UseAppConfigLoaderCallbacks
 ) {
-  if (!frameContainer.current?.innerHTML && data?.configurationUrl) {
+  if (!frameContainer?.innerHTML && data?.configurationUrl) {
     try {
       const response = await fetch(data?.configurationUrl, {
         headers: {
-          "x-saleor-domain": backendHost,
+          "x-saleor-domain": backendHostname,
           "x-saleor-token": data.accessToken
         },
         method: "GET"
@@ -40,8 +40,8 @@ async function _fetchAndSetContent(
       const frame = document.createElement("iframe");
       frame.src = "about:blank";
       frame.id = "extension-app";
-      frameContainer.current.innerHTML = "";
-      frameContainer.current.appendChild(frame);
+      frameContainer.innerHTML = "";
+      frameContainer.appendChild(frame);
       const frameContent = frame.contentWindow.document;
 
       const documentElement = content.documentElement;
@@ -66,7 +66,7 @@ function useAppConfigLoader(
   const frameContainer = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    _fetchAndSetContent(frameContainer, data, backendHost, callbacks);
+    fetchAndSetContent(frameContainer.current, data, backendHost, callbacks);
   }, [data]);
 
   return frameContainer;
