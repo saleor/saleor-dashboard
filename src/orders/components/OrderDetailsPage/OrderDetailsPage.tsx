@@ -138,7 +138,8 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
   const {
     isMetadataModified,
     isPrivateMetadataModified,
-    makeChangeHandler: makeMetadataChangeHandler
+    makeChangeHandler: makeMetadataChangeHandler,
+    resetMetadataChanged
   } = useMetadataChangeTrigger();
 
   const isOrderUnconfirmed = order?.status === OrderStatus.UNCONFIRMED;
@@ -149,16 +150,18 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
     line => line.quantityFulfilled < line.quantity
   );
 
-  const handleSubmit = (data: MetadataFormData) => {
+  const handleSubmit = async (data: MetadataFormData) => {
     const metadata = isMetadataModified ? data.metadata : undefined;
     const privateMetadata = isPrivateMetadataModified
       ? data.privateMetadata
       : undefined;
 
-    return onSubmit({
+    const result = await onSubmit({
       metadata,
       privateMetadata
     });
+    resetMetadataChanged();
+    return result;
   };
 
   const initial: MetadataFormData = {

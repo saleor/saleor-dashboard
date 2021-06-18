@@ -93,9 +93,14 @@ describe("Shipping weight limits", () => {
 
   it("should be possible to buy product in a shipping weight limits", () => {
     const rateName = `${startsWith}${faker.datatype.number()}`;
-    createShippingRate(rateName, price, rateOptions.WEIGHT_OPTION, {
-      max: 11,
-      min: 10
+    createShippingRate({
+      rateName,
+      price,
+      rateOption: rateOptions.WEIGHT_OPTION,
+      weightLimits: {
+        max: 11,
+        min: 10
+      }
     });
     createCheckout({
       address: usAddress,
@@ -109,9 +114,14 @@ describe("Shipping weight limits", () => {
 
   it("should not be possible to buy product not in a shipping weight limits", () => {
     const rateName = `${startsWith}${faker.datatype.number()}`;
-    createShippingRate(rateName, price, rateOptions.WEIGHT_OPTION, {
-      max: 101,
-      min: 100
+    createShippingRate({
+      rateName,
+      price,
+      rateOption: rateOptions.WEIGHT_OPTION,
+      weightLimits: {
+        max: 101,
+        min: 100
+      }
     });
     createCheckout({
       address: usAddress,
@@ -130,6 +140,7 @@ describe("Shipping weight limits", () => {
     const maxWeightInKg = 10;
     const minWeightInG = minWeightInKg * 1000;
     const maxWeightInG = maxWeightInKg * 1000;
+    let shippingMethod;
 
     cy.clearSessionData().loginUserViaRequest();
 
@@ -140,14 +151,27 @@ describe("Shipping weight limits", () => {
       maxWeight: maxWeightInKg,
       minWeight: minWeightInKg
     })
-      .then(({ shippingMethod }) => {
+      .then(({ shippingMethod: shippingMethodResp }) => {
+        shippingMethod = shippingMethodResp;
         cy.visit(urlList.shippingMethods)
           .get(SHARED_ELEMENTS.progressBar)
           .should("not.exist");
         changeWeightUnit("G");
 
+        cy.addAliasToGraphRequest("ShippingZone");
         cy.visit(weightRateUrl(shippingZone.id, shippingMethod.id))
-          .get(SHARED_ELEMENTS.progressBar)
+          .wait("@ShippingZone")
+          .its("response.body");
+      })
+      .then(responseArray => {
+        const shippingMethods = responseArray.find(
+          element => element.data.shippingZone
+        ).data.shippingZone.shippingMethods;
+        const rate = shippingMethods.find(
+          element => element.id === shippingMethod.id
+        );
+        expect(rate.minimumOrderWeight.unit).to.eq("G");
+        cy.get(SHARED_ELEMENTS.progressBar)
           .should("not.be.visible")
           .get(SHIPPING_RATE_DETAILS.minWeightInput)
           .invoke("val");

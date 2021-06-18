@@ -5,7 +5,7 @@ import {
   getPermissionGroup
 } from "../../../apiRequests/PermissionGroup.js";
 import { getStaffMembersStartsWith } from "../../../apiRequests/StaffMembers";
-import { USER_WITHOUT_NAME } from "../../../Data/users";
+import { TEST_ADMIN_USER, USER_WITHOUT_NAME } from "../../../Data/users";
 import { PERMISSION_GROUP_DETAILS } from "../../../elements/permissionGroup/permissionGroupDetails";
 import { PERMISSION_GROUP_LIST } from "../../../elements/permissionGroup/permissionGroupsList";
 import { BUTTON_SELECTORS } from "../../../elements/shared/button-selectors";
@@ -95,9 +95,8 @@ describe("Permissions groups", () => {
           .get(PERMISSION_GROUP_DETAILS.assignMemberButton)
           .click()
           .get(PERMISSION_GROUP_DETAILS.searchField)
-          .type(USER_WITHOUT_NAME.email)
-          .get(PERMISSION_GROUP_DETAILS.userRow)
-          .should("have.length", 1)
+          .type(TEST_ADMIN_USER.email);
+        cy.contains(PERMISSION_GROUP_DETAILS.userRow, TEST_ADMIN_USER.name)
           .find(BUTTON_SELECTORS.checkbox)
           .click()
           .get(BUTTON_SELECTORS.submit)
@@ -110,7 +109,7 @@ describe("Permissions groups", () => {
       })
       .then(resp => {
         expect(resp.users).to.have.length(1);
-        expect(resp.users[0].email).to.be.eq(USER_WITHOUT_NAME.email);
+        expect(resp.users[0].email).to.be.eq(TEST_ADMIN_USER.email);
       });
   });
 

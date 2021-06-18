@@ -46,7 +46,11 @@ export function changeWeightUnit(weightUnit) {
   cy.addAliasToGraphRequest("UpdateDefaultWeightUnit");
   cy.get(SHIPPING_ZONES_LIST.saveUnit)
     .click()
-    .wait("@UpdateDefaultWeightUnit");
+    .get(SHARED_ELEMENTS.notificationSuccess)
+    .should("be.visible")
+    .wait("@UpdateDefaultWeightUnit")
+    .get(SHARED_ELEMENTS.notificationSuccess)
+    .should("not.exist");
 }
 
 export function createShippingRate({
@@ -77,6 +81,8 @@ export function enterAndFillUpShippingRate({
     .click()
     .get(SHARED_ELEMENTS.progressBar)
     .should("not.be.visible")
+    .get(SHARED_ELEMENTS.richTextEditor.empty)
+    .should("exist")
     .get(SHIPPING_RATE_DETAILS.inputName)
     .type(rateName);
   if (deliveryTime) {
@@ -113,9 +119,16 @@ export function createRateWithPostalCode({
 }
 
 export function saveRate() {
-  cy.addAliasToGraphRequest("ShippingZone");
-  cy.get(BUTTON_SELECTORS.confirm).click();
-  cy.wait(`@ShippingZone`);
+  cy.addAliasToGraphRequest("ShippingMethodChannelListingUpdate")
+    .addAliasToGraphRequest("ShippingZone")
+    .get(BUTTON_SELECTORS.confirm)
+    .click()
+    .get(SHARED_ELEMENTS.notificationSuccess)
+    .should("be.visible")
+    .wait(`@ShippingMethodChannelListingUpdate`)
+    .wait(`@ShippingZone`)
+    .get(SHARED_ELEMENTS.notificationSuccess)
+    .should("not.exist");
 }
 
 export function fillUpWeightLimits({ max, min }) {
