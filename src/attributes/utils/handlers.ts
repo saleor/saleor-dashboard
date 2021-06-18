@@ -214,7 +214,7 @@ function getRichTextInput(attribute: AttributeInput) {
 function getBooleanInput(attribute: AttributeInput) {
   return {
     id: attribute.id,
-    boolean: JSON.parse(attribute.value[0])
+    boolean: JSON.parse(attribute.value[0] ?? "false")
   };
 }
 
