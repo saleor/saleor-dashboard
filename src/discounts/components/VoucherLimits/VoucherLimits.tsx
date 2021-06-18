@@ -72,6 +72,15 @@ const VoucherLimits = ({
           name={"applyOncePerCustomer" as keyof VoucherDetailsPageFormData}
           onChange={onChange}
         />
+        <ControlledCheckbox
+          checked={data.onlyForStaff}
+          label={intl.formatMessage({
+            defaultMessage: "Limit to staff only",
+            description: "limit voucher"
+          })}
+          name={"onlyForStaff" as keyof VoucherDetailsPageFormData}
+          onChange={onChange}
+        />
       </CardContent>
     </Card>
   );

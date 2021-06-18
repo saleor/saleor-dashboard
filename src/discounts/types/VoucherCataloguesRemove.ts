@@ -180,6 +180,7 @@ export interface VoucherCataloguesRemove_voucherCataloguesRemove_voucher {
   used: number;
   applyOncePerOrder: boolean;
   applyOncePerCustomer: boolean;
+  onlyForStaff: boolean;
   products: VoucherCataloguesRemove_voucherCataloguesRemove_voucher_products | null;
   collections: VoucherCataloguesRemove_voucherCataloguesRemove_voucher_collections | null;
   categories: VoucherCataloguesRemove_voucherCataloguesRemove_voucher_categories | null;

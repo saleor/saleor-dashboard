@@ -3018,6 +3018,10 @@
   "src_dot_discounts_dot_components_dot_VoucherLimits_dot_2215544659": {
     "string": "Limit number of times this discount can be used in total"
   },
+  "src_dot_discounts_dot_components_dot_VoucherLimits_dot_3091695071": {
+    "context": "limit voucher",
+    "string": "Limit to staff only"
+  },
   "src_dot_discounts_dot_components_dot_VoucherLimits_dot_3459612469": {
     "context": "limit voucher",
     "string": "Limit to one use per customer"
