@@ -131,6 +131,7 @@ export const OrderList: React.FC<OrderListProps> = ({ params }) => {
   const queryVariables = React.useMemo(
     () => ({
       ...paginationState,
+      channel: channel.slug,
       filter: getFilterVariables(params),
       sort: getSortQueryVariables(params)
     }),

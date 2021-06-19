@@ -74,6 +74,7 @@ export const SaleList: React.FC<SaleListProps> = ({ params }) => {
   const queryVariables = React.useMemo(
     () => ({
       ...paginationState,
+      channel: channel.slug,
       filter: getFilterVariables(params),
       sort: getSortQueryVariables(params, channel?.slug)
     }),

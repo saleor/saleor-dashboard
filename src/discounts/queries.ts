@@ -24,6 +24,7 @@ export const saleList = gql`
     $before: String
     $first: Int
     $last: Int
+    $channel: String
     $filter: SaleFilterInput
     $sort: SaleSortingInput
   ) {
@@ -32,6 +33,7 @@ export const saleList = gql`
       before: $before
       first: $first
       last: $last
+      channel: $channel
       filter: $filter
       sortBy: $sort
     ) {
@@ -58,6 +60,7 @@ export const voucherList = gql`
     $before: String
     $first: Int
     $last: Int
+    $channel: String
     $filter: VoucherFilterInput
     $sort: VoucherSortingInput
   ) {
@@ -66,6 +69,7 @@ export const voucherList = gql`
       before: $before
       first: $first
       last: $last
+      channel: $channel
       filter: $filter
       sortBy: $sort
     ) {

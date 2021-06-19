@@ -37,6 +37,7 @@ export const orderListQuery = gql`
     $after: String
     $last: Int
     $before: String
+    $channel: String
     $filter: OrderFilterInput
     $sort: OrderSortingInput
   ) {
@@ -45,6 +46,7 @@ export const orderListQuery = gql`
       after: $after
       first: $first
       last: $last
+      channel: $channel
       filter: $filter
       sortBy: $sort
     ) {
@@ -90,6 +92,7 @@ export const orderDraftListQuery = gql`
     $after: String
     $last: Int
     $before: String
+    $channel: String
     $filter: OrderDraftFilterInput
     $sort: OrderSortingInput
   ) {
@@ -98,6 +101,7 @@ export const orderDraftListQuery = gql`
       after: $after
       first: $first
       last: $last
+      channel: $channel
       filter: $filter
       sortBy: $sort
     ) {
