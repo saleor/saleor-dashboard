@@ -953,6 +953,10 @@
     "context": "attribute slug input field helper text",
     "string": "This is used internally. Make sure you don’t use spaces"
   },
+  "src_dot_attributes_dot_components_dot_AttributeDetails_dot_boolean": {
+    "context": "boolean attribute type",
+    "string": "Boolean"
+  },
   "src_dot_attributes_dot_components_dot_AttributeDetails_dot_distance": {
     "context": "distance units type",
     "string": "Distance"

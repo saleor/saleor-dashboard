@@ -14,6 +14,7 @@ import {
   getSingleChoices,
   getSingleDisplayValue
 } from "@saleor/components/Attributes/utils";
+import Checkbox from "@saleor/components/Checkbox";
 import FileUploadField from "@saleor/components/FileUploadField";
 import MultiAutocompleteSelectField from "@saleor/components/MultiAutocompleteSelectField";
 import RichTextEditor from "@saleor/components/RichTextEditor";
@@ -43,6 +44,10 @@ const useStyles = makeStyles(
   () => ({
     fileField: {
       float: "right"
+    },
+    pullRight: {
+      display: "flex",
+      justifyContent: "flex-end"
     }
   }),
   { name: "AttributeRow" }
@@ -191,6 +196,24 @@ const AttributeRow: React.FC<AttributeRowProps> = ({
               }
             }
           />
+        </BasicAttributeRow>
+      );
+    case AttributeInputTypeEnum.BOOLEAN:
+      return (
+        <BasicAttributeRow label={attribute.label}>
+          <div className={classes.pullRight}>
+            <Checkbox
+              disabled={disabled}
+              name={`attribute:${attribute.label}`}
+              onChange={event =>
+                onChange(attribute.id, JSON.stringify(event.target.checked))
+              }
+              checked={JSON.parse(attribute.value[0] ?? "false")}
+              className={classes.pullRight}
+              helperText={getErrorMessage(error, intl)}
+              error={!!error}
+            />
+          </div>
         </BasicAttributeRow>
       );
     default:

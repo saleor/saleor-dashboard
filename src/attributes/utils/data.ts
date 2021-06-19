@@ -28,6 +28,12 @@ export const ATTRIBUTE_TYPES_WITH_DEDICATED_VALUES = [
   AttributeInputTypeEnum.MULTISELECT
 ];
 
+export const ATTRIBUTE_TYPES_WITH_CONFIGURABLE_FACED_NAVIGATION = [
+  AttributeInputTypeEnum.DROPDOWN,
+  AttributeInputTypeEnum.MULTISELECT,
+  AttributeInputTypeEnum.BOOLEAN
+];
+
 export interface AttributeReference {
   label: string;
   value: string;
@@ -86,6 +92,9 @@ export function getSelectedAttributeValues(
 
     case AttributeInputTypeEnum.NUMERIC:
       return [attribute.values[0]?.name];
+
+    case AttributeInputTypeEnum.BOOLEAN:
+      return [attribute.values[0]?.boolean ?? "false"];
 
     default:
       return attribute.values.map(value => value.slug);

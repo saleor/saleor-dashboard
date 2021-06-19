@@ -91,6 +91,7 @@ export interface ProductList_products_edges_node_attributes_values {
   file: ProductList_products_edges_node_attributes_values_file | null;
   reference: string | null;
   richText: any | null;
+  boolean: boolean | null;
 }
 
 export interface ProductList_products_edges_node_attributes {

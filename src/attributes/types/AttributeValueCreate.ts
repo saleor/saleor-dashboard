@@ -31,6 +31,7 @@ export interface AttributeValueCreate_attributeValueCreate_attribute_choices_edg
   file: AttributeValueCreate_attributeValueCreate_attribute_choices_edges_node_file | null;
   reference: string | null;
   richText: any | null;
+  boolean: boolean | null;
 }
 
 export interface AttributeValueCreate_attributeValueCreate_attribute_choices_edges {

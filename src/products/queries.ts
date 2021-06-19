@@ -66,12 +66,14 @@ const initialProductFilterAttributesQuery = gql`
         node {
           id
           name
+          inputType
           slug
         }
       }
     }
   }
 `;
+
 export const useInitialProductFilterAttributesQuery = makeQuery<
   InitialProductFilterAttributes,
   never
