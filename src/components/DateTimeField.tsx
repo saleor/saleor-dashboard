@@ -4,7 +4,7 @@ import { getErrorMessage } from "@saleor/components/Attributes/utils";
 import { PageErrorWithAttributesFragment } from "@saleor/fragments/types/PageErrorWithAttributesFragment";
 import { ProductErrorWithAttributesFragment } from "@saleor/fragments/types/ProductErrorWithAttributesFragment";
 import { commonMessages } from "@saleor/intl";
-import { joinDateTime,splitDateTime } from "@saleor/misc";
+import { joinDateTime, splitDateTime } from "@saleor/misc";
 import React, { useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 
@@ -23,16 +23,19 @@ export const DateTimeField: React.FC<DateTimeFieldProps> = ({
   disabled,
   error,
   name,
-  onChange,value: initialValue
+  onChange,
+  value: initialValue
 }) => {
   const intl = useIntl();
-  const [value, setValue] = useState<Value>(initialValue ? splitDateTime(initialValue) :{ date: "", time: "" });
+  const [value, setValue] = useState<Value>(
+    initialValue ? splitDateTime(initialValue) : { date: "", time: "" }
+  );
 
-  useEffect(() =>{
-     if (value.time && value.date) {
-       onChange(joinDateTime(value.date, value.time))
-     }
-  }, [value])
+  useEffect(() => {
+    if (value.time && value.date) {
+      onChange(joinDateTime(value.date, value.time));
+    }
+  }, [value]);
 
   return (
     <>

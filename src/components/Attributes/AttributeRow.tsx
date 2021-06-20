@@ -26,7 +26,6 @@ import { PageErrorWithAttributesFragment } from "@saleor/fragments/types/PageErr
 import { ProductErrorWithAttributesFragment } from "@saleor/fragments/types/ProductErrorWithAttributesFragment";
 import { FormsetChange } from "@saleor/hooks/useFormset";
 import { commonMessages } from "@saleor/intl";
-import { splitDateTime } from "@saleor/misc";
 import { FetchMoreProps, ReorderEvent } from "@saleor/types";
 import { AttributeInputTypeEnum } from "@saleor/types/globalTypes";
 import React from "react";

@@ -51,7 +51,9 @@ export const product: (
                 reference: null,
                 slug: "portals",
                 richText: null,
-                boolean: null
+                boolean: null,
+                date: null,
+                dateTime: null
               }
             },
             {
@@ -65,7 +67,9 @@ export const product: (
                 reference: null,
                 slug: "Baht",
                 richText: null,
-                boolean: null
+                boolean: null,
+                date: null,
+                dateTime: null
               }
             }
           ]
@@ -80,7 +84,9 @@ export const product: (
           reference: null,
           slug: "portals",
           richText: null,
-          boolean: null
+          boolean: null,
+          date: null,
+          dateTime: null
         }
       ]
     },
@@ -116,7 +122,9 @@ export const product: (
                 reference: null,
                 slug: "payment",
                 richText: null,
-                boolean: null
+                boolean: null,
+                date: null,
+                dateTime: null
               }
             },
             {
@@ -130,7 +138,9 @@ export const product: (
                 reference: null,
                 slug: "Auto-Loan-Account",
                 richText: null,
-                boolean: null
+                boolean: null,
+                date: null,
+                dateTime: null
               }
             },
             {
@@ -144,7 +154,9 @@ export const product: (
                 reference: null,
                 slug: "Garden",
                 richText: null,
-                boolean: null
+                boolean: null,
+                date: null,
+                dateTime: null
               }
             },
             {
@@ -158,7 +170,9 @@ export const product: (
                 reference: null,
                 slug: "override",
                 richText: null,
-                boolean: null
+                boolean: null,
+                date: null,
+                dateTime: null
               }
             }
           ]
@@ -173,7 +187,9 @@ export const product: (
           reference: null,
           slug: "Auto-Loan-Account",
           richText: null,
-          boolean: null
+          boolean: null,
+          date: null,
+          dateTime: null
         }
       ]
     }
@@ -369,7 +385,9 @@ export const product: (
                 reference: null,
                 slug: "file-first-value",
                 richText: null,
-                boolean: null
+                boolean: null,
+                date: null,
+                dateTime: null
               }
             }
           ]
@@ -407,7 +425,9 @@ export const product: (
                 reference: null,
                 slug: "black",
                 richText: null,
-                boolean: null
+                boolean: null,
+                date: null,
+                dateTime: null
               }
             },
             {
@@ -421,7 +441,9 @@ export const product: (
                 reference: null,
                 slug: "white",
                 richText: null,
-                boolean: null
+                boolean: null,
+                date: null,
+                dateTime: null
               }
             }
           ]
@@ -463,7 +485,9 @@ export const product: (
                 reference: null,
                 slug: "file-first-value",
                 richText: null,
-                boolean: null
+                boolean: null,
+                date: null,
+                dateTime: null
               }
             }
           ]
@@ -494,7 +518,9 @@ export const product: (
                 reference: null,
                 slug: "black",
                 richText: null,
-                boolean: null
+                boolean: null,
+                date: null,
+                dateTime: null
               }
             },
             {
@@ -508,7 +534,9 @@ export const product: (
                 reference: null,
                 slug: "white",
                 richText: null,
-                boolean: null
+                boolean: null,
+                date: null,
+                dateTime: null
               }
             }
           ]
@@ -968,7 +996,9 @@ export const products = (
             reference: null,
             slug: "pineapple",
             richText: null,
-            boolean: null
+            boolean: null,
+            date: null,
+            dateTime: null
           }
         ]
       }
@@ -1078,7 +1108,9 @@ export const products = (
             reference: null,
             slug: "coconut",
             richText: null,
-            boolean: null
+            boolean: null,
+            date: null,
+            dateTime: null
           }
         ]
       }
@@ -1188,7 +1220,9 @@ export const products = (
             reference: null,
             slug: "apple",
             richText: null,
-            boolean: null
+            boolean: null,
+            date: null,
+            dateTime: null
           }
         ]
       }
@@ -1299,7 +1333,9 @@ export const products = (
             reference: null,
             slug: "orange",
             richText: null,
-            boolean: null
+            boolean: null,
+            date: null,
+            dateTime: null
           }
         ]
       }
@@ -1409,7 +1445,9 @@ export const products = (
             reference: null,
             slug: "banana",
             richText: null,
-            boolean: null
+            boolean: null,
+            date: null,
+            dateTime: null
           }
         ]
       }
@@ -1519,7 +1557,9 @@ export const products = (
             reference: null,
             slug: "bean",
             richText: null,
-            boolean: null
+            boolean: null,
+            date: null,
+            dateTime: null
           }
         ]
       }
@@ -1629,7 +1669,9 @@ export const products = (
             reference: null,
             slug: "carrot",
             richText: null,
-            boolean: null
+            boolean: null,
+            date: null,
+            dateTime: null
           }
         ]
       }
@@ -1739,7 +1781,9 @@ export const products = (
             reference: null,
             slug: "sprouty",
             richText: null,
-            boolean: null
+            boolean: null,
+            date: null,
+            dateTime: null
           }
         ]
       }
@@ -1849,7 +1893,9 @@ export const products = (
             reference: null,
             slug: "cotton",
             richText: null,
-            boolean: null
+            boolean: null,
+            date: null,
+            dateTime: null
           }
         ]
       }
@@ -1959,7 +2005,9 @@ export const products = (
             reference: null,
             slug: "cotton",
             richText: null,
-            boolean: null
+            boolean: null,
+            date: null,
+            dateTime: null
           }
         ]
       }
@@ -2069,7 +2117,9 @@ export const products = (
             reference: null,
             slug: "cotton",
             richText: null,
-            boolean: null
+            boolean: null,
+            date: null,
+            dateTime: null
           }
         ]
       }
@@ -2179,7 +2229,9 @@ export const products = (
             reference: null,
             slug: "cotton",
             richText: null,
-            boolean: null
+            boolean: null,
+            date: null,
+            dateTime: null
           }
         ]
       }
@@ -2289,7 +2341,9 @@ export const products = (
             reference: null,
             slug: "cotton",
             richText: null,
-            boolean: null
+            boolean: null,
+            date: null,
+            dateTime: null
           }
         ]
       }
@@ -2399,7 +2453,9 @@ export const products = (
             reference: null,
             slug: "cotton",
             richText: null,
-            boolean: null
+            boolean: null,
+            date: null,
+            dateTime: null
           }
         ]
       }
@@ -2509,7 +2565,9 @@ export const products = (
             reference: null,
             slug: "cotton",
             richText: null,
-            boolean: null
+            boolean: null,
+            date: null,
+            dateTime: null
           }
         ]
       }
@@ -2619,7 +2677,9 @@ export const products = (
             reference: null,
             slug: "cotton",
             richText: null,
-            boolean: null
+            boolean: null,
+            date: null,
+            dateTime: null
           }
         ]
       }
@@ -2729,7 +2789,9 @@ export const products = (
             reference: null,
             slug: "cotton",
             richText: null,
-            boolean: null
+            boolean: null,
+            date: null,
+            dateTime: null
           }
         ]
       }
@@ -2941,7 +3003,9 @@ export const variant = (placeholderImage: string): ProductVariant => ({
                 reference: null,
                 slug: "file-first-value",
                 richText: null,
-                boolean: null
+                boolean: null,
+                date: null,
+                dateTime: null
               }
             }
           ]
@@ -2960,7 +3024,9 @@ export const variant = (placeholderImage: string): ProductVariant => ({
           reference: null,
           slug: "file-first-value",
           richText: null,
-          boolean: null
+          boolean: null,
+          date: null,
+          dateTime: null
         }
       ]
     }
@@ -3222,7 +3288,9 @@ export const variant = (placeholderImage: string): ProductVariant => ({
                 reference: null,
                 slug: "portals",
                 richText: null,
-                boolean: null
+                boolean: null,
+                date: null,
+                dateTime: null
               }
             },
             {
@@ -3236,7 +3304,9 @@ export const variant = (placeholderImage: string): ProductVariant => ({
                 reference: null,
                 slug: "Baht",
                 richText: null,
-                boolean: null
+                boolean: null,
+                date: null,
+                dateTime: null
               }
             }
           ]
@@ -3251,7 +3321,9 @@ export const variant = (placeholderImage: string): ProductVariant => ({
           reference: null,
           slug: "portals",
           richText: null,
-          boolean: null
+          boolean: null,
+          date: null,
+          dateTime: null
         }
       ]
     },
@@ -3287,7 +3359,9 @@ export const variant = (placeholderImage: string): ProductVariant => ({
                 reference: null,
                 slug: "payment",
                 richText: null,
-                boolean: null
+                boolean: null,
+                date: null,
+                dateTime: null
               }
             },
             {
@@ -3301,7 +3375,9 @@ export const variant = (placeholderImage: string): ProductVariant => ({
                 reference: null,
                 slug: "Auto-Loan-Account",
                 richText: null,
-                boolean: null
+                boolean: null,
+                date: null,
+                dateTime: null
               }
             },
             {
@@ -3315,7 +3391,9 @@ export const variant = (placeholderImage: string): ProductVariant => ({
                 reference: null,
                 slug: "Garden",
                 richText: null,
-                boolean: null
+                boolean: null,
+                date: null,
+                dateTime: null
               }
             },
             {
@@ -3329,7 +3407,9 @@ export const variant = (placeholderImage: string): ProductVariant => ({
                 reference: null,
                 slug: "override",
                 richText: null,
-                boolean: null
+                boolean: null,
+                date: null,
+                dateTime: null
               }
             }
           ]
@@ -3344,7 +3424,9 @@ export const variant = (placeholderImage: string): ProductVariant => ({
           reference: null,
           slug: "Auto-Loan-Account",
           richText: null,
-          boolean: null
+          boolean: null,
+          date: null,
+          dateTime: null
         }
       ]
     }
