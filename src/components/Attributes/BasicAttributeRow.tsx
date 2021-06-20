@@ -22,11 +22,15 @@ const useStyles = makeStyles(
 
 interface BasicAttributeRowProps {
   label: string | React.ReactNode;
+  valueContainerClassName?: string;
 }
 
-const BasicAttributeRow: React.FC<BasicAttributeRowProps> = props => {
-  const { label, children } = props;
-  const classes = useStyles(props);
+const BasicAttributeRow: React.FC<BasicAttributeRowProps> = ({
+  label,
+  children,
+  valueContainerClassName
+}) => {
+  const classes = useStyles();
 
   return (
     <Grid className={classes.attributeSection} variant="uniform">
@@ -36,7 +40,9 @@ const BasicAttributeRow: React.FC<BasicAttributeRowProps> = props => {
       >
         <Typography>{label}</Typography>
       </div>
-      <div data-test="attribute-value">{children}</div>
+      <div data-test="attribute-value" className={valueContainerClassName}>
+        {children}
+      </div>
     </Grid>
   );
 };

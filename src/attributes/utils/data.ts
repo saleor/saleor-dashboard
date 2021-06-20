@@ -35,7 +35,9 @@ export const ATTRIBUTE_TYPES_WITH_DEDICATED_VALUES = [
 export const ATTRIBUTE_TYPES_WITH_CONFIGURABLE_FACED_NAVIGATION = [
   AttributeInputTypeEnum.DROPDOWN,
   AttributeInputTypeEnum.MULTISELECT,
-  AttributeInputTypeEnum.BOOLEAN
+  AttributeInputTypeEnum.BOOLEAN,
+  AttributeInputTypeEnum.DATE,
+  AttributeInputTypeEnum.DATE_TIME
 ];
 
 export interface AttributeReference {
@@ -99,6 +101,12 @@ export function getSelectedAttributeValues(
 
     case AttributeInputTypeEnum.BOOLEAN:
       return [attribute.values[0]?.boolean ?? "false"];
+
+    case AttributeInputTypeEnum.DATE:
+      return [attribute.values[0]?.date];
+
+    case AttributeInputTypeEnum.DATE_TIME:
+      return [attribute.values[0]?.dateTime];
 
     default:
       return attribute.values.map(value => value.slug);

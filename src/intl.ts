@@ -104,6 +104,12 @@ export const commonMessages = defineMessages({
   },
   yes: {
     defaultMessage: "Yes"
+  },
+  date: {
+    defaultMessage: "Date"
+  },
+  time: {
+    defaultMessage: "Time"
   }
 });
 
