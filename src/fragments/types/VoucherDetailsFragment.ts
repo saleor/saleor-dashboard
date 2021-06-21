@@ -173,6 +173,7 @@ export interface VoucherDetailsFragment {
   used: number;
   applyOncePerOrder: boolean;
   applyOncePerCustomer: boolean;
+  onlyForStaff: boolean;
   products: VoucherDetailsFragment_products | null;
   collections: VoucherDetailsFragment_collections | null;
   categories: VoucherDetailsFragment_categories | null;

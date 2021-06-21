@@ -3019,20 +3019,25 @@
     "context": "voucher code, button",
     "string": "Generate Code"
   },
-  "src_dot_discounts_dot_components_dot_VoucherLimits_dot_2215544659": {
-    "string": "Limit number of times this discount can be used in total"
-  },
-  "src_dot_discounts_dot_components_dot_VoucherLimits_dot_3459612469": {
+  "src_dot_discounts_dot_components_dot_VoucherLimits_dot_applyOncePerCustomer": {
     "context": "limit voucher",
     "string": "Limit to one use per customer"
   },
-  "src_dot_discounts_dot_components_dot_VoucherLimits_dot_3751756157": {
+  "src_dot_discounts_dot_components_dot_VoucherLimits_dot_hasUsageLimit": {
+    "context": "limit voucher",
+    "string": "Limit number of times this discount can be used in total"
+  },
+  "src_dot_discounts_dot_components_dot_VoucherLimits_dot_onlyForStaff": {
+    "context": "limit voucher",
+    "string": "Limit to staff only"
+  },
+  "src_dot_discounts_dot_components_dot_VoucherLimits_dot_usageLimit": {
+    "context": "limit voucher",
+    "string": "Limit of Uses"
+  },
+  "src_dot_discounts_dot_components_dot_VoucherLimits_dot_usageLimitsTitle": {
     "context": "voucher usage limit, header",
     "string": "Usage Limit"
-  },
-  "src_dot_discounts_dot_components_dot_VoucherLimits_dot_557552777": {
-    "context": "voucher",
-    "string": "Limit of Uses"
   },
   "src_dot_discounts_dot_components_dot_VoucherListPage_dot_1112241061": {
     "context": "tab name",

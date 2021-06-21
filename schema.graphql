@@ -1914,6 +1914,7 @@ type ExportError {
 }
 
 enum ExportErrorCode {
+  GRAPHQL_ERROR
   INVALID
   NOT_FOUND
   REQUIRED
@@ -4106,7 +4107,7 @@ type Product implements Node & ObjectWithMetadata {
   taxType: TaxType
   attributes: [SelectedAttribute!]!
   channelListings: [ProductChannelListing!]
-  mediaById(id: ID): ProductMedia!
+  mediaById(id: ID): ProductMedia
   imageById(id: ID): ProductImage @deprecated(reason: "Will be removed in Saleor 4.0. Use the `mediaById` field instead.")
   variants: [ProductVariant]
   media: [ProductMedia!]
@@ -5757,6 +5758,7 @@ type Voucher implements Node {
   endDate: DateTime
   applyOncePerOrder: Boolean!
   applyOncePerCustomer: Boolean!
+  onlyForStaff: Boolean!
   discountValueType: DiscountValueTypeEnum!
   minCheckoutItemsQuantity: Int
   categories(before: String, after: String, first: Int, last: Int): CategoryCountableConnection
@@ -5858,6 +5860,7 @@ input VoucherInput {
   countries: [String]
   applyOncePerOrder: Boolean
   applyOncePerCustomer: Boolean
+  onlyForStaff: Boolean
   usageLimit: Int
 }
 

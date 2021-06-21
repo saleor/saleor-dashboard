@@ -440,6 +440,7 @@ export enum DiscountValueTypeEnum {
 }
 
 export enum ExportErrorCode {
+  GRAPHQL_ERROR = "GRAPHQL_ERROR",
   INVALID = "INVALID",
   NOT_FOUND = "NOT_FOUND",
   REQUIRED = "REQUIRED",
@@ -1978,6 +1979,7 @@ export interface VoucherInput {
   countries?: (string | null)[] | null;
   applyOncePerOrder?: boolean | null;
   applyOncePerCustomer?: boolean | null;
+  onlyForStaff?: boolean | null;
   usageLimit?: number | null;
 }
 
