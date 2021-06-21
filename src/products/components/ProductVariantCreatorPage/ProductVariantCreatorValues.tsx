@@ -126,6 +126,7 @@ const ProductVariantCreatorValues: React.FC<ProductVariantCreatorValuesProps> = 
                   handleValueClick(attribute.id, event.target.value)
                 }
                 allowCustomValues={true}
+                fetchOnFocus={true}
                 fetchChoices={value =>
                   fetchAttributeValues(value, attribute.id)
                 }
