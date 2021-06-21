@@ -58,6 +58,7 @@ export function voucherDetailsPageTab(tab: string): VoucherDetailsPageTab {
 export interface VoucherDetailsPageFormData {
   applyOncePerCustomer: boolean;
   applyOncePerOrder: boolean;
+  onlyForStaff: boolean;
   channelListings: ChannelVoucherData[];
   code: string;
   discountType: DiscountTypeEnum;
@@ -170,6 +171,7 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
   const initialForm: VoucherDetailsPageFormData = {
     applyOncePerCustomer: voucher?.applyOncePerCustomer || false,
     applyOncePerOrder: voucher?.applyOncePerOrder || false,
+    onlyForStaff: voucher?.onlyForStaff || false,
     channelListings,
     code: voucher?.code || "",
     discountType,

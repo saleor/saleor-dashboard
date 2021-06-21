@@ -173,6 +173,7 @@ export interface VoucherDetails_voucher {
   used: number;
   applyOncePerOrder: boolean;
   applyOncePerCustomer: boolean;
+  onlyForStaff: boolean;
   products: VoucherDetails_voucher_products | null;
   collections: VoucherDetails_voucher_collections | null;
   categories: VoucherDetails_voucher_categories | null;
