@@ -125,7 +125,8 @@ const useStyles = makeStyles(
     progress: {},
     progressContainer: {
       display: "flex",
-      justifyContent: "center"
+      justifyContent: "center",
+      padding: `${theme.spacing(1)}px 0`
     },
     root: {
       borderBottomLeftRadius: 8,
@@ -201,8 +202,8 @@ const MultiAutocompleteSelectFieldContent: React.FC<MultiAutocompleteSelectField
     displayValues.length > 0 || displayCustomValue || choices.length > 0;
   return (
     <Paper className={classes.root}>
-      <div className={classes.content} ref={anchor}>
-        {hasValuesToDisplay && (
+      {hasValuesToDisplay && (
+        <div className={classes.content} ref={anchor}>
           <>
             {add && (
               <MenuItem
@@ -298,20 +299,20 @@ const MultiAutocompleteSelectFieldContent: React.FC<MultiAutocompleteSelectField
               );
             })}
           </>
-        )}
-        {!loading && !hasValuesToDisplay && (
-          <MenuItem
-            disabled={true}
-            component="div"
-            data-test="multiautocomplete-select-no-options"
-          >
-            <FormattedMessage defaultMessage={"No results found"} />
-          </MenuItem>
-        )}
-      </div>
+        </div>
+      )}
+      {!loading && !hasValuesToDisplay && (
+        <MenuItem
+          disabled={true}
+          component="div"
+          data-test="multiautocomplete-select-no-options"
+        >
+          <FormattedMessage defaultMessage={"No results found"} />
+        </MenuItem>
+      )}
       {(hasMore || loading) && (
         <>
-          <Hr className={classes.hr} />
+          {hasMore && <Hr className={classes.hr} />}
           <div className={classes.progressContainer}>
             <CircularProgress className={classes.progress} size={24} />
           </div>
