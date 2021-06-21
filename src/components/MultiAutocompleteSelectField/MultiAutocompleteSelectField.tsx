@@ -252,16 +252,12 @@ const MultiAutocompleteSelectField: React.FC<MultiAutocompleteSelectFieldProps> 
 
   if (fetchChoices) {
     return (
-      // <DebounceAutocomplete debounceFn={fetchChoices}>
-      //   {debounceFn => (
       <MultiAutocompleteSelectFieldComponent
         testId={testId}
         choices={choices}
         {...props}
         fetchChoices={fetchChoices}
       />
-      //   )}
-      // </DebounceAutocomplete>
     );
   }
 
