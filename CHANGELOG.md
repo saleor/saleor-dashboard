@@ -51,6 +51,7 @@ All notable, unreleased changes to this project will be documented in this file.
 - Paginate attribute values in filters - #1152 by @orzechdev
 - Fix attribute values input display - #1156 by @orzechdev
 - Fix product type translations - #1163 by @orzechdev
+- Support staff only voucher - #1174 by @orzechdev
 
 # 2.11.1
 
