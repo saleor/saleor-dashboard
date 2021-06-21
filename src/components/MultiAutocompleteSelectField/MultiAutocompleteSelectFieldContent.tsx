@@ -173,7 +173,6 @@ const MultiAutocompleteSelectFieldContent: React.FC<MultiAutocompleteSelectField
     inputValue,
     onFetchMore
   } = props;
-
   if (!!add && !!displayCustomValue) {
     throw new Error("Add and custom value cannot be displayed simultaneously");
   }
@@ -198,12 +197,12 @@ const MultiAutocompleteSelectFieldContent: React.FC<MultiAutocompleteSelectField
     }
   }, [loading]);
 
+  const hasValuesToDisplay =
+    displayValues.length > 0 || displayCustomValue || choices.length > 0;
   return (
     <Paper className={classes.root}>
       <div className={classes.content} ref={anchor}>
-        {choices.length > 0 ||
-        displayValues.length > 0 ||
-        displayCustomValue ? (
+        {hasValuesToDisplay && (
           <>
             {add && (
               <MenuItem
@@ -298,25 +297,26 @@ const MultiAutocompleteSelectFieldContent: React.FC<MultiAutocompleteSelectField
                 </MenuItem>
               );
             })}
-            {hasMore && (
-              <>
-                <Hr className={classes.hr} />
-                <div className={classes.progressContainer}>
-                  <CircularProgress className={classes.progress} size={24} />
-                </div>
-              </>
-            )}
           </>
-        ) : (
+        )}
+        {!loading && !hasValuesToDisplay && (
           <MenuItem
             disabled={true}
             component="div"
             data-test="multiautocomplete-select-no-options"
           >
-            <FormattedMessage defaultMessage="No results found" />
+            <FormattedMessage defaultMessage={"No results found"} />
           </MenuItem>
         )}
       </div>
+      {(hasMore || loading) && (
+        <>
+          <Hr className={classes.hr} />
+          <div className={classes.progressContainer}>
+            <CircularProgress className={classes.progress} size={24} />
+          </div>
+        </>
+      )}
       {choices.length > maxMenuItems && (
         <div className={classes.arrowContainer}>
           <div
