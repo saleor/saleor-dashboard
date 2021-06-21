@@ -15,7 +15,7 @@ export interface FulfillOrder_orderFulfill_errors {
   field: string | null;
   addressType: AddressTypeEnum | null;
   warehouse: string | null;
-  orderLine: string | null;
+  orderLines: string[] | null;
 }
 
 export interface FulfillOrder_orderFulfill_order_metadata {
