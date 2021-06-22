@@ -52,6 +52,7 @@ All notable, unreleased changes to this project will be documented in this file.
 - Fix attribute values input display - #1156 by @orzechdev
 - Fix product type translations - #1163 by @orzechdev
 - Support staff only voucher - #1174 by @orzechdev
+- Fix label names in reference attributes - #1184 by @orzechdev
 
 # 2.11.1
 
