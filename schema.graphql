@@ -519,6 +519,7 @@ input AttributeInput {
   slug: String!
   values: [String]
   valuesRange: IntRangeInput
+  boolean: Boolean
 }
 
 enum AttributeInputTypeEnum {
@@ -528,6 +529,7 @@ enum AttributeInputTypeEnum {
   REFERENCE
   NUMERIC
   RICH_TEXT
+  BOOLEAN
 }
 
 type AttributeReorderValues {
@@ -608,6 +610,7 @@ type AttributeValue implements Node {
   reference: ID
   file: File
   richText: JSONString
+  boolean: Boolean
 }
 
 type AttributeValueBulkDelete {
@@ -658,6 +661,7 @@ input AttributeValueInput {
   contentType: String
   references: [ID!]
   richText: JSONString
+  boolean: Boolean
 }
 
 type AttributeValueTranslatableContent implements Node {
@@ -1910,6 +1914,7 @@ type ExportError {
 }
 
 enum ExportErrorCode {
+  GRAPHQL_ERROR
   INVALID
   NOT_FOUND
   REQUIRED
@@ -3022,6 +3027,7 @@ type Order implements Node & ObjectWithMetadata {
   discountName: String @deprecated(reason: "Use discounts field. This field will be removed in Saleor 4.0.")
   translatedDiscountName: String @deprecated(reason: "Use discounts field. This field will be removed in Saleor 4.0.")
   discounts: [OrderDiscount!]
+  errors: [OrderError!]!
 }
 
 enum OrderAction {
@@ -3135,7 +3141,7 @@ type OrderError {
   message: String
   code: OrderErrorCode!
   warehouse: ID
-  orderLine: ID
+  orderLines: [ID!]
   variants: [ID!]
   addressType: AddressTypeEnum
 }
@@ -3255,6 +3261,8 @@ enum OrderEventsEnum {
   ORDER_DISCOUNT_DELETED
   ORDER_LINE_DISCOUNT_UPDATED
   ORDER_LINE_DISCOUNT_REMOVED
+  ORDER_LINE_PRODUCT_DELETED
+  ORDER_LINE_VARIANT_DELETED
   UPDATED_ADDRESS
   EMAIL_SENT
   CONFIRMED
@@ -4102,7 +4110,7 @@ type Product implements Node & ObjectWithMetadata {
   taxType: TaxType
   attributes: [SelectedAttribute!]!
   channelListings: [ProductChannelListing!]
-  mediaById(id: ID): ProductMedia!
+  mediaById(id: ID): ProductMedia
   imageById(id: ID): ProductImage @deprecated(reason: "Will be removed in Saleor 4.0. Use the `mediaById` field instead.")
   variants: [ProductVariant]
   media: [ProductMedia!]
@@ -5753,6 +5761,7 @@ type Voucher implements Node {
   endDate: DateTime
   applyOncePerOrder: Boolean!
   applyOncePerCustomer: Boolean!
+  onlyForStaff: Boolean!
   discountValueType: DiscountValueTypeEnum!
   minCheckoutItemsQuantity: Int
   categories(before: String, after: String, first: Int, last: Int): CategoryCountableConnection
@@ -5854,6 +5863,7 @@ input VoucherInput {
   countries: [String]
   applyOncePerOrder: Boolean
   applyOncePerCustomer: Boolean
+  onlyForStaff: Boolean
   usageLimit: Int
 }
 

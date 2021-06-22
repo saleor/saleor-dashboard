@@ -1,9 +1,13 @@
 import { IFilter } from "@saleor/components/Filter";
-import { sectionNames } from "@saleor/intl";
+import { commonMessages, sectionNames } from "@saleor/intl";
 import { AutocompleteFilterOpts, FilterOpts, MinMax } from "@saleor/types";
-import { StockAvailability } from "@saleor/types/globalTypes";
+import {
+  AttributeInputTypeEnum,
+  StockAvailability
+} from "@saleor/types/globalTypes";
 import {
   createAutocompleteField,
+  createBooleanField,
   createOptionsField,
   createPriceField
 } from "@saleor/utils/filters/fields";
@@ -24,6 +28,7 @@ export interface ProductListFilterOpts {
       id: string;
       name: string;
       slug: string;
+      inputType: AttributeInputTypeEnum;
     }
   >;
   attributeChoices: FilterOpts<string[]> & AutocompleteFilterOpts;
@@ -67,7 +72,14 @@ const messages = defineMessages({
 export function createFilterStructure(
   intl: IntlShape,
   opts: ProductListFilterOpts
-): IFilter<ProductFilterKeys> {
+): IFilter<string> {
+  const booleanAttributes = opts.attributes.filter(
+    ({ inputType }) => inputType === AttributeInputTypeEnum.BOOLEAN
+  );
+  const defaultAttributes = opts.attributes.filter(
+    ({ inputType }) => !inputType.includes(AttributeInputTypeEnum.BOOLEAN)
+  );
+
   return [
     {
       ...createOptionsField(
@@ -150,7 +162,22 @@ export function createFilterStructure(
       ),
       active: opts.productType.active
     },
-    ...opts.attributes.map(attr => ({
+    ...booleanAttributes.map(attr => ({
+      ...createBooleanField(
+        attr.slug,
+        attr.name,
+        Array.isArray(attr.value)
+          ? undefined
+          : (attr.value as unknown) === "true",
+        {
+          positive: intl.formatMessage(commonMessages.yes),
+          negative: intl.formatMessage(commonMessages.no)
+        }
+      ),
+      active: attr.active,
+      group: ProductFilterKeys.attributes
+    })),
+    ...defaultAttributes.map(attr => ({
       ...createAutocompleteField(
         attr.slug as any,
         attr.name,

@@ -114,7 +114,6 @@ const ProductVariantCreatorValues: React.FC<ProductVariantCreatorValuesProps> = 
             <CardTitle title={attribute?.name || <Skeleton />} />
             <CardContent data-test-id="value-container">
               <MultiAutocompleteSelectField
-                fetchOnFocus
                 choices={getMultiChoices(attributeValues)}
                 displayValues={getMultiDisplayValues(
                   data.attributes,
@@ -127,9 +126,10 @@ const ProductVariantCreatorValues: React.FC<ProductVariantCreatorValuesProps> = 
                   handleValueClick(attribute.id, event.target.value)
                 }
                 allowCustomValues={true}
-                // fetchChoices={value =>
-                //   fetchAttributeValues(value, attribute.id)
-                // }
+                fetchOnFocus={true}
+                fetchChoices={value =>
+                  fetchAttributeValues(value, attribute.id)
+                }
                 {...fetchMoreAttributeValues}
               />
             </CardContent>

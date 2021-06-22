@@ -11,6 +11,7 @@ export const productListFilterOpts: ProductListFilterOpts = {
   attributes: attributes.map(attr => ({
     id: attr.id,
     active: false,
+    inputType: attr.inputType,
     name: attr.name,
     slug: attr.slug,
     value: [

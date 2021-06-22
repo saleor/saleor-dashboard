@@ -6,7 +6,7 @@ async function handleFormSubmit<T>(
   setChanged: (changed: boolean) => void
 ): Promise<boolean> {
   const errors = await onSubmit(data);
-  const ok = errors.length === 0;
+  const ok = errors?.length === 0;
 
   if (ok) {
     setChanged(false);

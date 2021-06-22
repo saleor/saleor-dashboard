@@ -15,6 +15,7 @@ export const attributeValueFragment = gql`
     }
     reference
     richText
+    boolean
   }
 `;
 
@@ -28,6 +29,7 @@ export const attributeFragment = gql`
     filterableInDashboard
     filterableInStorefront
     unit
+    inputType
   }
 `;
 

@@ -83,6 +83,7 @@ export function getFilterOpts(
         id: attr.id,
         name: attr.name,
         slug: attr.slug,
+        inputType: attr.inputType,
         value:
           !!params.attributes && params.attributes[attr.slug]
             ? dedupeFilter(params.attributes[attr.slug])
@@ -198,20 +199,35 @@ export function getFilterOpts(
   };
 }
 
+function getFilteredAttributeValue(
+  params: ProductListUrlFilters
+): Array<({ boolean: boolean } | { values: string[] }) & { slug: string }> {
+  return !!params.attributes
+    ? Object.keys(params.attributes).map(key => {
+        const value = params.attributes[key];
+        const isMulti = isArray(params.attributes[key]);
+        const isBooleanValue =
+          !isMulti && ["true", "false"].includes((value as unknown) as string);
+
+        return {
+          slug: key,
+          ...(isBooleanValue
+            ? { boolean: JSON.parse((value as unknown) as string) }
+            : {
+                // It is possible for qs to parse values not as string[] but string
+                values: isMulti ? value : (([value] as unknown) as string[])
+              })
+        };
+      })
+    : null;
+}
+
 export function getFilterVariables(
   params: ProductListUrlFilters,
   channel: string | undefined
 ): ProductFilterInput {
   return {
-    attributes: !!params.attributes
-      ? Object.keys(params.attributes).map(key => ({
-          slug: key,
-          // It is possible for qs to parse values not as string[] but string
-          values: isArray(params.attributes[key])
-            ? params.attributes[key]
-            : (([params.attributes[key]] as unknown) as string[])
-        }))
-      : null,
+    attributes: getFilteredAttributeValue(params),
     categories: params.categories !== undefined ? params.categories : null,
     channel: channel || null,
     collections: params.collections !== undefined ? params.collections : null,
