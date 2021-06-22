@@ -4,7 +4,6 @@ import {
   mergeAttributeValues
 } from "@saleor/attributes/utils/data";
 import { ChannelData } from "@saleor/channels/utils";
-import AppHeader from "@saleor/components/AppHeader";
 import AssignAttributeValueDialog from "@saleor/components/AssignAttributeValueDialog";
 import Attributes, { AttributeInput } from "@saleor/components/Attributes";
 import CardSpacer from "@saleor/components/CardSpacer";
@@ -25,6 +24,7 @@ import { SubmitPromise } from "@saleor/hooks/useForm";
 import { FormsetData } from "@saleor/hooks/useFormset";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { sectionNames } from "@saleor/intl";
+import { Backlink } from "@saleor/macaw-ui";
 import { maybe } from "@saleor/misc";
 import ProductExternalMediaDialog from "@saleor/products/components/ProductExternalMediaDialog";
 import ProductVariantPrice from "@saleor/products/components/ProductVariantPrice";
@@ -278,9 +278,9 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
       }) => (
         <>
           <Container>
-            <AppHeader onBack={onBack}>
+            <Backlink onBack={onBack}>
               {intl.formatMessage(sectionNames.products)}
-            </AppHeader>
+            </Backlink>
             <PageHeader title={header} />
             <Grid>
               <div>

@@ -1,6 +1,5 @@
 import { Typography } from "@material-ui/core";
 import { ChannelVoucherData } from "@saleor/channels/utils";
-import AppHeader from "@saleor/components/AppHeader";
 import CardSpacer from "@saleor/components/CardSpacer";
 import ChannelsAvailabilityCard from "@saleor/components/ChannelsAvailabilityCard";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
@@ -18,6 +17,7 @@ import {
 import { DiscountTypeEnum, RequirementsPicker } from "@saleor/discounts/types";
 import { DiscountErrorFragment } from "@saleor/fragments/types/DiscountErrorFragment";
 import { sectionNames } from "@saleor/intl";
+import { Backlink } from "@saleor/macaw-ui";
 import { validatePrice } from "@saleor/products/utils/validation";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -211,9 +211,9 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
           );
         return (
           <Container>
-            <AppHeader onBack={onBack}>
+            <Backlink onBack={onBack}>
               {intl.formatMessage(sectionNames.vouchers)}
-            </AppHeader>
+            </Backlink>
             <PageHeader title={voucher?.code} />
             <Grid>
               <div>

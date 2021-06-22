@@ -1,5 +1,4 @@
 import { ChannelVoucherData } from "@saleor/channels/utils";
-import AppHeader from "@saleor/components/AppHeader";
 import CardSpacer from "@saleor/components/CardSpacer";
 import ChannelsAvailabilityCard from "@saleor/components/ChannelsAvailabilityCard";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
@@ -14,6 +13,7 @@ import {
 } from "@saleor/discounts/handlers";
 import { DiscountErrorFragment } from "@saleor/fragments/types/DiscountErrorFragment";
 import { sectionNames } from "@saleor/intl";
+import { Backlink } from "@saleor/macaw-ui";
 import { validatePrice } from "@saleor/products/utils/validation";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -115,9 +115,9 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
           );
         return (
           <Container>
-            <AppHeader onBack={onBack}>
+            <Backlink onBack={onBack}>
               {intl.formatMessage(sectionNames.vouchers)}
-            </AppHeader>
+            </Backlink>
             <PageHeader
               title={intl.formatMessage({
                 defaultMessage: "Create Voucher",

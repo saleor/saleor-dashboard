@@ -1,5 +1,4 @@
 import { ChannelCollectionData } from "@saleor/channels/utils";
-import AppHeader from "@saleor/components/AppHeader";
 import { CardSpacer } from "@saleor/components/CardSpacer";
 import ChannelsAvailabilityCard from "@saleor/components/ChannelsAvailabilityCard";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
@@ -13,6 +12,7 @@ import { CollectionChannelListingErrorFragment } from "@saleor/fragments/types/C
 import { CollectionErrorFragment } from "@saleor/fragments/types/CollectionErrorFragment";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import { sectionNames } from "@saleor/intl";
+import { Backlink } from "@saleor/macaw-ui";
 import { PermissionEnum } from "@saleor/types/globalTypes";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -56,9 +56,9 @@ const CollectionCreatePage: React.FC<CollectionCreatePageProps> = ({
     >
       {({ change, data, handlers, hasChanged, submit }) => (
         <Container>
-          <AppHeader onBack={onBack}>
+          <Backlink onBack={onBack}>
             {intl.formatMessage(sectionNames.collections)}
-          </AppHeader>
+          </Backlink>
           <PageHeader
             title={intl.formatMessage({
               defaultMessage: "Add Collection",

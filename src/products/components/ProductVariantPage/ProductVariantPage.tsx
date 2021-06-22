@@ -3,7 +3,6 @@ import {
   mergeAttributeValues
 } from "@saleor/attributes/utils/data";
 import { ChannelPriceData } from "@saleor/channels/utils";
-import AppHeader from "@saleor/components/AppHeader";
 import AssignAttributeValueDialog from "@saleor/components/AssignAttributeValueDialog";
 import Attributes, {
   AttributeInput,
@@ -21,6 +20,7 @@ import { ProductChannelListingErrorFragment } from "@saleor/fragments/types/Prod
 import { ProductErrorWithAttributesFragment } from "@saleor/fragments/types/ProductErrorWithAttributesFragment";
 import { ProductVariant } from "@saleor/fragments/types/ProductVariant";
 import { WarehouseFragment } from "@saleor/fragments/types/WarehouseFragment";
+import { Backlink } from "@saleor/macaw-ui";
 import { VariantUpdate_productVariantUpdate_errors } from "@saleor/products/types/VariantUpdate";
 import { SearchAttributeValues_attribute_choices_edges_node } from "@saleor/searches/types/SearchAttributeValues";
 import { SearchPages_search_edges_node } from "@saleor/searches/types/SearchPages";
@@ -176,7 +176,7 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
   return (
     <>
       <Container>
-        <AppHeader onBack={onBack}>{variant?.product?.name}</AppHeader>
+        <Backlink onBack={onBack}>{variant?.product?.name}</Backlink>
         <PageHeader title={header}>
           {variant?.product?.defaultVariant?.id !== variant?.id && (
             <ProductVariantSetDefault

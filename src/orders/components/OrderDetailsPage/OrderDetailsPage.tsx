@@ -1,5 +1,4 @@
 import { Typography } from "@material-ui/core";
-import AppHeader from "@saleor/components/AppHeader";
 import CardMenu from "@saleor/components/CardMenu";
 import { CardSpacer } from "@saleor/components/CardSpacer";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
@@ -13,6 +12,7 @@ import Savebar from "@saleor/components/Savebar";
 import Skeleton from "@saleor/components/Skeleton";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import { sectionNames } from "@saleor/intl";
+import { Backlink } from "@saleor/macaw-ui";
 import { makeStyles } from "@saleor/macaw-ui";
 import OrderChannelSectionCard from "@saleor/orders/components/OrderChannelSectionCard";
 import { UserPermissionProps } from "@saleor/types";
@@ -206,9 +206,9 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
 
         return (
           <Container>
-            <AppHeader onBack={onBack}>
+            <Backlink onBack={onBack}>
               {intl.formatMessage(sectionNames.orders)}
-            </AppHeader>
+            </Backlink>
             <PageHeader
               className={classes.header}
               inline

@@ -1,5 +1,5 @@
 import { Typography } from "@material-ui/core";
-import AppHeader from "@saleor/components/AppHeader";
+
 import CompanyAddressInput from "@saleor/components/CompanyAddressInput";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
 import Container from "@saleor/components/Container";
@@ -13,6 +13,7 @@ import useAddressValidation from "@saleor/hooks/useAddressValidation";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { commonMessages, sectionNames } from "@saleor/intl";
+import { Backlink } from "@saleor/macaw-ui";
 import { makeStyles } from "@saleor/macaw-ui";
 import createSingleAutocompleteSelectHandler from "@saleor/utils/handlers/singleAutocompleteSelectChangeHandler";
 import { mapCountriesToChoices } from "@saleor/utils/maps";
@@ -136,9 +137,9 @@ const SiteSettingsPage: React.FC<SiteSettingsPageProps> = props => {
 
         return (
           <Container>
-            <AppHeader onBack={onBack}>
+            <Backlink onBack={onBack}>
               {intl.formatMessage(sectionNames.configuration)}
-            </AppHeader>
+            </Backlink>
             <PageHeader
               title={intl.formatMessage(commonMessages.generalInformations)}
             />

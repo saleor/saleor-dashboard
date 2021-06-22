@@ -9,7 +9,6 @@ import {
   Typography
 } from "@material-ui/core";
 import { CSSProperties } from "@material-ui/styles";
-import AppHeader from "@saleor/components/AppHeader";
 import CardTitle from "@saleor/components/CardTitle";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
 import Container from "@saleor/components/Container";
@@ -22,6 +21,7 @@ import Skeleton from "@saleor/components/Skeleton";
 import TableCellAvatar from "@saleor/components/TableCellAvatar";
 import { WarehouseFragment } from "@saleor/fragments/types/WarehouseFragment";
 import useFormset, { FormsetData } from "@saleor/hooks/useFormset";
+import { Backlink } from "@saleor/macaw-ui";
 import { makeStyles } from "@saleor/macaw-ui";
 import { renderCollection } from "@saleor/misc";
 import { FulfillOrder_orderFulfill_errors } from "@saleor/orders/types/FulfillOrder";
@@ -242,7 +242,7 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
 
   return (
     <Container>
-      <AppHeader onBack={onBack}>
+      <Backlink onBack={onBack}>
         {order?.number
           ? intl.formatMessage(
               {
@@ -257,7 +257,7 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
               defaultMessage: "Order",
               description: "page header"
             })}
-      </AppHeader>
+      </Backlink>
       <PageHeader
         title={intl.formatMessage(
           {

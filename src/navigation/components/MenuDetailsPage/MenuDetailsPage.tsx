@@ -1,5 +1,4 @@
 import { Typography } from "@material-ui/core";
-import AppHeader from "@saleor/components/AppHeader";
 import CardSpacer from "@saleor/components/CardSpacer";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
 import Container from "@saleor/components/Container";
@@ -9,6 +8,7 @@ import Savebar from "@saleor/components/Savebar";
 import { MenuErrorFragment } from "@saleor/fragments/types/MenuErrorFragment";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import { sectionNames } from "@saleor/intl";
+import { Backlink } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -85,9 +85,9 @@ const MenuDetailsPage: React.FC<MenuDetailsPageProps> = ({
     <Form initial={initialForm} onSubmit={handleSubmit}>
       {({ change, data, hasChanged, submit }) => (
         <Container>
-          <AppHeader onBack={onBack}>
+          <Backlink onBack={onBack}>
             {intl.formatMessage(sectionNames.navigation)}
-          </AppHeader>
+          </Backlink>
           <Grid variant="inverted">
             <div>
               <Typography variant="h5">

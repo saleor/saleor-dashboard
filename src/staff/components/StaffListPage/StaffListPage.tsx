@@ -1,11 +1,11 @@
 import { Button, Card } from "@material-ui/core";
-import AppHeader from "@saleor/components/AppHeader";
 import { Container } from "@saleor/components/Container";
 import FilterBar from "@saleor/components/FilterBar";
 import LimitReachedAlert from "@saleor/components/LimitReachedAlert";
 import PageHeader from "@saleor/components/PageHeader";
 import { RefreshLimits_shop_limits } from "@saleor/components/Shop/types/RefreshLimits";
 import { sectionNames } from "@saleor/intl";
+import { Backlink } from "@saleor/macaw-ui";
 import { StaffListUrlSortField } from "@saleor/staff/urls";
 import {
   FilterPageProps,
@@ -59,9 +59,9 @@ const StaffListPage: React.FC<StaffListPageProps> = ({
 
   return (
     <Container>
-      <AppHeader onBack={onBack}>
+      <Backlink onBack={onBack}>
         {intl.formatMessage(sectionNames.configuration)}
-      </AppHeader>
+      </Backlink>
       <PageHeader
         title={intl.formatMessage(sectionNames.staff)}
         limit={

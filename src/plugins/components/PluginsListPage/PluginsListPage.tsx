@@ -1,9 +1,10 @@
 import { Card } from "@material-ui/core";
-import AppHeader from "@saleor/components/AppHeader";
+
 import Container from "@saleor/components/Container";
 import FilterBar from "@saleor/components/FilterBar";
 import PageHeader from "@saleor/components/PageHeader";
 import { sectionNames } from "@saleor/intl";
+import { Backlink } from "@saleor/macaw-ui";
 import { PluginListUrlSortField } from "@saleor/plugins/urls";
 import {
   FilterPageProps,
@@ -53,9 +54,9 @@ const PluginsListPage: React.FC<PluginsListPageProps> = ({
 
   return (
     <Container>
-      <AppHeader onBack={onBack}>
+      <Backlink onBack={onBack}>
         {intl.formatMessage(sectionNames.configuration)}
-      </AppHeader>
+      </Backlink>
       <PageHeader title={intl.formatMessage(sectionNames.plugins)} />
       <Card>
         <FilterBar

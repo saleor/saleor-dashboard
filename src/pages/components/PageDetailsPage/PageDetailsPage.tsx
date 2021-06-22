@@ -2,7 +2,6 @@ import {
   getAttributeValuesFromReferences,
   mergeAttributeValues
 } from "@saleor/attributes/utils/data";
-import AppHeader from "@saleor/components/AppHeader";
 import AssignAttributeValueDialog from "@saleor/components/AssignAttributeValueDialog";
 import Attributes, { AttributeInput } from "@saleor/components/Attributes";
 import CardSpacer from "@saleor/components/CardSpacer";
@@ -18,6 +17,7 @@ import { PageErrorWithAttributesFragment } from "@saleor/fragments/types/PageErr
 import useDateLocalize from "@saleor/hooks/useDateLocalize";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import { sectionNames } from "@saleor/intl";
+import { Backlink } from "@saleor/macaw-ui";
 import { PageType_pageType } from "@saleor/pages/types/PageType";
 import { SearchAttributeValues_attribute_choices_edges_node } from "@saleor/searches/types/SearchAttributeValues";
 import { SearchPages_search_edges_node } from "@saleor/searches/types/SearchPages";
@@ -134,9 +134,9 @@ const PageDetailsPage: React.FC<PageDetailsPageProps> = ({
     >
       {({ change, data, valid, handlers, hasChanged, submit }) => (
         <Container>
-          <AppHeader onBack={onBack}>
+          <Backlink onBack={onBack}>
             {intl.formatMessage(sectionNames.pages)}
-          </AppHeader>
+          </Backlink>
           <PageHeader
             title={
               !pageExists

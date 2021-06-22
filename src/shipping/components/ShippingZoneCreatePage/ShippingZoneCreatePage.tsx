@@ -1,4 +1,3 @@
-import AppHeader from "@saleor/components/AppHeader";
 import CardSpacer from "@saleor/components/CardSpacer";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
 import Container from "@saleor/components/Container";
@@ -10,6 +9,7 @@ import Savebar from "@saleor/components/Savebar";
 import { CountryFragment } from "@saleor/fragments/types/CountryFragment";
 import { ShippingErrorFragment } from "@saleor/fragments/types/ShippingErrorFragment";
 import { sectionNames } from "@saleor/intl";
+import { Backlink } from "@saleor/macaw-ui";
 import React from "react";
 import { defineMessages, useIntl } from "react-intl";
 
@@ -75,9 +75,9 @@ const ShippingZoneCreatePage: React.FC<ShippingZoneCreatePageProps> = ({
       {({ change, data, hasChanged, submit }) => (
         <>
           <Container>
-            <AppHeader onBack={onBack}>
+            <Backlink onBack={onBack}>
               {intl.formatMessage(sectionNames.shipping)}
-            </AppHeader>
+            </Backlink>
             <PageHeader title={intl.formatMessage(messages.createZone)} />
             <Grid>
               <div>

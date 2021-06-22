@@ -1,5 +1,4 @@
 import AccountPermissions from "@saleor/components/AccountPermissions";
-import AppHeader from "@saleor/components/AppHeader";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
 import Container from "@saleor/components/Container";
 import Form from "@saleor/components/Form";
@@ -11,6 +10,7 @@ import { ShopInfo_shop_permissions } from "@saleor/components/Shop/types/ShopInf
 import { PermissionGroupErrorFragment } from "@saleor/fragments/types/PermissionGroupErrorFragment";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import { sectionNames } from "@saleor/intl";
+import { Backlink } from "@saleor/macaw-ui";
 import { MembersListUrlSortField } from "@saleor/permissionGroups/urls";
 import {
   extractPermissionCodes,
@@ -93,9 +93,9 @@ const PermissionGroupDetailsPage: React.FC<PermissionGroupDetailsPageProps> = ({
     <Form initial={initialForm} onSubmit={onSubmit} confirmLeave>
       {({ data, change, submit, hasChanged }) => (
         <Container>
-          <AppHeader onBack={onBack}>
+          <Backlink onBack={onBack}>
             {intl.formatMessage(sectionNames.permissionGroups)}
-          </AppHeader>
+          </Backlink>
           <PageHeader title={permissionGroup?.name} />
 
           <Grid>

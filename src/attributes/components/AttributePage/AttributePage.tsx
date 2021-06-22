@@ -1,6 +1,5 @@
 import { AttributeDetails_attribute_choices } from "@saleor/attributes/types/AttributeDetails";
 import { ATTRIBUTE_TYPES_WITH_DEDICATED_VALUES } from "@saleor/attributes/utils/data";
-import AppHeader from "@saleor/components/AppHeader";
 import CardSpacer from "@saleor/components/CardSpacer";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
 import Container from "@saleor/components/Container";
@@ -14,6 +13,7 @@ import { ListSettingsUpdate } from "@saleor/components/TablePagination";
 import { AttributeDetailsFragment } from "@saleor/fragments/types/AttributeDetailsFragment";
 import { AttributeErrorFragment } from "@saleor/fragments/types/AttributeErrorFragment";
 import { sectionNames } from "@saleor/intl";
+import { Backlink } from "@saleor/macaw-ui";
 import { maybe } from "@saleor/misc";
 import { ListSettings, ReorderAction } from "@saleor/types";
 import {
@@ -169,9 +169,9 @@ const AttributePage: React.FC<AttributePageProps> = ({
 
         return (
           <Container>
-            <AppHeader onBack={onBack}>
+            <Backlink onBack={onBack}>
               {intl.formatMessage(sectionNames.attributes)}
-            </AppHeader>
+            </Backlink>
             <PageHeader
               title={
                 attribute === null

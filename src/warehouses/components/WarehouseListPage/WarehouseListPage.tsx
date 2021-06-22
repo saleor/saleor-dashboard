@@ -1,5 +1,4 @@
 import { Button, Card } from "@material-ui/core";
-import AppHeader from "@saleor/components/AppHeader";
 import Container from "@saleor/components/Container";
 import LimitReachedAlert from "@saleor/components/LimitReachedAlert";
 import PageHeader from "@saleor/components/PageHeader";
@@ -7,6 +6,7 @@ import SearchBar from "@saleor/components/SearchBar";
 import { RefreshLimits_shop_limits } from "@saleor/components/Shop/types/RefreshLimits";
 import { WarehouseWithShippingFragment } from "@saleor/fragments/types/WarehouseWithShippingFragment";
 import { sectionNames } from "@saleor/intl";
+import { Backlink } from "@saleor/macaw-ui";
 import {
   PageListProps,
   SearchPageProps,
@@ -60,9 +60,9 @@ export const WarehouseListPage: React.FC<WarehouseListPageProps> = ({
 
   return (
     <Container>
-      <AppHeader onBack={onBack}>
+      <Backlink onBack={onBack}>
         <FormattedMessage {...sectionNames.configuration} />
-      </AppHeader>
+      </Backlink>
       <PageHeader
         title={intl.formatMessage(sectionNames.warehouses)}
         limit={

@@ -1,5 +1,4 @@
 import { Typography } from "@material-ui/core";
-import AppHeader from "@saleor/components/AppHeader";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
 import Container from "@saleor/components/Container";
 import Form from "@saleor/components/Form";
@@ -12,6 +11,7 @@ import Savebar from "@saleor/components/Savebar";
 import { SingleAutocompleteChoiceType } from "@saleor/components/SingleAutocompleteSelectField";
 import { PageErrorFragment } from "@saleor/fragments/types/PageErrorFragment";
 import { commonMessages, sectionNames } from "@saleor/intl";
+import { Backlink } from "@saleor/macaw-ui";
 import { makeStyles } from "@saleor/macaw-ui";
 import { PageTypeDetails_pageType } from "@saleor/pageTypes/types/PageTypeDetails";
 import { ListActions, ReorderEvent } from "@saleor/types";
@@ -112,9 +112,9 @@ const PageTypeDetailsPage: React.FC<PageTypeDetailsPageProps> = props => {
 
         return (
           <Container>
-            <AppHeader onBack={onBack}>
+            <Backlink onBack={onBack}>
               {intl.formatMessage(sectionNames.pageTypes)}
-            </AppHeader>
+            </Backlink>
             <PageHeader title={pageTitle} />
             <Grid variant="inverted">
               <div>

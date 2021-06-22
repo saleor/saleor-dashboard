@@ -1,5 +1,4 @@
 import { ChannelSaleData } from "@saleor/channels/utils";
-import AppHeader from "@saleor/components/AppHeader";
 import CardSpacer from "@saleor/components/CardSpacer";
 import ChannelsAvailabilityCard from "@saleor/components/ChannelsAvailabilityCard";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
@@ -11,6 +10,7 @@ import Savebar from "@saleor/components/Savebar";
 import { createSaleChannelsChangeHandler } from "@saleor/discounts/handlers";
 import { DiscountErrorFragment } from "@saleor/fragments/types/DiscountErrorFragment";
 import { sectionNames } from "@saleor/intl";
+import { Backlink } from "@saleor/macaw-ui";
 import { validatePrice } from "@saleor/products/utils/validation";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -85,9 +85,9 @@ const SaleCreatePage: React.FC<SaleCreatePageProps> = ({
         );
         return (
           <Container>
-            <AppHeader onBack={onBack}>
+            <Backlink onBack={onBack}>
               {intl.formatMessage(sectionNames.sales)}
-            </AppHeader>
+            </Backlink>
             <PageHeader
               title={intl.formatMessage({
                 defaultMessage: "Create Sale",

@@ -1,6 +1,4 @@
-import AppHeader from "@saleor/components/AppHeader";
 import CardSpacer from "@saleor/components/CardSpacer";
-// import CardSpacer from "@saleor/components/CardSpacer";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
 import Container from "@saleor/components/Container";
 import Form from "@saleor/components/Form";
@@ -10,7 +8,7 @@ import Savebar from "@saleor/components/Savebar";
 import { PluginErrorFragment } from "@saleor/fragments/types/PluginErrorFragment";
 import { ChangeEvent } from "@saleor/hooks/useForm";
 import { sectionNames } from "@saleor/intl";
-import { makeStyles } from "@saleor/macaw-ui";
+import { Backlink } from "@saleor/macaw-ui";
 import { getStringOrPlaceholder } from "@saleor/misc";
 import { isSecretField } from "@saleor/plugins/utils";
 import { ConfigurationItemInput } from "@saleor/types/globalTypes";
@@ -102,9 +100,9 @@ const PluginsDetailsPage: React.FC<PluginsDetailsPageProps> = ({
         };
         return (
           <Container>
-            <AppHeader onBack={onBack}>
+            <Backlink onBack={onBack}>
               {intl.formatMessage(sectionNames.plugins)}
-            </AppHeader>
+            </Backlink>
             <PageHeader
               title={intl.formatMessage(
                 {

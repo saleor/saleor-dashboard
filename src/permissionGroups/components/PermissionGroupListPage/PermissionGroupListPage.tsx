@@ -1,8 +1,9 @@
 import { Button, Card } from "@material-ui/core";
-import AppHeader from "@saleor/components/AppHeader";
+
 import Container from "@saleor/components/Container";
 import PageHeader from "@saleor/components/PageHeader";
 import { sectionNames } from "@saleor/intl";
+import { Backlink } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -29,9 +30,9 @@ const PermissionGroupListPage: React.FC<PermissionGroupListPageProps> = ({
 
   return (
     <Container>
-      <AppHeader onBack={onBack}>
+      <Backlink onBack={onBack}>
         {intl.formatMessage(sectionNames.configuration)}
-      </AppHeader>
+      </Backlink>
       <PageHeader title={intl.formatMessage(sectionNames.permissionGroups)}>
         <Button
           color="primary"

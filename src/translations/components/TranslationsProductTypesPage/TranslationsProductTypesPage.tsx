@@ -1,4 +1,3 @@
-import AppHeader from "@saleor/components/AppHeader";
 import CardSpacer from "@saleor/components/CardSpacer";
 import Container from "@saleor/components/Container";
 import LanguageSwitch from "@saleor/components/LanguageSwitch";
@@ -9,7 +8,6 @@ import { commonMessages, sectionNames } from "@saleor/intl";
 import { getStringOrPlaceholder } from "@saleor/misc";
 import { TranslationsEntitiesPageProps } from "@saleor/translations/types";
 import { ListSettings } from "@saleor/types";
-import React from "react";
 import { defineMessages, useIntl } from "react-intl";
 
 import {
@@ -66,9 +64,9 @@ const TranslationsProductTypesPage: React.FC<TranslationsProductTypesPageProps> 
 
   return (
     <Container>
-      <AppHeader onBack={onBack}>
+      <Backlink onBack={onBack}>
         {intl.formatMessage(sectionNames.translations)}
-      </AppHeader>
+      </Backlink>
       <PageHeader
         title={intl.formatMessage(
           {

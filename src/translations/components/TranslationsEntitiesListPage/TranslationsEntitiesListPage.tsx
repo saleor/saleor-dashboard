@@ -1,9 +1,10 @@
 import { Card } from "@material-ui/core";
-import AppHeader from "@saleor/components/AppHeader";
+
 import Container from "@saleor/components/Container";
 import PageHeader from "@saleor/components/PageHeader";
 import { ShopInfo_shop_languages } from "@saleor/components/Shop/types/ShopInfo";
 import FilterTabs, { FilterTab } from "@saleor/components/TableFilter";
+import { Backlink } from "@saleor/macaw-ui";
 import { maybe } from "@saleor/misc";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -51,11 +52,11 @@ const TranslationsEntitiesListPage: React.FC<TranslationsEntitiesListPageProps> 
 
   return (
     <Container>
-      <AppHeader onBack={onBack}>
+      <Backlink onBack={onBack}>
         {intl.formatMessage({
           defaultMessage: "Languages"
         })}
-      </AppHeader>
+      </Backlink>
       <PageHeader
         title={intl.formatMessage(
           {

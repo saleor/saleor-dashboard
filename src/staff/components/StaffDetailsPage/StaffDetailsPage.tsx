@@ -1,6 +1,5 @@
 import { Card, CardContent, Typography } from "@material-ui/core";
 import AccountPermissionGroups from "@saleor/components/AccountPermissionGroups";
-import AppHeader from "@saleor/components/AppHeader";
 import AccountStatus from "@saleor/components/AppStatus";
 import CardSpacer from "@saleor/components/CardSpacer";
 import CardTitle from "@saleor/components/CardTitle";
@@ -16,6 +15,7 @@ import { SubmitPromise } from "@saleor/hooks/useForm";
 import useLocale from "@saleor/hooks/useLocale";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { sectionNames } from "@saleor/intl";
+import { Backlink } from "@saleor/macaw-ui";
 import { getUserName } from "@saleor/misc";
 import { SearchPermissionGroups_search_edges_node } from "@saleor/searches/types/SearchPermissionGroups";
 import { FetchMoreProps, SearchPageProps } from "@saleor/types";
@@ -111,9 +111,9 @@ const StaffDetailsPage: React.FC<StaffDetailsPageProps> = ({
 
         return (
           <Container>
-            <AppHeader onBack={onBack}>
+            <Backlink onBack={onBack}>
               {intl.formatMessage(sectionNames.staff)}
-            </AppHeader>
+            </Backlink>
             <PageHeader title={getUserName(staffMember)} />
             <Grid>
               <div>

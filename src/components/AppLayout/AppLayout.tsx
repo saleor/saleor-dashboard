@@ -6,6 +6,7 @@ import useUser from "@saleor/hooks/useUser";
 import {
   makeStyles,
   SaleorTheme,
+  useBacklink,
   useSavebar,
   useTheme
 } from "@saleor/macaw-ui";
@@ -24,7 +25,6 @@ import SideBarDrawer from "../SideBarDrawer/SideBarDrawer";
 import UserChip from "../UserChip";
 import useAppChannel from "./AppChannelContext";
 import AppChannelSelect from "./AppChannelSelect";
-import AppHeaderContext from "./AppHeaderContext";
 import { appLoaderHeight } from "./consts";
 import createMenuStructure from "./menuStructure";
 
@@ -122,7 +122,7 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
   const classes = useStyles({});
   const { themeType, setTheme } = useTheme();
   const { anchor: appActionAnchor, docked } = useSavebar();
-  const appHeaderAnchor = React.useRef<HTMLDivElement>();
+  const appHeaderAnchor = useBacklink();
   const { logout, user } = useUser();
   const navigate = useNavigator();
   const intl = useIntl();
@@ -171,91 +171,84 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
         visible={isNavigatorVisible}
         setVisibility={setNavigatorVisibility}
       />
-      <AppHeaderContext.Provider value={appHeaderAnchor}>
-        <div className={classes.root}>
-          {isMdUp && (
-            <SideBar
-              menuItems={menuStructure}
-              location={location.pathname}
-              user={user}
-              renderConfigure={renderConfigure}
-              onMenuItemClick={navigate}
-            />
+      <div className={classes.root}>
+        {isMdUp && (
+          <SideBar
+            menuItems={menuStructure}
+            location={location.pathname}
+            user={user}
+            renderConfigure={renderConfigure}
+            onMenuItemClick={navigate}
+          />
+        )}
+        <div className={classes.content}>
+          {appState.loading ? (
+            <LinearProgress className={classes.appLoader} color="primary" />
+          ) : (
+            <div className={classes.appLoaderPlaceholder} />
           )}
-          <div className={classes.content}>
-            {appState.loading ? (
-              <LinearProgress className={classes.appLoader} color="primary" />
-            ) : (
-              <div className={classes.appLoaderPlaceholder} />
-            )}
-            <div className={classes.viewContainer}>
-              <div>
-                <Container>
-                  <div className={classes.header}>
-                    <div
-                      className={classes.headerAnchor}
-                      ref={appHeaderAnchor}
-                    />
-                    <div className={classes.headerToolbar}>
-                      {!isMdUp && (
-                        <SideBarDrawer
-                          menuItems={menuStructure}
-                          location={location.pathname}
-                          user={user}
-                          renderConfigure={renderConfigure}
-                          onMenuItemClick={navigate}
+          <div className={classes.viewContainer}>
+            <div>
+              <Container>
+                <div className={classes.header}>
+                  <div className={classes.headerAnchor} ref={appHeaderAnchor} />
+                  <div className={classes.headerToolbar}>
+                    {!isMdUp && (
+                      <SideBarDrawer
+                        menuItems={menuStructure}
+                        location={location.pathname}
+                        user={user}
+                        renderConfigure={renderConfigure}
+                        onMenuItemClick={navigate}
+                      />
+                    )}
+                    <div className={classes.spacer} />
+                    <div className={classes.userBar}>
+                      <NavigatorButton
+                        isMac={navigator.platform.toLowerCase().includes("mac")}
+                        onClick={() => setNavigatorVisibility(true)}
+                      />
+                      {channel && (
+                        <AppChannelSelect
+                          channels={availableChannels}
+                          disabled={!isPickerActive}
+                          selectedChannelId={channel.id}
+                          onChannelSelect={setChannel}
                         />
                       )}
-                      <div className={classes.spacer} />
-                      <div className={classes.userBar}>
-                        <NavigatorButton
-                          isMac={navigator.platform
-                            .toLowerCase()
-                            .includes("mac")}
-                          onClick={() => setNavigatorVisibility(true)}
-                        />
-                        {channel && (
-                          <AppChannelSelect
-                            channels={availableChannels}
-                            disabled={!isPickerActive}
-                            selectedChannelId={channel.id}
-                            onChannelSelect={setChannel}
-                          />
-                        )}
-                        <UserChip
-                          isDarkThemeEnabled={isDark}
-                          user={user}
-                          onLogout={logout}
-                          onProfileClick={() =>
-                            navigate(staffMemberDetailsUrl(user.id))
-                          }
-                          onThemeToggle={toggleTheme}
-                        />
-                      </div>
+                      <UserChip
+                        isDarkThemeEnabled={isDark}
+                        user={user}
+                        onLogout={logout}
+                        onProfileClick={() =>
+                          navigate(staffMemberDetailsUrl(user.id))
+                        }
+                        onThemeToggle={toggleTheme}
+                      />
                     </div>
                   </div>
-                </Container>
-              </div>
-              <main className={classes.view}>
-                {appState.error
-                  ? appState.error.type === "unhandled" && (
-                      <ErrorPage
-                        id={appState.error.id}
-                        onBack={handleErrorBack}
-                      />
-                    )
-                  : children}
-              </main>
+                </div>
+              </Container>
             </div>
-            <div
-              className={classNames(classes.appAction, {
-                [classes.appActionDocked]: docked
-              })}
-              ref={appActionAnchor}
-            />
+            <main className={classes.view}>
+              {appState.error
+                ? appState.error.type === "unhandled" && (
+                    <ErrorPage
+                      id={appState.error.id}
+                      onBack={handleErrorBack}
+                    />
+                  )
+                : children}
+            </main>
           </div>
+          <div
+            className={classNames(classes.appAction, {
+              [classes.appActionDocked]: docked
+            })}
+            ref={appActionAnchor}
+          />
         </div>
-      </AppHeaderContext.Provider>
+      </div>
     </>
   );
 };

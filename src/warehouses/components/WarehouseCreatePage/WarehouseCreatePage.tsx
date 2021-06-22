@@ -1,4 +1,3 @@
-import AppHeader from "@saleor/components/AppHeader";
 import CardSpacer from "@saleor/components/CardSpacer";
 import CompanyAddressInput from "@saleor/components/CompanyAddressInput";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
@@ -13,6 +12,7 @@ import { WarehouseErrorFragment } from "@saleor/fragments/types/WarehouseErrorFr
 import useAddressValidation from "@saleor/hooks/useAddressValidation";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { sectionNames } from "@saleor/intl";
+import { Backlink } from "@saleor/macaw-ui";
 import createSingleAutocompleteSelectHandler from "@saleor/utils/handlers/singleAutocompleteSelectChangeHandler";
 import { mapCountriesToChoices } from "@saleor/utils/maps";
 import React from "react";
@@ -72,9 +72,9 @@ const WarehouseCreatePage: React.FC<WarehouseCreatePageProps> = ({
 
         return (
           <Container>
-            <AppHeader onBack={onBack}>
+            <Backlink onBack={onBack}>
               <FormattedMessage {...sectionNames.warehouses} />
-            </AppHeader>
+            </Backlink>
             <PageHeader
               title={intl.formatMessage({
                 defaultMessage: "Create Warehouse",

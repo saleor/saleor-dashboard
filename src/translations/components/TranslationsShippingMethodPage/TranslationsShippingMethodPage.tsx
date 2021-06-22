@@ -1,9 +1,9 @@
-import AppHeader from "@saleor/components/AppHeader";
 import Container from "@saleor/components/Container";
 import LanguageSwitch from "@saleor/components/LanguageSwitch";
 import PageHeader from "@saleor/components/PageHeader";
 import { ShippingMethodTranslationFragment } from "@saleor/fragments/types/ShippingMethodTranslationFragment";
 import { commonMessages, sectionNames } from "@saleor/intl";
+import { Backlink } from "@saleor/macaw-ui";
 import { getStringOrPlaceholder } from "@saleor/misc";
 import {
   TranslationInputFieldName,
@@ -37,9 +37,9 @@ const TranslationsShippingMethodPage: React.FC<TranslationsShippingMethodPagePro
 
   return (
     <Container>
-      <AppHeader onBack={onBack}>
+      <Backlink onBack={onBack}>
         {intl.formatMessage(sectionNames.translations)}
-      </AppHeader>
+      </Backlink>
       <PageHeader
         title={intl.formatMessage(
           {

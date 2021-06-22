@@ -1,10 +1,10 @@
-import AppHeader from "@saleor/components/AppHeader";
 import Container from "@saleor/components/Container";
 import Grid from "@saleor/components/Grid";
 import PageHeader from "@saleor/components/PageHeader";
 import RequirePermissions from "@saleor/components/RequirePermissions";
 import { ShippingZoneFragment } from "@saleor/fragments/types/ShippingZoneFragment";
 import { sectionNames } from "@saleor/intl";
+import { Backlink } from "@saleor/macaw-ui";
 import { ListActions, PageListProps, UserPermissionProps } from "@saleor/types";
 import { PermissionEnum, WeightUnitsEnum } from "@saleor/types/globalTypes";
 import React from "react";
@@ -36,9 +36,9 @@ const ShippingZonesListPage: React.FC<ShippingZonesListPageProps> = ({
 
   return (
     <Container>
-      <AppHeader onBack={onBack}>
+      <Backlink onBack={onBack}>
         {intl.formatMessage(sectionNames.configuration)}
-      </AppHeader>
+      </Backlink>
       <PageHeader
         title={intl.formatMessage({
           defaultMessage: "Shipping",

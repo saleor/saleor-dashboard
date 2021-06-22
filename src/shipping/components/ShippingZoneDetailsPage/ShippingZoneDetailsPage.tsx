@@ -1,5 +1,4 @@
 import { BaseChannels_channels } from "@saleor/channels/types/BaseChannels";
-import AppHeader from "@saleor/components/AppHeader";
 import CardSpacer from "@saleor/components/CardSpacer";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
 import Container from "@saleor/components/Container";
@@ -15,6 +14,7 @@ import { ShippingErrorFragment } from "@saleor/fragments/types/ShippingErrorFrag
 import { ShippingZoneDetailsFragment_warehouses } from "@saleor/fragments/types/ShippingZoneDetailsFragment";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
+import { Backlink } from "@saleor/macaw-ui";
 import { ShippingZone_shippingZone } from "@saleor/shipping/types/ShippingZone";
 import createMultiAutocompleteSelectHandler from "@saleor/utils/handlers/multiAutocompleteSelectChangeHandler";
 import { mapNodeToChoice } from "@saleor/utils/maps";
@@ -147,9 +147,9 @@ const ShippingZoneDetailsPage: React.FC<ShippingZoneDetailsPageProps> = ({
 
         return (
           <Container>
-            <AppHeader onBack={onBack}>
+            <Backlink onBack={onBack}>
               <FormattedMessage {...messages.shipping} />
-            </AppHeader>
+            </Backlink>
             <PageHeader title={shippingZone?.name} />
             <Grid>
               <div>
