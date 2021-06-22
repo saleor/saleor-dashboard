@@ -327,6 +327,7 @@ const ShippingZoneDetails: React.FC<ShippingZoneDetailsProps> = ({
             variables: {
               input: {
                 address: {
+                  companyName: data.companyName,
                   city: data.city,
                   cityArea: data.cityArea,
                   country: findValueInEnum(data.country, CountryCode),
@@ -336,7 +337,6 @@ const ShippingZoneDetails: React.FC<ShippingZoneDetailsProps> = ({
                   streetAddress1: data.streetAddress1,
                   streetAddress2: data.streetAddress2
                 },
-                companyName: data.companyName,
                 name: data.name
               }
             }

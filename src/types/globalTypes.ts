@@ -88,6 +88,7 @@ export enum AttributeErrorCode {
 }
 
 export enum AttributeInputTypeEnum {
+  BOOLEAN = "BOOLEAN",
   DROPDOWN = "DROPDOWN",
   FILE = "FILE",
   MULTISELECT = "MULTISELECT",
@@ -439,6 +440,7 @@ export enum DiscountValueTypeEnum {
 }
 
 export enum ExportErrorCode {
+  GRAPHQL_ERROR = "GRAPHQL_ERROR",
   INVALID = "INVALID",
   NOT_FOUND = "NOT_FOUND",
   REQUIRED = "REQUIRED",
@@ -677,6 +679,8 @@ export enum OrderEventsEnum {
   ORDER_FULLY_PAID = "ORDER_FULLY_PAID",
   ORDER_LINE_DISCOUNT_REMOVED = "ORDER_LINE_DISCOUNT_REMOVED",
   ORDER_LINE_DISCOUNT_UPDATED = "ORDER_LINE_DISCOUNT_UPDATED",
+  ORDER_LINE_PRODUCT_DELETED = "ORDER_LINE_PRODUCT_DELETED",
+  ORDER_LINE_VARIANT_DELETED = "ORDER_LINE_VARIANT_DELETED",
   ORDER_MARKED_AS_PAID = "ORDER_MARKED_AS_PAID",
   ORDER_REPLACEMENT_CREATED = "ORDER_REPLACEMENT_CREATED",
   OTHER = "OTHER",
@@ -1127,6 +1131,7 @@ export interface AttributeInput {
   slug: string;
   values?: (string | null)[] | null;
   valuesRange?: IntRangeInput | null;
+  boolean?: boolean | null;
 }
 
 export interface AttributeSortingInput {
@@ -1162,6 +1167,7 @@ export interface AttributeValueInput {
   contentType?: string | null;
   references?: string[] | null;
   richText?: any | null;
+  boolean?: boolean | null;
 }
 
 export interface AttributeValueTranslationInput {
@@ -1975,6 +1981,7 @@ export interface VoucherInput {
   countries?: (string | null)[] | null;
   applyOncePerOrder?: boolean | null;
   applyOncePerCustomer?: boolean | null;
+  onlyForStaff?: boolean | null;
   usageLimit?: number | null;
 }
 
@@ -1984,23 +1991,11 @@ export interface VoucherSortingInput {
   field: VoucherSortField;
 }
 
-export interface WarehouseAddressInput {
-  streetAddress1: string;
-  streetAddress2?: string | null;
-  city: string;
-  cityArea?: string | null;
-  postalCode?: string | null;
-  country: CountryCode;
-  countryArea?: string | null;
-  phone?: string | null;
-}
-
 export interface WarehouseCreateInput {
   slug?: string | null;
-  companyName?: string | null;
   email?: string | null;
   name: string;
-  address: WarehouseAddressInput;
+  address: AddressInput;
   shippingZones?: (string | null)[] | null;
 }
 
@@ -2016,10 +2011,9 @@ export interface WarehouseSortingInput {
 
 export interface WarehouseUpdateInput {
   slug?: string | null;
-  companyName?: string | null;
   email?: string | null;
   name?: string | null;
-  address?: WarehouseAddressInput | null;
+  address?: AddressInput | null;
 }
 
 export interface WebhookCreateInput {

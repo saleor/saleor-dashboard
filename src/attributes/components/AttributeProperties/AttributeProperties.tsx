@@ -1,5 +1,5 @@
 import { Card, CardContent, TextField, Typography } from "@material-ui/core";
-import { ATTRIBUTE_TYPES_WITH_DEDICATED_VALUES } from "@saleor/attributes/utils/data";
+import { ATTRIBUTE_TYPES_WITH_CONFIGURABLE_FACED_NAVIGATION } from "@saleor/attributes/utils/data";
 import CardSpacer from "@saleor/components/CardSpacer";
 import CardTitle from "@saleor/components/CardTitle";
 import ControlledCheckbox from "@saleor/components/ControlledCheckbox";
@@ -78,13 +78,14 @@ const AttributeProperties: React.FC<AttributePropertiesProps> = ({
 
   const formErrors = getFormErrors(["storefrontSearchPosition"], errors);
 
-  const dashboardProperties = ATTRIBUTE_TYPES_WITH_DEDICATED_VALUES.includes(
+  const dashboardProperties = ATTRIBUTE_TYPES_WITH_CONFIGURABLE_FACED_NAVIGATION.includes(
     data.inputType
   );
 
   const storefrontFacetedNavigationProperties =
-    ATTRIBUTE_TYPES_WITH_DEDICATED_VALUES.includes(data.inputType) &&
-    data.type === AttributeTypeEnum.PRODUCT_TYPE;
+    ATTRIBUTE_TYPES_WITH_CONFIGURABLE_FACED_NAVIGATION.includes(
+      data.inputType
+    ) && data.type === AttributeTypeEnum.PRODUCT_TYPE;
 
   return (
     <Card>

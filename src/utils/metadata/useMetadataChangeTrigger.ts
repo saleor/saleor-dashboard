@@ -18,10 +18,16 @@ function useMetadataChangeTrigger() {
     onChange(event);
   };
 
+  const resetMetadataChanged = () => {
+    setMetadataModified(false);
+    setPrivateMetadataModified(false);
+  };
+
   return {
     isMetadataModified,
     isPrivateMetadataModified,
-    makeChangeHandler
+    makeChangeHandler,
+    resetMetadataChanged
   };
 }
 

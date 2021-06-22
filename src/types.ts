@@ -55,9 +55,9 @@ export interface ListProps<TColumns extends string = string> {
   onNextPage: () => void;
   onPreviousPage: () => void;
   onRowClick: (id: string) => () => void;
-  onUpdateListSettings?: (
-    key: keyof ListSettings<TColumns>,
-    value: any
+  onUpdateListSettings?: <T extends keyof ListSettings<TColumns>>(
+    key: T,
+    value: ListSettings<TColumns>[T]
   ) => void;
   onListSettingsReset?: () => void;
 }
