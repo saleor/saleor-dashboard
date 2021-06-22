@@ -1,4 +1,5 @@
 import { IFilter } from "@saleor/components/Filter";
+import { SingleAutocompleteChoiceType } from "@saleor/components/SingleAutocompleteSelectField";
 import { commonMessages, sectionNames } from "@saleor/intl";
 import { AutocompleteFilterOpts, FilterOpts, MinMax } from "@saleor/types";
 import {
@@ -38,7 +39,7 @@ export interface ProductListFilterOpts {
   price: FilterOpts<MinMax>;
   productType: FilterOpts<string[]> & AutocompleteFilterOpts;
   stockStatus: FilterOpts<StockAvailability>;
-  channel: FilterOpts<string> & { choices: MultiAutocompleteChoiceType[] };
+  channel: FilterOpts<string> & { choices: SingleAutocompleteChoiceType[] };
 }
 
 const messages = defineMessages({

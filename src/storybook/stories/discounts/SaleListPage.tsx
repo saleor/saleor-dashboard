@@ -26,6 +26,16 @@ const props: SaleListPageProps = {
   ...sortPageProps,
   ...tabPageProps,
   filterOpts: {
+    channel: {
+      active: false,
+      value: "default-channel",
+      choices: [
+        {
+          value: "default-channel",
+          label: "Default channel"
+        }
+      ]
+    },
     saleType: {
       active: false,
       value: DiscountValueTypeEnum.FIXED
