@@ -31,7 +31,7 @@ import useAppChannel, {
   AppChannelProvider
 } from "./components/AppLayout/AppChannelContext";
 import { DateProvider } from "./components/Date";
-import ExitFormPromptProvider from "./components/Form/ExitFormPromptProvider";
+import ExitFormDialogProvider from "./components/Form/ExitFormDialogProvider";
 import { LocaleProvider } from "./components/Locale";
 import MessageManagerProvider from "./components/messages";
 import { ShopProvider } from "./components/Shop";
@@ -121,9 +121,9 @@ const App: React.FC = () => {
                     <ShopProvider>
                       <AuthProvider>
                         <AppChannelProvider>
-                          <ExitFormPromptProvider>
+                          <ExitFormDialogProvider>
                             <Routes />
-                          </ExitFormPromptProvider>
+                          </ExitFormDialogProvider>
                         </AppChannelProvider>
                       </AuthProvider>
                     </ShopProvider>
