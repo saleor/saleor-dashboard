@@ -440,7 +440,6 @@ export enum DiscountValueTypeEnum {
 }
 
 export enum ExportErrorCode {
-  GRAPHQL_ERROR = "GRAPHQL_ERROR",
   INVALID = "INVALID",
   NOT_FOUND = "NOT_FOUND",
   REQUIRED = "REQUIRED",
@@ -1513,6 +1512,7 @@ export interface PageFilterInput {
   search?: string | null;
   metadata?: (MetadataInput | null)[] | null;
   pageTypes?: (string | null)[] | null;
+  ids?: (string | null)[] | null;
 }
 
 export interface PageInput {

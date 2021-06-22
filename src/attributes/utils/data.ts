@@ -16,11 +16,7 @@ import {
   AttributeInputTypeEnum,
   AttributeValueInput
 } from "@saleor/types/globalTypes";
-import {
-  mapEdgesToItems,
-  mapNodeToChoice,
-  mapPagesToChoices
-} from "@saleor/utils/maps";
+import { mapNodeToChoice, mapPagesToChoices } from "@saleor/utils/maps";
 import { MutationFetchResult } from "react-apollo";
 
 import { AttributePageFormData } from "../components/AttributePage";
@@ -144,7 +140,7 @@ export const mergeChoicesWithValues = (
     | PageDetails_page_attributes
     | SelectedVariantAttributeFragment
 ) => {
-  const choices = mapEdgesToItems(attribute.attribute.choices);
+  const choices = attribute.attribute.values;
   const valuesToConcat = attribute.values.filter(
     value => !choices.some(choice => choice.id === value.id)
   );
