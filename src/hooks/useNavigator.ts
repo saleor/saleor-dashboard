@@ -1,4 +1,4 @@
-import { ExitFormPromptContext } from "@saleor/components/Form/ExitFormPromptProvider";
+import { ExitFormDialogContext } from "@saleor/components/Form/ExitFormDialogProvider";
 import { useContext } from "react";
 import useRouter from "use-react-router";
 
@@ -16,13 +16,13 @@ function useNavigator(): UseNavigatorResult {
     history
   } = useRouter();
 
-  const { shouldBlockNavigation } = useContext(ExitFormPromptContext);
+  const { shouldBlockNavigation } = useContext(ExitFormDialogContext);
 
   return (
     url: string,
     { replace = false, preserveQs = false, resetScroll = false } = {}
   ) => {
-    if (shouldBlockNavigation) {
+    if (shouldBlockNavigation()) {
       return;
     }
     const targetUrl = preserveQs ? url + search : url;

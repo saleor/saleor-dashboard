@@ -1,8 +1,11 @@
 import { OutputData } from "@editorjs/editorjs";
-import { ExitFormPromptContext } from "@saleor/components/Form/ExitFormPromptProvider";
+import { ExitFormDialogContext } from "@saleor/components/Form/ExitFormDialogProvider";
 import { MetadataFormData } from "@saleor/components/Metadata";
 import { RichTextEditorChange } from "@saleor/components/RichTextEditor";
-import useForm, { FormChange } from "@saleor/hooks/useForm";
+import useForm, {
+  CommonUseFormResult,
+  FormChange
+} from "@saleor/hooks/useForm";
 import handleFormSubmit from "@saleor/utils/handlers/handleFormSubmit";
 import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
 import useRichText from "@saleor/utils/richText/useRichText";
@@ -22,12 +25,9 @@ interface CategoryCreateHandlers {
   changeMetadata: FormChange;
   changeDescription: RichTextEditorChange;
 }
-export interface UseCategoryCreateFormResult {
-  change: FormChange;
-  data: CategoryCreateData;
+export interface UseCategoryCreateFormResult
+  extends CommonUseFormResult<CategoryCreateData> {
   handlers: CategoryCreateHandlers;
-  hasChanged: boolean;
-  submit: () => Promise<boolean>;
 }
 
 export interface CategoryCreateFormProps {
@@ -50,10 +50,10 @@ function useCategoryCreateForm(
 ): UseCategoryCreateFormResult {
   const { change, data, hasChanged, triggerChange, setChanged } = useForm<
     CategoryCreateFormData
-  >(initialData, undefined, confirmLeave);
+  >({ initialData, confirmLeave });
 
-  const { setExitPromptSubmitRef, setEnableExitPrompt } = useContext(
-    ExitFormPromptContext
+  const { setExitDialogSubmitRef, setEnableExitDialog } = useContext(
+    ExitFormDialogContext
   );
 
   const [description, changeDescription] = useRichText({
@@ -77,13 +77,10 @@ function useCategoryCreateForm(
     description: description.current
   });
 
-  const submitData = getData();
-
   const submit = () =>
-    handleFormSubmit(submitData, onSubmit, setChanged, setEnableExitPrompt);
+    handleFormSubmit(getData(), onSubmit, setChanged, setEnableExitDialog);
 
-  // comment
-  useEffect(() => setExitPromptSubmitRef(submit), [submit]);
+  useEffect(() => setExitDialogSubmitRef(submit), [submit]);
 
   return {
     change: handleChange,

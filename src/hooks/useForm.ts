@@ -1,4 +1,4 @@
-import { ExitFormPromptContext } from "@saleor/components/Form/ExitFormPromptProvider";
+import { ExitFormDialogContext } from "@saleor/components/Form/ExitFormDialogProvider";
 import handleFormSubmit from "@saleor/utils/handlers/handleFormSubmit";
 import { toggle } from "@saleor/utils/lists";
 import isEqual from "lodash/isEqual";
@@ -22,21 +22,23 @@ export type FormErrors<T> = {
   [field in keyof T]?: string | React.ReactNode;
 };
 
-export interface UseFormResult<T> {
-  change: FormChange;
-  data: T;
-  hasChanged: boolean;
+export interface UseFormResult<TData> extends CommonUseFormResult<TData> {
   reset: () => void;
-  set: (data: Partial<T>) => void;
-  submit: () => void;
+  set: (data: Partial<TData>) => void;
   triggerChange: () => void;
   setChanged: (value: boolean) => void;
   toggleValue: FormChange;
-  errors: FormErrors<T>;
-  setChanged: (value: boolean) => void;
-  setError: (name: keyof T, error: string | React.ReactNode) => void;
-  clearErrors: (name?: keyof T | Array<keyof T>) => void;
+  errors: FormErrors<TData>;
+  setError: (name: keyof TData, error: string | React.ReactNode) => void;
+  clearErrors: (name?: keyof TData | Array<keyof TData>) => void;
   confirmLeave?: boolean;
+}
+
+export interface CommonUseFormResult<TData> {
+  data: TData;
+  change: FormChange;
+  hasChanged: boolean;
+  submit: () => void;
 }
 
 type FormData = Record<string, any | any[]>;
@@ -64,57 +66,47 @@ function handleRefresh<T extends FormData>(
   }
 }
 
-function useForm<T extends FormData>(
-  initial: T,
-  onSubmit?: (data: T) => SubmitPromise | void,
+function useForm<T extends FormData>({
+  initialData,
+  onSubmit,
   confirmLeave = false
-): UseFormResult<T> {
+}: {
+  initialData: T;
+  onSubmit?: (data: T) => SubmitPromise | void;
+  confirmLeave;
+}): UseFormResult<T> {
   const [hasChanged, setChanged] = useState(false);
   const [errors, setErrors] = useState<FormErrors<T>>({});
-  const [data, setData] = useStateFromProps(initial, {
+  const [data, setData] = useStateFromProps(initialData, {
     mergeFunc: merge,
     onRefresh: newData => handleRefresh(data, newData, handleSetChanged)
   });
 
-  // const locationPath = useRef(null);
-
-  // const history = useHistory();
-
-  // useEffect(() => {
-  //   history.listen((location, action) => {
-  //     console.log({ location, action });
-  //     if (location.pathname !== locationPath.current) {
-  //       locationPath.current = location.pathname;
-  //       handleSetChanged(false);
-  //     }
-  //   });
-  // }, []);
-
   const {
-    setIsDirty: setIsFormDirtyInExitPrompt,
-    setExitPromptSubmitRef,
-    setEnableExitPrompt
-  } = useContext(ExitFormPromptContext);
+    setIsDirty: setIsFormDirtyInExitDialog,
+    setExitDialogSubmitRef,
+    setEnableExitDialog
+  } = useContext(ExitFormDialogContext);
 
   const handleSetChanged = (value: boolean = true) => {
     setChanged(value);
 
     if (confirmLeave) {
-      setIsFormDirtyInExitPrompt(value);
+      setIsFormDirtyInExitDialog(value);
     }
   };
 
-  const setExitPromptData = () => {
-    setEnableExitPrompt(true);
+  const setExitDialogData = () => {
+    setEnableExitDialog(true);
 
     if (!onSubmit) {
       return;
     }
 
-    setExitPromptSubmitRef(submit);
+    setExitDialogSubmitRef(submit);
   };
 
-  useEffect(setExitPromptData, [onSubmit]);
+  useEffect(setExitDialogData, [onSubmit]);
 
   function toggleValue(event: ChangeEvent, cb?: () => void) {
     const { name, value } = event.target;
@@ -154,7 +146,7 @@ function useForm<T extends FormData>(
   }
 
   function reset() {
-    setData(initial);
+    setData(initialData);
   }
 
   function set(newData: Partial<T>, setHasChanged = true) {
@@ -171,7 +163,7 @@ function useForm<T extends FormData>(
         data,
         onSubmit,
         handleSetChanged,
-        setEnableExitPrompt
+        setEnableExitDialog
       );
 
       return result;
@@ -199,7 +191,6 @@ function useForm<T extends FormData>(
     data,
     hasChanged,
     reset,
-    setChanged,
     set,
     submit,
     toggleValue,

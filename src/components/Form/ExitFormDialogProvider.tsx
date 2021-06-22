@@ -1,74 +1,73 @@
 import { SubmitPromise } from "@saleor/hooks/useForm";
-import React, { MutableRefObject, useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useHistory } from "react-router";
 import useRouter from "use-react-router";
 
-import ExitFormPrompt from "./ExitFormPrompt";
+import ExitFormDialog from "./ExitFormDialog";
 
-export interface ExitFormPromptData {
+export interface ExitFormDialogData {
   setIsDirty: (isDirty: boolean) => void;
-  setEnableExitPrompt: (value: boolean) => void;
-  setExitPromptSubmitRef: (submitFn: () => SubmitPromise<boolean>) => void;
-  shouldBlockNavigation: boolean;
-  // submitRef: MutableRefObject<() => SubmitPromise<boolean>>;
-  // cleanExitPromptData: () => void;
+  setEnableExitDialog: (value: boolean) => void;
+  setExitDialogSubmitRef: (submitFn: () => SubmitPromise<boolean>) => void;
+  shouldBlockNavigation: () => boolean;
 }
 
-export const ExitFormPromptContext = React.createContext<ExitFormPromptData>({
+export const ExitFormDialogContext = React.createContext<ExitFormDialogData>({
   setIsDirty: () => undefined,
-  setEnableExitPrompt: () => undefined,
-  setExitPromptSubmitRef: () => undefined,
-  shouldBlockNavigation: false
-  // cleanExitPromptData: () => undefined,
-  // submitRef: null
+  setEnableExitDialog: () => undefined,
+  setExitDialogSubmitRef: () => undefined,
+  shouldBlockNavigation: () => false
 });
 
 const defaultValues = {
   isDirty: false,
-  showPrompt: false,
+  showDialog: false,
   blockNav: true,
   navAction: null,
   submit: null,
-  enableExitPrompt: false
+  enableExitDialog: false
 };
 
-const ExitFormPromptProvider = ({ children }) => {
+const ExitFormDialogProvider = ({ children }) => {
   const history = useHistory();
   const { history: routerHistory } = useRouter();
 
-  const [showPrompt, setShowPrompt] = useState(defaultValues.showPrompt);
+  const [showDialog, setShowDialog] = useState(defaultValues.showDialog);
 
   const submitRef = useRef<() => SubmitPromise<boolean>>(null);
   const blockNav = useRef(defaultValues.blockNav);
   const navAction = useRef(defaultValues.navAction);
   const isDirty = useRef(defaultValues.isDirty);
-  const enableExitPrompt = useRef(defaultValues.enableExitPrompt);
+  const enableExitDialog = useRef(defaultValues.enableExitDialog);
 
-  const setEnableExitPrompt = (value: boolean) => {
-    enableExitPrompt.current = value;
+  const setEnableExitDialog = (value: boolean) => {
+    enableExitDialog.current = value;
   };
 
   const setIsDirty = (value: boolean) => {
     isDirty.current = value;
 
     if (value) {
-      enableExitPrompt.current = true;
+      enableExitDialog.current = true;
     }
   };
 
   const setBlockNav = (value: boolean) => (blockNav.current = value);
 
+  const setDefaultNavAction = () =>
+    (navAction.current = defaultValues.navAction);
+
   const setStateDefaultValues = () => {
     setIsDirty(defaultValues.isDirty);
-    setShowPrompt(defaultValues.showPrompt);
+    setShowDialog(defaultValues.showDialog);
     setBlockNav(defaultValues.blockNav);
-    setEnableExitPrompt(defaultValues.enableExitPrompt);
+    setEnableExitDialog(defaultValues.enableExitDialog);
     setSubmitRef(defaultValues.submit);
-    navAction.current = defaultValues.navAction;
+    setDefaultNavAction();
   };
 
   const shouldBlockNav = () => {
-    if (!enableExitPrompt.current || !isDirty.current) {
+    if (!enableExitDialog.current || !isDirty.current) {
       return false;
     }
 
@@ -79,7 +78,7 @@ const ExitFormPromptProvider = ({ children }) => {
     const unblock = history.block(transition => {
       if (shouldBlockNav()) {
         navAction.current = transition;
-        setShowPrompt(true);
+        setShowDialog(true);
         return false;
       }
 
@@ -98,7 +97,7 @@ const ExitFormPromptProvider = ({ children }) => {
     setBlockNav(false);
     setIsDirty(false);
     // because our useNavigator navigate action may be blocked
-    // by exit prompt we want to avoid using it doing this transition
+    // by exit dialog we want to avoid using it doing this transition
     routerHistory.push(navAction.current.pathname);
     setStateDefaultValues();
   };
@@ -108,7 +107,7 @@ const ExitFormPromptProvider = ({ children }) => {
       return;
     }
 
-    setShowPrompt(false);
+    setShowDialog(false);
 
     const isError = await submitRef.current();
 
@@ -116,7 +115,7 @@ const ExitFormPromptProvider = ({ children }) => {
       continueNavigation();
     }
 
-    navAction.current = defaultValues.navAction;
+    setDefaultNavAction();
   };
 
   const handleLeave = () => {
@@ -124,36 +123,38 @@ const ExitFormPromptProvider = ({ children }) => {
   };
 
   const handleClose = () => {
-    navAction.current = defaultValues.navAction;
-    setShowPrompt(false);
+    setDefaultNavAction();
+    setShowDialog(false);
   };
 
   // Used to prevent race conditions from places such as
   // create pages with navigation on mutation completed
-  const shouldBlockNavigation = !!navAction.current;
+  const shouldBlockNavigation = () => !!navAction.current;
 
+  // Set either on generic form load or on every custom form data change
+  // but doesn't cause re-renders
   function setSubmitRef<T extends () => SubmitPromise<boolean>>(submitFn: T) {
     submitRef.current = submitFn;
   }
 
-  const providerData: ExitFormPromptData = {
+  const providerData: ExitFormDialogData = {
     setIsDirty,
     shouldBlockNavigation,
-    setEnableExitPrompt,
-    setExitPromptSubmitRef: setSubmitRef
+    setEnableExitDialog,
+    setExitDialogSubmitRef: setSubmitRef
   };
 
   return (
-    <ExitFormPromptContext.Provider value={providerData}>
-      <ExitFormPrompt
-        isOpen={showPrompt}
+    <ExitFormDialogContext.Provider value={providerData}>
+      <ExitFormDialog
+        isOpen={showDialog}
         onSubmit={handleSubmit}
         onLeave={handleLeave}
         onClose={handleClose}
       />
       {children}
-    </ExitFormPromptContext.Provider>
+    </ExitFormDialogContext.Provider>
   );
 };
 
-export default ExitFormPromptProvider;
+export default ExitFormDialogProvider;

@@ -1,9 +1,12 @@
 import { OutputData } from "@editorjs/editorjs";
 import { CategoryDetails_category } from "@saleor/categories/types/CategoryDetails";
-import { ExitFormPromptContext } from "@saleor/components/Form/ExitFormPromptProvider";
+import { ExitFormDialogContext } from "@saleor/components/Form/ExitFormDialogProvider";
 import { MetadataFormData } from "@saleor/components/Metadata";
 import { RichTextEditorChange } from "@saleor/components/RichTextEditor";
-import useForm, { FormChange } from "@saleor/hooks/useForm";
+import useForm, {
+  CommonUseFormResult,
+  FormChange
+} from "@saleor/hooks/useForm";
 import handleFormSubmit from "@saleor/utils/handlers/handleFormSubmit";
 import { mapMetadataItemToInput } from "@saleor/utils/maps";
 import getMetadata from "@saleor/utils/metadata/getMetadata";
@@ -26,12 +29,9 @@ interface CategoryUpdateHandlers {
   changeMetadata: FormChange;
   changeDescription: RichTextEditorChange;
 }
-export interface UseCategoryUpdateFormResult {
-  change: FormChange;
-  data: CategoryUpdateData;
+export interface UseCategoryUpdateFormResult
+  extends CommonUseFormResult<CategoryUpdateData> {
   handlers: CategoryUpdateHandlers;
-  hasChanged: boolean;
-  submit: () => Promise<boolean>;
 }
 
 export interface CategoryUpdateFormProps {
@@ -40,32 +40,26 @@ export interface CategoryUpdateFormProps {
   onSubmit: (data: CategoryUpdateData) => Promise<any[]>;
 }
 
+const getInitialData = (category?: CategoryDetails_category) => ({
+  backgroundImageAlt: category?.backgroundImage?.alt || "",
+  metadata: category?.metadata?.map(mapMetadataItemToInput),
+  name: category?.name || "",
+  privateMetadata: category?.privateMetadata?.map(mapMetadataItemToInput),
+  seoDescription: category?.seoDescription || "",
+  seoTitle: category?.seoTitle || "",
+  slug: category?.slug || ""
+});
+
 function useCategoryUpdateForm(
   category: CategoryDetails_category,
   onSubmit: (data: CategoryUpdateData) => Promise<any[]>
 ): UseCategoryUpdateFormResult {
-  // const [changed, setChanged] = React.useState(false);
-  // const triggerChange = () => setChanged(true);
-
   const { change, data, triggerChange, hasChanged, setChanged } = useForm<
     CategoryUpdateFormData
-  >(
-    {
-      backgroundImageAlt: category?.backgroundImage?.alt || "",
-      metadata: category?.metadata?.map(mapMetadataItemToInput),
-      name: category?.name || "",
-      privateMetadata: category?.privateMetadata?.map(mapMetadataItemToInput),
-      seoDescription: category?.seoDescription || "",
-      seoTitle: category?.seoTitle || "",
-      slug: category?.slug || ""
-    },
-    onSubmit,
-    // CHANGE
-    true
-  );
+  >({ initialData: getInitialData(), onSubmit, confirmLeave: true });
 
-  const { setExitPromptSubmitRef, setEnableExitPrompt } = useContext(
-    ExitFormPromptContext
+  const { setExitDialogSubmitRef, setEnableExitDialog } = useContext(
+    ExitFormDialogContext
   );
 
   const [description, changeDescription] = useRichText({
@@ -102,10 +96,10 @@ function useCategoryUpdateForm(
       getSubmitData(),
       onSubmit,
       setChanged,
-      setEnableExitPrompt
+      setEnableExitDialog
     );
 
-  useEffect(() => setExitPromptSubmitRef(submit), [data]);
+  useEffect(() => setExitDialogSubmitRef(submit), [submit]);
 
   return {
     change: handleChange,
