@@ -127,9 +127,9 @@ const ProductVariantCreatorValues: React.FC<ProductVariantCreatorValuesProps> = 
                   handleValueClick(attribute.id, event.target.value)
                 }
                 allowCustomValues={true}
-                fetchChoices={value =>
-                  fetchAttributeValues(value, attribute.id)
-                }
+                // fetchChoices={value =>
+                //   fetchAttributeValues(value, attribute.id)
+                // }
                 {...fetchMoreAttributeValues}
               />
             </CardContent>
