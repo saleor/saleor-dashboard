@@ -1,3 +1,5 @@
+import { getValueWithDefault } from "./utils/Utils";
+
 export function createShippingRate(name, shippingZone) {
   const mutation = `mutation{
     shippingPriceCreate(input:{
@@ -14,15 +16,23 @@ export function createShippingRate(name, shippingZone) {
 }
 
 export function createShippingZone(name, country, channelId) {
+  const channelsLines = getValueWithDefault(
+    channelId,
+    `addChannels:["${channelId}"]`
+  );
   const mutation = `mutation{
     shippingZoneCreate(input:{
       name: "${name}"
       countries: "${country}"
-      addChannels:["${channelId}"]
+      ${channelsLines}
     }){
       shippingZone{
         id
         name
+      }
+      errors{
+        message
+        field
       }
     }
   }`;
@@ -77,17 +87,33 @@ export function deleteShippingZone(shippingZoneId) {
 
 export function getShippingZones() {
   const query = `query{
-          shippingZones(first:100){
-            edges{
-              node{
-                name
-                id
-              }
-            }
-          }
+    shippingZones(first:100){
+      edges{
+        node{
+          name
+          id
         }
-        `;
+      }
+    }
+  }
+  `;
   return cy
     .sendRequestWithQuery(query)
     .then(resp => resp.body.data.shippingZones.edges);
+}
+
+export function getShippingZone(shippingZoneId) {
+  const query = `query{
+    shippingZone(id:"${shippingZoneId}"){
+      id
+      name
+      channels{
+        name
+        id
+      }
+    }
+  } `;
+  return cy
+    .sendRequestWithQuery(query)
+    .then(resp => resp.body.data.shippingZone);
 }

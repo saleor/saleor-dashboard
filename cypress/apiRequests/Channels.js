@@ -54,3 +54,15 @@ export function deleteChannel(channelId, targetChannelId) {
   }`;
   return cy.sendRequestWithQuery(deleteChannelMutation);
 }
+
+export function activateChannel(channelId) {
+  const mutation = `mutation{
+    channelActivate(id:""){
+      errors{
+        field
+        message
+      }
+    }
+  }`;
+  return cy.sendRequestWithQuery(mutation);
+}
