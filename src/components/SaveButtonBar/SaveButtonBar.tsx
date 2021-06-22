@@ -2,7 +2,7 @@ import { Button, Card, CardContent, Portal } from "@material-ui/core";
 import useWindowScroll from "@saleor/hooks/useWindowScroll";
 import { buttonMessages } from "@saleor/intl";
 import { makeStyles } from "@saleor/theme";
-import React from "react";
+import React, { useContext } from "react";
 import { useIntl } from "react-intl";
 
 import { useAppAction } from "../AppLayout/AppActionContext";
@@ -10,6 +10,7 @@ import ConfirmButton, {
   ConfirmButtonTransitionState
 } from "../ConfirmButton/ConfirmButton";
 import Container from "../Container";
+import { ExitFormPromptContext } from "../Form/ExitFormPromptProvider";
 
 const useStyles = makeStyles(
   theme => ({
@@ -79,6 +80,14 @@ export const SaveButtonBar: React.FC<SaveButtonBarProps> = props => {
   const appAction = useAppAction();
   const intl = useIntl();
   const scrollPosition = useWindowScroll();
+  const { setEnableExitPrompt } = useContext(ExitFormPromptContext);
+
+  const handleSaveDeleteAction = (callback: (event: any) => void) => (
+    event?: any
+  ) => {
+    setEnableExitPrompt(false);
+    callback(event);
+  };
 
   React.useEffect(() => {
     if (!disabled && state !== "loading") {
@@ -102,7 +111,7 @@ export const SaveButtonBar: React.FC<SaveButtonBarProps> = props => {
               {!!onDelete && (
                 <Button
                   variant="contained"
-                  onClick={onDelete}
+                  onClick={handleSaveDeleteAction(onDelete)}
                   className={classes.deleteButton}
                   data-test="button-bar-delete"
                 >
@@ -120,7 +129,7 @@ export const SaveButtonBar: React.FC<SaveButtonBarProps> = props => {
               </Button>
               <ConfirmButton
                 disabled={disabled}
-                onClick={onSave}
+                onClick={handleSaveDeleteAction(onSave)}
                 transitionState={state}
                 data-test="button-bar-confirm"
                 onTransitionToDefault={() => appAction.setDocked(true)}

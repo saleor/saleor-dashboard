@@ -101,7 +101,7 @@ export const CategoryUpdatePage: React.FC<CategoryUpdatePageProps> = ({
   const intl = useIntl();
 
   return (
-    <CategoryUpdateForm category={category} onSubmit={onSubmit}>
+    <CategoryUpdateForm confirmLeave category={category} onSubmit={onSubmit}>
       {({ data, change, handlers, submit, hasChanged }) => (
         <Container>
           <AppHeader onBack={onBack}>

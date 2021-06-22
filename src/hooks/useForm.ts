@@ -1,5 +1,5 @@
 import { ExitFormPromptContext } from "@saleor/components/Form/ExitFormPromptProvider";
-import { getMutationErrors } from "@saleor/misc";
+import handleFormSubmit from "@saleor/utils/handlers/handleFormSubmit";
 import { toggle } from "@saleor/utils/lists";
 import isEqual from "lodash/isEqual";
 import omit from "lodash/omit";
@@ -30,6 +30,7 @@ export interface UseFormResult<T> {
   set: (data: Partial<T>) => void;
   submit: () => void;
   triggerChange: () => void;
+  setChanged: (value: boolean) => void;
   toggleValue: FormChange;
   errors: FormErrors<T>;
   setError: (name: keyof T, error: string | React.ReactNode) => void;
@@ -74,22 +75,45 @@ function useForm<T extends FormData>(
     onRefresh: newData => handleRefresh(data, newData, handleSetChanged)
   });
 
-  const handleSetChanged = (value: boolean) => {
+  // const locationPath = useRef(null);
+
+  // const history = useHistory();
+
+  // useEffect(() => {
+  //   history.listen((location, action) => {
+  //     console.log({ location, action });
+  //     if (location.pathname !== locationPath.current) {
+  //       locationPath.current = location.pathname;
+  //       handleSetChanged(false);
+  //     }
+  //   });
+  // }, []);
+
+  const {
+    setIsDirty: setIsFormDirtyInExitPrompt,
+    setExitPromptSubmitRef,
+    setEnableExitPrompt
+  } = useContext(ExitFormPromptContext);
+
+  const handleSetChanged = (value: boolean = true) => {
     setChanged(value);
 
     if (confirmLeave) {
-      setIsDirty(value);
+      setIsFormDirtyInExitPrompt(value);
     }
   };
 
-  const { setIsDirty, submitRef } = useContext(ExitFormPromptContext);
+  const setExitPromptData = () => {
+    setEnableExitPrompt(true);
 
-  const handleSetPromptSubmit = () => {
-    submitRef.current = submit;
-    return () => (submitRef.current = null);
+    if (!onSubmit) {
+      return;
+    }
+
+    setExitPromptSubmitRef(submit);
   };
 
-  useEffect(handleSetPromptSubmit, [onSubmit]);
+  useEffect(setExitPromptData, [onSubmit]);
 
   function toggleValue(event: ChangeEvent, cb?: () => void) {
     const { name, value } = event.target;
@@ -142,23 +166,15 @@ function useForm<T extends FormData>(
 
   async function submit() {
     if (typeof onSubmit === "function" && !Object.keys(errors).length) {
-      const result = await onSubmit(data);
+      const result = handleFormSubmit(
+        data,
+        onSubmit,
+        handleSetChanged,
+        setEnableExitPrompt
+      );
 
-      if (result) {
-        const errors = getMutationErrors(result.data);
-
-        if (errors?.length === 0) {
-          handleSetChanged(false);
-          return { isError: false };
-        }
-
-        return { isError: true };
-      }
+      return result;
     }
-  }
-
-  function triggerChange() {
-    handleSetChanged(true);
   }
 
   const setError = (field: keyof T, error: string | React.ReactNode) =>
@@ -185,7 +201,8 @@ function useForm<T extends FormData>(
     set,
     submit,
     toggleValue,
-    triggerChange
+    triggerChange: handleSetChanged,
+    setChanged: handleSetChanged
   };
 }
 

@@ -32,7 +32,7 @@ export const CategoryCreatePage: React.FC<CategoryCreatePageProps> = ({
   const intl = useIntl();
 
   return (
-    <CategoryCreateForm onSubmit={onSubmit}>
+    <CategoryCreateForm confirmLeave onSubmit={onSubmit}>
       {({ data, change, handlers, submit, hasChanged }) => (
         <Container>
           <AppHeader onBack={onBack}>
