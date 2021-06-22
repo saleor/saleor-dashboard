@@ -11,7 +11,7 @@ const useStyles = makeStyles(
       }
     },
     block: {
-      [theme.breakpoints.down("sm")]: {
+      [theme.breakpoints.down("xs")]: {
         "&&": {
           display: "block"
         }
