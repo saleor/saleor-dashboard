@@ -50,6 +50,7 @@ All notable, unreleased changes to this project will be documented in this file.
 - Add product / page delete warning - #1095 by @mmarkusik
 - Channels per plugin - #1093 by @mmarkusik
 - Support staff only voucher - #1174 by @orzechdev
+- Fix label names in reference attributes - #1184 by @orzechdev
 
 # 2.11.1
 

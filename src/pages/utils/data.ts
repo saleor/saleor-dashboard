@@ -1,4 +1,7 @@
-import { getSelectedAttributeValues } from "@saleor/attributes/utils/data";
+import {
+  getSelectedAttributeValues,
+  mergeChoicesWithValues
+} from "@saleor/attributes/utils/data";
 import { AttributeInput } from "@saleor/components/Attributes";
 
 import {
@@ -15,7 +18,7 @@ export function getAttributeInputFromPage(
       inputType: attribute.attribute.inputType,
       isRequired: attribute.attribute.valueRequired,
       selectedValues: attribute.values,
-      values: attribute.attribute.values,
+      values: mergeChoicesWithValues(attribute),
       unit: attribute.attribute.unit
     },
     id: attribute.attribute.id,
