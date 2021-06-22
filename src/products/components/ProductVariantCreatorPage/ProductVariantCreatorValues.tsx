@@ -10,6 +10,8 @@ import { getById } from "@saleor/orders/components/OrderReturnPage/utils";
 import { ProductDetails_product_productType_variantAttributes } from "@saleor/products/types/ProductDetails";
 import { SearchAttributeValues_attribute_choices_edges_node } from "@saleor/searches/types/SearchAttributeValues";
 import { FetchMoreProps } from "@saleor/types";
+// eslint-disable-next-line no-restricted-imports
+import _ from "lodash";
 import React from "react";
 import { defineMessages, FormattedMessage, useIntl } from "react-intl";
 
@@ -89,6 +91,23 @@ const ProductVariantCreatorValues: React.FC<ProductVariantCreatorValuesProps> = 
     });
   };
 
+  const [localAttributeValues, setLocalAttributeValues] = React.useState([]);
+
+  const prevRef = React.useRef<
+    SearchAttributeValues_attribute_choices_edges_node[]
+  >();
+
+  React.useEffect(() => {
+    if (!_.isEqual(attributeValues, prevRef.current)) {
+      setLocalAttributeValues(attributeValues);
+      prevRef.current = attributeValues;
+    }
+  }, [attributeValues]);
+
+  const clearLocalAttributeValues = () => {
+    setLocalAttributeValues([]);
+  };
+
   return (
     <>
       {variantsLeft !== null && (
@@ -114,7 +133,8 @@ const ProductVariantCreatorValues: React.FC<ProductVariantCreatorValuesProps> = 
             <CardTitle title={attribute?.name || <Skeleton />} />
             <CardContent data-test-id="value-container">
               <MultiAutocompleteSelectField
-                choices={getMultiChoices(attributeValues)}
+                fetchOnFocus
+                choices={getMultiChoices(localAttributeValues)}
                 displayValues={getMultiDisplayValues(
                   data.attributes,
                   attribute
@@ -129,6 +149,7 @@ const ProductVariantCreatorValues: React.FC<ProductVariantCreatorValuesProps> = 
                 fetchChoices={value =>
                   fetchAttributeValues(value, attribute.id)
                 }
+                onBlur={clearLocalAttributeValues}
                 {...fetchMoreAttributeValues}
               />
             </CardContent>

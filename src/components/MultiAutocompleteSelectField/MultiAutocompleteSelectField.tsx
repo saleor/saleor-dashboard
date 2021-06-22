@@ -86,6 +86,7 @@ export interface MultiAutocompleteSelectFieldProps
   fetchChoices?: (value: string) => void;
   onChange: (event: React.ChangeEvent<any>) => void;
   fetchOnFocus?: boolean;
+  onBlur?: () => void;
 }
 
 const DebounceAutocomplete: React.ComponentType<DebounceProps<
@@ -112,6 +113,7 @@ const MultiAutocompleteSelectFieldComponent: React.FC<MultiAutocompleteSelectFie
     onChange,
     onFetchMore,
     fetchOnFocus,
+    onBlur,
     ...rest
   } = props;
   const classes = useStyles(props);
@@ -135,7 +137,12 @@ const MultiAutocompleteSelectFieldComponent: React.FC<MultiAutocompleteSelectFie
           <Downshift
             onInputValueChange={value => debounceFn(value)}
             onSelect={handleSelect}
-            itemToString={() => ""}
+            stateReducer={(state, changes) => {
+              if (changes.isOpen === false && state.inputValue === "") {
+                delete changes.inputValue;
+              }
+              return changes;
+            }}
           >
             {({
               closeMenu,
@@ -172,6 +179,11 @@ const MultiAutocompleteSelectFieldComponent: React.FC<MultiAutocompleteSelectFie
                       onFocus: () => {
                         if (fetchOnFocus) {
                           fetchChoices(inputValue);
+                        }
+                      },
+                      onBlur: () => {
+                        if (onBlur) {
+                          onBlur();
                         }
                       }
                     }}
@@ -249,16 +261,12 @@ const MultiAutocompleteSelectField: React.FC<MultiAutocompleteSelectFieldProps> 
 
   if (fetchChoices) {
     return (
-      <DebounceAutocomplete debounceFn={fetchChoices}>
-        {debounceFn => (
-          <MultiAutocompleteSelectFieldComponent
-            testId={testId}
-            choices={choices}
-            {...props}
-            fetchChoices={debounceFn}
-          />
-        )}
-      </DebounceAutocomplete>
+      <MultiAutocompleteSelectFieldComponent
+        testId={testId}
+        choices={choices}
+        {...props}
+        fetchChoices={fetchChoices}
+      />
     );
   }
 
