@@ -216,7 +216,7 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
                               .includes("mac")}
                             onClick={() => setNavigatorVisibility(true)}
                           />
-                          {channel && (
+                          {channel && location.pathname === "/" && (
                             <AppChannelSelect
                               channels={availableChannels}
                               disabled={!isPickerActive}
