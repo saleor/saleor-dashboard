@@ -181,10 +181,7 @@ const MultiAutocompleteSelectFieldComponent: React.FC<MultiAutocompleteSelectFie
                     fullWidth={true}
                     disabled={disabled}
                   />
-                  {// TODO: check if ok
-                  // {isOpen && (!!inputValue || !!choices.length) && (
-
-                  isOpen && (
+                  {isOpen && (
                     <MultiAutocompleteSelectFieldContent
                       add={
                         add && {
