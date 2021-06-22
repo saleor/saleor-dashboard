@@ -17,7 +17,8 @@ import {
   dedupeFilter,
   getGteLteVariables,
   getMinMaxQueryParam,
-  getMultipleEnumValueQueryParam
+  getMultipleEnumValueQueryParam,
+  getSingleValueQueryParam
 } from "../../../utils/filters";
 import {
   VoucherListUrlFilters,
@@ -143,6 +144,12 @@ export function getFilterQueryParam(
         filter,
         VoucherListUrlFiltersWithMultipleValues.status,
         DiscountStatusEnum
+      );
+
+    case VoucherFilterKeys.channel:
+      return getSingleValueQueryParam(
+        filter,
+        VoucherListUrlFiltersEnum.channel
       );
   }
 }

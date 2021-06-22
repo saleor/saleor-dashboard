@@ -18,7 +18,8 @@ import {
   getGteLteVariables,
   getMinMaxQueryParam,
   getMultipleEnumValueQueryParam,
-  getSingleEnumValueQueryParam
+  getSingleEnumValueQueryParam,
+  getSingleValueQueryParam
 } from "../../../utils/filters";
 import {
   SaleListUrlFilters,
@@ -114,6 +115,9 @@ export function getFilterQueryParam(
         SaleListUrlFiltersWithMultipleValues.status,
         DiscountStatusEnum
       );
+
+    case SaleFilterKeys.channel:
+      return getSingleValueQueryParam(filter, SaleListUrlFiltersEnum.channel);
   }
 }
 
