@@ -1,9 +1,9 @@
 import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
 import { AttributeListUrlSortField } from "@saleor/attributes/urls";
-import AppHeader from "@saleor/components/AppHeader";
 import FilterBar from "@saleor/components/FilterBar";
 import { sectionNames } from "@saleor/intl";
+import { Backlink } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -55,9 +55,9 @@ const AttributeListPage: React.FC<AttributeListPageProps> = ({
 
   return (
     <Container>
-      <AppHeader onBack={onBack}>
+      <Backlink onBack={onBack}>
         <FormattedMessage {...sectionNames.configuration} />
-      </AppHeader>
+      </Backlink>
       <PageHeader title={intl.formatMessage(sectionNames.attributes)}>
         <Button onClick={onAdd} color="primary" variant="contained">
           <FormattedMessage

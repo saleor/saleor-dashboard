@@ -3,13 +3,13 @@ import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
-import AppHeader from "@saleor/components/AppHeader";
 import { Container } from "@saleor/components/Container";
 import Grid from "@saleor/components/Grid";
 import PageHeader from "@saleor/components/PageHeader";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
 import { sectionNames } from "@saleor/intl";
+import { Backlink } from "@saleor/macaw-ui";
 import { makeStyles } from "@saleor/macaw-ui";
 import { TaxRateType } from "@saleor/types/globalTypes";
 import React from "react";
@@ -147,9 +147,9 @@ const CountryTaxesPage: React.FC<CountryTaxesPageProps> = props => {
 
   return (
     <Container>
-      <AppHeader onBack={onBack}>
+      <Backlink onBack={onBack}>
         {intl.formatMessage(sectionNames.taxes)}
-      </AppHeader>
+      </Backlink>
       <PageHeader
         title={
           countryName

@@ -1,10 +1,10 @@
-import AppHeader from "@saleor/components/AppHeader";
 import CardSpacer from "@saleor/components/CardSpacer";
 import Container from "@saleor/components/Container";
 import Grid from "@saleor/components/Grid";
 import PageHeader from "@saleor/components/PageHeader";
 import { OrderErrorFragment } from "@saleor/fragments/types/OrderErrorFragment";
 import { SubmitPromise } from "@saleor/hooks/useForm";
+import { Backlink } from "@saleor/macaw-ui";
 import { renderCollection } from "@saleor/misc";
 import { OrderRefundData_order } from "@saleor/orders/types/OrderRefundData";
 import { FulfillmentStatus } from "@saleor/types/globalTypes";
@@ -70,7 +70,7 @@ const OrderRefundPage: React.FC<OrderRefundPageProps> = props => {
 
         return (
           <Container>
-            <AppHeader onBack={onBack}>
+            <Backlink onBack={onBack}>
               {order?.number
                 ? intl.formatMessage(
                     {
@@ -85,7 +85,7 @@ const OrderRefundPage: React.FC<OrderRefundPageProps> = props => {
                     defaultMessage: "Order",
                     description: "page header"
                   })}
-            </AppHeader>
+            </Backlink>
             <PageHeader
               title={intl.formatMessage(
                 {

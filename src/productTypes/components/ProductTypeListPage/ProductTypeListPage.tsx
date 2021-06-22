@@ -1,10 +1,10 @@
 import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
-import AppHeader from "@saleor/components/AppHeader";
 import Container from "@saleor/components/Container";
 import FilterBar from "@saleor/components/FilterBar";
 import PageHeader from "@saleor/components/PageHeader";
 import { sectionNames } from "@saleor/intl";
+import { Backlink } from "@saleor/macaw-ui";
 import { ProductTypeListUrlSortField } from "@saleor/productTypes/urls";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -55,9 +55,9 @@ const ProductTypeListPage: React.FC<ProductTypeListPageProps> = ({
 
   return (
     <Container>
-      <AppHeader onBack={onBack}>
+      <Backlink onBack={onBack}>
         {intl.formatMessage(sectionNames.configuration)}
-      </AppHeader>
+      </Backlink>
       <PageHeader title={intl.formatMessage(sectionNames.productTypes)}>
         <Button color="primary" variant="contained" onClick={onAdd}>
           <FormattedMessage
