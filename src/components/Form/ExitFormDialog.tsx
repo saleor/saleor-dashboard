@@ -24,14 +24,14 @@ const useStyles = makeStyles(
   { name: "ExitFormPrompt" }
 );
 
-interface ExitFormPromptProps {
+interface ExitFormDialogProps {
   onSubmit: () => void;
   onClose: () => void;
   onLeave: () => void;
   isOpen: boolean;
 }
 
-const ExitFormPrompt: React.FC<ExitFormPromptProps> = ({
+const ExitFormDialog: React.FC<ExitFormDialogProps> = ({
   onSubmit,
   onLeave,
   onClose,
@@ -61,4 +61,4 @@ const ExitFormPrompt: React.FC<ExitFormPromptProps> = ({
   );
 };
 
-export default ExitFormPrompt;
+export default ExitFormDialog;
