@@ -108,14 +108,15 @@ describe("Tests on inactive channel", () => {
       name: randomChannel,
       slug: randomChannel,
       currencyCode: currency
-    }).then(channelResp => {
-      channel = channelResp;
-    });
-    createTypeAttributeAndCategoryForProduct(randomChannel)
+    })
+      .then(channelResp => {
+        channel = channelResp;
+        createTypeAttributeAndCategoryForProduct(randomChannel);
+      })
       .then(({ productType, attribute, category }) => {
         createProductInChannel({
           name: randomChannel,
-          channelId: newChannel.id,
+          channelId: channel.id,
           productTypeId: productType.id,
           attributeId: attribute.id,
           categoryId: category.id
@@ -123,7 +124,7 @@ describe("Tests on inactive channel", () => {
       })
       .then(({ product: productResp }) => {
         product = productResp;
-        getProductDetails(product.id, newChannel.slug);
+        getProductDetails(product.id, channel.slug);
       })
       .then(resp => {
         const isVisible = isProductVisible(resp, randomChannel);
@@ -134,7 +135,7 @@ describe("Tests on inactive channel", () => {
         activateChannel(channel.id);
       })
       .then(() => {
-        getProductDetails(product.id, newChannel.slug);
+        getProductDetails(product.id, channel.slug);
       })
       .then(resp => {
         const isVisible = isProductVisible(resp, randomChannel);

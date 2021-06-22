@@ -57,7 +57,7 @@ export function deleteChannel(channelId, targetChannelId) {
 
 export function activateChannel(channelId) {
   const mutation = `mutation{
-    channelActivate(id:""){
+    channelActivate(id:"${channelId}"){
       errors{
         field
         message
