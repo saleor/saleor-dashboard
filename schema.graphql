@@ -506,7 +506,7 @@ input AttributeFilterInput {
   filterableInStorefront: Boolean
   filterableInDashboard: Boolean
   availableInGrid: Boolean
-  metadata: [MetadataInput]
+  metadata: [MetadataFilter]
   search: String
   ids: [ID]
   type: AttributeTypeEnum
@@ -776,7 +776,7 @@ type CategoryDelete {
 
 input CategoryFilterInput {
   search: String
-  metadata: [MetadataInput]
+  metadata: [MetadataFilter]
   ids: [ID]
 }
 
@@ -1228,7 +1228,7 @@ enum CollectionErrorCode {
 input CollectionFilterInput {
   published: CollectionPublished
   search: String
-  metadata: [MetadataInput]
+  metadata: [MetadataFilter]
   ids: [ID]
 }
 
@@ -1666,7 +1666,7 @@ input CustomerFilterInput {
   numberOfOrders: IntRangeInput
   placedOrders: DateRangeInput
   search: String
-  metadata: [MetadataInput]
+  metadata: [MetadataFilter]
 }
 
 input CustomerInput {
@@ -2519,7 +2519,7 @@ enum MenuErrorCode {
 input MenuFilterInput {
   search: String
   slug: [String]
-  metadata: [MetadataInput]
+  metadata: [MetadataFilter]
 }
 
 input MenuInput {
@@ -2584,7 +2584,7 @@ type MenuItemDelete {
 
 input MenuItemFilterInput {
   search: String
-  metadata: [MetadataInput]
+  metadata: [MetadataFilter]
 }
 
 input MenuItemInput {
@@ -2668,6 +2668,11 @@ enum MetadataErrorCode {
   INVALID
   NOT_FOUND
   REQUIRED
+}
+
+input MetadataFilter {
+  key: String!
+  value: String
 }
 
 input MetadataInput {
@@ -3128,7 +3133,7 @@ input OrderDraftFilterInput {
   customer: String
   created: DateRangeInput
   search: String
-  metadata: [MetadataInput]
+  metadata: [MetadataFilter]
   channels: [ID]
 }
 
@@ -3289,7 +3294,7 @@ input OrderFilterInput {
   customer: String
   created: DateRangeInput
   search: String
-  metadata: [MetadataInput]
+  metadata: [MetadataFilter]
   channels: [ID]
 }
 
@@ -3620,7 +3625,7 @@ enum PageErrorCode {
 
 input PageFilterInput {
   search: String
-  metadata: [MetadataInput]
+  metadata: [MetadataFilter]
   pageTypes: [ID]
   ids: [ID]
 }
@@ -4280,7 +4285,7 @@ input ProductFilterInput {
   stockAvailability: StockAvailability
   stocks: ProductStockFilterInput
   search: String
-  metadata: [MetadataInput]
+  metadata: [MetadataFilter]
   price: PriceRangeInput
   minimalPrice: PriceRangeInput
   productTypes: [ID]
@@ -4493,7 +4498,7 @@ input ProductTypeFilterInput {
   search: String
   configurable: ProductTypeConfigurable
   productType: ProductTypeEnum
-  metadata: [MetadataInput]
+  metadata: [MetadataFilter]
   ids: [ID]
 }
 
@@ -4638,7 +4643,7 @@ type ProductVariantDelete {
 input ProductVariantFilterInput {
   search: String
   sku: [String]
-  metadata: [MetadataInput]
+  metadata: [MetadataFilter]
 }
 
 input ProductVariantInput {
@@ -4794,7 +4799,7 @@ type Query {
 
 type ReducedRate {
   rate: Float!
-  rateType: TaxRateType!
+  rateType: String!
 }
 
 type RefreshToken {
@@ -5475,34 +5480,6 @@ input StockFilterInput {
 input StockInput {
   warehouse: ID!
   quantity: Int!
-}
-
-enum TaxRateType {
-  ACCOMMODATION
-  ADMISSION_TO_CULTURAL_EVENTS
-  ADMISSION_TO_ENTERTAINMENT_EVENTS
-  ADMISSION_TO_SPORTING_EVENTS
-  ADVERTISING
-  AGRICULTURAL_SUPPLIES
-  BABY_FOODSTUFFS
-  BIKES
-  BOOKS
-  CHILDRENS_CLOTHING
-  DOMESTIC_FUEL
-  DOMESTIC_SERVICES
-  E_BOOKS
-  FOODSTUFFS
-  HOTELS
-  MEDICAL
-  NEWSPAPERS
-  PASSENGER_TRANSPORT
-  PHARMACEUTICALS
-  PROPERTY_RENOVATIONS
-  RESTAURANTS
-  SOCIAL_HOUSING
-  STANDARD
-  WATER
-  WINE
 }
 
 type TaxType {

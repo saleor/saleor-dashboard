@@ -955,34 +955,6 @@ export enum StockErrorCode {
   UNIQUE = "UNIQUE",
 }
 
-export enum TaxRateType {
-  ACCOMMODATION = "ACCOMMODATION",
-  ADMISSION_TO_CULTURAL_EVENTS = "ADMISSION_TO_CULTURAL_EVENTS",
-  ADMISSION_TO_ENTERTAINMENT_EVENTS = "ADMISSION_TO_ENTERTAINMENT_EVENTS",
-  ADMISSION_TO_SPORTING_EVENTS = "ADMISSION_TO_SPORTING_EVENTS",
-  ADVERTISING = "ADVERTISING",
-  AGRICULTURAL_SUPPLIES = "AGRICULTURAL_SUPPLIES",
-  BABY_FOODSTUFFS = "BABY_FOODSTUFFS",
-  BIKES = "BIKES",
-  BOOKS = "BOOKS",
-  CHILDRENS_CLOTHING = "CHILDRENS_CLOTHING",
-  DOMESTIC_FUEL = "DOMESTIC_FUEL",
-  DOMESTIC_SERVICES = "DOMESTIC_SERVICES",
-  E_BOOKS = "E_BOOKS",
-  FOODSTUFFS = "FOODSTUFFS",
-  HOTELS = "HOTELS",
-  MEDICAL = "MEDICAL",
-  NEWSPAPERS = "NEWSPAPERS",
-  PASSENGER_TRANSPORT = "PASSENGER_TRANSPORT",
-  PHARMACEUTICALS = "PHARMACEUTICALS",
-  PROPERTY_RENOVATIONS = "PROPERTY_RENOVATIONS",
-  RESTAURANTS = "RESTAURANTS",
-  SOCIAL_HOUSING = "SOCIAL_HOUSING",
-  STANDARD = "STANDARD",
-  WATER = "WATER",
-  WINE = "WINE",
-}
-
 export enum UploadErrorCode {
   GRAPHQL_ERROR = "GRAPHQL_ERROR",
 }
@@ -1146,7 +1118,7 @@ export interface AttributeFilterInput {
   filterableInStorefront?: boolean | null;
   filterableInDashboard?: boolean | null;
   availableInGrid?: boolean | null;
-  metadata?: (MetadataInput | null)[] | null;
+  metadata?: (MetadataFilter | null)[] | null;
   search?: string | null;
   ids?: (string | null)[] | null;
   type?: AttributeTypeEnum | null;
@@ -1215,7 +1187,7 @@ export interface CatalogueInput {
 
 export interface CategoryFilterInput {
   search?: string | null;
-  metadata?: (MetadataInput | null)[] | null;
+  metadata?: (MetadataFilter | null)[] | null;
   ids?: (string | null)[] | null;
 }
 
@@ -1273,7 +1245,7 @@ export interface CollectionCreateInput {
 export interface CollectionFilterInput {
   published?: CollectionPublished | null;
   search?: string | null;
-  metadata?: (MetadataInput | null)[] | null;
+  metadata?: (MetadataFilter | null)[] | null;
   ids?: (string | null)[] | null;
 }
 
@@ -1303,7 +1275,7 @@ export interface CustomerFilterInput {
   numberOfOrders?: IntRangeInput | null;
   placedOrders?: DateRangeInput | null;
   search?: string | null;
-  metadata?: (MetadataInput | null)[] | null;
+  metadata?: (MetadataFilter | null)[] | null;
 }
 
 export interface CustomerInput {
@@ -1418,6 +1390,11 @@ export interface MenuSortingInput {
   field: MenuSortField;
 }
 
+export interface MetadataFilter {
+  key: string;
+  value?: string | null;
+}
+
 export interface MetadataInput {
   key: string;
   value: string;
@@ -1441,7 +1418,7 @@ export interface OrderDraftFilterInput {
   customer?: string | null;
   created?: DateRangeInput | null;
   search?: string | null;
-  metadata?: (MetadataInput | null)[] | null;
+  metadata?: (MetadataFilter | null)[] | null;
   channels?: (string | null)[] | null;
 }
 
@@ -1451,7 +1428,7 @@ export interface OrderFilterInput {
   customer?: string | null;
   created?: DateRangeInput | null;
   search?: string | null;
-  metadata?: (MetadataInput | null)[] | null;
+  metadata?: (MetadataFilter | null)[] | null;
   channels?: (string | null)[] | null;
 }
 
@@ -1548,7 +1525,7 @@ export interface PageCreateInput {
 
 export interface PageFilterInput {
   search?: string | null;
-  metadata?: (MetadataInput | null)[] | null;
+  metadata?: (MetadataFilter | null)[] | null;
   pageTypes?: (string | null)[] | null;
   ids?: (string | null)[] | null;
 }
@@ -1691,7 +1668,7 @@ export interface ProductFilterInput {
   stockAvailability?: StockAvailability | null;
   stocks?: ProductStockFilterInput | null;
   search?: string | null;
-  metadata?: (MetadataInput | null)[] | null;
+  metadata?: (MetadataFilter | null)[] | null;
   price?: PriceRangeInput | null;
   minimalPrice?: PriceRangeInput | null;
   productTypes?: (string | null)[] | null;
@@ -1727,7 +1704,7 @@ export interface ProductTypeFilterInput {
   search?: string | null;
   configurable?: ProductTypeConfigurable | null;
   productType?: ProductTypeEnum | null;
-  metadata?: (MetadataInput | null)[] | null;
+  metadata?: (MetadataFilter | null)[] | null;
   ids?: (string | null)[] | null;
 }
 
