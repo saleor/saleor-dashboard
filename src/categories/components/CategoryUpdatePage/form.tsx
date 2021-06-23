@@ -56,7 +56,7 @@ function useCategoryUpdateForm(
 ): UseCategoryUpdateFormResult {
   const { change, data, triggerChange, hasChanged, setChanged } = useForm<
     CategoryUpdateFormData
-  >({ initialData: getInitialData(), onSubmit, confirmLeave: true });
+  >(getInitialData(), undefined, { confirmLeave: true });
 
   const { setExitDialogSubmitRef, setEnableExitDialog } = useContext(
     ExitFormDialogContext

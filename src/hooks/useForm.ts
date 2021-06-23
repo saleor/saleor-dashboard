@@ -22,6 +22,10 @@ export type FormErrors<T> = {
   [field in keyof T]?: string | React.ReactNode;
 };
 
+export interface UseFormOpts {
+  confirmLeave: boolean;
+}
+
 export interface UseFormResult<TData> extends CommonUseFormResult<TData> {
   reset: () => void;
   set: (data: Partial<TData>) => void;
@@ -65,15 +69,12 @@ function handleRefresh<T extends FormData>(
   }
 }
 
-function useForm<T extends FormData>({
-  initialData,
-  onSubmit,
-  confirmLeave = false
-}: {
-  initialData: T;
-  onSubmit?: (data: T) => SubmitPromise | void;
-  confirmLeave;
-}): UseFormResult<T> {
+function useForm<T extends FormData>(
+  initialData: T,
+  onSubmit?: (data: T) => SubmitPromise | void,
+  opts?: UseFormOpts
+): UseFormResult<T> {
+  const { confirmLeave } = opts;
   const [hasChanged, setChanged] = useState(false);
   const [errors, setErrors] = useState<FormErrors<T>>({});
   const [data, setData] = useStateFromProps(initialData, {

@@ -10,7 +10,7 @@ import ConfirmButton, {
   ConfirmButtonTransitionState
 } from "../ConfirmButton/ConfirmButton";
 import Container from "../Container";
-import { ExitFormPromptContext } from "../Form/ExitFormPromptProvider";
+import { ExitFormDialogContext } from "../Form/ExitFormDialogProvider";
 
 const useStyles = makeStyles(
   theme => ({
@@ -80,12 +80,12 @@ export const SaveButtonBar: React.FC<SaveButtonBarProps> = props => {
   const appAction = useAppAction();
   const intl = useIntl();
   const scrollPosition = useWindowScroll();
-  const { setEnableExitPrompt } = useContext(ExitFormPromptContext);
+  const { setEnableExitDialog } = useContext(ExitFormDialogContext);
 
   const handleSaveDeleteAction = (callback: (event: any) => void) => (
     event?: any
   ) => {
-    setEnableExitPrompt(false);
+    setEnableExitDialog(false);
     callback(event);
   };
 
