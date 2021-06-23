@@ -128,6 +128,8 @@ export interface CreateMultipleVariantsData_product_productType_variantAttribute
   __typename: "Attribute";
   id: string;
   name: string | null;
+  inputType: AttributeInputTypeEnum | null;
+  unit: MeasurementUnitsEnum | null;
   choices: CreateMultipleVariantsData_product_productType_variantAttributes_choices | null;
 }
 

@@ -1,9 +1,5 @@
 import { ProductVariant } from "@saleor/fragments/types/ProductVariant";
-import {
-  AttributeInputTypeEnum,
-  ProductMediaType,
-  WeightUnitsEnum
-} from "@saleor/types/globalTypes";
+import { AttributeInputTypeEnum, ProductMediaType, WeightUnitsEnum } from "@saleor/types/globalTypes";
 import { warehouseList } from "@saleor/warehouses/fixtures";
 
 import * as richTextEditorFixtures from "../components/RichTextEditor/fixtures.json";
@@ -460,6 +456,7 @@ export const product: (
         __typename: "Attribute",
         id: "isdugfhud",
         name: "Attachment",
+        inputType: AttributeInputTypeEnum.DROPDOWN,
         choices: {
           __typename: "AttributeValueCountableConnection",
           pageInfo: {
@@ -497,6 +494,7 @@ export const product: (
         __typename: "Attribute",
         id: "pta18161",
         name: "Color",
+        inputType: AttributeInputTypeEnum.DROPDOWN,
         choices: {
           __typename: "AttributeValueCountableConnection",
           pageInfo: {

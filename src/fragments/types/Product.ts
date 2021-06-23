@@ -128,6 +128,8 @@ export interface Product_productType_variantAttributes {
   __typename: "Attribute";
   id: string;
   name: string | null;
+  inputType: AttributeInputTypeEnum | null;
+  unit: MeasurementUnitsEnum | null;
   choices: Product_productType_variantAttributes_choices | null;
 }
 

@@ -118,13 +118,15 @@ function getVariantName(
   return attributes.reduce(
     (acc, attribute) => [
       ...acc,
-      attribute.values?.find(
-        value =>
-          value?.slug ===
-          variant.attributes.find(
-            variantAttribute => variantAttribute.id === attribute.id
-          ).values[0]
-      )?.value?.name
+      attribute.values?.find(value => {
+        const variantAttributeValue = variant.attributes.find(
+          variantAttribute => variantAttribute.id === attribute.id
+        );
+        return (
+          variantAttributeValue.values?.[0] === value?.slug ||
+          variantAttributeValue.boolean === value.value.boolean
+        );
+      })?.value?.name
     ],
     []
   );
@@ -215,7 +217,7 @@ const ProductVariantCreatorSummary: React.FC<ProductVariantCreatorSummaryProps> 
           return (
             <React.Fragment
               key={variant.attributes
-                .map(attribute => attribute.values[0])
+                .map(attribute => attribute.values?.[0] ?? attribute.boolean)
                 .join(":")}
             >
               <div className={classNames(classes.col, classes.colName)}>

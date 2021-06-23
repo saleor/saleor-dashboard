@@ -89,6 +89,7 @@ function selectValue(
   const attribute = prevState.attributes.find(
     attribute => attribute.id === attributeId
   );
+
   const values = toggle(value, attribute.values, (a, b) => a.slug === b.slug);
   const updatedAttributes = add(
     {

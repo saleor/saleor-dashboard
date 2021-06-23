@@ -135,6 +135,8 @@ export interface ProductUpdate_productUpdate_product_productType_variantAttribut
   __typename: "Attribute";
   id: string;
   name: string | null;
+  inputType: AttributeInputTypeEnum | null;
+  unit: MeasurementUnitsEnum | null;
   choices: ProductUpdate_productUpdate_product_productType_variantAttributes_choices | null;
 }
 

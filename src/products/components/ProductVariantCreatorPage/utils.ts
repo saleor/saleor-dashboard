@@ -44,3 +44,6 @@ export function getStockAttributeValues(
         .map(value => value.node)
     : [];
 }
+
+export const getBySlug = (slugToCompare: string) => (obj: { slug: string }) =>
+  obj.slug === slugToCompare;

@@ -37,7 +37,8 @@ export const ATTRIBUTE_TYPES_WITH_CONFIGURABLE_FACED_NAVIGATION = [
   AttributeInputTypeEnum.MULTISELECT,
   AttributeInputTypeEnum.BOOLEAN,
   AttributeInputTypeEnum.DATE,
-  AttributeInputTypeEnum.DATE_TIME
+  AttributeInputTypeEnum.DATE_TIME,
+  AttributeInputTypeEnum.NUMERIC
 ];
 
 export interface AttributeReference {

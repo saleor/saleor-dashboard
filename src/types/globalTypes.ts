@@ -1132,6 +1132,10 @@ export interface AttributeInput {
   slug: string;
   values?: (string | null)[] | null;
   valuesRange?: IntRangeInput | null;
+  dateTimeRange?: DateTimeRangeInput | null;
+  dateRange?: DateRangeInput | null;
+  dateTime?: any | null;
+  date?: any | null;
   boolean?: boolean | null;
 }
 
@@ -1180,7 +1184,8 @@ export interface AttributeValueTranslationInput {
 
 export interface BulkAttributeValueInput {
   id?: string | null;
-  values: string[];
+  values?: (string | null)[] | null;
+  boolean?: boolean | null;
 }
 
 export interface CatalogueInput {

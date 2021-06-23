@@ -1,4 +1,5 @@
 import { Card, CardContent } from "@material-ui/core";
+import { getMeasurementUnitMessage } from "@saleor/attributes/components/AttributeDetails/utils";
 import Alert from "@saleor/components/Alert/Alert";
 import { getMultiChoices } from "@saleor/components/Attributes/utils";
 import CardSpacer from "@saleor/components/CardSpacer";
@@ -6,12 +7,20 @@ import CardTitle from "@saleor/components/CardTitle";
 import MultiAutocompleteSelectField from "@saleor/components/MultiAutocompleteSelectField";
 import Skeleton from "@saleor/components/Skeleton";
 import { AttributeValueFragment } from "@saleor/fragments/types/AttributeValueFragment";
+import { commonMessages } from "@saleor/intl";
 import { getById } from "@saleor/orders/components/OrderReturnPage/utils";
+import { getBySlug } from "@saleor/products/components/ProductVariantCreatorPage/utils";
 import { ProductDetails_product_productType_variantAttributes } from "@saleor/products/types/ProductDetails";
 import { SearchAttributeValues_attribute_choices_edges_node } from "@saleor/searches/types/SearchAttributeValues";
 import { FetchMoreProps } from "@saleor/types";
+import { AttributeInputTypeEnum } from "@saleor/types/globalTypes";
 import React from "react";
-import { defineMessages, FormattedMessage, useIntl } from "react-intl";
+import {
+  defineMessages,
+  FormattedMessage,
+  IntlShape,
+  useIntl
+} from "react-intl";
 
 import {
   Attribute,
@@ -52,6 +61,28 @@ export function getMultiDisplayValues(
   }));
 }
 
+const getBooleanDisplayValues = (
+  attributeId: string,
+  data: ProductVariantCreateFormData,
+  intl: IntlShape
+) => {
+  const values = data.attributes.find(({ id }) => id === attributeId).values;
+
+  if (!values.length) {
+    return [];
+  }
+
+  const choices = getBooleanChoices(intl);
+  return values.map(({ value: { boolean } }) =>
+    choices.find(({ value }) => value === boolean)
+  );
+};
+
+const getBooleanChoices = (intl: IntlShape) => [
+  { label: intl.formatMessage(commonMessages.yes), value: true },
+  { label: intl.formatMessage(commonMessages.no), value: false }
+];
+
 export interface ProductVariantCreatorValuesProps {
   attributes: ProductDetails_product_productType_variantAttributes[];
   attributeValues: SearchAttributeValues_attribute_choices_edges_node[];
@@ -61,7 +92,7 @@ export interface ProductVariantCreatorValuesProps {
   variantsLeft: number | null;
   onValueClick: (
     attributeId: string,
-    value: AttributeValue<AttributeValueFragment>
+    value: AttributeValue<Partial<AttributeValueFragment>>
   ) => void;
 }
 
@@ -78,15 +109,30 @@ const ProductVariantCreatorValues: React.FC<ProductVariantCreatorValuesProps> = 
   const intl = useIntl();
   const variantsNumber = getVariantsNumber(data);
 
-  const handleValueClick = (attributeId: string, valueSlug: string) => {
+  const handleValueClick = (
+    attributeId: string,
+    attributeName: string,
+    attributeValue: string | boolean
+  ) => {
     const dataAttribute = data.attributes.find(getById(attributeId));
 
-    onValueClick(attributeId, {
-      slug: valueSlug,
-      value:
-        dataAttribute?.values.find(value => value.slug === valueSlug)?.value ||
-        attributeValues.find(value => value.slug === valueSlug)
-    });
+    onValueClick(
+      attributeId,
+      typeof attributeValue === "boolean"
+        ? {
+            slug: attributeValue.toString(),
+            value: {
+              boolean: attributeValue,
+              name: `${attributeName}: ${attributeValue ? "Yes" : "No"}`
+            }
+          }
+        : {
+            slug: attributeValue,
+            value:
+              dataAttribute?.values.find(getBySlug(attributeValue))?.value ||
+              attributeValues.find(getBySlug(attributeValue))
+          }
+    );
   };
 
   return (
@@ -113,25 +159,58 @@ const ProductVariantCreatorValues: React.FC<ProductVariantCreatorValuesProps> = 
           <Card>
             <CardTitle title={attribute?.name || <Skeleton />} />
             <CardContent data-test-id="value-container">
-              <MultiAutocompleteSelectField
-                choices={getMultiChoices(attributeValues)}
-                displayValues={getMultiDisplayValues(
-                  data.attributes,
-                  attribute
-                )}
-                name={`attribute:${attribute.name}`}
-                label={intl.formatMessage(messages.multipleValueLabel)}
-                value={getMultiValues(data.attributes, attribute)}
-                onChange={event =>
-                  handleValueClick(attribute.id, event.target.value)
-                }
-                allowCustomValues={true}
-                fetchOnFocus={true}
-                fetchChoices={value =>
-                  fetchAttributeValues(value, attribute.id)
-                }
-                {...fetchMoreAttributeValues}
-              />
+              {attribute.inputType === AttributeInputTypeEnum.BOOLEAN ? (
+                <MultiAutocompleteSelectField
+                  displayValues={getBooleanDisplayValues(
+                    attribute.id,
+                    data,
+                    intl
+                  )}
+                  name={`attribute:${attribute.name}`}
+                  label={intl.formatMessage(messages.multipleValueLabel)}
+                  value={getMultiValues(data.attributes, attribute)}
+                  onChange={event =>
+                    handleValueClick(
+                      attribute.id,
+                      attribute.name,
+                      event.target.value
+                    )
+                  }
+                  allowCustomValues={false}
+                  choices={getBooleanChoices(intl)}
+                />
+              ) : (
+                <MultiAutocompleteSelectField
+                  choices={getMultiChoices(attributeValues)}
+                  displayValues={getMultiDisplayValues(
+                    data.attributes,
+                    attribute
+                  )}
+                  name={`attribute:${attribute.name}`}
+                  label={intl.formatMessage(messages.multipleValueLabel)}
+                  value={getMultiValues(data.attributes, attribute)}
+                  onChange={event =>
+                    handleValueClick(
+                      attribute.id,
+                      attribute.name,
+                      event.target.value
+                    )
+                  }
+                  endAdornment={
+                    attribute.unit &&
+                    getMeasurementUnitMessage(
+                      attribute.unit,
+                      intl.formatMessage
+                    )
+                  }
+                  fetchOnFocus={true}
+                  allowCustomValues={true}
+                  fetchChoices={value =>
+                    fetchAttributeValues(value, attribute.id)
+                  }
+                  {...fetchMoreAttributeValues}
+                />
+              )}
             </CardContent>
           </Card>
           <CardSpacer />

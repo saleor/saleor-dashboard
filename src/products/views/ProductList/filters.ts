@@ -31,6 +31,7 @@ import {
   mapSlugNodeToChoice
 } from "@saleor/utils/maps";
 import isArray from "lodash/isArray";
+import moment from "moment-timezone";
 
 import { IFilterElement } from "../../../components/Filter";
 import {
@@ -45,7 +46,8 @@ import {
   getMinMaxQueryParam,
   getMultipleValueQueryParam,
   getSingleEnumValueQueryParam,
-  getSingleValueQueryParam
+  getSingleValueQueryParam,
+  GteLte
 } from "../../../utils/filters";
 import {
   ProductListUrlFilters,
@@ -54,7 +56,6 @@ import {
   ProductListUrlFiltersWithMultipleValues,
   ProductListUrlQueryParams
 } from "../../urls";
-
 export const PRODUCT_FILTERS_KEY = "productFilters";
 
 export function getFilterOpts(
@@ -204,25 +205,78 @@ export function getFilterOpts(
   };
 }
 
+const parseFilterValue = (
+  params: ProductListUrlFilters,
+  key: string
+): {
+  type: "boolean" | "date" | "dateTime" | "string";
+  isMulti: boolean;
+  value: string[];
+} => {
+  const value = params.attributes[key];
+  const isMulti = isArray(params.attributes[key]);
+
+  const isBooleanValue =
+    !isMulti && ["true", "false"].includes((value as unknown) as string);
+  const isDateValue = (isMulti ? value : [value]).some(val =>
+    moment(val, moment.HTML5_FMT.DATE).isValid()
+  );
+  const isDateTimeValue = (isMulti ? value : [value]).some(val =>
+    moment(val, moment.ISO_8601).isValid()
+  );
+
+  const data = { isMulti, value: (isMulti ? value : [value]) as string[] };
+
+  if (isBooleanValue) {
+    return { ...data, type: "boolean" };
+  } else if (isDateValue) {
+    return { ...data, type: "date" };
+  } else if (isDateTimeValue) {
+    return { ...data, type: "dateTime" };
+  }
+  return { ...data, type: "string" };
+};
+
 function getFilteredAttributeValue(
   params: ProductListUrlFilters
-): Array<({ boolean: boolean } | { values: string[] }) & { slug: string }> {
+): Array<
+  (
+    | { boolean: boolean }
+    | { values: string[] }
+    | { dateTime: GteLte<string> }
+    | { date: GteLte<string> }
+  ) & { slug: string }
+> {
   return !!params.attributes
     ? Object.keys(params.attributes).map(key => {
-        const value = params.attributes[key];
-        const isMulti = isArray(params.attributes[key]);
-        const isBooleanValue =
-          !isMulti && ["true", "false"].includes((value as unknown) as string);
+        const { isMulti, type, value } = parseFilterValue(params, key);
+        const name = { slug: key };
 
-        return {
-          slug: key,
-          ...(isBooleanValue
-            ? { boolean: JSON.parse((value as unknown) as string) }
-            : {
-                // It is possible for qs to parse values not as string[] but string
-                values: isMulti ? value : (([value] as unknown) as string[])
+        switch (type) {
+          case "boolean":
+            return { ...name, boolean: JSON.parse(value[0]) };
+
+          case "date":
+            return {
+              ...name,
+              date: getGteLteVariables({
+                gte: value[0] || null,
+                lte: isMulti ? value[1] || null : value[0]
               })
-        };
+            };
+
+          case "dateTime":
+            return {
+              ...name,
+              dateTime: getGteLteVariables({
+                gte: value[0] || null,
+                lte: isMulti ? value[1] || null : value[0]
+              })
+            };
+
+          default:
+            return { ...name, values: value };
+        }
       })
     : null;
 }

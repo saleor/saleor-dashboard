@@ -63,6 +63,10 @@ const useStyles = makeStyles(
       margin: theme.spacing(1, 0),
       paddingLeft: theme.spacing(2),
       paddingRight: theme.spacing(1)
+    },
+    adornment: {
+      display: "flex",
+      alignItems: "center"
     }
   }),
   { name: "MultiAutocompleteSelectField" }
@@ -86,6 +90,7 @@ export interface MultiAutocompleteSelectFieldProps
   fetchChoices?: (value: string) => void;
   onChange: (event: React.ChangeEvent<any>) => void;
   fetchOnFocus?: boolean;
+  endAdornment?: React.ReactNode;
 }
 
 const DebounceAutocomplete: React.ComponentType<DebounceProps<
@@ -112,6 +117,7 @@ const MultiAutocompleteSelectFieldComponent: React.FC<MultiAutocompleteSelectFie
     onChange,
     onFetchMore,
     fetchOnFocus,
+    endAdornment,
     ...rest
   } = props;
   const classes = useStyles(props);
@@ -163,7 +169,8 @@ const MultiAutocompleteSelectFieldComponent: React.FC<MultiAutocompleteSelectFie
                         placeholder
                       }),
                       endAdornment: (
-                        <div>
+                        <div className={classes.adornment}>
+                          {endAdornment}
                           <ArrowDropdownIcon onClick={() => toggleMenu()} />
                         </div>
                       ),
