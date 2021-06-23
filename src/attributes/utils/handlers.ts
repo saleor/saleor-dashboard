@@ -192,8 +192,8 @@ function getFileInput(
     };
   }
   return {
-    file: updatedFileAttribute.file,
-    id: updatedFileAttribute.id
+    file: attribute.data.selectedValues?.[0]?.file?.url,
+    id: attribute.id
   };
 }
 
