@@ -192,9 +192,7 @@ function getFileInput(
     };
   }
   return {
-    file:
-      attribute.data.selectedValues &&
-      attribute.data.selectedValues[0]?.file?.url,
+    file: attribute.data.selectedValues?.[0]?.file?.url,
     id: attribute.id
   };
 }
