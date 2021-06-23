@@ -86,7 +86,12 @@ const AttributeValues: React.FC<AttributeValuesProps> = ({
           description: "section header"
         })}
         toolbar={
-          <Button color="primary" variant="text" onClick={onValueAdd}>
+          <Button
+            color="primary"
+            variant="text"
+            onClick={onValueAdd}
+            data-test-id="assignValueButton"
+          >
             <FormattedMessage
               defaultMessage="Assign value"
               description="assign attribute value button"
