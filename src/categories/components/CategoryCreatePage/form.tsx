@@ -45,12 +45,11 @@ const initialData: CategoryCreateFormData = {
 };
 
 function useCategoryCreateForm(
-  onSubmit: (data: CategoryCreateData) => Promise<any[]>,
-  confirmLeave
+  onSubmit: (data: CategoryCreateData) => Promise<any[]>
 ): UseCategoryCreateFormResult {
   const { change, data, hasChanged, triggerChange, setChanged } = useForm<
     CategoryCreateFormData
-  >({ initialData, confirmLeave });
+  >(initialData, undefined, { confirmLeave: true });
 
   const { setExitDialogSubmitRef, setEnableExitDialog } = useContext(
     ExitFormDialogContext
@@ -96,10 +95,9 @@ function useCategoryCreateForm(
 
 const CategoryCreateForm: React.FC<CategoryCreateFormProps> = ({
   children,
-  onSubmit,
-  confirmLeave
+  onSubmit
 }) => {
-  const props = useCategoryCreateForm(onSubmit, confirmLeave);
+  const props = useCategoryCreateForm(onSubmit);
 
   return <form onSubmit={props.submit}>{children(props)}</form>;
 };
