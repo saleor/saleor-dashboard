@@ -1,7 +1,6 @@
+import { IMenuItem } from "@saleor/macaw-ui";
 import { orderDraftListUrl, orderListUrl } from "@saleor/orders/urls";
 import { matchPath } from "react-router";
-
-import { IMenuItem } from "../AppLayout/menuStructure";
 
 export function isMenuActive(location: string, menuItem: IMenuItem) {
   if (menuItem.children) {
