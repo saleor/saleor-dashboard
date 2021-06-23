@@ -1,11 +1,12 @@
 import { LinearProgress, useMediaQuery } from "@material-ui/core";
-import { createConfigurationMenu } from "@saleor/configuration";
 import useAppState from "@saleor/hooks/useAppState";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useUser from "@saleor/hooks/useUser";
 import {
   makeStyles,
   SaleorTheme,
+  Sidebar,
+  SidebarDrawer,
   useBacklink,
   useSavebar,
   useTheme
@@ -20,13 +21,12 @@ import Container from "../Container";
 import ErrorPage from "../ErrorPage";
 import Navigator from "../Navigator";
 import NavigatorButton from "../NavigatorButton/NavigatorButton";
-import SideBar from "../SideBar";
-import SideBarDrawer from "../SideBarDrawer/SideBarDrawer";
 import UserChip from "../UserChip";
 import useAppChannel from "./AppChannelContext";
 import AppChannelSelect from "./AppChannelSelect";
 import { appLoaderHeight } from "./consts";
 import createMenuStructure from "./menuStructure";
+import { isMenuActive } from "./utils";
 
 const useStyles = makeStyles(
   theme => ({
@@ -139,18 +139,10 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
     setChannel
   } = useAppChannel(false);
 
-  const menuStructure = createMenuStructure(intl);
-  const configurationMenu = createConfigurationMenu(intl);
-  const userPermissions = user?.userPermissions || [];
-
-  const renderConfigure = configurationMenu.some(section =>
-    section.menuItems.some(
-      menuItem =>
-        !!userPermissions.find(
-          userPermission => userPermission.code === menuItem.permission
-        )
-    )
-  );
+  const menuStructure = createMenuStructure(intl, user);
+  const activeMenu = menuStructure.find(menuItem =>
+    isMenuActive(location.pathname, menuItem)
+  )?.id;
 
   const handleErrorBack = () => {
     navigate("/");
@@ -173,11 +165,9 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
       />
       <div className={classes.root}>
         {isMdUp && (
-          <SideBar
+          <Sidebar
+            active={activeMenu}
             menuItems={menuStructure}
-            location={location.pathname}
-            user={user}
-            renderConfigure={renderConfigure}
             onMenuItemClick={navigate}
           />
         )}
@@ -194,11 +184,8 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
                   <div className={classes.headerAnchor} ref={appHeaderAnchor} />
                   <div className={classes.headerToolbar}>
                     {!isMdUp && (
-                      <SideBarDrawer
+                      <SidebarDrawer
                         menuItems={menuStructure}
-                        location={location.pathname}
-                        user={user}
-                        renderConfigure={renderConfigure}
                         onMenuItemClick={navigate}
                       />
                     )}
