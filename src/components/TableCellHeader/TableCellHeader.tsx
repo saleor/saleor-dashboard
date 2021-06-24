@@ -18,6 +18,7 @@ const useStyles = makeStyles(
       transform: "rotate(180deg)"
     },
     disabled: {
+      opacity: 0.7,
       "&&": {
         cursor: "unset"
       }

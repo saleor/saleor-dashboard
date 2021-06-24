@@ -22,7 +22,7 @@ import createFilterHandlers from "@saleor/utils/handlers/filterHandlers";
 import createSortHandler from "@saleor/utils/handlers/sortHandler";
 import { mapEdgesToItems, mapNodeToChoice } from "@saleor/utils/maps";
 import { getSortParams } from "@saleor/utils/sort";
-import React from "react";
+import React, { useEffect } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import SaleListPage from "../../components/SaleListPage";
@@ -46,7 +46,7 @@ import {
   getFilterVariables,
   saveFilterTab
 } from "./filters";
-import { getSortQueryVariables } from "./sort";
+import { canBeSorted, DEFAULT_SORT_KEY, getSortQueryVariables } from "./sort";
 
 interface SaleListProps {
   params: SaleListUrlQueryParams;
@@ -111,6 +111,17 @@ export const SaleList: React.FC<SaleListProps> = ({ params }) => {
     navigate,
     params
   });
+
+  useEffect(() => {
+    if (!canBeSorted(params.sort, !!selectedChannel)) {
+      navigate(
+        saleListUrl({
+          ...params,
+          sort: DEFAULT_SORT_KEY
+        })
+      );
+    }
+  }, [params]);
 
   const handleTabChange = (tab: number) => {
     reset();
