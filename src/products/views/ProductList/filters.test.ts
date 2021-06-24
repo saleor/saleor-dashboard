@@ -27,7 +27,7 @@ describe("Filtering query params", () => {
     };
     const filterVariables = getFilterVariables(params, true);
 
-    expect(getExistingKeys(filterVariables)).toHaveLength(3);
+    expect(getExistingKeys(filterVariables)).toHaveLength(2);
   });
 });
 

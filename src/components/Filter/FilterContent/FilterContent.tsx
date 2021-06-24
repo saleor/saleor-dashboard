@@ -16,9 +16,9 @@ import { FilterReducerAction } from "../reducer";
 import {
   FieldType,
   FilterErrorMessages,
-  FilterErrors,
   IFilter,
-  IFilterElement
+  IFilterElement,
+  InvalidFilters
 } from "../types";
 import FilterContentBody, { FilterContentBodyProps } from "./FilterContentBody";
 import FilterContentBodyNameField from "./FilterContentBodyNameField";
@@ -80,7 +80,7 @@ export interface FilterContentProps<T extends string = string> {
   onSubmit: () => void;
   currencySymbol?: string;
   dataStructure: IFilter<T>;
-  errors?: FilterErrors;
+  errors?: InvalidFilters<T>;
   errorMessages?: FilterErrorMessages<T>;
 }
 
@@ -224,7 +224,7 @@ const FilterContent: React.FC<FilterContentProps> = ({
                 />
               </ExpansionPanelSummary>
               <FilterErrorsList
-                errors={errors}
+                errors={errors[filter.name]}
                 errorMessages={errorMessages}
                 filter={filter}
               />

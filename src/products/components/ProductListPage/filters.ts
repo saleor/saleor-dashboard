@@ -115,7 +115,8 @@ export function createFilterStructure(
           }
         ]
       ),
-      active: opts.stockStatus.active
+      active: opts.stockStatus.active,
+      dependencies: [ProductFilterKeys.channel]
     },
     {
       ...createPriceField(
