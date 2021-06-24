@@ -6,6 +6,7 @@ import {
   Typography
 } from "@material-ui/core";
 import { AvailableExternalAuthentications_shop_availableExternalAuthentications } from "@saleor/auth/types/AvailableExternalAuthentications";
+import Form from "@saleor/components/Form";
 import { FormSpacer } from "@saleor/components/FormSpacer";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import { commonMessages } from "@saleor/intl";
@@ -13,7 +14,8 @@ import { makeStyles } from "@saleor/theme";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import LoginForm, { LoginFormData } from "./form";
+import { LoginFormData } from "./types";
+import { getLoginFormInitialData } from "./utils";
 
 const useStyles = makeStyles(
   theme => ({
@@ -83,7 +85,7 @@ const LoginCard: React.FC<LoginCardProps> = props => {
   }
 
   return (
-    <LoginForm onSubmit={onSubmit}>
+    <Form initial={getLoginFormInitialData()} onSubmit={onSubmit}>
       {({ change: handleChange, data, submit: handleSubmit }) => (
         <>
           {error && (
@@ -193,7 +195,7 @@ const LoginCard: React.FC<LoginCardProps> = props => {
           ))}
         </>
       )}
-    </LoginForm>
+    </Form>
   );
 };
 LoginCard.displayName = "LoginCard";
