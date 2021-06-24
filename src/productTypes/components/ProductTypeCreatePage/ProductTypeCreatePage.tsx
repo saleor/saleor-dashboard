@@ -77,7 +77,12 @@ const ProductTypeCreatePage: React.FC<ProductTypeCreatePageProps> = ({
   } = useMetadataChangeTrigger();
 
   return (
-    <Form initial={formInitialData} onSubmit={onSubmit} confirmLeave>
+    <Form
+      confirmLeave
+      initial={formInitialData}
+      onSubmit={onSubmit}
+      confirmLeave
+    >
       {({ change, data, hasChanged, submit }) => {
         const changeMetadata = makeMetadataChangeHandler(change);
 

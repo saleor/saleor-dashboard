@@ -52,7 +52,7 @@ const CustomAppCreatePage: React.FC<CustomAppCreatePageProps> = props => {
   const permissionsError = getAppErrorMessage(formErrors.permissions, intl);
 
   return (
-    <Form initial={initialForm} onSubmit={onSubmit} confirmLeave>
+    <Form confirmLeave initial={initialForm} onSubmit={onSubmit}>
       {({ data, change, hasChanged, submit }) => (
         <Container>
           <AppHeader onBack={onBack}>

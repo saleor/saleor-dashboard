@@ -122,7 +122,7 @@ export const ShippingZoneRatesPage: React.FC<ShippingZoneRatesPageProps> = ({
   } = useMetadataChangeTrigger();
 
   return (
-    <Form initial={initialForm} onSubmit={onSubmit}>
+    <Form confirmLeave initial={initialForm} onSubmit={onSubmit}>
       {({ change, data, hasChanged, submit, set, triggerChange }) => {
         const handleChannelsChange = createChannelsChangeHandler(
           shippingChannels,

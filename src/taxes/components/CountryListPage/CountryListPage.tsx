@@ -46,7 +46,7 @@ const CountryListPage: React.FC<CountryListPageProps> = ({
     showGross: maybe(() => shop.displayGrossPrices, false)
   };
   return (
-    <Form initial={initialForm} onSubmit={onSubmit}>
+    <Form confirmLeave initial={initialForm} onSubmit={onSubmit}>
       {({ change, data, hasChanged, submit }) => (
         <>
           <Container>

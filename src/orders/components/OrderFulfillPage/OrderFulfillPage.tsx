@@ -269,7 +269,7 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
           }
         )}
       />
-      <Form initial={initialFormData} onSubmit={handleSubmit}>
+      <Form confirmLeave initial={initialFormData} onSubmit={handleSubmit}>
         {({ change, data, submit }) => (
           <>
             <Card>

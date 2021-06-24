@@ -96,7 +96,7 @@ export const ShippingZoneRatesCreatePage: React.FC<ShippingZoneRatesCreatePagePr
   };
 
   return (
-    <Form initial={initialForm} onSubmit={onSubmit}>
+    <Form confirmLeave initial={initialForm} onSubmit={onSubmit}>
       {({ change, data, hasChanged, submit, triggerChange, set }) => {
         const handleChannelsChange = createChannelsChangeHandler(
           shippingChannels,

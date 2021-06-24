@@ -61,7 +61,7 @@ const WebhooksDetailsPage: React.FC<WebhooksDetailsPageProps> = ({
   };
 
   return (
-    <Form initial={initialForm} onSubmit={onSubmit}>
+    <Form confirmLeave initial={initialForm} onSubmit={onSubmit}>
       {({ data, hasChanged, submit, change }) => (
         <Container>
           <AppHeader onBack={onBack}>{appName}</AppHeader>

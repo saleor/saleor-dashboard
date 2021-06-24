@@ -94,7 +94,7 @@ const CustomerAddressDialog = withStyles(
         fullWidth
         maxWidth="sm"
       >
-        <Form initial={initialForm} onSubmit={handleSubmit}>
+        <Form confirmLeave initial={initialForm} onSubmit={handleSubmit}>
           {({ change, data }) => {
             const handleCountrySelect = createSingleAutocompleteSelectHandler(
               change,

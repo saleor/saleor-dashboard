@@ -200,7 +200,7 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
   ]);
 
   return (
-    <Form initial={initial} onSubmit={handleSubmit}>
+    <Form confirmLeave initial={initial} onSubmit={handleSubmit}>
       {({ change, data, hasChanged, submit }) => {
         const changeMetadata = makeMetadataChangeHandler(change);
 

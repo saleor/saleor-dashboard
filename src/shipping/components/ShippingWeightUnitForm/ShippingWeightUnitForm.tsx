@@ -29,7 +29,11 @@ const ShippingWeightUnitForm: React.FC<ShippingWeightUnitFormProps> = ({
     unit: defaultWeightUnit
   };
   return (
-    <Form initial={initialForm} onSubmit={formData => onSubmit(formData.unit)}>
+    <Form
+      confirmLeave
+      initial={initialForm}
+      onSubmit={formData => onSubmit(formData.unit)}
+    >
       {({ change, data, submit }) => (
         <Card>
           <CardTitle title={intl.formatMessage(sectionNames.configuration)} />

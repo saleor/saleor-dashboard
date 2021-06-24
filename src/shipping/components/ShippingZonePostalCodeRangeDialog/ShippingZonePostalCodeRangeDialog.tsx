@@ -56,7 +56,7 @@ const ShippingZonePostalCodeRangeDialog: React.FC<ShippingZonePostalCodeRangeDia
           description="dialog header"
         />
       </DialogTitle>
-      <Form initial={initial} onSubmit={onSubmit}>
+      <Form confirmLeave initial={initial} onSubmit={onSubmit}>
         {({ change, data, hasChanged }) => (
           <>
             <DialogContent>

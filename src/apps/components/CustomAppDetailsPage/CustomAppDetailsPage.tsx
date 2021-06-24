@@ -95,7 +95,7 @@ const CustomAppDetailsPage: React.FC<CustomAppDetailsPageProps> = props => {
   };
 
   return (
-    <Form initial={initialForm} onSubmit={onSubmit} confirmLeave>
+    <Form confirmLeave initial={initialForm} onSubmit={onSubmit}>
       {({ data, change, hasChanged, submit }) => (
         <Container>
           <AppHeader onBack={onBack}>

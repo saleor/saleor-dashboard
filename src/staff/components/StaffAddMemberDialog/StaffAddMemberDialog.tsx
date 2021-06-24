@@ -82,7 +82,7 @@ const StaffAddMemberDialog: React.FC<StaffAddMemberDialogProps> = props => {
 
   return (
     <Dialog onClose={onClose} open={open}>
-      <Form initial={initialForm} onSubmit={onConfirm}>
+      <Form confirmLeave initial={initialForm} onSubmit={onConfirm}>
         {({ change, data: formData, hasChanged }) => (
           <>
             <DialogTitle>

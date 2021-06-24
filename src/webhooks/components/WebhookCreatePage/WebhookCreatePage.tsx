@@ -51,7 +51,7 @@ const WebhookCreatePage: React.FC<WebhookCreatePageProps> = ({
   };
 
   return (
-    <Form initial={initialForm} onSubmit={onSubmit}>
+    <Form confirmLeave initial={initialForm} onSubmit={onSubmit}>
       {({ data, hasChanged, submit, change }) => (
         <Container>
           <AppHeader onBack={onBack}>{appName}</AppHeader>

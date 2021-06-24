@@ -130,7 +130,12 @@ const CustomerCreatePage: React.FC<CustomerCreatePageProps> = ({
   };
 
   return (
-    <Form initial={initialForm} onSubmit={handleSubmit} confirmLeave>
+    <Form
+      confirmLeave
+      initial={initialForm}
+      onSubmit={handleSubmit}
+      confirmLeave
+    >
       {({ change, data, hasChanged, submit }) => {
         const handleCountrySelect = createSingleAutocompleteSelectHandler(
           change,

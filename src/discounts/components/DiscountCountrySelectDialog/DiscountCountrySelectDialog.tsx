@@ -79,7 +79,7 @@ const DiscountCountrySelectDialog: React.FC<DiscountCountrySelectDialogProps> = 
   };
   return (
     <Dialog onClose={onClose} open={open} fullWidth maxWidth="sm">
-      <Form initial={initialForm} onSubmit={onConfirm}>
+      <Form confirmLeave initial={initialForm} onSubmit={onConfirm}>
         {({ data, change }) => {
           const countrySelectionMap = countries.reduce((acc, country) => {
             acc[country.code] = !!data.countries.find(

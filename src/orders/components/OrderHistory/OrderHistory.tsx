@@ -317,7 +317,12 @@ const OrderHistory: React.FC<OrderHistoryProps> = props => {
       <Hr />
       {history ? (
         <Timeline>
-          <Form initial={{ message: "" }} onSubmit={onNoteAdd} resetOnSubmit>
+          <Form
+            confirmLeave
+            initial={{ message: "" }}
+            onSubmit={onNoteAdd}
+            resetOnSubmit
+          >
             {({ change, data, reset, submit }) => (
               <TimelineAddNote
                 message={data.message}

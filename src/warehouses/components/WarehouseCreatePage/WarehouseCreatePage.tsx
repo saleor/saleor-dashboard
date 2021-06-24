@@ -61,7 +61,7 @@ const WarehouseCreatePage: React.FC<WarehouseCreatePageProps> = ({
   } = useAddressValidation(onSubmit);
 
   return (
-    <Form initial={initialForm} onSubmit={handleSubmit}>
+    <Form confirmLeave initial={initialForm} onSubmit={handleSubmit}>
       {({ change, data, submit }) => {
         const countryChoices = mapCountriesToChoices(countries);
         const handleCountryChange = createSingleAutocompleteSelectHandler(

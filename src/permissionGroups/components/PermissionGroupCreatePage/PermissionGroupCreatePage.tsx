@@ -56,7 +56,7 @@ const PermissionGroupCreatePage: React.FC<PermissionGroupCreatePageProps> = ({
   );
 
   return (
-    <Form initial={initialForm} onSubmit={onSubmit} confirmLeave>
+    <Form confirmLeave initial={initialForm} onSubmit={onSubmit} confirmLeave>
       {({ data, change, submit, hasChanged }) => (
         <Container>
           <AppHeader onBack={onBack}>

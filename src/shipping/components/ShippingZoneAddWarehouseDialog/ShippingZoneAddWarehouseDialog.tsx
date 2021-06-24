@@ -104,7 +104,7 @@ const ShippingZoneAddWarehouseDialog: React.FC<ShippingZoneAddWarehouseDialogPro
           description="header, dialog"
         />
       </DialogTitle>
-      <Form initial={initialForm} onSubmit={handleSubmit}>
+      <Form confirmLeave initial={initialForm} onSubmit={handleSubmit}>
         {({ change, data }) => {
           const handleCountrySelect = createSingleAutocompleteSelectHandler(
             change,

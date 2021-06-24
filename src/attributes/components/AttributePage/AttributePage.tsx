@@ -154,7 +154,7 @@ const AttributePage: React.FC<AttributePageProps> = ({
   };
 
   return (
-    <Form initial={initialForm} onSubmit={handleSubmit}>
+    <Form confirmLeave initial={initialForm} onSubmit={handleSubmit}>
       {({
         change,
         set,

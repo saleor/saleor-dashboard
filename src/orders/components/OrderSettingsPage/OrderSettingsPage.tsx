@@ -28,7 +28,7 @@ const OrderSettingsPage: React.FC<OrderSettingsPageProps> = props => {
   const intl = useIntl();
 
   return (
-    <Form confirmLeave initial={data} onSubmit={onSubmit}>
+    <Form confirmLeave confirmLeave initial={data} onSubmit={onSubmit}>
       {({ data, submit, hasChanged, change }) => (
         <Container>
           <AppHeader onBack={onBack}>

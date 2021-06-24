@@ -98,6 +98,7 @@ const ExitFormDialogProvider = ({ children }) => {
     setIsDirty(false);
     // because our useNavigator navigate action may be blocked
     // by exit dialog we want to avoid using it doing this transition
+    // console.log(666, navAction.current.pathname);
     routerHistory.push(navAction.current.pathname);
     setStateDefaultValues();
   };

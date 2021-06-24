@@ -97,7 +97,7 @@ const StaffDetailsPage: React.FC<StaffDetailsPageProps> = ({
   };
 
   return (
-    <Form initial={initialForm} onSubmit={onSubmit} confirmLeave>
+    <Form confirmLeave initial={initialForm} onSubmit={onSubmit}>
       {({ data: formData, change, hasChanged, submit, toggleValue }) => {
         const permissionGroupsChange = createMultiAutocompleteSelectHandler(
           toggleValue,

@@ -139,7 +139,7 @@ const SaleDetailsPage: React.FC<SaleDetailsPageProps> = ({
     type: maybe(() => sale.type, SaleTypeEnum.FIXED)
   };
   return (
-    <Form initial={initialForm} onSubmit={onSubmit}>
+    <Form confirmLeave initial={initialForm} onSubmit={onSubmit}>
       {({ change, data, hasChanged, submit, triggerChange }) => {
         const handleChannelChange = createSaleChannelsChangeHandler(
           data.channelListings,

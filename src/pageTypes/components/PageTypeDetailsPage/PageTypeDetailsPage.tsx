@@ -106,7 +106,12 @@ const PageTypeDetailsPage: React.FC<PageTypeDetailsPageProps> = props => {
   };
 
   return (
-    <Form initial={formInitialData} onSubmit={handleSubmit} confirmLeave>
+    <Form
+      confirmLeave
+      initial={formInitialData}
+      onSubmit={handleSubmit}
+      confirmLeave
+    >
       {({ change, data, hasChanged, submit }) => {
         const changeMetadata = makeMetadataChangeHandler(change);
 

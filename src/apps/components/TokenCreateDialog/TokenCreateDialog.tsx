@@ -53,7 +53,11 @@ const TokenCreateDialog: React.FC<TokenCreateDialogProps> = props => {
 
   return (
     <Dialog open={open} fullWidth maxWidth="sm">
-      <Form initial={{ name: "" }} onSubmit={data => onCreate(data.name)}>
+      <Form
+        confirmLeave
+        initial={{ name: "" }}
+        onSubmit={data => onCreate(data.name)}
+      >
         {({ change, data, submit }) => (
           <>
             <DialogTitle>
