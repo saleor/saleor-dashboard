@@ -44,6 +44,11 @@ export interface CommonUseFormResult<TData> {
   submit: () => void;
 }
 
+export interface CommonUseFormResultWithHandlers<TData, THandlers>
+  extends CommonUseFormResult<TData> {
+  handlers: THandlers;
+}
+
 type FormData = Record<string, any | any[]>;
 
 function merge<T extends FormData>(prevData: T, prevState: T, data: T): T {
