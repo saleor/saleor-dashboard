@@ -297,9 +297,10 @@ export const ProductCreateView: React.FC<ProductCreateProps> = ({ params }) => {
         currentChannels={currentChannels}
         categories={mapEdgesToItems(searchCategoryOpts?.data?.search) || []}
         collections={mapEdgesToItems(searchCollectionOpts?.data?.search) || []}
-        attributeValues={mapEdgesToItems(
-          searchAttributeValuesOpts?.data?.attribute.choices
-        )}
+        attributeValues={
+          mapEdgesToItems(searchAttributeValuesOpts?.data?.attribute.choices) ||
+          []
+        }
         loading={loading}
         channelsErrors={
           updateVariantChannelsOpts.data?.productVariantChannelListingUpdate

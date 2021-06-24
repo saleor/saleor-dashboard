@@ -191,9 +191,8 @@ export const ProductVariant: React.FC<ProductVariantCreateProps> = ({
     onFetchMore: loadMoreAttributeValues
   };
 
-  const attributeValues = mapEdgesToItems(
-    searchAttributeValuesOpts?.data?.attribute.choices
-  );
+  const attributeValues =
+    mapEdgesToItems(searchAttributeValuesOpts?.data?.attribute.choices) || [];
 
   const disableForm =
     productLoading ||
