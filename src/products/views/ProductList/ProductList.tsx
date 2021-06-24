@@ -347,7 +347,7 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
 
   const filterOpts = getFilterOpts(
     params,
-    mapEdgesToItems(initialFilterAttributes?.attributes),
+    mapEdgesToItems(initialFilterAttributes?.attributes) || [],
     searchAttributeValues,
     {
       initial: mapEdgesToItems(initialFilterCategories?.categories) || [],
