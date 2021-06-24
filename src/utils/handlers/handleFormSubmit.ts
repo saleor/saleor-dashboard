@@ -1,4 +1,15 @@
 import { SubmitPromise } from "@saleor/hooks/useForm";
+import { getMutationErrors } from "@saleor/misc";
+
+// because our submit functions return either errors[],
+// or { data: { mutationName: { errors: [] }}}
+const extractErrors = (data: any): any[] => {
+  if (Array.isArray(data)) {
+    return data;
+  }
+
+  return getMutationErrors(data.data);
+};
 
 async function handleFormSubmit<T>(
   data: T,
@@ -9,7 +20,8 @@ async function handleFormSubmit<T>(
   const result = onSubmit(data);
 
   if (result) {
-    const errors = await result;
+    const response = await result;
+    const errors = extractErrors(response);
 
     if (errors?.length === 0) {
       setChanged(false);
