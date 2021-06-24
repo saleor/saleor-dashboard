@@ -3,12 +3,13 @@ import useNotifier from "@saleor/hooks/useNotifier";
 import { commonMessages } from "@saleor/intl";
 import { getMutationState } from "@saleor/misc";
 import OrderSettingsPage from "@saleor/orders/components/OrderSettingsPage";
-import { OrderSettingsFormData } from "@saleor/orders/components/OrderSettingsPage/form";
 import { useOrderSettingsUpdateMutation } from "@saleor/orders/mutations";
 import { useOrderSettingsQuery } from "@saleor/orders/queries";
 import { orderListUrl } from "@saleor/orders/urls";
 import React from "react";
 import { useIntl } from "react-intl";
+
+import { OrderSettingsFormData } from "../components/OrderSettingsPage/types";
 
 export const OrderSettings: React.FC = () => {
   const intl = useIntl();

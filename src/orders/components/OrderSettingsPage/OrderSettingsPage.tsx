@@ -2,6 +2,7 @@ import { Typography } from "@material-ui/core";
 import AppHeader from "@saleor/components/AppHeader";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
 import Container from "@saleor/components/Container";
+import Form from "@saleor/components/Form";
 import Grid from "@saleor/components/Grid";
 import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
@@ -12,7 +13,7 @@ import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import OrderSettings from "../OrderSettings/OrderSettings";
-import OrderSettingsForm, { OrderSettingsFormData } from "./form";
+import { OrderSettingsFormData } from "./types";
 
 export interface OrderSettingsPageProps {
   data: OrderSettingsFragment;
@@ -27,7 +28,7 @@ const OrderSettingsPage: React.FC<OrderSettingsPageProps> = props => {
   const intl = useIntl();
 
   return (
-    <OrderSettingsForm orderSettings={data} onSubmit={onSubmit}>
+    <Form confirmLeave initial={data} onSubmit={onSubmit}>
       {({ data, submit, hasChanged, change }) => (
         <Container>
           <AppHeader onBack={onBack}>
@@ -55,7 +56,7 @@ const OrderSettingsPage: React.FC<OrderSettingsPageProps> = props => {
           />
         </Container>
       )}
-    </OrderSettingsForm>
+    </Form>
   );
 };
 OrderSettingsPage.displayName = "OrderSettingsPage";
