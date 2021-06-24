@@ -14,11 +14,15 @@ import {
   AttributeInput,
   AttributeInputData
 } from "@saleor/components/Attributes";
+import { ExitFormDialogContext } from "@saleor/components/Form/ExitFormDialogProvider";
 import { MetadataFormData } from "@saleor/components/Metadata";
 import { MultiAutocompleteChoiceType } from "@saleor/components/MultiAutocompleteSelectField";
 import { RichTextEditorChange } from "@saleor/components/RichTextEditor";
 import { SingleAutocompleteChoiceType } from "@saleor/components/SingleAutocompleteSelectField";
-import useForm, { FormChange } from "@saleor/hooks/useForm";
+import useForm, {
+  CommonUseFormResultWithHandlers,
+  FormChange
+} from "@saleor/hooks/useForm";
 import useFormset, {
   FormsetChange,
   FormsetData
@@ -42,11 +46,12 @@ import { SearchProducts_search_edges_node } from "@saleor/searches/types/SearchP
 import { SearchProductTypes_search_edges_node } from "@saleor/searches/types/SearchProductTypes";
 import { SearchWarehouses_search_edges_node } from "@saleor/searches/types/SearchWarehouses";
 import { FetchMoreProps, ReorderEvent } from "@saleor/types";
+import handleFormSubmit from "@saleor/utils/handlers/handleFormSubmit";
 import createMultiAutocompleteSelectHandler from "@saleor/utils/handlers/multiAutocompleteSelectChangeHandler";
 import createSingleAutocompleteSelectHandler from "@saleor/utils/handlers/singleAutocompleteSelectChangeHandler";
 import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
 import useRichText from "@saleor/utils/richText/useRichText";
-import React from "react";
+import React, { useContext, useEffect } from "react";
 
 import { ProductStockFormsetData, ProductStockInput } from "../ProductStocks";
 
@@ -105,13 +110,12 @@ export interface ProductCreateHandlers
   fetchReferences: (value: string) => void;
   fetchMoreReferences: FetchMoreProps;
 }
-export interface UseProductCreateFormResult {
-  change: FormChange;
-  data: ProductCreateData;
+export interface UseProductCreateFormResult
+  extends CommonUseFormResultWithHandlers<
+    ProductCreateData,
+    ProductCreateHandlers
+  > {
   disabled: boolean;
-  handlers: ProductCreateHandlers;
-  hasChanged: boolean;
-  submit: () => Promise<boolean>;
 }
 
 export interface UseProductCreateFormOpts
@@ -175,13 +179,22 @@ function useProductCreateForm(
     weight: ""
   };
 
-  const [changed, setChanged] = React.useState(false);
-  const triggerChange = () => setChanged(true);
+  const {
+    change,
+    triggerChange,
+    toggleValue,
+    hasChanged,
+    data: formData,
+    setChanged
+  } = useForm(
+    {
+      ...initial,
+      ...defaultInitialFormData
+    },
+    undefined,
+    { confirmLeave: true }
+  );
 
-  const form = useForm({
-    ...initial,
-    ...defaultInitialFormData
-  });
   const attributes = useFormset<AttributeInputData>(
     opts.selectedProductType
       ? getAttributeInputFromProductType(opts.selectedProductType)
@@ -194,16 +207,20 @@ function useProductCreateForm(
     triggerChange
   });
 
+  const { setExitDialogSubmitRef, setEnableExitDialog } = useContext(
+    ExitFormDialogContext
+  );
+
   const {
     makeChangeHandler: makeMetadataChangeHandler
   } = useMetadataChangeTrigger();
 
   const handleChange: FormChange = (event, cb) => {
-    form.change(event, cb);
+    change(event, cb);
     triggerChange();
   };
   const handleCollectionSelect = createMultiAutocompleteSelectHandler(
-    form.toggleValue,
+    toggleValue,
     opts.setSelectedCollections,
     opts.selectedCollections,
     opts.collections
@@ -291,7 +308,7 @@ function useProductCreateForm(
   );
 
   const getData = (): ProductCreateData => ({
-    ...form.data,
+    ...formData,
     attributes: getAttributesDisplayData(
       attributes.data,
       attributesWithNewFileValue.data,
@@ -303,8 +320,13 @@ function useProductCreateForm(
     productType: opts.selectedProductType,
     stocks: stocks.data
   });
+
   const data = getData();
-  const submit = () => onSubmit(data);
+
+  const submit = () =>
+    handleFormSubmit(data, onSubmit, setChanged, setEnableExitDialog);
+
+  useEffect(() => setExitDialogSubmitRef(submit), [submit]);
 
   const disabled =
     !opts.selectedProductType?.hasVariants &&
@@ -338,7 +360,7 @@ function useProductCreateForm(
       selectProductType: handleProductTypeSelect,
       selectTaxRate: handleTaxTypeSelect
     },
-    hasChanged: changed,
+    hasChanged,
     submit
   };
 }
