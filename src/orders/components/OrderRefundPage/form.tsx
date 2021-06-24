@@ -1,11 +1,16 @@
-import useForm, { FormChange, SubmitPromise } from "@saleor/hooks/useForm";
+import { ExitFormDialogContext } from "@saleor/components/Form/ExitFormDialogProvider";
+import useForm, {
+  CommonUseFormResultWithHandlers,
+  FormChange,
+  SubmitPromise
+} from "@saleor/hooks/useForm";
 import useFormset, {
   FormsetChange,
   FormsetData
 } from "@saleor/hooks/useFormset";
 import { OrderRefundData_order } from "@saleor/orders/types/OrderRefundData";
 import handleFormSubmit from "@saleor/utils/handlers/handleFormSubmit";
-import React from "react";
+import React, { useContext, useEffect } from "react";
 
 import { refundFulfilledStatuses } from "./OrderRefundPage";
 
@@ -40,13 +45,12 @@ export interface OrderRefundFormData extends OrderRefundData {
 
 export type OrderRefundSubmitData = OrderRefundFormData;
 
-export interface UseOrderRefundFormResult {
-  change: FormChange;
-  data: OrderRefundFormData;
+export interface UseOrderRefundFormResult
+  extends CommonUseFormResultWithHandlers<
+    OrderRefundFormData,
+    OrderRefundHandlers
+  > {
   disabled: boolean;
-  handlers: OrderRefundHandlers;
-  hasChanged: boolean;
-  submit: () => Promise<boolean>;
 }
 
 interface OrderRefundFormProps {
@@ -72,10 +76,20 @@ function useOrderRefundForm(
   defaultType: OrderRefundType,
   onSubmit: (data: OrderRefundSubmitData) => SubmitPromise
 ): UseOrderRefundFormResult {
-  const [changed, setChanged] = React.useState(false);
-  const triggerChange = () => setChanged(true);
+  const {
+    change,
+    setChanged,
+    hasChanged,
+    triggerChange,
+    data: formData
+  } = useForm(getOrderRefundPageFormData(defaultType), undefined, {
+    confirmLeave: true
+  });
 
-  const form = useForm(getOrderRefundPageFormData(defaultType));
+  const { setExitDialogSubmitRef, setEnableExitDialog } = useContext(
+    ExitFormDialogContext
+  );
+
   const refundedProductQuantities = useFormset<null, string>(
     order?.lines
       .filter(line => line.quantityFulfilled !== line.quantity)
@@ -104,7 +118,7 @@ function useOrderRefundForm(
   );
 
   const handleChange: FormChange = (event, cb) => {
-    form.change(event, cb);
+    change(event, cb);
     triggerChange();
   };
   const handleRefundedProductQuantityChange: FormsetChange<string> = (
@@ -165,12 +179,15 @@ function useOrderRefundForm(
   };
 
   const data: OrderRefundFormData = {
-    ...form.data,
+    ...formData,
     refundedFulfilledProductQuantities: refundedFulfilledProductQuantities.data,
     refundedProductQuantities: refundedProductQuantities.data
   };
 
-  const submit = () => handleFormSubmit(data, onSubmit, setChanged);
+  const submit = () =>
+    handleFormSubmit(data, onSubmit, setChanged, setEnableExitDialog);
+
+  useEffect(() => setExitDialogSubmitRef(submit), [submit]);
 
   const disabled = !order;
 
@@ -184,7 +201,7 @@ function useOrderRefundForm(
       setMaximalRefundedFulfilledProductQuantities: handleMaximalRefundedFulfilledProductQuantitiesSet,
       setMaximalRefundedProductQuantities: handleMaximalRefundedProductQuantitiesSet
     },
-    hasChanged: changed,
+    hasChanged,
     submit
   };
 }
