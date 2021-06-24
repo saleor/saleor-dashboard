@@ -224,7 +224,7 @@ const FilterContent: React.FC<FilterContentProps> = ({
                 />
               </ExpansionPanelSummary>
               <FilterErrorsList
-                errors={errors[filter.name]}
+                errors={errors?.[filter.name]}
                 errorMessages={errorMessages}
                 filter={filter}
               />

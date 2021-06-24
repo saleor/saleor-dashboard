@@ -2103,12 +2103,24 @@
     "context": "button",
     "string": "Filters"
   },
+  "src_dot_components_dot_Filter_dot_DEPENDENCIES_MISSING": {
+    "context": "filters error messages dependencies missing",
+    "string": "Filter requires other filters: {dependencies}"
+  },
   "src_dot_components_dot_Filter_dot_FilterContent_dot_2779594451": {
     "context": "filter range separator",
     "string": "and"
   },
   "src_dot_components_dot_Filter_dot_FilterContent_dot_996289613": {
     "string": "Filters"
+  },
+  "src_dot_components_dot_Filter_dot_UNKNOWN_ERROR": {
+    "context": "filters error messages unknown error",
+    "string": "Unknown error occurred"
+  },
+  "src_dot_components_dot_Filter_dot_VALUE_REQUIRED": {
+    "context": "filters error messages value required",
+    "string": "Choose a value"
   },
   "src_dot_components_dot_ImageUpload_dot_1731007575": {
     "context": "image upload",
@@ -2893,6 +2905,10 @@
     "context": "sale status",
     "string": "Active"
   },
+  "src_dot_discounts_dot_components_dot_SaleListPage_dot_channel": {
+    "context": "sale channel",
+    "string": "Channel"
+  },
   "src_dot_discounts_dot_components_dot_SaleListPage_dot_expired": {
     "context": "sale status",
     "string": "Expired"
@@ -3053,6 +3069,10 @@
   "src_dot_discounts_dot_components_dot_VoucherListPage_dot_active": {
     "context": "voucher status",
     "string": "Active"
+  },
+  "src_dot_discounts_dot_components_dot_VoucherListPage_dot_channel": {
+    "context": "voucher channel",
+    "string": "Channel"
   },
   "src_dot_discounts_dot_components_dot_VoucherListPage_dot_expired": {
     "context": "voucher status",
@@ -5007,8 +5027,8 @@
     "string": "All Plugins"
   },
   "src_dot_plugins_dot_components_dot_PluginsListPage_dot_active": {
-    "context": "plugin filters error messages active",
-    "string": "Active is not selected"
+    "context": "plugin filters error messages status",
+    "string": "Status is not selected"
   },
   "src_dot_plugins_dot_components_dot_PluginsListPage_dot_channelStatusSectionSubtitle": {
     "context": "status section subtitle",
@@ -5363,6 +5383,10 @@
   "src_dot_products_dot_components_dot_ProductListPage_dot_available": {
     "context": "product status",
     "string": "Available"
+  },
+  "src_dot_products_dot_components_dot_ProductListPage_dot_channel": {
+    "context": "sales channel",
+    "string": "Channel"
   },
   "src_dot_products_dot_components_dot_ProductListPage_dot_hidden": {
     "context": "product is hidden",
