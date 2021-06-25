@@ -54,7 +54,7 @@ function useCategoryUpdateForm(
   category: CategoryDetails_category,
   onSubmit: (data: CategoryUpdateData) => Promise<any[]>
 ): UseCategoryUpdateFormResult {
-  const { change, data, triggerChange, hasChanged, setChanged } = useForm<
+  const { handleChange, data, triggerChange, hasChanged, setChanged } = useForm<
     CategoryUpdateFormData
   >(getInitialData(), undefined, { confirmLeave: true });
 
@@ -72,11 +72,6 @@ function useCategoryUpdateForm(
     isPrivateMetadataModified,
     makeChangeHandler: makeMetadataChangeHandler
   } = useMetadataChangeTrigger();
-
-  const handleChange: FormChange = (event, cb) => {
-    change(event, cb);
-    triggerChange();
-  };
 
   const changeMetadata = makeMetadataChangeHandler(handleChange);
 

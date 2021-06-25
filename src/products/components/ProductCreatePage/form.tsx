@@ -180,9 +180,9 @@ function useProductCreateForm(
   };
 
   const {
-    change,
     triggerChange,
     toggleValue,
+    handleChange,
     hasChanged,
     data: formData,
     setChanged
@@ -215,10 +215,6 @@ function useProductCreateForm(
     makeChangeHandler: makeMetadataChangeHandler
   } = useMetadataChangeTrigger();
 
-  const handleChange: FormChange = (event, cb) => {
-    change(event, cb);
-    triggerChange();
-  };
   const handleCollectionSelect = createMultiAutocompleteSelectHandler(
     toggleValue,
     opts.setSelectedCollections,

@@ -1,13 +1,18 @@
 import { OutputData } from "@editorjs/editorjs";
 import { ChannelCollectionData } from "@saleor/channels/utils";
 import { createChannelsChangeHandler } from "@saleor/collections/utils";
+import { ExitFormDialogContext } from "@saleor/components/Form/ExitFormDialogProvider";
 import { MetadataFormData } from "@saleor/components/Metadata";
 import { RichTextEditorChange } from "@saleor/components/RichTextEditor";
-import useForm, { FormChange, SubmitPromise } from "@saleor/hooks/useForm";
+import useForm, {
+  CommonUseFormResultWithHandlers,
+  FormChange,
+  SubmitPromise
+} from "@saleor/hooks/useForm";
 import handleFormSubmit from "@saleor/utils/handlers/handleFormSubmit";
 import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
 import useRichText from "@saleor/utils/richText/useRichText";
-import React from "react";
+import React, { useContext, useEffect } from "react";
 
 export interface CollectionCreateFormData extends MetadataFormData {
   backgroundImage: {
@@ -33,13 +38,10 @@ interface CollectionCreateHandlers {
     data: Omit<ChannelCollectionData, "name" | "id">
   ) => void;
 }
-export interface UseCollectionCreateFormResult {
-  change: FormChange;
-  data: CollectionCreateData;
-  handlers: CollectionCreateHandlers;
-  hasChanged: boolean;
-  submit: () => Promise<boolean>;
-}
+export type UseCollectionCreateFormResult = CommonUseFormResultWithHandlers<
+  CollectionCreateData,
+  CollectionCreateHandlers
+>;
 
 export interface CollectionCreateFormProps {
   currentChannels: ChannelCollectionData[];
@@ -48,28 +50,40 @@ export interface CollectionCreateFormProps {
   onSubmit: (data: CollectionCreateData) => SubmitPromise;
 }
 
+const getInitialData = (
+  currentChannels: ChannelCollectionData[]
+): CollectionCreateFormData => ({
+  backgroundImage: {
+    url: null,
+    value: null
+  },
+  backgroundImageAlt: "",
+  channelListings: currentChannels,
+  metadata: [],
+  name: "",
+  privateMetadata: [],
+  seoDescription: "",
+  seoTitle: "",
+  slug: ""
+});
+
 function useCollectionCreateForm(
   currentChannels: ChannelCollectionData[],
   setChannels: (data: ChannelCollectionData[]) => void,
   onSubmit: (data: CollectionCreateData) => SubmitPromise
 ): UseCollectionCreateFormResult {
-  const [changed, setChanged] = React.useState(false);
-  const triggerChange = () => setChanged(true);
+  const {
+    handleChange,
+    data: formData,
+    triggerChange,
+    setChanged,
+    hasChanged
+  } = useForm<CollectionCreateFormData>(getInitialData(currentChannels));
 
-  const form = useForm<CollectionCreateFormData>({
-    backgroundImage: {
-      url: null,
-      value: null
-    },
-    backgroundImageAlt: "",
-    channelListings: currentChannels,
-    metadata: [],
-    name: "",
-    privateMetadata: [],
-    seoDescription: "",
-    seoTitle: "",
-    slug: ""
-  });
+  const { setExitDialogSubmitRef, setEnableExitDialog } = useContext(
+    ExitFormDialogContext
+  );
+
   const [description, changeDescription] = useRichText({
     initial: null,
     triggerChange
@@ -79,15 +93,11 @@ function useCollectionCreateForm(
     makeChangeHandler: makeMetadataChangeHandler
   } = useMetadataChangeTrigger();
 
-  const handleChange: FormChange = (event, cb) => {
-    form.change(event, cb);
-    triggerChange();
-  };
   const changeMetadata = makeMetadataChangeHandler(handleChange);
 
   // Need to make it function to always have description.current up to date
   const getData = (): CollectionCreateData => ({
-    ...form.data,
+    ...formData,
     description: description.current
   });
 
@@ -97,7 +107,10 @@ function useCollectionCreateForm(
     triggerChange
   );
 
-  const submit = () => handleFormSubmit(getData(), onSubmit, setChanged);
+  const submit = () =>
+    handleFormSubmit(getData(), onSubmit, setChanged, setEnableExitDialog);
+
+  useEffect(() => setExitDialogSubmitRef(submit), [submit]);
 
   return {
     change: handleChange,
@@ -107,7 +120,7 @@ function useCollectionCreateForm(
       changeDescription,
       changeMetadata
     },
-    hasChanged: changed,
+    hasChanged,
     submit
   };
 }

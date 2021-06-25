@@ -80,7 +80,7 @@ function useOrderReturnForm(
   onSubmit: (data: OrderRefundSubmitData) => SubmitPromise
 ): UseOrderRefundFormResult {
   const {
-    change,
+    handleChange,
     setChanged,
     hasChanged,
     data: formData,
@@ -92,10 +92,6 @@ function useOrderReturnForm(
   const { setExitDialogSubmitRef, setEnableExitDialog } = useContext(
     ExitFormDialogContext
   );
-
-  const handleChange: FormChange = (event, cb) => {
-    change(event, cb);
-  };
 
   const unfulfiledItemsQuantites = useFormset<LineItemData, number>(
     getOrderUnfulfilledLines(order).map(getParsedLineData({ initialValue: 0 }))

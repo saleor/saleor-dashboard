@@ -130,7 +130,7 @@ function useProductVariantUpdateForm(
   };
 
   const {
-    change,
+    handleChange,
     triggerChange,
     data: formData,
     setChanged,
@@ -146,10 +146,6 @@ function useProductVariantUpdateForm(
     makeChangeHandler: makeMetadataChangeHandler
   } = useMetadataChangeTrigger();
 
-  const handleChange: FormChange = (event, cb) => {
-    change(event, cb);
-    triggerChange();
-  };
   const changeMetadata = makeMetadataChangeHandler(handleChange);
   const handleAttributeChange = createAttributeChangeHandler(
     attributes.change,

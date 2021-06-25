@@ -47,7 +47,7 @@ const initialData: CategoryCreateFormData = {
 function useCategoryCreateForm(
   onSubmit: (data: CategoryCreateData) => Promise<any[]>
 ): UseCategoryCreateFormResult {
-  const { change, data, hasChanged, triggerChange, setChanged } = useForm<
+  const { handleChange, data, hasChanged, triggerChange, setChanged } = useForm<
     CategoryCreateFormData
   >(initialData, undefined, { confirmLeave: true });
 
@@ -64,10 +64,6 @@ function useCategoryCreateForm(
     makeChangeHandler: makeMetadataChangeHandler
   } = useMetadataChangeTrigger();
 
-  const handleChange: FormChange = (event, cb) => {
-    change(event, cb);
-    triggerChange();
-  };
   const changeMetadata = makeMetadataChangeHandler(handleChange);
 
   // Need to make it function to always have description.current up to date

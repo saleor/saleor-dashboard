@@ -1,7 +1,6 @@
 import { ExitFormDialogContext } from "@saleor/components/Form/ExitFormDialogProvider";
 import useForm, {
   CommonUseFormResultWithHandlers,
-  FormChange,
   SubmitPromise
 } from "@saleor/hooks/useForm";
 import useFormset, {
@@ -77,7 +76,7 @@ function useOrderRefundForm(
   onSubmit: (data: OrderRefundSubmitData) => SubmitPromise
 ): UseOrderRefundFormResult {
   const {
-    change,
+    handleChange,
     setChanged,
     hasChanged,
     triggerChange,
@@ -117,10 +116,6 @@ function useOrderRefundForm(
       )
   );
 
-  const handleChange: FormChange = (event, cb) => {
-    change(event, cb);
-    triggerChange();
-  };
   const handleRefundedProductQuantityChange: FormsetChange<string> = (
     id,
     value

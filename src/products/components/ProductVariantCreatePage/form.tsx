@@ -102,7 +102,7 @@ function useProductVariantCreateForm(
   const {
     setChanged,
     triggerChange,
-    change,
+    handleChange,
     hasChanged,
     data: formData
   } = useForm(initial, undefined, { confirmLeave: true });
@@ -118,10 +118,6 @@ function useProductVariantCreateForm(
     makeChangeHandler: makeMetadataChangeHandler
   } = useMetadataChangeTrigger();
 
-  const handleChange: FormChange = (event, cb) => {
-    change(event, cb);
-    triggerChange();
-  };
   const changeMetadata = makeMetadataChangeHandler(handleChange);
   const handleAttributeChange = createAttributeChangeHandler(
     attributes.change,

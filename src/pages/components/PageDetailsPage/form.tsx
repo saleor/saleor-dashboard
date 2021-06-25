@@ -10,9 +10,15 @@ import {
   createFetchReferencesHandler
 } from "@saleor/attributes/utils/handlers";
 import { AttributeInput } from "@saleor/components/Attributes";
+import { ExitFormDialogContext } from "@saleor/components/Form/ExitFormDialogProvider";
 import { MetadataFormData } from "@saleor/components/Metadata";
 import { RichTextEditorChange } from "@saleor/components/RichTextEditor";
-import useForm, { FormChange, SubmitPromise } from "@saleor/hooks/useForm";
+import useForm, {
+  CommonUseFormResult,
+  CommonUseFormResultWithHandlers,
+  FormChange,
+  SubmitPromise
+} from "@saleor/hooks/useForm";
 import useFormset, {
   FormsetChange,
   FormsetData
@@ -37,7 +43,7 @@ import { mapMetadataItemToInput } from "@saleor/utils/maps";
 import getMetadata from "@saleor/utils/metadata/getMetadata";
 import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
 import useRichText from "@saleor/utils/richText/useRichText";
-import React from "react";
+import React, { useContext, useEffect } from "react";
 
 export interface PageFormData extends MetadataFormData {
   isPublished: boolean;
@@ -71,13 +77,11 @@ export interface PageUpdateHandlers {
   fetchReferences: (value: string) => void;
   fetchMoreReferences: FetchMoreProps;
 }
-export interface UsePageUpdateFormResult {
-  change: FormChange;
-  data: PageData;
-  handlers: PageUpdateHandlers;
-  hasChanged: boolean;
-  submit: () => void;
-}
+
+export type UsePageUpdateFormResult = CommonUseFormResultWithHandlers<
+  PageData,
+  PageUpdateHandlers
+>;
 
 export interface UsePageFormOpts {
   pageTypes?: SearchPageTypes_search_edges_node[];
@@ -98,13 +102,26 @@ export interface PageFormProps extends UsePageFormOpts {
   onSubmit: (data: PageData) => SubmitPromise;
 }
 
+const getInitialFormData = (page?: PageDetails_page): PageFormData => ({
+  isPublished: page?.isPublished,
+  metadata: page?.metadata?.map(mapMetadataItemToInput) || [],
+  pageType: null,
+  privateMetadata: page?.privateMetadata?.map(mapMetadataItemToInput) || [],
+  publicationDate: page?.publicationDate || "",
+  seoDescription: page?.seoDescription || "",
+  seoTitle: page?.seoTitle || "",
+  slug: page?.slug || "",
+  title: page?.title || ""
+});
+
 function usePageForm(
   page: PageDetails_page,
   onSubmit: (data: PageData) => SubmitPromise,
   opts: UsePageFormOpts
 ): UsePageUpdateFormResult {
-  const [changed, setChanged] = React.useState(false);
-  const triggerChange = () => setChanged(true);
+  const { setExitDialogSubmitRef, setEnableExitDialog } = useContext(
+    ExitFormDialogContext
+  );
 
   const pageExists = page !== null;
 
@@ -117,19 +134,16 @@ function usePageForm(
   );
   const attributesWithNewFileValue = useFormset<null, File>([]);
 
-  const form = useForm<PageFormData>({
-    isPublished: page?.isPublished,
-    metadata: pageExists ? page?.metadata?.map(mapMetadataItemToInput) : [],
-    pageType: null,
-    privateMetadata: pageExists
-      ? page?.privateMetadata?.map(mapMetadataItemToInput)
-      : [],
-    publicationDate: page?.publicationDate || "",
-    seoDescription: page?.seoDescription || "",
-    seoTitle: page?.seoTitle || "",
-    slug: page?.slug || "",
-    title: page?.title || ""
+  const {
+    handleChange,
+    triggerChange,
+    setChanged,
+    hasChanged,
+    data: formData
+  } = useForm<PageFormData>(getInitialFormData(page), undefined, {
+    confirmLeave: true
   });
+
   const [content, changeContent] = useRichText({
     initial: pageExists ? page?.content : null,
     triggerChange
@@ -141,10 +155,6 @@ function usePageForm(
     makeChangeHandler: makeMetadataChangeHandler
   } = useMetadataChangeTrigger();
 
-  const handleChange: FormChange = (event, cb) => {
-    form.change(event, cb);
-    triggerChange();
-  };
   const changeMetadata = makeMetadataChangeHandler(handleChange);
   const handlePageTypeSelect = createPageTypeSelectHandler(
     opts.onSelectPageType,
@@ -190,7 +200,7 @@ function usePageForm(
 
   // Need to make it function to always have content.current up to date
   const getData = (): PageData => ({
-    ...form.data,
+    ...formData,
     attributes: getAttributesDisplayData(
       attributes.data,
       attributesWithNewFileValue.data,
@@ -203,25 +213,30 @@ function usePageForm(
 
   const getSubmitData = (): PageSubmitData => ({
     ...getData(),
-    ...getMetadata(form.data, isMetadataModified, isPrivateMetadataModified),
-    ...getPublicationData(form.data),
+    ...getMetadata(formData, isMetadataModified, isPrivateMetadataModified),
+    ...getPublicationData(formData),
     attributesWithNewFileValue: attributesWithNewFileValue.data
   });
 
-  const handleSubmit = async (data: PageData) => {
-    const errors = await onSubmit(data);
+  // const handleSubmit = async (data: PageData) => {
+  //   const errors = await onSubmit(data);
 
-    if (!errors?.length && pageExists) {
-      attributesWithNewFileValue.set([]);
-    }
+  //   if (!errors?.length && pageExists) {
+  //     attributesWithNewFileValue.set([]);
+  //   }
 
-    return errors;
-  };
+  //   return errors;
+  // };
 
   const submit = () =>
-    pageExists
-      ? handleFormSubmit(getSubmitData(), handleSubmit, setChanged)
-      : onSubmit(getSubmitData());
+    handleFormSubmit(
+      getSubmitData(),
+      onSubmit,
+      setChanged,
+      setEnableExitDialog
+    );
+
+  useEffect(() => setExitDialogSubmitRef(submit), [submit]);
 
   return {
     change: handleChange,
@@ -238,7 +253,7 @@ function usePageForm(
       selectAttributeReference: handleAttributeReferenceChange,
       selectPageType: handlePageTypeSelect
     },
-    hasChanged: changed,
+    hasChanged,
     submit
   };
 }
