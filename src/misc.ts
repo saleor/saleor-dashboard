@@ -7,6 +7,7 @@ import { ConfirmButtonTransitionState } from "./components/ConfirmButton/Confirm
 import { StatusType } from "./components/StatusChip/types";
 import { APP_MOUNT_URI } from "./config";
 import { AddressType, AddressTypeInput } from "./customers/types";
+import { SubmitPromise } from "./hooks/useForm";
 import {
   MutationResultAdditionalProps,
   PartialMutationProviderOutput,
@@ -277,6 +278,12 @@ export function getMutationState(
 export interface SaleorMutationResult {
   errors?: any[];
 }
+
+export const extractMutationErrors = async (submitPromise: SubmitPromise) => {
+  const result = await submitPromise;
+
+  return getMutationErrors(result.data);
+};
 
 export function getMutationErrors<
   TData extends SaleorMutationResult,
