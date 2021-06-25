@@ -16,7 +16,7 @@ export interface ChangeEvent<TData = any> {
 }
 export type SubmitPromise<TData = any> = Promise<TData>;
 
-export type FormChange = (event: ChangeEvent, cb?: () => void) => void;
+export type FormChange = (event: ChangeEvent) => void;
 
 export type FormErrors<T> = {
   [field in keyof T]?: string | React.ReactNode;
@@ -31,6 +31,7 @@ export interface UseFormResult<TData> extends CommonUseFormResult<TData> {
   set: (data: Partial<TData>) => void;
   triggerChange: () => void;
   setChanged: (value: boolean) => void;
+  handleChange: FormChange;
   toggleValue: FormChange;
   errors: FormErrors<TData>;
   setError: (name: keyof TData, error: string | React.ReactNode) => void;
@@ -133,6 +134,11 @@ function useForm<T extends FormData>(
     }
   }
 
+  const handleChange: FormChange = event => {
+    change(event);
+    handleSetChanged(true);
+  };
+
   function change(event: ChangeEvent) {
     const { name, value } = event.target;
 
@@ -199,6 +205,7 @@ function useForm<T extends FormData>(
     set,
     submit,
     toggleValue,
+    handleChange,
     triggerChange: handleSetChanged,
     setChanged: handleSetChanged
   };
