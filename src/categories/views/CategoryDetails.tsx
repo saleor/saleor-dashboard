@@ -201,6 +201,7 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
 
     return result.data.categoryUpdate.errors;
   };
+
   const handleSubmit = createMetadataUpdateHandler(
     data?.category,
     handleUpdate,

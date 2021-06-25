@@ -282,15 +282,20 @@ export interface SaleorMutationResult {
 export const extractMutationErrors = async (submitPromise: SubmitPromise) => {
   const result = await submitPromise;
 
-  return getMutationErrors(result.data);
+  return getMutationErrors(result);
 };
 
 export function getMutationErrors<
-  TData extends SaleorMutationResult,
-  TErrors extends Pick<TData, "errors">
->(data: TData): TErrors[] {
-  return Object.values(data).reduce(
-    (acc: TErrors[], mut) => [...acc, ...maybe(() => mut.errors, [])],
+  TData extends Record<string, SaleorMutationResult | any>
+>(resultData: TData): any[] {
+  const { data } = resultData;
+
+  if (!data) {
+    return [];
+  }
+
+  return Object.values(data as ).reduce(
+    (acc: any[], mut) => [...acc, ...maybe(() => mut.errors, [])],
     []
   );
 }
@@ -298,7 +303,7 @@ export function getMutationErrors<
 export function getMutationStatus<
   TData extends Record<string, SaleorMutationResult | any>
 >(opts: MutationResult<TData>): ConfirmButtonTransitionState {
-  const errors = opts.data ? getMutationErrors(opts.data) : [];
+  const errors = getMutationErrors(opts);
 
   return getMutationState(opts.called, opts.loading, errors);
 }

@@ -12,6 +12,7 @@ import useChannels from "@saleor/hooks/useChannels";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import useShop from "@saleor/hooks/useShop";
+import { getMutationErrors } from "@saleor/misc";
 import ProductCreatePage from "@saleor/products/components/ProductCreatePage";
 import {
   useProductChannelListingUpdate,
@@ -210,6 +211,8 @@ export const ProductCreateView: React.FC<ProductCreateProps> = ({ params }) => {
     if (result) {
       setProductCreateComplete(true);
     }
+
+    return getMutationErrors(result);
   };
 
   const handleAssignAttributeReferenceClick = (attribute: AttributeInput) =>

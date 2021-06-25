@@ -4,7 +4,7 @@ import useListSettings from "@saleor/hooks/useListSettings";
 import useLocalPageInfo, { getMaxPage } from "@saleor/hooks/useLocalPageInfo";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
-import { getStringOrPlaceholder } from "@saleor/misc";
+import { getMutationErrors, getStringOrPlaceholder } from "@saleor/misc";
 import { ListViews, ReorderEvent } from "@saleor/types";
 import { AttributeErrorCode } from "@saleor/types/globalTypes";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
@@ -147,16 +147,18 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ params }) => {
     );
 
   const handleCreate = async (data: AttributePageFormData) => {
-    const input = getAttributeData(data, values);
-
     const result = await attributeCreate({
       variables: {
-        input
+        input: getAttributeData(data, values)
       }
     });
 
-    return result.data.attributeCreate?.attribute?.id || null;
+    return {
+      id: result.data.attributeCreate?.attribute?.id || null,
+      errors: getMutationErrors(result)
+    };
   };
+
   const handleSubmit = createMetadataCreateHandler(
     handleCreate,
     updateMetadata,
