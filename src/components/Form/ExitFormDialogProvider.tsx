@@ -86,9 +86,7 @@ const ExitFormDialogProvider = ({ children }) => {
       return true;
     });
 
-    return () => {
-      unblock();
-    };
+    return unblock;
   };
 
   useEffect(handleNavigationBlock, []);
