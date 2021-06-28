@@ -294,7 +294,7 @@ export function getMutationErrors<
     return [];
   }
 
-  return Object.values(data as ).reduce(
+  return Object.values(data).reduce(
     (acc: any[], mut) => [...acc, ...maybe(() => mut.errors, [])],
     []
   );
