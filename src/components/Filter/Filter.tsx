@@ -126,6 +126,11 @@ const Filter: React.FC<FilterProps> = props => {
     setFilterMenuOpened(false);
   };
 
+  const handleClear = () => {
+    reset();
+    setFilterErrors({});
+  };
+
   return (
     <ClickAwayListener
       onClickAway={event => {
@@ -199,7 +204,7 @@ const Filter: React.FC<FilterProps> = props => {
                 dataStructure={menu}
                 currencySymbol={currencySymbol}
                 filters={data}
-                onClear={reset}
+                onClear={handleClear}
                 onFilterPropertyChange={dispatch}
                 onFilterAttributeFocus={onFilterAttributeFocus}
                 onSubmit={handleSubmit}

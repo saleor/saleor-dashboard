@@ -35,6 +35,8 @@ import classNames from "classnames";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
+import ProductAvailabilityStatusLabel from "../ProductAvailabilityStatusLabel";
+
 const useStyles = makeStyles(
   theme => ({
     [theme.breakpoints.up("lg")]: {
@@ -371,17 +373,17 @@ export const ProductList: React.FC<ProductListProps> = props => {
                         !!product?.channelListings?.length
                       }
                     >
-                      {product && !product?.channelListings?.length ? (
-                        "-"
-                      ) : product?.channelListings !== undefined ? (
-                        <ChannelsAvailabilityDropdown
-                          allChannelsCount={channelsCount}
-                          currentChannel={channel}
-                          channels={product?.channelListings}
-                        />
-                      ) : (
-                        <Skeleton />
-                      )}
+                      {(!product && <Skeleton />) ||
+                        (!product?.channelListings?.length && "-") ||
+                        (product?.channelListings !== undefined && channel ? (
+                          <ProductAvailabilityStatusLabel channel={channel} />
+                        ) : (
+                          <ChannelsAvailabilityDropdown
+                            allChannelsCount={channelsCount}
+                            channels={product?.channelListings}
+                            showStatus
+                          />
+                        ))}
                     </TableCell>
                   </DisplayColumn>
                   {gridAttributesFromSettings.map(gridAttribute => (

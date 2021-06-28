@@ -57,16 +57,9 @@ export function mapNodeToChoice<T extends ExtendedNode>(
 }
 
 export function mapSlugNodeToChoice(
-  nodes: Array<SlugNode & Record<"name", string>>
+  nodes: Array<ExtendedNode & SlugNode>
 ): SingleAutocompleteChoiceType[] {
-  if (!nodes) {
-    return [];
-  }
-
-  return nodes.map(node => ({
-    label: node.name,
-    value: node.slug
-  }));
+  return mapNodeToChoice(nodes, nodes => nodes.slug);
 }
 
 export function mapMetadataItemToInput(item: MetadataItem): MetadataInput {
