@@ -73,7 +73,7 @@ function handleRefresh<T extends FormData>(
 function useForm<T extends FormData>(
   initialData: T,
   onSubmit?: (data: T) => SubmitPromise | void,
-  opts?: UseFormOpts
+  opts: UseFormOpts = {}
 ): UseFormResult<T> {
   const { confirmLeave } = opts;
   const [hasChanged, setChanged] = useState(false);
