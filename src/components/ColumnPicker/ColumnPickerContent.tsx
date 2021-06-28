@@ -12,7 +12,7 @@ import { FetchMoreProps } from "@saleor/types";
 import { isSelected } from "@saleor/utils/lists";
 import classNames from "classnames";
 import React from "react";
-import InfiniteScroll from "react-infinite-scroller";
+import InfiniteScroll from "react-infinite-scroll-component";
 import { FormattedMessage } from "react-intl";
 
 import ControlledCheckbox from "../ControlledCheckbox";
@@ -96,6 +96,7 @@ const ColumnPickerContent: React.FC<ColumnPickerContentProps> = props => {
   const classes = useStyles(props);
   const anchor = React.useRef<HTMLDivElement>();
   const scrollPosition = useElementScroll(anchor);
+  const scrollableTargetId = "columnPickerScrollableDiv";
 
   const dropShadow =
     anchor.current && scrollPosition
@@ -118,17 +119,22 @@ const ColumnPickerContent: React.FC<ColumnPickerContentProps> = props => {
         </Typography>
       </CardContent>
       <Hr />
-      {hasMore && onFetchMore ? (
+      {onFetchMore ? (
         <InfiniteScroll
-          pageStart={0}
-          loadMore={onFetchMore}
+          dataLength={columns.length}
+          next={onFetchMore}
           hasMore={hasMore}
-          useWindow={false}
-          threshold={100}
+          scrollThreshold="100px"
+          loader={null}
+          scrollableTarget={scrollableTargetId}
           key="infinite-scroll"
         >
           <CardContent className={classes.contentContainer}>
-            <div className={classes.content} ref={anchor}>
+            <div
+              className={classes.content}
+              ref={anchor}
+              id={scrollableTargetId}
+            >
               {columns.map(column => (
                 <ControlledCheckbox
                   checked={isSelected(
@@ -142,7 +148,7 @@ const ColumnPickerContent: React.FC<ColumnPickerContentProps> = props => {
                   key={column.value}
                 />
               ))}
-              {loading && (
+              {hasMore && loading && (
                 <div className={classes.loadMoreLoaderContainer}>
                   <CircularProgress size={16} />
                 </div>

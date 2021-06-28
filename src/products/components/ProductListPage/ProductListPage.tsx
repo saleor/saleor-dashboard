@@ -10,10 +10,8 @@ import PageHeader from "@saleor/components/PageHeader";
 import { RefreshLimits_shop_limits } from "@saleor/components/Shop/types/RefreshLimits";
 import { ProductListColumns } from "@saleor/config";
 import { sectionNames } from "@saleor/intl";
-import {
-  GridAttributes_availableInGrid_edges_node,
-  GridAttributes_grid_edges_node
-} from "@saleor/products/types/GridAttributes";
+import { AvailableInGridAttributes_availableInGrid_edges_node } from "@saleor/products/types/AvailableInGridAttributes";
+import { GridAttributes_grid_edges_node } from "@saleor/products/types/GridAttributes";
 import { ProductList_products_edges_node } from "@saleor/products/types/ProductList";
 import { makeStyles } from "@saleor/theme";
 import {
@@ -44,7 +42,7 @@ export interface ProductListPageProps
     SortPage<ProductListUrlSortField>,
     ChannelProps {
   activeAttributeSortId: string;
-  availableInGridAttributes: GridAttributes_availableInGrid_edges_node[];
+  availableInGridAttributes: AvailableInGridAttributes_availableInGrid_edges_node[];
   channelsCount: number;
   currencySymbol: string;
   gridAttributes: GridAttributes_grid_edges_node[];
