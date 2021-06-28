@@ -44,7 +44,6 @@ function useAddressValidation<TInput, TOutput>(
       } catch {
         const errors = add(countryRequiredError, validationErrors);
         setValidationErrors(errors);
-        return Promise.resolve(errors);
       }
     }
   };

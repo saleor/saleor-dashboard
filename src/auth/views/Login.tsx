@@ -7,7 +7,7 @@ import urlJoin from "url-join";
 import useRouter from "use-react-router";
 
 import LoginPage from "../components/LoginPage";
-import { LoginFormData } from "../components/LoginPage/form";
+import { LoginFormData } from "../components/LoginPage/types";
 import { availableExternalAuthentications } from "../queries";
 import { AvailableExternalAuthentications } from "../types/AvailableExternalAuthentications";
 import {

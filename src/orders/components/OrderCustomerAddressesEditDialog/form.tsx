@@ -8,7 +8,8 @@ import {
 } from "@saleor/customers/types/CustomerAddresses";
 import useForm, {
   CommonUseFormResultWithHandlers,
-  FormChange
+  FormChange,
+  SubmitPromise
 } from "@saleor/hooks/useForm";
 import handleFormSubmit from "@saleor/utils/handlers/handleFormSubmit";
 import createSingleAutocompleteSelectHandler from "@saleor/utils/handlers/singleAutocompleteSelectChangeHandler";
@@ -53,7 +54,7 @@ interface UseOrderCustomerAddressesEditFormResult
     OrderCustomerAddressesEditData,
     OrderCustomerAddressesEditHandlers
   > {
-  onSubmit: (event: React.FormEvent<any>) => Promise<boolean>;
+  submit: (event: React.FormEvent<any>) => SubmitPromise<boolean>;
 }
 
 interface UseOrderCustomerAddressesEditFormOpts {
@@ -66,7 +67,7 @@ export interface OrderCustomerAddressesEditFormProps
   extends UseOrderCustomerAddressesEditFormOpts {
   children: (props: UseOrderCustomerAddressesEditFormResult) => React.ReactNode;
   initial?: Partial<OrderCustomerAddressesEditFormData>;
-  onSubmit: (data: OrderCustomerAddressesEditData) => Promise<boolean>;
+  onSubmit: (data: OrderCustomerAddressesEditData) => SubmitPromise<any[]>;
 }
 
 const initialAddress: AddressTypeInput = {
@@ -91,7 +92,7 @@ const getDefaultInitialFormData = (
 
 function useOrderCustomerAddressesEditForm(
   initial: Partial<OrderCustomerAddressesEditFormData>,
-  onSubmit: (data: OrderCustomerAddressesEditData) => void,
+  onSubmit: (data: OrderCustomerAddressesEditData) => SubmitPromise<any[]>,
   opts: UseOrderCustomerAddressesEditFormOpts
 ): UseOrderCustomerAddressesEditFormResult {
   const {
@@ -183,9 +184,7 @@ function useOrderCustomerAddressesEditForm(
     return handleSubmit();
   };
 
-  useEffect(() => setExitDialogSubmitRef(submit as () => Promise<boolean>), [
-    handleSubmit
-  ]);
+  useEffect(() => setExitDialogSubmitRef(submit), [handleSubmit]);
 
   return {
     change: handleChange,

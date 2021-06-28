@@ -14,7 +14,7 @@ export interface ChangeEvent<TData = any> {
     value: TData;
   };
 }
-export type SubmitPromise<TData = any> = Promise<TData>;
+export type SubmitPromise<TData = any> = Promise<TData | boolean>;
 
 export type FormChange = (event: ChangeEvent) => void;
 
@@ -42,7 +42,7 @@ export interface CommonUseFormResult<TData> {
   data: TData;
   change: FormChange;
   hasChanged: boolean;
-  submit: () => void;
+  submit: (dataOrEvent?: any) => SubmitPromise<boolean>;
 }
 
 export interface CommonUseFormResultWithHandlers<TData, THandlers>
@@ -77,7 +77,7 @@ function handleRefresh<T extends FormData>(
 
 function useForm<T extends FormData>(
   initialData: T,
-  onSubmit?: (data: T) => SubmitPromise | void,
+  onSubmit?: (data: T) => SubmitPromise<any[]> | void,
   opts?: UseFormOpts
 ): UseFormResult<T> {
   const { confirmLeave } = opts;
@@ -172,7 +172,9 @@ function useForm<T extends FormData>(
     if (typeof onSubmit === "function" && !Object.keys(errors).length) {
       const result = handleFormSubmit(
         data,
-        onSubmit,
+        // because submit: () => void should only be passed if
+        // this submit is not used at all
+        onSubmit as (data: T) => SubmitPromise<any[]>,
         handleSetChanged,
         setEnableExitDialog
       );

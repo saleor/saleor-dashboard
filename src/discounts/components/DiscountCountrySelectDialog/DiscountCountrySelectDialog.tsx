@@ -104,7 +104,9 @@ const DiscountCountrySelectDialog: React.FC<DiscountCountrySelectDialogProps> = 
                 <TextField
                   name="query"
                   value={data.query}
-                  onChange={event => change(event, () => fetch(data.query))}
+                  onChange={event =>
+                    change(event /* TO BE CHECKED: () => fetch(data.query)*/)
+                  }
                   label={intl.formatMessage({
                     defaultMessage: "Filter Countries",
                     description: "search box label"

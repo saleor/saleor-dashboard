@@ -74,7 +74,7 @@ const CustomerDetailsPage: React.FC<CustomerDetailsPageProps> = ({
   } = useMetadataChangeTrigger();
 
   return (
-    <Form confirmLeave initial={initialForm} onSubmit={onSubmit} confirmLeave>
+    <Form confirmLeave initial={initialForm} onSubmit={onSubmit}>
       {({ change, data, hasChanged, submit }) => {
         const changeMetadata = makeMetadataChangeHandler(change);
 
