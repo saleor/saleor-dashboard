@@ -23,9 +23,12 @@ const menuItemHeight = 46;
 const maxMenuItems = 5;
 const offset = 24;
 
-export interface SingleAutocompleteChoiceType {
+export type ChoiceValue = string;
+export interface SingleAutocompleteChoiceType<
+  T extends ChoiceValue = ChoiceValue
+> {
   label: string;
-  value: any;
+  value: T;
 }
 export interface SingleAutocompleteActionType {
   label: string;
@@ -303,7 +306,7 @@ const SingleAutocompleteSelectFieldContent: React.FC<SingleAutocompleteSelectFie
         <div className={classes.arrowContainer}>
           <div
             className={classNames(classes.arrowInnerContainer, {
-              // Needs to be explicitely compared to false because
+              // Needs to be explicitly compared to false because
               // scrolledToBottom can be either true, false or undefined
               [classes.hide]: scrolledToBottom !== false
             })}

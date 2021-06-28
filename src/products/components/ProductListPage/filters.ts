@@ -1,4 +1,5 @@
 import { IFilter } from "@saleor/components/Filter";
+import { SingleAutocompleteChoiceType } from "@saleor/components/SingleAutocompleteSelectField";
 import { commonMessages, sectionNames } from "@saleor/intl";
 import { AutocompleteFilterOpts, FilterOpts, MinMax } from "@saleor/types";
 import {
@@ -19,7 +20,8 @@ export enum ProductFilterKeys {
   collections = "collections",
   price = "price",
   productType = "productType",
-  stock = "stock"
+  stock = "stock",
+  channel = "channel"
 }
 
 export interface ProductListFilterOpts {
@@ -37,12 +39,17 @@ export interface ProductListFilterOpts {
   price: FilterOpts<MinMax>;
   productType: FilterOpts<string[]> & AutocompleteFilterOpts;
   stockStatus: FilterOpts<StockAvailability>;
+  channel: FilterOpts<string> & { choices: SingleAutocompleteChoiceType[] };
 }
 
 const messages = defineMessages({
   available: {
     defaultMessage: "Available",
     description: "product status"
+  },
+  channel: {
+    defaultMessage: "Channel",
+    description: "sales channel"
   },
   hidden: {
     defaultMessage: "Hidden",
@@ -83,6 +90,16 @@ export function createFilterStructure(
   return [
     {
       ...createOptionsField(
+        ProductFilterKeys.channel,
+        intl.formatMessage(messages.channel),
+        [opts.channel.value],
+        false,
+        opts.channel.choices
+      ),
+      active: opts.channel.active
+    },
+    {
+      ...createOptionsField(
         ProductFilterKeys.stock,
         intl.formatMessage(messages.quantity),
         [opts.stockStatus.value],
@@ -98,7 +115,8 @@ export function createFilterStructure(
           }
         ]
       ),
-      active: opts.stockStatus.active
+      active: opts.stockStatus.active,
+      dependencies: [ProductFilterKeys.channel]
     },
     {
       ...createPriceField(

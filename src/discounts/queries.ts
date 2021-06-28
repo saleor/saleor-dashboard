@@ -26,6 +26,7 @@ export const saleList = gql`
     $last: Int
     $filter: SaleFilterInput
     $sort: SaleSortingInput
+    $channel: String
   ) {
     sales(
       after: $after
@@ -34,6 +35,7 @@ export const saleList = gql`
       last: $last
       filter: $filter
       sortBy: $sort
+      channel: $channel
     ) {
       edges {
         node {
@@ -60,6 +62,7 @@ export const voucherList = gql`
     $last: Int
     $filter: VoucherFilterInput
     $sort: VoucherSortingInput
+    $channel: String
   ) {
     vouchers(
       after: $after
@@ -68,6 +71,7 @@ export const voucherList = gql`
       last: $last
       filter: $filter
       sortBy: $sort
+      channel: $channel
     ) {
       edges {
         node {

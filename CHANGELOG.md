@@ -55,6 +55,8 @@ All notable, unreleased changes to this project will be documented in this file.
 - Fix label names in reference attributes - #1184 by @orzechdev
 - Fix failing product update with file attribute - #1190 by @orzechdev
 - Fix breaking select popups in filters - #1193 by @orzechdev
+- Create channel filters in product, sales and voucher lists - #1187 by @jwm0
+- Add generic filter validation - #1187 by @jwm0
 
 # 2.11.1
 

@@ -194,7 +194,6 @@ export const CategoryProductList: React.FC<CategoryProductListProps> = props => 
                     ) : product?.channelListings !== undefined ? (
                       <ChannelsAvailabilityDropdown
                         allChannelsCount={channelsCount}
-                        currentChannel={channel || product?.channelListings[0]}
                         channels={product?.channelListings}
                       />
                     ) : (

@@ -64,4 +64,5 @@ export interface SaleListVariables {
   last?: number | null;
   filter?: SaleFilterInput | null;
   sort?: SaleSortingInput | null;
+  channel?: string | null;
 }

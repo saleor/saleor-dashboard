@@ -55,6 +55,7 @@ Object {
   "categories": Array [
     "878752",
   ],
+  "channel": "default-channel",
   "collections": Array [
     "Q29sbGVjdGlvbjoc",
   ],
@@ -67,4 +68,4 @@ Object {
 }
 `;
 
-exports[`Filtering URL params should not be empty if active filters are present 2`] = `"stockStatus=IN_STOCK&priceFrom=10&priceTo=20&categories%5B0%5D=878752&collections%5B0%5D=Q29sbGVjdGlvbjoc&productTypes%5B0%5D=UHJvZHVjdFR5cGU6MQ%3D%3D&attributes%5Bauthor%5D%5B0%5D=john-doe&attributes%5Bauthor%5D%5B1%5D=false&attributes%5Bbox-size%5D%5B0%5D=100g&attributes%5Bbox-size%5D%5B1%5D=500g&attributes%5Bbrand%5D%5B0%5D=saleor&attributes%5Bbrand%5D%5B1%5D=false&attributes%5Bcandy-box-size%5D%5B0%5D=100g&attributes%5Bcandy-box-size%5D%5B1%5D=500g&attributes%5Bcoffee-genre%5D%5B0%5D=arabica&attributes%5Bcoffee-genre%5D%5B1%5D=false&attributes%5Bcollar%5D%5B0%5D=round&attributes%5Bcollar%5D%5B1%5D=polo&attributes%5Bcolor%5D%5B0%5D=blue&attributes%5Bcolor%5D%5B1%5D=false&attributes%5Bcover%5D%5B0%5D=soft&attributes%5Bcover%5D%5B1%5D=middle-soft&attributes%5Bflavor%5D%5B0%5D=sour&attributes%5Bflavor%5D%5B1%5D=false&attributes%5Blanguage%5D%5B0%5D=english&attributes%5Blanguage%5D%5B1%5D=false&attributes%5Bpublisher%5D%5B0%5D=mirumee-press&attributes%5Bpublisher%5D%5B1%5D=false&attributes%5Bsize%5D%5B0%5D=xs&attributes%5Bsize%5D%5B1%5D=m"`;
+exports[`Filtering URL params should not be empty if active filters are present 2`] = `"channel=default-channel&stockStatus=IN_STOCK&priceFrom=10&priceTo=20&categories%5B0%5D=878752&collections%5B0%5D=Q29sbGVjdGlvbjoc&productTypes%5B0%5D=UHJvZHVjdFR5cGU6MQ%3D%3D&attributes%5Bauthor%5D%5B0%5D=john-doe&attributes%5Bauthor%5D%5B1%5D=false&attributes%5Bbox-size%5D%5B0%5D=100g&attributes%5Bbox-size%5D%5B1%5D=500g&attributes%5Bbrand%5D%5B0%5D=saleor&attributes%5Bbrand%5D%5B1%5D=false&attributes%5Bcandy-box-size%5D%5B0%5D=100g&attributes%5Bcandy-box-size%5D%5B1%5D=500g&attributes%5Bcoffee-genre%5D%5B0%5D=arabica&attributes%5Bcoffee-genre%5D%5B1%5D=false&attributes%5Bcollar%5D%5B0%5D=round&attributes%5Bcollar%5D%5B1%5D=polo&attributes%5Bcolor%5D%5B0%5D=blue&attributes%5Bcolor%5D%5B1%5D=false&attributes%5Bcover%5D%5B0%5D=soft&attributes%5Bcover%5D%5B1%5D=middle-soft&attributes%5Bflavor%5D%5B0%5D=sour&attributes%5Bflavor%5D%5B1%5D=false&attributes%5Blanguage%5D%5B0%5D=english&attributes%5Blanguage%5D%5B1%5D=false&attributes%5Bpublisher%5D%5B0%5D=mirumee-press&attributes%5Bpublisher%5D%5B1%5D=false&attributes%5Bsize%5D%5B0%5D=xs&attributes%5Bsize%5D%5B1%5D=m"`;
