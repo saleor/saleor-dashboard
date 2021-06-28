@@ -57,6 +57,7 @@ All notable, unreleased changes to this project will be documented in this file.
 - Fix breaking select popups in filters - #1193 by @orzechdev
 - Create channel filters in product, sales and voucher lists - #1187 by @jwm0
 - Add generic filter validation - #1187 by @jwm0
+- Fix duplicated labels in column picker - #1197 by @orzechdev
 
 # 2.11.1
 
