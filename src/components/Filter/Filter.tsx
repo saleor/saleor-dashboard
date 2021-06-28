@@ -138,6 +138,7 @@ const Filter: React.FC<FilterProps> = props => {
           setFilterMenuOpened(false);
         }
       }}
+      mouseEvent="onMouseUp"
     >
       <div ref={anchor}>
         <ButtonBase

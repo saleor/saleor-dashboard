@@ -18,7 +18,7 @@ const useStyles = makeStyles(
   theme => ({
     [theme.breakpoints.up("lg")]: {
       colName: {
-        width: 840
+        width: "auto"
       },
       colProducts: {
         width: 160
