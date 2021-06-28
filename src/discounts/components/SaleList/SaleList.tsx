@@ -9,6 +9,7 @@ import TableCellHeader from "@saleor/components/TableCellHeader";
 import TableHead from "@saleor/components/TableHead";
 import TablePagination from "@saleor/components/TablePagination";
 import { SaleListUrlSortField } from "@saleor/discounts/urls";
+import { canBeSorted } from "@saleor/discounts/views/SaleList/sort";
 import { maybe, renderCollection } from "@saleor/misc";
 import { makeStyles } from "@saleor/theme";
 import { ChannelProps, ListActions, ListProps, SortPage } from "@saleor/types";
@@ -141,6 +142,9 @@ const SaleList: React.FC<SaleListProps> = props => {
           }
           textAlign="right"
           onClick={() => onSort(SaleListUrlSortField.value)}
+          disabled={
+            !canBeSorted(SaleListUrlSortField.value, !!selectedChannelId)
+          }
           className={classes.colValue}
         >
           <FormattedMessage defaultMessage="Value" description="sale value" />

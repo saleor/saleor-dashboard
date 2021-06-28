@@ -55,7 +55,7 @@ import useProductTypeSearch from "@saleor/searches/useProductTypeSearch";
 import { ListViews } from "@saleor/types";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import createFilterHandlers from "@saleor/utils/handlers/filterHandlers";
-import { mapEdgesToItems } from "@saleor/utils/maps";
+import { mapEdgesToItems, mapNodeToChoice } from "@saleor/utils/maps";
 import { getSortUrlVariables } from "@saleor/utils/sort";
 import { useWarehouseList } from "@saleor/warehouses/queries";
 import React, { useEffect, useState } from "react";
@@ -76,7 +76,7 @@ import {
   getFilterVariables,
   saveFilterTab
 } from "./filters";
-import { getSortQueryVariables } from "./sort";
+import { canBeSorted, DEFAULT_SORT_KEY, getSortQueryVariables } from "./sort";
 
 interface ProductListProps {
   params: ProductListUrlQueryParams;
@@ -160,14 +160,16 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
     },
     skip: params.action !== "export"
   });
-  const { availableChannels, channel } = useAppChannel();
+  const { availableChannels } = useAppChannel(false);
   const limitOpts = useShopLimitsQuery({
     variables: {
       productVariants: true
     }
   });
 
-  const noChannel = !channel && typeof channel !== "undefined";
+  const selectedChannel = availableChannels.find(
+    channel => channel.slug === params.channel
+  );
 
   const [openModal, closeModal] = createDialogActionHandlers<
     ProductListUrlDialog,
@@ -238,7 +240,7 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
     const sortWithQuery = ProductListUrlSortField.rank;
     const sortWithoutQuery =
       params.sort === ProductListUrlSortField.rank
-        ? ProductListUrlSortField.name
+        ? DEFAULT_SORT_KEY
         : params.sort;
     navigate(
       productListUrl({
@@ -248,6 +250,17 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
       })
     );
   }, [params.query]);
+
+  useEffect(() => {
+    if (!canBeSorted(params.sort, !!selectedChannel)) {
+      navigate(
+        productListUrl({
+          ...params,
+          sort: DEFAULT_SORT_KEY
+        })
+      );
+    }
+  }, [params]);
 
   const handleTabChange = (tab: number) => {
     reset();
@@ -281,18 +294,21 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
     );
 
   const paginationState = createPaginationState(settings.rowNumber, params);
-  const channelSlug = noChannel ? null : channel.slug;
-  const filter = getFilterVariables(params, channelSlug);
-  const sort = getSortQueryVariables(params);
+  const channelOpts = availableChannels
+    ? mapNodeToChoice(availableChannels, channel => channel.slug)
+    : null;
+  const filter = getFilterVariables(params, !!selectedChannel);
+  const sort = getSortQueryVariables(params, !!selectedChannel);
   const queryVariables = React.useMemo<ProductListVariables>(
     () => ({
       ...paginationState,
       filter,
       sort,
-      channel: channelSlug
+      channel: selectedChannel?.slug
     }),
     [params, settings.rowNumber]
   );
+  // TODO: When channel is undefined we should skip detailed pricing listings
   const { data, loading, refetch } = useProductListQuery({
     displayLoader: true,
     variables: queryVariables
@@ -340,7 +356,8 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
     {
       initial: mapEdgesToItems(initialFilterProductTypes?.productTypes),
       search: searchProductTypes
-    }
+    },
+    channelOpts
   );
 
   const { loadNextPage, loadPreviousPage, pageInfo } = paginate(
@@ -361,7 +378,7 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
         availableInGridAttributes={mapEdgesToItems(
           attributes?.data?.availableInGrid
         )}
-        currencySymbol={channel?.currencyCode || ""}
+        currencySymbol={selectedChannel?.currencyCode || ""}
         currentTab={currentTab}
         defaultSettings={defaultListSettings[ListViews.PRODUCT_LIST]}
         filterOpts={filterOpts}
@@ -438,7 +455,7 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
         tabs={getFilterTabs().map(tab => tab.name)}
         onExport={() => openModal("export")}
         channelsCount={availableChannels?.length}
-        selectedChannelId={channel?.id}
+        selectedChannelId={selectedChannel?.id}
       />
       <ActionDialog
         open={params.action === "delete"}
