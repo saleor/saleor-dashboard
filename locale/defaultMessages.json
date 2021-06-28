@@ -1986,13 +1986,13 @@
     "context": "product channel publication status",
     "string": "hidden"
   },
-  "src_dot_components_dot_ChannelsAvailabilityDropdown_dot_1484966255": {
-    "context": "product status title",
-    "string": "Available in {count}/{allCount}"
-  },
   "src_dot_components_dot_ChannelsAvailabilityDropdown_dot_1702481199": {
     "context": "product channel  publication date",
     "string": "published since {date}"
+  },
+  "src_dot_components_dot_ChannelsAvailabilityDropdown_dot_1944644572": {
+    "context": "product status title",
+    "string": "{count}/{allCount} channels"
   },
   "src_dot_components_dot_ChannelsAvailabilityDropdown_dot_3285520461": {
     "context": "product channel publication date",
@@ -5218,6 +5218,18 @@
   "src_dot_products": {
     "context": "products section name",
     "string": "Products"
+  },
+  "src_dot_products_dot_components_dot_ProductAvailabilityStatusLabel_dot_published": {
+    "context": "product publication date",
+    "string": "Published on {date}"
+  },
+  "src_dot_products_dot_components_dot_ProductAvailabilityStatusLabel_dot_unpublished": {
+    "context": "product publication date",
+    "string": "Unpublished"
+  },
+  "src_dot_products_dot_components_dot_ProductAvailabilityStatusLabel_dot_willBePublished": {
+    "context": "product publication date",
+    "string": "Becomes published on {date}"
   },
   "src_dot_products_dot_components_dot_ProductCategoryAndCollectionsForm_dot_1755013298": {
     "string": "Category"
