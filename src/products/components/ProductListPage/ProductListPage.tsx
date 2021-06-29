@@ -161,7 +161,6 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
           columns={columns}
           defaultColumns={defaultSettings.columns}
           hasMore={hasMore}
-          loading={loading}
           initialColumns={settings.columns}
           total={
             columns.length -
