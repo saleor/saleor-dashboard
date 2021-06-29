@@ -34,5 +34,6 @@ export const ATTRIBUTES_DETAILS = {
   unitsOptions: {
     CUBIC_CENTIMETER: '[data-test-id="CUBIC_CENTIMETER"]',
     FT: '[data-test-id="FT"]'
-  }
+  },
+  pageTypeAttributeCheckbox: '[value="PAGE_TYPE"]'
 };
