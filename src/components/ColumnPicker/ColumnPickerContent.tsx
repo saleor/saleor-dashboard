@@ -52,12 +52,12 @@ const useStyles = makeStyles(
       display: "grid",
       gridColumnGap: theme.spacing(3),
       gridTemplateColumns: "repeat(3, 1fr)",
-      maxHeight: 256,
-      overflowX: "visible",
-      overflowY: "scroll",
       padding: theme.spacing(2, 3)
     },
     contentContainer: {
+      maxHeight: 256,
+      overflowX: "visible",
+      overflowY: "scroll",
       padding: 0
     },
     dropShadow: {
@@ -80,11 +80,12 @@ const useStyles = makeStyles(
   { name: "ColumnPickerContent" }
 );
 
+const scrollableTargetId = "columnPickerScrollableDiv";
+
 const ColumnPickerContent: React.FC<ColumnPickerContentProps> = props => {
   const {
     columns,
     hasMore,
-    loading,
     selectedColumns,
     total,
     onCancel,
@@ -96,7 +97,6 @@ const ColumnPickerContent: React.FC<ColumnPickerContentProps> = props => {
   const classes = useStyles(props);
   const anchor = React.useRef<HTMLDivElement>();
   const scrollPosition = useElementScroll(anchor);
-  const scrollableTargetId = "columnPickerScrollableDiv";
 
   const dropShadow =
     anchor.current && scrollPosition
@@ -119,46 +119,25 @@ const ColumnPickerContent: React.FC<ColumnPickerContentProps> = props => {
         </Typography>
       </CardContent>
       <Hr />
-      {onFetchMore ? (
+      <CardContent
+        className={classes.contentContainer}
+        ref={anchor}
+        id={scrollableTargetId}
+      >
         <InfiniteScroll
           dataLength={columns.length}
           next={onFetchMore}
           hasMore={hasMore}
           scrollThreshold="100px"
-          loader={null}
+          loader={
+            <div className={classes.loadMoreLoaderContainer}>
+              <CircularProgress size={16} />
+            </div>
+          }
           scrollableTarget={scrollableTargetId}
           key="infinite-scroll"
         >
-          <CardContent className={classes.contentContainer}>
-            <div
-              className={classes.content}
-              ref={anchor}
-              id={scrollableTargetId}
-            >
-              {columns.map(column => (
-                <ControlledCheckbox
-                  checked={isSelected(
-                    column.value,
-                    selectedColumns,
-                    (a, b) => a === b
-                  )}
-                  name={column.value}
-                  label={column.label}
-                  onChange={() => onColumnToggle(column.value)}
-                  key={column.value}
-                />
-              ))}
-              {hasMore && loading && (
-                <div className={classes.loadMoreLoaderContainer}>
-                  <CircularProgress size={16} />
-                </div>
-              )}
-            </div>
-          </CardContent>
-        </InfiniteScroll>
-      ) : (
-        <CardContent className={classes.contentContainer}>
-          <div className={classes.content} ref={anchor}>
+          <div className={classes.content}>
             {columns.map(column => (
               <ControlledCheckbox
                 checked={isSelected(
@@ -173,8 +152,8 @@ const ColumnPickerContent: React.FC<ColumnPickerContentProps> = props => {
               />
             ))}
           </div>
-        </CardContent>
-      )}
+        </InfiniteScroll>
+      </CardContent>
       <Hr />
       <CardContent
         className={classNames(classes.actionBarContainer, {
