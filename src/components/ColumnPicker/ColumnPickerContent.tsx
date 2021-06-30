@@ -135,7 +135,6 @@ const ColumnPickerContent: React.FC<ColumnPickerContentProps> = props => {
             </div>
           }
           scrollableTarget={scrollableTargetId}
-          key="infinite-scroll"
         >
           <div className={classes.content}>
             {columns.map(column => (

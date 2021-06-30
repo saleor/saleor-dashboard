@@ -209,7 +209,6 @@ const AssignMembersDialog: React.FC<AssignMembersDialogProps> = ({
             </>
           }
           scrollableTarget={scrollableTargetId}
-          key="infinite-scroll"
         >
           <ResponsiveTable className={classes.table}>
             <TableBody>

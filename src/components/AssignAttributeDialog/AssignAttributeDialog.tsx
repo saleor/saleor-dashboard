@@ -144,7 +144,6 @@ const AssignAttributeDialog: React.FC<AssignAttributeDialogProps> = ({
             </div>
           }
           scrollableTarget={scrollableTargetId}
-          key="infinite-scroll"
         >
           <ResponsiveTable key="table">
             <TableBody>
