@@ -1,7 +1,6 @@
 import { ExitFormDialogContext } from "@saleor/components/Form/ExitFormDialogProvider";
 import useForm, {
   CommonUseFormResultWithHandlers,
-  FormChange,
   SubmitPromise
 } from "@saleor/hooks/useForm";
 import useFormset, {
@@ -59,7 +58,7 @@ export interface OrderReturnFormData extends OrderReturnData {
 export type OrderRefundSubmitData = OrderReturnFormData;
 
 export type UseOrderRefundFormResult = CommonUseFormResultWithHandlers<
-  OrderReturnData,
+  OrderReturnFormData,
   OrderReturnHandlers
 >;
 

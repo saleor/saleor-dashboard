@@ -6,7 +6,7 @@ export interface FormProps<T> {
   confirmLeave?: boolean;
   initial?: T;
   resetOnSubmit?: boolean;
-  onSubmit?: (data: T) => SubmitPromise | void;
+  onSubmit?: (data: T) => SubmitPromise<any[]>;
 }
 
 function Form<T>(props: FormProps<T>) {
