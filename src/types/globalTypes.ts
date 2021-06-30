@@ -1124,6 +1124,7 @@ export interface AttributeFilterInput {
   type?: AttributeTypeEnum | null;
   inCollection?: string | null;
   inCategory?: string | null;
+  channel?: string | null;
 }
 
 export interface AttributeInput {
@@ -1202,6 +1203,7 @@ export interface CategoryInput {
 
 export interface CategorySortingInput {
   direction: OrderDirection;
+  channel?: string | null;
   field: CategorySortField;
 }
 
@@ -1247,6 +1249,7 @@ export interface CollectionFilterInput {
   search?: string | null;
   metadata?: (MetadataFilter | null)[] | null;
   ids?: (string | null)[] | null;
+  channel?: string | null;
 }
 
 export interface CollectionInput {
@@ -1262,6 +1265,7 @@ export interface CollectionInput {
 
 export interface CollectionSortingInput {
   direction: OrderDirection;
+  channel?: string | null;
   field: CollectionSortField;
 }
 
@@ -1673,6 +1677,7 @@ export interface ProductFilterInput {
   minimalPrice?: PriceRangeInput | null;
   productTypes?: (string | null)[] | null;
   ids?: (string | null)[] | null;
+  channel?: string | null;
 }
 
 export interface ProductInput {
@@ -1691,6 +1696,7 @@ export interface ProductInput {
 
 export interface ProductOrder {
   direction: OrderDirection;
+  channel?: string | null;
   attributeId?: string | null;
   field?: ProductOrderField | null;
 }
@@ -1797,6 +1803,7 @@ export interface SaleInput {
 
 export interface SaleSortingInput {
   direction: OrderDirection;
+  channel?: string | null;
   field: SaleSortField;
 }
 
@@ -1985,6 +1992,7 @@ export interface VoucherInput {
 
 export interface VoucherSortingInput {
   direction: OrderDirection;
+  channel?: string | null;
   field: VoucherSortField;
 }
 
