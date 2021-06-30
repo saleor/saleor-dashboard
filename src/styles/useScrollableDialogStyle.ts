@@ -18,7 +18,8 @@ const useScrollableDialogStyle = makeStyles(
     },
     scrollArea: {
       overflowY: "scroll",
-      paddingTop: 0
+      paddingTop: 0,
+      height: "inherit"
     }
   }),
   {
