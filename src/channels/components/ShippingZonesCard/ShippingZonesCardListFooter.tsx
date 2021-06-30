@@ -51,6 +51,7 @@ const ShippingZonesCardListFooter: React.FC<ShippingZonesCardListFooterProps> = 
     <ClickAwayListener onClickAway={handleFooterClickAway}>
       <div>
         <SingleAutocompleteSelectField
+          data-test-id="shippingAutoCompleteSelect"
           value=""
           displayValue=""
           nakedInput

@@ -5,10 +5,16 @@ import { CHANNELS_SELECTORS } from "../elements/channels/channels-selectors";
 import { SELECT_CHANNELS_TO_ASSIGN } from "../elements/channels/select-channels-to-assign";
 import { HEADER_SELECTORS } from "../elements/header/header-selectors";
 import { BUTTON_SELECTORS } from "../elements/shared/button-selectors";
-import { SHARED_ELEMENTS } from "../elements/shared/sharedElements";
+import { fillAutocompleteSelect } from "./shared/autocompleteSelect";
 
-export function createChannelByView(name, currency, slug = name) {
-  cy.get(CHANNELS_SELECTORS.createChannelButton)
+export function createChannelByView({
+  name,
+  currency,
+  slug = name,
+  shippingZone
+}) {
+  cy.addAliasToGraphRequest("Channel")
+    .get(CHANNELS_SELECTORS.createChannelButton)
     .click()
     .get(ADD_CHANNEL_FORM_SELECTORS.channelName)
     .type(name)
@@ -24,8 +30,23 @@ export function createChannelByView(name, currency, slug = name) {
       cy.get(ADD_CHANNEL_FORM_SELECTORS.currencyAutocompleteDropdown).click();
     }
   });
+  if (shippingZone) {
+    addShippingZone(shippingZone);
+  }
   cy.get(ADD_CHANNEL_FORM_SELECTORS.saveButton).click();
 }
+
+export function addShippingZone(shippingZone) {
+  cy.get(BUTTON_SELECTORS.expandIcon)
+    .click()
+    .get(ADD_CHANNEL_FORM_SELECTORS.addShippingZoneButton)
+    .click();
+  fillAutocompleteSelect(
+    ADD_CHANNEL_FORM_SELECTORS.shippingAutocompleteSelect,
+    shippingZone
+  );
+}
+
 export function selectChannelInPicker(channelName) {
   cy.get(CHANNEL_FORM_SELECTORS.channelSelect).click();
   cy.contains(CHANNEL_FORM_SELECTORS.channelOption, channelName)
@@ -33,6 +54,7 @@ export function selectChannelInPicker(channelName) {
     .get(CHANNEL_FORM_SELECTORS.confirmButton)
     .click();
 }
+
 export function selectChannelInHeader(channelName) {
   cy.get(HEADER_SELECTORS.channelSelect)
     .click()
@@ -40,6 +62,7 @@ export function selectChannelInHeader(channelName) {
     .contains(channelName)
     .click();
 }
+
 export function selectChannelInDetailsPages(channelName) {
   cy.get(AVAILABLE_CHANNELS_FORM.menageChannelsButton)
     .click()
@@ -59,6 +82,7 @@ export function selectChannelInDetailsPages(channelName) {
     .find(BUTTON_SELECTORS.submit)
     .click();
 }
+
 export function selectChannelVariantInDetailsPage(channelName, attributeName) {
   cy.get(AVAILABLE_CHANNELS_FORM.menageChannelsButton).click();
   cy.contains(SELECT_CHANNELS_TO_ASSIGN.expandChannelRow, channelName)
