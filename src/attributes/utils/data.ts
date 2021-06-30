@@ -16,7 +16,11 @@ import {
   AttributeInputTypeEnum,
   AttributeValueInput
 } from "@saleor/types/globalTypes";
-import { mapNodeToChoice, mapPagesToChoices } from "@saleor/utils/maps";
+import {
+  mapEdgesToItems,
+  mapNodeToChoice,
+  mapPagesToChoices
+} from "@saleor/utils/maps";
 import { MutationFetchResult } from "react-apollo";
 
 import { AttributePageFormData } from "../components/AttributePage";
@@ -143,6 +147,20 @@ export const mergeAttributeValueDeleteErrors = (
     }
     return errors;
   }, []);
+
+export const mergeChoicesWithValues = (
+  attribute:
+    | ProductDetails_product_attributes
+    | PageDetails_page_attributes
+    | SelectedVariantAttributeFragment
+) => {
+  const choices = mapEdgesToItems(attribute.attribute.choices);
+  const valuesToConcat = attribute.values.filter(
+    value => !choices.some(choice => choice.id === value.id)
+  );
+
+  return choices.concat(valuesToConcat);
+};
 
 export const mergeAttributeValues = (
   attributeId: string,

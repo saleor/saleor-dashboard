@@ -10,7 +10,7 @@ import ChannelsAvailabilityDropdown, {
 const props: ChannelsAvailabilityDropdownProps = {
   allChannelsCount: 6,
   channels: productChannels,
-  currentChannel: productChannels[0]
+  showStatus: true
 };
 
 storiesOf("Generics / ChannelsAvailabilityDropdown", module)

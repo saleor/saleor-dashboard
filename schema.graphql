@@ -506,13 +506,12 @@ input AttributeFilterInput {
   filterableInStorefront: Boolean
   filterableInDashboard: Boolean
   availableInGrid: Boolean
-  metadata: [MetadataInput]
+  metadata: [MetadataFilter]
   search: String
   ids: [ID]
   type: AttributeTypeEnum
   inCollection: ID
   inCategory: ID
-  channel: String
 }
 
 input AttributeInput {
@@ -777,7 +776,7 @@ type CategoryDelete {
 
 input CategoryFilterInput {
   search: String
-  metadata: [MetadataInput]
+  metadata: [MetadataFilter]
   ids: [ID]
 }
 
@@ -798,7 +797,6 @@ enum CategorySortField {
 
 input CategorySortingInput {
   direction: OrderDirection!
-  channel: String
   field: CategorySortField!
 }
 
@@ -1230,9 +1228,8 @@ enum CollectionErrorCode {
 input CollectionFilterInput {
   published: CollectionPublished
   search: String
-  metadata: [MetadataInput]
+  metadata: [MetadataFilter]
   ids: [ID]
-  channel: String
 }
 
 input CollectionInput {
@@ -1272,7 +1269,6 @@ enum CollectionSortField {
 
 input CollectionSortingInput {
   direction: OrderDirection!
-  channel: String
   field: CollectionSortField!
 }
 
@@ -1670,7 +1666,7 @@ input CustomerFilterInput {
   numberOfOrders: IntRangeInput
   placedOrders: DateRangeInput
   search: String
-  metadata: [MetadataInput]
+  metadata: [MetadataFilter]
 }
 
 input CustomerInput {
@@ -2523,7 +2519,7 @@ enum MenuErrorCode {
 input MenuFilterInput {
   search: String
   slug: [String]
-  metadata: [MetadataInput]
+  metadata: [MetadataFilter]
 }
 
 input MenuInput {
@@ -2588,7 +2584,7 @@ type MenuItemDelete {
 
 input MenuItemFilterInput {
   search: String
-  metadata: [MetadataInput]
+  metadata: [MetadataFilter]
 }
 
 input MenuItemInput {
@@ -2672,6 +2668,11 @@ enum MetadataErrorCode {
   INVALID
   NOT_FOUND
   REQUIRED
+}
+
+input MetadataFilter {
+  key: String!
+  value: String
 }
 
 input MetadataInput {
@@ -3027,6 +3028,7 @@ type Order implements Node & ObjectWithMetadata {
   discountName: String @deprecated(reason: "Use discounts field. This field will be removed in Saleor 4.0.")
   translatedDiscountName: String @deprecated(reason: "Use discounts field. This field will be removed in Saleor 4.0.")
   discounts: [OrderDiscount!]
+  errors: [OrderError!]!
 }
 
 enum OrderAction {
@@ -3131,7 +3133,7 @@ input OrderDraftFilterInput {
   customer: String
   created: DateRangeInput
   search: String
-  metadata: [MetadataInput]
+  metadata: [MetadataFilter]
   channels: [ID]
 }
 
@@ -3140,7 +3142,7 @@ type OrderError {
   message: String
   code: OrderErrorCode!
   warehouse: ID
-  orderLine: ID
+  orderLines: [ID!]
   variants: [ID!]
   addressType: AddressTypeEnum
 }
@@ -3260,6 +3262,8 @@ enum OrderEventsEnum {
   ORDER_DISCOUNT_DELETED
   ORDER_LINE_DISCOUNT_UPDATED
   ORDER_LINE_DISCOUNT_REMOVED
+  ORDER_LINE_PRODUCT_DELETED
+  ORDER_LINE_VARIANT_DELETED
   UPDATED_ADDRESS
   EMAIL_SENT
   CONFIRMED
@@ -3290,7 +3294,7 @@ input OrderFilterInput {
   customer: String
   created: DateRangeInput
   search: String
-  metadata: [MetadataInput]
+  metadata: [MetadataFilter]
   channels: [ID]
 }
 
@@ -3621,7 +3625,7 @@ enum PageErrorCode {
 
 input PageFilterInput {
   search: String
-  metadata: [MetadataInput]
+  metadata: [MetadataFilter]
   pageTypes: [ID]
   ids: [ID]
 }
@@ -4281,12 +4285,11 @@ input ProductFilterInput {
   stockAvailability: StockAvailability
   stocks: ProductStockFilterInput
   search: String
-  metadata: [MetadataInput]
+  metadata: [MetadataFilter]
   price: PriceRangeInput
   minimalPrice: PriceRangeInput
   productTypes: [ID]
   ids: [ID]
-  channel: String
 }
 
 type ProductImage {
@@ -4371,7 +4374,6 @@ input ProductMediaUpdateInput {
 
 input ProductOrder {
   direction: OrderDirection!
-  channel: String
   attributeId: ID
   field: ProductOrderField
 }
@@ -4496,7 +4498,7 @@ input ProductTypeFilterInput {
   search: String
   configurable: ProductTypeConfigurable
   productType: ProductTypeEnum
-  metadata: [MetadataInput]
+  metadata: [MetadataFilter]
   ids: [ID]
 }
 
@@ -4641,7 +4643,7 @@ type ProductVariantDelete {
 input ProductVariantFilterInput {
   search: String
   sku: [String]
-  metadata: [MetadataInput]
+  metadata: [MetadataFilter]
 }
 
 input ProductVariantInput {
@@ -4778,7 +4780,7 @@ type Query {
   checkoutLines(before: String, after: String, first: Int, last: Int): CheckoutLineCountableConnection
   channel(id: ID): Channel
   channels: [Channel!]
-  attributes(filter: AttributeFilterInput, sortBy: AttributeSortingInput, before: String, after: String, first: Int, last: Int): AttributeCountableConnection
+  attributes(filter: AttributeFilterInput, sortBy: AttributeSortingInput, channel: String, before: String, after: String, first: Int, last: Int): AttributeCountableConnection
   attribute(id: ID, slug: String): Attribute
   appsInstallations: [AppInstallation!]!
   apps(filter: AppFilterInput, sortBy: AppSortingInput, before: String, after: String, first: Int, last: Int): AppCountableConnection
@@ -4935,7 +4937,6 @@ enum SaleSortField {
 
 input SaleSortingInput {
   direction: OrderDirection!
-  channel: String
   field: SaleSortField!
 }
 
@@ -5882,7 +5883,6 @@ enum VoucherSortField {
 
 input VoucherSortingInput {
   direction: OrderDirection!
-  channel: String
   field: VoucherSortField!
 }
 

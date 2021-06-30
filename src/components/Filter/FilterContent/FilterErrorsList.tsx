@@ -2,10 +2,12 @@ import { Typography } from "@material-ui/core";
 import { fade, makeStyles } from "@material-ui/core/styles";
 import InlineAlert from "@saleor/components/Alert/InlineAlert";
 import { useStyles as useDotStyles } from "@saleor/components/StatusLabel";
+import errorTracker from "@saleor/services/errorTracking";
 import classNames from "classnames";
 import React from "react";
 import { useIntl } from "react-intl";
 
+import { validationMessages } from "../messages";
 import { FilterErrorMessages, FilterErrors, IFilterElement } from "../types";
 
 const useStyles = makeStyles(
@@ -36,7 +38,7 @@ interface FilterErrorsListProps<T extends string = string> {
 }
 
 const FilterErrorsList: React.FC<FilterErrorsListProps> = ({
-  filter: { name, multipleFields },
+  filter: { dependencies },
   errors = [],
   errorMessages
 }) => {
@@ -44,18 +46,20 @@ const FilterErrorsList: React.FC<FilterErrorsListProps> = ({
   const dotClasses = useDotStyles({});
   const intl = useIntl();
 
-  const hasError = (fieldName: string) =>
-    !!errors.find(errorName => errorName === fieldName);
-
-  const hasErrorsToShow = () => {
-    if (!!multipleFields?.length) {
-      return multipleFields.some(multipleField => hasError(multipleField.name));
+  const getErrorMessage = (code: string) => {
+    try {
+      return intl.formatMessage(
+        errorMessages?.[code] || validationMessages[code],
+        { dependencies: dependencies?.join() }
+      );
+    } catch (e) {
+      errorTracker.captureException(e);
+      console.warn("Translation missing for filter error code: ", code);
+      return intl.formatMessage(validationMessages.UNKNOWN_ERROR);
     }
-
-    return hasError(name);
   };
 
-  if (!errors.length || !hasErrorsToShow()) {
+  if (!errors.length) {
     return null;
   }
 
@@ -63,11 +67,11 @@ const FilterErrorsList: React.FC<FilterErrorsListProps> = ({
     <div className={classes.container}>
       {!!errors.length && (
         <InlineAlert>
-          {errors.map(fieldName => (
-            <div className={classes.itemContainer}>
+          {errors.map(code => (
+            <div className={classes.itemContainer} key={code}>
               <div className={classNames(classes.dot, dotClasses.dot)} />
               <Typography className={classes.listItemTitle}>
-                {intl.formatMessage(errorMessages?.[fieldName])}
+                {getErrorMessage(code)}
               </Typography>
             </div>
           ))}

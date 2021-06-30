@@ -1,7 +1,9 @@
+import logoDark from "@assets/images/logo-sidebar-dark.svg";
 import logoLight from "@assets/images/logo-sidebar-light.svg";
 import { Drawer, Typography } from "@material-ui/core";
 import ArrowLeftIcon from "@material-ui/icons/ArrowLeft";
 import MenuIcon from "@material-ui/icons/Menu";
+import useTheme from "@saleor/hooks/useTheme";
 import classNames from "classnames";
 import React from "react";
 import SVG from "react-inlinesvg";
@@ -29,6 +31,8 @@ const SideBarDrawer: React.FC<SideBarDrawerProps> = ({
   const container = React.useRef<HTMLDivElement>(null);
 
   const configureMenuItem = getConfigureMenuItem(intl);
+
+  const { isDark } = useTheme();
 
   const handleMenuItemClick = (url: string) => {
     setOpened(false);
@@ -68,7 +72,10 @@ const SideBarDrawer: React.FC<SideBarDrawerProps> = ({
             })}
           >
             <div className={classes.content}>
-              <SVG className={classes.logo} src={logoLight} />
+              <SVG
+                className={classes.logo}
+                src={isDark ? logoDark : logoLight}
+              />
               {menuItems.map(menuItem => {
                 if (
                   menuItem.permission &&

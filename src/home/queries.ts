@@ -34,7 +34,8 @@ const home = gql`
       totalCount
     }
     productsOutOfStock: products(
-      filter: { stockAvailability: OUT_OF_STOCK, channel: $channel }
+      filter: { stockAvailability: OUT_OF_STOCK }
+      channel: $channel
     ) {
       totalCount
     }

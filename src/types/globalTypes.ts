@@ -679,6 +679,8 @@ export enum OrderEventsEnum {
   ORDER_FULLY_PAID = "ORDER_FULLY_PAID",
   ORDER_LINE_DISCOUNT_REMOVED = "ORDER_LINE_DISCOUNT_REMOVED",
   ORDER_LINE_DISCOUNT_UPDATED = "ORDER_LINE_DISCOUNT_UPDATED",
+  ORDER_LINE_PRODUCT_DELETED = "ORDER_LINE_PRODUCT_DELETED",
+  ORDER_LINE_VARIANT_DELETED = "ORDER_LINE_VARIANT_DELETED",
   ORDER_MARKED_AS_PAID = "ORDER_MARKED_AS_PAID",
   ORDER_REPLACEMENT_CREATED = "ORDER_REPLACEMENT_CREATED",
   OTHER = "OTHER",
@@ -1116,13 +1118,12 @@ export interface AttributeFilterInput {
   filterableInStorefront?: boolean | null;
   filterableInDashboard?: boolean | null;
   availableInGrid?: boolean | null;
-  metadata?: (MetadataInput | null)[] | null;
+  metadata?: (MetadataFilter | null)[] | null;
   search?: string | null;
   ids?: (string | null)[] | null;
   type?: AttributeTypeEnum | null;
   inCollection?: string | null;
   inCategory?: string | null;
-  channel?: string | null;
 }
 
 export interface AttributeInput {
@@ -1186,7 +1187,7 @@ export interface CatalogueInput {
 
 export interface CategoryFilterInput {
   search?: string | null;
-  metadata?: (MetadataInput | null)[] | null;
+  metadata?: (MetadataFilter | null)[] | null;
   ids?: (string | null)[] | null;
 }
 
@@ -1201,7 +1202,6 @@ export interface CategoryInput {
 
 export interface CategorySortingInput {
   direction: OrderDirection;
-  channel?: string | null;
   field: CategorySortField;
 }
 
@@ -1245,9 +1245,8 @@ export interface CollectionCreateInput {
 export interface CollectionFilterInput {
   published?: CollectionPublished | null;
   search?: string | null;
-  metadata?: (MetadataInput | null)[] | null;
+  metadata?: (MetadataFilter | null)[] | null;
   ids?: (string | null)[] | null;
-  channel?: string | null;
 }
 
 export interface CollectionInput {
@@ -1263,7 +1262,6 @@ export interface CollectionInput {
 
 export interface CollectionSortingInput {
   direction: OrderDirection;
-  channel?: string | null;
   field: CollectionSortField;
 }
 
@@ -1277,7 +1275,7 @@ export interface CustomerFilterInput {
   numberOfOrders?: IntRangeInput | null;
   placedOrders?: DateRangeInput | null;
   search?: string | null;
-  metadata?: (MetadataInput | null)[] | null;
+  metadata?: (MetadataFilter | null)[] | null;
 }
 
 export interface CustomerInput {
@@ -1392,6 +1390,11 @@ export interface MenuSortingInput {
   field: MenuSortField;
 }
 
+export interface MetadataFilter {
+  key: string;
+  value?: string | null;
+}
+
 export interface MetadataInput {
   key: string;
   value: string;
@@ -1415,7 +1418,7 @@ export interface OrderDraftFilterInput {
   customer?: string | null;
   created?: DateRangeInput | null;
   search?: string | null;
-  metadata?: (MetadataInput | null)[] | null;
+  metadata?: (MetadataFilter | null)[] | null;
   channels?: (string | null)[] | null;
 }
 
@@ -1425,7 +1428,7 @@ export interface OrderFilterInput {
   customer?: string | null;
   created?: DateRangeInput | null;
   search?: string | null;
-  metadata?: (MetadataInput | null)[] | null;
+  metadata?: (MetadataFilter | null)[] | null;
   channels?: (string | null)[] | null;
 }
 
@@ -1522,7 +1525,7 @@ export interface PageCreateInput {
 
 export interface PageFilterInput {
   search?: string | null;
-  metadata?: (MetadataInput | null)[] | null;
+  metadata?: (MetadataFilter | null)[] | null;
   pageTypes?: (string | null)[] | null;
   ids?: (string | null)[] | null;
 }
@@ -1665,12 +1668,11 @@ export interface ProductFilterInput {
   stockAvailability?: StockAvailability | null;
   stocks?: ProductStockFilterInput | null;
   search?: string | null;
-  metadata?: (MetadataInput | null)[] | null;
+  metadata?: (MetadataFilter | null)[] | null;
   price?: PriceRangeInput | null;
   minimalPrice?: PriceRangeInput | null;
   productTypes?: (string | null)[] | null;
   ids?: (string | null)[] | null;
-  channel?: string | null;
 }
 
 export interface ProductInput {
@@ -1689,7 +1691,6 @@ export interface ProductInput {
 
 export interface ProductOrder {
   direction: OrderDirection;
-  channel?: string | null;
   attributeId?: string | null;
   field?: ProductOrderField | null;
 }
@@ -1703,7 +1704,7 @@ export interface ProductTypeFilterInput {
   search?: string | null;
   configurable?: ProductTypeConfigurable | null;
   productType?: ProductTypeEnum | null;
-  metadata?: (MetadataInput | null)[] | null;
+  metadata?: (MetadataFilter | null)[] | null;
   ids?: (string | null)[] | null;
 }
 
@@ -1796,7 +1797,6 @@ export interface SaleInput {
 
 export interface SaleSortingInput {
   direction: OrderDirection;
-  channel?: string | null;
   field: SaleSortField;
 }
 
@@ -1985,7 +1985,6 @@ export interface VoucherInput {
 
 export interface VoucherSortingInput {
   direction: OrderDirection;
-  channel?: string | null;
   field: VoucherSortField;
 }
 

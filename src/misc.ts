@@ -5,6 +5,7 @@ import urlJoin from "url-join";
 
 import { ConfirmButtonTransitionState } from "./components/ConfirmButton/ConfirmButton";
 import { StatusType } from "./components/StatusChip/types";
+import { StatusLabelProps } from "./components/StatusLabel";
 import { APP_MOUNT_URI } from "./config";
 import { AddressType, AddressTypeInput } from "./customers/types";
 import {
@@ -90,7 +91,10 @@ const paymentStatusMessages = defineMessages({
   }
 });
 
-export const transformPaymentStatus = (status: string, intl: IntlShape) => {
+export const transformPaymentStatus = (
+  status: string,
+  intl: IntlShape
+): { localized: string; status: StatusLabelProps["status"] } => {
   switch (status) {
     case PaymentChargeStatusEnum.PARTIALLY_CHARGED:
       return {

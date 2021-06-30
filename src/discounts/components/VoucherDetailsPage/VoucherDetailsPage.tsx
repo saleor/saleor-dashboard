@@ -346,7 +346,6 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
                         onRowClick={onProductClick}
                         pageInfo={pageInfo}
                         discount={voucher}
-                        selectedChannelId={selectedChannelId}
                         channelsCount={allChannelsCount}
                         isChecked={isChecked}
                         selected={selected}
