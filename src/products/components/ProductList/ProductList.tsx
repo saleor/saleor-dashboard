@@ -24,6 +24,7 @@ import {
 import { GridAttributes_grid_edges_node } from "@saleor/products/types/GridAttributes";
 import { ProductList_products_edges_node } from "@saleor/products/types/ProductList";
 import { ProductListUrlSortField } from "@saleor/products/urls";
+import { canBeSorted } from "@saleor/products/views/ProductList/sort";
 import { makeStyles } from "@saleor/theme";
 import { ChannelProps, ListActions, ListProps, SortPage } from "@saleor/types";
 import TDisplayColumn, {
@@ -33,6 +34,8 @@ import { getArrowDirection } from "@saleor/utils/sort";
 import classNames from "classnames";
 import React from "react";
 import { FormattedMessage } from "react-intl";
+
+import ProductAvailabilityStatusLabel from "../ProductAvailabilityStatusLabel";
 
 const useStyles = makeStyles(
   theme => ({
@@ -215,6 +218,12 @@ export const ProductList: React.FC<ProductListProps> = props => {
                   : undefined
               }
               onClick={() => onSort(ProductListUrlSortField.status)}
+              disabled={
+                !canBeSorted(
+                  ProductListUrlSortField.status,
+                  !!selectedChannelId
+                )
+              }
             >
               <FormattedMessage
                 defaultMessage="Availability"
@@ -262,6 +271,9 @@ export const ProductList: React.FC<ProductListProps> = props => {
               }
               textAlign="right"
               onClick={() => onSort(ProductListUrlSortField.price)}
+              disabled={
+                !canBeSorted(ProductListUrlSortField.price, !!selectedChannelId)
+              }
             >
               <FormattedMessage
                 defaultMessage="Price"
@@ -361,17 +373,17 @@ export const ProductList: React.FC<ProductListProps> = props => {
                         !!product?.channelListings?.length
                       }
                     >
-                      {product && !product?.channelListings?.length ? (
-                        "-"
-                      ) : product?.channelListings !== undefined ? (
-                        <ChannelsAvailabilityDropdown
-                          allChannelsCount={channelsCount}
-                          currentChannel={channel}
-                          channels={product?.channelListings}
-                        />
-                      ) : (
-                        <Skeleton />
-                      )}
+                      {(!product && <Skeleton />) ||
+                        (!product?.channelListings?.length && "-") ||
+                        (product?.channelListings !== undefined && channel ? (
+                          <ProductAvailabilityStatusLabel channel={channel} />
+                        ) : (
+                          <ChannelsAvailabilityDropdown
+                            allChannelsCount={channelsCount}
+                            channels={product?.channelListings}
+                            showStatus
+                          />
+                        ))}
                     </TableCell>
                   </DisplayColumn>
                   {gridAttributesFromSettings.map(gridAttribute => (

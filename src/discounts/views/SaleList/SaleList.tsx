@@ -20,9 +20,9 @@ import { ListViews } from "@saleor/types";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import createFilterHandlers from "@saleor/utils/handlers/filterHandlers";
 import createSortHandler from "@saleor/utils/handlers/sortHandler";
-import { mapEdgesToItems } from "@saleor/utils/maps";
+import { mapEdgesToItems, mapNodeToChoice } from "@saleor/utils/maps";
 import { getSortParams } from "@saleor/utils/sort";
-import React from "react";
+import React, { useEffect } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import SaleListPage from "../../components/SaleListPage";
@@ -46,7 +46,7 @@ import {
   getFilterVariables,
   saveFilterTab
 } from "./filters";
-import { getSortQueryVariables } from "./sort";
+import { canBeSorted, DEFAULT_SORT_KEY, getSortQueryVariables } from "./sort";
 
 interface SaleListProps {
   params: SaleListUrlQueryParams;
@@ -63,7 +63,13 @@ export const SaleList: React.FC<SaleListProps> = ({ params }) => {
     ListViews.SALES_LIST
   );
   const intl = useIntl();
-  const { channel } = useAppChannel();
+  const { availableChannels } = useAppChannel(false);
+  const selectedChannel = availableChannels.find(
+    channel => channel.slug === params.channel
+  );
+  const channelOpts = availableChannels
+    ? mapNodeToChoice(availableChannels, channel => channel.slug)
+    : null;
 
   const [openModal, closeModal] = createDialogActionHandlers<
     SaleListUrlDialog,
@@ -75,7 +81,8 @@ export const SaleList: React.FC<SaleListProps> = ({ params }) => {
     () => ({
       ...paginationState,
       filter: getFilterVariables(params),
-      sort: getSortQueryVariables(params, channel?.slug)
+      sort: getSortQueryVariables(params),
+      channel: params.channel
     }),
     [params]
   );
@@ -104,6 +111,17 @@ export const SaleList: React.FC<SaleListProps> = ({ params }) => {
     navigate,
     params
   });
+
+  useEffect(() => {
+    if (!canBeSorted(params.sort, !!selectedChannel)) {
+      navigate(
+        saleListUrl({
+          ...params,
+          sort: DEFAULT_SORT_KEY
+        })
+      );
+    }
+  }, [params]);
 
   const handleTabChange = (tab: number) => {
     reset();
@@ -163,7 +181,7 @@ export const SaleList: React.FC<SaleListProps> = ({ params }) => {
             <WindowTitle title={intl.formatMessage(sectionNames.sales)} />
             <SaleListPage
               currentTab={currentTab}
-              filterOpts={getFilterOpts(params)}
+              filterOpts={getFilterOpts(params, channelOpts)}
               initialSearch={params.query || ""}
               onSearchChange={handleSearchChange}
               onFilterChange={filter => changeFilters(filter)}
@@ -199,7 +217,7 @@ export const SaleList: React.FC<SaleListProps> = ({ params }) => {
                   <DeleteIcon />
                 </IconButton>
               }
-              selectedChannelId={channel?.id}
+              selectedChannelId={selectedChannel?.id}
             />
             <ActionDialog
               confirmButtonState={saleBulkDeleteOpts.status}

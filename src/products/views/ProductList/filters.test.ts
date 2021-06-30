@@ -25,9 +25,9 @@ describe("Filtering query params", () => {
       status: true.toString(),
       stockStatus: StockAvailability.IN_STOCK
     };
-    const filterVariables = getFilterVariables(params, "default-channel");
+    const filterVariables = getFilterVariables(params, true);
 
-    expect(getExistingKeys(filterVariables)).toHaveLength(3);
+    expect(getExistingKeys(filterVariables)).toHaveLength(2);
   });
 });
 
