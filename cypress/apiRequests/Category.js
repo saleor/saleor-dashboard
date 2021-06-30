@@ -15,6 +15,17 @@ export function createCategory(name, slug = name) {
     .sendRequestWithQuery(mutation)
     .its("body.data.categoryCreate.category");
 }
+
+export function getCategory(categoryId) {
+  const mutation = `query{
+    category(id:"${categoryId}"){
+      name
+      description
+    }
+  }`;
+  return cy.sendRequestWithQuery(mutation).its("body.data.category");
+}
+
 export function getCategories(first, search) {
   const mutation = `query{
     categories(first:${first}, filter:{
@@ -32,6 +43,7 @@ export function getCategories(first, search) {
     .sendRequestWithQuery(mutation)
     .then(resp => resp.body.data.categories.edges);
 }
+
 export function deleteCategory(categoryId) {
   const mutation = `mutation{
     categoryDelete(id:"${categoryId}"){

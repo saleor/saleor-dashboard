@@ -104,6 +104,7 @@ describe("Collections", () => {
         expect(isVisible).to.equal(true);
       });
   });
+
   it("should not display collection not set as available in channel", () => {
     const collectionName = `${startsWith}${faker.datatype.number()}`;
     let collection;
@@ -128,6 +129,7 @@ describe("Collections", () => {
         expect(isVisible).to.equal(false);
       });
   });
+
   it("should display products hidden in listing", () => {
     // Products "hidden in listings" are not displayed in Category listings or search results,
     // but are listed on Collections
