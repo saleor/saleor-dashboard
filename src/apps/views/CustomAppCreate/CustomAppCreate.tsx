@@ -61,18 +61,18 @@ export const CustomAppCreate: React.FC<CustomAppCreateProps> = ({
 
     const getErrorResult = getErrors(result);
 
-    const extractResult = await extractMutationErrors(
-      createApp({
-        variables: {
-          input: {
-            name: data.name,
-            permissions: data.hasFullAccess
-              ? shop.permissions.map(permission => permission.code)
-              : data.permissions
-          }
+    const lol = createApp({
+      variables: {
+        input: {
+          name: data.name,
+          permissions: data.hasFullAccess
+            ? shop.permissions.map(permission => permission.code)
+            : data.permissions
         }
-      })
-    );
+      }
+    });
+
+    const extractResult = await extractMutationErrors(lol);
 
     return result;
   };

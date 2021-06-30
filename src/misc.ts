@@ -290,12 +290,15 @@ export interface SaleorMutationResult {
 type InferPromiseResult<T> = T extends Promise<infer V> ? V : never;
 
 export const extractMutationErrors = async <
-  TPromise extends Promise<MutationFetchResult>,
-  // TData extends InferPromiseResult<TPromise>,
+  TData extends InferPromiseResult<TPromise>,
+  TPromise extends Promise<MutationFetchResult<TData>>,
   TErrors extends ReturnType<typeof getErrors>
+  // TData
+
+  // TData extends InferPromiseResult<TPromise>
 >(
   submitPromise: TPromise
-) => {
+): Promise<TErrors> => {
   // return submitPromise;
   const result = await submitPromise;
   // return result;
@@ -304,7 +307,7 @@ export const extractMutationErrors = async <
   return e;
 };
 
-type InferAllKeys<T> = T extends Record<infer V, any> ? V[] : never;
+// type InferAllKeys<T> = T extends Record<infer V, any> ? V[] : never;
 
 export const getErrors = <
   T extends MutationFetchResult,
@@ -320,7 +323,7 @@ export const getErrors = <
   result: T
 ): TErrors => result.data?.errors;
 
-type InferErrorType<TData> = TData extends Array<infer V> ? V[] : never;
+// type InferErrorType<TData> = TData extends Array<infer V> ? V[] : never;
 
 // export const getErrors = <
 //   TData extends Record<string, any>,
