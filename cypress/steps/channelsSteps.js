@@ -41,8 +41,6 @@ export function addShippingZone(shippingZone) {
     .click()
     .get(ADD_CHANNEL_FORM_SELECTORS.addShippingZoneButton)
     .click();
-  // .get(ADD_CHANNEL_FORM_SELECTORS.shippingAutocompleteSelect)
-  // .type(shippingZone)
   fillAutocompleteSelect(
     ADD_CHANNEL_FORM_SELECTORS.shippingAutocompleteSelect,
     shippingZone
