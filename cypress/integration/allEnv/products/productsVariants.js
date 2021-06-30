@@ -160,16 +160,12 @@ describe("Creating variants", () => {
     const name = `${startsWith}${faker.datatype.number()}`;
     const variantsPrice = 10;
     let createdProduct;
-    // createChannel({ isActive: true, name, currencyCode: "PLN" })
-    // .then(resp => {
-    //   newChannel = resp;
     createProduct({
       attributeId: attribute.id,
       name,
       productTypeId: productType.id,
       categoryId: category.id
     })
-      // })
       .then(productResp => {
         createdProduct = productResp;
         updateChannelInProduct({
