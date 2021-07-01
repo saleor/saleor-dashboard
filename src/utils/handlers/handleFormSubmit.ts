@@ -2,17 +2,27 @@ import { SubmitPromise } from "@saleor/hooks/useForm";
 
 async function handleFormSubmit<T>(
   data: T,
-  onSubmit: (data: T) => SubmitPromise,
-  setChanged: (changed: boolean) => void
+  onSubmit: (data: T) => SubmitPromise | void,
+  setChanged: (changed: boolean) => void,
+  setEnableExitPrompt?: (value: boolean) => void
 ): Promise<boolean> {
-  const errors = await onSubmit(data);
-  const ok = errors?.length === 0;
+  const result = onSubmit(data);
 
-  if (ok) {
-    setChanged(false);
+  if (result) {
+    const errors = await result;
+
+    if (errors?.length === 0) {
+      setChanged(false);
+
+      if (!!setEnableExitPrompt) {
+        setEnableExitPrompt(false);
+      }
+
+      return false;
+    }
+
+    return true;
   }
-
-  return ok;
 }
 
 export default handleFormSubmit;

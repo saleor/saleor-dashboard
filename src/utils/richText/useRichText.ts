@@ -25,6 +25,10 @@ function useRichText(opts: {
   }, [opts.initial]);
 
   const change: RichTextEditorChange = newData => {
+    if (data.current.blocks.length === 0 && newData.blocks.length === 0) {
+      return;
+    }
+
     opts.triggerChange();
     data.current = newData;
   };

@@ -246,9 +246,7 @@ export function useShippingRateCreator(
       ]);
 
       if (
-        mutationResults.find(
-          result => getMutationErrors(result.data as any).length > 0
-        )
+        mutationResults.find(result => getMutationErrors(result).length > 0)
       ) {
         deleteShippingRate({
           variables: {

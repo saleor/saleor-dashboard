@@ -274,17 +274,20 @@ export function getMutationState(
   return "default";
 }
 
-interface SaleorMutationResult {
-  errors?: UserError[];
+export interface SaleorMutationResult {
+  errors?: any[];
 }
+
 export function getMutationErrors<
-  TData extends Record<string, SaleorMutationResult>
->(data: TData): UserError[] {
+  TData extends SaleorMutationResult,
+  TErrors extends Pick<TData, "errors">
+>(data: TData): TErrors[] {
   return Object.values(data).reduce(
-    (acc: UserError[], mut) => [...acc, ...maybe(() => mut.errors, [])],
+    (acc: TErrors[], mut) => [...acc, ...maybe(() => mut.errors, [])],
     []
   );
 }
+
 export function getMutationStatus<
   TData extends Record<string, SaleorMutationResult | any>
 >(opts: MutationResult<TData>): ConfirmButtonTransitionState {
