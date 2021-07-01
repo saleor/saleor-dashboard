@@ -6,6 +6,7 @@ export const urlList = {
   homePage: "/",
   orders: "orders/",
   products: "products/",
+  addProduct: "products/add",
   warehouses: "warehouses/",
   shippingMethods: "shipping/",
   sales: "discounts/sales/",
@@ -25,3 +26,6 @@ export const staffMemberDetailsUrl = staffMemberId =>
 
 export const permissionGroupDetails = permissionGroupId =>
   `${urlList.permissionsGroups}${permissionGroupId}`;
+
+export const categoryDetails = categoryId =>
+  `${urlList.categories}${categoryId}`;

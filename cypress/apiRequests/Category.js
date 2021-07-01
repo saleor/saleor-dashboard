@@ -21,6 +21,13 @@ export function getCategory(categoryId) {
     category(id:"${categoryId}"){
       name
       description
+      children(first:100){
+        edges{
+          node{
+            name
+          }
+        }
+      }
     }
   }`;
   return cy.sendRequestWithQuery(mutation).its("body.data.category");

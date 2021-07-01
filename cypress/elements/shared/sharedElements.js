@@ -3,5 +3,7 @@ export const SHARED_ELEMENTS = {
   progressBar: '[role="progressbar"]',
   skeleton: '[data-test-id="skeleton"]',
   table: 'table[class*="Table"]',
-  confirmationMsg: "[data-test='notification-success']"
+  tableRow: '[data-test="id"]',
+  confirmationMsg: "[data-test='notification-success']",
+  searchInput: '[data-test-id="searchInput"]'
 };
