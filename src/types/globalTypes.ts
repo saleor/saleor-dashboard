@@ -1124,7 +1124,6 @@ export interface AttributeFilterInput {
   type?: AttributeTypeEnum | null;
   inCollection?: string | null;
   inCategory?: string | null;
-  channel?: string | null;
 }
 
 export interface AttributeInput {
@@ -1162,7 +1161,7 @@ export interface AttributeValueCreateInput {
 
 export interface AttributeValueInput {
   id?: string | null;
-  values?: (string | null)[] | null;
+  values?: string[] | null;
   file?: string | null;
   contentType?: string | null;
   references?: string[] | null;
@@ -1177,7 +1176,7 @@ export interface AttributeValueTranslationInput {
 
 export interface BulkAttributeValueInput {
   id?: string | null;
-  values: (string | null)[];
+  values: string[];
 }
 
 export interface CatalogueInput {
@@ -1203,7 +1202,6 @@ export interface CategoryInput {
 
 export interface CategorySortingInput {
   direction: OrderDirection;
-  channel?: string | null;
   field: CategorySortField;
 }
 
@@ -1249,7 +1247,6 @@ export interface CollectionFilterInput {
   search?: string | null;
   metadata?: (MetadataFilter | null)[] | null;
   ids?: (string | null)[] | null;
-  channel?: string | null;
 }
 
 export interface CollectionInput {
@@ -1265,7 +1262,6 @@ export interface CollectionInput {
 
 export interface CollectionSortingInput {
   direction: OrderDirection;
-  channel?: string | null;
   field: CollectionSortField;
 }
 
@@ -1677,7 +1673,6 @@ export interface ProductFilterInput {
   minimalPrice?: PriceRangeInput | null;
   productTypes?: (string | null)[] | null;
   ids?: (string | null)[] | null;
-  channel?: string | null;
 }
 
 export interface ProductInput {
@@ -1696,7 +1691,6 @@ export interface ProductInput {
 
 export interface ProductOrder {
   direction: OrderDirection;
-  channel?: string | null;
   attributeId?: string | null;
   field?: ProductOrderField | null;
 }
@@ -1732,7 +1726,7 @@ export interface ProductTypeSortingInput {
 }
 
 export interface ProductVariantBulkCreateInput {
-  attributes: (BulkAttributeValueInput | null)[];
+  attributes: BulkAttributeValueInput[];
   sku: string;
   trackInventory?: boolean | null;
   weight?: any | null;
@@ -1747,7 +1741,7 @@ export interface ProductVariantChannelListingAddInput {
 }
 
 export interface ProductVariantCreateInput {
-  attributes: (AttributeValueInput | null)[];
+  attributes: AttributeValueInput[];
   sku?: string | null;
   trackInventory?: boolean | null;
   weight?: any | null;
@@ -1756,7 +1750,7 @@ export interface ProductVariantCreateInput {
 }
 
 export interface ProductVariantInput {
-  attributes?: (AttributeValueInput | null)[] | null;
+  attributes?: AttributeValueInput[] | null;
   sku?: string | null;
   trackInventory?: boolean | null;
   weight?: any | null;
@@ -1803,7 +1797,6 @@ export interface SaleInput {
 
 export interface SaleSortingInput {
   direction: OrderDirection;
-  channel?: string | null;
   field: SaleSortField;
 }
 
@@ -1992,7 +1985,6 @@ export interface VoucherInput {
 
 export interface VoucherSortingInput {
   direction: OrderDirection;
-  channel?: string | null;
   field: VoucherSortField;
 }
 

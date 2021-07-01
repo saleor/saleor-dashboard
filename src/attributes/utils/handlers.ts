@@ -221,10 +221,9 @@ function getBooleanInput(attribute: AttributeInput) {
 function getDefaultInput(attribute: AttributeInput) {
   return {
     id: attribute.id,
-    values:
-      attribute.value[0] === "" || attribute.value[0] === undefined
-        ? []
-        : attribute.value
+    values: ["", undefined, null].includes(attribute.value[0])
+      ? []
+      : attribute.value
   };
 }
 
