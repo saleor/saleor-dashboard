@@ -12,7 +12,7 @@ import { FetchMoreProps } from "@saleor/types";
 import { isSelected } from "@saleor/utils/lists";
 import classNames from "classnames";
 import React from "react";
-import InfiniteScroll from "react-infinite-scroller";
+import InfiniteScroll from "react-infinite-scroll-component";
 import { FormattedMessage } from "react-intl";
 
 import ControlledCheckbox from "../ControlledCheckbox";
@@ -52,12 +52,12 @@ const useStyles = makeStyles(
       display: "grid",
       gridColumnGap: theme.spacing(3),
       gridTemplateColumns: "repeat(3, 1fr)",
-      maxHeight: 256,
-      overflowX: "visible",
-      overflowY: "scroll",
       padding: theme.spacing(2, 3)
     },
     contentContainer: {
+      maxHeight: 256,
+      overflowX: "visible",
+      overflowY: "scroll",
       padding: 0
     },
     dropShadow: {
@@ -80,11 +80,12 @@ const useStyles = makeStyles(
   { name: "ColumnPickerContent" }
 );
 
+const scrollableTargetId = "columnPickerScrollableDiv";
+
 const ColumnPickerContent: React.FC<ColumnPickerContentProps> = props => {
   const {
     columns,
     hasMore,
-    loading,
     selectedColumns,
     total,
     onCancel,
@@ -118,41 +119,24 @@ const ColumnPickerContent: React.FC<ColumnPickerContentProps> = props => {
         </Typography>
       </CardContent>
       <Hr />
-      {hasMore && onFetchMore ? (
+      <CardContent
+        className={classes.contentContainer}
+        ref={anchor}
+        id={scrollableTargetId}
+      >
         <InfiniteScroll
-          pageStart={0}
-          loadMore={onFetchMore}
+          dataLength={columns.length}
+          next={onFetchMore}
           hasMore={hasMore}
-          useWindow={false}
-          threshold={100}
-          key="infinite-scroll"
-        >
-          <CardContent className={classes.contentContainer}>
-            <div className={classes.content} ref={anchor}>
-              {columns.map(column => (
-                <ControlledCheckbox
-                  checked={isSelected(
-                    column.value,
-                    selectedColumns,
-                    (a, b) => a === b
-                  )}
-                  name={column.value}
-                  label={column.label}
-                  onChange={() => onColumnToggle(column.value)}
-                  key={column.value}
-                />
-              ))}
-              {loading && (
-                <div className={classes.loadMoreLoaderContainer}>
-                  <CircularProgress size={16} />
-                </div>
-              )}
+          scrollThreshold="100px"
+          loader={
+            <div className={classes.loadMoreLoaderContainer}>
+              <CircularProgress size={16} />
             </div>
-          </CardContent>
-        </InfiniteScroll>
-      ) : (
-        <CardContent className={classes.contentContainer}>
-          <div className={classes.content} ref={anchor}>
+          }
+          scrollableTarget={scrollableTargetId}
+        >
+          <div className={classes.content}>
             {columns.map(column => (
               <ControlledCheckbox
                 checked={isSelected(
@@ -167,8 +151,8 @@ const ColumnPickerContent: React.FC<ColumnPickerContentProps> = props => {
               />
             ))}
           </div>
-        </CardContent>
-      )}
+        </InfiniteScroll>
+      </CardContent>
       <Hr />
       <CardContent
         className={classNames(classes.actionBarContainer, {

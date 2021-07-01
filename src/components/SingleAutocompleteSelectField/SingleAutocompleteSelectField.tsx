@@ -242,15 +242,11 @@ const SingleAutocompleteSelectField: React.FC<SingleAutocompleteSelectFieldProps
 
   if (fetchChoices) {
     return (
-      <DebounceAutocomplete debounceFn={fetchChoices}>
-        {debounceFn => (
-          <SingleAutocompleteSelectFieldComponent
-            choices={choices}
-            {...rest}
-            fetchChoices={debounceFn}
-          />
-        )}
-      </DebounceAutocomplete>
+      <SingleAutocompleteSelectFieldComponent
+        choices={choices}
+        {...rest}
+        fetchChoices={fetchChoices}
+      />
     );
   }
 
