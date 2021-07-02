@@ -10,8 +10,8 @@ import {
   UpdatePrivateMetadataVariables
 } from "../metadata/types/UpdatePrivateMetadata";
 
-function createMetadataCreateHandler<T extends MetadataFormData>(
-  create: (data: T) => Promise<{ id?: string; errors?: any[] }>,
+function createMetadataCreateHandler<T extends MetadataFormData, TError>(
+  create: (data: T) => Promise<{ id?: string; errors?: TError[] }>,
   setMetadata: MutationFunction<UpdateMetadata, UpdateMetadataVariables>,
   setPrivateMetadata: MutationFunction<
     UpdatePrivateMetadata,

@@ -10,7 +10,9 @@ import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
 import { Tab, TabContainer } from "@saleor/components/Tab";
 import { createSaleChannelsChangeHandler } from "@saleor/discounts/handlers";
+import { SaleUpdate_saleUpdate_errors } from "@saleor/discounts/types/SaleUpdate";
 import { DiscountErrorFragment } from "@saleor/fragments/types/DiscountErrorFragment";
+import { SubmitPromise } from "@saleor/hooks/useForm";
 import { sectionNames } from "@saleor/intl";
 import { validatePrice } from "@saleor/products/utils/validation";
 import React from "react";
@@ -80,7 +82,9 @@ export interface SaleDetailsPageProps
   onProductUnassign: (id: string) => void;
   onProductClick: (id: string) => () => void;
   onRemove: () => void;
-  onSubmit: (data: SaleDetailsPageFormData) => void;
+  onSubmit: (
+    data: SaleDetailsPageFormData
+  ) => SubmitPromise<SaleUpdate_saleUpdate_errors[]>;
   onTabClick: (index: SaleDetailsPageTab) => void;
   onChannelsChange: (data: ChannelSaleData[]) => void;
   openChannelsModal: () => void;

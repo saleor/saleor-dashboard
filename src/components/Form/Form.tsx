@@ -1,15 +1,15 @@
 import useForm, { SubmitPromise, UseFormResult } from "@saleor/hooks/useForm";
 import React from "react";
 
-export interface FormProps<T> {
-  children: (props: UseFormResult<T>) => React.ReactNode;
+export interface FormProps<TData, TErrors> {
+  children: (props: UseFormResult<TData>) => React.ReactNode;
   confirmLeave?: boolean;
-  initial?: T;
+  initial?: TData;
   resetOnSubmit?: boolean;
-  onSubmit?: (data: T) => SubmitPromise<any[]>;
+  onSubmit?: (data: TData) => SubmitPromise<TErrors>;
 }
 
-function Form<T>(props: FormProps<T>) {
+function Form<TData, TErrors>(props: FormProps<TData, TErrors>) {
   const { children, initial, resetOnSubmit, onSubmit, confirmLeave } = props;
   const renderProps = useForm(initial, onSubmit, { confirmLeave });
 

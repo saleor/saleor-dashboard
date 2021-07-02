@@ -13,6 +13,7 @@ import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { getDefaultNotifierSuccessErrorData } from "@saleor/hooks/useNotifier/utils";
 import { sectionNames } from "@saleor/intl";
+import { extractMutationErrors } from "@saleor/misc";
 import useShippingZonesSearch from "@saleor/searches/useShippingZonesSearch";
 import { useChannelShippingZones } from "@saleor/shipping/queries";
 import getChannelsErrorMessage from "@saleor/utils/errors/channels";
@@ -102,17 +103,19 @@ export const ChannelDetails: React.FC<ChannelDetailsProps> = ({
     shippingZonesIdsToRemove,
     shippingZonesIdsToAdd
   }: FormData) =>
-    updateChannel({
-      variables: {
-        id: data?.channel.id,
-        input: {
-          name,
-          slug,
-          addShippingZones: shippingZonesIdsToAdd,
-          removeShippingZones: shippingZonesIdsToRemove
+    extractMutationErrors(
+      updateChannel({
+        variables: {
+          id: data?.channel.id,
+          input: {
+            name,
+            slug,
+            addShippingZones: shippingZonesIdsToAdd,
+            removeShippingZones: shippingZonesIdsToRemove
+          }
         }
-      }
-    });
+      })
+    );
 
   const onDeleteCompleted = (data: ChannelDelete) => {
     const errors = data.channelDelete.errors;

@@ -285,79 +285,29 @@ export interface SaleorMutationResult {
   errors?: any[];
 }
 
-// type Lol<T> = T extends Promise<infer P> ? P : any;
-
 type InferPromiseResult<T> = T extends Promise<infer V> ? V : never;
 
 export const extractMutationErrors = async <
   TData extends InferPromiseResult<TPromise>,
-  TPromise extends Promise<MutationFetchResult<TData>>,
-  TErrors extends ReturnType<typeof getErrors>
-  // TData
-
-  // TData extends InferPromiseResult<TPromise>
+  TPromise extends Promise<MutationFetchResult<TData>>
+  // TErrors extends ReturnType<typeof getMutationErrors>
 >(
   submitPromise: TPromise
-): Promise<TErrors> => {
-  // return submitPromise;
+): Promise<any[]> /* Promise<TErrors> */ => {
   const result = await submitPromise;
-  // return result;
 
-  const e = getErrors(result);
+  const e = getMutationErrors(result);
+  // @ts-ignore
   return e;
 };
 
-// type InferAllKeys<T> = T extends Record<infer V, any> ? V[] : never;
-
-export const getErrors = <
-  T extends MutationFetchResult,
+export const getMutationErrors = <
+  T extends MutationFetchResult<any>,
   TData extends T["data"],
   TErrors extends TData[keyof TData]["errors"]
-  // TKey extends keyof TData,
-  // TData extends Record<string, any>,
-  // T extends MutationFetchResult<TData>
-  // TData extends Record<string, any>,
-  // TKeys extends InferAllKeys<TData>,
-  // T extends MutationFetchResult<TData>
 >(
   result: T
 ): TErrors => result.data?.errors;
-
-// type InferErrorType<TData> = TData extends Array<infer V> ? V[] : never;
-
-// export const getErrors = <
-//   TData extends Record<string, any>,
-//   TFetchResult extends MutationFetchResult<TData>,
-//   TErrors extends TData[keyof TData]["errors"]
-// >(
-//   result: TFetchResult
-// ): TData => {
-//   const keys: Array<keyof TData> = Object.keys(result.data);
-//   const mutationData = result.data[keys[0]];
-
-//   const errors: TErrors = mutationData.errors;
-//   return errors;
-// };
-
-// export const getErrors = <T extends MutationFetchResult>(
-//   result: T
-// ): T["data"]["errors"] => result.data?.errors as T["data"]["errors"];
-
-export function getMutationErrors<
-  TData extends MutationFetchResult
-  // T extends MutationResult<TData>
->(resultData: TData): Array<TData["data"]["errors"]> {
-  const { data } = resultData;
-
-  if (!data) {
-    return [];
-  }
-
-  return Object.values(data).reduce(
-    (acc, mut) => [...acc, ...maybe(() => mut.errors, [])],
-    []
-  );
-}
 
 export function getMutationStatus<
   TData extends Record<string, SaleorMutationResult | any>

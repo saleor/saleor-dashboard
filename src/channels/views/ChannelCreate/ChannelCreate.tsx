@@ -10,6 +10,7 @@ import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { getDefaultNotifierSuccessErrorData } from "@saleor/hooks/useNotifier/utils";
 import { sectionNames } from "@saleor/intl";
+import { extractMutationErrors } from "@saleor/misc";
 import useShippingZonesSearch from "@saleor/searches/useShippingZonesSearch";
 import currencyCodes from "currency-codes";
 import React from "react";
@@ -42,15 +43,17 @@ export const ChannelCreateView = ({}) => {
     currencyCode,
     ...rest
   }: FormData) =>
-    createChannel({
-      variables: {
-        input: {
-          ...rest,
-          currencyCode: currencyCode.toUpperCase(),
-          addShippingZones: shippingZonesIdsToAdd
+    extractMutationErrors(
+      createChannel({
+        variables: {
+          input: {
+            ...rest,
+            currencyCode: currencyCode.toUpperCase(),
+            addShippingZones: shippingZonesIdsToAdd
+          }
         }
-      }
-    });
+      })
+    );
 
   const {
     loadMore: fetchMoreShippingZones,

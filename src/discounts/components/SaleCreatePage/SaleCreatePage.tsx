@@ -9,7 +9,9 @@ import Grid from "@saleor/components/Grid";
 import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
 import { createSaleChannelsChangeHandler } from "@saleor/discounts/handlers";
+import { SaleCreate_saleCreate_errors } from "@saleor/discounts/types/SaleCreate";
 import { DiscountErrorFragment } from "@saleor/fragments/types/DiscountErrorFragment";
+import { SubmitPromise } from "@saleor/hooks/useForm";
 import { sectionNames } from "@saleor/intl";
 import { validatePrice } from "@saleor/products/utils/validation";
 import React from "react";
@@ -45,7 +47,7 @@ export interface SaleCreatePageProps {
   onBack: () => void;
   onChannelsChange: (data: ChannelSaleData[]) => void;
   openChannelsModal: () => void;
-  onSubmit: (data: FormData) => void;
+  onSubmit: (data: FormData) => SubmitPromise<SaleCreate_saleCreate_errors[]>;
 }
 
 const SaleCreatePage: React.FC<SaleCreatePageProps> = ({

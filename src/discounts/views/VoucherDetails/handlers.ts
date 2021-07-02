@@ -11,7 +11,7 @@ import {
   VoucherUpdate,
   VoucherUpdateVariables
 } from "@saleor/discounts/types/VoucherUpdate";
-import { joinDateTime } from "@saleor/misc";
+import { getMutationErrors, joinDateTime } from "@saleor/misc";
 import {
   DiscountValueTypeEnum,
   VoucherTypeEnum
@@ -30,7 +30,7 @@ export function createUpdateHandler(
 ) {
   return async (formData: VoucherDetailsPageFormData) => {
     const { id } = voucher;
-    await updateVoucher({
+    const result = await updateVoucher({
       id,
       input: {
         applyOncePerCustomer: formData.applyOncePerCustomer,
@@ -63,5 +63,7 @@ export function createUpdateHandler(
     updateChannels({
       variables: getChannelsVariables(id, formData, voucherChannelsChoices)
     });
+
+    return getMutationErrors(result);
   };
 }

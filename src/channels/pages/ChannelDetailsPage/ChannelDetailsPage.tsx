@@ -8,6 +8,7 @@ import { SingleAutocompleteChoiceType } from "@saleor/components/SingleAutocompl
 import { ChannelErrorFragment } from "@saleor/fragments/types/ChannelErrorFragment";
 import { SearchData } from "@saleor/hooks/makeTopLevelSearch";
 import { getParsedSearchData } from "@saleor/hooks/makeTopLevelSearch/utils";
+import { SubmitPromise } from "@saleor/hooks/useForm";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import {
   getById,
@@ -24,7 +25,7 @@ import { Channel_channel } from "../../types/Channel";
 import { ChannelShippingZones } from "./types";
 import { getUpdatedIdsWithNewId, getUpdatedIdsWithoutNewId } from "./utils";
 
-export interface ChannelDetailsPageProps {
+export interface ChannelDetailsPageProps<TErrors> {
   channel?: Channel_channel;
   currencyCodes?: SingleAutocompleteChoiceType[];
   disabled: boolean;
@@ -33,7 +34,7 @@ export interface ChannelDetailsPageProps {
   saveButtonBarState: ConfirmButtonTransitionState;
   onBack?: () => void;
   onDelete?: () => void;
-  onSubmit: (data: FormData) => void;
+  onSubmit: (data: FormData) => SubmitPromise<TErrors>;
   updateChannelStatus?: () => void;
   searchShippingZones: (query: string) => void;
   searchShippingZonesData?: SearchData;
@@ -41,7 +42,7 @@ export interface ChannelDetailsPageProps {
   channelShippingZones?: ChannelShippingZones;
 }
 
-export const ChannelDetailsPage: React.FC<ChannelDetailsPageProps> = ({
+const ChannelDetailsPage = function<TErrors>({
   channel,
   currencyCodes,
   disabled,
@@ -56,7 +57,7 @@ export const ChannelDetailsPage: React.FC<ChannelDetailsPageProps> = ({
   searchShippingZonesData,
   fetchMoreShippingZones,
   channelShippingZones = []
-}) => {
+}: ChannelDetailsPageProps<TErrors>) {
   const [selectedCurrencyCode, setSelectedCurrencyCode] = useState("");
 
   const [shippingZonesToDisplay, setShippingZonesToDisplay] = useStateFromProps<

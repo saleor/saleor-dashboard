@@ -3,13 +3,8 @@ import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import useShop from "@saleor/hooks/useShop";
 import { commonMessages } from "@saleor/intl";
-import {
-  extractMutationErrors,
-  getErrors,
-  getMutationErrors
-} from "@saleor/misc";
+import { extractMutationErrors } from "@saleor/misc";
 import React from "react";
-import { MutationFetchResult } from "react-apollo";
 import { useIntl } from "react-intl";
 
 import CustomAppCreatePage, {
@@ -47,35 +42,19 @@ export const CustomAppCreate: React.FC<CustomAppCreateProps> = ({
     onCompleted: onSubmit
   });
 
-  const handleSubmit = async (data: CustomAppCreatePageFormData) => {
-    const result = await createApp({
-      variables: {
-        input: {
-          name: data.name,
-          permissions: data.hasFullAccess
-            ? shop.permissions.map(permission => permission.code)
-            : data.permissions
+  const handleSubmit = async (data: CustomAppCreatePageFormData) =>
+    extractMutationErrors(
+      createApp({
+        variables: {
+          input: {
+            name: data.name,
+            permissions: data.hasFullAccess
+              ? shop.permissions.map(permission => permission.code)
+              : data.permissions
+          }
         }
-      }
-    });
-
-    const getErrorResult = getErrors(result);
-
-    const lol = createApp({
-      variables: {
-        input: {
-          name: data.name,
-          permissions: data.hasFullAccess
-            ? shop.permissions.map(permission => permission.code)
-            : data.permissions
-        }
-      }
-    });
-
-    const extractResult = await extractMutationErrors(lol);
-
-    return result;
-  };
+      })
+    );
 
   return (
     <>

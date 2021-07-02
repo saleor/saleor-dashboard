@@ -45,7 +45,9 @@ export interface CustomAppDetailsPageProps {
   onTokenDelete: (id: string) => void;
   onTokenClose: () => void;
   onTokenCreate: () => void;
-  onSubmit: (data: CustomAppDetailsPageFormData) => SubmitPromise;
+  onSubmit: (
+    data: CustomAppDetailsPageFormData
+  ) => SubmitPromise<AppErrorFragment[]>;
   onWebhookCreate: () => void;
   onWebhookRemove: (id: string) => void;
   navigateToWebhookDetails: (id: string) => () => void;

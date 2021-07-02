@@ -24,7 +24,7 @@ import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { PAGINATE_BY } from "../../config";
-import { maybe } from "../../misc";
+import { extractMutationErrors, maybe } from "../../misc";
 import { useProductBulkDeleteMutation } from "../../products/mutations";
 import { productAddUrl, productUrl } from "../../products/urls";
 import { CategoryInput } from "../../types/globalTypes";
@@ -182,25 +182,24 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
     params
   );
 
-  const handleUpdate = async (formData: CategoryUpdateData) => {
-    const result = await updateCategory({
-      variables: {
-        id,
-        input: {
-          backgroundImageAlt: formData.backgroundImageAlt,
-          description: getParsedDataForJsonStringField(formData.description),
-          name: formData.name,
-          seo: {
-            description: formData.seoDescription,
-            title: formData.seoTitle
-          },
-          slug: formData.slug
+  const handleUpdate = async (formData: CategoryUpdateData) =>
+    extractMutationErrors(
+      updateCategory({
+        variables: {
+          id,
+          input: {
+            backgroundImageAlt: formData.backgroundImageAlt,
+            description: getParsedDataForJsonStringField(formData.description),
+            name: formData.name,
+            seo: {
+              description: formData.seoDescription,
+              title: formData.seoTitle
+            },
+            slug: formData.slug
+          }
         }
-      }
-    });
-
-    return result.data.categoryUpdate.errors;
-  };
+      })
+    );
 
   const handleSubmit = createMetadataUpdateHandler(
     data?.category,

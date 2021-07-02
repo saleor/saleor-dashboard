@@ -10,7 +10,7 @@ import {
   SaleUpdate,
   SaleUpdateVariables
 } from "@saleor/discounts/types/SaleUpdate";
-import { joinDateTime } from "@saleor/misc";
+import { getMutationErrors, joinDateTime } from "@saleor/misc";
 import { DiscountValueTypeEnum, SaleType } from "@saleor/types/globalTypes";
 import { MutationFetchResult } from "react-apollo";
 
@@ -30,9 +30,9 @@ export function createUpdateHandler(
     variables: SaleChannelListingUpdateVariables;
   }) => Promise<MutationFetchResult<SaleChannelListingUpdate>>
 ) {
-  return (formData: SaleDetailsPageFormData) => {
+  return async (formData: SaleDetailsPageFormData) => {
     const { id } = sale;
-    updateSale({
+    const result = await updateSale({
       id,
       input: {
         endDate: formData.hasEndDate
@@ -47,5 +47,7 @@ export function createUpdateHandler(
     updateChannels({
       variables: getSaleChannelsVariables(id, formData, saleChannelsChoices)
     });
+
+    return getMutationErrors(result);
   };
 }

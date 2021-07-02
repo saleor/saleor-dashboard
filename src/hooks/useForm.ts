@@ -14,7 +14,7 @@ export interface ChangeEvent<TData = any> {
     value: TData;
   };
 }
-export type SubmitPromise<TData = any> = Promise<TData | boolean>;
+export type SubmitPromise<TData = any> = Promise<TData>;
 
 export type FormChange = (event: ChangeEvent) => void;
 
@@ -75,9 +75,9 @@ function handleRefresh<T extends FormData>(
   }
 }
 
-function useForm<T extends FormData>(
+function useForm<T extends FormData, TErrors>(
   initialData: T,
-  onSubmit?: (data: T) => SubmitPromise<any[]>,
+  onSubmit?: (data: T) => SubmitPromise<TErrors[]>,
   opts?: UseFormOpts
 ): UseFormResult<T> {
   const { confirmLeave } = opts;

@@ -1,11 +1,13 @@
 import saleorDarkLogoSmall from "@assets/images/logo-dark-small.svg";
 import plusIcon from "@assets/images/plus-icon.svg";
 import { Button, Card, CardContent, Grid, Typography } from "@material-ui/core";
+import { AppInstall_appInstall_errors } from "@saleor/apps/types/AppInstall";
 import CardSpacer from "@saleor/components/CardSpacer";
 import CardTitle from "@saleor/components/CardTitle";
 import Container from "@saleor/components/Container";
 import Hr from "@saleor/components/Hr";
 import Skeleton from "@saleor/components/Skeleton";
+import { SubmitPromise } from "@saleor/hooks/useForm";
 import { buttonMessages } from "@saleor/intl";
 import classNames from "classnames";
 import React from "react";
@@ -18,7 +20,7 @@ export interface AppInstallPageProps {
   data: AppFetch_appFetchManifest_manifest;
   loading: boolean;
   navigateToAppsList: () => void;
-  onSubmit: () => void;
+  onSubmit: () => SubmitPromise<AppInstall_appInstall_errors[]>;
 }
 
 export const AppInstallPage: React.FC<AppInstallPageProps> = ({
