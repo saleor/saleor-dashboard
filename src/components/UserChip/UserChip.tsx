@@ -1,11 +1,7 @@
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Switch from "@material-ui/core/Switch";
 import { User } from "@saleor/fragments/types/User";
-import {
-  makeStyles,
-  UserChip as MacawUserChip,
-  UserChipMenuItem
-} from "@saleor/macaw-ui";
+import { makeStyles, UserChipMenu, UserChipMenuItem } from "@saleor/macaw-ui";
 import { getUserInitials, getUserName } from "@saleor/misc";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -42,7 +38,7 @@ const UserChip: React.FC<UserChipProps> = ({
   const intl = useIntl();
 
   return (
-    <MacawUserChip
+    <UserChipMenu
       initials={getUserInitials(user)}
       name={getUserName(user, true)}
       avatar={user?.avatar?.url}
@@ -82,7 +78,7 @@ const UserChip: React.FC<UserChipProps> = ({
           onChange={onThemeToggle}
         />
       </UserChipMenuItem>
-    </MacawUserChip>
+    </UserChipMenu>
   );
 };
 UserChip.displayName = "UserChip";
