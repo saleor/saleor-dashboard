@@ -323,9 +323,8 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
     onFetchMore: loadMoreAttributeValues
   };
 
-  const attributeValues = mapEdgesToItems(
-    searchAttributeValuesOpts?.data?.attribute.choices
-  );
+  const attributeValues =
+    mapEdgesToItems(searchAttributeValuesOpts?.data?.attribute.choices) || [];
 
   return (
     <>
