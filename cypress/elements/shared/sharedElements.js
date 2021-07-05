@@ -5,3 +5,6 @@ export const SHARED_ELEMENTS = {
   table: 'table[class*="Table"]',
   confirmationMsg: "[data-test='notification-success']"
 };
+
+export const getElementByDataTestId = dataTestId =>
+  `[data-test-id=${dataTestId}]`;
