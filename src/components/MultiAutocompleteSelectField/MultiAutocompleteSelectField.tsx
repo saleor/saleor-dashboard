@@ -181,7 +181,7 @@ const MultiAutocompleteSelectFieldComponent: React.FC<MultiAutocompleteSelectFie
                     fullWidth={true}
                     disabled={disabled}
                   />
-                  {isOpen && (!!inputValue || !!choices.length) && (
+                  {isOpen && (
                     <MultiAutocompleteSelectFieldContent
                       add={
                         add && {
@@ -249,16 +249,12 @@ const MultiAutocompleteSelectField: React.FC<MultiAutocompleteSelectFieldProps> 
 
   if (fetchChoices) {
     return (
-      <DebounceAutocomplete debounceFn={fetchChoices}>
-        {debounceFn => (
-          <MultiAutocompleteSelectFieldComponent
-            testId={testId}
-            choices={choices}
-            {...props}
-            fetchChoices={debounceFn}
-          />
-        )}
-      </DebounceAutocomplete>
+      <MultiAutocompleteSelectFieldComponent
+        testId={testId}
+        choices={choices}
+        {...props}
+        fetchChoices={fetchChoices}
+      />
     );
   }
 

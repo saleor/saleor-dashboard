@@ -21,6 +21,13 @@ export function getCategory(categoryId) {
     category(id:"${categoryId}"){
       name
       description
+      products{
+        edges{
+          node{
+            name
+          }
+        }
+      }
       children(first:100){
         edges{
           node{

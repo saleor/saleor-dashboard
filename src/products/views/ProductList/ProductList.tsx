@@ -31,6 +31,7 @@ import {
 } from "@saleor/products/components/ProductListPage/utils";
 import {
   useAvailableInGridAttributesQuery,
+  useGridAttributesQuery,
   useInitialProductFilterAttributesQuery,
   useInitialProductFilterCategoriesQuery,
   useInitialProductFilterCollectionsQuery,
@@ -319,8 +320,11 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
       .filter(isAttributeColumnValue)
       .map(getAttributeIdFromColumnValue);
   }
-  const attributes = useAvailableInGridAttributesQuery({
-    variables: { first: 6, ids: filterColumnIds(settings.columns) }
+  const availableInGridAttributes = useAvailableInGridAttributesQuery({
+    variables: { first: 24 }
+  });
+  const gridAttributes = useGridAttributesQuery({
+    variables: { ids: filterColumnIds(settings.columns) }
   });
 
   const [
@@ -376,21 +380,22 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
         }}
         onSort={handleSort}
         availableInGridAttributes={mapEdgesToItems(
-          attributes?.data?.availableInGrid
+          availableInGridAttributes?.data?.availableInGrid
         )}
         currencySymbol={selectedChannel?.currencyCode || ""}
         currentTab={currentTab}
         defaultSettings={defaultListSettings[ListViews.PRODUCT_LIST]}
         filterOpts={filterOpts}
-        gridAttributes={mapEdgesToItems(attributes?.data?.grid)}
+        gridAttributes={mapEdgesToItems(gridAttributes?.data?.grid)}
         totalGridAttributes={maybe(
-          () => attributes.data.availableInGrid.totalCount,
+          () => availableInGridAttributes.data.availableInGrid.totalCount,
           0
         )}
         settings={settings}
-        loading={attributes.loading}
+        loading={availableInGridAttributes.loading || gridAttributes.loading}
         hasMore={maybe(
-          () => attributes.data.availableInGrid.pageInfo.hasNextPage,
+          () =>
+            availableInGridAttributes.data.availableInGrid.pageInfo.hasNextPage,
           false
         )}
         onAdd={() => navigate(productAddUrl())}
@@ -398,7 +403,7 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
         limits={limitOpts.data?.shop.limits}
         products={mapEdgesToItems(data?.products)}
         onFetchMore={() =>
-          attributes.loadMore(
+          availableInGridAttributes.loadMore(
             (prev, next) => {
               if (
                 prev.availableInGrid.pageInfo.endCursor ===
@@ -419,7 +424,9 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
               };
             },
             {
-              after: attributes.data.availableInGrid.pageInfo.endCursor
+              after:
+                availableInGridAttributes.data.availableInGrid.pageInfo
+                  .endCursor
             }
           )
         }

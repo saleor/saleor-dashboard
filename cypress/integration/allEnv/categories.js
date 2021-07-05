@@ -114,12 +114,15 @@ describe("Categories", () => {
       .click()
       .get(BUTTON_SELECTORS.deleteIcon)
       .click()
+      .addAliasToGraphRequest("productBulkDelete")
       .get(BUTTON_SELECTORS.submit)
       .click();
     confirmationMessageShouldDisappear();
-    cy.contains(CATEGORY_DETAILS.productRow, product.name).should("not.exist");
+    cy.contains(CATEGORY_DETAILS.productRow, product.name)
+      .should("not.exist")
+      .wait("@productBulkDelete");
     getCategory(category.id).then(categoryResp => {
-      expect(categoryResp.children.edges).to.be.empty;
+      expect(categoryResp.products).to.be.null;
     });
   });
 
