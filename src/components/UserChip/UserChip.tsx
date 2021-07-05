@@ -1,84 +1,20 @@
-import {
-  Avatar,
-  Chip,
-  ClickAwayListener,
-  FormControlLabel,
-  Grow,
-  Hidden,
-  MenuItem,
-  MenuList as Menu,
-  Paper,
-  Popper,
-  Switch
-} from "@material-ui/core";
+import { FormControlLabel, Switch } from "@material-ui/core";
 import { User } from "@saleor/fragments/types/User";
-import ArrowDropdown from "@saleor/icons/ArrowDropdown";
-import { makeStyles } from "@saleor/macaw-ui";
+import {
+  makeStyles,
+  UserChip as MacawUserChip,
+  UserChipMenuItem
+} from "@saleor/macaw-ui";
 import { getUserInitials, getUserName } from "@saleor/misc";
-import classNames from "classnames";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 const useStyles = makeStyles(
-  theme => ({
-    arrow: {
-      [theme.breakpoints.down("sm")]: {
-        marginLeft: 0
-      },
-      marginLeft: theme.spacing(2),
-      transition: theme.transitions.duration.standard + "ms"
-    },
-    avatar: {
-      "&&": {
-        [theme.breakpoints.down("sm")]: {
-          height: 40,
-          width: 40
-        },
-        height: 32,
-        width: 32
-      }
-    },
-    avatarInitials: {
-      color: theme.palette.primary.contrastText
-    },
-    avatarPlaceholder: {
-      alignItems: "center",
-      background: theme.palette.primary.main,
-      borderRadius: "100%",
-      display: "flex",
-      justifyContent: "center"
-    },
-    labelContainer: {
-      display: "inline-flex",
-      alignItems: "center"
-    },
-    popover: {
-      marginTop: theme.spacing(2),
-      zIndex: 10
-    },
-    rotate: {
-      transform: "rotate(180deg)"
-    },
+  () => ({
     switch: {
       "&&:hover": {
         background: "transparent"
       }
-    },
-    userChip: {
-      [theme.breakpoints.down("sm")]: {
-        height: 48
-      },
-      backgroundColor: theme.palette.background.paper,
-      borderRadius: 24,
-      color: theme.palette.text.primary,
-      height: 40,
-      padding: theme.spacing(0.5)
-    },
-    userMenuContainer: {
-      position: "relative"
-    },
-    userMenuItem: {
-      textAlign: "right"
     }
   }),
   {
@@ -102,122 +38,50 @@ const UserChip: React.FC<UserChipProps> = ({
   onThemeToggle
 }) => {
   const classes = useStyles({});
-  const [isMenuOpened, setMenuState] = React.useState(false);
-  const anchor = React.useRef<HTMLDivElement>();
   const intl = useIntl();
 
-  const handleLogout = () => {
-    setMenuState(false);
-    onLogout();
-  };
-
-  const handleViewerProfile = () => {
-    setMenuState(false);
-    onProfileClick();
-  };
-
   return (
-    <div className={classes.userMenuContainer} ref={anchor}>
-      <Chip
-        avatar={
-          user.avatar ? (
-            <Avatar alt="user" src={user.avatar.url} />
-          ) : (
-            <div className={classes.avatarPlaceholder}>
-              <div className={classes.avatarInitials}>
-                {getUserInitials(user)}
-              </div>
-            </div>
-          )
-        }
-        classes={{
-          avatar: classes.avatar
-        }}
-        className={classes.userChip}
-        label={
-          <div className={classes.labelContainer}>
-            <Hidden smDown>{getUserName(user, true)}</Hidden>
-            <ArrowDropdown
-              className={classNames(classes.arrow, {
-                [classes.rotate]: isMenuOpened
-              })}
-            />
-          </div>
-        }
-        onClick={() => setMenuState(!isMenuOpened)}
-        data-test="userMenu"
-      />
-      <Popper
-        className={classes.popover}
-        open={isMenuOpened}
-        anchorEl={anchor.current}
-        transition
-        placement="bottom-end"
+    <MacawUserChip
+      initials={getUserInitials(user)}
+      name={getUserName(user, true)}
+      avatar={user?.avatar?.url}
+    >
+      <UserChipMenuItem
+        onClick={onProfileClick}
+        data-test="accountSettingsButton"
       >
-        {({ TransitionProps, placement }) => (
-          <Grow
-            {...TransitionProps}
-            style={{
-              transformOrigin:
-                placement === "bottom" ? "right top" : "right bottom"
-            }}
-          >
-            <Paper>
-              <ClickAwayListener
-                onClickAway={() => setMenuState(false)}
-                mouseEvent="onClick"
-              >
-                <Menu>
-                  <MenuItem
-                    className={classes.userMenuItem}
-                    onClick={handleViewerProfile}
-                    data-test="accountSettingsButton"
-                  >
-                    <FormattedMessage
-                      defaultMessage="Account Settings"
-                      description="button"
-                    />
-                  </MenuItem>
-                  <MenuItem
-                    className={classes.userMenuItem}
-                    onClick={handleLogout}
-                    data-test="logOutButton"
-                  >
-                    <FormattedMessage
-                      defaultMessage="Log out"
-                      description="button"
-                    />
-                  </MenuItem>
-                  <MenuItem
-                    className={classes.userMenuItem}
-                    data-test="themeSwitch"
-                    data-test-is-dark={isDarkThemeEnabled}
-                  >
-                    <FormControlLabel
-                      control={
-                        <Switch
-                          classes={{
-                            switchBase: classes.switch
-                          }}
-                          checked={isDarkThemeEnabled}
-                          color="primary"
-                          disableRipple
-                        />
-                      }
-                      label={intl.formatMessage({
-                        defaultMessage: "Enable Dark Mode",
-                        description: "button"
-                      })}
-                      onChange={onThemeToggle}
-                    />
-                  </MenuItem>
-                </Menu>
-              </ClickAwayListener>
-            </Paper>
-          </Grow>
-        )}
-      </Popper>
-    </div>
+        <FormattedMessage
+          defaultMessage="Account Settings"
+          description="button"
+        />
+      </UserChipMenuItem>
+      <UserChipMenuItem onClick={onLogout} data-test="logOutButton">
+        <FormattedMessage defaultMessage="Log out" description="button" />
+      </UserChipMenuItem>
+      <UserChipMenuItem
+        leaveOpen
+        data-test="themeSwitch"
+        data-test-is-dark={isDarkThemeEnabled}
+      >
+        <FormControlLabel
+          control={
+            <Switch
+              classes={{
+                switchBase: classes.switch
+              }}
+              checked={isDarkThemeEnabled}
+              color="primary"
+              disableRipple
+            />
+          }
+          label={intl.formatMessage({
+            defaultMessage: "Enable Dark Mode",
+            description: "button"
+          })}
+          onChange={onThemeToggle}
+        />
+      </UserChipMenuItem>
+    </MacawUserChip>
   );
 };
 UserChip.displayName = "UserChip";
