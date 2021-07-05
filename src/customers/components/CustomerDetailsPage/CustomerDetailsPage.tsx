@@ -80,7 +80,7 @@ const CustomerDetailsPage: React.FC<CustomerDetailsPageProps> = ({
 
         return (
           <Container>
-            <Backlink onBack={onBack}>
+            <Backlink onClick={onBack}>
               {intl.formatMessage(sectionNames.customers)}
             </Backlink>
             <PageHeader title={getUserName(customer, true)} />

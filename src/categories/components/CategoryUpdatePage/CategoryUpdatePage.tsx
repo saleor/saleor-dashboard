@@ -105,7 +105,7 @@ export const CategoryUpdatePage: React.FC<CategoryUpdatePageProps> = ({
     <CategoryUpdateForm category={category} onSubmit={onSubmit}>
       {({ data, change, handlers, submit, hasChanged }) => (
         <Container>
-          <Backlink onBack={onBack}>
+          <Backlink onClick={onBack}>
             {intl.formatMessage(sectionNames.categories)}
           </Backlink>
           <PageHeader title={category?.name} />

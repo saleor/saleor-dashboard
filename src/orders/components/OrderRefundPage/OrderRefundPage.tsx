@@ -70,7 +70,7 @@ const OrderRefundPage: React.FC<OrderRefundPageProps> = props => {
 
         return (
           <Container>
-            <Backlink onBack={onBack}>
+            <Backlink onClick={onBack}>
               {order?.number
                 ? intl.formatMessage(
                     {

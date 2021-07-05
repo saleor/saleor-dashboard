@@ -54,7 +54,7 @@ const OrderRefundPage: React.FC<OrderReturnPageProps> = props => {
 
         return (
           <Container>
-            <Backlink onBack={onBack}>
+            <Backlink onClick={onBack}>
               {intl.formatMessage(messages.appTitle, {
                 orderNumber: order?.number
               })}

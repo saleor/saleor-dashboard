@@ -61,7 +61,7 @@ export const WarehouseListPage: React.FC<WarehouseListPageProps> = ({
 
   return (
     <Container>
-      <Backlink onBack={onBack}>
+      <Backlink onClick={onBack}>
         <FormattedMessage {...sectionNames.configuration} />
       </Backlink>
       <PageHeader

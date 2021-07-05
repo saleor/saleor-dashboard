@@ -87,7 +87,7 @@ const WarehouseDetailsPage: React.FC<WarehouseDetailsPageProps> = ({
 
         return (
           <Container>
-            <Backlink onBack={onBack}>
+            <Backlink onClick={onBack}>
               <FormattedMessage {...sectionNames.warehouses} />
             </Backlink>
             <PageHeader title={warehouse?.name} />

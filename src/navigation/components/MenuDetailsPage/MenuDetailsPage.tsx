@@ -85,7 +85,7 @@ const MenuDetailsPage: React.FC<MenuDetailsPageProps> = ({
     <Form initial={initialForm} onSubmit={handleSubmit}>
       {({ change, data, hasChanged, submit }) => (
         <Container>
-          <Backlink onBack={onBack}>
+          <Backlink onClick={onBack}>
             {intl.formatMessage(sectionNames.navigation)}
           </Backlink>
           <Grid variant="inverted">

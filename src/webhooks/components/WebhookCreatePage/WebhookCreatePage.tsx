@@ -54,7 +54,7 @@ const WebhookCreatePage: React.FC<WebhookCreatePageProps> = ({
     <Form initial={initialForm} onSubmit={onSubmit}>
       {({ data, hasChanged, submit, change }) => (
         <Container>
-          <Backlink onBack={onBack}>{appName}</Backlink>
+          <Backlink onClick={onBack}>{appName}</Backlink>
           <PageHeader
             title={intl.formatMessage({
               defaultMessage: "Create Webhook",

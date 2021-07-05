@@ -83,7 +83,7 @@ export const ChannelCreateView = ({}) => {
         })}
       />
       <Container>
-        <Backlink onBack={handleBack}>
+        <Backlink onClick={handleBack}>
           {intl.formatMessage(sectionNames.channels)}
         </Backlink>
         <PageHeader
