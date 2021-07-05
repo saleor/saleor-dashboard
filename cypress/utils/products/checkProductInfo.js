@@ -28,10 +28,9 @@ export function expectCorrectProductVariantInformation(
 }
 function expectCorrectGeneralInformation(productResp, generalInfo) {
   softExpect(productResp.name, "Check product name").to.be.eq(generalInfo.name);
-  // Uncomment expect description after fixing bug SALEOR-3623
-  // softExpect(productResp.description, "Check product description").includes(
-  //   generalInfo.description
-  // );
+  softExpect(productResp.description, "Check product description").includes(
+    generalInfo.description
+  );
   softExpect(productResp.rating, "Check product rate").to.be.eq(
     generalInfo.rating
   );
