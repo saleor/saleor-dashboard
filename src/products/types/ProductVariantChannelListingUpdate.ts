@@ -88,6 +88,7 @@ export interface ProductVariantChannelListingUpdate_productVariantChannelListing
 
 export interface ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_product {
   __typename: "Product";
+  id: string;
   channelListings: ProductVariantChannelListingUpdate_productVariantChannelListingUpdate_variant_product_channelListings[] | null;
 }
 

@@ -59,6 +59,7 @@ All notable, unreleased changes to this project will be documented in this file.
 - Add generic filter validation - #1187 by @jwm0
 - Fix duplicated labels in column picker - #1197 by @orzechdev
 - Fix forbidden null sending as attribute value - #1201 by @orzechdev
+- Fix missing call for update metadata mutation - #1207 by @orzechdev
 
 # 2.11.1
 
