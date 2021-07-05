@@ -206,15 +206,17 @@ export const PageTypeList: React.FC<PageTypeListProps> = ({ params }) => {
           </IconButton>
         }
       />
-      <TypeDeleteWarningDialog
-        {...pageTypeDeleteData}
-        typesData={pageTypesData}
-        typesToDelete={selectedPageTypes}
-        onClose={closeModal}
-        onDelete={hanldePageTypeBulkDelete}
-        deleteButtonState={pageTypeBulkDeleteOpts.status}
-        showViewAssignedItemsButton={false}
-      />
+      {pageTypesData && (
+        <TypeDeleteWarningDialog
+          {...pageTypeDeleteData}
+          typesData={pageTypesData}
+          typesToDelete={selectedPageTypes}
+          onClose={closeModal}
+          onDelete={hanldePageTypeBulkDelete}
+          deleteButtonState={pageTypeBulkDeleteOpts.status}
+          showViewAssignedItemsButton={false}
+        />
+      )}
       <SaveFilterTabDialog
         open={params.action === "save-search"}
         confirmButtonState="default"

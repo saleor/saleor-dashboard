@@ -342,7 +342,7 @@ export const PriceRatesUpdate: React.FC<PriceRatesUpdateProps> = ({
         loading={productsSearchOpts.loading}
         open={params.action === "assign-product"}
         hasMore={productsSearchOpts.data?.search?.pageInfo.hasNextPage}
-        products={mapEdgesToItems(productsSearchOpts?.data?.search).filter(
+        products={mapEdgesToItems(productsSearchOpts?.data?.search)?.filter(
           suggestedProduct => suggestedProduct.id
         )}
         onClose={closeModal}

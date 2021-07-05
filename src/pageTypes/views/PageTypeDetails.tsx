@@ -253,7 +253,7 @@ export const PageTypeDetails: React.FC<PageTypeDetailsProps> = ({
         }}
       />
 
-      {!dataLoading && (
+      {pageType && (
         <>
           <TypeDeleteWarningDialog
             {...pageTypeDeleteData}

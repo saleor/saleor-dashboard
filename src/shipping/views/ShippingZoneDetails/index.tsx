@@ -202,7 +202,7 @@ const ShippingZoneDetails: React.FC<ShippingZoneDetailsProps> = ({
         }
         saveButtonBarState={updateShippingZoneOpts.status}
         shippingZone={data?.shippingZone}
-        warehouses={mapEdgesToItems(searchWarehousesOpts?.data?.search)}
+        warehouses={mapEdgesToItems(searchWarehousesOpts?.data?.search) || []}
         hasMore={searchWarehousesOpts.data?.search?.pageInfo?.hasNextPage}
         loading={searchWarehousesOpts.loading}
         onFetchMore={loadMore}
