@@ -426,7 +426,9 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
                           <AssignCategoriesDialog
                             categories={mapEdgesToItems(
                               searchCategoriesOpts?.data?.search
-                            ).filter(suggestedCategory => suggestedCategory.id)}
+                            )?.filter(
+                              suggestedCategory => suggestedCategory.id
+                            )}
                             confirmButtonState={voucherCataloguesAddOpts.status}
                             hasMore={
                               searchCategoriesOpts.data?.search.pageInfo
@@ -452,7 +454,9 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
                           <AssignCollectionDialog
                             collections={mapEdgesToItems(
                               searchCollectionsOpts?.data?.search
-                            ).filter(suggestedCategory => suggestedCategory.id)}
+                            )?.filter(
+                              suggestedCategory => suggestedCategory.id
+                            )}
                             confirmButtonState={voucherCataloguesAddOpts.status}
                             hasMore={
                               searchCollectionsOpts.data?.search.pageInfo
@@ -524,7 +528,7 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
                             }
                             products={mapEdgesToItems(
                               searchProductsOpts?.data?.search
-                            ).filter(suggestedProduct => suggestedProduct.id)}
+                            )?.filter(suggestedProduct => suggestedProduct.id)}
                           />
                           <ActionDialog
                             open={

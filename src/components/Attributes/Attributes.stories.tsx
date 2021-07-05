@@ -18,7 +18,6 @@ const props: AttributesProps = {
   onReferencesAddClick: () => undefined,
   onReferencesRemove: () => undefined,
   onReferencesReorder: () => undefined,
-  onAttributeFocus: () => undefined,
   fetchAttributeValues: () => undefined,
   fetchMoreAttributeValues: fetchMoreProps
 };

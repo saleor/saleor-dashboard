@@ -215,6 +215,31 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
     return isAtLeastOneFulfilled && areProperlyFulfilled;
   };
 
+  const isStockError = (
+    overfulfill: boolean,
+    formsetStock: { quantity: number },
+    availableQuantity: number,
+    warehouse: WarehouseFragment,
+    line: OrderFulfillData_order_lines,
+    errors: FulfillOrder_orderFulfill_errors[]
+  ) => {
+    if (overfulfill) {
+      return true;
+    }
+
+    const isQuantityLargerThanAvailable =
+      line.variant.trackInventory && formsetStock.quantity > availableQuantity;
+
+    const isError = !!errors?.find(
+      err =>
+        err.warehouse === warehouse.id &&
+        err.orderLines.find((id: string) => id === line.id) &&
+        err.code === OrderErrorCode.INSUFFICIENT_STOCK
+    );
+
+    return isQuantityLargerThanAvailable || isError;
+  };
+
   return (
     <Container>
       <AppHeader onBack={onBack}>
@@ -422,19 +447,14 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
                                       )
                                     )
                                   }
-                                  error={
-                                    overfulfill ||
-                                    (line.variant.trackInventory &&
-                                      formsetStock.quantity >
-                                        availableQuantity) ||
-                                    !!errors?.find(
-                                      err =>
-                                        err.warehouse === warehouse.id &&
-                                        err.orderLine === line.id &&
-                                        err.code ===
-                                          OrderErrorCode.INSUFFICIENT_STOCK
-                                    )
-                                  }
+                                  error={isStockError(
+                                    overfulfill,
+                                    formsetStock,
+                                    availableQuantity,
+                                    warehouse,
+                                    line,
+                                    errors
+                                  )}
                                   InputProps={{
                                     endAdornment: line.variant
                                       .trackInventory && (

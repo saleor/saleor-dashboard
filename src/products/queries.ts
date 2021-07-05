@@ -20,6 +20,10 @@ import {
 import gql from "graphql-tag";
 
 import {
+  AvailableInGridAttributes,
+  AvailableInGridAttributesVariables
+} from "./types/AvailableInGridAttributes";
+import {
   CreateMultipleVariantsData,
   CreateMultipleVariantsDataVariables
 } from "./types/CreateMultipleVariantsData";
@@ -27,10 +31,7 @@ import {
   GridAttributes,
   GridAttributesVariables
 } from "./types/GridAttributes";
-import {
-  InitialProductFilterAttributes,
-  InitialProductFilterAttributesVariables
-} from "./types/InitialProductFilterAttributes";
+import { InitialProductFilterAttributes } from "./types/InitialProductFilterAttributes";
 import {
   InitialProductFilterCategories,
   InitialProductFilterCategoriesVariables
@@ -60,13 +61,7 @@ import {
 } from "./types/ProductVariantDetails";
 
 const initialProductFilterAttributesQuery = gql`
-  ${pageInfoFragment}
-  query InitialProductFilterAttributes(
-    $firstValues: Int
-    $afterValues: String
-    $lastValues: Int
-    $beforeValues: String
-  ) {
+  query InitialProductFilterAttributes {
     attributes(
       first: 100
       filter: { filterableInDashboard: true, type: PRODUCT_TYPE }
@@ -75,33 +70,17 @@ const initialProductFilterAttributesQuery = gql`
         node {
           id
           name
+          inputType
           slug
-          choices(
-            first: $firstValues
-            after: $afterValues
-            last: $lastValues
-            before: $beforeValues
-          ) {
-            pageInfo {
-              ...PageInfoFragment
-            }
-            edges {
-              cursor
-              node {
-                id
-                name
-                slug
-              }
-            }
-          }
         }
       }
     }
   }
 `;
+
 export const useInitialProductFilterAttributesQuery = makeQuery<
   InitialProductFilterAttributes,
-  InitialProductFilterAttributesVariables
+  never
 >(initialProductFilterAttributesQuery);
 
 const initialProductFilterCategoriesQuery = gql`
@@ -164,6 +143,7 @@ const productListQuery = gql`
     $last: Int
     $before: String
     $filter: ProductFilterInput
+    $channel: String
     $sort: ProductOrder
   ) {
     products(
@@ -173,6 +153,7 @@ const productListQuery = gql`
       last: $last
       filter: $filter
       sortBy: $sort
+      channel: $channel
     ) {
       edges {
         node {
@@ -202,8 +183,8 @@ export const useProductListQuery = makeQuery<ProductList, ProductListVariables>(
 );
 
 const productCountQuery = gql`
-  query ProductCount($filter: ProductFilterInput) {
-    products(filter: $filter) {
+  query ProductCount($filter: ProductFilterInput, $channel: String) {
+    products(filter: $filter, channel: $channel) {
       totalCount
     }
   }
@@ -385,7 +366,7 @@ export const useProductMediaQuery = makeQuery<
 
 const availableInGridAttributes = gql`
   ${pageInfoFragment}
-  query GridAttributes($first: Int!, $after: String, $ids: [ID!]!) {
+  query AvailableInGridAttributes($first: Int!, $after: String) {
     availableInGrid: attributes(
       first: $first
       after: $after
@@ -406,7 +387,15 @@ const availableInGridAttributes = gql`
       }
       totalCount
     }
+  }
+`;
+export const useAvailableInGridAttributesQuery = makeQuery<
+  AvailableInGridAttributes,
+  AvailableInGridAttributesVariables
+>(availableInGridAttributes);
 
+const gridAttributes = gql`
+  query GridAttributes($ids: [ID!]!) {
     grid: attributes(first: 25, filter: { ids: $ids }) {
       edges {
         node {
@@ -417,10 +406,10 @@ const availableInGridAttributes = gql`
     }
   }
 `;
-export const useAvailableInGridAttributesQuery = makeQuery<
+export const useGridAttributesQuery = makeQuery<
   GridAttributes,
   GridAttributesVariables
->(availableInGridAttributes);
+>(gridAttributes);
 
 const createMultipleVariantsData = gql`
   ${productVariantAttributesFragment}

@@ -1,4 +1,5 @@
 import { IFilter } from "@saleor/components/Filter";
+import { MultiAutocompleteChoiceType } from "@saleor/components/MultiAutocompleteSelectField";
 import { FilterOpts, MinMax } from "@saleor/types";
 import {
   DiscountStatusEnum,
@@ -13,19 +14,25 @@ import { defineMessages, IntlShape } from "react-intl";
 export enum SaleFilterKeys {
   saleType = "saleType",
   started = "started",
-  status = "status"
+  status = "status",
+  channel = "channel"
 }
 
 export interface SaleListFilterOpts {
   saleType: FilterOpts<DiscountValueTypeEnum>;
   started: FilterOpts<MinMax>;
   status: FilterOpts<DiscountStatusEnum[]>;
+  channel: FilterOpts<string> & { choices: MultiAutocompleteChoiceType[] };
 }
 
 const messages = defineMessages({
   active: {
     defaultMessage: "Active",
     description: "sale status"
+  },
+  channel: {
+    defaultMessage: "Channel",
+    description: "sale channel"
   },
   expired: {
     defaultMessage: "Expired",
@@ -61,6 +68,16 @@ export function createFilterStructure(
   opts: SaleListFilterOpts
 ): IFilter<SaleFilterKeys> {
   return [
+    {
+      ...createOptionsField(
+        SaleFilterKeys.channel,
+        intl.formatMessage(messages.channel),
+        [opts.channel.value],
+        false,
+        opts.channel.choices
+      ),
+      active: opts.channel.active
+    },
     {
       ...createDateField(
         SaleFilterKeys.started,

@@ -184,8 +184,8 @@ const CollectionList: React.FC<CollectionListProps> = props => {
                     channel ? (
                       <ChannelsAvailabilityDropdown
                         allChannelsCount={channelsCount}
-                        currentChannel={channel}
                         channels={collection?.channelListings}
+                        showStatus
                       />
                     ) : null
                   ) : (

@@ -30,6 +30,7 @@ import VoucherValue from "../VoucherValue";
 export interface FormData {
   applyOncePerCustomer: boolean;
   applyOncePerOrder: boolean;
+  onlyForStaff: boolean;
   channelListings: ChannelVoucherData[];
   code: string;
   discountType: DiscountTypeEnum;
@@ -76,6 +77,7 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
   const initialForm: FormData = {
     applyOncePerCustomer: false,
     applyOncePerOrder: false,
+    onlyForStaff: false,
     channelListings,
     code: "",
     discountType: DiscountTypeEnum.VALUE_FIXED,

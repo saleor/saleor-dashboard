@@ -25,7 +25,7 @@ export interface UpdateCategoryTranslations_categoryTranslate_category_translati
   id: string;
   description: any | null;
   language: UpdateCategoryTranslations_categoryTranslate_category_translation_language;
-  name: string;
+  name: string | null;
   seoDescription: string | null;
   seoTitle: string | null;
 }

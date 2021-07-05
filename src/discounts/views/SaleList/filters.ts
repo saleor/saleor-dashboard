@@ -1,4 +1,5 @@
 import { IFilterElement } from "@saleor/components/Filter";
+import { SingleAutocompleteChoiceType } from "@saleor/components/SingleAutocompleteSelectField";
 import {
   SaleFilterKeys,
   SaleListFilterOpts
@@ -17,7 +18,8 @@ import {
   getGteLteVariables,
   getMinMaxQueryParam,
   getMultipleEnumValueQueryParam,
-  getSingleEnumValueQueryParam
+  getSingleEnumValueQueryParam,
+  getSingleValueQueryParam
 } from "../../../utils/filters";
 import {
   SaleListUrlFilters,
@@ -28,8 +30,16 @@ import {
 
 export const SALE_FILTERS_KEY = "saleFilters";
 
-export function getFilterOpts(params: SaleListUrlFilters): SaleListFilterOpts {
+export function getFilterOpts(
+  params: SaleListUrlFilters,
+  channels: SingleAutocompleteChoiceType[]
+): SaleListFilterOpts {
   return {
+    channel: {
+      active: params?.channel !== undefined,
+      choices: channels,
+      value: params?.channel
+    },
     saleType: {
       active: !!maybe(() => params.type),
       value: maybe(() => findValueInEnum(params.type, DiscountValueTypeEnum))
@@ -105,6 +115,9 @@ export function getFilterQueryParam(
         SaleListUrlFiltersWithMultipleValues.status,
         DiscountStatusEnum
       );
+
+    case SaleFilterKeys.channel:
+      return getSingleValueQueryParam(filter, SaleListUrlFiltersEnum.channel);
   }
 }
 

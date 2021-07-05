@@ -210,7 +210,7 @@ const MenuList: React.FC<MenuListProps> = ({ params }) => {
                         id="menuListDeleteMenuContent"
                         values={{
                           menuName:
-                            mapEdgesToItems(data?.menus).find(
+                            mapEdgesToItems(data?.menus)?.find(
                               getById(params.id)
                             )?.name || "..."
                         }}

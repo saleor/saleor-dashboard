@@ -1,5 +1,5 @@
-import { ASSIGN_PRODUCTS_SELECTORS } from "../../elements/catalog/products/assign-products";
 import { SALES_SELECTORS } from "../../elements/discounts/sales";
+import { ASSIGN_ELEMENTS_SELECTORS } from "../../elements/shared/assign-elements-selectors";
 import { BUTTON_SELECTORS } from "../../elements/shared/button-selectors";
 import { formatDate } from "../../support/format/formatDate";
 import { selectChannelInDetailsPages } from "../channelsSteps";
@@ -38,10 +38,10 @@ export function assignProducts(productName) {
     .click()
     .get(SALES_SELECTORS.assignProducts)
     .click()
-    .get(ASSIGN_PRODUCTS_SELECTORS.searchInput)
+    .get(ASSIGN_ELEMENTS_SELECTORS.searchInput)
     .type(productName);
-  cy.contains(ASSIGN_PRODUCTS_SELECTORS.tableRow, productName)
-    .find(BUTTON_SELECTORS.checkbox)
+  cy.contains(ASSIGN_ELEMENTS_SELECTORS.productTableRow, productName)
+    .find(ASSIGN_ELEMENTS_SELECTORS.checkbox)
     .click();
   cy.addAliasToGraphRequest("SaleCataloguesAdd");
   cy.get(BUTTON_SELECTORS.submit).click();

@@ -17,14 +17,13 @@ import useScrollableDialogStyle from "@saleor/styles/useScrollableDialogStyle";
 import { makeStyles } from "@saleor/theme";
 import { FetchMoreProps, Node } from "@saleor/types";
 import React from "react";
-import InfiniteScroll from "react-infinite-scroller";
+import InfiniteScroll from "react-infinite-scroll-component";
 import { FormattedMessage } from "react-intl";
 
 import Checkbox from "../Checkbox";
 import ConfirmButton, {
   ConfirmButtonTransitionState
 } from "../ConfirmButton/ConfirmButton";
-import FormSpacer from "../FormSpacer";
 
 export interface FormData {
   containers: string[];
@@ -80,6 +79,8 @@ function handleContainerAssign(
   }
 }
 
+const scrollableTargetId = "assignContainerScrollableDialog";
+
 const AssignContainerDialog: React.FC<AssignContainerDialogProps> = props => {
   const {
     confirmButtonState,
@@ -101,11 +102,8 @@ const AssignContainerDialog: React.FC<AssignContainerDialogProps> = props => {
   const [selectedContainers, setSelectedContainers] = React.useState<string[]>(
     []
   );
-  const container = React.useRef<HTMLDivElement>();
 
   const handleSubmit = () => onSubmit(selectedContainers);
-
-  const containerHeight = container.current?.scrollHeight - 130;
 
   return (
     <Dialog
@@ -116,10 +114,7 @@ const AssignContainerDialog: React.FC<AssignContainerDialogProps> = props => {
       maxWidth="sm"
     >
       <DialogTitle>{title}</DialogTitle>
-      <DialogContent
-        className={scrollableDialogClasses.content}
-        ref={container}
-      >
+      <DialogContent className={scrollableDialogClasses.topArea}>
         <TextField
           name="query"
           value={query}
@@ -132,58 +127,57 @@ const AssignContainerDialog: React.FC<AssignContainerDialogProps> = props => {
             endAdornment: loading && <CircularProgress size={16} />
           }}
         />
-        <FormSpacer />
-        <div
-          className={scrollableDialogClasses.scrollArea}
-          style={{ height: containerHeight }}
+      </DialogContent>
+      <DialogContent
+        className={scrollableDialogClasses.scrollArea}
+        id={scrollableTargetId}
+      >
+        <InfiniteScroll
+          dataLength={containers?.length}
+          next={onFetchMore}
+          hasMore={hasMore}
+          scrollThreshold="100px"
+          loader={
+            <div className={scrollableDialogClasses.loadMoreLoaderContainer}>
+              <CircularProgress size={16} />
+            </div>
+          }
+          scrollableTarget={scrollableTargetId}
         >
-          <InfiniteScroll
-            pageStart={0}
-            loadMore={onFetchMore}
-            hasMore={hasMore}
-            useWindow={false}
-            loader={
-              <div className={scrollableDialogClasses.loadMoreLoaderContainer}>
-                <CircularProgress size={16} />
-              </div>
-            }
-            threshold={10}
-          >
-            <ResponsiveTable>
-              <TableBody>
-                {containers?.map(container => {
-                  const isSelected = !!selectedContainers.find(
-                    selectedContainer => selectedContainer === container.id
-                  );
+          <ResponsiveTable>
+            <TableBody>
+              {containers?.map(container => {
+                const isSelected = !!selectedContainers.find(
+                  selectedContainer => selectedContainer === container.id
+                );
 
-                  return (
-                    <TableRow key={container.id}>
-                      <TableCell
-                        padding="checkbox"
-                        className={classes.checkboxCell}
-                      >
-                        <Checkbox
-                          checked={isSelected}
-                          onChange={() =>
-                            handleContainerAssign(
-                              container.id,
-                              isSelected,
-                              selectedContainers,
-                              setSelectedContainers
-                            )
-                          }
-                        />
-                      </TableCell>
-                      <TableCell className={classes.wideCell}>
-                        {container.name}
-                      </TableCell>
-                    </TableRow>
-                  );
-                })}
-              </TableBody>
-            </ResponsiveTable>
-          </InfiniteScroll>
-        </div>
+                return (
+                  <TableRow key={container.id}>
+                    <TableCell
+                      padding="checkbox"
+                      className={classes.checkboxCell}
+                    >
+                      <Checkbox
+                        checked={isSelected}
+                        onChange={() =>
+                          handleContainerAssign(
+                            container.id,
+                            isSelected,
+                            selectedContainers,
+                            setSelectedContainers
+                          )
+                        }
+                      />
+                    </TableCell>
+                    <TableCell className={classes.wideCell}>
+                      {container.name}
+                    </TableCell>
+                  </TableRow>
+                );
+              })}
+            </TableBody>
+          </ResponsiveTable>
+        </InfiniteScroll>
       </DialogContent>
       <DialogActions>
         <Button onClick={onClose}>

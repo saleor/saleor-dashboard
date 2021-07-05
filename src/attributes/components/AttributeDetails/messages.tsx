@@ -69,6 +69,10 @@ export const inputTypeMessages = defineMessages({
   numeric: {
     defaultMessage: "Numeric",
     description: "numeric attribute type"
+  },
+  boolean: {
+    defaultMessage: "Boolean",
+    description: "boolean attribute type"
   }
 });
 

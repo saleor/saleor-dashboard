@@ -48,6 +48,18 @@ All notable, unreleased changes to this project will be documented in this file.
 - Choosing user shipping and billing addresses for draft order - #1082 by @orzechdev
 - Fix EditorJS inline formatting - #1096 by @orzechdev
 - Add pagination on attribute values - #1112 by @orzechdev
+- Paginate attribute values in filters - #1152 by @orzechdev
+- Fix attribute values input display - #1156 by @orzechdev
+- Fix product type translations - #1163 by @orzechdev
+- Support staff only voucher - #1174 by @orzechdev
+- Fix label names in reference attributes - #1184 by @orzechdev
+- Fix failing product update with file attribute - #1190 by @orzechdev
+- Fix breaking select popups in filters - #1193 by @orzechdev
+- Create channel filters in product, sales and voucher lists - #1187 by @jwm0
+- Add generic filter validation - #1187 by @jwm0
+- Fix duplicated labels in column picker - #1197 by @orzechdev
+- Fix forbidden null sending as attribute value - #1201 by @orzechdev
+- Fix missing call for update metadata mutation - #1207 by @orzechdev
 
 # 2.11.1
 
@@ -164,6 +176,7 @@ All notable, unreleased changes to this project will be documented in this file.
 - Update product stock management to newest design - #515 by @dominik-zeglen
 - Handle untracked products - #523 by @dominik-zeglen
 - Display correct error if there were no graphql errors - #525 by @dominik-zeglen
+- Add boolean attributes - #1157 by @piotrgrundas
 
 ## 2.0.0
 

@@ -9,6 +9,7 @@ export const USER_WITHOUT_NAME = {
   password: Cypress.env("USER_PASSWORD")
 };
 export const ONE_PERMISSION_USERS = {
+  channel: getOnePermissionUser("channel.manager@example.com"),
   shipping: getOnePermissionUser("shipping.manager@example.com"),
   giftCard: getOnePermissionUser("gift.card.manager@example.com"),
   app: getOnePermissionUser("app.manager@example.com"),
