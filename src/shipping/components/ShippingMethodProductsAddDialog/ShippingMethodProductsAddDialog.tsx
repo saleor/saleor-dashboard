@@ -26,7 +26,7 @@ import { makeStyles } from "@saleor/theme";
 import { FetchMoreProps } from "@saleor/types";
 import React from "react";
 import { MutationFetchResult } from "react-apollo";
-import InfiniteScroll from "react-infinite-scroller";
+import InfiniteScroll from "react-infinite-scroll-component";
 import { FormattedMessage, useIntl } from "react-intl";
 
 const useStyles = makeStyles(
@@ -88,6 +88,8 @@ const handleProductAssign = (
     setSelectedProducts([...selectedProducts, product]);
   }
 };
+
+const scrollableTargetId = "shippingMethodProductsAddScrollableDialog";
 
 const ShippingMethodProductsAddDialog: React.FC<ShippingMethodProductsAddDialogProps> = props => {
   const {
@@ -154,18 +156,18 @@ const ShippingMethodProductsAddDialog: React.FC<ShippingMethodProductsAddDialogP
           }}
         />
       </DialogContent>
-      <DialogContent className={classes.content}>
+      <DialogContent className={classes.content} id={scrollableTargetId}>
         <InfiniteScroll
-          pageStart={0}
-          loadMore={onFetchMore}
+          dataLength={products?.length}
+          next={onFetchMore}
           hasMore={hasMore}
-          useWindow={false}
+          scrollThreshold="100px"
           loader={
             <div key="loader" className={classes.loadMoreLoaderContainer}>
               <CircularProgress size={16} />
             </div>
           }
-          threshold={10}
+          scrollableTarget={scrollableTargetId}
         >
           <ResponsiveTable key="table">
             <TableBody>

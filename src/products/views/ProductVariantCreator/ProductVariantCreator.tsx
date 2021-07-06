@@ -66,9 +66,8 @@ const ProductVariantCreator: React.FC<ProductVariantCreatorProps> = ({
     onFetchMore: loadMoreAttributeValues
   };
 
-  const attributeValues = mapEdgesToItems(
-    searchAttributeValuesOpts?.data?.attribute.choices
-  );
+  const attributeValues =
+    mapEdgesToItems(searchAttributeValuesOpts?.data?.attribute.choices) || [];
 
   return (
     <>
@@ -99,7 +98,7 @@ const ProductVariantCreator: React.FC<ProductVariantCreatorProps> = ({
             variables: { id, inputs }
           })
         }
-        warehouses={mapEdgesToItems(data?.warehouses)}
+        warehouses={mapEdgesToItems(data?.warehouses) || []}
       />
     </>
   );

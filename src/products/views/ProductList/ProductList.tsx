@@ -31,6 +31,7 @@ import {
 } from "@saleor/products/components/ProductListPage/utils";
 import {
   useAvailableInGridAttributesQuery,
+  useGridAttributesQuery,
   useInitialProductFilterAttributesQuery,
   useInitialProductFilterCategoriesQuery,
   useInitialProductFilterCollectionsQuery,
@@ -319,8 +320,11 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
       .filter(isAttributeColumnValue)
       .map(getAttributeIdFromColumnValue);
   }
-  const attributes = useAvailableInGridAttributesQuery({
-    variables: { first: 6, ids: filterColumnIds(settings.columns) }
+  const availableInGridAttributes = useAvailableInGridAttributesQuery({
+    variables: { first: 24 }
+  });
+  const gridAttributes = useGridAttributesQuery({
+    variables: { ids: filterColumnIds(settings.columns) }
   });
 
   const [
@@ -343,18 +347,18 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
 
   const filterOpts = getFilterOpts(
     params,
-    mapEdgesToItems(initialFilterAttributes?.attributes),
+    mapEdgesToItems(initialFilterAttributes?.attributes) || [],
     searchAttributeValues,
     {
-      initial: mapEdgesToItems(initialFilterCategories?.categories),
+      initial: mapEdgesToItems(initialFilterCategories?.categories) || [],
       search: searchCategories
     },
     {
-      initial: mapEdgesToItems(initialFilterCollections?.collections),
+      initial: mapEdgesToItems(initialFilterCollections?.collections) || [],
       search: searchCollections
     },
     {
-      initial: mapEdgesToItems(initialFilterProductTypes?.productTypes),
+      initial: mapEdgesToItems(initialFilterProductTypes?.productTypes) || [],
       search: searchProductTypes
     },
     channelOpts
@@ -375,22 +379,24 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
           sort: params.sort
         }}
         onSort={handleSort}
-        availableInGridAttributes={mapEdgesToItems(
-          attributes?.data?.availableInGrid
-        )}
+        availableInGridAttributes={
+          mapEdgesToItems(availableInGridAttributes?.data?.availableInGrid) ||
+          []
+        }
         currencySymbol={selectedChannel?.currencyCode || ""}
         currentTab={currentTab}
         defaultSettings={defaultListSettings[ListViews.PRODUCT_LIST]}
         filterOpts={filterOpts}
-        gridAttributes={mapEdgesToItems(attributes?.data?.grid)}
+        gridAttributes={mapEdgesToItems(gridAttributes?.data?.grid) || []}
         totalGridAttributes={maybe(
-          () => attributes.data.availableInGrid.totalCount,
+          () => availableInGridAttributes.data.availableInGrid.totalCount,
           0
         )}
         settings={settings}
-        loading={attributes.loading}
+        loading={availableInGridAttributes.loading || gridAttributes.loading}
         hasMore={maybe(
-          () => attributes.data.availableInGrid.pageInfo.hasNextPage,
+          () =>
+            availableInGridAttributes.data.availableInGrid.pageInfo.hasNextPage,
           false
         )}
         onAdd={() => navigate(productAddUrl())}
@@ -398,7 +404,7 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
         limits={limitOpts.data?.shop.limits}
         products={mapEdgesToItems(data?.products)}
         onFetchMore={() =>
-          attributes.loadMore(
+          availableInGridAttributes.loadMore(
             (prev, next) => {
               if (
                 prev.availableInGrid.pageInfo.endCursor ===
@@ -419,7 +425,9 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
               };
             },
             {
-              after: attributes.data.availableInGrid.pageInfo.endCursor
+              after:
+                availableInGridAttributes.data.availableInGrid.pageInfo
+                  .endCursor
             }
           )
         }
@@ -484,7 +492,9 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
         </DialogContentText>
       </ActionDialog>
       <ProductExportDialog
-        attributes={mapEdgesToItems(searchAttributes?.result?.data?.search)}
+        attributes={
+          mapEdgesToItems(searchAttributes?.result?.data?.search) || []
+        }
         hasMore={searchAttributes.result.data?.search.pageInfo.hasNextPage}
         loading={
           searchAttributes.result.loading ||
@@ -501,7 +511,7 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
           filter: data?.products.totalCount
         }}
         selectedProducts={listElements.length}
-        warehouses={mapEdgesToItems(warehouses?.data?.warehouses)}
+        warehouses={mapEdgesToItems(warehouses?.data?.warehouses) || []}
         channels={availableChannels}
         onClose={closeModal}
         onSubmit={data =>

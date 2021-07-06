@@ -2,11 +2,12 @@
 import faker from "faker";
 
 import { createAttribute } from "../../../apiRequests/Attribute";
-import { createTypeProduct } from "../../../apiRequests/Product";
+import { createTypeProduct } from "../../../apiRequests/productType";
 import { ONE_PERMISSION_USERS } from "../../../Data/users";
 import { PRODUCT_DETAILS } from "../../../elements/catalog/products/product-details";
 import { PRODUCTS_LIST } from "../../../elements/catalog/products/products-list";
 import { BUTTON_SELECTORS } from "../../../elements/shared/button-selectors";
+import { SHARED_ELEMENTS } from "../../../elements/shared/sharedElements";
 import { metadataForms } from "../../../steps/catalog/metadataSteps";
 import {
   fillUpPriceList,
@@ -50,7 +51,7 @@ describe("Create product", () => {
   before(() => {
     cy.clearSessionData().loginUserViaRequest();
     productUtils.deleteProductsStartsWith(startsWith);
-    createAttribute(name).then(attributeResp => {
+    createAttribute({ name }).then(attributeResp => {
       attribute = attributeResp;
     });
   });
@@ -74,7 +75,7 @@ describe("Create product", () => {
     cy.addAliasToGraphRequest("ProductDetails");
     cy.get(BUTTON_SELECTORS.confirm).click();
     cy.wait("@ProductDetails");
-    cy.get(PRODUCT_DETAILS.confirmationMsg).should("be.visible");
+    cy.get(SHARED_ELEMENTS.confirmationMsg).should("be.visible");
     cy.get("@ProductDetails")
       .its("response.body")
       .then(resp => {
@@ -105,7 +106,7 @@ describe("Create product", () => {
     cy.addAliasToGraphRequest("ProductDetails");
     cy.get(BUTTON_SELECTORS.confirm).click();
     cy.wait("@ProductDetails");
-    cy.get(PRODUCT_DETAILS.confirmationMsg).should("be.visible");
+    cy.get(SHARED_ELEMENTS.confirmationMsg).should("be.visible");
     cy.get("@ProductDetails")
       .its("response.body")
       .then(resp => {

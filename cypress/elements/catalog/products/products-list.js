@@ -25,7 +25,15 @@ export const PRODUCTS_LIST = {
       collection: '[data-test="filterGroupActive"][data-test-id="collections"]',
       productType:
         '[data-test="filterGroupActive"][data-test-id="productType"]',
-      stock: '[data-test="filterGroupActive"][data-test-id="stock"]'
+      stock: '[data-test="filterGroupActive"][data-test-id="stock"]',
+      channel: '[data-test="filterGroupActive"][data-test-id="channel"]'
+    },
+    filterField: {
+      category: '[data-test="filter-field"][data-test-id="categories"]',
+      collection: '[data-test="filter-field"][data-test-id="collections"]',
+      productType: '[data-test="filter-field"][data-test-id="productType"]',
+      stock: '[data-test="filter-field"][data-test-id="stock"]',
+      channel: '[data-test="filter-field"][data-test-id="channel"]'
     },
     filterBySearchInput: '[data-test*="filterField"][data-test*="Input"]'
   },

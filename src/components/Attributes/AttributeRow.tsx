@@ -70,6 +70,7 @@ interface AttributeRowProps extends AttributeRowHandlers {
   disabled: boolean;
   error: ProductErrorWithAttributesFragment | PageErrorWithAttributesFragment;
   loading: boolean;
+  entityId: string;
 }
 
 const AttributeRow: React.FC<AttributeRowProps> = ({
@@ -85,7 +86,8 @@ const AttributeRow: React.FC<AttributeRowProps> = ({
   onReferencesReorder,
   onChange,
   fetchAttributeValues,
-  fetchMoreAttributeValues
+  fetchMoreAttributeValues,
+  entityId
 }) => {
   const intl = useIntl();
   const classes = useStyles({});
@@ -160,6 +162,7 @@ const AttributeRow: React.FC<AttributeRowProps> = ({
       return (
         <BasicAttributeRow label={attribute.label}>
           <RichTextEditor
+            key={entityId} // temporary workaround, TODO: refactor rich text editor
             name={`attribute:${attribute.label}`}
             disabled={disabled}
             error={!!error}

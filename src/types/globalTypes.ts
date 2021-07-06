@@ -1161,7 +1161,7 @@ export interface AttributeValueCreateInput {
 
 export interface AttributeValueInput {
   id?: string | null;
-  values?: (string | null)[] | null;
+  values?: string[] | null;
   file?: string | null;
   contentType?: string | null;
   references?: string[] | null;
@@ -1176,7 +1176,7 @@ export interface AttributeValueTranslationInput {
 
 export interface BulkAttributeValueInput {
   id?: string | null;
-  values: (string | null)[];
+  values: string[];
 }
 
 export interface CatalogueInput {
@@ -1726,7 +1726,7 @@ export interface ProductTypeSortingInput {
 }
 
 export interface ProductVariantBulkCreateInput {
-  attributes: (BulkAttributeValueInput | null)[];
+  attributes: BulkAttributeValueInput[];
   sku: string;
   trackInventory?: boolean | null;
   weight?: any | null;
@@ -1741,7 +1741,7 @@ export interface ProductVariantChannelListingAddInput {
 }
 
 export interface ProductVariantCreateInput {
-  attributes: (AttributeValueInput | null)[];
+  attributes: AttributeValueInput[];
   sku?: string | null;
   trackInventory?: boolean | null;
   weight?: any | null;
@@ -1750,7 +1750,7 @@ export interface ProductVariantCreateInput {
 }
 
 export interface ProductVariantInput {
-  attributes?: (AttributeValueInput | null)[] | null;
+  attributes?: AttributeValueInput[] | null;
   sku?: string | null;
   trackInventory?: boolean | null;
   weight?: any | null;

@@ -755,7 +755,7 @@ export interface VariantUpdateVariables {
   addStocks: StockInput[];
   removeStocks: string[];
   id: string;
-  attributes?: (AttributeValueInput | null)[] | null;
+  attributes?: AttributeValueInput[] | null;
   sku?: string | null;
   trackInventory: boolean;
   stocks: StockInput[];

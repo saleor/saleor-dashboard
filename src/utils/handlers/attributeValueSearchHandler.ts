@@ -40,7 +40,6 @@ function createAttributeValueSearchHandler(
       search("");
     }
   }, [state.id]);
-
   return {
     loadMore,
     search: handleSearch,

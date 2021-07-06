@@ -27,7 +27,7 @@ const HomeSection = () => {
 
   return (
     <HomePage
-      activities={mapEdgesToItems(data?.activities)}
+      activities={mapEdgesToItems(data?.activities)?.reverse()}
       orders={data?.ordersToday?.totalCount}
       sales={data?.salesToday?.gross}
       topProducts={mapEdgesToItems(data?.productTopToday)}

@@ -361,7 +361,7 @@ export const CollectionDetails: React.FC<CollectionDetailsProps> = ({
                   }
                 })
               }
-              products={mapEdgesToItems(result?.data?.search).filter(
+              products={mapEdgesToItems(result?.data?.search)?.filter(
                 suggestedProduct => suggestedProduct.id
               )}
             />

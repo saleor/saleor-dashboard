@@ -58,7 +58,12 @@ const ProductTypeListPage: React.FC<ProductTypeListPageProps> = ({
         {intl.formatMessage(sectionNames.configuration)}
       </AppHeader>
       <PageHeader title={intl.formatMessage(sectionNames.productTypes)}>
-        <Button color="primary" variant="contained" onClick={onAdd}>
+        <Button
+          color="primary"
+          variant="contained"
+          onClick={onAdd}
+          data-test-id="addProductType"
+        >
           <FormattedMessage
             defaultMessage="create product type"
             description="button"

@@ -343,7 +343,7 @@ export const WeightRatesUpdate: React.FC<WeightRatesUpdateProps> = ({
         loading={productsSearchOpts.loading}
         open={params.action === "assign-product"}
         hasMore={productsSearchOpts.data?.search?.pageInfo.hasNextPage}
-        products={mapEdgesToItems(productsSearchOpts?.data?.search).filter(
+        products={mapEdgesToItems(productsSearchOpts?.data?.search)?.filter(
           suggestedProduct => suggestedProduct.id
         )}
         onClose={closeModal}
