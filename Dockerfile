@@ -15,3 +15,7 @@ FROM nginx:stable
 WORKDIR /app
 COPY ./nginx/default.conf /etc/nginx/conf.d/default.conf
 COPY --from=builder /app/build/ /app/
+
+ENV API_URI ${API_URI:-http://localhost:8000/graphql/}
+ENV APP_MOUNT_URI ${APP_MOUNT_URI:-/dashboard/}
+ENV STATIC_URL ${STATIC_URL:-/dashboard/}
