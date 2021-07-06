@@ -2,10 +2,12 @@
 import faker from "faker";
 
 import { createAttribute } from "../../../apiRequests/Attribute";
-import { createTypeProduct } from "../../../apiRequests/Product";
+import { createTypeProduct } from "../../../apiRequests/productType";
+import { ONE_PERMISSION_USERS } from "../../../Data/users";
 import { PRODUCT_DETAILS } from "../../../elements/catalog/products/product-details";
 import { PRODUCTS_LIST } from "../../../elements/catalog/products/products-list";
 import { BUTTON_SELECTORS } from "../../../elements/shared/button-selectors";
+import { SHARED_ELEMENTS } from "../../../elements/shared/sharedElements";
 import { metadataForms } from "../../../steps/catalog/metadataSteps";
 import {
   fillUpPriceList,
@@ -55,14 +57,10 @@ describe("Create product", () => {
   });
   beforeEach(() => {
     cy.clearSessionData().loginUserViaRequest();
-    cy.visit(urlList.products)
-      .get(PRODUCTS_LIST.createProductBtn)
-      .click();
   });
 
   it("should create product with variants", () => {
     const randomName = `${startsWith}${faker.datatype.number()}`;
-    createTypeProduct({ name: randomName, attributeId: attribute.id });
     seo.slug = randomName;
     const productData = {
       generalInfo,
@@ -71,13 +69,13 @@ describe("Create product", () => {
       productOrganization: { productType: randomName },
       attribute
     };
-    fillUpCommonFieldsForAllProductTypes(productData).then(
+    createTpeAndFillUpProductFields(randomName, true, productData).then(
       productOrgResp => (productData.productOrganization = productOrgResp)
     );
     cy.addAliasToGraphRequest("ProductDetails");
     cy.get(BUTTON_SELECTORS.confirm).click();
     cy.wait("@ProductDetails");
-    cy.get(PRODUCT_DETAILS.confirmationMsg).should("be.visible");
+    cy.get(SHARED_ELEMENTS.confirmationMsg).should("be.visible");
     cy.get("@ProductDetails")
       .its("response.body")
       .then(resp => {
@@ -86,15 +84,11 @@ describe("Create product", () => {
         expectCorrectProductInformation(productResp, productData);
       });
   });
+
   it("should create product without variants", () => {
     const prices = { sellingPrice: 6, costPrice: 3 };
     const randomName = `${startsWith}${faker.datatype.number()}`;
     seo.slug = randomName;
-    createTypeProduct({
-      name: randomName,
-      attributeId: attribute.id,
-      hasVariants: false
-    });
     const productData = {
       generalInfo,
       seo,
@@ -102,7 +96,7 @@ describe("Create product", () => {
       productOrganization: { productType: randomName },
       attribute
     };
-    fillUpCommonFieldsForAllProductTypes(productData).then(
+    createTpeAndFillUpProductFields(randomName, false, productData).then(
       productOrgResp => (productData.productOrganization = productOrgResp)
     );
     selectChannelInDetailsPages();
@@ -112,7 +106,7 @@ describe("Create product", () => {
     cy.addAliasToGraphRequest("ProductDetails");
     cy.get(BUTTON_SELECTORS.confirm).click();
     cy.wait("@ProductDetails");
-    cy.get(PRODUCT_DETAILS.confirmationMsg).should("be.visible");
+    cy.get(SHARED_ELEMENTS.confirmationMsg).should("be.visible");
     cy.get("@ProductDetails")
       .its("response.body")
       .then(resp => {
@@ -126,4 +120,22 @@ describe("Create product", () => {
         );
       });
   });
+
+  function createTpeAndFillUpProductFields(
+    randomName,
+    hasVariants,
+    productData
+  ) {
+    createTypeProduct({
+      name: randomName,
+      attributeId: attribute.id,
+      hasVariants
+    });
+    cy.clearSessionData()
+      .loginUserViaRequest("auth", ONE_PERMISSION_USERS.product)
+      .visit(urlList.products)
+      .get(PRODUCTS_LIST.createProductBtn)
+      .click();
+    return fillUpCommonFieldsForAllProductTypes(productData);
+  }
 });

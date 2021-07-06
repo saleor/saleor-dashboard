@@ -416,6 +416,7 @@ export const voucherDetails: VoucherDetails_voucher = {
   __typename: "Voucher",
   applyOncePerCustomer: false,
   applyOncePerOrder: false,
+  onlyForStaff: false,
   categories: {
     __typename: "CategoryCountableConnection",
     edges: [],

@@ -41,7 +41,8 @@ export enum ListViews {
   STAFF_MEMBERS_LIST = "STAFF_MEMBERS_LIST",
   VOUCHER_LIST = "VOUCHER_LIST",
   WAREHOUSE_LIST = "WAREHOUSE_LIST",
-  WEBHOOK_LIST = "WEBHOOK_LIST"
+  WEBHOOK_LIST = "WEBHOOK_LIST",
+  TRANSLATION_ATTRIBUTE_VALUE_LIST = "TRANSLATION_ATTRIBUTE_VALUE_LIST"
 }
 
 export interface ListProps<TColumns extends string = string> {
@@ -54,9 +55,9 @@ export interface ListProps<TColumns extends string = string> {
   onNextPage: () => void;
   onPreviousPage: () => void;
   onRowClick: (id: string) => () => void;
-  onUpdateListSettings?: (
-    key: keyof ListSettings<TColumns>,
-    value: any
+  onUpdateListSettings?: <T extends keyof ListSettings<TColumns>>(
+    key: T,
+    value: ListSettings<TColumns>[T]
   ) => void;
   onListSettingsReset?: () => void;
 }
@@ -107,6 +108,7 @@ export interface FilterPageProps<TKeys extends string, TOpts extends {}>
 export interface FilterProps<TKeys extends string> {
   currencySymbol?: string;
   onFilterChange: (filter: IFilter<TKeys>) => void;
+  onFilterAttributeFocus?: (id?: string) => void;
 }
 
 export interface TabPageProps {
@@ -132,6 +134,9 @@ export interface PartialMutationProviderOutput<
 
 export interface Node {
   id: string;
+}
+export interface SlugNode {
+  slug: string;
 }
 
 export type Pagination = Partial<{

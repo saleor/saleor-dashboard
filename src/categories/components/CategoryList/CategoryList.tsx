@@ -18,7 +18,7 @@ const useStyles = makeStyles(
   theme => ({
     [theme.breakpoints.up("lg")]: {
       colName: {
-        width: 840
+        width: "auto"
       },
       colProducts: {
         width: 160
@@ -94,7 +94,7 @@ const CategoryList: React.FC<CategoryListProps> = props => {
           }
           arrowPosition="right"
           className={classes.colName}
-          disableClick={!isRoot}
+          disabled={!isRoot}
           onClick={() => isRoot && onSort(CategoryListUrlSortField.name)}
         >
           <FormattedMessage defaultMessage="Category Name" />
@@ -106,7 +106,7 @@ const CategoryList: React.FC<CategoryListProps> = props => {
               : undefined
           }
           className={classes.colSubcategories}
-          disableClick={!isRoot}
+          disabled={!isRoot}
           onClick={() =>
             isRoot && onSort(CategoryListUrlSortField.subcategoryCount)
           }
@@ -123,7 +123,7 @@ const CategoryList: React.FC<CategoryListProps> = props => {
               : undefined
           }
           className={classes.colProducts}
-          disableClick={!isRoot}
+          disabled={!isRoot}
           onClick={() =>
             isRoot && onSort(CategoryListUrlSortField.productCount)
           }

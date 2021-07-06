@@ -81,4 +81,5 @@ export interface VoucherListVariables {
   last?: number | null;
   filter?: VoucherFilterInput | null;
   sort?: VoucherSortingInput | null;
+  channel?: string | null;
 }

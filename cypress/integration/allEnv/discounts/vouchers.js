@@ -2,6 +2,7 @@
 import faker from "faker";
 
 import { createChannel } from "../../../apiRequests/Channels";
+import { ONE_PERMISSION_USERS } from "../../../Data/users";
 import {
   createVoucher,
   discountOptions
@@ -81,69 +82,47 @@ describe("Vouchers discounts", () => {
       .then(({ variantsList: variantsResp }) => (variants = variantsResp));
   });
 
-  beforeEach(() => {
-    cy.clearSessionData().loginUserViaRequest();
-    cy.visit(urlList.vouchers);
-  });
-
   it("should create percentage voucher", () => {
-    const voucherCode = `${startsWith}${faker.datatype.number()}`;
     const voucherValue = 50;
 
-    createVoucher({
-      voucherCode,
-      voucherValue,
-      discountOption: discountOptions.PERCENTAGE,
-      channelName: defaultChannel.name
+    loginAndCreateCheckoutForVoucherWithDiscount(
+      discountOptions.PERCENTAGE,
+      voucherValue
+    ).then(amount => {
+      const expectedAmount =
+        (productPrice * voucherValue) / 100 + shippingPrice;
+      expect(amount).to.be.eq(expectedAmount);
     });
-    createCheckoutForCreatedVoucher(voucherCode)
-      .its("checkout.totalPrice.gross.amount")
-      .then(amount => {
-        const expectedAmount =
-          (productPrice * voucherValue) / 100 + shippingPrice;
-        expect(amount).to.be.eq(expectedAmount);
-      });
   });
-  it("should create fixed price voucher", () => {
-    const voucherCode = `${startsWith}${faker.datatype.number()}`;
-    const voucherValue = 50;
 
-    cy.softExpectSkeletonIsVisible();
-    createVoucher({
-      voucherCode,
-      voucherValue,
-      discountOption: discountOptions.FIXED,
-      channelName: defaultChannel.name
+  it("should create fixed price voucher", () => {
+    const voucherValue = 50;
+    loginAndCreateCheckoutForVoucherWithDiscount(
+      discountOptions.FIXED,
+      voucherValue
+    ).then(amount => {
+      const expectedAmount = productPrice + shippingPrice - voucherValue;
+      expect(amount).to.be.eq(expectedAmount);
     });
-    createCheckoutForCreatedVoucher(voucherCode)
-      .its("checkout.totalPrice.gross.amount")
-      .then(amount => {
-        const expectedAmount = productPrice + shippingPrice - voucherValue;
-        expect(amount).to.be.eq(expectedAmount);
-      });
   });
 
   it("should create free shipping voucher", () => {
-    const voucherCode = `${startsWith}${faker.datatype.number()}`;
-
-    cy.softExpectSkeletonIsVisible();
-    createVoucher({
-      voucherCode,
-      discountOption: discountOptions.SHIPPING,
-      channelName: defaultChannel.name
+    loginAndCreateCheckoutForVoucherWithDiscount(
+      discountOptions.SHIPPING,
+      null
+    ).then(amount => {
+      const expectedAmount = productPrice;
+      expect(amount).to.be.eq(expectedAmount);
     });
-    createCheckoutForCreatedVoucher(voucherCode)
-      .its("checkout.totalPrice.gross.amount")
-      .then(amount => {
-        const expectedAmount = productPrice;
-        expect(amount).to.be.eq(expectedAmount);
-      });
   });
 
   it("should create voucher not available for selected channel", () => {
     const randomName = `${startsWith}${faker.datatype.number()}`;
     const voucherValue = 50;
 
+    cy.clearSessionData()
+      .loginUserViaRequest()
+      .visit(urlList.vouchers);
     cy.softExpectSkeletonIsVisible();
     createChannel({ name: randomName })
       .then(channel => {
@@ -170,5 +149,26 @@ describe("Vouchers discounts", () => {
       voucherCode,
       auth: "token"
     });
+  }
+
+  function loginAndCreateCheckoutForVoucherWithDiscount(
+    discount,
+    voucherValue
+  ) {
+    const voucherCode = `${startsWith}${faker.datatype.number()}`;
+
+    cy.clearSessionData()
+      .loginUserViaRequest("auth", ONE_PERMISSION_USERS.discount)
+      .visit(urlList.vouchers);
+    cy.softExpectSkeletonIsVisible();
+    createVoucher({
+      voucherCode,
+      voucherValue,
+      discountOption: discount,
+      channelName: defaultChannel.name
+    });
+    return createCheckoutForCreatedVoucher(voucherCode).its(
+      "checkout.totalPrice.gross.amount"
+    );
   }
 });

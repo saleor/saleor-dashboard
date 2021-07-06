@@ -953,6 +953,10 @@
     "context": "attribute slug input field helper text",
     "string": "This is used internally. Make sure you don’t use spaces"
   },
+  "src_dot_attributes_dot_components_dot_AttributeDetails_dot_boolean": {
+    "context": "boolean attribute type",
+    "string": "Boolean"
+  },
   "src_dot_attributes_dot_components_dot_AttributeDetails_dot_distance": {
     "context": "distance units type",
     "string": "Distance"
@@ -1982,13 +1986,13 @@
     "context": "product channel publication status",
     "string": "hidden"
   },
-  "src_dot_components_dot_ChannelsAvailabilityDropdown_dot_1484966255": {
-    "context": "product status title",
-    "string": "Available in {count}/{allCount}"
-  },
   "src_dot_components_dot_ChannelsAvailabilityDropdown_dot_1702481199": {
     "context": "product channel  publication date",
     "string": "published since {date}"
+  },
+  "src_dot_components_dot_ChannelsAvailabilityDropdown_dot_1944644572": {
+    "context": "product status title",
+    "string": "{count}/{allCount} channels"
   },
   "src_dot_components_dot_ChannelsAvailabilityDropdown_dot_3285520461": {
     "context": "product channel publication date",
@@ -2099,12 +2103,24 @@
     "context": "button",
     "string": "Filters"
   },
+  "src_dot_components_dot_Filter_dot_DEPENDENCIES_MISSING": {
+    "context": "filters error messages dependencies missing",
+    "string": "Filter requires other filters: {dependencies}"
+  },
   "src_dot_components_dot_Filter_dot_FilterContent_dot_2779594451": {
     "context": "filter range separator",
     "string": "and"
   },
   "src_dot_components_dot_Filter_dot_FilterContent_dot_996289613": {
     "string": "Filters"
+  },
+  "src_dot_components_dot_Filter_dot_UNKNOWN_ERROR": {
+    "context": "filters error messages unknown error",
+    "string": "Unknown error occurred"
+  },
+  "src_dot_components_dot_Filter_dot_VALUE_REQUIRED": {
+    "context": "filters error messages value required",
+    "string": "Choose a value"
   },
   "src_dot_components_dot_ImageUpload_dot_1731007575": {
     "context": "image upload",
@@ -2889,6 +2905,10 @@
     "context": "sale status",
     "string": "Active"
   },
+  "src_dot_discounts_dot_components_dot_SaleListPage_dot_channel": {
+    "context": "sale channel",
+    "string": "Channel"
+  },
   "src_dot_discounts_dot_components_dot_SaleListPage_dot_expired": {
     "context": "sale status",
     "string": "Expired"
@@ -3015,20 +3035,25 @@
     "context": "voucher code, button",
     "string": "Generate Code"
   },
-  "src_dot_discounts_dot_components_dot_VoucherLimits_dot_2215544659": {
-    "string": "Limit number of times this discount can be used in total"
-  },
-  "src_dot_discounts_dot_components_dot_VoucherLimits_dot_3459612469": {
+  "src_dot_discounts_dot_components_dot_VoucherLimits_dot_applyOncePerCustomer": {
     "context": "limit voucher",
     "string": "Limit to one use per customer"
   },
-  "src_dot_discounts_dot_components_dot_VoucherLimits_dot_3751756157": {
+  "src_dot_discounts_dot_components_dot_VoucherLimits_dot_hasUsageLimit": {
+    "context": "limit voucher",
+    "string": "Limit number of times this discount can be used in total"
+  },
+  "src_dot_discounts_dot_components_dot_VoucherLimits_dot_onlyForStaff": {
+    "context": "limit voucher",
+    "string": "Limit to staff only"
+  },
+  "src_dot_discounts_dot_components_dot_VoucherLimits_dot_usageLimit": {
+    "context": "limit voucher",
+    "string": "Limit of Uses"
+  },
+  "src_dot_discounts_dot_components_dot_VoucherLimits_dot_usageLimitsTitle": {
     "context": "voucher usage limit, header",
     "string": "Usage Limit"
-  },
-  "src_dot_discounts_dot_components_dot_VoucherLimits_dot_557552777": {
-    "context": "voucher",
-    "string": "Limit of Uses"
   },
   "src_dot_discounts_dot_components_dot_VoucherListPage_dot_1112241061": {
     "context": "tab name",
@@ -3044,6 +3069,10 @@
   "src_dot_discounts_dot_components_dot_VoucherListPage_dot_active": {
     "context": "voucher status",
     "string": "Active"
+  },
+  "src_dot_discounts_dot_components_dot_VoucherListPage_dot_channel": {
+    "context": "voucher channel",
+    "string": "Channel"
   },
   "src_dot_discounts_dot_components_dot_VoucherListPage_dot_expired": {
     "context": "voucher status",
@@ -4998,8 +5027,8 @@
     "string": "All Plugins"
   },
   "src_dot_plugins_dot_components_dot_PluginsListPage_dot_active": {
-    "context": "plugin filters error messages active",
-    "string": "Active is not selected"
+    "context": "plugin filters error messages status",
+    "string": "Status is not selected"
   },
   "src_dot_plugins_dot_components_dot_PluginsListPage_dot_channelStatusSectionSubtitle": {
     "context": "status section subtitle",
@@ -5190,6 +5219,18 @@
     "context": "products section name",
     "string": "Products"
   },
+  "src_dot_products_dot_components_dot_ProductAvailabilityStatusLabel_dot_published": {
+    "context": "product publication date",
+    "string": "Published on {date}"
+  },
+  "src_dot_products_dot_components_dot_ProductAvailabilityStatusLabel_dot_unpublished": {
+    "context": "product publication date",
+    "string": "Unpublished"
+  },
+  "src_dot_products_dot_components_dot_ProductAvailabilityStatusLabel_dot_willBePublished": {
+    "context": "product publication date",
+    "string": "Becomes published on {date}"
+  },
   "src_dot_products_dot_components_dot_ProductCategoryAndCollectionsForm_dot_1755013298": {
     "string": "Category"
   },
@@ -5354,6 +5395,10 @@
   "src_dot_products_dot_components_dot_ProductListPage_dot_available": {
     "context": "product status",
     "string": "Available"
+  },
+  "src_dot_products_dot_components_dot_ProductListPage_dot_channel": {
+    "context": "sales channel",
+    "string": "Channel"
   },
   "src_dot_products_dot_components_dot_ProductListPage_dot_hidden": {
     "context": "product is hidden",
@@ -6734,6 +6779,10 @@
   "src_dot_translations_dot_components_dot_TranslationsProductTypesPage_dot_884093025": {
     "context": "header",
     "string": "Translation Attribute \"{attribute}\" - {languageCode}"
+  },
+  "src_dot_translations_dot_components_dot_TranslationsProductTypesPage_dot_values": {
+    "context": "section name",
+    "string": "Values"
   },
   "src_dot_translations_dot_components_dot_TranslationsProductsPage_dot_1406947243": {
     "string": "Search Engine Description"

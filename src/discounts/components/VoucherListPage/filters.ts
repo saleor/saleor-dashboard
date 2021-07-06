@@ -1,4 +1,5 @@
 import { IFilter } from "@saleor/components/Filter";
+import { MultiAutocompleteChoiceType } from "@saleor/components/MultiAutocompleteSelectField";
 import { FilterOpts, MinMax } from "@saleor/types";
 import {
   DiscountStatusEnum,
@@ -15,7 +16,8 @@ export enum VoucherFilterKeys {
   saleType = "saleType",
   started = "started",
   status = "status",
-  timesUsed = "timesUsed"
+  timesUsed = "timesUsed",
+  channel = "channel"
 }
 
 export interface VoucherListFilterOpts {
@@ -23,12 +25,17 @@ export interface VoucherListFilterOpts {
   started: FilterOpts<MinMax>;
   status: FilterOpts<DiscountStatusEnum[]>;
   timesUsed: FilterOpts<MinMax>;
+  channel: FilterOpts<string> & { choices: MultiAutocompleteChoiceType[] };
 }
 
 const messages = defineMessages({
   active: {
     defaultMessage: "Active",
     description: "voucher status"
+  },
+  channel: {
+    defaultMessage: "Channel",
+    description: "voucher channel"
   },
   expired: {
     defaultMessage: "Expired",
@@ -68,6 +75,16 @@ export function createFilterStructure(
   opts: VoucherListFilterOpts
 ): IFilter<VoucherFilterKeys> {
   return [
+    {
+      ...createOptionsField(
+        VoucherFilterKeys.channel,
+        intl.formatMessage(messages.channel),
+        [opts.channel.value],
+        false,
+        opts.channel.choices
+      ),
+      active: opts.channel.active
+    },
     {
       ...createDateField(
         VoucherFilterKeys.started,

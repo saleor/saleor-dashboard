@@ -14,7 +14,17 @@ const useStyles = makeStyles(
     },
     root: {
       alignItems: "center",
-      display: "flex"
+      display: "flex",
+      [theme.breakpoints.down("xs")]: {
+        flexDirection: "column",
+        alignItems: "flex-start",
+        "& > *": {
+          width: "100%"
+        },
+        "& > *:not(first-child)": {
+          marginTop: theme.spacing(2)
+        }
+      }
     },
     title: {
       [theme.breakpoints.down("sm")]: {

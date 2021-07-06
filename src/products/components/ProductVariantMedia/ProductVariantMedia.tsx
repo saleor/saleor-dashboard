@@ -32,7 +32,6 @@ const useStyles = makeStyles(
       gridColumnEnd: "span 4"
     },
     image: {
-      height: "100%",
       objectFit: "contain",
       width: "100%"
     },

@@ -1,6 +1,7 @@
 import faker from "faker";
 
 import { getProductDetails } from "../../../../apiRequests/storeFront/ProductDetails";
+import { ONE_PERMISSION_USERS } from "../../../../Data/users";
 import { updateProductPublish } from "../../../../steps/catalog/products/productSteps";
 import { productDetailsUrl } from "../../../../url/urlList";
 import { getDefaultChannel } from "../../../../utils/channelsUtils";
@@ -14,6 +15,7 @@ describe("Published products", () => {
   let productType;
   let attribute;
   let category;
+  let defaultChannel;
 
   before(() => {
     cy.clearSessionData().loginUserViaRequest();
@@ -29,28 +31,33 @@ describe("Published products", () => {
           productType = productTypeResp;
           attribute = attributeResp;
           category = categoryResp;
+          getDefaultChannel();
         }
-      );
+      )
+      .then(channel => {
+        defaultChannel = channel;
+      });
   });
 
   beforeEach(() => {
-    cy.clearSessionData().loginUserViaRequest();
+    cy.clearSessionData().loginUserViaRequest(
+      "auth",
+      ONE_PERMISSION_USERS.product
+    );
   });
+
   it("should update product to published", () => {
     const productName = `${startsWith}${faker.datatype.number()}`;
-    let defaultChannel;
-    getDefaultChannel()
-      .then(channel => {
-        defaultChannel = channel;
-        productsUtils.createProductInChannel({
-          name: productName,
-          channelId: defaultChannel.id,
-          productTypeId: productType.id,
-          attributeId: attribute.id,
-          categoryId: category.id,
-          isPublished: false,
-          isAvailableForPurchase: false
-        });
+
+    productsUtils
+      .createProductInChannel({
+        name: productName,
+        channelId: defaultChannel.id,
+        productTypeId: productType.id,
+        attributeId: attribute.id,
+        categoryId: category.id,
+        isPublished: false,
+        isAvailableForPurchase: false
       })
       .then(({ product: productResp }) => {
         const product = productResp;
@@ -63,21 +70,18 @@ describe("Published products", () => {
         expect(isVisible).to.be.eq(true);
       });
   });
+
   it("should update product to not published", () => {
     const productName = `${startsWith}${faker.datatype.number()}`;
-    let defaultChannel;
     let product;
 
-    getDefaultChannel()
-      .then(channel => {
-        defaultChannel = channel;
-        productsUtils.createProductInChannel({
-          name: productName,
-          channelId: defaultChannel.id,
-          productTypeId: productType.id,
-          attributeId: attribute.id,
-          categoryId: category.id
-        });
+    productsUtils
+      .createProductInChannel({
+        name: productName,
+        channelId: defaultChannel.id,
+        productTypeId: productType.id,
+        attributeId: attribute.id,
+        categoryId: category.id
       })
       .then(({ product: productResp }) => {
         product = productResp;

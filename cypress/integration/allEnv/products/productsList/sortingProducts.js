@@ -4,7 +4,7 @@ import { urlList } from "../../../../url/urlList";
 import { expectProductsSortedBy } from "../../../../utils/products/productsListUtils";
 
 describe("Sorting products", () => {
-  const sortByList = ["name", "type", "price"];
+  const sortByList = ["name", "type"];
   sortByList.forEach(sortBy => {
     it(`Sorting by ${sortBy}`, () => {
       cy.clearSessionData()

@@ -31,7 +31,7 @@ export interface ProductMediaById_product {
   __typename: "Product";
   id: string;
   name: string;
-  mainImage: ProductMediaById_product_mainImage;
+  mainImage: ProductMediaById_product_mainImage | null;
   media: ProductMediaById_product_media[] | null;
 }
 

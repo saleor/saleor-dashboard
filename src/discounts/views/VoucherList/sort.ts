@@ -2,6 +2,27 @@ import { VoucherListUrlSortField } from "@saleor/discounts/urls";
 import { VoucherSortField } from "@saleor/types/globalTypes";
 import { createGetSortQueryVariables } from "@saleor/utils/sort";
 
+export const DEFAULT_SORT_KEY = VoucherListUrlSortField.code;
+
+export function canBeSorted(
+  sort: VoucherListUrlSortField,
+  isChannelSelected: boolean
+) {
+  switch (sort) {
+    case VoucherListUrlSortField.code:
+    case VoucherListUrlSortField.startDate:
+    case VoucherListUrlSortField.endDate:
+    case VoucherListUrlSortField.type:
+    case VoucherListUrlSortField.limit:
+      return true;
+    case VoucherListUrlSortField.value:
+    case VoucherListUrlSortField.minSpent:
+      return isChannelSelected;
+    default:
+      return false;
+  }
+}
+
 export function getSortQueryField(
   sort: VoucherListUrlSortField
 ): VoucherSortField {

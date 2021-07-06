@@ -1,3 +1,4 @@
+import { SingleAutocompleteChoiceType } from "@saleor/components/SingleAutocompleteSelectField";
 import { UseSearchResult } from "@saleor/hooks/makeSearch";
 import { findValueInEnum, maybe } from "@saleor/misc";
 import {
@@ -8,6 +9,10 @@ import { InitialProductFilterAttributes_attributes_edges_node } from "@saleor/pr
 import { InitialProductFilterCategories_categories_edges_node } from "@saleor/products/types/InitialProductFilterCategories";
 import { InitialProductFilterCollections_collections_edges_node } from "@saleor/products/types/InitialProductFilterCollections";
 import { InitialProductFilterProductTypes_productTypes_edges_node } from "@saleor/products/types/InitialProductFilterProductTypes";
+import {
+  SearchAttributeValues,
+  SearchAttributeValuesVariables
+} from "@saleor/searches/types/SearchAttributeValues";
 import {
   SearchCategories,
   SearchCategoriesVariables
@@ -20,7 +25,11 @@ import {
   SearchProductTypes,
   SearchProductTypesVariables
 } from "@saleor/searches/types/SearchProductTypes";
-import { mapEdgesToItems, mapNodeToChoice } from "@saleor/utils/maps";
+import {
+  mapEdgesToItems,
+  mapNodeToChoice,
+  mapSlugNodeToChoice
+} from "@saleor/utils/maps";
 import isArray from "lodash/isArray";
 
 import { IFilterElement } from "../../../components/Filter";
@@ -35,7 +44,8 @@ import {
   getGteLteVariables,
   getMinMaxQueryParam,
   getMultipleValueQueryParam,
-  getSingleEnumValueQueryParam
+  getSingleEnumValueQueryParam,
+  getSingleValueQueryParam
 } from "../../../utils/filters";
 import {
   ProductListUrlFilters,
@@ -50,6 +60,10 @@ export const PRODUCT_FILTERS_KEY = "productFilters";
 export function getFilterOpts(
   params: ProductListUrlFilters,
   attributes: InitialProductFilterAttributes_attributes_edges_node[],
+  focusedAttributeChoices: UseSearchResult<
+    SearchAttributeValues,
+    SearchAttributeValuesVariables
+  >,
   categories: {
     initial: InitialProductFilterCategories_categories_edges_node[];
     search: UseSearchResult<SearchCategories, SearchCategoriesVariables>;
@@ -61,24 +75,40 @@ export function getFilterOpts(
   productTypes: {
     initial: InitialProductFilterProductTypes_productTypes_edges_node[];
     search: UseSearchResult<SearchProductTypes, SearchProductTypesVariables>;
-  }
+  },
+  channels: SingleAutocompleteChoiceType[]
 ): ProductListFilterOpts {
   return {
     attributes: attributes
       .sort((a, b) => (a.name > b.name ? 1 : -1))
       .map(attr => ({
         active: maybe(() => params.attributes[attr.slug].length > 0, false),
-        choices: attr.choices?.edges?.map(val => ({
-          label: val.node.name,
-          value: val.node.slug
-        })),
+        id: attr.id,
         name: attr.name,
         slug: attr.slug,
+        inputType: attr.inputType,
         value:
           !!params.attributes && params.attributes[attr.slug]
-            ? params.attributes[attr.slug]
+            ? dedupeFilter(params.attributes[attr.slug])
             : []
       })),
+    attributeChoices: {
+      active: true,
+      choices: mapSlugNodeToChoice(
+        mapEdgesToItems(focusedAttributeChoices.result.data?.attribute?.choices)
+      ),
+      displayValues: mapNodeToChoice(
+        mapEdgesToItems(focusedAttributeChoices.result.data?.attribute?.choices)
+      ),
+      hasMore:
+        focusedAttributeChoices.result.data?.attribute?.choices?.pageInfo
+          ?.hasNextPage || false,
+      initialSearch: "",
+      loading: focusedAttributeChoices.result.loading,
+      onFetchMore: focusedAttributeChoices.loadMore,
+      onSearchChange: focusedAttributeChoices.search,
+      value: null
+    },
     categories: {
       active: !!params.categories,
       choices: mapNodeToChoice(
@@ -103,6 +133,11 @@ export function getFilterOpts(
       onFetchMore: categories.search.loadMore,
       onSearchChange: categories.search.search,
       value: maybe(() => dedupeFilter(params.categories), [])
+    },
+    channel: {
+      active: params?.channel !== undefined,
+      choices: channels,
+      value: params?.channel
     },
     collections: {
       active: !!params.collections,
@@ -172,24 +207,38 @@ export function getFilterOpts(
   };
 }
 
+function getFilteredAttributeValue(
+  params: ProductListUrlFilters
+): Array<({ boolean: boolean } | { values: string[] }) & { slug: string }> {
+  return !!params.attributes
+    ? Object.keys(params.attributes).map(key => {
+        const value = params.attributes[key];
+        const isMulti = isArray(params.attributes[key]);
+        const isBooleanValue =
+          !isMulti && ["true", "false"].includes((value as unknown) as string);
+
+        return {
+          slug: key,
+          ...(isBooleanValue
+            ? { boolean: JSON.parse((value as unknown) as string) }
+            : {
+                // It is possible for qs to parse values not as string[] but string
+                values: isMulti ? value : (([value] as unknown) as string[])
+              })
+        };
+      })
+    : null;
+}
+
 export function getFilterVariables(
   params: ProductListUrlFilters,
-  channel: string | undefined
+  isChannelSelected: boolean
 ): ProductFilterInput {
   return {
-    attributes: !!params.attributes
-      ? Object.keys(params.attributes).map(key => ({
-          slug: key,
-          // It is possible for qs to parse values not as string[] but string
-          values: isArray(params.attributes[key])
-            ? params.attributes[key]
-            : (([params.attributes[key]] as unknown) as string[])
-        }))
-      : null,
+    attributes: getFilteredAttributeValue(params),
     categories: params.categories !== undefined ? params.categories : null,
-    channel: channel || null,
     collections: params.collections !== undefined ? params.collections : null,
-    price: channel
+    price: isChannelSelected
       ? getGteLteVariables({
           gte: parseFloat(params.priceFrom),
           lte: parseFloat(params.priceTo)
@@ -255,6 +304,12 @@ export function getFilterQueryParam(
         filter,
         ProductListUrlFiltersEnum.stockStatus,
         StockAvailability
+      );
+
+    case ProductFilterKeys.channel:
+      return getSingleValueQueryParam(
+        filter,
+        ProductListUrlFiltersEnum.channel
       );
   }
 }
