@@ -62,12 +62,9 @@ export function getMultiDisplayValues(
 }
 
 const getBooleanDisplayValues = (
-  attributeId: string,
-  data: ProductVariantCreateFormData,
-  intl: IntlShape
+  intl: IntlShape,
+  values: Array<AttributeValue<Partial<AttributeValueFragment>>>
 ) => {
-  const values = data.attributes.find(({ id }) => id === attributeId).values;
-
   if (!values.length) {
     return [];
   }
@@ -78,10 +75,18 @@ const getBooleanDisplayValues = (
   );
 };
 
-const getBooleanChoices = (intl: IntlShape) => [
-  { label: intl.formatMessage(commonMessages.yes), value: true },
-  { label: intl.formatMessage(commonMessages.no), value: false }
-];
+const getBooleanChoices = (
+  intl: IntlShape,
+  values?: Array<AttributeValue<Partial<AttributeValueFragment>>>
+) => {
+  const selectedValues = values?.map(({ value }) => value.boolean) ?? [];
+  const choices = [
+    { label: intl.formatMessage(commonMessages.yes), value: true },
+    { label: intl.formatMessage(commonMessages.no), value: false }
+  ];
+
+  return choices.filter(({ value }) => !selectedValues.includes(value));
+};
 
 export interface ProductVariantCreatorValuesProps {
   attributes: ProductDetails_product_productType_variantAttributes[];
@@ -162,9 +167,8 @@ const ProductVariantCreatorValues: React.FC<ProductVariantCreatorValuesProps> = 
               {attribute.inputType === AttributeInputTypeEnum.BOOLEAN ? (
                 <MultiAutocompleteSelectField
                   displayValues={getBooleanDisplayValues(
-                    attribute.id,
-                    data,
-                    intl
+                    intl,
+                    data.attributes.find(({ id }) => id === attribute.id).values
                   )}
                   name={`attribute:${attribute.name}`}
                   label={intl.formatMessage(messages.multipleValueLabel)}
@@ -177,7 +181,10 @@ const ProductVariantCreatorValues: React.FC<ProductVariantCreatorValuesProps> = 
                     )
                   }
                   allowCustomValues={false}
-                  choices={getBooleanChoices(intl)}
+                  choices={getBooleanChoices(
+                    intl,
+                    data.attributes.find(({ id }) => id === attribute.id).values
+                  )}
                 />
               ) : (
                 <MultiAutocompleteSelectField
