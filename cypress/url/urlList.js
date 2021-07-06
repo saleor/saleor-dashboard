@@ -14,7 +14,7 @@ export const urlList = {
   staffMembers: "staff/",
   newPassword: "new-password/",
   permissionsGroups: "permission-groups/",
-  weightRete: "weight/"
+  weightRate: "weight/"
 };
 export const productDetailsUrl = productId => `${urlList.products}${productId}`;
 
