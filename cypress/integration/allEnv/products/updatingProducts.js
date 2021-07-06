@@ -3,8 +3,10 @@ import faker from "faker";
 import { createCategory } from "../../../apiRequests/Category";
 import { createCollection } from "../../../apiRequests/Collections";
 import { getProductDetails } from "../../../apiRequests/storeFront/ProductDetails";
+import { ONE_PERMISSION_USERS } from "../../../Data/users";
 import { PRODUCT_DETAILS } from "../../../elements/catalog/products/product-details";
 import { BUTTON_SELECTORS } from "../../../elements/shared/button-selectors";
+import { SHARED_ELEMENTS } from "../../../elements/shared/sharedElements";
 import { metadataForms } from "../../../steps/catalog/metadataSteps";
 import { fillUpCommonFieldsForAllProductTypes } from "../../../steps/catalog/products/productSteps";
 import { productDetailsUrl } from "../../../url/urlList";
@@ -56,6 +58,7 @@ describe("Update products", () => {
         product = productResp;
       });
   });
+
   it("Should update product", () => {
     const updatedName = `${startsWith}${faker.random.number()}`;
     let updatedCategory;
@@ -95,14 +98,17 @@ describe("Update products", () => {
             collection: updatedCollection.name
           }
         };
-        cy.visit(productDetailsUrl(product.id));
-        cy.get(PRODUCT_DETAILS.collectionRemoveButtons).click();
+        cy.clearSessionData()
+          .loginUserViaRequest("auth", ONE_PERMISSION_USERS.product)
+          .visit(productDetailsUrl(product.id))
+          .get(PRODUCT_DETAILS.collectionRemoveButtons)
+          .click();
         fillUpCommonFieldsForAllProductTypes(productData, false);
         cy.addAliasToGraphRequest("UpdatePrivateMetadata");
         cy.addAliasToGraphRequest("UpdateMetadata");
         cy.addAliasToGraphRequest("ProductUpdate");
         cy.get(BUTTON_SELECTORS.confirm).click();
-        cy.get(PRODUCT_DETAILS.confirmationMsg)
+        cy.get(SHARED_ELEMENTS.confirmationMsg)
           .should("be.visible")
           .then(() => {
             cy.wait("@ProductUpdate");
@@ -122,15 +128,18 @@ describe("Update products", () => {
           });
       });
   });
+
   it("should delete product", () => {
-    cy.visit(productDetailsUrl(product.id));
-    cy.addAliasToGraphRequest("ProductDelete");
-    cy.get(BUTTON_SELECTORS.deleteButton)
+    cy.clearSessionData()
+      .loginUserViaRequest("auth", ONE_PERMISSION_USERS.product)
+      .visit(productDetailsUrl(product.id))
+      .addAliasToGraphRequest("ProductDelete")
+      .get(BUTTON_SELECTORS.deleteButton)
       .click()
       .get(BUTTON_SELECTORS.submit)
-      .click();
-    cy.wait("@ProductDelete");
-    cy.loginUserViaRequest("token")
+      .click()
+      .wait("@ProductDelete")
+      .loginUserViaRequest("token")
       .then(() => {
         getProductDetails(product.id, defaultChannel.slug).its("body.data");
       })

@@ -6,9 +6,9 @@ import useNotifier from "@saleor/hooks/useNotifier";
 import { useProductVariantBulkCreateMutation } from "@saleor/products/mutations";
 import { useCreateMultipleVariantsData } from "@saleor/products/queries";
 import { productUrl } from "@saleor/products/urls";
-import useAttributeValueSearch from "@saleor/searches/useAttributeValueSearch";
+import createAttributeValueSearchHandler from "@saleor/utils/handlers/attributeValueSearchHandler";
 import { mapEdgesToItems } from "@saleor/utils/maps";
-import React, { useState } from "react";
+import React from "react";
 import { useIntl } from "react-intl";
 
 import ProductVariantCreatorPage from "../../components/ProductVariantCreatorPage";
@@ -53,18 +53,11 @@ const ProductVariantCreator: React.FC<ProductVariantCreatorProps> = ({
     }
   });
 
-  const [focusedAttribute, setFocusedAttribute] = useState<string>();
   const {
     loadMore: loadMoreAttributeValues,
     search: searchAttributeValues,
     result: searchAttributeValuesOpts
-  } = useAttributeValueSearch({
-    variables: {
-      id: focusedAttribute,
-      ...DEFAULT_INITIAL_SEARCH_DATA
-    },
-    skip: !focusedAttribute
-  });
+  } = createAttributeValueSearchHandler(DEFAULT_INITIAL_SEARCH_DATA);
 
   const fetchMoreAttributeValues = {
     hasMore: !!searchAttributeValuesOpts.data?.attribute?.choices?.pageInfo
@@ -73,9 +66,8 @@ const ProductVariantCreator: React.FC<ProductVariantCreatorProps> = ({
     onFetchMore: loadMoreAttributeValues
   };
 
-  const attributeValues = mapEdgesToItems(
-    searchAttributeValuesOpts?.data?.attribute.choices
-  );
+  const attributeValues =
+    mapEdgesToItems(searchAttributeValuesOpts?.data?.attribute.choices) || [];
 
   return (
     <>
@@ -106,8 +98,7 @@ const ProductVariantCreator: React.FC<ProductVariantCreatorProps> = ({
             variables: { id, inputs }
           })
         }
-        warehouses={mapEdgesToItems(data?.warehouses)}
-        onAttributeFocus={setFocusedAttribute}
+        warehouses={mapEdgesToItems(data?.warehouses) || []}
       />
     </>
   );

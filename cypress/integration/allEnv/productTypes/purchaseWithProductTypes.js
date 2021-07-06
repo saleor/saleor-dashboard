@@ -10,7 +10,7 @@ import {
   createCheckout
 } from "../../../apiRequests/Checkout";
 import { getOrder } from "../../../apiRequests/Order";
-import { createTypeProduct } from "../../../apiRequests/Product";
+import { createTypeProduct } from "../../../apiRequests/productType";
 import { getDefaultChannel } from "../../../utils/channelsUtils";
 import {
   addPayment,

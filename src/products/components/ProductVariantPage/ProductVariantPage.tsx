@@ -94,9 +94,8 @@ interface ProductVariantPageProps {
   fetchMoreAttributeValues?: FetchMoreProps;
   fetchReferencePages?: (data: string) => void;
   fetchReferenceProducts?: (data: string) => void;
-  fetchAttributeValues: (query: string) => void;
+  fetchAttributeValues: (query: string, attributeId: string) => void;
   onAssignReferencesClick: (attribute: AttributeInput) => void;
-  onAttributeFocus: (id: string) => void;
   onCloseDialog: () => void;
   onVariantReorder: ReorderAction;
   onAdd();
@@ -133,7 +132,6 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
   onVariantReorder,
   onSetDefaultVariant,
   onWarehouseConfigure,
-  onAttributeFocus,
   assignReferencesAttributeId,
   onAssignReferencesClick,
   fetchReferencePages,
@@ -229,6 +227,7 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
                 <div>
                   <VariantDetailsChannelsAvailabilityCard variant={variant} />
                   <Attributes
+                    entityId={variant?.id}
                     title={intl.formatMessage(messages.nonSelectionAttributes)}
                     attributes={data.attributes.filter(
                       attribute =>
@@ -247,10 +246,10 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
                     onReferencesReorder={handlers.reorderAttributeValue}
                     fetchAttributeValues={fetchAttributeValues}
                     fetchMoreAttributeValues={fetchMoreAttributeValues}
-                    onAttributeFocus={onAttributeFocus}
                   />
                   <CardSpacer />
                   <Attributes
+                    entityId={variant?.id}
                     title={intl.formatMessage(
                       messages.selectionAttributesHeader
                     )}
@@ -271,7 +270,6 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
                     onReferencesReorder={handlers.reorderAttributeValue}
                     fetchAttributeValues={fetchAttributeValues}
                     fetchMoreAttributeValues={fetchMoreAttributeValues}
-                    onAttributeFocus={onAttributeFocus}
                   />
                   <CardSpacer />
                   <ProductVariantMedia

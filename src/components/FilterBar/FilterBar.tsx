@@ -48,6 +48,7 @@ const FilterBar: React.FC<FilterBarProps> = props => {
     onAll,
     onSearchChange,
     onFilterChange,
+    onFilterAttributeFocus,
     onTabChange,
     onTabDelete,
     onTabSave,
@@ -90,6 +91,7 @@ const FilterBar: React.FC<FilterBarProps> = props => {
           menu={filterStructure}
           currencySymbol={currencySymbol}
           onFilterAdd={onFilterChange}
+          onFilterAttributeFocus={onFilterAttributeFocus}
         />
         <SearchInput
           initialSearch={initialSearch}

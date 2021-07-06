@@ -10,6 +10,10 @@ export const PERMISSIONS_OPTIONS = {
     user: ONE_PERMISSION_USERS.app,
     permissions: [PERMISSIONS.app]
   },
+  channel: {
+    user: ONE_PERMISSION_USERS.channel,
+    permissions: [PERMISSIONS.channel]
+  },
   customer: {
     user: ONE_PERMISSION_USERS.user,
     permissions: [PERMISSIONS.customer]

@@ -8,9 +8,9 @@ import { isSelected } from "@saleor/utils/lists";
 import React from "react";
 
 import { ProductVariantCreateFormData } from "./form";
-import ProductVariantCreatePriceAndSku from "./ProductVariantCreatorPriceAndSku";
-import ProductVariantCreateSummary from "./ProductVariantCreatorSummary";
-import ProductVariantCreateValues from "./ProductVariantCreatorValues";
+import ProductVariantCreatorPriceAndSku from "./ProductVariantCreatorPriceAndSku";
+import ProductVariantCreatorSummary from "./ProductVariantCreatorSummary";
+import ProductVariantCreatorValues from "./ProductVariantCreatorValues";
 import {
   ProductVariantCreateReducerAction,
   ProductVariantCreateReducerActionType
@@ -27,9 +27,8 @@ export interface ProductVariantCreatorContentProps {
   step: ProductVariantCreatorStep;
   variantsLeft: number | null;
   warehouses: WarehouseFragment[];
-  fetchAttributeValues: (query: string) => void;
+  fetchAttributeValues: (query: string, attributeId: string) => void;
   fetchMoreAttributeValues?: FetchMoreProps;
-  onAttributeFocus: (id: string) => void;
 }
 
 const ProductVariantCreatorContent: React.FC<ProductVariantCreatorContentProps> = ({
@@ -43,8 +42,7 @@ const ProductVariantCreatorContent: React.FC<ProductVariantCreatorContentProps> 
   errors,
   step,
   variantsLeft,
-  warehouses,
-  onAttributeFocus
+  warehouses
 }) => {
   const selectedAttributes = attributes.filter(attribute =>
     isSelected(
@@ -57,7 +55,7 @@ const ProductVariantCreatorContent: React.FC<ProductVariantCreatorContentProps> 
   return (
     <>
       {step === ProductVariantCreatorStep.values && (
-        <ProductVariantCreateValues
+        <ProductVariantCreatorValues
           attributes={selectedAttributes}
           attributeValues={attributeValues}
           fetchAttributeValues={fetchAttributeValues}
@@ -73,11 +71,10 @@ const ProductVariantCreatorContent: React.FC<ProductVariantCreatorContentProps> 
               type: ProductVariantCreateReducerActionType.selectValue
             })
           }
-          onAttributeFocus={onAttributeFocus}
         />
       )}
       {step === ProductVariantCreatorStep.prices && (
-        <ProductVariantCreatePriceAndSku
+        <ProductVariantCreatorPriceAndSku
           attributes={selectedAttributes}
           data={data}
           channelListings={channelListings}
@@ -157,7 +154,7 @@ const ProductVariantCreatorContent: React.FC<ProductVariantCreatorContentProps> 
         />
       )}
       {step === ProductVariantCreatorStep.summary && (
-        <ProductVariantCreateSummary
+        <ProductVariantCreatorSummary
           attributes={selectedAttributes}
           channelListings={channelListings}
           data={data}

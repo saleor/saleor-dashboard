@@ -140,9 +140,13 @@ const WarehouseList: React.FC<WarehouseListProps> = props => {
                 {maybe<React.ReactNode>(() => warehouse.name, <Skeleton />)}
               </TableCell>
               <TableCell className={classes.colZones} data-test="zones">
-                {mapEdgesToItems(warehouse?.shippingZones)
-                  .map(({ name }) => name)
-                  .join(", ") || <Skeleton />}
+                {warehouse?.shippingZones === undefined ? (
+                  <Skeleton />
+                ) : (
+                  mapEdgesToItems(warehouse?.shippingZones)
+                    ?.map(({ name }) => name)
+                    .join(", ") || "-"
+                )}
               </TableCell>
               <TableCell className={classes.colActions}>
                 <div className={classes.actions}>

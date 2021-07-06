@@ -11,7 +11,9 @@ export const useStyles = makeStyles(
     const dot = {
       borderRadius: "100%",
       height: 8,
-      width: 8
+      minHeight: 8,
+      width: 8,
+      minWidth: 8
     };
 
     return {
@@ -56,9 +58,9 @@ export const useStyles = makeStyles(
   { name: "StatusLabel" }
 );
 
-interface StatusLabelProps {
+export interface StatusLabelProps {
   label: string | React.ReactNode;
-  status: "success" | "alert" | "neutral" | "error" | string;
+  status: "success" | "alert" | "neutral" | "error" | undefined;
   subtitle?: string;
   className?: string;
 }

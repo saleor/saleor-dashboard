@@ -213,14 +213,16 @@ export const ProductTypeList: React.FC<ProductTypeListProps> = ({ params }) => {
                 </IconButton>
               }
             />
-            <TypeDeleteWarningDialog
-              {...productTypeDeleteData}
-              typesData={productTypesData}
-              typesToDelete={selectedProductTypes}
-              onClose={closeModal}
-              onDelete={onProductTypeBulkDelete}
-              deleteButtonState={productTypeBulkDeleteOpts.status}
-            />
+            {productTypesData && (
+              <TypeDeleteWarningDialog
+                {...productTypeDeleteData}
+                typesData={productTypesData}
+                typesToDelete={selectedProductTypes}
+                onClose={closeModal}
+                onDelete={onProductTypeBulkDelete}
+                deleteButtonState={productTypeBulkDeleteOpts.status}
+              />
+            )}
             <SaveFilterTabDialog
               open={params.action === "save-search"}
               confirmButtonState="default"

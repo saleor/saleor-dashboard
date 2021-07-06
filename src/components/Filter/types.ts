@@ -32,6 +32,8 @@ export interface IFilterElement<T extends string = string>
   type?: FieldType;
   required?: boolean;
   multipleFields?: IFilterElement[];
+  id?: string;
+  dependencies?: string[];
 }
 
 export interface FilterBaseFieldProps<T extends string = string> {
@@ -52,3 +54,11 @@ export enum FilterType {
   MULTIPLE = "MULTIPLE",
   SINGULAR = "SINGULAR"
 }
+
+export enum ValidationErrorCode {
+  VALUE_REQUIRED = "VALUE_REQUIRED",
+  DEPENDENCIES_MISSING = "DEPENDENCIES_MISSING",
+  UNKNOWN_ERROR = "UNKNOWN_ERROR"
+}
+
+export type InvalidFilters<T extends string> = Record<T, string[]>;

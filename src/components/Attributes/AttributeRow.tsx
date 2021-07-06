@@ -14,6 +14,7 @@ import {
   getSingleChoices,
   getSingleDisplayValue
 } from "@saleor/components/Attributes/utils";
+import Checkbox from "@saleor/components/Checkbox";
 import FileUploadField from "@saleor/components/FileUploadField";
 import MultiAutocompleteSelectField from "@saleor/components/MultiAutocompleteSelectField";
 import RichTextEditor from "@saleor/components/RichTextEditor";
@@ -43,6 +44,10 @@ const useStyles = makeStyles(
   () => ({
     fileField: {
       float: "right"
+    },
+    pullRight: {
+      display: "flex",
+      justifyContent: "flex-end"
     }
   }),
   { name: "AttributeRow" }
@@ -55,9 +60,8 @@ export interface AttributeRowHandlers {
   onReferencesAddClick: (attribute: AttributeInput) => void;
   onReferencesRemove: FormsetChange<string[]>;
   onReferencesReorder: FormsetChange<ReorderEvent>;
-  fetchAttributeValues: (query: string) => void;
+  fetchAttributeValues: (query: string, attributeId: string) => void;
   fetchMoreAttributeValues: FetchMoreProps;
-  onAttributeFocus: (id: string) => void;
 }
 
 interface AttributeRowProps extends AttributeRowHandlers {
@@ -66,6 +70,7 @@ interface AttributeRowProps extends AttributeRowHandlers {
   disabled: boolean;
   error: ProductErrorWithAttributesFragment | PageErrorWithAttributesFragment;
   loading: boolean;
+  entityId: string;
 }
 
 const AttributeRow: React.FC<AttributeRowProps> = ({
@@ -82,7 +87,7 @@ const AttributeRow: React.FC<AttributeRowProps> = ({
   onChange,
   fetchAttributeValues,
   fetchMoreAttributeValues,
-  onAttributeFocus
+  entityId
 }) => {
   const intl = useIntl();
   const classes = useStyles({});
@@ -147,9 +152,9 @@ const AttributeRow: React.FC<AttributeRowProps> = ({
             value={attribute.value[0]}
             onChange={event => onChange(attribute.id, event.target.value)}
             allowCustomValues={true}
-            fetchChoices={fetchAttributeValues}
+            fetchOnFocus={true}
+            fetchChoices={value => fetchAttributeValues(value, attribute.id)}
             {...fetchMoreAttributeValues}
-            onFocus={() => onAttributeFocus(attribute.id)}
           />
         </BasicAttributeRow>
       );
@@ -157,6 +162,7 @@ const AttributeRow: React.FC<AttributeRowProps> = ({
       return (
         <BasicAttributeRow label={attribute.label}>
           <RichTextEditor
+            key={entityId} // temporary workaround, TODO: refactor rich text editor
             name={`attribute:${attribute.label}`}
             disabled={disabled}
             error={!!error}
@@ -195,6 +201,24 @@ const AttributeRow: React.FC<AttributeRowProps> = ({
           />
         </BasicAttributeRow>
       );
+    case AttributeInputTypeEnum.BOOLEAN:
+      return (
+        <BasicAttributeRow label={attribute.label}>
+          <div className={classes.pullRight}>
+            <Checkbox
+              disabled={disabled}
+              name={`attribute:${attribute.label}`}
+              onChange={event =>
+                onChange(attribute.id, JSON.stringify(event.target.checked))
+              }
+              checked={JSON.parse(attribute.value[0] ?? "false")}
+              className={classes.pullRight}
+              helperText={getErrorMessage(error, intl)}
+              error={!!error}
+            />
+          </div>
+        </BasicAttributeRow>
+      );
     default:
       return (
         <BasicAttributeRow label={attribute.label}>
@@ -209,9 +233,9 @@ const AttributeRow: React.FC<AttributeRowProps> = ({
             value={attribute.value}
             onChange={event => onMultiChange(attribute.id, event.target.value)}
             allowCustomValues={true}
-            fetchChoices={fetchAttributeValues}
+            fetchOnFocus={true}
+            fetchChoices={value => fetchAttributeValues(value, attribute.id)}
             {...fetchMoreAttributeValues}
-            onFocus={() => onAttributeFocus(attribute.id)}
           />
         </BasicAttributeRow>
       );

@@ -395,12 +395,14 @@ export const SaleDetails: React.FC<SaleDetailsProps> = ({ id, params }) => {
                             }
                             products={mapEdgesToItems(
                               searchProductsOpts?.data?.search
-                            ).filter(suggestedProduct => suggestedProduct.id)}
+                            )?.filter(suggestedProduct => suggestedProduct.id)}
                           />
                           <AssignCategoriesDialog
                             categories={mapEdgesToItems(
                               searchCategoriesOpts?.data?.search
-                            ).filter(suggestedCategory => suggestedCategory.id)}
+                            )?.filter(
+                              suggestedCategory => suggestedCategory.id
+                            )}
                             confirmButtonState={saleCataloguesAddOpts.status}
                             hasMore={
                               searchCategoriesOpts.data?.search.pageInfo
@@ -426,7 +428,9 @@ export const SaleDetails: React.FC<SaleDetailsProps> = ({ id, params }) => {
                           <AssignCollectionDialog
                             collections={mapEdgesToItems(
                               searchCollectionsOpts?.data?.search
-                            ).filter(suggestedCategory => suggestedCategory.id)}
+                            )?.filter(
+                              suggestedCategory => suggestedCategory.id
+                            )}
                             confirmButtonState={saleCataloguesAddOpts.status}
                             hasMore={
                               searchCollectionsOpts.data?.search.pageInfo

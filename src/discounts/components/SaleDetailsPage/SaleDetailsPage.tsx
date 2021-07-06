@@ -274,7 +274,6 @@ const SaleDetailsPage: React.FC<SaleDetailsPageProps> = ({
                     pageInfo={pageInfo}
                     discount={sale}
                     channelsCount={allChannelsCount}
-                    selectedChannelId={selectedChannelId}
                     isChecked={isChecked}
                     selected={selected}
                     toggle={toggle}

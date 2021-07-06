@@ -10,6 +10,7 @@ import Metadata from "@saleor/components/Metadata/Metadata";
 import { MetadataFormData } from "@saleor/components/Metadata/types";
 import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
+import { ListSettingsUpdate } from "@saleor/components/TablePagination";
 import { AttributeDetailsFragment } from "@saleor/fragments/types/AttributeDetailsFragment";
 import { AttributeErrorFragment } from "@saleor/fragments/types/AttributeErrorFragment";
 import { sectionNames } from "@saleor/intl";
@@ -46,7 +47,7 @@ export interface AttributePageProps {
   onValueReorder: ReorderAction;
   onValueUpdate: (id: string) => void;
   settings?: ListSettings;
-  onUpdateListSettings?: (key: keyof ListSettings, value: any) => void;
+  onUpdateListSettings?: ListSettingsUpdate;
   pageInfo: {
     hasNextPage: boolean;
     hasPreviousPage: boolean;

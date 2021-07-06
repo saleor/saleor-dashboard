@@ -26,7 +26,7 @@ export function getOrdersWithStatus(status, channelSlug) {
 }
 export function getProductsOutOfStock(channelSlug) {
   const query = `query{
-    products(filter: { stockAvailability: OUT_OF_STOCK, channel:"${channelSlug}" }){
+    products(filter: { stockAvailability: OUT_OF_STOCK} channel:"${channelSlug}" ){
       totalCount
     }
   }`;

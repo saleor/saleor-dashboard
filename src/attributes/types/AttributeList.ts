@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { AttributeFilterInput, AttributeSortingInput, AttributeTypeEnum, MeasurementUnitsEnum } from "./../../types/globalTypes";
+import { AttributeFilterInput, AttributeSortingInput, AttributeTypeEnum, MeasurementUnitsEnum, AttributeInputTypeEnum } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL query operation: AttributeList
@@ -19,6 +19,7 @@ export interface AttributeList_attributes_edges_node {
   filterableInDashboard: boolean;
   filterableInStorefront: boolean;
   unit: MeasurementUnitsEnum | null;
+  inputType: AttributeInputTypeEnum | null;
 }
 
 export interface AttributeList_attributes_edges {

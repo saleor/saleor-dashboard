@@ -6,6 +6,7 @@ import {
   deleteCustomersStartsWith
 } from "../../../apiRequests/Customer";
 import { getOrder } from "../../../apiRequests/Order";
+import { ONE_PERMISSION_USERS } from "../../../Data/users";
 import { ORDER_REFUND } from "../../../elements/orders/order-refund";
 import { ORDERS_SELECTORS } from "../../../elements/orders/orders-selectors";
 import { BUTTON_SELECTORS } from "../../../elements/shared/button-selectors";
@@ -91,10 +92,15 @@ describe("Orders", () => {
   });
 
   beforeEach(() => {
-    cy.clearSessionData().loginUserViaRequest();
+    cy.clearSessionData().loginUserViaRequest(
+      "auth",
+      ONE_PERMISSION_USERS.order
+    );
   });
 
   it("should create order with selected channel", () => {
+    // Remove login as admin after fixing SALEOR-3154
+    cy.clearSessionData().loginUserViaRequest();
     cy.visit(urlList.orders)
       .get(ORDERS_SELECTORS.createOrder)
       .click();
@@ -108,6 +114,7 @@ describe("Orders", () => {
     });
   });
 
+  // This test will pass after fixing SALEOR-3154
   it("should not be possible to change channel in order", () => {
     createOrder({
       customerId: customer.id,

@@ -113,15 +113,13 @@ const MenuDetails: React.FC<MenuDetailsProps> = ({ id, params }) => {
           pageSearch.search(query);
         };
 
-        const categories = mapEdgesToItems(
-          categorySearch?.result?.data?.search
-        );
+        const categories =
+          mapEdgesToItems(categorySearch?.result?.data?.search) || [];
 
-        const collections = mapEdgesToItems(
-          collectionSearch?.result?.data?.search
-        );
+        const collections =
+          mapEdgesToItems(collectionSearch?.result?.data?.search) || [];
 
-        const pages = mapEdgesToItems(pageSearch?.result?.data?.search);
+        const pages = mapEdgesToItems(pageSearch?.result?.data?.search) || [];
 
         return (
           <MenuDeleteMutation

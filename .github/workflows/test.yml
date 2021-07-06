@@ -87,7 +87,6 @@ jobs:
           echo "::set-output name=custom_api_uri::$(echo $pull_request_body | grep -Eo "$prefix$pattern" | sed s/$prefix// | head -n 1)"
 
       - name: Cypress run
-        if: ${{ steps.api_uri.outputs.custom_api_uri}} != 'https://qa.staging.saleor.cloud/graphql/'
         uses: cypress-io/github-action@v2
         env:
           API_URI: ${{ steps.api_uri.outputs.custom_api_uri || secrets.API_URI }}
@@ -103,8 +102,30 @@ jobs:
           wait-on: http://localhost:9000/
           wait-on-timeout: 120
           spec: cypress/integration/allEnv/**/*.js
+      - uses: actions/upload-artifact@v1
+        if: always()
+        with:
+          name: cypress-videos
+          path: cypress/videos
 
-      - name: Cypress run
+  cypress-run-staged:
+    if: github.event.pull_request.head.repo.full_name == 'mirumee/saleor-dashboard'
+    runs-on: ubuntu-16.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+
+      - name: Get custom API_URI
+        id: api_uri
+        # Search for API_URI in PR description
+        env:
+          pull_request_body: ${{ github.event.pull_request.body }}
+          prefix: API_URI=
+          pattern: (http|https)://[a-zA-Z0-9.-]+/graphql/?
+        run: |
+          echo "::set-output name=custom_api_uri::$(echo $pull_request_body | grep -Eo "$prefix$pattern" | sed s/$prefix// | head -n 1)"
+
+      - name: Cypress run staged only
         if: ${{ steps.api_uri.outputs.custom_api_uri}} == 'https://qa.staging.saleor.cloud/graphql/'
         uses: cypress-io/github-action@v2
         env:
@@ -121,6 +142,7 @@ jobs:
           start: npx local-web-server --spa index.html
           wait-on: http://localhost:9000/
           wait-on-timeout: 120
+          spec: cypress/integration/stagedOnly/**/*.js
       - uses: actions/upload-artifact@v1
         if: always()
         with:

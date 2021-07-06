@@ -36,7 +36,7 @@ export type AttributeFileInput = FormsetAtomicData<AttributeInputData, File[]>;
 export interface AttributesProps extends AttributeRowHandlers {
   attributes: AttributeInput[];
   attributeValues: AttributeValueFragment[];
-  fetchAttributeValues: (query: string) => void;
+  fetchAttributeValues: (query: string, attributeId: string) => void;
   fetchMoreAttributeValues: FetchMoreProps;
   disabled: boolean;
   loading: boolean;
@@ -44,7 +44,7 @@ export interface AttributesProps extends AttributeRowHandlers {
     ProductErrorWithAttributesFragment | PageErrorWithAttributesFragment
   >;
   title?: React.ReactNode;
-  onAttributeFocus: (id: string) => void;
+  entityId?: string;
 }
 
 const useStyles = makeStyles(
@@ -117,6 +117,7 @@ const Attributes: React.FC<AttributesProps> = ({
   attributeValues,
   errors,
   title,
+  entityId = "_defaultId",
   ...props
 }) => {
   const intl = useIntl();
@@ -163,6 +164,7 @@ const Attributes: React.FC<AttributesProps> = ({
                 <React.Fragment key={attribute.id}>
                   {attributeIndex > 0 && <Hr />}
                   <AttributeRow
+                    entityId={entityId}
                     attribute={attribute}
                     attributeValues={attributeValues}
                     error={error}
