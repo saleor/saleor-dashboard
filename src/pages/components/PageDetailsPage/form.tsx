@@ -74,7 +74,7 @@ export interface PageUpdateHandlers {
 export interface UsePageUpdateFormResult {
   change: FormChange;
   data: PageData;
-  disabled: boolean;
+  valid: boolean;
   handlers: PageUpdateHandlers;
   hasChanged: boolean;
   submit: () => void;
@@ -224,12 +224,12 @@ function usePageForm(
       ? handleFormSubmit(getSubmitData(), handleSubmit, setChanged)
       : onSubmit(getSubmitData());
 
-  const disabled = !opts.selectedPageType;
+  const valid = !!opts.selectedPageType;
 
   return {
     change: handleChange,
     data: getData(),
-    disabled,
+    valid,
     handlers: {
       changeContent,
       changeMetadata,
