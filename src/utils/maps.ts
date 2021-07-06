@@ -8,16 +8,17 @@ import { SearchPages_search_edges_node } from "@saleor/searches/types/SearchPage
 import { Node, SlugNode } from "@saleor/types";
 import { MetadataInput } from "@saleor/types/globalTypes";
 
-interface EdgesType<T> {
-  edges?: Array<{ node: T }>;
+interface Edge<T> {
+  node: T;
+}
+interface Connection<T> {
+  edges: Array<Edge<T>> | undefined;
 }
 
-export function mapEdgesToItems<T>(data?: EdgesType<T>): T[] {
-  if (!data || !data?.edges) {
-    return [];
-  }
-
-  return data.edges.map(({ node }) => node);
+export function mapEdgesToItems<T>(
+  data: Connection<T> | undefined
+): T[] | undefined {
+  return data?.edges?.map(({ node }) => node);
 }
 
 export function mapCountriesToChoices(countries: ShopInfo_shop_countries[]) {

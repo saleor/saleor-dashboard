@@ -669,6 +669,7 @@ export const ProductVariantChannelListingUpdateMutation = gql`
           ...ChannelListingProductVariantFragment
         }
         product {
+          id
           channelListings {
             ...ChannelListingProductFragment
           }

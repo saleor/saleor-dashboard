@@ -5,7 +5,7 @@ import {
   getPermissionGroup
 } from "../../../apiRequests/PermissionGroup.js";
 import { getStaffMembersStartsWith } from "../../../apiRequests/StaffMembers";
-import { USER_WITHOUT_NAME } from "../../../Data/users";
+import { TEST_ADMIN_USER } from "../../../Data/users.js";
 import { PERMISSION_GROUP_DETAILS } from "../../../elements/permissionGroup/permissionGroupDetails";
 import { PERMISSION_GROUP_LIST } from "../../../elements/permissionGroup/permissionGroupsList";
 import { BUTTON_SELECTORS } from "../../../elements/shared/button-selectors";
@@ -60,7 +60,7 @@ describe("Permissions groups", () => {
   it("should delete permission group", () => {
     const permissionName = `${startsWith}${faker.datatype.number()}`;
     let staffMember;
-    getStaffMembersStartsWith(USER_WITHOUT_NAME.email)
+    getStaffMembersStartsWith(TEST_ADMIN_USER.email)
       .its("body.data.staffUsers.edges")
       .then(staffMemberResp => {
         staffMember = staffMemberResp[0].node;
@@ -95,8 +95,11 @@ describe("Permissions groups", () => {
           .get(PERMISSION_GROUP_DETAILS.assignMemberButton)
           .click()
           .get(PERMISSION_GROUP_DETAILS.searchField)
-          .type(USER_WITHOUT_NAME.email)
-          .get(PERMISSION_GROUP_DETAILS.userRow)
+          .type(TEST_ADMIN_USER.email);
+        cy.contains(
+          PERMISSION_GROUP_DETAILS.userRow,
+          `${TEST_ADMIN_USER.name} ${TEST_ADMIN_USER.lastName}`
+        )
           .should("have.length", 1)
           .find(BUTTON_SELECTORS.checkbox)
           .click()
@@ -110,14 +113,14 @@ describe("Permissions groups", () => {
       })
       .then(resp => {
         expect(resp.users).to.have.length(1);
-        expect(resp.users[0].email).to.be.eq(USER_WITHOUT_NAME.email);
+        expect(resp.users[0].email).to.be.eq(TEST_ADMIN_USER.email);
       });
   });
 
   it("should remove user from permission group", () => {
     const permissionName = `${startsWith}${faker.datatype.number()}`;
     let staffMember;
-    getStaffMembersStartsWith(USER_WITHOUT_NAME.email)
+    getStaffMembersStartsWith(TEST_ADMIN_USER.email)
       .its("body.data.staffUsers.edges")
       .then(staffMemberResp => {
         staffMember = staffMemberResp[0].node;
