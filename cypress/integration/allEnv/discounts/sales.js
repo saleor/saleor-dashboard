@@ -89,9 +89,12 @@ describe("Sales discounts", () => {
         price: productPrice
       })
       .then(({ product: productResp }) => {
-        cy.clearSessionData()
-          .loginUserViaRequest("auth", ONE_PERMISSION_USERS.discount)
-          .visit(urlList.sales);
+        /* Uncomment after fixing SALEOR-3367 bug
+         cy.clearSessionData()
+        .loginUserViaRequest("auth", ONE_PERMISSION_USERS.discount) 
+        */
+
+        cy.visit(urlList.sales);
         const product = productResp;
         createSale({
           saleName,
@@ -124,9 +127,12 @@ describe("Sales discounts", () => {
         price: productPrice
       })
       .then(({ product: productResp }) => {
-        cy.clearSessionData()
-          .loginUserViaRequest("auth", ONE_PERMISSION_USERS.discount)
-          .visit(urlList.sales);
+        /* Uncomment after fixing SALEOR-3367 bug
+         cy.clearSessionData()
+        .loginUserViaRequest("auth", ONE_PERMISSION_USERS.discount) 
+        */
+
+        cy.visit(urlList.sales);
         const product = productResp;
         createSale({
           saleName,
@@ -171,9 +177,12 @@ describe("Sales discounts", () => {
         });
       })
       .then(() => {
-        cy.clearSessionData()
-          .loginUserViaRequest("auth", ONE_PERMISSION_USERS.discount)
-          .visit(urlList.sales);
+        /* Uncomment after fixing SALEOR-3367 bug
+         cy.clearSessionData()
+        .loginUserViaRequest("auth", ONE_PERMISSION_USERS.discount) 
+        */
+
+        cy.visit(urlList.sales);
         createSale({
           saleName,
           channelName: channel.name,

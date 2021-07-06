@@ -6,10 +6,10 @@ import {
   getProductType
 } from "../../../apiRequests/productType";
 import { PRODUCT_TYPE_DETAILS } from "../../../elements/productTypes/productTypeDetails";
-import { SHARED_ELEMENTS } from "../../../elements/shared/sharedElements";
 import { createProductType } from "../../../steps/productTypeSteps";
 import { assignElements } from "../../../steps/shared/assignElements";
 import { confirmationMessageShouldDisappear } from "../../../steps/shared/confirmationMessage";
+import { visitAndWaitForProgressBarToDisappear } from "../../../steps/shared/progressBar";
 import { productTypeDetailsUrl, urlList } from "../../../url/urlList";
 import { deleteProductsStartsWith } from "../../../utils/products/productsUtils";
 
@@ -61,9 +61,9 @@ describe("Tests for product types", () => {
 
     createTypeProduct({ name })
       .then(productType => {
-        cy.visit(productTypeDetailsUrl(productType.id))
-          .get(SHARED_ELEMENTS.progressBar)
-          .should("be.not.visible")
+        visitAndWaitForProgressBarToDisappear(
+          productTypeDetailsUrl(productType.id)
+        )
           .get(PRODUCT_TYPE_DETAILS.assignProductAttributeButton)
           .click();
         cy.addAliasToGraphRequest("AssignProductAttribute");
@@ -82,9 +82,9 @@ describe("Tests for product types", () => {
 
     createTypeProduct({ name, hasVariants: false })
       .then(productType => {
-        cy.visit(productTypeDetailsUrl(productType.id))
-          .get(SHARED_ELEMENTS.progressBar)
-          .should("be.not.visible")
+        visitAndWaitForProgressBarToDisappear(
+          productTypeDetailsUrl(productType.id)
+        )
           .get(PRODUCT_TYPE_DETAILS.hasVariantsButton)
           .click()
           .get(PRODUCT_TYPE_DETAILS.assignVariantAttributeButton)
