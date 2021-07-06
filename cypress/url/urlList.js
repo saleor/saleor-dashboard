@@ -13,8 +13,10 @@ export const urlList = {
   vouchers: "discounts/vouchers/",
   staffMembers: "staff/",
   newPassword: "new-password/",
-  permissionsGroups: "permission-groups/"
+  permissionsGroups: "permission-groups/",
+  pageTypes: "page-types/"
 };
+
 export const productDetailsUrl = productId => `${urlList.products}${productId}`;
 
 export const userDetailsUrl = userId => `${urlList.staffMembers}${userId}`;
