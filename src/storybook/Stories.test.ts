@@ -16,6 +16,10 @@ jest.mock("@material-ui/styles/createGenerateClassName");
   [stylesheet.options.meta, rule.key, "id"].join("-")
 );
 
+jest
+  .spyOn(global, "Date")
+  .mockImplementation(() => (new Date(1466424490000) as unknown) as string);
+
 initStoryshots({
   configPath: "src/storybook/",
   test({ story }) {

@@ -99,7 +99,7 @@ export function createFilterStructure(
         AttributeInputTypeEnum.DATE_TIME
       ].includes(inputType)
   );
-  console.log(dateAttributes);
+
   return [
     {
       ...createOptionsField(

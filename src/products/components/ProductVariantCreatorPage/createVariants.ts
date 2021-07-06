@@ -8,10 +8,11 @@ import {
   Stock
 } from "./form";
 
-type CreateVariantAttributeValueInput = { attributeId: string } & (
-  | { attributeValueSlug: string; attributeBooleanValue: never }
-  | { attributeValueSlug: never; attributeBooleanValue: boolean }
-);
+interface CreateVariantAttributeValueInput {
+  attributeId: string;
+  attributeValueSlug: string;
+  attributeBooleanValue: boolean | null;
+}
 
 type CreateVariantInput = CreateVariantAttributeValueInput[];
 
