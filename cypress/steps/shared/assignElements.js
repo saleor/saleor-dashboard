@@ -1,11 +1,11 @@
 import { ASSIGN_ELEMENTS_SELECTORS } from "../../elements/shared/assign-elements-selectors";
-import { waitForProgressBarToNotExist } from "./progressBar";
+import { waitForProgressBarToNotVisible } from "./progressBar";
 
 export function assignElements(name, withLoader = true) {
   cy.get(ASSIGN_ELEMENTS_SELECTORS.searchInput).type(name);
   if (withLoader) {
     cy.get(ASSIGN_ELEMENTS_SELECTORS.dialogContent);
-    waitForProgressBarToNotExist();
+    waitForProgressBarToNotVisible();
   }
   cy.contains(ASSIGN_ELEMENTS_SELECTORS.tableRow, name)
     .find(ASSIGN_ELEMENTS_SELECTORS.checkbox)
