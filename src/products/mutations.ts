@@ -330,7 +330,7 @@ export const variantUpdateMutation = gql`
     $addStocks: [StockInput!]!
     $removeStocks: [ID!]!
     $id: ID!
-    $attributes: [AttributeValueInput]
+    $attributes: [AttributeValueInput!]
     $sku: String
     $trackInventory: Boolean!
     $stocks: [StockInput!]!
@@ -669,6 +669,7 @@ export const ProductVariantChannelListingUpdateMutation = gql`
           ...ChannelListingProductVariantFragment
         }
         product {
+          id
           channelListings {
             ...ChannelListingProductFragment
           }

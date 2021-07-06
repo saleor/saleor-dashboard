@@ -67,6 +67,7 @@ const DialogButtons: React.FC<DialogButtonsProps> = props => {
           className={classNames({
             [classes.deleteButton]: variant === "delete"
           })}
+          data-test-id="submit"
           data-test="submit"
         >
           {confirmButtonLabel ||

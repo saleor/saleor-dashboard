@@ -1,7 +1,13 @@
 import * as shippingMethodRequest from "../apiRequests/ShippingMethod";
 import * as warehouseRequest from "../apiRequests/Warehouse";
 
-export function createShipping({ channelId, name, address, price = 1 }) {
+export function createShipping({
+  channelId,
+  name,
+  address,
+  price = 1,
+  minProductPrice = 0
+}) {
   let shippingMethod;
   let shippingZone;
   let warehouse;
@@ -28,10 +34,16 @@ export function createShipping({ channelId, name, address, price = 1 }) {
       shippingMethodRequest.addChannelToShippingMethod(
         shippingMethod.id,
         channelId,
-        price
+        price,
+        minProductPrice
       );
     })
     .then(() => ({ shippingMethod, shippingZone, warehouse }));
+}
+export function createShippingRate({ name, shippingZoneId }) {
+  return shippingMethodRequest
+    .createShippingRate({ name, shippingZoneId })
+    .its("body.data.shippingPriceCreate.shippingMethod");
 }
 
 export function deleteShippingStartsWith(startsWith) {

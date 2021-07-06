@@ -11,6 +11,7 @@ export const productListFilterOpts: ProductListFilterOpts = {
   attributes: attributes.map(attr => ({
     id: attr.id,
     active: false,
+    inputType: attr.inputType,
     name: attr.name,
     slug: attr.slug,
     value: [
@@ -41,6 +42,16 @@ export const productListFilterOpts: ProductListFilterOpts = {
       }
     ],
     value: [categories[5].id]
+  },
+  channel: {
+    active: false,
+    value: "default-channel",
+    choices: [
+      {
+        value: "default-channel",
+        label: "Default channel"
+      }
+    ]
   },
   collections: {
     ...fetchMoreProps,

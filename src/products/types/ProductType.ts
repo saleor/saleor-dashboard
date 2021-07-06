@@ -31,6 +31,7 @@ export interface ProductType_productType_productAttributes_choices_edges_node {
   file: ProductType_productType_productAttributes_choices_edges_node_file | null;
   reference: string | null;
   richText: any | null;
+  boolean: boolean | null;
 }
 
 export interface ProductType_productType_productAttributes_choices_edges {

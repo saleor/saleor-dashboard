@@ -31,6 +31,7 @@ export interface Product_attributes_attribute_choices_edges_node {
   file: Product_attributes_attribute_choices_edges_node_file | null;
   reference: string | null;
   richText: any | null;
+  boolean: boolean | null;
 }
 
 export interface Product_attributes_attribute_choices_edges {
@@ -71,6 +72,7 @@ export interface Product_attributes_values {
   file: Product_attributes_values_file | null;
   reference: string | null;
   richText: any | null;
+  boolean: boolean | null;
 }
 
 export interface Product_attributes {
@@ -101,6 +103,7 @@ export interface Product_productType_variantAttributes_choices_edges_node {
   file: Product_productType_variantAttributes_choices_edges_node_file | null;
   reference: string | null;
   richText: any | null;
+  boolean: boolean | null;
 }
 
 export interface Product_productType_variantAttributes_choices_edges {

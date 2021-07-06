@@ -2,13 +2,13 @@ import * as checkoutRequest from "../apiRequests/Checkout";
 import * as orderRequest from "../apiRequests/Order";
 import { createProductInChannel } from "./products/productsUtils";
 
-export function createWaitingForCaptureOrder(
+export function createWaitingForCaptureOrder({
   channelSlug,
   email,
   variantsList,
   shippingMethodId,
   address
-) {
+}) {
   let checkout;
   const auth = "token";
   cy.loginInShop();
@@ -178,13 +178,13 @@ export function createOrderWithNewProduct({
   })
     .then(({ variantsList: variantsListResp }) => {
       variantsList = variantsListResp;
-      createWaitingForCaptureOrder(
-        channel.slug,
-        "email@example.com",
+      createWaitingForCaptureOrder({
+        channelSlug: channel.slug,
+        email: "email@example.com",
         variantsList,
         shippingMethodId,
         address
-      );
+      });
     })
     .then(({ order, checkout }) => ({ order, checkout, variantsList }));
 }

@@ -20,6 +20,10 @@ import {
 import gql from "graphql-tag";
 
 import {
+  AvailableInGridAttributes,
+  AvailableInGridAttributesVariables
+} from "./types/AvailableInGridAttributes";
+import {
   CreateMultipleVariantsData,
   CreateMultipleVariantsDataVariables
 } from "./types/CreateMultipleVariantsData";
@@ -66,12 +70,14 @@ const initialProductFilterAttributesQuery = gql`
         node {
           id
           name
+          inputType
           slug
         }
       }
     }
   }
 `;
+
 export const useInitialProductFilterAttributesQuery = makeQuery<
   InitialProductFilterAttributes,
   never
@@ -137,6 +143,7 @@ const productListQuery = gql`
     $last: Int
     $before: String
     $filter: ProductFilterInput
+    $channel: String
     $sort: ProductOrder
   ) {
     products(
@@ -146,6 +153,7 @@ const productListQuery = gql`
       last: $last
       filter: $filter
       sortBy: $sort
+      channel: $channel
     ) {
       edges {
         node {
@@ -175,8 +183,8 @@ export const useProductListQuery = makeQuery<ProductList, ProductListVariables>(
 );
 
 const productCountQuery = gql`
-  query ProductCount($filter: ProductFilterInput) {
-    products(filter: $filter) {
+  query ProductCount($filter: ProductFilterInput, $channel: String) {
+    products(filter: $filter, channel: $channel) {
       totalCount
     }
   }
@@ -358,7 +366,7 @@ export const useProductMediaQuery = makeQuery<
 
 const availableInGridAttributes = gql`
   ${pageInfoFragment}
-  query GridAttributes($first: Int!, $after: String, $ids: [ID!]!) {
+  query AvailableInGridAttributes($first: Int!, $after: String) {
     availableInGrid: attributes(
       first: $first
       after: $after
@@ -379,7 +387,15 @@ const availableInGridAttributes = gql`
       }
       totalCount
     }
+  }
+`;
+export const useAvailableInGridAttributesQuery = makeQuery<
+  AvailableInGridAttributes,
+  AvailableInGridAttributesVariables
+>(availableInGridAttributes);
 
+const gridAttributes = gql`
+  query GridAttributes($ids: [ID!]!) {
     grid: attributes(first: 25, filter: { ids: $ids }) {
       edges {
         node {
@@ -390,10 +406,10 @@ const availableInGridAttributes = gql`
     }
   }
 `;
-export const useAvailableInGridAttributesQuery = makeQuery<
+export const useGridAttributesQuery = makeQuery<
   GridAttributes,
   GridAttributesVariables
->(availableInGridAttributes);
+>(gridAttributes);
 
 const createMultipleVariantsData = gql`
   ${productVariantAttributesFragment}

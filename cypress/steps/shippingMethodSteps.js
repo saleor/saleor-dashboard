@@ -3,6 +3,7 @@ import { SHARED_ELEMENTS } from "../elements/shared/sharedElements";
 import { SHIPPING_RATE_DETAILS } from "../elements/shipping/shipping-rate-details";
 import { SHIPPING_ZONE_DETAILS } from "../elements/shipping/shipping-zone-details";
 import { SHIPPING_ZONES_LIST } from "../elements/shipping/shipping-zones-list";
+import { confirmationMessageShouldDisappear } from "./shared/confirmationMessage";
 import { fillBaseSelect } from "./shared/selects";
 
 export function createShippingZone(
@@ -25,12 +26,21 @@ export function createShippingZone(
     .get(SHIPPING_ZONE_DETAILS.submitAssignCountry)
     .click()
     .get(BUTTON_SELECTORS.confirm)
+    .click();
+  confirmationMessageShouldDisappear();
+  cy.get(SHIPPING_ZONE_DETAILS.warehouseSelector)
     .click()
+    .get(SHIPPING_ZONE_DETAILS.autocompleteContentDialog)
+    .scrollTo("bottom")
+    // Remove this code between comments after fixing bug: SALEOR-3611
+    .get(SHIPPING_ZONE_DETAILS.autocompleteContentDialog)
+    .should("not.exist")
     .get(SHIPPING_ZONE_DETAILS.warehouseSelector)
     .click()
+    // Remove this code between comments after fixing bug: SALEOR-3611
     .get(SHIPPING_ZONE_DETAILS.option)
     .contains(warehouseName)
-    .click()
+    .click({ force: true })
     .get(SHIPPING_ZONE_DETAILS.channelSelector)
     .click()
     .get(SHIPPING_ZONE_DETAILS.option)
@@ -38,6 +48,7 @@ export function createShippingZone(
     .click();
   cy.addAliasToGraphRequest("UpdateShippingZone");
   cy.get(BUTTON_SELECTORS.confirm).click();
+  confirmationMessageShouldDisappear();
   cy.wait("@UpdateShippingZone");
 }
 

@@ -20,4 +20,5 @@ export interface ProductCount {
 
 export interface ProductCountVariables {
   filter?: ProductFilterInput | null;
+  channel?: string | null;
 }

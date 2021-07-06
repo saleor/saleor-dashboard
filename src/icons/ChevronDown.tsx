@@ -16,8 +16,8 @@ const ChevronDown: React.FC = () => {
       <path
         d="M1 1L5 5L9 1"
         stroke={isDark ? "#FAFAFA" : "#28234A"}
-        stroke-opacity="0.4"
-        stroke-width="2"
+        strokeOpacity="0.4"
+        strokeWidth="2"
       />
     </svg>
   );

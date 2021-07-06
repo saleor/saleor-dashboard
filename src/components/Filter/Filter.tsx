@@ -12,7 +12,12 @@ import React, { useState } from "react";
 import { FormattedMessage } from "react-intl";
 
 import { FilterContent } from ".";
-import { FilterErrorMessages, IFilter, IFilterElement } from "./types";
+import {
+  FilterErrorMessages,
+  IFilter,
+  IFilterElement,
+  InvalidFilters
+} from "./types";
 import useFilter from "./useFilter";
 import { extractInvalidFilters } from "./utils";
 
@@ -103,7 +108,7 @@ const Filter: React.FC<FilterProps> = props => {
 
   const anchor = React.useRef<HTMLDivElement>();
   const [isFilterMenuOpened, setFilterMenuOpened] = useState(false);
-  const [filterErrors, setFilterErrors] = useState<string[]>([]);
+  const [filterErrors, setFilterErrors] = useState<InvalidFilters<string>>({});
   const [data, dispatch, reset] = useFilter(menu);
 
   const isFilterActive = menu.some(filterElement => filterElement.active);
@@ -111,15 +116,19 @@ const Filter: React.FC<FilterProps> = props => {
   const handleSubmit = () => {
     const invalidFilters = extractInvalidFilters(data, menu);
 
-    if (!!invalidFilters.length) {
-      const parsedFilterErrors = invalidFilters.map(({ name }) => name);
-      setFilterErrors(parsedFilterErrors);
+    if (Object.keys(invalidFilters).length > 0) {
+      setFilterErrors(invalidFilters);
       return;
     }
 
-    setFilterErrors([]);
+    setFilterErrors({});
     onFilterAdd(data);
     setFilterMenuOpened(false);
+  };
+
+  const handleClear = () => {
+    reset();
+    setFilterErrors({});
   };
 
   return (
@@ -129,6 +138,7 @@ const Filter: React.FC<FilterProps> = props => {
           setFilterMenuOpened(false);
         }
       }}
+      mouseEvent="onMouseUp"
     >
       <div ref={anchor}>
         <ButtonBase
@@ -195,7 +205,7 @@ const Filter: React.FC<FilterProps> = props => {
                 dataStructure={menu}
                 currencySymbol={currencySymbol}
                 filters={data}
-                onClear={reset}
+                onClear={handleClear}
                 onFilterPropertyChange={dispatch}
                 onFilterAttributeFocus={onFilterAttributeFocus}
                 onSubmit={handleSubmit}

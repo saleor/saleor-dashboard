@@ -31,6 +31,7 @@ export interface SelectedVariantAttributeFragment_attribute_choices_edges_node {
   file: SelectedVariantAttributeFragment_attribute_choices_edges_node_file | null;
   reference: string | null;
   richText: any | null;
+  boolean: boolean | null;
 }
 
 export interface SelectedVariantAttributeFragment_attribute_choices_edges {
@@ -71,6 +72,7 @@ export interface SelectedVariantAttributeFragment_values {
   file: SelectedVariantAttributeFragment_values_file | null;
   reference: string | null;
   richText: any | null;
+  boolean: boolean | null;
 }
 
 export interface SelectedVariantAttributeFragment {

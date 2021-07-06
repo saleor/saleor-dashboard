@@ -50,6 +50,7 @@ export interface ProductVariantCreateData_product_productType_selectionVariantAt
   file: ProductVariantCreateData_product_productType_selectionVariantAttributes_choices_edges_node_file | null;
   reference: string | null;
   richText: any | null;
+  boolean: boolean | null;
 }
 
 export interface ProductVariantCreateData_product_productType_selectionVariantAttributes_choices_edges {
@@ -98,6 +99,7 @@ export interface ProductVariantCreateData_product_productType_nonSelectionVarian
   file: ProductVariantCreateData_product_productType_nonSelectionVariantAttributes_choices_edges_node_file | null;
   reference: string | null;
   richText: any | null;
+  boolean: boolean | null;
 }
 
 export interface ProductVariantCreateData_product_productType_nonSelectionVariantAttributes_choices_edges {

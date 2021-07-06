@@ -101,6 +101,11 @@ export function createProduct({
     description,
     `description:"{\\"blocks\\":[{\\"type\\":\\"paragraph\\",\\"data\\":{\\"text\\":\\"${description}\\"}}]}"`
   );
+  const categoryLine = getValueWithDefault(
+    categoryId,
+    `category:"${categoryId}"`
+  );
+
   const mutation = `mutation{
     productCreate(input:{
       attributes:[{
@@ -110,7 +115,7 @@ export function createProduct({
       slug:"${name}"
       seo:{title:"${name}" description:""}
       productType:"${productTypeId}"
-      category:"${categoryId}"
+      ${categoryLine}
       ${collection}
       ${descriptionLine}
     }){
@@ -185,41 +190,6 @@ export function createVariant({
     .its("body.data.productVariantBulkCreate.productVariants");
 }
 
-export function createTypeProduct({
-  name,
-  attributeId,
-  hasVariants = true,
-  slug = name,
-  shippable = true
-}) {
-  const variantAttributesLine = getValueWithDefault(
-    hasVariants,
-    `variantAttributes: "${attributeId}"`
-  );
-  const mutation = `mutation{
-    productTypeCreate(input: {
-      name: "${name}"
-      slug: "${slug}"
-      productAttributes: "${attributeId}"
-      hasVariants: ${hasVariants}
-      ${variantAttributesLine}
-      isShippingRequired:${shippable}
-    }){
-      productErrors{
-        field
-        message
-      }
-      productType{
-        id
-        name
-      }
-    }
-  } `;
-  return cy
-    .sendRequestWithQuery(mutation)
-    .its("body.data.productTypeCreate.productType");
-}
-
 export function deleteProduct(productId) {
   const mutation = `mutation{
     productDelete(id: "${productId}"){
@@ -229,36 +199,6 @@ export function deleteProduct(productId) {
       }
     }
   } `;
-  return cy.sendRequestWithQuery(mutation);
-}
-
-export function getProductTypes(first, search) {
-  const query = `query{
-    productTypes(first:${first}, filter:{
-      search:"${search}"
-    }){
-      edges{
-        node{
-          id
-          name
-        }
-      }
-    }
-  }`;
-  return cy
-    .sendRequestWithQuery(query)
-    .then(resp => resp.body.data.productTypes.edges);
-}
-
-export function deleteProductType(productTypeId) {
-  const mutation = `mutation{
-    productTypeDelete(id:"${productTypeId}"){
-      productErrors{
-        field
-        message
-      }
-    }
-  }`;
   return cy.sendRequestWithQuery(mutation);
 }
 

@@ -3,6 +3,8 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
+import { AttributeInputTypeEnum } from "./../../types/globalTypes";
+
 // ====================================================
 // GraphQL query operation: InitialProductFilterAttributes
 // ====================================================
@@ -11,6 +13,7 @@ export interface InitialProductFilterAttributes_attributes_edges_node {
   __typename: "Attribute";
   id: string;
   name: string | null;
+  inputType: AttributeInputTypeEnum | null;
   slug: string | null;
 }
 

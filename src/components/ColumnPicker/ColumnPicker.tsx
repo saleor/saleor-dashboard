@@ -43,7 +43,6 @@ const ColumnPicker: React.FC<ColumnPickerProps> = props => {
     hasMore,
     initialColumns,
     initialOpen = false,
-    loading,
     total,
     onFetchMore,
     onSave
@@ -100,7 +99,6 @@ const ColumnPicker: React.FC<ColumnPickerProps> = props => {
               <ColumnPickerContent
                 columns={columns}
                 hasMore={hasMore}
-                loading={loading}
                 selectedColumns={selectedColumns}
                 total={total}
                 onCancel={handleCancel}

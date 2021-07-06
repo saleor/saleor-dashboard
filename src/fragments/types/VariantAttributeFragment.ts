@@ -31,6 +31,7 @@ export interface VariantAttributeFragment_choices_edges_node {
   file: VariantAttributeFragment_choices_edges_node_file | null;
   reference: string | null;
   richText: any | null;
+  boolean: boolean | null;
 }
 
 export interface VariantAttributeFragment_choices_edges {

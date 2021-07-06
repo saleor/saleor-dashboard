@@ -27,21 +27,33 @@ export function createShippingRate({
       shippingMethod{
         id
       }
+      errors{
+        field
+        message
+      }
     }
   }`;
   return cy.sendRequestWithQuery(mutation).its("body.data.shippingPriceCreate");
 }
 
 export function createShippingZone(name, country, channelId) {
+  const channelsLines = getValueWithDefault(
+    channelId,
+    `addChannels:["${channelId}"]`
+  );
   const mutation = `mutation{
     shippingZoneCreate(input:{
       name: "${name}"
       countries: "${country}"
-      addChannels:["${channelId}"]
+      ${channelsLines}
     }){
       shippingZone{
         id
         name
+      }
+      errors{
+        field
+        message
       }
     }
   }`;
@@ -62,18 +74,24 @@ export function addChannelToShippingZone(shippingZoneId, channelId) {
   }`;
   return cy.sendRequestWithQuery(mutation);
 }
-export function addChannelToShippingMethod(shippingRateId, channelId, price) {
+export function addChannelToShippingMethod(
+  shippingRateId,
+  channelId,
+  price,
+  minProductPrice = 0
+) {
   const mutation = `mutation{
     shippingMethodChannelListingUpdate(id:"${shippingRateId}", input:{
       addChannels: {
         channelId:"${channelId}"
         price: ${price}
+        minimumOrderPrice:${minProductPrice}
       }
     }){
       shippingMethod{
         id
       }
-      shippingErrors{
+      errors{
         code
         message
       }
@@ -96,17 +114,33 @@ export function deleteShippingZone(shippingZoneId) {
 
 export function getShippingZones() {
   const query = `query{
-          shippingZones(first:100){
-            edges{
-              node{
-                name
-                id
-              }
-            }
-          }
+    shippingZones(first:100){
+      edges{
+        node{
+          name
+          id
         }
-        `;
+      }
+    }
+  }
+  `;
   return cy
     .sendRequestWithQuery(query)
     .then(resp => resp.body.data.shippingZones.edges);
+}
+
+export function getShippingZone(shippingZoneId) {
+  const query = `query{
+    shippingZone(id:"${shippingZoneId}"){
+      id
+      name
+      channels{
+        name
+        id
+      }
+    }
+  } `;
+  return cy
+    .sendRequestWithQuery(query)
+    .then(resp => resp.body.data.shippingZone);
 }

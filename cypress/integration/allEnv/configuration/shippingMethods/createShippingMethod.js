@@ -84,7 +84,7 @@ describe("Create shipping method", () => {
       defaultChannel.name
     );
     createShippingRate({
-      shippingName,
+      rateName: shippingName,
       price,
       rateOption: rateOptions.PRICE_OPTION,
       deliveryTime
@@ -119,7 +119,7 @@ describe("Create shipping method", () => {
       defaultChannel.name
     );
     createShippingRate({
-      shippingName,
+      rateName: shippingName,
       price,
       rateOption: rateOptions.WEIGHT_OPTION,
       deliveryTime

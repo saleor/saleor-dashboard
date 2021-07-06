@@ -35,6 +35,7 @@ export function createUpdateHandler(
       input: {
         applyOncePerCustomer: formData.applyOncePerCustomer,
         applyOncePerOrder: formData.applyOncePerOrder,
+        onlyForStaff: formData.onlyForStaff,
         discountValueType:
           formData.discountType === DiscountTypeEnum.VALUE_PERCENTAGE
             ? DiscountValueTypeEnum.PERCENTAGE

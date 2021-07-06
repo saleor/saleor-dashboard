@@ -46,7 +46,8 @@ export const attributes: ProductType_productType_productAttributes[] = [
               sortOrder: 0,
               type: "STRING",
               value: "",
-              richText: null
+              richText: null,
+              boolean: null
             }
           },
           {
@@ -62,7 +63,8 @@ export const attributes: ProductType_productType_productAttributes[] = [
               sortOrder: 1,
               type: "STRING",
               value: "",
-              richText: null
+              richText: null,
+              boolean: null
             }
           }
         ]
@@ -102,7 +104,8 @@ export const attributes: ProductType_productType_productAttributes[] = [
               sortOrder: 0,
               type: "STRING",
               value: "",
-              richText: null
+              richText: null,
+              boolean: null
             }
           },
           {
@@ -118,7 +121,8 @@ export const attributes: ProductType_productType_productAttributes[] = [
               sortOrder: 1,
               type: "STRING",
               value: "",
-              richText: null
+              richText: null,
+              boolean: null
             }
           },
           {
@@ -134,7 +138,8 @@ export const attributes: ProductType_productType_productAttributes[] = [
               sortOrder: 2,
               type: "STRING",
               value: "",
-              richText: null
+              richText: null,
+              boolean: null
             }
           },
           {
@@ -150,7 +155,8 @@ export const attributes: ProductType_productType_productAttributes[] = [
               sortOrder: 3,
               type: "STRING",
               value: "",
-              richText: null
+              richText: null,
+              boolean: null
             }
           }
         ]
@@ -190,7 +196,8 @@ export const attributes: ProductType_productType_productAttributes[] = [
               sortOrder: 0,
               type: "STRING",
               value: "",
-              richText: null
+              richText: null,
+              boolean: null
             }
           }
         ]
@@ -230,7 +237,8 @@ export const attributes: ProductType_productType_productAttributes[] = [
               sortOrder: 0,
               type: "STRING",
               value: "",
-              richText: null
+              richText: null,
+              boolean: null
             }
           },
           {
@@ -246,7 +254,8 @@ export const attributes: ProductType_productType_productAttributes[] = [
               sortOrder: 1,
               type: "STRING",
               value: "",
-              richText: null
+              richText: null,
+              boolean: null
             }
           },
           {
@@ -262,7 +271,8 @@ export const attributes: ProductType_productType_productAttributes[] = [
               sortOrder: 2,
               type: "STRING",
               value: "",
-              richText: null
+              richText: null,
+              boolean: null
             }
           }
         ]
@@ -302,7 +312,8 @@ export const attributes: ProductType_productType_productAttributes[] = [
               sortOrder: 0,
               type: "STRING",
               value: "",
-              richText: null
+              richText: null,
+              boolean: null
             }
           },
           {
@@ -318,7 +329,8 @@ export const attributes: ProductType_productType_productAttributes[] = [
               sortOrder: 1,
               type: "STRING",
               value: "",
-              richText: null
+              richText: null,
+              boolean: null
             }
           }
         ]
@@ -358,7 +370,8 @@ export const attributes: ProductType_productType_productAttributes[] = [
               sortOrder: 0,
               type: "STRING",
               value: "",
-              richText: null
+              richText: null,
+              boolean: null
             }
           },
           {
@@ -374,7 +387,8 @@ export const attributes: ProductType_productType_productAttributes[] = [
               sortOrder: 1,
               type: "STRING",
               value: "",
-              richText: null
+              richText: null,
+              boolean: null
             }
           },
           {
@@ -390,7 +404,8 @@ export const attributes: ProductType_productType_productAttributes[] = [
               sortOrder: 2,
               type: "STRING",
               value: "",
-              richText: null
+              richText: null,
+              boolean: null
             }
           }
         ]
@@ -430,7 +445,8 @@ export const attributes: ProductType_productType_productAttributes[] = [
               sortOrder: 0,
               type: "STRING",
               value: "",
-              richText: null
+              richText: null,
+              boolean: null
             }
           },
           {
@@ -446,7 +462,8 @@ export const attributes: ProductType_productType_productAttributes[] = [
               sortOrder: 1,
               type: "STRING",
               value: "",
-              richText: null
+              richText: null,
+              boolean: null
             }
           }
         ]
@@ -486,7 +503,8 @@ export const attributes: ProductType_productType_productAttributes[] = [
               sortOrder: 0,
               type: "STRING",
               value: "",
-              richText: null
+              richText: null,
+              boolean: null
             }
           },
           {
@@ -502,7 +520,8 @@ export const attributes: ProductType_productType_productAttributes[] = [
               sortOrder: 1,
               type: "STRING",
               value: "",
-              richText: null
+              richText: null,
+              boolean: null
             }
           },
           {
@@ -518,7 +537,8 @@ export const attributes: ProductType_productType_productAttributes[] = [
               sortOrder: 2,
               type: "STRING",
               value: "",
-              richText: null
+              richText: null,
+              boolean: null
             }
           },
           {
@@ -534,7 +554,8 @@ export const attributes: ProductType_productType_productAttributes[] = [
               sortOrder: 3,
               type: "STRING",
               value: "",
-              richText: null
+              richText: null,
+              boolean: null
             }
           },
           {
@@ -550,7 +571,8 @@ export const attributes: ProductType_productType_productAttributes[] = [
               sortOrder: 4,
               type: "STRING",
               value: "",
-              richText: null
+              richText: null,
+              boolean: null
             }
           },
           {
@@ -566,7 +588,8 @@ export const attributes: ProductType_productType_productAttributes[] = [
               sortOrder: 5,
               type: "STRING",
               value: "",
-              richText: null
+              richText: null,
+              boolean: null
             }
           }
         ]
@@ -606,7 +629,8 @@ export const attributes: ProductType_productType_productAttributes[] = [
               sortOrder: 0,
               type: "STRING",
               value: "",
-              richText: null
+              richText: null,
+              boolean: null
             }
           },
           {
@@ -622,7 +646,8 @@ export const attributes: ProductType_productType_productAttributes[] = [
               sortOrder: 1,
               type: "STRING",
               value: "",
-              richText: null
+              richText: null,
+              boolean: null
             }
           }
         ]
@@ -662,7 +687,8 @@ export const attributes: ProductType_productType_productAttributes[] = [
               sortOrder: 0,
               type: "STRING",
               value: "",
-              richText: null
+              richText: null,
+              boolean: null
             }
           },
           {
@@ -678,7 +704,8 @@ export const attributes: ProductType_productType_productAttributes[] = [
               sortOrder: 1,
               type: "STRING",
               value: "",
-              richText: null
+              richText: null,
+              boolean: null
             }
           }
         ]
@@ -718,7 +745,8 @@ export const attributes: ProductType_productType_productAttributes[] = [
               sortOrder: 0,
               type: "STRING",
               value: "",
-              richText: null
+              richText: null,
+              boolean: null
             }
           },
           {
@@ -734,7 +762,8 @@ export const attributes: ProductType_productType_productAttributes[] = [
               sortOrder: 1,
               type: "STRING",
               value: "",
-              richText: null
+              richText: null,
+              boolean: null
             }
           }
         ]
@@ -774,7 +803,8 @@ export const attributes: ProductType_productType_productAttributes[] = [
               sortOrder: 0,
               type: "STRING",
               value: "",
-              richText: null
+              richText: null,
+              boolean: null
             }
           },
           {
@@ -790,7 +820,8 @@ export const attributes: ProductType_productType_productAttributes[] = [
               sortOrder: 1,
               type: "STRING",
               value: "",
-              richText: null
+              richText: null,
+              boolean: null
             }
           },
           {
@@ -806,7 +837,8 @@ export const attributes: ProductType_productType_productAttributes[] = [
               sortOrder: 2,
               type: "STRING",
               value: "",
-              richText: null
+              richText: null,
+              boolean: null
             }
           },
           {
@@ -822,7 +854,8 @@ export const attributes: ProductType_productType_productAttributes[] = [
               sortOrder: 3,
               type: "STRING",
               value: "",
-              richText: null
+              richText: null,
+              boolean: null
             }
           },
           {
@@ -838,7 +871,8 @@ export const attributes: ProductType_productType_productAttributes[] = [
               sortOrder: 4,
               type: "STRING",
               value: "",
-              richText: null
+              richText: null,
+              boolean: null
             }
           },
           {
@@ -854,7 +888,8 @@ export const attributes: ProductType_productType_productAttributes[] = [
               sortOrder: 5,
               type: "STRING",
               value: "",
-              richText: null
+              richText: null,
+              boolean: null
             }
           }
         ]
@@ -976,6 +1011,7 @@ export const productType: ProductTypeDetails_productType = {
       name: "Author",
       slug: "author",
       type: AttributeTypeEnum.PRODUCT_TYPE,
+      inputType: AttributeInputTypeEnum.DROPDOWN,
       visibleInStorefront: true,
       unit: null
     },
@@ -987,6 +1023,7 @@ export const productType: ProductTypeDetails_productType = {
       name: "Language",
       slug: "language",
       type: AttributeTypeEnum.PRODUCT_TYPE,
+      inputType: AttributeInputTypeEnum.DROPDOWN,
       visibleInStorefront: true,
       unit: null
     },
@@ -998,6 +1035,7 @@ export const productType: ProductTypeDetails_productType = {
       name: "Publisher",
       slug: "publisher",
       type: AttributeTypeEnum.PRODUCT_TYPE,
+      inputType: AttributeInputTypeEnum.DROPDOWN,
       visibleInStorefront: true,
       unit: null
     }

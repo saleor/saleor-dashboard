@@ -31,10 +31,10 @@ export interface AttributeDetailsFragment {
   filterableInDashboard: boolean;
   filterableInStorefront: boolean;
   unit: MeasurementUnitsEnum | null;
+  inputType: AttributeInputTypeEnum | null;
   metadata: (AttributeDetailsFragment_metadata | null)[];
   privateMetadata: (AttributeDetailsFragment_privateMetadata | null)[];
   availableInGrid: boolean;
-  inputType: AttributeInputTypeEnum | null;
   entityType: AttributeEntityTypeEnum | null;
   storefrontSearchPosition: number;
   valueRequired: boolean;
