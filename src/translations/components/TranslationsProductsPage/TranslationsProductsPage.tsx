@@ -5,6 +5,7 @@ import LanguageSwitch from "@saleor/components/LanguageSwitch";
 import PageHeader from "@saleor/components/PageHeader";
 import { ProductTranslationFragment } from "@saleor/fragments/types/ProductTranslationFragment";
 import { commonMessages, sectionNames } from "@saleor/intl";
+import { getStringOrPlaceholder } from "@saleor/misc";
 import {
   TranslationInputFieldName,
   TranslationsEntitiesPageProps
@@ -49,7 +50,7 @@ const TranslationsProductsPage: React.FC<TranslationsProductsPageProps> = ({
           },
           {
             languageCode,
-            productName: data?.product?.name || "..."
+            productName: getStringOrPlaceholder(data?.product?.name)
           }
         )}
       >
