@@ -60,6 +60,7 @@ All notable, unreleased changes to this project will be documented in this file.
 - Fix duplicated labels in column picker - #1197 by @orzechdev
 - Fix forbidden null sending as attribute value - #1201 by @orzechdev
 - Fix missing call for update metadata mutation - #1207 by @orzechdev
+- Disable next step when no value selected in variant selector - #1218 by @orzechdev
 
 # 2.11.1
 
