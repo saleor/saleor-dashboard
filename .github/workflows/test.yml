@@ -87,7 +87,7 @@ jobs:
           echo "::set-output name=custom_api_uri::$(echo $pull_request_body | grep -Eo "$prefix$pattern" | sed s/$prefix// | head -n 1)"
 
       - name: Cypress run
-        # uses: cypress-io/github-action@v2
+        run: npm run cy:run_v2:parallel
         env:
           API_URI: ${{ steps.api_uri.outputs.custom_api_uri || secrets.API_URI }}
           APP_MOUNT_URI: ${{ secrets.APP_MOUNT_URI }}
@@ -101,8 +101,6 @@ jobs:
           start: npx local-web-server --spa index.html
           wait-on: http://localhost:9000/
           wait-on-timeout: 120
-          command: npm run cy:run_v2:parallel
-          # spec: cypress/integration/allEnv/**/*.js
       - uses: actions/upload-artifact@v1
         if: always()
         with:
