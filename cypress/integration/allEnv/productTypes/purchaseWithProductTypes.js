@@ -10,7 +10,7 @@ import {
   createCheckout
 } from "../../../apiRequests/Checkout";
 import { getOrder } from "../../../apiRequests/Order";
-import { createTypeProduct } from "../../../apiRequests/Product";
+import { createTypeProduct } from "../../../apiRequests/productType";
 import { getDefaultChannel } from "../../../utils/channelsUtils";
 import {
   addPayment,
@@ -130,13 +130,13 @@ describe("Purchase products with all products types", () => {
         createProductInChannel(createProductData);
       })
       .then(({ variantsList }) => {
-        createWaitingForCaptureOrder(
-          defaultChannel.slug,
+        createWaitingForCaptureOrder({
+          channelSlug: defaultChannel.slug,
           email,
           variantsList,
-          shippingMethod.id,
+          shippingMethodId: shippingMethod.id,
           address
-        );
+        });
       })
       .then(({ order }) => {
         getOrder(order.id);

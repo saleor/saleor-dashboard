@@ -167,7 +167,7 @@ const WarehouseList: React.FC<WarehouseListProps> = ({ params }) => {
       />
       <WarehouseDeleteDialog
         confirmButtonState={deleteTransitionState}
-        name={mapEdgesToItems(data?.warehouses).find(getById(params.id))?.name}
+        name={mapEdgesToItems(data?.warehouses)?.find(getById(params.id))?.name}
         open={params.action === "delete"}
         onClose={closeModal}
         onConfirm={() =>

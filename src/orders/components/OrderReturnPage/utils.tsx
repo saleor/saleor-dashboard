@@ -3,6 +3,7 @@ import {
   OrderDetails_order,
   OrderDetails_order_fulfillments
 } from "@saleor/orders/types/OrderDetails";
+import { Node } from "@saleor/types";
 import { FulfillmentStatus } from "@saleor/types/globalTypes";
 
 import { LineItemOptions } from "./form";
@@ -31,7 +32,7 @@ export const getAllOrderFulfilledLines = (order?: OrderDetails_order) =>
   );
 
 export function getLineItem<T>(
-  { id }: { id: string },
+  { id }: Node,
   {
     initialValue,
     isFulfillment = false,
@@ -51,7 +52,7 @@ export function getParsedLineData<T>({
   isFulfillment = false,
   isRefunded = false
 }: LineItemOptions<T>) {
-  return (item: { id: string }) =>
+  return (item: Node) =>
     getLineItem(item, { initialValue, isFulfillment, isRefunded });
 }
 
@@ -89,16 +90,16 @@ export const getParsedFulfiledLines = (
     quantity
   }));
 
-export const getById = (idToCompare: string) => (obj: { id: string }) =>
+export const getById = (idToCompare: string) => (obj: Node) =>
   obj.id === idToCompare;
 
 export const getByUnmatchingId = (idToCompare: string) => (obj: {
   id: string;
 }) => obj.id !== idToCompare;
 
-const isIncludedInIds = function<T extends { id: string }>(
+const isIncludedInIds = function<T extends Node>(
   arrayToCompare: string[] | T[],
-  obj: { id: string }
+  obj: Node
 ) {
   const isSimpleIdsArray = (arrayToCompare as string[]).every(
     value => typeof value === "string"
@@ -111,14 +112,12 @@ const isIncludedInIds = function<T extends { id: string }>(
   return idsToCompare.includes(obj.id);
 };
 
-export function getByIds<T extends { id: string }>(
-  arrayToCompare: string[] | T[]
-) {
-  return (obj: { id: string }) => isIncludedInIds(arrayToCompare, obj);
+export function getByIds<T extends Node>(arrayToCompare: string[] | T[]) {
+  return (obj: Node) => isIncludedInIds(arrayToCompare, obj);
 }
 
-export function getByUnmatchingIds<T extends { id: string }>(
+export function getByUnmatchingIds<T extends Node>(
   arrayToCompare: string[] | T[]
 ) {
-  return (obj: { id: string }) => !isIncludedInIds(arrayToCompare, obj);
+  return (obj: Node) => !isIncludedInIds(arrayToCompare, obj);
 }

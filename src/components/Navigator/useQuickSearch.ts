@@ -108,7 +108,7 @@ function useQuickSearch(
       intl,
       {
         catalog,
-        customers: mapEdgesToItems(customers?.data?.search),
+        customers: mapEdgesToItems(customers?.data?.search) || [],
         order: maybe(() => orderData.order)
       },
       {

@@ -6,8 +6,13 @@ export function fillUpAddressForm(address) {
   cy.get(ADDRESS_SELECTORS.firstName)
     .type(address.firstName)
     .get(ADDRESS_SELECTORS.lastName)
-    .type(address.lastName)
-    .get(ADDRESS_SELECTORS.companyName)
+    .type(address.lastName);
+  fillUpBasicAddress(address);
+  cy.get(BUTTON_SELECTORS.submit).click();
+}
+
+export function fillUpBasicAddress(address) {
+  cy.get(ADDRESS_SELECTORS.companyName)
     .type(address.companyName)
     .get(ADDRESS_SELECTORS.phone)
     .type(address.phone)
@@ -20,8 +25,5 @@ export function fillUpAddressForm(address) {
     .get(ADDRESS_SELECTORS.postalCode)
     .type(address.postalCode);
   fillAutocompleteSelect(ADDRESS_SELECTORS.country, address.countryFullName);
-  cy.get(ADDRESS_SELECTORS.countryArea)
-    .type(address.countryArea)
-    .get(BUTTON_SELECTORS.submit)
-    .click();
+  cy.get(ADDRESS_SELECTORS.countryArea).type(address.countryArea);
 }
