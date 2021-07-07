@@ -53,6 +53,13 @@ All notable, unreleased changes to this project will be documented in this file.
 - Fix product type translations - #1163 by @orzechdev
 - Support staff only voucher - #1174 by @orzechdev
 - Fix label names in reference attributes - #1184 by @orzechdev
+- Fix failing product update with file attribute - #1190 by @orzechdev
+- Fix breaking select popups in filters - #1193 by @orzechdev
+- Create channel filters in product, sales and voucher lists - #1187 by @jwm0
+- Add generic filter validation - #1187 by @jwm0
+- Fix duplicated labels in column picker - #1197 by @orzechdev
+- Fix forbidden null sending as attribute value - #1201 by @orzechdev
+- Fix missing call for update metadata mutation - #1207 by @orzechdev
 
 # 2.11.1
 

@@ -390,14 +390,16 @@ export const ProductTypeUpdate: React.FC<ProductTypeUpdateProps> = ({
                           key={key}
                         />
                       ))}
-                      <TypeDeleteWarningDialog
-                        {...productTypeDeleteData}
-                        typesData={[productType]}
-                        typesToDelete={[id]}
-                        onClose={closeModal}
-                        onDelete={handleProductTypeDelete}
-                        deleteButtonState={deleteProductType.opts.status}
-                      />
+                      {productType && (
+                        <TypeDeleteWarningDialog
+                          {...productTypeDeleteData}
+                          typesData={[productType]}
+                          typesToDelete={[id]}
+                          onClose={closeModal}
+                          onDelete={handleProductTypeDelete}
+                          deleteButtonState={deleteProductType.opts.status}
+                        />
+                      )}
                     </>
                   )}
 

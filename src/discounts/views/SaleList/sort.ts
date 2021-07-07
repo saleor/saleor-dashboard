@@ -2,6 +2,25 @@ import { SaleListUrlSortField } from "@saleor/discounts/urls";
 import { SaleSortField } from "@saleor/types/globalTypes";
 import { createGetSortQueryVariables } from "@saleor/utils/sort";
 
+export const DEFAULT_SORT_KEY = SaleListUrlSortField.name;
+
+export function canBeSorted(
+  sort: SaleListUrlSortField,
+  isChannelSelected: boolean
+) {
+  switch (sort) {
+    case SaleListUrlSortField.name:
+    case SaleListUrlSortField.startDate:
+    case SaleListUrlSortField.endDate:
+    case SaleListUrlSortField.type:
+      return true;
+    case SaleListUrlSortField.value:
+      return isChannelSelected;
+    default:
+      return false;
+  }
+}
+
 export function getSortQueryField(sort: SaleListUrlSortField): SaleSortField {
   switch (sort) {
     case SaleListUrlSortField.name:

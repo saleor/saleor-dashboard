@@ -29,7 +29,7 @@ export const tokenLink = setContext((_, context) => {
     ...context,
     headers: {
       ...context.headers,
-      Authorization: authToken ? `JWT ${authToken}` : null
+      "Authorization-Bearer": authToken || null
     }
   };
 });

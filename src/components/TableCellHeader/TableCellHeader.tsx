@@ -17,7 +17,8 @@ const useStyles = makeStyles(
     arrowUp: {
       transform: "rotate(180deg)"
     },
-    disableClick: {
+    disabled: {
+      opacity: 0.7,
       "&&": {
         cursor: "unset"
       }
@@ -54,8 +55,8 @@ export type TableCellHeaderArrowPosition = "left" | "right";
 export interface TableCellHeaderProps extends TableCellProps {
   arrowPosition?: TableCellHeaderArrowPosition;
   direction?: TableCellHeaderArrowDirection;
-  disableClick?: boolean;
   textAlign?: "left" | "center" | "right";
+  disabled?: boolean;
 }
 
 const TableCellHeader: React.FC<TableCellHeaderProps> = props => {
@@ -65,16 +66,22 @@ const TableCellHeader: React.FC<TableCellHeaderProps> = props => {
     children,
     className,
     direction,
-    disableClick,
     textAlign,
+    disabled = false,
+    onClick,
     ...rest
   } = props;
 
   return (
     <TableCell
       {...rest}
+      onClick={e => {
+        if (!disabled) {
+          onClick(e);
+        }
+      }}
       className={classNames(classes.root, className, {
-        [classes.disableClick]: disableClick
+        [classes.disabled]: disabled
       })}
     >
       <div

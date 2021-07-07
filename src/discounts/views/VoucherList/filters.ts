@@ -1,4 +1,5 @@
 import { IFilterElement } from "@saleor/components/Filter";
+import { SingleAutocompleteChoiceType } from "@saleor/components/SingleAutocompleteSelectField";
 import {
   VoucherFilterKeys,
   VoucherListFilterOpts
@@ -16,7 +17,8 @@ import {
   dedupeFilter,
   getGteLteVariables,
   getMinMaxQueryParam,
-  getMultipleEnumValueQueryParam
+  getMultipleEnumValueQueryParam,
+  getSingleValueQueryParam
 } from "../../../utils/filters";
 import {
   VoucherListUrlFilters,
@@ -28,9 +30,15 @@ import {
 export const VOUCHER_FILTERS_KEY = "voucherFilters";
 
 export function getFilterOpts(
-  params: VoucherListUrlFilters
+  params: VoucherListUrlFilters,
+  channels: SingleAutocompleteChoiceType[]
 ): VoucherListFilterOpts {
   return {
+    channel: {
+      active: params?.channel !== undefined,
+      choices: channels,
+      value: params?.channel
+    },
     saleType: {
       active: !!maybe(() => params.type),
       value: maybe(
@@ -136,6 +144,12 @@ export function getFilterQueryParam(
         filter,
         VoucherListUrlFiltersWithMultipleValues.status,
         DiscountStatusEnum
+      );
+
+    case VoucherFilterKeys.channel:
+      return getSingleValueQueryParam(
+        filter,
+        VoucherListUrlFiltersEnum.channel
       );
   }
 }

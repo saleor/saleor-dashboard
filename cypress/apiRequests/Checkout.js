@@ -182,6 +182,9 @@ export function addProductsToCheckout(
     checkoutLinesUpdate(checkoutId:"${checkoutId}" lines:[${lines.join()}]){
       checkout{
         id
+        availableShippingMethods{
+          name
+        }
       }
       errors{
         field
