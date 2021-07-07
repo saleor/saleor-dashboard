@@ -26,15 +26,15 @@ export enum ProductFilterKeys {
   channel = "channel"
 }
 
+export type AttributeFilterOpts = FilterOpts<string[]> & {
+  id: string;
+  name: string;
+  slug: string;
+  inputType: AttributeInputTypeEnum;
+};
+
 export interface ProductListFilterOpts {
-  attributes: Array<
-    FilterOpts<string[]> & {
-      id: string;
-      name: string;
-      slug: string;
-      inputType: AttributeInputTypeEnum;
-    }
-  >;
+  attributes: AttributeFilterOpts[];
   attributeChoices: FilterOpts<string[]> & AutocompleteFilterOpts;
   categories: FilterOpts<string[]> & AutocompleteFilterOpts;
   collections: FilterOpts<string[]> & AutocompleteFilterOpts;
@@ -78,19 +78,26 @@ const messages = defineMessages({
   }
 });
 
-const extractAttributes = (opts: ProductListFilterOpts) => (
-  type: AttributeInputTypeEnum
-) => opts.attributes.filter(({ inputType }) => inputType === type);
+const filterByType = (type: AttributeInputTypeEnum) => (
+  attribute: AttributeFilterOpts
+) => attribute.inputType === type;
 
 export function createFilterStructure(
   intl: IntlShape,
   opts: ProductListFilterOpts
 ): IFilter<string> {
-  const getAttributes = extractAttributes(opts);
+  const attributes = opts.attributes;
 
-  const booleanAttributes = getAttributes(AttributeInputTypeEnum.BOOLEAN);
-  const dateAttributes = getAttributes(AttributeInputTypeEnum.DATE);
-  const dateTimeAttributes = getAttributes(AttributeInputTypeEnum.DATE_TIME);
+  const booleanAttributes = attributes.filter(
+    filterByType(AttributeInputTypeEnum.BOOLEAN)
+  );
+  const dateAttributes = attributes.filter(
+    filterByType(AttributeInputTypeEnum.DATE)
+  );
+  const dateTimeAttributes = attributes.filter(
+    filterByType(AttributeInputTypeEnum.DATE_TIME)
+  );
+
   const defaultAttributes = opts.attributes.filter(
     ({ inputType }) =>
       ![

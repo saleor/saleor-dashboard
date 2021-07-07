@@ -43,22 +43,13 @@ const messages = defineMessages({
 });
 
 const useStyles = makeStyles(
-  theme => ({
+  () => ({
     fileField: {
       float: "right"
     },
     pullRight: {
       display: "flex",
       justifyContent: "flex-end"
-    },
-    dateTimeField: {
-      columnGap: theme.spacing(2) + "px",
-      display: "flex",
-      flexDirection: "row",
-      [theme.breakpoints.down("md")]: {
-        flexDirection: "column",
-        rowGap: theme.spacing(2) + "px"
-      }
     }
   }),
   { name: "AttributeRow" }
@@ -232,10 +223,7 @@ const AttributeRow: React.FC<AttributeRowProps> = ({
       );
     case AttributeInputTypeEnum.DATE:
       return (
-        <BasicAttributeRow
-          label={attribute.label}
-          valueContainerClassName={classes.dateTimeField}
-        >
+        <BasicAttributeRow label={attribute.label} flexValueContainer>
           <TextField
             fullWidth
             disabled={disabled}
@@ -252,10 +240,7 @@ const AttributeRow: React.FC<AttributeRowProps> = ({
       );
     case AttributeInputTypeEnum.DATE_TIME:
       return (
-        <BasicAttributeRow
-          label={attribute.label}
-          valueContainerClassName={classes.dateTimeField}
-        >
+        <BasicAttributeRow label={attribute.label} flexValueContainer>
           <DateTimeField
             fullWidth
             name={`attribute:${attribute.label}`}

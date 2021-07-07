@@ -9,7 +9,10 @@ import Skeleton from "@saleor/components/Skeleton";
 import { AttributeValueFragment } from "@saleor/fragments/types/AttributeValueFragment";
 import { commonMessages } from "@saleor/intl";
 import { getById } from "@saleor/orders/components/OrderReturnPage/utils";
-import { getBySlug } from "@saleor/products/components/ProductVariantCreatorPage/utils";
+import {
+  geBasicAttributeValue,
+  getBooleanAttributeValue
+} from "@saleor/products/components/ProductVariantCreatorPage/utils";
 import { ProductDetails_product_productType_variantAttributes } from "@saleor/products/types/ProductDetails";
 import { SearchAttributeValues_attribute_choices_edges_node } from "@saleor/searches/types/SearchAttributeValues";
 import { FetchMoreProps } from "@saleor/types";
@@ -118,27 +121,18 @@ const ProductVariantCreatorValues: React.FC<ProductVariantCreatorValuesProps> = 
     attributeId: string,
     attributeName: string,
     attributeValue: string | boolean
-  ) => {
-    const dataAttribute = data.attributes.find(getById(attributeId));
-
+  ) =>
     onValueClick(
       attributeId,
       typeof attributeValue === "boolean"
-        ? {
-            slug: attributeValue.toString(),
-            value: {
-              boolean: attributeValue,
-              name: `${attributeName}: ${attributeValue ? "Yes" : "No"}`
-            }
-          }
-        : {
-            slug: attributeValue,
-            value:
-              dataAttribute?.values.find(getBySlug(attributeValue))?.value ||
-              attributeValues.find(getBySlug(attributeValue))
-          }
+        ? getBooleanAttributeValue(attributeName, attributeValue)
+        : geBasicAttributeValue(
+            attributeId,
+            attributeValue,
+            attributeValues,
+            data
+          )
     );
-  };
 
   return (
     <>

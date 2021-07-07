@@ -4,7 +4,7 @@ import { getErrorMessage } from "@saleor/components/Attributes/utils";
 import { PageErrorWithAttributesFragment } from "@saleor/fragments/types/PageErrorWithAttributesFragment";
 import { ProductErrorWithAttributesFragment } from "@saleor/fragments/types/ProductErrorWithAttributesFragment";
 import { commonMessages } from "@saleor/intl";
-import { joinDateTime, splitDateTime } from "@saleor/misc";
+import { DateTime, joinDateTime, splitDateTime } from "@saleor/misc";
 import React, { useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 
@@ -14,11 +14,6 @@ type DateTimeFieldProps = Omit<TextFieldProps, "label" | "error"> & {
   value: string;
 };
 
-interface Value {
-  date: string;
-  time: string;
-}
-
 export const DateTimeField: React.FC<DateTimeFieldProps> = ({
   disabled,
   error,
@@ -27,7 +22,7 @@ export const DateTimeField: React.FC<DateTimeFieldProps> = ({
   value: initialValue
 }) => {
   const intl = useIntl();
-  const [value, setValue] = useState<Value>(
+  const [value, setValue] = useState<DateTime>(
     initialValue ? splitDateTime(initialValue) : { date: "", time: "" }
   );
 
@@ -47,7 +42,7 @@ export const DateTimeField: React.FC<DateTimeFieldProps> = ({
         label={intl.formatMessage(commonMessages.date)}
         name={`${name}:date`}
         onChange={event =>
-          setValue(values => ({ ...values, date: event.target.value }))
+          setValue(value => ({ ...value, date: event.target.value }))
         }
         type="date"
         value={value.date}
@@ -61,7 +56,7 @@ export const DateTimeField: React.FC<DateTimeFieldProps> = ({
         label={intl.formatMessage(commonMessages.time)}
         name={`${name}:time`}
         onChange={event =>
-          setValue(values => ({ ...values, time: event.target.value }))
+          setValue(value => ({ ...value, time: event.target.value }))
         }
         type="time"
         value={value.time}

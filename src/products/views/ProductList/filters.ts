@@ -237,15 +237,30 @@ const parseFilterValue = (
   return { ...data, type: "string" };
 };
 
+interface BaseFilterParam {
+  slug: string;
+}
+interface BooleanFilterParam extends BaseFilterParam {
+  boolean: boolean;
+}
+interface DateFilterParam extends BaseFilterParam {
+  date: GteLte<string>;
+}
+interface DateTimeFilterParam extends BaseFilterParam {
+  dateTime: GteLte<string>;
+}
+interface DefaultFilterParam extends BaseFilterParam {
+  values: string[];
+}
+
 function getFilteredAttributeValue(
   params: ProductListUrlFilters
 ): Array<
-  (
-    | { boolean: boolean }
-    | { values: string[] }
-    | { dateTime: GteLte<string> }
-    | { date: GteLte<string> }
-  ) & { slug: string }
+  | BooleanFilterParam
+  | BaseFilterParam
+  | DateTimeFilterParam
+  | DateFilterParam
+  | DefaultFilterParam
 > {
   return !!params.attributes
     ? Object.keys(params.attributes).map(key => {
