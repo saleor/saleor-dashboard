@@ -30,7 +30,7 @@ const OrderSettingsPage: React.FC<OrderSettingsPageProps> = props => {
     <OrderSettingsForm orderSettings={data} onSubmit={onSubmit}>
       {({ data, submit, hasChanged, change }) => (
         <Container>
-          <Backlink onBack={onBack}>
+          <Backlink onClick={onBack}>
             {intl.formatMessage(sectionNames.orders)}
           </Backlink>
           <PageHeader

@@ -211,7 +211,7 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
           );
         return (
           <Container>
-            <Backlink onBack={onBack}>
+            <Backlink onClick={onBack}>
               {intl.formatMessage(sectionNames.vouchers)}
             </Backlink>
             <PageHeader title={voucher?.code} />

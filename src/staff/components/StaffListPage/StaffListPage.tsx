@@ -59,7 +59,7 @@ const StaffListPage: React.FC<StaffListPageProps> = ({
 
   return (
     <Container>
-      <Backlink onBack={onBack}>
+      <Backlink onClick={onBack}>
         {intl.formatMessage(sectionNames.configuration)}
       </Backlink>
       <PageHeader

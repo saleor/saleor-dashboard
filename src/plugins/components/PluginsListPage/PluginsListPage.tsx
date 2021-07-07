@@ -54,7 +54,7 @@ const PluginsListPage: React.FC<PluginsListPageProps> = ({
 
   return (
     <Container>
-      <Backlink onBack={onBack}>
+      <Backlink onClick={onBack}>
         {intl.formatMessage(sectionNames.configuration)}
       </Backlink>
       <PageHeader title={intl.formatMessage(sectionNames.plugins)} />

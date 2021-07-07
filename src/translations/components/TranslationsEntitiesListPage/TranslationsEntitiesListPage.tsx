@@ -52,7 +52,7 @@ const TranslationsEntitiesListPage: React.FC<TranslationsEntitiesListPageProps> 
 
   return (
     <Container>
-      <Backlink onBack={onBack}>
+      <Backlink onClick={onBack}>
         {intl.formatMessage({
           defaultMessage: "Languages"
         })}

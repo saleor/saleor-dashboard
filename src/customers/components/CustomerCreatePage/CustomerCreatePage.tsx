@@ -140,7 +140,7 @@ const CustomerCreatePage: React.FC<CustomerCreatePageProps> = ({
 
         return (
           <Container>
-            <Backlink onBack={onBack}>
+            <Backlink onClick={onBack}>
               <FormattedMessage {...sectionNames.customers} />
             </Backlink>
             <PageHeader

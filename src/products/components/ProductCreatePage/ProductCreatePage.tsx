@@ -211,7 +211,7 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
 
         return (
           <Container>
-            <Backlink onBack={onBack}>
+            <Backlink onClick={onBack}>
               {intl.formatMessage(sectionNames.products)}
             </Backlink>
             <PageHeader title={header} />

@@ -134,7 +134,7 @@ const PageDetailsPage: React.FC<PageDetailsPageProps> = ({
     >
       {({ change, data, valid, handlers, hasChanged, submit }) => (
         <Container>
-          <Backlink onBack={onBack}>
+          <Backlink onClick={onBack}>
             {intl.formatMessage(sectionNames.pages)}
           </Backlink>
           <PageHeader

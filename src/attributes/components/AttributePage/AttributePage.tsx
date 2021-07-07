@@ -169,7 +169,7 @@ const AttributePage: React.FC<AttributePageProps> = ({
 
         return (
           <Container>
-            <Backlink onBack={onBack}>
+            <Backlink onClick={onBack}>
               {intl.formatMessage(sectionNames.attributes)}
             </Backlink>
             <PageHeader

@@ -41,7 +41,7 @@ export const AppDetailsSettingsPage: React.FC<AppDetailsSettingsPageProps> = ({
 
   return (
     <Container>
-      <Backlink onBack={onBack}>
+      <Backlink onClick={onBack}>
         {intl.formatMessage(sectionNames.apps)}
       </Backlink>
       <Grid variant="uniform">

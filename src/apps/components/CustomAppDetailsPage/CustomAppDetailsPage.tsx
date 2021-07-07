@@ -98,7 +98,7 @@ const CustomAppDetailsPage: React.FC<CustomAppDetailsPageProps> = props => {
     <Form initial={initialForm} onSubmit={onSubmit} confirmLeave>
       {({ data, change, hasChanged, submit }) => (
         <Container>
-          <Backlink onBack={onBack}>
+          <Backlink onClick={onBack}>
             {intl.formatMessage(sectionNames.apps)}
           </Backlink>
           <PageHeader title={app?.name}>

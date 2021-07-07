@@ -51,7 +51,7 @@ export const ChannelsListPage: React.FC<ChannelsListPageProps> = ({
 
   return (
     <Container>
-      <Backlink onBack={onBack}>
+      <Backlink onClick={onBack}>
         {intl.formatMessage(sectionNames.configuration)}
       </Backlink>
       <PageHeader

@@ -206,7 +206,7 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
 
         return (
           <Container>
-            <Backlink onBack={onBack}>
+            <Backlink onClick={onBack}>
               {intl.formatMessage(sectionNames.orders)}
             </Backlink>
             <PageHeader

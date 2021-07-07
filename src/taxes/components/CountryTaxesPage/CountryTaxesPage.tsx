@@ -42,7 +42,7 @@ const CountryTaxesPage: React.FC<CountryTaxesPageProps> = props => {
 
   return (
     <Container>
-      <Backlink onBack={onBack}>
+      <Backlink onClick={onBack}>
         {intl.formatMessage(sectionNames.taxes)}
       </Backlink>
       <PageHeader

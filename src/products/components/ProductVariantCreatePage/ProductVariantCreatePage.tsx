@@ -157,7 +157,7 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
         submit
       }) => (
         <Container>
-          <Backlink onBack={onBack}>{product?.name}</Backlink>
+          <Backlink onClick={onBack}>{product?.name}</Backlink>
           <PageHeader title={header} />
           <Grid variant="inverted">
             <div>

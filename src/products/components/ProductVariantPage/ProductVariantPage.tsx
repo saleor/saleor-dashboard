@@ -176,7 +176,7 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
   return (
     <>
       <Container>
-        <Backlink onBack={onBack}>{variant?.product?.name}</Backlink>
+        <Backlink onClick={onBack}>{variant?.product?.name}</Backlink>
         <PageHeader title={header}>
           {variant?.product?.defaultVariant?.id !== variant?.id && (
             <ProductVariantSetDefault

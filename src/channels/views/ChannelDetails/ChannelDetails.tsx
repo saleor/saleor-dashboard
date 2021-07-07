@@ -178,7 +178,7 @@ export const ChannelDetails: React.FC<ChannelDetailsProps> = ({
         })}
       />
       <Container>
-        <Backlink onBack={handleBack}>
+        <Backlink onClick={handleBack}>
           {intl.formatMessage(sectionNames.channels)}
         </Backlink>
         <PageHeader title={data?.channel?.name} />

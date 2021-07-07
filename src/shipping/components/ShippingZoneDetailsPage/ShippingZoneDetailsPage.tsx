@@ -147,7 +147,7 @@ const ShippingZoneDetailsPage: React.FC<ShippingZoneDetailsPageProps> = ({
 
         return (
           <Container>
-            <Backlink onBack={onBack}>
+            <Backlink onClick={onBack}>
               <FormattedMessage {...messages.shipping} />
             </Backlink>
             <PageHeader title={shippingZone?.name} />

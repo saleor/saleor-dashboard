@@ -151,7 +151,7 @@ const SaleDetailsPage: React.FC<SaleDetailsPageProps> = ({
         );
         return (
           <Container>
-            <Backlink onBack={onBack}>
+            <Backlink onClick={onBack}>
               {intl.formatMessage(sectionNames.sales)}
             </Backlink>
             <PageHeader title={maybe(() => sale.name)} />

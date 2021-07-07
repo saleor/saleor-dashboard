@@ -50,7 +50,7 @@ const CountryListPage: React.FC<CountryListPageProps> = ({
       {({ change, data, hasChanged, submit }) => (
         <>
           <Container>
-            <Backlink onBack={onBack}>
+            <Backlink onClick={onBack}>
               {intl.formatMessage(sectionNames.configuration)}
             </Backlink>
             <PageHeader

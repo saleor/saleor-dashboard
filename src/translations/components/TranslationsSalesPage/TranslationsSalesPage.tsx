@@ -38,7 +38,7 @@ const TranslationsSalesPage: React.FC<TranslationsSalesPageProps> = ({
 
   return (
     <Container>
-      <Backlink onBack={onBack}>
+      <Backlink onClick={onBack}>
         {intl.formatMessage(sectionNames.translations)}
       </Backlink>
       <PageHeader

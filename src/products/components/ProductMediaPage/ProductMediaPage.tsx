@@ -103,7 +103,7 @@ const ProductMediaPage: React.FC<ProductMediaPageProps> = props => {
     >
       {({ change, data, hasChanged, submit }) => (
         <Container>
-          <Backlink onBack={onBack}>{product}</Backlink>
+          <Backlink onClick={onBack}>{product}</Backlink>
           <PageHeader title={intl.formatMessage(messages.editMedia)} />
           <Grid variant="inverted">
             <div>

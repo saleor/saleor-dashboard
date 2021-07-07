@@ -28,7 +28,7 @@ const MenuListPage: React.FC<MenuListPageProps> = ({
   const intl = useIntl();
   return (
     <Container>
-      <Backlink onBack={onBack}>
+      <Backlink onClick={onBack}>
         {intl.formatMessage(sectionNames.configuration)}
       </Backlink>
       <PageHeader title={intl.formatMessage(sectionNames.navigation)}>

@@ -75,7 +75,7 @@ const CollectionDetailsPage: React.FC<CollectionDetailsPageProps> = ({
     >
       {({ change, data, handlers, hasChanged, submit }) => (
         <Container>
-          <Backlink onBack={onBack}>
+          <Backlink onClick={onBack}>
             {intl.formatMessage(sectionNames.collections)}
           </Backlink>
           <PageHeader title={collection?.name} />

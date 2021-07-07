@@ -44,7 +44,7 @@ const PageTypeListPage: React.FC<PageTypeListPageProps> = ({
   const intl = useIntl();
   return (
     <Container>
-      <Backlink onBack={onBack}>
+      <Backlink onClick={onBack}>
         {intl.formatMessage(sectionNames.configuration)}
       </Backlink>
       <PageHeader title={intl.formatMessage(sectionNames.pageTypes)}>

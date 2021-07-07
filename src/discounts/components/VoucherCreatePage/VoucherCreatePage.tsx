@@ -115,7 +115,7 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
           );
         return (
           <Container>
-            <Backlink onBack={onBack}>
+            <Backlink onClick={onBack}>
               {intl.formatMessage(sectionNames.vouchers)}
             </Backlink>
             <PageHeader

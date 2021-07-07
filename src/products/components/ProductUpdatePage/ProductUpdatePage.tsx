@@ -278,7 +278,7 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
       }) => (
         <>
           <Container>
-            <Backlink onBack={onBack}>
+            <Backlink onClick={onBack}>
               {intl.formatMessage(sectionNames.products)}
             </Backlink>
             <PageHeader title={header} />

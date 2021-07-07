@@ -40,7 +40,7 @@ export const AppDetailsPage: React.FC<AppDetailsPageProps> = ({
 
   return (
     <Container>
-      <Backlink onBack={onBack}>
+      <Backlink onClick={onBack}>
         {intl.formatMessage(sectionNames.apps)}
       </Backlink>
       <PageHeader

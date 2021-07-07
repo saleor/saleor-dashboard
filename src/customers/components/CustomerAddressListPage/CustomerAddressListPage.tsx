@@ -92,7 +92,7 @@ const CustomerAddressListPage: React.FC<CustomerAddressListPageProps> = props =>
 
   return (
     <Container>
-      <Backlink onBack={onBack}>
+      <Backlink onClick={onBack}>
         {intl.formatMessage(messages.fullNameDetail, { fullName })}
       </Backlink>
       {!isEmpty && (

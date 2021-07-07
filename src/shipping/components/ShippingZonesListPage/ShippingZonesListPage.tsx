@@ -36,7 +36,7 @@ const ShippingZonesListPage: React.FC<ShippingZonesListPageProps> = ({
 
   return (
     <Container>
-      <Backlink onBack={onBack}>
+      <Backlink onClick={onBack}>
         {intl.formatMessage(sectionNames.configuration)}
       </Backlink>
       <PageHeader
