@@ -130,13 +130,13 @@ describe("Purchase products with all products types", () => {
         createProductInChannel(createProductData);
       })
       .then(({ variantsList }) => {
-        createWaitingForCaptureOrder(
-          defaultChannel.slug,
+        createWaitingForCaptureOrder({
+          channelSlug: defaultChannel.slug,
           email,
           variantsList,
-          shippingMethod.id,
+          shippingMethodId: shippingMethod.id,
           address
-        );
+        });
       })
       .then(({ order }) => {
         getOrder(order.id);
