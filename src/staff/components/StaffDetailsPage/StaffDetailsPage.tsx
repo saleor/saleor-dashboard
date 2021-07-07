@@ -111,7 +111,7 @@ const StaffDetailsPage: React.FC<StaffDetailsPageProps> = ({
 
         return (
           <Container>
-            <Backlink onBack={onBack}>
+            <Backlink onClick={onBack}>
               {intl.formatMessage(sectionNames.staff)}
             </Backlink>
             <PageHeader title={getUserName(staffMember)} />

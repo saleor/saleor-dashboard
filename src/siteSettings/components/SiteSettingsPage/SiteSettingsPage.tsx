@@ -136,7 +136,7 @@ const SiteSettingsPage: React.FC<SiteSettingsPageProps> = props => {
 
         return (
           <Container>
-            <Backlink onBack={onBack}>
+            <Backlink onClick={onBack}>
               {intl.formatMessage(sectionNames.configuration)}
             </Backlink>
             <PageHeader

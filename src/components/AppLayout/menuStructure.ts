@@ -13,7 +13,7 @@ import {
 import { MenuItem } from "@saleor/configuration/ConfigurationPage";
 import { User } from "@saleor/fragments/types/User";
 import { commonMessages, sectionNames } from "@saleor/intl";
-import { IMenuItem } from "@saleor/macaw-ui";
+import { SidebarMenuItem } from "@saleor/macaw-ui";
 import { IntlShape } from "react-intl";
 
 import { appsListPath } from "../../apps/urls";
@@ -26,12 +26,12 @@ import { productListUrl } from "../../products/urls";
 import { languageListUrl } from "../../translations/urls";
 import { PermissionEnum } from "../../types/globalTypes";
 
-interface FilterableMenuItem extends Omit<IMenuItem, "children"> {
+interface FilterableMenuItem extends Omit<SidebarMenuItem, "children"> {
   children?: FilterableMenuItem[];
   permissions?: PermissionEnum[];
 }
 
-function createMenuStructure(intl: IntlShape, user: User): IMenuItem[] {
+function createMenuStructure(intl: IntlShape, user: User): SidebarMenuItem[] {
   const configurationMenu = createConfigurationMenu(intl);
 
   const menuItems: FilterableMenuItem[] = [

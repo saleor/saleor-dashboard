@@ -112,7 +112,7 @@ export const ShippingZoneRatesCreatePage: React.FC<ShippingZoneRatesCreatePagePr
 
         return (
           <Container>
-            <Backlink onBack={onBack}>
+            <Backlink onClick={onBack}>
               <FormattedMessage defaultMessage="Shipping" />
             </Backlink>
             <PageHeader

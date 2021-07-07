@@ -59,7 +59,7 @@ const PermissionGroupCreatePage: React.FC<PermissionGroupCreatePageProps> = ({
     <Form initial={initialForm} onSubmit={onSubmit} confirmLeave>
       {({ data, change, submit, hasChanged }) => (
         <Container>
-          <Backlink onBack={onBack}>
+          <Backlink onClick={onBack}>
             {intl.formatMessage(sectionNames.permissionGroups)}
           </Backlink>
           <Grid>

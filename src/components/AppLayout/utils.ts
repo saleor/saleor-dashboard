@@ -1,8 +1,8 @@
-import { IMenuItem } from "@saleor/macaw-ui";
+import { SidebarMenuItem } from "@saleor/macaw-ui";
 import { orderDraftListUrl, orderListUrl } from "@saleor/orders/urls";
 import { matchPath } from "react-router";
 
-export function isMenuActive(location: string, menuItem: IMenuItem) {
+export function isMenuActive(location: string, menuItem: SidebarMenuItem) {
   if (menuItem.children) {
     return menuItem.children.reduce(
       (acc, subMenuItem) => acc || isMenuActive(location, subMenuItem),

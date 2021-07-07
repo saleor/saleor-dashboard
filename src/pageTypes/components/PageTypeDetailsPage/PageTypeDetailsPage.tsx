@@ -112,7 +112,7 @@ const PageTypeDetailsPage: React.FC<PageTypeDetailsPageProps> = props => {
 
         return (
           <Container>
-            <Backlink onBack={onBack}>
+            <Backlink onClick={onBack}>
               {intl.formatMessage(sectionNames.pageTypes)}
             </Backlink>
             <PageHeader title={pageTitle} />

@@ -102,7 +102,7 @@ const PluginsDetailsPage: React.FC<PluginsDetailsPageProps> = props => {
         };
         return (
           <Container>
-            <Backlink onBack={onBack}>
+            <Backlink onClick={onBack}>
               {intl.formatMessage(sectionNames.plugins)}
             </Backlink>
             <PageHeader

@@ -27,7 +27,7 @@
     "@material-ui/icons": "^4.11.2",
     "@material-ui/lab": "^4.0.0-alpha.58",
     "@material-ui/styles": "^4.11.4",
-    "@saleor/macaw-ui": "git+https://github.com/mirumee/macaw-ui.git#5afa1eb",
+    "@saleor/macaw-ui": "git+https://github.com/mirumee/macaw-ui.git#59efe47",
     "@sentry/react": "^6.0.0",
     "@types/faker": "^5.1.6",
     "apollo": "^2.32.5",

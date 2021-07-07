@@ -55,7 +55,7 @@ const CustomAppCreatePage: React.FC<CustomAppCreatePageProps> = props => {
     <Form initial={initialForm} onSubmit={onSubmit} confirmLeave>
       {({ data, change, hasChanged, submit }) => (
         <Container>
-          <Backlink onBack={onBack}>
+          <Backlink onClick={onBack}>
             {intl.formatMessage(sectionNames.apps)}
           </Backlink>
           <PageHeader

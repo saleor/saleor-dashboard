@@ -75,7 +75,7 @@ const ShippingZoneCreatePage: React.FC<ShippingZoneCreatePageProps> = ({
       {({ change, data, hasChanged, submit }) => (
         <>
           <Container>
-            <Backlink onBack={onBack}>
+            <Backlink onClick={onBack}>
               {intl.formatMessage(sectionNames.shipping)}
             </Backlink>
             <PageHeader title={intl.formatMessage(messages.createZone)} />

@@ -215,7 +215,7 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
 
   return (
     <Container>
-      <Backlink onBack={onBack}>
+      <Backlink onClick={onBack}>
         {order?.number
           ? intl.formatMessage(
               {

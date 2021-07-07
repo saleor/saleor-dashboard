@@ -72,7 +72,7 @@ const WarehouseCreatePage: React.FC<WarehouseCreatePageProps> = ({
 
         return (
           <Container>
-            <Backlink onBack={onBack}>
+            <Backlink onClick={onBack}>
               <FormattedMessage {...sectionNames.warehouses} />
             </Backlink>
             <PageHeader

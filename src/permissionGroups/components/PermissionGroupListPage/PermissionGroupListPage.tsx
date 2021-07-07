@@ -30,7 +30,7 @@ const PermissionGroupListPage: React.FC<PermissionGroupListPageProps> = ({
 
   return (
     <Container>
-      <Backlink onBack={onBack}>
+      <Backlink onClick={onBack}>
         {intl.formatMessage(sectionNames.configuration)}
       </Backlink>
       <PageHeader title={intl.formatMessage(sectionNames.permissionGroups)}>

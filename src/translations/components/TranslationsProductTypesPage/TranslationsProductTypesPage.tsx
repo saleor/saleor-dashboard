@@ -42,7 +42,7 @@ const TranslationsProductTypesPage: React.FC<TranslationsProductTypesPageProps> 
 
   return (
     <Container>
-      <Backlink onBack={onBack}>
+      <Backlink onClick={onBack}>
         {intl.formatMessage(sectionNames.translations)}
       </Backlink>
       <PageHeader

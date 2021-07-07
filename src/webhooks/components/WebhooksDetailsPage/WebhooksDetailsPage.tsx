@@ -64,7 +64,7 @@ const WebhooksDetailsPage: React.FC<WebhooksDetailsPageProps> = ({
     <Form initial={initialForm} onSubmit={onSubmit}>
       {({ data, hasChanged, submit, change }) => (
         <Container>
-          <Backlink onBack={onBack}>{appName}</Backlink>
+          <Backlink onClick={onBack}>{appName}</Backlink>
           <PageHeader
             title={
               isUnnamed(webhook)

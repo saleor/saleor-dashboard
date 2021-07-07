@@ -55,7 +55,7 @@ const AttributeListPage: React.FC<AttributeListPageProps> = ({
 
   return (
     <Container>
-      <Backlink onBack={onBack}>
+      <Backlink onClick={onBack}>
         <FormattedMessage {...sectionNames.configuration} />
       </Backlink>
       <PageHeader title={intl.formatMessage(sectionNames.attributes)}>
