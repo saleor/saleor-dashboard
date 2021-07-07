@@ -96,11 +96,11 @@ jobs:
           CYPRESS_SECOND_USER_NAME: ${{ secrets.CYPRESS_SECOND_USER_NAME }}
           CYPRESS_USER_PASSWORD: ${{ secrets.CYPRESS_USER_PASSWORD }}
           CYPRESS_PERMISSIONS_USERS_PASSWORD: ${{ secrets.CYPRESS_PERMISSIONS_USERS_PASSWORD }}
-        with:
-          build: npm run build
-          start: npx local-web-server --spa index.html
-          wait-on: http://localhost:9000/
-          wait-on-timeout: 120
+        # with:
+        #   build: npm run build
+        #   start: npx local-web-server --spa index.html
+        #   wait-on: http://localhost:9000/
+        #   wait-on-timeout: 120
       - uses: actions/upload-artifact@v1
         if: always()
         with:
