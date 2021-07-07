@@ -1,4 +1,6 @@
-// <reference types="cypress" />
+{
+  /* <reference types="cypress" /> */
+}
 import { LOGIN_SELECTORS } from "../../elements/account/login-selectors";
 import { urlList } from "../../url/urlList";
 

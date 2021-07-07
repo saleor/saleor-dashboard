@@ -62,3 +62,29 @@ Cypress.on(
     // failing the test
     false
 );
+
+before(() => {
+  if (Cypress.env("setupSuite")) {
+    cy.log(`THIS IS GLOBAL BEFORE HOOK EXECUTED ONCE`);
+  }
+});
+
+after(() => {
+  if (Cypress.env("teardownSuite")) {
+    cy.log(`THIS IS GLOBAL AFTER HOOK EXECUTED ONCE`);
+  }
+});
+
+Cypress.on("window:before:load", win => {
+  win.open = (url, target, features) => {
+    Cypress.log({
+      name: "BLOCK_TAB",
+      message: `url=${url}`,
+      consoleProps: () => ({
+        url,
+        target,
+        features
+      })
+    });
+  };
+});

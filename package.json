@@ -239,6 +239,8 @@
     "start": "webpack-dev-server -d",
     "storybook": "start-storybook -p 3000 -c src/storybook/",
     "cy:run": "cypress run",
+    "cy:run_v2": "node cypress/runner/runner_v2.js",
+    "cy:run_v2:parallel": "node cypress/runner/runner_v2.js executors=4",
     "cy:run:record": "npm run cy:run -- --record",
     "cy:open": "cypress open",
     "cy:run:allEnv": "cypress run --spec 'cypress/integration/stagedOnly/*'",

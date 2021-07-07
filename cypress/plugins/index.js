@@ -23,6 +23,14 @@ module.exports = (on, config) => {
 
   on("before:browser:launch", (browser = {}, launchOptions) => {
     launchOptions.args.push("--proxy-bypass-list=<-loopback>");
+    if (browser.name === "chrome") {
+      launchOptions.args.push(
+        "--disable-site-isolation-trials",
+        // '--start-maximized',
+        "--disable-notifications"
+        // '--disable-background-mode'
+      );
+    }
     return launchOptions;
   });
   return config;

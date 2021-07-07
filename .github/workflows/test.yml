@@ -106,7 +106,7 @@ jobs:
         if: always()
         with:
           name: cypress-videos
-          path: cypress/videos
+          path: cypress/videos/**
 
   cypress-run-staged:
     if: github.event.pull_request.head.repo.full_name == 'mirumee/saleor-dashboard'
@@ -147,7 +147,7 @@ jobs:
         if: always()
         with:
           name: cypress-videos
-          path: cypress/videos
+          path: cypress/videos/**
 
   translation-messages:
     runs-on: ubuntu-latest
