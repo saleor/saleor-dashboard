@@ -2,7 +2,6 @@ import { Card, CardContent, TextField } from "@material-ui/core";
 import CardTitle from "@saleor/components/CardTitle";
 import { WarehouseErrorFragment } from "@saleor/fragments/types/WarehouseErrorFragment";
 import { FormChange } from "@saleor/hooks/useForm";
-import useRandomString from "@saleor/hooks/useRandomString";
 import { commonMessages } from "@saleor/intl";
 import { getFormErrors } from "@saleor/utils/errors";
 import getWarehouseErrorMessage from "@saleor/utils/errors/warehouse";
@@ -26,8 +25,6 @@ const WarehouseInfo: React.FC<WarehouseInfoProps> = ({
 
   const formErrors = getFormErrors(["name"], errors);
 
-  const randomAutoCompleteName = useRandomString();
-
   return (
     <Card data-test="generalInformationSection">
       <CardTitle
@@ -47,12 +44,7 @@ const WarehouseInfo: React.FC<WarehouseInfoProps> = ({
           onChange={onChange}
           InputProps={{
             inputProps: {
-              /* 
-                autocomplete="off" doesn't always work in chrome, 
-                workaround to mislead chrome autofill 
-                https://stackoverflow.com/a/34998771/3993664
-              */
-              autoComplete: `off-${randomAutoCompleteName}`
+              autoComplete: "none"
             }
           }}
         />

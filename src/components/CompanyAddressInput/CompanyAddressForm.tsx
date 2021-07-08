@@ -9,7 +9,6 @@ import { AccountErrorFragment } from "@saleor/fragments/types/AccountErrorFragme
 import { ShopErrorFragment } from "@saleor/fragments/types/ShopErrorFragment";
 import { WarehouseErrorFragment } from "@saleor/fragments/types/WarehouseErrorFragment";
 import { ChangeEvent } from "@saleor/hooks/useForm";
-import useRandomString from "@saleor/hooks/useRandomString";
 import { makeStyles } from "@saleor/theme";
 import { getFormErrors } from "@saleor/utils/errors";
 import getAccountErrorMessage from "@saleor/utils/errors/account";
@@ -77,8 +76,6 @@ const CompanyAddressForm: React.FC<CompanyAddressFormProps> = props => {
     "phone"
   ];
   const formErrors = getFormErrors(formFields, errors);
-
-  const randomAutoCompleteName = useRandomString();
 
   return (
     <div className={classes.root}>
@@ -178,12 +175,7 @@ const CompanyAddressForm: React.FC<CompanyAddressFormProps> = props => {
           choices={countries}
           InputProps={{
             inputProps: {
-              /* 
-                autocomplete="off" doesn't always work in chrome, 
-                workaround to mislead chrome autofill 
-                https://stackoverflow.com/a/34998771/3993664
-              */
-              autoComplete: `off-${randomAutoCompleteName}`
+              autoComplete: "none"
             }
           }}
         />
