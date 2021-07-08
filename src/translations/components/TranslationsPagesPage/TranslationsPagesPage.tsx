@@ -5,6 +5,7 @@ import LanguageSwitch from "@saleor/components/LanguageSwitch";
 import PageHeader from "@saleor/components/PageHeader";
 import { PageTranslationFragment } from "@saleor/fragments/types/PageTranslationFragment";
 import { commonMessages, sectionNames } from "@saleor/intl";
+import { getStringOrPlaceholder } from "@saleor/misc";
 import {
   PageTranslationInputFieldName,
   TranslationsEntitiesPageProps
@@ -48,7 +49,7 @@ const TranslationsPagesPage: React.FC<TranslationsPagesPageProps> = ({
           },
           {
             languageCode,
-            pageName: data?.page?.title || "..."
+            pageName: getStringOrPlaceholder(data?.page?.title)
           }
         )}
       >

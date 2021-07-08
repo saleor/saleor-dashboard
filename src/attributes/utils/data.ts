@@ -154,7 +154,7 @@ export const mergeChoicesWithValues = (
     | PageDetails_page_attributes
     | SelectedVariantAttributeFragment
 ) => {
-  const choices = mapEdgesToItems(attribute.attribute.choices);
+  const choices = mapEdgesToItems(attribute.attribute.choices) || [];
   const valuesToConcat = attribute.values.filter(
     value => !choices.some(choice => choice.id === value.id)
   );

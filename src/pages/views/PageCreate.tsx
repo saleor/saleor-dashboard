@@ -87,9 +87,8 @@ export const PageCreate: React.FC<PageCreateProps> = ({ params }) => {
     skip: !selectedPageTypeId
   });
 
-  const attributeValues = mapEdgesToItems(
-    searchAttributeValuesOpts?.data?.attribute.choices
-  );
+  const attributeValues =
+    mapEdgesToItems(searchAttributeValuesOpts?.data?.attribute.choices) || [];
 
   const [uploadFile, uploadFileOpts] = useFileUploadMutation({});
 
@@ -192,7 +191,9 @@ export const PageCreate: React.FC<PageCreateProps> = ({ params }) => {
               saveButtonBarState={pageCreateOpts.status}
               page={null}
               attributeValues={attributeValues}
-              pageTypes={mapEdgesToItems(searchPageTypesOpts?.data?.search)}
+              pageTypes={
+                mapEdgesToItems(searchPageTypesOpts?.data?.search) || []
+              }
               onBack={() => navigate(pageListUrl())}
               onRemove={() => undefined}
               onSubmit={handleSubmit}
@@ -202,10 +203,12 @@ export const PageCreate: React.FC<PageCreateProps> = ({ params }) => {
                 params.action === "assign-attribute-value" && params.id
               }
               onAssignReferencesClick={handleAssignAttributeReferenceClick}
-              referencePages={mapEdgesToItems(searchPagesOpts?.data?.search)}
-              referenceProducts={mapEdgesToItems(
-                searchProductsOpts?.data?.search
-              )}
+              referencePages={
+                mapEdgesToItems(searchPagesOpts?.data?.search) || []
+              }
+              referenceProducts={
+                mapEdgesToItems(searchProductsOpts?.data?.search) || []
+              }
               fetchReferencePages={searchPages}
               fetchMoreReferencePages={fetchMoreReferencePages}
               fetchReferenceProducts={searchProducts}

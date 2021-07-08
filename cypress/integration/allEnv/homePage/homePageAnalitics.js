@@ -136,13 +136,13 @@ describe("Homepage analytics", () => {
       .getOrdersReadyForCapture(defaultChannel.slug)
       .as("ordersReadyForCapture");
 
-    createWaitingForCaptureOrder(
-      defaultChannel.slug,
-      randomEmail,
-      createdVariants,
-      shippingMethod.id,
-      addresses.plAddress
-    );
+    createWaitingForCaptureOrder({
+      channelSlug: defaultChannel.slug,
+      email: randomEmail,
+      variantsList: createdVariants,
+      shippingMethodId: shippingMethod.id,
+      address: addresses.plAddress
+    });
 
     cy.get("@ordersReadyForCapture").then(ordersReadyForCaptureBefore => {
       const allOrdersReadyForCapture = ordersReadyForCaptureBefore + 1;
