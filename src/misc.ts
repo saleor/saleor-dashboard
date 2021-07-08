@@ -455,3 +455,15 @@ export const transformAddressToAddressInput = (data?: AddressType) => ({
   streetAddress1: data?.streetAddress1 || "",
   streetAddress2: data?.streetAddress2 || ""
 });
+
+export const getRandomString = (length = 10, randomString = "") => {
+  randomString += Math.random()
+    .toString(36)
+    .substr(2, length);
+
+  if (randomString.length >= length) {
+    return randomString.slice(0, length);
+  }
+
+  return getRandomString(length, randomString);
+};

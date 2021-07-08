@@ -2,6 +2,7 @@ import { TextField } from "@material-ui/core";
 import { AddressTypeInput } from "@saleor/customers/types";
 import { AccountErrorFragment } from "@saleor/fragments/types/AccountErrorFragment";
 import { OrderErrorFragment } from "@saleor/fragments/types/OrderErrorFragment";
+import useRandomString from "@saleor/hooks/useRandomString";
 import { commonMessages } from "@saleor/intl";
 import { makeStyles } from "@saleor/theme";
 import { getFormErrors } from "@saleor/utils/errors";
@@ -79,6 +80,8 @@ const AddressEdit: React.FC<AddressEditProps> = props => {
     keyof AddressTypeInput,
     AccountErrorFragment | OrderErrorFragment
   >(formFields, errors);
+
+  const randomAutoCompleteName = useRandomString();
 
   return (
     <>
@@ -238,7 +241,14 @@ const AddressEdit: React.FC<AddressEditProps> = props => {
             value={data.country}
             choices={countries}
             InputProps={{
-              autoComplete: "off"
+              inputProps: {
+                /* 
+                  autocomplete="off" doesn't always work in chrome, 
+                  workaround to mislead chrome autofill 
+                  https://stackoverflow.com/a/34998771/3993664
+                */
+                autoComplete: `off-${randomAutoCompleteName}`
+              }
             }}
           />
         </div>

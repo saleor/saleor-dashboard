@@ -9,6 +9,7 @@ import { AccountErrorFragment } from "@saleor/fragments/types/AccountErrorFragme
 import { ShopErrorFragment } from "@saleor/fragments/types/ShopErrorFragment";
 import { WarehouseErrorFragment } from "@saleor/fragments/types/WarehouseErrorFragment";
 import { ChangeEvent } from "@saleor/hooks/useForm";
+import useRandomString from "@saleor/hooks/useRandomString";
 import { makeStyles } from "@saleor/theme";
 import { getFormErrors } from "@saleor/utils/errors";
 import getAccountErrorMessage from "@saleor/utils/errors/account";
@@ -77,6 +78,8 @@ const CompanyAddressForm: React.FC<CompanyAddressFormProps> = props => {
   ];
   const formErrors = getFormErrors(formFields, errors);
 
+  const randomAutoCompleteName = useRandomString();
+
   return (
     <div className={classes.root}>
       <TextField
@@ -90,6 +93,9 @@ const CompanyAddressForm: React.FC<CompanyAddressFormProps> = props => {
         onChange={onChange}
         value={data.companyName}
         fullWidth
+        InputProps={{
+          autoComplete: "organization"
+        }}
       />
       <FormSpacer />
       <TextField
@@ -103,6 +109,9 @@ const CompanyAddressForm: React.FC<CompanyAddressFormProps> = props => {
         onChange={onChange}
         value={data.streetAddress1}
         fullWidth
+        InputProps={{
+          autoComplete: "address-line1"
+        }}
       />
       <FormSpacer />
       <TextField
@@ -116,6 +125,9 @@ const CompanyAddressForm: React.FC<CompanyAddressFormProps> = props => {
         onChange={onChange}
         value={data.streetAddress2}
         fullWidth
+        InputProps={{
+          autoComplete: "address-line2"
+        }}
       />
       <FormSpacer />
       <Grid>
@@ -130,6 +142,9 @@ const CompanyAddressForm: React.FC<CompanyAddressFormProps> = props => {
           onChange={onChange}
           value={data.city}
           fullWidth
+          InputProps={{
+            autoComplete: "address-level2"
+          }}
         />
         <TextField
           disabled={disabled}
@@ -142,6 +157,9 @@ const CompanyAddressForm: React.FC<CompanyAddressFormProps> = props => {
           onChange={onChange}
           value={data.postalCode}
           fullWidth
+          InputProps={{
+            autoComplete: "postal-code"
+          }}
         />
       </Grid>
       <FormSpacer />
@@ -160,7 +178,12 @@ const CompanyAddressForm: React.FC<CompanyAddressFormProps> = props => {
           choices={countries}
           InputProps={{
             inputProps: {
-              autoComplete: "none"
+              /* 
+                autocomplete="off" doesn't always work in chrome, 
+                workaround to mislead chrome autofill 
+                https://stackoverflow.com/a/34998771/3993664
+              */
+              autoComplete: `off-${randomAutoCompleteName}`
             }
           }}
         />
@@ -175,6 +198,9 @@ const CompanyAddressForm: React.FC<CompanyAddressFormProps> = props => {
           onChange={onChange}
           value={data.countryArea}
           fullWidth
+          InputProps={{
+            autoComplete: "address-level1"
+          }}
         />
       </Grid>
       <FormSpacer />
@@ -189,6 +215,9 @@ const CompanyAddressForm: React.FC<CompanyAddressFormProps> = props => {
         name={"phone" as keyof AddressTypeInput}
         value={data.phone}
         onChange={onChange}
+        InputProps={{
+          autoComplete: "tel"
+        }}
       />
     </div>
   );
