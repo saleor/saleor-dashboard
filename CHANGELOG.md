@@ -59,6 +59,7 @@ All notable, unreleased changes to this project will be documented in this file.
 - Add generic filter validation - #1187 by @jwm0
 - Fix duplicated labels in column picker - #1197 by @orzechdev
 - Fix forbidden null sending as attribute value - #1201 by @orzechdev
+- Fix huge payload issue for plugins view - #1203 by @kamilpastuszka
 
 # 2.11.1
 
