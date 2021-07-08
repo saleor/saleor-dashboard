@@ -13,7 +13,8 @@ export const urlList = {
   vouchers: "discounts/vouchers/",
   staffMembers: "staff/",
   newPassword: "new-password/",
-  permissionsGroups: "permission-groups/"
+  permissionsGroups: "permission-groups/",
+  productTypes: "product-types/"
 };
 export const productDetailsUrl = productId => `${urlList.products}${productId}`;
 
@@ -24,3 +25,12 @@ export const staffMemberDetailsUrl = staffMemberId =>
 
 export const permissionGroupDetails = permissionGroupId =>
   `${urlList.permissionsGroups}${permissionGroupId}`;
+
+export const shippingZoneDetailsUrl = shippingZoneId =>
+  `${urlList.shippingMethods}${shippingZoneId}`;
+
+export const warehouseDetailsUrl = warehouseId =>
+  `${urlList.warehouses}${warehouseId}`;
+
+export const productTypeDetailsUrl = productTypeId =>
+  `${urlList.productTypes}${productTypeId}`;
