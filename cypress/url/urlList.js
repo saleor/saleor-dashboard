@@ -14,7 +14,8 @@ export const urlList = {
   staffMembers: "staff/",
   newPassword: "new-password/",
   permissionsGroups: "permission-groups/",
-  productTypes: "product-types/"
+  productTypes: "product-types/",
+  pages: "pages/"
 };
 export const productDetailsUrl = productId => `${urlList.products}${productId}`;
 
