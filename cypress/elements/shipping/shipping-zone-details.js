@@ -8,7 +8,7 @@ export const SHIPPING_ZONE_DETAILS = {
   nameInput: "[name='name']",
   shippingRatePriceTableCell: "[data-test-id='shipping-rate-price']",
   autocompleteContentDialog:
-    "[class*='MultiAutocompleteSelectFieldContent-content']",
+    "[data-test-id='multiautocomplete-select-content']",
   option: "[data-test='multiautocomplete-select-option']",
   warehouseSelector: "[placeholder*='Warehouse']",
   channelSelector: "[placeholder*='Channel']"
