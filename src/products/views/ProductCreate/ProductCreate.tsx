@@ -128,7 +128,8 @@ export const ProductCreateView: React.FC<ProductCreateProps> = ({ params }) => {
     skip: !selectedProductTypeId
   });
 
-  const productTypes = mapEdgesToItems(searchProductTypesOpts?.data?.search);
+  const productTypes =
+    mapEdgesToItems(searchProductTypesOpts?.data?.search) || [];
 
   const { availableChannels } = useAppChannel(false);
   const allChannels: ChannelData[] = createSortedChannelsData(
@@ -335,8 +336,10 @@ export const ProductCreateView: React.FC<ProductCreateProps> = ({ params }) => {
           params.action === "assign-attribute-value" && params.id
         }
         onAssignReferencesClick={handleAssignAttributeReferenceClick}
-        referencePages={mapEdgesToItems(searchPagesOpts?.data?.search)}
-        referenceProducts={mapEdgesToItems(searchProductsOpts?.data?.search)}
+        referencePages={mapEdgesToItems(searchPagesOpts?.data?.search) || []}
+        referenceProducts={
+          mapEdgesToItems(searchProductsOpts?.data?.search) || []
+        }
         fetchReferencePages={searchPages}
         fetchMoreReferencePages={fetchMoreReferencePages}
         fetchReferenceProducts={searchProducts}

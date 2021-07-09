@@ -1,5 +1,5 @@
 import { Card, Popper } from "@material-ui/core";
-import { Plugin_plugin } from "@saleor/plugins/types/Plugin";
+import { PluginBaseFragment } from "@saleor/fragments/types/PluginBaseFragment";
 import { isPluginGlobal } from "@saleor/plugins/views/utils";
 import { makeStyles } from "@saleor/theme";
 import React from "react";
@@ -18,7 +18,7 @@ const useStyles = makeStyles(
 );
 
 interface PluginAvailabilityStatusPopupProps {
-  plugin: Plugin_plugin;
+  plugin: PluginBaseFragment;
   isOpen: boolean;
   anchor: React.RefObject<HTMLTableCellElement>;
 }

@@ -40,21 +40,24 @@ const HomeSection = () => {
       onOrdersToCaptureClick={() =>
         navigate(
           orderListUrl({
-            status: [OrderStatusFilter.READY_TO_CAPTURE]
+            status: [OrderStatusFilter.READY_TO_CAPTURE],
+            channel: [channel?.id]
           })
         )
       }
       onOrdersToFulfillClick={() =>
         navigate(
           orderListUrl({
-            status: [OrderStatusFilter.READY_TO_FULFILL]
+            status: [OrderStatusFilter.READY_TO_FULFILL],
+            channel: [channel?.id]
           })
         )
       }
       onProductsOutOfStockClick={() =>
         navigate(
           productListUrl({
-            stockStatus: StockAvailability.OUT_OF_STOCK
+            stockStatus: StockAvailability.OUT_OF_STOCK,
+            channel: channel?.slug
           })
         )
       }
