@@ -1,13 +1,13 @@
 import { TableCell } from "@material-ui/core";
 import Skeleton from "@saleor/components/Skeleton";
-import { Plugin_plugin } from "@saleor/plugins/types/Plugin";
+import { PluginBaseFragment } from "@saleor/fragments/types/PluginBaseFragment";
 import React, { useRef, useState } from "react";
 
 import PluginAvailabilityStatus from "./PluginAvailabilityStatus";
 import PluginAvailabilityStatusPopup from "./PluginAvailabilityStatusPopup";
 
 interface PluginChannelAvailabilityCellProps {
-  plugin: Plugin_plugin;
+  plugin: PluginBaseFragment;
 }
 
 const PluginChannelAvailabilityCell: React.FC<PluginChannelAvailabilityCellProps> = ({
