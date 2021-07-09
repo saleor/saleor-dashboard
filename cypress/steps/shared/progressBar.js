@@ -2,10 +2,10 @@ import { SHARED_ELEMENTS } from "../../elements/shared/sharedElements";
 
 export function visitAndWaitForProgressBarToDisappear(url) {
   cy.visit(url);
-  return waitForProgressBarToNotVisible();
+  return waitForProgressBarToNotBeVisible();
 }
 
-export function waitForProgressBarToNotVisible() {
+export function waitForProgressBarToNotBeVisible() {
   return cy.get(SHARED_ELEMENTS.progressBar).should("be.not.visible");
 }
 

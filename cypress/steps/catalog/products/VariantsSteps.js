@@ -3,9 +3,8 @@ import { PRODUCT_DETAILS } from "../../../elements/catalog/products/product-deta
 import { VARIANTS_SELECTORS } from "../../../elements/catalog/products/variants-selectors";
 import { AVAILABLE_CHANNELS_FORM } from "../../../elements/channels/available-channels-form";
 import { BUTTON_SELECTORS } from "../../../elements/shared/button-selectors";
-import { SHARED_ELEMENTS } from "../../../elements/shared/sharedElements";
 import { selectChannelVariantInDetailsPage } from "../../channelsSteps";
-import { waitForProgressBarToNotVisible } from "../../shared/progressBar";
+import { waitForProgressBarToNotBeVisible } from "../../shared/progressBar";
 import { fillUpPriceList } from "./priceList";
 
 export function variantsShouldBeVisible({ name, price }) {
@@ -33,7 +32,7 @@ export function createFirstVariant({ sku, warehouseId, price, attribute }) {
   cy.addAliasToGraphRequest("ProductVariantBulkCreate");
   cy.get(VARIANTS_SELECTORS.nextButton).click();
   cy.wait("@ProductVariantBulkCreate");
-  waitForProgressBarToNotVisible()
+  waitForProgressBarToNotBeVisible()
     .get(AVAILABLE_CHANNELS_FORM.menageChannelsButton)
     .should("be.visible");
 }
@@ -72,7 +71,7 @@ export function createVariant({
   cy.get(VARIANTS_SELECTORS.saveButton).click();
   cy.wait("@ProductVariantChannelListingUpdate");
   cy.get(BUTTON_SELECTORS.back).click();
-  waitForProgressBarToNotVisible()
+  waitForProgressBarToNotBeVisible()
     .get(AVAILABLE_CHANNELS_FORM.menageChannelsButton)
     .should("be.visible");
 }

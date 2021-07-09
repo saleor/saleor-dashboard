@@ -2,7 +2,7 @@ import { BUTTON_SELECTORS } from "../elements/shared/button-selectors";
 import { SHIPPING_RATE_DETAILS } from "../elements/shipping/shipping-rate-details";
 import { SHIPPING_ZONE_DETAILS } from "../elements/shipping/shipping-zone-details";
 import { SHIPPING_ZONES_LIST } from "../elements/shipping/shipping-zones-list";
-import { waitForProgressBarToNotVisible } from "./shared/progressBar";
+import { waitForProgressBarToNotBeVisible } from "./shared/progressBar";
 
 export function createShippingZone(
   shippingName,
@@ -42,7 +42,7 @@ export function createShippingZone(
 
 export function createShippingRate(rateName, price, rateOption) {
   cy.get(rateOption).click();
-  waitForProgressBarToNotVisible()
+  waitForProgressBarToNotBeVisible()
     .get(SHIPPING_RATE_DETAILS.inputName)
     .type(rateName)
     .get(SHIPPING_RATE_DETAILS.priceInput)
