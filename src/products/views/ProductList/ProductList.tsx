@@ -347,18 +347,18 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
 
   const filterOpts = getFilterOpts(
     params,
-    mapEdgesToItems(initialFilterAttributes?.attributes),
+    mapEdgesToItems(initialFilterAttributes?.attributes) || [],
     searchAttributeValues,
     {
-      initial: mapEdgesToItems(initialFilterCategories?.categories),
+      initial: mapEdgesToItems(initialFilterCategories?.categories) || [],
       search: searchCategories
     },
     {
-      initial: mapEdgesToItems(initialFilterCollections?.collections),
+      initial: mapEdgesToItems(initialFilterCollections?.collections) || [],
       search: searchCollections
     },
     {
-      initial: mapEdgesToItems(initialFilterProductTypes?.productTypes),
+      initial: mapEdgesToItems(initialFilterProductTypes?.productTypes) || [],
       search: searchProductTypes
     },
     channelOpts
@@ -379,14 +379,15 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
           sort: params.sort
         }}
         onSort={handleSort}
-        availableInGridAttributes={mapEdgesToItems(
-          availableInGridAttributes?.data?.availableInGrid
-        )}
+        availableInGridAttributes={
+          mapEdgesToItems(availableInGridAttributes?.data?.availableInGrid) ||
+          []
+        }
         currencySymbol={selectedChannel?.currencyCode || ""}
         currentTab={currentTab}
         defaultSettings={defaultListSettings[ListViews.PRODUCT_LIST]}
         filterOpts={filterOpts}
-        gridAttributes={mapEdgesToItems(gridAttributes?.data?.grid)}
+        gridAttributes={mapEdgesToItems(gridAttributes?.data?.grid) || []}
         totalGridAttributes={maybe(
           () => availableInGridAttributes.data.availableInGrid.totalCount,
           0
@@ -491,7 +492,9 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
         </DialogContentText>
       </ActionDialog>
       <ProductExportDialog
-        attributes={mapEdgesToItems(searchAttributes?.result?.data?.search)}
+        attributes={
+          mapEdgesToItems(searchAttributes?.result?.data?.search) || []
+        }
         hasMore={searchAttributes.result.data?.search.pageInfo.hasNextPage}
         loading={
           searchAttributes.result.loading ||
@@ -508,7 +511,7 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
           filter: data?.products.totalCount
         }}
         selectedProducts={listElements.length}
-        warehouses={mapEdgesToItems(warehouses?.data?.warehouses)}
+        warehouses={mapEdgesToItems(warehouses?.data?.warehouses) || []}
         channels={availableChannels}
         onClose={closeModal}
         onSubmit={data =>

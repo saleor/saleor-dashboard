@@ -323,9 +323,8 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
     onFetchMore: loadMoreAttributeValues
   };
 
-  const attributeValues = mapEdgesToItems(
-    searchAttributeValuesOpts?.data?.attribute.choices
-  );
+  const attributeValues =
+    mapEdgesToItems(searchAttributeValuesOpts?.data?.attribute.choices) || [];
 
   return (
     <>
@@ -346,7 +345,7 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
         placeholderImage={placeholderImg}
         variant={variant}
         header={variant?.name || variant?.sku}
-        warehouses={mapEdgesToItems(warehouses?.data?.warehouses)}
+        warehouses={mapEdgesToItems(warehouses?.data?.warehouses) || []}
         onAdd={() => navigate(productVariantAddUrl(productId))}
         onBack={handleBack}
         onDelete={() => openModal("remove")}
@@ -364,8 +363,10 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
           params.action === "assign-attribute-value" && params.id
         }
         onAssignReferencesClick={handleAssignAttributeReferenceClick}
-        referencePages={mapEdgesToItems(searchPagesOpts?.data?.search)}
-        referenceProducts={mapEdgesToItems(searchProductsOpts?.data?.search)}
+        referencePages={mapEdgesToItems(searchPagesOpts?.data?.search) || []}
+        referenceProducts={
+          mapEdgesToItems(searchProductsOpts?.data?.search) || []
+        }
         fetchReferencePages={searchPages}
         fetchMoreReferencePages={fetchMoreReferencePages}
         fetchReferenceProducts={searchProducts}

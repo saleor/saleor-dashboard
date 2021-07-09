@@ -1,6 +1,12 @@
 import * as attributeRequest from "../../apiRequests/Attribute";
 import * as categoryRequest from "../../apiRequests/Category";
 import * as productRequest from "../../apiRequests/Product";
+import {
+  createTypeProduct,
+  deleteProductType,
+  getProductTypes
+} from "../../apiRequests/productType";
+import { deleteAttributesStartsWith } from "../attributes.js/attributeUtils";
 
 export function createProductInChannel({
   name,
@@ -68,7 +74,7 @@ export function createTypeAttributeAndCategoryForProduct(
     .createAttribute(name, attributeValues)
     .then(attributeResp => {
       attribute = attributeResp;
-      productRequest.createTypeProduct({ name, attributeId: attributeResp.id });
+      createTypeProduct({ name, attributeId: attributeResp.id });
     })
     .then(productTypeResp => {
       productType = productTypeResp;
@@ -80,11 +86,8 @@ export function createTypeAttributeAndCategoryForProduct(
     });
 }
 export function deleteProductsStartsWith(startsWith) {
-  cy.deleteElementsStartsWith(
-    productRequest.deleteProductType,
-    productRequest.getProductTypes,
-    startsWith
-  );
+  deleteAttributesStartsWith(startsWith);
+  cy.deleteElementsStartsWith(deleteProductType, getProductTypes, startsWith);
   cy.deleteElementsStartsWith(
     attributeRequest.deleteAttribute,
     attributeRequest.getAttributes,

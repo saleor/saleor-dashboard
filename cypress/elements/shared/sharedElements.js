@@ -7,3 +7,6 @@ export const SHARED_ELEMENTS = {
   confirmationMsg: "[data-test='notification-success']",
   searchInput: '[data-test-id="searchInput"]'
 };
+
+export const getElementByDataTestId = dataTestId =>
+  `[data-test-id=${dataTestId}]`;

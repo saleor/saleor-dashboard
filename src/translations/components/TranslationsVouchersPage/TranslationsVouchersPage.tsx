@@ -4,6 +4,7 @@ import LanguageSwitch from "@saleor/components/LanguageSwitch";
 import PageHeader from "@saleor/components/PageHeader";
 import { VoucherTranslationFragment } from "@saleor/fragments/types/VoucherTranslationFragment";
 import { commonMessages, sectionNames } from "@saleor/intl";
+import { getStringOrPlaceholder } from "@saleor/misc";
 import { TranslationsEntitiesPageProps } from "@saleor/translations/types";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -49,7 +50,7 @@ const TranslationsVouchersPage: React.FC<TranslationsVouchersPageProps> = ({
           },
           {
             languageCode,
-            voucherName: data?.voucher?.name || "..."
+            voucherName: getStringOrPlaceholder(data?.voucher?.name)
           }
         )}
       >

@@ -143,7 +143,7 @@ const TranslationsEntities: React.FC<TranslationsEntitiesProps> = ({
             return (
               <TranslationsEntitiesList
                 disabled={loading}
-                entities={mapEdgesToItems(data?.translations).map(
+                entities={mapEdgesToItems(data?.translations)?.map(
                   node =>
                     node.__typename === "CategoryTranslatableContent" && {
                       completion: {
@@ -186,7 +186,7 @@ const TranslationsEntities: React.FC<TranslationsEntitiesProps> = ({
             return (
               <TranslationsEntitiesList
                 disabled={loading}
-                entities={mapEdgesToItems(data?.translations).map(
+                entities={mapEdgesToItems(data?.translations)?.map(
                   node =>
                     node.__typename === "ProductTranslatableContent" && {
                       completion: {
@@ -230,7 +230,7 @@ const TranslationsEntities: React.FC<TranslationsEntitiesProps> = ({
             return (
               <TranslationsEntitiesList
                 disabled={loading}
-                entities={mapEdgesToItems(data?.translations).map(
+                entities={mapEdgesToItems(data?.translations)?.map(
                   node =>
                     node.__typename === "CollectionTranslatableContent" && {
                       completion: {
@@ -274,7 +274,7 @@ const TranslationsEntities: React.FC<TranslationsEntitiesProps> = ({
             return (
               <TranslationsEntitiesList
                 disabled={loading}
-                entities={mapEdgesToItems(data?.translations).map(
+                entities={mapEdgesToItems(data?.translations)?.map(
                   node =>
                     node.__typename === "SaleTranslatableContent" && {
                       completion: {
@@ -313,7 +313,7 @@ const TranslationsEntities: React.FC<TranslationsEntitiesProps> = ({
             return (
               <TranslationsEntitiesList
                 disabled={loading}
-                entities={mapEdgesToItems(data?.translations).map(
+                entities={mapEdgesToItems(data?.translations)?.map(
                   node =>
                     node.__typename === "VoucherTranslatableContent" && {
                       completion: {
@@ -352,7 +352,7 @@ const TranslationsEntities: React.FC<TranslationsEntitiesProps> = ({
             return (
               <TranslationsEntitiesList
                 disabled={loading}
-                entities={mapEdgesToItems(data?.translations).map(
+                entities={mapEdgesToItems(data?.translations)?.map(
                   node =>
                     node.__typename === "PageTranslatableContent" && {
                       completion: {
@@ -391,7 +391,7 @@ const TranslationsEntities: React.FC<TranslationsEntitiesProps> = ({
             return (
               <TranslationsEntitiesList
                 disabled={loading}
-                entities={mapEdgesToItems(data?.translations).map(
+                entities={mapEdgesToItems(data?.translations)?.map(
                   node =>
                     node.__typename === "AttributeTranslatableContent" && {
                       completion: null,
@@ -426,7 +426,7 @@ const TranslationsEntities: React.FC<TranslationsEntitiesProps> = ({
             return (
               <TranslationsEntitiesList
                 disabled={loading}
-                entities={mapEdgesToItems(data?.translations).map(
+                entities={mapEdgesToItems(data?.translations)?.map(
                   node =>
                     node.__typename === "ShippingMethodTranslatableContent" && {
                       completion: {
