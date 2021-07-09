@@ -6,6 +6,7 @@ import {
   deleteProductType,
   getProductTypes
 } from "../../apiRequests/productType";
+import { deleteAttributesStartsWith } from "../attributes.js/attributeUtils";
 
 export function createProductInChannel({
   name,
@@ -85,6 +86,7 @@ export function createTypeAttributeAndCategoryForProduct(
     });
 }
 export function deleteProductsStartsWith(startsWith) {
+  deleteAttributesStartsWith(startsWith);
   cy.deleteElementsStartsWith(deleteProductType, getProductTypes, startsWith);
   cy.deleteElementsStartsWith(
     attributeRequest.deleteAttribute,

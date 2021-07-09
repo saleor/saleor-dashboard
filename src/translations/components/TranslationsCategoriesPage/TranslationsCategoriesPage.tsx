@@ -5,6 +5,7 @@ import LanguageSwitch from "@saleor/components/LanguageSwitch";
 import PageHeader from "@saleor/components/PageHeader";
 import { CategoryTranslationFragment } from "@saleor/fragments/types/CategoryTranslationFragment";
 import { commonMessages, sectionNames } from "@saleor/intl";
+import { getStringOrPlaceholder } from "@saleor/misc";
 import {
   TranslationInputFieldName,
   TranslationsEntitiesPageProps
@@ -47,7 +48,7 @@ const TranslationsCategoriesPage: React.FC<TranslationsCategoriesPageProps> = ({
               'Translation Category "{categoryName}" - {languageCode}'
           },
           {
-            categoryName: data?.category?.name || "...",
+            categoryName: getStringOrPlaceholder(data?.category?.name),
             languageCode
           }
         )}

@@ -58,7 +58,12 @@ const AttributeListPage: React.FC<AttributeListPageProps> = ({
         <FormattedMessage {...sectionNames.configuration} />
       </AppHeader>
       <PageHeader title={intl.formatMessage(sectionNames.attributes)}>
-        <Button onClick={onAdd} color="primary" variant="contained">
+        <Button
+          onClick={onAdd}
+          color="primary"
+          variant="contained"
+          data-test-id="createAttributeButton"
+        >
           <FormattedMessage
             defaultMessage="Create attribute"
             description="button"

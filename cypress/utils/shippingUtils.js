@@ -1,7 +1,13 @@
 import * as shippingMethodRequest from "../apiRequests/ShippingMethod";
 import * as warehouseRequest from "../apiRequests/Warehouse";
 
-export function createShipping({ channelId, name, address, price = 1 }) {
+export function createShipping({
+  channelId,
+  name,
+  address,
+  price = 1,
+  minProductPrice = 0
+}) {
   let shippingMethod;
   let shippingZone;
   let warehouse;
@@ -18,21 +24,22 @@ export function createShipping({ channelId, name, address, price = 1 }) {
     })
     .then(warehouseResp => {
       warehouse = warehouseResp;
-      createShippingRate(name, shippingZone.id);
+      createShippingRate({ name, shippingZoneId: shippingZone.id });
     })
     .then(sippingMethodResp => {
       shippingMethod = sippingMethodResp;
       shippingMethodRequest.addChannelToShippingMethod(
         shippingMethod.id,
         channelId,
-        price
+        price,
+        minProductPrice
       );
     })
     .then(() => ({ shippingMethod, shippingZone, warehouse }));
 }
-export function createShippingRate(name, shippingZoneId) {
+export function createShippingRate({ name, shippingZoneId }) {
   return shippingMethodRequest
-    .createShippingRate(name, shippingZoneId)
+    .createShippingRate({ name, shippingZoneId })
     .its("body.data.shippingPriceCreate.shippingMethod");
 }
 

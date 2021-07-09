@@ -59,6 +59,7 @@ const WarehousesSection: React.FC<WarehousesSectionProps> = ({
           label: intl.formatMessage(messages.selectFieldAddText),
           onClick: onAdd
         }}
+        testId="warehouses"
         choices={choices}
         displayValues={displayValues}
         fetchChoices={onSearchChange}

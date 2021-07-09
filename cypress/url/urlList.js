@@ -15,6 +15,7 @@ export const urlList = {
   newPassword: "new-password/",
   permissionsGroups: "permission-groups/",
   pageTypes: "page-types/",
+  attributes: "attributes/",
   productTypes: "product-types/"
 };
 
@@ -27,6 +28,12 @@ export const staffMemberDetailsUrl = staffMemberId =>
 
 export const permissionGroupDetails = permissionGroupId =>
   `${urlList.permissionsGroups}${permissionGroupId}`;
+
+export const shippingZoneDetailsUrl = shippingZoneId =>
+  `${urlList.shippingMethods}${shippingZoneId}`;
+
+export const warehouseDetailsUrl = warehouseId =>
+  `${urlList.warehouses}${warehouseId}`;
 
 export const productTypeDetailsUrl = productTypeId =>
   `${urlList.productTypes}${productTypeId}`;
