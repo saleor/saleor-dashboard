@@ -49,6 +49,13 @@ export const commonMessages = defineMessages({
   generalInformations: {
     defaultMessage: "General Information"
   },
+  imgageUploadError_title: {
+    defaultMessage: "Couldn't process image"
+  },
+  imageUploadError_text: {
+    defaultMessage:
+      "There was a poblem with the file you uploaded as an image and it couldn't be used. Please try a different file."
+  },
   insufficientPermissions: {
     defaultMessage: "Insufficient permissions"
   },
