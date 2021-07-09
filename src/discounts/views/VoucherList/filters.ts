@@ -41,12 +41,9 @@ export function getFilterOpts(
     },
     saleType: {
       active: !!maybe(() => params.type),
-      value: maybe(
-        () =>
-          dedupeFilter(
-            params.type.map(type => findValueInEnum(type, VoucherDiscountType))
-          ),
-        []
+      value: dedupeFilter(
+        params.type?.map(type => findValueInEnum(type, VoucherDiscountType)) ||
+          []
       )
     },
     started: {
@@ -64,14 +61,10 @@ export function getFilterOpts(
     },
     status: {
       active: !!maybe(() => params.status),
-      value: maybe(
-        () =>
-          dedupeFilter(
-            params.status.map(status =>
-              findValueInEnum(status, DiscountStatusEnum)
-            )
-          ),
-        []
+      value: dedupeFilter(
+        params.status?.map(status =>
+          findValueInEnum(status, DiscountStatusEnum)
+        ) || []
       )
     },
     timesUsed: {

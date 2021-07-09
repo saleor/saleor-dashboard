@@ -2,7 +2,7 @@ import { Button, Typography } from "@material-ui/core";
 import AppHeader from "@saleor/components/AppHeader";
 import Container from "@saleor/components/Container";
 import PageHeader from "@saleor/components/PageHeader";
-import { renderCollection } from "@saleor/misc";
+import { getStringOrPlaceholder, renderCollection } from "@saleor/misc";
 import { makeStyles } from "@saleor/theme";
 import React from "react";
 import { defineMessages, useIntl } from "react-intl";
@@ -86,7 +86,9 @@ const CustomerAddressListPage: React.FC<CustomerAddressListPageProps> = props =>
   const intl = useIntl();
 
   const isEmpty = customer?.addresses?.length === 0;
-  const fullName = [customer?.firstName, customer?.lastName].join(" ") || "...";
+  const fullName = getStringOrPlaceholder(
+    customer && [customer.firstName, customer.lastName].join(" ")
+  );
 
   return (
     <Container>

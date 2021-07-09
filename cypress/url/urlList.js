@@ -15,8 +15,10 @@ export const urlList = {
   newPassword: "new-password/",
   permissionsGroups: "permission-groups/",
   weightRete: "weight/",
+  attributes: "attributes/",
   productTypes: "product-types/"
 };
+
 export const productDetailsUrl = productId => `${urlList.products}${productId}`;
 
 export const userDetailsUrl = userId => `${urlList.staffMembers}${userId}`;
