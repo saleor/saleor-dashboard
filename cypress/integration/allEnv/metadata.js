@@ -3,12 +3,9 @@ import faker from "faker";
 import {
   updateMetadata,
   updatePrivateMetadata
-} from "../../apiRequests/metadata";
+} from "../../apiRequests/Metadata";
 import { createDraftOrder, getOrder } from "../../apiRequests/Order";
-import {
-  getProductDetails,
-  getProductMetadata
-} from "../../apiRequests/storeFront/ProductDetails";
+import { getProductMetadata } from "../../apiRequests/storeFront/ProductDetails";
 import { getDefaultChannel } from "../../utils/channelsUtils";
 import {
   createProductInChannel,
