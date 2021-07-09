@@ -3409,6 +3409,12 @@
   "src_dot_hooks_dot_3382262667": {
     "string": "Variant {name} has been set as default."
   },
+  "src_dot_imageUploadError_text": {
+    "string": "There was a poblem with the file you uploaded as an image and it couldn't be used. Please try a different file."
+  },
+  "src_dot_imgageUploadError_title": {
+    "string": "Couldn't process image"
+  },
   "src_dot_insufficientPermissions": {
     "string": "Insufficient permissions"
   },
