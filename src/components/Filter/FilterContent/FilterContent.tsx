@@ -21,9 +21,9 @@ import {
   InvalidFilters
 } from "../types";
 import FilterContentBody, { FilterContentBodyProps } from "./FilterContentBody";
-import FilterContentBodyNameField from "./FilterContentBodyNameField";
 import FilterContentHeader from "./FilterContentHeader";
 import FilterErrorsList from "./FilterErrorsList";
+import FilterGroupLabel from "./FilterGroupLabel";
 
 const useExpanderStyles = makeStyles(
   () => ({
@@ -219,7 +219,7 @@ const FilterContent: React.FC<FilterContentProps> = ({
                   classes={summaryClasses}
                   onClick={() => handleFilterOpen(filter)}
                 >
-                  <FilterContentBodyNameField
+                  <FilterGroupLabel
                     filter={currentFilter}
                     onFilterPropertyChange={action =>
                       handleFilterPropertyGroupChange(action, filter)
