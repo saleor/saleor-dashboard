@@ -10,7 +10,7 @@ import { AttributeValueFragment } from "@saleor/fragments/types/AttributeValueFr
 import { commonMessages } from "@saleor/intl";
 import { getById } from "@saleor/orders/components/OrderReturnPage/utils";
 import {
-  geBasicAttributeValue,
+  getBasicAttributeValue,
   getBooleanAttributeValue
 } from "@saleor/products/components/ProductVariantCreatorPage/utils";
 import { ProductDetails_product_productType_variantAttributes } from "@saleor/products/types/ProductDetails";
@@ -126,7 +126,7 @@ const ProductVariantCreatorValues: React.FC<ProductVariantCreatorValuesProps> = 
       attributeId,
       typeof attributeValue === "boolean"
         ? getBooleanAttributeValue(attributeName, attributeValue)
-        : geBasicAttributeValue(
+        : getBasicAttributeValue(
             attributeId,
             attributeValue,
             attributeValues,

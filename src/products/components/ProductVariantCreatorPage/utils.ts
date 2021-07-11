@@ -62,7 +62,7 @@ export const getBooleanAttributeValue = (
   }
 });
 
-export const geBasicAttributeValue = (
+export const getBasicAttributeValue = (
   attributeId: string,
   attributeValue: string,
   attributeValues: SearchAttributeValues_attribute_choices_edges_node[],
