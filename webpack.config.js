@@ -37,8 +37,8 @@ const htmlWebpackPlugin = new HtmlWebpackPlugin({
   template: "./src/index.html"
 });
 const environmentPlugin = new webpack.EnvironmentPlugin({
-  API_URI: "",
-  APP_MOUNT_URI: "/",
+  API_URI: "https://uyghur-store.herokuapp.com/graphql/",
+  APP_MOUNT_URI: "https://uyghur-store.herokuapp.com/graphql/",
   DEMO_MODE: false,
   ENVIRONMENT: "",
   GTM_ID: "",
