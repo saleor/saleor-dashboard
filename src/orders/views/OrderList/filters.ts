@@ -22,7 +22,6 @@ import {
 } from "../../../utils/filters";
 import {
   OrderListUrlFilters,
-  OrderListUrlFiltersDictWithMultipleValues,
   OrderListUrlFiltersEnum,
   OrderListUrlFiltersWithMultipleValues,
   OrderListUrlQueryParams
@@ -57,9 +56,9 @@ export function getFilterOpts(
     status: {
       active: params?.status !== undefined,
       value: dedupeFilter(
-        params?.status?.map(status =>
+        params.status?.map(status =>
           findValueInEnum(status, OrderStatusFilter)
-        )
+        ) || []
       )
     }
   };
@@ -103,7 +102,7 @@ export function getFilterQueryParam(
     case OrderFilterKeys.channel:
       return getMultipleValueQueryParam(
         filter,
-        OrderListUrlFiltersDictWithMultipleValues.channel
+        OrderListUrlFiltersWithMultipleValues.channel
       );
 
     case OrderFilterKeys.customer:

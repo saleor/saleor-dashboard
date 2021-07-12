@@ -13,7 +13,7 @@ import { BUTTON_SELECTORS } from "../../../elements/shared/button-selectors";
 import { SHARED_ELEMENTS } from "../../../elements/shared/sharedElements";
 import { selectChannelInPicker } from "../../../steps/channelsSteps";
 import { finalizeDraftOrder } from "../../../steps/draftOrderSteps";
-import { fillAutocompleteSelect } from "../../../steps/shared/autocompleteSelect";
+import { fillAutocompleteSelect } from "../../../steps/shared/selects";
 import { urlList } from "../../../url/urlList";
 import { getDefaultChannel } from "../../../utils/channelsUtils";
 import {

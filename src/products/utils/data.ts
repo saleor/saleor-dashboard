@@ -74,7 +74,7 @@ export function getAttributeInputFromProductType(
       entityType: attribute.entityType,
       inputType: attribute.inputType,
       isRequired: attribute.valueRequired,
-      values: mapEdgesToItems(attribute.choices),
+      values: mapEdgesToItems(attribute.choices) || [],
       unit: attribute.unit
     },
     id: attribute.id,
@@ -92,7 +92,7 @@ export function getAttributeInputFromAttributes(
       entityType: attribute.entityType,
       inputType: attribute.inputType,
       isRequired: attribute.valueRequired,
-      values: mapEdgesToItems(attribute.choices),
+      values: mapEdgesToItems(attribute.choices) || [],
       unit: attribute.unit,
       variantAttributeScope
     },

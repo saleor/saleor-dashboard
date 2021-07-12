@@ -9,7 +9,7 @@ import usePaginator, {
   createPaginationState
 } from "@saleor/hooks/usePaginator";
 import { buttonMessages, commonMessages } from "@saleor/intl";
-import { maybe } from "@saleor/misc";
+import { getStringOrPlaceholder, maybe } from "@saleor/misc";
 import { getById } from "@saleor/orders/components/OrderReturnPage/utils";
 import { ListViews } from "@saleor/types";
 import createSortHandler from "@saleor/utils/handlers/sortHandler";
@@ -209,10 +209,11 @@ const MenuList: React.FC<MenuListProps> = ({ params }) => {
                         defaultMessage="Are you sure you want to delete {menuName}?"
                         id="menuListDeleteMenuContent"
                         values={{
-                          menuName:
+                          menuName: getStringOrPlaceholder(
                             mapEdgesToItems(data?.menus)?.find(
                               getById(params.id)
-                            )?.name || "..."
+                            )?.name
+                          )
                         }}
                       />
                     </DialogContentText>

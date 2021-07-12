@@ -1,5 +1,5 @@
 import { getPermissionsArray } from "../apiRequests/permissions";
-import { inviteStaffMember } from "../apiRequests/staffMember";
+import { inviteStaffMember } from "../apiRequests/StaffMembers";
 
 export function inviteStaffMemberWithFirstPermission({
   email,

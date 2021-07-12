@@ -5,8 +5,14 @@ export const SHARED_ELEMENTS = {
   skeleton: '[data-test-id="skeleton"]',
   table: 'table[class*="Table"]',
   selectOption: '[data-test="selectFieldOption"]',
-  confirmationMsg: "[data-test='notification-success']"
+  confirmationMsg: "[data-test='notification-success']",
+  notificationSuccess: '[data-test="notification-success"]',
+  richTextEditor: {
+    empty: '[class*="codex-editor--empty"]'
+  }
 };
+
+export const selectorWithDataValue = value => `[data-value="${value}"]`;
 
 export const getElementByDataTestId = dataTestId =>
   `[data-test-id=${dataTestId}]`;

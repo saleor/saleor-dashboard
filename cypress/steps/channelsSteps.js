@@ -6,7 +6,7 @@ import { SELECT_CHANNELS_TO_ASSIGN } from "../elements/channels/select-channels-
 import { HEADER_SELECTORS } from "../elements/header/header-selectors";
 import { BUTTON_SELECTORS } from "../elements/shared/button-selectors";
 import { SHARED_ELEMENTS } from "../elements/shared/sharedElements";
-import { fillAutocompleteSelect } from "./shared/autocompleteSelect";
+import { fillAutocompleteSelect } from "./shared/selects";
 
 export function createChannelByView({
   name,

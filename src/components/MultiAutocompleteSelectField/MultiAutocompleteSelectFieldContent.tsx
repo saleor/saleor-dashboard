@@ -203,7 +203,11 @@ const MultiAutocompleteSelectFieldContent: React.FC<MultiAutocompleteSelectField
   return (
     <Paper className={classes.root}>
       {hasValuesToDisplay && (
-        <div className={classes.content} ref={anchor}>
+        <div
+          className={classes.content}
+          ref={anchor}
+          data-test-id="multiautocomplete-select-content"
+        >
           <>
             {add && (
               <MenuItem

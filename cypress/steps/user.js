@@ -4,7 +4,7 @@ import { SHARED_ELEMENTS } from "../elements/shared/sharedElements";
 import { INVITE_STAFF_MEMBER_FORM } from "../elements/staffMembers/inviteStaffMemberForm";
 import { STAFF_MEMBER_DETAILS } from "../elements/staffMembers/staffMemberDetails";
 import { userDetailsUrl } from "../url/urlList";
-import { fillAutocompleteSelect } from "./shared/autocompleteSelect";
+import { fillAutocompleteSelect } from "./shared/selects";
 
 export function fillUpSetPassword(password) {
   cy.get(SET_PASSWORD.confirmPasswordInput)

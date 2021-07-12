@@ -102,7 +102,7 @@ const TranslationsEntitiesList: React.FC<TranslationsEntitiesListProps> = props 
             >
               <TableCell>{entity?.name || <Skeleton />}</TableCell>
               <TableCell className={classes.textRight}>
-                {entity.completion !== null &&
+                {!!entity?.completion &&
                   maybe<React.ReactNode>(
                     () =>
                       intl.formatMessage(
