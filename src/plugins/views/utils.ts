@@ -1,7 +1,7 @@
-import { Plugin_plugin_globalConfiguration } from "@saleor/plugins/types/Plugin";
+import { PluginConfigurationBaseFragment } from "@saleor/fragments/types/PluginConfigurationBaseFragment";
 
 export const isPluginGlobal = (
-  globalConfiguration: Plugin_plugin_globalConfiguration
+  globalConfiguration: PluginConfigurationBaseFragment
 ) => !!globalConfiguration;
 
 export const getConfigByChannelId = (channelIdToCompare: string) => ({

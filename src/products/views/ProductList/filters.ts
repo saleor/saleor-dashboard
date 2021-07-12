@@ -87,10 +87,7 @@ export function getFilterOpts(
         name: attr.name,
         slug: attr.slug,
         inputType: attr.inputType,
-        value:
-          !!params.attributes && params.attributes[attr.slug]
-            ? dedupeFilter(params.attributes[attr.slug])
-            : []
+        value: dedupeFilter(params.attributes?.[attr.slug] || [])
       })),
     attributeChoices: {
       active: true,
@@ -132,7 +129,7 @@ export function getFilterOpts(
       loading: categories.search.result.loading,
       onFetchMore: categories.search.loadMore,
       onSearchChange: categories.search.search,
-      value: maybe(() => dedupeFilter(params.categories), [])
+      value: dedupeFilter(params.categories || [])
     },
     channel: {
       active: params?.channel !== undefined,
@@ -162,7 +159,7 @@ export function getFilterOpts(
       loading: collections.search.result.loading,
       onFetchMore: collections.search.loadMore,
       onSearchChange: collections.search.search,
-      value: maybe(() => dedupeFilter(params.collections), [])
+      value: dedupeFilter(params.collections || [])
     },
     price: {
       active: maybe(
@@ -198,7 +195,7 @@ export function getFilterOpts(
       loading: productTypes.search.result.loading,
       onFetchMore: productTypes.search.loadMore,
       onSearchChange: productTypes.search.search,
-      value: maybe(() => dedupeFilter(params.productTypes), [])
+      value: dedupeFilter(params.productTypes || [])
     },
     stockStatus: {
       active: maybe(() => params.stockStatus !== undefined, false),

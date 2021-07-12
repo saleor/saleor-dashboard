@@ -1,9 +1,9 @@
-import { Plugin_plugin_channelConfigurations } from "@saleor/plugins/types/Plugin";
+import { PluginConfigurationBaseFragment } from "@saleor/fragments/types/PluginConfigurationBaseFragment";
 
 export const getAllChannelConfigsCount = (
-  channelConfigurations: Plugin_plugin_channelConfigurations[]
+  channelConfigurations: PluginConfigurationBaseFragment[]
 ) => channelConfigurations?.length;
 
 export const getActiveChannelConfigsCount = (
-  channelConfigurations: Plugin_plugin_channelConfigurations[]
+  channelConfigurations: PluginConfigurationBaseFragment[]
 ) => channelConfigurations?.filter(({ active }) => !!active).length;

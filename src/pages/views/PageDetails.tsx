@@ -179,9 +179,8 @@ export const PageDetails: React.FC<PageDetailsProps> = ({ id, params }) => {
     result: searchAttributeValuesOpts
   } = createAttributeValueSearchHandler(DEFAULT_INITIAL_SEARCH_DATA);
 
-  const attributeValues = mapEdgesToItems(
-    searchAttributeValuesOpts?.data?.attribute.choices
-  );
+  const attributeValues =
+    mapEdgesToItems(searchAttributeValuesOpts?.data?.attribute.choices) || [];
 
   const fetchMoreReferencePages = {
     hasMore: searchPagesOpts.data?.search?.pageInfo?.hasNextPage,
@@ -213,7 +212,7 @@ export const PageDetails: React.FC<PageDetailsProps> = ({ id, params }) => {
         errors={pageUpdateOpts.data?.pageUpdate.errors || []}
         saveButtonBarState={pageUpdateOpts.status}
         page={pageDetails.data?.page}
-        attributeValues={attributeValues || []}
+        attributeValues={attributeValues}
         onBack={() => navigate(pageListUrl())}
         onRemove={() =>
           navigate(
