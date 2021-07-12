@@ -14,9 +14,11 @@ export const urlList = {
   staffMembers: "staff/",
   newPassword: "new-password/",
   permissionsGroups: "permission-groups/",
+  weightRete: "weight/",
   attributes: "attributes/",
   productTypes: "product-types/"
 };
+
 export const productDetailsUrl = productId => `${urlList.products}${productId}`;
 
 export const userDetailsUrl = userId => `${urlList.staffMembers}${userId}`;
@@ -29,6 +31,9 @@ export const permissionGroupDetails = permissionGroupId =>
 
 export const shippingZoneDetailsUrl = shippingZoneId =>
   `${urlList.shippingMethods}${shippingZoneId}`;
+
+export const weightRateUrl = (shippingZoneId, weightRateId) =>
+  `${urlList.shippingMethods}${shippingZoneId}/${urlList.weightRete}${weightRateId}`;
 
 export const warehouseDetailsUrl = warehouseId =>
   `${urlList.warehouses}${warehouseId}`;
