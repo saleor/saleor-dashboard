@@ -1,5 +1,6 @@
 import { Locale, RawLocaleProvider } from "@saleor/components/Locale";
 import { ThemeProvider } from "@saleor/macaw-ui";
+import themeOverrides from "@saleor/themeOverrides";
 import React from "react";
 import { IntlProvider } from "react-intl";
 import { BrowserRouter } from "react-router-dom";
@@ -19,7 +20,7 @@ export const Decorator = storyFn => (
     >
       <DateProvider value={+new Date("2018-08-07T14:30:44+00:00")}>
         <TimezoneProvider value="America/New_York">
-          <ThemeProvider>
+          <ThemeProvider overrides={themeOverrides}>
             <BrowserRouter basename={APP_MOUNT_URI}>
               <MessageManagerProvider>
                 <div

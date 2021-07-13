@@ -60,6 +60,7 @@ import ShippingSection from "./shipping";
 import SiteSettingsSection from "./siteSettings";
 import StaffSection from "./staff";
 import TaxesSection from "./taxes";
+import themeOverrides from "./themeOverrides";
 import TranslationsSection from "./translations";
 import { PermissionEnum } from "./types/globalTypes";
 import WarehouseSection from "./warehouses";
@@ -107,7 +108,7 @@ const apolloClient = new ApolloClient({
 const App: React.FC = () => (
   <ApolloProvider client={apolloClient}>
     <BrowserRouter basename={APP_MOUNT_URI}>
-      <ThemeProvider>
+      <ThemeProvider overrides={themeOverrides}>
         <DateProvider>
           <LocaleProvider>
             <MessageManagerProvider>
