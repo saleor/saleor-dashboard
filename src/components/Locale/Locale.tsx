@@ -42,6 +42,7 @@ export enum Locale {
   TH = "th",
   TR = "tr",
   UK = "uk",
+  UG = "ug",
   VI = "vi",
   ZH_HANS = "zh-Hans",
   ZH_HANT = "zh-Hant"
@@ -93,6 +94,7 @@ export const localeNames: Record<Locale, string> = {
   [Locale.TH]: "ภาษาไทย",
   [Locale.TR]: "Türkçe",
   [Locale.UK]: "Українська",
+  [Locale.UG]: "ئۇيغۇرچە",
   [Locale.VI]: "Tiếng Việt",
   [Locale.ZH_HANS]: "简体中文",
   [Locale.ZH_HANT]: "繁體中文"
