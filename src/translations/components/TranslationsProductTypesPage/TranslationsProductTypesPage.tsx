@@ -5,9 +5,11 @@ import PageHeader from "@saleor/components/PageHeader";
 import { ListSettingsUpdate } from "@saleor/components/TablePagination";
 import { AttributeTranslationDetailsFragment } from "@saleor/fragments/types/AttributeTranslationDetailsFragment";
 import { commonMessages, sectionNames } from "@saleor/intl";
+import { Backlink } from "@saleor/macaw-ui";
 import { getStringOrPlaceholder } from "@saleor/misc";
 import { TranslationsEntitiesPageProps } from "@saleor/translations/types";
 import { ListSettings } from "@saleor/types";
+import React from "react";
 import { defineMessages, useIntl } from "react-intl";
 
 import {
