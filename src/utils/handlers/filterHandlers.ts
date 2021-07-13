@@ -59,6 +59,8 @@ function createFilterHandlers<
     navigate(
       createUrl({
         ...params,
+        after: undefined,
+        before: undefined,
         activeTab: undefined,
         query
       })
