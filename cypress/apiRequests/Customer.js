@@ -1,3 +1,4 @@
+import { urlList } from "../url/urlList";
 import { getDefaultAddress } from "./utils/Utils";
 export function createCustomer(email, customerName, address, isActive = false) {
   const mutation = `
@@ -62,4 +63,44 @@ export function getCustomers(startsWith) {
     }
   }`;
   return cy.sendRequestWithQuery(query);
+}
+
+export function customerRegistration({
+  email,
+  password = Cypress.env("USER_PASSWORD"),
+  channel
+}) {
+  const mutation = `mutation{
+    accountRegister(input:{
+      email:"${email}",
+      password:"${password}"
+      channel:"${channel}"
+      redirectUrl: "${Cypress.config().baseUrl}account-confirm"
+    }){
+      requiresConfirmation
+      user{
+        id
+      }
+      errors{
+        field
+        message
+      }
+    }
+  }`;
+  return cy.sendRequestWithQuery(mutation).its("body.data.accountRegister");
+}
+
+export function confirmAccount(email, token) {
+  const mutation = `mutation{
+    confirmAccount(email:"${email}", token:"${token}"){
+      user{
+        email
+      }
+      errors{
+        field
+        message
+      }
+    }
+  }`;
+  return cy.sendRequestWithQuery(mutation).its("body.data.confirmAccount");
 }
