@@ -13,7 +13,7 @@ const useStyles = makeStyles(
         padding: "12px 12px 10px",
         textAlign: "right"
       },
-      width: 60
+      width: 80
     }
   }),
   { name: "TableLineForm" }
