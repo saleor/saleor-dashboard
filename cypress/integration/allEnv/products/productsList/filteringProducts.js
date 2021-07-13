@@ -91,6 +91,7 @@ describe("Filtering products", () => {
   const filterProductsBy = ["category", "collection", "productType"];
   filterProductsBy.forEach(filterBy => {
     it(`should filter products by ${filterBy}`, () => {
+      cy.softExpectSkeletonIsVisible();
       cy.get(SHARED_ELEMENTS.progressBar).should("not.exist");
       selectFilterOption(filterBy, name);
       cy.getTextFromElement(PRODUCTS_LIST.productsNames).then(product => {
@@ -100,6 +101,7 @@ describe("Filtering products", () => {
   });
 
   it("should filter products out of stock", () => {
+    cy.softExpectSkeletonIsVisible();
     const productOutOfStock = `${startsWith}${faker.datatype.number()}`;
     createProductInChannel({
       name: productOutOfStock,

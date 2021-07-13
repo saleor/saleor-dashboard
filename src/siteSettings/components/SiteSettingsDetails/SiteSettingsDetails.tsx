@@ -50,6 +50,11 @@ const SiteSettingsDetails: React.FC<SiteSettingsDetailsProps> = ({
           }
           value={data.name}
           onChange={onChange}
+          InputProps={{
+            inputProps: {
+              autoComplete: "none"
+            }
+          }}
         />
         <FormSpacer />
         <TextField
@@ -63,6 +68,11 @@ const SiteSettingsDetails: React.FC<SiteSettingsDetailsProps> = ({
           helperText={getShopErrorMessage(formErrors.domain, intl)}
           value={data.domain}
           onChange={onChange}
+          InputProps={{
+            inputProps: {
+              autoComplete: "none"
+            }
+          }}
         />
         <FormSpacer />
         <TextField
@@ -82,6 +92,11 @@ const SiteSettingsDetails: React.FC<SiteSettingsDetailsProps> = ({
           }
           value={data.description}
           onChange={onChange}
+          InputProps={{
+            inputProps: {
+              autoComplete: "none"
+            }
+          }}
         />
       </CardContent>
     </Card>

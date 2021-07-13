@@ -165,6 +165,7 @@ export function createOrderWithNewProduct({
   shippingMethodId,
   address
 }) {
+  let variantsList;
   return createProductInChannel({
     attributeId,
     categoryId,
@@ -174,13 +175,16 @@ export function createOrderWithNewProduct({
     warehouseId,
     quantityInWarehouse,
     trackInventory
-  }).then(({ variantsList }) =>
-    createWaitingForCaptureOrder({
-      channelSlug: channel.slug,
-      email: "email@example.com",
-      variantsList,
-      shippingMethodId,
-      address
+  })
+    .then(({ variantsList: variantsListResp }) => {
+      variantsList = variantsListResp;
+      createWaitingForCaptureOrder({
+        channelSlug: channel.slug,
+        email: "email@example.com",
+        variantsList,
+        shippingMethodId,
+        address
+      });
     })
-  );
+    .then(({ order, checkout }) => ({ order, checkout, variantsList }));
 }

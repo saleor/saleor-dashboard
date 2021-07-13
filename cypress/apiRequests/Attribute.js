@@ -58,3 +58,21 @@ export function deleteAttribute(attributeId) {
   }`;
   return cy.sendRequestWithQuery(mutation);
 }
+
+export function getAttribute(attributeId) {
+  const query = `query{
+    attribute(id:"${attributeId}"){
+      id
+      inputType
+      name
+      slug
+      type
+      entityType
+      valueRequired
+      visibleInStorefront
+      availableInGrid
+      unit
+    }
+  }`;
+  return cy.sendRequestWithQuery(query).its("body.data.attribute");
+}

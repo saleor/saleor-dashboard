@@ -46,6 +46,7 @@ describe("Channels", () => {
     const randomChannel = `${channelStartsWith} ${faker.datatype.number()}`;
     cy.addAliasToGraphRequest("Channels");
     cy.visit(urlList.channels);
+    cy.softExpectSkeletonIsVisible();
     cy.wait("@Channels");
     createChannelByView({ name: randomChannel, currency });
     cy.wait("@Channel");
@@ -87,6 +88,7 @@ describe("Channels", () => {
     const randomChannel = `${channelStartsWith} ${faker.datatype.number()}`;
     cy.addAliasToGraphRequest("Channels");
     cy.visit(urlList.channels);
+    cy.softExpectSkeletonIsVisible();
     cy.wait("@Channels");
     createChannelByView({
       name: randomChannel,
@@ -111,6 +113,7 @@ describe("Channels", () => {
       currencyCode: currency
     });
     cy.visit(urlList.channels);
+    cy.softExpectSkeletonIsVisible();
     createChannelByView({ name: randomChannel, currency });
     cy.get(ADD_CHANNEL_FORM_SELECTORS.slugValidationMessage).should(
       "be.visible"
@@ -120,6 +123,7 @@ describe("Channels", () => {
   it("should validate duplicated currency", () => {
     const randomChannel = `${channelStartsWith} ${faker.datatype.number()}`;
     cy.visit(urlList.channels);
+    cy.softExpectSkeletonIsVisible();
     createChannelByView({
       name: randomChannel,
       currency: "notExistingCurrency"
@@ -139,6 +143,7 @@ describe("Channels", () => {
     });
     cy.addAliasToGraphRequest("Channels");
     cy.visit(urlList.channels);
+    cy.softExpectSkeletonIsVisible();
     cy.wait("@Channels");
     cy.contains(CHANNELS_SELECTORS.channelName, randomChannelToDelete)
       .parentsUntil(CHANNELS_SELECTORS.channelsTable)

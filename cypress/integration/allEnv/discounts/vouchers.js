@@ -97,7 +97,6 @@ describe("Vouchers discounts", () => {
 
   it("should create fixed price voucher", () => {
     const voucherValue = 50;
-
     loginAndCreateCheckoutForVoucherWithDiscount(
       discountOptions.FIXED,
       voucherValue
@@ -124,6 +123,7 @@ describe("Vouchers discounts", () => {
     cy.clearSessionData()
       .loginUserViaRequest()
       .visit(urlList.vouchers);
+    cy.softExpectSkeletonIsVisible();
     createChannel({ name: randomName })
       .then(channel => {
         createVoucher({
@@ -160,6 +160,7 @@ describe("Vouchers discounts", () => {
     cy.clearSessionData()
       .loginUserViaRequest("auth", ONE_PERMISSION_USERS.discount)
       .visit(urlList.vouchers);
+    cy.softExpectSkeletonIsVisible();
     createVoucher({
       voucherCode,
       voucherValue,

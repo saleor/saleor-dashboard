@@ -25,7 +25,8 @@ describe("Tests for product types", () => {
   beforeEach(() => {
     cy.clearSessionData()
       .loginUserViaRequest()
-      .visit(urlList.productTypes);
+      .visit(urlList.productTypes)
+      .softExpectSkeletonIsVisible();
   });
 
   it("Create product type without shipping required", () => {

@@ -14,15 +14,15 @@ const useStyles = makeStyles(
       padding: theme.spacing(1, 2.5)
     }
   }),
-  { name: "FilterContentBodyNameField" }
+  { name: "FilterGroupLabel" }
 );
 
-export interface FilterContentBodyNameFieldProps<T extends string = string> {
+export interface FilterGroupLabelProps<T extends string = string> {
   filter: IFilterElement<T>;
   onFilterPropertyChange: React.Dispatch<FilterReducerAction<T>>;
 }
 
-const FilterContentBodyNameField: React.FC<FilterContentBodyNameFieldProps> = ({
+const FilterGroupLabel: React.FC<FilterGroupLabelProps> = ({
   filter,
   onFilterPropertyChange
 }) => {
@@ -60,4 +60,4 @@ const FilterContentBodyNameField: React.FC<FilterContentBodyNameFieldProps> = ({
   );
 };
 
-export default FilterContentBodyNameField;
+export default FilterGroupLabel;

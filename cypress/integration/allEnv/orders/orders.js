@@ -13,7 +13,7 @@ import { BUTTON_SELECTORS } from "../../../elements/shared/button-selectors";
 import { SHARED_ELEMENTS } from "../../../elements/shared/sharedElements";
 import { selectChannelInPicker } from "../../../steps/channelsSteps";
 import { finalizeDraftOrder } from "../../../steps/draftOrderSteps";
-import { fillAutocompleteSelect } from "../../../steps/shared/autocompleteSelect";
+import { fillAutocompleteSelect } from "../../../steps/shared/selects";
 import { urlList } from "../../../url/urlList";
 import { getDefaultChannel } from "../../../utils/channelsUtils";
 import {
@@ -144,6 +144,7 @@ describe("Orders", () => {
       .then(({ order: orderResp }) => {
         order = orderResp;
         cy.visit(urlList.orders);
+        cy.softExpectSkeletonIsVisible();
         cy.contains(ORDERS_SELECTORS.orderRow, order.number).click();
         cy.get(SHARED_ELEMENTS.skeleton)
           .should("not.exist")
@@ -180,6 +181,7 @@ describe("Orders", () => {
       .then(({ order: orderResp }) => {
         order = orderResp;
         cy.visit(urlList.orders);
+        cy.softExpectSkeletonIsVisible();
         cy.contains(ORDERS_SELECTORS.orderRow, order.number).click();
         cy.get(ORDERS_SELECTORS.refundButton)
           .click()
