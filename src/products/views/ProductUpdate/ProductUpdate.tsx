@@ -225,7 +225,8 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
       if (imageError) {
         notify({
           status: "error",
-          text: intl.formatMessage(commonMessages.somethingWentWrong)
+          title: intl.formatMessage(commonMessages.imgageUploadError_title),
+          text: intl.formatMessage(commonMessages.imageUploadError_text)
         });
       }
     }

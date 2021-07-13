@@ -100,7 +100,8 @@ export const CollectionDetails: React.FC<CollectionDetailsProps> = ({
       if (backgroundImageError) {
         notify({
           status: "error",
-          text: intl.formatMessage(commonMessages.somethingWentWrong)
+          title: intl.formatMessage(commonMessages.imgageUploadError_title),
+          text: intl.formatMessage(commonMessages.imageUploadError_text)
         });
       }
     }
