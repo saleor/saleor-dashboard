@@ -111,6 +111,12 @@ export const StaffDetails: React.FC<OrderListProps> = ({ id, params }) => {
               status: "success",
               text: intl.formatMessage(commonMessages.savedChanges)
             });
+          } else {
+            notify({
+              status: "error",
+              title: intl.formatMessage(commonMessages.imgageUploadError_title),
+              text: intl.formatMessage(commonMessages.imageUploadError_text)
+            });
           }
         };
         const handleStaffMemberAvatarDelete = (data: StaffAvatarDelete) => {
