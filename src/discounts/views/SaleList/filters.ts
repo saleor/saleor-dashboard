@@ -59,14 +59,10 @@ export function getFilterOpts(
     },
     status: {
       active: !!maybe(() => params.status),
-      value: maybe(
-        () =>
-          dedupeFilter(
-            params.status.map(status =>
-              findValueInEnum(status, DiscountStatusEnum)
-            )
-          ),
-        []
+      value: dedupeFilter(
+        params.status?.map(status =>
+          findValueInEnum(status, DiscountStatusEnum)
+        ) || []
       )
     }
   };

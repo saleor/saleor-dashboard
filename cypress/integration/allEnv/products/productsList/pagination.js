@@ -13,6 +13,7 @@ describe("Products", () => {
     cy.visit(urlList.products);
   });
   it("Should go to the next page", () => {
+    cy.softExpectSkeletonIsVisible();
     cy.get(PRODUCTS_LIST.productsList)
       .should("be.visible")
       .get(PRODUCTS_LIST.emptyProductRow)
@@ -35,6 +36,7 @@ describe("Products", () => {
     });
   });
   it("should displayed correct number of results per page", () => {
+    cy.softExpectSkeletonIsVisible();
     isNumberOfProductsSameAsInSelectResultsOnPage().then(
       isTheSame =>
         expect(isTheSame, "check if number of displayed products is correct").to

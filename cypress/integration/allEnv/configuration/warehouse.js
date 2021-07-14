@@ -8,7 +8,7 @@ import { SHIPPING_ZONE_DETAILS } from "../../../elements/shipping/shipping-zone-
 import { WAREHOUSES_DETAILS } from "../../../elements/warehouses/warehouse-details";
 import { WAREHOUSES_LIST } from "../../../elements/warehouses/warehouses-list";
 import { fillUpBasicAddress } from "../../../steps/shared/addressForm";
-import { fillAutocompleteSelect } from "../../../steps/shared/autocompleteSelect";
+import { fillAutocompleteSelect } from "../../../steps/shared/selects";
 import {
   shippingZoneDetailsUrl,
   urlList,
