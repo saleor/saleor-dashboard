@@ -41,9 +41,10 @@ export const DateTimeField: React.FC<DateTimeFieldProps> = ({
         helperText={getErrorMessage(error, intl)}
         label={intl.formatMessage(commonMessages.date)}
         name={`${name}:date`}
-        onChange={event =>
-          setValue(value => ({ ...value, date: event.target.value }))
-        }
+        onChange={event => {
+          const date = event.target.value;
+          setValue(value => ({ ...value, date }));
+        }}
         type="date"
         value={value.date}
         InputLabelProps={{ shrink: true }}
@@ -55,9 +56,10 @@ export const DateTimeField: React.FC<DateTimeFieldProps> = ({
         helperText={getErrorMessage(error, intl)}
         label={intl.formatMessage(commonMessages.time)}
         name={`${name}:time`}
-        onChange={event =>
-          setValue(value => ({ ...value, time: event.target.value }))
-        }
+        onChange={event => {
+          const time = event.target.value;
+          setValue(value => ({ ...value, time }));
+        }}
         type="time"
         value={value.time}
         InputLabelProps={{ shrink: true }}
