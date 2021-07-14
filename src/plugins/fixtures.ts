@@ -11,7 +11,6 @@ export const pluginList: Plugins_plugins_edges_node[] = [
       {
         __typename: "PluginConfiguration",
         active: true,
-        configuration: [],
         channel: {
           __typename: "Channel",
           id: "channel-1",
@@ -32,7 +31,6 @@ export const pluginList: Plugins_plugins_edges_node[] = [
       {
         __typename: "PluginConfiguration",
         active: true,
-        configuration: [],
         channel: {
           __typename: "Channel",
           id: "channel-1",

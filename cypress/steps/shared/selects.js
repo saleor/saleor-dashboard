@@ -1,4 +1,5 @@
 import { BUTTON_SELECTORS } from "../../elements/shared/button-selectors";
+import { selectorWithDataValue } from "../../elements/shared/sharedElements";
 
 export function fillAutocompleteSelect(selectSelector, option) {
   cy.get(selectSelector)
@@ -19,4 +20,11 @@ export function fillAutocompleteSelect(selectSelector, option) {
       .click();
   }
   return cy.get("@option");
+}
+
+export function fillBaseSelect(selectSelector, value) {
+  cy.get(selectSelector)
+    .click()
+    .get(selectorWithDataValue(value))
+    .click();
 }

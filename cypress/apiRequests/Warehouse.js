@@ -26,6 +26,7 @@ export function createWarehouse({ name, shippingZone, address, slug = name }) {
     .sendRequestWithQuery(mutation)
     .its("body.data.createWarehouse.warehouse");
 }
+
 export function getWarehouses(first, search) {
   const query = `query{
     warehouses(first:${first}, filter:{
@@ -43,6 +44,7 @@ export function getWarehouses(first, search) {
     .sendRequestWithQuery(query)
     .then(resp => resp.body.data.warehouses.edges);
 }
+
 export function deleteWarehouse(warehouseId) {
   const mutation = `mutation{
     deleteWarehouse(id:"${warehouseId}"){
@@ -53,4 +55,30 @@ export function deleteWarehouse(warehouseId) {
     }
   }`;
   return cy.sendRequestWithQuery(mutation);
+}
+
+export function getWarehouse(warehouseId) {
+  const query = `query{
+    warehouse(id:"${warehouseId}"){
+      id
+      name
+      address{
+        companyName
+        streetAddress1
+        streetAddress2
+        city
+        postalCode
+        countryArea
+        phone
+      }
+      shippingZones(first:100){
+        edges{
+          node{
+            id
+          }
+        }
+      }
+    }
+  }`;
+  return cy.sendRequestWithQuery(query).its("body.data.warehouse");
 }

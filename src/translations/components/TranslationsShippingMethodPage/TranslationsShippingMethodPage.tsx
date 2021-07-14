@@ -4,6 +4,7 @@ import LanguageSwitch from "@saleor/components/LanguageSwitch";
 import PageHeader from "@saleor/components/PageHeader";
 import { ShippingMethodTranslationFragment } from "@saleor/fragments/types/ShippingMethodTranslationFragment";
 import { commonMessages, sectionNames } from "@saleor/intl";
+import { getStringOrPlaceholder } from "@saleor/misc";
 import {
   TranslationInputFieldName,
   TranslationsEntitiesPageProps
@@ -48,7 +49,7 @@ const TranslationsShippingMethodPage: React.FC<TranslationsShippingMethodPagePro
           },
           {
             languageCode,
-            shippingMethodName: data?.name || "..."
+            shippingMethodName: getStringOrPlaceholder(data?.name)
           }
         )}
       >

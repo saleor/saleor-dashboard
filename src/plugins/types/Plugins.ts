@@ -3,34 +3,11 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { PluginFilterInput, PluginSortingInput, ConfigurationTypeFieldEnum } from "./../../types/globalTypes";
+import { PluginFilterInput, PluginSortingInput } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL query operation: Plugins
 // ====================================================
-
-export interface Plugins_plugins_edges_node_globalConfiguration_channel {
-  __typename: "Channel";
-  id: string;
-  name: string;
-  slug: string;
-}
-
-export interface Plugins_plugins_edges_node_globalConfiguration_configuration {
-  __typename: "ConfigurationItem";
-  name: string;
-  value: string | null;
-  type: ConfigurationTypeFieldEnum | null;
-  helpText: string | null;
-  label: string | null;
-}
-
-export interface Plugins_plugins_edges_node_globalConfiguration {
-  __typename: "PluginConfiguration";
-  active: boolean;
-  channel: Plugins_plugins_edges_node_globalConfiguration_channel | null;
-  configuration: (Plugins_plugins_edges_node_globalConfiguration_configuration | null)[] | null;
-}
 
 export interface Plugins_plugins_edges_node_channelConfigurations_channel {
   __typename: "Channel";
@@ -39,20 +16,23 @@ export interface Plugins_plugins_edges_node_channelConfigurations_channel {
   slug: string;
 }
 
-export interface Plugins_plugins_edges_node_channelConfigurations_configuration {
-  __typename: "ConfigurationItem";
-  name: string;
-  value: string | null;
-  type: ConfigurationTypeFieldEnum | null;
-  helpText: string | null;
-  label: string | null;
-}
-
 export interface Plugins_plugins_edges_node_channelConfigurations {
   __typename: "PluginConfiguration";
   active: boolean;
   channel: Plugins_plugins_edges_node_channelConfigurations_channel | null;
-  configuration: (Plugins_plugins_edges_node_channelConfigurations_configuration | null)[] | null;
+}
+
+export interface Plugins_plugins_edges_node_globalConfiguration_channel {
+  __typename: "Channel";
+  id: string;
+  name: string;
+  slug: string;
+}
+
+export interface Plugins_plugins_edges_node_globalConfiguration {
+  __typename: "PluginConfiguration";
+  active: boolean;
+  channel: Plugins_plugins_edges_node_globalConfiguration_channel | null;
 }
 
 export interface Plugins_plugins_edges_node {
@@ -60,8 +40,8 @@ export interface Plugins_plugins_edges_node {
   id: string;
   name: string;
   description: string;
-  globalConfiguration: Plugins_plugins_edges_node_globalConfiguration | null;
   channelConfigurations: Plugins_plugins_edges_node_channelConfigurations[];
+  globalConfiguration: Plugins_plugins_edges_node_globalConfiguration | null;
 }
 
 export interface Plugins_plugins_edges {

@@ -2,14 +2,14 @@ import { CardContent, Typography } from "@material-ui/core";
 import CardSpacer from "@saleor/components/CardSpacer";
 import StatusLabel from "@saleor/components/StatusLabel";
 import { statusLabelMessages } from "@saleor/components/StatusLabel/messages";
-import { Plugin_plugin } from "@saleor/plugins/types/Plugin";
+import { PluginBaseFragment } from "@saleor/fragments/types/PluginBaseFragment";
 import React from "react";
 import { useIntl } from "react-intl";
 
 import { globalConfigPluginMessages as messages } from "../messages";
 
 interface GlobalConfigPluginPopupBodyProps {
-  plugin: Plugin_plugin;
+  plugin: PluginBaseFragment;
 }
 
 const GlobalConfigPluginPopupBody: React.FC<GlobalConfigPluginPopupBodyProps> = ({

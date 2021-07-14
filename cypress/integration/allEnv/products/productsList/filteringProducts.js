@@ -3,7 +3,11 @@ import faker from "faker";
 import { createCollection } from "../../../../apiRequests/Collections";
 import { updateProduct } from "../../../../apiRequests/Product";
 import { PRODUCTS_LIST } from "../../../../elements/catalog/products/products-list";
+import { SHARED_ELEMENTS } from "../../../../elements/shared/sharedElements";
 import {
+  checkFilterOption,
+  selectChannel,
+  selectFilterBy,
   selectFilterOption,
   selectProductsOutOfStock
 } from "../../../../steps/catalog/products/productsListSteps";
@@ -20,7 +24,7 @@ import {
   deleteShippingStartsWith
 } from "../../../../utils/shippingUtils";
 
-describe("Products", () => {
+describe("Filtering products", () => {
   const startsWith = "CyFilterProducts-";
   const name = `${startsWith}${faker.datatype.number()}`;
   const stockQuantity = 747;
@@ -87,6 +91,8 @@ describe("Products", () => {
   const filterProductsBy = ["category", "collection", "productType"];
   filterProductsBy.forEach(filterBy => {
     it(`should filter products by ${filterBy}`, () => {
+      cy.softExpectSkeletonIsVisible();
+      cy.get(SHARED_ELEMENTS.progressBar).should("not.exist");
       selectFilterOption(filterBy, name);
       cy.getTextFromElement(PRODUCTS_LIST.productsNames).then(product => {
         expect(product).to.includes(name);
@@ -95,6 +101,7 @@ describe("Products", () => {
   });
 
   it("should filter products out of stock", () => {
+    cy.softExpectSkeletonIsVisible();
     const productOutOfStock = `${startsWith}${faker.datatype.number()}`;
     createProductInChannel({
       name: productOutOfStock,
@@ -106,7 +113,8 @@ describe("Products", () => {
       categoryId: category.id,
       price
     });
-    selectChannelInHeader(channel.name);
+    cy.get(SHARED_ELEMENTS.progressBar).should("not.exist");
+    selectChannel(channel.slug);
     selectProductsOutOfStock();
     cy.getTextFromElement(PRODUCTS_LIST.productsNames).then(product => {
       expect(product).to.includes(productOutOfStock);

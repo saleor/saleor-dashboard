@@ -102,7 +102,6 @@ const CollectionDetailsPage: React.FC<CollectionDetailsPageProps> = ({
               <CollectionProducts
                 disabled={disabled}
                 channelsCount={channelsCount}
-                selectedChannelId={selectedChannelId}
                 collection={collection}
                 {...collectionProductsProps}
               />

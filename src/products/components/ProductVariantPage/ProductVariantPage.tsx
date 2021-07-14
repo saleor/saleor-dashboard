@@ -227,6 +227,7 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
                 <div>
                   <VariantDetailsChannelsAvailabilityCard variant={variant} />
                   <Attributes
+                    entityId={variant?.id}
                     title={intl.formatMessage(messages.nonSelectionAttributes)}
                     attributes={data.attributes.filter(
                       attribute =>
@@ -248,6 +249,7 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
                   />
                   <CardSpacer />
                   <Attributes
+                    entityId={variant?.id}
                     title={intl.formatMessage(
                       messages.selectionAttributesHeader
                     )}

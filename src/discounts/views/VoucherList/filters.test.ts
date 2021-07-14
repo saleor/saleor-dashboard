@@ -40,6 +40,16 @@ describe("Filtering URL params", () => {
   const intl = createIntl(config);
 
   const filters = createFilterStructure(intl, {
+    channel: {
+      active: false,
+      choices: [
+        {
+          value: "default-channel",
+          label: "Default channel"
+        }
+      ],
+      value: "default-channel"
+    },
     saleType: {
       active: false,
       value: [VoucherDiscountType.FIXED, VoucherDiscountType.SHIPPING]

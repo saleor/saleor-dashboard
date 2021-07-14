@@ -15,4 +15,4 @@ export const getSearchFetchMoreProps = (
 });
 
 export const getParsedSearchData = ({ data }: ResultSearchData) =>
-  mapEdgesToItems(data?.search);
+  mapEdgesToItems(data?.search) || [];

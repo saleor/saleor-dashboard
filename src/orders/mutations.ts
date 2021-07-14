@@ -675,7 +675,7 @@ const fulfillOrder = gql`
       errors {
         ...OrderErrorFragment
         warehouse
-        orderLine
+        orderLines
       }
       order {
         ...OrderDetailsFragment

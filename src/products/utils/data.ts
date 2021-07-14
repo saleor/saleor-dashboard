@@ -1,4 +1,7 @@
-import { getSelectedAttributeValues } from "@saleor/attributes/utils/data";
+import {
+  getSelectedAttributeValues,
+  mergeChoicesWithValues
+} from "@saleor/attributes/utils/data";
 import { ChannelData } from "@saleor/channels/utils";
 import {
   AttributeInput,
@@ -52,7 +55,7 @@ export function getAttributeInputFromProduct(
           inputType: attribute.attribute.inputType,
           isRequired: attribute.attribute.valueRequired,
           selectedValues: attribute.values,
-          values: mapEdgesToItems(attribute.attribute.choices),
+          values: mergeChoicesWithValues(attribute),
           unit: attribute.attribute.unit
         },
         id: attribute.attribute.id,
@@ -71,7 +74,7 @@ export function getAttributeInputFromProductType(
       entityType: attribute.entityType,
       inputType: attribute.inputType,
       isRequired: attribute.valueRequired,
-      values: mapEdgesToItems(attribute.choices),
+      values: mapEdgesToItems(attribute.choices) || [],
       unit: attribute.unit
     },
     id: attribute.id,
@@ -89,7 +92,7 @@ export function getAttributeInputFromAttributes(
       entityType: attribute.entityType,
       inputType: attribute.inputType,
       isRequired: attribute.valueRequired,
-      values: mapEdgesToItems(attribute.choices),
+      values: mapEdgesToItems(attribute.choices) || [],
       unit: attribute.unit,
       variantAttributeScope
     },
@@ -109,7 +112,7 @@ export function getAttributeInputFromSelectedAttributes(
       inputType: attribute.attribute.inputType,
       isRequired: attribute.attribute.valueRequired,
       selectedValues: attribute.values,
-      values: mapEdgesToItems(attribute.attribute.choices),
+      values: mergeChoicesWithValues(attribute),
       unit: attribute.attribute.unit,
       variantAttributeScope
     },

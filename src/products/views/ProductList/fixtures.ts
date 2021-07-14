@@ -43,6 +43,16 @@ export const productListFilterOpts: ProductListFilterOpts = {
     ],
     value: [categories[5].id]
   },
+  channel: {
+    active: false,
+    value: "default-channel",
+    choices: [
+      {
+        value: "default-channel",
+        label: "Default channel"
+      }
+    ]
+  },
   collections: {
     ...fetchMoreProps,
     ...searchPageProps,

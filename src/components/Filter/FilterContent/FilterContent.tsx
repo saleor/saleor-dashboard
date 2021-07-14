@@ -16,14 +16,14 @@ import { FilterReducerAction } from "../reducer";
 import {
   FieldType,
   FilterErrorMessages,
-  FilterErrors,
   IFilter,
-  IFilterElement
+  IFilterElement,
+  InvalidFilters
 } from "../types";
 import FilterContentBody, { FilterContentBodyProps } from "./FilterContentBody";
-import FilterContentBodyNameField from "./FilterContentBodyNameField";
 import FilterContentHeader from "./FilterContentHeader";
 import FilterErrorsList from "./FilterErrorsList";
+import FilterGroupLabel from "./FilterGroupLabel";
 
 const useExpanderStyles = makeStyles(
   () => ({
@@ -80,7 +80,7 @@ export interface FilterContentProps<T extends string = string> {
   onSubmit: () => void;
   currencySymbol?: string;
   dataStructure: IFilter<T>;
-  errors?: FilterErrors;
+  errors?: InvalidFilters<T>;
   errorMessages?: FilterErrorMessages<T>;
 }
 
@@ -204,55 +204,63 @@ const FilterContent: React.FC<FilterContentProps> = ({
         <Hr />
         {dataStructure
           .sort((a, b) => (a.name > b.name ? 1 : -1))
-          .map(filter => (
-            <ExpansionPanel
-              key={filter.name}
-              classes={expanderClasses}
-              data-test="channel-availability-item"
-              expanded={filter.name === openedFilter?.name}
-            >
-              <ExpansionPanelSummary
-                expandIcon={<IconChevronDown />}
-                classes={summaryClasses}
-                onClick={() => handleFilterOpen(filter)}
+          .map(filter => {
+            const currentFilter = getFilterFromCurrentData(filter);
+
+            return (
+              <ExpansionPanel
+                key={filter.name}
+                classes={expanderClasses}
+                data-test="channel-availability-item"
+                expanded={filter.name === openedFilter?.name}
               >
-                <FilterContentBodyNameField
-                  filter={getFilterFromCurrentData(filter)}
-                  onFilterPropertyChange={action =>
-                    handleFilterPropertyGroupChange(action, filter)
-                  }
-                />
-              </ExpansionPanelSummary>
-              <FilterErrorsList
-                errors={errors}
-                errorMessages={errorMessages}
-                filter={filter}
-              />
-              {filter.multipleFields ? (
-                <CollectionWithDividers
-                  collection={filter.multipleFields}
-                  renderItem={filterField => (
-                    <FilterContentBody
-                      {...commonFilterBodyProps}
-                      onFilterPropertyChange={handleMultipleFieldPropertyChange}
-                      filter={{
-                        ...getFilterFromCurrentData(filterField),
-                        active: getFilterFromCurrentData(filter).active
-                      }}
-                    >
-                      <Typography>{filterField.label}</Typography>
-                    </FilterContentBody>
-                  )}
-                />
-              ) : (
-                <FilterContentBody
-                  {...commonFilterBodyProps}
-                  onFilterPropertyChange={onFilterPropertyChange}
-                  filter={getFilterFromCurrentData(filter)}
-                />
-              )}
-            </ExpansionPanel>
-          ))}
+                <ExpansionPanelSummary
+                  expandIcon={<IconChevronDown />}
+                  classes={summaryClasses}
+                  onClick={() => handleFilterOpen(filter)}
+                >
+                  <FilterGroupLabel
+                    filter={currentFilter}
+                    onFilterPropertyChange={action =>
+                      handleFilterPropertyGroupChange(action, filter)
+                    }
+                  />
+                </ExpansionPanelSummary>
+                {currentFilter.active && (
+                  <FilterErrorsList
+                    errors={errors?.[filter.name]}
+                    errorMessages={errorMessages}
+                    filter={filter}
+                  />
+                )}
+                {filter.multipleFields ? (
+                  <CollectionWithDividers
+                    collection={filter.multipleFields}
+                    renderItem={filterField => (
+                      <FilterContentBody
+                        {...commonFilterBodyProps}
+                        onFilterPropertyChange={
+                          handleMultipleFieldPropertyChange
+                        }
+                        filter={{
+                          ...getFilterFromCurrentData(filterField),
+                          active: currentFilter.active
+                        }}
+                      >
+                        <Typography>{filterField.label}</Typography>
+                      </FilterContentBody>
+                    )}
+                  />
+                ) : (
+                  <FilterContentBody
+                    {...commonFilterBodyProps}
+                    onFilterPropertyChange={onFilterPropertyChange}
+                    filter={currentFilter}
+                  />
+                )}
+              </ExpansionPanel>
+            );
+          })}
       </form>
     </Paper>
   );

@@ -1,3 +1,4 @@
+import { SingleAutocompleteChoiceType } from "@saleor/components/SingleAutocompleteSelectField";
 import { UseSearchResult } from "@saleor/hooks/makeSearch";
 import { findValueInEnum, maybe } from "@saleor/misc";
 import {
@@ -43,7 +44,8 @@ import {
   getGteLteVariables,
   getMinMaxQueryParam,
   getMultipleValueQueryParam,
-  getSingleEnumValueQueryParam
+  getSingleEnumValueQueryParam,
+  getSingleValueQueryParam
 } from "../../../utils/filters";
 import {
   ProductListUrlFilters,
@@ -73,7 +75,8 @@ export function getFilterOpts(
   productTypes: {
     initial: InitialProductFilterProductTypes_productTypes_edges_node[];
     search: UseSearchResult<SearchProductTypes, SearchProductTypesVariables>;
-  }
+  },
+  channels: SingleAutocompleteChoiceType[]
 ): ProductListFilterOpts {
   return {
     attributes: attributes
@@ -84,10 +87,7 @@ export function getFilterOpts(
         name: attr.name,
         slug: attr.slug,
         inputType: attr.inputType,
-        value:
-          !!params.attributes && params.attributes[attr.slug]
-            ? dedupeFilter(params.attributes[attr.slug])
-            : []
+        value: dedupeFilter(params.attributes?.[attr.slug] || [])
       })),
     attributeChoices: {
       active: true,
@@ -129,7 +129,12 @@ export function getFilterOpts(
       loading: categories.search.result.loading,
       onFetchMore: categories.search.loadMore,
       onSearchChange: categories.search.search,
-      value: maybe(() => dedupeFilter(params.categories), [])
+      value: dedupeFilter(params.categories || [])
+    },
+    channel: {
+      active: params?.channel !== undefined,
+      choices: channels,
+      value: params?.channel
     },
     collections: {
       active: !!params.collections,
@@ -154,7 +159,7 @@ export function getFilterOpts(
       loading: collections.search.result.loading,
       onFetchMore: collections.search.loadMore,
       onSearchChange: collections.search.search,
-      value: maybe(() => dedupeFilter(params.collections), [])
+      value: dedupeFilter(params.collections || [])
     },
     price: {
       active: maybe(
@@ -190,7 +195,7 @@ export function getFilterOpts(
       loading: productTypes.search.result.loading,
       onFetchMore: productTypes.search.loadMore,
       onSearchChange: productTypes.search.search,
-      value: maybe(() => dedupeFilter(params.productTypes), [])
+      value: dedupeFilter(params.productTypes || [])
     },
     stockStatus: {
       active: maybe(() => params.stockStatus !== undefined, false),
@@ -224,14 +229,13 @@ function getFilteredAttributeValue(
 
 export function getFilterVariables(
   params: ProductListUrlFilters,
-  channel: string | undefined
+  isChannelSelected: boolean
 ): ProductFilterInput {
   return {
     attributes: getFilteredAttributeValue(params),
     categories: params.categories !== undefined ? params.categories : null,
-    channel: channel || null,
     collections: params.collections !== undefined ? params.collections : null,
-    price: channel
+    price: isChannelSelected
       ? getGteLteVariables({
           gte: parseFloat(params.priceFrom),
           lte: parseFloat(params.priceTo)
@@ -297,6 +301,12 @@ export function getFilterQueryParam(
         filter,
         ProductListUrlFiltersEnum.stockStatus,
         StockAvailability
+      );
+
+    case ProductFilterKeys.channel:
+      return getSingleValueQueryParam(
+        filter,
+        ProductListUrlFiltersEnum.channel
       );
   }
 }

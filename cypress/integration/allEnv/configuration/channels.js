@@ -2,29 +2,37 @@
 import faker from "faker";
 
 import { createChannel } from "../../../apiRequests/Channels";
+import {
+  createShippingZone,
+  getShippingZone
+} from "../../../apiRequests/ShippingMethod";
 import { ONE_PERMISSION_USERS } from "../../../Data/users";
 import { PRODUCTS_LIST } from "../../../elements/catalog/products/products-list";
 import { ADD_CHANNEL_FORM_SELECTORS } from "../../../elements/channels/add-channel-form-selectors";
 import { AVAILABLE_CHANNELS_FORM } from "../../../elements/channels/available-channels-form";
-import { CHANNEL_FORM_SELECTORS } from "../../../elements/channels/channel-form-selectors";
 import { CHANNELS_SELECTORS } from "../../../elements/channels/channels-selectors";
 import { SELECT_CHANNELS_TO_ASSIGN } from "../../../elements/channels/select-channels-to-assign";
 import { HEADER_SELECTORS } from "../../../elements/header/header-selectors";
-import { DRAFT_ORDER_SELECTORS } from "../../../elements/orders/draft-order-selectors";
-import { ORDERS_SELECTORS } from "../../../elements/orders/orders-selectors";
 import { BUTTON_SELECTORS } from "../../../elements/shared/button-selectors";
 import { SHARED_ELEMENTS } from "../../../elements/shared/sharedElements";
 import { createChannelByView } from "../../../steps/channelsSteps";
 import { urlList } from "../../../url/urlList";
 import { deleteChannelsStartsWith } from "../../../utils/channelsUtils";
+import { deleteShippingStartsWith } from "../../../utils/shippingUtils";
 
 describe("Channels", () => {
-  const channelStartsWith = `CyChannels:`;
+  const channelStartsWith = `CyChannels`;
+  const randomName = `${channelStartsWith} ${faker.datatype.number()}`;
   const currency = "PLN";
+  let shippingZone;
 
   before(() => {
     cy.clearSessionData().loginUserViaRequest();
     deleteChannelsStartsWith(channelStartsWith);
+    deleteShippingStartsWith(channelStartsWith);
+    createShippingZone(randomName, "US").then(shippingZoneResp => {
+      shippingZone = shippingZoneResp;
+    });
   });
 
   beforeEach(() => {
@@ -38,12 +46,13 @@ describe("Channels", () => {
     const randomChannel = `${channelStartsWith} ${faker.datatype.number()}`;
     cy.addAliasToGraphRequest("Channels");
     cy.visit(urlList.channels);
+    cy.softExpectSkeletonIsVisible();
     cy.wait("@Channels");
-    cy.addAliasToGraphRequest("Channel");
-    createChannelByView(randomChannel, currency);
+    createChannelByView({ name: randomChannel, currency });
+    cy.wait("@Channel");
+
     // New channel should be visible in channels list
-    cy.wait("@Channel")
-      .get(ADD_CHANNEL_FORM_SELECTORS.backToChannelsList)
+    cy.get(ADD_CHANNEL_FORM_SELECTORS.backToChannelsList)
       .click()
       .get(CHANNELS_SELECTORS.channelsTable)
       .contains(randomChannel);
@@ -72,6 +81,29 @@ describe("Channels", () => {
       .contains(randomChannel);
   });
 
+  it("should create channel with shippingZone", () => {
+    // remove login after fixing SALEOR-3162
+    cy.clearSessionData().loginUserViaRequest();
+
+    const randomChannel = `${channelStartsWith} ${faker.datatype.number()}`;
+    cy.addAliasToGraphRequest("Channels");
+    cy.visit(urlList.channels);
+    cy.softExpectSkeletonIsVisible();
+    cy.wait("@Channels");
+    createChannelByView({
+      name: randomChannel,
+      currency,
+      shippingZone: shippingZone.name
+    });
+    cy.wait("@Channel");
+    getShippingZone(shippingZone.id).then(shippingZoneResp => {
+      const assignedChannel = shippingZoneResp.channels.find(
+        channel => channel.name === randomChannel
+      );
+      expect(assignedChannel).to.be.ok;
+    });
+  });
+
   it("should validate slug name", () => {
     const randomChannel = `${channelStartsWith} ${faker.datatype.number()}`;
     createChannel({
@@ -81,7 +113,8 @@ describe("Channels", () => {
       currencyCode: currency
     });
     cy.visit(urlList.channels);
-    createChannelByView(randomChannel, currency);
+    cy.softExpectSkeletonIsVisible();
+    createChannelByView({ name: randomChannel, currency });
     cy.get(ADD_CHANNEL_FORM_SELECTORS.slugValidationMessage).should(
       "be.visible"
     );
@@ -90,7 +123,11 @@ describe("Channels", () => {
   it("should validate duplicated currency", () => {
     const randomChannel = `${channelStartsWith} ${faker.datatype.number()}`;
     cy.visit(urlList.channels);
-    createChannelByView(randomChannel, "notExistingCurrency");
+    cy.softExpectSkeletonIsVisible();
+    createChannelByView({
+      name: randomChannel,
+      currency: "notExistingCurrency"
+    });
     cy.get(ADD_CHANNEL_FORM_SELECTORS.currencyValidationMessage).should(
       "be.visible"
     );
@@ -106,6 +143,7 @@ describe("Channels", () => {
     });
     cy.addAliasToGraphRequest("Channels");
     cy.visit(urlList.channels);
+    cy.softExpectSkeletonIsVisible();
     cy.wait("@Channels");
     cy.contains(CHANNELS_SELECTORS.channelName, randomChannelToDelete)
       .parentsUntil(CHANNELS_SELECTORS.channelsTable)
@@ -117,34 +155,6 @@ describe("Channels", () => {
 
     cy.get(CHANNELS_SELECTORS.channelName)
       .contains(randomChannelToDelete)
-      .should("not.exist");
-  });
-
-  it("should not be possible to add products to order with inactive channel", () => {
-    const randomChannel = `${channelStartsWith} ${faker.datatype.number()}`;
-    createChannel({
-      isActive: false,
-      name: randomChannel,
-      slug: randomChannel,
-      currencyCode: currency
-    });
-    cy.clearSessionData().loginUserViaRequest();
-    cy.visit(urlList.orders)
-      .get(ORDERS_SELECTORS.createOrder)
-      .click()
-      .get(CHANNEL_FORM_SELECTORS.channelSelect)
-      .click()
-      .get(CHANNEL_FORM_SELECTORS.channelOption)
-      .contains(randomChannel)
-      .click()
-      .get(CHANNEL_FORM_SELECTORS.confirmButton)
-      .click();
-    cy.location()
-      .should(loc => {
-        const urlRegex = new RegExp(`${urlList.orders}.+`, "g");
-        expect(loc.pathname).to.match(urlRegex);
-      })
-      .get(DRAFT_ORDER_SELECTORS.addProducts)
       .should("not.exist");
   });
 });

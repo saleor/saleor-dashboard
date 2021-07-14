@@ -4,6 +4,7 @@ import {
   addProductsToCheckout,
   createCheckout
 } from "../../../apiRequests/Checkout";
+import { getVariants } from "../../../apiRequests/Product";
 import { getDefaultChannel } from "../../../utils/channelsUtils";
 import { createOrderWithNewProduct } from "../../../utils/ordersUtils";
 import {
@@ -80,6 +81,7 @@ describe("Products stocks in checkout", () => {
       expect(order, "order should be created").to.be.ok;
     });
   });
+
   it("should not be possible to add product with quantity greater than stock", () => {
     const productName = `${startsWith}${faker.datatype.number()}`;
     let variants;
@@ -132,5 +134,29 @@ describe("Products stocks in checkout", () => {
     }).then(({ order }) => {
       expect(order, "order should be created").to.be.ok;
     });
+  });
+
+  it("should change product stock after purchase", () => {
+    const productName = `${startsWith}${faker.datatype.number()}`;
+
+    createOrderWithNewProduct({
+      attributeId: attribute.id,
+      categoryId: category.id,
+      productTypeId: productType.id,
+      channel: defaultChannel,
+      name: productName,
+      warehouseId: warehouse.id,
+      quantityInWarehouse: 10,
+      trackInventory: true,
+      shippingMethodId: shippingMethod.id,
+      address
+    })
+      .then(({ variantsList }) => {
+        getVariants(variantsList);
+      })
+      .then(variantsList => {
+        const variant = variantsList.edges[0];
+        expect(variant.node.stocks[0].quantityAllocated).to.eq(1);
+      });
   });
 });

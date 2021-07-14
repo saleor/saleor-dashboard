@@ -184,8 +184,11 @@ export const ShippingZonesList: React.FC<ShippingZonesListProps> = ({
             values={{
               shippingZoneName: (
                 <strong>
-                  {mapEdgesToItems(data?.shippingZones).find(getById(params.id))
-                    ?.name || "..."}
+                  {getStringOrPlaceholder(
+                    mapEdgesToItems(data?.shippingZones)?.find(
+                      getById(params.id)
+                    )?.name
+                  )}
                 </strong>
               )
             }}

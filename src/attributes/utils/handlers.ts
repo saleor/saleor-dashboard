@@ -192,8 +192,8 @@ function getFileInput(
     };
   }
   return {
-    file: updatedFileAttribute.file,
-    id: updatedFileAttribute.id
+    file: attribute.data.selectedValues?.[0]?.file?.url,
+    id: attribute.id
   };
 }
 
@@ -221,7 +221,9 @@ function getBooleanInput(attribute: AttributeInput) {
 function getDefaultInput(attribute: AttributeInput) {
   return {
     id: attribute.id,
-    values: attribute.value[0] === "" ? [] : attribute.value
+    values: ["", undefined, null].includes(attribute.value[0])
+      ? []
+      : attribute.value
   };
 }
 

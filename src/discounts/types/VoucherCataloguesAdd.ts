@@ -180,6 +180,7 @@ export interface VoucherCataloguesAdd_voucherCataloguesAdd_voucher {
   used: number;
   applyOncePerOrder: boolean;
   applyOncePerCustomer: boolean;
+  onlyForStaff: boolean;
   products: VoucherCataloguesAdd_voucherCataloguesAdd_voucher_products | null;
   collections: VoucherCataloguesAdd_voucherCataloguesAdd_voucher_collections | null;
   categories: VoucherCataloguesAdd_voucherCataloguesAdd_voucher_categories | null;

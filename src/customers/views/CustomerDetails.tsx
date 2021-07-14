@@ -5,6 +5,7 @@ import { WindowTitle } from "@saleor/components/WindowTitle";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { commonMessages } from "@saleor/intl";
+import { getStringOrPlaceholder } from "@saleor/misc";
 import createMetadataUpdateHandler from "@saleor/utils/handlers/metadataUpdateHandler";
 import {
   useMetadataUpdate,
@@ -13,7 +14,6 @@ import {
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { maybe } from "../../misc";
 import { orderListUrl, orderUrl } from "../../orders/urls";
 import CustomerDetailsPage, {
   CustomerDetailsPageFormData
@@ -114,11 +114,9 @@ export const CustomerDetailsView: React.FC<CustomerDetailsViewProps> = ({
 
                 return (
                   <>
-                    <WindowTitle
-                      title={maybe(() => customerDetails.data.user.email)}
-                    />
+                    <WindowTitle title={user?.email} />
                     <CustomerDetailsPage
-                      customer={maybe(() => customerDetails.data.user)}
+                      customer={user}
                       disabled={
                         customerDetails.loading ||
                         updateCustomerOpts.loading ||
@@ -144,9 +142,7 @@ export const CustomerDetailsView: React.FC<CustomerDetailsViewProps> = ({
                       onViewAllOrdersClick={() =>
                         navigate(
                           orderListUrl({
-                            customer: maybe(
-                              () => customerDetails.data.user.email
-                            )
+                            customer: user?.email
                           })
                         )
                       }
@@ -169,10 +165,7 @@ export const CustomerDetailsView: React.FC<CustomerDetailsViewProps> = ({
                           values={{
                             email: (
                               <strong>
-                                {maybe(
-                                  () => customerDetails.data.user.email,
-                                  "..."
-                                )}
+                                {getStringOrPlaceholder(user?.email)}
                               </strong>
                             )
                           }}
