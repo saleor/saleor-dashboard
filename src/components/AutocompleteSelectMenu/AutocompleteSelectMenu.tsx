@@ -27,6 +27,7 @@ export interface AutocompleteSelectMenuProps {
   loading: boolean;
   name: string;
   options: IMenu;
+  testIds?: string[];
   placeholder: string;
   onChange: (event: React.ChangeEvent<any>) => void;
   onInputChange?: (value: string) => void;
@@ -72,6 +73,7 @@ const AutocompleteSelectMenu: React.FC<AutocompleteSelectMenuProps> = props => {
     loading,
     name,
     options,
+    testIds,
     placeholder,
     onChange,
     onInputChange
@@ -159,21 +161,19 @@ const AutocompleteSelectMenu: React.FC<AutocompleteSelectMenuProps> = props => {
                         ? getMenuItemByPath(options, menuPath).children
                         : options
                       ).map((suggestion, index) => (
-                        <div data-test-id={suggestion.data.name}>
-                          <MenuItem
-                            data-test-id={suggestion.data.name}
-                            key={suggestion.value}
-                            component="div"
-                            {...getItemProps({ item: suggestion })}
-                            onClick={() =>
-                              suggestion.value
-                                ? selectItem(suggestion.value)
-                                : setMenuPath([...menuPath, index])
-                            }
-                          >
-                            {suggestion.label}
-                          </MenuItem>
-                        </div>
+                        <MenuItem
+                          data-test-id={testIds[index]}
+                          key={suggestion.value}
+                          component="div"
+                          {...getItemProps({ item: suggestion })}
+                          onClick={() =>
+                            suggestion.value
+                              ? selectItem(suggestion.value)
+                              : setMenuPath([...menuPath, index])
+                          }
+                        >
+                          {suggestion.label}
+                        </MenuItem>
                       ))}
                     </>
                   ) : (

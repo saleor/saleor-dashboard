@@ -3,9 +3,21 @@ export function getMenu(menuId) {
     menu(id:"${menuId}"){
       id
       name
+      items{
+        name
+        category{
+          name
+        }
+        collection{
+          name
+        }
+        page{
+          title
+        }
+      }
     }
   }`;
-  return cy.sendRequestWithQuery(query).its("body.data");
+  return cy.sendRequestWithQuery(query).its("body.data.menu");
 }
 
 export function getMenus(first, search) {

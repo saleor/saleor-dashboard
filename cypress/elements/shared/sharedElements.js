@@ -7,6 +7,7 @@ export const SHARED_ELEMENTS = {
   selectOption: '[data-test="selectFieldOption"]',
   confirmationMsg: "[data-test='notification-success']",
   notificationSuccess: '[data-test="notification-success"]',
+  dialog: '[role="dialog"]',
   richTextEditor: {
     empty: '[class*="codex-editor--empty"]'
   }
