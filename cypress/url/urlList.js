@@ -16,7 +16,8 @@ export const urlList = {
   permissionsGroups: "permission-groups/",
   weightRete: "weight/",
   attributes: "attributes/",
-  productTypes: "product-types/"
+  productTypes: "product-types/",
+  navigation: "navigation/"
 };
 
 export const productDetailsUrl = productId => `${urlList.products}${productId}`;
@@ -40,3 +41,5 @@ export const warehouseDetailsUrl = warehouseId =>
 
 export const productTypeDetailsUrl = productTypeId =>
   `${urlList.productTypes}${productTypeId}`;
+
+export const menuDetailsUrl = menuId => `${urlList.navigation}${menuId}`;

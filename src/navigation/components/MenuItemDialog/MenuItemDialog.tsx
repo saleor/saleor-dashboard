@@ -132,7 +132,9 @@ const MenuItemDialog: React.FC<MenuItemDialogProps> = ({
           label: category.name,
           value: "category:" + category.id
         })),
-        data: {},
+        data: {
+          name: "category"
+        },
         label: intl.formatMessage(sectionNames.categories)
       }
     ];
@@ -148,7 +150,9 @@ const MenuItemDialog: React.FC<MenuItemDialogProps> = ({
           label: collection.name,
           value: "collection:" + collection.id
         })),
-        data: {},
+        data: {
+          name: "collection"
+        },
         label: intl.formatMessage(sectionNames.collections)
       }
     ];
@@ -164,7 +168,9 @@ const MenuItemDialog: React.FC<MenuItemDialogProps> = ({
           label: page.title,
           value: "page:" + page.id
         })),
-        data: {},
+        data: {
+          name: "page"
+        },
         label: intl.formatMessage(sectionNames.pages)
       }
     ];

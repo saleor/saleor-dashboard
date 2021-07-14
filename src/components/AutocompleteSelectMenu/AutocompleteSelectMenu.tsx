@@ -110,7 +110,10 @@ const AutocompleteSelectMenu: React.FC<AutocompleteSelectMenuProps> = props => {
           onSelect={handleChange}
         >
           {({ getItemProps, isOpen, openMenu, closeMenu, selectItem }) => (
-            <div className={classes.container}>
+            <div
+              className={classes.container}
+              data-test-id="containerAutocompleteSelect"
+            >
               <TextField
                 InputProps={{
                   endAdornment: loading && <CircularProgress size={16} />,
@@ -156,18 +159,21 @@ const AutocompleteSelectMenu: React.FC<AutocompleteSelectMenuProps> = props => {
                         ? getMenuItemByPath(options, menuPath).children
                         : options
                       ).map((suggestion, index) => (
-                        <MenuItem
-                          key={suggestion.value}
-                          component="div"
-                          {...getItemProps({ item: suggestion })}
-                          onClick={() =>
-                            suggestion.value
-                              ? selectItem(suggestion.value)
-                              : setMenuPath([...menuPath, index])
-                          }
-                        >
-                          {suggestion.label}
-                        </MenuItem>
+                        <div data-test-id={suggestion.data.name}>
+                          <MenuItem
+                            data-test-id={suggestion.data.name}
+                            key={suggestion.value}
+                            component="div"
+                            {...getItemProps({ item: suggestion })}
+                            onClick={() =>
+                              suggestion.value
+                                ? selectItem(suggestion.value)
+                                : setMenuPath([...menuPath, index])
+                            }
+                          >
+                            {suggestion.label}
+                          </MenuItem>
+                        </div>
                       ))}
                     </>
                   ) : (
