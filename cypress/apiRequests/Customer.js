@@ -63,3 +63,33 @@ export function getCustomers(startsWith) {
   }`;
   return cy.sendRequestWithQuery(query);
 }
+
+export function getCustomer(customerId) {
+  const query = `query{
+    user(id:"${customerId}"){
+      id
+      email
+      firstName
+      lastName
+      isStaff
+      isActive
+      note
+      addresses{
+        firstName
+        lastName
+        companyName
+        streetAddress1
+        streetAddress2
+        city
+        cityArea
+        postalCode
+        country{
+          code
+        }
+        countryArea
+        phone
+      }
+    }
+  }`;
+  return cy.sendRequestWithQuery(query).its("body.data.user");
+}

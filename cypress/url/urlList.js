@@ -16,7 +16,8 @@ export const urlList = {
   permissionsGroups: "permission-groups/",
   weightRete: "weight/",
   attributes: "attributes/",
-  productTypes: "product-types/"
+  productTypes: "product-types/",
+  customers: "customers/"
 };
 
 export const productDetailsUrl = productId => `${urlList.products}${productId}`;
