@@ -1,9 +1,11 @@
 import { BUTTON_SELECTORS } from "../elements/shared/button-selectors";
+import { SHARED_ELEMENTS } from "../elements/shared/sharedElements";
 import { SHIPPING_RATE_DETAILS } from "../elements/shipping/shipping-rate-details";
 import { SHIPPING_ZONE_DETAILS } from "../elements/shipping/shipping-zone-details";
 import { SHIPPING_ZONES_LIST } from "../elements/shipping/shipping-zones-list";
 import { confirmationMessageShouldDisappear } from "./shared/confirmationMessage";
 import { waitForProgressBarToNotBeVisible } from "./shared/progressBar";
+import { fillBaseSelect } from "./shared/selects";
 
 export function createShippingZone(
   shippingName,
