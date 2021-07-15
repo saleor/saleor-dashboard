@@ -27,6 +27,7 @@ export interface AutocompleteSelectMenuProps {
   loading: boolean;
   name: string;
   options: IMenu;
+  testIds?: string[];
   placeholder: string;
   onChange: (event: React.ChangeEvent<any>) => void;
   onInputChange?: (value: string) => void;
@@ -72,6 +73,7 @@ const AutocompleteSelectMenu: React.FC<AutocompleteSelectMenuProps> = props => {
     loading,
     name,
     options,
+    testIds,
     placeholder,
     onChange,
     onInputChange
@@ -110,7 +112,10 @@ const AutocompleteSelectMenu: React.FC<AutocompleteSelectMenuProps> = props => {
           onSelect={handleChange}
         >
           {({ getItemProps, isOpen, openMenu, closeMenu, selectItem }) => (
-            <div className={classes.container}>
+            <div
+              className={classes.container}
+              data-test-id="containerAutocompleteSelect"
+            >
               <TextField
                 InputProps={{
                   endAdornment: loading && <CircularProgress size={16} />,
@@ -157,6 +162,7 @@ const AutocompleteSelectMenu: React.FC<AutocompleteSelectMenuProps> = props => {
                         : options
                       ).map((suggestion, index) => (
                         <MenuItem
+                          data-test-id={testIds[index]}
                           key={suggestion.value}
                           component="div"
                           {...getItemProps({ item: suggestion })}

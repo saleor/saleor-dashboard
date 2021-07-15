@@ -11,6 +11,7 @@ export const urlList = {
   draftOrders: "orders/drafts/",
   homePage: "/",
   newPassword: "new-password/",
+  navigation: "navigation/",
   orders: "orders/",
   pageTypes: "page-types/",
   permissionsGroups: "permission-groups/",
@@ -49,6 +50,8 @@ export const warehouseDetailsUrl = warehouseId =>
 
 export const productTypeDetailsUrl = productTypeId =>
   `${urlList.productTypes}${productTypeId}`;
+
+export const menuDetailsUrl = menuId => `${urlList.navigation}${menuId}`;
 
 export const customerDetailsUrl = customerId =>
   `${urlList.customers}${customerId}`;
