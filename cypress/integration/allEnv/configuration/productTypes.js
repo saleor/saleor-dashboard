@@ -19,7 +19,7 @@ describe("Tests for product types", () => {
   before(() => {
     cy.clearSessionData().loginUserViaRequest();
     deleteProductsStartsWith(startsWith);
-    createAttribute(startsWith);
+    createAttribute({ name: startsWith });
   });
 
   beforeEach(() => {
