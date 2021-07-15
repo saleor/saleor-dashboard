@@ -29,7 +29,7 @@ export function addSelectAttributeValue(attributeValue) {
 }
 
 export function addRichTextAttributeValue(attributeValue) {
-  cy.get(PAGE_DETAILS.richTextEditorAttributeValue).type(attributeValue);
+  cy.get(PAGE_DETAILS.attributeValues).type(attributeValue);
 }
 
 export function addBooleanAttributeValue() {

@@ -14,7 +14,7 @@ describe("Tests for pages", () => {
 
   const attributeValuesOnPage = {
     NUMERIC: 1,
-    RICH_TEXT: faker.lorem.paragraph(),
+    RICH_TEXT: faker.lorem.sentence(),
     DROPDOWN: "value",
     MULTISELECT: "value",
     BOOLEAN: true
@@ -35,7 +35,7 @@ describe("Tests for pages", () => {
     cy.clearSessionData().loginUserViaRequest();
   });
 
-  xit("should create not published page", () => {
+  it("should create not published page", () => {
     const randomName = `${startsWith}${faker.datatype.number()}`;
 
     createPage({ pageName: randomName, pageTypeName: name })
@@ -50,7 +50,7 @@ describe("Tests for pages", () => {
       });
   });
 
-  xit("should create published page", () => {
+  it("should create published page", () => {
     const randomName = `${startsWith}${faker.datatype.number()}`;
 
     createPage({ pageName: randomName, pageTypeName: name, isPublished: true })
@@ -88,7 +88,7 @@ describe("Tests for pages", () => {
         })
         .then(page => {
           expect(page.attributes[0].values[0].inputType).to.eq(attributeType);
-          if (attributeValuesOnPage !== "BOOLEAN") {
+          if (attributeType !== "BOOLEAN") {
             expect(page.attributes[0].values[0].name).to.eq(
               attributeValuesOnPage[attributeType].toString()
             );
