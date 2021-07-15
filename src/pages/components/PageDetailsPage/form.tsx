@@ -218,15 +218,15 @@ function usePageForm(
     attributesWithNewFileValue: attributesWithNewFileValue.data
   });
 
-  // const handleSubmit = async (data: PageData) => {
-  //   const errors = await onSubmit(data);
+  const handleSubmit = async (data: PageData) => {
+    const errors = await onSubmit(data);
 
-  //   if (!errors?.length && pageExists) {
-  //     attributesWithNewFileValue.set([]);
-  //   }
+    if (!errors?.length && pageExists) {
+      attributesWithNewFileValue.set([]);
+    }
 
-  //   return errors;
-  // };
+    return errors;
+  };
 
   const submit = () =>
     handleFormSubmit(

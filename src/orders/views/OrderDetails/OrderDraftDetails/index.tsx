@@ -239,15 +239,15 @@ export const OrderDraftDetails: React.FC<OrderDraftDetailsProps> = ({
         onClose={closeModal}
         onFetch={variantSearch}
         onFetchMore={loadMore}
-        onSubmit={variants =>
-          orderLinesAdd.mutate({
+        onSubmit={variants => {
+          const lol = orderLinesAdd.mutate({
             id,
             input: variants.map(variant => ({
               quantity: 1,
               variantId: variant.id
             }))
-          })
-        }
+          });
+        }}
       />
       <OrderCustomerChangeDialog
         open={params.action === "customer-change"}

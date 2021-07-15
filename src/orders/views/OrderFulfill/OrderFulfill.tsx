@@ -1,7 +1,10 @@
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
-import OrderFulfillPage from "@saleor/orders/components/OrderFulfillPage";
+import { extractMutationErrors } from "@saleor/misc";
+import OrderFulfillPage, {
+  OrderFulfillSubmitData
+} from "@saleor/orders/components/OrderFulfillPage";
 import { useOrderFulfill } from "@saleor/orders/mutations";
 import { useOrderFulfillData } from "@saleor/orders/queries";
 import { orderUrl } from "@saleor/orders/urls";
@@ -47,6 +50,22 @@ const OrderFulfill: React.FC<OrderFulfillProps> = ({ orderId }) => {
     }
   });
 
+  const handleSubmit = (formData: OrderFulfillSubmitData) =>
+    extractMutationErrors(
+      fulfillOrder({
+        variables: {
+          input: {
+            lines: formData.items.map(line => ({
+              orderLineId: line.id,
+              stocks: line.value
+            })),
+            notifyCustomer: formData.sendInfo
+          },
+          orderId
+        }
+      })
+    );
+
   return (
     <>
       <WindowTitle
@@ -71,20 +90,7 @@ const OrderFulfill: React.FC<OrderFulfillProps> = ({ orderId }) => {
         loading={loading || warehousesLoading || fulfillOrderOpts.loading}
         errors={fulfillOrderOpts.data?.orderFulfill.errors}
         onBack={() => navigate(orderUrl(orderId))}
-        onSubmit={formData =>
-          fulfillOrder({
-            variables: {
-              input: {
-                lines: formData.items.map(line => ({
-                  orderLineId: line.id,
-                  stocks: line.value
-                })),
-                notifyCustomer: formData.sendInfo
-              },
-              orderId
-            }
-          })
-        }
+        onSubmit={handleSubmit}
         order={data?.order}
         saveButtonBar="default"
         warehouses={mapEdgesToItems(warehouseData?.warehouses)}

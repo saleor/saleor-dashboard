@@ -12,7 +12,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import { categoryUrl } from "../../../categories/urls";
 import { collectionUrl } from "../../../collections/urls";
-import { maybe } from "../../../misc";
+import { extractMutationErrors, maybe } from "../../../misc";
 import { pageUrl } from "../../../pages/urls";
 import MenuDetailsPage, {
   MenuDetailsSubmitData
@@ -193,7 +193,11 @@ const MenuDetails: React.FC<MenuDetailsProps> = ({ id, params }) => {
                         open={params.action === "remove"}
                         onClose={closeModal}
                         confirmButtonState={menuDeleteOpts.status}
-                        onConfirm={() => menuDelete({ variables: { id } })}
+                        onConfirm={() =>
+                          extractMutationErrors(
+                            menuDelete({ variables: { id } })
+                          )
+                        }
                         variant="delete"
                         title={intl.formatMessage({
                           defaultMessage: "Delete Menu",
@@ -229,7 +233,9 @@ const MenuDetails: React.FC<MenuDetailsProps> = ({ id, params }) => {
                               input: getMenuItemCreateInputData(id, data)
                             };
 
-                            menuItemCreate({ variables });
+                            extractMutationErrors(
+                              menuItemCreate({ variables })
+                            );
                           };
 
                           return (
@@ -270,7 +276,9 @@ const MenuDetails: React.FC<MenuDetailsProps> = ({ id, params }) => {
                               input: getMenuItemInputData(data)
                             };
 
-                            menuItemUpdate({ variables });
+                            extractMutationErrors(
+                              menuItemUpdate({ variables })
+                            );
                           };
 
                           const menuItem = maybe(() =>

@@ -1,6 +1,7 @@
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { commonMessages } from "@saleor/intl";
+import { extractMutationErrors } from "@saleor/misc";
 import OrderReturnPage from "@saleor/orders/components/OrderReturnPage";
 import { OrderReturnFormData } from "@saleor/orders/components/OrderReturnPage/form";
 import { useOrderReturnCreateMutation } from "@saleor/orders/mutations";
@@ -82,18 +83,14 @@ const OrderReturn: React.FC<OrderReturnProps> = ({ orderId }) => {
       return;
     }
 
-    const result = await returnCreate({
-      variables: {
-        id: data.order.id,
-        input: new ReturnFormDataParser(data.order, formData).getParsedData()
-      }
-    });
-
-    const {
-      data: { orderFulfillmentReturnProducts }
-    } = result;
-
-    return orderFulfillmentReturnProducts.errors;
+    return extractMutationErrors(
+      returnCreate({
+        variables: {
+          id: data.order.id,
+          input: new ReturnFormDataParser(data.order, formData).getParsedData()
+        }
+      })
+    );
   };
 
   const navigateToOrder = (id?: string) => navigate(orderUrl(id || orderId));

@@ -122,7 +122,7 @@ const useStyles = makeStyles<OrderFulfillPageProps, ClassKey>(
 interface OrderFulfillFormData {
   sendInfo: boolean;
 }
-interface OrderFulfillSubmitData extends OrderFulfillFormData {
+export interface OrderFulfillSubmitData extends OrderFulfillFormData {
   items: FormsetData<null, OrderFulfillStockInput[]>;
 }
 export interface OrderFulfillPageProps {
