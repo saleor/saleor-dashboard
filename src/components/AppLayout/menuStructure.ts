@@ -5,6 +5,7 @@ import discountsIcon from "@assets/images/menu-discounts-icon.svg";
 import homeIcon from "@assets/images/menu-home-icon.svg";
 import ordersIcon from "@assets/images/menu-orders-icon.svg";
 import translationIcon from "@assets/images/menu-translation-icon.svg";
+import { giftCardsListUrl } from "@saleor/giftCards/urls";
 import { commonMessages, sectionNames } from "@saleor/intl";
 import { IntlShape } from "react-intl";
 
@@ -57,6 +58,12 @@ function createMenuStructure(intl: IntlShape): IMenuItem[] {
           label: intl.formatMessage(sectionNames.collections),
           testingContextId: "collections",
           url: collectionListUrl()
+        },
+        {
+          ariaLabel: "giftCards",
+          label: intl.formatMessage(sectionNames.giftCards),
+          testingContextId: "giftCards",
+          url: giftCardsListUrl()
         }
       ],
       icon: catalogIcon,
