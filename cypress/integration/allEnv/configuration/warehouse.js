@@ -50,28 +50,8 @@ describe("Warehouse settings", () => {
       })
       .then(warehouse => {
         const addressResp = warehouse.address;
-        expect(warehouse.name).to.be.eq(name);
-        expect(addressResp).to.have.property(
-          "city",
-          usAddress.city.toUpperCase()
-        );
-        expect(addressResp).to.have.property(
-          "countryArea",
-          usAddress.countryArea
-        );
-        expect(addressResp).to.have.property("phone", usAddress.phone);
-        expect(addressResp).to.have.property(
-          "postalCode",
-          usAddress.postalCode
-        );
-        expect(addressResp).to.have.property(
-          "streetAddress1",
-          usAddress.streetAddress1
-        );
-        expect(addressResp).to.have.property(
-          "streetAddress2",
-          usAddress.streetAddress2
-        );
+        chai.softExpect(warehouse.name).to.be.eq(name);
+        cy.expectCorrectBasicAddress(addressResp, usAddress);
       });
   });
 

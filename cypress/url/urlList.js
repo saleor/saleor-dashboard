@@ -17,7 +17,9 @@ export const urlList = {
   weightRete: "weight/",
   attributes: "attributes/",
   productTypes: "product-types/",
-  navigation: "navigation/"
+  navigation: "navigation/",
+  apps: "apps/",
+  customers: "customers/"
 };
 
 export const productDetailsUrl = productId => `${urlList.products}${productId}`;
@@ -43,3 +45,5 @@ export const productTypeDetailsUrl = productTypeId =>
   `${urlList.productTypes}${productTypeId}`;
 
 export const menuDetailsUrl = menuId => `${urlList.navigation}${menuId}`;
+
+export const appDetailsUrl = appId => `${urlList.apps}custom/${appId}`;

@@ -11,6 +11,7 @@ import { BUTTON_SELECTORS } from "../../../../elements/shared/button-selectors";
 import { SHARED_ELEMENTS } from "../../../../elements/shared/sharedElements";
 import { SHIPPING_ZONE_DETAILS } from "../../../../elements/shipping/shipping-zone-details";
 import { selectChannelInHeader } from "../../../../steps/channelsSteps";
+import { waitForProgressBarToNotExist } from "../../../../steps/shared/progressBar";
 import { getFormattedCurrencyAmount } from "../../../../support/format/formatCurrencyAmount";
 import { urlList } from "../../../../url/urlList";
 import * as channelsUtils from "../../../../utils/channelsUtils";
@@ -84,9 +85,8 @@ describe("Channels in shippingMethod", () => {
           .loginUserViaRequest("auth", ONE_PERMISSION_USERS.shipping)
           .visit(urlList.shippingMethods)
           .get(SHARED_ELEMENTS.header)
-          .should("be.visible")
-          .get(SHARED_ELEMENTS.progressBar)
-          .should("not.exist");
+          .should("be.visible");
+        waitForProgressBarToNotExist();
         cy.addAliasToGraphRequest("ShippingZone");
         cy.getTextFromElement(SHARED_ELEMENTS.table);
       })

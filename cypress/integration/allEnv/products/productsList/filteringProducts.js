@@ -3,15 +3,12 @@ import faker from "faker";
 import { createCollection } from "../../../../apiRequests/Collections";
 import { updateProduct } from "../../../../apiRequests/Product";
 import { PRODUCTS_LIST } from "../../../../elements/catalog/products/products-list";
-import { SHARED_ELEMENTS } from "../../../../elements/shared/sharedElements";
 import {
-  checkFilterOption,
   selectChannel,
-  selectFilterBy,
   selectFilterOption,
   selectProductsOutOfStock
 } from "../../../../steps/catalog/products/productsListSteps";
-import { selectChannelInHeader } from "../../../../steps/channelsSteps";
+import { waitForProgressBarToNotExist } from "../../../../steps/shared/progressBar";
 import { urlList } from "../../../../url/urlList";
 import { getDefaultChannel } from "../../../../utils/channelsUtils";
 import {
@@ -92,7 +89,7 @@ describe("Filtering products", () => {
   filterProductsBy.forEach(filterBy => {
     it(`should filter products by ${filterBy}`, () => {
       cy.softExpectSkeletonIsVisible();
-      cy.get(SHARED_ELEMENTS.progressBar).should("not.exist");
+      waitForProgressBarToNotExist();
       selectFilterOption(filterBy, name);
       cy.getTextFromElement(PRODUCTS_LIST.productsNames).then(product => {
         expect(product).to.includes(name);
@@ -113,7 +110,7 @@ describe("Filtering products", () => {
       categoryId: category.id,
       price
     });
-    cy.get(SHARED_ELEMENTS.progressBar).should("not.exist");
+    waitForProgressBarToNotExist();
     selectChannel(channel.slug);
     selectProductsOutOfStock();
     cy.getTextFromElement(PRODUCTS_LIST.productsNames).then(product => {
