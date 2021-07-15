@@ -12,6 +12,7 @@ import {
 } from "@saleor/configuration";
 import { MenuItem } from "@saleor/configuration/ConfigurationPage";
 import { User } from "@saleor/fragments/types/User";
+import { giftCardsListUrl } from "@saleor/giftCards/urls";
 import { commonMessages, sectionNames } from "@saleor/intl";
 import { SidebarMenuItem } from "@saleor/macaw-ui";
 import { IntlShape } from "react-intl";
@@ -62,6 +63,12 @@ function createMenuStructure(intl: IntlShape, user: User): SidebarMenuItem[] {
           label: intl.formatMessage(sectionNames.collections),
           id: "collections",
           url: collectionListUrl()
+        },
+        {
+          ariaLabel: "giftCards",
+          label: intl.formatMessage(sectionNames.giftCards),
+          testingContextId: "giftCards",
+          url: giftCardsListUrl()
         }
       ],
       iconSrc: catalogIcon,
