@@ -1,23 +1,23 @@
 export const urlList = {
   apiUri: Cypress.env("API_URI"),
+  attributes: "attributes/",
   channels: "channels/",
+  collections: "collections/",
   configuration: "configuration/",
   draftOrders: "orders/drafts/",
   homePage: "/",
-  orders: "orders/",
-  products: "products/",
-  warehouses: "warehouses/",
-  shippingMethods: "shipping/",
-  sales: "discounts/sales/",
-  collections: "collections/",
-  vouchers: "discounts/vouchers/",
-  staffMembers: "staff/",
   newPassword: "new-password/",
-  permissionsGroups: "permission-groups/",
+  orders: "orders/",
   pageTypes: "page-types/",
-  weightRete: "weight/",
-  attributes: "attributes/",
-  productTypes: "product-types/"
+  permissionsGroups: "permission-groups/",
+  products: "products/",
+  productTypes: "product-types/",
+  sales: "discounts/sales/",
+  shippingMethods: "shipping/",
+  staffMembers: "staff/",
+  vouchers: "discounts/vouchers/",
+  warehouses: "warehouses/",
+  weightRete: "weight/"
 };
 
 export const productDetailsUrl = productId => `${urlList.products}${productId}`;
