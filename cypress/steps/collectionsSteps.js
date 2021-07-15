@@ -1,5 +1,4 @@
 import { COLLECTION_SELECTORS } from "../elements/catalog/collection-selectors";
-import { PRODUCT_DETAILS } from "../elements/catalog/products/product-details";
 import { AVAILABLE_CHANNELS_FORM } from "../elements/channels/available-channels-form";
 import { SELECT_CHANNELS_TO_ASSIGN } from "../elements/channels/select-channels-to-assign";
 import { ASSIGN_ELEMENTS_SELECTORS } from "../elements/shared/assign-elements-selectors";

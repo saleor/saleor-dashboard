@@ -47,7 +47,11 @@ const WebhooksList: React.FC<WebhooksListProps> = ({
         })}
         toolbar={
           !!onCreate && (
-            <Button color="primary" onClick={onCreate}>
+            <Button
+              color="primary"
+              onClick={onCreate}
+              data-test-id="createWebhook"
+            >
               <FormattedMessage
                 defaultMessage="Create Webhook"
                 description="button"

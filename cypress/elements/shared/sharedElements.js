@@ -4,9 +4,10 @@ export const SHARED_ELEMENTS = {
   circularProgress: '[class*="CircularProgress-circle"]',
   skeleton: '[data-test-id="skeleton"]',
   table: 'table[class*="Table"]',
-  selectOption: '[data-test="selectFieldOption"]',
+  tableRow: '[data-test="id"]',
   confirmationMsg: "[data-test='notification-success']",
-  notificationSuccess: '[data-test="notification-success"]',
+  searchInput: '[data-test-id="searchInput"]',
+  selectOption: '[data-test="selectFieldOption"]',
   richTextEditor: {
     empty: '[class*="codex-editor--empty"]'
   }
