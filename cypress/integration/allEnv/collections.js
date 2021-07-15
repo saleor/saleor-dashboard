@@ -72,6 +72,7 @@ describe("Collections", () => {
   it("should not display hidden collections", () => {
     const collectionName = `${startsWith}${faker.datatype.number()}`;
     cy.visit(urlList.collections);
+    cy.softExpectSkeletonIsVisible();
     let collection;
 
     createCollection(collectionName, false, defaultChannel)
@@ -92,6 +93,7 @@ describe("Collections", () => {
     const collectionName = `${startsWith}${faker.datatype.number()}`;
     let collection;
     cy.visit(urlList.collections);
+    cy.softExpectSkeletonIsVisible();
 
     createCollection(collectionName, true, defaultChannel)
       .then(collectionResp => {
@@ -116,6 +118,7 @@ describe("Collections", () => {
       })
       .then(() => {
         cy.visit(urlList.collections);
+        cy.softExpectSkeletonIsVisible();
         createCollection(collectionName, true, channel);
       })
       .then(collectionResp => {
@@ -146,6 +149,7 @@ describe("Collections", () => {
       })
       .then(({ product: productResp }) => (createdProduct = productResp));
     cy.visit(urlList.collections);
+    cy.softExpectSkeletonIsVisible();
     createCollection(randomName, true, defaultChannel)
       .then(collectionResp => {
         collection = collectionResp;

@@ -5,6 +5,7 @@ import LanguageSwitch from "@saleor/components/LanguageSwitch";
 import PageHeader from "@saleor/components/PageHeader";
 import { CollectionTranslationFragment } from "@saleor/fragments/types/CollectionTranslationFragment";
 import { commonMessages, sectionNames } from "@saleor/intl";
+import { getStringOrPlaceholder } from "@saleor/misc";
 import {
   TranslationInputFieldName,
   TranslationsEntitiesPageProps
@@ -48,7 +49,7 @@ const TranslationsCollectionsPage: React.FC<TranslationsCollectionsPageProps> = 
             description: "header"
           },
           {
-            collectionName: data?.collection?.name || "...",
+            collectionName: getStringOrPlaceholder(data?.collection?.name),
             languageCode
           }
         )}

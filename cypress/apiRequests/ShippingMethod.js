@@ -1,18 +1,39 @@
 import { getValueWithDefault } from "./utils/Utils";
 
-export function createShippingRate(name, shippingZone) {
+export function createShippingRate({
+  name,
+  shippingZone,
+  type = "PRICE",
+  maxWeight,
+  minWeight
+}) {
+  const maxOrderWeight = getValueWithDefault(
+    maxWeight,
+    `maximumOrderWeight: ${maxWeight}`
+  );
+  const minOrderWeight = getValueWithDefault(
+    minWeight,
+    `minimumOrderWeight: ${minWeight}`
+  );
+
   const mutation = `mutation{
     shippingPriceCreate(input:{
       name: "${name}"
       shippingZone: "${shippingZone}"
-      type: PRICE
+      type: ${type}
+      ${minOrderWeight}
+      ${maxOrderWeight}
     }){
       shippingMethod{
         id
       }
+      errors{
+        field
+        message
+      }
     }
   }`;
-  return cy.sendRequestWithQuery(mutation);
+  return cy.sendRequestWithQuery(mutation).its("body.data.shippingPriceCreate");
 }
 
 export function createShippingZone(name, country, channelId) {
@@ -31,8 +52,8 @@ export function createShippingZone(name, country, channelId) {
         name
       }
       errors{
-        message
         field
+        message
       }
     }
   }`;
@@ -53,18 +74,24 @@ export function addChannelToShippingZone(shippingZoneId, channelId) {
   }`;
   return cy.sendRequestWithQuery(mutation);
 }
-export function addChannelToShippingMethod(shippingRateId, channelId, price) {
+export function addChannelToShippingMethod(
+  shippingRateId,
+  channelId,
+  price,
+  minProductPrice = 0
+) {
   const mutation = `mutation{
     shippingMethodChannelListingUpdate(id:"${shippingRateId}", input:{
       addChannels: {
         channelId:"${channelId}"
         price: ${price}
+        minimumOrderPrice:${minProductPrice}
       }
     }){
       shippingMethod{
         id
       }
-      shippingErrors{
+      errors{
         code
         message
       }

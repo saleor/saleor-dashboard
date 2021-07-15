@@ -74,6 +74,7 @@ export const WarehouseListPage: React.FC<WarehouseListPageProps> = ({
         }
       >
         <Button
+          data-test-id="createWarehouse"
           color="primary"
           disabled={limitReached}
           variant="contained"

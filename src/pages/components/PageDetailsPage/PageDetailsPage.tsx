@@ -66,8 +66,8 @@ const PageDetailsPage: React.FC<PageDetailsPageProps> = ({
   errors,
   page,
   pageTypes: pageTypeChoiceList,
-  referencePages = [],
-  referenceProducts = [],
+  referencePages,
+  referenceProducts,
   saveButtonBarState,
   selectedPageType,
   attributeValues,
@@ -132,7 +132,7 @@ const PageDetailsPage: React.FC<PageDetailsPageProps> = ({
       assignReferencesAttributeId={assignReferencesAttributeId}
       onSubmit={onSubmit}
     >
-      {({ change, data, handlers, hasChanged, submit }) => (
+      {({ change, data, valid, handlers, hasChanged, submit }) => (
         <Container>
           <AppHeader onBack={onBack}>
             {intl.formatMessage(sectionNames.pages)}
@@ -237,7 +237,7 @@ const PageDetailsPage: React.FC<PageDetailsPageProps> = ({
             </div>
           </Grid>
           <SaveButtonBar
-            disabled={loading || !hasChanged}
+            disabled={loading || !hasChanged || !valid}
             state={saveButtonBarState}
             onCancel={onBack}
             onDelete={page === null ? undefined : onRemove}
