@@ -1,23 +1,28 @@
 export const urlList = {
   apiUri: Cypress.env("API_URI"),
+  addProduct: "products/add",
+  apps: "apps/",
+  attributes: "attributes/",
   channels: "channels/",
+  categories: "categories/",
+  collections: "collections/",
   configuration: "configuration/",
+  customers: "customers/",
   draftOrders: "orders/drafts/",
   homePage: "/",
+  newPassword: "new-password/",
   orders: "orders/",
+  pages: "pages/",
+  pageTypes: "page-types/",
+  permissionsGroups: "permission-groups/",
   products: "products/",
-  warehouses: "warehouses/",
+  productTypes: "product-types/",
   shippingMethods: "shipping/",
   sales: "discounts/sales/",
-  collections: "collections/",
-  vouchers: "discounts/vouchers/",
   staffMembers: "staff/",
-  newPassword: "new-password/",
-  permissionsGroups: "permission-groups/",
-  productTypes: "product-types/",
-  pages: "pages/",
+  warehouses: "warehouses/",
   weightRete: "weight/",
-  attributes: "attributes/"
+  vouchers: "discounts/vouchers/"
 };
 
 export const productDetailsUrl = productId => `${urlList.products}${productId}`;
@@ -30,6 +35,9 @@ export const staffMemberDetailsUrl = staffMemberId =>
 export const permissionGroupDetails = permissionGroupId =>
   `${urlList.permissionsGroups}${permissionGroupId}`;
 
+export const categoryDetails = categoryId =>
+  `${urlList.categories}${categoryId}`;
+
 export const shippingZoneDetailsUrl = shippingZoneId =>
   `${urlList.shippingMethods}${shippingZoneId}`;
 
@@ -41,3 +49,8 @@ export const warehouseDetailsUrl = warehouseId =>
 
 export const productTypeDetailsUrl = productTypeId =>
   `${urlList.productTypes}${productTypeId}`;
+
+export const pageTypeDetailsUrl = pageTypeId =>
+  `${urlList.pageTypes}${pageTypeId}`;
+
+export const appDetailsUrl = appId => `${urlList.apps}custom/${appId}`;
