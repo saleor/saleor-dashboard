@@ -7,8 +7,8 @@ import {
 import { getDefaultChannel } from "../../utils/channelsUtils";
 import { getMailActivationLinkForUser } from "../../utils/users";
 
-describe("Tests for customer registration", () => {
-  const startsWith = "Registration";
+describe("Tests for customer registration with email", () => {
+  const startsWith = "RegistrationEmail";
   let defaultChannel;
 
   before(() => {

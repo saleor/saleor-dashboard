@@ -88,6 +88,11 @@ describe("Sales discounts", () => {
         price: productPrice
       })
       .then(({ product: productResp }) => {
+        /* Uncomment after fixing SALEOR-3367 bug
+         cy.clearSessionData()
+        .loginUserViaRequest("auth", ONE_PERMISSION_USERS.discount) 
+        */
+
         cy.visit(urlList.sales);
         cy.softExpectSkeletonIsVisible();
         const product = productResp;
@@ -122,6 +127,11 @@ describe("Sales discounts", () => {
         price: productPrice
       })
       .then(({ product: productResp }) => {
+        /* Uncomment after fixing SALEOR-3367 bug
+         cy.clearSessionData()
+        .loginUserViaRequest("auth", ONE_PERMISSION_USERS.discount) 
+        */
+
         cy.visit(urlList.sales);
         cy.softExpectSkeletonIsVisible();
         const product = productResp;
@@ -168,6 +178,11 @@ describe("Sales discounts", () => {
         });
       })
       .then(() => {
+        /* Uncomment after fixing SALEOR-3367 bug
+         cy.clearSessionData()
+        .loginUserViaRequest("auth", ONE_PERMISSION_USERS.discount) 
+        */
+
         cy.visit(urlList.sales);
         cy.softExpectSkeletonIsVisible();
         createSale({

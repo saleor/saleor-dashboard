@@ -1,5 +1,5 @@
-import { urlList } from "../url/urlList";
 import { getDefaultAddress } from "./utils/Utils";
+
 export function createCustomer(email, customerName, address, isActive = false) {
   const mutation = `
   mutation{
@@ -103,4 +103,34 @@ export function confirmAccount(email, token) {
     }
   }`;
   return cy.sendRequestWithQuery(mutation).its("body.data.confirmAccount");
+}
+
+export function getCustomer(customerId) {
+  const query = `query{
+    user(id:"${customerId}"){
+      id
+      email
+      firstName
+      lastName
+      isStaff
+      isActive
+      note
+      addresses{
+        firstName
+        lastName
+        companyName
+        streetAddress1
+        streetAddress2
+        city
+        cityArea
+        postalCode
+        country{
+          code
+        }
+        countryArea
+        phone
+      }
+    }
+  }`;
+  return cy.sendRequestWithQuery(query).its("body.data.user");
 }

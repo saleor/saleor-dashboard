@@ -10,6 +10,7 @@ import { PERMISSION_GROUP_DETAILS } from "../../../elements/permissionGroup/perm
 import { PERMISSION_GROUP_LIST } from "../../../elements/permissionGroup/permissionGroupsList";
 import { BUTTON_SELECTORS } from "../../../elements/shared/button-selectors";
 import { SHARED_ELEMENTS } from "../../../elements/shared/sharedElements";
+import { waitForProgressBarToNotExist } from "../../../steps/shared/progressBar.js";
 import {
   permissionGroupDetails,
   staffMemberDetailsUrl,
@@ -48,9 +49,8 @@ describe("Permissions groups", () => {
       .get(PERMISSION_GROUP_DETAILS.assignMemberButton)
       .should("be.visible")
       .get(BUTTON_SELECTORS.back)
-      .click()
-      .get(SHARED_ELEMENTS.progressBar)
-      .should("not.exist");
+      .click();
+    waitForProgressBarToNotExist();
     cy.contains(
       PERMISSION_GROUP_LIST.permissionGroupRow,
       permissionName
