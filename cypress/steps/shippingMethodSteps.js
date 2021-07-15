@@ -56,13 +56,9 @@ export function createShippingZone(
 export function changeWeightUnit(weightUnit) {
   fillBaseSelect(SHIPPING_ZONES_LIST.unitSelect, weightUnit);
   cy.addAliasToGraphRequest("UpdateDefaultWeightUnit");
-  cy.get(SHIPPING_ZONES_LIST.saveUnit)
-    .click()
-    .get(SHARED_ELEMENTS.notificationSuccess)
-    .should("be.visible")
-    .wait("@UpdateDefaultWeightUnit")
-    .get(SHARED_ELEMENTS.notificationSuccess)
-    .should("not.exist");
+  cy.get(SHIPPING_ZONES_LIST.saveUnit).click();
+  confirmationMessageShouldDisappear();
+  cy.wait("@UpdateDefaultWeightUnit");
 }
 
 export function createShippingRate({
@@ -132,13 +128,9 @@ export function saveRate() {
   cy.addAliasToGraphRequest("ShippingMethodChannelListingUpdate")
     .addAliasToGraphRequest("ShippingZone")
     .get(BUTTON_SELECTORS.confirm)
-    .click()
-    .get(SHARED_ELEMENTS.notificationSuccess)
-    .should("be.visible")
-    .wait(`@ShippingMethodChannelListingUpdate`)
-    .wait(`@ShippingZone`)
-    .get(SHARED_ELEMENTS.notificationSuccess)
-    .should("not.exist");
+    .click();
+  confirmationMessageShouldDisappear();
+  cy.wait(`@ShippingMethodChannelListingUpdate`).wait(`@ShippingZone`);
 }
 
 export function fillUpWeightLimits({ max, min }) {
