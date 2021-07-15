@@ -59,8 +59,12 @@ All notable, unreleased changes to this project will be documented in this file.
 - Add generic filter validation - #1187 by @jwm0
 - Fix duplicated labels in column picker - #1197 by @orzechdev
 - Fix forbidden null sending as attribute value - #1201 by @orzechdev
+- Fix huge payload issue for plugins view - #1203 by @kamilpastuszka
 - Fix missing call for update metadata mutation - #1207 by @orzechdev
+- Disable next step when no value selected in variant selector - #1218 by @orzechdev
 - Fix order links on home page - #1219 by @jwm0
+- Fix huge payload issue for plugins view - #1203 by @kamilpastuszka
+- Fix content type validation in create page view - #1205 by @orzechdev
 
 # 2.11.1
 

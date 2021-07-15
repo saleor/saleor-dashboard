@@ -84,6 +84,10 @@ Cypress.Commands.add("softAssertMatch", (selector, regexp) => {
       chai.softExpect(assert.match(text, regexp, "regexp matches"))
     );
 });
+
 Cypress.Commands.add("softAssertVisibility", selector => {
-  cy.get(selector).then(element => chai.softExpect(element).to.be.visible);
+  cy.get(selector).then(
+    element =>
+      chai.softExpect(element, "element should be visible").to.be.visible
+  );
 });

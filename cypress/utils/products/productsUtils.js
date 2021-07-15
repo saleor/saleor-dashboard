@@ -6,7 +6,7 @@ import {
   deleteProductType,
   getProductTypes
 } from "../../apiRequests/productType";
-import { deleteAttributesStartsWith } from "../attributes";
+import { deleteAttributesStartsWith } from "../attributes/attributeUtils";
 
 export function createProductInChannel({
   name,
@@ -22,7 +22,8 @@ export function createProductInChannel({
   visibleInListings = true,
   collectionId = null,
   description = null,
-  trackInventory = true
+  trackInventory = true,
+  weight = 1
 }) {
   let product;
   let variantsList;
@@ -54,7 +55,8 @@ export function createProductInChannel({
         quantityInWarehouse,
         channelId,
         price,
-        trackInventory
+        trackInventory,
+        weight
       });
     })
     .then(variantsResp => {
@@ -86,6 +88,7 @@ export function createTypeAttributeAndCategoryForProduct(
     });
 }
 export function deleteProductsStartsWith(startsWith) {
+  deleteAttributesStartsWith(startsWith);
   cy.deleteElementsStartsWith(deleteProductType, getProductTypes, startsWith);
   deleteAttributesStartsWith(startsWith);
   cy.deleteElementsStartsWith(
