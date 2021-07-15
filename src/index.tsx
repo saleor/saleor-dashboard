@@ -43,6 +43,8 @@ import BackgroundTasksProvider from "./containers/BackgroundTasks";
 import ServiceWorker from "./containers/ServiceWorker/ServiceWorker";
 import { CustomerSection } from "./customers";
 import DiscountSection from "./discounts";
+import GiftCardSection from "./giftCards/GiftCardsList";
+import { giftCardsSectionUrlName } from "./giftCards/urls";
 import HomePage from "./home";
 import { commonMessages } from "./intl";
 import NavigationSection from "./navigation";
@@ -189,6 +191,12 @@ const Routes: React.FC = () => {
                 permissions={[PermissionEnum.MANAGE_USERS]}
                 path="/customers"
                 component={CustomerSection}
+              />
+              <SectionRoute
+                /* add after backend adds the permission to schema */
+                // permissions={[]}
+                path={giftCardsSectionUrlName}
+                component={GiftCardSection}
               />
               <SectionRoute
                 permissions={[PermissionEnum.MANAGE_DISCOUNTS]}
