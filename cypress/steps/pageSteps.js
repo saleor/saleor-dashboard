@@ -2,8 +2,8 @@ import { PAGES_LIST } from "../elements/pages/pages-list";
 import { PAGE_DETAILS } from "../elements/pages/pege-details";
 import { BUTTON_SELECTORS } from "../elements/shared/button-selectors";
 import { urlList } from "../url/urlList";
-import { fillAutocompleteSelect } from "./shared/autocompleteSelect";
 import { confirmationMessageShouldDisappear } from "./shared/confirmationMessage";
+import { fillAutocompleteSelect } from "./shared/selects";
 
 export const attributesTypes = {
   DROPDOWN: addSelectAttributeValue,

@@ -4,7 +4,7 @@ import { createAttribute } from "../../../apiRequests/Attribute";
 import { getPage } from "../../../apiRequests/Page";
 import { createPageType } from "../../../apiRequests/PageTypes";
 import { attributesTypes, createPage } from "../../../steps/pageSteps";
-import { deleteAttributesStartsWith } from "../../../utils/attributes";
+import { deleteAttributesStartsWith } from "../../../utils/attributes/attributeUtils";
 import { deletePageTypesStartsWith } from "../../../utils/pageTypeUtils";
 
 describe("Tests for pages", () => {
