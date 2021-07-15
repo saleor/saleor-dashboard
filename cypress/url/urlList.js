@@ -50,6 +50,9 @@ export const warehouseDetailsUrl = warehouseId =>
 export const productTypeDetailsUrl = productTypeId =>
   `${urlList.productTypes}${productTypeId}`;
 
+export const customerDetailsUrl = customerId =>
+  `${urlList.customers}${customerId}`;
+
 export const pageTypeDetailsUrl = pageTypeId =>
   `${urlList.pageTypes}${pageTypeId}`;
 
