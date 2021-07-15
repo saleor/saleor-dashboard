@@ -23,6 +23,7 @@ describe("Vouchers discounts", () => {
   const shippingPrice = 100;
 
   let defaultChannel;
+  let createdChannel;
   let productType;
   let attribute;
   let category;
@@ -79,7 +80,13 @@ describe("Vouchers discounts", () => {
           price: productPrice
         });
       })
-      .then(({ variantsList: variantsResp }) => (variants = variantsResp));
+      .then(({ variantsList: variantsResp }) => {
+        variants = variantsResp;
+        createChannel({ name });
+      })
+      .then(channel => {
+        createdChannel = channel;
+      });
   });
 
   it("should create percentage voucher", () => {
@@ -97,7 +104,6 @@ describe("Vouchers discounts", () => {
 
   it("should create fixed price voucher", () => {
     const voucherValue = 50;
-
     loginAndCreateCheckoutForVoucherWithDiscount(
       discountOptions.FIXED,
       voucherValue
@@ -124,20 +130,17 @@ describe("Vouchers discounts", () => {
     cy.clearSessionData()
       .loginUserViaRequest()
       .visit(urlList.vouchers);
-    createChannel({ name: randomName })
-      .then(channel => {
-        createVoucher({
-          voucherCode: randomName,
-          voucherValue,
-          discountOption: discountOptions.PERCENTAGE,
-          channelName: channel.name
-        });
-        createCheckoutForCreatedVoucher(randomName);
-      })
-      .then(resp => {
-        const errorField = resp.checkoutErrors[0].field;
-        expect(errorField).to.be.eq("promoCode");
-      });
+    cy.softExpectSkeletonIsVisible();
+    createVoucher({
+      voucherCode: randomName,
+      voucherValue,
+      discountOption: discountOptions.PERCENTAGE,
+      channelName: createdChannel.name
+    });
+    createCheckoutForCreatedVoucher(randomName).then(resp => {
+      const errorField = resp.checkoutErrors[0].field;
+      expect(errorField).to.be.eq("promoCode");
+    });
   });
 
   function createCheckoutForCreatedVoucher(voucherCode) {
@@ -160,6 +163,7 @@ describe("Vouchers discounts", () => {
     cy.clearSessionData()
       .loginUserViaRequest("auth", ONE_PERMISSION_USERS.discount)
       .visit(urlList.vouchers);
+    cy.softExpectSkeletonIsVisible();
     createVoucher({
       voucherCode,
       voucherValue,

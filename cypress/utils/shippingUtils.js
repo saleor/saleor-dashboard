@@ -24,9 +24,12 @@ export function createShipping({
     })
     .then(warehouseResp => {
       warehouse = warehouseResp;
-      createShippingRate({ name, shippingZoneId: shippingZone.id });
+      shippingMethodRequest.createShippingRate({
+        name,
+        shippingZone: shippingZone.id
+      });
     })
-    .then(sippingMethodResp => {
+    .then(({ shippingMethod: sippingMethodResp }) => {
       shippingMethod = sippingMethodResp;
       shippingMethodRequest.addChannelToShippingMethod(
         shippingMethod.id,

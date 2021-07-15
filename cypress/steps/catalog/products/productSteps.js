@@ -1,7 +1,7 @@
 import { PRODUCT_DETAILS } from "../../../elements/catalog/products/product-details";
 import { AVAILABLE_CHANNELS_FORM } from "../../../elements/channels/available-channels-form";
 import { BUTTON_SELECTORS } from "../../../elements/shared/button-selectors";
-import { fillAutocompleteSelect } from "../../shared/autocompleteSelect";
+import { fillAutocompleteSelect } from "../../shared/selects";
 import { addMetadataField } from "../metadataSteps";
 import { editSeoSettings } from "../seoSteps";
 

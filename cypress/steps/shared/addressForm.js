@@ -1,6 +1,6 @@
 import { ADDRESS_SELECTORS } from "../../elements/shared/addressForm";
 import { BUTTON_SELECTORS } from "../../elements/shared/button-selectors";
-import { fillAutocompleteSelect } from "./autocompleteSelect";
+import { fillAutocompleteSelect } from "./selects";
 
 export function fillUpAddressForm(address) {
   cy.get(ADDRESS_SELECTORS.firstName)
