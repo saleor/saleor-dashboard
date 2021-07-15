@@ -76,7 +76,7 @@ describe("Create shipping method", () => {
       "auth",
       ONE_PERMISSION_USERS.shipping
     );
-    cy.visit(urlList.shippingMethods);
+    cy.visit(urlList.shippingMethods).softExpectSkeletonIsVisible();
     createShippingZone(
       shippingName,
       warehouse.name,
@@ -111,7 +111,7 @@ describe("Create shipping method", () => {
       "auth",
       ONE_PERMISSION_USERS.shipping
     );
-    cy.visit(urlList.shippingMethods);
+    cy.visit(urlList.shippingMethods).softExpectSkeletonIsVisible();
     createShippingZone(
       shippingName,
       warehouse.name,

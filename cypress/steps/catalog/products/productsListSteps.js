@@ -1,9 +1,7 @@
 import { PRODUCTS_LIST } from "../../../elements/catalog/products/products-list";
 import { BUTTON_SELECTORS } from "../../../elements/shared/button-selectors";
-import {
-  getElementByDataTestId,
-  SHARED_ELEMENTS
-} from "../../../elements/shared/sharedElements";
+import { getElementByDataTestId } from "../../../elements/shared/sharedElements";
+import { waitForProgressBarToNotExist } from "../../shared/progressBar";
 
 export function isNumberOfProductsSameAsInSelectResultsOnPage() {
   let numberOfResults;
@@ -68,10 +66,8 @@ export function selectChannel(channelSlug) {
 }
 
 function submitFilters() {
-  cy.get(BUTTON_SELECTORS.submit)
-    .click()
-    .get(SHARED_ELEMENTS.progressBar)
-    .should("not.exist")
+  cy.get(BUTTON_SELECTORS.submit).click();
+  waitForProgressBarToNotExist()
     .get(PRODUCTS_LIST.emptyProductRow)
     .should("not.exist");
 }

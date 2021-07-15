@@ -53,6 +53,7 @@ describe("Staff members", () => {
     const emailInvite = `${startsWith}${firstName}@example.com`;
 
     cy.visit(urlList.staffMembers)
+      .softExpectSkeletonIsVisible()
       .get(STAFF_MEMBERS_LIST.inviteStaffMemberButton)
       .click();
     fillUpUserDetails(firstName, lastName, emailInvite);

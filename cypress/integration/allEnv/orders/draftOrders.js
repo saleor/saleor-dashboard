@@ -79,9 +79,9 @@ describe("Draft orders", () => {
   });
 
   it("should move draft order to orders", () => {
-    cy.visit(urlList.orders)
-      .get(ORDERS_SELECTORS.createOrder)
-      .click();
+    cy.visit(urlList.orders);
+    cy.softExpectSkeletonIsVisible();
+    cy.get(ORDERS_SELECTORS.createOrder).click();
     selectChannelInPicker(defaultChannel.name);
     finalizeDraftOrder(randomName, address).then(draftOrderNumber => {
       cy.visit(urlList.orders);

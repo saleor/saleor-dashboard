@@ -5,6 +5,7 @@ import { CHANNELS_SELECTORS } from "../elements/channels/channels-selectors";
 import { SELECT_CHANNELS_TO_ASSIGN } from "../elements/channels/select-channels-to-assign";
 import { HEADER_SELECTORS } from "../elements/header/header-selectors";
 import { BUTTON_SELECTORS } from "../elements/shared/button-selectors";
+import { SHARED_ELEMENTS } from "../elements/shared/sharedElements";
 import { fillAutocompleteSelect } from "./shared/selects";
 
 export function createChannelByView({
@@ -56,10 +57,9 @@ export function selectChannelInPicker(channelName) {
 }
 
 export function selectChannelInHeader(channelName) {
-  cy.get(HEADER_SELECTORS.channelSelect)
-    .click()
-    .get(HEADER_SELECTORS.channelSelectList)
-    .contains(channelName)
+  cy.get(HEADER_SELECTORS.channelSelect).click();
+  cy.contains(SHARED_ELEMENTS.selectOption, channelName)
+    .scrollIntoView()
     .click();
 }
 

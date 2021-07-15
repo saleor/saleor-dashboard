@@ -3,6 +3,8 @@ import { IntlShape } from "react-intl";
 
 import { FilterType } from "../types";
 
+export const filterTestingContext = "filter-field";
+
 export function getIsFilterMultipleChoices(
   intl: IntlShape
 ): SingleAutocompleteChoiceType[] {

@@ -84,6 +84,47 @@ Cypress.Commands.add("softAssertMatch", (selector, regexp) => {
       chai.softExpect(assert.match(text, regexp, "regexp matches"))
     );
 });
+
 Cypress.Commands.add("softAssertVisibility", selector => {
-  cy.get(selector).then(element => chai.softExpect(element).to.be.visible);
+  cy.get(selector).then(
+    element =>
+      chai.softExpect(element, "element should be visible").to.be.visible
+  );
 });
+
+Cypress.Commands.add(
+  "expectCorrectBasicAddress",
+  (responseAddress, expectedAddress) => {
+    chai
+      .softExpect(responseAddress)
+      .to.have.property("city", expectedAddress.city.toUpperCase());
+    chai
+      .softExpect(responseAddress)
+      .to.have.property("countryArea", expectedAddress.countryArea);
+    chai
+      .softExpect(responseAddress)
+      .to.have.property("phone", expectedAddress.phone);
+    chai
+      .softExpect(responseAddress)
+      .to.have.property("postalCode", expectedAddress.postalCode);
+    chai
+      .softExpect(responseAddress)
+      .to.have.property("streetAddress1", expectedAddress.streetAddress1);
+    chai
+      .softExpect(responseAddress)
+      .to.have.property("streetAddress2", expectedAddress.streetAddress2);
+  }
+);
+
+Cypress.Commands.add(
+  "expectCorrectFullAddress",
+  (responseAddress, expectedAddress) => {
+    chai
+      .softExpect(responseAddress)
+      .to.have.property("firstName", expectedAddress.firstName);
+    chai
+      .softExpect(responseAddress)
+      .to.have.property("firstName", expectedAddress.lastName);
+    cy.expectCorrectBasicAddress(responseAddress, expectedAddress);
+  }
+);

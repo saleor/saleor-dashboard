@@ -17,7 +17,8 @@ export const urlList = {
   weightRete: "weight/",
   attributes: "attributes/",
   productTypes: "product-types/",
-  apps: "apps/"
+  apps: "apps/",
+  customers: "customers/"
 };
 
 export const productDetailsUrl = productId => `${urlList.products}${productId}`;
