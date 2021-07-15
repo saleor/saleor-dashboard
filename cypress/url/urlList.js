@@ -53,6 +53,9 @@ export const productTypeDetailsUrl = productTypeId =>
 
 export const menuDetailsUrl = menuId => `${urlList.navigation}${menuId}`;
 
+export const customerDetailsUrl = customerId =>
+  `${urlList.customers}${customerId}`;
+
 export const pageTypeDetailsUrl = pageTypeId =>
   `${urlList.pageTypes}${pageTypeId}`;
 
