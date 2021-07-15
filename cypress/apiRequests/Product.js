@@ -97,15 +97,11 @@ export function createProduct({
     collectionId,
     `collections:["${collectionId}"]`
   );
+  const category = getValueWithDefault(categoryId, `category:"${categoryId}"`);
   const descriptionLine = getValueWithDefault(
     description,
     `description:"{\\"blocks\\":[{\\"type\\":\\"paragraph\\",\\"data\\":{\\"text\\":\\"${description}\\"}}]}"`
   );
-  const categoryLine = getValueWithDefault(
-    categoryId,
-    `category:"${categoryId}"`
-  );
-
   const mutation = `mutation{
     productCreate(input:{
       attributes:[{
@@ -115,7 +111,7 @@ export function createProduct({
       slug:"${name}"
       seo:{title:"${name}" description:""}
       productType:"${productTypeId}"
-      ${categoryLine}
+      ${category}
       ${collection}
       ${descriptionLine}
     }){

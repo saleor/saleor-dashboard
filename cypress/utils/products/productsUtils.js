@@ -73,7 +73,7 @@ export function createTypeAttributeAndCategoryForProduct(
   let productType;
   let category;
   return attributeRequest
-    .createAttribute(name, attributeValues)
+    .createAttribute({ name, attributeValues })
     .then(attributeResp => {
       attribute = attributeResp;
       createTypeProduct({ name, attributeId: attributeResp.id });
