@@ -1,14 +1,14 @@
 import faker from "faker";
 
-import { createAttribute } from "../../../apiRequests/Attribute";
-import { createPageType, getPageType } from "../../../apiRequests/PageTypes";
-import { PAGE_TYPE_DETAILS } from "../../../elements/pageTypes/pageTypeDetails";
-import { PAGE_TYPES_LIST } from "../../../elements/pageTypes/pageTypesList";
-import { BUTTON_SELECTORS } from "../../../elements/shared/button-selectors";
-import { SHARED_ELEMENTS } from "../../../elements/shared/sharedElements";
-import { assignElements } from "../../../steps/shared/assignElements";
-import { confirmationMessageShouldDisappear } from "../../../steps/shared/confirmationMessage";
-import { pageTypeDetailsUrl, urlList } from "../../../url/urlList";
+import { createAttribute } from "../../../../apiRequests/Attribute";
+import { createPageType, getPageType } from "../../../../apiRequests/PageTypes";
+import { PAGE_TYPE_DETAILS } from "../../../../elements/pageTypes/pageTypeDetails";
+import { PAGE_TYPES_LIST } from "../../../../elements/pageTypes/pageTypesList";
+import { BUTTON_SELECTORS } from "../../../../elements/shared/button-selectors";
+import { SHARED_ELEMENTS } from "../../../../elements/shared/sharedElements";
+import { assignElements } from "../../../../steps/shared/assignElements";
+import { confirmationMessageShouldDisappear } from "../../../../steps/shared/confirmationMessage";
+import { pageTypeDetailsUrl, urlList } from "../../../../url/urlList";
 
 describe("Tests for page types", () => {
   const startsWith = "PageTypes";

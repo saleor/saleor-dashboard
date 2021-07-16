@@ -4,7 +4,7 @@ export const PAGE_DETAILS = {
   attributeValues: '[data-test="attribute-value"]',
   isPublishedCheckbox: '[name="isPublished"][value=true]',
   uploadFileButton: '[data-test="button-upload-file"]',
-  richTextEditorAttributeValue: '[data-test="richTextEditor"]',
+  richTextEditorAttributeValue: '[class*="ce-paragraph"]',
   booleanAttributeValueCheckbox: '[name*="attribute:"][type="checkbox"]',
   numericAttributeValueInput: '[name*="attribute:"]'
 };

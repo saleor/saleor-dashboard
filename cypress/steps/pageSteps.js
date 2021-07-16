@@ -1,6 +1,7 @@
 import { PAGES_LIST } from "../elements/pages/pages-list";
 import { PAGE_DETAILS } from "../elements/pages/pege-details";
 import { BUTTON_SELECTORS } from "../elements/shared/button-selectors";
+import { SHARED_ELEMENTS } from "../elements/shared/sharedElements";
 import { urlList } from "../url/urlList";
 import { confirmationMessageShouldDisappear } from "./shared/confirmationMessage";
 import { fillAutocompleteSelect } from "./shared/selects";
@@ -8,7 +9,8 @@ import { fillAutocompleteSelect } from "./shared/selects";
 export const attributesTypes = {
   DROPDOWN: addSelectAttributeValue,
   MULTISELECT: addSelectAttributeValue,
-  RICH_TEXT: addRichTextAttributeValue,
+  // Uncomment it after resolving SALEOR-3728 bug
+  // RICH_TEXT: addRichTextAttributeValue,
   BOOLEAN: addBooleanAttributeValue,
   NUMERIC: addNumericAttributeValue
 };
@@ -29,7 +31,12 @@ export function addSelectAttributeValue(attributeValue) {
 }
 
 export function addRichTextAttributeValue(attributeValue) {
-  cy.get(PAGE_DETAILS.attributeValues).type(attributeValue);
+  cy.get(PAGE_DETAILS.attributeValues)
+    .find(SHARED_ELEMENTS.richTextEditor.empty)
+    .should("exist")
+    .get(PAGE_DETAILS.attributeValues)
+    .find(PAGE_DETAILS.richTextEditorAttributeValue)
+    .type(attributeValue);
 }
 
 export function addBooleanAttributeValue() {
