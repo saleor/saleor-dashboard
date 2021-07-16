@@ -17,17 +17,17 @@ export function fillUpAddressForm(address) {
 
 export function fillUpBasicAddress(address) {
   cy.get(ADDRESS_SELECTORS.companyName)
-    .type(address.companyName)
+    .clearAndType(address.companyName)
     .get(ADDRESS_SELECTORS.phone)
-    .type(address.phone)
+    .clearAndType(address.phone)
     .get(ADDRESS_SELECTORS.streetAddress1)
-    .type(address.streetAddress1)
+    .clearAndType(address.streetAddress1)
     .get(ADDRESS_SELECTORS.streetAddress2)
-    .type(address.streetAddress2)
+    .clearAndType(address.streetAddress2)
     .get(ADDRESS_SELECTORS.city)
-    .type(address.city)
+    .clearAndType(address.city)
     .get(ADDRESS_SELECTORS.postalCode)
-    .type(address.postalCode);
+    .clearAndType(address.postalCode);
   fillAutocompleteSelect(ADDRESS_SELECTORS.country, address.countryFullName);
-  cy.get(ADDRESS_SELECTORS.countryArea).type(address.countryArea);
+  cy.get(ADDRESS_SELECTORS.countryArea).clearAndType(address.countryArea);
 }
