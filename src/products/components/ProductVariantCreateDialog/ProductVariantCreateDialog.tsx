@@ -55,7 +55,10 @@ const ProductVariantCreateDialog: React.FC<ProductVariantCreateDialogProps> = pr
   const options = [
     {
       label: (
-        <div className={classes.option}>
+        <div
+          className={classes.option}
+          data-test-id="variant-create-option-multiple"
+        >
           <Typography variant="body1">
             <FormattedMessage
               defaultMessage="Create multiple variant via variant creator"
@@ -74,7 +77,10 @@ const ProductVariantCreateDialog: React.FC<ProductVariantCreateDialogProps> = pr
     },
     {
       label: (
-        <div className={classes.option}>
+        <div
+          className={classes.option}
+          data-test-id="variant-create-option-single"
+        >
           <Typography variant="body1">
             <FormattedMessage
               defaultMessage="Create single variant"
@@ -126,6 +132,8 @@ const ProductVariantCreateDialog: React.FC<ProductVariantCreateDialogProps> = pr
                 color="primary"
                 variant="contained"
                 type="submit"
+                data-test-id="submit"
+                data-test="submit"
               >
                 <FormattedMessage {...buttonMessages.create} />
               </ConfirmButton>
