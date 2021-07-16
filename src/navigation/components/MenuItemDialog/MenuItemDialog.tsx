@@ -116,6 +116,7 @@ const MenuItemDialog: React.FC<MenuItemDialogProps> = ({
 
   const mutationErrors = errors.filter(err => err.field === null);
   const formErrors = getFormErrors(["name"], errors);
+  const testIds = ["category", "collection", "page", "url"];
   const idError = ["category", "collection", "page", "url"]
     .map(field => getFieldError(errors, field))
     .reduce((acc, err) => acc || err);
@@ -270,6 +271,7 @@ const MenuItemDialog: React.FC<MenuItemDialogProps> = ({
           displayValue={displayValue}
           loading={loading}
           options={options}
+          testIds={testIds}
           error={!!idError}
           helperText={getMenuErrorMessage(idError, intl)}
           placeholder={intl.formatMessage({
@@ -294,6 +296,7 @@ const MenuItemDialog: React.FC<MenuItemDialogProps> = ({
           <FormattedMessage {...buttonMessages.back} />
         </Button>
         <ConfirmButton
+          data-test="submit"
           transitionState={confirmButtonState}
           color="primary"
           variant="contained"

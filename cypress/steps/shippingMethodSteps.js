@@ -4,6 +4,7 @@ import { SHIPPING_RATE_DETAILS } from "../elements/shipping/shipping-rate-detail
 import { SHIPPING_ZONE_DETAILS } from "../elements/shipping/shipping-zone-details";
 import { SHIPPING_ZONES_LIST } from "../elements/shipping/shipping-zones-list";
 import { confirmationMessageShouldDisappear } from "./shared/confirmationMessage";
+import { waitForProgressBarToNotBeVisible } from "./shared/progressBar";
 import { fillBaseSelect } from "./shared/selects";
 
 export function createShippingZone(
@@ -55,13 +56,9 @@ export function createShippingZone(
 export function changeWeightUnit(weightUnit) {
   fillBaseSelect(SHIPPING_ZONES_LIST.unitSelect, weightUnit);
   cy.addAliasToGraphRequest("UpdateDefaultWeightUnit");
-  cy.get(SHIPPING_ZONES_LIST.saveUnit)
-    .click()
-    .get(SHARED_ELEMENTS.notificationSuccess)
-    .should("be.visible")
-    .wait("@UpdateDefaultWeightUnit")
-    .get(SHARED_ELEMENTS.notificationSuccess)
-    .should("not.exist");
+  cy.get(SHIPPING_ZONES_LIST.saveUnit).click();
+  confirmationMessageShouldDisappear();
+  cy.wait("@UpdateDefaultWeightUnit");
 }
 
 export function createShippingRate({
@@ -88,11 +85,9 @@ export function enterAndFillUpShippingRate({
   weightLimits,
   deliveryTime
 }) {
-  cy.get(rateOption)
-    .click()
-    .get(SHARED_ELEMENTS.progressBar)
-    .should("not.be.visible")
-    .get(SHARED_ELEMENTS.richTextEditor.empty)
+  cy.get(rateOption).click();
+  waitForProgressBarToNotBeVisible();
+  cy.get(SHARED_ELEMENTS.richTextEditor.empty)
     .should("exist")
     .get(SHIPPING_RATE_DETAILS.inputName)
     .type(rateName);
@@ -133,13 +128,9 @@ export function saveRate() {
   cy.addAliasToGraphRequest("ShippingMethodChannelListingUpdate")
     .addAliasToGraphRequest("ShippingZone")
     .get(BUTTON_SELECTORS.confirm)
-    .click()
-    .get(SHARED_ELEMENTS.notificationSuccess)
-    .should("be.visible")
-    .wait(`@ShippingMethodChannelListingUpdate`)
-    .wait(`@ShippingZone`)
-    .get(SHARED_ELEMENTS.notificationSuccess)
-    .should("not.exist");
+    .click();
+  confirmationMessageShouldDisappear();
+  cy.wait(`@ShippingMethodChannelListingUpdate`).wait(`@ShippingZone`);
 }
 
 export function fillUpWeightLimits({ max, min }) {

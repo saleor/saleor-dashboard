@@ -42,7 +42,11 @@ const CustomApps: React.FC<CustomAppsProps> = ({
             className={classes.title}
             action={
               !!navigateToCustomAppCreate && (
-                <Button color="primary" onClick={navigateToCustomAppCreate}>
+                <Button
+                  color="primary"
+                  onClick={navigateToCustomAppCreate}
+                  data-test-id="createApp"
+                >
                   <FormattedMessage
                     defaultMessage="Create App"
                     description="create app button"

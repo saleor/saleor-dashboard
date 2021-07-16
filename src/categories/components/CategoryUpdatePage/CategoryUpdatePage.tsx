@@ -154,6 +154,7 @@ export const CategoryUpdatePage: React.FC<CategoryUpdatePageProps> = ({
               />
             </CategoriesTab>
             <ProductsTab
+              testId="productsTab"
               isActive={currentTab === CategoryPageTab.products}
               changeTab={changeTab}
             >
@@ -176,6 +177,7 @@ export const CategoryUpdatePage: React.FC<CategoryUpdatePageProps> = ({
                     color="primary"
                     variant="text"
                     onClick={onAddCategory}
+                    data-test-id="createSubcategory"
                   >
                     <FormattedMessage
                       defaultMessage="Create subcategory"

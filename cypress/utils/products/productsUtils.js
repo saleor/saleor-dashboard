@@ -6,7 +6,7 @@ import {
   deleteProductType,
   getProductTypes
 } from "../../apiRequests/productType";
-import { deleteAttributesStartsWith } from "../attributes.js/attributeUtils";
+import { deleteAttributesStartsWith } from "../attributes/attributeUtils";
 
 export function createProductInChannel({
   name,
@@ -73,7 +73,7 @@ export function createTypeAttributeAndCategoryForProduct(
   let productType;
   let category;
   return attributeRequest
-    .createAttribute(name, attributeValues)
+    .createAttribute({ name, attributeValues })
     .then(attributeResp => {
       attribute = attributeResp;
       createTypeProduct({ name, attributeId: attributeResp.id });
