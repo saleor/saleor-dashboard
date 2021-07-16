@@ -121,7 +121,7 @@ const ProductVariantCreateDialog: React.FC<ProductVariantCreateDialogProps> = pr
               <RadioGroupField
                 alignTop
                 choices={options}
-                name="variantCreateOption"
+                name="option"
                 value={data.option}
                 onChange={change}
               />
