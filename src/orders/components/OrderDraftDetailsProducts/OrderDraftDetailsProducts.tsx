@@ -32,16 +32,13 @@ const useStyles = makeStyles(
       marginLeft: AVATAR_MARGIN
     },
     colPrice: {
-      textAlign: "right",
-      width: 150
+      textAlign: "right"
     },
     colQuantity: {
-      textAlign: "right",
-      width: 80
+      textAlign: "right"
     },
     colTotal: {
-      textAlign: "right",
-      width: 150
+      textAlign: "right"
     },
     errorInfo: {
       color: theme.palette.error.main
