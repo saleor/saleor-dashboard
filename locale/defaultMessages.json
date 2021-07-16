@@ -5560,6 +5560,30 @@
     "context": "product label",
     "string": "Published"
   },
+  "src_dot_products_dot_components_dot_ProductVariantCreateDialog_dot_1321668459": {
+    "context": "create product variants",
+    "string": "How would you like to create variants:"
+  },
+  "src_dot_products_dot_components_dot_ProductVariantCreateDialog_dot_2124954667": {
+    "context": "option",
+    "string": "Create multiple variant via variant creator"
+  },
+  "src_dot_products_dot_components_dot_ProductVariantCreateDialog_dot_3796072295": {
+    "context": "option description",
+    "string": "Create new variant using variant details view"
+  },
+  "src_dot_products_dot_components_dot_ProductVariantCreateDialog_dot_3824462511": {
+    "context": "option description",
+    "string": "Use variant creator to create matrix of selected attribute values to create variants"
+  },
+  "src_dot_products_dot_components_dot_ProductVariantCreateDialog_dot_539249437": {
+    "context": "option",
+    "string": "Create single variant"
+  },
+  "src_dot_products_dot_components_dot_ProductVariantCreateDialog_dot_830692292": {
+    "context": "dialog header",
+    "string": "Create Variants"
+  },
   "src_dot_products_dot_components_dot_ProductVariantCreatePage_dot_attributesHeader": {
     "context": "attributes, section header",
     "string": "Variant Attributes"
