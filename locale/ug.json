@@ -1230,7 +1230,7 @@
   },
   "src_dot_auth_dot_components_dot_LoginPage_dot_2981302356": {
     "context": "link",
-    "string": "Use this link to recover it"
+    "string": "ئەسلىگە كەلتۈرۈش ئۈچۈن بۇ ئۇلانمىنى چېكىڭ"
   },
   "src_dot_auth_dot_components_dot_LoginPage_dot_3476994590": {
     "string": "كەچۈرۈڭ ، ئىشلەتكۈچى ئىسمىڭىز ۋە ياكى پارولىڭىز خاتا. قايتا سىناڭ"
@@ -2869,7 +2869,7 @@
     "string": "Assign products"
   },
   "src_dot_discounts_dot_components_dot_DiscountProducts_dot_2697405188": {
-    "string": "Product Name"
+    "string": "مەھسۇلات ئىسمى"
   },
   "src_dot_discounts_dot_components_dot_DiscountProducts_dot_3326160357": {
     "context": "product availability",
@@ -2888,7 +2888,7 @@
   },
   "src_dot_discounts_dot_components_dot_SaleInfo_dot_636461959": {
     "context": "sale name",
-    "string": "Name"
+    "string": "ئىسمى"
   },
   "src_dot_discounts_dot_components_dot_SaleListPage_dot_1866913828": {
     "string": "Search Sale"
@@ -2953,7 +2953,7 @@
   },
   "src_dot_discounts_dot_components_dot_SaleList_dot_636461959": {
     "context": "sale name",
-    "string": "Name"
+    "string": "ئىسمى"
   },
   "src_dot_discounts_dot_components_dot_SaleSummary_dot_1148029984": {
     "context": "sale value",
@@ -2961,7 +2961,7 @@
   },
   "src_dot_discounts_dot_components_dot_SaleSummary_dot_636461959": {
     "context": "sale name",
-    "string": "Name"
+    "string": "ئىسمى"
   },
   "src_dot_discounts_dot_components_dot_SaleType_dot_3216816841": {
     "context": "percentage or fixed, header",
@@ -3382,7 +3382,7 @@
   },
   "src_dot_fulfilled": {
     "context": "order status",
-    "string": "Fulfilled"
+    "string": "تاماملاندى"
   },
   "src_dot_generalInformations": {
     "string": "General Information"
@@ -3739,7 +3739,7 @@
     "string": "Order"
   },
   "src_dot_orders_dot_components_dot_OrderFulfillPage_dot_4046223826": {
-    "string": "Product name"
+    "string": "مەھسۇلات ئىسمى"
   },
   "src_dot_orders_dot_components_dot_OrderFulfillPage_dot_4251997263": {
     "context": "checkbox",
@@ -3808,7 +3808,7 @@
     "string": "Tracking number"
   },
   "src_dot_orders_dot_components_dot_OrderFulfillmentDialog_dot_4046223826": {
-    "string": "Product name"
+    "string": "مەھسۇلات ئىسمى"
   },
   "src_dot_orders_dot_components_dot_OrderFulfillmentDialog_dot_693960049": {
     "context": "product's sku",
@@ -5258,7 +5258,7 @@
   },
   "src_dot_products_dot_components_dot_ProductDetailsForm_dot_636461959": {
     "context": "product name",
-    "string": "Name"
+    "string": "ئىسمى"
   },
   "src_dot_products_dot_components_dot_ProductExportDialog_dot_1004476569": {
     "context": "option",
@@ -5368,7 +5368,7 @@
   },
   "src_dot_products_dot_components_dot_ProductListPage_dot_1542417144": {
     "context": "button",
-    "string": "Create Product"
+    "string": "مەھسۇلات كىرگۈزۈش"
   },
   "src_dot_products_dot_components_dot_ProductListPage_dot_1952810469": {
     "context": "product type",
@@ -5448,7 +5448,7 @@
   },
   "src_dot_products_dot_components_dot_ProductList_dot_636461959": {
     "context": "product",
-    "string": "Name"
+    "string": "ئىسمى"
   },
   "src_dot_products_dot_components_dot_ProductMediaNavigation_dot_allMedia": {
     "context": "section header",
@@ -5472,7 +5472,7 @@
   },
   "src_dot_products_dot_components_dot_ProductMediaPopper_dot_uploadImages": {
     "context": "modal button images upload",
-    "string": "Upload Images"
+    "string": "رەسىم يۈكلەش"
   },
   "src_dot_products_dot_components_dot_ProductMediaPopper_dot_uploadUrl": {
     "context": "modal button url upload",
@@ -5480,11 +5480,11 @@
   },
   "src_dot_products_dot_components_dot_ProductMedia_dot_media": {
     "context": "section header",
-    "string": "Media"
+    "string": "مېدىيا"
   },
   "src_dot_products_dot_components_dot_ProductMedia_dot_upload": {
     "context": "modal button upload",
-    "string": "Upload"
+    "string": "يۈكلەش"
   },
   "src_dot_products_dot_components_dot_ProductOrganization_dot_150865454": {
     "context": "product is not configurable",
@@ -5714,7 +5714,7 @@
   },
   "src_dot_products_dot_components_dot_ProductVariantMedia_dot_media": {
     "context": "section header",
-    "string": "Media"
+    "string": "مېدىيا"
   },
   "src_dot_products_dot_components_dot_ProductVariantMedia_dot_selectSpecificVariant": {
     "context": "select variant media",
@@ -5883,7 +5883,7 @@
   },
   "src_dot_products_dot_views_dot_ProductCreate_dot_1542417144": {
     "context": "window title",
-    "string": "Create Product"
+    "string": "مەھسۇلات كىرگۈزۈش"
   },
   "src_dot_products_dot_views_dot_ProductCreate_dot_1591632382": {
     "context": "page header",
@@ -5975,7 +5975,7 @@
   },
   "src_dot_save": {
     "context": "button",
-    "string": "Save"
+    "string": "ساقلاش"
   },
   "src_dot_savedChanges": {
     "string": "Saved changes"
@@ -6097,7 +6097,7 @@
     "string": "Assign products"
   },
   "src_dot_shipping_dot_components_dot_ShippingMethodProducts_dot_2697405188": {
-    "string": "Product Name"
+    "string": "مەھسۇلات ئىسمى"
   },
   "src_dot_shipping_dot_components_dot_ShippingMethodProducts_dot_4190792473": {
     "string": "Actions"
@@ -6292,7 +6292,7 @@
   },
   "src_dot_shipping_dot_components_dot_ShippingZoneRates_dot_636461959": {
     "context": "shipping method name",
-    "string": "Name"
+    "string": "ئىسمى"
   },
   "src_dot_shipping_dot_components_dot_ShippingZoneSettingsCard_dot_selectFieldAddText": {
     "context": "WarehousesSection select field add text",
@@ -6327,7 +6327,7 @@
   },
   "src_dot_shipping_dot_components_dot_ShippingZonesList_dot_636461959": {
     "context": "shipping zone",
-    "string": "Name"
+    "string": "ئىسمى"
   },
   "src_dot_shipping_dot_components_dot_ShippingZonesList_dot_655374584": {
     "string": "No shipping zones found"
@@ -6530,7 +6530,7 @@
     "string": "ئالدىنقى پارول"
   },
   "src_dot_staff_dot_components_dot_StaffPassword_dot_1274006906": {
-    "string": "You should change your password every month to avoid security issues."
+    "string": "بىخەتەرلىك مەسىلىسىدىن ساقلىنىش ئۈچۈن ھەر ئايدا پارولىڭىزنى ئۆزگەرتىشىڭىزنى تەۋسىيە قىلىمىز."
   },
   "src_dot_staff_dot_components_dot_StaffPassword_dot_1434811103": {
     "context": "button",
@@ -6541,7 +6541,7 @@
     "string": "پارولا"
   },
   "src_dot_staff_dot_components_dot_StaffPreferences_dot_1332294025": {
-    "string": "Selecting this will change the language of your dashboard"
+    "string": "بۇنى تاللىسىڭىز باشقۇرۇش تاختىڭىزنىڭ تىلىنى ئۆزگەرتىدۇ"
   },
   "src_dot_staff_dot_components_dot_StaffPreferences_dot_2162129531": {
     "string": "Please note, while all currency and date adjustments are complete, language translations are at varying degrees of completion."
@@ -6820,7 +6820,7 @@
   },
   "src_dot_translations_dot_components_dot_TranslationsShippingMethodPage_dot_636461959": {
     "context": "shipping method name",
-    "string": "Name"
+    "string": "ئىسمى"
   },
   "src_dot_translations_dot_components_dot_TranslationsVouchersPage_dot_2447510181": {
     "context": "header",
@@ -6850,7 +6850,7 @@
   },
   "src_dot_uploadImage": {
     "context": "button",
-    "string": "Upload image"
+    "string": "رەسىم يۈكلەش"
   },
   "src_dot_utils_dot_errors_dot_alreadyExists": {
     "context": "add authorization key error",
@@ -7349,7 +7349,7 @@
   },
   "src_dot_webhooks_dot_components_dot_WebhooksList_dot_636461959": {
     "context": "webhook name",
-    "string": "Name"
+    "string": "ئىسمى"
   },
   "src_dot_webhooks_dot_views_dot_3493926696": {
     "context": "window title",
