@@ -48,7 +48,12 @@ export const CategoryProducts: React.FC<CategoryProductsProps> = ({
           { categoryName }
         )}
         toolbar={
-          <Button color="primary" variant="text" onClick={onAdd}>
+          <Button
+            color="primary"
+            variant="text"
+            onClick={onAdd}
+            data-test-id="addProducts"
+          >
             <FormattedMessage
               defaultMessage="Add product"
               description="button"

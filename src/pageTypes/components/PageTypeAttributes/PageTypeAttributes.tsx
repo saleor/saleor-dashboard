@@ -91,6 +91,7 @@ const PageTypeAttributes: React.FC<PageTypeAttributesProps> = props => {
             color="primary"
             variant="text"
             onClick={() => onAttributeAssign(AttributeTypeEnum[type])}
+            data-test-id="assignAttributes"
           >
             <FormattedMessage
               defaultMessage="Assign attribute"
