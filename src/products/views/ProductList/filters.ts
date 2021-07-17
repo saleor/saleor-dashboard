@@ -219,10 +219,10 @@ const parseFilterValue = (
   const isBooleanValue =
     !isMulti && ["true", "false"].includes((value as unknown) as string);
   const isDateValue = (isMulti ? value : [value]).some(val =>
-    moment(val, moment.HTML5_FMT.DATE).isValid()
+    moment(val, moment.HTML5_FMT.DATE, true).isValid()
   );
   const isDateTimeValue = (isMulti ? value : [value]).some(val =>
-    moment(val, moment.ISO_8601).isValid()
+    moment(val, moment.ISO_8601, true).isValid()
   );
 
   const data = { isMulti, value: (isMulti ? value : [value]) as string[] };
