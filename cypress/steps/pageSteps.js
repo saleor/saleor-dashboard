@@ -9,8 +9,7 @@ import { fillAutocompleteSelect } from "./shared/selects";
 export const attributesTypes = {
   DROPDOWN: addSelectAttributeValue,
   MULTISELECT: addSelectAttributeValue,
-  // Uncomment it after resolving SALEOR-3728 bug
-  // RICH_TEXT: addRichTextAttributeValue,
+  RICH_TEXT: addRichTextAttributeValue,
   BOOLEAN: addBooleanAttributeValue,
   NUMERIC: addNumericAttributeValue
 };
@@ -36,7 +35,8 @@ export function addRichTextAttributeValue(attributeValue) {
     .should("exist")
     .get(PAGE_DETAILS.attributeValues)
     .find(PAGE_DETAILS.richTextEditorAttributeValue)
-    .type(attributeValue);
+    .type(attributeValue)
+    .wait(500);
 }
 
 export function addBooleanAttributeValue() {
