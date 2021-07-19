@@ -73,6 +73,7 @@ All notable, unreleased changes to this project will be documented in this file.
 - Add Metadata for Sale & Voucher - #7653 by @piotrgrundas
 - Add variant create options dialog - #1238 by @orzechdev
 - Fix for errors on changing channel availability - #1264 by @krzysztofwolski
+- Introduce fulfillment creation API - #1241 by @orzechdev
 
 # 2.11.1
 
