@@ -37,7 +37,7 @@ const Title: React.FC<TitleProps> = props => {
     <div className={classes.container}>
       {`#${order.number}`}
       <div className={classes.statusContainer}>
-        <StatusChip label={localized} type={status} />
+        <StatusChip label={localized} status={status} />
       </div>
     </div>
   );
