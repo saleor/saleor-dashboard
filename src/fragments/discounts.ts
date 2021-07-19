@@ -1,3 +1,4 @@
+import { metadataFragment } from "@saleor/fragments/metadata";
 import { channelListingProductWithoutPricingFragment } from "@saleor/fragments/products";
 import gql from "graphql-tag";
 
@@ -85,7 +86,9 @@ export const saleDetailsFragment = gql`
 `;
 
 export const voucherFragment = gql`
+  ${metadataFragment}
   fragment VoucherFragment on Voucher {
+    ...MetadataFragment
     id
     code
     startDate
