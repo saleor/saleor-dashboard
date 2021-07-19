@@ -26,6 +26,7 @@ import GiftCardsListTableFooter from "./GiftCardsListTableFooter";
 import GiftCardsListTableHeader from "./GiftCardsListTableHeader";
 
 const numberOfColumns = 7;
+const PLACEHOLDER = "-";
 
 // interface GiftCardsListTableProps {}
 
@@ -88,7 +89,7 @@ const GiftCardsListTable: React.FC = ({}) => {
                   </div>
                 </TableCell>
                 <TableCell>
-                  <Typography>{tag || "-"}</Typography>
+                  <Typography>{tag || PLACEHOLDER}</Typography>
                 </TableCell>
                 <TableCell className={classes.row}>
                   {product ? (
@@ -96,7 +97,7 @@ const GiftCardsListTable: React.FC = ({}) => {
                       {product?.name}
                     </Link>
                   ) : (
-                    "-"
+                    PLACEHOLDER
                   )}
                 </TableCell>
                 <TableCell className={classes.row}>
@@ -105,7 +106,7 @@ const GiftCardsListTable: React.FC = ({}) => {
                       {`${usedBy?.firstName} ${usedBy?.lastName}`}
                     </Link>
                   ) : (
-                    <Typography noWrap>{usedByEmail}</Typography>
+                    <Typography noWrap>{usedByEmail || PLACEHOLDER}</Typography>
                   )}
                 </TableCell>
                 <TableCell align="right" className={classes.colBalance}>
