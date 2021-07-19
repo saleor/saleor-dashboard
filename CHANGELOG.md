@@ -65,6 +65,7 @@ All notable, unreleased changes to this project will be documented in this file.
 - Fix order links on home page - #1219 by @jwm0
 - Fix huge payload issue for plugins view - #1203 by @kamilpastuszka
 - Fix content type validation in create page view - #1205 by @orzechdev
+- Fixed navigation menu items reordering issue - #1239 by @kamilpastuszka
 
 # 2.11.1
 
