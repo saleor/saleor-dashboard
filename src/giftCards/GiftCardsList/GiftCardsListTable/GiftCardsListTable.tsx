@@ -1,23 +1,24 @@
 import {
   Card,
-  Checkbox,
-  makeStyles,
   TableBody,
   TableCell,
   TableRow,
   Typography
 } from "@material-ui/core";
 import HorizontalSpacer from "@saleor/apps/components/HorizontalSpacer";
+import Checkbox from "@saleor/components/Checkbox";
+import DeleteIconButton from "@saleor/components/DeleteIconButton";
 import Link from "@saleor/components/Link";
-import Money from "@saleor/components/Money";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
+import StatusChip from "@saleor/components/StatusChip";
+import { StatusType } from "@saleor/components/StatusChip/types";
 import TableCellHeader, {
   TableCellHeaderProps
 } from "@saleor/components/TableCellHeader";
 import TableHead from "@saleor/components/TableHead";
 import { customerUrl } from "@saleor/customers/urls";
+import { BulkActions } from "@saleor/hooks/useBulkActions";
 import useNavigator from "@saleor/hooks/useNavigator";
-import useNotifier from "@saleor/hooks/useNotifier";
 import { renderCollection } from "@saleor/misc";
 import Label, {
   LabelSizes
@@ -26,12 +27,15 @@ import { productUrl } from "@saleor/products/urls";
 import faker from "faker";
 import { capitalize } from "lodash-es";
 import React from "react";
-import { MessageDescriptor, useIntl } from "react-intl";
+import { FormattedMessage, MessageDescriptor, useIntl } from "react-intl";
 
-import { giftCardsListTableMessages as messages } from "./messages";
+import { giftCardsListTableMessages as messages } from "../messages";
+import { useTableStyles as useStyles } from "../styles";
+import GiftCardsListTableFooter from "./GiftCardsListTableFooter";
 
-const numberOfColumns = 5;
+const numberOfColumns = 7;
 
+// TEMP DATA & HELPERS
 const getNumbersString = (num: number) => {
   const numString = num.toString();
 
@@ -50,7 +54,6 @@ const getNumbersString = (num: number) => {
 
 const displayAtRandom = yes => (faker.datatype.boolean() ? yes : null);
 
-// TEMP DATA
 const giftCards = new Array(150).fill(null).map(() => ({
   id: faker.datatype.uuid(),
   displayCode: getNumbersString(faker.datatype.number({ min: 0, max: 9999 })),
@@ -72,32 +75,30 @@ const giftCards = new Array(150).fill(null).map(() => ({
   }
 }));
 
-const useStyles = makeStyles(
-  () => ({
-    moneyContainer: {
-      display: "flex",
-      alignItems: "baseline",
-      justifyContent: "flex-end"
-    }
-  }),
-  { name: "GiftCardsListTable" }
-);
-
-interface GiftCardsListTableProps {}
+interface GiftCardsListTableProps {
+  bulkActions: BulkActions;
+}
 
 interface HeaderItem {
-  title: MessageDescriptor;
+  title?: MessageDescriptor;
   options?: TableCellHeaderProps;
 }
 
-const GiftCardsListTable: React.FC<GiftCardsListTableProps> = ({}) => {
+const GiftCardsListTable: React.FC<GiftCardsListTableProps> = ({
+  bulkActions
+}) => {
   const intl = useIntl();
   const classes = useStyles({});
   const navigate = useNavigator();
+  const { toggleAll, toggle, isSelected, listElements } = bulkActions;
 
   const headerItems: HeaderItem[] = [
     {
-      title: messages.giftCardsTableColumnGiftCardTitle
+      title: messages.giftCardsTableColumnGiftCardTitle,
+      options: {
+        className: classes.colCardCode,
+        textAlign: "left"
+      }
     },
     {
       title: messages.giftCardsTableColumnTagTitle
@@ -111,6 +112,7 @@ const GiftCardsListTable: React.FC<GiftCardsListTableProps> = ({}) => {
     {
       title: messages.giftCardsTableColumnBalanceTitle,
       options: {
+        className: classes.colBalance,
         textAlign: "right"
       }
     }
@@ -121,18 +123,22 @@ const GiftCardsListTable: React.FC<GiftCardsListTableProps> = ({}) => {
       <ResponsiveTable>
         <TableHead
           colSpan={numberOfColumns}
-          // selected={selected}
-          // disabled={disabled}
-          // items={collections}
-          // toggleAll={toggleAll}
-          // toolbar={toolbar}
+          selected={listElements.length}
+          // disabled={}
+          items={giftCards}
+          toggleAll={toggleAll}
         >
           {headerItems.map(({ title, options }) => (
             <TableCellHeader {...options}>
               <Label text={intl.formatMessage(title)} size={LabelSizes.md} />
             </TableCellHeader>
           ))}
+          <TableCell className={classes.colDelete} />
         </TableHead>
+        <GiftCardsListTableFooter
+          numberOfColumns={numberOfColumns}
+          pageInfo={giftCards?.pageInfo}
+        />
         <TableBody>
           {renderCollection(
             giftCards,
@@ -146,42 +152,57 @@ const GiftCardsListTable: React.FC<GiftCardsListTableProps> = ({}) => {
               product,
               currentBalance
             }) => (
-              <TableRow key={id}>
+              <TableRow className={classes.row} key={id}>
                 <TableCell padding="checkbox">
                   <Checkbox
-                  //   checked={isSelected}
-                  //   disabled={disabled}
-                  //   disableClickPropagation
-                  //   onChange={() => toggle(collection.id)}
+                    disableClickPropagation
+                    checked={isSelected(id)}
+                    onChange={() => toggle(id)}
                   />
                 </TableCell>
-                <TableCell>
-                  <Typography>
-                    {`${intl.formatMessage(
-                      messages.codeEndingWithLabel
-                    )} ${displayCode}`}
-                  </Typography>
+                <TableCell className={classes.colCardCode}>
+                  <div className={classes.cardCodeContainer}>
+                    <Typography>
+                      {`${intl.formatMessage(
+                        messages.codeEndingWithLabel
+                      )} ${displayCode}`}
+                    </Typography>
+                    {!isActive && (
+                      <>
+                        <HorizontalSpacer spacing={2} />
+                        <StatusChip
+                          size="md"
+                          status={StatusType.ERROR}
+                          label={intl.formatMessage(
+                            messages.giftCardDisabledLabel
+                          )}
+                        />
+                      </>
+                    )}
+                  </div>
                 </TableCell>
                 <TableCell>
                   <Typography>{tag || "-"}</Typography>
                 </TableCell>
-                <TableCell>
-                  <Link onClick={() => navigate(productUrl(product?.id))}>
-                    {product?.name || "-"}
-                  </Link>
-                </TableCell>
-                <TableCell>
-                  {usedBy ? (
-                    <Link onClick={() => navigate(customerUrl(usedBy?.id))}>
-                      <Typography>
-                        {`${usedBy?.firstName} ${usedBy?.lastName}`}
-                      </Typography>
+                <TableCell className={classes.row}>
+                  {product ? (
+                    <Link onClick={() => navigate(productUrl(product?.id))}>
+                      {product?.name}
                     </Link>
                   ) : (
-                    <Typography>{usedByEmail}</Typography>
+                    "-"
                   )}
                 </TableCell>
-                <TableCell align="right">
+                <TableCell className={classes.row}>
+                  {usedBy ? (
+                    <Link onClick={() => navigate(customerUrl(usedBy?.id))}>
+                      {`${usedBy?.firstName} ${usedBy?.lastName}`}
+                    </Link>
+                  ) : (
+                    <Typography noWrap>{usedByEmail}</Typography>
+                  )}
+                </TableCell>
+                <TableCell align="right" className={classes.colBalance}>
                   <div className={classes.moneyContainer}>
                     <Typography variant="caption">
                       {currentBalance.currency}
@@ -189,6 +210,16 @@ const GiftCardsListTable: React.FC<GiftCardsListTableProps> = ({}) => {
                     <HorizontalSpacer spacing={0.5} />
                     <Typography>{currentBalance.amount}</Typography>
                   </div>
+                </TableCell>
+                <TableCell className={classes.colDelete} colSpan={1}>
+                  <DeleteIconButton />
+                </TableCell>
+              </TableRow>
+            ),
+            () => (
+              <TableRow>
+                <TableCell colSpan={numberOfColumns}>
+                  <FormattedMessage {...messages.noGiftCardsFound} />
                 </TableCell>
               </TableRow>
             )
