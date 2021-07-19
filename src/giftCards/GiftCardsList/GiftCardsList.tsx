@@ -1,21 +1,23 @@
 import Container from "@saleor/components/Container";
-import useBulkActions from "@saleor/hooks/useBulkActions";
-import { BulkActionsProvider } from "@saleor/hooks/useBulkActions/BulkActionsProvider";
 import React from "react";
 
 import GiftCardsListHeader from "./GiftCardsListHeader";
+import { GiftCardsListProvider } from "./GiftCardsListProvider";
 import GiftCardsListTable from "./GiftCardsListTable";
+import { GiftCardListUrlQueryParams } from "./types";
 
-const GiftCardsList: React.FC = () => {
-  const bulkActions = useBulkActions();
+interface GiftCardsListProps {
+  params: GiftCardListUrlQueryParams;
+}
 
+const GiftCardsList: React.FC<GiftCardsListProps> = ({ params }) => {
   return (
-    // <BulkActionsProvider>
-    <Container>
-      <GiftCardsListHeader />
-      <GiftCardsListTable bulkActions={bulkActions} />
-    </Container>
-    // </BulkActionsProvider>
+    <GiftCardsListProvider params={params}>
+      <Container>
+        <GiftCardsListHeader />
+        <GiftCardsListTable />
+      </Container>
+    </GiftCardsListProvider>
   );
 };
 

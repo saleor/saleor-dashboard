@@ -1,38 +1,28 @@
 import { TableFooter, TableRow } from "@material-ui/core";
 import TablePagination from "@saleor/components/TablePagination";
-import useListSettings from "@saleor/hooks/useListSettings";
-import { PageInfo } from "@saleor/hooks/useLocalPaginator";
-import usePaginator, {
-  createPaginationState
-} from "@saleor/hooks/usePaginator";
-import { ListViews } from "@saleor/types";
-import React from "react";
+import usePaginator from "@saleor/hooks/usePaginator";
+import React, { useContext } from "react";
 
-import { GiftCardListColummns } from "../types";
+import { GiftCardsListContext } from "../GiftCardsListProvider";
+import { GiftCardsListTableCommonProps } from "../types";
 
-interface GiftCardsListTableFooterProps {
-  giftCardsPageInfo: PageInfo;
-  numberOfColumns: number;
-  disabled: boolean;
-}
-
-const GiftCardsListTableFooter: React.FC<GiftCardsListTableFooterProps> = ({
-  giftCardsPageInfo,
+const GiftCardsListTableFooter: React.FC<GiftCardsListTableCommonProps> = ({
   numberOfColumns,
   disabled
 }) => {
+  const {
+    settings,
+    updateListSettings,
+    pageInfo: apiPageInfo,
+    paginationState,
+    params
+  } = useContext(GiftCardsListContext);
   const paginate = usePaginator();
 
-  const { updateListSettings, settings } = useListSettings<
-    GiftCardListColummns
-  >(ListViews.GIFT_CARD_LIST);
-
-  const paginationState = createPaginationState(settings.rowNumber /* params*/);
-
   const { loadNextPage, loadPreviousPage, pageInfo } = paginate(
-    giftCardsPageInfo,
-    paginationState
-    // params
+    apiPageInfo,
+    paginationState,
+    params
   );
 
   return (

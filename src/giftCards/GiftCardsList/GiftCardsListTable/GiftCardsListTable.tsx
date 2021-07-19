@@ -12,133 +12,39 @@ import Link from "@saleor/components/Link";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import StatusChip from "@saleor/components/StatusChip";
 import { StatusType } from "@saleor/components/StatusChip/types";
-import TableCellHeader, {
-  TableCellHeaderProps
-} from "@saleor/components/TableCellHeader";
-import TableHead from "@saleor/components/TableHead";
 import { customerUrl } from "@saleor/customers/urls";
-import { BulkActions } from "@saleor/hooks/useBulkActions";
 import useNavigator from "@saleor/hooks/useNavigator";
 import { renderCollection } from "@saleor/misc";
-import Label, {
-  LabelSizes
-} from "@saleor/orders/components/OrderHistory/Label";
 import { productUrl } from "@saleor/products/urls";
-import faker from "faker";
-import { capitalize } from "lodash-es";
-import React from "react";
-import { FormattedMessage, MessageDescriptor, useIntl } from "react-intl";
+import React, { useContext } from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
+import { GiftCardsListContext } from "../GiftCardsListProvider";
 import { giftCardsListTableMessages as messages } from "../messages";
 import { useTableStyles as useStyles } from "../styles";
 import GiftCardsListTableFooter from "./GiftCardsListTableFooter";
+import GiftCardsListTableHeader from "./GiftCardsListTableHeader";
 
 const numberOfColumns = 7;
 
-// TEMP DATA & HELPERS
-const getNumbersString = (num: number) => {
-  const numString = num.toString();
+// interface GiftCardsListTableProps {}
 
-  switch (numString.length) {
-    case 4:
-      return numString;
-
-    case 3:
-      return `0${numString}`;
-    case 2:
-      return `00${numString}`;
-    default:
-      return `000${numString}`;
-  }
-};
-
-const displayAtRandom = yes => (faker.datatype.boolean() ? yes : null);
-
-const giftCards = new Array(150).fill(null).map(() => ({
-  id: faker.datatype.uuid(),
-  displayCode: getNumbersString(faker.datatype.number({ min: 0, max: 9999 })),
-  usedBy: displayAtRandom({
-    firstName: faker.name.firstName(),
-    lastName: faker.name.lastName(),
-    id: faker.datatype.uuid()
-  }),
-  usedByEmail: faker.internet.email().toLowerCase(),
-  tag: displayAtRandom(capitalize(faker.lorem.words(2))),
-  isActive: faker.datatype.boolean(),
-  product: displayAtRandom({
-    name: faker.commerce.productName(),
-    id: faker.datatype.uuid()
-  }),
-  currentBalance: {
-    currency: "USD",
-    amount: parseFloat(faker.finance.amount(1, 999))
-  }
-}));
-
-interface GiftCardsListTableProps {
-  bulkActions: BulkActions;
-}
-
-interface HeaderItem {
-  title?: MessageDescriptor;
-  options?: TableCellHeaderProps;
-}
-
-const GiftCardsListTable: React.FC<GiftCardsListTableProps> = ({
-  bulkActions
-}) => {
+const GiftCardsListTable: React.FC = ({}) => {
   const intl = useIntl();
   const classes = useStyles({});
   const navigate = useNavigator();
-  const { toggleAll, toggle, isSelected, listElements } = bulkActions;
+  const { toggle, isSelected, giftCards } = useContext(GiftCardsListContext);
 
-  const headerItems: HeaderItem[] = [
-    {
-      title: messages.giftCardsTableColumnGiftCardTitle,
-      options: {
-        className: classes.colCardCode,
-        textAlign: "left"
-      }
-    },
-    {
-      title: messages.giftCardsTableColumnTagTitle
-    },
-    {
-      title: messages.giftCardsTableColumnProductTitle
-    },
-    {
-      title: messages.giftCardsTableColumnCustomerTitle
-    },
-    {
-      title: messages.giftCardsTableColumnBalanceTitle,
-      options: {
-        className: classes.colBalance,
-        textAlign: "right"
-      }
-    }
-  ];
+  const commonTableProps = {
+    numberOfColumns
+    // disabled
+  };
 
   return (
     <Card>
       <ResponsiveTable>
-        <TableHead
-          colSpan={numberOfColumns}
-          selected={listElements.length}
-          // disabled={}
-          items={giftCards}
-          toggleAll={toggleAll}
-        >
-          {headerItems.map(({ title, options }) => (
-            <TableCellHeader {...options}>
-              <Label text={intl.formatMessage(title)} size={LabelSizes.md} />
-            </TableCellHeader>
-          ))}
-          <TableCell className={classes.colDelete} />
-        </TableHead>
-        <GiftCardsListTableFooter
-          numberOfColumns={numberOfColumns}
-          pageInfo={giftCards?.pageInfo}
-        />
+        <GiftCardsListTableHeader {...commonTableProps} />
+        <GiftCardsListTableFooter {...commonTableProps} />
         <TableBody>
           {renderCollection(
             giftCards,
