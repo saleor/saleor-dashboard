@@ -26,11 +26,7 @@ export const DateTimeField: React.FC<DateTimeFieldProps> = ({
     initialValue ? splitDateTime(initialValue) : { date: "", time: "" }
   );
 
-  useEffect(() => {
-    if (value.time && value.date) {
-      onChange(joinDateTime(value.date, value.time));
-    }
-  }, [value]);
+  useEffect(() => onChange(joinDateTime(value.date, value.time)), [value]);
 
   return (
     <>
