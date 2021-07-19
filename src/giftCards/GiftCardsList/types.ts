@@ -4,3 +4,10 @@ export type GiftCardListColummns =
   | "balance"
   | "usedBy"
   | "product";
+
+export interface GiftCardsListTableCommonProps {
+  numberOfColumns: number;
+  disabled: boolean;
+}
+
+export interface GiftCardListUrlQueryParams {}
