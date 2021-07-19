@@ -3,10 +3,12 @@ import { makeStyles } from "@saleor/theme";
 import classNames from "classnames";
 import React from "react";
 
+import { Size } from "../ActionDialog/types";
 import { StatusType } from "./types";
 
 export interface StatusChipProps {
   status?: StatusType;
+  size?: Size;
   label?: string;
 }
 
@@ -34,20 +36,30 @@ const StatusChipStyles = {
   },
   successLabel: {
     color: "#5DC292"
+  },
+  lg: {
+    padding: "8px 24px"
+  },
+  lgLabel: {
+    fontSize: "1rem"
+  },
+  md: {
+    padding: "4px 16px"
+  },
+  mdLabel: {
+    fontSize: 16
   }
 };
 
 const useStyles = makeStyles(
   theme => ({
     label: {
-      fontSize: "1rem",
       fontWeight: theme.typography.fontWeightBold,
       textTransform: "uppercase"
     },
     root: {
       borderRadius: 22,
-      display: "inline-block",
-      padding: "8px 24px"
+      display: "inline-block"
     },
     ...StatusChipStyles
   }),
@@ -55,7 +67,7 @@ const useStyles = makeStyles(
 );
 
 const StatusChip: React.FC<StatusChipProps> = props => {
-  const { status = StatusType.NEUTRAL, label } = props;
+  const { status = StatusType.NEUTRAL, size = "lg", label } = props;
   const classes = useStyles(props);
 
   if (!label) {
@@ -63,9 +75,13 @@ const StatusChip: React.FC<StatusChipProps> = props => {
   }
 
   return (
-    <div className={classNames(classes.root, classes[status])}>
+    <div className={classNames(classes.root, classes[status], classes[size])}>
       <Typography
-        className={classNames(classes.label, classes[`${status}Label`])}
+        className={classNames(
+          classes.label,
+          classes[`${status}Label`],
+          classes[`${size}Label`]
+        )}
       >
         {label}
       </Typography>
