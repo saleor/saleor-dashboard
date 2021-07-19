@@ -69,7 +69,7 @@ const MenuDetailsPage: React.FC<MenuDetailsPageProps> = ({
     });
 
     if (result) {
-      setTreeOperations([]);
+      setTreeOperations([...treeOperations]);
     }
 
     return result;
