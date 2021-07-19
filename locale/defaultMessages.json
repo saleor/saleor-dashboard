@@ -3383,6 +3383,10 @@
   "src_dot_generalInformations": {
     "string": "General Information"
   },
+  "src_dot_giftCards": {
+    "context": "gift cards section name",
+    "string": "Gift Cards"
+  },
   "src_dot_home": {
     "context": "home section name",
     "string": "Home"
