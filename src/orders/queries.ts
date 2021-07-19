@@ -2,7 +2,8 @@ import { fragmentAddress } from "@saleor/fragments/address";
 import {
   fragmentOrderDetails,
   fragmentOrderSettings,
-  fragmentRefundOrderLine
+  fragmentRefundOrderLine,
+  fragmentShopOrderSettings
 } from "@saleor/fragments/orders";
 import { fragmentMoney } from "@saleor/fragments/products";
 import makeQuery from "@saleor/hooks/makeQuery";
@@ -267,9 +268,13 @@ export const useOrderFulfillData = makeQuery<
 
 export const orderSettingsQuery = gql`
   ${fragmentOrderSettings}
+  ${fragmentShopOrderSettings}
   query OrderSettings {
     orderSettings {
       ...OrderSettingsFragment
+    }
+    shop {
+      ...ShopOrderSettingsFragment
     }
   }
 `;

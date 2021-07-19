@@ -22,10 +22,20 @@ export const OrderSettings: React.FC = () => {
     orderSettingsUpdateOpts
   ] = useOrderSettingsUpdateMutation({});
 
-  const handleSubmit = async (data: OrderSettingsFormData) => {
+  const handleSubmit = async ({
+    automaticallyConfirmAllNewOrders,
+    fulfillmentAutoConfirm,
+    fulfillmentAllowUnpaid
+  }: OrderSettingsFormData) => {
     const result = await orderSettingsUpdate({
       variables: {
-        input: data
+        orderSettingsInput: {
+          automaticallyConfirmAllNewOrders
+        },
+        shopSettingsInput: {
+          fulfillmentAutoConfirm,
+          fulfillmentAllowUnpaid
+        }
       }
     });
 
@@ -49,7 +59,8 @@ export const OrderSettings: React.FC = () => {
 
   return (
     <OrderSettingsPage
-      data={data?.orderSettings}
+      orderSettings={data?.orderSettings}
+      shop={data?.shop}
       disabled={loading || orderSettingsUpdateOpts.loading}
       onSubmit={handleSubmit}
       onBack={handleBack}
