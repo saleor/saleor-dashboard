@@ -29,7 +29,7 @@ export const giftCardsListTableMessages = defineMessages({
     description: "GiftCardsListTable column title product"
   },
   giftCardsTableColumnCustomerTitle: {
-    defaultMessage: "Customer",
+    defaultMessage: "Used by",
     description: "GiftCardsListTable column title customer"
   },
   giftCardsTableColumnBalanceTitle: {

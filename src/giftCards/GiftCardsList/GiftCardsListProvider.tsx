@@ -7,7 +7,6 @@ import {
   createPaginationState,
   PaginationState
 } from "@saleor/hooks/usePaginator";
-import { mapEdgesToItems } from "@saleor/utils/maps";
 import faker from "faker";
 import capitalize from "lodash-es/capitalize";
 import React, { createContext } from "react";
@@ -35,7 +34,7 @@ const getNumbersString = (num: number) => {
 const displayAtRandom = yes => (faker.datatype.boolean() ? yes : null);
 
 const data = {
-  giftCards: new Array(150).fill(null).map(() => ({
+  giftCards: new Array(4).fill(null).map(() => ({
     id: faker.datatype.uuid(),
     displayCode: getNumbersString(faker.datatype.number({ min: 0, max: 9999 })),
     usedBy: displayAtRandom({
@@ -43,7 +42,7 @@ const data = {
       lastName: faker.name.lastName(),
       id: faker.datatype.uuid()
     }),
-    usedByEmail: faker.internet.email().toLowerCase(),
+    usedByEmail: displayAtRandom(faker.internet.email().toLowerCase()),
     tag: displayAtRandom(capitalize(faker.lorem.words(2))),
     isActive: faker.datatype.boolean(),
     product: displayAtRandom({
@@ -98,12 +97,14 @@ export const GiftCardsListProvider: React.FC<GiftCardsListProviderProps> = ({
     GiftCardListColummns
   >(ListViews.GIFT_CARD_LIST);
 
+  // TEMP
   // const filter = getFilterVariables(params);
   // const sort = getSortQueryVariables(params);
 
   const queryVariables = React.useMemo<GiftCardListVariables>(
     () => ({
       ...paginationState
+      // TEMP
       // filter,
       // sort
     }),
