@@ -6,7 +6,7 @@ import React from "react";
 import { StatusType } from "./types";
 
 export interface StatusChipProps {
-  type?: StatusType;
+  status?: StatusType;
   label?: string;
 }
 
@@ -55,7 +55,7 @@ const useStyles = makeStyles(
 );
 
 const StatusChip: React.FC<StatusChipProps> = props => {
-  const { type = StatusType.NEUTRAL, label } = props;
+  const { status = StatusType.NEUTRAL, label } = props;
   const classes = useStyles(props);
 
   if (!label) {
@@ -63,9 +63,9 @@ const StatusChip: React.FC<StatusChipProps> = props => {
   }
 
   return (
-    <div className={classNames(classes.root, classes[type])}>
+    <div className={classNames(classes.root, classes[status])}>
       <Typography
-        className={classNames(classes.label, classes[`${type}Label`])}
+        className={classNames(classes.label, classes[`${status}Label`])}
       >
         {label}
       </Typography>
