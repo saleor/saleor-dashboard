@@ -1,6 +1,7 @@
 import { IMoney, subtractMoney } from "@saleor/components/Money";
 import { WarehouseFragment } from "@saleor/fragments/types/WarehouseFragment";
 import { FormsetData } from "@saleor/hooks/useFormset";
+import { OrderErrorCode } from "@saleor/types/globalTypes";
 
 import {
   LineItemData,
@@ -10,6 +11,7 @@ import {
   getAllOrderFulfilledLines,
   getById
 } from "../components/OrderReturnPage/utils";
+import { FulfillOrder_orderFulfill_errors } from "../types/FulfillOrder";
 import {
   OrderDetails_order,
   OrderDetails_order_fulfillments_lines,
@@ -236,3 +238,28 @@ export function mergeRepeatedOrderLines(
     return prev;
   }, Array<OrderDetails_order_fulfillments_lines>());
 }
+
+export const isStockError = (
+  overfulfill: boolean,
+  formsetStock: { quantity: number },
+  availableQuantity: number,
+  warehouse: WarehouseFragment,
+  line: OrderFulfillData_order_lines,
+  errors: FulfillOrder_orderFulfill_errors[]
+) => {
+  if (overfulfill) {
+    return true;
+  }
+
+  const isQuantityLargerThanAvailable =
+    line.variant.trackInventory && formsetStock.quantity > availableQuantity;
+
+  const isError = !!errors?.find(
+    err =>
+      err.warehouse === warehouse.id &&
+      err.orderLines.find((id: string) => id === line.id) &&
+      err.code === OrderErrorCode.INSUFFICIENT_STOCK
+  );
+
+  return isQuantityLargerThanAvailable || isError;
+};
