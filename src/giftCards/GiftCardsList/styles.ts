@@ -21,6 +21,7 @@ export const useTableStyles = makeStyles(
       width: 135
     },
     row: {
+      cursor: "pointer",
       height: 80,
       "& td": {
         padding: "0px 20px",
