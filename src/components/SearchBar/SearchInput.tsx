@@ -41,6 +41,7 @@ const SearchInput: React.FC<SearchInputProps> = props => {
 
         return (
           <TextField
+            data-test-id="searchInput"
             className={classes.root}
             inputProps={{
               className: classes.input,

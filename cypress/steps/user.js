@@ -1,9 +1,9 @@
 import { SET_PASSWORD } from "../elements/account/setPassword";
 import { BUTTON_SELECTORS } from "../elements/shared/button-selectors";
-import { SHARED_ELEMENTS } from "../elements/shared/sharedElements";
 import { INVITE_STAFF_MEMBER_FORM } from "../elements/staffMembers/inviteStaffMemberForm";
 import { STAFF_MEMBER_DETAILS } from "../elements/staffMembers/staffMemberDetails";
 import { userDetailsUrl } from "../url/urlList";
+import { visitAndWaitForProgressBarToDisappear } from "./shared/progressBar";
 import { fillAutocompleteSelect } from "./shared/selects";
 
 export function fillUpSetPassword(password) {
@@ -34,9 +34,7 @@ export function fillUpUserDetails(firstName, lastName, email) {
 }
 
 export function updateUserActiveFlag(userId) {
-  cy.visit(userDetailsUrl(userId))
-    .get(SHARED_ELEMENTS.progressBar)
-    .should("not.be.visible")
+  visitAndWaitForProgressBarToDisappear(userDetailsUrl(userId))
     .get(STAFF_MEMBER_DETAILS.isActiveCheckBox)
     .click()
     .addAliasToGraphRequest("StaffMemberUpdate");

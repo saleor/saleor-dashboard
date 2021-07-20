@@ -62,7 +62,7 @@ describe("Purchase products with all products types", () => {
           shippingMethod = shippingMethodResp;
         }
       );
-    createAttribute(name)
+    createAttribute({ name })
       .then(attributeResp => {
         attribute = attributeResp;
         createCategory(name);

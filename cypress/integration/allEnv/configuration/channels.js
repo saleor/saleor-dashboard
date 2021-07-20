@@ -14,8 +14,8 @@ import { CHANNELS_SELECTORS } from "../../../elements/channels/channels-selector
 import { SELECT_CHANNELS_TO_ASSIGN } from "../../../elements/channels/select-channels-to-assign";
 import { HEADER_SELECTORS } from "../../../elements/header/header-selectors";
 import { BUTTON_SELECTORS } from "../../../elements/shared/button-selectors";
-import { SHARED_ELEMENTS } from "../../../elements/shared/sharedElements";
 import { createChannelByView } from "../../../steps/channelsSteps";
+import { waitForProgressBarToNotExist } from "../../../steps/shared/progressBar";
 import { urlList } from "../../../url/urlList";
 import { deleteChannelsStartsWith } from "../../../utils/channelsUtils";
 import { deleteShippingStartsWith } from "../../../utils/shippingUtils";
@@ -70,7 +70,7 @@ describe("Channels", () => {
     cy.addAliasToGraphRequest("InitialProductFilterAttributes");
     cy.visit(urlList.products);
     cy.wait("@InitialProductFilterAttributes");
-    cy.get(SHARED_ELEMENTS.progressBar).should("not.exist");
+    waitForProgressBarToNotExist();
     cy.get(PRODUCTS_LIST.emptyProductRow).should("not.exist");
     cy.get(PRODUCTS_LIST.productsList)
       .first()

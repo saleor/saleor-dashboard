@@ -32,7 +32,12 @@ const MenuListPage: React.FC<MenuListPageProps> = ({
         {intl.formatMessage(sectionNames.configuration)}
       </AppHeader>
       <PageHeader title={intl.formatMessage(sectionNames.navigation)}>
-        <Button color="primary" variant="contained" onClick={onAdd}>
+        <Button
+          color="primary"
+          variant="contained"
+          onClick={onAdd}
+          data-test-id="addMenu"
+        >
           <FormattedMessage
             defaultMessage="Create Menu"
             description="button"
