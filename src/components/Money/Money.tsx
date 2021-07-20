@@ -24,6 +24,10 @@ const useStyles = makeStyles(
 export const Money: React.FC<MoneyProps> = ({ money, ...rest }) => {
   const classes = useStyles({});
 
+  if (!money) {
+    return null;
+  }
+
   return (
     <div className={classes.container}>
       <Typography variant="caption" {...rest}>
