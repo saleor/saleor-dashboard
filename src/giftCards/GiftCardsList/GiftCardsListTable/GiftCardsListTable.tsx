@@ -38,6 +38,7 @@ const GiftCardsListTable: React.FC = ({}) => {
 
   const commonTableProps = {
     numberOfColumns
+    // TEMP
     // disabled
   };
 
@@ -91,7 +92,7 @@ const GiftCardsListTable: React.FC = ({}) => {
                 <TableCell>
                   <Typography>{tag || PLACEHOLDER}</Typography>
                 </TableCell>
-                <TableCell className={classes.row}>
+                <TableCell>
                   {product ? (
                     <Link onClick={() => navigate(productUrl(product?.id))}>
                       {product?.name}
@@ -100,7 +101,7 @@ const GiftCardsListTable: React.FC = ({}) => {
                     PLACEHOLDER
                   )}
                 </TableCell>
-                <TableCell className={classes.row}>
+                <TableCell>
                   {usedBy ? (
                     <Link onClick={() => navigate(customerUrl(usedBy?.id))}>
                       {`${usedBy?.firstName} ${usedBy?.lastName}`}
@@ -118,7 +119,7 @@ const GiftCardsListTable: React.FC = ({}) => {
                     <Typography>{currentBalance.amount}</Typography>
                   </div>
                 </TableCell>
-                <TableCell className={classes.colDelete} colSpan={1}>
+                <TableCell className={classes.colDelete}>
                   <DeleteIconButton />
                 </TableCell>
               </TableRow>
