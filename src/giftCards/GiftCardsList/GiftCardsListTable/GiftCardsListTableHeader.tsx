@@ -55,20 +55,31 @@ const GiftCardsListTableHeader: React.FC<GiftCardsListTableCommonProps> = ({
     }
   ];
   return (
-    <TableHead
-      colSpan={numberOfColumns}
-      selected={listElements.length}
-      disabled={disabled}
-      items={giftCards}
-      toggleAll={toggleAll}
-    >
-      {headerItems.map(({ title, options }) => (
-        <TableCellHeader {...options}>
-          <Label text={intl.formatMessage(title)} size={LabelSizes.md} />
-        </TableCellHeader>
-      ))}
-      <TableCell className={classes.colDelete} />
-    </TableHead>
+    <>
+      <colgroup>
+        <col />
+        <col className={classes.colCardCode} />
+        <col />
+        <col />
+        <col />
+        <col className={classes.colBalance} />
+        <col className={classes.colDelete} />
+      </colgroup>
+      <TableHead
+        colSpan={numberOfColumns}
+        selected={listElements.length}
+        disabled={disabled}
+        items={giftCards}
+        toggleAll={toggleAll}
+      >
+        {headerItems.map(({ title, options }) => (
+          <TableCellHeader {...options}>
+            <Label text={intl.formatMessage(title)} size={LabelSizes.md} />
+          </TableCellHeader>
+        ))}
+        <TableCell className={classes.colDelete} />
+      </TableHead>
+    </>
   );
 };
 

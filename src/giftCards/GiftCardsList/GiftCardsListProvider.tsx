@@ -34,7 +34,7 @@ const getNumbersString = (num: number) => {
 const displayAtRandom = yes => (faker.datatype.boolean() ? yes : null);
 
 const data = {
-  giftCards: new Array(4).fill(null).map(() => ({
+  giftCards: new Array(20).fill(null).map(() => ({
     id: faker.datatype.uuid(),
     displayCode: getNumbersString(faker.datatype.number({ min: 0, max: 9999 })),
     usedBy: displayAtRandom({
