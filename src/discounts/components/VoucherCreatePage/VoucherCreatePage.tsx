@@ -5,7 +5,7 @@ import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
 import Container from "@saleor/components/Container";
 import Form from "@saleor/components/Form";
 import Grid from "@saleor/components/Grid";
-import Metadata from "@saleor/components/Metadata";
+import Metadata, { MetadataFormData } from "@saleor/components/Metadata";
 import PageHeader from "@saleor/components/PageHeader";
 import Savebar from "@saleor/components/Savebar";
 import {
@@ -20,11 +20,7 @@ import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTr
 import React from "react";
 import { useIntl } from "react-intl";
 
-import {
-  MetadataInput,
-  PermissionEnum,
-  VoucherTypeEnum
-} from "../../../types/globalTypes";
+import { PermissionEnum, VoucherTypeEnum } from "../../../types/globalTypes";
 import { DiscountTypeEnum, RequirementsPicker } from "../../types";
 import VoucherDates from "../VoucherDates";
 import VoucherInfo from "../VoucherInfo";
@@ -33,8 +29,7 @@ import VoucherRequirements from "../VoucherRequirements";
 import VoucherTypes from "../VoucherTypes";
 import VoucherValue from "../VoucherValue";
 
-export interface FormData
-  extends Record<"metadata" | "privateMetadata", MetadataInput[]> {
+export interface FormData extends MetadataFormData {
   applyOncePerCustomer: boolean;
   applyOncePerOrder: boolean;
   onlyForStaff: boolean;

@@ -13,6 +13,8 @@ import { VoucherList_vouchers_edges_node } from "./types/VoucherList";
 export const saleList: SaleList_sales_edges_node[] = [
   {
     __typename: "Sale" as "Sale",
+    metadata: [],
+    privateMetadata: [],
     channelListings: [
       {
         __typename: "SaleChannelListing",
@@ -35,6 +37,8 @@ export const saleList: SaleList_sales_edges_node[] = [
   },
   {
     __typename: "Sale" as "Sale",
+    metadata: [],
+    privateMetadata: [],
     channelListings: [
       {
         __typename: "SaleChannelListing",
@@ -57,6 +61,8 @@ export const saleList: SaleList_sales_edges_node[] = [
   },
   {
     __typename: "Sale" as "Sale",
+    metadata: [],
+    privateMetadata: [],
     channelListings: [
       {
         __typename: "SaleChannelListing",
@@ -79,6 +85,8 @@ export const saleList: SaleList_sales_edges_node[] = [
   },
   {
     __typename: "Sale" as "Sale",
+    metadata: [],
+    privateMetadata: [],
     channelListings: [
       {
         __typename: "SaleChannelListing",
@@ -101,6 +109,8 @@ export const saleList: SaleList_sales_edges_node[] = [
   },
   {
     __typename: "Sale" as "Sale",
+    metadata: [],
+    privateMetadata: [],
     channelListings: [
       {
         __typename: "SaleChannelListing",
@@ -126,6 +136,8 @@ export const saleList: SaleList_sales_edges_node[] = [
 export const voucherList: VoucherList_vouchers_edges_node[] = [
   {
     __typename: "Voucher" as "Voucher",
+    metadata: [],
+    privateMetadata: [],
     channelListings: [
       {
         __typename: "VoucherChannelListing",
@@ -163,6 +175,8 @@ export const voucherList: VoucherList_vouchers_edges_node[] = [
   },
   {
     __typename: "Voucher" as "Voucher",
+    metadata: [],
+    privateMetadata: [],
     channelListings: [
       {
         __typename: "VoucherChannelListing",
@@ -196,6 +210,8 @@ export const voucherList: VoucherList_vouchers_edges_node[] = [
 
 export const sale: SaleDetails_sale = {
   __typename: "Sale",
+  metadata: [],
+  privateMetadata: [],
   categories: {
     __typename: "CategoryCountableConnection",
     edges: [
@@ -414,6 +430,8 @@ export const sale: SaleDetails_sale = {
 
 export const voucherDetails: VoucherDetails_voucher = {
   __typename: "Voucher",
+  metadata: [],
+  privateMetadata: [],
   applyOncePerCustomer: false,
   applyOncePerOrder: false,
   onlyForStaff: false,

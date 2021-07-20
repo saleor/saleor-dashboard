@@ -60,6 +60,7 @@ function createMetadataUpdateHandler<TData extends MetadataFormData, TError>(
           return updateMetaErrors;
         }
       }
+
       if (data.privateMetadata) {
         const privateMetaDiff = diff(
           initial.privateMetadata,

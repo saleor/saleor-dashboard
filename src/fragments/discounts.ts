@@ -5,7 +5,9 @@ import gql from "graphql-tag";
 import { pageInfoFragment } from "./pageInfo";
 
 export const saleFragment = gql`
+  ${metadataFragment}
   fragment SaleFragment on Sale {
+    ...MetadataFragment
     id
     name
     type

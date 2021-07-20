@@ -20,6 +20,11 @@ import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { sectionNames } from "@saleor/intl";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
+import createMetadataCreateHandler from "@saleor/utils/handlers/metadataCreateHandler";
+import {
+  useMetadataUpdate,
+  usePrivateMetadataUpdate
+} from "@saleor/utils/metadata/updateMetadata";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -34,6 +39,8 @@ export const SaleCreateView: React.FC<SaleCreateProps> = ({ params }) => {
   const pushMessage = useNotifier();
   const intl = useIntl();
 
+  const [updateMetadata] = useMetadataUpdate({});
+  const [updatePrivateMetadata] = usePrivateMetadataUpdate({});
   const [openModal, closeModal] = createDialogActionHandlers<
     ChannelsAction,
     SaleCreateUrlQueryParams
@@ -92,10 +99,16 @@ export const SaleCreateView: React.FC<SaleCreateProps> = ({ params }) => {
       )}
       <TypedSaleCreate onCompleted={handleSaleCreate}>
         {(saleCreate, saleCreateOpts) => {
-          const handleSubmit = createHandler(
+          const handleCreate = createHandler(
             variables => saleCreate({ variables }),
             updateChannels
           );
+          const handleSubmit = createMetadataCreateHandler(
+            handleCreate,
+            updateMetadata,
+            updatePrivateMetadata
+          );
+
           return (
             <>
               <WindowTitle title={intl.formatMessage(sectionNames.sales)} />
