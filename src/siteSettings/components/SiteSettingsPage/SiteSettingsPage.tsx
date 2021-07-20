@@ -1,5 +1,4 @@
 import { Typography } from "@material-ui/core";
-
 import CompanyAddressInput from "@saleor/components/CompanyAddressInput";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
 import Container from "@saleor/components/Container";

@@ -6,12 +6,12 @@ import {
 import { ChannelData } from "@saleor/channels/utils";
 import { Messages } from "@saleor/components/ChannelsAvailabilityCard/types";
 import IconChevronDown from "@saleor/icons/ChevronDown";
+import { makeStyles } from "@saleor/macaw-ui";
 import Label from "@saleor/orders/components/OrderHistory/Label";
 import { getById } from "@saleor/orders/components/OrderReturnPage/utils";
 import { ProductDetails_product_variants } from "@saleor/products/types/ProductDetails";
 import { ChannelsWithVariantsData } from "@saleor/products/views/ProductUpdate/types";
 import { areAllChannelVariantsSelected } from "@saleor/products/views/ProductUpdate/utils";
-import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import { useIntl } from "react-intl";
 import { defineMessages } from "react-intl";

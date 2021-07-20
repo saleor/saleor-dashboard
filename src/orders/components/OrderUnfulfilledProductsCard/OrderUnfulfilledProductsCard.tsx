@@ -1,8 +1,8 @@
 import { Button, Card, CardActions, TableBody } from "@material-ui/core";
 import CardSpacer from "@saleor/components/CardSpacer";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
-import { renderCollection } from "@saleor/misc";
 import { makeStyles } from "@saleor/macaw-ui";
+import { renderCollection } from "@saleor/misc";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 

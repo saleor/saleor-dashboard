@@ -4,8 +4,8 @@ import LanguageSwitch from "@saleor/components/LanguageSwitch";
 import PageHeader from "@saleor/components/PageHeader";
 import { CollectionTranslationFragment } from "@saleor/fragments/types/CollectionTranslationFragment";
 import { commonMessages, sectionNames } from "@saleor/intl";
-import { getStringOrPlaceholder } from "@saleor/misc";
 import { Backlink } from "@saleor/macaw-ui";
+import { getStringOrPlaceholder } from "@saleor/misc";
 import {
   TranslationInputFieldName,
   TranslationsEntitiesPageProps
