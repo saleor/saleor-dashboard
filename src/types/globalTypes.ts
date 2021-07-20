@@ -468,6 +468,12 @@ export enum FulfillmentStatus {
   RETURNED = "RETURNED",
 }
 
+export enum GiftCardExpiryType {
+  EXPIRY_DATE = "EXPIRY_DATE",
+  EXPIRY_PERIOD = "EXPIRY_PERIOD",
+  NEVER_EXPIRE = "NEVER_EXPIRE",
+}
+
 export enum InvoiceErrorCode {
   EMAIL_NOT_SET = "EMAIL_NOT_SET",
   INVALID_STATUS = "INVALID_STATUS",
@@ -955,6 +961,11 @@ export enum StockErrorCode {
   NOT_FOUND = "NOT_FOUND",
   REQUIRED = "REQUIRED",
   UNIQUE = "UNIQUE",
+}
+
+export enum TimePeriodType {
+  MONTH = "MONTH",
+  YEAR = "YEAR",
 }
 
 export enum UploadErrorCode {
