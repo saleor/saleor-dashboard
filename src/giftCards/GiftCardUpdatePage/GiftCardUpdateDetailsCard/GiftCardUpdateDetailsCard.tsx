@@ -6,10 +6,12 @@ import {
   Divider,
   makeStyles
 } from "@material-ui/core";
+import CardSpacer from "@saleor/components/CardSpacer";
 import CardTitle from "@saleor/components/CardTitle";
 import React from "react";
 import { useIntl } from "react-intl";
 
+import GiftCardUpdateDetailsBalanceSection from "./GiftCardUpdateDetailsBalanceSection";
 import { giftCardUpdateDetailsCardMessages as messages } from "./messages";
 
 interface GiftCardUpdateDetailsCardProps {}
@@ -29,9 +31,9 @@ const GiftCardUpdateDetailsCard: React.FC<GiftCardUpdateDetailsCardProps> = ({})
 
   return (
     <Card>
-      <CardHeader
+      <CardTitle
         title={intl.formatMessage(messages.title)}
-        action={
+        toolbar={
           <Button
             className={classes.setBalanceButton}
             color="primary"
@@ -42,8 +44,12 @@ const GiftCardUpdateDetailsCard: React.FC<GiftCardUpdateDetailsCardProps> = ({})
           </Button>
         }
       />
-      <Divider />
-      <CardContent>lol</CardContent>
+      <CardContent>
+        <GiftCardUpdateDetailsBalanceSection />
+        <CardSpacer />
+        <Divider />
+        <CardSpacer />
+      </CardContent>
     </Card>
   );
 };
