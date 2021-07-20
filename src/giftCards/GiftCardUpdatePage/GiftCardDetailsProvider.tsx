@@ -18,10 +18,18 @@ export const GiftCardDetailsContext = createContext<
 const GiftCardDetailsProvider: React.FC<GiftCardDetailsProviderProps> = ({
   children
 }) => {
-  const giftCard = {
+  const giftCard: GiftCardDetails_giftCard = {
     id: "1234",
     code: "8361",
-    isActive: false
+    isActive: false,
+    currentBalance: {
+      amount: 10.67,
+      currency: "USD"
+    },
+    initialBalance: {
+      amount: 17.0,
+      currency: "USD"
+    }
   };
 
   const providerValues: GiftCardDetailsConsumerProps = {
