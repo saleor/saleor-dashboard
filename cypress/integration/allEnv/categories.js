@@ -7,7 +7,7 @@ import { CATEGORY_DETAILS } from "../../elements/catalog/categories/category-det
 import { BUTTON_SELECTORS } from "../../elements/shared/button-selectors";
 import { SHARED_ELEMENTS } from "../../elements/shared/sharedElements";
 import { createCategory } from "../../steps/categoriesSteps";
-import { confirmationMessageShouldDisappear } from "../../steps/shared/confirmationMessages";
+import { confirmationMessageShouldDisappear } from "../../steps/shared/confirmationMessage";
 import { categoryDetails, urlList } from "../../url/urlList";
 import { deleteCategoriesStartsWith } from "../../utils/categoryUtils";
 import * as channelsUtils from "../../utils/channelsUtils";

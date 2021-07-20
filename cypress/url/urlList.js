@@ -19,8 +19,8 @@ export const urlList = {
   productTypes: "product-types/",
   shippingMethods: "shipping/",
   sales: "discounts/sales/",
-  shippingMethods: "shipping/",
   staffMembers: "staff/",
+  translations: "translations/",
   vouchers: "discounts/vouchers/",
   warehouses: "warehouses/",
   weightRete: "weight/"
