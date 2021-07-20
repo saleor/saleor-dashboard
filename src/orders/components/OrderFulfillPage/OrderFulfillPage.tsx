@@ -9,6 +9,7 @@ import {
   Typography
 } from "@material-ui/core";
 import { CSSProperties } from "@material-ui/styles";
+import { drawerWidthExpanded } from "@saleor/components/AppLayout/consts";
 import CardTitle from "@saleor/components/CardTitle";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
 import Container from "@saleor/components/Container";
@@ -39,20 +40,7 @@ import classNames from "classnames";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-type ClassKey =
-  | "actionBar"
-  | "table"
-  | "colName"
-  | "colQuantity"
-  | "colQuantityHeader"
-  | "colQuantityTotal"
-  | "colSku"
-  | "error"
-  | "full"
-  | "quantityInnerInput"
-  | "quantityInnerInputNoRemaining"
-  | "remainingQuantity";
-const useStyles = makeStyles<OrderFulfillPageProps, ClassKey>(
+const useStyles = makeStyles(
   theme => {
     const inputPadding: CSSProperties = {
       paddingBottom: theme.spacing(2),
@@ -60,14 +48,9 @@ const useStyles = makeStyles<OrderFulfillPageProps, ClassKey>(
     };
 
     return {
-      [theme.breakpoints.up("lg")]: {
-        colName: {
-          width: ({ warehouses }) => (warehouses?.length > 3 ? 250 : "auto")
-        }
-      },
-      [theme.breakpoints.only("md")]: {
-        colName: {
-          width: ({ warehouses }) => (warehouses?.length > 2 ? 250 : "auto")
+      container: {
+        [theme.breakpoints.up("md")]: {
+          width: `calc(100vw - ${drawerWidthExpanded}px)`
         }
       },
       actionBar: {
@@ -75,7 +58,15 @@ const useStyles = makeStyles<OrderFulfillPageProps, ClassKey>(
         paddingLeft: `calc(${theme.spacing(2)} + 2px)`
       },
       colName: {
-        width: 250
+        width: 250,
+        [theme.breakpoints.up("lg")]: {
+          width: ({ warehouses }: OrderFulfillPageProps) =>
+            warehouses?.length > 3 ? 250 : "auto"
+        },
+        [theme.breakpoints.only("md")]: {
+          width: ({ warehouses }: OrderFulfillPageProps) =>
+            warehouses?.length > 2 ? 250 : "auto"
+        }
       },
       colQuantity: {
         textAlign: "right",
@@ -234,7 +225,7 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
   };
 
   return (
-    <Container>
+    <Container className={classes.container}>
       <Backlink onClick={onBack}>
         {order?.number
           ? intl.formatMessage(
