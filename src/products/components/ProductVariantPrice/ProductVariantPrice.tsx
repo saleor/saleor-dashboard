@@ -13,8 +13,8 @@ import PriceField from "@saleor/components/PriceField";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
 import { ProductChannelListingErrorFragment } from "@saleor/fragments/types/ProductChannelListingErrorFragment";
+import { makeStyles } from "@saleor/macaw-ui";
 import { renderCollection } from "@saleor/misc";
-import { makeStyles } from "@saleor/theme";
 import {
   getFormChannelError,
   getFormChannelErrors

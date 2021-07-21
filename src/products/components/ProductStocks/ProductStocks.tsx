@@ -27,9 +27,9 @@ import { ProductErrorFragment } from "@saleor/fragments/types/ProductErrorFragme
 import { WarehouseFragment } from "@saleor/fragments/types/WarehouseFragment";
 import { FormChange } from "@saleor/hooks/useForm";
 import { FormsetAtomicData, FormsetChange } from "@saleor/hooks/useFormset";
+import { makeStyles } from "@saleor/macaw-ui";
+import { ICONBUTTON_SIZE } from "@saleor/macaw-ui";
 import { renderCollection } from "@saleor/misc";
-import { makeStyles } from "@saleor/theme";
-import { ICONBUTTON_SIZE } from "@saleor/theme";
 import { getFormErrors, getProductErrorMessage } from "@saleor/utils/errors";
 import createNonNegativeValueChangeHandler from "@saleor/utils/handlers/nonNegativeValueChangeHandler";
 import React from "react";
@@ -65,7 +65,7 @@ const useStyles = makeStyles(
   theme => ({
     colAction: {
       padding: 0,
-      width: ICONBUTTON_SIZE + theme.spacing()
+      width: `calc(${ICONBUTTON_SIZE}px + ${theme.spacing(1)})`
     },
     colName: {},
     colQuantity: {
@@ -73,7 +73,7 @@ const useStyles = makeStyles(
       width: 150
     },
     editWarehouses: {
-      marginRight: -theme.spacing()
+      marginRight: theme.spacing(-1)
     },
     input: {
       padding: theme.spacing(1.5),
@@ -105,7 +105,7 @@ const useStyles = makeStyles(
     },
     skuInputContainer: {
       display: "grid",
-      gridColumnGap: theme.spacing(3) + "px",
+      gridColumnGap: theme.spacing(3),
       gridTemplateColumns: "repeat(2, 1fr)"
     }
   }),

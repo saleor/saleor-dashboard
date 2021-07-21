@@ -17,7 +17,7 @@ import { ChannelFragment } from "@saleor/fragments/types/ChannelFragment";
 import { ChangeEvent, FormChange } from "@saleor/hooks/useForm";
 import useSearchQuery from "@saleor/hooks/useSearchQuery";
 import { sectionNames } from "@saleor/intl";
-import { makeStyles } from "@saleor/theme";
+import { makeStyles } from "@saleor/macaw-ui";
 import { FetchMoreProps } from "@saleor/types";
 import {
   ExportProductsInput,
@@ -47,7 +47,7 @@ const useStyles = makeStyles(
     },
     checkbox: {
       position: "relative",
-      right: -theme.spacing(1.5)
+      right: theme.spacing(-1.5)
     },
     chip: {
       marginBottom: theme.spacing(1),

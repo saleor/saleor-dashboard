@@ -1,5 +1,5 @@
 import { Typography } from "@material-ui/core";
-import { makeStyles } from "@saleor/theme";
+import { makeStyles } from "@saleor/macaw-ui";
 import classNames from "classnames";
 import React from "react";
 
@@ -28,7 +28,7 @@ const useStyles = makeStyles(
       lineHeight: 1
     },
     toolbar: {
-      marginRight: -theme.spacing(1)
+      marginRight: theme.spacing(-1)
     }
   }),
   { name: "CardTitle" }

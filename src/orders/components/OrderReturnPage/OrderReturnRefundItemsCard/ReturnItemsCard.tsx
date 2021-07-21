@@ -14,12 +14,12 @@ import Skeleton from "@saleor/components/Skeleton";
 import TableCellAvatar from "@saleor/components/TableCellAvatar";
 import { OrderErrorFragment } from "@saleor/fragments/types/OrderErrorFragment";
 import { FormsetChange } from "@saleor/hooks/useFormset";
+import { makeStyles } from "@saleor/macaw-ui";
 import { renderCollection } from "@saleor/misc";
 import {
   OrderDetails_order,
   OrderDetails_order_lines
 } from "@saleor/orders/types/OrderDetails";
-import { makeStyles } from "@saleor/theme";
 import React, { CSSProperties } from "react";
 import { defineMessages, FormattedMessage, useIntl } from "react-intl";
 

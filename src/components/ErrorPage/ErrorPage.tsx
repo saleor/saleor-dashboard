@@ -1,6 +1,6 @@
 import notFoundImage from "@assets/images/what.svg";
 import { Button, Typography } from "@material-ui/core";
-import { makeStyles } from "@saleor/theme";
+import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import SVG from "react-inlinesvg";
 import { FormattedMessage } from "react-intl";

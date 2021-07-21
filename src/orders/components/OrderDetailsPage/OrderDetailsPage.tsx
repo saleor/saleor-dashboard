@@ -1,5 +1,4 @@
 import { Typography } from "@material-ui/core";
-import AppHeader from "@saleor/components/AppHeader";
 import CardMenu from "@saleor/components/CardMenu";
 import { CardSpacer } from "@saleor/components/CardSpacer";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
@@ -9,12 +8,13 @@ import Form from "@saleor/components/Form";
 import Grid from "@saleor/components/Grid";
 import Metadata, { MetadataFormData } from "@saleor/components/Metadata";
 import PageHeader from "@saleor/components/PageHeader";
-import SaveButtonBar from "@saleor/components/SaveButtonBar";
+import Savebar from "@saleor/components/Savebar";
 import Skeleton from "@saleor/components/Skeleton";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import { sectionNames } from "@saleor/intl";
+import { Backlink } from "@saleor/macaw-ui";
+import { makeStyles } from "@saleor/macaw-ui";
 import OrderChannelSectionCard from "@saleor/orders/components/OrderChannelSectionCard";
-import { makeStyles } from "@saleor/theme";
 import { UserPermissionProps } from "@saleor/types";
 import { mapMetadataItemToInput } from "@saleor/utils/maps";
 import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
@@ -206,9 +206,9 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
 
         return (
           <Container>
-            <AppHeader onBack={onBack}>
+            <Backlink onClick={onBack}>
               {intl.formatMessage(sectionNames.orders)}
-            </AppHeader>
+            </Backlink>
             <PageHeader
               className={classes.header}
               inline
@@ -218,7 +218,7 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
             </PageHeader>
             <div className={classes.date}>
               {order && order.created ? (
-                <Typography variant="caption">
+                <Typography variant="body2">
                   <DateTime date={order.created} />
                 </Typography>
               ) : (
@@ -308,10 +308,10 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
                 <OrderCustomerNote note={maybe(() => order.customerNote)} />
               </div>
             </Grid>
-            <SaveButtonBar
-              labels={{ save: saveLabel }}
+            <Savebar
+              labels={{ confirm: saveLabel }}
               onCancel={onBack}
-              onSave={submit}
+              onSubmit={submit}
               state={saveButtonBarState}
               disabled={allowSave(hasChanged)}
             />

@@ -13,8 +13,8 @@ import Grid from "@saleor/components/Grid";
 import Hr from "@saleor/components/Hr";
 import PriceField from "@saleor/components/PriceField";
 import SingleSelectField from "@saleor/components/SingleSelectField";
+import { makeStyles } from "@saleor/macaw-ui";
 import { ProductDetails_product_productType_variantAttributes } from "@saleor/products/types/ProductDetails";
-import { makeStyles } from "@saleor/theme";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -28,7 +28,7 @@ const useStyles = makeStyles(
   theme => ({
     attrInputsContainer: {
       display: "grid",
-      gap: theme.spacing(2) + "px",
+      gap: theme.spacing(2),
       gridTemplateColumns:
         "minmax(80px, 150px) repeat(auto-fit, minmax(150px, 250px))"
     },
@@ -47,7 +47,7 @@ const useStyles = makeStyles(
     },
     inputsContainer: {
       display: "grid",
-      gap: theme.spacing(2) + "px",
+      gap: theme.spacing(2),
       gridTemplateColumns: "repeat(auto-fit, minmax(150px, 250px))"
     },
     label: {

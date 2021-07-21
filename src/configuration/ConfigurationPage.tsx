@@ -2,7 +2,7 @@ import { Card, CardContent, Typography } from "@material-ui/core";
 import { IconProps } from "@material-ui/core/Icon";
 import { User } from "@saleor/fragments/types/User";
 import { sectionNames } from "@saleor/intl";
-import { makeStyles } from "@saleor/theme";
+import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -56,7 +56,7 @@ const useStyles = makeStyles(
       },
       borderTop: `solid 1px ${theme.palette.divider}`,
       display: "grid",
-      gridColumnGap: theme.spacing(4) + "px",
+      gridColumnGap: theme.spacing(4),
       gridTemplateColumns: "1fr 3fr",
       paddingTop: theme.spacing(3)
     },

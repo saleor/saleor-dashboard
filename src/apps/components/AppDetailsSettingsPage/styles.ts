@@ -1,4 +1,4 @@
-import { makeStyles } from "@saleor/theme";
+import { makeStyles } from "@saleor/macaw-ui";
 
 export const useStyles = makeStyles(
   theme => ({
@@ -18,7 +18,7 @@ export const useStyles = makeStyles(
           content: "'/'",
           display: "block",
           position: "absolute",
-          right: -theme.spacing(2),
+          right: theme.spacing(-2),
           top: 0
         },
         "&:not(:first-child):hover": {

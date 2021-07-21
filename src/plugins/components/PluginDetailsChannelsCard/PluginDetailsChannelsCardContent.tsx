@@ -1,8 +1,8 @@
 import CollectionWithDividers from "@saleor/components/CollectionWithDividers";
 import Skeleton from "@saleor/components/Skeleton";
+import { makeStyles } from "@saleor/macaw-ui";
 import { Plugin_plugin } from "@saleor/plugins/types/Plugin";
 import { isPluginGlobal } from "@saleor/plugins/views/utils";
-import { makeStyles } from "@saleor/theme";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
