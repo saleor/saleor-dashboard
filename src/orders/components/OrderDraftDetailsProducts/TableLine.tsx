@@ -29,16 +29,13 @@ const useStyles = makeStyles(
       marginLeft: AVATAR_MARGIN
     },
     colPrice: {
-      textAlign: "right",
-      width: 150
+      textAlign: "right"
     },
     colQuantity: {
-      textAlign: "right",
-      width: 80
+      textAlign: "right"
     },
     colTotal: {
-      textAlign: "right",
-      width: 150
+      textAlign: "right"
     },
     strike: {
       textDecoration: "line-through",
@@ -46,13 +43,6 @@ const useStyles = makeStyles(
     },
     errorInfo: {
       color: theme.palette.error.main
-    },
-    quantityField: {
-      "& input": {
-        padding: "12px 12px 10px",
-        textAlign: "right"
-      },
-      width: 60
     },
     table: {
       tableLayout: "fixed"
