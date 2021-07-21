@@ -14,6 +14,9 @@ import { makeStyles } from "@saleor/theme";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
+import { messages } from "./messages";
+import { ProductVariantCreateOptionEnum } from "./types";
+
 const useStyles = makeStyles(
   theme => ({
     option: {
@@ -23,11 +26,6 @@ const useStyles = makeStyles(
   }),
   { name: "ProductVariantCreateDialog" }
 );
-
-enum ProductVariantCreateOptionEnum {
-  MULTIPLE = "multiple",
-  SINGLE = "single"
-}
 
 interface ProductVariantCreateDialogForm {
   option: ProductVariantCreateOptionEnum;
@@ -54,48 +52,14 @@ const ProductVariantCreateDialog: React.FC<ProductVariantCreateDialogProps> = pr
 
   const options = [
     {
-      label: (
-        <div
-          className={classes.option}
-          data-test-id="variant-create-option-multiple"
-        >
-          <Typography variant="body1">
-            <FormattedMessage
-              defaultMessage="Create multiple variant via variant creator"
-              description="option"
-            />
-          </Typography>
-          <Typography color="textSecondary" variant="caption">
-            <FormattedMessage
-              defaultMessage="Use variant creator to create matrix of selected attribute values to create variants"
-              description="option description"
-            />
-          </Typography>
-        </div>
-      ),
-      value: ProductVariantCreateOptionEnum.MULTIPLE
+      title: messages.optionSingleTitle,
+      subtitle: messages.optionSingleDescription,
+      type: ProductVariantCreateOptionEnum.SINGLE
     },
     {
-      label: (
-        <div
-          className={classes.option}
-          data-test-id="variant-create-option-single"
-        >
-          <Typography variant="body1">
-            <FormattedMessage
-              defaultMessage="Create single variant"
-              description="option"
-            />
-          </Typography>
-          <Typography color="textSecondary" variant="caption">
-            <FormattedMessage
-              defaultMessage="Create new variant using variant details view"
-              description="option description"
-            />
-          </Typography>
-        </div>
-      ),
-      value: ProductVariantCreateOptionEnum.SINGLE
+      title: messages.optionMultipleTitle,
+      subtitle: messages.optionMultipleDescription,
+      type: ProductVariantCreateOptionEnum.MULTIPLE
     }
   ];
 
@@ -105,22 +69,31 @@ const ProductVariantCreateDialog: React.FC<ProductVariantCreateDialogProps> = pr
         {({ change, data }) => (
           <>
             <DialogTitle>
-              <FormattedMessage
-                defaultMessage="Create Variants"
-                description="dialog header"
-              />
+              <FormattedMessage {...messages.title} />
             </DialogTitle>
             <DialogContent>
               <Typography variant="body2">
-                <FormattedMessage
-                  defaultMessage="How would you like to create variants:"
-                  description="create product variants"
-                />
+                <FormattedMessage {...messages.description} />
               </Typography>
               <FormSpacer />
               <RadioGroupField
                 alignTop
-                choices={options}
+                choices={options.map(option => ({
+                  label: (
+                    <div
+                      className={classes.option}
+                      data-test-id={`variant-create-option-${option.type}`}
+                    >
+                      <Typography variant="body1">
+                        <FormattedMessage {...option.title} />
+                      </Typography>
+                      <Typography color="textSecondary" variant="caption">
+                        <FormattedMessage {...option.subtitle} />
+                      </Typography>
+                    </div>
+                  ),
+                  value: option.type
+                }))}
                 name="option"
                 value={data.option}
                 onChange={change}
