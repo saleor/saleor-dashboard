@@ -7,6 +7,7 @@ import { useIntl } from "react-intl";
 
 import { GiftCardUpdateFormContext } from "../GiftCardUpdateFormProvider";
 import GiftCardUpdateDetailsBalanceSection from "./GiftCardUpdateDetailsBalanceSection";
+import GiftCardUpdateDetailsExpirySection from "./GiftCardUpdateDetailsExpirySection";
 import { giftCardUpdateDetailsCardMessages as messages } from "./messages";
 
 const GiftCardUpdateDetailsCard: React.FC = ({}) => {
@@ -33,7 +34,13 @@ const GiftCardUpdateDetailsCard: React.FC = ({}) => {
         <CardSpacer />
         <Divider />
         <CardSpacer />
-        <GiftCardTagInput change={change} setSelected={setSelectedTag} />
+        <GiftCardTagInput
+          withTopLabel
+          change={change}
+          setSelected={setSelectedTag}
+        />
+        <CardSpacer />
+        <GiftCardUpdateDetailsExpirySection />
       </CardContent>
     </Card>
   );
