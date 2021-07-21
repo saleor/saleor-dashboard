@@ -10,7 +10,7 @@ import Form from "@saleor/components/Form";
 import FormSpacer from "@saleor/components/FormSpacer";
 import RadioGroupField from "@saleor/components/RadioGroupField";
 import { buttonMessages } from "@saleor/intl";
-import { makeStyles } from "@saleor/theme";
+import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
@@ -52,14 +52,14 @@ const ProductVariantCreateDialog: React.FC<ProductVariantCreateDialogProps> = pr
 
   const options = [
     {
-      title: messages.optionSingleTitle,
-      subtitle: messages.optionSingleDescription,
-      type: ProductVariantCreateOptionEnum.SINGLE
-    },
-    {
       title: messages.optionMultipleTitle,
       subtitle: messages.optionMultipleDescription,
       type: ProductVariantCreateOptionEnum.MULTIPLE
+    },
+    {
+      title: messages.optionSingleTitle,
+      subtitle: messages.optionSingleDescription,
+      type: ProductVariantCreateOptionEnum.SINGLE
     }
   ];
 
