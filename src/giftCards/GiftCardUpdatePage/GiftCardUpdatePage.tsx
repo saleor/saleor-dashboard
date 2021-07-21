@@ -3,21 +3,22 @@ import React from "react";
 
 import GiftCardDetailsProvider from "./GiftCardDetailsProvider";
 import GiftCardUpdateDetailsCard from "./GiftCardUpdateDetailsCard";
+import GiftCardUpdateFormProvider from "./GiftCardUpdateFormProvider";
 import GiftCardUpdatePageHeader from "./GiftCardUpdatePageHeader";
 
 interface GiftCardUpdatePageProps {
   id: string;
 }
 
-const GiftCardUpdatePage: React.FC<GiftCardUpdatePageProps> = ({ id }) => {
-  return (
-    <GiftCardDetailsProvider id={id}>
+const GiftCardUpdatePage: React.FC<GiftCardUpdatePageProps> = ({ id }) => (
+  <GiftCardDetailsProvider id={id}>
+    <GiftCardUpdateFormProvider>
       <Container>
         <GiftCardUpdatePageHeader />
         <GiftCardUpdateDetailsCard />
       </Container>
-    </GiftCardDetailsProvider>
-  );
-};
+    </GiftCardUpdateFormProvider>
+  </GiftCardDetailsProvider>
+);
 
 export default GiftCardUpdatePage;

@@ -1,24 +1,18 @@
-import {
-  Button,
-  Card,
-  CardContent,
-  CardHeader,
-  Divider,
-  makeStyles
-} from "@material-ui/core";
+import { Button, Card, CardContent, Divider } from "@material-ui/core";
 import CardSpacer from "@saleor/components/CardSpacer";
 import CardTitle from "@saleor/components/CardTitle";
 import GiftCardTagInput from "@saleor/giftCards/components/GiftCardTagInput";
-import React from "react";
+import React, { useContext } from "react";
 import { useIntl } from "react-intl";
 
+import { GiftCardUpdateFormContext } from "../GiftCardUpdateFormProvider";
 import GiftCardUpdateDetailsBalanceSection from "./GiftCardUpdateDetailsBalanceSection";
 import { giftCardUpdateDetailsCardMessages as messages } from "./messages";
 
-interface GiftCardUpdateDetailsCardProps {}
-
-const GiftCardUpdateDetailsCard: React.FC<GiftCardUpdateDetailsCardProps> = ({}) => {
+const GiftCardUpdateDetailsCard: React.FC = ({}) => {
   const intl = useIntl();
+
+  const { change, setSelectedTag } = useContext(GiftCardUpdateFormContext);
 
   return (
     <Card>
@@ -39,7 +33,7 @@ const GiftCardUpdateDetailsCard: React.FC<GiftCardUpdateDetailsCardProps> = ({})
         <CardSpacer />
         <Divider />
         <CardSpacer />
-        <GiftCardTagInput />
+        <GiftCardTagInput change={change} setSelected={setSelectedTag} />
       </CardContent>
     </Card>
   );
