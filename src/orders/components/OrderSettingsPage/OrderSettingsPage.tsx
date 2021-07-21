@@ -1,13 +1,13 @@
 import { Typography } from "@material-ui/core";
-import AppHeader from "@saleor/components/AppHeader";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
 import Container from "@saleor/components/Container";
 import Grid from "@saleor/components/Grid";
 import PageHeader from "@saleor/components/PageHeader";
-import SaveButtonBar from "@saleor/components/SaveButtonBar";
+import Savebar from "@saleor/components/Savebar";
 import { OrderSettingsFragment } from "@saleor/fragments/types/OrderSettingsFragment";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import { sectionNames } from "@saleor/intl";
+import { Backlink } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -30,9 +30,9 @@ const OrderSettingsPage: React.FC<OrderSettingsPageProps> = props => {
     <OrderSettingsForm orderSettings={data} onSubmit={onSubmit}>
       {({ data, submit, hasChanged, change }) => (
         <Container>
-          <AppHeader onBack={onBack}>
+          <Backlink onClick={onBack}>
             {intl.formatMessage(sectionNames.orders)}
-          </AppHeader>
+          </Backlink>
           <PageHeader
             title={intl.formatMessage({
               defaultMessage: "Order settings",
@@ -47,9 +47,9 @@ const OrderSettingsPage: React.FC<OrderSettingsPageProps> = props => {
             </div>
             <OrderSettings data={data} disabled={disabled} onChange={change} />
           </Grid>
-          <SaveButtonBar
+          <Savebar
             onCancel={onBack}
-            onSave={submit}
+            onSubmit={submit}
             disabled={disabled || !hasChanged}
             state={saveButtonBarState}
           />

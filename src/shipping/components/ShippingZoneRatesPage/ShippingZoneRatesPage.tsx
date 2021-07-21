@@ -1,6 +1,5 @@
 import { OutputData } from "@editorjs/editorjs";
 import { ChannelShippingData } from "@saleor/channels/utils";
-import AppHeader from "@saleor/components/AppHeader";
 import CardSpacer from "@saleor/components/CardSpacer";
 import ChannelsAvailabilityCard from "@saleor/components/ChannelsAvailabilityCard";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
@@ -10,10 +9,11 @@ import Grid from "@saleor/components/Grid";
 import Metadata from "@saleor/components/Metadata/Metadata";
 import { MetadataFormData } from "@saleor/components/Metadata/types";
 import PageHeader from "@saleor/components/PageHeader";
-import SaveButtonBar from "@saleor/components/SaveButtonBar";
+import Savebar from "@saleor/components/Savebar";
 import { ShippingChannelsErrorFragment } from "@saleor/fragments/types/ShippingChannelsErrorFragment";
 import { ShippingErrorFragment } from "@saleor/fragments/types/ShippingErrorFragment";
 import { ShippingMethodFragment_postalCodeRules } from "@saleor/fragments/types/ShippingMethodFragment";
+import { Backlink } from "@saleor/macaw-ui";
 import { validatePrice } from "@saleor/products/utils/validation";
 import OrderValue from "@saleor/shipping/components/OrderValue";
 import OrderWeight from "@saleor/shipping/components/OrderWeight";
@@ -143,9 +143,9 @@ export const ShippingZoneRatesPage: React.FC<ShippingZoneRatesPageProps> = ({
 
         return (
           <Container>
-            <AppHeader onBack={onBack}>
+            <Backlink onClick={onBack}>
               <FormattedMessage defaultMessage="Shipping" />
-            </AppHeader>
+            </Backlink>
             <PageHeader title={rate?.name} />
             <Grid>
               <div>
@@ -215,11 +215,11 @@ export const ShippingZoneRatesPage: React.FC<ShippingZoneRatesPageProps> = ({
                 />
               </div>
             </Grid>
-            <SaveButtonBar
+            <Savebar
               disabled={disabled || formDisabled || formIsUnchanged}
               onCancel={onBack}
               onDelete={onDelete}
-              onSave={submit}
+              onSubmit={submit}
               state={saveButtonBarState}
             />
           </Container>

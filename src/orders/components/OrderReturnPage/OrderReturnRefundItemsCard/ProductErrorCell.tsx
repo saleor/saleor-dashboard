@@ -1,6 +1,6 @@
 import { Popper, TableCell, Typography } from "@material-ui/core";
 import ErrorExclamationCircleIcon from "@saleor/icons/ErrorExclamationCircle";
-import { makeStyles } from "@saleor/theme";
+import { makeStyles } from "@saleor/macaw-ui";
 import React, { useState } from "react";
 import { defineMessages } from "react-intl";
 import { useIntl } from "react-intl";

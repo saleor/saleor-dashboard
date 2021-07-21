@@ -13,7 +13,7 @@ import ConfirmButton, {
 import Form from "@saleor/components/Form";
 import Grid from "@saleor/components/Grid";
 import { buttonMessages, commonMessages } from "@saleor/intl";
-import { makeStyles } from "@saleor/theme";
+import { makeStyles } from "@saleor/macaw-ui";
 import { DialogProps, MinMax } from "@saleor/types";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -93,6 +93,7 @@ const ShippingZonePostalCodeRangeDialog: React.FC<ShippingZonePostalCodeRangeDia
                 disabled={!hasChanged || !data.min}
                 transitionState={confirmButtonState}
                 type="submit"
+                data-test="submit"
               >
                 <FormattedMessage
                   defaultMessage="Add"

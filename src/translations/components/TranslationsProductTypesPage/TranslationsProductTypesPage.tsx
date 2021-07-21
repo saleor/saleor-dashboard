@@ -1,4 +1,3 @@
-import AppHeader from "@saleor/components/AppHeader";
 import CardSpacer from "@saleor/components/CardSpacer";
 import Container from "@saleor/components/Container";
 import LanguageSwitch from "@saleor/components/LanguageSwitch";
@@ -6,6 +5,8 @@ import PageHeader from "@saleor/components/PageHeader";
 import { ListSettingsUpdate } from "@saleor/components/TablePagination";
 import { AttributeTranslationDetailsFragment } from "@saleor/fragments/types/AttributeTranslationDetailsFragment";
 import { commonMessages, sectionNames } from "@saleor/intl";
+import { Backlink } from "@saleor/macaw-ui";
+import { getStringOrPlaceholder } from "@saleor/misc";
 import { TranslationsEntitiesPageProps } from "@saleor/translations/types";
 import { ListSettings } from "@saleor/types";
 import React from "react";
@@ -65,9 +66,9 @@ const TranslationsProductTypesPage: React.FC<TranslationsProductTypesPageProps> 
 
   return (
     <Container>
-      <AppHeader onBack={onBack}>
+      <Backlink onClick={onBack}>
         {intl.formatMessage(sectionNames.translations)}
-      </AppHeader>
+      </Backlink>
       <PageHeader
         title={intl.formatMessage(
           {
@@ -76,7 +77,7 @@ const TranslationsProductTypesPage: React.FC<TranslationsProductTypesPageProps> 
             description: "header"
           },
           {
-            attribute: data?.attribute?.name || "...",
+            attribute: getStringOrPlaceholder(data?.attribute?.name),
             languageCode
           }
         )}

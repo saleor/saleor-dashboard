@@ -1,9 +1,10 @@
-import AppHeader from "@saleor/components/AppHeader";
 import Container from "@saleor/components/Container";
 import LanguageSwitch from "@saleor/components/LanguageSwitch";
 import PageHeader from "@saleor/components/PageHeader";
 import { SaleTranslationFragment } from "@saleor/fragments/types/SaleTranslationFragment";
 import { commonMessages, sectionNames } from "@saleor/intl";
+import { Backlink } from "@saleor/macaw-ui";
+import { getStringOrPlaceholder } from "@saleor/misc";
 import { TranslationsEntitiesPageProps } from "@saleor/translations/types";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -37,9 +38,9 @@ const TranslationsSalesPage: React.FC<TranslationsSalesPageProps> = ({
 
   return (
     <Container>
-      <AppHeader onBack={onBack}>
+      <Backlink onClick={onBack}>
         {intl.formatMessage(sectionNames.translations)}
-      </AppHeader>
+      </Backlink>
       <PageHeader
         title={intl.formatMessage(
           {
@@ -48,7 +49,7 @@ const TranslationsSalesPage: React.FC<TranslationsSalesPageProps> = ({
           },
           {
             languageCode,
-            saleName: data?.sale?.name || "..."
+            saleName: getStringOrPlaceholder(data?.sale?.name)
           }
         )}
       >

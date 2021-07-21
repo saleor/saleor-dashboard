@@ -10,8 +10,8 @@ import CardTitle from "@saleor/components/CardTitle";
 import Hr from "@saleor/components/Hr";
 import PriceField from "@saleor/components/PriceField";
 import { WarehouseFragment } from "@saleor/fragments/types/WarehouseFragment";
+import { makeStyles } from "@saleor/macaw-ui";
 import { ProductVariantBulkCreate_productVariantBulkCreate_errors } from "@saleor/products/types/ProductVariantBulkCreate";
-import { makeStyles } from "@saleor/theme";
 import { ProductVariantBulkCreateInput } from "@saleor/types/globalTypes";
 import { getFormErrors } from "@saleor/utils/errors";
 import { getBulkProductErrorMessage } from "@saleor/utils/errors/product";
@@ -103,7 +103,7 @@ const useStyles = makeStyles<ProductVariantCreatorSummaryProps, ClassKey>(
           props.data.variants[0].stocks
             .length}, minmax(180px, auto)) 140px 64px`,
       overflowX: "scroll",
-      rowGap: theme.spacing() + "px"
+      rowGap: theme.spacing()
     }
   }),
   {

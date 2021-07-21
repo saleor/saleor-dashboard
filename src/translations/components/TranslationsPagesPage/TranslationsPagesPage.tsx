@@ -1,10 +1,11 @@
-import AppHeader from "@saleor/components/AppHeader";
 import CardSpacer from "@saleor/components/CardSpacer";
 import Container from "@saleor/components/Container";
 import LanguageSwitch from "@saleor/components/LanguageSwitch";
 import PageHeader from "@saleor/components/PageHeader";
 import { PageTranslationFragment } from "@saleor/fragments/types/PageTranslationFragment";
 import { commonMessages, sectionNames } from "@saleor/intl";
+import { Backlink } from "@saleor/macaw-ui";
+import { getStringOrPlaceholder } from "@saleor/misc";
 import {
   PageTranslationInputFieldName,
   TranslationsEntitiesPageProps
@@ -37,9 +38,9 @@ const TranslationsPagesPage: React.FC<TranslationsPagesPageProps> = ({
 
   return (
     <Container>
-      <AppHeader onBack={onBack}>
+      <Backlink onClick={onBack}>
         {intl.formatMessage(sectionNames.translations)}
-      </AppHeader>
+      </Backlink>
       <PageHeader
         title={intl.formatMessage(
           {
@@ -48,7 +49,7 @@ const TranslationsPagesPage: React.FC<TranslationsPagesPageProps> = ({
           },
           {
             languageCode,
-            pageName: data?.page?.title || "..."
+            pageName: getStringOrPlaceholder(data?.page?.title)
           }
         )}
       >

@@ -1,7 +1,7 @@
 import { Typography } from "@material-ui/core";
 import Money from "@saleor/components/Money";
 import { TimelineEvent } from "@saleor/components/Timeline";
-import { makeStyles } from "@saleor/theme";
+import { makeStyles } from "@saleor/macaw-ui";
 import { OrderEventsEnum } from "@saleor/types/globalTypes";
 import camelCase from "lodash/camelCase";
 import React from "react";

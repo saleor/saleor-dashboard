@@ -230,8 +230,10 @@ export const ProductVariant: React.FC<ProductVariantCreateProps> = ({
           params.action === "assign-attribute-value" && params.id
         }
         onAssignReferencesClick={handleAssignAttributeReferenceClick}
-        referencePages={mapEdgesToItems(searchPagesOpts?.data?.search)}
-        referenceProducts={mapEdgesToItems(searchProductsOpts?.data?.search)}
+        referencePages={mapEdgesToItems(searchPagesOpts?.data?.search) || []}
+        referenceProducts={
+          mapEdgesToItems(searchProductsOpts?.data?.search) || []
+        }
         fetchReferencePages={searchPages}
         fetchMoreReferencePages={fetchMoreReferencePages}
         fetchReferenceProducts={searchProducts}

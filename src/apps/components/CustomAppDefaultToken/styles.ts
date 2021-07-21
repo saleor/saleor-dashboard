@@ -1,5 +1,5 @@
 import { fade } from "@material-ui/core/styles/colorManipulator";
-import { makeStyles } from "@saleor/theme";
+import { makeStyles } from "@saleor/macaw-ui";
 
 export const useStyles = makeStyles(
   theme => ({
@@ -10,8 +10,8 @@ export const useStyles = makeStyles(
       display: "flex",
       justifyContent: "flex-end",
       position: "relative",
-      right: -theme.spacing(),
-      top: -theme.spacing(1)
+      right: theme.spacing(-1),
+      top: theme.spacing(-1)
     },
     content: {
       display: "grid",

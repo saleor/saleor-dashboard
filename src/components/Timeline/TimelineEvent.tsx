@@ -5,7 +5,7 @@ import {
   Typography
 } from "@material-ui/core";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import { makeStyles } from "@saleor/theme";
+import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 
 import TimelineEventHeader, { TitleElement } from "./TimelineEventHeader";
@@ -60,7 +60,7 @@ const useStyles = makeStyles(
         background: theme.palette.background.default,
         content: "''",
         height: "calc(50% - 4px)",
-        left: -theme.spacing(3) - 2,
+        left: -26,
         position: "absolute",
         top: "calc(50% + 4px)",
         width: "2px"

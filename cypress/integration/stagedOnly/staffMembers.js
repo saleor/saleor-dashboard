@@ -3,7 +3,7 @@ import faker from "faker";
 import {
   deleteStaffMembersStartsWith,
   updateStaffMember
-} from "../../apiRequests/staffMember";
+} from "../../apiRequests/StaffMembers";
 import { LEFT_MENU_SELECTORS } from "../../elements/account/left-menu/left-menu-selectors";
 import { BUTTON_SELECTORS } from "../../elements/shared/button-selectors";
 import { STAFF_MEMBER_DETAILS } from "../../elements/staffMembers/staffMemberDetails";
@@ -22,7 +22,7 @@ import {
 } from "../../utils/users";
 
 describe("Staff members", () => {
-  const startsWith = "Cypress";
+  const startsWith = "StaffMembers";
   const password = Cypress.env("USER_PASSWORD");
   const lastName = faker.name.lastName();
   const email = `${startsWith}${lastName}@example.com`;
@@ -53,6 +53,7 @@ describe("Staff members", () => {
     const emailInvite = `${startsWith}${firstName}@example.com`;
 
     cy.visit(urlList.staffMembers)
+      .softExpectSkeletonIsVisible()
       .get(STAFF_MEMBERS_LIST.inviteStaffMemberButton)
       .click();
     fillUpUserDetails(firstName, lastName, emailInvite);

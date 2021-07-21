@@ -1,7 +1,7 @@
 import { ClickAwayListener, Grow, Popper } from "@material-ui/core";
 import { fade } from "@material-ui/core/styles/colorManipulator";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
-import { makeStyles } from "@saleor/theme";
+import { makeStyles } from "@saleor/macaw-ui";
 import { toggle } from "@saleor/utils/lists";
 import React from "react";
 

@@ -72,6 +72,7 @@ describe("Collections", () => {
   it("should not display hidden collections", () => {
     const collectionName = `${startsWith}${faker.datatype.number()}`;
     cy.visit(urlList.collections);
+    cy.softExpectSkeletonIsVisible();
     let collection;
 
     createCollection(collectionName, false, defaultChannel)
@@ -92,6 +93,7 @@ describe("Collections", () => {
     const collectionName = `${startsWith}${faker.datatype.number()}`;
     let collection;
     cy.visit(urlList.collections);
+    cy.softExpectSkeletonIsVisible();
 
     createCollection(collectionName, true, defaultChannel)
       .then(collectionResp => {
@@ -104,6 +106,7 @@ describe("Collections", () => {
         expect(isVisible).to.equal(true);
       });
   });
+
   it("should not display collection not set as available in channel", () => {
     const collectionName = `${startsWith}${faker.datatype.number()}`;
     let collection;
@@ -116,6 +119,7 @@ describe("Collections", () => {
       })
       .then(() => {
         cy.visit(urlList.collections);
+        cy.softExpectSkeletonIsVisible();
         createCollection(collectionName, true, channel);
       })
       .then(collectionResp => {
@@ -128,6 +132,7 @@ describe("Collections", () => {
         expect(isVisible).to.equal(false);
       });
   });
+
   it("should display products hidden in listing", () => {
     // Products "hidden in listings" are not displayed in Category listings or search results,
     // but are listed on Collections
@@ -146,6 +151,7 @@ describe("Collections", () => {
       })
       .then(({ product: productResp }) => (createdProduct = productResp));
     cy.visit(urlList.collections);
+    cy.softExpectSkeletonIsVisible();
     createCollection(randomName, true, defaultChannel)
       .then(collectionResp => {
         collection = collectionResp;

@@ -1,10 +1,14 @@
-export function createAttribute(name, attributeValues = ["value"]) {
+export function createAttribute({
+  name,
+  attributeValues = ["value"],
+  type = "PRODUCT_TYPE"
+}) {
   const values = attributeValues.map(element => `{name:"${element}"}`);
   const mutation = `mutation{
     attributeCreate(input:{
       name:"${name}"
       valueRequired:false
-      type:PRODUCT_TYPE
+      type:${type}
       values: [${values}]
     }){
       attribute{
@@ -57,4 +61,22 @@ export function deleteAttribute(attributeId) {
     }
   }`;
   return cy.sendRequestWithQuery(mutation);
+}
+
+export function getAttribute(attributeId) {
+  const query = `query{
+    attribute(id:"${attributeId}"){
+      id
+      inputType
+      name
+      slug
+      type
+      entityType
+      valueRequired
+      visibleInStorefront
+      availableInGrid
+      unit
+    }
+  }`;
+  return cy.sendRequestWithQuery(query).its("body.data.attribute");
 }

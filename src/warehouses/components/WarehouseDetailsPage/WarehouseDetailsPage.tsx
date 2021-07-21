@@ -1,4 +1,3 @@
-import AppHeader from "@saleor/components/AppHeader";
 import CardSpacer from "@saleor/components/CardSpacer";
 import CompanyAddressInput from "@saleor/components/CompanyAddressInput";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
@@ -6,7 +5,7 @@ import Container from "@saleor/components/Container";
 import Form from "@saleor/components/Form";
 import Grid from "@saleor/components/Grid";
 import PageHeader from "@saleor/components/PageHeader";
-import SaveButtonBar from "@saleor/components/SaveButtonBar";
+import Savebar from "@saleor/components/Savebar";
 import { ShopInfo_shop_countries } from "@saleor/components/Shop/types/ShopInfo";
 import { AddressTypeInput } from "@saleor/customers/types";
 import { WarehouseErrorFragment } from "@saleor/fragments/types/WarehouseErrorFragment";
@@ -14,6 +13,7 @@ import useAddressValidation from "@saleor/hooks/useAddressValidation";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { sectionNames } from "@saleor/intl";
+import { Backlink } from "@saleor/macaw-ui";
 import { findValueInEnum, maybe } from "@saleor/misc";
 import { CountryCode } from "@saleor/types/globalTypes";
 import createSingleAutocompleteSelectHandler from "@saleor/utils/handlers/singleAutocompleteSelectChangeHandler";
@@ -87,9 +87,9 @@ const WarehouseDetailsPage: React.FC<WarehouseDetailsPageProps> = ({
 
         return (
           <Container>
-            <AppHeader onBack={onBack}>
+            <Backlink onClick={onBack}>
               <FormattedMessage {...sectionNames.warehouses} />
-            </AppHeader>
+            </Backlink>
             <PageHeader title={warehouse?.name} />
             <Grid>
               <div>
@@ -121,11 +121,11 @@ const WarehouseDetailsPage: React.FC<WarehouseDetailsPageProps> = ({
                 />
               </div>
             </Grid>
-            <SaveButtonBar
+            <Savebar
               disabled={disabled || !hasChanged}
               onCancel={onBack}
               onDelete={onDelete}
-              onSave={submit}
+              onSubmit={submit}
               state={saveButtonBarState}
             />
           </Container>

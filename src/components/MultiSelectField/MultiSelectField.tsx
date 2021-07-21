@@ -7,7 +7,7 @@ import {
   Select
 } from "@material-ui/core";
 import { SelectProps } from "@material-ui/core/Select";
-import { makeStyles } from "@saleor/theme";
+import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
@@ -16,7 +16,7 @@ import Checkbox from "../Checkbox";
 const useStyles = makeStyles(
   theme => ({
     checkbox: {
-      marginRight: -theme.spacing(2)
+      marginRight: theme.spacing(-2)
     },
     formControl: {
       width: "100%"

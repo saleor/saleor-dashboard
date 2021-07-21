@@ -8,8 +8,8 @@ import TableCellAvatar from "@saleor/components/TableCellAvatar";
 import { AVATAR_MARGIN } from "@saleor/components/TableCellAvatar/Avatar";
 import TableHead from "@saleor/components/TableHead";
 import TablePagination from "@saleor/components/TablePagination";
+import { makeStyles } from "@saleor/macaw-ui";
 import { maybe, renderCollection } from "@saleor/misc";
-import { makeStyles } from "@saleor/theme";
 import { ChannelProps, ListActions, ListProps } from "@saleor/types";
 import React from "react";
 import { FormattedMessage } from "react-intl";
@@ -161,6 +161,7 @@ export const CategoryProductList: React.FC<CategoryProductListProps> = props => 
 
               return (
                 <TableRow
+                  data-test-id="productRow"
                   selected={isSelected}
                   hover={!!product}
                   key={product ? product.id : "skeleton"}

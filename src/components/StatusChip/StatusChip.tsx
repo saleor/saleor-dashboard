@@ -1,5 +1,5 @@
 import { Typography } from "@material-ui/core";
-import { makeStyles } from "@saleor/theme";
+import { makeStyles } from "@saleor/macaw-ui";
 import classNames from "classnames";
 import React from "react";
 
@@ -40,7 +40,7 @@ const StatusChipStyles = {
 const useStyles = makeStyles(
   theme => ({
     label: {
-      fontSize: "1rem",
+      fontSize: theme.typography.body1.fontSize,
       fontWeight: theme.typography.fontWeightBold,
       textTransform: "uppercase"
     },
