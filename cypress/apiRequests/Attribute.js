@@ -14,6 +14,7 @@ export function createAttribute({
       attribute{
         id
         name
+        slug
         choices(first: 100){
           edges{
             node{
@@ -79,4 +80,18 @@ export function getAttribute(attributeId) {
     }
   }`;
   return cy.sendRequestWithQuery(query).its("body.data.attribute");
+}
+
+export function updateAttribute({ filterableInDashboard }) {
+  const mutation = `mutation{
+    attributeUpdate(id:"" input:{
+      filterableInDashboard:false
+    }){
+   	errors{
+    	field
+    	message
+    }
+  }
+}`;
+  return cy.sendRequestWithQuery(mutation);
 }
