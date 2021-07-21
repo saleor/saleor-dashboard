@@ -1,8 +1,8 @@
 import { TextField, Typography } from "@material-ui/core";
 import { ControlledCheckbox } from "@saleor/components/ControlledCheckbox";
 import Hr from "@saleor/components/Hr";
+import { makeStyles } from "@saleor/macaw-ui";
 import Label from "@saleor/orders/components/OrderHistory/Label";
-import { makeStyles } from "@saleor/theme";
 import React from "react";
 import { useIntl } from "react-intl";
 import { defineMessages, FormattedMessage } from "react-intl";

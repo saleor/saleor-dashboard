@@ -6,7 +6,7 @@ import RichTextEditor, {
 } from "@saleor/components/RichTextEditor";
 import { PageErrorFragment } from "@saleor/fragments/types/PageErrorFragment";
 import { commonMessages } from "@saleor/intl";
-import { makeStyles } from "@saleor/theme";
+import { makeStyles } from "@saleor/macaw-ui";
 import { getFormErrors } from "@saleor/utils/errors";
 import getPageErrorMessage from "@saleor/utils/errors/page";
 import React from "react";

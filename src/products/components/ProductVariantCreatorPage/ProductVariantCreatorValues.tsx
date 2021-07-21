@@ -1,8 +1,8 @@
 import { Card, CardContent } from "@material-ui/core";
-import Alert from "@saleor/components/Alert/Alert";
 import { getMultiChoices } from "@saleor/components/Attributes/utils";
 import CardSpacer from "@saleor/components/CardSpacer";
 import CardTitle from "@saleor/components/CardTitle";
+import LimitReachedAlert from "@saleor/components/LimitReachedAlert";
 import MultiAutocompleteSelectField from "@saleor/components/MultiAutocompleteSelectField";
 import Skeleton from "@saleor/components/Skeleton";
 import { AttributeValueFragment } from "@saleor/fragments/types/AttributeValueFragment";
@@ -91,9 +91,8 @@ const ProductVariantCreatorValues: React.FC<ProductVariantCreatorValuesProps> = 
 
   return (
     <>
-      {variantsLeft !== null && (
-        <Alert
-          show={variantsNumber > variantsLeft}
+      {variantsLeft !== null && variantsNumber > variantsLeft && (
+        <LimitReachedAlert
           title={intl.formatMessage({
             defaultMessage: "SKU limit reached",
             description: "alert"
@@ -106,7 +105,7 @@ const ProductVariantCreatorValues: React.FC<ProductVariantCreatorValuesProps> = 
               aboveLimitVariantsNumber: variantsNumber - variantsLeft
             }}
           />
-        </Alert>
+        </LimitReachedAlert>
       )}
       {attributes.map(attribute => (
         <React.Fragment key={attribute.id}>

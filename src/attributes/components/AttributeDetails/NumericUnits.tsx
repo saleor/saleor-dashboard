@@ -3,7 +3,7 @@ import ControlledCheckbox from "@saleor/components/ControlledCheckbox";
 import SingleSelectField from "@saleor/components/SingleSelectField";
 import { UseFormResult } from "@saleor/hooks/useForm";
 import { commonMessages } from "@saleor/intl";
-import { makeStyles } from "@saleor/theme";
+import { makeStyles } from "@saleor/macaw-ui";
 import { MeasurementUnitsEnum } from "@saleor/types/globalTypes";
 import React, { useEffect, useMemo, useState } from "react";
 import { useIntl } from "react-intl";

@@ -4,8 +4,8 @@ import Link from "@saleor/components/Link";
 import Money from "@saleor/components/Money";
 import TableCellAvatar from "@saleor/components/TableCellAvatar";
 import { AVATAR_MARGIN } from "@saleor/components/TableCellAvatar/Avatar";
+import { makeStyles } from "@saleor/macaw-ui";
 import { OrderLineDiscountContextConsumerProps } from "@saleor/products/components/OrderDiscountProviders/OrderLineDiscountProvider";
-import { makeStyles } from "@saleor/theme";
 import React, { useRef } from "react";
 
 import { maybe } from "../../../misc";
@@ -20,7 +20,7 @@ const useStyles = makeStyles(
       "&:last-child": {
         paddingRight: 0
       },
-      width: 76 + theme.spacing(0.5)
+      width: `calc(76px + ${theme.spacing(0.5)})`
     },
     colName: {
       width: "auto"

@@ -8,7 +8,7 @@ import {
 } from "@material-ui/core";
 import { InputProps } from "@material-ui/core/Input";
 import { SelectProps } from "@material-ui/core/Select";
-import { makeStyles } from "@saleor/theme";
+import { makeStyles } from "@saleor/macaw-ui";
 import classNames from "classnames";
 import React from "react";
 import { FormattedMessage } from "react-intl";

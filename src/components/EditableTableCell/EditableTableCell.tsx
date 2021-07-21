@@ -7,7 +7,7 @@ import {
 } from "@material-ui/core";
 import { TextFieldProps } from "@material-ui/core/TextField";
 import useForm from "@saleor/hooks/useForm";
-import { makeStyles } from "@saleor/theme";
+import { makeStyles } from "@saleor/macaw-ui";
 import classNames from "classnames";
 import React from "react";
 
