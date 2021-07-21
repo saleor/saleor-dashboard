@@ -75,7 +75,8 @@ const useSummaryStyles = makeStyles(
       height: theme.spacing(10),
       padding: 0,
       margin: 0,
-      minHeight: 0
+      minHeight: 0,
+      paddingRight: 20
     },
     content: {
       margin: 0

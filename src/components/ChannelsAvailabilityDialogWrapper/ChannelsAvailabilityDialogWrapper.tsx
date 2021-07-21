@@ -34,7 +34,8 @@ export const useStyles = makeStyles(
     scrollArea: {
       maxHeight: 400,
       overflowY: "scroll",
-      overflowX: "hidden"
+      overflowX: "hidden",
+      marginBottom: 20
     },
     text: {
       marginBottom: 5

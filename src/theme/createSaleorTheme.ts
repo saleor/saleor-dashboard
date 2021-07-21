@@ -59,8 +59,9 @@ const createTheme = (colors: IThemeColors): SaleorTheme =>
       },
       MuiDialogContent: {
         root: {
-          overflowY: "hidden",
-          padding: 24
+          overflowX: "hidden",
+          padding: `24px 0px`,
+          margin: `0px 24px`
         }
       },
       MuiDialogContentText: {
