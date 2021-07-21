@@ -1,7 +1,7 @@
 import StatusChip from "@saleor/components/StatusChip";
+import { makeStyles } from "@saleor/macaw-ui";
 import { transformOrderStatus } from "@saleor/misc";
 import { OrderDetails_order } from "@saleor/orders/types/OrderDetails";
-import { makeStyles } from "@saleor/theme";
 import React from "react";
 import { useIntl } from "react-intl";
 

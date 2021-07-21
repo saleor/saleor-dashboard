@@ -1,10 +1,10 @@
 import { PRODUCTS_LIST } from "../../../../elements/catalog/products/products-list";
 import { BUTTON_SELECTORS } from "../../../../elements/shared/button-selectors";
-import { SHARED_ELEMENTS } from "../../../../elements/shared/sharedElements";
 import {
   getDisplayedColumnArray,
   isNumberOfProductsSameAsInSelectResultsOnPage
 } from "../../../../steps/catalog/products/productsListSteps";
+import { waitForProgressBarToNotExist } from "../../../../steps/shared/progressBar";
 import { urlList } from "../../../../url/urlList";
 
 describe("Products", () => {
@@ -25,10 +25,8 @@ describe("Products", () => {
       productsList => (firstPageProducts = productsList)
     );
     cy.addAliasToGraphRequest("ProductList");
-    cy.get(PRODUCTS_LIST.nextPageButton)
-      .click()
-      .get(SHARED_ELEMENTS.progressBar)
-      .should("not.exist");
+    cy.get(PRODUCTS_LIST.nextPageButton).click();
+    waitForProgressBarToNotExist();
     cy.wait("@ProductList");
     getDisplayedColumnArray("name").then(productList => {
       expect(productList).to.not.equal(firstPageProducts);
@@ -50,9 +48,8 @@ describe("Products", () => {
         `${PRODUCTS_LIST.rowNumberOption}${BUTTON_SELECTORS.notSelectedOption}`
       )
       .first()
-      .click()
-      .get(SHARED_ELEMENTS.progressBar)
-      .should("not.exist");
+      .click();
+    waitForProgressBarToNotExist();
     isNumberOfProductsSameAsInSelectResultsOnPage().then(
       isTheSame =>
         expect(

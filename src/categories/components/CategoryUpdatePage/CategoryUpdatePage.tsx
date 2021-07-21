@@ -1,18 +1,18 @@
 import { Button, Card } from "@material-ui/core";
-import AppHeader from "@saleor/components/AppHeader";
 import { CardSpacer } from "@saleor/components/CardSpacer";
 import CardTitle from "@saleor/components/CardTitle";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
 import Container from "@saleor/components/Container";
 import Metadata from "@saleor/components/Metadata/Metadata";
 import PageHeader from "@saleor/components/PageHeader";
-import SaveButtonBar from "@saleor/components/SaveButtonBar";
+import Savebar from "@saleor/components/Savebar";
 import SeoForm from "@saleor/components/SeoForm";
 import { SingleAutocompleteChoiceType } from "@saleor/components/SingleAutocompleteSelectField";
 import { Tab, TabContainer } from "@saleor/components/Tab";
 import { ProductErrorFragment } from "@saleor/fragments/types/ProductErrorFragment";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import { sectionNames } from "@saleor/intl";
+import { Backlink } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -104,9 +104,9 @@ export const CategoryUpdatePage: React.FC<CategoryUpdatePageProps> = ({
     <CategoryUpdateForm category={category} onSubmit={onSubmit}>
       {({ data, change, handlers, submit, hasChanged }) => (
         <Container>
-          <AppHeader onBack={onBack}>
+          <Backlink onClick={onBack}>
             {intl.formatMessage(sectionNames.categories)}
-          </AppHeader>
+          </Backlink>
           <PageHeader title={category?.name} />
           <CategoryDetailsForm
             data={data}
@@ -154,6 +154,7 @@ export const CategoryUpdatePage: React.FC<CategoryUpdatePageProps> = ({
               />
             </CategoriesTab>
             <ProductsTab
+              testId="productsTab"
               isActive={currentTab === CategoryPageTab.products}
               changeTab={changeTab}
             >
@@ -176,6 +177,7 @@ export const CategoryUpdatePage: React.FC<CategoryUpdatePageProps> = ({
                     color="primary"
                     variant="text"
                     onClick={onAddCategory}
+                    data-test-id="createSubcategory"
                   >
                     <FormattedMessage
                       defaultMessage="Create subcategory"
@@ -222,10 +224,10 @@ export const CategoryUpdatePage: React.FC<CategoryUpdatePageProps> = ({
               toolbar={productListToolbar}
             />
           )}
-          <SaveButtonBar
+          <Savebar
             onCancel={onBack}
             onDelete={onDelete}
-            onSave={submit}
+            onSubmit={submit}
             state={saveButtonBarState}
             disabled={disabled || !hasChanged}
           />

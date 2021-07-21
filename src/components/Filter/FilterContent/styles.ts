@@ -1,5 +1,5 @@
 import { fade } from "@material-ui/core";
-import { makeStyles } from "@saleor/theme";
+import { makeStyles } from "@saleor/macaw-ui";
 
 const useStyles = makeStyles(
   theme => ({
@@ -19,11 +19,11 @@ const useStyles = makeStyles(
     },
 
     option: {
-      left: -theme.spacing(0.5),
+      left: theme.spacing(-0.5),
       position: "relative"
     },
     optionRadio: {
-      left: -theme.spacing(0.25)
+      left: theme.spacing(-0.25)
     },
 
     fieldInput: {

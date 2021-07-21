@@ -69,3 +69,29 @@ export function getProductDetails(productId, channelId, auth = "token") {
   }`;
   return cy.sendRequestWithQuery(query, auth);
 }
+
+export function getProductMetadata({
+  productId,
+  channelSlug,
+  auth,
+  withPrivateMetadata
+}) {
+  const privateMetadata = getValueWithDefault(
+    withPrivateMetadata,
+    `privateMetadata{
+    key
+    value
+  }`
+  );
+
+  const query = `query{
+    product(id:"${productId}" channel:"${channelSlug}"){
+      metadata{
+        key
+        value
+      }
+      ${privateMetadata}
+    }
+  }`;
+  return cy.sendRequestWithQuery(query, auth).its("body");
+}

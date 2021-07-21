@@ -24,6 +24,15 @@ module.exports = ({ config }) => {
       configFile: "./tsconfig.json"
     })
   ];
+  // Resolve macaw ui's peer dependencies to our own node_modules
+  // to make it work with npm link
+  config.resolve.alias = {
+    react: path.resolve("./node_modules/react"),
+    "react-dom": path.resolve("./node_modules/react-dom"),
+    "@material-ui/core": path.resolve("./node_modules/@material-ui/core"),
+    "@material-ui/icons": path.resolve("./node_modules/@material-ui/icons"),
+    "@material-ui/styles": path.resolve("./node_modules/@material-ui/styles")
+  };
   config.plugins.push(
     new CheckerPlugin({
       eslint: true

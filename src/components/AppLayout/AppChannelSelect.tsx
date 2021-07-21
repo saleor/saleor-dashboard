@@ -1,5 +1,5 @@
 import { ChannelFragment } from "@saleor/fragments/types/ChannelFragment";
-import { makeStyles } from "@saleor/theme";
+import { makeStyles } from "@saleor/macaw-ui";
 import { ChannelProps } from "@saleor/types";
 import { mapNodeToChoice } from "@saleor/utils/maps";
 import React from "react";

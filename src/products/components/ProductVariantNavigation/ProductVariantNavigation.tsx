@@ -8,7 +8,7 @@ import {
   SortableTableRow
 } from "@saleor/components/SortableTable";
 import TableCellAvatar from "@saleor/components/TableCellAvatar";
-import { makeStyles } from "@saleor/theme";
+import { makeStyles } from "@saleor/macaw-ui";
 import { ReorderAction } from "@saleor/types";
 import classNames from "classnames";
 import React from "react";

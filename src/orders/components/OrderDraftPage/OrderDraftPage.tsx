@@ -1,5 +1,4 @@
 import { Typography } from "@material-ui/core";
-import AppHeader from "@saleor/components/AppHeader";
 import CardMenu from "@saleor/components/CardMenu";
 import CardSpacer from "@saleor/components/CardSpacer";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
@@ -7,12 +6,13 @@ import { Container } from "@saleor/components/Container";
 import { DateTime } from "@saleor/components/Date";
 import Grid from "@saleor/components/Grid";
 import PageHeader from "@saleor/components/PageHeader";
-import SaveButtonBar from "@saleor/components/SaveButtonBar";
+import Savebar from "@saleor/components/Savebar";
 import Skeleton from "@saleor/components/Skeleton";
 import { sectionNames } from "@saleor/intl";
+import { Backlink } from "@saleor/macaw-ui";
+import { makeStyles } from "@saleor/macaw-ui";
 import DraftOrderChannelSectionCard from "@saleor/orders/components/DraftOrderChannelSectionCard";
 import { SearchCustomers_search_edges_node } from "@saleor/searches/types/SearchCustomers";
-import { makeStyles } from "@saleor/theme";
 import { FetchMoreProps, UserPermissionProps } from "@saleor/types";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -93,9 +93,9 @@ const OrderDraftPage: React.FC<OrderDraftPageProps> = props => {
 
   return (
     <Container>
-      <AppHeader onBack={onBack}>
+      <Backlink onClick={onBack}>
         {intl.formatMessage(sectionNames.draftOrders)}
-      </AppHeader>
+      </Backlink>
       <PageHeader
         className={classes.header}
         inline
@@ -115,7 +115,7 @@ const OrderDraftPage: React.FC<OrderDraftPageProps> = props => {
       </PageHeader>
       <div className={classes.date}>
         {order && order.created ? (
-          <Typography variant="caption">
+          <Typography variant="body2">
             <DateTime date={order.created} />
           </Typography>
         ) : (
@@ -157,13 +157,13 @@ const OrderDraftPage: React.FC<OrderDraftPageProps> = props => {
           <DraftOrderChannelSectionCard channelName={order?.channel?.name} />
         </div>
       </Grid>
-      <SaveButtonBar
+      <Savebar
         state={saveButtonBarState}
         disabled={disabled || !order?.canFinalize}
         onCancel={onBack}
-        onSave={onDraftFinalize}
+        onSubmit={onDraftFinalize}
         labels={{
-          save: intl.formatMessage({
+          confirm: intl.formatMessage({
             defaultMessage: "Finalize",
             description: "button"
           })

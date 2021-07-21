@@ -1,6 +1,7 @@
 import { VOUCHERS_SELECTORS } from "../../elements/discounts/vouchers";
 import { BUTTON_SELECTORS } from "../../elements/shared/button-selectors";
 import { selectChannelInDetailsPages } from "../channelsSteps";
+import { confirmationMessageShouldDisappear } from "../shared/confirmationMessage";
 
 export const discountOptions = {
   PERCENTAGE: VOUCHERS_SELECTORS.percentageDiscountRadioButton,
@@ -24,4 +25,5 @@ export function createVoucher({
     cy.get(VOUCHERS_SELECTORS.discountValueInputs).type(voucherValue);
   }
   cy.get(BUTTON_SELECTORS.confirm).click();
+  confirmationMessageShouldDisappear();
 }

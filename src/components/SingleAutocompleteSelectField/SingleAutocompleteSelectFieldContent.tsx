@@ -9,7 +9,7 @@ import Add from "@material-ui/icons/Add";
 import useElementScroll, {
   isScrolledToBottom
 } from "@saleor/hooks/useElementScroll";
-import { makeStyles } from "@saleor/theme";
+import { makeStyles } from "@saleor/macaw-ui";
 import { FetchMoreProps } from "@saleor/types";
 import classNames from "classnames";
 import { GetItemPropsOptions } from "downshift";
@@ -76,7 +76,9 @@ const useStyles = makeStyles(
       width: "100%"
     },
     content: {
-      maxHeight: menuItemHeight * maxMenuItems + theme.spacing(2),
+      maxHeight: `calc(${menuItemHeight * maxMenuItems}px + ${theme.spacing(
+        2
+      )})`,
       overflow: "scroll",
       padding: 8
     },

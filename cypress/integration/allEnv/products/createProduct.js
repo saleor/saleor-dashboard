@@ -51,7 +51,7 @@ describe("Create product", () => {
   before(() => {
     cy.clearSessionData().loginUserViaRequest();
     productUtils.deleteProductsStartsWith(startsWith);
-    createAttribute(name).then(attributeResp => {
+    createAttribute({ name }).then(attributeResp => {
       attribute = attributeResp;
     });
   });

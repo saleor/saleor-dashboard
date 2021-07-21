@@ -22,7 +22,7 @@ import {
 } from "../../utils/users";
 
 describe("Staff members", () => {
-  const startsWith = "Cypress";
+  const startsWith = "StaffMembers";
   const password = Cypress.env("USER_PASSWORD");
   const lastName = faker.name.lastName();
   const email = `${startsWith}${lastName}@example.com`;

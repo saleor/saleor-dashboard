@@ -67,6 +67,9 @@ All notable, unreleased changes to this project will be documented in this file.
 - Fix order links on home page - #1219 by @jwm0
 - Fix huge payload issue for plugins view - #1203 by @kamilpastuszka
 - Fix content type validation in create page view - #1205 by @orzechdev
+- Fix list pagination crash on search - #1230 by @orzechdev
+- Fix positive float number input validation - #1233 by @orzechdev
+- Use MacawUI - #1229 by @dominik-zeglen
 
 # 2.11.1
 

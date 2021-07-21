@@ -9,7 +9,7 @@ import Skeleton from "@saleor/components/Skeleton";
 import { ProductVariant } from "@saleor/fragments/types/ProductVariant";
 import useDateLocalize from "@saleor/hooks/useDateLocalize";
 import IconChevronDown from "@saleor/icons/ChevronDown";
-import { makeStyles } from "@saleor/theme";
+import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import { useIntl } from "react-intl";
 

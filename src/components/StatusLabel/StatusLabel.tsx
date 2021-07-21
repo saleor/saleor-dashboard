@@ -1,8 +1,8 @@
 import { Typography } from "@material-ui/core";
 import grey from "@material-ui/core/colors/grey";
 import yellow from "@material-ui/core/colors/yellow";
+import { makeStyles } from "@saleor/macaw-ui";
 import Label from "@saleor/orders/components/OrderHistory/Label";
-import { makeStyles } from "@saleor/theme";
 import classNames from "classnames";
 import React from "react";
 

@@ -1,11 +1,17 @@
 import { LinearProgress, useMediaQuery } from "@material-ui/core";
-import { createConfigurationMenu } from "@saleor/configuration";
 import useAppState from "@saleor/hooks/useAppState";
 import useNavigator from "@saleor/hooks/useNavigator";
-import useTheme from "@saleor/hooks/useTheme";
 import useUser from "@saleor/hooks/useUser";
+import {
+  makeStyles,
+  SaleorTheme,
+  Sidebar,
+  SidebarDrawer,
+  useBacklink,
+  useSavebar,
+  useTheme
+} from "@saleor/macaw-ui";
 import { staffMemberDetailsUrl } from "@saleor/staff/urls";
-import { makeStyles, SaleorTheme } from "@saleor/theme";
 import classNames from "classnames";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -15,15 +21,12 @@ import Container from "../Container";
 import ErrorPage from "../ErrorPage";
 import Navigator from "../Navigator";
 import NavigatorButton from "../NavigatorButton/NavigatorButton";
-import SideBar from "../SideBar";
-import SideBarDrawer from "../SideBarDrawer/SideBarDrawer";
 import UserChip from "../UserChip";
-import AppActionContext from "./AppActionContext";
 import useAppChannel from "./AppChannelContext";
 import AppChannelSelect from "./AppChannelSelect";
-import AppHeaderContext from "./AppHeaderContext";
 import { appLoaderHeight } from "./consts";
 import createMenuStructure from "./menuStructure";
+import { isMenuActive } from "./utils";
 
 const useStyles = makeStyles(
   theme => ({
@@ -103,7 +106,7 @@ const useStyles = makeStyles(
       }
     },
     viewContainer: {
-      minHeight: `calc(100vh - ${theme.spacing(2) + appLoaderHeight + 70}px)`
+      minHeight: `calc(100vh + ${appLoaderHeight + 70}px - ${theme.spacing(2)})`
     }
   }),
   {
@@ -117,9 +120,9 @@ interface AppLayoutProps {
 
 const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
   const classes = useStyles({});
-  const { isDark, toggleTheme } = useTheme();
-  const appActionAnchor = React.useRef<HTMLDivElement>();
-  const appHeaderAnchor = React.useRef<HTMLDivElement>();
+  const { themeType, setTheme } = useTheme();
+  const { anchor: appActionAnchor, docked } = useSavebar();
+  const appHeaderAnchor = useBacklink();
   const { logout, user } = useUser();
   const navigate = useNavigator();
   const intl = useIntl();
@@ -129,7 +132,6 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
   const isMdUp = useMediaQuery((theme: SaleorTheme) =>
     theme.breakpoints.up("md")
   );
-  const [docked, setDocked] = React.useState(true);
   const {
     availableChannels,
     channel,
@@ -137,18 +139,10 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
     setChannel
   } = useAppChannel(false);
 
-  const menuStructure = createMenuStructure(intl);
-  const configurationMenu = createConfigurationMenu(intl);
-  const userPermissions = user?.userPermissions || [];
-
-  const renderConfigure = configurationMenu.some(section =>
-    section.menuItems.some(
-      menuItem =>
-        !!userPermissions.find(
-          userPermission => userPermission.code === menuItem.permission
-        )
-    )
-  );
+  const menuStructure = createMenuStructure(intl, user);
+  const activeMenu = menuStructure.find(menuItem =>
+    isMenuActive(location.pathname, menuItem)
+  )?.id;
 
   const handleErrorBack = () => {
     navigate("/");
@@ -160,105 +154,88 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
     });
   };
 
+  const isDark = themeType === "dark";
+  const toggleTheme = () => setTheme(isDark ? "light" : "dark");
+
   return (
     <>
       <Navigator
         visible={isNavigatorVisible}
         setVisibility={setNavigatorVisibility}
       />
-      <AppHeaderContext.Provider value={appHeaderAnchor}>
-        <AppActionContext.Provider
-          value={{
-            anchor: appActionAnchor,
-            docked,
-            setDocked
-          }}
-        >
-          <div className={classes.root}>
-            {isMdUp && (
-              <SideBar
-                menuItems={menuStructure}
-                location={location.pathname}
-                user={user}
-                renderConfigure={renderConfigure}
-                onMenuItemClick={navigate}
-              />
-            )}
-            <div className={classes.content}>
-              {appState.loading ? (
-                <LinearProgress className={classes.appLoader} color="primary" />
-              ) : (
-                <div className={classes.appLoaderPlaceholder} />
-              )}
-              <div className={classes.viewContainer}>
-                <div>
-                  <Container>
-                    <div className={classes.header}>
-                      <div
-                        className={classes.headerAnchor}
-                        ref={appHeaderAnchor}
+      <div className={classes.root}>
+        {isMdUp && (
+          <Sidebar
+            active={activeMenu}
+            menuItems={menuStructure}
+            onMenuItemClick={navigate}
+          />
+        )}
+        <div className={classes.content}>
+          {appState.loading ? (
+            <LinearProgress className={classes.appLoader} color="primary" />
+          ) : (
+            <div className={classes.appLoaderPlaceholder} />
+          )}
+          <div className={classes.viewContainer}>
+            <div>
+              <Container>
+                <div className={classes.header}>
+                  <div className={classes.headerAnchor} ref={appHeaderAnchor} />
+                  <div className={classes.headerToolbar}>
+                    {!isMdUp && (
+                      <SidebarDrawer
+                        menuItems={menuStructure}
+                        onMenuItemClick={navigate}
                       />
-                      <div className={classes.headerToolbar}>
-                        {!isMdUp && (
-                          <SideBarDrawer
-                            menuItems={menuStructure}
-                            location={location.pathname}
-                            user={user}
-                            renderConfigure={renderConfigure}
-                            onMenuItemClick={navigate}
-                          />
-                        )}
-                        <div className={classes.spacer} />
-                        <div className={classes.userBar}>
-                          <NavigatorButton
-                            isMac={navigator.platform
-                              .toLowerCase()
-                              .includes("mac")}
-                            onClick={() => setNavigatorVisibility(true)}
-                          />
-                          {channel && (
-                            <AppChannelSelect
-                              channels={availableChannels}
-                              disabled={!isPickerActive}
-                              selectedChannelId={channel.id}
-                              onChannelSelect={setChannel}
-                            />
-                          )}
-                          <UserChip
-                            isDarkThemeEnabled={isDark}
-                            user={user}
-                            onLogout={logout}
-                            onProfileClick={() =>
-                              navigate(staffMemberDetailsUrl(user.id))
-                            }
-                            onThemeToggle={toggleTheme}
-                          />
-                        </div>
-                      </div>
-                    </div>
-                  </Container>
-                </div>
-                <main className={classes.view}>
-                  {appState.error
-                    ? appState.error.type === "unhandled" && (
-                        <ErrorPage
-                          id={appState.error.id}
-                          onBack={handleErrorBack}
+                    )}
+                    <div className={classes.spacer} />
+                    <div className={classes.userBar}>
+                      <NavigatorButton
+                        isMac={navigator.platform.toLowerCase().includes("mac")}
+                        onClick={() => setNavigatorVisibility(true)}
+                      />
+                      {channel && (
+                        <AppChannelSelect
+                          channels={availableChannels}
+                          disabled={!isPickerActive}
+                          selectedChannelId={channel.id}
+                          onChannelSelect={setChannel}
                         />
-                      )
-                    : children}
-                </main>
-              </div>
-              <div
-                className={classNames(classes.appAction, {
-                  [classes.appActionDocked]: docked
-                })}
-                ref={appActionAnchor}
-              />
+                      )}
+                      <UserChip
+                        isDarkThemeEnabled={isDark}
+                        user={user}
+                        onLogout={logout}
+                        onProfileClick={() =>
+                          navigate(staffMemberDetailsUrl(user.id))
+                        }
+                        onThemeToggle={toggleTheme}
+                      />
+                    </div>
+                  </div>
+                </div>
+              </Container>
             </div>
+            <main className={classes.view}>
+              {appState.error
+                ? appState.error.type === "unhandled" && (
+                    <ErrorPage
+                      id={appState.error.id}
+                      onBack={handleErrorBack}
+                    />
+                  )
+                : children}
+            </main>
           </div>
-        </AppActionContext.Provider>
-      </AppHeaderContext.Provider>
+          <div
+            className={classNames(classes.appAction, {
+              [classes.appActionDocked]: docked
+            })}
+            ref={appActionAnchor}
+          />
+        </div>
+      </div>
     </>
   );
 };

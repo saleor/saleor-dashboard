@@ -3,8 +3,8 @@ import CardTitle from "@saleor/components/CardTitle";
 import ImageUpload from "@saleor/components/ImageUpload";
 import MediaTile from "@saleor/components/MediaTile";
 import { ProductMediaFragment } from "@saleor/fragments/types/ProductMediaFragment";
+import { makeStyles } from "@saleor/macaw-ui";
 import { ProductMediaPopper } from "@saleor/products/components/ProductMediaPopper/ProductMediaPopper";
-import { makeStyles } from "@saleor/theme";
 import { ReorderAction } from "@saleor/types";
 import { ProductMediaType } from "@saleor/types/globalTypes";
 import createMultiFileUploadHandler from "@saleor/utils/handlers/multiFileUploadHandler";
@@ -78,8 +78,8 @@ const useStyles = makeStyles(
       alignContent: "flex-end",
       display: "flex",
       position: "relative",
-      right: -theme.spacing(3),
-      top: -theme.spacing(2)
+      right: theme.spacing(-3),
+      top: theme.spacing(-2)
     },
     imageUpload: {
       height: "100%",

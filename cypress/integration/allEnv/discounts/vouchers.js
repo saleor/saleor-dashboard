@@ -23,6 +23,7 @@ describe("Vouchers discounts", () => {
   const shippingPrice = 100;
 
   let defaultChannel;
+  let createdChannel;
   let productType;
   let attribute;
   let category;
@@ -79,7 +80,13 @@ describe("Vouchers discounts", () => {
           price: productPrice
         });
       })
-      .then(({ variantsList: variantsResp }) => (variants = variantsResp));
+      .then(({ variantsList: variantsResp }) => {
+        variants = variantsResp;
+        createChannel({ name });
+      })
+      .then(channel => {
+        createdChannel = channel;
+      });
   });
 
   it("should create percentage voucher", () => {
@@ -124,20 +131,16 @@ describe("Vouchers discounts", () => {
       .loginUserViaRequest()
       .visit(urlList.vouchers);
     cy.softExpectSkeletonIsVisible();
-    createChannel({ name: randomName })
-      .then(channel => {
-        createVoucher({
-          voucherCode: randomName,
-          voucherValue,
-          discountOption: discountOptions.PERCENTAGE,
-          channelName: channel.name
-        });
-        createCheckoutForCreatedVoucher(randomName);
-      })
-      .then(resp => {
-        const errorField = resp.checkoutErrors[0].field;
-        expect(errorField).to.be.eq("promoCode");
-      });
+    createVoucher({
+      voucherCode: randomName,
+      voucherValue,
+      discountOption: discountOptions.PERCENTAGE,
+      channelName: createdChannel.name
+    });
+    createCheckoutForCreatedVoucher(randomName).then(resp => {
+      const errorField = resp.checkoutErrors[0].field;
+      expect(errorField).to.be.eq("promoCode");
+    });
   });
 
   function createCheckoutForCreatedVoucher(voucherCode) {

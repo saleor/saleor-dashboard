@@ -3,7 +3,7 @@ import { MutationFunction, MutationResult } from "react-apollo";
 import { defineMessages, IntlShape } from "react-intl";
 import urlJoin from "url-join";
 
-import { ConfirmButtonTransitionState } from "./components/ConfirmButton/ConfirmButton";
+import { ConfirmButtonTransitionState } from "./components/ConfirmButton";
 import { StatusType } from "./components/StatusChip/types";
 import { StatusLabelProps } from "./components/StatusLabel";
 import { APP_MOUNT_URI } from "./config";

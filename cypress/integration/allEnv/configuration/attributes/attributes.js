@@ -6,8 +6,8 @@ import { getAttribute } from "../../../../apiRequests/Attribute";
 import { ATTRIBUTES_LIST } from "../../../../elements/attribute/attributes_list";
 import { createAttributeWithInputType } from "../../../../steps/attributesSteps";
 import { urlList } from "../../../../url/urlList";
-import { deleteAttributesStartsWith } from "../../../../utils/attributes.js/attributeUtils";
-import { expectCorrectDataInAttribute } from "../../../../utils/attributes.js/checkAttributeData";
+import { deleteAttributesStartsWith } from "../../../../utils/attributes/attributeUtils";
+import { expectCorrectDataInAttribute } from "../../../../utils/attributes/checkAttributeData";
 
 describe("Create attribute with type", () => {
   const startsWith = "AttrCreate";

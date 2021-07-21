@@ -1,15 +1,15 @@
 import { Card, CardContent, TextField } from "@material-ui/core";
-import AppHeader from "@saleor/components/AppHeader";
 import CardTitle from "@saleor/components/CardTitle";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
 import Container from "@saleor/components/Container";
 import Form from "@saleor/components/Form";
 import Grid from "@saleor/components/Grid";
 import PageHeader from "@saleor/components/PageHeader";
-import SaveButtonBar from "@saleor/components/SaveButtonBar";
+import Savebar from "@saleor/components/Savebar";
 import Skeleton from "@saleor/components/Skeleton";
 import { commonMessages } from "@saleor/intl";
-import { makeStyles } from "@saleor/theme";
+import { Backlink } from "@saleor/macaw-ui";
+import { makeStyles } from "@saleor/macaw-ui";
 import { ProductMediaType } from "@saleor/types/globalTypes";
 import React from "react";
 import { defineMessages, useIntl } from "react-intl";
@@ -103,7 +103,7 @@ const ProductMediaPage: React.FC<ProductMediaPageProps> = props => {
     >
       {({ change, data, hasChanged, submit }) => (
         <Container>
-          <AppHeader onBack={onBack}>{product}</AppHeader>
+          <Backlink onClick={onBack}>{product}</Backlink>
           <PageHeader title={intl.formatMessage(messages.editMedia)} />
           <Grid variant="inverted">
             <div>
@@ -159,12 +159,12 @@ const ProductMediaPage: React.FC<ProductMediaPageProps> = props => {
               </Card>
             </div>
           </Grid>
-          <SaveButtonBar
+          <Savebar
             disabled={disabled || !onSubmit || !hasChanged}
             state={saveButtonBarState}
             onCancel={onBack}
             onDelete={onDelete}
-            onSave={submit}
+            onSubmit={submit}
           />
         </Container>
       )}
