@@ -9,7 +9,7 @@ interface GiftCardUpdateFormProviderProps {
   children: React.ReactNode;
 }
 
-type GiftCardUpdateFormData = Pick<
+export type GiftCardUpdateFormData = Pick<
   GiftCardDetails_giftCard,
   "tag" | "expiryDate" | "expiryType" | "expiryPeriod"
 >;
