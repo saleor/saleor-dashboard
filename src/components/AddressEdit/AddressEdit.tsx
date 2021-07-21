@@ -3,7 +3,7 @@ import { AddressTypeInput } from "@saleor/customers/types";
 import { AccountErrorFragment } from "@saleor/fragments/types/AccountErrorFragment";
 import { OrderErrorFragment } from "@saleor/fragments/types/OrderErrorFragment";
 import { commonMessages } from "@saleor/intl";
-import { makeStyles } from "@saleor/theme";
+import { makeStyles } from "@saleor/macaw-ui";
 import { getFormErrors } from "@saleor/utils/errors";
 import getAccountErrorMessage from "@saleor/utils/errors/account";
 import getOrderErrorMessage from "@saleor/utils/errors/order";
@@ -93,6 +93,9 @@ const AddressEdit: React.FC<AddressEditProps> = props => {
             onChange={onChange}
             value={data.firstName}
             fullWidth
+            InputProps={{
+              autoComplete: "given-name"
+            }}
           />
         </div>
         <div>
@@ -105,6 +108,9 @@ const AddressEdit: React.FC<AddressEditProps> = props => {
             onChange={onChange}
             value={data.lastName}
             fullWidth
+            InputProps={{
+              autoComplete: "family-name"
+            }}
           />
         </div>
       </div>
@@ -122,6 +128,9 @@ const AddressEdit: React.FC<AddressEditProps> = props => {
             onChange={onChange}
             value={data.companyName}
             fullWidth
+            InputProps={{
+              autoComplete: "organization"
+            }}
           />
         </div>
         <div>
@@ -136,6 +145,9 @@ const AddressEdit: React.FC<AddressEditProps> = props => {
             name="phone"
             value={data.phone}
             onChange={onChange}
+            InputProps={{
+              autoComplete: "tel"
+            }}
           />
         </div>
       </div>
@@ -151,6 +163,9 @@ const AddressEdit: React.FC<AddressEditProps> = props => {
         onChange={onChange}
         value={data.streetAddress1}
         fullWidth
+        InputProps={{
+          autoComplete: "address-line1"
+        }}
       />
       <FormSpacer />
       <TextField
@@ -164,6 +179,9 @@ const AddressEdit: React.FC<AddressEditProps> = props => {
         onChange={onChange}
         value={data.streetAddress2}
         fullWidth
+        InputProps={{
+          autoComplete: "address-line2"
+        }}
       />
       <FormSpacer />
       <div className={classes.root}>
@@ -179,6 +197,9 @@ const AddressEdit: React.FC<AddressEditProps> = props => {
             onChange={onChange}
             value={data.city}
             fullWidth
+            InputProps={{
+              autoComplete: "address-level2"
+            }}
           />
         </div>
         <div>
@@ -193,6 +214,9 @@ const AddressEdit: React.FC<AddressEditProps> = props => {
             onChange={onChange}
             value={data.postalCode}
             fullWidth
+            InputProps={{
+              autoComplete: "postal-code"
+            }}
           />
         </div>
       </div>
@@ -214,7 +238,9 @@ const AddressEdit: React.FC<AddressEditProps> = props => {
             value={data.country}
             choices={countries}
             InputProps={{
-              autoComplete: "off"
+              inputProps: {
+                autoComplete: "none"
+              }
             }}
           />
         </div>
@@ -230,6 +256,9 @@ const AddressEdit: React.FC<AddressEditProps> = props => {
             onChange={onChange}
             value={data.countryArea}
             fullWidth
+            InputProps={{
+              autoComplete: "address-level1"
+            }}
           />
         </div>
       </div>

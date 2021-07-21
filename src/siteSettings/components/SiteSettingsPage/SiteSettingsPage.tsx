@@ -1,5 +1,4 @@
 import { Typography } from "@material-ui/core";
-import AppHeader from "@saleor/components/AppHeader";
 import CompanyAddressInput from "@saleor/components/CompanyAddressInput";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
 import Container from "@saleor/components/Container";
@@ -7,13 +6,14 @@ import Form from "@saleor/components/Form";
 import Grid from "@saleor/components/Grid";
 import Hr from "@saleor/components/Hr";
 import PageHeader from "@saleor/components/PageHeader";
-import SaveButtonBar from "@saleor/components/SaveButtonBar";
+import Savebar from "@saleor/components/Savebar";
 import { ShopErrorFragment } from "@saleor/fragments/types/ShopErrorFragment";
 import useAddressValidation from "@saleor/hooks/useAddressValidation";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { commonMessages, sectionNames } from "@saleor/intl";
-import { makeStyles } from "@saleor/theme";
+import { Backlink } from "@saleor/macaw-ui";
+import { makeStyles } from "@saleor/macaw-ui";
 import createSingleAutocompleteSelectHandler from "@saleor/utils/handlers/singleAutocompleteSelectChangeHandler";
 import { mapCountriesToChoices } from "@saleor/utils/maps";
 import React from "react";
@@ -136,9 +136,9 @@ const SiteSettingsPage: React.FC<SiteSettingsPageProps> = props => {
 
         return (
           <Container>
-            <AppHeader onBack={onBack}>
+            <Backlink onClick={onBack}>
               {intl.formatMessage(sectionNames.configuration)}
-            </AppHeader>
+            </Backlink>
             <PageHeader
               title={intl.formatMessage(commonMessages.generalInformations)}
             />
@@ -184,11 +184,11 @@ const SiteSettingsPage: React.FC<SiteSettingsPageProps> = props => {
                 onCountryChange={handleCountryChange}
               />
             </Grid>
-            <SaveButtonBar
+            <Savebar
               state={saveButtonBarState}
               disabled={disabled || !hasChanged}
               onCancel={onBack}
-              onSave={submit}
+              onSubmit={submit}
             />
           </Container>
         );

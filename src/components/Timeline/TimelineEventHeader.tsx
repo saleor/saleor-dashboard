@@ -1,6 +1,6 @@
 import { Typography } from "@material-ui/core";
 import useNavigator from "@saleor/hooks/useNavigator";
-import { makeStyles } from "@saleor/theme";
+import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 
 import { DateTime } from "../Date";
@@ -31,7 +31,7 @@ const useStyles = makeStyles(
       marginTop: theme.spacing(2)
     },
     titleElement: {
-      marginRight: "0.5rem"
+      marginRight: theme.spacing(0.5)
     }
   }),
   { name: "TimelineEventHeader" }

@@ -6,7 +6,7 @@ import {
 } from "@material-ui/core";
 import ArrowBack from "@material-ui/icons/ArrowBack";
 import { buttonMessages } from "@saleor/intl";
-import { makeStyles } from "@saleor/theme";
+import { makeStyles } from "@saleor/macaw-ui";
 import Downshift from "downshift";
 import React from "react";
 import { FormattedMessage } from "react-intl";
@@ -27,6 +27,7 @@ export interface AutocompleteSelectMenuProps {
   loading: boolean;
   name: string;
   options: IMenu;
+  testIds?: string[];
   placeholder: string;
   onChange: (event: React.ChangeEvent<any>) => void;
   onInputChange?: (value: string) => void;
@@ -47,7 +48,7 @@ const useStyles = makeStyles(
       position: "relative"
     },
     menuBack: {
-      marginLeft: -theme.spacing(0.5),
+      marginLeft: theme.spacing(-0.5),
       marginRight: theme.spacing(1)
     },
     paper: {
@@ -72,6 +73,7 @@ const AutocompleteSelectMenu: React.FC<AutocompleteSelectMenuProps> = props => {
     loading,
     name,
     options,
+    testIds,
     placeholder,
     onChange,
     onInputChange
@@ -110,7 +112,10 @@ const AutocompleteSelectMenu: React.FC<AutocompleteSelectMenuProps> = props => {
           onSelect={handleChange}
         >
           {({ getItemProps, isOpen, openMenu, closeMenu, selectItem }) => (
-            <div className={classes.container}>
+            <div
+              className={classes.container}
+              data-test-id="containerAutocompleteSelect"
+            >
               <TextField
                 InputProps={{
                   endAdornment: loading && <CircularProgress size={16} />,
@@ -157,6 +162,7 @@ const AutocompleteSelectMenu: React.FC<AutocompleteSelectMenuProps> = props => {
                         : options
                       ).map((suggestion, index) => (
                         <MenuItem
+                          data-test-id={testIds[index]}
                           key={suggestion.value}
                           component="div"
                           {...getItemProps({ item: suggestion })}

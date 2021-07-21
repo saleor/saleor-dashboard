@@ -3,7 +3,7 @@ import CardSpacer from "@saleor/components/CardSpacer";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
 import Form from "@saleor/components/Form";
 import Grid from "@saleor/components/Grid";
-import SaveButtonBar from "@saleor/components/SaveButtonBar";
+import Savebar from "@saleor/components/Savebar";
 import { SingleAutocompleteChoiceType } from "@saleor/components/SingleAutocompleteSelectField";
 import { ChannelErrorFragment } from "@saleor/fragments/types/ChannelErrorFragment";
 import { SearchData } from "@saleor/hooks/makeTopLevelSearch";
@@ -163,9 +163,9 @@ export const ChannelDetailsPage: React.FC<ChannelDetailsPageProps> = ({
                 />
               </div>
             </Grid>
-            <SaveButtonBar
+            <Savebar
               onCancel={onBack}
-              onSave={submit}
+              onSubmit={submit}
               onDelete={onDelete}
               state={saveButtonBarState}
               disabled={disabled || formDisabled || !onSubmit || !hasChanged}

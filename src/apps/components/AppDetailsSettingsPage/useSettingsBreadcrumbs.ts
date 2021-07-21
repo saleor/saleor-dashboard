@@ -6,7 +6,7 @@ import {
   ExtensionMessageType,
   sendMessageToExtension,
   useExtensionMessage
-} from "@saleor/macaw-ui/extensions";
+} from "@saleor/macaw-ui";
 import { useState } from "react";
 
 type UseSettingsBreadcrumbs = [Breadcrumb[], (value: string) => void];

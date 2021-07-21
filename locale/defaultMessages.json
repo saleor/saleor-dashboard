@@ -2130,10 +2130,6 @@
     "context": "button",
     "string": "{languageName} - {languageCode}"
   },
-  "src_dot_components_dot_ListField_dot_3099331554": {
-    "context": "button",
-    "string": "Add"
-  },
   "src_dot_components_dot_Metadata_dot_1148029984": {
     "context": "metadata field value, header",
     "string": "Value"

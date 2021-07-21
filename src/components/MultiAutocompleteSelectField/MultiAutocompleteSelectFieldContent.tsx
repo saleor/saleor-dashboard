@@ -10,7 +10,7 @@ import Checkbox from "@saleor/components/Checkbox";
 import useElementScroll, {
   isScrolledToBottom
 } from "@saleor/hooks/useElementScroll";
-import { makeStyles } from "@saleor/theme";
+import { makeStyles } from "@saleor/macaw-ui";
 import { FetchMoreProps } from "@saleor/types";
 import classNames from "classnames";
 import { GetItemPropsOptions } from "downshift";
@@ -82,7 +82,9 @@ const useStyles = makeStyles(
       width: 20
     },
     content: {
-      maxHeight: menuItemHeight * maxMenuItems + theme.spacing(2),
+      maxHeight: `calc(${menuItemHeight * maxMenuItems}px + ${theme.spacing(
+        2
+      )})`,
       overflowY: "scroll",
       padding: 8
     },
@@ -203,7 +205,11 @@ const MultiAutocompleteSelectFieldContent: React.FC<MultiAutocompleteSelectField
   return (
     <Paper className={classes.root}>
       {hasValuesToDisplay && (
-        <div className={classes.content} ref={anchor}>
+        <div
+          className={classes.content}
+          ref={anchor}
+          data-test-id="multiautocomplete-select-content"
+        >
           <>
             {add && (
               <MenuItem

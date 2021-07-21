@@ -1,10 +1,14 @@
-export function createAttribute(name, attributeValues = ["value"]) {
+export function createAttribute({
+  name,
+  attributeValues = ["value"],
+  type = "PRODUCT_TYPE"
+}) {
   const values = attributeValues.map(element => `{name:"${element}"}`);
   const mutation = `mutation{
     attributeCreate(input:{
       name:"${name}"
       valueRequired:false
-      type:PRODUCT_TYPE
+      type:${type}
       values: [${values}]
     }){
       attribute{

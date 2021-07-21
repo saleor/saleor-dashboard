@@ -1,7 +1,7 @@
 import { Card, CardContent, Typography } from "@material-ui/core";
 import CardTitle from "@saleor/components/CardTitle";
 import RadioGroupField from "@saleor/components/RadioGroupField";
-import { makeStyles } from "@saleor/theme";
+import { makeStyles } from "@saleor/macaw-ui";
 import { AttributeTypeEnum } from "@saleor/types/globalTypes";
 import React from "react";
 import { defineMessages, FormattedMessage, useIntl } from "react-intl";
@@ -32,7 +32,7 @@ const useStyles = makeStyles(
       overflow: "visible"
     },
     cardSubtitle: {
-      fontSize: "1rem",
+      fontSize: theme.typography.body1.fontSize,
       marginBottom: theme.spacing(0.5)
     },
     label: {

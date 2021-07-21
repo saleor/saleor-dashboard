@@ -19,12 +19,18 @@ export function getDefaultAddress(address, addressType, withName = true) {
   }
   return `${addressType}:{${defaultAddress}}`;
 }
+
 export function getVariantsLines(variantsList, quantity) {
   return variantsList.map(
     variant => `{quantity:${quantity}
                     variantId:"${variant.id}"}`
   );
 }
+
+export function getVariantsListIds(variantsList) {
+  return variantsList.map(variant => `"${variant.id}"`).join();
+}
+
 export const getPaymentDataLine = paymentData =>
   paymentData
     ? `, paymentData:"{\\"riskData\\":{\\"clientData\\":\\"${paymentData.clientData}\\"}, \\"paymentMethod\\":{\\"type\\":\\"scheme\\", \\"encryptedCardNumber\\":\\"${paymentData.encryptedCardNumber}\\", \\"encryptedExpiryMonth\\":\\"${paymentData.encryptedExpiryMonth}\\", \\"encryptedExpiryYear\\":\\"${paymentData.encryptedExpiryYear}\\", \\"encryptedSecurityCode\\":\\"${paymentData.encryptedSecurityCode}\\", \\"brand\\":\\"${paymentData.brand}\\"}}"`

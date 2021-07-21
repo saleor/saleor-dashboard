@@ -1,5 +1,5 @@
 import { stringify } from "../support/format/formatJson";
-import { getValueWithDefault } from "./utils/Utils";
+import { getValueWithDefault, getVariantsListIds } from "./utils/Utils";
 
 export function getFirstProducts(first, search) {
   const filter = search
@@ -97,15 +97,11 @@ export function createProduct({
     collectionId,
     `collections:["${collectionId}"]`
   );
+  const category = getValueWithDefault(categoryId, `category:"${categoryId}"`);
   const descriptionLine = getValueWithDefault(
     description,
     `description:"{\\"blocks\\":[{\\"type\\":\\"paragraph\\",\\"data\\":{\\"text\\":\\"${description}\\"}}]}"`
   );
-  const categoryLine = getValueWithDefault(
-    categoryId,
-    `category:"${categoryId}"`
-  );
-
   const mutation = `mutation{
     productCreate(input:{
       attributes:[{
@@ -115,7 +111,7 @@ export function createProduct({
       slug:"${name}"
       seo:{title:"${name}" description:""}
       productType:"${productTypeId}"
-      ${categoryLine}
+      ${category}
       ${collection}
       ${descriptionLine}
     }){
@@ -143,7 +139,8 @@ export function createVariant({
   attributeId,
   price = 1,
   costPrice = 1,
-  trackInventory = true
+  trackInventory = true,
+  weight = 1
 }) {
   const channelListings = getValueWithDefault(
     channelId,
@@ -168,6 +165,7 @@ export function createVariant({
         id:"${attributeId}"
         values: ["value"]
       }]
+      weight: ${weight}
       sku: "${sku}"
       ${channelListings}
       trackInventory:${trackInventory}
@@ -198,4 +196,24 @@ export function deleteProduct(productId) {
     }
   } `;
   return cy.sendRequestWithQuery(mutation);
+}
+
+export function getVariants(variantsList) {
+  const variantsIds = getVariantsListIds(variantsList);
+  const query = `query{
+    productVariants(first:100 ids:[${variantsIds}]){
+      edges{
+        node{
+          stocks{
+            warehouse{
+              id
+            }
+            quantity
+            quantityAllocated
+          }
+        }
+      }
+    }
+  }`;
+  return cy.sendRequestWithQuery(query).its("body.data.productVariants");
 }
