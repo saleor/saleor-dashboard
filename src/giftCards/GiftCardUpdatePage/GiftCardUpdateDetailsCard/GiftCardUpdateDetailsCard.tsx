@@ -8,6 +8,7 @@ import {
 } from "@material-ui/core";
 import CardSpacer from "@saleor/components/CardSpacer";
 import CardTitle from "@saleor/components/CardTitle";
+import GiftCardTagInput from "@saleor/giftCards/components/GiftCardTagInput";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -16,18 +17,8 @@ import { giftCardUpdateDetailsCardMessages as messages } from "./messages";
 
 interface GiftCardUpdateDetailsCardProps {}
 
-const useStyles = makeStyles(
-  () => ({
-    setBalanceButton: {
-      marginTop: 10
-    }
-  }),
-  { name: "GiftCardUpdateDetailsCard" }
-);
-
 const GiftCardUpdateDetailsCard: React.FC<GiftCardUpdateDetailsCardProps> = ({}) => {
   const intl = useIntl();
-  const classes = useStyles({});
 
   return (
     <Card>
@@ -35,10 +26,9 @@ const GiftCardUpdateDetailsCard: React.FC<GiftCardUpdateDetailsCardProps> = ({})
         title={intl.formatMessage(messages.title)}
         toolbar={
           <Button
-            className={classes.setBalanceButton}
+            data-test-id="createApp"
             color="primary"
             // onClick={navigateToCustomAppCreate}
-            data-test-id="createApp"
           >
             {intl.formatMessage(messages.setBalanceButtonLabel)}
           </Button>
@@ -49,6 +39,7 @@ const GiftCardUpdateDetailsCard: React.FC<GiftCardUpdateDetailsCardProps> = ({})
         <CardSpacer />
         <Divider />
         <CardSpacer />
+        <GiftCardTagInput />
       </CardContent>
     </Card>
   );
