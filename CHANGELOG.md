@@ -67,11 +67,8 @@ All notable, unreleased changes to this project will be documented in this file.
 - Fix content type validation in create page view - #1205 by @orzechdev
 - Fix list pagination crash on search - #1230 by @orzechdev
 - Fix positive float number input validation - #1233 by @orzechdev
-<<<<<<< HEAD
 - Use MacawUI - #1229 by @dominik-zeglen
-=======
 - Add Metadata for Sale & Voucher - #7653 by @piotrgrundas
->>>>>>> 357da7676 (Update changelog)
 
 # 2.11.1
 
