@@ -1,0 +1,16 @@
+;FFMETADATA1
+[CHAPTER]
+TIMEBASE=1/1000
+START=-3809
+END=14809
+title=User authorization should successfully log in an user
+[CHAPTER]
+TIMEBASE=1/1000
+START=27870
+END=33470
+title=User authorization should fail for wrong password
+[CHAPTER]
+TIMEBASE=1/1000
+START=29674
+END=39081
+title=User authorization should successfully log out an user
