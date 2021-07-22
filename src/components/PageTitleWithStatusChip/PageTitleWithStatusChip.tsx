@@ -1,7 +1,7 @@
 import HorizontalSpacer from "@saleor/apps/components/HorizontalSpacer";
 import StatusChip from "@saleor/components/StatusChip";
 import { StatusType } from "@saleor/components/StatusChip/types";
-import { makeStyles } from "@saleor/theme";
+import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 
 export interface PageTitleWithStatusChipProps {

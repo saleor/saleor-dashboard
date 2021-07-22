@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import Container from "@saleor/components/Container";
 import React from "react";
 
@@ -11,20 +10,13 @@ interface GiftCardsListProps {
   params: GiftCardListUrlQueryParams;
 }
 
-const GiftCardsList: React.FC<GiftCardsListProps> = ({ params }) => {
-  return (
-    <GiftCardsListProvider params={params}>
-      <Container>
-        <GiftCardsListHeader />
-        <GiftCardsListTable />
-      </Container>
-    </GiftCardsListProvider>
-  );
-};
-=======
-import React from "react";
-
-const GiftCardsList: React.FC = () => null;
->>>>>>> Add gift cards section to menu and add empty list component
+const GiftCardsList: React.FC<GiftCardsListProps> = ({ params }) => (
+  <GiftCardsListProvider params={params}>
+    <Container>
+      <GiftCardsListHeader />
+      <GiftCardsListTable />
+    </Container>
+  </GiftCardsListProvider>
+);
 
 export default GiftCardsList;

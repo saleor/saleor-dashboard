@@ -11,6 +11,7 @@ import {
   useSavebar,
   useTheme
 } from "@saleor/macaw-ui";
+import { isDarkTheme } from "@saleor/misc";
 import { staffMemberDetailsUrl } from "@saleor/staff/urls";
 import classNames from "classnames";
 import React from "react";
@@ -154,8 +155,7 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
     });
   };
 
-  const isDark = themeType === "dark";
-  const toggleTheme = () => setTheme(isDark ? "light" : "dark");
+  const toggleTheme = () => setTheme(isDarkTheme(themeType) ? "light" : "dark");
 
   return (
     <>
@@ -204,7 +204,7 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
                         />
                       )}
                       <UserChip
-                        isDarkThemeEnabled={isDark}
+                        isDarkThemeEnabled={isDarkTheme(themeType)}
                         user={user}
                         onLogout={logout}
                         onProfileClick={() =>
