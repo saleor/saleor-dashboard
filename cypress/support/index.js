@@ -41,12 +41,6 @@ Cypress.Commands.add("addAliasToGraphRequest", operationName => {
   });
 });
 
-Cypress.Commands.add("interceptOptionRequest", () => {
-  cy.intercept("POST", urlList.apiUri, req => {
-    req.alias = "interceptOptionRequest";
-  });
-});
-
 Cypress.Commands.add("sendRequestWithQuery", (query, authorization = "auth") =>
   cy.request({
     body: {

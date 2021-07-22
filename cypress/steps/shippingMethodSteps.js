@@ -56,10 +56,9 @@ export function createShippingZone(
 export function changeWeightUnit(weightUnit) {
   fillBaseSelect(SHIPPING_ZONES_LIST.unitSelect, weightUnit);
   cy.addAliasToGraphRequest("UpdateDefaultWeightUnit");
-  cy.interceptOptionRequest();
   cy.get(SHIPPING_ZONES_LIST.saveUnit).click();
   confirmationMessageShouldDisappear();
-  cy.wait("@UpdateDefaultWeightUnit").wait("@interceptOptionRequest");
+  cy.wait("@UpdateDefaultWeightUnit").wait(1000);
 }
 
 export function createShippingRate({
