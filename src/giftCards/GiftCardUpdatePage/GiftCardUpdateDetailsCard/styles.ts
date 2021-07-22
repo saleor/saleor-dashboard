@@ -1,4 +1,4 @@
-import { makeStyles } from "@saleor/theme";
+import { makeStyles } from "@saleor/macaw-ui";
 
 export const useGiftCardDetailsBalanceStyles = makeStyles(
   theme => ({
@@ -41,4 +41,36 @@ export const useGiftCardDetailsExpiryStyles = makeStyles(
     }
   }),
   { name: "GiftCardUpdateDetailsExpirySection" }
+);
+
+export const useTimePeriodTextWithSelectFieldStyles = makeStyles(
+  () => ({
+    container: {
+      position: "relative",
+      width: 400
+    },
+    textField: {
+      paddingRight: 300,
+      width: "100%",
+      "& input": {
+        paddingTop: 16,
+        paddingBottom: 16
+      }
+    },
+    autocompleteField: {
+      position: "absolute",
+      height: 52,
+      width: 300,
+      top: 0,
+      right: 0,
+      border: "none",
+      "& *": {
+        border: "none"
+      },
+      "& *:focus": {
+        background: "none"
+      }
+    }
+  }),
+  { name: "TimePeriodTextWithSelectField" }
 );

@@ -1,44 +1,30 @@
-import { makeStyles, TextField } from "@material-ui/core";
-import SingleAutocompleteSelectField from "@saleor/components/SingleAutocompleteSelectField";
+import { TextField } from "@material-ui/core";
+import SingleSelectField from "@saleor/components/SingleSelectField";
+import { FormChange } from "@saleor/hooks/useForm";
 import { TimePeriodType } from "@saleor/types/globalTypes";
+import createSingleAutocompleteSelectHandler from "@saleor/utils/handlers/singleAutocompleteSelectChangeHandler";
 import React from "react";
-import { defineMessages, useIntl } from "react-intl";
+import { useIntl } from "react-intl";
 
 import { timePeriodTextWithSelectFieldMessages as messages } from "./messages";
-
-const useStyles = makeStyles(
-  () => ({
-    container: {
-      position: "relative",
-      width: 400
-    },
-    textField: {
-      paddingRight: 300,
-      width: "100%"
-    },
-    autocompleteField: {
-      position: "absolute",
-      height: 52,
-      top: 0,
-      right: 0,
-      // bottom: "auto",
-      backgroundColor: "pink"
-    },
-    autocompleteInput: {
-      height: 52
-    }
-  }),
-  { name: "TimePeriodTextWithSelectField" }
-);
+import { useTimePeriodTextWithSelectFieldStyles as useStyles } from "./styles";
 
 interface TimePeriodTextWithSelectFieldProps {
   periodAmount: number;
   periodType: TimePeriodType;
+  change: FormChange;
+  textFieldName: string;
+  selectFieldName: string;
+  setSelectedTimePeriod: (value: TimePeriodType) => void;
 }
 
 const TimePeriodTextWithSelectField: React.FC<TimePeriodTextWithSelectFieldProps> = ({
   periodAmount,
-  periodType
+  periodType,
+  change,
+  textFieldName,
+  selectFieldName,
+  setSelectedTimePeriod
 }) => {
   const classes = useStyles({});
   const intl = useIntl();
@@ -58,22 +44,25 @@ const TimePeriodTextWithSelectField: React.FC<TimePeriodTextWithSelectFieldProps
     }
   ];
 
+  const handleSelect = createSingleAutocompleteSelectHandler(
+    change,
+    setSelectedTimePeriod,
+    options
+  );
+
   return (
     <div className={classes.container}>
       <TextField
+        name={textFieldName}
         InputProps={{ className: classes.textField }}
+        onChange={change}
         value={periodAmount}
-        // InputLabelProps={{ style: { height: 0 } }}
-        // className={classes.textField}
       ></TextField>
-      <SingleAutocompleteSelectField
+      <SingleSelectField
+        name={selectFieldName}
+        onChange={handleSelect}
         value={periodType}
-        displayValue={intl.formatMessage(
-          messages[`${periodType.toLowerCase()}Label`]
-        )}
         className={classes.autocompleteField}
-        InputProps={{ className: classes.autocompleteInput }}
-        nakedInput
         choices={options}
       />
     </div>
