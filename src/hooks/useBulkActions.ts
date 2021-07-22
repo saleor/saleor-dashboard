@@ -31,14 +31,3 @@ function useBulkActions(initial: string[] = []) {
   };
 }
 export default useBulkActions;
-
-export interface BulkActions {
-  add: (data: string) => void;
-  isSelected: (data: string) => boolean;
-  listElements: string[];
-  remove: (data: string) => void;
-  reset: () => void;
-  set: (data: string[]) => void;
-  toggle: (data: string) => void;
-  toggleAll: (itmes: Node[], selected: number) => void;
-}
