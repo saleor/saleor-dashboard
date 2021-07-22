@@ -1,3 +1,4 @@
+import { GiftCardExpiryType, TimePeriodType } from "@saleor/types/globalTypes";
 import React, { createContext } from "react";
 
 import { GiftCardDetails_giftCard } from "./types/GiftCardDetails";
@@ -22,6 +23,11 @@ const GiftCardDetailsProvider: React.FC<GiftCardDetailsProviderProps> = ({
     id: "1234",
     code: "8361",
     isActive: false,
+    expiryType: GiftCardExpiryType.EXPIRY_PERIOD,
+    expiryPeriod: {
+      type: TimePeriodType.MONTH,
+      amount: 12
+    },
     currentBalance: {
       amount: 10.67,
       currency: "USD"

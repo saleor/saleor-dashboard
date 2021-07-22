@@ -11,6 +11,8 @@ import {
 } from "../GiftCardUpdateFormProvider";
 import { giftCardUpdateDetailsExpirySectionMessages as messages } from "./messages";
 import { useGiftCardDetailsExpiryStyles as useStyles } from "./styles";
+import TimePeriodTextWithSelectField from "./TimePeriodTextWithSelectField";
+import TextWithSelectField from "./TimePeriodTextWithSelectField";
 
 const GiftCardUpdateDetailsExpirySection: React.FC = ({}) => {
   const intl = useIntl();
@@ -18,7 +20,7 @@ const GiftCardUpdateDetailsExpirySection: React.FC = ({}) => {
 
   const {
     change,
-    data: { expiryType }
+    data: { expiryType, expiryPeriodAmount, expiryPeriodType }
   } = useContext(GiftCardUpdateFormContext);
 
   const options = [
@@ -64,6 +66,12 @@ const GiftCardUpdateDetailsExpirySection: React.FC = ({}) => {
           />
         </>
       )}
+
+      {/* {expiryType === GiftCardExpiryType.EXPIRY_DATE && <TextWithSelectField />} */}
+      <TimePeriodTextWithSelectField
+        periodType={expiryPeriodType}
+        periodAmount={expiryPeriodAmount}
+      />
     </>
   );
 };
