@@ -1,7 +1,7 @@
 import { FilterReducerAction } from "@saleor/components/Filter/reducer";
 import { SingleAutocompleteChoiceType } from "@saleor/components/SingleAutocompleteSelectField";
+import { makeStyles } from "@saleor/macaw-ui";
 import { joinDateTime, splitDateTime } from "@saleor/misc";
-import { makeStyles } from "@saleor/theme";
 import React from "react";
 import { IntlShape } from "react-intl";
 
