@@ -7,6 +7,7 @@ import Skeleton from "@saleor/components/Skeleton";
 import TableCellHeader from "@saleor/components/TableCellHeader";
 import TableHead from "@saleor/components/TableHead";
 import TablePagination from "@saleor/components/TablePagination";
+import { makeStyles } from "@saleor/macaw-ui";
 import {
   maybe,
   renderCollection,
@@ -14,7 +15,6 @@ import {
   transformPaymentStatus
 } from "@saleor/misc";
 import { OrderDraftListUrlSortField } from "@saleor/orders/urls";
-import { makeStyles } from "@saleor/theme";
 import { ListActions, ListProps, SortPage } from "@saleor/types";
 import { getArrowDirection } from "@saleor/utils/sort";
 import React from "react";

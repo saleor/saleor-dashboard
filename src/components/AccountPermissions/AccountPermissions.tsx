@@ -11,8 +11,8 @@ import {
 import CardTitle from "@saleor/components/CardTitle";
 import Skeleton from "@saleor/components/Skeleton";
 import useUser from "@saleor/hooks/useUser";
+import { makeStyles } from "@saleor/macaw-ui";
 import { PermissionData } from "@saleor/permissionGroups/components/PermissionGroupDetailsPage/PermissionGroupDetailsPage";
-import { makeStyles } from "@saleor/theme";
 import React from "react";
 import { useIntl } from "react-intl";
 

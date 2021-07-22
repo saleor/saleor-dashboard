@@ -1,8 +1,8 @@
 import { TextField } from "@material-ui/core";
 import DebounceForm from "@saleor/components/DebounceForm";
 import Form from "@saleor/components/Form";
+import { makeStyles } from "@saleor/macaw-ui";
 import { OrderDetails_order_lines } from "@saleor/orders/types/OrderDetails";
-import { makeStyles } from "@saleor/theme";
 import createNonNegativeValueChangeHandler from "@saleor/utils/handlers/nonNegativeValueChangeHandler";
 import React from "react";
 
@@ -13,7 +13,7 @@ const useStyles = makeStyles(
         padding: "12px 12px 10px",
         textAlign: "right"
       },
-      width: 60
+      width: 100
     }
   }),
   { name: "TableLineForm" }

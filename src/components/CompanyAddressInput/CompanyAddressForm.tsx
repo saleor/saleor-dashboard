@@ -9,7 +9,7 @@ import { AccountErrorFragment } from "@saleor/fragments/types/AccountErrorFragme
 import { ShopErrorFragment } from "@saleor/fragments/types/ShopErrorFragment";
 import { WarehouseErrorFragment } from "@saleor/fragments/types/WarehouseErrorFragment";
 import { ChangeEvent } from "@saleor/hooks/useForm";
-import { makeStyles } from "@saleor/theme";
+import { makeStyles } from "@saleor/macaw-ui";
 import { getFormErrors } from "@saleor/utils/errors";
 import getAccountErrorMessage from "@saleor/utils/errors/account";
 import getShopErrorMessage from "@saleor/utils/errors/shop";

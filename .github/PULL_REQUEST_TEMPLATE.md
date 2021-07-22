@@ -21,7 +21,7 @@ greatly reduce the amount of work needed to review your work. -->
 
 ### Test environment config
 
-<!-- Do not remove this section. It is required to properly setup test instance.
-Modify API_URI if you want test instance to use custom backend. -->
+<!-- Do not remove this section. It is required to properly setup test deployment instance.
+Modify API_URI if you want test instance to use custom backend. CYPRESS_API_URI is optional, use when necessary. -->
 
-API_URI=https://qa.staging.saleor.cloud/graphql/
+API_URI=https://master.staging.saleor.cloud/graphql/

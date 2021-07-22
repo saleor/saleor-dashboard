@@ -1,5 +1,4 @@
 import { ChannelCollectionData } from "@saleor/channels/utils";
-import AppHeader from "@saleor/components/AppHeader";
 import { CardSpacer } from "@saleor/components/CardSpacer";
 import ChannelsAvailabilityCard from "@saleor/components/ChannelsAvailabilityCard";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
@@ -7,12 +6,13 @@ import { Container } from "@saleor/components/Container";
 import Grid from "@saleor/components/Grid";
 import Metadata from "@saleor/components/Metadata/Metadata";
 import PageHeader from "@saleor/components/PageHeader";
-import SaveButtonBar from "@saleor/components/SaveButtonBar";
+import Savebar from "@saleor/components/Savebar";
 import SeoForm from "@saleor/components/SeoForm";
 import { CollectionChannelListingErrorFragment } from "@saleor/fragments/types/CollectionChannelListingErrorFragment";
 import { CollectionErrorFragment } from "@saleor/fragments/types/CollectionErrorFragment";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import { sectionNames } from "@saleor/intl";
+import { Backlink } from "@saleor/macaw-ui";
 import { PermissionEnum } from "@saleor/types/globalTypes";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -75,9 +75,9 @@ const CollectionDetailsPage: React.FC<CollectionDetailsPageProps> = ({
     >
       {({ change, data, handlers, hasChanged, submit }) => (
         <Container>
-          <AppHeader onBack={onBack}>
+          <Backlink onClick={onBack}>
             {intl.formatMessage(sectionNames.collections)}
-          </AppHeader>
+          </Backlink>
           <PageHeader title={collection?.name} />
           <Grid>
             <div>
@@ -148,12 +148,12 @@ const CollectionDetailsPage: React.FC<CollectionDetailsPageProps> = ({
               </div>
             </div>
           </Grid>
-          <SaveButtonBar
+          <Savebar
             state={saveButtonBarState}
             disabled={disabled || (!hasChanged && !hasChannelChanged)}
             onCancel={onBack}
             onDelete={onCollectionRemove}
-            onSave={submit}
+            onSubmit={submit}
           />
         </Container>
       )}

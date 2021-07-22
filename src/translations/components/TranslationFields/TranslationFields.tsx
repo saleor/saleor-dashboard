@@ -14,7 +14,7 @@ import Hr from "@saleor/components/Hr";
 import Skeleton from "@saleor/components/Skeleton";
 import TablePagination from "@saleor/components/TablePagination";
 import { buttonMessages } from "@saleor/intl";
-import { makeStyles } from "@saleor/theme";
+import { makeStyles } from "@saleor/macaw-ui";
 import { ListProps } from "@saleor/types";
 import classNames from "classnames";
 import React from "react";

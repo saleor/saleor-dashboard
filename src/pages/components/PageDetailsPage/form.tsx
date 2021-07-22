@@ -224,7 +224,7 @@ function usePageForm(
       ? handleFormSubmit(getSubmitData(), handleSubmit, setChanged)
       : onSubmit(getSubmitData());
 
-  const valid = !!opts.selectedPageType;
+  const valid = pageExists || !!opts.selectedPageType;
 
   return {
     change: handleChange,

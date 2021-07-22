@@ -6,7 +6,7 @@ import {
 } from "@material-ui/core";
 import ArrowBack from "@material-ui/icons/ArrowBack";
 import { buttonMessages } from "@saleor/intl";
-import { makeStyles } from "@saleor/theme";
+import { makeStyles } from "@saleor/macaw-ui";
 import Downshift from "downshift";
 import React from "react";
 import { FormattedMessage } from "react-intl";
@@ -48,7 +48,7 @@ const useStyles = makeStyles(
       position: "relative"
     },
     menuBack: {
-      marginLeft: -theme.spacing(0.5),
+      marginLeft: theme.spacing(-0.5),
       marginRight: theme.spacing(1)
     },
     paper: {

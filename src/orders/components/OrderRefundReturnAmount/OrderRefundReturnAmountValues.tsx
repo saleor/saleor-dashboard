@@ -1,6 +1,6 @@
 import Money, { IMoney } from "@saleor/components/Money";
 import Skeleton from "@saleor/components/Skeleton";
-import { makeStyles } from "@saleor/theme";
+import { makeStyles } from "@saleor/macaw-ui";
 import classNames from "classnames";
 import reduce from "lodash/reduce";
 import React from "react";
