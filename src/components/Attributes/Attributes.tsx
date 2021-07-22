@@ -7,7 +7,7 @@ import { AttributeValueFragment } from "@saleor/fragments/types/AttributeValueFr
 import { PageErrorWithAttributesFragment } from "@saleor/fragments/types/PageErrorWithAttributesFragment";
 import { ProductErrorWithAttributesFragment } from "@saleor/fragments/types/ProductErrorWithAttributesFragment";
 import { FormsetAtomicData } from "@saleor/hooks/useFormset";
-import { makeStyles } from "@saleor/theme";
+import { makeStyles } from "@saleor/macaw-ui";
 import { FetchMoreProps } from "@saleor/types";
 import {
   AttributeEntityTypeEnum,
@@ -95,7 +95,7 @@ const useStyles = makeStyles(
     uploadFileContent: {
       color: theme.palette.primary.main,
       float: "right",
-      fontSize: "1rem"
+      fontSize: theme.typography.body1.fontSize
     }
   }),
   { name: "Attributes" }

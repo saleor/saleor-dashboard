@@ -1,6 +1,6 @@
 import { Typography } from "@material-ui/core";
 import { TypographyProps } from "@material-ui/core/Typography";
-import { makeStyles } from "@saleor/theme";
+import { makeStyles } from "@saleor/macaw-ui";
 import classNames from "classnames";
 import React from "react";
 

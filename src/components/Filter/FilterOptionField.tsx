@@ -1,5 +1,5 @@
 import { FormControlLabel, Radio } from "@material-ui/core";
-import { makeStyles } from "@saleor/theme";
+import { makeStyles } from "@saleor/macaw-ui";
 import { toggle } from "@saleor/utils/lists";
 import classNames from "classnames";
 import React from "react";
@@ -10,11 +10,11 @@ import { FilterBaseFieldProps } from "./types";
 const useStyles = makeStyles(
   theme => ({
     option: {
-      left: -theme.spacing(0.5),
+      left: theme.spacing(-0.5),
       position: "relative"
     },
     optionRadio: {
-      left: -theme.spacing(0.25)
+      left: theme.spacing(-0.25)
     },
     root: {}
   }),

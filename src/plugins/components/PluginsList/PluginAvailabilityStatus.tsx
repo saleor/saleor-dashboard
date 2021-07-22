@@ -57,13 +57,10 @@ const PluginAvailabilityStatus: React.FC<PluginAvailabilityStatusProps> = ({
         ) : (
           <div className={classes.horizontalContainer}>
             <Typography>
-              {intl.formatMessage(messages.channelTitle, {
+              {`${intl.formatMessage(messages.channelTitle, {
                 activeChannelsCount
-              })}
+              })}/${getAllChannelConfigsCount(channelConfigurations)}`}
             </Typography>
-            <Typography color="textSecondary">{`/${getAllChannelConfigsCount(
-              channelConfigurations
-            )}`}</Typography>
           </div>
         )
       }

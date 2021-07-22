@@ -1,5 +1,5 @@
 import { FormControlLabel, TextField, Typography } from "@material-ui/core";
-import { makeStyles } from "@saleor/theme";
+import { makeStyles } from "@saleor/macaw-ui";
 import { toggle } from "@saleor/utils/lists";
 import React from "react";
 import { FormattedMessage } from "react-intl";
@@ -38,7 +38,7 @@ const useStyles = makeStyles(
       marginTop: theme.spacing(1)
     },
     option: {
-      left: -theme.spacing(0.5),
+      left: theme.spacing(-0.5),
       position: "relative"
     },
     showMore: {

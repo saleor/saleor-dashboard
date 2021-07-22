@@ -11,14 +11,16 @@ export const urlList = {
   draftOrders: "orders/drafts/",
   homePage: "/",
   newPassword: "new-password/",
+  navigation: "navigation/",
   orders: "orders/",
   pages: "pages/",
   pageTypes: "page-types/",
   permissionsGroups: "permission-groups/",
   products: "products/",
   productTypes: "product-types/",
-  shippingMethods: "shipping/",
   sales: "discounts/sales/",
+  shippingMethods: "shipping/",
+  siteSettings: "site-settings/",
   staffMembers: "staff/",
   warehouses: "warehouses/",
   weightRete: "weight/",
@@ -49,6 +51,11 @@ export const warehouseDetailsUrl = warehouseId =>
 
 export const productTypeDetailsUrl = productTypeId =>
   `${urlList.productTypes}${productTypeId}`;
+
+export const menuDetailsUrl = menuId => `${urlList.navigation}${menuId}`;
+
+export const customerDetailsUrl = customerId =>
+  `${urlList.customers}${customerId}`;
 
 export const pageTypeDetailsUrl = pageTypeId =>
   `${urlList.pageTypes}${pageTypeId}`;

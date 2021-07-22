@@ -2,7 +2,7 @@ import { Button, IconButton, Typography } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
 import { FileFragment } from "@saleor/fragments/types/FileFragment";
 import { commonMessages } from "@saleor/intl";
-import { makeStyles } from "@saleor/theme";
+import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -45,7 +45,7 @@ const useStyles = makeStyles(
       alignItems: "center",
       color: theme.palette.primary.main,
       display: "flex",
-      fontSize: "1rem"
+      fontSize: theme.typography.body1.fontSize
     },
     uploadFileName: {
       minWidth: "6rem"

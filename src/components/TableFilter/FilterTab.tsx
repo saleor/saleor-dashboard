@@ -1,5 +1,5 @@
 import { Tab } from "@material-ui/core";
-import { makeStyles } from "@saleor/theme";
+import { makeStyles } from "@saleor/macaw-ui";
 import classNames from "classnames";
 import React from "react";
 
@@ -15,7 +15,7 @@ const useStyles = makeStyles(
         color: theme.typography.body1.color
       },
       color: theme.typography.caption.color,
-      fontSize: "1rem",
+      fontSize: theme.typography.body1.fontSize,
       fontWeight: 400
     },
     tabRoot: {

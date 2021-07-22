@@ -46,10 +46,6 @@ storiesOf("Generics / Global messages", module)
   .addDecorator(CardDecorator)
   .addDecorator(Decorator)
   .add("default", () => <Story {...props} />)
-  .add("with undo action", () => <Story onUndo={() => undefined} {...props} />)
-  .add("with expandText", () => (
-    <Story expandText={"Some expanded text"} {...props} />
-  ))
   .add("with action", () => (
     <Story
       actionBtn={{ action: () => undefined, label: "Action" }}
@@ -57,27 +53,11 @@ storiesOf("Generics / Global messages", module)
     />
   ))
   .add("with success status", () => (
-    <Story
-      {...props}
-      actionBtn={{ action: () => undefined, label: "Action" }}
-      status="success"
-      title="Success!"
-    />
+    <Story {...props} status="success" title="Success!" />
   ))
   .add("with error status", () => (
-    <Story
-      {...props}
-      actionBtn={{ action: () => undefined, label: "Action" }}
-      expandText={"Some expanded text"}
-      status="error"
-      title="Error"
-    />
+    <Story {...props} status="error" title="Error" />
   ))
   .add("with warning status", () => (
-    <Story
-      {...props}
-      expandText={"Some expanded text"}
-      status="warning"
-      title="Warning"
-    />
+    <Story {...props} status="warning" title="Warning" />
   ));

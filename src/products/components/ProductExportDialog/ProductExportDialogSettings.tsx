@@ -4,7 +4,7 @@ import RadioGroupField, {
 } from "@saleor/components/RadioGroupField";
 import { ExportErrorFragment } from "@saleor/fragments/types/ExportErrorFragment";
 import { ChangeEvent } from "@saleor/hooks/useForm";
-import { makeStyles } from "@saleor/theme";
+import { makeStyles } from "@saleor/macaw-ui";
 import {
   ExportProductsInput,
   ExportScope,
