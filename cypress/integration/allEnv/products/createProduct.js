@@ -15,6 +15,7 @@ import {
 } from "../../../steps/catalog/products/priceList";
 import { fillUpCommonFieldsForAllProductTypes } from "../../../steps/catalog/products/productSteps";
 import { selectChannelInDetailsPages } from "../../../steps/channelsSteps";
+import { confirmationMessageShouldDisappear } from "../../../steps/shared/confirmationMessages";
 import { urlList } from "../../../url/urlList";
 import {
   expectCorrectProductInformation,
@@ -74,8 +75,8 @@ describe("Create product", () => {
     );
     cy.addAliasToGraphRequest("ProductDetails");
     cy.get(BUTTON_SELECTORS.confirm).click();
+    confirmationMessageShouldDisappear();
     cy.wait("@ProductDetails");
-    cy.get(SHARED_ELEMENTS.confirmationMsg).should("be.visible");
     cy.get("@ProductDetails")
       .its("response.body")
       .then(resp => {
@@ -104,9 +105,9 @@ describe("Create product", () => {
     fillUpPriceList(prices.costPrice, priceInputLists.costPrice);
     cy.get(PRODUCT_DETAILS.skuInput).type(randomName);
     cy.addAliasToGraphRequest("ProductDetails");
+    confirmationMessageShouldDisappear();
     cy.get(BUTTON_SELECTORS.confirm).click();
     cy.wait("@ProductDetails");
-    cy.get(SHARED_ELEMENTS.confirmationMsg).should("be.visible");
     cy.get("@ProductDetails")
       .its("response.body")
       .then(resp => {

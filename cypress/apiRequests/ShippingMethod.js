@@ -138,6 +138,10 @@ export function getShippingZone(shippingZoneId) {
         name
         id
       }
+      shippingMethods{
+        id
+        name
+      }
     }
   } `;
   return cy

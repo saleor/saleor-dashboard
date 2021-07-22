@@ -9,6 +9,7 @@ import { BUTTON_SELECTORS } from "../../../elements/shared/button-selectors";
 import { SHARED_ELEMENTS } from "../../../elements/shared/sharedElements";
 import { metadataForms } from "../../../steps/catalog/metadataSteps";
 import { fillUpCommonFieldsForAllProductTypes } from "../../../steps/catalog/products/productSteps";
+import { confirmationMessageShouldDisappear } from "../../../steps/shared/confirmationMessages";
 import { productDetailsUrl } from "../../../url/urlList";
 import { getDefaultChannel } from "../../../utils/channelsUtils";
 import { deleteCollectionsStartsWith } from "../../../utils/collectionsUtils";
@@ -108,16 +109,13 @@ describe("Update products", () => {
         cy.addAliasToGraphRequest("UpdateMetadata");
         cy.addAliasToGraphRequest("ProductUpdate");
         cy.get(BUTTON_SELECTORS.confirm).click();
-        cy.get(SHARED_ELEMENTS.confirmationMsg)
-          .should("be.visible")
-          .then(() => {
-            cy.wait("@ProductUpdate");
-            cy.wait("@UpdateMetadata");
-            cy.wait("@UpdatePrivateMetadata");
-            productData.productOrganization.productType = name;
-            productData.attribute = attribute;
-            cy.loginUserViaRequest("token");
-          })
+        confirmationMessageShouldDisappear();
+        cy.wait("@ProductUpdate");
+        cy.wait("@UpdateMetadata");
+        cy.wait("@UpdatePrivateMetadata");
+        productData.productOrganization.productType = name;
+        productData.attribute = attribute;
+        cy.loginUserViaRequest("token")
           .then(() => {
             getProductDetails(product.id, defaultChannel.slug, "auth").its(
               "body.data.product"

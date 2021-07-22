@@ -3,7 +3,7 @@ import faker from "faker";
 import { customerRegistration } from "../../apiRequests/Customer";
 import { CUSTOMER_DETAILS } from "../../elements/customers/customer-details";
 import { BUTTON_SELECTORS } from "../../elements/shared/button-selectors";
-import { confirmationMessageShouldDisappear } from "../../steps/shared/confirmationMessage";
+import { confirmationMessageShouldDisappear } from "../../steps/shared/confirmationMessages";
 import { customerDetailsUrl } from "../../url/urlList";
 import { getDefaultChannel } from "../../utils/channelsUtils";
 

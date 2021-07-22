@@ -1,7 +1,7 @@
 import { VOUCHERS_SELECTORS } from "../../elements/discounts/vouchers";
 import { BUTTON_SELECTORS } from "../../elements/shared/button-selectors";
 import { selectChannelInDetailsPages } from "../channelsSteps";
-import { confirmationMessageShouldDisappear } from "../shared/confirmationMessage";
+import { confirmationMessageShouldDisappear } from "../shared/confirmationMessages";
 
 export const discountOptions = {
   PERCENTAGE: VOUCHERS_SELECTORS.percentageDiscountRadioButton,

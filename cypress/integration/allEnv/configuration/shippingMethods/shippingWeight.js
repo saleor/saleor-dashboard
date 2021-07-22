@@ -4,7 +4,8 @@ import faker from "faker";
 import { createCheckout } from "../../../../apiRequests/Checkout";
 import {
   createShippingRate as createShippingRateViaApi,
-  createShippingZone
+  createShippingZone,
+  getShippingZone
 } from "../../../../apiRequests/ShippingMethod";
 import { updateShopWeightUnit } from "../../../../apiRequests/shopSettings";
 import { createWarehouse } from "../../../../apiRequests/Warehouse";
@@ -101,15 +102,22 @@ describe("Shipping weight limits", () => {
         max: 11,
         min: 10
       }
-    });
-    createCheckout({
-      address: usAddress,
-      channelSlug: defaultChannel.slug,
-      email: "example@example.com",
-      variantsList
-    }).then(({ checkout }) => {
-      expect(isShippingAvailableInCheckout(checkout, rateName)).to.be.true;
-    });
+    })
+      .then(shippingZone => {
+        getShippingZone(shippingZone.id);
+      })
+      .then(({ shippingMethods }) => {
+        expect(shippingMethods[0].name).to.eq(rateName);
+        createCheckout({
+          address: usAddress,
+          channelSlug: defaultChannel.slug,
+          email: "example@example.com",
+          variantsList
+        });
+      })
+      .then(({ checkout }) => {
+        expect(isShippingAvailableInCheckout(checkout, rateName)).to.be.true;
+      });
   });
 
   it("should not be possible to buy product not in a shipping weight limits", () => {

@@ -6,7 +6,7 @@ export const SHARED_ELEMENTS = {
   table: 'table[class*="Table"]',
   tableRow: '[data-test="id"]',
   confirmationMsg: "[data-test='notification-success']",
-  notificationSuccess: '[data-test="notification-success"]',
+  notificationSuccess: '[data-test="notification"][data-test-type="success"]',
   dialog: '[role="dialog"]',
   searchInput: '[data-test-id="searchInput"]',
   selectOption: '[data-test="selectFieldOption"]',

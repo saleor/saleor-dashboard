@@ -4,6 +4,7 @@ import { SELECT_CHANNELS_TO_ASSIGN } from "../elements/channels/select-channels-
 import { ASSIGN_ELEMENTS_SELECTORS } from "../elements/shared/assign-elements-selectors";
 import { BUTTON_SELECTORS } from "../elements/shared/button-selectors";
 import { SHARED_ELEMENTS } from "../elements/shared/sharedElements";
+import { confirmationMessageShouldDisappear } from "./shared/confirmationMessages";
 
 export function createCollection(collectionName, isPublished, channel) {
   const publishedSelector = isPublished
@@ -29,7 +30,7 @@ export function createCollection(collectionName, isPublished, channel) {
     .click();
   cy.addAliasToGraphRequest("CreateCollection");
   cy.get(COLLECTION_SELECTORS.saveButton).click();
-  cy.get(SHARED_ELEMENTS.confirmationMsg).should("be.visible");
+  confirmationMessageShouldDisappear();
   return cy
     .wait("@CreateCollection")
     .its("response.body.data.collectionCreate.collection");
