@@ -23,7 +23,10 @@ import { defineMessages, useIntl } from "react-intl";
 
 import { maybe } from "../../../misc";
 import { OrderStatus } from "../../../types/globalTypes";
-import { OrderDetails_order } from "../../types/OrderDetails";
+import {
+  OrderDetails_order,
+  OrderDetails_shop
+} from "../../types/OrderDetails";
 import OrderCustomer from "../OrderCustomer";
 import OrderCustomerNote from "../OrderCustomerNote";
 import OrderDraftDetails from "../OrderDraftDetails/OrderDraftDetails";
@@ -54,6 +57,7 @@ const useStyles = makeStyles(
 
 export interface OrderDetailsPageProps extends UserPermissionProps {
   order: OrderDetails_order;
+  shop: OrderDetails_shop;
   shippingMethods?: Array<{
     id: string;
     name: string;
@@ -69,6 +73,7 @@ export interface OrderDetailsPageProps extends UserPermissionProps {
   onShippingMethodEdit?: () => void;
   onBack();
   onBillingAddressEdit();
+  onFulfillmentAccept(id: string);
   onFulfillmentCancel(id: string);
   onFulfillmentTrackingNumberUpdate(id: string);
   onOrderFulfill();
@@ -107,10 +112,12 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
   const {
     disabled,
     order,
+    shop,
     saveButtonBarState,
     userPermissions,
     onBack,
     onBillingAddressEdit,
+    onFulfillmentAccept,
     onFulfillmentCancel,
     onFulfillmentTrackingNumberUpdate,
     onNoteAdd,
@@ -249,7 +256,8 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
                   <React.Fragment key={fulfillment.id}>
                     <OrderFulfilledProductsCard
                       fulfillment={fulfillment}
-                      orderNumber={order.number}
+                      fulfillmentAllowUnpaid={shop?.fulfillmentAllowUnpaid}
+                      order={order}
                       onOrderFulfillmentCancel={() =>
                         onFulfillmentCancel(fulfillment.id)
                       }
@@ -257,6 +265,9 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
                         onFulfillmentTrackingNumberUpdate(fulfillment.id)
                       }
                       onRefund={onPaymentRefund}
+                      onOrderFulfillmentAccept={() =>
+                        onFulfillmentAccept(fulfillment.id)
+                      }
                     />
                   </React.Fragment>
                 ))}

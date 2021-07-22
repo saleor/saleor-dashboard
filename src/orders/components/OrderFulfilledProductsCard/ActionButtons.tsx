@@ -1,25 +1,35 @@
-import { Button, CardActions } from "@material-ui/core";
+import { Button, CardActions, Typography } from "@material-ui/core";
+import { buttonMessages } from "@saleor/intl";
 import { FulfillmentStatus } from "@saleor/types/globalTypes";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
+import { actionButtonsMessages } from "./messages";
+
 interface AcionButtonsProps {
   status: FulfillmentStatus;
   trackingNumber?: string;
+  orderIsPaid?: boolean;
+  fulfillmentAllowUnpaid: boolean;
   onTrackingCodeAdd();
   onRefund();
+  onApprove();
 }
 
 const statusesToShow = [
   FulfillmentStatus.FULFILLED,
-  FulfillmentStatus.RETURNED
+  FulfillmentStatus.RETURNED,
+  FulfillmentStatus.WAITING_FOR_ACCEPTANCE
 ];
 
 const ActionButtons: React.FC<AcionButtonsProps> = ({
   status,
-  onTrackingCodeAdd,
   trackingNumber,
-  onRefund
+  orderIsPaid,
+  fulfillmentAllowUnpaid,
+  onTrackingCodeAdd,
+  onRefund,
+  onApprove
 }) => {
   const hasTrackingNumber = !!trackingNumber;
 
@@ -27,14 +37,30 @@ const ActionButtons: React.FC<AcionButtonsProps> = ({
     return null;
   }
 
+  if (status === FulfillmentStatus.WAITING_FOR_ACCEPTANCE) {
+    const cannotFulfill = !orderIsPaid && !fulfillmentAllowUnpaid;
+
+    return (
+      <CardActions>
+        <Button color="primary" onClick={onApprove} disabled={cannotFulfill}>
+          <FormattedMessage {...buttonMessages.approve} />
+        </Button>
+        {cannotFulfill && (
+          <Typography color="error" variant="caption">
+            <FormattedMessage
+              {...actionButtonsMessages.cannotFullfillWarning}
+            />
+          </Typography>
+        )}
+      </CardActions>
+    );
+  }
+
   if (status === FulfillmentStatus.RETURNED) {
     return (
       <CardActions>
         <Button color="primary" onClick={onRefund}>
-          <FormattedMessage
-            defaultMessage="Refund"
-            description="refund button"
-          />
+          <FormattedMessage {...actionButtonsMessages.refund} />
         </Button>
       </CardActions>
     );
@@ -43,19 +69,13 @@ const ActionButtons: React.FC<AcionButtonsProps> = ({
   return hasTrackingNumber ? (
     <CardActions>
       <Button color="primary" onClick={onTrackingCodeAdd}>
-        <FormattedMessage
-          defaultMessage="Edit tracking"
-          description="edit tracking button"
-        />
+        <FormattedMessage {...actionButtonsMessages.editTracking} />
       </Button>
     </CardActions>
   ) : (
     <CardActions>
       <Button color="primary" onClick={onTrackingCodeAdd}>
-        <FormattedMessage
-          defaultMessage="Add tracking"
-          description="add tracking button"
-        />
+        <FormattedMessage {...actionButtonsMessages.addTracking} />
       </Button>
     </CardActions>
   );

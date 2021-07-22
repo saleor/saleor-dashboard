@@ -1,6 +1,7 @@
 import messages from "@saleor/containers/BackgroundTasks/messages";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
+import { OrderFulfillmentAccept } from "@saleor/orders/types/OrderFulfillmentAccept";
 import getOrderErrorMessage from "@saleor/utils/errors/order";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import React from "react";
@@ -32,6 +33,7 @@ interface OrderDetailsMessages {
     handleDraftUpdate: (data: OrderDraftUpdate) => void;
     handleNoteAdd: (data: OrderAddNote) => void;
     handleOrderCancel: (data: OrderCancel) => void;
+    handleOrderFulfillmentAccept: (data: OrderFulfillmentAccept) => void;
     handleOrderFulfillmentCancel: (data: OrderFulfillmentCancel) => void;
     handleOrderFulfillmentUpdate: (
       data: OrderFulfillmentUpdateTracking
@@ -215,6 +217,18 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
       );
     }
   };
+  const handleOrderFulfillmentAccept = (data: OrderFulfillmentAccept) => {
+    const errs = data.orderFulfillmentAccept?.errors;
+    if (errs.length === 0) {
+      pushMessage({
+        status: "success",
+        text: intl.formatMessage({
+          defaultMessage: "Fulfillment successfully accepted"
+        })
+      });
+      closeModal();
+    }
+  };
   const handleOrderFulfillmentCancel = (data: OrderFulfillmentCancel) => {
     const errs = data.orderFulfillmentCancel?.errors;
     if (errs.length === 0) {
@@ -299,6 +313,7 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
     handleInvoiceSend,
     handleNoteAdd,
     handleOrderCancel,
+    handleOrderFulfillmentAccept,
     handleOrderFulfillmentCancel,
     handleOrderFulfillmentUpdate,
     handleOrderLineDelete,

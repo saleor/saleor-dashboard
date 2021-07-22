@@ -4,10 +4,11 @@ import { makeStyles } from "@saleor/theme";
 import { FulfillmentStatus } from "@saleor/types/globalTypes";
 import classNames from "classnames";
 import React from "react";
-import { defineMessages, useIntl } from "react-intl";
+import { useIntl } from "react-intl";
 import { FormattedMessage } from "react-intl";
 
 import { OrderDetails_order_fulfillments } from "../../types/OrderDetails";
+import { extraInfoMessages } from "./messages";
 
 const useStyles = makeStyles(
   theme => ({
@@ -23,21 +24,6 @@ const useStyles = makeStyles(
   }),
   { name: "ExtraInfoLines" }
 );
-
-const messages = defineMessages({
-  fulfilled: {
-    defaultMessage: "Fulfilled from: ",
-    description: "fulfillment group"
-  },
-  restocked: {
-    defaultMessage: "Restocked from: ",
-    description: "restocked group"
-  },
-  tracking: {
-    defaultMessage: "Tracking Number: {trackingNumber}",
-    description: "tracking number"
-  }
-});
 
 const NUMBER_OF_COLUMNS = 5;
 
@@ -63,8 +49,8 @@ const ExtraInfoLines: React.FC<ExtraInfoLinesProps> = ({ fulfillment }) => {
             <>
               {intl.formatMessage(
                 status === FulfillmentStatus.RETURNED
-                  ? messages.restocked
-                  : messages.fulfilled
+                  ? extraInfoMessages.restocked
+                  : extraInfoMessages.fulfilled
               )}
               <Typography
                 className={classNames(classes.infoLabel, {
@@ -81,7 +67,7 @@ const ExtraInfoLines: React.FC<ExtraInfoLinesProps> = ({ fulfillment }) => {
         <Typography color="textSecondary" variant="body2">
           {trackingNumber && (
             <FormattedMessage
-              defaultMessage="Tracking Number: {trackingNumber}"
+              {...extraInfoMessages.tracking}
               values={{
                 trackingNumber: (
                   <Typography

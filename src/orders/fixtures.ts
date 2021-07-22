@@ -13,11 +13,26 @@ import {
   OrderEventsEmailsEnum,
   OrderEventsEnum,
   OrderStatus,
-  PaymentChargeStatusEnum
+  PaymentChargeStatusEnum,
+  WeightUnitsEnum
 } from "../types/globalTypes";
-import { OrderDetails_order } from "./types/OrderDetails";
+import { OrderDetails_order, OrderDetails_shop } from "./types/OrderDetails";
 import { OrderList_orders_edges_node } from "./types/OrderList";
 import { SearchOrderVariant_search_edges_node } from "./types/SearchOrderVariant";
+
+export const countries: ShopInfo_shop_countries[] = [
+  { __typename: "CountryDisplay", code: "AF", country: "Afghanistan" },
+  { __typename: "CountryDisplay", code: "AX", country: "Åland Islands" },
+  { __typename: "CountryDisplay", code: "AL", country: "Albania" },
+  { __typename: "CountryDisplay", code: "DZ", country: "Algeria" },
+  { __typename: "CountryDisplay", code: "AS", country: "American Samoa" }
+];
+export const shop: OrderDetails_shop = {
+  __typename: "Shop",
+  countries,
+  defaultWeightUnit: WeightUnitsEnum.KG,
+  fulfillmentAllowUnpaid: true
+};
 
 export const clients: SearchCustomers_search_edges_node[] = [
   {
@@ -1588,13 +1603,6 @@ export const variants = [
   { id: "p7", name: "Product 5: variant 2", sku: "14345", stockQuantity: 11 }
 ];
 export const prefixes = ["01", "02", "41", "49"];
-export const countries: ShopInfo_shop_countries[] = [
-  { __typename: "CountryDisplay", code: "AF", country: "Afghanistan" },
-  { __typename: "CountryDisplay", code: "AX", country: "Åland Islands" },
-  { __typename: "CountryDisplay", code: "AL", country: "Albania" },
-  { __typename: "CountryDisplay", code: "DZ", country: "Algeria" },
-  { __typename: "CountryDisplay", code: "AS", country: "American Samoa" }
-];
 export const shippingMethods = [
   { country: "whole world", id: "s1", name: "DHL", price: {} },
   { country: "Afghanistan", id: "s2", name: "UPS" }

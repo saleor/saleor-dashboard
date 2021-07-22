@@ -54,6 +54,10 @@ const messages = defineMessages({
     defaultMessage: "Returned ({quantity})",
     description: "refunded fulfillment, section header"
   },
+  waitingForAcceptance: {
+    defaultMessage: "Waiting for approval ({quantity})",
+    description: "unapproved fulfillment, section header"
+  },
   unfulfilled: {
     defaultMessage: "Unfulfilled",
     description: "section header"
@@ -92,6 +96,8 @@ const selectStatus = (status: CardTitleStatus) => {
       return StatusType.NEUTRAL;
     case FulfillmentStatus.REFUNDED_AND_RETURNED:
       return StatusType.NEUTRAL;
+    case FulfillmentStatus.WAITING_FOR_ACCEPTANCE:
+      return StatusType.ALERT;
     case FulfillmentStatus.CANCELED:
       return StatusType.ERROR;
     default:

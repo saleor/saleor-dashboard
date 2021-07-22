@@ -513,6 +513,7 @@ export interface OrderDetails_shop {
   __typename: "Shop";
   countries: OrderDetails_shop_countries[];
   defaultWeightUnit: WeightUnitsEnum | null;
+  fulfillmentAllowUnpaid: boolean;
 }
 
 export interface OrderDetails {

@@ -121,6 +121,9 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
                 onOrderLineDelete={orderMessages.handleOrderLineDelete}
                 onOrderLinesAdd={orderMessages.handleOrderLinesAdd}
                 onOrderLineUpdate={orderMessages.handleOrderLineUpdate}
+                onOrderFulfillmentAccept={
+                  orderMessages.handleOrderFulfillmentAccept
+                }
                 onOrderFulfillmentCancel={
                   orderMessages.handleOrderFulfillmentCancel
                 }
@@ -158,6 +161,7 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
                   orderVoid,
                   orderShippingMethodUpdate,
                   orderUpdate,
+                  orderFulfillmentAccept,
                   orderFulfillmentCancel,
                   orderFulfillmentUpdateTracking,
                   orderDraftCancel,
@@ -179,6 +183,7 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
                         orderPaymentMarkAsPaid={orderPaymentMarkAsPaid}
                         orderVoid={orderVoid}
                         orderPaymentCapture={orderPaymentCapture}
+                        orderFulfillmentAccept={orderFulfillmentAccept}
                         orderFulfillmentCancel={orderFulfillmentCancel}
                         orderFulfillmentUpdateTracking={
                           orderFulfillmentUpdateTracking
@@ -224,6 +229,7 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
                         orderPaymentMarkAsPaid={orderPaymentMarkAsPaid}
                         orderVoid={orderVoid}
                         orderPaymentCapture={orderPaymentCapture}
+                        orderFulfillmentAccept={orderFulfillmentAccept}
                         orderFulfillmentCancel={orderFulfillmentCancel}
                         orderFulfillmentUpdateTracking={
                           orderFulfillmentUpdateTracking

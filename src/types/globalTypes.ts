@@ -464,6 +464,7 @@ export enum FulfillmentStatus {
   REFUNDED_AND_RETURNED = "REFUNDED_AND_RETURNED",
   REPLACED = "REPLACED",
   RETURNED = "RETURNED",
+  WAITING_FOR_ACCEPTANCE = "WAITING_FOR_ACCEPTANCE",
 }
 
 export enum InvoiceErrorCode {
@@ -1339,6 +1340,10 @@ export interface ExportProductsInput {
   ids?: string[] | null;
   exportInfo?: ExportInfoInput | null;
   fileType: FileTypesEnum;
+}
+
+export interface FulfillmentAcceptInput {
+  notifyCustomer: boolean;
 }
 
 export interface FulfillmentCancelInput {

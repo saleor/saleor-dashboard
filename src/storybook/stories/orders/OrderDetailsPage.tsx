@@ -6,7 +6,10 @@ import React from "react";
 import OrderDetailsPage, {
   OrderDetailsPageProps
 } from "../../../orders/components/OrderDetailsPage";
-import { order as orderFixture } from "../../../orders/fixtures";
+import {
+  order as orderFixture,
+  shop as shopFixture
+} from "../../../orders/fixtures";
 import {
   FulfillmentStatus,
   OrderStatus,
@@ -20,6 +23,7 @@ const props: Omit<OrderDetailsPageProps, "classes"> = {
   disabled: false,
   onBack: () => undefined,
   onBillingAddressEdit: undefined,
+  onFulfillmentAccept: () => undefined,
   onFulfillmentCancel: () => undefined,
   onFulfillmentTrackingNumberUpdate: () => undefined,
   onInvoiceClick: () => undefined,
@@ -38,6 +42,7 @@ const props: Omit<OrderDetailsPageProps, "classes"> = {
   onShippingAddressEdit: undefined,
   onSubmit: () => undefined,
   order,
+  shop: shopFixture,
   saveButtonBarState: "default",
   userPermissions: adminUserPermissions
 };

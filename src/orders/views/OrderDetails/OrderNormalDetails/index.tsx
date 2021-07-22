@@ -2,7 +2,13 @@ import { WindowTitle } from "@saleor/components/WindowTitle";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useUser from "@saleor/hooks/useUser";
 import OrderCannotCancelOrderDialog from "@saleor/orders/components/OrderCannotCancelOrderDialog";
+import OrderFulfillmentAcceptDialog from "@saleor/orders/components/OrderFulfillmentAcceptDialog";
 import OrderInvoiceEmailSendDialog from "@saleor/orders/components/OrderInvoiceEmailSendDialog";
+import {
+  OrderFulfillmentAccept,
+  OrderFulfillmentAcceptVariables
+} from "@saleor/orders/types/OrderFulfillmentAccept";
+import { PartialMutationProviderOutput } from "@saleor/types";
 import { mapEdgesToItems } from "@saleor/utils/maps";
 import { useWarehouseList } from "@saleor/warehouses/queries";
 import React from "react";
@@ -39,6 +45,10 @@ interface OrderNormalDetailsProps {
   orderPaymentMarkAsPaid: any;
   orderVoid: any;
   orderPaymentCapture: any;
+  orderFulfillmentAccept: PartialMutationProviderOutput<
+    OrderFulfillmentAccept,
+    OrderFulfillmentAcceptVariables
+  >;
   orderFulfillmentCancel: any;
   orderFulfillmentUpdateTracking: any;
   orderInvoiceSend: any;
@@ -59,6 +69,7 @@ export const OrderNormalDetails: React.FC<OrderNormalDetailsProps> = ({
   orderPaymentMarkAsPaid,
   orderVoid,
   orderPaymentCapture,
+  orderFulfillmentAccept,
   orderFulfillmentCancel,
   orderFulfillmentUpdateTracking,
   orderInvoiceSend,
@@ -68,6 +79,7 @@ export const OrderNormalDetails: React.FC<OrderNormalDetailsProps> = ({
   closeModal
 }) => {
   const order = data?.order;
+  const shop = data?.shop;
   const navigate = useNavigator();
   const { user } = useUser();
 
@@ -108,6 +120,7 @@ export const OrderNormalDetails: React.FC<OrderNormalDetailsProps> = ({
         }
         onBack={handleBack}
         order={order}
+        shop={shop}
         saveButtonBarState={getMutationState(
           updateMetadataOpts.called || updatePrivateMetadataOpts.called,
           updateMetadataOpts.loading || updatePrivateMetadataOpts.loading,
@@ -124,6 +137,14 @@ export const OrderNormalDetails: React.FC<OrderNormalDetailsProps> = ({
         userPermissions={user?.userPermissions || []}
         onOrderCancel={() => openModal("cancel")}
         onOrderFulfill={() => navigate(orderFulfillUrl(id))}
+        onFulfillmentAccept={fulfillmentId =>
+          navigate(
+            orderUrl(id, {
+              action: "accept-fulfillment",
+              id: fulfillmentId
+            })
+          )
+        }
         onFulfillmentCancel={fulfillmentId =>
           navigate(
             orderUrl(id, {
@@ -218,6 +239,22 @@ export const OrderNormalDetails: React.FC<OrderNormalDetailsProps> = ({
             id
           })
         }
+      />
+      <OrderFulfillmentAcceptDialog
+        confirmButtonState={orderFulfillmentAccept.opts.status}
+        errors={
+          orderFulfillmentAccept.opts.data?.orderFulfillmentAccept.errors || []
+        }
+        open={params.action === "accept-fulfillment"}
+        onConfirm={({ notifyCustomer }) =>
+          orderFulfillmentAccept.mutate({
+            id: params.id,
+            input: {
+              notifyCustomer
+            }
+          })
+        }
+        onClose={closeModal}
       />
       <OrderFulfillmentCancelDialog
         confirmButtonState={orderFulfillmentCancel.opts.status}
