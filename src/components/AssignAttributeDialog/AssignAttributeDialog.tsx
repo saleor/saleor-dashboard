@@ -50,8 +50,15 @@ const useStyles = makeStyles(
       height: theme.spacing(3),
       justifyContent: "center"
     },
+    searchArea: {
+      marginBottom: theme.spacing(3),
+      overflowY: "hidden",
+      paddingBottom: theme.spacing(6)
+    },
     scrollArea: {
-      overflowY: "scroll"
+      overflowY: "scroll",
+      paddingTop: 0,
+      marginBottom: theme.spacing(3)
     },
     wideCell: {
       width: "100%"
@@ -110,7 +117,7 @@ const AssignAttributeDialog: React.FC<AssignAttributeDialogProps> = ({
           description="dialog header"
         />
       </DialogTitle>
-      <DialogContent>
+      <DialogContent className={classes.searchArea}>
         <TextField
           name="query"
           value={query}

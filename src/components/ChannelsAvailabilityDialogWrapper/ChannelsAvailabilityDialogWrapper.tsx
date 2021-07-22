@@ -35,7 +35,7 @@ export const useStyles = makeStyles(
       maxHeight: 400,
       overflowY: "scroll",
       overflowX: "hidden",
-      marginBottom: 20
+      marginBottom: theme.spacing(3)
     },
     text: {
       marginBottom: 5

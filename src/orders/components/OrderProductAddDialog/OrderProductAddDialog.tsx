@@ -51,7 +51,8 @@ const useStyles = makeStyles(
     },
     content: {
       overflowY: "scroll",
-      marginBottom: 24
+      paddingTop: 0,
+      marginBottom: theme.spacing(3)
     },
     grayText: {
       color: theme.palette.text.disabled
@@ -68,8 +69,8 @@ const useStyles = makeStyles(
     },
     topArea: {
       overflowY: "hidden",
-      paddingBottom: 50,
-      margin: `0px 24px 24px 24px`
+      paddingBottom: theme.spacing(6),
+      margin: theme.spacing(0, 3, 3, 3)
     },
     productCheckboxCell: {
       "&:first-child": {

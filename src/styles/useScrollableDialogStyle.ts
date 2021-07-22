@@ -15,12 +15,13 @@ const useScrollableDialogStyle = makeStyles(
     },
     topArea: {
       overflowY: "hidden",
-      marginBottom: 24
+      marginBottom: theme.spacing(3)
     },
     scrollArea: {
       overflowY: "scroll",
       paddingTop: 0,
-      height: "inherit"
+      height: "inherit",
+      marginBottom: theme.spacing(3)
     }
   }),
   {
