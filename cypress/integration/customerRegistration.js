@@ -61,7 +61,9 @@ describe("Tests for customer registration", () => {
     it("should activate customer from dashboard", () => {
       customerRegistration({ email, channel: defaultChannel.slug })
         .then(({ user }) => {
-          cy.visit(customerDetailsUrl(user.id))
+          cy.clearSessionData()
+            .loginUserViaRequest()
+            .visit(customerDetailsUrl(user.id))
             .get(CUSTOMER_DETAILS.isActiveCheckbox)
             .click()
             .get(BUTTON_SELECTORS.confirm)
