@@ -1,3 +1,4 @@
+import { ThemeType } from "@saleor/macaw-ui";
 import moment from "moment-timezone";
 import { MutationFunction, MutationResult } from "react-apollo";
 import { defineMessages, IntlShape } from "react-intl";
@@ -446,6 +447,8 @@ export const getDatePeriod = (days: number): DateRangeInput => {
     lte: end.format(format)
   };
 };
+
+export const isDarkTheme = (themeType: ThemeType) => themeType === "dark";
 
 export const transformAddressToAddressInput = (data?: AddressType) => ({
   city: data?.city || "",

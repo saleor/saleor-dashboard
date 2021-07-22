@@ -2,7 +2,8 @@ import { Typography } from "@material-ui/core";
 import HorizontalSpacer from "@saleor/apps/components/HorizontalSpacer";
 import CardSpacer from "@saleor/components/CardSpacer";
 import Money from "@saleor/components/Money";
-import useTheme from "@saleor/hooks/useTheme";
+import { useTheme } from "@saleor/macaw-ui";
+import { isDarkTheme } from "@saleor/misc";
 import classNames from "classnames";
 import React, { useContext } from "react";
 import { useIntl } from "react-intl";
@@ -12,7 +13,7 @@ import { giftCardUpdateDetailsCardMessages as messages } from "./messages";
 import { useGiftCardDetailsBalanceStyles as useStyles } from "./styles";
 
 const GiftCardUpdateDetailsBalanceSection: React.FC = () => {
-  const { isDark } = useTheme();
+  const { themeType } = useTheme();
   const classes = useStyles({});
   const intl = useIntl();
 
@@ -43,7 +44,7 @@ const GiftCardUpdateDetailsBalanceSection: React.FC = () => {
         <div
           style={{ width: `${progressBarWidth}%` }}
           className={classNames(classes.balanceBarProgress, {
-            [classes.balanceBarProgressDark]: isDark
+            [classes.balanceBarProgressDark]: isDarkTheme(themeType)
           })}
         />
       </div>
