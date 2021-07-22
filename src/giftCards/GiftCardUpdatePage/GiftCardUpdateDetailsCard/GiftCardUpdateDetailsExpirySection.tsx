@@ -12,7 +12,6 @@ import {
 import { giftCardUpdateDetailsExpirySectionMessages as messages } from "./messages";
 import { useGiftCardDetailsExpiryStyles as useStyles } from "./styles";
 import TimePeriodTextWithSelectField from "./TimePeriodTextWithSelectField";
-import TextWithSelectField from "./TimePeriodTextWithSelectField";
 
 const GiftCardUpdateDetailsExpirySection: React.FC = ({}) => {
   const intl = useIntl();
@@ -20,6 +19,7 @@ const GiftCardUpdateDetailsExpirySection: React.FC = ({}) => {
 
   const {
     change,
+    setSelectedTimePeriodType,
     data: { expiryType, expiryPeriodAmount, expiryPeriodType }
   } = useContext(GiftCardUpdateFormContext);
 
@@ -50,28 +50,31 @@ const GiftCardUpdateDetailsExpirySection: React.FC = ({}) => {
         name={"expiryType" as keyof GiftCardUpdateFormData}
         value={expiryType}
       />
+      <VerticalSpacer />
 
       {expiryType === GiftCardExpiryType.EXPIRY_DATE && (
-        <>
-          <VerticalSpacer />
-          <TextField
-            onChange={change}
-            name={"expiryDate" as keyof GiftCardUpdateFormData}
-            className={classes.dateField}
-            label={intl.formatMessage(messages.expiryDateLabel)}
-            InputLabelProps={{
-              shrink: true
-            }}
-            type="date"
-          />
-        </>
+        <TextField
+          onChange={change}
+          name={"expiryDate" as keyof GiftCardUpdateFormData}
+          className={classes.dateField}
+          label={intl.formatMessage(messages.expiryDateLabel)}
+          InputLabelProps={{
+            shrink: true
+          }}
+          type="date"
+        />
       )}
 
-      {/* {expiryType === GiftCardExpiryType.EXPIRY_DATE && <TextWithSelectField />} */}
-      <TimePeriodTextWithSelectField
-        periodType={expiryPeriodType}
-        periodAmount={expiryPeriodAmount}
-      />
+      {expiryType === GiftCardExpiryType.EXPIRY_PERIOD && (
+        <TimePeriodTextWithSelectField
+          periodType={expiryPeriodType}
+          periodAmount={expiryPeriodAmount}
+          change={change}
+          setSelectedTimePeriod={setSelectedTimePeriodType}
+          textFieldName={"expiryPeriodAmount" as keyof GiftCardUpdateFormData}
+          selectFieldName={"expiryPeriodType" as keyof GiftCardUpdateFormData}
+        />
+      )}
     </>
   );
 };
