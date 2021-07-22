@@ -28,7 +28,6 @@ import useNotifier from "@saleor/hooks/useNotifier";
 import useOnSetDefaultVariant from "@saleor/hooks/useOnSetDefaultVariant";
 import useShop from "@saleor/hooks/useShop";
 import { commonMessages, errorMessages } from "@saleor/intl";
-import { commonMessages } from "@saleor/intl";
 import ProductVariantCreateDialog from "@saleor/products/components/ProductVariantCreateDialog";
 import {
   useProductChannelListingUpdate,
