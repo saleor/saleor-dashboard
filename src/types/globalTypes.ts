@@ -962,6 +962,7 @@ export enum StockErrorCode {
 }
 
 export enum TimePeriodType {
+  DAY = "DAY",
   MONTH = "MONTH",
   YEAR = "YEAR",
 }

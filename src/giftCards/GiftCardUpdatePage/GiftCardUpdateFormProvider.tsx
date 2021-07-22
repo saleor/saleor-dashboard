@@ -1,5 +1,6 @@
 import Form from "@saleor/components/Form";
 import { UseFormResult } from "@saleor/hooks/useForm";
+import { TimePeriodType } from "@saleor/types/globalTypes";
 import React, { createContext, useContext, useState } from "react";
 
 import { GiftCardDetailsContext } from "./GiftCardDetailsProvider";
@@ -9,10 +10,11 @@ interface GiftCardUpdateFormProviderProps {
   children: React.ReactNode;
 }
 
-export type GiftCardUpdateFormData = Pick<
-  GiftCardDetails_giftCard,
-  "tag" | "expiryDate" | "expiryType" | "expiryPeriod"
->;
+export interface GiftCardUpdateFormData
+  extends Pick<GiftCardDetails_giftCard, "tag" | "expiryDate" | "expiryType"> {
+  expiryPeriodType: TimePeriodType;
+  expiryPeriodAmount: number;
+}
 
 export interface GiftCardUpdateFormConsumerProps
   extends UseFormResult<GiftCardUpdateFormData> {
@@ -33,7 +35,13 @@ const GiftCardUpdateFormProvider: React.FC<GiftCardUpdateFormProviderProps> = ({
 
   const [selectedTag, setSelectedTag] = useState(tag);
 
-  const initialData = { tag, expiryDate, expiryPeriod, expiryType };
+  const initialData: GiftCardUpdateFormData = {
+    tag,
+    expiryDate,
+    expiryType,
+    expiryPeriodType: expiryPeriod.type,
+    expiryPeriodAmount: expiryPeriod.amount
+  };
 
   return (
     <Form initial={initialData}>
