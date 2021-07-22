@@ -2,6 +2,7 @@ import DeleteFilterTabDialog from "@saleor/components/DeleteFilterTabDialog";
 import SaveFilterTabDialog, {
   SaveFilterTabDialogFormData
 } from "@saleor/components/SaveFilterTabDialog";
+import { DEFAULT_INITIAL_PAGINATION_DATA } from "@saleor/config";
 import { configurationMenuUrl } from "@saleor/configuration";
 import { useChannelsSearchWithLoadMore } from "@saleor/hooks/useChannelsSearchWithLoadMore";
 import useListSettings from "@saleor/hooks/useListSettings";
@@ -56,7 +57,7 @@ export const PluginsList: React.FC<PluginsListProps> = ({ params }) => {
       filter: getFilterVariables(params),
       sort: getSortQueryVariables(params)
     }),
-    [params]
+    [params, settings.rowNumber]
   );
   const { data, loading } = usePluginsListQuery({
     displayLoader: true,
@@ -117,6 +118,18 @@ export const PluginsList: React.FC<PluginsListProps> = ({ params }) => {
   const channelsSearchWithLoadMoreProps = useChannelsSearchWithLoadMore();
 
   const filterOpts = getFilterOpts(params, channelsSearchWithLoadMoreProps);
+
+  React.useEffect(
+    () =>
+      navigate(
+        pluginListUrl({
+          ...params,
+          ...DEFAULT_INITIAL_PAGINATION_DATA
+        }),
+        true
+      ),
+    [settings.rowNumber]
+  );
 
   return (
     <>

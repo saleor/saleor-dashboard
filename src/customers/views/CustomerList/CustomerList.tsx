@@ -5,6 +5,7 @@ import DeleteFilterTabDialog from "@saleor/components/DeleteFilterTabDialog";
 import SaveFilterTabDialog, {
   SaveFilterTabDialogFormData
 } from "@saleor/components/SaveFilterTabDialog";
+import { DEFAULT_INITIAL_PAGINATION_DATA } from "@saleor/config";
 import useBulkActions from "@saleor/hooks/useBulkActions";
 import useListSettings from "@saleor/hooks/useListSettings";
 import useNavigator from "@saleor/hooks/useNavigator";
@@ -69,7 +70,7 @@ export const CustomerList: React.FC<CustomerListProps> = ({ params }) => {
       filter: getFilterVariables(params),
       sort: getSortQueryVariables(params)
     }),
-    [params]
+    [params, settings.rowNumber]
   );
   const { data, loading, refetch } = useCustomerListQuery({
     displayLoader: true,
@@ -142,6 +143,18 @@ export const CustomerList: React.FC<CustomerListProps> = ({ params }) => {
   };
 
   const handleSort = createSortHandler(navigate, customerListUrl, params);
+
+  React.useEffect(
+    () =>
+      navigate(
+        customerListUrl({
+          ...params,
+          ...DEFAULT_INITIAL_PAGINATION_DATA
+        }),
+        true
+      ),
+    [settings.rowNumber]
+  );
 
   return (
     <TypedBulkRemoveCustomers onCompleted={handleBulkCustomerDelete}>

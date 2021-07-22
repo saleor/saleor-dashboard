@@ -1,6 +1,7 @@
 import { Button, DialogContentText, IconButton } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
 import ActionDialog from "@saleor/components/ActionDialog";
+import { DEFAULT_INITIAL_PAGINATION_DATA } from "@saleor/config";
 import { configurationMenuUrl } from "@saleor/configuration";
 import useBulkActions from "@saleor/hooks/useBulkActions";
 import useListSettings from "@saleor/hooks/useListSettings";
@@ -54,7 +55,7 @@ export const PageList: React.FC<PageListProps> = ({ params }) => {
       ...paginationState,
       sort: getSortQueryVariables(params)
     }),
-    [params]
+    [params, settings.rowNumber]
   );
   const { data, loading, refetch } = usePageListQuery({
     displayLoader: true,
@@ -103,6 +104,18 @@ export const PageList: React.FC<PageListProps> = ({ params }) => {
   };
 
   const handleSort = createSortHandler(navigate, pageListUrl, params);
+
+  React.useEffect(
+    () =>
+      navigate(
+        pageListUrl({
+          ...params,
+          ...DEFAULT_INITIAL_PAGINATION_DATA
+        }),
+        true
+      ),
+    [settings.rowNumber]
+  );
 
   return (
     <TypedPageBulkRemove onCompleted={handlePageBulkRemove}>

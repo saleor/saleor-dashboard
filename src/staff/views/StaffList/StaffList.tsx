@@ -4,7 +4,7 @@ import SaveFilterTabDialog, {
   SaveFilterTabDialogFormData
 } from "@saleor/components/SaveFilterTabDialog";
 import { useShopLimitsQuery } from "@saleor/components/Shop/query";
-import { APP_MOUNT_URI, DEFAULT_INITIAL_SEARCH_DATA } from "@saleor/config";
+import { APP_MOUNT_URI, DEFAULT_INITIAL_PAGINATION_DATA, DEFAULT_INITIAL_SEARCH_DATA } from "@saleor/config";
 import { configurationMenuUrl } from "@saleor/configuration";
 import useListSettings from "@saleor/hooks/useListSettings";
 import useNavigator from "@saleor/hooks/useNavigator";
@@ -69,7 +69,7 @@ export const StaffList: React.FC<StaffListProps> = ({ params }) => {
       filter: getFilterVariables(params),
       sort: getSortQueryVariables(params)
     }),
-    [params]
+    [params, settings.rowNumber]
   );
   const { data: staffQueryData, loading } = useStaffListQuery({
     displayLoader: true,
@@ -169,6 +169,18 @@ export const StaffList: React.FC<StaffListProps> = ({ params }) => {
         }
       }
     });
+
+    React.useEffect(
+      () =>
+        navigate(
+          staffListUrl({
+            ...params,
+            ...DEFAULT_INITIAL_PAGINATION_DATA
+          }),
+          true
+        ),
+      [settings.rowNumber]
+    );
 
   return (
     <>

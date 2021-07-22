@@ -4,6 +4,7 @@ import SaveFilterTabDialog, {
 } from "@saleor/components/SaveFilterTabDialog";
 import { useShopLimitsQuery } from "@saleor/components/Shop/query";
 import { WindowTitle } from "@saleor/components/WindowTitle";
+import { DEFAULT_INITIAL_PAGINATION_DATA } from "@saleor/config";
 import { configurationMenuUrl } from "@saleor/configuration";
 import useListSettings from "@saleor/hooks/useListSettings";
 import useNavigator from "@saleor/hooks/useNavigator";
@@ -64,7 +65,7 @@ const WarehouseList: React.FC<WarehouseListProps> = ({ params }) => {
       filter: getFilterVariables(params),
       sort: getSortQueryVariables(params)
     }),
-    [params]
+    [params, settings.rowNumber]
   );
   const { data, loading, refetch } = useWarehouseList({
     displayLoader: true,
@@ -137,6 +138,18 @@ const WarehouseList: React.FC<WarehouseListProps> = ({ params }) => {
   const handleSort = createSortHandler(navigate, warehouseListUrl, params);
 
   const deleteTransitionState = getMutationStatus(deleteWarehouseOpts);
+
+  React.useEffect(
+    () =>
+      navigate(
+        warehouseListUrl({
+          ...params,
+          ...DEFAULT_INITIAL_PAGINATION_DATA
+        }),
+        true
+      ),
+    [settings.rowNumber]
+  );
 
   return (
     <>

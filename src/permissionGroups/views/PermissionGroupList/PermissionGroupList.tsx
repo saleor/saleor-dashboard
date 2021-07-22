@@ -1,3 +1,4 @@
+import { DEFAULT_INITIAL_PAGINATION_DATA } from "@saleor/config";
 import { configurationMenuUrl } from "@saleor/configuration";
 import { PermissionGroupErrorFragment } from "@saleor/fragments/types/PermissionGroupErrorFragment";
 import useListSettings from "@saleor/hooks/useListSettings";
@@ -50,7 +51,7 @@ export const PermissionGroupList: React.FC<PermissionGroupListProps> = ({
       ...paginationState,
       sort: getSortQueryVariables(params)
     }),
-    [params]
+    [params, settings.rowNumber]
   );
   const { data, loading, refetch } = usePermissionGroupListQuery({
     displayLoader: true,
@@ -98,6 +99,18 @@ export const PermissionGroupList: React.FC<PermissionGroupListProps> = ({
   const [permissionGroupDelete] = usePermissionGroupDelete({
     onCompleted: handleDeleteSuccess
   });
+
+  React.useEffect(
+    () =>
+      navigate(
+        permissionGroupListUrl({
+          ...params,
+          ...DEFAULT_INITIAL_PAGINATION_DATA
+        }),
+        true
+      ),
+    [settings.rowNumber]
+  );
   return (
     <>
       <PermissionGroupListPage

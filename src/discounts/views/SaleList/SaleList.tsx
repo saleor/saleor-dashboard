@@ -7,6 +7,7 @@ import SaveFilterTabDialog, {
   SaveFilterTabDialogFormData
 } from "@saleor/components/SaveFilterTabDialog";
 import { WindowTitle } from "@saleor/components/WindowTitle";
+import { DEFAULT_INITIAL_PAGINATION_DATA } from "@saleor/config";
 import useBulkActions from "@saleor/hooks/useBulkActions";
 import useListSettings from "@saleor/hooks/useListSettings";
 import useNavigator from "@saleor/hooks/useNavigator";
@@ -84,7 +85,7 @@ export const SaleList: React.FC<SaleListProps> = ({ params }) => {
       sort: getSortQueryVariables(params),
       channel: params.channel
     }),
-    [params]
+    [params, settings.rowNumber]
   );
   const { data, loading, refetch } = useSaleListQuery({
     displayLoader: true,
@@ -165,6 +166,18 @@ export const SaleList: React.FC<SaleListProps> = ({ params }) => {
   };
 
   const handleSort = createSortHandler(navigate, saleListUrl, params);
+
+  React.useEffect(
+    () =>
+      navigate(
+        saleListUrl({
+          ...params,
+          ...DEFAULT_INITIAL_PAGINATION_DATA
+        }),
+        true
+      ),
+    [settings.rowNumber]
+  );
 
   return (
     <TypedSaleBulkDelete onCompleted={handleSaleBulkDelete}>

@@ -5,6 +5,7 @@ import SaveFilterTabDialog, {
   SaveFilterTabDialogFormData
 } from "@saleor/components/SaveFilterTabDialog";
 import TypeDeleteWarningDialog from "@saleor/components/TypeDeleteWarningDialog";
+import { DEFAULT_INITIAL_PAGINATION_DATA } from "@saleor/config";
 import useBulkActions from "@saleor/hooks/useBulkActions";
 import useListSettings from "@saleor/hooks/useListSettings";
 import useNavigator from "@saleor/hooks/useNavigator";
@@ -70,7 +71,7 @@ export const PageTypeList: React.FC<PageTypeListProps> = ({ params }) => {
       filter: getFilterVariables(params),
       sort: getSortQueryVariables(params)
     }),
-    [params]
+    [params, settings.rowNumber]
   );
   const { data, loading, refetch } = usePageTypeListQuery({
     displayLoader: true,
@@ -167,6 +168,18 @@ export const PageTypeList: React.FC<PageTypeListProps> = ({ params }) => {
   });
 
   const pageTypesData = mapEdgesToItems(data?.pageTypes);
+
+  React.useEffect(
+    () =>
+      navigate(
+        pageTypeListUrl({
+          ...params,
+          ...DEFAULT_INITIAL_PAGINATION_DATA
+        }),
+        true
+      ),
+    [settings.rowNumber]
+  );
 
   return (
     <>

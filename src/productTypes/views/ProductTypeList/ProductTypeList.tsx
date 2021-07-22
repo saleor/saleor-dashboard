@@ -4,6 +4,7 @@ import DeleteFilterTabDialog from "@saleor/components/DeleteFilterTabDialog";
 import SaveFilterTabDialog, {
   SaveFilterTabDialogFormData
 } from "@saleor/components/SaveFilterTabDialog";
+import { DEFAULT_INITIAL_PAGINATION_DATA } from "@saleor/config";
 import useBulkActions from "@saleor/hooks/useBulkActions";
 import useListSettings from "@saleor/hooks/useListSettings";
 import useNavigator from "@saleor/hooks/useNavigator";
@@ -74,7 +75,7 @@ export const ProductTypeList: React.FC<ProductTypeListProps> = ({ params }) => {
       filter: getFilterVariables(params),
       sort: getSortQueryVariables(params)
     }),
-    [params]
+    [params, settings.rowNumber]
   );
   const { data, loading, refetch } = useProductTypeListQuery({
     displayLoader: true,
@@ -160,6 +161,18 @@ export const ProductTypeList: React.FC<ProductTypeListProps> = ({ params }) => {
   });
 
   const productTypesData = mapEdgesToItems(data?.productTypes);
+
+  React.useEffect(
+    () =>
+      navigate(
+        productTypeListUrl({
+          ...params,
+          ...DEFAULT_INITIAL_PAGINATION_DATA
+        }),
+        true
+      ),
+    [settings.rowNumber]
+  );
 
   return (
     <TypedProductTypeBulkDeleteMutation

@@ -1,5 +1,6 @@
 import { Button, DialogContentText } from "@material-ui/core";
 import ActionDialog from "@saleor/components/ActionDialog";
+import { DEFAULT_INITIAL_PAGINATION_DATA } from "@saleor/config";
 import { configurationMenuUrl } from "@saleor/configuration";
 import useBulkActions from "@saleor/hooks/useBulkActions";
 import useListSettings from "@saleor/hooks/useListSettings";
@@ -64,7 +65,7 @@ const MenuList: React.FC<MenuListProps> = ({ params }) => {
       ...paginationState,
       sort: getSortQueryVariables(params)
     }),
-    [params]
+    [params, settings.rowNumber]
   );
   const { data, loading, refetch } = useMenuListQuery({
     displayLoader: true,
@@ -117,6 +118,18 @@ const MenuList: React.FC<MenuListProps> = ({ params }) => {
   };
 
   const handleSort = createSortHandler(navigate, menuListUrl, params);
+
+  React.useEffect(
+    () =>
+      navigate(
+        menuListUrl({
+          ...params,
+          ...DEFAULT_INITIAL_PAGINATION_DATA
+        }),
+        true
+      ),
+    [settings.rowNumber]
+  );
 
   return (
     <MenuCreateMutation onCompleted={handleCreate}>

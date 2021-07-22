@@ -5,6 +5,7 @@ import SaveFilterTabDialog, {
   SaveFilterTabDialogFormData
 } from "@saleor/components/SaveFilterTabDialog";
 import { useShopLimitsQuery } from "@saleor/components/Shop/query";
+import { DEFAULT_INITIAL_PAGINATION_DATA } from "@saleor/config";
 import useListSettings from "@saleor/hooks/useListSettings";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
@@ -148,6 +149,18 @@ export const OrderList: React.FC<OrderListProps> = ({ params }) => {
   );
 
   const handleSort = createSortHandler(navigate, orderListUrl, params);
+
+  React.useEffect(
+    () =>
+      navigate(
+        orderListUrl({
+          ...params,
+          ...DEFAULT_INITIAL_PAGINATION_DATA
+        }),
+        true
+      ),
+    [settings.rowNumber]
+  );
 
   return (
     <>
