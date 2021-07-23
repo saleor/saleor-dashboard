@@ -84,6 +84,7 @@ filterTests(["stagedOnly"], () => {
         })
         .then(({ variantsList: variants }) => (variantsList = variants));
     });
+
     beforeEach(() => {
       cy.clearSessionData().loginUserViaRequest();
       createCheckout({
@@ -102,6 +103,7 @@ filterTests(["stagedOnly"], () => {
           addAdyenPayment(checkout.id, checkoutResp.totalPrice.gross.amount);
         });
     });
+
     it("should purchase products with simple card", () => {
       const simpleCard = cardData;
       simpleCard.encryptedCardNumber =
@@ -115,6 +117,7 @@ filterTests(["stagedOnly"], () => {
           expect(order.paymentStatus).to.eq("FULLY_CHARGED");
         });
     });
+
     it("should purchase product with 3D secure 2 Auth", () => {
       const threeDSecureCard = cardData;
       threeDSecureCard.encryptedCardNumber =
@@ -128,6 +131,7 @@ filterTests(["stagedOnly"], () => {
           expect(order.paymentStatus).to.eq("FULLY_CHARGED");
         });
     });
+
     it("should purchase product with 3D secure 1 Auth", () => {
       const threeDSecureCardOneAuth = cardData;
       threeDSecureCardOneAuth.encryptedCardNumber =
@@ -142,6 +146,7 @@ filterTests(["stagedOnly"], () => {
           expect(order.paymentStatus).to.eq("FULLY_CHARGED");
         });
     });
+
     it("should fail with unknown security number", () => {
       const simpleCard = cardData;
       simpleCard.encryptedCardNumber =
@@ -153,6 +158,7 @@ filterTests(["stagedOnly"], () => {
         expect(checkoutErrors).to.have.length(1);
       });
     });
+
     it("should fail with timeout in 3D authorization", () => {
       const errorCard = cardData;
       errorCard.encryptedCardNumber =
@@ -162,6 +168,7 @@ filterTests(["stagedOnly"], () => {
         expect(checkoutErrors).to.have.length(1);
       });
     });
+
     it("should fail with closed account", () => {
       const closeAccount = cardData;
       closeAccount.encryptedCardNumber =
