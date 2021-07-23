@@ -1,7 +1,7 @@
 import { TextField, Typography } from "@material-ui/core";
 import VerticalSpacer from "@saleor/apps/components/VerticalSpacer";
 import RadioGroupField from "@saleor/components/RadioGroupField";
-import { GiftCardExpiryType } from "@saleor/types/globalTypes";
+import { GiftCardExpiryTypeEnum } from "@saleor/types/globalTypes";
 import React, { useContext } from "react";
 import { useIntl } from "react-intl";
 
@@ -11,7 +11,7 @@ import {
 } from "../GiftCardUpdateFormProvider";
 import { giftCardUpdateDetailsExpirySectionMessages as messages } from "./messages";
 import { useGiftCardDetailsExpiryStyles as useStyles } from "./styles";
-import TimePeriodTextWithSelectField from "./TimePeriodTextWithSelectField";
+import TimePeriodField from "./TimePeriodField";
 
 const GiftCardUpdateDetailsExpirySection: React.FC = ({}) => {
   const intl = useIntl();
@@ -19,22 +19,21 @@ const GiftCardUpdateDetailsExpirySection: React.FC = ({}) => {
 
   const {
     change,
-    setSelectedTimePeriodType,
     data: { expiryType, expiryPeriodAmount, expiryPeriodType }
   } = useContext(GiftCardUpdateFormContext);
 
   const options = [
     {
       label: intl.formatMessage(messages.neverExpireLabel),
-      value: GiftCardExpiryType.NEVER_EXPIRE
+      value: GiftCardExpiryTypeEnum.NEVER_EXPIRY
     },
     {
       label: intl.formatMessage(messages.expiryPeriodLabel),
-      value: GiftCardExpiryType.EXPIRY_PERIOD
+      value: GiftCardExpiryTypeEnum.EXPIRY_PERIOD
     },
     {
       label: intl.formatMessage(messages.expirationDateLabel),
-      value: GiftCardExpiryType.EXPIRY_DATE
+      value: GiftCardExpiryTypeEnum.EXPIRY_DATE
     }
   ];
   return (
@@ -50,9 +49,9 @@ const GiftCardUpdateDetailsExpirySection: React.FC = ({}) => {
         name={"expiryType" as keyof GiftCardUpdateFormData}
         value={expiryType}
       />
-      <VerticalSpacer />
+      <VerticalSpacer spacing={2} />
 
-      {expiryType === GiftCardExpiryType.EXPIRY_DATE && (
+      {expiryType === GiftCardExpiryTypeEnum.EXPIRY_DATE && (
         <TextField
           onChange={change}
           name={"expiryDate" as keyof GiftCardUpdateFormData}
@@ -65,14 +64,13 @@ const GiftCardUpdateDetailsExpirySection: React.FC = ({}) => {
         />
       )}
 
-      {expiryType === GiftCardExpiryType.EXPIRY_PERIOD && (
-        <TimePeriodTextWithSelectField
+      {expiryType === GiftCardExpiryTypeEnum.EXPIRY_PERIOD && (
+        <TimePeriodField
+          change={change}
           periodType={expiryPeriodType}
           periodAmount={expiryPeriodAmount}
-          change={change}
-          setSelectedTimePeriod={setSelectedTimePeriodType}
-          textFieldName={"expiryPeriodAmount" as keyof GiftCardUpdateFormData}
-          selectFieldName={"expiryPeriodType" as keyof GiftCardUpdateFormData}
+          amountFieldName={"expiryPeriodAmount"}
+          typeFieldName={"expiryPeriodType"}
         />
       )}
     </>
