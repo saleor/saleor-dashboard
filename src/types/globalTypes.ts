@@ -468,10 +468,22 @@ export enum FulfillmentStatus {
   RETURNED = "RETURNED",
 }
 
-export enum GiftCardExpiryType {
+export enum GiftCardEventsEnum {
+  ACTIVATED = "ACTIVATED",
+  BALANCE_RESET = "BALANCE_RESET",
+  BOUGHT = "BOUGHT",
+  DEACTIVATED = "DEACTIVATED",
+  EXPIRY_SETTINGS_UPDATED = "EXPIRY_SETTINGS_UPDATED",
+  ISSUED = "ISSUED",
+  RESENT = "RESENT",
+  SENT_TO_CUSTOMER = "SENT_TO_CUSTOMER",
+  UPDATED = "UPDATED",
+}
+
+export enum GiftCardExpiryTypeEnum {
   EXPIRY_DATE = "EXPIRY_DATE",
   EXPIRY_PERIOD = "EXPIRY_PERIOD",
-  NEVER_EXPIRE = "NEVER_EXPIRE",
+  NEVER_EXPIRY = "NEVER_EXPIRY",
 }
 
 export enum InvoiceErrorCode {
@@ -963,7 +975,7 @@ export enum StockErrorCode {
   UNIQUE = "UNIQUE",
 }
 
-export enum TimePeriodType {
+export enum TimePeriodTypeEnum {
   DAY = "DAY",
   MONTH = "MONTH",
   YEAR = "YEAR",
