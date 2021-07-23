@@ -2,7 +2,8 @@ import faker from "faker";
 
 import {
   confirmAccount,
-  customerRegistration
+  customerRegistration,
+  deleteCustomersStartsWith
 } from "../../apiRequests/Customer";
 import { getDefaultChannel } from "../../utils/channelsUtils";
 import { getMailActivationLinkForUser } from "../../utils/users";
@@ -13,6 +14,7 @@ describe("Tests for customer registration with email", () => {
 
   before(() => {
     cy.clearSessionData().loginUserViaRequest();
+    deleteCustomersStartsWith(startsWith);
     getDefaultChannel().then(channel => (defaultChannel = channel));
   });
 

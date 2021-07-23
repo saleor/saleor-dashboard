@@ -1,6 +1,9 @@
 import faker from "faker";
 
-import { customerRegistration } from "../../apiRequests/Customer";
+import {
+  customerRegistration,
+  deleteCustomersStartsWith
+} from "../../apiRequests/Customer";
 import { CUSTOMER_DETAILS } from "../../elements/customers/customer-details";
 import { BUTTON_SELECTORS } from "../../elements/shared/button-selectors";
 import { confirmationMessageShouldDisappear } from "../../steps/shared/confirmationMessages";
@@ -15,6 +18,7 @@ describe("Tests for customer registration", () => {
 
   before(() => {
     cy.clearSessionData().loginUserViaRequest();
+    deleteCustomersStartsWith(startsWith);
     getDefaultChannel().then(channel => {
       defaultChannel = channel;
     });
