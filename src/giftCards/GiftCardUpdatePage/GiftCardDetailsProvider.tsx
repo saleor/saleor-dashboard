@@ -1,4 +1,5 @@
 import {
+  GiftCardEventsEnum,
   GiftCardExpiryTypeEnum,
   TimePeriodTypeEnum
 } from "@saleor/types/globalTypes";
@@ -27,7 +28,13 @@ const GiftCardDetailsProvider: React.FC<GiftCardDetailsProviderProps> = ({
     code: "8361",
     isActive: false,
     expiryType: GiftCardExpiryTypeEnum.EXPIRY_PERIOD,
-    events: [],
+    events: [
+      {
+        type: GiftCardEventsEnum.ISSUED,
+        orderId: "1234",
+        orderNumber: "32423434"
+      }
+    ],
     createdBy: {
       id: "1222",
       firstName: "Janusz",
