@@ -30,7 +30,7 @@ const OrderFulfillmentSettings: React.FC<OrderFulfillmentSettingsProps> = ({
       />
       <CardContent>
         <ControlledCheckbox
-          name={"fulfillmentAutoConfirm" as keyof OrderSettingsFormData}
+          name={"fulfillmentAutoApprove" as keyof OrderSettingsFormData}
           label={
             <>
               <FormattedMessage
@@ -45,10 +45,10 @@ const OrderFulfillmentSettings: React.FC<OrderFulfillmentSettingsProps> = ({
               </Typography>
             </>
           }
-          checked={data.fulfillmentAutoConfirm}
+          checked={data.fulfillmentAutoApprove}
           onChange={onChange}
           disabled={disabled}
-          data-test="fulfillmentAutoConfirmCheckbox"
+          data-test="fulfillmentAutoApproveCheckbox"
         />
         <FormSpacer />
         <ControlledCheckbox

@@ -1884,7 +1884,7 @@ export interface ShopSettingsInput {
   defaultMailSenderName?: string | null;
   defaultMailSenderAddress?: string | null;
   customerSetPasswordUrl?: string | null;
-  fulfillmentAutoConfirm?: boolean | null;
+  fulfillmentAutoApprove?: boolean | null;
   fulfillmentAllowUnpaid?: boolean | null;
 }
 

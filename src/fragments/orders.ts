@@ -283,7 +283,7 @@ export const fragmentOrderSettings = gql`
 
 export const fragmentShopOrderSettings = gql`
   fragment ShopOrderSettingsFragment on Shop {
-    fulfillmentAutoConfirm
+    fulfillmentAutoApprove
     fulfillmentAllowUnpaid
   }
 `;

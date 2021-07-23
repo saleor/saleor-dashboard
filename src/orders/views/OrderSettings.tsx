@@ -24,7 +24,7 @@ export const OrderSettings: React.FC = () => {
 
   const handleSubmit = async ({
     automaticallyConfirmAllNewOrders,
-    fulfillmentAutoConfirm,
+    fulfillmentAutoApprove,
     fulfillmentAllowUnpaid
   }: OrderSettingsFormData) => {
     const result = await orderSettingsUpdate({
@@ -33,7 +33,7 @@ export const OrderSettings: React.FC = () => {
           automaticallyConfirmAllNewOrders
         },
         shopSettingsInput: {
-          fulfillmentAutoConfirm,
+          fulfillmentAutoApprove,
           fulfillmentAllowUnpaid
         }
       }

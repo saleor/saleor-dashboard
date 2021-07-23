@@ -34,7 +34,7 @@ export interface OrderSettingsUpdate_shopSettingsUpdate_errors {
 
 export interface OrderSettingsUpdate_shopSettingsUpdate_shop {
   __typename: "Shop";
-  fulfillmentAutoConfirm: boolean;
+  fulfillmentAutoApprove: boolean;
   fulfillmentAllowUnpaid: boolean;
 }
 

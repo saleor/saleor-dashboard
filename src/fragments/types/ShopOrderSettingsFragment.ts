@@ -9,6 +9,6 @@
 
 export interface ShopOrderSettingsFragment {
   __typename: "Shop";
-  fulfillmentAutoConfirm: boolean;
+  fulfillmentAutoApprove: boolean;
   fulfillmentAllowUnpaid: boolean;
 }

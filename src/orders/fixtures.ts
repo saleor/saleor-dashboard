@@ -1901,6 +1901,6 @@ export const orderSettings: OrderSettingsFragment = {
 
 export const shopOrderSettings: ShopOrderSettingsFragment = {
   __typename: "Shop",
-  fulfillmentAutoConfirm: true,
+  fulfillmentAutoApprove: true,
   fulfillmentAllowUnpaid: true
 };

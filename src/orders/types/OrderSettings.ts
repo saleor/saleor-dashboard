@@ -14,7 +14,7 @@ export interface OrderSettings_orderSettings {
 
 export interface ShopOrderSettings_shop {
   __typename: "Shop";
-  fulfillmentAutoConfirm: boolean;
+  fulfillmentAutoApprove: boolean;
   fulfillmentAllowUnpaid: boolean;
 }
 

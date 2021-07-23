@@ -6,7 +6,7 @@ import React from "react";
 
 export interface OrderSettingsFormData {
   automaticallyConfirmAllNewOrders: boolean;
-  fulfillmentAutoConfirm: boolean;
+  fulfillmentAutoApprove: boolean;
   fulfillmentAllowUnpaid: boolean;
 }
 
@@ -31,7 +31,7 @@ function getOrderSeettingsFormData(
   return {
     automaticallyConfirmAllNewOrders:
       orderSettings?.automaticallyConfirmAllNewOrders,
-    fulfillmentAutoConfirm: shop?.fulfillmentAutoConfirm,
+    fulfillmentAutoApprove: shop?.fulfillmentAutoApprove,
     fulfillmentAllowUnpaid: shop?.fulfillmentAllowUnpaid
   };
 }
