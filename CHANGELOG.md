@@ -69,6 +69,7 @@ All notable, unreleased changes to this project will be documented in this file.
 - Fix positive float number input validation - #1233 by @orzechdev
 - Use MacawUI - #1229 by @dominik-zeglen
 - Add Metadata for Sale & Voucher - #7653 by @piotrgrundas
+- Add variant create options dialog - #1238 by @orzechdev
 
 # 2.11.1
 
