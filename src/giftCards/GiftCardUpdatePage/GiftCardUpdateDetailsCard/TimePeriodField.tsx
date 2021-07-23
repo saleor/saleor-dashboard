@@ -1,10 +1,10 @@
+import TextWithSelectField from "@saleor/components/TextWithSelectField";
 import { FormChange } from "@saleor/hooks/useForm";
 import { TimePeriodTypeEnum } from "@saleor/types/globalTypes";
 import React from "react";
 import { useIntl } from "react-intl";
 
 import { timePeriodTextWithSelectFieldMessages as messages } from "./messages";
-import TextWithSelectField from "./TextWithSelectField";
 
 interface TimePeriodFieldProps<T> {
   change: FormChange;
