@@ -458,3 +458,13 @@ export const transformAddressToAddressInput = (data?: AddressType) => ({
   streetAddress1: data?.streetAddress1 || "",
   streetAddress2: data?.streetAddress2 || ""
 });
+
+export function getFullName<T extends { firstName: string; lastName: string }>(
+  data: T
+) {
+  if (!data) {
+    return "";
+  }
+
+  return `${data.firstName} ${data.lastName}`;
+}
