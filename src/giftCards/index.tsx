@@ -8,9 +8,9 @@ import GiftCardsList from "./GiftCardsList";
 import GiftCardUpdatePage from "./GiftCardUpdatePage";
 import { giftCardPath, giftCardsListPath } from "./urls";
 
-const GiftCardUpdate: React.FC<RouteComponentProps<any>> = ({ match }) => (
-  <GiftCardUpdatePage id={decodeURIComponent(match.params.id)} />
-);
+const GiftCardUpdate: React.FC<RouteComponentProps<{ id: string }>> = ({
+  match
+}) => <GiftCardUpdatePage id={decodeURIComponent(match.params.id)} />;
 
 const Component: React.FC = ({}) => {
   const intl = useIntl();

@@ -20,11 +20,7 @@ const GiftCardUpdateDetailsCard: React.FC = ({}) => {
       <CardTitle
         title={intl.formatMessage(messages.title)}
         toolbar={
-          <Button
-            data-test-id="createApp"
-            color="primary"
-            // onClick={navigateToCustomAppCreate}
-          >
+          <Button data-test-id="set-balance-button" color="primary">
             {intl.formatMessage(messages.setBalanceButtonLabel)}
           </Button>
         }
