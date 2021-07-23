@@ -13,6 +13,7 @@ import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import StatusChip from "@saleor/components/StatusChip";
 import { StatusType } from "@saleor/components/StatusChip/types";
 import { customerUrl } from "@saleor/customers/urls";
+import { giftCardPath } from "@saleor/giftCards/urls";
 import useNavigator from "@saleor/hooks/useNavigator";
 import { renderCollection } from "@saleor/misc";
 import { productUrl } from "@saleor/products/urls";
@@ -42,6 +43,9 @@ const GiftCardsListTable: React.FC = ({}) => {
     // disabled
   };
 
+  const redirectToGiftCardUpdate = (id: string) => () =>
+    navigate(giftCardPath(id));
+
   return (
     <Card>
       <ResponsiveTable>
@@ -60,7 +64,11 @@ const GiftCardsListTable: React.FC = ({}) => {
               product,
               currentBalance
             }) => (
-              <TableRow className={classes.row} key={id}>
+              <TableRow
+                onClick={redirectToGiftCardUpdate(id)}
+                className={classes.row}
+                key={id}
+              >
                 <TableCell padding="checkbox">
                   <Checkbox
                     disableClickPropagation

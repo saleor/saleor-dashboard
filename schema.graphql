@@ -3,6 +3,55 @@ schema {
   mutation: Mutation
 }
 
+type GiftCard implements Node & ObjectWithMetadata {
+	code: String!
+	user: User @deprecated(reason: "This field will be removed in Saleor 4.0.")
+	createdBy: User
+	usedBy: User
+  usedByEmail: String    # MADZIA
+	createdByEmail: String   # MADZIA
+	app: App
+	created: DateTime!
+	startDate: Date! @deprecated(reason: "This field will be removed in Saleor 4.0.")
+	endDate: Date @deprecated(reason: "This field will be removed in Saleor 4.0.")
+	expiryDate: Date
+  expiryType: GiftCardExpiryType
+  expiryPeriod: TimePeriod
+	lastUsedOn: DateTime
+	isActive: Boolean!
+	initialBalance: Money
+	currentBalance: Money
+	id: ID!
+	displayCode: String
+	product: Product
+  metadata: [MetadataItem]!
+  privateMetadata: [MetadataItem]!
+  tag: String
+}
+
+enum TimePeriodType {
+  DAY
+	MONTH
+	YEAR
+}
+
+type TimePeriod {
+	amount: Int
+	type: TimePeriodType
+}
+
+enum GiftCardExpiryType {
+  NEVER_EXPIRE
+  EXPIRY_PERIOD
+	EXPIRY_DATE
+}
+
+type GiftCardSettings {
+  expiryType: GiftCardExpiryType!
+  expiryPeriod: TimePeriod
+}
+
+
 type AccountAddressCreate {
   user: User
   accountErrors: [AccountError!]! @deprecated(reason: "Use errors field instead. This field will be removed in Saleor 4.0.")
@@ -2135,20 +2184,6 @@ type GatewayConfigLine {
 }
 
 scalar GenericScalar
-
-type GiftCard implements Node {
-  code: String
-  user: User
-  created: DateTime!
-  startDate: Date!
-  endDate: Date
-  lastUsedOn: DateTime
-  isActive: Boolean!
-  initialBalance: Money
-  currentBalance: Money
-  id: ID!
-  displayCode: String
-}
 
 type GiftCardActivate {
   giftCard: GiftCard
@@ -4764,7 +4799,7 @@ type Query {
   menuItem(id: ID!, channel: String): MenuItem
   menuItems(channel: String, sortBy: MenuItemSortingInput, filter: MenuItemFilterInput, before: String, after: String, first: Int, last: Int): MenuItemCountableConnection
   giftCard(id: ID!): GiftCard
-  giftCards(before: String, after: String, first: Int, last: Int): GiftCardCountableConnection
+  giftCards(filter: GiftCardFilterInput, before: String, after: String, first: Int, last: Int): GiftCardCountableConnection
   plugin(id: ID!): Plugin
   plugins(filter: PluginFilterInput, sortBy: PluginSortingInput, before: String, after: String, first: Int, last: Int): PluginCountableConnection
   sale(id: ID!, channel: String): Sale
@@ -4795,6 +4830,10 @@ type Query {
   user(id: ID, email: String): User
   _entities(representations: [_Any]): [_Entity]
   _service: _Service
+}
+
+type GiftCardFilterInput {
+  tag: String 
 }
 
 type ReducedRate {

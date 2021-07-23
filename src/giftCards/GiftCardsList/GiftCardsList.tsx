@@ -10,15 +10,13 @@ interface GiftCardsListProps {
   params: GiftCardListUrlQueryParams;
 }
 
-const GiftCardsList: React.FC<GiftCardsListProps> = ({ params }) => {
-  return (
-    <GiftCardsListProvider params={params}>
-      <Container>
-        <GiftCardsListHeader />
-        <GiftCardsListTable />
-      </Container>
-    </GiftCardsListProvider>
-  );
-};
+const GiftCardsList: React.FC<GiftCardsListProps> = ({ params }) => (
+  <GiftCardsListProvider params={params}>
+    <Container>
+      <GiftCardsListHeader />
+      <GiftCardsListTable />
+    </Container>
+  </GiftCardsListProvider>
+);
 
 export default GiftCardsList;

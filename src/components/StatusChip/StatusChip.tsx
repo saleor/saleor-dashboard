@@ -38,10 +38,10 @@ const StatusChipStyles = {
     color: "#5DC292"
   },
   lg: {
-    padding: "8px 24px"
+    padding: "4px 16px"
   },
   lgLabel: {
-    fontSize: "1rem"
+    fontSize: "1.5rem"
   },
   md: {
     padding: "4px 16px"

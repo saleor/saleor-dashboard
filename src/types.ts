@@ -140,6 +140,10 @@ export interface SlugNode {
   slug: string;
 }
 
+export interface TagNode {
+  tag: string;
+}
+
 export type Pagination = Partial<{
   after: string;
   before: string;
