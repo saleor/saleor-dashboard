@@ -83,7 +83,7 @@ const OrderFulfill: React.FC<OrderFulfillProps> = ({ orderId }) => {
                   stocks: line.value
                 })),
                 notifyCustomer:
-                  settings?.shop?.fulfillmentAutoConfirm && formData.sendInfo
+                  settings?.shop?.fulfillmentAutoApprove && formData.sendInfo
               },
               orderId
             }
