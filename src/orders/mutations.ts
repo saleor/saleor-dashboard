@@ -64,9 +64,9 @@ import {
   OrderDraftUpdateVariables
 } from "./types/OrderDraftUpdate";
 import {
-  OrderFulfillmentAccept,
-  OrderFulfillmentAcceptVariables
-} from "./types/OrderFulfillmentAccept";
+  OrderFulfillmentApprove,
+  OrderFulfillmentApproveVariables
+} from "./types/OrderFulfillmentApprove";
 import {
   OrderFulfillmentCancel,
   OrderFulfillmentCancelVariables
@@ -465,11 +465,11 @@ export const TypedOrderFulfillmentUpdateTrackingMutation = TypedMutation<
   OrderFulfillmentUpdateTrackingVariables
 >(orderFulfillmentUpdateTrackingMutation);
 
-const orderFulfillmentAcceptMutation = gql`
+const orderFulfillmentApproveMutation = gql`
   ${fragmentOrderDetails}
   ${orderErrorFragment}
-  mutation OrderFulfillmentAccept($id: ID!, $input: FulfillmentAcceptInput!) {
-    orderFulfillmentAccept(id: $id, input: $input) {
+  mutation OrderFulfillmentApprove($id: ID!, $input: FulfillmentApproveInput!) {
+    orderFulfillmentApprove(id: $id, input: $input) {
       errors {
         ...OrderErrorFragment
       }
@@ -479,10 +479,10 @@ const orderFulfillmentAcceptMutation = gql`
     }
   }
 `;
-export const TypedOrderFulfillmentAcceptMutation = TypedMutation<
-  OrderFulfillmentAccept,
-  OrderFulfillmentAcceptVariables
->(orderFulfillmentAcceptMutation);
+export const TypedOrderFulfillmentApproveMutation = TypedMutation<
+  OrderFulfillmentApprove,
+  OrderFulfillmentApproveVariables
+>(orderFulfillmentApproveMutation);
 
 const orderFulfillmentCancelMutation = gql`
   ${fragmentOrderDetails}

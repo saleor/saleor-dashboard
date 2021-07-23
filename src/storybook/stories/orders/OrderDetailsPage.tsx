@@ -23,7 +23,7 @@ const props: Omit<OrderDetailsPageProps, "classes"> = {
   disabled: false,
   onBack: () => undefined,
   onBillingAddressEdit: undefined,
-  onFulfillmentAccept: () => undefined,
+  onFulfillmentApprove: () => undefined,
   onFulfillmentCancel: () => undefined,
   onFulfillmentTrackingNumberUpdate: () => undefined,
   onInvoiceClick: () => undefined,

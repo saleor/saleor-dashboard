@@ -464,7 +464,7 @@ export enum FulfillmentStatus {
   REFUNDED_AND_RETURNED = "REFUNDED_AND_RETURNED",
   REPLACED = "REPLACED",
   RETURNED = "RETURNED",
-  WAITING_FOR_ACCEPTANCE = "WAITING_FOR_ACCEPTANCE",
+  WAITING_FOR_APPROVAL = "WAITING_FOR_APPROVAL",
 }
 
 export enum InvoiceErrorCode {
@@ -1342,7 +1342,7 @@ export interface ExportProductsInput {
   fileType: FileTypesEnum;
 }
 
-export interface FulfillmentAcceptInput {
+export interface FulfillmentApproveInput {
   notifyCustomer: boolean;
 }
 

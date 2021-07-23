@@ -73,7 +73,7 @@ export interface OrderDetailsPageProps extends UserPermissionProps {
   onShippingMethodEdit?: () => void;
   onBack();
   onBillingAddressEdit();
-  onFulfillmentAccept(id: string);
+  onFulfillmentApprove(id: string);
   onFulfillmentCancel(id: string);
   onFulfillmentTrackingNumberUpdate(id: string);
   onOrderFulfill();
@@ -117,7 +117,7 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
     userPermissions,
     onBack,
     onBillingAddressEdit,
-    onFulfillmentAccept,
+    onFulfillmentApprove,
     onFulfillmentCancel,
     onFulfillmentTrackingNumberUpdate,
     onNoteAdd,
@@ -265,8 +265,8 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
                         onFulfillmentTrackingNumberUpdate(fulfillment.id)
                       }
                       onRefund={onPaymentRefund}
-                      onOrderFulfillmentAccept={() =>
-                        onFulfillmentAccept(fulfillment.id)
+                      onOrderFulfillmentApprove={() =>
+                        onFulfillmentApprove(fulfillment.id)
                       }
                     />
                   </React.Fragment>

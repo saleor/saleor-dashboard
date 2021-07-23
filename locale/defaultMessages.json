@@ -3789,15 +3789,15 @@
     "context": "tracking number",
     "string": "Tracking Number: {trackingNumber}"
   },
-  "src_dot_orders_dot_components_dot_OrderFulfillmentAcceptDialog_dot_description": {
+  "src_dot_orders_dot_components_dot_OrderFulfillmentApproveDialog_dot_description": {
     "context": "dialog description",
     "string": "Are you sure you want to approve this fullfillment?"
   },
-  "src_dot_orders_dot_components_dot_OrderFulfillmentAcceptDialog_dot_notifyCustomer": {
+  "src_dot_orders_dot_components_dot_OrderFulfillmentApproveDialog_dot_notifyCustomer": {
     "context": "checkbox label, fulfillment approval",
     "string": "Send shipment details to customer"
   },
-  "src_dot_orders_dot_components_dot_OrderFulfillmentAcceptDialog_dot_title": {
+  "src_dot_orders_dot_components_dot_OrderFulfillmentApproveDialog_dot_title": {
     "context": "dialog header",
     "string": "Approve this fulfillment"
   },
@@ -4535,9 +4535,6 @@
   "src_dot_orders_dot_views_dot_OrderDetails_dot_2808777264": {
     "string": "Order successfully cancelled"
   },
-  "src_dot_orders_dot_views_dot_OrderDetails_dot_2960145775": {
-    "string": "Fulfillment successfully accepted"
-  },
   "src_dot_orders_dot_views_dot_OrderDetails_dot_3178394068": {
     "string": "Note successfully added"
   },
@@ -4546,6 +4543,9 @@
   },
   "src_dot_orders_dot_views_dot_OrderDetails_dot_3367579693": {
     "string": "Order successfully updated"
+  },
+  "src_dot_orders_dot_views_dot_OrderDetails_dot_3897044696": {
+    "string": "Fulfillment successfully approved"
   },
   "src_dot_orders_dot_views_dot_OrderDetails_dot_4085755992": {
     "string": "Invoice email sent"

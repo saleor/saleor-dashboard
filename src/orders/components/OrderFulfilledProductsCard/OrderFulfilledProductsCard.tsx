@@ -31,7 +31,7 @@ interface OrderFulfilledProductsCardProps {
   fulfillment: OrderDetails_order_fulfillments;
   fulfillmentAllowUnpaid: boolean;
   order?: OrderDetailsFragment;
-  onOrderFulfillmentAccept: () => void;
+  onOrderFulfillmentApprove: () => void;
   onOrderFulfillmentCancel: () => void;
   onTrackingCodeAdd: () => void;
   onRefund: () => void;
@@ -42,7 +42,7 @@ const OrderFulfilledProductsCard: React.FC<OrderFulfilledProductsCardProps> = pr
     fulfillment,
     fulfillmentAllowUnpaid,
     order,
-    onOrderFulfillmentAccept,
+    onOrderFulfillmentApprove,
     onOrderFulfillmentCancel,
     onTrackingCodeAdd,
     onRefund
@@ -110,7 +110,7 @@ const OrderFulfilledProductsCard: React.FC<OrderFulfilledProductsCardProps> = pr
           fulfillmentAllowUnpaid={fulfillmentAllowUnpaid}
           onTrackingCodeAdd={onTrackingCodeAdd}
           onRefund={onRefund}
-          onApprove={onOrderFulfillmentAccept}
+          onApprove={onOrderFulfillmentApprove}
         />
       </Card>
       <CardSpacer />

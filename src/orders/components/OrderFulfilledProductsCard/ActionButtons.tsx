@@ -19,7 +19,7 @@ interface AcionButtonsProps {
 const statusesToShow = [
   FulfillmentStatus.FULFILLED,
   FulfillmentStatus.RETURNED,
-  FulfillmentStatus.WAITING_FOR_ACCEPTANCE
+  FulfillmentStatus.WAITING_FOR_APPROVAL
 ];
 
 const ActionButtons: React.FC<AcionButtonsProps> = ({
@@ -37,7 +37,7 @@ const ActionButtons: React.FC<AcionButtonsProps> = ({
     return null;
   }
 
-  if (status === FulfillmentStatus.WAITING_FOR_ACCEPTANCE) {
+  if (status === FulfillmentStatus.WAITING_FOR_APPROVAL) {
     const cannotFulfill = !orderIsPaid && !fulfillmentAllowUnpaid;
 
     return (

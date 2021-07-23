@@ -11,7 +11,7 @@ import {
   TypedOrderDraftCancelMutation,
   TypedOrderDraftFinalizeMutation,
   TypedOrderDraftUpdateMutation,
-  TypedOrderFulfillmentAcceptMutation,
+  TypedOrderFulfillmentApproveMutation,
   TypedOrderFulfillmentCancelMutation,
   TypedOrderFulfillmentUpdateTrackingMutation,
   TypedOrderLineDeleteMutation,
@@ -46,9 +46,9 @@ import {
   OrderDraftUpdateVariables
 } from "../types/OrderDraftUpdate";
 import {
-  OrderFulfillmentAccept,
-  OrderFulfillmentAcceptVariables
-} from "../types/OrderFulfillmentAccept";
+  OrderFulfillmentApprove,
+  OrderFulfillmentApproveVariables
+} from "../types/OrderFulfillmentApprove";
 import {
   OrderFulfillmentCancel,
   OrderFulfillmentCancelVariables
@@ -88,9 +88,9 @@ interface OrderOperationsProps {
       OrderCancel,
       OrderCancelVariables
     >;
-    orderFulfillmentAccept: PartialMutationProviderOutput<
-      OrderFulfillmentAccept,
-      OrderFulfillmentAcceptVariables
+    orderFulfillmentApprove: PartialMutationProviderOutput<
+      OrderFulfillmentApprove,
+      OrderFulfillmentApproveVariables
     >;
     orderFulfillmentCancel: PartialMutationProviderOutput<
       OrderFulfillmentCancel,
@@ -150,7 +150,7 @@ interface OrderOperationsProps {
       InvoiceEmailSendVariables
     >;
   }) => React.ReactNode;
-  onOrderFulfillmentAccept: (data: OrderFulfillmentAccept) => void;
+  onOrderFulfillmentApprove: (data: OrderFulfillmentApprove) => void;
   onOrderFulfillmentCancel: (data: OrderFulfillmentCancel) => void;
   onOrderFulfillmentUpdate: (data: OrderFulfillmentUpdateTracking) => void;
   onOrderCancel: (data: OrderCancel) => void;
@@ -184,7 +184,7 @@ const OrderOperations: React.FC<OrderOperationsProps> = ({
   onUpdate,
   onDraftCancel,
   onDraftFinalize,
-  onOrderFulfillmentAccept,
+  onOrderFulfillmentApprove,
   onOrderFulfillmentCancel,
   onOrderFulfillmentUpdate,
   onOrderMarkAsPaid,
@@ -221,9 +221,9 @@ const OrderOperations: React.FC<OrderOperationsProps> = ({
                                         onCompleted={onOrderLineUpdate}
                                       >
                                         {(...updateOrderLine) => (
-                                          <TypedOrderFulfillmentAcceptMutation
+                                          <TypedOrderFulfillmentApproveMutation
                                             onCompleted={
-                                              onOrderFulfillmentAccept
+                                              onOrderFulfillmentApprove
                                             }
                                           >
                                             {(...acceptFulfillment) => (
@@ -296,7 +296,7 @@ const OrderOperations: React.FC<OrderOperationsProps> = ({
                                                                               orderDraftUpdate: getMutationProviderData(
                                                                                 ...updateDraft
                                                                               ),
-                                                                              orderFulfillmentAccept: getMutationProviderData(
+                                                                              orderFulfillmentApprove: getMutationProviderData(
                                                                                 ...acceptFulfillment
                                                                               ),
                                                                               orderFulfillmentCancel: getMutationProviderData(
@@ -352,7 +352,7 @@ const OrderOperations: React.FC<OrderOperationsProps> = ({
                                                 )}
                                               </TypedOrderFulfillmentCancelMutation>
                                             )}
-                                          </TypedOrderFulfillmentAcceptMutation>
+                                          </TypedOrderFulfillmentApproveMutation>
                                         )}
                                       </TypedOrderLineUpdateMutation>
                                     )}

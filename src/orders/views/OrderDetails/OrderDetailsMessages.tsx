@@ -1,7 +1,7 @@
 import messages from "@saleor/containers/BackgroundTasks/messages";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
-import { OrderFulfillmentAccept } from "@saleor/orders/types/OrderFulfillmentAccept";
+import { OrderFulfillmentApprove } from "@saleor/orders/types/OrderFulfillmentApprove";
 import getOrderErrorMessage from "@saleor/utils/errors/order";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import React from "react";
@@ -33,7 +33,7 @@ interface OrderDetailsMessages {
     handleDraftUpdate: (data: OrderDraftUpdate) => void;
     handleNoteAdd: (data: OrderAddNote) => void;
     handleOrderCancel: (data: OrderCancel) => void;
-    handleOrderFulfillmentAccept: (data: OrderFulfillmentAccept) => void;
+    handleOrderFulfillmentApprove: (data: OrderFulfillmentApprove) => void;
     handleOrderFulfillmentCancel: (data: OrderFulfillmentCancel) => void;
     handleOrderFulfillmentUpdate: (
       data: OrderFulfillmentUpdateTracking
@@ -217,13 +217,13 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
       );
     }
   };
-  const handleOrderFulfillmentAccept = (data: OrderFulfillmentAccept) => {
-    const errs = data.orderFulfillmentAccept?.errors;
+  const handleOrderFulfillmentApprove = (data: OrderFulfillmentApprove) => {
+    const errs = data.orderFulfillmentApprove?.errors;
     if (errs.length === 0) {
       pushMessage({
         status: "success",
         text: intl.formatMessage({
-          defaultMessage: "Fulfillment successfully accepted"
+          defaultMessage: "Fulfillment successfully approved"
         })
       });
       closeModal();
@@ -313,7 +313,7 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
     handleInvoiceSend,
     handleNoteAdd,
     handleOrderCancel,
-    handleOrderFulfillmentAccept,
+    handleOrderFulfillmentApprove,
     handleOrderFulfillmentCancel,
     handleOrderFulfillmentUpdate,
     handleOrderLineDelete,

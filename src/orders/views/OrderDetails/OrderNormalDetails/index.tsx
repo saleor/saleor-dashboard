@@ -2,12 +2,12 @@ import { WindowTitle } from "@saleor/components/WindowTitle";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useUser from "@saleor/hooks/useUser";
 import OrderCannotCancelOrderDialog from "@saleor/orders/components/OrderCannotCancelOrderDialog";
-import OrderFulfillmentAcceptDialog from "@saleor/orders/components/OrderFulfillmentAcceptDialog";
+import OrderFulfillmentApproveDialog from "@saleor/orders/components/OrderFulfillmentApproveDialog";
 import OrderInvoiceEmailSendDialog from "@saleor/orders/components/OrderInvoiceEmailSendDialog";
 import {
-  OrderFulfillmentAccept,
-  OrderFulfillmentAcceptVariables
-} from "@saleor/orders/types/OrderFulfillmentAccept";
+  OrderFulfillmentApprove,
+  OrderFulfillmentApproveVariables
+} from "@saleor/orders/types/OrderFulfillmentApprove";
 import { PartialMutationProviderOutput } from "@saleor/types";
 import { mapEdgesToItems } from "@saleor/utils/maps";
 import { useWarehouseList } from "@saleor/warehouses/queries";
@@ -45,9 +45,9 @@ interface OrderNormalDetailsProps {
   orderPaymentMarkAsPaid: any;
   orderVoid: any;
   orderPaymentCapture: any;
-  orderFulfillmentAccept: PartialMutationProviderOutput<
-    OrderFulfillmentAccept,
-    OrderFulfillmentAcceptVariables
+  orderFulfillmentApprove: PartialMutationProviderOutput<
+    OrderFulfillmentApprove,
+    OrderFulfillmentApproveVariables
   >;
   orderFulfillmentCancel: any;
   orderFulfillmentUpdateTracking: any;
@@ -69,7 +69,7 @@ export const OrderNormalDetails: React.FC<OrderNormalDetailsProps> = ({
   orderPaymentMarkAsPaid,
   orderVoid,
   orderPaymentCapture,
-  orderFulfillmentAccept,
+  orderFulfillmentApprove,
   orderFulfillmentCancel,
   orderFulfillmentUpdateTracking,
   orderInvoiceSend,
@@ -137,10 +137,10 @@ export const OrderNormalDetails: React.FC<OrderNormalDetailsProps> = ({
         userPermissions={user?.userPermissions || []}
         onOrderCancel={() => openModal("cancel")}
         onOrderFulfill={() => navigate(orderFulfillUrl(id))}
-        onFulfillmentAccept={fulfillmentId =>
+        onFulfillmentApprove={fulfillmentId =>
           navigate(
             orderUrl(id, {
-              action: "accept-fulfillment",
+              action: "approve-fulfillment",
               id: fulfillmentId
             })
           )
@@ -240,14 +240,15 @@ export const OrderNormalDetails: React.FC<OrderNormalDetailsProps> = ({
           })
         }
       />
-      <OrderFulfillmentAcceptDialog
-        confirmButtonState={orderFulfillmentAccept.opts.status}
+      <OrderFulfillmentApproveDialog
+        confirmButtonState={orderFulfillmentApprove.opts.status}
         errors={
-          orderFulfillmentAccept.opts.data?.orderFulfillmentAccept.errors || []
+          orderFulfillmentApprove.opts.data?.orderFulfillmentApprove.errors ||
+          []
         }
-        open={params.action === "accept-fulfillment"}
+        open={params.action === "approve-fulfillment"}
         onConfirm={({ notifyCustomer }) =>
-          orderFulfillmentAccept.mutate({
+          orderFulfillmentApprove.mutate({
             id: params.id,
             input: {
               notifyCustomer
