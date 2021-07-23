@@ -105,8 +105,8 @@ describe("Create product", () => {
     fillUpPriceList(prices.costPrice, priceInputLists.costPrice);
     cy.get(PRODUCT_DETAILS.skuInput).type(randomName);
     cy.addAliasToGraphRequest("ProductDetails");
-    confirmationMessageShouldDisappear();
     cy.get(BUTTON_SELECTORS.confirm).click();
+    confirmationMessageShouldDisappear();
     cy.wait("@ProductDetails");
     cy.get("@ProductDetails")
       .its("response.body")
