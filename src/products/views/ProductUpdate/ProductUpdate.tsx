@@ -27,7 +27,7 @@ import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import useOnSetDefaultVariant from "@saleor/hooks/useOnSetDefaultVariant";
 import useShop from "@saleor/hooks/useShop";
-import { commonMessages } from "@saleor/intl";
+import { commonMessages, errorMessages } from "@saleor/intl";
 import ProductVariantCreateDialog from "@saleor/products/components/ProductVariantCreateDialog";
 import {
   useProductChannelListingUpdate,
@@ -226,7 +226,8 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
       if (imageError) {
         notify({
           status: "error",
-          text: intl.formatMessage(commonMessages.somethingWentWrong)
+          title: intl.formatMessage(errorMessages.imgageUploadErrorTitle),
+          text: intl.formatMessage(errorMessages.imageUploadErrorText)
         });
       }
     }
