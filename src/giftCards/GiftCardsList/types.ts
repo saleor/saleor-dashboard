@@ -12,4 +12,10 @@ export interface GiftCardsListTableCommonProps {
   disabled: boolean;
 }
 
-export interface GiftCardListUrlQueryParams extends Pagination {}
+export enum GiftCardListParamsEnum {
+  CREATE = "gift-card-create"
+}
+
+export interface GiftCardListUrlQueryParams extends Pagination {
+  action: GiftCardListParamsEnum;
+}
