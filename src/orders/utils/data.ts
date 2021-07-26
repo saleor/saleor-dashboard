@@ -1,4 +1,5 @@
 import { IMoney, subtractMoney } from "@saleor/components/Money";
+import { WarehouseFragment } from "@saleor/fragments/types/WarehouseFragment";
 import { FormsetData } from "@saleor/hooks/useFormset";
 
 import {
@@ -14,6 +15,7 @@ import {
   OrderDetails_order_fulfillments_lines,
   OrderDetails_order_lines
 } from "../types/OrderDetails";
+import { OrderFulfillData_order } from "../types/OrderFulfillData";
 import {
   OrderRefundData_order,
   OrderRefundData_order_fulfillments,
@@ -24,6 +26,20 @@ export type OrderWithTotalAndTotalCaptured = Pick<
   OrderRefundData_order,
   "total" | "totalCaptured"
 >;
+
+export function getOrderWarehouses(order: OrderFulfillData_order) {
+  return order?.lines?.reduce(
+    (warehouses, line) =>
+      line.variant.stocks?.reduce(
+        (warehouses, stock) =>
+          warehouses.every(warehouse => warehouse.id !== stock.warehouse.id)
+            ? [...warehouses, stock.warehouse]
+            : warehouses,
+        warehouses
+      ),
+    [] as WarehouseFragment[]
+  );
+}
 
 export function getPreviouslyRefundedPrice(
   order: OrderWithTotalAndTotalCaptured

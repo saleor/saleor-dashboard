@@ -5,8 +5,7 @@ import OrderFulfillPage from "@saleor/orders/components/OrderFulfillPage";
 import { useOrderFulfill } from "@saleor/orders/mutations";
 import { useOrderFulfillData } from "@saleor/orders/queries";
 import { orderUrl } from "@saleor/orders/urls";
-import { mapEdgesToItems } from "@saleor/utils/maps";
-import { useWarehouseList } from "@saleor/warehouses/queries";
+import { getOrderWarehouses } from "@saleor/orders/utils/data";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -18,6 +17,7 @@ const OrderFulfill: React.FC<OrderFulfillProps> = ({ orderId }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();
+
   const { data, loading } = useOrderFulfillData({
     displayLoader: true,
     variables: {
@@ -25,12 +25,7 @@ const OrderFulfill: React.FC<OrderFulfillProps> = ({ orderId }) => {
     }
   });
 
-  const { data: warehouseData, loading: warehousesLoading } = useWarehouseList({
-    displayLoader: true,
-    variables: {
-      first: 20
-    }
-  });
+  const orderWarehouses = getOrderWarehouses(data?.order);
 
   const [fulfillOrder, fulfillOrderOpts] = useOrderFulfill({
     onCompleted: data => {
@@ -68,7 +63,7 @@ const OrderFulfill: React.FC<OrderFulfillProps> = ({ orderId }) => {
         }
       />
       <OrderFulfillPage
-        loading={loading || warehousesLoading || fulfillOrderOpts.loading}
+        loading={loading || fulfillOrderOpts.loading}
         errors={fulfillOrderOpts.data?.orderFulfill.errors}
         onBack={() => navigate(orderUrl(orderId))}
         onSubmit={formData =>
@@ -87,7 +82,7 @@ const OrderFulfill: React.FC<OrderFulfillProps> = ({ orderId }) => {
         }
         order={data?.order}
         saveButtonBar="default"
-        warehouses={mapEdgesToItems(warehouseData?.warehouses)}
+        warehouses={orderWarehouses}
       />
     </>
   );
