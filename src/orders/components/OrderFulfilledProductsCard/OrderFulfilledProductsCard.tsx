@@ -73,6 +73,7 @@ const OrderFulfilledProductsCard: React.FC<OrderFulfilledProductsCardProps> = pr
           fulfillmentOrder={fulfillment?.fulfillmentOrder}
           status={fulfillment?.status}
           orderNumber={orderNumber}
+          warehouseName={fulfillment?.warehouse?.name}
           toolbar={
             maybe(() => fulfillment.status) === FulfillmentStatus.FULFILLED && (
               <CardMenu
