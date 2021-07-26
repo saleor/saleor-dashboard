@@ -8,7 +8,7 @@ import {
 import { PRODUCT_TYPE_DETAILS } from "../../elements/productTypes/productTypeDetails";
 import { createProductType } from "../../steps/productTypeSteps";
 import { assignElements } from "../../steps/shared/assignElements";
-import { confirmationMessageShouldDisappear } from "../../steps/shared/confirmationMessage";
+import { confirmationMessageShouldDisappear } from "../../steps/shared/confirmationMessages";
 import { visitAndWaitForProgressBarToDisappear } from "../../steps/shared/progressBar";
 import filterTests from "../../support/filterTests";
 import { productTypeDetailsUrl, urlList } from "../../url/urlList";

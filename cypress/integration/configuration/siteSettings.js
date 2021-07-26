@@ -4,7 +4,7 @@ import { getShopInfo, updateShopAddress } from "../../apiRequests/shopSettings";
 import { BUTTON_SELECTORS } from "../../elements/shared/button-selectors";
 import { SITE_SETTINGS_DETAILS } from "../../elements/siteSettings/site-settings-details";
 import { fillUpBasicAddress } from "../../steps/shared/addressForm";
-import { confirmationMessageShouldDisappear } from "../../steps/shared/confirmationMessage";
+import { confirmationMessageShouldDisappear } from "../../steps/shared/confirmationMessages";
 import filterTests from "../../support/filterTests";
 import { urlList } from "../../url/urlList";
 

@@ -7,7 +7,7 @@ import { PAGE_TYPES_LIST } from "../../elements/pageTypes/pageTypesList";
 import { BUTTON_SELECTORS } from "../../elements/shared/button-selectors";
 import { SHARED_ELEMENTS } from "../../elements/shared/sharedElements";
 import { assignElements } from "../../steps/shared/assignElements";
-import { confirmationMessageShouldDisappear } from "../../steps/shared/confirmationMessage";
+import { confirmationMessageShouldDisappear } from "../../steps/shared/confirmationMessages";
 import filterTests from "../../support/filterTests";
 import { pageTypeDetailsUrl, urlList } from "../../url/urlList";
 

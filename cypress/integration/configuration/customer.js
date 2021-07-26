@@ -7,7 +7,7 @@ import { CUSTOMERS_LIST } from "../../elements/customer/customers-list";
 import { BUTTON_SELECTORS } from "../../elements/shared/button-selectors";
 import { SHARED_ELEMENTS } from "../../elements/shared/sharedElements";
 import { fillUpAddressForm } from "../../steps/shared/addressForm";
-import { confirmationMessageShouldDisappear } from "../../steps/shared/confirmationMessage";
+import { confirmationMessageShouldDisappear } from "../../steps/shared/confirmationMessages";
 import filterTests from "../../support/filterTests";
 import { urlList } from "../../url/urlList";
 

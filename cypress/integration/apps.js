@@ -6,7 +6,7 @@ import { APP_DETAILS } from "../elements/apps/appDetails";
 import { APPS_LIST } from "../elements/apps/appsList";
 import { WEBHOOK_DETAILS } from "../elements/apps/webhookDetails";
 import { BUTTON_SELECTORS } from "../elements/shared/button-selectors";
-import { confirmationMessageShouldDisappear } from "../steps/shared/confirmationMessage";
+import { confirmationMessageShouldDisappear } from "../steps/shared/confirmationMessages";
 import filterTests from "../support/filterTests";
 import { appDetailsUrl, urlList } from "../url/urlList";
 import { deleteAppsStartsWith } from "../utils/appUtils";
