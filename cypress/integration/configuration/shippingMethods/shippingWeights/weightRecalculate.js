@@ -4,17 +4,17 @@ import faker from "faker";
 import {
   createShippingRate as createShippingRateViaApi,
   createShippingZone
-} from "../../../../../apiRequests/ShippingMethod";
-import { updateShopWeightUnit } from "../../../../../apiRequests/shopSettings";
-import { SHARED_ELEMENTS } from "../../../../../elements/shared/sharedElements";
-import { SHIPPING_RATE_DETAILS } from "../../../../../elements/shipping/shipping-rate-details";
-import { waitForProgressBarToNotBeVisible } from "../../../../../steps/shared/progressBar";
-import { changeWeightUnit } from "../../../../../steps/shippingMethodSteps";
-import { urlList, weightRateUrl } from "../../../../../url/urlList";
-import { getDefaultChannel } from "../../../../../utils/channelsUtils";
-import { deleteProductsStartsWith } from "../../../../../utils/products/productsUtils";
-import { deleteShippingStartsWith } from "../../../../../utils/shippingUtils";
+} from "../../../../apiRequests/ShippingMethod";
+import { updateShopWeightUnit } from "../../../../apiRequests/shopSettings";
+import { SHARED_ELEMENTS } from "../../../../elements/shared/sharedElements";
+import { SHIPPING_RATE_DETAILS } from "../../../../elements/shipping/shipping-rate-details";
+import { waitForProgressBarToNotBeVisible } from "../../../../steps/shared/progressBar";
+import { changeWeightUnit } from "../../../../steps/shippingMethodSteps";
 import filterTests from "../../../../support/filterTests";
+import { urlList, weightRateUrl } from "../../../../url/urlList";
+import { getDefaultChannel } from "../../../../utils/channelsUtils";
+import { deleteProductsStartsWith } from "../../../../utils/products/productsUtils";
+import { deleteShippingStartsWith } from "../../../../utils/shippingUtils";
 
 filterTests(["all"], () => {
   describe("Recalculate weights", () => {
