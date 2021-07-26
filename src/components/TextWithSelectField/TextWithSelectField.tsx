@@ -11,6 +11,7 @@ import { useStyles } from "./styles";
 export interface TextWithSelectFieldProps {
   change: FormChange;
   choices: Choices;
+  textFieldLabel?: string;
   textFieldName: string;
   selectFieldName: string;
   textFieldValue: string;
@@ -23,6 +24,7 @@ const TextWithSelectField: React.FC<TextWithSelectFieldProps> = ({
   choices,
   textFieldName,
   textFieldValue,
+  textFieldLabel,
   selectFieldName,
   selectFieldValue,
   selectFieldClassName
@@ -34,8 +36,11 @@ const TextWithSelectField: React.FC<TextWithSelectFieldProps> = ({
       <TextField
         className={classes.innerContainer}
         name={textFieldName}
+        label={textFieldLabel}
         InputProps={{
-          className: classes.textField,
+          className: classNames(classes.textField, {
+            [classes.textFieldCentered]: !textFieldLabel
+          }),
           endAdornment: (
             <SingleSelectField
               name={selectFieldName}

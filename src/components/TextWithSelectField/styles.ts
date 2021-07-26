@@ -13,7 +13,11 @@ export const useStyles = makeStyles(
       width: "100%",
       paddingRight: 0,
       "& input": {
-        maxWidth: "100%",
+        maxWidth: "100%"
+      }
+    },
+    textFieldCentered: {
+      "& input": {
         paddingTop: 16,
         paddingBottom: 16
       }
