@@ -12,12 +12,14 @@ import {
   OrderDetails_order_fulfillments_lines,
   OrderDetails_order_lines
 } from "../types/OrderDetails";
+import { OrderFulfillData_order } from "../types/OrderFulfillData";
 import {
   OrderRefundData_order_fulfillments,
   OrderRefundData_order_lines
 } from "../types/OrderRefundData";
 import {
   getAllFulfillmentLinesPriceSum,
+  getOrderWarehouses,
   getPreviouslyRefundedPrice,
   getRefundedLinesPriceSum,
   getReplacedProductsAmount,
@@ -66,6 +68,106 @@ const orderBase: OrderDetails_order = {
     }
   }
 };
+
+describe("Get warehouses used in order", () => {
+  it("is able to calculate number of used warehouses from order", () => {
+    const order = {
+      __typename: "Order",
+      id: "order-1",
+      number: "1",
+      lines: [
+        {
+          __typename: "OrderLine",
+          id: "order-line-1",
+          productName: "Product 1",
+          variant: {
+            __typename: "ProductVariant",
+            id: "product-variant-1",
+            name: "Product variant 1",
+            stocks: [
+              {
+                __typename: "Stock",
+                warehouse: {
+                  __typename: "Warehouse",
+                  id: "warehouse-1",
+                  name: "Warehouse 1"
+                }
+              },
+              {
+                __typename: "Stock",
+                warehouse: {
+                  __typename: "Warehouse",
+                  id: "warehouse-2",
+                  name: "Warehouse 2"
+                }
+              }
+            ]
+          }
+        },
+        {
+          __typename: "OrderLine",
+          id: "order-line-2",
+          productName: "Product 2",
+          variant: {
+            __typename: "ProductVariant",
+            id: "product-variant-2",
+            name: "Product variant 2",
+            stocks: [
+              {
+                __typename: "Stock",
+                warehouse: {
+                  __typename: "Warehouse",
+                  id: "warehouse-1",
+                  name: "Warehouse 1"
+                }
+              },
+              {
+                __typename: "Stock",
+                warehouse: {
+                  __typename: "Warehouse",
+                  id: "warehouse-2",
+                  name: "Warehouse 2"
+                }
+              }
+            ]
+          }
+        },
+        {
+          __typename: "OrderLine",
+          id: "order-line-3",
+          productName: "Product 3",
+          variant: {
+            __typename: "ProductVariant",
+            id: "product-variant-3",
+            name: "Product variant 3",
+            stocks: [
+              {
+                __typename: "Stock",
+                warehouse: {
+                  __typename: "Warehouse",
+                  id: "warehouse-2",
+                  name: "Warehouse 2"
+                }
+              },
+              {
+                __typename: "Stock",
+                warehouse: {
+                  __typename: "Warehouse",
+                  id: "warehouse-3",
+                  name: "Warehouse 3"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    } as OrderFulfillData_order;
+
+    const orderWarehouses = getOrderWarehouses(order);
+
+    expect(orderWarehouses.length).toBe(3);
+  });
+});
 
 describe("Get previously refunded price", () => {
   it("is able to calculate refunded price from order", () => {
