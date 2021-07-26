@@ -3,7 +3,6 @@ import { AVAILABLE_CHANNELS_FORM } from "../elements/channels/available-channels
 import { SELECT_CHANNELS_TO_ASSIGN } from "../elements/channels/select-channels-to-assign";
 import { ASSIGN_ELEMENTS_SELECTORS } from "../elements/shared/assign-elements-selectors";
 import { BUTTON_SELECTORS } from "../elements/shared/button-selectors";
-import { SHARED_ELEMENTS } from "../elements/shared/sharedElements";
 import { confirmationMessageShouldDisappear } from "./shared/confirmationMessages";
 
 export function createCollection(collectionName, isPublished, channel) {
@@ -35,6 +34,7 @@ export function createCollection(collectionName, isPublished, channel) {
     .wait("@CreateCollection")
     .its("response.body.data.collectionCreate.collection");
 }
+
 export function assignProductsToCollection(productName) {
   cy.get(COLLECTION_SELECTORS.addProductButton)
     .click()

@@ -2038,10 +2038,6 @@
   "src_dot_components_dot_CompanyAddressInput_dot_944851093": {
     "string": "Country area"
   },
-  "src_dot_components_dot_ConfirmButton_dot_2845142593": {
-    "context": "button",
-    "string": "Error"
-  },
   "src_dot_components_dot_CountryList_dot_2460766407": {
     "context": "number of countries",
     "string": "{number} Countries"
@@ -2465,18 +2461,6 @@
   "src_dot_components_dot_Weight_dot_2781622322": {
     "context": "weight",
     "string": "{value} {unit}"
-  },
-  "src_dot_components_dot_messages_dot_1219076963": {
-    "context": "snackbar expand",
-    "string": "Expand"
-  },
-  "src_dot_components_dot_messages_dot_2473863536": {
-    "context": "snackbar button undo",
-    "string": "Undo"
-  },
-  "src_dot_components_dot_messages_dot_3444275093": {
-    "context": "snackbar collapse",
-    "string": "Collapse"
   },
   "src_dot_configuration": {
     "context": "configuration section name",
@@ -3368,6 +3352,9 @@
   },
   "src_dot_endHour": {
     "string": "End Hour"
+  },
+  "src_dot_error": {
+    "string": "Error"
   },
   "src_dot_exchangeRates": {
     "context": "Manage and Update your warehouse information",
@@ -5559,6 +5546,30 @@
   "src_dot_products_dot_components_dot_ProductUpdatePage_dot_3640454975": {
     "context": "product label",
     "string": "Published"
+  },
+  "src_dot_products_dot_components_dot_ProductVariantCreateDialog_dot_description": {
+    "context": "create product variants",
+    "string": "How would you like to create variants:"
+  },
+  "src_dot_products_dot_components_dot_ProductVariantCreateDialog_dot_optionMultipleDescription": {
+    "context": "option description",
+    "string": "Use variant creator to create matrix of selected attribute values to create variants"
+  },
+  "src_dot_products_dot_components_dot_ProductVariantCreateDialog_dot_optionMultipleTitle": {
+    "context": "option",
+    "string": "Create multiple variant via variant creator"
+  },
+  "src_dot_products_dot_components_dot_ProductVariantCreateDialog_dot_optionSingleDescription": {
+    "context": "option description",
+    "string": "Create new variant using variant details view"
+  },
+  "src_dot_products_dot_components_dot_ProductVariantCreateDialog_dot_optionSingleTitle": {
+    "context": "option",
+    "string": "Create single variant"
+  },
+  "src_dot_products_dot_components_dot_ProductVariantCreateDialog_dot_title": {
+    "context": "dialog header",
+    "string": "Create Variants"
   },
   "src_dot_products_dot_components_dot_ProductVariantCreatePage_dot_attributesHeader": {
     "context": "attributes, section header",

@@ -9,6 +9,10 @@ export const PRODUCT_DETAILS = {
   visibleRadioBtn: "[name='isPublished']",
   channelAvailabilityItem: "[data-test='channel-availability-item']",
   addVariantsButton: "[data-test*='button-add-variant']",
+  addVariantsOptionDialog: {
+    optionMultiple: '[data-test-id="variant-create-option-multiple"]',
+    optionSingle: '[data-test-id="variant-create-option-single"]'
+  },
   descriptionInput: "[data-test-id='description']",
   ratingInput: "[name='rating']",
   skuInput: "[name='sku']",
