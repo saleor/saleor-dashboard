@@ -7,6 +7,7 @@ import {
   TextField
 } from "@material-ui/core";
 import { getAttributeValueErrorMessage } from "@saleor/attributes/errors";
+import { ColorPicker } from "@saleor/components/ColorPicker";
 import ConfirmButton, {
   ConfirmButtonTransitionState
 } from "@saleor/components/ConfirmButton";
@@ -15,6 +16,7 @@ import { AttributeErrorFragment } from "@saleor/fragments/types/AttributeErrorFr
 import useModalDialogErrors from "@saleor/hooks/useModalDialogErrors";
 import { buttonMessages } from "@saleor/intl";
 import { maybe } from "@saleor/misc";
+import { AttributeInputTypeEnum } from "@saleor/types/globalTypes";
 import { getFormErrors } from "@saleor/utils/errors";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -30,6 +32,7 @@ export interface AttributeValueEditDialogProps {
   open: boolean;
   onSubmit: (data: AttributeValueEditDialogFormData) => void;
   onClose: () => void;
+  inputType?: AttributeInputTypeEnum;
 }
 
 const AttributeValueEditDialog: React.FC<AttributeValueEditDialogProps> = ({
@@ -49,7 +52,8 @@ const AttributeValueEditDialog: React.FC<AttributeValueEditDialogProps> = ({
   const formErrors = getFormErrors(["name"], errors);
 
   return (
-    <Dialog onClose={onClose} open={open} fullWidth maxWidth="sm">
+    // <Dialog onClose={onClose} open={open} fullWidth maxWidth="sm">
+    <Dialog onClose={onClose} open={true} fullWidth maxWidth="sm">
       <DialogTitle>
         {attributeValue === null ? (
           <FormattedMessage
@@ -85,6 +89,7 @@ const AttributeValueEditDialog: React.FC<AttributeValueEditDialogProps> = ({
                 value={data.name}
                 onChange={change}
               />
+              <ColorPicker />
             </DialogContent>
             <DialogActions>
               <Button onClick={onClose}>

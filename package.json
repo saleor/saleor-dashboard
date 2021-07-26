@@ -30,6 +30,8 @@
     "@saleor/macaw-ui": "^0.2.2",
     "@sentry/react": "^6.0.0",
     "@types/faker": "^5.1.6",
+    "@uiw/react-color-hue": "0.0.34",
+    "@uiw/react-color-saturation": "0.0.34",
     "apollo": "^2.32.5",
     "apollo-cache-inmemory": "^1.6.5",
     "apollo-client": "^2.6.8",

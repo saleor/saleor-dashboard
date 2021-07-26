@@ -29,7 +29,8 @@ import { AttributeValueDelete } from "../types/AttributeValueDelete";
 
 export const ATTRIBUTE_TYPES_WITH_DEDICATED_VALUES = [
   AttributeInputTypeEnum.DROPDOWN,
-  AttributeInputTypeEnum.MULTISELECT
+  AttributeInputTypeEnum.MULTISELECT,
+  AttributeInputTypeEnum.SWATCH
 ];
 
 export const ATTRIBUTE_TYPES_WITH_CONFIGURABLE_FACED_NAVIGATION = [
@@ -38,7 +39,8 @@ export const ATTRIBUTE_TYPES_WITH_CONFIGURABLE_FACED_NAVIGATION = [
   AttributeInputTypeEnum.BOOLEAN,
   AttributeInputTypeEnum.DATE,
   AttributeInputTypeEnum.DATE_TIME,
-  AttributeInputTypeEnum.NUMERIC
+  AttributeInputTypeEnum.NUMERIC,
+  AttributeInputTypeEnum.SWATCH
 ];
 
 export interface AttributeReference {

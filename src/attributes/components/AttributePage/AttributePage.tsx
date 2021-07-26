@@ -104,7 +104,8 @@ const AttributePage: React.FC<AttributePageProps> = ({
           entityType: null,
           filterableInDashboard: true,
           filterableInStorefront: true,
-          inputType: AttributeInputTypeEnum.DROPDOWN,
+          // inputType: AttributeInputTypeEnum.DROPDOWN,
+          inputType: AttributeInputTypeEnum.SWATCH,
           metadata: [],
           name: "",
           privateMetadata: [],
@@ -201,6 +202,7 @@ const AttributePage: React.FC<AttributePageProps> = ({
                   <>
                     <CardSpacer />
                     <AttributeValues
+                      inputType={data.inputType}
                       disabled={disabled}
                       values={mapEdgesToItems(values)}
                       onValueAdd={onValueAdd}

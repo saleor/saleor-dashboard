@@ -304,6 +304,7 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ id, params }) => {
         }
       />
       <AttributeValueEditDialog
+        inputType={data?.attribute.inputType}
         attributeValue={null}
         confirmButtonState={attributeValueCreateOpts.status}
         disabled={loading}
@@ -326,6 +327,7 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ id, params }) => {
         }
       />
       <AttributeValueEditDialog
+        inputType={data?.attribute.inputType}
         attributeValue={maybe(
           () =>
             data.attribute.choices.edges.find(
