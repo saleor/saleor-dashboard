@@ -15,7 +15,7 @@ import PriceField from "@saleor/components/PriceField";
 import RadioGroupField from "@saleor/components/RadioGroupField";
 import { Money } from "@saleor/fragments/types/Money";
 import { buttonMessages } from "@saleor/intl";
-import { makeStyles } from "@saleor/theme";
+import { makeStyles } from "@saleor/macaw-ui";
 import { DiscountValueTypeEnum } from "@saleor/types/globalTypes";
 import React, {
   ChangeEvent,

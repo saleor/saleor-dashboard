@@ -3,7 +3,7 @@ import { ASSIGN_ELEMENTS_SELECTORS } from "../../elements/shared/assign-elements
 import { BUTTON_SELECTORS } from "../../elements/shared/button-selectors";
 import { formatDate } from "../../support/format/formatDate";
 import { selectChannelInDetailsPages } from "../channelsSteps";
-import { confirmationMessageShouldDisappear } from "../shared/confirmationMessage";
+import { confirmationMessageShouldDisappear } from "../shared/confirmationMessages";
 import { waitForProgressBarToNotBeVisible } from "../shared/progressBar";
 
 export const discountOptions = {

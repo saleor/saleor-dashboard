@@ -1,9 +1,9 @@
 import { Button, Card } from "@material-ui/core";
-import AppHeader from "@saleor/components/AppHeader";
 import Container from "@saleor/components/Container";
 import PageHeader from "@saleor/components/PageHeader";
 import SearchBar from "@saleor/components/SearchBar";
 import { sectionNames } from "@saleor/intl";
+import { Backlink } from "@saleor/macaw-ui";
 import { PageTypeList_pageTypes_edges_node } from "@saleor/pageTypes/types/PageTypeList";
 import { PageTypeListUrlSortField } from "@saleor/pageTypes/urls";
 import React from "react";
@@ -44,9 +44,9 @@ const PageTypeListPage: React.FC<PageTypeListPageProps> = ({
   const intl = useIntl();
   return (
     <Container>
-      <AppHeader onBack={onBack}>
+      <Backlink onClick={onBack}>
         {intl.formatMessage(sectionNames.configuration)}
-      </AppHeader>
+      </Backlink>
       <PageHeader title={intl.formatMessage(sectionNames.pageTypes)}>
         <Button
           color="primary"

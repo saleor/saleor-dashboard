@@ -1,7 +1,7 @@
 import { ATTRIBUTES_DETAILS } from "../elements/attribute/attributes_details";
 import { BUTTON_SELECTORS } from "../elements/shared/button-selectors";
 import { attributeDetailsUrl } from "../url/urlList";
-import { confirmationMessageShouldDisappear } from "./shared/confirmationMessage";
+import { confirmationMessageShouldDisappear } from "./shared/confirmationMessages";
 
 export function createAttributeWithInputType({
   name,

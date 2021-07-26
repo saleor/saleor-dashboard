@@ -1,33 +1,23 @@
 import { DEFAULT_NOTIFICATION_SHOW_TIME } from "@saleor/config";
+import { Notification } from "@saleor/macaw-ui";
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import { createPortal } from "react-dom";
 import { TransitionGroup } from "react-transition-group";
 
-import {
-  INotification,
-  ITimer,
-  MessageContext,
-  MessageManagerTemplate
-} from ".";
+import { INotification, ITimer, MessageContext } from ".";
 import Container from "./Container";
+import { useStyles } from "./styles";
 import Transition from "./Transition";
 
 const MessageManagerProvider = ({ children }) => {
-  const root = useRef(null);
+  const classes = useStyles();
   const timersArr = useRef<ITimer[]>([]);
   const [notifications, setNotifications] = useState<INotification[]>([]);
 
   useEffect(() => {
-    root.current = document.createElement("div");
-    root.current.id = "__message-manager__";
-    document.body.appendChild(root.current);
     const timersArrRef = timersArr.current;
 
     return () => {
       timersArrRef.forEach(timer => clearTimeout(timer.timeoutId));
-      if (root.current) {
-        document.body.removeChild(root.current);
-      }
     };
   }, []);
 
@@ -101,33 +91,43 @@ const MessageManagerProvider = ({ children }) => {
   };
 
   return (
-    <MessageContext.Provider value={{ remove, show }}>
-      {children}
-      {root.current &&
-        createPortal(
-          <TransitionGroup
-            appear
-            options={{ position: "top right" }}
-            component={Container}
-          >
-            {!!notifications.length &&
-              notifications.map(notification => (
-                <Transition key={notification.id}>
-                  <MessageManagerTemplate
-                    {...notification}
-                    {...(!!notification.timeout
-                      ? {
-                          onMouseEnter: () => pauseTimer(notification),
-                          onMouseLeave: () => resumeTimer(notification)
-                        }
-                      : {})}
-                  />
-                </Transition>
-              ))}
-          </TransitionGroup>,
-          root.current
-        )}
-    </MessageContext.Provider>
+    <>
+      <MessageContext.Provider value={{ remove, show }}>
+        {children}
+      </MessageContext.Provider>
+      <TransitionGroup
+        appear
+        options={{ position: "top right" }}
+        component={Container}
+      >
+        {!!notifications.length &&
+          notifications.map(notification => (
+            <Transition key={notification.id}>
+              <Notification
+                {...(!!notification.timeout
+                  ? {
+                      onMouseEnter: () => pauseTimer(notification),
+                      onMouseLeave: () => resumeTimer(notification)
+                    }
+                  : {})}
+                onClose={notification.close}
+                title={notification.message.title}
+                type={notification.message.status || "info"}
+                content={notification.message.text}
+                {...(!!notification.message.actionBtn
+                  ? {
+                      action: {
+                        label: notification.message.actionBtn.label,
+                        onClick: notification.message.actionBtn.action
+                      }
+                    }
+                  : {})}
+                className={classes.notification}
+              />
+            </Transition>
+          ))}
+      </TransitionGroup>
+    </>
   );
 };
 

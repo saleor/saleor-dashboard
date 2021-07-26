@@ -33,6 +33,7 @@ export function createCheckout({
         field
         message
       }
+
       created
       checkout{
         id
@@ -56,6 +57,10 @@ export function addShippingMethod(checkoutId, shippingMethodId) {
         field
     	}
     	checkout{
+        shippingMethod{
+          id
+          name
+        }
      		totalPrice{
         	gross{
          	 amount
