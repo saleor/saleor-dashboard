@@ -1,9 +1,9 @@
+import { PAGE_DETAILS } from "../elements/pages/page-details";
 import { PAGES_LIST } from "../elements/pages/pages-list";
-import { PAGE_DETAILS } from "../elements/pages/pege-details";
 import { BUTTON_SELECTORS } from "../elements/shared/button-selectors";
 import { SHARED_ELEMENTS } from "../elements/shared/sharedElements";
 import { urlList } from "../url/urlList";
-import { confirmationMessageShouldDisappear } from "./shared/confirmationMessage";
+import { confirmationMessageShouldDisappear } from "./shared/confirmationMessages";
 import { fillAutocompleteSelect } from "./shared/selects";
 
 export const attributesTypes = {
