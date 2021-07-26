@@ -6,7 +6,7 @@ import Link from "@saleor/components/Link";
 import { customerUrl } from "@saleor/customers/urls";
 import useDateLocalize from "@saleor/hooks/useDateLocalize";
 import useNavigator from "@saleor/hooks/useNavigator";
-import { getFullName } from "@saleor/misc";
+import { getFullName, getStringOrPlaceholder } from "@saleor/misc";
 import Label from "@saleor/orders/components/OrderHistory/Label";
 import { getOrderNumberLinkObject } from "@saleor/orders/components/OrderHistory/utils";
 import { productUrl } from "@saleor/products/urls";
@@ -133,7 +133,9 @@ const GiftCardUpdateInfoCard: React.FC = () => {
             {getFullName(usedBy)}
           </Link>
         ) : (
-          <Typography>{usedByEmail || PLACEHOLDER}</Typography>
+          <Typography>
+            {getStringOrPlaceholder(usedByEmail, PLACEHOLDER)}
+          </Typography>
         )}
       </CardContent>
     </Card>

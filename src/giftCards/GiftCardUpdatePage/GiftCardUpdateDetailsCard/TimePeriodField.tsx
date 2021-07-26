@@ -6,21 +6,21 @@ import { useIntl } from "react-intl";
 
 import { timePeriodTextWithSelectFieldMessages as messages } from "./messages";
 
-interface TimePeriodFieldProps<T> {
+interface TimePeriodFieldProps {
   change: FormChange;
   periodAmount: number;
   periodType: TimePeriodTypeEnum;
-  amountFieldName: keyof T;
-  typeFieldName: keyof T;
+  amountFieldName: string;
+  typeFieldName: string;
 }
 
-function TimePeriodField<T>({
+const TimePeriodField: React.FC<TimePeriodFieldProps> = ({
   change,
   periodAmount,
   periodType,
   amountFieldName,
   typeFieldName
-}: TimePeriodFieldProps<T>) {
+}) => {
   const intl = useIntl();
 
   const options = [
@@ -48,6 +48,6 @@ function TimePeriodField<T>({
       selectFieldValue={periodType}
     />
   );
-}
+};
 
 export default TimePeriodField;
