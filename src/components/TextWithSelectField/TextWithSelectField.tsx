@@ -3,6 +3,7 @@ import SingleSelectField, {
   Choices
 } from "@saleor/components/SingleSelectField";
 import { FormChange } from "@saleor/hooks/useForm";
+import classNames from "classnames";
 import React from "react";
 
 import { useStyles } from "./styles";
@@ -14,15 +15,17 @@ export interface TextWithSelectFieldProps {
   selectFieldName: string;
   textFieldValue: string;
   selectFieldValue: string;
+  selectFieldClassName: string;
 }
 
 const TextWithSelectField: React.FC<TextWithSelectFieldProps> = ({
   change,
+  choices,
   textFieldName,
   textFieldValue,
   selectFieldName,
   selectFieldValue,
-  choices
+  selectFieldClassName
 }) => {
   const classes = useStyles();
 
@@ -38,7 +41,10 @@ const TextWithSelectField: React.FC<TextWithSelectFieldProps> = ({
               name={selectFieldName}
               onChange={change}
               value={selectFieldValue}
-              className={classes.autocompleteField}
+              className={classNames(
+                classes.autocompleteField,
+                selectFieldClassName
+              )}
               choices={choices}
             />
           )
