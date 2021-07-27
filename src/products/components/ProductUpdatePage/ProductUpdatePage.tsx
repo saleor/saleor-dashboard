@@ -4,7 +4,6 @@ import {
   mergeAttributeValues
 } from "@saleor/attributes/utils/data";
 import { ChannelData } from "@saleor/channels/utils";
-import AppHeader from "@saleor/components/AppHeader";
 import AssignAttributeValueDialog from "@saleor/components/AssignAttributeValueDialog";
 import Attributes, { AttributeInput } from "@saleor/components/Attributes";
 import CardSpacer from "@saleor/components/CardSpacer";
@@ -14,7 +13,7 @@ import Container from "@saleor/components/Container";
 import Grid from "@saleor/components/Grid";
 import Metadata from "@saleor/components/Metadata/Metadata";
 import PageHeader from "@saleor/components/PageHeader";
-import SaveButtonBar from "@saleor/components/SaveButtonBar";
+import Savebar from "@saleor/components/Savebar";
 import SeoForm from "@saleor/components/SeoForm";
 import { RefreshLimits_shop_limits } from "@saleor/components/Shop/types/RefreshLimits";
 import { ProductChannelListingErrorFragment } from "@saleor/fragments/types/ProductChannelListingErrorFragment";
@@ -25,6 +24,7 @@ import { SubmitPromise } from "@saleor/hooks/useForm";
 import { FormsetData } from "@saleor/hooks/useFormset";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { sectionNames } from "@saleor/intl";
+import { Backlink } from "@saleor/macaw-ui";
 import { maybe } from "@saleor/misc";
 import ProductExternalMediaDialog from "@saleor/products/components/ProductExternalMediaDialog";
 import ProductVariantPrice from "@saleor/products/components/ProductVariantPrice";
@@ -278,9 +278,9 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
       }) => (
         <>
           <Container>
-            <AppHeader onBack={onBack}>
+            <Backlink onClick={onBack}>
               {intl.formatMessage(sectionNames.products)}
-            </AppHeader>
+            </Backlink>
             <PageHeader title={header} />
             <Grid>
               <div>
@@ -469,10 +469,10 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                 />
               </div>
             </Grid>
-            <SaveButtonBar
+            <Savebar
               onCancel={onBack}
               onDelete={onDelete}
-              onSave={submit}
+              onSubmit={submit}
               state={saveButtonBarState}
               disabled={
                 disabled || formDisabled || (!hasChanged && !hasChannelChanged)

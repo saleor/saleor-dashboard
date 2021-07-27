@@ -7,7 +7,7 @@ import {
 } from "@material-ui/core";
 import useElementScroll from "@saleor/hooks/useElementScroll";
 import { buttonMessages } from "@saleor/intl";
-import { makeStyles } from "@saleor/theme";
+import { makeStyles } from "@saleor/macaw-ui";
 import { FetchMoreProps } from "@saleor/types";
 import { isSelected } from "@saleor/utils/lists";
 import classNames from "classnames";

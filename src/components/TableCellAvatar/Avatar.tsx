@@ -1,6 +1,6 @@
 import { Avatar as MuiAvatar } from "@material-ui/core";
 import Cached from "@material-ui/icons/Cached";
-import { makeStyles } from "@saleor/theme";
+import { makeStyles } from "@saleor/macaw-ui";
 import classNames from "classnames";
 import React from "react";
 

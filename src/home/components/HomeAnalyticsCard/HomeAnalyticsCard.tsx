@@ -1,6 +1,6 @@
 import { Card, CardContent, Typography } from "@material-ui/core";
 import { IconProps } from "@material-ui/core/Icon";
-import { makeStyles } from "@saleor/theme";
+import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 

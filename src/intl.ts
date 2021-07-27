@@ -43,12 +43,16 @@ export const commonMessages = defineMessages({
   endHour: {
     defaultMessage: "End Hour"
   },
+  error: {
+    defaultMessage: "Error"
+  },
   firstName: {
     defaultMessage: "First Name"
   },
   generalInformations: {
     defaultMessage: "General Information"
   },
+
   insufficientPermissions: {
     defaultMessage: "Insufficient permissions"
   },
@@ -104,6 +108,16 @@ export const commonMessages = defineMessages({
   },
   yes: {
     defaultMessage: "Yes"
+  }
+});
+
+export const errorMessages = defineMessages({
+  imgageUploadErrorTitle: {
+    defaultMessage: "Couldn't process image"
+  },
+  imageUploadErrorText: {
+    defaultMessage:
+      "There was a poblem with the file you uploaded as an image and it couldn't be used. Please try a different file."
   }
 });
 

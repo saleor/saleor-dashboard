@@ -7,7 +7,7 @@ import {
   Radio,
   RadioGroup
 } from "@material-ui/core";
-import { makeStyles } from "@saleor/theme";
+import { makeStyles } from "@saleor/macaw-ui";
 import classNames from "classnames";
 import React from "react";
 import { FormattedMessage } from "react-intl";
@@ -26,7 +26,7 @@ const useStyles = makeStyles(
       flexDirection: "row"
     },
     radioLabel: {
-      marginBottom: -theme.spacing(0.5)
+      marginBottom: theme.spacing(-0.5)
     },
     radioLabelInline: {
       marginRight: theme.spacing(4)
@@ -41,7 +41,7 @@ const useStyles = makeStyles(
       width: "100%"
     },
     rootNoLabel: {
-      marginTop: -theme.spacing(1.5)
+      marginTop: theme.spacing(-1.5)
     }
   }),
   {

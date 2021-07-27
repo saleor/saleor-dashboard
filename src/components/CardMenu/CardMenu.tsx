@@ -8,7 +8,7 @@ import {
   Popper
 } from "@material-ui/core";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
-import { makeStyles } from "@saleor/theme";
+import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 
 const ITEM_HEIGHT = 48;

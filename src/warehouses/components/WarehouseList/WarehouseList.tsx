@@ -13,8 +13,8 @@ import Skeleton from "@saleor/components/Skeleton";
 import TableCellHeader from "@saleor/components/TableCellHeader";
 import TablePagination from "@saleor/components/TablePagination";
 import { WarehouseWithShippingFragment } from "@saleor/fragments/types/WarehouseWithShippingFragment";
+import { makeStyles } from "@saleor/macaw-ui";
 import { maybe, renderCollection, stopPropagation } from "@saleor/misc";
-import { makeStyles } from "@saleor/theme";
 import { ListProps, SortPage } from "@saleor/types";
 import { mapEdgesToItems } from "@saleor/utils/maps";
 import { getArrowDirection } from "@saleor/utils/sort";
@@ -40,7 +40,7 @@ const useStyles = makeStyles(
       display: "flex",
       justifyContent: "flex-end",
       position: "relative",
-      right: -theme.spacing(2)
+      right: theme.spacing(-2)
     },
     colActions: {
       textAlign: "right"

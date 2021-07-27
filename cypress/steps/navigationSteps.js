@@ -3,7 +3,7 @@ import { MENU_LIST } from "../elements/navigation/menu-list";
 import { BUTTON_SELECTORS } from "../elements/shared/button-selectors";
 import { SHARED_ELEMENTS } from "../elements/shared/sharedElements";
 import { menuDetailsUrl, urlList } from "../url/urlList";
-import { confirmationMessageShouldDisappear } from "./shared/confirmationMessage";
+import { confirmationMessageShouldDisappear } from "./shared/confirmationMessages";
 
 export function createMenu(name) {
   cy.visit(urlList.navigation)

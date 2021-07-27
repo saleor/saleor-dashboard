@@ -15,9 +15,9 @@ import {
   SortableTableRow
 } from "@saleor/components/SortableTable";
 import TableHead from "@saleor/components/TableHead";
+import { makeStyles } from "@saleor/macaw-ui";
 import { renderCollection, stopPropagation } from "@saleor/misc";
 import { PageTypeDetails_pageType_attributes } from "@saleor/pageTypes/types/PageTypeDetails";
-import { makeStyles } from "@saleor/theme";
 import { ListActions, ReorderAction } from "@saleor/types";
 import { AttributeTypeEnum } from "@saleor/types/globalTypes";
 import React from "react";

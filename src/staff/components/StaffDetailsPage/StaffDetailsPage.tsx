@@ -1,6 +1,5 @@
 import { Card, CardContent, Typography } from "@material-ui/core";
 import AccountPermissionGroups from "@saleor/components/AccountPermissionGroups";
-import AppHeader from "@saleor/components/AppHeader";
 import AccountStatus from "@saleor/components/AppStatus";
 import CardSpacer from "@saleor/components/CardSpacer";
 import CardTitle from "@saleor/components/CardTitle";
@@ -10,12 +9,13 @@ import Form from "@saleor/components/Form";
 import Grid from "@saleor/components/Grid";
 import { MultiAutocompleteChoiceType } from "@saleor/components/MultiAutocompleteSelectField";
 import PageHeader from "@saleor/components/PageHeader";
-import SaveButtonBar from "@saleor/components/SaveButtonBar";
+import Savebar from "@saleor/components/Savebar";
 import { StaffErrorFragment } from "@saleor/fragments/types/StaffErrorFragment";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import useLocale from "@saleor/hooks/useLocale";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { sectionNames } from "@saleor/intl";
+import { Backlink } from "@saleor/macaw-ui";
 import { getUserName } from "@saleor/misc";
 import { SearchPermissionGroups_search_edges_node } from "@saleor/searches/types/SearchPermissionGroups";
 import { FetchMoreProps, SearchPageProps } from "@saleor/types";
@@ -111,9 +111,9 @@ const StaffDetailsPage: React.FC<StaffDetailsPageProps> = ({
 
         return (
           <Container>
-            <AppHeader onBack={onBack}>
+            <Backlink onClick={onBack}>
               {intl.formatMessage(sectionNames.staff)}
-            </AppHeader>
+            </Backlink>
             <PageHeader title={getUserName(staffMember)} />
             <Grid>
               <div>
@@ -185,11 +185,11 @@ const StaffDetailsPage: React.FC<StaffDetailsPageProps> = ({
                 )}
               </div>
             </Grid>
-            <SaveButtonBar
+            <Savebar
               disabled={disabled || !hasChanged}
               state={saveButtonBarState}
               onCancel={onBack}
-              onSave={submit}
+              onSubmit={submit}
               onDelete={canRemove ? onDelete : undefined}
             />
           </Container>

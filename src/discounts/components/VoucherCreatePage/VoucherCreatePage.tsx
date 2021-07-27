@@ -1,5 +1,4 @@
 import { ChannelVoucherData } from "@saleor/channels/utils";
-import AppHeader from "@saleor/components/AppHeader";
 import CardSpacer from "@saleor/components/CardSpacer";
 import ChannelsAvailabilityCard from "@saleor/components/ChannelsAvailabilityCard";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
@@ -7,13 +6,14 @@ import Container from "@saleor/components/Container";
 import Form from "@saleor/components/Form";
 import Grid from "@saleor/components/Grid";
 import PageHeader from "@saleor/components/PageHeader";
-import SaveButtonBar from "@saleor/components/SaveButtonBar";
+import Savebar from "@saleor/components/Savebar";
 import {
   createChannelsChangeHandler,
   createDiscountTypeChangeHandler
 } from "@saleor/discounts/handlers";
 import { DiscountErrorFragment } from "@saleor/fragments/types/DiscountErrorFragment";
 import { sectionNames } from "@saleor/intl";
+import { Backlink } from "@saleor/macaw-ui";
 import { validatePrice } from "@saleor/products/utils/validation";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -115,9 +115,9 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
           );
         return (
           <Container>
-            <AppHeader onBack={onBack}>
+            <Backlink onClick={onBack}>
               {intl.formatMessage(sectionNames.vouchers)}
-            </AppHeader>
+            </Backlink>
             <PageHeader
               title={intl.formatMessage({
                 defaultMessage: "Create Voucher",
@@ -190,12 +190,12 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
                 />
               </div>
             </Grid>
-            <SaveButtonBar
+            <Savebar
               disabled={
                 disabled || formDisabled || (!hasChanged && !hasChannelChanged)
               }
               onCancel={onBack}
-              onSave={submit}
+              onSubmit={submit}
               state={saveButtonBarState}
             />
           </Container>

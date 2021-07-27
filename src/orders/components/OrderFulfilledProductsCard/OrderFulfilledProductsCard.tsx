@@ -2,8 +2,8 @@ import { Card, TableBody } from "@material-ui/core";
 import CardMenu from "@saleor/components/CardMenu";
 import CardSpacer from "@saleor/components/CardSpacer";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
+import { makeStyles } from "@saleor/macaw-ui";
 import { mergeRepeatedOrderLines } from "@saleor/orders/utils/data";
-import { makeStyles } from "@saleor/theme";
 import React from "react";
 import { useIntl } from "react-intl";
 

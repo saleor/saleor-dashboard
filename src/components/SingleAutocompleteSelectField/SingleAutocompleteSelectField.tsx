@@ -1,7 +1,7 @@
 import { InputBase, TextField } from "@material-ui/core";
 import { InputProps } from "@material-ui/core/Input";
 import { ExtendedFormHelperTextProps } from "@saleor/channels/components/ChannelForm/types";
-import { makeStyles } from "@saleor/theme";
+import { makeStyles } from "@saleor/macaw-ui";
 import { FetchMoreProps } from "@saleor/types";
 import classNames from "classnames";
 import Downshift from "downshift";

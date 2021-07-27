@@ -2,7 +2,7 @@ import { Dialog, DialogContent, DialogTitle } from "@material-ui/core";
 import { DialogProps } from "@saleor/types";
 import React from "react";
 
-import { ConfirmButtonTransitionState } from "../ConfirmButton/ConfirmButton";
+import { ConfirmButtonTransitionState } from "../ConfirmButton";
 import DialogButtons from "./DialogButtons";
 import { ActionDialogVariant } from "./types";
 
