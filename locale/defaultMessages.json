@@ -4469,7 +4469,7 @@
     "context": "section header",
     "string": "Unfulfilled"
   },
-  "src_dot_orders_dot_components_dot_OrderReturnPage_dot_OrderReturnRefundItemsCard_dot_waitingForAcceptance": {
+  "src_dot_orders_dot_components_dot_OrderReturnPage_dot_OrderReturnRefundItemsCard_dot_waitingForApproval": {
     "context": "unapproved fulfillment, section header",
     "string": "Waiting for approval ({quantity})"
   },

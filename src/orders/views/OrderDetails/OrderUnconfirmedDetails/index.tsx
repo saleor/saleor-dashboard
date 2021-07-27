@@ -323,9 +323,7 @@ export const OrderUnconfirmedDetails: React.FC<OrderUnconfirmedDetailsProps> = (
         onConfirm={({ notifyCustomer }) =>
           orderFulfillmentApprove.mutate({
             id: params.id,
-            input: {
-              notifyCustomer
-            }
+            notifyCustomer
           })
         }
         onClose={closeModal}

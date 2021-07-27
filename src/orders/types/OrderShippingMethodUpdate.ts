@@ -503,6 +503,7 @@ export interface OrderShippingMethodUpdate_orderUpdateShipping_order {
   fulfillments: (OrderShippingMethodUpdate_orderUpdateShipping_order_fulfillments | null)[];
   lines: (OrderShippingMethodUpdate_orderUpdateShipping_order_lines | null)[];
   number: string | null;
+  isPaid: boolean;
   paymentStatus: PaymentChargeStatusEnum;
   shippingAddress: OrderShippingMethodUpdate_orderUpdateShipping_order_shippingAddress | null;
   status: OrderStatus;
@@ -515,7 +516,6 @@ export interface OrderShippingMethodUpdate_orderUpdateShipping_order {
   userEmail: string | null;
   invoices: (OrderShippingMethodUpdate_orderUpdateShipping_order_invoices | null)[] | null;
   channel: OrderShippingMethodUpdate_orderUpdateShipping_order_channel;
-  isPaid: boolean;
 }
 
 export interface OrderShippingMethodUpdate_orderUpdateShipping {

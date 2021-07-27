@@ -1639,6 +1639,7 @@ type CustomerEvent implements Node {
   date: DateTime
   type: CustomerEventsEnum
   user: User
+  app: App
   message: String
   count: Int
   order: Order
@@ -2080,10 +2081,6 @@ type FulfillmentApprove {
   order: Order
   orderErrors: [OrderError!]! @deprecated(reason: "Use errors field instead. This field will be removed in Saleor 4.0.")
   errors: [OrderError!]!
-}
-
-input FulfillmentApproveInput {
-  notifyCustomer: boolean!
 }
 
 type FulfillmentCancel {
@@ -2823,8 +2820,8 @@ type Mutation {
   orderCapture(amount: PositiveDecimal!, id: ID!): OrderCapture
   orderConfirm(id: ID!): OrderConfirm
   orderFulfill(input: OrderFulfillInput!, order: ID): OrderFulfill
-  orderFulfillmentApprove(id: ID!, input: FulfillmentApproveInput!): FulfillmentApprove
   orderFulfillmentCancel(id: ID!, input: FulfillmentCancelInput!): FulfillmentCancel
+  orderFulfillmentApprove(id: ID!, notifyCustomer: Boolean!): FulfillmentApprove
   orderFulfillmentUpdateTracking(id: ID!, input: FulfillmentUpdateTrackingInput!): FulfillmentUpdateTracking
   orderFulfillmentRefundProducts(input: OrderRefundProductsInput!, order: ID!): FulfillmentRefundProducts
   orderFulfillmentReturnProducts(input: OrderReturnProductsInput!, order: ID!): FulfillmentReturnProducts
@@ -3167,6 +3164,7 @@ enum OrderErrorCode {
   CANNOT_DELETE
   CANNOT_DISCOUNT
   CANNOT_REFUND
+  CANNOT_FULFILL_UNPAID_ORDER
   CAPTURE_INACTIVE_PAYMENT
   NOT_EDITABLE
   FULFILL_ORDER_LINE
@@ -3197,6 +3195,7 @@ type OrderEvent implements Node {
   date: DateTime
   type: OrderEventsEnum
   user: User
+  app: App
   message: String
   email: String
   emailType: OrderEventsEmailsEnum
@@ -3296,6 +3295,7 @@ enum OrderEventsEnum {
   FULFILLMENT_REFUNDED
   FULFILLMENT_RETURNED
   FULFILLMENT_REPLACED
+  FULFILLMENT_AWAITS_APPROVAL
   TRACKING_UPDATED
   NOTE_ADDED
   OTHER
@@ -3913,6 +3913,7 @@ type PaymentRefund {
 
 type PaymentSource {
   gateway: String!
+  paymentMethodId: String
   creditCardInfo: CreditCard
 }
 
@@ -4789,7 +4790,6 @@ type Query {
   taxTypes: [TaxType]
   checkout(token: UUID): Checkout
   checkouts(channel: String, before: String, after: String, first: Int, last: Int): CheckoutCountableConnection
-  checkoutLine(id: ID): CheckoutLine
   checkoutLines(before: String, after: String, first: Int, last: Int): CheckoutLineCountableConnection
   channel(id: ID): Channel
   channels: [Channel!]
@@ -4843,12 +4843,14 @@ type RequestPasswordReset {
   errors: [AccountError!]!
 }
 
-type Sale implements Node {
+type Sale implements Node & ObjectWithMetadata {
   id: ID!
   name: String!
   type: SaleType!
   startDate: DateTime!
   endDate: DateTime
+  privateMetadata: [MetadataItem]!
+  metadata: [MetadataItem]!
   categories(before: String, after: String, first: Int, last: Int): CategoryCountableConnection
   collections(before: String, after: String, first: Int, last: Int): CollectionCountableConnection
   products(before: String, after: String, first: Int, last: Int): ProductCountableConnection
@@ -4921,6 +4923,7 @@ input SaleFilterInput {
   saleType: DiscountValueTypeEnum
   started: DateTimeRangeInput
   search: String
+  metadata: [MetadataFilter]
 }
 
 input SaleInput {
@@ -5257,6 +5260,8 @@ type Shop {
   phonePrefixes: [String]!
   headerText: String
   includeTaxesInPrices: Boolean!
+  fulfillmentAutoApprove: Boolean!
+  fulfillmentAllowUnpaid: Boolean!
   displayGrossPrices: Boolean!
   chargeTaxesOnShipping: Boolean!
   trackInventoryByDefault: Boolean
@@ -5315,6 +5320,8 @@ input ShopSettingsInput {
   trackInventoryByDefault: Boolean
   defaultWeightUnit: WeightUnitsEnum
   automaticFulfillmentDigitalProducts: Boolean
+  fulfillmentAutoApprove: Boolean
+  fulfillmentAllowUnpaid: Boolean
   defaultDigitalMaxDownloads: Int
   defaultDigitalUrlValidDays: Int
   defaultMailSenderName: String
@@ -5761,7 +5768,7 @@ enum VolumeUnitsEnum {
   ACRE_FT
 }
 
-type Voucher implements Node {
+type Voucher implements Node & ObjectWithMetadata {
   id: ID!
   name: String
   type: VoucherTypeEnum!
@@ -5775,6 +5782,8 @@ type Voucher implements Node {
   onlyForStaff: Boolean!
   discountValueType: DiscountValueTypeEnum!
   minCheckoutItemsQuantity: Int
+  privateMetadata: [MetadataItem]!
+  metadata: [MetadataItem]!
   categories(before: String, after: String, first: Int, last: Int): CategoryCountableConnection
   collections(before: String, after: String, first: Int, last: Int): CollectionCountableConnection
   products(before: String, after: String, first: Int, last: Int): ProductCountableConnection
@@ -5858,6 +5867,7 @@ input VoucherFilterInput {
   discountType: [VoucherDiscountType]
   started: DateTimeRangeInput
   search: String
+  metadata: [MetadataFilter]
 }
 
 input VoucherInput {
@@ -6178,7 +6188,7 @@ enum WeightUnitsEnum {
 
 scalar _Any
 
-union _Entity = Address | User | Group | App | ProductVariant | Product | ProductType | Collection | Category | ProductMedia | ProductImage | PageType
+union _Entity = App | Address | User | Group | ProductVariant | Product | ProductType | Collection | Category | ProductMedia | ProductImage | PageType
 
 type _Service {
   sdl: String

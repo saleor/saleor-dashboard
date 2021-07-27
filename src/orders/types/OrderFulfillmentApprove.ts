@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { FulfillmentApproveInput, OrderErrorCode, AddressTypeEnum, OrderDiscountType, DiscountValueTypeEnum, OrderEventsEmailsEnum, OrderEventsEnum, FulfillmentStatus, PaymentChargeStatusEnum, OrderStatus, OrderAction, JobStatusEnum } from "../../types/globalTypes";
+import { OrderErrorCode, AddressTypeEnum, OrderDiscountType, DiscountValueTypeEnum, OrderEventsEmailsEnum, OrderEventsEnum, FulfillmentStatus, PaymentChargeStatusEnum, OrderStatus, OrderAction, JobStatusEnum } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: OrderFulfillmentApprove
@@ -490,6 +490,7 @@ export interface OrderFulfillmentApprove_orderFulfillmentApprove_order {
   fulfillments: (OrderFulfillmentApprove_orderFulfillmentApprove_order_fulfillments | null)[];
   lines: (OrderFulfillmentApprove_orderFulfillmentApprove_order_lines | null)[];
   number: string | null;
+  isPaid: boolean;
   paymentStatus: PaymentChargeStatusEnum;
   shippingAddress: OrderFulfillmentApprove_orderFulfillmentApprove_order_shippingAddress | null;
   shippingMethod: OrderFulfillmentApprove_orderFulfillmentApprove_order_shippingMethod | null;
@@ -507,7 +508,6 @@ export interface OrderFulfillmentApprove_orderFulfillmentApprove_order {
   availableShippingMethods: (OrderFulfillmentApprove_orderFulfillmentApprove_order_availableShippingMethods | null)[] | null;
   invoices: (OrderFulfillmentApprove_orderFulfillmentApprove_order_invoices | null)[] | null;
   channel: OrderFulfillmentApprove_orderFulfillmentApprove_order_channel;
-  isPaid: boolean;
 }
 
 export interface OrderFulfillmentApprove_orderFulfillmentApprove {
@@ -522,5 +522,5 @@ export interface OrderFulfillmentApprove {
 
 export interface OrderFulfillmentApproveVariables {
   id: string;
-  input: FulfillmentApproveInput;
+  notifyCustomer: boolean;
 }

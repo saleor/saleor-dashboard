@@ -226,7 +226,7 @@ const OrderOperations: React.FC<OrderOperationsProps> = ({
                                               onOrderFulfillmentApprove
                                             }
                                           >
-                                            {(...acceptFulfillment) => (
+                                            {(...approveFulfillment) => (
                                               <TypedOrderFulfillmentCancelMutation
                                                 onCompleted={
                                                   onOrderFulfillmentCancel
@@ -297,7 +297,7 @@ const OrderOperations: React.FC<OrderOperationsProps> = ({
                                                                                 ...updateDraft
                                                                               ),
                                                                               orderFulfillmentApprove: getMutationProviderData(
-                                                                                ...acceptFulfillment
+                                                                                ...approveFulfillment
                                                                               ),
                                                                               orderFulfillmentCancel: getMutationProviderData(
                                                                                 ...cancelFulfillment

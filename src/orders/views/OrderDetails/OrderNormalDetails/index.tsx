@@ -250,9 +250,7 @@ export const OrderNormalDetails: React.FC<OrderNormalDetailsProps> = ({
         onConfirm={({ notifyCustomer }) =>
           orderFulfillmentApprove.mutate({
             id: params.id,
-            input: {
-              notifyCustomer
-            }
+            notifyCustomer
           })
         }
         onClose={closeModal}

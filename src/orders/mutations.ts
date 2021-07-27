@@ -468,8 +468,8 @@ export const TypedOrderFulfillmentUpdateTrackingMutation = TypedMutation<
 const orderFulfillmentApproveMutation = gql`
   ${fragmentOrderDetails}
   ${orderErrorFragment}
-  mutation OrderFulfillmentApprove($id: ID!, $input: FulfillmentApproveInput!) {
-    orderFulfillmentApprove(id: $id, input: $input) {
+  mutation OrderFulfillmentApprove($id: ID!, $notifyCustomer: Boolean!) {
+    orderFulfillmentApprove(id: $id, notifyCustomer: $notifyCustomer) {
       errors {
         ...OrderErrorFragment
       }

@@ -54,7 +54,7 @@ const messages = defineMessages({
     defaultMessage: "Returned ({quantity})",
     description: "refunded fulfillment, section header"
   },
-  waitingForAcceptance: {
+  waitingForApproval: {
     defaultMessage: "Waiting for approval ({quantity})",
     description: "unapproved fulfillment, section header"
   },

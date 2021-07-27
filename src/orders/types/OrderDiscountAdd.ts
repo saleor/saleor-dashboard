@@ -490,6 +490,7 @@ export interface OrderDiscountAdd_orderDiscountAdd_order {
   fulfillments: (OrderDiscountAdd_orderDiscountAdd_order_fulfillments | null)[];
   lines: (OrderDiscountAdd_orderDiscountAdd_order_lines | null)[];
   number: string | null;
+  isPaid: boolean;
   paymentStatus: PaymentChargeStatusEnum;
   shippingAddress: OrderDiscountAdd_orderDiscountAdd_order_shippingAddress | null;
   shippingMethod: OrderDiscountAdd_orderDiscountAdd_order_shippingMethod | null;
@@ -507,7 +508,6 @@ export interface OrderDiscountAdd_orderDiscountAdd_order {
   availableShippingMethods: (OrderDiscountAdd_orderDiscountAdd_order_availableShippingMethods | null)[] | null;
   invoices: (OrderDiscountAdd_orderDiscountAdd_order_invoices | null)[] | null;
   channel: OrderDiscountAdd_orderDiscountAdd_order_channel;
-  isPaid: boolean;
 }
 
 export interface OrderDiscountAdd_orderDiscountAdd {
