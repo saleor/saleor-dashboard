@@ -16,6 +16,7 @@ export const giftCardList = gql`
         node {
           id
           code
+          isActive
           displayCode
           tag
           product {

@@ -13,6 +13,7 @@ const GiftCardsListTableFooter: React.FC<GiftCardsListTableCommonProps> = ({
   const paginate = usePaginator();
 
   const {
+    settings,
     updateListSettings,
     pageInfo: apiPageInfo,
     paginationState,
@@ -24,15 +25,12 @@ const GiftCardsListTableFooter: React.FC<GiftCardsListTableCommonProps> = ({
     paginationState,
     params
   );
-  console.log(666, {
-    hasPrev: pageInfo && !disabled ? pageInfo.hasPreviousPage : false,
-    hasNext: pageInfo && !disabled ? pageInfo.hasNextPage : false
-  });
 
   return (
     <TableFooter>
       <TableRow>
         <TablePagination
+          settings={settings}
           colSpan={numberOfColumns}
           hasNextPage={pageInfo && !disabled ? pageInfo.hasNextPage : false}
           onNextPage={loadNextPage}
