@@ -5,6 +5,7 @@ export function getProductDetails(productId, channelId, auth = "token") {
     auth === "auth",
     `privateMetadata{key value}`
   );
+
   const query = `fragment BasicProductFields on Product {
     id
     name
@@ -49,6 +50,10 @@ export function getProductDetails(productId, channelId, auth = "token") {
     id
     sku
     name
+    weight{
+      unit
+      value
+    }
     pricing {
       price {
         ...Price

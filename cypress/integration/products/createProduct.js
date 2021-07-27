@@ -15,7 +15,7 @@ import {
 } from "../../steps/catalog/products/priceList";
 import { fillUpCommonFieldsForAllProductTypes } from "../../steps/catalog/products/productSteps";
 import { selectChannelInDetailsPages } from "../../steps/channelsSteps";
-import { confirmationMessageShouldDisappear } from "../../steps/shared/confirmationMessage";
+import { confirmationMessageShouldDisappear } from "../../steps/shared/confirmationMessages";
 import filterTests from "../../support/filterTests";
 import { urlList } from "../../url/urlList";
 import {

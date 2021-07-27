@@ -9,7 +9,7 @@ import { BUTTON_SELECTORS } from "../../elements/shared/button-selectors";
 import { SHARED_ELEMENTS } from "../../elements/shared/sharedElements";
 import { metadataForms } from "../../steps/catalog/metadataSteps";
 import { fillUpCommonFieldsForAllProductTypes } from "../../steps/catalog/products/productSteps";
-import { confirmationMessageShouldDisappear } from "../../steps/shared/confirmationMessage";
+import { confirmationMessageShouldDisappear } from "../../steps/shared/confirmationMessages";
 import filterTests from "../../support/filterTests";
 import { productDetailsUrl } from "../../url/urlList";
 import { getDefaultChannel } from "../../utils/channelsUtils";
