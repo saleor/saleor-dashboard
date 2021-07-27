@@ -1,3 +1,5 @@
+import { Pagination } from "@saleor/types";
+
 export type GiftCardListColummns =
   | "giftCardCode"
   | "tag"
@@ -10,4 +12,4 @@ export interface GiftCardsListTableCommonProps {
   disabled: boolean;
 }
 
-export interface GiftCardListUrlQueryParams {}
+export interface GiftCardListUrlQueryParams extends Pagination {}
