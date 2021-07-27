@@ -15,7 +15,6 @@ import {
   OrderDetails_order_fulfillments_lines,
   OrderDetails_order_lines
 } from "../types/OrderDetails";
-import { OrderFulfillData_order } from "../types/OrderFulfillData";
 import {
   OrderRefundData_order,
   OrderRefundData_order_fulfillments,
@@ -27,14 +26,22 @@ export type OrderWithTotalAndTotalCaptured = Pick<
   "total" | "totalCaptured"
 >;
 
-export function getOrderWarehouses(order: OrderFulfillData_order) {
-  return order?.lines?.reduce(
+export interface OrderLineWithStockWarehouses {
+  variant: {
+    stocks: Array<{ warehouse: WarehouseFragment }>;
+  };
+}
+
+export function getWarehousesFromOrderLines<
+  T extends OrderLineWithStockWarehouses
+>(lines?: T[]) {
+  return lines?.reduce(
     (warehouses, line) =>
       line.variant.stocks?.reduce(
         (warehouses, stock) =>
-          warehouses.every(warehouse => warehouse.id !== stock.warehouse.id)
-            ? [...warehouses, stock.warehouse]
-            : warehouses,
+          warehouses.some(getById(stock.warehouse.id))
+            ? warehouses
+            : [...warehouses, stock.warehouse],
         warehouses
       ),
     [] as WarehouseFragment[]

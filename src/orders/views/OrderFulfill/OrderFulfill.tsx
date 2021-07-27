@@ -5,7 +5,7 @@ import OrderFulfillPage from "@saleor/orders/components/OrderFulfillPage";
 import { useOrderFulfill } from "@saleor/orders/mutations";
 import { useOrderFulfillData } from "@saleor/orders/queries";
 import { orderUrl } from "@saleor/orders/urls";
-import { getOrderWarehouses } from "@saleor/orders/utils/data";
+import { getWarehousesFromOrderLines } from "@saleor/orders/utils/data";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -25,7 +25,7 @@ const OrderFulfill: React.FC<OrderFulfillProps> = ({ orderId }) => {
     }
   });
 
-  const orderWarehouses = getOrderWarehouses(data?.order);
+  const orderLinesWarehouses = getWarehousesFromOrderLines(data?.order?.lines);
 
   const [fulfillOrder, fulfillOrderOpts] = useOrderFulfill({
     onCompleted: data => {
@@ -82,7 +82,7 @@ const OrderFulfill: React.FC<OrderFulfillProps> = ({ orderId }) => {
         }
         order={data?.order}
         saveButtonBar="default"
-        warehouses={orderWarehouses}
+        warehouses={orderLinesWarehouses}
       />
     </>
   );
