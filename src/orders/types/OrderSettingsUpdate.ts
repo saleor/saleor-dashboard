@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { OrderSettingsUpdateInput, OrderSettingsErrorCode, ShopErrorCode, ShopSettingsInput } from "./../../types/globalTypes";
+import { OrderSettingsUpdateInput, ShopSettingsInput, OrderSettingsErrorCode, ShopErrorCode } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: OrderSettingsUpdate
@@ -39,9 +39,9 @@ export interface OrderSettingsUpdate_shopSettingsUpdate_shop {
 }
 
 export interface OrderSettingsUpdate_shopSettingsUpdate {
-  __typename: "OrderSettingsUpdate";
+  __typename: "ShopSettingsUpdate";
   errors: OrderSettingsUpdate_shopSettingsUpdate_errors[];
-  orderSettings: OrderSettingsUpdate_shopSettingsUpdate_shop | null;
+  shop: OrderSettingsUpdate_shopSettingsUpdate_shop | null;
 }
 
 export interface OrderSettingsUpdate {
