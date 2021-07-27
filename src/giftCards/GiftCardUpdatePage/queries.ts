@@ -2,7 +2,52 @@ import { fragmentUserBase } from "@saleor/fragments/auth";
 import { metadataFragment } from "@saleor/fragments/metadata";
 import { fragmentMoney } from "@saleor/fragments/products";
 import { fragmentTimePeriod } from "@saleor/fragments/timePeriod";
+import makeQuery from "@saleor/hooks/makeQuery";
 import gql from "graphql-tag";
+
+import { GiftCardList, GiftCardListVariables } from "./types/GiftCardList";
+
+export const giftCardList = gql`
+  ${fragmentUserBase}
+  ${fragmentMoney}
+  query GiftCardList($first: Int, $after: String, $last: Int, $before: String) {
+    giftCards(first: $first, after: $after, before: $before, last: $last) {
+      edges {
+        node {
+          id
+          code
+          displayCode
+          tag
+          product {
+            id
+            name
+          }
+          usedBy {
+            ...UserBase
+          }
+          usedByEmail
+          currentBalance {
+            ...Money
+          }
+          initialBalance {
+            ...Money
+          }
+        }
+      }
+      pageInfo {
+        endCursor
+        hasNextPage
+        hasPreviousPage
+        startCursor
+      }
+    }
+  }
+`;
+
+export const useGiftCardListQuery = makeQuery<
+  GiftCardList,
+  GiftCardListVariables
+>(giftCardList);
 
 export const giftCardDetails = gql`
   ${fragmentMoney}

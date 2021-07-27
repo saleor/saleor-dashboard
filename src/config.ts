@@ -9,7 +9,7 @@ export const SW_INTERVAL = parseInt(process.env.SW_INTERVAL, 0);
 
 export const DEFAULT_INITIAL_SEARCH_DATA: SearchVariables = {
   after: null,
-  first: 20,
+  first: 4,
   query: ""
 };
 

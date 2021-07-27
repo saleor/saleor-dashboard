@@ -46,6 +46,7 @@ const GiftCardsListTable: React.FC = ({}) => {
   const redirectToGiftCardUpdate = (id: string) => () =>
     navigate(giftCardPath(id));
 
+  console.log({ giftCards });
   return (
     <Card>
       <ResponsiveTable>
