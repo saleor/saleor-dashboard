@@ -743,7 +743,7 @@ const orderSettingsUpdateMutation = gql`
     $orderSettingsInput: OrderSettingsUpdateInput!
     $shopSettingsInput: ShopSettingsInput!
   ) {
-    orderSettingsUpdate(input: $input) {
+    orderSettingsUpdate(input: $orderSettingsInput) {
       errors {
         ...OrderSettingsErrorFragment
       }
