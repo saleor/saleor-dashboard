@@ -1,13 +1,7 @@
 import Form from "@saleor/components/Form";
 import { UseFormResult } from "@saleor/hooks/useForm";
 import { TimePeriodType } from "@saleor/types/globalTypes";
-import React, {
-  createContext,
-  Dispatch,
-  SetStateAction,
-  useContext,
-  useState
-} from "react";
+import React, { createContext, useContext, useState } from "react";
 
 import { GiftCardDetailsContext } from "./GiftCardDetailsProvider";
 import { GiftCardDetails_giftCard } from "./types/GiftCardDetails";
@@ -26,7 +20,6 @@ export interface GiftCardUpdateFormConsumerProps
   extends UseFormResult<GiftCardUpdateFormData> {
   selectedTag: string;
   setSelectedTag: (value: string) => void;
-  setSelectedTimePeriodType: Dispatch<SetStateAction<TimePeriodType>>;
 }
 
 export const GiftCardUpdateFormContext = createContext<
@@ -41,9 +34,6 @@ const GiftCardUpdateFormProvider: React.FC<GiftCardUpdateFormProviderProps> = ({
   } = useContext(GiftCardDetailsContext);
 
   const [selectedTag, setSelectedTag] = useState(tag);
-  const [selectedTimePeriodType, setSelectedTimePeriodType] = useState(
-    expiryPeriod.type
-  );
 
   const initialData: GiftCardUpdateFormData = {
     tag,
@@ -59,8 +49,7 @@ const GiftCardUpdateFormProvider: React.FC<GiftCardUpdateFormProviderProps> = ({
         const providerValues: GiftCardUpdateFormConsumerProps = {
           ...formProps,
           selectedTag,
-          setSelectedTag,
-          setSelectedTimePeriodType
+          setSelectedTag
         };
 
         return (

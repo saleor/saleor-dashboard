@@ -1,4 +1,8 @@
-import { GiftCardExpiryType, TimePeriodType } from "@saleor/types/globalTypes";
+import {
+  GiftCardEventsEnum,
+  GiftCardExpiryTypeEnum,
+  TimePeriodTypeEnum
+} from "@saleor/types/globalTypes";
 import React, { createContext } from "react";
 
 import { GiftCardDetails_giftCard } from "./types/GiftCardDetails";
@@ -23,9 +27,33 @@ const GiftCardDetailsProvider: React.FC<GiftCardDetailsProviderProps> = ({
     id: "1234",
     code: "8361",
     isActive: false,
-    expiryType: GiftCardExpiryType.EXPIRY_PERIOD,
+    expiryType: GiftCardExpiryTypeEnum.EXPIRY_PERIOD,
+    events: [
+      {
+        type: GiftCardEventsEnum.ISSUED,
+        orderId: "1234",
+        orderNumber: "32423434"
+      }
+    ],
+    createdBy: {
+      id: "1222",
+      firstName: "Janusz",
+      lastName: "Kowalski"
+    },
+    product: {
+      id: "1234",
+      name: "Greatest product"
+    },
+    created: "2020-04-01",
+    createdByEmail: "foobar@gmail.com",
+    usedBy: {
+      id: "1234",
+      firstName: "Krzesimir",
+      lastName: "Majsterkowicz"
+    },
+    usedByEmail: "elfo.mail@gmail.com",
     expiryPeriod: {
-      type: TimePeriodType.MONTH,
+      type: TimePeriodTypeEnum.MONTH,
       amount: 12
     },
     currentBalance: {

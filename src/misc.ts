@@ -424,8 +424,11 @@ export function transformFormToAddressInput<T>(
   };
 }
 
-export function getStringOrPlaceholder(s: string | undefined): string {
-  return s || "...";
+export function getStringOrPlaceholder(
+  s: string | undefined,
+  placeholder?: string
+): string {
+  return s || placeholder || "...";
 }
 
 export const getDatePeriod = (days: number): DateRangeInput => {
@@ -458,3 +461,13 @@ export const transformAddressToAddressInput = (data?: AddressType) => ({
   streetAddress1: data?.streetAddress1 || "",
   streetAddress2: data?.streetAddress2 || ""
 });
+
+export function getFullName<T extends { firstName: string; lastName: string }>(
+  data: T
+) {
+  if (!data || !data.firstName || !data.lastName) {
+    return "";
+  }
+
+  return `${data.firstName} ${data.lastName}`;
+}
