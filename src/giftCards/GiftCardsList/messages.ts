@@ -12,6 +12,10 @@ export const giftCardsListHeaderMenuItemsMessages = defineMessages({
   exportCodes: {
     defaultMessage: "Export card codes",
     description: "GiftCardsListHeader menu item settings"
+  },
+  issueButtonLabel: {
+    defaultMessage: "Issue card",
+    description: "GiftCardsListHeader issue button label"
   }
 });
 

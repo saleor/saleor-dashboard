@@ -1,6 +1,8 @@
 import { Typography } from "@material-ui/core";
 import VerticalSpacer from "@saleor/apps/components/VerticalSpacer";
-import SingleAutocompleteSelectField from "@saleor/components/SingleAutocompleteSelectField";
+import SingleAutocompleteSelectField, {
+  SingleAutocompleteSelectFieldProps
+} from "@saleor/components/SingleAutocompleteSelectField";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@saleor/config";
 import createSingleAutocompleteSelectHandler, {
   SingleAutocompleteSelectedChangeHandlerProps
@@ -14,16 +16,18 @@ import useGiftCardTagsSearch from "./useGiftCardTagsSearch";
 
 interface GiftCardTagInputProps
   extends Pick<
-    SingleAutocompleteSelectedChangeHandlerProps,
-    "change" | "setSelected"
-  > {
+      SingleAutocompleteSelectedChangeHandlerProps,
+      "change" | "setSelected"
+    >,
+    Pick<SingleAutocompleteSelectFieldProps, "name"> {
   withTopLabel?: boolean;
 }
 
 const GiftCardTagInput: React.FC<GiftCardTagInputProps> = ({
   withTopLabel = false,
   change,
-  setSelected
+  setSelected,
+  name
 }) => {
   const intl = useIntl();
 
@@ -48,7 +52,7 @@ const GiftCardTagInput: React.FC<GiftCardTagInputProps> = ({
         </>
       )}
       <SingleAutocompleteSelectField
-        name="giftCardTag"
+        name={name || "giftCardTag"}
         allowCustomValues
         label={intl.formatMessage(messages.placeholder)}
         data-test-id="gift-card-tag-select-field"

@@ -29,16 +29,3 @@ export const useGiftCardDetailsBalanceStyles = makeStyles(
   }),
   { name: "GiftCardUpdateDetailsBalanceSection" }
 );
-
-export const useGiftCardDetailsExpiryStyles = makeStyles(
-  () => ({
-    radioGroupContainer: {
-      display: "flex",
-      flexDirection: "row"
-    },
-    dateField: {
-      width: 400
-    }
-  }),
-  { name: "GiftCardUpdateDetailsExpirySection" }
-);
