@@ -91,11 +91,7 @@ export function createTypeAttributeAndCategoryForProduct(
 export function deleteProductsStartsWith(startsWith) {
   deleteAttributesStartsWith(startsWith);
   cy.deleteElementsStartsWith(deleteProductType, getProductTypes, startsWith);
-  cy.deleteElementsStartsWith(
-    attributeRequest.deleteAttribute,
-    attributeRequest.getAttributes,
-    startsWith
-  );
+  deleteAttributesStartsWith(startsWith);
   cy.deleteElementsStartsWith(
     categoryRequest.deleteCategory,
     categoryRequest.getCategories,

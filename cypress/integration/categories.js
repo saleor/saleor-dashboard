@@ -9,7 +9,7 @@ import { SHARED_ELEMENTS } from "../elements/shared/sharedElements";
 import { createCategory } from "../steps/categoriesSteps";
 import { confirmationMessageShouldDisappear } from "../steps/shared/confirmationMessages";
 import filterTests from "../support/filterTests";
-import { categoryDetails, urlList } from "../url/urlList";
+import { categoryDetailsUrl, urlList } from "../url/urlList";
 import { deleteCategoriesStartsWith } from "../utils/categoryUtils";
 import * as channelsUtils from "../utils/channelsUtils";
 import * as productsUtils from "../utils/products/productsUtils";
@@ -85,11 +85,11 @@ filterTests(["all"], () => {
 
     it("should add subcategory", () => {
       const categoryName = `${startsWith}${faker.datatype.number()}`;
-      cy.visit(categoryDetails(category.id))
+      cy.visit(categoryDetailsUrl(category.id))
         .get(CATEGORY_DETAILS.createSubcategoryButton)
         .click();
       createCategory({ name: categoryName, description: categoryName })
-        .visit(categoryDetails(category.id))
+        .visit(categoryDetailsUrl(category.id))
         .contains(CATEGORY_DETAILS.categoryChildrenRow, categoryName)
         .should("be.visible");
       getCategory(category.id).then(categoryResp => {
@@ -98,7 +98,7 @@ filterTests(["all"], () => {
     });
 
     it("should add product to category", () => {
-      cy.visit(categoryDetails(category.id))
+      cy.visit(categoryDetailsUrl(category.id))
         .get(CATEGORY_DETAILS.productsTab)
         .click()
         .get(CATEGORY_DETAILS.addProducts)
@@ -108,7 +108,7 @@ filterTests(["all"], () => {
     });
 
     it("should remove product from category", () => {
-      cy.visit(categoryDetails(category.id))
+      cy.visit(categoryDetailsUrl(category.id))
         .get(CATEGORY_DETAILS.productsTab)
         .click();
       cy.contains(CATEGORY_DETAILS.productRow, product.name)

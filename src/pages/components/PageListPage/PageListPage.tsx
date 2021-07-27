@@ -32,7 +32,12 @@ const PageListPage: React.FC<PageListPageProps> = ({
         {intl.formatMessage(sectionNames.configuration)}
       </Backlink>
       <PageHeader title={intl.formatMessage(sectionNames.pages)}>
-        <Button onClick={onAdd} variant="contained" color="primary">
+        <Button
+          onClick={onAdd}
+          variant="contained"
+          color="primary"
+          data-test-id="createPage"
+        >
           <FormattedMessage defaultMessage="Create page" description="button" />
         </Button>
       </PageHeader>

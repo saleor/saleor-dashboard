@@ -13,6 +13,7 @@ export const urlList = {
   newPassword: "new-password/",
   navigation: "navigation/",
   orders: "orders/",
+  pages: "pages/",
   pageTypes: "page-types/",
   permissionsGroups: "permission-groups/",
   products: "products/",
@@ -21,9 +22,9 @@ export const urlList = {
   shippingMethods: "shipping/",
   siteSettings: "site-settings/",
   staffMembers: "staff/",
-  vouchers: "discounts/vouchers/",
   warehouses: "warehouses/",
-  weightRete: "weight/"
+  weightRete: "weight/",
+  vouchers: "discounts/vouchers/"
 };
 
 export const appDetailsUrl = appId => `${urlList.apps}custom/${appId}`;
@@ -31,7 +32,7 @@ export const appDetailsUrl = appId => `${urlList.apps}custom/${appId}`;
 export const attributeDetailsUrl = attributeId =>
   `${urlList.attributes}${attributeId}`;
 
-export const categoryDetails = categoryId =>
+export const categoryDetailsUrl = categoryId =>
   `${urlList.categories}${categoryId}`;
 
 export const customerDetailsUrl = customerId =>
