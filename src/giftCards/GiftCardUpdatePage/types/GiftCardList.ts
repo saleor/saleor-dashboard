@@ -36,6 +36,7 @@ export interface GiftCardList_giftCards_edges_node {
   __typename: "GiftCard";
   id: string;
   code: string;
+  isActive: boolean;
   displayCode: string;
   tag: string | null;
   product: GiftCardList_giftCards_edges_node_product | null;
