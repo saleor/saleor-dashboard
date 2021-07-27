@@ -14,5 +14,5 @@ export interface OrderFulfillSettings_shop {
 }
 
 export interface OrderFulfillSettings {
-  shop: OrderFulfillSettings_shop | null;
+  shop: OrderFulfillSettings_shop;
 }
