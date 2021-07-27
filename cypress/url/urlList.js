@@ -13,6 +13,7 @@ export const urlList = {
   newPassword: "new-password/",
   navigation: "navigation/",
   orders: "orders/",
+  pages: "pages/",
   pageTypes: "page-types/",
   permissionsGroups: "permission-groups/",
   products: "products/",
@@ -21,9 +22,9 @@ export const urlList = {
   shippingMethods: "shipping/",
   siteSettings: "site-settings/",
   staffMembers: "staff/",
-  vouchers: "discounts/vouchers/",
   warehouses: "warehouses/",
-  weightRete: "weight/"
+  weightRete: "weight/",
+  vouchers: "discounts/vouchers/"
 };
 
 export const productDetailsUrl = productId => `${urlList.products}${productId}`;

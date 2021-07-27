@@ -16,7 +16,7 @@ export function updateShopWeightUnit(weightUnit) {
   }`;
   return cy
     .sendRequestWithQuery(mutation)
-    .wait(1000)
+    .wait(5000)
     .its("body.data.shopSettingsUpdate");
 }
 
