@@ -1,4 +1,5 @@
 import { IMoney, subtractMoney } from "@saleor/components/Money";
+import { WarehouseFragment } from "@saleor/fragments/types/WarehouseFragment";
 import { FormsetData } from "@saleor/hooks/useFormset";
 
 import {
@@ -24,6 +25,28 @@ export type OrderWithTotalAndTotalCaptured = Pick<
   OrderRefundData_order,
   "total" | "totalCaptured"
 >;
+
+export interface OrderLineWithStockWarehouses {
+  variant: {
+    stocks: Array<{ warehouse: WarehouseFragment }>;
+  };
+}
+
+export function getWarehousesFromOrderLines<
+  T extends OrderLineWithStockWarehouses
+>(lines?: T[]) {
+  return lines?.reduce(
+    (warehouses, line) =>
+      line.variant.stocks?.reduce(
+        (warehouses, stock) =>
+          warehouses.some(getById(stock.warehouse.id))
+            ? warehouses
+            : [...warehouses, stock.warehouse],
+        warehouses
+      ),
+    [] as WarehouseFragment[]
+  );
+}
 
 export function getPreviouslyRefundedPrice(
   order: OrderWithTotalAndTotalCaptured
