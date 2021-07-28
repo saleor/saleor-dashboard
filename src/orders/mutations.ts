@@ -1,12 +1,14 @@
 import {
   invoiceErrorFragment,
   orderErrorFragment,
-  orderSettingsErrorFragment
+  orderSettingsErrorFragment,
+  shopErrorFragment
 } from "@saleor/fragments/errors";
 import {
   fragmentOrderDetails,
   fragmentOrderEvent,
   fragmentOrderSettings,
+  fragmentShopOrderSettings,
   fulfillmentFragment,
   invoiceFragment
 } from "@saleor/fragments/orders";
@@ -734,14 +736,27 @@ export const TypedInvoiceEmailSendMutation = TypedMutation<
 
 const orderSettingsUpdateMutation = gql`
   ${fragmentOrderSettings}
+  ${fragmentShopOrderSettings}
   ${orderSettingsErrorFragment}
-  mutation OrderSettingsUpdate($input: OrderSettingsUpdateInput!) {
-    orderSettingsUpdate(input: $input) {
+  ${shopErrorFragment}
+  mutation OrderSettingsUpdate(
+    $orderSettingsInput: OrderSettingsUpdateInput!
+    $shopSettingsInput: ShopSettingsInput!
+  ) {
+    orderSettingsUpdate(input: $orderSettingsInput) {
       errors {
         ...OrderSettingsErrorFragment
       }
       orderSettings {
         ...OrderSettingsFragment
+      }
+    }
+    shopSettingsUpdate(input: $shopSettingsInput) {
+      errors {
+        ...ShopErrorFragment
+      }
+      shop {
+        ...ShopOrderSettingsFragment
       }
     }
   }

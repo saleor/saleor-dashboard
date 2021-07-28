@@ -1,6 +1,7 @@
 import { ShopInfo_shop_countries } from "@saleor/components/Shop/types/ShopInfo";
 import { InvoiceFragment } from "@saleor/fragments/types/InvoiceFragment";
 import { OrderSettingsFragment } from "@saleor/fragments/types/OrderSettingsFragment";
+import { ShopOrderSettingsFragment } from "@saleor/fragments/types/ShopOrderSettingsFragment";
 import { SearchCustomers_search_edges_node } from "@saleor/searches/types/SearchCustomers";
 import { warehouseList } from "@saleor/warehouses/fixtures";
 import { MessageDescriptor } from "react-intl";
@@ -1896,4 +1897,10 @@ export const invoices: InvoiceFragment[] = [
 export const orderSettings: OrderSettingsFragment = {
   __typename: "OrderSettings",
   automaticallyConfirmAllNewOrders: true
+};
+
+export const shopOrderSettings: ShopOrderSettingsFragment = {
+  __typename: "Shop",
+  fulfillmentAutoApprove: true,
+  fulfillmentAllowUnpaid: true
 };

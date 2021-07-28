@@ -464,6 +464,7 @@ export enum FulfillmentStatus {
   REFUNDED_AND_RETURNED = "REFUNDED_AND_RETURNED",
   REPLACED = "REPLACED",
   RETURNED = "RETURNED",
+  WAITING_FOR_APPROVAL = "WAITING_FOR_APPROVAL",
 }
 
 export enum InvoiceErrorCode {
@@ -615,6 +616,7 @@ export enum OrderErrorCode {
   CANNOT_CANCEL_ORDER = "CANNOT_CANCEL_ORDER",
   CANNOT_DELETE = "CANNOT_DELETE",
   CANNOT_DISCOUNT = "CANNOT_DISCOUNT",
+  CANNOT_FULFILL_UNPAID_ORDER = "CANNOT_FULFILL_UNPAID_ORDER",
   CANNOT_REFUND = "CANNOT_REFUND",
   CAPTURE_INACTIVE_PAYMENT = "CAPTURE_INACTIVE_PAYMENT",
   CHANNEL_INACTIVE = "CHANNEL_INACTIVE",
@@ -661,6 +663,7 @@ export enum OrderEventsEnum {
   DRAFT_CREATED_FROM_REPLACE = "DRAFT_CREATED_FROM_REPLACE",
   EMAIL_SENT = "EMAIL_SENT",
   EXTERNAL_SERVICE_NOTIFICATION = "EXTERNAL_SERVICE_NOTIFICATION",
+  FULFILLMENT_AWAITS_APPROVAL = "FULFILLMENT_AWAITS_APPROVAL",
   FULFILLMENT_CANCELED = "FULFILLMENT_CANCELED",
   FULFILLMENT_FULFILLED_ITEMS = "FULFILLMENT_FULFILLED_ITEMS",
   FULFILLMENT_REFUNDED = "FULFILLMENT_REFUNDED",
@@ -1782,6 +1785,7 @@ export interface SaleFilterInput {
   saleType?: DiscountValueTypeEnum | null;
   started?: DateTimeRangeInput | null;
   search?: string | null;
+  metadata?: (MetadataFilter | null)[] | null;
 }
 
 export interface SaleInput {
@@ -1879,6 +1883,8 @@ export interface ShopSettingsInput {
   trackInventoryByDefault?: boolean | null;
   defaultWeightUnit?: WeightUnitsEnum | null;
   automaticFulfillmentDigitalProducts?: boolean | null;
+  fulfillmentAutoApprove?: boolean | null;
+  fulfillmentAllowUnpaid?: boolean | null;
   defaultDigitalMaxDownloads?: number | null;
   defaultDigitalUrlValidDays?: number | null;
   defaultMailSenderName?: string | null;
@@ -1963,6 +1969,7 @@ export interface VoucherFilterInput {
   discountType?: (VoucherDiscountType | null)[] | null;
   started?: DateTimeRangeInput | null;
   search?: string | null;
+  metadata?: (MetadataFilter | null)[] | null;
 }
 
 export interface VoucherInput {
