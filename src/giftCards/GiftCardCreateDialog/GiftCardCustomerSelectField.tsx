@@ -7,7 +7,7 @@ import { mapEdgesToItems } from "@saleor/utils/maps";
 import React, { useContext } from "react";
 import { useIntl } from "react-intl";
 
-import { GiftCardCreateFormContext } from "../GiftCardCreateFormProvider";
+import { GiftCardCreateFormContext } from "./GiftCardCreateFormProvider";
 import { giftCardCreateDialogMessages as messages } from "./messages";
 
 const GiftCardCustomerSelectField: React.FC = () => {

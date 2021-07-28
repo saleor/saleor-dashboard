@@ -10,8 +10,8 @@ import Label from "@saleor/orders/components/OrderHistory/Label";
 import React, { useContext } from "react";
 import { useIntl } from "react-intl";
 
-import { GiftCardCreateFormContext } from "../GiftCardsList/GiftCardCreateFormProvider";
 import GiftCardBalanceTextWithSelectField from "./GiftCardBalanceTextWithSelectField";
+import { GiftCardCreateFormContext } from "./GiftCardCreateFormProvider";
 import CustomerSelectField from "./GiftCardCustomerSelectField";
 import { giftCardCreateDialogMessages as messages } from "./messages";
 

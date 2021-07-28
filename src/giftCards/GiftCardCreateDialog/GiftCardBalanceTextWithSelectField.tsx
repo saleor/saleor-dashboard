@@ -5,7 +5,7 @@ import { mapSingleValueNodeToChoice } from "@saleor/utils/maps";
 import React, { useContext } from "react";
 import { useIntl } from "react-intl";
 
-import { GiftCardCreateFormContext } from "../GiftCardsList/GiftCardCreateFormProvider";
+import { GiftCardCreateFormContext } from "./GiftCardCreateFormProvider";
 import { giftCardCreateDialogMessages as messages } from "./messages";
 
 const useStyles = makeStyles(
