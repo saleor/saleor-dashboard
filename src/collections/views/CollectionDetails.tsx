@@ -20,6 +20,7 @@ import usePaginator, {
 } from "@saleor/hooks/usePaginator";
 import { commonMessages, errorMessages } from "@saleor/intl";
 import useProductSearch from "@saleor/searches/useProductSearch";
+import { arrayDiff } from "@saleor/utils/arrays";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import createMetadataUpdateHandler from "@saleor/utils/handlers/metadataUpdateHandler";
 import { mapEdgesToItems } from "@saleor/utils/maps";
@@ -28,7 +29,6 @@ import {
   usePrivateMetadataUpdate
 } from "@saleor/utils/metadata/updateMetadata";
 import { getParsedDataForJsonStringField } from "@saleor/utils/richText/misc";
-import { diff } from "fast-array-diff";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -215,11 +215,14 @@ export const CollectionDetails: React.FC<CollectionDetailsProps> = ({
               input
             }
           });
-          const diffChannels = diff(
-            collectionChannelsChoices,
-            formData.channelListings,
-            (a, b) => a.id === b.id
+          const initialIds = collectionChannelsChoices.map(
+            channel => channel.id
           );
+          const modifiedIds = formData.channelListings.map(
+            channel => channel.id
+          );
+
+          const idsDiff = arrayDiff(initialIds, modifiedIds);
 
           updateChannels({
             variables: {
@@ -230,10 +233,7 @@ export const CollectionDetails: React.FC<CollectionDetailsProps> = ({
                   isPublished: channel.isPublished,
                   publicationDate: channel.publicationDate
                 })),
-                removeChannels:
-                  diffChannels.removed?.map(
-                    removedChannel => removedChannel.id
-                  ) || []
+                removeChannels: idsDiff.removed
               }
             }
           });
