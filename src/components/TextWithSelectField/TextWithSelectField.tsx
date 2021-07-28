@@ -17,6 +17,7 @@ export interface TextWithSelectFieldProps {
   textFieldValue: string;
   selectFieldValue: string;
   selectFieldClassName: string;
+  containerClassName: string;
 }
 
 const TextWithSelectField: React.FC<TextWithSelectFieldProps> = ({
@@ -27,12 +28,13 @@ const TextWithSelectField: React.FC<TextWithSelectFieldProps> = ({
   textFieldLabel,
   selectFieldName,
   selectFieldValue,
-  selectFieldClassName
+  selectFieldClassName,
+  containerClassName
 }) => {
   const classes = useStyles();
 
   return (
-    <div className={classes.container}>
+    <div className={classNames(classes.container, containerClassName)}>
       <TextField
         className={classes.innerContainer}
         name={textFieldName}

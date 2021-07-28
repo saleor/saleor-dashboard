@@ -19,3 +19,8 @@ export enum GiftCardListParamsEnum {
 export interface GiftCardListUrlQueryParams extends Pagination {
   action: GiftCardListParamsEnum;
 }
+
+export interface GiftCardCreateFormCustomer {
+  name: string;
+  email: string;
+}

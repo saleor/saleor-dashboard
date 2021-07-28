@@ -64,6 +64,7 @@ const SaleCreateView: React.FC<RouteComponentProps> = ({ location }) => {
 
 const VoucherListView: React.FC<RouteComponentProps<{}>> = ({ location }) => {
   const qs = parseQs(location.search.substr(1));
+
   const params: VoucherListUrlQueryParams = asSortParams(
     qs,
     VoucherListUrlSortField,

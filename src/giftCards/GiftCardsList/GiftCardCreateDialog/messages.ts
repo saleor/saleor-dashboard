@@ -1,6 +1,14 @@
 import { defineMessages } from "react-intl";
 
 export const giftCardCreateDialogMessages = defineMessages({
+  title: {
+    defaultMessage: "Issue gift card",
+    description: "GiftCardCreateDialog title"
+  },
+  amountLabel: {
+    defaultMessage: "Enter amount",
+    description: "GiftCardCreateDialog amount label"
+  },
   issueButtonLabel: {
     defaultMessage: "Issue",
     description: "GiftCardCreateDialog issue button label"
@@ -13,6 +21,10 @@ export const giftCardCreateDialogMessages = defineMessages({
     defaultMessage:
       "Selected customer will be sent the generated gift card code. Someone else can redeem the gift card code. Gift card will be assigned to account which redeemed the code.",
     description: "GiftCardCreateDialog customer subtitle"
+  },
+  noteLabel: {
+    defaultMessage: "Note",
+    description: "GiftCardCreateDialog note label"
   },
   noteSubtitle: {
     defaultMessage:

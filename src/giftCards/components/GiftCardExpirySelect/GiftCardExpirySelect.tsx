@@ -9,9 +9,9 @@ import {
 import React from "react";
 import { MessageDescriptor, useIntl } from "react-intl";
 
+import TimePeriodField from "../TimePeriodField/TimePeriodField";
 import { giftCardExpirySelectMessages as messages } from "./messages";
 import { useGiftCardExpirySelectStyles as useStyles } from "./styles";
-import TimePeriodField from "../TimePeriodField/TimePeriodField";
 
 interface UntranslatedOption {
   label: MessageDescriptor;
@@ -21,7 +21,7 @@ interface UntranslatedOption {
 const options: UntranslatedOption[] = [
   {
     label: messages.neverExpireLabel,
-    value: GiftCardExpiryTypeEnum.NEVER_EXPIRY
+    value: GiftCardExpiryTypeEnum.NEVER_EXPIRE
   },
   {
     label: messages.expiryPeriodLabel,

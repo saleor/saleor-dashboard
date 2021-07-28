@@ -481,7 +481,7 @@ export enum GiftCardEventsEnum {
 export enum GiftCardExpiryTypeEnum {
   EXPIRY_DATE = "EXPIRY_DATE",
   EXPIRY_PERIOD = "EXPIRY_PERIOD",
-  NEVER_EXPIRY = "NEVER_EXPIRY",
+  NEVER_EXPIRE = "NEVER_EXPIRE",
 }
 
 export enum InvoiceErrorCode {
@@ -1806,6 +1806,7 @@ export interface SaleFilterInput {
   saleType?: DiscountValueTypeEnum | null;
   started?: DateTimeRangeInput | null;
   search?: string | null;
+  metadata?: (MetadataFilter | null)[] | null;
 }
 
 export interface SaleInput {
@@ -1987,6 +1988,7 @@ export interface VoucherFilterInput {
   discountType?: (VoucherDiscountType | null)[] | null;
   started?: DateTimeRangeInput | null;
   search?: string | null;
+  metadata?: (MetadataFilter | null)[] | null;
 }
 
 export interface VoucherInput {

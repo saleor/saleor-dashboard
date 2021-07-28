@@ -5,27 +5,24 @@ import CardSpacer from "@saleor/components/CardSpacer";
 import TextWithSelectField from "@saleor/components/TextWithSelectField";
 import GiftCardExpirySelect from "@saleor/giftCards/components/GiftCardExpirySelect";
 import GiftCardTagInput from "@saleor/giftCards/components/GiftCardTagInput";
+import { commonMessages } from "@saleor/intl";
 import { makeStyles } from "@saleor/macaw-ui";
 import Label from "@saleor/orders/components/OrderHistory/Label";
 import React, { useContext } from "react";
 import { useIntl } from "react-intl";
 
 import { GiftCardCreateFormContext } from "../GiftCardCreateFormProvider";
-import CustomerSelectField from "./CustomerSelectField";
+import GiftCardBalanceTextWithSelectField from "./GiftCardBalanceTextWithSelectField";
+import CustomerSelectField from "./GiftCardCustomerSelectField";
 import { giftCardCreateDialogMessages as messages } from "./messages";
 
 interface GiftCardCreateDialogProps {
   open: boolean;
+  onClose: () => void;
 }
 
 const useStyles = makeStyles(
   () => ({
-    container: {
-      width: 650
-    },
-    currencySelectField: {
-      width: 100
-    },
     noteField: {
       width: "100%"
     }
@@ -34,7 +31,8 @@ const useStyles = makeStyles(
 );
 
 const GiftCardCreateDialog: React.FC<GiftCardCreateDialogProps> = ({
-  open
+  open,
+  onClose
 }) => {
   const intl = useIntl();
   const classes = useStyles({});
@@ -42,51 +40,32 @@ const GiftCardCreateDialog: React.FC<GiftCardCreateDialogProps> = ({
   const {
     submit,
     change,
-    selectedCustomer,
     setSelectedTag,
-    setSelectedCustomer,
-    data: {
-      balanceAmount,
-      balanceCurrency,
-      expiryPeriodAmount,
-      expiryPeriodType,
-      expiryType
-    }
+    selectedTag,
+    data: { expiryPeriodAmount, expiryPeriodType, expiryType }
   } = useContext(GiftCardCreateFormContext);
-
-  const currencies = ["USD", "GBP", "PLN"];
 
   return (
     <ActionDialog
+      maxWidth="sm"
       open={open}
       onConfirm={submit}
       confirmButtonLabel={intl.formatMessage(messages.issueButtonLabel)}
+      onClose={onClose}
+      title={intl.formatMessage(messages.title)}
     >
-      <TextWithSelectField
-        textFieldLabel="Loool"
-        change={change}
-        choices={currencies.map(value => ({ value, label: value }))}
-        textFieldName="balanceAmount"
-        selectFieldName="balanceCurrency"
-        textFieldValue={balanceAmount}
-        selectFieldValue={balanceCurrency}
-        selectFieldClassName={classes.currencySelectField}
-      />
+      <GiftCardBalanceTextWithSelectField />
       <CardSpacer />
       <GiftCardTagInput
         name="tag"
+        value={selectedTag}
         setSelected={setSelectedTag}
         change={change}
       />
       <CardSpacer />
       <Divider />
       <CardSpacer />
-      <CustomerSelectField
-        optional
-        change={change}
-        value={selectedCustomer}
-        setSelected={setSelectedCustomer}
-      />
+      <CustomerSelectField />
       <VerticalSpacer />
       <Label text={intl.formatMessage(messages.customerSubtitle)} />
       <CardSpacer />
@@ -99,7 +78,13 @@ const GiftCardCreateDialog: React.FC<GiftCardCreateDialogProps> = ({
         expiryPeriodType={expiryPeriodType}
       />
       <CardSpacer />
-      <TextField multiline className={classes.noteField} />
+      <TextField
+        multiline
+        className={classes.noteField}
+        label={`${intl.formatMessage(messages.noteLabel)} *${intl.formatMessage(
+          commonMessages.optionalField
+        )}`}
+      />
       <VerticalSpacer />
       <Label text={intl.formatMessage(messages.noteSubtitle)} />
     </ActionDialog>

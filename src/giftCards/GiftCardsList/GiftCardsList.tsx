@@ -1,7 +1,9 @@
 import Container from "@saleor/components/Container";
+import useNavigator from "@saleor/hooks/useNavigator";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import React from "react";
 
+import { giftCardsListUrl } from "../urls";
 import GiftCardCreateDialog from "./GiftCardCreateDialog";
 import GiftCardCreateFormProvider from "./GiftCardCreateFormProvider";
 import GiftCardsListHeader from "./GiftCardsListHeader";
@@ -14,22 +16,26 @@ interface GiftCardsListProps {
 }
 
 const GiftCardsList: React.FC<GiftCardsListProps> = ({ params }) => {
+  const navigate = useNavigator();
+
+  const isCreateModalOpen = params?.action === GiftCardListParamsEnum.CREATE;
+
   const [openModal, closeModal] = createDialogActionHandlers<
     GiftCardListParamsEnum,
     GiftCardListUrlQueryParams
-  >(navigate, collectionListUrl, params);
+  >(navigate, giftCardsListUrl, params);
+
+  const openCreateModal = () => openModal(GiftCardListParamsEnum.CREATE);
 
   return (
     <GiftCardCreateFormProvider>
       <GiftCardsListProvider params={params}>
         <Container>
-          <GiftCardsListHeader />
+          <GiftCardsListHeader onIssueButtonClick={openCreateModal} />
           <GiftCardsListTable />
         </Container>
       </GiftCardsListProvider>
-      <GiftCardCreateDialog
-        open={params?.action === GiftCardListParamsEnum.CREATE}
-      />
+      <GiftCardCreateDialog open={isCreateModalOpen} onClose={closeModal} />
     </GiftCardCreateFormProvider>
   );
 };

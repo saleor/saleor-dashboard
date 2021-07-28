@@ -7,13 +7,14 @@ import {
 import React, { createContext, useState } from "react";
 
 import { GiftCardDetails_giftCard } from "../GiftCardUpdatePage/types/GiftCardDetails";
+import { GiftCardCreateFormCustomer } from "./types";
 
 interface GiftCardCreateFormProviderProps {
   children: React.ReactNode;
 }
 
 export interface GiftCardCreateFormData
-  extends Pick<GiftCardDetails_giftCard, "tag" | "expiryDate" | "expiryType"> {
+  extends Pick<GiftCardDetails_giftCard, "expiryDate" | "expiryType"> {
   balanceAmount: number;
   balanceCurrency: string;
   expiryPeriodType: TimePeriodTypeEnum;
@@ -25,8 +26,8 @@ export interface GiftCardCreateFormConsumerProps
   extends UseFormResult<GiftCardCreateFormData> {
   selectedTag: string;
   setSelectedTag: (value: string) => void;
-  selectedCustomer: string;
-  setSelectedCustomer: (value: string) => void;
+  selectedCustomer: GiftCardCreateFormCustomer;
+  setSelectedCustomer: (value: GiftCardCreateFormCustomer) => void;
 }
 
 export const GiftCardCreateFormContext = createContext<
@@ -37,25 +38,19 @@ const GiftCardCreateFormProvider: React.FC<GiftCardCreateFormProviderProps> = ({
   children
 }) => {
   const [selectedTag, setSelectedTag] = useState("");
-  const [selectedCustomer, setSelectedCustomer] = useState("");
-
-  // TEMP
+  const [selectedCustomer, setSelectedCustomer] = useState<
+    GiftCardCreateFormCustomer
+  >({ email: "", name: "" });
 
   const initialData: GiftCardCreateFormData = {
     balanceAmount: 0,
-    balanceCurrency: "USD", // should default to?
-    tag: "",
+    balanceCurrency: "",
     note: "",
     expiryDate: "",
     expiryType: GiftCardExpiryTypeEnum.EXPIRY_PERIOD,
     expiryPeriodType: TimePeriodTypeEnum.YEAR,
     expiryPeriodAmount: 0
   };
-
-  //   const [openModal, closeModal] = createDialogActionHandlers<
-  //     AppDetailsUrlDialog,
-  //     AppDetailsUrlQueryParams
-  //   >(navigate, params => appUrl(id, params), params);
 
   return (
     <Form initial={initialData}>
