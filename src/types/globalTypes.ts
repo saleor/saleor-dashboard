@@ -466,6 +466,15 @@ export enum FulfillmentStatus {
   RETURNED = "RETURNED",
 }
 
+export enum GiftCardErrorCode {
+  ALREADY_EXISTS = "ALREADY_EXISTS",
+  GRAPHQL_ERROR = "GRAPHQL_ERROR",
+  INVALID = "INVALID",
+  NOT_FOUND = "NOT_FOUND",
+  REQUIRED = "REQUIRED",
+  UNIQUE = "UNIQUE",
+}
+
 export enum GiftCardEventsEnum {
   ACTIVATED = "ACTIVATED",
   BALANCE_RESET = "BALANCE_RESET",
@@ -1374,6 +1383,23 @@ export interface FulfillmentUpdateTrackingInput {
   notifyCustomer?: boolean | null;
 }
 
+export interface GiftCardCreateInput {
+  tag?: string | null;
+  startDate?: any | null;
+  endDate?: any | null;
+  balance: PriceInput;
+  userEmail?: string | null;
+  expirySettings: GiftCardExpirySettingsInput;
+  code?: string | null;
+  note?: string | null;
+}
+
+export interface GiftCardExpirySettingsInput {
+  expiryType: GiftCardExpiryTypeEnum;
+  expiryDate?: any | null;
+  expiryPeriod?: TimePeriodInputType | null;
+}
+
 export interface IntRangeInput {
   gte?: number | null;
   lte?: number | null;
@@ -1640,6 +1666,11 @@ export interface PluginStatusInChannelsInput {
 export interface PluginUpdateInput {
   active?: boolean | null;
   configuration?: (ConfigurationItemInput | null)[] | null;
+}
+
+export interface PriceInput {
+  currency: string;
+  amount: any;
 }
 
 export interface PriceRangeInput {
@@ -1944,6 +1975,11 @@ export interface StaffUserInput {
 export interface StockInput {
   warehouse: string;
   quantity: number;
+}
+
+export interface TimePeriodInputType {
+  amount: number;
+  type: TimePeriodTypeEnum;
 }
 
 export interface TranslationInput {
