@@ -29,7 +29,8 @@ export const useStyles = makeStyles(
       textContainer: {
         marginLeft: theme.spacing(1),
         display: "flex",
-        flexDirection: "column"
+        flexDirection: "column",
+        width: "100%"
       },
       dotVertical: {
         marginTop: theme.spacing(1)
