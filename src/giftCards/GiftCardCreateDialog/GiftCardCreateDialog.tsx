@@ -2,7 +2,6 @@ import { Divider, TextField } from "@material-ui/core";
 import VerticalSpacer from "@saleor/apps/components/VerticalSpacer";
 import ActionDialog from "@saleor/components/ActionDialog";
 import CardSpacer from "@saleor/components/CardSpacer";
-import TextWithSelectField from "@saleor/components/TextWithSelectField";
 import GiftCardExpirySelect from "@saleor/giftCards/components/GiftCardExpirySelect";
 import GiftCardTagInput from "@saleor/giftCards/components/GiftCardTagInput";
 import { commonMessages } from "@saleor/intl";
@@ -11,7 +10,7 @@ import Label from "@saleor/orders/components/OrderHistory/Label";
 import React, { useContext } from "react";
 import { useIntl } from "react-intl";
 
-import { GiftCardCreateFormContext } from "../GiftCardCreateFormProvider";
+import { GiftCardCreateFormContext } from "../GiftCardsList/GiftCardCreateFormProvider";
 import GiftCardBalanceTextWithSelectField from "./GiftCardBalanceTextWithSelectField";
 import CustomerSelectField from "./GiftCardCustomerSelectField";
 import { giftCardCreateDialogMessages as messages } from "./messages";

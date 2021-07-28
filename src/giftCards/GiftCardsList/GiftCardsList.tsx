@@ -3,8 +3,8 @@ import useNavigator from "@saleor/hooks/useNavigator";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import React from "react";
 
+import GiftCardCreateDialog from "../GiftCardCreateDialog";
 import { giftCardsListUrl } from "../urls";
-import GiftCardCreateDialog from "./GiftCardCreateDialog";
 import GiftCardCreateFormProvider from "./GiftCardCreateFormProvider";
 import GiftCardsListHeader from "./GiftCardsListHeader";
 import { GiftCardsListProvider } from "./GiftCardsListProvider";
