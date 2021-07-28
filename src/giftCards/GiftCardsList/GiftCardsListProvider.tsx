@@ -19,6 +19,8 @@ import {
 } from "../GiftCardUpdatePage/types/GiftCardList";
 import { GiftCardListColummns, GiftCardListUrlQueryParams } from "./types";
 
+const numberOfColumns = 7;
+
 interface GiftCardsListProviderProps {
   children: React.ReactNode;
   params: GiftCardListUrlQueryParams;
@@ -37,6 +39,7 @@ export interface GiftCardsListConsumerProps
   loading: boolean;
   params: GiftCardListUrlQueryParams;
   paginationState: PaginationState;
+  numberOfColumns: number;
 }
 
 export const GiftCardsListContext = createContext<GiftCardsListConsumerProps>(
@@ -85,7 +88,8 @@ export const GiftCardsListProvider: React.FC<GiftCardsListProviderProps> = ({
     paginationState,
     params,
     settings,
-    updateListSettings
+    updateListSettings,
+    numberOfColumns
   };
 
   return (

@@ -12,20 +12,16 @@ import { MessageDescriptor, useIntl } from "react-intl";
 import { GiftCardsListContext } from "../GiftCardsListProvider";
 import { giftCardsListTableMessages as messages } from "../messages";
 import { useTableStyles as useStyles } from "../styles";
-import { GiftCardsListTableCommonProps } from "../types";
 
 interface HeaderItem {
   title?: MessageDescriptor;
   options?: TableCellHeaderProps;
 }
 
-const GiftCardsListTableHeader: React.FC<GiftCardsListTableCommonProps> = ({
-  numberOfColumns,
-  disabled
-}) => {
+const GiftCardsListTableHeader: React.FC = () => {
   const intl = useIntl();
   const classes = useStyles({});
-  const { toggleAll, listElements, giftCards } = useContext(
+  const { toggleAll, listElements, giftCards, numberOfColumns } = useContext(
     GiftCardsListContext
   );
 

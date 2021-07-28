@@ -26,22 +26,15 @@ import { useTableStyles as useStyles } from "../styles";
 import GiftCardsListTableFooter from "./GiftCardsListTableFooter";
 import GiftCardsListTableHeader from "./GiftCardsListTableHeader";
 
-const numberOfColumns = 7;
 const PLACEHOLDER = "-";
 
-// interface GiftCardsListTableProps {}
-
-const GiftCardsListTable: React.FC = ({}) => {
+const GiftCardsListTable: React.FC = () => {
   const intl = useIntl();
   const classes = useStyles({});
   const navigate = useNavigator();
-  const { toggle, isSelected, giftCards } = useContext(GiftCardsListContext);
-
-  const commonTableProps = {
-    numberOfColumns
-    // TEMP
-    // disabled
-  };
+  const { toggle, isSelected, giftCards, numberOfColumns } = useContext(
+    GiftCardsListContext
+  );
 
   const redirectToGiftCardUpdate = (id: string) => () =>
     navigate(giftCardPath(id));
@@ -49,8 +42,8 @@ const GiftCardsListTable: React.FC = ({}) => {
   return (
     <Card>
       <ResponsiveTable>
-        <GiftCardsListTableHeader {...commonTableProps} />
-        <GiftCardsListTableFooter {...commonTableProps} />
+        <GiftCardsListTableHeader />
+        <GiftCardsListTableFooter />
         <TableBody>
           {renderCollection(
             giftCards,

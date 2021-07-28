@@ -4,8 +4,8 @@ import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandl
 import React from "react";
 
 import GiftCardCreateDialog from "../GiftCardCreateDialog";
+import GiftCardCreateFormProvider from "../GiftCardCreateDialog/GiftCardCreateFormProvider";
 import { giftCardsListUrl } from "../urls";
-import GiftCardCreateFormProvider from "./GiftCardCreateFormProvider";
 import GiftCardsListHeader from "./GiftCardsListHeader";
 import { GiftCardsListProvider } from "./GiftCardsListProvider";
 import GiftCardsListTable from "./GiftCardsListTable";

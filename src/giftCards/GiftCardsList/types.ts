@@ -7,20 +7,10 @@ export type GiftCardListColummns =
   | "usedBy"
   | "product";
 
-export interface GiftCardsListTableCommonProps {
-  numberOfColumns: number;
-  disabled: boolean;
-}
-
 export enum GiftCardListParamsEnum {
   CREATE = "gift-card-create"
 }
 
 export interface GiftCardListUrlQueryParams extends Pagination {
   action: GiftCardListParamsEnum;
-}
-
-export interface GiftCardCreateFormCustomer {
-  name: string;
-  email: string;
 }

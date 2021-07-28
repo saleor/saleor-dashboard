@@ -4,12 +4,8 @@ import usePaginator from "@saleor/hooks/usePaginator";
 import React, { useContext } from "react";
 
 import { GiftCardsListContext } from "../GiftCardsListProvider";
-import { GiftCardsListTableCommonProps } from "../types";
 
-const GiftCardsListTableFooter: React.FC<GiftCardsListTableCommonProps> = ({
-  numberOfColumns,
-  disabled
-}) => {
+const GiftCardsListTableFooter: React.FC = () => {
   const paginate = usePaginator();
 
   const {
@@ -17,7 +13,8 @@ const GiftCardsListTableFooter: React.FC<GiftCardsListTableCommonProps> = ({
     updateListSettings,
     pageInfo: apiPageInfo,
     paginationState,
-    params
+    params,
+    numberOfColumns
   } = useContext(GiftCardsListContext);
 
   const { loadNextPage, loadPreviousPage, pageInfo } = paginate(
@@ -32,13 +29,11 @@ const GiftCardsListTableFooter: React.FC<GiftCardsListTableCommonProps> = ({
         <TablePagination
           settings={settings}
           colSpan={numberOfColumns}
-          hasNextPage={pageInfo && !disabled ? pageInfo.hasNextPage : false}
+          hasNextPage={pageInfo ? pageInfo.hasNextPage : false}
           onNextPage={loadNextPage}
           onUpdateListSettings={updateListSettings}
           onPreviousPage={loadPreviousPage}
-          hasPreviousPage={
-            pageInfo && !disabled ? pageInfo.hasPreviousPage : false
-          }
+          hasPreviousPage={pageInfo ? pageInfo.hasPreviousPage : false}
         />
       </TableRow>
     </TableFooter>
