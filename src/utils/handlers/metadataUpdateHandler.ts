@@ -1,7 +1,7 @@
 import { MetadataFormData } from "@saleor/components/Metadata/types";
 import { MetadataErrorFragment } from "@saleor/fragments/types/MetadataErrorFragment";
 import { MetadataInput } from "@saleor/types/globalTypes";
-import { diff } from "fast-array-diff";
+import { arrayDiff } from "@saleor/utils/arrays";
 import { MutationFetchResult } from "react-apollo";
 
 import {
@@ -40,16 +40,15 @@ function createMetadataUpdateHandler<TData extends MetadataFormData, TError>(
 
     if (errors.length === 0) {
       if (data.metadata) {
-        const metaDiff = diff(
-          initial.metadata,
-          data.metadata,
-          (a, b) => a.key === b.key
-        );
+        const initialKeys = initial.metadata.map(m => m.key);
+        const modifiedKeys = data.metadata.map(m => m.key);
+
+        const keyDiff = arrayDiff(initialKeys, modifiedKeys);
 
         const updateMetaResult = await updateMetadata({
           id: initial.id,
           input: data.metadata,
-          keysToDelete: metaDiff.removed.map(meta => meta.key)
+          keysToDelete: keyDiff.removed
         });
         const updateMetaErrors = [
           ...(updateMetaResult.data.deleteMetadata.errors || []),
@@ -61,16 +60,15 @@ function createMetadataUpdateHandler<TData extends MetadataFormData, TError>(
         }
       }
       if (data.privateMetadata) {
-        const privateMetaDiff = diff(
-          initial.privateMetadata,
-          data.privateMetadata,
-          (a, b) => a.key === b.key
-        );
+        const initialKeys = initial.privateMetadata.map(m => m.key);
+        const modifiedKeys = data.privateMetadata.map(m => m.key);
+
+        const keyDiff = arrayDiff(initialKeys, modifiedKeys);
 
         const updatePrivateMetaResult = await updatePrivateMetadata({
           id: initial.id,
           input: data.privateMetadata,
-          keysToDelete: privateMetaDiff.removed.map(meta => meta.key)
+          keysToDelete: keyDiff.removed
         });
 
         const updatePrivateMetaErrors = [
