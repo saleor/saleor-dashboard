@@ -22,7 +22,9 @@ import {
   getRefundedLinesPriceSum,
   getReplacedProductsAmount,
   getReturnSelectedProductsAmount,
+  getWarehousesFromOrderLines,
   mergeRepeatedOrderLines,
+  OrderLineWithStockWarehouses,
   OrderWithTotalAndTotalCaptured
 } from "./data";
 
@@ -66,6 +68,77 @@ const orderBase: OrderDetails_order = {
     }
   }
 };
+
+describe("Get warehouses used in order", () => {
+  it("is able to calculate number of used warehouses from order", () => {
+    const lines: OrderLineWithStockWarehouses[] = [
+      {
+        variant: {
+          stocks: [
+            {
+              warehouse: {
+                __typename: "Warehouse",
+                id: "warehouse-1",
+                name: "Warehouse 1"
+              }
+            },
+            {
+              warehouse: {
+                __typename: "Warehouse",
+                id: "warehouse-2",
+                name: "Warehouse 2"
+              }
+            }
+          ]
+        }
+      },
+      {
+        variant: {
+          stocks: [
+            {
+              warehouse: {
+                __typename: "Warehouse",
+                id: "warehouse-1",
+                name: "Warehouse 1"
+              }
+            },
+            {
+              warehouse: {
+                __typename: "Warehouse",
+                id: "warehouse-2",
+                name: "Warehouse 2"
+              }
+            }
+          ]
+        }
+      },
+      {
+        variant: {
+          stocks: [
+            {
+              warehouse: {
+                __typename: "Warehouse",
+                id: "warehouse-2",
+                name: "Warehouse 2"
+              }
+            },
+            {
+              warehouse: {
+                __typename: "Warehouse",
+                id: "warehouse-3",
+                name: "Warehouse 3"
+              }
+            }
+          ]
+        }
+      }
+    ];
+
+    const orderWarehouses = getWarehousesFromOrderLines(lines);
+
+    expect(orderWarehouses.length).toBe(3);
+  });
+});
 
 describe("Get previously refunded price", () => {
   it("is able to calculate refunded price from order", () => {

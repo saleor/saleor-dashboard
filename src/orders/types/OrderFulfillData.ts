@@ -32,6 +32,7 @@ export interface OrderFulfillData_order_lines_variant_attributes {
 export interface OrderFulfillData_order_lines_variant_stocks_warehouse {
   __typename: "Warehouse";
   id: string;
+  name: string;
 }
 
 export interface OrderFulfillData_order_lines_variant_stocks {

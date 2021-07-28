@@ -5,6 +5,7 @@ import {
   fragmentRefundOrderLine
 } from "@saleor/fragments/orders";
 import { fragmentMoney } from "@saleor/fragments/products";
+import { warehouseFragment } from "@saleor/fragments/warehouses";
 import makeQuery from "@saleor/hooks/makeQuery";
 import makeTopLevelSearch from "@saleor/hooks/makeTopLevelSearch";
 import gql from "graphql-tag";
@@ -217,6 +218,7 @@ export const useOrderVariantSearch = makeTopLevelSearch<
 >(searchOrderVariant);
 
 const orderFulfillData = gql`
+  ${warehouseFragment}
   query OrderFulfillData($orderId: ID!) {
     order(id: $orderId) {
       id
@@ -245,7 +247,7 @@ const orderFulfillData = gql`
           stocks {
             id
             warehouse {
-              id
+              ...WarehouseFragment
             }
             quantity
             quantityAllocated
