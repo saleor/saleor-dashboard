@@ -12,6 +12,13 @@ export interface OrderSettings_orderSettings {
   automaticallyConfirmAllNewOrders: boolean;
 }
 
+export interface OrderSettings_shop {
+  __typename: "Shop";
+  fulfillmentAutoApprove: boolean;
+  fulfillmentAllowUnpaid: boolean;
+}
+
 export interface OrderSettings {
   orderSettings: OrderSettings_orderSettings | null;
+  shop: OrderSettings_shop;
 }
