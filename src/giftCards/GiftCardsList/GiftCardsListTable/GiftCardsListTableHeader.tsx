@@ -64,7 +64,6 @@ const GiftCardsListTableHeader: React.FC = () => {
       <TableHead
         colSpan={numberOfColumns}
         selected={listElements.length}
-        disabled={disabled}
         items={giftCards}
         toggleAll={toggleAll}
       >

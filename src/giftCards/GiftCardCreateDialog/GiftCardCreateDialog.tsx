@@ -78,6 +78,8 @@ const GiftCardCreateDialog: React.FC<GiftCardCreateDialogProps> = ({
       />
       <CardSpacer />
       <TextField
+        name="note"
+        onChange={change}
         multiline
         className={classes.noteField}
         label={`${intl.formatMessage(messages.noteLabel)} *${intl.formatMessage(
