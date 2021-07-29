@@ -19,6 +19,7 @@ import {
   useShippingZoneDelete,
   useShippingZoneUpdate
 } from "@saleor/shipping/mutations";
+import { arrayDiff } from "@saleor/utils/arrays";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import createMetadataUpdateHandler from "@saleor/utils/handlers/metadataUpdateHandler";
 import { mapEdgesToItems } from "@saleor/utils/maps";
@@ -27,7 +28,6 @@ import {
   usePrivateMetadataUpdate
 } from "@saleor/utils/metadata/updateMetadata";
 import { useWarehouseCreate } from "@saleor/warehouses/mutations";
-import { diff } from "fast-array-diff";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -133,12 +133,12 @@ const ShippingZoneDetails: React.FC<ShippingZoneDetailsProps> = ({
   const [updatePrivateMetadata] = usePrivateMetadataUpdate({});
 
   const updateData = async (submitData: FormData) => {
-    const warehouseDiff = diff(
+    const warehouseDiff = arrayDiff(
       data.shippingZone.warehouses.map(warehouse => warehouse.id),
       submitData.warehouses
     );
 
-    const channelsDiff = diff(
+    const channelsDiff = arrayDiff(
       data.shippingZone.channels.map(channel => channel.id),
       submitData.channels
     );

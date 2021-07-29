@@ -72,6 +72,7 @@ All notable, unreleased changes to this project will be documented in this file.
 - Use MacawUI - #1229 by @dominik-zeglen
 - Add Metadata for Sale & Voucher - #7653 by @piotrgrundas
 - Add variant create options dialog - #1238 by @orzechdev
+- Fix for errors on changing channel availability - #1264 by @krzysztofwolski
 
 # 2.11.1
 
