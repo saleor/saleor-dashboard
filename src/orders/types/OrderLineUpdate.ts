@@ -490,6 +490,7 @@ export interface OrderLineUpdate_orderLineUpdate_order {
   fulfillments: (OrderLineUpdate_orderLineUpdate_order_fulfillments | null)[];
   lines: (OrderLineUpdate_orderLineUpdate_order_lines | null)[];
   number: string | null;
+  isPaid: boolean;
   paymentStatus: PaymentChargeStatusEnum;
   shippingAddress: OrderLineUpdate_orderLineUpdate_order_shippingAddress | null;
   shippingMethod: OrderLineUpdate_orderLineUpdate_order_shippingMethod | null;
@@ -507,7 +508,6 @@ export interface OrderLineUpdate_orderLineUpdate_order {
   availableShippingMethods: (OrderLineUpdate_orderLineUpdate_order_availableShippingMethods | null)[] | null;
   invoices: (OrderLineUpdate_orderLineUpdate_order_invoices | null)[] | null;
   channel: OrderLineUpdate_orderLineUpdate_order_channel;
-  isPaid: boolean;
 }
 
 export interface OrderLineUpdate_orderLineUpdate {

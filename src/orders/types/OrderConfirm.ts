@@ -490,6 +490,7 @@ export interface OrderConfirm_orderConfirm_order {
   fulfillments: (OrderConfirm_orderConfirm_order_fulfillments | null)[];
   lines: (OrderConfirm_orderConfirm_order_lines | null)[];
   number: string | null;
+  isPaid: boolean;
   paymentStatus: PaymentChargeStatusEnum;
   shippingAddress: OrderConfirm_orderConfirm_order_shippingAddress | null;
   shippingMethod: OrderConfirm_orderConfirm_order_shippingMethod | null;
@@ -507,7 +508,6 @@ export interface OrderConfirm_orderConfirm_order {
   availableShippingMethods: (OrderConfirm_orderConfirm_order_availableShippingMethods | null)[] | null;
   invoices: (OrderConfirm_orderConfirm_order_invoices | null)[] | null;
   channel: OrderConfirm_orderConfirm_order_channel;
-  isPaid: boolean;
 }
 
 export interface OrderConfirm_orderConfirm {

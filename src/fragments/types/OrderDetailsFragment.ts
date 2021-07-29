@@ -483,6 +483,7 @@ export interface OrderDetailsFragment {
   fulfillments: (OrderDetailsFragment_fulfillments | null)[];
   lines: (OrderDetailsFragment_lines | null)[];
   number: string | null;
+  isPaid: boolean;
   paymentStatus: PaymentChargeStatusEnum;
   shippingAddress: OrderDetailsFragment_shippingAddress | null;
   shippingMethod: OrderDetailsFragment_shippingMethod | null;
@@ -500,5 +501,4 @@ export interface OrderDetailsFragment {
   availableShippingMethods: (OrderDetailsFragment_availableShippingMethods | null)[] | null;
   invoices: (OrderDetailsFragment_invoices | null)[] | null;
   channel: OrderDetailsFragment_channel;
-  isPaid: boolean;
 }

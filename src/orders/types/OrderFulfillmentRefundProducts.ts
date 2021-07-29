@@ -585,6 +585,7 @@ export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_o
   fulfillments: (OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_fulfillments | null)[];
   lines: (OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_lines | null)[];
   number: string | null;
+  isPaid: boolean;
   paymentStatus: PaymentChargeStatusEnum;
   shippingAddress: OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_shippingAddress | null;
   shippingMethod: OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_shippingMethod | null;
@@ -602,7 +603,6 @@ export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_o
   availableShippingMethods: (OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_availableShippingMethods | null)[] | null;
   invoices: (OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_invoices | null)[] | null;
   channel: OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_channel;
-  isPaid: boolean;
 }
 
 export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts {
