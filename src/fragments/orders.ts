@@ -200,6 +200,7 @@ export const fragmentOrderDetails = gql`
       ...OrderLineFragment
     }
     number
+    isPaid
     paymentStatus
     shippingAddress {
       ...AddressFragment

@@ -490,6 +490,7 @@ export interface OrderDiscountUpdate_orderDiscountUpdate_order {
   fulfillments: (OrderDiscountUpdate_orderDiscountUpdate_order_fulfillments | null)[];
   lines: (OrderDiscountUpdate_orderDiscountUpdate_order_lines | null)[];
   number: string | null;
+  isPaid: boolean;
   paymentStatus: PaymentChargeStatusEnum;
   shippingAddress: OrderDiscountUpdate_orderDiscountUpdate_order_shippingAddress | null;
   shippingMethod: OrderDiscountUpdate_orderDiscountUpdate_order_shippingMethod | null;
@@ -507,7 +508,6 @@ export interface OrderDiscountUpdate_orderDiscountUpdate_order {
   availableShippingMethods: (OrderDiscountUpdate_orderDiscountUpdate_order_availableShippingMethods | null)[] | null;
   invoices: (OrderDiscountUpdate_orderDiscountUpdate_order_invoices | null)[] | null;
   channel: OrderDiscountUpdate_orderDiscountUpdate_order_channel;
-  isPaid: boolean;
 }
 
 export interface OrderDiscountUpdate_orderDiscountUpdate {

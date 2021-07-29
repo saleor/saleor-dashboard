@@ -490,6 +490,7 @@ export interface OrderCancel_orderCancel_order {
   fulfillments: (OrderCancel_orderCancel_order_fulfillments | null)[];
   lines: (OrderCancel_orderCancel_order_lines | null)[];
   number: string | null;
+  isPaid: boolean;
   paymentStatus: PaymentChargeStatusEnum;
   shippingAddress: OrderCancel_orderCancel_order_shippingAddress | null;
   shippingMethod: OrderCancel_orderCancel_order_shippingMethod | null;
@@ -507,7 +508,6 @@ export interface OrderCancel_orderCancel_order {
   availableShippingMethods: (OrderCancel_orderCancel_order_availableShippingMethods | null)[] | null;
   invoices: (OrderCancel_orderCancel_order_invoices | null)[] | null;
   channel: OrderCancel_orderCancel_order_channel;
-  isPaid: boolean;
 }
 
 export interface OrderCancel_orderCancel {

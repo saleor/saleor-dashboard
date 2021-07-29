@@ -483,6 +483,7 @@ export interface OrderDetails_order {
   fulfillments: (OrderDetails_order_fulfillments | null)[];
   lines: (OrderDetails_order_lines | null)[];
   number: string | null;
+  isPaid: boolean;
   paymentStatus: PaymentChargeStatusEnum;
   shippingAddress: OrderDetails_order_shippingAddress | null;
   shippingMethod: OrderDetails_order_shippingMethod | null;
@@ -500,7 +501,6 @@ export interface OrderDetails_order {
   availableShippingMethods: (OrderDetails_order_availableShippingMethods | null)[] | null;
   invoices: (OrderDetails_order_invoices | null)[] | null;
   channel: OrderDetails_order_channel;
-  isPaid: boolean;
 }
 
 export interface OrderDetails_shop_countries {
@@ -513,6 +513,7 @@ export interface OrderDetails_shop {
   __typename: "Shop";
   countries: OrderDetails_shop_countries[];
   defaultWeightUnit: WeightUnitsEnum | null;
+  fulfillmentAllowUnpaid: boolean;
 }
 
 export interface OrderDetails {
