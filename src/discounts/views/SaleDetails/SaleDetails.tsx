@@ -50,7 +50,12 @@ import useCategorySearch from "@saleor/searches/useCategorySearch";
 import useCollectionSearch from "@saleor/searches/useCollectionSearch";
 import useProductSearch from "@saleor/searches/useProductSearch";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
+import createMetadataUpdateHandler from "@saleor/utils/handlers/metadataUpdateHandler";
 import { mapEdgesToItems } from "@saleor/utils/maps";
+import {
+  useMetadataUpdate,
+  usePrivateMetadataUpdate
+} from "@saleor/utils/metadata/updateMetadata";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -62,6 +67,8 @@ interface SaleDetailsProps {
 }
 
 export const SaleDetails: React.FC<SaleDetailsProps> = ({ id, params }) => {
+  const [updateMetadata] = useMetadataUpdate({});
+  const [updatePrivateMetadata] = usePrivateMetadataUpdate({});
   const navigate = useNavigator();
   const paginate = usePaginator();
   const notify = useNotifier();
@@ -253,12 +260,19 @@ export const SaleDetails: React.FC<SaleDetailsProps> = ({ id, params }) => {
                         pageInfo
                       } = paginate(tabPageInfo, paginationState, params);
 
-                      const handleSubmit = createUpdateHandler(
+                      const handleUpdate = createUpdateHandler(
                         data?.sale,
                         saleChannelsChoices,
                         variables => saleUpdate({ variables }),
                         updateChannels
                       );
+                      const handleSubmit = createMetadataUpdateHandler(
+                        data?.sale,
+                        handleUpdate,
+                        variables => updateMetadata({ variables }),
+                        variables => updatePrivateMetadata({ variables })
+                      );
+
                       return (
                         <>
                           <WindowTitle

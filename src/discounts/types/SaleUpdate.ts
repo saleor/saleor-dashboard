@@ -16,6 +16,18 @@ export interface SaleUpdate_saleUpdate_errors {
   channels: string[] | null;
 }
 
+export interface SaleUpdate_saleUpdate_sale_metadata {
+  __typename: "MetadataItem";
+  key: string;
+  value: string;
+}
+
+export interface SaleUpdate_saleUpdate_sale_privateMetadata {
+  __typename: "MetadataItem";
+  key: string;
+  value: string;
+}
+
 export interface SaleUpdate_saleUpdate_sale_channelListings_channel {
   __typename: "Channel";
   id: string;
@@ -33,6 +45,8 @@ export interface SaleUpdate_saleUpdate_sale_channelListings {
 
 export interface SaleUpdate_saleUpdate_sale {
   __typename: "Sale";
+  metadata: (SaleUpdate_saleUpdate_sale_metadata | null)[];
+  privateMetadata: (SaleUpdate_saleUpdate_sale_privateMetadata | null)[];
   id: string;
   name: string;
   type: SaleType;
