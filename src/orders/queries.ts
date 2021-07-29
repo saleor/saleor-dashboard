@@ -152,6 +152,7 @@ export const orderDetailsQuery = gql`
         country
       }
       defaultWeightUnit
+      fulfillmentAllowUnpaid
     }
   }
 `;

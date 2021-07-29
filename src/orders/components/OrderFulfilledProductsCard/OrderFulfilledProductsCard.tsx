@@ -2,6 +2,7 @@ import { Card, TableBody } from "@material-ui/core";
 import CardMenu from "@saleor/components/CardMenu";
 import CardSpacer from "@saleor/components/CardSpacer";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
+import { OrderDetailsFragment } from "@saleor/fragments/types/OrderDetailsFragment";
 import { makeStyles } from "@saleor/macaw-ui";
 import { mergeRepeatedOrderLines } from "@saleor/orders/utils/data";
 import React from "react";
@@ -15,6 +16,7 @@ import TableLine from "../OrderProductsCardElements/OrderProductsTableRow";
 import CardTitle from "../OrderReturnPage/OrderReturnRefundItemsCard/CardTitle";
 import ActionButtons from "./ActionButtons";
 import ExtraInfoLines from "./ExtraInfoLines";
+import { messages } from "./messages";
 
 const useStyles = makeStyles(
   () => ({
@@ -27,7 +29,9 @@ const useStyles = makeStyles(
 
 interface OrderFulfilledProductsCardProps {
   fulfillment: OrderDetails_order_fulfillments;
-  orderNumber?: string;
+  fulfillmentAllowUnpaid: boolean;
+  order?: OrderDetailsFragment;
+  onOrderFulfillmentApprove: () => void;
   onOrderFulfillmentCancel: () => void;
   onTrackingCodeAdd: () => void;
   onRefund: () => void;
@@ -36,7 +40,9 @@ interface OrderFulfilledProductsCardProps {
 const OrderFulfilledProductsCard: React.FC<OrderFulfilledProductsCardProps> = props => {
   const {
     fulfillment,
-    orderNumber,
+    fulfillmentAllowUnpaid,
+    order,
+    onOrderFulfillmentApprove,
     onOrderFulfillmentCancel,
     onTrackingCodeAdd,
     onRefund
@@ -72,17 +78,14 @@ const OrderFulfilledProductsCard: React.FC<OrderFulfilledProductsCardProps> = pr
           lines={fulfillment?.lines}
           fulfillmentOrder={fulfillment?.fulfillmentOrder}
           status={fulfillment?.status}
-          orderNumber={orderNumber}
           warehouseName={fulfillment?.warehouse?.name}
+          orderNumber={order?.number}
           toolbar={
             maybe(() => fulfillment.status) === FulfillmentStatus.FULFILLED && (
               <CardMenu
                 menuItems={[
                   {
-                    label: intl.formatMessage({
-                      defaultMessage: "Cancel Fulfillment",
-                      description: "button"
-                    }),
+                    label: intl.formatMessage(messages.cancelFulfillment),
                     onSelect: onOrderFulfillmentCancel,
                     testId: "cancelFulfillmentButton"
                   }
@@ -103,8 +106,11 @@ const OrderFulfilledProductsCard: React.FC<OrderFulfilledProductsCardProps> = pr
         <ActionButtons
           status={fulfillment?.status}
           trackingNumber={fulfillment?.trackingNumber}
+          orderIsPaid={order?.isPaid}
+          fulfillmentAllowUnpaid={fulfillmentAllowUnpaid}
           onTrackingCodeAdd={onTrackingCodeAdd}
           onRefund={onRefund}
+          onApprove={onOrderFulfillmentApprove}
         />
       </Card>
       <CardSpacer />

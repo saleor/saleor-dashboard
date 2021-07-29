@@ -536,6 +536,10 @@
     "context": "button",
     "string": "Accept"
   },
+  "src_dot_approve": {
+    "context": "button",
+    "string": "Approve"
+  },
   "src_dot_apps": {
     "context": "apps section name",
     "string": "Apps"
@@ -3995,28 +3999,29 @@
     "context": "product's sku",
     "string": "SKU"
   },
-  "src_dot_orders_dot_components_dot_OrderFulfilledProductsCard_dot_1119771899": {
+  "src_dot_orders_dot_components_dot_OrderFulfilledProductsCard_dot_addTracking": {
     "context": "add tracking button",
     "string": "Add tracking"
   },
-  "src_dot_orders_dot_components_dot_OrderFulfilledProductsCard_dot_2211099657": {
-    "context": "edit tracking button",
-    "string": "Edit tracking"
-  },
-  "src_dot_orders_dot_components_dot_OrderFulfilledProductsCard_dot_2845258362": {
-    "context": "refund button",
-    "string": "Refund"
-  },
-  "src_dot_orders_dot_components_dot_OrderFulfilledProductsCard_dot_3254150098": {
-    "string": "Tracking Number: {trackingNumber}"
-  },
-  "src_dot_orders_dot_components_dot_OrderFulfilledProductsCard_dot_732594284": {
+  "src_dot_orders_dot_components_dot_OrderFulfilledProductsCard_dot_cancelFulfillment": {
     "context": "button",
     "string": "Cancel Fulfillment"
+  },
+  "src_dot_orders_dot_components_dot_OrderFulfilledProductsCard_dot_cannotFullfillWarning": {
+    "context": "approve button disable description",
+    "string": "Can’t fulfill until payment is captured"
+  },
+  "src_dot_orders_dot_components_dot_OrderFulfilledProductsCard_dot_editTracking": {
+    "context": "edit tracking button",
+    "string": "Edit tracking"
   },
   "src_dot_orders_dot_components_dot_OrderFulfilledProductsCard_dot_fulfilled": {
     "context": "fulfillment group",
     "string": "Fulfilled from: "
+  },
+  "src_dot_orders_dot_components_dot_OrderFulfilledProductsCard_dot_refund": {
+    "context": "refund button",
+    "string": "Refund"
   },
   "src_dot_orders_dot_components_dot_OrderFulfilledProductsCard_dot_restocked": {
     "context": "restocked group",
@@ -4025,6 +4030,18 @@
   "src_dot_orders_dot_components_dot_OrderFulfilledProductsCard_dot_tracking": {
     "context": "tracking number",
     "string": "Tracking Number: {trackingNumber}"
+  },
+  "src_dot_orders_dot_components_dot_OrderFulfillmentApproveDialog_dot_description": {
+    "context": "dialog description",
+    "string": "Are you sure you want to approve this fullfillment?"
+  },
+  "src_dot_orders_dot_components_dot_OrderFulfillmentApproveDialog_dot_notifyCustomer": {
+    "context": "checkbox label, fulfillment approval",
+    "string": "Send shipment details to customer"
+  },
+  "src_dot_orders_dot_components_dot_OrderFulfillmentApproveDialog_dot_title": {
+    "context": "dialog header",
+    "string": "Approve this fulfillment"
   },
   "src_dot_orders_dot_components_dot_OrderFulfillmentCancelDialog_dot_1097287358": {
     "string": "Are you sure you want to cancel fulfillment? Canceling a fulfillment will restock products at a selected warehouse."
@@ -4711,6 +4728,10 @@
     "context": "section header",
     "string": "Unfulfilled"
   },
+  "src_dot_orders_dot_components_dot_OrderReturnPage_dot_OrderReturnRefundItemsCard_dot_waitingForApproval": {
+    "context": "unapproved fulfillment, section header",
+    "string": "Waiting for approval ({quantity})"
+  },
   "src_dot_orders_dot_components_dot_OrderReturnPage_dot_appTitle": {
     "context": "page header with order number",
     "string": "Order #{orderNumber}"
@@ -4781,6 +4802,9 @@
   },
   "src_dot_orders_dot_views_dot_OrderDetails_dot_3367579693": {
     "string": "Order successfully updated"
+  },
+  "src_dot_orders_dot_views_dot_OrderDetails_dot_3897044696": {
+    "string": "Fulfillment successfully approved"
   },
   "src_dot_orders_dot_views_dot_OrderDetails_dot_4085755992": {
     "string": "Invoice email sent"

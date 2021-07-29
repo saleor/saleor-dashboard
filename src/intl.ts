@@ -139,6 +139,10 @@ export const buttonMessages = defineMessages({
     defaultMessage: "Accept",
     description: "button"
   },
+  approve: {
+    defaultMessage: "Approve",
+    description: "button"
+  },
   back: {
     defaultMessage: "Back",
     description: "button"
