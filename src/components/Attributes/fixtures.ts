@@ -19,7 +19,9 @@ const DROPDOWN_ATTRIBUTE: AttributeInput = {
         reference: null,
         slug: "dropdown-first-value",
         richText: null,
-        boolean: null
+        boolean: null,
+        date: null,
+        dateTime: null
       },
       {
         __typename: "AttributeValue",
@@ -29,7 +31,9 @@ const DROPDOWN_ATTRIBUTE: AttributeInput = {
         reference: null,
         slug: "dropdown-second-value",
         richText: null,
-        boolean: null
+        boolean: null,
+        date: null,
+        dateTime: null
       }
     ]
   },
@@ -51,7 +55,9 @@ const MULTISELECT_ATTRIBUTE: AttributeInput = {
         reference: null,
         slug: "multiselect-first-value",
         richText: null,
-        boolean: null
+        boolean: null,
+        date: null,
+        dateTime: null
       },
       {
         __typename: "AttributeValue",
@@ -61,7 +67,9 @@ const MULTISELECT_ATTRIBUTE: AttributeInput = {
         reference: null,
         slug: "multiselect-second-value",
         richText: null,
-        boolean: null
+        boolean: null,
+        date: null,
+        dateTime: null
       },
       {
         __typename: "AttributeValue",
@@ -71,7 +79,9 @@ const MULTISELECT_ATTRIBUTE: AttributeInput = {
         reference: null,
         slug: "multiselect-third-value",
         richText: null,
-        boolean: null
+        boolean: null,
+        date: null,
+        dateTime: null
       }
     ]
   },
@@ -97,7 +107,9 @@ const FILE_ATTRIBUTE: AttributeInput = {
         reference: null,
         slug: "file-first-value",
         richText: null,
-        boolean: null
+        boolean: null,
+        date: null,
+        dateTime: null
       }
     ]
   },
@@ -134,7 +146,9 @@ const REFERENCE_ATTRIBUTE: AttributeInput = {
         reference: null,
         slug: "references-first-value",
         richText: null,
-        boolean: null
+        boolean: null,
+        date: null,
+        dateTime: null
       },
       {
         __typename: "AttributeValue",
@@ -144,7 +158,9 @@ const REFERENCE_ATTRIBUTE: AttributeInput = {
         reference: null,
         slug: "references-second-value",
         richText: null,
-        boolean: null
+        boolean: null,
+        date: null,
+        dateTime: null
       },
       {
         __typename: "AttributeValue",
@@ -154,7 +170,9 @@ const REFERENCE_ATTRIBUTE: AttributeInput = {
         reference: null,
         slug: "references-third-value",
         richText: null,
-        boolean: null
+        boolean: null,
+        date: null,
+        dateTime: null
       }
     ]
   },
@@ -180,7 +198,9 @@ const RICH_TEXT_ATTRIBUTE: AttributeInput = {
           blocks: [{ data: { text: "Some cool text" }, type: "paragraph" }],
           version: "2.19.3"
         }),
-        boolean: null
+        boolean: null,
+        date: null,
+        dateTime: null
       }
     ],
     selectedValues: []
@@ -204,6 +224,8 @@ const NUMERIC_ATTRIBUTE: AttributeInput = {
         reference: null,
         richText: null,
         boolean: null,
+        date: null,
+        dateTime: null,
         slug: "319_35"
       }
     ]
@@ -226,7 +248,9 @@ const BOOLEAN_ATTRIBUTE: AttributeInput = {
         reference: null,
         richText: null,
         boolean: true,
-        slug: "319_True"
+        slug: "319_True",
+        date: null,
+        dateTime: null
       }
     ]
   },
@@ -235,6 +259,53 @@ const BOOLEAN_ATTRIBUTE: AttributeInput = {
   value: []
 };
 
+const DATE_ATTRIBUTE: AttributeInput = {
+  data: {
+    inputType: AttributeInputTypeEnum.DATE,
+    isRequired: true,
+    values: [
+      {
+        __typename: "AttributeValue",
+        file: null,
+        id: "asdfasdfasdfasdf",
+        name: "Date Attribute: '2021-06-03 00:15:00+00:00'",
+        reference: null,
+        richText: null,
+        boolean: true,
+        slug: "319_True",
+        date: "2021-06-03",
+        dateTime: "2021-06-03 00:15:00+00:00"
+      }
+    ]
+  },
+  id: "QXR0cmfsdfasfdjMasdfasdf1",
+  label: "Date Attribute",
+  value: []
+};
+
+const DATE_TIME_ATTRIBUTE: AttributeInput = {
+  data: {
+    inputType: AttributeInputTypeEnum.DATE_TIME,
+    isRequired: true,
+    values: [
+      {
+        __typename: "AttributeValue",
+        file: null,
+        id: "asdfasdfasdfasdf",
+        name: "Date Time Attribute: '2021-06-03 00:15:00+00:00'",
+        reference: null,
+        richText: null,
+        boolean: true,
+        slug: "319_True",
+        date: "2021-06-03",
+        dateTime: "2021-06-03 00:15:00+00:00"
+      }
+    ]
+  },
+  id: "QXR0cmlidXasdfasdfasdf1",
+  label: "Date Time Attribute",
+  value: []
+};
 export const ATTRIBUTES: AttributeInput[] = [
   DROPDOWN_ATTRIBUTE,
   MULTISELECT_ATTRIBUTE,
@@ -242,7 +313,9 @@ export const ATTRIBUTES: AttributeInput[] = [
   REFERENCE_ATTRIBUTE,
   RICH_TEXT_ATTRIBUTE,
   NUMERIC_ATTRIBUTE,
-  BOOLEAN_ATTRIBUTE
+  BOOLEAN_ATTRIBUTE,
+  DATE_ATTRIBUTE,
+  DATE_TIME_ATTRIBUTE
 ];
 
 export const ATTRIBUTES_SELECTED: AttributeInput[] = [
@@ -284,5 +357,13 @@ export const ATTRIBUTES_SELECTED: AttributeInput[] = [
   {
     ...BOOLEAN_ATTRIBUTE,
     value: [JSON.stringify(BOOLEAN_ATTRIBUTE.data.values[0].boolean)]
+  },
+  {
+    ...DATE_ATTRIBUTE,
+    value: [DATE_TIME_ATTRIBUTE.data.values[0].date]
+  },
+  {
+    ...DATE_TIME_ATTRIBUTE,
+    value: [DATE_TIME_ATTRIBUTE.data.values[0].dateTime]
   }
 ];
