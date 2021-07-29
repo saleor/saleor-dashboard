@@ -449,12 +449,12 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
                   : intl.formatMessage(messages.submitPrepareFulfillment)
               }}
               state={saveButtonBar}
-              // tooltips={{
-              //   confirm:
-              //     !shopSettings?.fulfillmentAllowUnpaid &&
-              //     !order?.isPaid &&
-              //     intl.formatMessage(messages.cannotFullfill)
-              // }}
+              tooltips={{
+                confirm:
+                  !shopSettings?.fulfillmentAllowUnpaid &&
+                  !order?.isPaid &&
+                  intl.formatMessage(messages.cannotFullfill)
+              }}
               onSubmit={submit}
               onCancel={onBack}
             />
