@@ -6,6 +6,8 @@ export const warehouseFragment = gql`
   fragment WarehouseFragment on Warehouse {
     id
     name
+    isPrivate
+    clickAndCollectOption
   }
 `;
 export const warehouseWithShippingFragment = gql`

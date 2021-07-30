@@ -10,7 +10,7 @@ import { ShopInfo_shop_countries } from "@saleor/components/Shop/types/ShopInfo"
 import { AddressTypeInput } from "@saleor/customers/types";
 import { WarehouseErrorFragment } from "@saleor/fragments/types/WarehouseErrorFragment";
 import useAddressValidation from "@saleor/hooks/useAddressValidation";
-import { SubmitPromise } from "@saleor/hooks/useForm";
+import { FormChange, SubmitPromise } from "@saleor/hooks/useForm";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { sectionNames } from "@saleor/intl";
 import { Backlink } from "@saleor/macaw-ui";
@@ -24,9 +24,12 @@ import { FormattedMessage, useIntl } from "react-intl";
 import { WarehouseDetails_warehouse } from "../../types/WarehouseDetails";
 import WarehouseInfo from "../WarehouseInfo";
 import WarehouseZones from "../WarehouseZones";
+import { WarehouseClickAndCollectOptionEnum } from "./../../../types/globalTypes";
 
 export interface WarehouseDetailsPageFormData extends AddressTypeInput {
   name: string;
+  isPrivate: boolean;
+  clickAndCollectOption: WarehouseClickAndCollectOptionEnum;
 }
 export interface WarehouseDetailsPageProps {
   countries: ShopInfo_shop_countries[];
@@ -67,6 +70,11 @@ const WarehouseDetailsPage: React.FC<WarehouseDetailsPageProps> = ({
     country: maybe(() =>
       findValueInEnum(warehouse.address.country.code, CountryCode)
     ),
+    isPrivate: maybe(() => warehouse.isPrivate, false),
+    clickAndCollectOption: maybe(
+      () => warehouse.clickAndCollectOption,
+      WarehouseClickAndCollectOptionEnum.DISABLED
+    ),
     countryArea: maybe(() => warehouse.address.countryArea, ""),
     name: maybe(() => warehouse.name, ""),
     phone: maybe(() => warehouse.address.phone, ""),
@@ -83,6 +91,10 @@ const WarehouseDetailsPage: React.FC<WarehouseDetailsPageProps> = ({
           change,
           setDisplayCountry,
           countryChoices
+        );
+
+        const [isPrivate, setIsPrivate] = React.useState<string>(
+          data.isPrivate.toString()
         );
 
         return (
@@ -117,7 +129,14 @@ const WarehouseDetailsPage: React.FC<WarehouseDetailsPageProps> = ({
               <div>
                 <WarehouseZones
                   zones={mapEdgesToItems(warehouse?.shippingZones)}
+                  disabled={disabled}
+                  data={data}
+                  isPrivate={isPrivate}
                   onShippingZoneClick={onShippingZoneClick}
+                  onChange={change}
+                  onIsPrivateChange={e => {
+                    setIsPrivate(e.target.value);
+                  }}
                 />
               </div>
             </Grid>

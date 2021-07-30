@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { WarehouseFilterInput, WarehouseSortingInput } from "./../../types/globalTypes";
+import { WarehouseFilterInput, WarehouseSortingInput, WarehouseClickAndCollectOptionEnum } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL query operation: WarehouseList
@@ -29,6 +29,8 @@ export interface WarehouseList_warehouses_edges_node {
   __typename: "Warehouse";
   id: string;
   name: string;
+  isPrivate: boolean;
+  clickAndCollectOption: WarehouseClickAndCollectOptionEnum;
   shippingZones: WarehouseList_warehouses_edges_node_shippingZones;
 }
 

@@ -3,6 +3,8 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
+import { WarehouseClickAndCollectOptionEnum } from "./../../types/globalTypes";
+
 // ====================================================
 // GraphQL query operation: WarehouseDetails
 // ====================================================
@@ -49,6 +51,8 @@ export interface WarehouseDetails_warehouse {
   __typename: "Warehouse";
   id: string;
   name: string;
+  isPrivate: boolean;
+  clickAndCollectOption: WarehouseClickAndCollectOptionEnum;
   shippingZones: WarehouseDetails_warehouse_shippingZones;
   address: WarehouseDetails_warehouse_address;
 }
