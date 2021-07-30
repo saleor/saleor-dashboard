@@ -108,6 +108,10 @@ export const commonMessages = defineMessages({
   },
   yes: {
     defaultMessage: "Yes"
+  },
+  cannotFullfillUnpaidOrder: {
+    defaultMessage: "Can’t fulfill until payment is captured",
+    description: "disabled option description"
   }
 });
 

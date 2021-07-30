@@ -154,6 +154,7 @@ export const orderDetailsQuery = gql`
       }
       defaultWeightUnit
       fulfillmentAllowUnpaid
+      fulfillmentAutoApprove
     }
   }
 `;

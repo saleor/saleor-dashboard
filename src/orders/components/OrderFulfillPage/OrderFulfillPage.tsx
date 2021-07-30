@@ -23,6 +23,7 @@ import TableCellAvatar from "@saleor/components/TableCellAvatar";
 import { ShopOrderSettingsFragment } from "@saleor/fragments/types/ShopOrderSettingsFragment";
 import { WarehouseFragment } from "@saleor/fragments/types/WarehouseFragment";
 import useFormset, { FormsetData } from "@saleor/hooks/useFormset";
+import { commonMessages } from "@saleor/intl";
 import { Backlink } from "@saleor/macaw-ui";
 import { makeStyles } from "@saleor/macaw-ui";
 import { renderCollection } from "@saleor/misc";
@@ -457,7 +458,7 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
               tooltips={{
                 confirm:
                   notAllowedToFulfillUnpaid &&
-                  intl.formatMessage(messages.cannotFullfillUnpaid)
+                  intl.formatMessage(commonMessages.cannotFullfillUnpaidOrder)
               }}
               onSubmit={submit}
               onCancel={onBack}

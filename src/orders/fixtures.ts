@@ -32,7 +32,8 @@ export const shop: OrderDetails_shop = {
   __typename: "Shop",
   countries,
   defaultWeightUnit: WeightUnitsEnum.KG,
-  fulfillmentAllowUnpaid: true
+  fulfillmentAllowUnpaid: true,
+  fulfillmentAutoApprove: true
 };
 
 export const clients: SearchCustomers_search_edges_node[] = [
