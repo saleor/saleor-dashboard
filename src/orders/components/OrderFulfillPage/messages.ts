@@ -45,7 +45,7 @@ export const messages = defineMessages({
     defaultMessage: "Send shipment details to customer",
     description: "checkbox label"
   },
-  cannotFullfill: {
+  cannotFullfillUnpaid: {
     defaultMessage: "Can’t fulfill until payment is captured",
     description: "button tooltip"
   }

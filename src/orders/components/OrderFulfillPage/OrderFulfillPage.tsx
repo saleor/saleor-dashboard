@@ -175,12 +175,17 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
       items: formsetData
     });
 
+  const notAllowedToFulfillUnpaid =
+    shopSettings?.fulfillmentAutoApprove &&
+    !shopSettings?.fulfillmentAllowUnpaid &&
+    !order?.isPaid;
+
   const shouldEnableSave = () => {
     if (!order || loading) {
       return false;
     }
 
-    if (!order?.isPaid && !shopSettings?.fulfillmentAllowUnpaid) {
+    if (notAllowedToFulfillUnpaid) {
       return false;
     }
 
@@ -451,9 +456,8 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
               state={saveButtonBar}
               tooltips={{
                 confirm:
-                  !shopSettings?.fulfillmentAllowUnpaid &&
-                  !order?.isPaid &&
-                  intl.formatMessage(messages.cannotFullfill)
+                  notAllowedToFulfillUnpaid &&
+                  intl.formatMessage(messages.cannotFullfillUnpaid)
               }}
               onSubmit={submit}
               onCancel={onBack}

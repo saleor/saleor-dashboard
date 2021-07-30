@@ -3707,7 +3707,7 @@
     "context": "button",
     "string": "Finalize"
   },
-  "src_dot_orders_dot_components_dot_OrderFulfillPage_dot_cannotFullfill": {
+  "src_dot_orders_dot_components_dot_OrderFulfillPage_dot_cannotFullfillUnpaid": {
     "context": "button tooltip",
     "string": "Can’t fulfill until payment is captured"
   },
