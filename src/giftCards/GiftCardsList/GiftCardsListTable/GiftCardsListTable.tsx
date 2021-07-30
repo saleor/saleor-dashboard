@@ -72,9 +72,9 @@ const GiftCardsListTable: React.FC = () => {
                 <TableCell className={classes.colCardCode}>
                   <div className={classes.cardCodeContainer}>
                     <Typography>
-                      {`${intl.formatMessage(
-                        messages.codeEndingWithLabel
-                      )} ${displayCode}`}
+                      {intl.formatMessage(messages.codeEndingWithLabel, {
+                        displayCode
+                      })}
                     </Typography>
                     {!isActive && (
                       <>

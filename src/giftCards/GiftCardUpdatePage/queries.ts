@@ -5,6 +5,10 @@ import { fragmentTimePeriod } from "@saleor/fragments/timePeriod";
 import makeQuery from "@saleor/hooks/makeQuery";
 import gql from "graphql-tag";
 
+import {
+  GiftCardDetails,
+  GiftCardDetailsVariables
+} from "./types/GiftCardDetails";
 import { GiftCardList, GiftCardListVariables } from "./types/GiftCardList";
 
 export const giftCardList = gql`
@@ -58,7 +62,7 @@ export const giftCardDetails = gql`
   query GiftCardDetails($id: ID!) {
     giftCard(id: $id) {
       ...MetadataFragment
-      code
+      displayCode
       createdBy {
         ...UserBase
       }
@@ -137,8 +141,12 @@ export const giftCardDetails = gql`
         }
       }
       id
-      displayCode
       tag
     }
   }
 `;
+
+export const useGiftCardDetailsQuery = makeQuery<
+  GiftCardDetails,
+  GiftCardDetailsVariables
+>(giftCardDetails);

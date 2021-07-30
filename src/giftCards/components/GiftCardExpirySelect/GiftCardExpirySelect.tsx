@@ -43,9 +43,9 @@ interface GiftCardExpirySelectProps {
 
 const GiftCardExpirySelect: React.FC<GiftCardExpirySelectProps> = ({
   change,
-  expiryPeriodType,
-  expiryPeriodAmount,
-  expiryType,
+  expiryPeriodType = TimePeriodTypeEnum.YEAR,
+  expiryPeriodAmount = 1,
+  expiryType = GiftCardExpiryTypeEnum.EXPIRY_PERIOD,
   customOptions
 }) => {
   const intl = useIntl();

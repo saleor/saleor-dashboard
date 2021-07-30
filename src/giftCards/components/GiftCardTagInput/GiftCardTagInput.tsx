@@ -5,11 +5,12 @@ import SingleAutocompleteSelectField, {
 } from "@saleor/components/SingleAutocompleteSelectField";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@saleor/config";
 import { FormChange } from "@saleor/hooks/useForm";
-import createSingleAutocompleteSelectHandler from "@saleor/utils/handlers/singleAutocompleteSelectChangeHandler";
 import {
   mapEdgesToItems,
   mapSingleValueNodeToChoice
 } from "@saleor/utils/maps";
+import compact from "lodash/compact";
+import uniq from "lodash/uniq";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -19,7 +20,6 @@ import useGiftCardTagsSearch from "./useGiftCardTagsSearch";
 interface GiftCardTagInputProps
   extends Pick<SingleAutocompleteSelectFieldProps, "name"> {
   change: FormChange;
-  setSelected: (id: string) => void;
   value: string;
   withTopLabel?: boolean;
 }
@@ -27,7 +27,6 @@ interface GiftCardTagInputProps
 const GiftCardTagInput: React.FC<GiftCardTagInputProps> = ({
   withTopLabel = false,
   change,
-  setSelected,
   name,
   value
 }) => {
@@ -38,14 +37,8 @@ const GiftCardTagInput: React.FC<GiftCardTagInputProps> = ({
   });
 
   const choices = mapSingleValueNodeToChoice(
-    mapEdgesToItems(result?.data?.search)?.filter(({ tag }) => !!tag),
+    uniq(compact(mapEdgesToItems(result?.data?.search)?.map(({ tag }) => tag))),
     "tag"
-  );
-
-  const handleSelect = createSingleAutocompleteSelectHandler(
-    change,
-    setSelected,
-    choices
   );
 
   return (
@@ -57,15 +50,15 @@ const GiftCardTagInput: React.FC<GiftCardTagInputProps> = ({
         </>
       )}
       <SingleAutocompleteSelectField
-        name={name || "giftCardTag"}
         allowCustomValues
+        name={name || "giftCardTag"}
         label={intl.formatMessage(messages.placeholder)}
         data-test-id="gift-card-tag-select-field"
         value={value}
         displayValue={value}
         choices={choices}
         fetchChoices={search}
-        onChange={handleSelect}
+        onChange={change}
         onFetchMore={loadMore}
       />
     </>

@@ -33,6 +33,26 @@ const TextWithSelectField: React.FC<TextWithSelectFieldProps> = ({
 }) => {
   const classes = useStyles();
 
+  // in case one of the fields in the form is empty
+  // we need to save the other part of the field as well
+  const handleChange = (type: "selectField" | "textField") => (
+    event: React.ChangeEvent<any>
+  ) => {
+    const otherTarget =
+      type === "textField"
+        ? {
+            value: selectFieldValue,
+            name: selectFieldName
+          }
+        : {
+            value: textFieldValue,
+            name: textFieldName
+          };
+
+    change(event);
+    change({ target: otherTarget });
+  };
+
   return (
     <div className={classNames(classes.container, containerClassName)}>
       <TextField
@@ -46,7 +66,7 @@ const TextWithSelectField: React.FC<TextWithSelectFieldProps> = ({
           endAdornment: (
             <SingleSelectField
               name={selectFieldName}
-              onChange={change}
+              onChange={handleChange("selectField")}
               value={selectFieldValue}
               className={classNames(
                 classes.autocompleteField,
@@ -56,7 +76,7 @@ const TextWithSelectField: React.FC<TextWithSelectFieldProps> = ({
             />
           )
         }}
-        onChange={change}
+        onChange={handleChange("textField")}
         value={textFieldValue}
       />
     </div>

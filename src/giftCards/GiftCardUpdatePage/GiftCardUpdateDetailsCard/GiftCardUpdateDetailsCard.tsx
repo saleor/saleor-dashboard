@@ -6,17 +6,20 @@ import GiftCardTagInput from "@saleor/giftCards/components/GiftCardTagInput";
 import React, { useContext } from "react";
 import { useIntl } from "react-intl";
 
+import { GiftCardDetailsContext } from "../GiftCardDetailsProvider";
 import { GiftCardUpdateFormContext } from "../GiftCardUpdateFormProvider";
+import ContentOrSkeleton from "../GiftCardUpdateInfoCard/ContentOrSkeleton";
 import GiftCardUpdateDetailsBalanceSection from "./GiftCardUpdateDetailsBalanceSection";
 import { giftCardUpdateDetailsCardMessages as messages } from "./messages";
 
 const GiftCardUpdateDetailsCard: React.FC = ({}) => {
   const intl = useIntl();
 
+  const { loading } = useContext(GiftCardDetailsContext);
+
   const {
     change,
-    setSelectedTag,
-    data: { expiryType, expiryPeriodAmount, expiryPeriodType }
+    data: { expiryType, expiryPeriodAmount, expiryPeriodType, tag }
   } = useContext(GiftCardUpdateFormContext);
 
   return (
@@ -30,22 +33,25 @@ const GiftCardUpdateDetailsCard: React.FC = ({}) => {
         }
       />
       <CardContent>
-        <GiftCardUpdateDetailsBalanceSection />
-        <CardSpacer />
-        <Divider />
-        <CardSpacer />
-        <GiftCardTagInput
-          withTopLabel
-          change={change}
-          setSelected={setSelectedTag}
-        />
-        <CardSpacer />
-        <GiftCardExpirySelect
-          change={change}
-          expiryType={expiryType}
-          expiryPeriodAmount={expiryPeriodAmount}
-          expiryPeriodType={expiryPeriodType}
-        />
+        <ContentOrSkeleton condition={!loading}>
+          <GiftCardUpdateDetailsBalanceSection />
+          <CardSpacer />
+          <Divider />
+          <CardSpacer />
+          <GiftCardTagInput
+            name="tag"
+            withTopLabel
+            value={tag}
+            change={change}
+          />
+          <CardSpacer />
+          <GiftCardExpirySelect
+            change={change}
+            expiryType={expiryType}
+            expiryPeriodAmount={expiryPeriodAmount}
+            expiryPeriodType={expiryPeriodType}
+          />
+        </ContentOrSkeleton>
       </CardContent>
     </Card>
   );

@@ -10,21 +10,32 @@ import {
 import React, { createContext, useState } from "react";
 import { useIntl } from "react-intl";
 
-import { GiftCardDetails_giftCard } from "../GiftCardUpdatePage/types/GiftCardDetails";
 import { useGiftCardCreateMutation } from "./mutations";
-import { GiftCardCreateFormCustomer } from "./types";
+import {
+  GiftCardCreateFormCustomer,
+  GiftCardExpirySettingsFormData
+} from "./types";
 import { GiftCardCreate } from "./types/GiftCardCreate";
+
+export const initialData: GiftCardCreateFormData = {
+  tag: "",
+  balanceAmount: 1,
+  balanceCurrency: "",
+  note: "",
+  expiryDate: "",
+  expiryType: GiftCardExpiryTypeEnum.EXPIRY_PERIOD,
+  expiryPeriodType: TimePeriodTypeEnum.YEAR,
+  expiryPeriodAmount: 1
+};
 
 interface GiftCardCreateFormProviderProps {
   children: React.ReactNode;
 }
 
-export interface GiftCardCreateFormData
-  extends Pick<GiftCardDetails_giftCard, "expiryDate" | "expiryType"> {
-  balanceAmount: string;
+export interface GiftCardCreateFormData extends GiftCardExpirySettingsFormData {
+  tag: string;
+  balanceAmount: number;
   balanceCurrency: string;
-  expiryPeriodType: TimePeriodTypeEnum;
-  expiryPeriodAmount: number;
   note: string;
 }
 
@@ -51,16 +62,6 @@ const GiftCardCreateFormProvider: React.FC<GiftCardCreateFormProviderProps> = ({
   const [selectedCustomer, setSelectedCustomer] = useState<
     GiftCardCreateFormCustomer
   >({ email: "", name: "" });
-
-  const initialData: GiftCardCreateFormData = {
-    balanceAmount: "0",
-    balanceCurrency: "",
-    note: "",
-    expiryDate: "",
-    expiryType: GiftCardExpiryTypeEnum.EXPIRY_PERIOD,
-    expiryPeriodType: TimePeriodTypeEnum.YEAR,
-    expiryPeriodAmount: 0
-  };
 
   const onSubmit = (data: GiftCardCreate) => {
     notify(

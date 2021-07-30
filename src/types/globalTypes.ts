@@ -1400,6 +1400,14 @@ export interface GiftCardExpirySettingsInput {
   expiryPeriod?: TimePeriodInputType | null;
 }
 
+export interface GiftCardUpdateInput {
+  tag?: string | null;
+  startDate?: any | null;
+  endDate?: any | null;
+  balance?: PriceInput | null;
+  expirySettings?: GiftCardExpirySettingsInput | null;
+}
+
 export interface IntRangeInput {
   gte?: number | null;
   lte?: number | null;
