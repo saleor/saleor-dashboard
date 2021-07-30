@@ -23,7 +23,7 @@ const useStyles = makeStyles(
     warehouseName: {
       float: "right",
       color: theme.palette.text.secondary,
-      margin: `auto ${theme.spacing(1)}px auto auto`
+      margin: `auto ${theme.spacing(1)} auto auto`
     }
   }),
   { name: "CardTitle" }
