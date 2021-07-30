@@ -139,10 +139,6 @@ const initialFormData: OrderFulfillFormData = {
   sendInfo: true
 };
 
-function getRemainingQuantity(line: OrderFulfillData_order_lines): number {
-  return line.quantity - line.quantityFulfilled;
-}
-
 const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
   const {
     loading,
@@ -162,7 +158,7 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
     OrderFulfillStockInput[]
   >(
     order?.lines
-      .filter(line => getRemainingQuantity(line) > 0)
+      .filter(line => line.quantityToFulfill > 0)
       .map(line => ({
         data: null,
         id: line.id,
@@ -198,18 +194,16 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
     const areProperlyFulfilled = formsetData.every(({ id, value }) => {
       const { lines } = order;
 
-      const { quantity, quantityFulfilled } = lines.find(
+      const { quantityToFulfill } = lines.find(
         ({ id: lineId }) => lineId === id
       );
-
-      const remainingQuantity = quantity - quantityFulfilled;
 
       const formQuantityFulfilled = value.reduce(
         (result, { quantity }) => result + quantity,
         0
       );
 
-      return formQuantityFulfilled <= remainingQuantity;
+      return formQuantityFulfilled <= quantityToFulfill;
     });
 
     return isAtLeastOneFulfilled && areProperlyFulfilled;
@@ -312,7 +306,7 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
                 </TableHead>
                 <TableBody>
                   {renderCollection(
-                    order?.lines.filter(line => getRemainingQuantity(line) > 0),
+                    order?.lines.filter(line => line.quantityToFulfill > 0),
                     (line: OrderFulfillData_order_lines, lineIndex) => {
                       if (!line) {
                         return (
@@ -339,7 +333,7 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
                         );
                       }
 
-                      const remainingQuantity = getRemainingQuantity(line);
+                      const remainingQuantity = line.quantityToFulfill;
                       const quantityToFulfill = formsetData[
                         lineIndex
                       ].value.reduce(

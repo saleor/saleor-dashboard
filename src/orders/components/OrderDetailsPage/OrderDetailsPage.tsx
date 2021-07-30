@@ -154,7 +154,7 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
   const canEditAddresses = order?.status !== OrderStatus.CANCELED;
   const canFulfill = order?.status !== OrderStatus.CANCELED;
   const unfulfilled = (order?.lines || []).filter(
-    line => line.quantityFulfilled < line.quantity
+    line => line.quantityToFulfill > 0
   );
 
   const handleSubmit = async (data: MetadataFormData) => {
