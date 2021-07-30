@@ -1,4 +1,6 @@
 import { Button, Card } from "@material-ui/core";
+import { IFrameOpener } from "@saleor/apps/components/IFrameOpener/IFrameOpener";
+import { useExtensions } from "@saleor/apps/hooks";
 import CardMenu from "@saleor/components/CardMenu";
 import ColumnPicker, {
   ColumnPickerChoice
@@ -22,6 +24,10 @@ import {
   PageListProps,
   SortPage
 } from "@saleor/types";
+import {
+  AppExtensionTypeEnum,
+  AppExtensionViewEnum
+} from "@saleor/types/globalTypes";
 import { hasLimits, isLimitReached } from "@saleor/utils/limits";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -129,6 +135,18 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
   ];
 
   const limitReached = isLimitReached(limits, "productVariants");
+  const { create, moreActions } = useExtensions(
+    AppExtensionViewEnum.PRODUCT,
+    AppExtensionTypeEnum.OVERVIEW
+  );
+
+  const extensionMenuItems = create.map(({ label, app }) => ({
+    label,
+    testId: `extension-${app.id}`,
+    onSelect: () => console.log("extension clicked")
+  }));
+
+  console.log({ create, moreActions });
 
   return (
     <Container>
@@ -158,7 +176,8 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
               }),
               onSelect: onExport,
               testId: "export"
-            }
+            },
+            ...extensionMenuItems
           ]}
           data-test="menu"
         />
@@ -188,6 +207,11 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
             description="button"
           />
         </Button>
+        {create.map(({ app, url, label }) => (
+          <IFrameOpener app={app} backendUrl={url}>
+            {label}
+          </IFrameOpener>
+        ))}
       </PageHeader>
       {limitReached && (
         <LimitReachedAlert

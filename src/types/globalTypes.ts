@@ -63,6 +63,20 @@ export enum AppErrorCode {
   UNIQUE = "UNIQUE",
 }
 
+export enum AppExtensionTargetEnum {
+  CREATE = "CREATE",
+  MORE_ACTIONS = "MORE_ACTIONS",
+}
+
+export enum AppExtensionTypeEnum {
+  DETAILS = "DETAILS",
+  OVERVIEW = "OVERVIEW",
+}
+
+export enum AppExtensionViewEnum {
+  PRODUCT = "PRODUCT",
+}
+
 export enum AppSortField {
   CREATION_DATE = "CREATION_DATE",
   NAME = "NAME",
@@ -1831,6 +1845,12 @@ export interface AddressInput {
   country?: CountryCode | null;
   countryArea?: string | null;
   phone?: string | null;
+}
+
+export interface AppExtensionFilterInput {
+  view?: AppExtensionViewEnum | null;
+  type?: AppExtensionTypeEnum | null;
+  target?: AppExtensionTargetEnum | null;
 }
 
 export interface AppFilterInput {
