@@ -8,9 +8,12 @@ export interface GiftCardCreateFormCustomer {
   email: string;
 }
 
-export interface GiftCardExpirySettingsFormData {
+export interface GiftCardCommonFormData {
+  tag: string;
+  balanceAmount: string;
+  balanceCurrency: string;
   expiryDate: string;
   expiryType: GiftCardExpiryTypeEnum;
   expiryPeriodType: TimePeriodTypeEnum;
-  expiryPeriodAmount: number;
+  expiryPeriodAmount: string;
 }

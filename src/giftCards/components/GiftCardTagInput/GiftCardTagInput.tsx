@@ -4,6 +4,8 @@ import SingleAutocompleteSelectField, {
   SingleAutocompleteSelectFieldProps
 } from "@saleor/components/SingleAutocompleteSelectField";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@saleor/config";
+import { GiftCardError } from "@saleor/fragments/types/GiftCardError";
+import { getGiftCardErrorMessage } from "@saleor/giftCards/GiftCardUpdatePage/messages";
 import { FormChange } from "@saleor/hooks/useForm";
 import {
   mapEdgesToItems,
@@ -22,13 +24,15 @@ interface GiftCardTagInputProps
   change: FormChange;
   value: string;
   withTopLabel?: boolean;
+  error: GiftCardError;
 }
 
 const GiftCardTagInput: React.FC<GiftCardTagInputProps> = ({
   withTopLabel = false,
   change,
   name,
-  value
+  value,
+  error
 }) => {
   const intl = useIntl();
 
@@ -50,6 +54,8 @@ const GiftCardTagInput: React.FC<GiftCardTagInputProps> = ({
         </>
       )}
       <SingleAutocompleteSelectField
+        error={!!error}
+        helperText={getGiftCardErrorMessage(error, intl)}
         allowCustomValues
         name={name || "giftCardTag"}
         label={intl.formatMessage(messages.placeholder)}

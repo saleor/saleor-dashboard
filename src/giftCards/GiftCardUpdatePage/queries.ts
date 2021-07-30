@@ -9,94 +9,72 @@ import {
   GiftCardDetails,
   GiftCardDetailsVariables
 } from "./types/GiftCardDetails";
-import { GiftCardList, GiftCardListVariables } from "./types/GiftCardList";
 
-export const giftCardList = gql`
-  ${fragmentUserBase}
-  ${fragmentMoney}
-  query GiftCardList($first: Int, $after: String, $last: Int, $before: String) {
-    giftCards(first: $first, after: $after, before: $before, last: $last) {
-      edges {
-        node {
-          id
-          code
-          isActive
-          displayCode
-          tag
-          product {
-            id
-            name
-          }
-          usedBy {
-            ...UserBase
-          }
-          usedByEmail
-          currentBalance {
-            ...Money
-          }
-          initialBalance {
-            ...Money
-          }
-        }
-      }
-      pageInfo {
-        endCursor
-        hasNextPage
-        hasPreviousPage
-        startCursor
-      }
-    }
-  }
-`;
-
-export const useGiftCardListQuery = makeQuery<
-  GiftCardList,
-  GiftCardListVariables
->(giftCardList);
-
-export const giftCardDetails = gql`
+export const giftCardDataFragment = gql`
   ${fragmentMoney}
   ${metadataFragment}
   ${fragmentUserBase}
   ${fragmentTimePeriod}
+  fragment GiftCardData on GiftCard {
+    ...MetadataFragment
+    displayCode
+    createdBy {
+      ...UserBase
+    }
+    product {
+      id
+      name
+    }
+    user {
+      ...UserBase
+    }
+    usedBy {
+      ...UserBase
+    }
+    usedByEmail
+    createdByEmail
+    app {
+      id
+      name
+    }
+    created
+    expiryDate
+    expiryType
+    expiryPeriod {
+      ...TimePeriod
+    }
+    lastUsedOn
+    isActive
+    initialBalance {
+      ...Money
+    }
+    currentBalance {
+      ...Money
+    }
+
+    id
+    tag
+  }
+`;
+
+export const giftCardDetails = gql`
+  ${giftCardDataFragment}
   query GiftCardDetails($id: ID!) {
     giftCard(id: $id) {
-      ...MetadataFragment
-      displayCode
-      createdBy {
-        ...UserBase
-      }
-      product {
-        id
-        name
-      }
-      user {
-        ...UserBase
-      }
-      usedBy {
-        ...UserBase
-      }
-      usedByEmail
-      createdByEmail
-      app {
-        id
-        name
-      }
-      created
-      expiryDate
-      expiryType
-      expiryPeriod {
-        ...TimePeriod
-      }
-      lastUsedOn
-      isActive
-      initialBalance {
-        ...Money
-      }
-      currentBalance {
-        ...Money
-      }
+      ...GiftCardData
       events {
+        expiry {
+          expiryType
+          expiryPeriod {
+            ...TimePeriod
+          }
+          expiryDate
+          oldExpiryType
+          oldExpiryPeriod {
+            ...TimePeriod
+          }
+          oldExpiryDate
+        }
         id
         date
         type
@@ -127,21 +105,7 @@ export const giftCardDetails = gql`
             ...Money
           }
         }
-        expiry {
-          expiryType
-          expiryPeriod {
-            ...TimePeriod
-          }
-          expiryDate
-          oldExpiryType
-          oldExpiryPeriod {
-            ...TimePeriod
-          }
-          oldExpiryDate
-        }
       }
-      id
-      tag
     }
   }
 `;

@@ -7,7 +7,7 @@ import React, { useContext } from "react";
 import { useIntl } from "react-intl";
 
 import { giftCardsListTableMessages as tableMessages } from "../GiftCardsList/messages";
-import { GiftCardDetailsContext } from "./GiftCardDetailsProvider";
+import { GiftCardDetailsContext } from "./providers/GiftCardDetailsProvider";
 
 interface GiftCardUpdatePageHeaderProps {
   onBack: () => void;
@@ -23,7 +23,11 @@ const GiftCardUpdatePageHeader: React.FC<GiftCardUpdatePageHeaderProps> = ({
     return null;
   }
 
-  const { displayCode } = giftCard;
+  const { displayCode, isActive } = giftCard;
+
+  const title = intl.formatMessage(tableMessages.codeEndingWithLabel, {
+    displayCode
+  });
 
   return (
     <>
@@ -33,15 +37,17 @@ const GiftCardUpdatePageHeader: React.FC<GiftCardUpdatePageHeaderProps> = ({
       <PageHeader
         inline
         title={
-          <PageTitleWithStatusChip
-            title={intl.formatMessage(tableMessages.codeEndingWithLabel, {
-              displayCode
-            })}
-            statusLabel={intl.formatMessage(
-              tableMessages.giftCardDisabledLabel
-            )}
-            statusType={StatusType.ERROR}
-          />
+          isActive ? (
+            title
+          ) : (
+            <PageTitleWithStatusChip
+              title={title}
+              statusLabel={intl.formatMessage(
+                tableMessages.giftCardDisabledLabel
+              )}
+              statusType={StatusType.ERROR}
+            />
+          )
         }
       />
     </>

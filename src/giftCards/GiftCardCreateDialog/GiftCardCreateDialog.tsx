@@ -10,14 +10,15 @@ import Label from "@saleor/orders/components/OrderHistory/Label";
 import React, { useContext } from "react";
 import { useIntl } from "react-intl";
 
+import { GiftCardListActionParamsEnum } from "../GiftCardsList/types";
 import GiftCardBalanceTextWithSelectField from "./GiftCardBalanceTextWithSelectField";
 import { GiftCardCreateFormContext } from "./GiftCardCreateFormProvider";
 import CustomerSelectField from "./GiftCardCustomerSelectField";
 import { giftCardCreateDialogMessages as messages } from "./messages";
 
 interface GiftCardCreateDialogProps {
-  open: boolean;
   onClose: () => void;
+  action: string;
 }
 
 const useStyles = makeStyles(
@@ -30,8 +31,8 @@ const useStyles = makeStyles(
 );
 
 const GiftCardCreateDialog: React.FC<GiftCardCreateDialogProps> = ({
-  open,
-  onClose
+  onClose,
+  action
 }) => {
   const intl = useIntl();
   const classes = useStyles({});
@@ -39,15 +40,16 @@ const GiftCardCreateDialog: React.FC<GiftCardCreateDialogProps> = ({
   const {
     submit,
     change,
-    setSelectedTag,
     selectedTag,
     data: { expiryPeriodAmount, expiryPeriodType, expiryType }
   } = useContext(GiftCardCreateFormContext);
 
+  const isOpen = action === GiftCardListActionParamsEnum.CREATE;
+
   return (
     <ActionDialog
       maxWidth="sm"
-      open={open}
+      open={isOpen}
       onConfirm={submit}
       confirmButtonLabel={intl.formatMessage(messages.issueButtonLabel)}
       onClose={onClose}
@@ -55,12 +57,7 @@ const GiftCardCreateDialog: React.FC<GiftCardCreateDialogProps> = ({
     >
       <GiftCardBalanceTextWithSelectField />
       <CardSpacer />
-      <GiftCardTagInput
-        name="tag"
-        value={selectedTag}
-        setSelected={setSelectedTag}
-        change={change}
-      />
+      <GiftCardTagInput name="tag" value={selectedTag} change={change} />
       <CardSpacer />
       <Divider />
       <CardSpacer />

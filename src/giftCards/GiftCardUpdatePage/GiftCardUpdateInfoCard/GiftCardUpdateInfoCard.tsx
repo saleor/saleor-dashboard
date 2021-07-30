@@ -3,7 +3,7 @@ import CardTitle from "@saleor/components/CardTitle";
 import React, { useContext } from "react";
 import { useIntl } from "react-intl";
 
-import { GiftCardDetailsContext } from "../GiftCardDetailsProvider";
+import { GiftCardDetailsContext } from "../providers/GiftCardDetailsProvider";
 import ContentOrSkeleton from "./ContentOrSkeleton";
 import GiftCardUpdateInfoCardContent from "./GiftCardUpdateInfoCardContent";
 import { giftCardUpdateInfoCardMessages as messages } from "./messages";

@@ -1,5 +1,4 @@
 import { Typography } from "@material-ui/core";
-import { Email } from "@material-ui/icons";
 import { appUrl } from "@saleor/apps/urls";
 import CardSpacer from "@saleor/components/CardSpacer";
 import Link from "@saleor/components/Link";
@@ -15,7 +14,7 @@ import { GiftCardEventsEnum } from "@saleor/types/globalTypes";
 import React, { useContext } from "react";
 import { MessageDescriptor, useIntl } from "react-intl";
 
-import { GiftCardDetailsContext } from "../GiftCardDetailsProvider";
+import { GiftCardDetailsContext } from "../providers/GiftCardDetailsProvider";
 import { giftCardUpdateInfoCardMessages as messages } from "./messages";
 
 const PLACEHOLDER = "-";
@@ -25,7 +24,7 @@ const GiftCardUpdateInfoCardContent: React.FC = () => {
   const localizeDate = useDateLocalize();
   const navigate = useNavigator();
 
-  const { giftCard } = useContext(GiftCardDetailsContext);
+  const { giftCard, loading } = useContext(GiftCardDetailsContext);
 
   const {
     created,
@@ -77,7 +76,7 @@ const GiftCardUpdateInfoCardContent: React.FC = () => {
     return {
       label: messages.boughtByLabel,
       name: getFullName(createdBy),
-      url: customerUrl(createdBy.id)
+      url: customerUrl(createdBy?.id)
     };
   };
 

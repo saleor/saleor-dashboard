@@ -9,8 +9,8 @@ import Label, {
 import React, { useContext } from "react";
 import { MessageDescriptor, useIntl } from "react-intl";
 
-import { GiftCardsListContext } from "../GiftCardsListProvider";
 import { giftCardsListTableMessages as messages } from "../messages";
+import { GiftCardsListContext } from "../providers/GiftCardsListProvider";
 import { useTableStyles as useStyles } from "../styles";
 
 interface HeaderItem {

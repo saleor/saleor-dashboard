@@ -18,7 +18,7 @@ const useStyles = makeStyles(
   { name: "GiftCardBalanceTextWithSelectField" }
 );
 
-const GiftCardBalanceTextWithSelectField: React.FC = ({}) => {
+const GiftCardBalanceTextWithSelectField: React.FC = () => {
   const intl = useIntl();
   const classes = useStyles({});
   const { channelCurrencies } = useShop();
@@ -30,15 +30,20 @@ const GiftCardBalanceTextWithSelectField: React.FC = ({}) => {
 
   return (
     <TextWithSelectField
-      textFieldLabel={intl.formatMessage(messages.amountLabel)}
       change={change}
       choices={mapSingleValueNodeToChoice(channelCurrencies)}
-      textFieldName="balanceAmount"
-      selectFieldName="balanceCurrency"
-      textFieldValue={balanceAmount}
-      selectFieldValue={balanceCurrency}
-      selectFieldClassName={classes.currencySelectField}
       containerClassName={classes.balanceContainer}
+      textFieldProps={{
+        type: "number",
+        label: intl.formatMessage(messages.amountLabel),
+        name: "balanceAmount",
+        value: balanceAmount
+      }}
+      selectFieldProps={{
+        name: "balanceCurrency",
+        value: balanceCurrency,
+        className: classes.currencySelectField
+      }}
     />
   );
 };

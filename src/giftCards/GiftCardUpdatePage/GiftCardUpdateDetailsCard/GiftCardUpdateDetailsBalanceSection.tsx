@@ -8,7 +8,7 @@ import classNames from "classnames";
 import React, { useContext } from "react";
 import { useIntl } from "react-intl";
 
-import { GiftCardDetailsContext } from "../GiftCardDetailsProvider";
+import { GiftCardDetailsContext } from "../providers/GiftCardDetailsProvider";
 import { giftCardUpdateDetailsCardMessages as messages } from "./messages";
 import { useGiftCardDetailsBalanceStyles as useStyles } from "./styles";
 

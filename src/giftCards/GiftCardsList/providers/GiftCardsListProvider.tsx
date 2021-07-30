@@ -12,12 +12,12 @@ import { ListViews } from "@saleor/types";
 import { mapEdgesToItems } from "@saleor/utils/maps";
 import React, { createContext } from "react";
 
-import { useGiftCardListQuery } from "../GiftCardUpdatePage/queries";
+import { useGiftCardListQuery } from "../queries";
+import { GiftCardListColummns, GiftCardListUrlQueryParams } from "../types";
 import {
   GiftCardList_giftCards_edges_node,
   GiftCardListVariables
-} from "../GiftCardUpdatePage/types/GiftCardList";
-import { GiftCardListColummns, GiftCardListUrlQueryParams } from "./types";
+} from "../types/GiftCardList";
 
 const numberOfColumns = 7;
 
@@ -50,11 +50,8 @@ export const GiftCardsListProvider: React.FC<GiftCardsListProviderProps> = ({
   children,
   params
 }) => {
-  // TEMP
-  const initiallySelected = [];
-
   const { isSelected, listElements, reset, toggle, toggleAll } = useBulkActions(
-    initiallySelected
+    []
   );
 
   const { updateListSettings, settings } = useListSettings<

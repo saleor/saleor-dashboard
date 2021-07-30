@@ -1,7 +1,7 @@
 import React, { createContext } from "react";
 
-import { useGiftCardDetailsQuery } from "./queries";
-import { GiftCardDetails_giftCard } from "./types/GiftCardDetails";
+import { useGiftCardDetailsQuery } from "../queries";
+import { GiftCardDetails_giftCard } from "../types/GiftCardDetails";
 
 interface GiftCardDetailsProviderProps {
   children: React.ReactNode;

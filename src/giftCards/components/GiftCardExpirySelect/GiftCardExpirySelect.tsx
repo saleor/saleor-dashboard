@@ -1,6 +1,8 @@
 import { TextField, Typography } from "@material-ui/core";
 import VerticalSpacer from "@saleor/apps/components/VerticalSpacer";
 import RadioGroupField from "@saleor/components/RadioGroupField";
+import { GiftCardError } from "@saleor/fragments/types/GiftCardError";
+import { getGiftCardErrorMessage } from "@saleor/giftCards/GiftCardUpdatePage/messages";
 import { FormChange } from "@saleor/hooks/useForm";
 import {
   GiftCardExpiryTypeEnum,
@@ -36,15 +38,17 @@ const options: UntranslatedOption[] = [
 interface GiftCardExpirySelectProps {
   change: FormChange;
   expiryPeriodType: TimePeriodTypeEnum;
-  expiryPeriodAmount: number;
+  expiryPeriodAmount: string;
   expiryType: GiftCardExpiryTypeEnum;
   customOptions?: UntranslatedOption[];
+  errors?: Record<"expiryPeriod" | "expiryDate", GiftCardError>;
 }
 
 const GiftCardExpirySelect: React.FC<GiftCardExpirySelectProps> = ({
+  errors,
   change,
   expiryPeriodType = TimePeriodTypeEnum.YEAR,
-  expiryPeriodAmount = 1,
+  expiryPeriodAmount = "1",
   expiryType = GiftCardExpiryTypeEnum.EXPIRY_PERIOD,
   customOptions
 }) => {
@@ -58,6 +62,7 @@ const GiftCardExpirySelect: React.FC<GiftCardExpirySelectProps> = ({
     })
   );
 
+  console.log({ errors });
   return (
     <>
       <Typography>
@@ -75,6 +80,8 @@ const GiftCardExpirySelect: React.FC<GiftCardExpirySelectProps> = ({
 
       {expiryType === GiftCardExpiryTypeEnum.EXPIRY_DATE && (
         <TextField
+          error={!!errors?.expiryDate}
+          helperText={getGiftCardErrorMessage(errors?.expiryDate, intl)}
           onChange={change}
           name={"expiryDate"}
           className={classes.dateField}
@@ -88,6 +95,8 @@ const GiftCardExpirySelect: React.FC<GiftCardExpirySelectProps> = ({
 
       {expiryType === GiftCardExpiryTypeEnum.EXPIRY_PERIOD && (
         <TimePeriodField
+          isError={!!errors?.expiryPeriod}
+          helperText={getGiftCardErrorMessage(errors?.expiryPeriod, intl)}
           change={change}
           periodType={expiryPeriodType}
           periodAmount={expiryPeriodAmount}
