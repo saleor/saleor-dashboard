@@ -69,15 +69,12 @@ All notable, unreleased changes to this project will be documented in this file.
 - Fix content type validation in create page view - #1205 by @orzechdev
 - Fix list pagination crash on search - #1230 by @orzechdev
 - Fix positive float number input validation - #1233 by @orzechdev
-<<<<<<< HEAD
 - Use MacawUI - #1229 by @dominik-zeglen
 - Add Metadata for Sale & Voucher - #7653 by @piotrgrundas
 - Add variant create options dialog - #1238 by @orzechdev
 - Fix for errors on changing channel availability - #1264 by @krzysztofwolski
-=======
 - Fixed navigation menu items reordering issue - #1239 by @kamilpastuszka
 - Fixed issue with modals containing invalid, redundant scrolls #1240 by @kamilpastuszka
->>>>>>> 008f229c (fixed issue with modals containing invalid/redundant scrolls)
 
 # 2.11.1
 
