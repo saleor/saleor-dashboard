@@ -15,6 +15,7 @@ import {
   getSingleDisplayValue
 } from "@saleor/components/Attributes/utils";
 import Checkbox from "@saleor/components/Checkbox";
+import { DateTimeField } from "@saleor/components/DateTimeField";
 import FileUploadField from "@saleor/components/FileUploadField";
 import MultiAutocompleteSelectField from "@saleor/components/MultiAutocompleteSelectField";
 import RichTextEditor from "@saleor/components/RichTextEditor";
@@ -24,6 +25,7 @@ import { AttributeValueFragment } from "@saleor/fragments/types/AttributeValueFr
 import { PageErrorWithAttributesFragment } from "@saleor/fragments/types/PageErrorWithAttributesFragment";
 import { ProductErrorWithAttributesFragment } from "@saleor/fragments/types/ProductErrorWithAttributesFragment";
 import { FormsetChange } from "@saleor/hooks/useFormset";
+import { commonMessages } from "@saleor/intl";
 import { FetchMoreProps, ReorderEvent } from "@saleor/types";
 import { AttributeInputTypeEnum } from "@saleor/types/globalTypes";
 import React from "react";
@@ -217,6 +219,37 @@ const AttributeRow: React.FC<AttributeRowProps> = ({
               error={!!error}
             />
           </div>
+        </BasicAttributeRow>
+      );
+    case AttributeInputTypeEnum.DATE:
+      return (
+        <BasicAttributeRow label={attribute.label} flexValueContainer>
+          <TextField
+            fullWidth
+            disabled={disabled}
+            error={!!error}
+            helperText={getErrorMessage(error, intl)}
+            label={intl.formatMessage(commonMessages.date)}
+            name={`attribute:${attribute.label}`}
+            onChange={event => onChange(attribute.id, event.target.value)}
+            type="date"
+            value={attribute.value[0]}
+            InputLabelProps={{ shrink: true }}
+          />
+        </BasicAttributeRow>
+      );
+    case AttributeInputTypeEnum.DATE_TIME:
+      return (
+        <BasicAttributeRow label={attribute.label} flexValueContainer>
+          <DateTimeField
+            fullWidth
+            name={`attribute:${attribute.label}`}
+            disabled={disabled}
+            error={error}
+            value={attribute.value[0]}
+            helperText={getErrorMessage(error, intl)}
+            onChange={value => onChange(attribute.id, value)}
+          />
         </BasicAttributeRow>
       );
     default:

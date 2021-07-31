@@ -16,6 +16,18 @@ export interface VoucherUpdate_voucherUpdate_errors {
   channels: string[] | null;
 }
 
+export interface VoucherUpdate_voucherUpdate_voucher_metadata {
+  __typename: "MetadataItem";
+  key: string;
+  value: string;
+}
+
+export interface VoucherUpdate_voucherUpdate_voucher_privateMetadata {
+  __typename: "MetadataItem";
+  key: string;
+  value: string;
+}
+
 export interface VoucherUpdate_voucherUpdate_voucher_countries {
   __typename: "CountryDisplay";
   code: string;
@@ -46,6 +58,8 @@ export interface VoucherUpdate_voucherUpdate_voucher_channelListings {
 
 export interface VoucherUpdate_voucherUpdate_voucher {
   __typename: "Voucher";
+  metadata: (VoucherUpdate_voucherUpdate_voucher_metadata | null)[];
+  privateMetadata: (VoucherUpdate_voucherUpdate_voucher_privateMetadata | null)[];
   id: string;
   code: string;
   startDate: any;

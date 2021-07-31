@@ -9,6 +9,18 @@ import { SaleType } from "./../../types/globalTypes";
 // GraphQL fragment: SaleDetailsFragment
 // ====================================================
 
+export interface SaleDetailsFragment_metadata {
+  __typename: "MetadataItem";
+  key: string;
+  value: string;
+}
+
+export interface SaleDetailsFragment_privateMetadata {
+  __typename: "MetadataItem";
+  key: string;
+  value: string;
+}
+
 export interface SaleDetailsFragment_channelListings_channel {
   __typename: "Channel";
   id: string;
@@ -147,6 +159,8 @@ export interface SaleDetailsFragment_collections {
 
 export interface SaleDetailsFragment {
   __typename: "Sale";
+  metadata: (SaleDetailsFragment_metadata | null)[];
+  privateMetadata: (SaleDetailsFragment_privateMetadata | null)[];
   id: string;
   name: string;
   type: SaleType;

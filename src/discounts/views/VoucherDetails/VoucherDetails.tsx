@@ -47,7 +47,12 @@ import useCategorySearch from "@saleor/searches/useCategorySearch";
 import useCollectionSearch from "@saleor/searches/useCollectionSearch";
 import useProductSearch from "@saleor/searches/useProductSearch";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
+import createMetadataUpdateHandler from "@saleor/utils/handlers/metadataUpdateHandler";
 import { mapEdgesToItems } from "@saleor/utils/maps";
+import {
+  useMetadataUpdate,
+  usePrivateMetadataUpdate
+} from "@saleor/utils/metadata/updateMetadata";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -95,6 +100,8 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
   } = useProductSearch({
     variables: DEFAULT_INITIAL_SEARCH_DATA
   });
+  const [updateMetadata] = useMetadataUpdate({});
+  const [updatePrivateMetadata] = usePrivateMetadataUpdate({});
 
   const paginationState = createPaginationState(PAGINATE_BY, params);
   const changeTab = (tab: VoucherDetailsPageTab) => {
@@ -218,11 +225,18 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
                 {(voucherUpdate, voucherUpdateOpts) => (
                   <TypedVoucherDelete onCompleted={handleVoucherDelete}>
                     {(voucherDelete, voucherDeleteOpts) => {
-                      const handleSubmit = createUpdateHandler(
+                      const handleUpdate = createUpdateHandler(
                         data?.voucher,
                         voucherChannelsChoices,
                         variables => voucherUpdate({ variables }),
                         updateChannels
+                      );
+
+                      const handleSubmit = createMetadataUpdateHandler(
+                        data?.voucher,
+                        handleUpdate,
+                        variables => updateMetadata({ variables }),
+                        variables => updatePrivateMetadata({ variables })
                       );
 
                       const tabPageInfo =
