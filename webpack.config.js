@@ -38,7 +38,7 @@ const htmlWebpackPlugin = new HtmlWebpackPlugin({
 });
 const environmentPlugin = new webpack.EnvironmentPlugin({
   API_URI: "http://3.144.13.93:8000/graphql/",
-  APP_MOUNT_URI: "",
+  APP_MOUNT_URI: "/",
   DEMO_MODE: false,
   ENVIRONMENT: "",
   GTM_ID: "",

@@ -813,7 +813,7 @@
   },
   "src_dot_apps_dot_components_dot_Marketplace_dot_2932910073": {
     "context": "section header",
-    "string": "Saleor Marketplace"
+    "string": "بازار"
   },
   "src_dot_apps_dot_components_dot_Marketplace_dot_3259214524": {
     "context": "marketplace content",
@@ -1769,7 +1769,7 @@
     "string": "Delete collections"
   },
   "src_dot_components_dot_AccountPermissionGroups_dot_2836633439": {
-    "string": "Permission groups"
+    "string": "ئىجازەت گۇرۇپپىلىرى"
   },
   "src_dot_components_dot_AccountPermissions_dot_2690176844": {
     "context": "dialog header",
@@ -1794,7 +1794,7 @@
     "string": "تېلېفون"
   },
   "src_dot_components_dot_AddressEdit_dot_1363074570": {
-    "string": "Address line 1"
+    "string": "1. ئادرېس"
   },
   "src_dot_components_dot_AddressEdit_dot_253031977": {
     "string": "شەھەر"
@@ -1803,13 +1803,13 @@
     "string": "ZIP / پوچتا نومۇرى"
   },
   "src_dot_components_dot_AddressEdit_dot_3121963259": {
-    "string": "Address line 2"
+    "string": "2. ئادرىس"
   },
   "src_dot_components_dot_AddressEdit_dot_3570415321": {
     "string": "شىركەت"
   },
   "src_dot_components_dot_AddressEdit_dot_944851093": {
-    "string": "دۆلەت رايونى"
+    "string": "رايون / ئۆلكە"
   },
   "src_dot_components_dot_AppStatus_dot_1624959454": {
     "string": "If you want to disable this App please uncheck the box below."
@@ -2279,7 +2279,7 @@
   },
   "src_dot_components_dot_Navigator_dot_modes_dot_createVoucher": {
     "context": "button",
-    "string": "Create Voucher"
+    "string": "ئېتىبار چېكى كىرگۈزۈش"
   },
   "src_dot_components_dot_Navigator_dot_modes_dot_customerWithName": {
     "string": "{firstName} {lastName}"
@@ -2493,16 +2493,16 @@
     "string": "Shipping Settings"
   },
   "src_dot_configuration_dot_1742602794": {
-    "string": "Attributes and Product Types"
+    "string": "خاسلىقى ۋە مەھسۇلات تۈرلىرى"
   },
   "src_dot_configuration_dot_3140151600": {
-    "string": "Staff Settings"
+    "string": "خىزمەتچىلەر تەڭشىكى"
   },
   "src_dot_configuration_dot_3351299924": {
-    "string": "Content Management"
+    "string": "مەزمۇن باشقۇرۇش"
   },
   "src_dot_configuration_dot_3655543906": {
-    "string": "Product Settings"
+    "string": "مەھسۇلات تەڭشىكى"
   },
   "src_dot_configuration_dot_887806978": {
     "string": "Multichannel"
@@ -2996,7 +2996,7 @@
   },
   "src_dot_discounts_dot_components_dot_VoucherCreatePage_dot_1357216572": {
     "context": "page header",
-    "string": "Create Voucher"
+    "string": "ئېتىبار چېكى كىرگۈزۈش"
   },
   "src_dot_discounts_dot_components_dot_VoucherDates_dot_1596226028": {
     "context": "voucher end date, switch button",
@@ -3057,14 +3057,14 @@
   },
   "src_dot_discounts_dot_components_dot_VoucherListPage_dot_1112241061": {
     "context": "tab name",
-    "string": "All Vouchers"
+    "string": "بارلىق ئېتىبار چەكلىرى"
   },
   "src_dot_discounts_dot_components_dot_VoucherListPage_dot_1930485532": {
     "string": "Search Voucher"
   },
   "src_dot_discounts_dot_components_dot_VoucherListPage_dot_614836274": {
     "context": "button",
-    "string": "Create voucher"
+    "string": "ئېتىبار چېكى كىرگۈزۈش"
   },
   "src_dot_discounts_dot_components_dot_VoucherListPage_dot_active": {
     "context": "voucher status",
@@ -3076,7 +3076,7 @@
   },
   "src_dot_discounts_dot_components_dot_VoucherListPage_dot_expired": {
     "context": "voucher status",
-    "string": "Expired"
+    "string": "ۋاقتى ئۆتكەن"
   },
   "src_dot_discounts_dot_components_dot_VoucherListPage_dot_fixed": {
     "context": "discount type",
@@ -3358,7 +3358,7 @@
     "string": "Draft Orders"
   },
   "src_dot_drafts": {
-    "string": "Drafts"
+    "string": "لايىھە"
   },
   "src_dot_edit": {
     "context": "button",
@@ -3385,7 +3385,7 @@
     "string": "تاماملاندى"
   },
   "src_dot_generalInformations": {
-    "string": "General Information"
+    "string": "مەھسۇلات ئۇچۇرلىرى"
   },
   "src_dot_home": {
     "context": "home section name",
@@ -3424,7 +3424,7 @@
   },
   "src_dot_navigation": {
     "context": "navigation section name",
-    "string": "Navigation"
+    "string": "تىزىملىك"
   },
   "src_dot_nextStep": {
     "context": "go to next step, button",
@@ -4590,7 +4590,7 @@
   },
   "src_dot_pageTypes": {
     "context": "page types section name",
-    "string": "Page Types"
+    "string": "سەھىپە تۈرى"
   },
   "src_dot_pageTypes_dot_components_dot_PageTypeAttributes_dot_1192828581": {
     "string": "No attributes found"
@@ -4836,7 +4836,7 @@
   },
   "src_dot_permissionGroups": {
     "context": "permission groups section name",
-    "string": "Permission Groups"
+    "string": "ئىجازەت گۇرۇپپىسى"
   },
   "src_dot_permissionGroups_dot_components_dot_AssignMembersDialog_dot_1004218338": {
     "context": "staff member status",
@@ -4902,11 +4902,11 @@
   },
   "src_dot_permissionGroups_dot_components_dot_PermissionGroupListPage_dot_613749311": {
     "context": "button",
-    "string": "create permission group"
+    "string": "ئىجازەت گۇرۇپپىسى قۇرۇش"
   },
   "src_dot_permissionGroups_dot_components_dot_PermissionGroupList_dot_2011544055": {
     "context": "permission group name",
-    "string": "Permission Group Name"
+    "string": "ئىجازەت گۇرۇپپىسىنىڭ ئىسمى"
   },
   "src_dot_permissionGroups_dot_components_dot_PermissionGroupList_dot_2734377620": {
     "string": "ئەزالار"
@@ -5773,11 +5773,11 @@
   },
   "src_dot_products_dot_components_dot_ProductVariantPrice_dot_1387754199": {
     "context": "tabel column header",
-    "string": "Selling Price"
+    "string": "سېتىش باھاسى"
   },
   "src_dot_products_dot_components_dot_ProductVariantPrice_dot_2051669917": {
     "context": "tabel column header",
-    "string": "Cost Price"
+    "string": "تەننەرخ"
   },
   "src_dot_products_dot_components_dot_ProductVariantPrice_dot_3211447524": {
     "context": "info text",
@@ -6411,7 +6411,7 @@
     "string": "Name of your store is shown on tab in web browser"
   },
   "src_dot_siteSettings_dot_components_dot_SiteSettingsDetails_dot_1987367127": {
-    "string": "Store Description"
+    "string": "دۇكىنىڭىزنى تونۇشتۇرۇڭ"
   },
   "src_dot_siteSettings_dot_components_dot_SiteSettingsDetails_dot_2286355060": {
     "string": "دۇكىنىڭىزنىڭ ئىسمى"
@@ -6478,7 +6478,7 @@
     "string": "Staff Member limit reached"
   },
   "src_dot_staff_dot_components_dot_StaffListPage_dot_61043583": {
-    "string": "Search Staff Member"
+    "string": "خىزمەتچى خادىم ئىزدەش"
   },
   "src_dot_staff_dot_components_dot_StaffListPage_dot_797461521": {
     "context": "button",
@@ -6530,7 +6530,7 @@
     "string": "ئالدىنقى پارول"
   },
   "src_dot_staff_dot_components_dot_StaffPassword_dot_1274006906": {
-    "string": "بىخەتەرلىك مەسىلىسىدىن ساقلىنىش ئۈچۈن ھەر ئايدا پارولىڭىزنى ئۆزگەرتىشىڭىزنى تەۋسىيە قىلىمىز."
+    "string": "بىخەتەرلىك مەسىلىسىدىن ساقلىنىش ئۈچۈن ھەر ئايدا پارولىڭىزنى ئۆزگەرتىشىڭىزنى تەۋسىيە قىلىمىز"
   },
   "src_dot_staff_dot_components_dot_StaffPassword_dot_1434811103": {
     "context": "button",
@@ -6720,7 +6720,7 @@
     "string": "سېتىش"
   },
   "src_dot_translations_dot_components_dot_TranslationsEntitiesListPage_dot_749185240": {
-    "string": "Vouchers"
+    "string": "ئېتىبار چېكى"
   },
   "src_dot_translations_dot_components_dot_TranslationsEntitiesList_dot_1136143456": {
     "context": "translation progress",
@@ -7054,7 +7054,7 @@
   },
   "src_dot_vouchers": {
     "context": "vouchers section name",
-    "string": "Vouchers"
+    "string": "ئېتىبار چېكى"
   },
   "src_dot_warehouses": {
     "context": "warehouses section name",
