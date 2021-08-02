@@ -28,7 +28,7 @@ export type OrderWithTotalAndTotalCaptured = Pick<
 >;
 
 export interface OrderLineWithStockWarehouses {
-  variant: {
+  variant?: {
     stocks: Array<{ warehouse: WarehouseFragment }>;
   };
 }
@@ -42,7 +42,7 @@ export function getWarehousesFromOrderLines<
 >(lines?: T[]) {
   return lines?.reduce(
     (warehouses, line) =>
-      line.variant.stocks?.reduce(
+      line.variant?.stocks?.reduce(
         (warehouses, stock) =>
           warehouses.some(getById(stock.warehouse.id))
             ? warehouses

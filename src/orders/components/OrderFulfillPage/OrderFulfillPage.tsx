@@ -161,14 +161,14 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
     getToFulfillOrderLines(order?.lines).map(line => ({
       data: null,
       id: line.id,
-      label: line.variant.attributes
+      label: line.variant?.attributes
         .map(attribute =>
           attribute.values
             .map(attributeValue => attributeValue.name)
             .join(" , ")
         )
         .join(" / "),
-      value: line.variant.stocks.map(stock => ({
+      value: line.variant?.stocks.map(stock => ({
         quantity: 0,
         warehouse: stock.warehouse.id
       }))
@@ -186,18 +186,18 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
       return false;
     }
 
-    const isAtLeastOneFulfilled = formsetData.some(({ value }) =>
-      value.some(({ quantity }) => quantity > 0)
+    const isAtLeastOneFulfilled = formsetData?.some(({ value }) =>
+      value?.some(({ quantity }) => quantity > 0)
     );
 
-    const areProperlyFulfilled = formsetData.every(({ id, value }) => {
+    const areProperlyFulfilled = formsetData?.every(({ id, value }) => {
       const { lines } = order;
 
       const { quantityToFulfill } = lines.find(
         ({ id: lineId }) => lineId === id
       );
 
-      const formQuantityFulfilled = value.reduce(
+      const formQuantityFulfilled = value?.reduce(
         (result, { quantity }) => result + quantity,
         0
       );
@@ -335,7 +335,7 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
                       const remainingQuantity = line.quantityToFulfill;
                       const quantityToFulfill = formsetData[
                         lineIndex
-                      ].value.reduce(
+                      ].value?.reduce(
                         (quantityToFulfill, lineInput) =>
                           quantityToFulfill + (lineInput.quantity || 0),
                         0
@@ -350,7 +350,7 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
                           >
                             {line.productName}
                             <Typography color="textSecondary" variant="caption">
-                              {line.variant.attributes
+                              {line.variant?.attributes
                                 .map(attribute =>
                                   attribute.values
                                     .map(attributeValue => attributeValue.name)
@@ -360,10 +360,10 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
                             </Typography>
                           </TableCellAvatar>
                           <TableCell className={classes.colSku}>
-                            {line.variant.sku}
+                            {line.variant?.sku}
                           </TableCell>
                           {warehouses?.map(warehouse => {
-                            const warehouseStock = line.variant.stocks.find(
+                            const warehouseStock = line.variant?.stocks.find(
                               stock => stock.warehouse.id === warehouse.id
                             );
                             const formsetStock = formsetData[
