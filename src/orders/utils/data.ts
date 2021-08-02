@@ -34,7 +34,7 @@ export interface OrderLineWithStockWarehouses {
 }
 
 export function getToFulfillOrderLines(lines?: OrderFulfillData_order_lines[]) {
-  return lines?.filter(line => line.quantityToFulfill > 0);
+  return lines?.filter(line => line.quantityToFulfill > 0) || [];
 }
 
 export function getWarehousesFromOrderLines<
