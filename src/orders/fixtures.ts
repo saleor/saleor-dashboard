@@ -1040,6 +1040,7 @@ export const order = (placeholder: string): OrderDetails_order => ({
             productSku: "5-1337",
             quantity: 2,
             quantityFulfilled: 2,
+            quantityToFulfill: 0,
             thumbnail: {
               __typename: "Image" as "Image",
               url: placeholder
@@ -1108,6 +1109,7 @@ export const order = (placeholder: string): OrderDetails_order => ({
             productSku: "5-1337",
             quantity: 2,
             quantityFulfilled: 2,
+            quantityToFulfill: 0,
             thumbnail: {
               __typename: "Image" as "Image",
               url: placeholder
@@ -1183,6 +1185,7 @@ export const order = (placeholder: string): OrderDetails_order => ({
       productSku: "59-1337",
       quantity: 3,
       quantityFulfilled: 0,
+      quantityToFulfill: 3,
       thumbnail: {
         __typename: "Image" as "Image",
         url: placeholder
@@ -1236,6 +1239,7 @@ export const order = (placeholder: string): OrderDetails_order => ({
       productSku: "5-1337",
       quantity: 2,
       quantityFulfilled: 2,
+      quantityToFulfill: 0,
       thumbnail: {
         __typename: "Image" as "Image",
         url: placeholder
@@ -1421,6 +1425,7 @@ export const draftOrder = (placeholder: string): OrderDetails_order => ({
       productSku: "58-1338",
       quantity: 2,
       quantityFulfilled: 0,
+      quantityToFulfill: 2,
       thumbnail: {
         __typename: "Image" as "Image",
         url: placeholder
@@ -1474,6 +1479,7 @@ export const draftOrder = (placeholder: string): OrderDetails_order => ({
       productSku: "15-1337",
       quantity: 2,
       quantityFulfilled: 0,
+      quantityToFulfill: 2,
       thumbnail: {
         __typename: "Image" as "Image",
         url: placeholder

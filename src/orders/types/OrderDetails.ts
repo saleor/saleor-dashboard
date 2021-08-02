@@ -216,6 +216,7 @@ export interface OrderDetails_order_fulfillments_lines_orderLine {
   productSku: string;
   quantity: number;
   quantityFulfilled: number;
+  quantityToFulfill: number;
   unitDiscount: OrderDetails_order_fulfillments_lines_orderLine_unitDiscount;
   unitDiscountValue: any;
   unitDiscountReason: string | null;
@@ -311,6 +312,7 @@ export interface OrderDetails_order_lines {
   productSku: string;
   quantity: number;
   quantityFulfilled: number;
+  quantityToFulfill: number;
   unitDiscount: OrderDetails_order_lines_unitDiscount;
   unitDiscountValue: any;
   unitDiscountReason: string | null;

@@ -236,6 +236,7 @@ const orderFulfillData = gql`
           }
         }
         quantityFulfilled
+        quantityToFulfill
         variant {
           id
           name

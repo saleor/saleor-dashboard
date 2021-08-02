@@ -285,6 +285,7 @@ export interface OrderShippingMethodUpdate_orderUpdateShipping_order_fulfillment
   productSku: string;
   quantity: number;
   quantityFulfilled: number;
+  quantityToFulfill: number;
   unitDiscount: OrderShippingMethodUpdate_orderUpdateShipping_order_fulfillments_lines_orderLine_unitDiscount;
   unitDiscountValue: any;
   unitDiscountReason: string | null;
@@ -380,6 +381,7 @@ export interface OrderShippingMethodUpdate_orderUpdateShipping_order_lines {
   productSku: string;
   quantity: number;
   quantityFulfilled: number;
+  quantityToFulfill: number;
   unitDiscount: OrderShippingMethodUpdate_orderUpdateShipping_order_lines_unitDiscount;
   unitDiscountValue: any;
   unitDiscountReason: string | null;

@@ -4054,25 +4054,6 @@
     "context": "dialog header",
     "string": "Cancel Fulfillment"
   },
-  "src_dot_orders_dot_components_dot_OrderFulfillmentDialog_dot_2796503714": {
-    "context": "quantity of fulfilled products",
-    "string": "Quantity"
-  },
-  "src_dot_orders_dot_components_dot_OrderFulfillmentDialog_dot_3123761129": {
-    "context": "dialog header",
-    "string": "Fulfill Products"
-  },
-  "src_dot_orders_dot_components_dot_OrderFulfillmentDialog_dot_3252172269": {
-    "context": "fulfillment group",
-    "string": "Tracking number"
-  },
-  "src_dot_orders_dot_components_dot_OrderFulfillmentDialog_dot_4046223826": {
-    "string": "Product name"
-  },
-  "src_dot_orders_dot_components_dot_OrderFulfillmentDialog_dot_693960049": {
-    "context": "product's sku",
-    "string": "SKU"
-  },
   "src_dot_orders_dot_components_dot_OrderFulfillmentSettings_dot_1154699654": {
     "context": "checkbox label",
     "string": "Allow fulfillment without payment"
