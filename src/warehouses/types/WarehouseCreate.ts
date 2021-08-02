@@ -55,10 +55,10 @@ export interface WarehouseCreate_createWarehouse_warehouse_address {
 
 export interface WarehouseCreate_createWarehouse_warehouse {
   __typename: "Warehouse";
-  id: string;
-  name: string;
   isPrivate: boolean;
   clickAndCollectOption: WarehouseClickAndCollectOptionEnum;
+  id: string;
+  name: string;
   shippingZones: WarehouseCreate_createWarehouse_warehouse_shippingZones;
   address: WarehouseCreate_createWarehouse_warehouse_address;
 }

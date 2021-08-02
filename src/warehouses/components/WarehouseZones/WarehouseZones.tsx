@@ -1,6 +1,7 @@
 import { Card, CardContent, Divider, Typography } from "@material-ui/core";
 import CardSpacer from "@saleor/components/CardSpacer";
 import CardTitle from "@saleor/components/CardTitle";
+import { FormSpacer } from "@saleor/components/FormSpacer";
 import Link from "@saleor/components/Link";
 import { RadioGroupField } from "@saleor/components/RadioGroupField";
 import Skeleton from "@saleor/components/Skeleton";
@@ -50,7 +51,7 @@ const WarehouseInfo: React.FC<WarehouseInfoProps> = ({
           <Typography variant="caption" color="textSecondary">
             <FormattedMessage defaultMessage="If enabled stock in this warehouse won't be shown" />
           </Typography>
-          <CardSpacer />
+          <FormSpacer />
         </>
       ),
       value: "true"
@@ -76,7 +77,7 @@ const WarehouseInfo: React.FC<WarehouseInfoProps> = ({
           <Typography variant="caption" color="textSecondary">
             <FormattedMessage defaultMessage="If selected customer won't be able to choose this warehouse as pickup point" />
           </Typography>
-          <CardSpacer />
+          <FormSpacer />
         </>
       ),
       value: WarehouseClickAndCollectOptionEnum.DISABLED
@@ -88,7 +89,7 @@ const WarehouseInfo: React.FC<WarehouseInfoProps> = ({
           <Typography variant="caption" color="textSecondary">
             <FormattedMessage defaultMessage="If selected customer will be able to choose this warehouse as pickup point. Ordered products will be only fulfilled from this warehouse stock" />
           </Typography>
-          <CardSpacer />
+          <FormSpacer />
         </>
       ),
       value: WarehouseClickAndCollectOptionEnum.LOCAL
@@ -100,7 +101,6 @@ const WarehouseInfo: React.FC<WarehouseInfoProps> = ({
           <Typography variant="caption" color="textSecondary">
             <FormattedMessage defaultMessage="If selected customer will be able to choose this warehouse as pickup point. Ordered products can be shipped here from a different warehouse" />
           </Typography>
-          <CardSpacer />
         </>
       ),
       value: WarehouseClickAndCollectOptionEnum.ALL
@@ -115,7 +115,7 @@ const WarehouseInfo: React.FC<WarehouseInfoProps> = ({
           <Typography variant="caption" color="textSecondary">
             <FormattedMessage defaultMessage="If selected customer won't be able to choose this warehouse as pickup point" />
           </Typography>
-          <CardSpacer />
+          <FormSpacer />
         </>
       ),
       value: WarehouseClickAndCollectOptionEnum.DISABLED
@@ -127,7 +127,6 @@ const WarehouseInfo: React.FC<WarehouseInfoProps> = ({
           <Typography variant="caption" color="textSecondary">
             <FormattedMessage defaultMessage="If selected customer will be able to choose this warehouse as pickup point. Ordered products can be shipped here from a different warehouse" />
           </Typography>
-          <CardSpacer />
         </>
       ),
       value: WarehouseClickAndCollectOptionEnum.ALL

@@ -49,10 +49,10 @@ export interface WarehouseDetailsFragment_address {
 
 export interface WarehouseDetailsFragment {
   __typename: "Warehouse";
-  id: string;
-  name: string;
   isPrivate: boolean;
   clickAndCollectOption: WarehouseClickAndCollectOptionEnum;
+  id: string;
+  name: string;
   shippingZones: WarehouseDetailsFragment_shippingZones;
   address: WarehouseDetailsFragment_address;
 }

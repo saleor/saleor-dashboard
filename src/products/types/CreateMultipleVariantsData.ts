@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { AttributeInputTypeEnum, AttributeEntityTypeEnum, MeasurementUnitsEnum, WarehouseClickAndCollectOptionEnum } from "./../../types/globalTypes";
+import { AttributeInputTypeEnum, AttributeEntityTypeEnum, MeasurementUnitsEnum } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL query operation: CreateMultipleVariantsData
@@ -197,8 +197,6 @@ export interface CreateMultipleVariantsData_warehouses_edges_node {
   __typename: "Warehouse";
   id: string;
   name: string;
-  isPrivate: boolean;
-  clickAndCollectOption: WarehouseClickAndCollectOptionEnum;
 }
 
 export interface CreateMultipleVariantsData_warehouses_edges {

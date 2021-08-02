@@ -8,23 +8,25 @@ import PageHeader from "@saleor/components/PageHeader";
 import Savebar from "@saleor/components/Savebar";
 import { ShopInfo_shop_countries } from "@saleor/components/Shop/types/ShopInfo";
 import { AddressTypeInput } from "@saleor/customers/types";
+import { WarehouseDetailsFragment } from "@saleor/fragments/types/WarehouseDetailsFragment";
 import { WarehouseErrorFragment } from "@saleor/fragments/types/WarehouseErrorFragment";
 import useAddressValidation from "@saleor/hooks/useAddressValidation";
-import { FormChange, SubmitPromise } from "@saleor/hooks/useForm";
+import { SubmitPromise } from "@saleor/hooks/useForm";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { sectionNames } from "@saleor/intl";
 import { Backlink } from "@saleor/macaw-ui";
 import { findValueInEnum, maybe } from "@saleor/misc";
-import { CountryCode } from "@saleor/types/globalTypes";
+import {
+  CountryCode,
+  WarehouseClickAndCollectOptionEnum
+} from "@saleor/types/globalTypes";
 import createSingleAutocompleteSelectHandler from "@saleor/utils/handlers/singleAutocompleteSelectChangeHandler";
 import { mapCountriesToChoices, mapEdgesToItems } from "@saleor/utils/maps";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { WarehouseDetails_warehouse } from "../../types/WarehouseDetails";
 import WarehouseInfo from "../WarehouseInfo";
 import WarehouseZones from "../WarehouseZones";
-import { WarehouseClickAndCollectOptionEnum } from "./../../../types/globalTypes";
 
 export interface WarehouseDetailsPageFormData extends AddressTypeInput {
   name: string;
@@ -36,7 +38,7 @@ export interface WarehouseDetailsPageProps {
   disabled: boolean;
   errors: WarehouseErrorFragment[];
   saveButtonBarState: ConfirmButtonTransitionState;
-  warehouse: WarehouseDetails_warehouse;
+  warehouse: WarehouseDetailsFragment;
   onBack: () => void;
   onDelete: () => void;
   onShippingZoneClick: (id: string) => void;

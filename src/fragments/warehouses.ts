@@ -6,14 +6,14 @@ export const warehouseFragment = gql`
   fragment WarehouseFragment on Warehouse {
     id
     name
-    isPrivate
-    clickAndCollectOption
   }
 `;
 export const warehouseWithShippingFragment = gql`
   ${warehouseFragment}
   fragment WarehouseWithShippingFragment on Warehouse {
     ...WarehouseFragment
+    isPrivate
+    clickAndCollectOption
     shippingZones(first: 100) {
       edges {
         node {
@@ -29,6 +29,8 @@ export const warehouseDetailsFragment = gql`
   ${fragmentAddress}
   ${warehouseWithShippingFragment}
   fragment WarehouseDetailsFragment on Warehouse {
+    isPrivate
+    clickAndCollectOption
     ...WarehouseWithShippingFragment
     address {
       ...AddressFragment

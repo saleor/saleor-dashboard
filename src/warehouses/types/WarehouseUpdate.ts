@@ -55,10 +55,10 @@ export interface WarehouseUpdate_updateWarehouse_warehouse_address {
 
 export interface WarehouseUpdate_updateWarehouse_warehouse {
   __typename: "Warehouse";
-  id: string;
-  name: string;
   isPrivate: boolean;
   clickAndCollectOption: WarehouseClickAndCollectOptionEnum;
+  id: string;
+  name: string;
   shippingZones: WarehouseUpdate_updateWarehouse_warehouse_shippingZones;
   address: WarehouseUpdate_updateWarehouse_warehouse_address;
 }
