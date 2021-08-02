@@ -66,6 +66,7 @@ export interface OrderFulfillData_order_lines {
   quantity: number;
   allocations: OrderFulfillData_order_lines_allocations[] | null;
   quantityFulfilled: number;
+  quantityToFulfill: number;
   variant: OrderFulfillData_order_lines_variant | null;
   thumbnail: OrderFulfillData_order_lines_thumbnail | null;
 }

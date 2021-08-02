@@ -81,6 +81,7 @@ export const fragmentOrderLine = gql`
     productSku
     quantity
     quantityFulfilled
+    quantityToFulfill
     unitDiscount {
       amount
       currency

@@ -29,6 +29,7 @@ import {
   OrderFulfillData_order,
   OrderFulfillData_order_lines
 } from "@saleor/orders/types/OrderFulfillData";
+import { getToFulfillOrderLines } from "@saleor/orders/utils/data";
 import {
   OrderErrorCode,
   OrderFulfillStockInput
@@ -139,10 +140,6 @@ const initialFormData: OrderFulfillFormData = {
   sendInfo: true
 };
 
-function getRemainingQuantity(line: OrderFulfillData_order_lines): number {
-  return line.quantity - line.quantityFulfilled;
-}
-
 const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
   const {
     loading,
@@ -161,23 +158,21 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
     null,
     OrderFulfillStockInput[]
   >(
-    order?.lines
-      .filter(line => getRemainingQuantity(line) > 0)
-      .map(line => ({
-        data: null,
-        id: line.id,
-        label: line.variant.attributes
-          .map(attribute =>
-            attribute.values
-              .map(attributeValue => attributeValue.name)
-              .join(" , ")
-          )
-          .join(" / "),
-        value: line.variant.stocks.map(stock => ({
-          quantity: 0,
-          warehouse: stock.warehouse.id
-        }))
+    getToFulfillOrderLines(order?.lines).map(line => ({
+      data: null,
+      id: line.id,
+      label: line.variant?.attributes
+        .map(attribute =>
+          attribute.values
+            .map(attributeValue => attributeValue.name)
+            .join(" , ")
+        )
+        .join(" / "),
+      value: line.variant?.stocks.map(stock => ({
+        quantity: 0,
+        warehouse: stock.warehouse.id
       }))
+    }))
   );
 
   const handleSubmit = (formData: OrderFulfillFormData) =>
@@ -191,25 +186,23 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
       return false;
     }
 
-    const isAtLeastOneFulfilled = formsetData.some(({ value }) =>
-      value.some(({ quantity }) => quantity > 0)
+    const isAtLeastOneFulfilled = formsetData?.some(({ value }) =>
+      value?.some(({ quantity }) => quantity > 0)
     );
 
-    const areProperlyFulfilled = formsetData.every(({ id, value }) => {
+    const areProperlyFulfilled = formsetData?.every(({ id, value }) => {
       const { lines } = order;
 
-      const { quantity, quantityFulfilled } = lines.find(
+      const { quantityToFulfill } = lines.find(
         ({ id: lineId }) => lineId === id
       );
 
-      const remainingQuantity = quantity - quantityFulfilled;
-
-      const formQuantityFulfilled = value.reduce(
+      const formQuantityFulfilled = value?.reduce(
         (result, { quantity }) => result + quantity,
         0
       );
 
-      return formQuantityFulfilled <= remainingQuantity;
+      return formQuantityFulfilled <= quantityToFulfill;
     });
 
     return isAtLeastOneFulfilled && areProperlyFulfilled;
@@ -312,7 +305,7 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
                 </TableHead>
                 <TableBody>
                   {renderCollection(
-                    order?.lines.filter(line => getRemainingQuantity(line) > 0),
+                    getToFulfillOrderLines(order?.lines),
                     (line: OrderFulfillData_order_lines, lineIndex) => {
                       if (!line) {
                         return (
@@ -339,10 +332,10 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
                         );
                       }
 
-                      const remainingQuantity = getRemainingQuantity(line);
+                      const remainingQuantity = line.quantityToFulfill;
                       const quantityToFulfill = formsetData[
                         lineIndex
-                      ].value.reduce(
+                      ].value?.reduce(
                         (quantityToFulfill, lineInput) =>
                           quantityToFulfill + (lineInput.quantity || 0),
                         0
@@ -357,7 +350,7 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
                           >
                             {line.productName}
                             <Typography color="textSecondary" variant="caption">
-                              {line.variant.attributes
+                              {line.variant?.attributes
                                 .map(attribute =>
                                   attribute.values
                                     .map(attributeValue => attributeValue.name)
@@ -367,10 +360,10 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
                             </Typography>
                           </TableCellAvatar>
                           <TableCell className={classes.colSku}>
-                            {line.variant.sku}
+                            {line.variant?.sku}
                           </TableCell>
                           {warehouses?.map(warehouse => {
-                            const warehouseStock = line.variant.stocks.find(
+                            const warehouseStock = line.variant?.stocks.find(
                               stock => stock.warehouse.id === warehouse.id
                             );
                             const formsetStock = formsetData[

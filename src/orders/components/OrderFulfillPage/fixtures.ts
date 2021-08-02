@@ -16,6 +16,7 @@ export const orderToFulfill: OrderFulfillData_order = {
       productName: "T-Shirt",
       quantity: 3,
       quantityFulfilled: 1,
+      quantityToFulfill: 2,
       variant: {
         __typename: "ProductVariant",
         id: "UHJvZHVjdFZhcmlhbnQ6Mjk2",
@@ -78,6 +79,7 @@ export const orderToFulfill: OrderFulfillData_order = {
       productName: "Lemon Juice",
       quantity: 4,
       quantityFulfilled: 0,
+      quantityToFulfill: 4,
       variant: {
         __typename: "ProductVariant",
         id: "UHJvZHVjdFZhcmlhbnQ6MTgx",
@@ -133,6 +135,7 @@ export const orderToFulfill: OrderFulfillData_order = {
       productName: "Orange Juice",
       quantity: 3,
       quantityFulfilled: 2,
+      quantityToFulfill: 1,
       variant: {
         __typename: "ProductVariant",
         id: "UHJvZHVjdFZhcmlhbnQ6MTgy",
