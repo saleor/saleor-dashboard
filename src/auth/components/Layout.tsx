@@ -80,7 +80,11 @@ const Layout: React.FC = props => {
       </div>
       <div className={classes.mainPanel}>
         <div className={classes.mainPanelContent}>
-          <img src={logoBig} alt="logo" style={{width: '200px', marginBottom: '20px'}} />
+          <img
+            src={logoBig}
+            alt="logo"
+            style={{ width: "200px", marginBottom: "20px" }}
+          />
           {children}
         </div>
       </div>

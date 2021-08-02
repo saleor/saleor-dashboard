@@ -388,12 +388,32 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
                     [classes.logoSmall]: isMenuSmall,
                     [classes.logoDark]: isDark
                   })}
-                  style={{background: '#ffffff', borderBottom: '1px solid #dddddd'}}
+                  style={{
+                    background: "#ffffff",
+                    borderBottom: "1px solid #dddddd"
+                  }}
                 >
-                  {isMenuSmall ? 
-                    <img src={logoSmall} style={{width: '42px', display: 'block', margin: '10px auto'}} alt="logo" /> 
-                    : 
-                    <img src={logoBig} alt="logo" style={{width: '130px', display: 'block', margin: '10px auto'}} />}
+                  {isMenuSmall ? (
+                    <img
+                      src={logoSmall}
+                      style={{
+                        width: "42px",
+                        display: "block",
+                        margin: "10px auto"
+                      }}
+                      alt="logo"
+                    />
+                  ) : (
+                    <img
+                      src={logoBig}
+                      alt="logo"
+                      style={{
+                        width: "130px",
+                        display: "block",
+                        margin: "10px auto"
+                      }}
+                    />
+                  )}
                 </div>
                 <Hidden smDown>
                   <div

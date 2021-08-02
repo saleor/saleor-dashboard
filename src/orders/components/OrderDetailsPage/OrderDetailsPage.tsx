@@ -24,14 +24,13 @@ import { maybe, renderCollection } from "../../../misc";
 import { OrderStatus } from "../../../types/globalTypes";
 import { OrderDetails_order } from "../../types/OrderDetails";
 import OrderCustomer from "../OrderCustomer";
+import OrderCustomerCancelDetails from "../OrderCustomerCancelDetails";
 import OrderCustomerNote from "../OrderCustomerNote";
 import OrderFulfillment from "../OrderFulfillment";
 import OrderHistory, { FormData as HistoryFormData } from "../OrderHistory";
 import OrderInvoiceList from "../OrderInvoiceList";
 import OrderPayment from "../OrderPayment/OrderPayment";
 import OrderUnfulfilledItems from "../OrderUnfulfilledItems/OrderUnfulfilledItems";
-import OrderCustomerCancelDetails from '../OrderCustomerCancelDetails';
-import { OrderEventsEnum } from "../../../types/globalTypes";
 
 const useStyles = makeStyles(
   theme => ({
@@ -137,7 +136,7 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
     privateMetadata: order?.privateMetadata.map(mapMetadataItemToInput)
   };
 
-  const isOrderCancelled = order?.status === OrderEventsEnum.CANCELED;
+  const isOrderCancelled = order?.status === OrderStatus.CANCELED;
 
   return (
     <Form initial={initial} onSubmit={handleSubmit}>
@@ -243,7 +242,9 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
                 <CardSpacer />
                 <OrderCustomerNote note={maybe(() => order.customerNote)} />
                 {isOrderCancelled && (
-                  <OrderCustomerCancelDetails metadata={order?.metadata || []} />
+                  <OrderCustomerCancelDetails
+                    metadata={order?.metadata || []}
+                  />
                 )}
               </div>
             </Grid>
