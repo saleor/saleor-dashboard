@@ -223,6 +223,7 @@ export interface OrderDraftCancel_draftOrderDelete_order_fulfillments_lines_orde
   productSku: string;
   quantity: number;
   quantityFulfilled: number;
+  quantityToFulfill: number;
   unitDiscount: OrderDraftCancel_draftOrderDelete_order_fulfillments_lines_orderLine_unitDiscount;
   unitDiscountValue: any;
   unitDiscountReason: string | null;
@@ -318,6 +319,7 @@ export interface OrderDraftCancel_draftOrderDelete_order_lines {
   productSku: string;
   quantity: number;
   quantityFulfilled: number;
+  quantityToFulfill: number;
   unitDiscount: OrderDraftCancel_draftOrderDelete_order_lines_unitDiscount;
   unitDiscountValue: any;
   unitDiscountReason: string | null;

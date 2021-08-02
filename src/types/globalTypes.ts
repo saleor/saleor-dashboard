@@ -1187,7 +1187,7 @@ export interface AttributeValueTranslationInput {
 
 export interface BulkAttributeValueInput {
   id?: string | null;
-  values?: (string | null)[] | null;
+  values?: string[] | null;
   boolean?: boolean | null;
 }
 

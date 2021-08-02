@@ -223,6 +223,7 @@ export interface OrderDraftFinalize_draftOrderComplete_order_fulfillments_lines_
   productSku: string;
   quantity: number;
   quantityFulfilled: number;
+  quantityToFulfill: number;
   unitDiscount: OrderDraftFinalize_draftOrderComplete_order_fulfillments_lines_orderLine_unitDiscount;
   unitDiscountValue: any;
   unitDiscountReason: string | null;
@@ -318,6 +319,7 @@ export interface OrderDraftFinalize_draftOrderComplete_order_lines {
   productSku: string;
   quantity: number;
   quantityFulfilled: number;
+  quantityToFulfill: number;
   unitDiscount: OrderDraftFinalize_draftOrderComplete_order_lines_unitDiscount;
   unitDiscountValue: any;
   unitDiscountReason: string | null;

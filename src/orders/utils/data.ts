@@ -15,6 +15,7 @@ import {
   OrderDetails_order_fulfillments_lines,
   OrderDetails_order_lines
 } from "../types/OrderDetails";
+import { OrderFulfillData_order_lines } from "../types/OrderFulfillData";
 import {
   OrderRefundData_order,
   OrderRefundData_order_fulfillments,
@@ -27,9 +28,13 @@ export type OrderWithTotalAndTotalCaptured = Pick<
 >;
 
 export interface OrderLineWithStockWarehouses {
-  variant: {
+  variant?: {
     stocks: Array<{ warehouse: WarehouseFragment }>;
   };
+}
+
+export function getToFulfillOrderLines(lines?: OrderFulfillData_order_lines[]) {
+  return lines?.filter(line => line.quantityToFulfill > 0) || [];
 }
 
 export function getWarehousesFromOrderLines<
@@ -37,7 +42,7 @@ export function getWarehousesFromOrderLines<
 >(lines?: T[]) {
   return lines?.reduce(
     (warehouses, line) =>
-      line.variant.stocks?.reduce(
+      line.variant?.stocks?.reduce(
         (warehouses, stock) =>
           warehouses.some(getById(stock.warehouse.id))
             ? warehouses

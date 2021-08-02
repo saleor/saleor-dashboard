@@ -223,6 +223,7 @@ export interface OrderFulfillmentApprove_orderFulfillmentApprove_order_fulfillme
   productSku: string;
   quantity: number;
   quantityFulfilled: number;
+  quantityToFulfill: number;
   unitDiscount: OrderFulfillmentApprove_orderFulfillmentApprove_order_fulfillments_lines_orderLine_unitDiscount;
   unitDiscountValue: any;
   unitDiscountReason: string | null;
@@ -318,6 +319,7 @@ export interface OrderFulfillmentApprove_orderFulfillmentApprove_order_lines {
   productSku: string;
   quantity: number;
   quantityFulfilled: number;
+  quantityToFulfill: number;
   unitDiscount: OrderFulfillmentApprove_orderFulfillmentApprove_order_lines_unitDiscount;
   unitDiscountValue: any;
   unitDiscountReason: string | null;
