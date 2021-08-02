@@ -30,6 +30,8 @@ import OrderHistory, { FormData as HistoryFormData } from "../OrderHistory";
 import OrderInvoiceList from "../OrderInvoiceList";
 import OrderPayment from "../OrderPayment/OrderPayment";
 import OrderUnfulfilledItems from "../OrderUnfulfilledItems/OrderUnfulfilledItems";
+import OrderCustomerCancelDetails from '../OrderCustomerCancelDetails';
+import { OrderEventsEnum } from "../../../types/globalTypes";
 
 const useStyles = makeStyles(
   theme => ({
@@ -135,6 +137,8 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
     privateMetadata: order?.privateMetadata.map(mapMetadataItemToInput)
   };
 
+  const isOrderCancelled = order?.status === OrderEventsEnum.CANCELED;
+
   return (
     <Form initial={initial} onSubmit={handleSubmit}>
       {({ change, data, hasChanged, submit }) => {
@@ -238,6 +242,9 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
                 />
                 <CardSpacer />
                 <OrderCustomerNote note={maybe(() => order.customerNote)} />
+                {isOrderCancelled && (
+                  <OrderCustomerCancelDetails metadata={order?.metadata || []} />
+                )}
               </div>
             </Grid>
             <SaveButtonBar
