@@ -1,5 +1,5 @@
-import { Card, CardContent, Typography } from "@material-ui/core";
-import { CardSpacer } from "@saleor/components/CardSpacer";
+import { Card, CardContent, Divider, Typography } from "@material-ui/core";
+import CardSpacer from "@saleor/components/CardSpacer";
 import CardTitle from "@saleor/components/CardTitle";
 import Link from "@saleor/components/Link";
 import { RadioGroupField } from "@saleor/components/RadioGroupField";
@@ -15,12 +15,9 @@ import { WarehouseDetailsPageFormData } from "./../WarehouseDetailsPage";
 
 export interface WarehouseInfoProps {
   zones: WarehouseDetails_warehouse_shippingZones_edges_node[];
-  disabled: boolean;
-  isPrivate: string;
   data: WarehouseDetailsPageFormData;
   onShippingZoneClick: (id: string) => void;
   onChange: (event: React.ChangeEvent<any>) => void;
-  onIsPrivateChange: (event: React.ChangeEvent<any>) => void;
 }
 
 const useStyles = makeStyles(
@@ -38,69 +35,101 @@ const useStyles = makeStyles(
 
 const WarehouseInfo: React.FC<WarehouseInfoProps> = ({
   zones,
-  disabled,
   data,
-  isPrivate,
   onShippingZoneClick,
-  onChange,
-  onIsPrivateChange
+  onChange
 }) => {
   const classes = useStyles({});
   const intl = useIntl();
+
   const isPrivateChoices = [
     {
-      label: intl.formatMessage({
-        defaultMessage: "Private Stock",
-        description: "TBD"
-      }),
+      label: (
+        <>
+          <FormattedMessage defaultMessage="Private Stock" />
+          <Typography variant="caption" color="textSecondary">
+            <FormattedMessage defaultMessage="If enabled stock in this warehouse won't be shown" />
+          </Typography>
+          <CardSpacer />
+        </>
+      ),
       value: "true"
     },
     {
-      label: intl.formatMessage({
-        defaultMessage: "Public Stock",
-        description: "TBD"
-      }),
+      label: (
+        <>
+          <FormattedMessage defaultMessage="Public Stock" />
+          <Typography variant="caption" color="textSecondary">
+            <FormattedMessage defaultMessage="If enabled stock in this warehouse will be shown" />
+          </Typography>
+        </>
+      ),
       value: "false"
     }
   ];
 
   const clickAndCollectChoices = [
     {
-      label: intl.formatMessage({
-        defaultMessage: "Disabled",
-        description: "TBD"
-      }),
+      label: (
+        <>
+          <FormattedMessage defaultMessage="Disabled" />
+          <Typography variant="caption" color="textSecondary">
+            <FormattedMessage defaultMessage="If selected customer won't be able to choose this warehouse as pickup point" />
+          </Typography>
+          <CardSpacer />
+        </>
+      ),
       value: WarehouseClickAndCollectOptionEnum.DISABLED
     },
     {
-      label: intl.formatMessage({
-        defaultMessage: "Local stock only",
-        description: "TBD"
-      }),
+      label: (
+        <>
+          <FormattedMessage defaultMessage="Local stock only" />
+          <Typography variant="caption" color="textSecondary">
+            <FormattedMessage defaultMessage="If selected customer will be able to choose this warehouse as pickup point. Ordered products will be only fulfilled from this warehouse stock" />
+          </Typography>
+          <CardSpacer />
+        </>
+      ),
       value: WarehouseClickAndCollectOptionEnum.LOCAL
     },
     {
-      label: intl.formatMessage({
-        defaultMessage: "All Warehouses",
-        description: "TBD"
-      }),
+      label: (
+        <>
+          <FormattedMessage defaultMessage="All warehouses" />
+          <Typography variant="caption" color="textSecondary">
+            <FormattedMessage defaultMessage="If selected customer will be able to choose this warehouse as pickup point. Ordered products can be shipped here from a different warehouse" />
+          </Typography>
+          <CardSpacer />
+        </>
+      ),
       value: WarehouseClickAndCollectOptionEnum.ALL
     }
   ];
 
   const clickAndCollectChoicesPrivate = [
     {
-      label: intl.formatMessage({
-        defaultMessage: "Disabled",
-        description: "TBD"
-      }),
+      label: (
+        <>
+          <FormattedMessage defaultMessage="Disabled" />
+          <Typography variant="caption" color="textSecondary">
+            <FormattedMessage defaultMessage="If selected customer won't be able to choose this warehouse as pickup point" />
+          </Typography>
+          <CardSpacer />
+        </>
+      ),
       value: WarehouseClickAndCollectOptionEnum.DISABLED
     },
     {
-      label: intl.formatMessage({
-        defaultMessage: "All Warehouses",
-        description: "TBD"
-      }),
+      label: (
+        <>
+          <FormattedMessage defaultMessage="All warehouses" />
+          <Typography variant="caption" color="textSecondary">
+            <FormattedMessage defaultMessage="If selected customer will be able to choose this warehouse as pickup point. Ordered products can be shipped here from a different warehouse" />
+          </Typography>
+          <CardSpacer />
+        </>
+      ),
       value: WarehouseClickAndCollectOptionEnum.ALL
     }
   ];
@@ -133,22 +162,31 @@ const WarehouseInfo: React.FC<WarehouseInfoProps> = ({
             </Typography>
           )
         )}
-
+      </CardContent>
+      <Divider />
+      <CardContent>
         <CardSpacer />
         <RadioGroupField
-          disabled={disabled}
           choices={isPrivateChoices}
-          onChange={onIsPrivateChange}
-          value={isPrivate.toString()}
+          onChange={onChange}
+          value={data.isPrivate.toString()}
           name="isPrivate"
+          alignTop={true}
         />
+      </CardContent>
+      <Divider />
+      <CardContent>
+        <Typography color="textSecondary" variant="h6">
+          <FormattedMessage defaultMessage="Pickup" />
+        </Typography>
         <CardSpacer />
-        {isPrivate === "true" ? (
+        {data.isPrivate.toString() === "true" ? (
           <RadioGroupField
             choices={clickAndCollectChoicesPrivate}
             onChange={onChange}
             value={data.clickAndCollectOption}
             name="clickAndCollectOption"
+            alignTop={true}
           />
         ) : (
           <RadioGroupField
@@ -156,6 +194,7 @@ const WarehouseInfo: React.FC<WarehouseInfoProps> = ({
             onChange={onChange}
             value={data.clickAndCollectOption}
             name="clickAndCollectOption"
+            alignTop={true}
           />
         )}
       </CardContent>

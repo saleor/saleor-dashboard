@@ -70,11 +70,10 @@ const WarehouseDetailsPage: React.FC<WarehouseDetailsPageProps> = ({
     country: maybe(() =>
       findValueInEnum(warehouse.address.country.code, CountryCode)
     ),
-    isPrivate: maybe(() => warehouse.isPrivate, false),
-    clickAndCollectOption: maybe(
-      () => warehouse.clickAndCollectOption,
-      WarehouseClickAndCollectOptionEnum.DISABLED
-    ),
+    isPrivate: !!warehouse?.isPrivate,
+    clickAndCollectOption:
+      warehouse?.clickAndCollectOption ||
+      WarehouseClickAndCollectOptionEnum.DISABLED,
     countryArea: maybe(() => warehouse.address.countryArea, ""),
     name: maybe(() => warehouse.name, ""),
     phone: maybe(() => warehouse.address.phone, ""),
@@ -85,7 +84,7 @@ const WarehouseDetailsPage: React.FC<WarehouseDetailsPageProps> = ({
 
   return (
     <Form initial={initialForm} onSubmit={handleSubmit}>
-      {({ change, data, hasChanged, submit }) => {
+      {({ change, data, hasChanged, set, submit }) => {
         const countryChoices = mapCountriesToChoices(countries);
         const handleCountryChange = createSingleAutocompleteSelectHandler(
           change,
@@ -93,9 +92,17 @@ const WarehouseDetailsPage: React.FC<WarehouseDetailsPageProps> = ({
           countryChoices
         );
 
-        const [isPrivate, setIsPrivate] = React.useState<string>(
-          data.isPrivate.toString()
-        );
+        React.useEffect(() => {
+          if (
+            data.isPrivate.toString() === "true" &&
+            data.clickAndCollectOption ===
+              WarehouseClickAndCollectOptionEnum.LOCAL
+          ) {
+            set({
+              clickAndCollectOption: WarehouseClickAndCollectOptionEnum.DISABLED
+            });
+          }
+        }, [data.isPrivate]);
 
         return (
           <Container>
@@ -129,14 +136,9 @@ const WarehouseDetailsPage: React.FC<WarehouseDetailsPageProps> = ({
               <div>
                 <WarehouseZones
                   zones={mapEdgesToItems(warehouse?.shippingZones)}
-                  disabled={disabled}
                   data={data}
-                  isPrivate={isPrivate}
                   onShippingZoneClick={onShippingZoneClick}
                   onChange={change}
-                  onIsPrivateChange={e => {
-                    setIsPrivate(e.target.value);
-                  }}
                 />
               </div>
             </Grid>
