@@ -29,6 +29,7 @@ import {
   OrderFulfillData_order,
   OrderFulfillData_order_lines
 } from "@saleor/orders/types/OrderFulfillData";
+import { getToFulfillOrderLines } from "@saleor/orders/utils/data";
 import {
   OrderErrorCode,
   OrderFulfillStockInput
@@ -157,23 +158,21 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
     null,
     OrderFulfillStockInput[]
   >(
-    order?.lines
-      .filter(line => line.quantityToFulfill > 0)
-      .map(line => ({
-        data: null,
-        id: line.id,
-        label: line.variant.attributes
-          .map(attribute =>
-            attribute.values
-              .map(attributeValue => attributeValue.name)
-              .join(" , ")
-          )
-          .join(" / "),
-        value: line.variant.stocks.map(stock => ({
-          quantity: 0,
-          warehouse: stock.warehouse.id
-        }))
+    getToFulfillOrderLines(order?.lines).map(line => ({
+      data: null,
+      id: line.id,
+      label: line.variant.attributes
+        .map(attribute =>
+          attribute.values
+            .map(attributeValue => attributeValue.name)
+            .join(" , ")
+        )
+        .join(" / "),
+      value: line.variant.stocks.map(stock => ({
+        quantity: 0,
+        warehouse: stock.warehouse.id
       }))
+    }))
   );
 
   const handleSubmit = (formData: OrderFulfillFormData) =>
@@ -306,7 +305,7 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
                 </TableHead>
                 <TableBody>
                   {renderCollection(
-                    order?.lines.filter(line => line.quantityToFulfill > 0),
+                    getToFulfillOrderLines(order?.lines),
                     (line: OrderFulfillData_order_lines, lineIndex) => {
                       if (!line) {
                         return (
