@@ -10,9 +10,8 @@ import { getFormErrors } from "@saleor/utils/errors";
 import React, { createContext, useContext } from "react";
 import { useIntl } from "react-intl";
 
-import { initialData as emptyFormData } from "../../GiftCardCreateDialog/GiftCardCreateFormProvider";
+import { initialData as emptyFormData } from "../../GiftCardCreateDialog/providers/GiftCardCreateFormProvider";
 import { useGiftCardUpdateMutation } from "../mutations";
-import { GiftCardDetails_giftCard } from "../types/GiftCardDetails";
 import { GiftCardUpdate } from "../types/GiftCardUpdate";
 import { getGiftCardExpirySettingsInputData } from "../utils";
 import { GiftCardDetailsContext } from "./GiftCardDetailsProvider";
@@ -28,7 +27,7 @@ export interface GiftCardUpdateFormConsumerProps
   extends UseFormResult<GiftCardUpdateFormData> {
   opts: MutationResultWithOpts<GiftCardUpdate>;
   submitBalance: () => void;
-  formErrors: Record<keyof GiftCardDetails_giftCard, GiftCardError>;
+  errors: Record<"tag" | "expiryDate" | "expiryPeriod", GiftCardError>;
 }
 
 export const GiftCardUpdateFormContext = createContext<
@@ -98,7 +97,7 @@ const GiftCardUpdateFormProvider: React.FC<GiftCardUpdateFormProviderProps> = ({
       expirySettings: getGiftCardExpirySettingsInputData(formData)
     });
 
-  const formErrors = getFormErrors(
+  const errors = getFormErrors(
     ["tag", "expiryDate", "expiryPeriod"],
     updateGiftCardOpts?.data?.giftCardUpdate?.errors || []
   );
@@ -118,7 +117,7 @@ const GiftCardUpdateFormProvider: React.FC<GiftCardUpdateFormProviderProps> = ({
           ...formProps,
           opts: updateGiftCardOpts,
           submitBalance: handleBalanceSubmit,
-          formErrors
+          errors
         };
 
         return (

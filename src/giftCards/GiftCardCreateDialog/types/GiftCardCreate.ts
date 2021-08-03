@@ -9,6 +9,11 @@ import { GiftCardCreateInput, GiftCardErrorCode } from "./../../../types/globalT
 // GraphQL mutation operation: GiftCardCreate
 // ====================================================
 
+export interface GiftCardCreate_giftCardCreate_giftCard {
+  __typename: "GiftCard";
+  code: string;
+}
+
 export interface GiftCardCreate_giftCardCreate_errors {
   __typename: "GiftCardError";
   code: GiftCardErrorCode;
@@ -17,6 +22,7 @@ export interface GiftCardCreate_giftCardCreate_errors {
 
 export interface GiftCardCreate_giftCardCreate {
   __typename: "GiftCardCreate";
+  giftCard: GiftCardCreate_giftCardCreate_giftCard | null;
   errors: GiftCardCreate_giftCardCreate_errors[];
 }
 

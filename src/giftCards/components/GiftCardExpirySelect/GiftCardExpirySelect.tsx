@@ -62,7 +62,6 @@ const GiftCardExpirySelect: React.FC<GiftCardExpirySelectProps> = ({
     })
   );
 
-  console.log({ errors });
   return (
     <>
       <Typography>

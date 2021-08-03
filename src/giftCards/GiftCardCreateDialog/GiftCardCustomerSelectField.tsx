@@ -4,18 +4,22 @@ import { commonMessages } from "@saleor/intl";
 import { getFullName } from "@saleor/misc";
 import useCustomerSearch from "@saleor/searches/useCustomerSearch";
 import { mapEdgesToItems } from "@saleor/utils/maps";
-import React, { useContext } from "react";
+import React from "react";
 import { useIntl } from "react-intl";
 
-import { GiftCardCreateFormContext } from "./GiftCardCreateFormProvider";
 import { giftCardCreateDialogMessages as messages } from "./messages";
+import { GiftCardCreateFormCustomer } from "./types";
 
-const GiftCardCustomerSelectField: React.FC = () => {
+export interface GiftCardCustomerSelectFieldProps {
+  selectedCustomer: GiftCardCreateFormCustomer;
+  setSelectedCustomer: (customer: GiftCardCreateFormCustomer) => void;
+}
+
+const GiftCardCustomerSelectField: React.FC<GiftCardCustomerSelectFieldProps> = ({
+  selectedCustomer,
+  setSelectedCustomer
+}) => {
   const intl = useIntl();
-
-  const { setSelectedCustomer, selectedCustomer, change } = useContext(
-    GiftCardCreateFormContext
-  );
 
   const { loadMore, search, result } = useCustomerSearch({
     variables: DEFAULT_INITIAL_SEARCH_DATA
@@ -29,8 +33,6 @@ const GiftCardCustomerSelectField: React.FC = () => {
   }));
 
   const handleSelect = (event: React.ChangeEvent<any>) => {
-    change(event);
-
     const value = event.target.value;
     const label = choices?.find(category => category.value === value)?.label;
 

@@ -1,3 +1,5 @@
+import { GiftCardError } from "@saleor/fragments/types/GiftCardError";
+import { FormChange } from "@saleor/hooks/useForm";
 import {
   GiftCardExpiryTypeEnum,
   TimePeriodTypeEnum
@@ -16,4 +18,15 @@ export interface GiftCardCommonFormData {
   expiryType: GiftCardExpiryTypeEnum;
   expiryPeriodType: TimePeriodTypeEnum;
   expiryPeriodAmount: string;
+}
+
+export type GiftCardCreateFormErrors = Record<
+  "tag" | "expiryDate" | "expiryPeriod" | "customer" | "currency" | "amount",
+  GiftCardError
+>;
+
+export interface GiftCardCreateFormCommonProps {
+  change: FormChange;
+  errors: GiftCardCreateFormErrors;
+  data: GiftCardCommonFormData;
 }

@@ -71,7 +71,7 @@ const TextWithSelectField: React.FC<TextWithSelectFieldProps> = ({
   };
 
   return (
-    <div className={classNames(classes.container, containerClassName)}>
+    <div className={containerClassName || classes.container}>
       <TextField
         error={isError}
         helperText={helperText}

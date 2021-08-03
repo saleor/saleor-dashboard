@@ -1,91 +1,114 @@
-import { Divider, TextField } from "@material-ui/core";
-import VerticalSpacer from "@saleor/apps/components/VerticalSpacer";
-import ActionDialog from "@saleor/components/ActionDialog";
-import CardSpacer from "@saleor/components/CardSpacer";
-import GiftCardExpirySelect from "@saleor/giftCards/components/GiftCardExpirySelect";
-import GiftCardTagInput from "@saleor/giftCards/components/GiftCardTagInput";
-import { commonMessages } from "@saleor/intl";
-import { makeStyles } from "@saleor/macaw-ui";
-import Label from "@saleor/orders/components/OrderHistory/Label";
-import React, { useContext } from "react";
+import { Dialog, DialogTitle } from "@material-ui/core";
+import { IMessage } from "@saleor/components/messages";
+import useNotifier from "@saleor/hooks/useNotifier";
+import { GiftCardCreateInput } from "@saleor/types/globalTypes";
+import commonErrorMessages from "@saleor/utils/errors/common";
+import React, { useState } from "react";
 import { useIntl } from "react-intl";
 
 import { GiftCardListActionParamsEnum } from "../GiftCardsList/types";
-import GiftCardBalanceTextWithSelectField from "./GiftCardBalanceTextWithSelectField";
-import { GiftCardCreateFormContext } from "./GiftCardCreateFormProvider";
-import CustomerSelectField from "./GiftCardCustomerSelectField";
+import { getGiftCardExpirySettingsInputData } from "../GiftCardUpdatePage/utils";
+import GiftCardCreateDialogCodeContent from "./GiftCardCreateDialogCodeContent";
+import GiftCardCreateDialogForm, {
+  GiftCardCreateFormData
+} from "./GiftCardCreateDialogForm";
 import { giftCardCreateDialogMessages as messages } from "./messages";
+import { useGiftCardCreateMutation } from "./mutations";
+import { GiftCardCreate } from "./types/GiftCardCreate";
 
 interface GiftCardCreateDialogProps {
   onClose: () => void;
   action: string;
 }
 
-const useStyles = makeStyles(
-  () => ({
-    noteField: {
-      width: "100%"
-    }
-  }),
-  { name: "GiftCardCreateDialog" }
-);
-
 const GiftCardCreateDialog: React.FC<GiftCardCreateDialogProps> = ({
   onClose,
   action
 }) => {
   const intl = useIntl();
-  const classes = useStyles({});
-
-  const {
-    submit,
-    change,
-    selectedTag,
-    data: { expiryPeriodAmount, expiryPeriodType, expiryType }
-  } = useContext(GiftCardCreateFormContext);
+  const notify = useNotifier();
 
   const isOpen = action === GiftCardListActionParamsEnum.CREATE;
 
+  const [cardCode, setCardCode] = useState(null);
+
+  const onCompleted = (data: GiftCardCreate) => {
+    const errors = data?.giftCardCreate?.errors;
+
+    const notifierData: IMessage = !!errors?.length
+      ? {
+          status: "error",
+          text: intl.formatMessage(commonErrorMessages.unknownError)
+        }
+      : {
+          status: "success",
+          text: intl.formatMessage(messages.createdSuccessAlertTitle)
+        };
+
+    notify(notifierData);
+
+    if (!errors?.length) {
+      setCardCode(data?.giftCardCreate?.giftCard?.code);
+    }
+  };
+
+  const getParsedSubmitInputData = (
+    formData: GiftCardCreateFormData
+  ): GiftCardCreateInput => {
+    const {
+      balanceAmount,
+      balanceCurrency,
+      note,
+      tag,
+      selectedCustomer
+    } = formData;
+
+    return {
+      note: note || null,
+      tag: tag || null,
+      userEmail: selectedCustomer.email || null,
+      balance: {
+        amount: balanceAmount,
+        currency: balanceCurrency
+      },
+      expirySettings: getGiftCardExpirySettingsInputData(formData)
+    };
+  };
+
+  const [createGiftCard, createGiftCardOpts] = useGiftCardCreateMutation({
+    onCompleted
+  });
+
+  const handleSubmit = (data: GiftCardCreateFormData) => {
+    createGiftCard({
+      variables: {
+        input: getParsedSubmitInputData(data)
+      }
+    });
+  };
+
+  const handleClose = () => {
+    onClose();
+    setCardCode(null);
+  };
+
   return (
-    <ActionDialog
-      maxWidth="sm"
-      open={isOpen}
-      onConfirm={submit}
-      confirmButtonLabel={intl.formatMessage(messages.issueButtonLabel)}
-      onClose={onClose}
-      title={intl.formatMessage(messages.title)}
-    >
-      <GiftCardBalanceTextWithSelectField />
-      <CardSpacer />
-      <GiftCardTagInput name="tag" value={selectedTag} change={change} />
-      <CardSpacer />
-      <Divider />
-      <CardSpacer />
-      <CustomerSelectField />
-      <VerticalSpacer />
-      <Label text={intl.formatMessage(messages.customerSubtitle)} />
-      <CardSpacer />
-      <Divider />
-      <CardSpacer />
-      <GiftCardExpirySelect
-        change={change}
-        expiryType={expiryType}
-        expiryPeriodAmount={expiryPeriodAmount}
-        expiryPeriodType={expiryPeriodType}
-      />
-      <CardSpacer />
-      <TextField
-        name="note"
-        onChange={change}
-        multiline
-        className={classes.noteField}
-        label={`${intl.formatMessage(messages.noteLabel)} *${intl.formatMessage(
-          commonMessages.optionalField
-        )}`}
-      />
-      <VerticalSpacer />
-      <Label text={intl.formatMessage(messages.noteSubtitle)} />
-    </ActionDialog>
+    <Dialog open={isOpen} maxWidth="sm">
+      <DialogTitle>{intl.formatMessage(messages.title)}</DialogTitle>
+      {!!cardCode ? (
+        <GiftCardCreateDialogCodeContent
+          cardCode={cardCode}
+          onClose={handleClose}
+        />
+      ) : (
+        <GiftCardCreateDialogForm
+          opts={createGiftCardOpts}
+          onClose={handleClose}
+          apiErrors={createGiftCardOpts?.data?.giftCardCreate?.errors}
+          onSubmit={handleSubmit}
+        />
+      )}
+    </Dialog>
   );
 };
 

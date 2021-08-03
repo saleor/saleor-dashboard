@@ -7,6 +7,7 @@ import { DEFAULT_INITIAL_SEARCH_DATA } from "@saleor/config";
 import { GiftCardError } from "@saleor/fragments/types/GiftCardError";
 import { getGiftCardErrorMessage } from "@saleor/giftCards/GiftCardUpdatePage/messages";
 import { FormChange } from "@saleor/hooks/useForm";
+import { commonMessages } from "@saleor/intl";
 import {
   mapEdgesToItems,
   mapSingleValueNodeToChoice
@@ -58,7 +59,9 @@ const GiftCardTagInput: React.FC<GiftCardTagInputProps> = ({
         helperText={getGiftCardErrorMessage(error, intl)}
         allowCustomValues
         name={name || "giftCardTag"}
-        label={intl.formatMessage(messages.placeholder)}
+        label={`${intl.formatMessage(
+          messages.placeholder
+        )} *${intl.formatMessage(commonMessages.optionalField)}`}
         data-test-id="gift-card-tag-select-field"
         value={value}
         displayValue={value}

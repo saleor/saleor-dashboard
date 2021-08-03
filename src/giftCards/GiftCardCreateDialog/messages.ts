@@ -30,5 +30,21 @@ export const giftCardCreateDialogMessages = defineMessages({
     defaultMessage:
       "Why was this gift card issued. This note will not be shown to the customer. Note will be stored in gift card history",
     description: "GiftCardCreateDialog note subtitle"
+  },
+  createdGiftCardLabel: {
+    defaultMessage: "This is the code of a created gift card:",
+    description: "GiftCardCreateDialog created gift card label"
+  },
+  copyCodeLabel: {
+    defaultMessage: "Copy code",
+    description: "GiftCardCreateDialog copy code label"
+  },
+  copiedToClipboardTitle: {
+    defaultMessage: "Copied to clipboard",
+    description: "GiftCardCreateDialog copied to clipboard title"
+  },
+  createdSuccessAlertTitle: {
+    defaultMessage: "Successfully created gift card",
+    description: "GiftCardCreateDialog createdSuccessAlertTitle"
   }
 });

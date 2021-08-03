@@ -3,7 +3,6 @@ import { makeStyles } from "@saleor/macaw-ui";
 export const useStyles = makeStyles(
   () => ({
     container: {
-      position: "relative",
       width: 400
     },
     innerContainer: {
