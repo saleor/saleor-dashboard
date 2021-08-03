@@ -67,7 +67,7 @@ function createMenuStructure(intl: IntlShape, user: User): SidebarMenuItem[] {
         {
           ariaLabel: "giftCards",
           label: intl.formatMessage(sectionNames.giftCards),
-          testingContextId: "giftCards",
+          id: "giftCards",
           url: giftCardsListUrl()
         }
       ],
