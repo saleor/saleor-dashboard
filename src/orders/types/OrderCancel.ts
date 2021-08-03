@@ -497,6 +497,7 @@ export interface OrderCancel_orderCancel_order {
   shippingAddress: OrderCancel_orderCancel_order_shippingAddress | null;
   shippingMethod: OrderCancel_orderCancel_order_shippingMethod | null;
   shippingMethodName: string | null;
+  collectionPointName: string | null;
   shippingPrice: OrderCancel_orderCancel_order_shippingPrice;
   status: OrderStatus;
   subtotal: OrderCancel_orderCancel_order_subtotal;

@@ -497,6 +497,7 @@ export interface OrderCapture_orderCapture_order {
   shippingAddress: OrderCapture_orderCapture_order_shippingAddress | null;
   shippingMethod: OrderCapture_orderCapture_order_shippingMethod | null;
   shippingMethodName: string | null;
+  collectionPointName: string | null;
   shippingPrice: OrderCapture_orderCapture_order_shippingPrice;
   status: OrderStatus;
   subtotal: OrderCapture_orderCapture_order_subtotal;

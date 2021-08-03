@@ -499,6 +499,7 @@ export interface FulfillOrder_orderFulfill_order {
   shippingAddress: FulfillOrder_orderFulfill_order_shippingAddress | null;
   shippingMethod: FulfillOrder_orderFulfill_order_shippingMethod | null;
   shippingMethodName: string | null;
+  collectionPointName: string | null;
   shippingPrice: FulfillOrder_orderFulfill_order_shippingPrice;
   status: OrderStatus;
   subtotal: FulfillOrder_orderFulfill_order_subtotal;

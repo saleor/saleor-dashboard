@@ -497,6 +497,7 @@ export interface OrderLineDelete_orderLineDelete_order {
   shippingAddress: OrderLineDelete_orderLineDelete_order_shippingAddress | null;
   shippingMethod: OrderLineDelete_orderLineDelete_order_shippingMethod | null;
   shippingMethodName: string | null;
+  collectionPointName: string | null;
   shippingPrice: OrderLineDelete_orderLineDelete_order_shippingPrice;
   status: OrderStatus;
   subtotal: OrderLineDelete_orderLineDelete_order_subtotal;

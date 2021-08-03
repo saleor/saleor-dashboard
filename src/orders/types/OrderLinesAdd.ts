@@ -497,6 +497,7 @@ export interface OrderLinesAdd_orderLinesCreate_order {
   shippingAddress: OrderLinesAdd_orderLinesCreate_order_shippingAddress | null;
   shippingMethod: OrderLinesAdd_orderLinesCreate_order_shippingMethod | null;
   shippingMethodName: string | null;
+  collectionPointName: string | null;
   shippingPrice: OrderLinesAdd_orderLinesCreate_order_shippingPrice;
   status: OrderStatus;
   subtotal: OrderLinesAdd_orderLinesCreate_order_subtotal;

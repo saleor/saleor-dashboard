@@ -497,6 +497,7 @@ export interface OrderConfirm_orderConfirm_order {
   shippingAddress: OrderConfirm_orderConfirm_order_shippingAddress | null;
   shippingMethod: OrderConfirm_orderConfirm_order_shippingMethod | null;
   shippingMethodName: string | null;
+  collectionPointName: string | null;
   shippingPrice: OrderConfirm_orderConfirm_order_shippingPrice;
   status: OrderStatus;
   subtotal: OrderConfirm_orderConfirm_order_subtotal;

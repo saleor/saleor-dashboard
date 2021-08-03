@@ -497,6 +497,7 @@ export interface OrderDiscountAdd_orderDiscountAdd_order {
   shippingAddress: OrderDiscountAdd_orderDiscountAdd_order_shippingAddress | null;
   shippingMethod: OrderDiscountAdd_orderDiscountAdd_order_shippingMethod | null;
   shippingMethodName: string | null;
+  collectionPointName: string | null;
   shippingPrice: OrderDiscountAdd_orderDiscountAdd_order_shippingPrice;
   status: OrderStatus;
   subtotal: OrderDiscountAdd_orderDiscountAdd_order_subtotal;

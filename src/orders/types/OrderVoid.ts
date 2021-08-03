@@ -497,6 +497,7 @@ export interface OrderVoid_orderVoid_order {
   shippingAddress: OrderVoid_orderVoid_order_shippingAddress | null;
   shippingMethod: OrderVoid_orderVoid_order_shippingMethod | null;
   shippingMethodName: string | null;
+  collectionPointName: string | null;
   shippingPrice: OrderVoid_orderVoid_order_shippingPrice;
   status: OrderStatus;
   subtotal: OrderVoid_orderVoid_order_subtotal;

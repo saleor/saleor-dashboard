@@ -593,6 +593,7 @@ export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_o
   shippingAddress: OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_shippingAddress | null;
   shippingMethod: OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_shippingMethod | null;
   shippingMethodName: string | null;
+  collectionPointName: string | null;
   shippingPrice: OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_shippingPrice;
   status: OrderStatus;
   subtotal: OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_subtotal;

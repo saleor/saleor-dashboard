@@ -497,6 +497,7 @@ export interface OrderRefund_orderRefund_order {
   shippingAddress: OrderRefund_orderRefund_order_shippingAddress | null;
   shippingMethod: OrderRefund_orderRefund_order_shippingMethod | null;
   shippingMethodName: string | null;
+  collectionPointName: string | null;
   shippingPrice: OrderRefund_orderRefund_order_shippingPrice;
   status: OrderStatus;
   subtotal: OrderRefund_orderRefund_order_subtotal;

@@ -497,6 +497,7 @@ export interface OrderMarkAsPaid_orderMarkAsPaid_order {
   shippingAddress: OrderMarkAsPaid_orderMarkAsPaid_order_shippingAddress | null;
   shippingMethod: OrderMarkAsPaid_orderMarkAsPaid_order_shippingMethod | null;
   shippingMethodName: string | null;
+  collectionPointName: string | null;
   shippingPrice: OrderMarkAsPaid_orderMarkAsPaid_order_shippingPrice;
   status: OrderStatus;
   subtotal: OrderMarkAsPaid_orderMarkAsPaid_order_subtotal;

@@ -490,6 +490,7 @@ export interface OrderDetails_order {
   shippingAddress: OrderDetails_order_shippingAddress | null;
   shippingMethod: OrderDetails_order_shippingMethod | null;
   shippingMethodName: string | null;
+  collectionPointName: string | null;
   shippingPrice: OrderDetails_order_shippingPrice;
   status: OrderStatus;
   subtotal: OrderDetails_order_subtotal;

@@ -144,16 +144,21 @@ const OrderPayment: React.FC<OrderPaymentProps> = props => {
               </td>
               <td>
                 {maybe(() => order.shippingMethodName) === undefined &&
-                maybe(() => order.shippingPrice) === undefined ? (
+                maybe(() => order.shippingPrice) === undefined &&
+                maybe(() => order.collectionPointName) === undefined ? (
                   <Skeleton />
                 ) : order.shippingMethodName === null ? (
-                  intl.formatMessage({
-                    defaultMessage: "does not apply",
-                    description: "order does not require shipping",
-                    id: "orderPaymentShippingDoesNotApply"
-                  })
+                  order.collectionPointName === null ? (
+                    intl.formatMessage({
+                      defaultMessage: "does not apply",
+                      description: "order does not require shipping",
+                      id: "orderPaymentShippingDoesNotApply"
+                    })
+                  ) : (
+                    order.collectionPointName
+                  )
                 ) : (
-                  order.shippingMethodName
+                  "click&collect"
                 )}
               </td>
               <td className={classes.textRight}>

@@ -497,6 +497,7 @@ export interface OrderDraftCancel_draftOrderDelete_order {
   shippingAddress: OrderDraftCancel_draftOrderDelete_order_shippingAddress | null;
   shippingMethod: OrderDraftCancel_draftOrderDelete_order_shippingMethod | null;
   shippingMethodName: string | null;
+  collectionPointName: string | null;
   shippingPrice: OrderDraftCancel_draftOrderDelete_order_shippingPrice;
   status: OrderStatus;
   subtotal: OrderDraftCancel_draftOrderDelete_order_subtotal;
