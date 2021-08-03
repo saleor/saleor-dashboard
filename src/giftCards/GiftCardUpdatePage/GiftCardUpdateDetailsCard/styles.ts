@@ -22,23 +22,7 @@ export const useGiftCardDetailsBalanceStyles = makeStyles(
       height: 28,
       borderRadius: 14,
       backgroundColor: theme.palette.primary.light
-    },
-    balanceBarProgressDark: {
-      backgroundColor: theme.palette.primary.dark
     }
   }),
   { name: "GiftCardUpdateDetailsBalanceSection" }
-);
-
-export const useGiftCardDetailsExpiryStyles = makeStyles(
-  () => ({
-    radioGroupContainer: {
-      display: "flex",
-      flexDirection: "row"
-    },
-    dateField: {
-      width: 400
-    }
-  }),
-  { name: "GiftCardUpdateDetailsExpirySection" }
 );
