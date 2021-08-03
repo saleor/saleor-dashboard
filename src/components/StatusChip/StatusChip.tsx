@@ -12,7 +12,7 @@ export interface StatusChipProps {
   label?: string;
 }
 
-const StatusChipStyles = {
+export const statusChipStyles = {
   alert: {
     background: "#FFF4E4"
   },
@@ -61,7 +61,7 @@ const useStyles = makeStyles(
       borderRadius: 22,
       display: "inline-block"
     },
-    ...StatusChipStyles
+    ...statusChipStyles
   }),
   { name: "StatusChip" }
 );
