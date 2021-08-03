@@ -30,7 +30,7 @@ import WarehouseZones from "../WarehouseZones";
 
 export interface WarehouseDetailsPageFormData extends AddressTypeInput {
   name: string;
-  isPrivate: boolean;
+  isPrivate: string;
   clickAndCollectOption: WarehouseClickAndCollectOptionEnum;
 }
 export interface WarehouseDetailsPageProps {
@@ -72,7 +72,7 @@ const WarehouseDetailsPage: React.FC<WarehouseDetailsPageProps> = ({
     country: maybe(() =>
       findValueInEnum(warehouse.address.country.code, CountryCode)
     ),
-    isPrivate: !!warehouse?.isPrivate,
+    isPrivate: (!!warehouse?.isPrivate).toString(),
     clickAndCollectOption:
       warehouse?.clickAndCollectOption ||
       WarehouseClickAndCollectOptionEnum.DISABLED,
@@ -96,7 +96,7 @@ const WarehouseDetailsPage: React.FC<WarehouseDetailsPageProps> = ({
 
         React.useEffect(() => {
           if (
-            data.isPrivate.toString() === "true" &&
+            data.isPrivate === "true" &&
             data.clickAndCollectOption ===
               WarehouseClickAndCollectOptionEnum.LOCAL
           ) {
@@ -139,6 +139,7 @@ const WarehouseDetailsPage: React.FC<WarehouseDetailsPageProps> = ({
                 <WarehouseZones
                   zones={mapEdgesToItems(warehouse?.shippingZones)}
                   data={data}
+                  disabled={disabled}
                   onShippingZoneClick={onShippingZoneClick}
                   onChange={change}
                 />

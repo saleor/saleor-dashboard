@@ -155,10 +155,10 @@ const OrderPayment: React.FC<OrderPaymentProps> = props => {
                       id: "orderPaymentShippingDoesNotApply"
                     })
                   ) : (
-                    order.collectionPointName
+                    "click&collect"
                   )
                 ) : (
-                  "click&collect"
+                  order.shippingMethodName
                 )}
               </td>
               <td className={classes.textRight}>

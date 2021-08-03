@@ -16,6 +16,7 @@ import { WarehouseDetailsPageFormData } from "./../WarehouseDetailsPage";
 
 export interface WarehouseInfoProps {
   zones: WarehouseDetails_warehouse_shippingZones_edges_node[];
+  disabled: boolean;
   data: WarehouseDetailsPageFormData;
   onShippingZoneClick: (id: string) => void;
   onChange: (event: React.ChangeEvent<any>) => void;
@@ -36,6 +37,7 @@ const useStyles = makeStyles(
 
 const WarehouseInfo: React.FC<WarehouseInfoProps> = ({
   zones,
+  disabled,
   data,
   onShippingZoneClick,
   onChange
@@ -69,43 +71,18 @@ const WarehouseInfo: React.FC<WarehouseInfoProps> = ({
     }
   ];
 
-  const clickAndCollectChoices = [
-    {
-      label: (
-        <>
-          <FormattedMessage defaultMessage="Disabled" />
-          <Typography variant="caption" color="textSecondary">
-            <FormattedMessage defaultMessage="If selected customer won't be able to choose this warehouse as pickup point" />
-          </Typography>
-          <FormSpacer />
-        </>
-      ),
-      value: WarehouseClickAndCollectOptionEnum.DISABLED
-    },
-    {
-      label: (
-        <>
-          <FormattedMessage defaultMessage="Local stock only" />
-          <Typography variant="caption" color="textSecondary">
-            <FormattedMessage defaultMessage="If selected customer will be able to choose this warehouse as pickup point. Ordered products will be only fulfilled from this warehouse stock" />
-          </Typography>
-          <FormSpacer />
-        </>
-      ),
-      value: WarehouseClickAndCollectOptionEnum.LOCAL
-    },
-    {
-      label: (
-        <>
-          <FormattedMessage defaultMessage="All warehouses" />
-          <Typography variant="caption" color="textSecondary">
-            <FormattedMessage defaultMessage="If selected customer will be able to choose this warehouse as pickup point. Ordered products can be shipped here from a different warehouse" />
-          </Typography>
-        </>
-      ),
-      value: WarehouseClickAndCollectOptionEnum.ALL
-    }
-  ];
+  const localChoice = {
+    label: (
+      <>
+        <FormattedMessage defaultMessage="Local stock only" />
+        <Typography variant="caption" color="textSecondary">
+          <FormattedMessage defaultMessage="If selected customer will be able to choose this warehouse as pickup point. Ordered products will be only fulfilled from this warehouse stock" />
+        </Typography>
+        <FormSpacer />
+      </>
+    ),
+    value: WarehouseClickAndCollectOptionEnum.LOCAL
+  };
 
   const clickAndCollectChoicesPrivate = [
     {
@@ -131,6 +108,12 @@ const WarehouseInfo: React.FC<WarehouseInfoProps> = ({
       ),
       value: WarehouseClickAndCollectOptionEnum.ALL
     }
+  ];
+
+  const clickAndCollectChoicesPublic = [
+    { ...clickAndCollectChoicesPrivate[0] },
+    { ...localChoice },
+    { ...clickAndCollectChoicesPrivate[1] }
   ];
 
   return (
@@ -166,9 +149,10 @@ const WarehouseInfo: React.FC<WarehouseInfoProps> = ({
       <CardContent>
         <CardSpacer />
         <RadioGroupField
+          disabled={disabled}
           choices={isPrivateChoices}
           onChange={onChange}
-          value={data.isPrivate.toString()}
+          value={data.isPrivate}
           name="isPrivate"
           alignTop={true}
         />
@@ -179,8 +163,9 @@ const WarehouseInfo: React.FC<WarehouseInfoProps> = ({
           <FormattedMessage defaultMessage="Pickup" />
         </Typography>
         <CardSpacer />
-        {data.isPrivate.toString() === "true" ? (
+        {data.isPrivate === "true" ? (
           <RadioGroupField
+            disabled={disabled}
             choices={clickAndCollectChoicesPrivate}
             onChange={onChange}
             value={data.clickAndCollectOption}
@@ -189,7 +174,8 @@ const WarehouseInfo: React.FC<WarehouseInfoProps> = ({
           />
         ) : (
           <RadioGroupField
-            choices={clickAndCollectChoices}
+            disabled={disabled}
+            choices={clickAndCollectChoicesPublic}
             onChange={onChange}
             value={data.clickAndCollectOption}
             name="clickAndCollectOption"

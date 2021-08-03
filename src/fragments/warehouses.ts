@@ -12,8 +12,6 @@ export const warehouseWithShippingFragment = gql`
   ${warehouseFragment}
   fragment WarehouseWithShippingFragment on Warehouse {
     ...WarehouseFragment
-    isPrivate
-    clickAndCollectOption
     shippingZones(first: 100) {
       edges {
         node {
