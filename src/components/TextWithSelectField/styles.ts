@@ -3,7 +3,6 @@ import { makeStyles } from "@saleor/macaw-ui";
 export const useStyles = makeStyles(
   () => ({
     container: {
-      position: "relative",
       width: 400
     },
     innerContainer: {
@@ -11,8 +10,13 @@ export const useStyles = makeStyles(
     },
     textField: {
       width: "100%",
+      paddingRight: 0,
       "& input": {
-        width: "70%",
+        maxWidth: "100%"
+      }
+    },
+    textFieldCentered: {
+      "& input": {
         paddingTop: 16,
         paddingBottom: 16
       }
