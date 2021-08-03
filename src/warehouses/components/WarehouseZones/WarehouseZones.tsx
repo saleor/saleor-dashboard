@@ -71,20 +71,7 @@ const WarehouseInfo: React.FC<WarehouseInfoProps> = ({
     }
   ];
 
-  const localChoice = {
-    label: (
-      <>
-        <FormattedMessage defaultMessage="Local stock only" />
-        <Typography variant="caption" color="textSecondary">
-          <FormattedMessage defaultMessage="If selected customer will be able to choose this warehouse as pickup point. Ordered products will be only fulfilled from this warehouse stock" />
-        </Typography>
-        <FormSpacer />
-      </>
-    ),
-    value: WarehouseClickAndCollectOptionEnum.LOCAL
-  };
-
-  const clickAndCollectChoicesPrivate = [
+  const clickAndCollectChoicesPublic = [
     {
       label: (
         <>
@@ -100,6 +87,18 @@ const WarehouseInfo: React.FC<WarehouseInfoProps> = ({
     {
       label: (
         <>
+          <FormattedMessage defaultMessage="Local stock only" />
+          <Typography variant="caption" color="textSecondary">
+            <FormattedMessage defaultMessage="If selected customer will be able to choose this warehouse as pickup point. Ordered products will be only fulfilled from this warehouse stock" />
+          </Typography>
+          <FormSpacer />
+        </>
+      ),
+      value: WarehouseClickAndCollectOptionEnum.LOCAL
+    },
+    {
+      label: (
+        <>
           <FormattedMessage defaultMessage="All warehouses" />
           <Typography variant="caption" color="textSecondary">
             <FormattedMessage defaultMessage="If selected customer will be able to choose this warehouse as pickup point. Ordered products can be shipped here from a different warehouse" />
@@ -110,11 +109,9 @@ const WarehouseInfo: React.FC<WarehouseInfoProps> = ({
     }
   ];
 
-  const clickAndCollectChoicesPublic = [
-    { ...clickAndCollectChoicesPrivate[0] },
-    { ...localChoice },
-    { ...clickAndCollectChoicesPrivate[1] }
-  ];
+  const clickAndCollectChoicesPrivate = clickAndCollectChoicesPublic.filter(
+    choice => choice.value !== WarehouseClickAndCollectOptionEnum.LOCAL
+  );
 
   return (
     <Card>
