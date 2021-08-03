@@ -8,10 +8,12 @@ import { timePeriodTextWithSelectFieldMessages as messages } from "./messages";
 
 interface TimePeriodFieldProps {
   change: FormChange;
-  periodAmount: number;
+  periodAmount: string;
   periodType: TimePeriodTypeEnum;
   amountFieldName: string;
   typeFieldName: string;
+  helperText?: string;
+  isError?: boolean;
 }
 
 const TimePeriodField: React.FC<TimePeriodFieldProps> = ({
@@ -19,7 +21,9 @@ const TimePeriodField: React.FC<TimePeriodFieldProps> = ({
   periodAmount,
   periodType,
   amountFieldName,
-  typeFieldName
+  typeFieldName,
+  helperText,
+  isError
 }) => {
   const intl = useIntl();
 
@@ -40,12 +44,19 @@ const TimePeriodField: React.FC<TimePeriodFieldProps> = ({
 
   return (
     <TextWithSelectField
+      isError={isError}
       choices={options}
       change={change}
-      textFieldName={amountFieldName as string}
-      selectFieldName={typeFieldName as string}
-      textFieldValue={periodAmount}
-      selectFieldValue={periodType}
+      helperText={helperText}
+      textFieldProps={{
+        type: "number",
+        name: amountFieldName,
+        value: periodAmount
+      }}
+      selectFieldProps={{
+        name: typeFieldName,
+        value: periodType
+      }}
     />
   );
 };
