@@ -12,12 +12,14 @@ import { ListViews } from "@saleor/types";
 import { mapEdgesToItems } from "@saleor/utils/maps";
 import React, { createContext } from "react";
 
-import { useGiftCardListQuery } from "../GiftCardUpdatePage/queries";
+import { useGiftCardListQuery } from "../queries";
+import { GiftCardListColummns, GiftCardListUrlQueryParams } from "../types";
 import {
   GiftCardList_giftCards_edges_node,
   GiftCardListVariables
-} from "../GiftCardUpdatePage/types/GiftCardList";
-import { GiftCardListColummns, GiftCardListUrlQueryParams } from "./types";
+} from "../types/GiftCardList";
+
+const numberOfColumns = 7;
 
 interface GiftCardsListProviderProps {
   children: React.ReactNode;
@@ -37,6 +39,7 @@ export interface GiftCardsListConsumerProps
   loading: boolean;
   params: GiftCardListUrlQueryParams;
   paginationState: PaginationState;
+  numberOfColumns: number;
 }
 
 export const GiftCardsListContext = createContext<GiftCardsListConsumerProps>(
@@ -47,11 +50,8 @@ export const GiftCardsListProvider: React.FC<GiftCardsListProviderProps> = ({
   children,
   params
 }) => {
-  // TEMP
-  const initiallySelected = [];
-
   const { isSelected, listElements, reset, toggle, toggleAll } = useBulkActions(
-    initiallySelected
+    []
   );
 
   const { updateListSettings, settings } = useListSettings<
@@ -85,7 +85,8 @@ export const GiftCardsListProvider: React.FC<GiftCardsListProviderProps> = ({
     paginationState,
     params,
     settings,
-    updateListSettings
+    updateListSettings,
+    numberOfColumns
   };
 
   return (
