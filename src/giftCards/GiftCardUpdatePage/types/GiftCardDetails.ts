@@ -72,6 +72,28 @@ export interface GiftCardDetails_giftCard_currentBalance {
   currency: string;
 }
 
+export interface GiftCardDetails_giftCard_events_expiry_expiryPeriod {
+  __typename: "TimePeriod";
+  amount: number;
+  type: TimePeriodTypeEnum;
+}
+
+export interface GiftCardDetails_giftCard_events_expiry_oldExpiryPeriod {
+  __typename: "TimePeriod";
+  amount: number;
+  type: TimePeriodTypeEnum;
+}
+
+export interface GiftCardDetails_giftCard_events_expiry {
+  __typename: "GiftCardEventExpiry";
+  expiryType: GiftCardExpiryTypeEnum | null;
+  expiryPeriod: GiftCardDetails_giftCard_events_expiry_expiryPeriod | null;
+  expiryDate: any | null;
+  oldExpiryType: GiftCardExpiryTypeEnum | null;
+  oldExpiryPeriod: GiftCardDetails_giftCard_events_expiry_oldExpiryPeriod | null;
+  oldExpiryDate: any | null;
+}
+
 export interface GiftCardDetails_giftCard_events_user {
   __typename: "User";
   id: string;
@@ -117,30 +139,9 @@ export interface GiftCardDetails_giftCard_events_balance {
   oldCurrentBalance: GiftCardDetails_giftCard_events_balance_oldCurrentBalance | null;
 }
 
-export interface GiftCardDetails_giftCard_events_expiry_expiryPeriod {
-  __typename: "TimePeriod";
-  amount: number;
-  type: TimePeriodTypeEnum;
-}
-
-export interface GiftCardDetails_giftCard_events_expiry_oldExpiryPeriod {
-  __typename: "TimePeriod";
-  amount: number;
-  type: TimePeriodTypeEnum;
-}
-
-export interface GiftCardDetails_giftCard_events_expiry {
-  __typename: "GiftCardEventExpiry";
-  expiryType: GiftCardExpiryTypeEnum | null;
-  expiryPeriod: GiftCardDetails_giftCard_events_expiry_expiryPeriod | null;
-  expiryDate: any | null;
-  oldExpiryType: GiftCardExpiryTypeEnum | null;
-  oldExpiryPeriod: GiftCardDetails_giftCard_events_expiry_oldExpiryPeriod | null;
-  oldExpiryDate: any | null;
-}
-
 export interface GiftCardDetails_giftCard_events {
   __typename: "GiftCardEvent";
+  expiry: GiftCardDetails_giftCard_events_expiry | null;
   id: string;
   date: any | null;
   type: GiftCardEventsEnum | null;
@@ -153,14 +154,13 @@ export interface GiftCardDetails_giftCard_events {
   tag: string | null;
   oldTag: string | null;
   balance: GiftCardDetails_giftCard_events_balance | null;
-  expiry: GiftCardDetails_giftCard_events_expiry | null;
 }
 
 export interface GiftCardDetails_giftCard {
   __typename: "GiftCard";
   metadata: (GiftCardDetails_giftCard_metadata | null)[];
   privateMetadata: (GiftCardDetails_giftCard_privateMetadata | null)[];
-  code: string;
+  displayCode: string;
   createdBy: GiftCardDetails_giftCard_createdBy | null;
   product: GiftCardDetails_giftCard_product | null;
   user: GiftCardDetails_giftCard_user | null;
@@ -176,10 +176,9 @@ export interface GiftCardDetails_giftCard {
   isActive: boolean;
   initialBalance: GiftCardDetails_giftCard_initialBalance | null;
   currentBalance: GiftCardDetails_giftCard_currentBalance | null;
-  events: (GiftCardDetails_giftCard_events | null)[] | null;
   id: string;
-  displayCode: string;
   tag: string | null;
+  events: GiftCardDetails_giftCard_events[];
 }
 
 export interface GiftCardDetails {
