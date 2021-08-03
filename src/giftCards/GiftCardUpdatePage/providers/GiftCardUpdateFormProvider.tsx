@@ -5,12 +5,11 @@ import { MutationResultWithOpts } from "@saleor/hooks/makeMutation";
 import { UseFormResult } from "@saleor/hooks/useForm";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { getDefaultNotifierSuccessErrorData } from "@saleor/hooks/useNotifier/utils";
-import { GiftCardUpdateInput } from "@saleor/types/globalTypes";
 import { getFormErrors } from "@saleor/utils/errors";
 import React, { createContext, useContext } from "react";
 import { useIntl } from "react-intl";
 
-import { initialData as emptyFormData } from "../../GiftCardCreateDialog/providers/GiftCardCreateFormProvider";
+import { initialData as emptyFormData } from "../../GiftCardCreateDialog/GiftCardCreateDialogForm";
 import { useGiftCardUpdateMutation } from "../mutations";
 import { GiftCardUpdate } from "../types/GiftCardUpdate";
 import { getGiftCardExpirySettingsInputData } from "../utils";
@@ -21,13 +20,15 @@ interface GiftCardUpdateFormProviderProps {
   onBalanceUpdateSuccess: () => void;
 }
 
-export type GiftCardUpdateFormData = GiftCardCommonFormData;
+export type GiftCardUpdateFormData = Omit<
+  GiftCardCommonFormData,
+  "balanceAmount" | "balanceCurrency"
+>;
 
 export interface GiftCardUpdateFormConsumerProps
   extends UseFormResult<GiftCardUpdateFormData> {
   opts: MutationResultWithOpts<GiftCardUpdate>;
-  submitBalance: () => void;
-  errors: Record<"tag" | "expiryDate" | "expiryPeriod", GiftCardError>;
+  formErrors: Record<"tag" | "expiryDate" | "expiryPeriod", GiftCardError>;
 }
 
 export const GiftCardUpdateFormContext = createContext<
@@ -50,17 +51,9 @@ const GiftCardUpdateFormProvider: React.FC<GiftCardUpdateFormProviderProps> = ({
       return emptyFormData;
     }
 
-    const {
-      tag,
-      expiryDate,
-      expiryType,
-      expiryPeriod,
-      currentBalance: { amount, currency }
-    } = giftCard;
+    const { tag, expiryDate, expiryType, expiryPeriod } = giftCard;
 
     return {
-      balanceAmount: amount.toString(),
-      balanceCurrency: currency,
       tag,
       expiryDate,
       expiryType,
@@ -83,41 +76,30 @@ const GiftCardUpdateFormProvider: React.FC<GiftCardUpdateFormProviderProps> = ({
     onCompleted: onSubmit
   });
 
-  const handleGiftCardUpdate = (input: GiftCardUpdateInput) =>
+  const handleSubmit = (formData: GiftCardUpdateFormData) => {
     updateGiftCard({
       variables: {
         id: giftCard?.id,
-        input
+        input: {
+          tag: formData.tag,
+          expirySettings: getGiftCardExpirySettingsInputData(formData)
+        }
       }
     });
+  };
 
-  const handleSubmit = (formData: GiftCardUpdateFormData) =>
-    handleGiftCardUpdate({
-      tag: formData.tag,
-      expirySettings: getGiftCardExpirySettingsInputData(formData)
-    });
-
-  const errors = getFormErrors(
+  const formErrors = getFormErrors(
     ["tag", "expiryDate", "expiryPeriod"],
-    updateGiftCardOpts?.data?.giftCardUpdate?.errors || []
+    updateGiftCardOpts?.data?.giftCardUpdate?.errors
   );
 
   return (
     <Form initial={getInitialData()} onSubmit={handleSubmit}>
       {formProps => {
-        const handleBalanceSubmit = () =>
-          handleGiftCardUpdate({
-            balance: {
-              amount: formProps.data.balanceAmount,
-              currency: formProps.data.balanceCurrency
-            }
-          });
-
         const providerValues: GiftCardUpdateFormConsumerProps = {
           ...formProps,
           opts: updateGiftCardOpts,
-          submitBalance: handleBalanceSubmit,
-          errors
+          formErrors
         };
 
         return (

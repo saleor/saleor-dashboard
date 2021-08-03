@@ -1,13 +1,19 @@
-import { GiftCardExpiryTypeEnum } from "@saleor/types/globalTypes";
+import {
+  GiftCardExpirySettingsInput,
+  GiftCardExpiryTypeEnum
+} from "@saleor/types/globalTypes";
 
-import { GiftCardExpirySettingsFormData } from "../GiftCardCreateDialog/types";
+import { GiftCardCommonFormData } from "../GiftCardCreateDialog/types";
 
 export const getGiftCardExpirySettingsInputData = ({
   expiryType,
   expiryDate,
   expiryPeriodAmount,
   expiryPeriodType
-}: GiftCardExpirySettingsFormData) => {
+}: Pick<
+  GiftCardCommonFormData,
+  "expiryDate" | "expiryPeriodAmount" | "expiryPeriodType" | "expiryType"
+>): GiftCardExpirySettingsInput => {
   switch (expiryType) {
     case GiftCardExpiryTypeEnum.EXPIRY_DATE: {
       return {
@@ -20,7 +26,7 @@ export const getGiftCardExpirySettingsInputData = ({
       return {
         expiryType,
         expiryPeriod: {
-          amount: expiryPeriodAmount,
+          amount: parseInt(expiryPeriodAmount, 10),
           type: expiryPeriodType
         }
       };

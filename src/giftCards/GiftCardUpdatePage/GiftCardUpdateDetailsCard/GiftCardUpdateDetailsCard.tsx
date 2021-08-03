@@ -7,7 +7,6 @@ import React, { useContext } from "react";
 import { useIntl } from "react-intl";
 
 import ContentOrSkeleton from "../GiftCardUpdateInfoCard/ContentOrSkeleton";
-import { getGiftCardErrorMessage } from "../messages";
 import { GiftCardDetailsContext } from "../providers/GiftCardDetailsProvider";
 import { GiftCardUpdateFormContext } from "../providers/GiftCardUpdateFormProvider";
 import GiftCardUpdateDetailsBalanceSection from "./GiftCardUpdateDetailsBalanceSection";

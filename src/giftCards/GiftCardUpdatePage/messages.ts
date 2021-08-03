@@ -9,20 +9,6 @@ export const giftCardUpdateDetailsCardMessages = defineMessages({
   title: {
     defaultMessage: "Details",
     description: "GiftCardUpdateDetailsCard title"
-  },
-  setBalanceButtonLabel: {
-    defaultMessage: "Set balance",
-    description: "GiftCardUpdateDetailsCard set balance button label"
-  },
-  setBalanceDialogSubtitle: {
-    defaultMessage:
-      "What would you like to set cards balance to. When you change the balance both values will be changed",
-    description: "GiftCardUpdateDetailsCard set balance dialog subtitle"
-  },
-  changeButtonLabel: {
-    defaultMessage: "Change",
-    description:
-      "GiftCardUpdateDetailsCard set balance dialog change button label"
   }
 });
 

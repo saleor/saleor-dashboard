@@ -24,7 +24,7 @@ const GiftCardUpdateInfoCardContent: React.FC = () => {
   const localizeDate = useDateLocalize();
   const navigate = useNavigator();
 
-  const { giftCard, loading } = useContext(GiftCardDetailsContext);
+  const { giftCard } = useContext(GiftCardDetailsContext);
 
   const {
     created,

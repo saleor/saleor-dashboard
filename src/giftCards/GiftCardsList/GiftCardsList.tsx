@@ -4,7 +4,6 @@ import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandl
 import React from "react";
 
 import GiftCardCreateDialog from "../GiftCardCreateDialog";
-import GiftCardCreateFormProvider from "../GiftCardCreateDialog/providers/GiftCardCreateFormProvider";
 import { giftCardsListUrl } from "../urls";
 import GiftCardsListHeader from "./GiftCardsListHeader";
 import GiftCardsListTable from "./GiftCardsListTable";
@@ -29,7 +28,7 @@ const GiftCardsList: React.FC<GiftCardsListProps> = ({ params }) => {
   const openCreateModal = () => openModal(GiftCardListActionParamsEnum.CREATE);
 
   return (
-    <GiftCardCreateFormProvider onSubmitSuccess={closeModal}>
+    <>
       <GiftCardsListProvider params={params}>
         <Container>
           <GiftCardsListHeader onIssueButtonClick={openCreateModal} />
@@ -37,7 +36,7 @@ const GiftCardsList: React.FC<GiftCardsListProps> = ({ params }) => {
         </Container>
       </GiftCardsListProvider>
       <GiftCardCreateDialog action={params?.action} onClose={closeModal} />
-    </GiftCardCreateFormProvider>
+    </>
   );
 };
 

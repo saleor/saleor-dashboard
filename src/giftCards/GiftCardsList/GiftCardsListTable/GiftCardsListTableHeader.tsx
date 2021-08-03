@@ -21,9 +21,13 @@ interface HeaderItem {
 const GiftCardsListTableHeader: React.FC = () => {
   const intl = useIntl();
   const classes = useStyles({});
-  const { toggleAll, listElements, giftCards, numberOfColumns } = useContext(
-    GiftCardsListContext
-  );
+  const {
+    toggleAll,
+    listElements,
+    giftCards,
+    numberOfColumns,
+    loading
+  } = useContext(GiftCardsListContext);
 
   const headerItems: HeaderItem[] = [
     {
@@ -62,6 +66,7 @@ const GiftCardsListTableHeader: React.FC = () => {
         <col className={classes.colDelete} />
       </colgroup>
       <TableHead
+        disabled={loading}
         colSpan={numberOfColumns}
         selected={listElements.length}
         items={giftCards}

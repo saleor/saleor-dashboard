@@ -3,12 +3,12 @@ import React from "react";
 
 interface ContentOrSkeletonProps {
   condition: any;
-  children: React.ReactNode | React.ReactNode[];
+  children: React.ReactNode;
 }
 
 const ContentOrSkeleton: React.FC<ContentOrSkeletonProps> = ({
   condition,
   children
-}) => (!!condition ? children : <Skeleton />);
+}) => (!!condition ? <>{children}</> : <Skeleton />);
 
 export default ContentOrSkeleton;

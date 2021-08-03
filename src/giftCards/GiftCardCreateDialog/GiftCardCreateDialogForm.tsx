@@ -78,7 +78,7 @@ const GiftCardCreateDialogForm: React.FC<GiftCardCreateDialogFormProps> = ({
       "amount",
       "balance"
     ],
-    apiErrors || []
+    apiErrors
   );
 
   return (
