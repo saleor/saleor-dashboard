@@ -466,6 +466,15 @@ export enum FulfillmentStatus {
   RETURNED = "RETURNED",
 }
 
+export enum GiftCardErrorCode {
+  ALREADY_EXISTS = "ALREADY_EXISTS",
+  GRAPHQL_ERROR = "GRAPHQL_ERROR",
+  INVALID = "INVALID",
+  NOT_FOUND = "NOT_FOUND",
+  REQUIRED = "REQUIRED",
+  UNIQUE = "UNIQUE",
+}
+
 export enum GiftCardEventsEnum {
   ACTIVATED = "ACTIVATED",
   BALANCE_RESET = "BALANCE_RESET",
@@ -481,7 +490,7 @@ export enum GiftCardEventsEnum {
 export enum GiftCardExpiryTypeEnum {
   EXPIRY_DATE = "EXPIRY_DATE",
   EXPIRY_PERIOD = "EXPIRY_PERIOD",
-  NEVER_EXPIRY = "NEVER_EXPIRY",
+  NEVER_EXPIRE = "NEVER_EXPIRE",
 }
 
 export enum InvoiceErrorCode {
@@ -1374,6 +1383,31 @@ export interface FulfillmentUpdateTrackingInput {
   notifyCustomer?: boolean | null;
 }
 
+export interface GiftCardCreateInput {
+  tag?: string | null;
+  startDate?: any | null;
+  endDate?: any | null;
+  balance: PriceInput;
+  userEmail?: string | null;
+  expirySettings: GiftCardExpirySettingsInput;
+  code?: string | null;
+  note?: string | null;
+}
+
+export interface GiftCardExpirySettingsInput {
+  expiryType: GiftCardExpiryTypeEnum;
+  expiryDate?: any | null;
+  expiryPeriod?: TimePeriodInputType | null;
+}
+
+export interface GiftCardUpdateInput {
+  tag?: string | null;
+  startDate?: any | null;
+  endDate?: any | null;
+  balanceAmount?: any | null;
+  expirySettings?: GiftCardExpirySettingsInput | null;
+}
+
 export interface IntRangeInput {
   gte?: number | null;
   lte?: number | null;
@@ -1642,6 +1676,11 @@ export interface PluginUpdateInput {
   configuration?: (ConfigurationItemInput | null)[] | null;
 }
 
+export interface PriceInput {
+  currency: string;
+  amount: any;
+}
+
 export interface PriceRangeInput {
   gte?: number | null;
   lte?: number | null;
@@ -1806,6 +1845,7 @@ export interface SaleFilterInput {
   saleType?: DiscountValueTypeEnum | null;
   started?: DateTimeRangeInput | null;
   search?: string | null;
+  metadata?: (MetadataFilter | null)[] | null;
 }
 
 export interface SaleInput {
@@ -1945,6 +1985,11 @@ export interface StockInput {
   quantity: number;
 }
 
+export interface TimePeriodInputType {
+  amount: number;
+  type: TimePeriodTypeEnum;
+}
+
 export interface TranslationInput {
   seoTitle?: string | null;
   seoDescription?: string | null;
@@ -1987,6 +2032,7 @@ export interface VoucherFilterInput {
   discountType?: (VoucherDiscountType | null)[] | null;
   started?: DateTimeRangeInput | null;
   search?: string | null;
+  metadata?: (MetadataFilter | null)[] | null;
 }
 
 export interface VoucherInput {
