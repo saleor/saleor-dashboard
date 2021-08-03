@@ -11,6 +11,9 @@ export const commonMessages = defineMessages({
     defaultMessage: "Choose file",
     description: "button"
   },
+  channel: {
+    defaultMessage: "Channel"
+  },
   customApps: {
     defaultMessage: "Local Apps"
   },

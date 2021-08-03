@@ -17,7 +17,8 @@ const collectionSectionUrl = "/collections/";
 export const collectionListPath = collectionSectionUrl;
 export enum CollectionListUrlFiltersEnum {
   status = "status",
-  query = "query"
+  query = "query",
+  channel = "channel"
 }
 export type CollectionListUrlFilters = Filters<CollectionListUrlFiltersEnum>;
 export type CollectionListUrlDialog = "remove" | TabActionDialog;
