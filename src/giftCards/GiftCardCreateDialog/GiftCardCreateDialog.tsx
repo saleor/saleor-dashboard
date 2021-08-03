@@ -7,7 +7,6 @@ import React, { useState } from "react";
 import { useIntl } from "react-intl";
 
 import { GiftCardListActionParamsEnum } from "../GiftCardsList/types";
-import { getGiftCardExpirySettingsInputData } from "../GiftCardUpdatePage/utils";
 import GiftCardCreateDialogCodeContent from "./GiftCardCreateDialogCodeContent";
 import GiftCardCreateDialogForm, {
   GiftCardCreateFormData
@@ -15,6 +14,7 @@ import GiftCardCreateDialogForm, {
 import { giftCardCreateDialogMessages as messages } from "./messages";
 import { useGiftCardCreateMutation } from "./mutations";
 import { GiftCardCreate } from "./types/GiftCardCreate";
+import { getGiftCardExpirySettingsInputData } from "./utils";
 
 interface GiftCardCreateDialogProps {
   onClose: () => void;
