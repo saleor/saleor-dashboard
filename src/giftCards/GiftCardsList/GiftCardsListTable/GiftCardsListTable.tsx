@@ -7,13 +7,13 @@ import {
 } from "@material-ui/core";
 import HorizontalSpacer from "@saleor/apps/components/HorizontalSpacer";
 import Checkbox from "@saleor/components/Checkbox";
+import ContentOrSkeleton from "@saleor/components/ContentOrSkeleton";
 import DeleteIconButton from "@saleor/components/DeleteIconButton";
 import Link from "@saleor/components/Link";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import StatusChip from "@saleor/components/StatusChip";
 import { StatusType } from "@saleor/components/StatusChip/types";
 import { customerUrl } from "@saleor/customers/urls";
-import ContentOrSkeleton from "@saleor/giftCards/GiftCardUpdatePage/GiftCardUpdateInfoCard/ContentOrSkeleton";
 import { giftCardUrl } from "@saleor/giftCards/urls";
 import useNavigator from "@saleor/hooks/useNavigator";
 import { renderCollection } from "@saleor/misc";
