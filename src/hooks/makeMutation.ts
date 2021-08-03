@@ -15,9 +15,12 @@ import { useIntl } from "react-intl";
 import useNotifier from "./useNotifier";
 import useUser from "./useUser";
 
+export type MutationResultWithOpts<TData> = MutationResult<TData> &
+  MutationResultAdditionalProps;
+
 export type UseMutation<TData, TVariables> = [
   MutationFunction<TData, TVariables>,
-  MutationResult<TData> & MutationResultAdditionalProps
+  MutationResultWithOpts<TData>
 ];
 export type UseMutationCbs<TData> = Partial<{
   onCompleted: (data: TData) => void;

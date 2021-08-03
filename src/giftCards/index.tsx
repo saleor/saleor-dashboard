@@ -7,12 +7,23 @@ import { Route, RouteComponentProps, Switch } from "react-router-dom";
 
 import GiftCardListComponent from "./GiftCardsList";
 import { GiftCardListUrlQueryParams } from "./GiftCardsList/types";
-import GiftCardUpdatePage from "./GiftCardUpdatePage";
-import { giftCardPath, giftCardsListPath } from "./urls";
+import GiftCardUpdatePageComponent from "./GiftCardUpdatePage";
+import { GiftCardUpdatePageUrlQueryParams } from "./GiftCardUpdatePage/types";
+import { giftCardsListPath, giftCardUrl } from "./urls";
 
-const GiftCardUpdate: React.FC<RouteComponentProps<{ id: string }>> = ({
+const GiftCardUpdatePage: React.FC<RouteComponentProps<{ id: string }>> = ({
   match
-}) => <GiftCardUpdatePage id={decodeURIComponent(match.params.id)} />;
+}) => {
+  const qs = parseQs(location.search.substr(1));
+  const params: GiftCardUpdatePageUrlQueryParams = qs;
+
+  return (
+    <GiftCardUpdatePageComponent
+      id={decodeURIComponent(match.params.id)}
+      params={params}
+    />
+  );
+};
 
 const GiftCardList: React.FC<RouteComponentProps<any>> = () => {
   const qs = parseQs(location.search.substr(1));
@@ -29,7 +40,7 @@ const Component: React.FC = ({}) => {
       <WindowTitle title={intl.formatMessage(sectionNames.giftCards)} />
       <Switch>
         <Route exact path={giftCardsListPath} component={GiftCardList} />
-        <Route path={giftCardPath(":id")} component={GiftCardUpdate} />
+        <Route path={giftCardUrl(":id")} component={GiftCardUpdatePage} />
       </Switch>
     </>
   );
