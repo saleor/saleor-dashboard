@@ -1,11 +1,19 @@
 import { Typography } from "@material-ui/core";
 import VerticalSpacer from "@saleor/apps/components/VerticalSpacer";
-import SingleAutocompleteSelectField from "@saleor/components/SingleAutocompleteSelectField";
+import SingleAutocompleteSelectField, {
+  SingleAutocompleteSelectFieldProps
+} from "@saleor/components/SingleAutocompleteSelectField";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@saleor/config";
-import createSingleAutocompleteSelectHandler, {
-  SingleAutocompleteSelectedChangeHandlerProps
-} from "@saleor/utils/handlers/singleAutocompleteSelectChangeHandler";
-import { mapEdgesToItems, mapTagNodeToChoice } from "@saleor/utils/maps";
+import { GiftCardError } from "@saleor/fragments/types/GiftCardError";
+import { getGiftCardErrorMessage } from "@saleor/giftCards/GiftCardUpdatePage/messages";
+import { FormChange } from "@saleor/hooks/useForm";
+import { commonMessages } from "@saleor/intl";
+import {
+  mapEdgesToItems,
+  mapSingleValueNodeToChoice
+} from "@saleor/utils/maps";
+import compact from "lodash/compact";
+import uniq from "lodash/uniq";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -13,17 +21,19 @@ import { giftCardTagInputMessages as messages } from "./messages";
 import useGiftCardTagsSearch from "./useGiftCardTagsSearch";
 
 interface GiftCardTagInputProps
-  extends Pick<
-    SingleAutocompleteSelectedChangeHandlerProps,
-    "change" | "setSelected"
-  > {
+  extends Pick<SingleAutocompleteSelectFieldProps, "name"> {
+  change: FormChange;
+  value: string;
   withTopLabel?: boolean;
+  error: GiftCardError;
 }
 
 const GiftCardTagInput: React.FC<GiftCardTagInputProps> = ({
   withTopLabel = false,
   change,
-  setSelected
+  name,
+  value,
+  error
 }) => {
   const intl = useIntl();
 
@@ -31,12 +41,9 @@ const GiftCardTagInput: React.FC<GiftCardTagInputProps> = ({
     variables: DEFAULT_INITIAL_SEARCH_DATA
   });
 
-  const choices = mapTagNodeToChoice(mapEdgesToItems(result?.data?.search));
-
-  const handleSelect = createSingleAutocompleteSelectHandler(
-    change,
-    setSelected,
-    choices
+  const choices = mapSingleValueNodeToChoice(
+    uniq(compact(mapEdgesToItems(result?.data?.search)?.map(({ tag }) => tag))),
+    "tag"
   );
 
   return (
@@ -48,15 +55,19 @@ const GiftCardTagInput: React.FC<GiftCardTagInputProps> = ({
         </>
       )}
       <SingleAutocompleteSelectField
-        name="giftCardTag"
+        error={!!error}
+        helperText={getGiftCardErrorMessage(error, intl)}
         allowCustomValues
-        label={intl.formatMessage(messages.placeholder)}
+        name={name || "giftCardTag"}
+        label={`${intl.formatMessage(
+          messages.placeholder
+        )} *${intl.formatMessage(commonMessages.optionalField)}`}
         data-test-id="gift-card-tag-select-field"
-        value=""
-        displayValue=""
+        value={value}
+        displayValue={value}
         choices={choices}
         fetchChoices={search}
-        onChange={handleSelect}
+        onChange={change}
         onFetchMore={loadMore}
       />
     </>
