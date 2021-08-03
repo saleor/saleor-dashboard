@@ -182,7 +182,7 @@ const CollectionList: React.FC<CollectionListProps> = props => {
                   )}
                 </TableCell>
                 <TableCell
-                  className={classes.colPublished}
+                  className={classes.colAvailability}
                   data-test="availability"
                   data-test-availability={!!collection?.channelListings?.length}
                 >
