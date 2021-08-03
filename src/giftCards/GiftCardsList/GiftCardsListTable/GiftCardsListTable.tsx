@@ -13,44 +13,42 @@ import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import StatusChip from "@saleor/components/StatusChip";
 import { StatusType } from "@saleor/components/StatusChip/types";
 import { customerUrl } from "@saleor/customers/urls";
-import { giftCardPath } from "@saleor/giftCards/urls";
+import ContentOrSkeleton from "@saleor/giftCards/GiftCardUpdatePage/GiftCardUpdateInfoCard/ContentOrSkeleton";
+import { giftCardUrl } from "@saleor/giftCards/urls";
 import useNavigator from "@saleor/hooks/useNavigator";
 import { renderCollection } from "@saleor/misc";
 import { productUrl } from "@saleor/products/urls";
 import React, { useContext } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { GiftCardsListContext } from "../GiftCardsListProvider";
 import { giftCardsListTableMessages as messages } from "../messages";
+import { GiftCardsListContext } from "../providers/GiftCardsListProvider";
 import { useTableStyles as useStyles } from "../styles";
 import GiftCardsListTableFooter from "./GiftCardsListTableFooter";
 import GiftCardsListTableHeader from "./GiftCardsListTableHeader";
 
-const numberOfColumns = 7;
 const PLACEHOLDER = "-";
 
-// interface GiftCardsListTableProps {}
-
-const GiftCardsListTable: React.FC = ({}) => {
+const GiftCardsListTable: React.FC = () => {
   const intl = useIntl();
   const classes = useStyles({});
   const navigate = useNavigator();
-  const { toggle, isSelected, giftCards } = useContext(GiftCardsListContext);
-
-  const commonTableProps = {
-    numberOfColumns
-    // TEMP
-    // disabled
-  };
+  const {
+    toggle,
+    isSelected,
+    giftCards,
+    numberOfColumns,
+    loading
+  } = useContext(GiftCardsListContext);
 
   const redirectToGiftCardUpdate = (id: string) => () =>
-    navigate(giftCardPath(id));
+    navigate(giftCardUrl(id));
 
   return (
     <Card>
       <ResponsiveTable>
-        <GiftCardsListTableHeader {...commonTableProps} />
-        <GiftCardsListTableFooter {...commonTableProps} />
+        <GiftCardsListTableHeader />
+        <GiftCardsListTableFooter />
         <TableBody>
           {renderCollection(
             giftCards,
@@ -79,9 +77,9 @@ const GiftCardsListTable: React.FC = ({}) => {
                 <TableCell className={classes.colCardCode}>
                   <div className={classes.cardCodeContainer}>
                     <Typography>
-                      {`${intl.formatMessage(
-                        messages.codeEndingWithLabel
-                      )} ${displayCode}`}
+                      {intl.formatMessage(messages.codeEndingWithLabel, {
+                        displayCode
+                      })}
                     </Typography>
                     {!isActive && (
                       <>
@@ -135,7 +133,9 @@ const GiftCardsListTable: React.FC = ({}) => {
             () => (
               <TableRow>
                 <TableCell colSpan={numberOfColumns}>
-                  <FormattedMessage {...messages.noGiftCardsFound} />
+                  <ContentOrSkeleton condition={!loading}>
+                    <FormattedMessage {...messages.noGiftCardsFound} />
+                  </ContentOrSkeleton>
                 </TableCell>
               </TableRow>
             )

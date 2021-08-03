@@ -12,6 +12,10 @@ export const giftCardsListHeaderMenuItemsMessages = defineMessages({
   exportCodes: {
     defaultMessage: "Export card codes",
     description: "GiftCardsListHeader menu item settings"
+  },
+  issueButtonLabel: {
+    defaultMessage: "Issue card",
+    description: "GiftCardsListHeader issue button label"
   }
 });
 
@@ -37,7 +41,7 @@ export const giftCardsListTableMessages = defineMessages({
     description: "GiftCardsListTable column title balance"
   },
   codeEndingWithLabel: {
-    defaultMessage: "Code ending with ",
+    defaultMessage: "Code ending with {displayCode}",
     description: "GiftCardsListTable code ending with label"
   },
   giftCardDisabledLabel: {
