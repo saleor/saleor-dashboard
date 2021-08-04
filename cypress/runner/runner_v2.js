@@ -23,7 +23,7 @@ process.exitCode = 0;
 specs = specs
   ? specs
   : glob
-      .sync("cypress/integration/*")
+      .sync("cypress/integration/**.js")
       .filter(specPath =>
         typeof filter === "undefined" ? specPath : specPath.includes(filter)
       );
