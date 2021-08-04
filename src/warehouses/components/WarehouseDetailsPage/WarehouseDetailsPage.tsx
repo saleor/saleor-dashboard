@@ -26,7 +26,7 @@ import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import WarehouseInfo from "../WarehouseInfo";
-import WarehouseZones from "../WarehouseZones";
+import WarehouseSettings from "../WarehouseSettings";
 
 export interface WarehouseDetailsPageFormData extends AddressTypeInput {
   name: string;
@@ -136,7 +136,7 @@ const WarehouseDetailsPage: React.FC<WarehouseDetailsPageProps> = ({
                 />
               </div>
               <div>
-                <WarehouseZones
+                <WarehouseSettings
                   zones={mapEdgesToItems(warehouse?.shippingZones)}
                   data={data}
                   disabled={disabled}
