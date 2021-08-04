@@ -153,6 +153,10 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
   const canCancel = order?.status !== OrderStatus.CANCELED;
   const canEditAddresses = order?.status !== OrderStatus.CANCELED;
   const canFulfill = order?.status !== OrderStatus.CANCELED;
+  const notAllowedToFulfillUnpaid =
+    shop?.fulfillmentAutoApprove &&
+    !shop?.fulfillmentAllowUnpaid &&
+    !order?.isPaid;
   const unfulfilled = (order?.lines || []).filter(
     line => line.quantityToFulfill > 0
   );
@@ -236,7 +240,8 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
               <div data-test-id="orderFulfillment">
                 {!isOrderUnconfirmed ? (
                   <OrderUnfulfilledProductsCard
-                    canFulfill={canFulfill}
+                    showFulfillmentAction={canFulfill}
+                    notAllowedToFulfillUnpaid={notAllowedToFulfillUnpaid}
                     lines={unfulfilled}
                     onFulfill={onOrderFulfill}
                   />

@@ -121,6 +121,10 @@ export const commonMessages = defineMessages({
   time: {
     defaultMessage: "Time",
     description: "independent of any particular day, eg. 11:35"
+  },
+  cannotFullfillUnpaidOrder: {
+    defaultMessage: "Can’t fulfill until payment is captured",
+    description: "disabled option description"
   }
 });
 

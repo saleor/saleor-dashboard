@@ -1,5 +1,5 @@
 import { Button, CardActions, Typography } from "@material-ui/core";
-import { buttonMessages } from "@saleor/intl";
+import { buttonMessages, commonMessages } from "@saleor/intl";
 import { FulfillmentStatus } from "@saleor/types/globalTypes";
 import React from "react";
 import { FormattedMessage } from "react-intl";
@@ -47,9 +47,7 @@ const ActionButtons: React.FC<AcionButtonsProps> = ({
         </Button>
         {cannotFulfill && (
           <Typography color="error" variant="caption">
-            <FormattedMessage
-              {...actionButtonsMessages.cannotFullfillWarning}
-            />
+            <FormattedMessage {...commonMessages.cannotFullfillUnpaidOrder} />
           </Typography>
         )}
       </CardActions>

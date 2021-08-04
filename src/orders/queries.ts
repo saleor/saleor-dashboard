@@ -21,6 +21,7 @@ import {
   OrderFulfillData,
   OrderFulfillDataVariables
 } from "./types/OrderFulfillData";
+import { OrderFulfillSettings } from "./types/OrderFulfillSettings";
 import { OrderList, OrderListVariables } from "./types/OrderList";
 import {
   OrderRefundData,
@@ -153,6 +154,7 @@ export const orderDetailsQuery = gql`
       }
       defaultWeightUnit
       fulfillmentAllowUnpaid
+      fulfillmentAutoApprove
     }
   }
 `;
@@ -224,6 +226,7 @@ const orderFulfillData = gql`
   query OrderFulfillData($orderId: ID!) {
     order(id: $orderId) {
       id
+      isPaid
       lines {
         id
         isShippingRequired
@@ -269,6 +272,19 @@ export const useOrderFulfillData = makeQuery<
   OrderFulfillData,
   OrderFulfillDataVariables
 >(orderFulfillData);
+
+export const orderFulfillSettingsQuery = gql`
+  ${fragmentShopOrderSettings}
+  query OrderFulfillSettings {
+    shop {
+      ...ShopOrderSettingsFragment
+    }
+  }
+`;
+export const useOrderFulfillSettingsQuery = makeQuery<
+  OrderFulfillSettings,
+  never
+>(orderFulfillSettingsQuery);
 
 export const orderSettingsQuery = gql`
   ${fragmentOrderSettings}
