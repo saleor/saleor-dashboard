@@ -23,7 +23,7 @@ process.exitCode = 0;
 specs = specs
   ? specs
   : glob
-      .sync("cypress/integration/**.js")
+      .sync("cypress/integration/*")
       .filter(specPath =>
         typeof filter === "undefined" ? specPath : specPath.includes(filter)
       );
@@ -36,11 +36,11 @@ process.stdout.write(`Found ${initialSpecsCount} spec files\n`);
 /* execute cypress run for spec file */
 const cypressTask = (spec, envVariables) => {
   process.stdout.write(Object.keys(envVariables).toString());
-  let newSpec = spec.includes(".js") ? spec : `${spec}/**.js`;
+  let newSpec = spec.includes(".js") ? spec : `${spec}/**/*`;
   return new Promise((resolve, reject) => {
     cypress
       .run({
-        spec: newSpec,
+        spec: spec,
         config: {
           video: true,
           videosFolder: `cypress/videos${newSpec}`
