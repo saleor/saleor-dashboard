@@ -19,10 +19,6 @@ export const actionButtonsMessages = defineMessages({
   addTracking: {
     defaultMessage: "Add tracking",
     description: "add tracking button"
-  },
-  cannotFullfillWarning: {
-    defaultMessage: "Can’t fulfill until payment is captured",
-    description: "approve button disable description"
   }
 });
 

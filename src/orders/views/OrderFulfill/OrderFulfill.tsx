@@ -3,7 +3,10 @@ import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import OrderFulfillPage from "@saleor/orders/components/OrderFulfillPage";
 import { useOrderFulfill } from "@saleor/orders/mutations";
-import { useOrderFulfillData } from "@saleor/orders/queries";
+import {
+  useOrderFulfillData,
+  useOrderFulfillSettingsQuery
+} from "@saleor/orders/queries";
 import { orderUrl } from "@saleor/orders/urls";
 import { getWarehousesFromOrderLines } from "@saleor/orders/utils/data";
 import React from "react";
@@ -17,6 +20,11 @@ const OrderFulfill: React.FC<OrderFulfillProps> = ({ orderId }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();
+
+  const {
+    data: settings,
+    loading: settingsLoading
+  } = useOrderFulfillSettingsQuery({});
 
   const { data, loading } = useOrderFulfillData({
     displayLoader: true,
@@ -63,7 +71,7 @@ const OrderFulfill: React.FC<OrderFulfillProps> = ({ orderId }) => {
         }
       />
       <OrderFulfillPage
-        loading={loading || fulfillOrderOpts.loading}
+        loading={loading || settingsLoading || fulfillOrderOpts.loading}
         errors={fulfillOrderOpts.data?.orderFulfill.errors}
         onBack={() => navigate(orderUrl(orderId))}
         onSubmit={formData =>
@@ -74,7 +82,8 @@ const OrderFulfill: React.FC<OrderFulfillProps> = ({ orderId }) => {
                   orderLineId: line.id,
                   stocks: line.value
                 })),
-                notifyCustomer: formData.sendInfo
+                notifyCustomer:
+                  settings?.shop?.fulfillmentAutoApprove && formData.sendInfo
               },
               orderId
             }
@@ -83,6 +92,7 @@ const OrderFulfill: React.FC<OrderFulfillProps> = ({ orderId }) => {
         order={data?.order}
         saveButtonBar="default"
         warehouses={orderLinesWarehouses}
+        shopSettings={settings?.shop}
       />
     </>
   );

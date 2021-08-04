@@ -74,6 +74,7 @@ export interface OrderFulfillData_order_lines {
 export interface OrderFulfillData_order {
   __typename: "Order";
   id: string;
+  isPaid: boolean;
   lines: (OrderFulfillData_order_lines | null)[];
   number: string | null;
 }

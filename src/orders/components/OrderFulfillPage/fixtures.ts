@@ -7,6 +7,7 @@ import { warehouseList } from "@saleor/warehouses/fixtures";
 export const orderToFulfill: OrderFulfillData_order = {
   __typename: "Order",
   id: "T3JkZXI6Mg==",
+  isPaid: true,
   lines: [
     {
       __typename: "OrderLine",
