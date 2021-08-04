@@ -2,7 +2,7 @@ import { TextField } from "@material-ui/core";
 import SingleSelectField, {
   Choices
 } from "@saleor/components/SingleSelectField";
-import { FormChange } from "@saleor/hooks/useForm";
+import { ChangeEvent, FormChange } from "@saleor/hooks/useForm";
 import classNames from "classnames";
 import React from "react";
 
@@ -53,7 +53,7 @@ const TextWithSelectField: React.FC<TextWithSelectFieldProps> = ({
   // in case one of the fields in the form is empty
   // we need to save the other part of the field as well
   const handleChange = (type: "selectField" | "textField") => (
-    event: React.ChangeEvent<any>
+    event: ChangeEvent
   ) => {
     const otherTarget =
       type === "textField"

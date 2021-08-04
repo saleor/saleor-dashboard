@@ -92,7 +92,7 @@ const GiftCardCreateDialog: React.FC<GiftCardCreateDialogProps> = ({
   return (
     <Dialog open={open} maxWidth="sm">
       <DialogTitle>{intl.formatMessage(messages.title)}</DialogTitle>
-      {!!cardCode ? (
+      {cardCode ? (
         <GiftCardCreateDialogCodeContent
           cardCode={cardCode}
           onClose={handleClose}
