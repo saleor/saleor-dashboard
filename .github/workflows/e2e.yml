@@ -40,7 +40,7 @@ jobs:
           start: npx local-web-server --spa index.html
           wait-on: http://localhost:9000/
           wait-on-timeout: 120
-          command: cy:run_v2:parallel
+          command: npm run cy:run_v2:parallel
       - uses: actions/upload-artifact@v1
         if: ${{ failure() }}
         with:
