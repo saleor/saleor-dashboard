@@ -6,7 +6,6 @@ import commonErrorMessages from "@saleor/utils/errors/common";
 import React, { useState } from "react";
 import { useIntl } from "react-intl";
 
-import { GiftCardListActionParamsEnum } from "../GiftCardsList/types";
 import GiftCardCreateDialogCodeContent from "./GiftCardCreateDialogCodeContent";
 import GiftCardCreateDialogForm, {
   GiftCardCreateFormData
@@ -18,17 +17,15 @@ import { getGiftCardExpirySettingsInputData } from "./utils";
 
 interface GiftCardCreateDialogProps {
   onClose: () => void;
-  action: string;
+  open: boolean;
 }
 
 const GiftCardCreateDialog: React.FC<GiftCardCreateDialogProps> = ({
   onClose,
-  action
+  open
 }) => {
   const intl = useIntl();
   const notify = useNotifier();
-
-  const isOpen = action === GiftCardListActionParamsEnum.CREATE;
 
   const [cardCode, setCardCode] = useState(null);
 
@@ -93,7 +90,7 @@ const GiftCardCreateDialog: React.FC<GiftCardCreateDialogProps> = ({
   };
 
   return (
-    <Dialog open={isOpen} maxWidth="sm">
+    <Dialog open={open} maxWidth="sm">
       <DialogTitle>{intl.formatMessage(messages.title)}</DialogTitle>
       {!!cardCode ? (
         <GiftCardCreateDialogCodeContent
