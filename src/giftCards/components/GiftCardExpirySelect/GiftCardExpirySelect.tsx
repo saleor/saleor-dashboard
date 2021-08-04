@@ -38,7 +38,7 @@ const options: UntranslatedOption[] = [
 interface GiftCardExpirySelectProps {
   change: FormChange;
   expiryPeriodType: TimePeriodTypeEnum;
-  expiryPeriodAmount: string;
+  expiryPeriodAmount: number;
   expiryType: GiftCardExpiryTypeEnum;
   customOptions?: UntranslatedOption[];
   errors?: Record<"expiryPeriod" | "expiryDate", GiftCardError>;
@@ -48,7 +48,7 @@ const GiftCardExpirySelect: React.FC<GiftCardExpirySelectProps> = ({
   errors,
   change,
   expiryPeriodType = TimePeriodTypeEnum.YEAR,
-  expiryPeriodAmount = "1",
+  expiryPeriodAmount = 1,
   expiryType = GiftCardExpiryTypeEnum.EXPIRY_PERIOD,
   customOptions
 }) => {

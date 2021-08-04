@@ -10,7 +10,6 @@ import { useStyles } from "./styles";
 
 interface CommonFieldProps {
   name: string;
-  value: string;
   type?: string;
   className?: string;
   label?: string;
@@ -21,8 +20,8 @@ export interface TextWithSelectFieldProps {
   choices: Choices;
   helperText?: string;
   isError?: boolean;
-  textFieldProps: CommonFieldProps;
-  selectFieldProps: CommonFieldProps;
+  textFieldProps: CommonFieldProps & { value?: string | number };
+  selectFieldProps: CommonFieldProps & { value: string };
   containerClassName?: string;
 }
 
@@ -50,23 +49,33 @@ const TextWithSelectField: React.FC<TextWithSelectFieldProps> = ({
     className: selectFieldClassName
   } = selectFieldProps;
 
-  // in case one of the fields in the form is empty
-  // we need to save the other part of the field as well
-  const handleChange = (type: "selectField" | "textField") => (
-    event: ChangeEvent
-  ) => {
-    const otherTarget =
-      type === "textField"
-        ? {
-            value: selectFieldValue,
-            name: selectFieldName
-          }
-        : {
-            value: textFieldValue,
-            name: textFieldName
-          };
+  const handleSelectChange = (event: ChangeEvent) => {
+    // in case one of the fields in the form is empty
+    // we need to save the other part of the field as well
+    const otherTarget = {
+      value: textFieldValue,
+      name: textFieldName
+    };
 
     change(event);
+    change({ target: otherTarget });
+  };
+
+  const handleTextChange = (event: ChangeEvent) => {
+    const { value } = event.target;
+
+    const otherTarget = {
+      value: selectFieldValue,
+      name: selectFieldName
+    };
+
+    // handle parsing in case of text field of type number
+    const parsedValue =
+      textFieldType === "number" && typeof value === "string"
+        ? parseInt(value, 10)
+        : value;
+
+    change({ ...event, target: { ...event.target, value: parsedValue } });
     change({ target: otherTarget });
   };
 
@@ -86,7 +95,7 @@ const TextWithSelectField: React.FC<TextWithSelectFieldProps> = ({
           endAdornment: (
             <SingleSelectField
               name={selectFieldName}
-              onChange={handleChange("selectField")}
+              onChange={handleSelectChange}
               value={selectFieldValue}
               className={classNames(
                 classes.autocompleteField,
@@ -96,7 +105,7 @@ const TextWithSelectField: React.FC<TextWithSelectFieldProps> = ({
             />
           )
         }}
-        onChange={handleChange("textField")}
+        onChange={handleTextChange}
         value={textFieldValue}
       />
     </div>

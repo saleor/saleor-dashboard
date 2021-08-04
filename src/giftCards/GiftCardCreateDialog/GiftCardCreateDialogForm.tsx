@@ -35,13 +35,13 @@ const initialCustomer = { email: "", name: "" };
 
 export const initialData: GiftCardCreateFormData = {
   tag: "",
-  balanceAmount: "1",
+  balanceAmount: 1,
   balanceCurrency: null,
   note: "",
   expiryDate: "",
   expiryType: GiftCardExpiryTypeEnum.EXPIRY_PERIOD,
   expiryPeriodType: TimePeriodTypeEnum.YEAR,
-  expiryPeriodAmount: "1"
+  expiryPeriodAmount: 1
 };
 
 interface GiftCardCreateDialogFormProps {
