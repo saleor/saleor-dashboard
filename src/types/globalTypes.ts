@@ -1135,10 +1135,8 @@ export interface AttributeInput {
   slug: string;
   values?: (string | null)[] | null;
   valuesRange?: IntRangeInput | null;
-  dateTimeRange?: DateTimeRangeInput | null;
-  dateRange?: DateRangeInput | null;
-  dateTime?: any | null;
-  date?: any | null;
+  dateTime?: DateTimeRangeInput | null;
+  date?: DateRangeInput | null;
   boolean?: boolean | null;
 }
 
