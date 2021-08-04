@@ -39,6 +39,8 @@ export interface ProductUpdate_productUpdate_product_attributes_attribute_choice
   reference: string | null;
   richText: any | null;
   boolean: boolean | null;
+  date: any | null;
+  dateTime: any | null;
 }
 
 export interface ProductUpdate_productUpdate_product_attributes_attribute_choices_edges {
@@ -80,6 +82,8 @@ export interface ProductUpdate_productUpdate_product_attributes_values {
   reference: string | null;
   richText: any | null;
   boolean: boolean | null;
+  date: any | null;
+  dateTime: any | null;
 }
 
 export interface ProductUpdate_productUpdate_product_attributes {
@@ -111,6 +115,8 @@ export interface ProductUpdate_productUpdate_product_productType_variantAttribut
   reference: string | null;
   richText: any | null;
   boolean: boolean | null;
+  date: any | null;
+  dateTime: any | null;
 }
 
 export interface ProductUpdate_productUpdate_product_productType_variantAttributes_choices_edges {
@@ -129,6 +135,8 @@ export interface ProductUpdate_productUpdate_product_productType_variantAttribut
   __typename: "Attribute";
   id: string;
   name: string | null;
+  inputType: AttributeInputTypeEnum | null;
+  unit: MeasurementUnitsEnum | null;
   choices: ProductUpdate_productUpdate_product_productType_variantAttributes_choices | null;
 }
 

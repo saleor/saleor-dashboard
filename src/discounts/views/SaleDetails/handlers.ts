@@ -30,22 +30,26 @@ export function createUpdateHandler(
     variables: SaleChannelListingUpdateVariables;
   }) => Promise<MutationFetchResult<SaleChannelListingUpdate>>
 ) {
-  return (formData: SaleDetailsPageFormData) => {
+  return async (formData: SaleDetailsPageFormData) => {
     const { id } = sale;
-    updateSale({
-      id,
-      input: {
-        endDate: formData.hasEndDate
-          ? joinDateTime(formData.endDate, formData.endTime)
-          : null,
-        name: formData.name,
-        startDate: joinDateTime(formData.startDate, formData.startTime),
-        type: discountValueTypeEnum(formData.type)
-      }
-    });
+    const errors = await Promise.all([
+      updateSale({
+        id,
+        input: {
+          endDate: formData.hasEndDate
+            ? joinDateTime(formData.endDate, formData.endTime)
+            : null,
+          name: formData.name,
+          startDate: joinDateTime(formData.startDate, formData.startTime),
+          type: discountValueTypeEnum(formData.type)
+        }
+      }).then(({ data }) => data?.saleUpdate.errors ?? []),
 
-    updateChannels({
-      variables: getSaleChannelsVariables(id, formData, saleChannelsChoices)
-    });
+      updateChannels({
+        variables: getSaleChannelsVariables(id, formData, saleChannelsChoices)
+      }).then(({ data }) => data?.saleChannelListingUpdate.errors ?? [])
+    ]);
+
+    return errors.flat();
   };
 }

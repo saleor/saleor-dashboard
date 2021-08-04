@@ -40,13 +40,13 @@ import { SearchPages_search_edges_node } from "@saleor/searches/types/SearchPage
 import { SearchProducts_search_edges_node } from "@saleor/searches/types/SearchProducts";
 import { SearchWarehouses_search_edges_node } from "@saleor/searches/types/SearchWarehouses";
 import { FetchMoreProps, ReorderEvent } from "@saleor/types";
+import { arrayDiff } from "@saleor/utils/arrays";
 import handleFormSubmit from "@saleor/utils/handlers/handleFormSubmit";
 import createMultiAutocompleteSelectHandler from "@saleor/utils/handlers/multiAutocompleteSelectChangeHandler";
 import createSingleAutocompleteSelectHandler from "@saleor/utils/handlers/singleAutocompleteSelectChangeHandler";
 import getMetadata from "@saleor/utils/metadata/getMetadata";
 import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
 import useRichText from "@saleor/utils/richText/useRichText";
-import { diff } from "fast-array-diff";
 import React from "react";
 
 import { ProductStockFormsetData, ProductStockInput } from "../ProductStocks";
@@ -180,7 +180,7 @@ const getStocksData = (
   const dataStocks = stocks.map(stock => stock.id);
   const variantStocks =
     product?.variants[0]?.stocks.map(stock => stock.warehouse.id) || [];
-  const stockDiff = diff(variantStocks, dataStocks);
+  const stockDiff = arrayDiff(variantStocks, dataStocks);
 
   return {
     addStocks: stocks.filter(stock =>

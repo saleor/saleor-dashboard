@@ -32,6 +32,21 @@ export function createDateField<T extends string>(
   };
 }
 
+export function createDateTimeField<T extends string>(
+  name: T,
+  label: string,
+  defaultValue: MinMax
+): IFilterElement<T> {
+  return {
+    active: false,
+    label,
+    multiple: defaultValue.min !== defaultValue.max,
+    name,
+    type: FieldType.dateTime,
+    value: [defaultValue.min, defaultValue.max]
+  };
+}
+
 export function createNumberField<T extends string>(
   name: T,
   label: string,

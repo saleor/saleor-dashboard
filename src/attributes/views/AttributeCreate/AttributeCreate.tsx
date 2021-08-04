@@ -207,6 +207,8 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ params }) => {
               value: null,
               richText: null,
               boolean: null,
+              date: null,
+              dateTime: null,
               ...value
             }
           }))

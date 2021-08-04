@@ -30,10 +30,10 @@ import { SearchPages_search_edges_node } from "@saleor/searches/types/SearchPage
 import { SearchProducts_search_edges_node } from "@saleor/searches/types/SearchProducts";
 import { SearchWarehouses_search_edges_node } from "@saleor/searches/types/SearchWarehouses";
 import { FetchMoreProps, ReorderEvent } from "@saleor/types";
+import { arrayDiff } from "@saleor/utils/arrays";
 import { mapMetadataItemToInput } from "@saleor/utils/maps";
 import getMetadata from "@saleor/utils/metadata/getMetadata";
 import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
-import { diff } from "fast-array-diff";
 import React from "react";
 
 import handleFormSubmit from "../../../utils/handlers/handleFormSubmit";
@@ -206,7 +206,7 @@ function useProductVariantUpdateForm(
 
   const dataStocks = stocks.data.map(stock => stock.id);
   const variantStocks = variant?.stocks.map(stock => stock.warehouse.id) || [];
-  const stockDiff = diff(variantStocks, dataStocks);
+  const stockDiff = arrayDiff(variantStocks, dataStocks);
 
   const addStocks = stocks.data.filter(stock =>
     stockDiff.added.some(addedStock => addedStock === stock.id)

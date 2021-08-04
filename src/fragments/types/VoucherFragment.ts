@@ -9,6 +9,18 @@ import { VoucherTypeEnum, DiscountValueTypeEnum } from "./../../types/globalType
 // GraphQL fragment: VoucherFragment
 // ====================================================
 
+export interface VoucherFragment_metadata {
+  __typename: "MetadataItem";
+  key: string;
+  value: string;
+}
+
+export interface VoucherFragment_privateMetadata {
+  __typename: "MetadataItem";
+  key: string;
+  value: string;
+}
+
 export interface VoucherFragment_countries {
   __typename: "CountryDisplay";
   code: string;
@@ -39,6 +51,8 @@ export interface VoucherFragment_channelListings {
 
 export interface VoucherFragment {
   __typename: "Voucher";
+  metadata: (VoucherFragment_metadata | null)[];
+  privateMetadata: (VoucherFragment_privateMetadata | null)[];
   id: string;
   code: string;
   startDate: any;

@@ -11,7 +11,9 @@ import {
 interface CreateVariantAttributeValueInput {
   attributeId: string;
   attributeValueSlug: string;
+  attributeBooleanValue: boolean | null;
 }
+
 type CreateVariantInput = CreateVariantAttributeValueInput[];
 
 function findAttribute(
@@ -97,7 +99,9 @@ function createVariant(
   return {
     attributes: attributes.map(attribute => ({
       id: attribute.attributeId,
-      values: [attribute.attributeValueSlug]
+      ...(attribute.attributeBooleanValue === null
+        ? { values: [attribute.attributeValueSlug] }
+        : { boolean: attribute.attributeBooleanValue })
     })),
     channelListings: price,
     sku: "",
@@ -116,7 +120,8 @@ function addAttributeToVariant(
     ...variant,
     {
       attributeId: attribute.id,
-      attributeValueSlug: attributeValue.slug
+      attributeValueSlug: attributeValue.slug,
+      attributeBooleanValue: attributeValue.value?.boolean ?? null
     }
   ]);
 }
@@ -124,11 +129,9 @@ function addVariantAttributeInput(
   data: CreateVariantInput[],
   attribute: Attribute
 ): CreateVariantInput[] {
-  const variants = data
+  return data
     .map(variant => addAttributeToVariant(attribute, variant))
     .reduce((acc, variantInput) => [...acc, ...variantInput]);
-
-  return variants;
 }
 
 export function createVariantFlatMatrixDimension(

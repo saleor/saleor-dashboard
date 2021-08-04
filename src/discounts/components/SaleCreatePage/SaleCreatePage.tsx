@@ -5,6 +5,7 @@ import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
 import Container from "@saleor/components/Container";
 import Form from "@saleor/components/Form";
 import Grid from "@saleor/components/Grid";
+import Metadata, { MetadataFormData } from "@saleor/components/Metadata";
 import PageHeader from "@saleor/components/PageHeader";
 import Savebar from "@saleor/components/Savebar";
 import { createSaleChannelsChangeHandler } from "@saleor/discounts/handlers";
@@ -12,6 +13,7 @@ import { DiscountErrorFragment } from "@saleor/fragments/types/DiscountErrorFrag
 import { sectionNames } from "@saleor/intl";
 import { Backlink } from "@saleor/macaw-ui";
 import { validatePrice } from "@saleor/products/utils/validation";
+import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -24,7 +26,7 @@ import SaleInfo from "../SaleInfo";
 import SaleType from "../SaleType";
 import SaleValue from "../SaleValue";
 
-export interface FormData {
+export interface FormData extends MetadataFormData {
   channelListings: ChannelSaleData[];
   endDate: string;
   endTime: string;
@@ -60,6 +62,9 @@ const SaleCreatePage: React.FC<SaleCreatePageProps> = ({
   onBack
 }) => {
   const intl = useIntl();
+  const {
+    makeChangeHandler: makeMetadataChangeHandler
+  } = useMetadataChangeTrigger();
 
   const initialForm: FormData = {
     channelListings,
@@ -70,7 +75,9 @@ const SaleCreatePage: React.FC<SaleCreatePageProps> = ({
     startDate: "",
     startTime: "",
     type: SaleTypeEnum.FIXED,
-    value: ""
+    value: "",
+    metadata: [],
+    privateMetadata: []
   };
   return (
     <Form initial={initialForm} onSubmit={onSubmit}>
@@ -83,6 +90,8 @@ const SaleCreatePage: React.FC<SaleCreatePageProps> = ({
         const formDisabled = data.channelListings?.some(channel =>
           validatePrice(channel?.discountValue)
         );
+        const changeMetadata = makeMetadataChangeHandler(change);
+
         return (
           <Container>
             <Backlink onClick={onBack}>
@@ -132,6 +141,7 @@ const SaleCreatePage: React.FC<SaleCreatePageProps> = ({
                   openModal={openChannelsModal}
                 />
               </div>
+              <Metadata data={data} onChange={changeMetadata} />
             </Grid>
             <Savebar
               disabled={disabled || formDisabled || !hasChanged}

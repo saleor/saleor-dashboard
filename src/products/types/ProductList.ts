@@ -92,6 +92,8 @@ export interface ProductList_products_edges_node_attributes_values {
   reference: string | null;
   richText: any | null;
   boolean: boolean | null;
+  date: any | null;
+  dateTime: any | null;
 }
 
 export interface ProductList_products_edges_node_attributes {

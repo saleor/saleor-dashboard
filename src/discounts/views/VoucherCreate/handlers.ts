@@ -63,6 +63,7 @@ export function createHandler(
           formData.channelListings
         )
       });
+      return response.data.voucherCreate.voucher.id;
     }
   };
 }
