@@ -7,25 +7,30 @@ const glob = require("glob");
 
 process.stdout.write(`argv - ${process.argv}\n`);
 
-let { executors = 1, filter } = process.argv.slice(2).reduce((acc, pair) => {
-  let [key, value] = pair.split("=");
-  acc[key] = value;
-  return acc;
-}, {});
+let { executors = 1, specs, filter, tags } = process.argv
+  .slice(2)
+  .reduce((acc, pair) => {
+    let [key, value] = pair.split("=");
+    acc[key] = value;
+    return acc;
+  }, {});
 
 let resultsList = [];
 
 process.exitCode = 0;
 
 /* get list of all .spec files*/
-let specs = glob
-  .sync("cypress/integration/*")
-  .filter(specPath =>
-    typeof filter === "undefined" ? specPath : specPath.includes(filter)
-  );
+specs = specs
+  ? specs
+  : glob
+      .sync("cypress/integration/*")
+      .filter(specPath =>
+        typeof filter === "undefined" ? specPath : specPath.includes(filter)
+      );
 
 const initialSpecsCount = specs.length;
 process.stdout.write(`Running cypress with ${executors} executors\n`);
+process.stdout.write(`Running cypress with ${tags} tags\n`);
 process.stdout.write(`Found ${initialSpecsCount} spec files\n`);
 
 /* execute cypress run for spec file */
@@ -35,13 +40,13 @@ const cypressTask = (spec, envVariables) => {
   return new Promise((resolve, reject) => {
     cypress
       .run({
-        browser: "chrome",
         spec: newSpec,
         config: {
           video: true,
-          videosFolder: `cypress/videos`
+          videosFolder: `cypress/videos${newSpec}`
         },
         env: {
+          tags: tags,
           ...envVariables
         }
       })

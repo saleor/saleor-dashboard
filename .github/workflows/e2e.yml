@@ -45,7 +45,7 @@ jobs:
         if: ${{ failure() }}
         with:
           name: cypress-videos
-          path: cypress/videos
+          path: cypress/videoscypress
 
       - name: Cypress run allEnvs spec
         if: ${{ steps.api_uri.outputs.custom_api_uri != 'https://qa.staging.saleor.cloud/graphql/' }}
@@ -68,4 +68,4 @@ jobs:
         if: ${{ failure() }}
         with:
           name: cypress-videos
-          path: cypress/videos
+          path: cypress/videoscypress
