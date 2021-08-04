@@ -1,9 +1,9 @@
 import { TableFooter, TableRow } from "@material-ui/core";
 import TablePagination from "@saleor/components/TablePagination";
 import usePaginator from "@saleor/hooks/usePaginator";
-import React, { useContext } from "react";
+import React from "react";
 
-import { GiftCardsListContext } from "../providers/GiftCardsListProvider";
+import useGiftCardList from "../hooks/useGiftCardList";
 
 const GiftCardsListTableFooter: React.FC = () => {
   const paginate = usePaginator();
@@ -15,7 +15,7 @@ const GiftCardsListTableFooter: React.FC = () => {
     paginationState,
     params,
     numberOfColumns
-  } = useContext(GiftCardsListContext);
+  } = useGiftCardList();
 
   const { loadNextPage, loadPreviousPage, pageInfo } = paginate(
     apiPageInfo,
