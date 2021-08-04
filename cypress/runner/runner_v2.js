@@ -19,7 +19,7 @@ process.exitCode = 0;
 
 /* get list of all .spec files*/
 let specs = glob
-  .sync("cypress/integration/apps.js")
+  .sync("cypress/integration/*")
   .filter(specPath =>
     typeof filter === "undefined" ? specPath : specPath.includes(filter)
   );
@@ -39,7 +39,7 @@ const cypressTask = (spec, envVariables) => {
         spec: newSpec,
         config: {
           video: true,
-          videosFolder: `cypress/videos/videos${specs.length}`
+          videosFolder: `cypress/videos`
         },
         env: {
           ...envVariables
