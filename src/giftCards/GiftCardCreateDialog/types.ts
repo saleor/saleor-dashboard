@@ -12,12 +12,12 @@ export interface GiftCardCreateFormCustomer {
 
 export interface GiftCardCommonFormData {
   tag: string;
-  balanceAmount: string;
+  balanceAmount: number;
   balanceCurrency: string;
   expiryDate: string;
   expiryType: GiftCardExpiryTypeEnum;
   expiryPeriodType: TimePeriodTypeEnum;
-  expiryPeriodAmount: string;
+  expiryPeriodAmount: number;
 }
 
 export type GiftCardCreateFormErrors = Record<

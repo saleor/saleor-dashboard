@@ -8,7 +8,7 @@ import { timePeriodTextWithSelectFieldMessages as messages } from "./messages";
 
 interface TimePeriodFieldProps {
   change: FormChange;
-  periodAmount: string;
+  periodAmount: number;
   periodType: TimePeriodTypeEnum;
   amountFieldName: string;
   typeFieldName: string;
