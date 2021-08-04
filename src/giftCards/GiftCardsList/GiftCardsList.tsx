@@ -35,7 +35,10 @@ const GiftCardsList: React.FC<GiftCardsListProps> = ({ params }) => {
           <GiftCardsListTable />
         </Container>
       </GiftCardsListProvider>
-      <GiftCardCreateDialog action={params?.action} onClose={closeModal} />
+      <GiftCardCreateDialog
+        open={params?.action === GiftCardListActionParamsEnum.CREATE}
+        onClose={closeModal}
+      />
     </>
   );
 };
