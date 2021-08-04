@@ -7458,12 +7458,45 @@
     "context": "warehouse",
     "string": "Name"
   },
-  "src_dot_warehouses_dot_components_dot_WarehouseZones_dot_1225932315": {
-    "context": "zones that warehouse sends to",
-    "string": "Shipping Zones"
+  "src_dot_warehouses_dot_components_dot_WarehouseSettings_dot_102387600": {
+    "string": "Pickup"
   },
-  "src_dot_warehouses_dot_components_dot_WarehouseZones_dot_2423245141": {
+  "src_dot_warehouses_dot_components_dot_WarehouseSettings_dot_1108162915": {
+    "string": "If selected customer won't be able to choose this warehouse as pickup point"
+  },
+  "src_dot_warehouses_dot_components_dot_WarehouseSettings_dot_1236253310": {
+    "string": "All warehouses"
+  },
+  "src_dot_warehouses_dot_components_dot_WarehouseSettings_dot_1391686013": {
+    "context": "zones that warehouse sends to",
+    "string": "Settings"
+  },
+  "src_dot_warehouses_dot_components_dot_WarehouseSettings_dot_1730920417": {
+    "string": "Public Stock"
+  },
+  "src_dot_warehouses_dot_components_dot_WarehouseSettings_dot_1999863759": {
+    "string": "Private Stock"
+  },
+  "src_dot_warehouses_dot_components_dot_WarehouseSettings_dot_2073596697": {
+    "string": "If selected customer will be able to choose this warehouse as pickup point. Ordered products can be shipped here from a different warehouse"
+  },
+  "src_dot_warehouses_dot_components_dot_WarehouseSettings_dot_22952149": {
+    "string": "Local stock only"
+  },
+  "src_dot_warehouses_dot_components_dot_WarehouseSettings_dot_2423245141": {
     "string": "This warehouse has no shipping zones assigned."
+  },
+  "src_dot_warehouses_dot_components_dot_WarehouseSettings_dot_3466298669": {
+    "string": "If enabled stock in this warehouse will be shown"
+  },
+  "src_dot_warehouses_dot_components_dot_WarehouseSettings_dot_546149452": {
+    "string": "If enabled stock in this warehouse won't be shown"
+  },
+  "src_dot_warehouses_dot_components_dot_WarehouseSettings_dot_577895086": {
+    "string": "Disabled"
+  },
+  "src_dot_warehouses_dot_components_dot_WarehouseSettings_dot_682580436": {
+    "string": "If selected customer will be able to choose this warehouse as pickup point. Ordered products will be only fulfilled from this warehouse stock"
   },
   "src_dot_warehouses_dot_views_dot_WarehouseCreate_dot_934572530": {
     "context": "header",
