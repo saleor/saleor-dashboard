@@ -1,4 +1,6 @@
-import useBulkActions from "@saleor/hooks/useBulkActions";
+import useBulkActions, {
+  UseBulkActionsProps
+} from "@saleor/hooks/useBulkActions";
 import useListSettings, {
   UseListSettings
 } from "@saleor/hooks/useListSettings";
@@ -7,7 +9,6 @@ import {
   PageInfo,
   PaginationState
 } from "@saleor/hooks/usePaginator";
-import { Node } from "@saleor/types";
 import { ListViews } from "@saleor/types";
 import { mapEdgesToItems } from "@saleor/utils/maps";
 import React, { createContext } from "react";
@@ -26,20 +27,20 @@ interface GiftCardsListProviderProps {
   params: GiftCardListUrlQueryParams;
 }
 
-export interface GiftCardsListConsumerProps
-  extends UseListSettings<GiftCardListColummns> {
-  isSelected: (id: string) => boolean;
-  listElements: string[];
-  toggle: (id: string) => void;
-  toggleAll: (items: Node[], selected: number) => void;
-  reset: () => void;
-  selectedItemsCount: number;
+export interface GiftCardListDataProps {
   giftCards: GiftCardList_giftCards_edges_node[];
   pageInfo: PageInfo;
   loading: boolean;
   params: GiftCardListUrlQueryParams;
   paginationState: PaginationState;
   numberOfColumns: number;
+}
+
+export interface GiftCardsListConsumerProps
+  extends UseBulkActionsProps,
+    GiftCardListDataProps,
+    UseListSettings<GiftCardListColummns> {
+  selectedItemsCount: number;
 }
 
 export const GiftCardsListContext = createContext<GiftCardsListConsumerProps>(

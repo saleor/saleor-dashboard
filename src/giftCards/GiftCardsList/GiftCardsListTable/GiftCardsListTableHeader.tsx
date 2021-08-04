@@ -6,11 +6,12 @@ import TableHead from "@saleor/components/TableHead";
 import Label, {
   LabelSizes
 } from "@saleor/orders/components/OrderHistory/Label";
-import React, { useContext } from "react";
+import React from "react";
 import { MessageDescriptor, useIntl } from "react-intl";
 
+import useGiftCardList from "../hooks/useGiftCardList";
+import useGiftCardListBulkActions from "../hooks/useGiftCardListBulkActions";
 import { giftCardsListTableMessages as messages } from "../messages";
-import { GiftCardsListContext } from "../providers/GiftCardsListProvider";
 import { useTableStyles as useStyles } from "../styles";
 
 interface HeaderItem {
@@ -21,13 +22,8 @@ interface HeaderItem {
 const GiftCardsListTableHeader: React.FC = () => {
   const intl = useIntl();
   const classes = useStyles({});
-  const {
-    toggleAll,
-    listElements,
-    giftCards,
-    numberOfColumns,
-    loading
-  } = useContext(GiftCardsListContext);
+  const { giftCards, numberOfColumns, loading } = useGiftCardList();
+  const { toggleAll, listElements } = useGiftCardListBulkActions();
 
   const headerItems: HeaderItem[] = [
     {

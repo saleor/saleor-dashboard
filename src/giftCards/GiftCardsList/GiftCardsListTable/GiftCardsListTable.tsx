@@ -18,11 +18,12 @@ import { giftCardUrl } from "@saleor/giftCards/urls";
 import useNavigator from "@saleor/hooks/useNavigator";
 import { renderCollection } from "@saleor/misc";
 import { productUrl } from "@saleor/products/urls";
-import React, { useContext } from "react";
+import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
+import useGiftCardList from "../hooks/useGiftCardList";
+import useGiftCardListBulkActions from "../hooks/useGiftCardListBulkActions";
 import { giftCardsListTableMessages as messages } from "../messages";
-import { GiftCardsListContext } from "../providers/GiftCardsListProvider";
 import { useTableStyles as useStyles } from "../styles";
 import GiftCardsListTableFooter from "./GiftCardsListTableFooter";
 import GiftCardsListTableHeader from "./GiftCardsListTableHeader";
@@ -33,13 +34,8 @@ const GiftCardsListTable: React.FC = () => {
   const intl = useIntl();
   const classes = useStyles({});
   const navigate = useNavigator();
-  const {
-    toggle,
-    isSelected,
-    giftCards,
-    numberOfColumns,
-    loading
-  } = useContext(GiftCardsListContext);
+  const { giftCards, numberOfColumns, loading } = useGiftCardList();
+  const { toggle, isSelected } = useGiftCardListBulkActions();
 
   const redirectToGiftCardUpdate = (id: string) => () =>
     navigate(giftCardUrl(id));
