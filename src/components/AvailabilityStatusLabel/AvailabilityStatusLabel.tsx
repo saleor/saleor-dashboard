@@ -5,7 +5,7 @@ import { useIntl } from "react-intl";
 
 import { messages } from "./messages";
 
-export const ProductAvailabilityStatusLabel = ({ channel }) => {
+export const AvailabilityStatusLabel = ({ channel, type }) => {
   const intl = useIntl();
   const localizeDate = useDateLocalize();
 
@@ -18,7 +18,8 @@ export const ProductAvailabilityStatusLabel = ({ channel }) => {
             : messages.willBePublished
           : messages.unpublished,
         {
-          date: localizeDate(channel.publicationDate, "L")
+          date: localizeDate(channel.publicationDate, "L"),
+          type: type || ""
         }
       )}
       status={
@@ -32,4 +33,4 @@ export const ProductAvailabilityStatusLabel = ({ channel }) => {
   );
 };
 
-export default ProductAvailabilityStatusLabel;
+export default AvailabilityStatusLabel;

@@ -5,6 +5,7 @@ import {
   TableRow,
   Typography
 } from "@material-ui/core";
+import AvailabilityStatusLabel from "@saleor/components/AvailabilityStatusLabel";
 import { ChannelsAvailabilityDropdown } from "@saleor/components/ChannelsAvailabilityDropdown";
 import Checkbox from "@saleor/components/Checkbox";
 import MoneyRange from "@saleor/components/MoneyRange";
@@ -34,8 +35,6 @@ import { getArrowDirection } from "@saleor/utils/sort";
 import classNames from "classnames";
 import React from "react";
 import { FormattedMessage } from "react-intl";
-
-import ProductAvailabilityStatusLabel from "../ProductAvailabilityStatusLabel";
 
 const useStyles = makeStyles(
   theme => ({
@@ -376,7 +375,10 @@ export const ProductList: React.FC<ProductListProps> = props => {
                       {(!product && <Skeleton />) ||
                         (!product?.channelListings?.length && "-") ||
                         (product?.channelListings !== undefined && channel ? (
-                          <ProductAvailabilityStatusLabel channel={channel} />
+                          <AvailabilityStatusLabel
+                            channel={channel}
+                            type="product"
+                          />
                         ) : (
                           <ChannelsAvailabilityDropdown
                             allChannelsCount={channelsCount}

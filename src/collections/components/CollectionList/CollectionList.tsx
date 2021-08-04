@@ -1,6 +1,7 @@
 import { TableBody, TableCell, TableFooter, TableRow } from "@material-ui/core";
 import { CollectionListUrlSortField } from "@saleor/collections/urls";
 import { canBeSorted } from "@saleor/collections/views/CollectionList/sort";
+import AvailabilityStatusLabel from "@saleor/components/AvailabilityStatusLabel";
 import { ChannelsAvailabilityDropdown } from "@saleor/components/ChannelsAvailabilityDropdown";
 import Checkbox from "@saleor/components/Checkbox";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
@@ -16,7 +17,6 @@ import React from "react";
 import { FormattedMessage } from "react-intl";
 
 import { CollectionList_collections_edges_node } from "../../types/CollectionList";
-import CollectionAvailabilityStatusLabel from "../CollectionAvailabilityStatusLabel";
 
 const useStyles = makeStyles(
   theme => ({
@@ -189,7 +189,10 @@ const CollectionList: React.FC<CollectionListProps> = props => {
                   {(!collection && <Skeleton />) ||
                     (!collection?.channelListings?.length && "-") ||
                     (collection?.channelListings !== undefined && channel ? (
-                      <CollectionAvailabilityStatusLabel channel={channel} />
+                      <AvailabilityStatusLabel
+                        channel={channel}
+                        type="collection"
+                      />
                     ) : (
                       <ChannelsAvailabilityDropdown
                         allChannelsCount={channelsCount}
