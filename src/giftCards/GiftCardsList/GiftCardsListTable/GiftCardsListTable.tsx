@@ -7,10 +7,10 @@ import {
 } from "@material-ui/core";
 import HorizontalSpacer from "@saleor/apps/components/HorizontalSpacer";
 import Checkbox from "@saleor/components/Checkbox";
-import ContentOrSkeleton from "@saleor/components/ContentOrSkeleton";
 import DeleteIconButton from "@saleor/components/DeleteIconButton";
 import Link from "@saleor/components/Link";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
+import Skeleton from "@saleor/components/Skeleton";
 import StatusChip from "@saleor/components/StatusChip";
 import { StatusType } from "@saleor/components/StatusChip/types";
 import { customerUrl } from "@saleor/customers/urls";
@@ -133,9 +133,11 @@ const GiftCardsListTable: React.FC = () => {
             () => (
               <TableRow>
                 <TableCell colSpan={numberOfColumns}>
-                  <ContentOrSkeleton condition={!loading}>
-                    <FormattedMessage {...messages.noGiftCardsFound} />
-                  </ContentOrSkeleton>
+                  <Skeleton>
+                    {!loading && (
+                      <FormattedMessage {...messages.noGiftCardsFound} />
+                    )}
+                  </Skeleton>
                 </TableCell>
               </TableRow>
             )
