@@ -11,7 +11,7 @@ import useNotifier from "@saleor/hooks/useNotifier";
 import usePaginator, {
   createPaginationState
 } from "@saleor/hooks/usePaginator";
-import { commonMessages } from "@saleor/intl";
+import { commonMessages, errorMessages } from "@saleor/intl";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import createMetadataUpdateHandler from "@saleor/utils/handlers/metadataUpdateHandler";
 import { mapEdgesToItems, mapNodeToChoice } from "@saleor/utils/maps";
@@ -115,7 +115,8 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
       if (backgroundImageError) {
         notify({
           status: "error",
-          text: intl.formatMessage(commonMessages.somethingWentWrong)
+          title: intl.formatMessage(errorMessages.imgageUploadErrorTitle),
+          text: intl.formatMessage(errorMessages.imageUploadErrorText)
         });
       }
     }

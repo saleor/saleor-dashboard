@@ -68,7 +68,6 @@ jobs:
       - name: Run jest
         run: |
           npm run test
-          
   translation-messages:
     runs-on: ubuntu-latest
     steps:

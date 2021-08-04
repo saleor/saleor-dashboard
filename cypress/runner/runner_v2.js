@@ -4,6 +4,9 @@ const cypress = require("cypress");
 const glob = require("glob");
 
 /* Parse args */
+
+process.stdout.write(`argv - ${process.argv}\n`);
+
 let { executors = 1, filter } = process.argv.slice(2).reduce((acc, pair) => {
   let [key, value] = pair.split("=");
   acc[key] = value;
@@ -16,7 +19,7 @@ process.exitCode = 0;
 
 /* get list of all .spec files*/
 let specs = glob
-  .sync("cypress/integration/allEnv/*")
+  .sync("cypress/integration/apps.js")
   .filter(specPath =>
     typeof filter === "undefined" ? specPath : specPath.includes(filter)
   );

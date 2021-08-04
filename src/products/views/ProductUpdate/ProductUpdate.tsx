@@ -27,7 +27,8 @@ import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import useOnSetDefaultVariant from "@saleor/hooks/useOnSetDefaultVariant";
 import useShop from "@saleor/hooks/useShop";
-import { commonMessages } from "@saleor/intl";
+import { commonMessages, errorMessages } from "@saleor/intl";
+import ProductVariantCreateDialog from "@saleor/products/components/ProductVariantCreateDialog";
 import {
   useProductChannelListingUpdate,
   useProductDeleteMutation,
@@ -225,7 +226,8 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
       if (imageError) {
         notify({
           status: "error",
-          text: intl.formatMessage(commonMessages.somethingWentWrong)
+          title: intl.formatMessage(errorMessages.imgageUploadErrorTitle),
+          text: intl.formatMessage(errorMessages.imageUploadErrorText)
         });
       }
     }
@@ -369,6 +371,7 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
     return <NotFoundPage onBack={handleBack} />;
   }
   const handleVariantAdd = () => navigate(productVariantAddUrl(id));
+  const handleVariantsAdd = () => navigate(productVariantCreatorUrl(id));
 
   const handleImageDelete = (id: string) => () =>
     deleteProductImage({ variables: { id } });
@@ -563,7 +566,7 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
         }}
         onWarehouseConfigure={() => navigate(warehouseAddPath)}
         onVariantAdd={handleVariantAdd}
-        onVariantsAdd={() => navigate(productVariantCreatorUrl(id))}
+        onVariantsAdd={() => openModal("add-variants")}
         onVariantShow={variantId => () =>
           navigate(productVariantEditUrl(product.id, variantId))}
         onVariantReorder={handleVariantReorder}
@@ -643,6 +646,13 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
           />
         </DialogContentText>
       </ActionDialog>
+      <ProductVariantCreateDialog
+        open={params.action === "add-variants"}
+        onClose={closeModal}
+        onConfirm={option =>
+          option === "multiple" ? handleVariantsAdd() : handleVariantAdd()
+        }
+      />
     </>
   );
 };

@@ -59,15 +59,20 @@ All notable, unreleased changes to this project will be documented in this file.
 - Add generic filter validation - #1187 by @jwm0
 - Fix duplicated labels in column picker - #1197 by @orzechdev
 - Fix forbidden null sending as attribute value - #1201 by @orzechdev
-- Fix huge payload issue for plugins view - #1203 by @kamilpastuszka
 - Fix missing call for update metadata mutation - #1207 by @orzechdev
 - Disable next step when no value selected in variant selector - #1218 by @orzechdev
+- Add boolean attributes - #1157 by @piotrgrundas
+- Add date & date time attributes - #1180 by @piotrgrundas
 - Fix order links on home page - #1219 by @jwm0
+- Fix incorrectly handled image upload errors - #1223 by @kamilpastuszka
 - Fix huge payload issue for plugins view - #1203 by @kamilpastuszka
 - Fix content type validation in create page view - #1205 by @orzechdev
 - Fix list pagination crash on search - #1230 by @orzechdev
 - Fix positive float number input validation - #1233 by @orzechdev
 - Use MacawUI - #1229 by @dominik-zeglen
+- Add Metadata for Sale & Voucher - #7653 by @piotrgrundas
+- Add variant create options dialog - #1238 by @orzechdev
+- Fix for errors on changing channel availability - #1264 by @krzysztofwolski
 
 # 2.11.1
 
@@ -184,7 +189,6 @@ All notable, unreleased changes to this project will be documented in this file.
 - Update product stock management to newest design - #515 by @dominik-zeglen
 - Handle untracked products - #523 by @dominik-zeglen
 - Display correct error if there were no graphql errors - #525 by @dominik-zeglen
-- Add boolean attributes - #1157 by @piotrgrundas
 
 ## 2.0.0
 

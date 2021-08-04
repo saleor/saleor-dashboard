@@ -40,7 +40,7 @@ jobs:
           start: npx local-web-server --spa index.html
           wait-on: http://localhost:9000/
           wait-on-timeout: 120
-          command: npm run cy:run:critical
+          command: cy:run_v2:parallel
       - uses: actions/upload-artifact@v1
         if: ${{ failure() }}
         with:
@@ -63,7 +63,7 @@ jobs:
           start: npx local-web-server --spa index.html
           wait-on: http://localhost:9000/
           wait-on-timeout: 120
-          spec: cypress/integration/allEnv/**/*.js
+          command: npm run cy:run:allEnv
       - uses: actions/upload-artifact@v1
         if: ${{ failure() }}
         with:

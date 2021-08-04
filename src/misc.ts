@@ -346,6 +346,11 @@ export function stopPropagation(cb: (event?: AnyEvent) => void) {
   };
 }
 
+export interface DateTime {
+  date: string;
+  time: string;
+}
+
 export function joinDateTime(date: string, time?: string) {
   if (!date) {
     return null;

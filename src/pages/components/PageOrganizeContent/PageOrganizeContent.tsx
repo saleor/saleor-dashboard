@@ -67,6 +67,7 @@ const PageOrganizeContent: React.FC<PageOrganizeContentProps> = props => {
       <CardContent>
         {canChangeType ? (
           <SingleAutocompleteSelectField
+            data-test-id="pageTypesAutocompleteSelect"
             disabled={disabled}
             displayValue={pageTypeInputDisplayValue}
             label={intl.formatMessage({

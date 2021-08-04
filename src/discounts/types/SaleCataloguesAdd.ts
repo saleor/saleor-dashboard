@@ -16,6 +16,18 @@ export interface SaleCataloguesAdd_saleCataloguesAdd_errors {
   channels: string[] | null;
 }
 
+export interface SaleCataloguesAdd_saleCataloguesAdd_sale_metadata {
+  __typename: "MetadataItem";
+  key: string;
+  value: string;
+}
+
+export interface SaleCataloguesAdd_saleCataloguesAdd_sale_privateMetadata {
+  __typename: "MetadataItem";
+  key: string;
+  value: string;
+}
+
 export interface SaleCataloguesAdd_saleCataloguesAdd_sale_channelListings_channel {
   __typename: "Channel";
   id: string;
@@ -154,6 +166,8 @@ export interface SaleCataloguesAdd_saleCataloguesAdd_sale_collections {
 
 export interface SaleCataloguesAdd_saleCataloguesAdd_sale {
   __typename: "Sale";
+  metadata: (SaleCataloguesAdd_saleCataloguesAdd_sale_metadata | null)[];
+  privateMetadata: (SaleCataloguesAdd_saleCataloguesAdd_sale_privateMetadata | null)[];
   id: string;
   name: string;
   type: SaleType;

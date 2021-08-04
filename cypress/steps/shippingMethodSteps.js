@@ -3,7 +3,7 @@ import { SHARED_ELEMENTS } from "../elements/shared/sharedElements";
 import { SHIPPING_RATE_DETAILS } from "../elements/shipping/shipping-rate-details";
 import { SHIPPING_ZONE_DETAILS } from "../elements/shipping/shipping-zone-details";
 import { SHIPPING_ZONES_LIST } from "../elements/shipping/shipping-zones-list";
-import { confirmationMessageShouldDisappear } from "./shared/confirmationMessage";
+import { confirmationMessageShouldDisappear } from "./shared/confirmationMessages";
 import { waitForProgressBarToNotBeVisible } from "./shared/progressBar";
 import { fillBaseSelect } from "./shared/selects";
 
@@ -58,7 +58,7 @@ export function changeWeightUnit(weightUnit) {
   cy.addAliasToGraphRequest("UpdateDefaultWeightUnit");
   cy.get(SHIPPING_ZONES_LIST.saveUnit).click();
   confirmationMessageShouldDisappear();
-  cy.wait("@UpdateDefaultWeightUnit");
+  cy.wait("@UpdateDefaultWeightUnit").wait(5000);
 }
 
 export function createShippingRate({
@@ -75,7 +75,7 @@ export function createShippingRate({
     weightLimits,
     deliveryTime
   });
-  saveRate();
+  return saveRate();
 }
 
 export function enterAndFillUpShippingRate({
@@ -121,7 +121,7 @@ export function createRateWithPostalCode({
     .type(maxPostalCode)
     .get(BUTTON_SELECTORS.submit)
     .click();
-  saveRate();
+  return saveRate();
 }
 
 export function saveRate() {
@@ -130,7 +130,10 @@ export function saveRate() {
     .get(BUTTON_SELECTORS.confirm)
     .click();
   confirmationMessageShouldDisappear();
-  cy.wait(`@ShippingMethodChannelListingUpdate`).wait(`@ShippingZone`);
+  return cy
+    .wait(`@ShippingMethodChannelListingUpdate`)
+    .wait(`@ShippingZone`)
+    .its("response.body.0.data.shippingZone");
 }
 
 export function fillUpWeightLimits({ max, min }) {
