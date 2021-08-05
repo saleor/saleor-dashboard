@@ -1,6 +1,6 @@
 import { Card, CardContent } from "@material-ui/core";
 import CardTitle from "@saleor/components/CardTitle";
-import ContentOrSkeleton from "@saleor/components/ContentOrSkeleton";
+import Skeleton from "@saleor/components/Skeleton";
 import React, { useContext } from "react";
 import { useIntl } from "react-intl";
 
@@ -17,9 +17,7 @@ const GiftCardUpdateInfoCard: React.FC = () => {
     <Card>
       <CardTitle title={intl.formatMessage(messages.title)} />
       <CardContent>
-        <ContentOrSkeleton condition={!loading}>
-          <GiftCardUpdateInfoCardContent />
-        </ContentOrSkeleton>
+        <Skeleton>{!loading && <GiftCardUpdateInfoCardContent />}</Skeleton>
       </CardContent>
     </Card>
   );
