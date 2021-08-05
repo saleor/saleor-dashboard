@@ -16,11 +16,14 @@ import { GiftCardUpdatePageActionParamsEnum } from "../types";
 import { GiftCardUpdate } from "../types/GiftCardUpdate";
 import { giftCardUpdateBalanceDialogMessages as messages } from "./messages";
 import { useUpdateBalanceDialogStyles as useStyles } from "./styles";
-import { GiftCardBalanceUpdateFormData } from "./types";
 
 interface GiftCardUpdateBalanceDialogProps {
   action: string;
   onClose: () => void;
+}
+
+export interface GiftCardBalanceUpdateFormData {
+  balanceAmount: number;
 }
 
 const GiftCardUpdateBalanceDialog: React.FC<GiftCardUpdateBalanceDialogProps> = ({
