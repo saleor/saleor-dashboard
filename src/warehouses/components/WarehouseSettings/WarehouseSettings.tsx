@@ -6,7 +6,7 @@ import Link from "@saleor/components/Link";
 import { RadioGroupField } from "@saleor/components/RadioGroupField";
 import Skeleton from "@saleor/components/Skeleton";
 import { makeStyles } from "@saleor/macaw-ui";
-import { maybe, renderCollection } from "@saleor/misc";
+import { renderCollection } from "@saleor/misc";
 import { WarehouseDetails_warehouse_shippingZones_edges_node } from "@saleor/warehouses/types/WarehouseDetails";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -125,14 +125,13 @@ const WarehouseInfo: React.FC<WarehouseInfoProps> = ({
         {renderCollection(
           zones,
           zone =>
-            maybe(
-              () => (
-                <div className={classes.link} key={zone.id}>
-                  <Link underline onClick={() => onShippingZoneClick(zone.id)}>
-                    {zone.name}
-                  </Link>
-                </div>
-              ),
+            zone ? (
+              <div className={classes.link} key={zone.id}>
+                <Link underline onClick={() => onShippingZoneClick(zone.id)}>
+                  {zone.name}
+                </Link>
+              </div>
+            ) : (
               <Skeleton />
             ),
           () => (

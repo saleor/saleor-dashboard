@@ -143,9 +143,9 @@ const OrderPayment: React.FC<OrderPaymentProps> = props => {
                 />
               </td>
               <td>
-                {maybe(() => order.shippingMethodName) === undefined &&
-                maybe(() => order.shippingPrice) === undefined &&
-                maybe(() => order.collectionPointName) === undefined ? (
+                {order?.shippingMethodName === undefined &&
+                order?.shippingPrice === undefined &&
+                order?.collectionPointName === undefined ? (
                   <Skeleton />
                 ) : order.shippingMethodName === null ? (
                   order.collectionPointName === null ? (
