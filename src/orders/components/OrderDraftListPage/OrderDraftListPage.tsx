@@ -2,6 +2,7 @@ import { Button, Card } from "@material-ui/core";
 import Container from "@saleor/components/Container";
 import FilterBar from "@saleor/components/FilterBar";
 import PageHeader from "@saleor/components/PageHeader";
+import { RefreshLimits_shop_limits } from "@saleor/components/Shop/types/RefreshLimits";
 import { sectionNames } from "@saleor/intl";
 import { OrderDraftListUrlSortField } from "@saleor/orders/urls";
 import {
@@ -11,11 +12,13 @@ import {
   SortPage,
   TabPageProps
 } from "@saleor/types";
+import { hasLimits, isLimitReached } from "@saleor/utils/limits";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { OrderDraftList_draftOrders_edges_node } from "../../types/OrderDraftList";
 import OrderDraftList from "../OrderDraftList";
+import OrderLimitReached from "../OrderLimitReached";
 import {
   createFilterStructure,
   OrderDraftFilterKeys,
@@ -28,6 +31,7 @@ export interface OrderDraftListPageProps
     FilterPageProps<OrderDraftFilterKeys, OrderDraftListFilterOpts>,
     SortPage<OrderDraftListUrlSortField>,
     TabPageProps {
+  limits: RefreshLimits_shop_limits;
   orders: OrderDraftList_draftOrders_edges_node[];
 }
 
@@ -36,6 +40,7 @@ const OrderDraftListPage: React.FC<OrderDraftListPageProps> = ({
   disabled,
   filterOpts,
   initialSearch,
+  limits,
   onAdd,
   onAll,
   onFilterChange,
@@ -48,14 +53,30 @@ const OrderDraftListPage: React.FC<OrderDraftListPageProps> = ({
 }) => {
   const intl = useIntl();
   const structure = createFilterStructure(intl, filterOpts);
+  const limitsReached = isLimitReached(limits, "orders");
 
   return (
     <Container>
-      <PageHeader title={intl.formatMessage(sectionNames.draftOrders)}>
+      <PageHeader
+        title={intl.formatMessage(sectionNames.draftOrders)}
+        limitText={
+          hasLimits(limits, "orders") &&
+          intl.formatMessage(
+            {
+              defaultMessage: "{count}/{max} orders",
+              description: "placed orders counter"
+            },
+            {
+              count: limits.currentUsage.orders,
+              max: limits.allowedUsage.orders
+            }
+          )
+        }
+      >
         <Button
           color="primary"
           variant="contained"
-          disabled={disabled}
+          disabled={disabled || limitsReached}
           onClick={onAdd}
         >
           <FormattedMessage
@@ -64,6 +85,7 @@ const OrderDraftListPage: React.FC<OrderDraftListPageProps> = ({
           />
         </Button>
       </PageHeader>
+      {limitsReached && <OrderLimitReached />}
       <Card>
         <FilterBar
           allTabLabel={intl.formatMessage({
