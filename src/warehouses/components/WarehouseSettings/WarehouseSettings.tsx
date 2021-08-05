@@ -20,6 +20,7 @@ export interface WarehouseInfoProps {
   data: WarehouseDetailsPageFormData;
   onShippingZoneClick: (id: string) => void;
   onChange: (event: React.ChangeEvent<any>) => void;
+  setData: (data: Partial<WarehouseDetailsPageFormData>) => void;
 }
 
 const useStyles = makeStyles(
@@ -40,8 +41,20 @@ const WarehouseInfo: React.FC<WarehouseInfoProps> = ({
   disabled,
   data,
   onShippingZoneClick,
-  onChange
+  onChange,
+  setData
 }) => {
+  React.useEffect(() => {
+    if (
+      data.isPrivate === "true" &&
+      data.clickAndCollectOption === WarehouseClickAndCollectOptionEnum.LOCAL
+    ) {
+      setData({
+        clickAndCollectOption: WarehouseClickAndCollectOptionEnum.DISABLED
+      });
+    }
+  }, [data.isPrivate]);
+
   const classes = useStyles({});
   const intl = useIntl();
 

@@ -94,18 +94,6 @@ const WarehouseDetailsPage: React.FC<WarehouseDetailsPageProps> = ({
           countryChoices
         );
 
-        React.useEffect(() => {
-          if (
-            data.isPrivate === "true" &&
-            data.clickAndCollectOption ===
-              WarehouseClickAndCollectOptionEnum.LOCAL
-          ) {
-            set({
-              clickAndCollectOption: WarehouseClickAndCollectOptionEnum.DISABLED
-            });
-          }
-        }, [data.isPrivate]);
-
         return (
           <Container>
             <Backlink onClick={onBack}>
@@ -142,6 +130,7 @@ const WarehouseDetailsPage: React.FC<WarehouseDetailsPageProps> = ({
                   disabled={disabled}
                   onShippingZoneClick={onShippingZoneClick}
                   onChange={change}
+                  setData={set}
                 />
               </div>
             </Grid>

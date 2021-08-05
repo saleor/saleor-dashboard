@@ -155,7 +155,11 @@ const OrderPayment: React.FC<OrderPaymentProps> = props => {
                       id: "orderPaymentShippingDoesNotApply"
                     })
                   ) : (
-                    "click&collect"
+                    intl.formatMessage({
+                      defaultMessage: "click&collect",
+                      description: "order will be picked up by customer",
+                      id: "orderPaymentClickAndCollectShippingMethod"
+                    })
                   )
                 ) : (
                   order.shippingMethodName

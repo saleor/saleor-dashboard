@@ -367,6 +367,10 @@
     "context": "shipping address is not set in draft order",
     "string": "Not set"
   },
+  "orderPaymentClickAndCollectShippingMethod": {
+    "context": "order will be picked up by customer",
+    "string": "click&collect"
+  },
   "orderPaymentShippingDoesNotApply": {
     "context": "order does not require shipping",
     "string": "does not apply"
