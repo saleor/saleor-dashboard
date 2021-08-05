@@ -173,6 +173,14 @@ const WebhookEvents: React.FC<WebhookEventsProps> = ({
     [WebhookEventTypeEnum.NOTIFY_USER]: intl.formatMessage({
       defaultMessage: "User notified",
       description: "event"
+    }),
+    [WebhookEventTypeEnum.TRANSLATION_CREATED]: intl.formatMessage({
+      defaultMessage: "Translation created",
+      description: "event"
+    }),
+    [WebhookEventTypeEnum.TRANSLATION_UPDATED]: intl.formatMessage({
+      defaultMessage: "Translation updated",
+      description: "event"
     })
   };
 
