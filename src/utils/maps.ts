@@ -76,3 +76,18 @@ export function mapMetadataItemToInput(item: MetadataItem): MetadataInput {
     value: item.value
   };
 }
+
+export function mapSingleValueNodeToChoice<T extends Record<string, any>>(
+  nodes: T[] | string[],
+  key?: keyof T
+): SingleAutocompleteChoiceType[] {
+  if (!nodes) {
+    return [];
+  }
+
+  if ((nodes as string[]).every(node => typeof node === "string")) {
+    return (nodes as string[]).map(node => ({ label: node, value: node }));
+  }
+
+  return (nodes as T[]).map(node => ({ label: node[key], value: node[key] }));
+}

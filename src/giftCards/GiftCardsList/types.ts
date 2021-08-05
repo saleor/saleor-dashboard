@@ -1,4 +1,4 @@
-import { Pagination } from "@saleor/types";
+import { Dialog, Pagination } from "@saleor/types";
 
 export type GiftCardListColummns =
   | "giftCardCode"
@@ -7,9 +7,9 @@ export type GiftCardListColummns =
   | "usedBy"
   | "product";
 
-export interface GiftCardsListTableCommonProps {
-  numberOfColumns: number;
-  disabled: boolean;
+export enum GiftCardListActionParamsEnum {
+  CREATE = "gift-card-create"
 }
 
-export interface GiftCardListUrlQueryParams extends Pagination {}
+export type GiftCardListUrlQueryParams = Pagination &
+  Dialog<GiftCardListActionParamsEnum>;

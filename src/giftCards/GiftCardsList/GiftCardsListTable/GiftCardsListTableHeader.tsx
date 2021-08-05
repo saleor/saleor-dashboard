@@ -6,28 +6,24 @@ import TableHead from "@saleor/components/TableHead";
 import Label, {
   LabelSizes
 } from "@saleor/orders/components/OrderHistory/Label";
-import React, { useContext } from "react";
+import React from "react";
 import { MessageDescriptor, useIntl } from "react-intl";
 
-import { GiftCardsListContext } from "../GiftCardsListProvider";
+import useGiftCardList from "../hooks/useGiftCardList";
+import useGiftCardListBulkActions from "../hooks/useGiftCardListBulkActions";
 import { giftCardsListTableMessages as messages } from "../messages";
 import { useTableStyles as useStyles } from "../styles";
-import { GiftCardsListTableCommonProps } from "../types";
 
 interface HeaderItem {
   title?: MessageDescriptor;
   options?: TableCellHeaderProps;
 }
 
-const GiftCardsListTableHeader: React.FC<GiftCardsListTableCommonProps> = ({
-  numberOfColumns,
-  disabled
-}) => {
+const GiftCardsListTableHeader: React.FC = () => {
   const intl = useIntl();
   const classes = useStyles({});
-  const { toggleAll, listElements, giftCards } = useContext(
-    GiftCardsListContext
-  );
+  const { giftCards, numberOfColumns, loading } = useGiftCardList();
+  const { toggleAll, listElements } = useGiftCardListBulkActions();
 
   const headerItems: HeaderItem[] = [
     {
@@ -66,9 +62,9 @@ const GiftCardsListTableHeader: React.FC<GiftCardsListTableCommonProps> = ({
         <col className={classes.colDelete} />
       </colgroup>
       <TableHead
+        disabled={loading}
         colSpan={numberOfColumns}
         selected={listElements.length}
-        disabled={disabled}
         items={giftCards}
         toggleAll={toggleAll}
       >

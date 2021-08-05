@@ -2,48 +2,110 @@ import { TextField } from "@material-ui/core";
 import SingleSelectField, {
   Choices
 } from "@saleor/components/SingleSelectField";
-import { FormChange } from "@saleor/hooks/useForm";
+import { ChangeEvent, FormChange } from "@saleor/hooks/useForm";
+import classNames from "classnames";
 import React from "react";
 
 import { useStyles } from "./styles";
 
+interface CommonFieldProps {
+  name: string;
+  type?: string;
+  className?: string;
+  label?: string;
+}
+
 export interface TextWithSelectFieldProps {
   change: FormChange;
   choices: Choices;
-  textFieldName: string;
-  selectFieldName: string;
-  textFieldValue: string;
-  selectFieldValue: string;
+  helperText?: string;
+  isError?: boolean;
+  textFieldProps: CommonFieldProps & { value?: string | number };
+  selectFieldProps: CommonFieldProps & { value: string };
+  containerClassName?: string;
 }
 
 const TextWithSelectField: React.FC<TextWithSelectFieldProps> = ({
   change,
-  textFieldName,
-  textFieldValue,
-  selectFieldName,
-  selectFieldValue,
-  choices
+  choices,
+  containerClassName,
+  textFieldProps,
+  selectFieldProps,
+  helperText,
+  isError
 }) => {
   const classes = useStyles();
 
+  const {
+    name: textFieldName,
+    value: textFieldValue,
+    label: textFieldLabel,
+    type: textFieldType
+  } = textFieldProps;
+
+  const {
+    name: selectFieldName,
+    value: selectFieldValue,
+    className: selectFieldClassName
+  } = selectFieldProps;
+
+  const handleSelectChange = (event: ChangeEvent) => {
+    // in case one of the fields in the form is empty
+    // we need to save the other part of the field as well
+    const otherTarget = {
+      value: textFieldValue,
+      name: textFieldName
+    };
+
+    change(event);
+    change({ target: otherTarget });
+  };
+
+  const handleTextChange = (event: ChangeEvent) => {
+    const { value } = event.target;
+
+    const otherTarget = {
+      value: selectFieldValue,
+      name: selectFieldName
+    };
+
+    // handle parsing in case of text field of type number
+    const parsedValue =
+      textFieldType === "number" && typeof value === "string"
+        ? parseInt(value, 10)
+        : value;
+
+    change({ ...event, target: { ...event.target, value: parsedValue } });
+    change({ target: otherTarget });
+  };
+
   return (
-    <div className={classes.container}>
+    <div className={containerClassName || classes.container}>
       <TextField
+        error={isError}
+        helperText={helperText}
+        type={textFieldType}
         className={classes.innerContainer}
         name={textFieldName}
+        label={textFieldLabel}
         InputProps={{
-          className: classes.textField,
+          className: classNames(classes.textField, {
+            [classes.textFieldCentered]: !textFieldLabel
+          }),
           endAdornment: (
             <SingleSelectField
               name={selectFieldName}
-              onChange={change}
+              onChange={handleSelectChange}
               value={selectFieldValue}
-              className={classes.autocompleteField}
+              className={classNames(
+                classes.autocompleteField,
+                selectFieldClassName
+              )}
               choices={choices}
             />
           )
         }}
-        onChange={change}
+        onChange={handleTextChange}
         value={textFieldValue}
       />
     </div>

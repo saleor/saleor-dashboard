@@ -1,15 +1,11 @@
 import { TableFooter, TableRow } from "@material-ui/core";
 import TablePagination from "@saleor/components/TablePagination";
 import usePaginator from "@saleor/hooks/usePaginator";
-import React, { useContext } from "react";
+import React from "react";
 
-import { GiftCardsListContext } from "../GiftCardsListProvider";
-import { GiftCardsListTableCommonProps } from "../types";
+import useGiftCardList from "../hooks/useGiftCardList";
 
-const GiftCardsListTableFooter: React.FC<GiftCardsListTableCommonProps> = ({
-  numberOfColumns,
-  disabled
-}) => {
+const GiftCardsListTableFooter: React.FC = () => {
   const paginate = usePaginator();
 
   const {
@@ -17,8 +13,9 @@ const GiftCardsListTableFooter: React.FC<GiftCardsListTableCommonProps> = ({
     updateListSettings,
     pageInfo: apiPageInfo,
     paginationState,
-    params
-  } = useContext(GiftCardsListContext);
+    params,
+    numberOfColumns
+  } = useGiftCardList();
 
   const { loadNextPage, loadPreviousPage, pageInfo } = paginate(
     apiPageInfo,
@@ -32,13 +29,11 @@ const GiftCardsListTableFooter: React.FC<GiftCardsListTableCommonProps> = ({
         <TablePagination
           settings={settings}
           colSpan={numberOfColumns}
-          hasNextPage={pageInfo && !disabled ? pageInfo.hasNextPage : false}
+          hasNextPage={pageInfo ? pageInfo.hasNextPage : false}
           onNextPage={loadNextPage}
           onUpdateListSettings={updateListSettings}
           onPreviousPage={loadPreviousPage}
-          hasPreviousPage={
-            pageInfo && !disabled ? pageInfo.hasPreviousPage : false
-          }
+          hasPreviousPage={pageInfo ? pageInfo.hasPreviousPage : false}
         />
       </TableRow>
     </TableFooter>
