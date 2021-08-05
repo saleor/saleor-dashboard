@@ -7,6 +7,7 @@ import TextWithSelectField from "@saleor/components/TextWithSelectField";
 import { GiftCardError } from "@saleor/fragments/types/GiftCardError";
 import GiftCardExpirySelect from "@saleor/giftCards/components/GiftCardExpirySelect";
 import GiftCardTagInput from "@saleor/giftCards/components/GiftCardTagInput";
+import useForm from "@saleor/hooks/useForm";
 import useShop from "@saleor/hooks/useShop";
 import { commonMessages } from "@saleor/intl";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
@@ -17,7 +18,7 @@ import {
 } from "@saleor/types/globalTypes";
 import { getFormErrors } from "@saleor/utils/errors";
 import { mapSingleValueNodeToChoice } from "@saleor/utils/maps";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 
 import { getGiftCardErrorMessage } from "../GiftCardUpdatePage/messages";
@@ -61,12 +62,20 @@ const GiftCardCreateDialogForm: React.FC<GiftCardCreateDialogFormProps> = ({
   const classes = useStyles({});
   const shop = useShop();
 
+  // TEMP
+  const initialCurrency = shop?.channelCurrencies?.[0];
+
   const [selectedCustomer, setSelectedCustomer] = useState<
     GiftCardCreateFormCustomer
   >(initialCustomer);
 
   const handleSubmit = (data: GiftCardCreateFormData) =>
     onSubmit({ ...data, selectedCustomer });
+
+  const { submit, change, data } = useForm(
+    { ...initialData, balanceCurrency: initialCurrency },
+    handleSubmit
+  );
 
   const formErrors = getFormErrors(
     [
@@ -81,88 +90,82 @@ const GiftCardCreateDialogForm: React.FC<GiftCardCreateDialogFormProps> = ({
     apiErrors
   );
 
-  return (
-    <Form initial={initialData} onSubmit={handleSubmit}>
-      {({ submit, change, data }) => {
-        const {
-          tag,
-          expiryPeriodAmount,
-          expiryPeriodType,
-          expiryType,
-          balanceAmount,
-          balanceCurrency
-        } = data;
+  const {
+    tag,
+    expiryPeriodAmount,
+    expiryPeriodType,
+    expiryType,
+    balanceAmount,
+    balanceCurrency
+  } = data;
 
-        return (
-          <>
-            <DialogContent>
-              <TextWithSelectField
-                isError={!!formErrors?.balance}
-                helperText={getGiftCardErrorMessage(formErrors?.balance, intl)}
-                change={change}
-                choices={mapSingleValueNodeToChoice(shop?.channelCurrencies)}
-                containerClassName={classes.balanceContainer}
-                textFieldProps={{
-                  type: "number",
-                  label: intl.formatMessage(messages.amountLabel),
-                  name: "balanceAmount",
-                  value: balanceAmount
-                }}
-                selectFieldProps={{
-                  name: "balanceCurrency",
-                  value: balanceCurrency || shop?.channelCurrencies?.[0],
-                  className: classes.currencySelectField
-                }}
-              />
-              <CardSpacer />
-              <GiftCardTagInput
-                error={formErrors?.tag}
-                name="tag"
-                value={tag}
-                change={change}
-              />
-              <CardSpacer />
-              <Divider />
-              <CardSpacer />
-              <GiftCardCustomerSelectField
-                selectedCustomer={selectedCustomer}
-                setSelectedCustomer={setSelectedCustomer}
-              />
-              <VerticalSpacer />
-              <Label text={intl.formatMessage(messages.customerSubtitle)} />
-              <CardSpacer />
-              <Divider />
-              <CardSpacer />
-              <GiftCardExpirySelect
-                errors={formErrors}
-                change={change}
-                expiryType={expiryType}
-                expiryPeriodAmount={expiryPeriodAmount}
-                expiryPeriodType={expiryPeriodType}
-              />
-              <CardSpacer />
-              <TextField
-                name="note"
-                onChange={change}
-                multiline
-                className={classes.noteField}
-                label={`${intl.formatMessage(
-                  messages.noteLabel
-                )} *${intl.formatMessage(commonMessages.optionalField)}`}
-              />
-              <VerticalSpacer />
-              <Label text={intl.formatMessage(messages.noteSubtitle)} />
-            </DialogContent>
-            <DialogButtons
-              onConfirm={submit}
-              confirmButtonLabel={intl.formatMessage(messages.issueButtonLabel)}
-              confirmButtonState={opts?.status}
-              onClose={onClose}
-            />
-          </>
-        );
-      }}
-    </Form>
+  return (
+    <>
+      <DialogContent>
+        <TextWithSelectField
+          isError={!!formErrors?.balance}
+          helperText={getGiftCardErrorMessage(formErrors?.balance, intl)}
+          change={change}
+          choices={mapSingleValueNodeToChoice(shop?.channelCurrencies)}
+          containerClassName={classes.balanceContainer}
+          textFieldProps={{
+            type: "number",
+            label: intl.formatMessage(messages.amountLabel),
+            name: "balanceAmount",
+            value: balanceAmount
+          }}
+          selectFieldProps={{
+            name: "balanceCurrency",
+            value: balanceCurrency || initialCurrency,
+            className: classes.currencySelectField
+          }}
+        />
+        <CardSpacer />
+        <GiftCardTagInput
+          error={formErrors?.tag}
+          name="tag"
+          value={tag}
+          change={change}
+        />
+        <CardSpacer />
+        <Divider />
+        <CardSpacer />
+        <GiftCardCustomerSelectField
+          selectedCustomer={selectedCustomer}
+          setSelectedCustomer={setSelectedCustomer}
+        />
+        <VerticalSpacer />
+        <Label text={intl.formatMessage(messages.customerSubtitle)} />
+        <CardSpacer />
+        <Divider />
+        <CardSpacer />
+        <GiftCardExpirySelect
+          errors={formErrors}
+          change={change}
+          expiryType={expiryType}
+          expiryPeriodAmount={expiryPeriodAmount}
+          expiryPeriodType={expiryPeriodType}
+        />
+        <CardSpacer />
+        <TextField
+          name="note"
+          onChange={change}
+          multiline
+          className={classes.noteField}
+          label={`${intl.formatMessage(
+            messages.noteLabel
+          )} *${intl.formatMessage(commonMessages.optionalField)}`}
+        />
+        <VerticalSpacer />
+        <Label text={intl.formatMessage(messages.noteSubtitle)} />
+      </DialogContent>
+      <DialogButtons
+        onConfirm={submit}
+        confirmButtonLabel={intl.formatMessage(messages.issueButtonLabel)}
+        confirmButtonState={opts?.status}
+        onClose={onClose}
+      />
+    </>
   );
 };
 
