@@ -86,7 +86,9 @@ const GiftCardCreateDialog: React.FC<GiftCardCreateDialogProps> = ({
 
   const handleClose = () => {
     onClose();
-    setCardCode(null);
+    // dialog closing animation runs slower than prop change
+    // and we don't want to show the form for a split second
+    setTimeout(() => setCardCode(null), 0);
   };
 
   return (
