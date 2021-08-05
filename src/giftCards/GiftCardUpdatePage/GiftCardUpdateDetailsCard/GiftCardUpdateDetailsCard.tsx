@@ -1,7 +1,7 @@
 import { Button, Card, CardContent, Divider } from "@material-ui/core";
 import CardSpacer from "@saleor/components/CardSpacer";
 import CardTitle from "@saleor/components/CardTitle";
-import ContentOrSkeleton from "@saleor/components/ContentOrSkeleton";
+import Skeleton from "@saleor/components/Skeleton";
 import GiftCardExpirySelect from "@saleor/giftCards/components/GiftCardExpirySelect";
 import GiftCardTagInput from "@saleor/giftCards/components/GiftCardTagInput";
 import React, { useContext } from "react";
@@ -44,27 +44,31 @@ const GiftCardUpdateDetailsCard: React.FC<GiftCardUpdateDetailsCardProps> = ({
         }
       />
       <CardContent>
-        <ContentOrSkeleton condition={!loading}>
-          <GiftCardUpdateDetailsBalanceSection />
-          <CardSpacer />
-          <Divider />
-          <CardSpacer />
-          <GiftCardTagInput
-            error={formErrors?.tag}
-            name="tag"
-            withTopLabel
-            value={tag}
-            change={change}
-          />
-          <CardSpacer />
-          <GiftCardExpirySelect
-            errors={formErrors}
-            change={change}
-            expiryType={expiryType}
-            expiryPeriodAmount={expiryPeriodAmount}
-            expiryPeriodType={expiryPeriodType}
-          />
-        </ContentOrSkeleton>
+        <Skeleton>
+          {!loading && (
+            <>
+              <GiftCardUpdateDetailsBalanceSection />
+              <CardSpacer />
+              <Divider />
+              <CardSpacer />
+              <GiftCardTagInput
+                error={formErrors?.tag}
+                name="tag"
+                withTopLabel
+                value={tag}
+                change={change}
+              />
+              <CardSpacer />
+              <GiftCardExpirySelect
+                errors={formErrors}
+                change={change}
+                expiryType={expiryType}
+                expiryPeriodAmount={expiryPeriodAmount}
+                expiryPeriodType={expiryPeriodType}
+              />
+            </>
+          )}
+        </Skeleton>
       </CardContent>
     </Card>
   );
