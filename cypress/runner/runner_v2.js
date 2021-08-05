@@ -37,10 +37,11 @@ process.stdout.write(`Found ${initialSpecsCount} spec files\n`);
 const cypressTask = (spec, envVariables) => {
   process.stdout.write(Object.keys(envVariables).toString());
   let newSpec = spec.includes(".js") ? spec : `${spec}/**/*`;
+  process.stdout.write(`Running cypress spec ${newSpec}\n`);
   return new Promise((resolve, reject) => {
     cypress
       .run({
-        spec: spec,
+        spec: newSpec,
         config: {
           video: true,
           videosFolder: `cypress/videos${newSpec}`
@@ -103,9 +104,11 @@ Promise.all(chains);
 
 process.on("exit", code => {
   resultsList.forEach(element => {
-    process.stdout.write(
-      `\n\nTOTAL FAILED IN RUNNER: ${element.totalFailed.toString()}\n`
-    );
+    if (element.totalFailed) {
+      process.stdout.write(
+        `\n\nTOTAL FAILED IN RUNNER: ${element.totalFailed.toString()}\n`
+      );
+    }
     element.runs.forEach(run => {
       if (run.tests) {
         run.tests.forEach(test => {

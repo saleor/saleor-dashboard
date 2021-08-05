@@ -15,6 +15,7 @@
 /**
  * @type {Cypress.PluginConfig}
  */
+
 module.exports = (on, config) => {
   // make env variables visible for cypress
   config.env.API_URI = process.env.API_URI;
@@ -22,6 +23,18 @@ module.exports = (on, config) => {
   config.env.mailHogUrl = process.env.CYPRESS_MAILHOG;
 
   on("before:browser:launch", (browser = {}, launchOptions) => {
+    on("after:spec", (spec, results) => {
+      if (results && results.video) {
+        // Do we have failures for any retry attempts?
+        const failures = _.some(results.tests, test =>
+          _.some(test.attempts, { state: "failed" })
+        );
+        if (!failures) {
+          // delete the video if the spec passed and no tests retried
+          return del(results.video);
+        }
+      }
+    });
     launchOptions.args.push("--proxy-bypass-list=<-loopback>");
     if (browser.name === "chrome") {
       launchOptions.args.push(
