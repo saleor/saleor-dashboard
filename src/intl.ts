@@ -4,9 +4,6 @@ export const commonMessages = defineMessages({
   availability: {
     defaultMessage: "Availability"
   },
-  attributes: {
-    defaultMessage: "Attributes"
-  },
   catalog: {
     defaultMessage: "Catalog"
   },
@@ -101,6 +98,9 @@ export const commonMessages = defineMessages({
   },
   summary: {
     defaultMessage: "Summary"
+  },
+  translationAttributes: {
+    defaultMessage: "Attributes"
   },
   unauthorizedDashboardAccess: {
     defaultMessage: "Only staff users can access the dashboard"

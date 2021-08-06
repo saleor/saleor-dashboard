@@ -130,7 +130,7 @@ const TranslationsProductsPage: React.FC<TranslationsProductsPageProps> = ({
         activeField={activeField}
         disabled={disabled}
         initialState={true}
-        title={intl.formatMessage(commonMessages.attributes)}
+        title={intl.formatMessage(commonMessages.translationAttributes)}
         fields={
           data?.attributeValues?.map(attrVal => ({
             id: attrVal.attributeValue.id,
