@@ -40,10 +40,33 @@ export interface UpdatePageTranslations_pageTranslate_page_translation {
   language: UpdatePageTranslations_pageTranslate_page_translation_language;
 }
 
+export interface UpdatePageTranslations_pageTranslate_page_attributeValues_translation_language {
+  __typename: "LanguageDisplay";
+  code: LanguageCodeEnum;
+  language: string;
+}
+
+export interface UpdatePageTranslations_pageTranslate_page_attributeValues_translation {
+  __typename: "AttributeValueTranslation";
+  id: string;
+  name: string;
+  richText: any | null;
+  language: UpdatePageTranslations_pageTranslate_page_attributeValues_translation_language;
+}
+
+export interface UpdatePageTranslations_pageTranslate_page_attributeValues {
+  __typename: "AttributeValueTranslatableContent";
+  id: string;
+  name: string;
+  richText: any | null;
+  translation: UpdatePageTranslations_pageTranslate_page_attributeValues_translation | null;
+}
+
 export interface UpdatePageTranslations_pageTranslate_page {
   __typename: "PageTranslatableContent";
   page: UpdatePageTranslations_pageTranslate_page_page | null;
   translation: UpdatePageTranslations_pageTranslate_page_translation | null;
+  attributeValues: UpdatePageTranslations_pageTranslate_page_attributeValues[];
 }
 
 export interface UpdatePageTranslations_pageTranslate {

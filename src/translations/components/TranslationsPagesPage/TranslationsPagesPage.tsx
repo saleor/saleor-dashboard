@@ -90,6 +90,7 @@ const TranslationsPagesPage: React.FC<TranslationsPagesPageProps> = ({
         onDiscard={onDiscard}
         onSubmit={onSubmit}
       />
+
       <CardSpacer />
       <TranslationFields
         activeField={activeField}
@@ -118,6 +119,32 @@ const TranslationsPagesPage: React.FC<TranslationsPagesPageProps> = ({
             value: data?.page?.seoDescription
           }
         ]}
+        saveButtonState={saveButtonState}
+        onEdit={onEdit}
+        onDiscard={onDiscard}
+        onSubmit={onSubmit}
+      />
+      <CardSpacer />
+      <TranslationFields
+        activeField={activeField}
+        disabled={disabled}
+        initialState={true}
+        title={intl.formatMessage(commonMessages.attributes)}
+        fields={
+          data?.attributeValues?.map(attrVal => ({
+            displayName: attrVal.richText
+              ? intl.formatMessage({
+                  defaultMessage: "Rich Text Attribute"
+                })
+              : intl.formatMessage({
+                  defaultMessage: "Attribute"
+                }),
+            name: attrVal?.name,
+            translation: attrVal?.translation?.richText,
+            type: "rich" as "rich",
+            value: attrVal?.richText
+          })) || []
+        }
         saveButtonState={saveButtonState}
         onEdit={onEdit}
         onDiscard={onDiscard}

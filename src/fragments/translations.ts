@@ -44,6 +44,7 @@ export const collectionTranslationFragment = gql`
     }
   }
 `;
+
 export const productTranslationFragment = gql`
   fragment ProductTranslationFragment on ProductTranslatableContent {
     product {
@@ -55,14 +56,28 @@ export const productTranslationFragment = gql`
     }
     translation(languageCode: $language) {
       id
+      seoTitle
+      seoDescription
+      name
       description
       language {
         code
         language
       }
+    }
+    attributeValues {
+      id
       name
-      seoDescription
-      seoTitle
+      richText
+      translation(languageCode: $language) {
+        id
+        name
+        richText
+        language {
+          code
+          language
+        }
+      }
     }
   }
 `;
@@ -139,6 +154,20 @@ export const pageTranslationFragment = gql`
         language
       }
     }
+    attributeValues {
+      id
+      name
+      richText
+      translation(languageCode: $language) {
+        id
+        name
+        richText
+        language {
+          code
+          language
+        }
+      }
+    }
   }
 `;
 export const pageTranslatableFragment = gql`
@@ -148,7 +177,6 @@ export const pageTranslatableFragment = gql`
     seoDescription
     seoTitle
     title
-
     translation(languageCode: $language) {
       id
       content
@@ -188,6 +216,8 @@ export const attributeChoicesTranslationFragment = gql`
 
 export const attributeTranslationFragment = gql`
   fragment AttributeTranslationFragment on AttributeTranslatableContent {
+    id
+    name
     translation(languageCode: $language) {
       id
       name
@@ -203,6 +233,29 @@ export const attributeTranslationFragment = gql`
 export const attributeTranslationDetailsFragment = gql`
   ${attributeChoicesTranslationFragment}
   fragment AttributeTranslationDetailsFragment on AttributeTranslatableContent {
+    translation(languageCode: $language) {
+      id
+      name
+    }
+    attribute {
+      id
+      name
+      inputType
+      choices(
+        first: $firstValues
+        after: $afterValues
+        last: $lastValues
+        before: $beforeValues
+      ) {
+        ...AttributeChoicesTranslationFragment
+      }
+    }
+  }
+`;
+
+export const attributeValueTranslatableContentFragment = gql`
+  ${attributeChoicesTranslationFragment}
+  fragment AttributeValueTranslatableContentFragment on AttributeTranslatableContent {
     translation(languageCode: $language) {
       id
       name

@@ -38,10 +38,33 @@ export interface PageTranslations_translations_edges_node_PageTranslatableConten
   language: PageTranslations_translations_edges_node_PageTranslatableContent_translation_language;
 }
 
+export interface PageTranslations_translations_edges_node_PageTranslatableContent_attributeValues_translation_language {
+  __typename: "LanguageDisplay";
+  code: LanguageCodeEnum;
+  language: string;
+}
+
+export interface PageTranslations_translations_edges_node_PageTranslatableContent_attributeValues_translation {
+  __typename: "AttributeValueTranslation";
+  id: string;
+  name: string;
+  richText: any | null;
+  language: PageTranslations_translations_edges_node_PageTranslatableContent_attributeValues_translation_language;
+}
+
+export interface PageTranslations_translations_edges_node_PageTranslatableContent_attributeValues {
+  __typename: "AttributeValueTranslatableContent";
+  id: string;
+  name: string;
+  richText: any | null;
+  translation: PageTranslations_translations_edges_node_PageTranslatableContent_attributeValues_translation | null;
+}
+
 export interface PageTranslations_translations_edges_node_PageTranslatableContent {
   __typename: "PageTranslatableContent";
   page: PageTranslations_translations_edges_node_PageTranslatableContent_page | null;
   translation: PageTranslations_translations_edges_node_PageTranslatableContent_translation | null;
+  attributeValues: PageTranslations_translations_edges_node_PageTranslatableContent_attributeValues[];
 }
 
 export type PageTranslations_translations_edges_node = PageTranslations_translations_edges_node_ProductTranslatableContent | PageTranslations_translations_edges_node_PageTranslatableContent;

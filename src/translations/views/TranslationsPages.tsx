@@ -6,11 +6,16 @@ import { stringify as stringifyQs } from "qs";
 import React from "react";
 import { useIntl } from "react-intl";
 
+import { getMutationState, maybe } from "../../misc";
 import { LanguageCodeEnum } from "../../types/globalTypes";
 import TranslationsPagesPage from "../components/TranslationsPagesPage";
-import { TypedUpdatePageTranslations } from "../mutations";
+import {
+  TypedUpdateAttributeValueTranslations,
+  TypedUpdatePageTranslations
+} from "../mutations";
 import { usePageTranslationDetails } from "../queries";
 import { PageTranslationInputFieldName } from "../types";
+import { UpdateAttributeValueTranslations } from "../types/UpdateAttributeValueTranslations";
 import { UpdatePageTranslations } from "../types/UpdatePageTranslations";
 import {
   languageEntitiesUrl,
@@ -60,57 +65,112 @@ const TranslationsPages: React.FC<TranslationsPagesProps> = ({
       navigate("?", true);
     }
   };
+
+  const onAttributeValueUpdate = (data: UpdateAttributeValueTranslations) => {
+    if (data.attributeValueTranslate.errors.length === 0) {
+      pageTranslations.refetch();
+      notify({
+        status: "success",
+        text: intl.formatMessage(commonMessages.savedChanges)
+      });
+      navigate("?", true);
+    }
+  };
+
   const onDiscard = () => {
     navigate("?", true);
   };
 
   return (
     <TypedUpdatePageTranslations onCompleted={onUpdate}>
-      {(updateTranslations, updateTranslationsOpts) => {
-        const handleSubmit = (
-          fieldName: PageTranslationInputFieldName,
-          data: string
-        ) => {
-          updateTranslations({
-            variables: {
-              id,
-              input: getParsedTranslationInputData({ data, fieldName }),
-              language: languageCode
-            }
-          });
-        };
-        const translation = pageTranslations?.data?.translation;
+      {(updateTranslations, updateTranslationsOpts) => (
+        <TypedUpdateAttributeValueTranslations
+          onCompleted={onAttributeValueUpdate}
+        >
+          {(
+            updateAttributeValueTranslations,
+            updateAttributeValueTranslationsOpts
+          ) => {
+            const handleSubmit = (
+              fieldName: PageTranslationInputFieldName,
+              data: string | any
+            ) => {
+              const richTextValue =
+                data &&
+                data.blocks &&
+                data.blocks[0].data &&
+                data.blocks[0].data.text;
+              const isRichText = richTextValue !== "undefined";
 
-        return (
-          <TranslationsPagesPage
-            activeField={params.activeField}
-            disabled={
-              pageTranslations.loading || updateTranslationsOpts.loading
-            }
-            languageCode={languageCode}
-            languages={shop?.languages || []}
-            saveButtonState={updateTranslationsOpts.status}
-            onBack={() =>
-              navigate(
-                languageEntitiesUrl(languageCode, {
-                  tab: TranslatableEntities.pages
-                })
+              if (isRichText) {
+                updateAttributeValueTranslations({
+                  variables: {
+                    id,
+                    input: { richText: JSON.stringify(richTextValue) },
+                    language: languageCode
+                  }
+                });
+              } else {
+                updateTranslations({
+                  variables: {
+                    id,
+                    input: getParsedTranslationInputData({ data, fieldName }),
+                    language: languageCode
+                  }
+                });
+              }
+            };
+
+            const saveButtonState = getMutationState(
+              updateTranslationsOpts.called ||
+                updateAttributeValueTranslationsOpts.called,
+              updateTranslationsOpts.loading ||
+                updateAttributeValueTranslationsOpts.loading,
+              maybe(() => updateTranslationsOpts.data.pageTranslate.errors, []),
+              maybe(
+                () =>
+                  updateAttributeValueTranslationsOpts.data
+                    .attributeValueTranslate.errors,
+                []
               )
-            }
-            onEdit={onEdit}
-            onDiscard={onDiscard}
-            onLanguageChange={lang =>
-              navigate(languageEntityUrl(lang, TranslatableEntities.pages, id))
-            }
-            onSubmit={handleSubmit}
-            data={
-              translation?.__typename === "PageTranslatableContent"
-                ? translation
-                : null
-            }
-          />
-        );
-      }}
+            );
+
+            const translation = pageTranslations?.data?.translation;
+
+            return (
+              <TranslationsPagesPage
+                activeField={params.activeField}
+                disabled={
+                  pageTranslations.loading || updateTranslationsOpts.loading
+                }
+                languageCode={languageCode}
+                languages={shop?.languages || []}
+                saveButtonState={saveButtonState}
+                onBack={() =>
+                  navigate(
+                    languageEntitiesUrl(languageCode, {
+                      tab: TranslatableEntities.pages
+                    })
+                  )
+                }
+                onEdit={onEdit}
+                onDiscard={onDiscard}
+                onLanguageChange={lang =>
+                  navigate(
+                    languageEntityUrl(lang, TranslatableEntities.pages, id)
+                  )
+                }
+                onSubmit={handleSubmit}
+                data={
+                  translation?.__typename === "PageTranslatableContent"
+                    ? translation
+                    : null
+                }
+              />
+            );
+          }}
+        </TypedUpdateAttributeValueTranslations>
+      )}
     </TypedUpdatePageTranslations>
   );
 };

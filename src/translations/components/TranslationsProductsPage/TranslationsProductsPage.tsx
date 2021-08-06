@@ -123,6 +123,28 @@ const TranslationsProductsPage: React.FC<TranslationsProductsPageProps> = ({
         onDiscard={onDiscard}
         onSubmit={onSubmit}
       />
+      <TranslationFields
+        activeField={activeField}
+        disabled={disabled}
+        initialState={true}
+        title={intl.formatMessage(commonMessages.attributes)}
+        fields={
+          data?.attributeValues?.map(attrVal => ({
+            displayName: intl.formatMessage({
+              defaultMessage: "Rich Text Attribute"
+            }),
+            name: attrVal?.name,
+            translation: attrVal?.translation?.richText,
+            type: "rich" as "rich",
+            value: attrVal?.richText
+          })) || []
+        }
+        saveButtonState={saveButtonState}
+        onEdit={onEdit}
+        onDiscard={onDiscard}
+        onSubmit={onSubmit}
+      />
+      <CardSpacer />
     </Container>
   );
 };

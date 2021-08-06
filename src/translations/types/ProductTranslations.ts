@@ -31,17 +31,40 @@ export interface ProductTranslations_translations_edges_node_ProductTranslatable
 export interface ProductTranslations_translations_edges_node_ProductTranslatableContent_translation {
   __typename: "ProductTranslation";
   id: string;
+  seoTitle: string | null;
+  seoDescription: string | null;
+  name: string | null;
   description: any | null;
   language: ProductTranslations_translations_edges_node_ProductTranslatableContent_translation_language;
-  name: string | null;
-  seoDescription: string | null;
-  seoTitle: string | null;
+}
+
+export interface ProductTranslations_translations_edges_node_ProductTranslatableContent_attributeValues_translation_language {
+  __typename: "LanguageDisplay";
+  code: LanguageCodeEnum;
+  language: string;
+}
+
+export interface ProductTranslations_translations_edges_node_ProductTranslatableContent_attributeValues_translation {
+  __typename: "AttributeValueTranslation";
+  id: string;
+  name: string;
+  richText: any | null;
+  language: ProductTranslations_translations_edges_node_ProductTranslatableContent_attributeValues_translation_language;
+}
+
+export interface ProductTranslations_translations_edges_node_ProductTranslatableContent_attributeValues {
+  __typename: "AttributeValueTranslatableContent";
+  id: string;
+  name: string;
+  richText: any | null;
+  translation: ProductTranslations_translations_edges_node_ProductTranslatableContent_attributeValues_translation | null;
 }
 
 export interface ProductTranslations_translations_edges_node_ProductTranslatableContent {
   __typename: "ProductTranslatableContent";
   product: ProductTranslations_translations_edges_node_ProductTranslatableContent_product | null;
   translation: ProductTranslations_translations_edges_node_ProductTranslatableContent_translation | null;
+  attributeValues: ProductTranslations_translations_edges_node_ProductTranslatableContent_attributeValues[];
 }
 
 export type ProductTranslations_translations_edges_node = ProductTranslations_translations_edges_node_CollectionTranslatableContent | ProductTranslations_translations_edges_node_ProductTranslatableContent;
