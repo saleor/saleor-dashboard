@@ -247,6 +247,7 @@ export const attributeTranslationDetailsFragment = gql`
       id
       name
       inputType
+      withChoices
       choices(
         first: $firstValues
         after: $afterValues

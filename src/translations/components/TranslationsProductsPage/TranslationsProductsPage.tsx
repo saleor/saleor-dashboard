@@ -125,6 +125,7 @@ const TranslationsProductsPage: React.FC<TranslationsProductsPageProps> = ({
         onDiscard={onDiscard}
         onSubmit={onSubmit}
       />
+      <CardSpacer />
       <TranslationFields
         activeField={activeField}
         disabled={disabled}
