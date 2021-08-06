@@ -19,7 +19,7 @@ export const AvailabilityStatusLabel = ({ channel, type = "" }) => {
           : messages.unpublished,
         {
           date: localizeDate(channel.publicationDate, "L"),
-          type: type || ""
+          type
         }
       )}
       status={
