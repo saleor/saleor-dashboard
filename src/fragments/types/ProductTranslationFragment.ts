@@ -34,6 +34,11 @@ export interface ProductTranslationFragment_translation {
   language: ProductTranslationFragment_translation_language;
 }
 
+export interface ProductTranslationFragment_attributeValues_attributeValue {
+  __typename: "AttributeValue";
+  id: string;
+}
+
 export interface ProductTranslationFragment_attributeValues_translation_language {
   __typename: "LanguageDisplay";
   code: LanguageCodeEnum;
@@ -53,6 +58,7 @@ export interface ProductTranslationFragment_attributeValues {
   id: string;
   name: string;
   richText: any | null;
+  attributeValue: ProductTranslationFragment_attributeValues_attributeValue | null;
   translation: ProductTranslationFragment_attributeValues_translation | null;
 }
 

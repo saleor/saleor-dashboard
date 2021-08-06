@@ -38,6 +38,11 @@ export interface ProductTranslationDetails_translation_ProductTranslatableConten
   language: ProductTranslationDetails_translation_ProductTranslatableContent_translation_language;
 }
 
+export interface ProductTranslationDetails_translation_ProductTranslatableContent_attributeValues_attributeValue {
+  __typename: "AttributeValue";
+  id: string;
+}
+
 export interface ProductTranslationDetails_translation_ProductTranslatableContent_attributeValues_translation_language {
   __typename: "LanguageDisplay";
   code: LanguageCodeEnum;
@@ -57,6 +62,7 @@ export interface ProductTranslationDetails_translation_ProductTranslatableConten
   id: string;
   name: string;
   richText: any | null;
+  attributeValue: ProductTranslationDetails_translation_ProductTranslatableContent_attributeValues_attributeValue | null;
   translation: ProductTranslationDetails_translation_ProductTranslatableContent_attributeValues_translation | null;
 }
 

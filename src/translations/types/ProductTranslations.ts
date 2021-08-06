@@ -38,6 +38,11 @@ export interface ProductTranslations_translations_edges_node_ProductTranslatable
   language: ProductTranslations_translations_edges_node_ProductTranslatableContent_translation_language;
 }
 
+export interface ProductTranslations_translations_edges_node_ProductTranslatableContent_attributeValues_attributeValue {
+  __typename: "AttributeValue";
+  id: string;
+}
+
 export interface ProductTranslations_translations_edges_node_ProductTranslatableContent_attributeValues_translation_language {
   __typename: "LanguageDisplay";
   code: LanguageCodeEnum;
@@ -57,6 +62,7 @@ export interface ProductTranslations_translations_edges_node_ProductTranslatable
   id: string;
   name: string;
   richText: any | null;
+  attributeValue: ProductTranslations_translations_edges_node_ProductTranslatableContent_attributeValues_attributeValue | null;
   translation: ProductTranslations_translations_edges_node_ProductTranslatableContent_attributeValues_translation | null;
 }
 

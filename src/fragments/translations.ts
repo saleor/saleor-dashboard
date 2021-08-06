@@ -69,6 +69,9 @@ export const productTranslationFragment = gql`
       id
       name
       richText
+      attributeValue {
+        id
+      }
       translation(languageCode: $language) {
         id
         name

@@ -16,8 +16,6 @@ import {
 } from "../mutations";
 import { usePageTranslationDetails } from "../queries";
 import { PageTranslationInputFieldName, TranslationField } from "../types";
-import { UpdateAttributeValueTranslations } from "../types/UpdateAttributeValueTranslations";
-import { UpdatePageTranslations } from "../types/UpdatePageTranslations";
 import {
   languageEntitiesUrl,
   languageEntityUrl,
@@ -56,19 +54,9 @@ const TranslationsPages: React.FC<TranslationsPagesProps> = ({
         }),
       true
     );
-  const onUpdate = (data: UpdatePageTranslations) => {
-    if (data.pageTranslate.errors.length === 0) {
-      pageTranslations.refetch();
-      notify({
-        status: "success",
-        text: intl.formatMessage(commonMessages.savedChanges)
-      });
-      navigate("?", true);
-    }
-  };
 
-  const onAttributeValueUpdate = (data: UpdateAttributeValueTranslations) => {
-    if (data.attributeValueTranslate.errors.length === 0) {
+  const onUpdate = (errors: unknown[]) => {
+    if (errors.length === 0) {
       pageTranslations.refetch();
       notify({
         status: "success",
@@ -83,10 +71,12 @@ const TranslationsPages: React.FC<TranslationsPagesProps> = ({
   };
 
   return (
-    <TypedUpdatePageTranslations onCompleted={onUpdate}>
+    <TypedUpdatePageTranslations
+      onCompleted={data => onUpdate(data.pageTranslate.errors)}
+    >
       {(updateTranslations, updateTranslationsOpts) => (
         <TypedUpdateAttributeValueTranslations
-          onCompleted={onAttributeValueUpdate}
+          onCompleted={data => onUpdate(data.attributeValueTranslate.errors)}
         >
           {(
             updateAttributeValueTranslations,

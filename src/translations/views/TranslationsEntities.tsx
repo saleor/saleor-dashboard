@@ -176,7 +176,8 @@ const TranslationsEntities: React.FC<TranslationsEntitiesProps> = ({
           }}
         </TypedCategoryTranslations>
       ) : params.tab === "products" ? (
-        <TypedProductTranslations variables={queryVariables}>
+        // FIXME: Remove hardcoded variable
+        <TypedProductTranslations variables={{ ...queryVariables, first: 5 }}>
           {({ data, loading }) => {
             const { loadNextPage, loadPreviousPage, pageInfo } = paginate(
               data?.translations?.pageInfo,

@@ -19,6 +19,7 @@ import TranslationFields from "../TranslationFields";
 export interface TranslationsProductsPageProps
   extends TranslationsEntitiesPageProps {
   data: ProductTranslationFragment;
+  onAttributeValueSubmit: TranslationsEntitiesPageProps["onSubmit"];
 }
 
 const TranslationsProductsPage: React.FC<TranslationsProductsPageProps> = ({
@@ -32,7 +33,8 @@ const TranslationsProductsPage: React.FC<TranslationsProductsPageProps> = ({
   onDiscard,
   onEdit,
   onLanguageChange,
-  onSubmit
+  onSubmit,
+  onAttributeValueSubmit
 }) => {
   const intl = useIntl();
 
@@ -130,11 +132,10 @@ const TranslationsProductsPage: React.FC<TranslationsProductsPageProps> = ({
         title={intl.formatMessage(commonMessages.attributes)}
         fields={
           data?.attributeValues?.map(attrVal => ({
-            displayName: intl.formatMessage({
-              defaultMessage: "Rich Text Attribute"
-            }),
+            id: attrVal.attributeValue.id,
+            displayName: attrVal.name,
             name: attrVal?.name,
-            translation: attrVal?.translation?.richText,
+            translation: attrVal?.translation?.richText || null,
             type: "rich" as "rich",
             value: attrVal?.richText
           })) || []
@@ -142,7 +143,7 @@ const TranslationsProductsPage: React.FC<TranslationsProductsPageProps> = ({
         saveButtonState={saveButtonState}
         onEdit={onEdit}
         onDiscard={onDiscard}
-        onSubmit={onSubmit}
+        onSubmit={onAttributeValueSubmit}
       />
       <CardSpacer />
     </Container>
