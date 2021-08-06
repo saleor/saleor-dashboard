@@ -3,11 +3,11 @@ import PageTitleWithStatusChip from "@saleor/components/PageTitleWithStatusChip"
 import { StatusType } from "@saleor/components/StatusChip/types";
 import { sectionNames } from "@saleor/intl";
 import { Backlink } from "@saleor/macaw-ui";
-import React, { useContext } from "react";
+import React from "react";
 import { useIntl } from "react-intl";
 
 import { giftCardsListTableMessages as tableMessages } from "../GiftCardsList/messages";
-import { GiftCardDetailsContext } from "./providers/GiftCardDetailsProvider";
+import useGiftCardDetails from "./hooks/useGiftCardDetails";
 
 interface GiftCardUpdatePageHeaderProps {
   onBack: () => void;
@@ -17,7 +17,7 @@ const GiftCardUpdatePageHeader: React.FC<GiftCardUpdatePageHeaderProps> = ({
   onBack
 }) => {
   const intl = useIntl();
-  const { giftCard } = useContext(GiftCardDetailsContext);
+  const { giftCard } = useGiftCardDetails();
 
   if (!giftCard) {
     return null;

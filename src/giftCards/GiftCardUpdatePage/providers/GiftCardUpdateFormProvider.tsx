@@ -25,11 +25,19 @@ export type GiftCardUpdateFormData = Omit<
   "balanceAmount" | "balanceCurrency"
 >;
 
-export interface GiftCardUpdateFormConsumerProps
-  extends UseFormResult<GiftCardUpdateFormData> {
+export interface GiftCardUpdateFormConsumerData
+  extends GiftCardUpdateFormErrors {
   opts: MutationResultWithOpts<GiftCardUpdate>;
+}
+
+export interface GiftCardUpdateFormErrors {
   formErrors: Record<"tag" | "expiryDate" | "expiryPeriod", GiftCardError>;
 }
+
+export type GiftCardUpdateFormConsumerProps = UseFormResult<
+  GiftCardUpdateFormData
+> &
+  GiftCardUpdateFormConsumerData;
 
 export const GiftCardUpdateFormContext = createContext<
   GiftCardUpdateFormConsumerProps
@@ -58,7 +66,7 @@ const GiftCardUpdateFormProvider: React.FC<GiftCardUpdateFormProviderProps> = ({
       expiryDate,
       expiryType,
       expiryPeriodType: expiryPeriod?.type,
-      expiryPeriodAmount: expiryPeriod?.amount.toString()
+      expiryPeriodAmount: expiryPeriod?.amount
     };
   };
 

@@ -1,17 +1,17 @@
 import { Card, CardContent } from "@material-ui/core";
 import CardTitle from "@saleor/components/CardTitle";
 import Skeleton from "@saleor/components/Skeleton";
-import React, { useContext } from "react";
+import React from "react";
 import { useIntl } from "react-intl";
 
-import { GiftCardDetailsContext } from "../providers/GiftCardDetailsProvider";
+import useGiftCardDetails from "../hooks/useGiftCardDetails";
 import GiftCardUpdateInfoCardContent from "./GiftCardUpdateInfoCardContent";
 import { giftCardUpdateInfoCardMessages as messages } from "./messages";
 
 const GiftCardUpdateInfoCard: React.FC = () => {
   const intl = useIntl();
 
-  const { loading } = useContext(GiftCardDetailsContext);
+  const { loading } = useGiftCardDetails();
 
   return (
     <Card>

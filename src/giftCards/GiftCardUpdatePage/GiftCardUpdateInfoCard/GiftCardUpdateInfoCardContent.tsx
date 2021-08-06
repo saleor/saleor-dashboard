@@ -11,10 +11,10 @@ import { getOrderNumberLinkObject } from "@saleor/orders/components/OrderHistory
 import { productUrl } from "@saleor/products/urls";
 import { staffMemberDetailsUrl } from "@saleor/staff/urls";
 import { GiftCardEventsEnum } from "@saleor/types/globalTypes";
-import React, { useContext } from "react";
+import React from "react";
 import { MessageDescriptor, useIntl } from "react-intl";
 
-import { GiftCardDetailsContext } from "../providers/GiftCardDetailsProvider";
+import useGiftCardDetails from "../hooks/useGiftCardDetails";
 import { giftCardUpdateInfoCardMessages as messages } from "./messages";
 
 const PLACEHOLDER = "-";
@@ -24,7 +24,7 @@ const GiftCardUpdateInfoCardContent: React.FC = () => {
   const localizeDate = useDateLocalize();
   const navigate = useNavigator();
 
-  const { giftCard } = useContext(GiftCardDetailsContext);
+  const { giftCard } = useGiftCardDetails();
 
   const {
     created,
