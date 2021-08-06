@@ -78,10 +78,7 @@ const TranslationsProducts: React.FC<TranslationsProductsProps> = ({
         <TypedUpdateAttributeValueTranslations
           onCompleted={data => onUpdate(data.attributeValueTranslate.errors)}
         >
-          {(
-            updateAttributeValueTranslations
-            // updateAttributeValueTranslationsOpts
-          ) => {
+          {updateAttributeValueTranslations => {
             const handleSubmit = (
               { name: fieldName }: TranslationField<TranslationInputFieldName>,
               data: string

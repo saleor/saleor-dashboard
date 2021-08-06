@@ -78,10 +78,7 @@ const TranslationsPages: React.FC<TranslationsPagesProps> = ({
         <TypedUpdateAttributeValueTranslations
           onCompleted={data => onUpdate(data.attributeValueTranslate.errors)}
         >
-          {(
-            updateAttributeValueTranslations,
-            updateAttributeValueTranslationsOpts
-          ) => {
+          {updateAttributeValueTranslations => {
             const handleSubmit = (
               {
                 name: fieldName
@@ -113,20 +110,6 @@ const TranslationsPages: React.FC<TranslationsPagesProps> = ({
               });
             };
 
-            const saveButtonState = getMutationState(
-              updateTranslationsOpts.called ||
-                updateAttributeValueTranslationsOpts.called,
-              updateTranslationsOpts.loading ||
-                updateAttributeValueTranslationsOpts.loading,
-              maybe(() => updateTranslationsOpts.data.pageTranslate.errors, []),
-              maybe(
-                () =>
-                  updateAttributeValueTranslationsOpts.data
-                    .attributeValueTranslate.errors,
-                []
-              )
-            );
-
             const translation = pageTranslations?.data?.translation;
 
             return (
@@ -137,7 +120,7 @@ const TranslationsPages: React.FC<TranslationsPagesProps> = ({
                 }
                 languageCode={languageCode}
                 languages={shop?.languages || []}
-                saveButtonState={saveButtonState}
+                saveButtonState={updateTranslationsOpts.status}
                 onBack={() =>
                   navigate(
                     languageEntitiesUrl(languageCode, {
