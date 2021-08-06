@@ -7,7 +7,6 @@ import { stringify as stringifyQs } from "qs";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import { getMutationState, maybe } from "../../misc";
 import { LanguageCodeEnum } from "../../types/globalTypes";
 import TranslationsPagesPage from "../components/TranslationsPagesPage";
 import {
