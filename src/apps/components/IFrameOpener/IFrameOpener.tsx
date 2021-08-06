@@ -2,33 +2,19 @@ import { Modal } from "@material-ui/core";
 import { AppFragment } from "@saleor/fragments/types/AppFragment";
 import React from "react";
 
-import useAppConfigLoader from "../AppDetailsSettingsPage/useAppConfigLoader";
-import { useStyles } from "./styles";
+import { AppFrame } from "../AppFrame";
 
 interface Props {
   app: AppFragment;
+  src: string;
   backendUrl: string;
-  onLoad(): void;
-  onError(): void;
+  onLoad?(): void;
+  onError?(): void;
 }
-
-const AppContainer: React.FC<Props> = ({
-  app,
-  backendUrl,
-  onError,
-  onLoad
-}) => {
-  const classes = useStyles();
-  const frameContainer = useAppConfigLoader(app, backendUrl, {
-    onLoad,
-    onError
-  });
-
-  return <div ref={frameContainer} className={classes.iframeContainer} />;
-};
 
 export const IFrameOpener: React.FC<Props> = ({
   app,
+  src,
   backendUrl,
   children
 }) => {
@@ -47,12 +33,10 @@ export const IFrameOpener: React.FC<Props> = ({
         }}
       >
         {open && (
-          // <iframe src={backendUrl} width={600} height={600} />
-          <AppContainer
-            app={app}
-            backendUrl="extend-install-app-logic-to-handle-extensions.api.saleor.rocks"
-            onLoad={() => console.log("app loaded")}
-            onError={() => console.log("app error")}
+          <AppFrame
+            src={src}
+            appToken={app.accessToken}
+            backendHost={backendUrl}
           />
         )}
       </Modal>

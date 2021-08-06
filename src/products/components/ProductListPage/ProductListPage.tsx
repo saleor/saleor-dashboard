@@ -1,6 +1,7 @@
-import { Button, Card } from "@material-ui/core";
+import { Card } from "@material-ui/core";
 import { IFrameOpener } from "@saleor/apps/components/IFrameOpener/IFrameOpener";
 import { useExtensions } from "@saleor/apps/hooks";
+import { ButtonWithSelect } from "@saleor/components/ButtonWithSelect";
 import CardMenu from "@saleor/components/CardMenu";
 import ColumnPicker, {
   ColumnPickerChoice
@@ -195,20 +196,19 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
           onFetchMore={onFetchMore}
           onSave={handleSave}
         />
-        <Button
+        <ButtonWithSelect
+          options={extensionMenuItems}
+          data-test="add-product"
           disabled={limitReached}
           onClick={onAdd}
-          color="primary"
-          variant="contained"
-          data-test="add-product"
         >
           <FormattedMessage
             defaultMessage="Create Product"
             description="button"
           />
-        </Button>
+        </ButtonWithSelect>
         {create.map(({ app, url, label }) => (
-          <IFrameOpener app={app} backendUrl={url}>
+          <IFrameOpener key={app.id} app={app} src={url} backendUrl={url}>
             {label}
           </IFrameOpener>
         ))}
