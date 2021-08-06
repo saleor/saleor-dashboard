@@ -34,6 +34,11 @@ export interface PageTranslationFragment_translation {
   language: PageTranslationFragment_translation_language;
 }
 
+export interface PageTranslationFragment_attributeValues_attributeValue {
+  __typename: "AttributeValue";
+  id: string;
+}
+
 export interface PageTranslationFragment_attributeValues_translation_language {
   __typename: "LanguageDisplay";
   code: LanguageCodeEnum;
@@ -53,6 +58,7 @@ export interface PageTranslationFragment_attributeValues {
   id: string;
   name: string;
   richText: any | null;
+  attributeValue: PageTranslationFragment_attributeValues_attributeValue | null;
   translation: PageTranslationFragment_attributeValues_translation | null;
 }
 

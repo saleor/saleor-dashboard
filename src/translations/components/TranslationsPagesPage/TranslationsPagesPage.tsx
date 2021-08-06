@@ -19,6 +19,7 @@ import TranslationFields from "../TranslationFields";
 export interface TranslationsPagesPageProps
   extends TranslationsEntitiesPageProps {
   data: PageTranslationFragment;
+  onAttributeValueSubmit: TranslationsEntitiesPageProps["onSubmit"];
 }
 
 const TranslationsPagesPage: React.FC<TranslationsPagesPageProps> = ({
@@ -32,7 +33,8 @@ const TranslationsPagesPage: React.FC<TranslationsPagesPageProps> = ({
   onDiscard,
   onEdit,
   onLanguageChange,
-  onSubmit
+  onSubmit,
+  onAttributeValueSubmit
 }) => {
   const intl = useIntl();
 
@@ -132,15 +134,10 @@ const TranslationsPagesPage: React.FC<TranslationsPagesPageProps> = ({
         title={intl.formatMessage(commonMessages.attributes)}
         fields={
           data?.attributeValues?.map(attrVal => ({
-            displayName: attrVal.richText
-              ? intl.formatMessage({
-                  defaultMessage: "Rich Text Attribute"
-                })
-              : intl.formatMessage({
-                  defaultMessage: "Attribute"
-                }),
+            id: attrVal.attributeValue.id,
+            displayName: attrVal.name,
             name: attrVal?.name,
-            translation: attrVal?.translation?.richText,
+            translation: attrVal?.translation?.richText || null,
             type: "rich" as "rich",
             value: attrVal?.richText
           })) || []
@@ -148,7 +145,7 @@ const TranslationsPagesPage: React.FC<TranslationsPagesPageProps> = ({
         saveButtonState={saveButtonState}
         onEdit={onEdit}
         onDiscard={onDiscard}
-        onSubmit={onSubmit}
+        onSubmit={onAttributeValueSubmit}
       />
     </Container>
   );

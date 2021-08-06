@@ -11,7 +11,7 @@ import { LanguageCodeEnum } from "../../types/globalTypes";
 import TranslationsCategoriesPage from "../components/TranslationsCategoriesPage";
 import { TypedUpdateCategoryTranslations } from "../mutations";
 import { useCategoryTranslationDetails } from "../queries";
-import { TranslationInputFieldName } from "../types";
+import { TranslationField, TranslationInputFieldName } from "../types";
 import { UpdateCategoryTranslations } from "../types/UpdateCategoryTranslations";
 import {
   languageEntitiesUrl,
@@ -69,13 +69,16 @@ const TranslationsCategories: React.FC<TranslationsCategoriesProps> = ({
     <TypedUpdateCategoryTranslations onCompleted={onUpdate}>
       {(updateTranslations, updateTranslationsOpts) => {
         const handleSubmit = (
-          fieldName: TranslationInputFieldName,
+          { name: fieldName }: TranslationField<TranslationInputFieldName>,
           data: string | OutputData
         ) => {
           updateTranslations({
             variables: {
               id,
-              input: getParsedTranslationInputData({ data, fieldName }),
+              input: getParsedTranslationInputData({
+                data,
+                fieldName
+              }),
               language: languageCode
             }
           });

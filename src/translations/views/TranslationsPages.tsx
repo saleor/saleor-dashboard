@@ -1,3 +1,4 @@
+import { OutputData } from "@editorjs/editorjs";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import useShop from "@saleor/hooks/useShop";
@@ -14,7 +15,7 @@ import {
   TypedUpdatePageTranslations
 } from "../mutations";
 import { usePageTranslationDetails } from "../queries";
-import { PageTranslationInputFieldName } from "../types";
+import { PageTranslationInputFieldName, TranslationField } from "../types";
 import { UpdateAttributeValueTranslations } from "../types/UpdateAttributeValueTranslations";
 import { UpdatePageTranslations } from "../types/UpdatePageTranslations";
 import {
@@ -92,33 +93,34 @@ const TranslationsPages: React.FC<TranslationsPagesProps> = ({
             updateAttributeValueTranslationsOpts
           ) => {
             const handleSubmit = (
-              fieldName: PageTranslationInputFieldName,
+              {
+                name: fieldName
+              }: TranslationField<PageTranslationInputFieldName>,
               data: string | any
             ) => {
-              const richTextValue =
-                data &&
-                data.blocks &&
-                data.blocks[0].data &&
-                data.blocks[0].data.text;
-              const isRichText = richTextValue !== "undefined";
+              updateTranslations({
+                variables: {
+                  id,
+                  input: getParsedTranslationInputData({
+                    data,
+                    fieldName
+                  }),
+                  language: languageCode
+                }
+              });
+            };
 
-              if (isRichText) {
-                updateAttributeValueTranslations({
-                  variables: {
-                    id,
-                    input: { richText: JSON.stringify(richTextValue) },
-                    language: languageCode
-                  }
-                });
-              } else {
-                updateTranslations({
-                  variables: {
-                    id,
-                    input: getParsedTranslationInputData({ data, fieldName }),
-                    language: languageCode
-                  }
-                });
-              }
+            const handleAttributeValueSubmit = (
+              { id }: TranslationField<PageTranslationInputFieldName>,
+              data: OutputData
+            ) => {
+              updateAttributeValueTranslations({
+                variables: {
+                  id,
+                  input: { richText: JSON.stringify(data) },
+                  language: languageCode
+                }
+              });
             };
 
             const saveButtonState = getMutationState(
@@ -161,6 +163,7 @@ const TranslationsPages: React.FC<TranslationsPagesProps> = ({
                   )
                 }
                 onSubmit={handleSubmit}
+                onAttributeValueSubmit={handleAttributeValueSubmit}
                 data={
                   translation?.__typename === "PageTranslatableContent"
                     ? translation

@@ -158,6 +158,9 @@ export const pageTranslationFragment = gql`
       id
       name
       richText
+      attributeValue {
+        id
+      }
       translation(languageCode: $language) {
         id
         name

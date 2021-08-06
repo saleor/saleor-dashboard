@@ -47,7 +47,7 @@ export interface TranslationFieldsProps {
   pagination?: Pagination;
   onEdit: (field: string) => void;
   onDiscard: () => void;
-  onSubmit: (field: string, data: string | OutputData) => void;
+  onSubmit: (field: TranslationField, data: string | OutputData) => void;
 }
 
 const useStyles = makeStyles(
@@ -215,7 +215,7 @@ const TranslationFields: React.FC<TranslationFieldsProps> = props => {
                         initial={field.translation}
                         saveButtonState={saveButtonState}
                         onDiscard={onDiscard}
-                        onSubmit={data => onSubmit(field.name, data)}
+                        onSubmit={data => onSubmit(field, data)}
                       />
                     ) : field.type === "long" ? (
                       <TranslationFieldsLong
@@ -224,7 +224,7 @@ const TranslationFields: React.FC<TranslationFieldsProps> = props => {
                         initial={field.translation}
                         saveButtonState={saveButtonState}
                         onDiscard={onDiscard}
-                        onSubmit={data => onSubmit(field.name, data)}
+                        onSubmit={data => onSubmit(field, data)}
                       />
                     ) : (
                       <TranslationFieldsRich
@@ -233,7 +233,7 @@ const TranslationFields: React.FC<TranslationFieldsProps> = props => {
                         initial={field.translation}
                         saveButtonState={saveButtonState}
                         onDiscard={onDiscard}
-                        onSubmit={data => onSubmit(field.name, data)}
+                        onSubmit={data => onSubmit(field, data)}
                       />
                     )
                   ) : (

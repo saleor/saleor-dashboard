@@ -40,6 +40,11 @@ export interface UpdatePageTranslations_pageTranslate_page_translation {
   language: UpdatePageTranslations_pageTranslate_page_translation_language;
 }
 
+export interface UpdatePageTranslations_pageTranslate_page_attributeValues_attributeValue {
+  __typename: "AttributeValue";
+  id: string;
+}
+
 export interface UpdatePageTranslations_pageTranslate_page_attributeValues_translation_language {
   __typename: "LanguageDisplay";
   code: LanguageCodeEnum;
@@ -59,6 +64,7 @@ export interface UpdatePageTranslations_pageTranslate_page_attributeValues {
   id: string;
   name: string;
   richText: any | null;
+  attributeValue: UpdatePageTranslations_pageTranslate_page_attributeValues_attributeValue | null;
   translation: UpdatePageTranslations_pageTranslate_page_attributeValues_translation | null;
 }
 

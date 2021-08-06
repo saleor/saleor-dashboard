@@ -25,7 +25,7 @@ export const messages = defineMessages({
   }
 });
 
-export interface TranslationsProductTypesPageProps
+export interface TranslationsAttributesPageProps
   extends TranslationsEntitiesPageProps {
   data: AttributeTranslationDetailsFragment;
   settings?: ListSettings;
@@ -44,7 +44,7 @@ export const fieldNames = {
   richTextValue: "attributeRichTextValue"
 };
 
-const TranslationsProductTypesPage: React.FC<TranslationsProductTypesPageProps> = ({
+const TranslationsAttributesPage: React.FC<TranslationsAttributesPageProps> = ({
   activeField,
   disabled,
   languages,
@@ -169,5 +169,5 @@ const TranslationsProductTypesPage: React.FC<TranslationsProductTypesPageProps> 
     </Container>
   );
 };
-TranslationsProductTypesPage.displayName = "TranslationsProductTypesPage";
-export default TranslationsProductTypesPage;
+TranslationsAttributesPage.displayName = "TranslationsAttributesPage";
+export default TranslationsAttributesPage;
