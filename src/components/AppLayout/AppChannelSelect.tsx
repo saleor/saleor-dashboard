@@ -23,13 +23,11 @@ const useStyles = makeStyles(
 
 export interface AppChannelSelectProps extends ChannelProps {
   channels: ChannelFragment[];
-  disabled: boolean;
   onChannelSelect: (id: string) => void;
 }
 
 const AppChannelSelect: React.FC<AppChannelSelectProps> = ({
   channels,
-  disabled,
   onChannelSelect,
   selectedChannelId
 }) => {
@@ -40,7 +38,6 @@ const AppChannelSelect: React.FC<AppChannelSelectProps> = ({
       <SingleSelectField
         testId="app-channel-select"
         choices={mapNodeToChoice(channels)}
-        disabled={disabled}
         value={selectedChannelId}
         onChange={event => onChannelSelect(event.target.value)}
       />
