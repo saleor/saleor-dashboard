@@ -7,7 +7,10 @@ import { AttributeTranslationDetailsFragment } from "@saleor/fragments/types/Att
 import { commonMessages, sectionNames } from "@saleor/intl";
 import { Backlink } from "@saleor/macaw-ui";
 import { getStringOrPlaceholder } from "@saleor/misc";
-import { TranslationsEntitiesPageProps } from "@saleor/translations/types";
+import {
+  TranslationField,
+  TranslationsEntitiesPageProps
+} from "@saleor/translations/types";
 import { ListSettings } from "@saleor/types";
 import React from "react";
 import { defineMessages, useIntl } from "react-intl";
@@ -16,7 +19,7 @@ import {
   AttributeInputTypeEnum,
   LanguageCodeEnum
 } from "../../../types/globalTypes";
-import TranslationFields, { TranslationField } from "../TranslationFields";
+import TranslationFields from "../TranslationFields";
 
 export const messages = defineMessages({
   values: {

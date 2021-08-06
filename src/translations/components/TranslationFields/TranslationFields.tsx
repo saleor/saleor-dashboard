@@ -15,6 +15,7 @@ import Skeleton from "@saleor/components/Skeleton";
 import TablePagination from "@saleor/components/TablePagination";
 import { buttonMessages } from "@saleor/intl";
 import { makeStyles } from "@saleor/macaw-ui";
+import { TranslationField } from "@saleor/translations/types";
 import { ListProps } from "@saleor/types";
 import classNames from "classnames";
 import React from "react";
@@ -23,14 +24,6 @@ import { FormattedMessage } from "react-intl";
 import TranslationFieldsLong from "./TranslationFieldsLong";
 import TranslationFieldsRich from "./TranslationFieldsRich";
 import TranslationFieldsShort from "./TranslationFieldsShort";
-
-export interface TranslationField {
-  displayName: string;
-  name: string;
-  translation: string;
-  type: "short" | "long" | "rich";
-  value: string;
-}
 
 type Pagination = Pick<
   ListProps,
