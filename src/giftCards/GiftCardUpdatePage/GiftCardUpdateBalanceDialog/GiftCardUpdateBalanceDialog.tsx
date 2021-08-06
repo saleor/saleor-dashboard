@@ -6,12 +6,12 @@ import { IMessage } from "@saleor/components/messages";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { getFormErrors } from "@saleor/utils/errors";
 import commonErrorMessages from "@saleor/utils/errors/common";
-import React, { useContext } from "react";
+import React from "react";
 import { useIntl } from "react-intl";
 
 import { giftCardsListTableMessages as tableMessages } from "../../GiftCardsList/messages";
+import useGiftCardDetails from "../hooks/useGiftCardDetails";
 import { useGiftCardUpdateMutation } from "../mutations";
-import { GiftCardDetailsContext } from "../providers/GiftCardDetailsProvider";
 import { GiftCardUpdatePageActionParamsEnum } from "../types";
 import { GiftCardUpdate } from "../types/GiftCardUpdate";
 import { giftCardUpdateBalanceDialogMessages as messages } from "./messages";
@@ -41,7 +41,7 @@ const GiftCardUpdateBalanceDialog: React.FC<GiftCardUpdateBalanceDialogProps> = 
       id,
       currentBalance: { amount, currency }
     }
-  } = useContext(GiftCardDetailsContext);
+  } = useGiftCardDetails();
 
   const initialFormData: GiftCardBalanceUpdateFormData = {
     balanceAmount: amount

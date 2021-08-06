@@ -4,11 +4,11 @@ import CardTitle from "@saleor/components/CardTitle";
 import Skeleton from "@saleor/components/Skeleton";
 import GiftCardExpirySelect from "@saleor/giftCards/components/GiftCardExpirySelect";
 import GiftCardTagInput from "@saleor/giftCards/components/GiftCardTagInput";
-import React, { useContext } from "react";
+import React from "react";
 import { useIntl } from "react-intl";
 
-import { GiftCardDetailsContext } from "../providers/GiftCardDetailsProvider";
-import { GiftCardUpdateFormContext } from "../providers/GiftCardUpdateFormProvider";
+import useGiftCardDetails from "../hooks/useGiftCardDetails";
+import useGiftCardUpdateForm from "../hooks/useGiftCardUpdateForm";
 import GiftCardUpdateDetailsBalanceSection from "./GiftCardUpdateDetailsBalanceSection";
 import { giftCardUpdateDetailsCardMessages as messages } from "./messages";
 
@@ -21,13 +21,13 @@ const GiftCardUpdateDetailsCard: React.FC<GiftCardUpdateDetailsCardProps> = ({
 }) => {
   const intl = useIntl();
 
-  const { loading } = useContext(GiftCardDetailsContext);
+  const { loading } = useGiftCardDetails();
 
   const {
     change,
     data: { expiryType, expiryPeriodAmount, expiryPeriodType, tag },
     formErrors
-  } = useContext(GiftCardUpdateFormContext);
+  } = useGiftCardUpdateForm();
 
   return (
     <Card>
