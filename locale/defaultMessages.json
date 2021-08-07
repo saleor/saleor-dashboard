@@ -7257,6 +7257,10 @@
     "context": "event",
     "string": "Order created"
   },
+  "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_36047288": {
+    "context": "event",
+    "string": "Translation created"
+  },
   "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_3617444329": {
     "context": "event",
     "string": "Order cancelled"
@@ -7296,6 +7300,10 @@
   "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_4292269645": {
     "context": "event",
     "string": "Process payment"
+  },
+  "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_482477254": {
+    "context": "event",
+    "string": "Translation updated"
   },
   "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_679080833": {
     "context": "event",

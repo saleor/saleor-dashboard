@@ -1044,6 +1044,8 @@ export enum WebhookEventTypeEnum {
   PRODUCT_VARIANT_CREATED = "PRODUCT_VARIANT_CREATED",
   PRODUCT_VARIANT_DELETED = "PRODUCT_VARIANT_DELETED",
   PRODUCT_VARIANT_UPDATED = "PRODUCT_VARIANT_UPDATED",
+  TRANSLATION_CREATED = "TRANSLATION_CREATED",
+  TRANSLATION_UPDATED = "TRANSLATION_UPDATED",
 }
 
 export enum WeightUnitsEnum {
@@ -1126,16 +1128,15 @@ export interface AttributeFilterInput {
   type?: AttributeTypeEnum | null;
   inCollection?: string | null;
   inCategory?: string | null;
+  channel?: string | null;
 }
 
 export interface AttributeInput {
   slug: string;
   values?: (string | null)[] | null;
   valuesRange?: IntRangeInput | null;
-  dateTimeRange?: DateTimeRangeInput | null;
-  dateRange?: DateRangeInput | null;
-  dateTime?: any | null;
-  date?: any | null;
+  dateTime?: DateTimeRangeInput | null;
+  date?: DateRangeInput | null;
   boolean?: boolean | null;
 }
 
@@ -1184,7 +1185,7 @@ export interface AttributeValueTranslationInput {
 
 export interface BulkAttributeValueInput {
   id?: string | null;
-  values?: (string | null)[] | null;
+  values?: string[] | null;
   boolean?: boolean | null;
 }
 
@@ -1211,6 +1212,7 @@ export interface CategoryInput {
 
 export interface CategorySortingInput {
   direction: OrderDirection;
+  channel?: string | null;
   field: CategorySortField;
 }
 
@@ -1256,6 +1258,7 @@ export interface CollectionFilterInput {
   search?: string | null;
   metadata?: (MetadataFilter | null)[] | null;
   ids?: (string | null)[] | null;
+  channel?: string | null;
 }
 
 export interface CollectionInput {
@@ -1271,6 +1274,7 @@ export interface CollectionInput {
 
 export interface CollectionSortingInput {
   direction: OrderDirection;
+  channel?: string | null;
   field: CollectionSortField;
 }
 
@@ -1682,6 +1686,7 @@ export interface ProductFilterInput {
   minimalPrice?: PriceRangeInput | null;
   productTypes?: (string | null)[] | null;
   ids?: (string | null)[] | null;
+  channel?: string | null;
 }
 
 export interface ProductInput {
@@ -1700,6 +1705,7 @@ export interface ProductInput {
 
 export interface ProductOrder {
   direction: OrderDirection;
+  channel?: string | null;
   attributeId?: string | null;
   field?: ProductOrderField | null;
 }
@@ -1791,6 +1797,7 @@ export interface SaleFilterInput {
   saleType?: DiscountValueTypeEnum | null;
   started?: DateTimeRangeInput | null;
   search?: string | null;
+  metadata?: (MetadataFilter | null)[] | null;
 }
 
 export interface SaleInput {
@@ -1806,6 +1813,7 @@ export interface SaleInput {
 
 export interface SaleSortingInput {
   direction: OrderDirection;
+  channel?: string | null;
   field: SaleSortField;
 }
 
@@ -1972,6 +1980,7 @@ export interface VoucherFilterInput {
   discountType?: (VoucherDiscountType | null)[] | null;
   started?: DateTimeRangeInput | null;
   search?: string | null;
+  metadata?: (MetadataFilter | null)[] | null;
 }
 
 export interface VoucherInput {
@@ -1994,6 +2003,7 @@ export interface VoucherInput {
 
 export interface VoucherSortingInput {
   direction: OrderDirection;
+  channel?: string | null;
   field: VoucherSortField;
 }
 
