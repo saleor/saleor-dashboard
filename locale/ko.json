@@ -70,7 +70,7 @@
     "string": "{amount, plural,one {One payment to capture} other {{amount} Payments to capture}}"
   },
   "homeNotificationTableProducts": {
-    "string": "{amount, plural,one {One product out of stock} other {{amount} Products out of stock}}"
+    "string": "{amount, plural,one {One product out of stock} other {{amount} 상품 재고 없음}}"
   },
   "homeNotificationsNoPayments": {
     "string": "확정이 필요한 결제 내역이 없습니다."
@@ -4447,7 +4447,7 @@
   },
   "src_dot_productTypes": {
     "context": "product types section name",
-    "string": "Product Types"
+    "string": "상품 타입"
   },
   "src_dot_productTypes_dot_components_dot_ProductTypeAttributes_dot_1192828581": {
     "string": "No attributes found"
@@ -4488,7 +4488,7 @@
   },
   "src_dot_productTypes_dot_components_dot_ProductTypeListPage_dot_1776073799": {
     "context": "tab name",
-    "string": "All Product Types"
+    "string": "전체 상품 타입"
   },
   "src_dot_productTypes_dot_components_dot_ProductTypeListPage_dot_3420445375": {
     "string": "Search Product Type"
@@ -4514,7 +4514,7 @@
     "string": "Type"
   },
   "src_dot_productTypes_dot_components_dot_ProductTypeList_dot_1126553969": {
-    "string": "No product types found"
+    "string": "상품 타입이 없습니다"
   },
   "src_dot_productTypes_dot_components_dot_ProductTypeList_dot_1211157042": {
     "context": "product type",
@@ -4563,22 +4563,22 @@
   },
   "src_dot_productTypes_dot_views_dot_ProductTypeList_dot_4080551769": {
     "context": "dialog header",
-    "string": "Delete Product Types"
+    "string": "상품 타입 삭제"
   },
   "src_dot_productTypes_dot_views_dot_ProductTypeList_dot_4269954457": {
     "context": "dialog content",
     "string": "{counter,plural,one {Are you sure you want to delete this product type?} other {Are you sure you want to delete {displayQuantity} product types?}}"
   },
   "src_dot_productTypes_dot_views_dot_ProductTypeUpdate_dot_3512959355": {
-    "string": "Product type deleted"
+    "string": "상품 타입이 삭제되었습니다"
   },
   "src_dot_productTypes_dot_views_dot_ProductTypeUpdate_dot_404238501": {
     "context": "dialog header",
-    "string": "Unassign Attribute From Product Type"
+    "string": "상품 타입에서 속성을 해제하시겠습니까?"
   },
   "src_dot_productTypes_dot_views_dot_ProductTypeUpdate_dot_766918870": {
     "context": "dialog header",
-    "string": "Unassign Attribute from Product Type"
+    "string": "상품 타입에서 속성 해제"
   },
   "src_dot_productTypes_dot_views_dot_ProductTypeUpdate_dot_870815507": {
     "context": "unassign attribute from product type, button",
@@ -4771,7 +4771,7 @@
   },
   "src_dot_products_dot_components_dot_ProductListPage_dot_outOfStock": {
     "context": "product status",
-    "string": "Out Of Stock"
+    "string": "재고 없음"
   },
   "src_dot_products_dot_components_dot_ProductListPage_dot_price": {
     "string": "가격"
@@ -4827,7 +4827,7 @@
   },
   "src_dot_products_dot_components_dot_ProductOrganization_dot_2364184433": {
     "context": "section header",
-    "string": "Organize Product"
+    "string": "상품 구성"
   },
   "src_dot_products_dot_components_dot_ProductOrganization_dot_2754779425": {
     "context": "product is configurable",
@@ -4838,7 +4838,7 @@
     "string": "*Optional. Adding product to collection helps users find it."
   },
   "src_dot_products_dot_components_dot_ProductOrganization_dot_4257289053": {
-    "string": "Product Type"
+    "string": "상품 타입"
   },
   "src_dot_products_dot_components_dot_ProductShipping_dot_1325966144": {
     "context": "product shipping",
@@ -4846,7 +4846,7 @@
   },
   "src_dot_products_dot_components_dot_ProductShipping_dot_746695941": {
     "context": "product weight",
-    "string": "Weight"
+    "string": "무게"
   },
   "src_dot_products_dot_components_dot_ProductStocks_dot_2585918415": {
     "string": "SKU (Stock Keeping Unit)"
@@ -4876,7 +4876,7 @@
   },
   "src_dot_products_dot_components_dot_ProductTaxes_dot_2022558114": {
     "context": "select tax ratte",
-    "string": "Tax Rate"
+    "string": "세율"
   },
   "src_dot_products_dot_components_dot_ProductTaxes_dot_2771905943": {
     "context": "checkbox",
@@ -5169,11 +5169,11 @@
   },
   "src_dot_products_dot_views_dot_ProductCreate_dot_1542417144": {
     "context": "window title",
-    "string": "Create Product"
+    "string": "상품 생성"
   },
   "src_dot_products_dot_views_dot_ProductCreate_dot_1591632382": {
     "context": "page header",
-    "string": "New Product"
+    "string": "신규 상품"
   },
   "src_dot_products_dot_views_dot_ProductCreate_dot_2899821092": {
     "string": "Product created"
