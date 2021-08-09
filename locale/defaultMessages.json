@@ -6808,6 +6808,10 @@
   "src_dot_translations_dot_components_dot_TranslationsPagesPage_dot_3468022343": {
     "string": "Search Engine Preview"
   },
+  "src_dot_translations_dot_components_dot_TranslationsPagesPage_dot_4165966072": {
+    "context": "attribute list",
+    "string": "Attribute {number}"
+  },
   "src_dot_translations_dot_components_dot_TranslationsPagesPage_dot_432157284": {
     "string": "Page Title"
   },
@@ -6829,6 +6833,10 @@
   },
   "src_dot_translations_dot_components_dot_TranslationsProductsPage_dot_3468022343": {
     "string": "Search Engine Preview"
+  },
+  "src_dot_translations_dot_components_dot_TranslationsProductsPage_dot_4165966072": {
+    "context": "attribute list",
+    "string": "Attribute {number}"
   },
   "src_dot_translations_dot_components_dot_TranslationsSalesPage_dot_3731955064": {
     "context": "header",
