@@ -48,7 +48,7 @@ const GiftCardUpdateInfoCardContent: React.FC = () => {
   } => {
     // createdBy can be either customer or staff hence
     // we check for issued event
-    if (!!cardIssuedEvent) {
+    if (cardIssuedEvent) {
       const userName = getFullName(createdBy);
 
       return {
