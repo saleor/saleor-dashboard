@@ -60,6 +60,7 @@ export interface AttributeTranslationDetails_translation_AttributeTranslatableCo
   id: string;
   name: string | null;
   inputType: AttributeInputTypeEnum | null;
+  withChoices: boolean;
   choices: AttributeTranslationDetails_translation_AttributeTranslatableContent_attribute_choices | null;
 }
 

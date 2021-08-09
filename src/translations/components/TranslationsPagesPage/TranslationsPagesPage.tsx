@@ -19,6 +19,7 @@ import TranslationFields from "../TranslationFields";
 export interface TranslationsPagesPageProps
   extends TranslationsEntitiesPageProps {
   data: PageTranslationFragment;
+  onAttributeValueSubmit: TranslationsEntitiesPageProps["onSubmit"];
 }
 
 const TranslationsPagesPage: React.FC<TranslationsPagesPageProps> = ({
@@ -32,7 +33,8 @@ const TranslationsPagesPage: React.FC<TranslationsPagesPageProps> = ({
   onDiscard,
   onEdit,
   onLanguageChange,
-  onSubmit
+  onSubmit,
+  onAttributeValueSubmit
 }) => {
   const intl = useIntl();
 
@@ -90,6 +92,7 @@ const TranslationsPagesPage: React.FC<TranslationsPagesPageProps> = ({
         onDiscard={onDiscard}
         onSubmit={onSubmit}
       />
+
       <CardSpacer />
       <TranslationFields
         activeField={activeField}
@@ -123,6 +126,40 @@ const TranslationsPagesPage: React.FC<TranslationsPagesPageProps> = ({
         onDiscard={onDiscard}
         onSubmit={onSubmit}
       />
+      <CardSpacer />
+      {data?.attributeValues?.length > 0 && (
+        <>
+          <TranslationFields
+            activeField={activeField}
+            disabled={disabled}
+            initialState={true}
+            title={intl.formatMessage(commonMessages.translationAttributes)}
+            fields={
+              data.attributeValues.map((attrVal, i) => ({
+                id: attrVal.attributeValue.id,
+                displayName: intl.formatMessage(
+                  {
+                    defaultMessage: "Attribute {number}",
+                    description: "attribute list"
+                  },
+                  {
+                    number: i + 1
+                  }
+                ),
+                name: attrVal?.name,
+                translation: attrVal?.translation?.richText || null,
+                type: "rich" as "rich",
+                value: attrVal?.richText
+              })) || []
+            }
+            saveButtonState={saveButtonState}
+            onEdit={onEdit}
+            onDiscard={onDiscard}
+            onSubmit={onAttributeValueSubmit}
+          />
+          <CardSpacer />
+        </>
+      )}
     </Container>
   );
 };

@@ -25,7 +25,7 @@ export interface TranslationsEntitiesFilters {
   onSalesTabClick: () => void;
   onVouchersTabClick: () => void;
   onPagesTabClick: () => void;
-  onProductTypesTabClick: () => void;
+  onAttributesTabClick: () => void;
   onShippingMethodsTabClick: () => void;
 }
 
@@ -38,7 +38,7 @@ const tabs: TranslationsEntitiesListFilterTab[] = [
   "sales",
   "vouchers",
   "pages",
-  "productTypes",
+  "attributes",
   "shippingMethods"
 ];
 
@@ -109,7 +109,7 @@ const TranslationsEntitiesListPage: React.FC<TranslationsEntitiesListPageProps> 
             label={intl.formatMessage({
               defaultMessage: "Attributes"
             })}
-            onClick={filters.onProductTypesTabClick}
+            onClick={filters.onAttributesTabClick}
           />
           <FilterTab
             label={intl.formatMessage({

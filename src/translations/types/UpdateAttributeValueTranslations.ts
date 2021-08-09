@@ -26,6 +26,7 @@ export interface UpdateAttributeValueTranslations_attributeValueTranslate_attrib
   __typename: "AttributeValue";
   id: string;
   name: string | null;
+  richText: any | null;
   translation: UpdateAttributeValueTranslations_attributeValueTranslate_attributeValue_translation | null;
 }
 

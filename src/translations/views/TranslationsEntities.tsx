@@ -76,11 +76,11 @@ const TranslationsEntities: React.FC<TranslationsEntitiesProps> = ({
             tab: TranslatableEntities.pages
           })
       ),
-    onProductTypesTabClick: () =>
+    onAttributesTabClick: () =>
       navigate(
         "?" +
           stringifyQs({
-            tab: TranslatableEntities.productTypes
+            tab: TranslatableEntities.attributes
           })
       ),
     onProductsTabClick: () =>
@@ -380,7 +380,7 @@ const TranslationsEntities: React.FC<TranslationsEntitiesProps> = ({
             );
           }}
         </TypedPageTranslations>
-      ) : params.tab === "productTypes" ? (
+      ) : params.tab === "attributes" ? (
         <TypedAttributeTranslations variables={queryVariables}>
           {({ data, loading }) => {
             const { loadNextPage, loadPreviousPage, pageInfo } = paginate(
@@ -403,7 +403,7 @@ const TranslationsEntities: React.FC<TranslationsEntitiesProps> = ({
                   navigate(
                     languageEntityUrl(
                       language,
-                      TranslatableEntities.productTypes,
+                      TranslatableEntities.attributes,
                       id
                     )
                   )

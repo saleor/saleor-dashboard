@@ -19,6 +19,7 @@ import TranslationFields from "../TranslationFields";
 export interface TranslationsProductsPageProps
   extends TranslationsEntitiesPageProps {
   data: ProductTranslationFragment;
+  onAttributeValueSubmit: TranslationsEntitiesPageProps["onSubmit"];
 }
 
 const TranslationsProductsPage: React.FC<TranslationsProductsPageProps> = ({
@@ -32,7 +33,8 @@ const TranslationsProductsPage: React.FC<TranslationsProductsPageProps> = ({
   onDiscard,
   onEdit,
   onLanguageChange,
-  onSubmit
+  onSubmit,
+  onAttributeValueSubmit
 }) => {
   const intl = useIntl();
 
@@ -123,6 +125,40 @@ const TranslationsProductsPage: React.FC<TranslationsProductsPageProps> = ({
         onDiscard={onDiscard}
         onSubmit={onSubmit}
       />
+      <CardSpacer />
+      {data?.attributeValues?.length > 0 && (
+        <>
+          <TranslationFields
+            activeField={activeField}
+            disabled={disabled}
+            initialState={true}
+            title={intl.formatMessage(commonMessages.translationAttributes)}
+            fields={
+              data.attributeValues.map((attrVal, i) => ({
+                id: attrVal.attributeValue.id,
+                displayName: intl.formatMessage(
+                  {
+                    defaultMessage: "Attribute {number}",
+                    description: "attribute list"
+                  },
+                  {
+                    number: i + 1
+                  }
+                ),
+                name: attrVal?.name,
+                translation: attrVal?.translation?.richText || null,
+                type: "rich" as "rich",
+                value: attrVal?.richText
+              })) || []
+            }
+            saveButtonState={saveButtonState}
+            onEdit={onEdit}
+            onDiscard={onDiscard}
+            onSubmit={onAttributeValueSubmit}
+          />
+          <CardSpacer />
+        </>
+      )}
     </Container>
   );
 };
