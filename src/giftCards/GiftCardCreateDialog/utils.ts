@@ -26,7 +26,7 @@ export const getGiftCardExpirySettingsInputData = ({
       return {
         expiryType,
         expiryPeriod: {
-          amount: parseInt(expiryPeriodAmount, 10),
+          amount: expiryPeriodAmount,
           type: expiryPeriodType
         }
       };
