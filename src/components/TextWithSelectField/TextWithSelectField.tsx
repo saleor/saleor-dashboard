@@ -20,7 +20,10 @@ export interface TextWithSelectFieldProps {
   choices: Choices;
   helperText?: string;
   isError?: boolean;
-  textFieldProps: CommonFieldProps & { value?: string | number };
+  textFieldProps: CommonFieldProps & {
+    value?: string | number;
+    minValue?: number;
+  };
   selectFieldProps: CommonFieldProps & { value: string };
   containerClassName?: string;
 }
@@ -40,7 +43,8 @@ const TextWithSelectField: React.FC<TextWithSelectFieldProps> = ({
     name: textFieldName,
     value: textFieldValue,
     label: textFieldLabel,
-    type: textFieldType
+    type: textFieldType,
+    minValue: textFieldMinValue
   } = textFieldProps;
 
   const {
@@ -87,10 +91,13 @@ const TextWithSelectField: React.FC<TextWithSelectFieldProps> = ({
       <TextField
         error={isError}
         helperText={helperText}
-        type={textFieldType}
+        type="number"
         className={classes.innerContainer}
         name={textFieldName}
         label={textFieldLabel}
+        inputProps={{
+          min: textFieldMinValue
+        }}
         InputProps={{
           className: classNames(classes.textField, {
             [classes.textFieldCentered]: !textFieldLabel

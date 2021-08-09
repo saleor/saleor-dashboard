@@ -51,7 +51,8 @@ const TimePeriodField: React.FC<TimePeriodFieldProps> = ({
       textFieldProps={{
         type: "number",
         name: amountFieldName,
-        value: periodAmount
+        value: periodAmount,
+        minValue: 0
       }}
       selectFieldProps={{
         name: typeFieldName,
