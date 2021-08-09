@@ -115,66 +115,48 @@ const TranslationsAttributesPage: React.FC<TranslationsAttributesPageProps> = ({
         onSubmit={onSubmit}
       />
       <CardSpacer />
-      {data &&
-        (withChoices ? null : (
-          <TranslationFields
-            activeField={activeField}
-            disabled={disabled}
-            initialState={true}
-            title={intl.formatMessage(messages.values)}
-            fields={
-              data?.attribute?.choices?.edges?.map(
-                ({ node: attributeValue }, attributeValueIndex) => {
-                  const isRichText =
-                    attributeValue?.inputType ===
-                    AttributeInputTypeEnum.RICH_TEXT;
-                  const displayName = isRichText
-                    ? intl.formatMessage({
-                        defaultMessage: "Text",
-                        description: "attribute richtext value"
-                      })
-                    : intl.formatMessage(
-                        {
-                          defaultMessage: "Value {number}",
-                          description: "attribute values"
-                        },
-                        {
-                          number: attributeValueIndex + 1
-                        }
-                      );
+      {data && withChoices && (
+        <TranslationFields
+          activeField={activeField}
+          disabled={disabled}
+          initialState={true}
+          title={intl.formatMessage(messages.values)}
+          fields={
+            data?.attribute?.choices?.edges?.map(
+              ({ node: attributeValue }, attributeValueIndex) => {
+                const displayName = intl.formatMessage(
+                  {
+                    defaultMessage: "Value {number}",
+                    description: "attribute values"
+                  },
+                  {
+                    number: attributeValueIndex + 1
+                  }
+                );
 
-                  return {
-                    displayName,
-                    name: `${
-                      isRichText ? fieldNames.richTextValue : fieldNames.value
-                    }:${attributeValue.id}`,
-                    translation:
-                      (isRichText
-                        ? attributeValue?.translation?.richText
-                        : attributeValue?.translation?.name) || null,
-                    type: (isRichText
-                      ? "rich"
-                      : "short") as TranslationField["type"],
-                    value: isRichText
-                      ? attributeValue?.richText
-                      : attributeValue?.name
-                  };
-                }
-              ) || []
-            }
-            saveButtonState={saveButtonState}
-            pagination={{
-              settings,
-              onUpdateListSettings,
-              pageInfo,
-              onNextPage,
-              onPreviousPage
-            }}
-            onEdit={onEdit}
-            onDiscard={onDiscard}
-            onSubmit={onSubmit}
-          />
-        ))}
+                return {
+                  displayName,
+                  name: `${fieldNames.value}:${attributeValue.id}`,
+                  translation: attributeValue?.translation?.name || null,
+                  type: "short" as TranslationField["type"],
+                  value: attributeValue?.name
+                };
+              }
+            ) || []
+          }
+          saveButtonState={saveButtonState}
+          pagination={{
+            settings,
+            onUpdateListSettings,
+            pageInfo,
+            onNextPage,
+            onPreviousPage
+          }}
+          onEdit={onEdit}
+          onDiscard={onDiscard}
+          onSubmit={onSubmit}
+        />
+      )}
     </Container>
   );
 };
