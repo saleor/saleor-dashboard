@@ -14,14 +14,15 @@ import { useIntl } from "react-intl";
 
 import { getMutationState, maybe } from "../../misc";
 import { LanguageCodeEnum } from "../../types/globalTypes";
-import TranslationsProductTypesPage, {
+import TranslationsAttributesPage, {
   fieldNames
-} from "../components/TranslationsProductTypesPage";
+} from "../components/TranslationsAttributesPage";
 import {
   TypedUpdateAttributeTranslations,
   TypedUpdateAttributeValueTranslations
 } from "../mutations";
 import { useAttributeTranslationDetails } from "../queries";
+import { TranslationField } from "../types";
 import { UpdateAttributeTranslations } from "../types/UpdateAttributeTranslations";
 import { UpdateAttributeValueTranslations } from "../types/UpdateAttributeValueTranslations";
 import {
@@ -30,16 +31,16 @@ import {
   TranslatableEntities
 } from "../urls";
 
-export interface TranslationsProductTypesQueryParams extends Pagination {
+export interface TranslationsAttributesQueryParams extends Pagination {
   activeField: string;
 }
-export interface TranslationsProductTypesProps {
+export interface TranslationsAttributesProps {
   id: string;
   languageCode: LanguageCodeEnum;
-  params: TranslationsProductTypesQueryParams;
+  params: TranslationsAttributesQueryParams;
 }
 
-const TranslationsProductTypes: React.FC<TranslationsProductTypesProps> = ({
+const TranslationsAttributes: React.FC<TranslationsAttributesProps> = ({
   id,
   languageCode,
   params
@@ -121,8 +122,11 @@ const TranslationsProductTypes: React.FC<TranslationsProductTypesProps> = ({
             updateAttributeValueTranslations,
             updateAttributeValueTranslationsOpts
           ) => {
-            const handleSubmit = (field: string, data: string | OutputData) => {
-              const [fieldName, fieldId] = field.split(":");
+            const handleSubmit = (
+              { name }: TranslationField,
+              data: string | OutputData
+            ) => {
+              const [fieldName, fieldId] = name.split(":");
 
               if (fieldName === fieldNames.attribute) {
                 updateAttributeTranslations({
@@ -168,7 +172,7 @@ const TranslationsProductTypes: React.FC<TranslationsProductTypesProps> = ({
             );
 
             return (
-              <TranslationsProductTypesPage
+              <TranslationsAttributesPage
                 activeField={params.activeField}
                 disabled={
                   attributeTranslations.loading ||
@@ -181,7 +185,7 @@ const TranslationsProductTypes: React.FC<TranslationsProductTypesProps> = ({
                 onBack={() =>
                   navigate(
                     languageEntitiesUrl(languageCode, {
-                      tab: TranslatableEntities.productTypes
+                      tab: TranslatableEntities.attributes
                     })
                   )
                 }
@@ -189,11 +193,7 @@ const TranslationsProductTypes: React.FC<TranslationsProductTypesProps> = ({
                 onDiscard={onDiscard}
                 onLanguageChange={lang =>
                   navigate(
-                    languageEntityUrl(
-                      lang,
-                      TranslatableEntities.productTypes,
-                      id
-                    )
+                    languageEntityUrl(lang, TranslatableEntities.attributes, id)
                   )
                 }
                 onSubmit={handleSubmit}
@@ -211,5 +211,5 @@ const TranslationsProductTypes: React.FC<TranslationsProductTypesProps> = ({
     </TypedUpdateAttributeTranslations>
   );
 };
-TranslationsProductTypes.displayName = "TranslationsProductTypes";
-export default TranslationsProductTypes;
+TranslationsAttributes.displayName = "TranslationsAttributes";
+export default TranslationsAttributes;

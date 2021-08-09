@@ -7,16 +7,16 @@ import { AttributeTranslationDetailsFragment } from "@saleor/fragments/types/Att
 import { commonMessages, sectionNames } from "@saleor/intl";
 import { Backlink } from "@saleor/macaw-ui";
 import { getStringOrPlaceholder } from "@saleor/misc";
-import { TranslationsEntitiesPageProps } from "@saleor/translations/types";
+import {
+  TranslationField,
+  TranslationsEntitiesPageProps
+} from "@saleor/translations/types";
 import { ListSettings } from "@saleor/types";
 import React from "react";
 import { defineMessages, useIntl } from "react-intl";
 
-import {
-  AttributeInputTypeEnum,
-  LanguageCodeEnum
-} from "../../../types/globalTypes";
-import TranslationFields, { TranslationField } from "../TranslationFields";
+import { LanguageCodeEnum } from "../../../types/globalTypes";
+import TranslationFields from "../TranslationFields";
 
 export const messages = defineMessages({
   values: {
@@ -25,7 +25,7 @@ export const messages = defineMessages({
   }
 });
 
-export interface TranslationsProductTypesPageProps
+export interface TranslationsAttributesPageProps
   extends TranslationsEntitiesPageProps {
   data: AttributeTranslationDetailsFragment;
   settings?: ListSettings;
@@ -44,7 +44,7 @@ export const fieldNames = {
   richTextValue: "attributeRichTextValue"
 };
 
-const TranslationsProductTypesPage: React.FC<TranslationsProductTypesPageProps> = ({
+const TranslationsAttributesPage: React.FC<TranslationsAttributesPageProps> = ({
   activeField,
   disabled,
   languages,
@@ -63,6 +63,8 @@ const TranslationsProductTypesPage: React.FC<TranslationsProductTypesPageProps> 
   onPreviousPage
 }) => {
   const intl = useIntl();
+
+  const withChoices = data?.attribute?.withChoices;
 
   return (
     <Container>
@@ -110,64 +112,50 @@ const TranslationsProductTypesPage: React.FC<TranslationsProductTypesPageProps> 
         onSubmit={onSubmit}
       />
       <CardSpacer />
-      <TranslationFields
-        activeField={activeField}
-        disabled={disabled}
-        initialState={true}
-        title={intl.formatMessage(messages.values)}
-        fields={
-          data?.attribute?.choices?.edges?.map(
-            ({ node: attributeValue }, attributeValueIndex) => {
-              const isRichText =
-                attributeValue?.inputType === AttributeInputTypeEnum.RICH_TEXT;
-              const displayName = isRichText
-                ? intl.formatMessage({
-                    defaultMessage: "Text",
-                    description: "attribute richtext value"
-                  })
-                : intl.formatMessage(
-                    {
-                      defaultMessage: "Value {number}",
-                      description: "attribute values"
-                    },
-                    {
-                      number: attributeValueIndex + 1
-                    }
-                  );
+      {data?.attribute?.choices.edges.length > 0 && withChoices && (
+        <TranslationFields
+          activeField={activeField}
+          disabled={disabled}
+          initialState={true}
+          title={intl.formatMessage(messages.values)}
+          fields={
+            data?.attribute?.choices?.edges?.map(
+              ({ node: attributeValue }, attributeValueIndex) => {
+                const displayName = intl.formatMessage(
+                  {
+                    defaultMessage: "Value {number}",
+                    description: "attribute values"
+                  },
+                  {
+                    number: attributeValueIndex + 1
+                  }
+                );
 
-              return {
-                displayName,
-                name: `${
-                  isRichText ? fieldNames.richTextValue : fieldNames.value
-                }:${attributeValue.id}`,
-                translation:
-                  (isRichText
-                    ? attributeValue?.translation?.richText
-                    : attributeValue?.translation?.name) || null,
-                type: (isRichText
-                  ? "rich"
-                  : "short") as TranslationField["type"],
-                value: isRichText
-                  ? attributeValue?.richText
-                  : attributeValue?.name
-              };
-            }
-          ) || []
-        }
-        saveButtonState={saveButtonState}
-        pagination={{
-          settings,
-          onUpdateListSettings,
-          pageInfo,
-          onNextPage,
-          onPreviousPage
-        }}
-        onEdit={onEdit}
-        onDiscard={onDiscard}
-        onSubmit={onSubmit}
-      />
+                return {
+                  displayName,
+                  name: `${fieldNames.value}:${attributeValue.id}`,
+                  translation: attributeValue?.translation?.name || null,
+                  type: "short" as TranslationField["type"],
+                  value: attributeValue?.name
+                };
+              }
+            ) || []
+          }
+          saveButtonState={saveButtonState}
+          pagination={{
+            settings,
+            onUpdateListSettings,
+            pageInfo,
+            onNextPage,
+            onPreviousPage
+          }}
+          onEdit={onEdit}
+          onDiscard={onDiscard}
+          onSubmit={onSubmit}
+        />
+      )}
     </Container>
   );
 };
-TranslationsProductTypesPage.displayName = "TranslationsProductTypesPage";
-export default TranslationsProductTypesPage;
+TranslationsAttributesPage.displayName = "TranslationsAttributesPage";
+export default TranslationsAttributesPage;

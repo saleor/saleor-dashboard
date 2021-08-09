@@ -11,7 +11,7 @@ export enum TranslatableEntities {
   sales = "sales",
   vouchers = "vouchers",
   pages = "pages",
-  productTypes = "productTypes",
+  attributes = "attributes",
   shippingMethods = "shippingMethods"
 }
 
