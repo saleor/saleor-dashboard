@@ -30,7 +30,13 @@ import GiftCardsListTableHeader from "./GiftCardsListTableHeader";
 
 const PLACEHOLDER = "-";
 
-const GiftCardsListTable: React.FC = () => {
+interface GiftCardsListTableProps {
+  onDelete: (id?: string) => void;
+}
+
+const GiftCardsListTable: React.FC<GiftCardsListTableProps> = ({
+  onDelete
+}) => {
   const intl = useIntl();
   const classes = useStyles({});
   const navigate = useNavigator();
@@ -43,7 +49,7 @@ const GiftCardsListTable: React.FC = () => {
   return (
     <Card>
       <ResponsiveTable>
-        <GiftCardsListTableHeader />
+        <GiftCardsListTableHeader onDelete={onDelete} />
         <GiftCardsListTableFooter />
         <TableBody>
           {renderCollection(
@@ -122,7 +128,12 @@ const GiftCardsListTable: React.FC = () => {
                   </div>
                 </TableCell>
                 <TableCell className={classes.colDelete}>
-                  <DeleteIconButton />
+                  <DeleteIconButton
+                    onClick={event => {
+                      event.stopPropagation();
+                      onDelete(id);
+                    }}
+                  />
                 </TableCell>
               </TableRow>
             ),

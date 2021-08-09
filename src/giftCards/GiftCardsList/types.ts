@@ -8,8 +8,11 @@ export type GiftCardListColummns =
   | "product";
 
 export enum GiftCardListActionParamsEnum {
-  CREATE = "gift-card-create"
+  CREATE = "gift-card-create",
+  DELETE = "gift-card-delete"
 }
 
 export type GiftCardListUrlQueryParams = Pagination &
-  Dialog<GiftCardListActionParamsEnum>;
+  Dialog<GiftCardListActionParamsEnum> & {
+    "delete-gift-card-id": string;
+  };

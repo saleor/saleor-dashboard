@@ -1,4 +1,5 @@
 import { TableCell } from "@material-ui/core";
+import DeleteIconButton from "@saleor/components/DeleteIconButton";
 import TableCellHeader, {
   TableCellHeaderProps
 } from "@saleor/components/TableCellHeader";
@@ -19,7 +20,13 @@ interface HeaderItem {
   options?: TableCellHeaderProps;
 }
 
-const GiftCardsListTableHeader: React.FC = () => {
+interface GiftCardsListTableHeaderProps {
+  onDelete: () => void;
+}
+
+const GiftCardsListTableHeader: React.FC<GiftCardsListTableHeaderProps> = ({
+  onDelete
+}) => {
   const intl = useIntl();
   const classes = useStyles({});
   const { giftCards, numberOfColumns, loading } = useGiftCardList();
@@ -68,6 +75,7 @@ const GiftCardsListTableHeader: React.FC = () => {
         selected={listElements.length}
         items={giftCards}
         toggleAll={toggleAll}
+        toolbar={<DeleteIconButton onClick={() => onDelete()} />}
       >
         {headerItems.map(({ title, options }) => (
           <TableCellHeader {...options}>

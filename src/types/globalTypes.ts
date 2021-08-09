@@ -482,6 +482,7 @@ export enum GiftCardEventsEnum {
   DEACTIVATED = "DEACTIVATED",
   EXPIRY_SETTINGS_UPDATED = "EXPIRY_SETTINGS_UPDATED",
   ISSUED = "ISSUED",
+  NOTE_ADDED = "NOTE_ADDED",
   RESENT = "RESENT",
   SENT_TO_CUSTOMER = "SENT_TO_CUSTOMER",
   UPDATED = "UPDATED",
@@ -916,6 +917,11 @@ export enum ProductTypeConfigurable {
 export enum ProductTypeEnum {
   DIGITAL = "DIGITAL",
   SHIPPABLE = "SHIPPABLE",
+}
+
+export enum ProductTypeKindEnum {
+  GIFT_CARD = "GIFT_CARD",
+  NORMAL = "NORMAL",
 }
 
 export enum ProductTypeSortField {
@@ -1404,7 +1410,7 @@ export interface GiftCardUpdateInput {
   tag?: string | null;
   startDate?: any | null;
   endDate?: any | null;
-  balanceAmount?: any | null;
+  balance?: PriceInput | null;
   expirySettings?: GiftCardExpirySettingsInput | null;
 }
 
@@ -1774,6 +1780,7 @@ export interface ProductTypeFilterInput {
 export interface ProductTypeInput {
   name?: string | null;
   slug?: string | null;
+  kind?: ProductTypeKindEnum | null;
   hasVariants?: boolean | null;
   productAttributes?: (string | null)[] | null;
   variantAttributes?: (string | null)[] | null;

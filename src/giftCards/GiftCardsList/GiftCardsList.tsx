@@ -3,6 +3,7 @@ import useNavigator from "@saleor/hooks/useNavigator";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import React from "react";
 
+import GiftCardDeleteDialog from "../components/GiftCardDeleteDialog";
 import GiftCardCreateDialog from "../GiftCardCreateDialog";
 import { giftCardsListUrl } from "../urls";
 import GiftCardsListHeader from "./GiftCardsListHeader";
@@ -25,20 +26,40 @@ const GiftCardsList: React.FC<GiftCardsListProps> = ({ params }) => {
     GiftCardListUrlQueryParams
   >(navigate, giftCardsListUrl, params);
 
-  const openCreateModal = () => openModal(GiftCardListActionParamsEnum.CREATE);
+  const handleModalOpen = (action: GiftCardListActionParamsEnum) => (
+    id?: string
+  ) => {
+    if (id) {
+      openModal(action, { "delete-gift-card-id": id });
+      return;
+    }
+
+    openModal(action);
+  };
 
   return (
     <>
       <GiftCardsListProvider params={params}>
         <Container>
-          <GiftCardsListHeader onIssueButtonClick={openCreateModal} />
-          <GiftCardsListTable />
+          <GiftCardsListHeader
+            onIssueButtonClick={handleModalOpen(
+              GiftCardListActionParamsEnum.CREATE
+            )}
+          />
+          <GiftCardsListTable
+            onDelete={handleModalOpen(GiftCardListActionParamsEnum.DELETE)}
+          />
         </Container>
+        <GiftCardCreateDialog
+          open={params?.action === GiftCardListActionParamsEnum.CREATE}
+          onClose={closeModal}
+        />
+        <GiftCardDeleteDialog
+          open={params?.action === GiftCardListActionParamsEnum.DELETE}
+          id={params?.["delete-gift-card-id"]}
+          onClose={closeModal}
+        />
       </GiftCardsListProvider>
-      <GiftCardCreateDialog
-        open={params?.action === GiftCardListActionParamsEnum.CREATE}
-        onClose={closeModal}
-      />
     </>
   );
 };
