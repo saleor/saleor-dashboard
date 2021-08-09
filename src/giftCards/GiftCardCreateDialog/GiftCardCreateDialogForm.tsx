@@ -111,7 +111,8 @@ const GiftCardCreateDialogForm: React.FC<GiftCardCreateDialogFormProps> = ({
             type: "number",
             label: intl.formatMessage(messages.amountLabel),
             name: "balanceAmount",
-            value: balanceAmount
+            value: balanceAmount,
+            minValue: 0
           }}
           selectFieldProps={{
             name: "balanceCurrency",

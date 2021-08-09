@@ -108,6 +108,7 @@ const GiftCardUpdateBalanceDialog: React.FC<GiftCardUpdateBalanceDialogProps> = 
           <Typography>{intl.formatMessage(messages.subtitle)}</Typography>
           <CardSpacer />
           <TextField
+            inputProps={{ min: 0 }}
             error={!!formErrors?.balanceAmount}
             helperText={formErrors?.balanceAmount}
             name="balanceAmount"
