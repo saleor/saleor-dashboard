@@ -112,7 +112,7 @@ const TranslationsAttributesPage: React.FC<TranslationsAttributesPageProps> = ({
         onSubmit={onSubmit}
       />
       <CardSpacer />
-      {withChoices && (
+      {data?.attribute?.choices.edges.length > 0 && withChoices && (
         <TranslationFields
           activeField={activeField}
           disabled={disabled}

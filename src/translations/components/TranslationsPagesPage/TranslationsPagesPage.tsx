@@ -127,26 +127,39 @@ const TranslationsPagesPage: React.FC<TranslationsPagesPageProps> = ({
         onSubmit={onSubmit}
       />
       <CardSpacer />
-      <TranslationFields
-        activeField={activeField}
-        disabled={disabled}
-        initialState={true}
-        title={intl.formatMessage(commonMessages.translationAttributes)}
-        fields={
-          data?.attributeValues?.map(attrVal => ({
-            id: attrVal.attributeValue.id,
-            displayName: attrVal.name,
-            name: attrVal?.name,
-            translation: attrVal?.translation?.richText || null,
-            type: "rich" as "rich",
-            value: attrVal?.richText
-          })) || []
-        }
-        saveButtonState={saveButtonState}
-        onEdit={onEdit}
-        onDiscard={onDiscard}
-        onSubmit={onAttributeValueSubmit}
-      />
+      {data?.attributeValues?.length > 0 && (
+        <>
+          <TranslationFields
+            activeField={activeField}
+            disabled={disabled}
+            initialState={true}
+            title={intl.formatMessage(commonMessages.translationAttributes)}
+            fields={
+              data.attributeValues.map((attrVal, i) => ({
+                id: attrVal.attributeValue.id,
+                displayName: intl.formatMessage(
+                  {
+                    defaultMessage: "Attribute {number}",
+                    description: "attribute list"
+                  },
+                  {
+                    number: i + 1
+                  }
+                ),
+                name: attrVal?.name,
+                translation: attrVal?.translation?.richText || null,
+                type: "rich" as "rich",
+                value: attrVal?.richText
+              })) || []
+            }
+            saveButtonState={saveButtonState}
+            onEdit={onEdit}
+            onDiscard={onDiscard}
+            onSubmit={onAttributeValueSubmit}
+          />
+          <CardSpacer />
+        </>
+      )}
     </Container>
   );
 };
