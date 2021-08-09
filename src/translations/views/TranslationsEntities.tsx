@@ -4,7 +4,7 @@ import usePaginator, {
 } from "@saleor/hooks/usePaginator";
 import useShop from "@saleor/hooks/useShop";
 import { mapEdgesToItems } from "@saleor/utils/maps";
-import { stringifyQs } from "@saleor/utils/urls";
+import { stringify as stringifyQs } from "qs";
 import React from "react";
 
 import { PAGINATE_BY } from "../../config";
