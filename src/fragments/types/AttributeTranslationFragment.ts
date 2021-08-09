@@ -24,6 +24,8 @@ export interface AttributeTranslationFragment_attribute {
 
 export interface AttributeTranslationFragment {
   __typename: "AttributeTranslatableContent";
+  id: string;
+  name: string;
   translation: AttributeTranslationFragment_translation | null;
   attribute: AttributeTranslationFragment_attribute | null;
 }

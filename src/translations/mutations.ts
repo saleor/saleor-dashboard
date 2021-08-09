@@ -276,6 +276,7 @@ const updateAttributeValueTranslations = gql`
       attributeValue {
         id
         name
+        richText
         translation(languageCode: $language) {
           id
           name

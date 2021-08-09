@@ -1,3 +1,4 @@
+import { OutputData } from "@editorjs/editorjs";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import useShop from "@saleor/hooks/useShop";
@@ -8,10 +9,12 @@ import { useIntl } from "react-intl";
 
 import { LanguageCodeEnum } from "../../types/globalTypes";
 import TranslationsPagesPage from "../components/TranslationsPagesPage";
-import { TypedUpdatePageTranslations } from "../mutations";
+import {
+  TypedUpdateAttributeValueTranslations,
+  TypedUpdatePageTranslations
+} from "../mutations";
 import { usePageTranslationDetails } from "../queries";
-import { PageTranslationInputFieldName } from "../types";
-import { UpdatePageTranslations } from "../types/UpdatePageTranslations";
+import { PageTranslationInputFieldName, TranslationField } from "../types";
 import {
   languageEntitiesUrl,
   languageEntityUrl,
@@ -50,8 +53,9 @@ const TranslationsPages: React.FC<TranslationsPagesProps> = ({
         }),
       true
     );
-  const onUpdate = (data: UpdatePageTranslations) => {
-    if (data.pageTranslate.errors.length === 0) {
+
+  const onUpdate = (errors: unknown[]) => {
+    if (errors.length === 0) {
       pageTranslations.refetch();
       notify({
         status: "success",
@@ -60,57 +64,88 @@ const TranslationsPages: React.FC<TranslationsPagesProps> = ({
       navigate("?", true);
     }
   };
+
   const onDiscard = () => {
     navigate("?", true);
   };
 
   return (
-    <TypedUpdatePageTranslations onCompleted={onUpdate}>
-      {(updateTranslations, updateTranslationsOpts) => {
-        const handleSubmit = (
-          fieldName: PageTranslationInputFieldName,
-          data: string
-        ) => {
-          updateTranslations({
-            variables: {
-              id,
-              input: getParsedTranslationInputData({ data, fieldName }),
-              language: languageCode
-            }
-          });
-        };
-        const translation = pageTranslations?.data?.translation;
+    <TypedUpdatePageTranslations
+      onCompleted={data => onUpdate(data.pageTranslate.errors)}
+    >
+      {(updateTranslations, updateTranslationsOpts) => (
+        <TypedUpdateAttributeValueTranslations
+          onCompleted={data => onUpdate(data.attributeValueTranslate.errors)}
+        >
+          {updateAttributeValueTranslations => {
+            const handleSubmit = (
+              {
+                name: fieldName
+              }: TranslationField<PageTranslationInputFieldName>,
+              data: string | any
+            ) => {
+              updateTranslations({
+                variables: {
+                  id,
+                  input: getParsedTranslationInputData({
+                    data,
+                    fieldName
+                  }),
+                  language: languageCode
+                }
+              });
+            };
 
-        return (
-          <TranslationsPagesPage
-            activeField={params.activeField}
-            disabled={
-              pageTranslations.loading || updateTranslationsOpts.loading
-            }
-            languageCode={languageCode}
-            languages={shop?.languages || []}
-            saveButtonState={updateTranslationsOpts.status}
-            onBack={() =>
-              navigate(
-                languageEntitiesUrl(languageCode, {
-                  tab: TranslatableEntities.pages
-                })
-              )
-            }
-            onEdit={onEdit}
-            onDiscard={onDiscard}
-            onLanguageChange={lang =>
-              navigate(languageEntityUrl(lang, TranslatableEntities.pages, id))
-            }
-            onSubmit={handleSubmit}
-            data={
-              translation?.__typename === "PageTranslatableContent"
-                ? translation
-                : null
-            }
-          />
-        );
-      }}
+            const handleAttributeValueSubmit = (
+              { id }: TranslationField<PageTranslationInputFieldName>,
+              data: OutputData
+            ) => {
+              updateAttributeValueTranslations({
+                variables: {
+                  id,
+                  input: { richText: JSON.stringify(data) },
+                  language: languageCode
+                }
+              });
+            };
+
+            const translation = pageTranslations?.data?.translation;
+
+            return (
+              <TranslationsPagesPage
+                activeField={params.activeField}
+                disabled={
+                  pageTranslations.loading || updateTranslationsOpts.loading
+                }
+                languageCode={languageCode}
+                languages={shop?.languages || []}
+                saveButtonState={updateTranslationsOpts.status}
+                onBack={() =>
+                  navigate(
+                    languageEntitiesUrl(languageCode, {
+                      tab: TranslatableEntities.pages
+                    })
+                  )
+                }
+                onEdit={onEdit}
+                onDiscard={onDiscard}
+                onLanguageChange={lang =>
+                  navigate(
+                    languageEntityUrl(lang, TranslatableEntities.pages, id)
+                  )
+                }
+                onSubmit={handleSubmit}
+                onAttributeValueSubmit={handleAttributeValueSubmit}
+                data={
+                  translation?.__typename === "PageTranslatableContent"
+                    ? translation
+                    : null
+                }
+              />
+            );
+          }}
+        </TypedUpdateAttributeValueTranslations>
+      )}
     </TypedUpdatePageTranslations>
   );
 };

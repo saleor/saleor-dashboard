@@ -56,6 +56,7 @@ export interface AttributeTranslationDetailsFragment_attribute {
   id: string;
   name: string | null;
   inputType: AttributeInputTypeEnum | null;
+  withChoices: boolean;
   choices: AttributeTranslationDetailsFragment_attribute_choices | null;
 }
 

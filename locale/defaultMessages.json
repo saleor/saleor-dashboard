@@ -6668,6 +6668,9 @@
     "context": "independent of any particular day, eg. 11:35",
     "string": "Time"
   },
+  "src_dot_translationAttributes": {
+    "string": "Attributes"
+  },
   "src_dot_translations": {
     "context": "translations section name",
     "string": "Translations"
@@ -6687,6 +6690,21 @@
   },
   "src_dot_translations_dot_components_dot_TranslationFields_dot_3793796047": {
     "string": "No translation yet"
+  },
+  "src_dot_translations_dot_components_dot_TranslationsAttributesPage_dot_1567737068": {
+    "context": "attribute values",
+    "string": "Value {number}"
+  },
+  "src_dot_translations_dot_components_dot_TranslationsAttributesPage_dot_2642976392": {
+    "string": "Attribute Name"
+  },
+  "src_dot_translations_dot_components_dot_TranslationsAttributesPage_dot_884093025": {
+    "context": "header",
+    "string": "Translation Attribute \"{attribute}\" - {languageCode}"
+  },
+  "src_dot_translations_dot_components_dot_TranslationsAttributesPage_dot_values": {
+    "context": "section name",
+    "string": "Values"
   },
   "src_dot_translations_dot_components_dot_TranslationsCategoriesPage_dot_1214235329": {
     "string": "Category Name"
@@ -6790,27 +6808,12 @@
   "src_dot_translations_dot_components_dot_TranslationsPagesPage_dot_3468022343": {
     "string": "Search Engine Preview"
   },
+  "src_dot_translations_dot_components_dot_TranslationsPagesPage_dot_4165966072": {
+    "context": "attribute list",
+    "string": "Attribute {number}"
+  },
   "src_dot_translations_dot_components_dot_TranslationsPagesPage_dot_432157284": {
     "string": "Page Title"
-  },
-  "src_dot_translations_dot_components_dot_TranslationsProductTypesPage_dot_1567737068": {
-    "context": "attribute values",
-    "string": "Value {number}"
-  },
-  "src_dot_translations_dot_components_dot_TranslationsProductTypesPage_dot_2642976392": {
-    "string": "Attribute Name"
-  },
-  "src_dot_translations_dot_components_dot_TranslationsProductTypesPage_dot_3495336243": {
-    "context": "attribute richtext value",
-    "string": "Text"
-  },
-  "src_dot_translations_dot_components_dot_TranslationsProductTypesPage_dot_884093025": {
-    "context": "header",
-    "string": "Translation Attribute \"{attribute}\" - {languageCode}"
-  },
-  "src_dot_translations_dot_components_dot_TranslationsProductTypesPage_dot_values": {
-    "context": "section name",
-    "string": "Values"
   },
   "src_dot_translations_dot_components_dot_TranslationsProductsPage_dot_1406947243": {
     "string": "Search Engine Description"
@@ -6830,6 +6833,10 @@
   },
   "src_dot_translations_dot_components_dot_TranslationsProductsPage_dot_3468022343": {
     "string": "Search Engine Preview"
+  },
+  "src_dot_translations_dot_components_dot_TranslationsProductsPage_dot_4165966072": {
+    "context": "attribute list",
+    "string": "Attribute {number}"
   },
   "src_dot_translations_dot_components_dot_TranslationsSalesPage_dot_3731955064": {
     "context": "header",

@@ -99,6 +99,9 @@ export const commonMessages = defineMessages({
   summary: {
     defaultMessage: "Summary"
   },
+  translationAttributes: {
+    defaultMessage: "Attributes"
+  },
   unauthorizedDashboardAccess: {
     defaultMessage: "Only staff users can access the dashboard"
   },
