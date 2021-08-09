@@ -15,10 +15,7 @@ import { ListSettings } from "@saleor/types";
 import React from "react";
 import { defineMessages, useIntl } from "react-intl";
 
-import {
-  AttributeInputTypeEnum,
-  LanguageCodeEnum
-} from "../../../types/globalTypes";
+import { LanguageCodeEnum } from "../../../types/globalTypes";
 import TranslationFields from "../TranslationFields";
 
 export const messages = defineMessages({
