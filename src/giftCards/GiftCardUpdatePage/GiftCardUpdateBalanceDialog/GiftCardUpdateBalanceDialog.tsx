@@ -12,13 +12,12 @@ import { useIntl } from "react-intl";
 import { giftCardsListTableMessages as tableMessages } from "../../GiftCardsList/messages";
 import useGiftCardDetails from "../hooks/useGiftCardDetails";
 import { useGiftCardUpdateMutation } from "../mutations";
-import { GiftCardUpdatePageActionParamsEnum } from "../types";
 import { GiftCardUpdate } from "../types/GiftCardUpdate";
 import { giftCardUpdateBalanceDialogMessages as messages } from "./messages";
 import { useUpdateBalanceDialogStyles as useStyles } from "./styles";
 
 interface GiftCardUpdateBalanceDialogProps {
-  action: string;
+  open: boolean;
   onClose: () => void;
 }
 
@@ -27,14 +26,12 @@ export interface GiftCardBalanceUpdateFormData {
 }
 
 const GiftCardUpdateBalanceDialog: React.FC<GiftCardUpdateBalanceDialogProps> = ({
-  action,
+  open,
   onClose
 }) => {
   const intl = useIntl();
   const classes = useStyles({});
   const notify = useNotifier();
-
-  const isOpen = action === GiftCardUpdatePageActionParamsEnum.SET_BALANCE;
 
   const {
     giftCard: {
@@ -101,7 +98,7 @@ const GiftCardUpdateBalanceDialog: React.FC<GiftCardUpdateBalanceDialogProps> = 
       {({ data, change, submit, hasChanged }) => (
         <ActionDialog
           maxWidth="sm"
-          open={isOpen}
+          open={open}
           onConfirm={submit}
           confirmButtonLabel={intl.formatMessage(messages.changeButtonLabel)}
           onClose={onClose}

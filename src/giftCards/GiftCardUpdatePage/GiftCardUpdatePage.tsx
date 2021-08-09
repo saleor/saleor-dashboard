@@ -64,7 +64,10 @@ const GiftCardUpdatePage: React.FC<GiftCardUpdatePageProps> = ({
               giftCard && (
                 <GiftCardUpdateBalanceDialog
                   onClose={closeModal}
-                  action={params?.action}
+                  open={
+                    params?.action ===
+                    GiftCardUpdatePageActionParamsEnum.SET_BALANCE
+                  }
                 />
               )
             }
