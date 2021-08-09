@@ -2,7 +2,6 @@ import { DialogContent, Divider, TextField } from "@material-ui/core";
 import VerticalSpacer from "@saleor/apps/components/VerticalSpacer";
 import DialogButtons from "@saleor/components/ActionDialog/DialogButtons";
 import CardSpacer from "@saleor/components/CardSpacer";
-import Form from "@saleor/components/Form";
 import TextWithSelectField from "@saleor/components/TextWithSelectField";
 import { GiftCardError } from "@saleor/fragments/types/GiftCardError";
 import GiftCardExpirySelect from "@saleor/giftCards/components/GiftCardExpirySelect";
@@ -18,7 +17,7 @@ import {
 } from "@saleor/types/globalTypes";
 import { getFormErrors } from "@saleor/utils/errors";
 import { mapSingleValueNodeToChoice } from "@saleor/utils/maps";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useIntl } from "react-intl";
 
 import { getGiftCardErrorMessage } from "../GiftCardUpdatePage/messages";
