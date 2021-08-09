@@ -75,7 +75,10 @@ const TextWithSelectField: React.FC<TextWithSelectFieldProps> = ({
         ? parseInt(value, 10)
         : value;
 
-    change({ ...event, target: { ...event.target, value: parsedValue } });
+    change({
+      ...event,
+      target: { ...event.target, value: parsedValue, name: event.target.name }
+    });
     change({ target: otherTarget });
   };
 
