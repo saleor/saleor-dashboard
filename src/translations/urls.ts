@@ -1,5 +1,5 @@
 import { Pagination } from "@saleor/types";
-import { stringify as stringifyQs } from "qs";
+import { stringifyQs } from "@saleor/utils/urls";
 import urlJoin from "url-join";
 
 import { TranslationsEntitiesListFilterTab } from "./components/TranslationsEntitiesListPage";
