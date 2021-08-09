@@ -6664,6 +6664,10 @@
   "src_dot_taxes_dot_views_dot_2411670026": {
     "string": "Successfully fetched tax rates"
   },
+  "src_dot_time": {
+    "context": "independent of any particular day, eg. 11:35",
+    "string": "Time"
+  },
   "src_dot_translationAttributes": {
     "string": "Attributes"
   },
