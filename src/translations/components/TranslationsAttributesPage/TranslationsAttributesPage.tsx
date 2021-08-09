@@ -112,7 +112,7 @@ const TranslationsAttributesPage: React.FC<TranslationsAttributesPageProps> = ({
         onSubmit={onSubmit}
       />
       <CardSpacer />
-      {data && withChoices && (
+      {withChoices && (
         <TranslationFields
           activeField={activeField}
           disabled={disabled}
