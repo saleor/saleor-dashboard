@@ -6698,10 +6698,6 @@
   "src_dot_translations_dot_components_dot_TranslationsAttributesPage_dot_2642976392": {
     "string": "Attribute Name"
   },
-  "src_dot_translations_dot_components_dot_TranslationsAttributesPage_dot_3495336243": {
-    "context": "attribute richtext value",
-    "string": "Text"
-  },
   "src_dot_translations_dot_components_dot_TranslationsAttributesPage_dot_884093025": {
     "context": "header",
     "string": "Translation Attribute \"{attribute}\" - {languageCode}"
