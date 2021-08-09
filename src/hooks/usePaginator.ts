@@ -1,4 +1,4 @@
-import { stringifyQs } from "@saleor/utils/urls";
+import { stringify as stringifyQs } from "qs";
 
 import { Pagination } from "../types";
 import useNavigator from "./useNavigator";
