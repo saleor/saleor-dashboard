@@ -74,8 +74,10 @@ const GiftCardUpdateBalanceDialog: React.FC<GiftCardUpdateBalanceDialogProps> = 
     onCompleted
   });
 
-  const handleSubmit = ({ balanceAmount }: GiftCardBalanceUpdateFormData) => {
-    updateGiftCardBalance({
+  const handleSubmit = async ({
+    balanceAmount
+  }: GiftCardBalanceUpdateFormData) => {
+    const result = await updateGiftCardBalance({
       variables: {
         id,
         input: {
@@ -83,6 +85,8 @@ const GiftCardUpdateBalanceDialog: React.FC<GiftCardUpdateBalanceDialogProps> = 
         }
       }
     });
+
+    return result?.data?.giftCardUpdate?.errors;
   };
 
   const { loading, status, data } = updateGiftCardBalanceOpts;
