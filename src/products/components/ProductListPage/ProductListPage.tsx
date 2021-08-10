@@ -134,12 +134,18 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
     <Container>
       <PageHeader
         title={intl.formatMessage(sectionNames.products)}
-        limit={
-          hasLimits(limits, "productVariants") && {
-            data: limits,
-            key: "productVariants",
-            text: "SKUs used"
-          }
+        limitText={
+          hasLimits(limits, "productVariants") &&
+          intl.formatMessage(
+            {
+              defaultMessage: "{count}/{max} SKUs used",
+              description: "created products counter"
+            },
+            {
+              count: limits.currentUsage.productVariants,
+              max: limits.allowedUsage.productVariants
+            }
+          )
         }
       >
         <CardMenu

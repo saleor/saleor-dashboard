@@ -64,12 +64,18 @@ const StaffListPage: React.FC<StaffListPageProps> = ({
       </Backlink>
       <PageHeader
         title={intl.formatMessage(sectionNames.staff)}
-        limit={
-          hasLimits(limits, "staffUsers") && {
-            data: limits,
-            key: "staffUsers",
-            text: "members"
-          }
+        limitText={
+          hasLimits(limits, "staffUsers") &&
+          intl.formatMessage(
+            {
+              defaultMessage: "{count}/{max} members",
+              description: "used staff users counter"
+            },
+            {
+              count: limits.currentUsage.staffUsers,
+              max: limits.allowedUsage.staffUsers
+            }
+          )
         }
       >
         <Button
