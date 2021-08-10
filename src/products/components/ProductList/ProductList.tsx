@@ -36,6 +36,8 @@ import classNames from "classnames";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
+import { messages } from "./messages";
+
 const useStyles = makeStyles(
   theme => ({
     [theme.breakpoints.up("lg")]: {
@@ -377,7 +379,7 @@ export const ProductList: React.FC<ProductListProps> = props => {
                         (product?.channelListings !== undefined && channel ? (
                           <AvailabilityStatusLabel
                             channel={channel}
-                            type="product"
+                            messages={messages}
                           />
                         ) : (
                           <ChannelsAvailabilityDropdown

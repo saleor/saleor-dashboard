@@ -17,6 +17,7 @@ import React from "react";
 import { FormattedMessage } from "react-intl";
 
 import { CollectionList_collections_edges_node } from "../../types/CollectionList";
+import { messages } from "./messages";
 
 const useStyles = makeStyles(
   theme => ({
@@ -191,7 +192,7 @@ const CollectionList: React.FC<CollectionListProps> = props => {
                     (collection?.channelListings !== undefined && channel ? (
                       <AvailabilityStatusLabel
                         channel={channel}
-                        type="collection"
+                        messages={messages}
                       />
                     ) : (
                       <ChannelsAvailabilityDropdown

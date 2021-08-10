@@ -3,9 +3,7 @@ import useDateLocalize from "@saleor/hooks/useDateLocalize";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import { messages } from "./messages";
-
-export const AvailabilityStatusLabel = ({ channel, type = "" }) => {
+export const AvailabilityStatusLabel = ({ channel, messages }) => {
   const intl = useIntl();
   const localizeDate = useDateLocalize();
 
@@ -18,8 +16,7 @@ export const AvailabilityStatusLabel = ({ channel, type = "" }) => {
             : messages.willBePublished
           : messages.unpublished,
         {
-          date: localizeDate(channel.publicationDate, "L"),
-          type
+          date: localizeDate(channel.publicationDate, "L")
         }
       )}
       status={
