@@ -49,7 +49,7 @@ const GiftCardUpdatePage: React.FC<GiftCardUpdatePageProps> = ({
       <GiftCardUpdateFormProvider onBalanceUpdateSuccess={closeModal}>
         <GiftCardUpdateFormContext.Consumer>
           {({
-            opts: { loading, status },
+            opts: { loading: loadingUpdate, status },
             hasChanged,
             submit,
             data,
@@ -71,8 +71,8 @@ const GiftCardUpdatePage: React.FC<GiftCardUpdatePageProps> = ({
               </Grid>
 
               <GiftCardDetailsContext.Consumer>
-                {({ loading, giftCard }) =>
-                  !loading &&
+                {({ loading: loadingDetails, giftCard }) =>
+                  !loadingDetails &&
                   giftCard && (
                     <GiftCardUpdateBalanceDialog
                       onClose={closeModal}
@@ -87,7 +87,7 @@ const GiftCardUpdatePage: React.FC<GiftCardUpdatePageProps> = ({
 
               <Savebar
                 state={status}
-                disabled={loading || !hasChanged}
+                disabled={loadingUpdate || !hasChanged}
                 onCancel={navigateBack}
                 onSubmit={submit}
               />
