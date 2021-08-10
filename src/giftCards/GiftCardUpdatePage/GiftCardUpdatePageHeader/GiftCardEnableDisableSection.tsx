@@ -1,5 +1,4 @@
 import useNotifier from "@saleor/hooks/useNotifier";
-import { getDefaultNotifierSuccessErrorData } from "@saleor/hooks/useNotifier/utils";
 import { commonMessages } from "@saleor/intl";
 import { ConfirmButton } from "@saleor/macaw-ui";
 import commonErrorMessages from "@saleor/utils/errors/common";
