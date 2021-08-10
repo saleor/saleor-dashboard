@@ -30,7 +30,7 @@ const GiftCardsList: React.FC<GiftCardsListProps> = ({ params }) => {
     id?: string
   ) => {
     if (id) {
-      openModal(action, { "delete-gift-card-id": id });
+      openModal(action, { id });
       return;
     }
 
@@ -56,7 +56,7 @@ const GiftCardsList: React.FC<GiftCardsListProps> = ({ params }) => {
         />
         <GiftCardDeleteDialog
           open={params?.action === GiftCardListActionParamsEnum.DELETE}
-          id={params?.["delete-gift-card-id"]}
+          id={params?.id}
           onClose={closeModal}
         />
       </GiftCardsListProvider>
