@@ -81,7 +81,7 @@ const GiftCardEnableDisableSection: React.FC = () => {
   const handleClick = () =>
     isActive
       ? giftCardDeactivate({ variables: { id } })
-      : giftCardActivate({ variables: { id: "lol" } });
+      : giftCardActivate({ variables: { id } });
 
   const buttonLabel = isActive ? messages.disableLabel : messages.enableLabel;
 
