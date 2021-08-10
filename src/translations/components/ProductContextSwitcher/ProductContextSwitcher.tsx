@@ -18,7 +18,7 @@ import {
 } from "@saleor/translations/urls";
 import classNames from "classnames";
 import React from "react";
-import { useIntl } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import { useProductVariantList } from "../../queries";
 
@@ -35,7 +35,13 @@ const useStyles = makeStyles(
       transition: theme.transitions.duration.standard + "ms"
     },
     container: {
-      paddingBottom: theme.spacing(1)
+      display: "flex",
+      alignItems: "center",
+      paddingBottom: theme.spacing(1),
+      marginRight: theme.spacing(1)
+    },
+    label: {
+      paddingRight: theme.spacing(1)
     },
     menuContainer: {
       cursor: "pointer",
@@ -89,68 +95,73 @@ const ProductContextSwitcher: React.FC<ProductContextSwitcherProps> = ({
           )
         )
     },
-    ...(data?.product?.variants?.map(({ name, id }) => ({
-      label: name,
+    ...(data?.product?.variants?.map(({ name, sku, id }) => ({
+      label: name || sku,
       value: id,
       onClick: () => navigate(productVariantUrl(languageCode, productId, id))
     })) || [])
   ];
 
   return (
-    <div className={classes.container} ref={anchor}>
-      <Card
-        className={classes.menuContainer}
-        onClick={() => setExpandedState(!isExpanded)}
-      >
-        <Typography>
-          {items.find(({ value }) => value === selectedId)?.label || "-"}
-        </Typography>
-        <ArrowDropDown
-          className={classNames(classes.arrow, {
-            [classes.rotate]: isExpanded
-          })}
-        />
-      </Card>
-      <Popper
-        className={classes.popover}
-        open={isExpanded}
-        anchorEl={anchor.current}
-        transition
-        disablePortal
-        placement="bottom-end"
-      >
-        {({ TransitionProps, placement }) => (
-          <Grow
-            {...TransitionProps}
-            style={{
-              transformOrigin:
-                placement === "bottom" ? "right top" : "right bottom"
-            }}
-          >
-            <Paper className={classes.menuPaper}>
-              <ClickAwayListener
-                onClickAway={() => setExpandedState(false)}
-                mouseEvent="onClick"
-              >
-                <Menu>
-                  {items.map(({ label, value, onClick }) => (
-                    <MenuItem
-                      key={value}
-                      className={classes.menuItem}
-                      onClick={() => {
-                        setExpandedState(false);
-                        onClick();
-                      }}
-                    >
-                      {label}
-                    </MenuItem>
-                  ))}
-                </Menu>
-              </ClickAwayListener>
-            </Paper>
-          </Grow>
-        )}
-      </Popper>
+    <div className={classes.container}>
+      <Typography className={classes.label}>
+        <FormattedMessage defaultMessage="Translating" />:
+      </Typography>
+      <div ref={anchor}>
+        <Card
+          className={classes.menuContainer}
+          onClick={() => setExpandedState(!isExpanded)}
+        >
+          <Typography>
+            {items.find(({ value }) => value === selectedId)?.label || "-"}
+          </Typography>
+          <ArrowDropDown
+            className={classNames(classes.arrow, {
+              [classes.rotate]: isExpanded
+            })}
+          />
+        </Card>
+        <Popper
+          className={classes.popover}
+          open={isExpanded}
+          anchorEl={anchor.current}
+          transition
+          disablePortal
+          placement="bottom-end"
+        >
+          {({ TransitionProps, placement }) => (
+            <Grow
+              {...TransitionProps}
+              style={{
+                transformOrigin:
+                  placement === "bottom" ? "right top" : "right bottom"
+              }}
+            >
+              <Paper className={classes.menuPaper}>
+                <ClickAwayListener
+                  onClickAway={() => setExpandedState(false)}
+                  mouseEvent="onClick"
+                >
+                  <Menu>
+                    {items.map(({ label, value, onClick }) => (
+                      <MenuItem
+                        key={value}
+                        className={classes.menuItem}
+                        onClick={() => {
+                          setExpandedState(false);
+                          onClick();
+                        }}
+                      >
+                        {label}
+                      </MenuItem>
+                    ))}
+                  </Menu>
+                </ClickAwayListener>
+              </Paper>
+            </Grow>
+          )}
+        </Popper>
+      </div>
     </div>
   );
 };

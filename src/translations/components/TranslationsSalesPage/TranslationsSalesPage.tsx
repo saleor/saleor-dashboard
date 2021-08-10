@@ -76,6 +76,7 @@ const TranslationsSalesPage: React.FC<TranslationsSalesPageProps> = ({
           }
         ]}
         saveButtonState={saveButtonState}
+        richTextResetKey={languageCode}
         onEdit={onEdit}
         onDiscard={onDiscard}
         onSubmit={onSubmit}

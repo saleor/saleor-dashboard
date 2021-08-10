@@ -88,6 +88,7 @@ const TranslationsPagesPage: React.FC<TranslationsPagesPageProps> = ({
           }
         ]}
         saveButtonState={saveButtonState}
+        richTextResetKey={languageCode}
         onEdit={onEdit}
         onDiscard={onDiscard}
         onSubmit={onSubmit}
@@ -122,6 +123,7 @@ const TranslationsPagesPage: React.FC<TranslationsPagesPageProps> = ({
           }
         ]}
         saveButtonState={saveButtonState}
+        richTextResetKey={languageCode}
         onEdit={onEdit}
         onDiscard={onDiscard}
         onSubmit={onSubmit}
@@ -153,6 +155,7 @@ const TranslationsPagesPage: React.FC<TranslationsPagesPageProps> = ({
               })) || []
             }
             saveButtonState={saveButtonState}
+            richTextResetKey={languageCode}
             onEdit={onEdit}
             onDiscard={onDiscard}
             onSubmit={onAttributeValueSubmit}

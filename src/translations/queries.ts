@@ -372,6 +372,7 @@ const productVariantList = gql`
       variants {
         id
         name
+        sku
       }
     }
   }
