@@ -11,6 +11,7 @@ import { useIntl } from "react-intl";
 
 import { giftCardsListTableMessages as tableMessages } from "../../GiftCardsList/messages";
 import useGiftCardDetails from "../hooks/useGiftCardDetails";
+import { getGiftCardErrorMessage } from "../messages";
 import { useGiftCardUpdateMutation } from "../mutations";
 import { GiftCardUpdate } from "../types/GiftCardUpdate";
 import { giftCardUpdateBalanceDialogMessages as messages } from "./messages";
@@ -111,7 +112,10 @@ const GiftCardUpdateBalanceDialog: React.FC<GiftCardUpdateBalanceDialogProps> = 
           <TextField
             inputProps={{ min: 0 }}
             error={!!formErrors?.balanceAmount}
-            helperText={formErrors?.balanceAmount}
+            helperText={getGiftCardErrorMessage(
+              formErrors?.balanceAmount,
+              intl
+            )}
             name="balanceAmount"
             value={data.balanceAmount}
             onChange={change}
