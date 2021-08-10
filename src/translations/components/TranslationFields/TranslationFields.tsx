@@ -38,6 +38,7 @@ export interface TranslationFieldsProps {
   initialState: boolean;
   saveButtonState: ConfirmButtonTransitionState;
   pagination?: Pagination;
+  richTextResetKey: string; // temporary workaround TODO: fix rich text editor
   onEdit: (field: string) => void;
   onDiscard: () => void;
   onSubmit: (field: TranslationField, data: string | OutputData) => void;
@@ -120,6 +121,7 @@ const TranslationFields: React.FC<TranslationFieldsProps> = props => {
     title,
     saveButtonState,
     pagination,
+    richTextResetKey,
     onEdit,
     onDiscard,
     onSubmit
@@ -187,6 +189,7 @@ const TranslationFields: React.FC<TranslationFieldsProps> = props => {
                       />
                     ) : (
                       <TranslationFieldsRich
+                        resetKey={richTextResetKey}
                         disabled={disabled}
                         edit={false}
                         initial={field.value}
@@ -221,6 +224,7 @@ const TranslationFields: React.FC<TranslationFieldsProps> = props => {
                       />
                     ) : (
                       <TranslationFieldsRich
+                        resetKey={richTextResetKey}
                         disabled={disabled}
                         edit={activeField === field.name}
                         initial={field.translation}

@@ -84,6 +84,41 @@ export const productTranslationFragment = gql`
     }
   }
 `;
+
+export const productVariantTranslationFragment = gql`
+  fragment ProductVariantTranslationFragment on ProductVariantTranslatableContent {
+    productVariant {
+      id
+    }
+    name
+    translation(languageCode: $language) {
+      id
+      name
+      language {
+        code
+        language
+      }
+    }
+    attributeValues {
+      id
+      name
+      richText
+      attributeValue {
+        id
+      }
+      translation(languageCode: $language) {
+        id
+        name
+        richText
+        language {
+          code
+          language
+        }
+      }
+    }
+  }
+`;
+
 export const saleTranslationFragment = gql`
   fragment SaleTranslationFragment on SaleTranslatableContent {
     sale {

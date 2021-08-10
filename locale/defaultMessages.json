@@ -1583,6 +1583,10 @@
     "context": "alert",
     "string": "Channel limit reached"
   },
+  "src_dot_channels_dot_pages_dot_ChannelsListPage_dot_3277722884": {
+    "context": "created channels counter",
+    "string": "{count}/{max} channels used"
+  },
   "src_dot_channels_dot_pages_dot_ChannelsListPage_dot_3511613983": {
     "context": "channel name",
     "string": "Channel Name"
@@ -3445,6 +3449,13 @@
     "context": "orders section name",
     "string": "Orders"
   },
+  "src_dot_orders_dot_components_dot_2214147779": {
+    "context": "alert",
+    "string": "Order limit reached"
+  },
+  "src_dot_orders_dot_components_dot_3769643084": {
+    "string": "You have reached your order limit, you will be billed extra for orders above limit. If you would like to up your limit, contact your administration staff about raising your limits."
+  },
   "src_dot_orders_dot_components_dot_DraftOrderChannelSectionCard_dot_1243773440": {
     "context": "section header",
     "string": "Sales channel"
@@ -3669,6 +3680,10 @@
   "src_dot_orders_dot_components_dot_OrderDraftDetails_dot_2528459381": {
     "context": "button",
     "string": "Add products"
+  },
+  "src_dot_orders_dot_components_dot_OrderDraftListPage_dot_1629108523": {
+    "context": "placed orders counter",
+    "string": "{count}/{max} orders"
   },
   "src_dot_orders_dot_components_dot_OrderDraftListPage_dot_2826235371": {
     "context": "button",
@@ -4010,9 +4025,9 @@
     "context": "generate invoice button",
     "string": "Generate"
   },
-  "src_dot_orders_dot_components_dot_OrderListPage_dot_2214147779": {
-    "context": "alert",
-    "string": "Order limit reached"
+  "src_dot_orders_dot_components_dot_OrderListPage_dot_1629108523": {
+    "context": "placed order counter",
+    "string": "{count}/{max} orders"
   },
   "src_dot_orders_dot_components_dot_OrderListPage_dot_2225897825": {
     "context": "button",
@@ -4024,9 +4039,6 @@
   },
   "src_dot_orders_dot_components_dot_OrderListPage_dot_355376157": {
     "string": "Search Orders..."
-  },
-  "src_dot_orders_dot_components_dot_OrderListPage_dot_3769643084": {
-    "string": "You have reached your order limit, you will be billed extra for orders above limit. If you would like to up your limit, contact your administration staff about raising your limits."
   },
   "src_dot_orders_dot_components_dot_OrderListPage_dot_875489544": {
     "context": "tab name",
@@ -5382,6 +5394,10 @@
     "context": "alert",
     "string": "SKU limit reached"
   },
+  "src_dot_products_dot_components_dot_ProductListPage_dot_3155791658": {
+    "context": "created products counter",
+    "string": "{count}/{max} SKUs used"
+  },
   "src_dot_products_dot_components_dot_ProductListPage_dot_3550330425": {
     "string": "Search Products..."
   },
@@ -6508,6 +6524,10 @@
     "context": "button",
     "string": "Invite staff member"
   },
+  "src_dot_staff_dot_components_dot_StaffListPage_dot_938945387": {
+    "context": "used staff users counter",
+    "string": "{count}/{max} members"
+  },
   "src_dot_staff_dot_components_dot_StaffListPage_dot_active": {
     "context": "staff member's account",
     "string": "Active"
@@ -6675,6 +6695,12 @@
     "context": "translations section name",
     "string": "Translations"
   },
+  "src_dot_translations_dot_components_dot_ProductContextSwitcher_dot_1932340772": {
+    "string": "Translating"
+  },
+  "src_dot_translations_dot_components_dot_ProductContextSwitcher_dot_197468239": {
+    "string": "Main Product"
+  },
   "src_dot_translations_dot_components_dot_TranslationFields_dot_1308081812": {
     "string": "{numberOfFields} Translations, {numberOfTranslatedFields} Completed"
   },
@@ -6814,6 +6840,17 @@
   },
   "src_dot_translations_dot_components_dot_TranslationsPagesPage_dot_432157284": {
     "string": "Page Title"
+  },
+  "src_dot_translations_dot_components_dot_TranslationsProductVariantsPage_dot_4165966072": {
+    "context": "attribute list",
+    "string": "Attribute {number}"
+  },
+  "src_dot_translations_dot_components_dot_TranslationsProductVariantsPage_dot_847507870": {
+    "context": "header",
+    "string": "Translation Product Variant \"{productName}\" - {languageCode}"
+  },
+  "src_dot_translations_dot_components_dot_TranslationsProductVariantsPage_dot_953327101": {
+    "string": "Variant Name"
   },
   "src_dot_translations_dot_components_dot_TranslationsProductsPage_dot_1406947243": {
     "string": "Search Engine Description"
@@ -7117,6 +7154,10 @@
   },
   "src_dot_warehouses_dot_components_dot_WarehouseInfo_dot_2622674857": {
     "string": "Warehouse Name"
+  },
+  "src_dot_warehouses_dot_components_dot_WarehouseListPage_dot_1082745946": {
+    "context": "used warehouses counter",
+    "string": "{count}/{max} warehouses used"
   },
   "src_dot_warehouses_dot_components_dot_WarehouseListPage_dot_2304765290": {
     "string": "Search Warehouse"

@@ -29,6 +29,9 @@ import TranslationsPagesComponent, {
 import TranslationsProductsComponent, {
   TranslationsProductsQueryParams
 } from "./views/TranslationsProducts";
+import TranslationsProductVariantsComponent, {
+  TranslationsProductVariantsQueryParams
+} from "./views/TranslationsProductVariants";
 import TranslationsSaleComponent, {
   TranslationsSalesQueryParams
 } from "./views/TranslationsSales";
@@ -102,6 +105,28 @@ const TranslationsProducts: React.FC<TranslationsEntityRouteProps> = ({
   return (
     <TranslationsProductsComponent
       id={decodeURIComponent(match.params.id)}
+      languageCode={LanguageCodeEnum[match.params.languageCode]}
+      params={params}
+    />
+  );
+};
+type TranslationsProductVariantProps = RouteComponentProps<{
+  productId: string;
+  id: string;
+  languageCode: string;
+}>;
+const TranslationsProductVariants: React.FC<TranslationsProductVariantProps> = ({
+  location,
+  match
+}) => {
+  const qs = parseQs(location.search.substr(1));
+  const params: TranslationsProductVariantsQueryParams = {
+    activeField: qs.activeField
+  };
+  return (
+    <TranslationsProductVariantsComponent
+      id={decodeURIComponent(match.params.id)}
+      productId={decodeURIComponent(match.params.productId)}
       languageCode={LanguageCodeEnum[match.params.languageCode]}
       params={params}
     />
@@ -213,6 +238,17 @@ const TranslationsRouter: React.FC = () => {
             ":id"
           )}
           component={TranslationsProducts}
+        />
+        <Route
+          exact
+          path={languageEntityPath(
+            ":languageCode",
+            TranslatableEntities.products,
+            ":productId",
+            TranslatableEntities.productVariants,
+            ":id"
+          )}
+          component={TranslationsProductVariants}
         />
         <Route
           exact

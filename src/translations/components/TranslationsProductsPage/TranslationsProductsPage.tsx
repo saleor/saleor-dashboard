@@ -14,15 +14,18 @@ import React from "react";
 import { useIntl } from "react-intl";
 
 import { LanguageCodeEnum } from "../../../types/globalTypes";
+import ProductContextSwitcher from "../ProductContextSwitcher";
 import TranslationFields from "../TranslationFields";
 
 export interface TranslationsProductsPageProps
   extends TranslationsEntitiesPageProps {
   data: ProductTranslationFragment;
+  productId: string;
   onAttributeValueSubmit: TranslationsEntitiesPageProps["onSubmit"];
 }
 
 const TranslationsProductsPage: React.FC<TranslationsProductsPageProps> = ({
+  productId,
   activeField,
   disabled,
   languageCode,
@@ -56,6 +59,11 @@ const TranslationsProductsPage: React.FC<TranslationsProductsPageProps> = ({
           }
         )}
       >
+        <ProductContextSwitcher
+          languageCode={languageCode}
+          productId={productId}
+          selectedId={productId}
+        />
         <LanguageSwitch
           currentLanguage={LanguageCodeEnum[languageCode]}
           languages={languages}
@@ -88,6 +96,7 @@ const TranslationsProductsPage: React.FC<TranslationsProductsPageProps> = ({
           }
         ]}
         saveButtonState={saveButtonState}
+        richTextResetKey={languageCode}
         onEdit={onEdit}
         onDiscard={onDiscard}
         onSubmit={onSubmit}
@@ -121,6 +130,7 @@ const TranslationsProductsPage: React.FC<TranslationsProductsPageProps> = ({
           }
         ]}
         saveButtonState={saveButtonState}
+        richTextResetKey={languageCode}
         onEdit={onEdit}
         onDiscard={onDiscard}
         onSubmit={onSubmit}
@@ -152,6 +162,7 @@ const TranslationsProductsPage: React.FC<TranslationsProductsPageProps> = ({
               })) || []
             }
             saveButtonState={saveButtonState}
+            richTextResetKey={languageCode}
             onEdit={onEdit}
             onDiscard={onDiscard}
             onSubmit={onAttributeValueSubmit}

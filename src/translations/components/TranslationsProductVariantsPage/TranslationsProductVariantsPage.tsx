@@ -2,33 +2,38 @@ import CardSpacer from "@saleor/components/CardSpacer";
 import Container from "@saleor/components/Container";
 import LanguageSwitch from "@saleor/components/LanguageSwitch";
 import PageHeader from "@saleor/components/PageHeader";
-import { PageTranslationFragment } from "@saleor/fragments/types/PageTranslationFragment";
+import { ProductVariantTranslationFragment } from "@saleor/fragments/types/ProductVariantTranslationFragment";
 import { commonMessages, sectionNames } from "@saleor/intl";
 import { Backlink } from "@saleor/macaw-ui";
 import { getStringOrPlaceholder } from "@saleor/misc";
 import {
-  PageTranslationInputFieldName,
+  TranslationInputFieldName,
   TranslationsEntitiesPageProps
 } from "@saleor/translations/types";
 import React from "react";
 import { useIntl } from "react-intl";
 
 import { LanguageCodeEnum } from "../../../types/globalTypes";
+import ProductContextSwitcher from "../ProductContextSwitcher";
 import TranslationFields from "../TranslationFields";
 
-export interface TranslationsPagesPageProps
+export interface TranslationsProductsPageProps
   extends TranslationsEntitiesPageProps {
-  data: PageTranslationFragment;
+  data: ProductVariantTranslationFragment;
+  productId: string;
+  variantId: string;
   onAttributeValueSubmit: TranslationsEntitiesPageProps["onSubmit"];
 }
 
-const TranslationsPagesPage: React.FC<TranslationsPagesPageProps> = ({
+const TranslationsProductsPage: React.FC<TranslationsProductsPageProps> = ({
   activeField,
   disabled,
   languageCode,
   languages,
   data,
   saveButtonState,
+  productId,
+  variantId,
   onBack,
   onDiscard,
   onEdit,
@@ -41,20 +46,26 @@ const TranslationsPagesPage: React.FC<TranslationsPagesPageProps> = ({
   return (
     <Container>
       <Backlink onClick={onBack}>
-        {intl.formatMessage(sectionNames.translations)}
+        {intl.formatMessage(sectionNames.products)}
       </Backlink>
       <PageHeader
         title={intl.formatMessage(
           {
-            defaultMessage: 'Translation Page "{pageName}" - {languageCode}',
+            defaultMessage:
+              'Translation Product Variant "{productName}" - {languageCode}',
             description: "header"
           },
           {
             languageCode,
-            pageName: getStringOrPlaceholder(data?.page?.title)
+            productName: getStringOrPlaceholder(data?.name)
           }
         )}
       >
+        <ProductContextSwitcher
+          languageCode={languageCode}
+          productId={productId}
+          selectedId={variantId}
+        />
         <LanguageSwitch
           currentLanguage={LanguageCodeEnum[languageCode]}
           languages={languages}
@@ -69,57 +80,12 @@ const TranslationsPagesPage: React.FC<TranslationsPagesPageProps> = ({
         fields={[
           {
             displayName: intl.formatMessage({
-              defaultMessage: "Page Title"
+              defaultMessage: "Variant Name"
             }),
-            name: PageTranslationInputFieldName.title,
-            translation: data?.translation?.title || null,
+            name: TranslationInputFieldName.name,
+            translation: data?.translation?.name || null,
             type: "short" as "short",
-            value: data?.page?.title
-          },
-          {
-            displayName: intl.formatMessage({
-              defaultMessage: "Content",
-              description: "page content"
-            }),
-            name: PageTranslationInputFieldName.content,
-            translation: data?.translation?.content || null,
-            type: "rich" as "rich",
-            value: data?.page?.content
-          }
-        ]}
-        saveButtonState={saveButtonState}
-        richTextResetKey={languageCode}
-        onEdit={onEdit}
-        onDiscard={onDiscard}
-        onSubmit={onSubmit}
-      />
-
-      <CardSpacer />
-      <TranslationFields
-        activeField={activeField}
-        disabled={disabled}
-        initialState={true}
-        title={intl.formatMessage({
-          defaultMessage: "Search Engine Preview"
-        })}
-        fields={[
-          {
-            displayName: intl.formatMessage({
-              defaultMessage: "Search Engine Title"
-            }),
-            name: PageTranslationInputFieldName.seoTitle,
-            translation: data?.translation?.seoTitle || null,
-            type: "short" as "short",
-            value: data?.page?.seoTitle
-          },
-          {
-            displayName: intl.formatMessage({
-              defaultMessage: "Search Engine Description"
-            }),
-            name: PageTranslationInputFieldName.seoDescription,
-            translation: data?.translation?.seoDescription || null,
-            type: "long" as "long",
-            value: data?.page?.seoDescription
+            value: data?.name
           }
         ]}
         saveButtonState={saveButtonState}
@@ -166,5 +132,5 @@ const TranslationsPagesPage: React.FC<TranslationsPagesPageProps> = ({
     </Container>
   );
 };
-TranslationsPagesPage.displayName = "TranslationsPagesPage";
-export default TranslationsPagesPage;
+TranslationsProductsPage.displayName = "TranslationsProductsPage";
+export default TranslationsProductsPage;
