@@ -194,9 +194,12 @@ const TranslationsEntities: React.FC<TranslationsEntitiesProps> = ({
                           node.translation?.description,
                           node.translation?.name,
                           node.translation?.seoDescription,
-                          node.translation?.seoTitle
+                          node.translation?.seoTitle,
+                          ...(node.attributeValues?.map(
+                            ({ translation }) => translation?.richText
+                          ) || [])
                         ]),
-                        max: 4
+                        max: 4 + (node.attributeValues?.length || 0)
                       },
                       id: node?.product?.id,
                       name: node?.product?.name

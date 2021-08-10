@@ -112,6 +112,7 @@ const TranslationsProducts: React.FC<TranslationsProductsProps> = ({
 
             return (
               <TranslationsProductsPage
+                productId={id}
                 activeField={params.activeField}
                 disabled={
                   productTranslations.loading || updateTranslationsOpts.loading
