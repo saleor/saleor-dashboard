@@ -20,6 +20,9 @@ export const useTableStyles = makeStyles(
     colBalance: {
       width: 135
     },
+    colBase: {
+      width: 150
+    },
     row: {
       cursor: "pointer",
       height: 80,

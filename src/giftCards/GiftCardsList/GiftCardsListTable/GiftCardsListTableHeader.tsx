@@ -50,14 +50,15 @@ const GiftCardsListTableHeader: React.FC = () => {
       }
     }
   ];
+
   return (
     <>
       <colgroup>
         <col />
         <col className={classes.colCardCode} />
-        <col />
-        <col />
-        <col />
+        <col className={classes.colBase} />
+        <col className={classes.colBase} />
+        <col className={classes.colBase} />
         <col className={classes.colBalance} />
         <col className={classes.colDelete} />
       </colgroup>
