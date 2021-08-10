@@ -99,27 +99,27 @@ export const transformOrderPaymentStatus = (
     case OrderPaymentStatusEnum.PARTIALLY_CHARGED:
       return {
         localized: intl.formatMessage(paymentStatusMessages.partiallyPaid),
-        status: "error"
+        status: StatusType.ERROR
       };
     case OrderPaymentStatusEnum.FULLY_CHARGED:
       return {
         localized: intl.formatMessage(paymentStatusMessages.paid),
-        status: "success"
+        status: StatusType.SUCCESS
       };
     case OrderPaymentStatusEnum.PARTIALLY_REFUNDED:
       return {
         localized: intl.formatMessage(paymentStatusMessages.partiallyRefunded),
-        status: "error"
+        status: StatusType.ERROR
       };
     case OrderPaymentStatusEnum.FULLY_REFUNDED:
       return {
         localized: intl.formatMessage(paymentStatusMessages.refunded),
-        status: "success"
+        status: StatusType.SUCCESS
       };
     default:
       return {
         localized: intl.formatMessage(paymentStatusMessages.unpaid),
-        status: "error"
+        status: StatusType.ERROR
       };
   }
 };
