@@ -3,10 +3,10 @@ import { commonMessages } from "@saleor/intl";
 import { ConfirmButton } from "@saleor/macaw-ui";
 import commonErrorMessages from "@saleor/utils/errors/common";
 import classNames from "classnames";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 
-import { GiftCardDetailsContext } from "../providers/GiftCardDetailsProvider";
+import useGiftCardDetails from "../hooks/useGiftCardDetails";
 import { giftCardEnableDisableSectionMessages as messages } from "./messages";
 import {
   useGiftCardActivateMutation,
@@ -23,7 +23,7 @@ const GiftCardEnableDisableSection: React.FC = () => {
 
   const {
     giftCard: { id, isActive }
-  } = useContext(GiftCardDetailsContext);
+  } = useGiftCardDetails();
 
   const [showButtonGreen, setShowButtonGreen] = useState(!isActive);
 
