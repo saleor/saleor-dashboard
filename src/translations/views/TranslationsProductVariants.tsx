@@ -9,31 +9,33 @@ import { useIntl } from "react-intl";
 
 import { maybe } from "../../misc";
 import { LanguageCodeEnum } from "../../types/globalTypes";
-import TranslationsProductsPage from "../components/TranslationsProductsPage";
+import TranslationsProductVariantsPage from "../components/TranslationsProductVariantsPage";
 import {
   TypedUpdateAttributeValueTranslations,
-  TypedUpdateProductTranslations
+  TypedUpdateProductVariantTranslations
 } from "../mutations";
-import { useProductTranslationDetails } from "../queries";
+import { useProductVariantTranslationDetails } from "../queries";
 import { TranslationField, TranslationInputFieldName } from "../types";
 import {
   languageEntitiesUrl,
-  languageEntityUrl,
+  productVariantUrl,
   TranslatableEntities
 } from "../urls";
 import { getParsedTranslationInputData } from "../utils";
 
-export interface TranslationsProductsQueryParams {
+export interface TranslationsProductVariantsQueryParams {
   activeField: string;
 }
-export interface TranslationsProductsProps {
+export interface TranslationsProductVariantsProps {
   id: string;
+  productId: string;
   languageCode: LanguageCodeEnum;
-  params: TranslationsProductsQueryParams;
+  params: TranslationsProductVariantsQueryParams;
 }
 
-const TranslationsProducts: React.FC<TranslationsProductsProps> = ({
+const TranslationsProductVariants: React.FC<TranslationsProductVariantsProps> = ({
   id,
+  productId,
   languageCode,
   params
 }) => {
@@ -42,7 +44,7 @@ const TranslationsProducts: React.FC<TranslationsProductsProps> = ({
   const shop = useShop();
   const intl = useIntl();
 
-  const productTranslations = useProductTranslationDetails({
+  const productVariantTranslations = useProductVariantTranslationDetails({
     variables: { id, language: languageCode }
   });
 
@@ -57,7 +59,7 @@ const TranslationsProducts: React.FC<TranslationsProductsProps> = ({
 
   const onUpdate = (errors: unknown[]) => {
     if (errors.length === 0) {
-      productTranslations.refetch();
+      productVariantTranslations.refetch();
       notify({
         status: "success",
         text: intl.formatMessage(commonMessages.savedChanges)
@@ -71,8 +73,8 @@ const TranslationsProducts: React.FC<TranslationsProductsProps> = ({
   };
 
   return (
-    <TypedUpdateProductTranslations
-      onCompleted={data => onUpdate(data.productTranslate.errors)}
+    <TypedUpdateProductVariantTranslations
+      onCompleted={data => onUpdate(data.productVariantTranslate.errors)}
     >
       {(updateTranslations, updateTranslationsOpts) => (
         <TypedUpdateAttributeValueTranslations
@@ -108,14 +110,16 @@ const TranslationsProducts: React.FC<TranslationsProductsProps> = ({
               });
             };
 
-            const translation = productTranslations?.data?.translation;
+            const translation = productVariantTranslations?.data?.translation;
 
             return (
-              <TranslationsProductsPage
-                productId={id}
+              <TranslationsProductVariantsPage
+                productId={productId}
+                variantId={id}
                 activeField={params.activeField}
                 disabled={
-                  productTranslations.loading || updateTranslationsOpts.loading
+                  productVariantTranslations.loading ||
+                  updateTranslationsOpts.loading
                 }
                 languageCode={languageCode}
                 languages={maybe(() => shop.languages, [])}
@@ -130,14 +134,13 @@ const TranslationsProducts: React.FC<TranslationsProductsProps> = ({
                 onEdit={onEdit}
                 onDiscard={onDiscard}
                 onLanguageChange={lang =>
-                  navigate(
-                    languageEntityUrl(lang, TranslatableEntities.products, id)
-                  )
+                  navigate(productVariantUrl(lang, productId, id))
                 }
                 onSubmit={handleSubmit}
                 onAttributeValueSubmit={handleAttributeValueSubmit}
                 data={
-                  translation?.__typename === "ProductTranslatableContent"
+                  translation?.__typename ===
+                  "ProductVariantTranslatableContent"
                     ? translation
                     : null
                 }
@@ -146,8 +149,8 @@ const TranslationsProducts: React.FC<TranslationsProductsProps> = ({
           }}
         </TypedUpdateAttributeValueTranslations>
       )}
-    </TypedUpdateProductTranslations>
+    </TypedUpdateProductVariantTranslations>
   );
 };
-TranslationsProducts.displayName = "TranslationsProducts";
-export default TranslationsProducts;
+TranslationsProductVariants.displayName = "TranslationsProductVariants";
+export default TranslationsProductVariants;

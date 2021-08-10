@@ -27,6 +27,10 @@ import {
   UpdateProductTranslationsVariables
 } from "./types/UpdateProductTranslations";
 import {
+  UpdateProductVariantTranslations,
+  UpdateProductVariantTranslationsVariables
+} from "./types/UpdateProductVariantTranslations";
+import {
   UpdateSaleTranslations,
   UpdateSaleTranslationsVariables
 } from "./types/UpdateSaleTranslations";
@@ -75,6 +79,37 @@ export const TypedUpdateProductTranslations = TypedMutation<
   UpdateProductTranslations,
   UpdateProductTranslationsVariables
 >(updateProductTranslations);
+
+const updateProductVariantTranslations = gql`
+  mutation UpdateProductVariantTranslations(
+    $id: ID!
+    $input: NameTranslationInput!
+    $language: LanguageCodeEnum!
+  ) {
+    productVariantTranslate(id: $id, input: $input, languageCode: $language) {
+      errors {
+        field
+        message
+      }
+      productVariant {
+        id
+        name
+        translation(languageCode: $language) {
+          id
+          name
+          language {
+            code
+            language
+          }
+        }
+      }
+    }
+  }
+`;
+export const TypedUpdateProductVariantTranslations = TypedMutation<
+  UpdateProductVariantTranslations,
+  UpdateProductVariantTranslationsVariables
+>(updateProductVariantTranslations);
 
 const updateCategoryTranslations = gql`
   mutation UpdateCategoryTranslations(
