@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { GiftCardExpiryTypeEnum, TimePeriodTypeEnum, GiftCardEventsEnum } from "../../../types/globalTypes";
+import { GiftCardExpiryTypeEnum, TimePeriodTypeEnum, GiftCardEventsEnum } from "./../../../types/globalTypes";
 
 // ====================================================
 // GraphQL query operation: GiftCardDetails
@@ -32,13 +32,6 @@ export interface GiftCardDetails_giftCard_product {
   __typename: "Product";
   id: string;
   name: string;
-}
-
-export interface GiftCardDetails_giftCard_user {
-  __typename: "User";
-  id: string;
-  firstName: string;
-  lastName: string;
 }
 
 export interface GiftCardDetails_giftCard_usedBy {
@@ -133,7 +126,7 @@ export interface GiftCardDetails_giftCard_events_balance_oldCurrentBalance {
 
 export interface GiftCardDetails_giftCard_events_balance {
   __typename: "GiftCardEventBalance";
-  initialBalance: GiftCardDetails_giftCard_events_balance_initialBalance;
+  initialBalance: GiftCardDetails_giftCard_events_balance_initialBalance | null;
   currentBalance: GiftCardDetails_giftCard_events_balance_currentBalance;
   oldInitialBalance: GiftCardDetails_giftCard_events_balance_oldInitialBalance | null;
   oldCurrentBalance: GiftCardDetails_giftCard_events_balance_oldCurrentBalance | null;
@@ -163,7 +156,6 @@ export interface GiftCardDetails_giftCard {
   displayCode: string;
   createdBy: GiftCardDetails_giftCard_createdBy | null;
   product: GiftCardDetails_giftCard_product | null;
-  user: GiftCardDetails_giftCard_user | null;
   usedBy: GiftCardDetails_giftCard_usedBy | null;
   usedByEmail: string | null;
   createdByEmail: string | null;

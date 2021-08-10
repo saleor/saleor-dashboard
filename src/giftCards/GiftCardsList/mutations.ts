@@ -2,7 +2,6 @@ import { giftCardErrorFragment } from "@saleor/fragments/errors";
 import makeMutation from "@saleor/hooks/makeMutation";
 import gql from "graphql-tag";
 
-import { giftCardDataFragment } from "../GiftCardUpdatePage/queries";
 import {
   BulkDeleteGiftCard,
   BulkDeleteGiftCardVariables
@@ -14,14 +13,10 @@ import {
 
 const deleteGiftCard = gql`
   ${giftCardErrorFragment}
-  ${giftCardDataFragment}
   mutation DeleteGiftCard($id: ID!) {
     giftCardDelete(id: $id) {
       errors {
         ...GiftCardError
-      }
-      giftCard {
-        ...GiftCardData
       }
     }
   }

@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { GiftCardExpiryTypeEnum, TimePeriodTypeEnum } from "../../../types/globalTypes";
+import { GiftCardExpiryTypeEnum, TimePeriodTypeEnum } from "./../../../types/globalTypes";
 
 // ====================================================
 // GraphQL fragment: GiftCardData
@@ -32,13 +32,6 @@ export interface GiftCardData_product {
   __typename: "Product";
   id: string;
   name: string;
-}
-
-export interface GiftCardData_user {
-  __typename: "User";
-  id: string;
-  firstName: string;
-  lastName: string;
 }
 
 export interface GiftCardData_usedBy {
@@ -79,7 +72,6 @@ export interface GiftCardData {
   displayCode: string;
   createdBy: GiftCardData_createdBy | null;
   product: GiftCardData_product | null;
-  user: GiftCardData_user | null;
   usedBy: GiftCardData_usedBy | null;
   usedByEmail: string | null;
   createdByEmail: string | null;

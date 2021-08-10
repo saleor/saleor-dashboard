@@ -5,17 +5,15 @@ import Metadata from "@saleor/components/Metadata";
 import Savebar from "@saleor/components/Savebar";
 import React from "react";
 
-import GiftCardUpdateBalanceDialog from "./GiftCardUpdateBalanceDialog";
 import GiftCardUpdateDetailsCard from "./GiftCardUpdateDetailsCard";
 import GiftCardUpdateInfoCard from "./GiftCardUpdateInfoCard";
 import GiftCardUpdatePageHeader from "./GiftCardUpdatePageHeader";
-import useGiftCardDetails from "./providers/GiftCardDetailsProvider/hooks/useGiftCardDetails";
 import useGiftCardUpdateDialogs from "./providers/GiftCardUpdateDialogsProvider/hooks/useGiftCardUpdateDialogs";
 import useGiftCardUpdate from "./providers/GiftCardUpdateFormProvider/hooks/useGiftCardUpdate";
 import useGiftCardUpdateForm from "./providers/GiftCardUpdateFormProvider/hooks/useGiftCardUpdateForm";
 
 const GiftCardUpdatePage: React.FC = () => {
-  const { navigateBack } = useGiftCardUpdateDialogs();
+  const { navigateBack, openDeleteDialog } = useGiftCardUpdateDialogs();
 
   const {
     hasChanged,
@@ -46,6 +44,7 @@ const GiftCardUpdatePage: React.FC = () => {
         disabled={loadingUpdate || !hasChanged}
         onCancel={navigateBack}
         onSubmit={submit}
+        onDelete={openDeleteDialog}
       />
     </Container>
   );

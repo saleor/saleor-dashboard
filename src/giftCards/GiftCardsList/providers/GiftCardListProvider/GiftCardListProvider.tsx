@@ -13,12 +13,12 @@ import { ListViews } from "@saleor/types";
 import { mapEdgesToItems } from "@saleor/utils/maps";
 import React, { createContext } from "react";
 
-import { useGiftCardListQuery } from "../queries";
-import { GiftCardListColummns, GiftCardListUrlQueryParams } from "../types";
+import { useGiftCardListQuery } from "../../queries";
+import { GiftCardListColummns, GiftCardListUrlQueryParams } from "../../types";
 import {
   GiftCardList_giftCards_edges_node,
   GiftCardListVariables
-} from "../types/GiftCardList";
+} from "../../types/GiftCardList";
 
 const numberOfColumns = 7;
 

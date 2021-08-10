@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { GiftCardUpdateInput, GiftCardErrorCode, GiftCardExpiryTypeEnum, TimePeriodTypeEnum } from "../../../types/globalTypes";
+import { GiftCardUpdateInput, GiftCardErrorCode, GiftCardExpiryTypeEnum, TimePeriodTypeEnum } from "./../../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: GiftCardUpdate
@@ -38,13 +38,6 @@ export interface GiftCardUpdate_giftCardUpdate_giftCard_product {
   __typename: "Product";
   id: string;
   name: string;
-}
-
-export interface GiftCardUpdate_giftCardUpdate_giftCard_user {
-  __typename: "User";
-  id: string;
-  firstName: string;
-  lastName: string;
 }
 
 export interface GiftCardUpdate_giftCardUpdate_giftCard_usedBy {
@@ -85,7 +78,6 @@ export interface GiftCardUpdate_giftCardUpdate_giftCard {
   displayCode: string;
   createdBy: GiftCardUpdate_giftCardUpdate_giftCard_createdBy | null;
   product: GiftCardUpdate_giftCardUpdate_giftCard_product | null;
-  user: GiftCardUpdate_giftCardUpdate_giftCard_user | null;
   usedBy: GiftCardUpdate_giftCardUpdate_giftCard_usedBy | null;
   usedByEmail: string | null;
   createdByEmail: string | null;

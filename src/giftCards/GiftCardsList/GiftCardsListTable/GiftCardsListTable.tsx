@@ -22,26 +22,23 @@ import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { giftCardsListTableMessages as messages } from "../messages";
-import useGiftCardList from "../providers/hooks/useGiftCardList";
-import useGiftCardListBulkActions from "../providers/hooks/useGiftCardListBulkActions";
+import useGiftCardListDialogs from "../providers/GiftCardListDialogsProvider/hooks/useGiftCardListDialogs";
+import useGiftCardList from "../providers/GiftCardListProvider/hooks/useGiftCardList";
+import useGiftCardListBulkActions from "../providers/GiftCardListProvider/hooks/useGiftCardListBulkActions";
 import { useTableStyles as useStyles } from "../styles";
 import GiftCardsListTableFooter from "./GiftCardsListTableFooter";
 import GiftCardsListTableHeader from "./GiftCardsListTableHeader";
 
 const PLACEHOLDER = "-";
 
-interface GiftCardsListTableProps {
-  onDelete: (id?: string) => void;
-}
-
-const GiftCardsListTable: React.FC<GiftCardsListTableProps> = ({
-  onDelete
-}) => {
+const GiftCardsListTable: React.FC = () => {
   const intl = useIntl();
   const classes = useStyles({});
   const navigate = useNavigator();
+
   const { giftCards, numberOfColumns, loading } = useGiftCardList();
   const { toggle, isSelected } = useGiftCardListBulkActions();
+  const { openDeleteDialog } = useGiftCardListDialogs();
 
   const redirectToGiftCardUpdate = (id: string) => () =>
     navigate(giftCardUrl(id));
@@ -49,7 +46,7 @@ const GiftCardsListTable: React.FC<GiftCardsListTableProps> = ({
   return (
     <Card>
       <ResponsiveTable>
-        <GiftCardsListTableHeader onDelete={onDelete} />
+        <GiftCardsListTableHeader />
         <GiftCardsListTableFooter />
         <TableBody>
           {renderCollection(
@@ -131,7 +128,7 @@ const GiftCardsListTable: React.FC<GiftCardsListTableProps> = ({
                   <DeleteIconButton
                     onClick={event => {
                       event.stopPropagation();
-                      onDelete(id);
+                      openDeleteDialog(id);
                     }}
                   />
                 </TableCell>

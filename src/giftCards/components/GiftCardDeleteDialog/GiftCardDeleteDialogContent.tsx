@@ -1,24 +1,39 @@
-import { DialogContentText, Typography } from "@material-ui/core";
+import {
+  CircularProgress,
+  DialogContentText,
+  Typography
+} from "@material-ui/core";
 import ActionDialog, {
   ActionDialogProps
 } from "@saleor/components/ActionDialog";
 import DeleteWarningDialogConsentContent from "@saleor/components/TypeDeleteWarningDialog/DeleteWarningDialogConsentContent";
-import useGiftCardList from "@saleor/giftCards/GiftCardsList/hooks/useGiftCardList";
-import useGiftCardListBulkActions from "@saleor/giftCards/GiftCardsList/hooks/useGiftCardListBulkActions";
+import { UseGiftCardListProps } from "@saleor/giftCards/GiftCardsList/providers/GiftCardListProvider/hooks/useGiftCardList";
+import { UseGiftCardListBulkActionsProps } from "@saleor/giftCards/GiftCardsList/providers/GiftCardListProvider/hooks/useGiftCardListBulkActions";
+import { GiftCardDetailsConsumerProps } from "@saleor/giftCards/GiftCardUpdate/providers/GiftCardDetailsProvider";
 import { getById } from "@saleor/orders/components/OrderReturnPage/utils";
 import React, { useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 
 import { giftCardDeleteDialogMessages as messages } from "./messages";
+import { useGiftCardDeleteDialogContentStyles as useStyles } from "./styles";
 
-export const SINGLE_COUNT = 1;
+export const SINGLE = 1;
 
-interface GiftCardDeleteDialogContentProps
+export interface GiftCardDeleteDialogContentProps
   extends Pick<
-    ActionDialogProps,
-    "open" | "onClose" | "onConfirm" | "confirmButtonState"
-  > {
+      ActionDialogProps,
+      "open" | "onClose" | "onConfirm" | "confirmButtonState"
+    >,
+    Partial<Pick<UseGiftCardListProps, "giftCards" | "loading">>,
+    Partial<
+      Pick<
+        UseGiftCardListBulkActionsProps,
+        "listElements" | "selectedItemsCount"
+      >
+    >,
+    Partial<Pick<GiftCardDetailsConsumerProps, "giftCard">> {
   id?: string;
+  singleDeletion: boolean;
 }
 
 const GiftCardDeleteDialogContent: React.FC<GiftCardDeleteDialogContentProps> = ({
@@ -26,14 +41,20 @@ const GiftCardDeleteDialogContent: React.FC<GiftCardDeleteDialogContentProps> = 
   open,
   onClose,
   onConfirm,
-  confirmButtonState
+  confirmButtonState,
+  singleDeletion,
+  selectedItemsCount: listSelectedItemsCount,
+  listElements,
+  giftCards,
+  giftCard,
+  loading
 }) => {
   const intl = useIntl();
-
-  const { listElements, selectedItemsCount } = useGiftCardListBulkActions();
-  const { giftCards } = useGiftCardList();
+  const classes = useStyles({});
 
   const [isConsentChecked, setConsentChecked] = useState(false);
+
+  const selectedItemsCount = listSelectedItemsCount || SINGLE;
 
   useEffect(() => {
     if (!open) {
@@ -41,14 +62,8 @@ const GiftCardDeleteDialogContent: React.FC<GiftCardDeleteDialogContentProps> = 
     }
   }, [open]);
 
-  const isSingleDelete = !!id;
-
-  const counterVariables = {
-    counter: isSingleDelete ? SINGLE_COUNT : selectedItemsCount
-  };
-
   const hasSelectedAnyGiftCardsWithBalance = () => {
-    if (!giftCards || !selectedItemsCount) {
+    if (!giftCards) {
       return false;
     }
 
@@ -56,44 +71,47 @@ const GiftCardDeleteDialogContent: React.FC<GiftCardDeleteDialogContentProps> = 
   };
 
   const hasSelectedGiftCardBalance = (id: string) => {
-    const giftCard = giftCards?.find(getById(id));
+    const card = giftCards?.find(getById(id)) || giftCard;
 
-    return giftCard?.currentBalance?.amount > 0;
+    return card?.currentBalance?.amount > 0;
   };
 
-  const deletingCardsWithBalance = isSingleDelete
+  const deletingCardsWithBalance = singleDeletion
     ? hasSelectedGiftCardBalance(id)
     : hasSelectedAnyGiftCardsWithBalance();
+
+  const submitEnabled = deletingCardsWithBalance ? isConsentChecked : true;
 
   return (
     <ActionDialog
       open={open}
       onClose={onClose}
       variant="delete"
-      title={intl.formatMessage(messages.title, counterVariables)}
+      title={intl.formatMessage(messages.title, { selectedItemsCount })}
       onConfirm={onConfirm}
       confirmButtonState={confirmButtonState}
-      disabled={!isConsentChecked}
+      disabled={!submitEnabled}
     >
-      {deletingCardsWithBalance ? (
+      {loading ? (
+        <div className={classes.progressContainer}>
+          <CircularProgress />
+        </div>
+      ) : deletingCardsWithBalance ? (
         <DeleteWarningDialogConsentContent
-          description={intl.formatMessage(
-            messages.withBalanceDescription,
-            counterVariables
-          )}
-          consentLabel={intl.formatMessage(
-            messages.consentLabel,
-            counterVariables
-          )}
           isConsentChecked={isConsentChecked}
           onConsentChange={setConsentChecked}
+          description={intl.formatMessage(messages.withBalanceDescription, {
+            selectedItemsCount
+          })}
+          consentLabel={intl.formatMessage(messages.consentLabel, {
+            selectedItemsCount
+          })}
         />
       ) : (
         <DialogContentText>
           <Typography>
             {intl.formatMessage(messages.defaultDescription, {
-              ...counterVariables,
-              selectedQuantity: selectedItemsCount
+              selectedItemsCount
             })}
           </Typography>
         </DialogContentText>

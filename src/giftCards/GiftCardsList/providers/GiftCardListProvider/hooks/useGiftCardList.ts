@@ -1,13 +1,13 @@
 import { UseListSettings } from "@saleor/hooks/useListSettings";
 import { useContext } from "react";
 
-import { GiftCardListColummns } from "../../types";
+import { GiftCardListColummns } from "../../../types";
 import {
   GiftCardListDataProps,
   GiftCardsListContext
-} from "../GiftCardsListProvider";
+} from "../GiftCardListProvider";
 
-type UseGiftCardListProps = GiftCardListDataProps &
+export type UseGiftCardListProps = GiftCardListDataProps &
   UseListSettings<GiftCardListColummns>;
 
 const useGiftCardList = (): UseGiftCardListProps => {

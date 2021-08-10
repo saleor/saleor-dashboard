@@ -4,7 +4,7 @@ import { useContext } from "react";
 import {
   GiftCardsListConsumerProps,
   GiftCardsListContext
-} from "../GiftCardsListProvider";
+} from "../GiftCardListProvider";
 
 export type UseGiftCardListBulkActionsProps = UseBulkActionsProps &
   Pick<GiftCardsListConsumerProps, "selectedItemsCount">;

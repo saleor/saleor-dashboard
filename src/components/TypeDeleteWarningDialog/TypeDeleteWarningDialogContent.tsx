@@ -3,7 +3,7 @@ import HorizontalSpacer from "@saleor/apps/components/HorizontalSpacer";
 import CardSpacer from "@saleor/components/CardSpacer";
 import ConfirmButton from "@saleor/components/ConfirmButton";
 import useNavigator from "@saleor/hooks/useNavigator";
-import React, { ChangeEvent, useState } from "react";
+import React, { useState } from "react";
 import { MessageDescriptor, useIntl } from "react-intl";
 
 import DeleteButton from "../DeleteButton";

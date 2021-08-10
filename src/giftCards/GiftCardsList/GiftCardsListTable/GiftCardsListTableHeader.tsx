@@ -11,8 +11,9 @@ import React from "react";
 import { MessageDescriptor, useIntl } from "react-intl";
 
 import { giftCardsListTableMessages as messages } from "../messages";
-import useGiftCardList from "../providers/hooks/useGiftCardList";
-import useGiftCardListBulkActions from "../providers/hooks/useGiftCardListBulkActions";
+import useGiftCardListDialogs from "../providers/GiftCardListDialogsProvider/hooks/useGiftCardListDialogs";
+import useGiftCardList from "../providers/GiftCardListProvider/hooks/useGiftCardList";
+import useGiftCardListBulkActions from "../providers/GiftCardListProvider/hooks/useGiftCardListBulkActions";
 import { useTableStyles as useStyles } from "../styles";
 
 interface HeaderItem {
@@ -20,17 +21,13 @@ interface HeaderItem {
   options?: TableCellHeaderProps;
 }
 
-interface GiftCardsListTableHeaderProps {
-  onDelete: () => void;
-}
-
-const GiftCardsListTableHeader: React.FC<GiftCardsListTableHeaderProps> = ({
-  onDelete
-}) => {
+const GiftCardsListTableHeader: React.FC = () => {
   const intl = useIntl();
   const classes = useStyles({});
+
   const { giftCards, numberOfColumns, loading } = useGiftCardList();
   const { toggleAll, listElements } = useGiftCardListBulkActions();
+  const { openDeleteDialog } = useGiftCardListDialogs();
 
   const headerItems: HeaderItem[] = [
     {
@@ -75,7 +72,7 @@ const GiftCardsListTableHeader: React.FC<GiftCardsListTableHeaderProps> = ({
         selected={listElements.length}
         items={giftCards}
         toggleAll={toggleAll}
-        toolbar={<DeleteIconButton onClick={() => onDelete()} />}
+        toolbar={<DeleteIconButton onClick={openDeleteDialog} />}
       >
         {headerItems.map(({ title, options }) => (
           <TableCellHeader {...options}>

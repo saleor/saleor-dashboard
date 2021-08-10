@@ -421,6 +421,7 @@ type Attribute implements Node & ObjectWithMetadata {
   availableInGrid: Boolean!
   translation(languageCode: LanguageCodeEnum!): AttributeTranslation
   storefrontSearchPosition: Int!
+  withChoices: Boolean!
 }
 
 type AttributeBulkDelete {
@@ -512,12 +513,15 @@ input AttributeFilterInput {
   type: AttributeTypeEnum
   inCollection: ID
   inCategory: ID
+  channel: String
 }
 
 input AttributeInput {
   slug: String!
   values: [String]
   valuesRange: IntRangeInput
+  dateTime: DateTimeRangeInput
+  date: DateRangeInput
   boolean: Boolean
 }
 
@@ -529,6 +533,8 @@ enum AttributeInputTypeEnum {
   NUMERIC
   RICH_TEXT
   BOOLEAN
+  DATE
+  DATE_TIME
 }
 
 type AttributeReorderValues {
@@ -610,6 +616,8 @@ type AttributeValue implements Node {
   file: File
   richText: JSONString
   boolean: Boolean
+  date: Date
+  dateTime: DateTime
 }
 
 type AttributeValueBulkDelete {
@@ -661,6 +669,8 @@ input AttributeValueInput {
   references: [ID!]
   richText: JSONString
   boolean: Boolean
+  date: Date
+  dateTime: DateTime
 }
 
 type AttributeValueTranslatableContent implements Node {
@@ -698,7 +708,8 @@ type AttributeValueUpdate {
 
 input BulkAttributeValueInput {
   id: ID
-  values: [String!]!
+  values: [String!]
+  boolean: Boolean
 }
 
 type BulkProductError {
@@ -798,6 +809,7 @@ enum CategorySortField {
 
 input CategorySortingInput {
   direction: OrderDirection!
+  channel: String
   field: CategorySortField!
 }
 
@@ -1231,6 +1243,7 @@ input CollectionFilterInput {
   search: String
   metadata: [MetadataFilter]
   ids: [ID]
+  channel: String
 }
 
 input CollectionInput {
@@ -1270,6 +1283,7 @@ enum CollectionSortField {
 
 input CollectionSortingInput {
   direction: OrderDirection!
+  channel: String
   field: CollectionSortField!
 }
 
@@ -2268,7 +2282,7 @@ type GiftCardEvent implements Node {
 }
 
 type GiftCardEventBalance {
-  initialBalance: Money!
+  initialBalance: Money
   currentBalance: Money!
   oldInitialBalance: Money
   oldCurrentBalance: Money
@@ -2291,9 +2305,11 @@ enum GiftCardEventsEnum {
   DEACTIVATED
   BALANCE_RESET
   EXPIRY_SETTINGS_UPDATED
+  EXPIRY_DATE_SET
   SENT_TO_CUSTOMER
   RESENT
   NOTE_ADDED
+  USED_IN_ORDER
 }
 
 input GiftCardExpirySettingsInput {
@@ -2364,7 +2380,7 @@ input GiftCardUpdateInput {
   tag: String
   startDate: Date
   endDate: Date
-  balance: PriceInput
+  balanceAmount: PositiveDecimal
   expirySettings: GiftCardExpirySettingsInput
 }
 
@@ -3010,10 +3026,10 @@ type Mutation {
   giftCardDeactivate(id: ID!): GiftCardDeactivate
   giftCardUpdate(id: ID!, input: GiftCardUpdateInput!): GiftCardUpdate
   giftCardResend(input: GiftCardResendInput!): GiftCardResend
+  giftCardAddNote(id: ID!, input: GiftCardAddNoteInput!): GiftCardAddNote
   giftCardBulkDelete(ids: [ID]!): GiftCardBulkDelete
   giftCardBulkActivate(ids: [ID]!): GiftCardBulkActivate
   giftCardBulkDeactivate(ids: [ID]!): GiftCardBulkDeactivate
-  giftCardAddNote(id: ID!, input: GiftCardAddNoteInput!): GiftCardAddNote
   pluginUpdate(channelId: ID, id: ID!, input: PluginUpdateInput!): PluginUpdate
   saleCreate(input: SaleInput!): SaleCreate
   saleDelete(id: ID!): SaleDelete
@@ -3606,6 +3622,7 @@ input OrderReturnProductsInput {
 
 type OrderSettings {
   automaticallyConfirmAllNewOrders: Boolean!
+  automaticallyFulfillNonShippableGiftCard: Boolean!
 }
 
 type OrderSettingsError {
@@ -3625,7 +3642,8 @@ type OrderSettingsUpdate {
 }
 
 input OrderSettingsUpdateInput {
-  automaticallyConfirmAllNewOrders: Boolean!
+  automaticallyConfirmAllNewOrders: Boolean
+  automaticallyFulfillNonShippableGiftCard: Boolean
 }
 
 enum OrderSortField {
@@ -4458,6 +4476,7 @@ input ProductFilterInput {
   minimalPrice: PriceRangeInput
   productTypes: [ID]
   ids: [ID]
+  channel: String
 }
 
 type ProductImage {
@@ -4542,6 +4561,7 @@ input ProductMediaUpdateInput {
 
 input ProductOrder {
   direction: OrderDirection!
+  channel: String
   attributeId: ID
   field: ProductOrderField
 }
@@ -5117,6 +5137,7 @@ enum SaleSortField {
 
 input SaleSortingInput {
   direction: OrderDirection!
+  channel: String
   field: SaleSortField!
 }
 
@@ -6083,6 +6104,7 @@ enum VoucherSortField {
 
 input VoucherSortingInput {
   direction: OrderDirection!
+  channel: String
   field: VoucherSortField!
 }
 
@@ -6297,6 +6319,8 @@ enum WebhookEventTypeEnum {
   PAYMENT_PROCESS
   PAYMENT_REFUND
   PAYMENT_VOID
+  TRANSLATION_CREATED
+  TRANSLATION_UPDATED
 }
 
 enum WebhookSampleEventTypeEnum {
@@ -6331,6 +6355,8 @@ enum WebhookSampleEventTypeEnum {
   PAYMENT_PROCESS
   PAYMENT_REFUND
   PAYMENT_VOID
+  TRANSLATION_CREATED
+  TRANSLATION_UPDATED
 }
 
 type WebhookUpdate {
