@@ -12,7 +12,7 @@ import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { maybe, transformPaymentStatus } from "../../../misc";
-import { OrderAction, OrderStatus } from "../../../types/globalTypes";
+import { OrderAction } from "../../../types/globalTypes";
 import { OrderDetails_order } from "../../types/OrderDetails";
 
 const useStyles = makeStyles(
@@ -251,8 +251,10 @@ const OrderPayment: React.FC<OrderPaymentProps> = props => {
           </tbody>
         </table>
       </CardContent>
-      {maybe(() => order.status) !== OrderStatus.CANCELED &&
-        (canCapture || canRefund || canVoid || canMarkAsPaid) && (
+      {/* https://govfriend.atlassian.net/browse/MAR-92 */}
+      {/* Allow refund for caneclled orders */}
+      {/* maybe(() => order.status) !== OrderStatus.CANCELED */}
+      {(canCapture || canRefund || canVoid || canMarkAsPaid) && (
           <>
             <Hr />
             <CardActions>

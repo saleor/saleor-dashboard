@@ -360,7 +360,7 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
                             orderPaymentRefund.opts.data?.orderRefund.errors ||
                             []
                           }
-                          initial={order?.total.gross.amount}
+                          initial={order?.totalCaptured.amount}
                           open={params.action === "refund"}
                           variant="refund"
                           onClose={closeModal}
