@@ -13,7 +13,8 @@ import {
   OrderEventsEmailsEnum,
   OrderEventsEnum,
   OrderPaymentStatusEnum,
-  OrderStatus
+  OrderStatus,
+  PaymentChargeStatusEnum
 } from "../types/globalTypes";
 import { OrderDetails_order } from "./types/OrderDetails";
 import { OrderList_orders_edges_node } from "./types/OrderList";
@@ -75,6 +76,13 @@ export const orders: OrderList_orders_edges_node[] = [
     id: "T3JkZXI6MjA=",
     number: "20",
     paymentStatus: OrderPaymentStatusEnum.FULLY_CHARGED,
+    payments: [
+      {
+        __typename: "Payment",
+        paymentMethodType: "card",
+        chargeStatus: PaymentChargeStatusEnum.FULLY_CHARGED
+      }
+    ],
     status: OrderStatus.CANCELED,
     total: {
       __typename: "TaxedMoney",
@@ -111,6 +119,13 @@ export const orders: OrderList_orders_edges_node[] = [
     id: "T3JkZXI6MTk=",
     number: "19",
     paymentStatus: OrderPaymentStatusEnum.FULLY_CHARGED,
+    payments: [
+      {
+        __typename: "Payment",
+        paymentMethodType: "card",
+        chargeStatus: PaymentChargeStatusEnum.FULLY_CHARGED
+      }
+    ],
     status: OrderStatus.CANCELED,
     total: {
       __typename: "TaxedMoney",
@@ -129,6 +144,13 @@ export const orders: OrderList_orders_edges_node[] = [
     id: "T3JkZXI6MTg=",
     number: "18",
     paymentStatus: OrderPaymentStatusEnum.NOT_CHARGED,
+    payments: [
+      {
+        __typename: "Payment",
+        paymentMethodType: "card",
+        chargeStatus: PaymentChargeStatusEnum.FULLY_REFUNDED
+      }
+    ],
     status: OrderStatus.DRAFT,
     total: {
       __typename: "TaxedMoney",
@@ -165,6 +187,13 @@ export const orders: OrderList_orders_edges_node[] = [
     id: "T3JkZXI6MTc=",
     number: "17",
     paymentStatus: OrderPaymentStatusEnum.NOT_CHARGED,
+    payments: [
+      {
+        __typename: "Payment",
+        paymentMethodType: "card",
+        chargeStatus: PaymentChargeStatusEnum.FULLY_REFUNDED
+      }
+    ],
     status: OrderStatus.CANCELED,
     total: {
       __typename: "TaxedMoney",
@@ -201,6 +230,13 @@ export const orders: OrderList_orders_edges_node[] = [
     id: "T3JkZXI6MTY=",
     number: "16",
     paymentStatus: OrderPaymentStatusEnum.NOT_CHARGED,
+    payments: [
+      {
+        __typename: "Payment",
+        paymentMethodType: "card",
+        chargeStatus: PaymentChargeStatusEnum.NOT_CHARGED
+      }
+    ],
     status: OrderStatus.CANCELED,
     total: {
       __typename: "TaxedMoney",
@@ -237,6 +273,13 @@ export const orders: OrderList_orders_edges_node[] = [
     id: "T3JkZXI6MTU=",
     number: "15",
     paymentStatus: OrderPaymentStatusEnum.NOT_CHARGED,
+    payments: [
+      {
+        __typename: "Payment",
+        paymentMethodType: "card",
+        chargeStatus: PaymentChargeStatusEnum.NOT_CHARGED
+      }
+    ],
     status: OrderStatus.CANCELED,
     total: {
       __typename: "TaxedMoney",
@@ -273,6 +316,13 @@ export const orders: OrderList_orders_edges_node[] = [
     id: "T3JkZXI6MTQ=",
     number: "14",
     paymentStatus: OrderPaymentStatusEnum.NOT_CHARGED,
+    payments: [
+      {
+        __typename: "Payment",
+        paymentMethodType: "card",
+        chargeStatus: PaymentChargeStatusEnum.NOT_CHARGED
+      }
+    ],
     status: OrderStatus.CANCELED,
     total: {
       __typename: "TaxedMoney",
@@ -309,6 +359,13 @@ export const orders: OrderList_orders_edges_node[] = [
     id: "T3JkZXI6MTM=",
     number: "13",
     paymentStatus: OrderPaymentStatusEnum.NOT_CHARGED,
+    payments: [
+      {
+        __typename: "Payment",
+        paymentMethodType: "card",
+        chargeStatus: PaymentChargeStatusEnum.NOT_CHARGED
+      }
+    ],
     status: OrderStatus.CANCELED,
     total: {
       __typename: "TaxedMoney",
@@ -345,6 +402,13 @@ export const orders: OrderList_orders_edges_node[] = [
     id: "T3JkZXI6MTI=",
     number: "12",
     paymentStatus: OrderPaymentStatusEnum.NOT_CHARGED,
+    payments: [
+      {
+        __typename: "Payment",
+        paymentMethodType: "card",
+        chargeStatus: PaymentChargeStatusEnum.NOT_CHARGED
+      }
+    ],
     status: OrderStatus.CANCELED,
     total: {
       __typename: "TaxedMoney",
@@ -381,6 +445,13 @@ export const orders: OrderList_orders_edges_node[] = [
     id: "T3JkZXI6MTE=",
     number: "11",
     paymentStatus: OrderPaymentStatusEnum.FULLY_CHARGED,
+    payments: [
+      {
+        __typename: "Payment",
+        paymentMethodType: "card",
+        chargeStatus: PaymentChargeStatusEnum.FULLY_CHARGED
+      }
+    ],
     status: OrderStatus.UNFULFILLED,
     total: {
       __typename: "TaxedMoney",
@@ -417,6 +488,13 @@ export const orders: OrderList_orders_edges_node[] = [
     id: "T3JkZXI6MTA=",
     number: "10",
     paymentStatus: OrderPaymentStatusEnum.NOT_CHARGED,
+    payments: [
+      {
+        __typename: "Payment",
+        paymentMethodType: "card",
+        chargeStatus: PaymentChargeStatusEnum.NOT_CHARGED
+      }
+    ],
     status: OrderStatus.CANCELED,
     total: {
       __typename: "TaxedMoney",
@@ -453,6 +531,13 @@ export const orders: OrderList_orders_edges_node[] = [
     id: "T3JkZXI6OQ==",
     number: "9",
     paymentStatus: OrderPaymentStatusEnum.NOT_CHARGED,
+    payments: [
+      {
+        __typename: "Payment",
+        paymentMethodType: "card",
+        chargeStatus: PaymentChargeStatusEnum.NOT_CHARGED
+      }
+    ],
     status: OrderStatus.PARTIALLY_FULFILLED,
     total: {
       __typename: "TaxedMoney",
@@ -489,6 +574,13 @@ export const orders: OrderList_orders_edges_node[] = [
     id: "T3JkZXI6OA==",
     number: "8",
     paymentStatus: OrderPaymentStatusEnum.NOT_CHARGED,
+    payments: [
+      {
+        __typename: "Payment",
+        paymentMethodType: "card",
+        chargeStatus: PaymentChargeStatusEnum.NOT_CHARGED
+      }
+    ],
     status: OrderStatus.PARTIALLY_FULFILLED,
     total: {
       __typename: "TaxedMoney",
@@ -525,6 +617,13 @@ export const orders: OrderList_orders_edges_node[] = [
     id: "T3JkZXI6Nw==",
     number: "7",
     paymentStatus: OrderPaymentStatusEnum.FULLY_CHARGED,
+    payments: [
+      {
+        __typename: "Payment",
+        paymentMethodType: "card",
+        chargeStatus: PaymentChargeStatusEnum.FULLY_CHARGED
+      }
+    ],
     status: OrderStatus.PARTIALLY_FULFILLED,
     total: {
       __typename: "TaxedMoney",
@@ -561,6 +660,13 @@ export const orders: OrderList_orders_edges_node[] = [
     id: "T3JkZXI6Ng==",
     number: "6",
     paymentStatus: OrderPaymentStatusEnum.NOT_CHARGED,
+    payments: [
+      {
+        __typename: "Payment",
+        paymentMethodType: "card",
+        chargeStatus: PaymentChargeStatusEnum.FULLY_REFUNDED
+      }
+    ],
     status: OrderStatus.FULFILLED,
     total: {
       __typename: "TaxedMoney",
@@ -597,6 +703,13 @@ export const orders: OrderList_orders_edges_node[] = [
     id: "T3JkZXI6NQ==",
     number: "5",
     paymentStatus: OrderPaymentStatusEnum.NOT_CHARGED,
+    payments: [
+      {
+        __typename: "Payment",
+        paymentMethodType: "card",
+        chargeStatus: PaymentChargeStatusEnum.NOT_CHARGED
+      }
+    ],
     status: OrderStatus.PARTIALLY_FULFILLED,
     total: {
       __typename: "TaxedMoney",
@@ -633,6 +746,13 @@ export const orders: OrderList_orders_edges_node[] = [
     id: "T3JkZXI6NA==",
     number: "4",
     paymentStatus: OrderPaymentStatusEnum.NOT_CHARGED,
+    payments: [
+      {
+        __typename: "Payment",
+        paymentMethodType: "card",
+        chargeStatus: PaymentChargeStatusEnum.NOT_CHARGED
+      }
+    ],
     status: OrderStatus.PARTIALLY_FULFILLED,
     total: {
       __typename: "TaxedMoney",
@@ -669,6 +789,13 @@ export const orders: OrderList_orders_edges_node[] = [
     id: "T3JkZXI6Mw==",
     number: "3",
     paymentStatus: OrderPaymentStatusEnum.NOT_CHARGED,
+    payments: [
+      {
+        __typename: "Payment",
+        paymentMethodType: "card",
+        chargeStatus: PaymentChargeStatusEnum.NOT_CHARGED
+      }
+    ],
     status: OrderStatus.PARTIALLY_FULFILLED,
     total: {
       __typename: "TaxedMoney",
@@ -705,6 +832,13 @@ export const orders: OrderList_orders_edges_node[] = [
     id: "T3JkZXI6Mg==",
     number: "2",
     paymentStatus: OrderPaymentStatusEnum.FULLY_CHARGED,
+    payments: [
+      {
+        __typename: "Payment",
+        paymentMethodType: "card",
+        chargeStatus: PaymentChargeStatusEnum.FULLY_REFUNDED
+      }
+    ],
     status: OrderStatus.PARTIALLY_FULFILLED,
     total: {
       __typename: "TaxedMoney",
@@ -741,6 +875,13 @@ export const orders: OrderList_orders_edges_node[] = [
     id: "T3JkZXI6MQ==",
     number: "1",
     paymentStatus: OrderPaymentStatusEnum.FULLY_CHARGED,
+    payments: [
+      {
+        __typename: "Payment",
+        paymentMethodType: "card",
+        chargeStatus: PaymentChargeStatusEnum.FULLY_CHARGED
+      }
+    ],
     status: OrderStatus.PARTIALLY_FULFILLED,
     total: {
       __typename: "TaxedMoney",

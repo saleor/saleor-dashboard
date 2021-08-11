@@ -79,7 +79,7 @@ const OrderPaymentStatus: React.FC<OrderPaymentStatusProps> = ({
       onMouseLeave={handlePopoverClose}
     >
       <StatusLabel status={status} label={label} />
-      {paymentsList.length && (
+      {paymentsList.length > 0 && (
         <Popover
           id="mouse-over-popover"
           className={classes.popover}
