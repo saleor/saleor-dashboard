@@ -16,13 +16,13 @@ import {
   usePrivateMetadataUpdate
 } from "@saleor/utils/metadata/updateMetadata";
 import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
-import React, { createContext, useContext } from "react";
+import React, { createContext } from "react";
 import { useIntl } from "react-intl";
 
 import { initialData as emptyFormData } from "../../GiftCardCreateDialog/GiftCardCreateDialogForm";
+import useGiftCardDetails from "../hooks/useGiftCardDetails";
 import { useGiftCardUpdateMutation } from "../mutations";
 import { GiftCardUpdate } from "../types/GiftCardUpdate";
-import { GiftCardDetailsContext } from "./GiftCardDetailsProvider";
 
 interface GiftCardUpdateFormProviderProps {
   children: React.ReactNode;
@@ -63,9 +63,7 @@ const GiftCardUpdateFormProvider: React.FC<GiftCardUpdateFormProviderProps> = ({
   const [changed, setChanged] = React.useState(false);
   const triggerChange = () => setChanged(true);
 
-  const { loading: loadingGiftCard, giftCard } = useContext(
-    GiftCardDetailsContext
-  );
+  const { loading: loadingGiftCard, giftCard } = useGiftCardDetails();
 
   const getInitialData = (): GiftCardUpdateFormData => {
     if (loadingGiftCard || !giftCard) {
