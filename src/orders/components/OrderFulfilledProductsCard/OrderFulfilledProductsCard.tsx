@@ -1,12 +1,11 @@
-import { Card, TableBody } from "@material-ui/core";
-import CardMenu from "@saleor/components/CardMenu";
+import { Card, IconButton, TableBody } from "@material-ui/core";
 import CardSpacer from "@saleor/components/CardSpacer";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import { OrderDetailsFragment } from "@saleor/fragments/types/OrderDetailsFragment";
+import TrashIcon from "@saleor/icons/Trash";
 import { makeStyles } from "@saleor/macaw-ui";
 import { mergeRepeatedOrderLines } from "@saleor/orders/utils/data";
 import React from "react";
-import { useIntl } from "react-intl";
 
 import { renderCollection } from "../../../misc";
 import { FulfillmentStatus } from "../../../types/globalTypes";
@@ -16,12 +15,17 @@ import TableLine from "../OrderProductsCardElements/OrderProductsTableRow";
 import CardTitle from "../OrderReturnPage/OrderReturnRefundItemsCard/CardTitle";
 import ActionButtons from "./ActionButtons";
 import ExtraInfoLines from "./ExtraInfoLines";
-import { messages } from "./messages";
 
 const useStyles = makeStyles(
-  () => ({
+  theme => ({
     table: {
       tableLayout: "fixed"
+    },
+    deleteIcon: {
+      height: 40,
+      paddingRight: 0,
+      paddingLeft: theme.spacing(1),
+      width: 40
     }
   }),
   { name: "OrderFulfillment" }
@@ -60,8 +64,6 @@ const OrderFulfilledProductsCard: React.FC<OrderFulfilledProductsCardProps> = pr
   } = props;
   const classes = useStyles(props);
 
-  const intl = useIntl();
-
   if (!fulfillment) {
     return null;
   }
@@ -86,15 +88,13 @@ const OrderFulfilledProductsCard: React.FC<OrderFulfilledProductsCardProps> = pr
           orderNumber={order?.number}
           toolbar={
             cancelableStatuses.includes(fulfillment?.status) && (
-              <CardMenu
-                menuItems={[
-                  {
-                    label: intl.formatMessage(messages.cancelFulfillment),
-                    onSelect: onOrderFulfillmentCancel,
-                    testId: "cancelFulfillmentButton"
-                  }
-                ]}
-              />
+              <IconButton
+                className={classes.deleteIcon}
+                onClick={onOrderFulfillmentCancel}
+                data-test-id="cancelFulfillmentButton"
+              >
+                <TrashIcon />
+              </IconButton>
             )
           }
         />
