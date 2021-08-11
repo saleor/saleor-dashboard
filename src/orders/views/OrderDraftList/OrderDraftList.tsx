@@ -81,7 +81,7 @@ export const OrderDraftList: React.FC<OrderDraftListProps> = ({ params }) => {
     onCompleted: handleCreateOrderCreateSuccess
   });
 
-  const { channel, availableChannels } = useAppChannel();
+  const { channel, availableChannels } = useAppChannel(false);
   const limitOpts = useShopLimitsQuery({
     variables: {
       orders: true
