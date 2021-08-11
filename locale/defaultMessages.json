@@ -3944,9 +3944,9 @@
     "context": "order history message",
     "string": "Products were added to an order"
   },
-  "src_dot_orders_dot_components_dot_OrderHistory_dot_3927123907": {
+  "src_dot_orders_dot_components_dot_OrderHistory_dot_3854352507": {
     "context": "order history message",
-    "string": "Fulfilled {quantity} items awaits approval"
+    "string": "Fulfillment awaits approval"
   },
   "src_dot_orders_dot_components_dot_OrderHistory_dot_393045022": {
     "context": "order history message",

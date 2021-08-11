@@ -8,7 +8,7 @@ import { mergeRepeatedOrderLines } from "@saleor/orders/utils/data";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import { maybe, renderCollection } from "../../../misc";
+import { renderCollection } from "../../../misc";
 import { FulfillmentStatus } from "../../../types/globalTypes";
 import { OrderDetails_order_fulfillments } from "../../types/OrderDetails";
 import TableHeader from "../OrderProductsCardElements/OrderProductsCardHeader";
@@ -37,6 +37,17 @@ interface OrderFulfilledProductsCardProps {
   onRefund: () => void;
 }
 
+const statusesToMergeLines = [
+  FulfillmentStatus.REFUNDED,
+  FulfillmentStatus.REFUNDED_AND_RETURNED,
+  FulfillmentStatus.RETURNED,
+  FulfillmentStatus.REPLACED
+];
+const cancelableStatuses = [
+  FulfillmentStatus.FULFILLED,
+  FulfillmentStatus.WAITING_FOR_APPROVAL
+];
+
 const OrderFulfilledProductsCard: React.FC<OrderFulfilledProductsCardProps> = props => {
   const {
     fulfillment,
@@ -56,13 +67,6 @@ const OrderFulfilledProductsCard: React.FC<OrderFulfilledProductsCardProps> = pr
   }
 
   const getLines = () => {
-    const statusesToMergeLines = [
-      FulfillmentStatus.REFUNDED,
-      FulfillmentStatus.REFUNDED_AND_RETURNED,
-      FulfillmentStatus.RETURNED,
-      FulfillmentStatus.REPLACED
-    ];
-
     if (statusesToMergeLines.includes(fulfillment?.status)) {
       return mergeRepeatedOrderLines(fulfillment.lines);
     }
@@ -81,7 +85,7 @@ const OrderFulfilledProductsCard: React.FC<OrderFulfilledProductsCardProps> = pr
           warehouseName={fulfillment?.warehouse?.name}
           orderNumber={order?.number}
           toolbar={
-            maybe(() => fulfillment.status) === FulfillmentStatus.FULFILLED && (
+            cancelableStatuses.includes(fulfillment?.status) && (
               <CardMenu
                 menuItems={[
                   {
