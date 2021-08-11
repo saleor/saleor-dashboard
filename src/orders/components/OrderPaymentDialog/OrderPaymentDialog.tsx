@@ -43,7 +43,10 @@ const OrderPaymentDialog: React.FC<OrderPaymentDialogProps> = ({
   const intl = useIntl();
 
   const formFields = ["payment"];
+
   const formErrors = getFormErrors(formFields, errors);
+
+  const formErrorText = getOrderErrorMessage(formErrors.payment, intl);
 
   return (
     <Dialog onClose={onClose} open={open} fullWidth maxWidth="xs">
@@ -67,10 +70,12 @@ const OrderPaymentDialog: React.FC<OrderPaymentDialogProps> = ({
                   })}
             </DialogTitle>
             <DialogContent>
+              {/* https://govfriend.atlassian.net/browse/MAR-92 */}
+              {/* custom validate message to avoid confusing unknown error */}
               <TextField
                 error={!!formErrors.payment}
                 fullWidth
-                helperText={getOrderErrorMessage(formErrors.payment, intl)}
+                helperText={formErrorText === 'Unknown error' ?  '' : formErrorText}
                 label={intl.formatMessage({
                   defaultMessage: "Amount",
                   description: "amount of refunded money"
@@ -83,6 +88,13 @@ const OrderPaymentDialog: React.FC<OrderPaymentDialogProps> = ({
                 type="number"
                 value={data.amount}
               />
+              {/* https://govfriend.atlassian.net/browse/MAR-92 */}
+              {/* validate refund amount with remaining refundable amount */}
+              {data.amount > initial && (
+                <DialogContentText color="error">
+                  Refund amount cannot exceed ${initial}.
+                </DialogContentText>
+              )}
               {errors.length > 0 && (
                 <>
                   <FormSpacer />
