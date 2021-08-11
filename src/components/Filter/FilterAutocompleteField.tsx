@@ -74,6 +74,7 @@ const FilterAutocompleteField: React.FC<FilterAutocompleteFieldProps> = ({
       payload: {
         name: filterField.name,
         update: {
+          active: true,
           value: toggle(option.value, filterField.value, (a, b) => a === b)
         }
       },

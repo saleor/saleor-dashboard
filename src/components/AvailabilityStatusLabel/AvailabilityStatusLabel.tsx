@@ -3,9 +3,7 @@ import useDateLocalize from "@saleor/hooks/useDateLocalize";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import { messages } from "./messages";
-
-export const ProductAvailabilityStatusLabel = ({ channel }) => {
+export const AvailabilityStatusLabel = ({ channel, messages }) => {
   const intl = useIntl();
   const localizeDate = useDateLocalize();
 
@@ -32,4 +30,4 @@ export const ProductAvailabilityStatusLabel = ({ channel }) => {
   );
 };
 
-export default ProductAvailabilityStatusLabel;
+export default AvailabilityStatusLabel;
