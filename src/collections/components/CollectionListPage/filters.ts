@@ -1,4 +1,5 @@
 import { IFilter } from "@saleor/components/Filter";
+import { MultiAutocompleteChoiceType } from "@saleor/components/MultiAutocompleteSelectField";
 import { commonMessages } from "@saleor/intl";
 import { FilterOpts } from "@saleor/types";
 import { CollectionPublished } from "@saleor/types/globalTypes";
@@ -7,10 +8,12 @@ import { defineMessages, IntlShape } from "react-intl";
 
 export interface CollectionListFilterOpts {
   status: FilterOpts<CollectionPublished>;
+  channel: FilterOpts<string> & { choices: MultiAutocompleteChoiceType[] };
 }
 
 export enum CollectionFilterKeys {
-  status = "status"
+  status = "status",
+  channel = "channel"
 }
 
 const messages = defineMessages({
@@ -46,7 +49,18 @@ export function createFilterStructure(
           }
         ]
       ),
-      active: opts.status.active
+      active: opts.status.active,
+      dependencies: [CollectionFilterKeys.channel]
+    },
+    {
+      ...createOptionsField(
+        CollectionFilterKeys.channel,
+        intl.formatMessage(commonMessages.channel),
+        [opts.channel.value],
+        false,
+        opts.channel.choices
+      ),
+      active: opts.channel.active
     }
   ];
 }

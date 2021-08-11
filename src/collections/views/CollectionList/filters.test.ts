@@ -34,7 +34,8 @@ describe("Filtering URL params", () => {
     status: {
       active: false,
       value: CollectionPublished.PUBLISHED
-    }
+    },
+    channel: undefined
   });
 
   it("should be empty if no active filters", () => {
@@ -51,7 +52,8 @@ describe("Filtering URL params", () => {
       status: {
         active: true,
         value: CollectionPublished.PUBLISHED
-      }
+      },
+      channel: undefined
     });
 
     const filterQueryParams = getFilterQueryParams(

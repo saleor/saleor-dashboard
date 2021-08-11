@@ -17,10 +17,12 @@ import { commonMessages } from "@saleor/intl";
 import { maybe } from "@saleor/misc";
 import { ListViews } from "@saleor/types";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
+import createFilterHandlers from "@saleor/utils/handlers/filterHandlers";
 import createSortHandler from "@saleor/utils/handlers/sortHandler";
-import { mapEdgesToItems } from "@saleor/utils/maps";
+import { mapEdgesToItems, mapNodeToChoice } from "@saleor/utils/maps";
 import { getSortParams } from "@saleor/utils/sort";
 import React from "react";
+import { useEffect } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import CollectionListPage from "../../components/CollectionListPage/CollectionListPage";
@@ -37,11 +39,13 @@ import {
   areFiltersApplied,
   deleteFilterTab,
   getActiveFilters,
+  getFilterOpts,
+  getFilterQueryParam,
   getFilterTabs,
   getFilterVariables,
   saveFilterTab
 } from "./filters";
-import { getSortQueryVariables } from "./sort";
+import { canBeSorted, DEFAULT_SORT_KEY, getSortQueryVariables } from "./sort";
 
 interface CollectionListProps {
   params: CollectionListUrlQueryParams;
@@ -59,12 +63,33 @@ export const CollectionList: React.FC<CollectionListProps> = ({ params }) => {
   );
   const intl = useIntl();
 
+  const [
+    changeFilters,
+    resetFilters,
+    handleSearchChange
+  ] = createFilterHandlers({
+    cleanupFn: reset,
+    createUrl: collectionListUrl,
+    getFilterQueryParam,
+    navigate,
+    params
+  });
+
+  const { availableChannels } = useAppChannel(false);
+  const channelOpts = availableChannels
+    ? mapNodeToChoice(availableChannels, channel => channel.slug)
+    : null;
+  const selectedChannel = availableChannels.find(
+    channel => channel.slug === params.channel
+  );
+
   const paginationState = createPaginationState(settings.rowNumber, params);
   const queryVariables = React.useMemo(
     () => ({
       ...paginationState,
       filter: getFilterVariables(params),
-      sort: getSortQueryVariables(params)
+      sort: getSortQueryVariables(params),
+      channel: selectedChannel?.slug
     }),
     [params]
   );
@@ -90,9 +115,20 @@ export const CollectionList: React.FC<CollectionListProps> = ({ params }) => {
     }
   });
 
-  const { availableChannels, channel } = useAppChannel(false);
 
+  const filterOpts = getFilterOpts(params, channelOpts);
   const tabs = getFilterTabs();
+
+  useEffect(() => {
+    if (!canBeSorted(params.sort, !!selectedChannel)) {
+      navigate(
+        collectionListUrl({
+          ...params,
+          sort: DEFAULT_SORT_KEY
+        })
+      );
+    }
+  }, [params]);
 
   const currentTab =
     params.activeTab === undefined
@@ -100,16 +136,6 @@ export const CollectionList: React.FC<CollectionListProps> = ({ params }) => {
         ? tabs.length + 1
         : 0
       : parseInt(params.activeTab, 0);
-
-  const handleSearchChange = (query: string) => {
-    navigate(
-      collectionListUrl({
-        ...getActiveFilters(params),
-        activeTab: undefined,
-        query
-      })
-    );
-  };
 
   const [openModal, closeModal] = createDialogActionHandlers<
     CollectionListUrlDialog,
@@ -152,7 +178,7 @@ export const CollectionList: React.FC<CollectionListProps> = ({ params }) => {
         initialSearch={params.query || ""}
         onSearchChange={handleSearchChange}
         onAdd={() => navigate(collectionAddUrl())}
-        onAll={() => navigate(collectionListUrl())}
+        onAll={resetFilters}
         onTabChange={handleTabChange}
         onTabDelete={() => openModal("delete-search")}
         onTabSave={() => openModal("save-search")}
@@ -184,7 +210,9 @@ export const CollectionList: React.FC<CollectionListProps> = ({ params }) => {
         toggle={toggle}
         toggleAll={toggleAll}
         channelsCount={availableChannels?.length}
-        selectedChannelId={channel?.id}
+        selectedChannelId={selectedChannel?.id}
+        filterOpts={filterOpts}
+        onFilterChange={changeFilters}
       />
       <ActionDialog
         open={params.action === "remove" && maybe(() => params.ids.length > 0)}

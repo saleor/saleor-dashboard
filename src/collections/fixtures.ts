@@ -1,8 +1,28 @@
+import { CollectionPublished } from "@saleor/types/globalTypes";
+
 import * as richTextEditorFixtures from "../components/RichTextEditor/fixtures.json";
+import { CollectionListFilterOpts } from "./components/CollectionListPage";
 import { CollectionDetails_collection } from "./types/CollectionDetails";
 import { CollectionList_collections_edges_node } from "./types/CollectionList";
 
 const content = richTextEditorFixtures.richTextEditor;
+
+export const collectionListFilterOpts: CollectionListFilterOpts = {
+  channel: {
+    active: false,
+    value: "default-channel",
+    choices: [
+      {
+        value: "default-channel",
+        label: "Default channel"
+      }
+    ]
+  },
+  status: {
+    active: false,
+    value: CollectionPublished.PUBLISHED
+  }
+};
 
 export const collections: CollectionList_collections_edges_node[] = [
   {
