@@ -303,7 +303,8 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
   const {
     loadMore: loadMoreAttributeValues,
     search: searchAttributeValues,
-    result: searchAttributeValuesOpts
+    result: searchAttributeValuesOpts,
+    reset: searchAttributeReset
   } = useAttributeValueSearchHandler(DEFAULT_INITIAL_SEARCH_DATA);
 
   const fetchMoreReferencePages = {
@@ -376,6 +377,7 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
         onCloseDialog={() =>
           navigate(productVariantEditUrl(productId, variantId))
         }
+        onAttributeSelectBlur={searchAttributeReset}
       />
       <ProductVariantDeleteDialog
         confirmButtonState={deleteVariantOpts.status}

@@ -109,7 +109,8 @@ export const ProductCreateView: React.FC<ProductCreateProps> = ({ params }) => {
   const {
     loadMore: loadMoreAttributeValues,
     search: searchAttributeValues,
-    result: searchAttributeValuesOpts
+    result: searchAttributeValuesOpts,
+    reset: searchAttributeReset
   } = useAttributeValueSearchHandler(DEFAULT_INITIAL_SEARCH_DATA);
   const warehouses = useWarehouseList({
     displayLoader: true,
@@ -348,6 +349,7 @@ export const ProductCreateView: React.FC<ProductCreateProps> = ({ params }) => {
         onCloseDialog={() => navigate(productAddUrl())}
         selectedProductType={selectedProductType?.productType}
         onSelectProductType={id => setSelectedProductTypeId(id)}
+        onAttributeSelectBlur={searchAttributeReset}
       />
     </>
   );

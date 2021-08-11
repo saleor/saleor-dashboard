@@ -76,7 +76,8 @@ export const PageCreate: React.FC<PageCreateProps> = ({ params }) => {
   const {
     loadMore: loadMoreAttributeValues,
     search: searchAttributeValues,
-    result: searchAttributeValuesOpts
+    result: searchAttributeValuesOpts,
+    reset: searchAttributeReset
   } = useAttributeValueSearchHandler(DEFAULT_INITIAL_SEARCH_DATA);
 
   const { data: selectedPageType } = usePageTypeQuery({
@@ -218,6 +219,7 @@ export const PageCreate: React.FC<PageCreateProps> = ({ params }) => {
               onCloseDialog={() => navigate(pageCreateUrl())}
               selectedPageType={selectedPageType?.pageType}
               onSelectPageType={id => setSelectedPageTypeId(id)}
+              onAttributeSelectBlur={searchAttributeReset}
             />
           </>
         );

@@ -176,7 +176,8 @@ export const PageDetails: React.FC<PageDetailsProps> = ({ id, params }) => {
   const {
     loadMore: loadMoreAttributeValues,
     search: searchAttributeValues,
-    result: searchAttributeValuesOpts
+    result: searchAttributeValuesOpts,
+    reset: searchAttributeReset
   } = useAttributeValueSearchHandler(DEFAULT_INITIAL_SEARCH_DATA);
 
   const attributeValues =
@@ -237,6 +238,7 @@ export const PageDetails: React.FC<PageDetailsProps> = ({ id, params }) => {
         fetchAttributeValues={searchAttributeValues}
         fetchMoreAttributeValues={fetchMoreAttributeValues}
         onCloseDialog={() => navigate(pageUrl(id))}
+        onAttributeSelectBlur={searchAttributeReset}
       />
       <ActionDialog
         open={params.action === "remove"}

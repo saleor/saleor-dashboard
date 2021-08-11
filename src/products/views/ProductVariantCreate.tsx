@@ -171,7 +171,8 @@ export const ProductVariant: React.FC<ProductVariantCreateProps> = ({
   const {
     loadMore: loadMoreAttributeValues,
     search: searchAttributeValues,
-    result: searchAttributeValuesOpts
+    result: searchAttributeValuesOpts,
+    reset: searchAttributeReset
   } = useAttributeValueSearchHandler(DEFAULT_INITIAL_SEARCH_DATA);
 
   const fetchMoreReferencePages = {
@@ -241,6 +242,7 @@ export const ProductVariant: React.FC<ProductVariantCreateProps> = ({
         fetchAttributeValues={searchAttributeValues}
         fetchMoreAttributeValues={fetchMoreAttributeValues}
         onCloseDialog={() => navigate(productVariantAddUrl(productId))}
+        onAttributeSelectBlur={searchAttributeReset}
       />
     </>
   );
