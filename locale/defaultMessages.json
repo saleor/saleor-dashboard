@@ -4126,6 +4126,12 @@
     "context": "amount of refunded money",
     "string": "Amount"
   },
+  "src_dot_orders_dot_components_dot_OrderPaymentStatus_dot_1229222266": {
+    "string": "Payment method"
+  },
+  "src_dot_orders_dot_components_dot_OrderPaymentStatus_dot_1756106276": {
+    "string": "Status"
+  },
   "src_dot_orders_dot_components_dot_OrderPaymentVoidDialog_dot_2217048637": {
     "string": "Are you sure you want to void this payment?"
   },
