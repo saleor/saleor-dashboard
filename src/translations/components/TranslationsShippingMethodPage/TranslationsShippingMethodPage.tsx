@@ -87,6 +87,7 @@ const TranslationsShippingMethodPage: React.FC<TranslationsShippingMethodPagePro
           }
         ]}
         saveButtonState={saveButtonState}
+        richTextResetKey={languageCode}
         onEdit={onEdit}
         onDiscard={onDiscard}
         onSubmit={onSubmit}

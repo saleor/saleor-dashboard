@@ -7,21 +7,18 @@ import React from "react";
 import { useIntl } from "react-intl";
 
 import { maybe } from "../../misc";
-import {
-  LanguageCodeEnum,
-  NameTranslationInput
-} from "../../types/globalTypes";
-import TranslationsVouchersPage, {
-  fieldNames
-} from "../components/TranslationsVouchersPage";
+import { LanguageCodeEnum } from "../../types/globalTypes";
+import TranslationsVouchersPage from "../components/TranslationsVouchersPage";
 import { TypedUpdateVoucherTranslations } from "../mutations";
 import { useVoucherTranslationDetails } from "../queries";
+import { TranslationField, TranslationInputFieldName } from "../types";
 import { UpdateVoucherTranslations } from "../types/UpdateVoucherTranslations";
 import {
   languageEntitiesUrl,
   languageEntityUrl,
   TranslatableEntities
 } from "../urls";
+import { getParsedTranslationInputData } from "../utils";
 
 export interface TranslationsVouchersQueryParams {
   activeField: string;
@@ -71,15 +68,17 @@ const TranslationsVouchers: React.FC<TranslationsVouchersProps> = ({
   return (
     <TypedUpdateVoucherTranslations onCompleted={onUpdate}>
       {(updateTranslations, updateTranslationsOpts) => {
-        const handleSubmit = (field: string, data: string) => {
-          const input: NameTranslationInput = {};
-          if (field === fieldNames.name) {
-            input.name = data;
-          }
+        const handleSubmit = (
+          { name: fieldName }: TranslationField<TranslationInputFieldName>,
+          data: string
+        ) => {
           updateTranslations({
             variables: {
               id,
-              input,
+              input: getParsedTranslationInputData({
+                data,
+                fieldName
+              }),
               language: languageCode
             }
           });

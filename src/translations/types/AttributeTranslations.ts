@@ -28,6 +28,8 @@ export interface AttributeTranslations_translations_edges_node_AttributeTranslat
 
 export interface AttributeTranslations_translations_edges_node_AttributeTranslatableContent {
   __typename: "AttributeTranslatableContent";
+  id: string;
+  name: string;
   translation: AttributeTranslations_translations_edges_node_AttributeTranslatableContent_translation | null;
   attribute: AttributeTranslations_translations_edges_node_AttributeTranslatableContent_attribute | null;
 }
