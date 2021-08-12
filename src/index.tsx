@@ -14,6 +14,7 @@ import { useIntl } from "react-intl";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 
 import AppsSection from "./apps";
+import { ExternalAppProvider } from "./apps/components/ExternalAppContext";
 import { appsSection } from "./apps/urls";
 import AttributeSection from "./attributes";
 import { attributeSection } from "./attributes/urls";
@@ -120,7 +121,9 @@ const App: React.FC = () => (
                   <ShopProvider>
                     <AuthProvider>
                       <AppChannelProvider>
-                        <Routes />
+                        <ExternalAppProvider>
+                          <Routes />
+                        </ExternalAppProvider>
                       </AppChannelProvider>
                     </AuthProvider>
                   </ShopProvider>

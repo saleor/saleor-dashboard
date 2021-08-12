@@ -12,6 +12,8 @@ import {
 import { ArrowDropDown as ArrowDropDownIcon } from "@material-ui/icons";
 import React from "react";
 
+import { useStyles } from "./styles";
+
 interface Option {
   label: string;
   disabled?: boolean;
@@ -21,7 +23,7 @@ interface Option {
 export interface ButtonWithSelectProps
   extends Omit<ButtonGroupProps, "onClick"> {
   options: Option[];
-  onClick(e: React.MouseEventHandler<HTMLAnchorElement>): void;
+  onClick(e: React.MouseEvent<HTMLButtonElement, MouseEvent>): void;
 }
 
 export const ButtonWithSelect: React.FC<ButtonWithSelectProps> = ({
@@ -32,6 +34,7 @@ export const ButtonWithSelect: React.FC<ButtonWithSelectProps> = ({
 }) => {
   const [open, setOpen] = React.useState(false);
   const anchorRef = React.useRef<HTMLDivElement>(null);
+  const classes = useStyles();
 
   const handleMenuItemClick = (
     event: React.MouseEvent<HTMLLIElement, MouseEvent>,
@@ -66,17 +69,19 @@ export const ButtonWithSelect: React.FC<ButtonWithSelectProps> = ({
         {...props}
       >
         <Button onClick={onClick}>{children}</Button>
-        <Button
-          color="primary"
-          size="small"
-          aria-controls={open ? "button-with-select-menu" : undefined}
-          aria-expanded={open ? "true" : undefined}
-          aria-label="select different option"
-          aria-haspopup="menu"
-          onClick={handleToggle}
-        >
-          <ArrowDropDownIcon />
-        </Button>
+        {options.length > 0 && (
+          <Button
+            color="primary"
+            size="small"
+            aria-controls={open ? "button-with-select-menu" : undefined}
+            aria-expanded={open ? "true" : undefined}
+            aria-label="select different option"
+            aria-haspopup="menu"
+            onClick={handleToggle}
+          >
+            <ArrowDropDownIcon className={classes.buttonIcon} />
+          </Button>
+        )}
       </ButtonGroup>
       <Popper
         open={open}
@@ -84,10 +89,11 @@ export const ButtonWithSelect: React.FC<ButtonWithSelectProps> = ({
         transition
         disablePortal
         placement="bottom-end"
+        className={classes.popper}
       >
         {({ TransitionProps }) => (
           <Grow {...TransitionProps}>
-            <Paper>
+            <Paper className={classes.paper}>
               <ClickAwayListener onClickAway={handleClose}>
                 <MenuList id="button-with-select-menu">
                   {options.map((option, i) => (

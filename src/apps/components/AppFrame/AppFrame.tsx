@@ -1,5 +1,8 @@
+import { useTheme } from "@saleor/macaw-ui";
 import React from "react";
 import urlJoin from "url-join";
+
+import { useStyles } from "./styles";
 
 interface Props {
   src: string;
@@ -19,6 +22,8 @@ export const AppFrame: React.FC<Props> = ({
   onError
 }) => {
   const frameRef = React.useRef<HTMLIFrameElement>();
+  const { sendThemeToExtension } = useTheme();
+  const classes = useStyles();
 
   const handleLoad = () => {
     const appOrigin = getOrigin(src);
@@ -31,6 +36,7 @@ export const AppFrame: React.FC<Props> = ({
       },
       appOrigin
     );
+    sendThemeToExtension();
     onLoad();
   };
 
@@ -40,6 +46,7 @@ export const AppFrame: React.FC<Props> = ({
       src={urlJoin(src, `?domain=${backendHost}`)}
       onError={onError}
       onLoad={handleLoad}
+      className={classes.iframe}
     />
   );
 };

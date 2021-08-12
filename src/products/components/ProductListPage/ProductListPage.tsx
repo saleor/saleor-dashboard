@@ -1,5 +1,4 @@
 import { Card } from "@material-ui/core";
-import { IFrameOpener } from "@saleor/apps/components/IFrameOpener/IFrameOpener";
 import { useExtensions } from "@saleor/apps/hooks";
 import { ButtonWithSelect } from "@saleor/components/ButtonWithSelect";
 import CardMenu from "@saleor/components/CardMenu";
@@ -141,13 +140,14 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
     AppExtensionTypeEnum.OVERVIEW
   );
 
-  const extensionMenuItems = create.map(({ label, app }) => ({
+  const extensionMenuItems = create.map(({ label, app, open }) => ({
     label,
     testId: `extension-${app.id}`,
-    onSelect: () => console.log("extension clicked")
+    onSelect: open
   }));
 
-  console.log({ create, moreActions });
+  // TODO: Add moreActions
+  // console.log({ create, moreActions });
 
   return (
     <Container>
@@ -207,11 +207,6 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
             description="button"
           />
         </ButtonWithSelect>
-        {create.map(({ app, url, label }) => (
-          <IFrameOpener key={app.id} app={app} src={url} backendUrl={url}>
-            {label}
-          </IFrameOpener>
-        ))}
       </PageHeader>
       {limitReached && (
         <LimitReachedAlert
