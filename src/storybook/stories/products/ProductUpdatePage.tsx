@@ -48,6 +48,7 @@ const props: ProductUpdatePageProps = {
   fetchCategories: () => undefined,
   fetchCollections: () => undefined,
   fetchAttributeValues: () => undefined,
+  onAttributeSelectBlur: () => undefined,
   fetchMoreCategories: fetchMoreProps,
   fetchMoreCollections: fetchMoreProps,
   fetchMoreAttributeValues: fetchMoreProps,

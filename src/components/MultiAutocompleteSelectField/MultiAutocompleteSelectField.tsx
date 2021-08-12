@@ -89,6 +89,7 @@ export interface MultiAutocompleteSelectFieldProps
   testId?: string;
   fetchChoices?: (value: string) => void;
   onChange: (event: React.ChangeEvent<any>) => void;
+  onBlur?: () => void;
   fetchOnFocus?: boolean;
   endAdornment?: React.ReactNode;
 }
@@ -115,6 +116,7 @@ const MultiAutocompleteSelectFieldComponent: React.FC<MultiAutocompleteSelectFie
     testId,
     fetchChoices,
     onChange,
+    onBlur,
     onFetchMore,
     fetchOnFocus,
     endAdornment,
@@ -142,6 +144,14 @@ const MultiAutocompleteSelectFieldComponent: React.FC<MultiAutocompleteSelectFie
             onInputValueChange={value => debounceFn(value)}
             onSelect={handleSelect}
             itemToString={() => ""}
+            // this is to prevent unwanted state updates when the dropdown is closed with an empty value,
+            // which downshift interprets as the value being updated with an empty string, causing side-effects
+            stateReducer={(state, changes) => {
+              if (changes.isOpen === false && state.inputValue === "") {
+                delete changes.inputValue;
+              }
+              return changes;
+            }}
           >
             {({
               closeMenu,
@@ -175,6 +185,7 @@ const MultiAutocompleteSelectFieldComponent: React.FC<MultiAutocompleteSelectFie
                         </div>
                       ),
                       id: undefined,
+                      onBlur,
                       onClick: toggleMenu,
                       onFocus: () => {
                         if (fetchOnFocus) {

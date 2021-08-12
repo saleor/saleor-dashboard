@@ -73,6 +73,7 @@ interface AttributeRowProps extends AttributeRowHandlers {
   error: ProductErrorWithAttributesFragment | PageErrorWithAttributesFragment;
   loading: boolean;
   entityId: string;
+  onAttributeSelectBlur?: () => void;
 }
 
 const AttributeRow: React.FC<AttributeRowProps> = ({
@@ -89,7 +90,8 @@ const AttributeRow: React.FC<AttributeRowProps> = ({
   onChange,
   fetchAttributeValues,
   fetchMoreAttributeValues,
-  entityId
+  entityId,
+  onAttributeSelectBlur
 }) => {
   const intl = useIntl();
   const classes = useStyles({});
@@ -156,6 +158,7 @@ const AttributeRow: React.FC<AttributeRowProps> = ({
             allowCustomValues={true}
             fetchOnFocus={true}
             fetchChoices={value => fetchAttributeValues(value, attribute.id)}
+            onBlur={onAttributeSelectBlur}
             {...fetchMoreAttributeValues}
           />
         </BasicAttributeRow>
@@ -268,6 +271,7 @@ const AttributeRow: React.FC<AttributeRowProps> = ({
             allowCustomValues={true}
             fetchOnFocus={true}
             fetchChoices={value => fetchAttributeValues(value, attribute.id)}
+            onBlur={onAttributeSelectBlur}
             {...fetchMoreAttributeValues}
           />
         </BasicAttributeRow>

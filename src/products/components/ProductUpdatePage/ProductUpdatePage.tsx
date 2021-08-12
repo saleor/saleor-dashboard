@@ -110,6 +110,7 @@ export interface ProductUpdatePageProps extends ListActions, ChannelProps {
   onImageDelete: (id: string) => () => void;
   onSubmit: (data: ProductUpdatePageSubmitData) => SubmitPromise;
   openChannelsModal: () => void;
+  onAttributeSelectBlur: () => void;
   onBack?();
   onDelete();
   onImageEdit?(id: string);
@@ -194,7 +195,8 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
   fetchMoreAttributeValues,
   onCloseDialog,
   channelsWithVariantsData,
-  onChannelsChange
+  onChannelsChange,
+  onAttributeSelectBlur
 }) => {
   const intl = useIntl();
 
@@ -317,6 +319,7 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                     onReferencesReorder={handlers.reorderAttributeValue}
                     fetchAttributeValues={fetchAttributeValues}
                     fetchMoreAttributeValues={fetchMoreAttributeValues}
+                    onAttributeSelectBlur={onAttributeSelectBlur}
                   />
                 )}
                 <CardSpacer />

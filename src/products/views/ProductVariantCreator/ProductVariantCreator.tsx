@@ -6,7 +6,7 @@ import useNotifier from "@saleor/hooks/useNotifier";
 import { useProductVariantBulkCreateMutation } from "@saleor/products/mutations";
 import { useCreateMultipleVariantsData } from "@saleor/products/queries";
 import { productUrl } from "@saleor/products/urls";
-import createAttributeValueSearchHandler from "@saleor/utils/handlers/attributeValueSearchHandler";
+import useAttributeValueSearchHandler from "@saleor/utils/handlers/attributeValueSearchHandler";
 import { mapEdgesToItems } from "@saleor/utils/maps";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -56,8 +56,9 @@ const ProductVariantCreator: React.FC<ProductVariantCreatorProps> = ({
   const {
     loadMore: loadMoreAttributeValues,
     search: searchAttributeValues,
+    reset: searchAttributeReset,
     result: searchAttributeValuesOpts
-  } = createAttributeValueSearchHandler(DEFAULT_INITIAL_SEARCH_DATA);
+  } = useAttributeValueSearchHandler(DEFAULT_INITIAL_SEARCH_DATA);
 
   const fetchMoreAttributeValues = {
     hasMore: !!searchAttributeValuesOpts.data?.attribute?.choices?.pageInfo
@@ -98,6 +99,7 @@ const ProductVariantCreator: React.FC<ProductVariantCreatorProps> = ({
             variables: { id, inputs }
           })
         }
+        onAttributeSelectBlur={searchAttributeReset}
         warehouses={mapEdgesToItems(data?.warehouses) || []}
       />
     </>
