@@ -2,7 +2,7 @@ import { stringifyQs } from "@saleor/utils/urls";
 import urlJoin from "url-join";
 
 import { GiftCardListUrlQueryParams } from "./GiftCardsList/types";
-import { GiftCardUpdatePageUrlQueryParams } from "./GiftCardUpdatePage/types";
+import { GiftCardUpdatePageUrlQueryParams } from "./GiftCardUpdate/types";
 
 export const giftCardsSectionUrlName = "/gift-cards";
 

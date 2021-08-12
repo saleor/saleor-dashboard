@@ -5,7 +5,7 @@ import SingleAutocompleteSelectField, {
 } from "@saleor/components/SingleAutocompleteSelectField";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@saleor/config";
 import { GiftCardError } from "@saleor/fragments/types/GiftCardError";
-import { getGiftCardErrorMessage } from "@saleor/giftCards/GiftCardUpdatePage/messages";
+import { getGiftCardErrorMessage } from "@saleor/giftCards/GiftCardUpdate/messages";
 import { FormChange } from "@saleor/hooks/useForm";
 import { commonMessages } from "@saleor/intl";
 import {

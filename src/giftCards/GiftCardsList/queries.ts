@@ -3,7 +3,7 @@ import { fragmentMoney } from "@saleor/fragments/products";
 import makeQuery from "@saleor/hooks/makeQuery";
 import gql from "graphql-tag";
 
-import { giftCardDataFragment } from "../GiftCardUpdatePage/queries";
+import { giftCardDataFragment } from "../GiftCardUpdate/queries";
 import { GiftCardList, GiftCardListVariables } from "./types/GiftCardList";
 
 export const giftCardList = gql`

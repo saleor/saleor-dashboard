@@ -3,7 +3,7 @@ import TablePagination from "@saleor/components/TablePagination";
 import usePaginator from "@saleor/hooks/usePaginator";
 import React from "react";
 
-import useGiftCardList from "../hooks/useGiftCardList";
+import useGiftCardList from "../providers/hooks/useGiftCardList";
 
 const GiftCardsListTableFooter: React.FC = () => {
   const paginate = usePaginator();

@@ -21,9 +21,9 @@ import { productUrl } from "@saleor/products/urls";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import useGiftCardList from "../hooks/useGiftCardList";
-import useGiftCardListBulkActions from "../hooks/useGiftCardListBulkActions";
 import { giftCardsListTableMessages as messages } from "../messages";
+import useGiftCardList from "../providers/hooks/useGiftCardList";
+import useGiftCardListBulkActions from "../providers/hooks/useGiftCardListBulkActions";
 import { useTableStyles as useStyles } from "../styles";
 import GiftCardsListTableFooter from "./GiftCardsListTableFooter";
 import GiftCardsListTableHeader from "./GiftCardsListTableHeader";
