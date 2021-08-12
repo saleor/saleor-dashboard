@@ -105,8 +105,8 @@ const SingleAutocompleteSelectFieldComponent: React.FC<SingleAutocompleteSelectF
           selectedItem={value || ""}
           // this is to prevent unwanted state updates when the dropdown is closed with an empty value,
           // which downshift interprets as the value being updated with an empty string, causing side-effects
-          stateReducer={(state, changes) => {
-            if (changes.isOpen === false && state.inputValue === "") {
+          stateReducer={(_, changes) => {
+            if (changes.isOpen === false) {
               delete changes.inputValue;
             }
             return changes;
@@ -210,6 +210,7 @@ const SingleAutocompleteSelectFieldComponent: React.FC<SingleAutocompleteSelectF
                   FormHelperTextProps={FormHelperTextProps}
                   label={label}
                   fullWidth={true}
+                  onBlur={onBlur}
                 />
                 {isOpen && (!!inputValue || !!choices.length) && (
                   <SingleAutocompleteSelectFieldContent
