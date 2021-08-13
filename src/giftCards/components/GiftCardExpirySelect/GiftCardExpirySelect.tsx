@@ -2,7 +2,7 @@ import { TextField, Typography } from "@material-ui/core";
 import VerticalSpacer from "@saleor/apps/components/VerticalSpacer";
 import RadioGroupField from "@saleor/components/RadioGroupField";
 import { GiftCardError } from "@saleor/fragments/types/GiftCardError";
-import { getGiftCardErrorMessage } from "@saleor/giftCards/GiftCardUpdatePage/messages";
+import { getGiftCardErrorMessage } from "@saleor/giftCards/GiftCardUpdate/messages";
 import { FormChange } from "@saleor/hooks/useForm";
 import {
   GiftCardExpiryTypeEnum,

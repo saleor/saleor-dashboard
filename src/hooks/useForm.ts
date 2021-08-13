@@ -30,6 +30,7 @@ export interface UseFormResult<T> {
   triggerChange: () => void;
   toggleValue: FormChange;
   errors: FormErrors<T>;
+  setChanged: (value: boolean) => void;
   setError: (name: keyof T, error: string | React.ReactNode) => void;
   clearErrors: (name?: keyof T | Array<keyof T>) => void;
 }
@@ -155,6 +156,7 @@ function useForm<T extends FormData>(
     data,
     hasChanged,
     reset,
+    setChanged,
     set,
     submit,
     toggleValue,

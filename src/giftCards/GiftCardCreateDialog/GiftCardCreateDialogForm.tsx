@@ -20,7 +20,7 @@ import { mapSingleValueNodeToChoice } from "@saleor/utils/maps";
 import React, { useState } from "react";
 import { useIntl } from "react-intl";
 
-import { getGiftCardErrorMessage } from "../GiftCardUpdatePage/messages";
+import { getGiftCardErrorMessage } from "../GiftCardUpdate/messages";
 import GiftCardCustomerSelectField from "./GiftCardCustomerSelectField";
 import { giftCardCreateDialogMessages as messages } from "./messages";
 import { useGiftCardCreateDialogFormStyles as useStyles } from "./styles";

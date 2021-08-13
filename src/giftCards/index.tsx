@@ -7,8 +7,8 @@ import { Route, RouteComponentProps, Switch } from "react-router-dom";
 
 import GiftCardListComponent from "./GiftCardsList";
 import { GiftCardListUrlQueryParams } from "./GiftCardsList/types";
-import GiftCardUpdatePageComponent from "./GiftCardUpdatePage";
-import { GiftCardUpdatePageUrlQueryParams } from "./GiftCardUpdatePage/types";
+import GiftCardUpdateComponent from "./GiftCardUpdate";
+import { GiftCardUpdatePageUrlQueryParams } from "./GiftCardUpdate/types";
 import { giftCardsListPath, giftCardUrl } from "./urls";
 
 const GiftCardUpdatePage: React.FC<RouteComponentProps<{ id: string }>> = ({
@@ -18,7 +18,7 @@ const GiftCardUpdatePage: React.FC<RouteComponentProps<{ id: string }>> = ({
   const params: GiftCardUpdatePageUrlQueryParams = qs;
 
   return (
-    <GiftCardUpdatePageComponent
+    <GiftCardUpdateComponent
       id={decodeURIComponent(match.params.id)}
       params={params}
     />
