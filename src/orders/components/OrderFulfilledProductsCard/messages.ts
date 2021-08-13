@@ -1,12 +1,5 @@
 import { defineMessages } from "react-intl";
 
-export const messages = defineMessages({
-  cancelFulfillment: {
-    defaultMessage: "Cancel Fulfillment",
-    description: "button"
-  }
-});
-
 export const actionButtonsMessages = defineMessages({
   refund: {
     defaultMessage: "Refund",

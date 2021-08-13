@@ -143,15 +143,10 @@ export const getEventMessage = (
         }
       );
     case OrderEventsEnum.FULFILLMENT_AWAITS_APPROVAL:
-      return intl.formatMessage(
-        {
-          defaultMessage: "Fulfilled {quantity} items awaits approval",
-          description: "order history message"
-        },
-        {
-          quantity: event.quantity
-        }
-      );
+      return intl.formatMessage({
+        defaultMessage: "Fulfillment awaits approval",
+        description: "order history message"
+      });
     case OrderEventsEnum.FULFILLMENT_FULFILLED_ITEMS:
       return intl.formatMessage(
         {
