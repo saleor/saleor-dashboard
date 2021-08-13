@@ -102,6 +102,7 @@ export interface ProductVariantCreatorValuesProps {
     attributeId: string,
     value: AttributeValue<Partial<AttributeValueFragment>>
   ) => void;
+  onValueBlur: () => void;
 }
 
 const ProductVariantCreatorValues: React.FC<ProductVariantCreatorValuesProps> = props => {
@@ -112,7 +113,8 @@ const ProductVariantCreatorValues: React.FC<ProductVariantCreatorValuesProps> = 
     fetchMoreAttributeValues,
     data,
     variantsLeft,
-    onValueClick
+    onValueClick,
+    onValueBlur
   } = props;
   const intl = useIntl();
   const variantsNumber = getVariantsNumber(data);
@@ -208,6 +210,7 @@ const ProductVariantCreatorValues: React.FC<ProductVariantCreatorValuesProps> = 
                   fetchChoices={value =>
                     fetchAttributeValues(value, attribute.id)
                   }
+                  onBlur={onValueBlur}
                   {...fetchMoreAttributeValues}
                 />
               )}

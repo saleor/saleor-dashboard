@@ -4,6 +4,8 @@ import React from "react";
 
 import {
   filterPageProps,
+  limits,
+  limitsReached,
   listActionsProps,
   pageListProps,
   searchPageProps,
@@ -36,6 +38,7 @@ const props: OrderDraftListPageProps = {
       value: undefined
     }
   },
+  limits,
   onAdd: () => undefined,
   orders,
   sort: {
@@ -50,4 +53,7 @@ storiesOf("Views / Orders / Draft order list", module)
   .add("loading", () => (
     <OrderDraftListPage {...props} disabled orders={undefined} />
   ))
-  .add("when no data", () => <OrderDraftListPage {...props} orders={[]} />);
+  .add("when no data", () => <OrderDraftListPage {...props} orders={[]} />)
+  .add("limits reached", () => (
+    <OrderDraftListPage {...props} limits={limitsReached} />
+  ));

@@ -3,7 +3,7 @@ import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import useShop from "@saleor/hooks/useShop";
 import { commonMessages } from "@saleor/intl";
-import { stringify as stringifyQs } from "qs";
+import { stringifyQs } from "@saleor/utils/urls";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -112,6 +112,7 @@ const TranslationsProducts: React.FC<TranslationsProductsProps> = ({
 
             return (
               <TranslationsProductsPage
+                productId={id}
                 activeField={params.activeField}
                 disabled={
                   productTranslations.loading || updateTranslationsOpts.loading
