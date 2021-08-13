@@ -1,4 +1,5 @@
 import { OutputData } from "@editorjs/editorjs";
+import { useExtensions } from "@saleor/apps/hooks";
 import {
   getAttributeValuesFromReferences,
   mergeAttributeValues
@@ -6,6 +7,7 @@ import {
 import { ChannelData } from "@saleor/channels/utils";
 import AssignAttributeValueDialog from "@saleor/components/AssignAttributeValueDialog";
 import Attributes, { AttributeInput } from "@saleor/components/Attributes";
+import CardMenu from "@saleor/components/CardMenu";
 import CardSpacer from "@saleor/components/CardSpacer";
 import ChannelsAvailabilityCard from "@saleor/components/ChannelsAvailabilityCard";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
@@ -40,7 +42,11 @@ import {
   ListActions,
   ReorderAction
 } from "@saleor/types";
-import { PermissionEnum } from "@saleor/types/globalTypes";
+import {
+  AppExtensionTypeEnum,
+  AppExtensionViewEnum,
+  PermissionEnum
+} from "@saleor/types/globalTypes";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -243,6 +249,17 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
     onCloseDialog();
   };
 
+  const { moreActions } = useExtensions(
+    AppExtensionViewEnum.PRODUCT,
+    AppExtensionTypeEnum.DETAILS
+  );
+
+  const extensionMenuItems = moreActions.map(({ label, app, open }) => ({
+    label,
+    testId: `extension-${app.id}`,
+    onSelect: open
+  }));
+
   return (
     <ProductUpdateForm
       isSimpleProduct={isSimpleProduct}
@@ -283,7 +300,11 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
             <Backlink onClick={onBack}>
               {intl.formatMessage(sectionNames.products)}
             </Backlink>
-            <PageHeader title={header} />
+            <PageHeader title={header}>
+              {extensionMenuItems.length > 0 && (
+                <CardMenu menuItems={extensionMenuItems} data-test="menu" />
+              )}
+            </PageHeader>
             <Grid>
               <div>
                 <ProductDetailsForm

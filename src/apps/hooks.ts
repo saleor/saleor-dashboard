@@ -40,7 +40,7 @@ const filterAndMapToTarget = (
       url,
       label,
       open: () =>
-        openApp({ appToken: app.accessToken, backendUrl: url, src: url })
+        openApp({ appToken: app.accessToken, backendUrl: url, src: url, label })
     }));
 
 export const useExtensions = (

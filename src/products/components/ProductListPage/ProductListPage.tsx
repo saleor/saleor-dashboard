@@ -140,14 +140,17 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
     AppExtensionTypeEnum.OVERVIEW
   );
 
-  const extensionMenuItems = create.map(({ label, app, open }) => ({
+  const extensionMenuItems = moreActions.map(({ label, app, open }) => ({
     label,
     testId: `extension-${app.id}`,
     onSelect: open
   }));
 
-  // TODO: Add moreActions
-  // console.log({ create, moreActions });
+  const extensionCreateButtonItems = create.map(({ label, app, open }) => ({
+    label,
+    testId: `extension-${app.id}`,
+    onSelect: open
+  }));
 
   return (
     <Container>
@@ -197,7 +200,7 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
           onSave={handleSave}
         />
         <ButtonWithSelect
-          options={extensionMenuItems}
+          options={extensionCreateButtonItems}
           data-test="add-product"
           disabled={limitReached}
           onClick={onAdd}

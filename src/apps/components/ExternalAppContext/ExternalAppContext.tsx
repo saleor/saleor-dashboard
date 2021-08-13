@@ -1,12 +1,13 @@
-import { Modal } from "@material-ui/core";
 import React from "react";
 
+import { AppDialog } from "../AppDialog";
 import { AppFrame } from "../AppFrame";
 
 export interface AppData {
   appToken: string;
   src: string;
   backendUrl: string;
+  label: string;
 }
 
 const ExternalAppContext = React.createContext<{
@@ -28,16 +29,7 @@ export const ExternalAppProvider: React.FC = ({ children }) => {
   return (
     <ExternalAppContext.Provider value={{ open, appData, setOpen, setAppData }}>
       {children}
-      <Modal
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="extension app modal"
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center"
-        }}
-      >
+      <AppDialog open={open} onClose={handleClose} title={appData?.label}>
         {open && appData && (
           <AppFrame
             src={appData.src}
@@ -45,7 +37,7 @@ export const ExternalAppProvider: React.FC = ({ children }) => {
             backendHost={appData.backendUrl}
           />
         )}
-      </Modal>
+      </AppDialog>
     </ExternalAppContext.Provider>
   );
 };
