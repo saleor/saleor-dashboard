@@ -17,8 +17,6 @@ import useGiftCardUpdateForm from "./providers/GiftCardUpdateFormProvider/hooks/
 const GiftCardUpdatePage: React.FC = () => {
   const { navigateBack } = useGiftCardUpdateDialogs();
 
-  const { loading: loadingGiftCard } = useGiftCardDetails();
-
   const {
     hasChanged,
     submit,
@@ -43,9 +41,6 @@ const GiftCardUpdatePage: React.FC = () => {
           <GiftCardUpdateInfoCard />
         </div>
       </Grid>
-
-      {!loadingGiftCard && <GiftCardUpdateBalanceDialog />}
-
       <Savebar
         state={status}
         disabled={loadingUpdate || !hasChanged}

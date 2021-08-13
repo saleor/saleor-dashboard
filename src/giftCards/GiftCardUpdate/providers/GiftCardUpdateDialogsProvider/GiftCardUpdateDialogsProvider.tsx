@@ -3,10 +3,12 @@ import useNavigator from "@saleor/hooks/useNavigator";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import React, { createContext } from "react";
 
+import GiftCardUpdateBalanceDialog from "../../GiftCardUpdateBalanceDialog";
 import {
   GiftCardUpdatePageActionParamsEnum,
   GiftCardUpdatePageUrlQueryParams
 } from "../../types";
+import useGiftCardDetails from "../GiftCardDetailsProvider/hooks/useGiftCardDetails";
 
 interface GiftCardUpdateDialogsProviderProps {
   children: React.ReactNode;
@@ -17,7 +19,6 @@ interface GiftCardUpdateDialogsProviderProps {
 export interface GiftCardUpdateDialogsConsumerProps {
   navigateBack: () => void;
   openSetBalanceDialog: () => void;
-  isSetBalanceDialogOpen: boolean;
   closeDialog: () => void;
 }
 
@@ -31,6 +32,8 @@ const GiftCardUpdateDialogsProvider: React.FC<GiftCardUpdateDialogsProviderProps
   id
 }) => {
   const navigate = useNavigator();
+
+  const { loading: loadingGiftCard } = useGiftCardDetails();
 
   const [openDialog, closeDialog] = createDialogActionHandlers<
     GiftCardUpdatePageActionParamsEnum,
@@ -46,7 +49,6 @@ const GiftCardUpdateDialogsProvider: React.FC<GiftCardUpdateDialogsProviderProps
   const navigateBack = () => navigate(giftCardsListPath);
 
   const providerValues: GiftCardUpdateDialogsConsumerProps = {
-    isSetBalanceDialogOpen,
     openSetBalanceDialog,
     closeDialog,
     navigateBack
@@ -55,6 +57,12 @@ const GiftCardUpdateDialogsProvider: React.FC<GiftCardUpdateDialogsProviderProps
   return (
     <GiftCardUpdateDialogsContext.Provider value={providerValues}>
       {children}
+      {!loadingGiftCard && (
+        <GiftCardUpdateBalanceDialog
+          onClose={closeDialog}
+          open={isSetBalanceDialogOpen}
+        />
+      )}
     </GiftCardUpdateDialogsContext.Provider>
   );
 };

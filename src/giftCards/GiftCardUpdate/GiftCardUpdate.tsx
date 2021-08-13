@@ -12,13 +12,13 @@ interface GiftCardUpdateProps {
 }
 
 const GiftCardUpdate: React.FC<GiftCardUpdateProps> = ({ id, params }) => (
-  <GiftCardUpdateDialogsProvider id={id} params={params}>
-    <GiftCardDetailsProvider id={id}>
-      <GiftCardUpdateFormProvider>
+  <GiftCardDetailsProvider id={id}>
+    <GiftCardUpdateFormProvider>
+      <GiftCardUpdateDialogsProvider id={id} params={params}>
         <GiftCardUpdatePage />
-      </GiftCardUpdateFormProvider>
-    </GiftCardDetailsProvider>
-  </GiftCardUpdateDialogsProvider>
+      </GiftCardUpdateDialogsProvider>
+    </GiftCardUpdateFormProvider>
+  </GiftCardDetailsProvider>
 );
 
 export default GiftCardUpdate;
