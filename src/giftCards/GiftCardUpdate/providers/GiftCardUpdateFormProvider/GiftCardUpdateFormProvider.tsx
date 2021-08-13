@@ -23,7 +23,6 @@ import { initialData as emptyFormData } from "../../../GiftCardCreateDialog/Gift
 import { useGiftCardUpdateMutation } from "../../mutations";
 import { GiftCardUpdate } from "../../types/GiftCardUpdate";
 import useGiftCardDetails from "../GiftCardDetailsProvider/hooks/useGiftCardDetails";
-import useGiftCardUpdateDialogs from "../GiftCardUpdateDialogsProvider/hooks/useGiftCardUpdateDialogs";
 
 interface GiftCardUpdateFormProviderProps {
   children: React.ReactNode;
@@ -60,7 +59,6 @@ const GiftCardUpdateFormProvider: React.FC<GiftCardUpdateFormProviderProps> = ({
   const [updatePrivateMetadata] = usePrivateMetadataUpdate({});
 
   const { loading: loadingGiftCard, giftCard } = useGiftCardDetails();
-  const { closeDialog: closeSetBalanceDialog } = useGiftCardUpdateDialogs();
 
   const getInitialData = (): GiftCardUpdateFormData => {
     if (loadingGiftCard || !giftCard) {
@@ -91,10 +89,6 @@ const GiftCardUpdateFormProvider: React.FC<GiftCardUpdateFormProviderProps> = ({
     const errors = data.giftCardUpdate.errors;
 
     notify(getDefaultNotifierSuccessErrorData(errors, intl));
-
-    if (!errors.length) {
-      closeSetBalanceDialog();
-    }
   };
 
   const [updateGiftCard, updateGiftCardOpts] = useGiftCardUpdateMutation({

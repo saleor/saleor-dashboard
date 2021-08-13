@@ -6,6 +6,7 @@ import { IMessage } from "@saleor/components/messages";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { getFormErrors } from "@saleor/utils/errors";
 import commonErrorMessages from "@saleor/utils/errors/common";
+import { DialogActionHandlers } from "@saleor/utils/handlers/dialogActionHandlers";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -13,7 +14,6 @@ import { giftCardsListTableMessages as tableMessages } from "../../GiftCardsList
 import { getGiftCardErrorMessage } from "../messages";
 import { useGiftCardUpdateMutation } from "../mutations";
 import useGiftCardDetails from "../providers/GiftCardDetailsProvider/hooks/useGiftCardDetails";
-import useGiftCardUpdateDialogs from "../providers/GiftCardUpdateDialogsProvider/hooks/useGiftCardUpdateDialogs";
 import { GiftCardUpdate } from "../types/GiftCardUpdate";
 import { giftCardUpdateBalanceDialogMessages as messages } from "./messages";
 import { useUpdateBalanceDialogStyles as useStyles } from "./styles";
@@ -22,15 +22,13 @@ export interface GiftCardBalanceUpdateFormData {
   balanceAmount: number;
 }
 
-const GiftCardUpdateBalanceDialog: React.FC = () => {
+const GiftCardUpdateBalanceDialog: React.FC<DialogActionHandlers> = ({
+  open,
+  onClose
+}) => {
   const intl = useIntl();
   const classes = useStyles({});
   const notify = useNotifier();
-
-  const {
-    isSetBalanceDialogOpen: open,
-    closeDialog
-  } = useGiftCardUpdateDialogs();
 
   const {
     giftCard: {
@@ -59,7 +57,7 @@ const GiftCardUpdateBalanceDialog: React.FC = () => {
     notify(notifierData);
 
     if (!errors.length) {
-      closeDialog();
+      onClose();
     }
   };
 
@@ -88,7 +86,7 @@ const GiftCardUpdateBalanceDialog: React.FC = () => {
   const { loading, status, data } = updateGiftCardBalanceOpts;
 
   const formErrors = getFormErrors(
-    ["balanceAmount"],
+    ["initialBalanceAmount"],
     data?.giftCardUpdate?.errors
   );
 
@@ -100,7 +98,7 @@ const GiftCardUpdateBalanceDialog: React.FC = () => {
           open={open}
           onConfirm={submit}
           confirmButtonLabel={intl.formatMessage(messages.changeButtonLabel)}
-          onClose={closeDialog}
+          onClose={onClose}
           title={intl.formatMessage(messages.title)}
           confirmButtonState={status}
           disabled={loading || !hasChanged}
@@ -109,9 +107,9 @@ const GiftCardUpdateBalanceDialog: React.FC = () => {
           <CardSpacer />
           <TextField
             inputProps={{ min: 0 }}
-            error={!!formErrors?.balanceAmount}
+            error={!!formErrors?.initialBalanceAmount}
             helperText={getGiftCardErrorMessage(
-              formErrors?.balanceAmount,
+              formErrors?.initialBalanceAmount,
               intl
             )}
             name="balanceAmount"
