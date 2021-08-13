@@ -1,9 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`Filtering URL params should not be empty if active filters are present 1`] = `
-Object {
-  "status": "PUBLISHED",
-}
-`;
-
-exports[`Filtering URL params should not be empty if active filters are present 2`] = `"status=PUBLISHED"`;

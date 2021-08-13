@@ -56,7 +56,7 @@ export function createFilterStructure(
       ...createOptionsField(
         CollectionFilterKeys.channel,
         intl.formatMessage(commonMessages.channel),
-        [opts.channel.value],
+        [opts.channel?.value],
         false,
         opts.channel.choices
       ),

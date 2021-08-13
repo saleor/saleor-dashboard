@@ -115,7 +115,6 @@ export const CollectionList: React.FC<CollectionListProps> = ({ params }) => {
     }
   });
 
-
   const filterOpts = getFilterOpts(params, channelOpts);
   const tabs = getFilterTabs();
 
