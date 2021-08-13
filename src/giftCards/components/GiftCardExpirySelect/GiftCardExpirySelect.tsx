@@ -42,14 +42,16 @@ interface GiftCardExpirySelectProps {
   expiryType: GiftCardExpiryTypeEnum;
   customOptions?: UntranslatedOption[];
   errors?: Record<"expiryPeriod" | "expiryDate", GiftCardError>;
+  expiryDate?: string;
 }
 
 const GiftCardExpirySelect: React.FC<GiftCardExpirySelectProps> = ({
   errors,
   change,
-  expiryPeriodType = TimePeriodTypeEnum.YEAR,
-  expiryPeriodAmount = 1,
+  expiryPeriodType,
+  expiryPeriodAmount,
   expiryType = GiftCardExpiryTypeEnum.EXPIRY_PERIOD,
+  expiryDate,
   customOptions
 }) => {
   const intl = useIntl();
@@ -85,6 +87,7 @@ const GiftCardExpirySelect: React.FC<GiftCardExpirySelectProps> = ({
           name={"expiryDate"}
           className={classes.dateField}
           label={intl.formatMessage(messages.expiryDateLabel)}
+          value={expiryDate}
           InputLabelProps={{
             shrink: true
           }}

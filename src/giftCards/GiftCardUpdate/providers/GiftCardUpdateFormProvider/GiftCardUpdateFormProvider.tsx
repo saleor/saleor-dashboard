@@ -6,6 +6,7 @@ import { MutationResultWithOpts } from "@saleor/hooks/makeMutation";
 import useForm, { FormChange, UseFormResult } from "@saleor/hooks/useForm";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { getDefaultNotifierSuccessErrorData } from "@saleor/hooks/useNotifier/utils";
+import { TimePeriodTypeEnum } from "@saleor/types/globalTypes";
 import { getFormErrors } from "@saleor/utils/errors";
 import handleFormSubmit from "@saleor/utils/handlers/handleFormSubmit";
 import createMetadataUpdateHandler from "@saleor/utils/handlers/metadataUpdateHandler";
@@ -78,8 +79,8 @@ const GiftCardUpdateFormProvider: React.FC<GiftCardUpdateFormProviderProps> = ({
       tag,
       expiryDate,
       expiryType,
-      expiryPeriodType: expiryPeriod?.type,
-      expiryPeriodAmount: expiryPeriod?.amount,
+      expiryPeriodType: expiryPeriod?.type || TimePeriodTypeEnum.YEAR,
+      expiryPeriodAmount: expiryPeriod?.amount || 1,
       privateMetadata: privateMetadata?.map(mapMetadataItemToInput),
       metadata: metadata?.map(mapMetadataItemToInput)
     };
