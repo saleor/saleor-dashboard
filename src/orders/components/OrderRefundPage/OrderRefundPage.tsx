@@ -26,7 +26,8 @@ import OrderRefundForm, {
 
 export const refundFulfilledStatuses = [
   FulfillmentStatus.FULFILLED,
-  FulfillmentStatus.RETURNED
+  FulfillmentStatus.RETURNED,
+  FulfillmentStatus.WAITING_FOR_APPROVAL
 ];
 
 export interface OrderRefundPageProps {
