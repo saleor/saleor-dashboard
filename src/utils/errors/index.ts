@@ -15,7 +15,7 @@ export function getErrors(errors: UserError[]): string[] {
 
 export function getFormErrors<TField extends string, TError extends UserError>(
   fields: TField[],
-  errors: TError[]
+  errors: TError[] = []
 ): Record<TField, TError> {
   return fields.reduce((errs, field) => {
     errs[field] = getFieldError(errors, field);

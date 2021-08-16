@@ -56,11 +56,11 @@ export function createFilterStructure(
       ...createOptionsField(
         CollectionFilterKeys.channel,
         intl.formatMessage(commonMessages.channel),
-        [opts.channel.value],
+        [opts.channel?.value],
         false,
-        opts.channel.choices
+        opts.channel?.choices
       ),
-      active: opts.channel.active
+      active: opts.channel?.active
     }
   ];
 }

@@ -1459,6 +1459,9 @@
     "context": "dialog title",
     "string": "Delete categories"
   },
+  "src_dot_channel": {
+    "string": "Channel"
+  },
   "src_dot_channels": {
     "context": "channels section name",
     "string": "Channels"
@@ -1681,8 +1684,8 @@
     "context": "tab name",
     "string": "All Collections"
   },
-  "src_dot_collections_dot_components_dot_CollectionListPage_dot_4057224233": {
-    "string": "Search Collection"
+  "src_dot_collections_dot_components_dot_CollectionListPage_dot_2685595924": {
+    "string": "Search Collections"
   },
   "src_dot_collections_dot_components_dot_CollectionListPage_dot_686910896": {
     "context": "button",
@@ -1708,6 +1711,18 @@
   "src_dot_collections_dot_components_dot_CollectionList_dot_3326160357": {
     "context": "collection availability",
     "string": "Availability"
+  },
+  "src_dot_collections_dot_components_dot_CollectionList_dot_published": {
+    "context": "collection publication date",
+    "string": "Published on {date}"
+  },
+  "src_dot_collections_dot_components_dot_CollectionList_dot_unpublished": {
+    "context": "collection publication date",
+    "string": "Unpublished"
+  },
+  "src_dot_collections_dot_components_dot_CollectionList_dot_willBePublished": {
+    "context": "collection publication date",
+    "string": "Becomes published on {date}"
   },
   "src_dot_collections_dot_components_dot_CollectionProducts_dot_1657559629": {
     "string": "No products found"
@@ -3384,6 +3399,218 @@
   },
   "src_dot_generalInformations": {
     "string": "General Information"
+  },
+  "src_dot_giftCards": {
+    "context": "gift cards section name",
+    "string": "Gift Cards"
+  },
+  "src_dot_giftCards_dot_GiftCardCreateDialog_dot_amountLabel": {
+    "context": "GiftCardCreateDialog amount label",
+    "string": "Enter amount"
+  },
+  "src_dot_giftCards_dot_GiftCardCreateDialog_dot_copiedToClipboardTitle": {
+    "context": "GiftCardCreateDialog copied to clipboard title",
+    "string": "Copied to clipboard"
+  },
+  "src_dot_giftCards_dot_GiftCardCreateDialog_dot_copyCodeLabel": {
+    "context": "GiftCardCreateDialog copy code label",
+    "string": "Copy code"
+  },
+  "src_dot_giftCards_dot_GiftCardCreateDialog_dot_createdGiftCardLabel": {
+    "context": "GiftCardCreateDialog created gift card label",
+    "string": "This is the code of a created gift card:"
+  },
+  "src_dot_giftCards_dot_GiftCardCreateDialog_dot_createdSuccessAlertTitle": {
+    "context": "GiftCardCreateDialog createdSuccessAlertTitle",
+    "string": "Successfully created gift card"
+  },
+  "src_dot_giftCards_dot_GiftCardCreateDialog_dot_customerLabel": {
+    "context": "GiftCardCreateDialog customer label",
+    "string": "Customer"
+  },
+  "src_dot_giftCards_dot_GiftCardCreateDialog_dot_customerSubtitle": {
+    "context": "GiftCardCreateDialog customer subtitle",
+    "string": "Selected customer will be sent the generated gift card code. Someone else can redeem the gift card code. Gift card will be assigned to account which redeemed the code."
+  },
+  "src_dot_giftCards_dot_GiftCardCreateDialog_dot_issueButtonLabel": {
+    "context": "GiftCardCreateDialog issue button label",
+    "string": "Issue"
+  },
+  "src_dot_giftCards_dot_GiftCardCreateDialog_dot_noteLabel": {
+    "context": "GiftCardCreateDialog note label",
+    "string": "Note"
+  },
+  "src_dot_giftCards_dot_GiftCardCreateDialog_dot_noteSubtitle": {
+    "context": "GiftCardCreateDialog note subtitle",
+    "string": "Why was this gift card issued. This note will not be shown to the customer. Note will be stored in gift card history"
+  },
+  "src_dot_giftCards_dot_GiftCardCreateDialog_dot_title": {
+    "context": "GiftCardCreateDialog title",
+    "string": "Issue gift card"
+  },
+  "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardUpdateBalanceDialog_dot_changeButtonLabel": {
+    "context": "GiftCardUpdateDetailsCard set balance dialog change button label",
+    "string": "Change"
+  },
+  "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardUpdateBalanceDialog_dot_subtitle": {
+    "context": "GiftCardUpdateDetailsCard set balance dialog subtitle",
+    "string": "What would you like to set cards balance to. When you change the balance both values will be changed"
+  },
+  "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardUpdateBalanceDialog_dot_title": {
+    "context": "GiftCardUpdateDetailsCard set balance button label",
+    "string": "Set balance"
+  },
+  "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardUpdateBalanceDialog_dot_updatedSuccessAlertTitle": {
+    "context": "GiftCardUpdateDetailsCard update success alert title",
+    "string": "Successfully updated card balance"
+  },
+  "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardUpdateDetailsCard_dot_cardBalanceLabel": {
+    "context": "GiftCardUpdateDetailsCard card balance label",
+    "string": "Card Balance"
+  },
+  "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardUpdateDetailsCard_dot_setBalanceButtonLabel": {
+    "context": "GiftCardUpdateDetailsCard set balance button label",
+    "string": "set balance"
+  },
+  "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardUpdateDetailsCard_dot_title": {
+    "context": "GiftCardUpdateDetailsCard title",
+    "string": "Details"
+  },
+  "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardUpdateInfoCard_dot_boughtByLabel": {
+    "context": "GiftCardUpdateInfoCard bought by label",
+    "string": "Bought by"
+  },
+  "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardUpdateInfoCard_dot_creationLabel": {
+    "context": "GiftCardUpdateInfoCard creation label",
+    "string": "Creation"
+  },
+  "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardUpdateInfoCard_dot_issuedByAppLabel": {
+    "context": "GiftCardUpdateInfoCard issued by app label",
+    "string": "Issued by app"
+  },
+  "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardUpdateInfoCard_dot_issuedByLabel": {
+    "context": "GiftCardUpdateInfoCard issued by label",
+    "string": "Issued by"
+  },
+  "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardUpdateInfoCard_dot_orderNumberLabel": {
+    "context": "GiftCardUpdateInfoCard order number label",
+    "string": "Order number"
+  },
+  "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardUpdateInfoCard_dot_productLabel": {
+    "context": "GiftCardUpdateInfoCard product label",
+    "string": "Product bought to get gift card"
+  },
+  "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardUpdateInfoCard_dot_title": {
+    "context": "GiftCardUpdateInfoCard title",
+    "string": "Card information"
+  },
+  "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardUpdateInfoCard_dot_usedByLabel": {
+    "context": "GiftCardUpdateInfoCard used by label",
+    "string": "Used by"
+  },
+  "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardUpdatePageHeader_dot_disableLabel": {
+    "context": "GiftCardEnableDisableSection enable label",
+    "string": "Disable"
+  },
+  "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardUpdatePageHeader_dot_enableLabel": {
+    "context": "GiftCardEnableDisableSection enable label",
+    "string": "Enable"
+  },
+  "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardUpdatePageHeader_dot_successfullyDisabledTitle": {
+    "context": "GiftCardEnableDisableSection disable success",
+    "string": "Successfully disabled gift card"
+  },
+  "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardUpdatePageHeader_dot_successfullyEnabledTitle": {
+    "context": "GiftCardEnableDisableSection enable success",
+    "string": "Successfully enabled gift card"
+  },
+  "src_dot_giftCards_dot_GiftCardUpdate_dot_title": {
+    "context": "GiftCardUpdateDetailsCard title",
+    "string": "Details"
+  },
+  "src_dot_giftCards_dot_GiftCardsList_dot_bulkIssue": {
+    "context": "GiftCardsListHeader menu item settings",
+    "string": "Bulk Issue"
+  },
+  "src_dot_giftCards_dot_GiftCardsList_dot_codeEndingWithLabel": {
+    "context": "GiftCardsListTable code ending with label",
+    "string": "Code ending with {displayCode}"
+  },
+  "src_dot_giftCards_dot_GiftCardsList_dot_exportCodes": {
+    "context": "GiftCardsListHeader menu item settings",
+    "string": "Export card codes"
+  },
+  "src_dot_giftCards_dot_GiftCardsList_dot_giftCardDisabledLabel": {
+    "context": "GiftCardsListTable disabled label",
+    "string": "Disabled"
+  },
+  "src_dot_giftCards_dot_GiftCardsList_dot_giftCardsTableColumnBalanceTitle": {
+    "context": "GiftCardsListTable column title balance",
+    "string": "Balance"
+  },
+  "src_dot_giftCards_dot_GiftCardsList_dot_giftCardsTableColumnCustomerTitle": {
+    "context": "GiftCardsListTable column title customer",
+    "string": "Used by"
+  },
+  "src_dot_giftCards_dot_GiftCardsList_dot_giftCardsTableColumnGiftCardTitle": {
+    "context": "GiftCardsListTable column title gift card",
+    "string": "Gift Card"
+  },
+  "src_dot_giftCards_dot_GiftCardsList_dot_giftCardsTableColumnProductTitle": {
+    "context": "GiftCardsListTable column title product",
+    "string": "Product"
+  },
+  "src_dot_giftCards_dot_GiftCardsList_dot_giftCardsTableColumnTagTitle": {
+    "context": "GiftCardsListTable column title tag",
+    "string": "Tag"
+  },
+  "src_dot_giftCards_dot_GiftCardsList_dot_issueButtonLabel": {
+    "context": "GiftCardsListHeader issue button label",
+    "string": "Issue card"
+  },
+  "src_dot_giftCards_dot_GiftCardsList_dot_noGiftCardsFound": {
+    "context": "GiftCardsListTable no cards found title",
+    "string": "No gift cards found"
+  },
+  "src_dot_giftCards_dot_GiftCardsList_dot_settings": {
+    "context": "GiftCardsListHeader menu item settings",
+    "string": "Settings"
+  },
+  "src_dot_giftCards_dot_components_dot_GiftCardExpirySelect_dot_expirationDateLabel": {
+    "context": "GiftCarUpdateDetailsExpirySection expiration date label",
+    "string": "Expiration date"
+  },
+  "src_dot_giftCards_dot_components_dot_GiftCardExpirySelect_dot_expiryDateLabel": {
+    "context": "GiftCarUpdateDetailsExpirySection expiry date label",
+    "string": "Expiration date"
+  },
+  "src_dot_giftCards_dot_components_dot_GiftCardExpirySelect_dot_expiryPeriodLabel": {
+    "context": "GiftCarUpdateDetailsExpirySection expiry period label",
+    "string": "Expiry period"
+  },
+  "src_dot_giftCards_dot_components_dot_GiftCardExpirySelect_dot_neverExpireLabel": {
+    "context": "GiftCarUpdateDetailsExpirySection never expire label",
+    "string": "Never expire"
+  },
+  "src_dot_giftCards_dot_components_dot_GiftCardTagInput_dot_label": {
+    "context": "GiftCardTagInput tag label",
+    "string": "Card Tag"
+  },
+  "src_dot_giftCards_dot_components_dot_GiftCardTagInput_dot_placeholder": {
+    "context": "GiftCardTagInput tag placeholder",
+    "string": "Tag"
+  },
+  "src_dot_giftCards_dot_components_dot_TimePeriodField_dot_dayLabel": {
+    "context": "TimePeriodTextWithSelectField day label",
+    "string": "days after usage"
+  },
+  "src_dot_giftCards_dot_components_dot_TimePeriodField_dot_monthLabel": {
+    "context": "TimePeriodTextWithSelectField month label",
+    "string": "months after usage"
+  },
+  "src_dot_giftCards_dot_components_dot_TimePeriodField_dot_yearLabel": {
+    "context": "TimePeriodTextWithSelectField year label",
+    "string": "years after usage"
   },
   "src_dot_home": {
     "context": "home section name",
@@ -5231,18 +5458,6 @@
     "context": "products section name",
     "string": "Products"
   },
-  "src_dot_products_dot_components_dot_ProductAvailabilityStatusLabel_dot_published": {
-    "context": "product publication date",
-    "string": "Published on {date}"
-  },
-  "src_dot_products_dot_components_dot_ProductAvailabilityStatusLabel_dot_unpublished": {
-    "context": "product publication date",
-    "string": "Unpublished"
-  },
-  "src_dot_products_dot_components_dot_ProductAvailabilityStatusLabel_dot_willBePublished": {
-    "context": "product publication date",
-    "string": "Becomes published on {date}"
-  },
   "src_dot_products_dot_components_dot_ProductCategoryAndCollectionsForm_dot_1755013298": {
     "string": "Category"
   },
@@ -5465,6 +5680,18 @@
   "src_dot_products_dot_components_dot_ProductList_dot_636461959": {
     "context": "product",
     "string": "Name"
+  },
+  "src_dot_products_dot_components_dot_ProductList_dot_published": {
+    "context": "product publication date",
+    "string": "Published on {date}"
+  },
+  "src_dot_products_dot_components_dot_ProductList_dot_unpublished": {
+    "context": "product publication date",
+    "string": "Unpublished"
+  },
+  "src_dot_products_dot_components_dot_ProductList_dot_willBePublished": {
+    "context": "product publication date",
+    "string": "Becomes published on {date}"
   },
   "src_dot_products_dot_components_dot_ProductMediaNavigation_dot_allMedia": {
     "context": "section header",
