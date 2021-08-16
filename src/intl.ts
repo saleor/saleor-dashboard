@@ -254,6 +254,10 @@ export const sectionNames = defineMessages({
     defaultMessage: "Exchange Rates",
     description: "Manage and Update your warehouse information"
   },
+  giftCards: {
+    defaultMessage: "Gift Cards",
+    description: "gift cards section name"
+  },
   home: {
     defaultMessage: "Home",
     description: "home section name"

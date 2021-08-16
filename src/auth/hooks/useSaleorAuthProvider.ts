@@ -2,7 +2,7 @@ import { DEMO_MODE } from "@saleor/config";
 import { User } from "@saleor/fragments/types/User";
 import { SetLocalStorage } from "@saleor/hooks/useLocalStorage";
 import { commonMessages } from "@saleor/intl";
-import { getMutationStatus } from "@saleor/misc";
+import { getFullName, getMutationStatus } from "@saleor/misc";
 import errorTracker from "@saleor/services/errorTracking";
 import {
   isSupported as isCredentialsManagementAPISupported,
@@ -66,11 +66,11 @@ export function useSaleorAuthProvider({
 
   useEffect(() => {
     if (!authPlugin && userContext) {
-      const { id, email, firstName, lastName } = userContext;
+      const { id, email } = userContext;
       errorTracker.setUserData({
         email,
         id,
-        username: `${firstName} ${lastName}`
+        username: getFullName(userContext)
       });
 
       if (!userContext.isStaff) {

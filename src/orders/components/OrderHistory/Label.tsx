@@ -1,12 +1,22 @@
 import { Typography } from "@material-ui/core";
 import React from "react";
 
-interface LabelProps {
-  text: string;
+export enum LabelSizes {
+  sm = 12,
+  md = 14
 }
 
-const Label: React.FC<LabelProps> = ({ text }) => (
-  <Typography variant="caption" color="textSecondary">
+interface LabelProps {
+  text: string;
+  size?: LabelSizes;
+}
+
+const Label: React.FC<LabelProps> = ({ text, size = 12 }) => (
+  <Typography
+    variant="caption"
+    color="textSecondary"
+    style={{ fontSize: LabelSizes[size] }}
+  >
     {text}
   </Typography>
 );
