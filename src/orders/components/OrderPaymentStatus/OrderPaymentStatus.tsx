@@ -40,6 +40,10 @@ const useStyles = makeStyles(
     tableCell: {
       height: 0,
       borderBottom: "none"
+    },
+    statusCell: {
+      display: "flex",
+      flexDirection: "row-reverse"
     }
   }),
   { name: "OrderPaymentStatus" }
@@ -106,7 +110,10 @@ const OrderPaymentStatus: React.FC<OrderPaymentStatusProps> = ({
                   <TableCellHeader className={classes.tableCellHeader}>
                     <FormattedMessage defaultMessage="Payment method" />
                   </TableCellHeader>
-                  <TableCellHeader className={classes.tableCellHeader}>
+                  <TableCellHeader
+                    textAlign="right"
+                    className={classes.tableCellHeader}
+                  >
                     <FormattedMessage defaultMessage="Status" />
                   </TableCellHeader>
                 </TableRow>
@@ -118,10 +125,12 @@ const OrderPaymentStatus: React.FC<OrderPaymentStatusProps> = ({
                       {payment.paymentMethodType}
                     </TableCell>
                     <TableCell className={classes.tableCell}>
-                      <StatusLabel
-                        status={payment.status.status}
-                        label={payment.status.localized}
-                      />
+                      <div className={classes.statusCell}>
+                        <StatusLabel
+                          status={payment.status.status}
+                          label={payment.status.localized}
+                        />
+                      </div>
                     </TableCell>
                   </TableRow>
                 ))}
