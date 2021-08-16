@@ -58,9 +58,9 @@ export function createFilterStructure(
         intl.formatMessage(commonMessages.channel),
         [opts.channel?.value],
         false,
-        opts.channel.choices
+        opts.channel?.choices
       ),
-      active: opts.channel.active
+      active: opts.channel?.active
     }
   ];
 }
