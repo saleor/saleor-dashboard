@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { GiftCardErrorCode, GiftCardExpiryTypeEnum, TimePeriodTypeEnum } from "../../../../types/globalTypes";
+import { GiftCardErrorCode, GiftCardExpiryTypeEnum, TimePeriodTypeEnum } from "./../../../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: GiftCardDeactivate

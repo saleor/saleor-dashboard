@@ -46,10 +46,11 @@ interface LimitInfo {
   key: keyof LimitInfoFragment;
   text: string;
 }
-interface PageHeaderProps {
+export interface PageHeaderProps {
   children?: React.ReactNode;
   className?: string;
   inline?: boolean;
+  underline?: boolean;
   limit?: LimitInfo;
   title?: React.ReactNode;
 }
@@ -61,7 +62,7 @@ function formatLimit(limit: LimitInfo): string {
 }
 
 const PageHeader: React.FC<PageHeaderProps> = props => {
-  const { children, className, inline, limit, title } = props;
+  const { children, className, inline, underline, limit, title } = props;
 
   const classes = useStyles(props);
 
@@ -70,6 +71,7 @@ const PageHeader: React.FC<PageHeaderProps> = props => {
       testId="page-header"
       className={className}
       inline={inline}
+      underline={underline}
       title={
         <Typography className={classes.title} variant="h5">
           {title !== undefined ? title : <Skeleton style={{ width: "10em" }} />}
