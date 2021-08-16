@@ -50,7 +50,9 @@ const useStyles = makeStyles(
       padding: 0
     },
     content: {
-      overflowY: "scroll"
+      overflowY: "scroll",
+      paddingTop: 0,
+      marginBottom: theme.spacing(3)
     },
     grayText: {
       color: theme.palette.text.disabled
@@ -63,7 +65,12 @@ const useStyles = makeStyles(
       marginTop: theme.spacing(3)
     },
     overflow: {
-      overflowY: "visible"
+      overflowY: "hidden"
+    },
+    topArea: {
+      overflowY: "hidden",
+      paddingBottom: theme.spacing(6),
+      margin: theme.spacing(0, 3, 3, 3)
     },
     productCheckboxCell: {
       "&:first-child": {
@@ -250,7 +257,7 @@ const OrderProductAddDialog: React.FC<OrderProductAddDialogProps> = props => {
           description="dialog header"
         />
       </DialogTitle>
-      <DialogContent className={classes.overflow} data-test-id="searchQuery">
+      <DialogContent className={classes.topArea} data-test-id="searchQuery">
         <TextField
           name="query"
           value={query}

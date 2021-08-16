@@ -19,7 +19,8 @@ const props: AttributesProps = {
   onReferencesRemove: () => undefined,
   onReferencesReorder: () => undefined,
   fetchAttributeValues: () => undefined,
-  fetchMoreAttributeValues: fetchMoreProps
+  fetchMoreAttributeValues: fetchMoreProps,
+  onAttributeSelectBlur: () => undefined
 };
 
 storiesOf("Attributes / Attributes", module)

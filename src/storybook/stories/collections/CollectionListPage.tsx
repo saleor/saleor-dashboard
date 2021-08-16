@@ -5,11 +5,14 @@ import React from "react";
 import CollectionListPage, {
   CollectionListPageProps
 } from "../../../collections/components/CollectionListPage";
-import { collections } from "../../../collections/fixtures";
 import {
+  collectionListFilterOpts,
+  collections
+} from "../../../collections/fixtures";
+import {
+  filterPageProps,
   listActionsProps,
   pageListProps,
-  searchPageProps,
   sortPageProps,
   tabPageProps
 } from "../../../fixtures";
@@ -18,7 +21,7 @@ import Decorator from "../../Decorator";
 const props: CollectionListPageProps = {
   ...listActionsProps,
   ...pageListProps.default,
-  ...searchPageProps,
+  ...filterPageProps,
   ...sortPageProps,
   channelsCount: 2,
   sort: {
@@ -27,7 +30,8 @@ const props: CollectionListPageProps = {
   },
   ...tabPageProps,
   collections,
-  selectedChannelId: "123"
+  selectedChannelId: "123",
+  filterOpts: collectionListFilterOpts
 };
 
 storiesOf("Views / Collections / Collection list", module)

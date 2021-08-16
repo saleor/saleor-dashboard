@@ -98,6 +98,7 @@ interface ProductVariantPageProps {
   onAssignReferencesClick: (attribute: AttributeInput) => void;
   onCloseDialog: () => void;
   onVariantReorder: ReorderAction;
+  onAttributeSelectBlur: () => void;
   onAdd();
   onBack();
   onDelete();
@@ -140,7 +141,8 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
   fetchMoreReferencePages,
   fetchMoreReferenceProducts,
   fetchMoreAttributeValues,
-  onCloseDialog
+  onCloseDialog,
+  onAttributeSelectBlur
 }) => {
   const intl = useIntl();
 
@@ -246,6 +248,7 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
                     onReferencesReorder={handlers.reorderAttributeValue}
                     fetchAttributeValues={fetchAttributeValues}
                     fetchMoreAttributeValues={fetchMoreAttributeValues}
+                    onAttributeSelectBlur={onAttributeSelectBlur}
                   />
                   <CardSpacer />
                   <Attributes
@@ -270,6 +273,7 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
                     onReferencesReorder={handlers.reorderAttributeValue}
                     fetchAttributeValues={fetchAttributeValues}
                     fetchMoreAttributeValues={fetchMoreAttributeValues}
+                    onAttributeSelectBlur={onAttributeSelectBlur}
                   />
                   <CardSpacer />
                   <ProductVariantMedia

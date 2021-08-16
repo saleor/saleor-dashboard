@@ -165,13 +165,14 @@ const FilterContent: React.FC<FilterContentProps> = ({
     filter: IFilterElement<string>
   ) {
     const switchToActive = action.payload.update.active;
-
     if (switchToActive && filter.name !== openedFilter?.name) {
       handleFilterAttributeFocus(filter);
     } else if (!switchToActive && filter.name === openedFilter?.name) {
       handleFilterAttributeFocus(undefined);
     }
-
+    if (!switchToActive) {
+      action.payload.update.value = [];
+    }
     onFilterPropertyChange(action);
   };
 
@@ -179,7 +180,6 @@ const FilterContent: React.FC<FilterContentProps> = ({
     action: FilterReducerAction<T>
   ) {
     const { update } = action.payload;
-
     onFilterPropertyChange({
       ...action,
       payload: { ...action.payload, update: { ...update, active: true } }
