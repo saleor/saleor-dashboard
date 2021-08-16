@@ -171,7 +171,7 @@ describe("Get refunded lines price sum", () => {
       id: "1",
       productName: "Milk 1",
       quantity: 1,
-      quantityFulfilled: 1,
+      quantityToFulfill: 0,
       thumbnail: undefined,
       unitPrice: {
         __typename: "TaxedMoney",
@@ -187,7 +187,7 @@ describe("Get refunded lines price sum", () => {
       id: "2",
       productName: "Milk 2",
       quantity: 2,
-      quantityFulfilled: 2,
+      quantityToFulfill: 0,
       thumbnail: undefined,
       unitPrice: {
         __typename: "TaxedMoney",
@@ -203,7 +203,7 @@ describe("Get refunded lines price sum", () => {
       id: "3",
       productName: "Milk 3",
       quantity: 4,
-      quantityFulfilled: 4,
+      quantityToFulfill: 0,
       thumbnail: undefined,
       unitPrice: {
         __typename: "TaxedMoney",

@@ -324,7 +324,7 @@ const orderRefundData = gql`
       }
       lines {
         ...RefundOrderLineFragment
-        quantityFulfilled
+        quantityToFulfill
       }
       fulfillments {
         id

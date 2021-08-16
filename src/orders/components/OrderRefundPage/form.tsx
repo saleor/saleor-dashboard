@@ -78,7 +78,7 @@ function useOrderRefundForm(
   const form = useForm(getOrderRefundPageFormData(defaultType));
   const refundedProductQuantities = useFormset<null, string>(
     order?.lines
-      .filter(line => line.quantityFulfilled !== line.quantity)
+      .filter(line => line.quantityToFulfill > 0)
       .map(line => ({
         data: null,
         id: line.id,
@@ -132,7 +132,7 @@ function useOrderRefundForm(
         data: null,
         id: line.id,
         label: null,
-        value: (line.quantity - line.quantityFulfilled).toString()
+        value: line.quantityToFulfill.toString()
       };
     });
     refundedProductQuantities.set(newQuantities);

@@ -52,7 +52,7 @@ const OrderRefundPage: React.FC<OrderRefundPageProps> = props => {
   const intl = useIntl();
 
   const unfulfilledLines = order?.lines.filter(
-    line => line.quantity !== line.quantityFulfilled
+    line => line.quantityToFulfill > 0
   );
 
   const fulfilledFulfillemnts =
