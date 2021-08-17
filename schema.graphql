@@ -2380,7 +2380,7 @@ input GiftCardUpdateInput {
   tag: String
   startDate: Date
   endDate: Date
-  balanceAmount: PositiveDecimal
+  balance: PriceInput
   expirySettings: GiftCardExpirySettingsInput
 }
 
