@@ -30,7 +30,7 @@ import WarehouseSettings from "../WarehouseSettings";
 
 export interface WarehouseDetailsPageFormData extends AddressTypeInput {
   name: string;
-  isPrivate: string;
+  isPrivate: boolean;
   clickAndCollectOption: WarehouseClickAndCollectOptionEnum;
 }
 export interface WarehouseDetailsPageProps {
@@ -72,7 +72,7 @@ const WarehouseDetailsPage: React.FC<WarehouseDetailsPageProps> = ({
     country: maybe(() =>
       findValueInEnum(warehouse.address.country.code, CountryCode)
     ),
-    isPrivate: (!!warehouse?.isPrivate).toString(),
+    isPrivate: !!warehouse?.isPrivate,
     clickAndCollectOption:
       warehouse?.clickAndCollectOption ||
       WarehouseClickAndCollectOptionEnum.DISABLED,

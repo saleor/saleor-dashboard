@@ -95,7 +95,7 @@ const WarehouseDetails: React.FC<WarehouseDetailsProps> = ({ id, params }) => {
             streetAddress2: data.streetAddress2
           },
           name: data.name,
-          isPrivate: data.isPrivate.toString() === "true",
+          isPrivate: data.isPrivate,
           clickAndCollectOption: data.clickAndCollectOption
         }
       }

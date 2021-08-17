@@ -15,6 +15,7 @@ import {
   OrderStatus
 } from "../../../types/globalTypes";
 import { OrderDetails_order } from "../../types/OrderDetails";
+import messages from "./messages";
 
 const useStyles = makeStyles(
   theme => ({
@@ -63,6 +64,28 @@ const OrderPayment: React.FC<OrderPaymentProps> = props => {
     order?.totalCaptured &&
     order?.total?.gross &&
     subtractMoney(order.totalCaptured, order.total.gross);
+
+  const getDeliveryMethodName = order => {
+    if (
+      order?.shippingMethodName === undefined &&
+      order?.shippingPrice === undefined &&
+      order?.collectionPointName === undefined
+    ) {
+      return <Skeleton />;
+    }
+
+    if (order.shippingMethodName === null) {
+      return order.collectionPointName == null ? (
+        <FormattedMessage {...messages.orderPaymentShippingDoesNotApply} />
+      ) : (
+        <FormattedMessage
+          {...messages.orderPaymentClickAndCollectShippingMethod}
+        />
+      );
+    }
+    return order.shippingMethodName;
+  };
+
   return (
     <Card>
       <CardTitle
@@ -142,29 +165,7 @@ const OrderPayment: React.FC<OrderPaymentProps> = props => {
                   description="order shipping method name"
                 />
               </td>
-              <td>
-                {order?.shippingMethodName === undefined &&
-                order?.shippingPrice === undefined &&
-                order?.collectionPointName === undefined ? (
-                  <Skeleton />
-                ) : order.shippingMethodName === null ? (
-                  order.collectionPointName === null ? (
-                    intl.formatMessage({
-                      defaultMessage: "does not apply",
-                      description: "order does not require shipping",
-                      id: "orderPaymentShippingDoesNotApply"
-                    })
-                  ) : (
-                    intl.formatMessage({
-                      defaultMessage: "click&collect",
-                      description: "order will be picked up by customer",
-                      id: "orderPaymentClickAndCollectShippingMethod"
-                    })
-                  )
-                ) : (
-                  order.shippingMethodName
-                )}
-              </td>
+              <td>{getDeliveryMethodName(order)}</td>
               <td className={classes.textRight}>
                 {maybe(() => order.shippingPrice.gross) === undefined ? (
                   <Skeleton />
