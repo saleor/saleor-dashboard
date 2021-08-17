@@ -46,12 +46,17 @@ const useStyles = makeStyles(
     checkboxCell: {
       paddingLeft: 0
     },
-    container: {
-      maxHeight: 400
-    },
     heading: {
       marginBottom: theme.spacing(2),
       marginTop: theme.spacing(2)
+    },
+    container: {
+      padding: theme.spacing(1.25, 0)
+    },
+    scrollAreaContainer: {
+      maxHeight: 400,
+      padding: theme.spacing(1.25, 0),
+      marginBottom: theme.spacing(3)
     },
     table: {
       border: "1px solid " + theme.palette.grey[200]
@@ -161,6 +166,9 @@ const ShippingZoneCountriesAssignDialog: React.FC<ShippingZoneCountriesAssignDia
                     description="country selection"
                   />
                 </Typography>
+              </DialogContent>
+
+              <DialogContent className={classes.scrollAreaContainer}>
                 <ResponsiveTable className={classes.table}>
                   <TableBody>
                     {filter(countries, data.query, {

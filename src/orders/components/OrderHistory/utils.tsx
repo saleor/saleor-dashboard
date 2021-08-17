@@ -1,3 +1,4 @@
+import { getFullName } from "@saleor/misc";
 import {
   OrderDetails_order_events,
   OrderDetails_order_events_user
@@ -75,7 +76,7 @@ const selectEmployeeName = ({
   email
 }: OrderDetails_order_events_user) => {
   if (!!firstName) {
-    return `${firstName} ${lastName}`.trim();
+    return getFullName({ firstName, lastName }).trim();
   }
 
   return email;
@@ -109,13 +110,21 @@ export const getOrderNumberLink = (event: OrderDetails_order_events) => {
 
   const { id, number } = event.relatedOrder;
 
-  return {
-    link: orderUrl(id),
-    text: `#${number}`
-  };
+  return getOrderNumberLinkObject({ id, number });
 };
 
 const hasEnsuredOrderEventFields = (
   event,
   fields: Array<keyof OrderDetails_order_events>
 ) => !fields.some((field: keyof OrderDetails_order_events) => !event[field]);
+
+export const getOrderNumberLinkObject = ({
+  id,
+  number
+}: {
+  id: string;
+  number: string;
+}) => ({
+  link: orderUrl(id),
+  text: `#${number}`
+});

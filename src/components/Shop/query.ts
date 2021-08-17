@@ -13,6 +13,7 @@ const shopInfo = gql`
         country
         code
       }
+      channelCurrencies
       defaultCountry {
         code
         country

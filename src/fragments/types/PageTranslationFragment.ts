@@ -34,8 +34,37 @@ export interface PageTranslationFragment_translation {
   language: PageTranslationFragment_translation_language;
 }
 
+export interface PageTranslationFragment_attributeValues_attributeValue {
+  __typename: "AttributeValue";
+  id: string;
+}
+
+export interface PageTranslationFragment_attributeValues_translation_language {
+  __typename: "LanguageDisplay";
+  code: LanguageCodeEnum;
+  language: string;
+}
+
+export interface PageTranslationFragment_attributeValues_translation {
+  __typename: "AttributeValueTranslation";
+  id: string;
+  name: string;
+  richText: any | null;
+  language: PageTranslationFragment_attributeValues_translation_language;
+}
+
+export interface PageTranslationFragment_attributeValues {
+  __typename: "AttributeValueTranslatableContent";
+  id: string;
+  name: string;
+  richText: any | null;
+  attributeValue: PageTranslationFragment_attributeValues_attributeValue | null;
+  translation: PageTranslationFragment_attributeValues_translation | null;
+}
+
 export interface PageTranslationFragment {
   __typename: "PageTranslatableContent";
   page: PageTranslationFragment_page | null;
   translation: PageTranslationFragment_translation | null;
+  attributeValues: PageTranslationFragment_attributeValues[];
 }

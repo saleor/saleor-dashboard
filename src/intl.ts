@@ -11,6 +11,9 @@ export const commonMessages = defineMessages({
     defaultMessage: "Choose file",
     description: "button"
   },
+  channel: {
+    defaultMessage: "Channel"
+  },
   customApps: {
     defaultMessage: "Local Apps"
   },
@@ -98,6 +101,9 @@ export const commonMessages = defineMessages({
   },
   summary: {
     defaultMessage: "Summary"
+  },
+  translationAttributes: {
+    defaultMessage: "Attributes"
   },
   unauthorizedDashboardAccess: {
     defaultMessage: "Only staff users can access the dashboard"
@@ -247,6 +253,10 @@ export const sectionNames = defineMessages({
   exchangeRates: {
     defaultMessage: "Exchange Rates",
     description: "Manage and Update your warehouse information"
+  },
+  giftCards: {
+    defaultMessage: "Gift Cards",
+    description: "gift cards section name"
   },
   home: {
     defaultMessage: "Home",

@@ -46,11 +46,16 @@ const useStyles = makeStyles(
     checkboxCell: {
       paddingLeft: 0
     },
+    containerTitle: {
+      padding: theme.spacing(1.25, 0)
+    },
     container: {
-      maxHeight: 500
+      maxHeight: 500,
+      paddingTop: 0,
+      marginBottom: theme.spacing(3)
     },
     heading: {
-      marginBottom: theme.spacing(2),
+      marginBottom: theme.spacing(1),
       marginTop: theme.spacing(2)
     },
     wideCell: {
@@ -117,13 +122,16 @@ const DiscountCountrySelectDialog: React.FC<DiscountCountrySelectDialogProps> = 
                 />
               </DialogContent>
               <Hr />
-              <DialogContent className={classes.container}>
+
+              <DialogContent className={classes.containerTitle}>
                 <Typography className={classes.heading} variant="subtitle1">
                   <FormattedMessage
                     defaultMessage="Countries A to Z"
                     description="country selection"
                   />
                 </Typography>
+              </DialogContent>
+              <DialogContent className={classes.container}>
                 <ResponsiveTable>
                   <TableBody>
                     {filter(countries, data.query, {

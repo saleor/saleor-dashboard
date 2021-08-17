@@ -2,7 +2,7 @@ import { DEMO_MODE } from "@saleor/config";
 import { User } from "@saleor/fragments/types/User";
 import { SetLocalStorage } from "@saleor/hooks/useLocalStorage";
 import { commonMessages } from "@saleor/intl";
-import { getMutationStatus } from "@saleor/misc";
+import { getFullName, getMutationStatus } from "@saleor/misc";
 import errorTracker from "@saleor/services/errorTracking";
 import { useEffect, useRef, useState } from "react";
 import { useMutation } from "react-apollo";
@@ -88,11 +88,11 @@ export function useExternalAuthProvider({
 
   useEffect(() => {
     if (authPlugin && userContext) {
-      const { id, email, firstName, lastName } = userContext;
+      const { id, email } = userContext;
       errorTracker.setUserData({
         email,
         id,
-        username: `${firstName} ${lastName}`
+        username: getFullName(userContext)
       });
 
       if (!userContext.isStaff) {

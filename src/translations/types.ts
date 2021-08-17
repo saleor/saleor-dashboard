@@ -2,6 +2,31 @@ import { OutputData } from "@editorjs/editorjs";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
 import { ShopInfo_shop_languages } from "@saleor/components/Shop/types/ShopInfo";
 
+export enum TranslationInputFieldName {
+  description = "description",
+  name = "name",
+  seoDescription = "seoDescription",
+  seoTitle = "seoTitle",
+  richText = "richText"
+}
+
+export enum PageTranslationInputFieldName {
+  content = "content",
+  title = "title",
+  seoDescription = "seoDescription",
+  seoTitle = "seoTitle",
+  richText = "richText"
+}
+
+export interface TranslationField<T extends string = string> {
+  id?: string;
+  displayName: string;
+  name: T;
+  translation: string;
+  type: "short" | "long" | "rich";
+  value: string;
+}
+
 export interface TranslationsEntitiesPageProps {
   activeField: string;
   disabled: boolean;
@@ -12,19 +37,5 @@ export interface TranslationsEntitiesPageProps {
   onEdit: (field: string) => void;
   onDiscard: () => void;
   onLanguageChange: (lang: string) => void;
-  onSubmit: (field: string, data: string | OutputData) => void;
-}
-
-export enum TranslationInputFieldName {
-  description = "description",
-  name = "name",
-  seoDescription = "seoDescription",
-  seoTitle = "seoTitle"
-}
-
-export enum PageTranslationInputFieldName {
-  content = "content",
-  title = "title",
-  seoDescription = "seoDescription",
-  seoTitle = "seoTitle"
+  onSubmit: (field: TranslationField, data: string | OutputData) => void;
 }

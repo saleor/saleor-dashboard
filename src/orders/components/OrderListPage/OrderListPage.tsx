@@ -2,18 +2,18 @@ import { Button, Card } from "@material-ui/core";
 import CardMenu from "@saleor/components/CardMenu";
 import Container from "@saleor/components/Container";
 import FilterBar from "@saleor/components/FilterBar";
-import LimitReachedAlert from "@saleor/components/LimitReachedAlert";
 import PageHeader from "@saleor/components/PageHeader";
 import { RefreshLimits_shop_limits } from "@saleor/components/Shop/types/RefreshLimits";
 import { sectionNames } from "@saleor/intl";
 import { makeStyles } from "@saleor/macaw-ui";
 import { OrderListUrlSortField } from "@saleor/orders/urls";
 import { FilterPageProps, PageListProps, SortPage } from "@saleor/types";
-import { isLimitReached } from "@saleor/utils/limits";
+import { hasLimits, isLimitReached } from "@saleor/utils/limits";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { OrderList_orders_edges_node } from "../../types/OrderList";
+import OrderLimitReached from "../OrderLimitReached";
 import OrderList from "../OrderList";
 import {
   createFilterStructure,
@@ -58,10 +58,26 @@ const OrderListPage: React.FC<OrderListPageProps> = ({
   const intl = useIntl();
   const classes = useStyles({});
   const filterStructure = createFilterStructure(intl, filterOpts);
+  const limitsReached = isLimitReached(limits, "orders");
 
   return (
     <Container>
-      <PageHeader title={intl.formatMessage(sectionNames.orders)}>
+      <PageHeader
+        title={intl.formatMessage(sectionNames.orders)}
+        limitText={
+          hasLimits(limits, "orders") &&
+          intl.formatMessage(
+            {
+              defaultMessage: "{count}/{max} orders",
+              description: "placed order counter"
+            },
+            {
+              count: limits.currentUsage.orders,
+              max: limits.allowedUsage.orders
+            }
+          )
+        }
+      >
         {!!onSettingsOpen && (
           <CardMenu
             className={classes.settings}
@@ -77,6 +93,7 @@ const OrderListPage: React.FC<OrderListPageProps> = ({
           />
         )}
         <Button
+          disabled={limitsReached}
           color="primary"
           variant="contained"
           onClick={onAdd}
@@ -88,16 +105,7 @@ const OrderListPage: React.FC<OrderListPageProps> = ({
           />
         </Button>
       </PageHeader>
-      {isLimitReached(limits, "orders") && (
-        <LimitReachedAlert
-          title={intl.formatMessage({
-            defaultMessage: "Order limit reached",
-            description: "alert"
-          })}
-        >
-          <FormattedMessage defaultMessage="You have reached your order limit, you will be billed extra for orders above limit. If you would like to up your limit, contact your administration staff about raising your limits." />
-        </LimitReachedAlert>
-      )}
+      {limitsReached && <OrderLimitReached />}
       <Card>
         <FilterBar
           currentTab={currentTab}
