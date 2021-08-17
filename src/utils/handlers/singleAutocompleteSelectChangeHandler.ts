@@ -1,6 +1,12 @@
 import { SingleAutocompleteChoiceType } from "@saleor/components/SingleAutocompleteSelectField";
 import { FormChange } from "@saleor/hooks/useForm";
 
+export interface SingleAutocompleteSelectedChangeHandlerProps {
+  change: FormChange;
+  setSelected: (value: string) => void;
+  choices: SingleAutocompleteChoiceType[];
+}
+
 function createSingleAutocompleteSelectHandler(
   change: FormChange,
   setSelected: (value: string) => void,

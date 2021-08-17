@@ -1,3 +1,4 @@
+import { ThemeType } from "@saleor/macaw-ui";
 import moment from "moment-timezone";
 import { MutationFunction, MutationResult } from "react-apollo";
 import { defineMessages, IntlShape } from "react-intl";
@@ -428,8 +429,11 @@ export function transformFormToAddressInput<T>(
   };
 }
 
-export function getStringOrPlaceholder(s: string | undefined): string {
-  return s || "...";
+export function getStringOrPlaceholder(
+  s: string | undefined,
+  placeholder?: string
+): string {
+  return s || placeholder || "...";
 }
 
 export const getDatePeriod = (days: number): DateRangeInput => {
@@ -447,6 +451,8 @@ export const getDatePeriod = (days: number): DateRangeInput => {
   };
 };
 
+export const isDarkTheme = (themeType: ThemeType) => themeType === "dark";
+
 export const transformAddressToAddressInput = (data?: AddressType) => ({
   city: data?.city || "",
   cityArea: data?.cityArea || "",
@@ -460,3 +466,13 @@ export const transformAddressToAddressInput = (data?: AddressType) => ({
   streetAddress1: data?.streetAddress1 || "",
   streetAddress2: data?.streetAddress2 || ""
 });
+
+export function getFullName<T extends { firstName: string; lastName: string }>(
+  data: T
+) {
+  if (!data || !data.firstName || !data.lastName) {
+    return "";
+  }
+
+  return `${data.firstName} ${data.lastName}`;
+}

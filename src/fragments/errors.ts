@@ -215,3 +215,10 @@ export const uploadErrorFragment = gql`
     field
   }
 `;
+
+export const giftCardErrorFragment = gql`
+  fragment GiftCardError on GiftCardError {
+    code
+    field
+  }
+`;

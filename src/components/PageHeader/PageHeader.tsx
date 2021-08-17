@@ -30,9 +30,10 @@ const useStyles = makeStyles(
         marginTop: theme.spacing(2),
         padding: 0
       },
+      fontWeight: 700,
       alignSelf: "flex-start",
       flex: 1,
-      fontSize: 24
+      fontSize: 48
     }
   }),
   { name: "PageHeader" }
