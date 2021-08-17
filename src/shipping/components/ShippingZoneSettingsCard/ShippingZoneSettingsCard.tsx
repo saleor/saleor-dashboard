@@ -52,38 +52,28 @@ export const ShippingZoneSettingsCard: React.FC<ShippingZoneSettingsCardProps> =
   return (
     <Card>
       <CardTitle title={intl.formatMessage(messages.title)} />
-      {loading && (
-        <CardContent>
-          <Skeleton />
-        </CardContent>
-      )}
-
-      {!loading && (
-        <>
-          <CardContent>
-            <ChannelsSection
-              channelsDisplayValues={channelsDisplayValues}
-              onChange={onChannelChange}
-              allChannels={allChannels}
-              selectedChannels={formData.channels}
-            />
-          </CardContent>
-          <Divider />
-          <CardContent>
-            <WarehousesSection
-              onAdd={onWarehouseAdd}
-              onSearchChange={onWarehousesSearchChange}
-              onChange={onWarehouseChange}
-              onFetchMore={onFetchMoreWarehouses}
-              displayValues={warehousesDisplayValues}
-              choices={warehousesChoices}
-              selectedWarehouses={formData.warehouses}
-              hasMore={hasMoreWarehouses}
-              loading={false}
-            />
-          </CardContent>
-        </>
-      )}
+      <CardContent>
+        <ChannelsSection
+          channelsDisplayValues={channelsDisplayValues}
+          onChange={onChannelChange}
+          allChannels={allChannels}
+          selectedChannels={formData.channels}
+        />
+      </CardContent>
+      <Divider />
+      <CardContent>
+        <WarehousesSection
+          onAdd={onWarehouseAdd}
+          onSearchChange={onWarehousesSearchChange}
+          onChange={onWarehouseChange}
+          onFetchMore={onFetchMoreWarehouses}
+          displayValues={warehousesDisplayValues}
+          choices={warehousesChoices}
+          selectedWarehouses={formData.warehouses}
+          hasMore={hasMoreWarehouses}
+          loading={loading}
+        />
+      </CardContent>
     </Card>
   );
 };
