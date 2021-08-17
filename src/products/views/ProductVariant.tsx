@@ -25,7 +25,7 @@ import { useProductVariantChannelListingUpdate } from "@saleor/products/mutation
 import { ProductVariantDetails_productVariant } from "@saleor/products/types/ProductVariantDetails";
 import usePageSearch from "@saleor/searches/usePageSearch";
 import useProductSearch from "@saleor/searches/useProductSearch";
-import createAttributeValueSearchHandler from "@saleor/utils/handlers/attributeValueSearchHandler";
+import useAttributeValueSearchHandler from "@saleor/utils/handlers/attributeValueSearchHandler";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import createMetadataUpdateHandler from "@saleor/utils/handlers/metadataUpdateHandler";
 import { mapEdgesToItems } from "@saleor/utils/maps";
@@ -303,8 +303,9 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
   const {
     loadMore: loadMoreAttributeValues,
     search: searchAttributeValues,
-    result: searchAttributeValuesOpts
-  } = createAttributeValueSearchHandler(DEFAULT_INITIAL_SEARCH_DATA);
+    result: searchAttributeValuesOpts,
+    reset: searchAttributeReset
+  } = useAttributeValueSearchHandler(DEFAULT_INITIAL_SEARCH_DATA);
 
   const fetchMoreReferencePages = {
     hasMore: searchPagesOpts.data?.search?.pageInfo?.hasNextPage,
@@ -376,6 +377,7 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
         onCloseDialog={() =>
           navigate(productVariantEditUrl(productId, variantId))
         }
+        onAttributeSelectBlur={searchAttributeReset}
       />
       <ProductVariantDeleteDialog
         confirmButtonState={deleteVariantOpts.status}

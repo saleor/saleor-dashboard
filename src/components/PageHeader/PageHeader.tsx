@@ -1,10 +1,8 @@
 import { Typography } from "@material-ui/core";
-import { LimitInfoFragment } from "@saleor/fragments/types/LimitInfoFragment";
 import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 
 import ExtendedPageHeader from "../ExtendedPageHeader";
-import { RefreshLimits_shop_limits } from "../Shop/types/RefreshLimits";
 import Skeleton from "../Skeleton";
 
 const useStyles = makeStyles(
@@ -41,27 +39,16 @@ const useStyles = makeStyles(
   { name: "PageHeader" }
 );
 
-interface LimitInfo {
-  data: RefreshLimits_shop_limits;
-  key: keyof LimitInfoFragment;
-  text: string;
-}
 interface PageHeaderProps {
   children?: React.ReactNode;
   className?: string;
   inline?: boolean;
-  limit?: LimitInfo;
+  limitText?: string;
   title?: React.ReactNode;
 }
 
-function formatLimit(limit: LimitInfo): string {
-  return `${limit.data.currentUsage[limit.key]}/${
-    limit.data.allowedUsage[limit.key]
-  } ${limit.text}`;
-}
-
 const PageHeader: React.FC<PageHeaderProps> = props => {
-  const { children, className, inline, limit, title } = props;
+  const { children, className, inline, limitText, title } = props;
 
   const classes = useStyles(props);
 
@@ -77,9 +64,9 @@ const PageHeader: React.FC<PageHeaderProps> = props => {
       }
     >
       <div className={classes.root}>
-        {limit && (
+        {limitText && (
           <Typography className={classes.limit} color="textSecondary">
-            {formatLimit(limit)}
+            {limitText}
           </Typography>
         )}
         {children}

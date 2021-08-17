@@ -5,9 +5,9 @@ import {
   ProductTypeEnum
 } from "@saleor/types/globalTypes";
 import { getFilterQueryParams } from "@saleor/utils/filters";
+import { stringifyQs } from "@saleor/utils/urls";
 import { getExistingKeys, setFilterOptsStatus } from "@test/filters";
 import { config } from "@test/intl";
-import { stringify as stringifyQs } from "qs";
 import { createIntl } from "react-intl";
 
 import { getFilterQueryParam, getFilterVariables } from "./filters";

@@ -16,6 +16,8 @@ export const attributeValueFragment = gql`
     reference
     richText
     boolean
+    date
+    dateTime
   }
 `;
 

@@ -65,12 +65,18 @@ export const WarehouseListPage: React.FC<WarehouseListPageProps> = ({
       </Backlink>
       <PageHeader
         title={intl.formatMessage(sectionNames.warehouses)}
-        limit={
-          hasLimits(limits, "warehouses") && {
-            data: limits,
-            key: "warehouses",
-            text: "warehouses used"
-          }
+        limitText={
+          hasLimits(limits, "warehouses") &&
+          intl.formatMessage(
+            {
+              defaultMessage: "{count}/{max} warehouses used",
+              description: "used warehouses counter"
+            },
+            {
+              count: limits.currentUsage.warehouses,
+              max: limits.allowedUsage.warehouses
+            }
+          )
         }
       >
         <Button

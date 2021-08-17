@@ -6,7 +6,7 @@ import {
   Sort,
   TabActionDialog
 } from "@saleor/types";
-import { stringify as stringifyQs } from "qs";
+import { stringifyQs } from "@saleor/utils/urls";
 import urlJoin from "url-join";
 
 const permissionGroupSection = "/permission-groups/";

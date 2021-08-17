@@ -14,14 +14,18 @@ import React from "react";
 import { useIntl } from "react-intl";
 
 import { LanguageCodeEnum } from "../../../types/globalTypes";
+import ProductContextSwitcher from "../ProductContextSwitcher";
 import TranslationFields from "../TranslationFields";
 
 export interface TranslationsProductsPageProps
   extends TranslationsEntitiesPageProps {
   data: ProductTranslationFragment;
+  productId: string;
+  onAttributeValueSubmit: TranslationsEntitiesPageProps["onSubmit"];
 }
 
 const TranslationsProductsPage: React.FC<TranslationsProductsPageProps> = ({
+  productId,
   activeField,
   disabled,
   languageCode,
@@ -32,7 +36,8 @@ const TranslationsProductsPage: React.FC<TranslationsProductsPageProps> = ({
   onDiscard,
   onEdit,
   onLanguageChange,
-  onSubmit
+  onSubmit,
+  onAttributeValueSubmit
 }) => {
   const intl = useIntl();
 
@@ -54,6 +59,11 @@ const TranslationsProductsPage: React.FC<TranslationsProductsPageProps> = ({
           }
         )}
       >
+        <ProductContextSwitcher
+          languageCode={languageCode}
+          productId={productId}
+          selectedId={productId}
+        />
         <LanguageSwitch
           currentLanguage={LanguageCodeEnum[languageCode]}
           languages={languages}
@@ -86,6 +96,7 @@ const TranslationsProductsPage: React.FC<TranslationsProductsPageProps> = ({
           }
         ]}
         saveButtonState={saveButtonState}
+        richTextResetKey={languageCode}
         onEdit={onEdit}
         onDiscard={onDiscard}
         onSubmit={onSubmit}
@@ -119,10 +130,46 @@ const TranslationsProductsPage: React.FC<TranslationsProductsPageProps> = ({
           }
         ]}
         saveButtonState={saveButtonState}
+        richTextResetKey={languageCode}
         onEdit={onEdit}
         onDiscard={onDiscard}
         onSubmit={onSubmit}
       />
+      <CardSpacer />
+      {data?.attributeValues?.length > 0 && (
+        <>
+          <TranslationFields
+            activeField={activeField}
+            disabled={disabled}
+            initialState={true}
+            title={intl.formatMessage(commonMessages.translationAttributes)}
+            fields={
+              data.attributeValues.map((attrVal, i) => ({
+                id: attrVal.attributeValue.id,
+                displayName: intl.formatMessage(
+                  {
+                    defaultMessage: "Attribute {number}",
+                    description: "attribute list"
+                  },
+                  {
+                    number: i + 1
+                  }
+                ),
+                name: attrVal?.name,
+                translation: attrVal?.translation?.richText || null,
+                type: "rich" as "rich",
+                value: attrVal?.richText
+              })) || []
+            }
+            saveButtonState={saveButtonState}
+            richTextResetKey={languageCode}
+            onEdit={onEdit}
+            onDiscard={onDiscard}
+            onSubmit={onAttributeValueSubmit}
+          />
+          <CardSpacer />
+        </>
+      )}
     </Container>
   );
 };

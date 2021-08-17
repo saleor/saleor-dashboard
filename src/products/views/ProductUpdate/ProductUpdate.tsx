@@ -27,7 +27,8 @@ import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import useOnSetDefaultVariant from "@saleor/hooks/useOnSetDefaultVariant";
 import useShop from "@saleor/hooks/useShop";
-import { commonMessages } from "@saleor/intl";
+import { commonMessages, errorMessages } from "@saleor/intl";
+import ProductVariantCreateDialog from "@saleor/products/components/ProductVariantCreateDialog";
 import {
   useProductChannelListingUpdate,
   useProductDeleteMutation,
@@ -46,7 +47,7 @@ import useCollectionSearch from "@saleor/searches/useCollectionSearch";
 import usePageSearch from "@saleor/searches/usePageSearch";
 import useProductSearch from "@saleor/searches/useProductSearch";
 import { getProductErrorMessage } from "@saleor/utils/errors";
-import createAttributeValueSearchHandler from "@saleor/utils/handlers/attributeValueSearchHandler";
+import useAttributeValueSearchHandler from "@saleor/utils/handlers/attributeValueSearchHandler";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import createMetadataUpdateHandler from "@saleor/utils/handlers/metadataUpdateHandler";
 import { mapEdgesToItems } from "@saleor/utils/maps";
@@ -147,8 +148,9 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
   const {
     loadMore: loadMoreAttributeValues,
     search: searchAttributeValues,
-    result: searchAttributeValuesOpts
-  } = createAttributeValueSearchHandler(DEFAULT_INITIAL_SEARCH_DATA);
+    result: searchAttributeValuesOpts,
+    reset: searchAttributeReset
+  } = useAttributeValueSearchHandler(DEFAULT_INITIAL_SEARCH_DATA);
   const warehouses = useWarehouseList({
     displayLoader: true,
     variables: {
@@ -163,7 +165,7 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
     productVariantCreateOpts
   ] = useVariantCreateMutation({});
 
-  const { availableChannels, channel } = useAppChannel();
+  const { availableChannels, channel } = useAppChannel(false);
   const { data, loading, refetch } = useProductDetails({
     displayLoader: true,
     variables: {
@@ -225,7 +227,8 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
       if (imageError) {
         notify({
           status: "error",
-          text: intl.formatMessage(commonMessages.somethingWentWrong)
+          title: intl.formatMessage(errorMessages.imgageUploadErrorTitle),
+          text: intl.formatMessage(errorMessages.imageUploadErrorText)
         });
       }
     }
@@ -369,6 +372,7 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
     return <NotFoundPage onBack={handleBack} />;
   }
   const handleVariantAdd = () => navigate(productVariantAddUrl(id));
+  const handleVariantsAdd = () => navigate(productVariantCreatorUrl(id));
 
   const handleImageDelete = (id: string) => () =>
     deleteProductImage({ variables: { id } });
@@ -563,7 +567,7 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
         }}
         onWarehouseConfigure={() => navigate(warehouseAddPath)}
         onVariantAdd={handleVariantAdd}
-        onVariantsAdd={() => navigate(productVariantCreatorUrl(id))}
+        onVariantsAdd={() => openModal("add-variants")}
         onVariantShow={variantId => () =>
           navigate(productVariantEditUrl(product.id, variantId))}
         onVariantReorder={handleVariantReorder}
@@ -603,6 +607,7 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
         fetchMoreReferenceProducts={fetchMoreReferenceProducts}
         fetchMoreAttributeValues={fetchMoreAttributeValues}
         onCloseDialog={() => navigate(productUrl(id))}
+        onAttributeSelectBlur={searchAttributeReset}
       />
       <ActionDialog
         open={params.action === "remove"}
@@ -643,6 +648,13 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
           />
         </DialogContentText>
       </ActionDialog>
+      <ProductVariantCreateDialog
+        open={params.action === "add-variants"}
+        onClose={closeModal}
+        onConfirm={option =>
+          option === "multiple" ? handleVariantsAdd() : handleVariantAdd()
+        }
+      />
     </>
   );
 };

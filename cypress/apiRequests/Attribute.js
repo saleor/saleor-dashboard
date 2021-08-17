@@ -1,7 +1,8 @@
 export function createAttribute({
   name,
   attributeValues = ["value"],
-  type = "PRODUCT_TYPE"
+  type = "PRODUCT_TYPE",
+  inputType = "DROPDOWN"
 }) {
   const values = attributeValues.map(element => `{name:"${element}"}`);
   const mutation = `mutation{
@@ -10,6 +11,7 @@ export function createAttribute({
       valueRequired:false
       type:${type}
       values: [${values}]
+      inputType: ${inputType}
     }){
       attribute{
         id

@@ -1,5 +1,5 @@
 import { ChannelsAction } from "@saleor/channels/urls";
-import { stringify as stringifyQs } from "qs";
+import { stringifyQs } from "@saleor/utils/urls";
 import urlJoin from "url-join";
 
 import {
@@ -17,7 +17,8 @@ const collectionSectionUrl = "/collections/";
 export const collectionListPath = collectionSectionUrl;
 export enum CollectionListUrlFiltersEnum {
   status = "status",
-  query = "query"
+  query = "query",
+  channel = "channel"
 }
 export type CollectionListUrlFilters = Filters<CollectionListUrlFiltersEnum>;
 export type CollectionListUrlDialog = "remove" | TabActionDialog;

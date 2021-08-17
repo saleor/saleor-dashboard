@@ -13,7 +13,7 @@ const useStyles = makeStyles(
       "& table": {
         tableLayout: "auto"
       },
-      overflowX: "auto",
+      overflowX: "hidden",
       width: "100%"
     }
   }),

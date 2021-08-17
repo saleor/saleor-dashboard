@@ -44,6 +44,8 @@ export interface ProductVariant_selectionAttributes_attribute_choices_edges_node
   reference: string | null;
   richText: any | null;
   boolean: boolean | null;
+  date: any | null;
+  dateTime: any | null;
 }
 
 export interface ProductVariant_selectionAttributes_attribute_choices_edges {
@@ -85,6 +87,8 @@ export interface ProductVariant_selectionAttributes_values {
   reference: string | null;
   richText: any | null;
   boolean: boolean | null;
+  date: any | null;
+  dateTime: any | null;
 }
 
 export interface ProductVariant_selectionAttributes {
@@ -116,6 +120,8 @@ export interface ProductVariant_nonSelectionAttributes_attribute_choices_edges_n
   reference: string | null;
   richText: any | null;
   boolean: boolean | null;
+  date: any | null;
+  dateTime: any | null;
 }
 
 export interface ProductVariant_nonSelectionAttributes_attribute_choices_edges {
@@ -157,6 +163,8 @@ export interface ProductVariant_nonSelectionAttributes_values {
   reference: string | null;
   richText: any | null;
   boolean: boolean | null;
+  date: any | null;
+  dateTime: any | null;
 }
 
 export interface ProductVariant_nonSelectionAttributes {

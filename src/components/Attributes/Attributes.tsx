@@ -38,6 +38,7 @@ export interface AttributesProps extends AttributeRowHandlers {
   attributeValues: AttributeValueFragment[];
   fetchAttributeValues: (query: string, attributeId: string) => void;
   fetchMoreAttributeValues: FetchMoreProps;
+  onAttributeSelectBlur: () => void;
   disabled: boolean;
   loading: boolean;
   errors: Array<
@@ -117,6 +118,7 @@ const Attributes: React.FC<AttributesProps> = ({
   attributeValues,
   errors,
   title,
+  onAttributeSelectBlur,
   entityId = "_defaultId",
   ...props
 }) => {
@@ -168,6 +170,7 @@ const Attributes: React.FC<AttributesProps> = ({
                     attribute={attribute}
                     attributeValues={attributeValues}
                     error={error}
+                    onAttributeSelectBlur={onAttributeSelectBlur}
                     {...props}
                   />
                 </React.Fragment>
