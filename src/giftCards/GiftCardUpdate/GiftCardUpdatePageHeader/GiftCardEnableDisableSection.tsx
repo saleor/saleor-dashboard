@@ -6,6 +6,7 @@ import classNames from "classnames";
 import React, { useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 
+import { bulkEnableDisableSectionMessages as buttonMessages } from "../../GiftCardsList/GiftCardsListTable/GiftCardsListTableHeader/messages";
 import useGiftCardDetails from "../providers/GiftCardDetailsProvider/hooks/useGiftCardDetails";
 import { giftCardEnableDisableSectionMessages as messages } from "./messages";
 import {
@@ -82,7 +83,9 @@ const GiftCardEnableDisableSection: React.FC = () => {
       ? giftCardDeactivate({ variables: { id } })
       : giftCardActivate({ variables: { id } });
 
-  const buttonLabel = isActive ? messages.disableLabel : messages.enableLabel;
+  const buttonLabel = isActive
+    ? buttonMessages.disableLabel
+    : buttonMessages.enableLabel;
 
   const currentOpts = isActive ? giftCardDeactivateOpts : giftCardActivateOpts;
 

@@ -17,7 +17,7 @@ import { giftCardUpdatePageHeaderMessages as messages } from "./messages";
 const GiftCardUpdatePageHeader: React.FC = () => {
   const intl = useIntl();
   const { giftCard } = useGiftCardDetails();
-  const { navigateBack } = useGiftCardUpdateDialogs();
+  const { navigateBack, openResendCodeDialog } = useGiftCardUpdateDialogs();
 
   if (!giftCard) {
     return null;
