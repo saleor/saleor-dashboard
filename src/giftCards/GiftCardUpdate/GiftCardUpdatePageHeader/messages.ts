@@ -18,3 +18,10 @@ export const giftCardEnableDisableSectionMessages = defineMessages({
     description: "GiftCardEnableDisableSection disable success"
   }
 });
+
+export const giftCardUpdatePageHeaderMessages = defineMessages({
+  resendButtonLabel: {
+    defaultMessage: "Resend code",
+    description: "giftCardUpdatePageHeader resendButtonLabel"
+  }
+});
