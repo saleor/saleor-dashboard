@@ -2,7 +2,6 @@ import { Card, CardContent, Divider } from "@material-ui/core";
 import { BaseChannels_channels } from "@saleor/channels/types/BaseChannels";
 import CardTitle from "@saleor/components/CardTitle";
 import { MultiAutocompleteChoiceType } from "@saleor/components/MultiAutocompleteSelectField";
-import Skeleton from "@saleor/components/Skeleton";
 import { FormChange } from "@saleor/hooks/useForm";
 import React from "react";
 import { defineMessages, useIntl } from "react-intl";
