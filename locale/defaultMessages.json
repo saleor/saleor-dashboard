@@ -594,7 +594,7 @@
   },
   "src_dot_apps_dot_components_dot_AppDeleteDialog_dot_3817179919": {
     "context": "delete app",
-    "string": "Deleting {name}, you will remove installation of the app. If you are paying for app subscription, remember to unsubscribe from the app in Saleor Marketplace. Are you sure you want to delete the app?"
+    "string": "Deleting {name}, you will remove installation of the app. If you are paying for app subscription, remember to unsubscribe from the app in Store Marketplace. Are you sure you want to delete the app?"
   },
   "src_dot_apps_dot_components_dot_AppDetailsPage_dot_1782042241": {
     "context": "link",
@@ -658,7 +658,7 @@
   },
   "src_dot_apps_dot_components_dot_AppInProgressDeleteDialog_dot_3817179919": {
     "context": "delete app",
-    "string": "Deleting {name}, you will remove installation of the app. If you are paying for app subscription, remember to unsubscribe from the app in Saleor Marketplace. Are you sure you want to delete the app?"
+    "string": "Deleting {name}, you will remove installation of the app. If you are paying for app subscription, remember to unsubscribe from the app in Store Marketplace. Are you sure you want to delete the app?"
   },
   "src_dot_apps_dot_components_dot_AppInstallErrorPage_dot_1152717819": {
     "context": "title",
@@ -666,7 +666,7 @@
   },
   "src_dot_apps_dot_components_dot_AppInstallErrorPage_dot_1261716527": {
     "context": "content",
-    "string": "Saleor couldn’t fetch crucial information regarding installation. Without those System can’t install the app in your Saleor. Please use the button below to get back to system’s dashboard."
+    "string": "Store couldn’t fetch crucial information regarding installation. Without those System can’t install the app in your Store. Please use the button below to get back to system’s dashboard."
   },
   "src_dot_apps_dot_components_dot_AppInstallErrorPage_dot_3375237564": {
     "context": "button",
@@ -718,7 +718,7 @@
   },
   "src_dot_apps_dot_components_dot_CustomAppCreatePage_dot_3076071936": {
     "context": "card description",
-    "string": "Expand or restrict app permissions to access certain part of Saleor system."
+    "string": "Expand or restrict app permissions to access certain part of Store system."
   },
   "src_dot_apps_dot_components_dot_CustomAppCreatePage_dot_3189779214": {
     "context": "header",
@@ -751,7 +751,7 @@
   },
   "src_dot_apps_dot_components_dot_CustomAppDetailsPage_dot_3076071936": {
     "context": "card description",
-    "string": "Expand or restrict app permissions to access certain part of Saleor system."
+    "string": "Expand or restrict app permissions to access certain part of Store system."
   },
   "src_dot_apps_dot_components_dot_CustomAppDetailsPage_dot_3865193889": {
     "context": "link",
@@ -813,7 +813,7 @@
   },
   "src_dot_apps_dot_components_dot_Marketplace_dot_2932910073": {
     "context": "section header",
-    "string": "Saleor Marketplace"
+    "string": "Uyghur Marketplace"
   },
   "src_dot_apps_dot_components_dot_Marketplace_dot_3259214524": {
     "context": "marketplace content",
@@ -825,7 +825,7 @@
   },
   "src_dot_apps_dot_components_dot_Marketplace_dot_52985091": {
     "context": "marketplace content",
-    "string": "Discover great free and paid apps in our Saleor Marketplace."
+    "string": "Discover great free and paid apps in our Uyghur Marketplace."
   },
   "src_dot_apps_dot_components_dot_TokenCreateDialog_dot_1336855942": {
     "string": "Generated Token"
@@ -1107,7 +1107,7 @@
     "string": "Default Label"
   },
   "src_dot_attributes_dot_components_dot_AttributeOrganization_dot_205334083": {
-    "string": "Define where this attribute should be used in Saleor system"
+    "string": "Define where this attribute should be used in Store system"
   },
   "src_dot_attributes_dot_components_dot_AttributeOrganization_dot_3829816432": {
     "context": "section header",
@@ -1285,7 +1285,7 @@
     "string": "Success! In a few minutes you’ll receive a message with instructions on how to reset your password."
   },
   "src_dot_auth_dot_views_dot_2388238158": {
-    "string": "Provided email address does not exist in our database."
+    "string": "Provided email address does not exist."
   },
   "src_dot_availability": {
     "string": "Availability"
@@ -2522,7 +2522,7 @@
   },
   "src_dot_containers_dot_ServiceWorker_dot_newVersionContent": {
     "context": "new version notification content",
-    "string": "You need to update Saleor to the newest version. Before doing so - save all changes to prevent loss of data. To update use the button below."
+    "string": "You need to update Store to the newest version. Before doing so - save all changes to prevent loss of data. To update use the button below."
   },
   "src_dot_containers_dot_ServiceWorker_dot_newVersionTitle": {
     "context": "notification title",
@@ -3469,7 +3469,7 @@
   },
   "src_dot_orders_dot_components_dot_OrderCannotCancelOrderDialog_dot_1561587911": {
     "context": "dialog header",
-    "string": "Saleor couldn’t cancel order"
+    "string": "Store couldn’t cancel order"
   },
   "src_dot_orders_dot_components_dot_OrderCannotCancelOrderDialog_dot_775268031": {
     "string": "There are still fulfillments created for this order. Cancel the fulfillments first before you cancel the order."
@@ -4874,7 +4874,7 @@
   },
   "src_dot_permissionGroups_dot_components_dot_PermissionGroupCreatePage_dot_3920591233": {
     "context": "card description",
-    "string": "Expand or restrict group's permissions to access certain part of saleor system."
+    "string": "Expand or restrict group's permissions to access certain part of store system."
   },
   "src_dot_permissionGroups_dot_components_dot_PermissionGroupDeleteDialog_dot_2297471173": {
     "context": "dialog content",
@@ -4894,7 +4894,7 @@
   },
   "src_dot_permissionGroups_dot_components_dot_PermissionGroupDetailsPage_dot_3920591233": {
     "context": "card description",
-    "string": "Expand or restrict group's permissions to access certain part of saleor system."
+    "string": "Expand or restrict group's permissions to access certain part of store system."
   },
   "src_dot_permissionGroups_dot_components_dot_PermissionGroupInfo_dot_2081191949": {
     "context": "text field label",
@@ -5968,7 +5968,7 @@
     "string": "Properties"
   },
   "src_dot_readOnly": {
-    "string": "Saleor runs in read-only mode. Changes not saved."
+    "string": "Store runs in read-only mode. Changes not saved."
   },
   "src_dot_readyToCapture": {
     "context": "order status",
@@ -6464,7 +6464,7 @@
     "string": "These are general information about your store. They define what is the URL of your store and what is shown in browsers taskbar."
   },
   "src_dot_somethingWentWrong": {
-    "string": "Uyghur Store ran into an unexpected problem"
+    "string": "Store ran into an unexpected problem"
   },
   "src_dot_staff": {
     "context": "staff section name",
@@ -7235,7 +7235,7 @@
   },
   "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_3051538277": {
     "context": "webhook events",
-    "string": "Expand or restrict webhooks permissions to register certain events in Saleor system."
+    "string": "Expand or restrict webhooks permissions to register certain events in Store system."
   },
   "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_3285325968": {
     "context": "event",

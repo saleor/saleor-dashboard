@@ -1271,13 +1271,13 @@
   },
   "src_dot_auth_dot_components_dot_ResetPasswordSuccessPage_dot_2245157344": {
     "context": "button",
-    "string": "Back to login"
+    "string": "قايتا كىرىش"
   },
   "src_dot_auth_dot_components_dot_ResetPasswordSuccessPage_dot_4066297200": {
-    "string": "Success! In a few minutes you’ll receive a message with instructions on how to reset your password."
+    "string": "تاماملاندى👌 بىر نەچچە مىنۇتتىن كىيىن پارولىڭىزنى قانداق تەڭشەش توغرىسىدا كۆرسەتمىلىك ئۇچۇر تاپشۇرۇۋالىسىز"
   },
   "src_dot_auth_dot_views_dot_2388238158": {
-    "string": "Provided email address does not exist in our database."
+    "string": "تەمىنلەنگەن ئېلېكترونلۇق خەت ئادرېسى مەۋجۇت ئەمەس"
   },
   "src_dot_availability": {
     "string": "Availability"
