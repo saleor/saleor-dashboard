@@ -15,7 +15,7 @@ import { WarehouseClickAndCollectOptionEnum } from "./../../../types/globalTypes
 import { WarehouseDetailsPageFormData } from "./../WarehouseDetailsPage";
 import messages from "./messages";
 
-export interface WarehouseInfoProps {
+export interface WarehouseSettingsProps {
   zones: WarehouseDetails_warehouse_shippingZones_edges_node[];
   disabled: boolean;
   data: WarehouseDetailsPageFormData;
@@ -37,7 +37,7 @@ const useStyles = makeStyles(
   }
 );
 
-const WarehouseSettings: React.FC<WarehouseInfoProps> = ({
+const WarehouseSettings: React.FC<WarehouseSettingsProps> = ({
   zones,
   disabled,
   data,
