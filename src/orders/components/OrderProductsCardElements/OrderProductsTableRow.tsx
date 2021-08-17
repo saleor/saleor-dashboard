@@ -1,6 +1,7 @@
 import { TableCell, TableRow } from "@material-ui/core";
 import Money from "@saleor/components/Money";
 import Skeleton from "@saleor/components/Skeleton";
+import StatusBadge, { StatusBadgeProps } from "@saleor/components/StatusBadge";
 import TableCellAvatar from "@saleor/components/TableCellAvatar";
 import { AVATAR_MARGIN } from "@saleor/components/TableCellAvatar/Avatar";
 import { makeStyles } from "@saleor/macaw-ui";
@@ -68,11 +69,13 @@ const useStyles = makeStyles(
 interface TableLineProps {
   line: OrderDetails_order_fulfillments_lines | OrderDetails_order_lines;
   isOrderLine?: boolean;
+  isFulfilled: boolean;
 }
 
 const TableLine: React.FC<TableLineProps> = ({
   line: lineData,
-  isOrderLine = false
+  isOrderLine = false,
+  isFulfilled
 }) => {
   const classes = useStyles({});
   const intl = useIntl();
@@ -93,7 +96,6 @@ const TableLine: React.FC<TableLineProps> = ({
     ? quantity - quantityFulfilled
     : quantity;
 
-  const isFulfilled = line.orderLine.quantityFulfilled > 0;
   const isDeleted = !line.orderLine.variant;
 
   return (
@@ -102,12 +104,16 @@ const TableLine: React.FC<TableLineProps> = ({
         className={classes.colName}
         thumbnail={maybe(() => line.orderLine.thumbnail.url)}
         badge={
-          isDeleted && {
-            variant: isFulfilled ? "warning" : "error",
-            message: isFulfilled
-              ? intl.formatMessage(messages.fulfilledVariantDeleted)
-              : intl.formatMessage(messages.unfulfilledVariantDeleted)
-          }
+          isDeleted && (
+            <StatusBadge
+              variant={isFulfilled ? "warning" : "error"}
+              message={
+                isFulfilled
+                  ? intl.formatMessage(messages.fulfilledVariantDeleted)
+                  : intl.formatMessage(messages.unfulfilledVariantDeleted)
+              }
+            />
+          )
         }
       >
         {maybe(() => line.orderLine.productName) || <Skeleton />}

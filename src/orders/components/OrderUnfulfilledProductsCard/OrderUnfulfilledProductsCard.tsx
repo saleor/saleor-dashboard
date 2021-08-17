@@ -42,7 +42,7 @@ const OrderUnfulfilledProductsCard: React.FC<OrderUnfulfilledProductsCardProps> 
           <TableHeader />
           <TableBody>
             {renderCollection(lines, line => (
-              <TableLine isOrderLine line={line} />
+              <TableLine isOrderLine line={line} isFulfilled={false} />
             ))}
           </TableBody>
         </ResponsiveTable>

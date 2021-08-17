@@ -1,6 +1,5 @@
 import { Avatar as MuiAvatar } from "@material-ui/core";
 import Cached from "@material-ui/icons/Cached";
-import StatusBadge, { StatusBadgeProps } from "@saleor/components/StatusBadge";
 import { makeStyles } from "@saleor/macaw-ui";
 import classNames from "classnames";
 import React from "react";
@@ -47,7 +46,7 @@ export interface AvatarProps {
   alignRight?: boolean;
   avatarProps?: string;
   children?: React.ReactNode | React.ReactNodeArray;
-  badge?: StatusBadgeProps;
+  badge?: React.ReactNode;
 }
 
 const Avatar: React.FC<AvatarProps> = ({
@@ -58,14 +57,13 @@ const Avatar: React.FC<AvatarProps> = ({
   badge
 }) => {
   const classes = useStyles({});
-
   return (
     <div
       className={classNames(classes.content, {
         [classes.alignRight]: alignRight
       })}
     >
-      {badge && <StatusBadge variant={badge.variant} message={badge.message} />}
+      {badge}
       {thumbnail === undefined ? (
         <MuiAvatar className={classNames(classes.avatar, avatarProps)}>
           <Cached color="primary" />
