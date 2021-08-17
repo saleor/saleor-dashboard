@@ -1,16 +1,14 @@
+import { fragmentGiftCardsSettings } from "@saleor/fragments/giftCards";
 import makeQuery from "@saleor/hooks/makeQuery";
 import gql from "graphql-tag";
 
 import { GiftCardSettings } from "./types/GiftCardSettings";
 
 export const giftCardSettings = gql`
+  ${fragmentGiftCardsSettings}
   query GiftCardSettings {
     giftCardSettings {
-      expiryType
-      expiryPeriod {
-        type
-        amount
-      }
+      ...GiftCardsSettingsFragment
     }
   }
 `;
