@@ -5,6 +5,7 @@ import React from "react";
 import { useIntl } from "react-intl";
 
 import useGiftCardListBulkActions from "../../providers/GiftCardListProvider/hooks/useGiftCardListBulkActions";
+import { GIFT_CARD_LIST_QUERY } from "../../types";
 import { bulkEnableDisableSectionMessages as messages } from "./messages";
 import {
   useGiftCardBulkActivateMutation,
@@ -57,14 +58,16 @@ const BulkEnableDisableSection: React.FC = () => {
     activateGiftCards,
     activateGiftCardsOpts
   ] = useGiftCardBulkActivateMutation({
-    onCompleted: onActivateCompleted
+    onCompleted: onActivateCompleted,
+    refetchQueries: [GIFT_CARD_LIST_QUERY]
   });
 
   const [
     deactivateGiftCards,
     deactivateGiftCardsOpts
   ] = useGiftCardBulkDeactivateMutation({
-    onCompleted: onDeactivateCompleted
+    onCompleted: onDeactivateCompleted,
+    refetchQueries: [GIFT_CARD_LIST_QUERY]
   });
 
   const handleActivateGiftCards = () =>

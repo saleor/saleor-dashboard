@@ -15,3 +15,5 @@ export enum GiftCardListActionParamsEnum {
 export type GiftCardListUrlQueryParams = Pagination &
   Dialog<GiftCardListActionParamsEnum> &
   SingleAction;
+
+export const GIFT_CARD_LIST_QUERY = "GiftCardList";
