@@ -162,7 +162,10 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
     OrderFulfillStockInput[]
   >(
     order?.lines
-      .filter(line => getRemainingQuantity(line) > 0)
+      .filter(
+        line => getRemainingQuantity(line) > 0
+        // && line.variant !== null
+      )
       .map(line => ({
         data: null,
         id: line.id,

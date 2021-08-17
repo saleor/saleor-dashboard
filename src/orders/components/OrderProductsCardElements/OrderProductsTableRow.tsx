@@ -10,6 +10,9 @@ import {
   OrderDetails_order_lines
 } from "@saleor/orders/types/OrderDetails";
 import React from "react";
+import { useIntl } from "react-intl";
+
+import { messages } from "./messages";
 
 const useStyles = makeStyles(
   theme => ({
@@ -72,6 +75,7 @@ const TableLine: React.FC<TableLineProps> = ({
   isOrderLine = false
 }) => {
   const classes = useStyles({});
+  const intl = useIntl();
   const { quantity, quantityFulfilled } = lineData as OrderDetails_order_lines;
 
   if (!lineData) {
@@ -89,11 +93,22 @@ const TableLine: React.FC<TableLineProps> = ({
     ? quantity - quantityFulfilled
     : quantity;
 
+  const isFulfilled = line.orderLine.quantityFulfilled > 0;
+  const isDeleted = !line.orderLine.variant;
+
   return (
     <TableRow className={classes.clickableRow} hover key={line.id}>
       <TableCellAvatar
         className={classes.colName}
         thumbnail={maybe(() => line.orderLine.thumbnail.url)}
+        badge={
+          isDeleted && {
+            variant: isFulfilled ? "warning" : "error",
+            message: isFulfilled
+              ? intl.formatMessage(messages.fulfilledVariantDeleted)
+              : intl.formatMessage(messages.unfulfilledVariantDeleted)
+          }
+        }
       >
         {maybe(() => line.orderLine.productName) || <Skeleton />}
       </TableCellAvatar>
