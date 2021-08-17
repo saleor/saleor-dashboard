@@ -14,7 +14,7 @@ import GiftCardEnableDisableSection from "./GiftCardEnableDisableSection";
 const GiftCardUpdatePageHeader: React.FC = () => {
   const intl = useIntl();
   const { giftCard } = useGiftCardDetails();
-  const { navigateBack } = useGiftCardUpdateDialogs();
+  const { navigateBack, openResendCodeDialog } = useGiftCardUpdateDialogs();
 
   if (!giftCard) {
     return null;

@@ -1,9 +1,11 @@
 import ConfirmButton from "@saleor/components/ConfirmButton";
 import { IMessage } from "@saleor/components/messages";
 import useNotifier from "@saleor/hooks/useNotifier";
+import { getByIds } from "@saleor/orders/components/OrderReturnPage/utils";
 import React from "react";
 import { useIntl } from "react-intl";
 
+import useGiftCardList from "../../providers/GiftCardListProvider/hooks/useGiftCardList";
 import useGiftCardListBulkActions from "../../providers/GiftCardListProvider/hooks/useGiftCardListBulkActions";
 import { GIFT_CARD_LIST_QUERY } from "../../types";
 import { bulkEnableDisableSectionMessages as messages } from "./messages";
@@ -18,7 +20,8 @@ const BulkEnableDisableSection: React.FC = () => {
   const intl = useIntl();
   const notify = useNotifier();
 
-  const { listElements: ids } = useGiftCardListBulkActions();
+  const { listElements: ids, reset } = useGiftCardListBulkActions();
+  const { giftCards } = useGiftCardList();
 
   const onActivateCompleted = (data: GiftCardBulkActivate) => {
     const { errors, count } = data?.giftCardBulkActivate;
@@ -34,6 +37,10 @@ const BulkEnableDisableSection: React.FC = () => {
         };
 
     notify(notifierData);
+
+    if (!errors.length) {
+      reset();
+    }
   };
 
   const onDeactivateCompleted = (data: GiftCardBulkDeactivate) => {
@@ -52,7 +59,19 @@ const BulkEnableDisableSection: React.FC = () => {
         };
 
     notify(notifierData);
+
+    if (!errors.length) {
+      reset();
+    }
   };
+
+  const hasAnyEnabledCardsSelected = giftCards
+    .filter(getByIds(ids))
+    .some(({ isActive }) => isActive);
+
+  const hasAnyDisabledCardsSelected = giftCards
+    .filter(getByIds(ids))
+    .some(({ isActive }) => !isActive);
 
   const [
     activateGiftCards,
@@ -79,6 +98,7 @@ const BulkEnableDisableSection: React.FC = () => {
   return (
     <>
       <ConfirmButton
+        disabled={hasAnyEnabledCardsSelected}
         onClick={handleActivateGiftCards}
         variant="text"
         transitionState={activateGiftCardsOpts?.status}
@@ -86,6 +106,7 @@ const BulkEnableDisableSection: React.FC = () => {
         {intl.formatMessage(messages.enableLabel)}
       </ConfirmButton>
       <ConfirmButton
+        disabled={hasAnyDisabledCardsSelected}
         onClick={handleDeactivateGiftCards}
         variant="text"
         transitionState={deactivateGiftCardsOpts?.status}
