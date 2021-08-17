@@ -10,11 +10,11 @@ interface GiftCardsListProps {
 }
 
 const GiftCardsList: React.FC<GiftCardsListProps> = ({ params }) => (
-  <GiftCardListDialogsProvider params={params}>
-    <GiftCardsListProvider params={params}>
+  <GiftCardsListProvider params={params}>
+    <GiftCardListDialogsProvider params={params}>
       <GiftCardListPage />
-    </GiftCardsListProvider>
-  </GiftCardListDialogsProvider>
+    </GiftCardListDialogsProvider>
+  </GiftCardsListProvider>
 );
 
 export default GiftCardsList;
