@@ -76,7 +76,7 @@ const GiftCardUpdateDialogsProvider: React.FC<GiftCardUpdateDialogsProviderProps
           />
           <GiftCardUpdatePageDeleteDialog
             closeDialog={closeDialog}
-            open={isSetBalanceDialogOpen}
+            open={isDeleteDialogOpen}
             navigateBack={navigateBack}
           />
         </>

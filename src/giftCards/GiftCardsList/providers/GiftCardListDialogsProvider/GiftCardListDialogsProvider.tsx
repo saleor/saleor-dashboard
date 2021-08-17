@@ -17,10 +17,8 @@ interface GiftCardListDialogsProviderProps {
 
 export interface GiftCardListDialogsConsumerProps {
   openCreateDialog: () => void;
-  isCreateDialogOpen: boolean;
-  closeDialog: () => void;
   openDeleteDialog: (id?: string | React.MouseEvent) => void;
-  isDeleteDialogOpen: boolean;
+  closeDialog: () => void;
   id: string;
 }
 
@@ -58,10 +56,8 @@ const GiftCardListDialogsProvider: React.FC<GiftCardListDialogsProviderProps> = 
   };
 
   const providerValues: GiftCardListDialogsConsumerProps = {
-    isCreateDialogOpen,
     openCreateDialog,
     openDeleteDialog: handleDeleteDialogOpen,
-    isDeleteDialogOpen,
     closeDialog,
     id
   };
@@ -73,7 +69,10 @@ const GiftCardListDialogsProvider: React.FC<GiftCardListDialogsProviderProps> = 
         open={isCreateDialogOpen}
         closeDialog={closeDialog}
       />
-      <GiftCardListPageDeleteDialog />
+      <GiftCardListPageDeleteDialog
+        open={isDeleteDialogOpen}
+        closeDialog={closeDialog}
+      />
     </GiftCardListDialogsContext.Provider>
   );
 };
