@@ -495,6 +495,11 @@ export enum GiftCardExpiryTypeEnum {
   NEVER_EXPIRE = "NEVER_EXPIRE",
 }
 
+export enum GiftCardSettingsExpiryTypeEnum {
+  EXPIRY_PERIOD = "EXPIRY_PERIOD",
+  NEVER_EXPIRE = "NEVER_EXPIRE",
+}
+
 export enum InvoiceErrorCode {
   EMAIL_NOT_SET = "EMAIL_NOT_SET",
   INVALID_STATUS = "INVALID_STATUS",
@@ -918,6 +923,11 @@ export enum ProductTypeConfigurable {
 export enum ProductTypeEnum {
   DIGITAL = "DIGITAL",
   SHIPPABLE = "SHIPPABLE",
+}
+
+export enum ProductTypeKindEnum {
+  GIFT_CARD = "GIFT_CARD",
+  NORMAL = "NORMAL",
 }
 
 export enum ProductTypeSortField {
@@ -1417,7 +1427,7 @@ export interface GiftCardUpdateInput {
   tag?: string | null;
   startDate?: any | null;
   endDate?: any | null;
-  balanceAmount?: any | null;
+  balance?: PriceInput | null;
   expirySettings?: GiftCardExpirySettingsInput | null;
 }
 
@@ -1789,6 +1799,7 @@ export interface ProductTypeFilterInput {
 export interface ProductTypeInput {
   name?: string | null;
   slug?: string | null;
+  kind?: ProductTypeKindEnum | null;
   hasVariants?: boolean | null;
   productAttributes?: (string | null)[] | null;
   variantAttributes?: (string | null)[] | null;
