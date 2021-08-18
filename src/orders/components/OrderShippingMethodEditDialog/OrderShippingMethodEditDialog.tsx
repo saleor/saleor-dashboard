@@ -141,6 +141,7 @@ const OrderShippingMethodEditDialog: React.FC<OrderShippingMethodEditDialogProps
                 color="primary"
                 variant="contained"
                 type="submit"
+                disabled={!data.shippingMethod}
               >
                 <FormattedMessage {...buttonMessages.confirm} />
               </ConfirmButton>
