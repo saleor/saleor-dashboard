@@ -6,6 +6,7 @@ import { SELECT_CHANNELS_TO_ASSIGN } from "../elements/channels/select-channels-
 import { HEADER_SELECTORS } from "../elements/header/header-selectors";
 import { BUTTON_SELECTORS } from "../elements/shared/button-selectors";
 import { SHARED_ELEMENTS } from "../elements/shared/sharedElements";
+import { urlList } from "../url/urlList";
 import { fillAutocompleteSelect } from "./shared/selects";
 
 export function createChannelByView({
@@ -95,4 +96,16 @@ export function selectChannelVariantInDetailsPage(channelName, attributeName) {
   cy.get(SELECT_CHANNELS_TO_ASSIGN.selectChannelsForm)
     .find(BUTTON_SELECTORS.submit)
     .click();
+}
+
+export function enterHomePageAndChangeChannel(channelName) {
+  cy.visit(urlList.homePage);
+  selectChannelInHeader(channelName);
+}
+
+export function enterHomePageChangeChannelAndReturn(channelName) {
+  cy.url().then(url => {
+    enterHomePageAndChangeChannel(channelName);
+    cy.visit(url);
+  });
 }

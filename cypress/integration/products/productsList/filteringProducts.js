@@ -9,6 +9,7 @@ import {
   selectProductsOutOfStock
 } from "../../../steps/catalog/products/productsListSteps";
 import { waitForProgressBarToNotExist } from "../../../steps/shared/progressBar";
+import { searchInTable } from "../../../steps/shared/tables";
 import filterTests from "../../../support/filterTests";
 import { urlList } from "../../../url/urlList";
 import { getDefaultChannel } from "../../../utils/channelsUtils";
@@ -112,9 +113,10 @@ filterTests(["all"], () => {
         categoryId: category.id,
         price
       });
-      waitForProgressBarToNotExist();
       selectChannel(channel.slug);
       selectProductsOutOfStock();
+      searchInTable(productOutOfStock);
+      cy.get(PRODUCTS_LIST.productsNames).should("have.length", 1);
       cy.getTextFromElement(PRODUCTS_LIST.productsNames).then(product => {
         expect(product).to.includes(productOutOfStock);
       });
