@@ -1438,7 +1438,7 @@ export interface GiftCardUpdateInput {
   tag?: string | null;
   startDate?: any | null;
   endDate?: any | null;
-  balance?: PriceInput | null;
+  balanceAmount?: any | null;
   expirySettings?: GiftCardExpirySettingsInput | null;
 }
 
