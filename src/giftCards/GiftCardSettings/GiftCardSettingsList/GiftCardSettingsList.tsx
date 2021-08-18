@@ -1,19 +1,14 @@
 import { Card, CardContent, Typography } from "@material-ui/core";
 import CardTitle from "@saleor/components/CardTitle";
-import ControlledCheckbox from "@saleor/components/ControlledCheckbox";
-import FormSpacer from "@saleor/components/FormSpacer";
 import Grid from "@saleor/components/Grid";
 import { GiftCardSettingsErrorFragment } from "@saleor/fragments/types/GiftCardSettingsErrorFragment";
-import TimePeriodField from "@saleor/giftCards/components/TimePeriodField";
+import GiftCardSettingsExpirySelect from "@saleor/giftCards/components/GiftCardSettingsExpirySelect";
 import { getFormErrors } from "@saleor/utils/errors";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import {
-  getGiftCardSettingsErrorMessage,
-  giftCardSettingsListMessages
-} from "../messages";
 import { GiftCardSettingsFormData } from "../types";
+import { giftCardSettingsListMessages } from "./messages";
 
 export interface GiftCardSettingsListProps {
   data: GiftCardSettingsFormData;
@@ -48,46 +43,14 @@ const GiftCardSettingsList: React.FC<GiftCardSettingsListProps> = ({
           )}
         />
         <CardContent>
-          <ControlledCheckbox
-            name={"expiryPeriodActive" as keyof GiftCardSettingsFormData}
-            label={
-              <>
-                <FormattedMessage
-                  {...giftCardSettingsListMessages.setExpirationPeriodTitle}
-                />
-                <Typography variant="caption">
-                  <FormattedMessage
-                    {...giftCardSettingsListMessages.setExpirationPeriodDescription}
-                  />
-                </Typography>
-              </>
-            }
-            checked={data.expiryPeriodActive}
-            onChange={onChange}
+          <GiftCardSettingsExpirySelect
+            expiryPeriodActive={data.expiryPeriodActive}
+            expiryPeriodType={data.expiryPeriodType}
+            expiryPeriodAmount={data.expiryPeriodAmount}
+            change={onChange}
             disabled={disabled}
-            data-test="expiryPeriodActive"
+            errors={formErrors}
           />
-          {data.expiryPeriodActive && (
-            <>
-              <FormSpacer />
-              <TimePeriodField
-                isError={!!formErrors?.expiryPeriod}
-                helperText={getGiftCardSettingsErrorMessage(
-                  formErrors?.expiryPeriod,
-                  intl
-                )}
-                change={onChange}
-                periodType={data.expiryPeriodType}
-                periodAmount={data.expiryPeriodAmount}
-                amountFieldName={
-                  "expiryPeriodAmount" as keyof GiftCardSettingsFormData
-                }
-                typeFieldName={
-                  "expiryPeriodType" as keyof GiftCardSettingsFormData
-                }
-              />
-            </>
-          )}
         </CardContent>
       </Card>
     </Grid>
