@@ -42,7 +42,9 @@ const useStyles = makeStyles(
     },
     root: {
       overflowY: "visible",
-      width: theme.breakpoints.values.sm
+      width: theme.breakpoints.values.sm,
+      margin: 0,
+      padding: theme.spacing(3)
     },
     shippingMethodName: {
       flex: 1,
