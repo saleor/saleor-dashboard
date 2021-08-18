@@ -3457,7 +3457,7 @@
   },
   "src_dot_giftCards_dot_GiftCardSettings_dot_title": {
     "context": "header",
-    "string": "Gift Cards Setting"
+    "string": "Gift Cards Settings"
   },
   "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardResendCodeDialog_dot_consentCheckboxLabel": {
     "context": "GiftCardResendCodeDialog consentCheckboxLabel",

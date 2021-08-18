@@ -6,7 +6,7 @@ import { defineMessages, IntlShape } from "react-intl";
 
 export const giftCardSettingsMessages = defineMessages({
   title: {
-    defaultMessage: "Gift Cards Setting",
+    defaultMessage: "Gift Cards Settings",
     description: "header"
   }
 });
