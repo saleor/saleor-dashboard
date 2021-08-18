@@ -11,26 +11,6 @@ export const giftCardSettingsMessages = defineMessages({
   }
 });
 
-export const giftCardSettingsListMessages = defineMessages({
-  expiryDateSectionDescription: {
-    defaultMessage:
-      "You can set gift cards to expire after a certain time after their purchase. Remember that in some countries, gift cards expiry is prohibited by law."
-  },
-  expiryDateTitle: {
-    defaultMessage: "Expiry date",
-    description: "section header"
-  },
-  setExpirationPeriodTitle: {
-    defaultMessage: "Set gift card expiration period",
-    description: "checkbox label"
-  },
-  setExpirationPeriodDescription: {
-    defaultMessage:
-      "Expiration date will be automatically set, once gift card is issued",
-    description: "checkbox label description"
-  }
-});
-
 export function getGiftCardSettingsErrorMessage(
   error: GiftCardSettingsErrorFragment | undefined,
   intl: IntlShape
