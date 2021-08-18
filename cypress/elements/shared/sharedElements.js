@@ -11,6 +11,9 @@ export const SHARED_ELEMENTS = {
   selectOption: '[data-test="selectFieldOption"]',
   richTextEditor: {
     empty: '[class*="codex-editor--empty"]'
+  },
+  filters: {
+    filterGroupActivateCheckbox: '[data-test="filterGroupActive"]'
   }
 };
 
