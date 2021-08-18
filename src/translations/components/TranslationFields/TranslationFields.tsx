@@ -15,6 +15,7 @@ import Skeleton from "@saleor/components/Skeleton";
 import TablePagination from "@saleor/components/TablePagination";
 import { buttonMessages } from "@saleor/intl";
 import { makeStyles } from "@saleor/macaw-ui";
+import { TranslationField } from "@saleor/translations/types";
 import { ListProps } from "@saleor/types";
 import classNames from "classnames";
 import React from "react";
@@ -23,14 +24,6 @@ import { FormattedMessage } from "react-intl";
 import TranslationFieldsLong from "./TranslationFieldsLong";
 import TranslationFieldsRich from "./TranslationFieldsRich";
 import TranslationFieldsShort from "./TranslationFieldsShort";
-
-export interface TranslationField {
-  displayName: string;
-  name: string;
-  translation: string;
-  type: "short" | "long" | "rich";
-  value: string;
-}
 
 type Pagination = Pick<
   ListProps,
@@ -45,9 +38,10 @@ export interface TranslationFieldsProps {
   initialState: boolean;
   saveButtonState: ConfirmButtonTransitionState;
   pagination?: Pagination;
+  richTextResetKey: string; // temporary workaround TODO: fix rich text editor
   onEdit: (field: string) => void;
   onDiscard: () => void;
-  onSubmit: (field: string, data: string | OutputData) => void;
+  onSubmit: (field: TranslationField, data: string | OutputData) => void;
 }
 
 const useStyles = makeStyles(
@@ -127,6 +121,7 @@ const TranslationFields: React.FC<TranslationFieldsProps> = props => {
     title,
     saveButtonState,
     pagination,
+    richTextResetKey,
     onEdit,
     onDiscard,
     onSubmit
@@ -198,6 +193,7 @@ const TranslationFields: React.FC<TranslationFieldsProps> = props => {
                       />
                     ) : (
                       <TranslationFieldsRich
+                        resetKey={richTextResetKey}
                         disabled={disabled}
                         edit={false}
                         initial={field.value}
@@ -219,7 +215,7 @@ const TranslationFields: React.FC<TranslationFieldsProps> = props => {
                         initial={field.translation}
                         saveButtonState={saveButtonState}
                         onDiscard={onDiscard}
-                        onSubmit={data => onSubmit(field.name, data)}
+                        onSubmit={data => onSubmit(field, data)}
                       />
                     ) : field.type === "long" ? (
                       <TranslationFieldsLong
@@ -228,16 +224,17 @@ const TranslationFields: React.FC<TranslationFieldsProps> = props => {
                         initial={field.translation}
                         saveButtonState={saveButtonState}
                         onDiscard={onDiscard}
-                        onSubmit={data => onSubmit(field.name, data)}
+                        onSubmit={data => onSubmit(field, data)}
                       />
                     ) : (
                       <TranslationFieldsRich
+                        resetKey={richTextResetKey}
                         disabled={disabled}
                         edit={activeField === field.name}
                         initial={field.translation}
                         saveButtonState={saveButtonState}
                         onDiscard={onDiscard}
-                        onSubmit={data => onSubmit(field.name, data)}
+                        onSubmit={data => onSubmit(field, data)}
                       />
                     )
                   ) : (

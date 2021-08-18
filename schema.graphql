@@ -421,6 +421,7 @@ type Attribute implements Node & ObjectWithMetadata {
   availableInGrid: Boolean!
   translation(languageCode: LanguageCodeEnum!): AttributeTranslation
   storefrontSearchPosition: Int!
+  withChoices: Boolean!
 }
 
 type AttributeBulkDelete {
@@ -512,12 +513,15 @@ input AttributeFilterInput {
   type: AttributeTypeEnum
   inCollection: ID
   inCategory: ID
+  channel: String
 }
 
 input AttributeInput {
   slug: String!
   values: [String]
   valuesRange: IntRangeInput
+  dateTime: DateTimeRangeInput
+  date: DateRangeInput
   boolean: Boolean
 }
 
@@ -529,6 +533,8 @@ enum AttributeInputTypeEnum {
   NUMERIC
   RICH_TEXT
   BOOLEAN
+  DATE
+  DATE_TIME
 }
 
 type AttributeReorderValues {
@@ -610,6 +616,8 @@ type AttributeValue implements Node {
   file: File
   richText: JSONString
   boolean: Boolean
+  date: Date
+  dateTime: DateTime
 }
 
 type AttributeValueBulkDelete {
@@ -661,11 +669,14 @@ input AttributeValueInput {
   references: [ID!]
   richText: JSONString
   boolean: Boolean
+  date: Date
+  dateTime: DateTime
 }
 
 type AttributeValueTranslatableContent implements Node {
   id: ID!
   name: String!
+  richText: JSONString
   translation(languageCode: LanguageCodeEnum!): AttributeValueTranslation
   attributeValue: AttributeValue @deprecated(reason: "Will be removed in Saleor 4.0. Get model fields from the root level.")
 }
@@ -697,7 +708,8 @@ type AttributeValueUpdate {
 
 input BulkAttributeValueInput {
   id: ID
-  values: [String!]!
+  values: [String!]
+  boolean: Boolean
 }
 
 type BulkProductError {
@@ -797,6 +809,7 @@ enum CategorySortField {
 
 input CategorySortingInput {
   direction: OrderDirection!
+  channel: String
   field: CategorySortField!
 }
 
@@ -1230,6 +1243,7 @@ input CollectionFilterInput {
   search: String
   metadata: [MetadataFilter]
   ids: [ID]
+  channel: String
 }
 
 input CollectionInput {
@@ -1269,6 +1283,7 @@ enum CollectionSortField {
 
 input CollectionSortingInput {
   direction: OrderDirection!
+  channel: String
   field: CollectionSortField!
 }
 
@@ -1639,6 +1654,7 @@ type CustomerEvent implements Node {
   date: DateTime
   type: CustomerEventsEnum
   user: User
+  app: App
   message: String
   count: Int
   order: Order
@@ -2136,18 +2152,31 @@ type GatewayConfigLine {
 
 scalar GenericScalar
 
-type GiftCard implements Node {
-  code: String
-  user: User
-  created: DateTime!
-  startDate: Date!
-  endDate: Date
-  lastUsedOn: DateTime
+type GiftCard implements Node & ObjectWithMetadata {
+  code: String!
   isActive: Boolean!
+  expiryDate: Date
+  expiryType: GiftCardExpiryTypeEnum!
+  tag: String
+  created: DateTime!
+  lastUsedOn: DateTime
   initialBalance: Money
   currentBalance: Money
   id: ID!
-  displayCode: String
+  privateMetadata: [MetadataItem]!
+  metadata: [MetadataItem]!
+  displayCode: String!
+  createdBy: User
+  usedBy: User
+  createdByEmail: String
+  usedByEmail: String
+  app: App
+  expiryPeriod: TimePeriod
+  product: Product
+  events: [GiftCardEvent!]!
+  user: User @deprecated(reason: "Will be removed in Saleor 4.0. Use created_by field instead")
+  endDate: DateTime @deprecated(reason: "Will be removed in Saleor 4.0. Use expiry_date field instead.")
+  startDate: DateTime @deprecated(reason: "Will be removed in Saleor 4.0.")
 }
 
 type GiftCardActivate {
@@ -2174,17 +2203,26 @@ type GiftCardCreate {
 }
 
 input GiftCardCreateInput {
+  tag: String
   startDate: Date
   endDate: Date
-  balance: PositiveDecimal
+  balance: PriceInput!
   userEmail: String
+  expirySettings: GiftCardExpirySettingsInput!
   code: String
+  note: String
 }
 
 type GiftCardDeactivate {
   giftCard: GiftCard
   giftCardErrors: [GiftCardError!]! @deprecated(reason: "Use errors field instead. This field will be removed in Saleor 4.0.")
   errors: [GiftCardError!]!
+}
+
+type GiftCardDelete {
+  giftCardErrors: [GiftCardError!]! @deprecated(reason: "Use errors field instead. This field will be removed in Saleor 4.0.")
+  errors: [GiftCardError!]!
+  giftCard: GiftCard
 }
 
 type GiftCardError {
@@ -2202,6 +2240,66 @@ enum GiftCardErrorCode {
   UNIQUE
 }
 
+type GiftCardEvent implements Node {
+  id: ID!
+  date: DateTime
+  type: GiftCardEventsEnum
+  user: User
+  app: App
+  message: String
+  email: String
+  orderId: ID
+  orderNumber: String
+  tag: String
+  oldTag: String
+  balance: GiftCardEventBalance
+  expiry: GiftCardEventExpiry
+}
+
+type GiftCardEventBalance {
+  initialBalance: Money!
+  currentBalance: Money!
+  oldInitialBalance: Money
+  oldCurrentBalance: Money
+}
+
+type GiftCardEventExpiry {
+  expiryType: GiftCardExpiryTypeEnum
+  expiryPeriod: TimePeriod
+  expiryDate: Date
+  oldExpiryType: GiftCardExpiryTypeEnum
+  oldExpiryPeriod: TimePeriod
+  oldExpiryDate: Date
+}
+
+enum GiftCardEventsEnum {
+  ISSUED
+  BOUGHT
+  UPDATED
+  ACTIVATED
+  DEACTIVATED
+  BALANCE_RESET
+  EXPIRY_SETTINGS_UPDATED
+  SENT_TO_CUSTOMER
+  RESENT
+}
+
+input GiftCardExpirySettingsInput {
+  expiryType: GiftCardExpiryTypeEnum!
+  expiryDate: Date
+  expiryPeriod: TimePeriodInputType
+}
+
+enum GiftCardExpiryTypeEnum {
+  NEVER_EXPIRE
+  EXPIRY_PERIOD
+  EXPIRY_DATE
+}
+
+input GiftCardFilterInput {
+  tag: String
+}
+
 type GiftCardUpdate {
   giftCardErrors: [GiftCardError!]! @deprecated(reason: "Use errors field instead. This field will be removed in Saleor 4.0.")
   errors: [GiftCardError!]!
@@ -2209,10 +2307,11 @@ type GiftCardUpdate {
 }
 
 input GiftCardUpdateInput {
+  tag: String
   startDate: Date
   endDate: Date
-  balance: PositiveDecimal
-  userEmail: String
+  balanceAmount: PositiveDecimal
+  expirySettings: GiftCardExpirySettingsInput
 }
 
 type Group implements Node {
@@ -2852,6 +2951,7 @@ type Mutation {
   invoiceSendNotification(id: ID!): InvoiceSendNotification
   giftCardActivate(id: ID!): GiftCardActivate
   giftCardCreate(input: GiftCardCreateInput!): GiftCardCreate
+  giftCardDelete(id: ID!): GiftCardDelete
   giftCardDeactivate(id: ID!): GiftCardDeactivate
   giftCardUpdate(id: ID!, input: GiftCardUpdateInput!): GiftCardUpdate
   pluginUpdate(channelId: ID, id: ID!, input: PluginUpdateInput!): PluginUpdate
@@ -3184,6 +3284,7 @@ type OrderEvent implements Node {
   date: DateTime
   type: OrderEventsEnum
   user: User
+  app: App
   message: String
   email: String
   emailType: OrderEventsEmailsEnum
@@ -3675,6 +3776,7 @@ type PageTranslatableContent implements Node {
   contentJson: JSONString @deprecated(reason: "Will be removed in Saleor 4.0. Use the `content` field instead.")
   translation(languageCode: LanguageCodeEnum!): PageTranslation
   page: Page @deprecated(reason: "Will be removed in Saleor 4.0. Get model fields from the root level.")
+  attributeValues: [AttributeValueTranslatableContent!]!
 }
 
 type PageTranslate {
@@ -3900,6 +4002,7 @@ type PaymentRefund {
 
 type PaymentSource {
   gateway: String!
+  paymentMethodId: String
   creditCardInfo: CreditCard
 }
 
@@ -4081,6 +4184,11 @@ scalar PositiveDecimal
 enum PostalCodeRuleInclusionTypeEnum {
   INCLUDE
   EXCLUDE
+}
+
+input PriceInput {
+  currency: String!
+  amount: PositiveDecimal!
 }
 
 input PriceRangeInput {
@@ -4290,6 +4398,7 @@ input ProductFilterInput {
   minimalPrice: PriceRangeInput
   productTypes: [ID]
   ids: [ID]
+  channel: String
 }
 
 type ProductImage {
@@ -4374,6 +4483,7 @@ input ProductMediaUpdateInput {
 
 input ProductOrder {
   direction: OrderDirection!
+  channel: String
   attributeId: ID
   field: ProductOrderField
 }
@@ -4420,6 +4530,7 @@ type ProductTranslatableContent implements Node {
   descriptionJson: JSONString @deprecated(reason: "Will be removed in Saleor 4.0. Use the `description` field instead.")
   translation(languageCode: LanguageCodeEnum!): ProductTranslation
   product: Product @deprecated(reason: "Will be removed in Saleor 4.0. Get model fields from the root level.")
+  attributeValues: [AttributeValueTranslatableContent!]!
 }
 
 type ProductTranslate {
@@ -4694,6 +4805,7 @@ type ProductVariantTranslatableContent implements Node {
   name: String!
   translation(languageCode: LanguageCodeEnum!): ProductVariantTranslation
   productVariant: ProductVariant @deprecated(reason: "Will be removed in Saleor 4.0. Get model fields from the root level.")
+  attributeValues: [AttributeValueTranslatableContent!]!
 }
 
 type ProductVariantTranslate {
@@ -4764,7 +4876,7 @@ type Query {
   menuItem(id: ID!, channel: String): MenuItem
   menuItems(channel: String, sortBy: MenuItemSortingInput, filter: MenuItemFilterInput, before: String, after: String, first: Int, last: Int): MenuItemCountableConnection
   giftCard(id: ID!): GiftCard
-  giftCards(before: String, after: String, first: Int, last: Int): GiftCardCountableConnection
+  giftCards(filter: GiftCardFilterInput, before: String, after: String, first: Int, last: Int): GiftCardCountableConnection
   plugin(id: ID!): Plugin
   plugins(filter: PluginFilterInput, sortBy: PluginSortingInput, before: String, after: String, first: Int, last: Int): PluginCountableConnection
   sale(id: ID!, channel: String): Sale
@@ -4776,7 +4888,6 @@ type Query {
   taxTypes: [TaxType]
   checkout(token: UUID): Checkout
   checkouts(channel: String, before: String, after: String, first: Int, last: Int): CheckoutCountableConnection
-  checkoutLine(id: ID): CheckoutLine
   checkoutLines(before: String, after: String, first: Int, last: Int): CheckoutLineCountableConnection
   channel(id: ID): Channel
   channels: [Channel!]
@@ -4830,12 +4941,14 @@ type RequestPasswordReset {
   errors: [AccountError!]!
 }
 
-type Sale implements Node {
+type Sale implements Node & ObjectWithMetadata {
   id: ID!
   name: String!
   type: SaleType!
   startDate: DateTime!
   endDate: DateTime
+  privateMetadata: [MetadataItem]!
+  metadata: [MetadataItem]!
   categories(before: String, after: String, first: Int, last: Int): CategoryCountableConnection
   collections(before: String, after: String, first: Int, last: Int): CollectionCountableConnection
   products(before: String, after: String, first: Int, last: Int): ProductCountableConnection
@@ -4908,6 +5021,7 @@ input SaleFilterInput {
   saleType: DiscountValueTypeEnum
   started: DateTimeRangeInput
   search: String
+  metadata: [MetadataFilter]
 }
 
 input SaleInput {
@@ -4937,6 +5051,7 @@ enum SaleSortField {
 
 input SaleSortingInput {
   direction: OrderDirection!
+  channel: String
   field: SaleSortField!
 }
 
@@ -5232,6 +5347,7 @@ type Shop {
   availablePaymentGateways(currency: String, channel: String): [PaymentGateway!]!
   availableExternalAuthentications: [ExternalAuthentication!]!
   availableShippingMethods(channel: String!, address: AddressInput): [ShippingMethod]
+  channelCurrencies: [String!]!
   countries(languageCode: LanguageCodeEnum): [CountryDisplay!]!
   defaultCountry: CountryDisplay
   defaultMailSenderName: String
@@ -5499,6 +5615,22 @@ type TaxedMoneyRange {
   stop: TaxedMoney
 }
 
+type TimePeriod {
+  amount: Int!
+  type: TimePeriodTypeEnum!
+}
+
+input TimePeriodInputType {
+  amount: Int!
+  type: TimePeriodTypeEnum!
+}
+
+enum TimePeriodTypeEnum {
+  DAY
+  MONTH
+  YEAR
+}
+
 type Transaction implements Node {
   id: ID!
   created: DateTime!
@@ -5748,7 +5880,7 @@ enum VolumeUnitsEnum {
   ACRE_FT
 }
 
-type Voucher implements Node {
+type Voucher implements Node & ObjectWithMetadata {
   id: ID!
   name: String
   type: VoucherTypeEnum!
@@ -5762,6 +5894,8 @@ type Voucher implements Node {
   onlyForStaff: Boolean!
   discountValueType: DiscountValueTypeEnum!
   minCheckoutItemsQuantity: Int
+  privateMetadata: [MetadataItem]!
+  metadata: [MetadataItem]!
   categories(before: String, after: String, first: Int, last: Int): CategoryCountableConnection
   collections(before: String, after: String, first: Int, last: Int): CollectionCountableConnection
   products(before: String, after: String, first: Int, last: Int): ProductCountableConnection
@@ -5845,6 +5979,7 @@ input VoucherFilterInput {
   discountType: [VoucherDiscountType]
   started: DateTimeRangeInput
   search: String
+  metadata: [MetadataFilter]
 }
 
 input VoucherInput {
@@ -5883,6 +6018,7 @@ enum VoucherSortField {
 
 input VoucherSortingInput {
   direction: OrderDirection!
+  channel: String
   field: VoucherSortField!
 }
 
@@ -6097,6 +6233,8 @@ enum WebhookEventTypeEnum {
   PAYMENT_PROCESS
   PAYMENT_REFUND
   PAYMENT_VOID
+  TRANSLATION_CREATED
+  TRANSLATION_UPDATED
 }
 
 enum WebhookSampleEventTypeEnum {
@@ -6131,6 +6269,8 @@ enum WebhookSampleEventTypeEnum {
   PAYMENT_PROCESS
   PAYMENT_REFUND
   PAYMENT_VOID
+  TRANSLATION_CREATED
+  TRANSLATION_UPDATED
 }
 
 type WebhookUpdate {
@@ -6165,7 +6305,7 @@ enum WeightUnitsEnum {
 
 scalar _Any
 
-union _Entity = Address | User | Group | App | ProductVariant | Product | ProductType | Collection | Category | ProductMedia | ProductImage | PageType
+union _Entity = App | Address | User | Group | ProductVariant | Product | ProductType | Collection | Category | ProductMedia | ProductImage | PageType
 
 type _Service {
   sdl: String

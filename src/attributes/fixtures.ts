@@ -50,7 +50,9 @@ export const attribute: AttributeDetails_attribute = {
           reference: null,
           slug: "john-doe",
           richText: null,
-          boolean: null
+          boolean: null,
+          date: null,
+          dateTime: null
         }
       },
       {
@@ -64,7 +66,9 @@ export const attribute: AttributeDetails_attribute = {
           reference: null,
           slug: "milionare-pirate",
           richText: null,
-          boolean: null
+          boolean: null,
+          date: null,
+          dateTime: null
         }
       }
     ]
@@ -108,7 +112,9 @@ export const attributes: Array<AttributeList_attributes_edges_node &
               sortOrder: 0,
               value: "",
               richText: null,
-              boolean: null
+              boolean: null,
+              date: null,
+              dateTime: null
             }
           },
           {
@@ -124,7 +130,9 @@ export const attributes: Array<AttributeList_attributes_edges_node &
               sortOrder: 1,
               value: "",
               richText: null,
-              boolean: null
+              boolean: null,
+              date: null,
+              dateTime: null
             }
           }
         ]
@@ -166,7 +174,9 @@ export const attributes: Array<AttributeList_attributes_edges_node &
               sortOrder: 0,
               value: "",
               richText: null,
-              boolean: null
+              boolean: null,
+              date: null,
+              dateTime: null
             }
           },
           {
@@ -182,7 +192,9 @@ export const attributes: Array<AttributeList_attributes_edges_node &
               sortOrder: 1,
               value: "",
               richText: null,
-              boolean: null
+              boolean: null,
+              date: null,
+              dateTime: null
             }
           },
           {
@@ -198,7 +210,9 @@ export const attributes: Array<AttributeList_attributes_edges_node &
               sortOrder: 2,
               value: "",
               richText: null,
-              boolean: null
+              boolean: null,
+              date: null,
+              dateTime: null
             }
           },
           {
@@ -214,7 +228,9 @@ export const attributes: Array<AttributeList_attributes_edges_node &
               sortOrder: 3,
               value: "",
               richText: null,
-              boolean: null
+              boolean: null,
+              date: null,
+              dateTime: null
             }
           }
         ]
@@ -256,7 +272,9 @@ export const attributes: Array<AttributeList_attributes_edges_node &
               sortOrder: 0,
               value: "",
               richText: null,
-              boolean: null
+              boolean: null,
+              date: null,
+              dateTime: null
             }
           }
         ]
@@ -298,7 +316,9 @@ export const attributes: Array<AttributeList_attributes_edges_node &
               sortOrder: 0,
               value: "",
               richText: null,
-              boolean: null
+              boolean: null,
+              date: null,
+              dateTime: null
             }
           },
           {
@@ -314,7 +334,9 @@ export const attributes: Array<AttributeList_attributes_edges_node &
               sortOrder: 1,
               value: "",
               richText: null,
-              boolean: null
+              boolean: null,
+              date: null,
+              dateTime: null
             }
           },
           {
@@ -330,7 +352,9 @@ export const attributes: Array<AttributeList_attributes_edges_node &
               sortOrder: 2,
               value: "",
               richText: null,
-              boolean: null
+              boolean: null,
+              date: null,
+              dateTime: null
             }
           }
         ]
@@ -372,7 +396,9 @@ export const attributes: Array<AttributeList_attributes_edges_node &
               sortOrder: 0,
               value: "",
               richText: null,
-              boolean: null
+              boolean: null,
+              date: null,
+              dateTime: null
             }
           },
           {
@@ -388,7 +414,9 @@ export const attributes: Array<AttributeList_attributes_edges_node &
               sortOrder: 1,
               value: "",
               richText: null,
-              boolean: null
+              boolean: null,
+              date: null,
+              dateTime: null
             }
           }
         ]
@@ -430,7 +458,9 @@ export const attributes: Array<AttributeList_attributes_edges_node &
               sortOrder: 0,
               value: "",
               richText: null,
-              boolean: null
+              boolean: null,
+              date: null,
+              dateTime: null
             }
           },
           {
@@ -446,7 +476,9 @@ export const attributes: Array<AttributeList_attributes_edges_node &
               sortOrder: 1,
               value: "",
               richText: null,
-              boolean: null
+              boolean: null,
+              date: null,
+              dateTime: null
             }
           },
           {
@@ -462,7 +494,9 @@ export const attributes: Array<AttributeList_attributes_edges_node &
               sortOrder: 2,
               value: "",
               richText: null,
-              boolean: null
+              boolean: null,
+              date: null,
+              dateTime: null
             }
           }
         ]
@@ -504,7 +538,9 @@ export const attributes: Array<AttributeList_attributes_edges_node &
               sortOrder: 0,
               value: "",
               richText: null,
-              boolean: null
+              boolean: null,
+              date: null,
+              dateTime: null
             }
           },
           {
@@ -520,7 +556,9 @@ export const attributes: Array<AttributeList_attributes_edges_node &
               sortOrder: 1,
               value: "",
               richText: null,
-              boolean: null
+              boolean: null,
+              date: null,
+              dateTime: null
             }
           }
         ]
@@ -562,7 +600,9 @@ export const attributes: Array<AttributeList_attributes_edges_node &
               sortOrder: 0,
               value: "",
               richText: null,
-              boolean: null
+              boolean: null,
+              date: null,
+              dateTime: null
             }
           },
           {
@@ -578,7 +618,9 @@ export const attributes: Array<AttributeList_attributes_edges_node &
               sortOrder: 1,
               value: "",
               richText: null,
-              boolean: null
+              boolean: null,
+              date: null,
+              dateTime: null
             }
           },
           {
@@ -594,7 +636,9 @@ export const attributes: Array<AttributeList_attributes_edges_node &
               sortOrder: 2,
               value: "",
               richText: null,
-              boolean: null
+              boolean: null,
+              date: null,
+              dateTime: null
             }
           },
           {
@@ -610,7 +654,9 @@ export const attributes: Array<AttributeList_attributes_edges_node &
               sortOrder: 3,
               value: "",
               richText: null,
-              boolean: null
+              boolean: null,
+              date: null,
+              dateTime: null
             }
           },
           {
@@ -626,7 +672,9 @@ export const attributes: Array<AttributeList_attributes_edges_node &
               sortOrder: 4,
               value: "",
               richText: null,
-              boolean: null
+              boolean: null,
+              date: null,
+              dateTime: null
             }
           },
           {
@@ -642,7 +690,9 @@ export const attributes: Array<AttributeList_attributes_edges_node &
               sortOrder: 5,
               value: "",
               richText: null,
-              boolean: null
+              boolean: null,
+              date: null,
+              dateTime: null
             }
           }
         ]
@@ -684,7 +734,9 @@ export const attributes: Array<AttributeList_attributes_edges_node &
               sortOrder: 0,
               value: "",
               richText: null,
-              boolean: null
+              boolean: null,
+              date: null,
+              dateTime: null
             }
           },
           {
@@ -700,7 +752,9 @@ export const attributes: Array<AttributeList_attributes_edges_node &
               sortOrder: 1,
               value: "",
               richText: null,
-              boolean: null
+              boolean: null,
+              date: null,
+              dateTime: null
             }
           }
         ]
@@ -742,7 +796,9 @@ export const attributes: Array<AttributeList_attributes_edges_node &
               sortOrder: 0,
               value: "",
               richText: null,
-              boolean: null
+              boolean: null,
+              date: null,
+              dateTime: null
             }
           },
           {
@@ -758,7 +814,9 @@ export const attributes: Array<AttributeList_attributes_edges_node &
               sortOrder: 1,
               value: "",
               richText: null,
-              boolean: null
+              boolean: null,
+              date: null,
+              dateTime: null
             }
           }
         ]
@@ -800,7 +858,9 @@ export const attributes: Array<AttributeList_attributes_edges_node &
               sortOrder: 0,
               value: "",
               richText: null,
-              boolean: null
+              boolean: null,
+              date: null,
+              dateTime: null
             }
           },
           {
@@ -816,7 +876,9 @@ export const attributes: Array<AttributeList_attributes_edges_node &
               sortOrder: 1,
               value: "",
               richText: null,
-              boolean: null
+              boolean: null,
+              date: null,
+              dateTime: null
             }
           }
         ]
@@ -858,7 +920,9 @@ export const attributes: Array<AttributeList_attributes_edges_node &
               sortOrder: 0,
               value: "",
               richText: null,
-              boolean: null
+              boolean: null,
+              date: null,
+              dateTime: null
             }
           },
           {
@@ -874,7 +938,9 @@ export const attributes: Array<AttributeList_attributes_edges_node &
               sortOrder: 1,
               value: "",
               richText: null,
-              boolean: null
+              boolean: null,
+              date: null,
+              dateTime: null
             }
           },
           {
@@ -890,7 +956,9 @@ export const attributes: Array<AttributeList_attributes_edges_node &
               sortOrder: 2,
               value: "",
               richText: null,
-              boolean: null
+              boolean: null,
+              date: null,
+              dateTime: null
             }
           },
           {
@@ -906,7 +974,9 @@ export const attributes: Array<AttributeList_attributes_edges_node &
               sortOrder: 3,
               value: "",
               richText: null,
-              boolean: null
+              boolean: null,
+              date: null,
+              dateTime: null
             }
           },
           {
@@ -922,7 +992,9 @@ export const attributes: Array<AttributeList_attributes_edges_node &
               sortOrder: 4,
               value: "",
               richText: null,
-              boolean: null
+              boolean: null,
+              date: null,
+              dateTime: null
             }
           },
           {
@@ -938,7 +1010,9 @@ export const attributes: Array<AttributeList_attributes_edges_node &
               sortOrder: 5,
               value: "",
               richText: null,
-              boolean: null
+              boolean: null,
+              date: null,
+              dateTime: null
             }
           }
         ]

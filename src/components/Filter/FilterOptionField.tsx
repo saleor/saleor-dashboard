@@ -32,6 +32,7 @@ const FilterOptionField: React.FC<FilterBaseFieldProps> = ({
       payload: {
         name: filterField.name,
         update: {
+          active: true,
           value: filterField.multiple
             ? toggle(value, filterField.value, (a, b) => a === b)
             : [value]

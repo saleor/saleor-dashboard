@@ -39,6 +39,7 @@ export function createHandler(
         value: decimal(formData.value)
       }
     });
+
     if (!response.data.saleCreate.errors.length) {
       updateChannels({
         variables: getSaleChannelsVariables(
@@ -46,6 +47,7 @@ export function createHandler(
           formData
         )
       });
+      return response.data.saleCreate.sale.id;
     }
   };
 }

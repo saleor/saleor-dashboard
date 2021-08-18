@@ -42,6 +42,7 @@ function createMetadataCreateHandler<T extends MetadataFormData>(
         return updateMetaErrors;
       }
     }
+
     if (data.privateMetadata.length > 0) {
       const updatePrivateMetaResult = await setPrivateMetadata({
         variables: {

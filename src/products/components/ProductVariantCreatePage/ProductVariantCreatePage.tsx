@@ -85,6 +85,7 @@ interface ProductVariantCreatePageProps {
   fetchMoreReferenceProducts?: FetchMoreProps;
   fetchMoreAttributeValues?: FetchMoreProps;
   onCloseDialog: () => void;
+  onAttributeSelectBlur: () => void;
 }
 
 const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
@@ -112,7 +113,8 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
   fetchMoreReferencePages,
   fetchMoreReferenceProducts,
   fetchMoreAttributeValues,
-  onCloseDialog
+  onCloseDialog,
+  onAttributeSelectBlur
 }) => {
   const intl = useIntl();
 
@@ -192,6 +194,7 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
                 onReferencesReorder={handlers.reorderAttributeValue}
                 fetchAttributeValues={fetchAttributeValues}
                 fetchMoreAttributeValues={fetchMoreAttributeValues}
+                onAttributeSelectBlur={onAttributeSelectBlur}
               />
               <CardSpacer />
               <Attributes
@@ -213,6 +216,7 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
                 onReferencesReorder={handlers.reorderAttributeValue}
                 fetchAttributeValues={fetchAttributeValues}
                 fetchMoreAttributeValues={fetchMoreAttributeValues}
+                onAttributeSelectBlur={onAttributeSelectBlur}
               />
               <CardSpacer />
               <ProductShipping

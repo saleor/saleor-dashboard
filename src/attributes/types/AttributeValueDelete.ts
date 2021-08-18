@@ -32,6 +32,8 @@ export interface AttributeValueDelete_attributeValueDelete_attribute_choices_edg
   reference: string | null;
   richText: any | null;
   boolean: boolean | null;
+  date: any | null;
+  dateTime: any | null;
 }
 
 export interface AttributeValueDelete_attributeValueDelete_attribute_choices_edges {

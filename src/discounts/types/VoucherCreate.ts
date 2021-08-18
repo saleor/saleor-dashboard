@@ -16,6 +16,18 @@ export interface VoucherCreate_voucherCreate_errors {
   channels: string[] | null;
 }
 
+export interface VoucherCreate_voucherCreate_voucher_metadata {
+  __typename: "MetadataItem";
+  key: string;
+  value: string;
+}
+
+export interface VoucherCreate_voucherCreate_voucher_privateMetadata {
+  __typename: "MetadataItem";
+  key: string;
+  value: string;
+}
+
 export interface VoucherCreate_voucherCreate_voucher_countries {
   __typename: "CountryDisplay";
   code: string;
@@ -46,6 +58,8 @@ export interface VoucherCreate_voucherCreate_voucher_channelListings {
 
 export interface VoucherCreate_voucherCreate_voucher {
   __typename: "Voucher";
+  metadata: (VoucherCreate_voucherCreate_voucher_metadata | null)[];
+  privateMetadata: (VoucherCreate_voucherCreate_voucher_privateMetadata | null)[];
   id: string;
   code: string;
   startDate: any;

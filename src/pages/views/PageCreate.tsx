@@ -15,7 +15,7 @@ import useNotifier from "@saleor/hooks/useNotifier";
 import usePageSearch from "@saleor/searches/usePageSearch";
 import usePageTypeSearch from "@saleor/searches/usePageTypeSearch";
 import useProductSearch from "@saleor/searches/useProductSearch";
-import createAttributeValueSearchHandler from "@saleor/utils/handlers/attributeValueSearchHandler";
+import useAttributeValueSearchHandler from "@saleor/utils/handlers/attributeValueSearchHandler";
 import createMetadataCreateHandler from "@saleor/utils/handlers/metadataCreateHandler";
 import { mapEdgesToItems } from "@saleor/utils/maps";
 import {
@@ -76,8 +76,9 @@ export const PageCreate: React.FC<PageCreateProps> = ({ params }) => {
   const {
     loadMore: loadMoreAttributeValues,
     search: searchAttributeValues,
-    result: searchAttributeValuesOpts
-  } = createAttributeValueSearchHandler(DEFAULT_INITIAL_SEARCH_DATA);
+    result: searchAttributeValuesOpts,
+    reset: searchAttributeReset
+  } = useAttributeValueSearchHandler(DEFAULT_INITIAL_SEARCH_DATA);
 
   const { data: selectedPageType } = usePageTypeQuery({
     variables: {
@@ -218,6 +219,7 @@ export const PageCreate: React.FC<PageCreateProps> = ({ params }) => {
               onCloseDialog={() => navigate(pageCreateUrl())}
               selectedPageType={selectedPageType?.pageType}
               onSelectPageType={id => setSelectedPageTypeId(id)}
+              onAttributeSelectBlur={searchAttributeReset}
             />
           </>
         );

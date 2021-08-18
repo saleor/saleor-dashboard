@@ -1,5 +1,5 @@
 import { Pagination } from "@saleor/types";
-import { stringify as stringifyQs } from "qs";
+import { stringifyQs } from "@saleor/utils/urls";
 import urlJoin from "url-join";
 
 import { TranslationsEntitiesListFilterTab } from "./components/TranslationsEntitiesListPage";
@@ -7,11 +7,12 @@ import { TranslationsEntitiesListFilterTab } from "./components/TranslationsEnti
 export enum TranslatableEntities {
   categories = "categories",
   products = "products",
+  productVariants = "variants",
   collections = "collections",
   sales = "sales",
   vouchers = "vouchers",
   pages = "pages",
-  productTypes = "productTypes",
+  attributes = "attributes",
   shippingMethods = "shippingMethods"
 }
 
@@ -35,10 +36,25 @@ export const languageEntitiesUrl = (
 export const languageEntityPath = (
   code: string,
   entity: TranslatableEntities,
-  id: string
-) => urlJoin(languageEntitiesPath(code), entity.toString(), id);
+  id: string,
+  ...args: string[]
+) => urlJoin(languageEntitiesPath(code), entity.toString(), id, ...args);
 export const languageEntityUrl = (
   code: string,
   entity: TranslatableEntities,
-  id: string
-) => languageEntityPath(code, entity, encodeURIComponent(id));
+  id: string,
+  ...args: string[]
+) => languageEntityPath(code, entity, encodeURIComponent(id), ...args);
+
+export const productVariantUrl = (
+  code: string,
+  productId: string,
+  variantId: string
+) =>
+  languageEntityUrl(
+    code,
+    TranslatableEntities.products,
+    productId,
+    TranslatableEntities.productVariants,
+    variantId
+  );

@@ -89,6 +89,8 @@ export enum AttributeErrorCode {
 
 export enum AttributeInputTypeEnum {
   BOOLEAN = "BOOLEAN",
+  DATE = "DATE",
+  DATE_TIME = "DATE_TIME",
   DROPDOWN = "DROPDOWN",
   FILE = "FILE",
   MULTISELECT = "MULTISELECT",
@@ -464,6 +466,33 @@ export enum FulfillmentStatus {
   REFUNDED_AND_RETURNED = "REFUNDED_AND_RETURNED",
   REPLACED = "REPLACED",
   RETURNED = "RETURNED",
+}
+
+export enum GiftCardErrorCode {
+  ALREADY_EXISTS = "ALREADY_EXISTS",
+  GRAPHQL_ERROR = "GRAPHQL_ERROR",
+  INVALID = "INVALID",
+  NOT_FOUND = "NOT_FOUND",
+  REQUIRED = "REQUIRED",
+  UNIQUE = "UNIQUE",
+}
+
+export enum GiftCardEventsEnum {
+  ACTIVATED = "ACTIVATED",
+  BALANCE_RESET = "BALANCE_RESET",
+  BOUGHT = "BOUGHT",
+  DEACTIVATED = "DEACTIVATED",
+  EXPIRY_SETTINGS_UPDATED = "EXPIRY_SETTINGS_UPDATED",
+  ISSUED = "ISSUED",
+  RESENT = "RESENT",
+  SENT_TO_CUSTOMER = "SENT_TO_CUSTOMER",
+  UPDATED = "UPDATED",
+}
+
+export enum GiftCardExpiryTypeEnum {
+  EXPIRY_DATE = "EXPIRY_DATE",
+  EXPIRY_PERIOD = "EXPIRY_PERIOD",
+  NEVER_EXPIRE = "NEVER_EXPIRE",
 }
 
 export enum InvoiceErrorCode {
@@ -955,6 +984,12 @@ export enum StockErrorCode {
   UNIQUE = "UNIQUE",
 }
 
+export enum TimePeriodTypeEnum {
+  DAY = "DAY",
+  MONTH = "MONTH",
+  YEAR = "YEAR",
+}
+
 export enum UploadErrorCode {
   GRAPHQL_ERROR = "GRAPHQL_ERROR",
 }
@@ -1042,6 +1077,8 @@ export enum WebhookEventTypeEnum {
   PRODUCT_VARIANT_CREATED = "PRODUCT_VARIANT_CREATED",
   PRODUCT_VARIANT_DELETED = "PRODUCT_VARIANT_DELETED",
   PRODUCT_VARIANT_UPDATED = "PRODUCT_VARIANT_UPDATED",
+  TRANSLATION_CREATED = "TRANSLATION_CREATED",
+  TRANSLATION_UPDATED = "TRANSLATION_UPDATED",
 }
 
 export enum WeightUnitsEnum {
@@ -1124,12 +1161,15 @@ export interface AttributeFilterInput {
   type?: AttributeTypeEnum | null;
   inCollection?: string | null;
   inCategory?: string | null;
+  channel?: string | null;
 }
 
 export interface AttributeInput {
   slug: string;
   values?: (string | null)[] | null;
   valuesRange?: IntRangeInput | null;
+  dateTime?: DateTimeRangeInput | null;
+  date?: DateRangeInput | null;
   boolean?: boolean | null;
 }
 
@@ -1167,6 +1207,8 @@ export interface AttributeValueInput {
   references?: string[] | null;
   richText?: any | null;
   boolean?: boolean | null;
+  date?: any | null;
+  dateTime?: any | null;
 }
 
 export interface AttributeValueTranslationInput {
@@ -1176,7 +1218,8 @@ export interface AttributeValueTranslationInput {
 
 export interface BulkAttributeValueInput {
   id?: string | null;
-  values: string[];
+  values?: string[] | null;
+  boolean?: boolean | null;
 }
 
 export interface CatalogueInput {
@@ -1202,6 +1245,7 @@ export interface CategoryInput {
 
 export interface CategorySortingInput {
   direction: OrderDirection;
+  channel?: string | null;
   field: CategorySortField;
 }
 
@@ -1247,6 +1291,7 @@ export interface CollectionFilterInput {
   search?: string | null;
   metadata?: (MetadataFilter | null)[] | null;
   ids?: (string | null)[] | null;
+  channel?: string | null;
 }
 
 export interface CollectionInput {
@@ -1262,6 +1307,7 @@ export interface CollectionInput {
 
 export interface CollectionSortingInput {
   direction: OrderDirection;
+  channel?: string | null;
   field: CollectionSortField;
 }
 
@@ -1348,6 +1394,31 @@ export interface FulfillmentCancelInput {
 export interface FulfillmentUpdateTrackingInput {
   trackingNumber?: string | null;
   notifyCustomer?: boolean | null;
+}
+
+export interface GiftCardCreateInput {
+  tag?: string | null;
+  startDate?: any | null;
+  endDate?: any | null;
+  balance: PriceInput;
+  userEmail?: string | null;
+  expirySettings: GiftCardExpirySettingsInput;
+  code?: string | null;
+  note?: string | null;
+}
+
+export interface GiftCardExpirySettingsInput {
+  expiryType: GiftCardExpiryTypeEnum;
+  expiryDate?: any | null;
+  expiryPeriod?: TimePeriodInputType | null;
+}
+
+export interface GiftCardUpdateInput {
+  tag?: string | null;
+  startDate?: any | null;
+  endDate?: any | null;
+  balanceAmount?: any | null;
+  expirySettings?: GiftCardExpirySettingsInput | null;
 }
 
 export interface IntRangeInput {
@@ -1618,6 +1689,11 @@ export interface PluginUpdateInput {
   configuration?: (ConfigurationItemInput | null)[] | null;
 }
 
+export interface PriceInput {
+  currency: string;
+  amount: any;
+}
+
 export interface PriceRangeInput {
   gte?: number | null;
   lte?: number | null;
@@ -1673,6 +1749,7 @@ export interface ProductFilterInput {
   minimalPrice?: PriceRangeInput | null;
   productTypes?: (string | null)[] | null;
   ids?: (string | null)[] | null;
+  channel?: string | null;
 }
 
 export interface ProductInput {
@@ -1691,6 +1768,7 @@ export interface ProductInput {
 
 export interface ProductOrder {
   direction: OrderDirection;
+  channel?: string | null;
   attributeId?: string | null;
   field?: ProductOrderField | null;
 }
@@ -1782,6 +1860,7 @@ export interface SaleFilterInput {
   saleType?: DiscountValueTypeEnum | null;
   started?: DateTimeRangeInput | null;
   search?: string | null;
+  metadata?: (MetadataFilter | null)[] | null;
 }
 
 export interface SaleInput {
@@ -1797,6 +1876,7 @@ export interface SaleInput {
 
 export interface SaleSortingInput {
   direction: OrderDirection;
+  channel?: string | null;
   field: SaleSortField;
 }
 
@@ -1921,6 +2001,11 @@ export interface StockInput {
   quantity: number;
 }
 
+export interface TimePeriodInputType {
+  amount: number;
+  type: TimePeriodTypeEnum;
+}
+
 export interface TranslationInput {
   seoTitle?: string | null;
   seoDescription?: string | null;
@@ -1963,6 +2048,7 @@ export interface VoucherFilterInput {
   discountType?: (VoucherDiscountType | null)[] | null;
   started?: DateTimeRangeInput | null;
   search?: string | null;
+  metadata?: (MetadataFilter | null)[] | null;
 }
 
 export interface VoucherInput {
@@ -1985,6 +2071,7 @@ export interface VoucherInput {
 
 export interface VoucherSortingInput {
   direction: OrderDirection;
+  channel?: string | null;
   field: VoucherSortField;
 }
 

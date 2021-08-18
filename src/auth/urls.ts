@@ -1,4 +1,4 @@
-import { stringify as stringifyQs } from "qs";
+import { stringifyQs } from "@saleor/utils/urls";
 
 export const passwordResetPath = "/reset-password/";
 export const passwordResetUrl = passwordResetPath;

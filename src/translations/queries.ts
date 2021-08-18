@@ -6,6 +6,7 @@ import {
   collectionTranslationFragment,
   pageTranslationFragment,
   productTranslationFragment,
+  productVariantTranslationFragment,
   saleTranslationFragment,
   shippingMethodTranslationFragment,
   voucherTranslationFragment
@@ -54,6 +55,14 @@ import {
   ProductTranslations,
   ProductTranslationsVariables
 } from "./types/ProductTranslations";
+import {
+  ProductVariantList,
+  ProductVariantListVariables
+} from "./types/ProductVariantList";
+import {
+  ProductVariantTranslationDetails,
+  ProductVariantTranslationDetailsVariables
+} from "./types/ProductVariantTranslationDetails";
 import {
   SaleTranslationDetails,
   SaleTranslationDetailsVariables
@@ -355,6 +364,39 @@ export const useProductTranslationDetails = makeQuery<
   ProductTranslationDetails,
   ProductTranslationDetailsVariables
 >(productTranslationDetails);
+
+const productVariantList = gql`
+  query ProductVariantList($id: ID!) {
+    product(id: $id) {
+      id
+      variants {
+        id
+        name
+        sku
+      }
+    }
+  }
+`;
+export const useProductVariantList = makeQuery<
+  ProductVariantList,
+  ProductVariantListVariables
+>(productVariantList);
+
+const productVariantTranslationDetails = gql`
+  ${productVariantTranslationFragment}
+  query ProductVariantTranslationDetails(
+    $id: ID!
+    $language: LanguageCodeEnum!
+  ) {
+    translation(kind: VARIANT, id: $id) {
+      ...ProductVariantTranslationFragment
+    }
+  }
+`;
+export const useProductVariantTranslationDetails = makeQuery<
+  ProductVariantTranslationDetails,
+  ProductVariantTranslationDetailsVariables
+>(productVariantTranslationDetails);
 
 const categoryTranslationDetails = gql`
   ${categoryTranslationFragment}

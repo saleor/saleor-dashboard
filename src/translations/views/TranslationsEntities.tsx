@@ -4,7 +4,7 @@ import usePaginator, {
 } from "@saleor/hooks/usePaginator";
 import useShop from "@saleor/hooks/useShop";
 import { mapEdgesToItems } from "@saleor/utils/maps";
-import { stringify as stringifyQs } from "qs";
+import { stringifyQs } from "@saleor/utils/urls";
 import React from "react";
 
 import { PAGINATE_BY } from "../../config";
@@ -76,11 +76,11 @@ const TranslationsEntities: React.FC<TranslationsEntitiesProps> = ({
             tab: TranslatableEntities.pages
           })
       ),
-    onProductTypesTabClick: () =>
+    onAttributesTabClick: () =>
       navigate(
         "?" +
           stringifyQs({
-            tab: TranslatableEntities.productTypes
+            tab: TranslatableEntities.attributes
           })
       ),
     onProductsTabClick: () =>
@@ -194,9 +194,12 @@ const TranslationsEntities: React.FC<TranslationsEntitiesProps> = ({
                           node.translation?.description,
                           node.translation?.name,
                           node.translation?.seoDescription,
-                          node.translation?.seoTitle
+                          node.translation?.seoTitle,
+                          ...(node.attributeValues?.map(
+                            ({ translation }) => translation?.richText
+                          ) || [])
                         ]),
-                        max: 4
+                        max: 4 + (node.attributeValues?.length || 0)
                       },
                       id: node?.product?.id,
                       name: node?.product?.name
@@ -380,7 +383,7 @@ const TranslationsEntities: React.FC<TranslationsEntitiesProps> = ({
             );
           }}
         </TypedPageTranslations>
-      ) : params.tab === "productTypes" ? (
+      ) : params.tab === "attributes" ? (
         <TypedAttributeTranslations variables={queryVariables}>
           {({ data, loading }) => {
             const { loadNextPage, loadPreviousPage, pageInfo } = paginate(
@@ -403,7 +406,7 @@ const TranslationsEntities: React.FC<TranslationsEntitiesProps> = ({
                   navigate(
                     languageEntityUrl(
                       language,
-                      TranslatableEntities.productTypes,
+                      TranslatableEntities.attributes,
                       id
                     )
                   )

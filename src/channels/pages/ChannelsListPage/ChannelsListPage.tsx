@@ -56,12 +56,18 @@ export const ChannelsListPage: React.FC<ChannelsListPageProps> = ({
       </Backlink>
       <PageHeader
         title={intl.formatMessage(sectionNames.channels)}
-        limit={
-          hasLimits(limits, "channels") && {
-            data: limits,
-            key: "channels",
-            text: "channels used"
-          }
+        limitText={
+          hasLimits(limits, "channels") &&
+          intl.formatMessage(
+            {
+              defaultMessage: "{count}/{max} channels used",
+              description: "created channels counter"
+            },
+            {
+              count: limits.currentUsage.channels,
+              max: limits.allowedUsage.channels
+            }
+          )
         }
       >
         <Button

@@ -2,6 +2,23 @@ import { CollectionListUrlSortField } from "@saleor/collections/urls";
 import { CollectionSortField } from "@saleor/types/globalTypes";
 import { createGetSortQueryVariables } from "@saleor/utils/sort";
 
+export const DEFAULT_SORT_KEY = CollectionListUrlSortField.name;
+
+export function canBeSorted(
+  sort: CollectionListUrlSortField,
+  isChannelSelected: boolean
+) {
+  switch (sort) {
+    case CollectionListUrlSortField.name:
+    case CollectionListUrlSortField.productCount:
+      return true;
+    case CollectionListUrlSortField.available:
+      return isChannelSelected;
+    default:
+      return false;
+  }
+}
+
 export function getSortQueryField(
   sort: CollectionListUrlSortField
 ): CollectionSortField {

@@ -13,6 +13,7 @@ export const urlList = {
   newPassword: "new-password/",
   navigation: "navigation/",
   orders: "orders/",
+  pages: "pages/",
   pageTypes: "page-types/",
   permissionsGroups: "permission-groups/",
   products: "products/",

@@ -957,6 +957,14 @@
     "context": "boolean attribute type",
     "string": "Boolean"
   },
+  "src_dot_attributes_dot_components_dot_AttributeDetails_dot_date": {
+    "context": "date attribute type",
+    "string": "Date"
+  },
+  "src_dot_attributes_dot_components_dot_AttributeDetails_dot_dateTime": {
+    "context": "date time attribute type",
+    "string": "Date Time"
+  },
   "src_dot_attributes_dot_components_dot_AttributeDetails_dot_distance": {
     "context": "distance units type",
     "string": "Distance"
@@ -1451,6 +1459,9 @@
     "context": "dialog title",
     "string": "Delete categories"
   },
+  "src_dot_channel": {
+    "string": "Channel"
+  },
   "src_dot_channels": {
     "context": "channels section name",
     "string": "Channels"
@@ -1575,6 +1586,10 @@
     "context": "alert",
     "string": "Channel limit reached"
   },
+  "src_dot_channels_dot_pages_dot_ChannelsListPage_dot_3277722884": {
+    "context": "created channels counter",
+    "string": "{count}/{max} channels used"
+  },
   "src_dot_channels_dot_pages_dot_ChannelsListPage_dot_3511613983": {
     "context": "channel name",
     "string": "Channel Name"
@@ -1669,8 +1684,8 @@
     "context": "tab name",
     "string": "All Collections"
   },
-  "src_dot_collections_dot_components_dot_CollectionListPage_dot_4057224233": {
-    "string": "Search Collection"
+  "src_dot_collections_dot_components_dot_CollectionListPage_dot_2685595924": {
+    "string": "Search Collections"
   },
   "src_dot_collections_dot_components_dot_CollectionListPage_dot_686910896": {
     "context": "button",
@@ -1696,6 +1711,18 @@
   "src_dot_collections_dot_components_dot_CollectionList_dot_3326160357": {
     "context": "collection availability",
     "string": "Availability"
+  },
+  "src_dot_collections_dot_components_dot_CollectionList_dot_published": {
+    "context": "collection publication date",
+    "string": "Published on {date}"
+  },
+  "src_dot_collections_dot_components_dot_CollectionList_dot_unpublished": {
+    "context": "collection publication date",
+    "string": "Unpublished"
+  },
+  "src_dot_collections_dot_components_dot_CollectionList_dot_willBePublished": {
+    "context": "collection publication date",
+    "string": "Becomes published on {date}"
   },
   "src_dot_collections_dot_components_dot_CollectionProducts_dot_1657559629": {
     "string": "No products found"
@@ -2757,6 +2784,9 @@
   "src_dot_dashboard": {
     "string": "Dashboard"
   },
+  "src_dot_date": {
+    "string": "Date"
+  },
   "src_dot_delete": {
     "context": "button",
     "string": "Delete"
@@ -3370,6 +3400,218 @@
   "src_dot_generalInformations": {
     "string": "General Information"
   },
+  "src_dot_giftCards": {
+    "context": "gift cards section name",
+    "string": "Gift Cards"
+  },
+  "src_dot_giftCards_dot_GiftCardCreateDialog_dot_amountLabel": {
+    "context": "GiftCardCreateDialog amount label",
+    "string": "Enter amount"
+  },
+  "src_dot_giftCards_dot_GiftCardCreateDialog_dot_copiedToClipboardTitle": {
+    "context": "GiftCardCreateDialog copied to clipboard title",
+    "string": "Copied to clipboard"
+  },
+  "src_dot_giftCards_dot_GiftCardCreateDialog_dot_copyCodeLabel": {
+    "context": "GiftCardCreateDialog copy code label",
+    "string": "Copy code"
+  },
+  "src_dot_giftCards_dot_GiftCardCreateDialog_dot_createdGiftCardLabel": {
+    "context": "GiftCardCreateDialog created gift card label",
+    "string": "This is the code of a created gift card:"
+  },
+  "src_dot_giftCards_dot_GiftCardCreateDialog_dot_createdSuccessAlertTitle": {
+    "context": "GiftCardCreateDialog createdSuccessAlertTitle",
+    "string": "Successfully created gift card"
+  },
+  "src_dot_giftCards_dot_GiftCardCreateDialog_dot_customerLabel": {
+    "context": "GiftCardCreateDialog customer label",
+    "string": "Customer"
+  },
+  "src_dot_giftCards_dot_GiftCardCreateDialog_dot_customerSubtitle": {
+    "context": "GiftCardCreateDialog customer subtitle",
+    "string": "Selected customer will be sent the generated gift card code. Someone else can redeem the gift card code. Gift card will be assigned to account which redeemed the code."
+  },
+  "src_dot_giftCards_dot_GiftCardCreateDialog_dot_issueButtonLabel": {
+    "context": "GiftCardCreateDialog issue button label",
+    "string": "Issue"
+  },
+  "src_dot_giftCards_dot_GiftCardCreateDialog_dot_noteLabel": {
+    "context": "GiftCardCreateDialog note label",
+    "string": "Note"
+  },
+  "src_dot_giftCards_dot_GiftCardCreateDialog_dot_noteSubtitle": {
+    "context": "GiftCardCreateDialog note subtitle",
+    "string": "Why was this gift card issued. This note will not be shown to the customer. Note will be stored in gift card history"
+  },
+  "src_dot_giftCards_dot_GiftCardCreateDialog_dot_title": {
+    "context": "GiftCardCreateDialog title",
+    "string": "Issue gift card"
+  },
+  "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardUpdateBalanceDialog_dot_changeButtonLabel": {
+    "context": "GiftCardUpdateDetailsCard set balance dialog change button label",
+    "string": "Change"
+  },
+  "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardUpdateBalanceDialog_dot_subtitle": {
+    "context": "GiftCardUpdateDetailsCard set balance dialog subtitle",
+    "string": "What would you like to set cards balance to. When you change the balance both values will be changed"
+  },
+  "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardUpdateBalanceDialog_dot_title": {
+    "context": "GiftCardUpdateDetailsCard set balance button label",
+    "string": "Set balance"
+  },
+  "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardUpdateBalanceDialog_dot_updatedSuccessAlertTitle": {
+    "context": "GiftCardUpdateDetailsCard update success alert title",
+    "string": "Successfully updated card balance"
+  },
+  "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardUpdateDetailsCard_dot_cardBalanceLabel": {
+    "context": "GiftCardUpdateDetailsCard card balance label",
+    "string": "Card Balance"
+  },
+  "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardUpdateDetailsCard_dot_setBalanceButtonLabel": {
+    "context": "GiftCardUpdateDetailsCard set balance button label",
+    "string": "set balance"
+  },
+  "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardUpdateDetailsCard_dot_title": {
+    "context": "GiftCardUpdateDetailsCard title",
+    "string": "Details"
+  },
+  "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardUpdateInfoCard_dot_boughtByLabel": {
+    "context": "GiftCardUpdateInfoCard bought by label",
+    "string": "Bought by"
+  },
+  "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardUpdateInfoCard_dot_creationLabel": {
+    "context": "GiftCardUpdateInfoCard creation label",
+    "string": "Creation"
+  },
+  "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardUpdateInfoCard_dot_issuedByAppLabel": {
+    "context": "GiftCardUpdateInfoCard issued by app label",
+    "string": "Issued by app"
+  },
+  "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardUpdateInfoCard_dot_issuedByLabel": {
+    "context": "GiftCardUpdateInfoCard issued by label",
+    "string": "Issued by"
+  },
+  "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardUpdateInfoCard_dot_orderNumberLabel": {
+    "context": "GiftCardUpdateInfoCard order number label",
+    "string": "Order number"
+  },
+  "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardUpdateInfoCard_dot_productLabel": {
+    "context": "GiftCardUpdateInfoCard product label",
+    "string": "Product bought to get gift card"
+  },
+  "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardUpdateInfoCard_dot_title": {
+    "context": "GiftCardUpdateInfoCard title",
+    "string": "Card information"
+  },
+  "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardUpdateInfoCard_dot_usedByLabel": {
+    "context": "GiftCardUpdateInfoCard used by label",
+    "string": "Used by"
+  },
+  "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardUpdatePageHeader_dot_disableLabel": {
+    "context": "GiftCardEnableDisableSection enable label",
+    "string": "Disable"
+  },
+  "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardUpdatePageHeader_dot_enableLabel": {
+    "context": "GiftCardEnableDisableSection enable label",
+    "string": "Enable"
+  },
+  "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardUpdatePageHeader_dot_successfullyDisabledTitle": {
+    "context": "GiftCardEnableDisableSection disable success",
+    "string": "Successfully disabled gift card"
+  },
+  "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardUpdatePageHeader_dot_successfullyEnabledTitle": {
+    "context": "GiftCardEnableDisableSection enable success",
+    "string": "Successfully enabled gift card"
+  },
+  "src_dot_giftCards_dot_GiftCardUpdate_dot_title": {
+    "context": "GiftCardUpdateDetailsCard title",
+    "string": "Details"
+  },
+  "src_dot_giftCards_dot_GiftCardsList_dot_bulkIssue": {
+    "context": "GiftCardsListHeader menu item settings",
+    "string": "Bulk Issue"
+  },
+  "src_dot_giftCards_dot_GiftCardsList_dot_codeEndingWithLabel": {
+    "context": "GiftCardsListTable code ending with label",
+    "string": "Code ending with {displayCode}"
+  },
+  "src_dot_giftCards_dot_GiftCardsList_dot_exportCodes": {
+    "context": "GiftCardsListHeader menu item settings",
+    "string": "Export card codes"
+  },
+  "src_dot_giftCards_dot_GiftCardsList_dot_giftCardDisabledLabel": {
+    "context": "GiftCardsListTable disabled label",
+    "string": "Disabled"
+  },
+  "src_dot_giftCards_dot_GiftCardsList_dot_giftCardsTableColumnBalanceTitle": {
+    "context": "GiftCardsListTable column title balance",
+    "string": "Balance"
+  },
+  "src_dot_giftCards_dot_GiftCardsList_dot_giftCardsTableColumnCustomerTitle": {
+    "context": "GiftCardsListTable column title customer",
+    "string": "Used by"
+  },
+  "src_dot_giftCards_dot_GiftCardsList_dot_giftCardsTableColumnGiftCardTitle": {
+    "context": "GiftCardsListTable column title gift card",
+    "string": "Gift Card"
+  },
+  "src_dot_giftCards_dot_GiftCardsList_dot_giftCardsTableColumnProductTitle": {
+    "context": "GiftCardsListTable column title product",
+    "string": "Product"
+  },
+  "src_dot_giftCards_dot_GiftCardsList_dot_giftCardsTableColumnTagTitle": {
+    "context": "GiftCardsListTable column title tag",
+    "string": "Tag"
+  },
+  "src_dot_giftCards_dot_GiftCardsList_dot_issueButtonLabel": {
+    "context": "GiftCardsListHeader issue button label",
+    "string": "Issue card"
+  },
+  "src_dot_giftCards_dot_GiftCardsList_dot_noGiftCardsFound": {
+    "context": "GiftCardsListTable no cards found title",
+    "string": "No gift cards found"
+  },
+  "src_dot_giftCards_dot_GiftCardsList_dot_settings": {
+    "context": "GiftCardsListHeader menu item settings",
+    "string": "Settings"
+  },
+  "src_dot_giftCards_dot_components_dot_GiftCardExpirySelect_dot_expirationDateLabel": {
+    "context": "GiftCarUpdateDetailsExpirySection expiration date label",
+    "string": "Expiration date"
+  },
+  "src_dot_giftCards_dot_components_dot_GiftCardExpirySelect_dot_expiryDateLabel": {
+    "context": "GiftCarUpdateDetailsExpirySection expiry date label",
+    "string": "Expiration date"
+  },
+  "src_dot_giftCards_dot_components_dot_GiftCardExpirySelect_dot_expiryPeriodLabel": {
+    "context": "GiftCarUpdateDetailsExpirySection expiry period label",
+    "string": "Expiry period"
+  },
+  "src_dot_giftCards_dot_components_dot_GiftCardExpirySelect_dot_neverExpireLabel": {
+    "context": "GiftCarUpdateDetailsExpirySection never expire label",
+    "string": "Never expire"
+  },
+  "src_dot_giftCards_dot_components_dot_GiftCardTagInput_dot_label": {
+    "context": "GiftCardTagInput tag label",
+    "string": "Card Tag"
+  },
+  "src_dot_giftCards_dot_components_dot_GiftCardTagInput_dot_placeholder": {
+    "context": "GiftCardTagInput tag placeholder",
+    "string": "Tag"
+  },
+  "src_dot_giftCards_dot_components_dot_TimePeriodField_dot_dayLabel": {
+    "context": "TimePeriodTextWithSelectField day label",
+    "string": "days after usage"
+  },
+  "src_dot_giftCards_dot_components_dot_TimePeriodField_dot_monthLabel": {
+    "context": "TimePeriodTextWithSelectField month label",
+    "string": "months after usage"
+  },
+  "src_dot_giftCards_dot_components_dot_TimePeriodField_dot_yearLabel": {
+    "context": "TimePeriodTextWithSelectField year label",
+    "string": "years after usage"
+  },
   "src_dot_home": {
     "context": "home section name",
     "string": "Home"
@@ -3433,6 +3675,13 @@
   "src_dot_orders": {
     "context": "orders section name",
     "string": "Orders"
+  },
+  "src_dot_orders_dot_components_dot_2214147779": {
+    "context": "alert",
+    "string": "Order limit reached"
+  },
+  "src_dot_orders_dot_components_dot_3769643084": {
+    "string": "You have reached your order limit, you will be billed extra for orders above limit. If you would like to up your limit, contact your administration staff about raising your limits."
   },
   "src_dot_orders_dot_components_dot_DraftOrderChannelSectionCard_dot_1243773440": {
     "context": "section header",
@@ -3658,6 +3907,10 @@
   "src_dot_orders_dot_components_dot_OrderDraftDetails_dot_2528459381": {
     "context": "button",
     "string": "Add products"
+  },
+  "src_dot_orders_dot_components_dot_OrderDraftListPage_dot_1629108523": {
+    "context": "placed orders counter",
+    "string": "{count}/{max} orders"
   },
   "src_dot_orders_dot_components_dot_OrderDraftListPage_dot_2826235371": {
     "context": "button",
@@ -3999,9 +4252,9 @@
     "context": "generate invoice button",
     "string": "Generate"
   },
-  "src_dot_orders_dot_components_dot_OrderListPage_dot_2214147779": {
-    "context": "alert",
-    "string": "Order limit reached"
+  "src_dot_orders_dot_components_dot_OrderListPage_dot_1629108523": {
+    "context": "placed order counter",
+    "string": "{count}/{max} orders"
   },
   "src_dot_orders_dot_components_dot_OrderListPage_dot_2225897825": {
     "context": "button",
@@ -4013,9 +4266,6 @@
   },
   "src_dot_orders_dot_components_dot_OrderListPage_dot_355376157": {
     "string": "Search Orders..."
-  },
-  "src_dot_orders_dot_components_dot_OrderListPage_dot_3769643084": {
-    "string": "You have reached your order limit, you will be billed extra for orders above limit. If you would like to up your limit, contact your administration staff about raising your limits."
   },
   "src_dot_orders_dot_components_dot_OrderListPage_dot_875489544": {
     "context": "tab name",
@@ -5208,18 +5458,6 @@
     "context": "products section name",
     "string": "Products"
   },
-  "src_dot_products_dot_components_dot_ProductAvailabilityStatusLabel_dot_published": {
-    "context": "product publication date",
-    "string": "Published on {date}"
-  },
-  "src_dot_products_dot_components_dot_ProductAvailabilityStatusLabel_dot_unpublished": {
-    "context": "product publication date",
-    "string": "Unpublished"
-  },
-  "src_dot_products_dot_components_dot_ProductAvailabilityStatusLabel_dot_willBePublished": {
-    "context": "product publication date",
-    "string": "Becomes published on {date}"
-  },
   "src_dot_products_dot_components_dot_ProductCategoryAndCollectionsForm_dot_1755013298": {
     "string": "Category"
   },
@@ -5371,6 +5609,10 @@
     "context": "alert",
     "string": "SKU limit reached"
   },
+  "src_dot_products_dot_components_dot_ProductListPage_dot_3155791658": {
+    "context": "created products counter",
+    "string": "{count}/{max} SKUs used"
+  },
   "src_dot_products_dot_components_dot_ProductListPage_dot_3550330425": {
     "string": "Search Products..."
   },
@@ -5438,6 +5680,18 @@
   "src_dot_products_dot_components_dot_ProductList_dot_636461959": {
     "context": "product",
     "string": "Name"
+  },
+  "src_dot_products_dot_components_dot_ProductList_dot_published": {
+    "context": "product publication date",
+    "string": "Published on {date}"
+  },
+  "src_dot_products_dot_components_dot_ProductList_dot_unpublished": {
+    "context": "product publication date",
+    "string": "Unpublished"
+  },
+  "src_dot_products_dot_components_dot_ProductList_dot_willBePublished": {
+    "context": "product publication date",
+    "string": "Becomes published on {date}"
   },
   "src_dot_products_dot_components_dot_ProductMediaNavigation_dot_allMedia": {
     "context": "section header",
@@ -6497,6 +6751,10 @@
     "context": "button",
     "string": "Invite staff member"
   },
+  "src_dot_staff_dot_components_dot_StaffListPage_dot_938945387": {
+    "context": "used staff users counter",
+    "string": "{count}/{max} members"
+  },
   "src_dot_staff_dot_components_dot_StaffListPage_dot_active": {
     "context": "staff member's account",
     "string": "Active"
@@ -6653,9 +6911,22 @@
   "src_dot_taxes_dot_views_dot_2411670026": {
     "string": "Successfully fetched tax rates"
   },
+  "src_dot_time": {
+    "context": "independent of any particular day, eg. 11:35",
+    "string": "Time"
+  },
+  "src_dot_translationAttributes": {
+    "string": "Attributes"
+  },
   "src_dot_translations": {
     "context": "translations section name",
     "string": "Translations"
+  },
+  "src_dot_translations_dot_components_dot_ProductContextSwitcher_dot_1932340772": {
+    "string": "Translating"
+  },
+  "src_dot_translations_dot_components_dot_ProductContextSwitcher_dot_197468239": {
+    "string": "Main Product"
   },
   "src_dot_translations_dot_components_dot_TranslationFields_dot_1308081812": {
     "string": "{numberOfFields} Translations, {numberOfTranslatedFields} Completed"
@@ -6672,6 +6943,21 @@
   },
   "src_dot_translations_dot_components_dot_TranslationFields_dot_3793796047": {
     "string": "No translation yet"
+  },
+  "src_dot_translations_dot_components_dot_TranslationsAttributesPage_dot_1567737068": {
+    "context": "attribute values",
+    "string": "Value {number}"
+  },
+  "src_dot_translations_dot_components_dot_TranslationsAttributesPage_dot_2642976392": {
+    "string": "Attribute Name"
+  },
+  "src_dot_translations_dot_components_dot_TranslationsAttributesPage_dot_884093025": {
+    "context": "header",
+    "string": "Translation Attribute \"{attribute}\" - {languageCode}"
+  },
+  "src_dot_translations_dot_components_dot_TranslationsAttributesPage_dot_values": {
+    "context": "section name",
+    "string": "Values"
   },
   "src_dot_translations_dot_components_dot_TranslationsCategoriesPage_dot_1214235329": {
     "string": "Category Name"
@@ -6775,27 +7061,23 @@
   "src_dot_translations_dot_components_dot_TranslationsPagesPage_dot_3468022343": {
     "string": "Search Engine Preview"
   },
+  "src_dot_translations_dot_components_dot_TranslationsPagesPage_dot_4165966072": {
+    "context": "attribute list",
+    "string": "Attribute {number}"
+  },
   "src_dot_translations_dot_components_dot_TranslationsPagesPage_dot_432157284": {
     "string": "Page Title"
   },
-  "src_dot_translations_dot_components_dot_TranslationsProductTypesPage_dot_1567737068": {
-    "context": "attribute values",
-    "string": "Value {number}"
+  "src_dot_translations_dot_components_dot_TranslationsProductVariantsPage_dot_4165966072": {
+    "context": "attribute list",
+    "string": "Attribute {number}"
   },
-  "src_dot_translations_dot_components_dot_TranslationsProductTypesPage_dot_2642976392": {
-    "string": "Attribute Name"
-  },
-  "src_dot_translations_dot_components_dot_TranslationsProductTypesPage_dot_3495336243": {
-    "context": "attribute richtext value",
-    "string": "Text"
-  },
-  "src_dot_translations_dot_components_dot_TranslationsProductTypesPage_dot_884093025": {
+  "src_dot_translations_dot_components_dot_TranslationsProductVariantsPage_dot_847507870": {
     "context": "header",
-    "string": "Translation Attribute \"{attribute}\" - {languageCode}"
+    "string": "Translation Product Variant \"{productName}\" - {languageCode}"
   },
-  "src_dot_translations_dot_components_dot_TranslationsProductTypesPage_dot_values": {
-    "context": "section name",
-    "string": "Values"
+  "src_dot_translations_dot_components_dot_TranslationsProductVariantsPage_dot_953327101": {
+    "string": "Variant Name"
   },
   "src_dot_translations_dot_components_dot_TranslationsProductsPage_dot_1406947243": {
     "string": "Search Engine Description"
@@ -6815,6 +7097,10 @@
   },
   "src_dot_translations_dot_components_dot_TranslationsProductsPage_dot_3468022343": {
     "string": "Search Engine Preview"
+  },
+  "src_dot_translations_dot_components_dot_TranslationsProductsPage_dot_4165966072": {
+    "context": "attribute list",
+    "string": "Attribute {number}"
   },
   "src_dot_translations_dot_components_dot_TranslationsSalesPage_dot_3731955064": {
     "context": "header",
@@ -7096,6 +7382,10 @@
   "src_dot_warehouses_dot_components_dot_WarehouseInfo_dot_2622674857": {
     "string": "Warehouse Name"
   },
+  "src_dot_warehouses_dot_components_dot_WarehouseListPage_dot_1082745946": {
+    "context": "used warehouses counter",
+    "string": "{count}/{max} warehouses used"
+  },
   "src_dot_warehouses_dot_components_dot_WarehouseListPage_dot_2304765290": {
     "string": "Search Warehouse"
   },
@@ -7242,6 +7532,10 @@
     "context": "event",
     "string": "Order created"
   },
+  "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_36047288": {
+    "context": "event",
+    "string": "Translation created"
+  },
   "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_3617444329": {
     "context": "event",
     "string": "Order cancelled"
@@ -7281,6 +7575,10 @@
   "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_4292269645": {
     "context": "event",
     "string": "Process payment"
+  },
+  "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_482477254": {
+    "context": "event",
+    "string": "Translation updated"
   },
   "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_679080833": {
     "context": "event",

@@ -5,7 +5,7 @@ import {
 } from "@saleor/components/SingleAutocompleteSelectField";
 import { MetadataItem } from "@saleor/fragments/types/MetadataItem";
 import { SearchPages_search_edges_node } from "@saleor/searches/types/SearchPages";
-import { Node, SlugNode } from "@saleor/types";
+import { Node, SlugNode, TagNode } from "@saleor/types";
 import { MetadataInput } from "@saleor/types/globalTypes";
 
 interface Edge<T> {
@@ -36,13 +36,14 @@ export function mapPagesToChoices(pages: SearchPages_search_edges_node[]) {
 }
 
 type ExtendedNode = Node & Record<"name", string>;
+
 export function mapNodeToChoice<T extends ExtendedNode>(
   nodes: T[]
 ): Array<SingleAutocompleteChoiceType<string>>;
-export function mapNodeToChoice<T extends ExtendedNode, K extends ChoiceValue>(
-  nodes: T[],
-  getterFn: (node: T) => K
-): Array<SingleAutocompleteChoiceType<K>>;
+export function mapNodeToChoice<
+  T extends ExtendedNode | Node,
+  K extends ChoiceValue
+>(nodes: T[], getterFn: (node: T) => K): Array<SingleAutocompleteChoiceType<K>>;
 export function mapNodeToChoice<T extends ExtendedNode>(
   nodes: T[],
   getterFn?: (node: T) => any
@@ -60,7 +61,13 @@ export function mapNodeToChoice<T extends ExtendedNode>(
 export function mapSlugNodeToChoice(
   nodes: Array<ExtendedNode & SlugNode>
 ): SingleAutocompleteChoiceType[] {
-  return mapNodeToChoice(nodes, nodes => nodes.slug);
+  return mapNodeToChoice(nodes, node => node.slug);
+}
+
+export function mapTagNodeToChoice(
+  nodes: Array<Node & TagNode>
+): SingleAutocompleteChoiceType[] {
+  return mapNodeToChoice(nodes, node => node.tag);
 }
 
 export function mapMetadataItemToInput(item: MetadataItem): MetadataInput {
@@ -68,4 +75,19 @@ export function mapMetadataItemToInput(item: MetadataItem): MetadataInput {
     key: item.key,
     value: item.value
   };
+}
+
+export function mapSingleValueNodeToChoice<T extends Record<string, any>>(
+  nodes: T[] | string[],
+  key?: keyof T
+): SingleAutocompleteChoiceType[] {
+  if (!nodes) {
+    return [];
+  }
+
+  if ((nodes as string[]).every(node => typeof node === "string")) {
+    return (nodes as string[]).map(node => ({ label: node, value: node }));
+  }
+
+  return (nodes as T[]).map(node => ({ label: node[key], value: node[key] }));
 }
