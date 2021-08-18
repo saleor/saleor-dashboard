@@ -9,6 +9,18 @@ import { SaleFilterInput, SaleSortingInput, SaleType } from "./../../types/globa
 // GraphQL query operation: SaleList
 // ====================================================
 
+export interface SaleList_sales_edges_node_metadata {
+  __typename: "MetadataItem";
+  key: string;
+  value: string;
+}
+
+export interface SaleList_sales_edges_node_privateMetadata {
+  __typename: "MetadataItem";
+  key: string;
+  value: string;
+}
+
 export interface SaleList_sales_edges_node_channelListings_channel {
   __typename: "Channel";
   id: string;
@@ -26,6 +38,8 @@ export interface SaleList_sales_edges_node_channelListings {
 
 export interface SaleList_sales_edges_node {
   __typename: "Sale";
+  metadata: (SaleList_sales_edges_node_metadata | null)[];
+  privateMetadata: (SaleList_sales_edges_node_privateMetadata | null)[];
   id: string;
   name: string;
   type: SaleType;

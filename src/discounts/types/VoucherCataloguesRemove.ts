@@ -16,6 +16,18 @@ export interface VoucherCataloguesRemove_voucherCataloguesRemove_errors {
   channels: string[] | null;
 }
 
+export interface VoucherCataloguesRemove_voucherCataloguesRemove_voucher_metadata {
+  __typename: "MetadataItem";
+  key: string;
+  value: string;
+}
+
+export interface VoucherCataloguesRemove_voucherCataloguesRemove_voucher_privateMetadata {
+  __typename: "MetadataItem";
+  key: string;
+  value: string;
+}
+
 export interface VoucherCataloguesRemove_voucherCataloguesRemove_voucher_countries {
   __typename: "CountryDisplay";
   code: string;
@@ -167,6 +179,8 @@ export interface VoucherCataloguesRemove_voucherCataloguesRemove_voucher_categor
 
 export interface VoucherCataloguesRemove_voucherCataloguesRemove_voucher {
   __typename: "Voucher";
+  metadata: (VoucherCataloguesRemove_voucherCataloguesRemove_voucher_metadata | null)[];
+  privateMetadata: (VoucherCataloguesRemove_voucherCataloguesRemove_voucher_privateMetadata | null)[];
   id: string;
   code: string;
   startDate: any;

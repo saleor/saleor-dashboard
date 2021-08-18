@@ -11,6 +11,7 @@ import {
   useSavebar,
   useTheme
 } from "@saleor/macaw-ui";
+import { isDarkTheme } from "@saleor/misc";
 import { staffMemberDetailsUrl } from "@saleor/staff/urls";
 import classNames from "classnames";
 import React from "react";
@@ -154,8 +155,7 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
     });
   };
 
-  const isDark = themeType === "dark";
-  const toggleTheme = () => setTheme(isDark ? "light" : "dark");
+  const toggleTheme = () => setTheme(isDarkTheme(themeType) ? "light" : "dark");
 
   return (
     <>
@@ -195,16 +195,15 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
                         isMac={navigator.platform.toLowerCase().includes("mac")}
                         onClick={() => setNavigatorVisibility(true)}
                       />
-                      {channel && (
+                      {isPickerActive && (
                         <AppChannelSelect
                           channels={availableChannels}
-                          disabled={!isPickerActive}
                           selectedChannelId={channel.id}
                           onChannelSelect={setChannel}
                         />
                       )}
                       <UserChip
-                        isDarkThemeEnabled={isDark}
+                        isDarkThemeEnabled={isDarkTheme(themeType)}
                         user={user}
                         onLogout={logout}
                         onProfileClick={() =>

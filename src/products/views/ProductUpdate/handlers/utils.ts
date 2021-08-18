@@ -15,7 +15,7 @@ import { SimpleProductUpdate } from "@saleor/products/types/SimpleProductUpdate"
 import { mapFormsetStockToStockInput } from "@saleor/products/utils/data";
 import { getAvailabilityVariables } from "@saleor/products/utils/handlers";
 import { ProductChannelListingAddInput } from "@saleor/types/globalTypes";
-import { diff } from "fast-array-diff";
+import { arrayDiff } from "@saleor/utils/arrays";
 import isEqual from "lodash/isEqual";
 
 import { ChannelsWithVariantsData, ChannelWithVariantData } from "../types";
@@ -70,7 +70,7 @@ export const getChannelListingUpdateInputFromData = (
   basicChannelData: ChannelData
 ) => ({
   ...getChannelListingBaseInputData(basicChannelData),
-  addVariants: diff(initialSelectedVariantsIds, variantsIdsToAdd).added,
+  addVariants: arrayDiff(initialSelectedVariantsIds, variantsIdsToAdd).added,
   removeVariants: variantsIdsToRemove
 });
 
@@ -164,10 +164,11 @@ export const getSimpleChannelsVariables = (
   product: ProductDetails_product
 ) => {
   const productChannels = createSortedChannelsDataFromProduct(product);
-  const diffChannels = diff(
-    productChannels,
-    data.channelListings,
-    (a, b) => a.id === b.id
+  const existingChannelIDs = productChannels.map(channel => channel.id);
+  const modifiedChannelIDs = data.channelListings.map(channel => channel.id);
+
+  const removedChannelIDs = existingChannelIDs.filter(
+    x => !modifiedChannelIDs.includes(x)
   );
 
   return {
@@ -175,9 +176,7 @@ export const getSimpleChannelsVariables = (
       id: product.id,
       input: {
         updateChannels: getAvailabilityVariables(data.channelListings),
-        removeChannels: diffChannels.removed?.map(
-          removedChannel => removedChannel.id
-        )
+        removeChannels: removedChannelIDs
       }
     }
   };

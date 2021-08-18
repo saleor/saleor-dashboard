@@ -150,6 +150,8 @@ export const productVariantAttributesFragment = gql`
       variantAttributes(variantSelection: VARIANT_SELECTION) {
         id
         name
+        inputType
+        unit
         choices(
           first: $firstValues
           after: $afterValues

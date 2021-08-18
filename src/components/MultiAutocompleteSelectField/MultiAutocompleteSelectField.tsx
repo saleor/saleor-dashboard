@@ -63,6 +63,10 @@ const useStyles = makeStyles(
       margin: theme.spacing(1, 0),
       paddingLeft: theme.spacing(2),
       paddingRight: theme.spacing(1)
+    },
+    adornment: {
+      display: "flex",
+      alignItems: "center"
     }
   }),
   { name: "MultiAutocompleteSelectField" }
@@ -85,7 +89,9 @@ export interface MultiAutocompleteSelectFieldProps
   testId?: string;
   fetchChoices?: (value: string) => void;
   onChange: (event: React.ChangeEvent<any>) => void;
+  onBlur?: () => void;
   fetchOnFocus?: boolean;
+  endAdornment?: React.ReactNode;
 }
 
 const DebounceAutocomplete: React.ComponentType<DebounceProps<
@@ -110,8 +116,10 @@ const MultiAutocompleteSelectFieldComponent: React.FC<MultiAutocompleteSelectFie
     testId,
     fetchChoices,
     onChange,
+    onBlur,
     onFetchMore,
     fetchOnFocus,
+    endAdornment,
     ...rest
   } = props;
   const classes = useStyles(props);
@@ -136,6 +144,14 @@ const MultiAutocompleteSelectFieldComponent: React.FC<MultiAutocompleteSelectFie
             onInputValueChange={value => debounceFn(value)}
             onSelect={handleSelect}
             itemToString={() => ""}
+            // this is to prevent unwanted state updates when the dropdown is closed with an empty value,
+            // which downshift interprets as the value being updated with an empty string, causing side-effects
+            stateReducer={(state, changes) => {
+              if (changes.isOpen === false && state.inputValue === "") {
+                delete changes.inputValue;
+              }
+              return changes;
+            }}
           >
             {({
               closeMenu,
@@ -163,11 +179,13 @@ const MultiAutocompleteSelectFieldComponent: React.FC<MultiAutocompleteSelectFie
                         placeholder
                       }),
                       endAdornment: (
-                        <div>
+                        <div className={classes.adornment}>
+                          {endAdornment}
                           <ArrowDropdownIcon onClick={() => toggleMenu()} />
                         </div>
                       ),
                       id: undefined,
+                      onBlur,
                       onClick: toggleMenu,
                       onFocus: () => {
                         if (fetchOnFocus) {

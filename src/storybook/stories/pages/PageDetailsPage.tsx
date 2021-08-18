@@ -24,6 +24,7 @@ const props: PageDetailsPageProps = {
   attributeValues: [],
   saveButtonBarState: "default",
   fetchAttributeValues: () => undefined,
+  onAttributeSelectBlur: () => undefined,
   fetchMoreAttributeValues: fetchMoreProps
 };
 

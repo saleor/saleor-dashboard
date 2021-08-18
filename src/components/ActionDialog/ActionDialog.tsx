@@ -4,14 +4,14 @@ import React from "react";
 
 import { ConfirmButtonTransitionState } from "../ConfirmButton";
 import DialogButtons from "./DialogButtons";
-import { ActionDialogVariant } from "./types";
+import { ActionDialogVariant, Size } from "./types";
 
 interface ActionDialogProps extends DialogProps {
   children?: React.ReactNode;
   confirmButtonLabel?: string;
   confirmButtonState: ConfirmButtonTransitionState;
   disabled?: boolean;
-  maxWidth?: "xs" | "sm" | "md" | "lg" | "xl" | false;
+  maxWidth?: Size | false;
   title: string;
   variant?: ActionDialogVariant;
   onConfirm();

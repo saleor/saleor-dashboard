@@ -35,7 +35,7 @@ import useProductSearch from "@saleor/searches/useProductSearch";
 import useProductTypeSearch from "@saleor/searches/useProductTypeSearch";
 import { useTaxTypeList } from "@saleor/taxes/queries";
 import { getProductErrorMessage } from "@saleor/utils/errors";
-import createAttributeValueSearchHandler from "@saleor/utils/handlers/attributeValueSearchHandler";
+import useAttributeValueSearchHandler from "@saleor/utils/handlers/attributeValueSearchHandler";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import createMetadataCreateHandler from "@saleor/utils/handlers/metadataCreateHandler";
 import { mapEdgesToItems } from "@saleor/utils/maps";
@@ -109,8 +109,9 @@ export const ProductCreateView: React.FC<ProductCreateProps> = ({ params }) => {
   const {
     loadMore: loadMoreAttributeValues,
     search: searchAttributeValues,
-    result: searchAttributeValuesOpts
-  } = createAttributeValueSearchHandler(DEFAULT_INITIAL_SEARCH_DATA);
+    result: searchAttributeValuesOpts,
+    reset: searchAttributeReset
+  } = useAttributeValueSearchHandler(DEFAULT_INITIAL_SEARCH_DATA);
   const warehouses = useWarehouseList({
     displayLoader: true,
     variables: {
@@ -348,6 +349,7 @@ export const ProductCreateView: React.FC<ProductCreateProps> = ({ params }) => {
         onCloseDialog={() => navigate(productAddUrl())}
         selectedProductType={selectedProductType?.productType}
         onSelectProductType={id => setSelectedProductTypeId(id)}
+        onAttributeSelectBlur={searchAttributeReset}
       />
     </>
   );
