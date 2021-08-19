@@ -1,74 +1,103 @@
+import { Typography } from "@material-ui/core";
 import Container from "@saleor/components/Container";
 import Form from "@saleor/components/Form";
+import { Grid } from "@saleor/components/Grid";
 import PageHeader from "@saleor/components/PageHeader";
 import Savebar from "@saleor/components/Savebar";
-import { GiftCardSettingsErrorFragment } from "@saleor/fragments/types/GiftCardSettingsErrorFragment";
-import { GiftCardsSettingsFragment } from "@saleor/fragments/types/GiftCardsSettingsFragment";
+import useNavigator from "@saleor/hooks/useNavigator";
 import { sectionNames } from "@saleor/intl";
-import { Backlink, ConfirmButtonTransitionState } from "@saleor/macaw-ui";
+import { Backlink } from "@saleor/macaw-ui";
 import {
   GiftCardSettingsExpiryTypeEnum,
   TimePeriodTypeEnum
 } from "@saleor/types/globalTypes";
+import { getFormErrors } from "@saleor/utils/errors";
 import React from "react";
-import { useIntl } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 
-import GiftCardSettingsList from "./GiftCardSettingsList";
-import { giftCardSettingsMessages } from "./messages";
+import { giftCardsListPath } from "../urls";
+import GiftCardExpirySettingsCard from "./GiftCardExpirySettingsCard";
+import { giftCardExpirySettingsCard as expirySettingsMessages } from "./GiftCardExpirySettingsCard/messages";
+import { giftCardSettingsPageMessages as messages } from "./messages";
+import { useGiftCardSettingsUpdateMutation } from "./mutations";
+import { useGiftCardSettingsQuery } from "./queries";
 import { GiftCardSettingsFormData } from "./types";
+import { getGiftCardSettingsInputData } from "./utils";
 
-interface GiftCardSettingsPageProps {
-  onBack: () => void;
-  onSubmit: (formData: GiftCardSettingsFormData) => void;
-  disabled: boolean;
-  saveButtonBarState: ConfirmButtonTransitionState;
-  data?: GiftCardsSettingsFragment;
-  errors?: GiftCardSettingsErrorFragment[];
-}
-
-const GiftCardSettingsPage: React.FC<GiftCardSettingsPageProps> = ({
-  onBack,
-  onSubmit,
-  disabled,
-  saveButtonBarState,
-  data,
-  errors
-}) => {
+const GiftCardSettingsPage: React.FC = () => {
   const intl = useIntl();
+
+  const navigate = useNavigator();
+
+  const { data, loading } = useGiftCardSettingsQuery({});
+
+  const settingsData = data?.giftCardSettings;
 
   const initialData: GiftCardSettingsFormData = {
     expiryPeriodActive:
-      data?.expiryType === GiftCardSettingsExpiryTypeEnum.EXPIRY_PERIOD,
-    expiryPeriodType: data?.expiryPeriod?.type || TimePeriodTypeEnum.YEAR,
-    expiryPeriodAmount: data?.expiryPeriod?.amount || 1
+      settingsData?.expiryType === GiftCardSettingsExpiryTypeEnum.EXPIRY_PERIOD,
+    expiryPeriodType:
+      settingsData?.expiryPeriod?.type || TimePeriodTypeEnum.YEAR,
+    expiryPeriodAmount: settingsData?.expiryPeriod?.amount || 1
   };
 
+  const [
+    updateGiftCardSettings,
+    updateGiftCardSettingsOpts
+  ] = useGiftCardSettingsUpdateMutation({});
+
+  const navigateBack = () => navigate(giftCardsListPath);
+
+  const handleSubmit = (formData: GiftCardSettingsFormData) => {
+    updateGiftCardSettings({
+      variables: {
+        input: getGiftCardSettingsInputData(formData)
+      }
+    });
+  };
+
+  const formLoading = loading || updateGiftCardSettingsOpts?.loading;
+
+  const apiErrors =
+    updateGiftCardSettingsOpts?.data?.giftCardSettingsUpdate?.errors;
+
+  const formErrors = getFormErrors(["expiryPeriod"], apiErrors);
+
   return (
-    <Form initial={initialData} onSubmit={onSubmit}>
-      {({ data: formData, submit, hasChanged, change }) => (
-        <Container>
-          <Backlink onClick={onBack}>
-            {intl.formatMessage(sectionNames.giftCards)}
-          </Backlink>
-          <PageHeader
-            title={intl.formatMessage(giftCardSettingsMessages.title)}
-            underline={true}
-          />
-          <GiftCardSettingsList
-            data={formData}
-            disabled={disabled}
-            errors={errors}
-            onChange={change}
-          />
-          <Savebar
-            onCancel={onBack}
-            onSubmit={submit}
-            disabled={disabled || !hasChanged}
-            state={saveButtonBarState}
-          />
-        </Container>
-      )}
-    </Form>
+    <Container>
+      <Backlink onClick={navigateBack}>
+        {intl.formatMessage(sectionNames.giftCards)}
+      </Backlink>
+      <PageHeader title={intl.formatMessage(messages.title)} underline={true} />
+      <Grid variant="inverted">
+        <div>
+          <Typography>
+            <FormattedMessage
+              {...expirySettingsMessages.expiryDateSectionDescription}
+            />
+          </Typography>
+        </div>
+
+        <Form initial={initialData} onSubmit={handleSubmit}>
+          {({ data: formData, submit, hasChanged, change }) => (
+            <>
+              <GiftCardExpirySettingsCard
+                data={formData}
+                disabled={formLoading}
+                onChange={change}
+                errors={formErrors}
+              />
+              <Savebar
+                onCancel={navigateBack}
+                onSubmit={submit}
+                disabled={formLoading || !hasChanged}
+                state={updateGiftCardSettingsOpts?.status}
+              />
+            </>
+          )}
+        </Form>
+      </Grid>
+    </Container>
   );
 };
 
