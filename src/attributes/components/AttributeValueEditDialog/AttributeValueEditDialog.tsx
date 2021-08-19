@@ -15,7 +15,6 @@ import Form from "@saleor/components/Form";
 import { AttributeErrorFragment } from "@saleor/fragments/types/AttributeErrorFragment";
 import useModalDialogErrors from "@saleor/hooks/useModalDialogErrors";
 import { buttonMessages } from "@saleor/intl";
-import { maybe } from "@saleor/misc";
 import { AttributeInputTypeEnum } from "@saleor/types/globalTypes";
 import { getFormErrors } from "@saleor/utils/errors";
 import React from "react";
@@ -23,6 +22,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 export interface AttributeValueEditDialogFormData {
   name: string;
+  value?: string;
 }
 export interface AttributeValueEditDialogProps {
   attributeValue: AttributeValueEditDialogFormData | null;
@@ -46,14 +46,15 @@ const AttributeValueEditDialog: React.FC<AttributeValueEditDialogProps> = ({
 }) => {
   const intl = useIntl();
   const initialForm: AttributeValueEditDialogFormData = {
-    name: maybe(() => attributeValue.name, "")
+    name: attributeValue?.name ?? "",
+    value: attributeValue?.value ?? "#000000"
   };
   const errors = useModalDialogErrors(apiErrors, open);
   const formErrors = getFormErrors(["name"], errors);
 
   return (
-    // <Dialog onClose={onClose} open={open} fullWidth maxWidth="sm">
-    <Dialog onClose={onClose} open={true} fullWidth maxWidth="sm">
+    <Dialog onClose={onClose} open={open} fullWidth maxWidth="sm">
+      {/* <Dialog onClose={onClose} open={true} fullWidth maxWidth="sm">*/}
       <DialogTitle>
         {attributeValue === null ? (
           <FormattedMessage
@@ -68,7 +69,7 @@ const AttributeValueEditDialog: React.FC<AttributeValueEditDialogProps> = ({
         )}
       </DialogTitle>
       <Form initial={initialForm} onSubmit={onSubmit}>
-        {({ change, data, submit }) => (
+        {({ errors, set, change, clearErrors, setError, data, submit }) => (
           <>
             <DialogContent>
               <TextField
@@ -89,7 +90,13 @@ const AttributeValueEditDialog: React.FC<AttributeValueEditDialogProps> = ({
                 value={data.name}
                 onChange={change}
               />
-              <ColorPicker />
+              <ColorPicker
+                data={data}
+                errors={errors}
+                clearErrors={clearErrors}
+                setError={setError}
+                set={set}
+              />
             </DialogContent>
             <DialogActions>
               <Button onClick={onClose}>

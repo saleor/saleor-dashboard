@@ -1,2 +1,2 @@
-export * from "./HorizontalSpacer";
-export { default } from "./HorizontalSpacer";
+export * from "./Spacer";
+export { default } from "./Spacer";

@@ -34,6 +34,7 @@ export interface CreateMultipleVariantsData_product_attributes_attribute_choices
   boolean: boolean | null;
   date: any | null;
   dateTime: any | null;
+  value: string | null;
 }
 
 export interface CreateMultipleVariantsData_product_attributes_attribute_choices_edges {
@@ -77,6 +78,7 @@ export interface CreateMultipleVariantsData_product_attributes_values {
   boolean: boolean | null;
   date: any | null;
   dateTime: any | null;
+  value: string | null;
 }
 
 export interface CreateMultipleVariantsData_product_attributes {
@@ -110,6 +112,7 @@ export interface CreateMultipleVariantsData_product_productType_variantAttribute
   boolean: boolean | null;
   date: any | null;
   dateTime: any | null;
+  value: string | null;
 }
 
 export interface CreateMultipleVariantsData_product_productType_variantAttributes_choices_edges {

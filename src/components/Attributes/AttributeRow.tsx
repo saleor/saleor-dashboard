@@ -1,5 +1,6 @@
 import { InputAdornment, TextField } from "@material-ui/core";
 import makeStyles from "@material-ui/core/styles/makeStyles";
+import Spacer from "@saleor/apps/components/HorizontalSpacer";
 import { getMeasurementUnitMessage } from "@saleor/attributes/components/AttributeDetails/utils";
 import { AttributeInput } from "@saleor/components/Attributes/Attributes";
 import BasicAttributeRow from "@saleor/components/Attributes/BasicAttributeRow";
@@ -50,6 +51,15 @@ const useStyles = makeStyles(
     pullRight: {
       display: "flex",
       justifyContent: "flex-end"
+    },
+    swatchInput: {
+      paddingTop: 16.5,
+      paddingBottom: 16.5
+    },
+    swatchPreview: {
+      width: 32,
+      height: 32,
+      borderRadius: 4
     }
   }),
   { name: "AttributeRow" }
@@ -159,6 +169,53 @@ const AttributeRow: React.FC<AttributeRowProps> = ({
             fetchOnFocus={true}
             fetchChoices={value => fetchAttributeValues(value, attribute.id)}
             onBlur={onAttributeSelectBlur}
+            {...fetchMoreAttributeValues}
+          />
+        </BasicAttributeRow>
+      );
+    case AttributeInputTypeEnum.SWATCH:
+      return (
+        <BasicAttributeRow label={attribute.label}>
+          <SingleAutocompleteSelectField
+            fetchOnFocus
+            allowCustomValues={false}
+            choices={attributeValues.map(({ value, slug, name }) => ({
+              label: (
+                <>
+                  <div
+                    className={classes.swatchPreview}
+                    style={{ backgroundColor: value }}
+                  />
+                  <Spacer />
+                  {name}
+                </>
+              ),
+              value: slug
+            }))}
+            disabled={disabled}
+            displayValue={getSingleDisplayValue(attribute, attributeValues)}
+            emptyOption={!attribute.data.isRequired}
+            error={!!error}
+            helperText={getErrorMessage(error, intl)}
+            name={`attribute:${attribute.label}`}
+            value={attribute.value[0]}
+            onChange={event => onChange(attribute.id, event.target.value)}
+            fetchChoices={value => fetchAttributeValues(value, attribute.id)}
+            InputProps={{
+              classes: { input: classes.swatchInput },
+              startAdornment: (
+                <InputAdornment position="start">
+                  <div
+                    className={classes.swatchPreview}
+                    style={{
+                      backgroundColor: attribute.data.values.find(
+                        ({ slug }) => slug === attribute.value[0]
+                      )?.value
+                    }}
+                  />
+                </InputAdornment>
+              )
+            }}
             {...fetchMoreAttributeValues}
           />
         </BasicAttributeRow>

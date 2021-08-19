@@ -1,5 +1,5 @@
 import { Typography } from "@material-ui/core";
-import HorizontalSpacer from "@saleor/apps/components/HorizontalSpacer";
+import Spacer from "@saleor/apps/components/HorizontalSpacer";
 import { Money } from "@saleor/fragments/types/Money";
 import { makeStyles } from "@saleor/macaw-ui";
 import { DiscountValueTypeEnum } from "@saleor/types/globalTypes";
@@ -96,7 +96,7 @@ const MoneySection: React.FC<MoneySectionProps> = ({
       <Label text={intl.formatMessage(messages[sectionTitleMessageKey])} />
       <div className={classes.horizontalContainer}>
         <Typography>{`${moneyData.amount} ${moneyData.currency}`}</Typography>
-        <HorizontalSpacer />
+        <Spacer />
         <Label text={getDiscountSubitle()} />
       </div>
     </div>

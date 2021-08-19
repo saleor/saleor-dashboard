@@ -1,5 +1,5 @@
 import { CardContent, Typography } from "@material-ui/core";
-import HorizontalSpacer from "@saleor/apps/components/HorizontalSpacer";
+import Spacer from "@saleor/apps/components/HorizontalSpacer";
 import CardSpacer from "@saleor/components/CardSpacer";
 import ConfirmButton from "@saleor/components/ConfirmButton";
 import ControlledCheckbox from "@saleor/components/ControlledCheckbox";
@@ -82,7 +82,7 @@ const TypeDeleteWarningDialogContent: React.FC<TypeDeleteWarningDialogContentPro
             >
               {intl.formatMessage(viewAssignedItemsButtonLabel)}
             </ConfirmButton>
-            <HorizontalSpacer spacing={3} />
+            <Spacer spacing={3} />
           </>
         )}
         <DeleteButton onClick={onDelete} disabled={isDisbled} />

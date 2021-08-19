@@ -1,10 +1,7 @@
 import {
   Button,
   Card,
-  FormControl,
   IconButton,
-  MenuItem,
-  Select,
   TableCell,
   TableFooter,
   TableHead,
@@ -40,6 +37,9 @@ export interface AttributeValuesProps
 
 const useStyles = makeStyles(
   theme => ({
+    columnSwatch: {
+      width: 100
+    },
     columnAdmin: {
       width: 300
     },
@@ -60,6 +60,11 @@ const useStyles = makeStyles(
     },
     link: {
       cursor: "pointer"
+    },
+    swatch: {
+      width: 32,
+      height: 32,
+      borderRadius: 4
     }
   }),
   { name: "AttributeValues" }
@@ -111,7 +116,7 @@ const AttributeValues: React.FC<AttributeValuesProps> = ({
           <TableRow>
             <TableCell className={classes.columnDrag} />
             {isSwatch && (
-              <TableCell className={classes.columnAdmin}>
+              <TableCell className={classes.columnSwatch}>
                 <FormattedMessage
                   defaultMessage="Swatch"
                   description="attribute values list: slug column header"
@@ -160,18 +165,11 @@ const AttributeValues: React.FC<AttributeValuesProps> = ({
                 index={valueIndex || 0}
               >
                 {isSwatch && (
-                  <TableCell>
-                    <FormControl variant="outlined">
-                      <input type="color" id="color" />
-                      <label htmlFor="color">Choose a color</label>
-                      {/* <Select>*/}
-                      {/*  <MenuItem value="a">*/}
-                      {/*    <input type="color">Choose a color</input>*/}
-                      {/*  </MenuItem>*/}
-                      {/*  <MenuItem value="b">Upload a file</MenuItem>*/}
-                      {/*  <MenuItem value="c">Clear</MenuItem>*/}
-                      {/* </Select>*/}
-                    </FormControl>
+                  <TableCell className={classes.columnSwatch}>
+                    <div
+                      className={classes.swatch}
+                      style={{ backgroundColor: value.value }}
+                    />
                   </TableCell>
                 )}
                 <TableCell className={classes.columnAdmin}>

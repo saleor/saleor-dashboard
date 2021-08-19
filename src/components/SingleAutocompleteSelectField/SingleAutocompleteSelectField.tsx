@@ -36,7 +36,7 @@ export interface SingleAutocompleteSelectFieldProps
   name: string;
   displayValue: string;
   emptyOption?: boolean;
-  choices: SingleAutocompleteChoiceType[];
+  choices: Array<SingleAutocompleteChoiceType<string, string | JSX.Element>>;
   value: string;
   disabled?: boolean;
   placeholder?: string;
@@ -144,7 +144,7 @@ const SingleAutocompleteSelectFieldComponent: React.FC<SingleAutocompleteSelectF
               }
 
               if (isValueInValues && !isValueInLabels) {
-                reset({ inputValue: choiceFromInputValue.label });
+                reset({ inputValue: choiceFromInputValue.value });
                 return;
               }
 

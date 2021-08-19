@@ -3,7 +3,7 @@ import Decorator from "@saleor/storybook/Decorator";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
-import HorizontalSpacer from "./HorizontalSpacer";
+import Spacer from "./Spacer";
 
 interface HelperWrapperProps {
   children: React.ReactNode;
@@ -24,13 +24,13 @@ storiesOf("Generic / Horizontal Spacer", module)
   ))
   .add("default", () => (
     <HelperWrapper>
-      <HorizontalSpacer />
+      <Spacer />
       <Text />
     </HelperWrapper>
   ))
   .add("with bigger spacing provided", () => (
     <HelperWrapper>
-      <HorizontalSpacer spacing={4} />
+      <Spacer spacing={4} />
       <Text />
     </HelperWrapper>
   ));

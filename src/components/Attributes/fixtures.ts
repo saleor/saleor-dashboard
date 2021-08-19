@@ -21,7 +21,8 @@ const DROPDOWN_ATTRIBUTE: AttributeInput = {
         richText: null,
         boolean: null,
         date: null,
-        dateTime: null
+        dateTime: null,
+        value: null
       },
       {
         __typename: "AttributeValue",
@@ -33,7 +34,8 @@ const DROPDOWN_ATTRIBUTE: AttributeInput = {
         richText: null,
         boolean: null,
         date: null,
-        dateTime: null
+        dateTime: null,
+        value: null
       }
     ]
   },
@@ -57,7 +59,8 @@ const MULTISELECT_ATTRIBUTE: AttributeInput = {
         richText: null,
         boolean: null,
         date: null,
-        dateTime: null
+        dateTime: null,
+        value: null
       },
       {
         __typename: "AttributeValue",
@@ -69,7 +72,8 @@ const MULTISELECT_ATTRIBUTE: AttributeInput = {
         richText: null,
         boolean: null,
         date: null,
-        dateTime: null
+        dateTime: null,
+        value: null
       },
       {
         __typename: "AttributeValue",
@@ -81,7 +85,8 @@ const MULTISELECT_ATTRIBUTE: AttributeInput = {
         richText: null,
         boolean: null,
         date: null,
-        dateTime: null
+        dateTime: null,
+        value: null
       }
     ]
   },
@@ -109,7 +114,8 @@ const FILE_ATTRIBUTE: AttributeInput = {
         richText: null,
         boolean: null,
         date: null,
-        dateTime: null
+        dateTime: null,
+        value: null
       }
     ]
   },
@@ -148,7 +154,8 @@ const REFERENCE_ATTRIBUTE: AttributeInput = {
         richText: null,
         boolean: null,
         date: null,
-        dateTime: null
+        dateTime: null,
+        value: null
       },
       {
         __typename: "AttributeValue",
@@ -160,7 +167,8 @@ const REFERENCE_ATTRIBUTE: AttributeInput = {
         richText: null,
         boolean: null,
         date: null,
-        dateTime: null
+        dateTime: null,
+        value: null
       },
       {
         __typename: "AttributeValue",
@@ -172,7 +180,8 @@ const REFERENCE_ATTRIBUTE: AttributeInput = {
         richText: null,
         boolean: null,
         date: null,
-        dateTime: null
+        dateTime: null,
+        value: null
       }
     ]
   },
@@ -200,7 +209,8 @@ const RICH_TEXT_ATTRIBUTE: AttributeInput = {
         }),
         boolean: null,
         date: null,
-        dateTime: null
+        dateTime: null,
+        value: null
       }
     ],
     selectedValues: []
@@ -226,6 +236,7 @@ const NUMERIC_ATTRIBUTE: AttributeInput = {
         boolean: null,
         date: null,
         dateTime: null,
+        value: null,
         slug: "319_35"
       }
     ]
@@ -250,7 +261,8 @@ const BOOLEAN_ATTRIBUTE: AttributeInput = {
         boolean: true,
         slug: "319_True",
         date: null,
-        dateTime: null
+        dateTime: null,
+        value: null
       }
     ]
   },
@@ -274,7 +286,8 @@ const DATE_ATTRIBUTE: AttributeInput = {
         boolean: true,
         slug: "319_True",
         date: "2021-06-03",
-        dateTime: "2021-06-03 00:15:00+00:00"
+        dateTime: "2021-06-03 00:15:00+00:00",
+        value: null
       }
     ]
   },
@@ -298,7 +311,8 @@ const DATE_TIME_ATTRIBUTE: AttributeInput = {
         boolean: true,
         slug: "319_True",
         date: "2021-06-03",
-        dateTime: "2021-06-03 00:15:00+00:00"
+        dateTime: "2021-06-03 00:15:00+00:00",
+        value: null
       }
     ]
   },

@@ -1,5 +1,5 @@
 import { Typography } from "@material-ui/core";
-import HorizontalSpacer from "@saleor/apps/components/HorizontalSpacer";
+import Spacer from "@saleor/apps/components/HorizontalSpacer";
 import CardSpacer from "@saleor/components/CardSpacer";
 import { TimelineEvent } from "@saleor/components/Timeline";
 import { TitleElement } from "@saleor/components/Timeline/TimelineEventHeader";
@@ -73,7 +73,7 @@ const ExtendedDiscountTimelineEvent: React.FC<ExtendedTimelineEventProps> = ({
             moneyData={moneyData}
             calculationMode={calculationMode}
           />
-          <HorizontalSpacer spacing={4} />
+          <Spacer spacing={4} />
           <MoneySection
             sectionType={MoneySectionType.OLD}
             value={oldValue}

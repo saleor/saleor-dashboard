@@ -34,6 +34,7 @@ export interface AttributeValueCreate_attributeValueCreate_attribute_choices_edg
   boolean: boolean | null;
   date: any | null;
   dateTime: any | null;
+  value: string | null;
 }
 
 export interface AttributeValueCreate_attributeValueCreate_attribute_choices_edges {

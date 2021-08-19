@@ -1,5 +1,5 @@
 import { ExpansionPanelSummary, Typography } from "@material-ui/core";
-import HorizontalSpacer from "@saleor/apps/components/HorizontalSpacer";
+import Spacer from "@saleor/apps/components/HorizontalSpacer";
 import { ChannelShippingZones } from "@saleor/channels/pages/ChannelDetailsPage/types";
 import IconChevronDown from "@saleor/icons/ChevronDown";
 import { makeStyles } from "@saleor/macaw-ui";
@@ -65,7 +65,7 @@ const ShippingZonesListHeader: React.FC<ShippingZonesListHeaderProps> = ({
           })}
         </Typography>
       </ExpansionPanelSummary>
-      <HorizontalSpacer spacing={1.5} />
+      <Spacer spacing={1.5} />
     </div>
   );
 };

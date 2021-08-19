@@ -1,18 +1,18 @@
-import {
-  FormControl,
-  FormControlLabel,
-  FormLabel,
-  Radio,
-  RadioGroup,
-  TextField
-} from "@material-ui/core";
-import HorizontalSpacer from "@saleor/apps/components/HorizontalSpacer";
+import { TextField } from "@material-ui/core";
+import Spacer from "@saleor/apps/components/HorizontalSpacer";
+import { inputTypeMessages } from "@saleor/attributes/components/AttributeDetails/messages";
+import { AttributeValueEditDialogFormData } from "@saleor/attributes/components/AttributeValueEditDialog";
+import { UseFormResult } from "@saleor/hooks/useForm";
 import { makeStyles } from "@saleor/macaw-ui";
 import { RequireOnlyOne } from "@saleor/misc";
+import commonErrorMessages from "@saleor/utils/errors/common";
 import Hue from "@uiw/react-color-hue";
 import Saturation from "@uiw/react-color-saturation";
 import convert from "color-convert";
-import React, { useState } from "react";
+import { RGB } from "color-convert/conversions";
+import React, { useEffect, useState } from "react";
+import { FormattedMessage } from "react-intl";
+import { useIntl } from "react-intl";
 
 import RadioGroupField from "../RadioGroupField/RadioGroupField";
 
@@ -28,6 +28,7 @@ const useStyles = makeStyles(
     },
 
     colorInput: {
+      whiteSpace: "nowrap",
       width: "170px",
       marginBottom: theme.spacing(1),
 
@@ -40,98 +41,124 @@ const useStyles = makeStyles(
   { name: "ColorPicker" }
 );
 
-export const ColorPicker: React.FC = () => {
-  const classes = useStyles();
-  const [hsva, setHsva] = useState({ h: 0, s: 0, v: 68, a: 1 });
+type ColorPickerProps<T> = Pick<
+  UseFormResult<T>,
+  "setError" | "set" | "errors" | "clearErrors" | "data"
+>;
 
-  const [r, g, b] = convert.hsv.rgb([hsva.h, hsva.s, hsva.v]);
-  const hex = convert.hsv.hex([hsva.h, hsva.s, hsva.v]);
+export const ColorPicker: React.FC<ColorPickerProps<
+  AttributeValueEditDialogFormData
+>> = ({ clearErrors, setError, errors, set, data }) => {
+  const classes = useStyles();
+  const intl = useIntl();
+  const [hex, setHex] = useState<string>(data.value.replace("#", ""));
+  const [hue, setHue] = useState<number>(convert.hex.hsv(hex)[0]);
+
+  const [_, s, v] = convert.hex.hsv(hex);
+  const [r, g, b] = convert.hex.rgb(hex);
+  const isValidColor = hex.match(/^(?:[0-9a-fA-F]{3}){1,2}$/);
 
   const handleRGBChange = (
-    rgbColor: RequireOnlyOne<{ r: number; g: number; b: number }>
+    rgbColor: RequireOnlyOne<{ r: string; g: string; b: string }>
   ) => {
-    const [h, s, v] = convert.rgb.hsv([
-      rgbColor.r ?? r,
-      rgbColor.g ?? g,
-      rgbColor.b ?? b
-    ]);
-    setHsva(hsva => ({ h, s, v, a: hsva.a }));
+    const getValue = (val: string): number => {
+      if (!val) {
+        return 0;
+      }
+      const parsedVal = parseInt(val, 10);
+      return parsedVal > 255 ? 255 : parsedVal;
+    };
+
+    setHex(
+      convert.rgb.hex([
+        getValue(rgbColor.r),
+        getValue(rgbColor.g),
+        getValue(rgbColor.b)
+      ] as RGB)
+    );
   };
 
-  const handleHEXChange = (hexColor: string) => {
-    const [h, s, v] = convert.hex.hsv(hexColor);
-    setHsva(hsva => ({ h, s, v, a: hsva.a }));
-  };
+  const handleHEXChange = (hexColor: string) =>
+    setHex(hexColor.replace(/ |#/g, ""));
+
+  useEffect(() => {
+    if (isValidColor) {
+      if ("value" in errors) {
+        clearErrors("value");
+      }
+
+      set({ value: `#${hex}` });
+    } else {
+      if (!("value" in errors)) {
+        setError("value", intl.formatMessage(commonErrorMessages.invalid));
+      }
+    }
+  }, [errors, hex]);
 
   return (
     <>
+      <Spacer type="vertical" spacing={2} />
       <RadioGroupField
         choices={[
           { label: "Picker", value: "picker" },
           { label: "Image", value: "image" }
         ]}
         variant="inline"
-        label="Swatch"
+        label={<FormattedMessage {...inputTypeMessages.swatch} />}
         name="swatch"
         value="picker"
-        onChange={() => {}}
+        onChange={() => {
+          // probably move out
+        }}
       />
       <div className={classes.picker}>
         <div>
           <Saturation
-            hsva={hsva}
-            onChange={newColor => {
-              setHsva({ ...hsva, ...newColor, a: hsva.a });
-            }}
+            hsva={{ h: hue, s, v, a: 1 }}
+            onChange={({ h, s, v }) => setHex(convert.hsv.hex([h, s, v]))}
             className={classes.saturation}
           />
         </div>
-        <HorizontalSpacer spacing={4} />
+        <Spacer spacing={4} />
         <div>
           <Hue
-            hue={hsva.h}
-            onChange={newHue => {
-              setHsva({ ...hsva, ...newHue });
+            hue={hue}
+            onChange={({ h }) => {
+              setHue(h);
+              setHex(convert.hsv.hex([h, s, v]));
             }}
             direction="vertical"
             height="220px"
             width="16px"
           />
         </div>
-        <HorizontalSpacer spacing={4} />
+        <Spacer spacing={4} />
         <div>
           <TextField
             className={classes.colorInput}
             InputProps={{ startAdornment: "R" }}
-            inputProps={{ pattern: "[0-9]{3}", maxLength: 3 }}
             value={r}
-            onChange={evt =>
-              handleRGBChange({ r: parseInt(evt.target.value, 10) })
-            }
+            onChange={evt => handleRGBChange({ r: evt.target.value })}
           />
           <TextField
             className={classes.colorInput}
             InputProps={{ startAdornment: "G" }}
-            inputProps={{ pattern: "[0-9]{3}", maxLength: 3 }}
             value={g}
-            onChange={evt =>
-              handleRGBChange({ g: parseInt(evt.target.value, 10) })
-            }
+            onChange={evt => handleRGBChange({ g: evt.target.value })}
           />
           <TextField
             className={classes.colorInput}
             InputProps={{ startAdornment: "B" }}
-            inputProps={{ pattern: "[0-9]{3}", maxLength: 3 }}
             value={b}
-            onChange={evt =>
-              handleRGBChange({ b: parseInt(evt.target.value, 10) })
-            }
+            onChange={evt => handleRGBChange({ b: evt.target.value })}
           />
           <TextField
+            error={!isValidColor}
+            helperText={errors?.value}
             className={classes.colorInput}
             InputProps={{ startAdornment: "HEX" }}
             inputProps={{ pattern: "[A-Za-z0-9]{6}", maxLength: 6 }}
-            value={hex}
+            value={`#${hex}`}
             onChange={evt => handleHEXChange(evt.target.value)}
           />
         </div>
