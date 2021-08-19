@@ -4,7 +4,7 @@ import { GiftCardSettingsErrorCode } from "@saleor/types/globalTypes";
 import commonErrorMessages from "@saleor/utils/errors/common";
 import { defineMessages, IntlShape } from "react-intl";
 
-export const giftCardSettingsMessages = defineMessages({
+export const giftCardSettingsPageMessages = defineMessages({
   title: {
     defaultMessage: "Gift Cards Settings",
     description: "header"

@@ -11,7 +11,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 import TimePeriodField from "../TimePeriodField/TimePeriodField";
 import { giftCardSettingsExpirySelectMessages as messages } from "./messages";
 
-interface GiftCardSettingsExpirySelectProps {
+export interface GiftCardSettingsExpirySelectProps {
   change: FormChange;
   disabled: boolean;
   expiryPeriodActive: boolean;
