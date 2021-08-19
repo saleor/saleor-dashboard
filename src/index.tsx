@@ -152,7 +152,6 @@ const Routes: React.FC = () => {
   const homePageLoaded =
     channelLoaded &&
     isAuthenticated &&
-    hasToken &&
     !tokenAuthLoading &&
     !tokenVerifyLoading;
 
