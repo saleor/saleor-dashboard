@@ -1,5 +1,5 @@
 import { Card } from "@material-ui/core";
-import { useExtensions } from "@saleor/apps/hooks";
+import { mapToMenuItems, useExtensions } from "@saleor/apps/useExtensions";
 import { ButtonWithSelect } from "@saleor/components/ButtonWithSelect";
 import CardMenu from "@saleor/components/CardMenu";
 import ColumnPicker, {
@@ -140,17 +140,8 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
     AppExtensionTypeEnum.OVERVIEW
   );
 
-  const extensionMenuItems = moreActions.map(({ label, id, open }) => ({
-    label,
-    testId: `extension-${id}`,
-    onSelect: open
-  }));
-
-  const extensionCreateButtonItems = create.map(({ label, id, open }) => ({
-    label,
-    testId: `extension-${id}`,
-    onSelect: open
-  }));
+  const extensionMenuItems = mapToMenuItems(moreActions);
+  const extensionCreateButtonItems = mapToMenuItems(create);
 
   return (
     <Container>

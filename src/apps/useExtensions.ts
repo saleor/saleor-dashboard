@@ -34,6 +34,13 @@ const filterAndMapToTarget = (
         openApp({ appToken: accessToken, backendUrl: url, src: url, label })
     }));
 
+export const mapToMenuItems = (extensions: Extension[]) =>
+  extensions.map(({ label, id, open }) => ({
+    label,
+    testId: `extension-${id}`,
+    onSelect: open
+  }));
+
 export const useExtensions = (
   view: AppExtensionViewEnum,
   type: AppExtensionTypeEnum

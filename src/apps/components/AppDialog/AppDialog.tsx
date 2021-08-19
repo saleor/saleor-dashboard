@@ -12,7 +12,7 @@ import React from "react";
 import { useStyles } from "./styles";
 
 interface AppDialogProps extends DialogProps {
-  onClose(): void;
+  onClose: () => void;
 }
 
 export const AppDialog: React.FC<AppDialogProps> = ({ children, ...props }) => {

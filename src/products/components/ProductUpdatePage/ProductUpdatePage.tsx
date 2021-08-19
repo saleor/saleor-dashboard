@@ -1,5 +1,5 @@
 import { OutputData } from "@editorjs/editorjs";
-import { useExtensions } from "@saleor/apps/hooks";
+import { mapToMenuItems, useExtensions } from "@saleor/apps/useExtensions";
 import {
   getAttributeValuesFromReferences,
   mergeAttributeValues
@@ -254,11 +254,7 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
     AppExtensionTypeEnum.DETAILS
   );
 
-  const extensionMenuItems = moreActions.map(({ label, id, open }) => ({
-    label,
-    testId: `extension-${id}`,
-    onSelect: open
-  }));
+  const extensionMenuItems = mapToMenuItems(moreActions);
 
   return (
     <ProductUpdateForm
