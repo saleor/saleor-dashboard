@@ -254,9 +254,9 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
     AppExtensionTypeEnum.DETAILS
   );
 
-  const extensionMenuItems = moreActions.map(({ label, app, open }) => ({
+  const extensionMenuItems = moreActions.map(({ label, id, open }) => ({
     label,
-    testId: `extension-${app.id}`,
+    testId: `extension-${id}`,
     onSelect: open
   }));
 

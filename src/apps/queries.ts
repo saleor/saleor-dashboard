@@ -74,8 +74,6 @@ const appDetails = gql`
 `;
 
 const extensionList = gql`
-  ${appFragment}
-  ${webhooksFragment}
   query ExtensionList($filter: AppExtensionFilterInput!) {
     appExtensions(filter: $filter, first: 20) {
       edges {
@@ -86,9 +84,7 @@ const extensionList = gql`
           view
           type
           target
-          app {
-            ...AppFragment
-          }
+          accessToken
         }
       }
     }

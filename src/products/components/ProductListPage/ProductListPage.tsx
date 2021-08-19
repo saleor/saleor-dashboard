@@ -140,15 +140,15 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
     AppExtensionTypeEnum.OVERVIEW
   );
 
-  const extensionMenuItems = moreActions.map(({ label, app, open }) => ({
+  const extensionMenuItems = moreActions.map(({ label, id, open }) => ({
     label,
-    testId: `extension-${app.id}`,
+    testId: `extension-${id}`,
     onSelect: open
   }));
 
-  const extensionCreateButtonItems = create.map(({ label, app, open }) => ({
+  const extensionCreateButtonItems = create.map(({ label, id, open }) => ({
     label,
-    testId: `extension-${app.id}`,
+    testId: `extension-${id}`,
     onSelect: open
   }));
 

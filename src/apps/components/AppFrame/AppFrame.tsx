@@ -3,6 +3,7 @@ import React from "react";
 import urlJoin from "url-join";
 
 import { useStyles } from "./styles";
+import { useAppActions } from "./useAppActions";
 
 interface Props {
   src: string;
@@ -24,18 +25,17 @@ export const AppFrame: React.FC<Props> = ({
   const frameRef = React.useRef<HTMLIFrameElement>();
   const { sendThemeToExtension } = useTheme();
   const classes = useStyles();
+  const appOrigin = getOrigin(src);
+  const { postToExtension } = useAppActions(frameRef.current, appOrigin);
 
   const handleLoad = () => {
-    const appOrigin = getOrigin(src);
-    frameRef.current.contentWindow.postMessage(
-      {
-        payload: {
-          token: appToken
-        },
-        type: "handshake"
-      },
-      appOrigin
-    );
+    postToExtension({
+      type: "handshake",
+      payload: {
+        token: appToken,
+        version: 1
+      }
+    });
     sendThemeToExtension();
     onLoad();
   };

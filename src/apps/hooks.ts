@@ -1,4 +1,3 @@
-import { AppFragment } from "@saleor/fragments/types/AppFragment";
 import {
   AppExtensionTargetEnum,
   AppExtensionTypeEnum,
@@ -8,20 +7,11 @@ import { mapEdgesToItems } from "@saleor/utils/maps";
 
 import { AppData, useExternalApp } from "./components/ExternalAppContext";
 import { useExtensionList } from "./queries";
-
-interface AppExtension {
-  label: string;
-  url: string;
-  view: AppExtensionViewEnum;
-  type: AppExtensionTypeEnum;
-  target: AppExtensionTargetEnum;
-  id: string;
-  app: AppFragment;
-  canBeUsedByUser?: boolean;
-}
+import { ExtensionList_appExtensions_edges_node } from "./types/ExtensionList";
 
 interface Extension {
-  app: AppFragment;
+  id: string;
+  accessToken: string;
   label: string;
   url: string;
   open(): void;
@@ -29,18 +19,19 @@ interface Extension {
 type Target = "create" | "moreActions";
 
 const filterAndMapToTarget = (
-  extensions: AppExtension[],
+  extensions: ExtensionList_appExtensions_edges_node[],
   target: AppExtensionTargetEnum,
   openApp: (appData: AppData) => void
 ): Extension[] =>
   extensions
     .filter(app => app.target === target)
-    .map(({ app, url, label }) => ({
-      app,
+    .map(({ id, accessToken, url, label }) => ({
+      id,
+      accessToken,
       url,
       label,
       open: () =>
-        openApp({ appToken: app.accessToken, backendUrl: url, src: url, label })
+        openApp({ appToken: accessToken, backendUrl: url, src: url, label })
     }));
 
 export const useExtensions = (
