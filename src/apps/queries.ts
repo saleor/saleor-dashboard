@@ -73,7 +73,7 @@ const appDetails = gql`
   }
 `;
 
-const extensionList = gql`
+export const extensionList = gql`
   query ExtensionList($filter: AppExtensionFilterInput!) {
     appExtensions(filter: $filter, first: 20) {
       edges {
