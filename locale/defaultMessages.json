@@ -3448,10 +3448,10 @@
     "context": "GiftCardCreateDialog title",
     "string": "Issue gift card"
   },
-  "src_dot_giftCards_dot_GiftCardSettings_dot_GiftCardSettingsList_dot_expiryDateSectionDescription": {
+  "src_dot_giftCards_dot_GiftCardSettings_dot_GiftCardExpirySettingsCard_dot_expiryDateSectionDescription": {
     "string": "You can set gift cards to expire after a certain time after their purchase. Remember that in some countries, gift cards expiry is prohibited by law."
   },
-  "src_dot_giftCards_dot_GiftCardSettings_dot_GiftCardSettingsList_dot_expiryDateTitle": {
+  "src_dot_giftCards_dot_GiftCardSettings_dot_GiftCardExpirySettingsCard_dot_expiryDateTitle": {
     "context": "section header",
     "string": "Expiry date"
   },

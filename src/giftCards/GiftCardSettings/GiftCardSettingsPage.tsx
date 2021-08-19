@@ -69,34 +69,31 @@ const GiftCardSettingsPage: React.FC = () => {
         {intl.formatMessage(sectionNames.giftCards)}
       </Backlink>
       <PageHeader title={intl.formatMessage(messages.title)} underline={true} />
-      <Grid variant="inverted">
-        <div>
-          <Typography>
-            <FormattedMessage
-              {...expirySettingsMessages.expiryDateSectionDescription}
+      <Form initial={initialData} onSubmit={handleSubmit}>
+        {({ data: formData, submit, hasChanged, change }) => (
+          <Grid variant="inverted">
+            <div>
+              <Typography>
+                <FormattedMessage
+                  {...expirySettingsMessages.expiryDateSectionDescription}
+                />
+              </Typography>
+            </div>
+            <GiftCardExpirySettingsCard
+              data={formData}
+              disabled={formLoading}
+              onChange={change}
+              errors={formErrors}
             />
-          </Typography>
-        </div>
-
-        <Form initial={initialData} onSubmit={handleSubmit}>
-          {({ data: formData, submit, hasChanged, change }) => (
-            <>
-              <GiftCardExpirySettingsCard
-                data={formData}
-                disabled={formLoading}
-                onChange={change}
-                errors={formErrors}
-              />
-              <Savebar
-                onCancel={navigateBack}
-                onSubmit={submit}
-                disabled={formLoading || !hasChanged}
-                state={updateGiftCardSettingsOpts?.status}
-              />
-            </>
-          )}
-        </Form>
-      </Grid>
+            <Savebar
+              onCancel={navigateBack}
+              onSubmit={submit}
+              disabled={formLoading || !hasChanged}
+              state={updateGiftCardSettingsOpts?.status}
+            />
+          </Grid>
+        )}
+      </Form>
     </Container>
   );
 };
