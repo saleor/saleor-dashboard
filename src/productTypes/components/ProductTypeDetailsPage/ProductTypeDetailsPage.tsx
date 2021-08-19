@@ -16,6 +16,7 @@ import { maybe } from "@saleor/misc";
 import { ListActions, ReorderEvent, UserError } from "@saleor/types";
 import {
   ProductAttributeType,
+  ProductTypeKindEnum,
   WeightUnitsEnum
 } from "@saleor/types/globalTypes";
 import { mapMetadataItemToInput } from "@saleor/utils/maps";
@@ -39,6 +40,7 @@ interface ChoiceType {
 
 export interface ProductTypeForm extends MetadataFormData {
   name: string;
+  kind: ProductTypeKindEnum;
   hasVariants: boolean;
   isShippingRequired: boolean;
   taxType: string;
@@ -119,6 +121,7 @@ const ProductTypeDetailsPage: React.FC<ProductTypeDetailsPageProps> = ({
         : false,
     metadata: productType?.metadata?.map(mapMetadataItemToInput),
     name: maybe(() => productType.name) !== undefined ? productType.name : "",
+    kind: productType?.kind ? productType.kind : ProductTypeKindEnum.NORMAL,
     privateMetadata: productType?.privateMetadata?.map(mapMetadataItemToInput),
     productAttributes:
       maybe(() => productType.productAttributes) !== undefined
@@ -169,6 +172,7 @@ const ProductTypeDetailsPage: React.FC<ProductTypeDetailsPageProps> = ({
                   disabled={disabled}
                   errors={errors}
                   onChange={change}
+                  onKindChange={change}
                 />
                 <CardSpacer />
                 <ProductTypeTaxes

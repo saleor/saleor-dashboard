@@ -36,8 +36,17 @@ export type ProductTypeListUrlQueryParams = ActiveTab &
 export const productTypeListUrl = (params?: ProductTypeListUrlQueryParams) =>
   productTypeListPath + "?" + stringifyQs(params);
 
+export enum ProductTypeAddUrlKindEnum {
+  normal = "normal",
+  giftCard = "gift-card"
+}
+export interface ProductTypeAddUrlKind {
+  kind?: ProductTypeAddUrlKindEnum;
+}
+export type ProductTypeAddUrlQueryParams = ProductTypeAddUrlKind;
 export const productTypeAddPath = urlJoin(productTypeSection, "add");
-export const productTypeAddUrl = productTypeAddPath;
+export const productTypeAddUrl = (params?: ProductTypeAddUrlQueryParams) =>
+  productTypeAddPath + "?" + stringifyQs(params);
 
 export const productTypePath = (id: string) => urlJoin(productTypeSection, id);
 export type ProductTypeUrlDialog =

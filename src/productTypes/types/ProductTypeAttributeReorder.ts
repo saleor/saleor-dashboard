@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { ReorderInput, ProductAttributeType, AttributeTypeEnum, MeasurementUnitsEnum, AttributeInputTypeEnum, WeightUnitsEnum } from "./../../types/globalTypes";
+import { ReorderInput, ProductAttributeType, ProductTypeKindEnum, AttributeTypeEnum, MeasurementUnitsEnum, AttributeInputTypeEnum, WeightUnitsEnum } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: ProductTypeAttributeReorder
@@ -69,6 +69,7 @@ export interface ProductTypeAttributeReorder_productTypeReorderAttributes_produc
   __typename: "ProductType";
   id: string;
   name: string;
+  kind: ProductTypeKindEnum;
   hasVariants: boolean;
   isShippingRequired: boolean;
   taxType: ProductTypeAttributeReorder_productTypeReorderAttributes_productType_taxType | null;
