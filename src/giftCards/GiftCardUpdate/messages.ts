@@ -12,12 +12,21 @@ export const giftCardUpdateDetailsCardMessages = defineMessages({
   }
 });
 
+const giftCardErrorMessages = defineMessages({
+  notFound: {
+    defaultMessage: "Couldn't find gift card",
+    description: "giftCardErrorMessages not found"
+  }
+});
+
 export function getGiftCardErrorMessage(
   error: Omit<GiftCardUpdate_giftCardUpdate_errors, "__typename"> | undefined,
   intl: IntlShape
 ): string {
   if (error) {
     switch (error.code) {
+      case GiftCardErrorCode.NOT_FOUND:
+        return intl.formatMessage(giftCardErrorMessages.notFound);
       case GiftCardErrorCode.GRAPHQL_ERROR:
         return intl.formatMessage(commonErrorMessages.graphqlError);
       case GiftCardErrorCode.REQUIRED:

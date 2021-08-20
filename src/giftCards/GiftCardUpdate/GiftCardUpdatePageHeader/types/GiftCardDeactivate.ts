@@ -40,13 +40,6 @@ export interface GiftCardDeactivate_giftCardDeactivate_giftCard_product {
   name: string;
 }
 
-export interface GiftCardDeactivate_giftCardDeactivate_giftCard_user {
-  __typename: "User";
-  id: string;
-  firstName: string;
-  lastName: string;
-}
-
 export interface GiftCardDeactivate_giftCardDeactivate_giftCard_usedBy {
   __typename: "User";
   id: string;
@@ -85,7 +78,6 @@ export interface GiftCardDeactivate_giftCardDeactivate_giftCard {
   displayCode: string;
   createdBy: GiftCardDeactivate_giftCardDeactivate_giftCard_createdBy | null;
   product: GiftCardDeactivate_giftCardDeactivate_giftCard_product | null;
-  user: GiftCardDeactivate_giftCardDeactivate_giftCard_user | null;
   usedBy: GiftCardDeactivate_giftCardDeactivate_giftCard_usedBy | null;
   usedByEmail: string | null;
   createdByEmail: string | null;

@@ -34,13 +34,6 @@ export interface GiftCardList_giftCards_edges_node_product {
   name: string;
 }
 
-export interface GiftCardList_giftCards_edges_node_user {
-  __typename: "User";
-  id: string;
-  firstName: string;
-  lastName: string;
-}
-
 export interface GiftCardList_giftCards_edges_node_usedBy {
   __typename: "User";
   id: string;
@@ -79,7 +72,6 @@ export interface GiftCardList_giftCards_edges_node {
   displayCode: string;
   createdBy: GiftCardList_giftCards_edges_node_createdBy | null;
   product: GiftCardList_giftCards_edges_node_product | null;
-  user: GiftCardList_giftCards_edges_node_user | null;
   usedBy: GiftCardList_giftCards_edges_node_usedBy | null;
   usedByEmail: string | null;
   createdByEmail: string | null;

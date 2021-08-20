@@ -1,3 +1,4 @@
+import GiftCardUpdatePageDeleteDialog from "@saleor/giftCards/components/GiftCardDeleteDialog/GiftCardUpdatePageDeleteDialog";
 import { giftCardsListPath, giftCardUrl } from "@saleor/giftCards/urls";
 import useNavigator from "@saleor/hooks/useNavigator";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
@@ -20,6 +21,8 @@ export interface GiftCardUpdateDialogsConsumerProps {
   navigateBack: () => void;
   openSetBalanceDialog: () => void;
   closeDialog: () => void;
+  openDeleteDialog: () => void;
+  isDeleteDialogOpen: boolean;
 }
 
 export const GiftCardUpdateDialogsContext = createContext<
@@ -46,10 +49,18 @@ const GiftCardUpdateDialogsProvider: React.FC<GiftCardUpdateDialogsProviderProps
   const isSetBalanceDialogOpen =
     params?.action === GiftCardUpdatePageActionParamsEnum.SET_BALANCE;
 
+  const openDeleteDialog = () =>
+    openDialog(GiftCardUpdatePageActionParamsEnum.DELETE);
+
+  const isDeleteDialogOpen =
+    params?.action === GiftCardUpdatePageActionParamsEnum.DELETE;
+
   const navigateBack = () => navigate(giftCardsListPath);
 
   const providerValues: GiftCardUpdateDialogsConsumerProps = {
     openSetBalanceDialog,
+    openDeleteDialog,
+    isDeleteDialogOpen,
     closeDialog,
     navigateBack
   };
@@ -58,10 +69,17 @@ const GiftCardUpdateDialogsProvider: React.FC<GiftCardUpdateDialogsProviderProps
     <GiftCardUpdateDialogsContext.Provider value={providerValues}>
       {children}
       {!loadingGiftCard && (
-        <GiftCardUpdateBalanceDialog
-          onClose={closeDialog}
-          open={isSetBalanceDialogOpen}
-        />
+        <>
+          <GiftCardUpdateBalanceDialog
+            closeDialog={closeDialog}
+            open={isSetBalanceDialogOpen}
+          />
+          <GiftCardUpdatePageDeleteDialog
+            closeDialog={closeDialog}
+            open={isDeleteDialogOpen}
+            navigateBack={navigateBack}
+          />
+        </>
       )}
     </GiftCardUpdateDialogsContext.Provider>
   );

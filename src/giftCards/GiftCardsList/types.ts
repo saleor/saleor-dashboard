@@ -1,4 +1,4 @@
-import { Dialog, Pagination } from "@saleor/types";
+import { Dialog, Pagination, SingleAction } from "@saleor/types";
 
 export type GiftCardListColummns =
   | "giftCardCode"
@@ -8,8 +8,10 @@ export type GiftCardListColummns =
   | "product";
 
 export enum GiftCardListActionParamsEnum {
-  CREATE = "gift-card-create"
+  CREATE = "gift-card-create",
+  DELETE = "gift-card-delete"
 }
 
 export type GiftCardListUrlQueryParams = Pagination &
-  Dialog<GiftCardListActionParamsEnum>;
+  Dialog<GiftCardListActionParamsEnum> &
+  SingleAction;
