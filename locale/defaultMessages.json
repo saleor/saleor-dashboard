@@ -3455,6 +3455,30 @@
     "context": "GiftCardCreateDialog title",
     "string": "Issue gift card"
   },
+  "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardResendCodeDialog_dot_consentCheckboxLabel": {
+    "context": "GiftCardResendCodeDialog consentCheckboxLabel",
+    "string": "Yes, I want to send gift card to different address"
+  },
+  "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardResendCodeDialog_dot_description": {
+    "context": "GiftCardResendCodeDialog description",
+    "string": "Gift Card Code will be resent to email provided during checkout. You can provide a different email address if you want to:"
+  },
+  "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardResendCodeDialog_dot_emailInputPlaceholder": {
+    "context": "GiftCardResendCodeDialog emailInputPlaceholder",
+    "string": "Provided email address"
+  },
+  "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardResendCodeDialog_dot_submitButtonLabel": {
+    "context": "GiftCardResendCodeDialog submitButtonLabel",
+    "string": "Resend"
+  },
+  "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardResendCodeDialog_dot_successResendAlertText": {
+    "context": "GiftCardResendCodeDialog successResendAlertText",
+    "string": "Successfully resent code to customer!"
+  },
+  "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardResendCodeDialog_dot_title": {
+    "context": "GiftCardResendCodeDialog title",
+    "string": "Resend code to customer"
+  },
   "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardUpdateBalanceDialog_dot_changeButtonLabel": {
     "context": "GiftCardUpdateDetailsCard set balance dialog change button label",
     "string": "Change"
@@ -3522,6 +3546,10 @@
   "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardUpdatePageHeader_dot_enableLabel": {
     "context": "GiftCardEnableDisableSection enable label",
     "string": "Enable"
+  },
+  "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardUpdatePageHeader_dot_resendButtonLabel": {
+    "context": "giftCardUpdatePageHeader resendButtonLabel",
+    "string": "Resend code"
   },
   "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardUpdatePageHeader_dot_successfullyDisabledTitle": {
     "context": "GiftCardEnableDisableSection disable success",
