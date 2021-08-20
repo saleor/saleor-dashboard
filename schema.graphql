@@ -2185,6 +2185,31 @@ type GiftCardActivate {
   errors: [GiftCardError!]!
 }
 
+type GiftCardAddNote {
+  giftCard: GiftCard
+  event: GiftCardEvent
+  errors: [GiftCardError!]!
+}
+
+input GiftCardAddNoteInput {
+  message: String!
+}
+
+type GiftCardBulkActivate {
+  count: Int!
+  errors: [GiftCardError!]!
+}
+
+type GiftCardBulkDeactivate {
+  count: Int!
+  errors: [GiftCardError!]!
+}
+
+type GiftCardBulkDelete {
+  count: Int!
+  errors: [GiftCardError!]!
+}
+
 type GiftCardCountableConnection {
   pageInfo: PageInfo!
   edges: [GiftCardCountableEdge!]!
@@ -2257,7 +2282,7 @@ type GiftCardEvent implements Node {
 }
 
 type GiftCardEventBalance {
-  initialBalance: Money!
+  initialBalance: Money
   currentBalance: Money!
   oldInitialBalance: Money
   oldCurrentBalance: Money
@@ -2280,8 +2305,11 @@ enum GiftCardEventsEnum {
   DEACTIVATED
   BALANCE_RESET
   EXPIRY_SETTINGS_UPDATED
+  EXPIRY_DATE_SET
   SENT_TO_CUSTOMER
   RESENT
+  NOTE_ADDED
+  USED_IN_ORDER
 }
 
 input GiftCardExpirySettingsInput {
@@ -2298,6 +2326,48 @@ enum GiftCardExpiryTypeEnum {
 
 input GiftCardFilterInput {
   tag: String
+}
+
+type GiftCardResend {
+  giftCard: GiftCard
+  errors: [GiftCardError!]!
+}
+
+input GiftCardResendInput {
+  id: ID!
+  email: String
+}
+
+type GiftCardSettings {
+  expiryType: GiftCardSettingsExpiryTypeEnum!
+  expiryPeriod: TimePeriod
+}
+
+type GiftCardSettingsError {
+  field: String
+  message: String
+  code: GiftCardSettingsErrorCode!
+}
+
+enum GiftCardSettingsErrorCode {
+  INVALID
+  REQUIRED
+  GRAPHQL_ERROR
+}
+
+enum GiftCardSettingsExpiryTypeEnum {
+  NEVER_EXPIRE
+  EXPIRY_PERIOD
+}
+
+type GiftCardSettingsUpdate {
+  giftCardSettings: GiftCardSettings
+  errors: [GiftCardSettingsError!]!
+}
+
+input GiftCardSettingsUpdateInput {
+  expiryType: GiftCardSettingsExpiryTypeEnum
+  expiryPeriod: TimePeriodInputType
 }
 
 type GiftCardUpdate {
@@ -2817,6 +2887,7 @@ type Mutation {
   shopSettingsTranslate(input: ShopSettingsTranslationInput!, languageCode: LanguageCodeEnum!): ShopSettingsTranslate
   shopAddressUpdate(input: AddressInput): ShopAddressUpdate
   orderSettingsUpdate(input: OrderSettingsUpdateInput!): OrderSettingsUpdate
+  giftCardSettingsUpdate(input: GiftCardSettingsUpdateInput!): GiftCardSettingsUpdate
   shippingMethodChannelListingUpdate(id: ID!, input: ShippingMethodChannelListingInput!): ShippingMethodChannelListingUpdate
   shippingPriceCreate(input: ShippingPriceInput!): ShippingPriceCreate
   shippingPriceDelete(id: ID!): ShippingPriceDelete
@@ -2954,6 +3025,11 @@ type Mutation {
   giftCardDelete(id: ID!): GiftCardDelete
   giftCardDeactivate(id: ID!): GiftCardDeactivate
   giftCardUpdate(id: ID!, input: GiftCardUpdateInput!): GiftCardUpdate
+  giftCardResend(input: GiftCardResendInput!): GiftCardResend
+  giftCardAddNote(id: ID!, input: GiftCardAddNoteInput!): GiftCardAddNote
+  giftCardBulkDelete(ids: [ID]!): GiftCardBulkDelete
+  giftCardBulkActivate(ids: [ID]!): GiftCardBulkActivate
+  giftCardBulkDeactivate(ids: [ID]!): GiftCardBulkDeactivate
   pluginUpdate(channelId: ID, id: ID!, input: PluginUpdateInput!): PluginUpdate
   saleCreate(input: SaleInput!): SaleCreate
   saleDelete(id: ID!): SaleDelete
@@ -3546,6 +3622,7 @@ input OrderReturnProductsInput {
 
 type OrderSettings {
   automaticallyConfirmAllNewOrders: Boolean!
+  automaticallyFulfillNonShippableGiftCard: Boolean!
 }
 
 type OrderSettingsError {
@@ -3565,7 +3642,8 @@ type OrderSettingsUpdate {
 }
 
 input OrderSettingsUpdateInput {
-  automaticallyConfirmAllNewOrders: Boolean!
+  automaticallyConfirmAllNewOrders: Boolean
+  automaticallyFulfillNonShippableGiftCard: Boolean
 }
 
 enum OrderSortField {
@@ -4559,6 +4637,7 @@ type ProductType implements Node & ObjectWithMetadata {
   weight: Weight
   privateMetadata: [MetadataItem]!
   metadata: [MetadataItem]!
+  kind: ProductTypeKindEnum!
   products(channel: String, before: String, after: String, first: Int, last: Int): ProductCountableConnection @deprecated(reason: "Will be removed in Saleor 4.0. Use the top-level `products` query with the `productTypes` filter.")
   taxType: TaxType
   variantAttributes(variantSelection: VariantAttributeScope): [Attribute]
@@ -4616,6 +4695,7 @@ input ProductTypeFilterInput {
 input ProductTypeInput {
   name: String
   slug: String
+  kind: ProductTypeKindEnum
   hasVariants: Boolean
   productAttributes: [ID]
   variantAttributes: [ID]
@@ -4623,6 +4703,11 @@ input ProductTypeInput {
   isDigital: Boolean
   weight: WeightScalar
   taxCode: String
+}
+
+enum ProductTypeKindEnum {
+  NORMAL
+  GIFT_CARD
 }
 
 type ProductTypeReorderAttributes {
@@ -4844,6 +4929,7 @@ type Query {
   stocks(filter: StockFilterInput, before: String, after: String, first: Int, last: Int): StockCountableConnection
   shop: Shop!
   orderSettings: OrderSettings
+  giftCardSettings: GiftCardSettings!
   shippingZone(id: ID!, channel: String): ShippingZone
   shippingZones(filter: ShippingZoneFilterInput, channel: String, before: String, after: String, first: Int, last: Int): ShippingZoneCountableConnection
   digitalContent(id: ID!): DigitalContent

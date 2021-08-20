@@ -3,6 +3,7 @@ import { IMessage } from "@saleor/components/messages";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { GiftCardCreateInput } from "@saleor/types/globalTypes";
 import commonErrorMessages from "@saleor/utils/errors/common";
+import { DialogActionHandlersProps } from "@saleor/utils/handlers/dialogActionHandlers";
 import React, { useState } from "react";
 import { useIntl } from "react-intl";
 
@@ -15,13 +16,8 @@ import { useGiftCardCreateMutation } from "./mutations";
 import { GiftCardCreate } from "./types/GiftCardCreate";
 import { getGiftCardExpirySettingsInputData } from "./utils";
 
-interface GiftCardCreateDialogProps {
-  onClose: () => void;
-  open: boolean;
-}
-
-const GiftCardCreateDialog: React.FC<GiftCardCreateDialogProps> = ({
-  onClose,
+const GiftCardCreateDialog: React.FC<DialogActionHandlersProps> = ({
+  closeDialog,
   open
 }) => {
   const intl = useIntl();
@@ -73,7 +69,8 @@ const GiftCardCreateDialog: React.FC<GiftCardCreateDialogProps> = ({
   };
 
   const [createGiftCard, createGiftCardOpts] = useGiftCardCreateMutation({
-    onCompleted
+    onCompleted,
+    refetchQueries: ["GiftCardList"]
   });
 
   const handleSubmit = (data: GiftCardCreateFormData) => {
@@ -85,7 +82,7 @@ const GiftCardCreateDialog: React.FC<GiftCardCreateDialogProps> = ({
   };
 
   const handleClose = () => {
-    onClose();
+    closeDialog();
     // dialog closing animation runs slower than prop change
     // and we don't want to show the form for a split second
     setTimeout(() => setCardCode(null), 0);

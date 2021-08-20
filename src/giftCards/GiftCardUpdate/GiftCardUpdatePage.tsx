@@ -13,7 +13,7 @@ import useGiftCardUpdate from "./providers/GiftCardUpdateFormProvider/hooks/useG
 import useGiftCardUpdateForm from "./providers/GiftCardUpdateFormProvider/hooks/useGiftCardUpdateForm";
 
 const GiftCardUpdatePage: React.FC = () => {
-  const { navigateBack } = useGiftCardUpdateDialogs();
+  const { navigateBack, openDeleteDialog } = useGiftCardUpdateDialogs();
 
   const {
     hasChanged,
@@ -44,6 +44,7 @@ const GiftCardUpdatePage: React.FC = () => {
         disabled={loadingUpdate || !hasChanged}
         onCancel={navigateBack}
         onSubmit={submit}
+        onDelete={openDeleteDialog}
       />
     </Container>
   );

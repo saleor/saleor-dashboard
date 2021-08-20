@@ -482,11 +482,14 @@ export enum GiftCardEventsEnum {
   BALANCE_RESET = "BALANCE_RESET",
   BOUGHT = "BOUGHT",
   DEACTIVATED = "DEACTIVATED",
+  EXPIRY_DATE_SET = "EXPIRY_DATE_SET",
   EXPIRY_SETTINGS_UPDATED = "EXPIRY_SETTINGS_UPDATED",
   ISSUED = "ISSUED",
+  NOTE_ADDED = "NOTE_ADDED",
   RESENT = "RESENT",
   SENT_TO_CUSTOMER = "SENT_TO_CUSTOMER",
   UPDATED = "UPDATED",
+  USED_IN_ORDER = "USED_IN_ORDER",
 }
 
 export enum GiftCardExpiryTypeEnum {
@@ -918,6 +921,11 @@ export enum ProductTypeConfigurable {
 export enum ProductTypeEnum {
   DIGITAL = "DIGITAL",
   SHIPPABLE = "SHIPPABLE",
+}
+
+export enum ProductTypeKindEnum {
+  GIFT_CARD = "GIFT_CARD",
+  NORMAL = "NORMAL",
 }
 
 export enum ProductTypeSortField {
@@ -1565,7 +1573,8 @@ export interface OrderReturnProductsInput {
 }
 
 export interface OrderSettingsUpdateInput {
-  automaticallyConfirmAllNewOrders: boolean;
+  automaticallyConfirmAllNewOrders?: boolean | null;
+  automaticallyFulfillNonShippableGiftCard?: boolean | null;
 }
 
 export interface OrderSortingInput {
@@ -1789,6 +1798,7 @@ export interface ProductTypeFilterInput {
 export interface ProductTypeInput {
   name?: string | null;
   slug?: string | null;
+  kind?: ProductTypeKindEnum | null;
   hasVariants?: boolean | null;
   productAttributes?: (string | null)[] | null;
   variantAttributes?: (string | null)[] | null;
