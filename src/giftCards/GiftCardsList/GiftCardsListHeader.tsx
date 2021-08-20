@@ -7,15 +7,12 @@ import React from "react";
 import { useIntl } from "react-intl";
 
 import { giftCardsListHeaderMenuItemsMessages as messages } from "./messages";
+import useGiftCardListDialogs from "./providers/GiftCardListDialogsProvider/hooks/useGiftCardListDialogs";
 
-interface GiftCardsListHeaderProps {
-  onIssueButtonClick: () => void;
-}
-
-const GiftCardsListHeader: React.FC<GiftCardsListHeaderProps> = ({
-  onIssueButtonClick
-}) => {
+const GiftCardsListHeader: React.FC = () => {
   const intl = useIntl();
+
+  const { openCreateDialog } = useGiftCardListDialogs();
 
   // const menuItems: CardMenuItem[] = [
   //   {
@@ -39,7 +36,7 @@ const GiftCardsListHeader: React.FC<GiftCardsListHeaderProps> = ({
     <PageHeader title={intl.formatMessage(sectionNames.giftCards)}>
       {/* <CardMenu menuItems={menuItems} data-test="menu" /> */}
       <HorizontalSpacer spacing={2} />
-      <Button color="primary" variant="contained" onClick={onIssueButtonClick}>
+      <Button color="primary" variant="contained" onClick={openCreateDialog}>
         {intl.formatMessage(messages.issueButtonLabel)}
       </Button>
     </PageHeader>

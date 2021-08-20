@@ -34,13 +34,6 @@ export interface GiftCardData_product {
   name: string;
 }
 
-export interface GiftCardData_user {
-  __typename: "User";
-  id: string;
-  firstName: string;
-  lastName: string;
-}
-
 export interface GiftCardData_usedBy {
   __typename: "User";
   id: string;
@@ -79,7 +72,6 @@ export interface GiftCardData {
   displayCode: string;
   createdBy: GiftCardData_createdBy | null;
   product: GiftCardData_product | null;
-  user: GiftCardData_user | null;
   usedBy: GiftCardData_usedBy | null;
   usedByEmail: string | null;
   createdByEmail: string | null;

@@ -25,6 +25,7 @@ export type UseMutation<TData, TVariables> = [
 export type UseMutationCbs<TData> = Partial<{
   onCompleted: (data: TData) => void;
   onError: (error: ApolloError) => void;
+  refetchQueries?: string[];
 }>;
 export type UseMutationHook<TData, TVariables> = (
   cbs: UseMutationCbs<TData>
@@ -35,7 +36,8 @@ function makeMutation<TData, TVariables>(
 ): UseMutationHook<TData, TVariables> {
   function useMutation<TData, TVariables>({
     onCompleted,
-    onError
+    onError,
+    refetchQueries = []
   }: UseMutationCbs<TData>): UseMutation<TData, TVariables> {
     const notify = useNotifier();
     const intl = useIntl();
@@ -43,6 +45,7 @@ function makeMutation<TData, TVariables>(
 
     const [mutateFn, result] = useBaseMutation(mutation, {
       onCompleted,
+      refetchQueries,
       onError: (err: ApolloError) => {
         if (hasError(err, GqlErrors.ReadOnlyException)) {
           notify({
