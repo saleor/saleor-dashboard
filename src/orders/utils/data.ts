@@ -1,5 +1,7 @@
 import { IMoney, subtractMoney } from "@saleor/components/Money";
+import { WarehouseFragment } from "@saleor/fragments/types/WarehouseFragment";
 import { FormsetData } from "@saleor/hooks/useFormset";
+import { OrderErrorCode } from "@saleor/types/globalTypes";
 
 import {
   LineItemData,
@@ -9,11 +11,13 @@ import {
   getAllOrderFulfilledLines,
   getById
 } from "../components/OrderReturnPage/utils";
+import { FulfillOrder_orderFulfill_errors } from "../types/FulfillOrder";
 import {
   OrderDetails_order,
   OrderDetails_order_fulfillments_lines,
   OrderDetails_order_lines
 } from "../types/OrderDetails";
+import { OrderFulfillData_order_lines } from "../types/OrderFulfillData";
 import {
   OrderRefundData_order,
   OrderRefundData_order_fulfillments,
@@ -24,6 +28,32 @@ export type OrderWithTotalAndTotalCaptured = Pick<
   OrderRefundData_order,
   "total" | "totalCaptured"
 >;
+
+export interface OrderLineWithStockWarehouses {
+  variant?: {
+    stocks: Array<{ warehouse: WarehouseFragment }>;
+  };
+}
+
+export function getToFulfillOrderLines(lines?: OrderFulfillData_order_lines[]) {
+  return lines?.filter(line => line.quantityToFulfill > 0) || [];
+}
+
+export function getWarehousesFromOrderLines<
+  T extends OrderLineWithStockWarehouses
+>(lines?: T[]) {
+  return lines?.reduce(
+    (warehouses, line) =>
+      line.variant?.stocks?.reduce(
+        (warehouses, stock) =>
+          warehouses.some(getById(stock.warehouse.id))
+            ? warehouses
+            : [...warehouses, stock.warehouse],
+        warehouses
+      ),
+    [] as WarehouseFragment[]
+  );
+}
 
 export function getPreviouslyRefundedPrice(
   order: OrderWithTotalAndTotalCaptured
@@ -208,3 +238,28 @@ export function mergeRepeatedOrderLines(
     return prev;
   }, Array<OrderDetails_order_fulfillments_lines>());
 }
+
+export const isStockError = (
+  overfulfill: boolean,
+  formsetStock: { quantity: number },
+  availableQuantity: number,
+  warehouse: WarehouseFragment,
+  line: OrderFulfillData_order_lines,
+  errors: FulfillOrder_orderFulfill_errors[]
+) => {
+  if (overfulfill) {
+    return true;
+  }
+
+  const isQuantityLargerThanAvailable =
+    line.variant.trackInventory && formsetStock.quantity > availableQuantity;
+
+  const isError = !!errors?.find(
+    err =>
+      err.warehouse === warehouse.id &&
+      err.orderLines.find((id: string) => id === line.id) &&
+      err.code === OrderErrorCode.INSUFFICIENT_STOCK
+  );
+
+  return isQuantityLargerThanAvailable || isError;
+};

@@ -223,6 +223,7 @@ export interface OrderRefund_orderRefund_order_fulfillments_lines_orderLine {
   productSku: string;
   quantity: number;
   quantityFulfilled: number;
+  quantityToFulfill: number;
   unitDiscount: OrderRefund_orderRefund_order_fulfillments_lines_orderLine_unitDiscount;
   unitDiscountValue: any;
   unitDiscountReason: string | null;
@@ -318,6 +319,7 @@ export interface OrderRefund_orderRefund_order_lines {
   productSku: string;
   quantity: number;
   quantityFulfilled: number;
+  quantityToFulfill: number;
   unitDiscount: OrderRefund_orderRefund_order_lines_unitDiscount;
   unitDiscountValue: any;
   unitDiscountReason: string | null;
@@ -490,6 +492,7 @@ export interface OrderRefund_orderRefund_order {
   fulfillments: (OrderRefund_orderRefund_order_fulfillments | null)[];
   lines: (OrderRefund_orderRefund_order_lines | null)[];
   number: string | null;
+  isPaid: boolean;
   paymentStatus: PaymentChargeStatusEnum;
   shippingAddress: OrderRefund_orderRefund_order_shippingAddress | null;
   shippingMethod: OrderRefund_orderRefund_order_shippingMethod | null;
@@ -507,7 +510,6 @@ export interface OrderRefund_orderRefund_order {
   availableShippingMethods: (OrderRefund_orderRefund_order_availableShippingMethods | null)[] | null;
   invoices: (OrderRefund_orderRefund_order_invoices | null)[] | null;
   channel: OrderRefund_orderRefund_order_channel;
-  isPaid: boolean;
 }
 
 export interface OrderRefund_orderRefund {

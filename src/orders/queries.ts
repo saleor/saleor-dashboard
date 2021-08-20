@@ -2,9 +2,11 @@ import { fragmentAddress } from "@saleor/fragments/address";
 import {
   fragmentOrderDetails,
   fragmentOrderSettings,
-  fragmentRefundOrderLine
+  fragmentRefundOrderLine,
+  fragmentShopOrderSettings
 } from "@saleor/fragments/orders";
 import { fragmentMoney } from "@saleor/fragments/products";
+import { warehouseFragment } from "@saleor/fragments/warehouses";
 import makeQuery from "@saleor/hooks/makeQuery";
 import makeTopLevelSearch from "@saleor/hooks/makeTopLevelSearch";
 import gql from "graphql-tag";
@@ -19,6 +21,7 @@ import {
   OrderFulfillData,
   OrderFulfillDataVariables
 } from "./types/OrderFulfillData";
+import { OrderFulfillSettings } from "./types/OrderFulfillSettings";
 import { OrderList, OrderListVariables } from "./types/OrderList";
 import {
   OrderRefundData,
@@ -150,6 +153,8 @@ export const orderDetailsQuery = gql`
         country
       }
       defaultWeightUnit
+      fulfillmentAllowUnpaid
+      fulfillmentAutoApprove
     }
   }
 `;
@@ -217,9 +222,11 @@ export const useOrderVariantSearch = makeTopLevelSearch<
 >(searchOrderVariant);
 
 const orderFulfillData = gql`
+  ${warehouseFragment}
   query OrderFulfillData($orderId: ID!) {
     order(id: $orderId) {
       id
+      isPaid
       lines {
         id
         isShippingRequired
@@ -232,6 +239,7 @@ const orderFulfillData = gql`
           }
         }
         quantityFulfilled
+        quantityToFulfill
         variant {
           id
           name
@@ -245,7 +253,7 @@ const orderFulfillData = gql`
           stocks {
             id
             warehouse {
-              id
+              ...WarehouseFragment
             }
             quantity
             quantityAllocated
@@ -265,11 +273,28 @@ export const useOrderFulfillData = makeQuery<
   OrderFulfillDataVariables
 >(orderFulfillData);
 
+export const orderFulfillSettingsQuery = gql`
+  ${fragmentShopOrderSettings}
+  query OrderFulfillSettings {
+    shop {
+      ...ShopOrderSettingsFragment
+    }
+  }
+`;
+export const useOrderFulfillSettingsQuery = makeQuery<
+  OrderFulfillSettings,
+  never
+>(orderFulfillSettingsQuery);
+
 export const orderSettingsQuery = gql`
   ${fragmentOrderSettings}
+  ${fragmentShopOrderSettings}
   query OrderSettings {
     orderSettings {
       ...OrderSettingsFragment
+    }
+    shop {
+      ...ShopOrderSettingsFragment
     }
   }
 `;
@@ -299,7 +324,7 @@ const orderRefundData = gql`
       }
       lines {
         ...RefundOrderLineFragment
-        quantityFulfilled
+        quantityToFulfill
       }
       fulfillments {
         id
