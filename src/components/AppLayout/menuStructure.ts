@@ -50,30 +50,33 @@ function createMenuStructure(intl: IntlShape, user: User): SidebarMenuItem[] {
           ariaLabel: "products",
           label: intl.formatMessage(sectionNames.products),
           id: "products",
-          url: productListUrl()
+          url: productListUrl(),
+          permissions: [PermissionEnum.MANAGE_PRODUCTS]
         },
         {
           ariaLabel: "categories",
           label: intl.formatMessage(sectionNames.categories),
           id: "categories",
-          url: categoryListUrl()
+          url: categoryListUrl(),
+          permissions: [PermissionEnum.MANAGE_PRODUCTS]
         },
         {
           ariaLabel: "collections",
           label: intl.formatMessage(sectionNames.collections),
           id: "collections",
-          url: collectionListUrl()
+          url: collectionListUrl(),
+          permissions: [PermissionEnum.MANAGE_PRODUCTS]
         },
         {
           ariaLabel: "giftCards",
           label: intl.formatMessage(sectionNames.giftCards),
           id: "giftCards",
-          url: giftCardsListUrl()
+          url: giftCardsListUrl(),
+          permissions: [PermissionEnum.MANAGE_GIFT_CARD]
         }
       ],
       iconSrc: catalogIcon,
       label: intl.formatMessage(commonMessages.catalog),
-      permissions: [PermissionEnum.MANAGE_PRODUCTS],
       id: "catalogue"
     },
     {
@@ -160,12 +163,30 @@ function createMenuStructure(intl: IntlShape, user: User): SidebarMenuItem[] {
     }
   ];
 
-  return menuItems.filter(
-    menuItem =>
-      !menuItem.permissions ||
-      (user?.userPermissions || []).some(permission =>
-        menuItem.permissions.includes(permission.code)
-      )
+  const isMenuItemPermitted = (menuItem: FilterableMenuItem) =>
+    !menuItem.permissions ||
+    (user?.userPermissions || []).some(permission =>
+      menuItem.permissions.includes(permission.code)
+    );
+
+  const getFilteredMenuItems = (menuItems: FilterableMenuItem[]) =>
+    menuItems.filter(isMenuItemPermitted);
+
+  return menuItems.reduce(
+    (resultItems: FilterableMenuItem[], menuItem: FilterableMenuItem) => {
+      const { children } = menuItem;
+
+      if (!isMenuItemPermitted(menuItem)) {
+        return resultItems;
+      }
+
+      const filteredChildren = children
+        ? getFilteredMenuItems(children)
+        : undefined;
+
+      return [...resultItems, { ...menuItem, children: filteredChildren }];
+    },
+    [] as FilterableMenuItem[]
   );
 }
 

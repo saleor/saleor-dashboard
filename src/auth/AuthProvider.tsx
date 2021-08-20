@@ -28,7 +28,7 @@ export const useAuth = () => {
   const isAuthenticated = !!user.user;
 
   return {
-    hasToken: !!getTokens(),
+    hasToken: !!getTokens().auth,
     isAuthenticated,
     tokenAuthLoading: user.tokenAuthLoading,
     tokenVerifyLoading: user.tokenVerifyLoading,

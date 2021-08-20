@@ -144,6 +144,7 @@ const Routes: React.FC = () => {
     tokenVerifyLoading,
     user
   } = useAuth();
+
   const { channel } = useAppChannel(false);
 
   const channelLoaded = typeof channel !== "undefined";
@@ -193,8 +194,7 @@ const Routes: React.FC = () => {
                 component={CustomerSection}
               />
               <SectionRoute
-                /* add after backend adds the permission to schema */
-                // permissions={[]}
+                permissions={[PermissionEnum.MANAGE_GIFT_CARD]}
                 path={giftCardsSectionUrlName}
                 component={GiftCardSection}
               />
