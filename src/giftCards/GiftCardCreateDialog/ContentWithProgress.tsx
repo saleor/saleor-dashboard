@@ -28,7 +28,7 @@ const ContentWithProgress: React.FC<ContentWithProgressProps> = ({
   const classes = useStyles({});
 
   return children ? (
-    (children as React.ReactElement)
+    <>{children}</>
   ) : (
     <div className={classNames(classes.container, containerClassName)}>
       <CircularProgress />
