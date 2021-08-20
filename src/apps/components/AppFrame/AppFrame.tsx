@@ -26,7 +26,7 @@ export const AppFrame: React.FC<Props> = ({
   const { sendThemeToExtension } = useTheme();
   const classes = useStyles();
   const appOrigin = getOrigin(src);
-  const { postToExtension } = useAppActions(frameRef.current, appOrigin);
+  const { postToExtension } = useAppActions(frameRef, appOrigin);
 
   const handleLoad = () => {
     postToExtension({
@@ -37,7 +37,10 @@ export const AppFrame: React.FC<Props> = ({
       }
     });
     sendThemeToExtension();
-    onLoad();
+
+    if (onLoad) {
+      onLoad();
+    }
   };
 
   return (

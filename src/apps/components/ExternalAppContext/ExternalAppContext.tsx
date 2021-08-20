@@ -43,12 +43,14 @@ export const ExternalAppProvider: React.FC = ({ children }) => {
 };
 
 export const useExternalApp = () => {
-  const { setOpen, setAppData } = React.useContext(ExternalAppContext);
+  const { open, setOpen, setAppData } = React.useContext(ExternalAppContext);
 
   const openApp = (appData: AppData) => {
     setOpen(true);
     setAppData(appData);
   };
 
-  return { openApp };
+  const closeApp = () => setOpen(false);
+
+  return { open, openApp, closeApp };
 };

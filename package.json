@@ -100,7 +100,7 @@
     "@pollyjs/core": "^5.0.0",
     "@pollyjs/persister-fs": "^5.0.0",
     "@release-it/bumper": "^2.0.0",
-    "@saleor/app-bridge": "github:saleor/app-bridge#159634b09f78c8a14f9656282a295f73779d8518",
+    "@saleor/app-bridge": "github:saleor/app-bridge#e6d937d643bc550b39deccd685c9b5713c8281cc",
     "@sentry/webpack-plugin": "^1.14.0",
     "@storybook/addon-storyshots": "^5.2.8",
     "@storybook/react": "^5.1.9",
