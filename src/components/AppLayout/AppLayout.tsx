@@ -198,7 +198,7 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
                       {isPickerActive && (
                         <AppChannelSelect
                           channels={availableChannels}
-                          selectedChannelId={channel.id}
+                          selectedChannelId={channel?.id}
                           onChannelSelect={setChannel}
                         />
                       )}
@@ -207,7 +207,7 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
                         user={user}
                         onLogout={logout}
                         onProfileClick={() =>
-                          navigate(staffMemberDetailsUrl(user.id))
+                          navigate(staffMemberDetailsUrl(user?.id))
                         }
                         onThemeToggle={toggleTheme}
                       />
