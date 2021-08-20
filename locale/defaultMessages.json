@@ -3563,6 +3563,30 @@
     "context": "GiftCardUpdateDetailsCard title",
     "string": "Details"
   },
+  "src_dot_giftCards_dot_GiftCardsList_dot_GiftCardsListTable_dot_GiftCardsListTableHeader_dot_disableLabel": {
+    "context": "GiftCardEnableDisableSection enable label",
+    "string": "Deactivate"
+  },
+  "src_dot_giftCards_dot_GiftCardsList_dot_GiftCardsListTable_dot_GiftCardsListTableHeader_dot_enableLabel": {
+    "context": "GiftCardEnableDisableSection enable label",
+    "string": "Activate"
+  },
+  "src_dot_giftCards_dot_GiftCardsList_dot_GiftCardsListTable_dot_GiftCardsListTableHeader_dot_errorActivateAlertText": {
+    "context": "GiftCardEnableDisableSection error activate alert text",
+    "string": "Error activating gift {count,plural,one{card} other{cards}}"
+  },
+  "src_dot_giftCards_dot_GiftCardsList_dot_GiftCardsListTable_dot_GiftCardsListTableHeader_dot_errorDeactivateAlertText": {
+    "context": "GiftCardEnableDisableSection error activate alert text",
+    "string": "Errors deactivating gift {count,plural,one{card} other{cards}}"
+  },
+  "src_dot_giftCards_dot_GiftCardsList_dot_GiftCardsListTable_dot_GiftCardsListTableHeader_dot_successActivateAlertText": {
+    "context": "GiftCardEnableDisableSection success activate alert text",
+    "string": "Successfully activated gift {count,plural,one{card} other{cards}}"
+  },
+  "src_dot_giftCards_dot_GiftCardsList_dot_GiftCardsListTable_dot_GiftCardsListTableHeader_dot_successDeactivateAlertText": {
+    "context": "GiftCardEnableDisableSection success activate alert text",
+    "string": "Successfully deactivated gift {count,plural,one{card} other{cards}}"
+  },
   "src_dot_giftCards_dot_GiftCardsList_dot_bulkIssue": {
     "context": "GiftCardsListHeader menu item settings",
     "string": "Bulk Issue"
