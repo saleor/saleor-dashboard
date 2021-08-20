@@ -5,7 +5,6 @@ import React from "react";
 
 interface ContentWithProgressProps {
   containerClassName?: string;
-  children: React.ReactNode | React.ReactNode[];
 }
 
 export const useStyles = makeStyles(
@@ -16,7 +15,7 @@ export const useStyles = makeStyles(
       justifyContent: "center",
       height: "100%",
       width: "100%",
-      padding: theme.spacing(3)
+      padding: theme.spacing
     }
   }),
   { name: "ContentWithProgress" }
