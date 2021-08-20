@@ -5,6 +5,9 @@ export const ATTRIBUTES_DETAILS = {
   assignValuesButton: '[data-test-id="assignValueButton"]',
   valueRequired: '[name="valueRequired"]',
   valueNameInput: '[data-test-id="valueName"]',
+  dashboardProperties: {
+    useInFilteringCheckbox: '[name="filterableInDashboard"]'
+  },
   attributesInputTypes: {
     DROPDOWN: '[data-test-id="DROPDOWN"]',
     MULTISELECT: '[data-test-id="MULTISELECT"]',

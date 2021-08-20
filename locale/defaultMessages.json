@@ -536,6 +536,10 @@
     "context": "button",
     "string": "Accept"
   },
+  "src_dot_approve": {
+    "context": "button",
+    "string": "Approve"
+  },
   "src_dot_apps": {
     "context": "apps section name",
     "string": "Apps"
@@ -1301,6 +1305,10 @@
   "src_dot_cancelled": {
     "context": "order status",
     "string": "Cancelled"
+  },
+  "src_dot_cannotFullfillUnpaidOrder": {
+    "context": "disabled option description",
+    "string": "Can’t fulfill until payment is captured"
   },
   "src_dot_catalog": {
     "string": "Catalog"
@@ -3956,67 +3964,65 @@
     "context": "button",
     "string": "Finalize"
   },
-  "src_dot_orders_dot_components_dot_OrderFulfillPage_dot_1608534452": {
-    "context": "page header",
-    "string": "Order no. {orderNumber} - Add Fulfillment"
-  },
-  "src_dot_orders_dot_components_dot_OrderFulfillPage_dot_2094985970": {
-    "context": "quantity of fulfilled products",
-    "string": "Quantity to fulfill"
-  },
-  "src_dot_orders_dot_components_dot_OrderFulfillPage_dot_2095687440": {
-    "context": "fulfill order, button",
-    "string": "Fulfill"
-  },
-  "src_dot_orders_dot_components_dot_OrderFulfillPage_dot_2588284040": {
-    "context": "no variant stock in warehouse",
-    "string": "No Stock"
-  },
-  "src_dot_orders_dot_components_dot_OrderFulfillPage_dot_3244948255": {
-    "context": "header",
-    "string": "Items ready to ship"
-  },
-  "src_dot_orders_dot_components_dot_OrderFulfillPage_dot_3620521256": {
+  "src_dot_orders_dot_components_dot_OrderFulfillPage_dot_headerOrder": {
     "context": "page header",
     "string": "Order"
   },
-  "src_dot_orders_dot_components_dot_OrderFulfillPage_dot_4046223826": {
-    "string": "Product name"
-  },
-  "src_dot_orders_dot_components_dot_OrderFulfillPage_dot_4251997263": {
-    "context": "checkbox",
-    "string": "Send shipment details to customer"
-  },
-  "src_dot_orders_dot_components_dot_OrderFulfillPage_dot_580490159": {
-    "context": "page header with order number",
+  "src_dot_orders_dot_components_dot_OrderFulfillPage_dot_headerOrderNumber": {
+    "context": "page header",
     "string": "Order #{orderNumber}"
   },
-  "src_dot_orders_dot_components_dot_OrderFulfillPage_dot_693960049": {
+  "src_dot_orders_dot_components_dot_OrderFulfillPage_dot_headerOrderNumberAddFulfillment": {
+    "context": "page header",
+    "string": "Order no. {orderNumber} - Add Fulfillment"
+  },
+  "src_dot_orders_dot_components_dot_OrderFulfillPage_dot_itemsReadyToShip": {
+    "context": "header",
+    "string": "Items ready to ship"
+  },
+  "src_dot_orders_dot_components_dot_OrderFulfillPage_dot_noStock": {
+    "context": "no variant stock in warehouse",
+    "string": "No Stock"
+  },
+  "src_dot_orders_dot_components_dot_OrderFulfillPage_dot_productName": {
+    "context": "name",
+    "string": "Product name"
+  },
+  "src_dot_orders_dot_components_dot_OrderFulfillPage_dot_quantityToFulfill": {
+    "context": "quantity of fulfilled products",
+    "string": "Quantity to fulfill"
+  },
+  "src_dot_orders_dot_components_dot_OrderFulfillPage_dot_sentShipmentDetails": {
+    "context": "checkbox label",
+    "string": "Send shipment details to customer"
+  },
+  "src_dot_orders_dot_components_dot_OrderFulfillPage_dot_sku": {
     "context": "product's sku",
     "string": "SKU"
   },
-  "src_dot_orders_dot_components_dot_OrderFulfilledProductsCard_dot_1119771899": {
+  "src_dot_orders_dot_components_dot_OrderFulfillPage_dot_submitFulfillment": {
+    "context": "fulfill order, button",
+    "string": "Fulfill"
+  },
+  "src_dot_orders_dot_components_dot_OrderFulfillPage_dot_submitPrepareFulfillment": {
+    "context": "prepare order fulfillment, button",
+    "string": "Prepare fulfillment"
+  },
+  "src_dot_orders_dot_components_dot_OrderFulfilledProductsCard_dot_addTracking": {
     "context": "add tracking button",
     "string": "Add tracking"
   },
-  "src_dot_orders_dot_components_dot_OrderFulfilledProductsCard_dot_2211099657": {
+  "src_dot_orders_dot_components_dot_OrderFulfilledProductsCard_dot_editTracking": {
     "context": "edit tracking button",
     "string": "Edit tracking"
-  },
-  "src_dot_orders_dot_components_dot_OrderFulfilledProductsCard_dot_2845258362": {
-    "context": "refund button",
-    "string": "Refund"
-  },
-  "src_dot_orders_dot_components_dot_OrderFulfilledProductsCard_dot_3254150098": {
-    "string": "Tracking Number: {trackingNumber}"
-  },
-  "src_dot_orders_dot_components_dot_OrderFulfilledProductsCard_dot_732594284": {
-    "context": "button",
-    "string": "Cancel Fulfillment"
   },
   "src_dot_orders_dot_components_dot_OrderFulfilledProductsCard_dot_fulfilled": {
     "context": "fulfillment group",
     "string": "Fulfilled from: "
+  },
+  "src_dot_orders_dot_components_dot_OrderFulfilledProductsCard_dot_refund": {
+    "context": "refund button",
+    "string": "Refund"
   },
   "src_dot_orders_dot_components_dot_OrderFulfilledProductsCard_dot_restocked": {
     "context": "restocked group",
@@ -4025,6 +4031,18 @@
   "src_dot_orders_dot_components_dot_OrderFulfilledProductsCard_dot_tracking": {
     "context": "tracking number",
     "string": "Tracking Number: {trackingNumber}"
+  },
+  "src_dot_orders_dot_components_dot_OrderFulfillmentApproveDialog_dot_description": {
+    "context": "dialog description",
+    "string": "Are you sure you want to approve this fullfillment?"
+  },
+  "src_dot_orders_dot_components_dot_OrderFulfillmentApproveDialog_dot_notifyCustomer": {
+    "context": "checkbox label, fulfillment approval",
+    "string": "Send shipment details to customer"
+  },
+  "src_dot_orders_dot_components_dot_OrderFulfillmentApproveDialog_dot_title": {
+    "context": "dialog header",
+    "string": "Approve this fulfillment"
   },
   "src_dot_orders_dot_components_dot_OrderFulfillmentCancelDialog_dot_1097287358": {
     "string": "Are you sure you want to cancel fulfillment? Canceling a fulfillment will restock products at a selected warehouse."
@@ -4037,24 +4055,25 @@
     "context": "dialog header",
     "string": "Cancel Fulfillment"
   },
-  "src_dot_orders_dot_components_dot_OrderFulfillmentDialog_dot_2796503714": {
-    "context": "quantity of fulfilled products",
-    "string": "Quantity"
+  "src_dot_orders_dot_components_dot_OrderFulfillmentSettings_dot_1154699654": {
+    "context": "checkbox label",
+    "string": "Allow fulfillment without payment"
   },
-  "src_dot_orders_dot_components_dot_OrderFulfillmentDialog_dot_3123761129": {
-    "context": "dialog header",
-    "string": "Fulfill Products"
+  "src_dot_orders_dot_components_dot_OrderFulfillmentSettings_dot_2478368540": {
+    "context": "checkbox label description",
+    "string": "All fulfillments will be automatically approved"
   },
-  "src_dot_orders_dot_components_dot_OrderFulfillmentDialog_dot_3252172269": {
-    "context": "fulfillment group",
-    "string": "Tracking number"
+  "src_dot_orders_dot_components_dot_OrderFulfillmentSettings_dot_3336812159": {
+    "context": "checkbox label",
+    "string": "Automatically approve all fulfillments"
   },
-  "src_dot_orders_dot_components_dot_OrderFulfillmentDialog_dot_4046223826": {
-    "string": "Product name"
+  "src_dot_orders_dot_components_dot_OrderFulfillmentSettings_dot_3666602886": {
+    "context": "checkbox label description",
+    "string": "You will be able to fulfill products without capturing payment for the order."
   },
-  "src_dot_orders_dot_components_dot_OrderFulfillmentDialog_dot_693960049": {
-    "context": "product's sku",
-    "string": "SKU"
+  "src_dot_orders_dot_components_dot_OrderFulfillmentSettings_dot_4200951094": {
+    "context": "section header",
+    "string": "Fulfillment settings"
   },
   "src_dot_orders_dot_components_dot_OrderFulfillmentTrackingDialog_dot_3252172269": {
     "string": "Tracking number"
@@ -4162,6 +4181,10 @@
   "src_dot_orders_dot_components_dot_OrderHistory_dot_3796744261": {
     "context": "order history message",
     "string": "Products were added to an order"
+  },
+  "src_dot_orders_dot_components_dot_OrderHistory_dot_3854352507": {
+    "context": "order history message",
+    "string": "Fulfillment awaits approval"
   },
   "src_dot_orders_dot_components_dot_OrderHistory_dot_393045022": {
     "context": "order history message",
@@ -4441,10 +4464,6 @@
     "context": "order line total price",
     "string": "Total"
   },
-  "src_dot_orders_dot_components_dot_OrderRefundFulfilledProducts_dot_1097582574": {
-    "context": "section header returned",
-    "string": "Fulfillment returned"
-  },
   "src_dot_orders_dot_components_dot_OrderRefundFulfilledProducts_dot_1134347598": {
     "context": "tabel column header",
     "string": "Price"
@@ -4464,10 +4483,6 @@
     "context": "button",
     "string": "Set maximal quantities"
   },
-  "src_dot_orders_dot_components_dot_OrderRefundFulfilledProducts_dot_615325604": {
-    "context": "section header",
-    "string": "Fulfillment"
-  },
   "src_dot_orders_dot_components_dot_OrderRefundFulfilledProducts_dot_878013594": {
     "context": "tabel column header",
     "string": "Total"
@@ -4475,6 +4490,18 @@
   "src_dot_orders_dot_components_dot_OrderRefundFulfilledProducts_dot_937914544": {
     "context": "error message",
     "string": "Improper value"
+  },
+  "src_dot_orders_dot_components_dot_OrderRefundFulfilledProducts_dot_fulfillment": {
+    "context": "section header",
+    "string": "Fulfillment"
+  },
+  "src_dot_orders_dot_components_dot_OrderRefundFulfilledProducts_dot_fulfillmentReturned": {
+    "context": "section header returned",
+    "string": "Fulfillment returned"
+  },
+  "src_dot_orders_dot_components_dot_OrderRefundFulfilledProducts_dot_fulfillmentWaitingForApproval": {
+    "context": "section header returned",
+    "string": "Fulfillment waiting for approval"
   },
   "src_dot_orders_dot_components_dot_OrderRefundPage_dot_194531545": {
     "context": "page header",
@@ -4651,6 +4678,10 @@
     "context": "section header",
     "string": "Fulfilled ({quantity})"
   },
+  "src_dot_orders_dot_components_dot_OrderReturnPage_dot_OrderReturnRefundItemsCard_dot_fulfilledFrom": {
+    "context": "fulfilled fulfillment, section header",
+    "string": "Fulfilled from {warehouseName}"
+  },
   "src_dot_orders_dot_components_dot_OrderReturnPage_dot_OrderReturnRefundItemsCard_dot_improperValue": {
     "context": "error message",
     "string": "Improper value"
@@ -4686,6 +4717,10 @@
   "src_dot_orders_dot_components_dot_OrderReturnPage_dot_OrderReturnRefundItemsCard_dot_unfulfilled": {
     "context": "section header",
     "string": "Unfulfilled"
+  },
+  "src_dot_orders_dot_components_dot_OrderReturnPage_dot_OrderReturnRefundItemsCard_dot_waitingForApproval": {
+    "context": "unapproved fulfillment, section header",
+    "string": "Waiting for approval ({quantity})"
   },
   "src_dot_orders_dot_components_dot_OrderReturnPage_dot_appTitle": {
     "context": "page header with order number",
@@ -4757,6 +4792,9 @@
   },
   "src_dot_orders_dot_views_dot_OrderDetails_dot_3367579693": {
     "string": "Order successfully updated"
+  },
+  "src_dot_orders_dot_views_dot_OrderDetails_dot_3897044696": {
+    "string": "Fulfillment successfully approved"
   },
   "src_dot_orders_dot_views_dot_OrderDetails_dot_4085755992": {
     "string": "Invoice email sent"

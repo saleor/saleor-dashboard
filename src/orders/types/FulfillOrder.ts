@@ -225,6 +225,7 @@ export interface FulfillOrder_orderFulfill_order_fulfillments_lines_orderLine {
   productSku: string;
   quantity: number;
   quantityFulfilled: number;
+  quantityToFulfill: number;
   unitDiscount: FulfillOrder_orderFulfill_order_fulfillments_lines_orderLine_unitDiscount;
   unitDiscountValue: any;
   unitDiscountReason: string | null;
@@ -320,6 +321,7 @@ export interface FulfillOrder_orderFulfill_order_lines {
   productSku: string;
   quantity: number;
   quantityFulfilled: number;
+  quantityToFulfill: number;
   unitDiscount: FulfillOrder_orderFulfill_order_lines_unitDiscount;
   unitDiscountValue: any;
   unitDiscountReason: string | null;
@@ -492,6 +494,7 @@ export interface FulfillOrder_orderFulfill_order {
   fulfillments: (FulfillOrder_orderFulfill_order_fulfillments | null)[];
   lines: (FulfillOrder_orderFulfill_order_lines | null)[];
   number: string | null;
+  isPaid: boolean;
   paymentStatus: PaymentChargeStatusEnum;
   shippingAddress: FulfillOrder_orderFulfill_order_shippingAddress | null;
   shippingMethod: FulfillOrder_orderFulfill_order_shippingMethod | null;
@@ -509,7 +512,6 @@ export interface FulfillOrder_orderFulfill_order {
   availableShippingMethods: (FulfillOrder_orderFulfill_order_availableShippingMethods | null)[] | null;
   invoices: (FulfillOrder_orderFulfill_order_invoices | null)[] | null;
   channel: FulfillOrder_orderFulfill_order_channel;
-  isPaid: boolean;
 }
 
 export interface FulfillOrder_orderFulfill {

@@ -1,6 +1,6 @@
 import { handleQueryAuthError } from "@saleor/auth";
 import { RequireAtLeastOne } from "@saleor/misc";
-import { ApolloQueryResult } from "apollo-client";
+import { ApolloQueryResult, WatchQueryFetchPolicy } from "apollo-client";
 import { DocumentNode } from "graphql";
 import { useEffect } from "react";
 import { QueryResult, useQuery as useBaseQuery } from "react-apollo";
@@ -46,6 +46,7 @@ export type UseQueryOpts<TVariables> = Partial<{
   displayLoader: boolean;
   skip: boolean;
   variables: TVariables;
+  fetchPolicy: WatchQueryFetchPolicy;
 }>;
 type UseQueryHook<TData, TVariables> = (
   opts: UseQueryOpts<Omit<TVariables, PrefixedPermissions>>
@@ -57,7 +58,8 @@ function makeQuery<TData, TVariables>(
   function useQuery({
     displayLoader,
     skip,
-    variables
+    variables,
+    fetchPolicy
   }: UseQueryOpts<TVariables>): UseQueryResult<TData, TVariables> {
     const notify = useNotifier();
     const intl = useIntl();
@@ -78,7 +80,7 @@ function makeQuery<TData, TVariables>(
         useBatching: true
       },
       errorPolicy: "all",
-      fetchPolicy: "cache-and-network",
+      fetchPolicy: fetchPolicy || "cache-and-network",
       onError: error =>
         handleQueryAuthError(
           error,

@@ -223,6 +223,7 @@ export interface OrderMarkAsPaid_orderMarkAsPaid_order_fulfillments_lines_orderL
   productSku: string;
   quantity: number;
   quantityFulfilled: number;
+  quantityToFulfill: number;
   unitDiscount: OrderMarkAsPaid_orderMarkAsPaid_order_fulfillments_lines_orderLine_unitDiscount;
   unitDiscountValue: any;
   unitDiscountReason: string | null;
@@ -318,6 +319,7 @@ export interface OrderMarkAsPaid_orderMarkAsPaid_order_lines {
   productSku: string;
   quantity: number;
   quantityFulfilled: number;
+  quantityToFulfill: number;
   unitDiscount: OrderMarkAsPaid_orderMarkAsPaid_order_lines_unitDiscount;
   unitDiscountValue: any;
   unitDiscountReason: string | null;
@@ -490,6 +492,7 @@ export interface OrderMarkAsPaid_orderMarkAsPaid_order {
   fulfillments: (OrderMarkAsPaid_orderMarkAsPaid_order_fulfillments | null)[];
   lines: (OrderMarkAsPaid_orderMarkAsPaid_order_lines | null)[];
   number: string | null;
+  isPaid: boolean;
   paymentStatus: PaymentChargeStatusEnum;
   shippingAddress: OrderMarkAsPaid_orderMarkAsPaid_order_shippingAddress | null;
   shippingMethod: OrderMarkAsPaid_orderMarkAsPaid_order_shippingMethod | null;
@@ -507,7 +510,6 @@ export interface OrderMarkAsPaid_orderMarkAsPaid_order {
   availableShippingMethods: (OrderMarkAsPaid_orderMarkAsPaid_order_availableShippingMethods | null)[] | null;
   invoices: (OrderMarkAsPaid_orderMarkAsPaid_order_invoices | null)[] | null;
   channel: OrderMarkAsPaid_orderMarkAsPaid_order_channel;
-  isPaid: boolean;
 }
 
 export interface OrderMarkAsPaid_orderMarkAsPaid {
