@@ -43,3 +43,17 @@ export function getMailActivationLinkForUser(email, i = 0) {
     }
   });
 }
+
+export function getMailsForUser(email, i = 0) {
+  if (i > 3) {
+    throw new Error(`There is no email invitation for user ${email}`);
+  }
+  return cy.mhGetMailsByRecipient(email).should(mails => {
+    if (!mails.length) {
+      cy.wait(10000);
+      getEmailForUser(email, i + 1);
+    } else {
+      return mails[0].Content.Headers.Subject[0];
+    }
+  });
+}
