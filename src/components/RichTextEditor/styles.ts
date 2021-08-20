@@ -11,6 +11,9 @@ const useStyles = makeStyles(
 
     return {
       editor: {
+        "& .codex-editor": {
+          zIndex: 2
+        },
         "& .cdx-quote__text": {
           minHeight: 24
         },
