@@ -12,15 +12,21 @@ export const getGiftCardSettingsInputData = ({
 }: Pick<
   GiftCardSettingsFormData,
   "expiryPeriodActive" | "expiryPeriodType" | "expiryPeriodAmount"
->): GiftCardSettingsUpdateInput => ({
-  expiryType: expiryPeriodActive
+>): GiftCardSettingsUpdateInput => {
+  const expiryType = expiryPeriodActive
     ? GiftCardSettingsExpiryTypeEnum.EXPIRY_PERIOD
-    : GiftCardSettingsExpiryTypeEnum.NEVER_EXPIRE,
-  expiryPeriod:
+    : GiftCardSettingsExpiryTypeEnum.NEVER_EXPIRE;
+
+  const expiryPeriod =
     expiryPeriodActive && expiryPeriodType && expiryPeriodAmount
       ? {
           type: expiryPeriodType,
           amount: expiryPeriodAmount
         }
-      : undefined
-});
+      : undefined;
+
+  return {
+    expiryType,
+    expiryPeriod
+  };
+};

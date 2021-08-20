@@ -1,11 +1,10 @@
 import { BulkProductErrorFragment } from "@saleor/fragments/types/BulkProductErrorFragment";
 import { CollectionErrorFragment } from "@saleor/fragments/types/CollectionErrorFragment";
 import { ProductErrorFragment } from "@saleor/fragments/types/ProductErrorFragment";
-import { commonMessages } from "@saleor/intl";
 import { ProductErrorCode } from "@saleor/types/globalTypes";
 import { defineMessages, IntlShape } from "react-intl";
 
-import commonErrorMessages from "./common";
+import commonErrorMessages, { getCommonFormFieldErrorMessage } from "./common";
 
 const messages = defineMessages({
   alreadyExists: {
@@ -75,10 +74,6 @@ function getProductErrorMessage(
         return intl.formatMessage(messages.attributeVariantsDisabled);
       case ProductErrorCode.DUPLICATED_INPUT_ITEM:
         return intl.formatMessage(messages.duplicatedInputItem);
-      case ProductErrorCode.GRAPHQL_ERROR:
-        return intl.formatMessage(commonErrorMessages.graphqlError);
-      case ProductErrorCode.REQUIRED:
-        return intl.formatMessage(commonMessages.requiredField);
       case ProductErrorCode.VARIANT_NO_DIGITAL_CONTENT:
         return intl.formatMessage(messages.variantNoDigitalContent);
       case ProductErrorCode.UNSUPPORTED_MEDIA_PROVIDER:
@@ -94,11 +89,9 @@ function getProductErrorMessage(
         if (err.field === "sku") {
           return intl.formatMessage(messages.skuUnique);
         }
-      default:
-        return intl.formatMessage(commonErrorMessages.unknownError);
     }
   }
-  return undefined;
+  return getCommonFormFieldErrorMessage(err, intl);
 }
 
 export function getProductVariantAttributeErrorMessage(

@@ -9,14 +9,14 @@ import { useIntl } from "react-intl";
 import { GiftCardSettingsFormData } from "../types";
 import { giftCardExpirySettingsCard as messages } from "./messages";
 
-export interface GiftCardSettingsListProps
+export interface GiftCardExpirySettingsCardProps
   extends Pick<GiftCardSettingsExpirySelectProps, "errors"> {
   data: GiftCardSettingsFormData;
   disabled: boolean;
   onChange: (event: React.ChangeEvent<any>) => void;
 }
 
-const GiftCardSettingsList: React.FC<GiftCardSettingsListProps> = ({
+const GiftCardExpirySettingsCard: React.FC<GiftCardExpirySettingsCardProps> = ({
   data,
   disabled,
   errors,
@@ -41,5 +41,5 @@ const GiftCardSettingsList: React.FC<GiftCardSettingsListProps> = ({
   );
 };
 
-GiftCardSettingsList.displayName = "GiftCardSettingsList";
-export default GiftCardSettingsList;
+GiftCardExpirySettingsCard.displayName = "GiftCardExpirySettingsCard";
+export default GiftCardExpirySettingsCard;

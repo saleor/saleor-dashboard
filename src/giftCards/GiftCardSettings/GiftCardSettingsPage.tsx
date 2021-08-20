@@ -29,7 +29,7 @@ const GiftCardSettingsPage: React.FC = () => {
 
   const navigate = useNavigator();
 
-  const { data, loading } = useGiftCardSettingsQuery({});
+  const { data, loading } = useGiftCardSettingsQuery();
 
   const settingsData = data?.giftCardSettings;
 

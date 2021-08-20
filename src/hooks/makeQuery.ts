@@ -48,7 +48,7 @@ export type UseQueryOpts<TVariables> = Partial<{
   variables: TVariables;
 }>;
 type UseQueryHook<TData, TVariables> = (
-  opts: UseQueryOpts<Omit<TVariables, PrefixedPermissions>>
+  opts?: UseQueryOpts<Omit<TVariables, PrefixedPermissions>>
 ) => UseQueryResult<TData, TVariables>;
 
 function makeQuery<TData, TVariables>(
@@ -58,7 +58,7 @@ function makeQuery<TData, TVariables>(
     displayLoader,
     skip,
     variables
-  }: UseQueryOpts<TVariables>): UseQueryResult<TData, TVariables> {
+  }: UseQueryOpts<TVariables> = {}): UseQueryResult<TData, TVariables> {
     const notify = useNotifier();
     const intl = useIntl();
     const [, dispatchAppState] = useAppState();
