@@ -1,12 +1,14 @@
 import {
   invoiceErrorFragment,
   orderErrorFragment,
-  orderSettingsErrorFragment
+  orderSettingsErrorFragment,
+  shopErrorFragment
 } from "@saleor/fragments/errors";
 import {
   fragmentOrderDetails,
   fragmentOrderEvent,
   fragmentOrderSettings,
+  fragmentShopOrderSettings,
   fulfillmentFragment,
   invoiceFragment
 } from "@saleor/fragments/orders";
@@ -63,6 +65,10 @@ import {
   OrderDraftUpdate,
   OrderDraftUpdateVariables
 } from "./types/OrderDraftUpdate";
+import {
+  OrderFulfillmentApprove,
+  OrderFulfillmentApproveVariables
+} from "./types/OrderFulfillmentApprove";
 import {
   OrderFulfillmentCancel,
   OrderFulfillmentCancelVariables
@@ -461,6 +467,25 @@ export const TypedOrderFulfillmentUpdateTrackingMutation = TypedMutation<
   OrderFulfillmentUpdateTrackingVariables
 >(orderFulfillmentUpdateTrackingMutation);
 
+const orderFulfillmentApproveMutation = gql`
+  ${fragmentOrderDetails}
+  ${orderErrorFragment}
+  mutation OrderFulfillmentApprove($id: ID!, $notifyCustomer: Boolean!) {
+    orderFulfillmentApprove(id: $id, notifyCustomer: $notifyCustomer) {
+      errors {
+        ...OrderErrorFragment
+      }
+      order {
+        ...OrderDetailsFragment
+      }
+    }
+  }
+`;
+export const TypedOrderFulfillmentApproveMutation = TypedMutation<
+  OrderFulfillmentApprove,
+  OrderFulfillmentApproveVariables
+>(orderFulfillmentApproveMutation);
+
 const orderFulfillmentCancelMutation = gql`
   ${fragmentOrderDetails}
   ${orderErrorFragment}
@@ -734,14 +759,27 @@ export const TypedInvoiceEmailSendMutation = TypedMutation<
 
 const orderSettingsUpdateMutation = gql`
   ${fragmentOrderSettings}
+  ${fragmentShopOrderSettings}
   ${orderSettingsErrorFragment}
-  mutation OrderSettingsUpdate($input: OrderSettingsUpdateInput!) {
-    orderSettingsUpdate(input: $input) {
+  ${shopErrorFragment}
+  mutation OrderSettingsUpdate(
+    $orderSettingsInput: OrderSettingsUpdateInput!
+    $shopSettingsInput: ShopSettingsInput!
+  ) {
+    orderSettingsUpdate(input: $orderSettingsInput) {
       errors {
         ...OrderSettingsErrorFragment
       }
       orderSettings {
         ...OrderSettingsFragment
+      }
+    }
+    shopSettingsUpdate(input: $shopSettingsInput) {
+      errors {
+        ...ShopErrorFragment
+      }
+      shop {
+        ...ShopOrderSettingsFragment
       }
     }
   }

@@ -223,6 +223,7 @@ export interface OrderUpdate_orderUpdate_order_fulfillments_lines_orderLine {
   productSku: string;
   quantity: number;
   quantityFulfilled: number;
+  quantityToFulfill: number;
   unitDiscount: OrderUpdate_orderUpdate_order_fulfillments_lines_orderLine_unitDiscount;
   unitDiscountValue: any;
   unitDiscountReason: string | null;
@@ -318,6 +319,7 @@ export interface OrderUpdate_orderUpdate_order_lines {
   productSku: string;
   quantity: number;
   quantityFulfilled: number;
+  quantityToFulfill: number;
   unitDiscount: OrderUpdate_orderUpdate_order_lines_unitDiscount;
   unitDiscountValue: any;
   unitDiscountReason: string | null;
@@ -490,6 +492,7 @@ export interface OrderUpdate_orderUpdate_order {
   fulfillments: (OrderUpdate_orderUpdate_order_fulfillments | null)[];
   lines: (OrderUpdate_orderUpdate_order_lines | null)[];
   number: string | null;
+  isPaid: boolean;
   paymentStatus: PaymentChargeStatusEnum;
   shippingAddress: OrderUpdate_orderUpdate_order_shippingAddress | null;
   shippingMethod: OrderUpdate_orderUpdate_order_shippingMethod | null;
@@ -507,7 +510,6 @@ export interface OrderUpdate_orderUpdate_order {
   availableShippingMethods: (OrderUpdate_orderUpdate_order_availableShippingMethods | null)[] | null;
   invoices: (OrderUpdate_orderUpdate_order_invoices | null)[] | null;
   channel: OrderUpdate_orderUpdate_order_channel;
-  isPaid: boolean;
 }
 
 export interface OrderUpdate_orderUpdate {

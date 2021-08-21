@@ -97,6 +97,7 @@ export const orderPath = (id: string) => urlJoin(orderSectionUrl, id);
 
 export type OrderUrlDialog =
   | "add-order-line"
+  | "approve-fulfillment"
   | "cancel"
   | "cancel-fulfillment"
   | "capture"

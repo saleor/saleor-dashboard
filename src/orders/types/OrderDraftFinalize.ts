@@ -223,6 +223,7 @@ export interface OrderDraftFinalize_draftOrderComplete_order_fulfillments_lines_
   productSku: string;
   quantity: number;
   quantityFulfilled: number;
+  quantityToFulfill: number;
   unitDiscount: OrderDraftFinalize_draftOrderComplete_order_fulfillments_lines_orderLine_unitDiscount;
   unitDiscountValue: any;
   unitDiscountReason: string | null;
@@ -318,6 +319,7 @@ export interface OrderDraftFinalize_draftOrderComplete_order_lines {
   productSku: string;
   quantity: number;
   quantityFulfilled: number;
+  quantityToFulfill: number;
   unitDiscount: OrderDraftFinalize_draftOrderComplete_order_lines_unitDiscount;
   unitDiscountValue: any;
   unitDiscountReason: string | null;
@@ -490,6 +492,7 @@ export interface OrderDraftFinalize_draftOrderComplete_order {
   fulfillments: (OrderDraftFinalize_draftOrderComplete_order_fulfillments | null)[];
   lines: (OrderDraftFinalize_draftOrderComplete_order_lines | null)[];
   number: string | null;
+  isPaid: boolean;
   paymentStatus: PaymentChargeStatusEnum;
   shippingAddress: OrderDraftFinalize_draftOrderComplete_order_shippingAddress | null;
   shippingMethod: OrderDraftFinalize_draftOrderComplete_order_shippingMethod | null;
@@ -507,7 +510,6 @@ export interface OrderDraftFinalize_draftOrderComplete_order {
   availableShippingMethods: (OrderDraftFinalize_draftOrderComplete_order_availableShippingMethods | null)[] | null;
   invoices: (OrderDraftFinalize_draftOrderComplete_order_invoices | null)[] | null;
   channel: OrderDraftFinalize_draftOrderComplete_order_channel;
-  isPaid: boolean;
 }
 
 export interface OrderDraftFinalize_draftOrderComplete {
