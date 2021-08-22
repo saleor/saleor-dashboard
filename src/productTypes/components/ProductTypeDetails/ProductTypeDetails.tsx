@@ -23,7 +23,7 @@ const useStyles = makeStyles(
       overflow: "visible"
     },
     option: {
-      marginTop: theme.spacing(),
+      marginTop: theme.spacing(-0.25),
       marginBottom: theme.spacing()
     }
   }),
