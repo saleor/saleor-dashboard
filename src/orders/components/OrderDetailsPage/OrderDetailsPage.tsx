@@ -23,7 +23,10 @@ import { defineMessages, useIntl } from "react-intl";
 
 import { maybe } from "../../../misc";
 import { OrderStatus } from "../../../types/globalTypes";
-import { OrderDetails_order } from "../../types/OrderDetails";
+import {
+  OrderDetails_order,
+  OrderDetails_order_giftCards
+} from "../../types/OrderDetails";
 import OrderCustomer from "../OrderCustomer";
 import OrderCustomerNote from "../OrderCustomerNote";
 import OrderDraftDetails from "../OrderDraftDetails/OrderDraftDetails";

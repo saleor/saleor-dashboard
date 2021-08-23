@@ -179,6 +179,7 @@ export const fragmentOrderDetails = gql`
     giftCards {
       events {
         id
+        type
         orderId
         balance {
           initialBalance {
