@@ -50,6 +50,50 @@ export interface OrderDiscountDelete_orderDiscountDelete_order_billingAddress {
   streetAddress2: string;
 }
 
+export interface OrderDiscountDelete_orderDiscountDelete_order_giftCards_events_balance_initialBalance {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderDiscountDelete_orderDiscountDelete_order_giftCards_events_balance_currentBalance {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderDiscountDelete_orderDiscountDelete_order_giftCards_events_balance_oldInitialBalance {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderDiscountDelete_orderDiscountDelete_order_giftCards_events_balance_oldCurrentBalance {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderDiscountDelete_orderDiscountDelete_order_giftCards_events_balance {
+  __typename: "GiftCardEventBalance";
+  initialBalance: OrderDiscountDelete_orderDiscountDelete_order_giftCards_events_balance_initialBalance | null;
+  currentBalance: OrderDiscountDelete_orderDiscountDelete_order_giftCards_events_balance_currentBalance;
+  oldInitialBalance: OrderDiscountDelete_orderDiscountDelete_order_giftCards_events_balance_oldInitialBalance | null;
+  oldCurrentBalance: OrderDiscountDelete_orderDiscountDelete_order_giftCards_events_balance_oldCurrentBalance | null;
+}
+
+export interface OrderDiscountDelete_orderDiscountDelete_order_giftCards_events {
+  __typename: "GiftCardEvent";
+  id: string;
+  orderId: string | null;
+  balance: OrderDiscountDelete_orderDiscountDelete_order_giftCards_events_balance | null;
+}
+
+export interface OrderDiscountDelete_orderDiscountDelete_order_giftCards {
+  __typename: "GiftCard";
+  events: OrderDiscountDelete_orderDiscountDelete_order_giftCards_events[];
+}
+
 export interface OrderDiscountDelete_orderDiscountDelete_order_discounts_amount {
   __typename: "Money";
   amount: number;
@@ -496,6 +540,7 @@ export interface OrderDiscountDelete_orderDiscountDelete_order {
   metadata: (OrderDiscountDelete_orderDiscountDelete_order_metadata | null)[];
   privateMetadata: (OrderDiscountDelete_orderDiscountDelete_order_privateMetadata | null)[];
   billingAddress: OrderDiscountDelete_orderDiscountDelete_order_billingAddress | null;
+  giftCards: (OrderDiscountDelete_orderDiscountDelete_order_giftCards | null)[] | null;
   isShippingRequired: boolean;
   canFinalize: boolean;
   created: any;

@@ -177,6 +177,26 @@ export const fragmentOrderDetails = gql`
     billingAddress {
       ...AddressFragment
     }
+    giftCards {
+      events {
+        id
+        orderId
+        balance {
+          initialBalance {
+            ...Money
+          }
+          currentBalance {
+            ...Money
+          }
+          oldInitialBalance {
+            ...Money
+          }
+          oldCurrentBalance {
+            ...Money
+          }
+        }
+      }
+    }
     isShippingRequired
     canFinalize
     created

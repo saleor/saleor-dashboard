@@ -50,6 +50,50 @@ export interface OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_o
   streetAddress2: string;
 }
 
+export interface OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_order_giftCards_events_balance_initialBalance {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_order_giftCards_events_balance_currentBalance {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_order_giftCards_events_balance_oldInitialBalance {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_order_giftCards_events_balance_oldCurrentBalance {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_order_giftCards_events_balance {
+  __typename: "GiftCardEventBalance";
+  initialBalance: OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_order_giftCards_events_balance_initialBalance | null;
+  currentBalance: OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_order_giftCards_events_balance_currentBalance;
+  oldInitialBalance: OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_order_giftCards_events_balance_oldInitialBalance | null;
+  oldCurrentBalance: OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_order_giftCards_events_balance_oldCurrentBalance | null;
+}
+
+export interface OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_order_giftCards_events {
+  __typename: "GiftCardEvent";
+  id: string;
+  orderId: string | null;
+  balance: OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_order_giftCards_events_balance | null;
+}
+
+export interface OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_order_giftCards {
+  __typename: "GiftCard";
+  events: OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_order_giftCards_events[];
+}
+
 export interface OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_order_discounts_amount {
   __typename: "Money";
   amount: number;
@@ -496,6 +540,7 @@ export interface OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_o
   metadata: (OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_order_metadata | null)[];
   privateMetadata: (OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_order_privateMetadata | null)[];
   billingAddress: OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_order_billingAddress | null;
+  giftCards: (OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_order_giftCards | null)[] | null;
   isShippingRequired: boolean;
   canFinalize: boolean;
   created: any;

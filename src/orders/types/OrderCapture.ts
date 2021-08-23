@@ -50,6 +50,50 @@ export interface OrderCapture_orderCapture_order_billingAddress {
   streetAddress2: string;
 }
 
+export interface OrderCapture_orderCapture_order_giftCards_events_balance_initialBalance {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderCapture_orderCapture_order_giftCards_events_balance_currentBalance {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderCapture_orderCapture_order_giftCards_events_balance_oldInitialBalance {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderCapture_orderCapture_order_giftCards_events_balance_oldCurrentBalance {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderCapture_orderCapture_order_giftCards_events_balance {
+  __typename: "GiftCardEventBalance";
+  initialBalance: OrderCapture_orderCapture_order_giftCards_events_balance_initialBalance | null;
+  currentBalance: OrderCapture_orderCapture_order_giftCards_events_balance_currentBalance;
+  oldInitialBalance: OrderCapture_orderCapture_order_giftCards_events_balance_oldInitialBalance | null;
+  oldCurrentBalance: OrderCapture_orderCapture_order_giftCards_events_balance_oldCurrentBalance | null;
+}
+
+export interface OrderCapture_orderCapture_order_giftCards_events {
+  __typename: "GiftCardEvent";
+  id: string;
+  orderId: string | null;
+  balance: OrderCapture_orderCapture_order_giftCards_events_balance | null;
+}
+
+export interface OrderCapture_orderCapture_order_giftCards {
+  __typename: "GiftCard";
+  events: OrderCapture_orderCapture_order_giftCards_events[];
+}
+
 export interface OrderCapture_orderCapture_order_discounts_amount {
   __typename: "Money";
   amount: number;
@@ -496,6 +540,7 @@ export interface OrderCapture_orderCapture_order {
   metadata: (OrderCapture_orderCapture_order_metadata | null)[];
   privateMetadata: (OrderCapture_orderCapture_order_privateMetadata | null)[];
   billingAddress: OrderCapture_orderCapture_order_billingAddress | null;
+  giftCards: (OrderCapture_orderCapture_order_giftCards | null)[] | null;
   isShippingRequired: boolean;
   canFinalize: boolean;
   created: any;

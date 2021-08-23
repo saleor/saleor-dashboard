@@ -50,6 +50,50 @@ export interface OrderDraftCancel_draftOrderDelete_order_billingAddress {
   streetAddress2: string;
 }
 
+export interface OrderDraftCancel_draftOrderDelete_order_giftCards_events_balance_initialBalance {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderDraftCancel_draftOrderDelete_order_giftCards_events_balance_currentBalance {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderDraftCancel_draftOrderDelete_order_giftCards_events_balance_oldInitialBalance {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderDraftCancel_draftOrderDelete_order_giftCards_events_balance_oldCurrentBalance {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderDraftCancel_draftOrderDelete_order_giftCards_events_balance {
+  __typename: "GiftCardEventBalance";
+  initialBalance: OrderDraftCancel_draftOrderDelete_order_giftCards_events_balance_initialBalance | null;
+  currentBalance: OrderDraftCancel_draftOrderDelete_order_giftCards_events_balance_currentBalance;
+  oldInitialBalance: OrderDraftCancel_draftOrderDelete_order_giftCards_events_balance_oldInitialBalance | null;
+  oldCurrentBalance: OrderDraftCancel_draftOrderDelete_order_giftCards_events_balance_oldCurrentBalance | null;
+}
+
+export interface OrderDraftCancel_draftOrderDelete_order_giftCards_events {
+  __typename: "GiftCardEvent";
+  id: string;
+  orderId: string | null;
+  balance: OrderDraftCancel_draftOrderDelete_order_giftCards_events_balance | null;
+}
+
+export interface OrderDraftCancel_draftOrderDelete_order_giftCards {
+  __typename: "GiftCard";
+  events: OrderDraftCancel_draftOrderDelete_order_giftCards_events[];
+}
+
 export interface OrderDraftCancel_draftOrderDelete_order_discounts_amount {
   __typename: "Money";
   amount: number;
@@ -496,6 +540,7 @@ export interface OrderDraftCancel_draftOrderDelete_order {
   metadata: (OrderDraftCancel_draftOrderDelete_order_metadata | null)[];
   privateMetadata: (OrderDraftCancel_draftOrderDelete_order_privateMetadata | null)[];
   billingAddress: OrderDraftCancel_draftOrderDelete_order_billingAddress | null;
+  giftCards: (OrderDraftCancel_draftOrderDelete_order_giftCards | null)[] | null;
   isShippingRequired: boolean;
   canFinalize: boolean;
   created: any;
