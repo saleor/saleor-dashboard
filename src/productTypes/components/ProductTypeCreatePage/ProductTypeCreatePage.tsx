@@ -10,7 +10,7 @@ import { ChangeEvent, FormChange } from "@saleor/hooks/useForm";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { sectionNames } from "@saleor/intl";
 import { Backlink } from "@saleor/macaw-ui";
-import { makeProductTypeKindChangeHanlder } from "@saleor/productTypes/handlers";
+import { makeProductTypeKindChangeHandler } from "@saleor/productTypes/handlers";
 import { ProductTypeDetails_taxTypes } from "@saleor/productTypes/types/ProductTypeDetails";
 import { UserError } from "@saleor/types";
 import {
@@ -96,7 +96,7 @@ const ProductTypeCreatePage: React.FC<ProductTypeCreatePageProps> = ({
       {({ change, data, hasChanged, submit }) => {
         const changeMetadata = makeMetadataChangeHandler(change);
 
-        const changeKind = makeProductTypeKindChangeHanlder(
+        const changeKind = makeProductTypeKindChangeHandler(
           change,
           onChangeKind
         );

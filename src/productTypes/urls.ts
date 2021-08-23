@@ -1,3 +1,4 @@
+import { ProductTypeKindEnum } from "@saleor/types/globalTypes";
 import { stringifyQs } from "@saleor/utils/urls";
 import urlJoin from "url-join";
 
@@ -36,12 +37,8 @@ export type ProductTypeListUrlQueryParams = ActiveTab &
 export const productTypeListUrl = (params?: ProductTypeListUrlQueryParams) =>
   productTypeListPath + "?" + stringifyQs(params);
 
-export enum ProductTypeAddUrlKindEnum {
-  normal = "normal",
-  giftCard = "gift-card"
-}
 export interface ProductTypeAddUrlKind {
-  kind?: ProductTypeAddUrlKindEnum;
+  kind?: ProductTypeKindEnum;
 }
 export type ProductTypeAddUrlQueryParams = ProductTypeAddUrlKind;
 export const productTypeAddPath = urlJoin(productTypeSection, "add");

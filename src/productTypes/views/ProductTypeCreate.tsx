@@ -14,10 +14,6 @@ import { maybe } from "../../misc";
 import ProductTypeCreatePage, {
   ProductTypeForm
 } from "../components/ProductTypeCreatePage";
-import {
-  mapProductTypeKindFromQueryParam,
-  mapProductTypeKindToQueryParam
-} from "../handlers";
 import { TypedProductTypeCreateMutation } from "../mutations";
 import { TypedProductTypeCreateDataQuery } from "../queries";
 import { ProductTypeCreate as ProductTypeCreateMutation } from "../types/ProductTypeCreate";
@@ -57,7 +53,7 @@ export const ProductTypeCreate: React.FC<ProductTypeCreateProps> = ({
     navigate(
       productTypeAddUrl({
         ...params,
-        kind: mapProductTypeKindToQueryParam(kind)
+        kind
       })
     );
 
@@ -110,7 +106,7 @@ export const ProductTypeCreate: React.FC<ProductTypeCreateProps> = ({
                   })}
                   saveButtonBarState={createProductTypeOpts.status}
                   taxTypes={data?.taxTypes || []}
-                  kind={mapProductTypeKindFromQueryParam(params.kind)}
+                  kind={params.kind}
                   onChangeKind={handleChangeKind}
                   onBack={() => navigate(productTypeListUrl())}
                   onSubmit={handleSubmit}

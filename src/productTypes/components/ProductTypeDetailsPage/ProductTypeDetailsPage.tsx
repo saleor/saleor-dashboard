@@ -121,7 +121,7 @@ const ProductTypeDetailsPage: React.FC<ProductTypeDetailsPageProps> = ({
         : false,
     metadata: productType?.metadata?.map(mapMetadataItemToInput),
     name: maybe(() => productType.name) !== undefined ? productType.name : "",
-    kind: productType?.kind ? productType.kind : ProductTypeKindEnum.NORMAL,
+    kind: productType?.kind || ProductTypeKindEnum.NORMAL,
     privateMetadata: productType?.privateMetadata?.map(mapMetadataItemToInput),
     productAttributes:
       maybe(() => productType.productAttributes) !== undefined
