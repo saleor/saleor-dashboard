@@ -85,7 +85,7 @@ export const VoucherList: React.FC<VoucherListProps> = ({ params }) => {
       sort: getSortQueryVariables(params),
       channel: params.channel
     }),
-    [params]
+    [params, settings.rowNumber]
   );
   const { data, loading, refetch } = useVoucherListQuery({
     displayLoader: true,

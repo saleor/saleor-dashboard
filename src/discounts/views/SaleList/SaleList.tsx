@@ -84,7 +84,7 @@ export const SaleList: React.FC<SaleListProps> = ({ params }) => {
       sort: getSortQueryVariables(params),
       channel: params.channel
     }),
-    [params]
+    [params, settings.rowNumber]
   );
   const { data, loading, refetch } = useSaleListQuery({
     displayLoader: true,
