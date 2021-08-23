@@ -1421,6 +1421,11 @@ export interface GiftCardExpirySettingsInput {
   expiryPeriod?: TimePeriodInputType | null;
 }
 
+export interface GiftCardResendInput {
+  id: string;
+  email?: string | null;
+}
+
 export interface GiftCardUpdateInput {
   tag?: string | null;
   startDate?: any | null;
