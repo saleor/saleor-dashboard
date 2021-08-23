@@ -145,6 +145,50 @@ export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_o
   streetAddress2: string;
 }
 
+export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_giftCards_events_balance_initialBalance {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_giftCards_events_balance_currentBalance {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_giftCards_events_balance_oldInitialBalance {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_giftCards_events_balance_oldCurrentBalance {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_giftCards_events_balance {
+  __typename: "GiftCardEventBalance";
+  initialBalance: OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_giftCards_events_balance_initialBalance | null;
+  currentBalance: OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_giftCards_events_balance_currentBalance;
+  oldInitialBalance: OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_giftCards_events_balance_oldInitialBalance | null;
+  oldCurrentBalance: OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_giftCards_events_balance_oldCurrentBalance | null;
+}
+
+export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_giftCards_events {
+  __typename: "GiftCardEvent";
+  id: string;
+  orderId: string | null;
+  balance: OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_giftCards_events_balance | null;
+}
+
+export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_giftCards {
+  __typename: "GiftCard";
+  events: OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_giftCards_events[];
+}
+
 export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_discounts_amount {
   __typename: "Money";
   amount: number;
@@ -576,6 +620,7 @@ export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_o
   metadata: (OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_metadata | null)[];
   privateMetadata: (OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_privateMetadata | null)[];
   billingAddress: OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_billingAddress | null;
+  giftCards: (OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_giftCards | null)[] | null;
   isShippingRequired: boolean;
   canFinalize: boolean;
   created: any;
