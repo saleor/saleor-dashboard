@@ -16,5 +16,5 @@ export const useGiftCardExpirySelectStyles = makeStyles(
       marginTop: theme.spacing(0.5)
     }
   }),
-  { name: "GiftCardUpdateDetailsExpirySection" }
+  { name: "GiftCardExpirySelect" }
 );
