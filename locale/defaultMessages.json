@@ -3532,14 +3532,6 @@
     "context": "GiftCardUpdateInfoCard used by label",
     "string": "Used by"
   },
-  "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardUpdatePageHeader_dot_disableLabel": {
-    "context": "GiftCardEnableDisableSection enable label",
-    "string": "Disable"
-  },
-  "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardUpdatePageHeader_dot_enableLabel": {
-    "context": "GiftCardEnableDisableSection enable label",
-    "string": "Enable"
-  },
   "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardUpdatePageHeader_dot_resendButtonLabel": {
     "context": "giftCardUpdatePageHeader resendButtonLabel",
     "string": "Resend code"
