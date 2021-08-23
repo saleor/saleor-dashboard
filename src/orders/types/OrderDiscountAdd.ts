@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { OrderDiscountCommonInput, OrderErrorCode, AddressTypeEnum, OrderDiscountType, DiscountValueTypeEnum, OrderEventsEmailsEnum, OrderEventsEnum, FulfillmentStatus, PaymentChargeStatusEnum, WarehouseClickAndCollectOptionEnum, OrderStatus, OrderAction, JobStatusEnum } from "./../../types/globalTypes";
+import { OrderDiscountCommonInput, OrderErrorCode, AddressTypeEnum, GiftCardEventsEnum, OrderDiscountType, DiscountValueTypeEnum, OrderEventsEmailsEnum, OrderEventsEnum, FulfillmentStatus, PaymentChargeStatusEnum, WarehouseClickAndCollectOptionEnum, OrderStatus, OrderAction, JobStatusEnum } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: OrderDiscountAdd
@@ -85,6 +85,7 @@ export interface OrderDiscountAdd_orderDiscountAdd_order_giftCards_events_balanc
 export interface OrderDiscountAdd_orderDiscountAdd_order_giftCards_events {
   __typename: "GiftCardEvent";
   id: string;
+  type: GiftCardEventsEnum | null;
   orderId: string | null;
   balance: OrderDiscountAdd_orderDiscountAdd_order_giftCards_events_balance | null;
 }

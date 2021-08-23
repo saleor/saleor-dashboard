@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { OrderRefundProductsInput, OrderErrorCode, AddressTypeEnum, DiscountValueTypeEnum, FulfillmentStatus, OrderDiscountType, OrderEventsEmailsEnum, OrderEventsEnum, PaymentChargeStatusEnum, WarehouseClickAndCollectOptionEnum, OrderStatus, OrderAction, JobStatusEnum } from "./../../types/globalTypes";
+import { OrderRefundProductsInput, OrderErrorCode, AddressTypeEnum, DiscountValueTypeEnum, FulfillmentStatus, GiftCardEventsEnum, OrderDiscountType, OrderEventsEmailsEnum, OrderEventsEnum, PaymentChargeStatusEnum, WarehouseClickAndCollectOptionEnum, OrderStatus, OrderAction, JobStatusEnum } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: OrderFulfillmentRefundProducts
@@ -181,6 +181,7 @@ export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_o
 export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_giftCards_events {
   __typename: "GiftCardEvent";
   id: string;
+  type: GiftCardEventsEnum | null;
   orderId: string | null;
   balance: OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_giftCards_events_balance | null;
 }
