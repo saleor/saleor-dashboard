@@ -64,7 +64,7 @@ export const CategoryList: React.FC<CategoryListProps> = ({ params }) => {
       filter: getFilterVariables(params),
       sort: getSortQueryVariables(params)
     }),
-    [params]
+    [params, settings.rowNumber]
   );
   const { data, loading, refetch } = useRootCategoriesQuery({
     displayLoader: true,
