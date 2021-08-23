@@ -9,6 +9,10 @@ export const timePeriodTextWithSelectFieldMessages = defineMessages({
     defaultMessage: "months after usage",
     description: "TimePeriodTextWithSelectField month label"
   },
+  weekLabel: {
+    defaultMessage: "weeks after usage",
+    description: "TimePeriodTextWithSelectField day label"
+  },
   dayLabel: {
     defaultMessage: "days after usage",
     description: "TimePeriodTextWithSelectField day label"
