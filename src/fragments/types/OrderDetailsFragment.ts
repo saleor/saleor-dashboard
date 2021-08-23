@@ -43,6 +43,50 @@ export interface OrderDetailsFragment_billingAddress {
   streetAddress2: string;
 }
 
+export interface OrderDetailsFragment_giftCards_events_balance_initialBalance {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderDetailsFragment_giftCards_events_balance_currentBalance {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderDetailsFragment_giftCards_events_balance_oldInitialBalance {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderDetailsFragment_giftCards_events_balance_oldCurrentBalance {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderDetailsFragment_giftCards_events_balance {
+  __typename: "GiftCardEventBalance";
+  initialBalance: OrderDetailsFragment_giftCards_events_balance_initialBalance | null;
+  currentBalance: OrderDetailsFragment_giftCards_events_balance_currentBalance;
+  oldInitialBalance: OrderDetailsFragment_giftCards_events_balance_oldInitialBalance | null;
+  oldCurrentBalance: OrderDetailsFragment_giftCards_events_balance_oldCurrentBalance | null;
+}
+
+export interface OrderDetailsFragment_giftCards_events {
+  __typename: "GiftCardEvent";
+  id: string;
+  orderId: string | null;
+  balance: OrderDetailsFragment_giftCards_events_balance | null;
+}
+
+export interface OrderDetailsFragment_giftCards {
+  __typename: "GiftCard";
+  events: OrderDetailsFragment_giftCards_events[];
+}
+
 export interface OrderDetailsFragment_discounts_amount {
   __typename: "Money";
   amount: number;
@@ -497,6 +541,7 @@ export interface OrderDetailsFragment {
   metadata: (OrderDetailsFragment_metadata | null)[];
   privateMetadata: (OrderDetailsFragment_privateMetadata | null)[];
   billingAddress: OrderDetailsFragment_billingAddress | null;
+  giftCards: (OrderDetailsFragment_giftCards | null)[] | null;
   isShippingRequired: boolean;
   canFinalize: boolean;
   created: any;

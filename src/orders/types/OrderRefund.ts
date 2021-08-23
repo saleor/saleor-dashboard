@@ -50,6 +50,50 @@ export interface OrderRefund_orderRefund_order_billingAddress {
   streetAddress2: string;
 }
 
+export interface OrderRefund_orderRefund_order_giftCards_events_balance_initialBalance {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderRefund_orderRefund_order_giftCards_events_balance_currentBalance {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderRefund_orderRefund_order_giftCards_events_balance_oldInitialBalance {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderRefund_orderRefund_order_giftCards_events_balance_oldCurrentBalance {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderRefund_orderRefund_order_giftCards_events_balance {
+  __typename: "GiftCardEventBalance";
+  initialBalance: OrderRefund_orderRefund_order_giftCards_events_balance_initialBalance | null;
+  currentBalance: OrderRefund_orderRefund_order_giftCards_events_balance_currentBalance;
+  oldInitialBalance: OrderRefund_orderRefund_order_giftCards_events_balance_oldInitialBalance | null;
+  oldCurrentBalance: OrderRefund_orderRefund_order_giftCards_events_balance_oldCurrentBalance | null;
+}
+
+export interface OrderRefund_orderRefund_order_giftCards_events {
+  __typename: "GiftCardEvent";
+  id: string;
+  orderId: string | null;
+  balance: OrderRefund_orderRefund_order_giftCards_events_balance | null;
+}
+
+export interface OrderRefund_orderRefund_order_giftCards {
+  __typename: "GiftCard";
+  events: OrderRefund_orderRefund_order_giftCards_events[];
+}
+
 export interface OrderRefund_orderRefund_order_discounts_amount {
   __typename: "Money";
   amount: number;
@@ -504,6 +548,7 @@ export interface OrderRefund_orderRefund_order {
   metadata: (OrderRefund_orderRefund_order_metadata | null)[];
   privateMetadata: (OrderRefund_orderRefund_order_privateMetadata | null)[];
   billingAddress: OrderRefund_orderRefund_order_billingAddress | null;
+  giftCards: (OrderRefund_orderRefund_order_giftCards | null)[] | null;
   isShippingRequired: boolean;
   canFinalize: boolean;
   created: any;

@@ -50,6 +50,50 @@ export interface OrderCancel_orderCancel_order_billingAddress {
   streetAddress2: string;
 }
 
+export interface OrderCancel_orderCancel_order_giftCards_events_balance_initialBalance {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderCancel_orderCancel_order_giftCards_events_balance_currentBalance {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderCancel_orderCancel_order_giftCards_events_balance_oldInitialBalance {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderCancel_orderCancel_order_giftCards_events_balance_oldCurrentBalance {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderCancel_orderCancel_order_giftCards_events_balance {
+  __typename: "GiftCardEventBalance";
+  initialBalance: OrderCancel_orderCancel_order_giftCards_events_balance_initialBalance | null;
+  currentBalance: OrderCancel_orderCancel_order_giftCards_events_balance_currentBalance;
+  oldInitialBalance: OrderCancel_orderCancel_order_giftCards_events_balance_oldInitialBalance | null;
+  oldCurrentBalance: OrderCancel_orderCancel_order_giftCards_events_balance_oldCurrentBalance | null;
+}
+
+export interface OrderCancel_orderCancel_order_giftCards_events {
+  __typename: "GiftCardEvent";
+  id: string;
+  orderId: string | null;
+  balance: OrderCancel_orderCancel_order_giftCards_events_balance | null;
+}
+
+export interface OrderCancel_orderCancel_order_giftCards {
+  __typename: "GiftCard";
+  events: OrderCancel_orderCancel_order_giftCards_events[];
+}
+
 export interface OrderCancel_orderCancel_order_discounts_amount {
   __typename: "Money";
   amount: number;
@@ -504,6 +548,7 @@ export interface OrderCancel_orderCancel_order {
   metadata: (OrderCancel_orderCancel_order_metadata | null)[];
   privateMetadata: (OrderCancel_orderCancel_order_privateMetadata | null)[];
   billingAddress: OrderCancel_orderCancel_order_billingAddress | null;
+  giftCards: (OrderCancel_orderCancel_order_giftCards | null)[] | null;
   isShippingRequired: boolean;
   canFinalize: boolean;
   created: any;
