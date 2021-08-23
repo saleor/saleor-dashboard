@@ -34,3 +34,15 @@ export const useTableStyles = makeStyles(
   }),
   { name: "GiftCardsListTable" }
 );
+
+export const useHeaderStyles = makeStyles(
+  () => ({
+    notification: {
+      maxWidth: "100%",
+      "& .MuiSnackbarContent-root": {
+        maxWidth: "100%"
+      }
+    }
+  }),
+  { name: "GiftCardsListHeader" }
+);
