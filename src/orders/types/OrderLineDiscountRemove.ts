@@ -223,6 +223,7 @@ export interface OrderLineDiscountRemove_orderLineDiscountRemove_order_fulfillme
   productSku: string;
   quantity: number;
   quantityFulfilled: number;
+  quantityToFulfill: number;
   unitDiscount: OrderLineDiscountRemove_orderLineDiscountRemove_order_fulfillments_lines_orderLine_unitDiscount;
   unitDiscountValue: any;
   unitDiscountReason: string | null;
@@ -318,6 +319,7 @@ export interface OrderLineDiscountRemove_orderLineDiscountRemove_order_lines {
   productSku: string;
   quantity: number;
   quantityFulfilled: number;
+  quantityToFulfill: number;
   unitDiscount: OrderLineDiscountRemove_orderLineDiscountRemove_order_lines_unitDiscount;
   unitDiscountValue: any;
   unitDiscountReason: string | null;
@@ -490,6 +492,7 @@ export interface OrderLineDiscountRemove_orderLineDiscountRemove_order {
   fulfillments: (OrderLineDiscountRemove_orderLineDiscountRemove_order_fulfillments | null)[];
   lines: (OrderLineDiscountRemove_orderLineDiscountRemove_order_lines | null)[];
   number: string | null;
+  isPaid: boolean;
   paymentStatus: PaymentChargeStatusEnum;
   shippingAddress: OrderLineDiscountRemove_orderLineDiscountRemove_order_shippingAddress | null;
   shippingMethod: OrderLineDiscountRemove_orderLineDiscountRemove_order_shippingMethod | null;
@@ -507,7 +510,6 @@ export interface OrderLineDiscountRemove_orderLineDiscountRemove_order {
   availableShippingMethods: (OrderLineDiscountRemove_orderLineDiscountRemove_order_availableShippingMethods | null)[] | null;
   invoices: (OrderLineDiscountRemove_orderLineDiscountRemove_order_invoices | null)[] | null;
   channel: OrderLineDiscountRemove_orderLineDiscountRemove_order_channel;
-  isPaid: boolean;
 }
 
 export interface OrderLineDiscountRemove_orderLineDiscountRemove {

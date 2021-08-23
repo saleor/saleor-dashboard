@@ -223,6 +223,7 @@ export interface OrderFulfillmentCancel_orderFulfillmentCancel_order_fulfillment
   productSku: string;
   quantity: number;
   quantityFulfilled: number;
+  quantityToFulfill: number;
   unitDiscount: OrderFulfillmentCancel_orderFulfillmentCancel_order_fulfillments_lines_orderLine_unitDiscount;
   unitDiscountValue: any;
   unitDiscountReason: string | null;
@@ -318,6 +319,7 @@ export interface OrderFulfillmentCancel_orderFulfillmentCancel_order_lines {
   productSku: string;
   quantity: number;
   quantityFulfilled: number;
+  quantityToFulfill: number;
   unitDiscount: OrderFulfillmentCancel_orderFulfillmentCancel_order_lines_unitDiscount;
   unitDiscountValue: any;
   unitDiscountReason: string | null;
@@ -490,6 +492,7 @@ export interface OrderFulfillmentCancel_orderFulfillmentCancel_order {
   fulfillments: (OrderFulfillmentCancel_orderFulfillmentCancel_order_fulfillments | null)[];
   lines: (OrderFulfillmentCancel_orderFulfillmentCancel_order_lines | null)[];
   number: string | null;
+  isPaid: boolean;
   paymentStatus: PaymentChargeStatusEnum;
   shippingAddress: OrderFulfillmentCancel_orderFulfillmentCancel_order_shippingAddress | null;
   shippingMethod: OrderFulfillmentCancel_orderFulfillmentCancel_order_shippingMethod | null;
@@ -507,7 +510,6 @@ export interface OrderFulfillmentCancel_orderFulfillmentCancel_order {
   availableShippingMethods: (OrderFulfillmentCancel_orderFulfillmentCancel_order_availableShippingMethods | null)[] | null;
   invoices: (OrderFulfillmentCancel_orderFulfillmentCancel_order_invoices | null)[] | null;
   channel: OrderFulfillmentCancel_orderFulfillmentCancel_order_channel;
-  isPaid: boolean;
 }
 
 export interface OrderFulfillmentCancel_orderFulfillmentCancel {

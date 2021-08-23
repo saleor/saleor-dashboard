@@ -142,6 +142,11 @@ export const getEventMessage = (
           sentBy: event.user ? event.user.email : null
         }
       );
+    case OrderEventsEnum.FULFILLMENT_AWAITS_APPROVAL:
+      return intl.formatMessage({
+        defaultMessage: "Fulfillment awaits approval",
+        description: "order history message"
+      });
     case OrderEventsEnum.FULFILLMENT_FULFILLED_ITEMS:
       return intl.formatMessage(
         {
