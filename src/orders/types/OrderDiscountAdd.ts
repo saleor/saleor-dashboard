@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { OrderDiscountCommonInput, OrderErrorCode, AddressTypeEnum, OrderDiscountType, DiscountValueTypeEnum, OrderEventsEmailsEnum, OrderEventsEnum, FulfillmentStatus, PaymentChargeStatusEnum, OrderStatus, OrderAction, JobStatusEnum } from "./../../types/globalTypes";
+import { OrderDiscountCommonInput, OrderErrorCode, AddressTypeEnum, OrderDiscountType, DiscountValueTypeEnum, OrderEventsEmailsEnum, OrderEventsEnum, FulfillmentStatus, PaymentChargeStatusEnum, WarehouseClickAndCollectOptionEnum, OrderStatus, OrderAction, JobStatusEnum } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: OrderDiscountAdd
@@ -351,6 +351,19 @@ export interface OrderDiscountAdd_orderDiscountAdd_order_shippingAddress {
   streetAddress2: string;
 }
 
+export interface OrderDiscountAdd_orderDiscountAdd_order_deliveryMethod_ShippingMethod {
+  __typename: "ShippingMethod";
+  id: string;
+}
+
+export interface OrderDiscountAdd_orderDiscountAdd_order_deliveryMethod_Warehouse {
+  __typename: "Warehouse";
+  id: string;
+  clickAndCollectOption: WarehouseClickAndCollectOptionEnum;
+}
+
+export type OrderDiscountAdd_orderDiscountAdd_order_deliveryMethod = OrderDiscountAdd_orderDiscountAdd_order_deliveryMethod_ShippingMethod | OrderDiscountAdd_orderDiscountAdd_order_deliveryMethod_Warehouse;
+
 export interface OrderDiscountAdd_orderDiscountAdd_order_shippingMethod {
   __typename: "ShippingMethod";
   id: string;
@@ -495,6 +508,7 @@ export interface OrderDiscountAdd_orderDiscountAdd_order {
   isPaid: boolean;
   paymentStatus: PaymentChargeStatusEnum;
   shippingAddress: OrderDiscountAdd_orderDiscountAdd_order_shippingAddress | null;
+  deliveryMethod: OrderDiscountAdd_orderDiscountAdd_order_deliveryMethod | null;
   shippingMethod: OrderDiscountAdd_orderDiscountAdd_order_shippingMethod | null;
   shippingMethodName: string | null;
   collectionPointName: string | null;

@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { OrderLineCreateInput, OrderErrorCode, AddressTypeEnum, OrderDiscountType, DiscountValueTypeEnum, OrderEventsEmailsEnum, OrderEventsEnum, FulfillmentStatus, PaymentChargeStatusEnum, OrderStatus, OrderAction, JobStatusEnum } from "./../../types/globalTypes";
+import { OrderLineCreateInput, OrderErrorCode, AddressTypeEnum, OrderDiscountType, DiscountValueTypeEnum, OrderEventsEmailsEnum, OrderEventsEnum, FulfillmentStatus, PaymentChargeStatusEnum, WarehouseClickAndCollectOptionEnum, OrderStatus, OrderAction, JobStatusEnum } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: OrderLinesAdd
@@ -351,6 +351,19 @@ export interface OrderLinesAdd_orderLinesCreate_order_shippingAddress {
   streetAddress2: string;
 }
 
+export interface OrderLinesAdd_orderLinesCreate_order_deliveryMethod_ShippingMethod {
+  __typename: "ShippingMethod";
+  id: string;
+}
+
+export interface OrderLinesAdd_orderLinesCreate_order_deliveryMethod_Warehouse {
+  __typename: "Warehouse";
+  id: string;
+  clickAndCollectOption: WarehouseClickAndCollectOptionEnum;
+}
+
+export type OrderLinesAdd_orderLinesCreate_order_deliveryMethod = OrderLinesAdd_orderLinesCreate_order_deliveryMethod_ShippingMethod | OrderLinesAdd_orderLinesCreate_order_deliveryMethod_Warehouse;
+
 export interface OrderLinesAdd_orderLinesCreate_order_shippingMethod {
   __typename: "ShippingMethod";
   id: string;
@@ -495,6 +508,7 @@ export interface OrderLinesAdd_orderLinesCreate_order {
   isPaid: boolean;
   paymentStatus: PaymentChargeStatusEnum;
   shippingAddress: OrderLinesAdd_orderLinesCreate_order_shippingAddress | null;
+  deliveryMethod: OrderLinesAdd_orderLinesCreate_order_deliveryMethod | null;
   shippingMethod: OrderLinesAdd_orderLinesCreate_order_shippingMethod | null;
   shippingMethodName: string | null;
   collectionPointName: string | null;

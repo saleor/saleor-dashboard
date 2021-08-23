@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { OrderDiscountType, DiscountValueTypeEnum, OrderEventsEmailsEnum, OrderEventsEnum, FulfillmentStatus, PaymentChargeStatusEnum, OrderStatus, OrderAction, JobStatusEnum, WeightUnitsEnum } from "./../../types/globalTypes";
+import { OrderDiscountType, DiscountValueTypeEnum, OrderEventsEmailsEnum, OrderEventsEnum, FulfillmentStatus, PaymentChargeStatusEnum, WarehouseClickAndCollectOptionEnum, OrderStatus, OrderAction, JobStatusEnum, WeightUnitsEnum } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL query operation: OrderDetails
@@ -344,6 +344,19 @@ export interface OrderDetails_order_shippingAddress {
   streetAddress2: string;
 }
 
+export interface OrderDetails_order_deliveryMethod_ShippingMethod {
+  __typename: "ShippingMethod";
+  id: string;
+}
+
+export interface OrderDetails_order_deliveryMethod_Warehouse {
+  __typename: "Warehouse";
+  id: string;
+  clickAndCollectOption: WarehouseClickAndCollectOptionEnum;
+}
+
+export type OrderDetails_order_deliveryMethod = OrderDetails_order_deliveryMethod_ShippingMethod | OrderDetails_order_deliveryMethod_Warehouse;
+
 export interface OrderDetails_order_shippingMethod {
   __typename: "ShippingMethod";
   id: string;
@@ -488,6 +501,7 @@ export interface OrderDetails_order {
   isPaid: boolean;
   paymentStatus: PaymentChargeStatusEnum;
   shippingAddress: OrderDetails_order_shippingAddress | null;
+  deliveryMethod: OrderDetails_order_deliveryMethod | null;
   shippingMethod: OrderDetails_order_shippingMethod | null;
   shippingMethodName: string | null;
   collectionPointName: string | null;

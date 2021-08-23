@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { OrderErrorCode, AddressTypeEnum, OrderDiscountType, DiscountValueTypeEnum, OrderEventsEmailsEnum, OrderEventsEnum, FulfillmentStatus, PaymentChargeStatusEnum, OrderStatus, OrderAction, JobStatusEnum } from "./../../types/globalTypes";
+import { OrderErrorCode, AddressTypeEnum, OrderDiscountType, DiscountValueTypeEnum, OrderEventsEmailsEnum, OrderEventsEnum, FulfillmentStatus, PaymentChargeStatusEnum, WarehouseClickAndCollectOptionEnum, OrderStatus, OrderAction, JobStatusEnum } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: OrderCancel
@@ -351,6 +351,19 @@ export interface OrderCancel_orderCancel_order_shippingAddress {
   streetAddress2: string;
 }
 
+export interface OrderCancel_orderCancel_order_deliveryMethod_ShippingMethod {
+  __typename: "ShippingMethod";
+  id: string;
+}
+
+export interface OrderCancel_orderCancel_order_deliveryMethod_Warehouse {
+  __typename: "Warehouse";
+  id: string;
+  clickAndCollectOption: WarehouseClickAndCollectOptionEnum;
+}
+
+export type OrderCancel_orderCancel_order_deliveryMethod = OrderCancel_orderCancel_order_deliveryMethod_ShippingMethod | OrderCancel_orderCancel_order_deliveryMethod_Warehouse;
+
 export interface OrderCancel_orderCancel_order_shippingMethod {
   __typename: "ShippingMethod";
   id: string;
@@ -495,6 +508,7 @@ export interface OrderCancel_orderCancel_order {
   isPaid: boolean;
   paymentStatus: PaymentChargeStatusEnum;
   shippingAddress: OrderCancel_orderCancel_order_shippingAddress | null;
+  deliveryMethod: OrderCancel_orderCancel_order_deliveryMethod | null;
   shippingMethod: OrderCancel_orderCancel_order_shippingMethod | null;
   shippingMethodName: string | null;
   collectionPointName: string | null;

@@ -62,3 +62,10 @@ export const warehouse: WarehouseDetails_warehouse = {
   clickAndCollectOption: WarehouseClickAndCollectOptionEnum.DISABLED,
   address
 };
+
+export const warehouseForPickup: WarehouseDetails_warehouse = {
+  ...warehouseList[0],
+  isPrivate: false,
+  clickAndCollectOption: WarehouseClickAndCollectOptionEnum.ALL,
+  address
+};

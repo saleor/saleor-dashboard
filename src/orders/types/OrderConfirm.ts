@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { OrderErrorCode, AddressTypeEnum, OrderDiscountType, DiscountValueTypeEnum, OrderEventsEmailsEnum, OrderEventsEnum, FulfillmentStatus, PaymentChargeStatusEnum, OrderStatus, OrderAction, JobStatusEnum } from "./../../types/globalTypes";
+import { OrderErrorCode, AddressTypeEnum, OrderDiscountType, DiscountValueTypeEnum, OrderEventsEmailsEnum, OrderEventsEnum, FulfillmentStatus, PaymentChargeStatusEnum, WarehouseClickAndCollectOptionEnum, OrderStatus, OrderAction, JobStatusEnum } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: OrderConfirm
@@ -351,6 +351,19 @@ export interface OrderConfirm_orderConfirm_order_shippingAddress {
   streetAddress2: string;
 }
 
+export interface OrderConfirm_orderConfirm_order_deliveryMethod_ShippingMethod {
+  __typename: "ShippingMethod";
+  id: string;
+}
+
+export interface OrderConfirm_orderConfirm_order_deliveryMethod_Warehouse {
+  __typename: "Warehouse";
+  id: string;
+  clickAndCollectOption: WarehouseClickAndCollectOptionEnum;
+}
+
+export type OrderConfirm_orderConfirm_order_deliveryMethod = OrderConfirm_orderConfirm_order_deliveryMethod_ShippingMethod | OrderConfirm_orderConfirm_order_deliveryMethod_Warehouse;
+
 export interface OrderConfirm_orderConfirm_order_shippingMethod {
   __typename: "ShippingMethod";
   id: string;
@@ -495,6 +508,7 @@ export interface OrderConfirm_orderConfirm_order {
   isPaid: boolean;
   paymentStatus: PaymentChargeStatusEnum;
   shippingAddress: OrderConfirm_orderConfirm_order_shippingAddress | null;
+  deliveryMethod: OrderConfirm_orderConfirm_order_deliveryMethod | null;
   shippingMethod: OrderConfirm_orderConfirm_order_shippingMethod | null;
   shippingMethodName: string | null;
   collectionPointName: string | null;
