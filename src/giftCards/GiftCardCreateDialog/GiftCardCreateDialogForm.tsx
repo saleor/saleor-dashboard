@@ -7,7 +7,6 @@ import { GiftCardError } from "@saleor/fragments/types/GiftCardError";
 import GiftCardExpirySelect from "@saleor/giftCards/components/GiftCardExpirySelect";
 import GiftCardTagInput from "@saleor/giftCards/components/GiftCardTagInput";
 import useForm from "@saleor/hooks/useForm";
-import useShop from "@saleor/hooks/useShop";
 import { commonMessages } from "@saleor/intl";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import Label from "@saleor/orders/components/OrderHistory/Label";
@@ -49,20 +48,20 @@ interface GiftCardCreateDialogFormProps {
   apiErrors: GiftCardError[];
   onSubmit: (data: GiftCardCreateFormData) => void;
   onClose: () => void;
+  channelCurrencies: string[];
 }
 
 const GiftCardCreateDialogForm: React.FC<GiftCardCreateDialogFormProps> = ({
   onSubmit,
   opts,
   onClose,
-  apiErrors
+  apiErrors,
+  channelCurrencies
 }) => {
   const intl = useIntl();
   const classes = useStyles({});
-  const shop = useShop();
 
-  // TEMP
-  const initialCurrency = shop?.channelCurrencies?.[0];
+  const initialCurrency = channelCurrencies[0];
 
   const [selectedCustomer, setSelectedCustomer] = useState<
     GiftCardCreateFormCustomer
@@ -105,7 +104,7 @@ const GiftCardCreateDialogForm: React.FC<GiftCardCreateDialogFormProps> = ({
           isError={!!formErrors?.balance}
           helperText={getGiftCardErrorMessage(formErrors?.balance, intl)}
           change={change}
-          choices={mapSingleValueNodeToChoice(shop?.channelCurrencies)}
+          choices={mapSingleValueNodeToChoice(channelCurrencies)}
           containerClassName={classes.balanceContainer}
           textFieldProps={{
             type: "number",

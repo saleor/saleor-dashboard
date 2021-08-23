@@ -81,6 +81,7 @@ export const fragmentOrderLine = gql`
     productSku
     quantity
     quantityFulfilled
+    quantityToFulfill
     unitDiscount {
       amount
       currency
@@ -200,6 +201,7 @@ export const fragmentOrderDetails = gql`
       ...OrderLineFragment
     }
     number
+    isPaid
     paymentStatus
     shippingAddress {
       ...AddressFragment
@@ -278,5 +280,12 @@ export const fragmentOrderDetails = gql`
 export const fragmentOrderSettings = gql`
   fragment OrderSettingsFragment on OrderSettings {
     automaticallyConfirmAllNewOrders
+  }
+`;
+
+export const fragmentShopOrderSettings = gql`
+  fragment ShopOrderSettingsFragment on Shop {
+    fulfillmentAutoApprove
+    fulfillmentAllowUnpaid
   }
 `;

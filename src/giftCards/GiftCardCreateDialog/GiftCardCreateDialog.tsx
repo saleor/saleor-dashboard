@@ -6,12 +6,14 @@ import commonErrorMessages from "@saleor/utils/errors/common";
 import React, { useState } from "react";
 import { useIntl } from "react-intl";
 
+import ContentWithProgress from "./ContentWithProgress";
 import GiftCardCreateDialogCodeContent from "./GiftCardCreateDialogCodeContent";
 import GiftCardCreateDialogForm, {
   GiftCardCreateFormData
 } from "./GiftCardCreateDialogForm";
 import { giftCardCreateDialogMessages as messages } from "./messages";
 import { useGiftCardCreateMutation } from "./mutations";
+import { useChannelCurrencies } from "./queries";
 import { GiftCardCreate } from "./types/GiftCardCreate";
 import { getGiftCardExpirySettingsInputData } from "./utils";
 
@@ -26,6 +28,11 @@ const GiftCardCreateDialog: React.FC<GiftCardCreateDialogProps> = ({
 }) => {
   const intl = useIntl();
   const notify = useNotifier();
+
+  const {
+    data: channelCurrenciesData,
+    loading: loadingChannelCurrencies
+  } = useChannelCurrencies({});
 
   const [cardCode, setCardCode] = useState(null);
 
@@ -94,19 +101,23 @@ const GiftCardCreateDialog: React.FC<GiftCardCreateDialogProps> = ({
   return (
     <Dialog open={open} maxWidth="sm">
       <DialogTitle>{intl.formatMessage(messages.title)}</DialogTitle>
-      {cardCode ? (
-        <GiftCardCreateDialogCodeContent
-          cardCode={cardCode}
-          onClose={handleClose}
-        />
-      ) : (
-        <GiftCardCreateDialogForm
-          opts={createGiftCardOpts}
-          onClose={handleClose}
-          apiErrors={createGiftCardOpts?.data?.giftCardCreate?.errors}
-          onSubmit={handleSubmit}
-        />
-      )}
+      <ContentWithProgress>
+        {!loadingChannelCurrencies &&
+          (cardCode ? (
+            <GiftCardCreateDialogCodeContent
+              cardCode={cardCode}
+              onClose={handleClose}
+            />
+          ) : (
+            <GiftCardCreateDialogForm
+              channelCurrencies={channelCurrenciesData?.shop?.channelCurrencies}
+              opts={createGiftCardOpts}
+              onClose={handleClose}
+              apiErrors={createGiftCardOpts?.data?.giftCardCreate?.errors}
+              onSubmit={handleSubmit}
+            />
+          ))}
+      </ContentWithProgress>
     </Dialog>
   );
 };
