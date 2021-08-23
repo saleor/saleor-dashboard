@@ -1,3 +1,4 @@
+import { GIFT_CARD_LIST_QUERY } from "@saleor/giftCards/GiftCardsList/types";
 import useGiftCardDetails from "@saleor/giftCards/GiftCardUpdate/providers/GiftCardDetailsProvider/hooks/useGiftCardDetails";
 import { GiftCardUpdateDialogsConsumerProps } from "@saleor/giftCards/GiftCardUpdate/providers/GiftCardUpdateDialogsProvider";
 import { DialogActionHandlersProps } from "@saleor/utils/handlers/dialogActionHandlers";
@@ -20,7 +21,7 @@ const GiftCardUpdatePageDeleteDialog: React.FC<GiftCardUpdatePageDeleteDialogPro
     id: giftCard?.id,
     onClose: closeDialog,
     onSuccess: navigateBack,
-    refetchQueries: ["GiftCardList"]
+    refetchQueries: [GIFT_CARD_LIST_QUERY]
   });
 
   return (
