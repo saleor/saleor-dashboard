@@ -2,8 +2,7 @@ import useNotifier from "@saleor/hooks/useNotifier";
 import { commonMessages } from "@saleor/intl";
 import { ConfirmButton } from "@saleor/macaw-ui";
 import commonErrorMessages from "@saleor/utils/errors/common";
-import classNames from "classnames";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useIntl } from "react-intl";
 
 import { bulkEnableDisableSectionMessages as buttonMessages } from "../../GiftCardsList/GiftCardsListTable/GiftCardsListTableHeader/messages";
@@ -13,22 +12,16 @@ import {
   useGiftCardActivateMutation,
   useGiftCardDeactivateMutation
 } from "./mutations";
-import { useGiftCardEnableDisableSectionStyles as useStyles } from "./styles";
 import { GiftCardActivate } from "./types/GiftCardActivate";
 import { GiftCardDeactivate } from "./types/GiftCardDeactivate";
 
 const GiftCardEnableDisableSection: React.FC = () => {
-  const classes = useStyles({});
   const notify = useNotifier();
   const intl = useIntl();
 
   const {
     giftCard: { id, isActive }
   } = useGiftCardDetails();
-
-  const [showButtonGreen, setShowButtonGreen] = useState(!isActive);
-
-  useEffect(() => setShowButtonGreen(!isActive), [isActive]);
 
   const onActivateCompleted = (data: GiftCardActivate) => {
     const errors = data?.giftCardActivate?.errors;
@@ -39,8 +32,6 @@ const GiftCardEnableDisableSection: React.FC = () => {
         text: intl.formatMessage(commonErrorMessages.unknownError)
       });
 
-      setShowButtonGreen(false);
-      setTimeout(() => setShowButtonGreen(true), 3000);
       return;
     }
 
@@ -91,10 +82,6 @@ const GiftCardEnableDisableSection: React.FC = () => {
 
   return (
     <ConfirmButton
-      className={classNames(classes.button, {
-        [classes.buttonRed]: isActive || currentOpts?.status === "error",
-        [classes.buttonGreen]: showButtonGreen
-      })}
       onClick={handleClick}
       transitionState={currentOpts?.status}
       labels={{
