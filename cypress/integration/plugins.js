@@ -1,7 +1,7 @@
 import faker from "faker";
 
+import { createChannel } from "../apiRequests/Channels";
 import {
-  createCustomer,
   customerRegistration,
   deleteCustomersStartsWith,
   requestPasswordReset
@@ -24,6 +24,7 @@ filterTests(["stagedOnly"], () => {
     before(() => {
       cy.clearSessionData().loginUserViaRequest();
       deleteCustomersStartsWith(startsWith);
+      createChannel({ name: randomName });
       getDefaultChannel().then(channel => (defaultChannel = channel));
     });
 
@@ -39,7 +40,7 @@ filterTests(["stagedOnly"], () => {
       cy.contains(SHARED_ELEMENTS.tableRow, "User emails").click();
       cy.contains(PLUGINS_DETAILS.channel, defaultChannel.name)
         .click()
-        .get(PLUGINS_DETAILS.accountConfirmationSubject)
+        .get(PLUGINS_DETAILS.accountConfirmationSubjectInput)
         .clearAndType(randomName)
         .get(BUTTON_SELECTORS.confirm)
         .click();
@@ -57,9 +58,12 @@ filterTests(["stagedOnly"], () => {
     });
 
     it("should change admin email plugin", () => {
+      const customerEmail = `${randomName}@example.com`;
       cy.contains(SHARED_ELEMENTS.tableRow, "Admin emails")
         .click()
         .get(PLUGINS_DETAILS.staffPasswordResetInput)
+        .click()
+        .clear()
         .clearAndType(randomName)
         .get(BUTTON_SELECTORS.confirm)
         .click();
