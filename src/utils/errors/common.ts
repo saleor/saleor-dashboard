@@ -13,11 +13,8 @@ const commonErrorMessages = defineMessages({
   }
 });
 
-enum CommonErrorCode {
-  GRAPHQL_ERROR = "GRAPHQL_ERROR",
-  INVALID = "INVALID",
-  REQUIRED = "REQUIRED"
-}
+type CommonErrorCode = "GRAPHQL_ERROR" | "INVALID" | "REQUIRED";
+
 interface CommonError<ErrorCode> {
   code: ErrorCode | CommonErrorCode;
   field: string | null;
@@ -29,11 +26,11 @@ export function getCommonFormFieldErrorMessage<ErrorCode>(
 ): string {
   if (error) {
     switch (error.code) {
-      case CommonErrorCode.GRAPHQL_ERROR:
+      case "GRAPHQL_ERROR":
         return intl.formatMessage(commonErrorMessages.graphqlError);
-      case CommonErrorCode.REQUIRED:
+      case "REQUIRED":
         return intl.formatMessage(commonMessages.requiredField);
-      case CommonErrorCode.INVALID:
+      case "INVALID":
         return intl.formatMessage(commonErrorMessages.invalid);
 
       default:
