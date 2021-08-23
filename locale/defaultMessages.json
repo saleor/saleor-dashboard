@@ -3698,6 +3698,10 @@
     "context": "TimePeriodTextWithSelectField month label",
     "string": "months after usage"
   },
+  "src_dot_giftCards_dot_components_dot_TimePeriodField_dot_weekLabel": {
+    "context": "TimePeriodTextWithSelectField day label",
+    "string": "weeks after usage"
+  },
   "src_dot_giftCards_dot_components_dot_TimePeriodField_dot_yearLabel": {
     "context": "TimePeriodTextWithSelectField year label",
     "string": "years after usage"
