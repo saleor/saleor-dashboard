@@ -7,6 +7,12 @@
 // GraphQL fragment: ChannelFragment
 // ====================================================
 
+export interface ChannelFragment_defaultCountry {
+  __typename: "CountryDisplay";
+  code: string;
+  country: string;
+}
+
 export interface ChannelFragment {
   __typename: "Channel";
   id: string;
@@ -14,4 +20,5 @@ export interface ChannelFragment {
   name: string;
   slug: string;
   currencyCode: string;
+  defaultCountry: ChannelFragment_defaultCountry;
 }
