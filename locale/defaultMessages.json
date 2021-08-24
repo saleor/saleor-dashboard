@@ -4793,6 +4793,14 @@
     "context": "section header",
     "string": "Settings"
   },
+  "src_dot_orders_dot_components_dot_OrderSettings_dot_2116402092": {
+    "context": "checkbox gift cards label",
+    "string": "Automatically fulfill non shippable gift cards"
+  },
+  "src_dot_orders_dot_components_dot_OrderSettings_dot_2879928595": {
+    "context": "checkbox gift cards label description",
+    "string": "when activated non-shippable gift cards will be automatically set as fulfilled and sent to customer"
+  },
   "src_dot_orders_dot_components_dot_OrderSettings_dot_3281882935": {
     "context": "checkbox label description",
     "string": "All orders will be automatically confirmed and all payments will be captured."
