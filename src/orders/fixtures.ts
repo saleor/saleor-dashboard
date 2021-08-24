@@ -772,6 +772,7 @@ export const orders: OrderList_orders_edges_node[] = [
 ];
 export const order = (placeholder: string): OrderDetails_order => ({
   __typename: "Order",
+  giftCards: [],
   actions: [
     OrderAction.CAPTURE,
     OrderAction.MARK_AS_PAID,
@@ -1389,6 +1390,7 @@ export const order = (placeholder: string): OrderDetails_order => ({
 });
 export const draftOrder = (placeholder: string): OrderDetails_order => ({
   __typename: "Order" as "Order",
+  giftCards: [],
   actions: [OrderAction.CAPTURE],
   availableShippingMethods: null,
   billingAddress: null,
