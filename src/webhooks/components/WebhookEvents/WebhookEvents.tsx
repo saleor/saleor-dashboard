@@ -185,6 +185,10 @@ const WebhookEvents: React.FC<WebhookEventsProps> = ({
     [WebhookEventTypeEnum.TRANSLATION_UPDATED]: intl.formatMessage({
       defaultMessage: "Translation updated",
       description: "event"
+    }),
+    [WebhookEventTypeEnum.FULFILLMENT_CANCELED]: intl.formatMessage({
+      defaultMessage: "Translation updated",
+      description: "event"
     })
   };
 
