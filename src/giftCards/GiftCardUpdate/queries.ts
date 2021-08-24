@@ -14,7 +14,6 @@ export const giftCardDataFragment = gql`
   ${fragmentMoney}
   ${metadataFragment}
   ${fragmentUserBase}
-  ${fragmentTimePeriod}
   fragment GiftCardData on GiftCard {
     ...MetadataFragment
     displayCode
@@ -39,10 +38,6 @@ export const giftCardDataFragment = gql`
     }
     created
     expiryDate
-    expiryType
-    expiryPeriod {
-      ...TimePeriod
-    }
     lastUsedOn
     isActive
     initialBalance {
@@ -63,18 +58,8 @@ export const giftCardDetails = gql`
     giftCard(id: $id) {
       ...GiftCardData
       events {
-        expiry {
-          expiryType
-          expiryPeriod {
-            ...TimePeriod
-          }
-          expiryDate
-          oldExpiryType
-          oldExpiryPeriod {
-            ...TimePeriod
-          }
-          oldExpiryDate
-        }
+        expiryDate
+        oldExpiryDate
         id
         date
         type
