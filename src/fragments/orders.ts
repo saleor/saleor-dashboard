@@ -278,5 +278,6 @@ export const fragmentOrderDetails = gql`
 export const fragmentOrderSettings = gql`
   fragment OrderSettingsFragment on OrderSettings {
     automaticallyConfirmAllNewOrders
+    automaticallyFulfillNonShippableGiftCard
   }
 `;
