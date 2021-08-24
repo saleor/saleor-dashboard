@@ -103,6 +103,13 @@ export interface OrderLineDiscountRemove_orderLineDiscountRemove_order_events_us
   lastName: string;
 }
 
+export interface OrderLineDiscountRemove_orderLineDiscountRemove_order_events_app {
+  __typename: "App";
+  id: string;
+  name: string | null;
+  appUrl: string | null;
+}
+
 export interface OrderLineDiscountRemove_orderLineDiscountRemove_order_events_lines_discount_amount {
   __typename: "Money";
   amount: number;
@@ -157,6 +164,7 @@ export interface OrderLineDiscountRemove_orderLineDiscountRemove_order_events {
   transactionReference: string | null;
   type: OrderEventsEnum | null;
   user: OrderLineDiscountRemove_orderLineDiscountRemove_order_events_user | null;
+  app: OrderLineDiscountRemove_orderLineDiscountRemove_order_events_app | null;
   lines: (OrderLineDiscountRemove_orderLineDiscountRemove_order_events_lines | null)[] | null;
 }
 
