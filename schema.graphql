@@ -405,7 +405,8 @@ type Attribute implements Node & ObjectWithMetadata {
   inputType: AttributeInputTypeEnum
   name: String
   slug: String
-  values: [AttributeValue]
+  values: [AttributeValue] @deprecated(reason: "Use the `choices` field instead. It will be removed in Saleor 3.0.")
+  choices(sortBy: AttributeChoicesSortingInput, filter: AttributeChoiceFilterInput, before: String, after: String, first: Int, last: Int): AttributeValueCountableConnection
   valueRequired: Boolean!
   visibleInStorefront: Boolean!
   filterableInStorefront: Boolean!
@@ -430,6 +431,20 @@ type AttributeBulkDelete {
   errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   count: Int!
   productErrors: [ProductError!]!
+}
+
+input AttributeChoiceFilterInput {
+  search: String
+}
+
+enum AttributeChoicesSortField {
+  NAME
+  SLUG
+}
+
+input AttributeChoicesSortingInput {
+  direction: OrderDirection!
+  field: AttributeChoicesSortField!
 }
 
 type AttributeClearMeta {
@@ -605,6 +620,17 @@ type AttributeValueBulkDelete {
   productErrors: [ProductError!]!
 }
 
+type AttributeValueCountableConnection {
+  pageInfo: PageInfo!
+  edges: [AttributeValueCountableEdge!]!
+  totalCount: Int
+}
+
+type AttributeValueCountableEdge {
+  node: AttributeValue!
+  cursor: String!
+}
+
 type AttributeValueCreate {
   errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   attribute: Attribute
@@ -707,6 +733,24 @@ type BulkStockError {
   index: Int
 }
 
+type CancellationChoice implements Node {
+  id: ID!
+  label: String!
+  slug: String!
+  hasCustomValue: Boolean!
+}
+
+type CancellationChoiceCountableConnection {
+  pageInfo: PageInfo!
+  edges: [CancellationChoiceCountableEdge!]!
+  totalCount: Int
+}
+
+type CancellationChoiceCountableEdge {
+  node: CancellationChoice!
+  cursor: String!
+}
+
 input CatalogueInput {
   products: [ID]
   categories: [ID]
@@ -718,7 +762,6 @@ type Category implements Node & ObjectWithMetadata {
   seoDescription: String
   id: ID!
   name: String!
-  description: String!
   descriptionJson: JSONString!
   slug: String!
   parent: Category
@@ -730,6 +773,7 @@ type Category implements Node & ObjectWithMetadata {
   ancestors(before: String, after: String, first: Int, last: Int): CategoryCountableConnection
   products(before: String, after: String, first: Int, last: Int): ProductCountableConnection
   url: String @deprecated(reason: "This field will be removed after 2020-07-31.")
+  description: String! @deprecated(reason: "Use the `descriptionJson` field instead.")
   children(before: String, after: String, first: Int, last: Int): CategoryCountableConnection
   backgroundImage(size: Int): Image
   translation(languageCode: LanguageCodeEnum!): CategoryTranslation
@@ -807,8 +851,8 @@ type CategoryTranslatableContent implements Node {
   seoDescription: String
   id: ID!
   name: String!
-  description: String!
   descriptionJson: JSONString!
+  description: String! @deprecated(reason: "Use the `descriptionJson` field instead.")
   translation(languageCode: LanguageCodeEnum!): CategoryTranslation
   category: Category
 }
@@ -824,9 +868,9 @@ type CategoryTranslation implements Node {
   seoDescription: String
   id: ID!
   name: String!
-  description: String!
   descriptionJson: JSONString!
   language: LanguageDisplay!
+  description: String! @deprecated(reason: "Use the `descriptionJson` field instead.")
 }
 
 type CategoryUpdate {
@@ -1071,7 +1115,6 @@ type Collection implements Node & ObjectWithMetadata {
   seoDescription: String
   id: ID!
   name: String!
-  description: String!
   descriptionJson: JSONString!
   publicationDate: Date
   slug: String!
@@ -1081,6 +1124,7 @@ type Collection implements Node & ObjectWithMetadata {
   meta: [MetaStore]! @deprecated(reason: "Use the `metadata` field. This field will be removed after 2020-07-31.")
   products(filter: ProductFilterInput, sortBy: ProductOrder, before: String, after: String, first: Int, last: Int): ProductCountableConnection
   backgroundImage(size: Int): Image
+  description: String! @deprecated(reason: "Use the `descriptionJson` field instead.")
   translation(languageCode: LanguageCodeEnum!): CollectionTranslation
   isPublished: Boolean!
 }
@@ -1203,8 +1247,8 @@ type CollectionTranslatableContent implements Node {
   seoDescription: String
   id: ID!
   name: String!
-  description: String!
   descriptionJson: JSONString!
+  description: String! @deprecated(reason: "Use the `descriptionJson` field instead.")
   translation(languageCode: LanguageCodeEnum!): CollectionTranslation
   collection: Collection
 }
@@ -1220,9 +1264,9 @@ type CollectionTranslation implements Node {
   seoDescription: String
   id: ID!
   name: String!
-  description: String!
   descriptionJson: JSONString!
   language: LanguageDisplay!
+  description: String! @deprecated(reason: "Use the `descriptionJson` field instead.")
 }
 
 type CollectionUpdate {
@@ -2711,6 +2755,7 @@ type Mutation {
   draftOrderUpdate(id: ID!, input: DraftOrderInput!): DraftOrderUpdate
   orderAddNote(order: ID!, input: OrderAddNoteInput!): OrderAddNote
   orderCancel(id: ID!): OrderCancel
+  orderCancelCustomer(cancellationChoiceCustomValue: String, cancellationChoiceId: ID!, id: ID!): OrderCancelCustomer
   orderCapture(amount: PositiveDecimal!, id: ID!): OrderCapture
   orderClearPrivateMeta(id: ID!, input: MetaPath!): OrderClearPrivateMeta @deprecated(reason: "Use the `deletePrivateMetadata` mutation instead. This field will be removed after 2020-07-31.")
   orderClearMeta(input: MetaPath!, token: UUID!): OrderClearMeta @deprecated(reason: "Use the `deleteMetadata` mutation instead. This field will be removed after 2020-07-31.")
@@ -2755,6 +2800,8 @@ type Mutation {
   giftCardDeactivate(id: ID!): GiftCardDeactivate
   giftCardUpdate(id: ID!, input: GiftCardUpdateInput!): GiftCardUpdate
   pluginUpdate(id: ID!, input: PluginUpdateInput!): PluginUpdate
+  productTagCreate(input: ProductTagCreateInput!): ProductTagCreate
+  productTagDelete(id: ID!): ProductTagDelete
   saleCreate(input: SaleInput!): SaleCreate
   saleDelete(id: ID!): SaleDelete
   saleBulkDelete(ids: [ID]!): SaleBulkDelete
@@ -2818,6 +2865,7 @@ type Mutation {
   accountUpdate(input: AccountInput!): AccountUpdate
   accountRequestDeletion(redirectUrl: String!): AccountRequestDeletion
   accountDelete(token: String!): AccountDelete
+  onboarding(input: OnboardingInput!): Onboarding
   accountUpdateMeta(input: MetaInput!): AccountUpdateMeta @deprecated(reason: "Use the `updateMetadata` mutation. This field will be removed after 2020-07-31.")
   addressCreate(input: AddressInput!, userId: ID!): AddressCreate
   addressUpdate(id: ID!, input: AddressInput!): AddressUpdate
@@ -2873,6 +2921,19 @@ interface ObjectWithMetadata {
   metadata: [MetadataItem]!
   privateMeta: [MetaStore]! @deprecated(reason: "Use the `privetaMetadata` field. This field will be removed after 2020-07-31.")
   meta: [MetaStore]! @deprecated(reason: "Use the `metadata` field. This field will be removed after 2020-07-31.")
+}
+
+type Onboarding {
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
+  requiresConfirmation: Boolean
+  accountErrors: [AccountError!]!
+  user: User
+}
+
+input OnboardingInput {
+  email: String!
+  password: String!
+  inviteCode: String!
 }
 
 type Order implements Node & ObjectWithMetadata {
@@ -2947,6 +3008,12 @@ type OrderBulkCancel {
 }
 
 type OrderCancel {
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
+  order: Order
+  orderErrors: [OrderError!]!
+}
+
+type OrderCancelCustomer {
   errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
   order: Order
   orderErrors: [OrderError!]!
@@ -3249,7 +3316,6 @@ type Page implements Node & ObjectWithMetadata {
   seoDescription: String
   id: ID!
   title: String!
-  content: String!
   contentJson: JSONString!
   publicationDate: Date
   slug: String!
@@ -3258,6 +3324,7 @@ type Page implements Node & ObjectWithMetadata {
   metadata: [MetadataItem]!
   privateMeta: [MetaStore]! @deprecated(reason: "Use the `privetaMetadata` field. This field will be removed after 2020-07-31.")
   meta: [MetaStore]! @deprecated(reason: "Use the `metadata` field. This field will be removed after 2020-07-31.")
+  content: String! @deprecated(reason: "Use the `contentJson` field instead.")
   translation(languageCode: LanguageCodeEnum!): PageTranslation
   isPublished: Boolean!
 }
@@ -3350,8 +3417,8 @@ type PageTranslatableContent implements Node {
   seoDescription: String
   id: ID!
   title: String!
-  content: String!
   contentJson: JSONString!
+  content: String! @deprecated(reason: "Use the `contentJson` field instead.")
   translation(languageCode: LanguageCodeEnum!): PageTranslation
   page: Page
 }
@@ -3367,9 +3434,9 @@ type PageTranslation implements Node {
   seoDescription: String
   id: ID!
   title: String!
-  content: String!
   contentJson: JSONString!
   language: LanguageDisplay!
+  content: String! @deprecated(reason: "Use the `contentJson` field instead.")
 }
 
 input PageTranslationInput {
@@ -3665,7 +3732,6 @@ type Product implements Node & ObjectWithMetadata {
   seoTitle: String
   seoDescription: String
   name: String!
-  description: String!
   descriptionJson: JSONString!
   publicationDate: Date
   productType: ProductType!
@@ -3697,6 +3763,7 @@ type Product implements Node & ObjectWithMetadata {
   translation(languageCode: LanguageCodeEnum!): ProductTranslation
   isAvailableForPurchase: Boolean
   isPublished: Boolean!
+  description: String! @deprecated(reason: "Use the `descriptionJson` field instead.")
 }
 
 type ProductBulkDelete {
@@ -3911,6 +3978,7 @@ enum ProductOrderField {
   TYPE
   PUBLISHED
   PUBLICATION_DATE
+  COLLECTION
 }
 
 type ProductPricingInfo {
@@ -3933,13 +4001,49 @@ input ProductStockFilterInput {
   quantity: IntRangeInput
 }
 
+type ProductTag implements Node {
+  id: ID!
+  tag: Tag!
+  product: Product!
+  created: DateTime!
+  modified: DateTime
+}
+
+type ProductTagCountableConnection {
+  pageInfo: PageInfo!
+  edges: [ProductTagCountableEdge!]!
+  totalCount: Int
+}
+
+type ProductTagCountableEdge {
+  node: ProductTag!
+  cursor: String!
+}
+
+type ProductTagCreate {
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
+  productTag: ProductTag
+  productTagErrors: [ProductError!]!
+}
+
+input ProductTagCreateInput {
+  name: String!
+  product: ID!
+}
+
+type ProductTagDelete {
+  errors: [Error!]! @deprecated(reason: "Use typed errors with error codes. This field will be removed after 2020-07-31.")
+  productTagErrors: [ProductError!]!
+  productTag: ProductTag
+}
+
 type ProductTranslatableContent implements Node {
   id: ID!
   seoTitle: String
   seoDescription: String
   name: String!
-  description: String!
   descriptionJson: JSONString!
+  description: String! @deprecated(reason: "Use the `descriptionJson` field instead.")
   translation(languageCode: LanguageCodeEnum!): ProductTranslation
   product: Product
 }
@@ -3955,9 +4059,9 @@ type ProductTranslation implements Node {
   seoTitle: String
   seoDescription: String
   name: String!
-  description: String!
   descriptionJson: JSONString!
   language: LanguageDisplay!
+  description: String! @deprecated(reason: "Use the `descriptionJson` field instead.")
 }
 
 type ProductType implements Node & ObjectWithMetadata {
@@ -3973,7 +4077,7 @@ type ProductType implements Node & ObjectWithMetadata {
   privateMeta: [MetaStore]! @deprecated(reason: "Use the `privetaMetadata` field. This field will be removed after 2020-07-31.")
   meta: [MetaStore]! @deprecated(reason: "Use the `metadata` field. This field will be removed after 2020-07-31.")
   products(before: String, after: String, first: Int, last: Int): ProductCountableConnection
-  taxRate: TaxRateType
+  taxRate: TaxRateType @deprecated(reason: "Use the TaxType instead. It will be removed in Saleor 3.0.")
   taxType: TaxType
   variantAttributes: [Attribute]
   productAttributes: [Attribute]
@@ -4329,6 +4433,8 @@ type Query {
   giftCards(before: String, after: String, first: Int, last: Int): GiftCardCountableConnection
   plugin(id: ID!): Plugin
   plugins(filter: PluginFilterInput, sortBy: PluginSortingInput, before: String, after: String, first: Int, last: Int): PluginCountableConnection
+  tags(before: String, after: String, first: Int, last: Int): TagCountableConnection
+  productTags(product: ID, before: String, after: String, first: Int, last: Int): ProductTagCountableConnection
   sale(id: ID!): Sale
   sales(filter: SaleFilterInput, sortBy: SaleSortingInput, query: String, before: String, after: String, first: Int, last: Int): SaleCountableConnection
   voucher(id: ID!): Voucher
@@ -4340,6 +4446,7 @@ type Query {
   checkouts(before: String, after: String, first: Int, last: Int): CheckoutCountableConnection
   checkoutLine(id: ID): CheckoutLine
   checkoutLines(before: String, after: String, first: Int, last: Int): CheckoutLineCountableConnection
+  cancellationChoices(before: String, after: String, first: Int, last: Int): CancellationChoiceCountableConnection
   appsInstallations: [AppInstallation!]!
   apps(filter: AppFilterInput, sortBy: AppSortingInput, before: String, after: String, first: Int, last: Int): AppCountableConnection
   app(id: ID!): App
@@ -4778,7 +4885,7 @@ input ShippingZoneUpdateInput {
 
 type Shop {
   availablePaymentGateways(currency: String): [PaymentGateway!]!
-  geolocalization: Geolocalization
+  geolocalization: Geolocalization @deprecated(reason: "Server-side geolocalization will be dropped in Saleor 3.0.")
   authorizationKeys: [AuthorizationKey]!
   countries(languageCode: LanguageCodeEnum): [CountryDisplay!]!
   currencies: [String]! @deprecated(reason: "This field will be removed in Saleor 3.0")
@@ -5029,6 +5136,25 @@ input StockFilterInput {
 input StockInput {
   warehouse: ID!
   quantity: Int
+}
+
+type Tag implements Node {
+  id: ID!
+  slug: String!
+  name: String!
+  created: DateTime!
+  modified: DateTime
+}
+
+type TagCountableConnection {
+  pageInfo: PageInfo!
+  edges: [TagCountableEdge!]!
+  totalCount: Int
+}
+
+type TagCountableEdge {
+  node: Tag!
+  cursor: String!
 }
 
 enum TaxRateType {

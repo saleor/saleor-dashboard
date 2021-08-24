@@ -22,6 +22,7 @@ import { FetchMoreProps, ListActions, ReorderAction } from "@saleor/types";
 import { convertFromRaw, RawDraftContentState } from "draft-js";
 import React from "react";
 import { useIntl } from "react-intl";
+import ProductTags from "@saleor/extensions/ProductTags";
 
 import {
   ProductDetails_product,
@@ -279,6 +280,10 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                 />
                 <CardSpacer />
                 <Metadata data={data} onChange={handlers.changeMetadata} />
+                <CardSpacer />
+                {product?.id && (
+                  <ProductTags productId={product.id} />
+                )}
               </div>
               <div>
                 <ProductOrganization
