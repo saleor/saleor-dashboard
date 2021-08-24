@@ -22,7 +22,12 @@ export const channelsList: Channels_channels[] = [
     id: "Q2hhbm5lcDoy",
     isActive: true,
     name: "Test",
-    slug: "test"
+    slug: "test",
+    defaultCountry: {
+      code: "PL",
+      country: "Poland",
+      __typename: "CountryDisplay"
+    }
   },
   {
     __typename: "Channel",
@@ -31,7 +36,12 @@ export const channelsList: Channels_channels[] = [
     id: "Q2hhbm7lbDoy213",
     isActive: true,
     name: "Channel",
-    slug: "channel"
+    slug: "channel",
+    defaultCountry: {
+      code: "PL",
+      country: "Poland",
+      __typename: "CountryDisplay"
+    }
   },
   {
     __typename: "Channel",
@@ -40,7 +50,12 @@ export const channelsList: Channels_channels[] = [
     id: "Q2hhbn5lbDoytr",
     isActive: true,
     name: "Channel test",
-    slug: "channeltest"
+    slug: "channeltest",
+    defaultCountry: {
+      code: "PL",
+      country: "Poland",
+      __typename: "CountryDisplay"
+    }
   },
   {
     __typename: "Channel",
@@ -49,7 +64,12 @@ export const channelsList: Channels_channels[] = [
     id: "Q2hhbm5lbDo5bot",
     isActive: true,
     name: "Channel USD",
-    slug: "channel-usd"
+    slug: "channel-usd",
+    defaultCountry: {
+      code: "PL",
+      country: "Poland",
+      __typename: "CountryDisplay"
+    }
   },
   {
     __typename: "Channel",
@@ -58,7 +78,12 @@ export const channelsList: Channels_channels[] = [
     id: "Q2hhbm7lbDoyr0tr",
     isActive: true,
     name: "Channel",
-    slug: "channel2"
+    slug: "channel2",
+    defaultCountry: {
+      code: "PL",
+      country: "Poland",
+      __typename: "CountryDisplay"
+    }
   },
   {
     __typename: "Channel",
@@ -67,7 +92,12 @@ export const channelsList: Channels_channels[] = [
     id: "Q2hhbn5lbDoyya",
     isActive: true,
     name: "Channel test",
-    slug: "channeltest4"
+    slug: "channeltest4",
+    defaultCountry: {
+      code: "PL",
+      country: "Poland",
+      __typename: "CountryDisplay"
+    }
   },
   {
     __typename: "Channel",
@@ -76,7 +106,12 @@ export const channelsList: Channels_channels[] = [
     id: "Q2hhbm5lbDo5w0z",
     isActive: true,
     name: "Channel USD",
-    slug: "channel-usd1"
+    slug: "channel-usd1",
+    defaultCountry: {
+      code: "PL",
+      country: "Poland",
+      __typename: "CountryDisplay"
+    }
   }
 ];
 
@@ -87,7 +122,12 @@ export const channel: Channel_channel = {
   id: "Q2hhbm5lbDov78",
   isActive: true,
   name: "Test",
-  slug: "test"
+  slug: "test",
+  defaultCountry: {
+    code: "PL",
+    country: "Poland",
+    __typename: "CountryDisplay"
+  }
 };
 
 export const productChannels: ProductDetails_product_channelListings[] = [
