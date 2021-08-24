@@ -497,20 +497,13 @@ export enum GiftCardEventsEnum {
   BALANCE_RESET = "BALANCE_RESET",
   BOUGHT = "BOUGHT",
   DEACTIVATED = "DEACTIVATED",
-  EXPIRY_DATE_SET = "EXPIRY_DATE_SET",
-  EXPIRY_SETTINGS_UPDATED = "EXPIRY_SETTINGS_UPDATED",
+  EXPIRY_DATE_UPDATED = "EXPIRY_DATE_UPDATED",
   ISSUED = "ISSUED",
   NOTE_ADDED = "NOTE_ADDED",
   RESENT = "RESENT",
   SENT_TO_CUSTOMER = "SENT_TO_CUSTOMER",
   UPDATED = "UPDATED",
   USED_IN_ORDER = "USED_IN_ORDER",
-}
-
-export enum GiftCardExpiryTypeEnum {
-  EXPIRY_DATE = "EXPIRY_DATE",
-  EXPIRY_PERIOD = "EXPIRY_PERIOD",
-  NEVER_EXPIRE = "NEVER_EXPIRE",
 }
 
 export enum InvoiceErrorCode {
@@ -1743,6 +1736,7 @@ export enum StockErrorCode {
 export enum TimePeriodTypeEnum {
   DAY = "DAY",
   MONTH = "MONTH",
+  WEEK = "WEEK",
   YEAR = "YEAR",
 }
 
@@ -2171,19 +2165,14 @@ export interface FulfillmentUpdateTrackingInput {
 
 export interface GiftCardCreateInput {
   tag?: string | null;
+  expiryDate?: any | null;
   startDate?: any | null;
   endDate?: any | null;
   balance: PriceInput;
   userEmail?: string | null;
-  expirySettings: GiftCardExpirySettingsInput;
+  isActive: boolean;
   code?: string | null;
   note?: string | null;
-}
-
-export interface GiftCardExpirySettingsInput {
-  expiryType: GiftCardExpiryTypeEnum;
-  expiryDate?: any | null;
-  expiryPeriod?: TimePeriodInputType | null;
 }
 
 export interface GiftCardResendInput {
@@ -2193,10 +2182,10 @@ export interface GiftCardResendInput {
 
 export interface GiftCardUpdateInput {
   tag?: string | null;
+  expiryDate?: any | null;
   startDate?: any | null;
   endDate?: any | null;
   balanceAmount?: any | null;
-  expirySettings?: GiftCardExpirySettingsInput | null;
 }
 
 export interface IntRangeInput {
@@ -2781,11 +2770,6 @@ export interface StaffUserInput {
 export interface StockInput {
   warehouse: string;
   quantity: number;
-}
-
-export interface TimePeriodInputType {
-  amount: number;
-  type: TimePeriodTypeEnum;
 }
 
 export interface TranslationInput {

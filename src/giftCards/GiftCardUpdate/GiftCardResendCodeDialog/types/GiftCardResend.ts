@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { GiftCardResendInput, GiftCardErrorCode, GiftCardExpiryTypeEnum, TimePeriodTypeEnum } from "./../../../../types/globalTypes";
+import { GiftCardResendInput, GiftCardErrorCode } from "./../../../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: GiftCardResend
@@ -53,12 +53,6 @@ export interface GiftCardResend_giftCardResend_giftCard_app {
   name: string | null;
 }
 
-export interface GiftCardResend_giftCardResend_giftCard_expiryPeriod {
-  __typename: "TimePeriod";
-  amount: number;
-  type: TimePeriodTypeEnum;
-}
-
 export interface GiftCardResend_giftCardResend_giftCard_initialBalance {
   __typename: "Money";
   amount: number;
@@ -84,8 +78,6 @@ export interface GiftCardResend_giftCardResend_giftCard {
   app: GiftCardResend_giftCardResend_giftCard_app | null;
   created: any;
   expiryDate: any | null;
-  expiryType: GiftCardExpiryTypeEnum;
-  expiryPeriod: GiftCardResend_giftCardResend_giftCard_expiryPeriod | null;
   lastUsedOn: any | null;
   isActive: boolean;
   initialBalance: GiftCardResend_giftCardResend_giftCard_initialBalance | null;

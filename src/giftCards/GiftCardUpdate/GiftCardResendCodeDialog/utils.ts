@@ -32,3 +32,7 @@ export function useDialogFormReset<
 
   return { formErrors };
 }
+
+export const handleCheckboxChange = (callback: (value: boolean) => any) => (
+  event: React.ChangeEvent<any>
+) => callback(event.target.value);
