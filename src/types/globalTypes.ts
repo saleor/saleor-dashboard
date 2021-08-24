@@ -1802,6 +1802,7 @@ export interface ProductFilterInput {
   productTypes?: (string | null)[] | null;
   ids?: (string | null)[] | null;
   channel?: string | null;
+  giftCard?: boolean | null;
 }
 
 export interface ProductInput {
@@ -1836,6 +1837,7 @@ export interface ProductTypeFilterInput {
   productType?: ProductTypeEnum | null;
   metadata?: (MetadataFilter | null)[] | null;
   ids?: (string | null)[] | null;
+  kind?: ProductTypeKindEnum | null;
 }
 
 export interface ProductTypeInput {

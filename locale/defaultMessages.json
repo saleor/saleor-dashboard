@@ -3602,6 +3602,14 @@
     "context": "GiftCardsListTable code ending with label",
     "string": "Code ending with {displayCode}"
   },
+  "src_dot_giftCards_dot_GiftCardsList_dot_createGiftCardProduct": {
+    "context": "GiftCardsListHeader notification",
+    "string": "Create a gift card product"
+  },
+  "src_dot_giftCards_dot_GiftCardsList_dot_createGiftCardProductType": {
+    "context": "GiftCardsListHeader notification",
+    "string": "Create a gift card product type"
+  },
   "src_dot_giftCards_dot_GiftCardsList_dot_exportCodes": {
     "context": "GiftCardsListHeader menu item settings",
     "string": "Export card codes"
@@ -3609,6 +3617,10 @@
   "src_dot_giftCards_dot_GiftCardsList_dot_giftCardDisabledLabel": {
     "context": "GiftCardsListTable disabled label",
     "string": "Disabled"
+  },
+  "src_dot_giftCards_dot_GiftCardsList_dot_giftCardProduct": {
+    "context": "GiftCardsListHeader notification",
+    "string": "gift card product"
   },
   "src_dot_giftCards_dot_GiftCardsList_dot_giftCardsTableColumnBalanceTitle": {
     "context": "GiftCardsListTable column title balance",
@@ -3638,21 +3650,21 @@
     "context": "GiftCardsListTable no cards found title",
     "string": "No gift cards found"
   },
-  "src_dot_giftCards_dot_GiftCardsList_dot_noGiftCardsNotificationCreateProduct": {
-    "context": "GiftCardsListHeader notification",
-    "string": "gift card product"
-  },
-  "src_dot_giftCards_dot_GiftCardsList_dot_noGiftCardsNotificationCreateProductType": {
-    "context": "GiftCardsListHeader notification",
-    "string": "Create a gift card product type"
-  },
-  "src_dot_giftCards_dot_GiftCardsList_dot_noGiftCardsNotificationDescription": {
-    "context": "GiftCardsListHeader notification",
-    "string": "{createGiftCardProductType} and {giftCardProduct} to start selling gift cards in your store."
-  },
   "src_dot_giftCards_dot_GiftCardsList_dot_noGiftCardsNotificationTitle": {
     "context": "GiftCardsListHeader notification",
     "string": "You haven’t defined a gift card product!"
+  },
+  "src_dot_giftCards_dot_GiftCardsList_dot_noGiftCardsProductTypes": {
+    "context": "GiftCardsListHeader notification",
+    "string": "{createGiftCardProductType} to start selling gift cards in your store."
+  },
+  "src_dot_giftCards_dot_GiftCardsList_dot_noGiftCardsProducts": {
+    "context": "GiftCardsListHeader notification",
+    "string": "{createGiftCardProduct} to start selling gift cards in your store."
+  },
+  "src_dot_giftCards_dot_GiftCardsList_dot_noGiftCardsProductsAndProductTypes": {
+    "context": "GiftCardsListHeader notification",
+    "string": "{createGiftCardProductType} and {giftCardProduct} to start selling gift cards in your store."
   },
   "src_dot_giftCards_dot_GiftCardsList_dot_settings": {
     "context": "GiftCardsListHeader menu item settings",

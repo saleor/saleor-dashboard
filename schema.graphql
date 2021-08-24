@@ -4473,6 +4473,7 @@ input ProductFilterInput {
   productTypes: [ID]
   ids: [ID]
   channel: String
+  giftCard: Boolean
 }
 
 type ProductImage {
@@ -4686,6 +4687,7 @@ input ProductTypeFilterInput {
   productType: ProductTypeEnum
   metadata: [MetadataFilter]
   ids: [ID]
+  kind: ProductTypeKindEnum
 }
 
 input ProductTypeInput {

@@ -21,16 +21,30 @@ export const giftCardsListHeaderMenuItemsMessages = defineMessages({
     defaultMessage: "You haven’t defined a gift card product!",
     description: "GiftCardsListHeader notification"
   },
-  noGiftCardsNotificationDescription: {
+  noGiftCardsProductsAndProductTypes: {
     defaultMessage:
       "{createGiftCardProductType} and {giftCardProduct} to start selling gift cards in your store.",
     description: "GiftCardsListHeader notification"
   },
-  noGiftCardsNotificationCreateProductType: {
+  noGiftCardsProductTypes: {
+    defaultMessage:
+      "{createGiftCardProductType} to start selling gift cards in your store.",
+    description: "GiftCardsListHeader notification"
+  },
+  noGiftCardsProducts: {
+    defaultMessage:
+      "{createGiftCardProduct} to start selling gift cards in your store.",
+    description: "GiftCardsListHeader notification"
+  },
+  createGiftCardProductType: {
     defaultMessage: "Create a gift card product type",
     description: "GiftCardsListHeader notification"
   },
-  noGiftCardsNotificationCreateProduct: {
+  createGiftCardProduct: {
+    defaultMessage: "Create a gift card product",
+    description: "GiftCardsListHeader notification"
+  },
+  giftCardProduct: {
     defaultMessage: "gift card product",
     description: "GiftCardsListHeader notification"
   }

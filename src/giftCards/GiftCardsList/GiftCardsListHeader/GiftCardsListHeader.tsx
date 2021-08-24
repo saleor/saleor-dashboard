@@ -2,7 +2,6 @@ import { Button } from "@material-ui/core";
 import HorizontalSpacer from "@saleor/apps/components/HorizontalSpacer";
 import VerticalSpacer from "@saleor/apps/components/VerticalSpacer";
 import CardMenu, { CardMenuItem } from "@saleor/components/CardMenu";
-import Link from "@saleor/components/Link";
 import PageHeader from "@saleor/components/PageHeader";
 import useNavigator from "@saleor/hooks/useNavigator";
 import { sectionNames } from "@saleor/intl";
@@ -11,13 +10,14 @@ import { productAddUrl } from "@saleor/products/urls";
 import { productTypeAddUrl } from "@saleor/productTypes/urls";
 import { ProductTypeKindEnum } from "@saleor/types/globalTypes";
 import React from "react";
-import { FormattedMessage } from "react-intl";
 import { useIntl } from "react-intl";
 
-import { giftCardSettingsUrl } from "../urls";
-import { giftCardsListHeaderMenuItemsMessages as messages } from "./messages";
-import useGiftCardListDialogs from "./providers/GiftCardListDialogsProvider/hooks/useGiftCardListDialogs";
-import { useHeaderStyles as useStyles } from "./styles";
+import { giftCardSettingsUrl } from "../../urls";
+import { giftCardsListHeaderMenuItemsMessages as messages } from "../messages";
+import useGiftCardListDialogs from "../providers/GiftCardListDialogsProvider/hooks/useGiftCardListDialogs";
+import { useGiftCardProductsCountQuery } from "../queries";
+import { useHeaderStyles as useStyles } from "../styles";
+import GiftCardsListHeaderNotificationContent from "./GiftCardsListHeaderContent";
 
 const GiftCardsListHeader: React.FC = () => {
   const intl = useIntl();
@@ -25,6 +25,11 @@ const GiftCardsListHeader: React.FC = () => {
   const navigate = useNavigator();
 
   const { openCreateDialog } = useGiftCardListDialogs();
+
+  const {
+    data: giftCardProductsCount,
+    loading: giftCardProductsCountLoading
+  } = useGiftCardProductsCountQuery();
 
   const openSettings = () => navigate(giftCardSettingsUrl);
 
@@ -46,6 +51,23 @@ const GiftCardsListHeader: React.FC = () => {
     //   }
   ];
 
+  const giftCardProductTypesExist =
+    giftCardProductsCount?.giftCardProductTypes.totalCount === 0;
+  const giftCardProductsExist =
+    giftCardProductsCount?.giftCardProducts.totalCount === 0;
+
+  const showNoGiftCardProductsNotification =
+    !giftCardProductsCountLoading &&
+    (!giftCardProductTypesExist || !giftCardProductsExist);
+
+  const handleCreateGiftCardProductType = () =>
+    navigate(
+      productTypeAddUrl({
+        kind: ProductTypeKindEnum.GIFT_CARD
+      })
+    );
+  const handleCreateGiftCardProduct = () => navigate(productAddUrl());
+
   return (
     <>
       <PageHeader title={intl.formatMessage(sectionNames.giftCards)}>
@@ -55,39 +77,22 @@ const GiftCardsListHeader: React.FC = () => {
           {intl.formatMessage(messages.issueButtonLabel)}
         </Button>
       </PageHeader>
-      <Notification
-        title={intl.formatMessage(messages.noGiftCardsNotificationTitle)}
-        content={intl.formatMessage(
-          messages.noGiftCardsNotificationDescription,
-          {
-            createGiftCardProductType: (
-              <Link
-                onClick={() =>
-                  navigate(
-                    productTypeAddUrl({
-                      kind: ProductTypeKindEnum.GIFT_CARD
-                    })
-                  )
-                }
-              >
-                <FormattedMessage
-                  {...messages.noGiftCardsNotificationCreateProductType}
-                />
-              </Link>
-            ),
-            giftCardProduct: (
-              <Link onClick={() => navigate(productAddUrl())}>
-                <FormattedMessage
-                  {...messages.noGiftCardsNotificationCreateProduct}
-                />
-              </Link>
-            )
+      {showNoGiftCardProductsNotification && (
+        <Notification
+          title={intl.formatMessage(messages.noGiftCardsNotificationTitle)}
+          content={
+            <GiftCardsListHeaderNotificationContent
+              giftCardProductTypesExist={giftCardProductTypesExist}
+              giftCardProductsExist={giftCardProductsExist}
+              handleCreateGiftCardProductType={handleCreateGiftCardProductType}
+              handleCreateGiftCardProduct={handleCreateGiftCardProduct}
+            />
           }
-        )}
-        type="warning"
-        onClose={() => undefined}
-        className={classes.notification}
-      />
+          type="warning"
+          onClose={() => undefined}
+          className={classes.notification}
+        />
+      )}
       <VerticalSpacer spacing={2} />
     </>
   );
