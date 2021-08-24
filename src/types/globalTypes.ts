@@ -1951,6 +1951,7 @@ export interface ChannelCreateInput {
   name: string;
   slug: string;
   currencyCode: string;
+  defaultCountry: CountryCode;
   addShippingZones?: string[] | null;
 }
 
@@ -1962,6 +1963,7 @@ export interface ChannelUpdateInput {
   isActive?: boolean | null;
   name?: string | null;
   slug?: string | null;
+  defaultCountry?: CountryCode | null;
   addShippingZones?: string[] | null;
   removeShippingZones?: string[] | null;
 }
