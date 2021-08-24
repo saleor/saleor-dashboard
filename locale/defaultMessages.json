@@ -3448,6 +3448,17 @@
     "context": "GiftCardCreateDialog title",
     "string": "Issue gift card"
   },
+  "src_dot_giftCards_dot_GiftCardSettings_dot_GiftCardExpirySettingsCard_dot_expiryDateSectionDescription": {
+    "string": "You can set gift cards to expire after a certain time after their purchase. Remember that in some countries, gift cards expiry is prohibited by law."
+  },
+  "src_dot_giftCards_dot_GiftCardSettings_dot_GiftCardExpirySettingsCard_dot_expiryDateTitle": {
+    "context": "section header",
+    "string": "Expiry date"
+  },
+  "src_dot_giftCards_dot_GiftCardSettings_dot_title": {
+    "context": "header",
+    "string": "Gift Cards Settings"
+  },
   "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardResendCodeDialog_dot_consentCheckboxLabel": {
     "context": "GiftCardResendCodeDialog consentCheckboxLabel",
     "string": "Yes, I want to send gift card to different address"
@@ -3531,14 +3542,6 @@
   "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardUpdateInfoCard_dot_usedByLabel": {
     "context": "GiftCardUpdateInfoCard used by label",
     "string": "Used by"
-  },
-  "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardUpdatePageHeader_dot_disableLabel": {
-    "context": "GiftCardEnableDisableSection enable label",
-    "string": "Disable"
-  },
-  "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardUpdatePageHeader_dot_enableLabel": {
-    "context": "GiftCardEnableDisableSection enable label",
-    "string": "Enable"
   },
   "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardUpdatePageHeader_dot_resendButtonLabel": {
     "context": "giftCardUpdatePageHeader resendButtonLabel",
@@ -3667,6 +3670,14 @@
   "src_dot_giftCards_dot_components_dot_GiftCardExpirySelect_dot_neverExpireLabel": {
     "context": "GiftCarUpdateDetailsExpirySection never expire label",
     "string": "Never expire"
+  },
+  "src_dot_giftCards_dot_components_dot_GiftCardSettingsExpirySelect_dot_setExpirationPeriodDescription": {
+    "context": "checkbox label description",
+    "string": "Expiration date will be automatically set, once gift card is issued"
+  },
+  "src_dot_giftCards_dot_components_dot_GiftCardSettingsExpirySelect_dot_setExpirationPeriodTitle": {
+    "context": "checkbox label",
+    "string": "Set gift card expiration period"
   },
   "src_dot_giftCards_dot_components_dot_GiftCardTagInput_dot_label": {
     "context": "GiftCardTagInput tag label",

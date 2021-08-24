@@ -498,6 +498,17 @@ export enum GiftCardExpiryTypeEnum {
   NEVER_EXPIRE = "NEVER_EXPIRE",
 }
 
+export enum GiftCardSettingsErrorCode {
+  GRAPHQL_ERROR = "GRAPHQL_ERROR",
+  INVALID = "INVALID",
+  REQUIRED = "REQUIRED",
+}
+
+export enum GiftCardSettingsExpiryTypeEnum {
+  EXPIRY_PERIOD = "EXPIRY_PERIOD",
+  NEVER_EXPIRE = "NEVER_EXPIRE",
+}
+
 export enum InvoiceErrorCode {
   EMAIL_NOT_SET = "EMAIL_NOT_SET",
   INVALID_STATUS = "INVALID_STATUS",
@@ -1424,6 +1435,11 @@ export interface GiftCardExpirySettingsInput {
 export interface GiftCardResendInput {
   id: string;
   email?: string | null;
+}
+
+export interface GiftCardSettingsUpdateInput {
+  expiryType?: GiftCardSettingsExpiryTypeEnum | null;
+  expiryPeriod?: TimePeriodInputType | null;
 }
 
 export interface GiftCardUpdateInput {
