@@ -96,6 +96,13 @@ export interface OrderDetails_order_events_user {
   lastName: string;
 }
 
+export interface OrderDetails_order_events_app {
+  __typename: "App";
+  id: string;
+  name: string | null;
+  appUrl: string | null;
+}
+
 export interface OrderDetails_order_events_lines_discount_amount {
   __typename: "Money";
   amount: number;
@@ -150,6 +157,7 @@ export interface OrderDetails_order_events {
   transactionReference: string | null;
   type: OrderEventsEnum | null;
   user: OrderDetails_order_events_user | null;
+  app: OrderDetails_order_events_app | null;
   lines: (OrderDetails_order_events_lines | null)[] | null;
 }
 

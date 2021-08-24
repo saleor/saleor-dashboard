@@ -841,6 +841,12 @@ export const order = (placeholder: string): OrderDetails_order => ({
       shippingCostsIncluded: false,
       transactionReference: "123",
       type: OrderEventsEnum.FULFILLMENT_FULFILLED_ITEMS,
+      app: {
+        id: "ZXCkcmVasdwoxTW==",
+        __typename: "App",
+        name: "Testapp",
+        appUrl: "https://www.google.com/"
+      },
       user: {
         __typename: "User",
         email: "admin@example.com",
@@ -890,6 +896,12 @@ export const order = (placeholder: string): OrderDetails_order => ({
       shippingCostsIncluded: true,
       transactionReference: "123",
       type: OrderEventsEnum.FULFILLMENT_REFUNDED,
+      app: {
+        id: "ZXCkcmVasdwoxTW==",
+        __typename: "App",
+        name: "Testapp",
+        appUrl: "https://www.google.com/"
+      },
       user: {
         __typename: "User",
         email: "admin@example.com",
@@ -914,7 +926,8 @@ export const order = (placeholder: string): OrderDetails_order => ({
       shippingCostsIncluded: false,
       transactionReference: "124",
       type: OrderEventsEnum.NOTE_ADDED,
-      user: null
+      user: null,
+      app: null
     },
     {
       __typename: "OrderEvent",
@@ -932,7 +945,8 @@ export const order = (placeholder: string): OrderDetails_order => ({
       shippingCostsIncluded: false,
       transactionReference: "125",
       type: OrderEventsEnum.NOTE_ADDED,
-      user: null
+      user: null,
+      app: null
     },
     {
       __typename: "OrderEvent",
@@ -950,7 +964,8 @@ export const order = (placeholder: string): OrderDetails_order => ({
       shippingCostsIncluded: false,
       transactionReference: "126",
       type: OrderEventsEnum.EXTERNAL_SERVICE_NOTIFICATION,
-      user: null
+      user: null,
+      app: null
     },
     {
       __typename: "OrderEvent",
@@ -968,7 +983,8 @@ export const order = (placeholder: string): OrderDetails_order => ({
       shippingCostsIncluded: false,
       transactionReference: "127",
       type: OrderEventsEnum.EMAIL_SENT,
-      user: null
+      user: null,
+      app: null
     },
     {
       __typename: "OrderEvent",
@@ -986,7 +1002,8 @@ export const order = (placeholder: string): OrderDetails_order => ({
       shippingCostsIncluded: false,
       transactionReference: "128",
       type: OrderEventsEnum.EMAIL_SENT,
-      user: null
+      user: null,
+      app: null
     },
     {
       __typename: "OrderEvent",
@@ -1004,7 +1021,8 @@ export const order = (placeholder: string): OrderDetails_order => ({
       shippingCostsIncluded: false,
       transactionReference: "129",
       type: OrderEventsEnum.PAYMENT_AUTHORIZED,
-      user: null
+      user: null,
+      app: null
     }
   ],
   fulfillments: [
