@@ -207,6 +207,7 @@ export const fragmentOrderDetails = gql`
       ...AddressFragment
     }
     deliveryMethod {
+      __typename
       ... on ShippingMethod {
         id
       }
