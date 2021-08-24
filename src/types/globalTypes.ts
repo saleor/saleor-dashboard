@@ -1797,6 +1797,7 @@ export enum WebhookEventTypeEnum {
   CHECKOUT_UPDATED = "CHECKOUT_UPDATED",
   CUSTOMER_CREATED = "CUSTOMER_CREATED",
   CUSTOMER_UPDATED = "CUSTOMER_UPDATED",
+  FULFILLMENT_CANCELED = "FULFILLMENT_CANCELED",
   FULFILLMENT_CREATED = "FULFILLMENT_CREATED",
   INVOICE_DELETED = "INVOICE_DELETED",
   INVOICE_REQUESTED = "INVOICE_REQUESTED",
@@ -2143,7 +2144,7 @@ export interface ExportProductsInput {
 }
 
 export interface FulfillmentCancelInput {
-  warehouseId: string;
+  warehouseId?: string | null;
 }
 
 export interface FulfillmentUpdateTrackingInput {
