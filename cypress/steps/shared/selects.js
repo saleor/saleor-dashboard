@@ -14,9 +14,11 @@ export function fillAutocompleteSelect(selectSelector, option) {
     cy.get(BUTTON_SELECTORS.selectOption)
       .first()
       .invoke("text")
-      .as("option");
-    cy.get(BUTTON_SELECTORS.selectOption)
+      .as("option")
+      .get(BUTTON_SELECTORS.selectOption)
       .first()
+      .find(BUTTON_SELECTORS.checkbox)
+      .should("be.enabled")
       .click();
   }
   return cy.get("@option");
