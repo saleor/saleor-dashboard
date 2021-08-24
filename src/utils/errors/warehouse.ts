@@ -1,9 +1,8 @@
 import { WarehouseErrorFragment } from "@saleor/fragments/types/WarehouseErrorFragment";
-import { commonMessages } from "@saleor/intl";
 import { WarehouseErrorCode } from "@saleor/types/globalTypes";
 import { defineMessages, IntlShape } from "react-intl";
 
-import commonErrorMessages from "./common";
+import { getCommonFormFieldErrorMessage } from "./common";
 
 const messages = defineMessages({
   slugUnique: {
@@ -16,20 +15,7 @@ function getWarehouseErrorMessage(
   err: Omit<WarehouseErrorFragment, "__typename"> | undefined,
   intl: IntlShape
 ): string {
-  if (err) {
-    switch (err.code) {
-      case WarehouseErrorCode.GRAPHQL_ERROR:
-        return intl.formatMessage(commonErrorMessages.graphqlError);
-      case WarehouseErrorCode.REQUIRED:
-        return intl.formatMessage(commonMessages.requiredField);
-      case WarehouseErrorCode.INVALID:
-        return intl.formatMessage(commonErrorMessages.invalid);
-      default:
-        return intl.formatMessage(commonErrorMessages.unknownError);
-    }
-  }
-
-  return undefined;
+  return getCommonFormFieldErrorMessage(err, intl);
 }
 
 export function getWarehouseSlugErrorMessage(

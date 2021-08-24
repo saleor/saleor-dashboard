@@ -59,7 +59,7 @@ export const GiftCardsListProvider: React.FC<GiftCardsListProviderProps> = ({
     GiftCardListColummns
   >(ListViews.GIFT_CARD_LIST);
 
-  const paginationState = createPaginationState(settings.rowNumber, params);
+  const paginationState = createPaginationState(settings?.rowNumber, params);
 
   const queryVariables = React.useMemo<GiftCardListVariables>(
     () => ({
