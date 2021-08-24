@@ -130,6 +130,14 @@ const WebhookEvents: React.FC<WebhookEventsProps> = ({
       defaultMessage: "Product deleted",
       description: "event"
     }),
+    [WebhookEventTypeEnum.PRODUCT_VARIANT_BACK_IN_STOCK]: intl.formatMessage({
+      defaultMessage: "Product Variant back in stock",
+      description: "event"
+    }),
+    [WebhookEventTypeEnum.PRODUCT_VARIANT_OUT_OF_STOCK]: intl.formatMessage({
+      defaultMessage: "Product Variant out of stock",
+      description: "event"
+    }),
     [WebhookEventTypeEnum.PRODUCT_VARIANT_CREATED]: intl.formatMessage({
       defaultMessage: "Product variant created",
       description: "event"
