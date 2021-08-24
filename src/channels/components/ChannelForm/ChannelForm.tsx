@@ -79,7 +79,7 @@ export const ChannelForm: React.FC<ChannelFormProps> = ({
             disabled={disabled}
             fullWidth
             label={intl.formatMessage({
-              defaultMessage: "Channel Name",
+              defaultMessage: "Channel name",
               description: "channel name"
             })}
             name="name"
@@ -168,7 +168,7 @@ export const ChannelForm: React.FC<ChannelFormProps> = ({
             <>
               <Typography variant="caption" className={classes.label}>
                 <FormattedMessage
-                  defaultMessage="Selected Currency"
+                  defaultMessage="Selected currency"
                   description="selected currency"
                 />
               </Typography>
