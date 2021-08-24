@@ -227,6 +227,13 @@ const orderFulfillData = gql`
     order(id: $orderId) {
       id
       isPaid
+      deliveryMethod {
+        __typename
+        ... on Warehouse {
+          id
+          clickAndCollectOption
+        }
+      }
       lines {
         id
         isShippingRequired
