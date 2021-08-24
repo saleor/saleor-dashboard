@@ -1933,7 +1933,8 @@ export const invoices: InvoiceFragment[] = [
 
 export const orderSettings: OrderSettingsFragment = {
   __typename: "OrderSettings",
-  automaticallyConfirmAllNewOrders: true
+  automaticallyConfirmAllNewOrders: true,
+  automaticallyFulfillNonShippableGiftCard: false
 };
 
 export const shopOrderSettings: ShopOrderSettingsFragment = {
