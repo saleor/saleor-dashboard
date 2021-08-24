@@ -1111,6 +1111,7 @@ enum CheckoutErrorCode {
   TAX_ERROR
   UNIQUE
   VOUCHER_NOT_APPLICABLE
+  GIFT_CARD_NOT_APPLICABLE
   ZERO_QUANTITY
   MISSING_CHANNEL_SLUG
   CHANNEL_INACTIVE
@@ -2253,7 +2254,6 @@ type GiftCard implements Node & ObjectWithMetadata {
   code: String!
   isActive: Boolean!
   expiryDate: Date
-  expiryType: GiftCardExpiryTypeEnum!
   tag: String
   created: DateTime!
   lastUsedOn: DateTime
@@ -2268,7 +2268,6 @@ type GiftCard implements Node & ObjectWithMetadata {
   createdByEmail: String
   usedByEmail: String
   app: App
-  expiryPeriod: TimePeriod
   product: Product
   events: [GiftCardEvent!]!
   user: User @deprecated(reason: "This field will be removed in Saleor 4.0. Use `createdBy` field instead.")
@@ -2326,11 +2325,12 @@ type GiftCardCreate {
 
 input GiftCardCreateInput {
   tag: String
+  expiryDate: Date
   startDate: Date
   endDate: Date
   balance: PriceInput!
   userEmail: String
-  expirySettings: GiftCardExpirySettingsInput!
+  isActive: Boolean!
   code: String
   note: String
 }
@@ -2375,7 +2375,8 @@ type GiftCardEvent implements Node {
   tag: String
   oldTag: String
   balance: GiftCardEventBalance
-  expiry: GiftCardEventExpiry
+  expiryDate: Date
+  oldExpiryDate: Date
 }
 
 type GiftCardEventBalance {
@@ -2385,15 +2386,6 @@ type GiftCardEventBalance {
   oldCurrentBalance: Money
 }
 
-type GiftCardEventExpiry {
-  expiryType: GiftCardExpiryTypeEnum
-  expiryPeriod: TimePeriod
-  expiryDate: Date
-  oldExpiryType: GiftCardExpiryTypeEnum
-  oldExpiryPeriod: TimePeriod
-  oldExpiryDate: Date
-}
-
 enum GiftCardEventsEnum {
   ISSUED
   BOUGHT
@@ -2401,24 +2393,11 @@ enum GiftCardEventsEnum {
   ACTIVATED
   DEACTIVATED
   BALANCE_RESET
-  EXPIRY_SETTINGS_UPDATED
-  EXPIRY_DATE_SET
+  EXPIRY_DATE_UPDATED
   SENT_TO_CUSTOMER
   RESENT
   NOTE_ADDED
   USED_IN_ORDER
-}
-
-input GiftCardExpirySettingsInput {
-  expiryType: GiftCardExpiryTypeEnum!
-  expiryDate: Date
-  expiryPeriod: TimePeriodInputType
-}
-
-enum GiftCardExpiryTypeEnum {
-  NEVER_EXPIRE
-  EXPIRY_PERIOD
-  EXPIRY_DATE
 }
 
 input GiftCardFilterInput {
@@ -2475,10 +2454,10 @@ type GiftCardUpdate {
 
 input GiftCardUpdateInput {
   tag: String
+  expiryDate: Date
   startDate: Date
   endDate: Date
   balanceAmount: PositiveDecimal
-  expirySettings: GiftCardExpirySettingsInput
 }
 
 type Group implements Node {
@@ -6557,6 +6536,7 @@ input TimePeriodInputType {
 
 enum TimePeriodTypeEnum {
   DAY
+  WEEK
   MONTH
   YEAR
 }
