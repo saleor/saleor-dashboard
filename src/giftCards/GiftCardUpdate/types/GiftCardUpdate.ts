@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { GiftCardUpdateInput, GiftCardErrorCode, GiftCardExpiryTypeEnum, TimePeriodTypeEnum } from "./../../../types/globalTypes";
+import { GiftCardUpdateInput, GiftCardErrorCode } from "./../../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: GiftCardUpdate
@@ -53,12 +53,6 @@ export interface GiftCardUpdate_giftCardUpdate_giftCard_app {
   name: string | null;
 }
 
-export interface GiftCardUpdate_giftCardUpdate_giftCard_expiryPeriod {
-  __typename: "TimePeriod";
-  amount: number;
-  type: TimePeriodTypeEnum;
-}
-
 export interface GiftCardUpdate_giftCardUpdate_giftCard_initialBalance {
   __typename: "Money";
   amount: number;
@@ -84,8 +78,6 @@ export interface GiftCardUpdate_giftCardUpdate_giftCard {
   app: GiftCardUpdate_giftCardUpdate_giftCard_app | null;
   created: any;
   expiryDate: any | null;
-  expiryType: GiftCardExpiryTypeEnum;
-  expiryPeriod: GiftCardUpdate_giftCardUpdate_giftCard_expiryPeriod | null;
   lastUsedOn: any | null;
   isActive: boolean;
   initialBalance: GiftCardUpdate_giftCardUpdate_giftCard_initialBalance | null;

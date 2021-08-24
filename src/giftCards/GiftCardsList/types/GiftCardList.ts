@@ -3,8 +3,6 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { GiftCardExpiryTypeEnum, TimePeriodTypeEnum } from "./../../../types/globalTypes";
-
 // ====================================================
 // GraphQL query operation: GiftCardList
 // ====================================================
@@ -47,12 +45,6 @@ export interface GiftCardList_giftCards_edges_node_app {
   name: string | null;
 }
 
-export interface GiftCardList_giftCards_edges_node_expiryPeriod {
-  __typename: "TimePeriod";
-  amount: number;
-  type: TimePeriodTypeEnum;
-}
-
 export interface GiftCardList_giftCards_edges_node_initialBalance {
   __typename: "Money";
   amount: number;
@@ -78,8 +70,6 @@ export interface GiftCardList_giftCards_edges_node {
   app: GiftCardList_giftCards_edges_node_app | null;
   created: any;
   expiryDate: any | null;
-  expiryType: GiftCardExpiryTypeEnum;
-  expiryPeriod: GiftCardList_giftCards_edges_node_expiryPeriod | null;
   lastUsedOn: any | null;
   isActive: boolean;
   initialBalance: GiftCardList_giftCards_edges_node_initialBalance | null;

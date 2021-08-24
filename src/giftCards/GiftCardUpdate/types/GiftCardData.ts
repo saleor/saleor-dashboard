@@ -3,8 +3,6 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { GiftCardExpiryTypeEnum, TimePeriodTypeEnum } from "./../../../types/globalTypes";
-
 // ====================================================
 // GraphQL fragment: GiftCardData
 // ====================================================
@@ -47,12 +45,6 @@ export interface GiftCardData_app {
   name: string | null;
 }
 
-export interface GiftCardData_expiryPeriod {
-  __typename: "TimePeriod";
-  amount: number;
-  type: TimePeriodTypeEnum;
-}
-
 export interface GiftCardData_initialBalance {
   __typename: "Money";
   amount: number;
@@ -78,8 +70,6 @@ export interface GiftCardData {
   app: GiftCardData_app | null;
   created: any;
   expiryDate: any | null;
-  expiryType: GiftCardExpiryTypeEnum;
-  expiryPeriod: GiftCardData_expiryPeriod | null;
   lastUsedOn: any | null;
   isActive: boolean;
   initialBalance: GiftCardData_initialBalance | null;
