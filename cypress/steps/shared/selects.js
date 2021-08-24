@@ -1,9 +1,14 @@
 import { BUTTON_SELECTORS } from "../../elements/shared/button-selectors";
-import { selectorWithDataValue } from "../../elements/shared/sharedElements";
+import {
+  selectorWithDataValue,
+  SHARED_ELEMENTS
+} from "../../elements/shared/sharedElements";
 
 export function fillAutocompleteSelect(selectSelector, option) {
   cy.get(selectSelector)
     .click()
+    .get(SHARED_ELEMENTS.autocompleteCircle)
+    .should("be.visible")
     .get(BUTTON_SELECTORS.selectOption)
     .should("be.visible");
   if (option) {

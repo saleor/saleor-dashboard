@@ -3,7 +3,7 @@ export const SHARED_ELEMENTS = {
   progressBar: '[role="progressbar"]',
   circularProgress: '[class*="CircularProgress-circle"]',
   autocompleteCircle:
-    '[class*="MultiAutocompleteSelectFieldContent-progressContainer"] * svg',
+    '[class*="MultiAutocompleteSelectFieldContent-arrowInnerContainer"]',
   skeleton: '[data-test-id="skeleton"]',
   table: 'table[class*="Table"]',
   tableRow: '[data-test="id"]',
