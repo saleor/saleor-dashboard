@@ -3,32 +3,41 @@ import React from "react";
 import { FormattedMessage } from "react-intl";
 
 import { giftCardsListHeaderMenuItemsMessages as messages } from "../messages";
+import { useHeaderStyles as useStyles } from "../styles";
 
-interface GiftCardsListHeaderNotificationContentProps {
+interface GiftCardsListHeaderAlertContentProps {
   giftCardProductTypesExist: boolean;
   giftCardProductsExist: boolean;
   handleCreateGiftCardProductType: () => void;
   handleCreateGiftCardProduct: () => void;
 }
 
-const GiftCardsListHeaderNotificationContent: React.FC<GiftCardsListHeaderNotificationContentProps> = ({
+const GiftCardsListHeaderAlertContent: React.FC<GiftCardsListHeaderAlertContentProps> = ({
   giftCardProductTypesExist,
   giftCardProductsExist,
   handleCreateGiftCardProductType,
   handleCreateGiftCardProduct
 }) => {
+  const classes = useStyles({});
+
   if (!giftCardProductTypesExist && !giftCardProductsExist) {
     return (
       <FormattedMessage
         {...messages.noGiftCardsProductsAndProductTypes}
         values={{
           createGiftCardProductType: (
-            <Link onClick={handleCreateGiftCardProductType}>
+            <Link
+              onClick={handleCreateGiftCardProductType}
+              className={classes.alertLink}
+            >
               <FormattedMessage {...messages.createGiftCardProductType} />
             </Link>
           ),
           giftCardProduct: (
-            <Link onClick={handleCreateGiftCardProduct}>
+            <Link
+              onClick={handleCreateGiftCardProduct}
+              className={classes.alertLink}
+            >
               <FormattedMessage {...messages.giftCardProduct} />
             </Link>
           )
@@ -43,7 +52,10 @@ const GiftCardsListHeaderNotificationContent: React.FC<GiftCardsListHeaderNotifi
         {...messages.noGiftCardsProductTypes}
         values={{
           createGiftCardProductType: (
-            <Link onClick={handleCreateGiftCardProductType}>
+            <Link
+              onClick={handleCreateGiftCardProductType}
+              className={classes.alertLink}
+            >
               <FormattedMessage {...messages.createGiftCardProductType} />
             </Link>
           )
@@ -58,7 +70,10 @@ const GiftCardsListHeaderNotificationContent: React.FC<GiftCardsListHeaderNotifi
         {...messages.noGiftCardsProducts}
         values={{
           createGiftCardProduct: (
-            <Link onClick={handleCreateGiftCardProduct}>
+            <Link
+              onClick={handleCreateGiftCardProduct}
+              className={classes.alertLink}
+            >
               <FormattedMessage {...messages.createGiftCardProduct} />
             </Link>
           )
@@ -68,4 +83,4 @@ const GiftCardsListHeaderNotificationContent: React.FC<GiftCardsListHeaderNotifi
   }
 };
 
-export default GiftCardsListHeaderNotificationContent;
+export default GiftCardsListHeaderAlertContent;

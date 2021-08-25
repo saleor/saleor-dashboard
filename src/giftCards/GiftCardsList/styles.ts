@@ -36,12 +36,9 @@ export const useTableStyles = makeStyles(
 );
 
 export const useHeaderStyles = makeStyles(
-  () => ({
-    notification: {
-      maxWidth: "100%",
-      "& .MuiSnackbarContent-root": {
-        maxWidth: "100%"
-      }
+  theme => ({
+    alertLink: {
+      fontSize: theme.typography.body2.fontSize
     }
   }),
   { name: "GiftCardsListHeader" }
