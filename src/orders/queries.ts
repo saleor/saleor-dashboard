@@ -229,6 +229,9 @@ const orderFulfillData = gql`
       isPaid
       deliveryMethod {
         __typename
+        ... on ShippingMethod {
+          id
+        }
         ... on Warehouse {
           id
           clickAndCollectOption
