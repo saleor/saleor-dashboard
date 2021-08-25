@@ -2075,6 +2075,18 @@
   "src_dot_components_dot_DeleteFilterTabDialog_dot_71479100": {
     "string": "Are you sure you want to delete {name} search tab?"
   },
+  "src_dot_components_dot_DemoBanner_dot_214739616": {
+    "string": "Play with <emphasis>GraphQL API</emphasis>"
+  },
+  "src_dot_components_dot_DemoBanner_dot_2367386033": {
+    "string": "API"
+  },
+  "src_dot_components_dot_DemoBanner_dot_2844777114": {
+    "string": "Explore <emphasis>Store’s dashboard</emphasis>"
+  },
+  "src_dot_components_dot_DemoBanner_dot_3662390044": {
+    "string": "Dashboard"
+  },
   "src_dot_components_dot_ErrorMessageCard_dot_2845142593": {
     "context": "header",
     "string": "Error"
