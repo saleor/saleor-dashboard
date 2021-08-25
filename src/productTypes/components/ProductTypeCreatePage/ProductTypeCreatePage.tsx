@@ -88,7 +88,7 @@ const ProductTypeCreatePage: React.FC<ProductTypeCreatePageProps> = ({
 
   const initialData = {
     ...formInitialData,
-    kind
+    kind: kind || formInitialData.kind
   };
 
   return (
