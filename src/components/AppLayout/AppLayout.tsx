@@ -18,6 +18,7 @@ import { useIntl } from "react-intl";
 import useRouter from "use-react-router";
 
 import Container from "../Container";
+import { DemoBanner } from "../DemoBanner";
 import ErrorPage from "../ErrorPage";
 import Navigator from "../Navigator";
 import NavigatorButton from "../NavigatorButton/NavigatorButton";
@@ -118,6 +119,8 @@ interface AppLayoutProps {
   children: React.ReactNode;
 }
 
+const isDemoMode = process.env.DEMO_MODE === "true";
+
 const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
   const classes = useStyles({});
   const { themeType, setTheme } = useTheme();
@@ -163,6 +166,7 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
         visible={isNavigatorVisible}
         setVisibility={setNavigatorVisibility}
       />
+      {isDemoMode && <DemoBanner />}
       <div className={classes.root}>
         {isMdUp && (
           <Sidebar

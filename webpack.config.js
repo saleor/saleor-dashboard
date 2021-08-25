@@ -9,6 +9,7 @@ const SentryWebpackPlugin = require("@sentry/webpack-plugin");
 const BundleAnalyzerPlugin = require("webpack-bundle-analyzer")
   .BundleAnalyzerPlugin;
 const SpeedMeasurePlugin = require("speed-measure-webpack-plugin");
+const Dotenv = require("dotenv-webpack");
 
 require("dotenv").config();
 
@@ -45,6 +46,7 @@ const environmentPlugin = new webpack.EnvironmentPlugin({
   SENTRY_DSN: "",
   SW_INTERVAL: "300" // Fetch SW every 300 seconds
 });
+const dotEnvPlugin = new Dotenv();
 
 const dashboardBuildPath = "build/dashboard/";
 
@@ -148,7 +150,8 @@ module.exports = speedMeasureWrapper((env, argv) => {
       htmlWebpackPlugin,
       sentryPlugin,
       manifestPlugin,
-      bundleAnalyzerPlugin
+      bundleAnalyzerPlugin,
+      dotEnvPlugin
     ].filter(Boolean),
     resolve: {
       // Resolve macaw ui's peer dependencies to our own node_modules
