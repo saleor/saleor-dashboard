@@ -154,6 +154,10 @@ const WebhookEvents: React.FC<WebhookEventsProps> = ({
       defaultMessage: "Fulfillment created",
       description: "event"
     }),
+    [WebhookEventTypeEnum.FULFILLMENT_CANCELED]: intl.formatMessage({
+      defaultMessage: "Fulfillment canceled",
+      description: "event"
+    }),
     [WebhookEventTypeEnum.INVOICE_REQUESTED]: intl.formatMessage({
       defaultMessage: "Invoice requested",
       description: "event"
