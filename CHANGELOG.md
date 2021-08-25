@@ -80,6 +80,7 @@ All notable, unreleased changes to this project will be documented in this file.
 - Add text attribute for product and page translations - #1276 by @kamilpastuszka
 - Add app dashboard extensions - #1292 by @jwm0
 - Introduce fulfillment creation - #1241 by @orzechdev
+- Introduce Click&Collect feature - #1268 by @kuchichan
 
 # 2.11.1
 
