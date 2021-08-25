@@ -9,6 +9,12 @@ import { ChannelErrorCode } from "./../../types/globalTypes";
 // GraphQL mutation operation: ChannelDeactivate
 // ====================================================
 
+export interface ChannelDeactivate_channelDeactivate_channel_defaultCountry {
+  __typename: "CountryDisplay";
+  code: string;
+  country: string;
+}
+
 export interface ChannelDeactivate_channelDeactivate_channel {
   __typename: "Channel";
   id: string;
@@ -16,6 +22,7 @@ export interface ChannelDeactivate_channelDeactivate_channel {
   name: string;
   slug: string;
   currencyCode: string;
+  defaultCountry: ChannelDeactivate_channelDeactivate_channel_defaultCountry;
   hasOrders: boolean;
 }
 

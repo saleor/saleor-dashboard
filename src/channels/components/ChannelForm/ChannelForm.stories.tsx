@@ -1,4 +1,6 @@
+import { countries } from "@saleor/fixtures";
 import Decorator from "@saleor/storybook/Decorator";
+import { CountryCode } from "@saleor/types/globalTypes";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
@@ -11,11 +13,15 @@ const props: ChannelFormProps = {
     shippingZonesIdsToAdd: [],
     shippingZonesIdsToRemove: [],
     name: "Test",
-    slug: "test"
+    slug: "test",
+    defaultCountry: CountryCode.PL
   },
   disabled: false,
   errors: [],
-  onChange: () => undefined
+  selectedCountryDisplayName: "Poland",
+  countries: countries.map(({ name, code }) => ({ label: name, value: code })),
+  onChange: () => undefined,
+  onDefaultCountryChange: () => undefined
 };
 
 storiesOf("Views / Channels / Channel form", module)

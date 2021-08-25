@@ -1514,9 +1514,9 @@
     "context": "channel settings",
     "string": "Channel Settings"
   },
-  "src_dot_channels_dot_components_dot_ChannelForm_dot_1843613796": {
+  "src_dot_channels_dot_components_dot_ChannelForm_dot_146559392": {
     "context": "selected currency",
-    "string": "Selected Currency"
+    "string": "Selected currency"
   },
   "src_dot_channels_dot_components_dot_ChannelForm_dot_2864204643": {
     "context": "button",
@@ -1526,10 +1526,6 @@
     "context": "channel slug",
     "string": "Slug"
   },
-  "src_dot_channels_dot_components_dot_ChannelForm_dot_3511613983": {
-    "context": "channel name",
-    "string": "Channel Name"
-  },
   "src_dot_channels_dot_components_dot_ChannelForm_dot_383867403": {
     "context": "button",
     "string": "Copy"
@@ -1537,6 +1533,13 @@
   "src_dot_channels_dot_components_dot_ChannelForm_dot_3873626327": {
     "context": "channel currency",
     "string": "Currency"
+  },
+  "src_dot_channels_dot_components_dot_ChannelForm_dot_3962880609": {
+    "string": "Default country"
+  },
+  "src_dot_channels_dot_components_dot_ChannelForm_dot_507892781": {
+    "context": "channel name",
+    "string": "Channel name"
   },
   "src_dot_channels_dot_components_dot_ChannelPickerDialog_dot_2423186459": {
     "context": "dialog header",
@@ -7509,6 +7512,10 @@
   "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_144149815": {
     "context": "event",
     "string": "Product variant deleted"
+  },
+  "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_1594316266": {
+    "context": "event",
+    "string": "Fulfillment canceled"
   },
   "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_1606361075": {
     "context": "event",

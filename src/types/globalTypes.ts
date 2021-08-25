@@ -1797,6 +1797,7 @@ export enum WebhookEventTypeEnum {
   CHECKOUT_UPDATED = "CHECKOUT_UPDATED",
   CUSTOMER_CREATED = "CUSTOMER_CREATED",
   CUSTOMER_UPDATED = "CUSTOMER_UPDATED",
+  FULFILLMENT_CANCELED = "FULFILLMENT_CANCELED",
   FULFILLMENT_CREATED = "FULFILLMENT_CREATED",
   INVOICE_DELETED = "INVOICE_DELETED",
   INVOICE_REQUESTED = "INVOICE_REQUESTED",
@@ -2007,6 +2008,7 @@ export interface ChannelCreateInput {
   name: string;
   slug: string;
   currencyCode: string;
+  defaultCountry: CountryCode;
   addShippingZones?: string[] | null;
 }
 
@@ -2018,6 +2020,7 @@ export interface ChannelUpdateInput {
   isActive?: boolean | null;
   name?: string | null;
   slug?: string | null;
+  defaultCountry?: CountryCode | null;
   addShippingZones?: string[] | null;
   removeShippingZones?: string[] | null;
 }
@@ -2141,7 +2144,7 @@ export interface ExportProductsInput {
 }
 
 export interface FulfillmentCancelInput {
-  warehouseId: string;
+  warehouseId?: string | null;
 }
 
 export interface FulfillmentUpdateTrackingInput {
