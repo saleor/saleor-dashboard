@@ -16,6 +16,7 @@ export const giftCardDataFragment = gql`
   fragment GiftCardData on GiftCard {
     ...MetadataFragment
     displayCode
+    boughtInChannel
     createdBy {
       ...UserBase
     }

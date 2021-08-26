@@ -62,6 +62,7 @@ export interface GiftCardList_giftCards_edges_node {
   metadata: (GiftCardList_giftCards_edges_node_metadata | null)[];
   privateMetadata: (GiftCardList_giftCards_edges_node_privateMetadata | null)[];
   displayCode: string;
+  boughtInChannel: string | null;
   createdBy: GiftCardList_giftCards_edges_node_createdBy | null;
   product: GiftCardList_giftCards_edges_node_product | null;
   usedBy: GiftCardList_giftCards_edges_node_usedBy | null;
