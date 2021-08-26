@@ -1,9 +1,9 @@
 import { defineMessages } from "react-intl";
 
 export const giftCardExpirySelectMessages = defineMessages({
-  cardExpiresSelectedLabel: {
+  expirySelectedLabel: {
     defaultMessage: "Set gift card expiry date",
-    description: "GiftCarUpdateDetailsExpirySection expiration enabled label"
+    description: "GiftCarUpdateDetailsExpirySection expiry selected label"
   },
   expiryPeriodLabel: {
     defaultMessage: "Expires in",

@@ -62,6 +62,7 @@ const GiftCardCreateDialog: React.FC<DialogActionHandlersProps> = ({
       note,
       tag,
       selectedCustomer,
+      expirySelected,
       expiryType,
       expiryDate,
       expiryPeriodAmount,
@@ -77,6 +78,7 @@ const GiftCardCreateDialog: React.FC<DialogActionHandlersProps> = ({
         currency: balanceCurrency
       },
       expiryDate: getGiftCardExpiryInputData({
+        expirySelected,
         expiryType,
         expiryDate,
         expiryPeriodAmount,

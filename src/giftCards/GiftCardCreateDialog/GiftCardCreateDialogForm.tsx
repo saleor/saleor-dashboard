@@ -29,6 +29,7 @@ import {
 export interface GiftCardCreateFormData extends GiftCardCommonFormData {
   note: string;
   selectedCustomer?: GiftCardCreateFormCustomer;
+  expirySelected: boolean;
   expiryType: GiftCardExpiryType;
   expiryPeriodType: TimePeriodTypeEnum;
   expiryPeriodAmount: number;
@@ -41,6 +42,7 @@ export const initialData: GiftCardCreateFormData = {
   balanceAmount: 1,
   balanceCurrency: null,
   note: "",
+  expirySelected: false,
   expiryType: "EXPIRY_PERIOD",
   expiryDate: "",
   expiryPeriodType: TimePeriodTypeEnum.MONTH,
@@ -88,9 +90,11 @@ const GiftCardCreateDialogForm: React.FC<GiftCardCreateDialogFormProps> = ({
     tag,
     balanceAmount,
     balanceCurrency,
+    expirySelected,
     expiryType,
     expiryPeriodAmount,
-    expiryPeriodType
+    expiryPeriodType,
+    expiryDate
   } = data;
 
   return (
@@ -137,9 +141,11 @@ const GiftCardCreateDialogForm: React.FC<GiftCardCreateDialogFormProps> = ({
         <GiftCardExpirySelect
           errors={formErrors}
           change={change}
+          expirySelected={expirySelected}
           expiryType={expiryType}
           expiryPeriodAmount={expiryPeriodAmount}
           expiryPeriodType={expiryPeriodType}
+          expiryDate={expiryDate}
         />
         <CardSpacer />
         <TextField
