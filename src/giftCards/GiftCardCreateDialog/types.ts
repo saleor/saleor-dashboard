@@ -1,6 +1,5 @@
 import { GiftCardError } from "@saleor/fragments/types/GiftCardError";
 import { FormChange } from "@saleor/hooks/useForm";
-import { TimePeriodTypeEnum } from "@saleor/types/globalTypes";
 
 export type GiftCardExpiryType = "EXPIRY_DATE" | "EXPIRY_PERIOD";
 
@@ -14,9 +13,6 @@ export interface GiftCardCommonFormData {
   balanceAmount: number;
   balanceCurrency: string;
   expiryDate: string;
-  expiryType?: GiftCardExpiryType;
-  expiryPeriodType?: TimePeriodTypeEnum;
-  expiryPeriodAmount?: number;
 }
 
 export type GiftCardCreateFormErrors = Record<

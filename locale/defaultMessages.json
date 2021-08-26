@@ -3694,25 +3694,6 @@
     "context": "GiftCardDeleteDialog with balance description",
     "string": "{selectedItemsCount,plural,one{The gift card you are about to delete has available balance. By deleting this card you may remove balance available to your customer.} other{You are about to delete gift cards with available balance. Are you sure you want to do that?}}"
   },
-<<<<<<< HEAD
-=======
-  "src_dot_giftCards_dot_components_dot_GiftCardExpirySelect_dot_cardExpiresSelectedLabel": {
-    "context": "GiftCarUpdateDetailsExpirySection expiration enabled label",
-    "string": "Set gift card expiry date"
-  },
-  "src_dot_giftCards_dot_components_dot_GiftCardExpirySelect_dot_expiryDateLabel": {
-    "context": "GiftCarUpdateDetailsExpirySection expiry date label",
-    "string": "Exact date"
-  },
-  "src_dot_giftCards_dot_components_dot_GiftCardExpirySelect_dot_expiryOnLabel": {
-    "context": "GiftCarUpdateDetailsExpirySection expiry on label",
-    "string": "Will expire on:"
-  },
-  "src_dot_giftCards_dot_components_dot_GiftCardExpirySelect_dot_expiryPeriodLabel": {
-    "context": "GiftCarUpdateDetailsExpirySection expiry period label",
-    "string": "Expires in"
-  },
->>>>>>> Change gift card dialog expiry settings
   "src_dot_giftCards_dot_components_dot_GiftCardSettingsExpirySelect_dot_setExpirationPeriodDescription": {
     "context": "checkbox label description",
     "string": "Expiration date will be automatically set, once gift card is issued"

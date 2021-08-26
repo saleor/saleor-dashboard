@@ -6,12 +6,10 @@ import RadioGroupField from "@saleor/components/RadioGroupField";
 import { GiftCardError } from "@saleor/fragments/types/GiftCardError";
 import { GiftCardExpiryType } from "@saleor/giftCards/GiftCardCreateDialog/types";
 import { getExpiryPeriodTerminationDate } from "@saleor/giftCards/GiftCardCreateDialog/utils";
-import { handleCheckboxChange } from "@saleor/giftCards/GiftCardUpdate/GiftCardResendCodeDialog/utils";
 import { getGiftCardErrorMessage } from "@saleor/giftCards/GiftCardUpdate/messages";
 import { FormChange } from "@saleor/hooks/useForm";
-import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { TimePeriodTypeEnum } from "@saleor/types/globalTypes";
-import React, { useEffect } from "react";
+import React from "react";
 import { FormattedMessage } from "react-intl";
 import { MessageDescriptor, useIntl } from "react-intl";
 
@@ -37,6 +35,7 @@ const options: UntranslatedOption[] = [
 
 interface GiftCardExpirySelectProps {
   change: FormChange;
+  expirySelected: boolean;
   expiryPeriodType: TimePeriodTypeEnum;
   expiryPeriodAmount: number;
   expiryType: GiftCardExpiryType;
@@ -48,6 +47,7 @@ interface GiftCardExpirySelectProps {
 const GiftCardExpirySelect: React.FC<GiftCardExpirySelectProps> = ({
   errors,
   change,
+  expirySelected,
   expiryPeriodType,
   expiryPeriodAmount,
   expiryType = "EXPIRY_PERIOD",
@@ -64,30 +64,15 @@ const GiftCardExpirySelect: React.FC<GiftCardExpirySelectProps> = ({
     })
   );
 
-  const [cardExpiresSelected, setCardExpiresSelected] = useStateFromProps(
-    !!expiryDate
-  );
-
-  useEffect(() => {
-    if (!cardExpiresSelected) {
-      change({
-        target: {
-          name: "expiryDate",
-          value: null
-        }
-      });
-    }
-  }, [cardExpiresSelected]);
-
   return (
     <>
       <ControlledCheckbox
-        name={"cardExpiresSelected"}
-        label={intl.formatMessage(messages.cardExpiresSelectedLabel)}
-        checked={cardExpiresSelected}
-        onChange={handleCheckboxChange(setCardExpiresSelected)}
+        name={"expirySelected"}
+        label={intl.formatMessage(messages.expirySelectedLabel)}
+        checked={expirySelected}
+        onChange={change}
       />
-      {cardExpiresSelected && (
+      {expirySelected && (
         <>
           <VerticalSpacer spacing={2} />
           <RadioGroupField
@@ -96,6 +81,7 @@ const GiftCardExpirySelect: React.FC<GiftCardExpirySelectProps> = ({
             onChange={change}
             name={"expiryType"}
             value={expiryType}
+            variant="inline"
           />
           <VerticalSpacer spacing={2} />
 
@@ -135,7 +121,7 @@ const GiftCardExpirySelect: React.FC<GiftCardExpirySelectProps> = ({
                   {getExpiryPeriodTerminationDate(
                     expiryPeriodType,
                     expiryPeriodAmount
-                  )}
+                  )?.format("L")}
                 </Typography>
               </div>
             </div>
