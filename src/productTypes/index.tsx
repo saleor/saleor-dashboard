@@ -8,13 +8,14 @@ import { Route, RouteComponentProps, Switch } from "react-router-dom";
 import { WindowTitle } from "../components/WindowTitle";
 import {
   productTypeAddPath,
+  ProductTypeAddUrlQueryParams,
   productTypeListPath,
   ProductTypeListUrlQueryParams,
   ProductTypeListUrlSortField,
   productTypePath,
   ProductTypeUrlQueryParams
 } from "./urls";
-import ProductTypeCreate from "./views/ProductTypeCreate";
+import ProductTypeCreateComponent from "./views/ProductTypeCreate";
 import ProductTypeListComponent from "./views/ProductTypeList";
 import ProductTypeUpdateComponent from "./views/ProductTypeUpdate";
 
@@ -25,6 +26,18 @@ const ProductTypeList: React.FC<RouteComponentProps<{}>> = ({ location }) => {
     ProductTypeListUrlSortField
   );
   return <ProductTypeListComponent params={params} />;
+};
+
+interface ProductTypeCreateRouteParams {
+  id: string;
+}
+const ProductTypeCreate: React.FC<RouteComponentProps<
+  ProductTypeCreateRouteParams
+>> = ({ location }) => {
+  const qs = parseQs(location.search.substr(1));
+  const params: ProductTypeAddUrlQueryParams = qs;
+
+  return <ProductTypeCreateComponent params={params} />;
 };
 
 interface ProductTypeUpdateRouteParams {

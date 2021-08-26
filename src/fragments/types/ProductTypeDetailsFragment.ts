@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { AttributeTypeEnum, MeasurementUnitsEnum, AttributeInputTypeEnum, WeightUnitsEnum } from "./../../types/globalTypes";
+import { ProductTypeKindEnum, AttributeTypeEnum, MeasurementUnitsEnum, AttributeInputTypeEnum, WeightUnitsEnum } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL fragment: ProductTypeDetailsFragment
@@ -63,6 +63,7 @@ export interface ProductTypeDetailsFragment {
   __typename: "ProductType";
   id: string;
   name: string;
+  kind: ProductTypeKindEnum;
   hasVariants: boolean;
   isShippingRequired: boolean;
   taxType: ProductTypeDetailsFragment_taxType | null;

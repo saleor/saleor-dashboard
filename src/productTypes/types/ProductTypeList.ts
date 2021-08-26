@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { ProductTypeFilterInput, ProductTypeSortingInput } from "./../../types/globalTypes";
+import { ProductTypeFilterInput, ProductTypeSortingInput, ProductTypeKindEnum } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL query operation: ProductTypeList
@@ -19,6 +19,7 @@ export interface ProductTypeList_productTypes_edges_node {
   __typename: "ProductType";
   id: string;
   name: string;
+  kind: ProductTypeKindEnum;
   hasVariants: boolean;
   isShippingRequired: boolean;
   taxType: ProductTypeList_productTypes_edges_node_taxType | null;
