@@ -5,7 +5,7 @@ import {
 import { GiftCardEventsEnum } from "@saleor/types/globalTypes";
 
 export const extractOrderGiftCardUsedAmount = (
-  order: OrderDetails_order
+  order?: OrderDetails_order
 ): number | undefined => {
   if (!order) {
     return undefined;
@@ -13,16 +13,12 @@ export const extractOrderGiftCardUsedAmount = (
 
   const { id, giftCards } = order;
 
-  const orderRelatedEvent = giftCards.reduce((resultEvent, { events }) => {
-    if (resultEvent) {
-      return resultEvent;
-    }
-
-    return events.find(
+  const orderRelatedEvent = giftCards.find(({ events }) =>
+    events.find(
       ({ orderId, type }) =>
         type === GiftCardEventsEnum.USED_IN_ORDER && orderId === id
-    );
-  }, undefined as OrderDetails_order_giftCards_events);
+    )
+  );
 
   if (!orderRelatedEvent) {
     return undefined;
