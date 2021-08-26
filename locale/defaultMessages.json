@@ -3689,15 +3689,19 @@
   },
   "src_dot_giftCards_dot_components_dot_TimePeriodField_dot_dayLabel": {
     "context": "TimePeriodTextWithSelectField day label",
-    "string": "days after usage"
+    "string": "days after issue"
   },
   "src_dot_giftCards_dot_components_dot_TimePeriodField_dot_monthLabel": {
     "context": "TimePeriodTextWithSelectField month label",
-    "string": "months after usage"
+    "string": "months after issue"
+  },
+  "src_dot_giftCards_dot_components_dot_TimePeriodField_dot_weekLabel": {
+    "context": "TimePeriodTextWithSelectField day label",
+    "string": "weeks after issue"
   },
   "src_dot_giftCards_dot_components_dot_TimePeriodField_dot_yearLabel": {
     "context": "TimePeriodTextWithSelectField year label",
-    "string": "years after usage"
+    "string": "years after issue"
   },
   "src_dot_home": {
     "context": "home section name",
