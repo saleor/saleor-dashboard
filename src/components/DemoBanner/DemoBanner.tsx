@@ -4,14 +4,14 @@ import React from "react";
 import { FormattedMessage } from "react-intl";
 import Media from "react-responsive";
 
-import { emphasisedTextBlue, grey, greyDark, textColor } from "./constants";
+import { emphasisedTextBlue, greyDark, textColor } from "./constants";
 export const mediumScreen = 720;
 
 const useStyles = makeStyles(
   theme => ({
     wrapper: {
       width: "100%",
-      backgroundColor: grey,
+      backgroundColor: "inherit",
       padding: `0 13px`,
       fontSize: theme.spacing(1.5)
     },
