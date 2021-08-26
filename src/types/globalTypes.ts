@@ -2147,6 +2147,7 @@ export interface GiftCardCreateInput {
 export interface GiftCardResendInput {
   id: string;
   email?: string | null;
+  channel: string;
 }
 
 export interface GiftCardSettingsUpdateInput {
