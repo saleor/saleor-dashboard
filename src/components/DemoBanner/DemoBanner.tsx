@@ -52,7 +52,7 @@ const useStyles = makeStyles(
     }
   }),
   {
-    name: "DemmoBanner"
+    name: "DemoBanner"
   }
 );
 
