@@ -1,4 +1,5 @@
 import { LinearProgress, useMediaQuery } from "@material-ui/core";
+import { DEMO_MODE } from "@saleor/config";
 import useAppState from "@saleor/hooks/useAppState";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useUser from "@saleor/hooks/useUser";
@@ -119,8 +120,6 @@ interface AppLayoutProps {
   children: React.ReactNode;
 }
 
-const isDemoMode = process.env.DEMO_MODE === "true";
-
 const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
   const classes = useStyles({});
   const { themeType, setTheme } = useTheme();
@@ -166,7 +165,7 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
         visible={isNavigatorVisible}
         setVisibility={setNavigatorVisibility}
       />
-      {isDemoMode && <DemoBanner />}
+      {DEMO_MODE && <DemoBanner />}
       <div className={classes.root}>
         {isMdUp && (
           <Sidebar
