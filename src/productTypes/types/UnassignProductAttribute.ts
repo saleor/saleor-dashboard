@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { AttributeTypeEnum, MeasurementUnitsEnum, AttributeInputTypeEnum, WeightUnitsEnum } from "./../../types/globalTypes";
+import { ProductTypeKindEnum, AttributeTypeEnum, MeasurementUnitsEnum, AttributeInputTypeEnum, WeightUnitsEnum } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: UnassignProductAttribute
@@ -69,6 +69,7 @@ export interface UnassignProductAttribute_productAttributeUnassign_productType {
   __typename: "ProductType";
   id: string;
   name: string;
+  kind: ProductTypeKindEnum;
   hasVariants: boolean;
   isShippingRequired: boolean;
   taxType: UnassignProductAttribute_productAttributeUnassign_productType_taxType | null;
