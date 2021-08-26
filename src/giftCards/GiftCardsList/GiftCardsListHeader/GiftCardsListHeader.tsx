@@ -50,9 +50,9 @@ const GiftCardsListHeader: React.FC = () => {
   ];
 
   const giftCardProductTypesExist =
-    giftCardProductsCount?.giftCardProductTypes.totalCount === 0;
+    giftCardProductsCount?.giftCardProductTypes.totalCount > 0;
   const giftCardProductsExist =
-    giftCardProductsCount?.giftCardProducts.totalCount === 0;
+    giftCardProductsCount?.giftCardProducts.totalCount > 0;
 
   const showNoGiftCardProductsAlert =
     !giftCardProductsCountLoading &&
