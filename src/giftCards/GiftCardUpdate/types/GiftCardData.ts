@@ -62,6 +62,7 @@ export interface GiftCardData {
   metadata: (GiftCardData_metadata | null)[];
   privateMetadata: (GiftCardData_privateMetadata | null)[];
   displayCode: string;
+  boughtInChannel: string | null;
   createdBy: GiftCardData_createdBy | null;
   product: GiftCardData_product | null;
   usedBy: GiftCardData_usedBy | null;

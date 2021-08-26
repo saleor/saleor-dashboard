@@ -8,10 +8,10 @@ import { IMessage } from "@saleor/components/messages";
 import SingleAutocompleteSelectField from "@saleor/components/SingleAutocompleteSelectField";
 import useForm from "@saleor/hooks/useForm";
 import useNotifier from "@saleor/hooks/useNotifier";
-import { getById } from "@saleor/orders/components/OrderReturnPage/utils";
+import { getBySlug } from "@saleor/products/components/ProductVariantCreatorPage/utils";
 import commonErrorMessages from "@saleor/utils/errors/common";
 import { DialogActionHandlersProps } from "@saleor/utils/handlers/dialogActionHandlers";
-import { mapNodeToChoice } from "@saleor/utils/maps";
+import { mapSlugNodeToChoice } from "@saleor/utils/maps";
 import React, { useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 
@@ -26,7 +26,7 @@ import { useDialogFormReset } from "./utils";
 
 export interface GiftCardResendCodeFormData {
   email: string;
-  channelId: string;
+  channelSlug: string;
 }
 
 const GiftCardResendCodeDialog: React.FC<DialogActionHandlersProps> = ({
@@ -37,6 +37,10 @@ const GiftCardResendCodeDialog: React.FC<DialogActionHandlersProps> = ({
   const notify = useNotifier();
   const classes = useStyles();
   const progressClasses = useProgressStyles();
+
+  const {
+    giftCard: { boughtInChannel: initialChannelSlug }
+  } = useGiftCardDetails();
 
   const [consentSelected, setConsentSelected] = useState(false);
 
@@ -49,7 +53,7 @@ const GiftCardResendCodeDialog: React.FC<DialogActionHandlersProps> = ({
   const initialFormData: GiftCardResendCodeFormData = {
     email: "",
     // TMP
-    channelId: ""
+    channelSlug: initialChannelSlug || ""
   };
 
   const {
@@ -58,14 +62,14 @@ const GiftCardResendCodeDialog: React.FC<DialogActionHandlersProps> = ({
 
   const handleSubmit = async ({
     email,
-    channelId
+    channelSlug
   }: GiftCardResendCodeFormData) => {
     const result = await resendGiftCardCode({
       variables: {
         input: {
           id,
           email: email ? email : null,
-          channelSlug: channels?.find(getById(channelId))?.slug
+          channel: channelSlug
         }
       }
     });
@@ -137,12 +141,12 @@ const GiftCardResendCodeDialog: React.FC<DialogActionHandlersProps> = ({
           <Typography>{intl.formatMessage(messages.description)}</Typography>
           <VerticalSpacer />
           <SingleAutocompleteSelectField
-            choices={mapNodeToChoice(filteredChannels)}
-            name="channelId"
+            choices={mapSlugNodeToChoice(filteredChannels)}
+            name="channelSlug"
             label={intl.formatMessage(messages.sendToChannelSelectLabel)}
-            value={data?.channelId}
+            value={data?.channelSlug}
             onChange={change}
-            displayValue={channels.find(getById(data?.channelId))?.name}
+            displayValue={channels.find(getBySlug(data?.channelSlug))?.name}
             fetchChoices={onQueryChange}
           />
           <VerticalSpacer spacing={0.5} />

@@ -70,6 +70,7 @@ export interface GiftCardUpdate_giftCardUpdate_giftCard {
   metadata: (GiftCardUpdate_giftCardUpdate_giftCard_metadata | null)[];
   privateMetadata: (GiftCardUpdate_giftCardUpdate_giftCard_privateMetadata | null)[];
   displayCode: string;
+  boughtInChannel: string | null;
   createdBy: GiftCardUpdate_giftCardUpdate_giftCard_createdBy | null;
   product: GiftCardUpdate_giftCardUpdate_giftCard_product | null;
   usedBy: GiftCardUpdate_giftCardUpdate_giftCard_usedBy | null;
