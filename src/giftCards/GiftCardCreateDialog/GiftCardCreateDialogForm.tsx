@@ -1,7 +1,13 @@
-import { DialogContent, Divider, TextField } from "@material-ui/core";
+import {
+  DialogContent,
+  Divider,
+  TextField,
+  Typography
+} from "@material-ui/core";
 import VerticalSpacer from "@saleor/apps/components/VerticalSpacer";
 import DialogButtons from "@saleor/components/ActionDialog/DialogButtons";
 import CardSpacer from "@saleor/components/CardSpacer";
+import ControlledCheckbox from "@saleor/components/ControlledCheckbox";
 import TextWithSelectField from "@saleor/components/TextWithSelectField";
 import { GiftCardError } from "@saleor/fragments/types/GiftCardError";
 import GiftCardTagInput from "@saleor/giftCards/components/GiftCardTagInput";
@@ -13,7 +19,7 @@ import { TimePeriodTypeEnum } from "@saleor/types/globalTypes";
 import { getFormErrors } from "@saleor/utils/errors";
 import { mapSingleValueNodeToChoice } from "@saleor/utils/maps";
 import React, { useState } from "react";
-import { useIntl } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import GiftCardExpirySelect from "../components/GiftCardExpirySelect/GiftCardExpirySelect";
 import { getGiftCardErrorMessage } from "../GiftCardUpdate/messages";
@@ -33,6 +39,7 @@ export interface GiftCardCreateFormData extends GiftCardCommonFormData {
   expiryType: GiftCardExpiryType;
   expiryPeriodType: TimePeriodTypeEnum;
   expiryPeriodAmount: number;
+  requiresActivation: boolean;
 }
 
 const initialCustomer = { email: "", name: "" };
@@ -46,7 +53,8 @@ export const initialData: GiftCardCreateFormData = {
   expiryType: "EXPIRY_PERIOD",
   expiryDate: "",
   expiryPeriodType: TimePeriodTypeEnum.MONTH,
-  expiryPeriodAmount: 12
+  expiryPeriodAmount: 12,
+  requiresActivation: true
 };
 
 interface GiftCardCreateDialogFormProps {
@@ -94,7 +102,8 @@ const GiftCardCreateDialogForm: React.FC<GiftCardCreateDialogFormProps> = ({
     expiryType,
     expiryPeriodAmount,
     expiryPeriodType,
-    expiryDate
+    expiryDate,
+    requiresActivation
   } = data;
 
   return (
@@ -159,6 +168,20 @@ const GiftCardCreateDialogForm: React.FC<GiftCardCreateDialogFormProps> = ({
         />
         <VerticalSpacer />
         <Label text={intl.formatMessage(messages.noteSubtitle)} />
+        <VerticalSpacer spacing={2} />
+        <ControlledCheckbox
+          name="requiresActivation"
+          label={
+            <>
+              <FormattedMessage {...messages.requiresActivationLabel} />
+              <Typography variant="caption">
+                <FormattedMessage {...messages.requiresActivationCaption} />
+              </Typography>
+            </>
+          }
+          checked={requiresActivation}
+          onChange={change}
+        />
       </DialogContent>
       <DialogButtons
         onConfirm={submit}
