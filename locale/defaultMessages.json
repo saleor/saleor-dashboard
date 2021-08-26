@@ -5440,7 +5440,24 @@
     "context": "switch button",
     "string": "Product type uses Variant Attributes"
   },
-  "src_dot_productTypes_dot_components_dot_ProductTypeDetails_dot_1007996279": {
+  "src_dot_productTypes_dot_components_dot_ProductTypeDetails_dot_optionGiftCardDescription": {
+    "context": "option description",
+    "string": "This product type can be used to create voucher/gift card type products that user will be able to pay with during checkout process"
+  },
+  "src_dot_productTypes_dot_components_dot_ProductTypeDetails_dot_optionGiftCardTitle": {
+    "context": "option",
+    "string": "Products of this type can be used as gift card/voucher"
+  },
+  "src_dot_productTypes_dot_components_dot_ProductTypeDetails_dot_optionNormalDescription": {
+    "context": "option description",
+    "string": "This product type can be used to create shipping passes for your customers"
+  },
+  "src_dot_productTypes_dot_components_dot_ProductTypeDetails_dot_optionNormalTitle": {
+    "context": "option",
+    "string": "This is a normal product"
+  },
+  "src_dot_productTypes_dot_components_dot_ProductTypeDetails_dot_productTypeName": {
+    "context": "label",
     "string": "Product Type Name"
   },
   "src_dot_productTypes_dot_components_dot_ProductTypeListPage_dot_1776073799": {
