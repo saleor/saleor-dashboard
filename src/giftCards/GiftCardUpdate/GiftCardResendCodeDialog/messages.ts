@@ -25,5 +25,9 @@ export const giftCardResendCodeDialogMessages = defineMessages({
   successResendAlertText: {
     defaultMessage: "Successfully resent code to customer!",
     description: "GiftCardResendCodeDialog successResendAlertText"
+  },
+  sendToChannelSelectLabel: {
+    defaultMessage: "Send to channel",
+    description: "ChannelPickerSelectField sendToChannelLabel"
   }
 });
