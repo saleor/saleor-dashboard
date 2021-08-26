@@ -3451,6 +3451,14 @@
     "context": "GiftCardCreateDialog note subtitle",
     "string": "Why was this gift card issued. This note will not be shown to the customer. Note will be stored in gift card history"
   },
+  "src_dot_giftCards_dot_GiftCardCreateDialog_dot_requiresActivationCaption": {
+    "context": "GiftCarUpdateDetailsExpirySection requires activation caption",
+    "string": "All issued cards require activation by staff before use."
+  },
+  "src_dot_giftCards_dot_GiftCardCreateDialog_dot_requiresActivationLabel": {
+    "context": "GiftCarUpdateDetailsExpirySection requires activation label",
+    "string": "Requires activation"
+  },
   "src_dot_giftCards_dot_GiftCardCreateDialog_dot_title": {
     "context": "GiftCardCreateDialog title",
     "string": "Issue gift card"
