@@ -2,7 +2,6 @@ import ExternalLink from "@saleor/components/ExternalLink";
 import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage } from "react-intl";
-import Media from "react-responsive";
 
 import { emphasisedTextBlue, greyDark, textColor } from "./constants";
 export const mediumScreen = 720;
@@ -49,6 +48,19 @@ const useStyles = makeStyles(
     divider: {
       borderRight: `1px solid  ${greyDark}`,
       height: theme.spacing(2)
+    },
+    mediaMedium: {
+      display: "flex",
+      [theme.breakpoints.up(mediumScreen)]: {
+        display: "none"
+      }
+    },
+    mediaLarge: {
+      display: "flex",
+      alignItems: "center",
+      [theme.breakpoints.down(mediumScreen)]: {
+        display: "none"
+      }
     }
   }),
   {
@@ -64,7 +76,7 @@ export const DemoBanner: React.FC = () => {
       <div className={classes.borderedWrapper}>
         <div />
         <div className={classes.linkList}>
-          <Media maxWidth={mediumScreen}>
+          <div className={classes.mediaMedium}>
             <ExternalLink
               className={classes.link}
               href={"https://demo.saleor.io/graphql/"}
@@ -82,9 +94,9 @@ export const DemoBanner: React.FC = () => {
                 <FormattedMessage defaultMessage="Dashboard" />
               </div>
             </ExternalLink>
-          </Media>
+          </div>
 
-          <Media minWidth={mediumScreen}>
+          <div className={classes.mediaLarge}>
             <ExternalLink
               className={classes.link}
               href="https://demo.saleor.io/dashboard/"
@@ -112,7 +124,7 @@ export const DemoBanner: React.FC = () => {
                 }}
               />
             </ExternalLink>
-          </Media>
+          </div>
         </div>
       </div>
     </div>
