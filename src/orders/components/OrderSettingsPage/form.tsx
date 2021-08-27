@@ -5,6 +5,7 @@ import React from "react";
 
 export interface OrderSettingsFormData {
   automaticallyConfirmAllNewOrders: boolean;
+  automaticallyFulfillNonShippableGiftCard: boolean;
 }
 
 export interface UseOrderSettingsFormResult {
@@ -24,6 +25,8 @@ function getOrderSeettingsFormData(
   orderSettings: OrderSettingsFragment
 ): OrderSettingsFormData {
   return {
+    automaticallyFulfillNonShippableGiftCard:
+      orderSettings?.automaticallyFulfillNonShippableGiftCard,
     automaticallyConfirmAllNewOrders:
       orderSettings?.automaticallyConfirmAllNewOrders
   };
