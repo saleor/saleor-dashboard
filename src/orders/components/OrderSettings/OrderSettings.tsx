@@ -30,9 +30,7 @@ const OrderSettings: React.FC<OrderSettingsProps> = ({
       />
       <CardContent>
         <ControlledCheckbox
-          name={
-            "automaticallyConfirmAllNewOrders" as keyof OrderSettingsFormData
-          }
+          name="automaticallyConfirmAllNewOrders"
           label={
             <>
               <FormattedMessage
@@ -54,9 +52,7 @@ const OrderSettings: React.FC<OrderSettingsProps> = ({
         />
         <CardSpacer />
         <ControlledCheckbox
-          name={
-            "automaticallyFulfillNonShippableGiftCard" as keyof OrderSettingsFormData
-          }
+          name="automaticallyFulfillNonShippableGiftCard"
           label={
             <>
               <FormattedMessage
