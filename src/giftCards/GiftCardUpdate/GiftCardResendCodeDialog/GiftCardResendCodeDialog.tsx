@@ -16,7 +16,7 @@ import useGiftCardDetails from "../providers/GiftCardDetailsProvider/hooks/useGi
 import { giftCardResendCodeDialogMessages as messages } from "./messages";
 import { useGiftCardResendCodeMutation } from "./mutations";
 import { GiftCardResend } from "./types/GiftCardResend";
-import { handleCheckboxChange, useDialogFormReset } from "./utils";
+import { useDialogFormReset } from "./utils";
 
 export interface GiftCardResendCodeFormData {
   email: string;
@@ -111,7 +111,7 @@ const GiftCardResendCodeDialog: React.FC<DialogActionHandlersProps> = ({
         name="differentMailConsent"
         label={intl.formatMessage(messages.consentCheckboxLabel)}
         checked={consentSelected}
-        onChange={handleCheckboxChange(setConsentSelected)}
+        onChange={event => setConsentSelected(event.target.value)}
       />
       <VerticalSpacer />
       <TextField
