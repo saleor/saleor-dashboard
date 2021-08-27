@@ -1481,6 +1481,7 @@ export const order = (placeholder: string): OrderDetails_order => ({
         currency: "USD"
       },
       paymentMethodType: "card",
+      pspReference: "evt_1J7IKBH1Vac4G4dbPB6uERAp",
       chargeStatus: PaymentChargeStatusEnum.NOT_CHARGED
     }
   ],

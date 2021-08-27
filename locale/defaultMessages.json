@@ -4607,6 +4607,9 @@
   "src_dot_orders_dot_views_dot_OrderDetails_dot_2808777264": {
     "string": "Order successfully cancelled"
   },
+  "src_dot_orders_dot_views_dot_OrderDetails_dot_3151327724": {
+    "string": "Payments successfully captured"
+  },
   "src_dot_orders_dot_views_dot_OrderDetails_dot_3178394068": {
     "string": "Note successfully added"
   },
@@ -4615,6 +4618,9 @@
   },
   "src_dot_orders_dot_views_dot_OrderDetails_dot_3367579693": {
     "string": "Order successfully updated"
+  },
+  "src_dot_orders_dot_views_dot_OrderDetails_dot_3582578067": {
+    "string": "Order payments successfully voided"
   },
   "src_dot_orders_dot_views_dot_OrderDetails_dot_4085755992": {
     "string": "Invoice email sent"
