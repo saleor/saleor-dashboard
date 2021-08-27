@@ -1,7 +1,6 @@
 import { fragmentUserBase } from "@saleor/fragments/auth";
 import { metadataFragment } from "@saleor/fragments/metadata";
 import { fragmentMoney } from "@saleor/fragments/products";
-import { fragmentTimePeriod } from "@saleor/fragments/timePeriod";
 import makeQuery from "@saleor/hooks/makeQuery";
 import gql from "graphql-tag";
 
@@ -14,7 +13,6 @@ export const giftCardDataFragment = gql`
   ${fragmentMoney}
   ${metadataFragment}
   ${fragmentUserBase}
-  ${fragmentTimePeriod}
   fragment GiftCardData on GiftCard {
     ...MetadataFragment
     displayCode
@@ -39,10 +37,6 @@ export const giftCardDataFragment = gql`
     }
     created
     expiryDate
-    expiryType
-    expiryPeriod {
-      ...TimePeriod
-    }
     lastUsedOn
     isActive
     initialBalance {
@@ -63,18 +57,8 @@ export const giftCardDetails = gql`
     giftCard(id: $id) {
       ...GiftCardData
       events {
-        expiry {
-          expiryType
-          expiryPeriod {
-            ...TimePeriod
-          }
-          expiryDate
-          oldExpiryType
-          oldExpiryPeriod {
-            ...TimePeriod
-          }
-          oldExpiryDate
-        }
+        expiryDate
+        oldExpiryDate
         id
         date
         type

@@ -2,8 +2,8 @@ import { Button, Card, CardContent, Divider } from "@material-ui/core";
 import CardSpacer from "@saleor/components/CardSpacer";
 import CardTitle from "@saleor/components/CardTitle";
 import Skeleton from "@saleor/components/Skeleton";
-import GiftCardExpirySelect from "@saleor/giftCards/components/GiftCardExpirySelect";
 import GiftCardTagInput from "@saleor/giftCards/components/GiftCardTagInput";
+import GiftCardUpdateExpirySelect from "@saleor/giftCards/GiftCardUpdate/GiftCardUpdateExpirySelect";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -21,7 +21,7 @@ const GiftCardUpdateDetailsCard: React.FC = () => {
 
   const {
     change,
-    data: { expiryType, expiryPeriodAmount, expiryPeriodType, tag, expiryDate },
+    data: { tag },
     formErrors
   } = useGiftCardUpdateForm();
 
@@ -55,14 +55,7 @@ const GiftCardUpdateDetailsCard: React.FC = () => {
                 change={change}
               />
               <CardSpacer />
-              <GiftCardExpirySelect
-                expiryDate={expiryDate}
-                errors={formErrors}
-                change={change}
-                expiryType={expiryType}
-                expiryPeriodAmount={expiryPeriodAmount}
-                expiryPeriodType={expiryPeriodType}
-              />
+              <GiftCardUpdateExpirySelect />
             </>
           )}
         </Skeleton>

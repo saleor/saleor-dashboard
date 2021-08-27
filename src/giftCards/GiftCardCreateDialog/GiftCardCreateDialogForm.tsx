@@ -4,8 +4,8 @@ import DialogButtons from "@saleor/components/ActionDialog/DialogButtons";
 import CardSpacer from "@saleor/components/CardSpacer";
 import TextWithSelectField from "@saleor/components/TextWithSelectField";
 import { GiftCardError } from "@saleor/fragments/types/GiftCardError";
-import GiftCardExpirySelect from "@saleor/giftCards/components/GiftCardExpirySelect";
 import GiftCardTagInput from "@saleor/giftCards/components/GiftCardTagInput";
+import GiftCardExpirySelect from "@saleor/giftCards/GiftCardUpdate/GiftCardUpdateExpirySelect";
 import useForm from "@saleor/hooks/useForm";
 import useShop from "@saleor/hooks/useShop";
 import { commonMessages } from "@saleor/intl";
@@ -29,6 +29,9 @@ import { GiftCardCommonFormData, GiftCardCreateFormCustomer } from "./types";
 export interface GiftCardCreateFormData extends GiftCardCommonFormData {
   note: string;
   selectedCustomer?: GiftCardCreateFormCustomer;
+  expiryType: GiftCardExpiryTypeEnum;
+  expiryPeriodType: TimePeriodTypeEnum;
+  expiryPeriodAmount: number;
 }
 
 const initialCustomer = { email: "", name: "" };
@@ -39,8 +42,6 @@ export const initialData: GiftCardCreateFormData = {
   balanceCurrency: null,
   note: "",
   expiryDate: "",
-  expiryType: GiftCardExpiryTypeEnum.EXPIRY_PERIOD,
-  expiryPeriodType: TimePeriodTypeEnum.YEAR,
   expiryPeriodAmount: 1
 };
 
@@ -77,26 +78,11 @@ const GiftCardCreateDialogForm: React.FC<GiftCardCreateDialogFormProps> = ({
   );
 
   const formErrors = getFormErrors(
-    [
-      "tag",
-      "expiryDate",
-      "expiryPeriod",
-      "customer",
-      "currency",
-      "amount",
-      "balance"
-    ],
+    ["tag", "expiryDate", "customer", "currency", "amount", "balance"],
     apiErrors
   );
 
-  const {
-    tag,
-    expiryPeriodAmount,
-    expiryPeriodType,
-    expiryType,
-    balanceAmount,
-    balanceCurrency
-  } = data;
+  const { tag, balanceAmount, balanceCurrency } = data;
 
   return (
     <>
@@ -139,13 +125,7 @@ const GiftCardCreateDialogForm: React.FC<GiftCardCreateDialogFormProps> = ({
         <CardSpacer />
         <Divider />
         <CardSpacer />
-        <GiftCardExpirySelect
-          errors={formErrors}
-          change={change}
-          expiryType={expiryType}
-          expiryPeriodAmount={expiryPeriodAmount}
-          expiryPeriodType={expiryPeriodType}
-        />
+        <GiftCardExpirySelect />
         <CardSpacer />
         <TextField
           name="note"

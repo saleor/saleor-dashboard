@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { GiftCardExpiryTypeEnum, TimePeriodTypeEnum, GiftCardEventsEnum } from "./../../../types/globalTypes";
+import { GiftCardEventsEnum } from "./../../../types/globalTypes";
 
 // ====================================================
 // GraphQL query operation: GiftCardDetails
@@ -47,12 +47,6 @@ export interface GiftCardDetails_giftCard_app {
   name: string | null;
 }
 
-export interface GiftCardDetails_giftCard_expiryPeriod {
-  __typename: "TimePeriod";
-  amount: number;
-  type: TimePeriodTypeEnum;
-}
-
 export interface GiftCardDetails_giftCard_initialBalance {
   __typename: "Money";
   amount: number;
@@ -63,28 +57,6 @@ export interface GiftCardDetails_giftCard_currentBalance {
   __typename: "Money";
   amount: number;
   currency: string;
-}
-
-export interface GiftCardDetails_giftCard_events_expiry_expiryPeriod {
-  __typename: "TimePeriod";
-  amount: number;
-  type: TimePeriodTypeEnum;
-}
-
-export interface GiftCardDetails_giftCard_events_expiry_oldExpiryPeriod {
-  __typename: "TimePeriod";
-  amount: number;
-  type: TimePeriodTypeEnum;
-}
-
-export interface GiftCardDetails_giftCard_events_expiry {
-  __typename: "GiftCardEventExpiry";
-  expiryType: GiftCardExpiryTypeEnum | null;
-  expiryPeriod: GiftCardDetails_giftCard_events_expiry_expiryPeriod | null;
-  expiryDate: any | null;
-  oldExpiryType: GiftCardExpiryTypeEnum | null;
-  oldExpiryPeriod: GiftCardDetails_giftCard_events_expiry_oldExpiryPeriod | null;
-  oldExpiryDate: any | null;
 }
 
 export interface GiftCardDetails_giftCard_events_user {
@@ -134,7 +106,8 @@ export interface GiftCardDetails_giftCard_events_balance {
 
 export interface GiftCardDetails_giftCard_events {
   __typename: "GiftCardEvent";
-  expiry: GiftCardDetails_giftCard_events_expiry | null;
+  expiryDate: any | null;
+  oldExpiryDate: any | null;
   id: string;
   date: any | null;
   type: GiftCardEventsEnum | null;
@@ -162,8 +135,6 @@ export interface GiftCardDetails_giftCard {
   app: GiftCardDetails_giftCard_app | null;
   created: any;
   expiryDate: any | null;
-  expiryType: GiftCardExpiryTypeEnum;
-  expiryPeriod: GiftCardDetails_giftCard_expiryPeriod | null;
   lastUsedOn: any | null;
   isActive: boolean;
   initialBalance: GiftCardDetails_giftCard_initialBalance | null;
