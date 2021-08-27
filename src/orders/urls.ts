@@ -100,6 +100,7 @@ export type OrderUrlDialog =
   | "cancel"
   | "cancel-fulfillment"
   | "capture"
+  | "payment-capture"
   | "customer-change"
   | "edit-customer-addresses"
   | "edit-billing-address"
@@ -109,6 +110,7 @@ export type OrderUrlDialog =
   | "finalize"
   | "mark-paid"
   | "void"
+  | "payment-void"
   | "invoice-send";
 
 export type OrderUrlQueryParams = Dialog<OrderUrlDialog> & SingleAction;

@@ -111,7 +111,27 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
                 onNoteAdd={orderMessages.handleNoteAdd}
                 onOrderCancel={orderMessages.handleOrderCancel}
                 onOrderVoid={orderMessages.handleOrderVoid}
-                onPaymentCapture={orderMessages.handlePaymentCapture}
+                onPaymentVoid={data => {
+                  if (data.paymentVoid.payment !== null) {
+                    order.paymentStatus =
+                      data.paymentVoid.payment.order.paymentStatus;
+                    order.totalCaptured =
+                      data.paymentVoid.payment.order.totalCaptured;
+                    order.actions = data.paymentVoid.payment.order.actions;
+                  }
+                  orderMessages.handlePaymentVoid(data);
+                }}
+                onOrderCapture={orderMessages.handleOrderCapture}
+                onPaymentCapture={data => {
+                  if (data.paymentCapture.payment !== null) {
+                    order.paymentStatus =
+                      data.paymentCapture.payment.order.paymentStatus;
+                    order.totalCaptured =
+                      data.paymentCapture.payment.order.totalCaptured;
+                    order.actions = data.paymentCapture.payment.order.actions;
+                  }
+                  orderMessages.handlePaymentCapture(data);
+                }}
                 onUpdate={orderMessages.handleUpdate}
                 onDraftUpdate={orderMessages.handleDraftUpdate}
                 onShippingMethodUpdate={data => {
@@ -154,8 +174,10 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
                   orderLinesAdd,
                   orderLineDelete,
                   orderLineUpdate,
-                  orderPaymentCapture,
+                  orderCapture,
+                  paymentCapture,
                   orderVoid,
+                  paymentVoid,
                   orderShippingMethodUpdate,
                   orderUpdate,
                   orderFulfillmentCancel,
@@ -178,7 +200,9 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
                         orderCancel={orderCancel}
                         orderPaymentMarkAsPaid={orderPaymentMarkAsPaid}
                         orderVoid={orderVoid}
-                        orderPaymentCapture={orderPaymentCapture}
+                        paymentVoid={paymentVoid}
+                        orderCapture={orderCapture}
+                        paymentCapture={paymentCapture}
                         orderFulfillmentCancel={orderFulfillmentCancel}
                         orderFulfillmentUpdateTracking={
                           orderFulfillmentUpdateTracking
@@ -223,7 +247,9 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
                         orderLinesAdd={orderLinesAdd}
                         orderPaymentMarkAsPaid={orderPaymentMarkAsPaid}
                         orderVoid={orderVoid}
-                        orderPaymentCapture={orderPaymentCapture}
+                        paymentVoid={paymentVoid}
+                        orderCapture={orderCapture}
+                        paymentCapture={paymentCapture}
                         orderFulfillmentCancel={orderFulfillmentCancel}
                         orderFulfillmentUpdateTracking={
                           orderFulfillmentUpdateTracking

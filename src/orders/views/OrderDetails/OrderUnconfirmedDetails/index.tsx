@@ -48,7 +48,9 @@ interface OrderUnconfirmedDetailsProps {
   orderLinesAdd: any;
   orderPaymentMarkAsPaid: any;
   orderVoid: any;
-  orderPaymentCapture: any;
+  paymentVoid: any;
+  orderCapture: any;
+  paymentCapture: any;
   orderFulfillmentCancel: any;
   orderFulfillmentUpdateTracking: any;
   orderInvoiceSend: any;
@@ -72,7 +74,9 @@ export const OrderUnconfirmedDetails: React.FC<OrderUnconfirmedDetailsProps> = (
   orderLinesAdd,
   orderPaymentMarkAsPaid,
   orderVoid,
-  orderPaymentCapture,
+  paymentVoid,
+  orderCapture,
+  paymentCapture,
   orderFulfillmentCancel,
   orderFulfillmentUpdateTracking,
   orderInvoiceSend,
@@ -172,8 +176,10 @@ export const OrderUnconfirmedDetails: React.FC<OrderUnconfirmedDetailsProps> = (
                 })
               )
             }
-            onPaymentCapture={() => openModal("capture")}
-            onPaymentVoid={() => openModal("void")}
+            onCapture={() => openModal("capture")}
+            onPaymentCapture={() => openModal("payment-capture")}
+            onVoid={() => openModal("void")}
+            onPaymentVoid={() => openModal("payment-void")}
             onPaymentRefund={() => navigate(orderRefundUrl(id))}
             onProductClick={id => () => navigate(productUrl(id))}
             onBillingAddressEdit={() => openModal("edit-billing-address")}
@@ -279,16 +285,41 @@ export const OrderUnconfirmedDetails: React.FC<OrderUnconfirmedDetailsProps> = (
         onClose={closeModal}
         onConfirm={() => orderVoid.mutate({ id })}
       />
+      <OrderPaymentVoidDialog
+        confirmButtonState={paymentVoid.opts.status}
+        errors={paymentVoid.opts.data?.paymentVoid.errors || []}
+        open={params.action === "payment-void"}
+        onClose={closeModal}
+        onConfirm={() => paymentVoid.mutate({ id: params.id })}
+      />
       <OrderPaymentDialog
-        confirmButtonState={orderPaymentCapture.opts.status}
-        errors={orderPaymentCapture.opts.data?.orderCapture.errors || []}
+        confirmButtonState={orderCapture.opts.status}
+        errors={orderCapture.opts.data?.orderCapture.errors || []}
         initial={order?.total.gross.amount}
         open={params.action === "capture"}
         onClose={closeModal}
         onSubmit={variables =>
-          orderPaymentCapture.mutate({
+          orderCapture.mutate({
             ...variables,
             id
+          })
+        }
+      />
+      <OrderPaymentDialog
+        confirmButtonState={paymentCapture.opts.status}
+        errors={paymentCapture.opts.data?.paymentCapture.errors || []}
+        initial={
+          params.id
+            ? order?.payments.find(payment => payment.id === params.id)?.total
+                .amount
+            : ""
+        }
+        open={params.action === "payment-capture"}
+        onClose={closeModal}
+        onSubmit={variables =>
+          paymentCapture.mutate({
+            ...variables,
+            id: params.id
           })
         }
       />

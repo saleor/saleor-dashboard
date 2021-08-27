@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { OrderErrorCode, AddressTypeEnum, OrderDiscountType, DiscountValueTypeEnum, OrderEventsEmailsEnum, OrderEventsEnum, FulfillmentStatus, OrderPaymentStatusEnum, OrderStatus, OrderAction, JobStatusEnum } from "./../../types/globalTypes";
+import { OrderErrorCode, AddressTypeEnum, OrderDiscountType, DiscountValueTypeEnum, OrderEventsEmailsEnum, OrderEventsEnum, FulfillmentStatus, PaymentChargeStatusEnum, OrderAction, OrderPaymentStatusEnum, OrderStatus, JobStatusEnum } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: OrderConfirm
@@ -338,6 +338,29 @@ export interface OrderConfirm_orderConfirm_order_lines {
   thumbnail: OrderConfirm_orderConfirm_order_lines_thumbnail | null;
 }
 
+export interface OrderConfirm_orderConfirm_order_payments_total {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderConfirm_orderConfirm_order_payments_capturedAmount {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderConfirm_orderConfirm_order_payments {
+  __typename: "Payment";
+  id: string;
+  total: OrderConfirm_orderConfirm_order_payments_total | null;
+  capturedAmount: OrderConfirm_orderConfirm_order_payments_capturedAmount | null;
+  paymentMethodType: string;
+  pspReference: string | null;
+  chargeStatus: PaymentChargeStatusEnum;
+  actions: (OrderAction | null)[];
+}
+
 export interface OrderConfirm_orderConfirm_order_shippingAddress_country {
   __typename: "CountryDisplay";
   code: string;
@@ -501,6 +524,7 @@ export interface OrderConfirm_orderConfirm_order {
   fulfillments: (OrderConfirm_orderConfirm_order_fulfillments | null)[];
   lines: (OrderConfirm_orderConfirm_order_lines | null)[];
   number: string | null;
+  payments: (OrderConfirm_orderConfirm_order_payments | null)[] | null;
   paymentStatus: OrderPaymentStatusEnum;
   shippingAddress: OrderConfirm_orderConfirm_order_shippingAddress | null;
   shippingMethod: OrderConfirm_orderConfirm_order_shippingMethod | null;

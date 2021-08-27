@@ -1,6 +1,8 @@
 import messages from "@saleor/containers/BackgroundTasks/messages";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
+import { PaymentCapture } from "@saleor/orders/types/PaymentCapture";
+import { PaymentVoid } from "@saleor/orders/types/PaymentVoid";
 import getOrderErrorMessage from "@saleor/utils/errors/order";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import React from "react";
@@ -41,7 +43,9 @@ interface OrderDetailsMessages {
     handleOrderLineUpdate: (data: OrderLineUpdate) => void;
     handleOrderMarkAsPaid: (data: OrderMarkAsPaid) => void;
     handleOrderVoid: (data: OrderVoid) => void;
-    handlePaymentCapture: (data: OrderCapture) => void;
+    handlePaymentVoid: (data: PaymentVoid) => void;
+    handleOrderCapture: (data: OrderCapture) => void;
+    handlePaymentCapture: (data: PaymentCapture) => void;
     handleShippingMethodUpdate: (data: OrderShippingMethodUpdate) => void;
     handleUpdate: (data: OrderUpdate) => void;
     handleInvoiceGeneratePending: (data: InvoiceRequest) => void;
@@ -67,8 +71,21 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
     params
   );
 
-  const handlePaymentCapture = (data: OrderCapture) => {
+  const handleOrderCapture = (data: OrderCapture) => {
     const errs = data.orderCapture?.errors;
+    if (errs.length === 0) {
+      pushMessage({
+        status: "success",
+        text: intl.formatMessage({
+          defaultMessage: "Payments successfully captured"
+        })
+      });
+      closeModal();
+    }
+  };
+
+  const handlePaymentCapture = (data: PaymentCapture) => {
+    const errs = data.paymentCapture?.errors;
     if (errs.length === 0) {
       pushMessage({
         status: "success",
@@ -79,6 +96,7 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
       closeModal();
     }
   };
+
   const handleOrderMarkAsPaid = (data: OrderMarkAsPaid) => {
     const errs = data.orderMarkAsPaid?.errors;
     if (errs.length === 0) {
@@ -117,6 +135,18 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
   };
   const handleOrderVoid = (data: OrderVoid) => {
     const errs = data.orderVoid?.errors;
+    if (errs.length === 0) {
+      pushMessage({
+        status: "success",
+        text: intl.formatMessage({
+          defaultMessage: "Order payments successfully voided"
+        })
+      });
+      closeModal();
+    }
+  };
+  const handlePaymentVoid = (data: PaymentVoid) => {
+    const errs = data.paymentVoid?.errors;
     if (errs.length === 0) {
       pushMessage({
         status: "success",
@@ -306,6 +336,8 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
     handleOrderLinesAdd,
     handleOrderMarkAsPaid,
     handleOrderVoid,
+    handlePaymentVoid,
+    handleOrderCapture,
     handlePaymentCapture,
     handleShippingMethodUpdate,
     handleUpdate

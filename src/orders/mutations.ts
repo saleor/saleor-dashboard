@@ -1,14 +1,16 @@
 import {
   invoiceErrorFragment,
   orderErrorFragment,
-  orderSettingsErrorFragment
+  orderSettingsErrorFragment,
+  paymentErrorFragment
 } from "@saleor/fragments/errors";
 import {
   fragmentOrderDetails,
   fragmentOrderEvent,
   fragmentOrderSettings,
   fulfillmentFragment,
-  invoiceFragment
+  invoiceFragment,
+  paymentFragment
 } from "@saleor/fragments/orders";
 import makeMutation from "@saleor/hooks/makeMutation";
 import gql from "graphql-tag";
@@ -107,6 +109,11 @@ import {
 } from "./types/OrderShippingMethodUpdate";
 import { OrderUpdate, OrderUpdateVariables } from "./types/OrderUpdate";
 import { OrderVoid, OrderVoidVariables } from "./types/OrderVoid";
+import {
+  PaymentCapture,
+  PaymentCaptureVariables
+} from "./types/PaymentCapture";
+import { PaymentVoid, PaymentVoidVariables } from "./types/PaymentVoid";
 
 const orderCancelMutation = gql`
   ${fragmentOrderDetails}
@@ -401,6 +408,33 @@ export const TypedOrderVoidMutation = TypedMutation<
   OrderVoidVariables
 >(orderVoidMutation);
 
+const paymentVoidMutation = gql`
+  ${paymentFragment}
+  ${paymentErrorFragment}
+  mutation PaymentVoid($id: ID!) {
+    paymentVoid(paymentId: $id) {
+      errors {
+        ...PaymentErrorFragment
+      }
+      payment {
+        ...PaymentFragment
+        order {
+          paymentStatus
+          totalCaptured {
+            amount
+            currency
+          }
+          actions
+        }
+      }
+    }
+  }
+`;
+export const TypedPaymentVoidMutation = TypedMutation<
+  PaymentVoid,
+  PaymentVoidVariables
+>(paymentVoidMutation);
+
 const orderMarkAsPaidMutation = gql`
   ${fragmentOrderDetails}
   ${orderErrorFragment}
@@ -438,6 +472,33 @@ export const TypedOrderCaptureMutation = TypedMutation<
   OrderCapture,
   OrderCaptureVariables
 >(orderCaptureMutation);
+
+const paymentCaptureMutation = gql`
+  ${paymentFragment}
+  ${paymentErrorFragment}
+  mutation PaymentCapture($id: ID!, $amount: PositiveDecimal!) {
+    paymentCapture(amount: $amount, paymentId: $id) {
+      errors {
+        ...PaymentErrorFragment
+      }
+      payment {
+        ...PaymentFragment
+        order {
+          paymentStatus
+          totalCaptured {
+            amount
+            currency
+          }
+          actions
+        }
+      }
+    }
+  }
+`;
+export const TypedPaymentCaptureMutation = TypedMutation<
+  PaymentCapture,
+  PaymentCaptureVariables
+>(paymentCaptureMutation);
 
 const orderFulfillmentUpdateTrackingMutation = gql`
   ${fragmentOrderDetails}

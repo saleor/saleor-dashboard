@@ -1459,6 +1459,31 @@ export const order = (placeholder: string): OrderDetails_order => ({
   ],
   number: "9",
   paymentStatus: OrderPaymentStatusEnum.NOT_CHARGED,
+  payments: [
+    {
+      __typename: "Payment",
+      id: "UGF5bWVudDo5",
+      pspReference: "ch_69d9ec4c-6ff0-47e6-aa94-2e9b34a497f9",
+      actions: [
+        OrderAction.CAPTURE,
+        OrderAction.MARK_AS_PAID,
+        OrderAction.REFUND,
+        OrderAction.VOID
+      ],
+      total: {
+        __typename: "Money",
+        amount: 128.62,
+        currency: "USD"
+      },
+      capturedAmount: {
+        __typename: "Money",
+        amount: 0,
+        currency: "USD"
+      },
+      paymentMethodType: "card",
+      chargeStatus: PaymentChargeStatusEnum.NOT_CHARGED
+    }
+  ],
   privateMetadata: [],
   shippingAddress: {
     __typename: "Address",
@@ -1690,6 +1715,7 @@ export const draftOrder = (placeholder: string): OrderDetails_order => ({
   metadata: [],
   number: "24",
   paymentStatus: null,
+  payments: [],
   privateMetadata: [],
   shippingAddress: null,
   shippingMethod: null,
