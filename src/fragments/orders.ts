@@ -176,6 +176,27 @@ export const fragmentOrderDetails = gql`
     billingAddress {
       ...AddressFragment
     }
+    giftCards {
+      events {
+        id
+        type
+        orderId
+        balance {
+          initialBalance {
+            ...Money
+          }
+          currentBalance {
+            ...Money
+          }
+          oldInitialBalance {
+            ...Money
+          }
+          oldCurrentBalance {
+            ...Money
+          }
+        }
+      }
+    }
     isShippingRequired
     canFinalize
     created
@@ -278,5 +299,6 @@ export const fragmentOrderDetails = gql`
 export const fragmentOrderSettings = gql`
   fragment OrderSettingsFragment on OrderSettings {
     automaticallyConfirmAllNewOrders
+    automaticallyFulfillNonShippableGiftCard
   }
 `;

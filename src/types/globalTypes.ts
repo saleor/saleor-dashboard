@@ -2149,6 +2149,11 @@ export interface GiftCardResendInput {
   email?: string | null;
 }
 
+export interface GiftCardSettingsUpdateInput {
+  expiryType?: GiftCardSettingsExpiryTypeEnum | null;
+  expiryPeriod?: TimePeriodInputType | null;
+}
+
 export interface GiftCardUpdateInput {
   tag?: string | null;
   expiryDate?: any | null;

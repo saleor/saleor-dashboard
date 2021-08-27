@@ -3448,6 +3448,17 @@
     "context": "GiftCardCreateDialog title",
     "string": "Issue gift card"
   },
+  "src_dot_giftCards_dot_GiftCardSettings_dot_GiftCardExpirySettingsCard_dot_expiryDateSectionDescription": {
+    "string": "You can set gift cards to expire after a certain time after their purchase. Remember that in some countries, gift cards expiry is prohibited by law."
+  },
+  "src_dot_giftCards_dot_GiftCardSettings_dot_GiftCardExpirySettingsCard_dot_expiryDateTitle": {
+    "context": "section header",
+    "string": "Expiry date"
+  },
+  "src_dot_giftCards_dot_GiftCardSettings_dot_title": {
+    "context": "header",
+    "string": "Gift Cards Settings"
+  },
   "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardResendCodeDialog_dot_consentCheckboxLabel": {
     "context": "GiftCardResendCodeDialog consentCheckboxLabel",
     "string": "Yes, I want to send gift card to different address"
@@ -3531,14 +3542,6 @@
   "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardUpdateInfoCard_dot_usedByLabel": {
     "context": "GiftCardUpdateInfoCard used by label",
     "string": "Used by"
-  },
-  "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardUpdatePageHeader_dot_disableLabel": {
-    "context": "GiftCardEnableDisableSection enable label",
-    "string": "Disable"
-  },
-  "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardUpdatePageHeader_dot_enableLabel": {
-    "context": "GiftCardEnableDisableSection enable label",
-    "string": "Enable"
   },
   "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardUpdatePageHeader_dot_resendButtonLabel": {
     "context": "giftCardUpdatePageHeader resendButtonLabel",
@@ -3668,6 +3671,14 @@
     "context": "GiftCarUpdateDetailsExpirySection never expire label",
     "string": "Never expire"
   },
+  "src_dot_giftCards_dot_components_dot_GiftCardSettingsExpirySelect_dot_setExpirationPeriodDescription": {
+    "context": "checkbox label description",
+    "string": "Expiration date will be automatically set, once gift card is issued"
+  },
+  "src_dot_giftCards_dot_components_dot_GiftCardSettingsExpirySelect_dot_setExpirationPeriodTitle": {
+    "context": "checkbox label",
+    "string": "Set gift card expiration period"
+  },
   "src_dot_giftCards_dot_components_dot_GiftCardTagInput_dot_label": {
     "context": "GiftCardTagInput tag label",
     "string": "Card Tag"
@@ -3678,15 +3689,19 @@
   },
   "src_dot_giftCards_dot_components_dot_TimePeriodField_dot_dayLabel": {
     "context": "TimePeriodTextWithSelectField day label",
-    "string": "days after usage"
+    "string": "days after issue"
   },
   "src_dot_giftCards_dot_components_dot_TimePeriodField_dot_monthLabel": {
     "context": "TimePeriodTextWithSelectField month label",
-    "string": "months after usage"
+    "string": "months after issue"
+  },
+  "src_dot_giftCards_dot_components_dot_TimePeriodField_dot_weekLabel": {
+    "context": "TimePeriodTextWithSelectField day label",
+    "string": "weeks after issue"
   },
   "src_dot_giftCards_dot_components_dot_TimePeriodField_dot_yearLabel": {
     "context": "TimePeriodTextWithSelectField year label",
-    "string": "years after usage"
+    "string": "years after issue"
   },
   "src_dot_home": {
     "context": "home section name",
@@ -4461,6 +4476,10 @@
     "context": "order discount",
     "string": "Discount"
   },
+  "src_dot_orders_dot_components_dot_OrderPayment_dot_372187363": {
+    "context": "order payment",
+    "string": "Paid with Gift Card"
+  },
   "src_dot_orders_dot_components_dot_OrderPayment_dot_3768782744": {
     "context": "order payment",
     "string": "Preauthorized amount"
@@ -4781,6 +4800,14 @@
   "src_dot_orders_dot_components_dot_OrderSettings_dot_1391686013": {
     "context": "section header",
     "string": "Settings"
+  },
+  "src_dot_orders_dot_components_dot_OrderSettings_dot_2116402092": {
+    "context": "checkbox gift cards label",
+    "string": "Automatically fulfill non shippable gift cards"
+  },
+  "src_dot_orders_dot_components_dot_OrderSettings_dot_2879928595": {
+    "context": "checkbox gift cards label description",
+    "string": "when activated non-shippable gift cards will be automatically set as fulfilled and sent to customer"
   },
   "src_dot_orders_dot_components_dot_OrderSettings_dot_3281882935": {
     "context": "checkbox label description",
@@ -5429,7 +5456,24 @@
     "context": "switch button",
     "string": "Product type uses Variant Attributes"
   },
-  "src_dot_productTypes_dot_components_dot_ProductTypeDetails_dot_1007996279": {
+  "src_dot_productTypes_dot_components_dot_ProductTypeDetails_dot_optionGiftCardDescription": {
+    "context": "option description",
+    "string": "This product type can be used to create voucher/gift card type products that user will be able to pay with during checkout process"
+  },
+  "src_dot_productTypes_dot_components_dot_ProductTypeDetails_dot_optionGiftCardTitle": {
+    "context": "option",
+    "string": "Products of this type can be used as gift card/voucher"
+  },
+  "src_dot_productTypes_dot_components_dot_ProductTypeDetails_dot_optionNormalDescription": {
+    "context": "option description",
+    "string": "This product type can be used to create shipping passes for your customers"
+  },
+  "src_dot_productTypes_dot_components_dot_ProductTypeDetails_dot_optionNormalTitle": {
+    "context": "option",
+    "string": "This is a normal product"
+  },
+  "src_dot_productTypes_dot_components_dot_ProductTypeDetails_dot_productTypeName": {
+    "context": "label",
     "string": "Product Type Name"
   },
   "src_dot_productTypes_dot_components_dot_ProductTypeListPage_dot_1776073799": {
