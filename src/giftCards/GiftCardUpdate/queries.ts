@@ -1,7 +1,6 @@
 import { fragmentUserBase } from "@saleor/fragments/auth";
 import { metadataFragment } from "@saleor/fragments/metadata";
 import { fragmentMoney } from "@saleor/fragments/products";
-import { fragmentTimePeriod } from "@saleor/fragments/timePeriod";
 import makeQuery from "@saleor/hooks/makeQuery";
 import gql from "graphql-tag";
 
