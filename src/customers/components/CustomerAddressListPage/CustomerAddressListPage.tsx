@@ -34,6 +34,11 @@ const messages = defineMessages({
     defaultMessage: "{fullName}'s Address Book",
     description: "customer's address book, header"
   },
+  noNameToShow: {
+    defaultMessage: "Address Book",
+    description:
+      "customer's address book when no customer name is available, header"
+  },
   fullNameDetail: {
     defaultMessage: "{fullName} Details",
     description: "customer details, header"
@@ -93,7 +98,9 @@ const CustomerAddressListPage: React.FC<CustomerAddressListPageProps> = props =>
   return (
     <Container>
       <Backlink onClick={onBack}>
-        {intl.formatMessage(messages.fullNameDetail, { fullName })}
+        {fullName.trim().length > 0
+          ? intl.formatMessage(messages.fullNameDetail, { fullName })
+          : intl.formatMessage(messages.noNameToShow)}
       </Backlink>
       {!isEmpty && (
         <PageHeader

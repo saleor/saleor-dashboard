@@ -2595,6 +2595,10 @@
   "src_dot_customers_dot_components_dot_CustomerAddressListPage_dot_noAddressToShow": {
     "string": "There is no address to show for this customer"
   },
+  "src_dot_customers_dot_components_dot_CustomerAddressListPage_dot_noNameToShow": {
+    "context": "customer's address book when no customer name is available, header",
+    "string": "Address Book"
+  },
   "src_dot_customers_dot_components_dot_CustomerAddress_dot_defaultAddress": {
     "string": "Default Address"
   },
