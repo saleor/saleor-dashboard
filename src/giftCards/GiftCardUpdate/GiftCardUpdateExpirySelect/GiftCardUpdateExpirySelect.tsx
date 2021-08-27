@@ -7,7 +7,6 @@ import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import React, { useEffect } from "react";
 import { useIntl } from "react-intl";
 
-import { handleCheckboxChange } from "../GiftCardResendCodeDialog/utils";
 import { giftCardExpirySelectMessages as messages } from "./messages";
 import { useGiftCardExpirySelectStyles as useStyles } from "./styles";
 
@@ -44,7 +43,7 @@ const GiftCardExpirySelect: React.FC = () => {
         name="cardExpires"
         label={intl.formatMessage(messages.expiryDateCheckboxLabel)}
         checked={cardExpiresSelected}
-        onChange={handleCheckboxChange(setCardExpiresSelected)}
+        onChange={event => setCardExpiresSelected(event.target.value)}
       />
       <VerticalSpacer spacing={2} />
 
