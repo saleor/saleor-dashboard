@@ -103,6 +103,13 @@ export interface OrderCapture_orderCapture_order_events_user {
   lastName: string;
 }
 
+export interface OrderCapture_orderCapture_order_events_app {
+  __typename: "App";
+  id: string;
+  name: string | null;
+  appUrl: string | null;
+}
+
 export interface OrderCapture_orderCapture_order_events_lines_discount_amount {
   __typename: "Money";
   amount: number;
@@ -157,6 +164,7 @@ export interface OrderCapture_orderCapture_order_events {
   transactionReference: string | null;
   type: OrderEventsEnum | null;
   user: OrderCapture_orderCapture_order_events_user | null;
+  app: OrderCapture_orderCapture_order_events_app | null;
   lines: (OrderCapture_orderCapture_order_events_lines | null)[] | null;
 }
 
