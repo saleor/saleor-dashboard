@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { OrderFulfillInput, OrderErrorCode, AddressTypeEnum, OrderDiscountType, DiscountValueTypeEnum, OrderEventsEmailsEnum, OrderEventsEnum, FulfillmentStatus, PaymentChargeStatusEnum, OrderStatus, OrderAction, JobStatusEnum } from "./../../types/globalTypes";
+import { OrderFulfillInput, OrderErrorCode, AddressTypeEnum, GiftCardEventsEnum, OrderDiscountType, DiscountValueTypeEnum, OrderEventsEmailsEnum, OrderEventsEnum, FulfillmentStatus, PaymentChargeStatusEnum, OrderStatus, OrderAction, JobStatusEnum } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: FulfillOrder
@@ -50,6 +50,51 @@ export interface FulfillOrder_orderFulfill_order_billingAddress {
   postalCode: string;
   streetAddress1: string;
   streetAddress2: string;
+}
+
+export interface FulfillOrder_orderFulfill_order_giftCards_events_balance_initialBalance {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface FulfillOrder_orderFulfill_order_giftCards_events_balance_currentBalance {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface FulfillOrder_orderFulfill_order_giftCards_events_balance_oldInitialBalance {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface FulfillOrder_orderFulfill_order_giftCards_events_balance_oldCurrentBalance {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface FulfillOrder_orderFulfill_order_giftCards_events_balance {
+  __typename: "GiftCardEventBalance";
+  initialBalance: FulfillOrder_orderFulfill_order_giftCards_events_balance_initialBalance | null;
+  currentBalance: FulfillOrder_orderFulfill_order_giftCards_events_balance_currentBalance;
+  oldInitialBalance: FulfillOrder_orderFulfill_order_giftCards_events_balance_oldInitialBalance | null;
+  oldCurrentBalance: FulfillOrder_orderFulfill_order_giftCards_events_balance_oldCurrentBalance | null;
+}
+
+export interface FulfillOrder_orderFulfill_order_giftCards_events {
+  __typename: "GiftCardEvent";
+  id: string;
+  type: GiftCardEventsEnum | null;
+  orderId: string | null;
+  balance: FulfillOrder_orderFulfill_order_giftCards_events_balance | null;
+}
+
+export interface FulfillOrder_orderFulfill_order_giftCards {
+  __typename: "GiftCard";
+  events: FulfillOrder_orderFulfill_order_giftCards_events[];
 }
 
 export interface FulfillOrder_orderFulfill_order_discounts_amount {
@@ -483,6 +528,7 @@ export interface FulfillOrder_orderFulfill_order {
   metadata: (FulfillOrder_orderFulfill_order_metadata | null)[];
   privateMetadata: (FulfillOrder_orderFulfill_order_privateMetadata | null)[];
   billingAddress: FulfillOrder_orderFulfill_order_billingAddress | null;
+  giftCards: (FulfillOrder_orderFulfill_order_giftCards | null)[] | null;
   isShippingRequired: boolean;
   canFinalize: boolean;
   created: any;

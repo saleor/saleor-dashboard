@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { OrderLineCreateInput, OrderErrorCode, AddressTypeEnum, OrderDiscountType, DiscountValueTypeEnum, OrderEventsEmailsEnum, OrderEventsEnum, FulfillmentStatus, PaymentChargeStatusEnum, OrderStatus, OrderAction, JobStatusEnum } from "./../../types/globalTypes";
+import { OrderLineCreateInput, OrderErrorCode, AddressTypeEnum, GiftCardEventsEnum, OrderDiscountType, DiscountValueTypeEnum, OrderEventsEmailsEnum, OrderEventsEnum, FulfillmentStatus, PaymentChargeStatusEnum, OrderStatus, OrderAction, JobStatusEnum } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: OrderLinesAdd
@@ -48,6 +48,51 @@ export interface OrderLinesAdd_orderLinesCreate_order_billingAddress {
   postalCode: string;
   streetAddress1: string;
   streetAddress2: string;
+}
+
+export interface OrderLinesAdd_orderLinesCreate_order_giftCards_events_balance_initialBalance {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderLinesAdd_orderLinesCreate_order_giftCards_events_balance_currentBalance {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderLinesAdd_orderLinesCreate_order_giftCards_events_balance_oldInitialBalance {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderLinesAdd_orderLinesCreate_order_giftCards_events_balance_oldCurrentBalance {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderLinesAdd_orderLinesCreate_order_giftCards_events_balance {
+  __typename: "GiftCardEventBalance";
+  initialBalance: OrderLinesAdd_orderLinesCreate_order_giftCards_events_balance_initialBalance | null;
+  currentBalance: OrderLinesAdd_orderLinesCreate_order_giftCards_events_balance_currentBalance;
+  oldInitialBalance: OrderLinesAdd_orderLinesCreate_order_giftCards_events_balance_oldInitialBalance | null;
+  oldCurrentBalance: OrderLinesAdd_orderLinesCreate_order_giftCards_events_balance_oldCurrentBalance | null;
+}
+
+export interface OrderLinesAdd_orderLinesCreate_order_giftCards_events {
+  __typename: "GiftCardEvent";
+  id: string;
+  type: GiftCardEventsEnum | null;
+  orderId: string | null;
+  balance: OrderLinesAdd_orderLinesCreate_order_giftCards_events_balance | null;
+}
+
+export interface OrderLinesAdd_orderLinesCreate_order_giftCards {
+  __typename: "GiftCard";
+  events: OrderLinesAdd_orderLinesCreate_order_giftCards_events[];
 }
 
 export interface OrderLinesAdd_orderLinesCreate_order_discounts_amount {
@@ -481,6 +526,7 @@ export interface OrderLinesAdd_orderLinesCreate_order {
   metadata: (OrderLinesAdd_orderLinesCreate_order_metadata | null)[];
   privateMetadata: (OrderLinesAdd_orderLinesCreate_order_privateMetadata | null)[];
   billingAddress: OrderLinesAdd_orderLinesCreate_order_billingAddress | null;
+  giftCards: (OrderLinesAdd_orderLinesCreate_order_giftCards | null)[] | null;
   isShippingRequired: boolean;
   canFinalize: boolean;
   created: any;
