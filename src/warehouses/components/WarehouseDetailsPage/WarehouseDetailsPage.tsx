@@ -8,6 +8,7 @@ import PageHeader from "@saleor/components/PageHeader";
 import Savebar from "@saleor/components/Savebar";
 import { ShopInfo_shop_countries } from "@saleor/components/Shop/types/ShopInfo";
 import { AddressTypeInput } from "@saleor/customers/types";
+import { WarehouseDetailsFragment } from "@saleor/fragments/types/WarehouseDetailsFragment";
 import { WarehouseErrorFragment } from "@saleor/fragments/types/WarehouseErrorFragment";
 import useAddressValidation from "@saleor/hooks/useAddressValidation";
 import { SubmitPromise } from "@saleor/hooks/useForm";
@@ -15,25 +16,29 @@ import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { sectionNames } from "@saleor/intl";
 import { Backlink } from "@saleor/macaw-ui";
 import { findValueInEnum, maybe } from "@saleor/misc";
-import { CountryCode } from "@saleor/types/globalTypes";
+import {
+  CountryCode,
+  WarehouseClickAndCollectOptionEnum
+} from "@saleor/types/globalTypes";
 import createSingleAutocompleteSelectHandler from "@saleor/utils/handlers/singleAutocompleteSelectChangeHandler";
 import { mapCountriesToChoices, mapEdgesToItems } from "@saleor/utils/maps";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { WarehouseDetails_warehouse } from "../../types/WarehouseDetails";
 import WarehouseInfo from "../WarehouseInfo";
-import WarehouseZones from "../WarehouseZones";
+import WarehouseSettings from "../WarehouseSettings";
 
 export interface WarehouseDetailsPageFormData extends AddressTypeInput {
   name: string;
+  isPrivate: boolean;
+  clickAndCollectOption: WarehouseClickAndCollectOptionEnum;
 }
 export interface WarehouseDetailsPageProps {
   countries: ShopInfo_shop_countries[];
   disabled: boolean;
   errors: WarehouseErrorFragment[];
   saveButtonBarState: ConfirmButtonTransitionState;
-  warehouse: WarehouseDetails_warehouse;
+  warehouse: WarehouseDetailsFragment;
   onBack: () => void;
   onDelete: () => void;
   onShippingZoneClick: (id: string) => void;
@@ -67,6 +72,10 @@ const WarehouseDetailsPage: React.FC<WarehouseDetailsPageProps> = ({
     country: maybe(() =>
       findValueInEnum(warehouse.address.country.code, CountryCode)
     ),
+    isPrivate: !!warehouse?.isPrivate,
+    clickAndCollectOption:
+      warehouse?.clickAndCollectOption ||
+      WarehouseClickAndCollectOptionEnum.DISABLED,
     countryArea: maybe(() => warehouse.address.countryArea, ""),
     name: maybe(() => warehouse.name, ""),
     phone: maybe(() => warehouse.address.phone, ""),
@@ -77,7 +86,7 @@ const WarehouseDetailsPage: React.FC<WarehouseDetailsPageProps> = ({
 
   return (
     <Form initial={initialForm} onSubmit={handleSubmit}>
-      {({ change, data, hasChanged, submit }) => {
+      {({ change, data, hasChanged, set, submit }) => {
         const countryChoices = mapCountriesToChoices(countries);
         const handleCountryChange = createSingleAutocompleteSelectHandler(
           change,
@@ -115,9 +124,13 @@ const WarehouseDetailsPage: React.FC<WarehouseDetailsPageProps> = ({
                 />
               </div>
               <div>
-                <WarehouseZones
+                <WarehouseSettings
                   zones={mapEdgesToItems(warehouse?.shippingZones)}
+                  data={data}
+                  disabled={disabled}
                   onShippingZoneClick={onShippingZoneClick}
+                  onChange={change}
+                  setData={set}
                 />
               </div>
             </Grid>

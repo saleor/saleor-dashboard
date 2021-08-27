@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { FulfillmentUpdateTrackingInput, OrderErrorCode, AddressTypeEnum, OrderDiscountType, DiscountValueTypeEnum, OrderEventsEmailsEnum, OrderEventsEnum, FulfillmentStatus, PaymentChargeStatusEnum, OrderStatus, OrderAction, JobStatusEnum } from "./../../types/globalTypes";
+import { FulfillmentUpdateTrackingInput, OrderErrorCode, AddressTypeEnum, OrderDiscountType, DiscountValueTypeEnum, OrderEventsEmailsEnum, OrderEventsEnum, FulfillmentStatus, PaymentChargeStatusEnum, WarehouseClickAndCollectOptionEnum, OrderStatus, OrderAction, JobStatusEnum } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: OrderFulfillmentUpdateTracking
@@ -351,6 +351,19 @@ export interface OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_o
   streetAddress2: string;
 }
 
+export interface OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_order_deliveryMethod_ShippingMethod {
+  __typename: "ShippingMethod";
+  id: string;
+}
+
+export interface OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_order_deliveryMethod_Warehouse {
+  __typename: "Warehouse";
+  id: string;
+  clickAndCollectOption: WarehouseClickAndCollectOptionEnum;
+}
+
+export type OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_order_deliveryMethod = OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_order_deliveryMethod_ShippingMethod | OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_order_deliveryMethod_Warehouse;
+
 export interface OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_order_shippingMethod {
   __typename: "ShippingMethod";
   id: string;
@@ -495,8 +508,10 @@ export interface OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_o
   isPaid: boolean;
   paymentStatus: PaymentChargeStatusEnum;
   shippingAddress: OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_order_shippingAddress | null;
+  deliveryMethod: OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_order_deliveryMethod | null;
   shippingMethod: OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_order_shippingMethod | null;
   shippingMethodName: string | null;
+  collectionPointName: string | null;
   shippingPrice: OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_order_shippingPrice;
   status: OrderStatus;
   subtotal: OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_order_subtotal;

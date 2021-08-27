@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { OrderErrorCode, AddressTypeEnum, OrderDiscountType, DiscountValueTypeEnum, OrderEventsEmailsEnum, OrderEventsEnum, FulfillmentStatus, PaymentChargeStatusEnum, OrderStatus, OrderAction, JobStatusEnum } from "./../../types/globalTypes";
+import { OrderErrorCode, AddressTypeEnum, OrderDiscountType, DiscountValueTypeEnum, OrderEventsEmailsEnum, OrderEventsEnum, FulfillmentStatus, PaymentChargeStatusEnum, WarehouseClickAndCollectOptionEnum, OrderStatus, OrderAction, JobStatusEnum } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: OrderMarkAsPaid
@@ -351,6 +351,19 @@ export interface OrderMarkAsPaid_orderMarkAsPaid_order_shippingAddress {
   streetAddress2: string;
 }
 
+export interface OrderMarkAsPaid_orderMarkAsPaid_order_deliveryMethod_ShippingMethod {
+  __typename: "ShippingMethod";
+  id: string;
+}
+
+export interface OrderMarkAsPaid_orderMarkAsPaid_order_deliveryMethod_Warehouse {
+  __typename: "Warehouse";
+  id: string;
+  clickAndCollectOption: WarehouseClickAndCollectOptionEnum;
+}
+
+export type OrderMarkAsPaid_orderMarkAsPaid_order_deliveryMethod = OrderMarkAsPaid_orderMarkAsPaid_order_deliveryMethod_ShippingMethod | OrderMarkAsPaid_orderMarkAsPaid_order_deliveryMethod_Warehouse;
+
 export interface OrderMarkAsPaid_orderMarkAsPaid_order_shippingMethod {
   __typename: "ShippingMethod";
   id: string;
@@ -495,8 +508,10 @@ export interface OrderMarkAsPaid_orderMarkAsPaid_order {
   isPaid: boolean;
   paymentStatus: PaymentChargeStatusEnum;
   shippingAddress: OrderMarkAsPaid_orderMarkAsPaid_order_shippingAddress | null;
+  deliveryMethod: OrderMarkAsPaid_orderMarkAsPaid_order_deliveryMethod | null;
   shippingMethod: OrderMarkAsPaid_orderMarkAsPaid_order_shippingMethod | null;
   shippingMethodName: string | null;
+  collectionPointName: string | null;
   shippingPrice: OrderMarkAsPaid_orderMarkAsPaid_order_shippingPrice;
   status: OrderStatus;
   subtotal: OrderMarkAsPaid_orderMarkAsPaid_order_subtotal;
