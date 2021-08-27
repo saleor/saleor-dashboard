@@ -81,6 +81,8 @@ const GiftCardsListHeaderAlertContent: React.FC<GiftCardsListHeaderAlertContentP
       />
     );
   }
+
+  return null;
 };
 
 export default GiftCardsListHeaderAlertContent;
