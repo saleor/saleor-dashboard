@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { OrderErrorCode, AddressTypeEnum, OrderDiscountType, DiscountValueTypeEnum, OrderEventsEmailsEnum, OrderEventsEnum, FulfillmentStatus, PaymentChargeStatusEnum, OrderStatus, OrderAction, JobStatusEnum } from "./../../types/globalTypes";
+import { OrderErrorCode, AddressTypeEnum, OrderDiscountType, DiscountValueTypeEnum, OrderEventsEmailsEnum, OrderEventsEnum, FulfillmentStatus, PaymentChargeStatusEnum, WarehouseClickAndCollectOptionEnum, OrderStatus, OrderAction, JobStatusEnum } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: OrderVoid
@@ -351,6 +351,19 @@ export interface OrderVoid_orderVoid_order_shippingAddress {
   streetAddress2: string;
 }
 
+export interface OrderVoid_orderVoid_order_deliveryMethod_ShippingMethod {
+  __typename: "ShippingMethod";
+  id: string;
+}
+
+export interface OrderVoid_orderVoid_order_deliveryMethod_Warehouse {
+  __typename: "Warehouse";
+  id: string;
+  clickAndCollectOption: WarehouseClickAndCollectOptionEnum;
+}
+
+export type OrderVoid_orderVoid_order_deliveryMethod = OrderVoid_orderVoid_order_deliveryMethod_ShippingMethod | OrderVoid_orderVoid_order_deliveryMethod_Warehouse;
+
 export interface OrderVoid_orderVoid_order_shippingMethod {
   __typename: "ShippingMethod";
   id: string;
@@ -495,8 +508,10 @@ export interface OrderVoid_orderVoid_order {
   isPaid: boolean;
   paymentStatus: PaymentChargeStatusEnum;
   shippingAddress: OrderVoid_orderVoid_order_shippingAddress | null;
+  deliveryMethod: OrderVoid_orderVoid_order_deliveryMethod | null;
   shippingMethod: OrderVoid_orderVoid_order_shippingMethod | null;
   shippingMethodName: string | null;
+  collectionPointName: string | null;
   shippingPrice: OrderVoid_orderVoid_order_shippingPrice;
   status: OrderStatus;
   subtotal: OrderVoid_orderVoid_order_subtotal;

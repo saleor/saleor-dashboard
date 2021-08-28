@@ -64,7 +64,7 @@ const WarehouseList: React.FC<WarehouseListProps> = ({ params }) => {
       filter: getFilterVariables(params),
       sort: getSortQueryVariables(params)
     }),
-    [params]
+    [params, settings.rowNumber]
   );
   const { data, loading, refetch } = useWarehouseList({
     displayLoader: true,

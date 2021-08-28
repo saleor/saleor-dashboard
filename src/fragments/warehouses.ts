@@ -27,6 +27,8 @@ export const warehouseDetailsFragment = gql`
   ${fragmentAddress}
   ${warehouseWithShippingFragment}
   fragment WarehouseDetailsFragment on Warehouse {
+    isPrivate
+    clickAndCollectOption
     ...WarehouseWithShippingFragment
     address {
       ...AddressFragment

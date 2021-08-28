@@ -1,6 +1,7 @@
 import useAppState from "@saleor/hooks/useAppState";
 import { ThemeProvider } from "@saleor/macaw-ui";
 import { defaultDataIdFromObject, InMemoryCache } from "apollo-cache-inmemory";
+import { IntrospectionFragmentMatcher } from "apollo-cache-inmemory";
 import { ApolloClient } from "apollo-client";
 import { ApolloLink } from "apollo-link";
 import { BatchHttpLink } from "apollo-link-batch-http";
@@ -13,6 +14,7 @@ import TagManager from "react-gtm-module";
 import { useIntl } from "react-intl";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 
+import introspectionQueryResultData from "../fragmentTypes.json";
 import AppsSection from "./apps";
 import { ExternalAppProvider } from "./apps/components/ExternalAppContext";
 import { appsSection } from "./apps/urls";
@@ -68,7 +70,6 @@ import TranslationsSection from "./translations";
 import { PermissionEnum } from "./types/globalTypes";
 import WarehouseSection from "./warehouses";
 import { warehouseSection } from "./warehouses/urls";
-
 if (process.env.GTM_ID) {
   TagManager.initialize({ gtmId: GTM_ID });
 }
@@ -94,8 +95,13 @@ const link = ApolloLink.split(
   uploadLink
 );
 
+const fragmentMatcher = new IntrospectionFragmentMatcher({
+  introspectionQueryResultData
+});
+
 const apolloClient = new ApolloClient({
   cache: new InMemoryCache({
+    fragmentMatcher,
     dataIdFromObject: (obj: any) => {
       // We need to set manually shop's ID, since it is singleton and
       // API does not return its ID

@@ -367,10 +367,6 @@
     "context": "shipping address is not set in draft order",
     "string": "Not set"
   },
-  "orderPaymentShippingDoesNotApply": {
-    "context": "order does not require shipping",
-    "string": "does not apply"
-  },
   "orderPaymentVATDoesNotApply": {
     "context": "vat not included in order price",
     "string": "does not apply"
@@ -3810,6 +3806,14 @@
   "src_dot_orders_dot_components_dot_OrderCustomer_dot_4282475982": {
     "string": "Billing Address"
   },
+  "src_dot_orders_dot_components_dot_OrderCustomer_dot_orderCustomerFulfillmentAll": {
+    "context": "OrderCustomer Fulfillment from All Warehouses",
+    "string": "Fulfill from All Warehouses"
+  },
+  "src_dot_orders_dot_components_dot_OrderCustomer_dot_orderCustomerFulfillmentLocal": {
+    "context": "OrderCustomer Fulfillment from Local Warehouse",
+    "string": "Fulfill from Local Stock"
+  },
   "src_dot_orders_dot_components_dot_OrderDetailsPage_dot_cancelOrder": {
     "context": "cancel button",
     "string": "Cancel order"
@@ -4429,6 +4433,14 @@
   "src_dot_orders_dot_components_dot_OrderPayment_dot_878013594": {
     "context": "order total price",
     "string": "Total"
+  },
+  "src_dot_orders_dot_components_dot_OrderPayment_dot_orderPaymentClickAndCollectShippingMethod": {
+    "context": "OrderPayment click&collect shipping method",
+    "string": "click&collect"
+  },
+  "src_dot_orders_dot_components_dot_OrderPayment_dot_orderPaymentShippingDoesNotApply": {
+    "context": "OrderPayment does not require shipping",
+    "string": "does not apply"
   },
   "src_dot_orders_dot_components_dot_OrderProductAddDialog_dot_2272209368": {
     "context": "variant sku",
@@ -7458,12 +7470,57 @@
     "context": "warehouse",
     "string": "Name"
   },
-  "src_dot_warehouses_dot_components_dot_WarehouseZones_dot_1225932315": {
-    "context": "zones that warehouse sends to",
-    "string": "Shipping Zones"
+  "src_dot_warehouses_dot_components_dot_WarehouseSettings_dot_warehouseSettingsAllWarehouses": {
+    "context": "WarehouseSettings all warehouses label",
+    "string": "All warehouses"
   },
-  "src_dot_warehouses_dot_components_dot_WarehouseZones_dot_2423245141": {
+  "src_dot_warehouses_dot_components_dot_WarehouseSettings_dot_warehouseSettingsAllWarehousesDescription": {
+    "context": "WarehouseSettings all warehouses description",
+    "string": "If selected customer will be able to choose this warehouse as pickup point. Ordered products can be shipped here from a different warehouse"
+  },
+  "src_dot_warehouses_dot_components_dot_WarehouseSettings_dot_warehouseSettingsDisabled": {
+    "context": "WarehouseSettings disabled warehouse label",
+    "string": "Disabled"
+  },
+  "src_dot_warehouses_dot_components_dot_WarehouseSettings_dot_warehouseSettingsDisabledDescription": {
+    "context": "WarehouseSettings disabled warehouse description",
+    "string": "If selected customer won't be able to choose this warehouse as pickup point"
+  },
+  "src_dot_warehouses_dot_components_dot_WarehouseSettings_dot_warehouseSettingsLocal": {
+    "context": "WarehouseSettings local warehouse label",
+    "string": "Local stock only"
+  },
+  "src_dot_warehouses_dot_components_dot_WarehouseSettings_dot_warehouseSettingsLocalDescription": {
+    "context": "WarehouseSettings local warehouse description",
+    "string": "If selected customer will be able to choose this warehouse as pickup point. Ordered products will be only fulfilled from this warehouse stock"
+  },
+  "src_dot_warehouses_dot_components_dot_WarehouseSettings_dot_warehouseSettingsNoShippingZonesAssigned": {
+    "context": "WarehouseSettings no shipping zones assigned",
     "string": "This warehouse has no shipping zones assigned."
+  },
+  "src_dot_warehouses_dot_components_dot_WarehouseSettings_dot_warehouseSettingsPickupTitle": {
+    "context": "WarehouseSettings pickup title",
+    "string": "Pickup"
+  },
+  "src_dot_warehouses_dot_components_dot_WarehouseSettings_dot_warehouseSettingsPrivateStock": {
+    "context": "WarehouseSettings private stock label",
+    "string": "Private Stock"
+  },
+  "src_dot_warehouses_dot_components_dot_WarehouseSettings_dot_warehouseSettingsPrivateStockDescription": {
+    "context": "WarehouseSettings private stock description",
+    "string": "If enabled stock in this warehouse won't be shown"
+  },
+  "src_dot_warehouses_dot_components_dot_WarehouseSettings_dot_warehouseSettingsPublicStock": {
+    "context": "WarehouseSettings public stock label",
+    "string": "Public Stock"
+  },
+  "src_dot_warehouses_dot_components_dot_WarehouseSettings_dot_warehouseSettingsPublicStockDescription": {
+    "context": "WarehouseSettings public stock description",
+    "string": "If enabled stock in this warehouse will be shown"
+  },
+  "src_dot_warehouses_dot_components_dot_WarehouseSettings_dot_warehouseSettingsTitle": {
+    "context": "WarehouseSettings title",
+    "string": "Settings"
   },
   "src_dot_warehouses_dot_views_dot_WarehouseCreate_dot_934572530": {
     "context": "header",

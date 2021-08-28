@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { OrderUpdateInput, OrderErrorCode, AddressTypeEnum, OrderDiscountType, DiscountValueTypeEnum, OrderEventsEmailsEnum, OrderEventsEnum, FulfillmentStatus, PaymentChargeStatusEnum, OrderStatus, OrderAction, JobStatusEnum } from "./../../types/globalTypes";
+import { OrderUpdateInput, OrderErrorCode, AddressTypeEnum, OrderDiscountType, DiscountValueTypeEnum, OrderEventsEmailsEnum, OrderEventsEnum, FulfillmentStatus, PaymentChargeStatusEnum, WarehouseClickAndCollectOptionEnum, OrderStatus, OrderAction, JobStatusEnum } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: OrderUpdate
@@ -351,6 +351,19 @@ export interface OrderUpdate_orderUpdate_order_shippingAddress {
   streetAddress2: string;
 }
 
+export interface OrderUpdate_orderUpdate_order_deliveryMethod_ShippingMethod {
+  __typename: "ShippingMethod";
+  id: string;
+}
+
+export interface OrderUpdate_orderUpdate_order_deliveryMethod_Warehouse {
+  __typename: "Warehouse";
+  id: string;
+  clickAndCollectOption: WarehouseClickAndCollectOptionEnum;
+}
+
+export type OrderUpdate_orderUpdate_order_deliveryMethod = OrderUpdate_orderUpdate_order_deliveryMethod_ShippingMethod | OrderUpdate_orderUpdate_order_deliveryMethod_Warehouse;
+
 export interface OrderUpdate_orderUpdate_order_shippingMethod {
   __typename: "ShippingMethod";
   id: string;
@@ -495,8 +508,10 @@ export interface OrderUpdate_orderUpdate_order {
   isPaid: boolean;
   paymentStatus: PaymentChargeStatusEnum;
   shippingAddress: OrderUpdate_orderUpdate_order_shippingAddress | null;
+  deliveryMethod: OrderUpdate_orderUpdate_order_deliveryMethod | null;
   shippingMethod: OrderUpdate_orderUpdate_order_shippingMethod | null;
   shippingMethodName: string | null;
+  collectionPointName: string | null;
   shippingPrice: OrderUpdate_orderUpdate_order_shippingPrice;
   status: OrderStatus;
   subtotal: OrderUpdate_orderUpdate_order_subtotal;
