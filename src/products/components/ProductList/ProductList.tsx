@@ -40,9 +40,9 @@ import { messages } from "./messages";
 
 const useStyles = makeStyles(
   theme => ({
-    [theme.breakpoints.up("lg")]: {
+    [theme.breakpoints.up("md")]: {
       colName: {
-        width: "auto"
+        minWidth: 200
       },
       colPrice: {
         width: 300
