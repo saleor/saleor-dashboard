@@ -3518,6 +3518,14 @@
     "context": "GiftCardUpdateDetailsCard title",
     "string": "Details"
   },
+  "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardUpdateExpirySelect_dot_expiryDateCheckboxLabel": {
+    "context": "GiftCarUpdateDetailsExpirySection expiry date checkbox label",
+    "string": "Gift card expires"
+  },
+  "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardUpdateExpirySelect_dot_expiryDateLabel": {
+    "context": "GiftCarUpdateDetailsExpirySection expiry date label",
+    "string": "Expiration date"
+  },
   "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardUpdateInfoCard_dot_boughtByLabel": {
     "context": "GiftCardUpdateInfoCard bought by label",
     "string": "Bought by"
@@ -3689,22 +3697,6 @@
   "src_dot_giftCards_dot_components_dot_GiftCardDeleteDialog_dot_withBalanceDescription": {
     "context": "GiftCardDeleteDialog with balance description",
     "string": "{selectedItemsCount,plural,one{The gift card you are about to delete has available balance. By deleting this card you may remove balance available to your customer.} other{You are about to delete gift cards with available balance. Are you sure you want to do that?}}"
-  },
-  "src_dot_giftCards_dot_components_dot_GiftCardExpirySelect_dot_expirationDateLabel": {
-    "context": "GiftCarUpdateDetailsExpirySection expiration date label",
-    "string": "Expiration date"
-  },
-  "src_dot_giftCards_dot_components_dot_GiftCardExpirySelect_dot_expiryDateLabel": {
-    "context": "GiftCarUpdateDetailsExpirySection expiry date label",
-    "string": "Expiration date"
-  },
-  "src_dot_giftCards_dot_components_dot_GiftCardExpirySelect_dot_expiryPeriodLabel": {
-    "context": "GiftCarUpdateDetailsExpirySection expiry period label",
-    "string": "Expiry period"
-  },
-  "src_dot_giftCards_dot_components_dot_GiftCardExpirySelect_dot_neverExpireLabel": {
-    "context": "GiftCarUpdateDetailsExpirySection never expire label",
-    "string": "Never expire"
   },
   "src_dot_giftCards_dot_components_dot_GiftCardSettingsExpirySelect_dot_setExpirationPeriodDescription": {
     "context": "checkbox label description",
