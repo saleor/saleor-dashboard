@@ -3447,10 +3447,6 @@
     "context": "GiftCardCreateDialog customer label",
     "string": "Customer"
   },
-  "src_dot_giftCards_dot_GiftCardCreateDialog_dot_customerSubtitle": {
-    "context": "GiftCardCreateDialog customer subtitle",
-    "string": "Selected customer will be sent the generated gift card code. Someone else can redeem the gift card code. Gift card will be assigned to account which redeemed the code."
-  },
   "src_dot_giftCards_dot_GiftCardCreateDialog_dot_issueButtonLabel": {
     "context": "GiftCardCreateDialog issue button label",
     "string": "Issue"

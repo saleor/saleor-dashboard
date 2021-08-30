@@ -8,6 +8,7 @@ import VerticalSpacer from "@saleor/apps/components/VerticalSpacer";
 import DialogButtons from "@saleor/components/ActionDialog/DialogButtons";
 import CardSpacer from "@saleor/components/CardSpacer";
 import ControlledCheckbox from "@saleor/components/ControlledCheckbox";
+import { Choices } from "@saleor/components/SingleSelectField";
 import TextWithSelectField from "@saleor/components/TextWithSelectField";
 import { GiftCardError } from "@saleor/fragments/types/GiftCardError";
 import GiftCardTagInput from "@saleor/giftCards/components/GiftCardTagInput";
@@ -21,9 +22,9 @@ import { mapSingleValueNodeToChoice } from "@saleor/utils/maps";
 import React, { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
+import GiftCardSendToCustomer from "../components/GiftCardSendToCustomer/GiftCardSendToCustomer";
 import { getGiftCardErrorMessage } from "../GiftCardUpdate/messages";
 import GiftCardCreateExpirySelect from "./GiftCardCreateExpirySelect";
-import GiftCardCustomerSelectField from "./GiftCardCustomerSelectField";
 import { giftCardCreateDialogMessages as messages } from "./messages";
 import { useGiftCardCreateDialogFormStyles as useStyles } from "./styles";
 import {
@@ -34,7 +35,9 @@ import {
 
 export interface GiftCardCreateFormData extends GiftCardCommonFormData {
   note: string;
+  sendToCustomerSelected: boolean;
   selectedCustomer?: GiftCardCreateFormCustomer;
+  channel?: string;
   expirySelected: boolean;
   expiryType: GiftCardExpiryType;
   expiryPeriodType: TimePeriodTypeEnum;
@@ -49,6 +52,7 @@ export const initialData: GiftCardCreateFormData = {
   balanceAmount: 1,
   balanceCurrency: null,
   note: "",
+  sendToCustomerSelected: false,
   expirySelected: false,
   expiryType: "EXPIRY_PERIOD",
   expiryDate: "",
@@ -58,6 +62,8 @@ export const initialData: GiftCardCreateFormData = {
 };
 
 interface GiftCardCreateDialogFormProps {
+  defaultChannel: string;
+  channelsChoices: Choices;
   opts: { status: ConfirmButtonTransitionState };
   apiErrors: GiftCardError[];
   onSubmit: (data: GiftCardCreateFormData) => void;
@@ -66,6 +72,8 @@ interface GiftCardCreateDialogFormProps {
 }
 
 const GiftCardCreateDialogForm: React.FC<GiftCardCreateDialogFormProps> = ({
+  defaultChannel,
+  channelsChoices,
   onSubmit,
   opts,
   onClose,
@@ -85,7 +93,11 @@ const GiftCardCreateDialogForm: React.FC<GiftCardCreateDialogFormProps> = ({
     onSubmit({ ...data, selectedCustomer });
 
   const { submit, change, data } = useForm(
-    { ...initialData, balanceCurrency: initialCurrency },
+    {
+      ...initialData,
+      balanceCurrency: initialCurrency,
+      channel: defaultChannel
+    },
     handleSubmit
   );
 
@@ -96,6 +108,8 @@ const GiftCardCreateDialogForm: React.FC<GiftCardCreateDialogFormProps> = ({
 
   const {
     tag,
+    sendToCustomerSelected,
+    channel,
     balanceAmount,
     balanceCurrency,
     expirySelected,
@@ -150,12 +164,14 @@ const GiftCardCreateDialogForm: React.FC<GiftCardCreateDialogFormProps> = ({
         <CardSpacer />
         <Divider />
         <CardSpacer />
-        <GiftCardCustomerSelectField
+        <GiftCardSendToCustomer
+          change={change}
+          sendToCustomerSelected={sendToCustomerSelected}
           selectedCustomer={selectedCustomer}
           setSelectedCustomer={setSelectedCustomer}
+          channel={channel}
+          channelsChoices={channelsChoices}
         />
-        <VerticalSpacer />
-        <Label text={intl.formatMessage(messages.customerSubtitle)} />
         <CardSpacer />
         <Divider />
         <VerticalSpacer />
