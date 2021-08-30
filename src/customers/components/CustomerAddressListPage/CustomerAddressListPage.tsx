@@ -104,7 +104,11 @@ const CustomerAddressListPage: React.FC<CustomerAddressListPageProps> = props =>
       </Backlink>
       {!isEmpty && (
         <PageHeader
-          title={intl.formatMessage(messages.fullNameAddress, { fullName })}
+          title={
+            fullName.trim().length > 0
+              ? intl.formatMessage(messages.fullNameAddress, { fullName })
+              : intl.formatMessage(messages.noNameToShow)
+          }
         >
           <Button color="primary" variant="contained" onClick={onAdd}>
             {intl.formatMessage(messages.addAddress)}
