@@ -17,11 +17,6 @@ export const giftCardCreateDialogMessages = defineMessages({
     defaultMessage: "Customer",
     description: "GiftCardCreateDialog customer label"
   },
-  customerSubtitle: {
-    defaultMessage:
-      "Selected customer will be sent the generated gift card code. Someone else can redeem the gift card code. Gift card will be assigned to account which redeemed the code.",
-    description: "GiftCardCreateDialog customer subtitle"
-  },
   noteLabel: {
     defaultMessage: "Note",
     description: "GiftCardCreateDialog note label"
