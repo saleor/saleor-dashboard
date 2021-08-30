@@ -136,7 +136,13 @@ const ChannelsWithVariantsAvailabilityDialogContent: React.FC<ChannelsWithVarian
   return (
     <>
       {map(channelsWithVariants, ({ selectedVariantsIds }, channelId) => {
-        const { name } = channels.find(getById(channelId));
+        const filteredChannel = channels.find(getById(channelId));
+
+        if (!filteredChannel) {
+          return null;
+        }
+
+        const { name } = filteredChannel;
 
         const isVariantSelected = (variantId: string) =>
           selectedVariantsIds.includes(variantId);
