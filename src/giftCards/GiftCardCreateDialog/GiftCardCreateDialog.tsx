@@ -1,9 +1,11 @@
 import { Dialog, DialogTitle } from "@material-ui/core";
+import useAppChannel from "@saleor/components/AppLayout/AppChannelContext";
 import { IMessage } from "@saleor/components/messages";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { GiftCardCreateInput } from "@saleor/types/globalTypes";
 import commonErrorMessages from "@saleor/utils/errors/common";
 import { DialogActionHandlersProps } from "@saleor/utils/handlers/dialogActionHandlers";
+import { mapNodeToChoice } from "@saleor/utils/maps";
 import React, { useState } from "react";
 import { useIntl } from "react-intl";
 
@@ -30,6 +32,7 @@ const GiftCardCreateDialog: React.FC<DialogActionHandlersProps> = ({
     data: channelCurrenciesData,
     loading: loadingChannelCurrencies
   } = useChannelCurrencies({});
+  const { channel, availableChannels } = useAppChannel(false);
 
   const [cardCode, setCardCode] = useState(null);
 
@@ -61,7 +64,9 @@ const GiftCardCreateDialog: React.FC<DialogActionHandlersProps> = ({
       balanceCurrency,
       note,
       tag,
+      sendToCustomerSelected,
       selectedCustomer,
+      channel,
       expirySelected,
       expiryType,
       expiryDate,
@@ -73,7 +78,8 @@ const GiftCardCreateDialog: React.FC<DialogActionHandlersProps> = ({
     return {
       note: note || null,
       tag: tag || null,
-      userEmail: selectedCustomer.email || null,
+      userEmail: (sendToCustomerSelected && selectedCustomer.email) || null,
+      channel: (sendToCustomerSelected && channel) || null,
       balance: {
         amount: balanceAmount,
         currency: balanceCurrency
@@ -126,6 +132,8 @@ const GiftCardCreateDialog: React.FC<DialogActionHandlersProps> = ({
               onClose={handleClose}
               apiErrors={createGiftCardOpts?.data?.giftCardCreate?.errors}
               onSubmit={handleSubmit}
+              defaultChannel={channel?.id}
+              channelsChoices={mapNodeToChoice(availableChannels)}
             />
           ))}
       </ContentWithProgress>

@@ -1449,6 +1449,7 @@ export interface GiftCardCreateInput {
   endDate?: any | null;
   balance: PriceInput;
   userEmail?: string | null;
+  channel?: string | null;
   isActive: boolean;
   code?: string | null;
   note?: string | null;

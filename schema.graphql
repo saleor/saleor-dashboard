@@ -2246,6 +2246,7 @@ input GiftCardCreateInput {
   endDate: Date
   balance: PriceInput!
   userEmail: String
+  channel: String
   isActive: Boolean!
   code: String
   note: String
