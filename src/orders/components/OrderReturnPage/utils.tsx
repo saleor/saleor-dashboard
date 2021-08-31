@@ -23,7 +23,7 @@ export const getFulfilledFulfillemnts = (order?: OrderDetails_order) =>
   order?.fulfillments.filter(getFulfilledFulfillment) || [];
 
 export const getUnfulfilledLines = (order?: OrderDetails_order) =>
-  order?.lines.filter(line => line.quantity !== line.quantityFulfilled) || [];
+  order?.lines.filter(line => line.quantityToFulfill > 0) || [];
 
 export const getAllOrderFulfilledLines = (order?: OrderDetails_order) =>
   getFulfilledFulfillemnts(order).reduce(
