@@ -21,8 +21,8 @@ import { mapSingleValueNodeToChoice } from "@saleor/utils/maps";
 import React, { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import GiftCardExpirySelect from "../components/GiftCardExpirySelect/GiftCardExpirySelect";
 import { getGiftCardErrorMessage } from "../GiftCardUpdate/messages";
+import GiftCardCreateExpirySelect from "./GiftCardCreateExpirySelect";
 import GiftCardCustomerSelectField from "./GiftCardCustomerSelectField";
 import { giftCardCreateDialogMessages as messages } from "./messages";
 import { useGiftCardCreateDialogFormStyles as useStyles } from "./styles";
@@ -106,6 +106,18 @@ const GiftCardCreateDialogForm: React.FC<GiftCardCreateDialogFormProps> = ({
     requiresActivation
   } = data;
 
+  const shouldEnableSubmitButton = () => {
+    if (!balanceAmount) {
+      return false;
+    }
+
+    if (expirySelected && expiryType === "EXPIRY_DATE") {
+      return !!expiryDate;
+    }
+
+    return true;
+  };
+
   return (
     <>
       <DialogContent>
@@ -146,8 +158,8 @@ const GiftCardCreateDialogForm: React.FC<GiftCardCreateDialogFormProps> = ({
         <Label text={intl.formatMessage(messages.customerSubtitle)} />
         <CardSpacer />
         <Divider />
-        <CardSpacer />
-        <GiftCardExpirySelect
+        <VerticalSpacer />
+        <GiftCardCreateExpirySelect
           errors={formErrors}
           change={change}
           expirySelected={expirySelected}
@@ -156,7 +168,7 @@ const GiftCardCreateDialogForm: React.FC<GiftCardCreateDialogFormProps> = ({
           expiryPeriodType={expiryPeriodType}
           expiryDate={expiryDate}
         />
-        <CardSpacer />
+        <VerticalSpacer />
         <TextField
           name="note"
           onChange={change}
@@ -184,6 +196,7 @@ const GiftCardCreateDialogForm: React.FC<GiftCardCreateDialogFormProps> = ({
         />
       </DialogContent>
       <DialogButtons
+        disabled={!shouldEnableSubmitButton()}
         onConfirm={submit}
         confirmButtonLabel={intl.formatMessage(messages.issueButtonLabel)}
         confirmButtonState={opts?.status}
