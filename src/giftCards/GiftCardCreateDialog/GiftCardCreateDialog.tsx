@@ -65,11 +65,6 @@ const GiftCardCreateDialog: React.FC<DialogActionHandlersProps> = ({
       note,
       tag,
       selectedCustomer,
-      expirySelected,
-      expiryType,
-      expiryDate,
-      expiryPeriodAmount,
-      expiryPeriodType,
       requiresActivation
     } = formData;
 
@@ -81,16 +76,7 @@ const GiftCardCreateDialog: React.FC<DialogActionHandlersProps> = ({
         amount: balanceAmount,
         currency: balanceCurrency
       },
-      expiryDate: getGiftCardExpiryInputData(
-        {
-          expirySelected,
-          expiryType,
-          expiryDate,
-          expiryPeriodAmount,
-          expiryPeriodType
-        },
-        currentDate
-      ),
+      expiryDate: getGiftCardExpiryInputData(formData, currentDate),
       isActive: !requiresActivation
     };
   };
