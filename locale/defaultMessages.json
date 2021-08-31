@@ -7734,6 +7734,10 @@
     "context": "event",
     "string": "Checkout created"
   },
+  "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_2315238863": {
+    "context": "event",
+    "string": "Product variant out of stock"
+  },
   "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_2454751033": {
     "context": "event",
     "string": "All events"
@@ -7825,6 +7829,10 @@
   "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_679080833": {
     "context": "event",
     "string": "Page created"
+  },
+  "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_69923590": {
+    "context": "event",
+    "string": "Product variant back in stock"
   },
   "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_759562905": {
     "context": "event",
