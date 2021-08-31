@@ -55,7 +55,7 @@ const TypeDeleteWarningDialogContent: React.FC<TypeDeleteWarningDialogContentPro
           assignedItemsCount,
           b: (...chunks) => <b>{chunks}</b>
         })}
-        consentLabel={intl.formatMessage(consentLabel)}
+        consentLabel={consentLabel && intl.formatMessage(consentLabel)}
         isConsentChecked={isConsentChecked}
         onConsentChange={setIsConsentChecked}
       />
