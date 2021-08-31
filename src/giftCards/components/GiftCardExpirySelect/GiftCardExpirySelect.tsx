@@ -7,6 +7,7 @@ import { GiftCardError } from "@saleor/fragments/types/GiftCardError";
 import { GiftCardExpiryType } from "@saleor/giftCards/GiftCardCreateDialog/types";
 import { getExpiryPeriodTerminationDate } from "@saleor/giftCards/GiftCardCreateDialog/utils";
 import { getGiftCardErrorMessage } from "@saleor/giftCards/GiftCardUpdate/messages";
+import useCurrentDate from "@saleor/hooks/useCurrentDate";
 import { FormChange } from "@saleor/hooks/useForm";
 import { TimePeriodTypeEnum } from "@saleor/types/globalTypes";
 import React from "react";
@@ -64,6 +65,8 @@ const GiftCardExpirySelect: React.FC<GiftCardExpirySelectProps> = ({
     })
   );
 
+  const currentDate = useCurrentDate();
+
   return (
     <>
       <ControlledCheckbox
@@ -119,6 +122,7 @@ const GiftCardExpirySelect: React.FC<GiftCardExpirySelectProps> = ({
                 </Typography>
                 <Typography>
                   {getExpiryPeriodTerminationDate(
+                    currentDate,
                     expiryPeriodType,
                     expiryPeriodAmount
                   )?.format("L")}

@@ -4,46 +4,54 @@ import moment from "moment-timezone";
 import { GiftCardCreateFormData } from "./GiftCardCreateDialogForm";
 
 const addToCurrentDate = (
+  currentDate: number,
   expiryPeriodAmount: number,
   unit: moment.unitOfTime.DurationConstructor
-) => moment().add(expiryPeriodAmount, unit);
+) => moment(currentDate).add(expiryPeriodAmount, unit);
 
 export const getExpiryPeriodTerminationDate = (
+  currentDate: number,
   expiryPeriodType: TimePeriodTypeEnum,
   expiryPeriodAmount: number = 0
 ): moment.Moment | null => {
   switch (expiryPeriodType) {
     case TimePeriodTypeEnum.DAY:
-      return addToCurrentDate(expiryPeriodAmount, "d");
+      return addToCurrentDate(currentDate, expiryPeriodAmount, "d");
+    case TimePeriodTypeEnum.WEEK:
+      return addToCurrentDate(currentDate, expiryPeriodAmount, "w");
     case TimePeriodTypeEnum.MONTH:
-      return addToCurrentDate(expiryPeriodAmount, "M");
+      return addToCurrentDate(currentDate, expiryPeriodAmount, "M");
     case TimePeriodTypeEnum.YEAR:
-      return addToCurrentDate(expiryPeriodAmount, "y");
+      return addToCurrentDate(currentDate, expiryPeriodAmount, "y");
     default:
       return null;
   }
 };
 
-export const getGiftCardExpiryInputData = ({
-  expirySelected,
-  expiryType,
-  expiryDate,
-  expiryPeriodAmount,
-  expiryPeriodType
-}: Pick<
-  GiftCardCreateFormData,
-  | "expirySelected"
-  | "expiryDate"
-  | "expiryPeriodAmount"
-  | "expiryPeriodType"
-  | "expiryType"
->): string => {
+export const getGiftCardExpiryInputData = (
+  {
+    expirySelected,
+    expiryType,
+    expiryDate,
+    expiryPeriodAmount,
+    expiryPeriodType
+  }: Pick<
+    GiftCardCreateFormData,
+    | "expirySelected"
+    | "expiryDate"
+    | "expiryPeriodAmount"
+    | "expiryPeriodType"
+    | "expiryType"
+  >,
+  currentDate: number
+): string => {
   if (!expirySelected) {
     return;
   }
 
   if (expiryType === "EXPIRY_PERIOD") {
     return getExpiryPeriodTerminationDate(
+      currentDate,
       expiryPeriodType,
       expiryPeriodAmount
     )?.format("YYYY-MM-DD");

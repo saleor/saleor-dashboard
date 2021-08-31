@@ -1,5 +1,6 @@
 import { Dialog, DialogTitle } from "@material-ui/core";
 import { IMessage } from "@saleor/components/messages";
+import useCurrentDate from "@saleor/hooks/useCurrentDate";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { GiftCardCreateInput } from "@saleor/types/globalTypes";
 import commonErrorMessages from "@saleor/utils/errors/common";
@@ -53,6 +54,8 @@ const GiftCardCreateDialog: React.FC<DialogActionHandlersProps> = ({
     }
   };
 
+  const currentDate = useCurrentDate();
+
   const getParsedSubmitInputData = (
     formData: GiftCardCreateFormData
   ): GiftCardCreateInput => {
@@ -78,13 +81,16 @@ const GiftCardCreateDialog: React.FC<DialogActionHandlersProps> = ({
         amount: balanceAmount,
         currency: balanceCurrency
       },
-      expiryDate: getGiftCardExpiryInputData({
-        expirySelected,
-        expiryType,
-        expiryDate,
-        expiryPeriodAmount,
-        expiryPeriodType
-      }),
+      expiryDate: getGiftCardExpiryInputData(
+        {
+          expirySelected,
+          expiryType,
+          expiryDate,
+          expiryPeriodAmount,
+          expiryPeriodType
+        },
+        currentDate
+      ),
       isActive: !requiresActivation
     };
   };
