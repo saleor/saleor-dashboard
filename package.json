@@ -116,7 +116,6 @@
     "@types/react-dropzone": "^4.2.2",
     "@types/react-helmet": "^5.0.8",
     "@types/react-infinite-scroller": "^1.2.1",
-    "@types/react-responsive": "^3.0.3",
     "@types/react-router-dom": "^4.3.4",
     "@types/react-sortable-hoc": "^0.7.1",
     "@types/react-sortable-tree": "^0.3.6",
