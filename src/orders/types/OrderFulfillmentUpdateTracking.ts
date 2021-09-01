@@ -103,6 +103,13 @@ export interface OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_o
   lastName: string;
 }
 
+export interface OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_order_events_app {
+  __typename: "App";
+  id: string;
+  name: string | null;
+  appUrl: string | null;
+}
+
 export interface OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_order_events_lines_discount_amount {
   __typename: "Money";
   amount: number;
@@ -157,6 +164,7 @@ export interface OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_o
   transactionReference: string | null;
   type: OrderEventsEnum | null;
   user: OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_order_events_user | null;
+  app: OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_order_events_app | null;
   lines: (OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_order_events_lines | null)[] | null;
 }
 

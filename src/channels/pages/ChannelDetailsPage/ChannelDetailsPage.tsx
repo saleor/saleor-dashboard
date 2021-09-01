@@ -144,7 +144,11 @@ export const ChannelDetailsPage: React.FC<ChannelDetailsPageProps> = ({
           );
         };
 
-        const formDisabled = !data.name || !data.slug || !data.currencyCode;
+        const formDisabled =
+          !data.name ||
+          !data.slug ||
+          !data.currencyCode ||
+          !(data.name.trim().length > 0);
 
         return (
           <>

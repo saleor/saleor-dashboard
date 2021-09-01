@@ -199,6 +199,13 @@ export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_o
   lastName: string;
 }
 
+export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_events_app {
+  __typename: "App";
+  id: string;
+  name: string | null;
+  appUrl: string | null;
+}
+
 export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_events_lines_discount_amount {
   __typename: "Money";
   amount: number;
@@ -253,6 +260,7 @@ export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_o
   transactionReference: string | null;
   type: OrderEventsEnum | null;
   user: OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_events_user | null;
+  app: OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_events_app | null;
   lines: (OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_events_lines | null)[] | null;
 }
 
