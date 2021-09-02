@@ -11,6 +11,7 @@ import { WarehouseClickAndCollectOptionEnum } from "./../../types/globalTypes";
 
 export interface OrderFulfillData_order_deliveryMethod_ShippingMethod {
   __typename: "ShippingMethod";
+  id: string;
 }
 
 export interface OrderFulfillData_order_deliveryMethod_Warehouse {

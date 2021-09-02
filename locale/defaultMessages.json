@@ -3518,6 +3518,14 @@
     "context": "GiftCardUpdateDetailsCard title",
     "string": "Details"
   },
+  "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardUpdateExpirySelect_dot_expiryDateCheckboxLabel": {
+    "context": "GiftCarUpdateDetailsExpirySection expiry date checkbox label",
+    "string": "Gift card expires"
+  },
+  "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardUpdateExpirySelect_dot_expiryDateLabel": {
+    "context": "GiftCarUpdateDetailsExpirySection expiry date label",
+    "string": "Expiration date"
+  },
   "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardUpdateInfoCard_dot_boughtByLabel": {
     "context": "GiftCardUpdateInfoCard bought by label",
     "string": "Bought by"
@@ -3602,6 +3610,14 @@
     "context": "GiftCardsListTable code ending with label",
     "string": "Code ending with {displayCode}"
   },
+  "src_dot_giftCards_dot_GiftCardsList_dot_createGiftCardProduct": {
+    "context": "GiftCardsListHeader alert",
+    "string": "Create a gift card product"
+  },
+  "src_dot_giftCards_dot_GiftCardsList_dot_createGiftCardProductType": {
+    "context": "GiftCardsListHeader alert",
+    "string": "Create a gift card product type"
+  },
   "src_dot_giftCards_dot_GiftCardsList_dot_exportCodes": {
     "context": "GiftCardsListHeader menu item settings",
     "string": "Export card codes"
@@ -3609,6 +3625,10 @@
   "src_dot_giftCards_dot_GiftCardsList_dot_giftCardDisabledLabel": {
     "context": "GiftCardsListTable disabled label",
     "string": "Disabled"
+  },
+  "src_dot_giftCards_dot_GiftCardsList_dot_giftCardProduct": {
+    "context": "GiftCardsListHeader alert",
+    "string": "gift card product"
   },
   "src_dot_giftCards_dot_GiftCardsList_dot_giftCardsTableColumnBalanceTitle": {
     "context": "GiftCardsListTable column title balance",
@@ -3634,9 +3654,25 @@
     "context": "GiftCardsListHeader issue button label",
     "string": "Issue card"
   },
+  "src_dot_giftCards_dot_GiftCardsList_dot_noGiftCardsAlertTitle": {
+    "context": "GiftCardsListHeader alert",
+    "string": "You haven’t defined a gift card product!"
+  },
   "src_dot_giftCards_dot_GiftCardsList_dot_noGiftCardsFound": {
     "context": "GiftCardsListTable no cards found title",
     "string": "No gift cards found"
+  },
+  "src_dot_giftCards_dot_GiftCardsList_dot_noGiftCardsProductTypes": {
+    "context": "GiftCardsListHeader alert",
+    "string": "{createGiftCardProductType} to start selling gift cards in your store."
+  },
+  "src_dot_giftCards_dot_GiftCardsList_dot_noGiftCardsProducts": {
+    "context": "GiftCardsListHeader alert",
+    "string": "{createGiftCardProduct} to start selling gift cards in your store."
+  },
+  "src_dot_giftCards_dot_GiftCardsList_dot_noGiftCardsProductsAndProductTypes": {
+    "context": "GiftCardsListHeader alert",
+    "string": "{createGiftCardProductType} and {giftCardProduct} to start selling gift cards in your store."
   },
   "src_dot_giftCards_dot_GiftCardsList_dot_settings": {
     "context": "GiftCardsListHeader menu item settings",
@@ -3661,22 +3697,6 @@
   "src_dot_giftCards_dot_components_dot_GiftCardDeleteDialog_dot_withBalanceDescription": {
     "context": "GiftCardDeleteDialog with balance description",
     "string": "{selectedItemsCount,plural,one{The gift card you are about to delete has available balance. By deleting this card you may remove balance available to your customer.} other{You are about to delete gift cards with available balance. Are you sure you want to do that?}}"
-  },
-  "src_dot_giftCards_dot_components_dot_GiftCardExpirySelect_dot_expirationDateLabel": {
-    "context": "GiftCarUpdateDetailsExpirySection expiration date label",
-    "string": "Expiration date"
-  },
-  "src_dot_giftCards_dot_components_dot_GiftCardExpirySelect_dot_expiryDateLabel": {
-    "context": "GiftCarUpdateDetailsExpirySection expiry date label",
-    "string": "Expiration date"
-  },
-  "src_dot_giftCards_dot_components_dot_GiftCardExpirySelect_dot_expiryPeriodLabel": {
-    "context": "GiftCarUpdateDetailsExpirySection expiry period label",
-    "string": "Expiry period"
-  },
-  "src_dot_giftCards_dot_components_dot_GiftCardExpirySelect_dot_neverExpireLabel": {
-    "context": "GiftCarUpdateDetailsExpirySection never expire label",
-    "string": "Never expire"
   },
   "src_dot_giftCards_dot_components_dot_GiftCardSettingsExpirySelect_dot_setExpirationPeriodDescription": {
     "context": "checkbox label description",
@@ -7714,6 +7734,10 @@
     "context": "event",
     "string": "Checkout created"
   },
+  "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_2315238863": {
+    "context": "event",
+    "string": "Product variant out of stock"
+  },
   "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_2454751033": {
     "context": "event",
     "string": "All events"
@@ -7805,6 +7829,10 @@
   "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_679080833": {
     "context": "event",
     "string": "Page created"
+  },
+  "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_69923590": {
+    "context": "event",
+    "string": "Product variant back in stock"
   },
   "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_759562905": {
     "context": "event",

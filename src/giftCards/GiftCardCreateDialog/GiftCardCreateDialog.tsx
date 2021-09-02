@@ -71,7 +71,8 @@ const GiftCardCreateDialog: React.FC<DialogActionHandlersProps> = ({
         amount: balanceAmount,
         currency: balanceCurrency
       },
-      expirySettings: {}
+      // expirySettings: {}
+      isActive: true
     };
   };
 

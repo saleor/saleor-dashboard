@@ -5,6 +5,7 @@ import gql from "graphql-tag";
 
 import { giftCardDataFragment } from "../GiftCardUpdate/queries";
 import { GiftCardList, GiftCardListVariables } from "./types/GiftCardList";
+import { GiftCardProductsCount } from "./types/GiftCardProductsCount";
 
 export const giftCardList = gql`
   ${fragmentUserBase}
@@ -26,8 +27,22 @@ export const giftCardList = gql`
     }
   }
 `;
-
 export const useGiftCardListQuery = makeQuery<
   GiftCardList,
   GiftCardListVariables
 >(giftCardList);
+
+export const giftCardProductsCount = gql`
+  query GiftCardProductsCount {
+    giftCardProductTypes: productTypes(filter: { kind: GIFT_CARD }) {
+      totalCount
+    }
+    giftCardProducts: products(filter: { giftCard: true }) {
+      totalCount
+    }
+  }
+`;
+export const useGiftCardProductsCountQuery = makeQuery<
+  GiftCardProductsCount,
+  never
+>(giftCardProductsCount);

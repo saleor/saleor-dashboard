@@ -25,7 +25,6 @@ import { maybe } from "../../../misc";
 import { OrderStatus } from "../../../types/globalTypes";
 import {
   OrderDetails_order,
-  OrderDetails_order_giftCards,
   OrderDetails_shop
 } from "../../types/OrderDetails";
 import OrderCustomer from "../OrderCustomer";
