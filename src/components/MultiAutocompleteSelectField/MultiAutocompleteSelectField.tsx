@@ -129,7 +129,7 @@ const MultiAutocompleteSelectFieldComponent: React.FC<MultiAutocompleteSelectFie
     downshiftOpts?: ControllerStateAndHelpers
   ) => {
     if (downshiftOpts) {
-      downshiftOpts.reset({ inputValue: "" });
+      downshiftOpts.reset({ inputValue: "", isOpen: true });
     }
     onChange({
       target: { name, value: item }
