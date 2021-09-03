@@ -4,12 +4,13 @@ export const SHARED_ELEMENTS = {
   circularProgress: '[class*="CircularProgress-circle"]',
   skeleton: '[data-test-id="skeleton"]',
   table: 'table[class*="Table"]',
-  tableRow: '[data-test="id"]',
+  tableRow: '[data-test="id"], [class*="MuiTableRow"]',
   notificationSuccess: '[data-test="notification"][data-test-type="success"]',
   dialog: '[role="dialog"]',
   searchInput: '[data-test-id="searchInput"]',
   selectOption: '[data-test="selectFieldOption"]',
   richTextEditor: {
+    loader: '[class*="codex-editor__loader"]',
     empty: '[class*="codex-editor--empty"]'
   },
   filters: {

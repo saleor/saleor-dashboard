@@ -14,6 +14,7 @@ filterTests(["all"], () => {
 
     before(() => {
       cy.clearSessionData().loginUserViaRequest();
+
       cy.fixture("addresses").then(({ usAddress, plAddress }) => {
         address = usAddress;
         updateShopAddress(plAddress);
