@@ -1,7 +1,5 @@
 import { TableBody, TableCell, TableFooter, TableRow } from "@material-ui/core";
-import { ChannelsAvailabilityDropdown } from "@saleor/components/ChannelsAvailabilityDropdown";
 import Checkbox from "@saleor/components/Checkbox";
-import MoneyRange from "@saleor/components/MoneyRange";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
 import TableCellAvatar from "@saleor/components/TableCellAvatar";
@@ -10,7 +8,7 @@ import TableHead from "@saleor/components/TableHead";
 import TablePagination from "@saleor/components/TablePagination";
 import { makeStyles } from "@saleor/macaw-ui";
 import { maybe, renderCollection } from "@saleor/misc";
-import { ChannelProps, ListActions, ListProps } from "@saleor/types";
+import { ListActions, ListProps } from "@saleor/types";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
@@ -21,15 +19,6 @@ const useStyles = makeStyles(
     [theme.breakpoints.up("lg")]: {
       colName: {
         width: "auto"
-      },
-      colPrice: {
-        width: 300
-      },
-      colPublished: {
-        width: 200
-      },
-      colType: {
-        width: 200
       }
     },
     colFill: {
@@ -40,11 +29,6 @@ const useStyles = makeStyles(
     colNameHeader: {
       marginLeft: AVATAR_MARGIN
     },
-    colPrice: {
-      textAlign: "right"
-    },
-    colPublished: {},
-    colType: {},
     link: {
       cursor: "pointer"
     },
@@ -66,17 +50,12 @@ const useStyles = makeStyles(
   }
 );
 
-interface CategoryProductListProps
-  extends ListProps,
-    ListActions,
-    ChannelProps {
-  channelsCount: number;
+interface CategoryProductListProps extends ListProps, ListActions {
   products: CategoryDetails_category_products_edges_node[];
 }
 
 export const CategoryProductList: React.FC<CategoryProductListProps> = props => {
   const {
-    channelsCount,
     disabled,
     isChecked,
     pageInfo,
@@ -87,13 +66,12 @@ export const CategoryProductList: React.FC<CategoryProductListProps> = props => 
     toolbar,
     onNextPage,
     onPreviousPage,
-    onRowClick,
-    selectedChannelId
+    onRowClick
   } = props;
 
   const classes = useStyles(props);
 
-  const numberOfColumns = 5;
+  const numberOfColumns = 2;
 
   return (
     <div className={classes.tableContainer}>
@@ -101,9 +79,6 @@ export const CategoryProductList: React.FC<CategoryProductListProps> = props => 
         <colgroup>
           <col />
           <col className={classes.colName} />
-          <col className={classes.colType} />
-          <col className={classes.colPublished} />
-          <col className={classes.colPrice} />
         </colgroup>
         <TableHead
           colSpan={numberOfColumns}
@@ -117,24 +92,6 @@ export const CategoryProductList: React.FC<CategoryProductListProps> = props => 
             <span className={classes.colNameHeader}>
               <FormattedMessage defaultMessage="Name" description="product" />
             </span>
-          </TableCell>
-          <TableCell className={classes.colType}>
-            <FormattedMessage
-              defaultMessage="Type"
-              description="product type"
-            />
-          </TableCell>
-          <TableCell className={classes.colPublished}>
-            <FormattedMessage
-              defaultMessage="Availability"
-              description="availability status"
-            />
-          </TableCell>
-          <TableCell className={classes.colPrice}>
-            <FormattedMessage
-              defaultMessage="Price"
-              description="product price"
-            />
           </TableCell>
         </TableHead>
         <TableFooter>
@@ -155,9 +112,6 @@ export const CategoryProductList: React.FC<CategoryProductListProps> = props => 
             products,
             product => {
               const isSelected = product ? isChecked(product.id) : false;
-              const channel = product?.channelListings.find(
-                listing => listing.channel.id === selectedChannelId
-              );
 
               return (
                 <TableRow
@@ -182,35 +136,6 @@ export const CategoryProductList: React.FC<CategoryProductListProps> = props => 
                   >
                     {product ? product.name : <Skeleton />}
                   </TableCellAvatar>
-                  <TableCell className={classes.colType}>
-                    {product && product.productType ? (
-                      product.productType.name
-                    ) : (
-                      <Skeleton />
-                    )}
-                  </TableCell>
-                  <TableCell className={classes.colPublished}>
-                    {product && !product?.channelListings?.length ? (
-                      "-"
-                    ) : product?.channelListings !== undefined ? (
-                      <ChannelsAvailabilityDropdown
-                        allChannelsCount={channelsCount}
-                        channels={product?.channelListings}
-                      />
-                    ) : (
-                      <Skeleton />
-                    )}
-                  </TableCell>
-                  <TableCell className={classes.colPrice}>
-                    {product?.channelListings ? (
-                      <MoneyRange
-                        from={channel?.pricing?.priceRange?.start?.net}
-                        to={channel?.pricing?.priceRange?.stop?.net}
-                      />
-                    ) : (
-                      <Skeleton />
-                    )}
-                  </TableCell>
                 </TableRow>
               );
             },
