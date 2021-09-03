@@ -14,6 +14,7 @@ interface TranslationFieldsRichProps {
   edit: boolean;
   initial: string;
   saveButtonState: ConfirmButtonTransitionState;
+  resetKey: string;
   onDiscard: () => void;
   onSubmit: (data: OutputData) => void;
 }
@@ -23,6 +24,7 @@ const TranslationFieldsRich: React.FC<TranslationFieldsRichProps> = ({
   edit,
   initial,
   saveButtonState,
+  resetKey,
   onDiscard,
   onSubmit
 }) => {
@@ -45,6 +47,7 @@ const TranslationFieldsRich: React.FC<TranslationFieldsRichProps> = ({
           defaultMessage: "Translation"
         })}
         name="translation"
+        data-test-id="translation"
         onChange={change}
       />
       <TranslationFieldsSave
@@ -59,7 +62,7 @@ const TranslationFieldsRich: React.FC<TranslationFieldsRichProps> = ({
     </Typography>
   ) : (
     <Typography>
-      <RichTextEditorContent data={JSON.parse(initial)} />
+      <RichTextEditorContent key={resetKey} data={JSON.parse(initial)} />
     </Typography>
   );
 };

@@ -40,6 +40,7 @@ const TranslationFieldsLong: React.FC<TranslationFieldsLongProps> = ({
               defaultMessage: "Translation"
             })}
             name="translation"
+            data-test-id="translation"
             value={data.translation || ""}
             onChange={change}
           />

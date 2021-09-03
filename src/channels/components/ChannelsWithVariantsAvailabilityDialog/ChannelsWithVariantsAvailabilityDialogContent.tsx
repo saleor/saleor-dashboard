@@ -75,7 +75,8 @@ const useSummaryStyles = makeStyles(
       height: theme.spacing(10),
       padding: 0,
       margin: 0,
-      minHeight: 0
+      minHeight: 0,
+      paddingRight: theme.spacing(2.5)
     },
     content: {
       margin: 0
@@ -135,7 +136,13 @@ const ChannelsWithVariantsAvailabilityDialogContent: React.FC<ChannelsWithVarian
   return (
     <>
       {map(channelsWithVariants, ({ selectedVariantsIds }, channelId) => {
-        const { name } = channels.find(getById(channelId));
+        const filteredChannel = channels.find(getById(channelId));
+
+        if (!filteredChannel) {
+          return null;
+        }
+
+        const { name } = filteredChannel;
 
         const isVariantSelected = (variantId: string) =>
           selectedVariantsIds.includes(variantId);

@@ -11,6 +11,9 @@ export const commonMessages = defineMessages({
     defaultMessage: "Choose file",
     description: "button"
   },
+  channel: {
+    defaultMessage: "Channel"
+  },
   customApps: {
     defaultMessage: "Local Apps"
   },
@@ -52,6 +55,7 @@ export const commonMessages = defineMessages({
   generalInformations: {
     defaultMessage: "General Information"
   },
+
   insufficientPermissions: {
     defaultMessage: "Insufficient permissions"
   },
@@ -98,6 +102,9 @@ export const commonMessages = defineMessages({
   summary: {
     defaultMessage: "Summary"
   },
+  translationAttributes: {
+    defaultMessage: "Attributes"
+  },
   unauthorizedDashboardAccess: {
     defaultMessage: "Only staff users can access the dashboard"
   },
@@ -107,12 +114,37 @@ export const commonMessages = defineMessages({
   },
   yes: {
     defaultMessage: "Yes"
+  },
+  date: {
+    defaultMessage: "Date"
+  },
+  time: {
+    defaultMessage: "Time",
+    description: "independent of any particular day, eg. 11:35"
+  },
+  cannotFullfillUnpaidOrder: {
+    defaultMessage: "Can’t fulfill until payment is captured",
+    description: "disabled option description"
+  }
+});
+
+export const errorMessages = defineMessages({
+  imgageUploadErrorTitle: {
+    defaultMessage: "Couldn't process image"
+  },
+  imageUploadErrorText: {
+    defaultMessage:
+      "There was a poblem with the file you uploaded as an image and it couldn't be used. Please try a different file."
   }
 });
 
 export const buttonMessages = defineMessages({
   accept: {
     defaultMessage: "Accept",
+    description: "button"
+  },
+  approve: {
+    defaultMessage: "Approve",
     description: "button"
   },
   back: {
@@ -229,6 +261,10 @@ export const sectionNames = defineMessages({
   exchangeRates: {
     defaultMessage: "Exchange Rates",
     description: "Manage and Update your warehouse information"
+  },
+  giftCards: {
+    defaultMessage: "Gift Cards",
+    description: "gift cards section name"
   },
   home: {
     defaultMessage: "Home",

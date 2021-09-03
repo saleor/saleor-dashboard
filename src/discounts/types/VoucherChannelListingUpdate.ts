@@ -16,6 +16,18 @@ export interface VoucherChannelListingUpdate_voucherChannelListingUpdate_errors 
   channels: string[] | null;
 }
 
+export interface VoucherChannelListingUpdate_voucherChannelListingUpdate_voucher_metadata {
+  __typename: "MetadataItem";
+  key: string;
+  value: string;
+}
+
+export interface VoucherChannelListingUpdate_voucherChannelListingUpdate_voucher_privateMetadata {
+  __typename: "MetadataItem";
+  key: string;
+  value: string;
+}
+
 export interface VoucherChannelListingUpdate_voucherChannelListingUpdate_voucher_countries {
   __typename: "CountryDisplay";
   code: string;
@@ -46,6 +58,8 @@ export interface VoucherChannelListingUpdate_voucherChannelListingUpdate_voucher
 
 export interface VoucherChannelListingUpdate_voucherChannelListingUpdate_voucher {
   __typename: "Voucher";
+  metadata: (VoucherChannelListingUpdate_voucherChannelListingUpdate_voucher_metadata | null)[];
+  privateMetadata: (VoucherChannelListingUpdate_voucherChannelListingUpdate_voucher_privateMetadata | null)[];
   id: string;
   code: string;
   startDate: any;

@@ -238,7 +238,7 @@ const MenuItemDialog: React.FC<MenuItemDialogProps> = ({
               id: "menuItemDialogAddItem"
             })}
       </DialogTitle>
-      <DialogContent style={{ overflowY: "visible" }}>
+      <DialogContent style={{ overflow: "visible" }}>
         <TextField
           disabled={disabled}
           label={intl.formatMessage({

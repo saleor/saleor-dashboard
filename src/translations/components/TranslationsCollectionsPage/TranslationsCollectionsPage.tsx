@@ -84,6 +84,7 @@ const TranslationsCollectionsPage: React.FC<TranslationsCollectionsPageProps> = 
           }
         ]}
         saveButtonState={saveButtonState}
+        richTextResetKey={languageCode}
         onEdit={onEdit}
         onDiscard={onDiscard}
         onSubmit={onSubmit}
@@ -117,6 +118,7 @@ const TranslationsCollectionsPage: React.FC<TranslationsCollectionsPageProps> = 
           }
         ]}
         saveButtonState={saveButtonState}
+        richTextResetKey={languageCode}
         onEdit={onEdit}
         onDiscard={onDiscard}
         onSubmit={onSubmit}

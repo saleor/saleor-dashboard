@@ -5,6 +5,7 @@ import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
 import Container from "@saleor/components/Container";
 import Form from "@saleor/components/Form";
 import Grid from "@saleor/components/Grid";
+import Metadata, { MetadataFormData } from "@saleor/components/Metadata";
 import PageHeader from "@saleor/components/PageHeader";
 import Savebar from "@saleor/components/Savebar";
 import {
@@ -15,6 +16,7 @@ import { DiscountErrorFragment } from "@saleor/fragments/types/DiscountErrorFrag
 import { sectionNames } from "@saleor/intl";
 import { Backlink } from "@saleor/macaw-ui";
 import { validatePrice } from "@saleor/products/utils/validation";
+import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -27,7 +29,7 @@ import VoucherRequirements from "../VoucherRequirements";
 import VoucherTypes from "../VoucherTypes";
 import VoucherValue from "../VoucherValue";
 
-export interface FormData {
+export interface FormData extends MetadataFormData {
   applyOncePerCustomer: boolean;
   applyOncePerOrder: boolean;
   onlyForStaff: boolean;
@@ -73,6 +75,9 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
   openChannelsModal
 }) => {
   const intl = useIntl();
+  const {
+    makeChangeHandler: makeMetadataChangeHandler
+  } = useMetadataChangeTrigger();
 
   const initialForm: FormData = {
     applyOncePerCustomer: false,
@@ -91,7 +96,9 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
     startTime: "",
     type: VoucherTypeEnum.ENTIRE_ORDER,
     usageLimit: "0",
-    value: 0
+    value: 0,
+    metadata: [],
+    privateMetadata: []
   };
 
   return (
@@ -113,6 +120,8 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
               (data.requirementsPicker === RequirementsPicker.ORDER &&
                 validatePrice(channel.minSpent))
           );
+        const changeMetadata = makeMetadataChangeHandler(change);
+
         return (
           <Container>
             <Backlink onClick={onBack}>
@@ -189,6 +198,7 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
                   openModal={openChannelsModal}
                 />
               </div>
+              <Metadata data={data} onChange={changeMetadata} />
             </Grid>
             <Savebar
               disabled={

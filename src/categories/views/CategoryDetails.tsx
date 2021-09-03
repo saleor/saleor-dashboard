@@ -1,9 +1,7 @@
 import { DialogContentText, IconButton } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
 import ActionDialog from "@saleor/components/ActionDialog";
-import useAppChannel from "@saleor/components/AppLayout/AppChannelContext";
 import NotFoundPage from "@saleor/components/NotFoundPage";
-import Skeleton from "@saleor/components/Skeleton";
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import useBulkActions from "@saleor/hooks/useBulkActions";
 import useNavigator from "@saleor/hooks/useNavigator";
@@ -11,10 +9,10 @@ import useNotifier from "@saleor/hooks/useNotifier";
 import usePaginator, {
   createPaginationState
 } from "@saleor/hooks/usePaginator";
-import { commonMessages } from "@saleor/intl";
+import { commonMessages, errorMessages } from "@saleor/intl";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import createMetadataUpdateHandler from "@saleor/utils/handlers/metadataUpdateHandler";
-import { mapEdgesToItems, mapNodeToChoice } from "@saleor/utils/maps";
+import { mapEdgesToItems } from "@saleor/utils/maps";
 import {
   useMetadataUpdate,
   usePrivateMetadataUpdate
@@ -81,10 +79,6 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
     variables: { ...paginationState, id }
   });
 
-  const { availableChannels, channel } = useAppChannel();
-
-  const channelChoices = mapNodeToChoice(availableChannels);
-
   const category = data?.category;
 
   if (category === null) {
@@ -115,7 +109,8 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
       if (backgroundImageError) {
         notify({
           status: "error",
-          text: intl.formatMessage(commonMessages.somethingWentWrong)
+          title: intl.formatMessage(errorMessages.imgageUploadErrorTitle),
+          text: intl.formatMessage(errorMessages.imageUploadErrorText)
         });
       }
     }
@@ -208,16 +203,10 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
     variables => updatePrivateMetadata({ variables })
   );
 
-  if (typeof channel === "undefined") {
-    return <Skeleton />;
-  }
-
   return (
     <>
       <WindowTitle title={maybe(() => data.category.name)} />
       <CategoryUpdatePage
-        channelsCount={availableChannels.length}
-        channelChoices={channelChoices}
         changeTab={changeTab}
         currentTab={params.activeTab}
         category={maybe(() => data.category)}
@@ -259,7 +248,6 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
         onSubmit={handleSubmit}
         products={mapEdgesToItems(data?.category?.products)}
         saveButtonBarState={updateResult.status}
-        selectedChannelId={channel?.id}
         subcategories={mapEdgesToItems(data?.category?.children)}
         subcategoryListToolbar={
           <IconButton

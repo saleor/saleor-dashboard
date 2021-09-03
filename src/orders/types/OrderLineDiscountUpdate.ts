@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { OrderDiscountCommonInput, OrderErrorCode, AddressTypeEnum, OrderDiscountType, DiscountValueTypeEnum, OrderEventsEmailsEnum, OrderEventsEnum, FulfillmentStatus, PaymentChargeStatusEnum, OrderStatus, OrderAction, JobStatusEnum } from "./../../types/globalTypes";
+import { OrderDiscountCommonInput, OrderErrorCode, AddressTypeEnum, OrderDiscountType, DiscountValueTypeEnum, OrderEventsEmailsEnum, OrderEventsEnum, FulfillmentStatus, PaymentChargeStatusEnum, WarehouseClickAndCollectOptionEnum, OrderStatus, OrderAction, JobStatusEnum } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: OrderLineDiscountUpdate
@@ -103,6 +103,13 @@ export interface OrderLineDiscountUpdate_orderLineDiscountUpdate_order_events_us
   lastName: string;
 }
 
+export interface OrderLineDiscountUpdate_orderLineDiscountUpdate_order_events_app {
+  __typename: "App";
+  id: string;
+  name: string | null;
+  appUrl: string | null;
+}
+
 export interface OrderLineDiscountUpdate_orderLineDiscountUpdate_order_events_lines_discount_amount {
   __typename: "Money";
   amount: number;
@@ -157,6 +164,7 @@ export interface OrderLineDiscountUpdate_orderLineDiscountUpdate_order_events {
   transactionReference: string | null;
   type: OrderEventsEnum | null;
   user: OrderLineDiscountUpdate_orderLineDiscountUpdate_order_events_user | null;
+  app: OrderLineDiscountUpdate_orderLineDiscountUpdate_order_events_app | null;
   lines: (OrderLineDiscountUpdate_orderLineDiscountUpdate_order_events_lines | null)[] | null;
 }
 
@@ -223,6 +231,7 @@ export interface OrderLineDiscountUpdate_orderLineDiscountUpdate_order_fulfillme
   productSku: string;
   quantity: number;
   quantityFulfilled: number;
+  quantityToFulfill: number;
   unitDiscount: OrderLineDiscountUpdate_orderLineDiscountUpdate_order_fulfillments_lines_orderLine_unitDiscount;
   unitDiscountValue: any;
   unitDiscountReason: string | null;
@@ -318,6 +327,7 @@ export interface OrderLineDiscountUpdate_orderLineDiscountUpdate_order_lines {
   productSku: string;
   quantity: number;
   quantityFulfilled: number;
+  quantityToFulfill: number;
   unitDiscount: OrderLineDiscountUpdate_orderLineDiscountUpdate_order_lines_unitDiscount;
   unitDiscountValue: any;
   unitDiscountReason: string | null;
@@ -348,6 +358,19 @@ export interface OrderLineDiscountUpdate_orderLineDiscountUpdate_order_shippingA
   streetAddress1: string;
   streetAddress2: string;
 }
+
+export interface OrderLineDiscountUpdate_orderLineDiscountUpdate_order_deliveryMethod_ShippingMethod {
+  __typename: "ShippingMethod";
+  id: string;
+}
+
+export interface OrderLineDiscountUpdate_orderLineDiscountUpdate_order_deliveryMethod_Warehouse {
+  __typename: "Warehouse";
+  id: string;
+  clickAndCollectOption: WarehouseClickAndCollectOptionEnum;
+}
+
+export type OrderLineDiscountUpdate_orderLineDiscountUpdate_order_deliveryMethod = OrderLineDiscountUpdate_orderLineDiscountUpdate_order_deliveryMethod_ShippingMethod | OrderLineDiscountUpdate_orderLineDiscountUpdate_order_deliveryMethod_Warehouse;
 
 export interface OrderLineDiscountUpdate_orderLineDiscountUpdate_order_shippingMethod {
   __typename: "ShippingMethod";
@@ -490,10 +513,13 @@ export interface OrderLineDiscountUpdate_orderLineDiscountUpdate_order {
   fulfillments: (OrderLineDiscountUpdate_orderLineDiscountUpdate_order_fulfillments | null)[];
   lines: (OrderLineDiscountUpdate_orderLineDiscountUpdate_order_lines | null)[];
   number: string | null;
+  isPaid: boolean;
   paymentStatus: PaymentChargeStatusEnum;
   shippingAddress: OrderLineDiscountUpdate_orderLineDiscountUpdate_order_shippingAddress | null;
+  deliveryMethod: OrderLineDiscountUpdate_orderLineDiscountUpdate_order_deliveryMethod | null;
   shippingMethod: OrderLineDiscountUpdate_orderLineDiscountUpdate_order_shippingMethod | null;
   shippingMethodName: string | null;
+  collectionPointName: string | null;
   shippingPrice: OrderLineDiscountUpdate_orderLineDiscountUpdate_order_shippingPrice;
   status: OrderStatus;
   subtotal: OrderLineDiscountUpdate_orderLineDiscountUpdate_order_subtotal;
@@ -507,7 +533,6 @@ export interface OrderLineDiscountUpdate_orderLineDiscountUpdate_order {
   availableShippingMethods: (OrderLineDiscountUpdate_orderLineDiscountUpdate_order_availableShippingMethods | null)[] | null;
   invoices: (OrderLineDiscountUpdate_orderLineDiscountUpdate_order_invoices | null)[] | null;
   channel: OrderLineDiscountUpdate_orderLineDiscountUpdate_order_channel;
-  isPaid: boolean;
 }
 
 export interface OrderLineDiscountUpdate_orderLineDiscountUpdate {

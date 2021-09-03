@@ -2,7 +2,7 @@ import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import useShop from "@saleor/hooks/useShop";
 import { commonMessages } from "@saleor/intl";
-import { stringify as stringifyQs } from "qs";
+import { stringifyQs } from "@saleor/utils/urls";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -10,7 +10,7 @@ import { LanguageCodeEnum } from "../../types/globalTypes";
 import TranslationsShippingMethodPage from "../components/TranslationsShippingMethodPage";
 import { TypedUpdateShippingMethodTranslations } from "../mutations";
 import { useShippingMethodTranslationDetails } from "../queries";
-import { TranslationInputFieldName } from "../types";
+import { TranslationField, TranslationInputFieldName } from "../types";
 import { UpdateShippingMethodTranslations } from "../types/UpdateShippingMethodTranslations";
 import {
   languageEntitiesUrl,
@@ -68,13 +68,13 @@ const TranslationsShippingMethod: React.FC<TranslationsShippingMethodProps> = ({
     <TypedUpdateShippingMethodTranslations onCompleted={onUpdate}>
       {(updateTranslations, updateTranslationsOpts) => {
         const handleSubmit = (
-          field: TranslationInputFieldName,
+          { name: fieldName }: TranslationField<TranslationInputFieldName>,
           data: string
         ) => {
           updateTranslations({
             variables: {
               id,
-              input: getParsedTranslationInputData({ fieldName: field, data }),
+              input: getParsedTranslationInputData({ fieldName, data }),
               language: languageCode
             }
           });

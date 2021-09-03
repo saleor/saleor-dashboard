@@ -307,7 +307,10 @@ export const searchPageProps: SearchPageProps = {
 export const filterPageProps: FilterPageProps<string, {}> = {
   ...searchPageProps,
   ...tabPageProps,
-  filterOpts: {},
+  filterOpts: {
+    status: { value: undefined, active: false },
+    channel: { value: undefined, active: false }
+  },
   onFilterChange: () => undefined
 };
 

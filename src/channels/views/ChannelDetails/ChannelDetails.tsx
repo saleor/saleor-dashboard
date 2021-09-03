@@ -11,6 +11,7 @@ import { getSearchFetchMoreProps } from "@saleor/hooks/makeTopLevelSearch/utils"
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { getDefaultNotifierSuccessErrorData } from "@saleor/hooks/useNotifier/utils";
+import useShop from "@saleor/hooks/useShop";
 import { sectionNames } from "@saleor/intl";
 import { Backlink } from "@saleor/macaw-ui";
 import useShippingZonesSearch from "@saleor/searches/useShippingZonesSearch";
@@ -48,6 +49,7 @@ export const ChannelDetails: React.FC<ChannelDetailsProps> = ({
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();
+  const shop = useShop();
 
   const handleBack = () => navigate(channelsListUrl());
 
@@ -100,7 +102,8 @@ export const ChannelDetails: React.FC<ChannelDetailsProps> = ({
     name,
     slug,
     shippingZonesIdsToRemove,
-    shippingZonesIdsToAdd
+    shippingZonesIdsToAdd,
+    defaultCountry
   }: FormData) =>
     updateChannel({
       variables: {
@@ -108,6 +111,7 @@ export const ChannelDetails: React.FC<ChannelDetailsProps> = ({
         input: {
           name,
           slug,
+          defaultCountry,
           addShippingZones: shippingZonesIdsToAdd,
           removeShippingZones: shippingZonesIdsToRemove
         }
@@ -209,6 +213,7 @@ export const ChannelDetails: React.FC<ChannelDetailsProps> = ({
               : activateChannel({ variables: { id } })
           }
           saveButtonBarState={updateChannelOpts.status}
+          countries={shop?.countries || []}
         />
       </Container>
       <ChannelDeleteDialog

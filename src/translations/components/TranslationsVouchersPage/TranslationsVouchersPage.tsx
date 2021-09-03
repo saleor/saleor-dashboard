@@ -77,6 +77,7 @@ const TranslationsVouchersPage: React.FC<TranslationsVouchersPageProps> = ({
           }
         ]}
         saveButtonState={saveButtonState}
+        richTextResetKey={languageCode}
         onEdit={onEdit}
         onDiscard={onDiscard}
         onSubmit={onSubmit}

@@ -1,4 +1,4 @@
-import { stringify as stringifyQs } from "qs";
+import { stringifyQs } from "@saleor/utils/urls";
 import urlJoin from "url-join";
 
 import {
@@ -97,6 +97,7 @@ export const orderPath = (id: string) => urlJoin(orderSectionUrl, id);
 
 export type OrderUrlDialog =
   | "add-order-line"
+  | "approve-fulfillment"
   | "cancel"
   | "cancel-fulfillment"
   | "capture"

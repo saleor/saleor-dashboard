@@ -1,4 +1,5 @@
 import { OutputData } from "@editorjs/editorjs";
+import { mapToMenuItems, useExtensions } from "@saleor/apps/useExtensions";
 import {
   getAttributeValuesFromReferences,
   mergeAttributeValues
@@ -6,6 +7,7 @@ import {
 import { ChannelData } from "@saleor/channels/utils";
 import AssignAttributeValueDialog from "@saleor/components/AssignAttributeValueDialog";
 import Attributes, { AttributeInput } from "@saleor/components/Attributes";
+import CardMenu from "@saleor/components/CardMenu";
 import CardSpacer from "@saleor/components/CardSpacer";
 import ChannelsAvailabilityCard from "@saleor/components/ChannelsAvailabilityCard";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
@@ -40,7 +42,11 @@ import {
   ListActions,
   ReorderAction
 } from "@saleor/types";
-import { PermissionEnum } from "@saleor/types/globalTypes";
+import {
+  AppExtensionTypeEnum,
+  AppExtensionViewEnum,
+  PermissionEnum
+} from "@saleor/types/globalTypes";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -110,6 +116,7 @@ export interface ProductUpdatePageProps extends ListActions, ChannelProps {
   onImageDelete: (id: string) => () => void;
   onSubmit: (data: ProductUpdatePageSubmitData) => SubmitPromise;
   openChannelsModal: () => void;
+  onAttributeSelectBlur: () => void;
   onBack?();
   onDelete();
   onImageEdit?(id: string);
@@ -194,7 +201,8 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
   fetchMoreAttributeValues,
   onCloseDialog,
   channelsWithVariantsData,
-  onChannelsChange
+  onChannelsChange,
+  onAttributeSelectBlur
 }) => {
   const intl = useIntl();
 
@@ -241,6 +249,13 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
     onCloseDialog();
   };
 
+  const { moreActions } = useExtensions(
+    AppExtensionViewEnum.PRODUCT,
+    AppExtensionTypeEnum.DETAILS
+  );
+
+  const extensionMenuItems = mapToMenuItems(moreActions);
+
   return (
     <ProductUpdateForm
       isSimpleProduct={isSimpleProduct}
@@ -281,7 +296,11 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
             <Backlink onClick={onBack}>
               {intl.formatMessage(sectionNames.products)}
             </Backlink>
-            <PageHeader title={header} />
+            <PageHeader title={header}>
+              {extensionMenuItems.length > 0 && (
+                <CardMenu menuItems={extensionMenuItems} data-test="menu" />
+              )}
+            </PageHeader>
             <Grid>
               <div>
                 <ProductDetailsForm
@@ -317,6 +336,7 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                     onReferencesReorder={handlers.reorderAttributeValue}
                     fetchAttributeValues={fetchAttributeValues}
                     fetchMoreAttributeValues={fetchMoreAttributeValues}
+                    onAttributeSelectBlur={onAttributeSelectBlur}
                   />
                 )}
                 <CardSpacer />

@@ -14,7 +14,10 @@ export function updateShopWeightUnit(weightUnit) {
       }
     }
   }`;
-  return cy.sendRequestWithQuery(mutation).its("body.data.shopSettingsUpdate");
+  return cy
+    .sendRequestWithQuery(mutation)
+    .wait(5000)
+    .its("body.data.shopSettingsUpdate");
 }
 
 export function updateShopAddress(address) {

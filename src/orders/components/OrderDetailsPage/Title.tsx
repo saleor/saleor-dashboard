@@ -1,31 +1,15 @@
-import StatusChip from "@saleor/components/StatusChip";
-import { makeStyles } from "@saleor/macaw-ui";
+import PageTitleWithStatusChip from "@saleor/components/PageTitleWithStatusChip";
 import { transformOrderStatus } from "@saleor/misc";
 import { OrderDetails_order } from "@saleor/orders/types/OrderDetails";
 import React from "react";
 import { useIntl } from "react-intl";
 
-export interface TitleProps {
+interface TitleProps {
   order?: OrderDetails_order;
 }
 
-const useStyles = makeStyles(
-  theme => ({
-    container: {
-      alignItems: "center",
-      display: "flex"
-    },
-    statusContainer: {
-      marginLeft: theme.spacing(2)
-    }
-  }),
-  { name: "OrderDetailsTitle" }
-);
-
-const Title: React.FC<TitleProps> = props => {
+const Title: React.FC<TitleProps> = ({ order }) => {
   const intl = useIntl();
-  const classes = useStyles(props);
-  const { order } = props;
 
   if (!order) {
     return null;
@@ -34,12 +18,11 @@ const Title: React.FC<TitleProps> = props => {
   const { localized, status } = transformOrderStatus(order.status, intl);
 
   return (
-    <div className={classes.container}>
-      {`#${order.number}`}
-      <div className={classes.statusContainer}>
-        <StatusChip label={localized} type={status} />
-      </div>
-    </div>
+    <PageTitleWithStatusChip
+      title={order?.number}
+      statusLabel={localized}
+      statusType={status}
+    />
   );
 };
 

@@ -13,7 +13,7 @@ import useNavigator from "@saleor/hooks/useNavigator";
 import useShop from "@saleor/hooks/useShop";
 import usePageSearch from "@saleor/searches/usePageSearch";
 import useProductSearch from "@saleor/searches/useProductSearch";
-import createAttributeValueSearchHandler from "@saleor/utils/handlers/attributeValueSearchHandler";
+import useAttributeValueSearchHandler from "@saleor/utils/handlers/attributeValueSearchHandler";
 import createMetadataCreateHandler from "@saleor/utils/handlers/metadataCreateHandler";
 import { mapEdgesToItems } from "@saleor/utils/maps";
 import {
@@ -171,8 +171,9 @@ export const ProductVariant: React.FC<ProductVariantCreateProps> = ({
   const {
     loadMore: loadMoreAttributeValues,
     search: searchAttributeValues,
-    result: searchAttributeValuesOpts
-  } = createAttributeValueSearchHandler(DEFAULT_INITIAL_SEARCH_DATA);
+    result: searchAttributeValuesOpts,
+    reset: searchAttributeReset
+  } = useAttributeValueSearchHandler(DEFAULT_INITIAL_SEARCH_DATA);
 
   const fetchMoreReferencePages = {
     hasMore: searchPagesOpts.data?.search?.pageInfo?.hasNextPage,
@@ -241,6 +242,7 @@ export const ProductVariant: React.FC<ProductVariantCreateProps> = ({
         fetchAttributeValues={searchAttributeValues}
         fetchMoreAttributeValues={fetchMoreAttributeValues}
         onCloseDialog={() => navigate(productVariantAddUrl(productId))}
+        onAttributeSelectBlur={searchAttributeReset}
       />
     </>
   );

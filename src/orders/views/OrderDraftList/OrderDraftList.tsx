@@ -7,6 +7,7 @@ import DeleteFilterTabDialog from "@saleor/components/DeleteFilterTabDialog";
 import SaveFilterTabDialog, {
   SaveFilterTabDialogFormData
 } from "@saleor/components/SaveFilterTabDialog";
+import { useShopLimitsQuery } from "@saleor/components/Shop/query";
 import { DEFAULT_INITIAL_PAGINATION_DATA } from "@saleor/config";
 import useBulkActions from "@saleor/hooks/useBulkActions";
 import useListSettings from "@saleor/hooks/useListSettings";
@@ -81,7 +82,12 @@ export const OrderDraftList: React.FC<OrderDraftListProps> = ({ params }) => {
     onCompleted: handleCreateOrderCreateSuccess
   });
 
-  const { channel, availableChannels } = useAppChannel();
+  const { channel, availableChannels } = useAppChannel(false);
+  const limitOpts = useShopLimitsQuery({
+    variables: {
+      orders: true
+    }
+  });
 
   const tabs = getFilterTabs();
 
@@ -196,6 +202,7 @@ export const OrderDraftList: React.FC<OrderDraftListProps> = ({ params }) => {
               <OrderDraftListPage
                 currentTab={currentTab}
                 filterOpts={getFilterOpts(params)}
+                limits={limitOpts.data?.shop.limits}
                 initialSearch={params.query || ""}
                 onSearchChange={handleSearchChange}
                 onFilterChange={changeFilters}

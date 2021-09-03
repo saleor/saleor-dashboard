@@ -60,7 +60,7 @@ export interface OrderRefundData_order_lines {
   quantity: number;
   unitPrice: OrderRefundData_order_lines_unitPrice;
   thumbnail: OrderRefundData_order_lines_thumbnail | null;
-  quantityFulfilled: number;
+  quantityToFulfill: number;
 }
 
 export interface OrderRefundData_order_fulfillments_lines_orderLine_unitPrice_gross {
