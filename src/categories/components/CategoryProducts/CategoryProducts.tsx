@@ -53,7 +53,11 @@ export const CategoryProducts: React.FC<CategoryProductsProps> = ({
                 categories: [categoryId]
               })}
             >
-              <Button color="primary" variant="text" data-test-id="addProducts">
+              <Button
+                color="primary"
+                variant="text"
+                data-test-id="viewProducts"
+              >
                 <FormattedMessage
                   defaultMessage="View products"
                   description="button"
