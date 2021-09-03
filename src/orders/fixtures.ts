@@ -3,7 +3,7 @@ import { InvoiceFragment } from "@saleor/fragments/types/InvoiceFragment";
 import { OrderSettingsFragment } from "@saleor/fragments/types/OrderSettingsFragment";
 import { ShopOrderSettingsFragment } from "@saleor/fragments/types/ShopOrderSettingsFragment";
 import { SearchCustomers_search_edges_node } from "@saleor/searches/types/SearchCustomers";
-import { warehouseList } from "@saleor/warehouses/fixtures";
+import { warehouseForPickup, warehouseList } from "@saleor/warehouses/fixtures";
 import { MessageDescriptor } from "react-intl";
 
 import { transformOrderStatus, transformPaymentStatus } from "../misc";
@@ -858,6 +858,12 @@ export const order = (placeholder: string): OrderDetails_order => ({
       shippingCostsIncluded: false,
       transactionReference: "123",
       type: OrderEventsEnum.FULFILLMENT_FULFILLED_ITEMS,
+      app: {
+        id: "ZXCkcmVasdwoxTW==",
+        __typename: "App",
+        name: "Testapp",
+        appUrl: "https://www.google.com/"
+      },
       user: {
         __typename: "User",
         email: "admin@example.com",
@@ -907,6 +913,12 @@ export const order = (placeholder: string): OrderDetails_order => ({
       shippingCostsIncluded: true,
       transactionReference: "123",
       type: OrderEventsEnum.FULFILLMENT_REFUNDED,
+      app: {
+        id: "ZXCkcmVasdwoxTW==",
+        __typename: "App",
+        name: "Testapp",
+        appUrl: "https://www.google.com/"
+      },
       user: {
         __typename: "User",
         email: "admin@example.com",
@@ -931,7 +943,8 @@ export const order = (placeholder: string): OrderDetails_order => ({
       shippingCostsIncluded: false,
       transactionReference: "124",
       type: OrderEventsEnum.NOTE_ADDED,
-      user: null
+      user: null,
+      app: null
     },
     {
       __typename: "OrderEvent",
@@ -949,7 +962,8 @@ export const order = (placeholder: string): OrderDetails_order => ({
       shippingCostsIncluded: false,
       transactionReference: "125",
       type: OrderEventsEnum.NOTE_ADDED,
-      user: null
+      user: null,
+      app: null
     },
     {
       __typename: "OrderEvent",
@@ -967,7 +981,8 @@ export const order = (placeholder: string): OrderDetails_order => ({
       shippingCostsIncluded: false,
       transactionReference: "126",
       type: OrderEventsEnum.EXTERNAL_SERVICE_NOTIFICATION,
-      user: null
+      user: null,
+      app: null
     },
     {
       __typename: "OrderEvent",
@@ -985,7 +1000,8 @@ export const order = (placeholder: string): OrderDetails_order => ({
       shippingCostsIncluded: false,
       transactionReference: "127",
       type: OrderEventsEnum.EMAIL_SENT,
-      user: null
+      user: null,
+      app: null
     },
     {
       __typename: "OrderEvent",
@@ -1003,7 +1019,8 @@ export const order = (placeholder: string): OrderDetails_order => ({
       shippingCostsIncluded: false,
       transactionReference: "128",
       type: OrderEventsEnum.EMAIL_SENT,
-      user: null
+      user: null,
+      app: null
     },
     {
       __typename: "OrderEvent",
@@ -1021,7 +1038,8 @@ export const order = (placeholder: string): OrderDetails_order => ({
       shippingCostsIncluded: false,
       transactionReference: "129",
       type: OrderEventsEnum.PAYMENT_AUTHORIZED,
-      user: null
+      user: null,
+      app: null
     }
   ],
   fulfillments: [
@@ -1319,6 +1337,8 @@ export const order = (placeholder: string): OrderDetails_order => ({
   },
   shippingMethod: null,
   shippingMethodName: "Registred priority",
+  collectionPointName: "Warehouse",
+  deliveryMethod: warehouseForPickup,
   shippingPrice: {
     __typename: "TaxedMoney",
     gross: {
@@ -1534,6 +1554,8 @@ export const draftOrder = (placeholder: string): OrderDetails_order => ({
   shippingAddress: null,
   shippingMethod: null,
   shippingMethodName: null,
+  collectionPointName: null,
+  deliveryMethod: null,
   shippingPrice: {
     __typename: "TaxedMoney" as "TaxedMoney",
     gross: {

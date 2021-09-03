@@ -16,6 +16,7 @@ import useClipboard from "@saleor/hooks/useClipboard";
 import { ChangeEvent } from "@saleor/hooks/useForm";
 import { FormChange } from "@saleor/hooks/useForm";
 import { commonMessages } from "@saleor/intl";
+import { CountryCode } from "@saleor/types/globalTypes";
 import { getFormErrors } from "@saleor/utils/errors";
 import getChannelsErrorMessage from "@saleor/utils/errors/channels";
 import React from "react";
@@ -30,6 +31,7 @@ export interface FormData {
   slug: string;
   shippingZonesIdsToAdd: string[];
   shippingZonesIdsToRemove: string[];
+  defaultCountry: CountryCode;
 }
 
 export interface ChannelFormProps {
@@ -38,8 +40,11 @@ export interface ChannelFormProps {
   currencyCodes?: SingleAutocompleteChoiceType[];
   errors: ChannelErrorFragment[];
   selectedCurrencyCode?: string;
+  selectedCountryDisplayName: string;
+  countries: SingleAutocompleteChoiceType[];
   onChange: FormChange;
   onCurrencyCodeChange?: (event: ChangeEvent) => void;
+  onDefaultCountryChange: (event: ChangeEvent) => void;
 }
 
 export const ChannelForm: React.FC<ChannelFormProps> = ({
@@ -48,8 +53,11 @@ export const ChannelForm: React.FC<ChannelFormProps> = ({
   disabled,
   errors,
   selectedCurrencyCode,
+  selectedCountryDisplayName,
+  countries,
   onChange,
-  onCurrencyCodeChange
+  onCurrencyCodeChange,
+  onDefaultCountryChange
 }) => {
   const intl = useIntl();
   const [copied, copy] = useClipboard();
@@ -58,7 +66,6 @@ export const ChannelForm: React.FC<ChannelFormProps> = ({
     errors
   );
   const classes = useStyles({});
-
   return (
     <>
       <Card>
@@ -72,7 +79,7 @@ export const ChannelForm: React.FC<ChannelFormProps> = ({
             disabled={disabled}
             fullWidth
             label={intl.formatMessage({
-              defaultMessage: "Channel Name",
+              defaultMessage: "Channel name",
               description: "channel name"
             })}
             name="name"
@@ -132,7 +139,7 @@ export const ChannelForm: React.FC<ChannelFormProps> = ({
           })}
         />
         <CardContent>
-          {!!currencyCodes ? (
+          {currencyCodes ? (
             <SingleAutocompleteSelectField
               data-test-id="channel-currency-select-input"
               allowCustomValues
@@ -161,13 +168,36 @@ export const ChannelForm: React.FC<ChannelFormProps> = ({
             <>
               <Typography variant="caption" className={classes.label}>
                 <FormattedMessage
-                  defaultMessage="Selected Currency"
+                  defaultMessage="Selected currency"
                   description="selected currency"
                 />
               </Typography>
               <Typography>{data.currencyCode}</Typography>
             </>
           )}
+          <FormSpacer />
+          <SingleAutocompleteSelectField
+            data-test-id="country-select-input"
+            error={!!formErrors.defaultCountry}
+            FormHelperTextProps={
+              {
+                "data-testid": "country-text-input-helper-text"
+              } as ExtendedFormHelperTextProps
+            }
+            helperText={getChannelsErrorMessage(
+              formErrors?.defaultCountry,
+              intl
+            )}
+            disabled={disabled}
+            label={intl.formatMessage({
+              defaultMessage: "Default country"
+            })}
+            choices={countries}
+            name="defaultCountry"
+            displayValue={selectedCountryDisplayName}
+            value={data.defaultCountry}
+            onChange={onDefaultCountryChange}
+          />
         </CardContent>
       </Card>
     </>

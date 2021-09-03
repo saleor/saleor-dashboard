@@ -1,10 +1,10 @@
-import { address, countries } from "@saleor/fixtures";
+import { countries } from "@saleor/fixtures";
 import Decorator from "@saleor/storybook/Decorator";
 import { WarehouseErrorCode } from "@saleor/types/globalTypes";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
-import { warehouseList } from "../../fixtures";
+import { warehouse } from "../../fixtures";
 import WarehouseDetailsPage, {
   WarehouseDetailsPageFormData,
   WarehouseDetailsPageProps
@@ -23,10 +23,7 @@ const props: WarehouseDetailsPageProps = {
   onShippingZoneClick: () => undefined,
   onSubmit: () => undefined,
   saveButtonBarState: "default",
-  warehouse: {
-    ...warehouseList[0],
-    address
-  }
+  warehouse
 };
 storiesOf("Views / Warehouses / Warehouse details", module)
   .addDecorator(Decorator)

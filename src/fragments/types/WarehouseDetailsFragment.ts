@@ -3,6 +3,8 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
+import { WarehouseClickAndCollectOptionEnum } from "./../../types/globalTypes";
+
 // ====================================================
 // GraphQL fragment: WarehouseDetailsFragment
 // ====================================================
@@ -47,6 +49,8 @@ export interface WarehouseDetailsFragment_address {
 
 export interface WarehouseDetailsFragment {
   __typename: "Warehouse";
+  isPrivate: boolean;
+  clickAndCollectOption: WarehouseClickAndCollectOptionEnum;
   id: string;
   name: string;
   shippingZones: WarehouseDetailsFragment_shippingZones;

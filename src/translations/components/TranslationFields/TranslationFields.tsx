@@ -163,7 +163,11 @@ const TranslationFields: React.FC<TranslationFieldsProps> = props => {
                   {field.displayName}
                 </Typography>
                 <div className={classes.editButtonContainer}>
-                  <Button color="primary" onClick={() => onEdit(field.name)}>
+                  <Button
+                    color="primary"
+                    onClick={() => onEdit(field.name)}
+                    data-test-id={`edit-${field.name}`}
+                  >
                     <FormattedMessage {...buttonMessages.edit} />
                   </Button>
                 </div>

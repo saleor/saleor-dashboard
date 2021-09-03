@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { OrderErrorCode, AddressTypeEnum, OrderDiscountType, DiscountValueTypeEnum, OrderEventsEmailsEnum, OrderEventsEnum, FulfillmentStatus, PaymentChargeStatusEnum, OrderStatus, OrderAction, JobStatusEnum } from "./../../types/globalTypes";
+import { OrderErrorCode, AddressTypeEnum, OrderDiscountType, DiscountValueTypeEnum, OrderEventsEmailsEnum, OrderEventsEnum, FulfillmentStatus, PaymentChargeStatusEnum, WarehouseClickAndCollectOptionEnum, OrderStatus, OrderAction, JobStatusEnum } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: OrderDraftFinalize
@@ -103,6 +103,13 @@ export interface OrderDraftFinalize_draftOrderComplete_order_events_user {
   lastName: string;
 }
 
+export interface OrderDraftFinalize_draftOrderComplete_order_events_app {
+  __typename: "App";
+  id: string;
+  name: string | null;
+  appUrl: string | null;
+}
+
 export interface OrderDraftFinalize_draftOrderComplete_order_events_lines_discount_amount {
   __typename: "Money";
   amount: number;
@@ -157,6 +164,7 @@ export interface OrderDraftFinalize_draftOrderComplete_order_events {
   transactionReference: string | null;
   type: OrderEventsEnum | null;
   user: OrderDraftFinalize_draftOrderComplete_order_events_user | null;
+  app: OrderDraftFinalize_draftOrderComplete_order_events_app | null;
   lines: (OrderDraftFinalize_draftOrderComplete_order_events_lines | null)[] | null;
 }
 
@@ -351,6 +359,19 @@ export interface OrderDraftFinalize_draftOrderComplete_order_shippingAddress {
   streetAddress2: string;
 }
 
+export interface OrderDraftFinalize_draftOrderComplete_order_deliveryMethod_ShippingMethod {
+  __typename: "ShippingMethod";
+  id: string;
+}
+
+export interface OrderDraftFinalize_draftOrderComplete_order_deliveryMethod_Warehouse {
+  __typename: "Warehouse";
+  id: string;
+  clickAndCollectOption: WarehouseClickAndCollectOptionEnum;
+}
+
+export type OrderDraftFinalize_draftOrderComplete_order_deliveryMethod = OrderDraftFinalize_draftOrderComplete_order_deliveryMethod_ShippingMethod | OrderDraftFinalize_draftOrderComplete_order_deliveryMethod_Warehouse;
+
 export interface OrderDraftFinalize_draftOrderComplete_order_shippingMethod {
   __typename: "ShippingMethod";
   id: string;
@@ -495,8 +516,10 @@ export interface OrderDraftFinalize_draftOrderComplete_order {
   isPaid: boolean;
   paymentStatus: PaymentChargeStatusEnum;
   shippingAddress: OrderDraftFinalize_draftOrderComplete_order_shippingAddress | null;
+  deliveryMethod: OrderDraftFinalize_draftOrderComplete_order_deliveryMethod | null;
   shippingMethod: OrderDraftFinalize_draftOrderComplete_order_shippingMethod | null;
   shippingMethodName: string | null;
+  collectionPointName: string | null;
   shippingPrice: OrderDraftFinalize_draftOrderComplete_order_shippingPrice;
   status: OrderStatus;
   subtotal: OrderDraftFinalize_draftOrderComplete_order_subtotal;

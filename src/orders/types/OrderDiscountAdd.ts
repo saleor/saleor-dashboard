@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { OrderDiscountCommonInput, OrderErrorCode, AddressTypeEnum, OrderDiscountType, DiscountValueTypeEnum, OrderEventsEmailsEnum, OrderEventsEnum, FulfillmentStatus, PaymentChargeStatusEnum, OrderStatus, OrderAction, JobStatusEnum } from "./../../types/globalTypes";
+import { OrderDiscountCommonInput, OrderErrorCode, AddressTypeEnum, OrderDiscountType, DiscountValueTypeEnum, OrderEventsEmailsEnum, OrderEventsEnum, FulfillmentStatus, PaymentChargeStatusEnum, WarehouseClickAndCollectOptionEnum, OrderStatus, OrderAction, JobStatusEnum } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: OrderDiscountAdd
@@ -103,6 +103,13 @@ export interface OrderDiscountAdd_orderDiscountAdd_order_events_user {
   lastName: string;
 }
 
+export interface OrderDiscountAdd_orderDiscountAdd_order_events_app {
+  __typename: "App";
+  id: string;
+  name: string | null;
+  appUrl: string | null;
+}
+
 export interface OrderDiscountAdd_orderDiscountAdd_order_events_lines_discount_amount {
   __typename: "Money";
   amount: number;
@@ -157,6 +164,7 @@ export interface OrderDiscountAdd_orderDiscountAdd_order_events {
   transactionReference: string | null;
   type: OrderEventsEnum | null;
   user: OrderDiscountAdd_orderDiscountAdd_order_events_user | null;
+  app: OrderDiscountAdd_orderDiscountAdd_order_events_app | null;
   lines: (OrderDiscountAdd_orderDiscountAdd_order_events_lines | null)[] | null;
 }
 
@@ -351,6 +359,19 @@ export interface OrderDiscountAdd_orderDiscountAdd_order_shippingAddress {
   streetAddress2: string;
 }
 
+export interface OrderDiscountAdd_orderDiscountAdd_order_deliveryMethod_ShippingMethod {
+  __typename: "ShippingMethod";
+  id: string;
+}
+
+export interface OrderDiscountAdd_orderDiscountAdd_order_deliveryMethod_Warehouse {
+  __typename: "Warehouse";
+  id: string;
+  clickAndCollectOption: WarehouseClickAndCollectOptionEnum;
+}
+
+export type OrderDiscountAdd_orderDiscountAdd_order_deliveryMethod = OrderDiscountAdd_orderDiscountAdd_order_deliveryMethod_ShippingMethod | OrderDiscountAdd_orderDiscountAdd_order_deliveryMethod_Warehouse;
+
 export interface OrderDiscountAdd_orderDiscountAdd_order_shippingMethod {
   __typename: "ShippingMethod";
   id: string;
@@ -495,8 +516,10 @@ export interface OrderDiscountAdd_orderDiscountAdd_order {
   isPaid: boolean;
   paymentStatus: PaymentChargeStatusEnum;
   shippingAddress: OrderDiscountAdd_orderDiscountAdd_order_shippingAddress | null;
+  deliveryMethod: OrderDiscountAdd_orderDiscountAdd_order_deliveryMethod | null;
   shippingMethod: OrderDiscountAdd_orderDiscountAdd_order_shippingMethod | null;
   shippingMethodName: string | null;
+  collectionPointName: string | null;
   shippingPrice: OrderDiscountAdd_orderDiscountAdd_order_shippingPrice;
   status: OrderStatus;
   subtotal: OrderDiscountAdd_orderDiscountAdd_order_subtotal;

@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { OrderDiscountType, DiscountValueTypeEnum, OrderEventsEmailsEnum, OrderEventsEnum, FulfillmentStatus, PaymentChargeStatusEnum, OrderStatus, OrderAction, JobStatusEnum } from "./../../types/globalTypes";
+import { OrderDiscountType, DiscountValueTypeEnum, OrderEventsEmailsEnum, OrderEventsEnum, FulfillmentStatus, PaymentChargeStatusEnum, WarehouseClickAndCollectOptionEnum, OrderStatus, OrderAction, JobStatusEnum } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL fragment: OrderDetailsFragment
@@ -96,6 +96,13 @@ export interface OrderDetailsFragment_events_user {
   lastName: string;
 }
 
+export interface OrderDetailsFragment_events_app {
+  __typename: "App";
+  id: string;
+  name: string | null;
+  appUrl: string | null;
+}
+
 export interface OrderDetailsFragment_events_lines_discount_amount {
   __typename: "Money";
   amount: number;
@@ -150,6 +157,7 @@ export interface OrderDetailsFragment_events {
   transactionReference: string | null;
   type: OrderEventsEnum | null;
   user: OrderDetailsFragment_events_user | null;
+  app: OrderDetailsFragment_events_app | null;
   lines: (OrderDetailsFragment_events_lines | null)[] | null;
 }
 
@@ -344,6 +352,19 @@ export interface OrderDetailsFragment_shippingAddress {
   streetAddress2: string;
 }
 
+export interface OrderDetailsFragment_deliveryMethod_ShippingMethod {
+  __typename: "ShippingMethod";
+  id: string;
+}
+
+export interface OrderDetailsFragment_deliveryMethod_Warehouse {
+  __typename: "Warehouse";
+  id: string;
+  clickAndCollectOption: WarehouseClickAndCollectOptionEnum;
+}
+
+export type OrderDetailsFragment_deliveryMethod = OrderDetailsFragment_deliveryMethod_ShippingMethod | OrderDetailsFragment_deliveryMethod_Warehouse;
+
 export interface OrderDetailsFragment_shippingMethod {
   __typename: "ShippingMethod";
   id: string;
@@ -488,8 +509,10 @@ export interface OrderDetailsFragment {
   isPaid: boolean;
   paymentStatus: PaymentChargeStatusEnum;
   shippingAddress: OrderDetailsFragment_shippingAddress | null;
+  deliveryMethod: OrderDetailsFragment_deliveryMethod | null;
   shippingMethod: OrderDetailsFragment_shippingMethod | null;
   shippingMethodName: string | null;
+  collectionPointName: string | null;
   shippingPrice: OrderDetailsFragment_shippingPrice;
   status: OrderStatus;
   subtotal: OrderDetailsFragment_subtotal;

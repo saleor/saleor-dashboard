@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { OrderRefundProductsInput, OrderErrorCode, AddressTypeEnum, DiscountValueTypeEnum, FulfillmentStatus, OrderDiscountType, OrderEventsEmailsEnum, OrderEventsEnum, PaymentChargeStatusEnum, OrderStatus, OrderAction, JobStatusEnum } from "./../../types/globalTypes";
+import { OrderRefundProductsInput, OrderErrorCode, AddressTypeEnum, DiscountValueTypeEnum, FulfillmentStatus, OrderDiscountType, OrderEventsEmailsEnum, OrderEventsEnum, PaymentChargeStatusEnum, WarehouseClickAndCollectOptionEnum, OrderStatus, OrderAction, JobStatusEnum } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: OrderFulfillmentRefundProducts
@@ -199,6 +199,13 @@ export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_o
   lastName: string;
 }
 
+export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_events_app {
+  __typename: "App";
+  id: string;
+  name: string | null;
+  appUrl: string | null;
+}
+
 export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_events_lines_discount_amount {
   __typename: "Money";
   amount: number;
@@ -253,6 +260,7 @@ export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_o
   transactionReference: string | null;
   type: OrderEventsEnum | null;
   user: OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_events_user | null;
+  app: OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_events_app | null;
   lines: (OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_events_lines | null)[] | null;
 }
 
@@ -447,6 +455,19 @@ export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_o
   streetAddress2: string;
 }
 
+export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_deliveryMethod_ShippingMethod {
+  __typename: "ShippingMethod";
+  id: string;
+}
+
+export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_deliveryMethod_Warehouse {
+  __typename: "Warehouse";
+  id: string;
+  clickAndCollectOption: WarehouseClickAndCollectOptionEnum;
+}
+
+export type OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_deliveryMethod = OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_deliveryMethod_ShippingMethod | OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_deliveryMethod_Warehouse;
+
 export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_shippingMethod {
   __typename: "ShippingMethod";
   id: string;
@@ -591,8 +612,10 @@ export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_o
   isPaid: boolean;
   paymentStatus: PaymentChargeStatusEnum;
   shippingAddress: OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_shippingAddress | null;
+  deliveryMethod: OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_deliveryMethod | null;
   shippingMethod: OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_shippingMethod | null;
   shippingMethodName: string | null;
+  collectionPointName: string | null;
   shippingPrice: OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_shippingPrice;
   status: OrderStatus;
   subtotal: OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_subtotal;

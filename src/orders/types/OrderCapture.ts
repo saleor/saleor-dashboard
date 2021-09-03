@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { OrderErrorCode, AddressTypeEnum, OrderDiscountType, DiscountValueTypeEnum, OrderEventsEmailsEnum, OrderEventsEnum, FulfillmentStatus, PaymentChargeStatusEnum, OrderStatus, OrderAction, JobStatusEnum } from "./../../types/globalTypes";
+import { OrderErrorCode, AddressTypeEnum, OrderDiscountType, DiscountValueTypeEnum, OrderEventsEmailsEnum, OrderEventsEnum, FulfillmentStatus, PaymentChargeStatusEnum, WarehouseClickAndCollectOptionEnum, OrderStatus, OrderAction, JobStatusEnum } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: OrderCapture
@@ -103,6 +103,13 @@ export interface OrderCapture_orderCapture_order_events_user {
   lastName: string;
 }
 
+export interface OrderCapture_orderCapture_order_events_app {
+  __typename: "App";
+  id: string;
+  name: string | null;
+  appUrl: string | null;
+}
+
 export interface OrderCapture_orderCapture_order_events_lines_discount_amount {
   __typename: "Money";
   amount: number;
@@ -157,6 +164,7 @@ export interface OrderCapture_orderCapture_order_events {
   transactionReference: string | null;
   type: OrderEventsEnum | null;
   user: OrderCapture_orderCapture_order_events_user | null;
+  app: OrderCapture_orderCapture_order_events_app | null;
   lines: (OrderCapture_orderCapture_order_events_lines | null)[] | null;
 }
 
@@ -351,6 +359,19 @@ export interface OrderCapture_orderCapture_order_shippingAddress {
   streetAddress2: string;
 }
 
+export interface OrderCapture_orderCapture_order_deliveryMethod_ShippingMethod {
+  __typename: "ShippingMethod";
+  id: string;
+}
+
+export interface OrderCapture_orderCapture_order_deliveryMethod_Warehouse {
+  __typename: "Warehouse";
+  id: string;
+  clickAndCollectOption: WarehouseClickAndCollectOptionEnum;
+}
+
+export type OrderCapture_orderCapture_order_deliveryMethod = OrderCapture_orderCapture_order_deliveryMethod_ShippingMethod | OrderCapture_orderCapture_order_deliveryMethod_Warehouse;
+
 export interface OrderCapture_orderCapture_order_shippingMethod {
   __typename: "ShippingMethod";
   id: string;
@@ -495,8 +516,10 @@ export interface OrderCapture_orderCapture_order {
   isPaid: boolean;
   paymentStatus: PaymentChargeStatusEnum;
   shippingAddress: OrderCapture_orderCapture_order_shippingAddress | null;
+  deliveryMethod: OrderCapture_orderCapture_order_deliveryMethod | null;
   shippingMethod: OrderCapture_orderCapture_order_shippingMethod | null;
   shippingMethodName: string | null;
+  collectionPointName: string | null;
   shippingPrice: OrderCapture_orderCapture_order_shippingPrice;
   status: OrderStatus;
   subtotal: OrderCapture_orderCapture_order_subtotal;

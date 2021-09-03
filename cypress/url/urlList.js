@@ -22,9 +22,10 @@ export const urlList = {
   shippingMethods: "shipping/",
   siteSettings: "site-settings/",
   staffMembers: "staff/",
+  translations: "translations/",
+  vouchers: "discounts/vouchers/",
   warehouses: "warehouses/",
-  weightRete: "weight/",
-  vouchers: "discounts/vouchers/"
+  weightRete: "weight/"
 };
 
 export const appDetailsUrl = appId => `${urlList.apps}custom/${appId}`;

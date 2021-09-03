@@ -1542,6 +1542,7 @@ export enum PaymentChargeStatusEnum {
 
 export enum PermissionEnum {
   HANDLE_PAYMENTS = "HANDLE_PAYMENTS",
+  IMPERSONATE_USER = "IMPERSONATE_USER",
   MANAGE_APPS = "MANAGE_APPS",
   MANAGE_CHANNELS = "MANAGE_CHANNELS",
   MANAGE_CHECKOUTS = "MANAGE_CHECKOUTS",
@@ -1770,6 +1771,12 @@ export enum VoucherTypeEnum {
   SPECIFIC_PRODUCT = "SPECIFIC_PRODUCT",
 }
 
+export enum WarehouseClickAndCollectOptionEnum {
+  ALL = "ALL",
+  DISABLED = "DISABLED",
+  LOCAL = "LOCAL",
+}
+
 export enum WarehouseErrorCode {
   ALREADY_EXISTS = "ALREADY_EXISTS",
   GRAPHQL_ERROR = "GRAPHQL_ERROR",
@@ -1797,6 +1804,7 @@ export enum WebhookEventTypeEnum {
   CHECKOUT_UPDATED = "CHECKOUT_UPDATED",
   CUSTOMER_CREATED = "CUSTOMER_CREATED",
   CUSTOMER_UPDATED = "CUSTOMER_UPDATED",
+  FULFILLMENT_CANCELED = "FULFILLMENT_CANCELED",
   FULFILLMENT_CREATED = "FULFILLMENT_CREATED",
   INVOICE_DELETED = "INVOICE_DELETED",
   INVOICE_REQUESTED = "INVOICE_REQUESTED",
@@ -1821,8 +1829,10 @@ export enum WebhookEventTypeEnum {
   PRODUCT_CREATED = "PRODUCT_CREATED",
   PRODUCT_DELETED = "PRODUCT_DELETED",
   PRODUCT_UPDATED = "PRODUCT_UPDATED",
+  PRODUCT_VARIANT_BACK_IN_STOCK = "PRODUCT_VARIANT_BACK_IN_STOCK",
   PRODUCT_VARIANT_CREATED = "PRODUCT_VARIANT_CREATED",
   PRODUCT_VARIANT_DELETED = "PRODUCT_VARIANT_DELETED",
+  PRODUCT_VARIANT_OUT_OF_STOCK = "PRODUCT_VARIANT_OUT_OF_STOCK",
   PRODUCT_VARIANT_UPDATED = "PRODUCT_VARIANT_UPDATED",
   TRANSLATION_CREATED = "TRANSLATION_CREATED",
   TRANSLATION_UPDATED = "TRANSLATION_UPDATED",
@@ -2007,6 +2017,7 @@ export interface ChannelCreateInput {
   name: string;
   slug: string;
   currencyCode: string;
+  defaultCountry: CountryCode;
   addShippingZones?: string[] | null;
 }
 
@@ -2018,6 +2029,7 @@ export interface ChannelUpdateInput {
   isActive?: boolean | null;
   name?: string | null;
   slug?: string | null;
+  defaultCountry?: CountryCode | null;
   addShippingZones?: string[] | null;
   removeShippingZones?: string[] | null;
 }
@@ -2141,7 +2153,7 @@ export interface ExportProductsInput {
 }
 
 export interface FulfillmentCancelInput {
-  warehouseId: string;
+  warehouseId?: string | null;
 }
 
 export interface FulfillmentUpdateTrackingInput {
@@ -2839,8 +2851,10 @@ export interface WarehouseCreateInput {
 }
 
 export interface WarehouseFilterInput {
+  clickAndCollectOption?: WarehouseClickAndCollectOptionEnum | null;
   search?: string | null;
   ids?: (string | null)[] | null;
+  isPrivate?: boolean | null;
 }
 
 export interface WarehouseSortingInput {
@@ -2853,6 +2867,8 @@ export interface WarehouseUpdateInput {
   email?: string | null;
   name?: string | null;
   address?: AddressInput | null;
+  clickAndCollectOption?: WarehouseClickAndCollectOptionEnum | null;
+  isPrivate?: boolean | null;
 }
 
 export interface WebhookCreateInput {
