@@ -38,6 +38,7 @@ function makeSearch<TData, TVariables extends SearchVariables>(
     const result = useSearchQuery({
       ...opts,
       displayLoader: true,
+      skip: searchQuery === "",
       variables: {
         ...opts.variables,
         query: searchQuery
