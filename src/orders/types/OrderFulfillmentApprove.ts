@@ -103,6 +103,13 @@ export interface OrderFulfillmentApprove_orderFulfillmentApprove_order_events_us
   lastName: string;
 }
 
+export interface OrderFulfillmentApprove_orderFulfillmentApprove_order_events_app {
+  __typename: "App";
+  id: string;
+  name: string | null;
+  appUrl: string | null;
+}
+
 export interface OrderFulfillmentApprove_orderFulfillmentApprove_order_events_lines_discount_amount {
   __typename: "Money";
   amount: number;
@@ -157,6 +164,7 @@ export interface OrderFulfillmentApprove_orderFulfillmentApprove_order_events {
   transactionReference: string | null;
   type: OrderEventsEnum | null;
   user: OrderFulfillmentApprove_orderFulfillmentApprove_order_events_user | null;
+  app: OrderFulfillmentApprove_orderFulfillmentApprove_order_events_app | null;
   lines: (OrderFulfillmentApprove_orderFulfillmentApprove_order_events_lines | null)[] | null;
 }
 
