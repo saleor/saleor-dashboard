@@ -3,7 +3,6 @@ import {
   categoryFragment
 } from "@saleor/fragments/categories";
 import { pageInfoFragment } from "@saleor/fragments/pageInfo";
-import { channelListingProductFragment } from "@saleor/fragments/products";
 import makeQuery from "@saleor/hooks/makeQuery";
 import gql from "graphql-tag";
 
@@ -49,7 +48,6 @@ export const useRootCategoriesQuery = makeQuery<RootCategories, {}>(
 );
 
 export const categoryDetails = gql`
-  ${channelListingProductFragment}
   ${categoryFragment}
   ${categoryDetailsFragment}
   ${pageInfoFragment}
@@ -83,13 +81,6 @@ export const categoryDetails = gql`
             name
             thumbnail {
               url
-            }
-            productType {
-              id
-              name
-            }
-            channelListings {
-              ...ChannelListingProductFragment
             }
           }
         }
