@@ -174,7 +174,6 @@ function useProductCreateForm(
     trackInventory: false,
     weight: ""
   };
-
   const [changed, setChanged] = React.useState(false);
   const triggerChange = () => setChanged(true);
 
@@ -312,7 +311,8 @@ function useProductCreateForm(
       data.channelListings.some(
         channel =>
           validatePrice(channel.price) || validateCostPrice(channel.costPrice)
-      ));
+      ) ||
+      !data.category);
 
   return {
     change: handleChange,
