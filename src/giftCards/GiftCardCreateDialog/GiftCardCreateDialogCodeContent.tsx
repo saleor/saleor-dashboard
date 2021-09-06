@@ -38,7 +38,7 @@ const GiftCardCreateDialogCodeContent: React.FC<GiftCardCreateDialogCodeContentP
         {intl.formatMessage(messages.createdGiftCardLabel)}
       </Typography>
       <VerticalSpacer />
-      <Typography variant="h6" color="textSecondary">
+      <Typography variant="h6" color="textSecondary" data-test-id="cardCode">
         {cardCode}
       </Typography>
       <VerticalSpacer spacing={2} />
@@ -47,7 +47,12 @@ const GiftCardCreateDialogCodeContent: React.FC<GiftCardCreateDialogCodeContentP
           {intl.formatMessage(messages.copyCodeLabel)}
         </Button>
         <HorizontalSpacer spacing={2} />
-        <Button color="primary" variant="contained" onClick={onClose}>
+        <Button
+          color="primary"
+          variant="contained"
+          onClick={onClose}
+          data-test="submit"
+        >
           {intl.formatMessage(buttonMessages.ok)}
         </Button>
       </div>
