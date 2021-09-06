@@ -156,7 +156,7 @@ function useOrderReturnForm(
     const waitingFulfillmentsItems = getParsedLineDataForFulfillmentStatus(
       order,
       FulfillmentStatus.WAITING_FOR_APPROVAL,
-      { initialValue: false, isFulfillment: false }
+      { initialValue: false, isFulfillment: true }
     );
 
     return [
