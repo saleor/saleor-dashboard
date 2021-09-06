@@ -1,14 +1,9 @@
 import { BUTTON_SELECTORS } from "../../elements/shared/button-selectors";
-import {
-  selectorWithDataValue,
-  SHARED_ELEMENTS
-} from "../../elements/shared/sharedElements";
+import { selectorWithDataValue } from "../../elements/shared/sharedElements";
 
 export function fillAutocompleteSelect(selectSelector, option) {
   cy.get(selectSelector)
     .click()
-    .get(SHARED_ELEMENTS.autocompleteCircle)
-    .should("be.visible")
     .get(BUTTON_SELECTORS.selectOption)
     .should("be.visible");
   if (option) {
@@ -17,13 +12,12 @@ export function fillAutocompleteSelect(selectSelector, option) {
     cy.wrap(option).as("option");
   } else {
     cy.get(BUTTON_SELECTORS.selectOption)
+      .wait(1000)
       .first()
       .invoke("text")
       .as("option")
       .get(BUTTON_SELECTORS.selectOption)
       .first()
-      .find(BUTTON_SELECTORS.checkbox)
-      .should("be.enabled")
       .click();
   }
   return cy.get("@option");

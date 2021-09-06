@@ -13,7 +13,8 @@ export function createChannelByView({
   name,
   currency,
   slug = name,
-  shippingZone
+  shippingZone,
+  defaultCountry = "Poland"
 }) {
   cy.addAliasToGraphRequest("Channel")
     .get(CHANNELS_SELECTORS.createChannelButton)
@@ -32,6 +33,10 @@ export function createChannelByView({
       cy.get(ADD_CHANNEL_FORM_SELECTORS.currencyAutocompleteDropdown).click();
     }
   });
+  fillAutocompleteSelect(
+    ADD_CHANNEL_FORM_SELECTORS.countryAutocompleteInput,
+    defaultCountry
+  );
   if (shippingZone) {
     addShippingZone(shippingZone);
   }

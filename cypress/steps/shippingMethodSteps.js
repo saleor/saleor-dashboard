@@ -33,12 +33,6 @@ export function createShippingZone(
     .click()
     .get(SHIPPING_ZONE_DETAILS.autocompleteContentDialog)
     .scrollTo("bottom")
-    // Remove this code between comments after fixing bug: SALEOR-3611
-    .get(SHIPPING_ZONE_DETAILS.autocompleteContentDialog)
-    .should("not.exist")
-    .get(SHIPPING_ZONE_DETAILS.warehouseSelector)
-    .click()
-    // Remove this code between comments after fixing bug: SALEOR-3611
     .get(SHIPPING_ZONE_DETAILS.option)
     .contains(warehouseName)
     .click({ force: true })
