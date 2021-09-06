@@ -5,7 +5,7 @@ import {
   createCustomer,
   deleteCustomersStartsWith
 } from "../../apiRequests/Customer";
-import { getOrder } from "../../apiRequests/Order";
+import { getOrder, updateOrdersSettings } from "../../apiRequests/Order";
 import { ONE_PERMISSION_USERS } from "../../Data/users";
 import { ORDER_REFUND } from "../../elements/orders/order-refund";
 import { ORDERS_SELECTORS } from "../../elements/orders/orders-selectors";
@@ -46,6 +46,7 @@ filterTests(["all"], () => {
       deleteShippingStartsWith(startsWith);
       productsUtils.deleteProductsStartsWith(startsWith);
 
+      updateOrdersSettings();
       getDefaultChannel()
         .then(channel => {
           defaultChannel = channel;

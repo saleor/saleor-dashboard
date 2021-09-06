@@ -2,8 +2,7 @@ export const SHARED_ELEMENTS = {
   header: "[data-test-id='page-header']",
   progressBar: '[role="progressbar"]',
   circularProgress: '[class*="CircularProgress-circle"]',
-  autocompleteCircle:
-    '[class*="MultiAutocompleteSelectFieldContent-arrowInnerContainer"]',
+  autocompleteCircle: '[class*="arrowInnerContainer"]',
   skeleton: '[data-test-id="skeleton"]',
   table: 'table[class*="Table"]',
   tableRow: '[data-test="id"]',
