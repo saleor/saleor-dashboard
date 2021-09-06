@@ -42,8 +42,7 @@ export interface OrderReturnHandlers {
   changeWaitingItemsQuantity: FormsetChange<number>;
   changeUnfulfiledItemsQuantity: FormsetChange<number>;
   changeItemsToBeReplaced: FormsetChange<boolean>;
-  handleSetMaximalFulfiledItemsQuantities;
-  handleSetMaximalWaitingItemsQuantities;
+  handleSetMaximalItemsQuantities;
   handleSetMaximalUnfulfiledItemsQuantities;
 }
 
@@ -118,13 +117,11 @@ function useOrderReturnForm(
       isFulfillment: true
     };
 
-    const waitingFulfillmentsItems = getParsedLineDataForFulfillmentStatus(
+    return getParsedLineDataForFulfillmentStatus(
       order,
       FulfillmentStatus.WAITING_FOR_APPROVAL,
       commonOptions
     );
-
-    return waitingFulfillmentsItems;
   };
 
   const fulfiledItemsQuatities = useFormset<LineItemData, number>(
@@ -188,52 +185,29 @@ function useOrderReturnForm(
     unfulfiledItemsQuantites.set(newQuantities);
   };
 
-  const handleSetMaximalFulfiledItemsQuantities = (
-    fulfillmentId: string
-  ) => () => {
-    const { lines } = order.fulfillments.find(getById(fulfillmentId));
+  const handleSetMaximalItemsQuantities = (fulfillmentId: string) => () => {
+    const fulfillment = order.fulfillments.find(getById(fulfillmentId));
 
-    const newQuantities: FormsetQuantityData = fulfiledItemsQuatities.data.map(
-      item => {
-        const line = lines.find(getById(item.id));
+    const quantities =
+      fulfillment.status === FulfillmentStatus.WAITING_FOR_APPROVAL
+        ? waitingItemsQuantities
+        : fulfiledItemsQuatities;
 
-        if (!line) {
-          return item;
-        }
+    const newQuantities: FormsetQuantityData = quantities.data.map(item => {
+      const line = fulfillment.lines.find(getById(item.id));
 
-        return getLineItem(line, {
-          initialValue: line.quantity,
-          isRefunded: item.data.isRefunded
-        });
+      if (!line) {
+        return item;
       }
-    );
+
+      return getLineItem(line, {
+        initialValue: line.quantity,
+        isRefunded: item.data.isRefunded
+      });
+    });
 
     triggerChange();
-    fulfiledItemsQuatities.set(newQuantities);
-  };
-
-  const handleSetMaximalWaitingItemsQuantities = (
-    fulfillmentId: string
-  ) => () => {
-    const { lines } = order.fulfillments.find(getById(fulfillmentId));
-
-    const newQuantities: FormsetQuantityData = waitingItemsQuantities.data.map(
-      item => {
-        const line = lines.find(getById(item.id));
-
-        if (!line) {
-          return item;
-        }
-
-        return getLineItem(line, {
-          initialValue: line.quantity,
-          isRefunded: false
-        });
-      }
-    );
-
-    triggerChange();
-    waitingItemsQuantities.set(newQuantities);
+    quantities.set(newQuantities);
   };
 
   const data: OrderReturnFormData = {
@@ -269,8 +243,7 @@ function useOrderReturnForm(
       changeUnfulfiledItemsQuantity: handleHandlerChange(
         unfulfiledItemsQuantites.change
       ),
-      handleSetMaximalFulfiledItemsQuantities,
-      handleSetMaximalWaitingItemsQuantities,
+      handleSetMaximalItemsQuantities,
       handleSetMaximalUnfulfiledItemsQuantities
     },
     hasChanged,

@@ -206,7 +206,7 @@ export const getRefundProductsAmountValues = (
   getProductsAmountValues(
     order,
     refundedFulfilledProductQuantities,
-    null,
+    [],
     refundedProductQuantities,
     refundShipmentCosts
   );

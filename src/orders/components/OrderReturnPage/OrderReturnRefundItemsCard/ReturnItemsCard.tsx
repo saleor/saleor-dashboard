@@ -171,8 +171,8 @@ const ItemsCard: React.FC<OrderReturnRefundLinesCardProps> = ({
                 variant
               } = line;
               const isValueError = false;
-              const isRefunded = itemsQuantities.find(getById(id))?.data
-                ?.isRefunded;
+              const isRefunded = itemsQuantities.find(getById(id)).data
+                .isRefunded;
               const isReplacable = !!variant && !isRefunded;
               const isReturnable = !!variant;
               const lineQuantity = fulfilmentId ? quantity : quantityToFulfill;

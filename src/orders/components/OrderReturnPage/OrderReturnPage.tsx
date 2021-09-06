@@ -101,7 +101,7 @@ const OrderRefundPage: React.FC<OrderReturnPageProps> = props => {
                         itemsQuantities={data.waitingItemsQuantities}
                         itemsSelections={data.itemsToBeReplaced}
                         onChangeQuantity={handlers.changeWaitingItemsQuantity}
-                        onSetMaxQuantity={handlers.handleSetMaximalWaitingItemsQuantities(
+                        onSetMaxQuantity={handlers.handleSetMaximalItemsQuantities(
                           id
                         )}
                         onChangeSelected={handlers.changeItemsToBeReplaced}
@@ -122,7 +122,7 @@ const OrderRefundPage: React.FC<OrderReturnPageProps> = props => {
                         itemsQuantities={data.fulfilledItemsQuantities}
                         itemsSelections={data.itemsToBeReplaced}
                         onChangeQuantity={handlers.changeFulfiledItemsQuantity}
-                        onSetMaxQuantity={handlers.handleSetMaximalFulfiledItemsQuantities(
+                        onSetMaxQuantity={handlers.handleSetMaximalItemsQuantities(
                           id
                         )}
                         onChangeSelected={handlers.changeItemsToBeReplaced}
