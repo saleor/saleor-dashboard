@@ -7,7 +7,6 @@ import Metadata from "@saleor/components/Metadata/Metadata";
 import PageHeader from "@saleor/components/PageHeader";
 import Savebar from "@saleor/components/Savebar";
 import SeoForm from "@saleor/components/SeoForm";
-import { SingleAutocompleteChoiceType } from "@saleor/components/SingleAutocompleteSelectField";
 import { Tab, TabContainer } from "@saleor/components/Tab";
 import { ProductErrorFragment } from "@saleor/fragments/types/ProductErrorFragment";
 import { SubmitPromise } from "@saleor/hooks/useForm";
@@ -17,7 +16,7 @@ import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { maybe } from "../../../misc";
-import { ChannelProps, TabListActions } from "../../../types";
+import { TabListActions } from "../../../types";
 import CategoryDetailsForm from "../../components/CategoryDetailsForm";
 import CategoryList from "../../components/CategoryList";
 import {
@@ -35,8 +34,7 @@ export enum CategoryPageTab {
 }
 
 export interface CategoryUpdatePageProps
-  extends TabListActions<"productListToolbar" | "subcategoryListToolbar">,
-    ChannelProps {
+  extends TabListActions<"productListToolbar" | "subcategoryListToolbar"> {
   changeTab: (index: CategoryPageTab) => void;
   currentTab: CategoryPageTab;
   errors: ProductErrorFragment[];
@@ -49,8 +47,6 @@ export interface CategoryUpdatePageProps
     hasPreviousPage: boolean;
   };
   saveButtonBarState: ConfirmButtonTransitionState;
-  channelChoices: SingleAutocompleteChoiceType[];
-  channelsCount: number;
   onImageDelete: () => void;
   onSubmit: (data: CategoryUpdateData) => SubmitPromise;
   onImageUpload(file: File);
@@ -69,8 +65,6 @@ const ProductsTab = Tab(CategoryPageTab.products);
 
 export const CategoryUpdatePage: React.FC<CategoryUpdatePageProps> = ({
   changeTab,
-  channelChoices,
-  channelsCount,
   currentTab,
   category,
   disabled,
@@ -93,7 +87,6 @@ export const CategoryUpdatePage: React.FC<CategoryUpdatePageProps> = ({
   isChecked,
   productListToolbar,
   selected,
-  selectedChannelId,
   subcategoryListToolbar,
   toggle,
   toggleAll
@@ -206,8 +199,7 @@ export const CategoryUpdatePage: React.FC<CategoryUpdatePageProps> = ({
           )}
           {currentTab === CategoryPageTab.products && (
             <CategoryProducts
-              channelsCount={channelsCount}
-              channelChoices={channelChoices}
+              categoryId={category?.id}
               categoryName={category?.name}
               products={products}
               disabled={disabled}
@@ -219,7 +211,6 @@ export const CategoryUpdatePage: React.FC<CategoryUpdatePageProps> = ({
               toggle={toggle}
               toggleAll={toggleAll}
               selected={selected}
-              selectedChannelId={selectedChannelId}
               isChecked={isChecked}
               toolbar={productListToolbar}
             />

@@ -6,6 +6,7 @@ import Grid from "@saleor/components/Grid";
 import Savebar from "@saleor/components/Savebar";
 import { SingleAutocompleteChoiceType } from "@saleor/components/SingleAutocompleteSelectField";
 import { ChannelErrorFragment } from "@saleor/fragments/types/ChannelErrorFragment";
+import { CountryFragment } from "@saleor/fragments/types/CountryFragment";
 import { SearchData } from "@saleor/hooks/makeTopLevelSearch";
 import { getParsedSearchData } from "@saleor/hooks/makeTopLevelSearch/utils";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
@@ -15,7 +16,9 @@ import {
 } from "@saleor/orders/components/OrderReturnPage/utils";
 import { SearchShippingZones_search_edges_node } from "@saleor/searches/types/SearchShippingZones";
 import { FetchMoreProps } from "@saleor/types";
+import { CountryCode } from "@saleor/types/globalTypes";
 import createSingleAutocompleteSelectHandler from "@saleor/utils/handlers/singleAutocompleteSelectChangeHandler";
+import { mapCountriesToChoices } from "@saleor/utils/maps";
 import React, { useState } from "react";
 
 import { ChannelForm, FormData } from "../../components/ChannelForm";
@@ -31,14 +34,15 @@ export interface ChannelDetailsPageProps {
   disabledStatus?: boolean;
   errors: ChannelErrorFragment[];
   saveButtonBarState: ConfirmButtonTransitionState;
+  searchShippingZonesData?: SearchData;
+  fetchMoreShippingZones: FetchMoreProps;
+  channelShippingZones?: ChannelShippingZones;
+  countries: CountryFragment[];
   onBack?: () => void;
   onDelete?: () => void;
   onSubmit: (data: FormData) => void;
   updateChannelStatus?: () => void;
   searchShippingZones: (query: string) => void;
-  searchShippingZonesData?: SearchData;
-  fetchMoreShippingZones: FetchMoreProps;
-  channelShippingZones?: ChannelShippingZones;
 }
 
 export const ChannelDetailsPage: React.FC<ChannelDetailsPageProps> = ({
@@ -55,21 +59,30 @@ export const ChannelDetailsPage: React.FC<ChannelDetailsPageProps> = ({
   searchShippingZones,
   searchShippingZonesData,
   fetchMoreShippingZones,
+  countries,
   channelShippingZones = []
 }) => {
   const [selectedCurrencyCode, setSelectedCurrencyCode] = useState("");
+  const [
+    selectedCountryDisplayName,
+    setSelectedCountryDisplayName
+  ] = useStateFromProps(channel?.defaultCountry.country || "");
 
   const [shippingZonesToDisplay, setShippingZonesToDisplay] = useStateFromProps<
     ChannelShippingZones
   >(channelShippingZones);
 
+  const countryChoices = mapCountriesToChoices(countries || []);
+
+  const { defaultCountry, ...formData } = channel || {};
   const initialData: FormData = {
     currencyCode: "",
     name: "",
     slug: "",
     shippingZonesIdsToAdd: [],
     shippingZonesIdsToRemove: [],
-    ...channel
+    defaultCountry: (defaultCountry?.code || "") as CountryCode,
+    ...formData
   };
 
   const getFilteredShippingZonesChoices = (): SearchShippingZones_search_edges_node[] =>
@@ -85,6 +98,11 @@ export const ChannelDetailsPage: React.FC<ChannelDetailsPageProps> = ({
           change,
           setSelectedCurrencyCode,
           currencyCodes
+        );
+        const handleDefaultCountrySelect = createSingleAutocompleteSelectHandler(
+          change,
+          setSelectedCountryDisplayName,
+          countryChoices
         );
 
         const addShippingZone = (zoneId: string) => {
@@ -126,7 +144,11 @@ export const ChannelDetailsPage: React.FC<ChannelDetailsPageProps> = ({
           );
         };
 
-        const formDisabled = !data.name || !data.slug || !data.currencyCode;
+        const formDisabled =
+          !data.name ||
+          !data.slug ||
+          !data.currencyCode ||
+          !(data.name.trim().length > 0);
 
         return (
           <>
@@ -136,9 +158,12 @@ export const ChannelDetailsPage: React.FC<ChannelDetailsPageProps> = ({
                   data={data}
                   disabled={disabled}
                   currencyCodes={currencyCodes}
+                  countries={countryChoices}
                   selectedCurrencyCode={selectedCurrencyCode}
+                  selectedCountryDisplayName={selectedCountryDisplayName}
                   onChange={change}
                   onCurrencyCodeChange={handleCurrencyCodeSelect}
+                  onDefaultCountryChange={handleDefaultCountrySelect}
                   errors={errors}
                 />
               </div>

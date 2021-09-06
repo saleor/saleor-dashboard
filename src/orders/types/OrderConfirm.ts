@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { OrderErrorCode, AddressTypeEnum, OrderDiscountType, DiscountValueTypeEnum, OrderEventsEmailsEnum, OrderEventsEnum, FulfillmentStatus, PaymentChargeStatusEnum, OrderStatus, OrderAction, JobStatusEnum } from "./../../types/globalTypes";
+import { OrderErrorCode, AddressTypeEnum, OrderDiscountType, DiscountValueTypeEnum, OrderEventsEmailsEnum, OrderEventsEnum, FulfillmentStatus, PaymentChargeStatusEnum, WarehouseClickAndCollectOptionEnum, OrderStatus, OrderAction, JobStatusEnum } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: OrderConfirm
@@ -103,6 +103,13 @@ export interface OrderConfirm_orderConfirm_order_events_user {
   lastName: string;
 }
 
+export interface OrderConfirm_orderConfirm_order_events_app {
+  __typename: "App";
+  id: string;
+  name: string | null;
+  appUrl: string | null;
+}
+
 export interface OrderConfirm_orderConfirm_order_events_lines_discount_amount {
   __typename: "Money";
   amount: number;
@@ -157,6 +164,7 @@ export interface OrderConfirm_orderConfirm_order_events {
   transactionReference: string | null;
   type: OrderEventsEnum | null;
   user: OrderConfirm_orderConfirm_order_events_user | null;
+  app: OrderConfirm_orderConfirm_order_events_app | null;
   lines: (OrderConfirm_orderConfirm_order_events_lines | null)[] | null;
 }
 
@@ -351,6 +359,19 @@ export interface OrderConfirm_orderConfirm_order_shippingAddress {
   streetAddress2: string;
 }
 
+export interface OrderConfirm_orderConfirm_order_deliveryMethod_ShippingMethod {
+  __typename: "ShippingMethod";
+  id: string;
+}
+
+export interface OrderConfirm_orderConfirm_order_deliveryMethod_Warehouse {
+  __typename: "Warehouse";
+  id: string;
+  clickAndCollectOption: WarehouseClickAndCollectOptionEnum;
+}
+
+export type OrderConfirm_orderConfirm_order_deliveryMethod = OrderConfirm_orderConfirm_order_deliveryMethod_ShippingMethod | OrderConfirm_orderConfirm_order_deliveryMethod_Warehouse;
+
 export interface OrderConfirm_orderConfirm_order_shippingMethod {
   __typename: "ShippingMethod";
   id: string;
@@ -495,8 +516,10 @@ export interface OrderConfirm_orderConfirm_order {
   isPaid: boolean;
   paymentStatus: PaymentChargeStatusEnum;
   shippingAddress: OrderConfirm_orderConfirm_order_shippingAddress | null;
+  deliveryMethod: OrderConfirm_orderConfirm_order_deliveryMethod | null;
   shippingMethod: OrderConfirm_orderConfirm_order_shippingMethod | null;
   shippingMethodName: string | null;
+  collectionPointName: string | null;
   shippingPrice: OrderConfirm_orderConfirm_order_shippingPrice;
   status: OrderStatus;
   subtotal: OrderConfirm_orderConfirm_order_subtotal;

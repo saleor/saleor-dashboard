@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { OrderUpdateShippingInput, OrderErrorCode, AddressTypeEnum, OrderDiscountType, DiscountValueTypeEnum, OrderEventsEmailsEnum, OrderEventsEnum, FulfillmentStatus, PaymentChargeStatusEnum, OrderStatus, OrderAction, JobStatusEnum } from "./../../types/globalTypes";
+import { OrderUpdateShippingInput, OrderErrorCode, AddressTypeEnum, OrderDiscountType, DiscountValueTypeEnum, OrderEventsEmailsEnum, OrderEventsEnum, FulfillmentStatus, PaymentChargeStatusEnum, WarehouseClickAndCollectOptionEnum, OrderStatus, OrderAction, JobStatusEnum } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: OrderShippingMethodUpdate
@@ -165,6 +165,13 @@ export interface OrderShippingMethodUpdate_orderUpdateShipping_order_events_user
   lastName: string;
 }
 
+export interface OrderShippingMethodUpdate_orderUpdateShipping_order_events_app {
+  __typename: "App";
+  id: string;
+  name: string | null;
+  appUrl: string | null;
+}
+
 export interface OrderShippingMethodUpdate_orderUpdateShipping_order_events_lines_discount_amount {
   __typename: "Money";
   amount: number;
@@ -219,6 +226,7 @@ export interface OrderShippingMethodUpdate_orderUpdateShipping_order_events {
   transactionReference: string | null;
   type: OrderEventsEnum | null;
   user: OrderShippingMethodUpdate_orderUpdateShipping_order_events_user | null;
+  app: OrderShippingMethodUpdate_orderUpdateShipping_order_events_app | null;
   lines: (OrderShippingMethodUpdate_orderUpdateShipping_order_events_lines | null)[] | null;
 }
 
@@ -413,6 +421,19 @@ export interface OrderShippingMethodUpdate_orderUpdateShipping_order_shippingAdd
   streetAddress2: string;
 }
 
+export interface OrderShippingMethodUpdate_orderUpdateShipping_order_deliveryMethod_ShippingMethod {
+  __typename: "ShippingMethod";
+  id: string;
+}
+
+export interface OrderShippingMethodUpdate_orderUpdateShipping_order_deliveryMethod_Warehouse {
+  __typename: "Warehouse";
+  id: string;
+  clickAndCollectOption: WarehouseClickAndCollectOptionEnum;
+}
+
+export type OrderShippingMethodUpdate_orderUpdateShipping_order_deliveryMethod = OrderShippingMethodUpdate_orderUpdateShipping_order_deliveryMethod_ShippingMethod | OrderShippingMethodUpdate_orderUpdateShipping_order_deliveryMethod_Warehouse;
+
 export interface OrderShippingMethodUpdate_orderUpdateShipping_order_subtotal_gross {
   __typename: "Money";
   amount: number;
@@ -508,6 +529,8 @@ export interface OrderShippingMethodUpdate_orderUpdateShipping_order {
   isPaid: boolean;
   paymentStatus: PaymentChargeStatusEnum;
   shippingAddress: OrderShippingMethodUpdate_orderUpdateShipping_order_shippingAddress | null;
+  deliveryMethod: OrderShippingMethodUpdate_orderUpdateShipping_order_deliveryMethod | null;
+  collectionPointName: string | null;
   status: OrderStatus;
   subtotal: OrderShippingMethodUpdate_orderUpdateShipping_order_subtotal;
   actions: (OrderAction | null)[];

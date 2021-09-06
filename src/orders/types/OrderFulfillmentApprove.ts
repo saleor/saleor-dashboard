@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { OrderErrorCode, AddressTypeEnum, OrderDiscountType, DiscountValueTypeEnum, OrderEventsEmailsEnum, OrderEventsEnum, FulfillmentStatus, PaymentChargeStatusEnum, OrderStatus, OrderAction, JobStatusEnum } from "./../../types/globalTypes";
+import { OrderErrorCode, AddressTypeEnum, OrderDiscountType, DiscountValueTypeEnum, OrderEventsEmailsEnum, OrderEventsEnum, FulfillmentStatus, PaymentChargeStatusEnum, WarehouseClickAndCollectOptionEnum, OrderStatus, OrderAction, JobStatusEnum } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: OrderFulfillmentApprove
@@ -103,6 +103,13 @@ export interface OrderFulfillmentApprove_orderFulfillmentApprove_order_events_us
   lastName: string;
 }
 
+export interface OrderFulfillmentApprove_orderFulfillmentApprove_order_events_app {
+  __typename: "App";
+  id: string;
+  name: string | null;
+  appUrl: string | null;
+}
+
 export interface OrderFulfillmentApprove_orderFulfillmentApprove_order_events_lines_discount_amount {
   __typename: "Money";
   amount: number;
@@ -157,6 +164,7 @@ export interface OrderFulfillmentApprove_orderFulfillmentApprove_order_events {
   transactionReference: string | null;
   type: OrderEventsEnum | null;
   user: OrderFulfillmentApprove_orderFulfillmentApprove_order_events_user | null;
+  app: OrderFulfillmentApprove_orderFulfillmentApprove_order_events_app | null;
   lines: (OrderFulfillmentApprove_orderFulfillmentApprove_order_events_lines | null)[] | null;
 }
 
@@ -351,6 +359,19 @@ export interface OrderFulfillmentApprove_orderFulfillmentApprove_order_shippingA
   streetAddress2: string;
 }
 
+export interface OrderFulfillmentApprove_orderFulfillmentApprove_order_deliveryMethod_ShippingMethod {
+  __typename: "ShippingMethod";
+  id: string;
+}
+
+export interface OrderFulfillmentApprove_orderFulfillmentApprove_order_deliveryMethod_Warehouse {
+  __typename: "Warehouse";
+  id: string;
+  clickAndCollectOption: WarehouseClickAndCollectOptionEnum;
+}
+
+export type OrderFulfillmentApprove_orderFulfillmentApprove_order_deliveryMethod = OrderFulfillmentApprove_orderFulfillmentApprove_order_deliveryMethod_ShippingMethod | OrderFulfillmentApprove_orderFulfillmentApprove_order_deliveryMethod_Warehouse;
+
 export interface OrderFulfillmentApprove_orderFulfillmentApprove_order_shippingMethod {
   __typename: "ShippingMethod";
   id: string;
@@ -495,8 +516,10 @@ export interface OrderFulfillmentApprove_orderFulfillmentApprove_order {
   isPaid: boolean;
   paymentStatus: PaymentChargeStatusEnum;
   shippingAddress: OrderFulfillmentApprove_orderFulfillmentApprove_order_shippingAddress | null;
+  deliveryMethod: OrderFulfillmentApprove_orderFulfillmentApprove_order_deliveryMethod | null;
   shippingMethod: OrderFulfillmentApprove_orderFulfillmentApprove_order_shippingMethod | null;
   shippingMethodName: string | null;
+  collectionPointName: string | null;
   shippingPrice: OrderFulfillmentApprove_orderFulfillmentApprove_order_shippingPrice;
   status: OrderStatus;
   subtotal: OrderFulfillmentApprove_orderFulfillmentApprove_order_subtotal;

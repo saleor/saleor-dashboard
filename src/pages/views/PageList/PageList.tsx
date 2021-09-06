@@ -54,7 +54,7 @@ export const PageList: React.FC<PageListProps> = ({ params }) => {
       ...paginationState,
       sort: getSortQueryVariables(params)
     }),
-    [params]
+    [params, settings.rowNumber]
   );
   const { data, loading, refetch } = usePageListQuery({
     displayLoader: true,

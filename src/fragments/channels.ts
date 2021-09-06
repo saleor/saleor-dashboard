@@ -15,6 +15,10 @@ export const channelFragment = gql`
     name
     slug
     currencyCode
+    defaultCountry {
+      code
+      country
+    }
   }
 `;
 

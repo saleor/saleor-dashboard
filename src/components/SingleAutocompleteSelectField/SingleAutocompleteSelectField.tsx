@@ -160,7 +160,9 @@ const SingleAutocompleteSelectFieldComponent: React.FC<SingleAutocompleteSelectF
 
             const handleBlur = () => {
               ensureProperValues(true);
-              onBlur();
+              if (onBlur) {
+                onBlur();
+              }
               closeMenu();
             };
 

@@ -1,3 +1,4 @@
+import { countries } from "@saleor/fixtures";
 import Decorator from "@saleor/storybook/Decorator";
 import { storiesOf } from "@storybook/react";
 import React from "react";
@@ -21,6 +22,11 @@ const props: ChannelDetailsPageProps = {
   updateChannelStatus: () => undefined,
   searchShippingZones: () => undefined,
   searchShippingZonesData: undefined,
+  countries: countries.map(({ name, code }) => ({
+    code,
+    country: name,
+    __typename: "CountryDisplay"
+  })),
   channelShippingZones: [
     {
       __typename: "ShippingZone",

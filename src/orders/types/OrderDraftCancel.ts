@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { OrderErrorCode, AddressTypeEnum, OrderDiscountType, DiscountValueTypeEnum, OrderEventsEmailsEnum, OrderEventsEnum, FulfillmentStatus, PaymentChargeStatusEnum, OrderStatus, OrderAction, JobStatusEnum } from "./../../types/globalTypes";
+import { OrderErrorCode, AddressTypeEnum, OrderDiscountType, DiscountValueTypeEnum, OrderEventsEmailsEnum, OrderEventsEnum, FulfillmentStatus, PaymentChargeStatusEnum, WarehouseClickAndCollectOptionEnum, OrderStatus, OrderAction, JobStatusEnum } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: OrderDraftCancel
@@ -103,6 +103,13 @@ export interface OrderDraftCancel_draftOrderDelete_order_events_user {
   lastName: string;
 }
 
+export interface OrderDraftCancel_draftOrderDelete_order_events_app {
+  __typename: "App";
+  id: string;
+  name: string | null;
+  appUrl: string | null;
+}
+
 export interface OrderDraftCancel_draftOrderDelete_order_events_lines_discount_amount {
   __typename: "Money";
   amount: number;
@@ -157,6 +164,7 @@ export interface OrderDraftCancel_draftOrderDelete_order_events {
   transactionReference: string | null;
   type: OrderEventsEnum | null;
   user: OrderDraftCancel_draftOrderDelete_order_events_user | null;
+  app: OrderDraftCancel_draftOrderDelete_order_events_app | null;
   lines: (OrderDraftCancel_draftOrderDelete_order_events_lines | null)[] | null;
 }
 
@@ -351,6 +359,19 @@ export interface OrderDraftCancel_draftOrderDelete_order_shippingAddress {
   streetAddress2: string;
 }
 
+export interface OrderDraftCancel_draftOrderDelete_order_deliveryMethod_ShippingMethod {
+  __typename: "ShippingMethod";
+  id: string;
+}
+
+export interface OrderDraftCancel_draftOrderDelete_order_deliveryMethod_Warehouse {
+  __typename: "Warehouse";
+  id: string;
+  clickAndCollectOption: WarehouseClickAndCollectOptionEnum;
+}
+
+export type OrderDraftCancel_draftOrderDelete_order_deliveryMethod = OrderDraftCancel_draftOrderDelete_order_deliveryMethod_ShippingMethod | OrderDraftCancel_draftOrderDelete_order_deliveryMethod_Warehouse;
+
 export interface OrderDraftCancel_draftOrderDelete_order_shippingMethod {
   __typename: "ShippingMethod";
   id: string;
@@ -495,8 +516,10 @@ export interface OrderDraftCancel_draftOrderDelete_order {
   isPaid: boolean;
   paymentStatus: PaymentChargeStatusEnum;
   shippingAddress: OrderDraftCancel_draftOrderDelete_order_shippingAddress | null;
+  deliveryMethod: OrderDraftCancel_draftOrderDelete_order_deliveryMethod | null;
   shippingMethod: OrderDraftCancel_draftOrderDelete_order_shippingMethod | null;
   shippingMethodName: string | null;
+  collectionPointName: string | null;
   shippingPrice: OrderDraftCancel_draftOrderDelete_order_shippingPrice;
   status: OrderStatus;
   subtotal: OrderDraftCancel_draftOrderDelete_order_subtotal;
