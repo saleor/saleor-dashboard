@@ -31,6 +31,8 @@ export function createShippingZone(
   confirmationMessageShouldDisappear();
   cy.get(SHIPPING_ZONE_DETAILS.warehouseSelector)
     .click()
+    .get(SHIPPING_ZONE_DETAILS.warehouseSelector)
+    .type(warehouseName)
     .get(SHIPPING_ZONE_DETAILS.autocompleteContentDialog)
     .scrollTo("bottom")
     .get(SHIPPING_ZONE_DETAILS.option)

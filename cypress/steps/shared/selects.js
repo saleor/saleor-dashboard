@@ -1,5 +1,8 @@
 import { BUTTON_SELECTORS } from "../../elements/shared/button-selectors";
-import { selectorWithDataValue } from "../../elements/shared/sharedElements";
+import {
+  selectorWithDataValue,
+  SHARED_ELEMENTS
+} from "../../elements/shared/sharedElements";
 
 export function fillAutocompleteSelect(selectSelector, option) {
   cy.get(selectSelector)
@@ -21,6 +24,15 @@ export function fillAutocompleteSelect(selectSelector, option) {
       .click();
   }
   return cy.get("@option");
+}
+
+export function fillMultiSelect(selectSelector, option) {
+  fillAutocompleteSelect(selectSelector, option).then(returnedOption => {
+    cy.get(SHARED_ELEMENTS.spacer)
+      .first()
+      .click({ force: true });
+    return cy.wrap(returnedOption);
+  });
 }
 
 export function fillBaseSelect(selectSelector, value) {

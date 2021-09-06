@@ -16,7 +16,8 @@ export const SHARED_ELEMENTS = {
   },
   filters: {
     filterGroupActivateCheckbox: '[data-test="filterGroupActive"]'
-  }
+  },
+  spacer: '[class*="spacer"]'
 };
 
 export const selectorWithDataValue = value => `[data-value="${value}"]`;
