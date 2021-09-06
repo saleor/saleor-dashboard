@@ -1501,6 +1501,27 @@ describe("Get the total value of all selected products", () => {
       }
     ];
 
+    const waitingItemsQuantities: FormsetData<LineItemData, number> = [
+      {
+        data: { isFulfillment: false, isRefunded: false },
+        id: "1",
+        label: null,
+        value: 0
+      },
+      {
+        data: { isFulfillment: false, isRefunded: false },
+        id: "2",
+        label: null,
+        value: 2
+      },
+      {
+        data: { isFulfillment: false, isRefunded: false },
+        id: "3",
+        label: null,
+        value: 1
+      }
+    ];
+
     const fulfilledItemsQuantities: FormsetData<LineItemData, number> = [
       {
         data: { isFulfillment: true, isRefunded: false },
@@ -1591,6 +1612,7 @@ describe("Get the total value of all selected products", () => {
       },
       {
         itemsToBeReplaced,
+        waitingItemsQuantities,
         unfulfilledItemsQuantities,
         fulfilledItemsQuantities
       }

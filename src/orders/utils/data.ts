@@ -9,6 +9,7 @@ import {
 } from "../components/OrderReturnPage/form";
 import {
   getAllOrderFulfilledLines,
+  getAllOrderWaitingLines,
   getById
 } from "../components/OrderReturnPage/utils";
 import { FulfillOrder_orderFulfill_errors } from "../types/FulfillOrder";
@@ -137,7 +138,12 @@ export const getReplacedProductsAmount = (
 
 export const getReturnSelectedProductsAmount = (
   order: OrderDetails_order,
-  { itemsToBeReplaced, unfulfilledItemsQuantities, fulfilledItemsQuantities }
+  {
+    itemsToBeReplaced,
+    waitingItemsQuantities,
+    unfulfilledItemsQuantities,
+    fulfilledItemsQuantities
+  }
 ) => {
   if (!order) {
     return 0;
@@ -155,10 +161,44 @@ export const getReturnSelectedProductsAmount = (
     orderLines: getAllOrderFulfilledLines(order)
   });
 
-  return unfulfilledItemsValue + fulfiledItemsValue;
+  const waitingItemsValue = getWaitingProductsValue({
+    itemsQuantities: waitingItemsQuantities,
+    itemsToBeReplaced,
+    orderLines: getAllOrderWaitingLines(order)
+  });
+
+  return unfulfilledItemsValue + fulfiledItemsValue + waitingItemsValue;
 };
 
 const getPartialProductsValue = ({
+  orderLines,
+  itemsQuantities,
+  itemsToBeReplaced
+}: {
+  itemsToBeReplaced: FormsetData<LineItemData, boolean>;
+  itemsQuantities: FormsetData<LineItemData, number>;
+  orderLines: OrderDetails_order_lines[];
+}) =>
+  itemsQuantities.reduce(
+    (resultAmount, { id, value: quantity, data: { isRefunded } }) => {
+      const { value: isItemToBeReplaced } = itemsToBeReplaced.find(getById(id));
+
+      if (quantity < 1 || isItemToBeReplaced || isRefunded) {
+        return resultAmount;
+      }
+
+      const { selectedQuantity, unitPrice } = getItemPriceAndQuantity({
+        id,
+        itemsQuantities,
+        orderLines
+      });
+
+      return resultAmount + unitPrice.gross.amount * selectedQuantity;
+    },
+    0
+  );
+
+const getWaitingProductsValue = ({
   orderLines,
   itemsQuantities,
   itemsToBeReplaced

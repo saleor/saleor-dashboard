@@ -24,6 +24,7 @@ class ReturnFormDataParser {
   public getParsedData = (): OrderReturnProductsInput => {
     const {
       fulfilledItemsQuantities,
+      waitingItemsQuantities,
       unfulfilledItemsQuantities,
       refundShipmentCosts
     } = this.formData;
@@ -32,6 +33,10 @@ class ReturnFormDataParser {
       OrderReturnFulfillmentLineInput
     >(fulfilledItemsQuantities, "fulfillmentLineId");
 
+    const waitingLines = this.getParsedLineData<
+      OrderReturnFulfillmentLineInput
+    >(waitingItemsQuantities, "fulfillmentLineId");
+
     const orderLines = this.getParsedLineData<OrderReturnLineInput>(
       unfulfilledItemsQuantities,
       "orderLineId"
@@ -39,7 +44,7 @@ class ReturnFormDataParser {
 
     return {
       amountToRefund: this.getAmountToRefund(),
-      fulfillmentLines,
+      fulfillmentLines: fulfillmentLines.concat(waitingLines),
       includeShippingCosts: refundShipmentCosts,
       orderLines,
       refund: this.getShouldRefund(orderLines, fulfillmentLines)

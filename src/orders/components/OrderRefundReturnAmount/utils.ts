@@ -43,6 +43,7 @@ const getMaxRefund = (order: OrderRefundData_order) => order?.totalCaptured;
 export const getProductsAmountValues = (
   order: OrderRefundData_order,
   fulfilledItemsQuantities: FormsetData<null | LineItemData, string | number>,
+  waitingItemsQuantities: FormsetData<null | LineItemData, string | number>,
   unfulfilledItemsQuantities: FormsetData<null | LineItemData, string | number>,
   shipmentCosts
 ): OrderRefundAmountValuesProps => {
@@ -55,11 +56,16 @@ export const getProductsAmountValues = (
     order?.lines,
     unfulfilledItemsQuantities as FormsetData<null, string>
   );
+  const waitingLinesSum = getAllFulfillmentLinesPriceSum(
+    order?.fulfillments,
+    waitingItemsQuantities as FormsetData<null, string>
+  );
   const allFulfillmentLinesSum = getAllFulfillmentLinesPriceSum(
     order?.fulfillments,
     fulfilledItemsQuantities as FormsetData<null, string>
   );
-  const allLinesSum = refundedLinesSum + allFulfillmentLinesSum;
+  const allLinesSum =
+    refundedLinesSum + allFulfillmentLinesSum + waitingLinesSum;
   const calculatedTotalAmount = getCalculatedTotalAmount({
     allLinesSum,
     maxRefund,
@@ -150,6 +156,7 @@ export const getReturnProductsAmountValues = (
 
   const {
     fulfilledItemsQuantities,
+    waitingItemsQuantities,
     unfulfilledItemsQuantities,
     refundShipmentCosts
   } = formData;
@@ -178,6 +185,7 @@ export const getReturnProductsAmountValues = (
     ...getProductsAmountValues(
       order,
       fulfilledItemsQuantities,
+      waitingItemsQuantities,
       unfulfilledItemsQuantities,
       refundShipmentCosts
     ),
@@ -198,6 +206,7 @@ export const getRefundProductsAmountValues = (
   getProductsAmountValues(
     order,
     refundedFulfilledProductQuantities,
+    null,
     refundedProductQuantities,
     refundShipmentCosts
   );

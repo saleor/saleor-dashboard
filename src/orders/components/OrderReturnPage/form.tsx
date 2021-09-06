@@ -39,15 +39,18 @@ export interface OrderReturnData {
 
 export interface OrderReturnHandlers {
   changeFulfiledItemsQuantity: FormsetChange<number>;
+  changeWaitingItemsQuantity: FormsetChange<number>;
   changeUnfulfiledItemsQuantity: FormsetChange<number>;
   changeItemsToBeReplaced: FormsetChange<boolean>;
   handleSetMaximalFulfiledItemsQuantities;
+  handleSetMaximalWaitingItemsQuantities;
   handleSetMaximalUnfulfiledItemsQuantities;
 }
 
 export interface OrderReturnFormData extends OrderReturnData {
   itemsToBeReplaced: FormsetReplacementData;
   fulfilledItemsQuantities: FormsetQuantityData;
+  waitingItemsQuantities: FormsetQuantityData;
   unfulfilledItemsQuantities: FormsetQuantityData;
 }
 
@@ -109,8 +112,27 @@ function useOrderReturnForm(
     return refundedFulfilmentsItems.concat(fulfilledFulfillmentsItems);
   };
 
+  const getItemsWaiting = () => {
+    const commonOptions = {
+      initialValue: 0,
+      isFulfillment: true
+    };
+
+    const waitingFulfillmentsItems = getParsedLineDataForFulfillmentStatus(
+      order,
+      FulfillmentStatus.WAITING_FOR_APPROVAL,
+      commonOptions
+    );
+
+    return waitingFulfillmentsItems;
+  };
+
   const fulfiledItemsQuatities = useFormset<LineItemData, number>(
     getItemsFulfilled()
+  );
+
+  const waitingItemsQuantities = useFormset<LineItemData, number>(
+    getItemsWaiting()
   );
 
   const getItemsToBeReplaced = () => {
@@ -134,10 +156,17 @@ function useOrderReturnForm(
       { initialValue: false, isFulfillment: true }
     );
 
+    const waitingFulfillmentsItems = getParsedLineDataForFulfillmentStatus(
+      order,
+      FulfillmentStatus.WAITING_FOR_APPROVAL,
+      { initialValue: false, isFulfillment: false }
+    );
+
     return [
       ...orderLinesItems,
       ...refundedFulfilmentsItems,
-      ...fulfilledFulfillmentsItems
+      ...fulfilledFulfillmentsItems,
+      ...waitingFulfillmentsItems
     ];
   };
 
@@ -183,8 +212,33 @@ function useOrderReturnForm(
     fulfiledItemsQuatities.set(newQuantities);
   };
 
+  const handleSetMaximalWaitingItemsQuantities = (
+    fulfillmentId: string
+  ) => () => {
+    const { lines } = order.fulfillments.find(getById(fulfillmentId));
+
+    const newQuantities: FormsetQuantityData = waitingItemsQuantities.data.map(
+      item => {
+        const line = lines.find(getById(item.id));
+
+        if (!line) {
+          return item;
+        }
+
+        return getLineItem(line, {
+          initialValue: line.quantity,
+          isRefunded: false
+        });
+      }
+    );
+
+    triggerChange();
+    waitingItemsQuantities.set(newQuantities);
+  };
+
   const data: OrderReturnFormData = {
     fulfilledItemsQuantities: fulfiledItemsQuatities.data,
+    waitingItemsQuantities: waitingItemsQuantities.data,
     itemsToBeReplaced: itemsToBeReplaced.data,
     unfulfilledItemsQuantities: unfulfiledItemsQuantites.data,
     ...form.data
@@ -208,11 +262,15 @@ function useOrderReturnForm(
       changeFulfiledItemsQuantity: handleHandlerChange(
         fulfiledItemsQuatities.change
       ),
+      changeWaitingItemsQuantity: handleHandlerChange(
+        waitingItemsQuantities.change
+      ),
       changeItemsToBeReplaced: handleHandlerChange(itemsToBeReplaced.change),
       changeUnfulfiledItemsQuantity: handleHandlerChange(
         unfulfiledItemsQuantites.change
       ),
       handleSetMaximalFulfiledItemsQuantities,
+      handleSetMaximalWaitingItemsQuantities,
       handleSetMaximalUnfulfiledItemsQuantities
     },
     hasChanged,
