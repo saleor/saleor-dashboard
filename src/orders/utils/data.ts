@@ -100,7 +100,7 @@ const selectItemPriceAndQuantity = (
   isFulfillment: boolean
 ) => {
   const fulfillment = getFulfillmentByFulfillmentLineId(order, id);
-  if (fulfillment.status === FulfillmentStatus.WAITING_FOR_APPROVAL) {
+  if (fulfillment?.status === FulfillmentStatus.WAITING_FOR_APPROVAL) {
     return getItemPriceAndQuantity({
       id,
       itemsQuantities: waitingItemsQuantities,
@@ -184,7 +184,7 @@ export const getReturnSelectedProductsAmount = (
     orderLines: getAllOrderFulfilledLines(order)
   });
 
-  const waitingItemsValue = getWaitingProductsValue({
+  const waitingItemsValue = getPartialProductsValue({
     itemsQuantities: waitingItemsQuantities,
     itemsToBeReplaced,
     orderLines: getAllOrderWaitingLines(order)
@@ -194,34 +194,6 @@ export const getReturnSelectedProductsAmount = (
 };
 
 const getPartialProductsValue = ({
-  orderLines,
-  itemsQuantities,
-  itemsToBeReplaced
-}: {
-  itemsToBeReplaced: FormsetData<LineItemData, boolean>;
-  itemsQuantities: FormsetData<LineItemData, number>;
-  orderLines: OrderDetails_order_lines[];
-}) =>
-  itemsQuantities.reduce(
-    (resultAmount, { id, value: quantity, data: { isRefunded } }) => {
-      const { value: isItemToBeReplaced } = itemsToBeReplaced.find(getById(id));
-
-      if (quantity < 1 || isItemToBeReplaced || isRefunded) {
-        return resultAmount;
-      }
-
-      const { selectedQuantity, unitPrice } = getItemPriceAndQuantity({
-        id,
-        itemsQuantities,
-        orderLines
-      });
-
-      return resultAmount + unitPrice.gross.amount * selectedQuantity;
-    },
-    0
-  );
-
-const getWaitingProductsValue = ({
   orderLines,
   itemsQuantities,
   itemsToBeReplaced
