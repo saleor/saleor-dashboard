@@ -73,7 +73,7 @@ const ShippingZoneDetails: React.FC<ShippingZoneDetailsProps> = ({
     displayLoader: true,
     variables: { id, ...paginationState }
   });
-  const { availableChannels, channel } = useAppChannel(false);
+  const { availableChannels, channel } = useAppChannel();
 
   const [openModal, closeModal] = createDialogActionHandlers<
     ShippingZoneUrlDialog,

@@ -1370,20 +1370,8 @@
     "context": "number of products",
     "string": "No. of Products"
   },
-  "src_dot_categories_dot_components_dot_CategoryProductList_dot_1134347598": {
-    "context": "product price",
-    "string": "Price"
-  },
   "src_dot_categories_dot_components_dot_CategoryProductList_dot_1657559629": {
     "string": "No products found"
-  },
-  "src_dot_categories_dot_components_dot_CategoryProductList_dot_1952810469": {
-    "context": "product type",
-    "string": "Type"
-  },
-  "src_dot_categories_dot_components_dot_CategoryProductList_dot_3326160357": {
-    "context": "availability status",
-    "string": "Availability"
   },
   "src_dot_categories_dot_components_dot_CategoryProductList_dot_636461959": {
     "context": "product",
@@ -1392,6 +1380,10 @@
   "src_dot_categories_dot_components_dot_CategoryProducts_dot_3554578821": {
     "context": "button",
     "string": "Add product"
+  },
+  "src_dot_categories_dot_components_dot_CategoryProducts_dot_4078580795": {
+    "context": "button",
+    "string": "View products"
   },
   "src_dot_categories_dot_components_dot_CategoryProducts_dot_4164156574": {
     "context": "header",
@@ -7598,6 +7590,10 @@
     "context": "event",
     "string": "Checkout created"
   },
+  "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_2275774954": {
+    "context": "event",
+    "string": "Product Variant out of stock"
+  },
   "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_2454751033": {
     "context": "event",
     "string": "All events"
@@ -7661,6 +7657,10 @@
   "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_3907151399": {
     "context": "event",
     "string": "Order fulfilled"
+  },
+  "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_3951314810": {
+    "context": "event",
+    "string": "Product Variant back in stock"
   },
   "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_3970234993": {
     "context": "event",

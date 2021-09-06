@@ -80,70 +80,11 @@ export interface CategoryDetails_category_products_edges_node_thumbnail {
   url: string;
 }
 
-export interface CategoryDetails_category_products_edges_node_productType {
-  __typename: "ProductType";
-  id: string;
-  name: string;
-}
-
-export interface CategoryDetails_category_products_edges_node_channelListings_channel {
-  __typename: "Channel";
-  id: string;
-  name: string;
-  currencyCode: string;
-}
-
-export interface CategoryDetails_category_products_edges_node_channelListings_pricing_priceRange_start_net {
-  __typename: "Money";
-  amount: number;
-  currency: string;
-}
-
-export interface CategoryDetails_category_products_edges_node_channelListings_pricing_priceRange_start {
-  __typename: "TaxedMoney";
-  net: CategoryDetails_category_products_edges_node_channelListings_pricing_priceRange_start_net;
-}
-
-export interface CategoryDetails_category_products_edges_node_channelListings_pricing_priceRange_stop_net {
-  __typename: "Money";
-  amount: number;
-  currency: string;
-}
-
-export interface CategoryDetails_category_products_edges_node_channelListings_pricing_priceRange_stop {
-  __typename: "TaxedMoney";
-  net: CategoryDetails_category_products_edges_node_channelListings_pricing_priceRange_stop_net;
-}
-
-export interface CategoryDetails_category_products_edges_node_channelListings_pricing_priceRange {
-  __typename: "TaxedMoneyRange";
-  start: CategoryDetails_category_products_edges_node_channelListings_pricing_priceRange_start | null;
-  stop: CategoryDetails_category_products_edges_node_channelListings_pricing_priceRange_stop | null;
-}
-
-export interface CategoryDetails_category_products_edges_node_channelListings_pricing {
-  __typename: "ProductPricingInfo";
-  priceRange: CategoryDetails_category_products_edges_node_channelListings_pricing_priceRange | null;
-}
-
-export interface CategoryDetails_category_products_edges_node_channelListings {
-  __typename: "ProductChannelListing";
-  isPublished: boolean;
-  publicationDate: any | null;
-  isAvailableForPurchase: boolean | null;
-  availableForPurchase: any | null;
-  visibleInListings: boolean;
-  channel: CategoryDetails_category_products_edges_node_channelListings_channel;
-  pricing: CategoryDetails_category_products_edges_node_channelListings_pricing | null;
-}
-
 export interface CategoryDetails_category_products_edges_node {
   __typename: "Product";
   id: string;
   name: string;
   thumbnail: CategoryDetails_category_products_edges_node_thumbnail | null;
-  productType: CategoryDetails_category_products_edges_node_productType;
-  channelListings: CategoryDetails_category_products_edges_node_channelListings[] | null;
 }
 
 export interface CategoryDetails_category_products_edges {
