@@ -39,6 +39,7 @@ const useStyles = makeStyles(
       color: emphasisedTextBlue,
       textTransform: "uppercase",
       fontWeight: 600,
+      fontStyle: "normal",
       paddingLeft: "5px"
     },
     divider: {

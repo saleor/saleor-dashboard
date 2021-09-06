@@ -23,7 +23,7 @@ export const DemoBanner: React.FC = () => {
                 defaultMessage="See <emphasis>DEMO STOREFRONT</emphasis>"
                 values={{
                   emphasis: (children: any) => (
-                    <div className={classes.textEmphasis}>{children}</div>
+                    <em className={classes.textEmphasis}>{children}</em>
                   )
                 }}
               />
@@ -40,7 +40,7 @@ export const DemoBanner: React.FC = () => {
                 defaultMessage="Play with <emphasis>GraphQL API</emphasis>"
                 values={{
                   emphasis: (children: any) => (
-                    <div className={classes.textEmphasis}>{children}</div>
+                    <em className={classes.textEmphasis}>{children}</em>
                   )
                 }}
               />
