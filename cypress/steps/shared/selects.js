@@ -28,7 +28,7 @@ export function fillAutocompleteSelect(selectSelector, option) {
 
 export function fillMultiSelect(selectSelector, option) {
   fillAutocompleteSelect(selectSelector, option).then(returnedOption => {
-    cy.get(SHARED_ELEMENTS.spacer)
+    cy.get(SHARED_ELEMENTS.header)
       .first()
       .click({ force: true });
     return cy.wrap(returnedOption);
