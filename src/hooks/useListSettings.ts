@@ -22,7 +22,7 @@ export default function useListSettings<TColumns extends string = string>(
         return defaultListSettings;
       }
 
-      return merge(defaultListSettings, storedListSettings);
+      return merge({}, defaultListSettings, storedListSettings);
     }
   );
 
