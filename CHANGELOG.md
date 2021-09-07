@@ -78,8 +78,6 @@ All notable, unreleased changes to this project will be documented in this file.
 - Fixed navigation menu items reordering issue - #1239 by @kamilpastuszka
 - Fixed issue with modals containing invalid, redundant scrolls #1240 by @kamilpastuszka
 - Add text attribute for product and page translations - #1276 by @kamilpastuszka
-- Add app dashboard extensions - #1292 by @jwm0
-- Introduce fulfillment creation - #1241 by @orzechdev
 - Add Demo Banner - #1331 by @kamilpastuszka
 
 # 2.11.1
