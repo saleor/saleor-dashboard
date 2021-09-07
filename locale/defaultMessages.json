@@ -3407,6 +3407,22 @@
     "context": "gift cards section name",
     "string": "Gift Cards"
   },
+  "src_dot_giftCards_dot_GiftCardCreateDialog_dot_GiftCardCreateExpirySelect_dot_expiryDateLabel": {
+    "context": "GiftCarUpdateDetailsExpirySection expiry date label",
+    "string": "Exact date"
+  },
+  "src_dot_giftCards_dot_GiftCardCreateDialog_dot_GiftCardCreateExpirySelect_dot_expiryOnLabel": {
+    "context": "GiftCarUpdateDetailsExpirySection expiry on label",
+    "string": "Will expire on:"
+  },
+  "src_dot_giftCards_dot_GiftCardCreateDialog_dot_GiftCardCreateExpirySelect_dot_expiryPeriodLabel": {
+    "context": "GiftCarUpdateDetailsExpirySection expiry period label",
+    "string": "Expires in"
+  },
+  "src_dot_giftCards_dot_GiftCardCreateDialog_dot_GiftCardCreateExpirySelect_dot_expirySelectedLabel": {
+    "context": "GiftCarUpdateDetailsExpirySection expiry selected label",
+    "string": "Set gift card expiry date"
+  },
   "src_dot_giftCards_dot_GiftCardCreateDialog_dot_amountLabel": {
     "context": "GiftCardCreateDialog amount label",
     "string": "Enter amount"
