@@ -72,7 +72,7 @@ const PluginList: React.FC<PluginListProps> = props => {
           plugin =>
             plugin ? (
               <TableRow
-                data-test="id"
+                data-test-id="plugin"
                 hover={!!plugin}
                 className={!!plugin ? classes.link : undefined}
                 onClick={plugin ? onRowClick(plugin.id) : undefined}

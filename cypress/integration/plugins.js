@@ -7,8 +7,8 @@ import {
   requestPasswordReset
 } from "../apiRequests/Customer";
 import { PLUGINS_DETAILS } from "../elements/plugins/pluginDetails";
+import { PLUGINS_LIST } from "../elements/plugins/pluginsList";
 import { BUTTON_SELECTORS } from "../elements/shared/button-selectors";
-import { SHARED_ELEMENTS } from "../elements/shared/sharedElements";
 import { confirmationMessageShouldDisappear } from "../steps/shared/confirmationMessages";
 import filterTests from "../support/filterTests";
 import { urlList } from "../url/urlList";
@@ -37,7 +37,7 @@ filterTests(["stagedOnly"], () => {
 
     it("should change user email", () => {
       const customerEmail = `${randomName}@example.com`;
-      cy.contains(SHARED_ELEMENTS.tableRow, "User emails").click();
+      cy.contains(PLUGINS_LIST.pluginRow, "User emails").click();
       cy.contains(PLUGINS_DETAILS.channel, defaultChannel.name)
         .click()
         .get(PLUGINS_DETAILS.accountConfirmationSubjectInput)
@@ -59,7 +59,7 @@ filterTests(["stagedOnly"], () => {
 
     it("should change admin email plugin", () => {
       const customerEmail = `${randomName}@example.com`;
-      cy.contains(SHARED_ELEMENTS.tableRow, "Admin emails")
+      cy.contains(PLUGINS_LIST.pluginRow, "Admin emails")
         .click()
         .get(PLUGINS_DETAILS.staffPasswordResetInput)
         .click()
