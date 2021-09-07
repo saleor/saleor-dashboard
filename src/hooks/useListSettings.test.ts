@@ -16,6 +16,12 @@ const valueWithoutKey = {
   ...defaultListSettings,
   [key]: undefined
 };
+const valueWithoutSettings = {
+  ...defaultListSettings,
+  [key]: {
+    foo: "bar"
+  }
+};
 
 beforeEach(() => {
   localStorage.clear();
@@ -53,5 +59,22 @@ describe("useListSettings", () => {
     const { result } = renderHook(() => useListSettings(key));
 
     expect(result.current.settings).toStrictEqual(defaultListSettings[key]);
+  });
+
+  it("properly fills missing settings", () => {
+    localStorage.setItem(
+      listSettingsStorageKey,
+      JSON.stringify(valueWithoutSettings)
+    );
+    expect(localStorage.getItem(listSettingsStorageKey)).toBe(
+      JSON.stringify(valueWithoutSettings)
+    );
+
+    const { result } = renderHook(() => useListSettings(key));
+
+    expect(result.current.settings).toStrictEqual({
+      ...valueWithoutSettings[key],
+      ...defaultListSettings[key]
+    });
   });
 });
