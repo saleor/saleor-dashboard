@@ -3494,6 +3494,10 @@
     "context": "GiftCardResendCodeDialog emailInputPlaceholder",
     "string": "Provided email address"
   },
+  "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardResendCodeDialog_dot_sendToChannelSelectLabel": {
+    "context": "ChannelPickerSelectField sendToChannelLabel",
+    "string": "Send to channel"
+  },
   "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardResendCodeDialog_dot_submitButtonLabel": {
     "context": "GiftCardResendCodeDialog submitButtonLabel",
     "string": "Resend"
