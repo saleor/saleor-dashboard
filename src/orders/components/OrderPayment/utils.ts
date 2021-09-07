@@ -13,12 +13,16 @@ export const extractOrderGiftCardUsedAmount = (
 
   const { id, giftCards } = order;
 
-  const orderRelatedEvent = giftCards.find(({ events }) =>
-    events.find(
+  const orderRelatedEvent = giftCards.reduce((resultEvent, { events }) => {
+    if (resultEvent) {
+      return resultEvent;
+    }
+
+    return events.find(
       ({ orderId, type }) =>
         type === GiftCardEventsEnum.USED_IN_ORDER && orderId === id
-    )
-  );
+    );
+  }, undefined as OrderDetails_order_giftCards_events);
 
   if (!orderRelatedEvent) {
     return undefined;

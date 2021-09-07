@@ -3718,6 +3718,22 @@
     "context": "GiftCardDeleteDialog with balance description",
     "string": "{selectedItemsCount,plural,one{The gift card you are about to delete has available balance. By deleting this card you may remove balance available to your customer.} other{You are about to delete gift cards with available balance. Are you sure you want to do that?}}"
   },
+  "src_dot_giftCards_dot_components_dot_GiftCardSendToCustomer_dot_channelSelectLabel": {
+    "context": "GiftCardCreateDialog channel select label",
+    "string": "Channel"
+  },
+  "src_dot_giftCards_dot_components_dot_GiftCardSendToCustomer_dot_customerChannelSubtitle": {
+    "context": "GiftCardCreateDialog customer channel subtitle",
+    "string": "Customer will be sent the gift card code via this channels email address"
+  },
+  "src_dot_giftCards_dot_components_dot_GiftCardSendToCustomer_dot_customerSubtitle": {
+    "context": "GiftCardCreateDialog customer subtitle",
+    "string": "Selected customer will be sent the generated gift card code. Someone else can redeem the gift card code. Gift card will be assigned to account which redeemed the code."
+  },
+  "src_dot_giftCards_dot_components_dot_GiftCardSendToCustomer_dot_sendToCustomerSelectedLabel": {
+    "context": "GiftCardSendToCustomer send to customer selected label",
+    "string": "Send gift card to customer"
+  },
   "src_dot_giftCards_dot_components_dot_GiftCardSettingsExpirySelect_dot_setExpirationPeriodDescription": {
     "context": "checkbox label description",
     "string": "Expiration date will be automatically set, once gift card is issued"
