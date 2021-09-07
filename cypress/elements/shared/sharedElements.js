@@ -15,7 +15,8 @@ export const SHARED_ELEMENTS = {
     empty: '[class*="codex-editor--empty"]'
   },
   filters: {
-    filterGroupActivateCheckbox: '[data-test="filterGroupActive"]'
+    filterGroupActivateCheckbox: '[data-test="filterGroupActive"]',
+    filterRow: '[data-test="channel-availability-item"]'
   }
 };
 
