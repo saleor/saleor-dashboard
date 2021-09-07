@@ -48,11 +48,12 @@ const GiftCardResendCodeDialog: React.FC<DialogActionHandlersProps> = ({
 
   const channels = channelsData?.channels;
 
-  const { onQueryChange, filteredChannels } = useChannelsSearch(channels);
+  const activeChannels = channels?.filter(({ isActive }) => isActive);
+
+  const { onQueryChange, filteredChannels } = useChannelsSearch(activeChannels);
 
   const initialFormData: GiftCardResendCodeFormData = {
     email: "",
-    // TMP
     channelSlug: initialChannelSlug || ""
   };
 
@@ -149,7 +150,7 @@ const GiftCardResendCodeDialog: React.FC<DialogActionHandlersProps> = ({
             displayValue={channels.find(getBySlug(data?.channelSlug))?.name}
             fetchChoices={onQueryChange}
           />
-          <VerticalSpacer spacing={0.5} />
+          <VerticalSpacer />
           <ControlledCheckbox
             name="differentMailConsent"
             label={intl.formatMessage(messages.consentCheckboxLabel)}
