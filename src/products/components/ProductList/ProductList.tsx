@@ -147,9 +147,7 @@ export const ProductList: React.FC<ProductListProps> = props => {
       <ResponsiveTable className={classes.table}>
         <colgroup>
           <col />
-          <DisplayColumn column="productName" displayColumns={settings.columns}>
-            <col className={classes.colName} />
-          </DisplayColumn>
+          <col className={classes.colName} />
           <DisplayColumn column="productType" displayColumns={settings.columns}>
             <col className={classes.colType} />
           </DisplayColumn>
@@ -328,7 +326,6 @@ export const ProductList: React.FC<ProductListProps> = props => {
                     />
                   </TableCell>
                   <TableCellAvatar
-                    className={classes.colName}
                     thumbnail={maybe(() => product.thumbnail.url)}
                   >
                     {product?.productType ? (
