@@ -46,5 +46,13 @@ export const giftCardCreateDialogMessages = defineMessages({
   createdSuccessAlertTitle: {
     defaultMessage: "Successfully created gift card",
     description: "GiftCardCreateDialog createdSuccessAlertTitle"
+  },
+  requiresActivationLabel: {
+    defaultMessage: "Requires activation",
+    description: "GiftCarUpdateDetailsExpirySection requires activation label"
+  },
+  requiresActivationCaption: {
+    defaultMessage: "All issued cards require activation by staff before use.",
+    description: "GiftCarUpdateDetailsExpirySection requires activation caption"
   }
 });

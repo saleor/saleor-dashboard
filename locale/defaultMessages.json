@@ -3411,6 +3411,22 @@
     "context": "gift cards section name",
     "string": "Gift Cards"
   },
+  "src_dot_giftCards_dot_GiftCardCreateDialog_dot_GiftCardCreateExpirySelect_dot_expiryDateLabel": {
+    "context": "GiftCarUpdateDetailsExpirySection expiry date label",
+    "string": "Exact date"
+  },
+  "src_dot_giftCards_dot_GiftCardCreateDialog_dot_GiftCardCreateExpirySelect_dot_expiryOnLabel": {
+    "context": "GiftCarUpdateDetailsExpirySection expiry on label",
+    "string": "Will expire on:"
+  },
+  "src_dot_giftCards_dot_GiftCardCreateDialog_dot_GiftCardCreateExpirySelect_dot_expiryPeriodLabel": {
+    "context": "GiftCarUpdateDetailsExpirySection expiry period label",
+    "string": "Expires in"
+  },
+  "src_dot_giftCards_dot_GiftCardCreateDialog_dot_GiftCardCreateExpirySelect_dot_expirySelectedLabel": {
+    "context": "GiftCarUpdateDetailsExpirySection expiry selected label",
+    "string": "Set gift card expiry date"
+  },
   "src_dot_giftCards_dot_GiftCardCreateDialog_dot_amountLabel": {
     "context": "GiftCardCreateDialog amount label",
     "string": "Enter amount"
@@ -3450,6 +3466,14 @@
   "src_dot_giftCards_dot_GiftCardCreateDialog_dot_noteSubtitle": {
     "context": "GiftCardCreateDialog note subtitle",
     "string": "Why was this gift card issued. This note will not be shown to the customer. Note will be stored in gift card history"
+  },
+  "src_dot_giftCards_dot_GiftCardCreateDialog_dot_requiresActivationCaption": {
+    "context": "GiftCarUpdateDetailsExpirySection requires activation caption",
+    "string": "All issued cards require activation by staff before use."
+  },
+  "src_dot_giftCards_dot_GiftCardCreateDialog_dot_requiresActivationLabel": {
+    "context": "GiftCarUpdateDetailsExpirySection requires activation label",
+    "string": "Requires activation"
   },
   "src_dot_giftCards_dot_GiftCardCreateDialog_dot_title": {
     "context": "GiftCardCreateDialog title",

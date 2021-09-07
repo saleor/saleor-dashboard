@@ -1,6 +1,6 @@
 import { makeStyles } from "@saleor/macaw-ui";
 
-export const useGiftCardExpirySelectStyles = makeStyles(
+export const useGiftCardCreateExpirySelectStyles = makeStyles(
   theme => ({
     radioGroupContainer: {
       display: "flex",
@@ -16,5 +16,5 @@ export const useGiftCardExpirySelectStyles = makeStyles(
       marginTop: theme.spacing(0.5)
     }
   }),
-  { name: "GiftCardUpdateDetailsExpirySection" }
+  { name: "GiftCardExpirySelect" }
 );
