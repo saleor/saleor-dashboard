@@ -163,7 +163,6 @@ const GiftCardCreateDialogForm: React.FC<GiftCardCreateDialogFormProps> = ({
         />
         <CardSpacer />
         <Divider />
-        <CardSpacer />
         <GiftCardSendToCustomer
           change={change}
           sendToCustomerSelected={sendToCustomerSelected}
@@ -172,7 +171,6 @@ const GiftCardCreateDialogForm: React.FC<GiftCardCreateDialogFormProps> = ({
           channel={channel}
           channelsChoices={channelsChoices}
         />
-        <CardSpacer />
         <Divider />
         <VerticalSpacer />
         <GiftCardCreateExpirySelect

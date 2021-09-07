@@ -127,9 +127,9 @@ const GiftCardCreateExpirySelect: React.FC<GiftCardCreateExpirySelectProps> = ({
               </div>
             </div>
           )}
+          <VerticalSpacer spacing={2} />
         </>
       )}
-      <VerticalSpacer />
     </>
   );
 };

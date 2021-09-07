@@ -33,6 +33,7 @@ const GiftCardSendToCustomer: React.FC<GiftCardSendToCustomerProps> = ({
 
   return (
     <>
+      <VerticalSpacer />
       <ControlledCheckbox
         name={"sendToCustomerSelected"}
         label={intl.formatMessage(messages.sendToCustomerSelectedLabel)}
@@ -41,14 +42,14 @@ const GiftCardSendToCustomer: React.FC<GiftCardSendToCustomerProps> = ({
       />
       {sendToCustomerSelected && (
         <>
-          <VerticalSpacer spacing={2} />
+          <VerticalSpacer />
           <GiftCardCustomerSelectField
             selectedCustomer={selectedCustomer}
             setSelectedCustomer={setSelectedCustomer}
           />
           <VerticalSpacer />
           <Label text={intl.formatMessage(messages.customerSubtitle)} />
-          <VerticalSpacer spacing={2} />
+          <VerticalSpacer />
           <SingleSelectField
             choices={channelsChoices}
             name="channel"
@@ -58,8 +59,10 @@ const GiftCardSendToCustomer: React.FC<GiftCardSendToCustomerProps> = ({
           />
           <VerticalSpacer />
           <Label text={intl.formatMessage(messages.customerChannelSubtitle)} />
+          <VerticalSpacer />
         </>
       )}
+      <VerticalSpacer />
     </>
   );
 };
