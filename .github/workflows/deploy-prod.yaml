@@ -28,7 +28,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
         with:
-          ref: ${{ github.event.inputs.chart_git_ref }}
+          ref: ${{ github.event.inputs.git_ref }}
       - name: Package
         timeout-minutes: 15
         run: |
