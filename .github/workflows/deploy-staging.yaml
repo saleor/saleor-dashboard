@@ -35,9 +35,9 @@ jobs:
           SERVICE_NAME_INPUT=${{ github.event.inputs.service_name }}
           SERVICE_NAME="${SERVICE_NAME_INPUT:=saleor-master-staging}"
 
-          echo "export GIT_REF=$GIT_REF" >> $GITHUB_ENV
+          echo "GIT_REF=$GIT_REF" >> $GITHUB_ENV
           # ENVIRONMENT variable is provided to sentry at build time
-          echo "export ENVIRONMENT=$SERVICE_NAME" >> $GITHUB_ENV
+          echo "ENVIRONMENT=$SERVICE_NAME" >> $GITHUB_ENV
 
       - uses: actions/checkout@v2
         with:
