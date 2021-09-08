@@ -69,14 +69,15 @@ const GiftCardCreateDialog: React.FC<DialogActionHandlersProps> = ({
       tag,
       sendToCustomerSelected,
       selectedCustomer,
-      requiresActivation
+      requiresActivation,
+      channel
     } = formData;
 
     return {
       note: note || null,
       tag: tag || null,
       userEmail: (sendToCustomerSelected && selectedCustomer.email) || null,
-      channel: (sendToCustomerSelected && channel?.slug) || null,
+      channel: (sendToCustomerSelected && channel) || null,
       balance: {
         amount: balanceAmount,
         currency: balanceCurrency
