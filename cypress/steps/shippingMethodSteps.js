@@ -34,9 +34,8 @@ export function createShippingZone(
     .get(SHIPPING_ZONE_DETAILS.warehouseSelector)
     .type(warehouseName)
     .get(SHIPPING_ZONE_DETAILS.autocompleteContentDialog)
-    .scrollTo("bottom")
-    .get(SHIPPING_ZONE_DETAILS.option)
-    .contains(warehouseName)
+    .scrollTo("bottom");
+  cy.contains(SHIPPING_ZONE_DETAILS.option, warehouseName)
     .click({ force: true })
     .get(SHIPPING_ZONE_DETAILS.channelSelector)
     .click()
