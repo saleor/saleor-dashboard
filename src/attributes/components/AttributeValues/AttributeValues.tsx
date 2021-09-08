@@ -64,7 +64,9 @@ const useStyles = makeStyles(
     swatch: {
       width: 32,
       height: 32,
-      borderRadius: 4
+      borderRadius: 4,
+      backgroundSize: "cover",
+      backgroundPosition: "center"
     }
   }),
   { name: "AttributeValues" }
@@ -168,7 +170,11 @@ const AttributeValues: React.FC<AttributeValuesProps> = ({
                   <TableCell className={classes.columnSwatch}>
                     <div
                       className={classes.swatch}
-                      style={{ backgroundColor: value.value }}
+                      style={
+                        value?.file
+                          ? { backgroundImage: `url(${value.file.url})` }
+                          : { backgroundColor: value.value }
+                      }
                     />
                   </TableCell>
                 )}

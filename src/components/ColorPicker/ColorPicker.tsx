@@ -1,7 +1,5 @@
 import { TextField } from "@material-ui/core";
 import Spacer from "@saleor/apps/components/HorizontalSpacer";
-import { inputTypeMessages } from "@saleor/attributes/components/AttributeDetails/messages";
-import { AttributeValueEditDialogFormData } from "@saleor/attributes/components/AttributeValueEditDialog";
 import { UseFormResult } from "@saleor/hooks/useForm";
 import { makeStyles } from "@saleor/macaw-ui";
 import { RequireOnlyOne } from "@saleor/misc";
@@ -11,10 +9,7 @@ import Saturation from "@uiw/react-color-saturation";
 import convert from "color-convert";
 import { RGB } from "color-convert/conversions";
 import React, { useEffect, useState } from "react";
-import { FormattedMessage } from "react-intl";
 import { useIntl } from "react-intl";
-
-import RadioGroupField from "../RadioGroupField/RadioGroupField";
 
 const useStyles = makeStyles(
   theme => ({
@@ -41,17 +36,23 @@ const useStyles = makeStyles(
   { name: "ColorPicker" }
 );
 
-type ColorPickerProps<T> = Pick<
+type ColorPickerProps<T = any> = Pick<
   UseFormResult<T>,
-  "setError" | "set" | "errors" | "clearErrors" | "data"
->;
+  "setError" | "errors" | "clearErrors" | "data"
+> & { onColorChange: (hex: string) => void };
 
-export const ColorPicker: React.FC<ColorPickerProps<
-  AttributeValueEditDialogFormData
->> = ({ clearErrors, setError, errors, set, data }) => {
+export const ColorPicker: React.FC<ColorPickerProps> = ({
+  clearErrors,
+  setError,
+  errors,
+  onColorChange,
+  data
+}) => {
   const classes = useStyles();
   const intl = useIntl();
-  const [hex, setHex] = useState<string>(data.value.replace("#", ""));
+  const [hex, setHex] = useState<string>(
+    data.value ? data.value.replace("#", "") : "000000"
+  );
   const [hue, setHue] = useState<number>(convert.hex.hsv(hex)[0]);
 
   const [_, s, v] = convert.hex.hsv(hex);
@@ -87,7 +88,7 @@ export const ColorPicker: React.FC<ColorPickerProps<
         clearErrors("value");
       }
 
-      set({ value: `#${hex}` });
+      onColorChange(`#${hex}`);
     } else {
       if (!("value" in errors)) {
         setError("value", intl.formatMessage(commonErrorMessages.invalid));
@@ -96,73 +97,57 @@ export const ColorPicker: React.FC<ColorPickerProps<
   }, [errors, hex]);
 
   return (
-    <>
-      <Spacer type="vertical" spacing={2} />
-      <RadioGroupField
-        choices={[
-          { label: "Picker", value: "picker" },
-          { label: "Image", value: "image" }
-        ]}
-        variant="inline"
-        label={<FormattedMessage {...inputTypeMessages.swatch} />}
-        name="swatch"
-        value="picker"
-        onChange={() => {
-          // probably move out
-        }}
-      />
-      <div className={classes.picker}>
-        <div>
-          <Saturation
-            hsva={{ h: hue, s, v, a: 1 }}
-            onChange={({ h, s, v }) => setHex(convert.hsv.hex([h, s, v]))}
-            className={classes.saturation}
-          />
-        </div>
-        <Spacer spacing={4} />
-        <div>
-          <Hue
-            hue={hue}
-            onChange={({ h }) => {
-              setHue(h);
-              setHex(convert.hsv.hex([h, s, v]));
-            }}
-            direction="vertical"
-            height="220px"
-            width="16px"
-          />
-        </div>
-        <Spacer spacing={4} />
-        <div>
-          <TextField
-            className={classes.colorInput}
-            InputProps={{ startAdornment: "R" }}
-            value={r}
-            onChange={evt => handleRGBChange({ r: evt.target.value })}
-          />
-          <TextField
-            className={classes.colorInput}
-            InputProps={{ startAdornment: "G" }}
-            value={g}
-            onChange={evt => handleRGBChange({ g: evt.target.value })}
-          />
-          <TextField
-            className={classes.colorInput}
-            InputProps={{ startAdornment: "B" }}
-            value={b}
-            onChange={evt => handleRGBChange({ b: evt.target.value })}
-          />
-          <TextField
-            error={!isValidColor}
-            helperText={errors?.value}
-            className={classes.colorInput}
-            InputProps={{ startAdornment: "HEX" }}
-            inputProps={{ pattern: "[A-Za-z0-9]{6}", maxLength: 6 }}
-            value={`#${hex}`}
-            onChange={evt => handleHEXChange(evt.target.value)}
-          />
-        </div>
+    <div className={classes.picker}>
+      <div>
+        <Saturation
+          hsva={{ h: hue, s, v, a: 1 }}
+          onChange={({ h, s, v }) => setHex(convert.hsv.hex([h, s, v]))}
+          className={classes.saturation}
+        />
       </div>
-    </>
+      <Spacer spacing={4} />
+      <div>
+        <Hue
+          hue={hue}
+          onChange={({ h }) => {
+            setHue(h);
+            setHex(convert.hsv.hex([h, s, v]));
+          }}
+          direction="vertical"
+          height="220px"
+          width="16px"
+        />
+      </div>
+      <Spacer spacing={4} />
+      <div>
+        <TextField
+          className={classes.colorInput}
+          InputProps={{ startAdornment: "R" }}
+          value={r}
+          onChange={evt => handleRGBChange({ r: evt.target.value })}
+        />
+        <TextField
+          className={classes.colorInput}
+          InputProps={{ startAdornment: "G" }}
+          value={g}
+          onChange={evt => handleRGBChange({ g: evt.target.value })}
+        />
+        <TextField
+          className={classes.colorInput}
+          InputProps={{ startAdornment: "B" }}
+          value={b}
+          onChange={evt => handleRGBChange({ b: evt.target.value })}
+        />
+        <TextField
+          error={!isValidColor}
+          helperText={errors?.value}
+          className={classes.colorInput}
+          InputProps={{ startAdornment: "HEX" }}
+          inputProps={{ pattern: "[A-Za-z0-9]{6}", maxLength: 6 }}
+          value={`#${hex}`}
+          onChange={evt => handleHEXChange(evt.target.value)}
+        />
+      </div>
+    </div>
   );
 };

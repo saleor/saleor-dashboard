@@ -59,7 +59,9 @@ const useStyles = makeStyles(
     swatchPreview: {
       width: 32,
       height: 32,
-      borderRadius: 4
+      borderRadius: 4,
+      backgroundSize: "cover",
+      backgroundPosition: "center"
     }
   }),
   { name: "AttributeRow" }
@@ -174,17 +176,24 @@ const AttributeRow: React.FC<AttributeRowProps> = ({
         </BasicAttributeRow>
       );
     case AttributeInputTypeEnum.SWATCH:
+      const value = attribute.data.values.find(
+        ({ slug }) => slug === attribute.value[0]
+      );
       return (
         <BasicAttributeRow label={attribute.label}>
           <SingleAutocompleteSelectField
             fetchOnFocus
             allowCustomValues={false}
-            choices={attributeValues.map(({ value, slug, name }) => ({
+            choices={attributeValues.map(({ file, value, slug, name }) => ({
               label: (
                 <>
                   <div
                     className={classes.swatchPreview}
-                    style={{ backgroundColor: value }}
+                    style={
+                      file
+                        ? { backgroundImage: `url(${file.url})` }
+                        : { backgroundColor: value }
+                    }
                   />
                   <Spacer />
                   {name}
@@ -207,11 +216,11 @@ const AttributeRow: React.FC<AttributeRowProps> = ({
                 <InputAdornment position="start">
                   <div
                     className={classes.swatchPreview}
-                    style={{
-                      backgroundColor: attribute.data.values.find(
-                        ({ slug }) => slug === attribute.value[0]
-                      )?.value
-                    }}
+                    style={
+                      value?.file
+                        ? { backgroundImage: `url(${value.file.url})` }
+                        : { backgroundColor: value?.value }
+                    }
                   />
                 </InputAdornment>
               )

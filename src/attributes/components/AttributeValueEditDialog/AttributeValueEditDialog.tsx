@@ -7,7 +7,6 @@ import {
   TextField
 } from "@material-ui/core";
 import { getAttributeValueErrorMessage } from "@saleor/attributes/errors";
-import { ColorPicker } from "@saleor/components/ColorPicker";
 import ConfirmButton, {
   ConfirmButtonTransitionState
 } from "@saleor/components/ConfirmButton";
@@ -20,10 +19,9 @@ import { getFormErrors } from "@saleor/utils/errors";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-export interface AttributeValueEditDialogFormData {
-  name: string;
-  value?: string;
-}
+import { AttributeValueEditDialogFormData } from "../../utils/data";
+import AttributeSwatchField from "../AttributeSwatchField";
+
 export interface AttributeValueEditDialogProps {
   attributeValue: AttributeValueEditDialogFormData | null;
   confirmButtonState: ConfirmButtonTransitionState;
@@ -42,19 +40,27 @@ const AttributeValueEditDialog: React.FC<AttributeValueEditDialogProps> = ({
   errors: apiErrors,
   onClose,
   onSubmit,
-  open
+  open,
+  inputType
 }) => {
   const intl = useIntl();
   const initialForm: AttributeValueEditDialogFormData = {
     name: attributeValue?.name ?? "",
-    value: attributeValue?.value ?? "#000000"
+    ...(attributeValue?.fileUrl
+      ? {
+          fileUrl: attributeValue?.fileUrl,
+          contentType: attributeValue?.contentType
+        }
+      : {
+          value: attributeValue?.value ?? ""
+        })
   };
   const errors = useModalDialogErrors(apiErrors, open);
   const formErrors = getFormErrors(["name"], errors);
+  const isSwatch = inputType === AttributeInputTypeEnum.SWATCH;
 
   return (
     <Dialog onClose={onClose} open={open} fullWidth maxWidth="sm">
-      {/* <Dialog onClose={onClose} open={true} fullWidth maxWidth="sm">*/}
       <DialogTitle>
         {attributeValue === null ? (
           <FormattedMessage
@@ -90,13 +96,15 @@ const AttributeValueEditDialog: React.FC<AttributeValueEditDialogProps> = ({
                 value={data.name}
                 onChange={change}
               />
-              <ColorPicker
-                data={data}
-                errors={errors}
-                clearErrors={clearErrors}
-                setError={setError}
-                set={set}
-              />
+              {isSwatch && (
+                <AttributeSwatchField
+                  data={data}
+                  errors={errors}
+                  clearErrors={clearErrors}
+                  setError={setError}
+                  set={set}
+                />
+              )}
             </DialogContent>
             <DialogActions>
               <Button onClick={onClose}>

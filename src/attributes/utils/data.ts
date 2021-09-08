@@ -4,6 +4,7 @@ import {
 } from "@saleor/components/Attributes";
 import { FileUpload } from "@saleor/files/types/FileUpload";
 import { AttributeErrorFragment } from "@saleor/fragments/types/AttributeErrorFragment";
+import { AttributeValueFragment } from "@saleor/fragments/types/AttributeValueFragment";
 import { SelectedVariantAttributeFragment } from "@saleor/fragments/types/SelectedVariantAttributeFragment";
 import { UploadErrorFragment } from "@saleor/fragments/types/UploadErrorFragment";
 import { FormsetData } from "@saleor/hooks/useFormset";
@@ -24,7 +25,6 @@ import {
 import { MutationFetchResult } from "react-apollo";
 
 import { AttributePageFormData } from "../components/AttributePage";
-import { AttributeValueEditDialogFormData } from "../components/AttributeValueEditDialog";
 import { AttributeValueDelete } from "../types/AttributeValueDelete";
 
 export const ATTRIBUTE_TYPES_WITH_DEDICATED_VALUES = [
@@ -48,6 +48,24 @@ export interface AttributeReference {
   value: string;
 }
 
+export interface AttributeValueEditDialogFormData {
+  name: string;
+  value?: string;
+  fileUrl?: string;
+  contentType?: string;
+}
+
+export function attributeValueFragmentToFormData(
+  data: AttributeValueFragment | null
+): AttributeValueEditDialogFormData {
+  return {
+    name: data?.name,
+    value: data?.value,
+    contentType: data?.file?.contentType,
+    fileUrl: data?.file?.contentType
+  };
+}
+
 function getSimpleAttributeData(
   data: AttributePageFormData,
   values: AttributeValueEditDialogFormData[]
@@ -59,6 +77,22 @@ function getSimpleAttributeData(
     storefrontSearchPosition: parseInt(data.storefrontSearchPosition, 10),
     values: values.map(value => ({
       name: value.name
+    }))
+  };
+}
+
+function getSwatchAttributeData(
+  data: AttributePageFormData,
+  values: AttributeValueEditDialogFormData[]
+) {
+  return {
+    ...data,
+    metadata: undefined,
+    privateMetadata: undefined,
+    storefrontSearchPosition: parseInt(data.storefrontSearchPosition, 10),
+    values: values.map(({ fileUrl, name, value, contentType }) => ({
+      name,
+      ...(fileUrl ? { fileUrl, contentType } : { value })
     }))
   };
 }
@@ -79,7 +113,9 @@ export function getAttributeData(
   data: AttributePageFormData,
   values: AttributeValueEditDialogFormData[]
 ) {
-  if (ATTRIBUTE_TYPES_WITH_DEDICATED_VALUES.includes(data.inputType)) {
+  if (data.inputType === AttributeInputTypeEnum.SWATCH) {
+    return getSwatchAttributeData(data, values);
+  } else if (ATTRIBUTE_TYPES_WITH_DEDICATED_VALUES.includes(data.inputType)) {
     return getSimpleAttributeData(data, values);
   } else {
     return getFileOrReferenceAttributeData(data, values);
