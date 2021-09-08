@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { WarehouseUpdateInput, WarehouseErrorCode } from "./../../types/globalTypes";
+import { WarehouseUpdateInput, WarehouseErrorCode, WarehouseClickAndCollectOptionEnum } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: WarehouseUpdate
@@ -55,6 +55,8 @@ export interface WarehouseUpdate_updateWarehouse_warehouse_address {
 
 export interface WarehouseUpdate_updateWarehouse_warehouse {
   __typename: "Warehouse";
+  isPrivate: boolean;
+  clickAndCollectOption: WarehouseClickAndCollectOptionEnum;
   id: string;
   name: string;
   shippingZones: WarehouseUpdate_updateWarehouse_warehouse_shippingZones;

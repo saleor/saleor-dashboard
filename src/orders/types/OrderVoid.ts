@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { OrderErrorCode, AddressTypeEnum, OrderDiscountType, DiscountValueTypeEnum, OrderEventsEmailsEnum, OrderEventsEnum, FulfillmentStatus, PaymentChargeStatusEnum, OrderStatus, OrderAction, JobStatusEnum } from "./../../types/globalTypes";
+import { OrderErrorCode, AddressTypeEnum, OrderDiscountType, DiscountValueTypeEnum, OrderEventsEmailsEnum, OrderEventsEnum, FulfillmentStatus, PaymentChargeStatusEnum, WarehouseClickAndCollectOptionEnum, OrderStatus, OrderAction, JobStatusEnum } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: OrderVoid
@@ -103,6 +103,13 @@ export interface OrderVoid_orderVoid_order_events_user {
   lastName: string;
 }
 
+export interface OrderVoid_orderVoid_order_events_app {
+  __typename: "App";
+  id: string;
+  name: string | null;
+  appUrl: string | null;
+}
+
 export interface OrderVoid_orderVoid_order_events_lines_discount_amount {
   __typename: "Money";
   amount: number;
@@ -157,6 +164,7 @@ export interface OrderVoid_orderVoid_order_events {
   transactionReference: string | null;
   type: OrderEventsEnum | null;
   user: OrderVoid_orderVoid_order_events_user | null;
+  app: OrderVoid_orderVoid_order_events_app | null;
   lines: (OrderVoid_orderVoid_order_events_lines | null)[] | null;
 }
 
@@ -223,6 +231,7 @@ export interface OrderVoid_orderVoid_order_fulfillments_lines_orderLine {
   productSku: string;
   quantity: number;
   quantityFulfilled: number;
+  quantityToFulfill: number;
   unitDiscount: OrderVoid_orderVoid_order_fulfillments_lines_orderLine_unitDiscount;
   unitDiscountValue: any;
   unitDiscountReason: string | null;
@@ -318,6 +327,7 @@ export interface OrderVoid_orderVoid_order_lines {
   productSku: string;
   quantity: number;
   quantityFulfilled: number;
+  quantityToFulfill: number;
   unitDiscount: OrderVoid_orderVoid_order_lines_unitDiscount;
   unitDiscountValue: any;
   unitDiscountReason: string | null;
@@ -348,6 +358,19 @@ export interface OrderVoid_orderVoid_order_shippingAddress {
   streetAddress1: string;
   streetAddress2: string;
 }
+
+export interface OrderVoid_orderVoid_order_deliveryMethod_ShippingMethod {
+  __typename: "ShippingMethod";
+  id: string;
+}
+
+export interface OrderVoid_orderVoid_order_deliveryMethod_Warehouse {
+  __typename: "Warehouse";
+  id: string;
+  clickAndCollectOption: WarehouseClickAndCollectOptionEnum;
+}
+
+export type OrderVoid_orderVoid_order_deliveryMethod = OrderVoid_orderVoid_order_deliveryMethod_ShippingMethod | OrderVoid_orderVoid_order_deliveryMethod_Warehouse;
 
 export interface OrderVoid_orderVoid_order_shippingMethod {
   __typename: "ShippingMethod";
@@ -490,10 +513,13 @@ export interface OrderVoid_orderVoid_order {
   fulfillments: (OrderVoid_orderVoid_order_fulfillments | null)[];
   lines: (OrderVoid_orderVoid_order_lines | null)[];
   number: string | null;
+  isPaid: boolean;
   paymentStatus: PaymentChargeStatusEnum;
   shippingAddress: OrderVoid_orderVoid_order_shippingAddress | null;
+  deliveryMethod: OrderVoid_orderVoid_order_deliveryMethod | null;
   shippingMethod: OrderVoid_orderVoid_order_shippingMethod | null;
   shippingMethodName: string | null;
+  collectionPointName: string | null;
   shippingPrice: OrderVoid_orderVoid_order_shippingPrice;
   status: OrderStatus;
   subtotal: OrderVoid_orderVoid_order_subtotal;
@@ -507,7 +533,6 @@ export interface OrderVoid_orderVoid_order {
   availableShippingMethods: (OrderVoid_orderVoid_order_availableShippingMethods | null)[] | null;
   invoices: (OrderVoid_orderVoid_order_invoices | null)[] | null;
   channel: OrderVoid_orderVoid_order_channel;
-  isPaid: boolean;
 }
 
 export interface OrderVoid_orderVoid {

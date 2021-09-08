@@ -69,7 +69,7 @@ export const StaffList: React.FC<StaffListProps> = ({ params }) => {
       filter: getFilterVariables(params),
       sort: getSortQueryVariables(params)
     }),
-    [params]
+    [params, settings.rowNumber]
   );
   const { data: staffQueryData, loading } = useStaffListQuery({
     displayLoader: true,

@@ -42,7 +42,7 @@ const Skeleton: React.FC<SkeletonProps> = props => {
   const classes = useStyles(props);
 
   return children ? (
-    (children as React.ReactElement)
+    <>{children}</>
   ) : (
     <span
       data-test-id="skeleton"

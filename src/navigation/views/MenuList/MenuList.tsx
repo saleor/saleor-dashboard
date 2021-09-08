@@ -64,7 +64,7 @@ const MenuList: React.FC<MenuListProps> = ({ params }) => {
       ...paginationState,
       sort: getSortQueryVariables(params)
     }),
-    [params]
+    [params, settings.rowNumber]
   );
   const { data, loading, refetch } = useMenuListQuery({
     displayLoader: true,

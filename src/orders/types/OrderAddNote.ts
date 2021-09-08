@@ -53,6 +53,13 @@ export interface OrderAddNote_orderAddNote_order_events_user {
   lastName: string;
 }
 
+export interface OrderAddNote_orderAddNote_order_events_app {
+  __typename: "App";
+  id: string;
+  name: string | null;
+  appUrl: string | null;
+}
+
 export interface OrderAddNote_orderAddNote_order_events_lines_discount_amount {
   __typename: "Money";
   amount: number;
@@ -107,6 +114,7 @@ export interface OrderAddNote_orderAddNote_order_events {
   transactionReference: string | null;
   type: OrderEventsEnum | null;
   user: OrderAddNote_orderAddNote_order_events_user | null;
+  app: OrderAddNote_orderAddNote_order_events_app | null;
   lines: (OrderAddNote_orderAddNote_order_events_lines | null)[] | null;
 }
 

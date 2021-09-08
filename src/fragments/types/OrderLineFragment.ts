@@ -72,6 +72,7 @@ export interface OrderLineFragment {
   productSku: string;
   quantity: number;
   quantityFulfilled: number;
+  quantityToFulfill: number;
   unitDiscount: OrderLineFragment_unitDiscount;
   unitDiscountValue: any;
   unitDiscountReason: string | null;

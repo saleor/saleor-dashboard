@@ -3,21 +3,49 @@ import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import OrderFulfillPage from "@saleor/orders/components/OrderFulfillPage";
 import { useOrderFulfill } from "@saleor/orders/mutations";
-import { useOrderFulfillData } from "@saleor/orders/queries";
+import {
+  useOrderFulfillData,
+  useOrderFulfillSettingsQuery
+} from "@saleor/orders/queries";
+import { OrderFulfillData_order } from "@saleor/orders/types/OrderFulfillData";
 import { orderUrl } from "@saleor/orders/urls";
-import { mapEdgesToItems } from "@saleor/utils/maps";
-import { useWarehouseList } from "@saleor/warehouses/queries";
+import { getWarehousesFromOrderLines } from "@saleor/orders/utils/data";
 import React from "react";
 import { useIntl } from "react-intl";
+
+import { WarehouseClickAndCollectOptionEnum } from "../../../types/globalTypes";
 
 export interface OrderFulfillProps {
   orderId: string;
 }
 
+const resolveLocalFulfillment = (
+  order: OrderFulfillData_order,
+  orderLineWarehouses
+) => {
+  const deliveryMethod = order?.deliveryMethod;
+  if (
+    deliveryMethod?.__typename === "Warehouse" &&
+    deliveryMethod?.clickAndCollectOption ===
+      WarehouseClickAndCollectOptionEnum.LOCAL
+  ) {
+    return orderLineWarehouses?.filter(
+      warehouse => warehouse?.id === deliveryMethod?.id
+    );
+  }
+  return orderLineWarehouses;
+};
+
 const OrderFulfill: React.FC<OrderFulfillProps> = ({ orderId }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();
+
+  const {
+    data: settings,
+    loading: settingsLoading
+  } = useOrderFulfillSettingsQuery({});
+
   const { data, loading } = useOrderFulfillData({
     displayLoader: true,
     variables: {
@@ -25,12 +53,7 @@ const OrderFulfill: React.FC<OrderFulfillProps> = ({ orderId }) => {
     }
   });
 
-  const { data: warehouseData, loading: warehousesLoading } = useWarehouseList({
-    displayLoader: true,
-    variables: {
-      first: 20
-    }
-  });
+  const orderLinesWarehouses = getWarehousesFromOrderLines(data?.order?.lines);
 
   const [fulfillOrder, fulfillOrderOpts] = useOrderFulfill({
     onCompleted: data => {
@@ -46,6 +69,11 @@ const OrderFulfill: React.FC<OrderFulfillProps> = ({ orderId }) => {
       }
     }
   });
+
+  const resolvedOrderLinesWarehouses = resolveLocalFulfillment(
+    data?.order,
+    orderLinesWarehouses
+  );
 
   return (
     <>
@@ -68,7 +96,7 @@ const OrderFulfill: React.FC<OrderFulfillProps> = ({ orderId }) => {
         }
       />
       <OrderFulfillPage
-        loading={loading || warehousesLoading || fulfillOrderOpts.loading}
+        loading={loading || settingsLoading || fulfillOrderOpts.loading}
         errors={fulfillOrderOpts.data?.orderFulfill.errors}
         onBack={() => navigate(orderUrl(orderId))}
         onSubmit={formData =>
@@ -79,7 +107,8 @@ const OrderFulfill: React.FC<OrderFulfillProps> = ({ orderId }) => {
                   orderLineId: line.id,
                   stocks: line.value
                 })),
-                notifyCustomer: formData.sendInfo
+                notifyCustomer:
+                  settings?.shop?.fulfillmentAutoApprove && formData.sendInfo
               },
               orderId
             }
@@ -87,7 +116,8 @@ const OrderFulfill: React.FC<OrderFulfillProps> = ({ orderId }) => {
         }
         order={data?.order}
         saveButtonBar="default"
-        warehouses={mapEdgesToItems(warehouseData?.warehouses)}
+        warehouses={resolvedOrderLinesWarehouses}
+        shopSettings={settings?.shop}
       />
     </>
   );

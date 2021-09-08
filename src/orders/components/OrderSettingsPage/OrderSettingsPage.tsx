@@ -5,17 +5,20 @@ import Grid from "@saleor/components/Grid";
 import PageHeader from "@saleor/components/PageHeader";
 import Savebar from "@saleor/components/Savebar";
 import { OrderSettingsFragment } from "@saleor/fragments/types/OrderSettingsFragment";
+import { ShopOrderSettingsFragment } from "@saleor/fragments/types/ShopOrderSettingsFragment";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import { sectionNames } from "@saleor/intl";
 import { Backlink } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
+import OrderFulfillmentSettings from "../OrderFulfillmentSettings";
 import OrderSettings from "../OrderSettings/OrderSettings";
 import OrderSettingsForm, { OrderSettingsFormData } from "./form";
 
 export interface OrderSettingsPageProps {
-  data: OrderSettingsFragment;
+  orderSettings: OrderSettingsFragment;
+  shop: ShopOrderSettingsFragment;
   disabled: boolean;
   saveButtonBarState: ConfirmButtonTransitionState;
   onBack: () => void;
@@ -23,11 +26,22 @@ export interface OrderSettingsPageProps {
 }
 
 const OrderSettingsPage: React.FC<OrderSettingsPageProps> = props => {
-  const { data, disabled, saveButtonBarState, onBack, onSubmit } = props;
+  const {
+    orderSettings,
+    shop,
+    disabled,
+    saveButtonBarState,
+    onBack,
+    onSubmit
+  } = props;
   const intl = useIntl();
 
   return (
-    <OrderSettingsForm orderSettings={data} onSubmit={onSubmit}>
+    <OrderSettingsForm
+      orderSettings={orderSettings}
+      shop={shop}
+      onSubmit={onSubmit}
+    >
       {({ data, submit, hasChanged, change }) => (
         <Container>
           <Backlink onClick={onBack}>
@@ -46,6 +60,12 @@ const OrderSettingsPage: React.FC<OrderSettingsPageProps> = props => {
               </Typography>
             </div>
             <OrderSettings data={data} disabled={disabled} onChange={change} />
+            <div />
+            <OrderFulfillmentSettings
+              data={data}
+              disabled={disabled}
+              onChange={change}
+            />
           </Grid>
           <Savebar
             onCancel={onBack}

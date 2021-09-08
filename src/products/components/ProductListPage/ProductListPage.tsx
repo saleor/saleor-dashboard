@@ -1,4 +1,6 @@
-import { Button, Card } from "@material-ui/core";
+import { Card } from "@material-ui/core";
+import { mapToMenuItems, useExtensions } from "@saleor/apps/useExtensions";
+import { ButtonWithSelect } from "@saleor/components/ButtonWithSelect";
 import CardMenu from "@saleor/components/CardMenu";
 import ColumnPicker, {
   ColumnPickerChoice
@@ -22,6 +24,10 @@ import {
   PageListProps,
   SortPage
 } from "@saleor/types";
+import {
+  AppExtensionTypeEnum,
+  AppExtensionViewEnum
+} from "@saleor/types/globalTypes";
 import { hasLimits, isLimitReached } from "@saleor/utils/limits";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -129,6 +135,13 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
   ];
 
   const limitReached = isLimitReached(limits, "productVariants");
+  const { create, moreActions } = useExtensions(
+    AppExtensionViewEnum.PRODUCT,
+    AppExtensionTypeEnum.OVERVIEW
+  );
+
+  const extensionMenuItems = mapToMenuItems(moreActions);
+  const extensionCreateButtonItems = mapToMenuItems(create);
 
   return (
     <Container>
@@ -158,7 +171,8 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
               }),
               onSelect: onExport,
               testId: "export"
-            }
+            },
+            ...extensionMenuItems
           ]}
           data-test="menu"
         />
@@ -176,18 +190,17 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
           onFetchMore={onFetchMore}
           onSave={handleSave}
         />
-        <Button
+        <ButtonWithSelect
+          options={extensionCreateButtonItems}
+          data-test="add-product"
           disabled={limitReached}
           onClick={onAdd}
-          color="primary"
-          variant="contained"
-          data-test="add-product"
         >
           <FormattedMessage
             defaultMessage="Create Product"
             description="button"
           />
-        </Button>
+        </ButtonWithSelect>
       </PageHeader>
       {limitReached && (
         <LimitReachedAlert
