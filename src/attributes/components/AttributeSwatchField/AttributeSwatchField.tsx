@@ -3,11 +3,9 @@ import { inputTypeMessages } from "@saleor/attributes/components/AttributeDetail
 import { AttributeValueEditDialogFormData } from "@saleor/attributes/utils/data";
 import { ColorPicker } from "@saleor/components/ColorPicker";
 import FileUploadField from "@saleor/components/FileUploadField";
-import { validationMessages } from "@saleor/components/Filter/messages";
 import { RadioGroupField } from "@saleor/components/RadioGroupField";
 import { useFileUploadMutation } from "@saleor/files/mutations";
 import { UseFormResult } from "@saleor/hooks/useForm";
-import { commonMessages } from "@saleor/intl";
 import { makeStyles } from "@saleor/macaw-ui";
 import commonErrorMessages from "@saleor/utils/errors/common";
 import React, { useState } from "react";
