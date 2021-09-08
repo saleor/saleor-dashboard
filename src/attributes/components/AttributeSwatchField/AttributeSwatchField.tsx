@@ -3,10 +3,13 @@ import { inputTypeMessages } from "@saleor/attributes/components/AttributeDetail
 import { AttributeValueEditDialogFormData } from "@saleor/attributes/utils/data";
 import { ColorPicker } from "@saleor/components/ColorPicker";
 import FileUploadField from "@saleor/components/FileUploadField";
+import { validationMessages } from "@saleor/components/Filter/messages";
 import { RadioGroupField } from "@saleor/components/RadioGroupField";
 import { useFileUploadMutation } from "@saleor/files/mutations";
 import { UseFormResult } from "@saleor/hooks/useForm";
+import { commonMessages } from "@saleor/intl";
 import { makeStyles } from "@saleor/macaw-ui";
+import commonErrorMessages from "@saleor/utils/errors/common";
 import React, { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -38,6 +41,7 @@ const AttributeSwatchField: React.FC<AttributeSwatchFieldProps<
   const { data } = props;
   const { formatMessage } = useIntl();
   const classes = useStyles();
+  const [processing, setProcessing] = useState(false);
   const [uploadFile] = useFileUploadMutation({});
   const [type, setType] = useState<SwatchType>(
     data.fileUrl ? "image" : "picker"
@@ -47,17 +51,23 @@ const AttributeSwatchField: React.FC<AttributeSwatchFieldProps<
     set({ value: hex, fileUrl: undefined, contentType: undefined });
 
   const handleFileUpload = async (file: File) => {
+    setProcessing(true);
+
     const {
       data: { fileUpload }
     } = await uploadFile({ variables: { file } });
 
-    if (fileUpload) {
+    if (fileUpload.errors?.length) {
+      props.setError("fileUrl", formatMessage(commonErrorMessages.invalid));
+    } else {
       set({
         fileUrl: fileUpload.uploadedFile.url,
         contentType: fileUpload.uploadedFile.contentType,
         value: undefined
       });
     }
+
+    setProcessing(false);
   };
 
   const handleFileDelete = () =>
@@ -85,8 +95,8 @@ const AttributeSwatchField: React.FC<AttributeSwatchFieldProps<
       {type === "image" ? (
         <>
           <FileUploadField
-            disabled={false}
-            loading={false}
+            disabled={processing}
+            loading={processing}
             file={{ label: null, value: null, file: null }}
             onFileUpload={handleFileUpload}
             onFileDelete={handleFileDelete}
