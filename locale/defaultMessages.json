@@ -7770,6 +7770,10 @@
     "context": "event",
     "string": "Checkout created"
   },
+  "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_2275774954": {
+    "context": "event",
+    "string": "Product Variant out of stock"
+  },
   "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_2315238863": {
     "context": "event",
     "string": "Product variant out of stock"
