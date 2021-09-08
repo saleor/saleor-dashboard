@@ -175,7 +175,7 @@ function useOrderReturnForm(
     const newQuantities: FormsetQuantityData = unfulfiledItemsQuantites.data.map(
       ({ id }) => {
         const line = order.lines.find(getById(id));
-        const initialValue = line.quantity - line.quantityFulfilled;
+        const initialValue = line.quantityToFulfill;
 
         return getLineItem(line, { initialValue });
       }
