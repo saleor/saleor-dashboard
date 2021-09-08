@@ -1,8 +1,6 @@
-import {
-  OrderDetails_order,
-  OrderDetails_order_giftCards_events
-} from "@saleor/orders/types/OrderDetails";
+import { OrderDetails_order } from "@saleor/orders/types/OrderDetails";
 import { GiftCardEventsEnum } from "@saleor/types/globalTypes";
+import compact from "lodash/compact";
 
 export const extractOrderGiftCardUsedAmount = (
   order?: OrderDetails_order
@@ -11,24 +9,23 @@ export const extractOrderGiftCardUsedAmount = (
     return undefined;
   }
 
-  const { id, giftCards } = order;
+  const { giftCards } = order;
 
-  const orderRelatedEvent = giftCards.reduce((resultEvent, { events }) => {
-    if (resultEvent) {
-      return resultEvent;
-    }
+  const usedInOrderEvents = compact(
+    giftCards.map(({ events }) =>
+      events.find(({ type }) => type === GiftCardEventsEnum.USED_IN_ORDER)
+    )
+  );
 
-    return events.find(
-      ({ orderId, type }) =>
-        type === GiftCardEventsEnum.USED_IN_ORDER && orderId === id
-    );
-  }, undefined as OrderDetails_order_giftCards_events);
-
-  if (!orderRelatedEvent) {
+  if (!usedInOrderEvents.length) {
     return undefined;
   }
 
-  const { currentBalance, oldCurrentBalance } = orderRelatedEvent.balance;
+  return usedInOrderEvents.reduce((resultAmount, { balance }) => {
+    const { currentBalance, oldCurrentBalance } = balance;
 
-  return oldCurrentBalance.amount - currentBalance.amount;
+    const amountToAdd = oldCurrentBalance.amount - currentBalance.amount;
+
+    return resultAmount + amountToAdd;
+  }, 0);
 };
