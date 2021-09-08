@@ -1,4 +1,4 @@
-import Spacer from "@saleor/apps/components/HorizontalSpacer";
+import Spacer from "@saleor/apps/components/Spacer";
 import { inputTypeMessages } from "@saleor/attributes/components/AttributeDetails/messages";
 import { AttributeValueEditDialogFormData } from "@saleor/attributes/utils/data";
 import { ColorPicker } from "@saleor/components/ColorPicker";

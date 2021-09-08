@@ -1,5 +1,5 @@
 import { Button, DialogContent, Typography } from "@material-ui/core";
-import HorizontalSpacer from "@saleor/apps/components/HorizontalSpacer";
+import HorizontalSpacer from "@saleor/apps/components/Spacer";
 import VerticalSpacer from "@saleor/apps/components/VerticalSpacer";
 import useClipboard from "@saleor/hooks/useClipboard";
 import useNotifier from "@saleor/hooks/useNotifier";

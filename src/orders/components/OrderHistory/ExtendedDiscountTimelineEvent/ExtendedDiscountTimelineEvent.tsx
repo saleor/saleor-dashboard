@@ -1,5 +1,5 @@
 import { Typography } from "@material-ui/core";
-import Spacer from "@saleor/apps/components/HorizontalSpacer";
+import Spacer from "@saleor/apps/components/Spacer";
 import CardSpacer from "@saleor/components/CardSpacer";
 import { TimelineEvent } from "@saleor/components/Timeline";
 import { TitleElement } from "@saleor/components/Timeline/TimelineEventHeader";

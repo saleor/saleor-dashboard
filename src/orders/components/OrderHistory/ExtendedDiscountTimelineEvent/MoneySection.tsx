@@ -1,5 +1,5 @@
 import { Typography } from "@material-ui/core";
-import Spacer from "@saleor/apps/components/HorizontalSpacer";
+import Spacer from "@saleor/apps/components/Spacer";
 import { Money } from "@saleor/fragments/types/Money";
 import { makeStyles } from "@saleor/macaw-ui";
 import { DiscountValueTypeEnum } from "@saleor/types/globalTypes";

@@ -1,5 +1,5 @@
 import { CardContent, Typography } from "@material-ui/core";
-import Spacer from "@saleor/apps/components/HorizontalSpacer";
+import Spacer from "@saleor/apps/components/Spacer";
 import CardSpacer from "@saleor/components/CardSpacer";
 import ConfirmButton from "@saleor/components/ConfirmButton";
 import ControlledCheckbox from "@saleor/components/ControlledCheckbox";

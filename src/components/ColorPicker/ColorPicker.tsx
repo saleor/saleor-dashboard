@@ -1,5 +1,5 @@
 import { TextField } from "@material-ui/core";
-import Spacer from "@saleor/apps/components/HorizontalSpacer";
+import Spacer from "@saleor/apps/components/Spacer";
 import { UseFormResult } from "@saleor/hooks/useForm";
 import { makeStyles } from "@saleor/macaw-ui";
 import { RequireOnlyOne } from "@saleor/misc";
@@ -36,7 +36,7 @@ const useStyles = makeStyles(
   { name: "ColorPicker" }
 );
 
-type ColorPickerProps<T = any> = Pick<
+export type ColorPickerProps<T = any> = Pick<
   UseFormResult<T>,
   "setError" | "errors" | "clearErrors" | "data"
 > & { onColorChange: (hex: string) => void };

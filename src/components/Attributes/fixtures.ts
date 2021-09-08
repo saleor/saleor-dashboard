@@ -320,6 +320,32 @@ const DATE_TIME_ATTRIBUTE: AttributeInput = {
   label: "Date Time Attribute",
   value: []
 };
+
+const SWATCH_ATTRIBUTE: AttributeInput = {
+  data: {
+    inputType: AttributeInputTypeEnum.SWATCH,
+    isRequired: true,
+    values: [
+      {
+        __typename: "AttributeValue",
+        file: null,
+        id: "sdfgsdgsdfg",
+        name: "Red",
+        reference: null,
+        richText: null,
+        boolean: true,
+        slug: "315_11",
+        date: null,
+        dateTime: null,
+        value: "#FF0000"
+      }
+    ]
+  },
+  id: "QXR0cmlidXasdfasdfasdf1",
+  label: "Swatch Attribute",
+  value: []
+};
+
 export const ATTRIBUTES: AttributeInput[] = [
   DROPDOWN_ATTRIBUTE,
   MULTISELECT_ATTRIBUTE,
@@ -329,7 +355,8 @@ export const ATTRIBUTES: AttributeInput[] = [
   NUMERIC_ATTRIBUTE,
   BOOLEAN_ATTRIBUTE,
   DATE_ATTRIBUTE,
-  DATE_TIME_ATTRIBUTE
+  DATE_TIME_ATTRIBUTE,
+  SWATCH_ATTRIBUTE
 ];
 
 export const ATTRIBUTES_SELECTED: AttributeInput[] = [
@@ -379,5 +406,9 @@ export const ATTRIBUTES_SELECTED: AttributeInput[] = [
   {
     ...DATE_TIME_ATTRIBUTE,
     value: [DATE_TIME_ATTRIBUTE.data.values[0].dateTime]
+  },
+  {
+    ...SWATCH_ATTRIBUTE,
+    value: [SWATCH_ATTRIBUTE.data.values[0].slug]
   }
 ];

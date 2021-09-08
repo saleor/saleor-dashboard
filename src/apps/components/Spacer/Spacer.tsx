@@ -12,7 +12,7 @@ const useStyles = makeStyles(
       [type === "horizontal" ? "width" : "height"]: theme.spacing(spacing)
     })
   }),
-  { name: "HorizontalSpacer" }
+  { name: "Spacer" }
 );
 
 const Spacer: React.FC<SpacerProps> = ({
