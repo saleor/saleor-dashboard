@@ -124,7 +124,7 @@ const GiftCardUpdateBalanceDialog: React.FC<DialogActionHandlersProps> = ({
         label={intl.formatMessage(
           tableMessages.giftCardsTableColumnBalanceTitle
         )}
-        type="number"
+        type="float"
         InputProps={{
           startAdornment: (
             <div className={classes.currencyCodeContainer}>

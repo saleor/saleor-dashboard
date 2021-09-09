@@ -170,7 +170,7 @@ const GiftCardCreateDialogForm: React.FC<GiftCardCreateDialogFormProps> = ({
           choices={mapSingleValueNodeToChoice(channelCurrencies)}
           containerClassName={classes.balanceContainer}
           textFieldProps={{
-            type: "number",
+            type: "float",
             label: intl.formatMessage(messages.amountLabel),
             name: "balanceAmount",
             value: balanceAmount,
