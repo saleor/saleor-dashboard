@@ -7,11 +7,8 @@ import { ProductDetails_product_variants } from "@saleor/products/types/ProductD
 import every from "lodash/every";
 import reduce from "lodash/reduce";
 
-import {
-  ChannelsWithVariantsData,
-  ChannelWithVariantData,
-  initialChannelWithVariantData
-} from "./types";
+import { initialChannelWithVariantData } from "./consts";
+import { ChannelsWithVariantsData, ChannelWithVariantData } from "./types";
 
 export const getParsedChannelsWithVariantsDataFromChannels = (
   channels: ChannelData[]

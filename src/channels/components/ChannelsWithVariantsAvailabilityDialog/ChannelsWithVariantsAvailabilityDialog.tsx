@@ -6,6 +6,7 @@ import {
   areAllVariantsAtAllChannelsSelected,
   areAnyChannelVariantsSelected
 } from "@saleor/products/views/ProductUpdate/utils";
+import { DialogProps } from "@saleor/types";
 import React, { useState } from "react";
 import { useIntl } from "react-intl";
 import { defineMessages } from "react-intl";
@@ -30,21 +31,23 @@ type UseChannelsWithVariantsCommonProps = Omit<
 >;
 
 export interface ChannelsAvailabilityDialogProps
-  extends UseChannelsWithVariantsCommonProps {
+  extends UseChannelsWithVariantsCommonProps,
+    DialogProps {
   channels: ChannelData[];
   contentType?: string;
   variants: ProductDetails_product_variants[];
+  onConfirm: () => void;
 }
 
 export const ChannelsWithVariantsAvailabilityDialog: React.FC<ChannelsAvailabilityDialogProps> = ({
   channels,
   contentType,
   variants,
-  isChannelsAvailabilityModalOpen,
+  open,
   toggleAllChannels,
   channelsWithVariantsData,
-  onChannelsAvailiabilityModalClose,
-  onChannelsWithVariantsConfirm,
+  onClose,
+  onConfirm,
   addVariantToChannel,
   removeVariantFromChannel,
   toggleAllChannelVariants
@@ -76,9 +79,9 @@ export const ChannelsWithVariantsAvailabilityDialog: React.FC<ChannelsAvailabili
   return (
     <ActionDialog
       confirmButtonState="default"
-      open={isChannelsAvailabilityModalOpen}
-      onClose={withChange(onChannelsAvailiabilityModalClose, false)}
-      onConfirm={withChange(onChannelsWithVariantsConfirm, false)}
+      open={open}
+      onClose={withChange(onClose, false)}
+      onConfirm={withChange(onConfirm, false)}
       title={intl.formatMessage(messages.title)}
       disabled={!changed}
     >

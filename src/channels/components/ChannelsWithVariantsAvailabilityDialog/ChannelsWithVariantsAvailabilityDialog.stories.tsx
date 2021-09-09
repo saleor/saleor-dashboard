@@ -50,7 +50,7 @@ const props: ChannelsAvailabilityDialogProps = {
       media: []
     }
   ] as ProductDetails_product_variants[],
-  onChannelsWithVariantsConfirm: () => undefined,
+  onClose: () => undefined,
   addVariantToChannel: () => undefined,
   removeVariantFromChannel: () => undefined,
   channelsWithVariantsData: {
@@ -70,8 +70,8 @@ const props: ChannelsAvailabilityDialogProps = {
       variantsIdsToAdd: []
     }
   },
-  onChannelsAvailiabilityModalClose: () => undefined,
-  isChannelsAvailabilityModalOpen: true,
+  onConfirm: () => undefined,
+  open: true,
   toggleAllChannels: () => undefined,
   toggleAllChannelVariants: () => () => undefined,
   haveChannelsWithVariantsDataChanged: true

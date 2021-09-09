@@ -4,7 +4,6 @@ import reduce from "lodash/reduce";
 import { useEffect, useRef, useState } from "react";
 
 import {
-  CHANNELS_AVAILIABILITY_MODAL_SELECTOR,
   ChannelsWithVariantsData,
   UseChannelsWithProductVariants,
   UseChannelsWithProductVariantsProps
@@ -20,10 +19,7 @@ import {
 
 const useChannelsWithProductVariants = ({
   channels,
-  variants,
-  openModal,
-  closeModal,
-  action
+  variants
 }: UseChannelsWithProductVariantsProps): UseChannelsWithProductVariants => {
   const [channelsData, setChannelsData] = useStateFromProps(channels);
 
@@ -113,26 +109,15 @@ const useChannelsWithProductVariants = ({
     setChannelsWithVariantsData(updatedData);
   };
 
-  const onChannelsWithVariantsConfirm = () => closeModal();
-
-  const handleModalOpen = () =>
-    openModal(CHANNELS_AVAILIABILITY_MODAL_SELECTOR);
-
-  const isModalOpen = action === CHANNELS_AVAILIABILITY_MODAL_SELECTOR;
-
   return {
     channelsWithVariantsData,
     setChannelsData,
     channelsData,
     addVariantToChannel: handleAddVariant,
     removeVariantFromChannel: handleRemoveVariant,
-    onChannelsAvailiabilityModalOpen: handleModalOpen,
-    onChannelsAvailiabilityModalClose: closeModal,
-    isChannelsAvailabilityModalOpen: isModalOpen,
     haveChannelsWithVariantsDataChanged: hasChanged,
     toggleAllChannelVariants,
     toggleAllChannels,
-    onChannelsWithVariantsConfirm,
     setHaveChannelsWithVariantsChanged: setHasChanged
   };
 };

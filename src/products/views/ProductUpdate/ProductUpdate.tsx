@@ -77,6 +77,7 @@ import {
   productVariantCreatorUrl,
   productVariantEditUrl
 } from "../../urls";
+import { CHANNELS_AVAILIABILITY_MODAL_SELECTOR } from "./consts";
 import {
   createImageReorderHandler,
   createImageUploadHandler,
@@ -278,16 +279,12 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
     channelsWithVariantsData,
     haveChannelsWithVariantsDataChanged,
     setHaveChannelsWithVariantsChanged,
-    onChannelsAvailiabilityModalOpen,
     channelsData,
     setChannelsData,
     ...channelsWithVariantsProps
   } = useChannelsWithProductVariants({
     channels: allChannels,
-    variants: product?.variants,
-    action: params?.action,
-    openModal,
-    closeModal
+    variants: product?.variants
   });
 
   const productChannelsChoices: ChannelData[] = createSortedChannelsDataFromProduct(
@@ -524,6 +521,9 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
             {...channelsWithVariantsProps}
             channels={allChannels}
             variants={product?.variants}
+            open={params.action === CHANNELS_AVAILIABILITY_MODAL_SELECTOR}
+            onClose={closeModal}
+            onConfirm={closeModal}
           />
         ))}
       <ProductUpdatePage
