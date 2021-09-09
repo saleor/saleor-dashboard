@@ -16,13 +16,17 @@ import useForm from "@saleor/hooks/useForm";
 import { commonMessages } from "@saleor/intl";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import Label from "@saleor/orders/components/OrderHistory/Label";
-import { TimePeriodTypeEnum } from "@saleor/types/globalTypes";
+import {
+  GiftCardSettingsExpiryTypeEnum,
+  TimePeriodTypeEnum
+} from "@saleor/types/globalTypes";
 import { getFormErrors } from "@saleor/utils/errors";
 import { mapSingleValueNodeToChoice } from "@saleor/utils/maps";
 import React, { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import GiftCardSendToCustomer from "../components/GiftCardSendToCustomer/GiftCardSendToCustomer";
+import { useGiftCardSettingsQuery } from "../GiftCardSettings/queries";
 import { getGiftCardErrorMessage } from "../GiftCardUpdate/messages";
 import GiftCardCreateExpirySelect from "./GiftCardCreateExpirySelect";
 import { giftCardCreateDialogMessages as messages } from "./messages";
@@ -85,6 +89,11 @@ const GiftCardCreateDialogForm: React.FC<GiftCardCreateDialogFormProps> = ({
 
   const initialCurrency = channelCurrencies[0];
 
+  const {
+    data: settingsData,
+    loading: loadingSettings
+  } = useGiftCardSettingsQuery();
+
   const [selectedCustomer, setSelectedCustomer] = useState<
     GiftCardCreateFormCustomer
   >(initialCustomer);
@@ -92,9 +101,28 @@ const GiftCardCreateDialogForm: React.FC<GiftCardCreateDialogFormProps> = ({
   const handleSubmit = (data: GiftCardCreateFormData) =>
     onSubmit({ ...data, selectedCustomer });
 
+  const getInitialExpirySettingsData = (): Partial<GiftCardCreateFormData> => {
+    if (loadingSettings) {
+      return {};
+    }
+
+    const { expiryType, expiryPeriod } = settingsData?.giftCardSettings;
+
+    if (expiryType === GiftCardSettingsExpiryTypeEnum.NEVER_EXPIRE) {
+      return {};
+    }
+
+    return {
+      expiryType,
+      expiryPeriodType: expiryPeriod?.type,
+      expiryPeriodAmount: expiryPeriod?.amount
+    };
+  };
+
   const { submit, change, data } = useForm(
     {
       ...initialData,
+      ...getInitialExpirySettingsData(),
       balanceCurrency: initialCurrency,
       channel: defaultChannel
     },
