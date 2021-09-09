@@ -47,9 +47,9 @@ const useStyles = makeStyles(
 );
 
 const messages = defineMessages({
-  addCustomerInfo: {
-    defaultMessage: "add customer first",
-    description: "add customer first label"
+  addShippingAddressInfo: {
+    defaultMessage: "add shipping address first",
+    description: "add shipping address first label"
   },
   subtotal: {
     defaultMessage: "Subtotal",
@@ -181,7 +181,9 @@ const OrderDraftDetailsSummary: React.FC<OrderDraftDetailsSummaryProps> = props 
       );
     }
 
-    const addCustomerInfo = intl.formatMessage(messages.addCustomerInfo);
+    const addShippingAddressInfo = intl.formatMessage(
+      messages.addShippingAddressInfo
+    );
 
     return (
       <div className={classes.shippingMethodContainer}>
@@ -189,7 +191,7 @@ const OrderDraftDetailsSummary: React.FC<OrderDraftDetailsSummaryProps> = props 
           {shippingCarrierBase}
         </Link>
         <HorizontalSpacer />
-        <Typography variant="caption">{`(${addCustomerInfo})`}</Typography>
+        <Typography variant="caption">{`(${addShippingAddressInfo})`}</Typography>
       </div>
     );
   };
