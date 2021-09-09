@@ -1,5 +1,5 @@
 import { Typography } from "@material-ui/core";
-import Spacer from "@saleor/apps/components/Spacer";
+import HorizontalSpacer from "@saleor/apps/components/HorizontalSpacer";
 import Link from "@saleor/components/Link";
 import Money from "@saleor/components/Money";
 import { makeStyles } from "@saleor/macaw-ui";
@@ -188,7 +188,7 @@ const OrderDraftDetailsSummary: React.FC<OrderDraftDetailsSummaryProps> = props 
         <Link underline disabled onClick={onShippingMethodEdit}>
           {shippingCarrierBase}
         </Link>
-        <Spacer />
+        <HorizontalSpacer />
         <Typography variant="caption">{`(${addCustomerInfo})`}</Typography>
       </div>
     );

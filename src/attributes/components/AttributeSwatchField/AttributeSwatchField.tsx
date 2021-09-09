@@ -1,4 +1,4 @@
-import Spacer from "@saleor/apps/components/Spacer";
+import VerticalSpacer from "@saleor/apps/components/VerticalSpacer";
 import { inputTypeMessages } from "@saleor/attributes/components/AttributeDetails/messages";
 import { AttributeValueEditDialogFormData } from "@saleor/attributes/utils/data";
 import { ColorPicker } from "@saleor/components/ColorPicker";
@@ -10,8 +10,6 @@ import { makeStyles } from "@saleor/macaw-ui";
 import commonErrorMessages from "@saleor/utils/errors/common";
 import React, { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
-
-import * as M from "./messages";
 
 const useStyles = makeStyles(
   theme => ({
@@ -77,11 +75,23 @@ const AttributeSwatchField: React.FC<AttributeSwatchFieldProps<
 
   return (
     <>
-      <Spacer type="vertical" spacing={2} />
+      <VerticalSpacer spacing={2} />
       <RadioGroupField
         choices={[
-          { label: formatMessage(M.defined.picker), value: "picker" },
-          { label: formatMessage(M.defined.image), value: "image" }
+          {
+            label: formatMessage({
+              defaultMessage: "Picker",
+              description: "swatch attribute color picker label"
+            }),
+            value: "picker"
+          },
+          {
+            label: formatMessage({
+              defaultMessage: "Image",
+              description: "swatch attribute image label"
+            }),
+            value: "image"
+          }
         ]}
         variant="inline"
         label={<FormattedMessage {...inputTypeMessages.swatch} />}

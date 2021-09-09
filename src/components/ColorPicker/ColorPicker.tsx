@@ -1,5 +1,5 @@
 import { TextField } from "@material-ui/core";
-import Spacer from "@saleor/apps/components/Spacer";
+import HorizontalSpacer from "@saleor/apps/components/HorizontalSpacer";
 import { UseFormResult } from "@saleor/hooks/useForm";
 import { makeStyles } from "@saleor/macaw-ui";
 import { RequireOnlyOne } from "@saleor/misc";
@@ -105,7 +105,7 @@ export const ColorPicker: React.FC<ColorPickerProps> = ({
           className={classes.saturation}
         />
       </div>
-      <Spacer spacing={4} />
+      <HorizontalSpacer spacing={4} />
       <div>
         <Hue
           hue={hue}
@@ -118,7 +118,7 @@ export const ColorPicker: React.FC<ColorPickerProps> = ({
           width="16px"
         />
       </div>
-      <Spacer spacing={4} />
+      <HorizontalSpacer spacing={4} />
       <div>
         <TextField
           className={classes.colorInput}

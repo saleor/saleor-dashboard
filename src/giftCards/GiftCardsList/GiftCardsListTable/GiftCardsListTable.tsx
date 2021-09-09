@@ -5,7 +5,7 @@ import {
   TableRow,
   Typography
 } from "@material-ui/core";
-import HorizontalSpacer from "@saleor/apps/components/Spacer";
+import HorizontalSpacer from "@saleor/apps/components/HorizontalSpacer";
 import Checkbox from "@saleor/components/Checkbox";
 import DeleteIconButton from "@saleor/components/DeleteIconButton";
 import Link from "@saleor/components/Link";

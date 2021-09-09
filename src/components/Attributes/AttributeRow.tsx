@@ -1,6 +1,6 @@
 import { InputAdornment, TextField } from "@material-ui/core";
 import makeStyles from "@material-ui/core/styles/makeStyles";
-import Spacer from "@saleor/apps/components/Spacer";
+import HorizontalSpacer from "@saleor/apps/components/HorizontalSpacer";
 import { getMeasurementUnitMessage } from "@saleor/attributes/components/AttributeDetails/utils";
 import { AttributeInput } from "@saleor/components/Attributes/Attributes";
 import BasicAttributeRow from "@saleor/components/Attributes/BasicAttributeRow";
@@ -195,7 +195,7 @@ const AttributeRow: React.FC<AttributeRowProps> = ({
                         : { backgroundColor: value }
                     }
                   />
-                  <Spacer />
+                  <HorizontalSpacer />
                   {name}
                 </>
               ),

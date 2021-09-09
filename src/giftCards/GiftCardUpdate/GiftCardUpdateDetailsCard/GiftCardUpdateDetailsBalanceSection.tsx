@@ -1,5 +1,5 @@
 import { Typography } from "@material-ui/core";
-import HorizontalSpacer from "@saleor/apps/components/Spacer";
+import HorizontalSpacer from "@saleor/apps/components/HorizontalSpacer";
 import CardSpacer from "@saleor/components/CardSpacer";
 import Money from "@saleor/components/Money";
 import classNames from "classnames";

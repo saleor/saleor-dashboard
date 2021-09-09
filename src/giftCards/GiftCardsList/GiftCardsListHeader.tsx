@@ -1,5 +1,5 @@
 import { Button } from "@material-ui/core";
-import HorizontalSpacer from "@saleor/apps/components/Spacer";
+import HorizontalSpacer from "@saleor/apps/components/HorizontalSpacer";
 // import CardMenu, { CardMenuItem } from "@saleor/components/CardMenu";
 import PageHeader from "@saleor/components/PageHeader";
 import { sectionNames } from "@saleor/intl";

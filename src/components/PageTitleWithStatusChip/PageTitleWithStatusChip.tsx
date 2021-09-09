@@ -1,4 +1,4 @@
-import HorizontalSpacer from "@saleor/apps/components/Spacer";
+import HorizontalSpacer from "@saleor/apps/components/HorizontalSpacer";
 import StatusChip from "@saleor/components/StatusChip";
 import { StatusType } from "@saleor/components/StatusChip/types";
 import { makeStyles } from "@saleor/macaw-ui";

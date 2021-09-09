@@ -1,5 +1,5 @@
 import { makeStyles, Typography, TypographyProps } from "@material-ui/core";
-import HorizontalSpacer from "@saleor/apps/components/Spacer";
+import HorizontalSpacer from "@saleor/apps/components/HorizontalSpacer";
 import React from "react";
 
 export interface IMoney {
