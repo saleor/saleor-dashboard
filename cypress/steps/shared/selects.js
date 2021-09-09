@@ -28,3 +28,10 @@ export function fillBaseSelect(selectSelector, value) {
     .get(selectorWithDataValue(value))
     .click();
 }
+
+export function createNewOption(selectSelector, newOption) {
+  cy.get(selectSelector).type(newOption);
+  cy.contains(BUTTON_SELECTORS.selectOption, newOption)
+    .should("be.visible")
+    .click();
+}

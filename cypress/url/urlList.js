@@ -9,6 +9,7 @@ export const urlList = {
   configuration: "configuration/",
   customers: "customers/",
   draftOrders: "orders/drafts/",
+  giftCards: "gift-cards/",
   homePage: "/",
   newPassword: "new-password/",
   navigation: "navigation/",
