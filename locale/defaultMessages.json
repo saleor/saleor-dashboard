@@ -3655,13 +3655,13 @@
     "context": "total price of ordered products",
     "string": "Total"
   },
-  "src_dot_orders_dot_components_dot_OrderDraftDetailsSummary_dot_addCustomerInfo": {
-    "context": "add customer first label",
-    "string": "add customer first"
-  },
   "src_dot_orders_dot_components_dot_OrderDraftDetailsSummary_dot_addDiscount": {
     "context": "add discount button",
     "string": "Add Discount"
+  },
+  "src_dot_orders_dot_components_dot_OrderDraftDetailsSummary_dot_addShippingAddressInfo": {
+    "context": "add shipping address first label",
+    "string": "add shipping address first"
   },
   "src_dot_orders_dot_components_dot_OrderDraftDetailsSummary_dot_addShippingCarrier": {
     "context": "add shipping carrier button",
