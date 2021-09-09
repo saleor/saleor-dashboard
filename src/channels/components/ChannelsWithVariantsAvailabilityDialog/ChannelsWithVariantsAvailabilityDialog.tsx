@@ -6,8 +6,7 @@ import {
   areAllVariantsAtAllChannelsSelected,
   areAnyChannelVariantsSelected
 } from "@saleor/products/views/ProductUpdate/utils";
-import isEqual from "lodash/isEqual";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useState } from "react";
 import { useIntl } from "react-intl";
 import { defineMessages } from "react-intl";
 
@@ -45,30 +44,16 @@ export const ChannelsWithVariantsAvailabilityDialog: React.FC<ChannelsAvailabili
   toggleAllChannels,
   channelsWithVariantsData,
   onChannelsAvailiabilityModalClose,
-  haveChannelsWithVariantsDataChanged,
   onChannelsWithVariantsConfirm,
-  ...rest
+  addVariantToChannel,
+  removeVariantFromChannel,
+  toggleAllChannelVariants
 }) => {
   const intl = useIntl();
-  const [canConfirm, setCanConfirm] = useState(false);
-  const channelsWithVariantsDataRef = useRef(channelsWithVariantsData);
+  const [changed, setChanged] = useState(false);
   const { query, onQueryChange, filteredChannels } = useChannelsSearch(
     channels
   );
-
-  const handleSetCanConfirm = () => {
-    const hasDataInsideDialogChanged = !isEqual(
-      channelsWithVariantsData,
-      channelsWithVariantsDataRef.current
-    );
-
-    if (hasDataInsideDialogChanged) {
-      channelsWithVariantsDataRef.current = channelsWithVariantsData;
-      setCanConfirm(true);
-    }
-  };
-
-  useEffect(handleSetCanConfirm, [channelsWithVariantsData]);
 
   const hasAllChannelsSelected = areAllVariantsAtAllChannelsSelected(
     variants,
@@ -78,31 +63,31 @@ export const ChannelsWithVariantsAvailabilityDialog: React.FC<ChannelsAvailabili
   const isChannelSelected = (channelId: string) =>
     areAnyChannelVariantsSelected(channelsWithVariantsData[channelId]);
 
-  const handleClose = () => {
-    setCanConfirm(false);
-    onChannelsAvailiabilityModalClose();
-  };
-
-  const handleConfirm = () => {
-    setCanConfirm(false);
-    onChannelsWithVariantsConfirm();
-  };
+  function withChange<T>(
+    fn: (...args: any[]) => T,
+    change: boolean
+  ): (...args: any[]) => T {
+    return (...args: any[]) => {
+      setChanged(change);
+      return fn(...args);
+    };
+  }
 
   return (
     <ActionDialog
       confirmButtonState="default"
       open={isChannelsAvailabilityModalOpen}
-      onClose={handleClose}
-      onConfirm={handleConfirm}
+      onClose={withChange(onChannelsAvailiabilityModalClose, false)}
+      onConfirm={withChange(onChannelsWithVariantsConfirm, false)}
       title={intl.formatMessage(messages.title)}
-      disabled={!canConfirm}
+      disabled={!changed}
     >
       <ChannelsAvailabilityContentWrapper
         hasAllSelected={hasAllChannelsSelected}
         hasAnyChannelsToDisplay={!!filteredChannels.length}
         query={query}
         onQueryChange={onQueryChange}
-        toggleAll={toggleAllChannels}
+        toggleAll={withChange(toggleAllChannels, true)}
         contentType={contentType}
       >
         <ChannelsWithVariantsAvailabilityDialogContent
@@ -110,7 +95,9 @@ export const ChannelsWithVariantsAvailabilityDialog: React.FC<ChannelsAvailabili
           channels={filteredChannels}
           isChannelSelected={isChannelSelected}
           channelsWithVariants={channelsWithVariantsData}
-          {...rest}
+          addVariantToChannel={withChange(addVariantToChannel, true)}
+          removeVariantFromChannel={withChange(removeVariantFromChannel, true)}
+          toggleAllChannelVariants={withChange(toggleAllChannelVariants, true)}
         />
       </ChannelsAvailabilityContentWrapper>
     </ActionDialog>

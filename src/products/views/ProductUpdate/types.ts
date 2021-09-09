@@ -38,7 +38,7 @@ export interface UseChannelsWithProductVariants {
   onChannelsAvailiabilityModalClose: () => void;
   isChannelsAvailabilityModalOpen: boolean;
   toggleAllChannels: () => void;
-  toggleAllChannelVariants: (channelId: string) => () => void;
+  toggleAllChannelVariants: (channelId: string) => void;
   haveChannelsWithVariantsDataChanged: boolean;
   setHaveChannelsWithVariantsChanged: (hasChanged: boolean) => void;
 }

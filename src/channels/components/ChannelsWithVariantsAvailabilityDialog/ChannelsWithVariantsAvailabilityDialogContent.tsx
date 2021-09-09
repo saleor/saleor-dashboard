@@ -96,7 +96,7 @@ interface ChannelsWithVariantsAvailabilityDialogContentProps {
   addVariantToChannel: (channelId: string, variantId: string) => void;
   removeVariantFromChannel: (channelId: string, variantId: string) => void;
   channelsWithVariants: ChannelsWithVariantsData;
-  toggleAllChannelVariants: (channelId: string) => () => void;
+  toggleAllChannelVariants: (channelId: string) => void;
   isChannelSelected: (channelId: string) => boolean;
   channels: ChannelData[];
   allVariants: ProductDetails_product_variants[];
@@ -183,7 +183,7 @@ const ChannelsWithVariantsAvailabilityDialogContent: React.FC<ChannelsWithVarian
                         />
                       </div>
                     }
-                    onChange={toggleAllChannelVariants(channelId)}
+                    onChange={() => toggleAllChannelVariants(channelId)}
                   />
                 </div>
                 <Divider />

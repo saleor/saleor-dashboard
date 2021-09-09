@@ -81,7 +81,7 @@ const useChannelsWithProductVariants = ({
       })
     });
 
-  const toggleAllChannelVariants = (channelId: string) => () => {
+  const toggleAllChannelVariants = (channelId: string) => {
     const isChannelSelected = areAnyChannelVariantsSelected(
       channelsWithVariantsData[channelId]
     );
