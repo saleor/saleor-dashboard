@@ -123,6 +123,7 @@ export function addVoucher(checkoutId, voucherCode) {
         message
       }
       checkout{
+        id
         totalPrice{
           gross{
             amount

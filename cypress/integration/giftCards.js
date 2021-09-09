@@ -12,6 +12,7 @@ import {
 } from "../steps/giftCardSteps";
 import filterTests from "../support/filterTests";
 import { formatDate } from "../support/format/formatDate";
+import { deleteGiftCardsWithTagStartsWith } from "../utils/giftCardUtils";
 
 filterTests(["all"], () => {
   describe("Tests for gift cards", () => {
@@ -20,6 +21,7 @@ filterTests(["all"], () => {
     const currency = "USD";
 
     before(() => {
+      deleteGiftCardsWithTagStartsWith(startsWith);
       cy.clearSessionData().loginUserViaRequest();
     });
 

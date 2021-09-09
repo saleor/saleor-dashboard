@@ -1,7 +1,9 @@
 import { GIFT_CARD_DIALOG } from "../elements/giftCard/giftCardDialog";
 import { GIFT_CARD_LIST } from "../elements/giftCard/giftCardList";
+import { GIFT_CARD_UPDATE } from "../elements/giftCard/gitfCardUpdate";
 import { BUTTON_SELECTORS } from "../elements/shared/button-selectors";
-import { urlList } from "../url/urlList";
+import { giftCardDetailsUrl, urlList } from "../url/urlList";
+import { confirmationMessageShouldDisappear } from "./shared/confirmationMessages";
 import { createNewOption } from "./shared/selects";
 
 export function openAndFillUpCreateGiftCardDialog({
@@ -60,4 +62,11 @@ export function setExpiryDate(date) {
     .click()
     .get(GIFT_CARD_DIALOG.expirationOptions.expiryDateInput)
     .type(date);
+}
+
+export function changeGiftCardActiveStatus(giftCardId) {
+  cy.visit(giftCardDetailsUrl(giftCardId))
+    .get(GIFT_CARD_UPDATE.changeActiveStatusButton)
+    .click();
+  confirmationMessageShouldDisappear();
 }

@@ -88,6 +88,7 @@ const GiftCardEnableDisableSection: React.FC = () => {
 
   return (
     <ConfirmButton
+      data-test-id="enable-button"
       className={classNames(classes.button, {
         [classes.buttonRed]: isActive || currentOpts?.status === "error",
         [classes.buttonGreen]: showButtonGreen

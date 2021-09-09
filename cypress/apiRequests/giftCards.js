@@ -19,6 +19,10 @@ export function getGiftCardsWithTag(first, tag) {
             amount
             type
           }
+          currentBalance{
+            currency
+            amount
+          }
           initialBalance{
             currency
             amount
@@ -29,3 +33,58 @@ export function getGiftCardsWithTag(first, tag) {
   }`;
   return cy.sendRequestWithQuery(query);
 }
+
+export function createGiftCard({ tag, expiryType, currency, amount }) {
+  const mutation = `mutation{
+    giftCardCreate(input:{
+      tag:"${tag}"
+      expirySettings: {
+        expiryType: ${expiryType}
+      }
+      balance: {
+        currency: "${currency}"
+        amount: ${amount}
+      }
+    }){
+      errors{
+        field
+        message
+      }
+      giftCard{
+        code
+        id
+      }
+    }
+  }`;
+  return cy
+    .sendRequestWithQuery(mutation)
+    .its("body.data.giftCardCreate.giftCard");
+}
+
+export function giftCardDeactivate(giftCardId) {
+  const mutation = `mutation{
+    giftCardDeactivate(id:"${giftCardId}"){
+      errors{
+        field
+        message
+      }
+    }
+  }`;
+  return cy.sendRequestWithQuery(mutation);
+}
+
+export function deleteGiftCard(giftCardId) {
+  const mutation = `mutation{
+    giftCardDelete(id:"${giftCardId}"){
+      errors{
+        field
+        message
+      }
+    }
+  }`;
+  return cy.sendRequestWithQuery(mutation);
+}
+
+export const giftCardExpiryOptions = {
+  NEVER_EXPIRE: "NEVER_EXPIRE"
+};
