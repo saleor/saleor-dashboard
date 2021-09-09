@@ -14,7 +14,7 @@ const fulfiledStatuses = [
 ];
 
 export const getOrderUnfulfilledLines = (order: OrderDetails_order) =>
-  order?.lines.filter(line => line.quantityFulfilled !== line.quantity) || [];
+  order?.lines.filter(line => line.quantityToFulfill > 0) || [];
 
 export const getFulfilledFulfillment = fulfillment =>
   fulfiledStatuses.includes(fulfillment.status);
