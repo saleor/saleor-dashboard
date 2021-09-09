@@ -1172,14 +1172,6 @@
     "context": "caption",
     "string": "If enabled, attribute will be accessible to customers."
   },
-  "src_dot_attributes_dot_components_dot_AttributeSwatchField_dot_image": {
-    "context": "swatch attribute image label",
-    "string": "Image"
-  },
-  "src_dot_attributes_dot_components_dot_AttributeSwatchField_dot_picker": {
-    "context": "swatch attribute color picker label",
-    "string": "Picker"
-  },
   "src_dot_attributes_dot_components_dot_AttributeValueDeleteDialog_dot_1326420604": {
     "context": "delete attribute value",
     "string": "Are you sure you want to delete \"{name}\" value?"
