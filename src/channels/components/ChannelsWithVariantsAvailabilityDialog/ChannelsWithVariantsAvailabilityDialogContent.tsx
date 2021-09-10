@@ -158,6 +158,7 @@ const ChannelsWithVariantsAvailabilityDialogContent: React.FC<ChannelsWithVarian
           <ExpansionPanel
             classes={expanderClasses}
             data-test-id="expand-channel-row"
+            key={channelId}
           >
             <ExpansionPanelSummary
               expandIcon={<IconChevronDown />}
@@ -193,7 +194,7 @@ const ChannelsWithVariantsAvailabilityDialogContent: React.FC<ChannelsWithVarian
               </div>
             </ExpansionPanelSummary>
             {allVariants.map(({ id: variantId, name }) => (
-              <>
+              <React.Fragment key={variantId}>
                 <div
                   data-test-id="channel-variant-row"
                   key={variantId}
@@ -212,7 +213,7 @@ const ChannelsWithVariantsAvailabilityDialogContent: React.FC<ChannelsWithVarian
                   />
                 </div>
                 <Divider />
-              </>
+              </React.Fragment>
             ))}
           </ExpansionPanel>
         );
