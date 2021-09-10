@@ -20,32 +20,6 @@ const GiftCardsListHeaderAlertContent: React.FC<GiftCardsListHeaderAlertContentP
 }) => {
   const classes = useStyles({});
 
-  if (!giftCardProductTypesExist && !giftCardProductsExist) {
-    return (
-      <FormattedMessage
-        {...messages.noGiftCardsProductsAndProductTypes}
-        values={{
-          createGiftCardProductType: (
-            <Link
-              onClick={handleCreateGiftCardProductType}
-              className={classes.alertLink}
-            >
-              <FormattedMessage {...messages.createGiftCardProductType} />
-            </Link>
-          ),
-          giftCardProduct: (
-            <Link
-              onClick={handleCreateGiftCardProduct}
-              className={classes.alertLink}
-            >
-              <FormattedMessage {...messages.giftCardProduct} />
-            </Link>
-          )
-        }}
-      />
-    );
-  }
-
   if (!giftCardProductTypesExist) {
     return (
       <FormattedMessage

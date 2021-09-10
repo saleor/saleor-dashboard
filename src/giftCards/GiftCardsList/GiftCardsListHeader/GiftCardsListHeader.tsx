@@ -64,6 +64,7 @@ const GiftCardsListHeader: React.FC = () => {
         kind: ProductTypeKindEnum.GIFT_CARD
       })
     );
+
   const handleCreateGiftCardProduct = () => navigate(productAddUrl());
 
   return (
