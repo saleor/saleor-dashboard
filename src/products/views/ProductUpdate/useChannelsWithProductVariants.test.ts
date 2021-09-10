@@ -34,7 +34,7 @@ describe("useChannelsWithProductVariants", () => {
     expect(
       result.current.channelsWithVariantsData.channel1.variantsIdsToRemove
     ).toHaveLength(0);
-    expect(result.current.haveChannelsWithVariantsDataChanged).toBe(false);
+    expect(result.current.hasChanged).toBe(false);
   });
 
   it("properly adds variants", () => {
@@ -51,7 +51,7 @@ describe("useChannelsWithProductVariants", () => {
     expect(
       result.current.channelsWithVariantsData.channel1.variantsIdsToRemove
     ).toHaveLength(0);
-    expect(result.current.haveChannelsWithVariantsDataChanged).toBe(true);
+    expect(result.current.hasChanged).toBe(true);
   });
 
   it("properly removes variants", () => {
@@ -68,7 +68,7 @@ describe("useChannelsWithProductVariants", () => {
     expect(
       result.current.channelsWithVariantsData.channel1.variantsIdsToRemove
     ).toHaveLength(1);
-    expect(result.current.haveChannelsWithVariantsDataChanged).toBe(true);
+    expect(result.current.hasChanged).toBe(true);
   });
 
   it("properly toggles all variants in channel", () => {
@@ -86,7 +86,7 @@ describe("useChannelsWithProductVariants", () => {
     expect(
       result.current.channelsWithVariantsData.channel1.variantsIdsToRemove
     ).toHaveLength(5);
-    expect(result.current.haveChannelsWithVariantsDataChanged).toBe(true);
+    expect(result.current.hasChanged).toBe(true);
 
     // Select all
     act(() => result.current.toggleAllChannelVariants("channel1"));
@@ -126,7 +126,7 @@ describe("useChannelsWithProductVariants", () => {
     expect(
       result.current.channelsWithVariantsData.channel2.variantsIdsToRemove
     ).toHaveLength(0);
-    expect(result.current.haveChannelsWithVariantsDataChanged).toBe(true);
+    expect(result.current.hasChanged).toBe(true);
 
     // Deselect all
     act(result.current.toggleAllChannels);

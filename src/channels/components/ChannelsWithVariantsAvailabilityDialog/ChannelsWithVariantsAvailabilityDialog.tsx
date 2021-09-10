@@ -28,6 +28,7 @@ type UseChannelsWithVariantsCommonProps = Omit<
   | "setHaveChannelsWithVariantsChanged"
   | "channelsData"
   | "setChannelsData"
+  | "hasChanged"
 >;
 
 export interface ChannelsAvailabilityDialogProps

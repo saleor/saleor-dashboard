@@ -98,7 +98,7 @@ const useChannelsWithProductVariants = (
     channelsData,
     addVariantToChannel: handleAddVariant,
     removeVariantFromChannel: handleRemoveVariant,
-    haveChannelsWithVariantsDataChanged: hasChanged, // Used only to make pdp submit disabled
+    hasChanged,
     toggleAllChannelVariants,
     toggleAllChannels
   };

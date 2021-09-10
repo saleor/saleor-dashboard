@@ -16,5 +16,5 @@ export interface UseChannelsWithProductVariants {
   channelsWithVariantsData: ChannelsWithVariantsData;
   toggleAllChannels: () => void;
   toggleAllChannelVariants: (channelId: string) => void;
-  haveChannelsWithVariantsDataChanged: boolean;
+  hasChanged: boolean;
 }
