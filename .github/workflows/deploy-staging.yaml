@@ -4,6 +4,14 @@ on:
     branches:
       - master
       - ci/staging/**
+  workflow_dispatch:
+    inputs:
+      git_ref:
+        description: Git ref (tag, branch or commit hash) with helm chart to deploy
+        required: true
+      service_name:
+        description: Name of the service
+        required: true
 jobs:
   build:
     runs-on: ubuntu-20.04
@@ -14,28 +22,33 @@ jobs:
       SENTRY_ORG: saleor
       SENTRY_PROJECT: dashboard
       SENTRY_URL_PREFIX: "~/dashboard/static"
-      ENVIRONMENT: master-staging
       SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
       SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
     steps:
+      - name: Set env variables
+        run: |
+          set -x
+
+          GIT_REF_INPUT=${{ github.event.inputs.git_ref }}
+          GIT_REF="${GIT_REF_INPUT:=master}"
+
+          SERVICE_NAME_INPUT=${{ github.event.inputs.service_name }}
+          SERVICE_NAME="${SERVICE_NAME_INPUT:=saleor-master-staging}"
+
+          echo "GIT_REF=$GIT_REF" >> $GITHUB_ENV
+          # ENVIRONMENT variable is provided to sentry at build time
+          echo "ENVIRONMENT=$SERVICE_NAME" >> $GITHUB_ENV
+
       - uses: actions/checkout@v2
+        with:
+          ref: ${{ env.GIT_REF }}
       - name: Package
+        timeout-minutes: 15
         run: |
           npm ci
+      - name: Build
+        run: |
           npm run build
-      - uses: actions/upload-artifact@v2
-        with:
-          name: build
-          path: build
-  deploy:
-    needs:
-      - build
-    runs-on: ubuntu-20.04
-    steps:
-      - uses: actions/download-artifact@v2
-        with:
-          name: build
-          path: build
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
@@ -44,6 +57,6 @@ jobs:
           aws-region: us-east-1
       - name: Deploy
         run: |
-          aws s3 sync build/dashboard s3://${{ secrets.AWS_STAGING_DEPLOYMENT_BUCKET }}/saleor-master-staging/static/
-          aws s3 cp build/dashboard/index.html s3://${{ secrets.AWS_STAGING_DEPLOYMENT_BUCKET }}/saleor-master-staging/
+          aws s3 sync build/dashboard s3://${{ secrets.AWS_STAGING_DEPLOYMENT_BUCKET }}/${ENVIRONMENT}/static/
+          aws s3 cp build/dashboard/index.html s3://${{ secrets.AWS_STAGING_DEPLOYMENT_BUCKET }}/${ENVIRONMENT}/
           aws cloudfront create-invalidation --distribution-id ${{ secrets.AWS_STAGING_CF_DIST_ID }} --paths "/dashboard*"
