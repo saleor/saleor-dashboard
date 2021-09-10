@@ -280,7 +280,7 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
   const {
     channelsWithVariantsData,
     hasChanged: hasChannelVariantListingChanged,
-    ...channelsWithVariantsProps
+    setChannelVariantListing
   } = useChannelsWithProductVariants(
     allChannels,
     product?.variants.map(variant => variant.id)
@@ -513,13 +513,14 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
           />
         ) : (
           <ChannelsWithVariantsAvailabilityDialog
-            {...channelsWithVariantsProps}
-            channelsWithVariantsData={channelsWithVariantsData}
             channels={allChannels}
             variants={product?.variants}
             open={params.action === CHANNELS_AVAILIABILITY_MODAL_SELECTOR}
             onClose={closeModal}
-            onConfirm={closeModal}
+            onConfirm={listings => {
+              closeModal();
+              setChannelVariantListing(listings);
+            }}
           />
         ))}
       <ProductUpdatePage

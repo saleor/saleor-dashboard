@@ -82,11 +82,13 @@ const useChannelsWithProductVariants = (
 
   return {
     channelsWithVariantsData,
+    channelVariantListing: updatedChannelVariantListing,
     addVariantToChannel: handleAddVariant,
     removeVariantFromChannel: handleRemoveVariant,
     hasChanged,
     toggleAllChannelVariants,
-    toggleAllChannels
+    toggleAllChannels,
+    setChannelVariantListing: setUpdatedChannelVariantListing
   };
 };
 

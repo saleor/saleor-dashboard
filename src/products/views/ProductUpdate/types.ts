@@ -13,4 +13,6 @@ export interface UseChannelsWithProductVariants {
   toggleAllChannels: () => void;
   toggleAllChannelVariants: (channelId: string) => void;
   hasChanged: boolean;
+  channelVariantListing: Record<string, string[]>;
+  setChannelVariantListing: (listings: Record<string, string[]>) => void;
 }
