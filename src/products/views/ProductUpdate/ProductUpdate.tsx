@@ -278,7 +278,6 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
   const {
     channelsWithVariantsData,
     haveChannelsWithVariantsDataChanged,
-    setHaveChannelsWithVariantsChanged,
     channelsData,
     setChannelsData,
     ...channelsWithVariantsProps
@@ -563,10 +562,7 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
         onDelete={() => openModal("remove")}
         onImageReorder={handleImageReorder}
         onMediaUrlUpload={handleMediaUrlUpload}
-        onSubmit={(formData: ProductUpdatePageSubmitData) => {
-          setHaveChannelsWithVariantsChanged(false);
-          return handleSubmit(formData);
-        }}
+        onSubmit={handleSubmit}
         onWarehouseConfigure={() => navigate(warehouseAddPath)}
         onVariantAdd={handleVariantAdd}
         onVariantsAdd={() => openModal("add-variants")}

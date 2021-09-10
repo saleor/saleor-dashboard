@@ -1,8 +1,9 @@
 import { ChannelData } from "@saleor/channels/utils";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import isEmpty from "lodash/isEmpty";
+import isEqual from "lodash/isEqual";
 import reduce from "lodash/reduce";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 
 import {
   ChannelsWithVariantsData,
@@ -34,28 +35,10 @@ const useChannelsWithProductVariants = (
     initialChannelsWithVariantsData
   );
 
-  const channelsWithVariantsDataRef = useRef(channelsWithVariantsData);
-
-  const [hasChanged, setHasChanged] = useState(false);
-
-  const handleSetHasChanged = () => {
-    const isDataRefEmpty = isEmpty(channelsWithVariantsDataRef.current);
-    const isDataEmpty = isEmpty(channelsWithVariantsData);
-
-    const hasFilledInitialData = isDataRefEmpty && !isDataEmpty;
-
-    const hasNoDataFilled = isDataRefEmpty && isDataEmpty;
-
-    channelsWithVariantsDataRef.current = channelsWithVariantsData;
-
-    if (hasNoDataFilled || hasFilledInitialData) {
-      return;
-    }
-
-    setHasChanged(true);
-  };
-
-  useEffect(handleSetHasChanged, [channelsWithVariantsData]);
+  const hasChanged = useMemo(
+    () => !isEqual(initialChannelsWithVariantsData, channelsWithVariantsData),
+    [initialChannelsWithVariantsData, channelsWithVariantsData]
+  );
 
   const handleAddVariant = (channelId: string, variantId: string) =>
     setChannelsWithVariantsData({
@@ -117,8 +100,7 @@ const useChannelsWithProductVariants = (
     removeVariantFromChannel: handleRemoveVariant,
     haveChannelsWithVariantsDataChanged: hasChanged, // Used only to make pdp submit disabled
     toggleAllChannelVariants,
-    toggleAllChannels,
-    setHaveChannelsWithVariantsChanged: setHasChanged
+    toggleAllChannels
   };
 };
 

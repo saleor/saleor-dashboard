@@ -59,7 +59,7 @@ export const ChannelsWithVariantsAvailabilityDialog: React.FC<ChannelsAvailabili
   );
 
   const hasAllChannelsSelected = areAllVariantsAtAllChannelsSelected(
-    variants,
+    variants.map(variant => variant.id),
     channelsWithVariantsData
   );
 
