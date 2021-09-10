@@ -3,7 +3,11 @@ import every from "lodash/every";
 import reduce from "lodash/reduce";
 
 import { initialChannelWithVariantData } from "./consts";
-import { ChannelsWithVariantsData, ChannelWithVariantData } from "./types";
+import {
+  ChannelsWithVariantsData,
+  channelVariantListing,
+  ChannelWithVariantData
+} from "./types";
 
 export function createFromChannels<T>(
   channels: ChannelData[],
@@ -37,7 +41,7 @@ export const getChannelVariantToggleData = (
 
 export const areAllVariantsAtAllChannelsSelected = (
   variants: string[] = [],
-  channelsWithVariants: Record<string, string[]> = {}
+  channelsWithVariants: channelVariantListing = {}
 ) =>
   every(channelsWithVariants, channelWithVariantsData =>
     areAllChannelVariantsSelected(variants, channelWithVariantsData)
@@ -60,9 +64,9 @@ export const getTotalSelectedChannelsCount = (
   ).length;
 
 export const addAllVariantsToAllChannels = (
-  listings: Record<string, string[]>,
+  listings: channelVariantListing,
   variants: string[]
-): Record<string, string[]> => {
+): channelVariantListing => {
   const areAllChannelsSelected = areAllVariantsAtAllChannelsSelected(
     variants,
     listings
@@ -70,7 +74,7 @@ export const addAllVariantsToAllChannels = (
 
   const updatedListing = reduce(
     listings,
-    (result: Record<string, string[]>, _, channelId) => ({
+    (result: channelVariantListing, _, channelId) => ({
       ...result,
       [channelId]: getChannelVariantToggleData(variants, areAllChannelsSelected)
     }),
@@ -82,11 +86,11 @@ export const addAllVariantsToAllChannels = (
 
 export const channelVariantListingDiffToDict = (
   listing: ChannelsWithVariantsData
-): Record<string, string[]> =>
+): channelVariantListing =>
   reduce(
     listing,
     (
-      listingDict: Record<string, string[]>,
+      listingDict: channelVariantListing,
       { selectedVariantsIds },
       channelId
     ) => ({
