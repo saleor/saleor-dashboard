@@ -35,18 +35,23 @@ describe("Tests for using attributes in filters", () => {
   });
 
   it("should use attribute as filter", () => {
-    updateAttribute({ filterableInDashboard: false });
+    updateAttribute({
+      attributeId: attribute.id,
+      filterableInDashboard: false
+    });
     enterAttributeAndChanegeIsFilterableInDashbord(attribute.id);
     enterProductListPage();
-    selectAttributeFilter(attribute.slug, startsWith);
-    cy.contains(SHARED_ELEMENTS.tableRow, startsWith).should("be.visible");
+    selectAttributeFilter(attribute.slug, attribute.name);
+    cy.contains(SHARED_ELEMENTS.tableRow, attribute.name).should("be.visible");
   });
 
   it("should remove attribute from filters", () => {
-    updateAttribute({ filterableInDashboard: false });
+    updateAttribute({ attributeId: attribute.id, filterableInDashboard: true });
     enterAttributeAndChanegeIsFilterableInDashbord(attribute.id);
     enterProductListPage();
     showFilters();
-    cy.contains(attribute.name).should("not.exist");
+    cy.contains(SHARED_ELEMENTS.filters.filterRow, attribute.name).should(
+      "not.exist"
+    );
   });
 });

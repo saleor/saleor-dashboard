@@ -3,6 +3,7 @@ import { BUTTON_SELECTORS } from "../elements/shared/button-selectors";
 import { INVITE_STAFF_MEMBER_FORM } from "../elements/staffMembers/inviteStaffMemberForm";
 import { STAFF_MEMBER_DETAILS } from "../elements/staffMembers/staffMemberDetails";
 import { userDetailsUrl } from "../url/urlList";
+import { confirmationMessageShouldDisappear } from "./shared/confirmationMessages";
 import { visitAndWaitForProgressBarToDisappear } from "./shared/progressBar";
 import { fillAutocompleteSelect } from "./shared/selects";
 
@@ -26,6 +27,7 @@ export function fillUpUserDetails(firstName, lastName, email) {
     .type(email)
     .get(BUTTON_SELECTORS.submit)
     .click();
+  confirmationMessageShouldDisappear();
   fillAutocompleteSelect(STAFF_MEMBER_DETAILS.permissionsSelect);
   cy.addAliasToGraphRequest("StaffMemberUpdate");
   cy.get(BUTTON_SELECTORS.confirm)

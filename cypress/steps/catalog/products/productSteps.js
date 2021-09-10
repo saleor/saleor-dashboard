@@ -1,7 +1,7 @@
 import { PRODUCT_DETAILS } from "../../../elements/catalog/products/product-details";
 import { AVAILABLE_CHANNELS_FORM } from "../../../elements/channels/available-channels-form";
 import { BUTTON_SELECTORS } from "../../../elements/shared/button-selectors";
-import { fillAutocompleteSelect } from "../../shared/selects";
+import { fillAutocompleteSelect, fillMultiSelect } from "../../shared/selects";
 import { addMetadataField } from "../metadataSteps";
 import { editSeoSettings } from "../seoSteps";
 
@@ -105,7 +105,7 @@ export function fillUpCollectionAndCategory({ category, collection }) {
   return fillAutocompleteSelect(PRODUCT_DETAILS.categoryInput, category)
     .then(selected => {
       organization.category = selected;
-      fillAutocompleteSelect(PRODUCT_DETAILS.collectionInput, collection);
+      fillMultiSelect(PRODUCT_DETAILS.collectionInput, collection);
     })
     .then(selected => {
       organization.collection = selected;
