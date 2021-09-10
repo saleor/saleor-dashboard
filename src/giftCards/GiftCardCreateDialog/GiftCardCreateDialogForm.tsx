@@ -41,7 +41,7 @@ export interface GiftCardCreateFormData extends GiftCardCommonFormData {
   note: string;
   sendToCustomerSelected: boolean;
   selectedCustomer?: GiftCardCreateFormCustomer;
-  channel?: string;
+  channelSlug?: string;
   expirySelected: boolean;
   expiryType: GiftCardExpiryType;
   expiryPeriodType: TimePeriodTypeEnum;
@@ -66,8 +66,6 @@ export const initialData: GiftCardCreateFormData = {
 };
 
 interface GiftCardCreateDialogFormProps {
-  defaultChannel: string;
-  channelsChoices: Choices;
   opts: { status: ConfirmButtonTransitionState };
   apiErrors: GiftCardError[];
   onSubmit: (data: GiftCardCreateFormData) => void;
@@ -76,8 +74,6 @@ interface GiftCardCreateDialogFormProps {
 }
 
 const GiftCardCreateDialogForm: React.FC<GiftCardCreateDialogFormProps> = ({
-  defaultChannel,
-  channelsChoices,
   onSubmit,
   opts,
   onClose,
@@ -124,7 +120,7 @@ const GiftCardCreateDialogForm: React.FC<GiftCardCreateDialogFormProps> = ({
       ...initialData,
       ...getInitialExpirySettingsData(),
       balanceCurrency: initialCurrency,
-      channel: defaultChannel
+      channelSlug: ""
     },
     handleSubmit
   );
@@ -137,7 +133,7 @@ const GiftCardCreateDialogForm: React.FC<GiftCardCreateDialogFormProps> = ({
   const {
     tag,
     sendToCustomerSelected,
-    channel,
+    channelSlug,
     balanceAmount,
     balanceCurrency,
     expirySelected,
@@ -192,12 +188,11 @@ const GiftCardCreateDialogForm: React.FC<GiftCardCreateDialogFormProps> = ({
         <CardSpacer />
         <Divider />
         <GiftCardSendToCustomer
+          selectedChannelSlug={channelSlug}
           change={change}
           sendToCustomerSelected={sendToCustomerSelected}
           selectedCustomer={selectedCustomer}
           setSelectedCustomer={setSelectedCustomer}
-          channel={channel}
-          channelsChoices={channelsChoices}
         />
         <Divider />
         <VerticalSpacer />

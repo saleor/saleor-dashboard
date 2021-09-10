@@ -33,7 +33,6 @@ const GiftCardCreateDialog: React.FC<DialogActionHandlersProps> = ({
     data: channelCurrenciesData,
     loading: loadingChannelCurrencies
   } = useChannelCurrencies({});
-  const { channel, availableChannels } = useAppChannel(false);
 
   const [cardCode, setCardCode] = useState(null);
 
@@ -70,14 +69,14 @@ const GiftCardCreateDialog: React.FC<DialogActionHandlersProps> = ({
       sendToCustomerSelected,
       selectedCustomer,
       requiresActivation,
-      channel
+      channelSlug
     } = formData;
 
     return {
       note: note || null,
       tag: tag || null,
       userEmail: (sendToCustomerSelected && selectedCustomer.email) || null,
-      channel: (sendToCustomerSelected && channel) || null,
+      channel: (sendToCustomerSelected && channelSlug) || null,
       balance: {
         amount: balanceAmount,
         currency: balanceCurrency
@@ -124,8 +123,6 @@ const GiftCardCreateDialog: React.FC<DialogActionHandlersProps> = ({
               onClose={handleClose}
               apiErrors={createGiftCardOpts?.data?.giftCardCreate?.errors}
               onSubmit={handleSubmit}
-              defaultChannel={channel?.id}
-              channelsChoices={mapNodeToChoice(availableChannels)}
             />
           ))}
       </ContentWithProgress>

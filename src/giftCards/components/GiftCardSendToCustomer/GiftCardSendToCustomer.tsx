@@ -1,20 +1,19 @@
 import VerticalSpacer from "@saleor/apps/components/VerticalSpacer";
+import useAppChannel from "@saleor/components/AppLayout/AppChannelContext";
 import ControlledCheckbox from "@saleor/components/ControlledCheckbox";
-import SingleSelectField, {
-  Choices
-} from "@saleor/components/SingleSelectField";
+import SingleSelectField from "@saleor/components/SingleSelectField";
 import GiftCardCustomerSelectField from "@saleor/giftCards/GiftCardCreateDialog/GiftCardCustomerSelectField";
 import { GiftCardCreateFormCustomer } from "@saleor/giftCards/GiftCardCreateDialog/types";
 import { FormChange } from "@saleor/hooks/useForm";
 import Label from "@saleor/orders/components/OrderHistory/Label";
-import React from "react";
+import { mapSlugNodeToChoice } from "@saleor/utils/maps";
+import React, { useEffect } from "react";
 import { useIntl } from "react-intl";
 
 import { giftCardSendToCustomerMessages as messages } from "./messages";
 
 interface GiftCardSendToCustomerProps {
-  channelsChoices: Choices;
-  channel: string;
+  selectedChannelSlug: string;
   change: FormChange;
   sendToCustomerSelected: boolean;
   selectedCustomer: GiftCardCreateFormCustomer;
@@ -22,13 +21,21 @@ interface GiftCardSendToCustomerProps {
 }
 
 const GiftCardSendToCustomer: React.FC<GiftCardSendToCustomerProps> = ({
-  channelsChoices,
-  channel,
   change,
   sendToCustomerSelected,
+  selectedChannelSlug,
   selectedCustomer,
   setSelectedCustomer
 }) => {
+  const { channel, availableChannels } = useAppChannel(false);
+
+  const channelsChoices = mapSlugNodeToChoice(availableChannels);
+
+  useEffect(
+    () => change({ target: { name: "channelSlug", value: channel?.slug } }),
+    []
+  );
+
   const intl = useIntl();
 
   return (
@@ -52,9 +59,9 @@ const GiftCardSendToCustomer: React.FC<GiftCardSendToCustomerProps> = ({
           <VerticalSpacer />
           <SingleSelectField
             choices={channelsChoices}
-            name="channel"
+            name="channelSlug"
             label={intl.formatMessage(messages.channelSelectLabel)}
-            value={channel}
+            value={selectedChannelSlug || channel?.slug}
             onChange={change}
           />
           <VerticalSpacer />

@@ -57,8 +57,7 @@ export const AppChannelProvider: React.FC = ({ children }) => {
   const availableChannels = channelData?.channels || [];
 
   const channel =
-    channelData &&
-    (availableChannels.find(channel => channel.id === selectedChannel) || null);
+    channelData && (availableChannels.find(getById(selectedChannel)) || null);
 
   return (
     <AppChannelContext.Provider
