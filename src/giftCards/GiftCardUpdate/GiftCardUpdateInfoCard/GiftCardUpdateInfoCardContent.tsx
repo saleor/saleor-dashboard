@@ -84,6 +84,10 @@ const GiftCardUpdateInfoCardContent: React.FC = () => {
     if (cardIssuedEvent) {
       const { orderId, orderNumber } = cardIssuedEvent;
 
+      if (!orderId) {
+        return null;
+      }
+
       return getOrderNumberLinkObject({
         id: orderId,
         number: orderNumber
