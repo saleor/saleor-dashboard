@@ -27,6 +27,7 @@ import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import useOnSetDefaultVariant from "@saleor/hooks/useOnSetDefaultVariant";
 import useShop from "@saleor/hooks/useShop";
+import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { commonMessages, errorMessages } from "@saleor/intl";
 import ProductVariantCreateDialog from "@saleor/products/components/ProductVariantCreateDialog";
 import {
@@ -275,11 +276,12 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
     channel.name.localeCompare(nextChannel.name)
   );
 
+  const isSimpleProduct = !data?.product?.productType?.hasVariants;
+
+  const [channelsData, setChannelsData] = useStateFromProps(allChannels);
   const {
     channelsWithVariantsData,
     hasChanged: hasChannelVariantListingChanged,
-    channelsData,
-    setChannelsData,
     ...channelsWithVariantsProps
   } = useChannelsWithProductVariants(
     allChannels,

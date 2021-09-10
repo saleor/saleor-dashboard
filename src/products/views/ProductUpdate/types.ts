@@ -1,5 +1,3 @@
-import { ChannelData } from "@saleor/channels/utils";
-
 export interface ChannelWithVariantData {
   selectedVariantsIds: string[];
   variantsIdsToRemove: string[];
@@ -9,8 +7,6 @@ export interface ChannelWithVariantData {
 export type ChannelsWithVariantsData = Record<string, ChannelWithVariantData>;
 
 export interface UseChannelsWithProductVariants {
-  channelsData: ChannelData[];
-  setChannelsData: (data: ChannelData[]) => void;
   addVariantToChannel: (channelId: string, variantId: string) => void;
   removeVariantFromChannel: (channelId: string, variantId: string) => void;
   channelsWithVariantsData: ChannelsWithVariantsData;

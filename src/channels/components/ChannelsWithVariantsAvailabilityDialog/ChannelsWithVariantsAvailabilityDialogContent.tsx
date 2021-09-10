@@ -125,7 +125,7 @@ const ChannelsWithVariantsAvailabilityDialogContent: React.FC<ChannelsWithVarian
 
   const selectChannelIcon = (channelId: string) =>
     areAllChannelVariantsSelected(
-      allVariants,
+      allVariants?.map(variant => variant.id),
       channelsWithVariants[channelId]
     ) ? (
       <IconCheckboxChecked />

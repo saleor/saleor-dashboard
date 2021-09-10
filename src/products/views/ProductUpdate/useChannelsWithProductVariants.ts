@@ -22,8 +22,6 @@ const useChannelsWithProductVariants = (
   channels: ChannelData[],
   variants: string[]
 ): UseChannelsWithProductVariants => {
-  const [channelsData, setChannelsData] = useStateFromProps(channels);
-
   const initialChannelsWithVariantsData = getParsedChannelsWithVariantsDataFromChannels(
     channels
   );
@@ -94,8 +92,6 @@ const useChannelsWithProductVariants = (
 
   return {
     channelsWithVariantsData,
-    setChannelsData,
-    channelsData,
     addVariantToChannel: handleAddVariant,
     removeVariantFromChannel: handleRemoveVariant,
     hasChanged,
