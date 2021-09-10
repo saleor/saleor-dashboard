@@ -1,3 +1,4 @@
+import { ChannelData } from "@saleor/channels/utils";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import isEmpty from "lodash/isEmpty";
 import reduce from "lodash/reduce";
@@ -5,8 +6,7 @@ import { useEffect, useRef, useState } from "react";
 
 import {
   ChannelsWithVariantsData,
-  UseChannelsWithProductVariants,
-  UseChannelsWithProductVariantsProps
+  UseChannelsWithProductVariants
 } from "./types";
 import {
   areAllVariantsAtAllChannelsSelected,
@@ -17,10 +17,10 @@ import {
   getParsedChannelsWithVariantsDataFromChannels
 } from "./utils";
 
-const useChannelsWithProductVariants = ({
-  channels,
-  variants
-}: UseChannelsWithProductVariantsProps): UseChannelsWithProductVariants => {
+const useChannelsWithProductVariants = (
+  channels: ChannelData[],
+  variants: string[]
+): UseChannelsWithProductVariants => {
   const [channelsData, setChannelsData] = useStateFromProps(channels);
 
   const initialChannelsWithVariantsData = getParsedChannelsWithVariantsDataFromChannels(

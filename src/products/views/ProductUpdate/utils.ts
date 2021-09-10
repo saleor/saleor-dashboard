@@ -69,30 +69,27 @@ export const getChannelWithRemovedVariantData = ({
 });
 
 export const getChannelVariantToggleData = (
-  variants: ProductDetails_product_variants[],
+  variants: string[],
   isSelected: boolean
-): ChannelWithVariantData => {
-  const allProductVariantsIds = extractAllProductVariantsIds(variants);
-
-  return isSelected
+): ChannelWithVariantData =>
+  isSelected
     ? {
         selectedVariantsIds: [],
         variantsIdsToAdd: [],
-        variantsIdsToRemove: allProductVariantsIds
+        variantsIdsToRemove: variants
       }
     : {
-        selectedVariantsIds: allProductVariantsIds,
-        variantsIdsToAdd: allProductVariantsIds,
+        selectedVariantsIds: variants,
+        variantsIdsToAdd: variants,
         variantsIdsToRemove: []
       };
-};
 
 export const extractAllProductVariantsIds = (
   productVariants: ProductDetails_product_variants[] = []
 ) => productVariants.map(({ id }) => id);
 
 export const areAllVariantsAtAllChannelsSelected = (
-  variants: ProductDetails_product_variants[] = [],
+  variants: string[] = [],
   channelsWithVariants: ChannelsWithVariantsData = {}
 ) =>
   every(channelsWithVariants, channelWithVariantsData =>
@@ -100,7 +97,7 @@ export const areAllVariantsAtAllChannelsSelected = (
   );
 
 export const areAllChannelVariantsSelected = (
-  variants: ProductDetails_product_variants[] = [],
+  variants: string[] = [],
   { selectedVariantsIds }: Pick<ChannelWithVariantData, "selectedVariantsIds">
 ) => selectedVariantsIds.length === variants.length;
 

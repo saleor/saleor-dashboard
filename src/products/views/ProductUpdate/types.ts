@@ -1,10 +1,4 @@
 import { ChannelData } from "@saleor/channels/utils";
-import { ProductDetails_product_variants } from "@saleor/products/types/ProductDetails";
-
-export interface UseChannelsWithProductVariantsProps {
-  channels: ChannelData[];
-  variants: ProductDetails_product_variants[];
-}
 
 export interface ChannelWithVariantData {
   selectedVariantsIds: string[];

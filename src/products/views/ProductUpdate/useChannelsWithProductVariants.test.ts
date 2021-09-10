@@ -8,13 +8,18 @@ const channels: ChannelData[] = [
     id: "channel1",
     name: "Channel 1",
     variantsIds: ["variant1", "variant2"]
+  },
+  {
+    id: "channel2",
+    name: "Channel 2",
+    variantsIds: []
   }
 ];
 
-const variants = [];
+const variants = ["variant1", "variant2", "variant3", "variant4", "variant5"];
 
 const setupHook = () =>
-  renderHook(() => useChannelsWithProductVariants({ channels, variants }));
+  renderHook(() => useChannelsWithProductVariants(channels, variants));
 
 describe("useChannelsWithProductVariants", () => {
   it("properly initializes state", () => {
@@ -61,5 +66,83 @@ describe("useChannelsWithProductVariants", () => {
     expect(
       result.current.channelsWithVariantsData.channel1.variantsIdsToRemove
     ).toHaveLength(1);
+  });
+
+  it("properly toggles all variants in channel", () => {
+    const { result } = setupHook();
+
+    // Deselect all because it's partially selected
+    act(() => result.current.toggleAllChannelVariants("channel1"));
+
+    expect(
+      result.current.channelsWithVariantsData.channel1.selectedVariantsIds
+    ).toHaveLength(0);
+    expect(
+      result.current.channelsWithVariantsData.channel1.variantsIdsToAdd
+    ).toHaveLength(0);
+    expect(
+      result.current.channelsWithVariantsData.channel1.variantsIdsToRemove
+    ).toHaveLength(5);
+
+    // Select all
+    act(() => result.current.toggleAllChannelVariants("channel1"));
+
+    expect(
+      result.current.channelsWithVariantsData.channel1.selectedVariantsIds
+    ).toHaveLength(5);
+    expect(
+      result.current.channelsWithVariantsData.channel1.variantsIdsToAdd
+    ).toHaveLength(3);
+    expect(
+      result.current.channelsWithVariantsData.channel1.variantsIdsToRemove
+    ).toHaveLength(0);
+  });
+
+  it("properly toggles all", () => {
+    const { result } = setupHook();
+
+    // Select all
+    act(result.current.toggleAllChannels);
+
+    expect(
+      result.current.channelsWithVariantsData.channel1.selectedVariantsIds
+    ).toHaveLength(5);
+    expect(
+      result.current.channelsWithVariantsData.channel1.variantsIdsToAdd
+    ).toHaveLength(3);
+    expect(
+      result.current.channelsWithVariantsData.channel1.variantsIdsToRemove
+    ).toHaveLength(0);
+    expect(
+      result.current.channelsWithVariantsData.channel2.selectedVariantsIds
+    ).toHaveLength(5);
+    expect(
+      result.current.channelsWithVariantsData.channel2.variantsIdsToAdd
+    ).toHaveLength(5);
+    expect(
+      result.current.channelsWithVariantsData.channel2.variantsIdsToRemove
+    ).toHaveLength(0);
+
+    // Deselect all
+    act(result.current.toggleAllChannels);
+
+    expect(
+      result.current.channelsWithVariantsData.channel1.selectedVariantsIds
+    ).toHaveLength(0);
+    expect(
+      result.current.channelsWithVariantsData.channel1.variantsIdsToAdd
+    ).toHaveLength(0);
+    expect(
+      result.current.channelsWithVariantsData.channel1.variantsIdsToRemove
+    ).toHaveLength(5);
+    expect(
+      result.current.channelsWithVariantsData.channel2.selectedVariantsIds
+    ).toHaveLength(0);
+    expect(
+      result.current.channelsWithVariantsData.channel2.variantsIdsToAdd
+    ).toHaveLength(0);
+    expect(
+      result.current.channelsWithVariantsData.channel2.variantsIdsToRemove
+    ).toHaveLength(0);
   });
 });

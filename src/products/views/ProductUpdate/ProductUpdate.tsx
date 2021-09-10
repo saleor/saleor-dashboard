@@ -282,10 +282,10 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
     channelsData,
     setChannelsData,
     ...channelsWithVariantsProps
-  } = useChannelsWithProductVariants({
-    channels: allChannels,
-    variants: product?.variants
-  });
+  } = useChannelsWithProductVariants(
+    allChannels,
+    product?.variants.map(variant => variant.id)
+  );
 
   const productChannelsChoices: ChannelData[] = createSortedChannelsDataFromProduct(
     product
