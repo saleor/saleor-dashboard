@@ -51,30 +51,8 @@ const props: ChannelsAvailabilityDialogProps = {
     }
   ] as ProductDetails_product_variants[],
   onClose: () => undefined,
-  addVariantToChannel: () => undefined,
-  removeVariantFromChannel: () => undefined,
-  channelsWithVariantsData: {
-    ["1"]: {
-      selectedVariantsIds: ["variantA", "variantB"],
-      variantsIdsToRemove: [],
-      variantsIdsToAdd: []
-    },
-    ["2"]: {
-      selectedVariantsIds: ["variantA", "variantC"],
-      variantsIdsToRemove: [],
-      variantsIdsToAdd: []
-    },
-    ["3"]: {
-      selectedVariantsIds: [],
-      variantsIdsToRemove: [],
-      variantsIdsToAdd: []
-    }
-  },
   onConfirm: () => undefined,
-  open: true,
-  toggleAllChannels: () => undefined,
-  toggleAllChannelVariants: () => () => undefined,
-  haveChannelsWithVariantsDataChanged: true
+  open: true
 };
 
 storiesOf("Channels / Channels with Variants Availability Dialog", module)
