@@ -12,7 +12,7 @@ import { useIntl } from "react-intl";
 import { OrderDetails_order } from "../../types/OrderDetails";
 import OrderDiscountCommonModal from "../OrderDiscountCommonModal";
 import { ORDER_DISCOUNT } from "../OrderDiscountCommonModal/types";
-import messages from "./messages";
+import { messages } from "./messages";
 
 const useStyles = makeStyles(
   theme => ({
