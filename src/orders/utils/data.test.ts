@@ -1522,6 +1522,8 @@ describe("Get the total value of all selected products", () => {
       }
     ];
 
+    const waitingItemsQuantities: FormsetData<LineItemData, number> = [];
+
     const itemsToBeReplaced: FormsetData<LineItemData, boolean> = [
       {
         data: { isFulfillment: false, isRefunded: false },
@@ -1591,6 +1593,7 @@ describe("Get the total value of all selected products", () => {
       },
       {
         itemsToBeReplaced,
+        waitingItemsQuantities,
         unfulfilledItemsQuantities,
         fulfilledItemsQuantities
       }

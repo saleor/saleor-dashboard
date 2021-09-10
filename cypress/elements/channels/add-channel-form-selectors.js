@@ -10,5 +10,6 @@ export const ADD_CHANNEL_FORM_SELECTORS = {
   currencyAutocompleteDropdown:
     "[data-test='singleautocomplete-select-option'][data-test-type='custom']",
   addShippingZoneButton: '[data-test-id="add-shipping-zone-button"]',
-  shippingAutocompleteSelect: "[data-test-id='shippingAutoCompleteSelect']"
+  shippingAutocompleteSelect: "[data-test-id='shippingAutoCompleteSelect']",
+  countryAutocompleteInput: '[data-test-id="country-select-input"]'
 };

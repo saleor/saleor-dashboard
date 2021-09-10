@@ -28,6 +28,7 @@ export function createChannel({
     .sendRequestWithQuery(createChannelMutation)
     .its("body.data.channelCreate.channel");
 }
+
 export function getChannels() {
   const getChannelsInfoQuery = `query{
     channels{

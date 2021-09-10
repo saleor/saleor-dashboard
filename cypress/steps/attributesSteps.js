@@ -2,6 +2,7 @@ import { ATTRIBUTES_DETAILS } from "../elements/attribute/attributes_details";
 import { BUTTON_SELECTORS } from "../elements/shared/button-selectors";
 import { attributeDetailsUrl } from "../url/urlList";
 import { confirmationMessageShouldDisappear } from "./shared/confirmationMessages";
+import { waitForProgressBarToNotBeVisible } from "./shared/progressBar";
 
 export function createAttributeWithInputType({
   name,
@@ -86,8 +87,8 @@ export function selectNumericSystem({ unitSystem, unitsOf, unit }) {
 }
 
 export function enterAttributeAndChanegeIsFilterableInDashbord(attributeId) {
-  cy.visit(attributeDetailsUrl(attributeId))
-    .get(ATTRIBUTES_DETAILS.dashboardProperties.useInFilteringCheckbox)
-    .click();
+  cy.visit(attributeDetailsUrl(attributeId));
+  waitForProgressBarToNotBeVisible();
+  cy.get(ATTRIBUTES_DETAILS.dashboardProperties.useInFilteringCheckbox).click();
   submitAttribute();
 }

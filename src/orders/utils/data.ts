@@ -1,7 +1,7 @@
 import { IMoney, subtractMoney } from "@saleor/components/Money";
 import { WarehouseFragment } from "@saleor/fragments/types/WarehouseFragment";
 import { FormsetData } from "@saleor/hooks/useFormset";
-import { OrderErrorCode } from "@saleor/types/globalTypes";
+import { FulfillmentStatus, OrderErrorCode } from "@saleor/types/globalTypes";
 
 import {
   LineItemData,
@@ -9,6 +9,7 @@ import {
 } from "../components/OrderReturnPage/form";
 import {
   getAllOrderFulfilledLines,
+  getAllOrderWaitingLines,
   getById
 } from "../components/OrderReturnPage/utils";
 import { FulfillOrder_orderFulfill_errors } from "../types/FulfillOrder";
@@ -80,16 +81,33 @@ const getItemPriceAndQuantity = ({
   return { selectedQuantity, unitPrice };
 };
 
+const getFulfillmentByFulfillmentLineId = (order, fulfillmentLineId) => {
+  for (const fulfillment of order.fulfillments) {
+    if (fulfillment.lines.find(getById(fulfillmentLineId))) {
+      return fulfillment;
+    }
+  }
+};
+
 const selectItemPriceAndQuantity = (
   order: OrderDetails_order,
   {
     fulfilledItemsQuantities,
+    waitingItemsQuantities,
     unfulfilledItemsQuantities
   }: Partial<OrderReturnFormData>,
   id: string,
   isFulfillment: boolean
-) =>
-  isFulfillment
+) => {
+  const fulfillment = getFulfillmentByFulfillmentLineId(order, id);
+  if (fulfillment?.status === FulfillmentStatus.WAITING_FOR_APPROVAL) {
+    return getItemPriceAndQuantity({
+      id,
+      itemsQuantities: waitingItemsQuantities,
+      orderLines: getAllOrderWaitingLines(order)
+    });
+  }
+  return isFulfillment
     ? getItemPriceAndQuantity({
         id,
         itemsQuantities: fulfilledItemsQuantities,
@@ -100,12 +118,14 @@ const selectItemPriceAndQuantity = (
         itemsQuantities: unfulfilledItemsQuantities,
         orderLines: order.lines
       });
+};
 
 export const getReplacedProductsAmount = (
   order: OrderDetails_order,
   {
     itemsToBeReplaced,
     unfulfilledItemsQuantities,
+    waitingItemsQuantities,
     fulfilledItemsQuantities
   }: Partial<OrderReturnFormData>
 ) => {
@@ -124,7 +144,11 @@ export const getReplacedProductsAmount = (
 
       const { unitPrice, selectedQuantity } = selectItemPriceAndQuantity(
         order,
-        { fulfilledItemsQuantities, unfulfilledItemsQuantities },
+        {
+          fulfilledItemsQuantities,
+          waitingItemsQuantities,
+          unfulfilledItemsQuantities
+        },
         id,
         isFulfillment
       );
@@ -137,7 +161,12 @@ export const getReplacedProductsAmount = (
 
 export const getReturnSelectedProductsAmount = (
   order: OrderDetails_order,
-  { itemsToBeReplaced, unfulfilledItemsQuantities, fulfilledItemsQuantities }
+  {
+    itemsToBeReplaced,
+    waitingItemsQuantities,
+    unfulfilledItemsQuantities,
+    fulfilledItemsQuantities
+  }
 ) => {
   if (!order) {
     return 0;
@@ -155,7 +184,13 @@ export const getReturnSelectedProductsAmount = (
     orderLines: getAllOrderFulfilledLines(order)
   });
 
-  return unfulfilledItemsValue + fulfiledItemsValue;
+  const waitingItemsValue = getPartialProductsValue({
+    itemsQuantities: waitingItemsQuantities,
+    itemsToBeReplaced,
+    orderLines: getAllOrderWaitingLines(order)
+  });
+
+  return unfulfilledItemsValue + fulfiledItemsValue + waitingItemsValue;
 };
 
 const getPartialProductsValue = ({
