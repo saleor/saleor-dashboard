@@ -83,7 +83,7 @@ import {
   createUpdateHandler,
   createVariantReorderHandler
 } from "./handlers";
-import useChannelsWithProductVariants from "./useChannelsWithProductVariants";
+import useChannelVariantListings from "./useChannelVariantListings";
 
 const messages = defineMessages({
   deleteProductDialogTitle: {
@@ -281,10 +281,7 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
     channelsWithVariantsData,
     hasChanged: hasChannelVariantListingChanged,
     setChannelVariantListing
-  } = useChannelsWithProductVariants(
-    allChannels,
-    product?.variants.map(variant => variant.id)
-  );
+  } = useChannelVariantListings(allChannels);
 
   const productChannelsChoices: ChannelData[] = createSortedChannelsDataFromProduct(
     product

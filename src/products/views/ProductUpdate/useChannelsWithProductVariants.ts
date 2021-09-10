@@ -1,17 +1,10 @@
 import { ChannelData } from "@saleor/channels/utils";
-import useStateFromProps from "@saleor/hooks/useStateFromProps";
-import { arrayDiff } from "@saleor/utils/arrays";
-import isEqual from "lodash/isEqual";
 import uniq from "lodash/uniq";
-import { useMemo } from "react";
 
-import {
-  ChannelsWithVariantsData,
-  UseChannelsWithProductVariants
-} from "./types";
+import { UseChannelsWithProductVariants } from "./types";
+import useChannelVariantListings from "./useChannelVariantListings";
 import {
   addAllVariantsToAllChannels,
-  createFromChannels,
   getChannelVariantToggleData
 } from "./utils";
 
@@ -19,29 +12,21 @@ const useChannelsWithProductVariants = (
   channels: ChannelData[],
   variants: string[]
 ): UseChannelsWithProductVariants => {
-  const initialChannelVariantListing = useMemo(
-    () => createFromChannels(channels, ({ variantsIds }) => variantsIds),
-    [channels]
-  );
-
-  const [
-    updatedChannelVariantListing,
-    setUpdatedChannelVariantListing
-  ] = useStateFromProps(initialChannelVariantListing);
-
-  const hasChanged = useMemo(
-    () => !isEqual(initialChannelVariantListing, updatedChannelVariantListing),
-    [initialChannelVariantListing, updatedChannelVariantListing]
-  );
+  const {
+    channelsWithVariantsData,
+    hasChanged,
+    setChannelVariantListing,
+    channelVariantListing
+  } = useChannelVariantListings(channels);
 
   const handleAddVariant = (channelId: string, variantId: string) =>
-    setUpdatedChannelVariantListing(listings => ({
+    setChannelVariantListing(listings => ({
       ...listings,
       [channelId]: uniq([...listings[channelId], variantId])
     }));
 
   const handleRemoveVariant = (channelId: string, variantId: string) =>
-    setUpdatedChannelVariantListing(listings => ({
+    setChannelVariantListing(listings => ({
       ...listings,
       [channelId]: listings[channelId].filter(
         selectedVariantId => selectedVariantId !== variantId
@@ -49,46 +34,28 @@ const useChannelsWithProductVariants = (
     }));
 
   const toggleAllChannelVariants = (channelId: string) => {
-    const isChannelSelected =
-      updatedChannelVariantListing[channelId].length > 0;
+    const isChannelSelected = channelVariantListing[channelId].length > 0;
 
-    setUpdatedChannelVariantListing({
-      ...updatedChannelVariantListing,
+    setChannelVariantListing({
+      ...channelVariantListing,
       [channelId]: getChannelVariantToggleData(variants, isChannelSelected)
     });
   };
 
   const toggleAllChannels = () =>
-    setUpdatedChannelVariantListing(listings =>
+    setChannelVariantListing(listings =>
       addAllVariantsToAllChannels(listings, variants)
     );
 
-  const channelsWithVariantsData = useMemo<ChannelsWithVariantsData>(
-    () =>
-      createFromChannels(channels, channel => {
-        const diff = arrayDiff(
-          initialChannelVariantListing[channel.id],
-          updatedChannelVariantListing[channel.id]
-        );
-
-        return {
-          selectedVariantsIds: updatedChannelVariantListing[channel.id],
-          variantsIdsToAdd: diff.added,
-          variantsIdsToRemove: diff.removed
-        };
-      }),
-    [initialChannelVariantListing, updatedChannelVariantListing]
-  );
-
   return {
     channelsWithVariantsData,
-    channelVariantListing: updatedChannelVariantListing,
+    channelVariantListing,
     addVariantToChannel: handleAddVariant,
     removeVariantFromChannel: handleRemoveVariant,
     hasChanged,
     toggleAllChannelVariants,
     toggleAllChannels,
-    setChannelVariantListing: setUpdatedChannelVariantListing
+    setChannelVariantListing
   };
 };
 
