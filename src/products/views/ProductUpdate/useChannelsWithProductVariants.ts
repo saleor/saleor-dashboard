@@ -1,94 +1,84 @@
 import { ChannelData } from "@saleor/channels/utils";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
-import isEmpty from "lodash/isEmpty";
+import { arrayDiff } from "@saleor/utils/arrays";
 import isEqual from "lodash/isEqual";
-import reduce from "lodash/reduce";
-import { useEffect, useMemo, useRef, useState } from "react";
+import uniq from "lodash/uniq";
+import { useMemo } from "react";
 
 import {
   ChannelsWithVariantsData,
   UseChannelsWithProductVariants
 } from "./types";
 import {
-  areAllVariantsAtAllChannelsSelected,
-  areAnyChannelVariantsSelected,
-  getChannelVariantToggleData,
-  getChannelWithAddedVariantData,
-  getChannelWithRemovedVariantData,
-  getParsedChannelsWithVariantsDataFromChannels
+  addAllVariantsToAllChannels,
+  createFromChannels,
+  getChannelVariantToggleData
 } from "./utils";
 
 const useChannelsWithProductVariants = (
   channels: ChannelData[],
   variants: string[]
 ): UseChannelsWithProductVariants => {
-  const initialChannelsWithVariantsData = getParsedChannelsWithVariantsDataFromChannels(
-    channels
+  const initialChannelVariantListing = useMemo(
+    () => createFromChannels(channels, ({ variantsIds }) => variantsIds),
+    [channels]
   );
 
   const [
-    channelsWithVariantsData,
-    setChannelsWithVariantsData
-  ] = useStateFromProps<ChannelsWithVariantsData>(
-    initialChannelsWithVariantsData
-  );
+    updatedChannelVariantListing,
+    setUpdatedChannelVariantListing
+  ] = useStateFromProps(initialChannelVariantListing);
 
   const hasChanged = useMemo(
-    () => !isEqual(initialChannelsWithVariantsData, channelsWithVariantsData),
-    [initialChannelsWithVariantsData, channelsWithVariantsData]
+    () => !isEqual(initialChannelVariantListing, updatedChannelVariantListing),
+    [initialChannelVariantListing, updatedChannelVariantListing]
   );
 
   const handleAddVariant = (channelId: string, variantId: string) =>
-    setChannelsWithVariantsData({
-      ...channelsWithVariantsData,
-      ...getChannelWithAddedVariantData({
-        channelWithVariantsData: channelsWithVariantsData[channelId],
-        channelId,
-        variantId
-      })
-    });
+    setUpdatedChannelVariantListing(listings => ({
+      ...listings,
+      [channelId]: uniq([...listings[channelId], variantId])
+    }));
 
   const handleRemoveVariant = (channelId: string, variantId: string) =>
-    setChannelsWithVariantsData({
-      ...channelsWithVariantsData,
-      ...getChannelWithRemovedVariantData({
-        channelWithVariantsData: channelsWithVariantsData[channelId],
-        channelId,
-        variantId
-      })
-    });
+    setUpdatedChannelVariantListing(listings => ({
+      ...listings,
+      [channelId]: listings[channelId].filter(
+        selectedVariantId => selectedVariantId !== variantId
+      )
+    }));
 
   const toggleAllChannelVariants = (channelId: string) => {
-    const isChannelSelected = areAnyChannelVariantsSelected(
-      channelsWithVariantsData[channelId]
-    );
+    const isChannelSelected =
+      updatedChannelVariantListing[channelId].length > 0;
 
-    setChannelsWithVariantsData({
-      ...channelsWithVariantsData,
+    setUpdatedChannelVariantListing({
+      ...updatedChannelVariantListing,
       [channelId]: getChannelVariantToggleData(variants, isChannelSelected)
     });
   };
 
-  const toggleAllChannels = () => {
-    const areAllChannelsSelected = areAllVariantsAtAllChannelsSelected(
-      variants,
-      channelsWithVariantsData
+  const toggleAllChannels = () =>
+    setUpdatedChannelVariantListing(listings =>
+      addAllVariantsToAllChannels(listings, variants)
     );
 
-    const updatedData: ChannelsWithVariantsData = reduce(
-      channelsWithVariantsData,
-      (result, _, channelId) => ({
-        ...result,
-        [channelId]: getChannelVariantToggleData(
-          variants,
-          areAllChannelsSelected
-        )
+  const channelsWithVariantsData = useMemo<ChannelsWithVariantsData>(
+    () =>
+      createFromChannels(channels, channel => {
+        const diff = arrayDiff(
+          initialChannelVariantListing[channel.id],
+          updatedChannelVariantListing[channel.id]
+        );
+
+        return {
+          selectedVariantsIds: updatedChannelVariantListing[channel.id],
+          variantsIdsToAdd: diff.added,
+          variantsIdsToRemove: diff.removed
+        };
       }),
-      {}
-    );
-
-    setChannelsWithVariantsData(updatedData);
-  };
+    [initialChannelVariantListing, updatedChannelVariantListing]
+  );
 
   return {
     channelsWithVariantsData,

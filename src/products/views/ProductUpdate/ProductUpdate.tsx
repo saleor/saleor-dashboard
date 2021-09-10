@@ -62,9 +62,7 @@ import React from "react";
 import { defineMessages, FormattedMessage, useIntl } from "react-intl";
 
 import { getMutationState } from "../../../misc";
-import ProductUpdatePage, {
-  ProductUpdatePageSubmitData
-} from "../../components/ProductUpdatePage";
+import ProductUpdatePage from "../../components/ProductUpdatePage";
 import { useProductDetails } from "../../queries";
 import { ProductMediaCreateVariables } from "../../types/ProductMediaCreate";
 import { ProductUpdate as ProductUpdateMutationResult } from "../../types/ProductUpdate";

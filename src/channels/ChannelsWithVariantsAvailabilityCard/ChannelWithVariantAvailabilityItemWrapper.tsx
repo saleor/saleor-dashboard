@@ -113,9 +113,7 @@ const ChannelWithVariantsAvailabilityItemWrapper: React.FC<ChannelAvailabilityIt
 
   const variantsLabel = areAllChannelVariantsSelected(
     variants?.map(variant => variant.id),
-    {
-      selectedVariantsIds
-    }
+    selectedVariantsIds
   )
     ? messages.allVariantsLabel
     : messages.variantCountLabel;

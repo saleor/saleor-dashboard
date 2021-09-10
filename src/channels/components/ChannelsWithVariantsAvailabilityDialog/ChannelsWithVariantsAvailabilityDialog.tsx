@@ -4,7 +4,8 @@ import { ProductDetails_product_variants } from "@saleor/products/types/ProductD
 import { UseChannelsWithProductVariants } from "@saleor/products/views/ProductUpdate/types";
 import {
   areAllVariantsAtAllChannelsSelected,
-  areAnyChannelVariantsSelected
+  areAnyChannelVariantsSelected,
+  channelVariantListingDiffToDict
 } from "@saleor/products/views/ProductUpdate/utils";
 import { DialogProps } from "@saleor/types";
 import React, { useState } from "react";
@@ -61,7 +62,7 @@ export const ChannelsWithVariantsAvailabilityDialog: React.FC<ChannelsAvailabili
 
   const hasAllChannelsSelected = areAllVariantsAtAllChannelsSelected(
     variants.map(variant => variant.id),
-    channelsWithVariantsData
+    channelVariantListingDiffToDict(channelsWithVariantsData)
   );
 
   const isChannelSelected = (channelId: string) =>

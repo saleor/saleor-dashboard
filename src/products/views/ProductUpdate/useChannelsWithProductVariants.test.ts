@@ -34,6 +34,17 @@ describe("useChannelsWithProductVariants", () => {
     expect(
       result.current.channelsWithVariantsData.channel1.variantsIdsToRemove
     ).toHaveLength(0);
+
+    expect(
+      result.current.channelsWithVariantsData.channel2.selectedVariantsIds
+    ).toHaveLength(0);
+    expect(
+      result.current.channelsWithVariantsData.channel2.variantsIdsToAdd
+    ).toHaveLength(0);
+    expect(
+      result.current.channelsWithVariantsData.channel2.variantsIdsToRemove
+    ).toHaveLength(0);
+
     expect(result.current.hasChanged).toBe(false);
   });
 
@@ -51,6 +62,17 @@ describe("useChannelsWithProductVariants", () => {
     expect(
       result.current.channelsWithVariantsData.channel1.variantsIdsToRemove
     ).toHaveLength(0);
+
+    expect(
+      result.current.channelsWithVariantsData.channel2.selectedVariantsIds
+    ).toHaveLength(0);
+    expect(
+      result.current.channelsWithVariantsData.channel2.variantsIdsToAdd
+    ).toHaveLength(0);
+    expect(
+      result.current.channelsWithVariantsData.channel2.variantsIdsToRemove
+    ).toHaveLength(0);
+
     expect(result.current.hasChanged).toBe(true);
   });
 
@@ -68,6 +90,17 @@ describe("useChannelsWithProductVariants", () => {
     expect(
       result.current.channelsWithVariantsData.channel1.variantsIdsToRemove
     ).toHaveLength(1);
+
+    expect(
+      result.current.channelsWithVariantsData.channel2.selectedVariantsIds
+    ).toHaveLength(0);
+    expect(
+      result.current.channelsWithVariantsData.channel2.variantsIdsToAdd
+    ).toHaveLength(0);
+    expect(
+      result.current.channelsWithVariantsData.channel2.variantsIdsToRemove
+    ).toHaveLength(0);
+
     expect(result.current.hasChanged).toBe(true);
   });
 
@@ -85,7 +118,7 @@ describe("useChannelsWithProductVariants", () => {
     ).toHaveLength(0);
     expect(
       result.current.channelsWithVariantsData.channel1.variantsIdsToRemove
-    ).toHaveLength(5);
+    ).toHaveLength(2);
     expect(result.current.hasChanged).toBe(true);
 
     // Select all
@@ -139,7 +172,7 @@ describe("useChannelsWithProductVariants", () => {
     ).toHaveLength(0);
     expect(
       result.current.channelsWithVariantsData.channel1.variantsIdsToRemove
-    ).toHaveLength(5);
+    ).toHaveLength(2);
     expect(
       result.current.channelsWithVariantsData.channel2.selectedVariantsIds
     ).toHaveLength(0);

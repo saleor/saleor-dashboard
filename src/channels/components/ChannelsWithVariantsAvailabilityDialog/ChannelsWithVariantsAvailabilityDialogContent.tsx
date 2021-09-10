@@ -14,7 +14,10 @@ import Label from "@saleor/orders/components/OrderHistory/Label";
 import { getById } from "@saleor/orders/components/OrderReturnPage/utils";
 import { ProductDetails_product_variants } from "@saleor/products/types/ProductDetails";
 import { ChannelsWithVariantsData } from "@saleor/products/views/ProductUpdate/types";
-import { areAllChannelVariantsSelected } from "@saleor/products/views/ProductUpdate/utils";
+import {
+  areAllChannelVariantsSelected,
+  channelVariantListingDiffToDict
+} from "@saleor/products/views/ProductUpdate/utils";
 import map from "lodash/map";
 import React, { ChangeEvent } from "react";
 import { defineMessages, useIntl } from "react-intl";
@@ -126,7 +129,7 @@ const ChannelsWithVariantsAvailabilityDialogContent: React.FC<ChannelsWithVarian
   const selectChannelIcon = (channelId: string) =>
     areAllChannelVariantsSelected(
       allVariants?.map(variant => variant.id),
-      channelsWithVariants[channelId]
+      channelVariantListingDiffToDict(channelsWithVariants)[channelId]
     ) ? (
       <IconCheckboxChecked />
     ) : (

@@ -1,96 +1,43 @@
-import {
-  getUpdatedIdsWithNewId,
-  getUpdatedIdsWithoutNewId
-} from "@saleor/channels/pages/ChannelDetailsPage/utils";
 import { ChannelData } from "@saleor/channels/utils";
-import { ProductDetails_product_variants } from "@saleor/products/types/ProductDetails";
 import every from "lodash/every";
 import reduce from "lodash/reduce";
 
 import { initialChannelWithVariantData } from "./consts";
 import { ChannelsWithVariantsData, ChannelWithVariantData } from "./types";
 
-export const getParsedChannelsWithVariantsDataFromChannels = (
-  channels: ChannelData[]
-): ChannelsWithVariantsData =>
-  channels?.reduce(
-    (result: ChannelsWithVariantsData, { id, variantsIds }) => ({
+export function createFromChannels<T>(
+  channels: ChannelData[],
+  cb: (channel: ChannelData) => T
+): Record<string, T> {
+  return channels?.reduce(
+    (result: Record<string, T>, channel) => ({
       ...result,
-      [id]: {
-        ...initialChannelWithVariantData,
-        selectedVariantsIds: variantsIds
-      } as ChannelWithVariantData
+      [channel.id]: cb(channel)
     }),
     {}
   );
-
-interface ChannelAddRemoveVariantCommonProps {
-  channelWithVariantsData: ChannelWithVariantData;
-  channelId: string;
-  variantId: string;
 }
 
-export const getChannelWithAddedVariantData = ({
-  channelWithVariantsData: {
-    selectedVariantsIds,
-    variantsIdsToAdd,
-    variantsIdsToRemove
-  },
-  channelId,
-  variantId
-}: ChannelAddRemoveVariantCommonProps): ChannelsWithVariantsData => ({
-  [channelId]: {
-    selectedVariantsIds: getUpdatedIdsWithNewId(selectedVariantsIds, variantId),
-    variantsIdsToAdd: getUpdatedIdsWithNewId(variantsIdsToAdd, variantId),
-    variantsIdsToRemove: getUpdatedIdsWithoutNewId(
-      variantsIdsToRemove,
-      variantId
-    )
-  }
-});
-
-export const getChannelWithRemovedVariantData = ({
-  channelWithVariantsData: {
-    selectedVariantsIds,
-    variantsIdsToAdd,
-    variantsIdsToRemove
-  },
-  channelId,
-  variantId
-}: ChannelAddRemoveVariantCommonProps): ChannelsWithVariantsData => ({
-  [channelId]: {
-    selectedVariantsIds: getUpdatedIdsWithoutNewId(
-      selectedVariantsIds,
-      variantId
-    ),
-    variantsIdsToRemove: getUpdatedIdsWithNewId(variantsIdsToRemove, variantId),
-    variantsIdsToAdd: getUpdatedIdsWithoutNewId(variantsIdsToAdd, variantId)
-  }
-});
+export const getParsedChannelsWithVariantsDataFromChannels = (
+  channels: ChannelData[]
+): ChannelsWithVariantsData =>
+  createFromChannels(
+    channels,
+    ({ variantsIds }) =>
+      ({
+        ...initialChannelWithVariantData,
+        selectedVariantsIds: variantsIds
+      } as ChannelWithVariantData)
+  );
 
 export const getChannelVariantToggleData = (
   variants: string[],
   isSelected: boolean
-): ChannelWithVariantData =>
-  isSelected
-    ? {
-        selectedVariantsIds: [],
-        variantsIdsToAdd: [],
-        variantsIdsToRemove: variants
-      }
-    : {
-        selectedVariantsIds: variants,
-        variantsIdsToAdd: variants,
-        variantsIdsToRemove: []
-      };
-
-export const extractAllProductVariantsIds = (
-  productVariants: ProductDetails_product_variants[] = []
-) => productVariants.map(({ id }) => id);
+): string[] => (isSelected ? [] : variants);
 
 export const areAllVariantsAtAllChannelsSelected = (
   variants: string[] = [],
-  channelsWithVariants: ChannelsWithVariantsData = {}
+  channelsWithVariants: Record<string, string[]> = {}
 ) =>
   every(channelsWithVariants, channelWithVariantsData =>
     areAllChannelVariantsSelected(variants, channelWithVariantsData)
@@ -98,8 +45,8 @@ export const areAllVariantsAtAllChannelsSelected = (
 
 export const areAllChannelVariantsSelected = (
   variants: string[] = [],
-  { selectedVariantsIds }: Pick<ChannelWithVariantData, "selectedVariantsIds">
-) => selectedVariantsIds.length === variants.length;
+  selectedVariants: string[]
+) => selectedVariants.length === variants.length;
 
 export const areAnyChannelVariantsSelected = (
   channelsWithVariantsData: ChannelWithVariantData
@@ -108,9 +55,43 @@ export const areAnyChannelVariantsSelected = (
 export const getTotalSelectedChannelsCount = (
   channelsWithVariantsData: ChannelsWithVariantsData
 ) =>
+  Object.values(channelsWithVariantsData).filter(
+    channel => channel.selectedVariantsIds.length > 0
+  ).length;
+
+export const addAllVariantsToAllChannels = (
+  listings: Record<string, string[]>,
+  variants: string[]
+): Record<string, string[]> => {
+  const areAllChannelsSelected = areAllVariantsAtAllChannelsSelected(
+    variants,
+    listings
+  );
+
+  const updatedListing = reduce(
+    listings,
+    (result: Record<string, string[]>, _, channelId) => ({
+      ...result,
+      [channelId]: getChannelVariantToggleData(variants, areAllChannelsSelected)
+    }),
+    {}
+  );
+
+  return updatedListing;
+};
+
+export const channelVariantListingDiffToDict = (
+  listing: ChannelsWithVariantsData
+): Record<string, string[]> =>
   reduce(
-    channelsWithVariantsData,
-    (result, { selectedVariantsIds }) =>
-      selectedVariantsIds.length ? result + 1 : result,
-    0
+    listing,
+    (
+      listingDict: Record<string, string[]>,
+      { selectedVariantsIds },
+      channelId
+    ) => ({
+      ...listingDict,
+      [channelId]: selectedVariantsIds
+    }),
+    {}
   );
