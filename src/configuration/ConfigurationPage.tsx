@@ -1,5 +1,7 @@
 import { Card, CardContent, Typography } from "@material-ui/core";
 import { IconProps } from "@material-ui/core/Icon";
+import { useTheme } from "@material-ui/core/styles";
+import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { User } from "@saleor/fragments/types/User";
 import { sectionNames } from "@saleor/intl";
 import { makeStyles } from "@saleor/macaw-ui";
@@ -7,6 +9,7 @@ import React from "react";
 import { useIntl } from "react-intl";
 
 import { hasPermission } from "../auth/misc";
+import AppVersions from "../components/AppVersions";
 import Container from "../components/Container";
 import PageHeader from "../components/PageHeader";
 import { PermissionEnum } from "../types/globalTypes";
@@ -23,6 +26,11 @@ export interface MenuItem {
 export interface MenuSection {
   label: string;
   menuItems: MenuItem[];
+}
+
+interface AppVersions {
+  dashboardVersion: string;
+  coreVersion: string;
 }
 
 const useStyles = makeStyles(
@@ -92,20 +100,38 @@ const useStyles = makeStyles(
 export interface ConfigurationPageProps {
   menu: MenuSection[];
   user: User;
+  appVersions: AppVersions;
   onSectionClick: (sectionName: string) => void;
 }
 
 export const ConfigurationPage: React.FC<ConfigurationPageProps> = props => {
-  const { menu: menus, user, onSectionClick } = props;
+  const {
+    menu: menus,
+    user,
+    onSectionClick,
+    appVersions: { dashboardVersion, coreVersion }
+  } = props;
   const classes = useStyles(props);
+  const theme = useTheme();
+  const isSmUp = useMediaQuery(theme.breakpoints.up("sm"));
+
+  const AppVersionComponent = () => (
+    <AppVersions
+      dashboardVersion={dashboardVersion}
+      coreVersion={coreVersion}
+    />
+  );
 
   const intl = useIntl();
   return (
     <Container>
+      {isSmUp ? null : <AppVersionComponent />}
       <PageHeader
         className={classes.header}
         title={intl.formatMessage(sectionNames.configuration)}
-      />
+      >
+        {isSmUp && <AppVersionComponent />}
+      </PageHeader>
       {menus
         .filter(menu =>
           menu.menuItems.some(menuItem =>
