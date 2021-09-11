@@ -124,7 +124,7 @@ filterTests(["all"], () => {
         .should("not.exist")
         .wait("@productBulkDelete");
       getCategory(category.id).then(categoryResp => {
-        expect(categoryResp.products).to.be.null;
+        expect(categoryResp.products.edges.length).to.be.eq(0);
       });
     });
 

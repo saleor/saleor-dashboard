@@ -65,6 +65,7 @@ const PluginDetailsChannelsCardContent: React.FC<PluginDetailsChannelsCardProps>
         collection={plugin.channelConfigurations}
         renderItem={({ channel }) => (
           <div
+            data-test-id="channel"
             className={classes.itemContainer}
             key={channel.id}
             onClick={() => setSelectedChannelId(channel.id)}
