@@ -1,6 +1,7 @@
 import { ChannelData } from "@saleor/channels/utils";
 import ActionDialog from "@saleor/components/ActionDialog";
 import { ProductDetails_product_variants } from "@saleor/products/types/ProductDetails";
+import { channelVariantListing } from "@saleor/products/views/ProductUpdate/types";
 import useChannelsWithProductVariants from "@saleor/products/views/ProductUpdate/useChannelsWithProductVariants";
 import {
   areAllVariantsAtAllChannelsSelected,
@@ -27,7 +28,7 @@ export interface ChannelsAvailabilityDialogProps extends DialogProps {
   channels: ChannelData[];
   contentType?: string;
   variants: ProductDetails_product_variants[];
-  onConfirm: (listings: Record<string, string[]>) => void;
+  onConfirm: (listings: channelVariantListing) => void;
 }
 
 export const ChannelsWithVariantsAvailabilityDialog: React.FC<ChannelsAvailabilityDialogProps> = ({

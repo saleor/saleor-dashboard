@@ -1,4 +1,3 @@
-import { ChannelData } from "@saleor/channels/utils";
 import { ProductDetails_product_variants } from "@saleor/products/types/ProductDetails";
 import CommonDecorator from "@saleor/storybook/Decorator";
 import { storiesOf } from "@storybook/react";
@@ -12,17 +11,20 @@ const props: ChannelsAvailabilityDialogProps = {
   channels: [
     {
       id: "1",
-      name: "Channel 1"
+      name: "Channel 1",
+      variantsIds: []
     },
     {
       id: "2",
-      name: "Channel 2"
+      name: "Channel 2",
+      variantsIds: []
     },
     {
       id: "3",
-      name: "Channel 3"
+      name: "Channel 3",
+      variantsIds: []
     }
-  ] as ChannelData[],
+  ],
   variants: [
     {
       id: "variantA",
