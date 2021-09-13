@@ -23,7 +23,7 @@ export const useServiceWorker = (timeout: number) => {
   };
 
   const update = useCallback(() => {
-    if (updateAvailable) {
+    if (updateAvailable && registrationRef.current?.waiting) {
       registrationRef.current.waiting.postMessage("update");
     }
   }, [updateAvailable]);
