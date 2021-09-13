@@ -1,6 +1,5 @@
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
-import useShop from "@saleor/hooks/useShop";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -15,7 +14,6 @@ interface AppDetailsSetttingsProps {
 export const AppDetailsSettings: React.FC<AppDetailsSetttingsProps> = ({
   id
 }) => {
-  const shop = useShop();
   const { data } = useAppDetails({
     displayLoader: true,
     variables: { id }
@@ -26,7 +24,6 @@ export const AppDetailsSettings: React.FC<AppDetailsSetttingsProps> = ({
 
   return (
     <AppDetailsSettingsPage
-      backendHost={shop?.domain.host}
       data={data?.app}
       navigateToDashboard={() => navigate(appUrl(id))}
       onBack={() => navigate(appsListPath)}

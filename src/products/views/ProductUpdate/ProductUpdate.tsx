@@ -165,7 +165,6 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
     productVariantCreateOpts
   ] = useVariantCreateMutation({});
 
-  const { availableChannels, channel } = useAppChannel();
   const { data, loading, refetch } = useProductDetails({
     displayLoader: true,
     variables: {
@@ -173,6 +172,11 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
       firstValues: VALUES_PAGINATE_BY
     }
   });
+
+  const isSimpleProduct = !data?.product?.productType?.hasVariants;
+
+  const { availableChannels, channel } = useAppChannel(!isSimpleProduct);
+
   const limitOpts = useShopLimitsQuery({
     variables: {
       productVariants: true
@@ -269,8 +273,6 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
   ).sort((channel, nextChannel) =>
     channel.name.localeCompare(nextChannel.name)
   );
-
-  const isSimpleProduct = !data?.product?.productType?.hasVariants;
 
   const {
     channelsWithVariantsData,
