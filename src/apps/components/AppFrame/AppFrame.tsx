@@ -1,3 +1,4 @@
+import useShop from "@saleor/hooks/useShop";
 import { useTheme } from "@saleor/macaw-ui";
 import React from "react";
 import urlJoin from "url-join";
@@ -8,7 +9,6 @@ import { useAppActions } from "./useAppActions";
 interface Props {
   src: string;
   appToken: string;
-  backendHost: string;
   onLoad?(): void;
   onError?(): void;
 }
@@ -18,10 +18,10 @@ const getOrigin = (url: string) => new URL(url).origin;
 export const AppFrame: React.FC<Props> = ({
   src,
   appToken,
-  backendHost,
   onLoad,
   onError
 }) => {
+  const shop = useShop();
   const frameRef = React.useRef<HTMLIFrameElement>();
   const { sendThemeToExtension } = useTheme();
   const classes = useStyles();
@@ -43,10 +43,14 @@ export const AppFrame: React.FC<Props> = ({
     }
   };
 
+  if (!shop?.domain.host) {
+    return null;
+  }
+
   return (
     <iframe
       ref={frameRef}
-      src={urlJoin(src, `?domain=${backendHost}`)}
+      src={urlJoin(src, `?domain=${shop.domain.host}`)}
       onError={onError}
       onLoad={handleLoad}
       className={classes.iframe}

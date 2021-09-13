@@ -19,7 +19,6 @@ import { mapCountriesToChoices } from "@saleor/utils/maps";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { maybe } from "../../../misc";
 import { SiteSettings_shop } from "../../types/SiteSettings";
 import SiteSettingsDetails from "../SiteSettingsDetails/SiteSettingsDetails";
 
@@ -90,7 +89,7 @@ const SiteSettingsPage: React.FC<SiteSettingsPageProps> = props => {
   const classes = useStyles(props);
   const intl = useIntl();
   const [displayCountry, setDisplayCountry] = useStateFromProps(
-    maybe(() => shop.companyAddress.country.code, "")
+    shop?.companyAddress?.country.code || ""
   );
 
   const {
@@ -99,20 +98,20 @@ const SiteSettingsPage: React.FC<SiteSettingsPageProps> = props => {
   } = useAddressValidation(onSubmit);
 
   const initialFormAddress: SiteSettingsPageAddressFormData = {
-    city: maybe(() => shop.companyAddress.city, ""),
-    companyName: maybe(() => shop.companyAddress.companyName, ""),
-    country: maybe(() => shop.companyAddress.country.code, ""),
-    countryArea: maybe(() => shop.companyAddress.countryArea, ""),
-    phone: maybe(() => shop.companyAddress.phone, ""),
-    postalCode: maybe(() => shop.companyAddress.postalCode, ""),
-    streetAddress1: maybe(() => shop.companyAddress.streetAddress1, ""),
-    streetAddress2: maybe(() => shop.companyAddress.streetAddress2, "")
+    city: shop?.companyAddress?.city || "",
+    companyName: shop?.companyAddress?.companyName || "",
+    country: shop?.companyAddress?.country.code || "",
+    countryArea: shop?.companyAddress?.countryArea || "",
+    phone: shop?.companyAddress?.phone || "",
+    postalCode: shop?.companyAddress?.postalCode || "",
+    streetAddress1: shop?.companyAddress?.streetAddress1 || "",
+    streetAddress2: shop?.companyAddress?.streetAddress2 || ""
   };
   const initialForm: SiteSettingsPageFormData = {
     ...initialFormAddress,
-    description: maybe(() => shop.description, ""),
-    domain: maybe(() => shop.domain.host, ""),
-    name: maybe(() => shop.name, "")
+    description: shop?.description || "",
+    domain: shop?.domain.host || "",
+    name: shop?.name || ""
   };
 
   return (

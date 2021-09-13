@@ -24,6 +24,7 @@ jobs:
       SENTRY_URL_PREFIX: "~/dashboard/static"
       SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
       SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+      IS_CLOUD_INSTANCE: true
     steps:
       - name: Set env variables
         run: |

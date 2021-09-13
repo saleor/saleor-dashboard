@@ -8,7 +8,6 @@ import AppDetailsSettingsPage, {
 } from "./AppDetailsSettingsPage";
 
 const props: AppDetailsSettingsPageProps = {
-  backendHost: "host",
   data: appDetails,
   navigateToDashboard: () => undefined,
   onBack: () => undefined,
