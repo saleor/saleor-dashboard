@@ -18,7 +18,9 @@ export const useServiceWorker = (timeout: number) => {
     registrationRef.current = registration;
   };
 
-  const onUpdateFound = () => setUpdateAvailable(true);
+  const onUpdate = (registration: ServiceWorkerRegistration) => {
+    setUpdateAvailable(!!registration?.waiting);
+  };
 
   const update = useCallback(() => {
     if (updateAvailable) {
@@ -29,7 +31,7 @@ export const useServiceWorker = (timeout: number) => {
   useEffect(() => {
     register("/sw.js", {
       registered: onRegistered,
-      updatefound: onUpdateFound
+      updated: onUpdate
     });
   }, []);
 
