@@ -1,12 +1,10 @@
 import { Dialog, DialogTitle } from "@material-ui/core";
-import useAppChannel from "@saleor/components/AppLayout/AppChannelContext";
 import { IMessage } from "@saleor/components/messages";
 import useCurrentDate from "@saleor/hooks/useCurrentDate";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { GiftCardCreateInput } from "@saleor/types/globalTypes";
 import commonErrorMessages from "@saleor/utils/errors/common";
 import { DialogActionHandlersProps } from "@saleor/utils/handlers/dialogActionHandlers";
-import { mapNodeToChoice } from "@saleor/utils/maps";
 import React, { useState } from "react";
 import { useIntl } from "react-intl";
 
