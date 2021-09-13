@@ -124,19 +124,19 @@ export const ColorPicker: React.FC<ColorPickerProps> = ({
           className={classes.colorInput}
           InputProps={{ startAdornment: "R" }}
           value={r}
-          onChange={evt => handleRGBChange({ r: evt.target.value })}
+          onChange={event => handleRGBChange({ r: event.target.value })}
         />
         <TextField
           className={classes.colorInput}
           InputProps={{ startAdornment: "G" }}
           value={g}
-          onChange={evt => handleRGBChange({ g: evt.target.value })}
+          onChange={event => handleRGBChange({ g: event.target.value })}
         />
         <TextField
           className={classes.colorInput}
           InputProps={{ startAdornment: "B" }}
           value={b}
-          onChange={evt => handleRGBChange({ b: evt.target.value })}
+          onChange={event => handleRGBChange({ b: event.target.value })}
         />
         <TextField
           error={!isValidColor}
@@ -145,7 +145,7 @@ export const ColorPicker: React.FC<ColorPickerProps> = ({
           InputProps={{ startAdornment: "HEX" }}
           inputProps={{ pattern: "[A-Za-z0-9]{6}", maxLength: 6 }}
           value={`#${hex}`}
-          onChange={evt => handleHEXChange(evt.target.value)}
+          onChange={event => handleHEXChange(event.target.value)}
         />
       </div>
     </div>

@@ -81,6 +81,18 @@ function getSimpleAttributeData(
   };
 }
 
+function getAttributeValueTypeFields({
+  fileUrl,
+  value,
+  name,
+  contentType
+}: AttributeValueEditDialogFormData) {
+  return {
+    name,
+    ...(fileUrl ? { fileUrl, contentType } : { value })
+  };
+}
+
 function getSwatchAttributeData(
   data: AttributePageFormData,
   values: AttributeValueEditDialogFormData[]
@@ -90,10 +102,7 @@ function getSwatchAttributeData(
     metadata: undefined,
     privateMetadata: undefined,
     storefrontSearchPosition: parseInt(data.storefrontSearchPosition, 10),
-    values: values.map(({ fileUrl, name, value, contentType }) => ({
-      name,
-      ...(fileUrl ? { fileUrl, contentType } : { value })
-    }))
+    values: values.map(getAttributeValueTypeFields)
   };
 }
 

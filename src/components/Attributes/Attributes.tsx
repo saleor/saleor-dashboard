@@ -18,8 +18,8 @@ import classNames from "classnames";
 import React from "react";
 import { defineMessages, FormattedMessage, useIntl } from "react-intl";
 
-import AttributeRow, { AttributeRowHandlers } from "./AttributeRow";
-import { VariantAttributeScope } from "./types";
+import AttributeRow from "./AttributeRow";
+import { AttributeRowHandlers, VariantAttributeScope } from "./types";
 
 export interface AttributeInputData {
   inputType: AttributeInputTypeEnum;

@@ -1,10 +1,9 @@
 import { InputAdornment, TextField } from "@material-ui/core";
-import makeStyles from "@material-ui/core/styles/makeStyles";
-import HorizontalSpacer from "@saleor/apps/components/HorizontalSpacer";
 import { getMeasurementUnitMessage } from "@saleor/attributes/components/AttributeDetails/utils";
-import { AttributeInput } from "@saleor/components/Attributes/Attributes";
 import BasicAttributeRow from "@saleor/components/Attributes/BasicAttributeRow";
 import ExtendedAttributeRow from "@saleor/components/Attributes/ExtendedAttributeRow";
+import { attributeRowMessages } from "@saleor/components/Attributes/messages";
+import { SwatchRow } from "@saleor/components/Attributes/SwatchRow";
 import {
   getErrorMessage,
   getFileChoice,
@@ -22,71 +21,13 @@ import MultiAutocompleteSelectField from "@saleor/components/MultiAutocompleteSe
 import RichTextEditor from "@saleor/components/RichTextEditor";
 import SingleAutocompleteSelectField from "@saleor/components/SingleAutocompleteSelectField";
 import SortableChipsField from "@saleor/components/SortableChipsField";
-import { AttributeValueFragment } from "@saleor/fragments/types/AttributeValueFragment";
-import { PageErrorWithAttributesFragment } from "@saleor/fragments/types/PageErrorWithAttributesFragment";
-import { ProductErrorWithAttributesFragment } from "@saleor/fragments/types/ProductErrorWithAttributesFragment";
-import { FormsetChange } from "@saleor/hooks/useFormset";
 import { commonMessages } from "@saleor/intl";
-import { FetchMoreProps, ReorderEvent } from "@saleor/types";
 import { AttributeInputTypeEnum } from "@saleor/types/globalTypes";
 import React from "react";
-import { defineMessages, useIntl } from "react-intl";
+import { useIntl } from "react-intl";
 
-const messages = defineMessages({
-  multipleValueLabel: {
-    defaultMessage: "Values",
-    description: "attribute values"
-  },
-  valueLabel: {
-    defaultMessage: "Value",
-    description: "attribute value"
-  }
-});
-
-const useStyles = makeStyles(
-  () => ({
-    fileField: {
-      float: "right"
-    },
-    pullRight: {
-      display: "flex",
-      justifyContent: "flex-end"
-    },
-    swatchInput: {
-      paddingTop: 16.5,
-      paddingBottom: 16.5
-    },
-    swatchPreview: {
-      width: 32,
-      height: 32,
-      borderRadius: 4,
-      backgroundSize: "cover",
-      backgroundPosition: "center"
-    }
-  }),
-  { name: "AttributeRow" }
-);
-
-export interface AttributeRowHandlers {
-  onChange: FormsetChange<string>;
-  onFileChange: FormsetChange<File>;
-  onMultiChange: FormsetChange<string>;
-  onReferencesAddClick: (attribute: AttributeInput) => void;
-  onReferencesRemove: FormsetChange<string[]>;
-  onReferencesReorder: FormsetChange<ReorderEvent>;
-  fetchAttributeValues: (query: string, attributeId: string) => void;
-  fetchMoreAttributeValues: FetchMoreProps;
-}
-
-interface AttributeRowProps extends AttributeRowHandlers {
-  attribute: AttributeInput;
-  attributeValues: AttributeValueFragment[];
-  disabled: boolean;
-  error: ProductErrorWithAttributesFragment | PageErrorWithAttributesFragment;
-  loading: boolean;
-  entityId: string;
-  onAttributeSelectBlur?: () => void;
-}
+import { useStyles } from "./styles";
+import { AttributeRowProps } from "./types";
 
 const AttributeRow: React.FC<AttributeRowProps> = ({
   attribute,
@@ -106,17 +47,14 @@ const AttributeRow: React.FC<AttributeRowProps> = ({
   onAttributeSelectBlur
 }) => {
   const intl = useIntl();
-  const classes = useStyles({});
+  const classes = useStyles();
 
   switch (attribute.data.inputType) {
     case AttributeInputTypeEnum.REFERENCE:
       return (
         <ExtendedAttributeRow
           label={attribute.label}
-          selectLabel={intl.formatMessage({
-            defaultMessage: "Assign references",
-            description: "button label"
-          })}
+          selectLabel={intl.formatMessage(attributeRowMessages.reference)}
           onSelect={() => onReferencesAddClick(attribute)}
           disabled={disabled}
         >
@@ -164,7 +102,7 @@ const AttributeRow: React.FC<AttributeRowProps> = ({
             error={!!error}
             helperText={getErrorMessage(error, intl)}
             name={`attribute:${attribute.label}`}
-            label={intl.formatMessage(messages.valueLabel)}
+            label={intl.formatMessage(attributeRowMessages.valueLabel)}
             value={attribute.value[0]}
             onChange={event => onChange(attribute.id, event.target.value)}
             allowCustomValues={true}
@@ -176,58 +114,16 @@ const AttributeRow: React.FC<AttributeRowProps> = ({
         </BasicAttributeRow>
       );
     case AttributeInputTypeEnum.SWATCH:
-      const value = attribute.data.values.find(
-        ({ slug }) => slug === attribute.value[0]
-      );
       return (
-        <BasicAttributeRow label={attribute.label}>
-          <SingleAutocompleteSelectField
-            fetchOnFocus
-            allowCustomValues={false}
-            choices={attributeValues.map(({ file, value, slug, name }) => ({
-              label: (
-                <>
-                  <div
-                    className={classes.swatchPreview}
-                    style={
-                      file
-                        ? { backgroundImage: `url(${file.url})` }
-                        : { backgroundColor: value }
-                    }
-                  />
-                  <HorizontalSpacer />
-                  {name}
-                </>
-              ),
-              value: slug
-            }))}
-            disabled={disabled}
-            displayValue={getSingleDisplayValue(attribute, attributeValues)}
-            emptyOption={!attribute.data.isRequired}
-            error={!!error}
-            helperText={getErrorMessage(error, intl)}
-            name={`attribute:${attribute.label}`}
-            value={attribute.value[0]}
-            onChange={event => onChange(attribute.id, event.target.value)}
-            fetchChoices={value => fetchAttributeValues(value, attribute.id)}
-            InputProps={{
-              classes: { input: classes.swatchInput },
-              startAdornment: (
-                <InputAdornment position="start">
-                  <div
-                    className={classes.swatchPreview}
-                    style={
-                      value?.file
-                        ? { backgroundImage: `url(${value.file.url})` }
-                        : { backgroundColor: value?.value }
-                    }
-                  />
-                </InputAdornment>
-              )
-            }}
-            {...fetchMoreAttributeValues}
-          />
-        </BasicAttributeRow>
+        <SwatchRow
+          attribute={attribute}
+          attributeValues={attributeValues}
+          onChange={onChange}
+          disabled={disabled}
+          error={error}
+          fetchAttributeValues={fetchAttributeValues}
+          fetchMoreAttributeValues={fetchMoreAttributeValues}
+        />
       );
     case AttributeInputTypeEnum.RICH_TEXT:
       return (
@@ -237,7 +133,7 @@ const AttributeRow: React.FC<AttributeRowProps> = ({
             name={`attribute:${attribute.label}`}
             disabled={disabled}
             error={!!error}
-            label={intl.formatMessage(messages.valueLabel)}
+            label={intl.formatMessage(attributeRowMessages.valueLabel)}
             helperText={getErrorMessage(error, intl)}
             onChange={data => onChange(attribute.id, JSON.stringify(data))}
             data={getRichTextData(attribute)}
@@ -252,7 +148,7 @@ const AttributeRow: React.FC<AttributeRowProps> = ({
             disabled={disabled}
             error={!!error}
             helperText={getErrorMessage(error, intl)}
-            label={intl.formatMessage(messages.valueLabel)}
+            label={intl.formatMessage(attributeRowMessages.valueLabel)}
             name={`attribute:${attribute.label}`}
             onChange={event => onChange(attribute.id, event.target.value)}
             type="number"
@@ -330,7 +226,7 @@ const AttributeRow: React.FC<AttributeRowProps> = ({
             disabled={disabled}
             error={!!error}
             helperText={getErrorMessage(error, intl)}
-            label={intl.formatMessage(messages.multipleValueLabel)}
+            label={intl.formatMessage(attributeRowMessages.multipleValueLabel)}
             name={`attribute:${attribute.label}`}
             value={attribute.value}
             onChange={event => onMultiChange(attribute.id, event.target.value)}

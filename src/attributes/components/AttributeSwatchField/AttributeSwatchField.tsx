@@ -6,23 +6,12 @@ import FileUploadField from "@saleor/components/FileUploadField";
 import { RadioGroupField } from "@saleor/components/RadioGroupField";
 import { useFileUploadMutation } from "@saleor/files/mutations";
 import { UseFormResult } from "@saleor/hooks/useForm";
-import { makeStyles } from "@saleor/macaw-ui";
 import commonErrorMessages from "@saleor/utils/errors/common";
 import React, { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-const useStyles = makeStyles(
-  theme => ({
-    filePreview: {
-      marginTop: theme.spacing(3),
-      width: 216,
-      height: 216,
-      backgroundSize: "cover",
-      backgroundPosition: "center"
-    }
-  }),
-  { name: "AttributeSwatchField" }
-);
+import { swatchFieldMessages } from "./messages";
+import { useStyles } from "./styles";
 
 type AttributeSwatchFieldProps<T> = Pick<
   UseFormResult<T>,
@@ -79,17 +68,11 @@ const AttributeSwatchField: React.FC<AttributeSwatchFieldProps<
       <RadioGroupField
         choices={[
           {
-            label: formatMessage({
-              defaultMessage: "Picker",
-              description: "swatch attribute color picker label"
-            }),
+            label: formatMessage(swatchFieldMessages.picker),
             value: "picker"
           },
           {
-            label: formatMessage({
-              defaultMessage: "Image",
-              description: "swatch attribute image label"
-            }),
+            label: formatMessage(swatchFieldMessages.image),
             value: "image"
           }
         ]}
@@ -97,7 +80,7 @@ const AttributeSwatchField: React.FC<AttributeSwatchFieldProps<
         label={<FormattedMessage {...inputTypeMessages.swatch} />}
         name="swatch"
         value={type}
-        onChange={evt => setType(evt.target.value)}
+        onChange={event => setType(event.target.value)}
         data-test="swatch-radio"
       />
       {type === "image" ? (

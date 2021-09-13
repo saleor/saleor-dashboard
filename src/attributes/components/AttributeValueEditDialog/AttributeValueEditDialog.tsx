@@ -44,16 +44,16 @@ const AttributeValueEditDialog: React.FC<AttributeValueEditDialogProps> = ({
   inputType
 }) => {
   const intl = useIntl();
+  const attributeValueFields = attributeValue?.fileUrl
+    ? {
+        fileUrl: attributeValue?.fileUrl,
+        contentType: attributeValue?.contentType
+      }
+    : { value: attributeValue?.value ?? "" };
+
   const initialForm: AttributeValueEditDialogFormData = {
     name: attributeValue?.name ?? "",
-    ...(attributeValue?.fileUrl
-      ? {
-          fileUrl: attributeValue?.fileUrl,
-          contentType: attributeValue?.contentType
-        }
-      : {
-          value: attributeValue?.value ?? ""
-        })
+    ...attributeValueFields
   };
   const errors = useModalDialogErrors(apiErrors, open);
   const formErrors = getFormErrors(["name"], errors);
