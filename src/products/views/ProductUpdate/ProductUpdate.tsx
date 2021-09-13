@@ -274,8 +274,6 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
     channel.name.localeCompare(nextChannel.name)
   );
 
-  const isSimpleProduct = !data?.product?.productType?.hasVariants;
-
   const [channelsData, setChannelsData] = useStateFromProps(allChannels);
   const {
     channelsWithVariantsData,
