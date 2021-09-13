@@ -1,6 +1,9 @@
-import { PERMISSIONS_OPTIONS } from "../Data/permissionsUsers";
-import * as permissionsSteps from "../steps/permissions";
+// / <reference types="cypress"/>
+// / <reference types="../support"/>
+
+import { PERMISSIONS_OPTIONS } from "../fixtures/permissionsUsers";
 import filterTests from "../support/filterTests";
+import * as permissionsSteps from "../support/pages/permissionsPage";
 
 describe("Navigation for users with different permissions", () => {
   Object.keys(PERMISSIONS_OPTIONS).forEach(key => {

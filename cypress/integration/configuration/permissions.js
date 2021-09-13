@@ -1,23 +1,22 @@
 import faker from "faker";
 
-import {
-  createPermissionGroup,
-  getPermissionGroup
-} from "../../apiRequests/PermissionGroup.js";
-import { getStaffMembersStartsWith } from "../../apiRequests/StaffMembers";
-import { TEST_ADMIN_USER } from "../../Data/users.js";
 import { PERMISSION_GROUP_DETAILS } from "../../elements/permissionGroup/permissionGroupDetails";
 import { PERMISSION_GROUP_LIST } from "../../elements/permissionGroup/permissionGroupsList";
 import { BUTTON_SELECTORS } from "../../elements/shared/button-selectors";
 import { SHARED_ELEMENTS } from "../../elements/shared/sharedElements";
-import { waitForProgressBarToNotExist } from "../../steps/shared/progressBar.js";
-import filterTests from "../../support/filterTests.js";
 import {
   permissionGroupDetails,
   staffMemberDetailsUrl,
   urlList
-} from "../../url/urlList";
-import { deletePermissionGroupsStartsWith } from "../../utils/permissionGroupUtils.js";
+} from "../../fixtures/urlList";
+import { TEST_ADMIN_USER } from "../../fixtures/users.js";
+import {
+  createPermissionGroup,
+  getPermissionGroup
+} from "../../support/api/requests/PermissionGroup.js";
+import { getStaffMembersStartsWith } from "../../support/api/requests/StaffMembers";
+import { deletePermissionGroupsStartsWith } from "../../support/api/utils/permissionGroupUtils.js";
+import filterTests from "../../support/filterTests.js";
 
 filterTests(["all"], () => {
   describe("Permissions groups", () => {

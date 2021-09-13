@@ -1,18 +1,18 @@
 // <reference types="cypress" />
 import faker from "faker";
 
-import { createChannel } from "../../apiRequests/Channels";
 import { CHANNEL_FORM_SELECTORS } from "../../elements/channels/channel-form-selectors";
 import { HEADER_SELECTORS } from "../../elements/header/header-selectors";
 import { DRAFT_ORDER_SELECTORS } from "../../elements/orders/draft-order-selectors";
 import { ORDERS_SELECTORS } from "../../elements/orders/orders-selectors";
+import { urlList } from "../../fixtures/urlList";
+import { createChannel } from "../../support/api/requests/Channels";
+import * as channelsUtils from "../../support/api/utils/channelsUtils";
+import filterTests from "../../support/filterTests";
 import {
   selectChannelInHeader,
   selectChannelInPicker
-} from "../../steps/channelsSteps";
-import filterTests from "../../support/filterTests";
-import { urlList } from "../../url/urlList";
-import * as channelsUtils from "../../utils/channelsUtils";
+} from "../../support/pages/channelsPage";
 
 filterTests(["all"], () => {
   describe("Channels in draft orders", () => {

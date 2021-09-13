@@ -1,7 +1,7 @@
-import { TEST_ADMIN_USER, USER_WITHOUT_NAME } from "../../Data/users";
-import { expectWelcomeMessageIncludes } from "../../steps/homePageSteps";
+import { urlList } from "../../fixtures/urlList";
+import { TEST_ADMIN_USER, USER_WITHOUT_NAME } from "../../fixtures/users";
 import filterTests from "../../support/filterTests";
-import { urlList } from "../../url/urlList";
+import { expectWelcomeMessageIncludes } from "../../support/pages/homePage";
 
 filterTests(["all"], () => {
   describe("Displaying welcome message on home page", () => {

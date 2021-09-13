@@ -1,22 +1,21 @@
 // <reference types="cypress" />
 import faker from "faker";
 
-import { createChannel } from "../../../apiRequests/Channels";
-import {
-  addChannelToShippingMethod,
-  addChannelToShippingZone
-} from "../../../apiRequests/ShippingMethod";
-import { ONE_PERMISSION_USERS } from "../../../Data/users";
 import { BUTTON_SELECTORS } from "../../../elements/shared/button-selectors";
 import { SHARED_ELEMENTS } from "../../../elements/shared/sharedElements";
 import { SHIPPING_ZONE_DETAILS } from "../../../elements/shipping/shipping-zone-details";
-import { selectChannelInHeader } from "../../../steps/channelsSteps";
-import { waitForProgressBarToNotExist } from "../../../steps/shared/progressBar";
+import { urlList } from "../../../fixtures/urlList";
+import { ONE_PERMISSION_USERS } from "../../../fixtures/users";
+import { createChannel } from "../../../support/api/requests/Channels";
+import {
+  addChannelToShippingMethod,
+  addChannelToShippingZone
+} from "../../../support/api/requests/ShippingMethod";
+import * as channelsUtils from "../../../support/api/utils/channelsUtils";
+import * as shippingUtils from "../../../support/api/utils/shippingUtils";
 import filterTests from "../../../support/filterTests";
 import { getFormattedCurrencyAmount } from "../../../support/format/formatCurrencyAmount";
-import { urlList } from "../../../url/urlList";
-import * as channelsUtils from "../../../utils/channelsUtils";
-import * as shippingUtils from "../../../utils/shippingUtils";
+import { selectChannelInHeader } from "../../../support/pages/channelsPage";
 
 filterTests(["all"], () => {
   describe("Channels in shippingMethod", () => {
@@ -87,10 +86,10 @@ filterTests(["all"], () => {
             .loginUserViaRequest("auth", ONE_PERMISSION_USERS.shipping)
             .visit(urlList.shippingMethods)
             .get(SHARED_ELEMENTS.header)
-            .should("be.visible");
-          waitForProgressBarToNotExist();
-          cy.addAliasToGraphRequest("ShippingZone");
-          cy.getTextFromElement(SHARED_ELEMENTS.table);
+            .should("be.visible")
+            .waitForProgressBarToNotExist()
+            .addAliasToGraphRequest("ShippingZone")
+            .getTextFromElement(SHARED_ELEMENTS.table);
         })
         .then(tableText => {
           if (!tableText.includes(shippingZone.name)) {

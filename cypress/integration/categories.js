@@ -1,19 +1,20 @@
-// <reference types="cypress" />
+// / <reference types="cypress"/>
+// / <reference types="../support"/>
+
 import faker from "faker";
 
-import { getCategory } from "../apiRequests/Category";
 import { CATEGORIES_LIST } from "../elements/catalog/categories/categories-list";
 import { CATEGORY_DETAILS } from "../elements/catalog/categories/category-details";
 import { BUTTON_SELECTORS } from "../elements/shared/button-selectors";
 import { SHARED_ELEMENTS } from "../elements/shared/sharedElements";
-import { createCategory } from "../steps/categoriesSteps";
-import { confirmationMessageShouldDisappear } from "../steps/shared/confirmationMessages";
+import { categoryDetails, urlList } from "../fixtures/urlList";
+import { getCategory } from "../support/api/requests/Category";
+import { deleteCategoriesStartsWith } from "../support/api/utils/categoryUtils";
+import * as channelsUtils from "../support/api/utils/channelsUtils";
+import * as productsUtils from "../support/api/utils/products/productsUtils";
+import { deleteShippingStartsWith } from "../support/api/utils/shippingUtils";
 import filterTests from "../support/filterTests";
-import { categoryDetails, urlList } from "../url/urlList";
-import { deleteCategoriesStartsWith } from "../utils/categoryUtils";
-import * as channelsUtils from "../utils/channelsUtils";
-import * as productsUtils from "../utils/products/productsUtils";
-import { deleteShippingStartsWith } from "../utils/shippingUtils";
+import { createCategory } from "../support/pages/categoriesPage";
 
 filterTests(["all"], () => {
   describe("Categories", () => {
@@ -118,8 +119,8 @@ filterTests(["all"], () => {
         .click()
         .addAliasToGraphRequest("productBulkDelete")
         .get(BUTTON_SELECTORS.submit)
-        .click();
-      confirmationMessageShouldDisappear();
+        .click()
+        .confirmationMessageShouldDisappear();
       cy.contains(CATEGORY_DETAILS.productRow, product.name)
         .should("not.exist")
         .wait("@productBulkDelete");

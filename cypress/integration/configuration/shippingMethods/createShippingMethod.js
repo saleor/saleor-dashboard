@@ -1,20 +1,20 @@
 // <reference types="cypress" />
 import faker from "faker";
 
-import { createCheckout } from "../../../apiRequests/Checkout";
-import { createWarehouse } from "../../../apiRequests/Warehouse";
-import { ONE_PERMISSION_USERS } from "../../../Data/users";
+import { urlList } from "../../../fixtures/urlList";
+import { ONE_PERMISSION_USERS } from "../../../fixtures/users";
+import { createCheckout } from "../../../support/api/requests/Checkout";
+import { createWarehouse } from "../../../support/api/requests/Warehouse";
+import * as channelsUtils from "../../../support/api/utils/channelsUtils";
+import * as productsUtils from "../../../support/api/utils/products/productsUtils";
+import * as shippingUtils from "../../../support/api/utils/shippingUtils";
+import { isShippingAvailableInCheckout } from "../../../support/api/utils/storeFront/checkoutUtils";
+import filterTests from "../../../support/filterTests";
 import {
   createShippingRate,
   createShippingZone,
   rateOptions
-} from "../../../steps/shippingMethodSteps";
-import filterTests from "../../../support/filterTests";
-import { urlList } from "../../../url/urlList";
-import * as channelsUtils from "../../../utils/channelsUtils";
-import * as productsUtils from "../../../utils/products/productsUtils";
-import * as shippingUtils from "../../../utils/shippingUtils";
-import { isShippingAvailableInCheckout } from "../../../utils/storeFront/checkoutUtils";
+} from "../../../support/pages/shippingMethodPage";
 
 filterTests(["all"], () => {
   describe("Create shipping method", () => {

@@ -1,12 +1,13 @@
 import faker from "faker";
 
-import { getShopInfo, updateShopAddress } from "../../apiRequests/shopSettings";
 import { BUTTON_SELECTORS } from "../../elements/shared/button-selectors";
 import { SITE_SETTINGS_DETAILS } from "../../elements/siteSettings/site-settings-details";
-import { fillUpBasicAddress } from "../../steps/shared/addressForm";
-import { confirmationMessageShouldDisappear } from "../../steps/shared/confirmationMessages";
+import { urlList } from "../../fixtures/urlList";
+import {
+  getShopInfo,
+  updateShopAddress
+} from "../../support/api/requests/shopSettings";
 import filterTests from "../../support/filterTests";
-import { urlList } from "../../url/urlList";
 
 filterTests(["all"], () => {
   describe("Tests for site settings", () => {
@@ -32,8 +33,8 @@ filterTests(["all"], () => {
       cy.get(SITE_SETTINGS_DETAILS.nameInput)
         .clearAndType(name)
         .get(BUTTON_SELECTORS.confirm)
-        .click();
-      confirmationMessageShouldDisappear();
+        .click()
+        .confirmationMessageShouldDisappear();
       getShopInfo().then(shopInfo => {
         expect(shopInfo.name).to.eq(name);
       });
@@ -45,8 +46,8 @@ filterTests(["all"], () => {
       cy.get(SITE_SETTINGS_DETAILS.urlInput)
         .clearAndType(url)
         .get(BUTTON_SELECTORS.confirm)
-        .click();
-      confirmationMessageShouldDisappear();
+        .click()
+        .confirmationMessageShouldDisappear();
       getShopInfo().then(shopInfo => {
         expect(shopInfo.domain.host).to.eq(url);
       });
@@ -58,17 +59,18 @@ filterTests(["all"], () => {
       cy.get(SITE_SETTINGS_DETAILS.descriptionInput)
         .clearAndType(description)
         .get(BUTTON_SELECTORS.confirm)
-        .click();
-      confirmationMessageShouldDisappear();
+        .click()
+        .confirmationMessageShouldDisappear();
       getShopInfo().then(shopInfo => {
         expect(shopInfo.description).to.eq(description);
       });
     });
 
     it("should change store address", () => {
-      fillUpBasicAddress(address);
-      cy.get(BUTTON_SELECTORS.confirm).click();
-      confirmationMessageShouldDisappear();
+      cy.fillUpBasicAddress(address)
+        .get(BUTTON_SELECTORS.confirm)
+        .click()
+        .confirmationMessageShouldDisappear();
       getShopInfo().then(({ companyAddress }) => {
         expect(companyAddress.companyName).to.eq(address.companyName);
         cy.expectCorrectBasicAddress(companyAddress, address);

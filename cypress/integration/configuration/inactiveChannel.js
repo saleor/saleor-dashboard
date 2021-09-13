@@ -2,24 +2,27 @@
 
 import faker from "faker";
 
-import { activateChannel, createChannel } from "../../apiRequests/Channels";
-import { createCheckout } from "../../apiRequests/Checkout";
-import { getProductDetails } from "../../apiRequests/storeFront/ProductDetails";
 import { CHANNEL_FORM_SELECTORS } from "../../elements/channels/channel-form-selectors";
 import { DRAFT_ORDER_SELECTORS } from "../../elements/orders/draft-order-selectors";
 import { ORDERS_SELECTORS } from "../../elements/orders/orders-selectors";
-import filterTests from "../../support/filterTests";
-import { urlList } from "../../url/urlList";
+import { urlList } from "../../fixtures/urlList";
+import {
+  activateChannel,
+  createChannel
+} from "../../support/api/requests/Channels";
+import { createCheckout } from "../../support/api/requests/Checkout";
+import { getProductDetails } from "../../support/api/requests/storeFront/ProductDetails";
 import {
   deleteChannelsStartsWith,
   getDefaultChannel
-} from "../../utils/channelsUtils";
+} from "../../support/api/utils/channelsUtils";
 import {
   createProductInChannel,
   createTypeAttributeAndCategoryForProduct,
   deleteProductsStartsWith
-} from "../../utils/products/productsUtils";
-import { isProductVisible } from "../../utils/storeFront/storeFrontProductUtils";
+} from "../../support/api/utils/products/productsUtils";
+import { isProductVisible } from "../../support/api/utils/storeFront/storeFrontProductUtils";
+import filterTests from "../../support/filterTests";
 
 filterTests(["all"], () => {
   describe("Tests on inactive channel", () => {

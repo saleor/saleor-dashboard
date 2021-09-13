@@ -1,25 +1,27 @@
-// <reference types="cypress" />
+// / <reference types="cypress"/>
+// / <reference types="../support"/>
+
 import faker from "faker";
 
-import { createChannel } from "../apiRequests/Channels";
-import { updateChannelInProduct } from "../apiRequests/Product";
-import { getCollection } from "../apiRequests/storeFront/Collections";
-import { searchInShop } from "../apiRequests/storeFront/Search";
-import {
-  assignProductsToCollection,
-  createCollection
-} from "../steps/collectionsSteps";
-import filterTests from "../support/filterTests";
-import { urlList } from "../url/urlList";
-import * as channelsUtils from "../utils/channelsUtils";
-import { deleteCollectionsStartsWith } from "../utils/collectionsUtils";
-import * as productsUtils from "../utils/products/productsUtils";
-import { deleteShippingStartsWith } from "../utils/shippingUtils";
+import { urlList } from "../fixtures/urlList";
+import { createChannel } from "../support/api/requests/Channels";
+import { updateChannelInProduct } from "../support/api/requests/Product";
+import { getCollection } from "../support/api/requests/storeFront/Collections";
+import { searchInShop } from "../support/api/requests/storeFront/Search";
+import * as channelsUtils from "../support/api/utils/channelsUtils";
+import { deleteCollectionsStartsWith } from "../support/api/utils/collectionsUtils";
+import * as productsUtils from "../support/api/utils/products/productsUtils";
+import { deleteShippingStartsWith } from "../support/api/utils/shippingUtils";
 import {
   isCollectionVisible,
   isProductInCollectionVisible
-} from "../utils/storeFront/collectionsUtils";
-import { isProductVisibleInSearchResult } from "../utils/storeFront/storeFrontProductUtils";
+} from "../support/api/utils/storeFront/collectionsUtils";
+import { isProductVisibleInSearchResult } from "../support/api/utils/storeFront/storeFrontProductUtils";
+import filterTests from "../support/filterTests";
+import {
+  assignProductsToCollection,
+  createCollection
+} from "../support/pages/collectionsPage";
 
 filterTests(["all"], () => {
   describe("Collections", () => {

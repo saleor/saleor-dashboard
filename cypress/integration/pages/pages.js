@@ -1,11 +1,11 @@
 import faker from "faker";
 
-import { createAttribute } from "../../apiRequests/Attribute";
-import { getPage } from "../../apiRequests/Page";
-import { createPageType } from "../../apiRequests/PageTypes";
-import { attributesTypes, createPage } from "../../steps/pageSteps";
-import { deleteAttributesStartsWith } from "../../utils/attributes/attributeUtils";
-import { deletePageTypesStartsWith } from "../../utils/pageTypeUtils";
+import { createAttribute } from "../../support/api/requests/Attribute";
+import { getPage } from "../../support/api/requests/Page";
+import { createPageType } from "../../support/api/requests/PageTypes";
+import { deleteAttributesStartsWith } from "../../support/api/utils/attributes/attributeUtils";
+import { deletePageTypesStartsWith } from "../../support/api/utils/pageTypeUtils";
+import { attributesTypes, createPage } from "../../support/pages/pagesPage";
 
 describe("Tests for pages", () => {
   const startsWith = `Pages`;

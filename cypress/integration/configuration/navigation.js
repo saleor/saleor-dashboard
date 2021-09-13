@@ -3,14 +3,14 @@ import faker from "faker";
 import {
   createMenu as createMenuViaApi,
   getMenu
-} from "../../apiRequests/Menu";
+} from "../../support/api/requests/Menu";
+import { deleteMenusStartsWith } from "../../support/api/utils/navigationUtils";
+import filterTests from "../../support/filterTests";
 import {
   createMenu,
   createNewMenuItem,
   MENU_ITEM_TYPES
-} from "../../steps/navigationSteps";
-import filterTests from "../../support/filterTests";
-import { deleteMenusStartsWith } from "../../utils/navigationUtils";
+} from "../../support/pages/navigationPage";
 
 filterTests(["all"], () => {
   describe("Tests for menu navigation", () => {

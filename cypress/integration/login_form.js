@@ -1,7 +1,9 @@
-// <reference types="cypress" />
+// / <reference types="cypress"/>
+// / <reference types="../support"/>
+
 import { LOGIN_SELECTORS } from "../elements/account/login-selectors";
+import { urlList } from "../fixtures/urlList";
 import filterTests from "../support/filterTests";
-import { urlList } from "../url/urlList";
 
 filterTests(["all"], () => {
   describe("User authorization", () => {

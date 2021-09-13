@@ -1,23 +1,26 @@
+// / <reference types="cypress"/>
+// / <reference types="../support"/>
+
 import faker from "faker";
 
 import {
   addShippingMethod,
   completeCheckout,
   createCheckout
-} from "../apiRequests/Checkout";
-import { getOrder } from "../apiRequests/Order";
-import filterTests from "../support/filterTests";
-import { getDefaultChannel } from "../utils/channelsUtils";
-import { addAdyenPayment } from "../utils/ordersUtils";
+} from "../support/api/requests/Checkout";
+import { getOrder } from "../support/api/requests/Order";
+import { getDefaultChannel } from "../support/api/utils/channelsUtils";
+import { addAdyenPayment } from "../support/api/utils/ordersUtils";
 import {
   createProductInChannel,
   createTypeAttributeAndCategoryForProduct,
   deleteProductsStartsWith
-} from "../utils/products/productsUtils";
+} from "../support/api/utils/products/productsUtils";
 import {
   createShipping,
   deleteShippingStartsWith
-} from "../utils/shippingUtils";
+} from "../support/api/utils/shippingUtils";
+import filterTests from "../support/filterTests";
 
 filterTests(["stagedOnly"], () => {
   describe("Adyen payments", () => {

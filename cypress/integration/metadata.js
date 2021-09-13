@@ -1,14 +1,19 @@
+// / <reference types="cypress"/>
+// / <reference types="../support"/>
 import faker from "faker";
 
-import { updateMetadata, updatePrivateMetadata } from "../apiRequests/Metadata";
-import { createDraftOrder, getOrder } from "../apiRequests/Order";
-import { getProductMetadata } from "../apiRequests/storeFront/ProductDetails";
-import filterTests from "../support/filterTests";
-import { getDefaultChannel } from "../utils/channelsUtils";
+import {
+  updateMetadata,
+  updatePrivateMetadata
+} from "../support/api/requests/Metadata";
+import { createDraftOrder, getOrder } from "../support/api/requests/Order";
+import { getProductMetadata } from "../support/api/requests/storeFront/ProductDetails";
+import { getDefaultChannel } from "../support/api/utils/channelsUtils";
 import {
   createProductInChannel,
   createTypeAttributeAndCategoryForProduct
-} from "../utils/products/productsUtils";
+} from "../support/api/utils/products/productsUtils";
+import filterTests from "../support/filterTests";
 
 filterTests(["all"], () => {
   describe("Test for metadata", () => {

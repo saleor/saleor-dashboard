@@ -1,15 +1,13 @@
 import faker from "faker";
 
-import { searchInShop } from "../../../apiRequests/storeFront/Search";
-import { ONE_PERMISSION_USERS } from "../../../Data/users";
-import { updateProductVisibleInListings } from "../../../steps/catalog/products/productSteps";
+import { productDetailsUrl } from "../../../fixtures/urlList";
+import { ONE_PERMISSION_USERS } from "../../../fixtures/users";
+import { searchInShop } from "../../../support/api/requests/storeFront/Search";
+import { getDefaultChannel } from "../../../support/api/utils/channelsUtils";
+import * as productsUtils from "../../../support/api/utils/products/productsUtils";
+import { isProductVisibleInSearchResult } from "../../../support/api/utils/storeFront/storeFrontProductUtils";
 import filterTests from "../../../support/filterTests";
-import { productDetailsUrl } from "../../../url/urlList";
-import { getDefaultChannel } from "../../../utils/channelsUtils";
-import * as productsUtils from "../../../utils/products/productsUtils";
-import { isProductVisibleInSearchResult } from "../../../utils/storeFront/storeFrontProductUtils";
-
-// <reference types="cypress" />
+import { updateProductVisibleInListings } from "../../../support/pages/catalog/products/productDetailsPage";
 
 filterTests(["all"], () => {
   describe("Products displayed in listings", () => {

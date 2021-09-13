@@ -1,17 +1,17 @@
 import faker from "faker";
 
-import { createCheckout } from "../../apiRequests/Checkout";
-import filterTests from "../../support/filterTests";
-import { getDefaultChannel } from "../../utils/channelsUtils";
+import { createCheckout } from "../../support/api/requests/Checkout";
+import { getDefaultChannel } from "../../support/api/utils/channelsUtils";
 import {
   createProductInChannel,
   createTypeAttributeAndCategoryForProduct,
   deleteProductsStartsWith
-} from "../../utils/products/productsUtils";
+} from "../../support/api/utils/products/productsUtils";
 import {
   createShipping,
   deleteShippingStartsWith
-} from "../../utils/shippingUtils";
+} from "../../support/api/utils/shippingUtils";
+import filterTests from "../../support/filterTests";
 
 filterTests(["all"], () => {
   describe("Warehouses in checkout", () => {

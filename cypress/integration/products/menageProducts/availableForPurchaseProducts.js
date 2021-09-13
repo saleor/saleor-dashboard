@@ -1,16 +1,14 @@
 import faker from "faker";
 
-import { getProductDetails } from "../../../apiRequests/storeFront/ProductDetails";
-import { ONE_PERMISSION_USERS } from "../../../Data/users";
-import { updateProductIsAvailableForPurchase } from "../../../steps/catalog/products/productSteps";
+import { productDetailsUrl } from "../../../fixtures/urlList";
+import { ONE_PERMISSION_USERS } from "../../../fixtures/users";
+import { getProductDetails } from "../../../support/api/requests/storeFront/ProductDetails";
+import { getDefaultChannel } from "../../../support/api/utils/channelsUtils";
+import * as productsUtils from "../../../support/api/utils/products/productsUtils";
+import * as shippingUtils from "../../../support/api/utils/shippingUtils";
+import { isProductAvailableForPurchase } from "../../../support/api/utils/storeFront/storeFrontProductUtils";
 import filterTests from "../../../support/filterTests";
-import { productDetailsUrl } from "../../../url/urlList";
-import { getDefaultChannel } from "../../../utils/channelsUtils";
-import * as productsUtils from "../../../utils/products/productsUtils";
-import * as shippingUtils from "../../../utils/shippingUtils";
-import { isProductAvailableForPurchase } from "../../../utils/storeFront/storeFrontProductUtils";
-
-// <reference types="cypress" />
+import { updateProductIsAvailableForPurchase } from "../../../support/pages/catalog/products/productDetailsPage";
 
 filterTests(["all"], () => {
   describe("Products available in listings", () => {

@@ -1,20 +1,19 @@
 // <reference types="cypress" />
 import faker from "faker";
 
+import { SHARED_ELEMENTS } from "../../../../elements/shared/sharedElements";
+import { SHIPPING_RATE_DETAILS } from "../../../../elements/shipping/shipping-rate-details";
+import { urlList, weightRateUrl } from "../../../../fixtures/urlList";
 import {
   createShippingRate as createShippingRateViaApi,
   createShippingZone
-} from "../../../../apiRequests/ShippingMethod";
-import { updateShopWeightUnit } from "../../../../apiRequests/shopSettings";
-import { SHARED_ELEMENTS } from "../../../../elements/shared/sharedElements";
-import { SHIPPING_RATE_DETAILS } from "../../../../elements/shipping/shipping-rate-details";
-import { waitForProgressBarToNotBeVisible } from "../../../../steps/shared/progressBar";
-import { changeWeightUnit } from "../../../../steps/shippingMethodSteps";
+} from "../../../../support/api/requests/ShippingMethod";
+import { updateShopWeightUnit } from "../../../../support/api/requests/shopSettings";
+import { getDefaultChannel } from "../../../../support/api/utils/channelsUtils";
+import { deleteProductsStartsWith } from "../../../../support/api/utils/products/productsUtils";
+import { deleteShippingStartsWith } from "../../../../support/api/utils/shippingUtils";
 import filterTests from "../../../../support/filterTests";
-import { urlList, weightRateUrl } from "../../../../url/urlList";
-import { getDefaultChannel } from "../../../../utils/channelsUtils";
-import { deleteProductsStartsWith } from "../../../../utils/products/productsUtils";
-import { deleteShippingStartsWith } from "../../../../utils/shippingUtils";
+import { changeWeightUnit } from "../../../../support/pages/shippingMethodPage";
 
 filterTests(["all"], () => {
   describe("Recalculate weights", () => {
@@ -83,7 +82,7 @@ filterTests(["all"], () => {
           const rate = shippingMethods.find(
             element => element.id === shippingMethod.id
           );
-          waitForProgressBarToNotBeVisible();
+          cy.waitForProgressBarToNotBeVisible();
           expect(rate.minimumOrderWeight.unit).to.eq("G");
           cy.get(SHIPPING_RATE_DETAILS.minWeightInput).invoke("val");
         })

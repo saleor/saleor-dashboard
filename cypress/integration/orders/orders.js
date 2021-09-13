@@ -1,32 +1,31 @@
 // <reference types="cypress" />
 import faker from "faker";
 
-import {
-  createCustomer,
-  deleteCustomersStartsWith
-} from "../../apiRequests/Customer";
-import { getOrder } from "../../apiRequests/Order";
-import { ONE_PERMISSION_USERS } from "../../Data/users";
 import { ORDER_REFUND } from "../../elements/orders/order-refund";
 import { ORDERS_SELECTORS } from "../../elements/orders/orders-selectors";
 import { BUTTON_SELECTORS } from "../../elements/shared/button-selectors";
 import { SHARED_ELEMENTS } from "../../elements/shared/sharedElements";
-import { selectChannelInPicker } from "../../steps/channelsSteps";
-import { finalizeDraftOrder } from "../../steps/draftOrderSteps";
-import { fillAutocompleteSelect } from "../../steps/shared/selects";
-import filterTests from "../../support/filterTests";
-import { urlList } from "../../url/urlList";
-import { getDefaultChannel } from "../../utils/channelsUtils";
+import { urlList } from "../../fixtures/urlList";
+import { ONE_PERMISSION_USERS } from "../../fixtures/users";
+import {
+  createCustomer,
+  deleteCustomersStartsWith
+} from "../../support/api/requests/Customer";
+import { getOrder } from "../../support/api/requests/Order";
+import { getDefaultChannel } from "../../support/api/utils/channelsUtils";
 import {
   createFulfilledOrder,
   createOrder,
   createReadyToFulfillOrder
-} from "../../utils/ordersUtils";
-import * as productsUtils from "../../utils/products/productsUtils";
+} from "../../support/api/utils/ordersUtils";
+import * as productsUtils from "../../support/api/utils/products/productsUtils";
 import {
   createShipping,
   deleteShippingStartsWith
-} from "../../utils/shippingUtils";
+} from "../../support/api/utils/shippingUtils";
+import filterTests from "../../support/filterTests";
+import { selectChannelInPicker } from "../../support/pages/channelsPage";
+import { finalizeDraftOrder } from "../../support/pages/draftOrderPage";
 
 filterTests(["all"], () => {
   describe("Orders", () => {
@@ -162,16 +161,15 @@ filterTests(["all"], () => {
             .find(BUTTON_SELECTORS.showMoreButton)
             .click()
             .get(ORDERS_SELECTORS.cancelFulfillment)
-            .click();
-        })
-        .then(() => {
-          fillAutocompleteSelect(
-            ORDERS_SELECTORS.cancelFulfillmentSelectField,
-            warehouse.name
-          );
-          cy.addAliasToGraphRequest("OrderFulfillmentCancel");
-          cy.get(BUTTON_SELECTORS.submit).click();
-          cy.wait("@OrderFulfillmentCancel");
+            .click()
+            .fillAutocompleteSelect(
+              ORDERS_SELECTORS.cancelFulfillmentSelectField,
+              warehouse.name
+            )
+            .addAliasToGraphRequest("OrderFulfillmentCancel")
+            .get(BUTTON_SELECTORS.submit)
+            .click()
+            .wait("@OrderFulfillmentCancel");
           getOrder(order.id);
         })
         .then(orderResp => {

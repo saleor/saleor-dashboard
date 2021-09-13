@@ -1,15 +1,16 @@
 import faker from "faker";
 
-import { createAttribute } from "../../apiRequests/Attribute";
-import { createPageType, getPageType } from "../../apiRequests/PageTypes";
 import { PAGE_TYPE_DETAILS } from "../../elements/pageTypes/pageTypeDetails";
 import { PAGE_TYPES_LIST } from "../../elements/pageTypes/pageTypesList";
 import { BUTTON_SELECTORS } from "../../elements/shared/button-selectors";
 import { SHARED_ELEMENTS } from "../../elements/shared/sharedElements";
-import { assignElements } from "../../steps/shared/assignElements";
-import { confirmationMessageShouldDisappear } from "../../steps/shared/confirmationMessages";
+import { pageTypeDetailsUrl, urlList } from "../../fixtures/urlList";
+import { createAttribute } from "../../support/api/requests/Attribute";
+import {
+  createPageType,
+  getPageType
+} from "../../support/api/requests/PageTypes";
 import filterTests from "../../support/filterTests";
-import { pageTypeDetailsUrl, urlList } from "../../url/urlList";
 
 filterTests(["all"], () => {
   describe("Tests for page types", () => {
@@ -29,9 +30,9 @@ filterTests(["all"], () => {
         .type(randomName)
         .addAliasToGraphRequest("PageTypeCreate")
         .get(BUTTON_SELECTORS.confirm)
-        .click();
-      confirmationMessageShouldDisappear();
-      cy.wait("@PageTypeCreate")
+        .click()
+        .confirmationMessageShouldDisappear()
+        .wait("@PageTypeCreate")
         .its("response.body.data.pageTypeCreate.pageType")
         .then(pageType => {
           getPageType(pageType.id);
@@ -51,9 +52,9 @@ filterTests(["all"], () => {
             .get(SHARED_ELEMENTS.progressBar)
             .should("be.not.visible")
             .get(PAGE_TYPE_DETAILS.assignAttributesButton)
-            .click();
-          assignElements(randomName, false);
-          confirmationMessageShouldDisappear();
+            .click()
+            .assignElements(randomName, false)
+            .confirmationMessageShouldDisappear();
           getPageType(pageType.id);
         })
         .then(pageType => {

@@ -1,12 +1,6 @@
 // <reference types="cypress" />
 import faker from "faker";
 
-import { createChannel } from "../../apiRequests/Channels";
-import {
-  createShippingZone,
-  getShippingZone
-} from "../../apiRequests/ShippingMethod";
-import { ONE_PERMISSION_USERS } from "../../Data/users";
 import { PRODUCTS_LIST } from "../../elements/catalog/products/products-list";
 import { ADD_CHANNEL_FORM_SELECTORS } from "../../elements/channels/add-channel-form-selectors";
 import { AVAILABLE_CHANNELS_FORM } from "../../elements/channels/available-channels-form";
@@ -14,12 +8,17 @@ import { CHANNELS_SELECTORS } from "../../elements/channels/channels-selectors";
 import { SELECT_CHANNELS_TO_ASSIGN } from "../../elements/channels/select-channels-to-assign";
 import { HEADER_SELECTORS } from "../../elements/header/header-selectors";
 import { BUTTON_SELECTORS } from "../../elements/shared/button-selectors";
-import { createChannelByView } from "../../steps/channelsSteps";
-import { waitForProgressBarToNotExist } from "../../steps/shared/progressBar";
+import { urlList } from "../../fixtures/urlList";
+import { ONE_PERMISSION_USERS } from "../../fixtures/users";
+import { createChannel } from "../../support/api/requests/Channels";
+import {
+  createShippingZone,
+  getShippingZone
+} from "../../support/api/requests/ShippingMethod";
+import { deleteChannelsStartsWith } from "../../support/api/utils/channelsUtils";
+import { deleteShippingStartsWith } from "../../support/api/utils/shippingUtils";
 import filterTests from "../../support/filterTests";
-import { urlList } from "../../url/urlList";
-import { deleteChannelsStartsWith } from "../../utils/channelsUtils";
-import { deleteShippingStartsWith } from "../../utils/shippingUtils";
+import { createChannelByView } from "../../support/pages/channelsPage";
 
 filterTests(["all"], () => {
   describe("Channels", () => {
@@ -70,11 +69,12 @@ filterTests(["all"], () => {
       // new channel should be visible at product availability form
       cy.clearSessionData().loginUserViaRequest();
       cy.addAliasToGraphRequest("InitialProductFilterAttributes");
-      cy.visit(urlList.products);
-      cy.wait("@InitialProductFilterAttributes");
-      waitForProgressBarToNotExist();
-      cy.get(PRODUCTS_LIST.emptyProductRow).should("not.exist");
-      cy.get(PRODUCTS_LIST.productsList)
+      cy.visit(urlList.products)
+        .wait("@InitialProductFilterAttributes")
+        .waitForProgressBarToNotExist()
+        .get(PRODUCTS_LIST.emptyProductRow)
+        .should("not.exist")
+        .get(PRODUCTS_LIST.productsList)
         .first()
         .click()
         .get(AVAILABLE_CHANNELS_FORM.menageChannelsButton)
