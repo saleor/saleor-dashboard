@@ -142,7 +142,7 @@ export const OrderDraftList: React.FC<OrderDraftListProps> = ({ params }) => {
       filter: getFilterVariables(params),
       sort: getSortQueryVariables(params)
     }),
-    [params]
+    [params, settings.rowNumber]
   );
   const { data, loading, refetch } = useOrderDraftListQuery({
     displayLoader: true,

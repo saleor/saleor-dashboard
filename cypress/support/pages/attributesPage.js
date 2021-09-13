@@ -1,5 +1,6 @@
 import { ATTRIBUTES_DETAILS } from "../../elements/attribute/attributes_details";
 import { BUTTON_SELECTORS } from "../../elements/shared/button-selectors";
+import { attributeDetailsUrl } from "../../fixtures/urlList";
 
 export function createAttributeWithInputType({
   name,
@@ -40,12 +41,15 @@ export function fillUpAttributeCreateFields({
 }
 
 export function saveAttribute() {
-  return cy
-    .addAliasToGraphRequest("AttributeCreate")
-    .get(BUTTON_SELECTORS.confirm)
+  cy.addAliasToGraphRequest("AttributeCreate");
+  submitAttribute();
+  return cy.wait("@AttributeCreate").its("response.body.data.attributeCreate");
+}
+
+export function submitAttribute() {
+  cy.get(BUTTON_SELECTORS.confirm)
     .click()
-    .wait("@AttributeCreate")
-    .its("response.body.data.attributeCreate");
+    .confirmationMessageShouldDisappear();
 }
 
 export function addSingleValue(valueName) {
@@ -79,4 +83,12 @@ export function selectNumericSystem({ unitSystem, unitsOf, unit }) {
     .click()
     .get(ATTRIBUTES_DETAILS.unitsOptions[unit])
     .click();
+}
+
+export function enterAttributeAndChanegeIsFilterableInDashbord(attributeId) {
+  cy.visit(attributeDetailsUrl(attributeId))
+    .waitForProgressBarToNotBeVisible()
+    .get(ATTRIBUTES_DETAILS.dashboardProperties.useInFilteringCheckbox)
+    .click();
+  submitAttribute();
 }

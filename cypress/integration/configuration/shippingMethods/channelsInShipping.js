@@ -14,8 +14,8 @@ import {
 import * as channelsUtils from "../../../support/api/utils/channelsUtils";
 import * as shippingUtils from "../../../support/api/utils/shippingUtils";
 import filterTests from "../../../support/filterTests";
-import { getFormattedCurrencyAmount } from "../../../support/format/formatCurrencyAmount";
-import { selectChannelInHeader } from "../../../support/pages/channelsPage";
+import { getCurrencyAndAmountInString } from "../../../support/formatData/formatCurrencyAmount";
+import { enterHomePageChangeChannelAndReturn } from "../../../support/pages/channelsPage";
 
 filterTests(["all"], () => {
   describe("Channels in shippingMethod", () => {
@@ -95,20 +95,27 @@ filterTests(["all"], () => {
           if (!tableText.includes(shippingZone.name)) {
             cy.get(BUTTON_SELECTORS.nextPaginationButton).click();
           }
-          cy.contains(shippingZone.name).click();
-          cy.wait("@ShippingZone");
-          selectChannelInHeader(defaultChannel.name);
-          cy.getTextFromElement(
-            SHIPPING_ZONE_DETAILS.shippingRatePriceTableCell
-          )
+          cy.contains(shippingZone.name)
+            .click()
+            .wait("@ShippingZone");
+          enterHomePageChangeChannelAndReturn(defaultChannel.name);
+          cy.waitForProgressBarToNotBeVisible()
+            .get(SHARED_ELEMENTS.skeleton)
+            .should("not.exist")
+            .getTextFromElement(
+              SHIPPING_ZONE_DETAILS.shippingRatePriceTableCell
+            )
             .then(text => {
-              const expectedValue = getFormattedCurrencyAmount(
+              const expectedValue = getCurrencyAndAmountInString(
                 defaultChannelPrice,
                 defaultChannel.currencyCode
               );
               expect(text).to.be.eq(expectedValue);
 
-              selectChannelInHeader(createdChannel.name);
+              enterHomePageChangeChannelAndReturn(createdChannel.name);
+              cy.waitForProgressBarToNotBeVisible()
+                .get(SHARED_ELEMENTS.skeleton)
+                .should("not.exist");
             })
             .then(() => {
               cy.getTextFromElement(
@@ -116,7 +123,7 @@ filterTests(["all"], () => {
               );
             })
             .then(text => {
-              const expectedValue = getFormattedCurrencyAmount(
+              const expectedValue = getCurrencyAndAmountInString(
                 createdChannelPrice,
                 createdChannelCurrency
               );

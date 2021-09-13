@@ -58,7 +58,8 @@ export function getDisplayedSelectors(selectors = LEFT_MENU_SELECTORS) {
 export function expectAllSelectorsPermitted(permissions, selectors) {
   Object.values(selectors).forEach(selector => {
     const isSelectorPermitted = isPermitted(permissions, selector);
-    expect(isSelectorPermitted).to.be.true;
+    expect(isSelectorPermitted, `${selector} selector should be in permitted`)
+      .to.be.true;
   });
 }
 function isPermitted(permissions, selector) {

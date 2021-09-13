@@ -25,6 +25,7 @@ filterTests(["all"], () => {
     const channelStartsWith = `CyChannels`;
     const randomName = `${channelStartsWith} ${faker.datatype.number()}`;
     const currency = "PLN";
+    const defaultCountry = "Poland";
     let shippingZone;
 
     before(() => {

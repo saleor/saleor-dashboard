@@ -114,7 +114,7 @@ export function fillUpCollectionAndCategory({ category, collection }) {
     .fillAutocompleteSelect(PRODUCT_DETAILS.categoryInput, category)
     .then(selected => {
       organization.category = selected;
-      cy.fillAutocompleteSelect(PRODUCT_DETAILS.collectionInput, collection);
+      cy.fillMultiSelect(PRODUCT_DETAILS.collectionInput, collection);
     })
     .then(selected => {
       organization.collection = selected;

@@ -11,7 +11,10 @@ import {
   createCustomer,
   deleteCustomersStartsWith
 } from "../../support/api/requests/Customer";
-import { getOrder } from "../../support/api/requests/Order";
+import {
+  getOrder,
+  updateOrdersSettings
+} from "../../support/api/requests/Order";
 import { getDefaultChannel } from "../../support/api/utils/channelsUtils";
 import {
   createFulfilledOrder,
@@ -45,6 +48,7 @@ filterTests(["all"], () => {
       deleteShippingStartsWith(startsWith);
       productsUtils.deleteProductsStartsWith(startsWith);
 
+      updateOrdersSettings();
       getDefaultChannel()
         .then(channel => {
           defaultChannel = channel;
@@ -157,9 +161,6 @@ filterTests(["all"], () => {
           cy.contains(ORDERS_SELECTORS.orderRow, order.number).click();
           cy.get(SHARED_ELEMENTS.skeleton)
             .should("not.exist")
-            .get(ORDERS_SELECTORS.orderFulfillmentFrame)
-            .find(BUTTON_SELECTORS.showMoreButton)
-            .click()
             .get(ORDERS_SELECTORS.cancelFulfillment)
             .click()
             .fillAutocompleteSelect(

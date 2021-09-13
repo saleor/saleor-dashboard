@@ -42,6 +42,11 @@ export const fragmentOrderEvent = gql`
       firstName
       lastName
     }
+    app {
+      id
+      name
+      appUrl
+    }
     lines {
       quantity
       itemName
@@ -81,6 +86,7 @@ export const fragmentOrderLine = gql`
     productSku
     quantity
     quantityFulfilled
+    quantityToFulfill
     unitDiscount {
       amount
       currency
@@ -200,14 +206,26 @@ export const fragmentOrderDetails = gql`
       ...OrderLineFragment
     }
     number
+    isPaid
     paymentStatus
     shippingAddress {
       ...AddressFragment
+    }
+    deliveryMethod {
+      __typename
+      ... on ShippingMethod {
+        id
+      }
+      ... on Warehouse {
+        id
+        clickAndCollectOption
+      }
     }
     shippingMethod {
       id
     }
     shippingMethodName
+    collectionPointName
     shippingPrice {
       gross {
         amount
@@ -278,5 +296,12 @@ export const fragmentOrderDetails = gql`
 export const fragmentOrderSettings = gql`
   fragment OrderSettingsFragment on OrderSettings {
     automaticallyConfirmAllNewOrders
+  }
+`;
+
+export const fragmentShopOrderSettings = gql`
+  fragment ShopOrderSettingsFragment on Shop {
+    fulfillmentAutoApprove
+    fulfillmentAllowUnpaid
   }
 `;

@@ -7,7 +7,7 @@ import { CATEGORIES_LIST } from "../elements/catalog/categories/categories-list"
 import { CATEGORY_DETAILS } from "../elements/catalog/categories/category-details";
 import { BUTTON_SELECTORS } from "../elements/shared/button-selectors";
 import { SHARED_ELEMENTS } from "../elements/shared/sharedElements";
-import { categoryDetails, urlList } from "../fixtures/urlList";
+import { categoryDetailsUrl, urlList } from "../fixtures/urlList";
 import { getCategory } from "../support/api/requests/Category";
 import { deleteCategoriesStartsWith } from "../support/api/utils/categoryUtils";
 import * as channelsUtils from "../support/api/utils/channelsUtils";
@@ -86,11 +86,11 @@ filterTests(["all"], () => {
 
     it("should add subcategory", () => {
       const categoryName = `${startsWith}${faker.datatype.number()}`;
-      cy.visit(categoryDetails(category.id))
+      cy.visit(categoryDetailsUrl(category.id))
         .get(CATEGORY_DETAILS.createSubcategoryButton)
         .click();
       createCategory({ name: categoryName, description: categoryName })
-        .visit(categoryDetails(category.id))
+        .visit(categoryDetailsUrl(category.id))
         .contains(CATEGORY_DETAILS.categoryChildrenRow, categoryName)
         .should("be.visible");
       getCategory(category.id).then(categoryResp => {
@@ -99,7 +99,7 @@ filterTests(["all"], () => {
     });
 
     it("should add product to category", () => {
-      cy.visit(categoryDetails(category.id))
+      cy.visit(categoryDetailsUrl(category.id))
         .get(CATEGORY_DETAILS.productsTab)
         .click()
         .get(CATEGORY_DETAILS.addProducts)
@@ -109,7 +109,7 @@ filterTests(["all"], () => {
     });
 
     it("should remove product from category", () => {
-      cy.visit(categoryDetails(category.id))
+      cy.visit(categoryDetailsUrl(category.id))
         .get(CATEGORY_DETAILS.productsTab)
         .click();
       cy.contains(CATEGORY_DETAILS.productRow, product.name)
@@ -125,7 +125,7 @@ filterTests(["all"], () => {
         .should("not.exist")
         .wait("@productBulkDelete");
       getCategory(category.id).then(categoryResp => {
-        expect(categoryResp.products).to.be.null;
+        expect(categoryResp.products.edges.length).to.be.eq(0);
       });
     });
 

@@ -34,7 +34,7 @@ export const orderToRefund = (placeholder: string): OrderRefundData_order => ({
       id: "diufhdsif",
       productName: "Milk",
       quantity: 19,
-      quantityFulfilled: 3,
+      quantityToFulfill: 16,
       thumbnail: {
         __typename: "Image",
         url: placeholder
@@ -53,7 +53,7 @@ export const orderToRefund = (placeholder: string): OrderRefundData_order => ({
       id: "fdsfdfdsf",
       productName: "Coffee",
       quantity: 13,
-      quantityFulfilled: 5,
+      quantityToFulfill: 8,
       thumbnail: {
         __typename: "Image",
         url: placeholder

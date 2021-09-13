@@ -23,7 +23,7 @@ import {
   createVariant,
   variantsShouldBeVisible
 } from "../../support/pages/catalog/products/VariantsPage";
-import { selectChannelInHeader } from "../../support/pages/channelsPage";
+import { enterHomePageChangeChannelAndReturn } from "../../support/pages/channelsPage";
 
 filterTests(["all", "critical"], () => {
   describe("Creating variants", () => {
@@ -108,7 +108,7 @@ filterTests(["all", "critical"], () => {
             price,
             attribute: attributeValues[0]
           });
-          selectChannelInHeader(defaultChannel.name);
+          enterHomePageChangeChannelAndReturn(defaultChannel.name);
           variantsShouldBeVisible({ name, price });
           getProductVariants(createdProduct.id, defaultChannel.slug);
         })
@@ -146,7 +146,7 @@ filterTests(["all", "critical"], () => {
           });
         })
         .then(() => {
-          selectChannelInHeader(defaultChannel.name);
+          enterHomePageChangeChannelAndReturn(defaultChannel.name);
           variantsShouldBeVisible({
             name: variants[1].name,
             price: variants[1].price
@@ -191,9 +191,9 @@ filterTests(["all", "critical"], () => {
             price: variantsPrice,
             attribute: attributeValues[0]
           });
-          selectChannelInHeader(defaultChannel.name);
+          enterHomePageChangeChannelAndReturn(defaultChannel.name);
           variantsShouldBeVisible({ name, price: variantsPrice });
-          selectChannelInHeader(newChannel.name);
+          enterHomePageChangeChannelAndReturn(newChannel.name);
           variantsShouldBeVisible({ name, price: variantsPrice });
           getProductVariants(createdProduct.id, defaultChannel.slug);
         })

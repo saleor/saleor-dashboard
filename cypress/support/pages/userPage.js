@@ -24,6 +24,7 @@ export function fillUpUserDetails(firstName, lastName, email) {
     .type(email)
     .get(BUTTON_SELECTORS.submit)
     .click()
+    .confirmationMessageShouldDisappear()
     .fillAutocompleteSelect(STAFF_MEMBER_DETAILS.permissionsSelect)
     .addAliasToGraphRequest("StaffMemberUpdate")
     .get(BUTTON_SELECTORS.confirm)

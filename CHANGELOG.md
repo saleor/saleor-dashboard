@@ -47,6 +47,8 @@ All notable, unreleased changes to this project will be documented in this file.
 - Add service worker - #1073 by @dominik-zeglen
 - Choosing user shipping and billing addresses for draft order - #1082 by @orzechdev
 - Fix EditorJS inline formatting - #1096 by @orzechdev
+- Add product / page delete warning - #1095 by @mmarkusik
+- Channels per plugin - #1093 by @mmarkusik
 - Add pagination on attribute values - #1112 by @orzechdev
 - Paginate attribute values in filters - #1152 by @orzechdev
 - Fix attribute values input display - #1156 by @orzechdev
@@ -76,6 +78,9 @@ All notable, unreleased changes to this project will be documented in this file.
 - Fixed navigation menu items reordering issue - #1239 by @kamilpastuszka
 - Fixed issue with modals containing invalid, redundant scrolls #1240 by @kamilpastuszka
 - Add text attribute for product and page translations - #1276 by @kamilpastuszka
+- Add app dashboard extensions - #1292 by @jwm0
+- Introduce fulfillment creation - #1241 by @orzechdev
+- Introduce Click&Collect feature - #1268 by @kuchichan
 
 # 2.11.1
 

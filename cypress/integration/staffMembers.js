@@ -102,6 +102,7 @@ filterTests(["stagedOnly"], () => {
         .addAliasToGraphRequest("StaffMemberUpdate")
         .get(BUTTON_SELECTORS.confirm)
         .click()
+        .confirmationMessageShouldDisappear()
         .wait("@StaffMemberUpdate")
         .clearSessionData()
         .loginUserViaRequest("auth", { email, password })

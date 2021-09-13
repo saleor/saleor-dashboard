@@ -81,11 +81,13 @@ filterTests(["all"], () => {
           updateProduct(product.id, { collections: [collection.id] });
         });
     });
+
     beforeEach(() => {
       cy.clearSessionData()
         .loginUserViaRequest()
         .visit(urlList.products);
     });
+
     const filterProductsBy = ["category", "collection", "productType"];
     filterProductsBy.forEach(filterBy => {
       it(`should filter products by ${filterBy}`, () => {
@@ -113,9 +115,13 @@ filterTests(["all"], () => {
       cy.waitForProgressBarToNotExist();
       selectChannel(channel.slug);
       selectProductsOutOfStock();
-      cy.getTextFromElement(PRODUCTS_LIST.productsNames).then(product => {
-        expect(product).to.includes(productOutOfStock);
-      });
+      cy.searchInTable(productOutOfStock)
+        .get(PRODUCTS_LIST.productsNames)
+        .should("have.length", 1)
+        .getTextFromElement(PRODUCTS_LIST.productsNames)
+        .then(product => {
+          expect(product).to.includes(productOutOfStock);
+        });
     });
   });
 });

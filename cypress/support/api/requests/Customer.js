@@ -90,6 +90,20 @@ export function customerRegistration({
   return cy.sendRequestWithQuery(mutation).its("body.data.accountRegister");
 }
 
+export function requestPasswordReset(email, channel) {
+  const mutation = `mutation{
+    requestPasswordReset(channel:"${channel}" email:"${email}", redirectUrl:"${
+    Cypress.config().baseUrl
+  }password-reset"){
+      errors{
+        field
+        message
+      }
+    }
+  }`;
+  return cy.sendRequestWithQuery(mutation);
+}
+
 export function confirmAccount(email, token) {
   const mutation = `mutation{
     confirmAccount(email:"${email}", token:"${token}"){

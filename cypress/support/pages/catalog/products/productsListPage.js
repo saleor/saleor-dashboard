@@ -1,6 +1,10 @@
 import { PRODUCTS_LIST } from "../../../../elements/catalog/products/products-list";
 import { BUTTON_SELECTORS } from "../../../../elements/shared/button-selectors";
-import { getElementByDataTestId } from "../../../../elements/shared/sharedElements";
+import {
+  getElementByDataTestId,
+  SHARED_ELEMENTS
+} from "../../../../elements/shared/sharedElements";
+import { urlList } from "../../../../fixtures/urlList";
 
 export function isNumberOfProductsSameAsInSelectResultsOnPage() {
   let numberOfResults;
@@ -41,7 +45,24 @@ export function selectFilterOption(filter, optionName) {
     .get(PRODUCTS_LIST.filters.filterField[filter])
     .find(PRODUCTS_LIST.filters.filterBySearchInput)
     .type(optionName);
-  cy.contains(PRODUCTS_LIST.filters.filterOption, optionName)
+  cy.get(PRODUCTS_LIST.filters.filterField[filter])
+    .contains(PRODUCTS_LIST.filters.filterOption, optionName)
+    .find(BUTTON_SELECTORS.checkbox)
+    .click();
+  submitFilters();
+}
+
+export function selectAttributeFilter(attributeSlug, attributeValue) {
+  selectFilterByAttribute(attributeSlug);
+  cy.get(
+    `${getElementByDataTestId(attributeSlug)}${
+      PRODUCTS_LIST.filters.filterField.filterField
+    }`
+  )
+    .find(PRODUCTS_LIST.filters.filterOption)
+    .should("be.visible")
+    .contains(attributeValue)
+    .should("be.visible")
     .find(BUTTON_SELECTORS.checkbox)
     .click();
   submitFilters();
@@ -56,11 +77,23 @@ export function selectProductsOutOfStock() {
 }
 
 export function selectFilterBy(filter) {
-  return cy
-    .get(PRODUCTS_LIST.showFiltersButton)
-    .click()
+  return showFilters()
     .get(PRODUCTS_LIST.filters.filterBy[filter])
     .click();
+}
+
+export function selectFilterByAttribute(attributeSlug) {
+  return showFilters()
+    .get(
+      `${getElementByDataTestId(attributeSlug)}${
+        SHARED_ELEMENTS.filters.filterGroupActivateCheckbox
+      }`
+    )
+    .click();
+}
+
+export function showFilters() {
+  return cy.get(PRODUCTS_LIST.showFiltersButton).click();
 }
 
 export function selectChannel(channelSlug) {
@@ -74,4 +107,10 @@ function submitFilters() {
     .waitForProgressBarToNotExist()
     .get(PRODUCTS_LIST.emptyProductRow)
     .should("not.exist");
+}
+
+export function enterProductListPage() {
+  cy.visit(urlList.products)
+    .softExpectSkeletonIsVisible()
+    .waitForProgressBarToNotExist();
 }

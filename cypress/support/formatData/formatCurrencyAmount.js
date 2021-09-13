@@ -5,3 +5,7 @@ export function getFormattedCurrencyAmount(amount, currency) {
     style: "currency"
   });
 }
+
+export function getCurrencyAndAmountInString(amount, currency) {
+  return `${currency}${amount.toFixed(2)}`;
+}

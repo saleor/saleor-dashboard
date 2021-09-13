@@ -51,6 +51,7 @@ const TranslationsLanguageList: React.FC<TranslationsLanguageListProps> = props 
             languages,
             language => (
               <TableRow
+                data-test-id={language ? language.code : "skeleton"}
                 className={!!language ? classes.link : undefined}
                 hover={!!language}
                 key={language ? language.code : "skeleton"}

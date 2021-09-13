@@ -91,7 +91,7 @@ export const CollectionList: React.FC<CollectionListProps> = ({ params }) => {
       sort: getSortQueryVariables(params),
       channel: selectedChannel?.slug
     }),
-    [params]
+    [params, settings.rowNumber]
   );
   const { data, loading, refetch } = useCollectionListQuery({
     displayLoader: true,

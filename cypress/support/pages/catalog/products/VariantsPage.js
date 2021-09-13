@@ -7,11 +7,10 @@ import { selectChannelVariantInDetailsPage } from "../../channelsPage";
 import { fillUpPriceList } from "./priceListComponent";
 
 export function variantsShouldBeVisible({ name, price }) {
-  cy.contains(PRODUCT_DETAILS.variantRow, name)
-    .should("be.visible")
-    .find(PRODUCT_DETAILS.variantPrice)
-    .invoke("text")
-    .then(text => expect(text).to.includes(price));
+  cy.contains(PRODUCT_DETAILS.variantRow, name).should("be.visible");
+  cy.contains(PRODUCT_DETAILS.variantPrice, price);
+  // .invoke("text")
+  // .then(text => expect(text).to.includes(price));
 }
 
 export function createFirstVariant({ sku, warehouseId, price, attribute }) {

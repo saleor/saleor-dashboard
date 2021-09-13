@@ -63,6 +63,7 @@ filterTests(["all"], () => {
         }
       );
     });
+
     it("Draft order channel should be taken from global channel picker when changed", () => {
       cy.visit(urlList.homePage);
       selectChannelInHeader(otherChannel.name);
@@ -80,6 +81,7 @@ filterTests(["all"], () => {
         }
       );
     });
+
     it("should create draft order with chosen channel", () => {
       cy.visit(urlList.homePage);
       selectChannelInHeader(defaultChannel.name);

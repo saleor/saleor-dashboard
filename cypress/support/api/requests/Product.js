@@ -87,6 +87,7 @@ export function updateChannelPriceInVariant(variantId, channelId) {
 }
 export function createProduct({
   attributeId,
+  attributeValue,
   name,
   productTypeId,
   categoryId,
@@ -102,10 +103,15 @@ export function createProduct({
     description,
     `description:"{\\"blocks\\":[{\\"type\\":\\"paragraph\\",\\"data\\":{\\"text\\":\\"${description}\\"}}]}"`
   );
+  const attributeValuesLine = getValueWithDefault(
+    attributeValue,
+    `values:["${attributeValue}"]`
+  );
   const mutation = `mutation{
     productCreate(input:{
       attributes:[{
         id:"${attributeId}"
+        ${attributeValuesLine}
       }]
       name:"${name}"
       slug:"${name}"

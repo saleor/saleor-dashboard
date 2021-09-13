@@ -1,3 +1,5 @@
+import { getValueWithDefault } from "./utils/Utils";
+
 export function createCategory(name, slug = name) {
   const mutation = `mutation{
     categoryCreate(input:{name:"${name}", slug: "${slug}"}){
@@ -16,12 +18,22 @@ export function createCategory(name, slug = name) {
     .its("body.data.categoryCreate.category");
 }
 
-export function getCategory(categoryId) {
+export function getCategory(categoryId, translationLanguageCode) {
+  const translation = getValueWithDefault(
+    translationLanguageCode,
+    `translation(languageCode:${translationLanguageCode}){
+    name
+    description
+    seoTitle
+    seoDescription
+  }`
+  );
+
   const mutation = `query{
     category(id:"${categoryId}"){
       name
       description
-      products{
+      products(first:100){
         edges{
           node{
             name
@@ -35,6 +47,7 @@ export function getCategory(categoryId) {
           }
         }
       }
+      ${translation}
     }
   }`;
   return cy.sendRequestWithQuery(mutation).its("body.data.category");

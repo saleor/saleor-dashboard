@@ -5,18 +5,16 @@ import Grid from "@saleor/components/Grid";
 import Hr from "@saleor/components/Hr";
 import { sectionNames } from "@saleor/intl";
 import { Backlink } from "@saleor/macaw-ui";
-import { useTheme } from "@saleor/macaw-ui";
 import classNames from "classnames";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { App_app } from "../../types/App";
+import { AppFrame } from "../AppFrame";
 import { useStyles } from "./styles";
-import useAppConfigLoader from "./useAppConfigLoader";
 import useSettingsBreadcrumbs from "./useSettingsBreadcrumbs";
 
 export interface AppDetailsSettingsPageProps {
-  backendHost: string;
   data: App_app;
   navigateToDashboard: () => void;
   onBack: () => void;
@@ -24,7 +22,6 @@ export interface AppDetailsSettingsPageProps {
 }
 
 export const AppDetailsSettingsPage: React.FC<AppDetailsSettingsPageProps> = ({
-  backendHost,
   data,
   navigateToDashboard,
   onBack,
@@ -33,11 +30,6 @@ export const AppDetailsSettingsPage: React.FC<AppDetailsSettingsPageProps> = ({
   const intl = useIntl();
   const classes = useStyles({});
   const [breadcrumbs, onBreadcrumbClick] = useSettingsBreadcrumbs();
-  const { sendThemeToExtension } = useTheme();
-  const frameContainer = useAppConfigLoader(data, backendHost, {
-    onError,
-    onLoad: sendThemeToExtension
-  });
 
   return (
     <Container>
@@ -104,7 +96,15 @@ export const AppDetailsSettingsPage: React.FC<AppDetailsSettingsPageProps> = ({
       <Hr />
 
       <CardSpacer />
-      <div ref={frameContainer} className={classes.iframeContainer} />
+      <div className={classes.iframeContainer}>
+        {data && (
+          <AppFrame
+            src={data.configurationUrl}
+            appToken={data.accessToken}
+            onError={onError}
+          />
+        )}
+      </div>
       <CardSpacer />
     </Container>
   );

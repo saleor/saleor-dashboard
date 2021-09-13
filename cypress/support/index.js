@@ -9,6 +9,7 @@ import "./customCommands/sharedElementsOperations/assignElementsForm.js";
 import "./customCommands/sharedElementsOperations/confirmationMessages.js";
 import "./customCommands/sharedElementsOperations/progressBar.js";
 import "./customCommands/sharedElementsOperations/selects.js";
+import "./customCommands/sharedElementsOperations/tables";
 import "cypress-mailhog";
 
 import { urlList } from "../fixtures/urlList";

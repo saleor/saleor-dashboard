@@ -35,8 +35,7 @@ export function createNewMenuItem({ menuId, name, menuItemType }) {
     .should("be.not.visible")
     .get(MENU_DETAILS.newMenuItemForm[menuItemType])
     .click()
-    .get(MENU_DETAILS.newMenuItemForm[menuItemType])
-    .first()
+    .get(MENU_DETAILS.newMenuItemForm.anyMenuItem)
     .click()
     .invoke("text")
     .then(text => {

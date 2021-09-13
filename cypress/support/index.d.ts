@@ -44,5 +44,9 @@ declare namespace Cypress {
     ): Chainable<any>;
     addAliasToGraphRequest(alias: string): Chainable<any>;
     sendRequestWithQuery(query: string): Chainable<any>;
+    fillMultiSelect(selectSelector: string, option: string): Chainable<any>;
+    createNewOption(selectSelector: string, newOption: string): Chainable<any>;
+    findElementOnTable(elementName: string): Chainable<any>;
+    searchInTable(query: string): Chainable<any>;
   }
 }

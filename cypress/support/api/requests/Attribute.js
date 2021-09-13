@@ -2,7 +2,8 @@ export function createAttribute({
   name,
   attributeValues = ["value"],
   type = "PRODUCT_TYPE",
-  inputType = "DROPDOWN"
+  inputType = "DROPDOWN",
+  filterableInDashboard = false
 }) {
   const values = attributeValues.map(element => `{name:"${element}"}`);
   const mutation = `mutation{
@@ -12,10 +13,12 @@ export function createAttribute({
       type:${type}
       values: [${values}]
       inputType: ${inputType}
+      filterableInDashboard: ${filterableInDashboard}
     }){
       attribute{
         id
         name
+        slug
         choices(first: 100){
           edges{
             node{
@@ -81,4 +84,22 @@ export function getAttribute(attributeId) {
     }
   }`;
   return cy.sendRequestWithQuery(query).its("body.data.attribute");
+}
+
+export function updateAttribute({ attributeId, filterableInDashboard }) {
+  const mutation = `mutation{
+    attributeUpdate(id:"${attributeId}" input:{
+      filterableInDashboard: ${filterableInDashboard}
+    }){
+    attribute{
+      id
+      filterableInDashboard
+    }
+   	errors{
+    	field
+    	message
+    }
+  }
+}`;
+  return cy.sendRequestWithQuery(mutation);
 }

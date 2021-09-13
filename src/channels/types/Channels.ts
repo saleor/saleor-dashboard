@@ -7,6 +7,12 @@
 // GraphQL query operation: Channels
 // ====================================================
 
+export interface Channels_channels_defaultCountry {
+  __typename: "CountryDisplay";
+  code: string;
+  country: string;
+}
+
 export interface Channels_channels {
   __typename: "Channel";
   id: string;
@@ -14,6 +20,7 @@ export interface Channels_channels {
   name: string;
   slug: string;
   currencyCode: string;
+  defaultCountry: Channels_channels_defaultCountry;
   hasOrders: boolean;
 }
 

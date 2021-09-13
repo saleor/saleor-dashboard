@@ -50,8 +50,8 @@ filterTests(["all"], () => {
         .get(PERMISSION_GROUP_DETAILS.assignMemberButton)
         .should("be.visible")
         .get(BUTTON_SELECTORS.back)
-        .click();
-      waitForProgressBarToNotExist();
+        .click()
+        .waitForProgressBarToNotExist();
       cy.contains(
         PERMISSION_GROUP_LIST.permissionGroupRow,
         permissionName

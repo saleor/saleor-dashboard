@@ -148,7 +148,7 @@ const OrderRefundUnfulfilledProducts: React.FC<OrderRefundUnfulfilledProductsPro
               const selectedLineQuantity = data.refundedProductQuantities.find(
                 refundedLine => refundedLine.id === line.id
               );
-              const lineQuantity = line?.quantity - line?.quantityFulfilled;
+              const lineQuantity = line?.quantityToFulfill;
               const isError =
                 Number(selectedLineQuantity?.value) > lineQuantity ||
                 Number(selectedLineQuantity?.value) < 0;

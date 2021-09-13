@@ -1,6 +1,6 @@
 import placeholderImage from "@assets/images/placeholder255x255.png";
 import { ProductErrorCode } from "@saleor/types/globalTypes";
-import { mapEdgesToItems, mapNodeToChoice } from "@saleor/utils/maps";
+import { mapEdgesToItems } from "@saleor/utils/maps";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
@@ -14,13 +14,9 @@ import Decorator from "../../Decorator";
 
 const category = categoryFixture(placeholderImage);
 
-const channelChoices = mapNodeToChoice(mapEdgesToItems(category?.products));
-
 const updateProps: Omit<CategoryUpdatePageProps, "classes"> = {
   category,
   changeTab: undefined,
-  channelChoices,
-  channelsCount: 2,
   currentTab: CategoryPageTab.categories,
   disabled: false,
   errors: [],
@@ -42,7 +38,6 @@ const updateProps: Omit<CategoryUpdatePageProps, "classes"> = {
   productListToolbar: null,
   products: mapEdgesToItems(category.products),
   saveButtonBarState: "default",
-  selectedChannelId: "123",
   subcategories: mapEdgesToItems(category.children),
   subcategoryListToolbar: null,
   ...listActionsProps

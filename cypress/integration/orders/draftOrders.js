@@ -8,6 +8,7 @@ import {
   createCustomer,
   deleteCustomersStartsWith
 } from "../../support/api/requests/Customer";
+import { updateOrdersSettings } from "../../support/api/requests/Order";
 import { getDefaultChannel } from "../../support/api/utils/channelsUtils";
 import * as productsUtils from "../../support/api/utils/products/productsUtils";
 import {
@@ -33,6 +34,7 @@ filterTests(["all"], () => {
       deleteShippingStartsWith(startsWith);
       productsUtils.deleteProductsStartsWith(startsWith);
 
+      updateOrdersSettings();
       getDefaultChannel()
         .then(channel => {
           defaultChannel = channel;
