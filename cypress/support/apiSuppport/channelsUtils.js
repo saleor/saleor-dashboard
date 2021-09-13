@@ -1,4 +1,4 @@
-import * as channels from "../apiRequests/Channels";
+import * as channels from "../../apiRequests/Channels";
 
 export function deleteChannelsStartsWith(nameStartsWith) {
   channels.getChannels().then(resp => {

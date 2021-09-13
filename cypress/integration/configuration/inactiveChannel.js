@@ -1,4 +1,5 @@
-// <reference types="cypress" />
+// / <reference types="cypress" />
+
 import faker from "faker";
 
 import { activateChannel, createChannel } from "../../apiRequests/Channels";

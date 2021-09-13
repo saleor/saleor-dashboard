@@ -1,3 +1,5 @@
+// / <reference types="cypress" />
+
 import "./user";
 import "./softAssertions";
 import "./deleteElement/index.js";
