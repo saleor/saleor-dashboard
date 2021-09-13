@@ -25,6 +25,7 @@ jobs:
       ENVIRONMENT: ${{ github.event.inputs.service_name }}
       SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
       SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+      IS_CLOUD_INSTANCE: true
     steps:
       - uses: actions/checkout@v2
         with:
