@@ -64,6 +64,11 @@ const useStyles = makeStyles(
     },
     settings: {
       marginRight: theme.spacing(2)
+    },
+    container: {
+      [theme.breakpoints.up("md")]: {
+        marginLeft: "211px"
+      }
     }
   }),
   { name: "ProductListPage" }
@@ -131,7 +136,7 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
   const limitReached = isLimitReached(limits, "productVariants");
 
   return (
-    <Container>
+    <Container className={classes.container}>
       <PageHeader
         title={intl.formatMessage(sectionNames.products)}
         limitText={
