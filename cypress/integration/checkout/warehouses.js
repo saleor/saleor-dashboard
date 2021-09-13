@@ -1,6 +1,7 @@
 import faker from "faker";
 
 import { createCheckout } from "../../apiRequests/Checkout";
+import { enablePickup, setPublicStock } from "../../steps/warehouseSteps";
 import filterTests from "../../support/filterTests";
 import { getDefaultChannel } from "../../utils/channelsUtils";
 import {
@@ -19,13 +20,13 @@ filterTests(["all"], () => {
     let defaultChannel;
     let usAddress;
     let plAddress;
-    let warehouse;
+    let productData;
+    let checkoutData;
 
-    it("should not be possible to buy product for country not listed in warehouse", () => {
+    before(() => {
       cy.clearSessionData().loginUserViaRequest();
       deleteShippingStartsWith(startsWith);
       deleteProductsStartsWith(startsWith);
-      const name = `${startsWith}${faker.datatype.number()}`;
       cy.fixture("addresses")
         .then(addresses => {
           usAddress = addresses.usAddress;
@@ -34,34 +35,103 @@ filterTests(["all"], () => {
         })
         .then(channelResp => {
           defaultChannel = channelResp;
-          createShipping({
-            channelId: defaultChannel.id,
-            name,
-            address: usAddress
-          });
-        })
-        .then(({ warehouse: warehouseResp }) => {
-          warehouse = warehouseResp;
-          createTypeAttributeAndCategoryForProduct(name);
+          createTypeAttributeAndCategoryForProduct(startsWith);
         })
         .then(({ attribute, productType, category }) => {
-          createProductInChannel({
-            name,
+          productData = {
             attributeId: attribute.id,
             categoryId: category.id,
             channelId: defaultChannel.id,
             productTypeId: productType.id,
-            warehouseId: warehouse.id,
             quantityInWarehouse: 100
-          });
-        })
-        .then(({ variantsList }) => {
-          createCheckout({
+          };
+          checkoutData = {
             channelSlug: defaultChannel.slug,
             email: "example@example.com",
-            variantsList,
             address: plAddress
-          });
+          };
+        });
+    });
+
+    beforeEach(() => {
+      cy.clearSessionData().loginUserViaRequest();
+    });
+
+    it("should create warehouse with enabled pickup", () => {
+      const name = `${startsWith}${faker.datatype.number()}`;
+      let warehouse;
+
+      createShipping({
+        channelId: defaultChannel.id,
+        name,
+        address: plAddress
+      })
+        .then(({ warehouse: warehouseResp }) => {
+          warehouse = warehouseResp;
+          enablePickup(warehouse.id);
+          productData.name = name;
+          productData.warehouseId = warehouse.id;
+          createProductInChannel(productData);
+        })
+        .then(({ variantsList }) => {
+          checkoutData.variantsList = variantsList;
+          createCheckout(checkoutData);
+        })
+        .then(({ checkout }) => {
+          const clickAndCollectOption = checkout.availableCollectionPoints[0];
+          expect(clickAndCollectOption.clickAndCollectOption).to.eq("ALL");
+          expect(clickAndCollectOption.id).to.eq(warehouse.id);
+          expect(clickAndCollectOption.isPrivate).to.eq(true);
+          expect(clickAndCollectOption.name).to.eq(warehouse.name);
+        });
+    });
+
+    it("should create warehouse with public stock", () => {
+      const name = `${startsWith}${faker.datatype.number()}`;
+      let warehouse;
+
+      createShipping({
+        channelId: defaultChannel.id,
+        name,
+        address: plAddress
+      })
+        .then(({ warehouse: warehouseResp }) => {
+          warehouse = warehouseResp;
+          setPublicStock(warehouse.id);
+          productData.name = name;
+          productData.warehouseId = warehouse.id;
+          createProductInChannel(productData);
+        })
+        .then(({ variantsList }) => {
+          checkoutData.variantsList = variantsList;
+          createCheckout(checkoutData);
+        })
+        .then(({ checkout }) => {
+          const clickAndCollectOption = checkout.availableCollectionPoints[0];
+          expect(clickAndCollectOption.clickAndCollectOption).to.eq("ALL");
+          expect(clickAndCollectOption.id).to.eq(warehouse.id);
+          expect(clickAndCollectOption.isPrivate).to.eq(true);
+          expect(clickAndCollectOption.name).to.eq(warehouse.name);
+        });
+    });
+
+    it("should not be possible to buy product for country not listed in warehouse", () => {
+      const name = `${startsWith}${faker.datatype.number()}`;
+      let warehouse;
+
+      createShipping({
+        channelId: defaultChannel.id,
+        name,
+        address: usAddress
+      })
+        .then(({ warehouse: warehouseResp }) => {
+          warehouse = warehouseResp;
+          productData.warehouseId = warehouse.id;
+          createProductInChannel(productData);
+        })
+        .then(({ variantsList }) => {
+          checkoutData.variantsList = variantsList;
+          createCheckout(checkoutData);
         })
         .then(({ errors }) => {
           expect(errors[0]).to.have.property("field", "quantity");

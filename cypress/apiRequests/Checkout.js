@@ -33,12 +33,17 @@ export function createCheckout({
         field
         message
       }
-
       created
       checkout{
         id
         availableShippingMethods{
           name
+        }
+        availableCollectionPoints{
+          id
+          name
+          clickAndCollectOption
+          isPrivate
         }
       }
     }

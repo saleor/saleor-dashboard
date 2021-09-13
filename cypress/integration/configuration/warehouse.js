@@ -2,13 +2,17 @@
 import faker from "faker";
 
 import { createShippingZone } from "../../apiRequests/ShippingMethod";
-import { createWarehouse, getWarehouse } from "../../apiRequests/Warehouse";
+import {
+  createWarehouse as createWarehouseViaApi,
+  getWarehouse
+} from "../../apiRequests/Warehouse";
 import { BUTTON_SELECTORS } from "../../elements/shared/button-selectors";
 import { SHIPPING_ZONE_DETAILS } from "../../elements/shipping/shipping-zone-details";
 import { WAREHOUSES_DETAILS } from "../../elements/warehouses/warehouse-details";
 import { WAREHOUSES_LIST } from "../../elements/warehouses/warehouses-list";
 import { fillUpBasicAddress } from "../../steps/shared/addressForm";
 import { fillAutocompleteSelect } from "../../steps/shared/selects";
+import { createWarehouse, enablePickup } from "../../steps/warehouseSteps";
 import filterTests from "../../support/filterTests";
 import {
   shippingZoneDetailsUrl,
@@ -35,7 +39,7 @@ filterTests(["all"], () => {
       cy.clearSessionData().loginUserViaRequest();
     });
 
-    it("should create warehouse", () => {
+    xit("should create warehouse", () => {
       const name = `${startsWith}${faker.datatype.number()}`;
       cy.visit(urlList.warehouses)
         .get(WAREHOUSES_LIST.createNewButton)
@@ -57,7 +61,7 @@ filterTests(["all"], () => {
         });
     });
 
-    it("should add warehouse to shipping zone", () => {
+    xit("should add warehouse to shipping zone", () => {
       const name = `${startsWith}${faker.datatype.number()}`;
       let defaultChannel;
       let warehouse;
@@ -66,7 +70,7 @@ filterTests(["all"], () => {
       getDefaultChannel()
         .then(channelResp => {
           defaultChannel = channelResp;
-          createWarehouse({
+          createWarehouseViaApi({
             name,
             address: usAddress
           });
@@ -95,9 +99,9 @@ filterTests(["all"], () => {
         });
     });
 
-    it("should delete warehouse", () => {
+    xit("should delete warehouse", () => {
       const name = `${startsWith}${faker.datatype.number()}`;
-      createWarehouse({
+      createWarehouseViaApi({
         name,
         address: usAddress
       }).then(warehouse => {

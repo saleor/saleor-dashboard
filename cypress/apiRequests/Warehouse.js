@@ -62,6 +62,7 @@ export function getWarehouse(warehouseId) {
     warehouse(id:"${warehouseId}"){
       id
       name
+      clickAndCollectOption
       address{
         companyName
         streetAddress1
