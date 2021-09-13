@@ -46,6 +46,7 @@ filterTests(["all"], () => {
             quantityInWarehouse: 100
           };
           checkoutData = {
+            returnAvailableCollectionPoints: true,
             channelSlug: defaultChannel.slug,
             email: "example@example.com",
             address: plAddress
@@ -126,6 +127,7 @@ filterTests(["all"], () => {
       })
         .then(({ warehouse: warehouseResp }) => {
           warehouse = warehouseResp;
+          productData.name = name;
           productData.warehouseId = warehouse.id;
           createProductInChannel(productData);
         })
