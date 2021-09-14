@@ -34,3 +34,12 @@ export const useTableStyles = makeStyles(
   }),
   { name: "GiftCardsListTable" }
 );
+
+export const useHeaderStyles = makeStyles(
+  theme => ({
+    alertLink: {
+      fontSize: theme.typography.body2.fontSize
+    }
+  }),
+  { name: "GiftCardsListHeader" }
+);

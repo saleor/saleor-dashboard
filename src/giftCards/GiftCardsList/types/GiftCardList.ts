@@ -3,8 +3,6 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { GiftCardExpiryTypeEnum, TimePeriodTypeEnum } from "./../../../types/globalTypes";
-
 // ====================================================
 // GraphQL query operation: GiftCardList
 // ====================================================
@@ -34,13 +32,6 @@ export interface GiftCardList_giftCards_edges_node_product {
   name: string;
 }
 
-export interface GiftCardList_giftCards_edges_node_user {
-  __typename: "User";
-  id: string;
-  firstName: string;
-  lastName: string;
-}
-
 export interface GiftCardList_giftCards_edges_node_usedBy {
   __typename: "User";
   id: string;
@@ -52,12 +43,6 @@ export interface GiftCardList_giftCards_edges_node_app {
   __typename: "App";
   id: string;
   name: string | null;
-}
-
-export interface GiftCardList_giftCards_edges_node_expiryPeriod {
-  __typename: "TimePeriod";
-  amount: number;
-  type: TimePeriodTypeEnum;
 }
 
 export interface GiftCardList_giftCards_edges_node_initialBalance {
@@ -77,17 +62,15 @@ export interface GiftCardList_giftCards_edges_node {
   metadata: (GiftCardList_giftCards_edges_node_metadata | null)[];
   privateMetadata: (GiftCardList_giftCards_edges_node_privateMetadata | null)[];
   displayCode: string;
+  boughtInChannel: string | null;
   createdBy: GiftCardList_giftCards_edges_node_createdBy | null;
   product: GiftCardList_giftCards_edges_node_product | null;
-  user: GiftCardList_giftCards_edges_node_user | null;
   usedBy: GiftCardList_giftCards_edges_node_usedBy | null;
   usedByEmail: string | null;
   createdByEmail: string | null;
   app: GiftCardList_giftCards_edges_node_app | null;
   created: any;
   expiryDate: any | null;
-  expiryType: GiftCardExpiryTypeEnum;
-  expiryPeriod: GiftCardList_giftCards_edges_node_expiryPeriod | null;
   lastUsedOn: any | null;
   isActive: boolean;
   initialBalance: GiftCardList_giftCards_edges_node_initialBalance | null;

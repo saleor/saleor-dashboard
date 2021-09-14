@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { OrderUpdateShippingInput, OrderErrorCode, AddressTypeEnum, OrderDiscountType, DiscountValueTypeEnum, OrderEventsEmailsEnum, OrderEventsEnum, FulfillmentStatus, PaymentChargeStatusEnum, WarehouseClickAndCollectOptionEnum, OrderStatus, OrderAction, JobStatusEnum } from "./../../types/globalTypes";
+import { OrderUpdateShippingInput, OrderErrorCode, AddressTypeEnum, GiftCardEventsEnum, OrderDiscountType, DiscountValueTypeEnum, OrderEventsEmailsEnum, OrderEventsEnum, FulfillmentStatus, PaymentChargeStatusEnum, WarehouseClickAndCollectOptionEnum, OrderStatus, OrderAction, JobStatusEnum } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: OrderShippingMethodUpdate
@@ -110,6 +110,51 @@ export interface OrderShippingMethodUpdate_orderUpdateShipping_order_billingAddr
   postalCode: string;
   streetAddress1: string;
   streetAddress2: string;
+}
+
+export interface OrderShippingMethodUpdate_orderUpdateShipping_order_giftCards_events_balance_initialBalance {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderShippingMethodUpdate_orderUpdateShipping_order_giftCards_events_balance_currentBalance {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderShippingMethodUpdate_orderUpdateShipping_order_giftCards_events_balance_oldInitialBalance {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderShippingMethodUpdate_orderUpdateShipping_order_giftCards_events_balance_oldCurrentBalance {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderShippingMethodUpdate_orderUpdateShipping_order_giftCards_events_balance {
+  __typename: "GiftCardEventBalance";
+  initialBalance: OrderShippingMethodUpdate_orderUpdateShipping_order_giftCards_events_balance_initialBalance | null;
+  currentBalance: OrderShippingMethodUpdate_orderUpdateShipping_order_giftCards_events_balance_currentBalance;
+  oldInitialBalance: OrderShippingMethodUpdate_orderUpdateShipping_order_giftCards_events_balance_oldInitialBalance | null;
+  oldCurrentBalance: OrderShippingMethodUpdate_orderUpdateShipping_order_giftCards_events_balance_oldCurrentBalance | null;
+}
+
+export interface OrderShippingMethodUpdate_orderUpdateShipping_order_giftCards_events {
+  __typename: "GiftCardEvent";
+  id: string;
+  type: GiftCardEventsEnum | null;
+  orderId: string | null;
+  balance: OrderShippingMethodUpdate_orderUpdateShipping_order_giftCards_events_balance | null;
+}
+
+export interface OrderShippingMethodUpdate_orderUpdateShipping_order_giftCards {
+  __typename: "GiftCard";
+  events: OrderShippingMethodUpdate_orderUpdateShipping_order_giftCards_events[];
 }
 
 export interface OrderShippingMethodUpdate_orderUpdateShipping_order_discounts_amount {
@@ -517,6 +562,7 @@ export interface OrderShippingMethodUpdate_orderUpdateShipping_order {
   metadata: (OrderShippingMethodUpdate_orderUpdateShipping_order_metadata | null)[];
   privateMetadata: (OrderShippingMethodUpdate_orderUpdateShipping_order_privateMetadata | null)[];
   billingAddress: OrderShippingMethodUpdate_orderUpdateShipping_order_billingAddress | null;
+  giftCards: (OrderShippingMethodUpdate_orderUpdateShipping_order_giftCards | null)[] | null;
   isShippingRequired: boolean;
   canFinalize: boolean;
   created: any;

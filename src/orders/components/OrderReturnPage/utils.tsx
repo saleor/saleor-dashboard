@@ -132,3 +132,9 @@ export function getByUnmatchingIds<T extends Node>(
 ) {
   return (obj: Node) => !isIncludedInIds(arrayToCompare, obj);
 }
+
+export function getByType<TType, TObject extends { type: TType }>(
+  typeToCompare: TType
+) {
+  return (obj: TObject) => obj.type === typeToCompare;
+}

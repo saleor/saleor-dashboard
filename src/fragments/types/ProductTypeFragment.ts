@@ -3,6 +3,8 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
+import { ProductTypeKindEnum } from "./../../types/globalTypes";
+
 // ====================================================
 // GraphQL fragment: ProductTypeFragment
 // ====================================================
@@ -17,6 +19,7 @@ export interface ProductTypeFragment {
   __typename: "ProductType";
   id: string;
   name: string;
+  kind: ProductTypeKindEnum;
   hasVariants: boolean;
   isShippingRequired: boolean;
   taxType: ProductTypeFragment_taxType | null;

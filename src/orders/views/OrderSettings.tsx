@@ -15,7 +15,7 @@ export const OrderSettings: React.FC = () => {
   const navigate = useNavigator();
   const notify = useNotifier();
 
-  const { data, loading } = useOrderSettingsQuery({});
+  const { data, loading } = useOrderSettingsQuery();
 
   const [
     orderSettingsUpdate,

@@ -1,9 +1,8 @@
 import { InvoiceErrorFragment } from "@saleor/fragments/types/InvoiceErrorFragment";
-import { commonMessages } from "@saleor/intl";
 import { InvoiceErrorCode } from "@saleor/types/globalTypes";
 import { defineMessages, IntlShape } from "react-intl";
 
-import commonErrorMessages from "./common";
+import { getCommonFormFieldErrorMessage } from "./common";
 
 const messages = defineMessages({
   emailNotSet: {
@@ -51,14 +50,10 @@ function getInvoiceErrorMessage(
         return intl.formatMessage(messages.numberNotSet);
       case InvoiceErrorCode.URL_NOT_SET:
         return intl.formatMessage(messages.urlNotSet);
-      case InvoiceErrorCode.REQUIRED:
-        return intl.formatMessage(commonMessages.requiredField);
-      default:
-        return intl.formatMessage(commonErrorMessages.unknownError);
     }
   }
 
-  return undefined;
+  return getCommonFormFieldErrorMessage(err, intl);
 }
 
 export default getInvoiceErrorMessage;

@@ -7,6 +7,7 @@ export const productTypeFragment = gql`
   fragment ProductTypeFragment on ProductType {
     id
     name
+    kind
     hasVariants
     isShippingRequired
     taxType {

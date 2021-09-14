@@ -13,10 +13,15 @@ export function getErrors(errors: UserError[]): string[] {
     .map(err => err.message);
 }
 
+export type FormErrors<
+  TField extends string,
+  TError extends UserError
+> = Record<TField, TError>;
+
 export function getFormErrors<TField extends string, TError extends UserError>(
   fields: TField[],
   errors: TError[] = []
-): Record<TField, TError> {
+): FormErrors<TField, TError> {
   return fields.reduce((errs, field) => {
     errs[field] = getFieldError(errors, field);
     return errs;
