@@ -12,5 +12,9 @@ export const giftCardUpdateDetailsCardMessages = defineMessages({
   cardBalanceLabel: {
     defaultMessage: "Card Balance",
     description: "GiftCardUpdateDetailsCard card balance label"
+  },
+  tagInputLabel: {
+    defaultMessage: "Card Tag",
+    description: "GiftCardTagInput tag label"
   }
 });

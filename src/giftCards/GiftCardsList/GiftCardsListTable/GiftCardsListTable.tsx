@@ -14,6 +14,7 @@ import Skeleton from "@saleor/components/Skeleton";
 import StatusChip from "@saleor/components/StatusChip";
 import { StatusType } from "@saleor/components/StatusChip/types";
 import { customerUrl } from "@saleor/customers/urls";
+import { PLACEHOLDER } from "@saleor/giftCards/GiftCardUpdate/types";
 import { giftCardUrl } from "@saleor/giftCards/urls";
 import useNavigator from "@saleor/hooks/useNavigator";
 import { renderCollection } from "@saleor/misc";
@@ -28,8 +29,6 @@ import useGiftCardListBulkActions from "../providers/GiftCardListProvider/hooks/
 import { useTableStyles as useStyles } from "../styles";
 import GiftCardsListTableFooter from "./GiftCardsListTableFooter";
 import GiftCardsListTableHeader from "./GiftCardsListTableHeader";
-
-const PLACEHOLDER = "-";
 
 const GiftCardsListTable: React.FC = () => {
   const intl = useIntl();

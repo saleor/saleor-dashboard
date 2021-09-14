@@ -16,9 +16,8 @@ import React from "react";
 import { MessageDescriptor, useIntl } from "react-intl";
 
 import useGiftCardDetails from "../providers/GiftCardDetailsProvider/hooks/useGiftCardDetails";
+import { PLACEHOLDER } from "../types";
 import { giftCardUpdateInfoCardMessages as messages } from "./messages";
-
-const PLACEHOLDER = "-";
 
 const GiftCardUpdateInfoCardContent: React.FC = () => {
   const intl = useIntl();

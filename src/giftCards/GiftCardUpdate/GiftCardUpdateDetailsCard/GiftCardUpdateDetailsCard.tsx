@@ -9,34 +9,31 @@ import { useIntl } from "react-intl";
 
 import useGiftCardDetails from "../providers/GiftCardDetailsProvider/hooks/useGiftCardDetails";
 import useGiftCardUpdateDialogs from "../providers/GiftCardUpdateDialogsProvider/hooks/useGiftCardUpdateDialogs";
-import useGiftCardUpdateForm from "../providers/GiftCardUpdateFormProvider/hooks/useGiftCardUpdateForm";
 import GiftCardUpdateDetailsBalanceSection from "./GiftCardUpdateDetailsBalanceSection";
+import GiftCardUpdateDetailsTagSection from "./GiftCardUpdateDetailsTagSection";
 import { giftCardUpdateDetailsCardMessages as messages } from "./messages";
 
 const GiftCardUpdateDetailsCard: React.FC = () => {
   const intl = useIntl();
 
-  const { loading } = useGiftCardDetails();
+  const { loading, giftCard } = useGiftCardDetails();
   const { openSetBalanceDialog } = useGiftCardUpdateDialogs();
-
-  const {
-    change,
-    data: { tag },
-    formErrors
-  } = useGiftCardUpdateForm();
 
   return (
     <Card>
       <CardTitle
         title={intl.formatMessage(messages.title)}
         toolbar={
-          <Button
-            data-test-id="set-balance-button"
-            color="primary"
-            onClick={openSetBalanceDialog}
-          >
-            {intl.formatMessage(messages.setBalanceButtonLabel)}
-          </Button>
+          !loading &&
+          !giftCard?.isExpired && (
+            <Button
+              data-test-id="set-balance-button"
+              color="primary"
+              onClick={openSetBalanceDialog}
+            >
+              {intl.formatMessage(messages.setBalanceButtonLabel)}
+            </Button>
+          )
         }
       />
       <CardContent>
@@ -47,13 +44,7 @@ const GiftCardUpdateDetailsCard: React.FC = () => {
               <CardSpacer />
               <Divider />
               <CardSpacer />
-              <GiftCardTagInput
-                error={formErrors?.tag}
-                name="tag"
-                withTopLabel
-                value={tag}
-                change={change}
-              />
+              <GiftCardUpdateDetailsTagSection />
               <CardSpacer />
               <GiftCardUpdateExpirySelect />
             </>
