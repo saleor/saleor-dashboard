@@ -11,6 +11,20 @@ export function markOrderAsPaid(orderId) {
   return cy.sendRequestWithQuery(mutation);
 }
 
+export function updateOrdersSettings(automaticallyConfirmAllNewOrders = true) {
+  const mutation = `mutation{
+    orderSettingsUpdate(input:{
+      automaticallyConfirmAllNewOrders: ${automaticallyConfirmAllNewOrders}
+    }){
+      errors{
+        field
+        message
+      }
+    }
+  }`;
+  return cy.sendRequestWithQuery(mutation);
+}
+
 export function addProductToOrder(orderId, variantId, quantity = 1) {
   const mutation = `mutation{
     orderLinesCreate(id:"${orderId}", input:{

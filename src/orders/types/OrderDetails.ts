@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { OrderDiscountType, DiscountValueTypeEnum, OrderEventsEmailsEnum, OrderEventsEnum, FulfillmentStatus, PaymentChargeStatusEnum, WarehouseClickAndCollectOptionEnum, OrderStatus, OrderAction, JobStatusEnum, WeightUnitsEnum } from "./../../types/globalTypes";
+import { GiftCardEventsEnum, OrderDiscountType, DiscountValueTypeEnum, OrderEventsEmailsEnum, OrderEventsEnum, FulfillmentStatus, PaymentChargeStatusEnum, WarehouseClickAndCollectOptionEnum, OrderStatus, OrderAction, JobStatusEnum, WeightUnitsEnum } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL query operation: OrderDetails
@@ -41,6 +41,51 @@ export interface OrderDetails_order_billingAddress {
   postalCode: string;
   streetAddress1: string;
   streetAddress2: string;
+}
+
+export interface OrderDetails_order_giftCards_events_balance_initialBalance {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderDetails_order_giftCards_events_balance_currentBalance {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderDetails_order_giftCards_events_balance_oldInitialBalance {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderDetails_order_giftCards_events_balance_oldCurrentBalance {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderDetails_order_giftCards_events_balance {
+  __typename: "GiftCardEventBalance";
+  initialBalance: OrderDetails_order_giftCards_events_balance_initialBalance | null;
+  currentBalance: OrderDetails_order_giftCards_events_balance_currentBalance;
+  oldInitialBalance: OrderDetails_order_giftCards_events_balance_oldInitialBalance | null;
+  oldCurrentBalance: OrderDetails_order_giftCards_events_balance_oldCurrentBalance | null;
+}
+
+export interface OrderDetails_order_giftCards_events {
+  __typename: "GiftCardEvent";
+  id: string;
+  type: GiftCardEventsEnum | null;
+  orderId: string | null;
+  balance: OrderDetails_order_giftCards_events_balance | null;
+}
+
+export interface OrderDetails_order_giftCards {
+  __typename: "GiftCard";
+  events: OrderDetails_order_giftCards_events[];
 }
 
 export interface OrderDetails_order_discounts_amount {
@@ -497,6 +542,7 @@ export interface OrderDetails_order {
   metadata: (OrderDetails_order_metadata | null)[];
   privateMetadata: (OrderDetails_order_privateMetadata | null)[];
   billingAddress: OrderDetails_order_billingAddress | null;
+  giftCards: (OrderDetails_order_giftCards | null)[] | null;
   isShippingRequired: boolean;
   canFinalize: boolean;
   created: any;

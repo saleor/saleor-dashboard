@@ -43,12 +43,13 @@ interface PageHeaderProps {
   children?: React.ReactNode;
   className?: string;
   inline?: boolean;
+  underline?: boolean;
   limitText?: string;
   title?: React.ReactNode;
 }
 
 const PageHeader: React.FC<PageHeaderProps> = props => {
-  const { children, className, inline, limitText, title } = props;
+  const { children, className, inline, underline, limitText, title } = props;
 
   const classes = useStyles(props);
 
@@ -57,6 +58,7 @@ const PageHeader: React.FC<PageHeaderProps> = props => {
       testId="page-header"
       className={className}
       inline={inline}
+      underline={underline}
       title={
         <Typography className={classes.title} variant="h5">
           {title !== undefined ? title : <Skeleton style={{ width: "10em" }} />}

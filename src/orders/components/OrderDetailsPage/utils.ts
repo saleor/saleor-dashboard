@@ -2,7 +2,8 @@ import { OrderDetails_order } from "@saleor/orders/types/OrderDetails";
 
 import {
   getFulfilledFulfillemnts,
-  getUnfulfilledLines
+  getUnfulfilledLines,
+  getWaitingFulfillments
 } from "../OrderReturnPage/utils";
 
 export const hasAnyItemsReplaceable = (order?: OrderDetails_order) => {
@@ -12,9 +13,13 @@ export const hasAnyItemsReplaceable = (order?: OrderDetails_order) => {
 
   const hasAnyUnfulfilledItems = getUnfulfilledLines(order).length > 0;
 
+  const hasAnyWaitingLines = getWaitingFulfillments(order).length > 0;
+
   const hasAnyFulfilmentsToReturn = getFulfilledFulfillemnts(order).length > 0;
 
-  return hasAnyUnfulfilledItems || hasAnyFulfilmentsToReturn;
+  return (
+    hasAnyUnfulfilledItems || hasAnyFulfilmentsToReturn || hasAnyWaitingLines
+  );
 };
 
 export interface ConditionalItem {

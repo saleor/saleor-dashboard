@@ -2,7 +2,8 @@ export function createChannel({
   isActive = true,
   name,
   slug = name,
-  currencyCode = "PLN"
+  currencyCode = "PLN",
+  defaultCountry = "PL"
 }) {
   const createChannelMutation = `mutation{
     channelCreate(input: {
@@ -10,13 +11,14 @@ export function createChannel({
       name: "${name}"
       slug: "${slug}"
       currencyCode: "${currencyCode}"
+      defaultCountry: ${defaultCountry}
     }){
       channel{
         id
         name
         slug
       }
-      channelErrors{
+      errors{
         code
         message
       }
@@ -26,6 +28,7 @@ export function createChannel({
     .sendRequestWithQuery(createChannelMutation)
     .its("body.data.channelCreate.channel");
 }
+
 export function getChannels() {
   const getChannelsInfoQuery = `query{
     channels{

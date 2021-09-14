@@ -10,10 +10,13 @@ import { ONE_PERMISSION_USERS } from "../../../Data/users";
 import { BUTTON_SELECTORS } from "../../../elements/shared/button-selectors";
 import { SHARED_ELEMENTS } from "../../../elements/shared/sharedElements";
 import { SHIPPING_ZONE_DETAILS } from "../../../elements/shipping/shipping-zone-details";
-import { selectChannelInHeader } from "../../../steps/channelsSteps";
-import { waitForProgressBarToNotExist } from "../../../steps/shared/progressBar";
+import { enterHomePageChangeChannelAndReturn } from "../../../steps/channelsSteps";
+import {
+  waitForProgressBarToNotBeVisible,
+  waitForProgressBarToNotExist
+} from "../../../steps/shared/progressBar";
 import filterTests from "../../../support/filterTests";
-import { getFormattedCurrencyAmount } from "../../../support/format/formatCurrencyAmount";
+import { getCurrencyAndAmountInString } from "../../../support/format/formatCurrencyAmount";
 import { urlList } from "../../../url/urlList";
 import * as channelsUtils from "../../../utils/channelsUtils";
 import * as shippingUtils from "../../../utils/shippingUtils";
@@ -98,18 +101,22 @@ filterTests(["all"], () => {
           }
           cy.contains(shippingZone.name).click();
           cy.wait("@ShippingZone");
-          selectChannelInHeader(defaultChannel.name);
+          enterHomePageChangeChannelAndReturn(defaultChannel.name);
+          waitForProgressBarToNotBeVisible();
+          cy.get(SHARED_ELEMENTS.skeleton).should("not.exist");
           cy.getTextFromElement(
             SHIPPING_ZONE_DETAILS.shippingRatePriceTableCell
           )
             .then(text => {
-              const expectedValue = getFormattedCurrencyAmount(
+              const expectedValue = getCurrencyAndAmountInString(
                 defaultChannelPrice,
                 defaultChannel.currencyCode
               );
               expect(text).to.be.eq(expectedValue);
 
-              selectChannelInHeader(createdChannel.name);
+              enterHomePageChangeChannelAndReturn(createdChannel.name);
+              waitForProgressBarToNotBeVisible();
+              cy.get(SHARED_ELEMENTS.skeleton).should("not.exist");
             })
             .then(() => {
               cy.getTextFromElement(
@@ -117,7 +124,7 @@ filterTests(["all"], () => {
               );
             })
             .then(text => {
-              const expectedValue = getFormattedCurrencyAmount(
+              const expectedValue = getCurrencyAndAmountInString(
                 createdChannelPrice,
                 createdChannelCurrency
               );

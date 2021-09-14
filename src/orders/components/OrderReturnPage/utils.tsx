@@ -14,7 +14,7 @@ const fulfiledStatuses = [
 ];
 
 export const getOrderUnfulfilledLines = (order: OrderDetails_order) =>
-  order?.lines.filter(line => line.quantityFulfilled !== line.quantity) || [];
+  order?.lines.filter(line => line.quantityToFulfill > 0) || [];
 
 export const getFulfilledFulfillment = fulfillment =>
   fulfiledStatuses.includes(fulfillment.status);
@@ -22,12 +22,23 @@ export const getFulfilledFulfillment = fulfillment =>
 export const getFulfilledFulfillemnts = (order?: OrderDetails_order) =>
   order?.fulfillments.filter(getFulfilledFulfillment) || [];
 
+export const getWaitingFulfillments = (order: OrderDetails_order) =>
+  order?.fulfillments.filter(
+    f => f.status === FulfillmentStatus.WAITING_FOR_APPROVAL
+  ) || [];
+
 export const getUnfulfilledLines = (order?: OrderDetails_order) =>
-  order?.lines.filter(line => line.quantity !== line.quantityFulfilled) || [];
+  order?.lines.filter(line => line.quantityToFulfill > 0) || [];
 
 export const getAllOrderFulfilledLines = (order?: OrderDetails_order) =>
   getFulfilledFulfillemnts(order).reduce(
-    (result, { lines }) => [...result, ...getParsedFulfiledLines(lines)],
+    (result, { lines }) => [...result, ...getParsedLines(lines)],
+    []
+  );
+
+export const getAllOrderWaitingLines = (order?: OrderDetails_order) =>
+  getWaitingFulfillments(order).reduce(
+    (result, { lines }) => [...result, ...getParsedLines(lines)],
     []
   );
 
@@ -77,11 +88,11 @@ export const getParsedLinesOfFulfillments = (
   fullfillments: OrderDetails_order_fulfillments[]
 ) =>
   fullfillments.reduce(
-    (result, { lines }) => [...result, ...getParsedFulfiledLines(lines)],
+    (result, { lines }) => [...result, ...getParsedLines(lines)],
     []
   );
 
-export const getParsedFulfiledLines = (
+export const getParsedLines = (
   lines: OrderDetailsFragment_fulfillments_lines[]
 ) =>
   lines.map(({ id, quantity, orderLine }) => ({
@@ -120,4 +131,10 @@ export function getByUnmatchingIds<T extends Node>(
   arrayToCompare: string[] | T[]
 ) {
   return (obj: Node) => !isIncludedInIds(arrayToCompare, obj);
+}
+
+export function getByType<TType, TObject extends { type: TType }>(
+  typeToCompare: TType
+) {
+  return (obj: TObject) => obj.type === typeToCompare;
 }

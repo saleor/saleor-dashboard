@@ -1,11 +1,14 @@
 import { Dialog, DialogTitle } from "@material-ui/core";
 import { IMessage } from "@saleor/components/messages";
+import useCurrentDate from "@saleor/hooks/useCurrentDate";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { GiftCardCreateInput } from "@saleor/types/globalTypes";
 import commonErrorMessages from "@saleor/utils/errors/common";
+import { DialogActionHandlersProps } from "@saleor/utils/handlers/dialogActionHandlers";
 import React, { useState } from "react";
 import { useIntl } from "react-intl";
 
+import { GIFT_CARD_LIST_QUERY } from "../GiftCardsList/types";
 import ContentWithProgress from "./ContentWithProgress";
 import GiftCardCreateDialogCodeContent from "./GiftCardCreateDialogCodeContent";
 import GiftCardCreateDialogForm, {
@@ -15,15 +18,10 @@ import { giftCardCreateDialogMessages as messages } from "./messages";
 import { useGiftCardCreateMutation } from "./mutations";
 import { useChannelCurrencies } from "./queries";
 import { GiftCardCreate } from "./types/GiftCardCreate";
-import { getGiftCardExpirySettingsInputData } from "./utils";
+import { getGiftCardExpiryInputData } from "./utils";
 
-interface GiftCardCreateDialogProps {
-  onClose: () => void;
-  open: boolean;
-}
-
-const GiftCardCreateDialog: React.FC<GiftCardCreateDialogProps> = ({
-  onClose,
+const GiftCardCreateDialog: React.FC<DialogActionHandlersProps> = ({
+  closeDialog,
   open
 }) => {
   const intl = useIntl();
@@ -56,6 +54,8 @@ const GiftCardCreateDialog: React.FC<GiftCardCreateDialogProps> = ({
     }
   };
 
+  const currentDate = useCurrentDate();
+
   const getParsedSubmitInputData = (
     formData: GiftCardCreateFormData
   ): GiftCardCreateInput => {
@@ -64,23 +64,29 @@ const GiftCardCreateDialog: React.FC<GiftCardCreateDialogProps> = ({
       balanceCurrency,
       note,
       tag,
-      selectedCustomer
+      sendToCustomerSelected,
+      selectedCustomer,
+      requiresActivation,
+      channelSlug
     } = formData;
 
     return {
       note: note || null,
       tag: tag || null,
-      userEmail: selectedCustomer.email || null,
+      userEmail: (sendToCustomerSelected && selectedCustomer.email) || null,
+      channel: (sendToCustomerSelected && channelSlug) || null,
       balance: {
         amount: balanceAmount,
         currency: balanceCurrency
       },
-      expirySettings: getGiftCardExpirySettingsInputData(formData)
+      expiryDate: getGiftCardExpiryInputData(formData, currentDate),
+      isActive: !requiresActivation
     };
   };
 
   const [createGiftCard, createGiftCardOpts] = useGiftCardCreateMutation({
-    onCompleted
+    onCompleted,
+    refetchQueries: [GIFT_CARD_LIST_QUERY]
   });
 
   const handleSubmit = (data: GiftCardCreateFormData) => {
@@ -92,7 +98,7 @@ const GiftCardCreateDialog: React.FC<GiftCardCreateDialogProps> = ({
   };
 
   const handleClose = () => {
-    onClose();
+    closeDialog();
     // dialog closing animation runs slower than prop change
     // and we don't want to show the form for a split second
     setTimeout(() => setCardCode(null), 0);

@@ -10,6 +10,7 @@ import { STAFF_MEMBER_DETAILS } from "../elements/staffMembers/staffMemberDetail
 import { STAFF_MEMBERS_LIST } from "../elements/staffMembers/staffMembersList";
 import { expectWelcomeMessageIncludes } from "../steps/homePageSteps";
 import { getDisplayedSelectors } from "../steps/permissions";
+import { confirmationMessageShouldDisappear } from "../steps/shared/confirmationMessages";
 import {
   fillUpSetPassword,
   fillUpUserDetails,
@@ -98,8 +99,9 @@ filterTests(["stagedOnly"], () => {
         .click()
         .addAliasToGraphRequest("StaffMemberUpdate")
         .get(BUTTON_SELECTORS.confirm)
-        .click()
-        .wait("@StaffMemberUpdate")
+        .click();
+      confirmationMessageShouldDisappear();
+      cy.wait("@StaffMemberUpdate")
         .clearSessionData()
         .loginUserViaRequest("auth", { email, password })
         .visit(urlList.homePage);

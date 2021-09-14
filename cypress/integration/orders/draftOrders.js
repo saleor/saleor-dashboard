@@ -5,6 +5,7 @@ import {
   createCustomer,
   deleteCustomersStartsWith
 } from "../../apiRequests/Customer";
+import { updateOrdersSettings } from "../../apiRequests/Order";
 import { DRAFT_ORDERS_LIST_SELECTORS } from "../../elements/orders/draft-orders-list-selectors";
 import { ORDERS_SELECTORS } from "../../elements/orders/orders-selectors";
 import { selectChannelInPicker } from "../../steps/channelsSteps";
@@ -33,6 +34,7 @@ filterTests(["all"], () => {
       deleteShippingStartsWith(startsWith);
       productsUtils.deleteProductsStartsWith(startsWith);
 
+      updateOrdersSettings();
       getDefaultChannel()
         .then(channel => {
           defaultChannel = channel;

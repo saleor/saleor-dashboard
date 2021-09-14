@@ -150,6 +150,18 @@ const WebhookEvents: React.FC<WebhookEventsProps> = ({
       defaultMessage: "Product variant deleted",
       description: "event"
     }),
+    [WebhookEventTypeEnum.PRODUCT_VARIANT_BACK_IN_STOCK]: intl.formatMessage({
+      defaultMessage: "Product variant back in stock",
+      description: "event"
+    }),
+    [WebhookEventTypeEnum.PRODUCT_VARIANT_OUT_OF_STOCK]: intl.formatMessage({
+      defaultMessage: "Product variant out of stock",
+      description: "event"
+    }),
+    [WebhookEventTypeEnum.FULFILLMENT_CANCELED]: intl.formatMessage({
+      defaultMessage: "Fulfillment canceled",
+      description: "event"
+    }),
     [WebhookEventTypeEnum.FULFILLMENT_CREATED]: intl.formatMessage({
       defaultMessage: "Fulfillment created",
       description: "event"

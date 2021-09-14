@@ -163,7 +163,7 @@ const ItemsCard: React.FC<OrderReturnRefundLinesCardProps> = ({
             line => {
               const {
                 quantity,
-                quantityFulfilled,
+                quantityToFulfill,
                 id,
                 thumbnail,
                 unitPrice,
@@ -175,9 +175,7 @@ const ItemsCard: React.FC<OrderReturnRefundLinesCardProps> = ({
                 .isRefunded;
               const isReplacable = !!variant && !isRefunded;
               const isReturnable = !!variant;
-              const lineQuantity = fulfilmentId
-                ? quantity
-                : quantity - quantityFulfilled;
+              const lineQuantity = fulfilmentId ? quantity : quantityToFulfill;
               const isSelected = itemsSelections.find(getById(id))?.value;
               const currentQuantity = itemsQuantities.find(getById(id))?.value;
               const anyLineWithoutVariant = lines.some(

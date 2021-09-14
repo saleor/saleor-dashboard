@@ -1,13 +1,13 @@
-import { CardContent, Typography } from "@material-ui/core";
+import { CardContent } from "@material-ui/core";
 import HorizontalSpacer from "@saleor/apps/components/HorizontalSpacer";
 import CardSpacer from "@saleor/components/CardSpacer";
 import ConfirmButton from "@saleor/components/ConfirmButton";
-import ControlledCheckbox from "@saleor/components/ControlledCheckbox";
-import DeleteButton from "@saleor/components/DeleteButton";
 import useNavigator from "@saleor/hooks/useNavigator";
-import React, { ChangeEvent, useState } from "react";
+import React, { useState } from "react";
 import { MessageDescriptor, useIntl } from "react-intl";
 
+import DeleteButton from "../DeleteButton";
+import DeleteWarningDialogConsentContent from "./DeleteWarningDialogConsentContent";
 import { useTypeDeleteWarningDialogStyles as useStyles } from "./styles";
 
 interface TypeDeleteWarningDialogContentProps {
@@ -40,9 +40,6 @@ const TypeDeleteWarningDialogContent: React.FC<TypeDeleteWarningDialogContentPro
 
   const [isConsentChecked, setIsConsentChecked] = useState(false);
 
-  const handleConsentChange = ({ target }: ChangeEvent<any>) =>
-    setIsConsentChecked(target.value);
-
   const handleViewAssignedItems = () => navigate(viewAssignedItemsUrl);
 
   const isDisbled = hasAssignedItems ? !isConsentChecked : false;
@@ -52,26 +49,16 @@ const TypeDeleteWarningDialogContent: React.FC<TypeDeleteWarningDialogContentPro
 
   return (
     <CardContent>
-      <Typography>
-        {intl.formatMessage(description, {
+      <DeleteWarningDialogConsentContent
+        description={intl.formatMessage(description, {
           typeName: singleItemSelectedName,
           assignedItemsCount,
           b: (...chunks) => <b>{chunks}</b>
         })}
-      </Typography>
-      <CardSpacer />
-      {consentLabel && (
-        <ControlledCheckbox
-          name="delete-assigned-items-consent"
-          checked={isConsentChecked}
-          onChange={handleConsentChange}
-          label={
-            <Typography className={classes.consentLabel}>
-              {intl.formatMessage(consentLabel)}
-            </Typography>
-          }
-        />
-      )}
+        consentLabel={consentLabel && intl.formatMessage(consentLabel)}
+        isConsentChecked={isConsentChecked}
+        onConsentChange={setIsConsentChecked}
+      />
       <CardSpacer />
       <div className={classes.buttonsSection}>
         {shouldShowViewAssignedItemsButton && (

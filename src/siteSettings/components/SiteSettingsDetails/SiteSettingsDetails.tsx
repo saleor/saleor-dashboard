@@ -1,6 +1,7 @@
 import { Card, CardContent, TextField } from "@material-ui/core";
 import CardTitle from "@saleor/components/CardTitle";
 import FormSpacer from "@saleor/components/FormSpacer";
+import { IS_CLOUD_INSTANCE } from "@saleor/config";
 import { ShopErrorFragment } from "@saleor/fragments/types/ShopErrorFragment";
 import { commonMessages } from "@saleor/intl";
 import { getFormErrors } from "@saleor/utils/errors";
@@ -63,12 +64,13 @@ const SiteSettingsDetails: React.FC<SiteSettingsDetailsProps> = ({
           fullWidth
           name="domain"
           label={intl.formatMessage({
-            defaultMessage: "URL of your online store"
+            defaultMessage: "Store domain"
           })}
           helperText={getShopErrorMessage(formErrors.domain, intl)}
           value={data.domain}
           onChange={onChange}
           InputProps={{
+            readOnly: IS_CLOUD_INSTANCE,
             inputProps: {
               autoComplete: "none"
             }
@@ -81,7 +83,7 @@ const SiteSettingsDetails: React.FC<SiteSettingsDetailsProps> = ({
           fullWidth
           name="description"
           label={intl.formatMessage({
-            defaultMessage: "Store Description"
+            defaultMessage: "Store description"
           })}
           helperText={
             getShopErrorMessage(formErrors.description, intl) ||

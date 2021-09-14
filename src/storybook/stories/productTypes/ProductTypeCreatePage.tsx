@@ -6,7 +6,10 @@ import ProductTypeCreatePage, {
   ProductTypeCreatePageProps,
   ProductTypeForm
 } from "../../../productTypes/components/ProductTypeCreatePage";
-import { WeightUnitsEnum } from "../../../types/globalTypes";
+import {
+  ProductTypeKindEnum,
+  WeightUnitsEnum
+} from "../../../types/globalTypes";
 import Decorator from "../../Decorator";
 
 const props: Omit<ProductTypeCreatePageProps, "classes"> = {
@@ -17,7 +20,9 @@ const props: Omit<ProductTypeCreatePageProps, "classes"> = {
   onSubmit: () => undefined,
   pageTitle: "Create product type",
   saveButtonBarState: "default",
-  taxTypes: []
+  taxTypes: [],
+  kind: ProductTypeKindEnum.NORMAL,
+  onChangeKind: () => undefined
 };
 
 storiesOf("Views / Product types / Create product type", module)

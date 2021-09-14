@@ -6,7 +6,7 @@ import { ConfirmButtonTransitionState } from "../ConfirmButton";
 import DialogButtons from "./DialogButtons";
 import { ActionDialogVariant, Size } from "./types";
 
-interface ActionDialogProps extends DialogProps {
+export interface ActionDialogProps extends DialogProps {
   children?: React.ReactNode;
   confirmButtonLabel?: string;
   confirmButtonState: ConfirmButtonTransitionState;
