@@ -123,7 +123,7 @@
     "@types/semver-compare": "^1.0.1",
     "@types/setup-polly-jest": "^0.5.0",
     "@types/storybook__addon-storyshots": "^3.4.9",
-    "@types/storybook__react": "^4.0.2",
+    "@types/storybook__react": "^5.2.1",
     "@types/url-join": "^4.0.0",
     "@types/webappsec-credential-management": "^0.5.1",
     "@typescript-eslint/eslint-plugin": "^4.16.1",
