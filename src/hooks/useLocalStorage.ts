@@ -1,16 +1,9 @@
-import { useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 
-type LocalStorageValue = number | string | boolean | {};
-export type LocalStorageInitCb<T extends LocalStorageValue> = (
-  initial: unknown
-) => T;
-
-export type SetLocalStorageValue<T> = T | ((prevValue: T) => T);
-export type SetLocalStorage<T> = (value: SetLocalStorageValue<T>) => void;
-export type UseLocalStorage<T> = [T, SetLocalStorage<T>];
-export default function useLocalStorage<T = LocalStorageValue>(
+export type UseLocalStorage<T> = [T, Dispatch<SetStateAction<T>>];
+export default function useLocalStorage<T>(
   key: string,
-  initialValue: T | LocalStorageInitCb<T>
+  initialValue: SetStateAction<T>
 ): UseLocalStorage<T> {
   const saveToLocalStorage = (valueToStore: T) => {
     try {
@@ -24,11 +17,8 @@ export default function useLocalStorage<T = LocalStorageValue>(
     }
   };
 
-  function getValue<T extends LocalStorageValue>(
-    value: T,
-    initOrCb: T | LocalStorageInitCb<T>
-  ): T {
-    if (typeof initOrCb === "function") {
+  function getValue(value: T, initOrCb: SetStateAction<T>): T {
+    if (initOrCb instanceof Function) {
       const newValue = initOrCb(value);
       saveToLocalStorage(newValue);
       return newValue;
@@ -62,7 +52,7 @@ export default function useLocalStorage<T = LocalStorageValue>(
     return getValue(result, initialValue);
   });
 
-  const setValue = (value: SetLocalStorageValue<T>) => {
+  const setValue = (value: SetStateAction<T>) => {
     const valueToStore = value instanceof Function ? value(storedValue) : value;
     setStoredValue(valueToStore);
     saveToLocalStorage(valueToStore);
