@@ -30,7 +30,7 @@
     "@saleor/macaw-ui": "^0.2.3",
     "@sentry/react": "^6.0.0",
     "@types/faker": "^5.1.6",
-    "apollo": "^2.32.5",
+    "apollo": "^2.33.6",
     "apollo-cache-inmemory": "^1.6.5",
     "apollo-client": "^2.6.8",
     "apollo-client-preset": "^1.0.6",
