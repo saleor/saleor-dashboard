@@ -124,7 +124,7 @@
     "@types/react-router-dom": "^4.3.4",
     "@types/react-sortable-hoc": "^0.7.1",
     "@types/react-sortable-tree": "^0.3.6",
-    "@types/react-test-renderer": "^16.9.5",
+    "@types/react-test-renderer": "^17.0.1",
     "@types/semver-compare": "^1.0.1",
     "@types/setup-polly-jest": "^0.5.0",
     "@types/storybook__addon-storyshots": "^3.4.9",
