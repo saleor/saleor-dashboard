@@ -56,7 +56,10 @@ export function createCheckoutWithVoucher({
     .then(() => {
       checkoutRequest.addVoucher(checkout.id, voucherCode);
     })
-    .its("body.data.checkoutAddPromoCode");
+    .then(resp => ({
+      addPromoCodeResp: resp.body.data.checkoutAddPromoCode,
+      checkout
+    }));
 }
 
 export function purchaseProductWithPromoCode({

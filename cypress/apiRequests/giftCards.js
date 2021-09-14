@@ -34,6 +34,19 @@ export function getGiftCardsWithTag(first, tag) {
   return cy.sendRequestWithQuery(query);
 }
 
+export function getGiftCardWithId(id) {
+  const query = `query{
+    giftCard(id:"${id}"){
+      isActive
+      currentBalance{
+        currency
+        amount
+      }
+    }
+  }`;
+  return cy.sendRequestWithQuery(query).its("body.data.giftCard");
+}
+
 export function createGiftCard({ tag, expiryType, currency, amount }) {
   const mutation = `mutation{
     giftCardCreate(input:{
@@ -53,6 +66,7 @@ export function createGiftCard({ tag, expiryType, currency, amount }) {
       giftCard{
         code
         id
+        isActive
       }
     }
   }`;

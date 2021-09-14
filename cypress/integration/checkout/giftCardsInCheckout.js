@@ -1,20 +1,20 @@
 // <reference types="cypress" />
 import faker from "faker";
 
+import { completeCheckout } from "../../apiRequests/Checkout";
 import {
   createGiftCard,
+  getGiftCardWithId,
   getGiftCardWithTag,
   giftCardDeactivate,
   giftCardExpiryOptions
 } from "../../apiRequests/giftCards";
-import { GIFT_CARD_UPDATE } from "../../elements/giftCard/gitfCardUpdate";
 import { changeGiftCardActiveStatus } from "../../steps/giftCardSteps";
-import { confirmationMessageShouldDisappear } from "../../steps/shared/confirmationMessages";
 import filterTests from "../../support/filterTests";
-import { giftCardDetailsUrl } from "../../url/urlList";
 import * as channelsUtils from "../../utils/channelsUtils";
 import { deleteGiftCardsWithTagStartsWith } from "../../utils/giftCardUtils";
 import {
+  addPayment,
   createCheckoutWithVoucher,
   purchaseProductWithPromoCode
 } from "../../utils/ordersUtils";
@@ -113,6 +113,7 @@ filterTests(["all"], () => {
 
       createGiftCard(giftCardData)
         .then(giftCard => {
+          chai.softExpect(giftCard.isActive).to.eq(true);
           dataForCheckout.voucherCode = giftCard.code;
           purchaseProductWithPromoCode(dataForCheckout);
         })
@@ -158,8 +159,16 @@ filterTests(["all"], () => {
           dataForCheckout.voucherCode = giftCard.code;
           createCheckoutWithVoucher(dataForCheckout);
         })
-        .then(({ checkoutErrors }) => {
-          expect(checkoutErrors[0].field).to.eq("promoCode");
+        .then(({ addPromoCodeResp, checkout }) => {
+          expect(addPromoCodeResp.checkoutErrors[0].field).to.eq("promoCode");
+          addPayment(checkout.id);
+          completeCheckout(checkout.id);
+        })
+        .then(checkout => {
+          getGiftCardWithId(giftCard.id);
+        })
+        .then(giftCardResp => {
+          expect(giftCardResp.currentBalance.amount).to.eq(giftCardData.amount);
         });
     });
   });
