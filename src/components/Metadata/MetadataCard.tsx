@@ -31,6 +31,7 @@ export interface MetadataCardProps {
   data: MetadataInput[];
   isPrivate: boolean;
   onChange: FormChange;
+  disabled?: boolean;
 }
 
 export const nameSeparator = ":";
@@ -40,7 +41,8 @@ export const valueInputPrefix = EventDataField.value;
 const MetadataCard: React.FC<MetadataCardProps> = ({
   data,
   isPrivate,
-  onChange
+  onChange,
+  disabled
 }) => {
   const intl = useIntl();
   const loaded = React.useRef(false);
@@ -120,12 +122,15 @@ const MetadataCard: React.FC<MetadataCardProps> = ({
                       />
                     )}
                   </Typography>
-                  <Typography color="textSecondary">
-                    <FormattedMessage
-                      defaultMessage="Use the button below to add new metadata field"
-                      description="empty metadata text"
-                    />
-                  </Typography>
+
+                  {!disabled && (
+                    <Typography color="textSecondary">
+                      <FormattedMessage
+                        defaultMessage="Use the button below to add new metadata field"
+                        description="empty metadata text"
+                      />
+                    </Typography>
+                  )}
                 </div>
               ) : (
                 <Table className={classes.table}>
@@ -203,25 +208,27 @@ const MetadataCard: React.FC<MetadataCardProps> = ({
                   </TableBody>
                 </Table>
               )}
-              <CardActions>
-                <Button
-                  color="primary"
-                  data-test="addField"
-                  onClick={() =>
-                    onChange({
-                      target: {
-                        name: EventDataAction.add,
-                        value: null
-                      }
-                    })
-                  }
-                >
-                  <FormattedMessage
-                    defaultMessage="Add Field"
-                    description="add metadata field,button"
-                  />
-                </Button>
-              </CardActions>
+              {!disabled && (
+                <CardActions>
+                  <Button
+                    color="primary"
+                    data-test="addField"
+                    onClick={() =>
+                      onChange({
+                        target: {
+                          name: EventDataAction.add,
+                          value: null
+                        }
+                      })
+                    }
+                  >
+                    <FormattedMessage
+                      defaultMessage="Add Field"
+                      description="add metadata field,button"
+                    />
+                  </Button>
+                </CardActions>
+              )}
             </>
           )}
         </>

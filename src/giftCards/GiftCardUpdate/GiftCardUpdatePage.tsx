@@ -8,12 +8,15 @@ import React from "react";
 import GiftCardUpdateDetailsCard from "./GiftCardUpdateDetailsCard";
 import GiftCardUpdateInfoCard from "./GiftCardUpdateInfoCard";
 import GiftCardUpdatePageHeader from "./GiftCardUpdatePageHeader";
+import useGiftCardDetails from "./providers/GiftCardDetailsProvider/hooks/useGiftCardDetails";
 import useGiftCardUpdateDialogs from "./providers/GiftCardUpdateDialogsProvider/hooks/useGiftCardUpdateDialogs";
 import useGiftCardUpdate from "./providers/GiftCardUpdateFormProvider/hooks/useGiftCardUpdate";
 import useGiftCardUpdateForm from "./providers/GiftCardUpdateFormProvider/hooks/useGiftCardUpdateForm";
 
 const GiftCardUpdatePage: React.FC = () => {
   const { navigateBack, openDeleteDialog } = useGiftCardUpdateDialogs();
+
+  const { giftCard } = useGiftCardDetails();
 
   const {
     hasChanged,
@@ -33,7 +36,11 @@ const GiftCardUpdatePage: React.FC = () => {
         <div>
           <GiftCardUpdateDetailsCard />
           <CardSpacer />
-          <Metadata data={data} onChange={changeMetadata} />
+          <Metadata
+            data={data}
+            onChange={changeMetadata}
+            disabled={giftCard?.isExpired}
+          />
         </div>
         <div>
           <GiftCardUpdateInfoCard />
