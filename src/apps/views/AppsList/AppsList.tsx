@@ -53,10 +53,9 @@ interface AppsListProps {
 
 export const AppsList: React.FC<AppsListProps> = ({ params }) => {
   const { action } = params;
-  const [activeInstallations, setActiveInstallations] = useLocalStorage(
-    "activeInstallations",
-    []
-  );
+  const [activeInstallations, setActiveInstallations] = useLocalStorage<
+    Array<Record<"id" | "name", string>>
+  >("activeInstallations", []);
   const notify = useNotifier();
   const intl = useIntl();
   const navigate = useNavigator();
