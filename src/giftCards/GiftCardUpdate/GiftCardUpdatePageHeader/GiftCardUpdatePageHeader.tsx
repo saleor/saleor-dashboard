@@ -25,42 +25,53 @@ const GiftCardUpdatePageHeader: React.FC = () => {
 
   const { openResendCodeDialog } = useGiftCardUpdateDialogs();
 
-  const { displayCode, isActive } = giftCard;
+  const { displayCode, isActive, isExpired } = giftCard;
 
   const title = intl.formatMessage(tableMessages.codeEndingWithLabel, {
     displayCode
   });
+
+  const getPageTitle = () => {
+    if (isExpired) {
+      return (
+        <PageTitleWithStatusChip
+          title={title}
+          statusLabel={intl.formatMessage(messages.expiredStatusLabel)}
+          statusType={StatusType.NEUTRAL}
+        />
+      );
+    }
+
+    if (!isActive) {
+      return (
+        <PageTitleWithStatusChip
+          title={title}
+          statusLabel={intl.formatMessage(tableMessages.giftCardDisabledLabel)}
+          statusType={StatusType.ERROR}
+        />
+      );
+    }
+
+    return title;
+  };
 
   return (
     <>
       <Backlink onClick={navigateBack}>
         {intl.formatMessage(sectionNames.giftCards)}
       </Backlink>
-      <PageHeader
-        inline
-        title={
-          isActive ? (
-            title
-          ) : (
-            <PageTitleWithStatusChip
-              title={title}
-              statusLabel={intl.formatMessage(
-                tableMessages.giftCardDisabledLabel
-              )}
-              statusType={StatusType.ERROR}
-            />
-          )
-        }
-      >
+      <PageHeader inline title={getPageTitle()}>
         <GiftCardEnableDisableSection />
         <HorizontalSpacer />
-        <Button
-          color="primary"
-          variant="contained"
-          onClick={openResendCodeDialog}
-        >
-          {intl.formatMessage(messages.resendButtonLabel)}
-        </Button>
+        {!isExpired && (
+          <Button
+            color="primary"
+            variant="contained"
+            onClick={openResendCodeDialog}
+          >
+            {intl.formatMessage(messages.resendButtonLabel)}
+          </Button>
+        )}
       </PageHeader>
     </>
   );
