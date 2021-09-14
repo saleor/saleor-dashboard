@@ -1,8 +1,6 @@
 import backgroundArt from "@assets/images/login-background.svg";
 import saleorDarkLogo from "@assets/images/logo-dark.svg";
 import saleorLightLogo from "@assets/images/logo-light.svg";
-import DemoBanner from "@saleor/components/DemoBanner";
-import { DEMO_MODE } from "@saleor/config";
 import { useTheme } from "@saleor/macaw-ui";
 import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
@@ -77,23 +75,20 @@ const Layout: React.FC = props => {
   const { themeType } = useTheme();
 
   return (
-    <>
-      {DEMO_MODE && <DemoBanner />}
-      <div className={classes.root}>
-        <div className={classes.sidebar}>
-          <SVG className={classes.sidebarArt} src={backgroundArt} />
-        </div>
-        <div className={classes.mainPanel}>
-          <div className={classes.mainPanelContent}>
-            <SVG
-              className={classes.logo}
-              src={themeType === "dark" ? saleorDarkLogo : saleorLightLogo}
-            />
-            {children}
-          </div>
+    <div className={classes.root}>
+      <div className={classes.sidebar}>
+        <SVG className={classes.sidebarArt} src={backgroundArt} />
+      </div>
+      <div className={classes.mainPanel}>
+        <div className={classes.mainPanelContent}>
+          <SVG
+            className={classes.logo}
+            src={themeType === "dark" ? saleorDarkLogo : saleorLightLogo}
+          />
+          {children}
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

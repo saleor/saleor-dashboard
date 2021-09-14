@@ -1,5 +1,4 @@
 import { LinearProgress, useMediaQuery } from "@material-ui/core";
-import { DEMO_MODE } from "@saleor/config";
 import useAppState from "@saleor/hooks/useAppState";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useUser from "@saleor/hooks/useUser";
@@ -19,7 +18,6 @@ import { useIntl } from "react-intl";
 import useRouter from "use-react-router";
 
 import Container from "../Container";
-import { DemoBanner } from "../DemoBanner";
 import ErrorPage from "../ErrorPage";
 import Navigator from "../Navigator";
 import NavigatorButton from "../NavigatorButton/NavigatorButton";
@@ -165,7 +163,6 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
         visible={isNavigatorVisible}
         setVisibility={setNavigatorVisibility}
       />
-      {DEMO_MODE && <DemoBanner />}
       <div className={classes.root}>
         {isMdUp && (
           <Sidebar
