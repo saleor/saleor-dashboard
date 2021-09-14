@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { GiftCardErrorCode, GiftCardExpiryTypeEnum, TimePeriodTypeEnum } from "./../../../../types/globalTypes";
+import { GiftCardErrorCode } from "./../../../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: GiftCardDeactivate
@@ -40,13 +40,6 @@ export interface GiftCardDeactivate_giftCardDeactivate_giftCard_product {
   name: string;
 }
 
-export interface GiftCardDeactivate_giftCardDeactivate_giftCard_user {
-  __typename: "User";
-  id: string;
-  firstName: string;
-  lastName: string;
-}
-
 export interface GiftCardDeactivate_giftCardDeactivate_giftCard_usedBy {
   __typename: "User";
   id: string;
@@ -58,12 +51,6 @@ export interface GiftCardDeactivate_giftCardDeactivate_giftCard_app {
   __typename: "App";
   id: string;
   name: string | null;
-}
-
-export interface GiftCardDeactivate_giftCardDeactivate_giftCard_expiryPeriod {
-  __typename: "TimePeriod";
-  amount: number;
-  type: TimePeriodTypeEnum;
 }
 
 export interface GiftCardDeactivate_giftCardDeactivate_giftCard_initialBalance {
@@ -83,17 +70,15 @@ export interface GiftCardDeactivate_giftCardDeactivate_giftCard {
   metadata: (GiftCardDeactivate_giftCardDeactivate_giftCard_metadata | null)[];
   privateMetadata: (GiftCardDeactivate_giftCardDeactivate_giftCard_privateMetadata | null)[];
   displayCode: string;
+  boughtInChannel: string | null;
   createdBy: GiftCardDeactivate_giftCardDeactivate_giftCard_createdBy | null;
   product: GiftCardDeactivate_giftCardDeactivate_giftCard_product | null;
-  user: GiftCardDeactivate_giftCardDeactivate_giftCard_user | null;
   usedBy: GiftCardDeactivate_giftCardDeactivate_giftCard_usedBy | null;
   usedByEmail: string | null;
   createdByEmail: string | null;
   app: GiftCardDeactivate_giftCardDeactivate_giftCard_app | null;
   created: any;
   expiryDate: any | null;
-  expiryType: GiftCardExpiryTypeEnum;
-  expiryPeriod: GiftCardDeactivate_giftCardDeactivate_giftCard_expiryPeriod | null;
   lastUsedOn: any | null;
   isActive: boolean;
   initialBalance: GiftCardDeactivate_giftCardDeactivate_giftCard_initialBalance | null;

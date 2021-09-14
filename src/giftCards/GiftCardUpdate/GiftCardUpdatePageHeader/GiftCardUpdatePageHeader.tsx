@@ -1,3 +1,5 @@
+import { Button } from "@material-ui/core";
+import HorizontalSpacer from "@saleor/apps/components/HorizontalSpacer";
 import PageHeader from "@saleor/components/PageHeader";
 import PageTitleWithStatusChip from "@saleor/components/PageTitleWithStatusChip";
 import { StatusType } from "@saleor/components/StatusChip/types";
@@ -10,6 +12,7 @@ import { giftCardsListTableMessages as tableMessages } from "../../GiftCardsList
 import useGiftCardDetails from "../providers/GiftCardDetailsProvider/hooks/useGiftCardDetails";
 import useGiftCardUpdateDialogs from "../providers/GiftCardUpdateDialogsProvider/hooks/useGiftCardUpdateDialogs";
 import GiftCardEnableDisableSection from "./GiftCardEnableDisableSection";
+import { giftCardUpdatePageHeaderMessages as messages } from "./messages";
 
 const GiftCardUpdatePageHeader: React.FC = () => {
   const intl = useIntl();
@@ -19,6 +22,8 @@ const GiftCardUpdatePageHeader: React.FC = () => {
   if (!giftCard) {
     return null;
   }
+
+  const { openResendCodeDialog } = useGiftCardUpdateDialogs();
 
   const { displayCode, isActive } = giftCard;
 
@@ -48,6 +53,14 @@ const GiftCardUpdatePageHeader: React.FC = () => {
         }
       >
         <GiftCardEnableDisableSection />
+        <HorizontalSpacer />
+        <Button
+          color="primary"
+          variant="contained"
+          onClick={openResendCodeDialog}
+        >
+          {intl.formatMessage(messages.resendButtonLabel)}
+        </Button>
       </PageHeader>
     </>
   );
