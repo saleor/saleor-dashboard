@@ -150,7 +150,7 @@
     "eslint-loader": "^3.0.2",
     "eslint-plugin-chai-friendly": "^0.6.0",
     "eslint-plugin-cypress": "^2.11.2",
-    "eslint-plugin-import": "^2.19.1",
+    "eslint-plugin-import": "^2.24.2",
     "eslint-plugin-local-rules": "^0.1.1",
     "eslint-plugin-prefer-arrow": "^1.1.6",
     "eslint-plugin-simple-import-sort": "^5.0.3",
