@@ -1,4 +1,5 @@
 import { Button, Card } from "@material-ui/core";
+import { drawerWidthExpanded } from "@saleor/components/AppLayout/consts";
 import CardMenu from "@saleor/components/CardMenu";
 import ColumnPicker, {
   ColumnPickerChoice
@@ -67,7 +68,7 @@ const useStyles = makeStyles(
     },
     container: {
       [theme.breakpoints.up("md")]: {
-        marginLeft: "211px"
+        marginLeft: drawerWidthExpanded
       }
     }
   }),
