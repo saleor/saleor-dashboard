@@ -7,6 +7,9 @@ updates:
       interval: "daily"
     reviewers:
       - "saleor-frontend"
+    allowed_updates:
+      - match:
+          update_type: "security"
 
   - target-branch: "3.0"
     package-ecosystem: "npm"
@@ -15,3 +18,6 @@ updates:
       interval: "daily"
     reviewers:
       - "saleor-frontend"
+    allowed_updates:
+      - match:
+          update_type: "security"
