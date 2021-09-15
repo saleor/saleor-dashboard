@@ -4,7 +4,7 @@ export interface ChannelWithVariantData {
   variantsIdsToAdd: string[];
 }
 
-export type channelVariantListing = Record<string, string[]>;
+export type ChannelVariantListing = Record<string, string[]>;
 export type ChannelsWithVariantsData = Record<string, ChannelWithVariantData>;
 
 export interface UseChannelsWithProductVariants {
@@ -14,7 +14,7 @@ export interface UseChannelsWithProductVariants {
   toggleAllChannels: () => void;
   toggleAllChannelVariants: (channelId: string) => void;
   hasChanged: boolean;
-  channelVariantListing: channelVariantListing;
-  setChannelVariantListing: (listings: channelVariantListing) => void;
+  channelVariantListing: ChannelVariantListing;
+  setChannelVariantListing: (listings: ChannelVariantListing) => void;
   reset: () => void;
 }
