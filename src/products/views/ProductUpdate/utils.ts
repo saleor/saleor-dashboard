@@ -22,6 +22,24 @@ export function createFromChannels<T>(
   );
 }
 
+export function createUpdatedChannels(
+  channels: ChannelData[],
+  listing: channelVariantListing
+): ChannelData[] {
+  return reduce(
+    listing,
+    (acc, variantsIds, channelId) => [
+      ...acc,
+      {
+        id: channelId,
+        name: channels.find(channel => channel.id === channelId).name,
+        variantsIds
+      } as ChannelData
+    ],
+    []
+  );
+}
+
 export const getParsedChannelsWithVariantsDataFromChannels = (
   channels: ChannelData[]
 ): ChannelsWithVariantsData =>

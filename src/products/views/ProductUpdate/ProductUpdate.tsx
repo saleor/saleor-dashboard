@@ -276,6 +276,7 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
 
   const [channelsData, setChannelsData] = useStateFromProps(allChannels);
   const {
+    channels: updatedChannels,
     channelsWithVariantsData,
     hasChanged: hasChannelVariantListingChanged,
     setChannelVariantListing
@@ -508,7 +509,7 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
           />
         ) : (
           <ChannelsWithVariantsAvailabilityDialog
-            channels={allChannels}
+            channels={updatedChannels}
             variants={product?.variants}
             open={params.action === CHANNELS_AVAILIABILITY_MODAL_SELECTOR}
             onClose={closeModal}

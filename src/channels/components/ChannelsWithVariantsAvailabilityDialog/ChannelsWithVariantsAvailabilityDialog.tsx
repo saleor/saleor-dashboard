@@ -1,5 +1,6 @@
 import { ChannelData } from "@saleor/channels/utils";
 import ActionDialog from "@saleor/components/ActionDialog";
+import useModalDialogOpen from "@saleor/hooks/useModalDialogOpen";
 import { ProductDetails_product_variants } from "@saleor/products/types/ProductDetails";
 import { channelVariantListing } from "@saleor/products/views/ProductUpdate/types";
 import useChannelsWithProductVariants from "@saleor/products/views/ProductUpdate/useChannelsWithProductVariants";
@@ -47,11 +48,16 @@ export const ChannelsWithVariantsAvailabilityDialog: React.FC<ChannelsAvailabili
     addVariantToChannel,
     removeVariantFromChannel,
     toggleAllChannelVariants,
-    channelVariantListing
+    channelVariantListing,
+    reset
   } = useChannelsWithProductVariants(
     channels,
     variants?.map(variant => variant.id)
   );
+
+  useModalDialogOpen(open, {
+    onClose: reset
+  });
 
   const { query, onQueryChange, filteredChannels } = useChannelsSearch(
     channels

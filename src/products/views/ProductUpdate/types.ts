@@ -16,4 +16,5 @@ export interface UseChannelsWithProductVariants {
   hasChanged: boolean;
   channelVariantListing: channelVariantListing;
   setChannelVariantListing: (listings: channelVariantListing) => void;
+  reset: () => void;
 }

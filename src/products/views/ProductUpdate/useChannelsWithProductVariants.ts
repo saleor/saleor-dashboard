@@ -16,7 +16,8 @@ const useChannelsWithProductVariants = (
     channelsWithVariantsData,
     hasChanged,
     setChannelVariantListing,
-    channelVariantListing
+    channelVariantListing,
+    reset
   } = useChannelVariantListings(channels);
 
   const handleAddVariant = (channelId: string, variantId: string) =>
@@ -55,7 +56,8 @@ const useChannelsWithProductVariants = (
     hasChanged,
     toggleAllChannelVariants,
     toggleAllChannels,
-    setChannelVariantListing
+    setChannelVariantListing,
+    reset
   };
 };
 
