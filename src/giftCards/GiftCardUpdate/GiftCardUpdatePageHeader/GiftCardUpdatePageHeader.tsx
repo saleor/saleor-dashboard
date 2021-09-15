@@ -46,7 +46,7 @@ const GiftCardUpdatePageHeader: React.FC = () => {
       return (
         <PageTitleWithStatusChip
           title={title}
-          statusLabel={intl.formatMessage(tableMessages.giftCardDisabledLabel)}
+          statusLabel={intl.formatMessage(messages.disabledStatusLabel)}
           statusType={StatusType.ERROR}
         />
       );

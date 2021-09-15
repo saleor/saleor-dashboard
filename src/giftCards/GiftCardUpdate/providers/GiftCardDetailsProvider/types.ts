@@ -1,5 +1,7 @@
-import { GiftCardDetails_giftCard } from "../../types/GiftCardDetails";
-
-export interface ExtendedGiftCard extends GiftCardDetails_giftCard {
+export type ExtendedGiftCard<T extends GiftCardBase> = T & {
   isExpired: boolean;
+};
+
+export interface GiftCardBase {
+  expiryDate: string | undefined;
 }

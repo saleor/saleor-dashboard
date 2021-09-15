@@ -1,8 +1,9 @@
-import moment from "moment";
 import React, { createContext } from "react";
 
 import { useGiftCardDetailsQuery } from "../../queries";
+import { GiftCardDetails_giftCard } from "../../types/GiftCardDetails";
 import { ExtendedGiftCard } from "./types";
+import { getExtendedGiftCard } from "./utils";
 
 interface GiftCardDetailsProviderProps {
   children: React.ReactNode;
@@ -10,7 +11,7 @@ interface GiftCardDetailsProviderProps {
 }
 
 export interface GiftCardDetailsConsumerProps {
-  giftCard: ExtendedGiftCard;
+  giftCard: ExtendedGiftCard<GiftCardDetails_giftCard> | undefined;
   loading: boolean;
 }
 
@@ -27,23 +28,8 @@ const GiftCardDetailsProvider: React.FC<GiftCardDetailsProviderProps> = ({
     variables: { id }
   });
 
-  const isGiftCardExpired = () => {
-    if (loading) {
-      return false;
-    }
-
-    // For testing purposes, will be removed before merge
-    // return moment(data?.giftCard?.expiryDate).isBefore(moment());
-    return moment("2021-09-01").isBefore(moment());
-  };
-
-  const extendedGiftCard = {
-    ...data?.giftCard,
-    isExpired: isGiftCardExpired()
-  };
-
   const providerValues: GiftCardDetailsConsumerProps = {
-    giftCard: extendedGiftCard,
+    giftCard: getExtendedGiftCard(data?.giftCard),
     loading
   };
 

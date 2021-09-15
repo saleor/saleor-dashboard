@@ -19,5 +19,9 @@ export const giftCardUpdatePageHeaderMessages = defineMessages({
   expiredStatusLabel: {
     defaultMessage: "Expired",
     description: "giftCardUpdatePageHeader expired status label"
+  },
+  disabledStatusLabel: {
+    defaultMessage: "Disabled",
+    description: "giftCardUpdatePageHeader disabled status label"
   }
 });
