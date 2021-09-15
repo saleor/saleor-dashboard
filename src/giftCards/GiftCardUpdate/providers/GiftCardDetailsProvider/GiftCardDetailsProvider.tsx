@@ -32,6 +32,7 @@ const GiftCardDetailsProvider: React.FC<GiftCardDetailsProviderProps> = ({
       return false;
     }
 
+    // For testing purposes, will be removed before merge
     // return moment(data?.giftCard?.expiryDate).isBefore(moment());
     return moment("2021-09-01").isBefore(moment());
   };
