@@ -1,7 +1,10 @@
 /* eslint-disable sort-keys */
 
 import { OrderRefundData_order } from "@saleor/orders/types/OrderRefundData";
-import { FulfillmentStatus } from "@saleor/types/globalTypes";
+import {
+  FulfillmentStatus,
+  ProductTypeKindEnum
+} from "@saleor/types/globalTypes";
 
 export const orderToRefund = (placeholder: string): OrderRefundData_order => ({
   __typename: "Order",
@@ -46,6 +49,19 @@ export const orderToRefund = (placeholder: string): OrderRefundData_order => ({
           amount: 26.02,
           currency: "USD"
         }
+      },
+      variant: {
+        __typename: "ProductVariant",
+        id: "pvgfsjfdhfd",
+        product: {
+          __typename: "Product",
+          id: "pededededa",
+          productType: {
+            __typename: "ProductType",
+            id: "pthudfsdbcs",
+            kind: ProductTypeKindEnum.NORMAL
+          }
+        }
       }
     },
     {
@@ -64,6 +80,51 @@ export const orderToRefund = (placeholder: string): OrderRefundData_order => ({
           __typename: "Money",
           amount: 10,
           currency: "USD"
+        }
+      },
+      variant: {
+        __typename: "ProductVariant",
+        id: "pvjgfdiguhk",
+        product: {
+          __typename: "Product",
+          id: "pededededa",
+          productType: {
+            __typename: "ProductType",
+            id: "pthudfsdbcs",
+            kind: ProductTypeKindEnum.NORMAL
+          }
+        }
+      }
+    },
+    {
+      __typename: "OrderLine",
+      id: "hsdifbdsjkkk",
+      productName: "GiftCard",
+      quantity: 2,
+      quantityToFulfill: 1,
+      thumbnail: {
+        __typename: "Image",
+        url: placeholder
+      },
+      unitPrice: {
+        __typename: "TaxedMoney",
+        gross: {
+          __typename: "Money",
+          amount: 10,
+          currency: "USD"
+        }
+      },
+      variant: {
+        __typename: "ProductVariant",
+        id: "ttt444jhsjfhd",
+        product: {
+          __typename: "Product",
+          id: "kjjkk43hhh",
+          productType: {
+            __typename: "ProductType",
+            id: "jkiiigcgcgc",
+            kind: ProductTypeKindEnum.GIFT_CARD
+          }
         }
       }
     }
@@ -95,6 +156,19 @@ export const orderToRefund = (placeholder: string): OrderRefundData_order => ({
                 amount: 26.02,
                 currency: "USD"
               }
+            },
+            variant: {
+              __typename: "ProductVariant",
+              id: "pvgfsjfdhfd",
+              product: {
+                __typename: "Product",
+                id: "pededededa",
+                productType: {
+                  __typename: "ProductType",
+                  id: "pthudfsdbcs",
+                  kind: ProductTypeKindEnum.NORMAL
+                }
+              }
             }
           }
         },
@@ -117,6 +191,55 @@ export const orderToRefund = (placeholder: string): OrderRefundData_order => ({
                 __typename: "Money",
                 amount: 10,
                 currency: "USD"
+              }
+            },
+            variant: {
+              __typename: "ProductVariant",
+              id: "pvjgfdiguhk",
+              product: {
+                __typename: "Product",
+                id: "pededededa",
+                productType: {
+                  __typename: "ProductType",
+                  id: "pthudfsdbcs",
+                  kind: ProductTypeKindEnum.NORMAL
+                }
+              }
+            }
+          }
+        },
+        {
+          __typename: "FulfillmentLine",
+          id: "kdvfdkjgrun44573",
+          quantity: 1,
+          orderLine: {
+            __typename: "OrderLine",
+            id: "hsdifbdsjkkk",
+            productName: "GiftCard",
+            quantity: 1,
+            thumbnail: {
+              __typename: "Image",
+              url: placeholder
+            },
+            unitPrice: {
+              __typename: "TaxedMoney",
+              gross: {
+                __typename: "Money",
+                amount: 10,
+                currency: "USD"
+              }
+            },
+            variant: {
+              __typename: "ProductVariant",
+              id: "ttt444jhsjfhd",
+              product: {
+                __typename: "Product",
+                id: "kjjkk43hhh",
+                productType: {
+                  __typename: "ProductType",
+                  id: "jkiiigcgcgc",
+                  kind: ProductTypeKindEnum.GIFT_CARD
+                }
               }
             }
           }
@@ -149,6 +272,19 @@ export const orderToRefund = (placeholder: string): OrderRefundData_order => ({
                 amount: 26.02,
                 currency: "USD"
               }
+            },
+            variant: {
+              __typename: "ProductVariant",
+              id: "pvgfsjfdhfd",
+              product: {
+                __typename: "Product",
+                id: "pededededa",
+                productType: {
+                  __typename: "ProductType",
+                  id: "pthudfsdbcs",
+                  kind: ProductTypeKindEnum.NORMAL
+                }
+              }
             }
           }
         },
@@ -171,6 +307,19 @@ export const orderToRefund = (placeholder: string): OrderRefundData_order => ({
                 __typename: "Money",
                 amount: 10,
                 currency: "USD"
+              }
+            },
+            variant: {
+              __typename: "ProductVariant",
+              id: "pvjgfdiguhk",
+              product: {
+                __typename: "Product",
+                id: "pededededa",
+                productType: {
+                  __typename: "ProductType",
+                  id: "pthudfsdbcs",
+                  kind: ProductTypeKindEnum.NORMAL
+                }
               }
             }
           }

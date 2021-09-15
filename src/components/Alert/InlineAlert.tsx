@@ -1,5 +1,6 @@
 import { Card } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
+import classNames from "classnames";
 import React from "react";
 
 const useStyles = makeStyles(
@@ -14,12 +15,15 @@ const useStyles = makeStyles(
 
 interface AlertCardProps {
   children?: React.ReactNode | React.ReactNode[];
+  className?: string;
 }
 
-const AlertCard: React.FC<AlertCardProps> = ({ children }) => {
+const AlertCard: React.FC<AlertCardProps> = ({ children, className }) => {
   const classes = useStyles({});
 
-  return <Card className={classes.container}>{children}</Card>;
+  return (
+    <Card className={classNames(classes.container, className)}>{children}</Card>
+  );
 };
 
 export default AlertCard;

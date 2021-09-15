@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { OrderRefundProductsInput, OrderErrorCode, AddressTypeEnum, DiscountValueTypeEnum, FulfillmentStatus, GiftCardEventsEnum, OrderDiscountType, OrderEventsEmailsEnum, OrderEventsEnum, PaymentChargeStatusEnum, WarehouseClickAndCollectOptionEnum, OrderStatus, OrderAction, JobStatusEnum } from "./../../types/globalTypes";
+import { OrderRefundProductsInput, OrderErrorCode, AddressTypeEnum, ProductTypeKindEnum, DiscountValueTypeEnum, FulfillmentStatus, GiftCardEventsEnum, OrderDiscountType, OrderEventsEmailsEnum, OrderEventsEnum, PaymentChargeStatusEnum, WarehouseClickAndCollectOptionEnum, OrderStatus, OrderAction, JobStatusEnum } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: OrderFulfillmentRefundProducts
@@ -16,10 +16,23 @@ export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_e
   addressType: AddressTypeEnum | null;
 }
 
+export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_fulfillment_lines_orderLine_variant_product_productType {
+  __typename: "ProductType";
+  id: string;
+  kind: ProductTypeKindEnum;
+}
+
+export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_fulfillment_lines_orderLine_variant_product {
+  __typename: "Product";
+  id: string;
+  productType: OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_fulfillment_lines_orderLine_variant_product_productType;
+}
+
 export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_fulfillment_lines_orderLine_variant {
   __typename: "ProductVariant";
   id: string;
   quantityAvailable: number;
+  product: OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_fulfillment_lines_orderLine_variant_product;
 }
 
 export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_fulfillment_lines_orderLine_unitDiscount {
@@ -309,10 +322,23 @@ export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_o
   lines: (OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_events_lines | null)[] | null;
 }
 
+export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_fulfillments_lines_orderLine_variant_product_productType {
+  __typename: "ProductType";
+  id: string;
+  kind: ProductTypeKindEnum;
+}
+
+export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_fulfillments_lines_orderLine_variant_product {
+  __typename: "Product";
+  id: string;
+  productType: OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_fulfillments_lines_orderLine_variant_product_productType;
+}
+
 export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_fulfillments_lines_orderLine_variant {
   __typename: "ProductVariant";
   id: string;
   quantityAvailable: number;
+  product: OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_fulfillments_lines_orderLine_variant_product;
 }
 
 export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_fulfillments_lines_orderLine_unitDiscount {
@@ -405,10 +431,23 @@ export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_o
   warehouse: OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_fulfillments_warehouse | null;
 }
 
+export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_lines_variant_product_productType {
+  __typename: "ProductType";
+  id: string;
+  kind: ProductTypeKindEnum;
+}
+
+export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_lines_variant_product {
+  __typename: "Product";
+  id: string;
+  productType: OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_lines_variant_product_productType;
+}
+
 export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_lines_variant {
   __typename: "ProductVariant";
   id: string;
   quantityAvailable: number;
+  product: OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_lines_variant_product;
 }
 
 export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_lines_unitDiscount {

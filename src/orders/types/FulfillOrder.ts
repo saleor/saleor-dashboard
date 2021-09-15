@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { OrderFulfillInput, OrderErrorCode, AddressTypeEnum, GiftCardEventsEnum, OrderDiscountType, DiscountValueTypeEnum, OrderEventsEmailsEnum, OrderEventsEnum, FulfillmentStatus, PaymentChargeStatusEnum, WarehouseClickAndCollectOptionEnum, OrderStatus, OrderAction, JobStatusEnum } from "./../../types/globalTypes";
+import { OrderFulfillInput, OrderErrorCode, AddressTypeEnum, GiftCardEventsEnum, OrderDiscountType, DiscountValueTypeEnum, OrderEventsEmailsEnum, OrderEventsEnum, ProductTypeKindEnum, FulfillmentStatus, PaymentChargeStatusEnum, WarehouseClickAndCollectOptionEnum, OrderStatus, OrderAction, JobStatusEnum } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: FulfillOrder
@@ -215,10 +215,23 @@ export interface FulfillOrder_orderFulfill_order_events {
   lines: (FulfillOrder_orderFulfill_order_events_lines | null)[] | null;
 }
 
+export interface FulfillOrder_orderFulfill_order_fulfillments_lines_orderLine_variant_product_productType {
+  __typename: "ProductType";
+  id: string;
+  kind: ProductTypeKindEnum;
+}
+
+export interface FulfillOrder_orderFulfill_order_fulfillments_lines_orderLine_variant_product {
+  __typename: "Product";
+  id: string;
+  productType: FulfillOrder_orderFulfill_order_fulfillments_lines_orderLine_variant_product_productType;
+}
+
 export interface FulfillOrder_orderFulfill_order_fulfillments_lines_orderLine_variant {
   __typename: "ProductVariant";
   id: string;
   quantityAvailable: number;
+  product: FulfillOrder_orderFulfill_order_fulfillments_lines_orderLine_variant_product;
 }
 
 export interface FulfillOrder_orderFulfill_order_fulfillments_lines_orderLine_unitDiscount {
@@ -311,10 +324,23 @@ export interface FulfillOrder_orderFulfill_order_fulfillments {
   warehouse: FulfillOrder_orderFulfill_order_fulfillments_warehouse | null;
 }
 
+export interface FulfillOrder_orderFulfill_order_lines_variant_product_productType {
+  __typename: "ProductType";
+  id: string;
+  kind: ProductTypeKindEnum;
+}
+
+export interface FulfillOrder_orderFulfill_order_lines_variant_product {
+  __typename: "Product";
+  id: string;
+  productType: FulfillOrder_orderFulfill_order_lines_variant_product_productType;
+}
+
 export interface FulfillOrder_orderFulfill_order_lines_variant {
   __typename: "ProductVariant";
   id: string;
   quantityAvailable: number;
+  product: FulfillOrder_orderFulfill_order_lines_variant_product;
 }
 
 export interface FulfillOrder_orderFulfill_order_lines_unitDiscount {

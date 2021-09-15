@@ -3,16 +3,29 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { DiscountValueTypeEnum } from "./../../types/globalTypes";
+import { ProductTypeKindEnum, DiscountValueTypeEnum } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL fragment: OrderLineFragment
 // ====================================================
 
+export interface OrderLineFragment_variant_product_productType {
+  __typename: "ProductType";
+  id: string;
+  kind: ProductTypeKindEnum;
+}
+
+export interface OrderLineFragment_variant_product {
+  __typename: "Product";
+  id: string;
+  productType: OrderLineFragment_variant_product_productType;
+}
+
 export interface OrderLineFragment_variant {
   __typename: "ProductVariant";
   id: string;
   quantityAvailable: number;
+  product: OrderLineFragment_variant_product;
 }
 
 export interface OrderLineFragment_unitDiscount {

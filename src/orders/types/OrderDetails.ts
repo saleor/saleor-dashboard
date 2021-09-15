@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { GiftCardEventsEnum, OrderDiscountType, DiscountValueTypeEnum, OrderEventsEmailsEnum, OrderEventsEnum, FulfillmentStatus, PaymentChargeStatusEnum, WarehouseClickAndCollectOptionEnum, OrderStatus, OrderAction, JobStatusEnum, WeightUnitsEnum } from "./../../types/globalTypes";
+import { GiftCardEventsEnum, OrderDiscountType, DiscountValueTypeEnum, OrderEventsEmailsEnum, OrderEventsEnum, ProductTypeKindEnum, FulfillmentStatus, PaymentChargeStatusEnum, WarehouseClickAndCollectOptionEnum, OrderStatus, OrderAction, JobStatusEnum, WeightUnitsEnum } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL query operation: OrderDetails
@@ -206,10 +206,23 @@ export interface OrderDetails_order_events {
   lines: (OrderDetails_order_events_lines | null)[] | null;
 }
 
+export interface OrderDetails_order_fulfillments_lines_orderLine_variant_product_productType {
+  __typename: "ProductType";
+  id: string;
+  kind: ProductTypeKindEnum;
+}
+
+export interface OrderDetails_order_fulfillments_lines_orderLine_variant_product {
+  __typename: "Product";
+  id: string;
+  productType: OrderDetails_order_fulfillments_lines_orderLine_variant_product_productType;
+}
+
 export interface OrderDetails_order_fulfillments_lines_orderLine_variant {
   __typename: "ProductVariant";
   id: string;
   quantityAvailable: number;
+  product: OrderDetails_order_fulfillments_lines_orderLine_variant_product;
 }
 
 export interface OrderDetails_order_fulfillments_lines_orderLine_unitDiscount {
@@ -302,10 +315,23 @@ export interface OrderDetails_order_fulfillments {
   warehouse: OrderDetails_order_fulfillments_warehouse | null;
 }
 
+export interface OrderDetails_order_lines_variant_product_productType {
+  __typename: "ProductType";
+  id: string;
+  kind: ProductTypeKindEnum;
+}
+
+export interface OrderDetails_order_lines_variant_product {
+  __typename: "Product";
+  id: string;
+  productType: OrderDetails_order_lines_variant_product_productType;
+}
+
 export interface OrderDetails_order_lines_variant {
   __typename: "ProductVariant";
   id: string;
   quantityAvailable: number;
+  product: OrderDetails_order_lines_variant_product;
 }
 
 export interface OrderDetails_order_lines_unitDiscount {

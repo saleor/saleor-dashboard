@@ -3,7 +3,8 @@ import { FormsetData } from "@saleor/hooks/useFormset";
 import {
   FulfillmentStatus,
   OrderStatus,
-  PaymentChargeStatusEnum
+  PaymentChargeStatusEnum,
+  ProductTypeKindEnum
 } from "@saleor/types/globalTypes";
 
 import { LineItemData } from "../components/OrderReturnPage/form";
@@ -180,6 +181,19 @@ describe("Get refunded lines price sum", () => {
           amount: 10,
           currency: "USD"
         }
+      },
+      variant: {
+        __typename: "ProductVariant",
+        id: "1",
+        product: {
+          __typename: "Product",
+          id: "1",
+          productType: {
+            __typename: "ProductType",
+            id: "1",
+            kind: ProductTypeKindEnum.NORMAL
+          }
+        }
       }
     },
     {
@@ -196,6 +210,19 @@ describe("Get refunded lines price sum", () => {
           amount: 6,
           currency: "USD"
         }
+      },
+      variant: {
+        __typename: "ProductVariant",
+        id: "2",
+        product: {
+          __typename: "Product",
+          id: "2",
+          productType: {
+            __typename: "ProductType",
+            id: "2",
+            kind: ProductTypeKindEnum.NORMAL
+          }
+        }
       }
     },
     {
@@ -211,6 +238,19 @@ describe("Get refunded lines price sum", () => {
           __typename: "Money",
           amount: 4,
           currency: "USD"
+        }
+      },
+      variant: {
+        __typename: "ProductVariant",
+        id: "3",
+        product: {
+          __typename: "Product",
+          id: "3",
+          productType: {
+            __typename: "ProductType",
+            id: "3",
+            kind: ProductTypeKindEnum.NORMAL
+          }
         }
       }
     }
@@ -300,6 +340,19 @@ describe("Get get all fulfillment lines price sum", () => {
                 amount: 10,
                 currency: "USD"
               }
+            },
+            variant: {
+              __typename: "ProductVariant",
+              id: "1",
+              product: {
+                __typename: "Product",
+                id: "1",
+                productType: {
+                  __typename: "ProductType",
+                  id: "1",
+                  kind: ProductTypeKindEnum.NORMAL
+                }
+              }
             }
           },
           quantity: 1
@@ -328,6 +381,19 @@ describe("Get get all fulfillment lines price sum", () => {
                 amount: 6,
                 currency: "USD"
               }
+            },
+            variant: {
+              __typename: "ProductVariant",
+              id: "1",
+              product: {
+                __typename: "Product",
+                id: "1",
+                productType: {
+                  __typename: "ProductType",
+                  id: "1",
+                  kind: ProductTypeKindEnum.NORMAL
+                }
+              }
             }
           },
           quantity: 1
@@ -347,6 +413,19 @@ describe("Get get all fulfillment lines price sum", () => {
                 __typename: "Money",
                 amount: 6,
                 currency: "USD"
+              }
+            },
+            variant: {
+              __typename: "ProductVariant",
+              id: "2",
+              product: {
+                __typename: "Product",
+                id: "2",
+                productType: {
+                  __typename: "ProductType",
+                  id: "2",
+                  kind: ProductTypeKindEnum.NORMAL
+                }
               }
             }
           },
@@ -376,6 +455,19 @@ describe("Get get all fulfillment lines price sum", () => {
                 amount: 4,
                 currency: "USD"
               }
+            },
+            variant: {
+              __typename: "ProductVariant",
+              id: "1",
+              product: {
+                __typename: "Product",
+                id: "1",
+                productType: {
+                  __typename: "ProductType",
+                  id: "1",
+                  kind: ProductTypeKindEnum.NORMAL
+                }
+              }
             }
           },
           quantity: 1
@@ -396,6 +488,19 @@ describe("Get get all fulfillment lines price sum", () => {
                 amount: 4,
                 currency: "USD"
               }
+            },
+            variant: {
+              __typename: "ProductVariant",
+              id: "2",
+              product: {
+                __typename: "Product",
+                id: "2",
+                productType: {
+                  __typename: "ProductType",
+                  id: "2",
+                  kind: ProductTypeKindEnum.NORMAL
+                }
+              }
             }
           },
           quantity: 1
@@ -415,6 +520,19 @@ describe("Get get all fulfillment lines price sum", () => {
                 __typename: "Money",
                 amount: 4,
                 currency: "USD"
+              }
+            },
+            variant: {
+              __typename: "ProductVariant",
+              id: "3",
+              product: {
+                __typename: "Product",
+                id: "3",
+                productType: {
+                  __typename: "ProductType",
+                  id: "3",
+                  kind: ProductTypeKindEnum.NORMAL
+                }
               }
             }
           },
@@ -531,7 +649,16 @@ describe("Get the total value of all replaced products", () => {
         variant: {
           id: "UHJvZHVjdFZhcmlhbnQ6MzE3",
           quantityAvailable: 50,
-          __typename: "ProductVariant"
+          __typename: "ProductVariant",
+          product: {
+            __typename: "Product",
+            id: "UHJvZHVjdDozMjQ=",
+            productType: {
+              __typename: "ProductType",
+              id: "UHJvZHVjdFR5cGU6MzI0",
+              kind: ProductTypeKindEnum.NORMAL
+            }
+          }
         },
         productName: "Lake Tunes",
         productSku: "lake-tunes-mp3",
@@ -586,7 +713,16 @@ describe("Get the total value of all replaced products", () => {
         variant: {
           id: "UHJvZHVjdFZhcmlhbnQ6MzE3",
           quantityAvailable: 50,
-          __typename: "ProductVariant"
+          __typename: "ProductVariant",
+          product: {
+            __typename: "Product",
+            id: "UHJvZHVjdDozMjQ=",
+            productType: {
+              __typename: "ProductType",
+              id: "UHJvZHVjdFR5cGU6MzI0",
+              kind: ProductTypeKindEnum.NORMAL
+            }
+          }
         },
         productName: "Lake Tunes",
         productSku: "lake-tunes-mp3",
@@ -641,7 +777,16 @@ describe("Get the total value of all replaced products", () => {
         variant: {
           id: "UHJvZHVjdFZhcmlhbnQ6Mjg2",
           quantityAvailable: 50,
-          __typename: "ProductVariant"
+          __typename: "ProductVariant",
+          product: {
+            __typename: "Product",
+            id: "UHJvZHVjdDozMjQ=",
+            productType: {
+              __typename: "ProductType",
+              id: "UHJvZHVjdFR5cGU6MzI0",
+              kind: ProductTypeKindEnum.NORMAL
+            }
+          }
         },
         productName: "T-shirt",
         productSku: "29810068",
@@ -702,7 +847,16 @@ describe("Get the total value of all replaced products", () => {
           variant: {
             id: "UHJvZHVjdFZhcmlhbnQ6MzE3",
             quantityAvailable: 50,
-            __typename: "ProductVariant"
+            __typename: "ProductVariant",
+            product: {
+              __typename: "Product",
+              id: "UHJvZHVjdDozMjQ=",
+              productType: {
+                __typename: "ProductType",
+                id: "UHJvZHVjdFR5cGU6MzI0",
+                kind: ProductTypeKindEnum.NORMAL
+              }
+            }
           },
           productName: "Lake Tunes",
           productSku: "lake-tunes-mp3",
@@ -762,7 +916,16 @@ describe("Get the total value of all replaced products", () => {
           variant: {
             id: "UHJvZHVjdFZhcmlhbnQ6MzE3",
             quantityAvailable: 50,
-            __typename: "ProductVariant"
+            __typename: "ProductVariant",
+            product: {
+              __typename: "Product",
+              id: "UHJvZHVjdDozMjQ=",
+              productType: {
+                __typename: "ProductType",
+                id: "UHJvZHVjdFR5cGU6MzI0",
+                kind: ProductTypeKindEnum.NORMAL
+              }
+            }
           },
           productName: "Lake Tunes",
           productSku: "lake-tunes-mp3",
@@ -822,7 +985,16 @@ describe("Get the total value of all replaced products", () => {
           variant: {
             id: "UHJvZHVjdFZhcmlhbnQ6Mjg2",
             quantityAvailable: 50,
-            __typename: "ProductVariant"
+            __typename: "ProductVariant",
+            product: {
+              __typename: "Product",
+              id: "UHJvZHVjdDozMjQ=",
+              productType: {
+                __typename: "ProductType",
+                id: "UHJvZHVjdFR5cGU6MzI0",
+                kind: ProductTypeKindEnum.NORMAL
+              }
+            }
           },
           productName: "T-shirt",
           productSku: "29810068",
@@ -882,7 +1054,16 @@ describe("Get the total value of all replaced products", () => {
           variant: {
             id: "UHJvZHVjdFZhcmlhbnQ6MzE3",
             quantityAvailable: 50,
-            __typename: "ProductVariant"
+            __typename: "ProductVariant",
+            product: {
+              __typename: "Product",
+              id: "UHJvZHVjdDozMjQ=",
+              productType: {
+                __typename: "ProductType",
+                id: "UHJvZHVjdFR5cGU6MzI0",
+                kind: ProductTypeKindEnum.NORMAL
+              }
+            }
           },
           productName: "Lake Tunes",
           productSku: "lake-tunes-mp3",
@@ -942,7 +1123,16 @@ describe("Get the total value of all replaced products", () => {
           variant: {
             id: "UHJvZHVjdFZhcmlhbnQ6MzE3",
             quantityAvailable: 50,
-            __typename: "ProductVariant"
+            __typename: "ProductVariant",
+            product: {
+              __typename: "Product",
+              id: "UHJvZHVjdDozMjQ=",
+              productType: {
+                __typename: "ProductType",
+                id: "UHJvZHVjdFR5cGU6MzI0",
+                kind: ProductTypeKindEnum.NORMAL
+              }
+            }
           },
           productName: "Lake Tunes",
           productSku: "lake-tunes-mp3",
@@ -1136,7 +1326,16 @@ describe("Get the total value of all selected products", () => {
         variant: {
           id: "UHJvZHVjdFZhcmlhbnQ6MzE3",
           quantityAvailable: 50,
-          __typename: "ProductVariant"
+          __typename: "ProductVariant",
+          product: {
+            __typename: "Product",
+            id: "UHJvZHVjdDozMjQ=",
+            productType: {
+              __typename: "ProductType",
+              id: "UHJvZHVjdFR5cGU6MzI0",
+              kind: ProductTypeKindEnum.NORMAL
+            }
+          }
         },
         productName: "Lake Tunes",
         productSku: "lake-tunes-mp3",
@@ -1191,7 +1390,16 @@ describe("Get the total value of all selected products", () => {
         variant: {
           id: "UHJvZHVjdFZhcmlhbnQ6MzE3",
           quantityAvailable: 50,
-          __typename: "ProductVariant"
+          __typename: "ProductVariant",
+          product: {
+            __typename: "Product",
+            id: "UHJvZHVjdDozMjQ=",
+            productType: {
+              __typename: "ProductType",
+              id: "UHJvZHVjdFR5cGU6MzI0",
+              kind: ProductTypeKindEnum.NORMAL
+            }
+          }
         },
         productName: "Lake Tunes",
         productSku: "lake-tunes-mp3",
@@ -1246,7 +1454,16 @@ describe("Get the total value of all selected products", () => {
         variant: {
           id: "UHJvZHVjdFZhcmlhbnQ6Mjg2",
           quantityAvailable: 50,
-          __typename: "ProductVariant"
+          __typename: "ProductVariant",
+          product: {
+            __typename: "Product",
+            id: "UHJvZHVjdDozMjQ=",
+            productType: {
+              __typename: "ProductType",
+              id: "UHJvZHVjdFR5cGU6MzI0",
+              kind: ProductTypeKindEnum.NORMAL
+            }
+          }
         },
         productName: "T-shirt",
         productSku: "29810068",
@@ -1307,7 +1524,16 @@ describe("Get the total value of all selected products", () => {
           variant: {
             id: "UHJvZHVjdFZhcmlhbnQ6MzE3",
             quantityAvailable: 50,
-            __typename: "ProductVariant"
+            __typename: "ProductVariant",
+            product: {
+              __typename: "Product",
+              id: "UHJvZHVjdDozMjQ=",
+              productType: {
+                __typename: "ProductType",
+                id: "UHJvZHVjdFR5cGU6MzI0",
+                kind: ProductTypeKindEnum.NORMAL
+              }
+            }
           },
           productName: "Lake Tunes",
           productSku: "lake-tunes-mp3",
@@ -1367,7 +1593,16 @@ describe("Get the total value of all selected products", () => {
           variant: {
             id: "UHJvZHVjdFZhcmlhbnQ6MzE3",
             quantityAvailable: 50,
-            __typename: "ProductVariant"
+            __typename: "ProductVariant",
+            product: {
+              __typename: "Product",
+              id: "UHJvZHVjdDozMjQ=",
+              productType: {
+                __typename: "ProductType",
+                id: "UHJvZHVjdFR5cGU6MzI0",
+                kind: ProductTypeKindEnum.NORMAL
+              }
+            }
           },
           productName: "Lake Tunes",
           productSku: "lake-tunes-mp3",
@@ -1427,7 +1662,16 @@ describe("Get the total value of all selected products", () => {
           variant: {
             id: "UHJvZHVjdFZhcmlhbnQ6Mjg2",
             quantityAvailable: 50,
-            __typename: "ProductVariant"
+            __typename: "ProductVariant",
+            product: {
+              __typename: "Product",
+              id: "UHJvZHVjdDozMjQ=",
+              productType: {
+                __typename: "ProductType",
+                id: "UHJvZHVjdFR5cGU6MzI0",
+                kind: ProductTypeKindEnum.NORMAL
+              }
+            }
           },
           productName: "T-shirt",
           productSku: "29810068",
@@ -1615,7 +1859,16 @@ describe("Merge repeated order lines of fulfillment lines", () => {
           variant: {
             id: "UHJvZHVjdFZhcmlhbnQ6MzE3",
             quantityAvailable: 50,
-            __typename: "ProductVariant"
+            __typename: "ProductVariant",
+            product: {
+              __typename: "Product",
+              id: "UHJvZHVjdDozMjQ=",
+              productType: {
+                __typename: "ProductType",
+                id: "UHJvZHVjdFR5cGU6MzI0",
+                kind: ProductTypeKindEnum.NORMAL
+              }
+            }
           },
           productName: "Lake Tunes",
           productSku: "lake-tunes-mp3",
@@ -1675,7 +1928,16 @@ describe("Merge repeated order lines of fulfillment lines", () => {
           variant: {
             id: "UHJvZHVjdFZhcmlhbnQ6MzE3",
             quantityAvailable: 50,
-            __typename: "ProductVariant"
+            __typename: "ProductVariant",
+            product: {
+              __typename: "Product",
+              id: "UHJvZHVjdDozMjQ=",
+              productType: {
+                __typename: "ProductType",
+                id: "UHJvZHVjdFR5cGU6MzI0",
+                kind: ProductTypeKindEnum.NORMAL
+              }
+            }
           },
           productName: "Lake Tunes",
           productSku: "lake-tunes-mp3",
@@ -1735,7 +1997,16 @@ describe("Merge repeated order lines of fulfillment lines", () => {
           variant: {
             id: "UHJvZHVjdFZhcmlhbnQ6Mjg2",
             quantityAvailable: 50,
-            __typename: "ProductVariant"
+            __typename: "ProductVariant",
+            product: {
+              __typename: "Product",
+              id: "UHJvZHVjdDozMjQ=",
+              productType: {
+                __typename: "ProductType",
+                id: "UHJvZHVjdFR5cGU6MzI0",
+                kind: ProductTypeKindEnum.NORMAL
+              }
+            }
           },
           productName: "T-shirt",
           productSku: "29810068",

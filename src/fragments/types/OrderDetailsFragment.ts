@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { GiftCardEventsEnum, OrderDiscountType, DiscountValueTypeEnum, OrderEventsEmailsEnum, OrderEventsEnum, FulfillmentStatus, PaymentChargeStatusEnum, WarehouseClickAndCollectOptionEnum, OrderStatus, OrderAction, JobStatusEnum } from "./../../types/globalTypes";
+import { GiftCardEventsEnum, OrderDiscountType, DiscountValueTypeEnum, OrderEventsEmailsEnum, OrderEventsEnum, ProductTypeKindEnum, FulfillmentStatus, PaymentChargeStatusEnum, WarehouseClickAndCollectOptionEnum, OrderStatus, OrderAction, JobStatusEnum } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL fragment: OrderDetailsFragment
@@ -206,10 +206,23 @@ export interface OrderDetailsFragment_events {
   lines: (OrderDetailsFragment_events_lines | null)[] | null;
 }
 
+export interface OrderDetailsFragment_fulfillments_lines_orderLine_variant_product_productType {
+  __typename: "ProductType";
+  id: string;
+  kind: ProductTypeKindEnum;
+}
+
+export interface OrderDetailsFragment_fulfillments_lines_orderLine_variant_product {
+  __typename: "Product";
+  id: string;
+  productType: OrderDetailsFragment_fulfillments_lines_orderLine_variant_product_productType;
+}
+
 export interface OrderDetailsFragment_fulfillments_lines_orderLine_variant {
   __typename: "ProductVariant";
   id: string;
   quantityAvailable: number;
+  product: OrderDetailsFragment_fulfillments_lines_orderLine_variant_product;
 }
 
 export interface OrderDetailsFragment_fulfillments_lines_orderLine_unitDiscount {
@@ -302,10 +315,23 @@ export interface OrderDetailsFragment_fulfillments {
   warehouse: OrderDetailsFragment_fulfillments_warehouse | null;
 }
 
+export interface OrderDetailsFragment_lines_variant_product_productType {
+  __typename: "ProductType";
+  id: string;
+  kind: ProductTypeKindEnum;
+}
+
+export interface OrderDetailsFragment_lines_variant_product {
+  __typename: "Product";
+  id: string;
+  productType: OrderDetailsFragment_lines_variant_product_productType;
+}
+
 export interface OrderDetailsFragment_lines_variant {
   __typename: "ProductVariant";
   id: string;
   quantityAvailable: number;
+  product: OrderDetailsFragment_lines_variant_product;
 }
 
 export interface OrderDetailsFragment_lines_unitDiscount {

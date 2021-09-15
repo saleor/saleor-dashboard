@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { FulfillmentStatus } from "./../../types/globalTypes";
+import { ProductTypeKindEnum, FulfillmentStatus } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL query operation: OrderRefundData
@@ -53,6 +53,24 @@ export interface OrderRefundData_order_lines_thumbnail {
   url: string;
 }
 
+export interface OrderRefundData_order_lines_variant_product_productType {
+  __typename: "ProductType";
+  id: string;
+  kind: ProductTypeKindEnum;
+}
+
+export interface OrderRefundData_order_lines_variant_product {
+  __typename: "Product";
+  id: string;
+  productType: OrderRefundData_order_lines_variant_product_productType;
+}
+
+export interface OrderRefundData_order_lines_variant {
+  __typename: "ProductVariant";
+  id: string;
+  product: OrderRefundData_order_lines_variant_product;
+}
+
 export interface OrderRefundData_order_lines {
   __typename: "OrderLine";
   id: string;
@@ -60,6 +78,7 @@ export interface OrderRefundData_order_lines {
   quantity: number;
   unitPrice: OrderRefundData_order_lines_unitPrice;
   thumbnail: OrderRefundData_order_lines_thumbnail | null;
+  variant: OrderRefundData_order_lines_variant | null;
   quantityToFulfill: number;
 }
 
@@ -79,6 +98,24 @@ export interface OrderRefundData_order_fulfillments_lines_orderLine_thumbnail {
   url: string;
 }
 
+export interface OrderRefundData_order_fulfillments_lines_orderLine_variant_product_productType {
+  __typename: "ProductType";
+  id: string;
+  kind: ProductTypeKindEnum;
+}
+
+export interface OrderRefundData_order_fulfillments_lines_orderLine_variant_product {
+  __typename: "Product";
+  id: string;
+  productType: OrderRefundData_order_fulfillments_lines_orderLine_variant_product_productType;
+}
+
+export interface OrderRefundData_order_fulfillments_lines_orderLine_variant {
+  __typename: "ProductVariant";
+  id: string;
+  product: OrderRefundData_order_fulfillments_lines_orderLine_variant_product;
+}
+
 export interface OrderRefundData_order_fulfillments_lines_orderLine {
   __typename: "OrderLine";
   id: string;
@@ -86,6 +123,7 @@ export interface OrderRefundData_order_fulfillments_lines_orderLine {
   quantity: number;
   unitPrice: OrderRefundData_order_fulfillments_lines_orderLine_unitPrice;
   thumbnail: OrderRefundData_order_fulfillments_lines_orderLine_thumbnail | null;
+  variant: OrderRefundData_order_fulfillments_lines_orderLine_variant | null;
 }
 
 export interface OrderRefundData_order_fulfillments_lines {

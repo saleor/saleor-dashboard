@@ -4681,6 +4681,10 @@
     "context": "page header with order number",
     "string": "Order #{orderNumber}"
   },
+  "src_dot_orders_dot_components_dot_OrderRefundPage_dot_giftCardRefundNotAllowed": {
+    "context": "alert",
+    "string": "You cannot refund this product because it is a gift card"
+  },
   "src_dot_orders_dot_components_dot_OrderRefundReturnAmount_dot_2256869831": {
     "context": "section header",
     "string": "Refunded Amount"

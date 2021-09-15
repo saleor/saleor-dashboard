@@ -81,6 +81,13 @@ export const fragmentOrderLine = gql`
     variant {
       id
       quantityAvailable
+      product {
+        id
+        productType {
+          id
+          kind
+        }
+      }
     }
     productName
     productSku
@@ -133,6 +140,16 @@ export const fragmentRefundOrderLine = gql`
     }
     thumbnail(size: 64) {
       url
+    }
+    variant {
+      id
+      product {
+        id
+        productType {
+          id
+          kind
+        }
+      }
     }
   }
 `;

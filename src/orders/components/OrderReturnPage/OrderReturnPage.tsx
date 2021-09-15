@@ -40,7 +40,7 @@ export interface OrderReturnPageProps {
   onSubmit: (data: OrderRefundSubmitData) => SubmitPromise;
 }
 
-const OrderRefundPage: React.FC<OrderReturnPageProps> = props => {
+const OrderReturnPage: React.FC<OrderReturnPageProps> = props => {
   const { order, loading, errors = [], onBack, onSubmit } = props;
 
   const intl = useIntl();
@@ -154,4 +154,4 @@ const OrderRefundPage: React.FC<OrderReturnPageProps> = props => {
   );
 };
 
-export default OrderRefundPage;
+export default OrderReturnPage;

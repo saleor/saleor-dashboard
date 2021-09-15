@@ -15,6 +15,7 @@ import {
   OrderEventsEnum,
   OrderStatus,
   PaymentChargeStatusEnum,
+  ProductTypeKindEnum,
   WeightUnitsEnum
 } from "../types/globalTypes";
 import { OrderDetails_order, OrderDetails_shop } from "./types/OrderDetails";
@@ -1103,7 +1104,16 @@ export const order = (placeholder: string): OrderDetails_order => ({
             variant: {
               __typename: "ProductVariant",
               id: "dsfsfuhb",
-              quantityAvailable: 10
+              quantityAvailable: 10,
+              product: {
+                __typename: "Product",
+                id: "sahjbfuyd",
+                productType: {
+                  __typename: "ProductType",
+                  id: "sdfhdsfdsn",
+                  kind: ProductTypeKindEnum.NORMAL
+                }
+              }
             }
           },
           quantity: 1
@@ -1172,7 +1182,16 @@ export const order = (placeholder: string): OrderDetails_order => ({
             variant: {
               __typename: "ProductVariant",
               id: "dsfsfuhb",
-              quantityAvailable: 10
+              quantityAvailable: 10,
+              product: {
+                __typename: "Product",
+                id: "sahjbfuyd",
+                productType: {
+                  __typename: "ProductType",
+                  id: "sdfhdsfdsn",
+                  kind: ProductTypeKindEnum.NORMAL
+                }
+              }
             }
           },
           quantity: 1
@@ -1248,7 +1267,16 @@ export const order = (placeholder: string): OrderDetails_order => ({
       variant: {
         __typename: "ProductVariant",
         id: "dsfsfuhb",
-        quantityAvailable: 10
+        quantityAvailable: 10,
+        product: {
+          __typename: "Product",
+          id: "sahjbfuyd",
+          productType: {
+            __typename: "ProductType",
+            id: "sdfhdsfdsn",
+            kind: ProductTypeKindEnum.NORMAL
+          }
+        }
       }
     },
     {
@@ -1303,7 +1331,16 @@ export const order = (placeholder: string): OrderDetails_order => ({
       variant: {
         __typename: "ProductVariant",
         id: "dsfsfuhb",
-        quantityAvailable: 10
+        quantityAvailable: 10,
+        product: {
+          __typename: "Product",
+          id: "sahjbfuyd",
+          productType: {
+            __typename: "ProductType",
+            id: "sdfhdsfdsn",
+            kind: ProductTypeKindEnum.NORMAL
+          }
+        }
       }
     }
   ],
@@ -1491,7 +1528,16 @@ export const draftOrder = (placeholder: string): OrderDetails_order => ({
       variant: {
         __typename: "ProductVariant",
         id: "dsfsfuhb",
-        quantityAvailable: 10
+        quantityAvailable: 10,
+        product: {
+          __typename: "Product",
+          id: "sahjbfuyd",
+          productType: {
+            __typename: "ProductType",
+            id: "sdfhdsfdsn",
+            kind: ProductTypeKindEnum.NORMAL
+          }
+        }
       }
     },
     {
@@ -1545,7 +1591,16 @@ export const draftOrder = (placeholder: string): OrderDetails_order => ({
       variant: {
         __typename: "ProductVariant",
         id: "dsfsfuhb",
-        quantityAvailable: 10
+        quantityAvailable: 10,
+        product: {
+          __typename: "Product",
+          id: "sahjbfuyd",
+          productType: {
+            __typename: "ProductType",
+            id: "sdfhdsfdsn",
+            kind: ProductTypeKindEnum.NORMAL
+          }
+        }
       }
     }
   ],

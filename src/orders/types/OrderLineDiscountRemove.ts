@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { OrderErrorCode, AddressTypeEnum, GiftCardEventsEnum, OrderDiscountType, DiscountValueTypeEnum, OrderEventsEmailsEnum, OrderEventsEnum, FulfillmentStatus, PaymentChargeStatusEnum, WarehouseClickAndCollectOptionEnum, OrderStatus, OrderAction, JobStatusEnum } from "./../../types/globalTypes";
+import { OrderErrorCode, AddressTypeEnum, GiftCardEventsEnum, OrderDiscountType, DiscountValueTypeEnum, OrderEventsEmailsEnum, OrderEventsEnum, ProductTypeKindEnum, FulfillmentStatus, PaymentChargeStatusEnum, WarehouseClickAndCollectOptionEnum, OrderStatus, OrderAction, JobStatusEnum } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: OrderLineDiscountRemove
@@ -213,10 +213,23 @@ export interface OrderLineDiscountRemove_orderLineDiscountRemove_order_events {
   lines: (OrderLineDiscountRemove_orderLineDiscountRemove_order_events_lines | null)[] | null;
 }
 
+export interface OrderLineDiscountRemove_orderLineDiscountRemove_order_fulfillments_lines_orderLine_variant_product_productType {
+  __typename: "ProductType";
+  id: string;
+  kind: ProductTypeKindEnum;
+}
+
+export interface OrderLineDiscountRemove_orderLineDiscountRemove_order_fulfillments_lines_orderLine_variant_product {
+  __typename: "Product";
+  id: string;
+  productType: OrderLineDiscountRemove_orderLineDiscountRemove_order_fulfillments_lines_orderLine_variant_product_productType;
+}
+
 export interface OrderLineDiscountRemove_orderLineDiscountRemove_order_fulfillments_lines_orderLine_variant {
   __typename: "ProductVariant";
   id: string;
   quantityAvailable: number;
+  product: OrderLineDiscountRemove_orderLineDiscountRemove_order_fulfillments_lines_orderLine_variant_product;
 }
 
 export interface OrderLineDiscountRemove_orderLineDiscountRemove_order_fulfillments_lines_orderLine_unitDiscount {
@@ -309,10 +322,23 @@ export interface OrderLineDiscountRemove_orderLineDiscountRemove_order_fulfillme
   warehouse: OrderLineDiscountRemove_orderLineDiscountRemove_order_fulfillments_warehouse | null;
 }
 
+export interface OrderLineDiscountRemove_orderLineDiscountRemove_order_lines_variant_product_productType {
+  __typename: "ProductType";
+  id: string;
+  kind: ProductTypeKindEnum;
+}
+
+export interface OrderLineDiscountRemove_orderLineDiscountRemove_order_lines_variant_product {
+  __typename: "Product";
+  id: string;
+  productType: OrderLineDiscountRemove_orderLineDiscountRemove_order_lines_variant_product_productType;
+}
+
 export interface OrderLineDiscountRemove_orderLineDiscountRemove_order_lines_variant {
   __typename: "ProductVariant";
   id: string;
   quantityAvailable: number;
+  product: OrderLineDiscountRemove_orderLineDiscountRemove_order_lines_variant_product;
 }
 
 export interface OrderLineDiscountRemove_orderLineDiscountRemove_order_lines_unitDiscount {

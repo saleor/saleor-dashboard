@@ -13,54 +13,17 @@ import {
 import CardTitle from "@saleor/components/CardTitle";
 import Money from "@saleor/components/Money";
 import Skeleton from "@saleor/components/Skeleton";
-import TableCellAvatar from "@saleor/components/TableCellAvatar";
 import { FormsetChange } from "@saleor/hooks/useFormset";
-import { makeStyles } from "@saleor/macaw-ui";
 import { renderCollection } from "@saleor/misc";
 import { OrderRefundData_order_lines } from "@saleor/orders/types/OrderRefundData";
+import { ProductTypeKindEnum } from "@saleor/types/globalTypes";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { OrderRefundFormData } from "../OrderRefundPage/form";
-
-const useStyles = makeStyles(
-  theme => {
-    const inputPadding = {
-      paddingBottom: theme.spacing(2),
-      paddingTop: theme.spacing(2)
-    };
-
-    return {
-      cartContent: {
-        paddingBottom: 0,
-        paddingTop: 0
-      },
-      colQuantity: {
-        textAlign: "right",
-        width: 210
-      },
-      notice: {
-        marginBottom: theme.spacing(1),
-        marginTop: theme.spacing(2)
-      },
-      quantityInnerInput: {
-        ...inputPadding
-      },
-      quantityInnerInputNoRemaining: {
-        paddingRight: 0
-      },
-      remainingQuantity: {
-        ...inputPadding,
-        color: theme.palette.text.secondary,
-        whiteSpace: "nowrap"
-      },
-      setMaximalQuantityButton: {
-        marginTop: theme.spacing(1)
-      }
-    };
-  },
-  { name: "OrderRefundUnfulfilledProducts" }
-);
+import { messages as refundMessages } from "../OrderRefundPage/messages";
+import ProductImageCell from "../ProductImageCell";
+import { useStyles } from "./styles";
 
 interface OrderRefundUnfulfilledProductsProps {
   unfulfilledLines: OrderRefundData_order_lines[];
@@ -152,12 +115,20 @@ const OrderRefundUnfulfilledProducts: React.FC<OrderRefundUnfulfilledProductsPro
               const isError =
                 Number(selectedLineQuantity?.value) > lineQuantity ||
                 Number(selectedLineQuantity?.value) < 0;
+              const isNotAllowed =
+                line?.variant?.product.productType.kind ===
+                ProductTypeKindEnum.GIFT_CARD;
 
               return (
                 <TableRow key={line?.id}>
-                  <TableCellAvatar thumbnail={line?.thumbnail?.url}>
-                    {line?.productName ? line?.productName : <Skeleton />}
-                  </TableCellAvatar>
+                  <ProductImageCell
+                    productName={line?.productName}
+                    productThumbnail={line?.thumbnail?.url}
+                    notAllowed={isNotAllowed}
+                    notAllowedAlert={intl.formatMessage(
+                      refundMessages.giftCardRefundNotAllowed
+                    )}
+                  />
                   <TableCell>
                     {line?.unitPrice ? (
                       <Money money={line?.unitPrice.gross} />
@@ -168,7 +139,7 @@ const OrderRefundUnfulfilledProducts: React.FC<OrderRefundUnfulfilledProductsPro
                   <TableCell className={classes.colQuantity}>
                     {lineQuantity || lineQuantity === 0 ? (
                       <TextField
-                        disabled={disabled}
+                        disabled={disabled || isNotAllowed}
                         type="number"
                         inputProps={{
                           className: classes.quantityInnerInput,
