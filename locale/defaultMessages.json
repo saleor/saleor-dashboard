@@ -4228,6 +4228,14 @@
     "context": "order line total price",
     "string": "Total"
   },
+  "src_dot_orders_dot_components_dot_OrderProductsCardElements_dot_fulfilledVariantDeleted": {
+    "context": "product variant in an fulfilled order",
+    "string": "This product variant no longer exists"
+  },
+  "src_dot_orders_dot_components_dot_OrderProductsCardElements_dot_unfulfilledVariantDeleted": {
+    "context": "product variant in an unfulfilled order",
+    "string": "This product variant cannot be fulfilled because it no longer exists"
+  },
   "src_dot_orders_dot_components_dot_OrderRefundFulfilledProducts_dot_1097582574": {
     "context": "section header returned",
     "string": "Fulfillment returned"
@@ -4508,6 +4516,10 @@
   "src_dot_orders_dot_components_dot_OrderUnfulfilledProductsCard_dot_2095687440": {
     "context": "button",
     "string": "Fulfill"
+  },
+  "src_dot_orders_dot_components_dot_OrderUnfulfilledProductsCard_dot_deletedVariantDetected": {
+    "context": "tooltip content when disabled variants are detected",
+    "string": "You cannot fulfill products that are deleted."
   },
   "src_dot_orders_dot_views_dot_OrderDetails_dot_1039259580": {
     "string": "We’re generating the invoice you requested. Please wait a couple of moments"
