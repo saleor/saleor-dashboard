@@ -80,7 +80,7 @@ const AutocompleteSelectMenu: React.FC<AutocompleteSelectMenuProps> = props => {
   } = props;
   const classes = useStyles(props);
 
-  const [isOnBlur, setIsOnblur] = React.useState(false);
+  const [isFocused, setIsFocused] = React.useState(false);
 
   const [inputValue, setInputValue] = React.useState(displayValue || "");
 
@@ -121,22 +121,24 @@ const AutocompleteSelectMenu: React.FC<AutocompleteSelectMenuProps> = props => {
             >
               <TextField
                 InputProps={{
-                  endAdornment: !isOnBlur && loading && (
+                  endAdornment: isFocused && loading && (
                     <CircularProgress size={16} />
                   ),
                   id: undefined,
                   onBlur() {
-                    setIsOnblur(true);
+                    setIsFocused(false);
                     closeMenu();
                     setMenuPath([]);
                     setInputValue(displayValue || "");
                   },
                   onChange: event => {
-                    setIsOnblur(false);
                     debounceFn(event.target.value);
                     setInputValue(event.target.value);
                   },
-                  onFocus: () => openMenu(),
+                  onFocus: () => {
+                    openMenu();
+                    setIsFocused(true);
+                  },
                   placeholder
                 }}
                 disabled={disabled}
