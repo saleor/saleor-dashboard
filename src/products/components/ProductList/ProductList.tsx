@@ -42,7 +42,7 @@ const useStyles = makeStyles(
   theme => ({
     [theme.breakpoints.up("md")]: {
       colName: {
-        minWidth: 200
+        minWidth: 250
       },
       colPrice: {
         width: 300
