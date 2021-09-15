@@ -82,18 +82,7 @@ const AutocompleteSelectMenu: React.FC<AutocompleteSelectMenuProps> = props => {
 
   const [isOnBlur, setIsOnblur] = React.useState(false);
 
-  const getDefaultCase = () => {
-    if (!!isOnBlur && displayValue === undefined) {
-      return null;
-    }
-    if (!!isOnBlur && !!displayValue) {
-      return "";
-    }
-  };
-
-  const [inputValue, setInputValue] = React.useState(
-    displayValue || getDefaultCase()
-  );
+  const [inputValue, setInputValue] = React.useState(displayValue || "");
 
   const [menuPath, setMenuPath] = React.useState<number[]>([]);
 
@@ -116,7 +105,7 @@ const AutocompleteSelectMenu: React.FC<AutocompleteSelectMenuProps> = props => {
   React.useEffect(() => setMenuPath([]), [options]);
 
   // Reset input value after displayValue change
-  React.useEffect(() => setInputValue(displayValue), [displayValue, isOnBlur]);
+  React.useEffect(() => setInputValue(displayValue), [displayValue]);
 
   return (
     <DebounceAutocomplete debounceFn={onInputChange}>
@@ -132,13 +121,15 @@ const AutocompleteSelectMenu: React.FC<AutocompleteSelectMenuProps> = props => {
             >
               <TextField
                 InputProps={{
-                  endAdornment: loading && <CircularProgress size={16} />,
+                  endAdornment: !isOnBlur && loading && (
+                    <CircularProgress size={16} />
+                  ),
                   id: undefined,
                   onBlur() {
                     setIsOnblur(true);
                     closeMenu();
                     setMenuPath([]);
-                    setInputValue(displayValue);
+                    setInputValue(displayValue || "");
                   },
                   onChange: event => {
                     setIsOnblur(false);
