@@ -3659,10 +3659,6 @@
     "context": "deleted product info in an unconfirmed order",
     "string": "This product variant no longer exists"
   },
-  "src_dot_orders_dot_components_dot_OrderDraftDetailsSummary_dot_addCustomerInfo": {
-    "context": "add customer first label",
-    "string": "add customer first"
-  },
   "src_dot_orders_dot_components_dot_OrderDraftDetailsSummary_dot_addDiscount": {
     "context": "add discount button",
     "string": "Add Discount"
