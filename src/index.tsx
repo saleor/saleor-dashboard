@@ -1,3 +1,4 @@
+import DemoBanner from "@saleor/components/DemoBanner";
 import useAppState from "@saleor/hooks/useAppState";
 import { ThemeProvider } from "@saleor/macaw-ui";
 import { defaultDataIdFromObject, InMemoryCache } from "apollo-cache-inmemory";
@@ -36,7 +37,7 @@ import { LocaleProvider } from "./components/Locale";
 import MessageManagerProvider from "./components/messages";
 import { ShopProvider } from "./components/Shop";
 import { WindowTitle } from "./components/WindowTitle";
-import { API_URI, APP_MOUNT_URI, GTM_ID } from "./config";
+import { API_URI, APP_MOUNT_URI, DEMO_MODE, GTM_ID } from "./config";
 import ConfigurationSection, { createConfigurationMenu } from "./configuration";
 import AppStateProvider from "./containers/AppState";
 import BackgroundTasksProvider from "./containers/BackgroundTasks";
@@ -158,6 +159,7 @@ const Routes: React.FC = () => {
   return (
     <>
       <WindowTitle title={intl.formatMessage(commonMessages.dashboard)} />
+      {DEMO_MODE && <DemoBanner />}
       {homePageLoaded ? (
         <AppLayout>
           <ErrorBoundary
