@@ -1,9 +1,13 @@
 import { IMoney } from "@saleor/components/Money";
 import { FormsetData } from "@saleor/hooks/useFormset";
 import { OrderDetails_order } from "@saleor/orders/types/OrderDetails";
-import { OrderRefundData_order } from "@saleor/orders/types/OrderRefundData";
+import {
+  OrderRefundData_order,
+  OrderRefundData_order_totalCaptured
+} from "@saleor/orders/types/OrderRefundData";
 import {
   getAllFulfillmentLinesPriceSum,
+  getGiftCardLinesMaxPriceSum,
   getPreviouslyRefundedPrice,
   getRefundedLinesPriceSum,
   getReplacedProductsAmount,
@@ -38,7 +42,17 @@ const getShipmentCost = (order: OrderRefundData_order) =>
     currency: getAuthorizedAmount(order)?.currency
   });
 
-const getMaxRefund = (order: OrderRefundData_order) => order?.totalCaptured;
+const getMaxRefund = (
+  order: OrderRefundData_order
+): OrderRefundData_order_totalCaptured => {
+  const maxAmount =
+    order?.totalCaptured.amount - getGiftCardLinesMaxPriceSum(order.lines);
+
+  return {
+    ...order?.totalCaptured,
+    amount: maxAmount
+  };
+};
 
 export const getProductsAmountValues = ({
   order,

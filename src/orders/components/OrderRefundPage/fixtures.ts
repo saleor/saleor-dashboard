@@ -14,13 +14,13 @@ export const orderToRefund = (placeholder: string): OrderRefundData_order => ({
     __typename: "TaxedMoney",
     gross: {
       __typename: "Money",
-      amount: 744.38,
+      amount: 764.38,
       currency: "USD"
     }
   },
   totalCaptured: {
     __typename: "Money",
-    amount: 644.38,
+    amount: 664.38,
     currency: "USD"
   },
   shippingPrice: {

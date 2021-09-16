@@ -1,7 +1,11 @@
 import { IMoney, subtractMoney } from "@saleor/components/Money";
 import { WarehouseFragment } from "@saleor/fragments/types/WarehouseFragment";
 import { FormsetData } from "@saleor/hooks/useFormset";
-import { FulfillmentStatus, OrderErrorCode } from "@saleor/types/globalTypes";
+import {
+  FulfillmentStatus,
+  OrderErrorCode,
+  ProductTypeKindEnum
+} from "@saleor/types/globalTypes";
 
 import {
   LineItemData,
@@ -248,6 +252,19 @@ export function getAllFulfillmentLinesPriceSum(
       );
     }, 0);
     return sum + fulfilmentLinesSum;
+  }, 0);
+}
+
+export function getGiftCardLinesMaxPriceSum(
+  lines: OrderRefundData_order_lines[]
+): number {
+  return lines.reduce((sum, line) => {
+    if (
+      line.variant?.product.productType.kind === ProductTypeKindEnum.GIFT_CARD
+    ) {
+      return sum + line.unitPrice.gross.amount * line.quantity;
+    }
+    return sum;
   }, 0);
 }
 
