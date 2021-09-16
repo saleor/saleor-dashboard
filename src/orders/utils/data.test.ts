@@ -99,6 +99,10 @@ describe("Get refunded lines price sum", () => {
       productName: "Milk 1",
       quantity: 1,
       quantityFulfilled: 1,
+      variant: {
+        __typename: "ProductVariant",
+        id: "1"
+      },
       thumbnail: undefined,
       unitPrice: {
         __typename: "TaxedMoney",
@@ -115,6 +119,10 @@ describe("Get refunded lines price sum", () => {
       productName: "Milk 2",
       quantity: 2,
       quantityFulfilled: 2,
+      variant: {
+        __typename: "ProductVariant",
+        id: "1"
+      },
       thumbnail: undefined,
       unitPrice: {
         __typename: "TaxedMoney",
@@ -131,6 +139,10 @@ describe("Get refunded lines price sum", () => {
       productName: "Milk 3",
       quantity: 4,
       quantityFulfilled: 4,
+      variant: {
+        __typename: "ProductVariant",
+        id: "1"
+      },
       thumbnail: undefined,
       unitPrice: {
         __typename: "TaxedMoney",
@@ -219,6 +231,10 @@ describe("Get get all fulfillment lines price sum", () => {
             id: "1-line-1",
             productName: "Milk 1",
             quantity: 1,
+            variant: {
+              __typename: "ProductVariant",
+              id: "1"
+            },
             thumbnail: undefined,
             unitPrice: {
               __typename: "TaxedMoney",
@@ -247,6 +263,10 @@ describe("Get get all fulfillment lines price sum", () => {
             id: "2-line-1",
             productName: "Milk 1",
             quantity: 2,
+            variant: {
+              __typename: "ProductVariant",
+              id: "1"
+            },
             thumbnail: undefined,
             unitPrice: {
               __typename: "TaxedMoney",
@@ -267,6 +287,10 @@ describe("Get get all fulfillment lines price sum", () => {
             id: "2-line-2",
             productName: "Milk 2",
             quantity: 2,
+            variant: {
+              __typename: "ProductVariant",
+              id: "1"
+            },
             thumbnail: undefined,
             unitPrice: {
               __typename: "TaxedMoney",
@@ -295,6 +319,10 @@ describe("Get get all fulfillment lines price sum", () => {
             id: "3-line-1",
             productName: "Milk 1",
             quantity: 4,
+            variant: {
+              __typename: "ProductVariant",
+              id: "1"
+            },
             thumbnail: undefined,
             unitPrice: {
               __typename: "TaxedMoney",
@@ -315,6 +343,10 @@ describe("Get get all fulfillment lines price sum", () => {
             id: "3-line-2",
             productName: "Milk 2",
             quantity: 4,
+            variant: {
+              __typename: "ProductVariant",
+              id: "1"
+            },
             thumbnail: undefined,
             unitPrice: {
               __typename: "TaxedMoney",
@@ -335,6 +367,10 @@ describe("Get get all fulfillment lines price sum", () => {
             id: "3-line-3",
             productName: "Milk 3",
             quantity: 4,
+            variant: {
+              __typename: "ProductVariant",
+              id: "1"
+            },
             thumbnail: undefined,
             unitPrice: {
               __typename: "TaxedMoney",
