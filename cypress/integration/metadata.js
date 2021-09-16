@@ -23,7 +23,7 @@ filterTests(["all"], () => {
       getDefaultChannel()
         .then(channelResp => {
           channel = channelResp;
-          createTypeAttributeAndCategoryForProduct(name);
+          createTypeAttributeAndCategoryForProduct({ name });
         })
         .then(({ attribute, category, productType }) => {
           createProductInChannel({

@@ -39,7 +39,7 @@ filterTests(["all"], () => {
 
       const name = `${startsWith}${faker.datatype.number()}`;
       productsUtils
-        .createTypeAttributeAndCategoryForProduct(name)
+        .createTypeAttributeAndCategoryForProduct({ name })
         .then(
           ({
             productType: productTypeResp,

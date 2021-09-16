@@ -42,7 +42,7 @@ filterTests(["all"], () => {
         })
         .then(({ warehouse: warehouseResp }) => {
           warehouse = warehouseResp;
-          createTypeAttributeAndCategoryForProduct(name);
+          createTypeAttributeAndCategoryForProduct({ name });
         })
         .then(({ attribute, productType, category }) => {
           createProductInChannel({

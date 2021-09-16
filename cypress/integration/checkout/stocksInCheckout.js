@@ -55,7 +55,7 @@ filterTests(["all", "critical"], () => {
           }) => {
             warehouse = warehouseResp;
             shippingMethod = shippingMethodResp;
-            createTypeAttributeAndCategoryForProduct(name);
+            createTypeAttributeAndCategoryForProduct({ name });
           }
         )
         .then(

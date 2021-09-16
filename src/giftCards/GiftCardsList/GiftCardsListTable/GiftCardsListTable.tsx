@@ -22,8 +22,9 @@ import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { giftCardsListTableMessages as messages } from "../messages";
-import useGiftCardList from "../providers/hooks/useGiftCardList";
-import useGiftCardListBulkActions from "../providers/hooks/useGiftCardListBulkActions";
+import useGiftCardListDialogs from "../providers/GiftCardListDialogsProvider/hooks/useGiftCardListDialogs";
+import useGiftCardList from "../providers/GiftCardListProvider/hooks/useGiftCardList";
+import useGiftCardListBulkActions from "../providers/GiftCardListProvider/hooks/useGiftCardListBulkActions";
 import { useTableStyles as useStyles } from "../styles";
 import GiftCardsListTableFooter from "./GiftCardsListTableFooter";
 import GiftCardsListTableHeader from "./GiftCardsListTableHeader";
@@ -34,8 +35,10 @@ const GiftCardsListTable: React.FC = () => {
   const intl = useIntl();
   const classes = useStyles({});
   const navigate = useNavigator();
+
   const { giftCards, numberOfColumns, loading } = useGiftCardList();
   const { toggle, isSelected } = useGiftCardListBulkActions();
+  const { openDeleteDialog } = useGiftCardListDialogs();
 
   const redirectToGiftCardUpdate = (id: string) => () =>
     navigate(giftCardUrl(id));
@@ -122,7 +125,12 @@ const GiftCardsListTable: React.FC = () => {
                   </div>
                 </TableCell>
                 <TableCell className={classes.colDelete}>
-                  <DeleteIconButton />
+                  <DeleteIconButton
+                    onClick={event => {
+                      event.stopPropagation();
+                      openDeleteDialog(id);
+                    }}
+                  />
                 </TableCell>
               </TableRow>
             ),

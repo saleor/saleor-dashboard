@@ -61,7 +61,7 @@ filterTests(["all"], () => {
           }) => {
             warehouse = warehouseResp;
             shippingMethod = shippingMethodResp;
-            createTypeAttributeAndCategoryForProduct(name);
+            createTypeAttributeAndCategoryForProduct({ name });
           }
         )
         .then(

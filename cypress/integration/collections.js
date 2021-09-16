@@ -44,7 +44,7 @@ filterTests(["all"], () => {
         .getDefaultChannel()
         .then(channel => {
           defaultChannel = channel;
-          productsUtils.createTypeAttributeAndCategoryForProduct(name);
+          productsUtils.createTypeAttributeAndCategoryForProduct({ name });
         })
         .then(
           ({

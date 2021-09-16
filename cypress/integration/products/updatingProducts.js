@@ -43,7 +43,7 @@ filterTests(["all"], () => {
         })
         .then(collectionResp => {
           collection = collectionResp;
-          createTypeAttributeAndCategoryForProduct(name);
+          createTypeAttributeAndCategoryForProduct({ name });
         })
         .then(({ attribute: attributeResp, category, productType }) => {
           attribute = attributeResp;

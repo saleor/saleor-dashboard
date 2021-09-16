@@ -6,8 +6,7 @@ import {
   createGiftCard,
   getGiftCardWithId,
   getGiftCardWithTag,
-  giftCardDeactivate,
-  giftCardExpiryOptions
+  giftCardDeactivate
 } from "../../apiRequests/giftCards";
 import { changeGiftCardActiveStatus } from "../../steps/giftCardSteps";
 import filterTests from "../../support/filterTests";
@@ -39,7 +38,6 @@ filterTests(["all"], () => {
     let address;
     let dataForCheckout;
     const giftCardData = {
-      expiryType: giftCardExpiryOptions.NEVER_EXPIRE,
       amount: 150,
       currency: "USD"
     };
@@ -54,7 +52,7 @@ filterTests(["all"], () => {
       const name = `${startsWith}${faker.datatype.number()}`;
 
       productsUtils
-        .createTypeAttributeAndCategoryForProduct(name)
+        .createTypeAttributeAndCategoryForProduct({ name, kind: "GIFT_CARD" })
         .then(
           ({
             productType: productTypeResp,
@@ -117,8 +115,8 @@ filterTests(["all"], () => {
           dataForCheckout.voucherCode = giftCard.code;
           purchaseProductWithPromoCode(dataForCheckout);
         })
-        .then(({ checkout }) => {
-          expect(checkout.totalPrice.gross.amount).to.eq(0);
+        .then(({ order }) => {
+          expect(order.total.gross.amount).to.eq(0);
           getGiftCardWithTag(giftCardData.tag);
         })
         .then(giftCard => {
@@ -143,8 +141,8 @@ filterTests(["all"], () => {
           dataForCheckout.voucherCode = giftCard.code;
           createCheckoutWithVoucher(dataForCheckout);
         })
-        .then(({ checkout }) => {
-          expect(checkout.totalPrice.gross.amount).to.eq(0);
+        .then(({ addPromoCodeResp }) => {
+          expect(addPromoCodeResp.checkout.totalPrice.gross.amount).to.eq(0);
         });
     });
 
@@ -164,7 +162,7 @@ filterTests(["all"], () => {
           addPayment(checkout.id);
           completeCheckout(checkout.id);
         })
-        .then(checkout => {
+        .then(() => {
           getGiftCardWithId(giftCard.id);
         })
         .then(giftCardResp => {

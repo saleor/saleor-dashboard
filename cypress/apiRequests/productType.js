@@ -5,7 +5,8 @@ export function createTypeProduct({
   attributeId,
   hasVariants = true,
   slug = name,
-  shippable = true
+  shippable = true,
+  kind = "NORMAL"
 }) {
   const productAttributesLine = getValueWithDefault(
     attributeId,
@@ -23,8 +24,9 @@ export function createTypeProduct({
       hasVariants: ${hasVariants}
       ${variantAttributesLine}
       isShippingRequired:${shippable}
+      kind: ${kind}
     }){
-      productErrors{
+      errors{
         field
         message
       }

@@ -24,7 +24,7 @@ filterTests(["all"], () => {
       cy.clearSessionData().loginUserViaRequest();
       productsUtils.deleteProductsStartsWith(startsWith);
       productsUtils
-        .createTypeAttributeAndCategoryForProduct(name)
+        .createTypeAttributeAndCategoryForProduct({ name })
         .then(
           ({
             attribute: attributeResp,

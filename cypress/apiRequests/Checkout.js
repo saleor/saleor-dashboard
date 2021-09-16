@@ -101,6 +101,12 @@ export function completeCheckout(checkoutId, paymentData) {
     checkoutComplete(checkoutId:"${checkoutId}" ${paymentDataLine}){
       order{
         id
+        paymentStatus
+        total{
+          gross{
+            amount
+          }
+        }
       }
       confirmationNeeded
       confirmationData

@@ -10,6 +10,7 @@
 export interface OrderSettings_orderSettings {
   __typename: "OrderSettings";
   automaticallyConfirmAllNewOrders: boolean;
+  automaticallyFulfillNonShippableGiftCard: boolean;
 }
 
 export interface OrderSettings_shop {

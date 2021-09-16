@@ -65,10 +65,11 @@ export function createProductInChannel({
     });
 }
 
-export function createTypeAttributeAndCategoryForProduct(
+export function createTypeAttributeAndCategoryForProduct({
   name,
-  attributeValues
-) {
+  attributeValues,
+  kind = "NORMAL"
+}) {
   let attribute;
   let productType;
   let category;
@@ -76,7 +77,7 @@ export function createTypeAttributeAndCategoryForProduct(
     .createAttribute({ name, attributeValues })
     .then(attributeResp => {
       attribute = attributeResp;
-      createTypeProduct({ name, attributeId: attributeResp.id });
+      createTypeProduct({ name, attributeId: attributeResp.id, kind });
     })
     .then(productTypeResp => {
       productType = productTypeResp;

@@ -11,14 +11,8 @@ export function getGiftCardsWithTag(first, tag) {
       edges{
         node{
           id
-          code
           isActive
-          expiryType
           expiryDate
-          expiryPeriod{
-            amount
-            type
-          }
           currentBalance{
             currency
             amount
@@ -47,13 +41,11 @@ export function getGiftCardWithId(id) {
   return cy.sendRequestWithQuery(query).its("body.data.giftCard");
 }
 
-export function createGiftCard({ tag, expiryType, currency, amount }) {
+export function createGiftCard({ tag, currency, amount }) {
   const mutation = `mutation{
     giftCardCreate(input:{
       tag:"${tag}"
-      expirySettings: {
-        expiryType: ${expiryType}
-      }
+      isActive: true
       balance: {
         currency: "${currency}"
         amount: ${amount}
@@ -98,7 +90,3 @@ export function deleteGiftCard(giftCardId) {
   }`;
   return cy.sendRequestWithQuery(mutation);
 }
-
-export const giftCardExpiryOptions = {
-  NEVER_EXPIRE: "NEVER_EXPIRE"
-};

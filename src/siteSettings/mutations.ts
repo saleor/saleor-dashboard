@@ -1,3 +1,4 @@
+import { IS_CLOUD_INSTANCE } from "@saleor/config";
 import { fragmentAddress } from "@saleor/fragments/address";
 import { shopErrorFragment } from "@saleor/fragments/errors";
 import { shopFragment } from "@saleor/fragments/shop";
@@ -26,7 +27,7 @@ const shopSettingsUpdate = gql`
         ...ShopFragment
       }
     }
-    shopDomainUpdate(input: $shopDomainInput) {
+    shopDomainUpdate(input: $shopDomainInput) @skip(if: ${IS_CLOUD_INSTANCE}) {
       errors {
         ...ShopErrorFragment
       }

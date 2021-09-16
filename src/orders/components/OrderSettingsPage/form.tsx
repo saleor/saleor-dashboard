@@ -8,6 +8,7 @@ export interface OrderSettingsFormData {
   automaticallyConfirmAllNewOrders: boolean;
   fulfillmentAutoApprove: boolean;
   fulfillmentAllowUnpaid: boolean;
+  automaticallyFulfillNonShippableGiftCard: boolean;
 }
 
 export interface UseOrderSettingsFormResult {
@@ -29,6 +30,8 @@ function getOrderSeettingsFormData(
   shop: ShopOrderSettingsFragment
 ): OrderSettingsFormData {
   return {
+    automaticallyFulfillNonShippableGiftCard:
+      orderSettings?.automaticallyFulfillNonShippableGiftCard,
     automaticallyConfirmAllNewOrders:
       orderSettings?.automaticallyConfirmAllNewOrders,
     fulfillmentAutoApprove: shop?.fulfillmentAutoApprove,
