@@ -10,29 +10,13 @@ export interface GiftCardCreateFormCustomer {
   email: string;
 }
 
-export interface GiftCardCommonFormData {
-  tag: string;
-  balanceAmount: number;
-  balanceCurrency: string;
-  expiryDate: string;
-}
-
 export type GiftCardCreateFormErrors = Record<
-  "tag" | "expiryDate" | "customer" | "currency" | "amount",
+  "tag" | "expiryDate" | "customer" | "currency" | "amount" | "balance",
   GiftCardError
->;
-
-export type GiftCardCreateInputData = Pick<
-  GiftCardCreateFormData,
-  | "expirySelected"
-  | "expiryDate"
-  | "expiryPeriodAmount"
-  | "expiryPeriodType"
-  | "expiryType"
 >;
 
 export interface GiftCardCreateFormCommonProps {
   change: FormChange;
   errors: GiftCardCreateFormErrors;
-  data: GiftCardCommonFormData;
+  data: GiftCardCreateFormData;
 }
