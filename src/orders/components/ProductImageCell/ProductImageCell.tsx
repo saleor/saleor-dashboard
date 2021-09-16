@@ -1,4 +1,4 @@
-import { TableCell } from "@material-ui/core";
+import { TableCell, TableCellProps } from "@material-ui/core";
 import InlineAlert from "@saleor/components/Alert/InlineAlert";
 import Skeleton from "@saleor/components/Skeleton";
 import Avatar from "@saleor/components/TableCellAvatar/Avatar";
@@ -7,7 +7,7 @@ import React from "react";
 import { NotAllowedInverted } from "../NotAllowedInverted";
 import { useStyles } from "./styles";
 
-interface ProductImageCellProps {
+interface ProductImageCellProps extends TableCellProps {
   notAllowed?: boolean;
   notAllowedAlert?: string;
   productThumbnail?: string;
@@ -18,12 +18,13 @@ export const ProductImageCell: React.FC<ProductImageCellProps> = ({
   notAllowed = false,
   notAllowedAlert,
   productThumbnail,
-  productName
+  productName,
+  ...rest
 }) => {
   const classes = useStyles();
 
   return (
-    <TableCell>
+    <TableCell {...rest}>
       <div className={classes.avatar}>
         {notAllowed && (
           <div className={classes.avatarNotAllowed}>

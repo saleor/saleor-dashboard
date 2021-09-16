@@ -4896,6 +4896,10 @@
     "context": "page header with order number",
     "string": "Order #{orderNumber}"
   },
+  "src_dot_orders_dot_components_dot_OrderReturnPage_dot_giftCardReturnOrReplaceNotAllowed": {
+    "context": "alert",
+    "string": "You cannot return or replace this product because it is a gift card"
+  },
   "src_dot_orders_dot_components_dot_OrderReturnPage_dot_pageTitle": {
     "context": "page header",
     "string": "Order no. {orderNumber} - Replace/Return"

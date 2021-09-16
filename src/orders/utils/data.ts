@@ -256,9 +256,9 @@ export function getAllFulfillmentLinesPriceSum(
 }
 
 export function getGiftCardLinesMaxPriceSum(
-  lines: OrderRefundData_order_lines[]
+  lines?: OrderRefundData_order_lines[]
 ): number {
-  return lines.reduce((sum, line) => {
+  return lines?.reduce((sum, line) => {
     if (
       line.variant?.product.productType.kind === ProductTypeKindEnum.GIFT_CARD
     ) {

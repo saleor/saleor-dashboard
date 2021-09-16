@@ -11,7 +11,6 @@ import {
 } from "@material-ui/core";
 import Money from "@saleor/components/Money";
 import Skeleton from "@saleor/components/Skeleton";
-import TableCellAvatar from "@saleor/components/TableCellAvatar";
 import { OrderErrorFragment } from "@saleor/fragments/types/OrderErrorFragment";
 import { FormsetChange } from "@saleor/hooks/useFormset";
 import { makeStyles } from "@saleor/macaw-ui";
@@ -20,10 +19,13 @@ import {
   OrderDetails_order,
   OrderDetails_order_lines
 } from "@saleor/orders/types/OrderDetails";
+import { ProductTypeKindEnum } from "@saleor/types/globalTypes";
 import React, { CSSProperties } from "react";
 import { defineMessages, FormattedMessage, useIntl } from "react-intl";
 
+import ProductImageCell from "../../ProductImageCell";
 import { FormsetQuantityData, FormsetReplacementData } from "../form";
+import { messages as refundMessages } from "../messages";
 import { getById } from "../utils";
 import CardTitle from "./CardTitle";
 import MaximalButton from "./MaximalButton";
@@ -184,15 +186,21 @@ const ItemsCard: React.FC<OrderReturnRefundLinesCardProps> = ({
               const productNameCellWidth = anyLineWithoutVariant
                 ? "30%"
                 : "50%";
+              const isNotAllowed =
+                variant?.product.productType.kind ===
+                ProductTypeKindEnum.GIFT_CARD;
 
               return (
                 <TableRow key={id}>
-                  <TableCellAvatar
-                    thumbnail={thumbnail?.url}
+                  <ProductImageCell
+                    productName={productName}
+                    productThumbnail={thumbnail?.url}
+                    notAllowed={isNotAllowed}
+                    notAllowedAlert={intl.formatMessage(
+                      refundMessages.giftCardReturnOrReplaceNotAllowed
+                    )}
                     style={{ width: productNameCellWidth }}
-                  >
-                    {productName || <Skeleton />}
-                  </TableCellAvatar>
+                  />
                   <ProductErrorCell hasVariant={isReturnable} />
                   <TableCell align="right">
                     <Money
@@ -206,6 +214,7 @@ const ItemsCard: React.FC<OrderReturnRefundLinesCardProps> = ({
                     {isReturnable && (
                       <TextField
                         type="number"
+                        disabled={isNotAllowed}
                         inputProps={{
                           className: classes.quantityInnerInput,
                           "data-test": "quantityInput",
@@ -236,6 +245,7 @@ const ItemsCard: React.FC<OrderReturnRefundLinesCardProps> = ({
                     {isReplacable && (
                       <Checkbox
                         checked={isSelected}
+                        disabled={isNotAllowed}
                         onChange={() => onChangeSelected(id, !isSelected)}
                       />
                     )}

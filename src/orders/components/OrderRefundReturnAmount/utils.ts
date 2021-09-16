@@ -46,7 +46,7 @@ const getMaxRefund = (
   order: OrderRefundData_order
 ): OrderRefundData_order_totalCaptured => {
   const maxAmount =
-    order?.totalCaptured.amount - getGiftCardLinesMaxPriceSum(order.lines);
+    order?.totalCaptured.amount - getGiftCardLinesMaxPriceSum(order?.lines);
 
   return {
     ...order?.totalCaptured,
