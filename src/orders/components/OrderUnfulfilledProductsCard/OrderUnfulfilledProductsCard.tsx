@@ -58,25 +58,34 @@ const OrderUnfulfilledProductsCard: React.FC<OrderUnfulfilledProductsCardProps> 
         </ResponsiveTable>
         {canFulfill && (
           <CardActions>
-            <Tooltip
-              title={intl.formatMessage(messages.deletedVariantDetected)}
-              variant={"info"}
-              placement={"left"}
-            >
-              <div>
-                <Button
-                  disabled={isDeleted}
-                  variant="text"
-                  color="primary"
-                  onClick={onFulfill}
-                >
-                  <FormattedMessage
-                    defaultMessage="Fulfill"
-                    description="button"
-                  />
-                </Button>
-              </div>
-            </Tooltip>
+            {isDeleted ? (
+              <Tooltip
+                title={intl.formatMessage(messages.deletedVariantDetected)}
+                variant={"info"}
+                placement={"left"}
+              >
+                <div>
+                  <Button
+                    disabled
+                    variant="text"
+                    color="primary"
+                    onClick={onFulfill}
+                  >
+                    <FormattedMessage
+                      defaultMessage="Fulfill"
+                      description="button"
+                    />
+                  </Button>
+                </div>
+              </Tooltip>
+            ) : (
+              <Button variant="text" color="primary" onClick={onFulfill}>
+                <FormattedMessage
+                  defaultMessage="Fulfill"
+                  description="button"
+                />
+              </Button>
+            )}
           </CardActions>
         )}
       </Card>
