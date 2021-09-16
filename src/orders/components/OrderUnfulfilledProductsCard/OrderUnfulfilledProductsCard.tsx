@@ -61,7 +61,7 @@ const OrderUnfulfilledProductsCard: React.FC<OrderUnfulfilledProductsCardProps> 
             {isDeleted ? (
               <Tooltip
                 title={intl.formatMessage(messages.deletedVariantDetected)}
-                variant={"info"}
+                variant={"error"}
                 placement={"left"}
               >
                 <div>
