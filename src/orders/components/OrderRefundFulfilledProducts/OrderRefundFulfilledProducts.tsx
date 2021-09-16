@@ -16,7 +16,7 @@ import Skeleton from "@saleor/components/Skeleton";
 import { FormsetChange } from "@saleor/hooks/useFormset";
 import { renderCollection } from "@saleor/misc";
 import { OrderRefundData_order_fulfillments } from "@saleor/orders/types/OrderRefundData";
-import { ProductTypeKindEnum } from "@saleor/types/globalTypes";
+import { isGiftCardProduct } from "@saleor/orders/utils/data";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -114,9 +114,7 @@ const OrderRefundFulfilledProducts: React.FC<OrderRefundFulfilledProductsProps> 
               const isError =
                 Number(selectedLineQuantity?.value) > line?.quantity ||
                 Number(selectedLineQuantity?.value) < 0;
-              const isNotAllowed =
-                line?.orderLine?.variant?.product.productType.kind ===
-                ProductTypeKindEnum.GIFT_CARD;
+              const isNotAllowed = isGiftCardProduct(line?.orderLine?.variant);
 
               return (
                 <TableRow key={line?.id}>

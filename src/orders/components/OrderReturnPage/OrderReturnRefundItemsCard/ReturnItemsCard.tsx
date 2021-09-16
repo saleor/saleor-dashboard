@@ -19,7 +19,7 @@ import {
   OrderDetails_order,
   OrderDetails_order_lines
 } from "@saleor/orders/types/OrderDetails";
-import { ProductTypeKindEnum } from "@saleor/types/globalTypes";
+import { isGiftCardProduct } from "@saleor/orders/utils/data";
 import React, { CSSProperties } from "react";
 import { defineMessages, FormattedMessage, useIntl } from "react-intl";
 
@@ -186,9 +186,7 @@ const ItemsCard: React.FC<OrderReturnRefundLinesCardProps> = ({
               const productNameCellWidth = anyLineWithoutVariant
                 ? "30%"
                 : "50%";
-              const isNotAllowed =
-                variant?.product.productType.kind ===
-                ProductTypeKindEnum.GIFT_CARD;
+              const isNotAllowed = isGiftCardProduct(variant);
 
               return (
                 <TableRow key={id}>

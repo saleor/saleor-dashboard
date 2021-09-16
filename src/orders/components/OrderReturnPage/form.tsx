@@ -4,6 +4,7 @@ import useFormset, {
   FormsetData
 } from "@saleor/hooks/useFormset";
 import { OrderDetails_order } from "@saleor/orders/types/OrderDetails";
+import { isGiftCardProduct } from "@saleor/orders/utils/data";
 import { FulfillmentStatus } from "@saleor/types/globalTypes";
 import handleFormSubmit from "@saleor/utils/handlers/handleFormSubmit";
 import React, { useState } from "react";
@@ -173,8 +174,13 @@ function useOrderReturnForm(
 
   const handleSetMaximalUnfulfiledItemsQuantities = () => {
     const newQuantities: FormsetQuantityData = unfulfiledItemsQuantites.data.map(
-      ({ id }) => {
-        const line = order.lines.find(getById(id));
+      item => {
+        const line = order.lines.find(getById(item.id));
+
+        if (isGiftCardProduct(line.variant)) {
+          return item;
+        }
+
         const initialValue = line.quantityToFulfill;
 
         return getLineItem(line, { initialValue });
@@ -197,6 +203,10 @@ function useOrderReturnForm(
       const line = fulfillment.lines.find(getById(item.id));
 
       if (!line) {
+        return item;
+      }
+
+      if (isGiftCardProduct(line.orderLine.variant)) {
         return item;
       }
 

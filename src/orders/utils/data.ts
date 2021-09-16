@@ -26,7 +26,8 @@ import { OrderFulfillData_order_lines } from "../types/OrderFulfillData";
 import {
   OrderRefundData_order,
   OrderRefundData_order_fulfillments,
-  OrderRefundData_order_lines
+  OrderRefundData_order_lines,
+  OrderRefundData_order_lines_variant
 } from "../types/OrderRefundData";
 
 export type OrderWithTotalAndTotalCaptured = Pick<
@@ -255,13 +256,17 @@ export function getAllFulfillmentLinesPriceSum(
   }, 0);
 }
 
+export function isGiftCardProduct(
+  variant?: OrderRefundData_order_lines_variant
+) {
+  return variant?.product.productType.kind === ProductTypeKindEnum.GIFT_CARD;
+}
+
 export function getGiftCardLinesMaxPriceSum(
   lines?: OrderRefundData_order_lines[]
 ): number {
   return lines?.reduce((sum, line) => {
-    if (
-      line.variant?.product.productType.kind === ProductTypeKindEnum.GIFT_CARD
-    ) {
+    if (isGiftCardProduct(line.variant)) {
       return sum + line.unitPrice.gross.amount * line.quantity;
     }
     return sum;

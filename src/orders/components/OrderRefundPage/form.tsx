@@ -4,6 +4,7 @@ import useFormset, {
   FormsetData
 } from "@saleor/hooks/useFormset";
 import { OrderRefundData_order } from "@saleor/orders/types/OrderRefundData";
+import { isGiftCardProduct } from "@saleor/orders/utils/data";
 import handleFormSubmit from "@saleor/utils/handlers/handleFormSubmit";
 import React from "react";
 
@@ -128,6 +129,10 @@ function useOrderRefundForm(
     > = refundedProductQuantities.data.map(selectedLine => {
       const line = order.lines.find(line => line.id === selectedLine.id);
 
+      if (isGiftCardProduct(line.variant)) {
+        return selectedLine;
+      }
+
       return {
         data: null,
         id: line.id,
@@ -150,15 +155,20 @@ function useOrderRefundForm(
     > = refundedFulfilledProductQuantities.data.map(selectedLine => {
       const line = fulfillment.lines.find(line => line.id === selectedLine.id);
 
-      if (line) {
-        return {
-          data: null,
-          id: line.id,
-          label: null,
-          value: line.quantity.toString()
-        };
+      if (!line) {
+        return selectedLine;
       }
-      return selectedLine;
+
+      if (isGiftCardProduct(line.orderLine?.variant)) {
+        return selectedLine;
+      }
+
+      return {
+        data: null,
+        id: line.id,
+        label: null,
+        value: line.quantity.toString()
+      };
     });
     refundedFulfilledProductQuantities.set(newQuantities);
     triggerChange();
