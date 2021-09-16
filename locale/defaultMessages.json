@@ -4279,6 +4279,10 @@
     "context": "error message",
     "string": "Improper value"
   },
+  "src_dot_orders_dot_components_dot_OrderRefundFulfilledProducts_dot_fulfilledVariantDeleted": {
+    "context": "tooltip content when a deleted variant is detected",
+    "string": "This product is no longer in the database. It won't be restocked."
+  },
   "src_dot_orders_dot_components_dot_OrderRefundPage_dot_194531545": {
     "context": "page header",
     "string": "Order no. {orderNumber} - Refund"
@@ -4410,6 +4414,10 @@
     "context": "error message",
     "string": "Improper value"
   },
+  "src_dot_orders_dot_components_dot_OrderRefundUnfulfilledProducts_dot_unfulfilledVariantDeleted": {
+    "context": "tooltip content when a deleted variant is detected",
+    "string": "This product is no longer in the database. It won't be restocked."
+  },
   "src_dot_orders_dot_components_dot_OrderRefund_dot_1275363773": {
     "context": "section header",
     "string": "Refund Order"
@@ -4526,7 +4534,7 @@
     "string": "Fulfill"
   },
   "src_dot_orders_dot_components_dot_OrderUnfulfilledProductsCard_dot_deletedVariantDetected": {
-    "context": "tooltip content when disabled variants are detected",
+    "context": "tooltip content when a deleted variant is detected",
     "string": "You cannot fulfill products that are deleted."
   },
   "src_dot_orders_dot_views_dot_OrderDetails_dot_1039259580": {
