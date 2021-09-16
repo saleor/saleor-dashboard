@@ -212,13 +212,13 @@
     "string": "ئورۇنداشقا تەييار زاكاز يوق"
   },
   "homeNotificationTableOrders": {
-    "string": "{amount, plural,one {One order is ready to fulfill} other {{amount} زاكازلار ئورۇنداشقا تەييار}}"
+    "string": "{amount, plural,one {One order is ready to fulfill} other { زاكازلار ئورۇنداشقا تەييار {amount}}}"
   },
   "homeNotificationTablePayments": {
-    "string": "{amount, plural,one {One payment to capture}other {{amount} پۇل تۆلەنمىگەن زاكازلار}}"
+    "string": "{amount, plural,one {One payment to capture}other { پۇل تۆلەنمىگەن زاكازلار {amount}}}"
   },
   "homeNotificationTableProducts": {
-    "string": "{amount, plural,one {One product out of stock}other {{amount} مەھسۇلات يوق}}"
+    "string": "{amount, plural,one {One product out of stock}other { مەھسۇلات يوق {amount}}}"
   },
   "homeNotificationsNoPayments": {
     "string": "تۆلىنىشنى ساقلاۋاتقان پۇل يوق"
@@ -228,7 +228,7 @@
   },
   "homeProductListCardOrders": {
     "context": "number of ordered products",
-    "string": "{amount, plural,one {One ordered}other {{amount} زاكاز قىلىندى}}"
+    "string": "{amount, plural,one {One ordered}other { زاكاز قىلىندى {amount}}}"
   },
   "homeProductsListCardHeader": {
     "context": "header",
