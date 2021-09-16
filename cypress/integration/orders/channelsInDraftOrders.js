@@ -1,4 +1,6 @@
-// <reference types="cypress" />
+/// <reference types="cypress"/>
+/// <reference types="../../support"/>
+
 import faker from "faker";
 
 import { CHANNEL_FORM_SELECTORS } from "../../elements/channels/channel-form-selectors";

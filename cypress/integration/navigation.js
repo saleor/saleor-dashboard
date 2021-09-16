@@ -1,5 +1,5 @@
-// / <reference types="cypress"/>
-// / <reference types="../support"/>
+/// <reference types="cypress"/>
+/// <reference types="../support"/>
 
 import { PERMISSIONS_OPTIONS } from "../fixtures/permissionsUsers";
 import filterTests from "../support/filterTests";

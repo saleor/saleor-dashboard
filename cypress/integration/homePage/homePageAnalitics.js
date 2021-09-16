@@ -1,3 +1,6 @@
+/// <reference types="cypress"/>
+/// <reference types="../../support"/>
+
 import faker from "faker";
 
 import { HOMEPAGE_SELECTORS } from "../../elements/homePage/homePage-selectors";

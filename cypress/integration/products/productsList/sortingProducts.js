@@ -1,3 +1,6 @@
+/// <reference types="cypress"/>
+/// <reference types="../../../support"/>
+
 import { PRODUCTS_LIST } from "../../../elements/catalog/products/products-list";
 import { SHARED_ELEMENTS } from "../../../elements/shared/sharedElements";
 import { urlList } from "../../../fixtures/urlList";

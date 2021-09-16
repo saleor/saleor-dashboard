@@ -1,3 +1,6 @@
+/// <reference types="cypress"/>
+/// <reference types="../../support"/>
+
 import faker from "faker";
 
 import { BUTTON_SELECTORS } from "../../elements/shared/button-selectors";

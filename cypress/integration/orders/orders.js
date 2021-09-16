@@ -1,4 +1,6 @@
-// <reference types="cypress" />
+/// <reference types="cypress"/>
+/// <reference types="../../support"/>
+
 import faker from "faker";
 
 import { ORDER_REFUND } from "../../elements/orders/order-refund";

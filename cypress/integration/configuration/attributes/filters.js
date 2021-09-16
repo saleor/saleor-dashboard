@@ -1,3 +1,6 @@
+/// <reference types="cypress"/>
+/// <reference types="../../../support"/>
+
 import {
   getElementByDataTestId,
   SHARED_ELEMENTS

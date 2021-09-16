@@ -1,3 +1,6 @@
+/// <reference types="cypress"/>
+/// <reference types="../../support"/>
+
 import faker from "faker";
 
 import { PERMISSION_GROUP_DETAILS } from "../../elements/permissionGroup/permissionGroupDetails";

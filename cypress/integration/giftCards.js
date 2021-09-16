@@ -1,4 +1,4 @@
-// <reference types="cypress" />
+/// <reference types="cypress" />
 import faker from "faker";
 
 import { getGiftCardWithTag } from "../support/api/requests/giftCards";

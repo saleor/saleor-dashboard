@@ -1,4 +1,6 @@
-// <reference types="cypress" />
+/// <reference types="cypress"/>
+/// <reference types="../../support"/>
+
 import faker from "faker";
 
 import { PRODUCT_DETAILS } from "../../elements/catalog/products/product-details";

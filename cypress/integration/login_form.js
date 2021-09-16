@@ -1,5 +1,5 @@
-// / <reference types="cypress"/>
-// / <reference types="../support"/>
+/// <reference types="cypress"/>
+/// <reference types="../support"/>
 
 import { LOGIN_SELECTORS } from "../elements/account/login-selectors";
 import { urlList } from "../fixtures/urlList";
