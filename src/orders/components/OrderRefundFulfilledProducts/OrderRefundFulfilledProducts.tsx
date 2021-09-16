@@ -13,6 +13,7 @@ import {
 import CardTitle from "@saleor/components/CardTitle";
 import Money from "@saleor/components/Money";
 import Skeleton from "@saleor/components/Skeleton";
+import StatusBadge from "@saleor/components/StatusBadge";
 import TableCellAvatar from "@saleor/components/TableCellAvatar";
 import { FormsetChange } from "@saleor/hooks/useFormset";
 import { makeStyles } from "@saleor/macaw-ui";
@@ -23,6 +24,7 @@ import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { OrderRefundFormData } from "../OrderRefundPage/form";
+import { messages } from "./messages";
 
 const useStyles = makeStyles(
   theme => {
@@ -166,7 +168,19 @@ const OrderRefundFulfilledProducts: React.FC<OrderRefundFulfilledProductsProps> 
 
               return (
                 <TableRow key={line?.id}>
-                  <TableCellAvatar thumbnail={line?.orderLine?.thumbnail?.url}>
+                  <TableCellAvatar
+                    badge={
+                      !line.orderLine.variant && (
+                        <StatusBadge
+                          variant={"error"}
+                          message={intl.formatMessage(
+                            messages.fulfilledVariantDeleted
+                          )}
+                        />
+                      )
+                    }
+                    thumbnail={line?.orderLine?.thumbnail?.url}
+                  >
                     {line?.orderLine?.productName ? (
                       line?.orderLine?.productName
                     ) : (

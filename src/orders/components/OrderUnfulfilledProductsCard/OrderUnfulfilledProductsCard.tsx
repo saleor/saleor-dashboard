@@ -36,13 +36,7 @@ const OrderUnfulfilledProductsCard: React.FC<OrderUnfulfilledProductsCardProps> 
     return null;
   }
 
-  let isDeleted = false;
-  for (const line of lines) {
-    if (!line.variant) {
-      isDeleted = true;
-      break;
-    }
-  }
+  const noProductsAvailable = lines.every(el => !el.variant);
 
   return (
     <>
@@ -58,7 +52,7 @@ const OrderUnfulfilledProductsCard: React.FC<OrderUnfulfilledProductsCardProps> 
         </ResponsiveTable>
         {canFulfill && (
           <CardActions>
-            {isDeleted ? (
+            {noProductsAvailable ? (
               <Tooltip
                 title={intl.formatMessage(messages.deletedVariantDetected)}
                 variant={"error"}
