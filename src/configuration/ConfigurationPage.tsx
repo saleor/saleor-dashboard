@@ -9,9 +9,9 @@ import React from "react";
 import { useIntl } from "react-intl";
 
 import { hasPermission } from "../auth/misc";
-import AppVersions from "../components/AppVersions";
 import Container from "../components/Container";
 import PageHeader from "../components/PageHeader";
+import VersionInfo from "../components/VersionInfo";
 import { PermissionEnum } from "../types/globalTypes";
 
 export interface MenuItem {
@@ -28,7 +28,7 @@ export interface MenuSection {
   menuItems: MenuItem[];
 }
 
-interface AppVersions {
+interface VersionInfo {
   dashboardVersion: string;
   coreVersion: string;
 }
@@ -100,7 +100,7 @@ const useStyles = makeStyles(
 export interface ConfigurationPageProps {
   menu: MenuSection[];
   user: User;
-  appVersions: AppVersions;
+  versionInfo: VersionInfo;
   onSectionClick: (sectionName: string) => void;
 }
 
@@ -109,14 +109,14 @@ export const ConfigurationPage: React.FC<ConfigurationPageProps> = props => {
     menu: menus,
     user,
     onSectionClick,
-    appVersions: { dashboardVersion, coreVersion }
+    versionInfo: { dashboardVersion, coreVersion }
   } = props;
   const classes = useStyles(props);
   const theme = useTheme();
   const isSmUp = useMediaQuery(theme.breakpoints.up("sm"));
 
-  const AppVersionComponent = () => (
-    <AppVersions
+  const VersionInfoComponent = () => (
+    <VersionInfo
       dashboardVersion={dashboardVersion}
       coreVersion={coreVersion}
     />
@@ -125,12 +125,12 @@ export const ConfigurationPage: React.FC<ConfigurationPageProps> = props => {
   const intl = useIntl();
   return (
     <Container>
-      {isSmUp ? null : <AppVersionComponent />}
+      {isSmUp ? null : <VersionInfoComponent />}
       <PageHeader
         className={classes.header}
         title={intl.formatMessage(sectionNames.configuration)}
       >
-        {isSmUp && <AppVersionComponent />}
+        {isSmUp && <VersionInfoComponent />}
       </PageHeader>
       {menus
         .filter(menu =>

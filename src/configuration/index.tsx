@@ -1,7 +1,7 @@
 import { attributeListUrl } from "@saleor/attributes/urls";
 import { channelsListUrl } from "@saleor/channels/urls";
 import { WindowTitle } from "@saleor/components/WindowTitle";
-import { useAppVersions } from "@saleor/hooks/useAppVersions";
+import { APP_VERSION as dashboardVersion } from "@saleor/config";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useUser from "@saleor/hooks/useUser";
 import Attributes from "@saleor/icons/Attributes";
@@ -35,6 +35,7 @@ import React from "react";
 import { IntlShape, useIntl } from "react-intl";
 
 import ConfigurationPage, { MenuSection } from "./ConfigurationPage";
+import { useSaleorCoreVersion } from "./queries";
 
 export function createConfigurationMenu(intl: IntlShape): MenuSection[] {
   return [
@@ -243,10 +244,17 @@ export function createConfigurationMenu(intl: IntlShape): MenuSection[] {
 export const configurationMenuUrl = "/configuration/";
 
 export const ConfigurationSection: React.FC = () => {
+  const { data } = useSaleorCoreVersion({});
+  const coreVersion = data?.shop?.version;
+
+  const versions = {
+    dashboardVersion,
+    coreVersion
+  };
+
   const navigate = useNavigator();
   const user = useUser();
   const intl = useIntl();
-  const versions = useAppVersions();
 
   return (
     <>
@@ -255,7 +263,7 @@ export const ConfigurationSection: React.FC = () => {
         menu={createConfigurationMenu(intl)}
         user={maybe(() => user.user)}
         onSectionClick={navigate}
-        appVersions={versions}
+        versionInfo={versions}
       />
     </>
   );

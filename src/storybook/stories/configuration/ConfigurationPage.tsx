@@ -35,7 +35,7 @@ const Story: React.FC<{ user: User }> = ({ user }) => {
       menu={createConfigurationMenu(intl)}
       onSectionClick={() => undefined}
       user={user}
-      appVersions={versions}
+      versionInfo={versions}
     />
   );
 };
