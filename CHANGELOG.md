@@ -81,6 +81,7 @@ All notable, unreleased changes to this project will be documented in this file.
 - Add app dashboard extensions - #1292 by @jwm0
 - Introduce fulfillment creation - #1241 by @orzechdev
 - Introduce Click&Collect feature - #1268 by @kuchichan
+- Add Demo Banner - #1331 by @kamilpastuszka
 
 # 2.11.1
 
