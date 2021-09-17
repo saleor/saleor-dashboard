@@ -264,7 +264,7 @@ const SaleDetailsPage: React.FC<SaleDetailsPageProps> = ({
                       {
                         defaultMessage: "Variants ({quantity})",
                         description: "number of variants",
-                        id: "saleDetailsPageProductsQuantity"
+                        id: "saleDetailsPageVariantsQuantity"
                       },
                       {
                         quantity: maybe(

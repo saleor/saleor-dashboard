@@ -492,6 +492,10 @@
     "context": "number of products",
     "string": "Products ({quantity})"
   },
+  "saleDetailsPageVariantsQuantity": {
+    "context": "number of variants",
+    "string": "Variants ({quantity})"
+  },
   "saleDetailsUnassignCategory": {
     "context": "unassign category from sale, button",
     "string": "Unassign"
@@ -502,6 +506,10 @@
   },
   "saleDetailsUnassignProduct": {
     "context": "unassign product from sale, button",
+    "string": "Unassign"
+  },
+  "saleDetailsUnassignVaraint": {
+    "context": "unassign variant from sale, button",
     "string": "Unassign"
   },
   "set availability date": {
@@ -1911,6 +1919,20 @@
     "context": "dialog header",
     "string": "Assign Product"
   },
+  "src_dot_components_dot_AssignVariantDialog_dot_1180121133": {
+    "context": "button",
+    "string": "Assign variants"
+  },
+  "src_dot_components_dot_AssignVariantDialog_dot_3111608667": {
+    "string": "Search Variants"
+  },
+  "src_dot_components_dot_AssignVariantDialog_dot_3986131972": {
+    "context": "dialog header",
+    "string": "Assign Variant"
+  },
+  "src_dot_components_dot_AssignVariantDialog_dot_59669419": {
+    "string": "Search by variant name, attribute, variant type etc..."
+  },
   "src_dot_components_dot_AttributeUnassignDialog_dot_2037985699": {
     "string": "Are you sure you want to unassign {attributeName} from {itemTypeName}?"
   },
@@ -2895,6 +2917,26 @@
     "context": "section header",
     "string": "Eligible Products"
   },
+  "src_dot_discounts_dot_components_dot_DiscountVariants_dot_1180121133": {
+    "context": "button",
+    "string": "Assign variants"
+  },
+  "src_dot_discounts_dot_components_dot_DiscountVariants_dot_2633407446": {
+    "context": "section header",
+    "string": "Eligible Variants"
+  },
+  "src_dot_discounts_dot_components_dot_DiscountVariants_dot_2697405188": {
+    "string": "Product Name"
+  },
+  "src_dot_discounts_dot_components_dot_DiscountVariants_dot_4257289053": {
+    "string": "Product Type"
+  },
+  "src_dot_discounts_dot_components_dot_DiscountVariants_dot_908482263": {
+    "string": "No variants found"
+  },
+  "src_dot_discounts_dot_components_dot_DiscountVariants_dot_953327101": {
+    "string": "Variant Name"
+  },
   "src_dot_discounts_dot_components_dot_SaleCreatePage_dot_3866518732": {
     "context": "page header",
     "string": "Create Sale"
@@ -3279,6 +3321,10 @@
   "src_dot_discounts_dot_views_dot_SaleDetails_dot_2534378844": {
     "string": "Removed sale"
   },
+  "src_dot_discounts_dot_views_dot_SaleDetails_dot_2544297248": {
+    "context": "dialog header",
+    "string": "Unassign Variants From Sale"
+  },
   "src_dot_discounts_dot_views_dot_SaleDetails_dot_3215481647": {
     "context": "dialog content",
     "string": "{counter,plural,one{Are you sure you want to unassign this product?} other{Are you sure you want to unassign {displayQuantity} products?}}"
@@ -3289,6 +3335,10 @@
   },
   "src_dot_discounts_dot_views_dot_SaleDetails_dot_3823295269": {
     "string": "Manage Channel Availability"
+  },
+  "src_dot_discounts_dot_views_dot_SaleDetails_dot_385470907": {
+    "context": "dialog content",
+    "string": "{counter,plural,one{Are you sure you want to unassign this variant?} other{Are you sure you want to unassign {displayQuantity} variants?}}"
   },
   "src_dot_discounts_dot_views_dot_SaleDetails_dot_506030254": {
     "context": "dialog header",
