@@ -32,6 +32,32 @@ export const saleDetailsFragment = gql`
   ${saleFragment}
   fragment SaleDetailsFragment on Sale {
     ...SaleFragment
+    variants(after: $after, before: $before, first: $first, last: $last) {
+      edges {
+        node {
+          id
+          name
+          product {
+            id
+            name
+            thumbnail {
+              url
+            }
+            productType {
+              id
+              name
+            }
+            channelListings {
+              ...ChannelListingProductWithoutPricingFragment
+            }
+          }
+        }
+      }
+      pageInfo {
+        ...PageInfoFragment
+      }
+      totalCount
+    }
     products(after: $after, before: $before, first: $first, last: $last) {
       edges {
         node {

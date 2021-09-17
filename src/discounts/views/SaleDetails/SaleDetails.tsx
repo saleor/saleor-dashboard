@@ -11,6 +11,7 @@ import useAppChannel from "@saleor/components/AppLayout/AppChannelContext";
 import AssignCategoriesDialog from "@saleor/components/AssignCategoryDialog";
 import AssignCollectionDialog from "@saleor/components/AssignCollectionDialog";
 import AssignProductDialog from "@saleor/components/AssignProductDialog";
+import AssignVariantDialog from "@saleor/components/AssignVariantDialog";
 import ChannelsAvailabilityDialog from "@saleor/components/ChannelsAvailabilityDialog";
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import { DEFAULT_INITIAL_SEARCH_DATA, PAGINATE_BY } from "@saleor/config";
@@ -45,10 +46,11 @@ import usePaginator, {
 } from "@saleor/hooks/usePaginator";
 import { commonMessages, sectionNames } from "@saleor/intl";
 import { maybe } from "@saleor/misc";
-import { productUrl } from "@saleor/products/urls";
+import { productUrl, productVariantEditPath } from "@saleor/products/urls";
 import useCategorySearch from "@saleor/searches/useCategorySearch";
 import useCollectionSearch from "@saleor/searches/useCollectionSearch";
 import useProductSearch from "@saleor/searches/useProductSearch";
+import useVariantSearch from "@saleor/searches/useVariantSearch";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import createMetadataUpdateHandler from "@saleor/utils/handlers/metadataUpdateHandler";
 import { mapEdgesToItems } from "@saleor/utils/maps";
@@ -95,6 +97,13 @@ export const SaleDetails: React.FC<SaleDetailsProps> = ({ id, params }) => {
     search: searchProducts,
     result: searchProductsOpts
   } = useProductSearch({
+    variables: DEFAULT_INITIAL_SEARCH_DATA
+  });
+  const {
+    loadMore: loadMoreVariants,
+    search: searchVariants,
+    result: searchVariantsOpts
+  } = useVariantSearch({
     variables: DEFAULT_INITIAL_SEARCH_DATA
   });
 
@@ -219,7 +228,9 @@ export const SaleDetails: React.FC<SaleDetailsProps> = ({ id, params }) => {
                           ? maybe(() => data.sale.categories.pageInfo)
                           : params.activeTab === SaleDetailsPageTab.collections
                           ? maybe(() => data.sale.collections.pageInfo)
-                          : maybe(() => data.sale.products.pageInfo);
+                          : params.activeTab === SaleDetailsPageTab.products
+                          ? maybe(() => data.sale.products.pageInfo)
+                          : maybe(() => data.sale.variants.pageInfo);
 
                       const handleCategoriesUnassign = (ids: string[]) =>
                         saleCataloguesRemove({
@@ -250,6 +261,17 @@ export const SaleDetails: React.FC<SaleDetailsProps> = ({ id, params }) => {
                             id,
                             input: {
                               products: ids
+                            }
+                          }
+                        });
+
+                      const handleVariantsUnassign = (ids: string[]) =>
+                        saleCataloguesRemove({
+                          variables: {
+                            ...paginationState,
+                            id,
+                            input: {
+                              variants: ids
                             }
                           }
                         });
@@ -324,6 +346,14 @@ export const SaleDetails: React.FC<SaleDetailsProps> = ({ id, params }) => {
                             }
                             onProductClick={id => () =>
                               navigate(productUrl(id))}
+                            onVariantAssign={() => openModal("assign-variant")}
+                            onVariantUnassign={variantId =>
+                              handleVariantsUnassign([variantId])
+                            }
+                            onVariantClick={(productId, variantId) => () =>
+                              navigate(
+                                productVariantEditPath(productId, variantId)
+                              )}
                             activeTab={params.activeTab}
                             onBack={() => navigate(saleListUrl())}
                             onTabClick={changeTab}
@@ -378,10 +408,54 @@ export const SaleDetails: React.FC<SaleDetailsProps> = ({ id, params }) => {
                                 />
                               </Button>
                             }
+                            variantListToolbar={
+                              <Button
+                                color="primary"
+                                onClick={() =>
+                                  openModal("unassign-variant", {
+                                    ids: listElements
+                                  })
+                                }
+                              >
+                                <FormattedMessage
+                                  defaultMessage="Unassign"
+                                  description="unassign variant from sale, button"
+                                  id="saleDetailsUnassignVaraint"
+                                />
+                              </Button>
+                            }
                             isChecked={isSelected}
                             selected={listElements.length}
                             toggle={toggle}
                             toggleAll={toggleAll}
+                          />
+                          <AssignVariantDialog
+                            confirmButtonState={saleCataloguesAddOpts.status}
+                            hasMore={
+                              searchVariantsOpts.data?.search.pageInfo
+                                .hasNextPage
+                            }
+                            open={params.action === "assign-variant"}
+                            onFetch={searchVariants}
+                            onFetchMore={loadMoreVariants}
+                            loading={searchVariantsOpts.loading}
+                            onClose={closeModal}
+                            onSubmit={variants =>
+                              saleCataloguesAdd({
+                                variables: {
+                                  ...paginationState,
+                                  id,
+                                  input: {
+                                    variants: variants.map(
+                                      variant => variant.id
+                                    )
+                                  }
+                                }
+                              })
+                            }
+                            variants={mapEdgesToItems(
+                              searchVariantsOpts?.data?.search
+                            )?.filter(suggestedVariant => suggestedVariant.id)}
                           />
                           <AssignProductDialog
                             confirmButtonState={saleCataloguesAddOpts.status}
@@ -544,6 +618,34 @@ export const SaleDetails: React.FC<SaleDetailsProps> = ({ id, params }) => {
                               <DialogContentText>
                                 <FormattedMessage
                                   defaultMessage="{counter,plural,one{Are you sure you want to unassign this product?} other{Are you sure you want to unassign {displayQuantity} products?}}"
+                                  description="dialog content"
+                                  values={{
+                                    counter: params.ids.length,
+                                    displayQuantity: (
+                                      <strong>{params.ids.length}</strong>
+                                    )
+                                  }}
+                                />
+                              </DialogContentText>
+                            )}
+                          </ActionDialog>
+                          <ActionDialog
+                            open={
+                              params.action === "unassign-variant" &&
+                              canOpenBulkActionDialog
+                            }
+                            title={intl.formatMessage({
+                              defaultMessage: "Unassign Variants From Sale",
+                              description: "dialog header"
+                            })}
+                            confirmButtonState={saleCataloguesRemoveOpts.status}
+                            onClose={closeModal}
+                            onConfirm={() => handleVariantsUnassign(params.ids)}
+                          >
+                            {canOpenBulkActionDialog && (
+                              <DialogContentText>
+                                <FormattedMessage
+                                  defaultMessage="{counter,plural,one{Are you sure you want to unassign this variant?} other{Are you sure you want to unassign {displayQuantity} variants?}}"
                                   description="dialog content"
                                   values={{
                                     counter: params.ids.length,

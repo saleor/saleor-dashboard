@@ -30,6 +30,7 @@ import DiscountCategories from "../DiscountCategories";
 import DiscountCollections from "../DiscountCollections";
 import DiscountDates from "../DiscountDates";
 import DiscountProducts from "../DiscountProducts";
+import DiscountVariants from "../DiscountVariants";
 import SaleInfo from "../SaleInfo";
 import SaleSummary from "../SaleSummary";
 import SaleType from "../SaleType";
@@ -49,20 +50,27 @@ export interface SaleDetailsPageFormData extends MetadataFormData {
 export enum SaleDetailsPageTab {
   categories = "categories",
   collections = "collections",
-  products = "products"
+  products = "products",
+  variants = "variants"
 }
+
 export function saleDetailsPageTab(tab: string): SaleDetailsPageTab {
   return tab === SaleDetailsPageTab.products
     ? SaleDetailsPageTab.products
     : tab === SaleDetailsPageTab.collections
     ? SaleDetailsPageTab.collections
-    : SaleDetailsPageTab.categories;
+    : tab === SaleDetailsPageTab.categories
+    ? SaleDetailsPageTab.categories
+    : SaleDetailsPageTab.variants;
 }
 
 export interface SaleDetailsPageProps
   extends Pick<ListProps, Exclude<keyof ListProps, "onRowClick">>,
     TabListActions<
-      "categoryListToolbar" | "collectionListToolbar" | "productListToolbar"
+      | "categoryListToolbar"
+      | "collectionListToolbar"
+      | "productListToolbar"
+      | "variantListToolbar"
     >,
     ChannelProps {
   activeTab: SaleDetailsPageTab;
@@ -82,6 +90,9 @@ export interface SaleDetailsPageProps
   onProductAssign: () => void;
   onProductUnassign: (id: string) => void;
   onProductClick: (id: string) => () => void;
+  onVariantAssign: () => void;
+  onVariantUnassign: (id: string) => void;
+  onVariantClick: (productId: string, variantId: string) => () => void;
   onRemove: () => void;
   onSubmit: (data: SaleDetailsPageFormData) => void;
   onTabClick: (index: SaleDetailsPageTab) => void;
@@ -92,6 +103,7 @@ export interface SaleDetailsPageProps
 const CategoriesTab = Tab(SaleDetailsPageTab.categories);
 const CollectionsTab = Tab(SaleDetailsPageTab.collections);
 const ProductsTab = Tab(SaleDetailsPageTab.products);
+const VariantsTab = Tab(SaleDetailsPageTab.variants);
 
 const SaleDetailsPage: React.FC<SaleDetailsPageProps> = ({
   activeTab,
@@ -120,9 +132,13 @@ const SaleDetailsPage: React.FC<SaleDetailsPageProps> = ({
   onProductAssign,
   onProductUnassign,
   onProductClick,
+  onVariantAssign,
+  onVariantUnassign,
+  onVariantClick,
   categoryListToolbar,
   collectionListToolbar,
   productListToolbar,
+  variantListToolbar,
   isChecked,
   selected,
   selectedChannelId,
@@ -239,6 +255,25 @@ const SaleDetailsPage: React.FC<SaleDetailsPageProps> = ({
                       }
                     )}
                   </ProductsTab>
+                  <VariantsTab
+                    testId="variants-tab"
+                    isActive={activeTab === SaleDetailsPageTab.variants}
+                    changeTab={onTabClick}
+                  >
+                    {intl.formatMessage(
+                      {
+                        defaultMessage: "Variants ({quantity})",
+                        description: "number of variants",
+                        id: "saleDetailsPageProductsQuantity"
+                      },
+                      {
+                        quantity: maybe(
+                          () => sale.variants.totalCount.toString(),
+                          "…"
+                        )
+                      }
+                    )}
+                  </VariantsTab>
                 </TabContainer>
                 <CardSpacer />
                 {activeTab === SaleDetailsPageTab.categories ? (
@@ -273,7 +308,7 @@ const SaleDetailsPage: React.FC<SaleDetailsPageProps> = ({
                     toggleAll={toggleAll}
                     toolbar={collectionListToolbar}
                   />
-                ) : (
+                ) : activeTab === SaleDetailsPageTab.products ? (
                   <DiscountProducts
                     disabled={disabled}
                     onNextPage={onNextPage}
@@ -289,6 +324,22 @@ const SaleDetailsPage: React.FC<SaleDetailsPageProps> = ({
                     toggle={toggle}
                     toggleAll={toggleAll}
                     toolbar={productListToolbar}
+                  />
+                ) : (
+                  <DiscountVariants
+                    disabled={disabled}
+                    onNextPage={onNextPage}
+                    onPreviousPage={onPreviousPage}
+                    onVariantAssign={onVariantAssign}
+                    onVariantUnassign={onVariantUnassign}
+                    onRowClick={onVariantClick}
+                    pageInfo={pageInfo}
+                    discount={sale}
+                    isChecked={isChecked}
+                    selected={selected}
+                    toggle={toggle}
+                    toggleAll={toggleAll}
+                    toolbar={variantListToolbar}
                   />
                 )}
                 <CardSpacer />

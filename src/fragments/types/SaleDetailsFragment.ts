@@ -36,6 +36,70 @@ export interface SaleDetailsFragment_channelListings {
   currency: string;
 }
 
+export interface SaleDetailsFragment_variants_edges_node_product_thumbnail {
+  __typename: "Image";
+  url: string;
+}
+
+export interface SaleDetailsFragment_variants_edges_node_product_productType {
+  __typename: "ProductType";
+  id: string;
+  name: string;
+}
+
+export interface SaleDetailsFragment_variants_edges_node_product_channelListings_channel {
+  __typename: "Channel";
+  id: string;
+  name: string;
+  currencyCode: string;
+}
+
+export interface SaleDetailsFragment_variants_edges_node_product_channelListings {
+  __typename: "ProductChannelListing";
+  isPublished: boolean;
+  publicationDate: any | null;
+  isAvailableForPurchase: boolean | null;
+  availableForPurchase: any | null;
+  visibleInListings: boolean;
+  channel: SaleDetailsFragment_variants_edges_node_product_channelListings_channel;
+}
+
+export interface SaleDetailsFragment_variants_edges_node_product {
+  __typename: "Product";
+  id: string;
+  name: string;
+  thumbnail: SaleDetailsFragment_variants_edges_node_product_thumbnail | null;
+  productType: SaleDetailsFragment_variants_edges_node_product_productType;
+  channelListings: SaleDetailsFragment_variants_edges_node_product_channelListings[] | null;
+}
+
+export interface SaleDetailsFragment_variants_edges_node {
+  __typename: "ProductVariant";
+  id: string;
+  name: string;
+  product: SaleDetailsFragment_variants_edges_node_product;
+}
+
+export interface SaleDetailsFragment_variants_edges {
+  __typename: "ProductVariantCountableEdge";
+  node: SaleDetailsFragment_variants_edges_node;
+}
+
+export interface SaleDetailsFragment_variants_pageInfo {
+  __typename: "PageInfo";
+  endCursor: string | null;
+  hasNextPage: boolean;
+  hasPreviousPage: boolean;
+  startCursor: string | null;
+}
+
+export interface SaleDetailsFragment_variants {
+  __typename: "ProductVariantCountableConnection";
+  edges: SaleDetailsFragment_variants_edges[];
+  pageInfo: SaleDetailsFragment_variants_pageInfo;
+  totalCount: number | null;
+}
+
 export interface SaleDetailsFragment_products_edges_node_productType {
   __typename: "ProductType";
   id: string;
@@ -167,6 +231,7 @@ export interface SaleDetailsFragment {
   startDate: any;
   endDate: any | null;
   channelListings: SaleDetailsFragment_channelListings[] | null;
+  variants: SaleDetailsFragment_variants | null;
   products: SaleDetailsFragment_products | null;
   categories: SaleDetailsFragment_categories | null;
   collections: SaleDetailsFragment_collections | null;
