@@ -6,10 +6,10 @@ import {
   TableBody,
   TableCell,
   TableHead,
-  TableRow,
-  TextField
+  TableRow
 } from "@material-ui/core";
 import Money from "@saleor/components/Money";
+import QuantityField from "@saleor/components/QuantityField";
 import Skeleton from "@saleor/components/Skeleton";
 import { OrderErrorFragment } from "@saleor/fragments/types/OrderErrorFragment";
 import { FormsetChange } from "@saleor/hooks/useFormset";
@@ -21,7 +21,7 @@ import {
 } from "@saleor/orders/types/OrderDetails";
 import { isGiftCardProduct } from "@saleor/orders/utils/data";
 import React, { CSSProperties } from "react";
-import { defineMessages, FormattedMessage, useIntl } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import ProductImageCell from "../../ProductImageCell";
 import { FormsetQuantityData, FormsetReplacementData } from "../form";
@@ -49,6 +49,9 @@ const useStyles = makeStyles(
         marginTop: theme.spacing(2)
       },
 
+      colQuantity: {
+        width: 210
+      },
       quantityInnerInput: {
         ...inputPadding
       },
@@ -60,6 +63,10 @@ const useStyles = makeStyles(
         color: theme.palette.text.secondary,
         whiteSpace: "nowrap"
       },
+      quantityInnerInputDisabled: {
+        backgroundColor: theme.palette.grey[100],
+        color: theme.palette.grey[500]
+      },
       setMaximalQuantityButton: {
         marginBottom: theme.spacing(1),
         marginTop: theme.spacing(2),
@@ -69,22 +76,6 @@ const useStyles = makeStyles(
   },
   { name: "ItemsCard" }
 );
-
-const messages = defineMessages({
-  improperValue: {
-    defaultMessage: "Improper value",
-    description: "error message"
-  },
-
-  titleFulfilled: {
-    defaultMessage: "Fulfillment - #{fulfilmentId}",
-    description: "section header"
-  },
-  titleUnfulfilled: {
-    defaultMessage: "Unfulfilled Items",
-    description: "section header"
-  }
-});
 
 interface OrderReturnRefundLinesCardProps {
   onChangeQuantity: FormsetChange<number>;
@@ -180,12 +171,6 @@ const ItemsCard: React.FC<OrderReturnRefundLinesCardProps> = ({
               const lineQuantity = fulfilmentId ? quantity : quantityToFulfill;
               const isSelected = itemsSelections.find(getById(id))?.value;
               const currentQuantity = itemsQuantities.find(getById(id))?.value;
-              const anyLineWithoutVariant = lines.some(
-                ({ variant }) => !variant
-              );
-              const productNameCellWidth = anyLineWithoutVariant
-                ? "30%"
-                : "50%";
               const isNotAllowed = isGiftCardProduct(variant);
 
               return (
@@ -197,7 +182,6 @@ const ItemsCard: React.FC<OrderReturnRefundLinesCardProps> = ({
                     notAllowedAlert={intl.formatMessage(
                       refundMessages.giftCardReturnOrReplaceNotAllowed
                     )}
-                    style={{ width: productNameCellWidth }}
                   />
                   <ProductErrorCell hasVariant={isReturnable} />
                   <TableCell align="right">
@@ -208,34 +192,18 @@ const ItemsCard: React.FC<OrderReturnRefundLinesCardProps> = ({
                       }}
                     />
                   </TableCell>
-                  <TableCell align="right">
+                  <TableCell align="right" className={classes.colQuantity}>
                     {isReturnable && (
-                      <TextField
-                        type="number"
+                      <QuantityField
                         disabled={isNotAllowed}
-                        inputProps={{
-                          className: classes.quantityInnerInput,
-                          "data-test": "quantityInput",
-                          "data-test-id": id,
-                          max: lineQuantity.toString(),
-                          min: 0,
-                          style: { textAlign: "right" }
-                        }}
-                        fullWidth
-                        value={currentQuantity}
                         onChange={handleChangeQuantity(id)}
-                        InputProps={{
-                          endAdornment: lineQuantity && (
-                            <div className={classes.remainingQuantity}>
-                              / {lineQuantity}
-                            </div>
-                          )
-                        }}
+                        value={currentQuantity}
                         error={isValueError}
-                        helperText={
-                          isValueError &&
-                          intl.formatMessage(messages.improperValue)
-                        }
+                        max={lineQuantity}
+                        inputProps={{
+                          "data-test": "quantityInput",
+                          "data-test-id": id
+                        }}
                       />
                     )}
                   </TableCell>

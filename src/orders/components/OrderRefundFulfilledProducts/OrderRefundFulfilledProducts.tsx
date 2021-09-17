@@ -7,11 +7,11 @@ import {
   TableCell,
   TableHead,
   TableRow,
-  TextField,
   Typography
 } from "@material-ui/core";
 import CardTitle from "@saleor/components/CardTitle";
 import Money from "@saleor/components/Money";
+import QuantityField from "@saleor/components/QuantityField";
 import Skeleton from "@saleor/components/Skeleton";
 import { FormsetChange } from "@saleor/hooks/useFormset";
 import { renderCollection } from "@saleor/misc";
@@ -135,40 +135,21 @@ const OrderRefundFulfilledProducts: React.FC<OrderRefundFulfilledProductsProps> 
                   </TableCell>
                   <TableCell className={classes.colQuantity}>
                     {line?.quantity ? (
-                      <TextField
+                      <QuantityField
                         disabled={disabled || isNotAllowed}
-                        type="number"
-                        inputProps={{
-                          className: classes.quantityInnerInput,
-                          "data-test": "quantityInput",
-                          "data-test-id": line?.id,
-                          max: (line?.quantity).toString(),
-                          min: 0,
-                          style: { textAlign: "right" }
-                        }}
-                        fullWidth
-                        value={selectedLineQuantity?.value}
                         onChange={event =>
                           onRefundedProductQuantityChange(
                             line.id,
                             event.target.value
                           )
                         }
-                        InputProps={{
-                          endAdornment: line?.quantity && (
-                            <div className={classes.remainingQuantity}>
-                              / {line?.quantity}
-                            </div>
-                          )
-                        }}
+                        value={selectedLineQuantity?.value}
                         error={isError}
-                        helperText={
-                          isError &&
-                          intl.formatMessage({
-                            defaultMessage: "Improper value",
-                            description: "error message"
-                          })
-                        }
+                        max={line?.quantity}
+                        inputProps={{
+                          "data-test": "quantityInput",
+                          "data-test-id": line?.id
+                        }}
                       />
                     ) : (
                       <Skeleton />
