@@ -27,7 +27,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 const useStyles = makeStyles(
   {
     overflow: {
-      overflowY: "visible"
+      overflow: "visible"
     }
   },
   { name: "OrderAddressEditDialog" }
