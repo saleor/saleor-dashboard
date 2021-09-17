@@ -18,7 +18,7 @@ interface QuantityFieldProps {
   required?: boolean;
   min?: number;
   max?: number;
-  onChange(event: any);
+  onChange(event: React.ChangeEvent<any>);
 }
 
 export const QuantityField: React.FC<QuantityFieldProps> = props => {
