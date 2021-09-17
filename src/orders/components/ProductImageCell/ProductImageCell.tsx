@@ -2,9 +2,9 @@ import { TableCell, TableCellProps } from "@material-ui/core";
 import InlineAlert from "@saleor/components/Alert/InlineAlert";
 import Skeleton from "@saleor/components/Skeleton";
 import Avatar from "@saleor/components/TableCellAvatar/Avatar";
+import { NotAllowedInvertedIcon } from "@saleor/macaw-ui";
 import React from "react";
 
-import { NotAllowedInverted } from "../NotAllowedInverted";
 import { useStyles } from "./styles";
 
 interface ProductImageCellProps extends TableCellProps {
@@ -28,7 +28,7 @@ export const ProductImageCell: React.FC<ProductImageCellProps> = ({
       <div className={classes.avatar}>
         {notAllowed && (
           <div className={classes.avatarNotAllowed}>
-            <NotAllowedInverted />
+            <NotAllowedInvertedIcon />
             {notAllowedAlert && (
               <InlineAlert className={classes.alert}>
                 {notAllowedAlert}
