@@ -18,10 +18,10 @@ export interface ActionDialogProps extends DialogProps {
 }
 
 const ActionDialog: React.FC<ActionDialogProps> = props => {
-  const { children, open, title, onClose, variant, ...rest } = props;
+  const { children, open, title, onClose, variant, maxWidth, ...rest } = props;
 
   return (
-    <Dialog fullWidth onClose={onClose} open={open} {...rest}>
+    <Dialog fullWidth onClose={onClose} open={open} maxWidth={maxWidth}>
       <DialogTitle>{title}</DialogTitle>
       <DialogContent>{children}</DialogContent>
       <DialogButtons {...rest} onClose={onClose} variant={variant} />
