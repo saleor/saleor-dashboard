@@ -155,6 +155,31 @@ const Routes: React.FC = () => {
     user
   } = useAuth();
 
+  console.log(user);
+
+  // {
+  //   createConfigurationMenu(intl).filter(menu =>
+  //     menu.menuItems.map(item => hasPermission(item.permission, user))
+  //   ).length > 0 && (
+  //     <SectionRoute
+  //       exact
+  //       path="/configuration"
+  //       component={ConfigurationSection}
+  //     />
+  //   );
+  // }
+
+  console.log("create config menu", createConfigurationMenu(intl));
+  console.log(user);
+  // console.log(
+  // createConfigurationMenu(intl).filter(menu => {
+  //   console.log("menu items", menu.menuItems);
+  //   console.log("user", user);
+
+  //   return menu.menuItems.map(item => hasPermission(item.permission, user));
+  // });
+  // );
+
   const { channel } = useAppChannel(false);
 
   const channelLoaded = typeof channel !== "undefined";

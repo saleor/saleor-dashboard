@@ -68,6 +68,35 @@ export function createConfigurationMenu(intl: IntlShape): MenuSection[] {
     },
     {
       label: intl.formatMessage({
+        defaultMessage: "Attributes and Page Types"
+      }),
+      menuItems: [
+        {
+          description: intl.formatMessage({
+            defaultMessage: "Determine attributes used to create page types",
+            id: "configurationMenuPageAttributes"
+          }),
+          icon: <ProductTypes fontSize="inherit" viewBox="0 0 44 44" />,
+          permission: PermissionEnum.MANAGE_PAGE_TYPES_AND_ATTRIBUTES,
+          title: intl.formatMessage(sectionNames.attributes),
+          url: attributeListUrl(),
+          testId: "configurationMenuPageAttributes"
+        },
+        {
+          description: intl.formatMessage({
+            defaultMessage: "Define types of pages you create",
+            id: "configurationMenuPageTypes"
+          }),
+          icon: <Attributes fontSize="inherit" viewBox="0 0 44 44" />,
+          permission: PermissionEnum.MANAGE_PAGE_TYPES_AND_ATTRIBUTES,
+          title: intl.formatMessage(sectionNames.pageTypes),
+          url: productTypeListUrl(),
+          testId: "configurationMenuPageTypes"
+        }
+      ]
+    },
+    {
+      label: intl.formatMessage({
         defaultMessage: "Product Settings"
       }),
       menuItems: [
