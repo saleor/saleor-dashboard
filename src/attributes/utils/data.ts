@@ -62,7 +62,7 @@ export function attributeValueFragmentToFormData(
     name: data?.name,
     value: data?.value,
     contentType: data?.file?.contentType,
-    fileUrl: data?.file?.contentType
+    fileUrl: data?.file?.url
   };
 }
 

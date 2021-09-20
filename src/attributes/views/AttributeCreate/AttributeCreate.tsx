@@ -205,7 +205,13 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ params }) => {
           cursor: "1",
           node: {
             __typename: "AttributeValue" as "AttributeValue",
-            file: null,
+            file: value?.fileUrl
+              ? {
+                  url: value.fileUrl,
+                  contentType: value.contentType,
+                  __typename: "File"
+                }
+              : null,
             id: valueIndex.toString(),
             reference: null,
             slug: slugify(value.name).toLowerCase(),
