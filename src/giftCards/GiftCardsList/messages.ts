@@ -75,10 +75,6 @@ export const giftCardsListTableMessages = defineMessages({
     defaultMessage: "Code ending with {displayCode}",
     description: "GiftCardsListTable code ending with label"
   },
-  giftCardDisabledLabel: {
-    defaultMessage: "Disabled",
-    description: "GiftCardsListTable disabled label"
-  },
   noGiftCardsFound: {
     defaultMessage: "No gift cards found",
     description: "GiftCardsListTable no cards found title"
