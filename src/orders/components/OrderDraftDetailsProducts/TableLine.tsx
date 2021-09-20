@@ -107,7 +107,7 @@ const TableLine: React.FC<TableLineProps> = ({
         badge={
           isDeleted && (
             <StatusBadge
-              variant={"error"}
+              variant="error"
               message={intl.formatMessage(messages.productDeleted)}
             />
           )

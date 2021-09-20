@@ -55,7 +55,7 @@ const OrderUnfulfilledProductsCard: React.FC<OrderUnfulfilledProductsCardProps> 
             {noProductsAvailable ? (
               <Tooltip
                 title={intl.formatMessage(messages.deletedVariantDetected)}
-                variant={"error"}
+                variant="error"
                 placement={"left"}
               >
                 <div>

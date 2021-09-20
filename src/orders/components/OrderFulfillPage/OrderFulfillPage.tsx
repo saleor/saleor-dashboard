@@ -166,7 +166,7 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
     OrderFulfillStockInput[]
   >(
     order?.lines
-      .filter(line => isFulfillable(line))
+      .filter(isFulfillable)
       .map(line => ({
         data: null,
         id: line.id,
@@ -316,7 +316,7 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
                 </TableHead>
                 <TableBody>
                   {renderCollection(
-                    order?.lines.filter(line => isFulfillable(line)),
+                    order?.lines.filter(isFulfillable),
                     (line: OrderFulfillData_order_lines, lineIndex) => {
                       if (!line) {
                         return (
