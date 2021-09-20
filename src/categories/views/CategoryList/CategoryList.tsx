@@ -33,7 +33,6 @@ import {
   categoryUrl
 } from "../../urls";
 import {
-  areFiltersApplied,
   deleteFilterTab,
   getActiveFilters,
   getFiltersCurrentTab,

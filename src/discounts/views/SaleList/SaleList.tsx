@@ -37,7 +37,6 @@ import {
   saleUrl
 } from "../../urls";
 import {
-  areFiltersApplied,
   deleteFilterTab,
   getActiveFilters,
   getFilterOpts,

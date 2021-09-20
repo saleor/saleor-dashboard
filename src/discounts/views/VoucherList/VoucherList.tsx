@@ -37,7 +37,6 @@ import {
   voucherUrl
 } from "../../urls";
 import {
-  areFiltersApplied,
   deleteFilterTab,
   getActiveFilters,
   getFilterOpts,

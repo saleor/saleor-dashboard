@@ -38,11 +38,11 @@ import {
   staffMemberDetailsUrl
 } from "../../urls";
 import {
-  areFiltersApplied,
   deleteFilterTab,
   getActiveFilters,
   getFilterOpts,
   getFilterQueryParam,
+  getFiltersCurrentTab,
   getFilterTabs,
   getFilterVariables,
   saveFilterTab

@@ -35,9 +35,9 @@ import React from "react";
 import { useIntl } from "react-intl";
 
 import {
-  areFiltersApplied,
   deleteFilterTab,
   getActiveFilters,
+  getFiltersCurrentTab,
   getFilterTabs,
   getFilterVariables,
   saveFilterTab

@@ -36,7 +36,6 @@ import {
   pageTypeUrl
 } from "../../urls";
 import {
-  areFiltersApplied,
   deleteFilterTab,
   getActiveFilters,
   getFiltersCurrentTab,

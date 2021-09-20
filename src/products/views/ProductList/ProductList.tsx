@@ -68,7 +68,6 @@ import {
   useProductExport
 } from "../../mutations";
 import {
-  areFiltersApplied,
   deleteFilterTab,
   getActiveFilters,
   getFilterOpts,
