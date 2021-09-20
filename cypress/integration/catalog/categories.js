@@ -14,7 +14,7 @@ import * as channelsUtils from "../../support/api/utils/channelsUtils";
 import * as productsUtils from "../../support/api/utils/products/productsUtils";
 import { deleteShippingStartsWith } from "../../support/api/utils/shippingUtils";
 import filterTests from "../../support/filterTests";
-import { createCategory } from "../../support/pages/categoriesPage";
+import { createCategory } from "../../support/pages/catalog/categoriesPage";
 
 filterTests({ definedTags: ["all"] }, () => {
   describe("Categories", () => {

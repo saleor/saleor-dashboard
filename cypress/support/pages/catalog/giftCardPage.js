@@ -1,7 +1,7 @@
-import { GIFT_CARD_DIALOG } from "../../elements/giftCard/giftCardDialog";
-import { GIFT_CARD_LIST } from "../../elements/giftCard/giftCardList";
-import { BUTTON_SELECTORS } from "../../elements/shared/button-selectors";
-import { urlList } from "../../fixtures/urlList";
+import { GIFT_CARD_DIALOG } from "../../../elements/giftCard/giftCardDialog";
+import { GIFT_CARD_LIST } from "../../../elements/giftCard/giftCardList";
+import { BUTTON_SELECTORS } from "../../../elements/shared/button-selectors";
+import { urlList } from "../../../fixtures/urlList";
 
 export function openAndFillUpCreateGiftCardDialog({
   note,

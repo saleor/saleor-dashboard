@@ -13,9 +13,9 @@ import {
   setExpiryDate,
   setExpiryPeriod,
   setNeverExpire
-} from "../../support/pages/giftCardPage";
+} from "../../support/pages/catalog/giftCardPage";
 
-filterTests({ definedTags: ["all"] }, () => {
+filterTests({ definedTags: ["all"], version: "3.1.0" }, () => {
   describe("Tests for gift cards", () => {
     const startsWith = "GiftCards";
     const amount = 50;

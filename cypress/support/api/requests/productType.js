@@ -5,8 +5,13 @@ export function createTypeProduct({
   attributeId,
   hasVariants = true,
   slug = name,
-  shippable = true
+  shippable = true,
+  kind = "NORMAL"
 }) {
+  const kindLines =
+    Cypress.env("SHOP") === "dev" || Cypress.env("SHOP") >= 3.1
+      ? `kind: NORMAL`
+      : "";
   const productAttributesLine = getValueWithDefault(
     attributeId,
     `productAttributes: "${attributeId}"`
@@ -23,6 +28,7 @@ export function createTypeProduct({
       hasVariants: ${hasVariants}
       ${variantAttributesLine}
       isShippingRequired:${shippable}
+      ${kindLines}
     }){
       productErrors{
         field

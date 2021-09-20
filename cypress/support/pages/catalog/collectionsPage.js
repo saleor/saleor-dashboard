@@ -1,8 +1,8 @@
-import { COLLECTION_SELECTORS } from "../../elements/catalog/collection-selectors";
-import { AVAILABLE_CHANNELS_FORM } from "../../elements/channels/available-channels-form";
-import { SELECT_CHANNELS_TO_ASSIGN } from "../../elements/channels/select-channels-to-assign";
-import { ASSIGN_ELEMENTS_SELECTORS } from "../../elements/shared/assign-elements-selectors";
-import { BUTTON_SELECTORS } from "../../elements/shared/button-selectors";
+import { COLLECTION_SELECTORS } from "../../../elements/catalog/collection-selectors";
+import { AVAILABLE_CHANNELS_FORM } from "../../../elements/channels/available-channels-form";
+import { SELECT_CHANNELS_TO_ASSIGN } from "../../../elements/channels/select-channels-to-assign";
+import { ASSIGN_ELEMENTS_SELECTORS } from "../../../elements/shared/assign-elements-selectors";
+import { BUTTON_SELECTORS } from "../../../elements/shared/button-selectors";
 
 export function createCollection(collectionName, isPublished, channel) {
   const publishedSelector = isPublished

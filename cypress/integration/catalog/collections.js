@@ -21,7 +21,7 @@ import filterTests from "../../support/filterTests";
 import {
   assignProductsToCollection,
   createCollection
-} from "../../support/pages/collectionsPage";
+} from "../../support/pages/catalog/collectionsPage";
 
 filterTests({ definedTags: ["all"] }, () => {
   describe("Collections", () => {

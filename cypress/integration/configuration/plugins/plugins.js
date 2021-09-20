@@ -17,7 +17,7 @@ import { getDefaultChannel } from "../../../support/api/utils/channelsUtils";
 import { getMailsForUser } from "../../../support/api/utils/users";
 import filterTests from "../../../support/filterTests";
 
-filterTests({ definedTags: ["stagedOnly"] }, () => {
+filterTests({ definedTags: ["stagedOnly"], version: "3.1.1" }, () => {
   describe("Plugins", () => {
     const startsWith = "Plugins";
     const randomName = `${startsWith}${faker.datatype.number()}`;

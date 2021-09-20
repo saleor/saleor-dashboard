@@ -10,15 +10,17 @@
  * 3.1 -run eq or lower than 3.1
  */
 
-const filterTests = ({ definedTags = ["all"], version = 1 }, runTest) => {
+const filterTests = ({ definedTags = ["all"], version = "1.0.0" }, runTest) => {
   let isTestAvailableInVersion = false;
   const shopVersion = Cypress.env("SHOP");
-
   if (shopVersion === "dev") {
     isTestAvailableInVersion = true;
   } else {
-    const numberVersion = shopVersion.match("d.d.d");
-    if (version <= numberVersion) {
+    const tagVersion = version.match("^\\d\\.\\d\\.\\d")[0].replaceAll(".", "");
+    const numberVersion = shopVersion
+      .match("^\\d\\.\\d\\.\\d")[0]
+      .replaceAll(".", "");
+    if (tagVersion <= numberVersion) {
       isTestAvailableInVersion = true;
     }
   }
