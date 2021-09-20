@@ -8,7 +8,7 @@ export type BadgeVariant = "warning" | "error";
 
 export interface StatusBadgeProps {
   variant: BadgeVariant;
-  message: string;
+  description: string;
 }
 
 const getIcon = (variant: BadgeVariant) => {
@@ -22,10 +22,10 @@ const getIcon = (variant: BadgeVariant) => {
 
 export const StatusBadge: React.FC<StatusBadgeProps> = ({
   variant,
-  message
+  description
 }) => (
   <div style={{ marginRight: "1rem" }}>
-    <Tooltip title={message} variant={variant}>
+    <Tooltip title={description} variant={variant}>
       <div style={{ height: 40, width: 40 }}>
         <SVG src={getIcon(variant)} width="100%" height="100%" />
       </div>

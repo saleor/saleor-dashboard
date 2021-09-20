@@ -13,7 +13,7 @@ import {
 import React from "react";
 import { useIntl } from "react-intl";
 
-import { messages } from "./messages";
+import { orderProductsCardElementsMessages as messages } from "./messages";
 
 const useStyles = makeStyles(
   theme => ({
@@ -104,16 +104,20 @@ const TableLine: React.FC<TableLineProps> = ({
         className={classes.colName}
         thumbnail={maybe(() => line.orderLine.thumbnail.url)}
         badge={
-          isDeleted && (
+          isDeleted &&
+          (isFulfilled ? (
             <StatusBadge
-              variant={isFulfilled ? "warning" : "error"}
-              message={
-                isFulfilled
-                  ? intl.formatMessage(messages.fulfilledVariantDeleted)
-                  : intl.formatMessage(messages.unfulfilledVariantDeleted)
-              }
+              variant="warning"
+              description={intl.formatMessage(messages.fulfilledVariantDeleted)}
             />
-          )
+          ) : (
+            <StatusBadge
+              variant="error"
+              description={intl.formatMessage(
+                messages.unfulfilledVariantDeleted
+              )}
+            />
+          ))
         }
       >
         {maybe(() => line.orderLine.productName) || <Skeleton />}

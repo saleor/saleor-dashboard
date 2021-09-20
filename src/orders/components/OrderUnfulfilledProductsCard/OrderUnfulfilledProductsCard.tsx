@@ -65,19 +65,13 @@ const OrderUnfulfilledProductsCard: React.FC<OrderUnfulfilledProductsCardProps> 
                     color="primary"
                     onClick={onFulfill}
                   >
-                    <FormattedMessage
-                      defaultMessage="Fulfill"
-                      description="button"
-                    />
+                    {intl.formatMessage(messages.fulfillButton)}
                   </Button>
                 </div>
               </Tooltip>
             ) : (
               <Button variant="text" color="primary" onClick={onFulfill}>
-                <FormattedMessage
-                  defaultMessage="Fulfill"
-                  description="button"
-                />
+                {intl.formatMessage(messages.fulfillButton)}
               </Button>
             )}
           </CardActions>

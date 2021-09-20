@@ -4525,13 +4525,13 @@
     "context": "dialog header",
     "string": "Edit Shipping Method"
   },
-  "src_dot_orders_dot_components_dot_OrderUnfulfilledProductsCard_dot_2095687440": {
-    "context": "button",
-    "string": "Fulfill"
-  },
   "src_dot_orders_dot_components_dot_OrderUnfulfilledProductsCard_dot_deletedVariantDetected": {
     "context": "tooltip content when a deleted variant is detected",
     "string": "You cannot fulfill products that are deleted."
+  },
+  "src_dot_orders_dot_components_dot_OrderUnfulfilledProductsCard_dot_fulfillButton": {
+    "context": "Fulfill button",
+    "string": "Fulfill"
   },
   "src_dot_orders_dot_views_dot_OrderDetails_dot_1039259580": {
     "string": "We’re generating the invoice you requested. Please wait a couple of moments"
