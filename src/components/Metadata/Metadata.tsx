@@ -13,7 +13,7 @@ export interface MetadataProps
   data: Record<"metadata" | "privateMetadata", MetadataInput[]>;
 }
 
-const Metadata: React.FC<MetadataProps> = ({ data, onChange, disabled }) => {
+const Metadata: React.FC<MetadataProps> = ({ data, onChange }) => {
   const change = (event: ChangeEvent, isPrivate: boolean) => {
     const { action, field, fieldIndex, value } = parseEventData(event);
     const key = getDataKey(isPrivate);
@@ -55,14 +55,12 @@ const Metadata: React.FC<MetadataProps> = ({ data, onChange, disabled }) => {
   return (
     <>
       <MetadataCard
-        disabled={disabled}
         data={data?.metadata}
         isPrivate={false}
         onChange={event => change(event, false)}
       />
       <CardSpacer />
       <MetadataCard
-        disabled={disabled}
         data={data?.privateMetadata}
         isPrivate={true}
         onChange={event => change(event, true)}

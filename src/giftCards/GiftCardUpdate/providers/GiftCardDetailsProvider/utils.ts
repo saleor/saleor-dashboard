@@ -5,9 +5,7 @@ import { ExtendedGiftCard, GiftCardBase } from "./types";
 export function isGiftCardExpired<T extends GiftCardBase>(
   giftCard: T
 ): boolean {
-  // For testing purposes, will be removed before merge
-  // return moment(data?.giftCard?.expiryDate).isBefore(moment());
-  return moment("2021-09-01").isBefore(moment());
+  return moment(giftCard?.expiryDate).isBefore(moment());
 }
 
 export function getExtendedGiftCard<T extends GiftCardBase>(
