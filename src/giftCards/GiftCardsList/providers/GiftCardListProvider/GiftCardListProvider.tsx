@@ -75,8 +75,11 @@ export const GiftCardsListProvider: React.FC<GiftCardsListProviderProps> = ({
     variables: queryVariables
   });
 
+  const giftCards =
+    mapEdgesToItems(data?.giftCards)?.map(getExtendedGiftCard) || [];
+
   const providerValues: GiftCardsListConsumerProps = {
-    giftCards: mapEdgesToItems(data?.giftCards)?.map(getExtendedGiftCard) || [],
+    giftCards,
     loading,
     isSelected,
     listElements,

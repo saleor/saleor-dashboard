@@ -68,7 +68,7 @@ const GiftCardsListTable: React.FC = () => {
           size="md"
           status={StatusType.ERROR}
           label={intl.formatMessage(
-            giftCardStatusChipMessages.expiredStatusLabel
+            giftCardStatusChipMessages.disabledStatusLabel
           )}
         />
       );
