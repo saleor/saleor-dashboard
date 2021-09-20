@@ -1,4 +1,11 @@
-import { Button, Card, CardContent, Divider } from "@material-ui/core";
+import {
+  Button,
+  Card,
+  CardContent,
+  Divider,
+  Typography
+} from "@material-ui/core";
+import VerticalSpacer from "@saleor/apps/components/VerticalSpacer";
 import CardSpacer from "@saleor/components/CardSpacer";
 import CardTitle from "@saleor/components/CardTitle";
 import Skeleton from "@saleor/components/Skeleton";
@@ -16,9 +23,8 @@ import { giftCardUpdateDetailsCardMessages as messages } from "./messages";
 const GiftCardUpdateDetailsCard: React.FC = () => {
   const intl = useIntl();
 
-  const { loading } = useGiftCardDetails();
+  const { loading, giftCard } = useGiftCardDetails();
   const { openSetBalanceDialog } = useGiftCardUpdateDialogs();
-
   const {
     change,
     data: { tag },
@@ -30,13 +36,16 @@ const GiftCardUpdateDetailsCard: React.FC = () => {
       <CardTitle
         title={intl.formatMessage(messages.title)}
         toolbar={
-          <Button
-            data-test-id="set-balance-button"
-            color="primary"
-            onClick={openSetBalanceDialog}
-          >
-            {intl.formatMessage(messages.setBalanceButtonLabel)}
-          </Button>
+          !loading &&
+          !giftCard?.isExpired && (
+            <Button
+              data-test-id="set-balance-button"
+              color="primary"
+              onClick={openSetBalanceDialog}
+            >
+              {intl.formatMessage(messages.setBalanceButtonLabel)}
+            </Button>
+          )
         }
       />
       <CardContent>
@@ -47,10 +56,13 @@ const GiftCardUpdateDetailsCard: React.FC = () => {
               <CardSpacer />
               <Divider />
               <CardSpacer />
+              <Typography>
+                {intl.formatMessage(messages.tagInputLabel)}
+              </Typography>
+              <VerticalSpacer />
               <GiftCardTagInput
                 error={formErrors?.tag}
                 name="tag"
-                withTopLabel
                 value={tag}
                 change={change}
               />
