@@ -3534,9 +3534,17 @@
     "context": "GiftCardUpdateDetailsCard set balance button label",
     "string": "set balance"
   },
+  "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardUpdateDetailsCard_dot_tagInputLabel": {
+    "context": "GiftCardTagInput tag label",
+    "string": "Card Tag"
+  },
   "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardUpdateDetailsCard_dot_title": {
     "context": "GiftCardUpdateDetailsCard title",
     "string": "Details"
+  },
+  "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardUpdateExpirySelect_dot_expiredOnLabel": {
+    "context": "GiftCarUpdateDetailsExpirySection expired on label",
+    "string": "Expired on {date}"
   },
   "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardUpdateExpirySelect_dot_expiryDateCheckboxLabel": {
     "context": "GiftCarUpdateDetailsExpirySection expiry date checkbox label",
@@ -3577,6 +3585,14 @@
   "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardUpdateInfoCard_dot_usedByLabel": {
     "context": "GiftCardUpdateInfoCard used by label",
     "string": "Used by"
+  },
+  "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardUpdatePageHeader_dot_disabledStatusLabel": {
+    "context": "giftCardUpdatePageHeader disabled status label",
+    "string": "Disabled"
+  },
+  "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardUpdatePageHeader_dot_expiredStatusLabel": {
+    "context": "giftCardUpdatePageHeader expired status label",
+    "string": "Expired"
   },
   "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardUpdatePageHeader_dot_resendButtonLabel": {
     "context": "giftCardUpdatePageHeader resendButtonLabel",
@@ -3641,10 +3657,6 @@
   "src_dot_giftCards_dot_GiftCardsList_dot_exportCodes": {
     "context": "GiftCardsListHeader menu item settings",
     "string": "Export card codes"
-  },
-  "src_dot_giftCards_dot_GiftCardsList_dot_giftCardDisabledLabel": {
-    "context": "GiftCardsListTable disabled label",
-    "string": "Disabled"
   },
   "src_dot_giftCards_dot_GiftCardsList_dot_giftCardProduct": {
     "context": "GiftCardsListHeader alert",
@@ -3741,10 +3753,6 @@
   "src_dot_giftCards_dot_components_dot_GiftCardSettingsExpirySelect_dot_setExpirationPeriodTitle": {
     "context": "checkbox label",
     "string": "Set gift card expiration period"
-  },
-  "src_dot_giftCards_dot_components_dot_GiftCardTagInput_dot_label": {
-    "context": "GiftCardTagInput tag label",
-    "string": "Card Tag"
   },
   "src_dot_giftCards_dot_components_dot_GiftCardTagInput_dot_placeholder": {
     "context": "GiftCardTagInput tag placeholder",
