@@ -40,9 +40,9 @@ import { messages } from "./messages";
 
 const useStyles = makeStyles(
   theme => ({
-    [theme.breakpoints.up("lg")]: {
+    [theme.breakpoints.up("md")]: {
       colName: {
-        width: "auto"
+        minWidth: 250
       },
       colPrice: {
         width: 300
@@ -326,7 +326,6 @@ export const ProductList: React.FC<ProductListProps> = props => {
                     />
                   </TableCell>
                   <TableCellAvatar
-                    className={classes.colName}
                     thumbnail={maybe(() => product.thumbnail.url)}
                   >
                     {product?.productType ? (

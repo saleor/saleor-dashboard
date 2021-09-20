@@ -22,6 +22,7 @@ export const PAGINATE_BY = 20;
 export const VALUES_PAGINATE_BY = 10;
 
 export type ProductListColumns = "productType" | "availability" | "price";
+
 export interface AppListViewSettings {
   [ListViews.APPS_LIST]: ListSettings;
   [ListViews.ATTRIBUTE_VALUE_LIST]: ListSettings;
