@@ -10,14 +10,14 @@ import {
   createShippingRate as createShippingRateViaApi,
   createShippingZone
 } from "../../../../support/api/requests/ShippingMethod";
-import { updateShopWeightUnit } from "../../../../support/api/requests/shopSettings";
+import { updateShopWeightUnit } from "../../../../support/api/requests/ShopSettings";
 import { getDefaultChannel } from "../../../../support/api/utils/channelsUtils";
 import { deleteProductsStartsWith } from "../../../../support/api/utils/products/productsUtils";
 import { deleteShippingStartsWith } from "../../../../support/api/utils/shippingUtils";
 import filterTests from "../../../../support/filterTests";
 import { changeWeightUnit } from "../../../../support/pages/shippingMethodPage";
 
-filterTests(["all"], () => {
+filterTests({ definedTags: ["all"] }, () => {
   describe("Recalculate weights", () => {
     const startsWith = "RecalculateWeight";
     const name = `${startsWith}${faker.datatype.number()}`;

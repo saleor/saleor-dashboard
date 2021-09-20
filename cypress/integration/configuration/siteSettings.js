@@ -9,10 +9,10 @@ import { urlList } from "../../fixtures/urlList";
 import {
   getShopInfo,
   updateShopAddress
-} from "../../support/api/requests/shopSettings";
+} from "../../support/api/requests/ShopSettings";
 import filterTests from "../../support/filterTests";
 
-filterTests(["all"], () => {
+filterTests({ definedTags: ["all"] }, () => {
   describe("Tests for site settings", () => {
     let address;
 

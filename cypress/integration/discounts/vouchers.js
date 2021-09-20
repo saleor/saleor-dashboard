@@ -20,7 +20,7 @@ import {
   discountOptions
 } from "../../support/pages/discounts/vouchersPage";
 
-filterTests(["all"], () => {
+filterTests({ definedTags: ["all"] }, () => {
   describe("Vouchers discounts", () => {
     const startsWith = "CyVou-";
     const productPrice = 100;

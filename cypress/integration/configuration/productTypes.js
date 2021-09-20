@@ -9,12 +9,12 @@ import { createAttribute } from "../../support/api/requests/Attribute";
 import {
   createTypeProduct,
   getProductType
-} from "../../support/api/requests/productType";
+} from "../../support/api/requests/ProductType";
 import { deleteProductsStartsWith } from "../../support/api/utils/products/productsUtils";
 import filterTests from "../../support/filterTests";
 import { createProductType } from "../../support/pages/productTypePage";
 
-filterTests(["all"], () => {
+filterTests({ definedTags: ["all"] }, () => {
   describe("Tests for product types", () => {
     const startsWith = "ProductType";
 

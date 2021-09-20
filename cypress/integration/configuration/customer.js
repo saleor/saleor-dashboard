@@ -12,7 +12,7 @@ import { ONE_PERMISSION_USERS } from "../../fixtures/users";
 import { getCustomer } from "../../support/api/requests/Customer";
 import filterTests from "../../support/filterTests";
 
-filterTests(["all"], () => {
+filterTests({ definedTags: ["all"] }, () => {
   describe("Tests for customer", () => {
     const channelStartsWith = `Customers`;
 

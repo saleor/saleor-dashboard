@@ -1,22 +1,22 @@
 /// <reference types="cypress"/>
-/// <reference types="../support"/>
+/// <reference types="../../support"/>
 
 import faker from "faker";
 
-import { CATEGORIES_LIST } from "../elements/catalog/categories/categories-list";
-import { CATEGORY_DETAILS } from "../elements/catalog/categories/category-details";
-import { BUTTON_SELECTORS } from "../elements/shared/button-selectors";
-import { SHARED_ELEMENTS } from "../elements/shared/sharedElements";
-import { categoryDetailsUrl, urlList } from "../fixtures/urlList";
-import { getCategory } from "../support/api/requests/Category";
-import { deleteCategoriesStartsWith } from "../support/api/utils/categoryUtils";
-import * as channelsUtils from "../support/api/utils/channelsUtils";
-import * as productsUtils from "../support/api/utils/products/productsUtils";
-import { deleteShippingStartsWith } from "../support/api/utils/shippingUtils";
-import filterTests from "../support/filterTests";
-import { createCategory } from "../support/pages/categoriesPage";
+import { CATEGORIES_LIST } from "../../elements/catalog/categories/categories-list";
+import { CATEGORY_DETAILS } from "../../elements/catalog/categories/category-details";
+import { BUTTON_SELECTORS } from "../../elements/shared/button-selectors";
+import { SHARED_ELEMENTS } from "../../elements/shared/sharedElements";
+import { categoryDetailsUrl, urlList } from "../../fixtures/urlList";
+import { getCategory } from "../../support/api/requests/Category";
+import { deleteCategoriesStartsWith } from "../../support/api/utils/categoryUtils";
+import * as channelsUtils from "../../support/api/utils/channelsUtils";
+import * as productsUtils from "../../support/api/utils/products/productsUtils";
+import { deleteShippingStartsWith } from "../../support/api/utils/shippingUtils";
+import filterTests from "../../support/filterTests";
+import { createCategory } from "../../support/pages/categoriesPage";
 
-filterTests(["all"], () => {
+filterTests({ definedTags: ["all"] }, () => {
   describe("Categories", () => {
     const startsWith = "CyCollections";
     const name = `${startsWith}${faker.datatype.number()}`;

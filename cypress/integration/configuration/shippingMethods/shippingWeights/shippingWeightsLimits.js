@@ -22,7 +22,7 @@ import {
   rateOptions
 } from "../../../../support/pages/shippingMethodPage";
 
-filterTests(["all"], () => {
+filterTests({ definedTags: ["all"] }, () => {
   describe("Shipping weight limits", () => {
     const startsWith = "CyWeightRates-";
     const name = `${startsWith}${faker.datatype.number()}`;

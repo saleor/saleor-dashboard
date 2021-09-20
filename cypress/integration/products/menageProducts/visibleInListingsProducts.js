@@ -11,7 +11,7 @@ import { isProductVisibleInSearchResult } from "../../../support/api/utils/store
 import filterTests from "../../../support/filterTests";
 import { updateProductVisibleInListings } from "../../../support/pages/catalog/products/productDetailsPage";
 
-filterTests(["all"], () => {
+filterTests({ definedTags: ["all"] }, () => {
   describe("Products displayed in listings", () => {
     const startsWith = "CyVisibleInListings-";
     const name = `${startsWith}${faker.datatype.number()}`;

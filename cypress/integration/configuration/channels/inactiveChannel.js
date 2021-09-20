@@ -1,31 +1,31 @@
 /// <reference types="cypress"/>
-/// <reference types="../../support"/>
+/// <reference types="../../../support"/>
 
 import faker from "faker";
 
-import { CHANNEL_FORM_SELECTORS } from "../../elements/channels/channel-form-selectors";
-import { DRAFT_ORDER_SELECTORS } from "../../elements/orders/draft-order-selectors";
-import { ORDERS_SELECTORS } from "../../elements/orders/orders-selectors";
-import { urlList } from "../../fixtures/urlList";
+import { CHANNEL_FORM_SELECTORS } from "../../../elements/channels/channel-form-selectors";
+import { DRAFT_ORDER_SELECTORS } from "../../../elements/orders/draft-order-selectors";
+import { ORDERS_SELECTORS } from "../../../elements/orders/orders-selectors";
+import { urlList } from "../../../fixtures/urlList";
 import {
   activateChannel,
   createChannel
-} from "../../support/api/requests/Channels";
-import { createCheckout } from "../../support/api/requests/Checkout";
-import { getProductDetails } from "../../support/api/requests/storeFront/ProductDetails";
+} from "../../../support/api/requests/Channels";
+import { createCheckout } from "../../../support/api/requests/Checkout";
+import { getProductDetails } from "../../../support/api/requests/storeFront/ProductDetails";
 import {
   deleteChannelsStartsWith,
   getDefaultChannel
-} from "../../support/api/utils/channelsUtils";
+} from "../../../support/api/utils/channelsUtils";
 import {
   createProductInChannel,
   createTypeAttributeAndCategoryForProduct,
   deleteProductsStartsWith
-} from "../../support/api/utils/products/productsUtils";
-import { isProductVisible } from "../../support/api/utils/storeFront/storeFrontProductUtils";
-import filterTests from "../../support/filterTests";
+} from "../../../support/api/utils/products/productsUtils";
+import { isProductVisible } from "../../../support/api/utils/storeFront/storeFrontProductUtils";
+import filterTests from "../../../support/filterTests";
 
-filterTests(["all"], () => {
+filterTests({ definedTags: ["all"] }, () => {
   describe("Tests on inactive channel", () => {
     const channelStartsWith = `InactiveChannel`;
     const randomName = `${channelStartsWith}${faker.datatype.number()}`;

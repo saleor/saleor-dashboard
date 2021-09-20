@@ -6,7 +6,7 @@ import { TEST_ADMIN_USER, USER_WITHOUT_NAME } from "../../fixtures/users";
 import filterTests from "../../support/filterTests";
 import { expectWelcomeMessageIncludes } from "../../support/pages/homePage";
 
-filterTests(["all"], () => {
+filterTests({ definedTags: ["all"] }, () => {
   describe("Displaying welcome message on home page", () => {
     it("should display user name on home page", () => {
       cy.loginUserViaRequest();

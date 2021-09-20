@@ -22,7 +22,7 @@ import { changeChannel } from "../../support/pages/homePage";
 
 // <reference types="cypress" />
 
-filterTests(["all", "critical"], () => {
+filterTests({ definedTags: ["all", "critical"] }, () => {
   describe("Homepage analytics", () => {
     const startsWith = "CyHomeAnalytics";
 

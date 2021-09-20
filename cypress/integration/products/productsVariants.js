@@ -22,10 +22,10 @@ import {
   createFirstVariant,
   createVariant,
   variantsShouldBeVisible
-} from "../../support/pages/catalog/products/VariantsPage";
+} from "../../support/pages/catalog/products/variantsPage";
 import { enterHomePageChangeChannelAndReturn } from "../../support/pages/channelsPage";
 
-filterTests(["all", "critical"], () => {
+filterTests({ definedTags: ["all", "critical"] }, () => {
   describe("Creating variants", () => {
     const startsWith = "CyCreateVariants-";
     const attributeValues = ["value1", "value2"];

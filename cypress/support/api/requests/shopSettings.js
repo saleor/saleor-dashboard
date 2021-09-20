@@ -37,6 +37,7 @@ export function getShopInfo() {
   const query = `query{
     shop{
       name
+      version
       domain{
         host
       }

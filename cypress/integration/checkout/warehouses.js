@@ -16,7 +16,7 @@ import {
 } from "../../support/api/utils/shippingUtils";
 import filterTests from "../../support/filterTests";
 
-filterTests(["all"], () => {
+filterTests({ definedTags: ["all"] }, () => {
   describe("Warehouses in checkout", () => {
     const startsWith = `CyWarehouseCheckout`;
     let defaultChannel;

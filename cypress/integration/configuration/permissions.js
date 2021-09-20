@@ -21,7 +21,7 @@ import { getStaffMembersStartsWith } from "../../support/api/requests/StaffMembe
 import { deletePermissionGroupsStartsWith } from "../../support/api/utils/permissionGroupUtils.js";
 import filterTests from "../../support/filterTests.js";
 
-filterTests(["all"], () => {
+filterTests({ definedTags: ["all"] }, () => {
   describe("Permissions groups", () => {
     const startsWith = "CyPermissions-";
 

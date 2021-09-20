@@ -19,7 +19,7 @@ import filterTests from "../../../support/filterTests";
 import { getCurrencyAndAmountInString } from "../../../support/formatData/formatCurrencyAmount";
 import { enterHomePageChangeChannelAndReturn } from "../../../support/pages/channelsPage";
 
-filterTests(["all"], () => {
+filterTests({ definedTags: ["all"] }, () => {
   describe("Channels in shippingMethod", () => {
     const startsWith = "ChannelShippingMethod";
     let defaultChannel;

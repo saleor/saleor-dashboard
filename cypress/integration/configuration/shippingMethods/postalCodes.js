@@ -22,7 +22,7 @@ import {
   postalCodesOptions
 } from "../../../support/pages/shippingMethodPage";
 
-filterTests(["all"], () => {
+filterTests({ definedTags: ["all"] }, () => {
   describe("Postal codes in shipping", () => {
     const startsWith = "CyShippingMethods-";
     const name = `${startsWith}${faker.datatype.number()}`;

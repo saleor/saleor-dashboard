@@ -13,7 +13,7 @@ import { createApp, getApp } from "../support/api/requests/Apps";
 import { deleteAppsStartsWith } from "../support/api/utils/appUtils";
 import filterTests from "../support/filterTests";
 
-filterTests(["all"], () => {
+filterTests({ definedTags: ["all"] }, () => {
   describe("Tests for apps", () => {
     const startsWith = "Apps";
     const name = `${startsWith}${faker.datatype.number()}`;

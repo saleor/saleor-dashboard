@@ -1,5 +1,5 @@
 /// <reference types="cypress"/>
-/// <reference types="../support"/>
+/// <reference types="../../../support"/>
 
 import faker from "faker";
 
@@ -7,22 +7,22 @@ import {
   addShippingMethod,
   completeCheckout,
   createCheckout
-} from "../support/api/requests/Checkout";
-import { getOrder } from "../support/api/requests/Order";
-import { getDefaultChannel } from "../support/api/utils/channelsUtils";
-import { addAdyenPayment } from "../support/api/utils/ordersUtils";
+} from "../../../support/api/requests/Checkout";
+import { getOrder } from "../../../support/api/requests/Order";
+import { getDefaultChannel } from "../../../support/api/utils/channelsUtils";
+import { addAdyenPayment } from "../../../support/api/utils/ordersUtils";
 import {
   createProductInChannel,
   createTypeAttributeAndCategoryForProduct,
   deleteProductsStartsWith
-} from "../support/api/utils/products/productsUtils";
+} from "../../../support/api/utils/products/productsUtils";
 import {
   createShipping,
   deleteShippingStartsWith
-} from "../support/api/utils/shippingUtils";
-import filterTests from "../support/filterTests";
+} from "../../../support/api/utils/shippingUtils";
+import filterTests from "../../../support/filterTests";
 
-filterTests(["stagedOnly"], () => {
+filterTests({ definedTags: ["stagedOnly"] }, () => {
   describe("Adyen payments", () => {
     const startsWith = "CyChannelInDraftOrders-";
     const name = startsWith + faker.datatype.number();

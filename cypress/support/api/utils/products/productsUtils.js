@@ -5,7 +5,7 @@ import {
   createTypeProduct,
   deleteProductType,
   getProductTypes
-} from "../../requests/productType";
+} from "../../requests/ProductType";
 import { deleteAttributesStartsWith } from "../attributes/attributeUtils";
 
 export function createProductInChannel({

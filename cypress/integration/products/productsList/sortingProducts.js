@@ -7,7 +7,7 @@ import { urlList } from "../../../fixtures/urlList";
 import { expectProductsSortedBy } from "../../../support/api/utils/products/productsListUtils";
 import filterTests from "../../../support/filterTests";
 
-filterTests(["all"], () => {
+filterTests({ definedTags: ["all"] }, () => {
   describe("Sorting products", () => {
     const sortByList = ["name", "type"];
     sortByList.forEach(sortBy => {

@@ -16,7 +16,7 @@ import {
   selectChannelInPicker
 } from "../../support/pages/channelsPage";
 
-filterTests(["all"], () => {
+filterTests({ definedTags: ["all"] }, () => {
   describe("Channels in draft orders", () => {
     const startsWith = "CyChannelInDraftOrders-";
     const randomName = startsWith + faker.datatype.number();

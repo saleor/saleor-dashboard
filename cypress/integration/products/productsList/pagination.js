@@ -10,7 +10,7 @@ import {
   isNumberOfProductsSameAsInSelectResultsOnPage
 } from "../../../support/pages/catalog/products/productsListPage";
 
-filterTests(["all"], () => {
+filterTests({ definedTags: ["all"] }, () => {
   describe("Products", () => {
     beforeEach(() => {
       cy.clearSessionData().loginUserViaRequest();

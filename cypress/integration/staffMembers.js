@@ -25,7 +25,7 @@ import {
   updateUserActiveFlag
 } from "../support/pages/userPage";
 
-filterTests(["stagedOnly"], () => {
+filterTests({ definedTags: ["stagedOnly"] }, () => {
   describe("Staff members", () => {
     const startsWith = "StaffMembers";
     const password = Cypress.env("USER_PASSWORD");

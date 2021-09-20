@@ -1,9 +1,11 @@
 /// <reference types="cypress" />
+/// <reference types="../../support"/>
+
 import faker from "faker";
 
-import { getGiftCardWithTag } from "../support/api/requests/giftCards";
-import filterTests from "../support/filterTests";
-import { formatDate } from "../support/formatData/formatDate";
+import { getGiftCardWithTag } from "../../support/api/requests/GiftCards";
+import filterTests from "../../support/filterTests";
+import { formatDate } from "../../support/formatData/formatDate";
 import {
   expiryPeriods,
   openAndFillUpCreateGiftCardDialog,
@@ -11,9 +13,9 @@ import {
   setExpiryDate,
   setExpiryPeriod,
   setNeverExpire
-} from "../support/pages/giftCardPage";
+} from "../../support/pages/giftCardPage";
 
-filterTests(["all"], () => {
+filterTests({ definedTags: ["all"] }, () => {
   describe("Tests for gift cards", () => {
     const startsWith = "GiftCards";
     const amount = 50;

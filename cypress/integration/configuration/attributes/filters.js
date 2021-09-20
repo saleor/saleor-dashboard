@@ -19,7 +19,7 @@ import {
   showFilters
 } from "../../../support/pages/catalog/products/productsListPage";
 
-filterTests(["all"], () => {
+filterTests({ definedTags: ["all"] }, () => {
   describe("Tests for using attributes in filters", () => {
     const startsWith = "AttrFilter";
 

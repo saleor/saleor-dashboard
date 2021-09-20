@@ -15,7 +15,7 @@ import {
   MENU_ITEM_TYPES
 } from "../../support/pages/navigationPage";
 
-filterTests(["all"], () => {
+filterTests({ definedTags: ["all"] }, () => {
   describe("Tests for menu navigation", () => {
     const startsWith = "Navigation";
     const randomName = `${startsWith}${faker.datatype.number()}`;

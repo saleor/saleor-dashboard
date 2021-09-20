@@ -20,7 +20,7 @@ import {
 } from "../../support/api/utils/shippingUtils";
 import filterTests from "../../support/filterTests";
 
-filterTests(["all"], () => {
+filterTests({ definedTags: ["all"] }, () => {
   describe("Products without shipment option", () => {
     const startsWith = "WithoutShipmentCheckout-";
     const name = `${startsWith}${faker.datatype.number()}`;

@@ -29,7 +29,7 @@ describe("Tests for customer registration", () => {
     });
   });
 
-  filterTests(["stagedOnly"], () => {
+  filterTests({ definedTags: ["stagedOnly"] }, () => {
     it("should register customer", () => {
       const email = `${startsWith}${faker.datatype.number()}@example.com`;
       customerRegistration({ email, channel: defaultChannel.slug });

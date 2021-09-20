@@ -1,23 +1,23 @@
 /// <reference types="cypress"/>
-/// <reference types="../support"/>
+/// <reference types="../../../support"/>
 
 import faker from "faker";
 
-import { PLUGINS_DETAILS } from "../elements/plugins/pluginDetails";
-import { PLUGINS_LIST } from "../elements/plugins/pluginsList";
-import { BUTTON_SELECTORS } from "../elements/shared/button-selectors";
-import { urlList } from "../fixtures/urlList";
-import { createChannel } from "../support/api/requests/Channels";
+import { PLUGINS_DETAILS } from "../../../elements/plugins/pluginDetails";
+import { PLUGINS_LIST } from "../../../elements/plugins/pluginsList";
+import { BUTTON_SELECTORS } from "../../../elements/shared/button-selectors";
+import { urlList } from "../../../fixtures/urlList";
+import { createChannel } from "../../../support/api/requests/Channels";
 import {
   customerRegistration,
   deleteCustomersStartsWith,
   requestPasswordReset
-} from "../support/api/requests/Customer";
-import { getDefaultChannel } from "../support/api/utils/channelsUtils";
-import { getMailsForUser } from "../support/api/utils/users";
-import filterTests from "../support/filterTests";
+} from "../../../support/api/requests/Customer";
+import { getDefaultChannel } from "../../../support/api/utils/channelsUtils";
+import { getMailsForUser } from "../../../support/api/utils/users";
+import filterTests from "../../../support/filterTests";
 
-filterTests(["stagedOnly"], () => {
+filterTests({ definedTags: ["stagedOnly"] }, () => {
   describe("Plugins", () => {
     const startsWith = "Plugins";
     const randomName = `${startsWith}${faker.datatype.number()}`;

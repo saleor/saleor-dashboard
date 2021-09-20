@@ -9,7 +9,7 @@ import { BUTTON_SELECTORS } from "../../elements/shared/button-selectors";
 import { urlList } from "../../fixtures/urlList";
 import { ONE_PERMISSION_USERS } from "../../fixtures/users";
 import { createAttribute } from "../../support/api/requests/Attribute";
-import { createTypeProduct } from "../../support/api/requests/productType";
+import { createTypeProduct } from "../../support/api/requests/ProductType";
 import {
   expectCorrectProductInformation,
   expectCorrectProductVariantInformation
@@ -24,7 +24,7 @@ import {
 import { fillUpCommonFieldsForAllProductTypes } from "../../support/pages/catalog/products/productDetailsPage";
 import { selectChannelInDetailsPages } from "../../support/pages/channelsPage";
 
-filterTests(["all", "critical"], () => {
+filterTests({ definedTags: ["all", "critical"] }, () => {
   describe("Create product", () => {
     const startsWith = "CyCreateProduct-";
     const name = `${startsWith}${faker.datatype.number()}`;

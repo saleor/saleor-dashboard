@@ -11,7 +11,7 @@ import { expectCorrectDataInAttribute } from "../../../support/api/utils/attribu
 import filterTests from "../../../support/filterTests";
 import { createAttributeWithInputType } from "../../../support/pages/attributesPage";
 
-filterTests(["all"], () => {
+filterTests({ definedTags: ["all"] }, () => {
   describe("Create attribute with type", () => {
     const startsWith = "AttrCreate";
     const attributesTypes = [

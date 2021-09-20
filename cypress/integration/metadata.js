@@ -15,7 +15,7 @@ import {
 } from "../support/api/utils/products/productsUtils";
 import filterTests from "../support/filterTests";
 
-filterTests(["all"], () => {
+filterTests({ definedTags: ["all"] }, () => {
   describe("Test for metadata", () => {
     const startsWith = "Metadata";
     const name = `${startsWith}${faker.datatype.number()}`;

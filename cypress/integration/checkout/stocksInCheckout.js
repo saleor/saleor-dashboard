@@ -21,7 +21,7 @@ import {
 } from "../../support/api/utils/shippingUtils";
 import filterTests from "../../support/filterTests";
 
-filterTests(["all", "critical"], () => {
+filterTests({ definedTags: ["all", "critical"] }, () => {
   describe("Products stocks in checkout", () => {
     const startsWith = "CyStocksCheckout-";
     const name = `${startsWith}${faker.datatype.number()}`;

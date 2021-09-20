@@ -24,7 +24,7 @@ import {
   selectProductsOutOfStock
 } from "../../../support/pages/catalog/products/productsListPage";
 
-filterTests(["all"], () => {
+filterTests({ definedTags: ["all"] }, () => {
   describe("Filtering products", () => {
     const startsWith = "CyFilterProducts-";
     const name = `${startsWith}${faker.datatype.number()}`;

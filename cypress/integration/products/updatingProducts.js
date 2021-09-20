@@ -22,7 +22,7 @@ import filterTests from "../../support/filterTests";
 import { metadataForms } from "../../support/pages/catalog/metadataComponent";
 import { fillUpCommonFieldsForAllProductTypes } from "../../support/pages/catalog/products/productDetailsPage";
 
-filterTests(["all"], () => {
+filterTests({ definedTags: ["all"] }, () => {
   describe("Update products", () => {
     const startsWith = "CyUpdateProducts-";
     const name = `${startsWith}${faker.datatype.number()}`;

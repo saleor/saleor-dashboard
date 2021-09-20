@@ -18,7 +18,7 @@ import {
   rateOptions
 } from "../../../support/pages/shippingMethodPage";
 
-filterTests(["all"], () => {
+filterTests({ definedTags: ["all"] }, () => {
   describe("Create shipping method", () => {
     const startsWith = "CreateShippingMethods-";
     const name = `${startsWith}${faker.datatype.number()}`;

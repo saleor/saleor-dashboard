@@ -1,4 +1,4 @@
-import { getPermissionsArray } from "../requests/permissions";
+import { getPermissionsArray } from "../requests/Permissions";
 import { inviteStaffMember } from "../requests/StaffMembers";
 
 export function inviteStaffMemberWithFirstPermission({

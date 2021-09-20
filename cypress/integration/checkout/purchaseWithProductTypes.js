@@ -13,7 +13,7 @@ import {
   createCheckout
 } from "../../support/api/requests/Checkout";
 import { getOrder } from "../../support/api/requests/Order";
-import { createTypeProduct } from "../../support/api/requests/productType";
+import { createTypeProduct } from "../../support/api/requests/ProductType";
 import { getDefaultChannel } from "../../support/api/utils/channelsUtils";
 import {
   addPayment,
@@ -30,7 +30,7 @@ import {
 } from "../../support/api/utils/shippingUtils";
 import filterTests from "../../support/filterTests";
 
-filterTests(["all", "critical"], () => {
+filterTests({ definedTags: ["all", "critical"] }, () => {
   describe("Purchase products with all products types", () => {
     const startsWith = `CyPurchaseByType`;
     const name = `${startsWith}${faker.datatype.number()}`;

@@ -15,7 +15,7 @@ import {
 } from "../../support/api/requests/PageTypes";
 import filterTests from "../../support/filterTests";
 
-filterTests(["all"], () => {
+filterTests({ definedTags: ["all"] }, () => {
   describe("Tests for page types", () => {
     const startsWith = "PageTypes";
 

@@ -12,7 +12,7 @@ import { isProductVisible } from "../../../support/api/utils/storeFront/storeFro
 import filterTests from "../../../support/filterTests";
 import { updateProductPublish } from "../../../support/pages/catalog/products/productDetailsPage";
 
-filterTests(["all"], () => {
+filterTests({ definedTags: ["all"] }, () => {
   describe("Published products", () => {
     const startsWith = "CyPublishedProducts-";
     const name = `${startsWith}${faker.datatype.number()}`;

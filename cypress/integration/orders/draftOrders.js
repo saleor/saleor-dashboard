@@ -21,7 +21,7 @@ import filterTests from "../../support/filterTests";
 import { selectChannelInPicker } from "../../support/pages/channelsPage";
 import { finalizeDraftOrder } from "../../support/pages/draftOrderPage";
 
-filterTests(["all"], () => {
+filterTests({ definedTags: ["all"] }, () => {
   describe("Draft orders", () => {
     const startsWith = "CyDraftOrders-";
     const randomName = startsWith + faker.datatype.number();

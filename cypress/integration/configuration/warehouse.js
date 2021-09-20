@@ -21,7 +21,7 @@ import { getDefaultChannel } from "../../support/api/utils/channelsUtils";
 import { deleteShippingStartsWith } from "../../support/api/utils/shippingUtils";
 import filterTests from "../../support/filterTests";
 
-filterTests(["all"], () => {
+filterTests({ definedTags: ["all"] }, () => {
   describe("Warehouse settings", () => {
     const startsWith = "CyWarehouse";
     let usAddress;

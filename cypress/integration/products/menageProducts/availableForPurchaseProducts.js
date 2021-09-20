@@ -13,7 +13,7 @@ import { isProductAvailableForPurchase } from "../../../support/api/utils/storeF
 import filterTests from "../../../support/filterTests";
 import { updateProductIsAvailableForPurchase } from "../../../support/pages/catalog/products/productDetailsPage";
 
-filterTests(["all"], () => {
+filterTests({ definedTags: ["all"] }, () => {
   describe("Products available in listings", () => {
     const startsWith = "CyAvailForPurchase-";
     const name = `${startsWith}${faker.datatype.number()}`;

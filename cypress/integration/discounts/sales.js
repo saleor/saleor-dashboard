@@ -21,7 +21,7 @@ import {
   discountOptions
 } from "../../support/pages/discounts/salesPage";
 
-filterTests(["all"], () => {
+filterTests({ definedTags: ["all"] }, () => {
   describe("Sales discounts", () => {
     const startsWith = "CySales-";
 

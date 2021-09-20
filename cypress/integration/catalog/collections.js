@@ -1,29 +1,29 @@
 /// <reference types="cypress"/>
-/// <reference types="../support"/>
+/// <reference types="../../support"/>
 
 import faker from "faker";
 
-import { urlList } from "../fixtures/urlList";
-import { createChannel } from "../support/api/requests/Channels";
-import { updateChannelInProduct } from "../support/api/requests/Product";
-import { getCollection } from "../support/api/requests/storeFront/Collections";
-import { searchInShop } from "../support/api/requests/storeFront/Search";
-import * as channelsUtils from "../support/api/utils/channelsUtils";
-import { deleteCollectionsStartsWith } from "../support/api/utils/collectionsUtils";
-import * as productsUtils from "../support/api/utils/products/productsUtils";
-import { deleteShippingStartsWith } from "../support/api/utils/shippingUtils";
+import { urlList } from "../../fixtures/urlList";
+import { createChannel } from "../../support/api/requests/Channels";
+import { updateChannelInProduct } from "../../support/api/requests/Product";
+import { getCollection } from "../../support/api/requests/storeFront/Collections";
+import { searchInShop } from "../../support/api/requests/storeFront/Search";
+import * as channelsUtils from "../../support/api/utils/channelsUtils";
+import { deleteCollectionsStartsWith } from "../../support/api/utils/collectionsUtils";
+import * as productsUtils from "../../support/api/utils/products/productsUtils";
+import { deleteShippingStartsWith } from "../../support/api/utils/shippingUtils";
 import {
   isCollectionVisible,
   isProductInCollectionVisible
-} from "../support/api/utils/storeFront/collectionsUtils";
-import { isProductVisibleInSearchResult } from "../support/api/utils/storeFront/storeFrontProductUtils";
-import filterTests from "../support/filterTests";
+} from "../../support/api/utils/storeFront/collectionsUtils";
+import { isProductVisibleInSearchResult } from "../../support/api/utils/storeFront/storeFrontProductUtils";
+import filterTests from "../../support/filterTests";
 import {
   assignProductsToCollection,
   createCollection
-} from "../support/pages/collectionsPage";
+} from "../../support/pages/collectionsPage";
 
-filterTests(["all"], () => {
+filterTests({ definedTags: ["all"] }, () => {
   describe("Collections", () => {
     const startsWith = "CyCollections-";
     const name = `${startsWith}${faker.datatype.number()}`;
