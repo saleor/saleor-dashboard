@@ -14,7 +14,7 @@ import { maybe } from "../../../misc";
 import { OrderDetails_order_lines } from "../../types/OrderDetails";
 import OrderDiscountCommonModal from "../OrderDiscountCommonModal";
 import { ORDER_LINE_DISCOUNT } from "../OrderDiscountCommonModal/types";
-import { messages } from "./messages";
+import { orderDraftDetailsProductsMessages as messages } from "./messages";
 import TableLineForm, { FormData } from "./TableLineForm";
 
 const useStyles = makeStyles(
@@ -108,7 +108,7 @@ const TableLine: React.FC<TableLineProps> = ({
           isDeleted && (
             <StatusBadge
               variant="error"
-              message={intl.formatMessage(messages.productDeleted)}
+              description={intl.formatMessage(messages.productDeleted)}
             />
           )
         }

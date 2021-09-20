@@ -4,7 +4,7 @@ import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import { makeStyles, Tooltip } from "@saleor/macaw-ui";
 import { renderCollection } from "@saleor/misc";
 import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+import { useIntl } from "react-intl";
 
 import { OrderDetails_order_lines } from "../../types/OrderDetails";
 import TableHeader from "../OrderProductsCardElements/OrderProductsCardHeader";

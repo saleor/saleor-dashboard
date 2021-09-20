@@ -173,7 +173,7 @@ const OrderRefundFulfilledProducts: React.FC<OrderRefundFulfilledProductsProps> 
                       !line.orderLine.variant && (
                         <StatusBadge
                           variant={"error"}
-                          message={intl.formatMessage(
+                          description={intl.formatMessage(
                             messages.fulfilledVariantDeleted
                           )}
                         />
