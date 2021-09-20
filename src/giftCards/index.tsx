@@ -5,11 +5,12 @@ import React from "react";
 import { useIntl } from "react-intl";
 import { Route, RouteComponentProps, Switch } from "react-router-dom";
 
+import GiftCardSettings from "./GiftCardSettings";
 import GiftCardListComponent from "./GiftCardsList";
 import { GiftCardListUrlQueryParams } from "./GiftCardsList/types";
 import GiftCardUpdateComponent from "./GiftCardUpdate";
 import { GiftCardUpdatePageUrlQueryParams } from "./GiftCardUpdate/types";
-import { giftCardsListPath, giftCardUrl } from "./urls";
+import { giftCardSettingsUrl, giftCardsListPath, giftCardUrl } from "./urls";
 
 const GiftCardUpdatePage: React.FC<RouteComponentProps<{ id: string }>> = ({
   match
@@ -39,6 +40,7 @@ const Component: React.FC = ({}) => {
     <>
       <WindowTitle title={intl.formatMessage(sectionNames.giftCards)} />
       <Switch>
+        <Route path={giftCardSettingsUrl} component={GiftCardSettings} />
         <Route exact path={giftCardsListPath} component={GiftCardList} />
         <Route path={giftCardUrl(":id")} component={GiftCardUpdatePage} />
       </Switch>

@@ -1,41 +1,54 @@
-import {
-  GiftCardExpirySettingsInput,
-  GiftCardExpiryTypeEnum
-} from "@saleor/types/globalTypes";
+import { TimePeriodTypeEnum } from "@saleor/types/globalTypes";
+import moment from "moment-timezone";
 
-import { GiftCardCommonFormData } from "./types";
+import { GiftCardCreateFormData } from "./GiftCardCreateDialogForm";
 
-export const getGiftCardExpirySettingsInputData = ({
-  expiryType,
-  expiryDate,
-  expiryPeriodAmount,
-  expiryPeriodType
-}: Pick<
-  GiftCardCommonFormData,
-  "expiryDate" | "expiryPeriodAmount" | "expiryPeriodType" | "expiryType"
->): GiftCardExpirySettingsInput => {
-  switch (expiryType) {
-    case GiftCardExpiryTypeEnum.EXPIRY_DATE: {
-      return {
-        expiryType,
-        expiryDate
-      };
-    }
+const addToCurrentDate = (
+  currentDate: number,
+  expiryPeriodAmount: number,
+  unit: moment.unitOfTime.DurationConstructor
+) => moment(currentDate).add(expiryPeriodAmount, unit);
 
-    case GiftCardExpiryTypeEnum.EXPIRY_PERIOD: {
-      return {
-        expiryType,
-        expiryPeriod: {
-          amount: expiryPeriodAmount,
-          type: expiryPeriodType
-        }
-      };
-    }
-
-    default: {
-      return {
-        expiryType
-      };
-    }
+export const getExpiryPeriodTerminationDate = (
+  currentDate: number,
+  expiryPeriodType: TimePeriodTypeEnum,
+  expiryPeriodAmount: number = 0
+): moment.Moment | null => {
+  switch (expiryPeriodType) {
+    case TimePeriodTypeEnum.DAY:
+      return addToCurrentDate(currentDate, expiryPeriodAmount, "d");
+    case TimePeriodTypeEnum.WEEK:
+      return addToCurrentDate(currentDate, expiryPeriodAmount, "w");
+    case TimePeriodTypeEnum.MONTH:
+      return addToCurrentDate(currentDate, expiryPeriodAmount, "M");
+    case TimePeriodTypeEnum.YEAR:
+      return addToCurrentDate(currentDate, expiryPeriodAmount, "y");
+    default:
+      return null;
   }
+};
+
+export const getGiftCardExpiryInputData = (
+  {
+    expirySelected,
+    expiryType,
+    expiryDate,
+    expiryPeriodAmount,
+    expiryPeriodType
+  }: GiftCardCreateFormData,
+  currentDate: number
+): string => {
+  if (!expirySelected) {
+    return;
+  }
+
+  if (expiryType === "EXPIRY_PERIOD") {
+    return getExpiryPeriodTerminationDate(
+      currentDate,
+      expiryPeriodType,
+      expiryPeriodAmount
+    )?.format("YYYY-MM-DD");
+  }
+
+  return expiryDate;
 };

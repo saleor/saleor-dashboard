@@ -16,6 +16,7 @@ import {
 } from "../../../types/globalTypes";
 import { OrderDetails_order } from "../../types/OrderDetails";
 import messages from "./messages";
+import { extractOrderGiftCardUsedAmount } from "./utils";
 
 const useStyles = makeStyles(
   theme => ({
@@ -85,6 +86,8 @@ const OrderPayment: React.FC<OrderPaymentProps> = props => {
     }
     return order.shippingMethodName;
   };
+
+  const usedGiftCardAmount = extractOrderGiftCardUsedAmount(order);
 
   return (
     <Card>
@@ -223,6 +226,24 @@ const OrderPayment: React.FC<OrderPaymentProps> = props => {
       <CardContent>
         <table className={classes.root}>
           <tbody>
+            {!!usedGiftCardAmount && (
+              <tr>
+                <td>
+                  <FormattedMessage
+                    defaultMessage="Paid with Gift Card"
+                    description="order payment"
+                  />
+                </td>
+                <td className={classes.textRight}>
+                  <Money
+                    money={{
+                      amount: usedGiftCardAmount,
+                      currency: order?.total?.gross?.currency
+                    }}
+                  />
+                </td>
+              </tr>
+            )}
             <tr>
               <td>
                 <FormattedMessage

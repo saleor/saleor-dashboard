@@ -3,13 +3,13 @@ import { ChannelData } from "@saleor/channels/utils";
 import ControlledCheckbox from "@saleor/components/ControlledCheckbox";
 import Hr from "@saleor/components/Hr";
 import RadioSwitchField from "@saleor/components/RadioSwitchField";
+import useCurrentDate from "@saleor/hooks/useCurrentDate";
 import useDateLocalize from "@saleor/hooks/useDateLocalize";
 import { getFormErrors, getProductErrorMessage } from "@saleor/utils/errors";
 import classNames from "classnames";
 import React, { useState } from "react";
 import { useIntl } from "react-intl";
 
-import { DateContext } from "../../Date/DateContext";
 import { useStyles } from "../styles";
 import { ChannelOpts, ChannelsAvailabilityError, Messages } from "../types";
 export interface ChannelContentProps {
@@ -43,7 +43,7 @@ const ChannelContent: React.FC<ChannelContentProps> = ({
     publicationDate,
     ...(visibleInListings !== undefined ? { visibleInListings } : {})
   };
-  const dateNow = React.useContext(DateContext);
+  const dateNow = useCurrentDate();
   const localizeDate = useDateLocalize();
   const hasAvailableProps =
     isAvailable !== undefined && availableForPurchase !== undefined;

@@ -104,6 +104,7 @@ export const ProductTypeUpdate: React.FC<ProductTypeUpdateProps> = ({
           hasVariants: formData.hasVariants,
           isShippingRequired: formData.isShippingRequired,
           name: formData.name,
+          kind: formData.kind,
           productAttributes: formData.productAttributes.map(
             choice => choice.value
           ),

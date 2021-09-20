@@ -497,15 +497,22 @@ export enum GiftCardEventsEnum {
   BALANCE_RESET = "BALANCE_RESET",
   BOUGHT = "BOUGHT",
   DEACTIVATED = "DEACTIVATED",
-  EXPIRY_SETTINGS_UPDATED = "EXPIRY_SETTINGS_UPDATED",
+  EXPIRY_DATE_UPDATED = "EXPIRY_DATE_UPDATED",
   ISSUED = "ISSUED",
+  NOTE_ADDED = "NOTE_ADDED",
   RESENT = "RESENT",
   SENT_TO_CUSTOMER = "SENT_TO_CUSTOMER",
   UPDATED = "UPDATED",
+  USED_IN_ORDER = "USED_IN_ORDER",
 }
 
-export enum GiftCardExpiryTypeEnum {
-  EXPIRY_DATE = "EXPIRY_DATE",
+export enum GiftCardSettingsErrorCode {
+  GRAPHQL_ERROR = "GRAPHQL_ERROR",
+  INVALID = "INVALID",
+  REQUIRED = "REQUIRED",
+}
+
+export enum GiftCardSettingsExpiryTypeEnum {
   EXPIRY_PERIOD = "EXPIRY_PERIOD",
   NEVER_EXPIRE = "NEVER_EXPIRE",
 }
@@ -1668,6 +1675,11 @@ export enum ProductTypeEnum {
   SHIPPABLE = "SHIPPABLE",
 }
 
+export enum ProductTypeKindEnum {
+  GIFT_CARD = "GIFT_CARD",
+  NORMAL = "NORMAL",
+}
+
 export enum ProductTypeSortField {
   DIGITAL = "DIGITAL",
   NAME = "NAME",
@@ -1735,6 +1747,7 @@ export enum StockErrorCode {
 export enum TimePeriodTypeEnum {
   DAY = "DAY",
   MONTH = "MONTH",
+  WEEK = "WEEK",
   YEAR = "YEAR",
 }
 
@@ -2163,27 +2176,34 @@ export interface FulfillmentUpdateTrackingInput {
 
 export interface GiftCardCreateInput {
   tag?: string | null;
+  expiryDate?: any | null;
   startDate?: any | null;
   endDate?: any | null;
   balance: PriceInput;
   userEmail?: string | null;
-  expirySettings: GiftCardExpirySettingsInput;
+  channel?: string | null;
+  isActive: boolean;
   code?: string | null;
   note?: string | null;
 }
 
-export interface GiftCardExpirySettingsInput {
-  expiryType: GiftCardExpiryTypeEnum;
-  expiryDate?: any | null;
+export interface GiftCardResendInput {
+  id: string;
+  email?: string | null;
+  channel: string;
+}
+
+export interface GiftCardSettingsUpdateInput {
+  expiryType?: GiftCardSettingsExpiryTypeEnum | null;
   expiryPeriod?: TimePeriodInputType | null;
 }
 
 export interface GiftCardUpdateInput {
   tag?: string | null;
+  expiryDate?: any | null;
   startDate?: any | null;
   endDate?: any | null;
   balanceAmount?: any | null;
-  expirySettings?: GiftCardExpirySettingsInput | null;
 }
 
 export interface IntRangeInput {
@@ -2330,7 +2350,8 @@ export interface OrderReturnProductsInput {
 }
 
 export interface OrderSettingsUpdateInput {
-  automaticallyConfirmAllNewOrders: boolean;
+  automaticallyConfirmAllNewOrders?: boolean | null;
+  automaticallyFulfillNonShippableGiftCard?: boolean | null;
 }
 
 export interface OrderSortingInput {
@@ -2513,6 +2534,7 @@ export interface ProductFilterInput {
   price?: PriceRangeInput | null;
   minimalPrice?: PriceRangeInput | null;
   productTypes?: (string | null)[] | null;
+  giftCard?: boolean | null;
   ids?: (string | null)[] | null;
   channel?: string | null;
 }
@@ -2548,12 +2570,14 @@ export interface ProductTypeFilterInput {
   configurable?: ProductTypeConfigurable | null;
   productType?: ProductTypeEnum | null;
   metadata?: (MetadataFilter | null)[] | null;
+  kind?: ProductTypeKindEnum | null;
   ids?: (string | null)[] | null;
 }
 
 export interface ProductTypeInput {
   name?: string | null;
   slug?: string | null;
+  kind?: ProductTypeKindEnum | null;
   hasVariants?: boolean | null;
   productAttributes?: (string | null)[] | null;
   variantAttributes?: (string | null)[] | null;

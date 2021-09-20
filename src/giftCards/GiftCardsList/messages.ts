@@ -16,6 +16,37 @@ export const giftCardsListHeaderMenuItemsMessages = defineMessages({
   issueButtonLabel: {
     defaultMessage: "Issue card",
     description: "GiftCardsListHeader issue button label"
+  },
+  noGiftCardsAlertTitle: {
+    defaultMessage: "You haven’t defined a gift card product!",
+    description: "GiftCardsListHeader alert"
+  },
+  noGiftCardsProductsAndProductTypes: {
+    defaultMessage:
+      "{createGiftCardProductType} and {giftCardProduct} to start selling gift cards in your store.",
+    description: "GiftCardsListHeader alert"
+  },
+  noGiftCardsProductTypes: {
+    defaultMessage:
+      "{createGiftCardProductType} to start selling gift cards in your store.",
+    description: "GiftCardsListHeader alert"
+  },
+  noGiftCardsProducts: {
+    defaultMessage:
+      "{createGiftCardProduct} to start selling gift cards in your store.",
+    description: "GiftCardsListHeader alert"
+  },
+  createGiftCardProductType: {
+    defaultMessage: "Create a gift card product type",
+    description: "GiftCardsListHeader alert"
+  },
+  createGiftCardProduct: {
+    defaultMessage: "Create a gift card product",
+    description: "GiftCardsListHeader alert"
+  },
+  giftCardProduct: {
+    defaultMessage: "gift card product",
+    description: "GiftCardsListHeader alert"
   }
 });
 
@@ -43,10 +74,6 @@ export const giftCardsListTableMessages = defineMessages({
   codeEndingWithLabel: {
     defaultMessage: "Code ending with {displayCode}",
     description: "GiftCardsListTable code ending with label"
-  },
-  giftCardDisabledLabel: {
-    defaultMessage: "Disabled",
-    description: "GiftCardsListTable disabled label"
   },
   noGiftCardsFound: {
     defaultMessage: "No gift cards found",

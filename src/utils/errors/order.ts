@@ -1,9 +1,8 @@
 import { OrderErrorFragment } from "@saleor/fragments/types/OrderErrorFragment";
-import { commonMessages } from "@saleor/intl";
 import { OrderErrorCode } from "@saleor/types/globalTypes";
 import { defineMessages, IntlShape } from "react-intl";
 
-import commonErrorMessages from "./common";
+import { getCommonFormFieldErrorMessage } from "./common";
 
 const messages = defineMessages({
   billingNotSet: {
@@ -79,10 +78,6 @@ function getOrderErrorMessage(
         return intl.formatMessage(messages.captureInactive);
       case OrderErrorCode.FULFILL_ORDER_LINE:
         return intl.formatMessage(messages.cannotFulfillLine);
-      case OrderErrorCode.GRAPHQL_ERROR:
-        return intl.formatMessage(commonErrorMessages.graphqlError);
-      case OrderErrorCode.INVALID:
-        return intl.formatMessage(commonErrorMessages.invalid);
       case OrderErrorCode.INSUFFICIENT_STOCK:
         return intl.formatMessage(messages.insufficientStock);
       case OrderErrorCode.NOT_EDITABLE:
@@ -91,20 +86,16 @@ function getOrderErrorMessage(
         return intl.formatMessage(messages.noShippingAddress);
       case OrderErrorCode.PAYMENT_MISSING:
         return intl.formatMessage(messages.paymentMissing);
-      case OrderErrorCode.REQUIRED:
-        return intl.formatMessage(commonMessages.requiredField);
       case OrderErrorCode.SHIPPING_METHOD_NOT_APPLICABLE:
         return intl.formatMessage(messages.shippingNotApplicable);
       case OrderErrorCode.SHIPPING_METHOD_REQUIRED:
         return intl.formatMessage(messages.shippingRequired);
       case OrderErrorCode.VOID_INACTIVE_PAYMENT:
         return intl.formatMessage(messages.cannotVoid);
-      default:
-        return intl.formatMessage(commonErrorMessages.unknownError);
     }
   }
 
-  return undefined;
+  return getCommonFormFieldErrorMessage(err, intl);
 }
 
 export default getOrderErrorMessage;

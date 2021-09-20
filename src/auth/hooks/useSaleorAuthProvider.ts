@@ -1,6 +1,5 @@
 import { DEMO_MODE } from "@saleor/config";
 import { User } from "@saleor/fragments/types/User";
-import { SetLocalStorage } from "@saleor/hooks/useLocalStorage";
 import { commonMessages } from "@saleor/intl";
 import { getFullName, getMutationStatus } from "@saleor/misc";
 import errorTracker from "@saleor/services/errorTracking";
@@ -9,7 +8,7 @@ import {
   login as loginWithCredentialsManagementAPI,
   saveCredentials
 } from "@saleor/utils/credentialsManagement";
-import { useEffect, useRef, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
 import { useMutation } from "react-apollo";
 
 import {
@@ -38,7 +37,7 @@ export interface UseSaleorAuthProvider extends UseAuthProvider {
   loginByToken: (auth: string, csrf: string, user: User) => void;
 }
 export interface UseSaleorAuthProviderOpts extends UseAuthProviderOpts {
-  setAuthPlugin: SetLocalStorage<any>;
+  setAuthPlugin: Dispatch<SetStateAction<any>>;
   authPlugin: string;
 }
 

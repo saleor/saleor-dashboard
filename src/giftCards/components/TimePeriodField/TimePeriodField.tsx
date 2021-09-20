@@ -37,6 +37,10 @@ const TimePeriodField: React.FC<TimePeriodFieldProps> = ({
       value: TimePeriodTypeEnum.MONTH
     },
     {
+      label: intl.formatMessage(messages.weekLabel),
+      value: TimePeriodTypeEnum.WEEK
+    },
+    {
       label: intl.formatMessage(messages.dayLabel),
       value: TimePeriodTypeEnum.DAY
     }

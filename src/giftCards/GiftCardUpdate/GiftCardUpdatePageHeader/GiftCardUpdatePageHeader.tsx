@@ -1,3 +1,5 @@
+import { Button } from "@material-ui/core";
+import HorizontalSpacer from "@saleor/apps/components/HorizontalSpacer";
 import PageHeader from "@saleor/components/PageHeader";
 import PageTitleWithStatusChip from "@saleor/components/PageTitleWithStatusChip";
 import { StatusType } from "@saleor/components/StatusChip/types";
@@ -10,6 +12,7 @@ import { giftCardsListTableMessages as tableMessages } from "../../GiftCardsList
 import useGiftCardDetails from "../providers/GiftCardDetailsProvider/hooks/useGiftCardDetails";
 import useGiftCardUpdateDialogs from "../providers/GiftCardUpdateDialogsProvider/hooks/useGiftCardUpdateDialogs";
 import GiftCardEnableDisableSection from "./GiftCardEnableDisableSection";
+import { giftCardUpdatePageHeaderMessages as messages } from "./messages";
 
 const GiftCardUpdatePageHeader: React.FC = () => {
   const intl = useIntl();
@@ -20,34 +23,55 @@ const GiftCardUpdatePageHeader: React.FC = () => {
     return null;
   }
 
-  const { displayCode, isActive } = giftCard;
+  const { openResendCodeDialog } = useGiftCardUpdateDialogs();
+
+  const { displayCode, isActive, isExpired } = giftCard;
 
   const title = intl.formatMessage(tableMessages.codeEndingWithLabel, {
     displayCode
   });
+
+  const getPageTitle = () => {
+    if (isExpired) {
+      return (
+        <PageTitleWithStatusChip
+          title={title}
+          statusLabel={intl.formatMessage(messages.expiredStatusLabel)}
+          statusType={StatusType.NEUTRAL}
+        />
+      );
+    }
+
+    if (!isActive) {
+      return (
+        <PageTitleWithStatusChip
+          title={title}
+          statusLabel={intl.formatMessage(messages.disabledStatusLabel)}
+          statusType={StatusType.ERROR}
+        />
+      );
+    }
+
+    return title;
+  };
 
   return (
     <>
       <Backlink onClick={navigateBack}>
         {intl.formatMessage(sectionNames.giftCards)}
       </Backlink>
-      <PageHeader
-        inline
-        title={
-          isActive ? (
-            title
-          ) : (
-            <PageTitleWithStatusChip
-              title={title}
-              statusLabel={intl.formatMessage(
-                tableMessages.giftCardDisabledLabel
-              )}
-              statusType={StatusType.ERROR}
-            />
-          )
-        }
-      >
+      <PageHeader inline title={getPageTitle()}>
         <GiftCardEnableDisableSection />
+        <HorizontalSpacer />
+        {!isExpired && (
+          <Button
+            color="primary"
+            variant="contained"
+            onClick={openResendCodeDialog}
+          >
+            {intl.formatMessage(messages.resendButtonLabel)}
+          </Button>
+        )}
       </PageHeader>
     </>
   );

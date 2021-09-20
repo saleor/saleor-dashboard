@@ -22,6 +22,9 @@ export const useGiftCardDetailsBalanceStyles = makeStyles(
       height: 28,
       borderRadius: 14,
       backgroundColor: theme.palette.primary.light
+    },
+    balanceTotal: {
+      color: theme.palette.text.secondary
     }
   }),
   { name: "GiftCardUpdateDetailsBalanceSection" }

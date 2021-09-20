@@ -18,6 +18,7 @@ export interface OrderSettingsUpdate_orderSettingsUpdate_errors {
 export interface OrderSettingsUpdate_orderSettingsUpdate_orderSettings {
   __typename: "OrderSettings";
   automaticallyConfirmAllNewOrders: boolean;
+  automaticallyFulfillNonShippableGiftCard: boolean;
 }
 
 export interface OrderSettingsUpdate_orderSettingsUpdate {

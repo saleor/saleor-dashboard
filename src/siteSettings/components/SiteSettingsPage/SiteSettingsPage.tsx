@@ -140,6 +140,7 @@ const SiteSettingsPage: React.FC<SiteSettingsPageProps> = props => {
             </Backlink>
             <PageHeader
               title={intl.formatMessage(commonMessages.generalInformations)}
+              underline={true}
             />
             <Grid variant="inverted">
               <div>

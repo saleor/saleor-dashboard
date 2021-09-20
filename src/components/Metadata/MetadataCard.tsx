@@ -120,6 +120,7 @@ const MetadataCard: React.FC<MetadataCardProps> = ({
                       />
                     )}
                   </Typography>
+
                   <Typography color="textSecondary">
                     <FormattedMessage
                       defaultMessage="Use the button below to add new metadata field"

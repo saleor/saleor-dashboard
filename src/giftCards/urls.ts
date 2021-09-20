@@ -15,3 +15,5 @@ export const giftCardUrl = (
   id: string,
   params?: GiftCardUpdatePageUrlQueryParams
 ) => urlJoin(giftCardsListPath, id) + "?" + stringifyQs(params);
+
+export const giftCardSettingsUrl = urlJoin(giftCardsListPath, "settings");
