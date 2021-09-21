@@ -25,6 +25,7 @@ module.exports = async (on, config) => {
   config.env.SHOP = await getShopInfo(process.env);
 
   on("before:browser:launch", (launchOptions, browser = {}) => {
+    const browserAny = browser;
     launchOptions.args.push("--proxy-bypass-list=<-loopback>");
     return launchOptions;
   });
