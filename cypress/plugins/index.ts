@@ -15,6 +15,9 @@
 /**
  * @type {Cypress.PluginConfig}
  */
+
+/* tslint:disable:no-unused-variable */
+
 import graphql = require("graphql-request");
 
 module.exports = async (on, config) => {
@@ -24,10 +27,15 @@ module.exports = async (on, config) => {
   config.env.mailHogUrl = process.env.CYPRESS_MAILHOG;
   config.env.SHOP = await getShopInfo(process.env);
 
+  on("before:browser:launch", (browser = {}, launchOptions) => {
+    launchOptions.args.push("--proxy-bypass-list=<-loopback>");
+    return launchOptions;
+  });
   return config;
 };
 
 function getShopInfo(envVariables) {
+  // envVariables.CYPRESS_USER_NAME
   const variables = {
     email: envVariables.CYPRESS_USER_NAME,
     password: envVariables.CYPRESS_USER_PASSWORD
