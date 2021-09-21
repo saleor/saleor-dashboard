@@ -40,6 +40,7 @@ storiesOf("Views / Products / Product variant details", module)
       onAssignReferencesClick={() => undefined}
       onCloseDialog={() => undefined}
       onAttributeSelectBlur={() => undefined}
+      onVariantPreorderDeactivate={() => undefined}
     />
   ))
   .add("when loading data", () => (
@@ -69,6 +70,7 @@ storiesOf("Views / Products / Product variant details", module)
       onAssignReferencesClick={() => undefined}
       onCloseDialog={() => undefined}
       onAttributeSelectBlur={() => undefined}
+      onVariantPreorderDeactivate={() => undefined}
     />
   ))
   .add("no warehouses", () => (
@@ -97,6 +99,7 @@ storiesOf("Views / Products / Product variant details", module)
       onAssignReferencesClick={() => undefined}
       onCloseDialog={() => undefined}
       onAttributeSelectBlur={() => undefined}
+      onVariantPreorderDeactivate={() => undefined}
     />
   ))
   .add("attribute errors", () => (
@@ -153,5 +156,6 @@ storiesOf("Views / Products / Product variant details", module)
       onAssignReferencesClick={() => undefined}
       onCloseDialog={() => undefined}
       onAttributeSelectBlur={() => undefined}
+      onVariantPreorderDeactivate={() => undefined}
     />
   ));

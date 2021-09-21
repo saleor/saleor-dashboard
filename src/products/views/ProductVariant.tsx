@@ -21,7 +21,10 @@ import useNotifier from "@saleor/hooks/useNotifier";
 import useOnSetDefaultVariant from "@saleor/hooks/useOnSetDefaultVariant";
 import useShop from "@saleor/hooks/useShop";
 import { commonMessages } from "@saleor/intl";
-import { useProductVariantChannelListingUpdate } from "@saleor/products/mutations";
+import {
+  useProductVariantChannelListingUpdate,
+  useProductVariantPreorderDeactivateMutation
+} from "@saleor/products/mutations";
 import { ProductVariantDetails_productVariant } from "@saleor/products/types/ProductVariantDetails";
 import usePageSearch from "@saleor/searches/usePageSearch";
 import useProductSearch from "@saleor/searches/useProductSearch";
@@ -155,23 +158,28 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
     data: ProductVariantUpdateSubmitData,
     variant: ProductVariantDetails_productVariant
   ) => {
-    const isChannelPriceChange = data.channelListings.some(channel => {
+    const channelsHaveChanged = data.channelListings.some(channel => {
       const variantChannel = variant.channelListings.find(
         variantChannel => variantChannel.channel.id === channel.id
       );
       return (
         channel.value.price !== variantChannel?.price?.amount.toString() ||
-        channel.value.costPrice !== variantChannel?.costPrice?.amount.toString()
+        channel.value.costPrice !==
+          variantChannel?.costPrice?.amount.toString() ||
+        channel.value.preorderThreshold !==
+          variantChannel.preorderThreshold.quantity
       );
     });
-    if (isChannelPriceChange) {
+
+    if (channelsHaveChanged) {
       await updateChannels({
         variables: {
           id: variant.id,
           input: data.channelListings.map(listing => ({
             channelId: listing.id,
             costPrice: listing.value.costPrice || null,
-            price: listing.value.price
+            price: listing.value.price,
+            preorderThreshold: listing.value.preorderThreshold
           }))
         }
       });
@@ -184,6 +192,14 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
   if (variant === null) {
     return <NotFoundPage onBack={handleBack} />;
   }
+
+  const [
+    deactivatePreorder,
+    deactivatePreoderOpts
+  ] = useProductVariantPreorderDeactivateMutation({});
+  const handleDeactivateVariantPreorder = async (id: string) => {
+    await deactivatePreorder({ variables: { id } });
+  };
 
   const [
     reorderProductVariants,
@@ -204,6 +220,7 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
     updateVariantOpts.loading ||
     assignMediaOpts.loading ||
     unassignMediaOpts.loading ||
+    deactivatePreoderOpts.loading ||
     reorderProductVariantsOpts.loading ||
     deleteAttributeValueOpts.loading;
 
@@ -256,6 +273,10 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
         sku: data.sku,
         stocks: data.updateStocks.map(mapFormsetStockToStockInput),
         trackInventory: data.trackInventory,
+        preorder: {
+          globalThreshold: data.globalThreshold,
+          endDate: data.endDate
+        },
         weight: weight(data.weight),
         firstValues: 10
       }
@@ -359,6 +380,7 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
         onVariantClick={variantId => {
           navigate(productVariantEditUrl(productId, variantId));
         }}
+        onVariantPreorderDeactivate={handleDeactivateVariantPreorder}
         onVariantReorder={handleVariantReorder}
         assignReferencesAttributeId={
           params.action === "assign-attribute-value" && params.id

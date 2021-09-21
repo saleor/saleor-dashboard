@@ -9,7 +9,11 @@ import {
   createFetchMoreReferencesHandler,
   createFetchReferencesHandler
 } from "@saleor/attributes/utils/handlers";
-import { ChannelData, ChannelPriceArgs } from "@saleor/channels/utils";
+import {
+  ChannelData,
+  ChannelPreorderArgs,
+  ChannelPriceArgs
+} from "@saleor/channels/utils";
 import { AttributeInput } from "@saleor/components/Attributes";
 import { MetadataFormData } from "@saleor/components/Metadata";
 import { MultiAutocompleteChoiceType } from "@saleor/components/MultiAutocompleteSelectField";
@@ -29,6 +33,7 @@ import {
 } from "@saleor/products/utils/data";
 import {
   createChannelsChangeHandler,
+  createChannelsPreorderChangeHandler,
   createChannelsPriceChangeHandler
 } from "@saleor/products/utils/handlers";
 import {
@@ -68,6 +73,10 @@ export interface ProductUpdateFormData extends MetadataFormData {
   sku: string;
   taxCode: string;
   trackInventory: boolean;
+  isPreorder: boolean;
+  globalThreshold: number;
+  globalSoldUnits: number;
+  // ! TODO:endDate: any;
   weight: string;
 }
 export interface FileAttributeInputData {
@@ -110,6 +119,10 @@ export interface ProductUpdateHandlers
       FormsetChange<string>
     >,
     Record<"changeChannelPrice", (id: string, data: ChannelPriceArgs) => void>,
+    Record<
+      "changeChannelPreorder",
+      (id: string, data: ChannelPreorderArgs) => void
+    >,
     Record<
       "changeChannels",
       (
@@ -308,6 +321,12 @@ function useProductUpdateForm(
     triggerChange
   );
 
+  const handleChannelPreorderChange = createChannelsPreorderChangeHandler(
+    opts.isSimpleProduct ? opts.currentChannels : opts.channelsData,
+    opts.isSimpleProduct ? opts.setChannels : opts.setChannelsData,
+    triggerChange
+  );
+
   const handleChannelPriceChange = createChannelsPriceChangeHandler(
     opts.isSimpleProduct ? opts.currentChannels : opts.channelsData,
     opts.isSimpleProduct ? opts.setChannels : opts.setChannelsData,
@@ -365,6 +384,7 @@ function useProductUpdateForm(
     handlers: {
       addStock: handleStockAdd,
       changeChannelPrice: handleChannelPriceChange,
+      changeChannelPreorder: handleChannelPreorderChange,
       changeChannels: handleChannelsChange,
       changeDescription,
       changeMetadata,

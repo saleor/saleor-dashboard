@@ -11,6 +11,7 @@ import {
   channelListingProductFragment,
   channelListingProductVariantFragment,
   exportFileFragment,
+  fragmentPreorder,
   fragmentProductMedia,
   fragmentVariant,
   productFragmentDetails
@@ -66,6 +67,10 @@ import {
   ProductVariantChannelListingUpdate,
   ProductVariantChannelListingUpdateVariables
 } from "./types/ProductVariantChannelListingUpdate";
+import {
+  ProductVariantPreorderDeactivate,
+  ProductVariantPreorderDeactivateVariables
+} from "./types/ProductVariantPreorderDeactivate";
 import {
   ProductVariantReorder,
   ProductVariantReorderVariables
@@ -334,6 +339,7 @@ export const variantUpdateMutation = gql`
     $sku: String
     $trackInventory: Boolean!
     $stocks: [StockInput!]!
+    $preorder: PreorderSettingsInput
     $weight: WeightScalar
     $firstValues: Int
     $afterValues: String
@@ -346,6 +352,7 @@ export const variantUpdateMutation = gql`
         attributes: $attributes
         sku: $sku
         trackInventory: $trackInventory
+        preorder: $preorder
         weight: $weight
       }
     ) {
@@ -686,3 +693,25 @@ export const useProductVariantChannelListingUpdate = makeMutation<
   ProductVariantChannelListingUpdate,
   ProductVariantChannelListingUpdateVariables
 >(ProductVariantChannelListingUpdateMutation);
+
+export const ProductVariantPreorderDeactivateMutation = gql`
+  ${fragmentPreorder}
+  ${productErrorFragment}
+  mutation ProductVariantPreorderDeactivate($id: ID!) {
+    productVariantPreorderDeactivate(id: $id) {
+      productVariant {
+        id
+        preorder {
+          ...PreorderFragment
+        }
+      }
+      errors {
+        ...ProductErrorFragment
+      }
+    }
+  }
+`;
+export const useProductVariantPreorderDeactivateMutation = makeMutation<
+  ProductVariantPreorderDeactivate,
+  ProductVariantPreorderDeactivateVariables
+>(ProductVariantPreorderDeactivateMutation);

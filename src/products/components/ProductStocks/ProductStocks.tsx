@@ -18,6 +18,10 @@ import {
 import { fade } from "@material-ui/core/styles/colorManipulator";
 import AddIcon from "@material-ui/icons/Add";
 import DeleteIcon from "@material-ui/icons/Delete";
+import {
+  ChannelData,
+  ChannelPriceAndPreorderArgs
+} from "@saleor/channels/utils";
 import CardTitle from "@saleor/components/CardTitle";
 import ControlledCheckbox from "@saleor/components/ControlledCheckbox";
 import FormSpacer from "@saleor/components/FormSpacer";
@@ -45,16 +49,28 @@ export type ProductStockInput = FormsetAtomicData<
 export interface ProductStockFormData {
   sku: string;
   trackInventory: boolean;
+
+  isPreorder: boolean;
+  // should be independent from the rest of the form
+  globalThreshold: number;
+  globalSoldUnits: number;
+  // ! TODO endDate: any;
 }
 
 export interface ProductStocksProps {
+  productVariantChannelListings?: ChannelData[];
   data: ProductStockFormData;
   disabled: boolean;
   errors: ProductErrorFragment[];
   hasVariants: boolean;
   stocks: ProductStockInput[];
   warehouses: WarehouseFragment[];
+  onVariantChannelListingChange?: (
+    id: string,
+    data: ChannelPriceAndPreorderArgs
+  ) => void;
   onChange: FormsetChange;
+  onEndPreorderTrigger?: () => void;
   onFormDataChange: FormChange;
   onWarehouseStockAdd: (warehouseId: string) => void;
   onWarehouseStockDelete: (warehouseId: string) => void;
@@ -121,8 +137,11 @@ const ProductStocks: React.FC<ProductStocksProps> = ({
   errors,
   stocks,
   warehouses,
+  productVariantChannelListings,
   onChange,
+  onEndPreorderTrigger,
   onFormDataChange,
+  onVariantChannelListingChange,
   onWarehouseStockAdd,
   onWarehouseStockDelete,
   onWarehouseConfigure
@@ -162,38 +181,57 @@ const ProductStocks: React.FC<ProductStocksProps> = ({
             value={data.sku}
           />
         </div>
-        <FormSpacer />
         <ControlledCheckbox
-          checked={data.trackInventory}
-          name="trackInventory"
-          onChange={onFormDataChange}
+          checked={data.isPreorder}
+          name="isPreorder"
+          onChange={
+            onEndPreorderTrigger ? onEndPreorderTrigger : onFormDataChange
+          }
           disabled={disabled}
           label={
-            <>
-              <FormattedMessage
-                defaultMessage="Track Inventory"
-                description="product inventory, checkbox"
-              />
-              <Typography variant="caption">
-                <FormattedMessage defaultMessage="Active inventory tracking will automatically calculate changes of stock" />
-              </Typography>
-            </>
+            <FormattedMessage
+              defaultMessage="Variant currently in preorder"
+              description="product inventory, checkbox"
+            />
           }
         />
+
+        <FormSpacer />
+        {!data.isPreorder && (
+          <ControlledCheckbox
+            checked={data.trackInventory}
+            name="trackInventory"
+            onChange={onFormDataChange}
+            disabled={disabled}
+            label={
+              <>
+                <FormattedMessage
+                  defaultMessage="Track Inventory"
+                  description="product inventory, checkbox"
+                />
+                <Typography variant="caption">
+                  <FormattedMessage defaultMessage="Active inventory tracking will automatically calculate changes of stock" />
+                </Typography>
+              </>
+            }
+          />
+        )}
       </CardContent>
       <Hr />
       <CardContent className={classes.quantityContainer}>
-        <Typography>
-          <div className={classes.quantityHeader}>
-            <span>
-              <FormattedMessage
-                defaultMessage="Quantity"
-                description="header"
-              />
-            </span>
-          </div>
-        </Typography>
-        {!warehouses?.length && (
+        {!data.isPreorder && (
+          <Typography>
+            <div className={classes.quantityHeader}>
+              <span>
+                <FormattedMessage
+                  defaultMessage="Quantity"
+                  description="header"
+                />
+              </span>
+            </div>
+          </Typography>
+        )}
+        {!warehouses?.length && !data.isPreorder && (
           <Typography color="textSecondary" className={classes.noWarehouseInfo}>
             {hasVariants ? (
               <>
@@ -225,7 +263,7 @@ const ProductStocks: React.FC<ProductStocksProps> = ({
           </Typography>
         )}
       </CardContent>
-      {warehouses?.length > 0 && (
+      {warehouses?.length > 0 && !data.isPreorder && (
         <Table>
           <colgroup>
             <col className={classes.colName} />
@@ -351,6 +389,102 @@ const ProductStocks: React.FC<ProductStocksProps> = ({
                 </TableCell>
               </TableRow>
             )}
+          </TableBody>
+        </Table>
+      )}
+
+      {data.isPreorder && (
+        <>
+          Preordered products will be available in all warehouses. You can set a
+          threshold for sold quantity. Leaving input blank will be interpreted
+          as no limit to sale. Sold items will be allocated at the warehouse
+          assigned to chosen shipping zone.
+          <TextField
+            disabled={disabled}
+            error={!!formErrors.sku}
+            fullWidth
+            helperText={getProductErrorMessage(formErrors.sku, intl)}
+            label={intl.formatMessage({
+              defaultMessage: "Global threshold"
+            })}
+            name="globalThreshold"
+            required
+            onChange={onFormDataChange}
+            value={data.globalThreshold ?? ""}
+          />
+          <FormSpacer />
+        </>
+      )}
+      {/* "Threshold that cannot be exceeded even if per channel thresholds are still available" */}
+      {productVariantChannelListings?.length > 0 && data.isPreorder && (
+        <Table>
+          <colgroup>
+            <col className={classes.colName} />
+            <col className={classes.colQuantity} />
+            <col className={classes.colQuantity} />
+          </colgroup>
+          <TableHead>
+            <TableRow>
+              <TableCell className={classes.colName}>
+                <FormattedMessage
+                  defaultMessage="Channels"
+                  description="tabel column header"
+                />
+              </TableCell>
+              <TableCell className={classes.colQuantity}>
+                <FormattedMessage
+                  defaultMessage="Sold units"
+                  description="table column header, sold units preorder quantity"
+                  id="tableColAllocated"
+                />
+              </TableCell>
+              <TableCell className={classes.colQuantity}>
+                <FormattedMessage
+                  defaultMessage="Quantity Threshold"
+                  description="table column header"
+                  id="tableColQuantity"
+                />
+              </TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {renderCollection(productVariantChannelListings, listing => {
+              if (!listing) {
+                return;
+              }
+
+              return (
+                <TableRow key={listing.id}>
+                  <TableCell className={classes.colName}>
+                    {listing.name}
+                  </TableCell>
+                  <TableCell className={classes.colQuantity}>
+                    {listing?.unitsSold || 0}
+                  </TableCell>
+                  <TableCell className={classes.colQuantity}>
+                    <TextField
+                      disabled={disabled}
+                      fullWidth
+                      inputProps={{
+                        className: classes.input,
+                        min: 0,
+                        type: "number"
+                      }}
+                      onChange={e => {
+                        // onFormDataChange
+
+                        onVariantChannelListingChange(listing.id, {
+                          costPrice: listing.costPrice,
+                          price: listing.price as undefined,
+                          preorderThreshold: +e.target.value
+                        });
+                      }}
+                      value={listing?.preorderThreshold || 0}
+                    />
+                  </TableCell>
+                </TableRow>
+              );
+            })}
           </TableBody>
         </Table>
       )}

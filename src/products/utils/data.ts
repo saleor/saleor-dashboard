@@ -225,6 +225,10 @@ export interface ProductUpdatePageFormData extends MetadataFormData {
   taxCode: string;
   trackInventory: boolean;
   weight: string;
+  isPreorder: boolean;
+  globalThreshold: number;
+  globalSoldUnits: number;
+  endDate: any;
 }
 
 export function getProductUpdatePageFormData(
@@ -244,7 +248,7 @@ export function getProductUpdatePageFormData(
       () => product.collections.map(collection => collection.id),
       []
     ),
-    channelListings: currentChannels,
+    channelListings: currentChannels.map(listing => ({ ...listing })),
     isAvailable: !!product?.isAvailable,
     metadata: product?.metadata?.map(mapMetadataItemToInput),
     name: maybe(() => product.name, ""),
@@ -264,7 +268,11 @@ export function getProductUpdatePageFormData(
     slug: product?.slug || "",
     taxCode: product?.taxType.taxCode,
     trackInventory: !!product?.variants[0]?.trackInventory,
-    weight: product?.weight?.value.toString() || ""
+    weight: product?.weight?.value.toString() || "",
+    isPreorder: product?.variants[0].preorder.isPreorder || false,
+    globalThreshold: product?.variants[0].preorder.globalThreshold || 0,
+    globalSoldUnits: product?.variants[0].preorder.globalSoldUnits || 0,
+    endDate: product?.variants[0].preorder.endDate || null
   };
 }
 

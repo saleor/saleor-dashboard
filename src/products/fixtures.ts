@@ -631,10 +631,12 @@ export const product: (
         }
       ],
       trackInventory: true,
-      weight: {
-        __typename: "Weight",
-        unit: WeightUnitsEnum.KG,
-        value: 3
+      preorder: {
+        __typename: "PreorderData",
+        isPreorder: false,
+        endDate: null,
+        globalSoldUnits: null,
+        globalThreshold: 0
       }
     },
     {
@@ -657,6 +659,11 @@ export const product: (
             __typename: "Money",
             amount: 1,
             currency: "USD"
+          },
+          preorderThreshold: {
+            __typename: "PreorderThreshold",
+            quantity: 0,
+            soldUnits: 0
           }
         },
         {
@@ -676,6 +683,11 @@ export const product: (
             __typename: "Money",
             amount: 1,
             currency: "USD"
+          },
+          preorderThreshold: {
+            __typename: "PreorderThreshold",
+            quantity: 0,
+            soldUnits: 0
           }
         }
       ],
@@ -709,10 +721,12 @@ export const product: (
         }
       ],
       trackInventory: false,
-      weight: {
-        __typename: "Weight",
-        unit: WeightUnitsEnum.KG,
-        value: 4
+      preorder: {
+        __typename: "PreorderData",
+        isPreorder: false,
+        endDate: null,
+        globalSoldUnits: null,
+        globalThreshold: 0
       }
     }
   ],
@@ -2940,6 +2954,11 @@ export const variant = (placeholderImage: string): ProductVariant => ({
         __typename: "Money",
         amount: 10,
         currency: "USD"
+      },
+      preorderThreshold: {
+        __typename: "PreorderThreshold",
+        quantity: 0,
+        soldUnits: 0
       }
     },
     {
@@ -2959,6 +2978,11 @@ export const variant = (placeholderImage: string): ProductVariant => ({
         __typename: "Money",
         amount: 20,
         currency: "USD"
+      },
+      preorderThreshold: {
+        __typename: "PreorderThreshold",
+        quantity: 0,
+        soldUnits: 0
       }
     }
   ],
@@ -3502,6 +3526,13 @@ export const variant = (placeholderImage: string): ProductVariant => ({
     }
   ],
   trackInventory: true,
+  preorder: {
+    __typename: "PreorderData",
+    isPreorder: false,
+    endDate: null,
+    globalSoldUnits: null,
+    globalThreshold: 0
+  },
   weight: {
     __typename: "Weight",
     unit: WeightUnitsEnum.KG,

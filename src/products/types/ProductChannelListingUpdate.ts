@@ -79,11 +79,18 @@ export interface ProductChannelListingUpdate_productChannelListingUpdate_product
   currency: string;
 }
 
+export interface ProductChannelListingUpdate_productChannelListingUpdate_product_variants_channelListings_preorderThreshold {
+  __typename: "PreorderThreshold";
+  quantity: number | null;
+  soldUnits: number;
+}
+
 export interface ProductChannelListingUpdate_productChannelListingUpdate_product_variants_channelListings {
   __typename: "ProductVariantChannelListing";
   channel: ProductChannelListingUpdate_productChannelListingUpdate_product_variants_channelListings_channel;
   price: ProductChannelListingUpdate_productChannelListingUpdate_product_variants_channelListings_price | null;
   costPrice: ProductChannelListingUpdate_productChannelListingUpdate_product_variants_channelListings_costPrice | null;
+  preorderThreshold: ProductChannelListingUpdate_productChannelListingUpdate_product_variants_channelListings_preorderThreshold | null;
 }
 
 export interface ProductChannelListingUpdate_productChannelListingUpdate_product_variants {

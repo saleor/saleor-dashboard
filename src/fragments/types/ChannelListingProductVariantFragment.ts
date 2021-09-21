@@ -26,9 +26,16 @@ export interface ChannelListingProductVariantFragment_costPrice {
   currency: string;
 }
 
+export interface ChannelListingProductVariantFragment_preorderThreshold {
+  __typename: "PreorderThreshold";
+  quantity: number | null;
+  soldUnits: number;
+}
+
 export interface ChannelListingProductVariantFragment {
   __typename: "ProductVariantChannelListing";
   channel: ChannelListingProductVariantFragment_channel;
   price: ChannelListingProductVariantFragment_price | null;
   costPrice: ChannelListingProductVariantFragment_costPrice | null;
+  preorderThreshold: ChannelListingProductVariantFragment_preorderThreshold | null;
 }

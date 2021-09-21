@@ -380,6 +380,12 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                     />
                     <CardSpacer />
                     <ProductStocks
+                      // TODO
+                      // @ts-ignore
+                      onVariantChannelListingChange={
+                        handlers.changeChannelPreorder
+                      }
+                      productVariantChannelListings={data.channelListings}
                       data={data}
                       disabled={disabled}
                       hasVariants={false}

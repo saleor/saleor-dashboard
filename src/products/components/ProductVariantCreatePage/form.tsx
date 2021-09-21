@@ -8,7 +8,6 @@ import {
   createFetchMoreReferencesHandler,
   createFetchReferencesHandler
 } from "@saleor/attributes/utils/handlers";
-import { ChannelPriceData } from "@saleor/channels/utils";
 import { AttributeInput } from "@saleor/components/Attributes";
 import { MetadataFormData } from "@saleor/components/Metadata";
 import useForm, { FormChange } from "@saleor/hooks/useForm";
@@ -31,6 +30,10 @@ export interface ProductVariantCreateFormData extends MetadataFormData {
   sku: string;
   trackInventory: boolean;
   weight: string;
+  isPreorder: boolean;
+  endDate: any;
+  globalThreshold: number;
+  globalSoldUnits: number;
 }
 export interface ProductVariantCreateData extends ProductVariantCreateFormData {
   attributes: AttributeInput[];
@@ -40,7 +43,6 @@ export interface ProductVariantCreateData extends ProductVariantCreateFormData {
 
 export interface UseProductVariantCreateFormOpts {
   warehouses: SearchWarehouses_search_edges_node[];
-  currentChannels: ChannelPriceData[];
   referencePages: SearchPages_search_edges_node[];
   referenceProducts: SearchProducts_search_edges_node[];
   fetchReferencePages?: (data: string) => void;
@@ -86,7 +88,11 @@ const initial: ProductVariantCreateFormData = {
   privateMetadata: [],
   sku: "",
   trackInventory: true,
-  weight: ""
+  weight: "",
+  isPreorder: false,
+  endDate: null,
+  globalThreshold: null,
+  globalSoldUnits: 0
 };
 
 function useProductVariantCreateForm(

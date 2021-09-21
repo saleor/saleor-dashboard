@@ -8,7 +8,10 @@ import {
   createFetchMoreReferencesHandler,
   createFetchReferencesHandler
 } from "@saleor/attributes/utils/handlers";
-import { ChannelPriceData, IChannelPriceArgs } from "@saleor/channels/utils";
+import {
+  ChannelPriceAndPreorderData,
+  IChannelPriceAndPreorderArgs
+} from "@saleor/channels/utils";
 import { AttributeInput } from "@saleor/components/Attributes";
 import { MetadataFormData } from "@saleor/components/Metadata";
 import { ProductVariant } from "@saleor/fragments/types/ProductVariant";
@@ -43,9 +46,16 @@ export interface ProductVariantUpdateFormData extends MetadataFormData {
   sku: string;
   trackInventory: boolean;
   weight: string;
+  isPreorder: boolean;
+  globalThreshold: number;
+  globalSoldUnits: number;
+  endDate: any;
 }
 export interface ProductVariantUpdateData extends ProductVariantUpdateFormData {
-  channelListings: FormsetData<ChannelPriceData, IChannelPriceArgs>;
+  channelListings: FormsetData<
+    ChannelPriceAndPreorderData,
+    IChannelPriceAndPreorderArgs
+  >;
   attributes: AttributeInput[];
   stocks: ProductStockInput[];
 }
@@ -54,14 +64,17 @@ export interface ProductVariantUpdateSubmitData
   attributes: AttributeInput[];
   attributesWithNewFileValue: FormsetData<null, File>;
   addStocks: ProductStockInput[];
-  channelListings: FormsetData<ChannelPriceData, IChannelPriceArgs>;
+  channelListings: FormsetData<
+    ChannelPriceAndPreorderData,
+    IChannelPriceAndPreorderArgs
+  >;
   updateStocks: ProductStockInput[];
   removeStocks: string[];
 }
 
 export interface UseProductVariantUpdateFormOpts {
   warehouses: SearchWarehouses_search_edges_node[];
-  currentChannels: ChannelPriceData[];
+  currentChannels: ChannelPriceAndPreorderData[];
   referencePages: SearchPages_search_edges_node[];
   referenceProducts: SearchProducts_search_edges_node[];
   fetchReferencePages?: (data: string) => void;
@@ -114,13 +127,31 @@ function useProductVariantUpdateForm(
 
   const attributeInput = getAttributeInputFromVariant(variant);
   const stockInput = getStockInputFromVariant(variant);
-  const channelsInput = getChannelsInput(opts.currentChannels);
+
+  const currentChannelsWithPreorderInfo = opts.currentChannels?.map(channel => {
+    const variantChannel = variant.channelListings.find(
+      channelListing => channelListing.channel.id === channel.id
+    );
+
+    return {
+      ...channel,
+      preorderThreshold: variantChannel.preorderThreshold.quantity,
+      soldUnits: variantChannel.preorderThreshold.soldUnits
+    };
+  });
+
+  const channelsInput = getChannelsInput(currentChannelsWithPreorderInfo);
 
   const initial: ProductVariantUpdateFormData = {
     metadata: variant?.metadata?.map(mapMetadataItemToInput),
     privateMetadata: variant?.privateMetadata?.map(mapMetadataItemToInput),
     sku: variant?.sku || "",
     trackInventory: variant?.trackInventory,
+    isPreorder: variant?.preorder?.isPreorder || false,
+    globalThreshold: variant?.preorder?.globalThreshold || null,
+    globalSoldUnits: variant?.preorder?.globalSoldUnits || 0,
+    endDate: variant?.preorder?.endDate || null,
+
     weight: variant?.weight?.value.toString() || ""
   };
 

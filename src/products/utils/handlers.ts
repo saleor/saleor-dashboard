@@ -1,5 +1,7 @@
 import {
   ChannelData,
+  ChannelPreorderArgs,
+  ChannelPriceAndPreorderData,
   ChannelPriceArgs,
   ChannelPriceData
 } from "@saleor/channels/utils";
@@ -23,6 +25,34 @@ export function createChannelsPriceChangeHandler(
         ...channel,
         costPrice,
         price
+      },
+      ...channelListings.slice(channelIndex + 1)
+    ];
+    updateChannels(updatedChannels);
+
+    triggerChange();
+  };
+}
+
+export function createChannelsPreorderChangeHandler(
+  channelListings: ChannelData[],
+  updateChannels: (data: ChannelData[]) => void,
+  triggerChange: () => void
+) {
+  return (id: string, preorderData: ChannelPreorderArgs) => {
+    const { preorderThreshold, unitsSold } = preorderData;
+
+    const channelIndex = channelListings.findIndex(
+      channel => channel.id === id
+    );
+    const channel = channelListings[channelIndex];
+
+    const updatedChannels = [
+      ...channelListings.slice(0, channelIndex),
+      {
+        ...channel,
+        preorderThreshold,
+        unitsSold
       },
       ...channelListings.slice(channelIndex + 1)
     ];
@@ -96,14 +126,15 @@ export function createProductTypeSelectHandler(
   };
 }
 
-export const getChannelsInput = (channels: ChannelPriceData[]) =>
+export const getChannelsInput = (channels: ChannelPriceAndPreorderData[]) =>
   channels?.map(channel => ({
     data: channel,
     id: channel.id,
     label: channel.name,
     value: {
       costPrice: channel.costPrice || "",
-      price: channel.price || ""
+      price: channel.price || "",
+      preorderThreshold: channel.preorderThreshold || 0
     }
   }));
 

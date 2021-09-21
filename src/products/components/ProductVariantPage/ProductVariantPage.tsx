@@ -32,6 +32,7 @@ import { defineMessages, useIntl } from "react-intl";
 import { maybe } from "../../../misc";
 import ProductShipping from "../ProductShipping/ProductShipping";
 import ProductStocks, { ProductStockInput } from "../ProductStocks";
+import ProductVariantEndPreorderDialog from "../ProductVariantEndPreorderDialog";
 import ProductVariantMediaSelectDialog from "../ProductVariantImageSelectDialog";
 import ProductVariantMedia from "../ProductVariantMedia";
 import ProductVariantNavigation from "../ProductVariantNavigation";
@@ -97,6 +98,8 @@ interface ProductVariantPageProps {
   fetchAttributeValues: (query: string, attributeId: string) => void;
   onAssignReferencesClick: (attribute: AttributeInput) => void;
   onCloseDialog: () => void;
+  // TODO
+  onVariantPreorderDeactivate: any;
   onVariantReorder: ReorderAction;
   onAttributeSelectBlur: () => void;
   onAdd();
@@ -130,6 +133,7 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
   onMediaSelect,
   onSubmit,
   onVariantClick,
+  onVariantPreorderDeactivate,
   onVariantReorder,
   onSetDefaultVariant,
   onWarehouseConfigure,
@@ -149,6 +153,14 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
   const [isModalOpened, setModalStatus] = React.useState(false);
   const toggleModal = () => setModalStatus(!isModalOpened);
 
+  const [
+    isEndPreorderModalOpened,
+    setIsEndPreorderModalOpened
+  ] = React.useState(false);
+
+  const togglePreorderModal = () =>
+    setIsEndPreorderModalOpened(!isEndPreorderModalOpened);
+
   const variantMedia = variant?.media?.map(image => image.id);
   const productMedia = variant?.product?.media?.sort((prev, next) =>
     prev.sortOrder > next.sortOrder ? 1 : -1
@@ -158,6 +170,11 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
     .sort((prev, next) => (prev.sortOrder > next.sortOrder ? 1 : -1));
 
   const canOpenAssignReferencesAttributeDialog = !!assignReferencesAttributeId;
+
+  const handleDeactivatePreorder = async () => {
+    await onVariantPreorderDeactivate(variant.id);
+    togglePreorderModal();
+  };
 
   const handleAssignReferenceAttribute = (
     attributeValues: string[],
@@ -305,6 +322,13 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
                   />
                   <CardSpacer />
                   <ProductStocks
+                    productVariantChannelListings={data.channelListings.map(
+                      channel => ({
+                        ...channel.data,
+                        ...channel.value
+                      })
+                    )}
+                    onVariantChannelListingChange={handlers.changeChannels}
                     data={data}
                     disabled={loading}
                     hasVariants={true}
@@ -313,6 +337,7 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
                     warehouses={warehouses}
                     onChange={handlers.changeStock}
                     onFormDataChange={change}
+                    onEndPreorderTrigger={togglePreorderModal}
                     onWarehouseStockAdd={handlers.addStock}
                     onWarehouseStockDelete={handlers.deleteStock}
                     onWarehouseConfigure={onWarehouseConfigure}
@@ -362,6 +387,17 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
           open={isModalOpened}
           media={productMedia}
           selectedMedia={maybe(() => variant.media.map(image => image.id))}
+        />
+      )}
+      {variant?.preorder?.isPreorder && (
+        <ProductVariantEndPreorderDialog
+          confirmButtonState="default"
+          // TODO
+          //  "loading" | "success" | "error" | "default";
+          onClose={togglePreorderModal}
+          onConfirm={handleDeactivatePreorder}
+          open={isEndPreorderModalOpened}
+          variantGlobalSoldUnits={variant?.preorder.globalSoldUnits}
         />
       )}
     </>

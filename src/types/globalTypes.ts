@@ -1628,6 +1628,7 @@ export enum ProductErrorCode {
   NOT_FOUND = "NOT_FOUND",
   NOT_PRODUCTS_IMAGE = "NOT_PRODUCTS_IMAGE",
   NOT_PRODUCTS_VARIANT = "NOT_PRODUCTS_VARIANT",
+  PREORDER_VARIANT_CANNOT_BE_DEACTIVATED = "PREORDER_VARIANT_CANNOT_BE_DEACTIVATED",
   PRODUCT_NOT_ASSIGNED_TO_CHANNEL = "PRODUCT_NOT_ASSIGNED_TO_CHANNEL",
   PRODUCT_WITHOUT_CATEGORY = "PRODUCT_WITHOUT_CATEGORY",
   REQUIRED = "REQUIRED",
@@ -2497,6 +2498,11 @@ export interface PluginUpdateInput {
   configuration?: (ConfigurationItemInput | null)[] | null;
 }
 
+export interface PreorderSettingsInput {
+  globalThreshold?: number | null;
+  endDate?: any | null;
+}
+
 export interface PriceInput {
   currency: string;
   amount: any;
@@ -2558,6 +2564,7 @@ export interface ProductFilterInput {
   productTypes?: (string | null)[] | null;
   giftCard?: boolean | null;
   ids?: (string | null)[] | null;
+  hasPreorderedVariants?: boolean | null;
   channel?: string | null;
 }
 
@@ -2619,6 +2626,7 @@ export interface ProductVariantBulkCreateInput {
   sku?: string | null;
   trackInventory?: boolean | null;
   weight?: any | null;
+  preorder?: PreorderSettingsInput | null;
   stocks?: StockInput[] | null;
   channelListings?: ProductVariantChannelListingAddInput[] | null;
 }
@@ -2627,6 +2635,7 @@ export interface ProductVariantChannelListingAddInput {
   channelId: string;
   price: any;
   costPrice?: any | null;
+  preorderThreshold?: number | null;
 }
 
 export interface ProductVariantCreateInput {
@@ -2634,6 +2643,7 @@ export interface ProductVariantCreateInput {
   sku?: string | null;
   trackInventory?: boolean | null;
   weight?: any | null;
+  preorder?: PreorderSettingsInput | null;
   product: string;
   stocks?: StockInput[] | null;
 }
@@ -2643,6 +2653,7 @@ export interface ProductVariantInput {
   sku?: string | null;
   trackInventory?: boolean | null;
   weight?: any | null;
+  preorder?: PreorderSettingsInput | null;
 }
 
 export interface PublishableChannelListingInput {
