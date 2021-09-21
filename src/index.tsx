@@ -116,13 +116,13 @@ const App: React.FC = () => (
               <ServiceWorker />
               <BackgroundTasksProvider>
                 <AppStateProvider>
-                  <ShopProvider>
-                    <AuthProvider>
+                  <AuthProvider>
+                    <ShopProvider>
                       <AppChannelProvider>
                         <Routes />
                       </AppChannelProvider>
-                    </AuthProvider>
-                  </ShopProvider>
+                    </ShopProvider>
+                  </AuthProvider>
                 </AppStateProvider>
               </BackgroundTasksProvider>
             </MessageManagerProvider>
