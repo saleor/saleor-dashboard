@@ -16,9 +16,9 @@
  * @type {Cypress.PluginConfig}
  */
 
-/* tslint:disable:no-unused-variable */
+/* eslint-disable @typescript-eslint/no-var-requires */
 
-import graphql = require("graphql-request");
+const graphql = require("graphql-request");
 
 module.exports = async (on, config) => {
   // make env variables visible for cypress
