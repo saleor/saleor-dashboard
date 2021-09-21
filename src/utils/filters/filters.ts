@@ -22,7 +22,7 @@ function createFilterUtils<
 
   function getFiltersCurrentTab<TQueryTabParams extends ActiveTab>(
     params: TQueryTabParams,
-    tabs: any[]
+    tabs: unknown[]
   ) {
     return params.activeTab === undefined
       ? areFiltersApplied((params as unknown) as TQueryParams)
