@@ -76,7 +76,9 @@ export interface ProductUpdateFormData extends MetadataFormData {
   isPreorder: boolean;
   globalThreshold: number;
   globalSoldUnits: number;
-  // ! TODO:endDate: any;
+  hasPreorderEndDate: boolean;
+  preorderEndDate?: string;
+  preorderEndHour?: string;
   weight: string;
 }
 export interface FileAttributeInputData {

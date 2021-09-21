@@ -228,7 +228,9 @@ export interface ProductUpdatePageFormData extends MetadataFormData {
   isPreorder: boolean;
   globalThreshold: number;
   globalSoldUnits: number;
-  endDate: any;
+  hasPreorderEndDate: boolean;
+  preorderEndDate?: string;
+  preorderEndHour?: string;
 }
 
 export function getProductUpdatePageFormData(
@@ -238,6 +240,7 @@ export function getProductUpdatePageFormData(
   channelsData: ChannelData[],
   channelsWithVariants: ChannelsWithVariantsData
 ): ProductUpdatePageFormData {
+  const variant = product?.variants[0];
   return {
     channelsWithVariants,
     channelsData,
@@ -267,12 +270,18 @@ export function getProductUpdatePageFormData(
     ),
     slug: product?.slug || "",
     taxCode: product?.taxType.taxCode,
-    trackInventory: !!product?.variants[0]?.trackInventory,
+    trackInventory: !!variant?.trackInventory,
     weight: product?.weight?.value.toString() || "",
-    isPreorder: product?.variants[0].preorder.isPreorder || false,
-    globalThreshold: product?.variants[0].preorder.globalThreshold || 0,
-    globalSoldUnits: product?.variants[0].preorder.globalSoldUnits || 0,
-    endDate: product?.variants[0].preorder.endDate || null
+    isPreorder: variant?.preorder.isPreorder || false,
+    globalThreshold: variant?.preorder.globalThreshold || 0,
+    globalSoldUnits: variant?.preorder.globalSoldUnits || 0,
+    hasPreorderEndDate: !!variant?.preorder?.endDate,
+    preorderEndDate: !!variant?.preorder?.endDate
+      ? variant?.preorder?.endDate.split("T")?.[0]
+      : null,
+    preorderEndHour: !!variant?.preorder?.endDate
+      ? variant?.preorder?.endDate.split("T")?.[1]?.split("+")?.[0]
+      : null
   };
 }
 

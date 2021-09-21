@@ -58,6 +58,9 @@ export type ChannelPriceArgs = RequireOnlyOne<
 export interface ChannelPreorderArgs {
   preorderThreshold: number;
   unitsSold: number;
+  hasPreorderEndDate: boolean;
+  preorderEndDate?: string;
+  preorderEndHour?: string;
 }
 
 export interface ChannelPriceAndPreorderData {

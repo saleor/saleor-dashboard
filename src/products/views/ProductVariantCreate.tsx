@@ -120,7 +120,9 @@ export const ProductVariant: React.FC<ProductVariantCreateProps> = ({
           trackInventory: true,
           weight: weight(formData.weight),
           preorder: {
-            endDate: formData.endDate,
+            endDate: formData.hasPreorderEndDate
+              ? `${formData.preorderEndDate}T${formData.preorderEndHour}`
+              : null,
             globalThreshold: formData.globalThreshold
           }
         },

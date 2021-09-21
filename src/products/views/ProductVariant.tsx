@@ -275,7 +275,9 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
         trackInventory: data.trackInventory,
         preorder: {
           globalThreshold: data.globalThreshold,
-          endDate: data.endDate
+          endDate: data.hasPreorderEndDate
+            ? `${data.preorderEndDate}T${data.preorderEndHour}`
+            : null
         },
         weight: weight(data.weight),
         firstValues: 10

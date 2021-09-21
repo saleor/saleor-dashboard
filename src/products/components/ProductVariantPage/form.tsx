@@ -49,7 +49,9 @@ export interface ProductVariantUpdateFormData extends MetadataFormData {
   isPreorder: boolean;
   globalThreshold: number;
   globalSoldUnits: number;
-  endDate: any;
+  hasPreorderEndDate: boolean;
+  preorderEndDate?: string;
+  preorderEndHour?: string;
 }
 export interface ProductVariantUpdateData extends ProductVariantUpdateFormData {
   channelListings: FormsetData<
@@ -150,7 +152,13 @@ function useProductVariantUpdateForm(
     isPreorder: variant?.preorder?.isPreorder || false,
     globalThreshold: variant?.preorder?.globalThreshold || null,
     globalSoldUnits: variant?.preorder?.globalSoldUnits || 0,
-    endDate: variant?.preorder?.endDate || null,
+    hasPreorderEndDate: !!variant?.preorder?.endDate,
+    preorderEndDate: !!variant?.preorder?.endDate
+      ? variant?.preorder?.endDate.split("T")?.[0]
+      : null,
+    preorderEndHour: !!variant?.preorder?.endDate
+      ? variant?.preorder?.endDate.split("T")?.[1]?.split("+")?.[0]
+      : null,
 
     weight: variant?.weight?.value.toString() || ""
   };

@@ -34,6 +34,9 @@ export interface ProductVariantCreateFormData extends MetadataFormData {
   endDate: any;
   globalThreshold: number;
   globalSoldUnits: number;
+  hasPreorderEndDate: boolean;
+  preorderEndDate?: string;
+  preorderEndHour?: string;
 }
 export interface ProductVariantCreateData extends ProductVariantCreateFormData {
   attributes: AttributeInput[];
@@ -92,7 +95,10 @@ const initial: ProductVariantCreateFormData = {
   isPreorder: false,
   endDate: null,
   globalThreshold: null,
-  globalSoldUnits: 0
+  globalSoldUnits: 0,
+  hasPreorderEndDate: false,
+  preorderEndDate: "",
+  preorderEndHour: ""
 };
 
 function useProductVariantCreateForm(
