@@ -24,7 +24,7 @@ module.exports = async (on, config) => {
   config.env.mailHogUrl = process.env.CYPRESS_MAILHOG;
   config.env.SHOP = await getShopInfo(process.env);
 
-  on("before:browser:launch", launchOptions => {
+  on("before:browser:launch", (browser = {}, launchOptions) => {
     launchOptions.args.push("--proxy-bypass-list=<-loopback>");
     return launchOptions;
   });
