@@ -1,10 +1,10 @@
 import { IconButton } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
 import {
-  areFiltersApplied,
   deleteFilterTab,
   getActiveFilters,
   getFilterOpts,
+  getFiltersCurrentTab,
   getFilterTabs,
   getFilterVariables,
   saveFilterTab
@@ -92,12 +92,7 @@ const AttributeList: React.FC<AttributeListProps> = ({ params }) => {
 
   const tabs = getFilterTabs();
 
-  const currentTab =
-    params.activeTab === undefined
-      ? areFiltersApplied(params)
-        ? tabs.length + 1
-        : 0
-      : parseInt(params.activeTab, 0);
+  const currentTab = getFiltersCurrentTab(params, tabs);
 
   const [openModal, closeModal] = createDialogActionHandlers<
     AttributeListUrlDialog,

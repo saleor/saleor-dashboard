@@ -26,7 +26,10 @@ export const {
   saveFilterTab
 } = createFilterTabUtils<CategoryListUrlFilters>(CATEGORY_FILTERS_KEY);
 
-export const { areFiltersApplied, getActiveFilters } = createFilterUtils<
-  CategoryListUrlQueryParams,
-  CategoryListUrlFilters
->(CategoryListUrlFiltersEnum);
+export const {
+  areFiltersApplied,
+  getActiveFilters,
+  getFiltersCurrentTab
+} = createFilterUtils<CategoryListUrlQueryParams, CategoryListUrlFilters>(
+  CategoryListUrlFiltersEnum
+);
