@@ -4,7 +4,7 @@ import { Route, RouteProps } from "react-router-dom";
 
 import NotFound from "../../NotFound";
 import { PermissionEnum } from "../../types/globalTypes";
-import { hasPermission } from "../misc";
+import { hasPermissions } from "../misc";
 
 interface SectionRouteProps extends RouteProps {
   permissions?: PermissionEnum[];
@@ -16,12 +16,10 @@ export const SectionRoute: React.FC<SectionRouteProps> = ({
 }) => {
   const { user } = useUser();
 
-  const hasPermissions =
-    !permissions ||
-    permissions
-      .map(permission => hasPermission(permission, user))
-      .reduce((prev, curr) => prev && curr);
-  return hasPermissions ? <Route {...props} /> : <NotFound />;
+  const hasSectionPermissions =
+    !permissions || hasPermissions(permissions, user);
+
+  return hasSectionPermissions ? <Route {...props} /> : <NotFound />;
 };
 SectionRoute.displayName = "Route";
 export default SectionRoute;
