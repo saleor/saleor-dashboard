@@ -24,16 +24,10 @@ module.exports = async (on, config) => {
   config.env.mailHogUrl = process.env.CYPRESS_MAILHOG;
   config.env.SHOP = await getShopInfo(process.env);
 
-  on("before:browser:launch", (launchOptions, browser = {}) => {
-    const browserAny = browser;
-    launchOptions.args.push("--proxy-bypass-list=<-loopback>");
-    return launchOptions;
-  });
   return config;
 };
 
 function getShopInfo(envVariables) {
-  // envVariables.CYPRESS_USER_NAME
   const variables = {
     email: envVariables.CYPRESS_USER_NAME,
     password: envVariables.CYPRESS_USER_PASSWORD
