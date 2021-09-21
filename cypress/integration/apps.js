@@ -49,7 +49,7 @@ filterTests({ definedTags: ["all"] }, () => {
         .get(BUTTON_SELECTORS.confirm)
         .click()
         .confirmationMessageShouldDisappear()
-        .wait("@AppCreate")
+        .waitForRequestAndCheckIfNoErrors("@AppCreate")
         .its("response.body.data.appCreate.app")
         .then(app => {
           getApp(app.id);

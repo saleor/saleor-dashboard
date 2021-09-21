@@ -7,3 +7,10 @@ Cypress.Commands.add("clearAndType", { prevSubject: true }, (subject, text) => {
     .clear()
     .type(text);
 });
+
+Cypress.Commands.add("waitForRequestAndCheckIfNoErrors", alias => {
+  cy.wait(alias).then(resp => {
+    expect(resp.response.body.errors).to.be.undefined;
+    return resp;
+  });
+});
