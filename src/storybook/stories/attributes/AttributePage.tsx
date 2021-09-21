@@ -12,6 +12,7 @@ import React from "react";
 import Decorator from "../../Decorator";
 
 const props: AttributePageProps = {
+  children: () => null,
   attribute,
   disabled: false,
   errors: [],
@@ -34,16 +35,22 @@ const props: AttributePageProps = {
 
 storiesOf("Views / Attributes / Attribute details", module)
   .addDecorator(Decorator)
-  .add("default", () => <AttributePage {...props} />)
+  .add("default", () => <AttributePage {...props}>{() => null}</AttributePage>)
   .add("loading", () => (
     <AttributePage
       {...props}
       attribute={undefined}
       disabled={true}
       values={undefined}
-    />
+    >
+      {() => null}
+    </AttributePage>
   ))
-  .add("no values", () => <AttributePage {...props} values={undefined} />)
+  .add("no values", () => (
+    <AttributePage {...props} values={undefined}>
+      {() => null}
+    </AttributePage>
+  ))
   .add("form errors", () => (
     <AttributePage
       {...props}
@@ -52,7 +59,9 @@ storiesOf("Views / Attributes / Attribute details", module)
         code: AttributeErrorCode.INVALID,
         field
       }))}
-    />
+    >
+      {() => null}
+    </AttributePage>
   ))
   .add("multiple select input", () => (
     <AttributePage
@@ -61,6 +70,12 @@ storiesOf("Views / Attributes / Attribute details", module)
         ...attribute,
         inputType: AttributeInputTypeEnum.MULTISELECT
       }}
-    />
+    >
+      {() => null}
+    </AttributePage>
   ))
-  .add("create", () => <AttributePage {...props} attribute={null} />);
+  .add("create", () => (
+    <AttributePage {...props} attribute={null}>
+      {() => null}
+    </AttributePage>
+  ));

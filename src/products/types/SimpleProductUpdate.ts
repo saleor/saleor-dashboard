@@ -41,6 +41,7 @@ export interface SimpleProductUpdate_productUpdate_product_attributes_attribute_
   boolean: boolean | null;
   date: any | null;
   dateTime: any | null;
+  value: string | null;
 }
 
 export interface SimpleProductUpdate_productUpdate_product_attributes_attribute_choices_edges {
@@ -84,6 +85,7 @@ export interface SimpleProductUpdate_productUpdate_product_attributes_values {
   boolean: boolean | null;
   date: any | null;
   dateTime: any | null;
+  value: string | null;
 }
 
 export interface SimpleProductUpdate_productUpdate_product_attributes {
@@ -117,6 +119,7 @@ export interface SimpleProductUpdate_productUpdate_product_productType_variantAt
   boolean: boolean | null;
   date: any | null;
   dateTime: any | null;
+  value: string | null;
 }
 
 export interface SimpleProductUpdate_productUpdate_product_productType_variantAttributes_choices_edges {
@@ -389,6 +392,7 @@ export interface SimpleProductUpdate_productVariantUpdate_productVariant_selecti
   boolean: boolean | null;
   date: any | null;
   dateTime: any | null;
+  value: string | null;
 }
 
 export interface SimpleProductUpdate_productVariantUpdate_productVariant_selectionAttributes_attribute_choices_edges {
@@ -432,6 +436,7 @@ export interface SimpleProductUpdate_productVariantUpdate_productVariant_selecti
   boolean: boolean | null;
   date: any | null;
   dateTime: any | null;
+  value: string | null;
 }
 
 export interface SimpleProductUpdate_productVariantUpdate_productVariant_selectionAttributes {
@@ -465,6 +470,7 @@ export interface SimpleProductUpdate_productVariantUpdate_productVariant_nonSele
   boolean: boolean | null;
   date: any | null;
   dateTime: any | null;
+  value: string | null;
 }
 
 export interface SimpleProductUpdate_productVariantUpdate_productVariant_nonSelectionAttributes_attribute_choices_edges {
@@ -508,6 +514,7 @@ export interface SimpleProductUpdate_productVariantUpdate_productVariant_nonSele
   boolean: boolean | null;
   date: any | null;
   dateTime: any | null;
+  value: string | null;
 }
 
 export interface SimpleProductUpdate_productVariantUpdate_productVariant_nonSelectionAttributes {
@@ -732,6 +739,7 @@ export interface SimpleProductUpdate_productVariantStocksCreate_productVariant_s
   boolean: boolean | null;
   date: any | null;
   dateTime: any | null;
+  value: string | null;
 }
 
 export interface SimpleProductUpdate_productVariantStocksCreate_productVariant_selectionAttributes_attribute_choices_edges {
@@ -775,6 +783,7 @@ export interface SimpleProductUpdate_productVariantStocksCreate_productVariant_s
   boolean: boolean | null;
   date: any | null;
   dateTime: any | null;
+  value: string | null;
 }
 
 export interface SimpleProductUpdate_productVariantStocksCreate_productVariant_selectionAttributes {
@@ -808,6 +817,7 @@ export interface SimpleProductUpdate_productVariantStocksCreate_productVariant_n
   boolean: boolean | null;
   date: any | null;
   dateTime: any | null;
+  value: string | null;
 }
 
 export interface SimpleProductUpdate_productVariantStocksCreate_productVariant_nonSelectionAttributes_attribute_choices_edges {
@@ -851,6 +861,7 @@ export interface SimpleProductUpdate_productVariantStocksCreate_productVariant_n
   boolean: boolean | null;
   date: any | null;
   dateTime: any | null;
+  value: string | null;
 }
 
 export interface SimpleProductUpdate_productVariantStocksCreate_productVariant_nonSelectionAttributes {
@@ -1074,6 +1085,7 @@ export interface SimpleProductUpdate_productVariantStocksDelete_productVariant_s
   boolean: boolean | null;
   date: any | null;
   dateTime: any | null;
+  value: string | null;
 }
 
 export interface SimpleProductUpdate_productVariantStocksDelete_productVariant_selectionAttributes_attribute_choices_edges {
@@ -1117,6 +1129,7 @@ export interface SimpleProductUpdate_productVariantStocksDelete_productVariant_s
   boolean: boolean | null;
   date: any | null;
   dateTime: any | null;
+  value: string | null;
 }
 
 export interface SimpleProductUpdate_productVariantStocksDelete_productVariant_selectionAttributes {
@@ -1150,6 +1163,7 @@ export interface SimpleProductUpdate_productVariantStocksDelete_productVariant_n
   boolean: boolean | null;
   date: any | null;
   dateTime: any | null;
+  value: string | null;
 }
 
 export interface SimpleProductUpdate_productVariantStocksDelete_productVariant_nonSelectionAttributes_attribute_choices_edges {
@@ -1193,6 +1207,7 @@ export interface SimpleProductUpdate_productVariantStocksDelete_productVariant_n
   boolean: boolean | null;
   date: any | null;
   dateTime: any | null;
+  value: string | null;
 }
 
 export interface SimpleProductUpdate_productVariantStocksDelete_productVariant_nonSelectionAttributes {
@@ -1417,6 +1432,7 @@ export interface SimpleProductUpdate_productVariantStocksUpdate_productVariant_s
   boolean: boolean | null;
   date: any | null;
   dateTime: any | null;
+  value: string | null;
 }
 
 export interface SimpleProductUpdate_productVariantStocksUpdate_productVariant_selectionAttributes_attribute_choices_edges {
@@ -1460,6 +1476,7 @@ export interface SimpleProductUpdate_productVariantStocksUpdate_productVariant_s
   boolean: boolean | null;
   date: any | null;
   dateTime: any | null;
+  value: string | null;
 }
 
 export interface SimpleProductUpdate_productVariantStocksUpdate_productVariant_selectionAttributes {
@@ -1493,6 +1510,7 @@ export interface SimpleProductUpdate_productVariantStocksUpdate_productVariant_n
   boolean: boolean | null;
   date: any | null;
   dateTime: any | null;
+  value: string | null;
 }
 
 export interface SimpleProductUpdate_productVariantStocksUpdate_productVariant_nonSelectionAttributes_attribute_choices_edges {
@@ -1536,6 +1554,7 @@ export interface SimpleProductUpdate_productVariantStocksUpdate_productVariant_n
   boolean: boolean | null;
   date: any | null;
   dateTime: any | null;
+  value: string | null;
 }
 
 export interface SimpleProductUpdate_productVariantStocksUpdate_productVariant_nonSelectionAttributes {

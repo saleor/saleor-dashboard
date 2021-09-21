@@ -1021,6 +1021,10 @@
     "context": "check to require numeric attribute unit",
     "string": "Select unit"
   },
+  "src_dot_attributes_dot_components_dot_AttributeDetails_dot_swatch": {
+    "context": "swatch attribute type",
+    "string": "Swatch"
+  },
   "src_dot_attributes_dot_components_dot_AttributeDetails_dot_text": {
     "context": "text attribute type",
     "string": "Text"
@@ -1168,6 +1172,14 @@
     "context": "caption",
     "string": "If enabled, attribute will be accessible to customers."
   },
+  "src_dot_attributes_dot_components_dot_AttributeSwatchField_dot_image": {
+    "context": "swatch attribute image label",
+    "string": "Image"
+  },
+  "src_dot_attributes_dot_components_dot_AttributeSwatchField_dot_picker": {
+    "context": "swatch attribute color picker label",
+    "string": "Picker"
+  },
   "src_dot_attributes_dot_components_dot_AttributeValueDeleteDialog_dot_1326420604": {
     "context": "delete attribute value",
     "string": "Are you sure you want to delete \"{name}\" value?"
@@ -1210,6 +1222,10 @@
   "src_dot_attributes_dot_components_dot_AttributeValues_dot_351422234": {
     "context": "assign attribute value button",
     "string": "Assign value"
+  },
+  "src_dot_attributes_dot_components_dot_AttributeValues_dot_4086835540": {
+    "context": "attribute values list: slug column header",
+    "string": "Swatch"
   },
   "src_dot_attributes_dot_views_dot_AttributeCreate_dot_11941964": {
     "string": "Successfully created attribute"
@@ -1914,10 +1930,6 @@
   "src_dot_components_dot_AttributeUnassignDialog_dot_2037985699": {
     "string": "Are you sure you want to unassign {attributeName} from {itemTypeName}?"
   },
-  "src_dot_components_dot_Attributes_dot_3824528779": {
-    "context": "button label",
-    "string": "Assign references"
-  },
   "src_dot_components_dot_Attributes_dot_attributesNumber": {
     "context": "number of attributes",
     "string": "{number} Attributes"
@@ -1929,6 +1941,10 @@
   "src_dot_components_dot_Attributes_dot_multipleValueLabel": {
     "context": "attribute values",
     "string": "Values"
+  },
+  "src_dot_components_dot_Attributes_dot_reference": {
+    "context": "button label",
+    "string": "Assign references"
   },
   "src_dot_components_dot_Attributes_dot_valueLabel": {
     "context": "attribute value",

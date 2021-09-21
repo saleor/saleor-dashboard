@@ -34,6 +34,7 @@ export interface SelectedVariantAttributeFragment_attribute_choices_edges_node {
   boolean: boolean | null;
   date: any | null;
   dateTime: any | null;
+  value: string | null;
 }
 
 export interface SelectedVariantAttributeFragment_attribute_choices_edges {
@@ -77,6 +78,7 @@ export interface SelectedVariantAttributeFragment_values {
   boolean: boolean | null;
   date: any | null;
   dateTime: any | null;
+  value: string | null;
 }
 
 export interface SelectedVariantAttributeFragment {
