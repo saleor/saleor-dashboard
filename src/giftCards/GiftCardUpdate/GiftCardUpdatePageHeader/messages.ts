@@ -15,5 +15,13 @@ export const giftCardUpdatePageHeaderMessages = defineMessages({
   resendButtonLabel: {
     defaultMessage: "Resend code",
     description: "giftCardUpdatePageHeader resendButtonLabel"
+  },
+  expiredStatusLabel: {
+    defaultMessage: "Expired",
+    description: "giftCardUpdatePageHeader expired status label"
+  },
+  disabledStatusLabel: {
+    defaultMessage: "Disabled",
+    description: "giftCardUpdatePageHeader disabled status label"
   }
 });

@@ -8,5 +8,9 @@ export const giftCardExpirySelectMessages = defineMessages({
   expiryDateLabel: {
     defaultMessage: "Expiration date",
     description: "GiftCarUpdateDetailsExpirySection expiry date label"
+  },
+  expiredOnLabel: {
+    defaultMessage: "Expired on {date}",
+    description: "GiftCarUpdateDetailsExpirySection expired on label"
   }
 });

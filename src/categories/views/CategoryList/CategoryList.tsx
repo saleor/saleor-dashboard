@@ -33,9 +33,9 @@ import {
   categoryUrl
 } from "../../urls";
 import {
-  areFiltersApplied,
   deleteFilterTab,
   getActiveFilters,
+  getFiltersCurrentTab,
   getFilterTabs,
   getFilterVariables,
   saveFilterTab
@@ -73,12 +73,7 @@ export const CategoryList: React.FC<CategoryListProps> = ({ params }) => {
 
   const tabs = getFilterTabs();
 
-  const currentTab =
-    params.activeTab === undefined
-      ? areFiltersApplied(params)
-        ? tabs.length + 1
-        : 0
-      : parseInt(params.activeTab, 0);
+  const currentTab = getFiltersCurrentTab(params, tabs);
 
   const changeFilterField = (filter: CategoryListUrlFilters) => {
     reset();

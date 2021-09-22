@@ -97,7 +97,10 @@ export const {
   saveFilterTab
 } = createFilterTabUtils<CustomerListUrlFilters>(CUSTOMER_FILTERS_KEY);
 
-export const { areFiltersApplied, getActiveFilters } = createFilterUtils<
-  CustomerListUrlQueryParams,
-  CustomerListUrlFilters
->(CustomerListUrlFiltersEnum);
+export const {
+  areFiltersApplied,
+  getActiveFilters,
+  getFiltersCurrentTab
+} = createFilterUtils<CustomerListUrlQueryParams, CustomerListUrlFilters>(
+  CustomerListUrlFiltersEnum
+);

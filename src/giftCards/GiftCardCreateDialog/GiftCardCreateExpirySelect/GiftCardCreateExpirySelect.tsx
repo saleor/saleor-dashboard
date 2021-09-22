@@ -3,14 +3,14 @@ import HorizontalSpacer from "@saleor/apps/components/HorizontalSpacer";
 import VerticalSpacer from "@saleor/apps/components/VerticalSpacer";
 import ControlledCheckbox from "@saleor/components/ControlledCheckbox";
 import RadioGroupField from "@saleor/components/RadioGroupField";
-import { GiftCardError } from "@saleor/fragments/types/GiftCardError";
 import TimePeriodField from "@saleor/giftCards/components/TimePeriodField";
-import { GiftCardExpiryType } from "@saleor/giftCards/GiftCardCreateDialog/types";
+import {
+  GiftCardCreateFormCommonProps,
+  GiftCardExpiryType
+} from "@saleor/giftCards/GiftCardCreateDialog/types";
 import { getExpiryPeriodTerminationDate } from "@saleor/giftCards/GiftCardCreateDialog/utils";
 import { getGiftCardErrorMessage } from "@saleor/giftCards/GiftCardUpdate/messages";
 import useCurrentDate from "@saleor/hooks/useCurrentDate";
-import { FormChange } from "@saleor/hooks/useForm";
-import { TimePeriodTypeEnum } from "@saleor/types/globalTypes";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 import { MessageDescriptor, useIntl } from "react-intl";
@@ -34,25 +34,16 @@ const options: UntranslatedOption[] = [
   }
 ];
 
-interface GiftCardCreateExpirySelectProps {
-  change: FormChange;
-  expirySelected: boolean;
-  expiryPeriodType: TimePeriodTypeEnum;
-  expiryPeriodAmount: number;
-  expiryType: GiftCardExpiryType;
-  customOptions?: UntranslatedOption[];
-  errors?: Record<"expiryDate", GiftCardError>;
-  expiryDate?: string;
-}
-
-const GiftCardCreateExpirySelect: React.FC<GiftCardCreateExpirySelectProps> = ({
+const GiftCardCreateExpirySelect: React.FC<GiftCardCreateFormCommonProps> = ({
   errors,
   change,
-  expirySelected,
-  expiryPeriodType,
-  expiryPeriodAmount,
-  expiryType,
-  expiryDate
+  data: {
+    expirySelected,
+    expiryPeriodType,
+    expiryPeriodAmount,
+    expiryType,
+    expiryDate
+  }
 }) => {
   const intl = useIntl();
   const classes = useStyles({});

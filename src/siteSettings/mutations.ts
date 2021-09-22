@@ -1,4 +1,3 @@
-import { IS_CLOUD_INSTANCE } from "@saleor/config";
 import { fragmentAddress } from "@saleor/fragments/address";
 import { shopErrorFragment } from "@saleor/fragments/errors";
 import { shopFragment } from "@saleor/fragments/shop";
@@ -18,6 +17,7 @@ const shopSettingsUpdate = gql`
     $shopDomainInput: SiteDomainInput!
     $shopSettingsInput: ShopSettingsInput!
     $addressInput: AddressInput
+    $isCloudInstance: Boolean!
   ) {
     shopSettingsUpdate(input: $shopSettingsInput) {
       errors {
@@ -27,7 +27,7 @@ const shopSettingsUpdate = gql`
         ...ShopFragment
       }
     }
-    shopDomainUpdate(input: $shopDomainInput) @skip(if: ${IS_CLOUD_INSTANCE}) {
+    shopDomainUpdate(input: $shopDomainInput) @skip(if: $isCloudInstance) {
       errors {
         ...ShopErrorFragment
       }

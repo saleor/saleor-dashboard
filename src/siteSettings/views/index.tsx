@@ -1,4 +1,5 @@
 import { WindowTitle } from "@saleor/components/WindowTitle";
+import { IS_CLOUD_INSTANCE } from "@saleor/config";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { commonMessages, sectionNames } from "@saleor/intl";
@@ -80,7 +81,8 @@ export const SiteSettings: React.FC<SiteSettingsProps> = () => {
                   },
                   shopSettingsInput: {
                     description: data.description
-                  }
+                  },
+                  isCloudInstance: IS_CLOUD_INSTANCE
                 }
               });
 

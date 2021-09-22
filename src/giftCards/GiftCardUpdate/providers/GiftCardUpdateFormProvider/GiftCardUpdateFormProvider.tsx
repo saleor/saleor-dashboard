@@ -1,6 +1,5 @@
 import { MetadataFormData } from "@saleor/components/Metadata";
 import { GiftCardError } from "@saleor/fragments/types/GiftCardError";
-import { GiftCardCommonFormData } from "@saleor/giftCards/GiftCardCreateDialog/types";
 import { MutationResultWithOpts } from "@saleor/hooks/makeMutation";
 import useForm, { FormChange, UseFormResult } from "@saleor/hooks/useForm";
 import useNotifier from "@saleor/hooks/useNotifier";
@@ -18,7 +17,10 @@ import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTr
 import React, { createContext } from "react";
 import { useIntl } from "react-intl";
 
-import { initialData as emptyFormData } from "../../../GiftCardCreateDialog/GiftCardCreateDialogForm";
+import {
+  GiftCardCreateFormData,
+  initialData as emptyFormData
+} from "../../../GiftCardCreateDialog/GiftCardCreateDialogForm";
 import { useGiftCardUpdateMutation } from "../../mutations";
 import { GiftCardUpdate } from "../../types/GiftCardUpdate";
 import useGiftCardDetails from "../GiftCardDetailsProvider/hooks/useGiftCardDetails";
@@ -28,7 +30,7 @@ interface GiftCardUpdateFormProviderProps {
 }
 
 export type GiftCardUpdateFormData = MetadataFormData &
-  Omit<GiftCardCommonFormData, "balanceAmount" | "balanceCurrency">;
+  Pick<GiftCardCreateFormData, "tag" | "expiryDate">;
 
 export interface GiftCardUpdateFormConsumerData
   extends GiftCardUpdateFormErrors {
