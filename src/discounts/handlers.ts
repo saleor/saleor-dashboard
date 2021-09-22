@@ -74,10 +74,12 @@ export function createSaleChannelsChangeHandler(
   triggerChange: () => void
 ) {
   return (id: string, discountValue: string) => {
+    console.info("createSaleChannelsChangeHandler", { id, discountValue });
     const channelIndex = channelListings.findIndex(
       channel => channel.id === id
     );
     const channel = channelListings[channelIndex];
+    console.info(channel);
 
     const updatedChannels = [
       ...channelListings.slice(0, channelIndex),
@@ -87,6 +89,7 @@ export function createSaleChannelsChangeHandler(
       },
       ...channelListings.slice(channelIndex + 1)
     ];
+    console.log(updatedChannels);
     updateChannels(updatedChannels);
     triggerChange();
   };

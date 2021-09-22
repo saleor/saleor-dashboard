@@ -16,10 +16,12 @@ import { renderCollection } from "@saleor/misc";
 import { SaleType } from "@saleor/types/globalTypes";
 import { getFormErrors } from "@saleor/utils/errors";
 import getDiscountErrorMessage from "@saleor/utils/errors/discounts";
-import React from "react";
+import * as React from "react";
+import { useEffect } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { SaleDetailsPageFormData } from "../SaleDetailsPage";
+import SaleValueTextField from "./SaleValueTextField";
 import { useStyles } from "./styles";
 
 export interface SaleValueProps {
@@ -37,9 +39,21 @@ const SaleValue: React.FC<SaleValueProps> = ({
   errors,
   onChange
 }) => {
+  const { type } = data;
   const intl = useIntl();
   const classes = useStyles({});
   const formErrors = getFormErrors(["value"], errors);
+
+  // useEffect(() => {
+  //   // console.log(type);
+  //   if (type === SaleType.FIXED) {
+  //     // console.log(data);
+  //     data.channelListings.forEach(listing => {
+  //       console.log("Bonjourrrr", listing.id);
+  //       onChange(listing.id, "0");
+  //     });
+  //   }
+  // }, [type]);
 
   return (
     <Card>
@@ -93,8 +107,8 @@ const SaleValue: React.FC<SaleValueProps> = ({
                       </TableCell>
                       <TableCell>
                         {listing ? (
-                          <TextField
-                            disabled={disabled}
+                          <SaleValueTextField
+                            dataType={type}
                             helperText={
                               error
                                 ? getDiscountErrorMessage(
@@ -103,26 +117,43 @@ const SaleValue: React.FC<SaleValueProps> = ({
                                   )
                                 : ""
                             }
-                            name="value"
-                            onChange={e => onChange(listing.id, e.target.value)}
-                            label={intl.formatMessage({
-                              defaultMessage: "Discount Value",
-                              description: "sale discount"
-                            })}
-                            value={listing.discountValue || ""}
-                            type="number"
-                            fullWidth
-                            inputProps={{
-                              min: 0
-                            }}
-                            InputProps={{
-                              endAdornment:
-                                data.type === SaleType.FIXED
-                                  ? listing.currency
-                                  : "%"
-                            }}
+                            disabled={disabled}
+                            listing={listing}
+                            onChange={onChange}
                           />
                         ) : (
+                          // <TextField
+                          //   disabled={disabled}
+                          //   helperText={
+                          //     error
+                          //       ? getDiscountErrorMessage(
+                          //           formErrors.value,
+                          //           intl
+                          //         )
+                          //       : ""
+                          //   }
+                          //   name="value"
+                          //   onChange={e => {
+                          //     console.info(listing.id, e.target.value);
+                          //     onChange(listing.id, e.target.value);
+                          //   }}
+                          //   label={intl.formatMessage({
+                          //     defaultMessage: "Discount Value",
+                          //     description: "sale discount"
+                          //   })}
+                          //   value={listing.discountValue || ""}
+                          //   type="number"
+                          //   fullWidth
+                          //   inputProps={{
+                          //     min: 0
+                          //   }}
+                          //   InputProps={{
+                          //     endAdornment:
+                          //       data.type === SaleType.FIXED
+                          //         ? listing.currency
+                          //         : "%"
+                          //   }}
+                          // />
                           <Skeleton />
                         )}
                       </TableCell>
