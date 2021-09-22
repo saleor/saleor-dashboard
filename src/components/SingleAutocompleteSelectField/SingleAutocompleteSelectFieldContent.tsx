@@ -13,7 +13,7 @@ import { makeStyles } from "@saleor/macaw-ui";
 import { FetchMoreProps } from "@saleor/types";
 import classNames from "classnames";
 import { GetItemPropsOptions } from "downshift";
-import React from "react";
+import React, { ReactElement } from "react";
 import SVG from "react-inlinesvg";
 import { FormattedMessage } from "react-intl";
 
@@ -25,10 +25,11 @@ const offset = 24;
 
 export type ChoiceValue = string;
 export interface SingleAutocompleteChoiceType<
-  T extends ChoiceValue = ChoiceValue
+  V extends ChoiceValue = ChoiceValue,
+  L = string
 > {
-  label: string;
-  value: T;
+  label: L;
+  value: V;
 }
 export interface SingleAutocompleteActionType {
   label: string;
@@ -37,7 +38,7 @@ export interface SingleAutocompleteActionType {
 export interface SingleAutocompleteSelectFieldContentProps
   extends Partial<FetchMoreProps> {
   add?: SingleAutocompleteActionType;
-  choices: SingleAutocompleteChoiceType[];
+  choices: Array<SingleAutocompleteChoiceType<string, string | JSX.Element>>;
   displayCustomValue: boolean;
   emptyOption: boolean;
   getItemProps: (options: GetItemPropsOptions) => any;
@@ -266,11 +267,16 @@ const SingleAutocompleteSelectFieldContent: React.FC<SingleAutocompleteSelectFie
                 displayCustomValue,
                 !!add
               );
+              const key = React.isValidElement(suggestion.label)
+                ? `${index}${suggestion.value}${
+                    ((suggestion as unknown) as ReactElement).props
+                  }`
+                : JSON.stringify(suggestion);
 
               return (
                 <MenuItem
                   className={classes.menuItem}
-                  key={JSON.stringify(suggestion)}
+                  key={key}
                   selected={selectedItem === suggestion.value}
                   component="div"
                   {...getItemProps({

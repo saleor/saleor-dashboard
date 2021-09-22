@@ -1,5 +1,6 @@
 import { IFilter, IFilterElement } from "@saleor/components/Filter";
 import { findValueInEnum } from "@saleor/misc";
+import { ActiveTab } from "@saleor/types";
 import isArray from "lodash/isArray";
 
 function createFilterUtils<
@@ -19,9 +20,21 @@ function createFilterUtils<
     return Object.keys(getActiveFilters(params)).some(key => !!params[key]);
   }
 
+  function getFiltersCurrentTab<TQueryTabParams extends ActiveTab>(
+    params: TQueryTabParams,
+    tabs: unknown[]
+  ) {
+    return params.activeTab === undefined
+      ? areFiltersApplied((params as unknown) as TQueryParams)
+        ? tabs.length + 1
+        : 0
+      : parseInt(params.activeTab, 0);
+  }
+
   return {
     areFiltersApplied,
-    getActiveFilters
+    getActiveFilters,
+    getFiltersCurrentTab
   };
 }
 

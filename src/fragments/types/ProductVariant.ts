@@ -5,9 +5,9 @@
 
 import { AttributeInputTypeEnum, AttributeEntityTypeEnum, MeasurementUnitsEnum, ProductMediaType, WeightUnitsEnum } from "./../../types/globalTypes";
 
-// ====================================================
+//===
 // GraphQL fragment: ProductVariant
-// ====================================================
+//===
 
 export interface ProductVariant_metadata {
   __typename: "MetadataItem";
@@ -46,6 +46,7 @@ export interface ProductVariant_selectionAttributes_attribute_choices_edges_node
   boolean: boolean | null;
   date: any | null;
   dateTime: any | null;
+  value: string | null;
 }
 
 export interface ProductVariant_selectionAttributes_attribute_choices_edges {
@@ -89,6 +90,7 @@ export interface ProductVariant_selectionAttributes_values {
   boolean: boolean | null;
   date: any | null;
   dateTime: any | null;
+  value: string | null;
 }
 
 export interface ProductVariant_selectionAttributes {
@@ -122,6 +124,7 @@ export interface ProductVariant_nonSelectionAttributes_attribute_choices_edges_n
   boolean: boolean | null;
   date: any | null;
   dateTime: any | null;
+  value: string | null;
 }
 
 export interface ProductVariant_nonSelectionAttributes_attribute_choices_edges {
@@ -165,6 +168,7 @@ export interface ProductVariant_nonSelectionAttributes_values {
   boolean: boolean | null;
   date: any | null;
   dateTime: any | null;
+  value: string | null;
 }
 
 export interface ProductVariant_nonSelectionAttributes {

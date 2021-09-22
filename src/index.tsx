@@ -125,15 +125,15 @@ const App: React.FC = () => (
               <ServiceWorker />
               <BackgroundTasksProvider>
                 <AppStateProvider>
-                  <ShopProvider>
-                    <AuthProvider>
+                  <AuthProvider>
+                    <ShopProvider>
                       <AppChannelProvider>
                         <ExternalAppProvider>
                           <Routes />
                         </ExternalAppProvider>
                       </AppChannelProvider>
-                    </AuthProvider>
-                  </ShopProvider>
+                    </ShopProvider>
+                  </AuthProvider>
                 </AppStateProvider>
               </BackgroundTasksProvider>
             </MessageManagerProvider>

@@ -53,6 +53,7 @@ export interface VariantUpdate_productVariantUpdate_productVariant_selectionAttr
   boolean: boolean | null;
   date: any | null;
   dateTime: any | null;
+  value: string | null;
 }
 
 export interface VariantUpdate_productVariantUpdate_productVariant_selectionAttributes_attribute_choices_edges {
@@ -96,6 +97,7 @@ export interface VariantUpdate_productVariantUpdate_productVariant_selectionAttr
   boolean: boolean | null;
   date: any | null;
   dateTime: any | null;
+  value: string | null;
 }
 
 export interface VariantUpdate_productVariantUpdate_productVariant_selectionAttributes {
@@ -129,6 +131,7 @@ export interface VariantUpdate_productVariantUpdate_productVariant_nonSelectionA
   boolean: boolean | null;
   date: any | null;
   dateTime: any | null;
+  value: string | null;
 }
 
 export interface VariantUpdate_productVariantUpdate_productVariant_nonSelectionAttributes_attribute_choices_edges {
@@ -172,6 +175,7 @@ export interface VariantUpdate_productVariantUpdate_productVariant_nonSelectionA
   boolean: boolean | null;
   date: any | null;
   dateTime: any | null;
+  value: string | null;
 }
 
 export interface VariantUpdate_productVariantUpdate_productVariant_nonSelectionAttributes {
@@ -396,6 +400,7 @@ export interface VariantUpdate_productVariantStocksUpdate_productVariant_selecti
   boolean: boolean | null;
   date: any | null;
   dateTime: any | null;
+  value: string | null;
 }
 
 export interface VariantUpdate_productVariantStocksUpdate_productVariant_selectionAttributes_attribute_choices_edges {
@@ -439,6 +444,7 @@ export interface VariantUpdate_productVariantStocksUpdate_productVariant_selecti
   boolean: boolean | null;
   date: any | null;
   dateTime: any | null;
+  value: string | null;
 }
 
 export interface VariantUpdate_productVariantStocksUpdate_productVariant_selectionAttributes {
@@ -472,6 +478,7 @@ export interface VariantUpdate_productVariantStocksUpdate_productVariant_nonSele
   boolean: boolean | null;
   date: any | null;
   dateTime: any | null;
+  value: string | null;
 }
 
 export interface VariantUpdate_productVariantStocksUpdate_productVariant_nonSelectionAttributes_attribute_choices_edges {
@@ -515,6 +522,7 @@ export interface VariantUpdate_productVariantStocksUpdate_productVariant_nonSele
   boolean: boolean | null;
   date: any | null;
   dateTime: any | null;
+  value: string | null;
 }
 
 export interface VariantUpdate_productVariantStocksUpdate_productVariant_nonSelectionAttributes {
