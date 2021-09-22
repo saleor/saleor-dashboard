@@ -46,7 +46,7 @@ filterTests({ definedTags: ["all"] }, () => {
         .get(BUTTON_SELECTORS.confirm)
         .click()
         .confirmationMessageShouldDisappear()
-        .wait("@CreateCustomer")
+        .waitForRequestAndCheckIfNoErrors("@CreateCustomer")
         .its("response.body.data.customerCreate.user")
         .then(customer => {
           getCustomer(customer.id);

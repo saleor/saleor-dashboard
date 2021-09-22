@@ -91,10 +91,14 @@ export function createTypeAttributeAndCategoryForProduct(
 export function deleteProductsStartsWith(startsWith) {
   deleteAttributesStartsWith(startsWith);
   cy.deleteElementsStartsWith(deleteProductType, getProductTypes, startsWith);
-  deleteAttributesStartsWith(startsWith);
   cy.deleteElementsStartsWith(
     categoryRequest.deleteCategory,
     categoryRequest.getCategories,
+    startsWith
+  );
+  cy.deleteElementsStartsWith(
+    productRequest.deleteProduct,
+    productRequest.getFirstProducts,
     startsWith
   );
 }

@@ -43,7 +43,9 @@ export function fillUpAttributeCreateFields({
 export function saveAttribute() {
   cy.addAliasToGraphRequest("AttributeCreate");
   submitAttribute();
-  return cy.wait("@AttributeCreate").its("response.body.data.attributeCreate");
+  return cy
+    .waitForRequestAndCheckIfNoErrors("@AttributeCreate")
+    .its("response.body.data.attributeCreate");
 }
 
 export function submitAttribute() {

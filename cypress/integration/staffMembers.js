@@ -103,7 +103,7 @@ filterTests({ definedTags: ["stagedOnly"] }, () => {
         .get(BUTTON_SELECTORS.confirm)
         .click()
         .confirmationMessageShouldDisappear()
-        .wait("@StaffMemberUpdate")
+        .waitForRequestAndCheckIfNoErrors("@StaffMemberUpdate")
         .clearSessionData()
         .loginUserViaRequest("auth", { email, password })
         .visit(urlList.homePage);

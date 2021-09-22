@@ -172,7 +172,7 @@ filterTests({ definedTags: ["all"] }, () => {
             .addAliasToGraphRequest("OrderFulfillmentCancel")
             .get(BUTTON_SELECTORS.submit)
             .click()
-            .wait("@OrderFulfillmentCancel");
+            .waitForRequestAndCheckIfNoErrors("@OrderFulfillmentCancel");
           getOrder(order.id);
         })
         .then(orderResp => {
@@ -201,7 +201,9 @@ filterTests({ definedTags: ["all"] }, () => {
             .addAliasToGraphRequest("OrderFulfillmentRefundProducts");
           cy.get(BUTTON_SELECTORS.submit)
             .click()
-            .wait("@OrderFulfillmentRefundProducts");
+            .waitForRequestAndCheckIfNoErrors(
+              "@OrderFulfillmentRefundProducts"
+            );
           getOrder(order.id);
         })
         .then(orderResp => {

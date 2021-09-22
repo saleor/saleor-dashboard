@@ -35,7 +35,7 @@ filterTests({ definedTags: ["all"] }, () => {
         .get(BUTTON_SELECTORS.confirm)
         .click()
         .confirmationMessageShouldDisappear()
-        .wait("@PageTypeCreate")
+        .waitForRequestAndCheckIfNoErrors("@PageTypeCreate")
         .its("response.body.data.pageTypeCreate.pageType")
         .then(pageType => {
           getPageType(pageType.id);

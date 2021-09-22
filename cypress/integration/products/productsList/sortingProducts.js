@@ -27,7 +27,7 @@ filterTests({ definedTags: ["all"] }, () => {
           .get(PRODUCTS_LIST.tableHeaders[sortBy])
           .click()
           .waitForProgressBarToNotExist()
-          .wait("@ProductList");
+          .waitForRequestAndCheckIfNoErrors("@ProductList");
         expectProductsSortedBy(sortBy, false);
       });
     });

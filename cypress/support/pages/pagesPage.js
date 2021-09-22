@@ -70,6 +70,6 @@ function savePage() {
     .get(BUTTON_SELECTORS.confirm)
     .click()
     .confirmationMessageShouldDisappear()
-    .wait("@PageCreate")
+    .waitForRequestAndCheckIfNoErrors("@PageCreate")
     .its("response.body.data.pageCreate.page");
 }

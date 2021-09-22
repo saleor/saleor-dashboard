@@ -44,7 +44,7 @@ export function createNewMenuItem({ menuId, name, menuItemType }) {
         .get(BUTTON_SELECTORS.submit)
         .click()
         .confirmationMessageShouldDisappear()
-        .wait("@MenuItemCreate");
+        .waitForRequestAndCheckIfNoErrors("@MenuItemCreate");
     })
     .then(() => selectedItem);
 }

@@ -11,5 +11,5 @@ export function createCategory({ name, description }) {
     .get(BUTTON_SELECTORS.confirm)
     .click()
     .confirmationMessageShouldDisappear()
-    .wait("@CategoryCreate");
+    .waitForRequestAndCheckIfNoErrors("@CategoryCreate");
 }

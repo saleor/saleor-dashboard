@@ -31,7 +31,7 @@ export function createFirstVariant({ sku, warehouseId, price, attribute }) {
     .addAliasToGraphRequest("ProductVariantBulkCreate")
     .get(VARIANTS_SELECTORS.nextButton)
     .click()
-    .wait("@ProductVariantBulkCreate")
+    .waitForRequestAndCheckIfNoErrors("@ProductVariantBulkCreate")
     .waitForProgressBarToNotBeVisible()
     .get(AVAILABLE_CHANNELS_FORM.menageChannelsButton)
     .should("be.visible");
@@ -74,7 +74,7 @@ export function createVariant({
     .addAliasToGraphRequest("ProductVariantChannelListingUpdate")
     .get(VARIANTS_SELECTORS.saveButton)
     .click()
-    .wait("@ProductVariantChannelListingUpdate")
+    .waitForRequestAndCheckIfNoErrors("@ProductVariantChannelListingUpdate")
     .get(BUTTON_SELECTORS.back)
     .click()
     .waitForProgressBarToNotBeVisible()

@@ -1,3 +1,4 @@
+import { returnValueDependsOnShopVersion } from "../../formatData/dataDependingOnVersion";
 import { getValueWithDefault } from "./utils/Utils";
 
 export function createTypeProduct({
@@ -8,10 +9,7 @@ export function createTypeProduct({
   shippable = true,
   kind = "NORMAL"
 }) {
-  const kindLines =
-    Cypress.env("SHOP") === "dev" || Cypress.env("SHOP") >= 3.1
-      ? `kind: NORMAL`
-      : "";
+  const kindLines = returnValueDependsOnShopVersion("3.1", `kind: ${kind}`);
   const productAttributesLine = getValueWithDefault(
     attributeId,
     `productAttributes: "${attributeId}"`

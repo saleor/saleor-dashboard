@@ -72,7 +72,7 @@ filterTests({ definedTags: ["all"] }, () => {
             .addAliasToGraphRequest("AssignProductAttribute")
             .assignElements(startsWith, false)
             .confirmationMessageShouldDisappear()
-            .wait("@AssignProductAttribute");
+            .waitForRequestAndCheckIfNoErrors("@AssignProductAttribute");
           getProductType(productType.id);
         })
         .then(productType => {

@@ -31,7 +31,7 @@ export function createCollection(collectionName, isPublished, channel) {
     .get(COLLECTION_SELECTORS.saveButton)
     .click()
     .confirmationMessageShouldDisappear()
-    .wait("@CreateCollection")
+    .waitForRequestAndCheckIfNoErrors("@CreateCollection")
     .its("response.body.data.collectionCreate.collection");
 }
 
@@ -45,5 +45,5 @@ export function assignProductsToCollection(productName) {
     .click();
   cy.addAliasToGraphRequest("CollectionAssignProduct");
   cy.get(ASSIGN_ELEMENTS_SELECTORS.submitButton).click();
-  cy.wait("@CollectionAssignProduct");
+  cy.waitForRequestAndCheckIfNoErrors("@CollectionAssignProduct");
 }

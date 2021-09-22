@@ -112,7 +112,7 @@ filterTests({ definedTags: ["all"] }, () => {
             .addAliasToGraphRequest("PermissionGroupUpdate")
             .get(BUTTON_SELECTORS.confirm)
             .click()
-            .wait("@PermissionGroupUpdate");
+            .waitForRequestAndCheckIfNoErrors("@PermissionGroupUpdate");
           getPermissionGroup(group.id);
         })
         .then(resp => {
@@ -143,7 +143,7 @@ filterTests({ definedTags: ["all"] }, () => {
             .addAliasToGraphRequest("PermissionGroupUpdate")
             .get(BUTTON_SELECTORS.confirm)
             .click()
-            .wait("@PermissionGroupUpdate");
+            .waitForRequestAndCheckIfNoErrors("@PermissionGroupUpdate");
           cy.visit(staffMemberDetailsUrl(staffMember.id));
           cy.get(SHARED_ELEMENTS.header).should("be.visible");
           cy.contains(permissionName).should("not.exist");

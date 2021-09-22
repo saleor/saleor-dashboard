@@ -114,9 +114,9 @@ filterTests({ definedTags: ["all"] }, () => {
             .get(BUTTON_SELECTORS.confirm)
             .click()
             .confirmationMessageShouldDisappear()
-            .wait("@ProductUpdate")
-            .wait("@UpdateMetadata")
-            .wait("@UpdatePrivateMetadata");
+            .waitForRequestAndCheckIfNoErrors("@ProductUpdate")
+            .waitForRequestAndCheckIfNoErrors("@UpdateMetadata")
+            .waitForRequestAndCheckIfNoErrors("@UpdatePrivateMetadata");
           productData.productOrganization.productType = name;
           productData.attribute = attribute;
           cy.loginUserViaRequest("token")
@@ -140,7 +140,7 @@ filterTests({ definedTags: ["all"] }, () => {
         .click()
         .get(BUTTON_SELECTORS.submit)
         .click()
-        .wait("@ProductDelete")
+        .waitForRequestAndCheckIfNoErrors("@ProductDelete")
         .loginUserViaRequest("token")
         .then(() => {
           getProductDetails(product.id, defaultChannel.slug).its("body.data");

@@ -33,7 +33,7 @@ export function createSale({
     .get(SALES_SELECTORS.saveButton)
     .click()
     .confirmationMessageShouldDisappear()
-    .wait("@SaleCreate");
+    .waitForRequestAndCheckIfNoErrors("@SaleCreate");
 }
 
 export function assignProducts(productName) {
@@ -49,5 +49,5 @@ export function assignProducts(productName) {
     .click();
   cy.addAliasToGraphRequest("SaleCataloguesAdd");
   cy.get(BUTTON_SELECTORS.submit).click();
-  cy.wait("@SaleCataloguesAdd");
+  cy.waitForRequestAndCheckIfNoErrors("@SaleCataloguesAdd");
 }

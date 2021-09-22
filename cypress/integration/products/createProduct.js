@@ -79,7 +79,7 @@ filterTests({ definedTags: ["all", "critical"] }, () => {
         .get(BUTTON_SELECTORS.confirm)
         .click()
         .confirmationMessageShouldDisappear()
-        .wait("@ProductDetails")
+        .waitForRequestAndCheckIfNoErrors("@ProductDetails")
         .get("@ProductDetails")
         .its("response.body")
         .then(resp => {

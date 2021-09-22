@@ -18,7 +18,8 @@ export function getFirstProducts(first, search) {
           }
         }
       }
-    }`;
+    }
+  }`;
   return cy
     .sendRequestWithQuery(query)
     .then(resp => resp.body.data.products.edges);

@@ -18,6 +18,6 @@ export function createProductType(name, shippingWeight) {
     .addAliasToGraphRequest("ProductTypeCreate")
     .get(BUTTON_SELECTORS.confirm)
     .click()
-    .wait("@ProductTypeCreate")
+    .waitForRequestAndCheckIfNoErrors("@ProductTypeCreate")
     .its("response.body.data.productTypeCreate.productType");
 }

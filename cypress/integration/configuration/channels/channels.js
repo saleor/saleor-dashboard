@@ -50,9 +50,9 @@ filterTests({ definedTags: ["all"] }, () => {
       cy.addAliasToGraphRequest("Channels");
       cy.visit(urlList.channels);
       cy.softExpectSkeletonIsVisible();
-      cy.wait("@Channels");
+      cy.waitForRequestAndCheckIfNoErrors("@Channels");
       createChannelByView({ name: randomChannel, currency });
-      cy.wait("@Channel");
+      cy.waitForRequestAndCheckIfNoErrors("@Channel");
 
       // New channel should be visible in channels list
       cy.get(ADD_CHANNEL_FORM_SELECTORS.backToChannelsList)
@@ -72,7 +72,7 @@ filterTests({ definedTags: ["all"] }, () => {
       cy.clearSessionData().loginUserViaRequest();
       cy.addAliasToGraphRequest("InitialProductFilterAttributes");
       cy.visit(urlList.products)
-        .wait("@InitialProductFilterAttributes")
+        .waitForRequestAndCheckIfNoErrors("@InitialProductFilterAttributes")
         .waitForProgressBarToNotExist()
         .get(PRODUCTS_LIST.emptyProductRow)
         .should("not.exist")
@@ -99,7 +99,7 @@ filterTests({ definedTags: ["all"] }, () => {
         currency,
         shippingZone: shippingZone.name
       });
-      cy.wait("@Channel");
+      cy.waitForRequestAndCheckIfNoErrors("@Channel");
       getShippingZone(shippingZone.id).then(shippingZoneResp => {
         const assignedChannel = shippingZoneResp.channels.find(
           channel => channel.name === randomChannel
@@ -155,7 +155,7 @@ filterTests({ definedTags: ["all"] }, () => {
         .click();
       cy.addAliasToGraphRequest("Channels");
       cy.get(BUTTON_SELECTORS.submit).click();
-      cy.wait("@Channels");
+      cy.waitForRequestAndCheckIfNoErrors("@Channels");
 
       cy.get(CHANNELS_SELECTORS.channelName)
         .contains(randomChannelToDelete)

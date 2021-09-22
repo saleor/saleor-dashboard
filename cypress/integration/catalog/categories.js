@@ -123,7 +123,7 @@ filterTests({ definedTags: ["all"] }, () => {
         .confirmationMessageShouldDisappear();
       cy.contains(CATEGORY_DETAILS.productRow, product.name)
         .should("not.exist")
-        .wait("@productBulkDelete");
+        .waitForRequestAndCheckIfNoErrors("@productBulkDelete");
       getCategory(category.id).then(categoryResp => {
         expect(categoryResp.products.edges.length).to.be.eq(0);
       });

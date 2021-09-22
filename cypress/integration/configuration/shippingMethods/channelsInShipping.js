@@ -99,7 +99,7 @@ filterTests({ definedTags: ["all"] }, () => {
           }
           cy.contains(shippingZone.name)
             .click()
-            .wait("@ShippingZone");
+            .waitForRequestAndCheckIfNoErrors("@ShippingZone");
           enterHomePageChangeChannelAndReturn(defaultChannel.name);
           cy.waitForProgressBarToNotBeVisible()
             .get(SHARED_ELEMENTS.skeleton)

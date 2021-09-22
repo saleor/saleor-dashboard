@@ -49,7 +49,7 @@ filterTests({ definedTags: ["all"] }, () => {
         .addAliasToGraphRequest("WarehouseCreate")
         .get(BUTTON_SELECTORS.confirm)
         .click()
-        .wait("@WarehouseCreate")
+        .waitForRequestAndCheckIfNoErrors("@WarehouseCreate")
         .its("response.body.data.createWarehouse.warehouse")
         .then(warehouse => {
           getWarehouse(warehouse.id);
@@ -89,7 +89,7 @@ filterTests({ definedTags: ["all"] }, () => {
             .addAliasToGraphRequest("UpdateShippingZone")
             .get(BUTTON_SELECTORS.confirm)
             .click()
-            .wait("@UpdateShippingZone");
+            .waitForRequestAndCheckIfNoErrors("@UpdateShippingZone");
           getWarehouse(warehouse.id);
         })
         .then(warehouseResp => {
@@ -111,7 +111,7 @@ filterTests({ definedTags: ["all"] }, () => {
           .addAliasToGraphRequest("WarehouseDelete")
           .get(BUTTON_SELECTORS.submit)
           .click()
-          .wait("@WarehouseDelete");
+          .waitForRequestAndCheckIfNoErrors("@WarehouseDelete");
         getWarehouse(warehouse.id).should("be.null");
       });
     });

@@ -12,7 +12,7 @@ export function fillUpSetPassword(password) {
     .addAliasToGraphRequest("SetPassword")
     .get(BUTTON_SELECTORS.confirm)
     .click()
-    .wait("@SetPassword");
+    .waitForRequestAndCheckIfNoErrors("@SetPassword");
 }
 
 export function fillUpUserDetails(firstName, lastName, email) {
@@ -29,7 +29,7 @@ export function fillUpUserDetails(firstName, lastName, email) {
     .addAliasToGraphRequest("StaffMemberUpdate")
     .get(BUTTON_SELECTORS.confirm)
     .click()
-    .wait("@StaffMemberUpdate");
+    .waitForRequestAndCheckIfNoErrors("@StaffMemberUpdate");
 }
 
 export function updateUserActiveFlag(userId) {
@@ -39,5 +39,5 @@ export function updateUserActiveFlag(userId) {
     .addAliasToGraphRequest("StaffMemberUpdate")
     .get(BUTTON_SELECTORS.confirm)
     .click()
-    .wait("@StaffMemberUpdate");
+    .waitForRequestAndCheckIfNoErrors("@StaffMemberUpdate");
 }

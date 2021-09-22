@@ -36,6 +36,6 @@ export function finalizeDraftOrder(name, address) {
     .addAliasToGraphRequest("OrderDraftFinalize")
     .get(DRAFT_ORDER_SELECTORS.finalizeButton)
     .click()
-    .wait("@OrderDraftFinalize")
+    .waitForRequestAndCheckIfNoErrors("@OrderDraftFinalize")
     .get("@draftOrderNumber");
 }

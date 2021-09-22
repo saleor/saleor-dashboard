@@ -3,7 +3,7 @@
 
 import faker from "faker";
 
-import { getGiftCardWithTag } from "../../support/api/requests/GiftCards";
+import { getGiftCardWithTag } from "../../support/api/requests/GiftCard";
 import filterTests from "../../support/filterTests";
 import { formatDate } from "../../support/formatData/formatDate";
 import {

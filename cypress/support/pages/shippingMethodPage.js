@@ -43,7 +43,7 @@ export function createShippingZone(
     .get(BUTTON_SELECTORS.confirm)
     .click()
     .confirmationMessageShouldDisappear()
-    .wait("@UpdateShippingZone");
+    .waitForRequestAndCheckIfNoErrors("@UpdateShippingZone");
 }
 
 export function changeWeightUnit(weightUnit) {
@@ -52,7 +52,7 @@ export function changeWeightUnit(weightUnit) {
     .get(SHIPPING_ZONES_LIST.saveUnit)
     .click()
     .confirmationMessageShouldDisappear()
-    .wait("@UpdateDefaultWeightUnit")
+    .waitForRequestAndCheckIfNoErrors("@UpdateDefaultWeightUnit")
     .wait(5000);
 }
 
@@ -127,8 +127,8 @@ export function saveRate() {
     .get(BUTTON_SELECTORS.confirm)
     .click()
     .confirmationMessageShouldDisappear()
-    .wait(`@ShippingMethodChannelListingUpdate`)
-    .wait(`@ShippingZone`)
+    .waitForRequestAndCheckIfNoErrors(`@ShippingMethodChannelListingUpdate`)
+    .waitForRequestAndCheckIfNoErrors(`@ShippingZone`)
     .its("response.body.0.data.shippingZone");
 }
 
