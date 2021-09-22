@@ -10,6 +10,7 @@ import useBulkActions from "@saleor/hooks/useBulkActions";
 import useListSettings from "@saleor/hooks/useListSettings";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
+import { usePaginationReset } from "@saleor/hooks/usePaginationReset";
 import usePaginator, {
   createPaginationState
 } from "@saleor/hooks/usePaginator";
@@ -63,6 +64,14 @@ export const PageTypeList: React.FC<PageTypeListProps> = ({ params }) => {
   } = useBulkActions(params.ids);
   const intl = useIntl();
   const { settings } = useListSettings(ListViews.PAGES_LIST);
+
+  usePaginationReset(
+    pageTypeListUrl({
+      ...params,
+      ...DEFAULT_INITIAL_PAGINATION_DATA
+    }),
+    settings.rowNumber
+  );
 
   const paginationState = createPaginationState(settings.rowNumber, params);
   const queryVariables = React.useMemo(
@@ -168,18 +177,6 @@ export const PageTypeList: React.FC<PageTypeListProps> = ({ params }) => {
   });
 
   const pageTypesData = mapEdgesToItems(data?.pageTypes);
-
-  React.useEffect(
-    () =>
-      navigate(
-        pageTypeListUrl({
-          ...params,
-          ...DEFAULT_INITIAL_PAGINATION_DATA
-        }),
-        true
-      ),
-    [settings.rowNumber]
-  );
 
   return (
     <>

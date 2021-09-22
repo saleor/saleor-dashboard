@@ -10,6 +10,7 @@ import useBulkActions from "@saleor/hooks/useBulkActions";
 import useListSettings from "@saleor/hooks/useListSettings";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
+import { usePaginationReset } from "@saleor/hooks/usePaginationReset";
 import usePaginator, {
   createPaginationState
 } from "@saleor/hooks/usePaginator";
@@ -61,6 +62,15 @@ export const CustomerList: React.FC<CustomerListProps> = ({ params }) => {
   const { updateListSettings, settings } = useListSettings(
     ListViews.CUSTOMER_LIST
   );
+
+  usePaginationReset(
+    customerListUrl({
+      ...params,
+      ...DEFAULT_INITIAL_PAGINATION_DATA
+    }),
+    settings.rowNumber
+  );
+
   const intl = useIntl();
 
   const paginationState = createPaginationState(settings.rowNumber, params);
@@ -143,18 +153,6 @@ export const CustomerList: React.FC<CustomerListProps> = ({ params }) => {
   };
 
   const handleSort = createSortHandler(navigate, customerListUrl, params);
-
-  React.useEffect(
-    () =>
-      navigate(
-        customerListUrl({
-          ...params,
-          ...DEFAULT_INITIAL_PAGINATION_DATA
-        }),
-        true
-      ),
-    [settings.rowNumber]
-  );
 
   return (
     <TypedBulkRemoveCustomers onCompleted={handleBulkCustomerDelete}>

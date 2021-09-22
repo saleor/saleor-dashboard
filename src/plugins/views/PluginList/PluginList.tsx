@@ -7,6 +7,7 @@ import { configurationMenuUrl } from "@saleor/configuration";
 import { useChannelsSearchWithLoadMore } from "@saleor/hooks/useChannelsSearchWithLoadMore";
 import useListSettings from "@saleor/hooks/useListSettings";
 import useNavigator from "@saleor/hooks/useNavigator";
+import { usePaginationReset } from "@saleor/hooks/usePaginationReset";
 import usePaginator, {
   createPaginationState
 } from "@saleor/hooks/usePaginator";
@@ -48,6 +49,14 @@ export const PluginsList: React.FC<PluginsListProps> = ({ params }) => {
   const paginate = usePaginator();
   const { updateListSettings, settings } = useListSettings(
     ListViews.PLUGINS_LIST
+  );
+
+  usePaginationReset(
+    pluginListUrl({
+      ...params,
+      ...DEFAULT_INITIAL_PAGINATION_DATA
+    }),
+    settings.rowNumber
   );
 
   const paginationState = createPaginationState(settings.rowNumber, params);
@@ -118,18 +127,6 @@ export const PluginsList: React.FC<PluginsListProps> = ({ params }) => {
   const channelsSearchWithLoadMoreProps = useChannelsSearchWithLoadMore();
 
   const filterOpts = getFilterOpts(params, channelsSearchWithLoadMoreProps);
-
-  React.useEffect(
-    () =>
-      navigate(
-        pluginListUrl({
-          ...params,
-          ...DEFAULT_INITIAL_PAGINATION_DATA
-        }),
-        true
-      ),
-    [settings.rowNumber]
-  );
 
   return (
     <>

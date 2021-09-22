@@ -12,6 +12,7 @@ import useBulkActions from "@saleor/hooks/useBulkActions";
 import useListSettings from "@saleor/hooks/useListSettings";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
+import { usePaginationReset } from "@saleor/hooks/usePaginationReset";
 import usePaginator, {
   createPaginationState
 } from "@saleor/hooks/usePaginator";
@@ -63,6 +64,15 @@ export const VoucherList: React.FC<VoucherListProps> = ({ params }) => {
   const { updateListSettings, settings } = useListSettings(
     ListViews.VOUCHER_LIST
   );
+
+  usePaginationReset(
+    voucherListUrl({
+      ...params,
+      ...DEFAULT_INITIAL_PAGINATION_DATA
+    }),
+    settings.rowNumber
+  );
+
   const intl = useIntl();
 
   const { availableChannels } = useAppChannel(false);
@@ -167,18 +177,6 @@ export const VoucherList: React.FC<VoucherListProps> = ({ params }) => {
   };
 
   const handleSort = createSortHandler(navigate, voucherListUrl, params);
-
-  React.useEffect(
-    () =>
-      navigate(
-        voucherListUrl({
-          ...params,
-          ...DEFAULT_INITIAL_PAGINATION_DATA
-        }),
-        true
-      ),
-    [settings.rowNumber]
-  );
 
   return (
     <TypedVoucherBulkDelete onCompleted={handleVoucherBulkDelete}>

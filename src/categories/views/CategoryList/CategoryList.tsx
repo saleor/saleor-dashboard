@@ -9,6 +9,7 @@ import { DEFAULT_INITIAL_PAGINATION_DATA } from "@saleor/config";
 import useBulkActions from "@saleor/hooks/useBulkActions";
 import useListSettings from "@saleor/hooks/useListSettings";
 import useNavigator from "@saleor/hooks/useNavigator";
+import { usePaginationReset } from "@saleor/hooks/usePaginationReset";
 import usePaginator, {
   createPaginationState
 } from "@saleor/hooks/usePaginator";
@@ -50,12 +51,22 @@ interface CategoryListProps {
 export const CategoryList: React.FC<CategoryListProps> = ({ params }) => {
   const navigate = useNavigator();
   const paginate = usePaginator();
+
   const { isSelected, listElements, toggle, toggleAll, reset } = useBulkActions(
     params.ids
   );
   const { updateListSettings, settings } = useListSettings(
     ListViews.CATEGORY_LIST
   );
+
+  usePaginationReset(
+    categoryListUrl({
+      ...params,
+      ...DEFAULT_INITIAL_PAGINATION_DATA
+    }),
+    settings.rowNumber
+  );
+
   const intl = useIntl();
 
   const paginationState = createPaginationState(settings.rowNumber, params);
@@ -140,18 +151,6 @@ export const CategoryList: React.FC<CategoryListProps> = ({ params }) => {
   });
 
   const handleSort = createSortHandler(navigate, categoryListUrl, params);
-
-  React.useEffect(
-    () =>
-      navigate(
-        categoryListUrl({
-          ...params,
-          ...DEFAULT_INITIAL_PAGINATION_DATA
-        }),
-        true
-      ),
-    [settings.rowNumber]
-  );
 
   return (
     <>

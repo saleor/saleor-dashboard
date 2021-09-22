@@ -9,6 +9,7 @@ import { configurationMenuUrl } from "@saleor/configuration";
 import useListSettings from "@saleor/hooks/useListSettings";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
+import { usePaginationReset } from "@saleor/hooks/usePaginationReset";
 import usePaginator, {
   createPaginationState
 } from "@saleor/hooks/usePaginator";
@@ -57,6 +58,14 @@ const WarehouseList: React.FC<WarehouseListProps> = ({ params }) => {
     ListViews.SALES_LIST
   );
   const intl = useIntl();
+
+  usePaginationReset(
+    warehouseListUrl({
+      ...params,
+      ...DEFAULT_INITIAL_PAGINATION_DATA
+    }),
+    settings.rowNumber
+  );
 
   const paginationState = createPaginationState(settings.rowNumber, params);
   const queryVariables = React.useMemo(
@@ -138,18 +147,6 @@ const WarehouseList: React.FC<WarehouseListProps> = ({ params }) => {
   const handleSort = createSortHandler(navigate, warehouseListUrl, params);
 
   const deleteTransitionState = getMutationStatus(deleteWarehouseOpts);
-
-  React.useEffect(
-    () =>
-      navigate(
-        warehouseListUrl({
-          ...params,
-          ...DEFAULT_INITIAL_PAGINATION_DATA
-        }),
-        true
-      ),
-    [settings.rowNumber]
-  );
 
   return (
     <>

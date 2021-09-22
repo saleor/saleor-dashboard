@@ -11,6 +11,7 @@ import useBulkActions from "@saleor/hooks/useBulkActions";
 import useListSettings from "@saleor/hooks/useListSettings";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
+import { usePaginationReset } from "@saleor/hooks/usePaginationReset";
 import usePaginator, {
   createPaginationState
 } from "@saleor/hooks/usePaginator";
@@ -54,6 +55,7 @@ interface CollectionListProps {
 
 export const CollectionList: React.FC<CollectionListProps> = ({ params }) => {
   const navigate = useNavigator();
+  const intl = useIntl();
   const notify = useNotifier();
   const paginate = usePaginator();
   const { isSelected, listElements, reset, toggle, toggleAll } = useBulkActions(
@@ -62,7 +64,14 @@ export const CollectionList: React.FC<CollectionListProps> = ({ params }) => {
   const { updateListSettings, settings } = useListSettings(
     ListViews.COLLECTION_LIST
   );
-  const intl = useIntl();
+
+  usePaginationReset(
+    collectionListUrl({
+      ...params,
+      ...DEFAULT_INITIAL_PAGINATION_DATA
+    }),
+    settings.rowNumber
+  );
 
   const [
     changeFilters,
@@ -170,18 +179,6 @@ export const CollectionList: React.FC<CollectionListProps> = ({ params }) => {
   );
 
   const handleSort = createSortHandler(navigate, collectionListUrl, params);
-
-  React.useEffect(
-    () =>
-      navigate(
-        collectionListUrl({
-          ...params,
-          ...DEFAULT_INITIAL_PAGINATION_DATA
-        }),
-        true
-      ),
-    [settings.rowNumber]
-  );
 
   return (
     <>

@@ -12,6 +12,7 @@ import useBulkActions from "@saleor/hooks/useBulkActions";
 import useListSettings from "@saleor/hooks/useListSettings";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
+import { usePaginationReset } from "@saleor/hooks/usePaginationReset";
 import usePaginator, {
   createPaginationState
 } from "@saleor/hooks/usePaginator";
@@ -63,6 +64,15 @@ export const SaleList: React.FC<SaleListProps> = ({ params }) => {
   const { updateListSettings, settings } = useListSettings(
     ListViews.SALES_LIST
   );
+
+  usePaginationReset(
+    saleListUrl({
+      ...params,
+      ...DEFAULT_INITIAL_PAGINATION_DATA
+    }),
+    settings.rowNumber
+  );
+
   const intl = useIntl();
   const { availableChannels } = useAppChannel(false);
   const selectedChannel = availableChannels.find(
@@ -166,18 +176,6 @@ export const SaleList: React.FC<SaleListProps> = ({ params }) => {
   };
 
   const handleSort = createSortHandler(navigate, saleListUrl, params);
-
-  React.useEffect(
-    () =>
-      navigate(
-        saleListUrl({
-          ...params,
-          ...DEFAULT_INITIAL_PAGINATION_DATA
-        }),
-        true
-      ),
-    [settings.rowNumber]
-  );
 
   return (
     <TypedSaleBulkDelete onCompleted={handleSaleBulkDelete}>
