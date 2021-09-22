@@ -190,9 +190,6 @@ export const createChannelsData = (
     price: "",
     publicationDate: null,
     visibleInListings: false
-    // unitsSold
-    // preorderThreshold
-    // TODO
   })) || [];
 
 export const createChannelsDataWithPrice = (

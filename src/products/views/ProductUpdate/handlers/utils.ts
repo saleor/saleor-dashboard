@@ -12,7 +12,10 @@ import {
 } from "@saleor/products/types/ProductDetails";
 import { ProductUpdateVariables } from "@saleor/products/types/ProductUpdate";
 import { SimpleProductUpdate } from "@saleor/products/types/SimpleProductUpdate";
-import { mapFormsetStockToStockInput } from "@saleor/products/utils/data";
+import {
+  getEndPreorderDateInput,
+  mapFormsetStockToStockInput
+} from "@saleor/products/utils/data";
 import { getAvailabilityVariables } from "@saleor/products/utils/handlers";
 import { ProductChannelListingAddInput } from "@saleor/types/globalTypes";
 import { arrayDiff } from "@saleor/utils/arrays";
@@ -39,9 +42,11 @@ export const getSimpleProductVariables = (
     trackInventory: data.trackInventory,
     preorder: {
       globalThreshold: data.globalThreshold,
-      endDate: data.hasPreorderEndDate
-        ? `${data.preorderEndDate}T${data.preorderEndHour}`
-        : null
+      endDate: getEndPreorderDateInput(
+        data.hasPreorderEndDate,
+        data.preorderEndDate,
+        data.preorderEndHour
+      )
     }
   },
   updateStocks: data.updateStocks.map(mapFormsetStockToStockInput)
@@ -196,5 +201,4 @@ export const getVariantChannelsInput = ({
     costPrice: listing.costPrice || null,
     price: listing.price,
     preorderThreshold: listing.preorderThreshold
-    // TODO
   }));

@@ -1,15 +1,8 @@
 import { DialogContentText } from "@material-ui/core";
 import ActionDialog from "@saleor/components/ActionDialog";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
-// import { ProductVariant } from "@saleor/fragments/types/ProductVariant";
-// import { getStringOrPlaceholder } from "@saleor/misc";
 import React from "react";
-import {
-  // FormattedMessage,
-  useIntl
-} from "react-intl";
-
-// import msgs from "./messages";
+import { useIntl } from "react-intl";
 
 export interface ProductVariantEndPreorderDialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
@@ -45,24 +38,15 @@ const ProductVariantEndPreorderDialog: React.FC<ProductVariantEndPreorderDialogP
       variant="default"
     >
       <DialogContentText>
-        You are about to end your products preorder. You have sold{" "}
-        {variantGlobalSoldUnits} units of this variant. Sold units will be
-        allocated at appropriate warehouses. Remember to add remaining threshold
-        stock to warehouses.
-        {/* {["", null].includes(name) ? (
-          <FormattedMessage
-            {...(thirdParty ? msgs.deactivateApp : msgs.deactivateLocalApp)}
-          />
-        ) : (
-          <FormattedMessage
-            {...(thirdParty
-              ? msgs.deactivateNamedApp
-              : msgs.deactivateLocalNamedApp)}
-            values={{
-              name: <strong>{getStringOrPlaceholder(name)}</strong>
-            }}
-          />
-        )} */}
+        {intl.formatMessage(
+          {
+            defaultMessage:
+              "You are about to end your products preorder. You have sold {variantGlobalSoldUnits} units of this variant. Sold units will be allocated at appropriate warehouses. Remember to add remaining threshold stock to warehouses."
+          },
+          {
+            variantGlobalSoldUnits
+          }
+        )}
       </DialogContentText>
     </ActionDialog>
   );

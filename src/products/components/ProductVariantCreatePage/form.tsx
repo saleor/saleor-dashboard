@@ -31,7 +31,6 @@ export interface ProductVariantCreateFormData extends MetadataFormData {
   trackInventory: boolean;
   weight: string;
   isPreorder: boolean;
-  endDate: any;
   globalThreshold: number;
   globalSoldUnits: number;
   hasPreorderEndDate: boolean;
@@ -93,7 +92,6 @@ const initial: ProductVariantCreateFormData = {
   trackInventory: true,
   weight: "",
   isPreorder: false,
-  endDate: null,
   globalThreshold: null,
   globalSoldUnits: 0,
   hasPreorderEndDate: false,

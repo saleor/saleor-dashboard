@@ -276,12 +276,8 @@ export function getProductUpdatePageFormData(
     globalThreshold: variant?.preorder.globalThreshold || 0,
     globalSoldUnits: variant?.preorder.globalSoldUnits || 0,
     hasPreorderEndDate: !!variant?.preorder?.endDate,
-    preorderEndDate: !!variant?.preorder?.endDate
-      ? variant?.preorder?.endDate.split("T")?.[0]
-      : null,
-    preorderEndHour: !!variant?.preorder?.endDate
-      ? variant?.preorder?.endDate.split("T")?.[1]?.split("+")?.[0]
-      : null
+    preorderEndDate: getPreorderEndDateFormData(variant?.preorder?.endDate),
+    preorderEndHour: getPreorderEndHourFormData(variant?.preorder?.endDate)
   };
 }
 
@@ -293,3 +289,18 @@ export function mapFormsetStockToStockInput(
     warehouse: stock.id
   };
 }
+
+export const getEndPreorderDateInput = (
+  hasPreorderEndDate: boolean,
+  preorderEndDate?: string,
+  preorderEndHour?: string
+) =>
+  hasPreorderEndDate && preorderEndDate
+    ? `${preorderEndDate}T${preorderEndHour ?? "00:00"}`
+    : null;
+
+export const getPreorderEndDateFormData = (endDate?: string) =>
+  endDate ? endDate.split("T")?.[0] : null;
+
+export const getPreorderEndHourFormData = (endDate?: string) =>
+  endDate ? endDate.split("T")?.[1]?.split("+")?.[0] : null;

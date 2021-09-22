@@ -98,8 +98,7 @@ interface ProductVariantPageProps {
   fetchAttributeValues: (query: string, attributeId: string) => void;
   onAssignReferencesClick: (attribute: AttributeInput) => void;
   onCloseDialog: () => void;
-  // TODO
-  onVariantPreorderDeactivate: any;
+  onVariantPreorderDeactivate: (id: string) => void;
   onVariantReorder: ReorderAction;
   onAttributeSelectBlur: () => void;
   onAdd();
@@ -394,8 +393,6 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
       {variant?.preorder?.isPreorder && (
         <ProductVariantEndPreorderDialog
           confirmButtonState="default"
-          // TODO
-          //  "loading" | "success" | "error" | "default";
           onClose={togglePreorderModal}
           onConfirm={handleDeactivatePreorder}
           open={isEndPreorderModalOpened}

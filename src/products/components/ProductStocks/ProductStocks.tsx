@@ -68,7 +68,7 @@ export interface ProductStocksProps {
   warehouses: WarehouseFragment[];
   onVariantChannelListingChange?: (
     id: string,
-    data: ChannelPriceAndPreorderArgs
+    data: Partial<ChannelPriceAndPreorderArgs>
   ) => void;
   onChange: FormsetChange;
   onEndPreorderTrigger?: () => void;
@@ -88,6 +88,14 @@ const useStyles = makeStyles(
     colQuantity: {
       textAlign: "right",
       width: 150
+    },
+    colSoldUnits: {
+      textAlign: "right",
+      width: 150
+    },
+    colThreshold: {
+      textAlign: "right",
+      width: 180
     },
     editWarehouses: {
       marginRight: theme.spacing(-1)
@@ -126,13 +134,13 @@ const useStyles = makeStyles(
       gridTemplateColumns: "repeat(2, 1fr)"
     },
     dateTimeInputs: {
-      marginTop: 15,
-      marginBottom: 15
+      marginTop: theme.spacing(2),
+      marginBottom: theme.spacing(2)
     },
     dateInput: { marginRight: 15 },
     preorderInfo: {
-      marginBottom: 15,
-      marginTop: 15,
+      marginBottom: theme.spacing(2),
+      marginTop: theme.spacing(2),
       display: "block"
     },
     caption: {
@@ -446,7 +454,9 @@ const ProductStocks: React.FC<ProductStocksProps> = ({
             <div className={classes.dateTimeInputs}>
               <TextField
                 className={classes.dateInput}
-                label="End date"
+                label={intl.formatMessage({
+                  defaultMessage: "End date"
+                })}
                 name="preorderEndDate"
                 onChange={onFormDataChange}
                 value={data.preorderEndDate}
@@ -456,7 +466,9 @@ const ProductStocks: React.FC<ProductStocksProps> = ({
                 }}
               />
               <TextField
-                label="End hour"
+                label={intl.formatMessage({
+                  defaultMessage: "End hour"
+                })}
                 name="preorderEndHour"
                 onChange={onFormDataChange}
                 type="time"
@@ -501,9 +513,10 @@ const ProductStocks: React.FC<ProductStocksProps> = ({
               disabled={disabled}
               error={!!formErrors.sku}
               fullWidth
-              helperText={
-                "Threshold that cannot be exceeded even if per channel thresholds are still available"
-              }
+              helperText={intl.formatMessage({
+                defaultMessage:
+                  "Threshold that cannot be exceeded even if per channel thresholds are still available"
+              })}
               label={intl.formatMessage({
                 defaultMessage: "Global threshold"
               })}
@@ -528,6 +541,7 @@ const ProductStocks: React.FC<ProductStocksProps> = ({
                     )
                   : intl.formatMessage({
                       defaultMessage: "Unlimited",
+                      id: "unlimitedUnitsLeft",
                       description: "section header"
                     })}
               </Typography>
@@ -540,8 +554,8 @@ const ProductStocks: React.FC<ProductStocksProps> = ({
         <Table>
           <colgroup>
             <col className={classes.colName} />
-            <col className={classes.colQuantity} />
-            <col className={classes.colQuantity} />
+            <col className={classes.colSoldUnits} />
+            <col className={classes.colThreshold} />
           </colgroup>
           <TableHead>
             <TableRow>
@@ -551,18 +565,18 @@ const ProductStocks: React.FC<ProductStocksProps> = ({
                   description="tabel column header"
                 />
               </TableCell>
-              <TableCell className={classes.colQuantity}>
+              <TableCell className={classes.colSoldUnits}>
                 <FormattedMessage
                   defaultMessage="Sold units"
                   description="table column header, sold units preorder quantity"
-                  id="tableColAllocated"
+                  id="tableColSoldUnits"
                 />
               </TableCell>
-              <TableCell className={classes.colQuantity}>
+              <TableCell className={classes.colThreshold}>
                 <FormattedMessage
-                  defaultMessage="Quantity Threshold"
+                  defaultMessage="Channel Threshold"
                   description="table column header"
-                  id="tableColQuantity"
+                  id="tableColChannelThreshold"
                 />
               </TableCell>
             </TableRow>
@@ -590,6 +604,9 @@ const ProductStocks: React.FC<ProductStocksProps> = ({
                         min: 0,
                         type: "number"
                       }}
+                      placeholder={intl.formatMessage({
+                        defaultMessage: "Unlimited"
+                      })}
                       onChange={e => {
                         onVariantChannelListingChange(listing.id, {
                           costPrice: listing.costPrice,
@@ -597,7 +614,7 @@ const ProductStocks: React.FC<ProductStocksProps> = ({
                           preorderThreshold: +e.target.value
                         });
                       }}
-                      value={listing?.preorderThreshold || 0}
+                      value={listing?.preorderThreshold || ""}
                     />
                   </TableCell>
                 </TableRow>

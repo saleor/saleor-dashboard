@@ -61,7 +61,10 @@ import {
   ProductVariantEditUrlDialog,
   ProductVariantEditUrlQueryParams
 } from "../urls";
-import { mapFormsetStockToStockInput } from "../utils/data";
+import {
+  getEndPreorderDateInput,
+  mapFormsetStockToStockInput
+} from "../utils/data";
 import { createVariantReorderHandler } from "./ProductUpdate/handlers";
 
 interface ProductUpdateProps {
@@ -275,9 +278,11 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
         trackInventory: data.trackInventory,
         preorder: {
           globalThreshold: data.globalThreshold,
-          endDate: data.hasPreorderEndDate
-            ? `${data.preorderEndDate}T${data.preorderEndHour}`
-            : null
+          endDate: getEndPreorderDateInput(
+            data.hasPreorderEndDate,
+            data.preorderEndDate,
+            data.preorderEndHour
+          )
         },
         weight: weight(data.weight),
         firstValues: 10
