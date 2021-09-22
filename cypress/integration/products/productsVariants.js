@@ -22,7 +22,7 @@ import {
   createFirstVariant,
   createVariant,
   variantsShouldBeVisible
-} from "../../support/pages/catalog/products/variantsPage";
+} from "../../support/pages/catalog/products/VariantsPage";
 import { enterHomePageChangeChannelAndReturn } from "../../support/pages/channelsPage";
 
 filterTests({ definedTags: ["all", "critical"] }, () => {

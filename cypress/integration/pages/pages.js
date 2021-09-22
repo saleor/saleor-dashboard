@@ -5,7 +5,7 @@ import faker from "faker";
 
 import { createAttribute } from "../../support/api/requests/Attribute";
 import { getPage } from "../../support/api/requests/Page";
-import { createPageType } from "../../support/api/requests/PageTypes";
+import { createPageType } from "../../support/api/requests/PageType";
 import { deleteAttributesStartsWith } from "../../support/api/utils/attributes/attributeUtils";
 import { deletePageTypesStartsWith } from "../../support/api/utils/pageTypeUtils";
 import filterTests from "../../support/filterTests";

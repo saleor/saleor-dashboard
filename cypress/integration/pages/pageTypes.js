@@ -12,7 +12,7 @@ import { createAttribute } from "../../support/api/requests/Attribute";
 import {
   createPageType,
   getPageType
-} from "../../support/api/requests/PageTypes";
+} from "../../support/api/requests/PageType";
 import filterTests from "../../support/filterTests";
 
 filterTests({ definedTags: ["all"] }, () => {
