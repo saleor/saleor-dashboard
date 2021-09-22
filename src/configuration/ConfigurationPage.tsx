@@ -115,7 +115,7 @@ export const ConfigurationPage: React.FC<ConfigurationPageProps> = props => {
   const theme = useTheme();
   const isSmUp = useMediaQuery(theme.breakpoints.up("sm"));
 
-  const VersionInfoComponent = () => (
+  const renderVersionInfo = (
     <VersionInfo
       dashboardVersion={dashboardVersion}
       coreVersion={coreVersion}
@@ -125,12 +125,12 @@ export const ConfigurationPage: React.FC<ConfigurationPageProps> = props => {
   const intl = useIntl();
   return (
     <Container>
-      {isSmUp ? null : <VersionInfoComponent />}
+      {!isSmUp && renderVersionInfo}
       <PageHeader
         className={classes.header}
         title={intl.formatMessage(sectionNames.configuration)}
       >
-        {isSmUp && <VersionInfoComponent />}
+        {isSmUp && renderVersionInfo}
       </PageHeader>
       {menus
         .filter(menu =>

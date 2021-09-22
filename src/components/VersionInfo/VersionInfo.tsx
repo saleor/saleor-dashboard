@@ -13,14 +13,18 @@ const VersionInfo: React.FC<VersionInfoProps> = ({
 }) => {
   const classes = useStyles({});
 
-  return dashboardVersion && coreVersion ? (
+  if (!dashboardVersion || !coreVersion) {
+    return null;
+  }
+
+  return (
     <Typography variant="caption" className={classes.container}>
       <div
         className={classes.versionItem}
       >{`dashboard v${dashboardVersion}`}</div>
       <div className={classes.versionItem}>{`core v${coreVersion}`}</div>
     </Typography>
-  ) : null;
+  );
 };
 
 VersionInfo.displayName = "VersionInfo";

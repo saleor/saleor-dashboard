@@ -23,8 +23,8 @@ const user = {
 };
 
 const versions = {
-  dashboardVersion: "dashboard v3.0.0-b.3",
-  coreVersion: "core v3.0.0-b.15"
+  dashboardVersion: "3.0.0-b.3",
+  coreVersion: "3.0.0-b.15"
 };
 
 const Story: React.FC<{ user: User }> = ({ user }) => {
