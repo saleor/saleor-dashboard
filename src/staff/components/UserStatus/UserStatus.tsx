@@ -21,7 +21,6 @@ const AppStatus: React.FC<AppStatusProps> = ({
 }) => {
   const intl = useIntl();
 
-  //
   return (
     <Card>
       <CardTitle
