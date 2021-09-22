@@ -2,15 +2,17 @@ import { TextField } from "@material-ui/core";
 import { ChannelSaleData } from "@saleor/channels/utils";
 import { SaleType } from "@saleor/types/globalTypes";
 import React from "react";
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 
+import { SaleValueInputChangeType } from "./types";
+
 interface SaleValueTextFieldProps {
-  dataType: SaleType;
+  dataType: keyof typeof SaleType;
   helperText: string;
   disabled: boolean;
   listing: ChannelSaleData;
-  onChange: (channelId: string, discountValue: string) => void; // to extract
+  onChange: SaleValueInputChangeType;
 }
 
 const SaleValueTextField: React.FC<SaleValueTextFieldProps> = ({
@@ -22,21 +24,26 @@ const SaleValueTextField: React.FC<SaleValueTextFieldProps> = ({
 }) => {
   const intl = useIntl();
 
-  const [fixedValue, setFixedValue] = useState("");
-  const [percentageValue, setPercentageValue] = useState("");
+  const [fixedValue, setFixedValue] = useState(
+    dataType === SaleType.FIXED ? listing.discountValue : ""
+  );
+  const [percentageValue, setPercentageValue] = useState(
+    dataType === SaleType.PERCENTAGE ? listing.discountValue : ""
+  );
 
   const handleChange = (value: string) => {
     onChange(listing.id, value);
   };
 
   const setCurrentValue = (value: string) => {
-    dataType === SaleType.PERCENTAGE
-      ? setPercentageValue(value)
-      : setFixedValue(value);
+    if (dataType === SaleType.PERCENTAGE) {
+      setPercentageValue(value);
+    } else {
+      setFixedValue(value);
+    }
   };
 
   useEffect(() => {
-    console.log(dataType);
     if (dataType === SaleType.PERCENTAGE) {
       handleChange(percentageValue);
     } else {
@@ -53,7 +60,6 @@ const SaleValueTextField: React.FC<SaleValueTextFieldProps> = ({
       helperText={helperText || ""}
       name="value"
       onChange={e => {
-        // console.info(listing.id, e.target.value);
         handleChange(e.target.value);
         setCurrentValue(e.target.value);
       }}
@@ -61,7 +67,7 @@ const SaleValueTextField: React.FC<SaleValueTextFieldProps> = ({
         defaultMessage: "Discount Value",
         description: "sale discount"
       })}
-      value={getTextFieldValue() || ""}
+      value={getTextFieldValue()}
       type="number"
       fullWidth
       inputProps={{

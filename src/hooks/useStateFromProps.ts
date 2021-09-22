@@ -17,10 +17,7 @@ function useStateFromProps<T>(
   }
 
   const { mergeFunc, onRefresh } = opts;
-  console.info(prevData);
-  console.info(data);
   const shouldUpdate = !isEqual(prevData, data);
-  console.info(shouldUpdate);
 
   if (shouldUpdate) {
     const newData =

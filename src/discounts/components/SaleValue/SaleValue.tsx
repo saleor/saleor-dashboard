@@ -4,7 +4,6 @@ import {
   TableBody,
   TableCell,
   TableRow,
-  TextField,
   Typography
 } from "@material-ui/core";
 import CardTitle from "@saleor/components/CardTitle";
@@ -13,22 +12,21 @@ import Skeleton from "@saleor/components/Skeleton";
 import TableHead from "@saleor/components/TableHead";
 import { DiscountErrorFragment } from "@saleor/fragments/types/DiscountErrorFragment";
 import { renderCollection } from "@saleor/misc";
-import { SaleType } from "@saleor/types/globalTypes";
 import { getFormErrors } from "@saleor/utils/errors";
 import getDiscountErrorMessage from "@saleor/utils/errors/discounts";
 import * as React from "react";
-import { useEffect } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { SaleDetailsPageFormData } from "../SaleDetailsPage";
 import SaleValueTextField from "./SaleValueTextField";
 import { useStyles } from "./styles";
+import { SaleValueInputChangeType } from "./types";
 
 export interface SaleValueProps {
   data: SaleDetailsPageFormData;
   disabled: boolean;
   errors: DiscountErrorFragment[];
-  onChange: (channelId: string, discountValue: string) => void;
+  onChange: SaleValueInputChangeType;
 }
 
 const numberOfColumns = 2;
@@ -43,17 +41,6 @@ const SaleValue: React.FC<SaleValueProps> = ({
   const intl = useIntl();
   const classes = useStyles({});
   const formErrors = getFormErrors(["value"], errors);
-
-  // useEffect(() => {
-  //   // console.log(type);
-  //   if (type === SaleType.FIXED) {
-  //     // console.log(data);
-  //     data.channelListings.forEach(listing => {
-  //       console.log("Bonjourrrr", listing.id);
-  //       onChange(listing.id, "0");
-  //     });
-  //   }
-  // }, [type]);
 
   return (
     <Card>
@@ -122,38 +109,6 @@ const SaleValue: React.FC<SaleValueProps> = ({
                             onChange={onChange}
                           />
                         ) : (
-                          // <TextField
-                          //   disabled={disabled}
-                          //   helperText={
-                          //     error
-                          //       ? getDiscountErrorMessage(
-                          //           formErrors.value,
-                          //           intl
-                          //         )
-                          //       : ""
-                          //   }
-                          //   name="value"
-                          //   onChange={e => {
-                          //     console.info(listing.id, e.target.value);
-                          //     onChange(listing.id, e.target.value);
-                          //   }}
-                          //   label={intl.formatMessage({
-                          //     defaultMessage: "Discount Value",
-                          //     description: "sale discount"
-                          //   })}
-                          //   value={listing.discountValue || ""}
-                          //   type="number"
-                          //   fullWidth
-                          //   inputProps={{
-                          //     min: 0
-                          //   }}
-                          //   InputProps={{
-                          //     endAdornment:
-                          //       data.type === SaleType.FIXED
-                          //         ? listing.currency
-                          //         : "%"
-                          //   }}
-                          // />
                           <Skeleton />
                         )}
                       </TableCell>
