@@ -78,7 +78,8 @@ errorTracker.init();
 // so we need to explicitly set them
 const linkOptions = {
   credentials: "include",
-  uri: API_URI
+  uri: API_URI,
+  type: "image/png"
 };
 const uploadLink = createUploadLink(linkOptions);
 const batchLink = new BatchHttpLink({
