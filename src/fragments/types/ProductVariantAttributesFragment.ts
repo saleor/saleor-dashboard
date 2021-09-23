@@ -34,6 +34,7 @@ export interface ProductVariantAttributesFragment_attributes_attribute_choices_e
   boolean: boolean | null;
   date: any | null;
   dateTime: any | null;
+  value: string | null;
 }
 
 export interface ProductVariantAttributesFragment_attributes_attribute_choices_edges {
@@ -77,6 +78,7 @@ export interface ProductVariantAttributesFragment_attributes_values {
   boolean: boolean | null;
   date: any | null;
   dateTime: any | null;
+  value: string | null;
 }
 
 export interface ProductVariantAttributesFragment_attributes {
@@ -110,6 +112,7 @@ export interface ProductVariantAttributesFragment_productType_variantAttributes_
   boolean: boolean | null;
   date: any | null;
   dateTime: any | null;
+  value: string | null;
 }
 
 export interface ProductVariantAttributesFragment_productType_variantAttributes_choices_edges {

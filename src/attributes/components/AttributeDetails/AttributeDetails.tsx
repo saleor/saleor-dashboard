@@ -108,6 +108,10 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = props => {
     {
       label: intl.formatMessage(inputTypeMessages.dateTime),
       value: AttributeInputTypeEnum.DATE_TIME
+    },
+    {
+      label: intl.formatMessage(inputTypeMessages.swatch),
+      value: AttributeInputTypeEnum.SWATCH
     }
   ];
   const entityTypeChoices = [

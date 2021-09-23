@@ -3,19 +3,32 @@ import { fragmentMoney } from "@saleor/fragments/products";
 import makeQuery from "@saleor/hooks/makeQuery";
 import gql from "graphql-tag";
 
-import { giftCardDataFragment } from "../GiftCardUpdate/queries";
 import { GiftCardList, GiftCardListVariables } from "./types/GiftCardList";
 import { GiftCardProductsCount } from "./types/GiftCardProductsCount";
 
 export const giftCardList = gql`
   ${fragmentUserBase}
   ${fragmentMoney}
-  ${giftCardDataFragment}
   query GiftCardList($first: Int, $after: String, $last: Int, $before: String) {
     giftCards(first: $first, after: $after, before: $before, last: $last) {
       edges {
         node {
-          ...GiftCardData
+          id
+          usedByEmail
+          displayCode
+          isActive
+          expiryDate
+          product {
+            id
+            name
+          }
+          tag
+          usedBy {
+            ...UserBase
+          }
+          currentBalance {
+            ...Money
+          }
         }
       }
       pageInfo {
@@ -27,6 +40,7 @@ export const giftCardList = gql`
     }
   }
 `;
+
 export const useGiftCardListQuery = makeQuery<
   GiftCardList,
   GiftCardListVariables
@@ -42,6 +56,7 @@ export const giftCardProductsCount = gql`
     }
   }
 `;
+
 export const useGiftCardProductsCountQuery = makeQuery<
   GiftCardProductsCount,
   never

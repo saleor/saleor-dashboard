@@ -27,10 +27,7 @@ const GiftCardCreateDialog: React.FC<DialogActionHandlersProps> = ({
   const intl = useIntl();
   const notify = useNotifier();
 
-  const {
-    data: channelCurrenciesData,
-    loading: loadingChannelCurrencies
-  } = useChannelCurrencies({});
+  const { loading: loadingChannelCurrencies } = useChannelCurrencies({});
 
   const [cardCode, setCardCode] = useState(null);
 
@@ -116,7 +113,6 @@ const GiftCardCreateDialog: React.FC<DialogActionHandlersProps> = ({
             />
           ) : (
             <GiftCardCreateDialogForm
-              channelCurrencies={channelCurrenciesData?.shop?.channelCurrencies}
               opts={createGiftCardOpts}
               onClose={handleClose}
               apiErrors={createGiftCardOpts?.data?.giftCardCreate?.errors}

@@ -123,7 +123,10 @@ export const {
   saveFilterTab
 } = createFilterTabUtils<PluginListUrlFilters>(PLUGIN_FILTERS_KEY);
 
-export const { areFiltersApplied, getActiveFilters } = createFilterUtils<
-  PluginListUrlQueryParams,
-  PluginListUrlFilters
->(PluginListUrlFiltersEnum);
+export const {
+  areFiltersApplied,
+  getActiveFilters,
+  getFiltersCurrentTab
+} = createFilterUtils<PluginListUrlQueryParams, PluginListUrlFilters>(
+  PluginListUrlFiltersEnum
+);

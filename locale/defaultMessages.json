@@ -1021,6 +1021,10 @@
     "context": "check to require numeric attribute unit",
     "string": "Select unit"
   },
+  "src_dot_attributes_dot_components_dot_AttributeDetails_dot_swatch": {
+    "context": "swatch attribute type",
+    "string": "Swatch"
+  },
   "src_dot_attributes_dot_components_dot_AttributeDetails_dot_text": {
     "context": "text attribute type",
     "string": "Text"
@@ -1168,6 +1172,14 @@
     "context": "caption",
     "string": "If enabled, attribute will be accessible to customers."
   },
+  "src_dot_attributes_dot_components_dot_AttributeSwatchField_dot_image": {
+    "context": "swatch attribute image label",
+    "string": "Image"
+  },
+  "src_dot_attributes_dot_components_dot_AttributeSwatchField_dot_picker": {
+    "context": "swatch attribute color picker label",
+    "string": "Picker"
+  },
   "src_dot_attributes_dot_components_dot_AttributeValueDeleteDialog_dot_1326420604": {
     "context": "delete attribute value",
     "string": "Are you sure you want to delete \"{name}\" value?"
@@ -1210,6 +1222,10 @@
   "src_dot_attributes_dot_components_dot_AttributeValues_dot_351422234": {
     "context": "assign attribute value button",
     "string": "Assign value"
+  },
+  "src_dot_attributes_dot_components_dot_AttributeValues_dot_4086835540": {
+    "context": "attribute values list: slug column header",
+    "string": "Swatch"
   },
   "src_dot_attributes_dot_views_dot_AttributeCreate_dot_11941964": {
     "string": "Successfully created attribute"
@@ -1914,10 +1930,6 @@
   "src_dot_components_dot_AttributeUnassignDialog_dot_2037985699": {
     "string": "Are you sure you want to unassign {attributeName} from {itemTypeName}?"
   },
-  "src_dot_components_dot_Attributes_dot_3824528779": {
-    "context": "button label",
-    "string": "Assign references"
-  },
   "src_dot_components_dot_Attributes_dot_attributesNumber": {
     "context": "number of attributes",
     "string": "{number} Attributes"
@@ -1929,6 +1941,10 @@
   "src_dot_components_dot_Attributes_dot_multipleValueLabel": {
     "context": "attribute values",
     "string": "Values"
+  },
+  "src_dot_components_dot_Attributes_dot_reference": {
+    "context": "button label",
+    "string": "Assign references"
   },
   "src_dot_components_dot_Attributes_dot_valueLabel": {
     "context": "attribute value",
@@ -2078,6 +2094,18 @@
   },
   "src_dot_components_dot_DeleteFilterTabDialog_dot_71479100": {
     "string": "Are you sure you want to delete {name} search tab?"
+  },
+  "src_dot_components_dot_DemoBanner_dot_1647850230": {
+    "string": "Storefront"
+  },
+  "src_dot_components_dot_DemoBanner_dot_214739616": {
+    "string": "Play with <emphasis>GraphQL API</emphasis>"
+  },
+  "src_dot_components_dot_DemoBanner_dot_2367386033": {
+    "string": "API"
+  },
+  "src_dot_components_dot_DemoBanner_dot_4093572282": {
+    "string": "See <emphasis>DEMO STOREFRONT</emphasis>"
   },
   "src_dot_components_dot_ErrorMessageCard_dot_2845142593": {
     "context": "header",
@@ -3534,9 +3562,17 @@
     "context": "GiftCardUpdateDetailsCard set balance button label",
     "string": "set balance"
   },
+  "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardUpdateDetailsCard_dot_tagInputLabel": {
+    "context": "GiftCardTagInput tag label",
+    "string": "Card Tag"
+  },
   "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardUpdateDetailsCard_dot_title": {
     "context": "GiftCardUpdateDetailsCard title",
     "string": "Details"
+  },
+  "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardUpdateExpirySelect_dot_expiredOnLabel": {
+    "context": "GiftCarUpdateDetailsExpirySection expired on label",
+    "string": "Expired on {date}"
   },
   "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardUpdateExpirySelect_dot_expiryDateCheckboxLabel": {
     "context": "GiftCarUpdateDetailsExpirySection expiry date checkbox label",
@@ -3577,6 +3613,14 @@
   "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardUpdateInfoCard_dot_usedByLabel": {
     "context": "GiftCardUpdateInfoCard used by label",
     "string": "Used by"
+  },
+  "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardUpdatePageHeader_dot_disabledStatusLabel": {
+    "context": "giftCardUpdatePageHeader disabled status label",
+    "string": "Disabled"
+  },
+  "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardUpdatePageHeader_dot_expiredStatusLabel": {
+    "context": "giftCardUpdatePageHeader expired status label",
+    "string": "Expired"
   },
   "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardUpdatePageHeader_dot_resendButtonLabel": {
     "context": "giftCardUpdatePageHeader resendButtonLabel",
@@ -3641,10 +3685,6 @@
   "src_dot_giftCards_dot_GiftCardsList_dot_exportCodes": {
     "context": "GiftCardsListHeader menu item settings",
     "string": "Export card codes"
-  },
-  "src_dot_giftCards_dot_GiftCardsList_dot_giftCardDisabledLabel": {
-    "context": "GiftCardsListTable disabled label",
-    "string": "Disabled"
   },
   "src_dot_giftCards_dot_GiftCardsList_dot_giftCardProduct": {
     "context": "GiftCardsListHeader alert",
@@ -3741,10 +3781,6 @@
   "src_dot_giftCards_dot_components_dot_GiftCardSettingsExpirySelect_dot_setExpirationPeriodTitle": {
     "context": "checkbox label",
     "string": "Set gift card expiration period"
-  },
-  "src_dot_giftCards_dot_components_dot_GiftCardTagInput_dot_label": {
-    "context": "GiftCardTagInput tag label",
-    "string": "Card Tag"
   },
   "src_dot_giftCards_dot_components_dot_GiftCardTagInput_dot_placeholder": {
     "context": "GiftCardTagInput tag placeholder",

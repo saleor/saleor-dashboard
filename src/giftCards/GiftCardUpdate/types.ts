@@ -9,3 +9,5 @@ export enum GiftCardUpdatePageActionParamsEnum {
 export type GiftCardUpdatePageUrlQueryParams = Dialog<
   GiftCardUpdatePageActionParamsEnum
 >;
+
+export const PLACEHOLDER = "-";

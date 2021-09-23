@@ -27,6 +27,7 @@ import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import useOnSetDefaultVariant from "@saleor/hooks/useOnSetDefaultVariant";
 import useShop from "@saleor/hooks/useShop";
+import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { commonMessages, errorMessages } from "@saleor/intl";
 import ProductVariantCreateDialog from "@saleor/products/components/ProductVariantCreateDialog";
 import {
@@ -61,9 +62,7 @@ import React from "react";
 import { defineMessages, FormattedMessage, useIntl } from "react-intl";
 
 import { getMutationState } from "../../../misc";
-import ProductUpdatePage, {
-  ProductUpdatePageSubmitData
-} from "../../components/ProductUpdatePage";
+import ProductUpdatePage from "../../components/ProductUpdatePage";
 import { useProductDetails } from "../../queries";
 import { ProductMediaCreateVariables } from "../../types/ProductMediaCreate";
 import { ProductUpdate as ProductUpdateMutationResult } from "../../types/ProductUpdate";
@@ -77,13 +76,14 @@ import {
   productVariantCreatorUrl,
   productVariantEditUrl
 } from "../../urls";
+import { CHANNELS_AVAILIABILITY_MODAL_SELECTOR } from "./consts";
 import {
   createImageReorderHandler,
   createImageUploadHandler,
   createUpdateHandler,
   createVariantReorderHandler
 } from "./handlers";
-import useChannelsWithProductVariants from "./useChannelsWithProductVariants";
+import useChannelVariantListings from "./useChannelVariantListings";
 
 const messages = defineMessages({
   deleteProductDialogTitle: {
@@ -274,21 +274,13 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
     channel.name.localeCompare(nextChannel.name)
   );
 
+  const [channelsData, setChannelsData] = useStateFromProps(allChannels);
   const {
+    channels: updatedChannels,
     channelsWithVariantsData,
-    haveChannelsWithVariantsDataChanged,
-    setHaveChannelsWithVariantsChanged,
-    onChannelsAvailiabilityModalOpen,
-    channelsData,
-    setChannelsData,
-    ...channelsWithVariantsProps
-  } = useChannelsWithProductVariants({
-    channels: allChannels,
-    variants: product?.variants,
-    action: params?.action,
-    openModal,
-    closeModal
-  });
+    hasChanged: hasChannelVariantListingChanged,
+    setChannelVariantListing
+  } = useChannelVariantListings(allChannels);
 
   const productChannelsChoices: ChannelData[] = createSortedChannelsDataFromProduct(
     product
@@ -517,18 +509,19 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
           />
         ) : (
           <ChannelsWithVariantsAvailabilityDialog
-            channelsWithVariantsData={channelsWithVariantsData}
-            haveChannelsWithVariantsDataChanged={
-              haveChannelsWithVariantsDataChanged
-            }
-            {...channelsWithVariantsProps}
-            channels={allChannels}
+            channels={updatedChannels}
             variants={product?.variants}
+            open={params.action === CHANNELS_AVAILIABILITY_MODAL_SELECTOR}
+            onClose={closeModal}
+            onConfirm={listings => {
+              closeModal();
+              setChannelVariantListing(listings);
+            }}
           />
         ))}
       <ProductUpdatePage
         hasChannelChanged={
-          haveChannelsWithVariantsDataChanged ||
+          hasChannelVariantListingChanged ||
           productChannelsChoices?.length !== currentChannels?.length
         }
         isSimpleProduct={isSimpleProduct}
@@ -563,10 +556,7 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
         onDelete={() => openModal("remove")}
         onImageReorder={handleImageReorder}
         onMediaUrlUpload={handleMediaUrlUpload}
-        onSubmit={(formData: ProductUpdatePageSubmitData) => {
-          setHaveChannelsWithVariantsChanged(false);
-          return handleSubmit(formData);
-        }}
+        onSubmit={handleSubmit}
         onWarehouseConfigure={() => navigate(warehouseAddPath)}
         onVariantAdd={handleVariantAdd}
         onVariantsAdd={() => openModal("add-variants")}

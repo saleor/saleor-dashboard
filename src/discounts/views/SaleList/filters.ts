@@ -123,10 +123,11 @@ export const {
   saveFilterTab
 } = createFilterTabUtils<SaleListUrlFilters>(SALE_FILTERS_KEY);
 
-export const { areFiltersApplied, getActiveFilters } = createFilterUtils<
-  SaleListUrlQueryParams,
-  SaleListUrlFilters
->({
+export const {
+  areFiltersApplied,
+  getActiveFilters,
+  getFiltersCurrentTab
+} = createFilterUtils<SaleListUrlQueryParams, SaleListUrlFilters>({
   ...SaleListUrlFiltersEnum,
   ...SaleListUrlFiltersWithMultipleValues
 });

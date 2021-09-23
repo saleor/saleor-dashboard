@@ -2,6 +2,8 @@ import React, { createContext } from "react";
 
 import { useGiftCardDetailsQuery } from "../../queries";
 import { GiftCardDetails_giftCard } from "../../types/GiftCardDetails";
+import { ExtendedGiftCard } from "./types";
+import { getExtendedGiftCard } from "./utils";
 
 interface GiftCardDetailsProviderProps {
   children: React.ReactNode;
@@ -9,7 +11,7 @@ interface GiftCardDetailsProviderProps {
 }
 
 export interface GiftCardDetailsConsumerProps {
-  giftCard: GiftCardDetails_giftCard;
+  giftCard: ExtendedGiftCard<GiftCardDetails_giftCard> | undefined;
   loading: boolean;
 }
 
@@ -27,7 +29,7 @@ const GiftCardDetailsProvider: React.FC<GiftCardDetailsProviderProps> = ({
   });
 
   const providerValues: GiftCardDetailsConsumerProps = {
-    giftCard: data?.giftCard,
+    giftCard: getExtendedGiftCard(data?.giftCard),
     loading
   };
 

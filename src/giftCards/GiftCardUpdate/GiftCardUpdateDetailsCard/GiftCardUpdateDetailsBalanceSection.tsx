@@ -33,7 +33,7 @@ const GiftCardUpdateDetailsBalanceSection: React.FC = () => {
           <HorizontalSpacer />
           /
           <HorizontalSpacer />
-          <Money money={initialBalance} />
+          <Money className={classes.balanceTotal} money={initialBalance} />
         </div>
       </div>
       <CardSpacer />

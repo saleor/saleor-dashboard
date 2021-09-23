@@ -34,6 +34,7 @@ export interface Product_attributes_attribute_choices_edges_node {
   boolean: boolean | null;
   date: any | null;
   dateTime: any | null;
+  value: string | null;
 }
 
 export interface Product_attributes_attribute_choices_edges {
@@ -77,6 +78,7 @@ export interface Product_attributes_values {
   boolean: boolean | null;
   date: any | null;
   dateTime: any | null;
+  value: string | null;
 }
 
 export interface Product_attributes {
@@ -110,6 +112,7 @@ export interface Product_productType_variantAttributes_choices_edges_node {
   boolean: boolean | null;
   date: any | null;
   dateTime: any | null;
+  value: string | null;
 }
 
 export interface Product_productType_variantAttributes_choices_edges {
