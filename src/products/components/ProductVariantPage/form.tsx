@@ -133,14 +133,14 @@ function useProductVariantUpdateForm(
   const stockInput = getStockInputFromVariant(variant);
 
   const currentChannelsWithPreorderInfo = opts.currentChannels?.map(channel => {
-    const variantChannel = variant.channelListings.find(
+    const variantChannel = variant?.channelListings?.find(
       channelListing => channelListing.channel.id === channel.id
     );
 
     return {
       ...channel,
-      preorderThreshold: variantChannel.preorderThreshold.quantity,
-      soldUnits: variantChannel.preorderThreshold.soldUnits
+      preorderThreshold: variantChannel?.preorderThreshold?.quantity,
+      soldUnits: variantChannel?.preorderThreshold?.soldUnits
     };
   });
 
