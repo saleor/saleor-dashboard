@@ -26,7 +26,6 @@ import AuthProvider, { useAuth } from "./auth/AuthProvider";
 import LoginLoading from "./auth/components/LoginLoading/LoginLoading";
 import SectionRoute from "./auth/components/SectionRoute";
 import authLink from "./auth/link";
-import { hasAnyPermissions } from "./auth/misc";
 import CategorySection from "./categories";
 import ChannelsSection from "./channels";
 import { channelsSection } from "./channels/urls";
@@ -153,8 +152,7 @@ const Routes: React.FC = () => {
     hasToken,
     isAuthenticated,
     tokenAuthLoading,
-    tokenVerifyLoading,
-    user
+    tokenVerifyLoading
   } = useAuth();
 
   const { channel } = useAppChannel(false);
@@ -311,13 +309,13 @@ const Routes: React.FC = () => {
                 path={channelsSection}
                 component={ChannelsSection}
               />
-              {hasAnyPermissions(getConfigMenuItemsPermissions(intl), user) && (
-                <SectionRoute
-                  exact
-                  path="/configuration"
-                  component={ConfigurationSection}
-                />
-              )}
+              <SectionRoute
+                matchPermission="any"
+                permissions={getConfigMenuItemsPermissions(intl)}
+                exact
+                path="/configuration"
+                component={ConfigurationSection}
+              />
               <Route component={NotFound} />
             </Switch>
           </ErrorBoundary>
