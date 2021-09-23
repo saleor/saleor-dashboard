@@ -12,4 +12,4 @@ export const getConfigMenuItemsPermissions = (
         prev.concat(next.menuItems.map(menuItem => menuItem.permissions)),
       []
     )
-    .reduce((prev, next) => prev.concat(next), []);
+    .flat();

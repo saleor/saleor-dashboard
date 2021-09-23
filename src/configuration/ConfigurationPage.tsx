@@ -6,7 +6,7 @@ import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import { hasPermissions } from "../auth/misc";
+import { hasAnyPermissions } from "../auth/misc";
 import Container from "../components/Container";
 import PageHeader from "../components/PageHeader";
 import { PermissionEnum } from "../types/globalTypes";
@@ -110,7 +110,7 @@ export const ConfigurationPage: React.FC<ConfigurationPageProps> = props => {
       {menus
         .filter(menu =>
           menu.menuItems.some(menuItem =>
-            hasPermissions(menuItem.permissions, user)
+            hasAnyPermissions(menuItem.permissions, user)
           )
         )
         .map((menu, menuIndex) => (
@@ -120,7 +120,9 @@ export const ConfigurationPage: React.FC<ConfigurationPageProps> = props => {
             </div>
             <div className={classes.configurationItem}>
               {menu.menuItems
-                .filter(menuItem => hasPermissions(menuItem.permissions, user))
+                .filter(menuItem =>
+                  hasAnyPermissions(menuItem.permissions, user)
+                )
                 .map((item, itemIndex) => (
                   <Card
                     className={item.url ? classes.card : classes.cardDisabled}

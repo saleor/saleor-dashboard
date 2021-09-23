@@ -26,7 +26,7 @@ import AuthProvider, { useAuth } from "./auth/AuthProvider";
 import LoginLoading from "./auth/components/LoginLoading/LoginLoading";
 import SectionRoute from "./auth/components/SectionRoute";
 import authLink from "./auth/link";
-import { hasPermissions } from "./auth/misc";
+import { hasAnyPermissions } from "./auth/misc";
 import CategorySection from "./categories";
 import ChannelsSection from "./channels";
 import { channelsSection } from "./channels/urls";
@@ -228,6 +228,7 @@ const Routes: React.FC = () => {
                 ]}
                 path="/page-types"
                 component={PageTypesSection}
+                matchPermission="any"
               />
               <SectionRoute
                 permissions={[PermissionEnum.MANAGE_PLUGINS]}
@@ -293,6 +294,7 @@ const Routes: React.FC = () => {
                 ]}
                 path={attributeSection}
                 component={AttributeSection}
+                matchPermission="any"
               />
               <SectionRoute
                 permissions={[PermissionEnum.MANAGE_APPS]}
@@ -309,7 +311,7 @@ const Routes: React.FC = () => {
                 path={channelsSection}
                 component={ChannelsSection}
               />
-              {hasPermissions(getConfigMenuItemsPermissions(intl), user) && (
+              {hasAnyPermissions(getConfigMenuItemsPermissions(intl), user) && (
                 <SectionRoute
                   exact
                   path="/configuration"

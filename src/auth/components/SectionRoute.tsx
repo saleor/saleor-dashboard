@@ -4,22 +4,37 @@ import { Route, RouteProps } from "react-router-dom";
 
 import NotFound from "../../NotFound";
 import { PermissionEnum } from "../../types/globalTypes";
-import { hasPermissions } from "../misc";
+import { hasAllPermissions, hasAnyPermissions } from "../misc";
+
+type MatchPermissionType = "all" | "any";
 
 interface SectionRouteProps extends RouteProps {
   permissions?: PermissionEnum[];
+  matchPermission?: MatchPermissionType;
 }
+
+const matchAll = (match: MatchPermissionType) => match === "all";
 
 export const SectionRoute: React.FC<SectionRouteProps> = ({
   permissions,
+  matchPermission = "all",
   ...props
 }) => {
   const { user } = useUser();
 
-  const hasSectionPermissions =
-    !permissions || hasPermissions(permissions, user);
+  const hasSectionPermissions = () => {
+    if (!permissions) {
+      return true;
+    }
 
-  return hasSectionPermissions ? <Route {...props} /> : <NotFound />;
+    if (matchAll(matchPermission)) {
+      return hasAllPermissions(permissions, user);
+    }
+
+    return hasAnyPermissions(permissions, user);
+  };
+
+  return hasSectionPermissions() ? <Route {...props} /> : <NotFound />;
 };
 SectionRoute.displayName = "Route";
 export default SectionRoute;
