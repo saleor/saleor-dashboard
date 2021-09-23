@@ -1,7 +1,9 @@
 import { attributeListUrl } from "@saleor/attributes/urls";
 import { channelsListUrl } from "@saleor/channels/urls";
 import { WindowTitle } from "@saleor/components/WindowTitle";
+import { APP_VERSION as dashboardVersion } from "@saleor/config";
 import useNavigator from "@saleor/hooks/useNavigator";
+import useShop from "@saleor/hooks/useShop";
 import useUser from "@saleor/hooks/useUser";
 import Attributes from "@saleor/icons/Attributes";
 import Channels from "@saleor/icons/Channels";
@@ -242,6 +244,12 @@ export function createConfigurationMenu(intl: IntlShape): MenuSection[] {
 export const configurationMenuUrl = "/configuration/";
 
 export const ConfigurationSection: React.FC = () => {
+  const { version: coreVersion } = useShop();
+  const versions = {
+    dashboardVersion,
+    coreVersion
+  };
+
   const navigate = useNavigator();
   const user = useUser();
   const intl = useIntl();
@@ -253,6 +261,7 @@ export const ConfigurationSection: React.FC = () => {
         menu={createConfigurationMenu(intl)}
         user={maybe(() => user.user)}
         onSectionClick={navigate}
+        versionInfo={versions}
       />
     </>
   );
