@@ -8,8 +8,10 @@ export const getConfigMenuItemsPermissions = (
 ): PermissionEnum[] =>
   createConfigurationMenu(intl)
     .reduce(
-      (prev, next) =>
-        prev.concat(next.menuItems.map(menuItem => menuItem.permissions)),
+      (prev, { menuItems }) => [
+        ...prev,
+        ...menuItems.map(({ permissions }) => permissions)
+      ],
       []
     )
     .flat();
