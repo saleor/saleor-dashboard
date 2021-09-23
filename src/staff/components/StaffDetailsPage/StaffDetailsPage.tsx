@@ -13,7 +13,7 @@ import { StaffErrorFragment } from "@saleor/fragments/types/StaffErrorFragment";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import useLocale from "@saleor/hooks/useLocale";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
-import { sectionNames } from "@saleor/intl";
+import { commonMessages, sectionNames } from "@saleor/intl";
 import { Backlink } from "@saleor/macaw-ui";
 import { getUserName } from "@saleor/misc";
 import { SearchPermissionGroups_search_edges_node } from "@saleor/searches/types/SearchPermissionGroups";
@@ -146,10 +146,9 @@ const StaffDetailsPage: React.FC<StaffDetailsPageProps> = ({
                     <UserStatus
                       data={formData}
                       disabled={disabled}
-                      label={intl.formatMessage({
-                        defaultMessage: "User is active",
-                        description: "checkbox label"
-                      })}
+                      label={intl.formatMessage(
+                        commonMessages.userStatusActive
+                      )}
                       onChange={change}
                     />
                     <CardSpacer />

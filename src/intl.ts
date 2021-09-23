@@ -112,6 +112,18 @@ export const commonMessages = defineMessages({
     defaultMessage: "Upload image",
     description: "button"
   },
+  userStatus: {
+    defaultMessage: "User Status",
+    description: "section header"
+  },
+  userStatusActive: {
+    defaultMessage: "User is active",
+    description: "checkbox label"
+  },
+  userDisableInstruction: {
+    defaultMessage:
+      "If you want to disable this User please uncheck the box below."
+  },
   yes: {
     defaultMessage: "Yes"
   },

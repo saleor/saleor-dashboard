@@ -6521,10 +6521,6 @@
     "context": "dialog header",
     "string": "Permissions"
   },
-  "src_dot_staff_dot_components_dot_StaffDetailsPage_dot_881953347": {
-    "context": "checkbox label",
-    "string": "User is active"
-  },
   "src_dot_staff_dot_components_dot_StaffListPage_dot_2852350932": {
     "context": "tab name",
     "string": "All Staff Members"
@@ -6627,13 +6623,6 @@
   "src_dot_staff_dot_components_dot_StaffProperties_dot_457748370": {
     "context": "button",
     "string": "Delete photo"
-  },
-  "src_dot_staff_dot_components_dot_UserStatus_dot_2478471710": {
-    "context": "section header",
-    "string": "User Status"
-  },
-  "src_dot_staff_dot_components_dot_UserStatus_dot_677167463": {
-    "string": "If you want to disable this User please uncheck the box below."
   },
   "src_dot_staff_dot_views_dot_1308770978": {
     "context": "dialog header",
@@ -6949,6 +6938,17 @@
   "src_dot_uploadImage": {
     "context": "button",
     "string": "Upload image"
+  },
+  "src_dot_userDisableInstruction": {
+    "string": "If you want to disable this User please uncheck the box below."
+  },
+  "src_dot_userStatus": {
+    "context": "section header",
+    "string": "User Status"
+  },
+  "src_dot_userStatusActive": {
+    "context": "checkbox label",
+    "string": "User is active"
   },
   "src_dot_utils_dot_errors_dot_alreadyExists": {
     "context": "add authorization key error",
