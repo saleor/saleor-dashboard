@@ -24,12 +24,8 @@ const SaleValueTextField: React.FC<SaleValueTextFieldProps> = ({
 }) => {
   const intl = useIntl();
 
-  const [fixedValue, setFixedValue] = useState(
-    dataType === SaleType.FIXED ? listing.discountValue : ""
-  );
-  const [percentageValue, setPercentageValue] = useState(
-    dataType === SaleType.PERCENTAGE ? listing.discountValue : ""
-  );
+  const [fixedValue, setFixedValue] = useState("");
+  const [percentageValue, setPercentageValue] = useState("");
 
   const handleChange = (value: string) => {
     onChange(listing.id, value);
@@ -42,6 +38,10 @@ const SaleValueTextField: React.FC<SaleValueTextFieldProps> = ({
       setFixedValue(value);
     }
   };
+
+  useEffect(() => {
+    setCurrentValue(listing.discountValue);
+  }, []);
 
   useEffect(() => {
     if (dataType === SaleType.PERCENTAGE) {
