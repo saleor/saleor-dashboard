@@ -38,16 +38,14 @@ export function saveGiftCard() {
     });
 }
 
-export function setNeverExpire() {
-  cy.get(GIFT_CARD_DIALOG.expirationOptions.neverExpireRadioButton).click();
-}
-
 export const expiryPeriods = {
   MONTH: GIFT_CARD_DIALOG.expirationOptions.expiryPeriodMonthType
 };
 
 export function setExpiryPeriod(amount, period) {
-  cy.get(GIFT_CARD_DIALOG.expirationOptions.expiryPeriodRadioButton)
+  cy.get(GIFT_CARD_DIALOG.expirationOptions.setExpiryDateCheckbox)
+    .click()
+    .get(GIFT_CARD_DIALOG.expirationOptions.expiryPeriodRadioButton)
     .click()
     .get(GIFT_CARD_DIALOG.expirationOptions.expiryPeriodAmount)
     .clearAndType(amount)
@@ -58,7 +56,9 @@ export function setExpiryPeriod(amount, period) {
 }
 
 export function setExpiryDate(date) {
-  cy.get(GIFT_CARD_DIALOG.expirationOptions.expiryDateRadioButton)
+  cy.get(GIFT_CARD_DIALOG.expirationOptions.setExpiryDateCheckbox)
+    .click()
+    .get(GIFT_CARD_DIALOG.expirationOptions.expiryDateRadioButton)
     .click()
     .get(GIFT_CARD_DIALOG.expirationOptions.expiryDateInput)
     .type(date);

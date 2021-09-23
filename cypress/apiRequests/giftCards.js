@@ -10,6 +10,7 @@ export function getGiftCardsWithTag(first, tag) {
     giftCards(first: ${first}, filter: { tag: "${tag}"}){
       edges{
         node{
+          code
           id
           isActive
           expiryDate

@@ -7,12 +7,12 @@ import {
   openAndFillUpCreateGiftCardDialog,
   saveGiftCard,
   setExpiryDate,
-  setExpiryPeriod,
-  setNeverExpire
+  setExpiryPeriod
 } from "../steps/giftCardSteps";
 import filterTests from "../support/filterTests";
 import { formatDate } from "../support/format/formatDate";
 import { deleteGiftCardsWithTagStartsWith } from "../utils/giftCardUtils";
+import { addToDate } from "../utils/misc";
 
 filterTests(["all"], () => {
   describe("Tests for gift cards", () => {
@@ -39,7 +39,6 @@ filterTests(["all"], () => {
         amount,
         currency
       });
-      setNeverExpire();
       saveGiftCard()
         .then(createdGiftCardCode => {
           giftCardCode = createdGiftCardCode;
@@ -55,6 +54,7 @@ filterTests(["all"], () => {
     it("should create gift card with two moths expiry", () => {
       const name = `${startsWith}${faker.datatype.number()}`;
       let giftCardCode;
+      const expectedExpiryDate = addToDate(new Date(), 2, "M");
 
       openAndFillUpCreateGiftCardDialog({
         note: name,
@@ -72,8 +72,7 @@ filterTests(["all"], () => {
           expect(giftCard.code).to.eq(giftCardCode);
           expect(giftCard.initialBalance.amount).to.eq(amount);
           expect(giftCard.initialBalance.currency).to.eq(currency);
-          expect(giftCard.expiryPeriod.amount).to.eq(2);
-          expect(giftCard.expiryPeriod.type).to.eq("MONTH");
+          expect(giftCard.expiryDate).to.eq(expectedExpiryDate);
         });
     });
 

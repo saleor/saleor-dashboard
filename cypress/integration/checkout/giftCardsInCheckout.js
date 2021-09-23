@@ -106,27 +106,6 @@ filterTests(["all"], () => {
         });
     });
 
-    it("should buy product with gift card", () => {
-      giftCardData.tag = `${startsWith}${faker.datatype.number()}`;
-
-      createGiftCard(giftCardData)
-        .then(giftCard => {
-          chai.softExpect(giftCard.isActive).to.eq(true);
-          dataForCheckout.voucherCode = giftCard.code;
-          purchaseProductWithPromoCode(dataForCheckout);
-        })
-        .then(({ order }) => {
-          expect(order.total.gross.amount).to.eq(0);
-          getGiftCardWithTag(giftCardData.tag);
-        })
-        .then(giftCard => {
-          expect(giftCard.initialBalance.amount).to.eq(giftCardData.amount);
-          expect(giftCard.currentBalance.amount).to.eq(
-            giftCardData.amount - productPrice - shippingPrice
-          );
-        });
-    });
-
     it("should enable gift card", () => {
       giftCardData.tag = `${startsWith}${faker.datatype.number()}`;
       let giftCard;
@@ -139,10 +118,17 @@ filterTests(["all"], () => {
         .then(() => {
           changeGiftCardActiveStatus(giftCard.id);
           dataForCheckout.voucherCode = giftCard.code;
-          createCheckoutWithVoucher(dataForCheckout);
+          purchaseProductWithPromoCode(dataForCheckout);
         })
-        .then(({ addPromoCodeResp }) => {
-          expect(addPromoCodeResp.checkout.totalPrice.gross.amount).to.eq(0);
+        .then(({ order }) => {
+          expect(order.total.gross.amount).to.eq(0);
+          getGiftCardWithTag(giftCardData.tag);
+        })
+        .then(giftCard => {
+          expect(giftCard.initialBalance.amount).to.eq(giftCardData.amount);
+          expect(giftCard.currentBalance.amount).to.eq(
+            giftCardData.amount - productPrice - shippingPrice
+          );
         });
     });
 
