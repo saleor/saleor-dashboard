@@ -68,7 +68,10 @@ const useStyles = makeStyles(
       display: "flex",
       alignItems: "center",
       userSelect: "none",
-      cursor: "pointer"
+      cursor: "pointer",
+      "&:active": {
+        pointerEvents: "none"
+      }
     }
   }),
   { name: "MultiAutocompleteSelectField" }
@@ -181,34 +184,15 @@ const MultiAutocompleteSelectFieldComponent: React.FC<MultiAutocompleteSelectFie
                         placeholder
                       }),
                       endAdornment: (
-                        <div
-                          className={classes.adornment}
-                          // onClick={() => {
-                          // console.info("bonjour");
-                          // if (!isOpen) {
-                          //   if (fetchOnFocus && !!!choices.length) {
-                          //     fetchChoices(inputValue);
-                          //   }
-                          //   if (choices.length > 0) {
-                          //     toggleMenu();
-                          //   }
-                          // }
-                          // }}
-                        >
+                        <div className={classes.adornment}>
                           {endAdornment}
                           <ArrowDropdownIcon />
                         </div>
                       ),
                       id: undefined,
                       onBlur,
-                      onClick: (e: any) => {
-                        console.log(e);
-                        if (!isOpen) {
-                          toggleMenu();
-                        }
-                      },
+                      onClick: toggleMenu,
                       onFocus: () => {
-                        console.log("on focus");
                         if (fetchOnFocus) {
                           fetchChoices(inputValue);
                         }
