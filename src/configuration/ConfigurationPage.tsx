@@ -8,7 +8,7 @@ import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import { hasPermission } from "../auth/misc";
+import { hasAnyPermissions } from "../auth/misc";
 import Container from "../components/Container";
 import PageHeader from "../components/PageHeader";
 import VersionInfo from "../components/VersionInfo";
@@ -17,7 +17,7 @@ import { PermissionEnum } from "../types/globalTypes";
 export interface MenuItem {
   description: string;
   icon: React.ReactElement<IconProps>;
-  permission: PermissionEnum;
+  permissions: PermissionEnum[];
   title: string;
   url?: string;
   testId?: string;
@@ -123,6 +123,7 @@ export const ConfigurationPage: React.FC<ConfigurationPageProps> = props => {
   );
 
   const intl = useIntl();
+
   return (
     <Container>
       {!isSmUp && renderVersionInfo}
@@ -135,7 +136,7 @@ export const ConfigurationPage: React.FC<ConfigurationPageProps> = props => {
       {menus
         .filter(menu =>
           menu.menuItems.some(menuItem =>
-            hasPermission(menuItem.permission, user)
+            hasAnyPermissions(menuItem.permissions, user)
           )
         )
         .map((menu, menuIndex) => (
@@ -145,7 +146,9 @@ export const ConfigurationPage: React.FC<ConfigurationPageProps> = props => {
             </div>
             <div className={classes.configurationItem}>
               {menu.menuItems
-                .filter(menuItem => hasPermission(menuItem.permission, user))
+                .filter(menuItem =>
+                  hasAnyPermissions(menuItem.permissions, user)
+                )
                 .map((item, itemIndex) => (
                   <Card
                     className={item.url ? classes.card : classes.cardDisabled}
