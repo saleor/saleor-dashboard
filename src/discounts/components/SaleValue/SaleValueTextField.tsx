@@ -44,11 +44,7 @@ const SaleValueTextField: React.FC<SaleValueTextFieldProps> = ({
   }, []);
 
   useEffect(() => {
-    if (dataType === SaleType.PERCENTAGE) {
-      handleChange(percentageValue);
-    } else {
-      handleChange(fixedValue);
-    }
+    handleChange(getTextFieldValue());
   }, [dataType]);
 
   const getTextFieldValue = () =>
