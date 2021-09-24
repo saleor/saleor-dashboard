@@ -17,7 +17,7 @@ export const useStyles = makeStyles(
       // Parent container has disabled pointer events so we need to turn them on
       // for action and timer pausing to work
       pointerEvents: "all",
-      margin: `${theme.spacing(2)} ${theme.spacing(2)}`
+      margin: theme.spacing(2)
     }
   }),
   { name: "MessageManager" }
