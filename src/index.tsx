@@ -23,7 +23,6 @@ import AuthProvider, { useAuth } from "./auth/AuthProvider";
 import LoginLoading from "./auth/components/LoginLoading/LoginLoading";
 import SectionRoute from "./auth/components/SectionRoute";
 import authLink from "./auth/link";
-import { hasPermission } from "./auth/misc";
 import CategorySection from "./categories";
 import ChannelsSection from "./channels";
 import { channelsSection } from "./channels/urls";
@@ -38,7 +37,8 @@ import MessageManagerProvider from "./components/messages";
 import { ShopProvider } from "./components/Shop";
 import { WindowTitle } from "./components/WindowTitle";
 import { API_URI, APP_MOUNT_URI, DEMO_MODE, GTM_ID } from "./config";
-import ConfigurationSection, { createConfigurationMenu } from "./configuration";
+import ConfigurationSection from "./configuration";
+import { getConfigMenuItemsPermissions } from "./configuration/utils";
 import AppStateProvider from "./containers/AppState";
 import BackgroundTasksProvider from "./containers/BackgroundTasks";
 import ServiceWorker from "./containers/ServiceWorker/ServiceWorker";
@@ -140,8 +140,7 @@ const Routes: React.FC = () => {
     hasToken,
     isAuthenticated,
     tokenAuthLoading,
-    tokenVerifyLoading,
-    user
+    tokenVerifyLoading
   } = useAuth();
   const { channel } = useAppChannel(false);
 
@@ -203,9 +202,13 @@ const Routes: React.FC = () => {
                 component={PageSection}
               />
               <SectionRoute
-                permissions={[PermissionEnum.MANAGE_PAGES]}
+                permissions={[
+                  PermissionEnum.MANAGE_PAGES,
+                  PermissionEnum.MANAGE_PAGE_TYPES_AND_ATTRIBUTES
+                ]}
                 path="/page-types"
                 component={PageTypesSection}
+                matchPermission="any"
               />
               <SectionRoute
                 permissions={[PermissionEnum.MANAGE_PLUGINS]}
@@ -266,10 +269,12 @@ const Routes: React.FC = () => {
               />
               <SectionRoute
                 permissions={[
-                  PermissionEnum.MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES
+                  PermissionEnum.MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES,
+                  PermissionEnum.MANAGE_PAGE_TYPES_AND_ATTRIBUTES
                 ]}
                 path={attributeSection}
                 component={AttributeSection}
+                matchPermission="any"
               />
               <SectionRoute
                 permissions={[PermissionEnum.MANAGE_APPS]}
@@ -286,15 +291,13 @@ const Routes: React.FC = () => {
                 path={channelsSection}
                 component={ChannelsSection}
               />
-              {createConfigurationMenu(intl).filter(menu =>
-                menu.menuItems.map(item => hasPermission(item.permission, user))
-              ).length > 0 && (
-                <SectionRoute
-                  exact
-                  path="/configuration"
-                  component={ConfigurationSection}
-                />
-              )}
+              <SectionRoute
+                matchPermission="any"
+                permissions={getConfigMenuItemsPermissions(intl)}
+                exact
+                path="/configuration"
+                component={ConfigurationSection}
+              />
               <Route component={NotFound} />
             </Switch>
           </ErrorBoundary>
