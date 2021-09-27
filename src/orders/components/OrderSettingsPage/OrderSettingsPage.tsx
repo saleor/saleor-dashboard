@@ -52,6 +52,7 @@ const OrderSettingsPage: React.FC<OrderSettingsPageProps> = props => {
               defaultMessage: "Order settings",
               description: "header"
             })}
+            underline={true}
           />
           <Grid variant="inverted">
             <div>

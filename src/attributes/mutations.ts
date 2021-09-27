@@ -127,7 +127,7 @@ export const attributeValueUpdateMutation = gql`
   ${attributeErrorFragment}
   mutation AttributeValueUpdate(
     $id: ID!
-    $input: AttributeValueCreateInput!
+    $input: AttributeValueUpdateInput!
     $firstValues: Int
     $afterValues: String
     $lastValues: Int

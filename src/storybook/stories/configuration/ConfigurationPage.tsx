@@ -22,6 +22,11 @@ const user = {
   userPermissions: staffMember.userPermissions
 };
 
+const versions = {
+  dashboardVersion: "3.0.0-b.3",
+  coreVersion: "3.0.0-b.15"
+};
+
 const Story: React.FC<{ user: User }> = ({ user }) => {
   const intl = useIntl();
 
@@ -30,6 +35,7 @@ const Story: React.FC<{ user: User }> = ({ user }) => {
       menu={createConfigurationMenu(intl)}
       onSectionClick={() => undefined}
       user={user}
+      versionInfo={versions}
     />
   );
 };

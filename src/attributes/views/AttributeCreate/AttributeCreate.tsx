@@ -1,4 +1,3 @@
-import { getAttributeData } from "@saleor/attributes/utils/data";
 import { AttributeErrorFragment } from "@saleor/fragments/types/AttributeErrorFragment";
 import useListSettings from "@saleor/hooks/useListSettings";
 import useLocalPageInfo, { getMaxPage } from "@saleor/hooks/useLocalPageInfo";
@@ -28,9 +27,7 @@ import AttributePage, {
   AttributePageFormData
 } from "../../components/AttributePage";
 import AttributeValueDeleteDialog from "../../components/AttributeValueDeleteDialog";
-import AttributeValueEditDialog, {
-  AttributeValueEditDialogFormData
-} from "../../components/AttributeValueEditDialog";
+import AttributeValueEditDialog from "../../components/AttributeValueEditDialog";
 import { useAttributeCreateMutation } from "../../mutations";
 import {
   attributeAddUrl,
@@ -39,6 +36,10 @@ import {
   attributeListUrl,
   attributeUrl
 } from "../../urls";
+import {
+  AttributeValueEditDialogFormData,
+  getAttributeData
+} from "../../utils/data";
 
 interface AttributeDetailsProps {
   params: AttributeAddUrlQueryParams;
@@ -113,6 +114,7 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ params }) => {
     setValues(newValues);
     closeModal();
   };
+
   const handleValueUpdate = (input: AttributeValueEditDialogFormData) => {
     if (isSelected(input, values, areValuesEqual)) {
       setValueErrors([attributeValueAlreadyExistsError]);
@@ -121,21 +123,26 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ params }) => {
       closeModal();
     }
   };
+
   const handleValueCreate = (input: AttributeValueEditDialogFormData) => {
     if (isSelected(input, values, areValuesEqual)) {
       setValueErrors([attributeValueAlreadyExistsError]);
     } else {
       const newValues = add(input, values);
       setValues(newValues);
+
       const addedToNotVisibleLastPage =
         newValues.length - pageInfo.startCursor > settings.rowNumber;
+
       if (addedToNotVisibleLastPage) {
         const maxPage = getMaxPage(newValues.length, settings.rowNumber);
         loadPage(maxPage);
       }
+
       closeModal();
     }
   };
+
   const handleValueReorder = ({ newIndex, oldIndex }: ReorderEvent) =>
     setValues(
       move(
@@ -164,92 +171,103 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ params }) => {
   );
 
   return (
-    <>
-      <AttributePage
-        attribute={null}
-        disabled={attributeCreateOpts.loading}
-        errors={attributeCreateOpts.data?.attributeCreate.errors || []}
-        onBack={() => navigate(attributeListUrl())}
-        onDelete={undefined}
-        onSubmit={handleSubmit}
-        onValueAdd={() => openModal("add-value")}
-        onValueDelete={id =>
-          openModal("remove-value", {
-            id
-          })
-        }
-        onValueReorder={handleValueReorder}
-        onValueUpdate={id =>
-          openModal("edit-value", {
-            id
-          })
-        }
-        saveButtonBarState={attributeCreateOpts.status}
-        values={{
-          __typename: "AttributeValueCountableConnection" as "AttributeValueCountableConnection",
-          pageInfo: {
-            __typename: "PageInfo" as "PageInfo",
-            endCursor: "",
-            hasNextPage: false,
-            hasPreviousPage: false,
-            startCursor: ""
-          },
-          edges: pageValues.map((value, valueIndex) => ({
-            __typename: "AttributeValueCountableEdge" as "AttributeValueCountableEdge",
-            cursor: "1",
-            node: {
-              __typename: "AttributeValue" as "AttributeValue",
-              file: null,
-              id: valueIndex.toString(),
-              reference: null,
-              slug: slugify(value.name).toLowerCase(),
-              sortOrder: valueIndex,
-              value: null,
-              richText: null,
-              boolean: null,
-              date: null,
-              dateTime: null,
-              ...value
-            }
-          }))
-        }}
-        settings={settings}
-        onUpdateListSettings={updateListSettings}
-        pageInfo={pageInfo}
-        onNextPage={loadNextPage}
-        onPreviousPage={loadPreviousPage}
-      />
-      <AttributeValueEditDialog
-        attributeValue={null}
-        confirmButtonState="default"
-        disabled={false}
-        errors={valueErrors}
-        open={params.action === "add-value"}
-        onClose={closeModal}
-        onSubmit={handleValueCreate}
-      />
-      {values.length > 0 && (
+    <AttributePage
+      attribute={null}
+      disabled={attributeCreateOpts.loading}
+      errors={attributeCreateOpts.data?.attributeCreate.errors || []}
+      onBack={() => navigate(attributeListUrl())}
+      onDelete={undefined}
+      onSubmit={handleSubmit}
+      onValueAdd={() => openModal("add-value")}
+      onValueDelete={id =>
+        openModal("remove-value", {
+          id
+        })
+      }
+      onValueReorder={handleValueReorder}
+      onValueUpdate={id =>
+        openModal("edit-value", {
+          id
+        })
+      }
+      saveButtonBarState={attributeCreateOpts.status}
+      values={{
+        __typename: "AttributeValueCountableConnection" as "AttributeValueCountableConnection",
+        pageInfo: {
+          __typename: "PageInfo" as "PageInfo",
+          endCursor: "",
+          hasNextPage: false,
+          hasPreviousPage: false,
+          startCursor: ""
+        },
+        edges: pageValues.map((value, valueIndex) => ({
+          __typename: "AttributeValueCountableEdge" as "AttributeValueCountableEdge",
+          cursor: "1",
+          node: {
+            __typename: "AttributeValue" as "AttributeValue",
+            file: value?.fileUrl
+              ? {
+                  url: value.fileUrl,
+                  contentType: value.contentType,
+                  __typename: "File"
+                }
+              : null,
+            id: valueIndex.toString(),
+            reference: null,
+            slug: slugify(value.name).toLowerCase(),
+            sortOrder: valueIndex,
+            value: null,
+            richText: null,
+            boolean: null,
+            date: null,
+            dateTime: null,
+            ...value
+          }
+        }))
+      }}
+      settings={settings}
+      onUpdateListSettings={updateListSettings}
+      pageInfo={pageInfo}
+      onNextPage={loadNextPage}
+      onPreviousPage={loadPreviousPage}
+    >
+      {data => (
         <>
-          <AttributeValueDeleteDialog
-            attributeName={undefined}
-            open={params.action === "remove-value"}
-            name={getStringOrPlaceholder(values[id]?.name)}
-            confirmButtonState="default"
-            onClose={closeModal}
-            onConfirm={handleValueDelete}
-          />
           <AttributeValueEditDialog
-            attributeValue={values[id]}
+            attributeValue={null}
             confirmButtonState="default"
             disabled={false}
             errors={valueErrors}
-            open={params.action === "edit-value"}
+            open={params.action === "add-value"}
             onClose={closeModal}
-            onSubmit={handleValueUpdate}
+            onSubmit={handleValueCreate}
+            inputType={data.inputType}
           />
+          {values.length > 0 && (
+            <>
+              <AttributeValueDeleteDialog
+                attributeName={undefined}
+                open={params.action === "remove-value"}
+                name={getStringOrPlaceholder(values[id]?.name)}
+                confirmButtonState="default"
+                onClose={closeModal}
+                onConfirm={handleValueDelete}
+              />
+              <AttributeValueEditDialog
+                inputType={data.inputType}
+                attributeValue={values[id]}
+                confirmButtonState="default"
+                disabled={false}
+                errors={valueErrors}
+                open={params.action === "edit-value"}
+                onClose={closeModal}
+                onSubmit={handleValueUpdate}
+              />
+            </>
+          )}
         </>
       )}
-    </>
+    </AttributePage>
   );
 };
 AttributeDetails.displayName = "AttributeDetails";

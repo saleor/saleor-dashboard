@@ -81,6 +81,10 @@ export const inputTypeMessages = defineMessages({
   dateTime: {
     defaultMessage: "Date Time",
     description: "date time attribute type"
+  },
+  swatch: {
+    defaultMessage: "Swatch",
+    description: "swatch attribute type"
   }
 });
 

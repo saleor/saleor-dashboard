@@ -1,4 +1,3 @@
-import { ChannelData } from "@saleor/channels/utils";
 import { ProductDetails_product_variants } from "@saleor/products/types/ProductDetails";
 import CommonDecorator from "@saleor/storybook/Decorator";
 import { storiesOf } from "@storybook/react";
@@ -12,17 +11,20 @@ const props: ChannelsAvailabilityDialogProps = {
   channels: [
     {
       id: "1",
-      name: "Channel 1"
+      name: "Channel 1",
+      variantsIds: []
     },
     {
       id: "2",
-      name: "Channel 2"
+      name: "Channel 2",
+      variantsIds: []
     },
     {
       id: "3",
-      name: "Channel 3"
+      name: "Channel 3",
+      variantsIds: []
     }
-  ] as ChannelData[],
+  ],
   variants: [
     {
       id: "variantA",
@@ -50,31 +52,9 @@ const props: ChannelsAvailabilityDialogProps = {
       media: []
     }
   ] as ProductDetails_product_variants[],
-  onChannelsWithVariantsConfirm: () => undefined,
-  addVariantToChannel: () => undefined,
-  removeVariantFromChannel: () => undefined,
-  channelsWithVariantsData: {
-    ["1"]: {
-      selectedVariantsIds: ["variantA", "variantB"],
-      variantsIdsToRemove: [],
-      variantsIdsToAdd: []
-    },
-    ["2"]: {
-      selectedVariantsIds: ["variantA", "variantC"],
-      variantsIdsToRemove: [],
-      variantsIdsToAdd: []
-    },
-    ["3"]: {
-      selectedVariantsIds: [],
-      variantsIdsToRemove: [],
-      variantsIdsToAdd: []
-    }
-  },
-  onChannelsAvailiabilityModalClose: () => undefined,
-  isChannelsAvailabilityModalOpen: true,
-  toggleAllChannels: () => undefined,
-  toggleAllChannelVariants: () => () => undefined,
-  haveChannelsWithVariantsDataChanged: true
+  onClose: () => undefined,
+  onConfirm: () => undefined,
+  open: true
 };
 
 storiesOf("Channels / Channels with Variants Availability Dialog", module)

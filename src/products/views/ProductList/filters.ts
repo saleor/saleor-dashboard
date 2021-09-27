@@ -386,10 +386,11 @@ export const {
   saveFilterTab
 } = createFilterTabUtils<ProductListUrlFilters>(PRODUCT_FILTERS_KEY);
 
-export const { areFiltersApplied, getActiveFilters } = createFilterUtils<
-  ProductListUrlQueryParams,
-  ProductListUrlFilters
->({
+export const {
+  areFiltersApplied,
+  getActiveFilters,
+  getFiltersCurrentTab
+} = createFilterUtils<ProductListUrlQueryParams, ProductListUrlFilters>({
   ...ProductListUrlFiltersEnum,
   ...ProductListUrlFiltersWithMultipleValues,
   ...ProductListUrlFiltersAsDictWithMultipleValues

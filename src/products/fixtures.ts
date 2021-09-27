@@ -53,7 +53,8 @@ export const product: (
                 richText: null,
                 boolean: null,
                 date: null,
-                dateTime: null
+                dateTime: null,
+                value: null
               }
             },
             {
@@ -69,7 +70,8 @@ export const product: (
                 richText: null,
                 boolean: null,
                 date: null,
-                dateTime: null
+                dateTime: null,
+                value: null
               }
             }
           ]
@@ -86,7 +88,8 @@ export const product: (
           richText: null,
           boolean: null,
           date: null,
-          dateTime: null
+          dateTime: null,
+          value: null
         }
       ]
     },
@@ -124,7 +127,8 @@ export const product: (
                 richText: null,
                 boolean: null,
                 date: null,
-                dateTime: null
+                dateTime: null,
+                value: null
               }
             },
             {
@@ -140,7 +144,8 @@ export const product: (
                 richText: null,
                 boolean: null,
                 date: null,
-                dateTime: null
+                dateTime: null,
+                value: null
               }
             },
             {
@@ -156,7 +161,8 @@ export const product: (
                 richText: null,
                 boolean: null,
                 date: null,
-                dateTime: null
+                dateTime: null,
+                value: null
               }
             },
             {
@@ -172,7 +178,8 @@ export const product: (
                 richText: null,
                 boolean: null,
                 date: null,
-                dateTime: null
+                dateTime: null,
+                value: null
               }
             }
           ]
@@ -189,7 +196,8 @@ export const product: (
           richText: null,
           boolean: null,
           date: null,
-          dateTime: null
+          dateTime: null,
+          value: null
         }
       ]
     }
@@ -387,7 +395,8 @@ export const product: (
                 richText: null,
                 boolean: null,
                 date: null,
-                dateTime: null
+                dateTime: null,
+                value: null
               }
             }
           ]
@@ -427,7 +436,8 @@ export const product: (
                 richText: null,
                 boolean: null,
                 date: null,
-                dateTime: null
+                dateTime: null,
+                value: null
               }
             },
             {
@@ -443,7 +453,8 @@ export const product: (
                 richText: null,
                 boolean: null,
                 date: null,
-                dateTime: null
+                dateTime: null,
+                value: null
               }
             }
           ]
@@ -489,7 +500,8 @@ export const product: (
                 richText: null,
                 boolean: null,
                 date: null,
-                dateTime: null
+                dateTime: null,
+                value: null
               }
             }
           ]
@@ -524,7 +536,8 @@ export const product: (
                 richText: null,
                 boolean: null,
                 date: null,
-                dateTime: null
+                dateTime: null,
+                value: null
               }
             },
             {
@@ -540,7 +553,8 @@ export const product: (
                 richText: null,
                 boolean: null,
                 date: null,
-                dateTime: null
+                dateTime: null,
+                value: null
               }
             }
           ]
@@ -1002,7 +1016,8 @@ export const products = (
             richText: null,
             boolean: null,
             date: null,
-            dateTime: null
+            dateTime: null,
+            value: null
           }
         ]
       }
@@ -1114,7 +1129,8 @@ export const products = (
             richText: null,
             boolean: null,
             date: null,
-            dateTime: null
+            dateTime: null,
+            value: null
           }
         ]
       }
@@ -1226,7 +1242,8 @@ export const products = (
             richText: null,
             boolean: null,
             date: null,
-            dateTime: null
+            dateTime: null,
+            value: null
           }
         ]
       }
@@ -1339,7 +1356,8 @@ export const products = (
             richText: null,
             boolean: null,
             date: null,
-            dateTime: null
+            dateTime: null,
+            value: null
           }
         ]
       }
@@ -1451,7 +1469,8 @@ export const products = (
             richText: null,
             boolean: null,
             date: null,
-            dateTime: null
+            dateTime: null,
+            value: null
           }
         ]
       }
@@ -1563,7 +1582,8 @@ export const products = (
             richText: null,
             boolean: null,
             date: null,
-            dateTime: null
+            dateTime: null,
+            value: null
           }
         ]
       }
@@ -1675,7 +1695,8 @@ export const products = (
             richText: null,
             boolean: null,
             date: null,
-            dateTime: null
+            dateTime: null,
+            value: null
           }
         ]
       }
@@ -1787,7 +1808,8 @@ export const products = (
             richText: null,
             boolean: null,
             date: null,
-            dateTime: null
+            dateTime: null,
+            value: null
           }
         ]
       }
@@ -1899,7 +1921,8 @@ export const products = (
             richText: null,
             boolean: null,
             date: null,
-            dateTime: null
+            dateTime: null,
+            value: null
           }
         ]
       }
@@ -2011,7 +2034,8 @@ export const products = (
             richText: null,
             boolean: null,
             date: null,
-            dateTime: null
+            dateTime: null,
+            value: null
           }
         ]
       }
@@ -2123,7 +2147,8 @@ export const products = (
             richText: null,
             boolean: null,
             date: null,
-            dateTime: null
+            dateTime: null,
+            value: null
           }
         ]
       }
@@ -2235,7 +2260,8 @@ export const products = (
             richText: null,
             boolean: null,
             date: null,
-            dateTime: null
+            dateTime: null,
+            value: null
           }
         ]
       }
@@ -2347,7 +2373,8 @@ export const products = (
             richText: null,
             boolean: null,
             date: null,
-            dateTime: null
+            dateTime: null,
+            value: null
           }
         ]
       }
@@ -2459,7 +2486,8 @@ export const products = (
             richText: null,
             boolean: null,
             date: null,
-            dateTime: null
+            dateTime: null,
+            value: null
           }
         ]
       }
@@ -2571,7 +2599,8 @@ export const products = (
             richText: null,
             boolean: null,
             date: null,
-            dateTime: null
+            dateTime: null,
+            value: null
           }
         ]
       }
@@ -2683,7 +2712,8 @@ export const products = (
             richText: null,
             boolean: null,
             date: null,
-            dateTime: null
+            dateTime: null,
+            value: null
           }
         ]
       }
@@ -2795,7 +2825,8 @@ export const products = (
             richText: null,
             boolean: null,
             date: null,
-            dateTime: null
+            dateTime: null,
+            value: null
           }
         ]
       }
@@ -3009,7 +3040,8 @@ export const variant = (placeholderImage: string): ProductVariant => ({
                 richText: null,
                 boolean: null,
                 date: null,
-                dateTime: null
+                dateTime: null,
+                value: null
               }
             }
           ]
@@ -3030,7 +3062,8 @@ export const variant = (placeholderImage: string): ProductVariant => ({
           richText: null,
           boolean: null,
           date: null,
-          dateTime: null
+          dateTime: null,
+          value: null
         }
       ]
     }
@@ -3294,7 +3327,8 @@ export const variant = (placeholderImage: string): ProductVariant => ({
                 richText: null,
                 boolean: null,
                 date: null,
-                dateTime: null
+                dateTime: null,
+                value: null
               }
             },
             {
@@ -3310,7 +3344,8 @@ export const variant = (placeholderImage: string): ProductVariant => ({
                 richText: null,
                 boolean: null,
                 date: null,
-                dateTime: null
+                dateTime: null,
+                value: null
               }
             }
           ]
@@ -3327,7 +3362,8 @@ export const variant = (placeholderImage: string): ProductVariant => ({
           richText: null,
           boolean: null,
           date: null,
-          dateTime: null
+          dateTime: null,
+          value: null
         }
       ]
     },
@@ -3365,7 +3401,8 @@ export const variant = (placeholderImage: string): ProductVariant => ({
                 richText: null,
                 boolean: null,
                 date: null,
-                dateTime: null
+                dateTime: null,
+                value: null
               }
             },
             {
@@ -3381,7 +3418,8 @@ export const variant = (placeholderImage: string): ProductVariant => ({
                 richText: null,
                 boolean: null,
                 date: null,
-                dateTime: null
+                dateTime: null,
+                value: null
               }
             },
             {
@@ -3397,7 +3435,8 @@ export const variant = (placeholderImage: string): ProductVariant => ({
                 richText: null,
                 boolean: null,
                 date: null,
-                dateTime: null
+                dateTime: null,
+                value: null
               }
             },
             {
@@ -3413,7 +3452,8 @@ export const variant = (placeholderImage: string): ProductVariant => ({
                 richText: null,
                 boolean: null,
                 date: null,
-                dateTime: null
+                dateTime: null,
+                value: null
               }
             }
           ]
@@ -3430,7 +3470,8 @@ export const variant = (placeholderImage: string): ProductVariant => ({
           richText: null,
           boolean: null,
           date: null,
-          dateTime: null
+          dateTime: null,
+          value: null
         }
       ]
     }

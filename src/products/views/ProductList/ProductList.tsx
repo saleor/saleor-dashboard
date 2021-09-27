@@ -68,11 +68,11 @@ import {
   useProductExport
 } from "../../mutations";
 import {
-  areFiltersApplied,
   deleteFilterTab,
   getActiveFilters,
   getFilterOpts,
   getFilterQueryParam,
+  getFiltersCurrentTab,
   getFilterTabs,
   getFilterVariables,
   saveFilterTab
@@ -97,7 +97,7 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
   const intl = useIntl();
   const {
     data: initialFilterAttributes
-  } = useInitialProductFilterAttributesQuery({});
+  } = useInitialProductFilterAttributesQuery();
   const {
     data: initialFilterCategories
   } = useInitialProductFilterCategoriesQuery({
@@ -192,12 +192,7 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
 
   const tabs = getFilterTabs();
 
-  const currentTab =
-    params.activeTab === undefined
-      ? areFiltersApplied(params)
-        ? tabs.length + 1
-        : 0
-      : parseInt(params.activeTab, 0);
+  const currentTab = getFiltersCurrentTab(params, tabs);
 
   const countAllProducts = useProductCountQuery({
     skip: params.action !== "export"

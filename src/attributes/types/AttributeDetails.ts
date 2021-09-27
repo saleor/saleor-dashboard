@@ -46,6 +46,7 @@ export interface AttributeDetails_attribute_choices_edges_node {
   boolean: boolean | null;
   date: any | null;
   dateTime: any | null;
+  value: string | null;
 }
 
 export interface AttributeDetails_attribute_choices_edges {

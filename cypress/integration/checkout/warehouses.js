@@ -1,20 +1,26 @@
+/// <reference types="cypress"/>
+/// <reference types="../../support"/>
+
 import faker from "faker";
 
-import { createCheckout } from "../../apiRequests/Checkout";
-import { enablePickup, setPublicStock } from "../../steps/warehouseSteps";
-import filterTests from "../../support/filterTests";
-import { getDefaultChannel } from "../../utils/channelsUtils";
+import { createCheckout } from "../../support/api/requests/Checkout";
+import { getDefaultChannel } from "../../support/api/utils/channelsUtils";
 import {
   createProductInChannel,
   createTypeAttributeAndCategoryForProduct,
   deleteProductsStartsWith
-} from "../../utils/products/productsUtils";
+} from "../../support/api/utils/products/productsUtils";
 import {
   createShipping,
   deleteShippingStartsWith
-} from "../../utils/shippingUtils";
+} from "../../support/api/utils/shippingUtils";
+import filterTests from "../../support/filterTests";
+import {
+  visitAndEnablePickup,
+  visitSetPublicStockAndEnablePickup
+} from "../../support/pages/warehousePage";
 
-filterTests(["all"], () => {
+filterTests({ definedTags: ["all"] }, () => {
   describe("Warehouses in checkout", () => {
     const startsWith = `CyWarehouseCheckout`;
     let defaultChannel;
@@ -58,7 +64,7 @@ filterTests(["all"], () => {
       cy.clearSessionData().loginUserViaRequest();
     });
 
-    it("should create warehouse with enabled pickup", () => {
+    it("should create warehouse with enabled pickup and private stock", () => {
       const name = `${startsWith}${faker.datatype.number()}`;
       let warehouse;
 
@@ -69,7 +75,7 @@ filterTests(["all"], () => {
       })
         .then(({ warehouse: warehouseResp }) => {
           warehouse = warehouseResp;
-          enablePickup(warehouse.id);
+          visitAndEnablePickup(warehouse.id);
           productData.name = name;
           productData.warehouseId = warehouse.id;
           createProductInChannel(productData);
@@ -87,7 +93,7 @@ filterTests(["all"], () => {
         });
     });
 
-    it("should create warehouse with public stock", () => {
+    it("should create warehouse with enabled pickup and public stock", () => {
       const name = `${startsWith}${faker.datatype.number()}`;
       let warehouse;
 
@@ -98,7 +104,7 @@ filterTests(["all"], () => {
       })
         .then(({ warehouse: warehouseResp }) => {
           warehouse = warehouseResp;
-          setPublicStock(warehouse.id);
+          visitSetPublicStockAndEnablePickup(warehouse.id);
           productData.name = name;
           productData.warehouseId = warehouse.id;
           createProductInChannel(productData);
@@ -111,7 +117,7 @@ filterTests(["all"], () => {
           const clickAndCollectOption = checkout.availableCollectionPoints[0];
           expect(clickAndCollectOption.clickAndCollectOption).to.eq("ALL");
           expect(clickAndCollectOption.id).to.eq(warehouse.id);
-          expect(clickAndCollectOption.isPrivate).to.eq(true);
+          expect(clickAndCollectOption.isPrivate).to.eq(false);
           expect(clickAndCollectOption.name).to.eq(warehouse.name);
         });
     });

@@ -6,7 +6,6 @@ import { AppFrame } from "../AppFrame";
 export interface AppData {
   appToken: string;
   src: string;
-  backendUrl: string;
   label: string;
 }
 
@@ -31,11 +30,7 @@ export const ExternalAppProvider: React.FC = ({ children }) => {
       {children}
       <AppDialog open={open} onClose={handleClose} title={appData?.label}>
         {open && appData && (
-          <AppFrame
-            src={appData.src}
-            appToken={appData.appToken}
-            backendHost={appData.backendUrl}
-          />
+          <AppFrame src={appData.src} appToken={appData.appToken} />
         )}
       </AppDialog>
     </ExternalAppContext.Provider>

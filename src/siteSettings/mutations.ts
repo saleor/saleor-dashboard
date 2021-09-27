@@ -17,6 +17,7 @@ const shopSettingsUpdate = gql`
     $shopDomainInput: SiteDomainInput!
     $shopSettingsInput: ShopSettingsInput!
     $addressInput: AddressInput
+    $isCloudInstance: Boolean!
   ) {
     shopSettingsUpdate(input: $shopSettingsInput) {
       errors {
@@ -26,7 +27,7 @@ const shopSettingsUpdate = gql`
         ...ShopFragment
       }
     }
-    shopDomainUpdate(input: $shopDomainInput) {
+    shopDomainUpdate(input: $shopDomainInput) @skip(if: $isCloudInstance) {
       errors {
         ...ShopErrorFragment
       }

@@ -30,8 +30,7 @@ const filterAndMapToTarget = (
       accessToken,
       url,
       label,
-      open: () =>
-        openApp({ appToken: accessToken, backendUrl: url, src: url, label })
+      open: () => openApp({ appToken: accessToken, src: url, label })
     }));
 
 export const mapToMenuItems = (extensions: Extension[]) =>

@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { OrderErrorCode, AddressTypeEnum, OrderDiscountType, DiscountValueTypeEnum, OrderEventsEmailsEnum, OrderEventsEnum, FulfillmentStatus, PaymentChargeStatusEnum, WarehouseClickAndCollectOptionEnum, OrderStatus, OrderAction, JobStatusEnum } from "./../../types/globalTypes";
+import { OrderErrorCode, AddressTypeEnum, GiftCardEventsEnum, OrderDiscountType, DiscountValueTypeEnum, OrderEventsEmailsEnum, OrderEventsEnum, FulfillmentStatus, PaymentChargeStatusEnum, WarehouseClickAndCollectOptionEnum, OrderStatus, OrderAction, JobStatusEnum } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: OrderLineDiscountRemove
@@ -48,6 +48,51 @@ export interface OrderLineDiscountRemove_orderLineDiscountRemove_order_billingAd
   postalCode: string;
   streetAddress1: string;
   streetAddress2: string;
+}
+
+export interface OrderLineDiscountRemove_orderLineDiscountRemove_order_giftCards_events_balance_initialBalance {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderLineDiscountRemove_orderLineDiscountRemove_order_giftCards_events_balance_currentBalance {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderLineDiscountRemove_orderLineDiscountRemove_order_giftCards_events_balance_oldInitialBalance {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderLineDiscountRemove_orderLineDiscountRemove_order_giftCards_events_balance_oldCurrentBalance {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderLineDiscountRemove_orderLineDiscountRemove_order_giftCards_events_balance {
+  __typename: "GiftCardEventBalance";
+  initialBalance: OrderLineDiscountRemove_orderLineDiscountRemove_order_giftCards_events_balance_initialBalance | null;
+  currentBalance: OrderLineDiscountRemove_orderLineDiscountRemove_order_giftCards_events_balance_currentBalance;
+  oldInitialBalance: OrderLineDiscountRemove_orderLineDiscountRemove_order_giftCards_events_balance_oldInitialBalance | null;
+  oldCurrentBalance: OrderLineDiscountRemove_orderLineDiscountRemove_order_giftCards_events_balance_oldCurrentBalance | null;
+}
+
+export interface OrderLineDiscountRemove_orderLineDiscountRemove_order_giftCards_events {
+  __typename: "GiftCardEvent";
+  id: string;
+  type: GiftCardEventsEnum | null;
+  orderId: string | null;
+  balance: OrderLineDiscountRemove_orderLineDiscountRemove_order_giftCards_events_balance | null;
+}
+
+export interface OrderLineDiscountRemove_orderLineDiscountRemove_order_giftCards {
+  __typename: "GiftCard";
+  events: OrderLineDiscountRemove_orderLineDiscountRemove_order_giftCards_events[];
 }
 
 export interface OrderLineDiscountRemove_orderLineDiscountRemove_order_discounts_amount {
@@ -504,6 +549,7 @@ export interface OrderLineDiscountRemove_orderLineDiscountRemove_order {
   metadata: (OrderLineDiscountRemove_orderLineDiscountRemove_order_metadata | null)[];
   privateMetadata: (OrderLineDiscountRemove_orderLineDiscountRemove_order_privateMetadata | null)[];
   billingAddress: OrderLineDiscountRemove_orderLineDiscountRemove_order_billingAddress | null;
+  giftCards: (OrderLineDiscountRemove_orderLineDiscountRemove_order_giftCards | null)[] | null;
   isShippingRequired: boolean;
   canFinalize: boolean;
   created: any;

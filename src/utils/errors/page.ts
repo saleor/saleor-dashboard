@@ -1,9 +1,8 @@
 import { PageErrorFragment } from "@saleor/fragments/types/PageErrorFragment";
-import { commonMessages } from "@saleor/intl";
 import { PageErrorCode } from "@saleor/types/globalTypes";
 import { defineMessages, IntlShape } from "react-intl";
 
-import commonErrorMessages from "./common";
+import { getCommonFormFieldErrorMessage } from "./common";
 
 const messages = defineMessages({
   attributeAlreadyAssigned: {
@@ -30,12 +29,6 @@ function getPageErrorMessage(
 ): string {
   if (err) {
     switch (err.code) {
-      case PageErrorCode.GRAPHQL_ERROR:
-        return intl.formatMessage(commonErrorMessages.graphqlError);
-      case PageErrorCode.REQUIRED:
-        return intl.formatMessage(commonMessages.requiredField);
-      case PageErrorCode.INVALID:
-        return intl.formatMessage(commonErrorMessages.invalid);
       case PageErrorCode.UNIQUE:
         return intl.formatMessage(messages.nameAlreadyTaken);
       case PageErrorCode.ATTRIBUTE_ALREADY_ASSIGNED:
@@ -44,12 +37,10 @@ function getPageErrorMessage(
         return intl.formatMessage(messages.duplicatedInputItem);
       case PageErrorCode.NOT_FOUND:
         return intl.formatMessage(messages.notFound);
-      default:
-        return intl.formatMessage(commonErrorMessages.unknownError);
     }
   }
 
-  return undefined;
+  return getCommonFormFieldErrorMessage(err, intl);
 }
 
 export default getPageErrorMessage;
