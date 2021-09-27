@@ -138,4 +138,5 @@ export interface ShopSettingsUpdateVariables {
   shopDomainInput: SiteDomainInput;
   shopSettingsInput: ShopSettingsInput;
   addressInput?: AddressInput | null;
+  isCloudInstance: boolean;
 }
