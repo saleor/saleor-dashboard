@@ -42,11 +42,7 @@ export const getSimpleProductVariables = (
     trackInventory: data.trackInventory,
     preorder: {
       globalThreshold: data.globalThreshold,
-      endDate: getEndPreorderDateInput(
-        data.hasPreorderEndDate,
-        data.preorderEndDate,
-        data.preorderEndHour
-      )
+      endDate: getEndPreorderDateInput(data)
     }
   },
   updateStocks: data.updateStocks.map(mapFormsetStockToStockInput)

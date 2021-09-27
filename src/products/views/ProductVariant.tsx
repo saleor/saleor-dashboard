@@ -165,12 +165,20 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
       const variantChannel = variant.channelListings.find(
         variantChannel => variantChannel.channel.id === channel.id
       );
-      return (
-        channel.value.price !== variantChannel?.price?.amount.toString() ||
+
+      const priceHaveChanged =
+        channel.value.price !== variantChannel?.price?.amount.toString();
+
+      const costPriceHaveChanged =
         channel.value.costPrice !==
-          variantChannel?.costPrice?.amount.toString() ||
+        variantChannel?.costPrice?.amount.toString();
+
+      const preorderThresholdHaveChanged =
         channel.value.preorderThreshold !==
-          variantChannel.preorderThreshold.quantity
+        variantChannel.preorderThreshold.quantity;
+
+      return (
+        priceHaveChanged || costPriceHaveChanged || preorderThresholdHaveChanged
       );
     });
 
@@ -278,11 +286,7 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
         trackInventory: data.trackInventory,
         preorder: {
           globalThreshold: data.globalThreshold,
-          endDate: getEndPreorderDateInput(
-            data.hasPreorderEndDate,
-            data.preorderEndDate,
-            data.preorderEndHour
-          )
+          endDate: getEndPreorderDateInput(data)
         },
         weight: weight(data.weight),
         firstValues: 10

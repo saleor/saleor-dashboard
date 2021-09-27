@@ -6,6 +6,7 @@ import {
   ChannelPriceData
 } from "@saleor/channels/utils";
 import { FormChange } from "@saleor/hooks/useForm";
+import { getById } from "@saleor/orders/components/OrderReturnPage/utils";
 
 export function createChannelsPriceChangeHandler(
   channelListings: ChannelData[],
@@ -42,9 +43,8 @@ export function createChannelsPreorderChangeHandler(
   return (id: string, preorderData: ChannelPreorderArgs) => {
     const { preorderThreshold, unitsSold } = preorderData;
 
-    const channelIndex = channelListings.findIndex(
-      channel => channel.id === id
-    );
+    const channelIndex = channelListings.findIndex(getById(id));
+
     const channel = channelListings[channelIndex];
 
     const updatedChannels = [

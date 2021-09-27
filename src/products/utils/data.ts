@@ -290,14 +290,17 @@ export function mapFormsetStockToStockInput(
   };
 }
 
-export const getEndPreorderDateInput = (
-  hasPreorderEndDate: boolean,
-  preorderEndDate?: string,
-  preorderEndHour?: string
-) =>
-  hasPreorderEndDate && preorderEndDate
+export function getEndPreorderDateInput<
+  T extends {
+    hasPreorderEndDate: boolean;
+    preorderEndDate?: string;
+    preorderEndHour?: string;
+  }
+>({ hasPreorderEndDate, preorderEndDate, preorderEndHour }: T) {
+  return hasPreorderEndDate && preorderEndDate
     ? `${preorderEndDate}T${preorderEndHour ?? "00:00"}`
     : null;
+}
 
 export const getPreorderEndDateFormData = (endDate?: string) =>
   endDate ? endDate.split("T")?.[0] : null;
