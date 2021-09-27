@@ -2,6 +2,7 @@ import { WindowTitle } from "@saleor/components/WindowTitle";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import OrderFulfillPage from "@saleor/orders/components/OrderFulfillPage";
+import OrderFulfillStockExceededDialog from "@saleor/orders/components/OrderFulfillStockExceededDialog";
 import { useOrderFulfill } from "@saleor/orders/mutations";
 import { useOrderFulfillData } from "@saleor/orders/queries";
 import { orderUrl } from "@saleor/orders/urls";
@@ -32,6 +33,11 @@ const OrderFulfill: React.FC<OrderFulfillProps> = ({ orderId }) => {
     }
   });
 
+  const [
+    displayStockExceededDialog,
+    setDisplayStockExceededDialog
+  ] = React.useState(false);
+
   const [fulfillOrder, fulfillOrderOpts] = useOrderFulfill({
     onCompleted: data => {
       if (data.orderFulfill.errors.length === 0) {
@@ -44,8 +50,18 @@ const OrderFulfill: React.FC<OrderFulfillProps> = ({ orderId }) => {
           })
         });
       }
+      // eslint-disable-next-line no-console
+      console.log(data.orderFulfill.errors);
     }
   });
+
+  React.useEffect(() => {
+    setDisplayStockExceededDialog(
+      fulfillOrderOpts.data?.orderFulfill.errors?.every(
+        err => err.code === "INSUFFICIENT_STOCK"
+      )
+    );
+  }, [fulfillOrderOpts.data]);
 
   return (
     <>
@@ -79,7 +95,8 @@ const OrderFulfill: React.FC<OrderFulfillProps> = ({ orderId }) => {
                   orderLineId: line.id,
                   stocks: line.value
                 })),
-                notifyCustomer: formData.sendInfo
+                notifyCustomer: formData.sendInfo,
+                allowStockToBeExceeded: formData.allowStockToBeExceeded
               },
               orderId
             }
@@ -88,6 +105,12 @@ const OrderFulfill: React.FC<OrderFulfillProps> = ({ orderId }) => {
         order={data?.order}
         saveButtonBar="default"
         warehouses={mapEdgesToItems(warehouseData?.warehouses)}
+      />
+      <OrderFulfillStockExceededDialog
+        lines={data?.order.lines}
+        errors={fulfillOrderOpts.data?.orderFulfill.errors}
+        open={displayStockExceededDialog}
+        onClose={() => setDisplayStockExceededDialog(false)}
       />
     </>
   );

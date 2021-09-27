@@ -38,6 +38,8 @@ import classNames from "classnames";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
+import OrderFulfillStockExceededDialog from "../OrderFulfillStockExceededDialog";
+
 type ClassKey =
   | "actionBar"
   | "table"
@@ -47,10 +49,12 @@ type ClassKey =
   | "colQuantityTotal"
   | "colSku"
   | "error"
+  | "warning"
   | "full"
   | "quantityInnerInput"
   | "quantityInnerInputNoRemaining"
   | "remainingQuantity";
+
 const useStyles = makeStyles<OrderFulfillPageProps, ClassKey>(
   theme => {
     const inputPadding: CSSProperties = {
@@ -95,6 +99,10 @@ const useStyles = makeStyles<OrderFulfillPageProps, ClassKey>(
       error: {
         color: theme.palette.error.main
       },
+      warning: {
+        color: theme.palette.warning.main,
+        borderColor: theme.palette.warning.main + " !important"
+      },
       full: {
         fontWeight: 600
       },
@@ -121,6 +129,7 @@ const useStyles = makeStyles<OrderFulfillPageProps, ClassKey>(
 
 interface OrderFulfillFormData {
   sendInfo: boolean;
+  allowStockToBeExceeded: boolean;
 }
 interface OrderFulfillSubmitData extends OrderFulfillFormData {
   items: FormsetData<null, OrderFulfillStockInput[]>;
@@ -136,7 +145,8 @@ export interface OrderFulfillPageProps {
 }
 
 const initialFormData: OrderFulfillFormData = {
-  sendInfo: true
+  sendInfo: true,
+  allowStockToBeExceeded: false
 };
 
 function getRemainingQuantity(line: OrderFulfillData_order_lines): number {
@@ -219,7 +229,7 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
     return isAtLeastOneFulfilled && areProperlyFulfilled;
   };
 
-  const isStockError = (
+  const isError = (
     overfulfill: boolean,
     formsetStock: { quantity: number },
     availableQuantity: number,
@@ -231,6 +241,7 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
       return true;
     }
 
+    // this is now legal
     const isQuantityLargerThanAvailable =
       line.variant.trackInventory && formsetStock.quantity > availableQuantity;
 
@@ -241,7 +252,7 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
         err.code === OrderErrorCode.INSUFFICIENT_STOCK
     );
 
-    return isQuantityLargerThanAvailable || isError;
+    return isError;
   };
 
   return (
@@ -295,6 +306,12 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
                         description="product's sku"
                       />
                     </TableCell>
+                    <TableCell className={classes.colQuantityTotal}>
+                      <FormattedMessage
+                        defaultMessage="Quantity to fulfill"
+                        description="quantity of fulfilled products"
+                      />
+                    </TableCell>
                     {warehouses?.map(warehouse => (
                       <TableCell
                         key={warehouse.id}
@@ -306,12 +323,6 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
                         {warehouse.name}
                       </TableCell>
                     ))}
-                    <TableCell className={classes.colQuantityTotal}>
-                      <FormattedMessage
-                        defaultMessage="Quantity to fulfill"
-                        description="quantity of fulfilled products"
-                      />
-                    </TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -327,6 +338,10 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
                             <TableCell className={classes.colSku}>
                               <Skeleton />
                             </TableCell>
+                            <TableCell className={classes.colQuantityTotal}>
+                              {" "}
+                              <Skeleton />
+                            </TableCell>
                             {warehouses?.map(warehouse => (
                               <TableCell
                                 className={classes.colQuantity}
@@ -335,10 +350,6 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
                                 <Skeleton />
                               </TableCell>
                             ))}
-                            <TableCell className={classes.colQuantityTotal}>
-                              {" "}
-                              <Skeleton />
-                            </TableCell>
                           </TableRow>
                         );
                       }
@@ -372,6 +383,21 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
                           </TableCellAvatar>
                           <TableCell className={classes.colSku}>
                             {line.variant.sku}
+                          </TableCell>
+                          <TableCell
+                            className={classes.colQuantityTotal}
+                            key="total"
+                          >
+                            <span
+                              className={classNames({
+                                [classes.error]: overfulfill,
+                                [classes.full]:
+                                  remainingQuantity <= quantityToFulfill
+                              })}
+                            >
+                              {quantityToFulfill}
+                            </span>{" "}
+                            / {remainingQuantity}
                           </TableCell>
                           {warehouses?.map(warehouse => {
                             const warehouseStock = line.variant.stocks.find(
@@ -411,6 +437,19 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
                               warehouseStock.quantityAllocated +
                               allocatedQuantityForLine;
 
+                            const isStockExceeded =
+                              formsetData[lineIndex].value.find(
+                                el => el.warehouse === warehouse.id
+                              ).quantity > availableQuantity;
+
+                            const currentError = isError(
+                              overfulfill,
+                              formsetStock,
+                              availableQuantity,
+                              warehouse,
+                              line,
+                              errors
+                            );
                             return (
                               <TableCell
                                 className={classes.colQuantity}
@@ -423,13 +462,14 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
                                       classes.quantityInnerInput,
                                       {
                                         [classes.quantityInnerInputNoRemaining]: !line
-                                          .variant.trackInventory
+                                          .variant.trackInventory,
+                                        [classes.warning]: isStockExceeded
                                       }
                                     ),
-                                    max: (
+                                    /* max: (
                                       line.variant.trackInventory &&
                                       availableQuantity
-                                    ).toString(),
+                                    ).toString(), */
                                     min: 0,
                                     style: { textAlign: "right" }
                                   }}
@@ -451,15 +491,20 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
                                       )
                                     )
                                   }
-                                  error={isStockError(
-                                    overfulfill,
-                                    formsetStock,
-                                    availableQuantity,
-                                    warehouse,
-                                    line,
-                                    errors
-                                  )}
+                                  error={currentError}
+                                  variant="outlined"
+                                  /*
+                                  formsetData[lineIndex].value.find(
+                                      el => el.warehouse === warehouse.id
+                                    ).quantity
+                                  */
                                   InputProps={{
+                                    classes: {
+                                      ...(isStockExceeded &&
+                                        !currentError && {
+                                          notchedOutline: classes.warning
+                                        })
+                                    },
                                     endAdornment: line.variant
                                       .trackInventory && (
                                       <div
@@ -473,22 +518,6 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
                               </TableCell>
                             );
                           })}
-
-                          <TableCell
-                            className={classes.colQuantityTotal}
-                            key="total"
-                          >
-                            <span
-                              className={classNames({
-                                [classes.error]: overfulfill,
-                                [classes.full]:
-                                  remainingQuantity <= quantityToFulfill
-                              })}
-                            >
-                              {quantityToFulfill}
-                            </span>{" "}
-                            / {remainingQuantity}
-                          </TableCell>
                         </TableRow>
                       );
                     }
