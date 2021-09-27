@@ -7271,6 +7271,10 @@
     "context": "event",
     "string": "Product variant deleted"
   },
+  "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_1564545489": {
+    "context": "event",
+    "string": "Draft order deleted"
+  },
   "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_1606361075": {
     "context": "event",
     "string": "Order updated"
@@ -7331,9 +7335,17 @@
     "context": "event",
     "string": "Order created"
   },
+  "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_3418398751": {
+    "context": "event",
+    "string": "Draft order updated"
+  },
   "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_36047288": {
     "context": "event",
     "string": "Translation created"
+  },
+  "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_3610454973": {
+    "context": "event",
+    "string": "Draft order created"
   },
   "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_3617444329": {
     "context": "event",

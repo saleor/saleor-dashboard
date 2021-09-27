@@ -1498,6 +1498,7 @@ export enum PaymentChargeStatusEnum {
 
 export enum PermissionEnum {
   HANDLE_PAYMENTS = "HANDLE_PAYMENTS",
+  IMPERSONATE_USER = "IMPERSONATE_USER",
   MANAGE_APPS = "MANAGE_APPS",
   MANAGE_CHANNELS = "MANAGE_CHANNELS",
   MANAGE_CHECKOUTS = "MANAGE_CHECKOUTS",
@@ -1747,6 +1748,9 @@ export enum WebhookEventTypeEnum {
   CHECKOUT_UPDATED = "CHECKOUT_UPDATED",
   CUSTOMER_CREATED = "CUSTOMER_CREATED",
   CUSTOMER_UPDATED = "CUSTOMER_UPDATED",
+  DRAFT_ORDER_CREATED = "DRAFT_ORDER_CREATED",
+  DRAFT_ORDER_DELETED = "DRAFT_ORDER_DELETED",
+  DRAFT_ORDER_UPDATED = "DRAFT_ORDER_UPDATED",
   FULFILLMENT_CREATED = "FULFILLMENT_CREATED",
   INVOICE_DELETED = "INVOICE_DELETED",
   INVOICE_REQUESTED = "INVOICE_REQUESTED",
@@ -2175,11 +2179,13 @@ export interface OrderFilterInput {
   search?: string | null;
   metadata?: (MetadataFilter | null)[] | null;
   channels?: (string | null)[] | null;
+  ids?: (string | null)[] | null;
 }
 
 export interface OrderFulfillInput {
   lines: OrderFulfillLineInput[];
   notifyCustomer?: boolean | null;
+  allowStockToBeExceeded?: boolean | null;
 }
 
 export interface OrderFulfillLineInput {
