@@ -1,33 +1,36 @@
+/// <reference types="cypress"/>
+/// <reference types="../../support"/>
+
 import faker from "faker";
 
-import { createAttribute } from "../../apiRequests/Attribute";
-import { createCategory } from "../../apiRequests/Category";
+import { createAttribute } from "../../support/api/requests/Attribute";
+import { createCategory } from "../../support/api/requests/Category";
 import {
   checkoutShippingAddressUpdate,
   checkoutShippingMethodUpdate,
   checkoutVariantsUpdate,
   completeCheckout,
   createCheckout
-} from "../../apiRequests/Checkout";
-import { getOrder } from "../../apiRequests/Order";
-import { createTypeProduct } from "../../apiRequests/productType";
-import filterTests from "../../support/filterTests";
-import { getDefaultChannel } from "../../utils/channelsUtils";
+} from "../../support/api/requests/Checkout";
+import { getOrder } from "../../support/api/requests/Order";
+import { createTypeProduct } from "../../support/api/requests/ProductType";
+import { getDefaultChannel } from "../../support/api/utils/channelsUtils";
 import {
   addPayment,
   createAndCompleteCheckoutWithoutShipping,
   createWaitingForCaptureOrder
-} from "../../utils/ordersUtils";
+} from "../../support/api/utils/ordersUtils";
 import {
   createProductInChannel,
   deleteProductsStartsWith
-} from "../../utils/products/productsUtils";
+} from "../../support/api/utils/products/productsUtils";
 import {
   createShipping,
   deleteShippingStartsWith
-} from "../../utils/shippingUtils";
+} from "../../support/api/utils/shippingUtils";
+import filterTests from "../../support/filterTests";
 
-filterTests(["all", "critical"], () => {
+filterTests({ definedTags: ["all", "critical"] }, () => {
   describe("Purchase products with all products types", () => {
     const startsWith = `CyPurchaseByType`;
     const name = `${startsWith}${faker.datatype.number()}`;
