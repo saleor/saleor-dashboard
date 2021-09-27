@@ -55,7 +55,7 @@
     "fuzzaldrin": "^2.1.0",
     "graphql": "^15.4.0",
     "graphql-request": "^3.5.0",
-    "graphql-tag": "^2.11.0",
+    "graphql-tag": "^2.12.5",
     "hotkeys-js": "^3.8.1",
     "is-url": "^1.2.4",
     "jss": "^9.8.7",
