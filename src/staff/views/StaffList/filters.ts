@@ -62,7 +62,10 @@ export const {
   saveFilterTab
 } = createFilterTabUtils<StaffListUrlFilters>(STAFF_FILTERS_KEY);
 
-export const { areFiltersApplied, getActiveFilters } = createFilterUtils<
-  StaffListUrlQueryParams,
-  StaffListUrlFilters
->(StaffListUrlFiltersEnum);
+export const {
+  areFiltersApplied,
+  getActiveFilters,
+  getFiltersCurrentTab
+} = createFilterUtils<StaffListUrlQueryParams, StaffListUrlFilters>(
+  StaffListUrlFiltersEnum
+);

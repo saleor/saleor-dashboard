@@ -35,11 +35,11 @@ import {
   customerUrl
 } from "../../urls";
 import {
-  areFiltersApplied,
   deleteFilterTab,
   getActiveFilters,
   getFilterOpts,
   getFilterQueryParam,
+  getFiltersCurrentTab,
   getFilterTabs,
   getFilterVariables,
   saveFilterTab
@@ -78,12 +78,7 @@ export const CustomerList: React.FC<CustomerListProps> = ({ params }) => {
 
   const tabs = getFilterTabs();
 
-  const currentTab =
-    params.activeTab === undefined
-      ? areFiltersApplied(params)
-        ? tabs.length + 1
-        : 0
-      : parseInt(params.activeTab, 0);
+  const currentTab = getFiltersCurrentTab(params, tabs);
 
   const [
     changeFilters,

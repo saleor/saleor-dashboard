@@ -53,6 +53,7 @@ export interface ProductVariantCreateData_product_productType_selectionVariantAt
   boolean: boolean | null;
   date: any | null;
   dateTime: any | null;
+  value: string | null;
 }
 
 export interface ProductVariantCreateData_product_productType_selectionVariantAttributes_choices_edges {
@@ -104,6 +105,7 @@ export interface ProductVariantCreateData_product_productType_nonSelectionVarian
   boolean: boolean | null;
   date: any | null;
   dateTime: any | null;
+  value: string | null;
 }
 
 export interface ProductVariantCreateData_product_productType_nonSelectionVariantAttributes_choices_edges {

@@ -46,6 +46,7 @@ export interface ProductVariantDetails_productVariant_selectionAttributes_attrib
   boolean: boolean | null;
   date: any | null;
   dateTime: any | null;
+  value: string | null;
 }
 
 export interface ProductVariantDetails_productVariant_selectionAttributes_attribute_choices_edges {
@@ -89,6 +90,7 @@ export interface ProductVariantDetails_productVariant_selectionAttributes_values
   boolean: boolean | null;
   date: any | null;
   dateTime: any | null;
+  value: string | null;
 }
 
 export interface ProductVariantDetails_productVariant_selectionAttributes {
@@ -122,6 +124,7 @@ export interface ProductVariantDetails_productVariant_nonSelectionAttributes_att
   boolean: boolean | null;
   date: any | null;
   dateTime: any | null;
+  value: string | null;
 }
 
 export interface ProductVariantDetails_productVariant_nonSelectionAttributes_attribute_choices_edges {
@@ -165,6 +168,7 @@ export interface ProductVariantDetails_productVariant_nonSelectionAttributes_val
   boolean: boolean | null;
   date: any | null;
   dateTime: any | null;
+  value: string | null;
 }
 
 export interface ProductVariantDetails_productVariant_nonSelectionAttributes {

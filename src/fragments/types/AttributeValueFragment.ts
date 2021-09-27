@@ -24,4 +24,5 @@ export interface AttributeValueFragment {
   boolean: boolean | null;
   date: any | null;
   dateTime: any | null;
+  value: string | null;
 }

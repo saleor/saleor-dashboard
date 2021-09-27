@@ -33,9 +33,6 @@ export const PERMISSIONS_OPTIONS = {
     user: ONE_PERMISSION_USERS.page,
     permissions: [PERMISSIONS.page]
   },
-  pageTypeAndAttribute: {
-    user: ONE_PERMISSION_USERS.pageTypeAndAttribute
-  },
   plugin: {
     user: ONE_PERMISSION_USERS.plugin,
     permissions: [PERMISSIONS.plugin]
@@ -47,6 +44,10 @@ export const PERMISSIONS_OPTIONS = {
   productTypeAndAttribute: {
     user: ONE_PERMISSION_USERS.productTypeAndAttribute,
     permissions: [PERMISSIONS.productTypeAndAttribute]
+  },
+  pageTypeAndAttribute: {
+    user: ONE_PERMISSION_USERS.pageTypeAndAttribute,
+    permissions: [PERMISSIONS.pageTypeAndAttribute]
   },
   settings: {
     user: ONE_PERMISSION_USERS.settings,

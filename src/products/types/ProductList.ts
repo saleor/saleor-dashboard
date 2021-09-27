@@ -94,6 +94,7 @@ export interface ProductList_products_edges_node_attributes_values {
   boolean: boolean | null;
   date: any | null;
   dateTime: any | null;
+  value: string | null;
 }
 
 export interface ProductList_products_edges_node_attributes {

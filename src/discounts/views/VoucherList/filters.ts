@@ -153,10 +153,11 @@ export const {
   saveFilterTab
 } = createFilterTabUtils<VoucherListUrlFilters>(VOUCHER_FILTERS_KEY);
 
-export const { areFiltersApplied, getActiveFilters } = createFilterUtils<
-  VoucherListUrlQueryParams,
-  VoucherListUrlFilters
->({
+export const {
+  areFiltersApplied,
+  getActiveFilters,
+  getFiltersCurrentTab
+} = createFilterUtils<VoucherListUrlQueryParams, VoucherListUrlFilters>({
   ...VoucherListUrlFiltersEnum,
   ...VoucherListUrlFiltersWithMultipleValues
 });

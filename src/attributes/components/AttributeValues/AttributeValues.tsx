@@ -18,8 +18,9 @@ import {
 import TablePagination from "@saleor/components/TablePagination";
 import { AttributeValueListFragment_edges_node } from "@saleor/fragments/types/AttributeValueListFragment";
 import { makeStyles } from "@saleor/macaw-ui";
-import { maybe, renderCollection, stopPropagation } from "@saleor/misc";
+import { renderCollection, stopPropagation } from "@saleor/misc";
 import { ListProps, ReorderAction } from "@saleor/types";
+import { AttributeInputTypeEnum } from "@saleor/types/globalTypes";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -31,10 +32,14 @@ export interface AttributeValuesProps
   onValueDelete: (id: string) => void;
   onValueReorder: ReorderAction;
   onValueUpdate: (id: string) => void;
+  inputType: AttributeInputTypeEnum;
 }
 
 const useStyles = makeStyles(
   theme => ({
+    columnSwatch: {
+      width: 100
+    },
     columnAdmin: {
       width: 300
     },
@@ -55,12 +60,17 @@ const useStyles = makeStyles(
     },
     link: {
       cursor: "pointer"
+    },
+    swatch: {
+      width: 32,
+      height: 32,
+      borderRadius: 4,
+      backgroundSize: "cover",
+      backgroundPosition: "center"
     }
   }),
   { name: "AttributeValues" }
 );
-
-const numberOfColumns = 4;
 
 const AttributeValues: React.FC<AttributeValuesProps> = ({
   disabled,
@@ -73,10 +83,14 @@ const AttributeValues: React.FC<AttributeValuesProps> = ({
   onUpdateListSettings,
   pageInfo,
   onNextPage,
-  onPreviousPage
+  onPreviousPage,
+  inputType
 }) => {
   const classes = useStyles({});
   const intl = useIntl();
+
+  const isSwatch = inputType === AttributeInputTypeEnum.SWATCH;
+  const numberOfColumns = isSwatch ? 5 : 4;
 
   return (
     <Card>
@@ -103,6 +117,14 @@ const AttributeValues: React.FC<AttributeValuesProps> = ({
         <TableHead>
           <TableRow>
             <TableCell className={classes.columnDrag} />
+            {isSwatch && (
+              <TableCell className={classes.columnSwatch}>
+                <FormattedMessage
+                  defaultMessage="Swatch"
+                  description="attribute values list: slug column header"
+                />
+              </TableCell>
+            )}
             <TableCell className={classes.columnAdmin}>
               <FormattedMessage
                 defaultMessage="Admin"
@@ -141,14 +163,26 @@ const AttributeValues: React.FC<AttributeValuesProps> = ({
                 className={!!value ? classes.link : undefined}
                 hover={!!value}
                 onClick={!!value ? () => onValueUpdate(value.id) : undefined}
-                key={maybe(() => value.id)}
+                key={value?.id}
                 index={valueIndex || 0}
               >
+                {isSwatch && (
+                  <TableCell className={classes.columnSwatch}>
+                    <div
+                      className={classes.swatch}
+                      style={
+                        value?.file
+                          ? { backgroundImage: `url(${value.file.url})` }
+                          : { backgroundColor: value.value }
+                      }
+                    />
+                  </TableCell>
+                )}
                 <TableCell className={classes.columnAdmin}>
-                  {maybe(() => value.slug) ? value.slug : <Skeleton />}
+                  {value?.slug ?? <Skeleton />}
                 </TableCell>
                 <TableCell className={classes.columnStore}>
-                  {maybe(() => value.name) ? value.name : <Skeleton />}
+                  {value?.name ?? <Skeleton />}
                 </TableCell>
                 <TableCell className={classes.iconCell}>
                   <IconButton
@@ -162,7 +196,7 @@ const AttributeValues: React.FC<AttributeValuesProps> = ({
             ),
             () => (
               <TableRow>
-                <TableCell colSpan={2}>
+                <TableCell colSpan={numberOfColumns}>
                   <FormattedMessage
                     defaultMessage="No values found"
                     description="No attribute values found"

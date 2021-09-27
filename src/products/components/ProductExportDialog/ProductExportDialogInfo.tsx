@@ -128,7 +128,7 @@ const Option: React.FC<{
       className={classes.label}
       label={children}
       labelPlacement="start"
-    ></FormControlLabel>
+    />
   );
 };
 

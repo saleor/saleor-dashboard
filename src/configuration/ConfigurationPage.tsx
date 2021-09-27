@@ -1,20 +1,23 @@
 import { Card, CardContent, Typography } from "@material-ui/core";
 import { IconProps } from "@material-ui/core/Icon";
+import { useTheme } from "@material-ui/core/styles";
+import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { User } from "@saleor/fragments/types/User";
 import { sectionNames } from "@saleor/intl";
 import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import { hasPermission } from "../auth/misc";
+import { hasAnyPermissions } from "../auth/misc";
 import Container from "../components/Container";
 import PageHeader from "../components/PageHeader";
+import VersionInfo from "../components/VersionInfo";
 import { PermissionEnum } from "../types/globalTypes";
 
 export interface MenuItem {
   description: string;
   icon: React.ReactElement<IconProps>;
-  permission: PermissionEnum;
+  permissions: PermissionEnum[];
   title: string;
   url?: string;
   testId?: string;
@@ -23,6 +26,11 @@ export interface MenuItem {
 export interface MenuSection {
   label: string;
   menuItems: MenuItem[];
+}
+
+interface VersionInfo {
+  dashboardVersion: string;
+  coreVersion: string;
 }
 
 const useStyles = makeStyles(
@@ -92,24 +100,43 @@ const useStyles = makeStyles(
 export interface ConfigurationPageProps {
   menu: MenuSection[];
   user: User;
+  versionInfo: VersionInfo;
   onSectionClick: (sectionName: string) => void;
 }
 
 export const ConfigurationPage: React.FC<ConfigurationPageProps> = props => {
-  const { menu: menus, user, onSectionClick } = props;
+  const {
+    menu: menus,
+    user,
+    onSectionClick,
+    versionInfo: { dashboardVersion, coreVersion }
+  } = props;
   const classes = useStyles(props);
+  const theme = useTheme();
+  const isSmUp = useMediaQuery(theme.breakpoints.up("sm"));
+
+  const renderVersionInfo = (
+    <VersionInfo
+      dashboardVersion={dashboardVersion}
+      coreVersion={coreVersion}
+    />
+  );
 
   const intl = useIntl();
+
   return (
     <Container>
+      {!isSmUp && renderVersionInfo}
       <PageHeader
         className={classes.header}
         title={intl.formatMessage(sectionNames.configuration)}
-      />
+      >
+        {isSmUp && renderVersionInfo}
+      </PageHeader>
       {menus
         .filter(menu =>
           menu.menuItems.some(menuItem =>
-            hasPermission(menuItem.permission, user)
+            hasAnyPermissions(menuItem.permissions, user)
           )
         )
         .map((menu, menuIndex) => (
@@ -119,7 +146,9 @@ export const ConfigurationPage: React.FC<ConfigurationPageProps> = props => {
             </div>
             <div className={classes.configurationItem}>
               {menu.menuItems
-                .filter(menuItem => hasPermission(menuItem.permission, user))
+                .filter(menuItem =>
+                  hasAnyPermissions(menuItem.permissions, user)
+                )
                 .map((item, itemIndex) => (
                   <Card
                     className={item.url ? classes.card : classes.cardDisabled}

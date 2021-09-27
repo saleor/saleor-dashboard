@@ -19,7 +19,8 @@ const attributes: FormsetData<AttributeInputData, string[]> = [
           richText: null,
           boolean: null,
           date: null,
-          dateTime: null
+          dateTime: null,
+          value: null
         }
       ]
     },
@@ -42,7 +43,8 @@ const attributes: FormsetData<AttributeInputData, string[]> = [
           richText: null,
           boolean: null,
           date: null,
-          dateTime: null
+          dateTime: null,
+          value: null
         },
         {
           __typename: "AttributeValue",
@@ -54,7 +56,8 @@ const attributes: FormsetData<AttributeInputData, string[]> = [
           richText: null,
           boolean: null,
           date: null,
-          dateTime: null
+          dateTime: null,
+          value: null
         },
         {
           __typename: "AttributeValue",
@@ -66,7 +69,8 @@ const attributes: FormsetData<AttributeInputData, string[]> = [
           richText: null,
           boolean: null,
           date: null,
-          dateTime: null
+          dateTime: null,
+          value: null
         }
       ]
     },
@@ -93,7 +97,8 @@ const attributes: FormsetData<AttributeInputData, string[]> = [
           richText: null,
           boolean: null,
           date: null,
-          dateTime: null
+          dateTime: null,
+          value: null
         }
       ]
     },

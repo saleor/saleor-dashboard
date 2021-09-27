@@ -116,10 +116,11 @@ export const {
   saveFilterTab
 } = createFilterTabUtils<OrderListUrlFilters>(ORDER_FILTERS_KEY);
 
-export const { areFiltersApplied, getActiveFilters } = createFilterUtils<
-  OrderListUrlQueryParams,
-  OrderListUrlFilters
->({
+export const {
+  areFiltersApplied,
+  getActiveFilters,
+  getFiltersCurrentTab
+} = createFilterUtils<OrderListUrlQueryParams, OrderListUrlFilters>({
   ...OrderListUrlFiltersEnum,
   ...OrderListUrlFiltersWithMultipleValues
 });
