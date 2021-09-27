@@ -6,11 +6,8 @@ import discountsIcon from "@assets/images/menu-discounts-icon.svg";
 import homeIcon from "@assets/images/menu-home-icon.svg";
 import ordersIcon from "@assets/images/menu-orders-icon.svg";
 import translationIcon from "@assets/images/menu-translation-icon.svg";
-import {
-  configurationMenuUrl,
-  createConfigurationMenu
-} from "@saleor/configuration";
-import { MenuItem } from "@saleor/configuration/ConfigurationPage";
+import { configurationMenuUrl } from "@saleor/configuration";
+import { getConfigMenuItemsPermissions } from "@saleor/configuration/utils";
 import { User } from "@saleor/fragments/types/User";
 import { commonMessages, sectionNames } from "@saleor/intl";
 import { SidebarMenuItem } from "@saleor/macaw-ui";
@@ -32,8 +29,6 @@ interface FilterableMenuItem extends Omit<SidebarMenuItem, "children"> {
 }
 
 function createMenuStructure(intl: IntlShape, user: User): SidebarMenuItem[] {
-  const configurationMenu = createConfigurationMenu(intl);
-
   const menuItems: FilterableMenuItem[] = [
     {
       ariaLabel: "home",
@@ -142,12 +137,7 @@ function createMenuStructure(intl: IntlShape, user: User): SidebarMenuItem[] {
       ariaLabel: "configure",
       iconSrc: configurationIcon,
       label: intl.formatMessage(sectionNames.configuration),
-      permissions: configurationMenu
-        .reduce(
-          (sections, section) => [...sections, ...section.menuItems],
-          [] as MenuItem[]
-        )
-        .map(section => section.permission),
+      permissions: getConfigMenuItemsPermissions(intl),
       id: "configure",
       url: configurationMenuUrl
     }

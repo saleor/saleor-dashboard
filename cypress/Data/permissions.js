@@ -66,6 +66,13 @@ export const PERMISSIONS = {
       CONFIGURATION_SELECTORS.productTypes
     ]
   },
+  pageTypeAndAttribute: {
+    parent: configurationAsParent,
+    permissionSelectors: [
+      CONFIGURATION_SELECTORS.pageTypes,
+      CONFIGURATION_SELECTORS.attributes
+    ]
+  },
   settings: {
     parent: configurationAsParent,
     permissionSelectors: [
