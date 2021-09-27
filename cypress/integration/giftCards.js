@@ -21,8 +21,8 @@ filterTests(["all"], () => {
     const currency = "USD";
 
     before(() => {
-      deleteGiftCardsWithTagStartsWith(startsWith);
       cy.clearSessionData().loginUserViaRequest();
+      deleteGiftCardsWithTagStartsWith(startsWith);
     });
 
     beforeEach(() => {
