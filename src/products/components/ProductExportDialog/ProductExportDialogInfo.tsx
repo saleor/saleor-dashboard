@@ -36,6 +36,7 @@ const maxChips = 4;
 
 const inventoryFields = [
   ProductFieldEnum.PRODUCT_WEIGHT,
+  ProductFieldEnum.VARIANT_ID,
   ProductFieldEnum.VARIANT_SKU,
   ProductFieldEnum.VARIANT_WEIGHT
 ];

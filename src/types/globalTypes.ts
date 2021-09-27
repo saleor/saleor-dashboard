@@ -1645,6 +1645,7 @@ export enum ProductFieldEnum {
   PRODUCT_MEDIA = "PRODUCT_MEDIA",
   PRODUCT_TYPE = "PRODUCT_TYPE",
   PRODUCT_WEIGHT = "PRODUCT_WEIGHT",
+  VARIANT_ID = "VARIANT_ID",
   VARIANT_MEDIA = "VARIANT_MEDIA",
   VARIANT_SKU = "VARIANT_SKU",
   VARIANT_WEIGHT = "VARIANT_WEIGHT",
@@ -2611,7 +2612,7 @@ export interface ProductTypeSortingInput {
 
 export interface ProductVariantBulkCreateInput {
   attributes: BulkAttributeValueInput[];
-  sku: string;
+  sku?: string | null;
   trackInventory?: boolean | null;
   weight?: any | null;
   stocks?: StockInput[] | null;

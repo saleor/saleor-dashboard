@@ -265,7 +265,7 @@ export interface ProductVariantDetails_productVariant_product_variants {
   __typename: "ProductVariant";
   id: string;
   name: string;
-  sku: string;
+  sku: string | null;
   media: ProductVariantDetails_productVariant_product_variants_media[] | null;
 }
 
@@ -337,7 +337,7 @@ export interface ProductVariantDetails_productVariant {
   name: string;
   product: ProductVariantDetails_productVariant_product;
   channelListings: ProductVariantDetails_productVariant_channelListings[] | null;
-  sku: string;
+  sku: string | null;
   stocks: (ProductVariantDetails_productVariant_stocks | null)[] | null;
   trackInventory: boolean;
   weight: ProductVariantDetails_productVariant_weight | null;
