@@ -1143,6 +1143,7 @@ type Collection implements Node & ObjectWithMetadata {
   slug: String!
   privateMetadata: [MetadataItem]!
   metadata: [MetadataItem]!
+  channel: String
   descriptionJson: JSONString @deprecated(reason: "Will be removed in Saleor 4.0. Use the `description` field instead.")
   products(filter: ProductFilterInput, sortBy: ProductOrder, before: String, after: String, first: Int, last: Int): ProductCountableConnection
   backgroundImage(size: Int): Image
@@ -3626,7 +3627,7 @@ type Mutation {
   checkoutBillingAddressUpdate(billingAddress: AddressInput!, checkoutId: ID, token: UUID): CheckoutBillingAddressUpdate
   checkoutComplete(checkoutId: ID, paymentData: JSONString, redirectUrl: String, storeSource: Boolean = false, token: UUID): CheckoutComplete
   checkoutCreate(input: CheckoutCreateInput!): CheckoutCreate
-  checkoutCustomerAttach(checkoutId: ID, token: UUID): CheckoutCustomerAttach
+  checkoutCustomerAttach(checkoutId: ID, customerId: ID, token: UUID): CheckoutCustomerAttach
   checkoutCustomerDetach(checkoutId: ID, token: UUID): CheckoutCustomerDetach
   checkoutEmailUpdate(checkoutId: ID, email: String!, token: UUID): CheckoutEmailUpdate
   checkoutLineDelete(checkoutId: ID, lineId: ID, token: UUID): CheckoutLineDelete
@@ -4046,6 +4047,7 @@ input OrderFilterInput {
   search: String
   metadata: [MetadataFilter]
   channels: [ID]
+  ids: [ID]
 }
 
 type OrderFulfill {
@@ -4058,6 +4060,7 @@ type OrderFulfill {
 input OrderFulfillInput {
   lines: [OrderFulfillLineInput!]!
   notifyCustomer: Boolean
+  allowStockToBeExceeded: Boolean = false
 }
 
 input OrderFulfillLineInput {
@@ -4669,6 +4672,7 @@ type Permission {
 enum PermissionEnum {
   MANAGE_USERS
   MANAGE_STAFF
+  IMPERSONATE_USER
   MANAGE_APPS
   MANAGE_CHANNELS
   MANAGE_DISCOUNTS
@@ -4856,6 +4860,7 @@ type Product implements Node & ObjectWithMetadata {
   rating: Float
   privateMetadata: [MetadataItem]!
   metadata: [MetadataItem]!
+  channel: String
   descriptionJson: JSONString @deprecated(reason: "Will be removed in Saleor 4.0. Use the `description` field instead.")
   thumbnail(size: Int): Image
   pricing(address: AddressInput): ProductPricingInfo
@@ -5307,6 +5312,7 @@ type ProductVariant implements Node & ObjectWithMetadata {
   weight: Weight
   privateMetadata: [MetadataItem]!
   metadata: [MetadataItem]!
+  channel: String
   channelListings: [ProductVariantChannelListing!]
   pricing(address: AddressInput): VariantPricingInfo
   attributes(variantSelection: VariantAttributeScope): [SelectedAttribute!]!
@@ -6835,6 +6841,9 @@ enum WebhookEventTypeEnum {
   ORDER_UPDATED
   ORDER_CANCELLED
   ORDER_FULFILLED
+  DRAFT_ORDER_CREATED
+  DRAFT_ORDER_UPDATED
+  DRAFT_ORDER_DELETED
   INVOICE_REQUESTED
   INVOICE_DELETED
   INVOICE_SENT
@@ -6871,6 +6880,9 @@ enum WebhookSampleEventTypeEnum {
   ORDER_UPDATED
   ORDER_CANCELLED
   ORDER_FULFILLED
+  DRAFT_ORDER_CREATED
+  DRAFT_ORDER_UPDATED
+  DRAFT_ORDER_DELETED
   INVOICE_REQUESTED
   INVOICE_DELETED
   INVOICE_SENT
