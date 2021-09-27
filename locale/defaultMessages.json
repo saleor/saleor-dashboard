@@ -6359,16 +6359,16 @@
     "context": "dialog header",
     "string": "Delete Variant"
   },
-  "src_dot_products_dot_components_dot_ProductVariantEndPreorderDialog_dot_1062638251": {
-    "context": "dialog header",
-    "string": "Ending Preorder"
-  },
-  "src_dot_products_dot_components_dot_ProductVariantEndPreorderDialog_dot_1109566128": {
-    "string": "You are about to end your products preorder. You have sold {variantGlobalSoldUnits} units of this variant. Sold units will be allocated at appropriate warehouses. Remember to add remaining threshold stock to warehouses."
-  },
-  "src_dot_products_dot_components_dot_ProductVariantEndPreorderDialog_dot_296207559": {
+  "src_dot_products_dot_components_dot_ProductVariantEndPreorderDialog_dot_dialogConfirmButtonLabel": {
     "context": "button label",
     "string": "ACCEPT"
+  },
+  "src_dot_products_dot_components_dot_ProductVariantEndPreorderDialog_dot_dialogMessage": {
+    "string": "You are about to end your products preorder. You have sold {variantGlobalSoldUnits} units of this variant. Sold units will be allocated at appropriate warehouses. Remember to add remaining threshold stock to warehouses."
+  },
+  "src_dot_products_dot_components_dot_ProductVariantEndPreorderDialog_dot_dialogTitle": {
+    "context": "dialog header",
+    "string": "Ending Preorder"
   },
   "src_dot_products_dot_components_dot_ProductVariantImageSelectDialog_dot_2015102342": {
     "context": "dialog header",
@@ -8155,7 +8155,7 @@
   },
   "tableColChannelThreshold": {
     "context": "table column header",
-    "string": "Channel Threshold"
+    "string": "Channel threshold"
   },
   "tableColQuantity": {
     "context": "table column header",

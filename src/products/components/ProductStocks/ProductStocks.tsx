@@ -574,7 +574,7 @@ const ProductStocks: React.FC<ProductStocksProps> = ({
               </TableCell>
               <TableCell className={classes.colThreshold}>
                 <FormattedMessage
-                  defaultMessage="Channel Threshold"
+                  defaultMessage="Channel threshold"
                   description="table column header"
                   id="tableColChannelThreshold"
                 />
@@ -610,11 +610,11 @@ const ProductStocks: React.FC<ProductStocksProps> = ({
                       onChange={e => {
                         onVariantChannelListingChange(listing.id, {
                           costPrice: listing.costPrice,
-                          price: listing.price as undefined,
-                          preorderThreshold: +e.target.value
+                          price: listing.price,
+                          preorderThreshold: Number(e.target.value)
                         });
                       }}
-                      value={listing?.preorderThreshold || ""}
+                      value={listing?.preorderThreshold ?? ""}
                     />
                   </TableCell>
                 </TableRow>

@@ -79,10 +79,7 @@ export interface IChannelPriceAndPreorderArgs {
   preorderThreshold?: number | null;
   unitsSold?: number;
 }
-export type ChannelPriceAndPreorderArgs = RequireOnlyOne<
-  IChannelPriceArgs,
-  "price" | "costPrice"
-> & {
+export type ChannelPriceAndPreorderArgs = IChannelPriceArgs & {
   preorderThreshold: number | null;
   unitsSold?: number;
 };

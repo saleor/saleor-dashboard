@@ -157,9 +157,6 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
     setIsEndPreorderModalOpened
   ] = React.useState(false);
 
-  const togglePreorderModal = () =>
-    setIsEndPreorderModalOpened(!isEndPreorderModalOpened);
-
   const variantMedia = variant?.media?.map(image => image.id);
   const productMedia = variant?.product?.media?.sort((prev, next) =>
     prev.sortOrder > next.sortOrder ? 1 : -1
@@ -172,7 +169,7 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
 
   const handleDeactivatePreorder = async () => {
     await onVariantPreorderDeactivate(variant.id);
-    togglePreorderModal();
+    setIsEndPreorderModalOpened(false);
   };
 
   const handleAssignReferenceAttribute = (
@@ -336,8 +333,8 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
                     warehouses={warehouses}
                     onChange={handlers.changeStock}
                     onFormDataChange={change}
-                    onEndPreorderTrigger={
-                      variant?.preorder.isPreorder ? togglePreorderModal : null
+                    onEndPreorderTrigger={() =>
+                      setIsEndPreorderModalOpened(true)
                     }
                     onWarehouseStockAdd={handlers.addStock}
                     onWarehouseStockDelete={handlers.deleteStock}
@@ -393,7 +390,7 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
       {variant?.preorder?.isPreorder && (
         <ProductVariantEndPreorderDialog
           confirmButtonState="default"
-          onClose={togglePreorderModal}
+          onClose={() => setIsEndPreorderModalOpened(false)}
           onConfirm={handleDeactivatePreorder}
           open={isEndPreorderModalOpened}
           variantGlobalSoldUnits={variant?.preorder.globalSoldUnits}

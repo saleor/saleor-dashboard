@@ -9,7 +9,8 @@ import {
 } from "@material-ui/core";
 import {
   ChannelData,
-  ChannelPriceAndPreorderArgs
+  ChannelPriceAndPreorderArgs,
+  ChannelPriceArgs
 } from "@saleor/channels/utils";
 import CardTitle from "@saleor/components/CardTitle";
 import PriceField from "@saleor/components/PriceField";
@@ -69,7 +70,10 @@ interface ProductVariantPriceProps {
   errors?: ProductChannelListingErrorFragment[];
   loading?: boolean;
   disabled?: boolean;
-  onChange?: (id: string, data: ChannelPriceAndPreorderArgs) => void;
+  onChange?: (
+    id: string,
+    data: ChannelPriceArgs | ChannelPriceAndPreorderArgs
+  ) => void;
   disabledMessage?: MessageDescriptor;
 }
 

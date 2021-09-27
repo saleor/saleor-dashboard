@@ -6,7 +6,6 @@ import {
   ChannelPriceData
 } from "@saleor/channels/utils";
 import { FormChange } from "@saleor/hooks/useForm";
-import { getById } from "@saleor/orders/components/OrderReturnPage/utils";
 
 export function createChannelsPriceChangeHandler(
   channelListings: ChannelData[],
@@ -15,20 +14,11 @@ export function createChannelsPriceChangeHandler(
 ) {
   return (id: string, priceData: ChannelPriceArgs) => {
     const { costPrice, price } = priceData;
-    const channelIndex = channelListings.findIndex(
-      channel => channel.id === id
-    );
-    const channel = channelListings[channelIndex];
 
-    const updatedChannels = [
-      ...channelListings.slice(0, channelIndex),
-      {
-        ...channel,
-        costPrice,
-        price
-      },
-      ...channelListings.slice(channelIndex + 1)
-    ];
+    const updatedChannels = channelListings.map(channel =>
+      channel.id === id ? { ...channel, costPrice, price } : channel
+    );
+
     updateChannels(updatedChannels);
 
     triggerChange();
@@ -43,19 +33,10 @@ export function createChannelsPreorderChangeHandler(
   return (id: string, preorderData: ChannelPreorderArgs) => {
     const { preorderThreshold, unitsSold } = preorderData;
 
-    const channelIndex = channelListings.findIndex(getById(id));
+    const updatedChannels = channelListings.map(channel =>
+      channel.id === id ? { ...channel, preorderThreshold, unitsSold } : channel
+    );
 
-    const channel = channelListings[channelIndex];
-
-    const updatedChannels = [
-      ...channelListings.slice(0, channelIndex),
-      {
-        ...channel,
-        preorderThreshold,
-        unitsSold
-      },
-      ...channelListings.slice(channelIndex + 1)
-    ];
     updateChannels(updatedChannels);
 
     triggerChange();

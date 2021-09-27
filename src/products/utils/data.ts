@@ -21,6 +21,7 @@ import {
 } from "@saleor/products/types/ProductDetails";
 import { StockInput } from "@saleor/types/globalTypes";
 import { mapEdgesToItems, mapMetadataItemToInput } from "@saleor/utils/maps";
+import moment from "moment";
 
 import { ProductStockInput } from "../components/ProductStocks";
 import { ProductType_productType_productAttributes } from "../types/ProductType";
@@ -297,13 +298,26 @@ export function getEndPreorderDateInput<
     preorderEndHour?: string;
   }
 >({ hasPreorderEndDate, preorderEndDate, preorderEndHour }: T) {
-  return hasPreorderEndDate && preorderEndDate
-    ? `${preorderEndDate}T${preorderEndHour ?? "00:00"}`
-    : null;
+  if (!hasPreorderEndDate || !preorderEndDate) {
+    return null;
+  }
+
+  const date = moment(preorderEndDate);
+
+  if (preorderEndHour) {
+    const time = moment(preorderEndHour, "HH:mm");
+
+    date.set({
+      hour: time.get("hour"),
+      minute: time.get("minute")
+    });
+  }
+
+  return date;
 }
 
 export const getPreorderEndDateFormData = (endDate?: string) =>
-  endDate ? endDate.split("T")?.[0] : null;
+  endDate ? moment(endDate).format("YYYY-MM-DD") : null;
 
 export const getPreorderEndHourFormData = (endDate?: string) =>
-  endDate ? endDate.split("T")?.[1]?.split("+")?.[0] : null;
+  endDate ? moment(endDate).format("HH:mm") : null;
