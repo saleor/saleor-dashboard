@@ -1,17 +1,19 @@
+/// <reference types="cypress"/>
+/// <reference types="../support"/>
+
 import faker from "faker";
 
-import { createApp, getApp } from "../apiRequests/Apps";
-import { ONE_PERMISSION_USERS } from "../Data/users";
 import { APP_DETAILS } from "../elements/apps/appDetails";
 import { APPS_LIST } from "../elements/apps/appsList";
 import { WEBHOOK_DETAILS } from "../elements/apps/webhookDetails";
 import { BUTTON_SELECTORS } from "../elements/shared/button-selectors";
-import { confirmationMessageShouldDisappear } from "../steps/shared/confirmationMessages";
+import { appDetailsUrl, urlList } from "../fixtures/urlList";
+import { ONE_PERMISSION_USERS } from "../fixtures/users";
+import { createApp, getApp } from "../support/api/requests/Apps";
+import { deleteAppsStartsWith } from "../support/api/utils/appUtils";
 import filterTests from "../support/filterTests";
-import { appDetailsUrl, urlList } from "../url/urlList";
-import { deleteAppsStartsWith } from "../utils/appUtils";
 
-filterTests(["all"], () => {
+filterTests({ definedTags: ["all"] }, () => {
   describe("Tests for apps", () => {
     const startsWith = "Apps";
     const name = `${startsWith}${faker.datatype.number()}`;
@@ -45,9 +47,9 @@ filterTests(["all"], () => {
         .click()
         .addAliasToGraphRequest("AppCreate")
         .get(BUTTON_SELECTORS.confirm)
-        .click();
-      confirmationMessageShouldDisappear();
-      cy.wait("@AppCreate")
+        .click()
+        .confirmationMessageShouldDisappear()
+        .waitForRequestAndCheckIfNoErrors("@AppCreate")
         .its("response.body.data.appCreate.app")
         .then(app => {
           getApp(app.id);
@@ -71,8 +73,8 @@ filterTests(["all"], () => {
         .get(WEBHOOK_DETAILS.targetUrlInput)
         .type(targetUrl)
         .get(BUTTON_SELECTORS.confirm)
-        .click();
-      confirmationMessageShouldDisappear();
+        .click()
+        .confirmationMessageShouldDisappear();
       getApp(createdApp.id).then(({ webhooks }) => {
         expect(webhooks[0].name).to.eq(randomName);
         expect(webhooks[0].targetUrl).to.eq(targetUrl);

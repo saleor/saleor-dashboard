@@ -1,17 +1,18 @@
+/// <reference types="cypress"/>
+/// <reference types="../../support"/>
+
 import faker from "faker";
 
-import { getCustomer } from "../../apiRequests/Customer";
-import { ONE_PERMISSION_USERS } from "../../Data/users";
 import { CUSTOMER_DETAILS } from "../../elements/customer/customer-details";
 import { CUSTOMERS_LIST } from "../../elements/customer/customers-list";
 import { BUTTON_SELECTORS } from "../../elements/shared/button-selectors";
 import { SHARED_ELEMENTS } from "../../elements/shared/sharedElements";
-import { fillUpAddressForm } from "../../steps/shared/addressForm";
-import { confirmationMessageShouldDisappear } from "../../steps/shared/confirmationMessages";
+import { urlList } from "../../fixtures/urlList";
+import { ONE_PERMISSION_USERS } from "../../fixtures/users";
+import { getCustomer } from "../../support/api/requests/Customer";
 import filterTests from "../../support/filterTests";
-import { urlList } from "../../url/urlList";
 
-filterTests(["all"], () => {
+filterTests({ definedTags: ["all"] }, () => {
   describe("Tests for customer", () => {
     const channelStartsWith = `Customers`;
 
@@ -37,15 +38,15 @@ filterTests(["all"], () => {
         .fixture("addresses")
         .then(({ usAddress }) => {
           address = usAddress;
-          fillUpAddressForm(address);
+          cy.fillUpAddressForm(address);
         })
         .get(CUSTOMER_DETAILS.noteInput)
         .type(note)
         .addAliasToGraphRequest("CreateCustomer")
         .get(BUTTON_SELECTORS.confirm)
-        .click();
-      confirmationMessageShouldDisappear();
-      cy.wait("@CreateCustomer")
+        .click()
+        .confirmationMessageShouldDisappear()
+        .waitForRequestAndCheckIfNoErrors("@CreateCustomer")
         .its("response.body.data.customerCreate.user")
         .then(customer => {
           getCustomer(customer.id);

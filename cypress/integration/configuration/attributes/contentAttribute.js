@@ -1,15 +1,18 @@
+/// <reference types="cypress"/>
+/// <reference types="../../../support"/>
+
 import faker from "faker";
 
-import { getAttribute } from "../../../apiRequests/Attribute";
 import { ATTRIBUTES_DETAILS } from "../../../elements/attribute/attributes_details";
 import { ATTRIBUTES_LIST } from "../../../elements/attribute/attributes_list";
-import { createAttributeWithInputType } from "../../../steps/attributesSteps";
+import { urlList } from "../../../fixtures/urlList";
+import { getAttribute } from "../../../support/api/requests/Attribute";
+import { deleteAttributesStartsWith } from "../../../support/api/utils/attributes/attributeUtils";
+import { expectCorrectDataInAttribute } from "../../../support/api/utils/attributes/checkAttributeData";
 import filterTests from "../../../support/filterTests";
-import { urlList } from "../../../url/urlList";
-import { deleteAttributesStartsWith } from "../../../utils/attributes/attributeUtils";
-import { expectCorrectDataInAttribute } from "../../../utils/attributes/checkAttributeData";
+import { createAttributeWithInputType } from "../../../support/pages/attributesPage";
 
-filterTests(["all"], () => {
+filterTests({ definedTags: ["all"] }, () => {
   describe("Create content attribute", () => {
     const startsWith = "AttrCont";
     const attributesTypes = [
