@@ -1,30 +1,30 @@
-// <reference types="cypress" />
+/// <reference types="cypress"/>
+/// <reference types="../../support"/>
+
 import faker from "faker";
 
-import { createAttribute } from "../../apiRequests/Attribute";
-import { createTypeProduct } from "../../apiRequests/productType";
-import { ONE_PERMISSION_USERS } from "../../Data/users";
 import { PRODUCT_DETAILS } from "../../elements/catalog/products/product-details";
 import { PRODUCTS_LIST } from "../../elements/catalog/products/products-list";
 import { BUTTON_SELECTORS } from "../../elements/shared/button-selectors";
-import { SHARED_ELEMENTS } from "../../elements/shared/sharedElements";
-import { metadataForms } from "../../steps/catalog/metadataSteps";
-import {
-  fillUpPriceList,
-  priceInputLists
-} from "../../steps/catalog/products/priceList";
-import { fillUpCommonFieldsForAllProductTypes } from "../../steps/catalog/products/productSteps";
-import { selectChannelInDetailsPages } from "../../steps/channelsSteps";
-import { confirmationMessageShouldDisappear } from "../../steps/shared/confirmationMessages";
-import filterTests from "../../support/filterTests";
-import { urlList } from "../../url/urlList";
+import { urlList } from "../../fixtures/urlList";
+import { ONE_PERMISSION_USERS } from "../../fixtures/users";
+import { createAttribute } from "../../support/api/requests/Attribute";
+import { createTypeProduct } from "../../support/api/requests/ProductType";
 import {
   expectCorrectProductInformation,
   expectCorrectProductVariantInformation
-} from "../../utils/products/checkProductInfo";
-import * as productUtils from "../../utils/products/productsUtils";
+} from "../../support/api/utils/products/checkProductInfo";
+import * as productUtils from "../../support/api/utils/products/productsUtils";
+import filterTests from "../../support/filterTests";
+import { metadataForms } from "../../support/pages/catalog/metadataComponent";
+import {
+  fillUpPriceList,
+  priceInputLists
+} from "../../support/pages/catalog/products/priceListComponent";
+import { fillUpCommonFieldsForAllProductTypes } from "../../support/pages/catalog/products/productDetailsPage";
+import { selectChannelInDetailsPages } from "../../support/pages/channelsPage";
 
-filterTests(["all", "critical"], () => {
+filterTests({ definedTags: ["all", "critical"] }, () => {
   describe("Create product", () => {
     const startsWith = "CyCreateProduct-";
     const name = `${startsWith}${faker.datatype.number()}`;
@@ -75,11 +75,12 @@ filterTests(["all", "critical"], () => {
       createTpeAndFillUpProductFields(randomName, true, productData).then(
         productOrgResp => (productData.productOrganization = productOrgResp)
       );
-      cy.addAliasToGraphRequest("ProductDetails");
-      cy.get(BUTTON_SELECTORS.confirm).click();
-      confirmationMessageShouldDisappear();
-      cy.wait("@ProductDetails");
-      cy.get("@ProductDetails")
+      cy.addAliasToGraphRequest("ProductDetails")
+        .get(BUTTON_SELECTORS.confirm)
+        .click()
+        .confirmationMessageShouldDisappear()
+        .waitForRequestAndCheckIfNoErrors("@ProductDetails")
+        .get("@ProductDetails")
         .its("response.body")
         .then(resp => {
           const productResp = resp.find(element => element.data.product).data
@@ -105,12 +106,14 @@ filterTests(["all", "critical"], () => {
       selectChannelInDetailsPages();
       fillUpPriceList(prices.sellingPrice);
       fillUpPriceList(prices.costPrice, priceInputLists.costPrice);
-      cy.get(PRODUCT_DETAILS.skuInput).type(randomName);
-      cy.addAliasToGraphRequest("ProductDetails");
-      cy.get(BUTTON_SELECTORS.confirm).click();
-      confirmationMessageShouldDisappear();
-      cy.wait("@ProductDetails");
-      cy.get("@ProductDetails")
+      cy.get(PRODUCT_DETAILS.skuInput)
+        .type(randomName)
+        .addAliasToGraphRequest("ProductDetails")
+        .get(BUTTON_SELECTORS.confirm)
+        .click()
+        .confirmationMessageShouldDisappear()
+        .wait("@ProductDetails")
+        .get("@ProductDetails")
         .its("response.body")
         .then(resp => {
           const productResp = resp.find(element => element.data.product).data

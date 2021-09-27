@@ -212,6 +212,7 @@ const FilterContent: React.FC<FilterContentProps> = ({
                 key={filter.name}
                 classes={expanderClasses}
                 data-test="channel-availability-item"
+                data-test-id={filter.name}
                 expanded={filter.name === openedFilter?.name}
               >
                 <ExpansionPanelSummary

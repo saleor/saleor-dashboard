@@ -1,24 +1,26 @@
-// <reference types="cypress" />
+/// <reference types="cypress"/>
+/// <reference types="../../support"/>
+
 import faker from "faker";
 
-import { createChannel } from "../../apiRequests/Channels";
-import { ONE_PERMISSION_USERS } from "../../Data/users";
-import {
-  createVoucher,
-  discountOptions
-} from "../../steps/discounts/vouchersSteps";
-import filterTests from "../../support/filterTests";
-import { urlList } from "../../url/urlList";
-import * as channelsUtils from "../../utils/channelsUtils";
-import { deleteVouchersStartsWith } from "../../utils/discounts/vouchersUtils";
-import { createCheckoutWithVoucher } from "../../utils/ordersUtils";
-import * as productsUtils from "../../utils/products/productsUtils";
+import { urlList } from "../../fixtures/urlList";
+import { ONE_PERMISSION_USERS } from "../../fixtures/users";
+import { createChannel } from "../../support/api/requests/Channels";
+import * as channelsUtils from "../../support/api/utils/channelsUtils";
+import { deleteVouchersStartsWith } from "../../support/api/utils/discounts/vouchersUtils";
+import { createCheckoutWithVoucher } from "../../support/api/utils/ordersUtils";
+import * as productsUtils from "../../support/api/utils/products/productsUtils";
 import {
   createShipping,
   deleteShippingStartsWith
-} from "../../utils/shippingUtils";
+} from "../../support/api/utils/shippingUtils";
+import filterTests from "../../support/filterTests";
+import {
+  createVoucher,
+  discountOptions
+} from "../../support/pages/discounts/vouchersPage";
 
-filterTests(["all"], () => {
+filterTests({ definedTags: ["all"] }, () => {
   describe("Vouchers discounts", () => {
     const startsWith = "CyVou-";
     const productPrice = 100;

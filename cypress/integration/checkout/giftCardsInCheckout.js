@@ -1,29 +1,29 @@
 // <reference types="cypress" />
 import faker from "faker";
 
-import { completeCheckout } from "../../apiRequests/Checkout";
+import { completeCheckout } from "../../support/api/requests/Checkout";
 import {
   createGiftCard,
   getGiftCardWithId,
   getGiftCardWithTag,
   giftCardDeactivate
-} from "../../apiRequests/giftCards";
-import { changeGiftCardActiveStatus } from "../../steps/giftCardSteps";
-import filterTests from "../../support/filterTests";
-import * as channelsUtils from "../../utils/channelsUtils";
-import { deleteGiftCardsWithTagStartsWith } from "../../utils/giftCardUtils";
+} from "../../support/api/requests/giftCard";
+import { deleteGiftCardsWithTagStartsWith } from "../../support/api/utils/catalog/giftCardUtils";
+import * as channelsUtils from "../../support/api/utils/channelsUtils";
 import {
   addPayment,
   createCheckoutWithVoucher,
   purchaseProductWithPromoCode
-} from "../../utils/ordersUtils";
-import * as productsUtils from "../../utils/products/productsUtils";
+} from "../../support/api/utils/ordersUtils";
+import * as productsUtils from "../../support/api/utils/products/productsUtils";
 import {
   createShipping,
   deleteShippingStartsWith
-} from "../../utils/shippingUtils";
+} from "../../support/api/utils/shippingUtils";
+import filterTests from "../../support/filterTests";
+import { changeGiftCardActiveStatus } from "../../support/pages/catalog/giftCardPage";
 
-filterTests(["all"], () => {
+filterTests({ definedTags: ["all"], version: "3.1.0" }, () => {
   describe("Gift cards in checkout", () => {
     const startsWith = "GiftCardsCheckout";
     const productPrice = 50;
@@ -124,9 +124,9 @@ filterTests(["all"], () => {
           expect(order.total.gross.amount).to.eq(0);
           getGiftCardWithTag(giftCardData.tag);
         })
-        .then(giftCard => {
-          expect(giftCard.initialBalance.amount).to.eq(giftCardData.amount);
-          expect(giftCard.currentBalance.amount).to.eq(
+        .then(giftCardResp => {
+          expect(giftCardResp.initialBalance.amount).to.eq(giftCardData.amount);
+          expect(giftCardResp.currentBalance.amount).to.eq(
             giftCardData.amount - productPrice - shippingPrice
           );
         });
