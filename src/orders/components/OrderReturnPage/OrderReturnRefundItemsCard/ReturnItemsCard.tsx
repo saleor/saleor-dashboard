@@ -22,9 +22,10 @@ import {
   OrderDetails_order_lines
 } from "@saleor/orders/types/OrderDetails";
 import React, { CSSProperties } from "react";
-import { defineMessages, FormattedMessage, useIntl } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import { FormsetQuantityData, FormsetReplacementData } from "../form";
+import { ReturnItemCardMessages as messages } from "../messages";
 import { getById } from "../utils";
 import CardTitle from "./CardTitle";
 import MaximalButton from "./MaximalButton";
@@ -67,27 +68,6 @@ const useStyles = makeStyles(
   },
   { name: "ItemsCard" }
 );
-
-const messages = defineMessages({
-  improperValue: {
-    defaultMessage: "Improper value",
-    description: "error message"
-  },
-
-  titleFulfilled: {
-    defaultMessage: "Fulfillment - #{fulfilmentId}",
-    description: "section header"
-  },
-  titleUnfulfilled: {
-    defaultMessage: "Unfulfilled Items",
-    description: "section header"
-  },
-  deletedVariant: {
-    defaultMessage:
-      "This product is no longer in the database. It won’t be restocked.",
-    description: "status badge description on deleted variants"
-  }
-});
 
 interface OrderReturnRefundLinesCardProps {
   onChangeQuantity: FormsetChange<number>;
