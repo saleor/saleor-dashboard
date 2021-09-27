@@ -78,6 +78,18 @@ const WebhookEvents: React.FC<WebhookEventsProps> = ({
       defaultMessage: "Order updated",
       description: "event"
     }),
+    [WebhookEventTypeEnum.DRAFT_ORDER_CREATED]: intl.formatMessage({
+      defaultMessage: "Draft order created",
+      description: "event"
+    }),
+    [WebhookEventTypeEnum.DRAFT_ORDER_DELETED]: intl.formatMessage({
+      defaultMessage: "Draft order deleted",
+      description: "event"
+    }),
+    [WebhookEventTypeEnum.DRAFT_ORDER_UPDATED]: intl.formatMessage({
+      defaultMessage: "Draft order updated",
+      description: "event"
+    }),
     [WebhookEventTypeEnum.PAGE_CREATED]: intl.formatMessage({
       defaultMessage: "Page created",
       description: "event"
@@ -131,11 +143,11 @@ const WebhookEvents: React.FC<WebhookEventsProps> = ({
       description: "event"
     }),
     [WebhookEventTypeEnum.PRODUCT_VARIANT_BACK_IN_STOCK]: intl.formatMessage({
-      defaultMessage: "Product Variant back in stock",
+      defaultMessage: "Product variant back in stock",
       description: "event"
     }),
     [WebhookEventTypeEnum.PRODUCT_VARIANT_OUT_OF_STOCK]: intl.formatMessage({
-      defaultMessage: "Product Variant out of stock",
+      defaultMessage: "Product variant out of stock",
       description: "event"
     }),
     [WebhookEventTypeEnum.PRODUCT_VARIANT_CREATED]: intl.formatMessage({
