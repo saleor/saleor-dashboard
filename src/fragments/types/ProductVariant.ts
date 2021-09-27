@@ -5,9 +5,9 @@
 
 import { AttributeInputTypeEnum, AttributeEntityTypeEnum, MeasurementUnitsEnum, ProductMediaType, WeightUnitsEnum } from "./../../types/globalTypes";
 
-//===
+// ====================================================
 // GraphQL fragment: ProductVariant
-//===
+// ====================================================
 
 export interface ProductVariant_metadata {
   __typename: "MetadataItem";
