@@ -46,7 +46,9 @@ filterTests({ definedTags: ["all"] }, () => {
         })
         .then(warehouseResp => {
           warehouse = warehouseResp;
-          productsUtils.createTypeAttributeAndCategoryForProduct(startsWith);
+          productsUtils.createTypeAttributeAndCategoryForProduct({
+            name: startsWith
+          });
         })
         .then(
           ({

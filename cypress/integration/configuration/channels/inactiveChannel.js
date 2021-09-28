@@ -79,7 +79,7 @@ filterTests({ definedTags: ["all"] }, () => {
 
     it("should not be possible to create checkout with inactive channel", () => {
       const randomChannel = `${channelStartsWith}${faker.datatype.number()}`;
-      createTypeAttributeAndCategoryForProduct(randomChannel)
+      createTypeAttributeAndCategoryForProduct({ name: randomChannel })
         .then(({ productType, attribute, category }) => {
           createProductInChannel({
             name: randomChannel,
@@ -118,7 +118,7 @@ filterTests({ definedTags: ["all"] }, () => {
       })
         .then(channelResp => {
           channel = channelResp;
-          createTypeAttributeAndCategoryForProduct(randomChannel);
+          createTypeAttributeAndCategoryForProduct({ name: randomChannel });
         })
         .then(({ productType, attribute, category }) => {
           createProductInChannel({

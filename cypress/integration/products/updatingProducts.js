@@ -10,8 +10,8 @@ import { ONE_PERMISSION_USERS } from "../../fixtures/users";
 import { createCategory } from "../../support/api/requests/Category";
 import { createCollection } from "../../support/api/requests/Collections";
 import { getProductDetails } from "../../support/api/requests/storeFront/ProductDetails";
+import { deleteCollectionsStartsWith } from "../../support/api/utils/catalog/collectionsUtils";
 import { getDefaultChannel } from "../../support/api/utils/channelsUtils";
-import { deleteCollectionsStartsWith } from "../../support/api/utils/collectionsUtils";
 import { expectCorrectProductInformation } from "../../support/api/utils/products/checkProductInfo";
 import {
   createProductInChannel,

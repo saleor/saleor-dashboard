@@ -28,18 +28,19 @@ filterTests({ definedTags: ["all"] }, () => {
     before(() => {
       cy.clearSessionData().loginUserViaRequest();
       deleteProductsStartsWith(startsWith);
-      createTypeAttributeAndCategoryForProduct(startsWith, [startsWith]).then(
-        ({ attribute: attributeResp, category, productType }) => {
-          attribute = attributeResp;
-          createProduct({
-            attributeId: attribute.id,
-            attributeValue: startsWith,
-            categoryId: category.id,
-            productTypeId: productType.id,
-            name: startsWith
-          });
-        }
-      );
+      createTypeAttributeAndCategoryForProduct({
+        name: startsWith,
+        attributeValues: [startsWith]
+      }).then(({ attribute: attributeResp, category, productType }) => {
+        attribute = attributeResp;
+        createProduct({
+          attributeId: attribute.id,
+          attributeValue: startsWith,
+          categoryId: category.id,
+          productTypeId: productType.id,
+          name: startsWith
+        });
+      });
     });
 
     it("should use attribute as filter", () => {
