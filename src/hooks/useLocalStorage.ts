@@ -9,6 +9,8 @@ export default function useLocalStorage<T>(
     try {
       if (typeof valueToStore === "string") {
         localStorage.setItem(key, valueToStore);
+      } else if (typeof valueToStore === "undefined") {
+        localStorage.setItem(key, "");
       } else {
         localStorage.setItem(key, JSON.stringify(valueToStore));
       }
