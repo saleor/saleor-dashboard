@@ -5,9 +5,11 @@ import SaveFilterTabDialog, {
   SaveFilterTabDialogFormData
 } from "@saleor/components/SaveFilterTabDialog";
 import { useShopLimitsQuery } from "@saleor/components/Shop/query";
+import { DEFAULT_INITIAL_PAGINATION_DATA } from "@saleor/config";
 import useListSettings from "@saleor/hooks/useListSettings";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
+import { usePaginationReset } from "@saleor/hooks/usePaginationReset";
 import usePaginator, {
   createPaginationState
 } from "@saleor/hooks/usePaginator";
@@ -55,6 +57,15 @@ export const OrderList: React.FC<OrderListProps> = ({ params }) => {
   const { updateListSettings, settings } = useListSettings(
     ListViews.ORDER_LIST
   );
+
+  usePaginationReset(
+    orderListUrl({
+      ...params,
+      ...DEFAULT_INITIAL_PAGINATION_DATA
+    }),
+    settings.rowNumber
+  );
+
   const intl = useIntl();
 
   const handleCreateOrderCreateSuccess = (data: OrderDraftCreate) => {
