@@ -54,6 +54,9 @@ const useStyles = makeStyles(
       quantityInnerInputNoRemaining: {
         paddingRight: 0
       },
+      colProduct: {
+        width: "50%"
+      },
       remainingQuantity: {
         ...inputPadding,
         color: theme.palette.text.secondary,
@@ -121,7 +124,6 @@ const ItemsCard: React.FC<OrderReturnRefundLinesCardProps> = ({
                 description="table column header"
               />
             </TableCell>
-            <TableCell />
             <TableCell align="right">
               <FormattedMessage
                 defaultMessage="Price"
@@ -165,18 +167,12 @@ const ItemsCard: React.FC<OrderReturnRefundLinesCardProps> = ({
                 : quantity - quantityFulfilled;
               const isSelected = itemsSelections.find(getById(id))?.value;
               const currentQuantity = itemsQuantities.find(getById(id))?.value;
-              const anyLineWithoutVariant = lines.some(
-                ({ variant }) => !variant
-              );
-              const productNameCellWidth = anyLineWithoutVariant
-                ? "30%"
-                : "50%";
 
               return (
                 <TableRow key={id}>
                   <TableCellAvatar
                     thumbnail={thumbnail?.url}
-                    style={{ width: productNameCellWidth }}
+                    className={classes.colProduct}
                     badge={
                       isDeleted && (
                         <StatusBadge
@@ -190,7 +186,6 @@ const ItemsCard: React.FC<OrderReturnRefundLinesCardProps> = ({
                   >
                     {productName || <Skeleton />}
                   </TableCellAvatar>
-                  <TableCell />
                   <TableCell align="right">
                     <Money
                       money={{
@@ -204,8 +199,7 @@ const ItemsCard: React.FC<OrderReturnRefundLinesCardProps> = ({
                       type="number"
                       inputProps={{
                         className: classes.quantityInnerInput,
-                        "data-test": "quantityInput",
-                        "data-test-id": id,
+                        "data-test-id": "quantityInput",
                         max: lineQuantity.toString(),
                         min: 0,
                         style: { textAlign: "right" }
