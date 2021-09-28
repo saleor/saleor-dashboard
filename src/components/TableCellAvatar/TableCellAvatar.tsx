@@ -29,7 +29,11 @@ const TableCellAvatar: React.FC<TableCellAvatarProps> = props => {
   const classes = useStyles(props);
 
   return (
-    <TableCell className={classNames(classes.root, className)} {...rest}>
+    <TableCell
+      className={classNames(classes.root, className)}
+      data-test-id="tableCellAvatar"
+      {...rest}
+    >
       <Avatar {...rest} />
     </TableCell>
   );
