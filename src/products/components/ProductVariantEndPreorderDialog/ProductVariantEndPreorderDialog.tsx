@@ -6,7 +6,7 @@ import { defineMessages, useIntl } from "react-intl";
 
 const messages = defineMessages({
   dialogTitle: {
-    defaultMessage: "Ending Preorder",
+    defaultMessage: "Ending preorder",
     description: "dialog header"
   },
   dialogMessage: {

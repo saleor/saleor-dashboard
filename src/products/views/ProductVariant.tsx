@@ -166,19 +166,19 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
         variantChannel => variantChannel.channel.id === channel.id
       );
 
-      const priceHaveChanged =
+      const priceHasChanged =
         channel.value.price !== variantChannel?.price?.amount.toString();
 
-      const costPriceHaveChanged =
+      const costPriceHasChanged =
         channel.value.costPrice !==
         variantChannel?.costPrice?.amount.toString();
 
-      const preorderThresholdHaveChanged =
+      const preorderThresholdHasChanged =
         channel.value.preorderThreshold !==
         variantChannel.preorderThreshold.quantity;
 
       return (
-        priceHaveChanged || costPriceHaveChanged || preorderThresholdHaveChanged
+        priceHasChanged || costPriceHasChanged || preorderThresholdHasChanged
       );
     });
 
