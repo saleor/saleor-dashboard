@@ -22,7 +22,7 @@ export const ReturnItemCardMessages = defineMessages({
     description: "section header"
   },
   titleUnfulfilled: {
-    defaultMessage: "Unfulfilled Items",
+    defaultMessage: "Unfulfilled items",
     description: "section header"
   },
   deletedVariant: {
