@@ -40,7 +40,10 @@ const useStyles = makeStyles(
     },
     paper: {
       marginTop: theme.spacing(2),
-      maxHeight: ITEM_HEIGHT * 4.5,
+      maxHeight: () => {
+        console.log({ ITEM_HEIGHT });
+        return ITEM_HEIGHT * 4.5;
+      },
       overflowY: "scroll"
     }
   }),
