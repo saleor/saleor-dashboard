@@ -27,6 +27,9 @@ const useStyles = makeStyles(
       fontWeight: 500,
       lineHeight: 1
     },
+    subtitle: {
+      fontWeight: 400
+    },
     toolbar: {
       marginRight: theme.spacing(-1)
     }
@@ -39,8 +42,10 @@ interface CardTitleProps {
   className?: string;
   height?: "default" | "const";
   title: string | React.ReactNode;
+  subtitle?: string | React.ReactNode;
   toolbar?: React.ReactNode;
   onClick?: (event: React.MouseEvent<any>) => void;
+  showHorizontalLine?: boolean;
 }
 
 const CardTitle: React.FC<CardTitleProps> = props => {
@@ -49,8 +54,10 @@ const CardTitle: React.FC<CardTitleProps> = props => {
     children,
     height,
     title,
+    subtitle,
     toolbar,
     onClick,
+    showHorizontalLine = true,
     ...rest
   } = props;
 
@@ -76,7 +83,7 @@ const CardTitle: React.FC<CardTitleProps> = props => {
         <div className={classes.toolbar}>{toolbar}</div>
       </div>
       <div className={classes.children}>{children}</div>
-      <hr className={classes.hr} />
+      {showHorizontalLine && <hr className={classes.hr} />}
     </>
   );
 };
