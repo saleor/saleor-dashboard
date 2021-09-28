@@ -1,10 +1,12 @@
 import { Button, DialogContentText } from "@material-ui/core";
 import ActionDialog from "@saleor/components/ActionDialog";
+import { DEFAULT_INITIAL_PAGINATION_DATA } from "@saleor/config";
 import { configurationMenuUrl } from "@saleor/configuration";
 import useBulkActions from "@saleor/hooks/useBulkActions";
 import useListSettings from "@saleor/hooks/useListSettings";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
+import { usePaginationReset } from "@saleor/hooks/usePaginationReset";
 import usePaginator, {
   createPaginationState
 } from "@saleor/hooks/usePaginator";
@@ -45,6 +47,15 @@ const MenuList: React.FC<MenuListProps> = ({ params }) => {
   const { updateListSettings, settings } = useListSettings(
     ListViews.NAVIGATION_LIST
   );
+
+  usePaginationReset(
+    menuListUrl({
+      ...params,
+      ...DEFAULT_INITIAL_PAGINATION_DATA
+    }),
+    settings.rowNumber
+  );
+
   const intl = useIntl();
 
   const closeModal = () =>

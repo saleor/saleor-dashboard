@@ -19,6 +19,7 @@ import useBulkActions from "@saleor/hooks/useBulkActions";
 import useListSettings from "@saleor/hooks/useListSettings";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
+import { usePaginationReset } from "@saleor/hooks/usePaginationReset";
 import usePaginator, {
   createPaginationState
 } from "@saleor/hooks/usePaginator";
@@ -94,6 +95,15 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
   const { updateListSettings, settings } = useListSettings<ProductListColumns>(
     ListViews.PRODUCT_LIST
   );
+
+  usePaginationReset(
+    productListUrl({
+      ...params,
+      ...DEFAULT_INITIAL_PAGINATION_DATA
+    }),
+    settings.rowNumber
+  );
+
   const intl = useIntl();
   const {
     data: initialFilterAttributes
@@ -176,19 +186,6 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
     ProductListUrlDialog,
     ProductListUrlQueryParams
   >(navigate, productListUrl, params);
-
-  // Reset pagination
-  React.useEffect(
-    () =>
-      navigate(
-        productListUrl({
-          ...params,
-          ...DEFAULT_INITIAL_PAGINATION_DATA
-        }),
-        true
-      ),
-    [settings.rowNumber]
-  );
 
   const tabs = getFilterTabs();
 
