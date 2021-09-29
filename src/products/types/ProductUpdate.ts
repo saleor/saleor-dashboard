@@ -317,7 +317,7 @@ export interface ProductUpdate_productUpdate_product_variants {
   media: ProductUpdate_productUpdate_product_variants_media[] | null;
   stocks: (ProductUpdate_productUpdate_product_variants_stocks | null)[] | null;
   trackInventory: boolean;
-  preorder: ProductUpdate_productUpdate_product_variants_preorder;
+  preorder: ProductUpdate_productUpdate_product_variants_preorder | null;
   channelListings: ProductUpdate_productUpdate_product_variants_channelListings[] | null;
 }
 

@@ -362,7 +362,7 @@ export interface VariantCreate_productVariantCreate_productVariant {
   sku: string | null;
   stocks: (VariantCreate_productVariantCreate_productVariant_stocks | null)[] | null;
   trackInventory: boolean;
-  preorder: VariantCreate_productVariantCreate_productVariant_preorder;
+  preorder: VariantCreate_productVariantCreate_productVariant_preorder | null;
   weight: VariantCreate_productVariantCreate_productVariant_weight | null;
 }
 

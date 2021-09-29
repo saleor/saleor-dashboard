@@ -355,7 +355,7 @@ export interface ProductVariantDetails_productVariant {
   sku: string | null;
   stocks: (ProductVariantDetails_productVariant_stocks | null)[] | null;
   trackInventory: boolean;
-  preorder: ProductVariantDetails_productVariant_preorder;
+  preorder: ProductVariantDetails_productVariant_preorder | null;
   weight: ProductVariantDetails_productVariant_weight | null;
 }
 

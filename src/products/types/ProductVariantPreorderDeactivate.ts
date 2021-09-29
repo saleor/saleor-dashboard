@@ -20,7 +20,7 @@ export interface ProductVariantPreorderDeactivate_productVariantPreorderDeactiva
 export interface ProductVariantPreorderDeactivate_productVariantPreorderDeactivate_productVariant {
   __typename: "ProductVariant";
   id: string;
-  preorder: ProductVariantPreorderDeactivate_productVariantPreorderDeactivate_productVariant_preorder;
+  preorder: ProductVariantPreorderDeactivate_productVariantPreorderDeactivate_productVariant_preorder | null;
 }
 
 export interface ProductVariantPreorderDeactivate_productVariantPreorderDeactivate_errors {

@@ -317,7 +317,7 @@ export interface SimpleProductUpdate_productUpdate_product_variants {
   media: SimpleProductUpdate_productUpdate_product_variants_media[] | null;
   stocks: (SimpleProductUpdate_productUpdate_product_variants_stocks | null)[] | null;
   trackInventory: boolean;
-  preorder: SimpleProductUpdate_productUpdate_product_variants_preorder;
+  preorder: SimpleProductUpdate_productUpdate_product_variants_preorder | null;
   channelListings: SimpleProductUpdate_productUpdate_product_variants_channelListings[] | null;
 }
 
@@ -717,7 +717,7 @@ export interface SimpleProductUpdate_productVariantUpdate_productVariant {
   sku: string | null;
   stocks: (SimpleProductUpdate_productVariantUpdate_productVariant_stocks | null)[] | null;
   trackInventory: boolean;
-  preorder: SimpleProductUpdate_productVariantUpdate_productVariant_preorder;
+  preorder: SimpleProductUpdate_productVariantUpdate_productVariant_preorder | null;
   weight: SimpleProductUpdate_productVariantUpdate_productVariant_weight | null;
 }
 
@@ -1080,7 +1080,7 @@ export interface SimpleProductUpdate_productVariantStocksCreate_productVariant {
   sku: string | null;
   stocks: (SimpleProductUpdate_productVariantStocksCreate_productVariant_stocks | null)[] | null;
   trackInventory: boolean;
-  preorder: SimpleProductUpdate_productVariantStocksCreate_productVariant_preorder;
+  preorder: SimpleProductUpdate_productVariantStocksCreate_productVariant_preorder | null;
   weight: SimpleProductUpdate_productVariantStocksCreate_productVariant_weight | null;
 }
 
@@ -1442,7 +1442,7 @@ export interface SimpleProductUpdate_productVariantStocksDelete_productVariant {
   sku: string | null;
   stocks: (SimpleProductUpdate_productVariantStocksDelete_productVariant_stocks | null)[] | null;
   trackInventory: boolean;
-  preorder: SimpleProductUpdate_productVariantStocksDelete_productVariant_preorder;
+  preorder: SimpleProductUpdate_productVariantStocksDelete_productVariant_preorder | null;
   weight: SimpleProductUpdate_productVariantStocksDelete_productVariant_weight | null;
 }
 
@@ -1805,7 +1805,7 @@ export interface SimpleProductUpdate_productVariantStocksUpdate_productVariant {
   sku: string | null;
   stocks: (SimpleProductUpdate_productVariantStocksUpdate_productVariant_stocks | null)[] | null;
   trackInventory: boolean;
-  preorder: SimpleProductUpdate_productVariantStocksUpdate_productVariant_preorder;
+  preorder: SimpleProductUpdate_productVariantStocksUpdate_productVariant_preorder | null;
   weight: SimpleProductUpdate_productVariantStocksUpdate_productVariant_weight | null;
 }
 

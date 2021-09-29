@@ -310,7 +310,7 @@ export interface Product_variants {
   media: Product_variants_media[] | null;
   stocks: (Product_variants_stocks | null)[] | null;
   trackInventory: boolean;
-  preorder: Product_variants_preorder;
+  preorder: Product_variants_preorder | null;
   channelListings: Product_variants_channelListings[] | null;
 }
 

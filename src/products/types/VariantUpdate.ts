@@ -362,7 +362,7 @@ export interface VariantUpdate_productVariantUpdate_productVariant {
   sku: string | null;
   stocks: (VariantUpdate_productVariantUpdate_productVariant_stocks | null)[] | null;
   trackInventory: boolean;
-  preorder: VariantUpdate_productVariantUpdate_productVariant_preorder;
+  preorder: VariantUpdate_productVariantUpdate_productVariant_preorder | null;
   weight: VariantUpdate_productVariantUpdate_productVariant_weight | null;
 }
 
@@ -725,7 +725,7 @@ export interface VariantUpdate_productVariantStocksUpdate_productVariant {
   sku: string | null;
   stocks: (VariantUpdate_productVariantStocksUpdate_productVariant_stocks | null)[] | null;
   trackInventory: boolean;
-  preorder: VariantUpdate_productVariantStocksUpdate_productVariant_preorder;
+  preorder: VariantUpdate_productVariantStocksUpdate_productVariant_preorder | null;
   weight: VariantUpdate_productVariantStocksUpdate_productVariant_weight | null;
 }
 
