@@ -7,6 +7,7 @@ import { SHARED_ELEMENTS } from "../../elements/shared/sharedElements";
 import { demoProductsNames } from "../../fixtures/products";
 import { productDetailsUrl, urlList } from "../../fixtures/urlList";
 import { getFirstProducts } from "../../support/api/requests/Product";
+import { loginDeleteProductsAndCreateNewOneWithNewDataAndDefaultChannel } from "../../support/api/utils/products/productsUtils";
 import filterTests from "../../support/filterTests";
 
 filterTests({ definedTags: ["all"] }, () => {
@@ -63,8 +64,28 @@ filterTests({ definedTags: ["all"] }, () => {
         });
     });
 
-    // xit("should upload image", () => {
+    it("Should upload saved image", () => {
+      const name = "CyImages";
 
-    // })
+      loginDeleteProductsAndCreateNewOneWithNewDataAndDefaultChannel({ name })
+        .then(product => {
+          cy.visit(productDetailsUrl(product.id))
+            .get(PRODUCT_DETAILS.uploadImageButton)
+            .click()
+            .get(PRODUCT_DETAILS.uploadSavedImagesButton)
+            .click()
+            .get(SHARED_ELEMENTS.fileInput)
+            .attachFile("images/saleorDemoProductSneakers.png")
+            .get(PRODUCT_DETAILS.productImage)
+            .find("img")
+            .invoke("attr", "src");
+        })
+        .then(imageUrl => {
+          cy.request(imageUrl);
+        })
+        .then(imageResp => {
+          expect(imageResp.status).to.equal(200);
+        });
+    });
   });
 });

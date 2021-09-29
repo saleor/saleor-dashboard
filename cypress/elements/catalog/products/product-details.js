@@ -19,5 +19,9 @@ export const PRODUCT_DETAILS = {
   variantRow: "[data-test-id='product-variant-row']",
   variantPrice: '[data-test="price"]',
   collectionRemoveButtons: '[data-test-id="collectionRemove"]',
-  productImage: '[data-test="product-image"]'
+  productImage: '[data-test="product-image"]',
+  uploadImageButton: '[data-test="button-upload-image"]',
+  uploadSavedImagesButton: '[data-test="uploadImages"]',
+  uploadMediaUrlButton: '[data-test="uploadMediaUrl"]',
+  saveUploadUrlButton: '[data-test-id="upload-url-button"]'
 };
