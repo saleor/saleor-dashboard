@@ -82,7 +82,9 @@ filterTests({ definedTags: ["all"] }, () => {
           }) => {
             shippingMethod = shippingMethodResp;
             warehouse = warehouseResp;
-            productsUtils.createTypeAttributeAndCategoryForProduct(randomName);
+            productsUtils.createTypeAttributeAndCategoryForProduct({
+              name: randomName
+            });
           }
         )
         .then(

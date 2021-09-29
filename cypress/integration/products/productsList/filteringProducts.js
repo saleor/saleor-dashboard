@@ -41,7 +41,7 @@ filterTests({ definedTags: ["all"] }, () => {
       cy.clearSessionData().loginUserViaRequest();
       deleteShippingStartsWith(startsWith);
       deleteProductsStartsWith(startsWith);
-      createTypeAttributeAndCategoryForProduct(name).then(
+      createTypeAttributeAndCategoryForProduct({ name }).then(
         ({
           attribute: attributeResp,
           productType: productTypeResp,

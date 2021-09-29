@@ -74,7 +74,7 @@ filterTests({ definedTags: ["stagedOnly"] }, () => {
             shippingMethod = shippingMethodResp;
           }
         );
-      createTypeAttributeAndCategoryForProduct(name)
+      createTypeAttributeAndCategoryForProduct({ name })
         .then(({ productType, attribute, category }) => {
           createProductInChannel({
             name,

@@ -67,3 +67,6 @@ export const warehouseDetailsUrl = warehouseId =>
 
 export const productTypeDetailsUrl = productTypeId =>
   `${urlList.productTypes}${productTypeId}`;
+
+export const giftCardDetailsUrl = giftCardId =>
+  `${urlList.giftCards}${giftCardId}`;

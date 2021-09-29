@@ -44,19 +44,6 @@ filterTests({ definedTags: ["all"] }, () => {
       });
     });
 
-    it("should change site url", () => {
-      const url = `http://cypress${faker.datatype.number()}.saleor.com`;
-
-      cy.get(SITE_SETTINGS_DETAILS.urlInput)
-        .clearAndType(url)
-        .get(BUTTON_SELECTORS.confirm)
-        .click()
-        .confirmationMessageShouldDisappear();
-      getShopInfo().then(shopInfo => {
-        expect(shopInfo.domain.host).to.eq(url);
-      });
-    });
-
     it("should change store description", () => {
       const description = faker.lorem.sentence();
 

@@ -4,6 +4,8 @@
 import faker from "faker";
 
 import { getGiftCardWithTag } from "../../support/api/requests/GiftCard";
+import { deleteGiftCardsWithTagStartsWith } from "../../support/api/utils/catalog/giftCardUtils";
+import { addToDate } from "../../support/api/utils/misc";
 import filterTests from "../../support/filterTests";
 import { formatDate } from "../../support/formatData/formatDate";
 import {
@@ -11,8 +13,7 @@ import {
   openAndFillUpCreateGiftCardDialog,
   saveGiftCard,
   setExpiryDate,
-  setExpiryPeriod,
-  setNeverExpire
+  setExpiryPeriod
 } from "../../support/pages/catalog/giftCardPage";
 
 filterTests({ definedTags: ["all"], version: "3.1.0" }, () => {
@@ -23,6 +24,7 @@ filterTests({ definedTags: ["all"], version: "3.1.0" }, () => {
 
     before(() => {
       cy.clearSessionData().loginUserViaRequest();
+      deleteGiftCardsWithTagStartsWith(startsWith);
     });
 
     beforeEach(() => {
@@ -39,11 +41,10 @@ filterTests({ definedTags: ["all"], version: "3.1.0" }, () => {
         amount,
         currency
       });
-      setNeverExpire();
       saveGiftCard()
         .then(createdGiftCardCode => {
           giftCardCode = createdGiftCardCode;
-          getGiftCardWithTag(name);
+          getGiftCardWithTag(name, true);
         })
         .then(giftCard => {
           expect(giftCard.code).to.eq(giftCardCode);
@@ -55,6 +56,7 @@ filterTests({ definedTags: ["all"], version: "3.1.0" }, () => {
     it("should create gift card with two moths expiry", () => {
       const name = `${startsWith}${faker.datatype.number()}`;
       let giftCardCode;
+      const expectedExpiryDate = addToDate(new Date(), 2, "M");
 
       openAndFillUpCreateGiftCardDialog({
         note: name,
@@ -66,14 +68,13 @@ filterTests({ definedTags: ["all"], version: "3.1.0" }, () => {
       saveGiftCard()
         .then(createdGiftCardCode => {
           giftCardCode = createdGiftCardCode;
-          getGiftCardWithTag(name);
+          getGiftCardWithTag(name, true);
         })
         .then(giftCard => {
           expect(giftCard.code).to.eq(giftCardCode);
           expect(giftCard.initialBalance.amount).to.eq(amount);
           expect(giftCard.initialBalance.currency).to.eq(currency);
-          expect(giftCard.expiryPeriod.amount).to.eq(2);
-          expect(giftCard.expiryPeriod.type).to.eq("MONTH");
+          expect(giftCard.expiryDate).to.eq(expectedExpiryDate);
         });
     });
 
@@ -92,7 +93,7 @@ filterTests({ definedTags: ["all"], version: "3.1.0" }, () => {
       saveGiftCard()
         .then(createdGiftCardCode => {
           giftCardCode = createdGiftCardCode;
-          getGiftCardWithTag(name);
+          getGiftCardWithTag(name, true);
         })
         .then(giftCard => {
           expect(giftCard.code).to.eq(giftCardCode);

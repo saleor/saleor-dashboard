@@ -60,7 +60,9 @@ filterTests({ definedTags: ["all"] }, () => {
         })
         .then(({ warehouse: warehouseResp }) => {
           warehouse = warehouseResp;
-          productsUtils.createTypeAttributeAndCategoryForProduct(randomName);
+          productsUtils.createTypeAttributeAndCategoryForProduct({
+            name: randomName
+          });
         })
         .then(
           ({
