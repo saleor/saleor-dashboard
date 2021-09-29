@@ -9,6 +9,7 @@ import {
   addShippingMethod,
   createCheckout
 } from "../../support/api/requests/Checkout";
+import { deleteChannelsStartsWith } from "../../support/api/utils/channelsUtils";
 import {
   createProductInChannel,
   createTypeAttributeAndCategoryForProduct,
@@ -38,6 +39,7 @@ filterTests({ definedTags: ["all"] }, () => {
 
       deleteProductsStartsWith(startsWith);
       deleteShippingStartsWith(startsWith);
+      deleteChannelsStartsWith(startsWith);
 
       createChannel({
         name
