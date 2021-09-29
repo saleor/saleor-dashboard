@@ -15,7 +15,7 @@ import { useIntl } from "react-intl";
 import { LanguageCodeEnum } from "../../../types/globalTypes";
 import { getTranslationFields } from "../../utils";
 import TranslationFields from "../TranslationFields";
-import messages from "./messages";
+import { transtionsAttributesPageFieldsMessages as messages } from "./messages";
 
 export interface TranslationsAttributesPageProps
   extends TranslationsEntitiesPageProps {

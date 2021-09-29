@@ -1,10 +1,12 @@
 import { OutputData } from "@editorjs/editorjs";
+import type { AttributeTranslationDetailsFragment_attribute_choices } from "@saleor/fragments/types/AttributeTranslationDetailsFragment";
 import { TranslationField } from "@saleor/translations/types";
 import { mapEdgesToItems } from "@saleor/utils/maps";
 import { getParsedDataForJsonStringField } from "@saleor/utils/richText/misc";
+import type {IntlShape} from "react-intl"
 
 import { fieldNames } from "./components/TranslationsAttributesPage";
-import messages from "./components/TranslationsAttributesPage/messages";
+import {transtionsAttributesPageFieldsMessages  as messages} from "./components/TranslationsAttributesPage/messages";
 import {
   PageTranslationInputFieldName,
   TranslationInputFieldName
@@ -31,7 +33,7 @@ export const getParsedTranslationInputData = ({
   return { [fieldName]: data as string };
 };
 
-export const getTranslationFields = (fields, intl) =>
+export const getTranslationFields = (fields: AttributeTranslationDetailsFragment_attribute_choices, intl: IntlShape) =>
   mapEdgesToItems(fields).map(
     ({ id, name, translation }, attributeValueIndex) => {
       const displayName = intl.formatMessage(messages.valueNumber, {

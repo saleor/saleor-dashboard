@@ -1,6 +1,6 @@
 import { defineMessages } from "react-intl";
 
-const messages = defineMessages({
+export const transtionsAttributesPageFieldsMessages = defineMessages({
   values: {
     defaultMessage: "Values",
     description: "section name"
@@ -11,5 +11,3 @@ const messages = defineMessages({
     description: "attribute values"
   }
 });
-
-export default messages;
