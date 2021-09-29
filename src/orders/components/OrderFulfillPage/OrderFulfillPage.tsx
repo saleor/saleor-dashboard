@@ -20,7 +20,10 @@ import Savebar from "@saleor/components/Savebar";
 import Skeleton from "@saleor/components/Skeleton";
 import TableCellAvatar from "@saleor/components/TableCellAvatar";
 import { WarehouseFragment } from "@saleor/fragments/types/WarehouseFragment";
-import useFormset, { FormsetData } from "@saleor/hooks/useFormset";
+import useFormset, {
+  FormsetChange,
+  FormsetData
+} from "@saleor/hooks/useFormset";
 import { Backlink } from "@saleor/macaw-ui";
 import { makeStyles } from "@saleor/macaw-ui";
 import { renderCollection } from "@saleor/misc";
@@ -37,8 +40,6 @@ import { update } from "@saleor/utils/lists";
 import classNames from "classnames";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
-
-import OrderFulfillStockExceededDialog from "../OrderFulfillStockExceededDialog";
 
 type ClassKey =
   | "actionBar"
@@ -137,6 +138,8 @@ interface OrderFulfillSubmitData extends OrderFulfillFormData {
 export interface OrderFulfillPageProps {
   loading: boolean;
   errors: FulfillOrder_orderFulfill_errors[];
+  formsetChange: FormsetChange<OrderFulfillStockInput[]>;
+  formsetData: FormsetData<null, OrderFulfillStockInput[]>;
   order: OrderFulfillData_order;
   saveButtonBar: ConfirmButtonTransitionState;
   warehouses: WarehouseFragment[];
@@ -164,35 +167,14 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
     order,
     saveButtonBar,
     warehouses,
+    formsetData,
+    formsetChange,
     onBack,
     onSubmit
   } = props;
 
   const intl = useIntl();
   const classes = useStyles(props);
-
-  const { change: formsetChange, data: formsetData } = useFormset<
-    null,
-    OrderFulfillStockInput[]
-  >(
-    order?.lines
-      .filter(line => isFulfillable(line))
-      .map(line => ({
-        data: null,
-        id: line.id,
-        label: line.variant.attributes
-          .map(attribute =>
-            attribute.values
-              .map(attributeValue => attributeValue.name)
-              .join(" , ")
-          )
-          .join(" / "),
-        value: line.variant.stocks.map(stock => ({
-          quantity: 0,
-          warehouse: stock.warehouse.id
-        }))
-      }))
-  );
 
   const handleSubmit = (formData: OrderFulfillFormData) =>
     onSubmit({
@@ -242,17 +224,17 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
     }
 
     // this is now legal
-    const isQuantityLargerThanAvailable =
-      line.variant.trackInventory && formsetStock.quantity > availableQuantity;
+    // const isQuantityLargerThanAvailable =
+    //   line.variant.trackInventory && formsetStock.quantity > availableQuantity;
 
-    const isError = !!errors?.find(
-      err =>
-        err.warehouse === warehouse.id &&
-        err.orderLines.find((id: string) => id === line.id) &&
-        err.code === OrderErrorCode.INSUFFICIENT_STOCK
-    );
+    // const isError = !!errors?.find(
+    //   err =>
+    //     err.warehouse === warehouse.id &&
+    //     err.orderLines.find((id: string) => id === line.id) &&
+    //     err.code === OrderErrorCode.INSUFFICIENT_STOCK
+    // );
 
-    return isError;
+    // return isError;
   };
 
   return (
