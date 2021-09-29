@@ -7,23 +7,15 @@ import { AttributeTranslationDetailsFragment } from "@saleor/fragments/types/Att
 import { commonMessages, sectionNames } from "@saleor/intl";
 import { Backlink } from "@saleor/macaw-ui";
 import { getStringOrPlaceholder } from "@saleor/misc";
-import {
-  TranslationField,
-  TranslationsEntitiesPageProps
-} from "@saleor/translations/types";
+import { TranslationsEntitiesPageProps } from "@saleor/translations/types";
 import { ListSettings } from "@saleor/types";
 import React from "react";
-import { defineMessages, useIntl } from "react-intl";
+import { useIntl } from "react-intl";
 
 import { LanguageCodeEnum } from "../../../types/globalTypes";
+import { getTranslationFields } from "../../utils";
 import TranslationFields from "../TranslationFields";
-
-export const messages = defineMessages({
-  values: {
-    defaultMessage: "Values",
-    description: "section name"
-  }
-});
+import messages from "./messages";
 
 export interface TranslationsAttributesPageProps
   extends TranslationsEntitiesPageProps {
@@ -119,29 +111,7 @@ const TranslationsAttributesPage: React.FC<TranslationsAttributesPageProps> = ({
           disabled={disabled}
           initialState={true}
           title={intl.formatMessage(messages.values)}
-          fields={
-            data?.attribute?.choices?.edges?.map(
-              ({ node: attributeValue }, attributeValueIndex) => {
-                const displayName = intl.formatMessage(
-                  {
-                    defaultMessage: "Value {number}",
-                    description: "attribute values"
-                  },
-                  {
-                    number: attributeValueIndex + 1
-                  }
-                );
-
-                return {
-                  displayName,
-                  name: `${fieldNames.value}:${attributeValue.id}`,
-                  translation: attributeValue?.translation?.name || null,
-                  type: "short" as TranslationField["type"],
-                  value: attributeValue?.name
-                };
-              }
-            ) || []
-          }
+          fields={getTranslationFields(data?.attribute?.choices, intl)}
           saveButtonState={saveButtonState}
           richTextResetKey={languageCode}
           pagination={{
