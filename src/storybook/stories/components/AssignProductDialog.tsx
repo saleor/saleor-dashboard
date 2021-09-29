@@ -1,9 +1,8 @@
-import placeholderImage from "@assets/images/placeholder60x60.png";
 import AssignProductDialog, {
   AssignProductDialogProps
 } from "@saleor/components/AssignProductDialog";
 import { fetchMoreProps } from "@saleor/fixtures";
-import { products } from "@saleor/products/fixtures";
+import { products } from "@saleor/shipping/fixtures";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
@@ -17,7 +16,7 @@ const props: AssignProductDialogProps = {
   onFetch: () => undefined,
   onSubmit: () => undefined,
   open: true,
-  products: products(placeholderImage)
+  products
 };
 
 storiesOf("Generics / Assign product", module)

@@ -1907,6 +1907,9 @@
     "context": "dialog header",
     "string": "Assign Product"
   },
+  "src_dot_components_dot_AssignVariantDialog_dot_3284796469": {
+    "string": "No products available in order channel matching given query"
+  },
   "src_dot_components_dot_AssignVariantDialog_dot_assignVariantDialogButton": {
     "context": "button",
     "string": "Assign variants"
@@ -1918,8 +1921,12 @@
     "context": "dialog header",
     "string": "Assign Variant"
   },
+  "src_dot_components_dot_AssignVariantDialog_dot_assignVariantDialogSKU": {
+    "context": "variant sku",
+    "string": "SKU {sku}"
+  },
   "src_dot_components_dot_AssignVariantDialog_dot_assignVariantDialogSearch": {
-    "string": "Search by variant name, attribute, variant type etc..."
+    "string": "Search by product name, attribute, product type etc..."
   },
   "src_dot_components_dot_AttributeUnassignDialog_dot_2037985699": {
     "string": "Are you sure you want to unassign {attributeName} from {itemTypeName}?"

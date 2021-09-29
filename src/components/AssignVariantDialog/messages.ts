@@ -13,6 +13,10 @@ export const messages = defineMessages({
     defaultMessage: "Search Variants"
   },
   assignVariantDialogSearch: {
-    defaultMessage: "Search by variant name, attribute, variant type etc..."
+    defaultMessage: "Search by product name, attribute, product type etc..."
+  },
+  assignVariantDialogSKU: {
+    defaultMessage: "SKU {sku}",
+    description: "variant sku"
   }
 });

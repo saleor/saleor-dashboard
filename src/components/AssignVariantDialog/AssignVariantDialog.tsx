@@ -13,12 +13,16 @@ import {
 import ConfirmButton, {
   ConfirmButtonTransitionState
 } from "@saleor/components/ConfirmButton";
+import Money from "@saleor/components/Money";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import TableCellAvatar from "@saleor/components/TableCellAvatar";
 import useSearchQuery from "@saleor/hooks/useSearchQuery";
 import { buttonMessages } from "@saleor/intl";
-import { maybe } from "@saleor/misc";
-import { SearchVariants_search_edges_node } from "@saleor/searches/types/SearchVariants";
+import { maybe, renderCollection } from "@saleor/misc";
+import {
+  SearchProducts_search_edges_node,
+  SearchProducts_search_edges_node_variants
+} from "@saleor/searches/types/SearchProducts";
 import useScrollableDialogStyle from "@saleor/styles/useScrollableDialogStyle";
 import { DialogProps, FetchMoreProps } from "@saleor/types";
 import React from "react";
@@ -29,33 +33,82 @@ import Checkbox from "../Checkbox";
 import { messages } from "./messages";
 import { useStyles } from "./styles";
 
+type SetVariantsAction = (
+  data: SearchProducts_search_edges_node_variants[]
+) => void;
 export interface AssignVariantDialogFormData {
-  variants: SearchVariants_search_edges_node[];
+  products: SearchProducts_search_edges_node[];
   query: string;
 }
 export interface AssignVariantDialogProps extends FetchMoreProps, DialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
-  variants: SearchVariants_search_edges_node[];
+  products: SearchProducts_search_edges_node[];
   loading: boolean;
   onFetch: (value: string) => void;
-  onSubmit: (data: string[]) => void;
+  onSubmit: (data: SearchProducts_search_edges_node_variants[]) => void;
 }
 
-function handleVariantAssign(
-  variantID: string,
-  isSelected: boolean,
-  selectedVariants: string[],
-  setSelectedVariants: (data: string[]) => void
-) {
-  if (isSelected) {
-    setSelectedVariants(
-      selectedVariants.filter(
-        selectedVariants => selectedVariants !== variantID
+function isVariantSelected(
+  variant: SearchProducts_search_edges_node_variants,
+  selectedVariantsToProductsMap: SearchProducts_search_edges_node_variants[]
+): boolean {
+  return !!selectedVariantsToProductsMap.find(
+    selectedVariant => selectedVariant.id === variant.id
+  );
+}
+
+const handleProductAssign = (
+  product: SearchProducts_search_edges_node,
+  productIndex: number,
+  productsWithAllVariantsSelected: boolean[],
+  variants: SearchProducts_search_edges_node_variants[],
+  setVariants: SetVariantsAction
+) =>
+  productsWithAllVariantsSelected[productIndex]
+    ? setVariants(
+        variants.filter(
+          selectedVariant =>
+            !product.variants.find(
+              productVariant => productVariant.id === selectedVariant.id
+            )
+        )
       )
-    );
-  } else {
-    setSelectedVariants([...selectedVariants, variantID]);
-  }
+    : setVariants([
+        ...variants,
+        ...product.variants.filter(
+          productVariant =>
+            !variants.find(
+              selectedVariant => selectedVariant.id === productVariant.id
+            )
+        )
+      ]);
+
+const handleVariantAssign = (
+  variant: SearchProducts_search_edges_node_variants,
+  variantIndex: number,
+  productIndex: number,
+  variants: SearchProducts_search_edges_node_variants[],
+  selectedVariantsToProductsMap: boolean[][],
+  setVariants: SetVariantsAction
+) =>
+  selectedVariantsToProductsMap[productIndex][variantIndex]
+    ? setVariants(
+        variants.filter(selectedVariant => selectedVariant.id !== variant.id)
+      )
+    : setVariants([...variants, variant]);
+
+function hasAllVariantsSelected(
+  productVariants: SearchProducts_search_edges_node_variants[],
+  selectedVariantsToProductsMap: SearchProducts_search_edges_node_variants[]
+): boolean {
+  return productVariants.reduce(
+    (acc, productVariant) =>
+      acc &&
+      !!selectedVariantsToProductsMap.find(
+        selectedVariant => selectedVariant.id === productVariant.id
+      ),
+    true
+  );
 }
 
 const scrollableTargetId = "assignVariantScrollableDialog";
@@ -66,7 +119,7 @@ const AssignVariantDialog: React.FC<AssignVariantDialogProps> = props => {
     hasMore,
     open,
     loading,
-    variants,
+    products,
     onClose,
     onFetch,
     onFetchMore,
@@ -77,9 +130,26 @@ const AssignVariantDialog: React.FC<AssignVariantDialogProps> = props => {
 
   const intl = useIntl();
   const [query, onQueryChange] = useSearchQuery(onFetch);
-  const [selectedVariants, setSelectedVariants] = React.useState<string[]>([]);
+  const [variants, setVariants] = React.useState<
+    SearchProducts_search_edges_node_variants[]
+  >([]);
 
-  const handleSubmit = () => onSubmit(selectedVariants);
+  const productChoices =
+    products?.filter(product => product?.variants?.length > 0) || [];
+
+  const selectedVariantsToProductsMap = productChoices
+    ? productChoices.map(product =>
+        product.variants.map(variant => isVariantSelected(variant, variants))
+      )
+    : [];
+
+  const productsWithAllVariantsSelected = productChoices
+    ? productChoices.map(product =>
+        hasAllVariantsSelected(product.variants, variants)
+      )
+    : [];
+
+  const handleSubmit = () => onSubmit(variants);
 
   return (
     <Dialog
@@ -124,44 +194,93 @@ const AssignVariantDialog: React.FC<AssignVariantDialogProps> = props => {
         >
           <ResponsiveTable key="table">
             <TableBody>
-              {variants &&
-                variants.map(variant => {
-                  const isSelected = selectedVariants.some(
-                    selectedVariant => selectedVariant === variant.id
-                  );
-
-                  return (
-                    <TableRow
-                      key={variant.id}
-                      data-test-id="assign-variant-table-row"
-                    >
-                      <TableCellAvatar
-                        className={classes.avatar}
-                        thumbnail={maybe(() => variant.product.thumbnail.url)}
-                      />
-                      <TableCell className={classes.colName}>
-                        {variant.product.name}
-                      </TableCell>
-                      <TableCell>{variant.name}</TableCell>
+              {renderCollection(
+                products,
+                (product, productIndex) => (
+                  <React.Fragment key={product ? product.id : "skeleton"}>
+                    <TableRow>
                       <TableCell
                         padding="checkbox"
-                        className={classes.checkboxCell}
+                        className={classes.productCheckboxCell}
                       >
                         <Checkbox
-                          checked={isSelected}
+                          checked={
+                            productsWithAllVariantsSelected[productIndex]
+                          }
+                          disabled={loading}
                           onChange={() =>
-                            handleVariantAssign(
-                              variant.id,
-                              isSelected,
-                              selectedVariants,
-                              setSelectedVariants
+                            handleProductAssign(
+                              product,
+                              productIndex,
+                              productsWithAllVariantsSelected,
+                              variants,
+                              setVariants
                             )
                           }
                         />
                       </TableCell>
+                      <TableCellAvatar
+                        className={classes.avatar}
+                        thumbnail={maybe(() => product.thumbnail.url)}
+                      />
+                      <TableCell className={classes.colName} colSpan={2}>
+                        {maybe(() => product.name)}
+                      </TableCell>
                     </TableRow>
-                  );
-                })}
+                    {maybe(() => product.variants, []).map(
+                      (variant, variantIndex) => (
+                        <TableRow key={variant.id}>
+                          <TableCell />
+                          <TableCell className={classes.colVariantCheckbox}>
+                            <Checkbox
+                              className={classes.variantCheckbox}
+                              checked={
+                                selectedVariantsToProductsMap[productIndex][
+                                  variantIndex
+                                ]
+                              }
+                              disabled={loading}
+                              onChange={() =>
+                                handleVariantAssign(
+                                  variant,
+                                  variantIndex,
+                                  productIndex,
+                                  variants,
+                                  selectedVariantsToProductsMap,
+                                  setVariants
+                                )
+                              }
+                            />
+                          </TableCell>
+                          <TableCell className={classes.colName}>
+                            <div>{variant.name}</div>
+                            <div className={classes.grayText}>
+                              <FormattedMessage
+                                {...messages.assignVariantDialogSKU}
+                                values={{
+                                  sku: variant.sku
+                                }}
+                              />
+                            </div>
+                          </TableCell>
+                          <TableCell className={classes.textRight}>
+                            {variant?.channelListings[0]?.price && (
+                              <Money money={variant.channelListings[0].price} />
+                            )}
+                          </TableCell>
+                        </TableRow>
+                      )
+                    )}
+                  </React.Fragment>
+                ),
+                () => (
+                  <TableRow>
+                    <TableCell colSpan={4}>
+                      <FormattedMessage defaultMessage="No products available in order channel matching given query" />
+                    </TableCell>
+                  </TableRow>
+                )
+              )}
             </TableBody>
           </ResponsiveTable>
         </InfiniteScroll>

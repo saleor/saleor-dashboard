@@ -50,7 +50,6 @@ import { productUrl, productVariantEditPath } from "@saleor/products/urls";
 import useCategorySearch from "@saleor/searches/useCategorySearch";
 import useCollectionSearch from "@saleor/searches/useCollectionSearch";
 import useProductSearch from "@saleor/searches/useProductSearch";
-import useVariantSearch from "@saleor/searches/useVariantSearch";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import createMetadataUpdateHandler from "@saleor/utils/handlers/metadataUpdateHandler";
 import { mapEdgesToItems } from "@saleor/utils/maps";
@@ -98,13 +97,6 @@ export const SaleDetails: React.FC<SaleDetailsProps> = ({ id, params }) => {
     search: searchProducts,
     result: searchProductsOpts
   } = useProductSearch({
-    variables: DEFAULT_INITIAL_SEARCH_DATA
-  });
-  const {
-    loadMore: loadMoreVariants,
-    search: searchVariants,
-    result: searchVariantsOpts
-  } = useVariantSearch({
     variables: DEFAULT_INITIAL_SEARCH_DATA
   });
 
@@ -423,13 +415,13 @@ export const SaleDetails: React.FC<SaleDetailsProps> = ({ id, params }) => {
                           <AssignVariantDialog
                             confirmButtonState={saleCataloguesAddOpts.status}
                             hasMore={
-                              searchVariantsOpts.data?.search.pageInfo
+                              searchProductsOpts.data?.search.pageInfo
                                 .hasNextPage
                             }
                             open={params.action === "assign-variant"}
-                            onFetch={searchVariants}
-                            onFetchMore={loadMoreVariants}
-                            loading={searchVariantsOpts.loading}
+                            onFetch={searchProducts}
+                            onFetchMore={loadMoreProducts}
+                            loading={searchProductsOpts.loading}
                             onClose={closeModal}
                             onSubmit={variants =>
                               saleCataloguesAdd({
@@ -437,14 +429,16 @@ export const SaleDetails: React.FC<SaleDetailsProps> = ({ id, params }) => {
                                   ...paginationState,
                                   id,
                                   input: {
-                                    variants
+                                    variants: variants.map(
+                                      variant => variant.id
+                                    )
                                   }
                                 }
                               })
                             }
-                            variants={mapEdgesToItems(
-                              searchVariantsOpts?.data?.search
-                            )?.filter(suggestedVariant => suggestedVariant.id)}
+                            products={mapEdgesToItems(
+                              searchProductsOpts?.data?.search
+                            )?.filter(suggestedProduct => suggestedProduct.id)}
                           />
                           <AssignProductDialog
                             confirmButtonState={saleCataloguesAddOpts.status}
