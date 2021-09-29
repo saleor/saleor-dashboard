@@ -1895,7 +1895,7 @@
   },
   "src_dot_components_dot_AssignProductDialog_dot_assignProductDialogButton": {
     "context": "button",
-    "string": "Assign products"
+    "string": "Assign"
   },
   "src_dot_components_dot_AssignProductDialog_dot_assignProductDialogContent": {
     "string": "Search Products"
@@ -1912,7 +1912,7 @@
   },
   "src_dot_components_dot_AssignVariantDialog_dot_assignVariantDialogButton": {
     "context": "button",
-    "string": "Assign variants"
+    "string": "Assign"
   },
   "src_dot_components_dot_AssignVariantDialog_dot_assignVariantDialogContent": {
     "string": "Search Variants"
@@ -2826,7 +2826,7 @@
   },
   "src_dot_discounts_dot_components_dot_DiscountCategories_dot_discountCategoriesButton": {
     "context": "button",
-    "string": "Assign category"
+    "string": "Assign categories"
   },
   "src_dot_discounts_dot_components_dot_DiscountCategories_dot_discountCategoriesHeader": {
     "context": "section header",
@@ -2846,7 +2846,7 @@
   },
   "src_dot_discounts_dot_components_dot_DiscountCollections_dot_discountCollectionsButton": {
     "context": "button",
-    "string": "Assign collection"
+    "string": "Assign collections"
   },
   "src_dot_discounts_dot_components_dot_DiscountCollections_dot_discountCollectionsHeader": {
     "context": "section header",
@@ -3342,7 +3342,7 @@
   },
   "src_dot_discounts_dot_views_dot_SaleDetails_dot_saleDetailsUnassignCollectionDialog": {
     "context": "dialog content",
-    "string": "{counter,plural,one{Are you sure you want to unassign this collection?} other{Are you sure you want to unassign {displayQuantity} categories?}}"
+    "string": "{counter,plural,one{Are you sure you want to unassign this collection?} other{Are you sure you want to unassign {displayQuantity} collections?}}"
   },
   "src_dot_discounts_dot_views_dot_SaleDetails_dot_saleDetailsUnassignCollectionDialogHeader": {
     "context": "dialog header",
@@ -3358,7 +3358,7 @@
   },
   "src_dot_discounts_dot_views_dot_SaleDetails_dot_saleDetailsUnassignProductDialog": {
     "context": "dialog content",
-    "string": "{counter,plural,one{Are you sure you want to unassign this product?} other{Are you sure you want to unassign {displayQuantity} categories?}}"
+    "string": "{counter,plural,one{Are you sure you want to unassign this product?} other{Are you sure you want to unassign {displayQuantity} products?}}"
   },
   "src_dot_discounts_dot_views_dot_SaleDetails_dot_saleDetailsUnassignProductDialogHeader": {
     "context": "dialog header",
@@ -3370,7 +3370,7 @@
   },
   "src_dot_discounts_dot_views_dot_SaleDetails_dot_saleDetailsUnassignVariantDialog": {
     "context": "dialog content",
-    "string": "{counter,plural,one{Are you sure you want to unassign this variant?} other{Are you sure you want to unassign {displayQuantity} categories?}}"
+    "string": "{counter,plural,one{Are you sure you want to unassign this variant?} other{Are you sure you want to unassign {displayQuantity} variants?}}"
   },
   "src_dot_discounts_dot_views_dot_SaleDetails_dot_saleDetailsUnassignVariantDialogHeader": {
     "context": "dialog header",

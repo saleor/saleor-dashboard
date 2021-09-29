@@ -595,7 +595,7 @@ export const SaleDetails: React.FC<SaleDetailsProps> = ({ id, params }) => {
                             {canOpenBulkActionDialog && (
                               <DialogContentText>
                                 <FormattedMessage
-                                  {...messages.saleDetailsUnassignCategory}
+                                  {...messages.saleDetailsUnassignCategoryDialog}
                                   values={{
                                     counter: params.ids.length,
                                     displayQuantity: (

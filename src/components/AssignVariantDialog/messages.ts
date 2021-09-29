@@ -6,7 +6,7 @@ export const messages = defineMessages({
     description: "dialog header"
   },
   assignVariantDialogButton: {
-    defaultMessage: "Assign variants",
+    defaultMessage: "Assign",
     description: "button"
   },
   assignVariantDialogContent: {

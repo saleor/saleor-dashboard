@@ -6,7 +6,7 @@ export const messages = defineMessages({
     description: "section header"
   },
   discountCollectionsButton: {
-    defaultMessage: "Assign collection",
+    defaultMessage: "Assign collections",
     description: "button"
   },
   discountCollectionsTableProductHeader: {
