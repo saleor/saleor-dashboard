@@ -143,6 +143,10 @@ function getRemainingQuantity(line: OrderFulfillData_order_lines): number {
   return line.quantity - line.quantityFulfilled;
 }
 
+function isFulfillable(line: OrderFulfillData_order_lines): boolean {
+  return getRemainingQuantity(line) > 0 && line.variant !== null;
+}
+
 const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
   const {
     loading,
@@ -162,7 +166,7 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
     OrderFulfillStockInput[]
   >(
     order?.lines
-      .filter(line => getRemainingQuantity(line) > 0)
+      .filter(line => isFulfillable(line))
       .map(line => ({
         data: null,
         id: line.id,
@@ -312,7 +316,7 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
                 </TableHead>
                 <TableBody>
                   {renderCollection(
-                    order?.lines.filter(line => getRemainingQuantity(line) > 0),
+                    order?.lines.filter(line => isFulfillable(line)),
                     (line: OrderFulfillData_order_lines, lineIndex) => {
                       if (!line) {
                         return (

@@ -11,6 +11,7 @@ import {
 } from "@material-ui/core";
 import Money from "@saleor/components/Money";
 import Skeleton from "@saleor/components/Skeleton";
+import StatusBadge from "@saleor/components/StatusBadge";
 import TableCellAvatar from "@saleor/components/TableCellAvatar";
 import { OrderErrorFragment } from "@saleor/fragments/types/OrderErrorFragment";
 import { FormsetChange } from "@saleor/hooks/useFormset";
@@ -21,13 +22,13 @@ import {
   OrderDetails_order_lines
 } from "@saleor/orders/types/OrderDetails";
 import React, { CSSProperties } from "react";
-import { defineMessages, FormattedMessage, useIntl } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import { FormsetQuantityData, FormsetReplacementData } from "../form";
+import { ReturnItemCardMessages as messages } from "../messages";
 import { getById } from "../utils";
 import CardTitle from "./CardTitle";
 import MaximalButton from "./MaximalButton";
-import ProductErrorCell from "./ProductErrorCell";
 
 const useStyles = makeStyles(
   theme => {
@@ -53,6 +54,9 @@ const useStyles = makeStyles(
       quantityInnerInputNoRemaining: {
         paddingRight: 0
       },
+      colProduct: {
+        width: "50%"
+      },
       remainingQuantity: {
         ...inputPadding,
         color: theme.palette.text.secondary,
@@ -67,22 +71,6 @@ const useStyles = makeStyles(
   },
   { name: "ItemsCard" }
 );
-
-const messages = defineMessages({
-  improperValue: {
-    defaultMessage: "Improper value",
-    description: "error message"
-  },
-
-  titleFulfilled: {
-    defaultMessage: "Fulfillment - #{fulfilmentId}",
-    description: "section header"
-  },
-  titleUnfulfilled: {
-    defaultMessage: "Unfulfilled Items",
-    description: "section header"
-  }
-});
 
 interface OrderReturnRefundLinesCardProps {
   onChangeQuantity: FormsetChange<number>;
@@ -136,7 +124,6 @@ const ItemsCard: React.FC<OrderReturnRefundLinesCardProps> = ({
                 description="table column header"
               />
             </TableCell>
-            <TableCell />
             <TableCell align="right">
               <FormattedMessage
                 defaultMessage="Price"
@@ -174,28 +161,31 @@ const ItemsCard: React.FC<OrderReturnRefundLinesCardProps> = ({
               const isRefunded = itemsQuantities.find(getById(id)).data
                 .isRefunded;
               const isReplacable = !!variant && !isRefunded;
-              const isReturnable = !!variant;
+              const isDeleted = !variant;
               const lineQuantity = fulfilmentId
                 ? quantity
                 : quantity - quantityFulfilled;
               const isSelected = itemsSelections.find(getById(id))?.value;
               const currentQuantity = itemsQuantities.find(getById(id))?.value;
-              const anyLineWithoutVariant = lines.some(
-                ({ variant }) => !variant
-              );
-              const productNameCellWidth = anyLineWithoutVariant
-                ? "30%"
-                : "50%";
 
               return (
                 <TableRow key={id}>
                   <TableCellAvatar
                     thumbnail={thumbnail?.url}
-                    style={{ width: productNameCellWidth }}
+                    className={classes.colProduct}
+                    badge={
+                      isDeleted && (
+                        <StatusBadge
+                          variant="error"
+                          description={intl.formatMessage(
+                            messages.deletedVariant
+                          )}
+                        />
+                      )
+                    }
                   >
                     {productName || <Skeleton />}
                   </TableCellAvatar>
-                  <ProductErrorCell hasVariant={isReturnable} />
                   <TableCell align="right">
                     <Money
                       money={{
@@ -205,34 +195,31 @@ const ItemsCard: React.FC<OrderReturnRefundLinesCardProps> = ({
                     />
                   </TableCell>
                   <TableCell align="right">
-                    {isReturnable && (
-                      <TextField
-                        type="number"
-                        inputProps={{
-                          className: classes.quantityInnerInput,
-                          "data-test": "quantityInput",
-                          "data-test-id": id,
-                          max: lineQuantity.toString(),
-                          min: 0,
-                          style: { textAlign: "right" }
-                        }}
-                        fullWidth
-                        value={currentQuantity}
-                        onChange={handleChangeQuantity(id)}
-                        InputProps={{
-                          endAdornment: lineQuantity && (
-                            <div className={classes.remainingQuantity}>
-                              / {lineQuantity}
-                            </div>
-                          )
-                        }}
-                        error={isValueError}
-                        helperText={
-                          isValueError &&
-                          intl.formatMessage(messages.improperValue)
-                        }
-                      />
-                    )}
+                    <TextField
+                      type="number"
+                      inputProps={{
+                        className: classes.quantityInnerInput,
+                        "data-test-id": "quantityInput",
+                        max: lineQuantity.toString(),
+                        min: 0,
+                        style: { textAlign: "right" }
+                      }}
+                      fullWidth
+                      value={currentQuantity}
+                      onChange={handleChangeQuantity(id)}
+                      InputProps={{
+                        endAdornment: lineQuantity && (
+                          <div className={classes.remainingQuantity}>
+                            / {lineQuantity}
+                          </div>
+                        )
+                      }}
+                      error={isValueError}
+                      helperText={
+                        isValueError &&
+                        intl.formatMessage(messages.improperValue)
+                      }
+                    />
                   </TableCell>
                   <TableCell align="center">
                     {isReplacable && (

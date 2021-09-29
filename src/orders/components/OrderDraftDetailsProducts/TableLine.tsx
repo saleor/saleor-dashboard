@@ -2,16 +2,19 @@ import { IconButton, TableCell, TableRow, Typography } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
 import Link from "@saleor/components/Link";
 import Money from "@saleor/components/Money";
+import StatusBadge from "@saleor/components/StatusBadge";
 import TableCellAvatar from "@saleor/components/TableCellAvatar";
 import { AVATAR_MARGIN } from "@saleor/components/TableCellAvatar/Avatar";
 import { makeStyles } from "@saleor/macaw-ui";
 import { OrderLineDiscountContextConsumerProps } from "@saleor/products/components/OrderDiscountProviders/OrderLineDiscountProvider";
 import React, { useRef } from "react";
+import { useIntl } from "react-intl";
 
 import { maybe } from "../../../misc";
 import { OrderDetails_order_lines } from "../../types/OrderDetails";
 import OrderDiscountCommonModal from "../OrderDiscountCommonModal";
 import { ORDER_LINE_DISCOUNT } from "../OrderDiscountCommonModal/types";
+import { orderDraftDetailsProductsMessages as messages } from "./messages";
 import TableLineForm, { FormData } from "./TableLineForm";
 
 const useStyles = makeStyles(
@@ -74,6 +77,7 @@ const TableLine: React.FC<TableLineProps> = ({
 }) => {
   const classes = useStyles({});
   const popperAnchorRef = useRef<HTMLTableRowElement | null>(null);
+  const intl = useIntl();
   const { id, thumbnail, productName, productSku, quantity } = line;
 
   const getUnitPriceLabel = () => {
@@ -93,11 +97,21 @@ const TableLine: React.FC<TableLineProps> = ({
     return <Link onClick={openDialog}>{money}</Link>;
   };
 
+  const isDeleted = !line.variant;
+
   return (
     <TableRow key={id}>
       <TableCellAvatar
         className={classes.colName}
         thumbnail={maybe(() => thumbnail.url)}
+        badge={
+          isDeleted && (
+            <StatusBadge
+              variant="error"
+              description={intl.formatMessage(messages.productDeleted)}
+            />
+          )
+        }
       >
         <Typography variant="body2">{productName}</Typography>
         <Typography variant="caption">{productSku}</Typography>

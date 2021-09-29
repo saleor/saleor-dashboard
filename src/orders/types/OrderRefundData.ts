@@ -37,6 +37,11 @@ export interface OrderRefundData_order_shippingPrice {
   gross: OrderRefundData_order_shippingPrice_gross;
 }
 
+export interface OrderRefundData_order_lines_variant {
+  __typename: "ProductVariant";
+  id: string;
+}
+
 export interface OrderRefundData_order_lines_unitPrice_gross {
   __typename: "Money";
   amount: number;
@@ -58,9 +63,15 @@ export interface OrderRefundData_order_lines {
   id: string;
   productName: string;
   quantity: number;
+  variant: OrderRefundData_order_lines_variant | null;
   unitPrice: OrderRefundData_order_lines_unitPrice;
   thumbnail: OrderRefundData_order_lines_thumbnail | null;
   quantityFulfilled: number;
+}
+
+export interface OrderRefundData_order_fulfillments_lines_orderLine_variant {
+  __typename: "ProductVariant";
+  id: string;
 }
 
 export interface OrderRefundData_order_fulfillments_lines_orderLine_unitPrice_gross {
@@ -84,6 +95,7 @@ export interface OrderRefundData_order_fulfillments_lines_orderLine {
   id: string;
   productName: string;
   quantity: number;
+  variant: OrderRefundData_order_fulfillments_lines_orderLine_variant | null;
   unitPrice: OrderRefundData_order_fulfillments_lines_orderLine_unitPrice;
   thumbnail: OrderRefundData_order_fulfillments_lines_orderLine_thumbnail | null;
 }
