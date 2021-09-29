@@ -10,7 +10,10 @@ import {
 import { GiftCardActivate } from "../types/GiftCardActivate";
 import { GiftCardDeactivate } from "../types/GiftCardDeactivate";
 
-const useGiftCardActivationDeactivation = () => {
+const useGiftCardActivationDeactivation = (
+  onActivateActionComplete?: () => void | undefined,
+  onDeactivateActionComplete?: () => void | undefined
+) => {
   const intl = useIntl();
   const notify = useNotifier();
 
@@ -30,6 +33,10 @@ const useGiftCardActivationDeactivation = () => {
       status: "success",
       text: intl.formatMessage(messages.successfullyEnabledTitle)
     });
+
+    if (!!onActivateActionComplete) {
+      onActivateActionComplete();
+    }
   };
 
   const onDeactivateCompleted = (data: GiftCardDeactivate) => {
@@ -47,6 +54,10 @@ const useGiftCardActivationDeactivation = () => {
       status: "success",
       text: intl.formatMessage(messages.successfullyDisabledTitle)
     });
+
+    if (!!onDeactivateActionComplete) {
+      onDeactivateActionComplete();
+    }
   };
 
   const [giftCardActivate, giftCardActivateOpts] = useGiftCardActivateMutation({
