@@ -284,10 +284,12 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
         sku: data.sku,
         stocks: data.updateStocks.map(mapFormsetStockToStockInput),
         trackInventory: data.trackInventory,
-        preorder: {
-          globalThreshold: data.globalThreshold,
-          endDate: getEndPreorderDateInput(data)
-        },
+        preorder: data.isPreorder
+          ? {
+              globalThreshold: data.globalThreshold,
+              endDate: getEndPreorderDateInput(data)
+            }
+          : null,
         weight: weight(data.weight),
         firstValues: 10
       }

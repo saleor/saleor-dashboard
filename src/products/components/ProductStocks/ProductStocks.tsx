@@ -197,6 +197,10 @@ const ProductStocks: React.FC<ProductStocksProps> = ({
     ) || [];
   const formErrors = getFormErrors(["sku"], errors);
 
+  const onThresholdChange = createNonNegativeValueChangeHandler(
+    onFormDataChange
+  );
+
   return (
     <Card>
       <CardTitle
@@ -509,9 +513,11 @@ const ProductStocks: React.FC<ProductStocksProps> = ({
           </Typography>
           <div className={classes.thresholdRow}>
             <TextField
-              type="number"
+              inputProps={{
+                min: 0,
+                type: "number"
+              }}
               disabled={disabled}
-              error={!!formErrors.sku}
               fullWidth
               helperText={intl.formatMessage({
                 defaultMessage:
@@ -522,11 +528,11 @@ const ProductStocks: React.FC<ProductStocksProps> = ({
               })}
               name="globalThreshold"
               required
-              onChange={onFormDataChange}
+              onChange={onThresholdChange}
               value={data.globalThreshold ?? ""}
               className={classes.thresholdInput}
             />
-            {productVariantChannelListings.length > 0 && (
+            {productVariantChannelListings?.length > 0 && (
               <Typography
                 variant="caption"
                 className={classes.preorderItemsLeftCount}

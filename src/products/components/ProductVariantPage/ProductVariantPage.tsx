@@ -333,8 +333,10 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
                     warehouses={warehouses}
                     onChange={handlers.changeStock}
                     onFormDataChange={change}
-                    onEndPreorderTrigger={() =>
-                      setIsEndPreorderModalOpened(true)
+                    onEndPreorderTrigger={
+                      variant?.preorder.isPreorder
+                        ? () => setIsEndPreorderModalOpened(true)
+                        : null
                     }
                     onWarehouseStockAdd={handlers.addStock}
                     onWarehouseStockDelete={handlers.deleteStock}

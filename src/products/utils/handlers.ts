@@ -115,7 +115,7 @@ export const getChannelsInput = (channels: ChannelPriceAndPreorderData[]) =>
     value: {
       costPrice: channel.costPrice || "",
       price: channel.price || "",
-      preorderThreshold: channel.preorderThreshold || 0
+      preorderThreshold: channel.preorderThreshold || null
     }
   }));
 
