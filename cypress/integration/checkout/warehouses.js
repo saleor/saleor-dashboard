@@ -43,7 +43,7 @@ filterTests({ definedTags: ["all"] }, () => {
         })
         .then(channelResp => {
           defaultChannel = channelResp;
-          createTypeAttributeAndCategoryForProduct(startsWith);
+          createTypeAttributeAndCategoryForProduct({ name: startsWith });
         })
         .then(({ attribute, productType, category }) => {
           productData = {

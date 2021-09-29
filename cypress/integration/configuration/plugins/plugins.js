@@ -13,7 +13,10 @@ import {
   deleteCustomersStartsWith,
   requestPasswordReset
 } from "../../../support/api/requests/Customer";
-import { getDefaultChannel } from "../../../support/api/utils/channelsUtils";
+import {
+  deleteChannelsStartsWith,
+  getDefaultChannel
+} from "../../../support/api/utils/channelsUtils";
 import { getMailsForUser } from "../../../support/api/utils/users";
 import filterTests from "../../../support/filterTests";
 
@@ -26,6 +29,7 @@ filterTests({ definedTags: ["stagedOnly"], version: "3.1.1" }, () => {
     before(() => {
       cy.clearSessionData().loginUserViaRequest();
       deleteCustomersStartsWith(startsWith);
+      deleteChannelsStartsWith(startsWith);
       createChannel({ name: randomName });
       getDefaultChannel().then(channel => (defaultChannel = channel));
     });

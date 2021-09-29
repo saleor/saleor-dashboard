@@ -72,7 +72,9 @@ filterTests({ definedTags: ["all", "critical"] }, () => {
           }) => {
             warehouse = warehouseResp;
             shippingMethod = shippingMethodResp;
-            productsUtils.createTypeAttributeAndCategoryForProduct(randomName);
+            productsUtils.createTypeAttributeAndCategoryForProduct({
+              name: randomName
+            });
           }
         )
         .then(

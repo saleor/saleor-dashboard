@@ -8,8 +8,8 @@ import { createChannel } from "../../support/api/requests/Channels";
 import { updateChannelInProduct } from "../../support/api/requests/Product";
 import { getCollection } from "../../support/api/requests/storeFront/Collections";
 import { searchInShop } from "../../support/api/requests/storeFront/Search";
+import { deleteCollectionsStartsWith } from "../../support/api/utils/catalog/collectionsUtils";
 import * as channelsUtils from "../../support/api/utils/channelsUtils";
-import { deleteCollectionsStartsWith } from "../../support/api/utils/collectionsUtils";
 import * as productsUtils from "../../support/api/utils/products/productsUtils";
 import { deleteShippingStartsWith } from "../../support/api/utils/shippingUtils";
 import {
@@ -46,7 +46,7 @@ filterTests({ definedTags: ["all"] }, () => {
         .getDefaultChannel()
         .then(channel => {
           defaultChannel = channel;
-          productsUtils.createTypeAttributeAndCategoryForProduct(name);
+          productsUtils.createTypeAttributeAndCategoryForProduct({ name });
         })
         .then(
           ({

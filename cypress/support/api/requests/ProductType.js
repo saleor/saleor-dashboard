@@ -28,7 +28,7 @@ export function createTypeProduct({
       isShippingRequired:${shippable}
       ${kindLines}
     }){
-      productErrors{
+      errors{
         field
         message
       }
