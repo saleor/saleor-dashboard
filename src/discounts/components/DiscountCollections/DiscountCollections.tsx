@@ -83,7 +83,7 @@ const DiscountCollections: React.FC<DiscountCollectionsProps> = props => {
               {...messages.discountCollectionsTableProductHeader}
             />
           </TableCell>
-          <TableCell className={classes.textRight}>
+          <TableCell className={classes.colProducts}>
             <FormattedMessage
               {...messages.discountCollectionsTableProductNumber}
             />

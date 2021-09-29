@@ -17,8 +17,7 @@ export const useStyles = makeStyles(
     },
     tableRow: {
       cursor: "pointer"
-    },
-    textRight: {}
+    }
   },
   { name: "DiscountCollections" }
 );

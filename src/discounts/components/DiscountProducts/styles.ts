@@ -11,18 +11,19 @@ export const useStyles = makeStyles(
     },
     colName: {
       paddingLeft: 0,
-      width: "auto"
+      width: "auto",
+      minWidth: 200
     },
     colNameLabel: {
       marginLeft: `calc(${AVATAR_MARGIN}px + ${theme.spacing(3)})`
     },
     colPublished: {
       width: "auto",
-      minWidth: "150"
+      minWidth: 150
     },
     colType: {
       width: "auto",
-      minWidth: "150"
+      minWidth: 150
     },
     table: {
       tableLayout: "fixed"
