@@ -17,65 +17,44 @@ import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import TableCellAvatar from "@saleor/components/TableCellAvatar";
 import useSearchQuery from "@saleor/hooks/useSearchQuery";
 import { buttonMessages } from "@saleor/intl";
-import { makeStyles } from "@saleor/macaw-ui";
 import { maybe } from "@saleor/misc";
 import { SearchVariants_search_edges_node } from "@saleor/searches/types/SearchVariants";
 import useScrollableDialogStyle from "@saleor/styles/useScrollableDialogStyle";
-import { FetchMoreProps } from "@saleor/types";
+import { DialogProps, FetchMoreProps } from "@saleor/types";
 import React from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import Checkbox from "../Checkbox";
+import { messages } from "./messages";
+import { useStyles } from "./styles";
 
-export interface FormData {
+export interface AssignVariantDialogFormData {
   variants: SearchVariants_search_edges_node[];
   query: string;
 }
-
-const useStyles = makeStyles(
-  {
-    avatar: {
-      "&&:first-child": {
-        paddingLeft: 0
-      },
-      width: 72
-    },
-    checkboxCell: {
-      paddingLeft: 0,
-      width: 88
-    },
-    colName: {
-      paddingLeft: 0
-    }
-  },
-  { name: "AssignVariantDialog" }
-);
-
-export interface AssignVariantDialogProps extends FetchMoreProps {
+export interface AssignVariantDialogProps extends FetchMoreProps, DialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
-  open: boolean;
   variants: SearchVariants_search_edges_node[];
   loading: boolean;
-  onClose: () => void;
   onFetch: (value: string) => void;
-  onSubmit: (data: SearchVariants_search_edges_node[]) => void;
+  onSubmit: (data: string[]) => void;
 }
 
 function handleVariantAssign(
-  variant: SearchVariants_search_edges_node,
+  variantID: string,
   isSelected: boolean,
-  selectedVariants: SearchVariants_search_edges_node[],
-  setSelectedVariants: (data: SearchVariants_search_edges_node[]) => void
+  selectedVariants: string[],
+  setSelectedVariants: (data: string[]) => void
 ) {
   if (isSelected) {
     setSelectedVariants(
       selectedVariants.filter(
-        selectedVariant => selectedVariant.id !== variant.id
+        selectedVariants => selectedVariants !== variantID
       )
     );
   } else {
-    setSelectedVariants([...selectedVariants, variant]);
+    setSelectedVariants([...selectedVariants, variantID]);
   }
 }
 
@@ -98,9 +77,7 @@ const AssignVariantDialog: React.FC<AssignVariantDialogProps> = props => {
 
   const intl = useIntl();
   const [query, onQueryChange] = useSearchQuery(onFetch);
-  const [selectedVariants, setSelectedVariants] = React.useState<
-    SearchVariants_search_edges_node[]
-  >([]);
+  const [selectedVariants, setSelectedVariants] = React.useState<string[]>([]);
 
   const handleSubmit = () => onSubmit(selectedVariants);
 
@@ -113,23 +90,15 @@ const AssignVariantDialog: React.FC<AssignVariantDialogProps> = props => {
       maxWidth="sm"
     >
       <DialogTitle>
-        <FormattedMessage
-          defaultMessage="Assign Variant"
-          description="dialog header"
-        />
+        <FormattedMessage {...messages.assignVariantDialogHeader} />
       </DialogTitle>
       <DialogContent className={scrollableDialogClasses.topArea}>
         <TextField
           name="query"
           value={query}
           onChange={onQueryChange}
-          label={intl.formatMessage({
-            defaultMessage: "Search Variants"
-          })}
-          placeholder={intl.formatMessage({
-            defaultMessage:
-              "Search by variant name, attribute, variant type etc..."
-          })}
+          label={intl.formatMessage(messages.assignVariantDialogSearch)}
+          placeholder={intl.formatMessage(messages.assignVariantDialogContent)}
           fullWidth
           InputProps={{
             autoComplete: "off",
@@ -158,7 +127,7 @@ const AssignVariantDialog: React.FC<AssignVariantDialogProps> = props => {
               {variants &&
                 variants.map(variant => {
                   const isSelected = selectedVariants.some(
-                    selectedVariant => selectedVariant.id === variant.id
+                    selectedVariant => selectedVariant === variant.id
                   );
 
                   return (
@@ -182,7 +151,7 @@ const AssignVariantDialog: React.FC<AssignVariantDialogProps> = props => {
                           checked={isSelected}
                           onChange={() =>
                             handleVariantAssign(
-                              variant,
+                              variant.id,
                               isSelected,
                               selectedVariants,
                               setSelectedVariants
@@ -209,10 +178,7 @@ const AssignVariantDialog: React.FC<AssignVariantDialogProps> = props => {
           type="submit"
           onClick={handleSubmit}
         >
-          <FormattedMessage
-            defaultMessage="Assign variants"
-            description="button"
-          />
+          <FormattedMessage {...messages.assignVariantDialogButton} />
         </ConfirmButton>
       </DialogActions>
     </Dialog>

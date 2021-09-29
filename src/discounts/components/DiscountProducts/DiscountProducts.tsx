@@ -14,10 +14,8 @@ import Checkbox from "@saleor/components/Checkbox";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
 import TableCellAvatar from "@saleor/components/TableCellAvatar";
-import { AVATAR_MARGIN } from "@saleor/components/TableCellAvatar/Avatar";
 import TableHead from "@saleor/components/TableHead";
 import TablePagination from "@saleor/components/TablePagination";
-import { makeStyles } from "@saleor/macaw-ui";
 import { mapEdgesToItems } from "@saleor/utils/maps";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -26,44 +24,14 @@ import { maybe, renderCollection } from "../../../misc";
 import { ListActions, ListProps } from "../../../types";
 import { SaleDetails_sale } from "../../types/SaleDetails";
 import { VoucherDetails_voucher } from "../../types/VoucherDetails";
-
+import { messages } from "./messages";
+import { useStyles } from "./styles";
 export interface SaleProductsProps extends ListProps, ListActions {
   discount: SaleDetails_sale | VoucherDetails_voucher;
   channelsCount: number;
   onProductAssign: () => void;
   onProductUnassign: (id: string) => void;
 }
-
-const useStyles = makeStyles(
-  theme => ({
-    colActions: {
-      "&:last-child": {
-        paddingRight: 0
-      },
-      width: `calc(76px + ${theme.spacing(0.5)})`
-    },
-    colName: {
-      paddingLeft: 0,
-      width: "auto"
-    },
-    colNameLabel: {
-      marginLeft: `calc(${AVATAR_MARGIN}px + ${theme.spacing(3)})`
-    },
-    colPublished: {
-      width: 150
-    },
-    colType: {
-      width: 200
-    },
-    table: {
-      tableLayout: "fixed"
-    },
-    tableRow: {
-      cursor: "pointer"
-    }
-  }),
-  { name: "DiscountProducts" }
-);
 
 const numberOfColumns = 5;
 
@@ -91,20 +59,14 @@ const DiscountProducts: React.FC<SaleProductsProps> = props => {
   return (
     <Card>
       <CardTitle
-        title={intl.formatMessage({
-          defaultMessage: "Eligible Products",
-          description: "section header"
-        })}
+        title={intl.formatMessage(messages.discountProductsHeader)}
         toolbar={
           <Button
             color="primary"
             onClick={onProductAssign}
             data-test-id="assign-products"
           >
-            <FormattedMessage
-              defaultMessage="Assign products"
-              description="button"
-            />
+            <FormattedMessage {...messages.discountProductsButton} />
           </Button>
         }
       />
@@ -126,16 +88,17 @@ const DiscountProducts: React.FC<SaleProductsProps> = props => {
         >
           <TableCell className={classes.colName}>
             <span className={classes.colNameLabel}>
-              <FormattedMessage defaultMessage="Product Name" />
+              <FormattedMessage
+                {...messages.discountProductsTableProductHeader}
+              />
             </span>
           </TableCell>
           <TableCell className={classes.colType}>
-            <FormattedMessage defaultMessage="Product Type" />
+            <FormattedMessage {...messages.discountProductsTableTypeHeader} />
           </TableCell>
           <TableCell className={classes.colPublished}>
             <FormattedMessage
-              defaultMessage="Availability"
-              description="product availability"
+              {...messages.discountProductsTableAvailabilityHeader}
             />
           </TableCell>
           <TableCell className={classes.colActions} />
@@ -216,7 +179,7 @@ const DiscountProducts: React.FC<SaleProductsProps> = props => {
             () => (
               <TableRow>
                 <TableCell colSpan={numberOfColumns}>
-                  <FormattedMessage defaultMessage="No products found" />
+                  <FormattedMessage {...messages.discountProductsNotFound} />
                 </TableCell>
               </TableRow>
             )

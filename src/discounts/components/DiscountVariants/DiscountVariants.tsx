@@ -13,63 +13,31 @@ import Checkbox from "@saleor/components/Checkbox";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
 import TableCellAvatar from "@saleor/components/TableCellAvatar";
-import { AVATAR_MARGIN } from "@saleor/components/TableCellAvatar/Avatar";
 import TableHead from "@saleor/components/TableHead";
 import TablePagination from "@saleor/components/TablePagination";
-import { makeStyles } from "@saleor/macaw-ui";
 import { mapEdgesToItems } from "@saleor/utils/maps";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { maybe, renderCollection } from "../../../misc";
 import { ListActions, ListProps } from "../../../types";
-import { SaleDetails_sale } from "../../types/SaleDetails";
-
+import { SaleDetails_sale_variants } from "../../types/SaleDetails";
+import { messages } from "./messages";
+import { useStyles } from "./styles";
 export interface SaleVariantsProps
   extends Omit<ListProps, "onRowClick">,
     ListActions {
-  discount: SaleDetails_sale;
+  variants: SaleDetails_sale_variants | null;
   onVariantAssign: () => void;
   onRowClick: (productId: string, variantId: string) => () => void;
   onVariantUnassign: (id: string) => void;
 }
 
-const useStyles = makeStyles(
-  theme => ({
-    colActions: {
-      "&:last-child": {
-        paddingRight: 0
-      },
-      width: `calc(76px + ${theme.spacing(0.5)})`
-    },
-    colProductName: {
-      paddingLeft: 0,
-      width: "auto"
-    },
-    colNameLabel: {
-      marginLeft: `calc(${AVATAR_MARGIN}px + ${theme.spacing(3)})`
-    },
-    colVariantName: {
-      width: 150
-    },
-    colType: {
-      width: 200
-    },
-    table: {
-      tableLayout: "fixed"
-    },
-    tableRow: {
-      cursor: "pointer"
-    }
-  }),
-  { name: "DiscountVariants" }
-);
-
 const numberOfColumns = 5;
 
 const DiscountVariants: React.FC<SaleVariantsProps> = props => {
   const {
-    discount: sale,
+    variants,
     disabled,
     pageInfo,
     onRowClick,
@@ -90,20 +58,14 @@ const DiscountVariants: React.FC<SaleVariantsProps> = props => {
   return (
     <Card>
       <CardTitle
-        title={intl.formatMessage({
-          defaultMessage: "Eligible Variants",
-          description: "section header"
-        })}
+        title={intl.formatMessage(messages.discountVariantsHeader)}
         toolbar={
           <Button
             color="primary"
             onClick={onVariantAssign}
             data-test-id="assign-variant"
           >
-            <FormattedMessage
-              defaultMessage="Assign variants"
-              description="button"
-            />
+            <FormattedMessage {...messages.discountVariantsButton} />
           </Button>
         }
       />
@@ -119,20 +81,26 @@ const DiscountVariants: React.FC<SaleVariantsProps> = props => {
           colSpan={numberOfColumns}
           selected={selected}
           disabled={disabled}
-          items={mapEdgesToItems(sale?.variants)}
+          items={mapEdgesToItems(variants)}
           toggleAll={toggleAll}
           toolbar={toolbar}
         >
           <TableCell className={classes.colProductName}>
             <span className={classes.colNameLabel}>
-              <FormattedMessage defaultMessage="Product Name" />
+              <FormattedMessage
+                {...messages.discountVariantsTableProductHeader}
+              />
             </span>
           </TableCell>
           <TableCell className={classes.colVariantName}>
-            <FormattedMessage defaultMessage="Variant Name" />
+            <FormattedMessage
+              {...messages.discountVariantsTableVariantHeader}
+            />
           </TableCell>
           <TableCell className={classes.colType}>
-            <FormattedMessage defaultMessage="Product Type" />
+            <FormattedMessage
+              {...messages.discountVariantsTableProductHeader}
+            />
           </TableCell>
           <TableCell className={classes.colActions} />
         </TableHead>
@@ -151,7 +119,7 @@ const DiscountVariants: React.FC<SaleVariantsProps> = props => {
         </TableFooter>
         <TableBody>
           {renderCollection(
-            mapEdgesToItems(sale?.variants),
+            mapEdgesToItems(variants),
             variant => {
               const isSelected = variant ? isChecked(variant.id) : false;
 
@@ -208,7 +176,7 @@ const DiscountVariants: React.FC<SaleVariantsProps> = props => {
             () => (
               <TableRow>
                 <TableCell colSpan={numberOfColumns}>
-                  <FormattedMessage defaultMessage="No variants found" />
+                  <FormattedMessage {...messages.discountVariantsNotFound} />
                 </TableCell>
               </TableRow>
             )
