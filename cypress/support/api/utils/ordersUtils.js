@@ -41,7 +41,14 @@ export function createCheckoutWithVoucher({
 }) {
   let checkout;
   return checkoutRequest
-    .createCheckout({ channelSlug, email, variantsList, address, auth })
+    .createCheckout({
+      channelSlug,
+      email,
+      variantsList,
+      address,
+      billingAddress: address,
+      auth
+    })
     .then(({ checkout: checkoutResp }) => {
       checkout = checkoutResp;
       checkoutRequest.addShippingMethod(checkout.id, shippingMethodId);
@@ -49,7 +56,38 @@ export function createCheckoutWithVoucher({
     .then(() => {
       checkoutRequest.addVoucher(checkout.id, voucherCode);
     })
-    .its("body.data.checkoutAddPromoCode");
+    .then(resp => ({
+      addPromoCodeResp: resp.body.data.checkoutAddPromoCode,
+      checkout
+    }));
+}
+
+export function purchaseProductWithPromoCode({
+  channelSlug,
+  email = "email@example.com",
+  variantsList,
+  address,
+  shippingMethodId,
+  voucherCode,
+  auth
+}) {
+  let checkout;
+
+  return createCheckoutWithVoucher({
+    channelSlug,
+    email,
+    variantsList,
+    address,
+    shippingMethodId,
+    voucherCode,
+    auth
+  })
+    .then(({ checkout: checkoutResp }) => {
+      checkout = checkoutResp;
+      addPayment(checkout.id);
+    })
+    .then(() => checkoutRequest.completeCheckout(checkout.id))
+    .then(({ order }) => ({ checkout, order }));
 }
 
 export function createReadyToFulfillOrder({

@@ -45,7 +45,7 @@ filterTests({ definedTags: ["all"] }, () => {
         });
 
       productsUtils
-        .createTypeAttributeAndCategoryForProduct(name)
+        .createTypeAttributeAndCategoryForProduct({ name })
         .then(
           ({
             attribute: attributeResp,

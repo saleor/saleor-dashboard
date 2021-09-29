@@ -45,7 +45,7 @@ filterTests({ definedTags: ["all"] }, () => {
       const name = `${startsWith}${faker.datatype.number()}`;
 
       productsUtils
-        .createTypeAttributeAndCategoryForProduct(name)
+        .createTypeAttributeAndCategoryForProduct({ name })
         .then(
           ({
             productType: productTypeResp,
@@ -143,10 +143,12 @@ filterTests({ definedTags: ["all"] }, () => {
         discountOption: discountOptions.PERCENTAGE,
         channelName: createdChannel.name
       });
-      createCheckoutForCreatedVoucher(randomName).then(resp => {
-        const errorField = resp.checkoutErrors[0].field;
-        expect(errorField).to.be.eq("promoCode");
-      });
+      createCheckoutForCreatedVoucher(randomName).then(
+        ({ addPromoCodeResp }) => {
+          const errorField = addPromoCodeResp.checkoutErrors[0].field;
+          expect(errorField).to.be.eq("promoCode");
+        }
+      );
     });
 
     function createCheckoutForCreatedVoucher(voucherCode) {
@@ -177,7 +179,7 @@ filterTests({ definedTags: ["all"] }, () => {
         channelName: defaultChannel.name
       });
       return createCheckoutForCreatedVoucher(voucherCode).its(
-        "checkout.totalPrice.gross.amount"
+        "addPromoCodeResp.checkout.totalPrice.gross.amount"
       );
     }
   });

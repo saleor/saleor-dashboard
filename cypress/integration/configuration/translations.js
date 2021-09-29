@@ -12,7 +12,7 @@ import {
   createCategory,
   getCategory
 } from "../../support/api/requests/Category";
-import { deleteCategoriesStartsWith } from "../../support/api/utils/categoryUtils";
+import { deleteCategoriesStartsWith } from "../../support/api/utils/catalog/categoryUtils";
 import filterTests from "../../support/filterTests";
 
 filterTests({ definedTags: ["all"], version: "3.1.1" }, () => {
