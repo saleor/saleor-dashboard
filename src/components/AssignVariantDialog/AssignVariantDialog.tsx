@@ -20,6 +20,10 @@ import useSearchQuery from "@saleor/hooks/useSearchQuery";
 import { buttonMessages } from "@saleor/intl";
 import { maybe, renderCollection } from "@saleor/misc";
 import {
+  getById,
+  getByUnmatchingId
+} from "@saleor/orders/components/OrderReturnPage/utils";
+import {
   SearchProducts_search_edges_node,
   SearchProducts_search_edges_node_variants
 } from "@saleor/searches/types/SearchProducts";
@@ -52,9 +56,7 @@ function isVariantSelected(
   variant: SearchProducts_search_edges_node_variants,
   selectedVariantsToProductsMap: SearchProducts_search_edges_node_variants[]
 ): boolean {
-  return !!selectedVariantsToProductsMap.find(
-    selectedVariant => selectedVariant.id === variant.id
-  );
+  return !!selectedVariantsToProductsMap.find(getById(variant.id));
 }
 
 const handleProductAssign = (
@@ -67,19 +69,13 @@ const handleProductAssign = (
   productsWithAllVariantsSelected[productIndex]
     ? setVariants(
         variants.filter(
-          selectedVariant =>
-            !product.variants.find(
-              productVariant => productVariant.id === selectedVariant.id
-            )
+          selectedVariant => !product.variants.find(getById(selectedVariant.id))
         )
       )
     : setVariants([
         ...variants,
         ...product.variants.filter(
-          productVariant =>
-            !variants.find(
-              selectedVariant => selectedVariant.id === productVariant.id
-            )
+          productVariant => !variants.find(getById(productVariant.id))
         )
       ]);
 
@@ -92,9 +88,7 @@ const handleVariantAssign = (
   setVariants: SetVariantsAction
 ) =>
   selectedVariantsToProductsMap[productIndex][variantIndex]
-    ? setVariants(
-        variants.filter(selectedVariant => selectedVariant.id !== variant.id)
-      )
+    ? setVariants(variants.filter(getByUnmatchingId(variant.id)))
     : setVariants([...variants, variant]);
 
 function hasAllVariantsSelected(
@@ -103,10 +97,7 @@ function hasAllVariantsSelected(
 ): boolean {
   return productVariants.reduce(
     (acc, productVariant) =>
-      acc &&
-      !!selectedVariantsToProductsMap.find(
-        selectedVariant => selectedVariant.id === productVariant.id
-      ),
+      acc && !!selectedVariantsToProductsMap.find(getById(productVariant.id)),
     true
   );
 }

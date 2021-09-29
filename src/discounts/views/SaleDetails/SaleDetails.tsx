@@ -457,9 +457,7 @@ export const SaleDetails: React.FC<SaleDetailsProps> = ({ id, params }) => {
                                   ...paginationState,
                                   id,
                                   input: {
-                                    products: products.map(
-                                      product => product.id
-                                    )
+                                    products
                                   }
                                 }
                               })

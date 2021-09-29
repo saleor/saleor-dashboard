@@ -39,23 +39,21 @@ export interface AssignProductDialogProps extends FetchMoreProps, DialogProps {
   products: SearchProducts_search_edges_node[];
   loading: boolean;
   onFetch: (value: string) => void;
-  onSubmit: (data: SearchProducts_search_edges_node[]) => void;
+  onSubmit: (data: string[]) => void;
 }
 
 function handleProductAssign(
-  product: SearchProducts_search_edges_node,
+  productID: string,
   isSelected: boolean,
-  selectedProducts: SearchProducts_search_edges_node[],
-  setSelectedProducts: (data: SearchProducts_search_edges_node[]) => void
+  selectedProducts: string[],
+  setSelectedProducts: (data: string[]) => void
 ) {
   if (isSelected) {
     setSelectedProducts(
-      selectedProducts.filter(
-        selectedProduct => selectedProduct.id !== product.id
-      )
+      selectedProducts.filter(selectedProduct => selectedProduct !== productID)
     );
   } else {
-    setSelectedProducts([...selectedProducts, product]);
+    setSelectedProducts([...selectedProducts, productID]);
   }
 }
 
@@ -78,9 +76,7 @@ const AssignProductDialog: React.FC<AssignProductDialogProps> = props => {
 
   const intl = useIntl();
   const [query, onQueryChange] = useSearchQuery(onFetch);
-  const [selectedProducts, setSelectedProducts] = React.useState<
-    SearchProducts_search_edges_node[]
-  >([]);
+  const [selectedProducts, setSelectedProducts] = React.useState<string[]>([]);
 
   const handleSubmit = () => onSubmit(selectedProducts);
 
@@ -130,7 +126,7 @@ const AssignProductDialog: React.FC<AssignProductDialogProps> = props => {
               {products &&
                 products.map(product => {
                   const isSelected = selectedProducts.some(
-                    selectedProduct => selectedProduct.id === product.id
+                    selectedProduct => selectedProduct === product.id
                   );
 
                   return (
@@ -153,7 +149,7 @@ const AssignProductDialog: React.FC<AssignProductDialogProps> = props => {
                           checked={isSelected}
                           onChange={() =>
                             handleProductAssign(
-                              product,
+                              product.id,
                               isSelected,
                               selectedProducts,
                               setSelectedProducts
