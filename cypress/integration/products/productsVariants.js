@@ -63,7 +63,7 @@ filterTests({ definedTags: ["all", "critical"] }, () => {
         .then(resp => (newChannel = resp));
 
       productUtils
-        .createTypeAttributeAndCategoryForProduct({ name }, attributeValues)
+        .createTypeAttributeAndCategoryForProduct({ name, attributeValues })
         .then(
           ({
             attribute: attributeResp,

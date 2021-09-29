@@ -7,7 +7,7 @@ import {
   getGiftCardWithId,
   getGiftCardWithTag,
   giftCardDeactivate
-} from "../../support/api/requests/giftCard";
+} from "../../support/api/requests/GiftCard";
 import { deleteGiftCardsWithTagStartsWith } from "../../support/api/utils/catalog/giftCardUtils";
 import * as channelsUtils from "../../support/api/utils/channelsUtils";
 import {
