@@ -24,17 +24,17 @@ export const messages = defineMessages({
   },
   saleDetailsUnassignCollectionDialog: {
     defaultMessage:
-      "{counter,plural,one{Are you sure you want to unassign this collection?} other{Are you sure you want to unassign {displayQuantity} categories?}}",
+      "{counter,plural,one{Are you sure you want to unassign this collection?} other{Are you sure you want to unassign {displayQuantity} collections?}}",
     description: "dialog content"
   },
   saleDetailsUnassignProductDialog: {
     defaultMessage:
-      "{counter,plural,one{Are you sure you want to unassign this product?} other{Are you sure you want to unassign {displayQuantity} categories?}}",
+      "{counter,plural,one{Are you sure you want to unassign this product?} other{Are you sure you want to unassign {displayQuantity} products?}}",
     description: "dialog content"
   },
   saleDetailsUnassignVariantDialog: {
     defaultMessage:
-      "{counter,plural,one{Are you sure you want to unassign this variant?} other{Are you sure you want to unassign {displayQuantity} categories?}}",
+      "{counter,plural,one{Are you sure you want to unassign this variant?} other{Are you sure you want to unassign {displayQuantity} variants?}}",
     description: "dialog content"
   },
   saleDetailsUnassignDialogDelete: {

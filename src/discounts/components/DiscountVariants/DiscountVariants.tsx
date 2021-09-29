@@ -21,13 +21,13 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import { maybe, renderCollection } from "../../../misc";
 import { ListActions, ListProps } from "../../../types";
-import { SaleDetails_sale_variants } from "../../types/SaleDetails";
+import { SaleDetails_sale_variants_edges_node } from "../../types/SaleDetails";
 import { messages } from "./messages";
 import { useStyles } from "./styles";
 export interface SaleVariantsProps
   extends Omit<ListProps, "onRowClick">,
     ListActions {
-  variants: SaleDetails_sale_variants | null;
+  variants: SaleDetails_sale_variants_edges_node[] | null;
   onVariantAssign: () => void;
   onRowClick: (productId: string, variantId: string) => () => void;
   onVariantUnassign: (id: string) => void;
@@ -81,12 +81,12 @@ const DiscountVariants: React.FC<SaleVariantsProps> = props => {
           colSpan={numberOfColumns}
           selected={selected}
           disabled={disabled}
-          items={mapEdgesToItems(variants)}
+          items={variants}
           toggleAll={toggleAll}
           toolbar={toolbar}
         >
           <TableCell className={classes.colProductName}>
-            <span className={classes.colNameLabel}>
+            <span className={variants?.length > 0 && classes.colNameLabel}>
               <FormattedMessage
                 {...messages.discountVariantsTableProductHeader}
               />
@@ -119,7 +119,7 @@ const DiscountVariants: React.FC<SaleVariantsProps> = props => {
         </TableFooter>
         <TableBody>
           {renderCollection(
-            mapEdgesToItems(variants),
+            variants,
             variant => {
               const isSelected = variant ? isChecked(variant.id) : false;
 

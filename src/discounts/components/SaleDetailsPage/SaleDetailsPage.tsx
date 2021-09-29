@@ -14,6 +14,7 @@ import { DiscountErrorFragment } from "@saleor/fragments/types/DiscountErrorFrag
 import { sectionNames } from "@saleor/intl";
 import { Backlink } from "@saleor/macaw-ui";
 import { validatePrice } from "@saleor/products/utils/validation";
+import { mapEdgesToItems } from "@saleor/utils/maps";
 import { mapMetadataItemToInput } from "@saleor/utils/maps";
 import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
 import React from "react";
@@ -317,7 +318,7 @@ const SaleDetailsPage: React.FC<SaleDetailsPageProps> = ({
                     onProductUnassign={onProductUnassign}
                     onRowClick={onProductClick}
                     pageInfo={pageInfo}
-                    discount={sale}
+                    products={mapEdgesToItems(sale?.products)}
                     channelsCount={allChannelsCount}
                     isChecked={isChecked}
                     selected={selected}
@@ -334,7 +335,7 @@ const SaleDetailsPage: React.FC<SaleDetailsPageProps> = ({
                     onVariantUnassign={onVariantUnassign}
                     onRowClick={onVariantClick}
                     pageInfo={pageInfo}
-                    variants={sale?.variants}
+                    variants={mapEdgesToItems(sale?.variants)}
                     isChecked={isChecked}
                     selected={selected}
                     toggle={toggle}

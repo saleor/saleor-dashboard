@@ -17,10 +17,12 @@ export const useStyles = makeStyles(
       marginLeft: `calc(${AVATAR_MARGIN}px + ${theme.spacing(3)})`
     },
     colPublished: {
-      width: 150
+      width: "auto",
+      minWidth: "150"
     },
     colType: {
-      width: 200
+      width: "auto",
+      minWidth: "150"
     },
     table: {
       tableLayout: "fixed"
