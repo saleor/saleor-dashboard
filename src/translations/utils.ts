@@ -31,8 +31,8 @@ export const getParsedTranslationInputData = ({
   return { [fieldName]: data as string };
 };
 
-export const getTranslationFields = (data, intl) =>
-  mapEdgesToItems(data).map(
+export const getTranslationFields = (fields, intl) =>
+  mapEdgesToItems(fields).map(
     ({ id, name, translation }, attributeValueIndex) => {
       const displayName = intl.formatMessage(messages.valueNumber, {
         number: attributeValueIndex + 1
