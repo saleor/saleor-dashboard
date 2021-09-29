@@ -13,7 +13,7 @@ import { StaffErrorFragment } from "@saleor/fragments/types/StaffErrorFragment";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import useLocale from "@saleor/hooks/useLocale";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
-import { commonMessages, sectionNames } from "@saleor/intl";
+import { sectionNames } from "@saleor/intl";
 import { Backlink } from "@saleor/macaw-ui";
 import { getUserName } from "@saleor/misc";
 import { SearchPermissionGroups_search_edges_node } from "@saleor/searches/types/SearchPermissionGroups";
@@ -27,6 +27,7 @@ import { StaffMemberDetails_user } from "../../types/StaffMemberDetails";
 import StaffPassword from "../StaffPassword/StaffPassword";
 import StaffPreferences from "../StaffPreferences";
 import StaffProperties from "../StaffProperties/StaffProperties";
+import { staffDetailsPageMessages as messages } from "./messages";
 
 export interface StaffDetailsFormData {
   email: string;
@@ -146,9 +147,7 @@ const StaffDetailsPage: React.FC<StaffDetailsPageProps> = ({
                     <UserStatus
                       data={formData}
                       disabled={disabled}
-                      label={intl.formatMessage(
-                        commonMessages.userStatusActive
-                      )}
+                      label={intl.formatMessage(messages.userStatusActive)}
                       onChange={change}
                     />
                     <CardSpacer />

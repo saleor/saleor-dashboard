@@ -1,9 +1,10 @@
 import { Card, CardContent, Typography } from "@material-ui/core";
 import CardTitle from "@saleor/components/CardTitle";
 import { ControlledCheckbox } from "@saleor/components/ControlledCheckbox";
-import { commonMessages } from "@saleor/intl";
 import React from "react";
 import { useIntl } from "react-intl";
+
+import { userStatusMessages as messages } from "./messages";
 
 interface AppStatusProps {
   data: {
@@ -24,10 +25,10 @@ const AppStatus: React.FC<AppStatusProps> = ({
 
   return (
     <Card>
-      <CardTitle title={intl.formatMessage(commonMessages.userStatus)} />
+      <CardTitle title={intl.formatMessage(messages.userStatus)} />
       <CardContent>
         <Typography variant="body2">
-          {intl.formatMessage(commonMessages.userDisableInstruction)}
+          {intl.formatMessage(messages.userDisableInstruction)}
         </Typography>
         <ControlledCheckbox
           checked={data.isActive}
