@@ -129,7 +129,7 @@ export const getSaleChannelsVariables = (
   formData: SaleDetailsPageFormData,
   prevChannels?: ChannelSaleData[]
 ) => {
-  const initialIds = prevChannels.map(channel => channel.id);
+  const initialIds = prevChannels?.map(channel => channel.id) || [];
   const modifiedIds = formData.channelListings.map(channel => channel.id);
 
   const idsDiff = arrayDiff(initialIds, modifiedIds);

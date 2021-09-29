@@ -16,6 +16,7 @@ import {
 } from "../../support/api/utils/shippingUtils";
 import filterTests from "../../support/filterTests";
 import {
+  pickupOptions,
   visitAndEnablePickup,
   visitSetPublicStockAndEnablePickup
 } from "../../support/pages/warehousePage";
@@ -28,6 +29,7 @@ filterTests({ definedTags: ["all"] }, () => {
     let plAddress;
     let productData;
     let checkoutData;
+    let variantsInOtherWarehouse;
 
     before(() => {
       cy.clearSessionData().loginUserViaRequest();
@@ -57,6 +59,19 @@ filterTests({ definedTags: ["all"] }, () => {
             email: "example@example.com",
             address: plAddress
           };
+          createShipping({
+            channelId: defaultChannel.id,
+            name: startsWith,
+            address: plAddress
+          });
+        })
+        .then(({ warehouse: warehouseResp }) => {
+          productData.name = startsWith;
+          productData.warehouseId = warehouseResp.id;
+          createProductInChannel(productData);
+        })
+        .then(({ variantsList }) => {
+          variantsInOtherWarehouse = variantsList;
         });
     });
 
@@ -64,7 +79,7 @@ filterTests({ definedTags: ["all"] }, () => {
       cy.clearSessionData().loginUserViaRequest();
     });
 
-    it("should create warehouse with enabled pickup and private stock", () => {
+    it("should create warehouse with all warehouses pickup and private stock", () => {
       const name = `${startsWith}${faker.datatype.number()}`;
       let warehouse;
 
@@ -81,7 +96,9 @@ filterTests({ definedTags: ["all"] }, () => {
           createProductInChannel(productData);
         })
         .then(({ variantsList }) => {
-          checkoutData.variantsList = variantsList;
+          checkoutData.variantsList = variantsList.concat(
+            variantsInOtherWarehouse
+          );
           createCheckout(checkoutData);
         })
         .then(({ checkout }) => {
@@ -93,7 +110,7 @@ filterTests({ definedTags: ["all"] }, () => {
         });
     });
 
-    it("should create warehouse with enabled pickup and public stock", () => {
+    it("should create warehouse with all warehouses pickup and public stock", () => {
       const name = `${startsWith}${faker.datatype.number()}`;
       let warehouse;
 
@@ -110,12 +127,55 @@ filterTests({ definedTags: ["all"] }, () => {
           createProductInChannel(productData);
         })
         .then(({ variantsList }) => {
-          checkoutData.variantsList = variantsList;
+          checkoutData.variantsList = variantsList.concat(
+            variantsInOtherWarehouse
+          );
           createCheckout(checkoutData);
         })
         .then(({ checkout }) => {
           const clickAndCollectOption = checkout.availableCollectionPoints[0];
           expect(clickAndCollectOption.clickAndCollectOption).to.eq("ALL");
+          expect(clickAndCollectOption.id).to.eq(warehouse.id);
+          expect(clickAndCollectOption.isPrivate).to.eq(false);
+          expect(clickAndCollectOption.name).to.eq(warehouse.name);
+        });
+    });
+
+    it("should create warehouse with local stock only pickup and public stock", () => {
+      const name = `${startsWith}${faker.datatype.number()}`;
+      let warehouse;
+      let variantsInLocalStock;
+
+      createShipping({
+        channelId: defaultChannel.id,
+        name,
+        address: plAddress
+      })
+        .then(({ warehouse: warehouseResp }) => {
+          warehouse = warehouseResp;
+          visitSetPublicStockAndEnablePickup(warehouse.id, pickupOptions.local);
+          productData.name = name;
+          productData.warehouseId = warehouse.id;
+          createProductInChannel(productData);
+        })
+        .then(({ variantsList }) => {
+          variantsInLocalStock = variantsList;
+          checkoutData.variantsList = variantsInLocalStock.concat(
+            variantsInOtherWarehouse
+          );
+          createCheckout(checkoutData);
+        })
+        .then(({ checkout }) => {
+          expect(checkout.availableCollectionPoints).to.have.length(
+            0,
+            "there should be no available collection point"
+          );
+          checkoutData.variantsList = variantsInLocalStock;
+          createCheckout(checkoutData);
+        })
+        .then(({ checkout }) => {
+          const clickAndCollectOption = checkout.availableCollectionPoints[0];
+          expect(clickAndCollectOption.clickAndCollectOption).to.eq("LOCAL");
           expect(clickAndCollectOption.id).to.eq(warehouse.id);
           expect(clickAndCollectOption.isPrivate).to.eq(false);
           expect(clickAndCollectOption.name).to.eq(warehouse.name);

@@ -18,22 +18,36 @@ export function createWarehouse({ name, address }) {
     .its("response.body.data.createWarehouse.warehouse");
 }
 
-export function visitAndEnablePickup(warehouseId) {
+export function visitAndEnablePickup(
+  warehouseId,
+  pickup = enableAllWarehousesPickup
+) {
   cy.visit(warehouseDetailsUrl(warehouseId));
-  enablePickup();
+  pickup();
   return saveWarehouseAfterUpdate();
 }
 
-export function visitSetPublicStockAndEnablePickup(warehouseId) {
+export function visitSetPublicStockAndEnablePickup(
+  warehouseId,
+  pickup = enableAllWarehousesPickup
+) {
   cy.visit(warehouseDetailsUrl(warehouseId))
     .get(WAREHOUSES_DETAILS.publicRadioButton)
     .click();
-  enablePickup();
+  pickup();
   return saveWarehouseAfterUpdate();
 }
 
-export function enablePickup() {
-  return cy.get(WAREHOUSES_DETAILS.clickAndCollectEnabledRadioButton).click();
+export function enableAllWarehousesPickup() {
+  return cy
+    .get(WAREHOUSES_DETAILS.clickAndCollectAllWarehousesRadioButton)
+    .click();
+}
+
+export function enableLocalStockOnlyPickup() {
+  return cy
+    .get(WAREHOUSES_DETAILS.clickAndCollectLocalStockRadioButton)
+    .click();
 }
 
 function saveWarehouseAfterUpdate() {
@@ -43,3 +57,8 @@ function saveWarehouseAfterUpdate() {
     .click()
     .wait("@WarehouseUpdate");
 }
+
+export const pickupOptions = {
+  allWarehouses: enableAllWarehousesPickup,
+  local: enableLocalStockOnlyPickup
+};

@@ -4,11 +4,16 @@ import SaveFilterTabDialog, {
   SaveFilterTabDialogFormData
 } from "@saleor/components/SaveFilterTabDialog";
 import { useShopLimitsQuery } from "@saleor/components/Shop/query";
-import { APP_MOUNT_URI, DEFAULT_INITIAL_SEARCH_DATA } from "@saleor/config";
+import {
+  APP_MOUNT_URI,
+  DEFAULT_INITIAL_PAGINATION_DATA,
+  DEFAULT_INITIAL_SEARCH_DATA
+} from "@saleor/config";
 import { configurationMenuUrl } from "@saleor/configuration";
 import useListSettings from "@saleor/hooks/useListSettings";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
+import { usePaginationReset } from "@saleor/hooks/usePaginationReset";
 import usePaginator, {
   createPaginationState
 } from "@saleor/hooks/usePaginator";
@@ -61,6 +66,14 @@ export const StaffList: React.FC<StaffListProps> = ({ params }) => {
     ListViews.STAFF_MEMBERS_LIST
   );
   const intl = useIntl();
+
+  usePaginationReset(
+    staffListUrl({
+      ...params,
+      ...DEFAULT_INITIAL_PAGINATION_DATA
+    }),
+    settings.rowNumber
+  );
 
   const paginationState = createPaginationState(settings.rowNumber, params);
   const queryVariables = React.useMemo(
