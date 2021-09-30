@@ -266,7 +266,7 @@ export interface OrderDetailsFragment_fulfillments_lines_orderLine {
   isShippingRequired: boolean;
   variant: OrderDetailsFragment_fulfillments_lines_orderLine_variant | null;
   productName: string;
-  productSku: string;
+  productSku: string | null;
   quantity: number;
   quantityFulfilled: number;
   quantityToFulfill: number;
@@ -362,7 +362,7 @@ export interface OrderDetailsFragment_lines {
   isShippingRequired: boolean;
   variant: OrderDetailsFragment_lines_variant | null;
   productName: string;
-  productSku: string;
+  productSku: string | null;
   quantity: number;
   quantityFulfilled: number;
   quantityToFulfill: number;

@@ -418,6 +418,10 @@
     "context": "product field",
     "string": "Type"
   },
+  "productExportFieldVariantId": {
+    "context": "product field",
+    "string": "Export Variant ID"
+  },
   "productExportFieldVariantImages": {
     "context": "product field",
     "string": "Variant Images"

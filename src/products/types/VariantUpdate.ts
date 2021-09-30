@@ -272,7 +272,7 @@ export interface VariantUpdate_productVariantUpdate_productVariant_product_varia
   __typename: "ProductVariant";
   id: string;
   name: string;
-  sku: string;
+  sku: string | null;
   media: VariantUpdate_productVariantUpdate_productVariant_product_variants_media[] | null;
 }
 
@@ -344,7 +344,7 @@ export interface VariantUpdate_productVariantUpdate_productVariant {
   name: string;
   product: VariantUpdate_productVariantUpdate_productVariant_product;
   channelListings: VariantUpdate_productVariantUpdate_productVariant_channelListings[] | null;
-  sku: string;
+  sku: string | null;
   stocks: (VariantUpdate_productVariantUpdate_productVariant_stocks | null)[] | null;
   trackInventory: boolean;
   weight: VariantUpdate_productVariantUpdate_productVariant_weight | null;
@@ -619,7 +619,7 @@ export interface VariantUpdate_productVariantStocksUpdate_productVariant_product
   __typename: "ProductVariant";
   id: string;
   name: string;
-  sku: string;
+  sku: string | null;
   media: VariantUpdate_productVariantStocksUpdate_productVariant_product_variants_media[] | null;
 }
 
@@ -691,7 +691,7 @@ export interface VariantUpdate_productVariantStocksUpdate_productVariant {
   name: string;
   product: VariantUpdate_productVariantStocksUpdate_productVariant_product;
   channelListings: VariantUpdate_productVariantStocksUpdate_productVariant_channelListings[] | null;
-  sku: string;
+  sku: string | null;
   stocks: (VariantUpdate_productVariantStocksUpdate_productVariant_stocks | null)[] | null;
   trackInventory: boolean;
   weight: VariantUpdate_productVariantStocksUpdate_productVariant_weight | null;

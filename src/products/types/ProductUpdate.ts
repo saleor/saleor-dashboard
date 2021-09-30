@@ -296,7 +296,7 @@ export interface ProductUpdate_productUpdate_product_variants_channelListings {
 export interface ProductUpdate_productUpdate_product_variants {
   __typename: "ProductVariant";
   id: string;
-  sku: string;
+  sku: string | null;
   name: string;
   margin: number | null;
   media: ProductUpdate_productUpdate_product_variants_media[] | null;
