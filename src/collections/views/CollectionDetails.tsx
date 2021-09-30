@@ -358,7 +358,7 @@ export const CollectionDetails: React.FC<CollectionDetailsProps> = ({
                   variables: {
                     ...paginationState,
                     collectionId: id,
-                    productIds: products.map(product => product.id)
+                    productIds: products
                   }
                 })
               }
