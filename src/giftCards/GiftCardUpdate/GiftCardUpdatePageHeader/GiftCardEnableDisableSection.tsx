@@ -86,6 +86,7 @@ const GiftCardEnableDisableSection: React.FC = () => {
 
   return (
     <ConfirmButton
+      data-test-id="enable-button"
       onClick={handleClick}
       transitionState={currentOpts?.status}
       labels={{
