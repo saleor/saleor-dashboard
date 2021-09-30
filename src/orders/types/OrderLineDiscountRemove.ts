@@ -273,7 +273,7 @@ export interface OrderLineDiscountRemove_orderLineDiscountRemove_order_fulfillme
   isShippingRequired: boolean;
   variant: OrderLineDiscountRemove_orderLineDiscountRemove_order_fulfillments_lines_orderLine_variant | null;
   productName: string;
-  productSku: string;
+  productSku: string | null;
   quantity: number;
   quantityFulfilled: number;
   quantityToFulfill: number;
@@ -369,7 +369,7 @@ export interface OrderLineDiscountRemove_orderLineDiscountRemove_order_lines {
   isShippingRequired: boolean;
   variant: OrderLineDiscountRemove_orderLineDiscountRemove_order_lines_variant | null;
   productName: string;
-  productSku: string;
+  productSku: string | null;
   quantity: number;
   quantityFulfilled: number;
   quantityToFulfill: number;

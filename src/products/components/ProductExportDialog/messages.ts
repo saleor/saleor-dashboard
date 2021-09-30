@@ -50,6 +50,11 @@ function useProductExportFieldMessages() {
       description: "product field",
       id: "productExportFieldVariantImages"
     }),
+    [ProductFieldEnum.VARIANT_ID]: intl.formatMessage({
+      defaultMessage: "Export Variant ID",
+      description: "product field",
+      id: "productExportFieldVariantId"
+    }),
     [ProductFieldEnum.VARIANT_SKU]: intl.formatMessage({
       defaultMessage: "Export Variant SKU",
       description: "product field",

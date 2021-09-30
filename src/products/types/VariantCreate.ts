@@ -272,7 +272,7 @@ export interface VariantCreate_productVariantCreate_productVariant_product_varia
   __typename: "ProductVariant";
   id: string;
   name: string;
-  sku: string;
+  sku: string | null;
   media: VariantCreate_productVariantCreate_productVariant_product_variants_media[] | null;
 }
 
@@ -344,7 +344,7 @@ export interface VariantCreate_productVariantCreate_productVariant {
   name: string;
   product: VariantCreate_productVariantCreate_productVariant_product;
   channelListings: VariantCreate_productVariantCreate_productVariant_channelListings[] | null;
-  sku: string;
+  sku: string | null;
   stocks: (VariantCreate_productVariantCreate_productVariant_stocks | null)[] | null;
   trackInventory: boolean;
   weight: VariantCreate_productVariantCreate_productVariant_weight | null;

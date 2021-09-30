@@ -14,7 +14,6 @@ import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
 import TableHead from "@saleor/components/TableHead";
 import TablePagination from "@saleor/components/TablePagination";
-import { makeStyles } from "@saleor/macaw-ui";
 import { mapEdgesToItems } from "@saleor/utils/maps";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -23,34 +22,13 @@ import { maybe, renderCollection } from "../../../misc";
 import { ListActions, ListProps } from "../../../types";
 import { SaleDetails_sale } from "../../types/SaleDetails";
 import { VoucherDetails_voucher } from "../../types/VoucherDetails";
-
+import { messages } from "./messages";
+import { useStyles } from "./styles";
 export interface DiscountCategoriesProps extends ListProps, ListActions {
   discount: SaleDetails_sale | VoucherDetails_voucher;
   onCategoryAssign: () => void;
   onCategoryUnassign: (id: string) => void;
 }
-
-const useStyles = makeStyles(
-  {
-    colActions: {
-      "&:last-child": {
-        paddingRight: 0
-      },
-      width: 80
-    },
-    colName: {
-      width: "auto"
-    },
-    colProducts: {
-      textAlign: "right",
-      width: 140
-    },
-    tableRow: {
-      cursor: "pointer"
-    }
-  },
-  { name: "DiscountCategories" }
-);
 
 const numberOfColumns = 4;
 
@@ -77,16 +55,10 @@ const DiscountCategories: React.FC<DiscountCategoriesProps> = props => {
   return (
     <Card>
       <CardTitle
-        title={intl.formatMessage({
-          defaultMessage: "Eligible Categories",
-          description: "section header"
-        })}
+        title={intl.formatMessage(messages.discountCategoriesHeader)}
         toolbar={
           <Button color="primary" onClick={onCategoryAssign}>
-            <FormattedMessage
-              defaultMessage="Assign categories"
-              description="button"
-            />
+            <FormattedMessage {...messages.discountCategoriesButton} />
           </Button>
         }
       />
@@ -107,12 +79,13 @@ const DiscountCategories: React.FC<DiscountCategoriesProps> = props => {
         >
           <>
             <TableCell className={classes.colName}>
-              <FormattedMessage defaultMessage="Category name" />
+              <FormattedMessage
+                {...messages.discountCategoriesTableProductHeader}
+              />
             </TableCell>
             <TableCell className={classes.colProducts}>
               <FormattedMessage
-                defaultMessage="Products"
-                description="number of products"
+                {...messages.discountCategoriesTableProductNumber}
               />
             </TableCell>
             <TableCell />
@@ -179,7 +152,7 @@ const DiscountCategories: React.FC<DiscountCategoriesProps> = props => {
             () => (
               <TableRow>
                 <TableCell colSpan={numberOfColumns}>
-                  <FormattedMessage defaultMessage="No categories found" />
+                  <FormattedMessage {...messages.discountCategoriesNotFound} />
                 </TableCell>
               </TableRow>
             )

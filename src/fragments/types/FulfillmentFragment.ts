@@ -69,7 +69,7 @@ export interface FulfillmentFragment_lines_orderLine {
   isShippingRequired: boolean;
   variant: FulfillmentFragment_lines_orderLine_variant | null;
   productName: string;
-  productSku: string;
+  productSku: string | null;
   quantity: number;
   quantityFulfilled: number;
   quantityToFulfill: number;

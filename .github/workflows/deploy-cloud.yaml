@@ -1,16 +1,7 @@
-name: Deploy to production
+name: Deploy to cloud
 on:
-  workflow_dispatch:
-    inputs:
-      service_name:
-        description: Name of the service
-        required: true
-      region:
-        description: Region to which deploy (eu or us)
-        required: true
-      git_ref:
-        description: Git ref (tag, branch or full commit hash) to deploy
-        required: true
+  repository_dispatch:
+    types: cloud-deployment
 
 jobs:
   build:
@@ -22,19 +13,20 @@ jobs:
       SENTRY_ORG: saleor
       SENTRY_PROJECT: dashboard
       SENTRY_URL_PREFIX: "~/dashboard/static"
-      ENVIRONMENT: ${{ github.event.inputs.service_name }}
+      ENVIRONMENT: ${{ github.event.client_payload.deployment_name }}
+      REGION: ${{ github.event.client_payload.region }}
       SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
       SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
       IS_CLOUD_INSTANCE: true
     steps:
       - uses: actions/checkout@v2
         with:
-          ref: ${{ github.event.inputs.git_ref }}
+          ref: ${{ github.event.client_payload.ref }}
       - name: Package
         timeout-minutes: 15
         run: |
           npm ci
-      - name: build
+      - name: Build
         run: |
           npm run build
       - name: Configure AWS Credentials
@@ -45,7 +37,6 @@ jobs:
           aws-region: us-east-1
       - name: Deploy
         run: |
-          REGION=${{ github.event.inputs.region }}
           if [[ "$REGION" == "us" ]]; then
             BUCKET=${{ secrets.AWS_PROD_US_DEPLOYMENT_BUCKET }}
             CF_ID=${{ secrets.AWS_PROD_US_CF_DIST_ID }}

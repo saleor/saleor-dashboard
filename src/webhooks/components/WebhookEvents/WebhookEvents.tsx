@@ -90,6 +90,18 @@ const WebhookEvents: React.FC<WebhookEventsProps> = ({
       defaultMessage: "Draft order updated",
       description: "event"
     }),
+    [WebhookEventTypeEnum.SALE_CREATED]: intl.formatMessage({
+      defaultMessage: "Sale created",
+      description: "event"
+    }),
+    [WebhookEventTypeEnum.SALE_UPDATED]: intl.formatMessage({
+      defaultMessage: "Sale updated",
+      description: "event"
+    }),
+    [WebhookEventTypeEnum.SALE_DELETED]: intl.formatMessage({
+      defaultMessage: "Sale deleted",
+      description: "event"
+    }),
     [WebhookEventTypeEnum.PAGE_CREATED]: intl.formatMessage({
       defaultMessage: "Page created",
       description: "event"

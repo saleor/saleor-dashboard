@@ -802,6 +802,7 @@ input CatalogueInput {
   products: [ID]
   categories: [ID]
   collections: [ID]
+  variants: [ID]
 }
 
 type Category implements Node & ObjectWithMetadata {
@@ -4355,7 +4356,8 @@ type OrderLine implements Node {
   id: ID!
   productName: String!
   variantName: String!
-  productSku: String!
+  productSku: String
+  productVariantId: String
   isShippingRequired: Boolean!
   quantity: Int!
   quantityFulfilled: Int!
@@ -5319,6 +5321,7 @@ enum ProductFieldEnum {
   COLLECTIONS
   CHARGE_TAXES
   PRODUCT_MEDIA
+  VARIANT_ID
   VARIANT_SKU
   VARIANT_WEIGHT
   VARIANT_MEDIA
@@ -5606,7 +5609,7 @@ type ProductUpdate {
 type ProductVariant implements Node & ObjectWithMetadata {
   id: ID!
   name: String!
-  sku: String!
+  sku: String
   product: Product!
   trackInventory: Boolean!
   weight: Weight
@@ -5636,7 +5639,7 @@ type ProductVariantBulkCreate {
 
 input ProductVariantBulkCreateInput {
   attributes: [BulkAttributeValueInput!]!
-  sku: String!
+  sku: String
   trackInventory: Boolean
   weight: WeightScalar
   stocks: [StockInput!]
@@ -5905,6 +5908,7 @@ type Sale implements Node & ObjectWithMetadata {
   categories(before: String, after: String, first: Int, last: Int): CategoryCountableConnection
   collections(before: String, after: String, first: Int, last: Int): CollectionCountableConnection
   products(before: String, after: String, first: Int, last: Int): ProductCountableConnection
+  variants(before: String, after: String, first: Int, last: Int): ProductVariantCountableConnection
   translation(languageCode: LanguageCodeEnum!): SaleTranslation
   channelListings: [SaleChannelListing!]
   discountValue: Float
@@ -5982,6 +5986,7 @@ input SaleInput {
   type: DiscountValueTypeEnum
   value: PositiveDecimal
   products: [ID]
+  variants: [ID]
   categories: [ID]
   collections: [ID]
   startDate: DateTime
@@ -7187,6 +7192,9 @@ enum WebhookEventTypeEnum {
   DRAFT_ORDER_CREATED
   DRAFT_ORDER_UPDATED
   DRAFT_ORDER_DELETED
+  SALE_CREATED
+  SALE_UPDATED
+  SALE_DELETED
   INVOICE_REQUESTED
   INVOICE_DELETED
   INVOICE_SENT
@@ -7229,6 +7237,9 @@ enum WebhookSampleEventTypeEnum {
   DRAFT_ORDER_CREATED
   DRAFT_ORDER_UPDATED
   DRAFT_ORDER_DELETED
+  SALE_CREATED
+  SALE_UPDATED
+  SALE_DELETED
   INVOICE_REQUESTED
   INVOICE_DELETED
   INVOICE_SENT

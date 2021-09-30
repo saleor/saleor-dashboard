@@ -1645,6 +1645,7 @@ export enum ProductFieldEnum {
   PRODUCT_MEDIA = "PRODUCT_MEDIA",
   PRODUCT_TYPE = "PRODUCT_TYPE",
   PRODUCT_WEIGHT = "PRODUCT_WEIGHT",
+  VARIANT_ID = "VARIANT_ID",
   VARIANT_MEDIA = "VARIANT_MEDIA",
   VARIANT_SKU = "VARIANT_SKU",
   VARIANT_WEIGHT = "VARIANT_WEIGHT",
@@ -1853,6 +1854,9 @@ export enum WebhookEventTypeEnum {
   PRODUCT_VARIANT_DELETED = "PRODUCT_VARIANT_DELETED",
   PRODUCT_VARIANT_OUT_OF_STOCK = "PRODUCT_VARIANT_OUT_OF_STOCK",
   PRODUCT_VARIANT_UPDATED = "PRODUCT_VARIANT_UPDATED",
+  SALE_CREATED = "SALE_CREATED",
+  SALE_DELETED = "SALE_DELETED",
+  SALE_UPDATED = "SALE_UPDATED",
   TRANSLATION_CREATED = "TRANSLATION_CREATED",
   TRANSLATION_UPDATED = "TRANSLATION_UPDATED",
 }
@@ -2018,6 +2022,7 @@ export interface CatalogueInput {
   products?: (string | null)[] | null;
   categories?: (string | null)[] | null;
   collections?: (string | null)[] | null;
+  variants?: (string | null)[] | null;
 }
 
 export interface CategoryFilterInput {
@@ -2611,7 +2616,7 @@ export interface ProductTypeSortingInput {
 
 export interface ProductVariantBulkCreateInput {
   attributes: BulkAttributeValueInput[];
-  sku: string;
+  sku?: string | null;
   trackInventory?: boolean | null;
   weight?: any | null;
   stocks?: StockInput[] | null;
@@ -2674,6 +2679,7 @@ export interface SaleInput {
   type?: DiscountValueTypeEnum | null;
   value?: any | null;
   products?: (string | null)[] | null;
+  variants?: (string | null)[] | null;
   categories?: (string | null)[] | null;
   collections?: (string | null)[] | null;
   startDate?: any | null;

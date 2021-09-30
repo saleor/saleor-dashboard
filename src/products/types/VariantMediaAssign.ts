@@ -49,7 +49,7 @@ export interface VariantMediaAssign_variantMediaAssign_productVariant_product_va
   __typename: "ProductVariant";
   id: string;
   name: string;
-  sku: string;
+  sku: string | null;
   media: VariantMediaAssign_variantMediaAssign_productVariant_product_variants_media[] | null;
 }
 

@@ -11,6 +11,7 @@ import useAppChannel from "@saleor/components/AppLayout/AppChannelContext";
 import AssignCategoriesDialog from "@saleor/components/AssignCategoryDialog";
 import AssignCollectionDialog from "@saleor/components/AssignCollectionDialog";
 import AssignProductDialog from "@saleor/components/AssignProductDialog";
+import AssignVariantDialog from "@saleor/components/AssignVariantDialog";
 import ChannelsAvailabilityDialog from "@saleor/components/ChannelsAvailabilityDialog";
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import { DEFAULT_INITIAL_SEARCH_DATA, PAGINATE_BY } from "@saleor/config";
@@ -45,7 +46,7 @@ import usePaginator, {
 } from "@saleor/hooks/usePaginator";
 import { commonMessages, sectionNames } from "@saleor/intl";
 import { maybe } from "@saleor/misc";
-import { productUrl } from "@saleor/products/urls";
+import { productUrl, productVariantEditPath } from "@saleor/products/urls";
 import useCategorySearch from "@saleor/searches/useCategorySearch";
 import useCollectionSearch from "@saleor/searches/useCollectionSearch";
 import useProductSearch from "@saleor/searches/useProductSearch";
@@ -60,6 +61,7 @@ import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { createUpdateHandler } from "./handlers";
+import { messages } from "./messages";
 
 interface SaleDetailsProps {
   id: string;
@@ -155,9 +157,7 @@ export const SaleDetails: React.FC<SaleDetailsProps> = ({ id, params }) => {
     if (data.saleDelete.errors.length === 0) {
       notify({
         status: "success",
-        text: intl.formatMessage({
-          defaultMessage: "Removed sale"
-        })
+        text: intl.formatMessage(messages.saleDetailsSaleDeleteDialog)
       });
       navigate(saleListUrl(), true);
     }
@@ -197,9 +197,9 @@ export const SaleDetails: React.FC<SaleDetailsProps> = ({ id, params }) => {
           onChange={channelsToggle}
           onClose={handleChannelsModalClose}
           open={isChannelsModalOpen}
-          title={intl.formatMessage({
-            defaultMessage: "Manage Channel Availability"
-          })}
+          title={intl.formatMessage(
+            messages.saleDetailsChannelAvailabilityDialogHeader
+          )}
           selected={channelListElements.length}
           confirmButtonState="default"
           onConfirm={handleChannelsConfirm}
@@ -219,7 +219,9 @@ export const SaleDetails: React.FC<SaleDetailsProps> = ({ id, params }) => {
                           ? maybe(() => data.sale.categories.pageInfo)
                           : params.activeTab === SaleDetailsPageTab.collections
                           ? maybe(() => data.sale.collections.pageInfo)
-                          : maybe(() => data.sale.products.pageInfo);
+                          : params.activeTab === SaleDetailsPageTab.products
+                          ? maybe(() => data.sale.products.pageInfo)
+                          : maybe(() => data.sale.variants.pageInfo);
 
                       const handleCategoriesUnassign = (ids: string[]) =>
                         saleCataloguesRemove({
@@ -250,6 +252,17 @@ export const SaleDetails: React.FC<SaleDetailsProps> = ({ id, params }) => {
                             id,
                             input: {
                               products: ids
+                            }
+                          }
+                        });
+
+                      const handleVariantsUnassign = (ids: string[]) =>
+                        saleCataloguesRemove({
+                          variables: {
+                            ...paginationState,
+                            id,
+                            input: {
+                              variants: ids
                             }
                           }
                         });
@@ -324,6 +337,14 @@ export const SaleDetails: React.FC<SaleDetailsProps> = ({ id, params }) => {
                             }
                             onProductClick={id => () =>
                               navigate(productUrl(id))}
+                            onVariantAssign={() => openModal("assign-variant")}
+                            onVariantUnassign={variantId =>
+                              handleVariantsUnassign([variantId])
+                            }
+                            onVariantClick={(productId, variantId) => () =>
+                              navigate(
+                                productVariantEditPath(productId, variantId)
+                              )}
                             activeTab={params.activeTab}
                             onBack={() => navigate(saleListUrl())}
                             onTabClick={changeTab}
@@ -340,9 +361,7 @@ export const SaleDetails: React.FC<SaleDetailsProps> = ({ id, params }) => {
                                 }
                               >
                                 <FormattedMessage
-                                  defaultMessage="Unassign"
-                                  description="unassign category from sale, button"
-                                  id="saleDetailsUnassignCategory"
+                                  {...messages.saleDetailsUnassignCategory}
                                 />
                               </Button>
                             }
@@ -356,9 +375,7 @@ export const SaleDetails: React.FC<SaleDetailsProps> = ({ id, params }) => {
                                 }
                               >
                                 <FormattedMessage
-                                  defaultMessage="Unassign"
-                                  description="unassign collection from sale, button"
-                                  id="saleDetailsUnassignCollection"
+                                  {...messages.saleDetailsUnassignCollection}
                                 />
                               </Button>
                             }
@@ -372,9 +389,21 @@ export const SaleDetails: React.FC<SaleDetailsProps> = ({ id, params }) => {
                                 }
                               >
                                 <FormattedMessage
-                                  defaultMessage="Unassign"
-                                  description="unassign product from sale, button"
-                                  id="saleDetailsUnassignProduct"
+                                  {...messages.saleDetailsUnassignProduct}
+                                />
+                              </Button>
+                            }
+                            variantListToolbar={
+                              <Button
+                                color="primary"
+                                onClick={() =>
+                                  openModal("unassign-variant", {
+                                    ids: listElements
+                                  })
+                                }
+                              >
+                                <FormattedMessage
+                                  {...messages.saleDetailsUnassignVariant}
                                 />
                               </Button>
                             }
@@ -382,6 +411,34 @@ export const SaleDetails: React.FC<SaleDetailsProps> = ({ id, params }) => {
                             selected={listElements.length}
                             toggle={toggle}
                             toggleAll={toggleAll}
+                          />
+                          <AssignVariantDialog
+                            confirmButtonState={saleCataloguesAddOpts.status}
+                            hasMore={
+                              searchProductsOpts.data?.search.pageInfo
+                                .hasNextPage
+                            }
+                            open={params.action === "assign-variant"}
+                            onFetch={searchProducts}
+                            onFetchMore={loadMoreProducts}
+                            loading={searchProductsOpts.loading}
+                            onClose={closeModal}
+                            onSubmit={variants =>
+                              saleCataloguesAdd({
+                                variables: {
+                                  ...paginationState,
+                                  id,
+                                  input: {
+                                    variants: variants.map(
+                                      variant => variant.id
+                                    )
+                                  }
+                                }
+                              })
+                            }
+                            products={mapEdgesToItems(
+                              searchProductsOpts?.data?.search
+                            )?.filter(suggestedProduct => suggestedProduct.id)}
                           />
                           <AssignProductDialog
                             confirmButtonState={saleCataloguesAddOpts.status}
@@ -400,9 +457,7 @@ export const SaleDetails: React.FC<SaleDetailsProps> = ({ id, params }) => {
                                   ...paginationState,
                                   id,
                                   input: {
-                                    products: products.map(
-                                      product => product.id
-                                    )
+                                    products
                                   }
                                 }
                               })
@@ -472,10 +527,9 @@ export const SaleDetails: React.FC<SaleDetailsProps> = ({ id, params }) => {
                               params.action === "unassign-category" &&
                               canOpenBulkActionDialog
                             }
-                            title={intl.formatMessage({
-                              defaultMessage: "Unassign Categories From Sale",
-                              description: "dialog header"
-                            })}
+                            title={intl.formatMessage(
+                              messages.saleDetailsUnassignCategoryDialogHeader
+                            )}
                             confirmButtonState={saleCataloguesRemoveOpts.status}
                             onClose={closeModal}
                             onConfirm={() =>
@@ -485,8 +539,7 @@ export const SaleDetails: React.FC<SaleDetailsProps> = ({ id, params }) => {
                             {canOpenBulkActionDialog && (
                               <DialogContentText>
                                 <FormattedMessage
-                                  defaultMessage="{counter,plural,one{Are you sure you want to unassign this category?} other{Are you sure you want to unassign {displayQuantity} categories?}}"
-                                  description="dialog content"
+                                  {...messages.saleDetailsUnassignCategoryDialog}
                                   values={{
                                     counter: params.ids.length,
                                     displayQuantity: (
@@ -502,10 +555,9 @@ export const SaleDetails: React.FC<SaleDetailsProps> = ({ id, params }) => {
                               params.action === "unassign-collection" &&
                               canOpenBulkActionDialog
                             }
-                            title={intl.formatMessage({
-                              defaultMessage: "Unassign Collections From Sale",
-                              description: "dialog header"
-                            })}
+                            title={intl.formatMessage(
+                              messages.saleDetailsUnassignCollectionDialogHeader
+                            )}
                             confirmButtonState={saleCataloguesRemoveOpts.status}
                             onClose={closeModal}
                             onConfirm={() =>
@@ -515,8 +567,7 @@ export const SaleDetails: React.FC<SaleDetailsProps> = ({ id, params }) => {
                             {canOpenBulkActionDialog && (
                               <DialogContentText>
                                 <FormattedMessage
-                                  defaultMessage="{counter,plural,one{Are you sure you want to unassign this collection?} other{Are you sure you want to unassign {displayQuantity} collections?}}"
-                                  description="dialog content"
+                                  {...messages.saleDetailsUnassignCollectionDialog}
                                   values={{
                                     counter: params.ids.length,
                                     displayQuantity: (
@@ -532,10 +583,9 @@ export const SaleDetails: React.FC<SaleDetailsProps> = ({ id, params }) => {
                               params.action === "unassign-product" &&
                               canOpenBulkActionDialog
                             }
-                            title={intl.formatMessage({
-                              defaultMessage: "Unassign Products From Sale",
-                              description: "dialog header"
-                            })}
+                            title={intl.formatMessage(
+                              messages.saleDetailsUnassignProductDialogHeader
+                            )}
                             confirmButtonState={saleCataloguesRemoveOpts.status}
                             onClose={closeModal}
                             onConfirm={() => handleProductsUnassign(params.ids)}
@@ -543,8 +593,33 @@ export const SaleDetails: React.FC<SaleDetailsProps> = ({ id, params }) => {
                             {canOpenBulkActionDialog && (
                               <DialogContentText>
                                 <FormattedMessage
-                                  defaultMessage="{counter,plural,one{Are you sure you want to unassign this product?} other{Are you sure you want to unassign {displayQuantity} products?}}"
-                                  description="dialog content"
+                                  {...messages.saleDetailsUnassignCategoryDialog}
+                                  values={{
+                                    counter: params.ids.length,
+                                    displayQuantity: (
+                                      <strong>{params.ids.length}</strong>
+                                    )
+                                  }}
+                                />
+                              </DialogContentText>
+                            )}
+                          </ActionDialog>
+                          <ActionDialog
+                            open={
+                              params.action === "unassign-variant" &&
+                              canOpenBulkActionDialog
+                            }
+                            title={intl.formatMessage(
+                              messages.saleDetailsUnassignVariantDialogHeader
+                            )}
+                            confirmButtonState={saleCataloguesRemoveOpts.status}
+                            onClose={closeModal}
+                            onConfirm={() => handleVariantsUnassign(params.ids)}
+                          >
+                            {canOpenBulkActionDialog && (
+                              <DialogContentText>
+                                <FormattedMessage
+                                  {...messages.saleDetailsUnassignVariantDialog}
                                   values={{
                                     counter: params.ids.length,
                                     displayQuantity: (
@@ -557,10 +632,9 @@ export const SaleDetails: React.FC<SaleDetailsProps> = ({ id, params }) => {
                           </ActionDialog>
                           <ActionDialog
                             open={params.action === "remove"}
-                            title={intl.formatMessage({
-                              defaultMessage: "Delete Sale",
-                              description: "dialog header"
-                            })}
+                            title={intl.formatMessage(
+                              messages.saleDetailsSaleDeleteDialogHeader
+                            )}
                             confirmButtonState={saleDeleteOpts.status}
                             onClose={closeModal}
                             variant="delete"
@@ -572,8 +646,7 @@ export const SaleDetails: React.FC<SaleDetailsProps> = ({ id, params }) => {
                           >
                             <DialogContentText>
                               <FormattedMessage
-                                defaultMessage="Are you sure you want to delete {saleName}?"
-                                description="dialog content"
+                                {...messages.saleDetailsUnassignDialogDelete}
                                 values={{
                                   saleName: (
                                     <strong>
