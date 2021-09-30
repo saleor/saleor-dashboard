@@ -1,6 +1,7 @@
 import DemoBanner from "@saleor/components/DemoBanner";
 import useAppState from "@saleor/hooks/useAppState";
 import { ThemeProvider } from "@saleor/macaw-ui";
+import { createFetch, createSaleorClient, SaleorProvider } from "@saleor/sdk";
 import { defaultDataIdFromObject, InMemoryCache } from "apollo-cache-inmemory";
 import { ApolloClient } from "apollo-client";
 import { ApolloLink } from "apollo-link";
@@ -22,7 +23,6 @@ import Auth from "./auth";
 import AuthProvider, { useAuth } from "./auth/AuthProvider";
 import LoginLoading from "./auth/components/LoginLoading/LoginLoading";
 import SectionRoute from "./auth/components/SectionRoute";
-import authLink from "./auth/link";
 import CategorySection from "./categories";
 import ChannelsSection from "./channels";
 import { channelsSection } from "./channels/urls";
@@ -78,7 +78,8 @@ errorTracker.init();
 // so we need to explicitly set them
 const linkOptions = {
   credentials: "include",
-  uri: API_URI
+  uri: API_URI,
+  fetch: createFetch()
 };
 const uploadLink = createUploadLink(linkOptions);
 const batchLink = new BatchHttpLink({
@@ -103,57 +104,59 @@ const apolloClient = new ApolloClient({
       return defaultDataIdFromObject(obj);
     }
   }),
-  link: authLink.concat(link)
+  link
+  // link: authLink.concat(link)
+});
+
+const saleorClient = createSaleorClient({
+  apiUrl: API_URI,
+  channel: "",
+  autologin: true
 });
 
 const App: React.FC = () => (
-  <ApolloProvider client={apolloClient}>
-    <BrowserRouter basename={APP_MOUNT_URI}>
-      <ThemeProvider overrides={themeOverrides}>
-        <DateProvider>
-          <LocaleProvider>
-            <MessageManagerProvider>
-              <ServiceWorker />
-              <BackgroundTasksProvider>
-                <AppStateProvider>
-                  <AuthProvider>
-                    <ShopProvider>
-                      <AppChannelProvider>
-                        <Routes />
-                      </AppChannelProvider>
-                    </ShopProvider>
-                  </AuthProvider>
-                </AppStateProvider>
-              </BackgroundTasksProvider>
-            </MessageManagerProvider>
-          </LocaleProvider>
-        </DateProvider>
-      </ThemeProvider>
-    </BrowserRouter>
-  </ApolloProvider>
+  <SaleorProvider client={saleorClient}>
+    <ApolloProvider client={apolloClient}>
+      <BrowserRouter basename={APP_MOUNT_URI}>
+        <ThemeProvider overrides={themeOverrides}>
+          <DateProvider>
+            <LocaleProvider>
+              <MessageManagerProvider>
+                <ServiceWorker />
+                <BackgroundTasksProvider>
+                  <AppStateProvider>
+                    <AuthProvider>
+                      <ShopProvider>
+                        <AppChannelProvider
+                          onChannelChange={saleorClient.config.setChannel}
+                        >
+                          <Routes />
+                        </AppChannelProvider>
+                      </ShopProvider>
+                    </AuthProvider>
+                  </AppStateProvider>
+                </BackgroundTasksProvider>
+              </MessageManagerProvider>
+            </LocaleProvider>
+          </DateProvider>
+        </ThemeProvider>
+      </BrowserRouter>
+    </ApolloProvider>
+  </SaleorProvider>
 );
 
 const Routes: React.FC = () => {
   const intl = useIntl();
   const [, dispatchAppState] = useAppState();
-  const {
-    hasToken,
-    isAuthenticated,
-    tokenAuthLoading,
-    tokenVerifyLoading
-  } = useAuth();
+  const { authenticated, authenticating } = useAuth();
+
   const { channel } = useAppChannel(false);
 
   const channelLoaded = typeof channel !== "undefined";
 
-  const homePageLoaded =
-    channelLoaded &&
-    isAuthenticated &&
-    !tokenAuthLoading &&
-    !tokenVerifyLoading;
+  const homePageLoaded = channelLoaded && authenticated && !authenticating;
 
-  const homePageLoading =
-    (isAuthenticated && !channelLoaded) || (hasToken && tokenVerifyLoading);
+  const homePageLoading = (authenticated && !channelLoaded) || authenticating;
 
   return (
     <>

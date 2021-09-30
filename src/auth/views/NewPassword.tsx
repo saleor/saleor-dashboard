@@ -13,19 +13,19 @@ import { NewPasswordUrlQueryParams } from "../urls";
 
 const NewPassword: React.FC<RouteComponentProps> = ({ location }) => {
   const navigate = useNavigator();
-  const { loginByToken } = useUser();
+  // const { loginByToken } = useUser();
 
   const params: NewPasswordUrlQueryParams = parseQs(location.search.substr(1));
 
   const handleSetPassword = async (data: SetPassword) => {
-    if (data.setPassword.errors.length === 0) {
-      loginByToken(
-        data.setPassword.token,
-        data.setPassword.csrfToken,
-        data.setPassword.user
-      );
-      navigate("/", { replace: true });
-    }
+    // if (data.setPassword.errors.length === 0) {
+    //   loginByToken(
+    //     data.setPassword.token,
+    //     data.setPassword.csrfToken,
+    //     data.setPassword.user
+    //   );
+    //   navigate("/", { replace: true });
+    // }
   };
 
   return (

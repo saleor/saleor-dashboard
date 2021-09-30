@@ -1,13 +1,14 @@
 import { User } from "@saleor/fragments/types/User";
+import {
+  AccountErrorFragment,
+  CreateToken,
+  UserFragment
+} from "@saleor/sdk/dist/apollo/types";
 import { parse as parseQs } from "qs";
 import React, { MutableRefObject } from "react";
 import { Route, RouteComponentProps, Switch } from "react-router-dom";
 
 import Layout from "./components/Layout";
-import {
-  ExternalLoginInput,
-  RequestExternalLoginInput
-} from "./hooks/useExternalAuthProvider";
 import { ExternalObtainAccessTokens_externalObtainAccessTokens } from "./types/ExternalObtainAccessTokens";
 import { TokenAuth_tokenCreate } from "./types/TokenAuth";
 import {
@@ -29,32 +30,44 @@ const LoginView: React.FC<RouteComponentProps<any>> = () => {
 };
 
 interface UserContext {
-  login: (username: string, password: string) => Promise<TokenAuth_tokenCreate>;
-  loginByExternalPlugin: (
-    input: ExternalLoginInput
-  ) => Promise<ExternalObtainAccessTokens_externalObtainAccessTokens>;
-  loginByToken: (auth: string, csrf: string, user: User) => void;
+  login: (
+    username: string,
+    password: string
+  ) => Promise<
+    Pick<CreateToken, "refreshToken" | "token" | "csrfToken"> & {
+      errors: AccountErrorFragment[];
+      user?: UserFragment;
+    }
+  >;
+  // loginByExternalPlugin: (
+  //   input: ExternalLoginInput
+  // ) => Promise<ExternalObtainAccessTokens_externalObtainAccessTokens>;
+  // loginByToken: (auth: string, csrf: string, user: User) => void;
   logout: () => void;
-  requestLoginByExternalPlugin: (
-    pluginId: string,
-    input: RequestExternalLoginInput
-  ) => Promise<void>;
-  tokenAuthLoading: boolean;
-  tokenRefresh: () => Promise<boolean>;
-  tokenVerifyLoading: boolean;
+  // requestLoginByExternalPlugin: (
+  //   pluginId: string,
+  //   input: RequestExternalLoginInput
+  // ) => Promise<void>;
+  // tokenAuthLoading: boolean;
+  // tokenRefresh: () => Promise<boolean>;
+  // tokenVerifyLoading: boolean;
   user?: User;
-  autologinPromise?: MutableRefObject<Promise<any>>;
+  // autologinPromise?: MutableRefObject<Promise<any>>;
+  authenticating: boolean;
+  authenticated: boolean;
 }
 
 export const UserContext = React.createContext<UserContext>({
   login: undefined,
-  loginByExternalPlugin: undefined,
-  loginByToken: undefined,
+  // loginByExternalPlugin: undefined,
+  // loginByToken: undefined,
   logout: undefined,
-  requestLoginByExternalPlugin: undefined,
-  tokenAuthLoading: false,
-  tokenRefresh: undefined,
-  tokenVerifyLoading: false
+  // requestLoginByExternalPlugin: undefined,
+  // tokenAuthLoading: false,
+  // tokenRefresh: undefined,
+  // tokenVerifyLoading: false,
+  authenticating: false,
+  authenticated: false
 });
 
 const AuthRouter: React.FC = () => (

@@ -17,6 +17,7 @@
     "npm": ">=6.11.0 <7"
   },
   "dependencies": {
+    "@apollo/client": "^3.4.15",
     "@editorjs/editorjs": "^2.19.3",
     "@editorjs/header": "^2.6.1",
     "@editorjs/image": "^2.6.0",
@@ -28,6 +29,7 @@
     "@material-ui/lab": "^4.0.0-alpha.58",
     "@material-ui/styles": "^4.11.4",
     "@saleor/macaw-ui": "^0.2.7",
+    "@saleor/sdk": "github:mirumee/saleor-sdk#9410f0a2130994ade057891236376693ab9575b3",
     "@sentry/react": "^6.0.0",
     "@types/faker": "^5.1.6",
     "apollo": "^2.32.5",

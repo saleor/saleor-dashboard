@@ -1,4 +1,5 @@
 import { User } from "@saleor/fragments/types/User";
+import { UserFragment } from "@saleor/sdk/dist/apollo/types";
 
 export const isSupported = !!(
   navigator?.credentials?.preventSilentAccess && window.PasswordCredential
@@ -22,14 +23,14 @@ export async function login<T>(
 }
 
 export function saveCredentials(
-  user: User,
+  user: UserFragment,
   password: string
 ): Promise<CredentialType | null> {
   let result: Promise<CredentialType | null>;
 
   if (isSupported) {
     const cred = new PasswordCredential({
-      iconURL: user.avatar ? user.avatar.url : undefined,
+      // iconURL: user.avatar ? user.avatar.url : undefined,
       id: user.email,
       name: user.firstName ? `${user.firstName} ${user.lastName}` : undefined,
       password

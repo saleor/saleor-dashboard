@@ -1,58 +1,96 @@
 import { IMessageContext } from "@saleor/components/messages";
+import { DEMO_MODE } from "@saleor/config";
 import { User } from "@saleor/fragments/types/User";
 import useLocalStorage from "@saleor/hooks/useLocalStorage";
+import useNotifier from "@saleor/hooks/useNotifier";
+import { useAuth, useAuthState } from "@saleor/sdk";
+import {
+  AccountErrorFragment,
+  CreateToken,
+  UserFragment
+} from "@saleor/sdk/dist/apollo/types";
+import {
+  isSupported as isCredentialsManagementAPISupported,
+  login as loginWithCredentialsManagementAPI,
+  saveCredentials
+} from "@saleor/utils/credentialsManagement";
 import ApolloClient from "apollo-client";
-import { MutableRefObject } from "react";
+import { MutableRefObject, useState } from "react";
+import { useQuery } from "react-apollo";
+import { useIntl } from "react-intl";
 import { IntlShape } from "react-intl";
 
-import { useExternalAuthProvider } from "./useExternalAuthProvider";
-import { useSaleorAuthProvider } from "./useSaleorAuthProvider";
+import { userDetailsQuery } from "../queries";
+import { UserDetails } from "../types/UserDetails";
+import { displayDemoMessage } from "../utils";
 
 export interface UseAuthProvider {
+  login: (
+    username: string,
+    password: string
+  ) => Promise<
+    Pick<CreateToken, "refreshToken" | "token" | "csrfToken"> & {
+      errors: AccountErrorFragment[];
+      user?: UserFragment;
+    }
+  >;
   logout: () => void;
-  tokenAuthLoading: boolean;
-  tokenRefresh: () => Promise<boolean>;
-  tokenVerifyLoading: boolean;
+  authenticated: boolean;
+  authenticating: boolean;
   user?: User;
-  autologinPromise?: MutableRefObject<Promise<any>>;
 }
 export interface UseAuthProviderOpts {
   intl: IntlShape;
   notify: IMessageContext;
-  apolloClient: ApolloClient<any>;
 }
 
-export function useAuthProvider(opts: UseAuthProviderOpts) {
-  const [authPlugin, setAuthPlugin] = useLocalStorage("authPlugin", undefined);
+export function useAuthProvider(): UseAuthProvider {
+  const intl = useIntl();
+  const notify = useNotifier();
 
-  const saleorAuth = useSaleorAuthProvider({
-    authPlugin,
-    setAuthPlugin,
-    ...opts
+  const { login, logout } = useAuth();
+  const { user, token, authenticated, authenticating } = useAuthState();
+
+  const userDetails = useQuery<UserDetails>(userDetailsQuery, {
+    skip: !authenticated
   });
+  // const userDetails = useUserDetailsQuery({
+  //   skip: !authenticated
+  // });
 
-  const externalAuth = useExternalAuthProvider({
-    authPlugin,
-    setAuthPlugin,
-    ...opts
-  });
+  const handleLogout = () => {
+    logout();
 
-  const loginAuth = {
-    login: saleorAuth.login,
-    loginByExternalPlugin: externalAuth.loginByExternalPlugin,
-    loginByToken: saleorAuth.loginByToken,
-    requestLoginByExternalPlugin: externalAuth.requestLoginByExternalPlugin
+    if (isCredentialsManagementAPISupported) {
+      navigator.credentials.preventSilentAccess();
+    }
   };
 
-  if (authPlugin) {
-    return {
-      ...externalAuth,
-      ...loginAuth
-    };
-  }
+  const handleLogin = async (email: string, password: string) => {
+    const result = await login({
+      email,
+      password
+    });
+
+    if (result?.data.tokenCreate.errors.length > 0) {
+      logout();
+    }
+
+    if (result && !result.data.tokenCreate.errors.length) {
+      if (DEMO_MODE) {
+        displayDemoMessage(intl, notify);
+      }
+      saveCredentials(result.data.tokenCreate.user, password);
+    }
+
+    return result.data.tokenCreate;
+  };
 
   return {
-    ...saleorAuth,
-    ...loginAuth
+    login: handleLogin,
+    logout: handleLogout,
+    authenticating, // || userDetails.loading,
+    authenticated, // && !!userDetails.data?.me,
+    user: userDetails.data?.me // userContext // userDetails.data?.me
   };
 }
