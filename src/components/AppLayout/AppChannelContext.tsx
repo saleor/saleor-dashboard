@@ -37,11 +37,18 @@ const isValidChannel = (
   return channelList?.some(getById(channelId));
 };
 
-export const AppChannelProvider: React.FC = ({ children }) => {
-  const { isAuthenticated } = useAuth();
+interface AppChannelProviderProps {
+  onChannelChange: (channel: string) => void;
+}
+
+export const AppChannelProvider: React.FC<AppChannelProviderProps> = ({
+  children,
+  onChannelChange
+}) => {
+  const { authenticated } = useAuth();
   const [selectedChannel, setSelectedChannel] = useLocalStorage("channel", "");
   const { data: channelData, refetch } = useBaseChannelsList({
-    skip: !isAuthenticated
+    skip: !authenticated
   });
 
   const [isPickerActive, setPickerActive] = React.useState(false);
@@ -53,6 +60,10 @@ export const AppChannelProvider: React.FC = ({ children }) => {
       setSelectedChannel(channelData.channels[0].id);
     }
   }, [channelData]);
+
+  React.useEffect(() => {
+    onChannelChange(selectedChannel);
+  }, [selectedChannel]);
 
   const availableChannels = channelData?.channels || [];
 

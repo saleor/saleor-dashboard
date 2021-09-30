@@ -4,7 +4,7 @@ import { commonMessages } from "@saleor/intl";
 import { ApolloError } from "apollo-client";
 import { IntlShape } from "react-intl";
 
-import { isJwtError, isTokenExpired } from "./errors";
+import { isJwtError } from "./errors";
 
 export enum TOKEN_STORAGE_KEY {
   AUTH = "auth",
@@ -55,28 +55,15 @@ export const displayDemoMessage = (
 export async function handleQueryAuthError(
   error: ApolloError,
   notify: IMessageContext,
-  tokenRefresh: () => Promise<boolean>,
   logout: () => void,
   intl: IntlShape
 ) {
   if (error.graphQLErrors.some(isJwtError)) {
-    if (error.graphQLErrors.every(isTokenExpired)) {
-      const success = await tokenRefresh();
-
-      if (!success) {
-        logout();
-        notify({
-          status: "error",
-          text: intl.formatMessage(commonMessages.sessionExpired)
-        });
-      }
-    } else {
-      logout();
-      notify({
-        status: "error",
-        text: intl.formatMessage(commonMessages.somethingWentWrong)
-      });
-    }
+    logout();
+    notify({
+      status: "error",
+      text: intl.formatMessage(commonMessages.sessionExpired)
+    });
   } else if (
     !error.graphQLErrors.every(
       err => err.extensions?.exception?.code === "PermissionDenied"

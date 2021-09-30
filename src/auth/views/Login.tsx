@@ -1,11 +1,10 @@
-import { APP_DEFAULT_URI, APP_MOUNT_URI } from "@saleor/config";
 import useNavigator from "@saleor/hooks/useNavigator";
-import useUser from "@saleor/hooks/useUser";
+// import { useAuth, useAuthState } from "@saleor/sdk";
 import React, { useEffect, useState } from "react";
 import { useQuery } from "react-apollo";
-import urlJoin from "url-join";
 import useRouter from "use-react-router";
 
+import { useAuth } from "../AuthProvider";
 import LoginPage from "../components/LoginPage";
 import { LoginFormData } from "../components/LoginPage/form";
 import { availableExternalAuthentications } from "../queries";
@@ -23,12 +22,8 @@ interface LoginViewProps {
 const LoginView: React.FC<LoginViewProps> = ({ params }) => {
   const navigate = useNavigator();
   const { location } = useRouter();
-  const {
-    login,
-    requestLoginByExternalPlugin,
-    loginByExternalPlugin,
-    tokenAuthLoading
-  } = useUser();
+  const { login, authenticating } = useAuth();
+  // const { authenticating } = useAuthState();
   const [isError, setIsError] = useState(false);
   const [isExternalError, setIsExternalError] = useState(false);
   const {
@@ -47,26 +42,25 @@ const LoginView: React.FC<LoginViewProps> = ({ params }) => {
     return errors;
   };
 
-  const handleRequestExternalAuthentication = (pluginId: string) =>
-    requestLoginByExternalPlugin(pluginId, {
-      redirectUri: urlJoin(
-        window.location.origin,
-        APP_MOUNT_URI === APP_DEFAULT_URI ? "" : APP_MOUNT_URI,
-        loginCallbackPath
-      )
-    });
+  const handleRequestExternalAuthentication = (pluginId: string) => undefined;
+  // requestLoginByExternalPlugin(pluginId, {
+  //   redirectUri: urlJoin(
+  //     window.location.origin,
+  //     APP_MOUNT_URI === APP_DEFAULT_URI ? "" : APP_MOUNT_URI,
+  //     loginCallbackPath
+  //   )
+  // });
 
   const handleExternalAuthentication = async (code: string, state: string) => {
-    const result = await loginByExternalPlugin({ code, state });
-    const errors = result?.errors || [];
-
-    setIsError(false);
-    if (!result || errors?.length > 0) {
-      setIsExternalError(true);
-    } else {
-      navigate(APP_DEFAULT_URI);
-    }
-    return errors;
+    // const result = await loginByExternalPlugin({ code, state });
+    // const errors = result?.errors || [];
+    // setIsError(false);
+    // if (!result || errors?.length > 0) {
+    //   setIsExternalError(true);
+    // } else {
+    //   navigate(APP_DEFAULT_URI);
+    // }
+    // return errors;
   };
 
   useEffect(() => {
@@ -82,11 +76,11 @@ const LoginView: React.FC<LoginViewProps> = ({ params }) => {
     <LoginPage
       error={isError}
       externalError={isExternalError}
-      disabled={tokenAuthLoading}
+      disabled={authenticating} // tokenAuthLoading}
       externalAuthentications={
         externalAuthentications?.shop?.availableExternalAuthentications
       }
-      loading={externalAuthenticationsLoading || tokenAuthLoading}
+      loading={externalAuthenticationsLoading || authenticating} // tokenAuthLoading}
       onExternalAuthentication={handleRequestExternalAuthentication}
       onPasswordRecovery={() => navigate(passwordResetUrl)}
       onSubmit={handleSubmit}

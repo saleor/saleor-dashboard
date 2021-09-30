@@ -81,14 +81,7 @@ function makeQuery<TData, TVariables>(
       },
       errorPolicy: "all",
       fetchPolicy: fetchPolicy || "cache-and-network",
-      onError: error =>
-        handleQueryAuthError(
-          error,
-          notify,
-          user.tokenRefresh,
-          user.logout,
-          intl
-        ),
+      onError: error => handleQueryAuthError(error, notify, user.logout, intl),
       skip,
       variables: variablesWithPermissions
     });
