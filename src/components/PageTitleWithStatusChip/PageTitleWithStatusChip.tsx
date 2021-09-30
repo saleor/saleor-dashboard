@@ -1,7 +1,6 @@
 import HorizontalSpacer from "@saleor/apps/components/HorizontalSpacer";
 import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
-
 export interface PageTitleWithStatusChipProps {
   title: string;
 }
