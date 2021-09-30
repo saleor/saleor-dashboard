@@ -213,10 +213,16 @@ export interface OrderRefund_orderRefund_order_events {
   lines: (OrderRefund_orderRefund_order_events_lines | null)[] | null;
 }
 
+export interface OrderRefund_orderRefund_order_fulfillments_lines_orderLine_variant_preorder {
+  __typename: "PreorderData";
+  isPreorder: boolean;
+}
+
 export interface OrderRefund_orderRefund_order_fulfillments_lines_orderLine_variant {
   __typename: "ProductVariant";
   id: string;
   quantityAvailable: number;
+  preorder: OrderRefund_orderRefund_order_fulfillments_lines_orderLine_variant_preorder | null;
 }
 
 export interface OrderRefund_orderRefund_order_fulfillments_lines_orderLine_unitDiscount {
@@ -309,10 +315,16 @@ export interface OrderRefund_orderRefund_order_fulfillments {
   warehouse: OrderRefund_orderRefund_order_fulfillments_warehouse | null;
 }
 
+export interface OrderRefund_orderRefund_order_lines_variant_preorder {
+  __typename: "PreorderData";
+  isPreorder: boolean;
+}
+
 export interface OrderRefund_orderRefund_order_lines_variant {
   __typename: "ProductVariant";
   id: string;
   quantityAvailable: number;
+  preorder: OrderRefund_orderRefund_order_lines_variant_preorder | null;
 }
 
 export interface OrderRefund_orderRefund_order_lines_unitDiscount {

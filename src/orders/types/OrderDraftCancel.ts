@@ -213,10 +213,16 @@ export interface OrderDraftCancel_draftOrderDelete_order_events {
   lines: (OrderDraftCancel_draftOrderDelete_order_events_lines | null)[] | null;
 }
 
+export interface OrderDraftCancel_draftOrderDelete_order_fulfillments_lines_orderLine_variant_preorder {
+  __typename: "PreorderData";
+  isPreorder: boolean;
+}
+
 export interface OrderDraftCancel_draftOrderDelete_order_fulfillments_lines_orderLine_variant {
   __typename: "ProductVariant";
   id: string;
   quantityAvailable: number;
+  preorder: OrderDraftCancel_draftOrderDelete_order_fulfillments_lines_orderLine_variant_preorder | null;
 }
 
 export interface OrderDraftCancel_draftOrderDelete_order_fulfillments_lines_orderLine_unitDiscount {
@@ -309,10 +315,16 @@ export interface OrderDraftCancel_draftOrderDelete_order_fulfillments {
   warehouse: OrderDraftCancel_draftOrderDelete_order_fulfillments_warehouse | null;
 }
 
+export interface OrderDraftCancel_draftOrderDelete_order_lines_variant_preorder {
+  __typename: "PreorderData";
+  isPreorder: boolean;
+}
+
 export interface OrderDraftCancel_draftOrderDelete_order_lines_variant {
   __typename: "ProductVariant";
   id: string;
   quantityAvailable: number;
+  preorder: OrderDraftCancel_draftOrderDelete_order_lines_variant_preorder | null;
 }
 
 export interface OrderDraftCancel_draftOrderDelete_order_lines_unitDiscount {
