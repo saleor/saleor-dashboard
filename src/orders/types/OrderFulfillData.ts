@@ -33,6 +33,11 @@ export interface OrderFulfillData_order_lines_allocations {
   warehouse: OrderFulfillData_order_lines_allocations_warehouse;
 }
 
+export interface OrderFulfillData_order_lines_variant_preorder {
+  __typename: "PreorderData";
+  isPreorder: boolean;
+}
+
 export interface OrderFulfillData_order_lines_variant_attributes_values {
   __typename: "AttributeValue";
   id: string;
@@ -62,7 +67,12 @@ export interface OrderFulfillData_order_lines_variant {
   __typename: "ProductVariant";
   id: string;
   name: string;
+<<<<<<< HEAD
   sku: string | null;
+=======
+  sku: string;
+  preorder: OrderFulfillData_order_lines_variant_preorder | null;
+>>>>>>> a4d5204c (Adjust fulfill view to preorder in variant)
   attributes: OrderFulfillData_order_lines_variant_attributes[];
   stocks: (OrderFulfillData_order_lines_variant_stocks | null)[] | null;
   trackInventory: boolean;

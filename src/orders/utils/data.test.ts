@@ -531,6 +531,10 @@ describe("Get the total value of all replaced products", () => {
         variant: {
           id: "UHJvZHVjdFZhcmlhbnQ6MzE3",
           quantityAvailable: 50,
+          preorder: {
+            __typename: "PreorderData",
+            isPreorder: false
+          },
           __typename: "ProductVariant"
         },
         productName: "Lake Tunes",
@@ -586,6 +590,10 @@ describe("Get the total value of all replaced products", () => {
         variant: {
           id: "UHJvZHVjdFZhcmlhbnQ6MzE3",
           quantityAvailable: 50,
+          preorder: {
+            __typename: "PreorderData",
+            isPreorder: false
+          },
           __typename: "ProductVariant"
         },
         productName: "Lake Tunes",
@@ -641,6 +649,10 @@ describe("Get the total value of all replaced products", () => {
         variant: {
           id: "UHJvZHVjdFZhcmlhbnQ6Mjg2",
           quantityAvailable: 50,
+          preorder: {
+            __typename: "PreorderData",
+            isPreorder: false
+          },
           __typename: "ProductVariant"
         },
         productName: "T-shirt",
@@ -702,6 +714,10 @@ describe("Get the total value of all replaced products", () => {
           variant: {
             id: "UHJvZHVjdFZhcmlhbnQ6MzE3",
             quantityAvailable: 50,
+            preorder: {
+              __typename: "PreorderData",
+              isPreorder: false
+            },
             __typename: "ProductVariant"
           },
           productName: "Lake Tunes",
@@ -762,6 +778,10 @@ describe("Get the total value of all replaced products", () => {
           variant: {
             id: "UHJvZHVjdFZhcmlhbnQ6MzE3",
             quantityAvailable: 50,
+            preorder: {
+              __typename: "PreorderData",
+              isPreorder: false
+            },
             __typename: "ProductVariant"
           },
           productName: "Lake Tunes",
@@ -822,6 +842,10 @@ describe("Get the total value of all replaced products", () => {
           variant: {
             id: "UHJvZHVjdFZhcmlhbnQ6Mjg2",
             quantityAvailable: 50,
+            preorder: {
+              __typename: "PreorderData",
+              isPreorder: false
+            },
             __typename: "ProductVariant"
           },
           productName: "T-shirt",
@@ -882,6 +906,10 @@ describe("Get the total value of all replaced products", () => {
           variant: {
             id: "UHJvZHVjdFZhcmlhbnQ6MzE3",
             quantityAvailable: 50,
+            preorder: {
+              __typename: "PreorderData",
+              isPreorder: false
+            },
             __typename: "ProductVariant"
           },
           productName: "Lake Tunes",
@@ -942,6 +970,10 @@ describe("Get the total value of all replaced products", () => {
           variant: {
             id: "UHJvZHVjdFZhcmlhbnQ6MzE3",
             quantityAvailable: 50,
+            preorder: {
+              __typename: "PreorderData",
+              isPreorder: false
+            },
             __typename: "ProductVariant"
           },
           productName: "Lake Tunes",
@@ -1136,6 +1168,10 @@ describe("Get the total value of all selected products", () => {
         variant: {
           id: "UHJvZHVjdFZhcmlhbnQ6MzE3",
           quantityAvailable: 50,
+          preorder: {
+            __typename: "PreorderData",
+            isPreorder: false
+          },
           __typename: "ProductVariant"
         },
         productName: "Lake Tunes",
@@ -1191,6 +1227,10 @@ describe("Get the total value of all selected products", () => {
         variant: {
           id: "UHJvZHVjdFZhcmlhbnQ6MzE3",
           quantityAvailable: 50,
+          preorder: {
+            __typename: "PreorderData",
+            isPreorder: false
+          },
           __typename: "ProductVariant"
         },
         productName: "Lake Tunes",
@@ -1246,6 +1286,10 @@ describe("Get the total value of all selected products", () => {
         variant: {
           id: "UHJvZHVjdFZhcmlhbnQ6Mjg2",
           quantityAvailable: 50,
+          preorder: {
+            __typename: "PreorderData",
+            isPreorder: false
+          },
           __typename: "ProductVariant"
         },
         productName: "T-shirt",
@@ -1307,6 +1351,10 @@ describe("Get the total value of all selected products", () => {
           variant: {
             id: "UHJvZHVjdFZhcmlhbnQ6MzE3",
             quantityAvailable: 50,
+            preorder: {
+              __typename: "PreorderData",
+              isPreorder: false
+            },
             __typename: "ProductVariant"
           },
           productName: "Lake Tunes",
@@ -1367,6 +1415,10 @@ describe("Get the total value of all selected products", () => {
           variant: {
             id: "UHJvZHVjdFZhcmlhbnQ6MzE3",
             quantityAvailable: 50,
+            preorder: {
+              __typename: "PreorderData",
+              isPreorder: false
+            },
             __typename: "ProductVariant"
           },
           productName: "Lake Tunes",
@@ -1427,6 +1479,10 @@ describe("Get the total value of all selected products", () => {
           variant: {
             id: "UHJvZHVjdFZhcmlhbnQ6Mjg2",
             quantityAvailable: 50,
+            preorder: {
+              __typename: "PreorderData",
+              isPreorder: false
+            },
             __typename: "ProductVariant"
           },
           productName: "T-shirt",
@@ -1615,6 +1671,10 @@ describe("Merge repeated order lines of fulfillment lines", () => {
           variant: {
             id: "UHJvZHVjdFZhcmlhbnQ6MzE3",
             quantityAvailable: 50,
+            preorder: {
+              __typename: "PreorderData",
+              isPreorder: false
+            },
             __typename: "ProductVariant"
           },
           productName: "Lake Tunes",
@@ -1675,6 +1735,10 @@ describe("Merge repeated order lines of fulfillment lines", () => {
           variant: {
             id: "UHJvZHVjdFZhcmlhbnQ6MzE3",
             quantityAvailable: 50,
+            preorder: {
+              __typename: "PreorderData",
+              isPreorder: false
+            },
             __typename: "ProductVariant"
           },
           productName: "Lake Tunes",
@@ -1735,6 +1799,10 @@ describe("Merge repeated order lines of fulfillment lines", () => {
           variant: {
             id: "UHJvZHVjdFZhcmlhbnQ6Mjg2",
             quantityAvailable: 50,
+            preorder: {
+              __typename: "PreorderData",
+              isPreorder: false
+            },
             __typename: "ProductVariant"
           },
           productName: "T-shirt",

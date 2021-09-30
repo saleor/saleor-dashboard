@@ -1103,7 +1103,11 @@ export const order = (placeholder: string): OrderDetails_order => ({
             variant: {
               __typename: "ProductVariant",
               id: "dsfsfuhb",
-              quantityAvailable: 10
+              quantityAvailable: 10,
+              preorder: {
+                __typename: "PreorderData",
+                isPreorder: false
+              }
             }
           },
           quantity: 1
@@ -1172,7 +1176,11 @@ export const order = (placeholder: string): OrderDetails_order => ({
             variant: {
               __typename: "ProductVariant",
               id: "dsfsfuhb",
-              quantityAvailable: 10
+              quantityAvailable: 10,
+              preorder: {
+                __typename: "PreorderData",
+                isPreorder: false
+              }
             }
           },
           quantity: 1
@@ -1248,7 +1256,11 @@ export const order = (placeholder: string): OrderDetails_order => ({
       variant: {
         __typename: "ProductVariant",
         id: "dsfsfuhb",
-        quantityAvailable: 10
+        quantityAvailable: 10,
+        preorder: {
+          __typename: "PreorderData",
+          isPreorder: false
+        }
       }
     },
     {
@@ -1303,7 +1315,11 @@ export const order = (placeholder: string): OrderDetails_order => ({
       variant: {
         __typename: "ProductVariant",
         id: "dsfsfuhb",
-        quantityAvailable: 10
+        quantityAvailable: 10,
+        preorder: {
+          __typename: "PreorderData",
+          isPreorder: false
+        }
       }
     }
   ],
@@ -1491,7 +1507,11 @@ export const draftOrder = (placeholder: string): OrderDetails_order => ({
       variant: {
         __typename: "ProductVariant",
         id: "dsfsfuhb",
-        quantityAvailable: 10
+        quantityAvailable: 10,
+        preorder: {
+          __typename: "PreorderData",
+          isPreorder: false
+        }
       }
     },
     {
@@ -1545,7 +1565,11 @@ export const draftOrder = (placeholder: string): OrderDetails_order => ({
       variant: {
         __typename: "ProductVariant",
         id: "dsfsfuhb",
-        quantityAvailable: 10
+        quantityAvailable: 10,
+        preorder: {
+          __typename: "PreorderData",
+          isPreorder: false
+        }
       }
     }
   ],
