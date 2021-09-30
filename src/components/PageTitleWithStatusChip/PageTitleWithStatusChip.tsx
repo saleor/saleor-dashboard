@@ -6,10 +6,16 @@ import {
 } from "@saleor/giftCards/GiftCardUpdate/providers/GiftCardDetailsProvider/types";
 import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
+import { useIntl } from "react-intl";
+
+import StatusChip from "../StatusChip";
+import { StatusType } from "../StatusChip/types";
 
 export interface PageTitleWithStatusChipProps {
   title: string;
-  giftCard: ExtendedGiftCard<GiftCardBase & { isActive: boolean }>;
+  giftCard?: ExtendedGiftCard<GiftCardBase & { isActive: boolean }>;
+  statusLabel?: string;
+  statusType?: StatusType;
 }
 
 const useStyles = makeStyles(
@@ -24,15 +30,35 @@ const useStyles = makeStyles(
 
 const PageTitleWithStatusChip: React.FC<PageTitleWithStatusChipProps> = ({
   title,
-  giftCard
+  giftCard,
+  statusLabel,
+  statusType
 }) => {
   const classes = useStyles({});
+  const intl = useIntl();
+
+  const getStatusChip = () => {
+    if (statusLabel && statusType) {
+      return (
+        <StatusChip
+          size="md"
+          status={statusType}
+          label={intl.formatMessage({
+            defaultMessage: statusLabel,
+            description: "status chip label"
+          })}
+        />
+      );
+    }
+
+    return <GiftCardStatusChip giftCard={giftCard} />;
+  };
 
   return (
     <div className={classes.container}>
       {title}
       <HorizontalSpacer spacing={2} />
-      <GiftCardStatusChip giftCard={giftCard} />
+      {getStatusChip()}
     </div>
   );
 };

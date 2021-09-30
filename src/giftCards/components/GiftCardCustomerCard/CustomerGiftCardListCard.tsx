@@ -40,7 +40,7 @@ const CustomerGiftCardListCard: React.FC<GiftCardCustomerCardListingProps> = ({
 }) => {
   const intl = useIntl();
   const classes = useStyles();
-  const [isLoading, setIsLoading] = useState(false);
+  const [, setIsLoading] = useState(false);
   const [openDeleteGiftCard, setOpenDeleteGiftCard] = useState(false);
   const { isExpired, isActive } = giftCard;
 
