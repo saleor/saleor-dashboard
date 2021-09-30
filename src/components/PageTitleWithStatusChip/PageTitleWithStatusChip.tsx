@@ -1,13 +1,15 @@
 import HorizontalSpacer from "@saleor/apps/components/HorizontalSpacer";
-import StatusChip from "@saleor/components/StatusChip";
-import { StatusType } from "@saleor/components/StatusChip/types";
+import GiftCardStatusChip from "@saleor/giftCards/components/GiftCardStatusChip/GiftCardStatusChip";
+import {
+  ExtendedGiftCard,
+  GiftCardBase
+} from "@saleor/giftCards/GiftCardUpdate/providers/GiftCardDetailsProvider/types";
 import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 
 export interface PageTitleWithStatusChipProps {
   title: string;
-  statusLabel: string;
-  statusType: StatusType;
+  giftCard: ExtendedGiftCard<GiftCardBase & { isActive: boolean }>;
 }
 
 const useStyles = makeStyles(
@@ -22,8 +24,7 @@ const useStyles = makeStyles(
 
 const PageTitleWithStatusChip: React.FC<PageTitleWithStatusChipProps> = ({
   title,
-  statusLabel,
-  statusType
+  giftCard
 }) => {
   const classes = useStyles({});
 
@@ -31,7 +32,7 @@ const PageTitleWithStatusChip: React.FC<PageTitleWithStatusChipProps> = ({
     <div className={classes.container}>
       {title}
       <HorizontalSpacer spacing={2} />
-      <StatusChip label={statusLabel} status={statusType} />
+      <GiftCardStatusChip giftCard={giftCard} />
     </div>
   );
 };
