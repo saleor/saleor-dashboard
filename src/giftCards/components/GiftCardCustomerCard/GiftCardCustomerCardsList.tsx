@@ -1,36 +1,34 @@
-import React from "react";
-import GiftCardCustomerCardListing from "./GiftCardCustomerCardListing";
-import useGiftCardList from "@saleor/giftCards/GiftCardsList/providers/GiftCardListProvider/hooks/useGiftCardList";
+import { CardContent } from "@material-ui/core";
 import Skeleton from "@saleor/components/Skeleton";
+import { getExtendedGiftCard } from "@saleor/giftCards/GiftCardUpdate/providers/GiftCardDetailsProvider/utils";
+import React from "react";
 
-interface GiftCardCustomerCardsListProps {}
+import GiftCardCustomerCardListing from "./CustomerGiftCardListCard";
+import { CustomerGiftCardList_giftCards_edges_node } from "./types/CustomerGiftCardList";
 
-const GiftCardCustomerCardsList: React.FC<GiftCardCustomerCardsListProps> = ({}) => {
-  const { giftCards, loading } = useGiftCardList();
+interface GiftCardCustomerCardsListProps {
+  giftCards: CustomerGiftCardList_giftCards_edges_node[];
+  loading: boolean;
+}
 
-  if (!loading) {
-    console.log({ giftCards });
-  }
-
+const GiftCardCustomerCardsList: React.FC<GiftCardCustomerCardsListProps> = ({
+  giftCards,
+  loading
+}) => {
   if (loading) {
-    return <Skeleton />;
+    return (
+      <CardContent>
+        <Skeleton />
+      </CardContent>
+    );
   }
 
-  const getGiftCardsForCustomerPage = () => {
-    return giftCards
-      .splice(0, 5)
-      .map(giftCard => <GiftCardCustomerCardListing giftCard={giftCard} />);
-  };
+  const getGiftCardsForCustomerPage = () =>
+    giftCards.map(giftCard => (
+      <GiftCardCustomerCardListing giftCard={getExtendedGiftCard(giftCard)} />
+    ));
 
-  return (
-    <>
-      {giftCards.length > 0 ? (
-        getGiftCardsForCustomerPage()
-      ) : (
-        <div>No giftcards sad UwU</div>
-      )}
-    </>
-  );
+  return <>{giftCards.length > 0 && getGiftCardsForCustomerPage()}</>;
 };
 
 export default GiftCardCustomerCardsList;

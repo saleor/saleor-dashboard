@@ -1,63 +1,95 @@
 import { Button, Card, CardActions, makeStyles } from "@material-ui/core";
 import VerticalSpacer from "@saleor/apps/components/VerticalSpacer";
 import CardTitle from "@saleor/components/CardTitle";
-import { parse as parseQs } from "qs";
-import { GiftCardsListProvider } from "@saleor/giftCards/GiftCardsList/providers/GiftCardListProvider";
-import { GiftCardListUrlQueryParams } from "@saleor/giftCards/GiftCardsList/types";
+import { mapEdgesToItems } from "@saleor/utils/maps";
 import React from "react";
 import { FormattedMessage } from "react-intl";
-import GiftCardCustomerCardsList from "./GiftCardCustomerCardsList";
 
-interface GiftCardCustomerCardProps {}
+import GiftCardCustomerCardsList from "./GiftCardCustomerCardsList";
+import { useCustomerGiftCardQuery } from "./queries";
+
+interface GiftCardCustomerCardProps {
+  customerId?: string | null;
+}
 
 interface GiftCardCustomerCardActionsProps {
   buttonPosition: "left" | "right";
 }
 
-const useStyles = makeStyles(theme => ({
-  cardActions: {
-    padding: `${theme.spacing(2)} ${theme.spacing(3)}`,
-    flexDirection: ({ buttonPosition }: GiftCardCustomerCardActionsProps) =>
-      buttonPosition === "left" ? "row" : "row-reverse"
-  }
-}));
+const useStyles = makeStyles(
+  theme => ({
+    cardActions: {
+      padding: `${theme.spacing(2)} ${theme.spacing(3)}`,
+      flexDirection: ({ buttonPosition }: GiftCardCustomerCardActionsProps) =>
+        buttonPosition === "left" ? "row" : "row-reverse"
+    }
+  }),
+  { name: "GiftCardCustomerCard" }
+);
 
-const GiftCardCustomerCard: React.FC<GiftCardCustomerCardProps> = ({}) => {
-  const classes = useStyles({ buttonPosition: "right" });
+const GiftCardCustomerCard: React.FC<GiftCardCustomerCardProps> = ({
+  customerId
+}) => {
+  const { data, loading } = useCustomerGiftCardQuery({
+    variables: {
+      first: 5,
+      filter: {
+        usedBy: [customerId]
+      }
+    }
+  });
+
+  const giftCards = mapEdgesToItems(data?.giftCards);
+
+  const classes = useStyles({
+    buttonPosition: giftCards?.length > 0 ? "right" : "left"
+  });
 
   const handleViewAllButton = () => {
     // history push to filtered gift cards
-    console.log("Handle view all button");
   };
 
   const handleCreateNewCardButton = () => {
-    console.log("Handle new card");
+    // oepn issue new card modal
   };
 
-  const qs = parseQs(location.search.substr(1));
-  const params: GiftCardListUrlQueryParams = qs;
+  const getCardSubtitle = () =>
+    !!giftCards?.length ? (
+      <FormattedMessage
+        defaultMessage="Only five newest gift cards are shown here"
+        description="subtitle"
+      />
+    ) : (
+      <FormattedMessage
+        defaultMessage="There are no gift cards assigned to this customer"
+        description="subtitle"
+      />
+    );
 
   return (
     <Card>
       <CardTitle
         title="Gift Cards"
-        subtitle="Only five newest gift cards are shown here"
         toolbar={
-          <Button variant="text" color="primary" onClick={handleViewAllButton}>
-            <FormattedMessage defaultMessage="View All" description="button" />
-          </Button>
+          !!giftCards?.length && (
+            <Button
+              variant="text"
+              color="primary"
+              onClick={handleViewAllButton}
+            >
+              <FormattedMessage
+                defaultMessage="View All"
+                description="button"
+              />
+            </Button>
+          )
         }
-        showHorizontalLine={true}
+        showHorizontalLine={!!giftCards?.length}
       >
-        <FormattedMessage
-          defaultMessage="Only five newest gift cards are shown here"
-          description="subtitle"
-        />
+        {getCardSubtitle()}
         <VerticalSpacer spacing={2} />
       </CardTitle>
-      <GiftCardsListProvider params={params}>
-        <GiftCardCustomerCardsList />
-      </GiftCardsListProvider>
+      <GiftCardCustomerCardsList giftCards={giftCards} loading={loading} />
       <CardActions className={classes.cardActions}>
         <Button
           variant="text"
