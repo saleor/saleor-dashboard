@@ -7892,6 +7892,10 @@
     "context": "event",
     "string": "Product variant out of stock"
   },
+  "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_2328272362": {
+    "context": "event",
+    "string": "Sale deleted"
+  },
   "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_2454751033": {
     "context": "event",
     "string": "All events"
@@ -7972,6 +7976,10 @@
     "context": "event",
     "string": "List payment gateways"
   },
+  "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_4175628606": {
+    "context": "event",
+    "string": "Sale created"
+  },
   "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_4186057882": {
     "context": "event",
     "string": "Invoice requested"
@@ -7987,6 +7995,10 @@
   "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_482477254": {
     "context": "event",
     "string": "Translation updated"
+  },
+  "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_523513128": {
+    "context": "event",
+    "string": "Sale updated"
   },
   "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_679080833": {
     "context": "event",
