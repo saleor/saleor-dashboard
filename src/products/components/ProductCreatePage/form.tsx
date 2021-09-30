@@ -307,11 +307,10 @@ function useProductCreateForm(
 
   const disabled =
     !opts.selectedProductType?.hasVariants &&
-    (!data.sku ||
-      data.channelListings.some(
-        channel =>
-          validatePrice(channel.price) || validateCostPrice(channel.costPrice)
-      ) ||
+    (data.channelListings.some(
+      channel =>
+        validatePrice(channel.price) || validateCostPrice(channel.costPrice)
+    ) ||
       !data.category);
 
   return {
