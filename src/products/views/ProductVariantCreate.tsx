@@ -39,7 +39,6 @@ import {
   ProductVariantAddUrlQueryParams,
   productVariantEditUrl
 } from "../urls";
-import { getEndPreorderDateInput } from "../utils/data";
 import { createVariantReorderHandler } from "./ProductUpdate/handlers";
 
 interface ProductVariantCreateProps {
@@ -122,7 +121,7 @@ export const ProductVariant: React.FC<ProductVariantCreateProps> = ({
           weight: weight(formData.weight),
           preorder: {
             globalThreshold: formData.globalThreshold,
-            endDate: getEndPreorderDateInput(formData)
+            endDate: formData.preorderEndDateTime
           }
         },
         firstValues: 10

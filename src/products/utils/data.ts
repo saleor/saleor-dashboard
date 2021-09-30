@@ -230,8 +230,7 @@ export interface ProductUpdatePageFormData extends MetadataFormData {
   globalThreshold: number;
   globalSoldUnits: number;
   hasPreorderEndDate: boolean;
-  preorderEndDate?: string;
-  preorderEndHour?: string;
+  preorderEndDateTime?: string;
 }
 
 export function getProductUpdatePageFormData(
@@ -273,12 +272,11 @@ export function getProductUpdatePageFormData(
     taxCode: product?.taxType.taxCode,
     trackInventory: !!variant?.trackInventory,
     weight: product?.weight?.value.toString() || "",
-    isPreorder: variant?.preorder.isPreorder || false,
-    globalThreshold: variant?.preorder.globalThreshold || 0,
-    globalSoldUnits: variant?.preorder.globalSoldUnits || 0,
+    isPreorder: variant?.preorder?.isPreorder || false,
+    globalThreshold: variant?.preorder?.globalThreshold || 0,
+    globalSoldUnits: variant?.preorder?.globalSoldUnits || 0,
     hasPreorderEndDate: !!variant?.preorder?.endDate,
-    preorderEndDate: getPreorderEndDateFormData(variant?.preorder?.endDate),
-    preorderEndHour: getPreorderEndHourFormData(variant?.preorder?.endDate)
+    preorderEndDateTime: variant?.preorder?.endDate
   };
 }
 
@@ -291,33 +289,8 @@ export function mapFormsetStockToStockInput(
   };
 }
 
-export function getEndPreorderDateInput<
-  T extends {
-    hasPreorderEndDate: boolean;
-    preorderEndDate?: string;
-    preorderEndHour?: string;
-  }
->({ hasPreorderEndDate, preorderEndDate, preorderEndHour }: T) {
-  if (!hasPreorderEndDate || !preorderEndDate) {
-    return null;
-  }
-
-  const date = moment(preorderEndDate);
-
-  if (preorderEndHour) {
-    const time = moment(preorderEndHour, "HH:mm");
-
-    date.set({
-      hour: time.get("hour"),
-      minute: time.get("minute")
-    });
-  }
-
-  return date;
-}
-
 export const getPreorderEndDateFormData = (endDate?: string) =>
-  endDate ? moment(endDate).format("YYYY-MM-DD") : null;
+  endDate ? moment(endDate).format("YYYY-MM-DD") : "";
 
 export const getPreorderEndHourFormData = (endDate?: string) =>
-  endDate ? moment(endDate).format("HH:mm") : null;
+  endDate ? moment(endDate).format("HH:mm") : "";

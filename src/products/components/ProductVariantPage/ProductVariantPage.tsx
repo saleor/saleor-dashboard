@@ -334,7 +334,7 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
                     onChange={handlers.changeStock}
                     onFormDataChange={change}
                     onEndPreorderTrigger={
-                      variant?.preorder.isPreorder
+                      variant?.preorder?.isPreorder
                         ? () => setIsEndPreorderModalOpened(true)
                         : null
                     }
@@ -395,7 +395,7 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
           onClose={() => setIsEndPreorderModalOpened(false)}
           onConfirm={handleDeactivatePreorder}
           open={isEndPreorderModalOpened}
-          variantGlobalSoldUnits={variant?.preorder.globalSoldUnits}
+          variantGlobalSoldUnits={variant?.preorder?.globalSoldUnits}
         />
       )}
     </>

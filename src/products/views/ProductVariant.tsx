@@ -61,10 +61,7 @@ import {
   ProductVariantEditUrlDialog,
   ProductVariantEditUrlQueryParams
 } from "../urls";
-import {
-  getEndPreorderDateInput,
-  mapFormsetStockToStockInput
-} from "../utils/data";
+import { mapFormsetStockToStockInput } from "../utils/data";
 import { createVariantReorderHandler } from "./ProductUpdate/handlers";
 
 interface ProductUpdateProps {
@@ -174,7 +171,7 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
         variantChannel?.costPrice?.amount.toString();
 
       const preorderThresholdHasChanged =
-        channel.value.preorderThreshold !==
+        channel.value?.preorderThreshold !==
         variantChannel.preorderThreshold.quantity;
 
       return (
@@ -287,7 +284,7 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
         preorder: data.isPreorder
           ? {
               globalThreshold: data.globalThreshold,
-              endDate: getEndPreorderDateInput(data)
+              endDate: data?.preorderEndDateTime || null
             }
           : null,
         weight: weight(data.weight),

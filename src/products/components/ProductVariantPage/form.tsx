@@ -22,8 +22,6 @@ import useFormset, {
 } from "@saleor/hooks/useFormset";
 import {
   getAttributeInputFromVariant,
-  getPreorderEndDateFormData,
-  getPreorderEndHourFormData,
   getStockInputFromVariant
 } from "@saleor/products/utils/data";
 import { getChannelsInput } from "@saleor/products/utils/handlers";
@@ -52,8 +50,7 @@ export interface ProductVariantUpdateFormData extends MetadataFormData {
   globalThreshold: number;
   globalSoldUnits: number;
   hasPreorderEndDate: boolean;
-  preorderEndDate?: string;
-  preorderEndHour?: string;
+  preorderEndDateTime?: string;
 }
 export interface ProductVariantUpdateData extends ProductVariantUpdateFormData {
   channelListings: FormsetData<
@@ -155,8 +152,7 @@ function useProductVariantUpdateForm(
     globalThreshold: variant?.preorder?.globalThreshold || null,
     globalSoldUnits: variant?.preorder?.globalSoldUnits || 0,
     hasPreorderEndDate: !!variant?.preorder?.endDate,
-    preorderEndDate: getPreorderEndDateFormData(variant?.preorder?.endDate),
-    preorderEndHour: getPreorderEndHourFormData(variant?.preorder?.endDate),
+    preorderEndDateTime: variant?.preorder?.endDate,
     weight: variant?.weight?.value.toString() || ""
   };
 

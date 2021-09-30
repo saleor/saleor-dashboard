@@ -72,8 +72,7 @@ export interface ProductCreateFormData extends MetadataFormData {
   globalThreshold: number;
   globalSoldUnits: number;
   hasPreorderEndDate: boolean;
-  preorderEndDate: string;
-  preorderEndHour: string;
+  preorderEndDateTime: string;
   weight: string;
 }
 export interface ProductCreateData extends ProductCreateFormData {
@@ -183,8 +182,7 @@ function useProductCreateForm(
     globalThreshold: 0,
     isPreorder: false,
     hasPreorderEndDate: false,
-    preorderEndDate: "",
-    preorderEndHour: ""
+    preorderEndDateTime: ""
   };
   const [changed, setChanged] = React.useState(false);
   const triggerChange = () => setChanged(true);

@@ -35,7 +35,12 @@ import { FormsetAtomicData, FormsetChange } from "@saleor/hooks/useFormset";
 import { makeStyles } from "@saleor/macaw-ui";
 import { ICONBUTTON_SIZE } from "@saleor/macaw-ui";
 import { renderCollection } from "@saleor/misc";
+import {
+  getPreorderEndDateFormData,
+  getPreorderEndHourFormData
+} from "@saleor/products/utils/data";
 import { getFormErrors, getProductErrorMessage } from "@saleor/utils/errors";
+import createFutureDateChangeHandler from "@saleor/utils/handlers/futureDateChangeHandler";
 import createNonNegativeValueChangeHandler from "@saleor/utils/handlers/nonNegativeValueChangeHandler";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -54,8 +59,7 @@ export interface ProductStockFormData {
   globalThreshold: number;
   globalSoldUnits: number;
   hasPreorderEndDate: boolean;
-  preorderEndDate?: string;
-  preorderEndHour?: string;
+  preorderEndDateTime?: string;
 }
 
 export interface ProductStocksProps {
@@ -198,6 +202,11 @@ const ProductStocks: React.FC<ProductStocksProps> = ({
   const formErrors = getFormErrors(["sku"], errors);
 
   const onThresholdChange = createNonNegativeValueChangeHandler(
+    onFormDataChange
+  );
+
+  const onDateChange = createFutureDateChangeHandler(
+    "preorderEndDateTime",
     onFormDataChange
   );
 
@@ -461,22 +470,23 @@ const ProductStocks: React.FC<ProductStocksProps> = ({
                 label={intl.formatMessage({
                   defaultMessage: "End date"
                 })}
-                name="preorderEndDate"
-                onChange={onFormDataChange}
-                value={data.preorderEndDate}
+                name="date"
+                onChange={e => onDateChange(e, data?.preorderEndDateTime)}
+                value={getPreorderEndDateFormData(data?.preorderEndDateTime)}
                 type="date"
                 InputLabelProps={{
                   shrink: true
                 }}
               />
+
               <TextField
                 label={intl.formatMessage({
                   defaultMessage: "End hour"
                 })}
-                name="preorderEndHour"
-                onChange={onFormDataChange}
+                name="hour"
+                onChange={e => onDateChange(e, data?.preorderEndDateTime)}
                 type="time"
-                value={data.preorderEndHour}
+                value={getPreorderEndHourFormData(data?.preorderEndDateTime)}
                 InputLabelProps={{
                   shrink: true
                 }}

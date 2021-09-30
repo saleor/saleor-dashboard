@@ -12,10 +12,7 @@ import {
 } from "@saleor/products/types/ProductDetails";
 import { ProductUpdateVariables } from "@saleor/products/types/ProductUpdate";
 import { SimpleProductUpdate } from "@saleor/products/types/SimpleProductUpdate";
-import {
-  getEndPreorderDateInput,
-  mapFormsetStockToStockInput
-} from "@saleor/products/utils/data";
+import { mapFormsetStockToStockInput } from "@saleor/products/utils/data";
 import { getAvailabilityVariables } from "@saleor/products/utils/handlers";
 import { ProductChannelListingAddInput } from "@saleor/types/globalTypes";
 import { arrayDiff } from "@saleor/utils/arrays";
@@ -42,7 +39,7 @@ export const getSimpleProductVariables = (
     trackInventory: data.trackInventory,
     preorder: {
       globalThreshold: data.globalThreshold,
-      endDate: getEndPreorderDateInput(data)
+      endDate: data.preorderEndDateTime
     }
   },
   updateStocks: data.updateStocks.map(mapFormsetStockToStockInput)

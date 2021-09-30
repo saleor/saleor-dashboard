@@ -59,8 +59,7 @@ export interface ChannelPreorderArgs {
   preorderThreshold: number;
   unitsSold: number;
   hasPreorderEndDate: boolean;
-  preorderEndDate?: string;
-  preorderEndHour?: string;
+  preorderEndDateTime?: string;
 }
 
 export interface ChannelPriceAndPreorderData {
@@ -293,8 +292,8 @@ export const createChannelsDataFromProduct = (
         productData.variants,
         channel.id
       );
-      const soldUnits = variantChannel?.preorderThreshold.soldUnits;
-      const preorderThreshold = variantChannel?.preorderThreshold.quantity;
+      const soldUnits = variantChannel?.preorderThreshold?.soldUnits;
+      const preorderThreshold = variantChannel?.preorderThreshold?.quantity;
 
       return {
         availableForPurchase,
