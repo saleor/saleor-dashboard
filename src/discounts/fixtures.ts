@@ -424,6 +424,147 @@ export const sale: SaleDetails_sale = {
     },
     totalCount: 4
   },
+  variants: {
+    edges: [
+      {
+        node: {
+          id: "UHJvZHVjdFZhcmlhbnQ6MzE0",
+          name: "XL",
+          product: {
+            id: "UHJvZHVjdDoxMTg=",
+            name: "White Hoodie",
+            thumbnail: {
+              url: placeholderImage,
+              __typename: "Image"
+            },
+            productType: {
+              id: "UHJvZHVjdFR5cGU6MTQ=",
+              name: "Top (clothing)",
+              __typename: "ProductType"
+            },
+            channelListings: [
+              {
+                isPublished: true,
+                publicationDate: "2020-01-01",
+                isAvailableForPurchase: true,
+                availableForPurchase: "2020-08-31",
+                visibleInListings: true,
+                channel: {
+                  id: "Q2hhbm5lbDox",
+                  name: "Channel-USD",
+                  currencyCode: "USD",
+                  __typename: "Channel"
+                },
+                __typename: "ProductChannelListing"
+              }
+            ],
+            __typename: "Product"
+          },
+          __typename: "ProductVariant"
+        },
+        __typename: "ProductVariantCountableEdge"
+      },
+      {
+        node: {
+          id: "UHJvZHVjdFZhcmlhbnQ6Mjc4",
+          name: "L",
+          product: {
+            id: "UHJvZHVjdDoxMTE=",
+            name: "T-shirt",
+            thumbnail: {
+              url: placeholderImage,
+              __typename: "Image"
+            },
+            productType: {
+              id: "UHJvZHVjdFR5cGU6MTQ=",
+              name: "Top (clothing)",
+              __typename: "ProductType"
+            },
+            channelListings: [
+              {
+                isPublished: true,
+                publicationDate: "2020-01-01",
+                isAvailableForPurchase: true,
+                availableForPurchase: "2020-08-31",
+                visibleInListings: true,
+                channel: {
+                  id: "Q2hhbm5lbDox",
+                  name: "Channel-USD",
+                  currencyCode: "USD",
+                  __typename: "Channel"
+                },
+                __typename: "ProductChannelListing"
+              }
+            ],
+            __typename: "Product"
+          },
+          __typename: "ProductVariant"
+        },
+        __typename: "ProductVariantCountableEdge"
+      },
+      {
+        node: {
+          id: "UHJvZHVjdFZhcmlhbnQ6MjUz",
+          name: "L",
+          product: {
+            id: "UHJvZHVjdDo4OQ==",
+            name: "Code Division T-shirt",
+            thumbnail: {
+              url: placeholderImage,
+              __typename: "Image"
+            },
+            productType: {
+              id: "UHJvZHVjdFR5cGU6MTQ=",
+              name: "Top (clothing)",
+              __typename: "ProductType"
+            },
+            channelListings: [
+              {
+                isPublished: true,
+                publicationDate: "2020-01-01",
+                isAvailableForPurchase: true,
+                availableForPurchase: "2020-08-31",
+                visibleInListings: true,
+                channel: {
+                  id: "Q2hhbm5lbDox",
+                  name: "Channel-USD",
+                  currencyCode: "USD",
+                  __typename: "Channel"
+                },
+                __typename: "ProductChannelListing"
+              },
+              {
+                isPublished: true,
+                publicationDate: "2020-01-01",
+                isAvailableForPurchase: true,
+                availableForPurchase: "2020-08-31",
+                visibleInListings: true,
+                channel: {
+                  id: "Q2hhbm5lbDoy",
+                  name: "Channel-PLN",
+                  currencyCode: "PLN",
+                  __typename: "Channel"
+                },
+                __typename: "ProductChannelListing"
+              }
+            ],
+            __typename: "Product"
+          },
+          __typename: "ProductVariant"
+        },
+        __typename: "ProductVariantCountableEdge"
+      }
+    ],
+    pageInfo: {
+      endCursor: "W251bGwsICIxMTgyMjM1OTEiXQ==",
+      hasNextPage: false,
+      hasPreviousPage: false,
+      startCursor: "W251bGwsICIxMDQwNDk0NiJd",
+      __typename: "PageInfo"
+    },
+    totalCount: 3,
+    __typename: "ProductVariantCountableConnection"
+  },
   startDate: "2019-01-03",
   type: "PERCENTAGE" as SaleType
 };

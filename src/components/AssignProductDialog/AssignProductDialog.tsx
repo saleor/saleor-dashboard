@@ -17,65 +17,43 @@ import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import TableCellAvatar from "@saleor/components/TableCellAvatar";
 import useSearchQuery from "@saleor/hooks/useSearchQuery";
 import { buttonMessages } from "@saleor/intl";
-import { makeStyles } from "@saleor/macaw-ui";
 import { maybe } from "@saleor/misc";
 import { SearchProducts_search_edges_node } from "@saleor/searches/types/SearchProducts";
 import useScrollableDialogStyle from "@saleor/styles/useScrollableDialogStyle";
-import { FetchMoreProps } from "@saleor/types";
+import { DialogProps, FetchMoreProps } from "@saleor/types";
 import React from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import Checkbox from "../Checkbox";
+import { messages } from "./messages";
+import { useStyles } from "./styles";
 
-export interface FormData {
+export interface AssignProductDialogFormData {
   products: SearchProducts_search_edges_node[];
   query: string;
 }
 
-const useStyles = makeStyles(
-  {
-    avatar: {
-      "&&:first-child": {
-        paddingLeft: 0
-      },
-      width: 72
-    },
-    checkboxCell: {
-      paddingLeft: 0,
-      width: 88
-    },
-    colName: {
-      paddingLeft: 0
-    }
-  },
-  { name: "AssignProductDialog" }
-);
-
-export interface AssignProductDialogProps extends FetchMoreProps {
+export interface AssignProductDialogProps extends FetchMoreProps, DialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
-  open: boolean;
   products: SearchProducts_search_edges_node[];
   loading: boolean;
-  onClose: () => void;
   onFetch: (value: string) => void;
-  onSubmit: (data: SearchProducts_search_edges_node[]) => void;
+  onSubmit: (data: string[]) => void;
 }
 
 function handleProductAssign(
-  product: SearchProducts_search_edges_node,
+  productID: string,
   isSelected: boolean,
-  selectedProducts: SearchProducts_search_edges_node[],
-  setSelectedProducts: (data: SearchProducts_search_edges_node[]) => void
+  selectedProducts: string[],
+  setSelectedProducts: (data: string[]) => void
 ) {
   if (isSelected) {
     setSelectedProducts(
-      selectedProducts.filter(
-        selectedProduct => selectedProduct.id !== product.id
-      )
+      selectedProducts.filter(selectedProduct => selectedProduct !== productID)
     );
   } else {
-    setSelectedProducts([...selectedProducts, product]);
+    setSelectedProducts([...selectedProducts, productID]);
   }
 }
 
@@ -98,9 +76,7 @@ const AssignProductDialog: React.FC<AssignProductDialogProps> = props => {
 
   const intl = useIntl();
   const [query, onQueryChange] = useSearchQuery(onFetch);
-  const [selectedProducts, setSelectedProducts] = React.useState<
-    SearchProducts_search_edges_node[]
-  >([]);
+  const [selectedProducts, setSelectedProducts] = React.useState<string[]>([]);
 
   const handleSubmit = () => onSubmit(selectedProducts);
 
@@ -113,23 +89,15 @@ const AssignProductDialog: React.FC<AssignProductDialogProps> = props => {
       maxWidth="sm"
     >
       <DialogTitle>
-        <FormattedMessage
-          defaultMessage="Assign Product"
-          description="dialog header"
-        />
+        <FormattedMessage {...messages.assignVariantDialogHeader} />
       </DialogTitle>
       <DialogContent className={scrollableDialogClasses.topArea}>
         <TextField
           name="query"
           value={query}
           onChange={onQueryChange}
-          label={intl.formatMessage({
-            defaultMessage: "Search Products"
-          })}
-          placeholder={intl.formatMessage({
-            defaultMessage:
-              "Search by product name, attribute, product type etc..."
-          })}
+          label={intl.formatMessage(messages.assignProductDialogSearch)}
+          placeholder={intl.formatMessage(messages.assignProductDialogContent)}
           fullWidth
           InputProps={{
             autoComplete: "off",
@@ -158,7 +126,7 @@ const AssignProductDialog: React.FC<AssignProductDialogProps> = props => {
               {products &&
                 products.map(product => {
                   const isSelected = selectedProducts.some(
-                    selectedProduct => selectedProduct.id === product.id
+                    selectedProduct => selectedProduct === product.id
                   );
 
                   return (
@@ -181,7 +149,7 @@ const AssignProductDialog: React.FC<AssignProductDialogProps> = props => {
                           checked={isSelected}
                           onChange={() =>
                             handleProductAssign(
-                              product,
+                              product.id,
                               isSelected,
                               selectedProducts,
                               setSelectedProducts
@@ -208,10 +176,7 @@ const AssignProductDialog: React.FC<AssignProductDialogProps> = props => {
           type="submit"
           onClick={handleSubmit}
         >
-          <FormattedMessage
-            defaultMessage="Assign products"
-            description="button"
-          />
+          <FormattedMessage {...messages.assignProductDialogButton} />
         </ConfirmButton>
       </DialogActions>
     </Dialog>

@@ -5,6 +5,7 @@ import { useIntl } from "react-intl";
 import AssignContainerDialog, {
   AssignContainerDialogProps
 } from "../AssignContainerDialog";
+import { messages } from "./messages";
 
 interface AssignCategoryDialogProps
   extends Omit<AssignContainerDialogProps, "containers" | "title" | "search"> {
@@ -21,17 +22,12 @@ const AssignCategoryDialog: React.FC<AssignCategoryDialogProps> = ({
     <AssignContainerDialog
       containers={categories}
       search={{
-        label: intl.formatMessage({
-          defaultMessage: "Search Category"
-        }),
-        placeholder: intl.formatMessage({
-          defaultMessage: "Search by category name, etc..."
-        })
+        label: intl.formatMessage(messages.assignCategoryDialogLabel),
+        placeholder: intl.formatMessage(
+          messages.assignCategoryDialogPlaceholder
+        )
       }}
-      title={intl.formatMessage({
-        defaultMessage: "Assign Category",
-        description: "dialog header"
-      })}
+      title={intl.formatMessage(messages.assignCategoryDialogHeader)}
       {...rest}
     />
   );

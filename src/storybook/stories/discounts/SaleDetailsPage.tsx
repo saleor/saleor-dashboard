@@ -36,6 +36,9 @@ const props: SaleDetailsPageProps = {
   onProductAssign: () => undefined,
   onProductClick: () => undefined,
   onProductUnassign: () => undefined,
+  onVariantAssign: () => undefined,
+  onVariantClick: () => undefined,
+  onVariantUnassign: () => undefined,
   onRemove: () => undefined,
   onSubmit: () => undefined,
   onTabClick: () => undefined,
@@ -45,6 +48,7 @@ const props: SaleDetailsPageProps = {
     hasPreviousPage: false
   },
   productListToolbar: null,
+  variantListToolbar: null,
   sale,
   saveButtonBarState: "default",
   selectedChannelId: "123",

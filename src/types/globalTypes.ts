@@ -2018,6 +2018,7 @@ export interface CatalogueInput {
   products?: (string | null)[] | null;
   categories?: (string | null)[] | null;
   collections?: (string | null)[] | null;
+  variants?: (string | null)[] | null;
 }
 
 export interface CategoryFilterInput {
@@ -2674,6 +2675,7 @@ export interface SaleInput {
   type?: DiscountValueTypeEnum | null;
   value?: any | null;
   products?: (string | null)[] | null;
+  variants?: (string | null)[] | null;
   categories?: (string | null)[] | null;
   collections?: (string | null)[] | null;
   startDate?: any | null;
