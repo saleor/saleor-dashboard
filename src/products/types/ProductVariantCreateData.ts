@@ -155,7 +155,7 @@ export interface ProductVariantCreateData_product_variants {
   __typename: "ProductVariant";
   id: string;
   name: string;
-  sku: string;
+  sku: string | null;
   media: ProductVariantCreateData_product_variants_media[] | null;
 }
 

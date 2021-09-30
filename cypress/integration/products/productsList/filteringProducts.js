@@ -1,29 +1,30 @@
+/// <reference types="cypress"/>
+/// <reference types="../../../support"/>
+
 import faker from "faker";
 
-import { createCollection } from "../../../apiRequests/Collections";
-import { updateProduct } from "../../../apiRequests/Product";
 import { PRODUCTS_LIST } from "../../../elements/catalog/products/products-list";
-import {
-  selectChannel,
-  selectFilterOption,
-  selectProductsOutOfStock
-} from "../../../steps/catalog/products/productsListSteps";
-import { waitForProgressBarToNotExist } from "../../../steps/shared/progressBar";
-import { searchInTable } from "../../../steps/shared/tables";
-import filterTests from "../../../support/filterTests";
-import { urlList } from "../../../url/urlList";
-import { getDefaultChannel } from "../../../utils/channelsUtils";
+import { urlList } from "../../../fixtures/urlList";
+import { createCollection } from "../../../support/api/requests/Collections";
+import { updateProduct } from "../../../support/api/requests/Product";
+import { getDefaultChannel } from "../../../support/api/utils/channelsUtils";
 import {
   createProductInChannel,
   createTypeAttributeAndCategoryForProduct,
   deleteProductsStartsWith
-} from "../../../utils/products/productsUtils";
+} from "../../../support/api/utils/products/productsUtils";
 import {
   createShipping,
   deleteShippingStartsWith
-} from "../../../utils/shippingUtils";
+} from "../../../support/api/utils/shippingUtils";
+import filterTests from "../../../support/filterTests";
+import {
+  selectChannel,
+  selectFilterOption,
+  selectProductsOutOfStock
+} from "../../../support/pages/catalog/products/productsListPage";
 
-filterTests(["all"], () => {
+filterTests({ definedTags: ["all"] }, () => {
   describe("Filtering products", () => {
     const startsWith = "CyFilterProducts-";
     const name = `${startsWith}${faker.datatype.number()}`;
@@ -40,7 +41,7 @@ filterTests(["all"], () => {
       cy.clearSessionData().loginUserViaRequest();
       deleteShippingStartsWith(startsWith);
       deleteProductsStartsWith(startsWith);
-      createTypeAttributeAndCategoryForProduct(name).then(
+      createTypeAttributeAndCategoryForProduct({ name }).then(
         ({
           attribute: attributeResp,
           productType: productTypeResp,
@@ -83,16 +84,17 @@ filterTests(["all"], () => {
           updateProduct(product.id, { collections: [collection.id] });
         });
     });
+
     beforeEach(() => {
       cy.clearSessionData()
         .loginUserViaRequest()
         .visit(urlList.products);
     });
+
     const filterProductsBy = ["category", "collection", "productType"];
     filterProductsBy.forEach(filterBy => {
       it(`should filter products by ${filterBy}`, () => {
-        cy.softExpectSkeletonIsVisible();
-        waitForProgressBarToNotExist();
+        cy.softExpectSkeletonIsVisible().waitForProgressBarToNotExist();
         selectFilterOption(filterBy, name);
         cy.getTextFromElement(PRODUCTS_LIST.productsNames).then(product => {
           expect(product).to.includes(name);
@@ -113,13 +115,16 @@ filterTests(["all"], () => {
         categoryId: category.id,
         price
       });
+      cy.waitForProgressBarToNotExist();
       selectChannel(channel.slug);
       selectProductsOutOfStock();
-      searchInTable(productOutOfStock);
-      cy.get(PRODUCTS_LIST.productsNames).should("have.length", 1);
-      cy.getTextFromElement(PRODUCTS_LIST.productsNames).then(product => {
-        expect(product).to.includes(productOutOfStock);
-      });
+      cy.searchInTable(productOutOfStock)
+        .get(PRODUCTS_LIST.productsNames)
+        .should("have.length", 1)
+        .getTextFromElement(PRODUCTS_LIST.productsNames)
+        .then(product => {
+          expect(product).to.includes(productOutOfStock);
+        });
     });
   });
 });

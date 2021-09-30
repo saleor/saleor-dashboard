@@ -1,27 +1,28 @@
+/// <reference types="cypress"/>
+/// <reference types="../../support"/>
+
 import faker from "faker";
 
-import { createCategory } from "../../apiRequests/Category";
-import { createCollection } from "../../apiRequests/Collections";
-import { getProductDetails } from "../../apiRequests/storeFront/ProductDetails";
-import { ONE_PERMISSION_USERS } from "../../Data/users";
 import { PRODUCT_DETAILS } from "../../elements/catalog/products/product-details";
 import { BUTTON_SELECTORS } from "../../elements/shared/button-selectors";
-import { SHARED_ELEMENTS } from "../../elements/shared/sharedElements";
-import { metadataForms } from "../../steps/catalog/metadataSteps";
-import { fillUpCommonFieldsForAllProductTypes } from "../../steps/catalog/products/productSteps";
-import { confirmationMessageShouldDisappear } from "../../steps/shared/confirmationMessages";
-import filterTests from "../../support/filterTests";
-import { productDetailsUrl } from "../../url/urlList";
-import { getDefaultChannel } from "../../utils/channelsUtils";
-import { deleteCollectionsStartsWith } from "../../utils/collectionsUtils";
-import { expectCorrectProductInformation } from "../../utils/products/checkProductInfo";
+import { productDetailsUrl } from "../../fixtures/urlList";
+import { ONE_PERMISSION_USERS } from "../../fixtures/users";
+import { createCategory } from "../../support/api/requests/Category";
+import { createCollection } from "../../support/api/requests/Collections";
+import { getProductDetails } from "../../support/api/requests/storeFront/ProductDetails";
+import { deleteCollectionsStartsWith } from "../../support/api/utils/catalog/collectionsUtils";
+import { getDefaultChannel } from "../../support/api/utils/channelsUtils";
+import { expectCorrectProductInformation } from "../../support/api/utils/products/checkProductInfo";
 import {
   createProductInChannel,
   createTypeAttributeAndCategoryForProduct,
   deleteProductsStartsWith
-} from "../../utils/products/productsUtils";
+} from "../../support/api/utils/products/productsUtils";
+import filterTests from "../../support/filterTests";
+import { metadataForms } from "../../support/pages/catalog/metadataComponent";
+import { fillUpCommonFieldsForAllProductTypes } from "../../support/pages/catalog/products/productDetailsPage";
 
-filterTests(["all"], () => {
+filterTests({ definedTags: ["all"] }, () => {
   describe("Update products", () => {
     const startsWith = "CyUpdateProducts-";
     const name = `${startsWith}${faker.datatype.number()}`;
@@ -43,7 +44,7 @@ filterTests(["all"], () => {
         })
         .then(collectionResp => {
           collection = collectionResp;
-          createTypeAttributeAndCategoryForProduct(name);
+          createTypeAttributeAndCategoryForProduct({ name });
         })
         .then(({ attribute: attributeResp, category, productType }) => {
           attribute = attributeResp;
@@ -107,14 +108,15 @@ filterTests(["all"], () => {
             .get(PRODUCT_DETAILS.collectionRemoveButtons)
             .click();
           fillUpCommonFieldsForAllProductTypes(productData, false);
-          cy.addAliasToGraphRequest("UpdatePrivateMetadata");
-          cy.addAliasToGraphRequest("UpdateMetadata");
-          cy.addAliasToGraphRequest("ProductUpdate");
-          cy.get(BUTTON_SELECTORS.confirm).click();
-          confirmationMessageShouldDisappear();
-          cy.wait("@ProductUpdate");
-          cy.wait("@UpdateMetadata");
-          cy.wait("@UpdatePrivateMetadata");
+          cy.addAliasToGraphRequest("UpdatePrivateMetadata")
+            .addAliasToGraphRequest("UpdateMetadata")
+            .addAliasToGraphRequest("ProductUpdate")
+            .get(BUTTON_SELECTORS.confirm)
+            .click()
+            .confirmationMessageShouldDisappear()
+            .waitForRequestAndCheckIfNoErrors("@ProductUpdate")
+            .waitForRequestAndCheckIfNoErrors("@UpdateMetadata")
+            .waitForRequestAndCheckIfNoErrors("@UpdatePrivateMetadata");
           productData.productOrganization.productType = name;
           productData.attribute = attribute;
           cy.loginUserViaRequest("token")
@@ -138,7 +140,7 @@ filterTests(["all"], () => {
         .click()
         .get(BUTTON_SELECTORS.submit)
         .click()
-        .wait("@ProductDelete")
+        .waitForRequestAndCheckIfNoErrors("@ProductDelete")
         .loginUserViaRequest("token")
         .then(() => {
           getProductDetails(product.id, defaultChannel.slug).its("body.data");

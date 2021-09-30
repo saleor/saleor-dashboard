@@ -62,7 +62,7 @@ export interface OrderFulfillData_order_lines_variant {
   __typename: "ProductVariant";
   id: string;
   name: string;
-  sku: string;
+  sku: string | null;
   attributes: OrderFulfillData_order_lines_variant_attributes[];
   stocks: (OrderFulfillData_order_lines_variant_stocks | null)[] | null;
   trackInventory: boolean;

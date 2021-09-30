@@ -1,22 +1,24 @@
-// <reference types="cypress" />
+/// <reference types="cypress"/>
+/// <reference types="../../../support"/>
+
 import faker from "faker";
 
-import { createCheckout } from "../../../apiRequests/Checkout";
-import { createWarehouse } from "../../../apiRequests/Warehouse";
-import { ONE_PERMISSION_USERS } from "../../../Data/users";
+import { urlList } from "../../../fixtures/urlList";
+import { ONE_PERMISSION_USERS } from "../../../fixtures/users";
+import { createCheckout } from "../../../support/api/requests/Checkout";
+import { createWarehouse } from "../../../support/api/requests/Warehouse";
+import * as channelsUtils from "../../../support/api/utils/channelsUtils";
+import * as productsUtils from "../../../support/api/utils/products/productsUtils";
+import * as shippingUtils from "../../../support/api/utils/shippingUtils";
+import { isShippingAvailableInCheckout } from "../../../support/api/utils/storeFront/checkoutUtils";
+import filterTests from "../../../support/filterTests";
 import {
   createShippingRate,
   createShippingZone,
   rateOptions
-} from "../../../steps/shippingMethodSteps";
-import filterTests from "../../../support/filterTests";
-import { urlList } from "../../../url/urlList";
-import * as channelsUtils from "../../../utils/channelsUtils";
-import * as productsUtils from "../../../utils/products/productsUtils";
-import * as shippingUtils from "../../../utils/shippingUtils";
-import { isShippingAvailableInCheckout } from "../../../utils/storeFront/checkoutUtils";
+} from "../../../support/pages/shippingMethodPage";
 
-filterTests(["all"], () => {
+filterTests({ definedTags: ["all"] }, () => {
   describe("Create shipping method", () => {
     const startsWith = "CreateShippingMethods-";
     const name = `${startsWith}${faker.datatype.number()}`;
@@ -44,7 +46,9 @@ filterTests(["all"], () => {
         })
         .then(warehouseResp => {
           warehouse = warehouseResp;
-          productsUtils.createTypeAttributeAndCategoryForProduct(startsWith);
+          productsUtils.createTypeAttributeAndCategoryForProduct({
+            name: startsWith
+          });
         })
         .then(
           ({

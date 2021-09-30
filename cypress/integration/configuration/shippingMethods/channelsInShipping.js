@@ -1,27 +1,25 @@
-// <reference types="cypress" />
+/// <reference types="cypress"/>
+/// <reference types="../../../support"/>
+
 import faker from "faker";
 
-import { createChannel } from "../../../apiRequests/Channels";
-import {
-  addChannelToShippingMethod,
-  addChannelToShippingZone
-} from "../../../apiRequests/ShippingMethod";
-import { ONE_PERMISSION_USERS } from "../../../Data/users";
 import { BUTTON_SELECTORS } from "../../../elements/shared/button-selectors";
 import { SHARED_ELEMENTS } from "../../../elements/shared/sharedElements";
 import { SHIPPING_ZONE_DETAILS } from "../../../elements/shipping/shipping-zone-details";
-import { enterHomePageChangeChannelAndReturn } from "../../../steps/channelsSteps";
+import { urlList } from "../../../fixtures/urlList";
+import { ONE_PERMISSION_USERS } from "../../../fixtures/users";
+import { createChannel } from "../../../support/api/requests/Channels";
 import {
-  waitForProgressBarToNotBeVisible,
-  waitForProgressBarToNotExist
-} from "../../../steps/shared/progressBar";
+  addChannelToShippingMethod,
+  addChannelToShippingZone
+} from "../../../support/api/requests/ShippingMethod";
+import * as channelsUtils from "../../../support/api/utils/channelsUtils";
+import * as shippingUtils from "../../../support/api/utils/shippingUtils";
 import filterTests from "../../../support/filterTests";
-import { getCurrencyAndAmountInString } from "../../../support/format/formatCurrencyAmount";
-import { urlList } from "../../../url/urlList";
-import * as channelsUtils from "../../../utils/channelsUtils";
-import * as shippingUtils from "../../../utils/shippingUtils";
+import { getCurrencyAndAmountInString } from "../../../support/formatData/formatCurrencyAmount";
+import { enterHomePageChangeChannelAndReturn } from "../../../support/pages/channelsPage";
 
-filterTests(["all"], () => {
+filterTests({ definedTags: ["all"] }, () => {
   describe("Channels in shippingMethod", () => {
     const startsWith = "ChannelShippingMethod";
     let defaultChannel;
@@ -90,23 +88,25 @@ filterTests(["all"], () => {
             .loginUserViaRequest("auth", ONE_PERMISSION_USERS.shipping)
             .visit(urlList.shippingMethods)
             .get(SHARED_ELEMENTS.header)
-            .should("be.visible");
-          waitForProgressBarToNotExist();
-          cy.addAliasToGraphRequest("ShippingZone");
-          cy.getTextFromElement(SHARED_ELEMENTS.table);
+            .should("be.visible")
+            .waitForProgressBarToNotExist()
+            .addAliasToGraphRequest("ShippingZone")
+            .getTextFromElement(SHARED_ELEMENTS.table);
         })
         .then(tableText => {
           if (!tableText.includes(shippingZone.name)) {
             cy.get(BUTTON_SELECTORS.nextPaginationButton).click();
           }
-          cy.contains(shippingZone.name).click();
-          cy.wait("@ShippingZone");
+          cy.contains(shippingZone.name)
+            .click()
+            .waitForRequestAndCheckIfNoErrors("@ShippingZone");
           enterHomePageChangeChannelAndReturn(defaultChannel.name);
-          waitForProgressBarToNotBeVisible();
-          cy.get(SHARED_ELEMENTS.skeleton).should("not.exist");
-          cy.getTextFromElement(
-            SHIPPING_ZONE_DETAILS.shippingRatePriceTableCell
-          )
+          cy.waitForProgressBarToNotBeVisible()
+            .get(SHARED_ELEMENTS.skeleton)
+            .should("not.exist")
+            .getTextFromElement(
+              SHIPPING_ZONE_DETAILS.shippingRatePriceTableCell
+            )
             .then(text => {
               const expectedValue = getCurrencyAndAmountInString(
                 defaultChannelPrice,
@@ -115,8 +115,9 @@ filterTests(["all"], () => {
               expect(text).to.be.eq(expectedValue);
 
               enterHomePageChangeChannelAndReturn(createdChannel.name);
-              waitForProgressBarToNotBeVisible();
-              cy.get(SHARED_ELEMENTS.skeleton).should("not.exist");
+              cy.waitForProgressBarToNotBeVisible()
+                .get(SHARED_ELEMENTS.skeleton)
+                .should("not.exist");
             })
             .then(() => {
               cy.getTextFromElement(

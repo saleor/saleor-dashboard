@@ -353,11 +353,10 @@ function useProductUpdateForm(
 
   const disabled =
     !opts.hasVariants &&
-    (!data.sku ||
-      data.channelListings.some(
-        channel =>
-          validatePrice(channel.price) || validateCostPrice(channel.costPrice)
-      ));
+    data.channelListings.some(
+      channel =>
+        validatePrice(channel.price) || validateCostPrice(channel.costPrice)
+    );
 
   return {
     change: handleChange,

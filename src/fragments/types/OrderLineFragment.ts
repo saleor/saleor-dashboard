@@ -69,7 +69,7 @@ export interface OrderLineFragment {
   isShippingRequired: boolean;
   variant: OrderLineFragment_variant | null;
   productName: string;
-  productSku: string;
+  productSku: string | null;
   quantity: number;
   quantityFulfilled: number;
   quantityToFulfill: number;

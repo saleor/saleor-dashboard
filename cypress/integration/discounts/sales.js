@@ -1,26 +1,27 @@
-// <reference types="cypress" />
+/// <reference types="cypress"/>
+/// <reference types="../../support"/>
 
 import faker from "faker";
 
-import { createChannel } from "../../apiRequests/Channels";
-import { updateChannelInProduct } from "../../apiRequests/Product";
+import { urlList } from "../../fixtures/urlList";
+import { createChannel } from "../../support/api/requests/Channels";
+import { updateChannelInProduct } from "../../support/api/requests/Product";
+import * as channelsUtils from "../../support/api/utils/channelsUtils";
+import { deleteSalesStartsWith } from "../../support/api/utils/discounts/salesUtils";
+import * as productsUtils from "../../support/api/utils/products/productsUtils";
+import {
+  createShipping,
+  deleteShippingStartsWith
+} from "../../support/api/utils/shippingUtils";
+import { getProductPrice } from "../../support/api/utils/storeFront/storeFrontProductUtils";
+import filterTests from "../../support/filterTests";
 import {
   assignProducts,
   createSale,
   discountOptions
-} from "../../steps/discounts/salesSteps";
-import filterTests from "../../support/filterTests";
-import { urlList } from "../../url/urlList";
-import * as channelsUtils from "../../utils/channelsUtils";
-import { deleteSalesStartsWith } from "../../utils/discounts/salesUtils";
-import * as productsUtils from "../../utils/products/productsUtils";
-import {
-  createShipping,
-  deleteShippingStartsWith
-} from "../../utils/shippingUtils";
-import { getProductPrice } from "../../utils/storeFront/storeFrontProductUtils";
+} from "../../support/pages/discounts/salesPage";
 
-filterTests(["all"], () => {
+filterTests({ definedTags: ["all"] }, () => {
   describe("Sales discounts", () => {
     const startsWith = "CySales-";
 
@@ -39,7 +40,7 @@ filterTests(["all"], () => {
 
       const name = `${startsWith}${faker.datatype.number()}`;
       productsUtils
-        .createTypeAttributeAndCategoryForProduct(name)
+        .createTypeAttributeAndCategoryForProduct({ name })
         .then(
           ({
             productType: productTypeResp,

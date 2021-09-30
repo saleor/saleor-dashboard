@@ -503,6 +503,7 @@ export enum GiftCardEventsEnum {
   NOTE_ADDED = "NOTE_ADDED",
   RESENT = "RESENT",
   SENT_TO_CUSTOMER = "SENT_TO_CUSTOMER",
+  TAG_UPDATED = "TAG_UPDATED",
   UPDATED = "UPDATED",
   USED_IN_ORDER = "USED_IN_ORDER",
 }
@@ -1403,6 +1404,7 @@ export enum OrderErrorCode {
   CHANNEL_INACTIVE = "CHANNEL_INACTIVE",
   DUPLICATED_INPUT_ITEM = "DUPLICATED_INPUT_ITEM",
   FULFILL_ORDER_LINE = "FULFILL_ORDER_LINE",
+  GIFT_CARD_LINE = "GIFT_CARD_LINE",
   GRAPHQL_ERROR = "GRAPHQL_ERROR",
   INSUFFICIENT_STOCK = "INSUFFICIENT_STOCK",
   INVALID = "INVALID",
@@ -1643,6 +1645,7 @@ export enum ProductFieldEnum {
   PRODUCT_MEDIA = "PRODUCT_MEDIA",
   PRODUCT_TYPE = "PRODUCT_TYPE",
   PRODUCT_WEIGHT = "PRODUCT_WEIGHT",
+  VARIANT_ID = "VARIANT_ID",
   VARIANT_MEDIA = "VARIANT_MEDIA",
   VARIANT_SKU = "VARIANT_SKU",
   VARIANT_WEIGHT = "VARIANT_WEIGHT",
@@ -1818,6 +1821,9 @@ export enum WebhookEventTypeEnum {
   CHECKOUT_UPDATED = "CHECKOUT_UPDATED",
   CUSTOMER_CREATED = "CUSTOMER_CREATED",
   CUSTOMER_UPDATED = "CUSTOMER_UPDATED",
+  DRAFT_ORDER_CREATED = "DRAFT_ORDER_CREATED",
+  DRAFT_ORDER_DELETED = "DRAFT_ORDER_DELETED",
+  DRAFT_ORDER_UPDATED = "DRAFT_ORDER_UPDATED",
   FULFILLMENT_CANCELED = "FULFILLMENT_CANCELED",
   FULFILLMENT_CREATED = "FULFILLMENT_CREATED",
   INVOICE_DELETED = "INVOICE_DELETED",
@@ -1848,6 +1854,9 @@ export enum WebhookEventTypeEnum {
   PRODUCT_VARIANT_DELETED = "PRODUCT_VARIANT_DELETED",
   PRODUCT_VARIANT_OUT_OF_STOCK = "PRODUCT_VARIANT_OUT_OF_STOCK",
   PRODUCT_VARIANT_UPDATED = "PRODUCT_VARIANT_UPDATED",
+  SALE_CREATED = "SALE_CREATED",
+  SALE_DELETED = "SALE_DELETED",
+  SALE_UPDATED = "SALE_UPDATED",
   TRANSLATION_CREATED = "TRANSLATION_CREATED",
   TRANSLATION_UPDATED = "TRANSLATION_UPDATED",
 }
@@ -2013,6 +2022,7 @@ export interface CatalogueInput {
   products?: (string | null)[] | null;
   categories?: (string | null)[] | null;
   collections?: (string | null)[] | null;
+  variants?: (string | null)[] | null;
 }
 
 export interface CategoryFilterInput {
@@ -2302,6 +2312,7 @@ export interface OrderFilterInput {
 export interface OrderFulfillInput {
   lines: OrderFulfillLineInput[];
   notifyCustomer?: boolean | null;
+  allowStockToBeExceeded?: boolean | null;
 }
 
 export interface OrderFulfillLineInput {
@@ -2605,7 +2616,7 @@ export interface ProductTypeSortingInput {
 
 export interface ProductVariantBulkCreateInput {
   attributes: BulkAttributeValueInput[];
-  sku: string;
+  sku?: string | null;
   trackInventory?: boolean | null;
   weight?: any | null;
   stocks?: StockInput[] | null;
@@ -2668,6 +2679,7 @@ export interface SaleInput {
   type?: DiscountValueTypeEnum | null;
   value?: any | null;
   products?: (string | null)[] | null;
+  variants?: (string | null)[] | null;
   categories?: (string | null)[] | null;
   collections?: (string | null)[] | null;
   startDate?: any | null;

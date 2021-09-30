@@ -5,6 +5,7 @@ import { useIntl } from "react-intl";
 import AssignContainerDialog, {
   AssignContainerDialogProps
 } from "../AssignContainerDialog";
+import { messages } from "./messages";
 
 interface AssignCollectionDialogProps
   extends Omit<AssignContainerDialogProps, "containers" | "title" | "search"> {
@@ -21,17 +22,12 @@ const AssignCollectionDialog: React.FC<AssignCollectionDialogProps> = ({
     <AssignContainerDialog
       containers={collections}
       search={{
-        label: intl.formatMessage({
-          defaultMessage: "Search Collection"
-        }),
-        placeholder: intl.formatMessage({
-          defaultMessage: "Search by collection name, etc..."
-        })
+        label: intl.formatMessage(messages.assignCollectionDialogLabel),
+        placeholder: intl.formatMessage(
+          messages.assignCollectionDialogPlaceholder
+        )
       }}
-      title={intl.formatMessage({
-        defaultMessage: "Assign Collection",
-        description: "dialog header"
-      })}
+      title={intl.formatMessage(messages.assignCollectionDialogHeader)}
       {...rest}
     />
   );

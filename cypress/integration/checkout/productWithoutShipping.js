@@ -1,25 +1,27 @@
-// <reference types="cypress" />
+/// <reference types="cypress"/>
+/// <reference types="../../support"/>
 
 import faker from "faker";
 
-import { createChannel } from "../../apiRequests/Channels";
+import { createChannel } from "../../support/api/requests/Channels";
 import {
   addProductsToCheckout,
   addShippingMethod,
   createCheckout
-} from "../../apiRequests/Checkout";
-import filterTests from "../../support/filterTests";
+} from "../../support/api/requests/Checkout";
+import { deleteChannelsStartsWith } from "../../support/api/utils/channelsUtils";
 import {
   createProductInChannel,
   createTypeAttributeAndCategoryForProduct,
   deleteProductsStartsWith
-} from "../../utils/products/productsUtils";
+} from "../../support/api/utils/products/productsUtils";
 import {
   createShipping,
   deleteShippingStartsWith
-} from "../../utils/shippingUtils";
+} from "../../support/api/utils/shippingUtils";
+import filterTests from "../../support/filterTests";
 
-filterTests(["all"], () => {
+filterTests({ definedTags: ["all"] }, () => {
   describe("Products without shipment option", () => {
     const startsWith = "WithoutShipmentCheckout-";
     const name = `${startsWith}${faker.datatype.number()}`;
@@ -37,6 +39,7 @@ filterTests(["all"], () => {
 
       deleteProductsStartsWith(startsWith);
       deleteShippingStartsWith(startsWith);
+      deleteChannelsStartsWith(startsWith);
 
       createChannel({
         name
@@ -61,7 +64,7 @@ filterTests(["all"], () => {
           }) => {
             warehouse = warehouseResp;
             shippingMethod = shippingMethodResp;
-            createTypeAttributeAndCategoryForProduct(name);
+            createTypeAttributeAndCategoryForProduct({ name });
           }
         )
         .then(

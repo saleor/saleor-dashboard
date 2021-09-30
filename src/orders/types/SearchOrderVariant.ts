@@ -36,7 +36,7 @@ export interface SearchOrderVariant_search_edges_node_variants {
   __typename: "ProductVariant";
   id: string;
   name: string;
-  sku: string;
+  sku: string | null;
   channelListings: SearchOrderVariant_search_edges_node_variants_channelListings[] | null;
 }
 

@@ -76,7 +76,7 @@ export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_f
   isShippingRequired: boolean;
   variant: OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_fulfillment_lines_orderLine_variant | null;
   productName: string;
-  productSku: string;
+  productSku: string | null;
   quantity: number;
   quantityFulfilled: number;
   quantityToFulfill: number;
@@ -369,7 +369,7 @@ export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_o
   isShippingRequired: boolean;
   variant: OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_fulfillments_lines_orderLine_variant | null;
   productName: string;
-  productSku: string;
+  productSku: string | null;
   quantity: number;
   quantityFulfilled: number;
   quantityToFulfill: number;
@@ -465,7 +465,7 @@ export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_o
   isShippingRequired: boolean;
   variant: OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_lines_variant | null;
   productName: string;
-  productSku: string;
+  productSku: string | null;
   quantity: number;
   quantityFulfilled: number;
   quantityToFulfill: number;
