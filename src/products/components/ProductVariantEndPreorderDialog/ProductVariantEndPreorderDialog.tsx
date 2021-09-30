@@ -2,22 +2,9 @@ import { DialogContentText } from "@material-ui/core";
 import ActionDialog from "@saleor/components/ActionDialog";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
 import React from "react";
-import { defineMessages, useIntl } from "react-intl";
+import { useIntl } from "react-intl";
 
-const messages = defineMessages({
-  dialogTitle: {
-    defaultMessage: "Ending preorder",
-    description: "dialog header"
-  },
-  dialogMessage: {
-    defaultMessage:
-      "You are about to end your products preorder. You have sold {variantGlobalSoldUnits} units of this variant. Sold units will be allocated at appropriate warehouses. Remember to add remaining threshold stock to warehouses."
-  },
-  dialogConfirmButtonLabel: {
-    defaultMessage: "ACCEPT",
-    description: "button label"
-  }
-});
+import { productVariantEndPreorderDialogMessages } from "./messages";
 
 export interface ProductVariantEndPreorderDialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
@@ -38,18 +25,25 @@ const ProductVariantEndPreorderDialog: React.FC<ProductVariantEndPreorderDialogP
 
   return (
     <ActionDialog
-      confirmButtonLabel={intl.formatMessage(messages.dialogConfirmButtonLabel)}
+      confirmButtonLabel={intl.formatMessage(
+        productVariantEndPreorderDialogMessages.dialogConfirmButtonLabel
+      )}
       confirmButtonState={confirmButtonState}
       open={open}
       onClose={onClose}
       onConfirm={onConfirm}
-      title={intl.formatMessage(messages.dialogTitle)}
+      title={intl.formatMessage(
+        productVariantEndPreorderDialogMessages.dialogTitle
+      )}
       variant="default"
     >
       <DialogContentText>
-        {intl.formatMessage(messages.dialogMessage, {
-          variantGlobalSoldUnits
-        })}
+        {intl.formatMessage(
+          productVariantEndPreorderDialogMessages.dialogMessage,
+          {
+            variantGlobalSoldUnits
+          }
+        )}
       </DialogContentText>
     </ActionDialog>
   );

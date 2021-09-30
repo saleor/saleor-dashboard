@@ -286,6 +286,7 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
       {({
         change,
         data,
+        formErrors,
         disabled: formDisabled,
         handlers,
         hasChanged,
@@ -388,10 +389,12 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                       disabled={disabled}
                       hasVariants={false}
                       errors={errors}
+                      formErrors={formErrors}
                       stocks={data.stocks}
                       warehouses={warehouses}
                       onChange={handlers.changeStock}
                       onFormDataChange={change}
+                      onChangePreorderEndDate={handlers.changePreorderEndDate}
                       onWarehouseStockAdd={handlers.addStock}
                       onWarehouseStockDelete={handlers.deleteStock}
                       onWarehouseConfigure={onWarehouseConfigure}

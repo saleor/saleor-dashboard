@@ -99,6 +99,7 @@ interface ProductVariantPageProps {
   onAssignReferencesClick: (attribute: AttributeInput) => void;
   onCloseDialog: () => void;
   onVariantPreorderDeactivate: (id: string) => void;
+  variantDeactivatePreoderButtonState: ConfirmButtonTransitionState;
   onVariantReorder: ReorderAction;
   onAttributeSelectBlur: () => void;
   onAdd();
@@ -133,6 +134,7 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
   onSubmit,
   onVariantClick,
   onVariantPreorderDeactivate,
+  variantDeactivatePreoderButtonState,
   onVariantReorder,
   onSetDefaultVariant,
   onWarehouseConfigure,
@@ -215,6 +217,7 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
           {({
             change,
             data,
+            formErrors,
             disabled: formDisabled,
             handlers,
             hasChanged,
@@ -329,10 +332,12 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
                     disabled={loading}
                     hasVariants={true}
                     errors={errors}
+                    formErrors={formErrors}
                     stocks={data.stocks}
                     warehouses={warehouses}
                     onChange={handlers.changeStock}
                     onFormDataChange={change}
+                    onChangePreorderEndDate={handlers.changePreorderEndDate}
                     onEndPreorderTrigger={
                       variant?.preorder?.isPreorder
                         ? () => setIsEndPreorderModalOpened(true)
@@ -391,7 +396,7 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
       )}
       {variant?.preorder?.isPreorder && (
         <ProductVariantEndPreorderDialog
-          confirmButtonState="default"
+          confirmButtonState={variantDeactivatePreoderButtonState}
           onClose={() => setIsEndPreorderModalOpened(false)}
           onConfirm={handleDeactivatePreorder}
           open={isEndPreorderModalOpened}

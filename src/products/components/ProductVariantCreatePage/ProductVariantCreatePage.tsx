@@ -149,6 +149,7 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
       {({
         change,
         data,
+        formErrors,
         disabled: formDisabled,
         handlers,
         hasChanged,
@@ -229,14 +230,15 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
               <CardSpacer />
               <ProductStocks
                 data={data}
-                productVariantChannelListings={[]}
                 disabled={disabled}
                 hasVariants={true}
                 onFormDataChange={change}
+                formErrors={formErrors}
                 errors={errors}
                 stocks={data.stocks}
                 warehouses={warehouses}
                 onChange={handlers.changeStock}
+                onChangePreorderEndDate={handlers.changePreorderEndDate}
                 onWarehouseStockAdd={handlers.addStock}
                 onWarehouseStockDelete={handlers.deleteStock}
                 onWarehouseConfigure={onWarehouseConfigure}

@@ -10,13 +10,14 @@ import {
 } from "@saleor/attributes/utils/handlers";
 import { AttributeInput } from "@saleor/components/Attributes";
 import { MetadataFormData } from "@saleor/components/Metadata";
-import useForm, { FormChange } from "@saleor/hooks/useForm";
+import useForm, { FormChange, FormErrors } from "@saleor/hooks/useForm";
 import useFormset, {
   FormsetChange,
   FormsetData
 } from "@saleor/hooks/useFormset";
 import { ProductVariantCreateData_product } from "@saleor/products/types/ProductVariantCreateData";
 import { getVariantAttributeInputFromProduct } from "@saleor/products/utils/data";
+import { createPreorderEndDateChangeHandler } from "@saleor/products/utils/handlers";
 import { SearchPages_search_edges_node } from "@saleor/searches/types/SearchPages";
 import { SearchProducts_search_edges_node } from "@saleor/searches/types/SearchProducts";
 import { SearchWarehouses_search_edges_node } from "@saleor/searches/types/SearchWarehouses";
@@ -63,6 +64,7 @@ export interface ProductVariantCreateHandlers
     Record<"reorderAttributeValue", FormsetChange<ReorderEvent>>,
     Record<"addStock" | "deleteStock", (id: string) => void> {
   changeMetadata: FormChange;
+  changePreorderEndDate: FormChange;
   fetchReferences: (value: string) => void;
   fetchMoreReferences: FetchMoreProps;
 }
@@ -70,6 +72,7 @@ export interface ProductVariantCreateHandlers
 export interface UseProductVariantCreateFormResult {
   change: FormChange;
   data: ProductVariantCreateData;
+  formErrors: FormErrors<ProductVariantCreateData>;
   disabled: boolean;
   // TODO: type FormsetChange
   handlers: ProductVariantCreateHandlers;
@@ -177,6 +180,11 @@ function useProductVariantCreateForm(
     stocks.remove(id);
   };
 
+  const handlePreorderEndDateChange = createPreorderEndDateChangeHandler(
+    form,
+    triggerChange
+  );
+
   const data: ProductVariantCreateData = {
     ...form.data,
     attributes: getAttributesDisplayData(
@@ -194,11 +202,13 @@ function useProductVariantCreateForm(
   return {
     change: handleChange,
     data,
-    disabled: false,
+    disabled: !!form.errors.preorderEndDateTime,
+    formErrors: form.errors,
     handlers: {
       addStock: handleStockAdd,
       changeMetadata,
       changeStock: handleStockChange,
+      changePreorderEndDate: handlePreorderEndDateChange,
       deleteStock: handleStockDelete,
       fetchMoreReferences: handleFetchMoreReferences,
       fetchReferences: handleFetchReferences,

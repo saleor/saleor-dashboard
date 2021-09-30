@@ -25,25 +25,26 @@ import {
 } from "@saleor/channels/utils";
 import CardTitle from "@saleor/components/CardTitle";
 import ControlledCheckbox from "@saleor/components/ControlledCheckbox";
+import { DateTimeTimezoneField } from "@saleor/components/DateTimeTimezoneField";
 import FormSpacer from "@saleor/components/FormSpacer";
 import Hr from "@saleor/components/Hr";
 import Link from "@saleor/components/Link";
 import { ProductErrorFragment } from "@saleor/fragments/types/ProductErrorFragment";
 import { WarehouseFragment } from "@saleor/fragments/types/WarehouseFragment";
-import { FormChange } from "@saleor/hooks/useForm";
+import { FormChange, FormErrors } from "@saleor/hooks/useForm";
 import { FormsetAtomicData, FormsetChange } from "@saleor/hooks/useFormset";
 import { makeStyles } from "@saleor/macaw-ui";
 import { ICONBUTTON_SIZE } from "@saleor/macaw-ui";
 import { renderCollection } from "@saleor/misc";
-import {
-  getPreorderEndDateFormData,
-  getPreorderEndHourFormData
-} from "@saleor/products/utils/data";
 import { getFormErrors, getProductErrorMessage } from "@saleor/utils/errors";
-import createFutureDateChangeHandler from "@saleor/utils/handlers/futureDateChangeHandler";
 import createNonNegativeValueChangeHandler from "@saleor/utils/handlers/nonNegativeValueChangeHandler";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
+
+import { ProductCreateData } from "../ProductCreatePage";
+import { ProductUpdateSubmitData } from "../ProductUpdatePage/form";
+import { ProductVariantCreateData } from "../ProductVariantCreatePage/form";
+import { ProductVariantUpdateData } from "../ProductVariantPage/form";
 
 export interface ProductStockFormsetData {
   quantityAllocated: number;
@@ -67,6 +68,11 @@ export interface ProductStocksProps {
   data: ProductStockFormData;
   disabled: boolean;
   errors: ProductErrorFragment[];
+  formErrors:
+    | FormErrors<ProductVariantCreateData>
+    | FormErrors<ProductVariantUpdateData>
+    | FormErrors<ProductUpdateSubmitData>
+    | FormErrors<ProductCreateData>;
   hasVariants: boolean;
   stocks: ProductStockInput[];
   warehouses: WarehouseFragment[];
@@ -75,6 +81,7 @@ export interface ProductStocksProps {
     data: Partial<ChannelPriceAndPreorderArgs>
   ) => void;
   onChange: FormsetChange;
+  onChangePreorderEndDate: FormChange;
   onEndPreorderTrigger?: () => void;
   onFormDataChange: FormChange;
   onWarehouseStockAdd: (warehouseId: string) => void;
@@ -141,7 +148,6 @@ const useStyles = makeStyles(
       marginTop: theme.spacing(2),
       marginBottom: theme.spacing(2)
     },
-    dateInput: { marginRight: 15 },
     preorderInfo: {
       marginBottom: theme.spacing(2),
       marginTop: theme.spacing(2),
@@ -178,9 +184,11 @@ const ProductStocks: React.FC<ProductStocksProps> = ({
   disabled,
   hasVariants,
   errors,
+  formErrors: localFormErrors,
+  onChangePreorderEndDate,
   stocks,
   warehouses,
-  productVariantChannelListings,
+  productVariantChannelListings = [],
   onChange,
   onEndPreorderTrigger,
   onFormDataChange,
@@ -202,11 +210,6 @@ const ProductStocks: React.FC<ProductStocksProps> = ({
   const formErrors = getFormErrors(["sku"], errors);
 
   const onThresholdChange = createNonNegativeValueChangeHandler(
-    onFormDataChange
-  );
-
-  const onDateChange = createFutureDateChangeHandler(
-    "preorderEndDateTime",
     onFormDataChange
   );
 
@@ -465,34 +468,21 @@ const ProductStocks: React.FC<ProductStocksProps> = ({
 
           {data.hasPreorderEndDate && (
             <div className={classes.dateTimeInputs}>
-              <TextField
-                className={classes.dateInput}
-                label={intl.formatMessage({
-                  defaultMessage: "End date"
-                })}
-                name="date"
-                onChange={e => onDateChange(e, data?.preorderEndDateTime)}
-                value={getPreorderEndDateFormData(data?.preorderEndDateTime)}
-                type="date"
-                InputLabelProps={{
-                  shrink: true
-                }}
-              />
-
-              <TextField
-                label={intl.formatMessage({
-                  defaultMessage: "End hour"
-                })}
-                name="hour"
-                onChange={e => onDateChange(e, data?.preorderEndDateTime)}
-                type="time"
-                value={getPreorderEndHourFormData(data?.preorderEndDateTime)}
-                InputLabelProps={{
-                  shrink: true
-                }}
-                inputProps={{
-                  step: 60 // 1min
-                }}
+              <DateTimeTimezoneField
+                name={"preorderEndDateTime"}
+                disabled={disabled}
+                futureDatesOnly
+                fullWidth={false}
+                error={!!localFormErrors.preorderEndDateTime}
+                value={data?.preorderEndDateTime}
+                onChange={event =>
+                  onChangePreorderEndDate({
+                    target: {
+                      name: "preorderEndDateTime",
+                      value: event
+                    }
+                  })
+                }
               />
             </div>
           )}

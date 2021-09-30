@@ -31,6 +31,7 @@ storiesOf("Views / Products / Product variant details", module)
       onVariantClick={() => undefined}
       onVariantReorder={() => undefined}
       saveButtonBarState="default"
+      variantDeactivatePreoderButtonState="default"
       warehouses={warehouseList}
       onWarehouseConfigure={() => undefined}
       referencePages={[]}
@@ -61,6 +62,7 @@ storiesOf("Views / Products / Product variant details", module)
       onVariantClick={() => undefined}
       onVariantReorder={() => undefined}
       saveButtonBarState="default"
+      variantDeactivatePreoderButtonState="default"
       warehouses={warehouseList}
       onWarehouseConfigure={() => undefined}
       referencePages={[]}
@@ -90,6 +92,7 @@ storiesOf("Views / Products / Product variant details", module)
       onVariantClick={() => undefined}
       onVariantReorder={() => undefined}
       saveButtonBarState="default"
+      variantDeactivatePreoderButtonState="default"
       warehouses={[]}
       onWarehouseConfigure={() => undefined}
       referencePages={[]}
@@ -117,6 +120,7 @@ storiesOf("Views / Products / Product variant details", module)
       onVariantClick={() => undefined}
       onVariantReorder={() => undefined}
       saveButtonBarState="default"
+      variantDeactivatePreoderButtonState="default"
       errors={[
         {
           attributes: [variant.selectionAttributes[0].attribute.id],

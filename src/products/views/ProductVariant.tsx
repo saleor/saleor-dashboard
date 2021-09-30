@@ -205,9 +205,8 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
     deactivatePreorder,
     deactivatePreoderOpts
   ] = useProductVariantPreorderDeactivateMutation({});
-  const handleDeactivateVariantPreorder = async (id: string) => {
-    await deactivatePreorder({ variables: { id } });
-  };
+  const handleDeactivateVariantPreorder = async (id: string) =>
+    deactivatePreorder({ variables: { id } });
 
   const [
     reorderProductVariants,
@@ -391,6 +390,7 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
           navigate(productVariantEditUrl(productId, variantId));
         }}
         onVariantPreorderDeactivate={handleDeactivateVariantPreorder}
+        variantDeactivatePreoderButtonState={deactivatePreoderOpts.status}
         onVariantReorder={handleVariantReorder}
         assignReferencesAttributeId={
           params.action === "assign-attribute-value" && params.id

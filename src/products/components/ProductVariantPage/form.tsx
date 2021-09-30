@@ -15,7 +15,11 @@ import {
 import { AttributeInput } from "@saleor/components/Attributes";
 import { MetadataFormData } from "@saleor/components/Metadata";
 import { ProductVariant } from "@saleor/fragments/types/ProductVariant";
-import useForm, { FormChange, SubmitPromise } from "@saleor/hooks/useForm";
+import useForm, {
+  FormChange,
+  FormErrors,
+  SubmitPromise
+} from "@saleor/hooks/useForm";
 import useFormset, {
   FormsetChange,
   FormsetData
@@ -24,7 +28,10 @@ import {
   getAttributeInputFromVariant,
   getStockInputFromVariant
 } from "@saleor/products/utils/data";
-import { getChannelsInput } from "@saleor/products/utils/handlers";
+import {
+  createPreorderEndDateChangeHandler,
+  getChannelsInput
+} from "@saleor/products/utils/handlers";
 import {
   validateCostPrice,
   validatePrice
@@ -97,6 +104,7 @@ export interface ProductVariantUpdateHandlers
     Record<"selectAttributeFile", FormsetChange<File>>,
     Record<"reorderAttributeValue", FormsetChange<ReorderEvent>>,
     Record<"addStock" | "deleteStock", (id: string) => void> {
+  changePreorderEndDate: FormChange;
   changeMetadata: FormChange;
   fetchReferences: (value: string) => void;
   fetchMoreReferences: FetchMoreProps;
@@ -105,6 +113,7 @@ export interface ProductVariantUpdateHandlers
 export interface UseProductVariantUpdateFormResult {
   change: FormChange;
   data: ProductVariantUpdateData;
+  formErrors: FormErrors<ProductVariantUpdateData>;
   disabled: boolean;
   handlers: ProductVariantUpdateHandlers;
   hasChanged: boolean;
@@ -236,6 +245,11 @@ function useProductVariantUpdateForm(
     triggerChange();
   };
 
+  const handlePreorderEndDateChange = createPreorderEndDateChangeHandler(
+    form,
+    triggerChange
+  );
+
   const dataStocks = stocks.data.map(stock => stock.id);
   const variantStocks = variant?.stocks.map(stock => stock.warehouse.id) || [];
   const stockDiff = arrayDiff(variantStocks, dataStocks);
@@ -247,11 +261,12 @@ function useProductVariantUpdateForm(
     stock => !stockDiff.added.some(addedStock => addedStock === stock.id)
   );
 
-  const disabled = channels?.data.some(
-    channelData =>
-      validatePrice(channelData.value.price) ||
-      validateCostPrice(channelData.value.costPrice)
-  );
+  const disabled =
+    channels?.data.some(
+      channelData =>
+        validatePrice(channelData.value.price) ||
+        validateCostPrice(channelData.value.costPrice)
+    ) || !!form.errors.preorderEndDateTime;
   const data: ProductVariantUpdateData = {
     ...form.data,
     attributes: getAttributesDisplayData(
@@ -290,11 +305,13 @@ function useProductVariantUpdateForm(
     change: handleChange,
     data,
     disabled,
+    formErrors: form.errors,
     handlers: {
       addStock: handleStockAdd,
       changeChannels: handleChannelChange,
       changeMetadata,
       changeStock: handleStockChange,
+      changePreorderEndDate: handlePreorderEndDateChange,
       deleteStock: handleStockDelete,
       fetchMoreReferences: handleFetchMoreReferences,
       fetchReferences: handleFetchReferences,

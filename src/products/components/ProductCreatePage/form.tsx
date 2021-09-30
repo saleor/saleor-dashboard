@@ -18,7 +18,7 @@ import { MetadataFormData } from "@saleor/components/Metadata";
 import { MultiAutocompleteChoiceType } from "@saleor/components/MultiAutocompleteSelectField";
 import { RichTextEditorChange } from "@saleor/components/RichTextEditor";
 import { SingleAutocompleteChoiceType } from "@saleor/components/SingleAutocompleteSelectField";
-import useForm, { FormChange } from "@saleor/hooks/useForm";
+import useForm, { FormChange, FormErrors } from "@saleor/hooks/useForm";
 import useFormset, {
   FormsetChange,
   FormsetData
@@ -48,6 +48,7 @@ import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTr
 import useRichText from "@saleor/utils/richText/useRichText";
 import React from "react";
 
+import { createPreorderEndDateChangeHandler } from "../../utils/handlers";
 import { ProductStockFormsetData, ProductStockInput } from "../ProductStocks";
 
 export interface ProductCreateFormData extends MetadataFormData {
@@ -107,12 +108,14 @@ export interface ProductCreateHandlers
     Record<"reorderAttributeValue", FormsetChange<ReorderEvent>>,
     Record<"addStock" | "deleteStock", (id: string) => void> {
   changeDescription: RichTextEditorChange;
+  changePreorderEndDate: FormChange;
   fetchReferences: (value: string) => void;
   fetchMoreReferences: FetchMoreProps;
 }
 export interface UseProductCreateFormResult {
   change: FormChange;
   data: ProductCreateData;
+  formErrors: FormErrors<ProductCreateData>;
   disabled: boolean;
   handlers: ProductCreateHandlers;
   hasChanged: boolean;
@@ -299,6 +302,11 @@ function useProductCreateForm(
     triggerChange
   );
 
+  const handlePreorderEndDateChange = createPreorderEndDateChangeHandler(
+    form,
+    triggerChange
+  );
+
   const getData = (): ProductCreateData => ({
     ...form.data,
     attributes: getAttributesDisplayData(
@@ -316,17 +324,19 @@ function useProductCreateForm(
   const submit = () => onSubmit(data);
 
   const disabled =
-    !opts.selectedProductType?.hasVariants &&
-    (data.channelListings.some(
-      channel =>
-        validatePrice(channel.price) || validateCostPrice(channel.costPrice)
-    ) ||
-      !data.category);
+    (!opts.selectedProductType?.hasVariants &&
+      (data.channelListings.some(
+        channel =>
+          validatePrice(channel.price) || validateCostPrice(channel.costPrice)
+      ) ||
+        !data.category)) ||
+    !!form.errors.preorderEndDateTime;
 
   return {
     change: handleChange,
     data,
     disabled,
+    formErrors: form.errors,
     handlers: {
       addStock: handleStockAdd,
       changeChannelPrice: handleChannelPriceChange,
@@ -334,6 +344,7 @@ function useProductCreateForm(
       changeDescription,
       changeMetadata,
       changeStock: handleStockChange,
+      changePreorderEndDate: handlePreorderEndDateChange,
       deleteStock: handleStockDelete,
       fetchMoreReferences: handleFetchMoreReferences,
       fetchReferences: handleFetchReferences,
