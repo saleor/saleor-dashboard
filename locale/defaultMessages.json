@@ -4148,6 +4148,10 @@
     "context": "total price of ordered products",
     "string": "Total"
   },
+  "src_dot_orders_dot_components_dot_OrderDraftDetailsProducts_dot_productDeleted": {
+    "context": "deleted product info in an unconfirmed order",
+    "string": "This product variant no longer exists"
+  },
   "src_dot_orders_dot_components_dot_OrderDraftDetailsSummary_dot_addDiscount": {
     "context": "add discount button",
     "string": "Add Discount"
@@ -4748,6 +4752,14 @@
     "context": "order line total price",
     "string": "Total"
   },
+  "src_dot_orders_dot_components_dot_OrderProductsCardElements_dot_fulfilledVariantDeleted": {
+    "context": "product variant in an fulfilled order",
+    "string": "This product variant no longer exists"
+  },
+  "src_dot_orders_dot_components_dot_OrderProductsCardElements_dot_unfulfilledVariantDeleted": {
+    "context": "product variant in an unfulfilled order",
+    "string": "This product variant cannot be fulfilled because it no longer exists"
+  },
   "src_dot_orders_dot_components_dot_OrderRefundFulfilledProducts_dot_1134347598": {
     "context": "tabel column header",
     "string": "Price"
@@ -4774,6 +4786,10 @@
   "src_dot_orders_dot_components_dot_OrderRefundFulfilledProducts_dot_937914544": {
     "context": "error message",
     "string": "Improper value"
+  },
+  "src_dot_orders_dot_components_dot_OrderRefundFulfilledProducts_dot_fulfilledVariantDeleted": {
+    "context": "tooltip content when a deleted variant is detected",
+    "string": "This product is no longer in the database. It won't be restocked."
   },
   "src_dot_orders_dot_components_dot_OrderRefundFulfilledProducts_dot_fulfillment": {
     "context": "section header",
@@ -4918,6 +4934,10 @@
     "context": "error message",
     "string": "Improper value"
   },
+  "src_dot_orders_dot_components_dot_OrderRefundUnfulfilledProducts_dot_unfulfilledVariantDeleted": {
+    "context": "tooltip content when a deleted variant is detected",
+    "string": "This product is no longer in the database. It won't be restocked."
+  },
   "src_dot_orders_dot_components_dot_OrderRefund_dot_1275363773": {
     "context": "section header",
     "string": "Refund Order"
@@ -4966,10 +4986,6 @@
     "context": "fulfilled fulfillment, section header",
     "string": "Fulfilled from {warehouseName}"
   },
-  "src_dot_orders_dot_components_dot_OrderReturnPage_dot_OrderReturnRefundItemsCard_dot_improperValue": {
-    "context": "error message",
-    "string": "Improper value"
-  },
   "src_dot_orders_dot_components_dot_OrderReturnPage_dot_OrderReturnRefundItemsCard_dot_refunded": {
     "context": "refunded fulfillment, section header",
     "string": "Refunded ({quantity})"
@@ -4990,14 +5006,6 @@
     "context": "product no longer exists error title",
     "string": "Product no longer exists"
   },
-  "src_dot_orders_dot_components_dot_OrderReturnPage_dot_OrderReturnRefundItemsCard_dot_titleFulfilled": {
-    "context": "section header",
-    "string": "Fulfillment - #{fulfilmentId}"
-  },
-  "src_dot_orders_dot_components_dot_OrderReturnPage_dot_OrderReturnRefundItemsCard_dot_titleUnfulfilled": {
-    "context": "section header",
-    "string": "Unfulfilled Items"
-  },
   "src_dot_orders_dot_components_dot_OrderReturnPage_dot_OrderReturnRefundItemsCard_dot_unfulfilled": {
     "context": "section header",
     "string": "Unfulfilled"
@@ -5010,9 +5018,25 @@
     "context": "page header with order number",
     "string": "Order #{orderNumber}"
   },
+  "src_dot_orders_dot_components_dot_OrderReturnPage_dot_deletedVariant": {
+    "context": "status badge description on deleted variants",
+    "string": "This product is no longer in the database. It won’t be restocked."
+  },
+  "src_dot_orders_dot_components_dot_OrderReturnPage_dot_improperValue": {
+    "context": "error message",
+    "string": "Improper value"
+  },
   "src_dot_orders_dot_components_dot_OrderReturnPage_dot_pageTitle": {
     "context": "page header",
     "string": "Order no. {orderNumber} - Replace/Return"
+  },
+  "src_dot_orders_dot_components_dot_OrderReturnPage_dot_titleFulfilled": {
+    "context": "section header",
+    "string": "Fulfillment - #{fulfilmentId}"
+  },
+  "src_dot_orders_dot_components_dot_OrderReturnPage_dot_titleUnfulfilled": {
+    "context": "section header",
+    "string": "Unfulfilled items"
   },
   "src_dot_orders_dot_components_dot_OrderSettingsPage_dot_1149215359": {
     "context": "header",
@@ -5045,8 +5069,12 @@
     "context": "dialog header",
     "string": "Edit Shipping Method"
   },
-  "src_dot_orders_dot_components_dot_OrderUnfulfilledProductsCard_dot_2095687440": {
-    "context": "button",
+  "src_dot_orders_dot_components_dot_OrderUnfulfilledProductsCard_dot_deletedVariantDetected": {
+    "context": "tooltip content when a deleted variant is detected",
+    "string": "You cannot fulfill products that are deleted."
+  },
+  "src_dot_orders_dot_components_dot_OrderUnfulfilledProductsCard_dot_fulfillButton": {
+    "context": "Fulfill button",
     "string": "Fulfill"
   },
   "src_dot_orders_dot_views_dot_OrderDetails_dot_1039259580": {

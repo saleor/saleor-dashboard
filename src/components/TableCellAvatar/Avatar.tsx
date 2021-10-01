@@ -46,22 +46,24 @@ export interface AvatarProps {
   alignRight?: boolean;
   avatarProps?: string;
   children?: React.ReactNode | React.ReactNodeArray;
+  badge?: React.ReactNode;
 }
 
 const Avatar: React.FC<AvatarProps> = ({
   children,
   alignRight,
   thumbnail,
-  avatarProps
+  avatarProps,
+  badge
 }) => {
   const classes = useStyles({});
-
   return (
     <div
       className={classNames(classes.content, {
         [classes.alignRight]: alignRight
       })}
     >
+      {badge}
       {thumbnail === undefined ? (
         <MuiAvatar className={classNames(classes.avatar, avatarProps)}>
           <Cached color="primary" />

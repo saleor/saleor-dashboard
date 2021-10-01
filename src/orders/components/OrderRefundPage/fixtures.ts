@@ -35,6 +35,10 @@ export const orderToRefund = (placeholder: string): OrderRefundData_order => ({
       productName: "Milk",
       quantity: 19,
       quantityToFulfill: 16,
+      variant: {
+        __typename: "ProductVariant",
+        id: "1"
+      },
       thumbnail: {
         __typename: "Image",
         url: placeholder
@@ -54,6 +58,10 @@ export const orderToRefund = (placeholder: string): OrderRefundData_order => ({
       productName: "Coffee",
       quantity: 13,
       quantityToFulfill: 8,
+      variant: {
+        __typename: "ProductVariant",
+        id: "2"
+      },
       thumbnail: {
         __typename: "Image",
         url: placeholder
@@ -84,6 +92,10 @@ export const orderToRefund = (placeholder: string): OrderRefundData_order => ({
             id: "diufhdsif",
             productName: "Milk",
             quantity: 1,
+            variant: {
+              __typename: "ProductVariant",
+              id: "3"
+            },
             thumbnail: {
               __typename: "Image",
               url: placeholder
@@ -107,6 +119,10 @@ export const orderToRefund = (placeholder: string): OrderRefundData_order => ({
             id: "fdsfdfdsf",
             productName: "Coffee",
             quantity: 1,
+            variant: {
+              __typename: "ProductVariant",
+              id: "4"
+            },
             thumbnail: {
               __typename: "Image",
               url: placeholder
@@ -138,6 +154,10 @@ export const orderToRefund = (placeholder: string): OrderRefundData_order => ({
             id: "diufhdsif",
             productName: "Milk",
             quantity: 2,
+            variant: {
+              __typename: "ProductVariant",
+              id: "5"
+            },
             thumbnail: {
               __typename: "Image",
               url: placeholder
@@ -161,6 +181,10 @@ export const orderToRefund = (placeholder: string): OrderRefundData_order => ({
             id: "fdsfdfdsf",
             productName: "Coffee",
             quantity: 4,
+            variant: {
+              __typename: "ProductVariant",
+              id: "6"
+            },
             thumbnail: {
               __typename: "Image",
               url: placeholder

@@ -129,6 +129,9 @@ export const fragmentRefundOrderLine = gql`
     id
     productName
     quantity
+    variant {
+      id
+    }
     unitPrice {
       gross {
         ...Money

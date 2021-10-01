@@ -13,6 +13,11 @@ export const messages = defineMessages({
   fulfillmentWaitingForApproval: {
     defaultMessage: "Fulfillment waiting for approval",
     description: "section header returned"
+  },
+  fulfilledVariantDeleted: {
+    defaultMessage:
+      "This product is no longer in the database. It won't be restocked.",
+    description: "tooltip content when a deleted variant is detected"
   }
 });
 

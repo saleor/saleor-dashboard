@@ -7,6 +7,11 @@
 // GraphQL fragment: RefundOrderLineFragment
 // ====================================================
 
+export interface RefundOrderLineFragment_variant {
+  __typename: "ProductVariant";
+  id: string;
+}
+
 export interface RefundOrderLineFragment_unitPrice_gross {
   __typename: "Money";
   amount: number;
@@ -28,6 +33,7 @@ export interface RefundOrderLineFragment {
   id: string;
   productName: string;
   quantity: number;
+  variant: RefundOrderLineFragment_variant | null;
   unitPrice: RefundOrderLineFragment_unitPrice;
   thumbnail: RefundOrderLineFragment_thumbnail | null;
 }

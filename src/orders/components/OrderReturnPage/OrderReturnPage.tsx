@@ -8,11 +8,12 @@ import { Backlink } from "@saleor/macaw-ui";
 import { renderCollection } from "@saleor/misc";
 import { OrderDetails_order } from "@saleor/orders/types/OrderDetails";
 import React from "react";
-import { defineMessages, useIntl } from "react-intl";
+import { useIntl } from "react-intl";
 
 import OrderAmount from "../OrderRefundReturnAmount";
 import { getReturnProductsAmountValues } from "../OrderRefundReturnAmount/utils";
 import OrderRefundForm, { OrderRefundSubmitData } from "./form";
+import { OrderReturnPageMessages as messages } from "./messages";
 import ItemsCard from "./OrderReturnRefundItemsCard/ReturnItemsCard";
 import {
   getFulfilledFulfillemnts,
@@ -20,17 +21,6 @@ import {
   getUnfulfilledLines,
   getWaitingFulfillments
 } from "./utils";
-
-const messages = defineMessages({
-  appTitle: {
-    defaultMessage: "Order #{orderNumber}",
-    description: "page header with order number"
-  },
-  pageTitle: {
-    defaultMessage: "Order no. {orderNumber} - Replace/Return",
-    description: "page header"
-  }
-});
 
 export interface OrderReturnPageProps {
   order: OrderDetails_order;
