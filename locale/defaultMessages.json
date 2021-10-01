@@ -3738,6 +3738,34 @@
     "context": "GiftCardsListHeader menu item settings",
     "string": "Settings"
   },
+  "src_dot_giftCards_dot_components_dot_GiftCardCustomerCard_dot_1782042241": {
+    "context": "button",
+    "string": "Deactivate"
+  },
+  "src_dot_giftCards_dot_components_dot_GiftCardCustomerCard_dot_3645414921": {
+    "context": "button",
+    "string": "Delete"
+  },
+  "src_dot_giftCards_dot_components_dot_GiftCardCustomerCard_dot_3865193889": {
+    "context": "button",
+    "string": "Activate"
+  },
+  "src_dot_giftCards_dot_components_dot_GiftCardCustomerCard_dot_customerGiftCardsAbsentSubtitle": {
+    "context": "subtitle",
+    "string": "There are no gift cards assigned to this customer"
+  },
+  "src_dot_giftCards_dot_components_dot_GiftCardCustomerCard_dot_customerGiftCardsIssueNewCardButton": {
+    "context": "button",
+    "string": "Issue new card"
+  },
+  "src_dot_giftCards_dot_components_dot_GiftCardCustomerCard_dot_customerGiftCardsPresentSubtitle": {
+    "context": "subtitle",
+    "string": "Only five newest gift cards are shown here"
+  },
+  "src_dot_giftCards_dot_components_dot_GiftCardCustomerCard_dot_customerGiftCardsViewAllButton": {
+    "context": "button",
+    "string": "View All"
+  },
   "src_dot_giftCards_dot_components_dot_GiftCardDeleteDialog_dot_consentLabel": {
     "context": "GiftCardDeleteDialog consent label",
     "string": "{selectedItemsCount,plural,one{I am aware that I am removing a gift card with balance} other{I am aware that I am removing gift cards with balance}}"
