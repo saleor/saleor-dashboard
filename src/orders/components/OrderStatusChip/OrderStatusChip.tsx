@@ -15,21 +15,9 @@ const OrderStatusChip: React.FC<OrderStatusChipProps> = ({ order }) => {
     return null;
   }
 
-  const { localized: message, status } = transformOrderStatus(
-    order.status,
-    intl
-  );
+  const { localized, status } = transformOrderStatus(order.status, intl);
 
-  return (
-    <StatusChip
-      size="md"
-      status={status}
-      label={intl.formatMessage({
-        defaultMessage: message,
-        description: "status chip label"
-      })}
-    />
-  );
+  return <StatusChip size="md" status={status} label={localized} />;
 };
 
 export default OrderStatusChip;
