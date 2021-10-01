@@ -15,7 +15,7 @@ import { CUSTOMER_GIFT_CARD_LIST_QUERY } from "./queries";
 import { CustomerGiftCardList_giftCards_edges_node } from "./types/CustomerGiftCardList";
 import { getGiftCardDisplayCode } from "./utils";
 
-interface GiftCardCustomerCardListingProps {
+interface CustomerGiftCardsCardListCardProps {
   giftCard: ExtendedGiftCard<CustomerGiftCardList_giftCards_edges_node>;
 }
 
@@ -35,7 +35,7 @@ const useStyles = makeStyles(
   { name: "CustomerGiftCardListCard" }
 );
 
-const CustomerGiftCardListCard: React.FC<GiftCardCustomerCardListingProps> = ({
+const CustomerGiftCardsCardListCard: React.FC<CustomerGiftCardsCardListCardProps> = ({
   giftCard
 }) => {
   const intl = useIntl();
@@ -142,4 +142,4 @@ const CustomerGiftCardListCard: React.FC<GiftCardCustomerCardListingProps> = ({
   );
 };
 
-export default CustomerGiftCardListCard;
+export default CustomerGiftCardsCardListCard;

@@ -5,14 +5,14 @@ import { mapEdgesToItems } from "@saleor/utils/maps";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
-import GiftCardCustomerCardsList from "./GiftCardCustomerCardsList";
+import CustomerGiftCardsList from "./CustomerGiftCardsList";
 import { useCustomerGiftCardQuery } from "./queries";
 
-interface GiftCardCustomerCardProps {
+interface CustomerGiftCardsCardProps {
   customerId?: string | null;
 }
 
-interface GiftCardCustomerCardActionsProps {
+interface CustomerGiftCardsCardActionsProps {
   buttonPosition: "left" | "right";
 }
 
@@ -20,14 +20,14 @@ const useStyles = makeStyles(
   theme => ({
     cardActions: {
       padding: `${theme.spacing(2)} ${theme.spacing(3)}`,
-      flexDirection: ({ buttonPosition }: GiftCardCustomerCardActionsProps) =>
+      flexDirection: ({ buttonPosition }: CustomerGiftCardsCardActionsProps) =>
         buttonPosition === "left" ? "row" : "row-reverse"
     }
   }),
-  { name: "GiftCardCustomerCard" }
+  { name: "CustomerGiftCardsCard" }
 );
 
-const GiftCardCustomerCard: React.FC<GiftCardCustomerCardProps> = ({
+const CustomerGiftCardsCard: React.FC<CustomerGiftCardsCardProps> = ({
   customerId
 }) => {
   const { data, loading } = useCustomerGiftCardQuery({
@@ -89,7 +89,7 @@ const GiftCardCustomerCard: React.FC<GiftCardCustomerCardProps> = ({
         {getCardSubtitle()}
         <VerticalSpacer spacing={2} />
       </CardTitle>
-      <GiftCardCustomerCardsList giftCards={giftCards} loading={loading} />
+      <CustomerGiftCardsList giftCards={giftCards} loading={loading} />
       <CardActions className={classes.cardActions}>
         <Button
           variant="text"
@@ -106,4 +106,4 @@ const GiftCardCustomerCard: React.FC<GiftCardCustomerCardProps> = ({
   );
 };
 
-export default GiftCardCustomerCard;
+export default CustomerGiftCardsCard;

@@ -8,7 +8,7 @@ import { MetadataFormData } from "@saleor/components/Metadata/types";
 import PageHeader from "@saleor/components/PageHeader";
 import Savebar from "@saleor/components/Savebar";
 import { AccountErrorFragment } from "@saleor/fragments/types/AccountErrorFragment";
-import GiftCardCustomerCard from "@saleor/giftCards/components/GiftCardCustomerCard/GiftCardCustomerCard";
+import CustomerGiftCardsCard from "@saleor/giftCards/components/GiftCardCustomerCard/CustomerGiftCardsCard";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import { sectionNames } from "@saleor/intl";
 import { Backlink } from "@saleor/macaw-ui";
@@ -119,7 +119,7 @@ const CustomerDetailsPage: React.FC<CustomerDetailsPageProps> = ({
                 <CardSpacer />
                 <CustomerStats customer={customer} />
                 <CardSpacer />
-                <GiftCardCustomerCard customerId={customer?.id} />
+                <CustomerGiftCardsCard customerId={customer?.id} />
               </div>
             </Grid>
             <Savebar
