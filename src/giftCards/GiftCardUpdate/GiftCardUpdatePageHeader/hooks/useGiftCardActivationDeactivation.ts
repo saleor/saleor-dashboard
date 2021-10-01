@@ -10,10 +10,17 @@ import {
 import { GiftCardActivate } from "../types/GiftCardActivate";
 import { GiftCardDeactivate } from "../types/GiftCardDeactivate";
 
-const useGiftCardActivationDeactivation = (
-  onActivateActionComplete?: () => void | undefined,
-  onDeactivateActionComplete?: () => void | undefined
-) => {
+interface UseGiftCardActivationDeactivationProps {
+  onActivateActionComplete?: () => void | undefined;
+  onDeactivateActionComplete?: () => void | undefined;
+  isActive?: boolean;
+}
+
+const useGiftCardActivationDeactivation = ({
+  onActivateActionComplete,
+  onDeactivateActionComplete,
+  isActive
+}: UseGiftCardActivationDeactivationProps) => {
   const intl = useIntl();
   const notify = useNotifier();
 
@@ -71,11 +78,14 @@ const useGiftCardActivationDeactivation = (
     onCompleted: onDeactivateCompleted
   });
 
+  const currentOpts = isActive ? giftCardDeactivateOpts : giftCardActivateOpts;
+
   return {
     giftCardActivate,
     giftCardActivateOpts,
     giftCardDeactivate,
-    giftCardDeactivateOpts
+    giftCardDeactivateOpts,
+    currentOpts
   };
 };
 

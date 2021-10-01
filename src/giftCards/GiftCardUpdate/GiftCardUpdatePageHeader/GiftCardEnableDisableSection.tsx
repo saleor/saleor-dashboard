@@ -20,10 +20,11 @@ const GiftCardEnableDisableSection: React.FC = () => {
 
   const {
     giftCardActivate,
-    giftCardActivateOpts,
     giftCardDeactivate,
-    giftCardDeactivateOpts
-  } = useGiftCardActivationDeactivation();
+    currentOpts
+  } = useGiftCardActivationDeactivation({
+    isActive
+  });
 
   const handleClick = () =>
     isActive
@@ -33,8 +34,6 @@ const GiftCardEnableDisableSection: React.FC = () => {
   const buttonLabel = isActive
     ? buttonMessages.disableLabel
     : buttonMessages.enableLabel;
-
-  const currentOpts = isActive ? giftCardDeactivateOpts : giftCardActivateOpts;
 
   return (
     <ConfirmButton
