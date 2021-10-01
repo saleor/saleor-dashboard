@@ -45,7 +45,7 @@ interface CardTitleProps {
   subtitle?: string | React.ReactNode;
   toolbar?: React.ReactNode;
   onClick?: (event: React.MouseEvent<any>) => void;
-  showHorizontalLine?: boolean;
+  withDivider?: boolean;
 }
 
 const CardTitle: React.FC<CardTitleProps> = props => {
@@ -57,7 +57,7 @@ const CardTitle: React.FC<CardTitleProps> = props => {
     subtitle,
     toolbar,
     onClick,
-    showHorizontalLine = true,
+    withDivider = true,
     ...rest
   } = props;
 
@@ -83,7 +83,7 @@ const CardTitle: React.FC<CardTitleProps> = props => {
         <div className={classes.toolbar}>{toolbar}</div>
       </div>
       <div className={classes.children}>{children}</div>
-      {showHorizontalLine && <hr className={classes.hr} />}
+      {withDivider && <hr className={classes.hr} />}
     </>
   );
 };
