@@ -8,8 +8,8 @@ import {
   getProductTypes
 } from "../../requests/ProductType";
 import { deleteAttributesStartsWith } from "../attributes/attributeUtils";
+import { deleteCollectionsStartsWith } from "../catalog/collectionsUtils";
 import { getDefaultChannel } from "../channelsUtils";
-import { deleteCollectionsStartsWith } from "../collectionsUtils";
 
 export function createProductInChannel({
   name,
