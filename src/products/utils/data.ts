@@ -21,6 +21,7 @@ import {
 } from "@saleor/products/types/ProductDetails";
 import { StockInput } from "@saleor/types/globalTypes";
 import { mapEdgesToItems, mapMetadataItemToInput } from "@saleor/utils/maps";
+import moment from "moment";
 
 import { ProductStockInput } from "../components/ProductStocks";
 import { ProductType_productType_productAttributes } from "../types/ProductType";
@@ -225,6 +226,11 @@ export interface ProductUpdatePageFormData extends MetadataFormData {
   taxCode: string;
   trackInventory: boolean;
   weight: string;
+  isPreorder: boolean;
+  globalThreshold: number;
+  globalSoldUnits: number;
+  hasPreorderEndDate: boolean;
+  preorderEndDateTime?: string;
 }
 
 export function getProductUpdatePageFormData(
@@ -234,6 +240,7 @@ export function getProductUpdatePageFormData(
   channelsData: ChannelData[],
   channelsWithVariants: ChannelsWithVariantsData
 ): ProductUpdatePageFormData {
+  const variant = product?.variants[0];
   return {
     channelsWithVariants,
     channelsData,
@@ -244,7 +251,7 @@ export function getProductUpdatePageFormData(
       () => product.collections.map(collection => collection.id),
       []
     ),
-    channelListings: currentChannels,
+    channelListings: currentChannels.map(listing => ({ ...listing })),
     isAvailable: !!product?.isAvailable,
     metadata: product?.metadata?.map(mapMetadataItemToInput),
     name: maybe(() => product.name, ""),
@@ -263,8 +270,13 @@ export function getProductUpdatePageFormData(
     ),
     slug: product?.slug || "",
     taxCode: product?.taxType.taxCode,
-    trackInventory: !!product?.variants[0]?.trackInventory,
-    weight: product?.weight?.value.toString() || ""
+    trackInventory: !!variant?.trackInventory,
+    weight: product?.weight?.value.toString() || "",
+    isPreorder: !!variant?.preorder || false,
+    globalThreshold: variant?.preorder?.globalThreshold || 0,
+    globalSoldUnits: variant?.preorder?.globalSoldUnits || 0,
+    hasPreorderEndDate: !!variant?.preorder?.endDate,
+    preorderEndDateTime: variant?.preorder?.endDate
   };
 }
 
@@ -276,3 +288,9 @@ export function mapFormsetStockToStockInput(
     warehouse: stock.id
   };
 }
+
+export const getPreorderEndDateFormData = (endDate?: string) =>
+  endDate ? moment(endDate).format("YYYY-MM-DD") : "";
+
+export const getPreorderEndHourFormData = (endDate?: string) =>
+  endDate ? moment(endDate).format("HH:mm") : "";

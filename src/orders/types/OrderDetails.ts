@@ -206,10 +206,16 @@ export interface OrderDetails_order_events {
   lines: (OrderDetails_order_events_lines | null)[] | null;
 }
 
+export interface OrderDetails_order_fulfillments_lines_orderLine_variant_preorder {
+  __typename: "PreorderData";
+  endDate: any | null;
+}
+
 export interface OrderDetails_order_fulfillments_lines_orderLine_variant {
   __typename: "ProductVariant";
   id: string;
   quantityAvailable: number;
+  preorder: OrderDetails_order_fulfillments_lines_orderLine_variant_preorder | null;
 }
 
 export interface OrderDetails_order_fulfillments_lines_orderLine_unitDiscount {
@@ -302,10 +308,16 @@ export interface OrderDetails_order_fulfillments {
   warehouse: OrderDetails_order_fulfillments_warehouse | null;
 }
 
+export interface OrderDetails_order_lines_variant_preorder {
+  __typename: "PreorderData";
+  endDate: any | null;
+}
+
 export interface OrderDetails_order_lines_variant {
   __typename: "ProductVariant";
   id: string;
   quantityAvailable: number;
+  preorder: OrderDetails_order_lines_variant_preorder | null;
 }
 
 export interface OrderDetails_order_lines_unitDiscount {
