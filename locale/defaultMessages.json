@@ -3817,6 +3817,18 @@
     "context": "GiftCardsListHeader menu item settings",
     "string": "Settings"
   },
+  "src_dot_giftCards_dot_components_dot_GiftCardCustomerCard_dot_1782042241": {
+    "context": "button",
+    "string": "Deactivate"
+  },
+  "src_dot_giftCards_dot_components_dot_GiftCardCustomerCard_dot_3645414921": {
+    "context": "button",
+    "string": "Delete"
+  },
+  "src_dot_giftCards_dot_components_dot_GiftCardCustomerCard_dot_3865193889": {
+    "context": "button",
+    "string": "Activate"
+  },
   "src_dot_giftCards_dot_components_dot_GiftCardCustomerCard_dot_customerGiftCardsAbsentSubtitle": {
     "context": "subtitle",
     "string": "There are no gift cards assigned to this customer"
