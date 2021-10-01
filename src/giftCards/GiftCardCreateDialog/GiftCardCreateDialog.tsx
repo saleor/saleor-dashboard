@@ -8,7 +8,6 @@ import { DialogActionHandlersProps } from "@saleor/utils/handlers/dialogActionHa
 import React, { useState } from "react";
 import { useIntl } from "react-intl";
 
-import { CUSTOMER_GIFT_CARD_LIST_QUERY } from "../components/GiftCardCustomerCard/queries";
 import { GIFT_CARD_LIST_QUERY } from "../GiftCardsList/types";
 import ContentWithProgress from "./ContentWithProgress";
 import GiftCardCreateDialogCodeContent from "./GiftCardCreateDialogCodeContent";
@@ -23,7 +22,8 @@ import { getGiftCardExpiryInputData } from "./utils";
 
 const GiftCardCreateDialog: React.FC<DialogActionHandlersProps> = ({
   closeDialog,
-  open
+  open,
+  refetchQueries
 }) => {
   const intl = useIntl();
   const notify = useNotifier();
@@ -84,7 +84,7 @@ const GiftCardCreateDialog: React.FC<DialogActionHandlersProps> = ({
 
   const [createGiftCard, createGiftCardOpts] = useGiftCardCreateMutation({
     onCompleted,
-    refetchQueries: [GIFT_CARD_LIST_QUERY, CUSTOMER_GIFT_CARD_LIST_QUERY]
+    refetchQueries: [GIFT_CARD_LIST_QUERY, ...refetchQueries]
   });
 
   const handleSubmit = (data: GiftCardCreateFormData) => {
