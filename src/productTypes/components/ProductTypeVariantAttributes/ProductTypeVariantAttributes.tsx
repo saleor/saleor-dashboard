@@ -6,6 +6,7 @@ import {
   TableRow
 } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
+import HelpOutline from "@material-ui/icons/HelpOutline";
 import CardTitle from "@saleor/components/CardTitle";
 import Checkbox from "@saleor/components/Checkbox";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
@@ -38,9 +39,11 @@ const useStyles = makeStyles(
     colGrab: {
       width: 60
     },
-    colName: {},
+    colName: {
+      width: 200
+    },
     colSlug: {
-      width: 300
+      width: 200
     },
     colVariant: {
       width: 150
@@ -66,7 +69,7 @@ interface ProductTypeVariantAttributesProps extends ListActions {
   onAttributeClick: (id: string) => void;
   onAttributeReorder: ReorderAction;
   onAttributeUnassign: (id: string) => void;
-  // onAttributeVariantSelection?: (isActive: boolean) => void;
+  onAttributeVariantSelection?: (isActive: boolean) => void;
 }
 
 function handleContainerAssign(
@@ -86,7 +89,7 @@ function handleContainerAssign(
   }
 }
 
-const numberOfColumns = 5;
+const numberOfColumns = 6;
 
 const ProductTypeVariantAttributes: React.FC<ProductTypeVariantAttributesProps> = props => {
   const {
@@ -102,7 +105,8 @@ const ProductTypeVariantAttributes: React.FC<ProductTypeVariantAttributesProps> 
     onAttributeAssign,
     onAttributeClick,
     onAttributeReorder,
-    onAttributeUnassign
+    onAttributeUnassign,
+    onAttributeVariantSelection
   } = props;
   const classes = useStyles(props);
 
@@ -113,25 +117,12 @@ const ProductTypeVariantAttributes: React.FC<ProductTypeVariantAttributesProps> 
   );
 
   return (
-    <Card
-      data-test={
-        type === ProductAttributeType.PRODUCT
-          ? "product-attributes"
-          : "variant-attributes"
-      }
-    >
+    <Card data-test="variant-attributes">
       <CardTitle
-        title={
-          type === ProductAttributeType.PRODUCT
-            ? intl.formatMessage({
-                defaultMessage: "Product Attributes",
-                description: "section header"
-              })
-            : intl.formatMessage({
-                defaultMessage: "Variant Attributes",
-                description: "section header"
-              })
-        }
+        title={intl.formatMessage({
+          defaultMessage: "Variant Attributes",
+          description: "section header"
+        })}
         toolbar={
           <Button
             data-test-id={testId}
@@ -177,7 +168,7 @@ const ProductTypeVariantAttributes: React.FC<ProductTypeVariantAttributesProps> 
             <TableCell className={classes.colName}>
               <FormattedMessage
                 defaultMessage="Variant Selection"
-                description="attribute checkbox"
+                description="variant attribute checkbox"
               />
             </TableCell>
             <TableCell />
@@ -194,6 +185,12 @@ const ProductTypeVariantAttributes: React.FC<ProductTypeVariantAttributesProps> 
               const isSelected = !!selectedAttributes.find(
                 selectedAttribute => selectedAttribute === attribute.id
               );
+              const variantSelectionDisabled = ![
+                "DROPDOWN",
+                "BOOLEAN",
+                "SWATCH",
+                "NUMERIC"
+              ].includes(attribute.inputType);
 
               return (
                 <SortableTableRow
@@ -232,20 +229,25 @@ const ProductTypeVariantAttributes: React.FC<ProductTypeVariantAttributesProps> 
                       <Skeleton />
                     )}
                   </TableCell>
-                  <TableCell padding="checkbox">
+                  <TableCell
+                    className={classes.colVariant}
+                    data-test="variant-selection"
+                  >
                     <Checkbox
                       checked={isSelected}
-                      disabled={disabled}
+                      disabled={disabled || variantSelectionDisabled}
                       disableClickPropagation
-                      onChange={() =>
+                      onChange={() => {
+                        onAttributeVariantSelection(true);
                         handleContainerAssign(
                           attribute.id,
                           isSelected,
                           selectedAttributes,
                           setSelectedAttributes
-                        )
-                      }
+                        );
+                      }}
                     />
+                    {!!variantSelectionDisabled && <HelpOutline />}
                   </TableCell>
                   <TableCell className={classes.colAction}>
                     <IconButton
