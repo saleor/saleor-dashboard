@@ -3,6 +3,7 @@ import CardMenu, { CardMenuItem } from "@saleor/components/CardMenu";
 import { giftCardsListTableMessages } from "@saleor/giftCards/GiftCardsList/messages";
 import useGiftCardActivationDeactivation from "@saleor/giftCards/GiftCardUpdate/GiftCardUpdatePageHeader/hooks/useGiftCardActivationDeactivation";
 import { ExtendedGiftCard } from "@saleor/giftCards/GiftCardUpdate/providers/GiftCardDetailsProvider/types";
+import { GiftCardDetails_giftCard } from "@saleor/giftCards/GiftCardUpdate/types/GiftCardDetails";
 import { makeStyles } from "@saleor/macaw-ui";
 import * as React from "react";
 import { useState } from "react";
@@ -133,7 +134,7 @@ const CustomerGiftCardsCardListCard: React.FC<CustomerGiftCardsCardListCardProps
       <Divider />
       <GiftCardDeleteDialogContent
         singleDeletion
-        giftCard={giftCard as any}
+        giftCard={giftCard as ExtendedGiftCard<GiftCardDetails_giftCard>}
         open={openDeleteGiftCard}
         onClose={onGiftCardDeleteDialogClose}
         onConfirm={onDeleteGiftCard}
