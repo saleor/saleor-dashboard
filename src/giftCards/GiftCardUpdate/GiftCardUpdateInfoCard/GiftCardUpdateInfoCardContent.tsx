@@ -32,7 +32,6 @@ const GiftCardUpdateInfoCardContent: React.FC = () => {
     createdBy,
     usedByEmail,
     usedBy,
-    app,
     product,
     events
   } = giftCard;
@@ -48,12 +47,22 @@ const GiftCardUpdateInfoCardContent: React.FC = () => {
     // createdBy can be either customer or staff hence
     // we check for issued event
     if (cardIssuedEvent) {
+      const { app } = cardIssuedEvent;
+
+      if (app) {
+        return {
+          label: messages.issuedByAppLabel,
+          name: app?.name,
+          url: appUrl(app?.id)
+        };
+      }
+
       const userName = getFullName(createdBy);
 
       return {
         label: messages.issuedByLabel,
         name: userName || createdByEmail,
-        url: staffMemberDetailsUrl(createdBy.id)
+        url: staffMemberDetailsUrl(createdBy?.id)
       };
     }
 
@@ -61,14 +70,6 @@ const GiftCardUpdateInfoCardContent: React.FC = () => {
       return {
         label: messages.boughtByLabel,
         name: createdByEmail
-      };
-    }
-
-    if (app) {
-      return {
-        label: messages.issuedByAppLabel,
-        name: app.name,
-        url: appUrl(app.id)
       };
     }
 
