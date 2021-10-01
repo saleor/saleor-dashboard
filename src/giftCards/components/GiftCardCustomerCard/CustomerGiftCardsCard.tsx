@@ -6,6 +6,7 @@ import React from "react";
 import { FormattedMessage } from "react-intl";
 
 import CustomerGiftCardsList from "./CustomerGiftCardsList";
+import { giftCardCustomerCardMessages as messages } from "./messages";
 import { useCustomerGiftCardQuery } from "./queries";
 
 interface CustomerGiftCardsCardProps {
@@ -55,15 +56,9 @@ const CustomerGiftCardsCard: React.FC<CustomerGiftCardsCardProps> = ({
 
   const getCardSubtitle = () =>
     !!giftCards?.length ? (
-      <FormattedMessage
-        defaultMessage="Only five newest gift cards are shown here"
-        description="subtitle"
-      />
+      <FormattedMessage {...messages.customerGiftCardsPresentSubtitle} />
     ) : (
-      <FormattedMessage
-        defaultMessage="There are no gift cards assigned to this customer"
-        description="subtitle"
-      />
+      <FormattedMessage {...messages.customerGiftCardsAbsentSubtitle} />
     );
 
   return (
@@ -77,10 +72,7 @@ const CustomerGiftCardsCard: React.FC<CustomerGiftCardsCardProps> = ({
               color="primary"
               onClick={handleViewAllButton}
             >
-              <FormattedMessage
-                defaultMessage="View All"
-                description="button"
-              />
+              <FormattedMessage {...messages.customerGiftCardsViewAllButton} />
             </Button>
           )
         }
@@ -96,10 +88,7 @@ const CustomerGiftCardsCard: React.FC<CustomerGiftCardsCardProps> = ({
           color="primary"
           onClick={handleCreateNewCardButton}
         >
-          <FormattedMessage
-            defaultMessage="Issue new card"
-            description="button"
-          />
+          <FormattedMessage {...messages.customerGiftCardsIssueNewCardButton} />
         </Button>
       </CardActions>
     </Card>
