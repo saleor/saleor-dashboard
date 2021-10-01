@@ -49,15 +49,12 @@ const CustomerGiftCardsCardListCard: React.FC<CustomerGiftCardsCardListCardProps
 
   const {
     giftCardActivate,
-    giftCardDeactivate,
-    currentOpts
+    giftCardDeactivate
   } = useGiftCardActivationDeactivation({
     onActivateActionComplete: handleActionCompleted,
     onDeactivateActionComplete: handleActionCompleted,
     isActive
   });
-
-  const { loading } = currentOpts;
 
   const handleGiftCardActivate = () => {
     setIsLoading(true);
