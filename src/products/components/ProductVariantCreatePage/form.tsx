@@ -206,7 +206,10 @@ function useProductVariantCreateForm(
   return {
     change: handleChange,
     data,
-    disabled: data.hasPreorderEndDate && !!form.errors.preorderEndDateTime,
+    disabled:
+      data.isPreorder &&
+      data.hasPreorderEndDate &&
+      !!form.errors.preorderEndDateTime,
     formErrors: form.errors,
     handlers: {
       addStock: handleStockAdd,

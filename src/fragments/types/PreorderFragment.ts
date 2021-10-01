@@ -9,7 +9,6 @@
 
 export interface PreorderFragment {
   __typename: "PreorderData";
-  isPreorder: boolean;
   globalThreshold: number | null;
   globalSoldUnits: number;
   endDate: any | null;

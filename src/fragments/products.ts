@@ -29,7 +29,6 @@ export const fragmentMoney = gql`
 
 export const fragmentPreorder = gql`
   fragment PreorderFragment on PreorderData {
-    isPreorder
     globalThreshold
     globalSoldUnits
     endDate

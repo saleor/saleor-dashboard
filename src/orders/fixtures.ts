@@ -1104,10 +1104,7 @@ export const order = (placeholder: string): OrderDetails_order => ({
               __typename: "ProductVariant",
               id: "dsfsfuhb",
               quantityAvailable: 10,
-              preorder: {
-                __typename: "PreorderData",
-                isPreorder: false
-              }
+              preorder: null
             }
           },
           quantity: 1
@@ -1177,10 +1174,7 @@ export const order = (placeholder: string): OrderDetails_order => ({
               __typename: "ProductVariant",
               id: "dsfsfuhb",
               quantityAvailable: 10,
-              preorder: {
-                __typename: "PreorderData",
-                isPreorder: false
-              }
+              preorder: null
             }
           },
           quantity: 1
@@ -1257,10 +1251,7 @@ export const order = (placeholder: string): OrderDetails_order => ({
         __typename: "ProductVariant",
         id: "dsfsfuhb",
         quantityAvailable: 10,
-        preorder: {
-          __typename: "PreorderData",
-          isPreorder: false
-        }
+        preorder: null
       }
     },
     {
@@ -1316,10 +1307,7 @@ export const order = (placeholder: string): OrderDetails_order => ({
         __typename: "ProductVariant",
         id: "dsfsfuhb",
         quantityAvailable: 10,
-        preorder: {
-          __typename: "PreorderData",
-          isPreorder: false
-        }
+        preorder: null
       }
     }
   ],
@@ -1508,10 +1496,7 @@ export const draftOrder = (placeholder: string): OrderDetails_order => ({
         __typename: "ProductVariant",
         id: "dsfsfuhb",
         quantityAvailable: 10,
-        preorder: {
-          __typename: "PreorderData",
-          isPreorder: false
-        }
+        preorder: null
       }
     },
     {
@@ -1566,10 +1551,7 @@ export const draftOrder = (placeholder: string): OrderDetails_order => ({
         __typename: "ProductVariant",
         id: "dsfsfuhb",
         quantityAvailable: 10,
-        preorder: {
-          __typename: "PreorderData",
-          isPreorder: false
-        }
+        preorder: null
       }
     }
   ],

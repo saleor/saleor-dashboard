@@ -272,7 +272,7 @@ export function getProductUpdatePageFormData(
     taxCode: product?.taxType.taxCode,
     trackInventory: !!variant?.trackInventory,
     weight: product?.weight?.value.toString() || "",
-    isPreorder: variant?.preorder?.isPreorder || false,
+    isPreorder: !!variant?.preorder || false,
     globalThreshold: variant?.preorder?.globalThreshold || 0,
     globalSoldUnits: variant?.preorder?.globalSoldUnits || 0,
     hasPreorderEndDate: !!variant?.preorder?.endDate,

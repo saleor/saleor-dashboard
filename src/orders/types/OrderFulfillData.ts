@@ -35,7 +35,7 @@ export interface OrderFulfillData_order_lines_allocations {
 
 export interface OrderFulfillData_order_lines_variant_preorder {
   __typename: "PreorderData";
-  isPreorder: boolean;
+  endDate: any | null;
 }
 
 export interface OrderFulfillData_order_lines_variant_attributes_values {

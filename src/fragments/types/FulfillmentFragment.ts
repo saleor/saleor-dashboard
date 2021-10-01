@@ -11,7 +11,7 @@ import { DiscountValueTypeEnum, FulfillmentStatus } from "./../../types/globalTy
 
 export interface FulfillmentFragment_lines_orderLine_variant_preorder {
   __typename: "PreorderData";
-  isPreorder: boolean;
+  endDate: any | null;
 }
 
 export interface FulfillmentFragment_lines_orderLine_variant {

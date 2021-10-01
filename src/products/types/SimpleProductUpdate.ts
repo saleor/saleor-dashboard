@@ -269,7 +269,6 @@ export interface SimpleProductUpdate_productUpdate_product_variants_stocks {
 
 export interface SimpleProductUpdate_productUpdate_product_variants_preorder {
   __typename: "PreorderData";
-  isPreorder: boolean;
   globalThreshold: number | null;
   globalSoldUnits: number;
   endDate: any | null;
@@ -691,7 +690,6 @@ export interface SimpleProductUpdate_productVariantUpdate_productVariant_stocks 
 
 export interface SimpleProductUpdate_productVariantUpdate_productVariant_preorder {
   __typename: "PreorderData";
-  isPreorder: boolean;
   globalThreshold: number | null;
   globalSoldUnits: number;
   endDate: any | null;
@@ -1054,7 +1052,6 @@ export interface SimpleProductUpdate_productVariantStocksCreate_productVariant_s
 
 export interface SimpleProductUpdate_productVariantStocksCreate_productVariant_preorder {
   __typename: "PreorderData";
-  isPreorder: boolean;
   globalThreshold: number | null;
   globalSoldUnits: number;
   endDate: any | null;
@@ -1416,7 +1413,6 @@ export interface SimpleProductUpdate_productVariantStocksDelete_productVariant_s
 
 export interface SimpleProductUpdate_productVariantStocksDelete_productVariant_preorder {
   __typename: "PreorderData";
-  isPreorder: boolean;
   globalThreshold: number | null;
   globalSoldUnits: number;
   endDate: any | null;
@@ -1779,7 +1775,6 @@ export interface SimpleProductUpdate_productVariantStocksUpdate_productVariant_s
 
 export interface SimpleProductUpdate_productVariantStocksUpdate_productVariant_preorder {
   __typename: "PreorderData";
-  isPreorder: boolean;
   globalThreshold: number | null;
   globalSoldUnits: number;
   endDate: any | null;

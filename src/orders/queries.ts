@@ -255,7 +255,7 @@ const orderFulfillData = gql`
           name
           sku
           preorder {
-            isPreorder
+            endDate
           }
           attributes {
             values {

@@ -296,7 +296,7 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
                         0
                       );
                       const overfulfill = remainingQuantity < quantityToFulfill;
-                      const isPreorder = line.variant?.preorder?.isPreorder;
+                      const isPreorder = !!line.variant?.preorder;
 
                       return (
                         <TableRow key={line.id}>

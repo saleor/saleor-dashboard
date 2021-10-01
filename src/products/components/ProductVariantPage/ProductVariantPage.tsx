@@ -339,7 +339,7 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
                     onFormDataChange={change}
                     onChangePreorderEndDate={handlers.changePreorderEndDate}
                     onEndPreorderTrigger={
-                      variant?.preorder?.isPreorder
+                      !!variant?.preorder
                         ? () => setIsEndPreorderModalOpened(true)
                         : null
                     }
@@ -394,7 +394,7 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
           selectedMedia={maybe(() => variant.media.map(image => image.id))}
         />
       )}
-      {variant?.preorder?.isPreorder && (
+      {!!variant?.preorder && (
         <ProductVariantEndPreorderDialog
           confirmButtonState={variantDeactivatePreoderButtonState}
           onClose={() => setIsEndPreorderModalOpened(false)}

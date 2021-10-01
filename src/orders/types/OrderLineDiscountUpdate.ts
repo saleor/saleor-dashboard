@@ -215,7 +215,7 @@ export interface OrderLineDiscountUpdate_orderLineDiscountUpdate_order_events {
 
 export interface OrderLineDiscountUpdate_orderLineDiscountUpdate_order_fulfillments_lines_orderLine_variant_preorder {
   __typename: "PreorderData";
-  isPreorder: boolean;
+  endDate: any | null;
 }
 
 export interface OrderLineDiscountUpdate_orderLineDiscountUpdate_order_fulfillments_lines_orderLine_variant {
@@ -317,7 +317,7 @@ export interface OrderLineDiscountUpdate_orderLineDiscountUpdate_order_fulfillme
 
 export interface OrderLineDiscountUpdate_orderLineDiscountUpdate_order_lines_variant_preorder {
   __typename: "PreorderData";
-  isPreorder: boolean;
+  endDate: any | null;
 }
 
 export interface OrderLineDiscountUpdate_orderLineDiscountUpdate_order_lines_variant {

@@ -215,7 +215,7 @@ export interface OrderVoid_orderVoid_order_events {
 
 export interface OrderVoid_orderVoid_order_fulfillments_lines_orderLine_variant_preorder {
   __typename: "PreorderData";
-  isPreorder: boolean;
+  endDate: any | null;
 }
 
 export interface OrderVoid_orderVoid_order_fulfillments_lines_orderLine_variant {
@@ -317,7 +317,7 @@ export interface OrderVoid_orderVoid_order_fulfillments {
 
 export interface OrderVoid_orderVoid_order_lines_variant_preorder {
   __typename: "PreorderData";
-  isPreorder: boolean;
+  endDate: any | null;
 }
 
 export interface OrderVoid_orderVoid_order_lines_variant {

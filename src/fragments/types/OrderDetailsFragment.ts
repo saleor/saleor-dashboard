@@ -208,7 +208,7 @@ export interface OrderDetailsFragment_events {
 
 export interface OrderDetailsFragment_fulfillments_lines_orderLine_variant_preorder {
   __typename: "PreorderData";
-  isPreorder: boolean;
+  endDate: any | null;
 }
 
 export interface OrderDetailsFragment_fulfillments_lines_orderLine_variant {
@@ -310,7 +310,7 @@ export interface OrderDetailsFragment_fulfillments {
 
 export interface OrderDetailsFragment_lines_variant_preorder {
   __typename: "PreorderData";
-  isPreorder: boolean;
+  endDate: any | null;
 }
 
 export interface OrderDetailsFragment_lines_variant {

@@ -11,7 +11,6 @@ import { ProductErrorCode } from "./../../types/globalTypes";
 
 export interface ProductVariantPreorderDeactivate_productVariantPreorderDeactivate_productVariant_preorder {
   __typename: "PreorderData";
-  isPreorder: boolean;
   globalThreshold: number | null;
   globalSoldUnits: number;
   endDate: any | null;

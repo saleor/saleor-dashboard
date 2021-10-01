@@ -11,7 +11,7 @@ import { DiscountValueTypeEnum } from "./../../types/globalTypes";
 
 export interface OrderLineFragment_variant_preorder {
   __typename: "PreorderData";
-  isPreorder: boolean;
+  endDate: any | null;
 }
 
 export interface OrderLineFragment_variant {

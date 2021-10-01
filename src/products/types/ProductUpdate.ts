@@ -269,7 +269,6 @@ export interface ProductUpdate_productUpdate_product_variants_stocks {
 
 export interface ProductUpdate_productUpdate_product_variants_preorder {
   __typename: "PreorderData";
-  isPreorder: boolean;
   globalThreshold: number | null;
   globalSoldUnits: number;
   endDate: any | null;

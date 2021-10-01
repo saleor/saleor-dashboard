@@ -18,7 +18,7 @@ export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_e
 
 export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_fulfillment_lines_orderLine_variant_preorder {
   __typename: "PreorderData";
-  isPreorder: boolean;
+  endDate: any | null;
 }
 
 export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_fulfillment_lines_orderLine_variant {
@@ -317,7 +317,7 @@ export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_o
 
 export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_fulfillments_lines_orderLine_variant_preorder {
   __typename: "PreorderData";
-  isPreorder: boolean;
+  endDate: any | null;
 }
 
 export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_fulfillments_lines_orderLine_variant {
@@ -419,7 +419,7 @@ export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_o
 
 export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_lines_variant_preorder {
   __typename: "PreorderData";
-  isPreorder: boolean;
+  endDate: any | null;
 }
 
 export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_lines_variant {

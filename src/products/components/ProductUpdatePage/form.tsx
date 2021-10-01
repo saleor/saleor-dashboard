@@ -392,7 +392,9 @@ function useProductUpdateForm(
         channel =>
           validatePrice(channel.price) || validateCostPrice(channel.costPrice)
       )) ||
-    (data.hasPreorderEndDate && !!form.errors.preorderEndDateTime);
+    (data.isPreorder &&
+      data.hasPreorderEndDate &&
+      !!form.errors.preorderEndDateTime);
 
   return {
     change: handleChange,

@@ -633,7 +633,6 @@ export const product: (
       trackInventory: true,
       preorder: {
         __typename: "PreorderData",
-        isPreorder: false,
         endDate: null,
         globalSoldUnits: null,
         globalThreshold: 0
@@ -723,7 +722,6 @@ export const product: (
       trackInventory: false,
       preorder: {
         __typename: "PreorderData",
-        isPreorder: false,
         endDate: null,
         globalSoldUnits: null,
         globalThreshold: 0
@@ -3528,7 +3526,6 @@ export const variant = (placeholderImage: string): ProductVariant => ({
   trackInventory: true,
   preorder: {
     __typename: "PreorderData",
-    isPreorder: false,
     endDate: null,
     globalSoldUnits: null,
     globalThreshold: 0

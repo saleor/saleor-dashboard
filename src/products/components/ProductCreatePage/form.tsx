@@ -334,7 +334,9 @@ function useProductCreateForm(
           validatePrice(channel.price) || validateCostPrice(channel.costPrice)
       ) ||
         !data.category)) ||
-    (data.hasPreorderEndDate && !!form.errors.preorderEndDateTime);
+    (data.isPreorder &&
+      data.hasPreorderEndDate &&
+      !!form.errors.preorderEndDateTime);
 
   return {
     change: handleChange,

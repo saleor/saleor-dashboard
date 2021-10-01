@@ -160,7 +160,7 @@ function useProductVariantUpdateForm(
     privateMetadata: variant?.privateMetadata?.map(mapMetadataItemToInput),
     sku: variant?.sku || "",
     trackInventory: variant?.trackInventory,
-    isPreorder: variant?.preorder?.isPreorder || false,
+    isPreorder: !!variant?.preorder || false,
     globalThreshold: variant?.preorder?.globalThreshold || null,
     globalSoldUnits: variant?.preorder?.globalSoldUnits || 0,
     hasPreorderEndDate: !!variant?.preorder?.endDate,
@@ -283,7 +283,9 @@ function useProductVariantUpdateForm(
         validatePrice(channelData.value.price) ||
         validateCostPrice(channelData.value.costPrice)
     ) ||
-    (data.hasPreorderEndDate && !!form.errors.preorderEndDateTime);
+    (data.isPreorder &&
+      data.hasPreorderEndDate &&
+      !!form.errors.preorderEndDateTime);
 
   const submitData: ProductVariantUpdateSubmitData = {
     ...form.data,
