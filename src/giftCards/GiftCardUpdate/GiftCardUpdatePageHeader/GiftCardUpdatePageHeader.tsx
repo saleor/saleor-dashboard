@@ -2,6 +2,7 @@ import { Button } from "@material-ui/core";
 import HorizontalSpacer from "@saleor/apps/components/HorizontalSpacer";
 import PageHeader from "@saleor/components/PageHeader";
 import PageTitleWithStatusChip from "@saleor/components/PageTitleWithStatusChip";
+import GiftCardStatusChip from "@saleor/giftCards/components/GiftCardStatusChip/GiftCardStatusChip";
 import { sectionNames } from "@saleor/intl";
 import { Backlink } from "@saleor/macaw-ui";
 import React from "react";
@@ -37,7 +38,11 @@ const GiftCardUpdatePageHeader: React.FC = () => {
       </Backlink>
       <PageHeader
         inline
-        title={<PageTitleWithStatusChip title={title} giftCard={giftCard} />}
+        title={
+          <PageTitleWithStatusChip title={title}>
+            <GiftCardStatusChip giftCard={giftCard} />
+          </PageTitleWithStatusChip>
+        }
       >
         <GiftCardEnableDisableSection />
         <HorizontalSpacer />
