@@ -296,6 +296,7 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
                         0
                       );
                       const overfulfill = remainingQuantity < quantityToFulfill;
+                      const isPreorder = !!line.variant?.preorder;
 
                       return (
                         <TableRow key={line.id}>
@@ -318,6 +319,18 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
                             {line.variant?.sku}
                           </TableCell>
                           {warehouses?.map(warehouse => {
+                            if (isPreorder) {
+                              return (
+                                <TableCell
+                                  key="skeleton"
+                                  className={classNames(
+                                    classes.colQuantity,
+                                    classes.error
+                                  )}
+                                />
+                              );
+                            }
+
                             const warehouseStock = line.variant?.stocks?.find(
                               stock => stock.warehouse.id === warehouse.id
                             );
@@ -419,16 +432,20 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
                             className={classes.colQuantityTotal}
                             key="total"
                           >
-                            <span
-                              className={classNames({
-                                [classes.error]: overfulfill,
-                                [classes.full]:
-                                  remainingQuantity <= quantityToFulfill
-                              })}
-                            >
-                              {quantityToFulfill}
-                            </span>{" "}
-                            / {remainingQuantity}
+                            {!isPreorder && (
+                              <>
+                                <span
+                                  className={classNames({
+                                    [classes.error]: overfulfill,
+                                    [classes.full]:
+                                      remainingQuantity <= quantityToFulfill
+                                  })}
+                                >
+                                  {quantityToFulfill}
+                                </span>{" "}
+                                / {remainingQuantity}
+                              </>
+                            )}
                           </TableCell>
                         </TableRow>
                       );

@@ -5653,6 +5653,9 @@
   "src_dot_plugins_dot_views_dot_955370043": {
     "string": "The plugin may stop working after this field is cleared. Are you sure you want to proceed?"
   },
+  "src_dot_preorderEndDateInFutureErrorText": {
+    "string": "Preorder end time needs to be set in the future"
+  },
   "src_dot_productTypes": {
     "context": "product types section name",
     "string": "Product Types"
@@ -6109,6 +6112,17 @@
     "context": "product weight",
     "string": "Weight"
   },
+  "src_dot_products_dot_components_dot_ProductStocks_dot_1540024536": {
+    "context": "product inventory, checkbox",
+    "string": "Variant currently in preorder"
+  },
+  "src_dot_products_dot_components_dot_ProductStocks_dot_2473321447": {
+    "string": "CANCEL END DATE"
+  },
+  "src_dot_products_dot_components_dot_ProductStocks_dot_2481295410": {
+    "context": "app has been installed",
+    "string": "{unitsLeft} units left"
+  },
   "src_dot_products_dot_components_dot_ProductStocks_dot_2585918415": {
     "string": "SKU (Stock Keeping Unit)"
   },
@@ -6116,9 +6130,23 @@
     "context": "tabel column header",
     "string": "Warehouse Name"
   },
+  "src_dot_products_dot_components_dot_ProductStocks_dot_2699291877": {
+    "string": "SETUP END DATE"
+  },
   "src_dot_products_dot_components_dot_ProductStocks_dot_2796503714": {
     "context": "header",
     "string": "Quantity"
+  },
+  "src_dot_products_dot_components_dot_ProductStocks_dot_294624093": {
+    "context": "info text",
+    "string": "Preordered products will be available in all warehouses. You can set a threshold for sold quantity. Leaving input blank will be interpreted as no limit to sale. Sold items will be allocated at the warehouse assigned to chosen shipping zone."
+  },
+  "src_dot_products_dot_components_dot_ProductStocks_dot_2999762286": {
+    "string": "Threshold that cannot be exceeded even if per channel thresholds are still available"
+  },
+  "src_dot_products_dot_components_dot_ProductStocks_dot_3420537107": {
+    "context": "tabel column header",
+    "string": "Channels"
   },
   "src_dot_products_dot_components_dot_ProductStocks_dot_3633706025": {
     "context": "product inventory, checkbox",
@@ -6127,6 +6155,16 @@
   "src_dot_products_dot_components_dot_ProductStocks_dot_3857433664": {
     "context": "button",
     "string": "Assign Warehouse"
+  },
+  "src_dot_products_dot_components_dot_ProductStocks_dot_3862021157": {
+    "context": "info text",
+    "string": "Set up an end date of preorder. When end date will be reached product will be automatically taken from preorder to standard selling"
+  },
+  "src_dot_products_dot_components_dot_ProductStocks_dot_4187357147": {
+    "string": "Unlimited"
+  },
+  "src_dot_products_dot_components_dot_ProductStocks_dot_578055997": {
+    "string": "Global threshold"
   },
   "src_dot_products_dot_components_dot_ProductStocks_dot_849869830": {
     "string": "Active inventory tracking will automatically calculate changes of stock"
@@ -6317,6 +6355,17 @@
   "src_dot_products_dot_components_dot_ProductVariantDeleteDialog_dot_3726089650": {
     "context": "dialog header",
     "string": "Delete Variant"
+  },
+  "src_dot_products_dot_components_dot_ProductVariantEndPreorderDialog_dot_dialogConfirmButtonLabel": {
+    "context": "button label",
+    "string": "ACCEPT"
+  },
+  "src_dot_products_dot_components_dot_ProductVariantEndPreorderDialog_dot_dialogMessage": {
+    "string": "You are about to end your products preorder. You have sold {variantGlobalSoldUnits} units of this variant. Sold units will be allocated at appropriate warehouses. Remember to add remaining threshold stock to warehouses."
+  },
+  "src_dot_products_dot_components_dot_ProductVariantEndPreorderDialog_dot_dialogTitle": {
+    "context": "dialog header",
+    "string": "Ending preorder"
   },
   "src_dot_products_dot_components_dot_ProductVariantImageSelectDialog_dot_2015102342": {
     "context": "dialog header",
@@ -8101,9 +8150,17 @@
     "context": "table column header, allocated product quantity",
     "string": "Allocated"
   },
+  "tableColChannelThreshold": {
+    "context": "table column header",
+    "string": "Channel threshold"
+  },
   "tableColQuantity": {
     "context": "table column header",
     "string": "Quantity"
+  },
+  "tableColSoldUnits": {
+    "context": "table column header, sold units preorder quantity",
+    "string": "Sold units"
   },
   "transaction reference subtitle": {
     "context": "transaction reference subtitle",
@@ -8112,6 +8169,10 @@
   "unavailable for purchase": {
     "context": "product unavailability",
     "string": "Unavailable for purchase"
+  },
+  "unlimitedUnitsLeft": {
+    "context": "section header",
+    "string": "Unlimited"
   },
   "voucherDetailsUnassignCategory": {
     "context": "unassign category from voucher, button",

@@ -9,10 +9,16 @@ import { DiscountValueTypeEnum, FulfillmentStatus } from "./../../types/globalTy
 // GraphQL fragment: FulfillmentFragment
 // ====================================================
 
+export interface FulfillmentFragment_lines_orderLine_variant_preorder {
+  __typename: "PreorderData";
+  endDate: any | null;
+}
+
 export interface FulfillmentFragment_lines_orderLine_variant {
   __typename: "ProductVariant";
   id: string;
   quantityAvailable: number;
+  preorder: FulfillmentFragment_lines_orderLine_variant_preorder | null;
 }
 
 export interface FulfillmentFragment_lines_orderLine_unitDiscount {
