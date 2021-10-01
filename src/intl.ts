@@ -135,6 +135,9 @@ export const errorMessages = defineMessages({
   imageUploadErrorText: {
     defaultMessage:
       "There was a poblem with the file you uploaded as an image and it couldn't be used. Please try a different file."
+  },
+  preorderEndDateInFutureErrorText: {
+    defaultMessage: "Preorder end time needs to be set in the future"
   }
 });
 

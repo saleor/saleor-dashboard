@@ -27,6 +27,14 @@ export const fragmentMoney = gql`
   }
 `;
 
+export const fragmentPreorder = gql`
+  fragment PreorderFragment on PreorderData {
+    globalThreshold
+    globalSoldUnits
+    endDate
+  }
+`;
+
 export const priceRangeFragment = gql`
   ${fragmentMoney}
   fragment PriceRangeFragment on TaxedMoneyRange {
@@ -94,6 +102,10 @@ export const channelListingProductVariantFragment = gql`
     }
     costPrice {
       ...Money
+    }
+    preorderThreshold {
+      quantity
+      soldUnits
     }
   }
 `;
@@ -178,6 +190,7 @@ export const productVariantAttributesFragment = gql`
 `;
 
 export const productFragmentDetails = gql`
+  ${fragmentPreorder}
   ${fragmentProductMedia}
   ${productVariantAttributesFragment}
   ${stockFragment}
@@ -226,6 +239,9 @@ export const productFragmentDetails = gql`
         ...StockFragment
       }
       trackInventory
+      preorder {
+        ...PreorderFragment
+      }
       channelListings {
         ...ChannelListingProductVariantFragment
       }
@@ -282,6 +298,7 @@ export const selectedVariantAttributeFragment = gql`
 `;
 
 export const fragmentVariant = gql`
+  ${fragmentPreorder}
   ${fragmentProductMedia}
   ${selectedVariantAttributeFragment}
   ${priceRangeFragment}
@@ -357,6 +374,9 @@ export const fragmentVariant = gql`
       ...StockFragment
     }
     trackInventory
+    preorder {
+      ...PreorderFragment
+    }
     weight {
       ...WeightFragment
     }

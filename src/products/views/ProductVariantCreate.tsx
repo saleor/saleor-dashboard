@@ -3,7 +3,6 @@ import {
   handleUploadMultipleFiles,
   prepareAttributesInput
 } from "@saleor/attributes/utils/handlers";
-import { ChannelPriceData } from "@saleor/channels/utils";
 import { AttributeInput } from "@saleor/components/Attributes";
 import NotFoundPage from "@saleor/components/NotFoundPage";
 import { WindowTitle } from "@saleor/components/WindowTitle";
@@ -73,16 +72,6 @@ export const ProductVariant: React.FC<ProductVariantCreateProps> = ({
 
   const product = data?.product;
 
-  const channels: ChannelPriceData[] = product?.channelListings.map(
-    listing => ({
-      costPrice: null,
-      currency: listing.channel.currencyCode,
-      id: listing.channel.id,
-      name: listing.channel.name,
-      price: null
-    })
-  );
-
   const [variantCreate, variantCreateResult] = useVariantCreateMutation({});
 
   const [updateMetadata] = useMetadataUpdate({});
@@ -129,7 +118,11 @@ export const ProductVariant: React.FC<ProductVariantCreateProps> = ({
             warehouse: stock.id
           })),
           trackInventory: true,
-          weight: weight(formData.weight)
+          weight: weight(formData.weight),
+          preorder: {
+            globalThreshold: formData.globalThreshold,
+            endDate: formData.preorderEndDateTime
+          }
         },
         firstValues: 10
       }
@@ -210,7 +203,6 @@ export const ProductVariant: React.FC<ProductVariantCreateProps> = ({
         })}
       />
       <ProductVariantCreatePage
-        channels={channels}
         disabled={disableForm}
         errors={variantCreateResult.data?.productVariantCreate.errors || []}
         header={intl.formatMessage({

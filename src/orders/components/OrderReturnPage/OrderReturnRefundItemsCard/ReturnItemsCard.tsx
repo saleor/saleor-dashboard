@@ -175,6 +175,7 @@ const ItemsCard: React.FC<OrderReturnRefundLinesCardProps> = ({
                 .isRefunded;
               const isReplacable = !!variant && !isRefunded;
               const isReturnable = !!variant;
+              const isPreorder = !!variant?.preorder;
               const lineQuantity = fulfilmentId ? quantity : quantityToFulfill;
               const isSelected = itemsSelections.find(getById(id))?.value;
               const currentQuantity = itemsQuantities.find(getById(id))?.value;
@@ -233,7 +234,7 @@ const ItemsCard: React.FC<OrderReturnRefundLinesCardProps> = ({
                     )}
                   </TableCell>
                   <TableCell align="center">
-                    {isReplacable && (
+                    {isReplacable && !isPreorder && (
                       <Checkbox
                         checked={isSelected}
                         onChange={() => onChangeSelected(id, !isSelected)}

@@ -254,6 +254,9 @@ const orderFulfillData = gql`
           id
           name
           sku
+          preorder {
+            endDate
+          }
           attributes {
             values {
               id
