@@ -473,7 +473,7 @@ const ProductStocks: React.FC<ProductStocksProps> = ({
                 disabled={disabled}
                 futureDatesOnly
                 fullWidth={false}
-                error={!!localFormErrors.preorderEndDateTime}
+                error={localFormErrors.preorderEndDateTime}
                 value={data?.preorderEndDateTime}
                 onChange={event =>
                   onChangePreorderEndDate({

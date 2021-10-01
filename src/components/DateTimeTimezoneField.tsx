@@ -1,27 +1,42 @@
 import { TextField } from "@material-ui/core";
 import { TextFieldProps } from "@material-ui/core/TextField";
 import { commonMessages } from "@saleor/intl";
+import { makeStyles } from "@saleor/macaw-ui";
 import { DateTime, joinDateTime, splitDateTime } from "@saleor/misc";
 import React, { useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 
+import ErrorNoticeBar from "./ErrorNoticeBar";
+
 type DateTimeFieldProps = Omit<TextFieldProps, "label" | "error"> & {
   onChange: (value: string) => void;
-  error: boolean;
+  error: string | React.ReactNode;
   setError?: () => void;
   futureDatesOnly?: boolean;
   value: string;
 };
 
+const useStyles = makeStyles(
+  theme => ({
+    dateInput: {
+      marginRight: theme.spacing(2)
+    },
+    errorNoticeBar: {
+      marginTop: theme.spacing(2)
+    }
+  }),
+  { name: "DateTimeTimezoneField" }
+);
+
 export const DateTimeTimezoneField: React.FC<DateTimeFieldProps> = ({
   disabled,
   name,
   onChange,
-  futureDatesOnly,
   error,
   fullWidth,
   value: initialValue
 }) => {
+  const classes = useStyles({});
   const intl = useIntl();
   const [value, setValue] = useState<DateTime>(
     initialValue ? splitDateTime(initialValue) : { date: "", time: "" }
@@ -35,6 +50,7 @@ export const DateTimeTimezoneField: React.FC<DateTimeFieldProps> = ({
   return (
     <>
       <TextField
+        className={classes.dateInput}
         fullWidth={fullWidth}
         disabled={disabled}
         error={!!error}
@@ -63,8 +79,8 @@ export const DateTimeTimezoneField: React.FC<DateTimeFieldProps> = ({
         InputLabelProps={{ shrink: true }}
       />
 
-      {error && futureDatesOnly && (
-        <div>Preorder end time needs to be set in the future</div>
+      {error && (
+        <ErrorNoticeBar className={classes.errorNoticeBar} message={error} />
       )}
     </>
   );
