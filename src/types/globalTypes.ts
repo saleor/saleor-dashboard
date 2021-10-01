@@ -2778,6 +2778,8 @@ export interface ShopSettingsInput {
   defaultMailSenderName?: string | null;
   defaultMailSenderAddress?: string | null;
   customerSetPasswordUrl?: string | null;
+  reserveStockDurationAnonymousUser?: number | null;
+  reserveStockDurationAuthenticatedUser?: number | null;
 }
 
 export interface SiteDomainInput {
@@ -2873,6 +2875,7 @@ export interface VoucherInput {
   endDate?: any | null;
   discountValueType?: DiscountValueTypeEnum | null;
   products?: (string | null)[] | null;
+  variants?: (string | null)[] | null;
   collections?: (string | null)[] | null;
   categories?: (string | null)[] | null;
   minCheckoutItemsQuantity?: number | null;
