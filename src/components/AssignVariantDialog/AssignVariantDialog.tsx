@@ -186,7 +186,7 @@ const AssignVariantDialog: React.FC<AssignVariantDialogProps> = props => {
           <ResponsiveTable key="table">
             <TableBody>
               {renderCollection(
-                products,
+                productChoices,
                 (product, productIndex) => (
                   <React.Fragment key={product ? product.id : "skeleton"}>
                     <TableRow>
