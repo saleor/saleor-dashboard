@@ -1,3 +1,4 @@
+import CollectionWithDividers from "@saleor/components/CollectionWithDividers";
 import Skeleton from "@saleor/components/Skeleton";
 import { getExtendedGiftCard } from "@saleor/giftCards/GiftCardUpdate/providers/GiftCardDetailsProvider/utils";
 import React from "react";
@@ -15,12 +16,16 @@ const CustomerGiftCardsList: React.FC<CustomerGiftCardsListProps> = ({
   loading
 }) => (
   <Skeleton>
-    {!loading &&
-      giftCards.map(giftCard => (
-        <CustomerGiftCardsCardListCard
-          giftCard={getExtendedGiftCard(giftCard)}
-        />
-      ))}
+    {!loading && (
+      <CollectionWithDividers
+        collection={giftCards}
+        renderItem={giftCard => (
+          <CustomerGiftCardsCardListCard
+            giftCard={getExtendedGiftCard(giftCard)}
+          />
+        )}
+      />
+    )}
   </Skeleton>
 );
 

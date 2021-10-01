@@ -76,7 +76,7 @@ const CustomerGiftCardsCard: React.FC<CustomerGiftCardsCardProps> = ({
             </Button>
           )
         }
-        showHorizontalLine={!!giftCards?.length}
+        withDivider={!!giftCards?.length}
       >
         {getCardSubtitle()}
         <VerticalSpacer spacing={2} />
