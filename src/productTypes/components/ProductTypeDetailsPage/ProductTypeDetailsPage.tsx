@@ -32,6 +32,7 @@ import ProductTypeAttributes from "../ProductTypeAttributes/ProductTypeAttribute
 import ProductTypeDetails from "../ProductTypeDetails/ProductTypeDetails";
 import ProductTypeShipping from "../ProductTypeShipping/ProductTypeShipping";
 import ProductTypeTaxes from "../ProductTypeTaxes/ProductTypeTaxes";
+import ProductTypeVariantAttributes from "../ProductTypeVariantAttributes/ProductTypeVariantAttributes";
 
 interface ChoiceType {
   label: string;
@@ -217,7 +218,7 @@ const ProductTypeDetailsPage: React.FC<ProductTypeDetailsPageProps> = ({
                 {data.hasVariants && (
                   <>
                     <CardSpacer />
-                    <ProductTypeAttributes
+                    <ProductTypeVariantAttributes
                       testId="assignVariantsAttributes"
                       attributes={maybe(() => productType.variantAttributes)}
                       disabled={disabled}
