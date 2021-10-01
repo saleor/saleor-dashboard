@@ -1,4 +1,3 @@
-import { CardContent } from "@material-ui/core";
 import Skeleton from "@saleor/components/Skeleton";
 import { getExtendedGiftCard } from "@saleor/giftCards/GiftCardUpdate/providers/GiftCardDetailsProvider/utils";
 import React from "react";
