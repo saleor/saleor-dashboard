@@ -14,21 +14,15 @@ interface CustomerGiftCardsListProps {
 const CustomerGiftCardsList: React.FC<CustomerGiftCardsListProps> = ({
   giftCards,
   loading
-}) => {
-  if (loading) {
-    return (
-      <CardContent>
-        <Skeleton />
-      </CardContent>
-    );
-  }
-
-  const getGiftCardsForCustomerPage = () =>
-    giftCards.map(giftCard => (
-      <CustomerGiftCardsCardListCard giftCard={getExtendedGiftCard(giftCard)} />
-    ));
-
-  return <>{giftCards.length > 0 && getGiftCardsForCustomerPage()}</>;
-};
+}) => (
+  <Skeleton>
+    {!loading &&
+      giftCards.map(giftCard => (
+        <CustomerGiftCardsCardListCard
+          giftCard={getExtendedGiftCard(giftCard)}
+        />
+      ))}
+  </Skeleton>
+);
 
 export default CustomerGiftCardsList;
