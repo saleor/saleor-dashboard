@@ -514,8 +514,7 @@ const ProductStocks: React.FC<ProductStocksProps> = ({
           <div className={classes.thresholdRow}>
             <TextField
               inputProps={{
-                min: 0,
-                type: "number"
+                min: 0
               }}
               disabled={disabled}
               fullWidth
@@ -617,7 +616,10 @@ const ProductStocks: React.FC<ProductStocksProps> = ({
                         onVariantChannelListingChange(listing.id, {
                           costPrice: listing.costPrice,
                           price: listing.price,
-                          preorderThreshold: Number(e.target.value)
+                          preorderThreshold:
+                            e.target.value === ""
+                              ? undefined
+                              : Number(e.target.value)
                         });
                       }}
                       value={listing?.preorderThreshold ?? ""}
