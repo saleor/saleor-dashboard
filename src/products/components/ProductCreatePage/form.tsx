@@ -23,6 +23,7 @@ import useFormset, {
   FormsetChange,
   FormsetData
 } from "@saleor/hooks/useFormset";
+import { errorMessages } from "@saleor/intl";
 import { ProductType_productType } from "@saleor/products/types/ProductType";
 import {
   getAttributeInputFromProductType,
@@ -47,6 +48,7 @@ import createSingleAutocompleteSelectHandler from "@saleor/utils/handlers/single
 import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
 import useRichText from "@saleor/utils/richText/useRichText";
 import React from "react";
+import { useIntl } from "react-intl";
 
 import { createPreorderEndDateChangeHandler } from "../../utils/handlers";
 import { ProductStockFormsetData, ProductStockInput } from "../ProductStocks";
@@ -159,6 +161,7 @@ function useProductCreateForm(
   onSubmit: (data: ProductCreateData) => Promise<boolean>,
   opts: UseProductCreateFormOpts
 ): UseProductCreateFormResult {
+  const intl = useIntl();
   const defaultInitialFormData: ProductCreateFormData &
     Record<"productType", string> = {
     category: "",
@@ -304,7 +307,8 @@ function useProductCreateForm(
 
   const handlePreorderEndDateChange = createPreorderEndDateChangeHandler(
     form,
-    triggerChange
+    triggerChange,
+    intl.formatMessage(errorMessages.preorderEndDateInFutureErrorText)
   );
 
   const getData = (): ProductCreateData => ({
@@ -330,7 +334,7 @@ function useProductCreateForm(
           validatePrice(channel.price) || validateCostPrice(channel.costPrice)
       ) ||
         !data.category)) ||
-    !!form.errors.preorderEndDateTime;
+    (data.hasPreorderEndDate && !!form.errors.preorderEndDateTime);
 
   return {
     change: handleChange,

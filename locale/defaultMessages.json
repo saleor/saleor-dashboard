@@ -5653,6 +5653,9 @@
   "src_dot_plugins_dot_views_dot_955370043": {
     "string": "The plugin may stop working after this field is cleared. Are you sure you want to proceed?"
   },
+  "src_dot_preorderEndDateInFutureErrorText": {
+    "string": "Preorder end time needs to be set in the future"
+  },
   "src_dot_productTypes": {
     "context": "product types section name",
     "string": "Product Types"
@@ -6149,9 +6152,6 @@
     "context": "product inventory, checkbox",
     "string": "Track Inventory"
   },
-  "src_dot_products_dot_components_dot_ProductStocks_dot_3696991057": {
-    "string": "End date"
-  },
   "src_dot_products_dot_components_dot_ProductStocks_dot_3857433664": {
     "context": "button",
     "string": "Assign Warehouse"
@@ -6168,9 +6168,6 @@
   },
   "src_dot_products_dot_components_dot_ProductStocks_dot_849869830": {
     "string": "Active inventory tracking will automatically calculate changes of stock"
-  },
-  "src_dot_products_dot_components_dot_ProductStocks_dot_920608322": {
-    "string": "End hour"
   },
   "src_dot_products_dot_components_dot_ProductTaxes_dot_1943864488": {
     "context": "checkbox",

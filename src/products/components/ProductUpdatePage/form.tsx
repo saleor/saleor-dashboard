@@ -29,6 +29,7 @@ import useFormset, {
   FormsetChange,
   FormsetData
 } from "@saleor/hooks/useFormset";
+import { errorMessages } from "@saleor/intl";
 import { ProductDetails_product } from "@saleor/products/types/ProductDetails";
 import {
   getAttributeInputFromProduct,
@@ -58,6 +59,7 @@ import getMetadata from "@saleor/utils/metadata/getMetadata";
 import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
 import useRichText from "@saleor/utils/richText/useRichText";
 import React from "react";
+import { useIntl } from "react-intl";
 
 import { ProductStockFormsetData, ProductStockInput } from "../ProductStocks";
 
@@ -218,6 +220,7 @@ function useProductUpdateForm(
   onSubmit: (data: ProductUpdateSubmitData) => SubmitPromise,
   opts: UseProductUpdateFormOpts
 ): UseProductUpdateFormResult {
+  const intl = useIntl();
   const [changed, setChanged] = React.useState(false);
   const triggerChange = () => setChanged(true);
 
@@ -342,7 +345,8 @@ function useProductUpdateForm(
 
   const handlePreorderEndDateChange = createPreorderEndDateChangeHandler(
     form,
-    triggerChange
+    triggerChange,
+    intl.formatMessage(errorMessages.preorderEndDateInFutureErrorText)
   );
 
   const data: ProductUpdateData = {
@@ -388,7 +392,7 @@ function useProductUpdateForm(
         channel =>
           validatePrice(channel.price) || validateCostPrice(channel.costPrice)
       )) ||
-    !!form.errors.preorderEndDateTime;
+    (data.hasPreorderEndDate && !!form.errors.preorderEndDateTime);
 
   return {
     change: handleChange,

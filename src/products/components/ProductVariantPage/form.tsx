@@ -24,6 +24,7 @@ import useFormset, {
   FormsetChange,
   FormsetData
 } from "@saleor/hooks/useFormset";
+import { errorMessages } from "@saleor/intl";
 import {
   getAttributeInputFromVariant,
   getStockInputFromVariant
@@ -45,6 +46,7 @@ import { mapMetadataItemToInput } from "@saleor/utils/maps";
 import getMetadata from "@saleor/utils/metadata/getMetadata";
 import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
 import React from "react";
+import { useIntl } from "react-intl";
 
 import handleFormSubmit from "../../../utils/handlers/handleFormSubmit";
 import { ProductStockInput } from "../ProductStocks";
@@ -132,6 +134,7 @@ function useProductVariantUpdateForm(
   onSubmit: (data: ProductVariantUpdateSubmitData) => SubmitPromise,
   opts: UseProductVariantUpdateFormOpts
 ): UseProductVariantUpdateFormResult {
+  const intl = useIntl();
   const [changed, setChanged] = React.useState(false);
   const triggerChange = () => setChanged(true);
 
@@ -247,7 +250,8 @@ function useProductVariantUpdateForm(
 
   const handlePreorderEndDateChange = createPreorderEndDateChangeHandler(
     form,
-    triggerChange
+    triggerChange,
+    intl.formatMessage(errorMessages.preorderEndDateInFutureErrorText)
   );
 
   const dataStocks = stocks.data.map(stock => stock.id);
@@ -261,12 +265,6 @@ function useProductVariantUpdateForm(
     stock => !stockDiff.added.some(addedStock => addedStock === stock.id)
   );
 
-  const disabled =
-    channels?.data.some(
-      channelData =>
-        validatePrice(channelData.value.price) ||
-        validateCostPrice(channelData.value.costPrice)
-    ) || !!form.errors.preorderEndDateTime;
   const data: ProductVariantUpdateData = {
     ...form.data,
     attributes: getAttributesDisplayData(
@@ -278,6 +276,15 @@ function useProductVariantUpdateForm(
     channelListings: channels.data,
     stocks: stocks.data
   };
+
+  const disabled =
+    channels?.data.some(
+      channelData =>
+        validatePrice(channelData.value.price) ||
+        validateCostPrice(channelData.value.costPrice)
+    ) ||
+    (data.hasPreorderEndDate && !!form.errors.preorderEndDateTime);
+
   const submitData: ProductVariantUpdateSubmitData = {
     ...form.data,
     ...getMetadata(form.data, isMetadataModified, isPrivateMetadataModified),

@@ -143,15 +143,12 @@ export const getAvailabilityVariables = (channels: ChannelData[]) =>
 
 export const createPreorderEndDateChangeHandler = (
   form: UseFormResult<{ preorderEndDateTime?: string }>,
-  triggerChange: () => void
+  triggerChange: () => void,
+  preorderPastDateErrorMessage: string
 ): FormChange => (event, cb) => {
   form.change(event, cb);
   if (moment(event.target.value).isSameOrBefore(Date.now())) {
-    form.setError(
-      "preorderEndDateTime",
-      // ! TODO TRANSLATE MESSAGE
-      "Preorder end time needs to be set in the future"
-    );
+    form.setError("preorderEndDateTime", preorderPastDateErrorMessage);
   } else {
     form.clearErrors("preorderEndDateTime");
   }

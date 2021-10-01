@@ -15,6 +15,7 @@ import useFormset, {
   FormsetChange,
   FormsetData
 } from "@saleor/hooks/useFormset";
+import { errorMessages } from "@saleor/intl";
 import { ProductVariantCreateData_product } from "@saleor/products/types/ProductVariantCreateData";
 import { getVariantAttributeInputFromProduct } from "@saleor/products/utils/data";
 import { createPreorderEndDateChangeHandler } from "@saleor/products/utils/handlers";
@@ -24,6 +25,7 @@ import { SearchWarehouses_search_edges_node } from "@saleor/searches/types/Searc
 import { FetchMoreProps, ReorderEvent } from "@saleor/types";
 import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
 import React from "react";
+import { useIntl } from "react-intl";
 
 import { ProductStockFormsetData, ProductStockInput } from "../ProductStocks";
 
@@ -105,6 +107,7 @@ function useProductVariantCreateForm(
   onSubmit: (data: ProductVariantCreateData) => void,
   opts: UseProductVariantCreateFormOpts
 ): UseProductVariantCreateFormResult {
+  const intl = useIntl();
   const [changed, setChanged] = React.useState(false);
   const triggerChange = () => setChanged(true);
 
@@ -182,7 +185,8 @@ function useProductVariantCreateForm(
 
   const handlePreorderEndDateChange = createPreorderEndDateChangeHandler(
     form,
-    triggerChange
+    triggerChange,
+    intl.formatMessage(errorMessages.preorderEndDateInFutureErrorText)
   );
 
   const data: ProductVariantCreateData = {
@@ -202,7 +206,7 @@ function useProductVariantCreateForm(
   return {
     change: handleChange,
     data,
-    disabled: !!form.errors.preorderEndDateTime,
+    disabled: data.hasPreorderEndDate && !!form.errors.preorderEndDateTime,
     formErrors: form.errors,
     handlers: {
       addStock: handleStockAdd,
