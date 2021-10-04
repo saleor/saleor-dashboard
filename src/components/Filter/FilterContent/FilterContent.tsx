@@ -119,7 +119,7 @@ const FilterContent: React.FC<FilterContentProps> = ({
       if (filterField.multipleFields) {
         return filterField.multipleFields.reduce(
           getAutocompleteValuesWithNewValues,
-          {}
+          acc
         );
       }
 
