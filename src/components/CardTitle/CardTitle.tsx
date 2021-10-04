@@ -3,19 +3,13 @@ import { makeStyles } from "@saleor/macaw-ui";
 import classNames from "classnames";
 import React from "react";
 
+import CardDivider from "../CardDivider/CardDivider";
+
 const useStyles = makeStyles(
   theme => ({
     children: theme.mixins.gutters({}),
     constantHeight: {
       height: 56
-    },
-    hr: {
-      border: "none",
-      borderTop: `1px solid ${theme.palette.divider}`,
-      height: 0,
-      marginBottom: 0,
-      marginTop: 0,
-      width: "100%"
     },
     root: theme.mixins.gutters({
       alignItems: "center",
@@ -45,7 +39,6 @@ interface CardTitleProps {
   subtitle?: string | React.ReactNode;
   toolbar?: React.ReactNode;
   onClick?: (event: React.MouseEvent<any>) => void;
-  withDivider?: boolean;
 }
 
 const CardTitle: React.FC<CardTitleProps> = props => {
@@ -57,7 +50,6 @@ const CardTitle: React.FC<CardTitleProps> = props => {
     subtitle,
     toolbar,
     onClick,
-    withDivider = true,
     ...rest
   } = props;
 
@@ -83,7 +75,7 @@ const CardTitle: React.FC<CardTitleProps> = props => {
         <div className={classes.toolbar}>{toolbar}</div>
       </div>
       <div className={classes.children}>{children}</div>
-      {withDivider && <hr className={classes.hr} />}
+      <CardDivider />
     </>
   );
 };
