@@ -57,11 +57,9 @@ const CustomerGiftCardsCard: React.FC<CustomerGiftCardsCardProps> = ({
         }
       >
         <FormattedMessage
-          {...{
-            ...(!!giftCards?.length
-              ? messages.customerGiftCardsPresentSubtitle
-              : messages.customerGiftCardsAbsentSubtitle)
-          }}
+          {...(!!giftCards?.length
+            ? messages.customerGiftCardsPresentSubtitle
+            : messages.customerGiftCardsAbsentSubtitle)}
         />
         <VerticalSpacer spacing={2} />
       </CardTitle>
