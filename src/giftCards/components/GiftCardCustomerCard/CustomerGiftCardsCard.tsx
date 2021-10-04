@@ -1,4 +1,4 @@
-import { Button, Card, CardActions, makeStyles } from "@material-ui/core";
+import { Button, Card, CardActions } from "@material-ui/core";
 import VerticalSpacer from "@saleor/apps/components/VerticalSpacer";
 import CardTitle from "@saleor/components/CardTitle";
 import { mapEdgesToItems } from "@saleor/utils/maps";
@@ -8,25 +8,11 @@ import { FormattedMessage } from "react-intl";
 import CustomerGiftCardsList from "./CustomerGiftCardsList";
 import { giftCardCustomerCardMessages as messages } from "./messages";
 import { useCustomerGiftCardQuery } from "./queries";
+import { useCardActionsStyles } from "./styles";
 
 interface CustomerGiftCardsCardProps {
   customerId?: string | null;
 }
-
-interface CustomerGiftCardsCardActionsProps {
-  buttonPosition: "left" | "right";
-}
-
-const useStyles = makeStyles(
-  theme => ({
-    cardActions: {
-      padding: `${theme.spacing(2)} ${theme.spacing(3)}`,
-      flexDirection: ({ buttonPosition }: CustomerGiftCardsCardActionsProps) =>
-        buttonPosition === "left" ? "row" : "row-reverse"
-    }
-  }),
-  { name: "CustomerGiftCardsCard" }
-);
 
 const CustomerGiftCardsCard: React.FC<CustomerGiftCardsCardProps> = ({
   customerId
@@ -42,7 +28,7 @@ const CustomerGiftCardsCard: React.FC<CustomerGiftCardsCardProps> = ({
 
   const giftCards = mapEdgesToItems(data?.giftCards);
 
-  const classes = useStyles({
+  const classes = useCardActionsStyles({
     buttonPosition: giftCards?.length > 0 ? "right" : "left"
   });
 
@@ -53,13 +39,6 @@ const CustomerGiftCardsCard: React.FC<CustomerGiftCardsCardProps> = ({
   const handleCreateNewCardButton = () => {
     // oepn issue new card modal
   };
-
-  const getCardSubtitle = () =>
-    !!giftCards?.length ? (
-      <FormattedMessage {...messages.customerGiftCardsPresentSubtitle} />
-    ) : (
-      <FormattedMessage {...messages.customerGiftCardsAbsentSubtitle} />
-    );
 
   return (
     <Card>
@@ -76,9 +55,14 @@ const CustomerGiftCardsCard: React.FC<CustomerGiftCardsCardProps> = ({
             </Button>
           )
         }
-        withDivider={!!giftCards?.length}
       >
-        {getCardSubtitle()}
+        <FormattedMessage
+          {...{
+            ...(!!giftCards?.length
+              ? messages.customerGiftCardsPresentSubtitle
+              : messages.customerGiftCardsAbsentSubtitle)
+          }}
+        />
         <VerticalSpacer spacing={2} />
       </CardTitle>
       <CustomerGiftCardsList giftCards={giftCards} loading={loading} />

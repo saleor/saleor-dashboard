@@ -1,9 +1,10 @@
+import CardDivider from "@saleor/components/CardDivider/CardDivider";
 import CollectionWithDividers from "@saleor/components/CollectionWithDividers";
 import Skeleton from "@saleor/components/Skeleton";
 import { getExtendedGiftCard } from "@saleor/giftCards/GiftCardUpdate/providers/GiftCardDetailsProvider/utils";
 import React from "react";
 
-import CustomerGiftCardsCardListCard from "./CustomerGiftCardsCardListCard";
+import CustomerGiftCardsCardListItem from "./CustomerGiftCardsCardListItem";
 import { CustomerGiftCardList_giftCards_edges_node } from "./types/CustomerGiftCardList";
 
 interface CustomerGiftCardsListProps {
@@ -20,10 +21,12 @@ const CustomerGiftCardsList: React.FC<CustomerGiftCardsListProps> = ({
       <CollectionWithDividers
         collection={giftCards}
         renderItem={giftCard => (
-          <CustomerGiftCardsCardListCard
+          <CustomerGiftCardsCardListItem
             giftCard={getExtendedGiftCard(giftCard)}
           />
         )}
+        withOuterDividers
+        DividerComponent={CardDivider}
       />
     )}
   </Skeleton>

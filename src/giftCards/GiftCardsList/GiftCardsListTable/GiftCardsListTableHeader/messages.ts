@@ -9,6 +9,10 @@ export const bulkEnableDisableSectionMessages = defineMessages({
     defaultMessage: "Deactivate",
     description: "GiftCardEnableDisableSection enable label"
   },
+  deleteLabel: {
+    defaultMessage: "Delete",
+    description: "GiftCardEnableDisableSection enable label"
+  },
   successActivateAlertText: {
     defaultMessage:
       "Successfully activated gift {count,plural,one{card} other{cards}}",

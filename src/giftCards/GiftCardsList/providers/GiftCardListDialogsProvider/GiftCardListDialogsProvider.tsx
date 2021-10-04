@@ -6,6 +6,7 @@ import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandl
 import React, { createContext } from "react";
 
 import {
+  GIFT_CARD_LIST_QUERY,
   GiftCardListActionParamsEnum,
   GiftCardListUrlQueryParams
 } from "../../types";
@@ -68,6 +69,7 @@ const GiftCardListDialogsProvider: React.FC<GiftCardListDialogsProviderProps> = 
       <GiftCardCreateDialog
         open={isCreateDialogOpen}
         closeDialog={closeDialog}
+        refetchQueries={[GIFT_CARD_LIST_QUERY]}
       />
       <GiftCardListPageDeleteDialog
         open={isDeleteDialogOpen}

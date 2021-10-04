@@ -21,41 +21,30 @@ function GiftCardStatusChip<
   const { isExpired, isActive } = giftCard;
   const intl = useIntl();
 
-  const getGiftCardChipStatus = () => {
+  const getGiftCardData = () => {
     if (isExpired) {
-      return StatusType.NEUTRAL;
+      return {
+        status: StatusType.NEUTRAL,
+        label: intl.formatMessage(giftCardStatusChipMessages.expiredStatusLabel)
+      };
     }
 
     if (!isActive) {
-      return StatusType.ERROR;
+      return {
+        status: StatusType.ERROR,
+        label: intl.formatMessage(
+          giftCardStatusChipMessages.disabledStatusLabel
+        )
+      };
     }
 
-    return null;
+    return {
+      status: null,
+      label: null
+    };
   };
 
-  const getGiftCardChipLabel = () => {
-    if (isExpired) {
-      return giftCardStatusChipMessages.expiredStatusLabel;
-    }
-
-    if (!isActive) {
-      return giftCardStatusChipMessages.disabledStatusLabel;
-    }
-
-    return null;
-  };
-
-  if (!getGiftCardChipStatus()) {
-    return null;
-  }
-
-  return (
-    <StatusChip
-      size="md"
-      status={getGiftCardChipStatus()}
-      label={intl.formatMessage(getGiftCardChipLabel())}
-    />
-  );
+  return <StatusChip size="md" {...getGiftCardData()} />;
 }
 
 export default GiftCardStatusChip;
