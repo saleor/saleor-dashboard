@@ -2,7 +2,9 @@ import { Button, Card, CardActions } from "@material-ui/core";
 import VerticalSpacer from "@saleor/apps/components/VerticalSpacer";
 import CardTitle from "@saleor/components/CardTitle";
 import { mapEdgesToItems } from "@saleor/utils/maps";
-import React from "react";
+import * as React from "react";
+import { useContext } from "react";
+import { useState } from "react";
 import { FormattedMessage } from "react-intl";
 
 import CustomerGiftCardsList from "./CustomerGiftCardsList";
@@ -14,14 +16,30 @@ interface CustomerGiftCardsCardProps {
   customerId?: string | null;
 }
 
-const CustomerGiftCardsCard: React.FC<CustomerGiftCardsCardProps> = ({
-  customerId
-}) => {
+interface CustomerGiftCardsCardActionsProps {
+  buttonPosition: "left" | "right";
+}
+
+const useStyles = makeStyles(
+  theme => ({
+    cardActions: {
+      padding: `${theme.spacing(2)} ${theme.spacing(3)}`,
+      flexDirection: ({ buttonPosition }: CustomerGiftCardsCardActionsProps) =>
+        buttonPosition === "left" ? "row" : "row-reverse"
+    }
+  }),
+  { name: "CustomerGiftCardsCard" }
+);
+
+const CustomerGiftCardsCard: React.FC<CustomerGiftCardsCardProps> = () => {
+  // const { id } = useContext(CustomerGiftCardContext);
+  const XDXD = useContext(CustomerGiftCardContext);
+
   const { data, loading } = useCustomerGiftCardQuery({
     variables: {
       first: 5,
       filter: {
-        usedBy: [customerId]
+        usedBy: ["id"]
       }
     }
   });

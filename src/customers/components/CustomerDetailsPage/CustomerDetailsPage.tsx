@@ -9,12 +9,17 @@ import PageHeader from "@saleor/components/PageHeader";
 import Savebar from "@saleor/components/Savebar";
 import { AccountErrorFragment } from "@saleor/fragments/types/AccountErrorFragment";
 import CustomerGiftCardsCard from "@saleor/giftCards/components/GiftCardCustomerCard/CustomerGiftCardsCard";
+import {
+  CustomerGiftCardContext,
+  CustomerGiftCardProvider
+} from "@saleor/giftCards/components/GiftCardCustomerCard/providers/CustomerGiftCardProvider";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import { sectionNames } from "@saleor/intl";
 import { Backlink } from "@saleor/macaw-ui";
 import { mapEdgesToItems, mapMetadataItemToInput } from "@saleor/utils/maps";
 import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
 import React from "react";
+import { useContext } from "react";
 import { useIntl } from "react-intl";
 
 import { getUserName } from "../../../misc";
