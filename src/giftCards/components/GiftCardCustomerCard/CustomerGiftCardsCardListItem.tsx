@@ -1,4 +1,3 @@
-import { Divider } from "@material-ui/core";
 import CardMenu, { CardMenuItem } from "@saleor/components/CardMenu";
 import { bulkEnableDisableSectionMessages } from "@saleor/giftCards/GiftCardsList/GiftCardsListTable/GiftCardsListTableHeader/messages";
 import { giftCardsListTableMessages } from "@saleor/giftCards/GiftCardsList/messages";
@@ -110,7 +109,6 @@ const CustomerGiftCardsCardListItem: React.FC<CustomerGiftCardsCardListItemProps
         <GiftCardStatusChip giftCard={giftCard} />
         <CardMenu className={classes.listingMenu} menuItems={getMenuItems()} />
       </div>
-      <Divider />
       <GiftCardDeleteDialogContent
         singleDeletion
         giftCard={giftCard as ExtendedGiftCard<GiftCardDetails_giftCard>}
