@@ -24,12 +24,14 @@ export const OrderSettings: React.FC = () => {
 
   const handleSubmit = async ({
     automaticallyConfirmAllNewOrders,
+    automaticallyFulfillNonShippableGiftCard,
     fulfillmentAutoApprove,
     fulfillmentAllowUnpaid
   }: OrderSettingsFormData) => {
     const result = await orderSettingsUpdate({
       variables: {
         orderSettingsInput: {
+          automaticallyFulfillNonShippableGiftCard,
           automaticallyConfirmAllNewOrders
         },
         shopSettingsInput: {
