@@ -9,7 +9,7 @@ import translationIcon from "@assets/images/menu-translation-icon.svg";
 import { configurationMenuUrl } from "@saleor/configuration";
 import { getConfigMenuItemsPermissions } from "@saleor/configuration/utils";
 import { User } from "@saleor/fragments/types/User";
-import { giftCardsListUrl } from "@saleor/giftCards/urls";
+import { giftCardListUrl } from "@saleor/giftCards/urls";
 import { commonMessages, sectionNames } from "@saleor/intl";
 import { SidebarMenuItem } from "@saleor/macaw-ui";
 import { IntlShape } from "react-intl";
@@ -66,7 +66,7 @@ function createMenuStructure(intl: IntlShape, user: User): SidebarMenuItem[] {
           ariaLabel: "giftCards",
           label: intl.formatMessage(sectionNames.giftCards),
           id: "giftCards",
-          url: giftCardsListUrl(),
+          url: giftCardListUrl(),
           permissions: [PermissionEnum.MANAGE_GIFT_CARD]
         }
       ],
