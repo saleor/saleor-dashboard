@@ -3,8 +3,8 @@ import VerticalSpacer from "@saleor/apps/components/VerticalSpacer";
 import React from "react";
 
 interface PageSectionHeaderProps {
-  title?: React.ReactNode;
-  description?: React.ReactNode;
+  title?: string;
+  description?: string;
 }
 
 const PageSectionHeader: React.FC<PageSectionHeaderProps> = props => {

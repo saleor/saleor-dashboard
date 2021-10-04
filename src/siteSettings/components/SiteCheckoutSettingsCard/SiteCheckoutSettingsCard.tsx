@@ -9,14 +9,14 @@ import { FormattedMessage, useIntl } from "react-intl";
 import { SiteSettingsPageFormData } from "../SiteSettingsPage";
 import { messages } from "./messages";
 
-interface SiteCheckoutSettingsProps {
+interface SiteCheckoutSettingsCardProps {
   data: SiteSettingsPageFormData;
   errors: ShopErrorFragment[];
   disabled: boolean;
   onChange: (event: React.ChangeEvent<any>) => void;
 }
 
-const SiteCheckoutSettings: React.FC<SiteCheckoutSettingsProps> = ({
+const SiteCheckoutSettingsCard: React.FC<SiteCheckoutSettingsCardProps> = ({
   data,
   disabled,
   errors,
@@ -79,5 +79,5 @@ const SiteCheckoutSettings: React.FC<SiteCheckoutSettingsProps> = ({
     </Card>
   );
 };
-SiteCheckoutSettings.displayName = "SiteCheckoutSettings";
-export default SiteCheckoutSettings;
+SiteCheckoutSettingsCard.displayName = "SiteCheckoutSettingsCard";
+export default SiteCheckoutSettingsCard;

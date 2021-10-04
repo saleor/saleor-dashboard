@@ -7021,39 +7021,39 @@
     "context": "site settings section name",
     "string": "Site Settings"
   },
-  "src_dot_siteSettings_dot_components_dot_SiteCheckoutSettings_dot_reservedStock": {
+  "src_dot_siteSettings_dot_components_dot_SiteCheckoutSettingsCard_dot_reservedStock": {
     "context": "title",
     "string": "Reserved stock"
   },
-  "src_dot_siteSettings_dot_components_dot_SiteCheckoutSettings_dot_reservedStockDescription": {
+  "src_dot_siteSettings_dot_components_dot_SiteCheckoutSettingsCard_dot_reservedStockDescription": {
     "context": "description",
     "string": "Set up time amount that stock in checkout is reserved for the customer. You can set separate values for authenticated and anonymous customers."
   },
-  "src_dot_siteSettings_dot_components_dot_SiteCheckoutSettings_dot_stockReservationForAnonymousUser": {
+  "src_dot_siteSettings_dot_components_dot_SiteCheckoutSettingsCard_dot_stockReservationForAnonymousUser": {
     "context": "input label",
     "string": "Stock reservation for anonymous user (in minutes)"
   },
-  "src_dot_siteSettings_dot_components_dot_SiteCheckoutSettings_dot_stockReservationForAuthenticatedUser": {
+  "src_dot_siteSettings_dot_components_dot_SiteCheckoutSettingsCard_dot_stockReservationForAuthenticatedUser": {
     "context": "input label",
     "string": "Stock reservation for authenticated user (in minutes)"
   },
-  "src_dot_siteSettings_dot_components_dot_SiteCheckoutSettings_dot_stockWillNotBeReserved": {
+  "src_dot_siteSettings_dot_components_dot_SiteCheckoutSettingsCard_dot_stockWillNotBeReserved": {
     "context": "input helper text",
     "string": "Leaving this setting empty will mean that stock won’t be reserved"
   },
-  "src_dot_siteSettings_dot_components_dot_SiteDetailsSettings_dot_1008586926": {
+  "src_dot_siteSettings_dot_components_dot_SiteDetailsSettingsCard_dot_1008586926": {
     "string": "Name of your store is shown on tab in web browser"
   },
-  "src_dot_siteSettings_dot_components_dot_SiteDetailsSettings_dot_1170194728": {
+  "src_dot_siteSettings_dot_components_dot_SiteDetailsSettingsCard_dot_1170194728": {
     "string": "Store domain"
   },
-  "src_dot_siteSettings_dot_components_dot_SiteDetailsSettings_dot_2286355060": {
+  "src_dot_siteSettings_dot_components_dot_SiteDetailsSettingsCard_dot_2286355060": {
     "string": "Name of your store"
   },
-  "src_dot_siteSettings_dot_components_dot_SiteDetailsSettings_dot_3868874271": {
+  "src_dot_siteSettings_dot_components_dot_SiteDetailsSettingsCard_dot_3868874271": {
     "string": "Store description"
   },
-  "src_dot_siteSettings_dot_components_dot_SiteDetailsSettings_dot_529433178": {
+  "src_dot_siteSettings_dot_components_dot_SiteDetailsSettingsCard_dot_529433178": {
     "string": "Store description is shown on taskbar after your store name"
   },
   "src_dot_siteSettings_dot_components_dot_SiteSettingsPage_dot_229184360": {
@@ -7070,7 +7070,7 @@
   },
   "src_dot_siteSettings_dot_components_dot_SiteSettingsPage_dot_sectionCompanyDescription": {
     "context": "section description",
-    "string": "This adress will be used to generate invoices and calculate shipping rates. Email adress you provide here will be used as a contact adress for your customers."
+    "string": "This address will be used to generate invoices and calculate shipping rates. Email address you provide here will be used as a contact address for your customers."
   },
   "src_dot_siteSettings_dot_components_dot_SiteSettingsPage_dot_sectionCompanyTitle": {
     "context": "section title",

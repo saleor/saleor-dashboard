@@ -20,8 +20,8 @@ import React from "react";
 import { useIntl } from "react-intl";
 
 import { SiteSettings_shop } from "../../types/SiteSettings";
-import SiteCheckoutSettings from "../SiteCheckoutSettings";
-import SiteSettingsDetails from "../SiteDetailsSettings";
+import SiteCheckoutSettingsCard from "../SiteCheckoutSettingsCard";
+import SiteSettingsDetailsCard from "../SiteDetailsSettingsCard";
 import { messages } from "./messages";
 
 export interface SiteSettingsPageAddressFormData {
@@ -156,7 +156,7 @@ const SiteSettingsPage: React.FC<SiteSettingsPageProps> = props => {
                   messages.sectionDetailsDescription
                 )}
               />
-              <SiteSettingsDetails
+              <SiteSettingsDetailsCard
                 data={data}
                 errors={errors}
                 disabled={disabled}
@@ -169,7 +169,7 @@ const SiteSettingsPage: React.FC<SiteSettingsPageProps> = props => {
                   messages.sectionCheckoutDescription
                 )}
               />
-              <SiteCheckoutSettings
+              <SiteCheckoutSettingsCard
                 data={data}
                 errors={errors}
                 disabled={disabled}
