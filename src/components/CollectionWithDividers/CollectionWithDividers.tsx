@@ -44,13 +44,13 @@ function CollectionWithDividers<T>({
     )
   );
 
-  const attachOuterDividers = () => [
+  const collectionWithOuterDividers = () => [
     <SelectedDividerComponent />,
     ...collectionToRender,
     <SelectedDividerComponent />
   ];
 
-  return withOuterDividers ? attachOuterDividers() : collectionToRender;
+  return withOuterDividers ? collectionWithOuterDividers() : collectionToRender;
 }
 
 export default CollectionWithDividers;
