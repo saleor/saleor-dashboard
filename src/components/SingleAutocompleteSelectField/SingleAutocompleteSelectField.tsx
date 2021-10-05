@@ -23,6 +23,12 @@ const useStyles = makeStyles(
     },
     nakedInput: {
       padding: theme.spacing(2, 3)
+    },
+    adornment: {
+      cursor: "pointer",
+      "&:active": {
+        pointerEvents: "none"
+      }
     }
   }),
   { name: "SingleAutocompleteSelectField" }
@@ -174,7 +180,7 @@ const SingleAutocompleteSelectFieldComponent: React.FC<SingleAutocompleteSelectF
                 placeholder
               }),
               endAdornment: (
-                <div>
+                <div className={classes.adornment}>
                   <ArrowDropdownIcon />
                 </div>
               ),

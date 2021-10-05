@@ -66,7 +66,12 @@ const useStyles = makeStyles(
     },
     adornment: {
       display: "flex",
-      alignItems: "center"
+      alignItems: "center",
+      userSelect: "none",
+      cursor: "pointer",
+      "&:active": {
+        pointerEvents: "none"
+      }
     }
   }),
   { name: "MultiAutocompleteSelectField" }
@@ -181,7 +186,7 @@ const MultiAutocompleteSelectFieldComponent: React.FC<MultiAutocompleteSelectFie
                       endAdornment: (
                         <div className={classes.adornment}>
                           {endAdornment}
-                          <ArrowDropdownIcon onClick={() => toggleMenu()} />
+                          <ArrowDropdownIcon />
                         </div>
                       ),
                       id: undefined,

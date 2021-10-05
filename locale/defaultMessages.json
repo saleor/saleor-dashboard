@@ -418,6 +418,10 @@
     "context": "product field",
     "string": "Type"
   },
+  "productExportFieldVariantId": {
+    "context": "product field",
+    "string": "Export Variant ID"
+  },
   "productExportFieldVariantImages": {
     "context": "product field",
     "string": "Variant Images"
@@ -492,17 +496,9 @@
     "context": "number of products",
     "string": "Products ({quantity})"
   },
-  "saleDetailsUnassignCategory": {
-    "context": "unassign category from sale, button",
-    "string": "Unassign"
-  },
-  "saleDetailsUnassignCollection": {
-    "context": "unassign collection from sale, button",
-    "string": "Unassign"
-  },
-  "saleDetailsUnassignProduct": {
-    "context": "unassign product from sale, button",
-    "string": "Unassign"
+  "saleDetailsPageVariantsQuantity": {
+    "context": "number of variants",
+    "string": "Variants ({quantity})"
   },
   "set availability date": {
     "context": "product availability date label",
@@ -1889,43 +1885,68 @@
     "context": "placeholder",
     "string": "Search by value name, etc..."
   },
-  "src_dot_components_dot_AssignCategoryDialog_dot_3125506097": {
+  "src_dot_components_dot_AssignCategoryDialog_dot_assignCategoryDialogHeader": {
     "context": "dialog header",
     "string": "Assign Category"
   },
-  "src_dot_components_dot_AssignCategoryDialog_dot_3690273268": {
-    "string": "Search by category name, etc..."
-  },
-  "src_dot_components_dot_AssignCategoryDialog_dot_3841025483": {
+  "src_dot_components_dot_AssignCategoryDialog_dot_assignCategoryDialogLabel": {
+    "context": "dialog header",
     "string": "Search Category"
   },
-  "src_dot_components_dot_AssignCollectionDialog_dot_2605414502": {
-    "string": "Search by collection name, etc..."
+  "src_dot_components_dot_AssignCategoryDialog_dot_assignCategoryDialogPlaceholder": {
+    "context": "dialog search placeholder",
+    "string": "Search by category name, etc..."
   },
-  "src_dot_components_dot_AssignCollectionDialog_dot_3992923611": {
+  "src_dot_components_dot_AssignCollectionDialog_dot_assignCollectionDialogHeader": {
     "context": "dialog header",
     "string": "Assign Collection"
   },
-  "src_dot_components_dot_AssignCollectionDialog_dot_4057224233": {
+  "src_dot_components_dot_AssignCollectionDialog_dot_assignCollectionDialogLabel": {
+    "context": "dialog header",
     "string": "Search Collection"
   },
-  "src_dot_components_dot_AssignContainerDialog_dot_1731102929": {
+  "src_dot_components_dot_AssignCollectionDialog_dot_assignCollectionDialogPlaceholder": {
+    "context": "dialog search placeholder",
+    "string": "Search by collection name, etc..."
+  },
+  "src_dot_components_dot_AssignContainerDialog_dot_assignContainerDialogButton": {
     "context": "button",
     "string": "Assign"
   },
-  "src_dot_components_dot_AssignProductDialog_dot_2100305525": {
+  "src_dot_components_dot_AssignProductDialog_dot_assignProductDialogButton": {
     "context": "button",
-    "string": "Assign products"
+    "string": "Assign"
   },
-  "src_dot_components_dot_AssignProductDialog_dot_2336947364": {
-    "string": "Search by product name, attribute, product type etc..."
-  },
-  "src_dot_components_dot_AssignProductDialog_dot_2850255786": {
+  "src_dot_components_dot_AssignProductDialog_dot_assignProductDialogContent": {
     "string": "Search Products"
   },
-  "src_dot_components_dot_AssignProductDialog_dot_649693468": {
+  "src_dot_components_dot_AssignProductDialog_dot_assignProductDialogSearch": {
+    "string": "Search by product name, attribute, product type etc..."
+  },
+  "src_dot_components_dot_AssignProductDialog_dot_assignVariantDialogHeader": {
     "context": "dialog header",
     "string": "Assign Product"
+  },
+  "src_dot_components_dot_AssignVariantDialog_dot_3284796469": {
+    "string": "No products available in order channel matching given query"
+  },
+  "src_dot_components_dot_AssignVariantDialog_dot_assignVariantDialogButton": {
+    "context": "button",
+    "string": "Assign"
+  },
+  "src_dot_components_dot_AssignVariantDialog_dot_assignVariantDialogContent": {
+    "string": "Search Variants"
+  },
+  "src_dot_components_dot_AssignVariantDialog_dot_assignVariantDialogHeader": {
+    "context": "dialog header",
+    "string": "Assign Variant"
+  },
+  "src_dot_components_dot_AssignVariantDialog_dot_assignVariantDialogSKU": {
+    "context": "variant sku",
+    "string": "SKU {sku}"
+  },
+  "src_dot_components_dot_AssignVariantDialog_dot_assignVariantDialogSearch": {
+    "string": "Search by product name, attribute, product type etc..."
   },
   "src_dot_components_dot_AttributeUnassignDialog_dot_2037985699": {
     "string": "Are you sure you want to unassign {attributeName} from {itemTypeName}?"
@@ -2835,41 +2856,45 @@
   "src_dot_discounts": {
     "string": "Discounts"
   },
-  "src_dot_discounts_dot_components_dot_DiscountCategories_dot_1567318211": {
-    "string": "Category name"
-  },
-  "src_dot_discounts_dot_components_dot_DiscountCategories_dot_1681512341": {
-    "context": "section header",
-    "string": "Eligible Categories"
-  },
-  "src_dot_discounts_dot_components_dot_DiscountCategories_dot_2054128296": {
-    "string": "No categories found"
-  },
-  "src_dot_discounts_dot_components_dot_DiscountCategories_dot_2968663655": {
-    "context": "number of products",
-    "string": "Products"
-  },
-  "src_dot_discounts_dot_components_dot_DiscountCategories_dot_3973677075": {
+  "src_dot_discounts_dot_components_dot_DiscountCategories_dot_discountCategoriesButton": {
     "context": "button",
     "string": "Assign categories"
   },
-  "src_dot_discounts_dot_components_dot_DiscountCollections_dot_1035511604": {
-    "context": "button",
-    "string": "Assign collections"
+  "src_dot_discounts_dot_components_dot_DiscountCategories_dot_discountCategoriesHeader": {
+    "context": "section header",
+    "string": "Eligible Categories"
   },
-  "src_dot_discounts_dot_components_dot_DiscountCollections_dot_2137803833": {
-    "string": "No collections found"
+  "src_dot_discounts_dot_components_dot_DiscountCategories_dot_discountCategoriesNotFound": {
+    "context": "no categories",
+    "string": "No categories found"
   },
-  "src_dot_discounts_dot_components_dot_DiscountCollections_dot_2968663655": {
+  "src_dot_discounts_dot_components_dot_DiscountCategories_dot_discountCategoriesTableProductHeader": {
+    "context": "table head",
+    "string": "Category Name"
+  },
+  "src_dot_discounts_dot_components_dot_DiscountCategories_dot_discountCategoriesTableProductNumber": {
     "context": "number of products",
     "string": "Products"
   },
-  "src_dot_discounts_dot_components_dot_DiscountCollections_dot_3011396316": {
-    "string": "Collection name"
+  "src_dot_discounts_dot_components_dot_DiscountCollections_dot_discountCollectionsButton": {
+    "context": "button",
+    "string": "Assign collections"
   },
-  "src_dot_discounts_dot_components_dot_DiscountCollections_dot_452750900": {
+  "src_dot_discounts_dot_components_dot_DiscountCollections_dot_discountCollectionsHeader": {
     "context": "section header",
     "string": "Eligible Collections"
+  },
+  "src_dot_discounts_dot_components_dot_DiscountCollections_dot_discountCollectionsNotFound": {
+    "context": "no collections",
+    "string": "No collections found"
+  },
+  "src_dot_discounts_dot_components_dot_DiscountCollections_dot_discountCollectionsTableProductHeader": {
+    "context": "table head",
+    "string": "Collection Name"
+  },
+  "src_dot_discounts_dot_components_dot_DiscountCollections_dot_discountCollectionsTableProductNumber": {
+    "context": "number of products",
+    "string": "Products"
   },
   "src_dot_discounts_dot_components_dot_DiscountCountrySelectDialog_dot_1585396479": {
     "context": "dialog header",
@@ -2902,26 +2927,53 @@
     "context": "time during discount is active, header",
     "string": "Active Dates"
   },
-  "src_dot_discounts_dot_components_dot_DiscountProducts_dot_1657559629": {
-    "string": "No products found"
-  },
-  "src_dot_discounts_dot_components_dot_DiscountProducts_dot_2100305525": {
+  "src_dot_discounts_dot_components_dot_DiscountProducts_dot_discountProductsButton": {
     "context": "button",
     "string": "Assign products"
   },
-  "src_dot_discounts_dot_components_dot_DiscountProducts_dot_2697405188": {
-    "string": "Product Name"
+  "src_dot_discounts_dot_components_dot_DiscountProducts_dot_discountProductsHeader": {
+    "context": "section header",
+    "string": "Eligible Products"
   },
-  "src_dot_discounts_dot_components_dot_DiscountProducts_dot_3326160357": {
+  "src_dot_discounts_dot_components_dot_DiscountProducts_dot_discountProductsNotFound": {
+    "context": "no products",
+    "string": "No products found"
+  },
+  "src_dot_discounts_dot_components_dot_DiscountProducts_dot_discountProductsTableAvailabilityHeader": {
     "context": "product availability",
     "string": "Availability"
   },
-  "src_dot_discounts_dot_components_dot_DiscountProducts_dot_4257289053": {
+  "src_dot_discounts_dot_components_dot_DiscountProducts_dot_discountProductsTableProductHeader": {
+    "context": "table head",
+    "string": "Product Name"
+  },
+  "src_dot_discounts_dot_components_dot_DiscountProducts_dot_discountProductsTableTypeHeader": {
+    "context": "product type",
     "string": "Product Type"
   },
-  "src_dot_discounts_dot_components_dot_DiscountProducts_dot_919175218": {
+  "src_dot_discounts_dot_components_dot_DiscountVariants_dot_discountVariantsButton": {
+    "context": "button",
+    "string": "Assign variants"
+  },
+  "src_dot_discounts_dot_components_dot_DiscountVariants_dot_discountVariantsHeader": {
     "context": "section header",
-    "string": "Eligible Products"
+    "string": "Eligible Variants"
+  },
+  "src_dot_discounts_dot_components_dot_DiscountVariants_dot_discountVariantsNotFound": {
+    "context": "no variants",
+    "string": "No variants found"
+  },
+  "src_dot_discounts_dot_components_dot_DiscountVariants_dot_discountVariantsTableProductHeader": {
+    "context": "table head",
+    "string": "Product Name"
+  },
+  "src_dot_discounts_dot_components_dot_DiscountVariants_dot_discountVariantsTableTypeHeader": {
+    "context": "table head",
+    "string": "Product Type"
+  },
+  "src_dot_discounts_dot_components_dot_DiscountVariants_dot_discountVariantsTableVariantHeader": {
+    "context": "table head",
+    "string": "Variant Name"
   },
   "src_dot_discounts_dot_components_dot_SaleCreatePage_dot_3866518732": {
     "context": "page header",
@@ -3288,43 +3340,73 @@
   "src_dot_discounts_dot_views_dot_SaleCreate_dot_480188715": {
     "string": "Manage Sales Channel Availability"
   },
-  "src_dot_discounts_dot_views_dot_SaleDetails_dot_1457489953": {
-    "context": "dialog content",
-    "string": "Are you sure you want to delete {saleName}?"
-  },
-  "src_dot_discounts_dot_views_dot_SaleDetails_dot_1827854264": {
-    "context": "dialog header",
-    "string": "Unassign Categories From Sale"
-  },
-  "src_dot_discounts_dot_views_dot_SaleDetails_dot_1952217501": {
-    "context": "dialog header",
-    "string": "Unassign Collections From Sale"
-  },
-  "src_dot_discounts_dot_views_dot_SaleDetails_dot_2353723060": {
-    "context": "dialog content",
-    "string": "{counter,plural,one{Are you sure you want to unassign this category?} other{Are you sure you want to unassign {displayQuantity} categories?}}"
-  },
-  "src_dot_discounts_dot_views_dot_SaleDetails_dot_2534378844": {
-    "string": "Removed sale"
-  },
-  "src_dot_discounts_dot_views_dot_SaleDetails_dot_3215481647": {
-    "context": "dialog content",
-    "string": "{counter,plural,one{Are you sure you want to unassign this product?} other{Are you sure you want to unassign {displayQuantity} products?}}"
-  },
-  "src_dot_discounts_dot_views_dot_SaleDetails_dot_3395246518": {
-    "context": "dialog header",
-    "string": "Unassign Products From Sale"
-  },
-  "src_dot_discounts_dot_views_dot_SaleDetails_dot_3823295269": {
+  "src_dot_discounts_dot_views_dot_SaleDetails_dot_saleDetailsChannelAvailabilityDialogHeader": {
+    "context": "channel availability dialog header",
     "string": "Manage Channel Availability"
   },
-  "src_dot_discounts_dot_views_dot_SaleDetails_dot_506030254": {
+  "src_dot_discounts_dot_views_dot_SaleDetails_dot_saleDetailsSaleDelate": {
+    "context": "sale Details delete button",
+    "string": "Removed sale"
+  },
+  "src_dot_discounts_dot_views_dot_SaleDetails_dot_saleDetailsSaleDeleteDialog": {
+    "context": "dialog content",
+    "string": "Removed sale"
+  },
+  "src_dot_discounts_dot_views_dot_SaleDetails_dot_saleDetailsSaleDeleteDialogHeader": {
     "context": "dialog header",
     "string": "Delete Sale"
   },
-  "src_dot_discounts_dot_views_dot_SaleDetails_dot_767268203": {
+  "src_dot_discounts_dot_views_dot_SaleDetails_dot_saleDetailsUnassignCategory": {
+    "context": "unassign category from sale, button",
+    "string": "Unassign"
+  },
+  "src_dot_discounts_dot_views_dot_SaleDetails_dot_saleDetailsUnassignCategoryDialog": {
+    "context": "dialog content",
+    "string": "{counter,plural,one{Are you sure you want to unassign this category?} other{Are you sure you want to unassign {displayQuantity} categories?}}"
+  },
+  "src_dot_discounts_dot_views_dot_SaleDetails_dot_saleDetailsUnassignCategoryDialogHeader": {
+    "context": "dialog header",
+    "string": "Unassign Categories From Sale"
+  },
+  "src_dot_discounts_dot_views_dot_SaleDetails_dot_saleDetailsUnassignCollection": {
+    "context": "unassign collection from sale, button",
+    "string": "Unassign"
+  },
+  "src_dot_discounts_dot_views_dot_SaleDetails_dot_saleDetailsUnassignCollectionDialog": {
     "context": "dialog content",
     "string": "{counter,plural,one{Are you sure you want to unassign this collection?} other{Are you sure you want to unassign {displayQuantity} collections?}}"
+  },
+  "src_dot_discounts_dot_views_dot_SaleDetails_dot_saleDetailsUnassignCollectionDialogHeader": {
+    "context": "dialog header",
+    "string": "Unassign Collection From Sale"
+  },
+  "src_dot_discounts_dot_views_dot_SaleDetails_dot_saleDetailsUnassignDialogDelete": {
+    "context": "dialog content",
+    "string": "Are you sure you want to delete {saleName}?"
+  },
+  "src_dot_discounts_dot_views_dot_SaleDetails_dot_saleDetailsUnassignProduct": {
+    "context": "unassign product from sale, button",
+    "string": "Unassign"
+  },
+  "src_dot_discounts_dot_views_dot_SaleDetails_dot_saleDetailsUnassignProductDialog": {
+    "context": "dialog content",
+    "string": "{counter,plural,one{Are you sure you want to unassign this product?} other{Are you sure you want to unassign {displayQuantity} products?}}"
+  },
+  "src_dot_discounts_dot_views_dot_SaleDetails_dot_saleDetailsUnassignProductDialogHeader": {
+    "context": "dialog header",
+    "string": "Unassign Product From Sale"
+  },
+  "src_dot_discounts_dot_views_dot_SaleDetails_dot_saleDetailsUnassignVariant": {
+    "context": "unassign variant from sale, button",
+    "string": "Unassign"
+  },
+  "src_dot_discounts_dot_views_dot_SaleDetails_dot_saleDetailsUnassignVariantDialog": {
+    "context": "dialog content",
+    "string": "{counter,plural,one{Are you sure you want to unassign this variant?} other{Are you sure you want to unassign {displayQuantity} variants?}}"
+  },
+  "src_dot_discounts_dot_views_dot_SaleDetails_dot_saleDetailsUnassignVariantDialogHeader": {
+    "context": "dialog header",
+    "string": "Unassign Variant From Sale"
   },
   "src_dot_discounts_dot_views_dot_SaleList_dot_2809303671": {
     "context": "dialog header",
@@ -5571,6 +5653,9 @@
   "src_dot_plugins_dot_views_dot_955370043": {
     "string": "The plugin may stop working after this field is cleared. Are you sure you want to proceed?"
   },
+  "src_dot_preorderEndDateInFutureErrorText": {
+    "string": "Preorder end time needs to be set in the future"
+  },
   "src_dot_productTypes": {
     "context": "product types section name",
     "string": "Product Types"
@@ -6027,6 +6112,17 @@
     "context": "product weight",
     "string": "Weight"
   },
+  "src_dot_products_dot_components_dot_ProductStocks_dot_1540024536": {
+    "context": "product inventory, checkbox",
+    "string": "Variant currently in preorder"
+  },
+  "src_dot_products_dot_components_dot_ProductStocks_dot_2473321447": {
+    "string": "CANCEL END DATE"
+  },
+  "src_dot_products_dot_components_dot_ProductStocks_dot_2481295410": {
+    "context": "app has been installed",
+    "string": "{unitsLeft} units left"
+  },
   "src_dot_products_dot_components_dot_ProductStocks_dot_2585918415": {
     "string": "SKU (Stock Keeping Unit)"
   },
@@ -6034,9 +6130,23 @@
     "context": "tabel column header",
     "string": "Warehouse Name"
   },
+  "src_dot_products_dot_components_dot_ProductStocks_dot_2699291877": {
+    "string": "SETUP END DATE"
+  },
   "src_dot_products_dot_components_dot_ProductStocks_dot_2796503714": {
     "context": "header",
     "string": "Quantity"
+  },
+  "src_dot_products_dot_components_dot_ProductStocks_dot_294624093": {
+    "context": "info text",
+    "string": "Preordered products will be available in all warehouses. You can set a threshold for sold quantity. Leaving input blank will be interpreted as no limit to sale. Sold items will be allocated at the warehouse assigned to chosen shipping zone."
+  },
+  "src_dot_products_dot_components_dot_ProductStocks_dot_2999762286": {
+    "string": "Threshold that cannot be exceeded even if per channel thresholds are still available"
+  },
+  "src_dot_products_dot_components_dot_ProductStocks_dot_3420537107": {
+    "context": "tabel column header",
+    "string": "Channels"
   },
   "src_dot_products_dot_components_dot_ProductStocks_dot_3633706025": {
     "context": "product inventory, checkbox",
@@ -6045,6 +6155,16 @@
   "src_dot_products_dot_components_dot_ProductStocks_dot_3857433664": {
     "context": "button",
     "string": "Assign Warehouse"
+  },
+  "src_dot_products_dot_components_dot_ProductStocks_dot_3862021157": {
+    "context": "info text",
+    "string": "Set up an end date of preorder. When end date will be reached product will be automatically taken from preorder to standard selling"
+  },
+  "src_dot_products_dot_components_dot_ProductStocks_dot_4187357147": {
+    "string": "Unlimited"
+  },
+  "src_dot_products_dot_components_dot_ProductStocks_dot_578055997": {
+    "string": "Global threshold"
   },
   "src_dot_products_dot_components_dot_ProductStocks_dot_849869830": {
     "string": "Active inventory tracking will automatically calculate changes of stock"
@@ -6235,6 +6355,17 @@
   "src_dot_products_dot_components_dot_ProductVariantDeleteDialog_dot_3726089650": {
     "context": "dialog header",
     "string": "Delete Variant"
+  },
+  "src_dot_products_dot_components_dot_ProductVariantEndPreorderDialog_dot_dialogConfirmButtonLabel": {
+    "context": "button label",
+    "string": "ACCEPT"
+  },
+  "src_dot_products_dot_components_dot_ProductVariantEndPreorderDialog_dot_dialogMessage": {
+    "string": "You are about to end your products preorder. You have sold {variantGlobalSoldUnits} units of this variant. Sold units will be allocated at appropriate warehouses. Remember to add remaining threshold stock to warehouses."
+  },
+  "src_dot_products_dot_components_dot_ProductVariantEndPreorderDialog_dot_dialogTitle": {
+    "context": "dialog header",
+    "string": "Ending preorder"
   },
   "src_dot_products_dot_components_dot_ProductVariantImageSelectDialog_dot_2015102342": {
     "context": "dialog header",
@@ -7814,6 +7945,10 @@
     "context": "event",
     "string": "Product variant out of stock"
   },
+  "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_2328272362": {
+    "context": "event",
+    "string": "Sale deleted"
+  },
   "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_2454751033": {
     "context": "event",
     "string": "All events"
@@ -7894,6 +8029,10 @@
     "context": "event",
     "string": "List payment gateways"
   },
+  "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_4175628606": {
+    "context": "event",
+    "string": "Sale created"
+  },
   "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_4186057882": {
     "context": "event",
     "string": "Invoice requested"
@@ -7909,6 +8048,10 @@
   "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_482477254": {
     "context": "event",
     "string": "Translation updated"
+  },
+  "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_523513128": {
+    "context": "event",
+    "string": "Sale updated"
   },
   "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_679080833": {
     "context": "event",
@@ -8007,9 +8150,17 @@
     "context": "table column header, allocated product quantity",
     "string": "Allocated"
   },
+  "tableColChannelThreshold": {
+    "context": "table column header",
+    "string": "Channel threshold"
+  },
   "tableColQuantity": {
     "context": "table column header",
     "string": "Quantity"
+  },
+  "tableColSoldUnits": {
+    "context": "table column header, sold units preorder quantity",
+    "string": "Sold units"
   },
   "transaction reference subtitle": {
     "context": "transaction reference subtitle",
@@ -8018,6 +8169,10 @@
   "unavailable for purchase": {
     "context": "product unavailability",
     "string": "Unavailable for purchase"
+  },
+  "unlimitedUnitsLeft": {
+    "context": "section header",
+    "string": "Unlimited"
   },
   "voucherDetailsUnassignCategory": {
     "context": "unassign category from voucher, button",

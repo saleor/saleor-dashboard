@@ -18,11 +18,12 @@ import { MetadataFormData } from "@saleor/components/Metadata";
 import { MultiAutocompleteChoiceType } from "@saleor/components/MultiAutocompleteSelectField";
 import { RichTextEditorChange } from "@saleor/components/RichTextEditor";
 import { SingleAutocompleteChoiceType } from "@saleor/components/SingleAutocompleteSelectField";
-import useForm, { FormChange } from "@saleor/hooks/useForm";
+import useForm, { FormChange, FormErrors } from "@saleor/hooks/useForm";
 import useFormset, {
   FormsetChange,
   FormsetData
 } from "@saleor/hooks/useFormset";
+import { errorMessages } from "@saleor/intl";
 import { ProductType_productType } from "@saleor/products/types/ProductType";
 import {
   getAttributeInputFromProductType,
@@ -47,7 +48,9 @@ import createSingleAutocompleteSelectHandler from "@saleor/utils/handlers/single
 import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
 import useRichText from "@saleor/utils/richText/useRichText";
 import React from "react";
+import { useIntl } from "react-intl";
 
+import { createPreorderEndDateChangeHandler } from "../../utils/handlers";
 import { ProductStockFormsetData, ProductStockInput } from "../ProductStocks";
 
 export interface ProductCreateFormData extends MetadataFormData {
@@ -68,6 +71,11 @@ export interface ProductCreateFormData extends MetadataFormData {
   stockQuantity: number;
   taxCode: string;
   trackInventory: boolean;
+  isPreorder: boolean;
+  globalThreshold: number;
+  globalSoldUnits: number;
+  hasPreorderEndDate: boolean;
+  preorderEndDateTime: string;
   weight: string;
 }
 export interface ProductCreateData extends ProductCreateFormData {
@@ -102,12 +110,14 @@ export interface ProductCreateHandlers
     Record<"reorderAttributeValue", FormsetChange<ReorderEvent>>,
     Record<"addStock" | "deleteStock", (id: string) => void> {
   changeDescription: RichTextEditorChange;
+  changePreorderEndDate: FormChange;
   fetchReferences: (value: string) => void;
   fetchMoreReferences: FetchMoreProps;
 }
 export interface UseProductCreateFormResult {
   change: FormChange;
   data: ProductCreateData;
+  formErrors: FormErrors<ProductCreateData>;
   disabled: boolean;
   handlers: ProductCreateHandlers;
   hasChanged: boolean;
@@ -151,6 +161,7 @@ function useProductCreateForm(
   onSubmit: (data: ProductCreateData) => Promise<boolean>,
   opts: UseProductCreateFormOpts
 ): UseProductCreateFormResult {
+  const intl = useIntl();
   const defaultInitialFormData: ProductCreateFormData &
     Record<"productType", string> = {
     category: "",
@@ -172,7 +183,12 @@ function useProductCreateForm(
     stockQuantity: null,
     taxCode: null,
     trackInventory: false,
-    weight: ""
+    weight: "",
+    globalSoldUnits: 0,
+    globalThreshold: 0,
+    isPreorder: false,
+    hasPreorderEndDate: false,
+    preorderEndDateTime: ""
   };
   const [changed, setChanged] = React.useState(false);
   const triggerChange = () => setChanged(true);
@@ -289,6 +305,12 @@ function useProductCreateForm(
     triggerChange
   );
 
+  const handlePreorderEndDateChange = createPreorderEndDateChangeHandler(
+    form,
+    triggerChange,
+    intl.formatMessage(errorMessages.preorderEndDateInFutureErrorText)
+  );
+
   const getData = (): ProductCreateData => ({
     ...form.data,
     attributes: getAttributesDisplayData(
@@ -306,18 +328,21 @@ function useProductCreateForm(
   const submit = () => onSubmit(data);
 
   const disabled =
-    !opts.selectedProductType?.hasVariants &&
-    (!data.sku ||
-      data.channelListings.some(
+    (!opts.selectedProductType?.hasVariants &&
+      (data.channelListings.some(
         channel =>
           validatePrice(channel.price) || validateCostPrice(channel.costPrice)
       ) ||
-      !data.category);
+        !data.category)) ||
+    (data.isPreorder &&
+      data.hasPreorderEndDate &&
+      !!form.errors.preorderEndDateTime);
 
   return {
     change: handleChange,
     data,
     disabled,
+    formErrors: form.errors,
     handlers: {
       addStock: handleStockAdd,
       changeChannelPrice: handleChannelPriceChange,
@@ -325,6 +350,7 @@ function useProductCreateForm(
       changeDescription,
       changeMetadata,
       changeStock: handleStockChange,
+      changePreorderEndDate: handlePreorderEndDateChange,
       deleteStock: handleStockDelete,
       fetchMoreReferences: handleFetchMoreReferences,
       fetchReferences: handleFetchReferences,

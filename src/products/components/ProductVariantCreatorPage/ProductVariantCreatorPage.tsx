@@ -82,10 +82,8 @@ function canHitNext(
 
       return true;
     case ProductVariantCreatorStep.summary:
-      return !data.variants.some(
-        variant =>
-          variant.sku === "" ||
-          variant.channelListings.some(channel => validatePrice(channel.price))
+      return !data.variants.some(variant =>
+        variant.channelListings.some(channel => validatePrice(channel.price))
       );
 
     default:

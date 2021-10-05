@@ -9,18 +9,27 @@ import {
   createFetchMoreReferencesHandler,
   createFetchReferencesHandler
 } from "@saleor/attributes/utils/handlers";
-import { ChannelData, ChannelPriceArgs } from "@saleor/channels/utils";
+import {
+  ChannelData,
+  ChannelPreorderArgs,
+  ChannelPriceArgs
+} from "@saleor/channels/utils";
 import { AttributeInput } from "@saleor/components/Attributes";
 import { MetadataFormData } from "@saleor/components/Metadata";
 import { MultiAutocompleteChoiceType } from "@saleor/components/MultiAutocompleteSelectField";
 import { RichTextEditorChange } from "@saleor/components/RichTextEditor";
 import { SingleAutocompleteChoiceType } from "@saleor/components/SingleAutocompleteSelectField";
-import useForm, { FormChange, SubmitPromise } from "@saleor/hooks/useForm";
+import useForm, {
+  FormChange,
+  FormErrors,
+  SubmitPromise
+} from "@saleor/hooks/useForm";
 import useFormset, {
   FormsetAtomicData,
   FormsetChange,
   FormsetData
 } from "@saleor/hooks/useFormset";
+import { errorMessages } from "@saleor/intl";
 import { ProductDetails_product } from "@saleor/products/types/ProductDetails";
 import {
   getAttributeInputFromProduct,
@@ -29,7 +38,9 @@ import {
 } from "@saleor/products/utils/data";
 import {
   createChannelsChangeHandler,
-  createChannelsPriceChangeHandler
+  createChannelsPreorderChangeHandler,
+  createChannelsPriceChangeHandler,
+  createPreorderEndDateChangeHandler
 } from "@saleor/products/utils/handlers";
 import {
   validateCostPrice,
@@ -48,6 +59,7 @@ import getMetadata from "@saleor/utils/metadata/getMetadata";
 import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
 import useRichText from "@saleor/utils/richText/useRichText";
 import React from "react";
+import { useIntl } from "react-intl";
 
 import { ProductStockFormsetData, ProductStockInput } from "../ProductStocks";
 
@@ -68,6 +80,11 @@ export interface ProductUpdateFormData extends MetadataFormData {
   sku: string;
   taxCode: string;
   trackInventory: boolean;
+  isPreorder: boolean;
+  globalThreshold: number;
+  globalSoldUnits: number;
+  hasPreorderEndDate: boolean;
+  preorderEndDateTime?: string;
   weight: string;
 }
 export interface FileAttributeInputData {
@@ -111,6 +128,10 @@ export interface ProductUpdateHandlers
     >,
     Record<"changeChannelPrice", (id: string, data: ChannelPriceArgs) => void>,
     Record<
+      "changeChannelPreorder",
+      (id: string, data: ChannelPreorderArgs) => void
+    >,
+    Record<
       "changeChannels",
       (
         id: string,
@@ -122,13 +143,14 @@ export interface ProductUpdateHandlers
     Record<"reorderAttributeValue", FormsetChange<ReorderEvent>>,
     Record<"addStock" | "deleteStock", (id: string) => void> {
   changeDescription: RichTextEditorChange;
+  changePreorderEndDate: FormChange;
   fetchReferences: (value: string) => void;
   fetchMoreReferences: FetchMoreProps;
 }
 export interface UseProductUpdateFormResult {
   change: FormChange;
-
   data: ProductUpdateData;
+  formErrors: FormErrors<ProductUpdateSubmitData>;
   disabled: boolean;
   handlers: ProductUpdateHandlers;
   hasChanged: boolean;
@@ -198,6 +220,7 @@ function useProductUpdateForm(
   onSubmit: (data: ProductUpdateSubmitData) => SubmitPromise,
   opts: UseProductUpdateFormOpts
 ): UseProductUpdateFormResult {
+  const intl = useIntl();
   const [changed, setChanged] = React.useState(false);
   const triggerChange = () => setChanged(true);
 
@@ -308,10 +331,22 @@ function useProductUpdateForm(
     triggerChange
   );
 
+  const handleChannelPreorderChange = createChannelsPreorderChangeHandler(
+    opts.isSimpleProduct ? opts.currentChannels : opts.channelsData,
+    opts.isSimpleProduct ? opts.setChannels : opts.setChannelsData,
+    triggerChange
+  );
+
   const handleChannelPriceChange = createChannelsPriceChangeHandler(
     opts.isSimpleProduct ? opts.currentChannels : opts.channelsData,
     opts.isSimpleProduct ? opts.setChannels : opts.setChannelsData,
     triggerChange
+  );
+
+  const handlePreorderEndDateChange = createPreorderEndDateChangeHandler(
+    form,
+    triggerChange,
+    intl.formatMessage(errorMessages.preorderEndDateInFutureErrorText)
   );
 
   const data: ProductUpdateData = {
@@ -352,24 +387,29 @@ function useProductUpdateForm(
     handleFormSubmit(getSubmitData(), handleSubmit, setChanged);
 
   const disabled =
-    !opts.hasVariants &&
-    (!data.sku ||
+    (!opts.hasVariants &&
       data.channelListings.some(
         channel =>
           validatePrice(channel.price) || validateCostPrice(channel.costPrice)
-      ));
+      )) ||
+    (data.isPreorder &&
+      data.hasPreorderEndDate &&
+      !!form.errors.preorderEndDateTime);
 
   return {
     change: handleChange,
     data,
     disabled,
+    formErrors: form.errors,
     handlers: {
       addStock: handleStockAdd,
       changeChannelPrice: handleChannelPriceChange,
+      changeChannelPreorder: handleChannelPreorderChange,
       changeChannels: handleChannelsChange,
       changeDescription,
       changeMetadata,
       changeStock: handleStockChange,
+      changePreorderEndDate: handlePreorderEndDateChange,
       deleteStock: handleStockDelete,
       fetchMoreReferences: handleFetchMoreReferences,
       fetchReferences: handleFetchReferences,

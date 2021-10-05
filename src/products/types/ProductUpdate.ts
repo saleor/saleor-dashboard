@@ -267,6 +267,13 @@ export interface ProductUpdate_productUpdate_product_variants_stocks {
   warehouse: ProductUpdate_productUpdate_product_variants_stocks_warehouse;
 }
 
+export interface ProductUpdate_productUpdate_product_variants_preorder {
+  __typename: "PreorderData";
+  globalThreshold: number | null;
+  globalSoldUnits: number;
+  endDate: any | null;
+}
+
 export interface ProductUpdate_productUpdate_product_variants_channelListings_channel {
   __typename: "Channel";
   id: string;
@@ -286,22 +293,30 @@ export interface ProductUpdate_productUpdate_product_variants_channelListings_co
   currency: string;
 }
 
+export interface ProductUpdate_productUpdate_product_variants_channelListings_preorderThreshold {
+  __typename: "PreorderThreshold";
+  quantity: number | null;
+  soldUnits: number;
+}
+
 export interface ProductUpdate_productUpdate_product_variants_channelListings {
   __typename: "ProductVariantChannelListing";
   channel: ProductUpdate_productUpdate_product_variants_channelListings_channel;
   price: ProductUpdate_productUpdate_product_variants_channelListings_price | null;
   costPrice: ProductUpdate_productUpdate_product_variants_channelListings_costPrice | null;
+  preorderThreshold: ProductUpdate_productUpdate_product_variants_channelListings_preorderThreshold | null;
 }
 
 export interface ProductUpdate_productUpdate_product_variants {
   __typename: "ProductVariant";
   id: string;
-  sku: string;
+  sku: string | null;
   name: string;
   margin: number | null;
   media: ProductUpdate_productUpdate_product_variants_media[] | null;
   stocks: (ProductUpdate_productUpdate_product_variants_stocks | null)[] | null;
   trackInventory: boolean;
+  preorder: ProductUpdate_productUpdate_product_variants_preorder | null;
   channelListings: ProductUpdate_productUpdate_product_variants_channelListings[] | null;
 }
 
