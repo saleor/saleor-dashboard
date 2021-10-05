@@ -1,4 +1,3 @@
-import GiftCardDetailsProvider from "@saleor/giftCards/GiftCardUpdate/providers/GiftCardDetailsProvider";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { commonMessages } from "@saleor/intl";
@@ -9,6 +8,7 @@ import {
   TypedRemoveCustomerMutation,
   TypedUpdateCustomerMutation
 } from "../mutations";
+import { CustomerDetailsProvider } from "../providers/CustomerDetailsProvider";
 import { RemoveCustomer } from "../types/RemoveCustomer";
 import { UpdateCustomer } from "../types/UpdateCustomer";
 import { customerListUrl, CustomerUrlQueryParams } from "../urls";
@@ -57,7 +57,7 @@ export const CustomerDetailsView: React.FC<CustomerDetailsViewProps> = ({
       {(removeCustomer, removeCustomerOpts) => (
         <TypedUpdateCustomerMutation onCompleted={handleCustomerUpdateSuccess}>
           {(updateCustomer, updateCustomerOpts) => (
-            <GiftCardDetailsProvider id={id}>
+            <CustomerDetailsProvider id={id}>
               <CustomerDetailsContent
                 handleBack={handleBack}
                 id={id}
@@ -68,7 +68,7 @@ export const CustomerDetailsView: React.FC<CustomerDetailsViewProps> = ({
                 updateCustomer={updateCustomer}
                 updateCustomerOpts={updateCustomerOpts}
               />
-            </GiftCardDetailsProvider>
+            </CustomerDetailsProvider>
           )}
         </TypedUpdateCustomerMutation>
       )}

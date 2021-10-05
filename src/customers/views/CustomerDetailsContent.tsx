@@ -56,10 +56,9 @@ export const CustomerDetailsContent: React.FC<CustomerDetailsContentProps> = ({
   removeCustomer,
   params
 }) => {
-  const { customer, loading: customerDetailsLoading } = useContext(
-    CustomerDetailsContext
-  );
-  const user = customer?.user;
+  const customerDetails = useContext(CustomerDetailsContext);
+  const user = customerDetails?.customer?.user;
+  const customerDetailsLoading = customerDetails?.loading;
 
   const intl = useIntl();
 
