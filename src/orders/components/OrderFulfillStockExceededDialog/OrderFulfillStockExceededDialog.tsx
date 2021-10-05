@@ -6,6 +6,7 @@ import {
   Typography
 } from "@material-ui/core";
 import ActionDialog from "@saleor/components/ActionDialog";
+import { CardSpacer } from "@saleor/components/CardSpacer";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
 import TableCellAvatar from "@saleor/components/TableCellAvatar";
@@ -31,6 +32,9 @@ const useStyles = makeStyles(
     },
     table: {
       tableLayout: "fixed"
+    },
+    label: {
+      margin: theme.spacing(2)
     }
   }),
   { name: "OrderFulfillStockExceededDialog" }
@@ -49,6 +53,23 @@ const OrderFulfillStockExceededDialog: React.FC<OrderFulfillStockExceededDialogP
   const intl = useIntl();
   const classes = useStyles(props);
 
+  const getAvailableQuantity = (line, stock) => {
+    const warehouseAllocation = line.allocations.find(
+      allocation => allocation.warehouse.id === stock.warehouse.id
+    );
+    const allocatedQuantityForLine = warehouseAllocation?.quantity || 0;
+
+    const availableQuantity =
+      stock.quantity - stock.quantityAllocated + allocatedQuantityForLine;
+
+    return availableQuantity;
+  };
+
+  const getFormsetQuantity = (formsetData, line, stock) =>
+    formsetData
+      .find(data => data.id === line.id)
+      .value.find(val => val.warehouse === stock.warehouse.id).quantity;
+
   return (
     <>
       <ActionDialog
@@ -60,7 +81,7 @@ const OrderFulfillStockExceededDialog: React.FC<OrderFulfillStockExceededDialogP
         maxWidth={"sm"}
         confirmButtonLabel={intl.formatMessage(messages.fulfillButton)}
       >
-        {intl.formatMessage(messages.infoLabel)}
+        <Typography>{intl.formatMessage(messages.infoLabel)}</Typography>
         <ResponsiveTable className={classes.table}>
           {maybe(() => !!lines.length) && (
             <TableHead>
@@ -73,6 +94,9 @@ const OrderFulfillStockExceededDialog: React.FC<OrderFulfillStockExceededDialogP
                 </TableCell>
                 <TableCell className={classes.colQuantity}>
                   {intl.formatMessage(messages.availableStockLabel)}
+                </TableCell>
+                <TableCell className={classes.colQuantity}>
+                  {intl.formatMessage(messages.warehouseStockLabel)}
                 </TableCell>
               </TableRow>
             </TableHead>
@@ -102,6 +126,9 @@ const OrderFulfillStockExceededDialog: React.FC<OrderFulfillStockExceededDialogP
                       <TableCell className={classes.colQuantity}>
                         <Skeleton />
                       </TableCell>
+                      <TableCell className={classes.colQuantity}>
+                        <Skeleton />
+                      </TableCell>
                     </TableRow>
                   );
                 }
@@ -120,12 +147,11 @@ const OrderFulfillStockExceededDialog: React.FC<OrderFulfillStockExceededDialogP
                       stock.quantityAllocated +
                       allocatedQuantityForLine;
 
-                    const qA = availableQuantity;
-                    const qB = formsetData
+                    const formsetQuantity = formsetData
                       .find(data => data.id === line.id)
                       .value.find(val => val.warehouse === stock.warehouse.id)
                       .quantity;
-                    return qA < qB;
+                    return availableQuantity < formsetQuantity;
                   }),
                   stock => (
                     <TableRow key={line?.id}>
@@ -145,10 +171,18 @@ const OrderFulfillStockExceededDialog: React.FC<OrderFulfillStockExceededDialogP
                         </Typography>
                       </TableCellAvatar>
                       <TableCell className={classes.colQuantity}>
-                        {"0"}
+                        {getFormsetQuantity(formsetData, line, stock)}
                       </TableCell>
                       <TableCell className={classes.colQuantity}>
-                        {stock.warehouse.id}
+                        {line.variant.stocks.reduce(
+                          (partialSum, currentValue) =>
+                            partialSum +
+                            getAvailableQuantity(line, currentValue),
+                          0
+                        )}
+                      </TableCell>
+                      <TableCell className={classes.colQuantity}>
+                        {getAvailableQuantity(line, stock)}
                       </TableCell>
                     </TableRow>
                   )
@@ -158,7 +192,8 @@ const OrderFulfillStockExceededDialog: React.FC<OrderFulfillStockExceededDialogP
             )}
           </TableBody>
         </ResponsiveTable>
-        {intl.formatMessage(messages.questionLabel)}
+        <CardSpacer />
+        <Typography>{intl.formatMessage(messages.questionLabel)}</Typography>
       </ActionDialog>
     </>
   );

@@ -224,6 +224,7 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
     }
 
     // this is now legal
+
     // const isQuantityLargerThanAvailable =
     //   line.variant.trackInventory && formsetStock.quantity > availableQuantity;
 

@@ -27,11 +27,15 @@ export const stockExceededDialogMessages = defineMessages({
     description: "table header product label"
   },
   requiredStockLabel: {
-    defaultMessage: "Required stock",
+    defaultMessage: "Required",
     description: "table header required stock label"
   },
   availableStockLabel: {
-    defaultMessage: "Selected warehouse",
-    description: "table header selected warehouse label"
+    defaultMessage: "Available",
+    description: "table header available stock label"
+  },
+  warehouseStockLabel: {
+    defaultMessage: "Warehouse stock",
+    description: "table header warehouse stock label"
   }
 });
