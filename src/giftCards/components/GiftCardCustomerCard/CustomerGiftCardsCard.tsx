@@ -3,6 +3,7 @@ import VerticalSpacer from "@saleor/apps/components/VerticalSpacer";
 import CardTitle from "@saleor/components/CardTitle";
 import { CustomerDetailsContext } from "@saleor/customers/providers/CustomerDetailsProvider";
 import GiftCardCreateDialog from "@saleor/giftCards/GiftCardCreateDialog/GiftCardCreateDialog";
+import { getFullName } from "@saleor/misc";
 import { mapEdgesToItems } from "@saleor/utils/maps";
 import * as React from "react";
 import { useContext } from "react";
@@ -17,14 +18,10 @@ import {
 } from "./queries";
 import { useCardActionsStyles } from "./styles";
 
-interface CustomerGiftCardsCardProps {
-  customerId?: string | null;
-}
-
-const CustomerGiftCardsCard: React.FC<CustomerGiftCardsCardProps> = () => {
+const CustomerGiftCardsCard: React.FC = () => {
   const customerDetails = useContext(CustomerDetailsContext);
-  const id = customerDetails?.customer?.user.id;
-  const customerDetailsLoading = customerDetails?.loading;
+  const customer = customerDetails?.customer?.user;
+  const id = customer?.id;
 
   const { data, loading } = useCustomerGiftCardQuery({
     variables: {
@@ -46,7 +43,7 @@ const CustomerGiftCardsCard: React.FC<CustomerGiftCardsCardProps> = () => {
   };
 
   const handleCreateNewCardButton = () => {
-    // oepn issue new card modal
+    setOpenCreateDialog(true);
   };
 
   return (
@@ -88,10 +85,18 @@ const CustomerGiftCardsCard: React.FC<CustomerGiftCardsCardProps> = () => {
           </Button>
         </CardActions>
       </Card>
+
       <GiftCardCreateDialog
         open={openCreateDialog}
         closeDialog={closeCreateDialog}
         refetchQueries={[CUSTOMER_GIFT_CARD_LIST_QUERY]}
+        initialCustomer={{
+          email: customer?.email,
+          name: getFullName({
+            firstName: customer?.firstName,
+            lastName: customer?.lastName
+          })
+        }}
       />
     </>
   );
