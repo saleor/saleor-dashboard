@@ -13,11 +13,13 @@ import { GiftCardCreateFormCustomer } from "./types";
 export interface GiftCardCustomerSelectFieldProps {
   selectedCustomer: GiftCardCreateFormCustomer;
   setSelectedCustomer: (customer: GiftCardCreateFormCustomer) => void;
+  disabled?: boolean;
 }
 
 const GiftCardCustomerSelectField: React.FC<GiftCardCustomerSelectFieldProps> = ({
   selectedCustomer,
-  setSelectedCustomer
+  setSelectedCustomer,
+  disabled = false
 }) => {
   const intl = useIntl();
 
@@ -54,6 +56,7 @@ const GiftCardCustomerSelectField: React.FC<GiftCardCustomerSelectFieldProps> = 
       fetchChoices={search}
       onChange={handleSelect}
       onFetchMore={loadMore}
+      disabled={disabled}
     />
   );
 };

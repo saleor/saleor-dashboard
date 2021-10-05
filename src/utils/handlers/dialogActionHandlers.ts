@@ -11,6 +11,8 @@ export interface DialogActionHandlersProps {
   closeDialog: () => void;
   open: boolean;
   refetchQueries?: string[];
+  selectedCustomer?: GiftCardCreateFormCustomer;
+  initialCustomer?: GiftCardCreateFormCustomer;
 }
 
 function createDialogActionHandlers<

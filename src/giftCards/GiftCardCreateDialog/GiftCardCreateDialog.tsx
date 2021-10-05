@@ -22,7 +22,8 @@ import { getGiftCardExpiryInputData } from "./utils";
 const GiftCardCreateDialog: React.FC<DialogActionHandlersProps> = ({
   closeDialog,
   open,
-  refetchQueries
+  refetchQueries,
+  initialCustomer
 }) => {
   const intl = useIntl();
   const notify = useNotifier();
@@ -117,6 +118,7 @@ const GiftCardCreateDialog: React.FC<DialogActionHandlersProps> = ({
               onClose={handleClose}
               apiErrors={createGiftCardOpts?.data?.giftCardCreate?.errors}
               onSubmit={handleSubmit}
+              initialCustomer={initialCustomer}
             />
           ))}
       </ContentWithProgress>
