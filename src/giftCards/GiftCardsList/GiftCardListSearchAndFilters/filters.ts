@@ -358,7 +358,7 @@ export function getFilterVariables({
   query
 }: GiftCardListUrlQueryParams): GiftCardFilterInput {
   return {
-    search: query,
+    code: query,
     isActive: !!status ? status === "enabled" : undefined,
     tags: tag,
     usedBy,

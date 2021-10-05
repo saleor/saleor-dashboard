@@ -2419,7 +2419,6 @@ enum GiftCardEventsEnum {
 }
 
 input GiftCardFilterInput {
-  search: String
   isActive: Boolean
   tag: String
   tags: [String]

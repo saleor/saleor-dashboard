@@ -2210,7 +2210,6 @@ export interface GiftCardCreateInput {
 }
 
 export interface GiftCardFilterInput {
-  search?: string | null;
   isActive?: boolean | null;
   tag?: string | null;
   tags?: (string | null)[] | null;
