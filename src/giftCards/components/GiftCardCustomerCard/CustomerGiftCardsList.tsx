@@ -16,7 +16,7 @@ const CustomerGiftCardsList: React.FC<CustomerGiftCardsListProps> = ({
   loading
 }) => (
   <Skeleton>
-    {!loading && (
+    {!loading && giftCards && (
       <CollectionWithDividers
         collection={giftCards}
         renderItem={giftCard => (
