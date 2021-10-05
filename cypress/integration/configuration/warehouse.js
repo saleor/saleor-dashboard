@@ -14,7 +14,7 @@ import {
 } from "../../fixtures/urlList";
 import { createShippingZone } from "../../support/api/requests/ShippingMethod";
 import {
-  createWarehouse,
+  createWarehouse as createWarehouseViaApi,
   getWarehouse
 } from "../../support/api/requests/Warehouse";
 import { getDefaultChannel } from "../../support/api/utils/channelsUtils";
@@ -70,7 +70,7 @@ filterTests({ definedTags: ["all"] }, () => {
       getDefaultChannel()
         .then(channelResp => {
           defaultChannel = channelResp;
-          createWarehouse({
+          createWarehouseViaApi({
             name,
             address: usAddress
           });
@@ -101,7 +101,7 @@ filterTests({ definedTags: ["all"] }, () => {
 
     it("should delete warehouse", () => {
       const name = `${startsWith}${faker.datatype.number()}`;
-      createWarehouse({
+      createWarehouseViaApi({
         name,
         address: usAddress
       }).then(warehouse => {
