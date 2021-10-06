@@ -1,5 +1,6 @@
 import { Card } from "@material-ui/core";
 import { mapToMenuItems, useExtensions } from "@saleor/apps/useExtensions";
+import { drawerWidthExpanded } from "@saleor/components/AppLayout/consts";
 import { ButtonWithSelect } from "@saleor/components/ButtonWithSelect";
 import CardMenu from "@saleor/components/CardMenu";
 import ColumnPicker, {
@@ -70,6 +71,11 @@ const useStyles = makeStyles(
     },
     settings: {
       marginRight: theme.spacing(2)
+    },
+    container: {
+      [theme.breakpoints.up("md")]: {
+        marginLeft: drawerWidthExpanded
+      }
     }
   }),
   { name: "ProductListPage" }
@@ -144,7 +150,7 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
   const extensionCreateButtonItems = mapToMenuItems(create);
 
   return (
-    <Container>
+    <Container className={classes.container}>
       <PageHeader
         title={intl.formatMessage(sectionNames.products)}
         limitText={
