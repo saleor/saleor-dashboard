@@ -20,11 +20,7 @@ import Savebar from "@saleor/components/Savebar";
 import Skeleton from "@saleor/components/Skeleton";
 import TableCellAvatar from "@saleor/components/TableCellAvatar";
 import { WarehouseFragment } from "@saleor/fragments/types/WarehouseFragment";
-import {
-  FormsetAtomicData,
-  FormsetChange,
-  FormsetData
-} from "@saleor/hooks/useFormset";
+import { FormsetChange, FormsetData } from "@saleor/hooks/useFormset";
 import { Backlink } from "@saleor/macaw-ui";
 import { makeStyles } from "@saleor/macaw-ui";
 import { renderCollection } from "@saleor/misc";
