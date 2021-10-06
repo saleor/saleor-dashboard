@@ -8,6 +8,10 @@ import {
   AssignProductAttributeVariables
 } from "./types/AssignProductAttribute";
 import {
+  ProductAttributeAssignmentUpdate,
+  ProductAttributeAssignmentUpdateVariables
+} from "./types/productAttributeAssignmentUpdate";
+import {
   ProductTypeAttributeReorder,
   ProductTypeAttributeReorderVariables
 } from "./types/ProductTypeAttributeReorder";
@@ -170,3 +174,30 @@ export const ProductTypeAttributeReorderMutation = TypedMutation<
   ProductTypeAttributeReorder,
   ProductTypeAttributeReorderVariables
 >(productTypeAttributeReorder);
+
+export const productAttributeAssignmentUpdate = gql`
+  ${productTypeDetailsFragment}
+  mutation ProductAttributeAssignmentUpdate(
+    $operations: [ProductAttributeAssignmentUpdateInput]!
+    $productTypeId: ID!
+  ) {
+    productAttributeAssignmentUpdate(
+      operations: $operations
+      productTypeId: $productTypeId
+    ) {
+      errors {
+        field
+        message
+        attributes
+      }
+      productType {
+        ...ProductTypeDetailsFragment
+      }
+    }
+  }
+`;
+
+export const useProductAttributeAssignmentUpdateMutation = makeMutation<
+  ProductAttributeAssignmentUpdate,
+  ProductAttributeAssignmentUpdateVariables
+>(productAttributeAssignmentUpdate);

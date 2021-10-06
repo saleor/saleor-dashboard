@@ -53,6 +53,25 @@ export interface ProductTypeDetailsFragment_variantAttributes {
   inputType: AttributeInputTypeEnum | null;
 }
 
+export interface ProductTypeDetailsFragment_assignedVariantAttributes_attribute {
+  __typename: "Attribute";
+  id: string;
+  name: string | null;
+  slug: string | null;
+  type: AttributeTypeEnum | null;
+  visibleInStorefront: boolean;
+  filterableInDashboard: boolean;
+  filterableInStorefront: boolean;
+  unit: MeasurementUnitsEnum | null;
+  inputType: AttributeInputTypeEnum | null;
+}
+
+export interface ProductTypeDetailsFragment_assignedVariantAttributes {
+  __typename: "AssignedVariantAttribute";
+  attribute: ProductTypeDetailsFragment_assignedVariantAttributes_attribute;
+  variantSelection: boolean;
+}
+
 export interface ProductTypeDetailsFragment_weight {
   __typename: "Weight";
   unit: WeightUnitsEnum;
@@ -71,5 +90,6 @@ export interface ProductTypeDetailsFragment {
   privateMetadata: (ProductTypeDetailsFragment_privateMetadata | null)[];
   productAttributes: (ProductTypeDetailsFragment_productAttributes | null)[] | null;
   variantAttributes: (ProductTypeDetailsFragment_variantAttributes | null)[] | null;
+  assignedVariantAttributes: (ProductTypeDetailsFragment_assignedVariantAttributes | null)[] | null;
   weight: ProductTypeDetailsFragment_weight | null;
 }

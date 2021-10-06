@@ -1140,6 +1140,24 @@ export const productType: ProductTypeDetails_productType = {
       unit: null
     }
   ],
+  assignedVariantAttributes: [
+    {
+      __typename: "AssignedVariantAttribute" as "AssignedVariantAttribute",
+      attribute: {
+        __typename: "Attribute" as "Attribute",
+        filterableInDashboard: true,
+        filterableInStorefront: false,
+        id: "UHJvZHVjdEF0dHJpYnV0ATo5",
+        name: "Author",
+        slug: "author",
+        type: AttributeTypeEnum.PRODUCT_TYPE,
+        inputType: AttributeInputTypeEnum.DROPDOWN,
+        visibleInStorefront: true,
+        unit: null
+      },
+      variantSelection: true
+    }
+  ],
   weight: {
     __typename: "Weight",
     unit: WeightUnitsEnum.KG,

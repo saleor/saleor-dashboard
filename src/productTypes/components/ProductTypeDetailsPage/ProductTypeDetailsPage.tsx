@@ -68,6 +68,8 @@ export interface ProductTypeDetailsPageProps {
   onDelete: () => void;
   onHasVariantsToggle: (hasVariants: boolean) => void;
   onSubmit: (data: ProductTypeForm) => SubmitPromise;
+  setSelectedVariantAttributes: (data: string[]) => void;
+  selectedVariantAttributes: string[];
 }
 
 function handleTaxTypeChange(
@@ -99,7 +101,9 @@ const ProductTypeDetailsPage: React.FC<ProductTypeDetailsPageProps> = ({
   onBack,
   onDelete,
   onHasVariantsToggle,
-  onSubmit
+  onSubmit,
+  setSelectedVariantAttributes,
+  selectedVariantAttributes
 }) => {
   const intl = useIntl();
   const {
@@ -221,7 +225,9 @@ const ProductTypeDetailsPage: React.FC<ProductTypeDetailsPageProps> = ({
                     <CardSpacer />
                     <ProductTypeVariantAttributes
                       testId="assignVariantsAttributes"
-                      attributes={maybe(() => productType.variantAttributes)}
+                      assignedVariantAttributes={maybe(
+                        () => productType.assignedVariantAttributes
+                      )}
                       disabled={disabled}
                       type={ProductAttributeType.VARIANT}
                       onAttributeAssign={onAttributeAdd}
@@ -231,6 +237,10 @@ const ProductTypeDetailsPage: React.FC<ProductTypeDetailsPageProps> = ({
                       }
                       onAttributeUnassign={onAttributeUnassign}
                       onAttributeVariantSelection={changeVariantSelection}
+                      setSelectedVariantAttributes={
+                        setSelectedVariantAttributes
+                      }
+                      selectedVariantAttributes={selectedVariantAttributes}
                       {...variantAttributeList}
                     />
                   </>

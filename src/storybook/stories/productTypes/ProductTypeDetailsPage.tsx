@@ -28,7 +28,9 @@ const props: Omit<ProductTypeDetailsPageProps, "classes"> = {
   productType,
   saveButtonBarState: "default",
   taxTypes: [],
-  variantAttributeList: listActionsProps
+  variantAttributeList: listActionsProps,
+  setSelectedVariantAttributes: () => undefined,
+  selectedVariantAttributes: []
 };
 
 storiesOf("Views / Product types / Product type details", module)

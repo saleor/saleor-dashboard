@@ -59,6 +59,25 @@ export interface UnassignProductAttribute_productAttributeUnassign_productType_v
   inputType: AttributeInputTypeEnum | null;
 }
 
+export interface UnassignProductAttribute_productAttributeUnassign_productType_assignedVariantAttributes_attribute {
+  __typename: "Attribute";
+  id: string;
+  name: string | null;
+  slug: string | null;
+  type: AttributeTypeEnum | null;
+  visibleInStorefront: boolean;
+  filterableInDashboard: boolean;
+  filterableInStorefront: boolean;
+  unit: MeasurementUnitsEnum | null;
+  inputType: AttributeInputTypeEnum | null;
+}
+
+export interface UnassignProductAttribute_productAttributeUnassign_productType_assignedVariantAttributes {
+  __typename: "AssignedVariantAttribute";
+  attribute: UnassignProductAttribute_productAttributeUnassign_productType_assignedVariantAttributes_attribute;
+  variantSelection: boolean;
+}
+
 export interface UnassignProductAttribute_productAttributeUnassign_productType_weight {
   __typename: "Weight";
   unit: WeightUnitsEnum;
@@ -77,6 +96,7 @@ export interface UnassignProductAttribute_productAttributeUnassign_productType {
   privateMetadata: (UnassignProductAttribute_productAttributeUnassign_productType_privateMetadata | null)[];
   productAttributes: (UnassignProductAttribute_productAttributeUnassign_productType_productAttributes | null)[] | null;
   variantAttributes: (UnassignProductAttribute_productAttributeUnassign_productType_variantAttributes | null)[] | null;
+  assignedVariantAttributes: (UnassignProductAttribute_productAttributeUnassign_productType_assignedVariantAttributes | null)[] | null;
   weight: UnassignProductAttribute_productAttributeUnassign_productType_weight | null;
 }
 
