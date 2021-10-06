@@ -1,4 +1,5 @@
 import { Button, Card } from "@material-ui/core";
+import { drawerWidthExpanded } from "@saleor/components/AppLayout/consts";
 import CardMenu from "@saleor/components/CardMenu";
 import ColumnPicker, {
   ColumnPickerChoice
@@ -64,6 +65,11 @@ const useStyles = makeStyles(
     },
     settings: {
       marginRight: theme.spacing(2)
+    },
+    container: {
+      [theme.breakpoints.up("md")]: {
+        marginLeft: drawerWidthExpanded
+      }
     }
   }),
   { name: "ProductListPage" }
@@ -131,7 +137,7 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
   const limitReached = isLimitReached(limits, "productVariants");
 
   return (
-    <Container>
+    <Container className={classes.container}>
       <PageHeader
         title={intl.formatMessage(sectionNames.products)}
         limitText={
