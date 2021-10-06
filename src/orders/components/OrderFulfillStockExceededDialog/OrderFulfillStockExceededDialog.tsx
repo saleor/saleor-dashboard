@@ -68,8 +68,8 @@ const OrderFulfillStockExceededDialog: React.FC<OrderFulfillStockExceededDialogP
 
   const getFormsetQuantity = (formsetData, line, stock) =>
     formsetData
-      .find(data => data.id === line.id)
-      .value.find(val => val.warehouse === stock.warehouse.id).quantity;
+      ?.find(data => data.id === line.id)
+      ?.value.find(val => val.warehouse === stock.warehouse.id).quantity;
 
   return (
     <>
@@ -109,7 +109,7 @@ const OrderFulfillStockExceededDialog: React.FC<OrderFulfillStockExceededDialogP
                 line.variant.stocks.some(
                   stock =>
                     stock.quantity <
-                    formsetData[lineIndex].value.find(
+                    formsetData?.[lineIndex]?.value.find(
                       val => val.warehouse === stock.warehouse.id
                     ).quantity
                 )
@@ -149,8 +149,8 @@ const OrderFulfillStockExceededDialog: React.FC<OrderFulfillStockExceededDialogP
                       allocatedQuantityForLine;
 
                     const formsetQuantity = formsetData
-                      .find(data => data.id === line.id)
-                      .value.find(val => val.warehouse === stock.warehouse.id)
+                      ?.find(data => data.id === line.id)
+                      ?.value.find(val => val.warehouse === stock.warehouse.id)
                       .quantity;
                     return availableQuantity < formsetQuantity;
                   }),
