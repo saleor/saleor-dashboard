@@ -1,5 +1,5 @@
 import { WindowTitle } from "@saleor/components/WindowTitle";
-import useFormset from "@saleor/hooks/useFormset";
+import useFormset, { FormsetData } from "@saleor/hooks/useFormset";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import OrderFulfillPage from "@saleor/orders/components/OrderFulfillPage";
@@ -15,6 +15,13 @@ import { useIntl } from "react-intl";
 
 export interface OrderFulfillProps {
   orderId: string;
+}
+interface OrderFulfillFormData {
+  sendInfo: boolean;
+  allowStockToBeExceeded: boolean;
+}
+interface OrderFulfillSubmitData extends OrderFulfillFormData {
+  items: FormsetData<null, OrderFulfillStockInput[]>;
 }
 
 const OrderFulfill: React.FC<OrderFulfillProps> = ({ orderId }) => {
@@ -39,6 +46,8 @@ const OrderFulfill: React.FC<OrderFulfillProps> = ({ orderId }) => {
     displayStockExceededDialog,
     setDisplayStockExceededDialog
   ] = React.useState(false);
+
+  const [sendInfoToCustomer, setSendInfoToCustomer] = React.useState(true);
 
   const { change: formsetChange, data: formsetData } = useFormset<
     null,
@@ -115,16 +124,18 @@ const OrderFulfill: React.FC<OrderFulfillProps> = ({ orderId }) => {
         onBack={() => navigate(orderUrl(orderId))}
         formsetChange={formsetChange}
         formsetData={formsetData}
-        onSubmit={formData =>
+        setSendInfo={setSendInfoToCustomer}
+        sendInfo={sendInfoToCustomer}
+        onSubmit={() =>
           fulfillOrder({
             variables: {
               input: {
-                lines: formData.items.map(line => ({
+                lines: formsetData.map(line => ({
                   orderLineId: line.id,
                   stocks: line.value
                 })),
-                notifyCustomer: formData.sendInfo,
-                allowStockToBeExceeded: formData.allowStockToBeExceeded
+                notifyCustomer: sendInfoToCustomer,
+                allowStockToBeExceeded: false
               },
               orderId
             }
@@ -139,6 +150,21 @@ const OrderFulfill: React.FC<OrderFulfillProps> = ({ orderId }) => {
         formsetData={formsetData}
         open={displayStockExceededDialog}
         onClose={() => setDisplayStockExceededDialog(false)}
+        onSubmit={() =>
+          fulfillOrder({
+            variables: {
+              input: {
+                lines: formsetData.map(line => ({
+                  orderLineId: line.id,
+                  stocks: line.value
+                })),
+                notifyCustomer: sendInfoToCustomer,
+                allowStockToBeExceeded: true
+              },
+              orderId
+            }
+          })
+        }
       />
     </>
   );

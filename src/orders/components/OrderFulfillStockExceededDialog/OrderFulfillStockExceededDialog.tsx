@@ -44,11 +44,12 @@ export interface OrderFulfillStockExceededDialogProps {
   lines: OrderFulfillData_order_lines[];
   open: boolean;
   formsetData: FormsetData<null, OrderFulfillStockInput[]>;
+  onSubmit();
   onClose();
 }
 
 const OrderFulfillStockExceededDialog: React.FC<OrderFulfillStockExceededDialogProps> = props => {
-  const { lines, open, formsetData, onClose } = props;
+  const { lines, open, formsetData, onClose, onSubmit } = props;
 
   const intl = useIntl();
   const classes = useStyles(props);
@@ -75,7 +76,7 @@ const OrderFulfillStockExceededDialog: React.FC<OrderFulfillStockExceededDialogP
       <ActionDialog
         open={open}
         title={intl.formatMessage(messages.title)}
-        onConfirm={() => null}
+        onConfirm={onSubmit}
         onClose={onClose}
         confirmButtonState={"default"}
         maxWidth={"sm"}
@@ -154,7 +155,7 @@ const OrderFulfillStockExceededDialog: React.FC<OrderFulfillStockExceededDialogP
                     return availableQuantity < formsetQuantity;
                   }),
                   stock => (
-                    <TableRow key={line?.id}>
+                    <TableRow key={line?.id + stock?.id}>
                       <TableCellAvatar
                         className={classes.colName}
                         thumbnail={maybe(() => line.thumbnail.url)}

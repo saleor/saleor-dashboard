@@ -38,7 +38,7 @@ import {
 } from "@saleor/types/globalTypes";
 import { update } from "@saleor/utils/lists";
 import classNames from "classnames";
-import React from "react";
+import React, { Dispatch, SetStateAction } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 type ClassKey =
@@ -140,6 +140,8 @@ export interface OrderFulfillPageProps {
   errors: FulfillOrder_orderFulfill_errors[];
   formsetChange: FormsetChange<OrderFulfillStockInput[]>;
   formsetData: FormsetData<null, OrderFulfillStockInput[]>;
+  sendInfo: boolean;
+  setSendInfo: Dispatch<SetStateAction<boolean>>;
   order: OrderFulfillData_order;
   saveButtonBar: ConfirmButtonTransitionState;
   warehouses: WarehouseFragment[];
@@ -160,6 +162,10 @@ function isFulfillable(line: OrderFulfillData_order_lines): boolean {
   return getRemainingQuantity(line) > 0 && line.variant !== null;
 }
 
+function getFormsetStock(data, index) {
+  return data !== undefined ? data[index] : undefined;
+}
+
 const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
   const {
     loading,
@@ -169,6 +175,8 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
     warehouses,
     formsetData,
     formsetChange,
+    sendInfo,
+    setSendInfo,
     onBack,
     onSubmit
   } = props;
@@ -187,11 +195,11 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
       return false;
     }
 
-    const isAtLeastOneFulfilled = formsetData.some(({ value }) =>
+    const isAtLeastOneFulfilled = formsetData?.some(({ value }) =>
       value.some(({ quantity }) => quantity > 0)
     );
 
-    const areProperlyFulfilled = formsetData.every(({ id, value }) => {
+    const areProperlyFulfilled = formsetData?.every(({ id, value }) => {
       const { lines } = order;
 
       const { quantity, quantityFulfilled } = lines.find(
@@ -338,13 +346,14 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
                       }
 
                       const remainingQuantity = getRemainingQuantity(line);
-                      const quantityToFulfill = formsetData[
-                        lineIndex
-                      ].value.reduce(
-                        (quantityToFulfill, lineInput) =>
-                          quantityToFulfill + (lineInput.quantity || 0),
-                        0
-                      );
+                      const quantityToFulfill =
+                        formsetData !== undefined
+                          ? formsetData[lineIndex].value.reduce(
+                              (quantityToFulfill, lineInput) =>
+                                quantityToFulfill + (lineInput.quantity || 0),
+                              0
+                            )
+                          : undefined;
                       const overfulfill = remainingQuantity < quantityToFulfill;
 
                       return (
@@ -386,11 +395,12 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
                             const warehouseStock = line.variant.stocks.find(
                               stock => stock.warehouse.id === warehouse.id
                             );
-                            const formsetStock = formsetData[
-                              lineIndex
-                            ].value.find(
-                              line => line.warehouse === warehouse.id
-                            );
+                            const formsetStock =
+                              formsetData !== undefined
+                                ? formsetData[lineIndex].value.find(
+                                    line => line.warehouse === warehouse.id
+                                  )
+                                : undefined;
 
                             if (!warehouseStock) {
                               return (
@@ -421,9 +431,11 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
                               allocatedQuantityForLine;
 
                             const isStockExceeded =
-                              formsetData[lineIndex].value.find(
-                                el => el.warehouse === warehouse.id
-                              ).quantity > availableQuantity;
+                              formsetData !== undefined
+                                ? formsetData[lineIndex].value.find(
+                                    el => el.warehouse === warehouse.id
+                                  ).quantity > availableQuantity
+                                : undefined;
 
                             const currentError = isError(
                               overfulfill,
@@ -457,7 +469,7 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
                                     style: { textAlign: "right" }
                                   }}
                                   fullWidth
-                                  value={formsetStock.quantity}
+                                  value={formsetStock?.quantity}
                                   onChange={event =>
                                     formsetChange(
                                       line.id,
@@ -469,7 +481,8 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
                                           ),
                                           warehouse: warehouse.id
                                         },
-                                        formsetData[lineIndex].value,
+                                        getFormsetStock(formsetData, lineIndex)
+                                          ?.value,
                                         (a, b) => a.warehouse === b.warehouse
                                       )
                                     )
@@ -509,13 +522,15 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
               </ResponsiveTable>
               <CardActions className={classes.actionBar}>
                 <ControlledCheckbox
-                  checked={data.sendInfo}
+                  checked={sendInfo}
                   label={intl.formatMessage({
                     defaultMessage: "Send shipment details to customer",
                     description: "checkbox"
                   })}
                   name="sendInfo"
-                  onChange={change}
+                  onChange={() => {
+                    setSendInfo(!sendInfo);
+                  }}
                 />
               </CardActions>
             </Card>
