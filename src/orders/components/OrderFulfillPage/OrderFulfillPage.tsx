@@ -28,7 +28,6 @@ import {
 import { Backlink } from "@saleor/macaw-ui";
 import { makeStyles } from "@saleor/macaw-ui";
 import { renderCollection } from "@saleor/misc";
-import { FulfillOrder_orderFulfill_errors } from "@saleor/orders/types/FulfillOrder";
 import {
   OrderFulfillData_order,
   OrderFulfillData_order_lines
@@ -157,13 +156,6 @@ function getRemainingQuantity(line: OrderFulfillData_order_lines): number {
 
 function isFulfillable(line: OrderFulfillData_order_lines): boolean {
   return getRemainingQuantity(line) > 0 && line.variant !== null;
-}
-
-function getFormsetStock(
-  data: FormsetData<null, OrderFulfillStockInput[]>,
-  index: number
-): FormsetAtomicData<null, OrderFulfillStockInput[]> | undefined {
-  return data !== undefined ? data[index] : undefined;
 }
 
 const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {

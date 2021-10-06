@@ -1,5 +1,5 @@
 import { WindowTitle } from "@saleor/components/WindowTitle";
-import useFormset, { FormsetData } from "@saleor/hooks/useFormset";
+import useFormset from "@saleor/hooks/useFormset";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import OrderFulfillPage from "@saleor/orders/components/OrderFulfillPage";
@@ -15,10 +15,6 @@ import { useIntl } from "react-intl";
 
 export interface OrderFulfillProps {
   orderId: string;
-}
-interface OrderFulfillFormData {
-  sendInfo: boolean;
-  allowStockToBeExceeded: boolean;
 }
 
 const OrderFulfill: React.FC<OrderFulfillProps> = ({ orderId }) => {
