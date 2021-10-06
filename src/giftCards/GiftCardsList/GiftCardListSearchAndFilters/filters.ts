@@ -226,6 +226,9 @@ export function createFilterStructure(
         intl.formatMessage(messages.initialBalanceLabel),
         opts.initialBalanceAmount.value
       ),
+      multiple:
+        opts?.initialBalanceAmount?.value?.min !==
+        opts?.initialBalanceAmount?.value?.max,
       active: opts.initialBalanceAmount.active
     },
 
@@ -235,6 +238,9 @@ export function createFilterStructure(
         intl.formatMessage(messages.currentBalanceLabel),
         opts.currentBalanceAmount.value
       ),
+      multiple:
+        opts?.currentBalanceAmount?.value?.min !==
+        opts?.currentBalanceAmount?.value?.max,
       active: opts.currentBalanceAmount.active
     },
     {
