@@ -127,4 +127,4 @@ SENTRY_URL_PREFIX=
 ENVIRONMENT=
 ```
 
-#### Crafted with ❤️ by [Mirumee Software](https://mirumee.com)
+#### Crafted with ❤️ by [Saleor Commerce](https://saleor.io)
