@@ -5,12 +5,10 @@ import {
   UserFragment
 } from "@saleor/sdk/dist/apollo/types";
 import { parse as parseQs } from "qs";
-import React, { MutableRefObject } from "react";
+import React from "react";
 import { Route, RouteComponentProps, Switch } from "react-router-dom";
 
 import Layout from "./components/Layout";
-import { ExternalObtainAccessTokens_externalObtainAccessTokens } from "./types/ExternalObtainAccessTokens";
-import { TokenAuth_tokenCreate } from "./types/TokenAuth";
 import {
   LoginUrlQueryParams,
   newPasswordPath,

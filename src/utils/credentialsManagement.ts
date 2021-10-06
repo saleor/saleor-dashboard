@@ -1,4 +1,3 @@
-import { User } from "@saleor/fragments/types/User";
 import { UserFragment } from "@saleor/sdk/dist/apollo/types";
 
 export const isSupported = !!(
