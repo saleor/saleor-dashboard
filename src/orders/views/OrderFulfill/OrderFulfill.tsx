@@ -20,9 +20,6 @@ interface OrderFulfillFormData {
   sendInfo: boolean;
   allowStockToBeExceeded: boolean;
 }
-interface OrderFulfillSubmitData extends OrderFulfillFormData {
-  items: FormsetData<null, OrderFulfillStockInput[]>;
-}
 
 const OrderFulfill: React.FC<OrderFulfillProps> = ({ orderId }) => {
   const navigate = useNavigator();
@@ -120,7 +117,6 @@ const OrderFulfill: React.FC<OrderFulfillProps> = ({ orderId }) => {
       />
       <OrderFulfillPage
         loading={loading || warehousesLoading || fulfillOrderOpts.loading}
-        errors={fulfillOrderOpts.data?.orderFulfill.errors}
         onBack={() => navigate(orderUrl(orderId))}
         formsetChange={formsetChange}
         formsetData={formsetData}

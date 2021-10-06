@@ -135,7 +135,6 @@ interface OrderFulfillSubmitData extends OrderFulfillFormData {
 }
 export interface OrderFulfillPageProps {
   loading: boolean;
-  errors: FulfillOrder_orderFulfill_errors[];
   formsetChange: FormsetChange<OrderFulfillStockInput[]>;
   formsetData: FormsetData<null, OrderFulfillStockInput[]>;
   sendInfo: boolean;
@@ -170,7 +169,6 @@ function getFormsetStock(
 const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
   const {
     loading,
-    errors,
     order,
     saveButtonBar,
     warehouses,
