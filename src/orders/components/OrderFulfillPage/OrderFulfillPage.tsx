@@ -20,7 +20,8 @@ import Savebar from "@saleor/components/Savebar";
 import Skeleton from "@saleor/components/Skeleton";
 import TableCellAvatar from "@saleor/components/TableCellAvatar";
 import { WarehouseFragment } from "@saleor/fragments/types/WarehouseFragment";
-import useFormset, {
+import {
+  FormsetAtomicData,
   FormsetChange,
   FormsetData
 } from "@saleor/hooks/useFormset";
@@ -32,10 +33,7 @@ import {
   OrderFulfillData_order,
   OrderFulfillData_order_lines
 } from "@saleor/orders/types/OrderFulfillData";
-import {
-  OrderErrorCode,
-  OrderFulfillStockInput
-} from "@saleor/types/globalTypes";
+import { OrderFulfillStockInput } from "@saleor/types/globalTypes";
 import { update } from "@saleor/utils/lists";
 import classNames from "classnames";
 import React, { Dispatch, SetStateAction } from "react";
@@ -162,7 +160,10 @@ function isFulfillable(line: OrderFulfillData_order_lines): boolean {
   return getRemainingQuantity(line) > 0 && line.variant !== null;
 }
 
-function getFormsetStock(data, index) {
+function getFormsetStock(
+  data: FormsetData<null, OrderFulfillStockInput[]>,
+  index: number
+): FormsetAtomicData<null, OrderFulfillStockInput[]> | undefined {
   return data !== undefined ? data[index] : undefined;
 }
 
@@ -219,33 +220,6 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
     return isAtLeastOneFulfilled && areProperlyFulfilled;
   };
 
-  const isError = (
-    overfulfill: boolean,
-    formsetStock: { quantity: number },
-    availableQuantity: number,
-    warehouse: WarehouseFragment,
-    line: OrderFulfillData_order_lines,
-    errors: FulfillOrder_orderFulfill_errors[]
-  ) => {
-    if (overfulfill) {
-      return true;
-    }
-
-    // this is now legal
-
-    // const isQuantityLargerThanAvailable =
-    //   line.variant.trackInventory && formsetStock.quantity > availableQuantity;
-
-    // const isError = !!errors?.find(
-    //   err =>
-    //     err.warehouse === warehouse.id &&
-    //     err.orderLines.find((id: string) => id === line.id) &&
-    //     err.code === OrderErrorCode.INSUFFICIENT_STOCK
-    // );
-
-    // return isError;
-  };
-
   return (
     <Container>
       <Backlink onClick={onBack}>
@@ -276,7 +250,7 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
         )}
       />
       <Form initial={initialFormData} onSubmit={handleSubmit}>
-        {({ change, data, submit }) => (
+        {({ submit }) => (
           <>
             <Card>
               <CardTitle
@@ -346,14 +320,14 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
                       }
 
                       const remainingQuantity = getRemainingQuantity(line);
-                      const quantityToFulfill =
-                        formsetData !== undefined
-                          ? formsetData[lineIndex].value.reduce(
-                              (quantityToFulfill, lineInput) =>
-                                quantityToFulfill + (lineInput.quantity || 0),
-                              0
-                            )
-                          : undefined;
+                      const quantityToFulfill = getFormsetStock(
+                        formsetData,
+                        lineIndex
+                      )?.value.reduce(
+                        (quantityToFulfill, lineInput) =>
+                          quantityToFulfill + (lineInput.quantity || 0),
+                        0
+                      );
                       const overfulfill = remainingQuantity < quantityToFulfill;
 
                       return (
@@ -395,12 +369,12 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
                             const warehouseStock = line.variant.stocks.find(
                               stock => stock.warehouse.id === warehouse.id
                             );
-                            const formsetStock =
-                              formsetData !== undefined
-                                ? formsetData[lineIndex].value.find(
-                                    line => line.warehouse === warehouse.id
-                                  )
-                                : undefined;
+                            const formsetStock = getFormsetStock(
+                              formsetData,
+                              lineIndex
+                            ).value.find(
+                              line => line.warehouse === warehouse.id
+                            );
 
                             if (!warehouseStock) {
                               return (
@@ -431,20 +405,12 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
                               allocatedQuantityForLine;
 
                             const isStockExceeded =
-                              formsetData !== undefined
-                                ? formsetData[lineIndex].value.find(
-                                    el => el.warehouse === warehouse.id
-                                  ).quantity > availableQuantity
-                                : undefined;
+                              getFormsetStock(
+                                formsetData,
+                                lineIndex
+                              ).value.find(el => el.warehouse === warehouse.id)
+                                .quantity > availableQuantity;
 
-                            const currentError = isError(
-                              overfulfill,
-                              formsetStock,
-                              availableQuantity,
-                              warehouse,
-                              line,
-                              errors
-                            );
                             return (
                               <TableCell
                                 className={classes.colQuantity}
@@ -487,7 +453,7 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
                                       )
                                     )
                                   }
-                                  error={currentError}
+                                  error={overfulfill}
                                   variant="outlined"
                                   /*
                                   formsetData[lineIndex].value.find(
@@ -497,7 +463,7 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
                                   InputProps={{
                                     classes: {
                                       ...(isStockExceeded &&
-                                        !currentError && {
+                                        !overfulfill && {
                                           notchedOutline: classes.warning
                                         })
                                     },
