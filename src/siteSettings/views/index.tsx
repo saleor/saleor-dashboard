@@ -82,9 +82,9 @@ export const SiteSettings: React.FC<SiteSettingsProps> = () => {
                   shopSettingsInput: {
                     description: data.description,
                     reserveStockDurationAnonymousUser:
-                      data.reserveStockDurationAnonymousUser,
+                      data.reserveStockDurationAnonymousUser || null,
                     reserveStockDurationAuthenticatedUser:
-                      data.reserveStockDurationAuthenticatedUser
+                      data.reserveStockDurationAuthenticatedUser || null
                   },
                   isCloudInstance: IS_CLOUD_INSTANCE
                 }

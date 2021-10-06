@@ -50,7 +50,11 @@ const SiteCheckoutSettingsCard: React.FC<SiteCheckoutSettingsCardProps> = ({
             messages.stockReservationForAuthenticatedUser
           )}
           helperText={intl.formatMessage(messages.stockWillNotBeReserved)}
-          value={data.reserveStockDurationAuthenticatedUser}
+          value={
+            !!data.reserveStockDurationAuthenticatedUser
+              ? String(data.reserveStockDurationAuthenticatedUser)
+              : ""
+          }
           onChange={onChange}
           InputProps={{
             inputProps: {
@@ -67,7 +71,11 @@ const SiteCheckoutSettingsCard: React.FC<SiteCheckoutSettingsCardProps> = ({
           name="reserveStockDurationAnonymousUser"
           label={intl.formatMessage(messages.stockReservationForAnonymousUser)}
           helperText={intl.formatMessage(messages.stockWillNotBeReserved)}
-          value={data.reserveStockDurationAnonymousUser}
+          value={
+            !!data.reserveStockDurationAnonymousUser
+              ? String(data.reserveStockDurationAnonymousUser)
+              : ""
+          }
           onChange={onChange}
           InputProps={{
             inputProps: {
