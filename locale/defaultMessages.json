@@ -1849,13 +1849,6 @@
   "src_dot_components_dot_AddressEdit_dot_944851093": {
     "string": "Country area"
   },
-  "src_dot_components_dot_AppStatus_dot_1624959454": {
-    "string": "If you want to disable this App please uncheck the box below."
-  },
-  "src_dot_components_dot_AppStatus_dot_1750277107": {
-    "context": "section header",
-    "string": "App Status"
-  },
   "src_dot_components_dot_AssignAttributeDialog_dot_2173976534": {
     "context": "button",
     "string": "Assign attributes"
@@ -7125,7 +7118,7 @@
     "context": "dialog header",
     "string": "Permissions"
   },
-  "src_dot_staff_dot_components_dot_StaffDetailsPage_dot_881953347": {
+  "src_dot_staff_dot_components_dot_StaffDetailsPage_dot_userStatusActive": {
     "context": "checkbox label",
     "string": "User is active"
   },
@@ -7231,6 +7224,13 @@
   "src_dot_staff_dot_components_dot_StaffProperties_dot_457748370": {
     "context": "button",
     "string": "Delete photo"
+  },
+  "src_dot_staff_dot_components_dot_UserStatus_dot_userDisableInstruction": {
+    "string": "If you want to disable this User please uncheck the box below."
+  },
+  "src_dot_staff_dot_components_dot_UserStatus_dot_userStatus": {
+    "context": "section header",
+    "string": "User Status"
   },
   "src_dot_staff_dot_views_dot_1308770978": {
     "context": "dialog header",
