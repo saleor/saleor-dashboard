@@ -1,3 +1,4 @@
+import { GiftCardCreateFormCustomer } from "@saleor/giftCards/GiftCardCreateDialog/types";
 import { UseNavigatorResult } from "@saleor/hooks/useNavigator";
 import { BulkAction, Dialog, SingleAction } from "@saleor/types";
 

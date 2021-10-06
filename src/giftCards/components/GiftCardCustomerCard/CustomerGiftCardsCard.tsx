@@ -31,6 +31,8 @@ const CustomerGiftCardsCard: React.FC = () => {
       }
     }
   });
+  const [openCreateDialog, setOpenCreateDialog] = useState(false);
+  const closeCreateDialog = () => setOpenCreateDialog(false);
 
   const giftCards = mapEdgesToItems(data?.giftCards);
 
