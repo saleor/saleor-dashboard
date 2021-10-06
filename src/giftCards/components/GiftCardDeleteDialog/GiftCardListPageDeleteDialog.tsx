@@ -12,7 +12,15 @@ import GiftCardDeleteDialogContent, {
 import useGiftCardBulkDelete from "./useGiftCardBulkDelete";
 import useGiftCardSingleDelete from "./useGiftCardSingleDelete";
 
-const GiftCardDeleteDialog: React.FC<DialogProps> = ({ open, onClose }) => {
+interface GiftCardDeleteDialogProps extends DialogProps {
+  refetchQueries?: string[];
+}
+
+const GiftCardDeleteDialog: React.FC<GiftCardDeleteDialogProps> = ({
+  open,
+  onClose,
+  refetchQueries = []
+}) => {
   const giftCardBulkActionsProps = useGiftCardListBulkActions();
   const { selectedItemsCount } = giftCardBulkActionsProps;
 
@@ -25,7 +33,7 @@ const GiftCardDeleteDialog: React.FC<DialogProps> = ({ open, onClose }) => {
   const { onDeleteGiftCard, deleteGiftCardOpts } = useGiftCardSingleDelete({
     id,
     onClose,
-    refetchQueries: [GIFT_CARD_LIST_QUERY]
+    refetchQueries: [GIFT_CARD_LIST_QUERY, ...refetchQueries]
   });
 
   const {
@@ -33,7 +41,7 @@ const GiftCardDeleteDialog: React.FC<DialogProps> = ({ open, onClose }) => {
     bulkDeleteGiftCardOpts
   } = useGiftCardBulkDelete({
     onClose,
-    refetchQueries: [GIFT_CARD_LIST_QUERY]
+    refetchQueries: [GIFT_CARD_LIST_QUERY, ...refetchQueries]
   });
 
   const dialogProps: Pick<

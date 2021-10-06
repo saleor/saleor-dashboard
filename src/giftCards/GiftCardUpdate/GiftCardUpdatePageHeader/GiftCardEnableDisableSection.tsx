@@ -1,22 +1,13 @@
-import useNotifier from "@saleor/hooks/useNotifier";
 import { commonMessages } from "@saleor/intl";
 import { ConfirmButton } from "@saleor/macaw-ui";
-import commonErrorMessages from "@saleor/utils/errors/common";
 import React from "react";
 import { useIntl } from "react-intl";
 
 import { bulkEnableDisableSectionMessages as buttonMessages } from "../../GiftCardsList/GiftCardsListTable/GiftCardsListTableHeader/messages";
 import useGiftCardDetails from "../providers/GiftCardDetailsProvider/hooks/useGiftCardDetails";
-import { giftCardEnableDisableSectionMessages as messages } from "./messages";
-import {
-  useGiftCardActivateMutation,
-  useGiftCardDeactivateMutation
-} from "./mutations";
-import { GiftCardActivate } from "./types/GiftCardActivate";
-import { GiftCardDeactivate } from "./types/GiftCardDeactivate";
+import useGiftCardActivationDeactivation from "./hooks/useGiftCardActivationDeactivation";
 
 const GiftCardEnableDisableSection: React.FC = () => {
-  const notify = useNotifier();
   const intl = useIntl();
 
   const {
@@ -27,50 +18,12 @@ const GiftCardEnableDisableSection: React.FC = () => {
     return null;
   }
 
-  const onActivateCompleted = (data: GiftCardActivate) => {
-    const errors = data?.giftCardActivate?.errors;
-
-    if (!!errors?.length) {
-      notify({
-        status: "error",
-        text: intl.formatMessage(commonErrorMessages.unknownError)
-      });
-
-      return;
-    }
-
-    notify({
-      status: "success",
-      text: intl.formatMessage(messages.successfullyEnabledTitle)
-    });
-  };
-
-  const onDeactivateCompleted = (data: GiftCardDeactivate) => {
-    const errors = data?.giftCardDeactivate?.errors;
-
-    if (!!errors?.length) {
-      notify({
-        status: "error",
-        text: intl.formatMessage(commonErrorMessages.unknownError)
-      });
-      return;
-    }
-
-    notify({
-      status: "success",
-      text: intl.formatMessage(messages.successfullyDisabledTitle)
-    });
-  };
-
-  const [giftCardActivate, giftCardActivateOpts] = useGiftCardActivateMutation({
-    onCompleted: onActivateCompleted
-  });
-
-  const [
+  const {
+    giftCardActivate,
     giftCardDeactivate,
-    giftCardDeactivateOpts
-  ] = useGiftCardDeactivateMutation({
-    onCompleted: onDeactivateCompleted
+    currentOpts
+  } = useGiftCardActivationDeactivation({
+    isActive
   });
 
   const handleClick = () =>
@@ -81,8 +34,6 @@ const GiftCardEnableDisableSection: React.FC = () => {
   const buttonLabel = isActive
     ? buttonMessages.disableLabel
     : buttonMessages.enableLabel;
-
-  const currentOpts = isActive ? giftCardDeactivateOpts : giftCardActivateOpts;
 
   return (
     <ConfirmButton

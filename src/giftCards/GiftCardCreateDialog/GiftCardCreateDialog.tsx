@@ -8,7 +8,6 @@ import commonErrorMessages from "@saleor/utils/errors/common";
 import React, { useState } from "react";
 import { useIntl } from "react-intl";
 
-import { GIFT_CARD_LIST_QUERY } from "../GiftCardsList/types";
 import ContentWithProgress from "./ContentWithProgress";
 import GiftCardCreateDialogCodeContent from "./GiftCardCreateDialogCodeContent";
 import GiftCardCreateDialogForm, {
@@ -20,7 +19,15 @@ import { useChannelCurrencies } from "./queries";
 import { GiftCardCreate } from "./types/GiftCardCreate";
 import { getGiftCardExpiryInputData } from "./utils";
 
-const GiftCardCreateDialog: React.FC<DialogProps> = ({ onClose, open }) => {
+interface GiftCardCreateDialogProps extends DialogProps {
+  refetchQueries: string[];
+}
+
+const GiftCardCreateDialog: React.FC<GiftCardCreateDialogProps> = ({
+  onClose,
+  open,
+  refetchQueries
+}) => {
   const intl = useIntl();
   const notify = useNotifier();
 
@@ -80,7 +87,7 @@ const GiftCardCreateDialog: React.FC<DialogProps> = ({ onClose, open }) => {
 
   const [createGiftCard, createGiftCardOpts] = useGiftCardCreateMutation({
     onCompleted,
-    refetchQueries: [GIFT_CARD_LIST_QUERY]
+    refetchQueries
   });
 
   const handleSubmit = (data: GiftCardCreateFormData) => {
