@@ -5,6 +5,7 @@ import React from "react";
 interface CollectionWithDividersProps<T> {
   DividerComponent?: React.FunctionComponent;
   renderEmpty?: (collection: T[]) => any;
+  withOuterDividers?: boolean;
   collection: T[];
   renderItem: (
     item: T | undefined,
@@ -14,6 +15,7 @@ interface CollectionWithDividersProps<T> {
 }
 
 function CollectionWithDividers<T>({
+  withOuterDividers = false,
   collection,
   renderItem,
   DividerComponent,
@@ -31,7 +33,7 @@ function CollectionWithDividers<T>({
 
   const SelectedDividerComponent = DividerComponent || Divider;
 
-  return initial(
+  const collectionToRender = initial(
     collection.reduce(
       (result, item, index) => [
         ...result,
@@ -41,6 +43,14 @@ function CollectionWithDividers<T>({
       []
     )
   );
+
+  const collectionWithOuterDividers = () => [
+    <SelectedDividerComponent />,
+    ...collectionToRender,
+    <SelectedDividerComponent />
+  ];
+
+  return withOuterDividers ? collectionWithOuterDividers() : collectionToRender;
 }
 
 export default CollectionWithDividers;

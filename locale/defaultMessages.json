@@ -3717,6 +3717,10 @@
     "context": "GiftCardUpdateDetailsCard title",
     "string": "Details"
   },
+  "src_dot_giftCards_dot_GiftCardsList_dot_GiftCardsListTable_dot_GiftCardsListTableHeader_dot_deleteLabel": {
+    "context": "GiftCardEnableDisableSection enable label",
+    "string": "Delete"
+  },
   "src_dot_giftCards_dot_GiftCardsList_dot_GiftCardsListTable_dot_GiftCardsListTableHeader_dot_disableLabel": {
     "context": "GiftCardEnableDisableSection enable label",
     "string": "Deactivate"
@@ -3812,6 +3816,22 @@
   "src_dot_giftCards_dot_GiftCardsList_dot_settings": {
     "context": "GiftCardsListHeader menu item settings",
     "string": "Settings"
+  },
+  "src_dot_giftCards_dot_components_dot_GiftCardCustomerCard_dot_customerGiftCardsAbsentSubtitle": {
+    "context": "subtitle",
+    "string": "There are no gift cards assigned to this customer"
+  },
+  "src_dot_giftCards_dot_components_dot_GiftCardCustomerCard_dot_customerGiftCardsIssueNewCardButton": {
+    "context": "button",
+    "string": "Issue new card"
+  },
+  "src_dot_giftCards_dot_components_dot_GiftCardCustomerCard_dot_customerGiftCardsPresentSubtitle": {
+    "context": "subtitle",
+    "string": "Only five newest gift cards are shown here"
+  },
+  "src_dot_giftCards_dot_components_dot_GiftCardCustomerCard_dot_customerGiftCardsViewAllButton": {
+    "context": "button",
+    "string": "View All"
   },
   "src_dot_giftCards_dot_components_dot_GiftCardDeleteDialog_dot_consentLabel": {
     "context": "GiftCardDeleteDialog consent label",

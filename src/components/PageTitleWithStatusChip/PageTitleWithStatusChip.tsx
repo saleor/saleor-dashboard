@@ -1,13 +1,9 @@
 import HorizontalSpacer from "@saleor/apps/components/HorizontalSpacer";
-import StatusChip from "@saleor/components/StatusChip";
-import { StatusType } from "@saleor/components/StatusChip/types";
 import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 
 export interface PageTitleWithStatusChipProps {
   title: string;
-  statusLabel: string;
-  statusType: StatusType;
 }
 
 const useStyles = makeStyles(
@@ -22,8 +18,7 @@ const useStyles = makeStyles(
 
 const PageTitleWithStatusChip: React.FC<PageTitleWithStatusChipProps> = ({
   title,
-  statusLabel,
-  statusType
+  children
 }) => {
   const classes = useStyles({});
 
@@ -31,7 +26,7 @@ const PageTitleWithStatusChip: React.FC<PageTitleWithStatusChipProps> = ({
     <div className={classes.container}>
       {title}
       <HorizontalSpacer spacing={2} />
-      <StatusChip label={statusLabel} status={statusType} />
+      {children}
     </div>
   );
 };

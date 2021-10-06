@@ -10,6 +10,7 @@ type CreateCloseModal<
 export interface DialogActionHandlersProps {
   closeDialog: () => void;
   open: boolean;
+  refetchQueries?: string[];
 }
 
 function createDialogActionHandlers<

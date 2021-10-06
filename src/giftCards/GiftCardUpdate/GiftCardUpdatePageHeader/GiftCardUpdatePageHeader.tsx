@@ -2,7 +2,7 @@ import { Button } from "@material-ui/core";
 import HorizontalSpacer from "@saleor/apps/components/HorizontalSpacer";
 import PageHeader from "@saleor/components/PageHeader";
 import PageTitleWithStatusChip from "@saleor/components/PageTitleWithStatusChip";
-import { StatusType } from "@saleor/components/StatusChip/types";
+import GiftCardStatusChip from "@saleor/giftCards/components/GiftCardStatusChip/GiftCardStatusChip";
 import { sectionNames } from "@saleor/intl";
 import { Backlink } from "@saleor/macaw-ui";
 import React from "react";
@@ -25,42 +25,25 @@ const GiftCardUpdatePageHeader: React.FC = () => {
 
   const { openResendCodeDialog } = useGiftCardUpdateDialogs();
 
-  const { displayCode, isActive, isExpired } = giftCard;
+  const { displayCode, isExpired } = giftCard;
 
   const title = intl.formatMessage(tableMessages.codeEndingWithLabel, {
     displayCode
   });
-
-  const getPageTitle = () => {
-    if (isExpired) {
-      return (
-        <PageTitleWithStatusChip
-          title={title}
-          statusLabel={intl.formatMessage(messages.expiredStatusLabel)}
-          statusType={StatusType.NEUTRAL}
-        />
-      );
-    }
-
-    if (!isActive) {
-      return (
-        <PageTitleWithStatusChip
-          title={title}
-          statusLabel={intl.formatMessage(messages.disabledStatusLabel)}
-          statusType={StatusType.ERROR}
-        />
-      );
-    }
-
-    return title;
-  };
 
   return (
     <>
       <Backlink onClick={navigateBack}>
         {intl.formatMessage(sectionNames.giftCards)}
       </Backlink>
-      <PageHeader inline title={getPageTitle()}>
+      <PageHeader
+        inline
+        title={
+          <PageTitleWithStatusChip title={title}>
+            <GiftCardStatusChip giftCard={giftCard} />
+          </PageTitleWithStatusChip>
+        }
+      >
         <GiftCardEnableDisableSection />
         <HorizontalSpacer />
         {!isExpired && (
