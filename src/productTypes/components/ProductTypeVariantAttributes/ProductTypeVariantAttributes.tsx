@@ -277,7 +277,14 @@ const ProductTypeVariantAttributes: React.FC<ProductTypeVariantAttributesProps> 
                       />
                       {!!variantSelectionDisabled && (
                         <Tooltip
-                          title={`${readableAttributeInputType} attributes cannot be used as variant selection attributes.`}
+                          title={
+                            <FormattedMessage
+                              defaultMessage={
+                                "{inputType} attributes cannot be used as variant selection attributes."
+                              }
+                              values={{ inputType: readableAttributeInputType }}
+                            />
+                          }
                         >
                           <HelpOutline className={classes.colVariantDisabled} />
                         </Tooltip>
