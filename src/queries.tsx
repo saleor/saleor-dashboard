@@ -79,13 +79,7 @@ export function TypedQuery<TData, TVariables>(
         context={{ useBatching: true }}
         errorPolicy="all"
         onError={error =>
-          handleQueryAuthError(
-            error,
-            notify,
-            user.tokenRefresh,
-            user.logout,
-            intl
-          )
+          handleQueryAuthError(error, notify, user.logout, intl)
         }
       >
         {(queryData: QueryResult<TData, TVariables>) => {

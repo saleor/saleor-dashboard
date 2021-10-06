@@ -1,5 +1,4 @@
 import useNavigator from "@saleor/hooks/useNavigator";
-// import { useAuth, useAuthState } from "@saleor/sdk";
 import React, { useEffect, useState } from "react";
 import { useQuery } from "react-apollo";
 import useRouter from "use-react-router";
@@ -23,7 +22,6 @@ const LoginView: React.FC<LoginViewProps> = ({ params }) => {
   const navigate = useNavigator();
   const { location } = useRouter();
   const { login, authenticating } = useAuth();
-  // const { authenticating } = useAuthState();
   const [isError, setIsError] = useState(false);
   const [isExternalError, setIsExternalError] = useState(false);
   const {
@@ -42,7 +40,8 @@ const LoginView: React.FC<LoginViewProps> = ({ params }) => {
     return errors;
   };
 
-  const handleRequestExternalAuthentication = (pluginId: string) => undefined;
+  const handleRequestExternalAuthentication = (/* pluginId: string */) =>
+    undefined;
   // requestLoginByExternalPlugin(pluginId, {
   //   redirectUri: urlJoin(
   //     window.location.origin,
@@ -51,24 +50,24 @@ const LoginView: React.FC<LoginViewProps> = ({ params }) => {
   //   )
   // });
 
-  const handleExternalAuthentication = async (code: string, state: string) => {
-    // const result = await loginByExternalPlugin({ code, state });
-    // const errors = result?.errors || [];
-    // setIsError(false);
-    // if (!result || errors?.length > 0) {
-    //   setIsExternalError(true);
-    // } else {
-    //   navigate(APP_DEFAULT_URI);
-    // }
-    // return errors;
-  };
+  // const handleExternalAuthentication = async (code: string, state: string) => {
+  // const result = await loginByExternalPlugin({ code, state });
+  // const errors = result?.errors || [];
+  // setIsError(false);
+  // if (!result || errors?.length > 0) {
+  //   setIsExternalError(true);
+  // } else {
+  //   navigate(APP_DEFAULT_URI);
+  // }
+  // return errors;
+  // };
 
   useEffect(() => {
     const { code, state } = params;
     const isCallbackPath = location.pathname.includes(loginCallbackPath);
 
     if (code && state && isCallbackPath) {
-      handleExternalAuthentication(code, state);
+      // handleExternalAuthentication(code, state);
     }
   }, []);
 

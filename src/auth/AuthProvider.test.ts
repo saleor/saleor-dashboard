@@ -1,20 +1,16 @@
-import setupApi from "@test/api";
 import { act, renderHook } from "@testing-library/react-hooks";
-import ApolloClient from "apollo-client";
 
 import { useAuthProvider } from "./hooks/useAuthProvider";
 import { getTokens, setAuthToken } from "./utils";
 
-const apolloClient = setupApi();
-
-function renderAuthProvider(apolloClient: ApolloClient<any>) {
+function renderAuthProvider() {
   const intl = {
     formatMessage: ({ defaultMessage }) => defaultMessage
   };
   const notify = jest.fn();
 
   const { result } = renderHook(() =>
-    useAuthProvider({ apolloClient, intl: intl as any, notify })
+    useAuthProvider({ intl: intl as any, notify })
   );
 
   return result;
@@ -38,7 +34,7 @@ beforeEach(() => {
 
 describe("User", () => {
   it("will be logged in if has valid credentials", async done => {
-    const hook = renderAuthProvider(apolloClient);
+    const hook = renderAuthProvider();
 
     await act(async () => {
       await hook.current.login(
@@ -53,7 +49,7 @@ describe("User", () => {
   });
 
   it("will not be logged in if doesn't have valid credentials", async done => {
-    const hook = renderAuthProvider(apolloClient);
+    const hook = renderAuthProvider();
 
     await act(async () => {
       await hook.current.login(adminCredentials.email, "NotAValidPassword123!");
@@ -64,7 +60,7 @@ describe("User", () => {
   });
 
   it("will not be logged in if is non-staff", async done => {
-    const hook = renderAuthProvider(apolloClient);
+    const hook = renderAuthProvider();
 
     await act(async () => {
       await hook.current.login(
@@ -79,7 +75,7 @@ describe("User", () => {
 
   it("will be logged if has valid token", async done => {
     setAuthToken(adminCredentials.token, false);
-    const hook = renderAuthProvider(apolloClient);
+    const hook = renderAuthProvider();
 
     await act(() => hook.current.autologinPromise.current);
     expect(hook.current.user.email).toBe(adminCredentials.email);
@@ -89,7 +85,7 @@ describe("User", () => {
 
   it("will not be logged if has invalid token", async done => {
     setAuthToken("NotAToken", false);
-    const hook = renderAuthProvider(apolloClient);
+    const hook = renderAuthProvider();
 
     await act(() => hook.current.autologinPromise.current);
     expect(hook.current.user).toBe(undefined);

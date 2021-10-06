@@ -1,4 +1,6 @@
+import useNotifier from "@saleor/hooks/useNotifier";
 import React, { useContext } from "react";
+import { useIntl } from "react-intl";
 
 import { UserContext } from "./";
 import { useAuthProvider } from "./hooks/useAuthProvider";
@@ -8,7 +10,10 @@ interface AuthProviderProps {
 }
 
 const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
-  const authProvider = useAuthProvider();
+  const intl = useIntl();
+  const notify = useNotifier();
+
+  const authProvider = useAuthProvider({ intl, notify });
 
   return (
     <UserContext.Provider value={authProvider}>{children}</UserContext.Provider>

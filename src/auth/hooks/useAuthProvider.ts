@@ -1,8 +1,6 @@
 import { IMessageContext } from "@saleor/components/messages";
 import { DEMO_MODE } from "@saleor/config";
 import { User } from "@saleor/fragments/types/User";
-import useLocalStorage from "@saleor/hooks/useLocalStorage";
-import useNotifier from "@saleor/hooks/useNotifier";
 import { useAuth, useAuthState } from "@saleor/sdk";
 import {
   AccountErrorFragment,
@@ -14,10 +12,8 @@ import {
   login as loginWithCredentialsManagementAPI,
   saveCredentials
 } from "@saleor/utils/credentialsManagement";
-import ApolloClient from "apollo-client";
-import { MutableRefObject, useState } from "react";
+import { MutableRefObject, useEffect, useRef } from "react";
 import { useQuery } from "react-apollo";
-import { useIntl } from "react-intl";
 import { IntlShape } from "react-intl";
 
 import { userDetailsQuery } from "../queries";
@@ -38,25 +34,29 @@ export interface UseAuthProvider {
   authenticated: boolean;
   authenticating: boolean;
   user?: User;
+  autologinPromise?: MutableRefObject<Promise<any>>;
 }
 export interface UseAuthProviderOpts {
   intl: IntlShape;
   notify: IMessageContext;
 }
 
-export function useAuthProvider(): UseAuthProvider {
-  const intl = useIntl();
-  const notify = useNotifier();
-
+export function useAuthProvider({
+  intl,
+  notify
+}: UseAuthProviderOpts): UseAuthProvider {
   const { login, logout } = useAuth();
-  const { user, token, authenticated, authenticating } = useAuthState();
+  const { authenticated, authenticating } = useAuthState();
+
+  const autologinPromise = useRef<Promise<any>>();
+
+  useEffect(() => {
+    autologinPromise.current = loginWithCredentialsManagementAPI(handleLogin);
+  }, []);
 
   const userDetails = useQuery<UserDetails>(userDetailsQuery, {
     skip: !authenticated
   });
-  // const userDetails = useUserDetailsQuery({
-  //   skip: !authenticated
-  // });
 
   const handleLogout = () => {
     logout();
@@ -89,8 +89,9 @@ export function useAuthProvider(): UseAuthProvider {
   return {
     login: handleLogin,
     logout: handleLogout,
-    authenticating, // || userDetails.loading,
-    authenticated, // && !!userDetails.data?.me,
-    user: userDetails.data?.me // userContext // userDetails.data?.me
+    authenticating,
+    authenticated,
+    user: userDetails.data?.me,
+    autologinPromise
   };
 }
