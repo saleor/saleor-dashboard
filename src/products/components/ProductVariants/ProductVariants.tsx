@@ -137,6 +137,25 @@ function getAvailabilityLabel(
   variant: ProductDetails_product_variants,
   numAvailable: number
 ): string {
+  if (!!variant.preorder) {
+    if (variant.preorder.globalThreshold) {
+      return intl.formatMessage(
+        {
+          defaultMessage: "{globalThreshold} Global threshold",
+          description: "product variant preorder threshold"
+        },
+        {
+          globalThreshold: variant.preorder.globalThreshold
+        }
+      );
+    } else {
+      return intl.formatMessage({
+        defaultMessage: "In preorder",
+        description: "product variant preorder threshold"
+      });
+    }
+  }
+
   const variantStock = variant.stocks.find(s => s.warehouse.id === warehouse);
 
   if (!!warehouse) {
