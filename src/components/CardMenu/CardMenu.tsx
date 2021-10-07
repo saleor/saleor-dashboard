@@ -98,27 +98,21 @@ const CardMenu: React.FC<CardMenuProps> = props => {
     prevOpen.current = open;
   }, [open]);
 
-  const [loadingMenuItemIndex, setLoadingMenuItemIndex] = useState<number>(
-    undefined
-  );
-
   useEffect(() => {
-    const loadingMenuItem = menuItems[loadingMenuItemIndex];
+    const hasAnyItemsLoadingOrWithError = menuItems
+      ?.filter(({ withLoading }) => withLoading)
+      ?.some(({ loading, hasError }) => loading || hasError);
 
-    if (!!loadingMenuItem) {
-      if (!loadingMenuItem.loading && !loadingMenuItem.hasError) {
-        setOpen(false);
-      }
+    if (!hasAnyItemsLoadingOrWithError) {
+      setOpen(false);
     }
-  }, [loadingMenuItemIndex, menuItems]);
+  }, [menuItems]);
 
   const handleMenuClick = (index: number) => {
     const selectedItem = menuItems[index];
     selectedItem.onSelect();
 
-    if (selectedItem.withLoading) {
-      setLoadingMenuItemIndex(index);
-    } else {
+    if (!selectedItem.withLoading) {
       setOpen(false);
     }
   };
