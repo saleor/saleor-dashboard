@@ -5,7 +5,6 @@ import { createFetch } from "@saleor/sdk";
 import { InMemoryCache } from "apollo-cache-inmemory";
 import ApolloClient from "apollo-client";
 import { BatchHttpLink } from "apollo-link-batch-http";
-// import fetch from "node-fetch";
 import path from "path";
 import { setupPolly } from "setup-polly-jest";
 
