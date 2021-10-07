@@ -2,10 +2,10 @@ import { createSaleorClient, SaleorProvider } from "@saleor/sdk";
 import setupApi from "@test/api";
 import { act, renderHook } from "@testing-library/react-hooks";
 import React from "react";
-import { ApolloProvider } from "react-apollo";
 
 import { useAuthProvider } from "./hooks/useAuthProvider";
-import { getTokens, setAuthToken } from "./utils";
+
+const apolloClient = setupApi();
 
 function renderAuthProvider() {
   const intl = {
@@ -17,15 +17,12 @@ function renderAuthProvider() {
     channel: "",
     autologin: true
   });
-  const apolloClient = setupApi();
   const wrapper = ({ children }) => (
-    <SaleorProvider client={saleorClient}>
-      <ApolloProvider client={apolloClient}>{children}</ApolloProvider>
-    </SaleorProvider>
+    <SaleorProvider client={saleorClient}>{children}</SaleorProvider>
   );
 
   const { result } = renderHook(
-    () => useAuthProvider({ intl: intl as any, notify }),
+    () => useAuthProvider({ intl: intl as any, notify, apolloClient }),
     { wrapper }
   );
 
@@ -53,13 +50,13 @@ describe("User", () => {
     const hook = renderAuthProvider();
 
     await act(async () => {
-      await hook.current.login(
+      const result = await hook.current.login(
         adminCredentials.email,
         adminCredentials.password
       );
+      expect(result.user?.email).toBe(adminCredentials.email);
     });
-    expect(hook.current.user.email).toBe(adminCredentials.email);
-    adminCredentials.token = getTokens().auth;
+    expect(hook.current.authenticated).toBe(true);
 
     done();
   });
@@ -68,9 +65,13 @@ describe("User", () => {
     const hook = renderAuthProvider();
 
     await act(async () => {
-      await hook.current.login(adminCredentials.email, "NotAValidPassword123!");
+      const result = await hook.current.login(
+        adminCredentials.email,
+        "NotAValidPassword123!"
+      );
+      expect(result.user).toBe(null);
     });
-    expect(hook.current.user).toBe(null);
+    expect(hook.current.authenticated).toBe(false);
 
     done();
   });
@@ -79,32 +80,13 @@ describe("User", () => {
     const hook = renderAuthProvider();
 
     await act(async () => {
-      await hook.current.login(
+      const result = await hook.current.login(
         nonStaffUserCredentials.email,
         nonStaffUserCredentials.password
       );
+      expect(result.user).toBe(null);
     });
-    expect(hook.current.user).toBe(undefined);
-
-    done();
-  });
-
-  it("will be logged if has valid token", async done => {
-    setAuthToken(adminCredentials.token, false);
-    const hook = renderAuthProvider();
-
-    await act(() => hook.current.autologinPromise.current);
-    expect(hook.current.user.email).toBe(adminCredentials.email);
-
-    done();
-  });
-
-  it("will not be logged if has invalid token", async done => {
-    setAuthToken("NotAToken", false);
-    const hook = renderAuthProvider();
-
-    await act(() => hook.current.autologinPromise.current);
-    expect(hook.current.user).toBe(undefined);
+    expect(hook.current.authenticated).toBe(false);
 
     done();
   });

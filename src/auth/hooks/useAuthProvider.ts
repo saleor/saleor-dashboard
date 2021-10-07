@@ -14,6 +14,7 @@ import {
   login as loginWithCredentialsManagementAPI,
   saveCredentials
 } from "@saleor/utils/credentialsManagement";
+import ApolloClient from "apollo-client";
 import { FetchResult } from "apollo-link";
 import { MutableRefObject, useEffect, useRef } from "react";
 import { useQuery } from "react-apollo";
@@ -33,7 +34,7 @@ export interface UseAuthProvider {
       user?: UserFragment;
     }
   >;
-  logout: () => void;
+  logout: () => Promise<void>;
   setPassword: (
     opts: MutationSetPasswordArgs
   ) => Promise<
@@ -47,11 +48,13 @@ export interface UseAuthProvider {
 export interface UseAuthProviderOpts {
   intl: IntlShape;
   notify: IMessageContext;
+  apolloClient: ApolloClient<any>;
 }
 
 export function useAuthProvider({
   intl,
-  notify
+  notify,
+  apolloClient
 }: UseAuthProviderOpts): UseAuthProvider {
   const { login, logout, setPassword } = useAuth();
   const { authenticated, authenticating } = useAuthState();
@@ -63,11 +66,12 @@ export function useAuthProvider({
   }, []);
 
   const userDetails = useQuery<UserDetails>(userDetailsQuery, {
+    client: apolloClient,
     skip: !authenticated || authenticating
   });
 
-  const handleLogout = () => {
-    logout();
+  const handleLogout = async () => {
+    await logout();
 
     if (isCredentialsManagementAPISupported) {
       navigator.credentials.preventSilentAccess();
