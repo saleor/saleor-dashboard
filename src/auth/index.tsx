@@ -43,7 +43,6 @@ interface UserContext {
   // loginByExternalPlugin: (
   //   input: ExternalLoginInput
   // ) => Promise<ExternalObtainAccessTokens_externalObtainAccessTokens>;
-  // loginByToken: (auth: string, csrf: string, user: User) => void;
   logout: () => Promise<void>;
   // requestLoginByExternalPlugin: (
   //   pluginId: string,
