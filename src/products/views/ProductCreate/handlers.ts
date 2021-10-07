@@ -61,6 +61,12 @@ const getSimpleProductVariables = (
       quantity: parseInt(stock.value, 10),
       warehouse: stock.id
     })),
+    preorder: formData.isPreorder
+      ? {
+          globalThreshold: formData.globalThreshold,
+          endDate: formData.preorderEndDateTime || null
+        }
+      : null,
     trackInventory: formData.trackInventory
   }
 });
