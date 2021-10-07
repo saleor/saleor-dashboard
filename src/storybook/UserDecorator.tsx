@@ -7,6 +7,7 @@ export const UserDecorator = (user: User) => storyFn => (
     value={{
       login: undefined,
       logout: undefined,
+      setPassword: undefined,
       user,
       authenticated: false,
       authenticating: false
