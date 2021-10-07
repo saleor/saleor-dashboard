@@ -1971,6 +1971,9 @@
     "context": "unassign multiple attributes from item",
     "string": "{counter,plural,one{Are you sure you want to unassign this attribute from {itemTypeName}?} other{Are you sure you want to unassign {attributeQuantity} attributes from {itemTypeName}?}}"
   },
+  "src_dot_components_dot_CardMenu_dot_4078124637": {
+    "string": "working..."
+  },
   "src_dot_components_dot_ChannelsAvailabilityCard_dot_3326160357": {
     "context": "section header",
     "string": "Availability"
