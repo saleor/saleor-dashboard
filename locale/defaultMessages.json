@@ -3717,6 +3717,61 @@
     "context": "GiftCardUpdateDetailsCard title",
     "string": "Details"
   },
+  "src_dot_giftCards_dot_GiftCardsList_dot_GiftCardListSearchAndFilters_dot_1020984688": {
+    "string": "Search Gift Cards, e.g {exampleGiftCardCode}"
+  },
+  "src_dot_giftCards_dot_GiftCardsList_dot_GiftCardListSearchAndFilters_dot_2520696807": {
+    "context": "tab name",
+    "string": "All Gift Cards"
+  },
+  "src_dot_giftCards_dot_GiftCardsList_dot_GiftCardListSearchAndFilters_dot_balanceAmount": {
+    "context": "Filter balance amount error",
+    "string": "Balance amount is missing"
+  },
+  "src_dot_giftCards_dot_GiftCardsList_dot_GiftCardListSearchAndFilters_dot_balanceAmountLabel": {
+    "context": "amount filter label",
+    "string": "Amount"
+  },
+  "src_dot_giftCards_dot_GiftCardsList_dot_GiftCardListSearchAndFilters_dot_balanceCurrency": {
+    "context": "Filter balance currency error",
+    "string": "Balance currency is missing"
+  },
+  "src_dot_giftCards_dot_GiftCardsList_dot_GiftCardListSearchAndFilters_dot_currencyLabel": {
+    "context": "currency filter label",
+    "string": "Currency"
+  },
+  "src_dot_giftCards_dot_GiftCardsList_dot_GiftCardListSearchAndFilters_dot_currentBalanceLabel": {
+    "context": "current balance filter label",
+    "string": "Current balance"
+  },
+  "src_dot_giftCards_dot_GiftCardsList_dot_GiftCardListSearchAndFilters_dot_disabledOptionLabel": {
+    "context": "disabled status option label",
+    "string": "Disabled"
+  },
+  "src_dot_giftCards_dot_GiftCardsList_dot_GiftCardListSearchAndFilters_dot_enabledOptionLabel": {
+    "context": "enabled status option label",
+    "string": "Enabled"
+  },
+  "src_dot_giftCards_dot_GiftCardsList_dot_GiftCardListSearchAndFilters_dot_initialBalanceLabel": {
+    "context": "initial balance filter label",
+    "string": "Initial balance"
+  },
+  "src_dot_giftCards_dot_GiftCardsList_dot_GiftCardListSearchAndFilters_dot_productLabel": {
+    "context": "product filter label",
+    "string": "Product"
+  },
+  "src_dot_giftCards_dot_GiftCardsList_dot_GiftCardListSearchAndFilters_dot_statusLabel": {
+    "context": "status filter label",
+    "string": "Status"
+  },
+  "src_dot_giftCards_dot_GiftCardsList_dot_GiftCardListSearchAndFilters_dot_tagLabel": {
+    "context": "tag filter label",
+    "string": "Tags"
+  },
+  "src_dot_giftCards_dot_GiftCardsList_dot_GiftCardListSearchAndFilters_dot_usedByLabel": {
+    "context": "used by filter label",
+    "string": "Used by"
+  },
   "src_dot_giftCards_dot_GiftCardsList_dot_GiftCardsListTable_dot_GiftCardsListTableHeader_dot_disableLabel": {
     "context": "GiftCardEnableDisableSection enable label",
     "string": "Deactivate"
