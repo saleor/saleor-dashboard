@@ -63,7 +63,7 @@ export function useAuthProvider({
   }, []);
 
   const userDetails = useQuery<UserDetails>(userDetailsQuery, {
-    skip: !authenticated
+    skip: !authenticated || authenticating
   });
 
   const handleLogout = () => {
