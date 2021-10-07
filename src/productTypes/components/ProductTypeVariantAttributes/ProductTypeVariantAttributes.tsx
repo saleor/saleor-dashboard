@@ -130,11 +130,9 @@ const ProductTypeVariantAttributes: React.FC<ProductTypeVariantAttributesProps> 
   useEffect(() => {
     // Populate initial selection
     setSelectedVariantAttributes(
-      maybe(() =>
-        assignedVariantAttributes
-          .map(elem => (elem.variantSelection ? elem.attribute.id : undefined))
-          .filter(e => e)
-      )
+      assignedVariantAttributes
+        .map(elem => (elem.variantSelection ? elem.attribute.id : undefined))
+        .filter(Boolean) || []
     );
   }, []);
 
@@ -243,11 +241,7 @@ const ProductTypeVariantAttributes: React.FC<ProductTypeVariantAttributesProps> 
                     />
                   </TableCell>
                   <TableCell className={classes.colName} data-test="name">
-                    {maybe(() => attribute.name) ? (
-                      attribute.name
-                    ) : (
-                      <Skeleton />
-                    )}
+                    {attribute.name ?? <Skeleton />}
                   </TableCell>
                   <TableCell className={classes.colSlug} data-test="slug">
                     {maybe(() => attribute.slug) ? (

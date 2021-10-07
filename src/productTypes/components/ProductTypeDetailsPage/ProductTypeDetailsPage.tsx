@@ -21,7 +21,7 @@ import {
 } from "@saleor/types/globalTypes";
 import { mapMetadataItemToInput } from "@saleor/utils/maps";
 import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import { useIntl } from "react-intl";
 
 import {
@@ -111,7 +111,6 @@ const ProductTypeDetailsPage: React.FC<ProductTypeDetailsPageProps> = ({
     isPrivateMetadataModified,
     makeChangeHandler: makeMetadataChangeHandler
   } = useMetadataChangeTrigger();
-  const [hasVariantSelectionChanged, changeVariantSelection] = useState(false);
 
   const [taxTypeDisplayName, setTaxTypeDisplayName] = useStateFromProps(
     maybe(() => productType.taxType.description, "")
@@ -162,7 +161,7 @@ const ProductTypeDetailsPage: React.FC<ProductTypeDetailsPageProps> = ({
 
   return (
     <Form initial={formInitialData} onSubmit={handleSubmit} confirmLeave>
-      {({ change, data, hasChanged, submit }) => {
+      {({ change, data, hasChanged, submit, setChanged }) => {
         const changeMetadata = makeMetadataChangeHandler(change);
 
         return (
@@ -225,9 +224,9 @@ const ProductTypeDetailsPage: React.FC<ProductTypeDetailsPageProps> = ({
                     <CardSpacer />
                     <ProductTypeVariantAttributes
                       testId="assignVariantsAttributes"
-                      assignedVariantAttributes={maybe(
-                        () => productType.assignedVariantAttributes
-                      )}
+                      assignedVariantAttributes={
+                        productType?.assignedVariantAttributes
+                      }
                       disabled={disabled}
                       type={ProductAttributeType.VARIANT}
                       onAttributeAssign={onAttributeAdd}
@@ -236,7 +235,7 @@ const ProductTypeDetailsPage: React.FC<ProductTypeDetailsPageProps> = ({
                         onAttributeReorder(event, ProductAttributeType.VARIANT)
                       }
                       onAttributeUnassign={onAttributeUnassign}
-                      onAttributeVariantSelection={changeVariantSelection}
+                      onAttributeVariantSelection={setChanged}
                       setSelectedVariantAttributes={
                         setSelectedVariantAttributes
                       }
@@ -261,9 +260,7 @@ const ProductTypeDetailsPage: React.FC<ProductTypeDetailsPageProps> = ({
               onCancel={onBack}
               onDelete={onDelete}
               onSubmit={submit}
-              disabled={
-                disabled || (!hasChanged && !hasVariantSelectionChanged)
-              }
+              disabled={disabled || !hasChanged}
               state={saveButtonBarState}
             />
           </Container>
