@@ -5,6 +5,8 @@ import { useAuth, useAuthState } from "@saleor/sdk";
 import {
   AccountErrorFragment,
   CreateToken,
+  MutationSetPasswordArgs,
+  SetPasswordMutation,
   UserFragment
 } from "@saleor/sdk/dist/apollo/types";
 import {
@@ -12,6 +14,7 @@ import {
   login as loginWithCredentialsManagementAPI,
   saveCredentials
 } from "@saleor/utils/credentialsManagement";
+import { FetchResult } from "apollo-link";
 import { MutableRefObject, useEffect, useRef } from "react";
 import { useQuery } from "react-apollo";
 import { IntlShape } from "react-intl";
@@ -31,6 +34,11 @@ export interface UseAuthProvider {
     }
   >;
   logout: () => void;
+  setPassword: (
+    opts: MutationSetPasswordArgs
+  ) => Promise<
+    FetchResult<SetPasswordMutation, Record<string, any>, Record<string, any>>
+  >;
   authenticated: boolean;
   authenticating: boolean;
   user?: User;
@@ -45,7 +53,7 @@ export function useAuthProvider({
   intl,
   notify
 }: UseAuthProviderOpts): UseAuthProvider {
-  const { login, logout } = useAuth();
+  const { login, logout, setPassword } = useAuth();
   const { authenticated, authenticating } = useAuthState();
 
   const autologinPromise = useRef<Promise<any>>();
@@ -89,6 +97,7 @@ export function useAuthProvider({
   return {
     login: handleLogin,
     logout: handleLogout,
+    setPassword,
     authenticating,
     authenticated,
     user: userDetails.data?.me,

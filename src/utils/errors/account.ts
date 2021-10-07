@@ -1,4 +1,4 @@
-import { AccountErrorFragment } from "@saleor/fragments/types/AccountErrorFragment";
+import { AccountErrorCode as SdkAccountErrorCode } from "@saleor/sdk/dist/apollo/types";
 import { AccountErrorCode } from "@saleor/types/globalTypes";
 import { defineMessages, IntlShape } from "react-intl";
 
@@ -31,10 +31,11 @@ const messages = defineMessages({
   }
 });
 
-function getAccountErrorMessage(
-  err: AccountErrorFragment,
-  intl: IntlShape
-): string {
+interface ErrorFragment {
+  code: AccountErrorCode | SdkAccountErrorCode;
+}
+
+function getAccountErrorMessage(err: ErrorFragment, intl: IntlShape): string {
   if (err) {
     switch (err.code) {
       case AccountErrorCode.INVALID_PASSWORD:

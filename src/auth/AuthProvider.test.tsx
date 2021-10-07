@@ -1,4 +1,9 @@
+import { API_URI } from "@saleor/config";
+import { createSaleorClient, SaleorProvider } from "@saleor/sdk";
+import setupApi from "@test/api";
 import { act, renderHook } from "@testing-library/react-hooks";
+import React from "react";
+import { ApolloProvider } from "react-apollo";
 
 import { useAuthProvider } from "./hooks/useAuthProvider";
 import { getTokens, setAuthToken } from "./utils";
@@ -8,9 +13,21 @@ function renderAuthProvider() {
     formatMessage: ({ defaultMessage }) => defaultMessage
   };
   const notify = jest.fn();
+  const saleorClient = createSaleorClient({
+    apiUrl: API_URI,
+    channel: "",
+    autologin: true
+  });
+  const apolloClient = setupApi();
+  const wrapper = ({ children }) => (
+    <SaleorProvider client={saleorClient}>
+      <ApolloProvider client={apolloClient}>{children}</ApolloProvider>
+    </SaleorProvider>
+  );
 
-  const { result } = renderHook(() =>
-    useAuthProvider({ intl: intl as any, notify })
+  const { result } = renderHook(
+    () => useAuthProvider({ intl: intl as any, notify }),
+    { wrapper }
   );
 
   return result;

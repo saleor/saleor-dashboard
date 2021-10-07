@@ -115,7 +115,6 @@ const apolloClient = new ApolloClient({
     }
   }),
   link
-  // link: authLink.concat(link)
 });
 
 const saleorClient = createSaleorClient({

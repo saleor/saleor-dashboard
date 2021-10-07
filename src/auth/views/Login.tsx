@@ -75,11 +75,11 @@ const LoginView: React.FC<LoginViewProps> = ({ params }) => {
     <LoginPage
       error={isError}
       externalError={isExternalError}
-      disabled={authenticating} // tokenAuthLoading}
+      disabled={authenticating}
       externalAuthentications={
         externalAuthentications?.shop?.availableExternalAuthentications
       }
-      loading={externalAuthenticationsLoading || authenticating} // tokenAuthLoading}
+      loading={externalAuthenticationsLoading || authenticating}
       onExternalAuthentication={handleRequestExternalAuthentication}
       onPasswordRecovery={() => navigate(passwordResetUrl)}
       onSubmit={handleSubmit}

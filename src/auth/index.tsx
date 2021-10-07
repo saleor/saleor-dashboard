@@ -2,10 +2,13 @@ import { User } from "@saleor/fragments/types/User";
 import {
   AccountErrorFragment,
   CreateToken,
+  MutationSetPasswordArgs,
+  SetPasswordMutation,
   UserFragment
 } from "@saleor/sdk/dist/apollo/types";
+import { FetchResult } from "apollo-link";
 import { parse as parseQs } from "qs";
-import React from "react";
+import React, { MutableRefObject } from "react";
 import { Route, RouteComponentProps, Switch } from "react-router-dom";
 
 import Layout from "./components/Layout";
@@ -46,11 +49,13 @@ interface UserContext {
   //   pluginId: string,
   //   input: RequestExternalLoginInput
   // ) => Promise<void>;
-  // tokenAuthLoading: boolean;
-  // tokenRefresh: () => Promise<boolean>;
-  // tokenVerifyLoading: boolean;
+  setPassword: (
+    opts: MutationSetPasswordArgs
+  ) => Promise<
+    FetchResult<SetPasswordMutation, Record<string, any>, Record<string, any>>
+  >;
   user?: User;
-  // autologinPromise?: MutableRefObject<Promise<any>>;
+  autologinPromise?: MutableRefObject<Promise<any>>;
   authenticating: boolean;
   authenticated: boolean;
 }
@@ -58,12 +63,9 @@ interface UserContext {
 export const UserContext = React.createContext<UserContext>({
   login: undefined,
   // loginByExternalPlugin: undefined,
-  // loginByToken: undefined,
   logout: undefined,
   // requestLoginByExternalPlugin: undefined,
-  // tokenAuthLoading: false,
-  // tokenRefresh: undefined,
-  // tokenVerifyLoading: false,
+  setPassword: undefined,
   authenticating: false,
   authenticated: false
 });
