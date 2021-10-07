@@ -21,7 +21,7 @@ import {
 } from "@saleor/types/globalTypes";
 import { mapMetadataItemToInput } from "@saleor/utils/maps";
 import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
-import React, { useEffect } from "react";
+import React from "react";
 import { useIntl } from "react-intl";
 
 import {
