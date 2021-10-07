@@ -39,6 +39,7 @@ import {
   useProductUpdateMutation,
   useProductVariantBulkDeleteMutation,
   useProductVariantChannelListingUpdate,
+  useProductVariantPreorderDeactivateMutation,
   useProductVariantReorderMutation,
   useSimpleProductUpdateMutation,
   useVariantCreateMutation
@@ -406,6 +407,13 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
     reorderProductVariants({ variables })
   );
 
+  const [
+    deactivatePreorder,
+    deactivatePreoderOpts
+  ] = useProductVariantPreorderDeactivateMutation({});
+  const handleDeactivateVariantPreorder = async (id: string) =>
+    deactivatePreorder({ variables: { id } });
+
   const handleAssignAttributeReferenceClick = (attribute: AttributeInput) =>
     navigate(
       productUrl(id, {
@@ -424,6 +432,7 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
     updateChannelsOpts.loading ||
     updateVariantChannelsOpts.loading ||
     productVariantCreateOpts.loading ||
+    deactivatePreoderOpts.loading ||
     deleteAttributeValueOpts.loading ||
     createProductMediaOpts.loading ||
     loading;
@@ -563,6 +572,8 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
         onVariantShow={variantId => () =>
           navigate(productVariantEditUrl(product.id, variantId))}
         onVariantReorder={handleVariantReorder}
+        onVariantPreorderDeactivate={handleDeactivateVariantPreorder}
+        variantDeactivatePreoderButtonState={deactivatePreoderOpts.status}
         onImageUpload={handleImageUpload}
         onImageEdit={handleImageEdit}
         onImageDelete={handleImageDelete}

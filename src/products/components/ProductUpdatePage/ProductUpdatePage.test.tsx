@@ -59,6 +59,8 @@ const props: ProductUpdatePageProps = {
   onVariantReorder: () => undefined,
   onVariantShow: () => undefined,
   onVariantsAdd: () => undefined,
+  onVariantPreorderDeactivate: () => undefined,
+  variantDeactivatePreoderButtonState: "default",
   onWarehouseConfigure: () => undefined,
   openChannelsModal: () => undefined,
   placeholderImage,
