@@ -1,4 +1,3 @@
-import { API_URI } from "@saleor/config";
 import { createSaleorClient, SaleorProvider } from "@saleor/sdk";
 import setupApi from "@test/api";
 import { act, renderHook } from "@testing-library/react-hooks";
@@ -14,7 +13,7 @@ function renderAuthProvider() {
   };
   const notify = jest.fn();
   const saleorClient = createSaleorClient({
-    apiUrl: API_URI,
+    apiUrl: process.env.API_URI || "http://localhost:8000/graphql/",
     channel: "",
     autologin: true
   });
