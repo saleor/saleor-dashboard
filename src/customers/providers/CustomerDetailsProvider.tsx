@@ -27,14 +27,10 @@ export const CustomerDetailsProvider: React.FC<CustomerDetailsProviderProps> = (
     }
   });
 
-  console.info(data, loading);
-
   const providerValues: CustomerDetailsConsumerProps = {
     customer: data,
     loading
   };
-
-  console.info(children);
 
   return (
     <CustomerDetailsContext.Provider value={providerValues}>
