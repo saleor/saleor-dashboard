@@ -63,7 +63,6 @@ import ProductOrganization from "../ProductOrganization";
 import ProductShipping from "../ProductShipping/ProductShipping";
 import ProductStocks, { ProductStockInput } from "../ProductStocks";
 import ProductTaxes from "../ProductTaxes";
-import ProductVariantEndPreorderDialog from "../ProductVariantEndPreorderDialog";
 import ProductVariants from "../ProductVariants";
 import ProductUpdateForm, {
   ProductUpdateData,
@@ -111,11 +110,10 @@ export interface ProductUpdatePageProps extends ListActions, ChannelProps {
   fetchAttributeValues: (query: string, attributeId: string) => void;
   onAssignReferencesClick: (attribute: AttributeInput) => void;
   onCloseDialog: () => void;
-  onVariantPreorderDeactivate: (id: string) => void;
-  variantDeactivatePreoderButtonState: ConfirmButtonTransitionState;
   onVariantsAdd: () => void;
   onVariantShow: (id: string) => () => void;
   onVariantReorder: ReorderAction;
+  onVariantEndPreorderDialogOpen: () => void;
   onImageDelete: (id: string) => () => void;
   onSubmit: (data: ProductUpdatePageSubmitData) => SubmitPromise;
   openChannelsModal: () => void;
@@ -185,9 +183,8 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
   onVariantsAdd,
   onSetDefaultVariant,
   onVariantShow,
-  onVariantPreorderDeactivate,
-  variantDeactivatePreoderButtonState,
   onVariantReorder,
+  onVariantEndPreorderDialogOpen,
   onWarehouseConfigure,
   isChecked,
   isMediaUrlModalVisible,
@@ -210,11 +207,6 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
   onAttributeSelectBlur
 }) => {
   const intl = useIntl();
-
-  const [
-    isEndPreorderModalOpened,
-    setIsEndPreorderModalOpened
-  ] = React.useState(false);
 
   const [selectedCategory, setSelectedCategory] = useStateFromProps(
     product?.category?.name || ""
@@ -242,11 +234,6 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
     })) || [];
 
   const canOpenAssignReferencesAttributeDialog = !!assignReferencesAttributeId;
-
-  const handleDeactivatePreorder = async () => {
-    await onVariantPreorderDeactivate(variants[0].id);
-    setIsEndPreorderModalOpened(false);
-  };
 
   const handleAssignReferenceAttribute = (
     attributeValues: string[],
@@ -402,7 +389,7 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                       productVariantChannelListings={data.channelListings}
                       onEndPreorderTrigger={
                         !!variants?.[0]?.preorder
-                          ? () => setIsEndPreorderModalOpened(true)
+                          ? () => onVariantEndPreorderDialogOpen()
                           : null
                       }
                       data={data}
@@ -555,16 +542,6 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
               open={mediaUrlModalStatus}
               onSubmit={onMediaUrlUpload}
             />
-
-            {isSimpleProduct && !!variants?.[0].preorder && (
-              <ProductVariantEndPreorderDialog
-                confirmButtonState={variantDeactivatePreoderButtonState}
-                onClose={() => setIsEndPreorderModalOpened(false)}
-                onConfirm={handleDeactivatePreorder}
-                open={isEndPreorderModalOpened}
-                variantGlobalSoldUnits={variants[0]?.preorder?.globalSoldUnits}
-              />
-            )}
           </Container>
         </>
       )}
