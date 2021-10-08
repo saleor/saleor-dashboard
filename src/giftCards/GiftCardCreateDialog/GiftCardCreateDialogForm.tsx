@@ -113,17 +113,13 @@ const GiftCardCreateDialogForm: React.FC<GiftCardCreateDialogFormProps> = ({
     };
   };
 
-  const getInitialData = () => ({
-    ...initialData,
-    sendToCustomerSelected: !!initialCustomer
-  });
-
   const { submit, change, data, set } = useForm(
     {
-      ...getInitialData(),
+      ...initialData,
       ...getInitialExpirySettingsData(),
       balanceCurrency: "",
-      channelSlug: ""
+      channelSlug: "",
+      sendToCustomerSelected: !!initialCustomer
     },
     handleSubmit
   );
