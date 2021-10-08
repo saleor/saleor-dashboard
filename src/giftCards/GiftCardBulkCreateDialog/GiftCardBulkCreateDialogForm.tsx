@@ -11,16 +11,14 @@ import { GiftCardError } from "@saleor/fragments/types/GiftCardError";
 import GiftCardTagInput from "@saleor/giftCards/components/GiftCardTagInput";
 import useForm from "@saleor/hooks/useForm";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
-import Label from "@saleor/orders/components/OrderHistory/Label";
 import {
   GiftCardSettingsExpiryTypeEnum,
   TimePeriodTypeEnum
 } from "@saleor/types/globalTypes";
 import { getFormErrors } from "@saleor/utils/errors";
-import React, { useState } from "react";
+import React from "react";
 import { useIntl } from "react-intl";
 
-import GiftCardSendToCustomer from "../components/GiftCardSendToCustomer/GiftCardSendToCustomer";
 import GiftCardCreateExpirySelect from "../GiftCardCreateDialog/GiftCardCreateExpirySelect";
 import GiftCardCreateMoneyInput from "../GiftCardCreateDialog/GiftCardCreateMoneyInput";
 import GiftCardCreateRequiresActivationSection from "../GiftCardCreateDialog/GiftCardCreateRequiresActivationSection";
@@ -29,40 +27,25 @@ import { useGiftCardCreateFormStyles as useStyles } from "../GiftCardCreateDialo
 import { useGiftCardSettingsQuery } from "../GiftCardSettings/queries";
 import {
   GiftCardBulkCreateFormCommonProps,
-  GiftCardBulkCreateFormCustomer,
-  GiftCardExpiryType
+  GiftCardCreateCommonFormData
 } from "./types";
 
-export interface GiftCardBulkCreateFormData {
-  note: string;
-  sendToCustomerSelected: boolean;
-  selectedCustomer?: GiftCardBulkCreateFormCustomer;
-  channelSlug?: string;
-  expirySelected: boolean;
-  expiryType: GiftCardExpiryType;
-  expiryPeriodType: TimePeriodTypeEnum;
-  expiryPeriodAmount: number;
-  requiresActivation: boolean;
-  tag: string;
-  balanceAmount: number;
-  balanceCurrency: string;
-  expiryDate: string;
+export interface GiftCardBulkCreateFormData
+  extends GiftCardCreateCommonFormData {
+  cardsAmount: number;
 }
-
-const initialCustomer = { email: "", name: "" };
 
 export const initialData: GiftCardBulkCreateFormData = {
   tag: "",
   balanceAmount: 1,
   balanceCurrency: null,
-  note: "",
-  sendToCustomerSelected: false,
   expirySelected: false,
   expiryType: "EXPIRY_PERIOD",
   expiryDate: "",
   expiryPeriodType: TimePeriodTypeEnum.MONTH,
   expiryPeriodAmount: 12,
-  requiresActivation: true
+  requiresActivation: true,
+  cardsAmount: 100
 };
 
 interface GiftCardBulkCreateDialogFormProps {
@@ -86,13 +69,6 @@ const GiftCardBulkCreateDialogForm: React.FC<GiftCardBulkCreateDialogFormProps> 
     loading: loadingSettings
   } = useGiftCardSettingsQuery();
 
-  const [selectedCustomer, setSelectedCustomer] = useState<
-    GiftCardBulkCreateFormCustomer
-  >(initialCustomer);
-
-  const handleSubmit = (data: GiftCardBulkCreateFormData) =>
-    onSubmit({ ...data, selectedCustomer });
-
   const getInitialExpirySettingsData = (): Partial<GiftCardBulkCreateFormData> => {
     if (loadingSettings) {
       return {};
@@ -115,26 +91,24 @@ const GiftCardBulkCreateDialogForm: React.FC<GiftCardBulkCreateDialogFormProps> 
     {
       ...initialData,
       ...getInitialExpirySettingsData(),
-      balanceCurrency: "",
-      channelSlug: ""
+      balanceCurrency: ""
     },
-    handleSubmit
+    onSubmit
   );
 
   const formErrors = getFormErrors(
-    ["tag", "expiryDate", "currency", "amount", "balance"],
+    ["tag", "expiryDate", "currency", "amount", "balance", "count"],
     apiErrors
   );
 
   const {
     tag,
-    sendToCustomerSelected,
-    channelSlug,
     balanceAmount,
     expirySelected,
     expiryType,
     expiryDate,
-    requiresActivation
+    requiresActivation,
+    cardsAmount
   } = data;
 
   const shouldEnableSubmitButton = () => {
@@ -163,6 +137,7 @@ const GiftCardBulkCreateDialogForm: React.FC<GiftCardBulkCreateDialogFormProps> 
           onChange={change}
           className={classes.fullWidthContainer}
           label={intl.formatMessage(messages.giftCardsAmountLabel)}
+          value={cardsAmount}
         />
         <VerticalSpacer spacing={2} />
         <GiftCardCreateMoneyInput {...commonFormProps} set={set} />

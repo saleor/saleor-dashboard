@@ -17,32 +17,23 @@ import React, { useState } from "react";
 import { useIntl } from "react-intl";
 
 import GiftCardSendToCustomer from "../components/GiftCardSendToCustomer/GiftCardSendToCustomer";
+import { GiftCardCreateCommonFormData } from "../GiftCardBulkCreateDialog/types";
 import { useGiftCardSettingsQuery } from "../GiftCardSettings/queries";
 import GiftCardCreateExpirySelect from "./GiftCardCreateExpirySelect";
 import GiftCardCreateMoneyInput from "./GiftCardCreateMoneyInput";
 import GiftCardCreateRequiresActivationSection from "./GiftCardCreateRequiresActivationSection";
-import { giftCardCreateDialogMessages as messages } from "./messages";
-import { useGiftCardCreateDialogFormStyles as useStyles } from "./styles";
+import { giftCardCreateMessages as messages } from "./messages";
+import { useGiftCardCreateFormStyles as useStyles } from "./styles";
 import {
   GiftCardCreateFormCommonProps,
-  GiftCardCreateFormCustomer,
-  GiftCardExpiryType
+  GiftCardCreateFormCustomer
 } from "./types";
 
-export interface GiftCardCreateFormData {
+export interface GiftCardCreateFormData extends GiftCardCreateCommonFormData {
   note: string;
   sendToCustomerSelected: boolean;
   selectedCustomer?: GiftCardCreateFormCustomer;
   channelSlug?: string;
-  expirySelected: boolean;
-  expiryType: GiftCardExpiryType;
-  expiryPeriodType: TimePeriodTypeEnum;
-  expiryPeriodAmount: number;
-  requiresActivation: boolean;
-  tag: string;
-  balanceAmount: number;
-  balanceCurrency: string;
-  expiryDate: string;
 }
 
 const initialCustomer = { email: "", name: "" };

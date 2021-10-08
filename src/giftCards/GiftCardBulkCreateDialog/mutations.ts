@@ -1,4 +1,4 @@
-import makeMutation from "@saleorhooks/makeMutation";
+import makeMutation from "@saleor/hooks/makeMutation";
 import gql from "graphql-tag";
 
 import {
@@ -9,8 +9,8 @@ import {
 const giftCardBulkCreate = gql`
   mutation GiftCardBulkCreate($input: GiftCardBulkCreateInput!) {
     giftCardBulkCreate(input: $input) {
-      giftCard {
-        code
+      giftCards {
+        id
       }
       errors {
         code

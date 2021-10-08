@@ -1,20 +1,23 @@
 import TextWithSelectField from "@saleor/components/TextWithSelectField";
-import { ChangeEvent } from "@saleor/hooks/useForm";
+import { GiftCardError } from "@saleor/fragments/types/GiftCardError";
+import { ChangeEvent, FormChange } from "@saleor/hooks/useForm";
 import useLocalStorage from "@saleor/hooks/useLocalStorage";
 import { mapSingleValueNodeToChoice } from "@saleor/utils/maps";
 import * as React from "react";
 import { useEffect } from "react";
 import { useIntl } from "react-intl";
 
+import { GiftCardCreateCommonFormData } from "../GiftCardBulkCreateDialog/types";
 import { getGiftCardErrorMessage } from "../GiftCardUpdate/messages";
-import { GiftCardCreateFormData } from "./GiftCardCreateDialogForm";
 import { giftCardCreateMessages as messages } from "./messages";
 import { useChannelCurrencies } from "./queries";
 import { useGiftCardCreateFormStyles as useStyles } from "./styles";
-import { GiftCardCreateFormCommonProps } from "./types";
 
-interface GiftCardCreateMoneyInputProps extends GiftCardCreateFormCommonProps {
-  set: (data: Partial<GiftCardCreateFormData>) => void;
+interface GiftCardCreateMoneyInputProps {
+  change: FormChange;
+  errors: Record<"balance", GiftCardError>;
+  data: Pick<GiftCardCreateCommonFormData, "balanceCurrency" | "balanceAmount">;
+  set: (data: Partial<GiftCardCreateCommonFormData>) => void;
 }
 
 const GiftCardCreateMoneyInput: React.FC<GiftCardCreateMoneyInputProps> = ({
