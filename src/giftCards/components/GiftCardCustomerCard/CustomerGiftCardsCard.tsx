@@ -87,7 +87,6 @@ const CustomerGiftCardsCard: React.FC = () => {
           </Button>
         </CardActions>
       </Card>
-
       <GiftCardCreateDialog
         open={openCreateDialog}
         closeDialog={closeCreateDialog}
