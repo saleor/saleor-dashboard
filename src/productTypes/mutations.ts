@@ -10,7 +10,7 @@ import {
 import {
   ProductAttributeAssignmentUpdate,
   ProductAttributeAssignmentUpdateVariables
-} from "./types/productAttributeAssignmentUpdate";
+} from "./types/ProductAttributeAssignmentUpdate";
 import {
   ProductTypeAttributeReorder,
   ProductTypeAttributeReorderVariables

@@ -128,7 +128,7 @@ const ProductTypeVariantAttributes: React.FC<ProductTypeVariantAttributesProps> 
   const intl = useIntl();
 
   useEffect(() => {
-    // Populate initial selection
+    // Populate initial selection - populated inside this component to preserve it's state between data reloads
     setSelectedVariantAttributes(
       assignedVariantAttributes
         .map(elem => (elem.variantSelection ? elem.attribute.id : undefined))
