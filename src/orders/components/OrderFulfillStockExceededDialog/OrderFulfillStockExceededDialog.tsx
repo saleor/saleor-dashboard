@@ -35,6 +35,10 @@ const useStyles = makeStyles(
     },
     label: {
       margin: theme.spacing(2)
+    },
+    scrollable: {
+      height: 450,
+      overflow: "scroll"
     }
   }),
   { name: "OrderFulfillStockExceededDialog" }
@@ -83,116 +87,120 @@ const OrderFulfillStockExceededDialog: React.FC<OrderFulfillStockExceededDialogP
         confirmButtonLabel={intl.formatMessage(messages.fulfillButton)}
       >
         <Typography>{intl.formatMessage(messages.infoLabel)}</Typography>
-        <ResponsiveTable className={classes.table}>
-          {maybe(() => !!lines.length) && (
-            <TableHead>
-              <TableRow>
-                <TableCell className={classes.colName}>
-                  {intl.formatMessage(messages.productLabel)}
-                </TableCell>
-                <TableCell className={classes.colQuantity}>
-                  {intl.formatMessage(messages.requiredStockLabel)}
-                </TableCell>
-                <TableCell className={classes.colQuantity}>
-                  {intl.formatMessage(messages.availableStockLabel)}
-                </TableCell>
-                <TableCell className={classes.colQuantity}>
-                  {intl.formatMessage(messages.warehouseStockLabel)}
-                </TableCell>
-              </TableRow>
-            </TableHead>
-          )}
-
-          <TableBody>
-            {renderCollection(
-              lines?.filter((line, lineIndex) =>
-                line.variant.stocks.some(
-                  stock =>
-                    stock.quantity <
-                    formsetData?.[lineIndex]?.value.find(
-                      val => val.warehouse === stock.warehouse.id
-                    ).quantity
-                )
-              ),
-              (line, lineIndex) => {
-                if (!line) {
-                  return (
-                    <TableRow key={lineIndex}>
-                      <TableCellAvatar className={classes.colName}>
-                        <Skeleton />
-                      </TableCellAvatar>
-                      <TableCell className={classes.colQuantity}>
-                        <Skeleton />
-                      </TableCell>
-                      <TableCell className={classes.colQuantity}>
-                        <Skeleton />
-                      </TableCell>
-                      <TableCell className={classes.colQuantity}>
-                        <Skeleton />
-                      </TableCell>
-                    </TableRow>
-                  );
-                }
-
-                return renderCollection(
-                  line.variant.stocks.filter(stock => {
-                    const warehouseAllocation = line.allocations.find(
-                      allocation =>
-                        allocation.warehouse.id === stock.warehouse.id
-                    );
-                    const allocatedQuantityForLine =
-                      warehouseAllocation?.quantity || 0;
-
-                    const availableQuantity =
-                      stock.quantity -
-                      stock.quantityAllocated +
-                      allocatedQuantityForLine;
-
-                    const formsetQuantity = formsetData
-                      ?.find(data => data.id === line.id)
-                      ?.value.find(val => val.warehouse === stock.warehouse.id)
-                      .quantity;
-                    return availableQuantity < formsetQuantity;
-                  }),
-                  stock => (
-                    <TableRow key={line?.id + stock?.id}>
-                      <TableCellAvatar
-                        className={classes.colName}
-                        thumbnail={maybe(() => line.thumbnail.url)}
-                      >
-                        {line?.productName}
-                        <Typography color="textSecondary" variant="caption">
-                          {line.variant.attributes
-                            .map(attribute =>
-                              attribute.values
-                                .map(attributeValue => attributeValue.name)
-                                .join(", ")
-                            )
-                            .join(" / ")}
-                        </Typography>
-                      </TableCellAvatar>
-                      <TableCell className={classes.colQuantity}>
-                        {getFormsetQuantity(formsetData, line, stock)}
-                      </TableCell>
-                      <TableCell className={classes.colQuantity}>
-                        {line.variant.stocks.reduce(
-                          (partialSum, currentValue) =>
-                            partialSum +
-                            getAvailableQuantity(line, currentValue),
-                          0
-                        )}
-                      </TableCell>
-                      <TableCell className={classes.colQuantity}>
-                        {getAvailableQuantity(line, stock)}
-                      </TableCell>
-                    </TableRow>
-                  )
-                );
-              },
-              () => null
+        <CardSpacer />
+        <div className={classes.scrollable}>
+          <ResponsiveTable className={classes.table}>
+            {maybe(() => !!lines.length) && (
+              <TableHead>
+                <TableRow>
+                  <TableCell className={classes.colName}>
+                    {intl.formatMessage(messages.productLabel)}
+                  </TableCell>
+                  <TableCell className={classes.colQuantity}>
+                    {intl.formatMessage(messages.requiredStockLabel)}
+                  </TableCell>
+                  <TableCell className={classes.colQuantity}>
+                    {intl.formatMessage(messages.availableStockLabel)}
+                  </TableCell>
+                  <TableCell className={classes.colQuantity}>
+                    {intl.formatMessage(messages.warehouseStockLabel)}
+                  </TableCell>
+                </TableRow>
+              </TableHead>
             )}
-          </TableBody>
-        </ResponsiveTable>
+
+            <TableBody>
+              {renderCollection(
+                lines?.filter((line, lineIndex) =>
+                  line.variant.stocks.some(
+                    stock =>
+                      stock.quantity <
+                      formsetData?.[lineIndex]?.value.find(
+                        val => val.warehouse === stock.warehouse.id
+                      ).quantity
+                  )
+                ),
+                (line, lineIndex) => {
+                  if (!line) {
+                    return (
+                      <TableRow key={lineIndex}>
+                        <TableCellAvatar className={classes.colName}>
+                          <Skeleton />
+                        </TableCellAvatar>
+                        <TableCell className={classes.colQuantity}>
+                          <Skeleton />
+                        </TableCell>
+                        <TableCell className={classes.colQuantity}>
+                          <Skeleton />
+                        </TableCell>
+                        <TableCell className={classes.colQuantity}>
+                          <Skeleton />
+                        </TableCell>
+                      </TableRow>
+                    );
+                  }
+
+                  return renderCollection(
+                    line.variant.stocks.filter(stock => {
+                      const warehouseAllocation = line.allocations.find(
+                        allocation =>
+                          allocation.warehouse.id === stock.warehouse.id
+                      );
+                      const allocatedQuantityForLine =
+                        warehouseAllocation?.quantity || 0;
+
+                      const availableQuantity =
+                        stock.quantity -
+                        stock.quantityAllocated +
+                        allocatedQuantityForLine;
+
+                      const formsetQuantity = formsetData
+                        ?.find(data => data.id === line.id)
+                        ?.value.find(
+                          val => val.warehouse === stock.warehouse.id
+                        ).quantity;
+                      return availableQuantity < formsetQuantity;
+                    }),
+                    stock => (
+                      <TableRow key={line?.id + stock?.id}>
+                        <TableCellAvatar
+                          className={classes.colName}
+                          thumbnail={maybe(() => line.thumbnail.url)}
+                        >
+                          {line?.productName}
+                          <Typography color="textSecondary" variant="caption">
+                            {line.variant.attributes
+                              .map(attribute =>
+                                attribute.values
+                                  .map(attributeValue => attributeValue.name)
+                                  .join(", ")
+                              )
+                              .join(" / ")}
+                          </Typography>
+                        </TableCellAvatar>
+                        <TableCell className={classes.colQuantity}>
+                          {getFormsetQuantity(formsetData, line, stock)}
+                        </TableCell>
+                        <TableCell className={classes.colQuantity}>
+                          {line.variant.stocks.reduce(
+                            (partialSum, currentValue) =>
+                              partialSum +
+                              getAvailableQuantity(line, currentValue),
+                            0
+                          )}
+                        </TableCell>
+                        <TableCell className={classes.colQuantity}>
+                          {getAvailableQuantity(line, stock)}
+                        </TableCell>
+                      </TableRow>
+                    )
+                  );
+                },
+                () => null
+              )}
+            </TableBody>
+          </ResponsiveTable>
+        </div>
         <CardSpacer />
         <Typography>{intl.formatMessage(messages.questionLabel)}</Typography>
       </ActionDialog>
