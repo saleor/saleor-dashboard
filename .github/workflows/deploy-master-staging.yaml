@@ -1,8 +1,8 @@
-name: Deploy Dashboard to master staging
+name: Deploy Dashboard to main staging
 on:
   push:
     branches:
-      - master
+      - main
       - ci/staging/**
   workflow_dispatch:
 jobs:
