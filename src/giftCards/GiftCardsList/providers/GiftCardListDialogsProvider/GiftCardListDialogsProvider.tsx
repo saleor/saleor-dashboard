@@ -1,4 +1,5 @@
 import GiftCardListPageDeleteDialog from "@saleor/giftCards/components/GiftCardDeleteDialog/GiftCardListPageDeleteDialog";
+import GiftCardBulkCreateDialog from "@saleor/giftCards/GiftCardBulkCreateDialog";
 import GiftCardCreateDialog from "@saleor/giftCards/GiftCardCreateDialog";
 import { giftCardsListUrl } from "@saleor/giftCards/urls";
 import useNavigator from "@saleor/hooks/useNavigator";
@@ -73,6 +74,7 @@ const GiftCardListDialogsProvider: React.FC<GiftCardListDialogsProviderProps> = 
         open={isDeleteDialogOpen}
         closeDialog={closeDialog}
       />
+      <GiftCardBulkCreateDialog />
     </GiftCardListDialogsContext.Provider>
   );
 };

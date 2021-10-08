@@ -14,7 +14,7 @@ import GiftCardCreateDialogCodeContent from "./GiftCardCreateDialogCodeContent";
 import GiftCardCreateDialogForm, {
   GiftCardCreateFormData
 } from "./GiftCardCreateDialogForm";
-import { giftCardCreateDialogMessages as messages } from "./messages";
+import { giftCardCreateMessages as messages } from "./messages";
 import { useGiftCardCreateMutation } from "./mutations";
 import { useChannelCurrencies } from "./queries";
 import { GiftCardCreate } from "./types/GiftCardCreate";

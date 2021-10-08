@@ -8,17 +8,16 @@ import { useIntl } from "react-intl";
 
 import { getGiftCardErrorMessage } from "../GiftCardUpdate/messages";
 import { GiftCardCreateFormData } from "./GiftCardCreateDialogForm";
-import { giftCardCreateDialogMessages as messages } from "./messages";
+import { giftCardCreateMessages as messages } from "./messages";
 import { useChannelCurrencies } from "./queries";
-import { useGiftCardCreateDialogFormStyles as useStyles } from "./styles";
+import { useGiftCardCreateFormStyles as useStyles } from "./styles";
 import { GiftCardCreateFormCommonProps } from "./types";
 
-interface GiftCardCreateDialogMoneyInputProps
-  extends GiftCardCreateFormCommonProps {
+interface GiftCardCreateMoneyInputProps extends GiftCardCreateFormCommonProps {
   set: (data: Partial<GiftCardCreateFormData>) => void;
 }
 
-const GiftCardCreateDialogMoneyInput: React.FC<GiftCardCreateDialogMoneyInputProps> = ({
+const GiftCardCreateMoneyInput: React.FC<GiftCardCreateMoneyInputProps> = ({
   errors,
   data: { balanceAmount, balanceCurrency },
   change,
@@ -32,7 +31,7 @@ const GiftCardCreateDialogMoneyInput: React.FC<GiftCardCreateDialogMoneyInputPro
   const { channelCurrencies } = channelCurrenciesData?.shop;
 
   const [savedCurrency, setCurrency] = useLocalStorage(
-    "giftCardCreateDialogCurrency",
+    "giftCardCreateCurrency",
     undefined
   );
 
@@ -67,7 +66,7 @@ const GiftCardCreateDialogMoneyInput: React.FC<GiftCardCreateDialogMoneyInputPro
       helperText={getGiftCardErrorMessage(errors?.balance, intl)}
       change={handleInputChange}
       choices={mapSingleValueNodeToChoice(channelCurrencies)}
-      containerClassName={classes.balanceContainer}
+      containerClassName={classes.fullWidthContainer}
       textFieldProps={{
         type: "float",
         label: intl.formatMessage(messages.amountLabel),
@@ -84,4 +83,4 @@ const GiftCardCreateDialogMoneyInput: React.FC<GiftCardCreateDialogMoneyInputPro
   );
 };
 
-export default GiftCardCreateDialogMoneyInput;
+export default GiftCardCreateMoneyInput;
