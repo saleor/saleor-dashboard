@@ -30,7 +30,6 @@
     "@saleor/macaw-ui": "^0.2.3",
     "@sentry/react": "^6.0.0",
     "@types/faker": "^5.1.6",
-    "@types/hoist-non-react-statics": "^3.3.1",
     "@uiw/react-color-hue": "0.0.34",
     "@uiw/react-color-material": "^0.1.0",
     "@uiw/react-color-saturation": "0.0.34",
