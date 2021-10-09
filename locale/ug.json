@@ -220,6 +220,12 @@
   "homeNotificationTableProducts": {
     "string": "{amount, plural,one {One product out of stock}other { مەھسۇلات يوق {amount}}}"
   },
+  "homeNotificationTablePayments": {
+    "string": "{amount, plural,one {One payment to capture}other { پۇل تۆلەنمىگەن زاكازلار {amount}}}"
+  },
+  "homeNotificationTableProducts": {
+    "string": "{amount, plural,one {One product out of stock}other { مەھسۇلات يوق {amount}}}"
+  },
   "homeNotificationsNoPayments": {
     "string": "تۆلىنىشنى ساقلاۋاتقان پۇل يوق"
   },
