@@ -3630,11 +3630,7 @@
   },
   "src_dot_giftCards": {
     "context": "gift cards section name",
-<<<<<<< HEAD
     "string": "سوۋغات كارتىسى"
-=======
-    "string": "Gift Cards"
->>>>>>> 5cec3d379 (2008 new1)
   },
   "src_dot_giftCards_dot_GiftCardCreateDialog_dot_amountLabel": {
     "context": "GiftCardCreateDialog amount label",
