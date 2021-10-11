@@ -55,3 +55,12 @@ jobs:
           if [[ -n "$CF_2_ID" ]]; then
             aws cloudfront create-invalidation --distribution-id ${CF_2_ID} --paths "/dashboard*"
           fi
+      - name: Notify Slack
+        if: ${{ always() }}
+        env:
+          JOB_DEPLOYMENT_KIND: production
+          JOB_STATUS: ${{ job.status }}
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_CLOUD_DEPLOYMENTS_WEBHOOK_URL }}
+          JOB_TITLE: "Dashboard deployment to {{ env.ENVIRONMENT }}"
+        run: |
+          python3 ./.github/workflows/notify/notify-slack.py
