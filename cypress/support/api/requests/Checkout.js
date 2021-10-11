@@ -46,6 +46,7 @@ export function createCheckout({
       }
       created
       checkout{
+        token
         id
         availableShippingMethods{
           name
@@ -83,6 +84,18 @@ export function addShippingMethod(checkoutId, shippingMethodId) {
   return cy
     .sendRequestWithQuery(mutation)
     .its("body.data.checkoutShippingMethodUpdate");
+}
+
+export function deliveryMethodUpdate(deliveryMethodId, checkoutToken) {
+  const mutation = `mutation{
+    checkoutDeliveryMethodUpdate(deliveryMethodId:"${deliveryMethodId}", token:"${checkoutToken}"){
+      errors{
+        field
+        message
+      }
+    }
+  }`;
+  cy.sendRequestWithQuery(mutation);
 }
 
 export function addPayment({ checkoutId, gateway, token, amount }) {

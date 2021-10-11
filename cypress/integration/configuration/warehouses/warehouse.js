@@ -1,25 +1,25 @@
 /// <reference types="cypress"/>
-/// <reference types="../../support"/>
+/// <reference types="../../../support"/>
 
 import faker from "faker";
 
-import { BUTTON_SELECTORS } from "../../elements/shared/button-selectors";
-import { SHIPPING_ZONE_DETAILS } from "../../elements/shipping/shipping-zone-details";
-import { WAREHOUSES_DETAILS } from "../../elements/warehouses/warehouse-details";
-import { WAREHOUSES_LIST } from "../../elements/warehouses/warehouses-list";
+import { BUTTON_SELECTORS } from "../../../elements/shared/button-selectors";
+import { SHIPPING_ZONE_DETAILS } from "../../../elements/shipping/shipping-zone-details";
+import { WAREHOUSES_DETAILS } from "../../../elements/warehouses/warehouse-details";
+import { WAREHOUSES_LIST } from "../../../elements/warehouses/warehouses-list";
 import {
   shippingZoneDetailsUrl,
   urlList,
   warehouseDetailsUrl
-} from "../../fixtures/urlList";
-import { createShippingZone } from "../../support/api/requests/ShippingMethod";
+} from "../../../fixtures/urlList";
+import { createShippingZone } from "../../../support/api/requests/ShippingMethod";
 import {
   createWarehouse as createWarehouseViaApi,
   getWarehouse
-} from "../../support/api/requests/Warehouse";
-import { getDefaultChannel } from "../../support/api/utils/channelsUtils";
-import { deleteShippingStartsWith } from "../../support/api/utils/shippingUtils";
-import filterTests from "../../support/filterTests";
+} from "../../../support/api/requests/Warehouse";
+import { getDefaultChannel } from "../../../support/api/utils/channelsUtils";
+import { deleteShippingStartsWith } from "../../../support/api/utils/shippingUtils";
+import filterTests from "../../../support/filterTests";
 
 filterTests({ definedTags: ["all"] }, () => {
   describe("Warehouse settings", () => {
