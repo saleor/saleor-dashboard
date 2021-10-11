@@ -436,11 +436,6 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
                                   }
                                   error={overfulfill}
                                   variant="outlined"
-                                  /*
-                                  formsetData[lineIndex]?.value.find(
-                                      el => el.warehouse === warehouse.id
-                                    ).quantity
-                                  */
                                   InputProps={{
                                     classes: {
                                       ...(isStockExceeded &&
