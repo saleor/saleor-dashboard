@@ -13,7 +13,10 @@ import TableCellAvatar from "@saleor/components/TableCellAvatar";
 import { FormsetData } from "@saleor/hooks/useFormset";
 import { makeStyles } from "@saleor/macaw-ui";
 import { renderCollection } from "@saleor/misc";
-import { OrderFulfillData_order_lines } from "@saleor/orders/types/OrderFulfillData";
+import {
+  OrderFulfillData_order_lines,
+  OrderFulfillData_order_lines_variant_stocks
+} from "@saleor/orders/types/OrderFulfillData";
 import { OrderFulfillStockInput } from "@saleor/types/globalTypes";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -58,7 +61,10 @@ const OrderFulfillStockExceededDialog: React.FC<OrderFulfillStockExceededDialogP
   const intl = useIntl();
   const classes = useStyles(props);
 
-  const getAvailableQuantity = (line, stock) => {
+  const getAvailableQuantity = (
+    line: OrderFulfillData_order_lines,
+    stock: OrderFulfillData_order_lines_variant_stocks
+  ) => {
     const warehouseAllocation = line.allocations.find(
       allocation => allocation.warehouse.id === stock.warehouse.id
     );
@@ -70,10 +76,14 @@ const OrderFulfillStockExceededDialog: React.FC<OrderFulfillStockExceededDialogP
     return availableQuantity;
   };
 
-  const getFormsetQuantity = (formsetData, line, stock) =>
+  const getFormsetQuantity = (
+    formsetData: FormsetData<null, OrderFulfillStockInput[]>,
+    line: OrderFulfillData_order_lines,
+    stock: OrderFulfillData_order_lines_variant_stocks
+  ) =>
     formsetData
-      ?.find(data => data.id === line.id)
-      ?.value.find(val => val.warehouse === stock.warehouse.id).quantity;
+      .find(data => data.id === line.id)
+      .value.find(val => val.warehouse === stock.warehouse.id).quantity;
 
   return (
     <>
