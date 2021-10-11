@@ -2,7 +2,7 @@
 
 ![Saleor Dashboard](https://user-images.githubusercontent.com/249912/82305745-5c52fd00-99be-11ea-9ac6-cc04a6f28c91.png)
 
-A GraphQL-powered, single-page dashboard application for [Saleor](https://github.com/mirumee/saleor/).
+A GraphQL-powered, single-page dashboard application for [Saleor](https://github.com/saleor/saleor/).
 
 ## Demo
 
@@ -19,14 +19,14 @@ These instructions will get you a copy of the project up and running on your loc
 ### Prerequisites
 
 - Node.js v14+
-- A running instance of [Saleor](https://github.com/mirumee/saleor/).
+- A running instance of [Saleor](https://github.com/saleor/saleor/).
 
 ### Installing
 
 Clone the repository:
 
 ```
-$ git clone https://github.com/mirumee/saleor-dashboard.git
+$ git clone https://github.com/saleor/saleor-dashboard.git
 ```
 
 Enter the project directory:
@@ -43,7 +43,7 @@ To use the official stable release, checkout to a release tag:
 $ git checkout 2.11.1
 ```
 
-See the list of all releases here: https://github.com/mirumee/saleor-dashboard/releases/
+See the list of all releases here: https://github.com/saleor/saleor-dashboard/releases/
 
 #### Using development version
 

@@ -5,7 +5,7 @@ on: [pull_request]
 
 jobs:
   deploy:
-    if: github.event.pull_request.head.repo.full_name == 'mirumee/saleor-dashboard'
+    if: github.event.pull_request.head.repo.full_name == 'saleor/saleor-dashboard'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
