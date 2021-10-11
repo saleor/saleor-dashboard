@@ -92,8 +92,8 @@ const OrderFulfillStockExceededDialog: React.FC<OrderFulfillStockExceededDialogP
         title={intl.formatMessage(messages.title)}
         onConfirm={onSubmit}
         onClose={onClose}
-        confirmButtonState={"default"}
-        maxWidth={"sm"}
+        confirmButtonState="default"
+        maxWidth="sm"
         confirmButtonLabel={intl.formatMessage(messages.fulfillButton)}
       >
         <Typography>{intl.formatMessage(messages.infoLabel)}</Typography>
