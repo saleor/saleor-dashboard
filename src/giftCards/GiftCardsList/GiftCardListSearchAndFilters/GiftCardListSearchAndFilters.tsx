@@ -32,6 +32,7 @@ import {
   saveFilterTab
 } from "./filters";
 import { giftCardListFilterErrorMessages as errorMessages } from "./messages";
+import { giftCardListSearchAndFiltersMessages as messages } from "./messages";
 import { useGiftCardCurrenciesQuery } from "./queries";
 
 const GiftCardListSearchAndFilters: React.FC = () => {
@@ -159,16 +160,10 @@ const GiftCardListSearchAndFilters: React.FC = () => {
         onTabChange={handleTabChange}
         onTabDelete={openSearchDeleteDialog}
         onTabSave={openSearchSaveDialog}
-        searchPlaceholder={intl.formatMessage(
-          {
-            defaultMessage: "Search Gift Cards, e.g {exampleGiftCardCode}"
-          },
-          { exampleGiftCardCode: "21F1-39DY-V4U2" }
-        )}
-        allTabLabel={intl.formatMessage({
-          defaultMessage: "All Gift Cards",
-          description: "tab name"
+        searchPlaceholder={intl.formatMessage(messages.searchPlaceholder, {
+          exampleGiftCardCode: "21F1-39DY-V4U2"
         })}
+        allTabLabel={intl.formatMessage(messages.defaultTabLabel)}
       />
       <SaveFilterTabDialog
         open={params.action === GiftCardListActionParamsEnum.SAVE_SEARCH}

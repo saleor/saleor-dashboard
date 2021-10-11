@@ -356,6 +356,25 @@ export function getFilterVariables({
   initialBalanceAmountFrom,
   query
 }: GiftCardListUrlQueryParams): GiftCardFilterInput {
+  const balanceData = currency
+    ? {
+        currentBalance:
+          currentBalanceAmountFrom && currentBalanceAmountTo
+            ? {
+                gte: parseFloat(currentBalanceAmountFrom),
+                lte: parseFloat(currentBalanceAmountTo)
+              }
+            : undefined,
+        initialBalance:
+          initialBalanceAmountFrom && initialBalanceAmountTo
+            ? {
+                gte: parseFloat(initialBalanceAmountFrom),
+                lte: parseFloat(initialBalanceAmountTo)
+              }
+            : undefined
+      }
+    : {};
+
   return {
     code: query,
     isActive: !!status ? status === "enabled" : undefined,
@@ -363,19 +382,6 @@ export function getFilterVariables({
     usedBy,
     products: product,
     currency,
-    currentBalance:
-      currentBalanceAmountFrom && currentBalanceAmountTo
-        ? {
-            gte: parseFloat(currentBalanceAmountFrom),
-            lte: parseFloat(currentBalanceAmountTo)
-          }
-        : undefined,
-    initialBalance:
-      initialBalanceAmountFrom && initialBalanceAmountTo
-        ? {
-            gte: parseFloat(initialBalanceAmountFrom),
-            lte: parseFloat(initialBalanceAmountTo)
-          }
-        : undefined
+    ...balanceData
   };
 }

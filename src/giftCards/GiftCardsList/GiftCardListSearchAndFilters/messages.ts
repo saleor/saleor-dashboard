@@ -10,3 +10,14 @@ export const giftCardListFilterErrorMessages = defineMessages({
     description: "Filter balance currency error"
   }
 });
+
+export const giftCardListSearchAndFiltersMessages = defineMessages({
+  searchPlaceholder: {
+    defaultMessage: "Search Gift Cards, e.g {exampleGiftCardCode}",
+    description: "gift card search placeholder"
+  },
+  defaultTabLabel: {
+    defaultMessage: "All Gift Cards",
+    description: "gift card default tab label"
+  }
+});
