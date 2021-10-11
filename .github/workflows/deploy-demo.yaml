@@ -39,3 +39,12 @@ jobs:
           aws s3 sync build/dashboard s3://${{ secrets.AWS_DEMO_DEPLOYMENT_BUCKET }}/dashboard/static/
           aws s3 cp build/dashboard/index.html s3://${{ secrets.AWS_DEMO_DEPLOYMENT_BUCKET }}/dashboard/
           aws cloudfront create-invalidation --distribution-id ${{ secrets.AWS_DEMO_CF_DIST_ID }} --paths "/dashboard*"
+      - name: Notify Slack
+        if: ${{ always() }}
+        env:
+          JOB_DEPLOYMENT_KIND: production
+          JOB_STATUS: ${{ job.status }}
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_CLOUD_DEPLOYMENTS_WEBHOOK_URL }}
+          JOB_TITLE: "Dashboard deployment to {{ env.ENVIRONMENT }}"
+        run: |
+          python3 ./.github/workflows/notify/notify-slack.py
