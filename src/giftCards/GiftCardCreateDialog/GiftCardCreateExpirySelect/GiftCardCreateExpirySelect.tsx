@@ -3,9 +3,11 @@ import HorizontalSpacer from "@saleor/apps/components/HorizontalSpacer";
 import VerticalSpacer from "@saleor/apps/components/VerticalSpacer";
 import ControlledCheckbox from "@saleor/components/ControlledCheckbox";
 import RadioGroupField from "@saleor/components/RadioGroupField";
-import { GiftCardError } from "@saleor/fragments/types/GiftCardError";
 import TimePeriodField from "@saleor/giftCards/components/TimePeriodField";
-import { GiftCardCreateCommonFormData } from "@saleor/giftCards/GiftCardBulkCreateDialog/types";
+import {
+  GiftCardBulkCreateFormErrors,
+  GiftCardCreateCommonFormData
+} from "@saleor/giftCards/GiftCardBulkCreateDialog/types";
 import { GiftCardExpiryType } from "@saleor/giftCards/GiftCardCreateDialog/types";
 import { getExpiryPeriodTerminationDate } from "@saleor/giftCards/GiftCardCreateDialog/utils";
 import { getGiftCardErrorMessage } from "@saleor/giftCards/GiftCardUpdate/messages";
@@ -35,7 +37,7 @@ const options: UntranslatedOption[] = [
 ];
 
 interface GiftCardCreateExpirySelectProps {
-  errors: Record<"expiryDate", GiftCardError>;
+  errors: GiftCardBulkCreateFormErrors;
   change: FormChange;
   data: Pick<
     GiftCardCreateCommonFormData,

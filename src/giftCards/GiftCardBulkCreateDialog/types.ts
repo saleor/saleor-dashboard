@@ -2,14 +2,27 @@ import { GiftCardError } from "@saleor/fragments/types/GiftCardError";
 import { FormChange } from "@saleor/hooks/useForm";
 import { TimePeriodTypeEnum } from "@saleor/types/globalTypes";
 
-import {
-  GiftCardCreateCommonFormErrors,
-  GiftCardExpiryType
-} from "../GiftCardCreateDialog/types";
-import { GiftCardBulkCreateFormData } from "./GiftCardBulkCreateDialogForm";
+import { GiftCardExpiryType } from "../GiftCardCreateDialog/types";
 
-export type GiftCardBulkCreateFormErrors = GiftCardCreateCommonFormErrors &
-  Record<"count", GiftCardError>;
+export type GiftCardErrorKey =
+  | "tag"
+  | "expiryDate"
+  | "currency"
+  | "expiryPeriod"
+  | "amount"
+  | "balance"
+  | "count";
+
+export interface GiftCardBulkCreateFormData
+  extends GiftCardCreateCommonFormData {
+  cardsAmount: number;
+}
+
+export type GiftCardBulkCreateFormError = Pick<GiftCardError, "code" | "field">;
+
+export type GiftCardBulkCreateFormErrors = Partial<
+  Record<GiftCardErrorKey, GiftCardBulkCreateFormError>
+>;
 
 export interface GiftCardBulkCreateFormCommonProps {
   change: FormChange;
@@ -27,4 +40,9 @@ export interface GiftCardCreateCommonFormData {
   balanceAmount: number;
   balanceCurrency: string;
   expiryDate: string;
+}
+
+export interface GiftCardBulkCreateFormData
+  extends GiftCardCreateCommonFormData {
+  cardsAmount: number;
 }

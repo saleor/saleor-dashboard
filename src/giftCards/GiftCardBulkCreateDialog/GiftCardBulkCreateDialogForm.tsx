@@ -7,7 +7,6 @@ import {
 import VerticalSpacer from "@saleor/apps/components/VerticalSpacer";
 import DialogButtons from "@saleor/components/ActionDialog/DialogButtons";
 import CardSpacer from "@saleor/components/CardSpacer";
-import { GiftCardError } from "@saleor/fragments/types/GiftCardError";
 import GiftCardTagInput from "@saleor/giftCards/components/GiftCardTagInput";
 import useForm from "@saleor/hooks/useForm";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
@@ -15,7 +14,6 @@ import {
   GiftCardSettingsExpiryTypeEnum,
   TimePeriodTypeEnum
 } from "@saleor/types/globalTypes";
-import { getFormErrors } from "@saleor/utils/errors";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -25,15 +23,12 @@ import GiftCardCreateRequiresActivationSection from "../GiftCardCreateDialog/Gif
 import { giftCardCreateMessages as messages } from "../GiftCardCreateDialog/messages";
 import { useGiftCardCreateFormStyles as useStyles } from "../GiftCardCreateDialog/styles";
 import { useGiftCardSettingsQuery } from "../GiftCardSettings/queries";
+import { getGiftCardErrorMessage } from "../GiftCardUpdate/messages";
 import {
   GiftCardBulkCreateFormCommonProps,
-  GiftCardCreateCommonFormData
+  GiftCardBulkCreateFormData,
+  GiftCardBulkCreateFormErrors
 } from "./types";
-
-export interface GiftCardBulkCreateFormData
-  extends GiftCardCreateCommonFormData {
-  cardsAmount: number;
-}
 
 export const initialData: GiftCardBulkCreateFormData = {
   tag: "",
@@ -50,7 +45,7 @@ export const initialData: GiftCardBulkCreateFormData = {
 
 interface GiftCardBulkCreateDialogFormProps {
   opts: { status: ConfirmButtonTransitionState };
-  apiErrors: GiftCardError[];
+  formErrors: GiftCardBulkCreateFormErrors;
   onSubmit: (data: GiftCardBulkCreateFormData) => void;
   onClose: () => void;
 }
@@ -59,7 +54,7 @@ const GiftCardBulkCreateDialogForm: React.FC<GiftCardBulkCreateDialogFormProps> 
   onSubmit,
   opts,
   onClose,
-  apiErrors = [] // REMOVE
+  formErrors = {}
 }) => {
   const intl = useIntl();
   const classes = useStyles({});
@@ -96,32 +91,7 @@ const GiftCardBulkCreateDialogForm: React.FC<GiftCardBulkCreateDialogFormProps> 
     onSubmit
   );
 
-  const formErrors = getFormErrors(
-    ["tag", "expiryDate", "currency", "amount", "balance", "count"],
-    apiErrors
-  );
-
-  const {
-    tag,
-    balanceAmount,
-    expirySelected,
-    expiryType,
-    expiryDate,
-    requiresActivation,
-    cardsAmount
-  } = data;
-
-  const shouldEnableSubmitButton = () => {
-    if (!balanceAmount) {
-      return false;
-    }
-
-    if (expirySelected && expiryType === "EXPIRY_DATE") {
-      return !!expiryDate;
-    }
-
-    return true;
-  };
+  const { tag, requiresActivation, cardsAmount } = data;
 
   const commonFormProps: GiftCardBulkCreateFormCommonProps = {
     data,
@@ -133,16 +103,19 @@ const GiftCardBulkCreateDialogForm: React.FC<GiftCardBulkCreateDialogFormProps> 
     <>
       <DialogContent className={classes.dialogContent}>
         <TextField
+          error={!!formErrors?.count}
           name="cardsAmount"
           onChange={change}
           className={classes.fullWidthContainer}
           label={intl.formatMessage(messages.giftCardsAmountLabel)}
           value={cardsAmount}
+          helperText={getGiftCardErrorMessage(formErrors?.count, intl)}
         />
         <VerticalSpacer spacing={2} />
         <GiftCardCreateMoneyInput {...commonFormProps} set={set} />
         <VerticalSpacer spacing={2} />
         <GiftCardTagInput
+          optional={false}
           error={formErrors?.tag}
           name="tag"
           value={tag}
@@ -165,7 +138,6 @@ const GiftCardBulkCreateDialogForm: React.FC<GiftCardBulkCreateDialogFormProps> 
         </Typography>
       </DialogContent>
       <DialogButtons
-        disabled={!shouldEnableSubmitButton()}
         onConfirm={submit}
         confirmButtonLabel={intl.formatMessage(messages.issueButtonLabel)}
         confirmButtonState={opts?.status}

@@ -18,6 +18,7 @@ interface GiftCardListDialogsProviderProps {
 
 export interface GiftCardListDialogsConsumerProps {
   openCreateDialog: () => void;
+  openBulkCreateDialog: () => void;
   openDeleteDialog: (id?: string | React.MouseEvent) => void;
   closeDialog: () => void;
   id: string;
@@ -43,11 +44,17 @@ const GiftCardListDialogsProvider: React.FC<GiftCardListDialogsProviderProps> = 
   const openCreateDialog = () =>
     openDialog(GiftCardListActionParamsEnum.CREATE);
 
+  const openBulkCreateDialog = () =>
+    openDialog(GiftCardListActionParamsEnum.BULK_CREATE);
+
   const isCreateDialogOpen =
     params?.action === GiftCardListActionParamsEnum.CREATE;
 
   const isDeleteDialogOpen =
     params?.action === GiftCardListActionParamsEnum.DELETE;
+
+  const isBulkCreateDialogOpen =
+    params?.action === GiftCardListActionParamsEnum.BULK_CREATE;
 
   const handleDeleteDialogOpen = (id?: string) => {
     openDialog(
@@ -58,6 +65,7 @@ const GiftCardListDialogsProvider: React.FC<GiftCardListDialogsProviderProps> = 
 
   const providerValues: GiftCardListDialogsConsumerProps = {
     openCreateDialog,
+    openBulkCreateDialog,
     openDeleteDialog: handleDeleteDialogOpen,
     closeDialog,
     id
@@ -74,7 +82,10 @@ const GiftCardListDialogsProvider: React.FC<GiftCardListDialogsProviderProps> = 
         open={isDeleteDialogOpen}
         closeDialog={closeDialog}
       />
-      <GiftCardBulkCreateDialog />
+      <GiftCardBulkCreateDialog
+        open={isBulkCreateDialogOpen}
+        closeDialog={closeDialog}
+      />
     </GiftCardListDialogsContext.Provider>
   );
 };
