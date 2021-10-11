@@ -12,7 +12,7 @@ import Skeleton from "@saleor/components/Skeleton";
 import TableCellAvatar from "@saleor/components/TableCellAvatar";
 import { FormsetData } from "@saleor/hooks/useFormset";
 import { makeStyles } from "@saleor/macaw-ui";
-import { maybe, renderCollection } from "@saleor/misc";
+import { renderCollection } from "@saleor/misc";
 import { OrderFulfillData_order_lines } from "@saleor/orders/types/OrderFulfillData";
 import { OrderFulfillStockInput } from "@saleor/types/globalTypes";
 import React from "react";
@@ -90,7 +90,7 @@ const OrderFulfillStockExceededDialog: React.FC<OrderFulfillStockExceededDialogP
         <CardSpacer />
         <div className={classes.scrollable}>
           <ResponsiveTable className={classes.table}>
-            {maybe(() => !!lines.length) && (
+            {!!lines?.length && (
               <TableHead>
                 <TableRow>
                   <TableCell className={classes.colName}>
@@ -165,7 +165,7 @@ const OrderFulfillStockExceededDialog: React.FC<OrderFulfillStockExceededDialogP
                       <TableRow key={line?.id + stock?.id}>
                         <TableCellAvatar
                           className={classes.colName}
-                          thumbnail={maybe(() => line.thumbnail.url)}
+                          thumbnail={line?.thumbnail.url}
                         >
                           {line?.productName}
                           <Typography color="textSecondary" variant="caption">

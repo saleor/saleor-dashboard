@@ -182,11 +182,11 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
       return false;
     }
 
-    const isAtLeastOneFulfilled = formsetData?.some(({ value }) =>
+    const isAtLeastOneFulfilled = formsetData.some(({ value }) =>
       value.some(({ quantity }) => quantity > 0)
     );
 
-    const areProperlyFulfilled = formsetData?.every(({ id, value }) => {
+    const areProperlyFulfilled = formsetData.every(({ id, value }) => {
       const { lines } = order;
 
       const { quantity, quantityFulfilled } = lines.find(
@@ -306,14 +306,17 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
                       }
 
                       const remainingQuantity = getRemainingQuantity(line);
-                      const quantityToFulfill = formsetData?.[
+                      const quantityToFulfill = formsetData[
                         lineIndex
                       ]?.value.reduce(
                         (quantityToFulfill, lineInput) =>
                           quantityToFulfill + (lineInput.quantity || 0),
                         0
                       );
-                      const overfulfill = remainingQuantity < quantityToFulfill;
+                      const overfulfill =
+                        typeof quantityToFulfill === "number"
+                          ? remainingQuantity < quantityToFulfill
+                          : false;
 
                       return (
                         <TableRow key={line.id}>
@@ -354,7 +357,7 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
                             const warehouseStock = line.variant.stocks.find(
                               stock => stock.warehouse.id === warehouse.id
                             );
-                            const formsetStock = formsetData?.[
+                            const formsetStock = formsetData[
                               lineIndex
                             ]?.value.find(
                               line => line.warehouse === warehouse.id
@@ -389,7 +392,7 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
                               allocatedQuantityForLine;
 
                             const isStockExceeded =
-                              formsetData?.[lineIndex]?.value.find(
+                              formsetData[lineIndex]?.value.find(
                                 el => el.warehouse === warehouse.id
                               ).quantity > availableQuantity;
 
@@ -409,10 +412,6 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
                                         [classes.warning]: isStockExceeded
                                       }
                                     ),
-                                    /* max: (
-                                      line.variant.trackInventory &&
-                                      availableQuantity
-                                    ).toString(), */
                                     min: 0,
                                     style: { textAlign: "right" }
                                   }}
@@ -429,7 +428,7 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
                                           ),
                                           warehouse: warehouse.id
                                         },
-                                        formsetData?.[lineIndex]?.value,
+                                        formsetData[lineIndex]?.value,
                                         (a, b) => a.warehouse === b.warehouse
                                       )
                                     )
