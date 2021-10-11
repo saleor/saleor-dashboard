@@ -1,5 +1,4 @@
 import { IFilter, IFilterElement } from "@saleor/components/Filter";
-import { maybe } from "@saleor/misc";
 import { SearchCustomers_search_edges_node } from "@saleor/searches/types/SearchCustomers";
 import { SearchProducts_search_edges_node } from "@saleor/searches/types/SearchProducts";
 import { GiftCardFilterInput } from "@saleor/types/globalTypes";
@@ -100,29 +99,23 @@ export const getFilterOpts = ({
     onSearchChange: tagSearchProps.onSearchChange
   },
   initialBalanceAmount: {
-    active: maybe(
-      () =>
-        [params.initialBalanceAmountFrom, params.initialBalanceAmountTo].some(
-          field => field !== undefined
-        ),
-      false
-    ),
+    active:
+      [params.initialBalanceAmountFrom, params.initialBalanceAmountTo].some(
+        field => field !== undefined
+      ) || false,
     value: {
-      max: maybe(() => params.initialBalanceAmountTo, ""),
-      min: maybe(() => params.initialBalanceAmountFrom, "")
+      max: params.initialBalanceAmountTo || "",
+      min: params.initialBalanceAmountFrom || ""
     }
   },
   currentBalanceAmount: {
-    active: maybe(
-      () =>
-        [params.currentBalanceAmountFrom, params.currentBalanceAmountTo].some(
-          field => field !== undefined
-        ),
-      false
-    ),
+    active:
+      [params.currentBalanceAmountFrom, params.currentBalanceAmountTo].some(
+        field => field !== undefined
+      ) || false,
     value: {
-      max: maybe(() => params.currentBalanceAmountTo, ""),
-      min: maybe(() => params.currentBalanceAmountFrom, "")
+      max: params.currentBalanceAmountTo || "",
+      min: params.currentBalanceAmountFrom || ""
     }
   },
   status: {
