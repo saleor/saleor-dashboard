@@ -13,7 +13,7 @@ Manual Environment Variables (explicit):
 - JOB_DEPLOYMENT_KIND: deployment target kind, staging, dev, etc.
 - SLACK_WEBHOOK_URL: incoming webhook URL to send payload/message to
 - JOB_STATUS: status from GitHub's ``job.status``
-- JOB_TITLE: the title of the pull request
+- JOB_TITLE: the title of the job
 
 Global GitHub Environment Variables (implicit):
 - GITHUB_RUN_ID
