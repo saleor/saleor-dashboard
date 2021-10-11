@@ -12,16 +12,16 @@ export const useTableStyles = makeStyles(
       alignItems: "baseline"
     },
     colCardCode: {
-      width: 460
+      minWidth: "47%"
     },
     colDelete: {
-      width: 100
+      width: "10%"
     },
     colBalance: {
-      width: 135
+      width: "10%"
     },
     colBase: {
-      width: 150
+      width: "12%"
     },
     row: {
       cursor: "pointer",
