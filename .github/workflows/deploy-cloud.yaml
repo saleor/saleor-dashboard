@@ -43,6 +43,7 @@ jobs:
           elif [[ "$REGION" == "eu" ]]; then
             BUCKET=${{ secrets.AWS_PROD_EU_DEPLOYMENT_BUCKET }}
             CF_ID=${{ secrets.AWS_PROD_EU_CF_DIST_ID }}
+            CF_2_ID=${{ secrets.AWS_PROD_EU_CF_2_DIST_ID }}
           else
             echo "Unknown region provided"
             exit 1
@@ -51,3 +52,6 @@ jobs:
           aws s3 sync build/dashboard s3://${BUCKET}/${ENVIRONMENT}/static/
           aws s3 cp build/dashboard/index.html s3://${BUCKET}/${ENVIRONMENT}/
           aws cloudfront create-invalidation --distribution-id ${CF_ID} --paths "/dashboard*"
+          if [[ -n "$CF_2_ID" ]]; then
+            aws cloudfront create-invalidation --distribution-id ${CF_2_ID} --paths "/dashboard*"
+          fi
