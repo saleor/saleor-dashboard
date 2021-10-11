@@ -31,7 +31,7 @@ const useStyles = makeStyles(
     },
     colQuantity: {
       textAlign: "right",
-      width: "20%"
+      width: 100
     },
     table: {
       tableLayout: "fixed"
