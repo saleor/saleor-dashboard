@@ -47,10 +47,10 @@ See the list of all releases here: https://github.com/mirumee/saleor-dashboard/r
 
 #### Using development version
 
-If you want to use the latest development version, checkout to the `master` branch:
+If you want to use the latest development version, checkout to the `main` branch:
 
 ```
-$ git checkout master
+$ git checkout main
 ```
 
 Install NPM dependencies:
@@ -127,4 +127,4 @@ SENTRY_URL_PREFIX=
 ENVIRONMENT=
 ```
 
-#### Crafted with ❤️ by [Mirumee Software](https://mirumee.com)
+#### Crafted with ❤️ by [Saleor Commerce](https://saleor.io)

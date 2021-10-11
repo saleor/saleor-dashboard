@@ -213,10 +213,16 @@ export interface OrderLinesAdd_orderLinesCreate_order_events {
   lines: (OrderLinesAdd_orderLinesCreate_order_events_lines | null)[] | null;
 }
 
+export interface OrderLinesAdd_orderLinesCreate_order_fulfillments_lines_orderLine_variant_preorder {
+  __typename: "PreorderData";
+  endDate: any | null;
+}
+
 export interface OrderLinesAdd_orderLinesCreate_order_fulfillments_lines_orderLine_variant {
   __typename: "ProductVariant";
   id: string;
   quantityAvailable: number;
+  preorder: OrderLinesAdd_orderLinesCreate_order_fulfillments_lines_orderLine_variant_preorder | null;
 }
 
 export interface OrderLinesAdd_orderLinesCreate_order_fulfillments_lines_orderLine_unitDiscount {
@@ -273,7 +279,7 @@ export interface OrderLinesAdd_orderLinesCreate_order_fulfillments_lines_orderLi
   isShippingRequired: boolean;
   variant: OrderLinesAdd_orderLinesCreate_order_fulfillments_lines_orderLine_variant | null;
   productName: string;
-  productSku: string;
+  productSku: string | null;
   quantity: number;
   quantityFulfilled: number;
   quantityToFulfill: number;
@@ -309,10 +315,16 @@ export interface OrderLinesAdd_orderLinesCreate_order_fulfillments {
   warehouse: OrderLinesAdd_orderLinesCreate_order_fulfillments_warehouse | null;
 }
 
+export interface OrderLinesAdd_orderLinesCreate_order_lines_variant_preorder {
+  __typename: "PreorderData";
+  endDate: any | null;
+}
+
 export interface OrderLinesAdd_orderLinesCreate_order_lines_variant {
   __typename: "ProductVariant";
   id: string;
   quantityAvailable: number;
+  preorder: OrderLinesAdd_orderLinesCreate_order_lines_variant_preorder | null;
 }
 
 export interface OrderLinesAdd_orderLinesCreate_order_lines_unitDiscount {
@@ -369,7 +381,7 @@ export interface OrderLinesAdd_orderLinesCreate_order_lines {
   isShippingRequired: boolean;
   variant: OrderLinesAdd_orderLinesCreate_order_lines_variant | null;
   productName: string;
-  productSku: string;
+  productSku: string | null;
   quantity: number;
   quantityFulfilled: number;
   quantityToFulfill: number;

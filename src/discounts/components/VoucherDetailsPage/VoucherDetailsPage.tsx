@@ -20,6 +20,7 @@ import { DiscountErrorFragment } from "@saleor/fragments/types/DiscountErrorFrag
 import { sectionNames } from "@saleor/intl";
 import { Backlink } from "@saleor/macaw-ui";
 import { validatePrice } from "@saleor/products/utils/validation";
+import { mapEdgesToItems } from "@saleor/utils/maps";
 import { mapMetadataItemToInput } from "@saleor/utils/maps";
 import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
 import React from "react";
@@ -353,7 +354,7 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
                         onProductUnassign={onProductUnassign}
                         onRowClick={onProductClick}
                         pageInfo={pageInfo}
-                        discount={voucher}
+                        products={mapEdgesToItems(voucher.products)}
                         channelsCount={allChannelsCount}
                         isChecked={isChecked}
                         selected={selected}

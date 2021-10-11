@@ -213,10 +213,16 @@ export interface OrderMarkAsPaid_orderMarkAsPaid_order_events {
   lines: (OrderMarkAsPaid_orderMarkAsPaid_order_events_lines | null)[] | null;
 }
 
+export interface OrderMarkAsPaid_orderMarkAsPaid_order_fulfillments_lines_orderLine_variant_preorder {
+  __typename: "PreorderData";
+  endDate: any | null;
+}
+
 export interface OrderMarkAsPaid_orderMarkAsPaid_order_fulfillments_lines_orderLine_variant {
   __typename: "ProductVariant";
   id: string;
   quantityAvailable: number;
+  preorder: OrderMarkAsPaid_orderMarkAsPaid_order_fulfillments_lines_orderLine_variant_preorder | null;
 }
 
 export interface OrderMarkAsPaid_orderMarkAsPaid_order_fulfillments_lines_orderLine_unitDiscount {
@@ -273,7 +279,7 @@ export interface OrderMarkAsPaid_orderMarkAsPaid_order_fulfillments_lines_orderL
   isShippingRequired: boolean;
   variant: OrderMarkAsPaid_orderMarkAsPaid_order_fulfillments_lines_orderLine_variant | null;
   productName: string;
-  productSku: string;
+  productSku: string | null;
   quantity: number;
   quantityFulfilled: number;
   quantityToFulfill: number;
@@ -309,10 +315,16 @@ export interface OrderMarkAsPaid_orderMarkAsPaid_order_fulfillments {
   warehouse: OrderMarkAsPaid_orderMarkAsPaid_order_fulfillments_warehouse | null;
 }
 
+export interface OrderMarkAsPaid_orderMarkAsPaid_order_lines_variant_preorder {
+  __typename: "PreorderData";
+  endDate: any | null;
+}
+
 export interface OrderMarkAsPaid_orderMarkAsPaid_order_lines_variant {
   __typename: "ProductVariant";
   id: string;
   quantityAvailable: number;
+  preorder: OrderMarkAsPaid_orderMarkAsPaid_order_lines_variant_preorder | null;
 }
 
 export interface OrderMarkAsPaid_orderMarkAsPaid_order_lines_unitDiscount {
@@ -369,7 +381,7 @@ export interface OrderMarkAsPaid_orderMarkAsPaid_order_lines {
   isShippingRequired: boolean;
   variant: OrderMarkAsPaid_orderMarkAsPaid_order_lines_variant | null;
   productName: string;
-  productSku: string;
+  productSku: string | null;
   quantity: number;
   quantityFulfilled: number;
   quantityToFulfill: number;

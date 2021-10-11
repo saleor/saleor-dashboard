@@ -9,10 +9,16 @@ import { DiscountValueTypeEnum } from "./../../types/globalTypes";
 // GraphQL fragment: OrderLineFragment
 // ====================================================
 
+export interface OrderLineFragment_variant_preorder {
+  __typename: "PreorderData";
+  endDate: any | null;
+}
+
 export interface OrderLineFragment_variant {
   __typename: "ProductVariant";
   id: string;
   quantityAvailable: number;
+  preorder: OrderLineFragment_variant_preorder | null;
 }
 
 export interface OrderLineFragment_unitDiscount {
@@ -69,7 +75,7 @@ export interface OrderLineFragment {
   isShippingRequired: boolean;
   variant: OrderLineFragment_variant | null;
   productName: string;
-  productSku: string;
+  productSku: string | null;
   quantity: number;
   quantityFulfilled: number;
   quantityToFulfill: number;

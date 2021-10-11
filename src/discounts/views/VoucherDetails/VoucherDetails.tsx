@@ -533,9 +533,7 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
                                   ...paginationState,
                                   id,
                                   input: {
-                                    products: products.map(
-                                      product => product.id
-                                    )
+                                    products
                                   }
                                 }
                               })

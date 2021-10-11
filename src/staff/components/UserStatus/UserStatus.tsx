@@ -2,7 +2,9 @@ import { Card, CardContent, Typography } from "@material-ui/core";
 import CardTitle from "@saleor/components/CardTitle";
 import { ControlledCheckbox } from "@saleor/components/ControlledCheckbox";
 import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+import { useIntl } from "react-intl";
+
+import { userStatusMessages as messages } from "./messages";
 
 interface AppStatusProps {
   data: {
@@ -23,15 +25,10 @@ const AppStatus: React.FC<AppStatusProps> = ({
 
   return (
     <Card>
-      <CardTitle
-        title={intl.formatMessage({
-          defaultMessage: "App Status",
-          description: "section header"
-        })}
-      />
+      <CardTitle title={intl.formatMessage(messages.userStatus)} />
       <CardContent>
         <Typography variant="body2">
-          <FormattedMessage defaultMessage="If you want to disable this App please uncheck the box below." />
+          {intl.formatMessage(messages.userDisableInstruction)}
         </Typography>
         <ControlledCheckbox
           checked={data.isActive}

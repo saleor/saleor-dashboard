@@ -33,6 +33,11 @@ export interface OrderFulfillData_order_lines_allocations {
   warehouse: OrderFulfillData_order_lines_allocations_warehouse;
 }
 
+export interface OrderFulfillData_order_lines_variant_preorder {
+  __typename: "PreorderData";
+  endDate: any | null;
+}
+
 export interface OrderFulfillData_order_lines_variant_attributes_values {
   __typename: "AttributeValue";
   id: string;
@@ -62,7 +67,8 @@ export interface OrderFulfillData_order_lines_variant {
   __typename: "ProductVariant";
   id: string;
   name: string;
-  sku: string;
+  sku: string | null;
+  preorder: OrderFulfillData_order_lines_variant_preorder | null;
   attributes: OrderFulfillData_order_lines_variant_attributes[];
   stocks: (OrderFulfillData_order_lines_variant_stocks | null)[] | null;
   trackInventory: boolean;

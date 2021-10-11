@@ -11,7 +11,7 @@ export interface ProductVariantList_product_variants {
   __typename: "ProductVariant";
   id: string;
   name: string;
-  sku: string;
+  sku: string | null;
 }
 
 export interface ProductVariantList_product {

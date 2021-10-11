@@ -213,10 +213,16 @@ export interface OrderRefund_orderRefund_order_events {
   lines: (OrderRefund_orderRefund_order_events_lines | null)[] | null;
 }
 
+export interface OrderRefund_orderRefund_order_fulfillments_lines_orderLine_variant_preorder {
+  __typename: "PreorderData";
+  endDate: any | null;
+}
+
 export interface OrderRefund_orderRefund_order_fulfillments_lines_orderLine_variant {
   __typename: "ProductVariant";
   id: string;
   quantityAvailable: number;
+  preorder: OrderRefund_orderRefund_order_fulfillments_lines_orderLine_variant_preorder | null;
 }
 
 export interface OrderRefund_orderRefund_order_fulfillments_lines_orderLine_unitDiscount {
@@ -273,7 +279,7 @@ export interface OrderRefund_orderRefund_order_fulfillments_lines_orderLine {
   isShippingRequired: boolean;
   variant: OrderRefund_orderRefund_order_fulfillments_lines_orderLine_variant | null;
   productName: string;
-  productSku: string;
+  productSku: string | null;
   quantity: number;
   quantityFulfilled: number;
   quantityToFulfill: number;
@@ -309,10 +315,16 @@ export interface OrderRefund_orderRefund_order_fulfillments {
   warehouse: OrderRefund_orderRefund_order_fulfillments_warehouse | null;
 }
 
+export interface OrderRefund_orderRefund_order_lines_variant_preorder {
+  __typename: "PreorderData";
+  endDate: any | null;
+}
+
 export interface OrderRefund_orderRefund_order_lines_variant {
   __typename: "ProductVariant";
   id: string;
   quantityAvailable: number;
+  preorder: OrderRefund_orderRefund_order_lines_variant_preorder | null;
 }
 
 export interface OrderRefund_orderRefund_order_lines_unitDiscount {
@@ -369,7 +381,7 @@ export interface OrderRefund_orderRefund_order_lines {
   isShippingRequired: boolean;
   variant: OrderRefund_orderRefund_order_lines_variant | null;
   productName: string;
-  productSku: string;
+  productSku: string | null;
   quantity: number;
   quantityFulfilled: number;
   quantityToFulfill: number;
