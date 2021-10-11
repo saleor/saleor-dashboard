@@ -13,7 +13,7 @@ Manual Environment Variables (explicit):
 - JOB_DEPLOYMENT_KIND: deployment target kind, staging, dev, etc.
 - SLACK_WEBHOOK_URL: incoming webhook URL to send payload/message to
 - JOB_STATUS: status from GitHub's ``job.status``
-- JOB_PR_TITLE: the title of the pull request
+- JOB_TITLE: the title of the pull request
 
 Global GitHub Environment Variables (implicit):
 - GITHUB_RUN_ID
@@ -36,7 +36,7 @@ class JobNotifier:
 
     def __init__(self):
         # The title of the pull request
-        self.title: str = os.environ["JOB_PR_TITLE"]
+        self.title: str = os.environ["JOB_TITLE"]
 
         # The kind of deployment (dev, staging, ...)
         self.deployment_kind: str = os.environ["JOB_DEPLOYMENT_KIND"]
