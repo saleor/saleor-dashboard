@@ -48,7 +48,8 @@ const timelineEventTypes = {
     OrderEventsEnum.PAYMENT_REFUND_FAILED,
     OrderEventsEnum.PAYMENT_VOIDED,
     OrderEventsEnum.PAYMENT_VOID_FAILED,
-    OrderEventsEnum.PAYMENT_AUTHORIZED
+    OrderEventsEnum.PAYMENT_AUTHORIZED,
+    OrderEventsEnum.PAYMENT_AUTHORIZED_FAILED
   ],
   linked: [
     OrderEventsEnum.ORDER_REPLACEMENT_CREATED,
