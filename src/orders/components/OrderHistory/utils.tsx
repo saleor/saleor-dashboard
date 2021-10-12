@@ -40,7 +40,15 @@ const timelineEventTypes = {
     OrderEventsEnum.ORDER_DISCOUNT_ADDED,
     OrderEventsEnum.ORDER_DISCOUNT_AUTOMATICALLY_UPDATED,
     OrderEventsEnum.ORDER_DISCOUNT_UPDATED,
-    OrderEventsEnum.ORDER_LINE_DISCOUNT_UPDATED
+    OrderEventsEnum.ORDER_LINE_DISCOUNT_UPDATED,
+    OrderEventsEnum.PAYMENT_CAPTURED,
+    OrderEventsEnum.PAYMENT_CAPTURE_FAILED,
+    OrderEventsEnum.PAYMENT_FAILED,
+    OrderEventsEnum.PAYMENT_REFUNDED,
+    OrderEventsEnum.PAYMENT_REFUND_FAILED,
+    OrderEventsEnum.PAYMENT_VOIDED,
+    OrderEventsEnum.PAYMENT_VOID_FAILED,
+    OrderEventsEnum.PAYMENT_AUTHORIZED
   ],
   linked: [
     OrderEventsEnum.ORDER_REPLACEMENT_CREATED,
