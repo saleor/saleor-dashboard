@@ -56,6 +56,6 @@ jobs:
           JOB_DEPLOYMENT_KIND: staging
           JOB_STATUS: ${{ job.status }}
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_CLOUD_DEPLOYMENTS_WEBHOOK_URL }}
-          JOB_TITLE: "Dashboard deployment to {{ env.ENVIRONMENT }}"
+          JOB_TITLE: "Dashboard deployment to ${{ env.ENVIRONMENT }}"
         run: |
           python3 ./.github/workflows/notify/notify-slack.py
