@@ -13,14 +13,12 @@ import TableCellAvatar from "@saleor/components/TableCellAvatar";
 import { FormsetData } from "@saleor/hooks/useFormset";
 import { makeStyles } from "@saleor/macaw-ui";
 import { renderCollection } from "@saleor/misc";
-import {
-  OrderFulfillData_order_lines,
-  OrderFulfillData_order_lines_variant_stocks
-} from "@saleor/orders/types/OrderFulfillData";
+import { OrderFulfillData_order_lines } from "@saleor/orders/types/OrderFulfillData";
 import { OrderFulfillStockInput } from "@saleor/types/globalTypes";
 import React from "react";
 import { useIntl } from "react-intl";
 
+import OrderFulfillStockExceededDialogLines from "../OrderFulfillStockExceededDialogLines";
 import { stockExceededDialogMessages as messages } from "./messages";
 
 const useStyles = makeStyles(
@@ -67,30 +65,6 @@ const OrderFulfillStockExceededDialog: React.FC<OrderFulfillStockExceededDialogP
   const intl = useIntl();
   const classes = useStyles(props);
 
-  const getAvailableQuantity = (
-    line: OrderFulfillData_order_lines,
-    stock: OrderFulfillData_order_lines_variant_stocks
-  ) => {
-    const warehouseAllocation = line.allocations.find(
-      allocation => allocation.warehouse.id === stock.warehouse.id
-    );
-    const allocatedQuantityForLine = warehouseAllocation?.quantity || 0;
-
-    const availableQuantity =
-      stock.quantity - stock.quantityAllocated + allocatedQuantityForLine;
-
-    return availableQuantity;
-  };
-
-  const getFormsetQuantity = (
-    formsetData: FormsetData<null, OrderFulfillStockInput[]>,
-    line: OrderFulfillData_order_lines,
-    stock: OrderFulfillData_order_lines_variant_stocks
-  ) =>
-    formsetData
-      .find(data => data.id === line.id)
-      .value.find(val => val.warehouse === stock.warehouse.id).quantity;
-
   return (
     <>
       <ActionDialog
@@ -127,92 +101,30 @@ const OrderFulfillStockExceededDialog: React.FC<OrderFulfillStockExceededDialogP
 
             <TableBody>
               {renderCollection(
-                lines?.filter((line, lineIndex) =>
-                  line.variant.stocks.some(
-                    stock =>
-                      stock.quantity <
-                      formsetData?.[lineIndex]?.value.find(
-                        val => val.warehouse === stock.warehouse.id
-                      ).quantity
-                  )
+                lines,
+                line => (
+                  <OrderFulfillStockExceededDialogLines
+                    line={line}
+                    formsetData={formsetData}
+                    classes={classes}
+                  />
                 ),
-                (line, lineIndex) => {
-                  if (!line) {
-                    return (
-                      <TableRow key={lineIndex}>
-                        <TableCellAvatar className={classes.colName}>
-                          <Skeleton />
-                        </TableCellAvatar>
-                        <TableCell className={classes.colQuantity}>
-                          <Skeleton />
-                        </TableCell>
-                        <TableCell className={classes.colQuantity}>
-                          <Skeleton />
-                        </TableCell>
-                        <TableCell className={classes.colWarehouseStock}>
-                          <Skeleton />
-                        </TableCell>
-                      </TableRow>
-                    );
-                  }
-
-                  return renderCollection(
-                    line.variant.stocks.filter(stock => {
-                      const warehouseAllocation = line.allocations.find(
-                        allocation =>
-                          allocation.warehouse.id === stock.warehouse.id
-                      );
-                      const allocatedQuantityForLine =
-                        warehouseAllocation?.quantity || 0;
-
-                      const availableQuantity =
-                        stock.quantity -
-                        stock.quantityAllocated +
-                        allocatedQuantityForLine;
-
-                      const formsetQuantity = formsetData
-                        ?.find(data => data.id === line.id)
-                        ?.value.find(
-                          val => val.warehouse === stock.warehouse.id
-                        ).quantity;
-                      return availableQuantity < formsetQuantity;
-                    }),
-                    stock => (
-                      <TableRow key={line?.id + stock?.id}>
-                        <TableCellAvatar
-                          className={classes.colName}
-                          thumbnail={line?.thumbnail.url}
-                        >
-                          {line?.productName}
-                          <Typography color="textSecondary" variant="caption">
-                            {line.variant.attributes
-                              .map(attribute =>
-                                attribute.values
-                                  .map(attributeValue => attributeValue.name)
-                                  .join(", ")
-                              )
-                              .join(" / ")}
-                          </Typography>
-                        </TableCellAvatar>
-                        <TableCell className={classes.colQuantity}>
-                          {getFormsetQuantity(formsetData, line, stock)}
-                        </TableCell>
-                        <TableCell className={classes.colQuantity}>
-                          {line.variant.stocks.reduce(
-                            (partialSum, currentValue) =>
-                              partialSum +
-                              getAvailableQuantity(line, currentValue),
-                            0
-                          )}
-                        </TableCell>
-                        <TableCell className={classes.colWarehouseStock}>
-                          {getAvailableQuantity(line, stock)}
-                        </TableCell>
-                      </TableRow>
-                    )
-                  );
-                },
-                () => null
+                () => (
+                  <TableRow>
+                    <TableCellAvatar className={classes.colName}>
+                      <Skeleton />
+                    </TableCellAvatar>
+                    <TableCell className={classes.colQuantity}>
+                      <Skeleton />
+                    </TableCell>
+                    <TableCell className={classes.colQuantity}>
+                      <Skeleton />
+                    </TableCell>
+                    <TableCell className={classes.colWarehouseStock}>
+                      <Skeleton />
+                    </TableCell>
+                  </TableRow>
+                )
               )}
             </TableBody>
           </ResponsiveTable>
