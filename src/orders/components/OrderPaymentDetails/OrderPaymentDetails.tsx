@@ -91,15 +91,17 @@ const OrderPaymentDetails: React.FC<OrderPaymentDetailsProps> = props => {
             </tr>
             {expanded && (
               <>
-                <tr>
-                  <td colSpan={2} className={classes.reference}>
-                    <FormattedMessage
-                      defaultMessage="PSP reference:"
-                      description="order payment"
-                    />{" "}
-                    {payment.pspReference}
-                  </td>
-                </tr>
+                {payment.pspReference && (
+                  <tr>
+                    <td colSpan={2} className={classes.reference}>
+                      <FormattedMessage
+                        defaultMessage="PSP reference:"
+                        description="order payment"
+                      />{" "}
+                      {payment.pspReference}
+                    </td>
+                  </tr>
+                )}
                 <tr>
                   <td>
                     <FormattedMessage
