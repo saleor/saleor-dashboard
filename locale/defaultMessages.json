@@ -3717,13 +3717,6 @@
     "context": "GiftCardUpdateDetailsCard title",
     "string": "Details"
   },
-  "src_dot_giftCards_dot_GiftCardsList_dot_GiftCardListSearchAndFilters_dot_1020984688": {
-    "string": "Search Gift Cards, e.g {exampleGiftCardCode}"
-  },
-  "src_dot_giftCards_dot_GiftCardsList_dot_GiftCardListSearchAndFilters_dot_2520696807": {
-    "context": "tab name",
-    "string": "All Gift Cards"
-  },
   "src_dot_giftCards_dot_GiftCardsList_dot_GiftCardListSearchAndFilters_dot_balanceAmount": {
     "context": "Filter balance amount error",
     "string": "Balance amount is missing"
@@ -3744,6 +3737,10 @@
     "context": "current balance filter label",
     "string": "Current balance"
   },
+  "src_dot_giftCards_dot_GiftCardsList_dot_GiftCardListSearchAndFilters_dot_defaultTabLabel": {
+    "context": "gift card default tab label",
+    "string": "All Gift Cards"
+  },
   "src_dot_giftCards_dot_GiftCardsList_dot_GiftCardListSearchAndFilters_dot_disabledOptionLabel": {
     "context": "disabled status option label",
     "string": "Disabled"
@@ -3759,6 +3756,10 @@
   "src_dot_giftCards_dot_GiftCardsList_dot_GiftCardListSearchAndFilters_dot_productLabel": {
     "context": "product filter label",
     "string": "Product"
+  },
+  "src_dot_giftCards_dot_GiftCardsList_dot_GiftCardListSearchAndFilters_dot_searchPlaceholder": {
+    "context": "gift card search placeholder",
+    "string": "Search Gift Cards, e.g {exampleGiftCardCode}"
   },
   "src_dot_giftCards_dot_GiftCardsList_dot_GiftCardListSearchAndFilters_dot_statusLabel": {
     "context": "status filter label",
