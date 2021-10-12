@@ -7,7 +7,7 @@ import { buttonMessages } from "@saleor/intl";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import { giftCardCreateDialogMessages as messages } from "./messages";
+import { giftCardCreateMessages as messages } from "./messages";
 import { useGiftCardCreateDialogCodeContentStyles as useStyles } from "./styles";
 
 interface GiftCardCreateDialogCodeContentProps {

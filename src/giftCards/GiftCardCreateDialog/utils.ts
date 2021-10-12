@@ -2,8 +2,6 @@ import { TimePeriodTypeEnum } from "@saleor/types/globalTypes";
 import moment from "moment-timezone";
 
 import { GiftCardCreateCommonFormData } from "../GiftCardBulkCreateDialog/types";
-import { GiftCardCreateFormData } from "./GiftCardCreateDialogForm";
-import { GiftCardCreateCommonFormErrors } from "./types";
 
 const addToCurrentDate = (
   currentDate: number,
