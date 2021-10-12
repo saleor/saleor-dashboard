@@ -56,6 +56,10 @@ const GiftCardBulkCreateDialog: React.FC<DialogActionHandlersProps> = ({
     notify(notifierData);
 
     setFormErrors(getFormErrors(giftCardBulkCreateErrorKeys, errors));
+
+    if (!errors.length) {
+      closeDialog();
+    }
   };
 
   const currentDate = useCurrentDate();
