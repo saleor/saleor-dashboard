@@ -13,6 +13,15 @@ export type GiftCardErrorKey =
   | "balance"
   | "count";
 
+export const giftCardBulkCreateErrorKeys: GiftCardErrorKey[] = [
+  "tag",
+  "expiryDate",
+  "currency",
+  "amount",
+  "balance",
+  "count"
+];
+
 export interface GiftCardBulkCreateFormData
   extends GiftCardCreateCommonFormData {
   cardsAmount: number;

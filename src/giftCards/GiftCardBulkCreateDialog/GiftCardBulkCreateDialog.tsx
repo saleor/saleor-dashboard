@@ -1,16 +1,11 @@
 import { Dialog, DialogTitle } from "@material-ui/core";
 import { IMessage } from "@saleor/components/messages";
-import { GiftCardError } from "@saleor/fragments/types/GiftCardError";
 import useCurrentDate from "@saleor/hooks/useCurrentDate";
 import useNotifier from "@saleor/hooks/useNotifier";
-import {
-  GiftCardBulkCreateInput,
-  GiftCardErrorCode
-} from "@saleor/types/globalTypes";
+import { GiftCardBulkCreateInput } from "@saleor/types/globalTypes";
 import { getFormErrors } from "@saleor/utils/errors";
 import commonErrorMessages from "@saleor/utils/errors/common";
 import { DialogActionHandlersProps } from "@saleor/utils/handlers/dialogActionHandlers";
-import reduce from "lodash/reduce";
 import React, { useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 
@@ -22,19 +17,12 @@ import GiftCardBulkCreateDialogForm from "./GiftCardBulkCreateDialogForm";
 import { giftCardBulkCreateDialogMessages as messages } from "./messages";
 import { useGiftCardBulkCreateMutation } from "./mutations";
 import {
+  giftCardBulkCreateErrorKeys,
   GiftCardBulkCreateFormData,
   GiftCardBulkCreateFormErrors
 } from "./types";
 import { GiftCardBulkCreate } from "./types/GiftCardBulkCreate";
-
-const giftCardBulkCreateErrorKeys = [
-  "tag",
-  "expiryDate",
-  "currency",
-  "amount",
-  "balance",
-  "count"
-];
+import { getFormSchemaErrors } from "./utils";
 
 const GiftCardBulkCreateDialog: React.FC<DialogActionHandlersProps> = ({
   closeDialog,
@@ -69,66 +57,6 @@ const GiftCardBulkCreateDialog: React.FC<DialogActionHandlersProps> = ({
 
     setFormErrors(getFormErrors(giftCardBulkCreateErrorKeys, errors));
   };
-
-  const getFormError = (
-    {
-      expiryDate,
-      expiryPeriodAmount,
-      expiryType,
-      expirySelected,
-      expiryPeriodType
-    }: GiftCardBulkCreateFormData,
-    value,
-    key: keyof GiftCardBulkCreateFormData
-  ): Pick<GiftCardError, "field" | "code"> | null => {
-    const error = { code: GiftCardErrorCode.INVALID, field: key };
-
-    switch (key) {
-      case "cardsAmount":
-      case "tag":
-      case "balanceCurrency":
-      case "balanceAmount":
-        return !value ? error : null;
-
-      case "expiryDate":
-        if (expirySelected && expiryType === "EXPIRY_DATE") {
-          return !expiryDate ? error : null;
-        }
-        return null;
-
-      case "expiryPeriodAmount":
-        if (expirySelected && expiryType === "EXPIRY_PERIOD") {
-          return !expiryPeriodType || !expiryPeriodAmount
-            ? { ...error, field: "expiryDate" }
-            : null;
-        }
-        return null;
-    }
-  };
-
-  const getFormSchemaErrors = (
-    formData: GiftCardBulkCreateFormData
-  ): GiftCardBulkCreateFormErrors =>
-    reduce(
-      formData,
-      (resultErrors, value, key: keyof GiftCardBulkCreateFormData) => {
-        const correspondingKeys = {
-          cardsAmount: "count",
-          balanceCurrency: "balance",
-          balanceAmount: "balance",
-          expiryPeriodAmount: "expiryDate"
-        };
-
-        const formError = getFormError(formData, value, key);
-
-        if (!formError) {
-          return resultErrors;
-        }
-
-        return { ...resultErrors, [correspondingKeys[key] || key]: formError };
-      },
-      {}
-    );
 
   const currentDate = useCurrentDate();
 
@@ -180,7 +108,7 @@ const GiftCardBulkCreateDialog: React.FC<DialogActionHandlersProps> = ({
 
   const apiErrors = bulkCreateGiftCardOpts?.data?.giftCardBulkCreate?.errors;
 
-  useEffect(() => {
+  const handleSetSchemaErrors = () => {
     if (apiErrors?.length) {
       const formErrorsFromApi = getFormErrors(
         giftCardBulkCreateErrorKeys,
@@ -189,7 +117,9 @@ const GiftCardBulkCreateDialog: React.FC<DialogActionHandlersProps> = ({
 
       setFormErrors(formErrorsFromApi);
     }
-  }, [apiErrors]);
+  };
+
+  useEffect(handleSetSchemaErrors, [apiErrors]);
 
   return (
     <Dialog open={open} maxWidth="sm">
