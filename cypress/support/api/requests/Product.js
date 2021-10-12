@@ -224,3 +224,31 @@ export function getVariants(variantsList) {
   }`;
   return cy.sendRequestWithQuery(query).its("body.data.productVariants");
 }
+
+export function getVariant(id, channel, auth = "auth") {
+  const query = `query{
+    productVariant(id:"${id}" channel:"${channel}"){
+      id
+      name
+      pricing{
+        onSale
+        discount{
+          gross{
+            amount
+          }
+        }
+        price{
+          gross{
+            amount
+          }
+        }
+        priceUndiscounted{
+          gross{
+            amount
+          }
+        }
+      }
+    }
+  }`;
+  return cy.sendRequestWithQuery(query, auth).its("body.data.productVariant");
+}
