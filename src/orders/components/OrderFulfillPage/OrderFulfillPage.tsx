@@ -314,8 +314,8 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
                         0
                       );
                       const overfulfill =
-                        typeof quantityToFulfill === "number"
-                          && remainingQuantity < quantityToFulfill;
+                        typeof quantityToFulfill === "number" &&
+                        remainingQuantity < quantityToFulfill;
 
                       return (
                         <TableRow key={line.id}>
