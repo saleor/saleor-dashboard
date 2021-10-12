@@ -9,6 +9,7 @@ import { defineMessages, useIntl } from "react-intl";
 
 import { OrderDetails_order_events } from "../../types/OrderDetails";
 import ExtendedDiscountTimelineEvent from "./ExtendedDiscountTimelineEvent";
+import ExtendedPaymentTimelineEvent from "./ExtendedPaymentTimelineEvent";
 import Label from "./Label";
 import {
   getEmployeeNameLink,
@@ -114,6 +115,46 @@ export const titles = defineMessages({
     defaultMessage: "Order was marked as paid by",
     description: "order marked as paid event title",
     id: "event title marked as paid"
+  },
+  paymentRefunded: {
+    defaultMessage: "payment refunded",
+    description: "refund payment event title",
+    id: "event title payment refunded"
+  },
+  paymentRefundFailed: {
+    defaultMessage: "refund failed",
+    description: "refund payment fail event title",
+    id: "event title payment refund failed"
+  },
+  paymentAuthorized: {
+    defaultMessage: "payment authorized",
+    description: "authorized payment event title",
+    id: "event title payment authorized"
+  },
+  paymentAuthorizedFailed: {
+    defaultMessage: "payment authorize failed",
+    description: "authorize payment fail event title",
+    id: "event title payment authorize failed"
+  },
+  paymentCaptured: {
+    defaultMessage: "payment captured",
+    description: "captured payment event title",
+    id: "event title payment captured"
+  },
+  paymentCaptureFailed: {
+    defaultMessage: "payment capture failed",
+    description: "capture payment fail event title",
+    id: "event title payment capture failed"
+  },
+  paymentVoided: {
+    defaultMessage: "payment voided",
+    description: "voided payment event title",
+    id: "event title payment voided"
+  },
+  paymentVoidFailed: {
+    defaultMessage: "payment void failed",
+    description: "void payment fail event title",
+    id: "event title payment void failed"
   }
 });
 
@@ -214,6 +255,10 @@ const ExtendedTimelineEvent: React.FC<ExtendedTimelineEventProps> = ({
         titleElements={selectTitleElements()}
       />
     );
+  }
+
+  if (type === "PAYMENT_REFUNDED") {
+    return <ExtendedPaymentTimelineEvent />;
   }
 
   return (
