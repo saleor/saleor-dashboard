@@ -3,8 +3,6 @@
 
 import faker from "faker";
 
-import { urlList } from "../../fixtures/urlList";
-import { getVariant, getVariants } from "../../support/api/requests/Product";
 import * as channelsUtils from "../../support/api/utils/channelsUtils";
 import { deleteSalesStartsWith } from "../../support/api/utils/discounts/salesUtils";
 import * as productsUtils from "../../support/api/utils/products/productsUtils";
@@ -12,12 +10,8 @@ import {
   createShipping,
   deleteShippingStartsWith
 } from "../../support/api/utils/shippingUtils";
-import { getProductPrice } from "../../support/api/utils/storeFront/storeFrontProductUtils";
 import filterTests from "../../support/filterTests";
 import {
-  assignProducts,
-  assignVariants,
-  createSale,
   createSaleWithNewVariant,
   discountOptions
 } from "../../support/pages/discounts/salesPage";
