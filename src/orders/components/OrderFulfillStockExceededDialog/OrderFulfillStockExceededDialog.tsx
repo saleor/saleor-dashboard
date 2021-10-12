@@ -31,7 +31,13 @@ const useStyles = makeStyles(
     },
     colQuantity: {
       textAlign: "right",
-      width: 100
+      width: 100,
+      padding: "4px 4px"
+    },
+    colWarehouseStock: {
+      textAlign: "right",
+      width: 150,
+      padding: "4px 24px"
     },
     table: {
       tableLayout: "fixed"
@@ -112,7 +118,7 @@ const OrderFulfillStockExceededDialog: React.FC<OrderFulfillStockExceededDialogP
                   <TableCell className={classes.colQuantity}>
                     {intl.formatMessage(messages.availableStockLabel)}
                   </TableCell>
-                  <TableCell className={classes.colQuantity}>
+                  <TableCell className={classes.colWarehouseStock}>
                     {intl.formatMessage(messages.warehouseStockLabel)}
                   </TableCell>
                 </TableRow>
@@ -143,7 +149,7 @@ const OrderFulfillStockExceededDialog: React.FC<OrderFulfillStockExceededDialogP
                         <TableCell className={classes.colQuantity}>
                           <Skeleton />
                         </TableCell>
-                        <TableCell className={classes.colQuantity}>
+                        <TableCell className={classes.colWarehouseStock}>
                           <Skeleton />
                         </TableCell>
                       </TableRow>
@@ -199,7 +205,7 @@ const OrderFulfillStockExceededDialog: React.FC<OrderFulfillStockExceededDialogP
                             0
                           )}
                         </TableCell>
-                        <TableCell className={classes.colQuantity}>
+                        <TableCell className={classes.colWarehouseStock}>
                           {getAvailableQuantity(line, stock)}
                         </TableCell>
                       </TableRow>
