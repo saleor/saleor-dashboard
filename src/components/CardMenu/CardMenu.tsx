@@ -1,23 +1,30 @@
 import {
+  CircularProgress,
   ClickAwayListener,
   Grow,
   IconButton,
   MenuItem,
   MenuList,
   Paper,
-  Popper
+  Popper,
+  Typography
 } from "@material-ui/core";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import { makeStyles } from "@saleor/macaw-ui";
-import React from "react";
+import classNames from "classnames";
+import * as React from "react";
+import { useEffect, useRef, useState } from "react";
+import { FormattedMessage } from "react-intl";
 
 const ITEM_HEIGHT = 48;
-
 export interface CardMenuItem {
   disabled?: boolean;
   label: string;
   testId?: string;
   onSelect: () => void;
+  loading?: boolean;
+  withLoading?: boolean;
+  hasError?: boolean;
 }
 
 export interface CardMenuProps {
@@ -42,6 +49,14 @@ const useStyles = makeStyles(
       marginTop: theme.spacing(2),
       maxHeight: ITEM_HEIGHT * 4.5,
       overflowY: "scroll"
+    },
+    loadingContent: {
+      width: "100%",
+      display: "grid",
+      gridTemplateColumns: "1fr 24px",
+      gap: "16px",
+      alignItems: "center",
+      justifyContent: "flex-end"
     }
   }),
   { name: "CardMenu" }
@@ -51,8 +66,8 @@ const CardMenu: React.FC<CardMenuProps> = props => {
   const { className, disabled, menuItems, ...rest } = props;
   const classes = useStyles(props);
 
-  const anchorRef = React.useRef<HTMLButtonElement | null>(null);
-  const [open, setOpen] = React.useState(false);
+  const anchorRef = useRef<HTMLButtonElement | null>(null);
+  const [open, setOpen] = useState(false);
 
   const handleToggle = () => setOpen(prevOpen => !prevOpen);
 
@@ -74,8 +89,8 @@ const CardMenu: React.FC<CardMenuProps> = props => {
     }
   };
 
-  const prevOpen = React.useRef(open);
-  React.useEffect(() => {
+  const prevOpen = useRef(open);
+  useEffect(() => {
     if (prevOpen.current === true && open === false) {
       anchorRef.current!.focus();
     }
@@ -83,10 +98,26 @@ const CardMenu: React.FC<CardMenuProps> = props => {
     prevOpen.current = open;
   }, [open]);
 
+  useEffect(() => {
+    const hasAnyItemsLoadingOrWithError = menuItems
+      ?.filter(({ withLoading }) => withLoading)
+      ?.some(({ loading, hasError }) => loading || hasError);
+
+    if (!hasAnyItemsLoadingOrWithError) {
+      setOpen(false);
+    }
+  }, [menuItems]);
+
   const handleMenuClick = (index: number) => {
-    menuItems[index].onSelect();
-    setOpen(false);
+    const selectedItem = menuItems[index];
+    selectedItem.onSelect();
+
+    if (!selectedItem.withLoading) {
+      setOpen(false);
+    }
   };
+
+  const isWithLoading = menuItems.some(({ withLoading }) => withLoading);
 
   return (
     <div className={className} {...rest}>
@@ -128,12 +159,27 @@ const CardMenu: React.FC<CardMenuProps> = props => {
                   {menuItems.map((menuItem, menuItemIndex) => (
                     <MenuItem
                       data-test-id={menuItem.testId}
-                      disabled={menuItem.disabled}
+                      disabled={menuItem.loading || menuItem.disabled}
                       onClick={() => handleMenuClick(menuItemIndex)}
                       key={menuItem.label}
                       data-test={menuItem.testId}
                     >
-                      {menuItem.label}
+                      <div
+                        className={classNames(className, {
+                          [classes.loadingContent]: isWithLoading
+                        })}
+                      >
+                        {menuItem.loading ? (
+                          <>
+                            <Typography variant="subtitle1">
+                              <FormattedMessage defaultMessage="working..." />
+                            </Typography>
+                            <CircularProgress size={24} />
+                          </>
+                        ) : (
+                          menuItem.label
+                        )}
+                      </div>
                     </MenuItem>
                   ))}
                 </MenuList>

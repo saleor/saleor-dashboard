@@ -35,7 +35,9 @@ const CustomerGiftCardsCardListItem: React.FC<CustomerGiftCardsCardListItemProps
 
   const {
     giftCardActivate,
-    giftCardDeactivate
+    giftCardDeactivate,
+    giftCardActivateOpts,
+    giftCardDeactivateOpts
   } = useGiftCardActivationDeactivation({
     onActivateActionComplete: handleActionCompleted,
     onDeactivateActionComplete: handleActionCompleted,
@@ -79,13 +81,19 @@ const CustomerGiftCardsCardListItem: React.FC<CustomerGiftCardsCardListItemProps
           label: intl.formatMessage(
             bulkEnableDisableSectionMessages.disableLabel
           ),
-          onSelect: handleGiftCardDeactivate
+          onSelect: handleGiftCardDeactivate,
+          loading: giftCardDeactivateOpts.loading,
+          withLoading: true,
+          hasError: !!giftCardDeactivateOpts.error
         }
       : {
           label: intl.formatMessage(
             bulkEnableDisableSectionMessages.enableLabel
           ),
-          onSelect: handleGiftCardActivate
+          onSelect: handleGiftCardActivate,
+          loading: giftCardActivateOpts.loading,
+          withLoading: true,
+          hasError: !!giftCardActivateOpts.error
         };
 
     return [...items, statusButton];
