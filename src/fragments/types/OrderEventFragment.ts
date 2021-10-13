@@ -101,4 +101,7 @@ export interface OrderEventFragment {
   type: OrderEventsEnum | null;
   user: OrderEventFragment_user | null;
   lines: (OrderEventFragment_lines | null)[] | null;
+  pspReference: string | null;
+  grapqhlPaymentId: string | null;
+  paymentGateway: string | null;
 }

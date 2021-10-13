@@ -151,6 +151,9 @@ export interface OrderDetails_order_events {
   type: OrderEventsEnum | null;
   user: OrderDetails_order_events_user | null;
   lines: (OrderDetails_order_events_lines | null)[] | null;
+  pspReference: string | null;
+  grapqhlPaymentId: string | null;
+  paymentGateway: string | null;
 }
 
 export interface OrderDetails_order_fulfillments_lines_orderLine_variant {

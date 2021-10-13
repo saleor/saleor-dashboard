@@ -3202,6 +3202,8 @@ type OrderEvent implements Node {
   shippingCostsIncluded: Boolean
   relatedOrder: Order
   discount: OrderEventDiscountObject
+  pspReference: String
+  grapqhlPaymentId: String
 }
 
 type OrderEventCountableConnection {
@@ -3269,10 +3271,12 @@ enum OrderEventsEnum {
   CONFIRMED
   PAYMENT_AUTHORIZED
   PAYMENT_CAPTURED
+  PAYMENT_CAPTURE_FAILED
   EXTERNAL_SERVICE_NOTIFICATION
   PAYMENT_REFUNDED
+  PAYMENT_REFUND_FAILED
   PAYMENT_VOIDED
-  PAYMENT_FAILED
+  PAYMENT_VOID_FAILED
   INVOICE_REQUESTED
   INVOICE_GENERATED
   INVOICE_UPDATED
