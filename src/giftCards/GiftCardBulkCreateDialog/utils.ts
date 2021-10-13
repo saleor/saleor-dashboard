@@ -7,7 +7,7 @@ import {
   GiftCardBulkCreateFormErrors
 } from "./types";
 
-export const getFormError = (
+export const validateField = (
   {
     expiryDate,
     expiryPeriodAmount,
@@ -19,6 +19,8 @@ export const getFormError = (
   key: keyof GiftCardBulkCreateFormData
 ): Pick<GiftCardError, "field" | "code"> | null => {
   const error = { code: GiftCardErrorCode.INVALID, field: key };
+  const expiryDateSelected = expirySelected && expiryType === "EXPIRY_DATE";
+  const expiryPeriodSelected = expirySelected && expiryType === "EXPIRY_PERIOD";
 
   switch (key) {
     case "cardsAmount":
@@ -28,22 +30,16 @@ export const getFormError = (
       return !value ? error : null;
 
     case "expiryDate":
-      if (expirySelected && expiryType === "EXPIRY_DATE") {
-        return !expiryDate ? error : null;
-      }
-      return null;
+      return expiryDateSelected && !expiryDate ? error : null;
 
     case "expiryPeriodAmount":
-      if (expirySelected && expiryType === "EXPIRY_PERIOD") {
-        return !expiryPeriodType || !expiryPeriodAmount
-          ? { ...error, field: "expiryDate" }
-          : null;
-      }
-      return null;
+      return expiryPeriodSelected && (!expiryPeriodType || !expiryPeriodAmount)
+        ? { ...error, field: "expiryDate" }
+        : null;
   }
 };
 
-export const getFormSchemaErrors = (
+export const validateForm = (
   formData: GiftCardBulkCreateFormData
 ): GiftCardBulkCreateFormErrors =>
   reduce(
@@ -56,7 +52,7 @@ export const getFormSchemaErrors = (
         expiryPeriodAmount: "expiryDate"
       };
 
-      const formError = getFormError(formData, value, key);
+      const formError = validateField(formData, value, key);
 
       if (!formError) {
         return resultErrors;

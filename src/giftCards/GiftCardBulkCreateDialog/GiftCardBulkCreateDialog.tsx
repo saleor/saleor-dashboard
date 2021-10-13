@@ -22,7 +22,7 @@ import {
   GiftCardBulkCreateFormErrors
 } from "./types";
 import { GiftCardBulkCreate } from "./types/GiftCardBulkCreate";
-import { getFormSchemaErrors } from "./utils";
+import { validateForm } from "./utils";
 
 const GiftCardBulkCreateDialog: React.FC<DialogProps> = ({ onClose, open }) => {
   const intl = useIntl();
@@ -35,7 +35,7 @@ const GiftCardBulkCreateDialog: React.FC<DialogProps> = ({ onClose, open }) => {
 
   const onCompleted = (data: GiftCardBulkCreate) => {
     const errors = data?.giftCardBulkCreate?.errors;
-    const cardsAmount = data?.giftCardBulkCreate?.giftCards?.length;
+    const cardsAmount = data?.giftCardBulkCreate?.giftCards?.length || 0;
 
     const notifierData: IMessage = !!errors?.length
       ? {
@@ -74,7 +74,7 @@ const GiftCardBulkCreateDialog: React.FC<DialogProps> = ({ onClose, open }) => {
 
     return {
       count: cardsAmount,
-      tag: tag || null,
+      tag,
       balance: {
         amount: balanceAmount,
         currency: balanceCurrency
@@ -93,18 +93,17 @@ const GiftCardBulkCreateDialog: React.FC<DialogProps> = ({ onClose, open }) => {
   });
 
   const handleSubmit = (data: GiftCardBulkCreateFormData) => {
-    const formErrors = getFormSchemaErrors(data);
+    const formErrors = validateForm(data);
 
     if (!!Object.keys(formErrors).length) {
       setFormErrors(formErrors);
-      return;
+    } else {
+      bulkCreateGiftCard({
+        variables: {
+          input: getParsedSubmitInputData(data)
+        }
+      });
     }
-
-    bulkCreateGiftCard({
-      variables: {
-        input: getParsedSubmitInputData(data)
-      }
-    });
   };
 
   const apiErrors = bulkCreateGiftCardOpts?.data?.giftCardBulkCreate?.errors;
