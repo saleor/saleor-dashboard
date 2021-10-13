@@ -11,45 +11,15 @@ import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
 import TableCellAvatar from "@saleor/components/TableCellAvatar";
 import { FormsetData } from "@saleor/hooks/useFormset";
-import { makeStyles } from "@saleor/macaw-ui";
 import { renderCollection } from "@saleor/misc";
 import { OrderFulfillData_order_lines } from "@saleor/orders/types/OrderFulfillData";
 import { OrderFulfillStockInput } from "@saleor/types/globalTypes";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import OrderFulfillStockExceededDialogLines from "../OrderFulfillStockExceededDialogLines";
+import OrderFulfillStockExceededDialogLines from "../OrderFulfillStockExceededDialogLine";
 import { stockExceededDialogMessages as messages } from "./messages";
-
-const useStyles = makeStyles(
-  theme => ({
-    colName: {
-      width: "auto",
-      margin: "0px"
-    },
-    colQuantity: {
-      textAlign: "right",
-      width: 100,
-      padding: "4px 4px"
-    },
-    colWarehouseStock: {
-      textAlign: "right",
-      width: 150,
-      padding: "4px 24px"
-    },
-    table: {
-      tableLayout: "fixed"
-    },
-    label: {
-      margin: theme.spacing(2)
-    },
-    scrollable: {
-      height: 450,
-      overflow: "scroll"
-    }
-  }),
-  { name: "OrderFulfillStockExceededDialog" }
-);
+import { useStyles } from "./styles";
 
 export interface OrderFulfillStockExceededDialogProps {
   lines: OrderFulfillData_order_lines[];
@@ -104,6 +74,7 @@ const OrderFulfillStockExceededDialog: React.FC<OrderFulfillStockExceededDialogP
                 lines,
                 line => (
                   <OrderFulfillStockExceededDialogLines
+                    key={line?.id}
                     line={line}
                     formsetData={formsetData}
                     classes={classes}

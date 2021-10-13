@@ -34,6 +34,8 @@ import classNames from "classnames";
 import React, { Dispatch, SetStateAction } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
+import { getAllocatedQuantityForLine } from "../OrderFulfillStockExceededDialog/utils";
+
 type ClassKey =
   | "actionBar"
   | "table"
@@ -379,12 +381,11 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
                               );
                             }
 
-                            const warehouseAllocation = line.allocations.find(
-                              allocation =>
-                                allocation.warehouse.id === warehouse.id
+                            const allocatedQuantityForLine = getAllocatedQuantityForLine(
+                              line,
+                              warehouse
                             );
-                            const allocatedQuantityForLine =
-                              warehouseAllocation?.quantity || 0;
+
                             const availableQuantity =
                               warehouseStock.quantity -
                               warehouseStock.quantityAllocated +
