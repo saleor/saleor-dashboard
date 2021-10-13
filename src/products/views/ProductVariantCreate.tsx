@@ -121,7 +121,9 @@ export const ProductVariant: React.FC<ProductVariantCreateProps> = ({
           weight: weight(formData.weight),
           preorder: formData.isPreorder
             ? {
-                globalThreshold: formData.globalThreshold,
+                globalThreshold: formData.globalThreshold
+                  ? parseInt(formData.globalThreshold, 10)
+                  : null,
                 endDate: formData.preorderEndDateTime || null
               }
             : null

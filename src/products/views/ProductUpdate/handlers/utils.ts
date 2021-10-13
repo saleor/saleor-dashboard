@@ -38,7 +38,9 @@ export const getSimpleProductVariables = (
     sku: data.sku,
     trackInventory: data.trackInventory,
     preorder: {
-      globalThreshold: data.globalThreshold,
+      globalThreshold: data.globalThreshold
+        ? parseInt(data.globalThreshold, 10)
+        : null,
       endDate: data.preorderEndDateTime
     }
   },
