@@ -2,9 +2,9 @@ import { Dialog, DialogTitle } from "@material-ui/core";
 import { IMessage } from "@saleor/components/messages";
 import useCurrentDate from "@saleor/hooks/useCurrentDate";
 import useNotifier from "@saleor/hooks/useNotifier";
+import { DialogProps } from "@saleor/types";
 import { GiftCardCreateInput } from "@saleor/types/globalTypes";
 import commonErrorMessages from "@saleor/utils/errors/common";
-import { DialogActionHandlersProps } from "@saleor/utils/handlers/dialogActionHandlers";
 import React, { useState } from "react";
 import { useIntl } from "react-intl";
 
@@ -20,10 +20,7 @@ import { useChannelCurrencies } from "./queries";
 import { GiftCardCreate } from "./types/GiftCardCreate";
 import { getGiftCardExpiryInputData } from "./utils";
 
-const GiftCardCreateDialog: React.FC<DialogActionHandlersProps> = ({
-  closeDialog,
-  open
-}) => {
+const GiftCardCreateDialog: React.FC<DialogProps> = ({ onClose, open }) => {
   const intl = useIntl();
   const notify = useNotifier();
 
@@ -95,7 +92,7 @@ const GiftCardCreateDialog: React.FC<DialogActionHandlersProps> = ({
   };
 
   const handleClose = () => {
-    closeDialog();
+    onClose();
     // dialog closing animation runs slower than prop change
     // and we don't want to show the form for a split second
     setTimeout(() => setCardCode(null), 0);

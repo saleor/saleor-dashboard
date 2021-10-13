@@ -2,10 +2,10 @@ import { Dialog, DialogTitle } from "@material-ui/core";
 import { IMessage } from "@saleor/components/messages";
 import useCurrentDate from "@saleor/hooks/useCurrentDate";
 import useNotifier from "@saleor/hooks/useNotifier";
+import { DialogProps } from "@saleor/types";
 import { GiftCardBulkCreateInput } from "@saleor/types/globalTypes";
 import { getFormErrors } from "@saleor/utils/errors";
 import commonErrorMessages from "@saleor/utils/errors/common";
-import { DialogActionHandlersProps } from "@saleor/utils/handlers/dialogActionHandlers";
 import React, { useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 
@@ -24,10 +24,7 @@ import {
 import { GiftCardBulkCreate } from "./types/GiftCardBulkCreate";
 import { getFormSchemaErrors } from "./utils";
 
-const GiftCardBulkCreateDialog: React.FC<DialogActionHandlersProps> = ({
-  closeDialog,
-  open
-}) => {
+const GiftCardBulkCreateDialog: React.FC<DialogProps> = ({ onClose, open }) => {
   const intl = useIntl();
   const notify = useNotifier();
   const [formErrors, setFormErrors] = useState<GiftCardBulkCreateFormErrors>(
@@ -58,7 +55,7 @@ const GiftCardBulkCreateDialog: React.FC<DialogActionHandlersProps> = ({
     setFormErrors(getFormErrors(giftCardBulkCreateErrorKeys, errors));
 
     if (!errors.length) {
-      closeDialog();
+      onClose();
     }
   };
 
@@ -132,7 +129,7 @@ const GiftCardBulkCreateDialog: React.FC<DialogActionHandlersProps> = ({
         {!loadingChannelCurrencies && (
           <GiftCardBulkCreateDialogForm
             opts={bulkCreateGiftCardOpts}
-            onClose={closeDialog}
+            onClose={onClose}
             formErrors={formErrors}
             onSubmit={handleSubmit}
           />

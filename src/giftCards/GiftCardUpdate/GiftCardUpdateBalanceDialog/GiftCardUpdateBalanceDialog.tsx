@@ -4,8 +4,8 @@ import CardSpacer from "@saleor/components/CardSpacer";
 import { IMessage } from "@saleor/components/messages";
 import useForm from "@saleor/hooks/useForm";
 import useNotifier from "@saleor/hooks/useNotifier";
+import { DialogProps } from "@saleor/types";
 import commonErrorMessages from "@saleor/utils/errors/common";
-import { DialogActionHandlersProps } from "@saleor/utils/handlers/dialogActionHandlers";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -22,9 +22,9 @@ export interface GiftCardBalanceUpdateFormData {
   balanceAmount: number;
 }
 
-const GiftCardUpdateBalanceDialog: React.FC<DialogActionHandlersProps> = ({
+const GiftCardUpdateBalanceDialog: React.FC<DialogProps> = ({
   open,
-  closeDialog
+  onClose
 }) => {
   const intl = useIntl();
   const classes = useStyles({});
@@ -57,7 +57,7 @@ const GiftCardUpdateBalanceDialog: React.FC<DialogActionHandlersProps> = ({
     notify(notifierData);
 
     if (!errors.length) {
-      closeDialog();
+      onClose();
     }
   };
 
@@ -103,7 +103,7 @@ const GiftCardUpdateBalanceDialog: React.FC<DialogActionHandlersProps> = ({
       open={open}
       onConfirm={submit}
       confirmButtonLabel={intl.formatMessage(messages.changeButtonLabel)}
-      onClose={closeDialog}
+      onClose={onClose}
       title={intl.formatMessage(messages.title)}
       confirmButtonState={status}
       disabled={loading || !hasChanged}
