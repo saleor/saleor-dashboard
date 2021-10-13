@@ -159,6 +159,9 @@ export interface OrderDetails_order_events {
   user: OrderDetails_order_events_user | null;
   app: OrderDetails_order_events_app | null;
   lines: (OrderDetails_order_events_lines | null)[] | null;
+  pspReference: string | null;
+  grapqhlPaymentId: string | null;
+  paymentGateway: string | null;
 }
 
 export interface OrderDetails_order_fulfillments_lines_orderLine_variant {
