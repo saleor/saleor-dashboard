@@ -242,6 +242,9 @@ const ExtendedTimelineEvent: React.FC<ExtendedTimelineEventProps> = ({
       case OrderEventsEnum.ORDER_DISCOUNT_AUTOMATICALLY_UPDATED: {
         return [title];
       }
+      case OrderEventsEnum.PAYMENT_AUTHORIZED: {
+        return [title];
+      }
       default: {
         return [title, employeeName];
       }

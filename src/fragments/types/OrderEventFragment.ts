@@ -109,4 +109,7 @@ export interface OrderEventFragment {
   user: OrderEventFragment_user | null;
   app: OrderEventFragment_app | null;
   lines: (OrderEventFragment_lines | null)[] | null;
+  pspReference: string | null;
+  grapqhlPaymentId: string | null;
+  paymentGateway: string | null;
 }
