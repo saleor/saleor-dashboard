@@ -55,6 +55,7 @@ export interface GiftCardList_giftCards_pageInfo {
 export interface GiftCardList_giftCards {
   __typename: "GiftCardCountableConnection";
   edges: GiftCardList_giftCards_edges[];
+  totalCount: number | null;
   pageInfo: GiftCardList_giftCards_pageInfo;
 }
 

@@ -15,6 +15,8 @@ import getExportErrorMessage from "@saleor/utils/errors/export";
 import React from "react";
 import { useIntl } from "react-intl";
 
+import { ExportSettingsInput } from "./types";
+
 const useStyles = makeStyles(
   theme => ({
     hr: {
@@ -23,27 +25,30 @@ const useStyles = makeStyles(
     }
   }),
   {
-    name: "ProductExportDialogSettings"
+    name: "ExportDialogSettings"
   }
 );
 
-export type ProductQuantity = Record<"all" | "filter", number>;
-export interface ProductExportDialogSettingsProps {
-  data: ExportProductsInput;
+export type ExportItemsQuantity = Record<"all" | "filter", number>;
+
+export interface ExportDialogSettingsProps {
+  data: ExportSettingsInput;
   errors: ExportErrorFragment[];
-  productQuantity: ProductQuantity;
-  selectedProducts: number;
+  itemsQuantity: ExportItemsQuantity;
+  selectedItems: number;
+  exportTypeLabel: string;
   onChange: (event: ChangeEvent) => void;
 }
 
-const formFields: Array<keyof ExportProductsInput> = ["fileType", "scope"];
+const formFields: Array<keyof ExportSettingsInput> = ["fileType", "scope"];
 
-const ProductExportDialogSettings: React.FC<ProductExportDialogSettingsProps> = ({
+const ExportDialogSettings: React.FC<ExportDialogSettingsProps> = ({
   data,
   errors,
   onChange,
-  productQuantity,
-  selectedProducts
+  itemsQuantity,
+  selectedItems,
+  exportTypeLabel
 }) => {
   const classes = useStyles({});
   const intl = useIntl();
@@ -54,24 +59,26 @@ const ProductExportDialogSettings: React.FC<ProductExportDialogSettingsProps> = 
     {
       label: intl.formatMessage(
         {
-          defaultMessage: "All products ({number})",
-          description: "export all products to csv file"
+          defaultMessage: "All {exportTypeLabel} ({number})",
+          description: "export all items to csv file"
         },
         {
-          number: productQuantity.all || "..."
+          number: itemsQuantity.all || "...",
+          exportTypeLabel
         }
       ),
       value: ExportScope.ALL
     },
     {
-      disabled: selectedProducts === 0,
+      disabled: selectedItems === 0,
       label: intl.formatMessage(
         {
-          defaultMessage: "Selected products ({number})",
-          description: "export selected products to csv file"
+          defaultMessage: "Selected {exportTypeLabel} ({number})",
+          description: "export selected items to csv file"
         },
         {
-          number: selectedProducts
+          number: selectedItems,
+          exportTypeLabel
         }
       ),
       value: ExportScope.IDS
@@ -80,10 +87,10 @@ const ProductExportDialogSettings: React.FC<ProductExportDialogSettingsProps> = 
       label: intl.formatMessage(
         {
           defaultMessage: "Current search ({number})",
-          description: "export filtered products to csv file"
+          description: "export filtered items to csv file"
         },
         {
-          number: productQuantity.filter || "..."
+          number: itemsQuantity.filter || "..."
         }
       ),
       value: ExportScope.FILTER
@@ -96,14 +103,14 @@ const ProductExportDialogSettings: React.FC<ProductExportDialogSettingsProps> = 
     {
       label: intl.formatMessage({
         defaultMessage: "Spreadsheet for Excel, Numbers etc.",
-        description: "export products as spreadsheet"
+        description: "export items as spreadsheet"
       }),
       value: FileTypesEnum.XLSX
     },
     {
       label: intl.formatMessage({
         defaultMessage: "Plain CSV file",
-        description: "export products as csv file"
+        description: "export items as csv file"
       }),
       value: FileTypesEnum.CSV
     }
@@ -117,7 +124,7 @@ const ProductExportDialogSettings: React.FC<ProductExportDialogSettingsProps> = 
         hint={getExportErrorMessage(formErrors.scope, intl)}
         label={intl.formatMessage({
           defaultMessage: "Export information for:",
-          description: "export products to csv file, choice field label"
+          description: "export items to csv file, choice field label"
         })}
         name={"scope" as keyof ExportProductsInput}
         onChange={onChange}
@@ -130,7 +137,7 @@ const ProductExportDialogSettings: React.FC<ProductExportDialogSettingsProps> = 
         hint={getExportErrorMessage(formErrors.fileType, intl)}
         label={intl.formatMessage({
           defaultMessage: "Export as:",
-          description: "export products as csv or spreadsheet file"
+          description: "export items as csv or spreadsheet file"
         })}
         name={"fileType" as keyof ExportProductsInput}
         onChange={onChange}
@@ -140,5 +147,4 @@ const ProductExportDialogSettings: React.FC<ProductExportDialogSettingsProps> = 
   );
 };
 
-ProductExportDialogSettings.displayName = "ProductExportDialogSettings";
-export default ProductExportDialogSettings;
+export default ExportDialogSettings;

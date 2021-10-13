@@ -2172,6 +2172,13 @@ export interface DraftOrderInput {
   redirectUrl?: string | null;
 }
 
+export interface ExportGiftCardsInput {
+  scope: ExportScope;
+  filter?: GiftCardFilterInput | null;
+  ids?: string[] | null;
+  fileType: FileTypesEnum;
+}
+
 export interface ExportInfoInput {
   attributes?: string[] | null;
   warehouses?: string[] | null;
@@ -2215,6 +2222,17 @@ export interface GiftCardCreateInput {
   isActive: boolean;
   code?: string | null;
   note?: string | null;
+}
+
+export interface GiftCardFilterInput {
+  isActive?: boolean | null;
+  tag?: string | null;
+  tags?: (string | null)[] | null;
+  products?: (string | null)[] | null;
+  usedBy?: (string | null)[] | null;
+  currency?: string | null;
+  currentBalance?: PriceRangeInput | null;
+  initialBalance?: PriceRangeInput | null;
 }
 
 export interface GiftCardResendInput {
