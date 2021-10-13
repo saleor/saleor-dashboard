@@ -128,3 +128,14 @@ const hasEnsuredOrderEventFields = (
   event,
   fields: Array<keyof OrderDetails_order_events>
 ) => !fields.some((field: keyof OrderDetails_order_events) => !event[field]);
+
+export const isPaymentFailEvent = (type: OrderEventsEnum) => {
+  const failTypes = [
+    OrderEventsEnum.PAYMENT_AUTHORIZED_FAILED,
+    OrderEventsEnum.PAYMENT_CAPTURE_FAILED,
+    OrderEventsEnum.PAYMENT_REFUND_FAILED,
+    OrderEventsEnum.PAYMENT_VOID_FAILED
+  ];
+
+  return failTypes.includes(type);
+};
