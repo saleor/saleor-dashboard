@@ -2209,6 +2209,18 @@ export interface GiftCardCreateInput {
   note?: string | null;
 }
 
+export interface GiftCardFilterInput {
+  isActive?: boolean | null;
+  tag?: string | null;
+  tags?: (string | null)[] | null;
+  products?: (string | null)[] | null;
+  usedBy?: (string | null)[] | null;
+  currency?: string | null;
+  currentBalance?: PriceRangeInput | null;
+  initialBalance?: PriceRangeInput | null;
+  code?: string | null;
+}
+
 export interface GiftCardResendInput {
   id: string;
   email?: string | null;

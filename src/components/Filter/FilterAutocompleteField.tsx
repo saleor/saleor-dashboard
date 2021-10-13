@@ -69,26 +69,36 @@ const FilterAutocompleteField: React.FC<FilterAutocompleteFieldProps> = ({
   const displayNoResults =
     availableOptions.length === 0 && fieldDisplayValues.length === 0;
 
+  const getUpdatedFilterValue = (option: MultiAutocompleteChoiceType) => {
+    if (filterField.multiple) {
+      return toggle(option.value, filterField.value, (a, b) => a === b);
+    }
+
+    return [option.value];
+  };
+
   const handleChange = (option: MultiAutocompleteChoiceType) => {
     onFilterPropertyChange({
       payload: {
         name: filterField.name,
         update: {
           active: true,
-          value: toggle(option.value, filterField.value, (a, b) => a === b)
+          value: getUpdatedFilterValue(option)
         }
       },
       type: "set-property"
     });
 
-    setDisplayValues({
-      ...displayValues,
-      [filterField.name]: toggle(
-        option,
-        fieldDisplayValues,
-        (a, b) => a.value === b.value
-      )
-    });
+    if (filterField.multiple) {
+      setDisplayValues({
+        ...displayValues,
+        [filterField.name]: toggle(
+          option,
+          fieldDisplayValues,
+          (a, b) => a.value === b.value
+        )
+      });
+    }
   };
 
   const isValueChecked = (displayValue: MultiAutocompleteChoiceType) =>
@@ -106,18 +116,20 @@ const FilterAutocompleteField: React.FC<FilterAutocompleteFieldProps> = ({
 
   return (
     <div {...rest}>
-      <TextField
-        data-test="filterFieldAutocompleteInput"
-        className={classes.inputContainer}
-        fullWidth
-        name={filterField.name + "_autocomplete"}
-        InputProps={{
-          classes: {
-            input: classes.input
-          }
-        }}
-        onChange={event => filterField.onSearchChange(event.target.value)}
-      />
+      {filterField?.onSearchChange && (
+        <TextField
+          data-test="filterFieldAutocompleteInput"
+          className={classes.inputContainer}
+          fullWidth
+          name={filterField.name + "_autocomplete"}
+          InputProps={{
+            classes: {
+              input: classes.input
+            }
+          }}
+          onChange={event => filterField.onSearchChange(event.target.value)}
+        />
+      )}
       {filteredValuesChecked.map(displayValue => (
         <div className={classes.option} key={displayValue.value}>
           <FormControlLabel

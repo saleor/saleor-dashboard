@@ -156,7 +156,7 @@ const FilterContentBody: React.FC<FilterContentBodyProps> = ({
             />
           </div>
         ))}
-      {filter.type === FieldType.autocomplete && filter.multiple && (
+      {filter.type === FieldType.autocomplete && (
         <FilterAutocompleteField
           data-test={filterTestingContext}
           data-test-id={filter.name}
