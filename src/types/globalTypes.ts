@@ -2209,6 +2209,18 @@ export interface GiftCardCreateInput {
   note?: string | null;
 }
 
+export interface GiftCardFilterInput {
+  isActive?: boolean | null;
+  tag?: string | null;
+  tags?: (string | null)[] | null;
+  products?: (string | null)[] | null;
+  usedBy?: (string | null)[] | null;
+  currency?: string | null;
+  currentBalance?: PriceRangeInput | null;
+  initialBalance?: PriceRangeInput | null;
+  code?: string | null;
+}
+
 export interface GiftCardResendInput {
   id: string;
   email?: string | null;
@@ -2789,6 +2801,8 @@ export interface ShopSettingsInput {
   defaultMailSenderName?: string | null;
   defaultMailSenderAddress?: string | null;
   customerSetPasswordUrl?: string | null;
+  reserveStockDurationAnonymousUser?: number | null;
+  reserveStockDurationAuthenticatedUser?: number | null;
 }
 
 export interface SiteDomainInput {
@@ -2884,6 +2898,7 @@ export interface VoucherInput {
   endDate?: any | null;
   discountValueType?: DiscountValueTypeEnum | null;
   products?: (string | null)[] | null;
+  variants?: (string | null)[] | null;
   collections?: (string | null)[] | null;
   categories?: (string | null)[] | null;
   minCheckoutItemsQuantity?: number | null;

@@ -209,8 +209,8 @@ export interface FilterOpts<T> {
 }
 
 export interface AutocompleteFilterOpts
-  extends FetchMoreProps,
-    SearchPageProps {
+  extends Partial<FetchMoreProps>,
+    Partial<SearchPageProps> {
   choices: MultiAutocompleteChoiceType[];
   displayValues: MultiAutocompleteChoiceType[];
 }
