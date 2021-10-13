@@ -15,6 +15,7 @@ import {
   getEmployeeNameLink,
   getOrderNumberLink,
   hasOrderLineDiscountWithNoPreviousValue,
+  isPaymentEvent,
   isTimelineEventOfDiscountType
 } from "./utils";
 
@@ -245,6 +246,27 @@ const ExtendedTimelineEvent: React.FC<ExtendedTimelineEventProps> = ({
       case OrderEventsEnum.PAYMENT_AUTHORIZED: {
         return [title];
       }
+      case OrderEventsEnum.PAYMENT_AUTHORIZED_FAILED: {
+        return [title];
+      }
+      case OrderEventsEnum.PAYMENT_CAPTURED: {
+        return [title];
+      }
+      case OrderEventsEnum.PAYMENT_CAPTURE_FAILED: {
+        return [title];
+      }
+      case OrderEventsEnum.PAYMENT_REFUNDED: {
+        return [title];
+      }
+      case OrderEventsEnum.PAYMENT_REFUND_FAILED: {
+        return [title];
+      }
+      case OrderEventsEnum.PAYMENT_VOIDED: {
+        return [title];
+      }
+      case OrderEventsEnum.PAYMENT_VOID_FAILED: {
+        return [title];
+      }
       default: {
         return [title, employeeName];
       }
@@ -260,8 +282,14 @@ const ExtendedTimelineEvent: React.FC<ExtendedTimelineEventProps> = ({
     );
   }
 
-  if (type === "PAYMENT_REFUNDED") {
-    return <ExtendedPaymentTimelineEvent />;
+  if (isPaymentEvent(type)) {
+    return (
+      <ExtendedPaymentTimelineEvent
+        event={event}
+        titleElements={selectTitleElements()}
+        orderCurrency={orderCurrency}
+      />
+    );
   }
 
   return (
