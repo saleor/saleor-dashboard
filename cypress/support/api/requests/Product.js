@@ -1,5 +1,9 @@
 import { stringify } from "../.././formatData/formatJson";
-import { getValueWithDefault, getVariantsListIds } from "./utils/Utils";
+import {
+  getValuesInArray,
+  getValueWithDefault,
+  getVariantsListIds
+} from "./utils/Utils";
 
 export function getFirstProducts(first, search) {
   const filter = search
@@ -147,7 +151,8 @@ export function createVariant({
   price = 1,
   costPrice = 1,
   trackInventory = true,
-  weight = 1
+  weight = 1,
+  attributeValues = ["value"]
 }) {
   const channelListings = getValueWithDefault(
     channelId,
@@ -170,7 +175,7 @@ export function createVariant({
     productVariantBulkCreate(product: "${productId}", variants: {
       attributes: [{
         id:"${attributeId}"
-        values: ["value"]
+        values: ${getValuesInArray(attributeValues)}
       }]
       weight: ${weight}
       sku: "${sku}"
@@ -223,4 +228,32 @@ export function getVariants(variantsList) {
     }
   }`;
   return cy.sendRequestWithQuery(query).its("body.data.productVariants");
+}
+
+export function getVariant(id, channel, auth = "auth") {
+  const query = `query{
+    productVariant(id:"${id}" channel:"${channel}"){
+      id
+      name
+      pricing{
+        onSale
+        discount{
+          gross{
+            amount
+          }
+        }
+        price{
+          gross{
+            amount
+          }
+        }
+        priceUndiscounted{
+          gross{
+            amount
+          }
+        }
+      }
+    }
+  }`;
+  return cy.sendRequestWithQuery(query, auth).its("body.data.productVariant");
 }

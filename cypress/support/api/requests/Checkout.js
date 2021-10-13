@@ -50,6 +50,19 @@ export function createCheckout({
         availableShippingMethods{
           name
         }
+        lines{
+          variant{
+            id
+            pricing{
+              onSale
+              price{
+                gross{
+                  amount
+                }
+              }
+            }
+          }
+        }
         ${availableCollectionPointsLines}
       }
     }
