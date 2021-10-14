@@ -43,13 +43,11 @@ const timelineEventTypes = {
     OrderEventsEnum.ORDER_LINE_DISCOUNT_UPDATED,
     OrderEventsEnum.PAYMENT_CAPTURED,
     OrderEventsEnum.PAYMENT_CAPTURE_FAILED,
-    OrderEventsEnum.PAYMENT_FAILED,
     OrderEventsEnum.PAYMENT_REFUNDED,
     OrderEventsEnum.PAYMENT_REFUND_FAILED,
     OrderEventsEnum.PAYMENT_VOIDED,
     OrderEventsEnum.PAYMENT_VOID_FAILED,
-    OrderEventsEnum.PAYMENT_AUTHORIZED,
-    OrderEventsEnum.PAYMENT_AUTHORIZED_FAILED
+    OrderEventsEnum.PAYMENT_AUTHORIZED
   ],
   linked: [
     OrderEventsEnum.ORDER_REPLACEMENT_CREATED,
@@ -132,7 +130,6 @@ const hasEnsuredOrderEventFields = (
 export const isPaymentEvent = (type: OrderEventsEnum) => {
   const paymentEvents = [
     OrderEventsEnum.PAYMENT_AUTHORIZED,
-    OrderEventsEnum.PAYMENT_AUTHORIZED_FAILED,
     OrderEventsEnum.PAYMENT_CAPTURED,
     OrderEventsEnum.PAYMENT_CAPTURE_FAILED,
     OrderEventsEnum.PAYMENT_REFUNDED,
@@ -146,7 +143,6 @@ export const isPaymentEvent = (type: OrderEventsEnum) => {
 
 export const isPaymentFailEvent = (type: OrderEventsEnum) => {
   const failTypes = [
-    OrderEventsEnum.PAYMENT_AUTHORIZED_FAILED,
     OrderEventsEnum.PAYMENT_CAPTURE_FAILED,
     OrderEventsEnum.PAYMENT_REFUND_FAILED,
     OrderEventsEnum.PAYMENT_VOID_FAILED

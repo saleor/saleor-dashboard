@@ -65,10 +65,7 @@ const ExtendedPaymentTimelineEvent: React.FC<ExtendedTimelineEventProps> = ({
   const getAmountLabelMessage = () => {
     let labelMessage = "";
 
-    if (
-      type === OrderEventsEnum.PAYMENT_AUTHORIZED ||
-      type === OrderEventsEnum.PAYMENT_AUTHORIZED_FAILED
-    ) {
+    if (type === OrderEventsEnum.PAYMENT_AUTHORIZED) {
       labelMessage = intl.formatMessage(messages.authorizedAmount);
     }
 

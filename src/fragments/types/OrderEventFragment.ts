@@ -103,13 +103,13 @@ export interface OrderEventFragment {
   discount: OrderEventFragment_discount | null;
   relatedOrder: OrderEventFragment_relatedOrder | null;
   message: string | null;
+  pspReference: string | null;
+  grapqhlPaymentId: string | null;
+  paymentGateway: string | null;
   quantity: number | null;
   transactionReference: string | null;
   type: OrderEventsEnum | null;
   user: OrderEventFragment_user | null;
   app: OrderEventFragment_app | null;
   lines: (OrderEventFragment_lines | null)[] | null;
-  pspReference: string | null;
-  grapqhlPaymentId: string | null;
-  paymentGateway: string | null;
 }

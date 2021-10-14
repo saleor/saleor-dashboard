@@ -222,6 +222,9 @@ export interface OrderShippingMethodUpdate_orderUpdateShipping_order_events {
   discount: OrderShippingMethodUpdate_orderUpdateShipping_order_events_discount | null;
   relatedOrder: OrderShippingMethodUpdate_orderUpdateShipping_order_events_relatedOrder | null;
   message: string | null;
+  pspReference: string | null;
+  grapqhlPaymentId: string | null;
+  paymentGateway: string | null;
   quantity: number | null;
   transactionReference: string | null;
   type: OrderEventsEnum | null;
