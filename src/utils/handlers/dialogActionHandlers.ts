@@ -7,11 +7,6 @@ type CreateCloseModal<
   TParams extends Dialog<TAction>
 > = [(action: TAction, newParams?: TParams) => void, () => void];
 
-export interface DialogActionHandlersProps {
-  closeDialog: () => void;
-  open: boolean;
-}
-
 function createDialogActionHandlers<
   TAction extends string,
   TParams extends Dialog<TAction> & BulkAction & SingleAction
