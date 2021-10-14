@@ -7,16 +7,12 @@ import { BUTTON_SELECTORS } from "../../elements/shared/button-selectors";
 import { urlList, voucherDetailsUrl } from "../../fixtures/urlList";
 import { ONE_PERMISSION_USERS } from "../../fixtures/users";
 import { createChannel } from "../../support/api/requests/Channels";
-import { getCheckout } from "../../support/api/requests/Checkout";
 import * as channelsUtils from "../../support/api/utils/channelsUtils";
 import {
   createVoucherInChannel,
   deleteVouchersStartsWith
 } from "../../support/api/utils/discounts/vouchersUtils";
-import {
-  addPayment,
-  createCheckoutWithVoucher
-} from "../../support/api/utils/ordersUtils";
+import { createCheckoutWithVoucher } from "../../support/api/utils/ordersUtils";
 import * as productsUtils from "../../support/api/utils/products/productsUtils";
 import {
   createShipping,
