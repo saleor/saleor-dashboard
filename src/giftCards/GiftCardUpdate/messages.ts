@@ -1,6 +1,8 @@
 import { GiftCardError } from "@saleor/fragments/types/GiftCardError";
 import { GiftCardErrorCode } from "@saleor/types/globalTypes";
-import { getCommonFormFieldErrorMessage } from "@saleor/utils/errors/common";
+import commonErrorMessages, {
+  getCommonFormFieldErrorMessage
+} from "@saleor/utils/errors/common";
 import { defineMessages, IntlShape } from "react-intl";
 
 export const giftCardUpdateDetailsCardMessages = defineMessages({
@@ -25,6 +27,8 @@ export function getGiftCardErrorMessage(
     switch (error.code) {
       case GiftCardErrorCode.NOT_FOUND:
         return intl.formatMessage(giftCardErrorMessages.notFound);
+      case GiftCardErrorCode.INVALID:
+        return intl.formatMessage(commonErrorMessages.invalid);
     }
   }
 
