@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { OrderFilterInput, OrderSortingInput, PaymentChargeStatusEnum, OrderStatus } from "./../../types/globalTypes";
+import { OrderFilterInput, OrderSortingInput, OrderPaymentStatusEnum, OrderStatus } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL query operation: OrderList
@@ -48,7 +48,7 @@ export interface OrderList_orders_edges_node {
   created: any;
   id: string;
   number: string | null;
-  paymentStatus: PaymentChargeStatusEnum;
+  paymentStatus: OrderPaymentStatusEnum;
   status: OrderStatus;
   total: OrderList_orders_edges_node_total;
   userEmail: string | null;

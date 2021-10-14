@@ -9,8 +9,8 @@ import OrderDetailsPage, {
 import { order as orderFixture } from "../../../orders/fixtures";
 import {
   FulfillmentStatus,
-  OrderStatus,
-  PaymentChargeStatusEnum
+  OrderPaymentStatusEnum,
+  OrderStatus
 } from "../../../types/globalTypes";
 import Decorator from "../../Decorator";
 
@@ -51,7 +51,7 @@ storiesOf("Views / Orders / Order details", module)
       {...props}
       order={{
         ...props.order,
-        paymentStatus: PaymentChargeStatusEnum.NOT_CHARGED
+        paymentStatus: OrderPaymentStatusEnum.NOT_CHARGED
       }}
     />
   ))
@@ -60,7 +60,7 @@ storiesOf("Views / Orders / Order details", module)
       {...props}
       order={{
         ...props.order,
-        paymentStatus: PaymentChargeStatusEnum.NOT_CHARGED
+        paymentStatus: OrderPaymentStatusEnum.NOT_CHARGED
       }}
     />
   ))
@@ -69,7 +69,7 @@ storiesOf("Views / Orders / Order details", module)
       {...props}
       order={{
         ...props.order,
-        paymentStatus: PaymentChargeStatusEnum.FULLY_CHARGED
+        paymentStatus: OrderPaymentStatusEnum.FULLY_CHARGED
       }}
     />
   ))
@@ -87,7 +87,7 @@ storiesOf("Views / Orders / Order details", module)
       {...props}
       order={{
         ...props.order,
-        paymentStatus: PaymentChargeStatusEnum.FULLY_REFUNDED
+        paymentStatus: OrderPaymentStatusEnum.FULLY_REFUNDED
       }}
     />
   ))
@@ -96,7 +96,7 @@ storiesOf("Views / Orders / Order details", module)
       {...props}
       order={{
         ...props.order,
-        paymentStatus: PaymentChargeStatusEnum.NOT_CHARGED
+        paymentStatus: OrderPaymentStatusEnum.NOT_CHARGED
       }}
     />
   ))

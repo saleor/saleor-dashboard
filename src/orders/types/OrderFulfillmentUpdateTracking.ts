@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { FulfillmentUpdateTrackingInput, OrderErrorCode, AddressTypeEnum, OrderDiscountType, DiscountValueTypeEnum, OrderEventsEmailsEnum, OrderEventsEnum, FulfillmentStatus, PaymentChargeStatusEnum, OrderStatus, OrderAction, JobStatusEnum } from "./../../types/globalTypes";
+import { FulfillmentUpdateTrackingInput, OrderErrorCode, AddressTypeEnum, OrderDiscountType, DiscountValueTypeEnum, OrderEventsEmailsEnum, OrderEventsEnum, FulfillmentStatus, OrderPaymentStatusEnum, OrderStatus, OrderAction, JobStatusEnum } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: OrderFulfillmentUpdateTracking
@@ -498,7 +498,7 @@ export interface OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_o
   fulfillments: (OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_order_fulfillments | null)[];
   lines: (OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_order_lines | null)[];
   number: string | null;
-  paymentStatus: PaymentChargeStatusEnum;
+  paymentStatus: OrderPaymentStatusEnum;
   shippingAddress: OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_order_shippingAddress | null;
   shippingMethod: OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_order_shippingMethod | null;
   shippingMethodName: string | null;
