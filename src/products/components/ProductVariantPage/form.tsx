@@ -56,7 +56,7 @@ export interface ProductVariantUpdateFormData extends MetadataFormData {
   trackInventory: boolean;
   weight: string;
   isPreorder: boolean;
-  globalThreshold: number;
+  globalThreshold: string;
   globalSoldUnits: number;
   hasPreorderEndDate: boolean;
   preorderEndDateTime?: string;
@@ -161,7 +161,7 @@ function useProductVariantUpdateForm(
     sku: variant?.sku || "",
     trackInventory: variant?.trackInventory,
     isPreorder: !!variant?.preorder || false,
-    globalThreshold: variant?.preorder?.globalThreshold || null,
+    globalThreshold: variant?.preorder?.globalThreshold?.toString() || null,
     globalSoldUnits: variant?.preorder?.globalSoldUnits || 0,
     hasPreorderEndDate: !!variant?.preorder?.endDate,
     preorderEndDateTime: variant?.preorder?.endDate,

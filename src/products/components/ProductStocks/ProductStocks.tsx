@@ -57,7 +57,7 @@ export interface ProductStockFormData {
   sku: string;
   trackInventory: boolean;
   isPreorder: boolean;
-  globalThreshold: number;
+  globalThreshold: string;
   globalSoldUnits: number;
   hasPreorderEndDate: boolean;
   preorderEndDateTime?: string;
@@ -201,7 +201,7 @@ const ProductStocks: React.FC<ProductStocksProps> = ({
   const intl = useIntl();
   const anchor = React.useRef<HTMLDivElement>();
   const [isExpanded, setExpansionState] = React.useState(false);
-  const unitsLeft = data.globalThreshold - data.globalSoldUnits;
+  const unitsLeft = parseInt(data.globalThreshold, 10) - data.globalSoldUnits;
 
   const warehousesToAssign =
     warehouses?.filter(

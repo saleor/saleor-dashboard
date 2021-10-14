@@ -6534,6 +6534,10 @@
     "context": "button",
     "string": "Create variants"
   },
+  "src_dot_products_dot_components_dot_ProductVariants_dot_1819927358": {
+    "context": "product variant preorder threshold",
+    "string": "In preorder"
+  },
   "src_dot_products_dot_components_dot_ProductVariants_dot_2153006789": {
     "context": "section header",
     "string": "Variants"
@@ -6564,6 +6568,10 @@
   "src_dot_products_dot_components_dot_ProductVariants_dot_4017567521": {
     "context": "product variant inventory",
     "string": "Not stocked"
+  },
+  "src_dot_products_dot_components_dot_ProductVariants_dot_4232843317": {
+    "context": "product variant preorder threshold",
+    "string": "{globalThreshold} Global threshold"
   },
   "src_dot_products_dot_components_dot_ProductVariants_dot_693960049": {
     "string": "SKU"
