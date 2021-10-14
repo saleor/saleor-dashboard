@@ -2,7 +2,7 @@ import SingleAutocompleteSelectField, {
   SingleAutocompleteSelectFieldProps
 } from "@saleor/components/SingleAutocompleteSelectField";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@saleor/config";
-import { GiftCardError } from "@saleor/fragments/types/GiftCardError";
+import { GiftCardBulkCreateFormError } from "@saleor/giftCards/GiftCardBulkCreateDialog/types";
 import { getGiftCardErrorMessage } from "@saleor/giftCards/GiftCardUpdate/messages";
 import { FormChange } from "@saleor/hooks/useForm";
 import { commonMessages } from "@saleor/intl";
@@ -22,14 +22,16 @@ interface GiftCardTagInputProps
   extends Pick<SingleAutocompleteSelectFieldProps, "name"> {
   change: FormChange;
   value: string;
-  error: GiftCardError;
+  error: GiftCardBulkCreateFormError;
+  optional?: boolean;
 }
 
 const GiftCardTagInput: React.FC<GiftCardTagInputProps> = ({
   change,
   name,
   value,
-  error
+  error,
+  optional = true
 }) => {
   const intl = useIntl();
 
@@ -42,15 +44,19 @@ const GiftCardTagInput: React.FC<GiftCardTagInputProps> = ({
     "tag"
   );
 
+  const label = optional
+    ? `${intl.formatMessage(messages.placeholder)} *${intl.formatMessage(
+        commonMessages.optionalField
+      )}`
+    : intl.formatMessage(messages.placeholder);
+
   return (
     <SingleAutocompleteSelectField
       error={!!error}
       helperText={getGiftCardErrorMessage(error, intl)}
       allowCustomValues
       name={name || "giftCardTag"}
-      label={`${intl.formatMessage(messages.placeholder)} *${intl.formatMessage(
-        commonMessages.optionalField
-      )}`}
+      label={label}
       data-test-id="gift-card-tag-select-field"
       value={value}
       displayValue={value}

@@ -2249,6 +2249,14 @@ export interface FulfillmentUpdateTrackingInput {
   notifyCustomer?: boolean | null;
 }
 
+export interface GiftCardBulkCreateInput {
+  count: number;
+  balance: PriceInput;
+  tag: string;
+  expiryDate?: any | null;
+  isActive: boolean;
+}
+
 export interface GiftCardCreateInput {
   tag?: string | null;
   expiryDate?: any | null;

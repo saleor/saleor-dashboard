@@ -1,17 +1,17 @@
 import { GIFT_CARD_LIST_QUERY } from "@saleor/giftCards/GiftCardsList/types";
 import useGiftCardDetails from "@saleor/giftCards/GiftCardUpdate/providers/GiftCardDetailsProvider/hooks/useGiftCardDetails";
 import { GiftCardUpdateDialogsConsumerProps } from "@saleor/giftCards/GiftCardUpdate/providers/GiftCardUpdateDialogsProvider";
-import { DialogActionHandlersProps } from "@saleor/utils/handlers/dialogActionHandlers";
+import { DialogProps } from "@saleor/types";
 import React from "react";
 
 import GiftCardDeleteDialogContent from "./GiftCardDeleteDialogContent";
 import useGiftCardSingleDelete from "./useGiftCardSingleDelete";
 
-type GiftCardUpdatePageDeleteDialogProps = DialogActionHandlersProps &
+type GiftCardUpdatePageDeleteDialogProps = DialogProps &
   Pick<GiftCardUpdateDialogsConsumerProps, "navigateBack">;
 
 const GiftCardUpdatePageDeleteDialog: React.FC<GiftCardUpdatePageDeleteDialogProps> = ({
-  closeDialog,
+  onClose,
   open,
   navigateBack
 }) => {
@@ -19,7 +19,7 @@ const GiftCardUpdatePageDeleteDialog: React.FC<GiftCardUpdatePageDeleteDialogPro
 
   const { onDeleteGiftCard, deleteGiftCardOpts } = useGiftCardSingleDelete({
     id: giftCard?.id,
-    onClose: closeDialog,
+    onClose,
     onSuccess: navigateBack,
     refetchQueries: [GIFT_CARD_LIST_QUERY]
   });
@@ -29,7 +29,7 @@ const GiftCardUpdatePageDeleteDialog: React.FC<GiftCardUpdatePageDeleteDialogPro
       singleDeletion
       giftCard={giftCard}
       open={open}
-      onClose={closeDialog}
+      onClose={onClose}
       onConfirm={onDeleteGiftCard}
       confirmButtonState={deleteGiftCardOpts?.status}
     />

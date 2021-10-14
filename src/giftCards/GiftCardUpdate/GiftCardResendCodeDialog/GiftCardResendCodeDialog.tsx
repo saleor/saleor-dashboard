@@ -9,8 +9,8 @@ import SingleAutocompleteSelectField from "@saleor/components/SingleAutocomplete
 import useForm from "@saleor/hooks/useForm";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { getBySlug } from "@saleor/products/components/ProductVariantCreatorPage/utils";
+import { DialogProps } from "@saleor/types";
 import commonErrorMessages from "@saleor/utils/errors/common";
-import { DialogActionHandlersProps } from "@saleor/utils/handlers/dialogActionHandlers";
 import { mapSlugNodeToChoice } from "@saleor/utils/maps";
 import React, { useEffect, useState } from "react";
 import { useIntl } from "react-intl";
@@ -29,10 +29,7 @@ export interface GiftCardResendCodeFormData {
   channelSlug: string;
 }
 
-const GiftCardResendCodeDialog: React.FC<DialogActionHandlersProps> = ({
-  open,
-  closeDialog
-}) => {
+const GiftCardResendCodeDialog: React.FC<DialogProps> = ({ open, onClose }) => {
   const intl = useIntl();
   const notify = useNotifier();
   const classes = useStyles();
@@ -99,7 +96,7 @@ const GiftCardResendCodeDialog: React.FC<DialogActionHandlersProps> = ({
     notify(notifierData);
 
     if (!errors.length) {
-      closeDialog();
+      onClose();
       reset();
     }
   };
@@ -128,7 +125,7 @@ const GiftCardResendCodeDialog: React.FC<DialogActionHandlersProps> = ({
       open={open}
       onConfirm={submit}
       confirmButtonLabel={intl.formatMessage(messages.submitButtonLabel)}
-      onClose={closeDialog}
+      onClose={onClose}
       title={intl.formatMessage(messages.title)}
       confirmButtonState={status}
       disabled={loading}
