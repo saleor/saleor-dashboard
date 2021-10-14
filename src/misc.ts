@@ -70,23 +70,23 @@ export const removeDoubleSlashes = (url: string) =>
   url.replace(/([^:]\/)\/+/g, "$1");
 
 const paymentStatusMessages = defineMessages({
-  paid: {
+  orderPaid: {
     defaultMessage: "Fully paid",
     description: "order payment status"
   },
-  partiallyPaid: {
+  orderPartiallyPaid: {
     defaultMessage: "Partially paid",
     description: "order payment status"
   },
-  partiallyRefunded: {
+  orderPartiallyRefunded: {
     defaultMessage: "Partially refunded",
     description: "order payment status"
   },
-  refunded: {
+  orderRefunded: {
     defaultMessage: "Fully refunded",
     description: "order payment status"
   },
-  unpaid: {
+  orderUnpaid: {
     defaultMessage: "Unpaid",
     description: "order payment status"
   }
@@ -125,7 +125,7 @@ const chargeStatusMessages = defineMessages({
     defaultMessage: "Refused",
     description: "payment charge status"
   },
-  cancelled: {
+  voided: {
     defaultMessage: "Voided",
     description: "payment charge status"
   }
@@ -138,27 +138,29 @@ export const transformOrderPaymentStatus = (
   switch (status) {
     case OrderPaymentStatusEnum.PARTIALLY_CHARGED:
       return {
-        localized: intl.formatMessage(paymentStatusMessages.partiallyPaid),
+        localized: intl.formatMessage(paymentStatusMessages.orderPartiallyPaid),
         status: StatusType.ERROR
       };
     case OrderPaymentStatusEnum.FULLY_CHARGED:
       return {
-        localized: intl.formatMessage(paymentStatusMessages.paid),
+        localized: intl.formatMessage(paymentStatusMessages.orderPaid),
         status: StatusType.SUCCESS
       };
     case OrderPaymentStatusEnum.PARTIALLY_REFUNDED:
       return {
-        localized: intl.formatMessage(paymentStatusMessages.partiallyRefunded),
+        localized: intl.formatMessage(
+          paymentStatusMessages.orderPartiallyRefunded
+        ),
         status: StatusType.ERROR
       };
     case OrderPaymentStatusEnum.FULLY_REFUNDED:
       return {
-        localized: intl.formatMessage(paymentStatusMessages.refunded),
+        localized: intl.formatMessage(paymentStatusMessages.orderRefunded),
         status: StatusType.SUCCESS
       };
     default:
       return {
-        localized: intl.formatMessage(paymentStatusMessages.unpaid),
+        localized: intl.formatMessage(paymentStatusMessages.orderUnpaid),
         status: StatusType.ERROR
       };
   }
@@ -211,7 +213,7 @@ export const transformChargeStatus = (
       };
     case PaymentChargeStatusEnum.CANCELLED:
       return {
-        localized: intl.formatMessage(chargeStatusMessages.refused),
+        localized: intl.formatMessage(chargeStatusMessages.voided),
         status: StatusType.NEUTRAL
       };
     default:

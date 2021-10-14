@@ -59,9 +59,17 @@
     "context": "amount title",
     "string": "Refunded amount"
   },
+  "authorize amount title": {
+    "context": "authorize amount title",
+    "string": "Authorized amount"
+  },
   "by preposition": {
     "context": "by preposition",
     "string": "by"
+  },
+  "capture amount title": {
+    "context": "capture amount title",
+    "string": "Captured amount"
   },
   "channel hidden": {
     "context": "channel publication status",
@@ -170,6 +178,38 @@
     "context": "order line discount updated title",
     "string": "{productName} discount was updated by "
   },
+  "event title payment authorize failed": {
+    "context": "authorize payment fail event title",
+    "string": "Payment authorize failed"
+  },
+  "event title payment authorized": {
+    "context": "authorized payment event title",
+    "string": "Payment authorized"
+  },
+  "event title payment capture failed": {
+    "context": "capture payment fail event title",
+    "string": "Payment capture failed"
+  },
+  "event title payment captured": {
+    "context": "captured payment event title",
+    "string": "Payment captured"
+  },
+  "event title payment refund failed": {
+    "context": "refund payment fail event title",
+    "string": "Refund failed"
+  },
+  "event title payment refunded": {
+    "context": "refund payment event title",
+    "string": "Payment refunded"
+  },
+  "event title payment void failed": {
+    "context": "void payment fail event title",
+    "string": "Payment void failed"
+  },
+  "event title payment voided": {
+    "context": "voided payment event title",
+    "string": "Payment voided"
+  },
   "event title refunded": {
     "context": "refunded event title",
     "string": "Products were refunded by "
@@ -181,6 +221,10 @@
   "event title returned": {
     "context": "returned event title",
     "string": "Products were returned by"
+  },
+  "fail reason title": {
+    "context": "fail reason title",
+    "string": "Fail reason"
   },
   "fixed amount subtitle id": {
     "context": "Fixed amount subtitle",
@@ -480,9 +524,17 @@
     "context": "no warehouses info",
     "string": "There are no warehouses set up for your store. To add stock quantity to the product please <a>configure a warehouse</a>"
   },
+  "psp reference title": {
+    "context": "psp reference title",
+    "string": "PSP Reference"
+  },
   "published channel": {
     "context": "product label",
     "string": "Published"
+  },
+  "refund amount title": {
+    "context": "refund amount title",
+    "string": "Refunded amount"
   },
   "saleDetailsPageCategoriesQuantity": {
     "context": "number of categories",
@@ -1286,6 +1338,10 @@
   },
   "src_dot_auth_dot_views_dot_2388238158": {
     "string": "Provided email address does not exist in our database."
+  },
+  "src_dot_authorized": {
+    "context": "payment charge status",
+    "string": "Authorized"
   },
   "src_dot_availability": {
     "string": "Availability"
@@ -3401,6 +3457,14 @@
     "context": "order status",
     "string": "Fulfilled"
   },
+  "src_dot_fullyCharged": {
+    "context": "payment charge status",
+    "string": "Captured"
+  },
+  "src_dot_fullyRefunded": {
+    "context": "payment charge status",
+    "string": "Fully refunded"
+  },
   "src_dot_generalInformations": {
     "string": "General Information"
   },
@@ -3456,6 +3520,10 @@
   "src_dot_no": {
     "string": "No"
   },
+  "src_dot_notCharged": {
+    "context": "payment charge status",
+    "string": "Not charged"
+  },
   "src_dot_ok": {
     "context": "button",
     "string": "OK"
@@ -3463,6 +3531,26 @@
   "src_dot_optionalField": {
     "context": "field is optional",
     "string": "Optional"
+  },
+  "src_dot_orderPaid": {
+    "context": "order payment status",
+    "string": "Fully paid"
+  },
+  "src_dot_orderPartiallyPaid": {
+    "context": "order payment status",
+    "string": "Partially paid"
+  },
+  "src_dot_orderPartiallyRefunded": {
+    "context": "order payment status",
+    "string": "Partially refunded"
+  },
+  "src_dot_orderRefunded": {
+    "context": "order payment status",
+    "string": "Fully refunded"
+  },
+  "src_dot_orderUnpaid": {
+    "context": "order payment status",
+    "string": "Unpaid"
   },
   "src_dot_orders": {
     "context": "orders section name",
@@ -4917,25 +5005,25 @@
     "context": "dialog header",
     "string": "Delete Pages"
   },
-  "src_dot_paid": {
-    "context": "payment status",
-    "string": "Fully paid"
+  "src_dot_partiallyCharged": {
+    "context": "payment charge status",
+    "string": "Partially captured"
   },
   "src_dot_partiallyFulfilled": {
     "context": "order status",
     "string": "Partially fulfilled"
   },
-  "src_dot_partiallyPaid": {
-    "context": "payment status",
-    "string": "Partially paid"
-  },
   "src_dot_partiallyRefunded": {
-    "context": "payment status",
+    "context": "payment charge status",
     "string": "Partially refunded"
   },
   "src_dot_partiallyReturned": {
     "context": "order status",
     "string": "Partially returned"
+  },
+  "src_dot_pending": {
+    "context": "payment charge status",
+    "string": "Pending"
   },
   "src_dot_permissionGroups": {
     "context": "permission groups section name",
@@ -6085,9 +6173,9 @@
     "context": "order status",
     "string": "Ready to fulfill"
   },
-  "src_dot_refunded": {
-    "context": "payment status",
-    "string": "Fully refunded"
+  "src_dot_refused": {
+    "context": "payment charge status",
+    "string": "Refused"
   },
   "src_dot_remove": {
     "context": "button",
@@ -7014,10 +7102,6 @@
     "context": "order status",
     "string": "Unfulfilled"
   },
-  "src_dot_unpaid": {
-    "context": "payment status",
-    "string": "Unpaid"
-  },
   "src_dot_uploadImage": {
     "context": "button",
     "string": "Upload image"
@@ -7221,6 +7305,10 @@
   "src_dot_utils_dot_errors_dot_variantUnique": {
     "context": "product attribute error",
     "string": "This variant already exists"
+  },
+  "src_dot_voided": {
+    "context": "payment charge status",
+    "string": "Voided"
   },
   "src_dot_vouchers": {
     "context": "vouchers section name",
@@ -7567,6 +7655,10 @@
   "unavailable for purchase": {
     "context": "product unavailability",
     "string": "Unavailable for purchase"
+  },
+  "void amount title": {
+    "context": "void amount title",
+    "string": "Voided amount"
   },
   "voucherDetailsUnassignCategory": {
     "context": "unassign category from voucher, button",
