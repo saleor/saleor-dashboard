@@ -450,7 +450,7 @@ export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_o
   id: string;
   total: OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_payments_total | null;
   capturedAmount: OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_payments_capturedAmount | null;
-  paymentMethodType: string;
+  gatewayName: string;
   pspReference: string | null;
   chargeStatus: PaymentChargeStatusEnum;
   actions: (OrderAction | null)[];

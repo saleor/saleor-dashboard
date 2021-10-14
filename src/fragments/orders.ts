@@ -184,7 +184,7 @@ export const paymentFragment = gql`
       amount
       currency
     }
-    paymentMethodType
+    gatewayName
     pspReference
     chargeStatus
     actions

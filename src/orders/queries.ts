@@ -59,8 +59,8 @@ export const orderListQuery = gql`
           number
           paymentStatus
           payments {
-            paymentMethodType
             chargeStatus
+            gatewayName
           }
           status
           total {

@@ -33,8 +33,8 @@ export interface OrderList_orders_edges_node_billingAddress {
 
 export interface OrderList_orders_edges_node_payments {
   __typename: "Payment";
-  paymentMethodType: string;
   chargeStatus: PaymentChargeStatusEnum;
+  gatewayName: string;
 }
 
 export interface OrderList_orders_edges_node_total_gross {

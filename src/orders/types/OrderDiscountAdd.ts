@@ -355,7 +355,7 @@ export interface OrderDiscountAdd_orderDiscountAdd_order_payments {
   id: string;
   total: OrderDiscountAdd_orderDiscountAdd_order_payments_total | null;
   capturedAmount: OrderDiscountAdd_orderDiscountAdd_order_payments_capturedAmount | null;
-  paymentMethodType: string;
+  gatewayName: string;
   pspReference: string | null;
   chargeStatus: PaymentChargeStatusEnum;
   actions: (OrderAction | null)[];

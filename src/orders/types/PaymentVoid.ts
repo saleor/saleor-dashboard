@@ -46,7 +46,7 @@ export interface PaymentVoid_paymentVoid_payment {
   id: string;
   total: PaymentVoid_paymentVoid_payment_total | null;
   capturedAmount: PaymentVoid_paymentVoid_payment_capturedAmount | null;
-  paymentMethodType: string;
+  gatewayName: string;
   pspReference: string | null;
   chargeStatus: PaymentChargeStatusEnum;
   actions: (OrderAction | null)[];

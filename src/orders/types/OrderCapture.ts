@@ -355,7 +355,7 @@ export interface OrderCapture_orderCapture_order_payments {
   id: string;
   total: OrderCapture_orderCapture_order_payments_total | null;
   capturedAmount: OrderCapture_orderCapture_order_payments_capturedAmount | null;
-  paymentMethodType: string;
+  gatewayName: string;
   pspReference: string | null;
   chargeStatus: PaymentChargeStatusEnum;
   actions: (OrderAction | null)[];

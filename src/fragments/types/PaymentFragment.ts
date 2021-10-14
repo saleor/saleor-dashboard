@@ -26,7 +26,7 @@ export interface PaymentFragment {
   id: string;
   total: PaymentFragment_total | null;
   capturedAmount: PaymentFragment_capturedAmount | null;
-  paymentMethodType: string;
+  gatewayName: string;
   pspReference: string | null;
   chargeStatus: PaymentChargeStatusEnum;
   actions: (OrderAction | null)[];

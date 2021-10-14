@@ -122,7 +122,7 @@ const OrderPaymentStatus: React.FC<OrderPaymentStatusProps> = ({
                 {paymentsList.map((payment, key) => (
                   <TableRow key={key}>
                     <TableCell className={classes.tableCell}>
-                      {payment.paymentMethodType}
+                      {payment.gatewayName}
                     </TableCell>
                     <TableCell className={classes.tableCell}>
                       <div className={classes.statusCell}>

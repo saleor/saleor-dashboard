@@ -417,7 +417,7 @@ export interface OrderShippingMethodUpdate_orderUpdateShipping_order_payments {
   id: string;
   total: OrderShippingMethodUpdate_orderUpdateShipping_order_payments_total | null;
   capturedAmount: OrderShippingMethodUpdate_orderUpdateShipping_order_payments_capturedAmount | null;
-  paymentMethodType: string;
+  gatewayName: string;
   pspReference: string | null;
   chargeStatus: PaymentChargeStatusEnum;
   actions: (OrderAction | null)[];

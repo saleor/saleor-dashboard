@@ -357,7 +357,7 @@ export interface FulfillOrder_orderFulfill_order_payments {
   id: string;
   total: FulfillOrder_orderFulfill_order_payments_total | null;
   capturedAmount: FulfillOrder_orderFulfill_order_payments_capturedAmount | null;
-  paymentMethodType: string;
+  gatewayName: string;
   pspReference: string | null;
   chargeStatus: PaymentChargeStatusEnum;
   actions: (OrderAction | null)[];

@@ -355,7 +355,7 @@ export interface OrderFulfillmentCancel_orderFulfillmentCancel_order_payments {
   id: string;
   total: OrderFulfillmentCancel_orderFulfillmentCancel_order_payments_total | null;
   capturedAmount: OrderFulfillmentCancel_orderFulfillmentCancel_order_payments_capturedAmount | null;
-  paymentMethodType: string;
+  gatewayName: string;
   pspReference: string | null;
   chargeStatus: PaymentChargeStatusEnum;
   actions: (OrderAction | null)[];

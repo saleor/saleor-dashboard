@@ -355,7 +355,7 @@ export interface OrderLineDelete_orderLineDelete_order_payments {
   id: string;
   total: OrderLineDelete_orderLineDelete_order_payments_total | null;
   capturedAmount: OrderLineDelete_orderLineDelete_order_payments_capturedAmount | null;
-  paymentMethodType: string;
+  gatewayName: string;
   pspReference: string | null;
   chargeStatus: PaymentChargeStatusEnum;
   actions: (OrderAction | null)[];

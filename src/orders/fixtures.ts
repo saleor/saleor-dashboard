@@ -79,7 +79,7 @@ export const orders: OrderList_orders_edges_node[] = [
     payments: [
       {
         __typename: "Payment",
-        paymentMethodType: "card",
+        gatewayName: "Stripe",
         chargeStatus: PaymentChargeStatusEnum.FULLY_CHARGED
       }
     ],
@@ -122,7 +122,7 @@ export const orders: OrderList_orders_edges_node[] = [
     payments: [
       {
         __typename: "Payment",
-        paymentMethodType: "card",
+        gatewayName: "Stripe",
         chargeStatus: PaymentChargeStatusEnum.FULLY_CHARGED
       }
     ],
@@ -147,7 +147,7 @@ export const orders: OrderList_orders_edges_node[] = [
     payments: [
       {
         __typename: "Payment",
-        paymentMethodType: "card",
+        gatewayName: "Stripe",
         chargeStatus: PaymentChargeStatusEnum.FULLY_REFUNDED
       }
     ],
@@ -190,7 +190,7 @@ export const orders: OrderList_orders_edges_node[] = [
     payments: [
       {
         __typename: "Payment",
-        paymentMethodType: "card",
+        gatewayName: "Stripe",
         chargeStatus: PaymentChargeStatusEnum.FULLY_REFUNDED
       }
     ],
@@ -233,7 +233,7 @@ export const orders: OrderList_orders_edges_node[] = [
     payments: [
       {
         __typename: "Payment",
-        paymentMethodType: "card",
+        gatewayName: "Stripe",
         chargeStatus: PaymentChargeStatusEnum.NOT_CHARGED
       }
     ],
@@ -276,7 +276,7 @@ export const orders: OrderList_orders_edges_node[] = [
     payments: [
       {
         __typename: "Payment",
-        paymentMethodType: "card",
+        gatewayName: "Stripe",
         chargeStatus: PaymentChargeStatusEnum.NOT_CHARGED
       }
     ],
@@ -319,7 +319,7 @@ export const orders: OrderList_orders_edges_node[] = [
     payments: [
       {
         __typename: "Payment",
-        paymentMethodType: "card",
+        gatewayName: "Stripe",
         chargeStatus: PaymentChargeStatusEnum.NOT_CHARGED
       }
     ],
@@ -362,7 +362,7 @@ export const orders: OrderList_orders_edges_node[] = [
     payments: [
       {
         __typename: "Payment",
-        paymentMethodType: "card",
+        gatewayName: "Stripe",
         chargeStatus: PaymentChargeStatusEnum.NOT_CHARGED
       }
     ],
@@ -405,7 +405,7 @@ export const orders: OrderList_orders_edges_node[] = [
     payments: [
       {
         __typename: "Payment",
-        paymentMethodType: "card",
+        gatewayName: "Stripe",
         chargeStatus: PaymentChargeStatusEnum.NOT_CHARGED
       }
     ],
@@ -448,7 +448,7 @@ export const orders: OrderList_orders_edges_node[] = [
     payments: [
       {
         __typename: "Payment",
-        paymentMethodType: "card",
+        gatewayName: "Stripe",
         chargeStatus: PaymentChargeStatusEnum.FULLY_CHARGED
       }
     ],
@@ -491,7 +491,7 @@ export const orders: OrderList_orders_edges_node[] = [
     payments: [
       {
         __typename: "Payment",
-        paymentMethodType: "card",
+        gatewayName: "Stripe",
         chargeStatus: PaymentChargeStatusEnum.NOT_CHARGED
       }
     ],
@@ -534,7 +534,7 @@ export const orders: OrderList_orders_edges_node[] = [
     payments: [
       {
         __typename: "Payment",
-        paymentMethodType: "card",
+        gatewayName: "Stripe",
         chargeStatus: PaymentChargeStatusEnum.NOT_CHARGED
       }
     ],
@@ -577,7 +577,7 @@ export const orders: OrderList_orders_edges_node[] = [
     payments: [
       {
         __typename: "Payment",
-        paymentMethodType: "card",
+        gatewayName: "Stripe",
         chargeStatus: PaymentChargeStatusEnum.NOT_CHARGED
       }
     ],
@@ -620,7 +620,7 @@ export const orders: OrderList_orders_edges_node[] = [
     payments: [
       {
         __typename: "Payment",
-        paymentMethodType: "card",
+        gatewayName: "Stripe",
         chargeStatus: PaymentChargeStatusEnum.FULLY_CHARGED
       }
     ],
@@ -663,7 +663,7 @@ export const orders: OrderList_orders_edges_node[] = [
     payments: [
       {
         __typename: "Payment",
-        paymentMethodType: "card",
+        gatewayName: "Stripe",
         chargeStatus: PaymentChargeStatusEnum.FULLY_REFUNDED
       }
     ],
@@ -706,7 +706,7 @@ export const orders: OrderList_orders_edges_node[] = [
     payments: [
       {
         __typename: "Payment",
-        paymentMethodType: "card",
+        gatewayName: "Stripe",
         chargeStatus: PaymentChargeStatusEnum.NOT_CHARGED
       }
     ],
@@ -749,7 +749,7 @@ export const orders: OrderList_orders_edges_node[] = [
     payments: [
       {
         __typename: "Payment",
-        paymentMethodType: "card",
+        gatewayName: "Stripe",
         chargeStatus: PaymentChargeStatusEnum.NOT_CHARGED
       }
     ],
@@ -792,7 +792,7 @@ export const orders: OrderList_orders_edges_node[] = [
     payments: [
       {
         __typename: "Payment",
-        paymentMethodType: "card",
+        gatewayName: "Stripe",
         chargeStatus: PaymentChargeStatusEnum.NOT_CHARGED
       }
     ],
@@ -835,7 +835,7 @@ export const orders: OrderList_orders_edges_node[] = [
     payments: [
       {
         __typename: "Payment",
-        paymentMethodType: "card",
+        gatewayName: "Stripe",
         chargeStatus: PaymentChargeStatusEnum.FULLY_REFUNDED
       }
     ],
@@ -878,7 +878,7 @@ export const orders: OrderList_orders_edges_node[] = [
     payments: [
       {
         __typename: "Payment",
-        paymentMethodType: "card",
+        gatewayName: "Stripe",
         chargeStatus: PaymentChargeStatusEnum.FULLY_CHARGED
       }
     ],
@@ -1479,7 +1479,7 @@ export const order = (placeholder: string): OrderDetails_order => ({
         amount: 0,
         currency: "USD"
       },
-      paymentMethodType: "card",
+      gatewayName: "Stripe",
       pspReference: "evt_1J7IKBH1Vac4G4dbPB6uERAp",
       chargeStatus: PaymentChargeStatusEnum.NOT_CHARGED
     }

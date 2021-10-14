@@ -355,7 +355,7 @@ export interface OrderDraftCancel_draftOrderDelete_order_payments {
   id: string;
   total: OrderDraftCancel_draftOrderDelete_order_payments_total | null;
   capturedAmount: OrderDraftCancel_draftOrderDelete_order_payments_capturedAmount | null;
-  paymentMethodType: string;
+  gatewayName: string;
   pspReference: string | null;
   chargeStatus: PaymentChargeStatusEnum;
   actions: (OrderAction | null)[];

@@ -4234,6 +4234,10 @@
     "context": "capture payment, button",
     "string": "Capture"
   },
+  "src_dot_orders_dot_components_dot_OrderPaymentDetails_dot_440215216": {
+    "context": "payment header with gateway name",
+    "string": "{gatewayName} Payment"
+  },
   "src_dot_orders_dot_components_dot_OrderPaymentDialog_dot_1466130374": {
     "context": "dialog header",
     "string": "Capture Payment"

@@ -72,7 +72,17 @@ const OrderPaymentDetails: React.FC<OrderPaymentDetailsProps> = props => {
           <tbody>
             <tr>
               <td>
-                <b>{payment.paymentMethodType}</b>
+                <b>
+                  {intl.formatMessage(
+                    {
+                      defaultMessage: "{gatewayName} Payment",
+                      description: "payment header with gateway name"
+                    },
+                    {
+                      gatewayName: payment.gatewayName
+                    }
+                  )}
+                </b>
                 <IconButton
                   data-test="expand"
                   onClick={() => setExpanded(!expanded)}
