@@ -65,13 +65,7 @@ export const PageTypeList: React.FC<PageTypeListProps> = ({ params }) => {
   const intl = useIntl();
   const { settings } = useListSettings(ListViews.PAGES_LIST);
 
-  usePaginationReset(
-    pageTypeListUrl({
-      ...params,
-      ...DEFAULT_INITIAL_PAGINATION_DATA
-    }),
-    settings.rowNumber
-  );
+  usePaginationReset(pageTypeListUrl, params, settings.rowNumber);
 
   const paginationState = createPaginationState(settings.rowNumber, params);
   const queryVariables = React.useMemo(

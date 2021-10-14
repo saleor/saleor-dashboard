@@ -51,13 +51,7 @@ export const PluginsList: React.FC<PluginsListProps> = ({ params }) => {
     ListViews.PLUGINS_LIST
   );
 
-  usePaginationReset(
-    pluginListUrl({
-      ...params,
-      ...DEFAULT_INITIAL_PAGINATION_DATA
-    }),
-    settings.rowNumber
-  );
+  usePaginationReset(pluginListUrl, params, settings.rowNumber);
 
   const paginationState = createPaginationState(settings.rowNumber, params);
   const queryVariables = React.useMemo(

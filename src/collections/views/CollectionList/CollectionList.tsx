@@ -65,13 +65,7 @@ export const CollectionList: React.FC<CollectionListProps> = ({ params }) => {
     ListViews.COLLECTION_LIST
   );
 
-  usePaginationReset(
-    collectionListUrl({
-      ...params,
-      ...DEFAULT_INITIAL_PAGINATION_DATA
-    }),
-    settings.rowNumber
-  );
+  usePaginationReset(collectionListUrl, params, settings.rowNumber);
 
   const [
     changeFilters,

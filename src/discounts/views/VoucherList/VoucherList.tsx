@@ -65,13 +65,7 @@ export const VoucherList: React.FC<VoucherListProps> = ({ params }) => {
     ListViews.VOUCHER_LIST
   );
 
-  usePaginationReset(
-    voucherListUrl({
-      ...params,
-      ...DEFAULT_INITIAL_PAGINATION_DATA
-    }),
-    settings.rowNumber
-  );
+  usePaginationReset(voucherListUrl, params, settings.rowNumber);
 
   const intl = useIntl();
 

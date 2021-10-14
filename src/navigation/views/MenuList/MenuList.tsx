@@ -48,13 +48,7 @@ const MenuList: React.FC<MenuListProps> = ({ params }) => {
     ListViews.NAVIGATION_LIST
   );
 
-  usePaginationReset(
-    menuListUrl({
-      ...params,
-      ...DEFAULT_INITIAL_PAGINATION_DATA
-    }),
-    settings.rowNumber
-  );
+  usePaginationReset(menuListUrl, params, settings.rowNumber);
 
   const intl = useIntl();
 

@@ -46,13 +46,7 @@ export const PermissionGroupList: React.FC<PermissionGroupListProps> = ({
     ListViews.STAFF_MEMBERS_LIST
   );
 
-  usePaginationReset(
-    permissionGroupListUrl({
-      ...params,
-      ...DEFAULT_INITIAL_PAGINATION_DATA
-    }),
-    settings.rowNumber
-  );
+  usePaginationReset(permissionGroupListUrl, params, settings.rowNumber);
 
   const paginationState = createPaginationState(settings.rowNumber, params);
   const queryVariables = React.useMemo(

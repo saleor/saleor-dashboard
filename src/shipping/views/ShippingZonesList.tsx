@@ -56,13 +56,7 @@ export const ShippingZonesList: React.FC<ShippingZonesListProps> = ({
     ListViews.SHIPPING_METHODS_LIST
   );
 
-  usePaginationReset(
-    shippingZonesListUrl({
-      ...params,
-      ...DEFAULT_INITIAL_PAGINATION_DATA
-    }),
-    settings.rowNumber
-  );
+  usePaginationReset(shippingZonesListUrl, params, settings.rowNumber);
 
   const intl = useIntl();
 

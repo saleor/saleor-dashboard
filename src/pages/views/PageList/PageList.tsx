@@ -49,13 +49,7 @@ export const PageList: React.FC<PageListProps> = ({ params }) => {
     ListViews.PAGES_LIST
   );
 
-  usePaginationReset(
-    pageListUrl({
-      ...params,
-      ...DEFAULT_INITIAL_PAGINATION_DATA
-    }),
-    settings.rowNumber
-  );
+  usePaginationReset(pageListUrl, params, settings.rowNumber);
 
   const intl = useIntl();
 

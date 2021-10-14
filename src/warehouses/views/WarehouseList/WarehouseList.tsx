@@ -59,13 +59,7 @@ const WarehouseList: React.FC<WarehouseListProps> = ({ params }) => {
   );
   const intl = useIntl();
 
-  usePaginationReset(
-    warehouseListUrl({
-      ...params,
-      ...DEFAULT_INITIAL_PAGINATION_DATA
-    }),
-    settings.rowNumber
-  );
+  usePaginationReset(warehouseListUrl, params, settings.rowNumber);
 
   const paginationState = createPaginationState(settings.rowNumber, params);
   const queryVariables = React.useMemo(

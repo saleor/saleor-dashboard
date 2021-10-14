@@ -68,13 +68,7 @@ export const OrderDraftList: React.FC<OrderDraftListProps> = ({ params }) => {
     ListViews.DRAFT_LIST
   );
 
-  usePaginationReset(
-    orderDraftListUrl({
-      ...params,
-      ...DEFAULT_INITIAL_PAGINATION_DATA
-    }),
-    settings.rowNumber
-  );
+  usePaginationReset(orderDraftListUrl, params, settings.rowNumber);
 
   const intl = useIntl();
 

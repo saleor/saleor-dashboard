@@ -63,13 +63,7 @@ export const CustomerList: React.FC<CustomerListProps> = ({ params }) => {
     ListViews.CUSTOMER_LIST
   );
 
-  usePaginationReset(
-    customerListUrl({
-      ...params,
-      ...DEFAULT_INITIAL_PAGINATION_DATA
-    }),
-    settings.rowNumber
-  );
+  usePaginationReset(customerListUrl, params, settings.rowNumber);
 
   const intl = useIntl();
 

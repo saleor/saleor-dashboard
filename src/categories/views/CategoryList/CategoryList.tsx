@@ -59,13 +59,7 @@ export const CategoryList: React.FC<CategoryListProps> = ({ params }) => {
     ListViews.CATEGORY_LIST
   );
 
-  usePaginationReset(
-    categoryListUrl({
-      ...params,
-      ...DEFAULT_INITIAL_PAGINATION_DATA
-    }),
-    settings.rowNumber
-  );
+  usePaginationReset(categoryListUrl, params, settings.rowNumber);
 
   const intl = useIntl();
 

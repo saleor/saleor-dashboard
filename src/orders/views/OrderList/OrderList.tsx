@@ -58,13 +58,7 @@ export const OrderList: React.FC<OrderListProps> = ({ params }) => {
     ListViews.ORDER_LIST
   );
 
-  usePaginationReset(
-    orderListUrl({
-      ...params,
-      ...DEFAULT_INITIAL_PAGINATION_DATA
-    }),
-    settings.rowNumber
-  );
+  usePaginationReset(orderListUrl, params, settings.rowNumber);
 
   const intl = useIntl();
 

@@ -65,13 +65,7 @@ export const SaleList: React.FC<SaleListProps> = ({ params }) => {
     ListViews.SALES_LIST
   );
 
-  usePaginationReset(
-    saleListUrl({
-      ...params,
-      ...DEFAULT_INITIAL_PAGINATION_DATA
-    }),
-    settings.rowNumber
-  );
+  usePaginationReset(saleListUrl, params, settings.rowNumber);
 
   const intl = useIntl();
   const { availableChannels } = useAppChannel(false);
