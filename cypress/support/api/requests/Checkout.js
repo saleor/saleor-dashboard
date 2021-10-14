@@ -47,6 +47,7 @@ export function createCheckout({
       created
       checkout{
         id
+        token
         availableShippingMethods{
           name
         }

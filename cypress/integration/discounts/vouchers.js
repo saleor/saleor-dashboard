@@ -3,12 +3,20 @@
 
 import faker from "faker";
 
-import { urlList } from "../../fixtures/urlList";
+import { BUTTON_SELECTORS } from "../../elements/shared/button-selectors";
+import { urlList, voucherDetailsUrl } from "../../fixtures/urlList";
 import { ONE_PERMISSION_USERS } from "../../fixtures/users";
 import { createChannel } from "../../support/api/requests/Channels";
+import { getCheckout } from "../../support/api/requests/Checkout";
 import * as channelsUtils from "../../support/api/utils/channelsUtils";
-import { deleteVouchersStartsWith } from "../../support/api/utils/discounts/vouchersUtils";
-import { createCheckoutWithVoucher } from "../../support/api/utils/ordersUtils";
+import {
+  createVoucherInChannel,
+  deleteVouchersStartsWith
+} from "../../support/api/utils/discounts/vouchersUtils";
+import {
+  addPayment,
+  createCheckoutWithVoucher
+} from "../../support/api/utils/ordersUtils";
 import * as productsUtils from "../../support/api/utils/products/productsUtils";
 import {
   createShipping,
@@ -33,6 +41,7 @@ filterTests({ definedTags: ["all"] }, () => {
     let category;
     let shippingMethod;
     let variants;
+    let product;
     let address;
 
     before(() => {
@@ -86,7 +95,8 @@ filterTests({ definedTags: ["all"] }, () => {
             });
           }
         )
-        .then(({ variantsList: variantsResp }) => {
+        .then(({ variantsList: variantsResp, product: productResp }) => {
+          product = productResp;
           variants = variantsResp;
           createChannel({ name });
         })
@@ -149,6 +159,39 @@ filterTests({ definedTags: ["all"] }, () => {
           expect(errorField).to.be.eq("promoCode");
         }
       );
+    });
+
+    it("should delete voucher", () => {
+      const name = `${startsWith}${faker.datatype.number()}`;
+      const voucherValue = 50;
+
+      let voucher;
+
+      cy.clearSessionData().loginUserViaRequest();
+      createVoucherInChannel({
+        name,
+        productId: product.id,
+        channelId: defaultChannel.id,
+        value: voucherValue
+      })
+        .then(voucherResp => {
+          voucher = voucherResp;
+          expect(voucher.id).to.be.ok;
+        })
+        .then(resp => {
+          cy.visit(voucherDetailsUrl(voucher.id))
+            .addAliasToGraphRequest("VoucherDelete")
+            .get(BUTTON_SELECTORS.deleteButton)
+            .click()
+            .get(BUTTON_SELECTORS.submit)
+            .click()
+            .wait("@VoucherDelete");
+          createCheckoutForCreatedVoucher(voucher.code);
+        })
+        .then(({ addPromoCodeResp }) => {
+          const errorField = addPromoCodeResp.checkoutErrors[0].field;
+          expect(errorField).to.be.eq("promoCode");
+        });
     });
 
     function createCheckoutForCreatedVoucher(voucherCode) {
