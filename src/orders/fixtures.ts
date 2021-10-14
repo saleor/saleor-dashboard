@@ -1463,7 +1463,6 @@ export const order = (placeholder: string): OrderDetails_order => ({
     {
       __typename: "Payment",
       id: "UGF5bWVudDo5",
-      pspReference: "ch_69d9ec4c-6ff0-47e6-aa94-2e9b34a497f9",
       actions: [
         OrderAction.CAPTURE,
         OrderAction.MARK_AS_PAID,
