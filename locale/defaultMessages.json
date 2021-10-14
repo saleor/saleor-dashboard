@@ -3496,6 +3496,18 @@
     "context": "gift cards section name",
     "string": "Gift Cards"
   },
+  "src_dot_giftCards_dot_GiftCardBulkCreateDialog_dot_createdSuccessAlertDescription": {
+    "context": "bulk issue gift cards success alert description",
+    "string": "Requested {cardsAmount} were successfully issued"
+  },
+  "src_dot_giftCards_dot_GiftCardBulkCreateDialog_dot_createdSuccessAlertTitle": {
+    "context": "bulk issue gift cards success alert title",
+    "string": "Gift Cards Issued"
+  },
+  "src_dot_giftCards_dot_GiftCardBulkCreateDialog_dot_title": {
+    "context": "bulk issue gift cards dialogtitle",
+    "string": "Bulk Issue Gift Cards"
+  },
   "src_dot_giftCards_dot_GiftCardCreateDialog_dot_GiftCardCreateExpirySelect_dot_expiryDateLabel": {
     "context": "GiftCarUpdateDetailsExpirySection expiry date label",
     "string": "Exact date"
@@ -3513,51 +3525,59 @@
     "string": "Set gift card expiry date"
   },
   "src_dot_giftCards_dot_GiftCardCreateDialog_dot_amountLabel": {
-    "context": "GiftCardCreateDialog amount label",
+    "context": "money amount input label",
     "string": "Enter amount"
   },
+  "src_dot_giftCards_dot_GiftCardCreateDialog_dot_bulkCreateExplanation": {
+    "context": "gift card bulk create modal bottom explanation",
+    "string": "After creation Saleor will create a list of gift card codes that you will be able to download. "
+  },
   "src_dot_giftCards_dot_GiftCardCreateDialog_dot_copiedToClipboardTitle": {
-    "context": "GiftCardCreateDialog copied to clipboard title",
+    "context": "copied to clipboard alert title",
     "string": "Copied to clipboard"
   },
   "src_dot_giftCards_dot_GiftCardCreateDialog_dot_copyCodeLabel": {
-    "context": "GiftCardCreateDialog copy code label",
+    "context": "copy code button label",
     "string": "Copy code"
   },
   "src_dot_giftCards_dot_GiftCardCreateDialog_dot_createdGiftCardLabel": {
-    "context": "GiftCardCreateDialog created gift card label",
+    "context": "created gift card code label",
     "string": "This is the code of a created gift card:"
   },
   "src_dot_giftCards_dot_GiftCardCreateDialog_dot_createdSuccessAlertTitle": {
-    "context": "GiftCardCreateDialog createdSuccessAlertTitle",
+    "context": "successfully created gift card alert title",
     "string": "Successfully created gift card"
   },
   "src_dot_giftCards_dot_GiftCardCreateDialog_dot_customerLabel": {
-    "context": "GiftCardCreateDialog customer label",
+    "context": "customer input label",
     "string": "Customer"
   },
+  "src_dot_giftCards_dot_GiftCardCreateDialog_dot_giftCardsAmountLabel": {
+    "context": "issued cards amount label",
+    "string": "Cards Issued"
+  },
   "src_dot_giftCards_dot_GiftCardCreateDialog_dot_issueButtonLabel": {
-    "context": "GiftCardCreateDialog issue button label",
+    "context": "issue gift card button label",
     "string": "Issue"
   },
   "src_dot_giftCards_dot_GiftCardCreateDialog_dot_noteLabel": {
-    "context": "GiftCardCreateDialog note label",
+    "context": "note input label",
     "string": "Note"
   },
   "src_dot_giftCards_dot_GiftCardCreateDialog_dot_noteSubtitle": {
-    "context": "GiftCardCreateDialog note subtitle",
+    "context": "note input subtitle",
     "string": "Why was this gift card issued. This note will not be shown to the customer. Note will be stored in gift card history"
   },
   "src_dot_giftCards_dot_GiftCardCreateDialog_dot_requiresActivationCaption": {
-    "context": "GiftCarUpdateDetailsExpirySection requires activation caption",
+    "context": "requires activation checkbox caption",
     "string": "All issued cards require activation by staff before use."
   },
   "src_dot_giftCards_dot_GiftCardCreateDialog_dot_requiresActivationLabel": {
-    "context": "GiftCarUpdateDetailsExpirySection requires activation label",
+    "context": "requires activation checkbox label",
     "string": "Requires activation"
   },
   "src_dot_giftCards_dot_GiftCardCreateDialog_dot_title": {
-    "context": "GiftCardCreateDialog title",
+    "context": "issue gift card dialog title",
     "string": "Issue gift card"
   },
   "src_dot_giftCards_dot_GiftCardSettings_dot_GiftCardExpirySettingsCard_dot_expiryDateSectionDescription": {
