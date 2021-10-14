@@ -343,12 +343,26 @@ export interface OrderDetailsFragment_payments_capturedAmount {
   currency: string;
 }
 
+export interface OrderDetailsFragment_payments_availableCaptureAmount {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderDetailsFragment_payments_availableRefundAmount {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
 export interface OrderDetailsFragment_payments {
   __typename: "Payment";
   id: string;
   total: OrderDetailsFragment_payments_total | null;
   capturedAmount: OrderDetailsFragment_payments_capturedAmount | null;
   gatewayName: string;
+  availableCaptureAmount: OrderDetailsFragment_payments_availableCaptureAmount | null;
+  availableRefundAmount: OrderDetailsFragment_payments_availableRefundAmount | null;
   pspReference: string | null;
   chargeStatus: PaymentChargeStatusEnum;
   actions: (OrderAction | null)[];

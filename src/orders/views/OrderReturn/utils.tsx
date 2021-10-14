@@ -25,7 +25,9 @@ class ReturnFormDataParser {
     const {
       fulfilledItemsQuantities,
       unfulfilledItemsQuantities,
-      refundShipmentCosts
+      refundShipmentCosts,
+      paymentsToRefund,
+      amountCalculationMode
     } = this.formData;
 
     const fulfillmentLines = this.getParsedLineData<
@@ -37,20 +39,26 @@ class ReturnFormDataParser {
       "orderLineId"
     );
 
+    const paymentsToRefundValues =
+      amountCalculationMode === OrderRefundAmountCalculationMode.MANUAL
+        ? paymentsToRefund
+            .filter(payment => Number(payment.value) > 0)
+            .map(field => ({
+              paymentId: field.id,
+              amount: field.value
+            }))
+        : paymentsToRefund.map(field => ({
+            paymentId: field.id
+          }));
+
     return {
-      amountToRefund: this.getAmountToRefund(),
+      paymentsToRefund: paymentsToRefundValues,
       fulfillmentLines,
       includeShippingCosts: refundShipmentCosts,
       orderLines,
       refund: this.getShouldRefund(orderLines, fulfillmentLines)
     };
   };
-
-  private getAmountToRefund = (): number | undefined =>
-    this.formData.amountCalculationMode ===
-    OrderRefundAmountCalculationMode.MANUAL
-      ? this.formData.amount
-      : undefined;
 
   private getParsedLineData = function<
     T extends OrderReturnFulfillmentLineInput | OrderReturnLineInput
@@ -84,10 +92,6 @@ class ReturnFormDataParser {
         OrderRefundAmountCalculationMode.NONE
     ) {
       return false;
-    }
-
-    if (!!this.getAmountToRefund()) {
-      return true;
     }
 
     return (

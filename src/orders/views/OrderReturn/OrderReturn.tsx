@@ -1,12 +1,15 @@
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
+import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { commonMessages } from "@saleor/intl";
 import OrderReturnPage from "@saleor/orders/components/OrderReturnPage";
 import { OrderReturnFormData } from "@saleor/orders/components/OrderReturnPage/form";
 import { useOrderReturnCreateMutation } from "@saleor/orders/mutations";
 import { useOrderQuery } from "@saleor/orders/queries";
 import { orderUrl } from "@saleor/orders/urls";
+import { ReorderEvent } from "@saleor/types";
 import { OrderErrorCode } from "@saleor/types/globalTypes";
+import { move } from "@saleor/utils/lists";
 import React from "react";
 import { defineMessages } from "react-intl";
 import { useIntl } from "react-intl";
@@ -98,13 +101,30 @@ const OrderReturn: React.FC<OrderReturnProps> = ({ orderId }) => {
 
   const navigateToOrder = (id?: string) => navigate(orderUrl(id || orderId));
 
+  const [payments, setPayments] = useStateFromProps(
+    data?.order.payments.filter(
+      payment => payment.availableRefundAmount?.amount > 0
+    )
+  );
+  const handlePaymentsReorder = (event: ReorderEvent) => {
+    const reorderedPayments = move(
+      payments[event.oldIndex],
+      payments,
+      (a, b) => a === b,
+      event.newIndex
+    );
+    setPayments(reorderedPayments);
+  };
+
   return (
     <OrderReturnPage
       errors={returnCreateOpts.data?.orderFulfillmentReturnProducts.errors}
       order={data?.order}
+      payments={payments}
       loading={loading || returnCreateOpts.loading}
       onSubmit={handleSubmit}
       onBack={() => navigateToOrder()}
+      onPaymentsReorder={handlePaymentsReorder}
     />
   );
 };

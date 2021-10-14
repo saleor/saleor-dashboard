@@ -17,6 +17,9 @@ const useStyles = makeStyles(
     highlightedRow: {
       fontWeight: 600
     },
+    errorRow: {
+      color: "#FE6E76"
+    },
     row: {
       display: "flex",
       flexDirection: "row",
@@ -29,14 +32,16 @@ const useStyles = makeStyles(
 );
 
 export interface OrderRefundAmountValuesProps {
-  authorizedAmount: IMoney;
+  authorizedAmount?: IMoney;
   shipmentCost?: IMoney;
   selectedProductsValue?: IMoney;
-  previouslyRefunded: IMoney;
-  maxRefund: IMoney;
+  previouslyRefunded?: IMoney;
+  maxRefund?: IMoney;
   proposedRefundAmount?: IMoney;
   replacedProductsValue?: IMoney;
   refundTotalAmount?: IMoney;
+  remainingBalance?: IMoney;
+  paymentsTotalAmount?: IMoney;
 }
 
 const messages = defineMessages({
@@ -71,6 +76,10 @@ const messages = defineMessages({
   shipmentCost: {
     defaultMessage: "Shipment Cost",
     description: "order refund amount"
+  },
+  remainingBalance: {
+    defaultMessage: "Remaining balance",
+    description: "order refund amount"
   }
 });
 
@@ -80,17 +89,21 @@ const OrderRefundAmountValues: React.FC<OrderRefundAmountValuesProps> = props =>
 
   const orderedKeys: Array<keyof OrderRefundAmountValuesProps> = [
     "authorizedAmount",
-    "shipmentCost",
     "selectedProductsValue",
+    "shipmentCost",
     "previouslyRefunded",
     "replacedProductsValue",
     "maxRefund",
-    "refundTotalAmount"
+    "refundTotalAmount",
+    "remainingBalance"
   ];
 
   const highlightedItems: Array<keyof OrderRefundAmountValuesProps> = [
+    "selectedProductsValue",
+    "shipmentCost",
     "maxRefund",
-    "refundTotalAmount"
+    "refundTotalAmount",
+    "remainingBalance"
   ];
 
   const items = reduce(
@@ -115,7 +128,8 @@ const OrderRefundAmountValues: React.FC<OrderRefundAmountValuesProps> = props =>
       {items.map(({ key, data, highlighted }) => (
         <div
           className={classNames(classes.row, {
-            [classes.highlightedRow]: highlighted
+            [classes.highlightedRow]: highlighted,
+            [classes.errorRow]: data?.amount < 0 ? true : false
           })}
           key={key}
         >

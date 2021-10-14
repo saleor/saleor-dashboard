@@ -120,7 +120,13 @@ const OrderPaymentDetails: React.FC<OrderPaymentDetailsProps> = props => {
                     />
                   </td>
                   <td className={classes.textRight}>
-                    <Money money={payment.total} />
+                    {(payment.availableCaptureAmount && (
+                      <Money money={payment.availableCaptureAmount} />
+                    )) || (
+                      <Money
+                        money={{ amount: 0, currency: payment.total.currency }}
+                      />
+                    )}
                   </td>
                 </tr>
                 <tr>

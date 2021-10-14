@@ -32,7 +32,6 @@ export type FormsetQuantityData = FormsetData<LineItemData, number>;
 export type FormsetReplacementData = FormsetData<LineItemData, boolean>;
 
 export interface OrderReturnData {
-  amount: number;
   refundShipmentCosts: boolean;
   amountCalculationMode: OrderRefundAmountCalculationMode;
 }
@@ -43,12 +42,14 @@ export interface OrderReturnHandlers {
   changeItemsToBeReplaced: FormsetChange<boolean>;
   handleSetMaximalFulfiledItemsQuantities;
   handleSetMaximalUnfulfiledItemsQuantities;
+  changePaymentAmount: FormsetChange<string>;
 }
 
 export interface OrderReturnFormData extends OrderReturnData {
   itemsToBeReplaced: FormsetReplacementData;
   fulfilledItemsQuantities: FormsetQuantityData;
   unfulfilledItemsQuantities: FormsetQuantityData;
+  paymentsToRefund: FormsetData<null, string>;
 }
 
 export type OrderRefundSubmitData = OrderReturnFormData;
@@ -68,7 +69,6 @@ interface OrderReturnProps {
 }
 
 const getOrderRefundPageFormData = (): OrderReturnData => ({
-  amount: undefined,
   amountCalculationMode: OrderRefundAmountCalculationMode.AUTOMATIC,
   refundShipmentCosts: false
 });
@@ -79,6 +79,17 @@ function useOrderReturnForm(
 ): UseOrderRefundFormResult {
   const form = useForm(getOrderRefundPageFormData());
   const [hasChanged, setHasChanged] = useState(false);
+
+  const paymentsToRefund = useFormset<null, string>(
+    order?.payments
+      .filter(payment => payment.availableRefundAmount?.amount > 0)
+      .map(payment => ({
+        data: null,
+        id: payment.id,
+        label: null,
+        value: ""
+      }))
+  );
 
   const handleChange: FormChange = (event, cb) => {
     form.change(event, cb);
@@ -183,10 +194,16 @@ function useOrderReturnForm(
     fulfiledItemsQuatities.set(newQuantities);
   };
 
+  const handlePaymentAmountChange = (id: string, value: string) => {
+    triggerChange();
+    paymentsToRefund.change(id, value);
+  };
+
   const data: OrderReturnFormData = {
     fulfilledItemsQuantities: fulfiledItemsQuatities.data,
     itemsToBeReplaced: itemsToBeReplaced.data,
     unfulfilledItemsQuantities: unfulfiledItemsQuantites.data,
+    paymentsToRefund: paymentsToRefund.data,
     ...form.data
   };
 
@@ -213,7 +230,8 @@ function useOrderReturnForm(
         unfulfiledItemsQuantites.change
       ),
       handleSetMaximalFulfiledItemsQuantities,
-      handleSetMaximalUnfulfiledItemsQuantities
+      handleSetMaximalUnfulfiledItemsQuantities,
+      changePaymentAmount: handlePaymentAmountChange
     },
     hasChanged,
     submit

@@ -208,3 +208,12 @@ export function mergeRepeatedOrderLines(
     return prev;
   }, Array<OrderDetails_order_fulfillments_lines>());
 }
+
+export function getPaymentsTotalAmount(
+  paymentsToRefund: FormsetData<LineItemData, string | number>
+) {
+  return paymentsToRefund?.reduce(
+    (sum, payment) => sum + Number(payment?.value || 0),
+    0
+  );
+}

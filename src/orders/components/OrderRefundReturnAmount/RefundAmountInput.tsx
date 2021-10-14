@@ -1,7 +1,7 @@
-import { IMoney } from "@saleor/components/Money";
 import PriceField from "@saleor/components/PriceField";
 import { OrderErrorFragment } from "@saleor/fragments/types/OrderErrorFragment";
 import { makeStyles } from "@saleor/macaw-ui";
+import { OrderDetails_order_payments } from "@saleor/orders/types/OrderDetails";
 import { getFormErrors } from "@saleor/utils/errors";
 import getOrderErrorMessage from "@saleor/utils/errors/order";
 import React from "react";
@@ -18,7 +18,8 @@ const useStyles = makeStyles(
       fontWeight: 600
     },
     priceField: {
-      marginTop: theme.spacing(2)
+      marginTop: theme.spacing(1),
+      marginBottom: theme.spacing(1)
     },
     refundButton: {
       marginTop: theme.spacing(2)
@@ -39,8 +40,8 @@ const useStyles = makeStyles(
 );
 
 interface RefundAmountInputProps {
+  payment: OrderDetails_order_payments;
   data: OrderRefundFormData;
-  maxRefund: IMoney;
   currencySymbol: string;
   amountTooSmall: boolean;
   amountTooBig: boolean;
@@ -66,8 +67,8 @@ const messages = defineMessages({
 
 const RefundAmountInput: React.FC<RefundAmountInputProps> = props => {
   const {
+    payment,
     data,
-    maxRefund,
     amountTooSmall,
     amountTooBig,
     currencySymbol,
@@ -77,17 +78,26 @@ const RefundAmountInput: React.FC<RefundAmountInputProps> = props => {
   } = props;
   const intl = useIntl();
   const classes = useStyles(props);
-  const formErrors = getFormErrors(["amount"], errors);
-
-  const isError = !!formErrors.amount || amountTooSmall || amountTooBig;
+  const maxRefund = payment?.availableRefundAmount;
+  const currentPayment = data.paymentsToRefund?.find(p => p.id === payment?.id);
+  const paymentAmountTooBig =
+    Number(currentPayment?.value) > payment?.availableRefundAmount?.amount;
+  const formErrors = getFormErrors(["paymentsToRefund"], errors);
+  const isError =
+    !!formErrors.paymentsToRefund ||
+    amountTooSmall ||
+    amountTooBig ||
+    paymentAmountTooBig;
 
   return (
     <PriceField
       disabled={disabled}
       onChange={onChange}
-      currencySymbol={currencySymbol}
+      currencySymbol={
+        "/ " + currencySymbol + " " + maxRefund?.amount.toFixed(2)
+      }
       name={"amount" as keyof FormData}
-      value={data.amount}
+      value={currentPayment?.value}
       label={intl.formatMessage(messages.label)}
       className={classes.priceField}
       InputProps={{ inputProps: { max: maxRefund?.amount } }}
@@ -97,9 +107,10 @@ const RefundAmountInput: React.FC<RefundAmountInputProps> = props => {
       }}
       error={isError}
       hint={
-        getOrderErrorMessage(formErrors.amount, intl) ||
+        getOrderErrorMessage(formErrors.paymentsToRefund, intl) ||
         (amountTooSmall && intl.formatMessage(messages.amountTooSmall)) ||
-        (amountTooBig && intl.formatMessage(messages.amountTooBig))
+        (amountTooBig && intl.formatMessage(messages.amountTooBig)) ||
+        (paymentAmountTooBig && intl.formatMessage(messages.amountTooBig))
       }
     />
   );
