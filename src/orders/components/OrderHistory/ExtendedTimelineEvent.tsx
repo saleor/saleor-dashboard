@@ -118,42 +118,42 @@ export const titles = defineMessages({
     id: "event title marked as paid"
   },
   paymentRefunded: {
-    defaultMessage: "payment refunded",
+    defaultMessage: "Payment refunded",
     description: "refund payment event title",
     id: "event title payment refunded"
   },
   paymentRefundFailed: {
-    defaultMessage: "refund failed",
+    defaultMessage: "Refund failed",
     description: "refund payment fail event title",
     id: "event title payment refund failed"
   },
   paymentAuthorized: {
-    defaultMessage: "payment authorized",
+    defaultMessage: "Payment authorized",
     description: "authorized payment event title",
     id: "event title payment authorized"
   },
   paymentAuthorizedFailed: {
-    defaultMessage: "payment authorize failed",
+    defaultMessage: "Payment authorize failed",
     description: "authorize payment fail event title",
     id: "event title payment authorize failed"
   },
   paymentCaptured: {
-    defaultMessage: "payment captured",
+    defaultMessage: "Payment captured",
     description: "captured payment event title",
     id: "event title payment captured"
   },
   paymentCaptureFailed: {
-    defaultMessage: "payment capture failed",
+    defaultMessage: "Payment capture failed",
     description: "capture payment fail event title",
     id: "event title payment capture failed"
   },
   paymentVoided: {
-    defaultMessage: "payment voided",
+    defaultMessage: "Payment voided",
     description: "voided payment event title",
     id: "event title payment voided"
   },
   paymentVoidFailed: {
-    defaultMessage: "payment void failed",
+    defaultMessage: "Payment void failed",
     description: "void payment fail event title",
     id: "event title payment void failed"
   }
