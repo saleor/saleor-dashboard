@@ -24,6 +24,7 @@ export const urlList = {
   shippingMethods: "shipping/",
   siteSettings: "site-settings/",
   staffMembers: "staff/",
+  stripeApi: "https://api.stripe.com/v1/payment_methods",
   translations: "translations/",
   vouchers: "discounts/vouchers/",
   warehouses: "warehouses/",

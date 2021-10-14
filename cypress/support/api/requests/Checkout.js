@@ -46,6 +46,7 @@ export function createCheckout({
       }
       created
       checkout{
+        token
         id
         availableShippingMethods{
           name
@@ -68,6 +69,7 @@ export function addShippingMethod(checkoutId, shippingMethodId) {
         field
     	}
     	checkout{
+        id
         shippingMethod{
           id
           name
@@ -94,6 +96,7 @@ export function addPayment({ checkoutId, gateway, token, amount }) {
       gateway: "${gateway}"
       ${tokenLine}
       ${amountLine}
+      returnUrl: "https://qa.storefront.staging.saleor.cloud/checkout/payment-confirm"
     }){
       paymentErrors{
         field

@@ -172,6 +172,14 @@ export function addAdyenPayment(checkoutId, amount) {
     amount
   });
 }
+export function addStripePayment(checkoutId, amount, token) {
+  return checkoutRequest.addPayment({
+    checkoutId,
+    gateway: "saleor.payments.stripe",
+    amount,
+    token
+  });
+}
 
 export function createAndCompleteCheckoutWithoutShipping({
   channelSlug,
