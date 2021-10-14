@@ -1,7 +1,7 @@
 import { TimePeriodTypeEnum } from "@saleor/types/globalTypes";
 import moment from "moment-timezone";
 
-import { GiftCardCreateFormData } from "./GiftCardCreateDialogForm";
+import { GiftCardCreateCommonFormData } from "../GiftCardBulkCreateDialog/types";
 
 const addToCurrentDate = (
   currentDate: number,
@@ -35,7 +35,7 @@ export const getGiftCardExpiryInputData = (
     expiryDate,
     expiryPeriodAmount,
     expiryPeriodType
-  }: GiftCardCreateFormData,
+  }: GiftCardCreateCommonFormData,
   currentDate: number
 ): string => {
   if (!expirySelected) {

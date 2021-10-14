@@ -1,13 +1,7 @@
-import {
-  DialogContent,
-  Divider,
-  TextField,
-  Typography
-} from "@material-ui/core";
+import { DialogContent, Divider, TextField } from "@material-ui/core";
 import VerticalSpacer from "@saleor/apps/components/VerticalSpacer";
 import DialogButtons from "@saleor/components/ActionDialog/DialogButtons";
 import CardSpacer from "@saleor/components/CardSpacer";
-import ControlledCheckbox from "@saleor/components/ControlledCheckbox";
 import { GiftCardError } from "@saleor/fragments/types/GiftCardError";
 import GiftCardTagInput from "@saleor/giftCards/components/GiftCardTagInput";
 import useForm from "@saleor/hooks/useForm";
@@ -20,34 +14,26 @@ import {
 } from "@saleor/types/globalTypes";
 import { getFormErrors } from "@saleor/utils/errors";
 import React, { useState } from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+import { useIntl } from "react-intl";
 
 import GiftCardSendToCustomer from "../components/GiftCardSendToCustomer/GiftCardSendToCustomer";
+import { GiftCardCreateCommonFormData } from "../GiftCardBulkCreateDialog/types";
 import { useGiftCardSettingsQuery } from "../GiftCardSettings/queries";
-import GiftCardCreateDialogMoneyInput from "./GiftCardCreateDialogMoneyInput";
 import GiftCardCreateExpirySelect from "./GiftCardCreateExpirySelect";
-import { giftCardCreateDialogMessages as messages } from "./messages";
-import { useGiftCardCreateDialogFormStyles as useStyles } from "./styles";
+import GiftCardCreateMoneyInput from "./GiftCardCreateMoneyInput";
+import GiftCardCreateRequiresActivationSection from "./GiftCardCreateRequiresActivationSection";
+import { giftCardCreateMessages as messages } from "./messages";
+import { useGiftCardCreateFormStyles as useStyles } from "./styles";
 import {
   GiftCardCreateFormCommonProps,
-  GiftCardCreateFormCustomer,
-  GiftCardExpiryType
+  GiftCardCreateFormCustomer
 } from "./types";
 
-export interface GiftCardCreateFormData {
+export interface GiftCardCreateFormData extends GiftCardCreateCommonFormData {
   note: string;
   sendToCustomerSelected: boolean;
   selectedCustomer?: GiftCardCreateFormCustomer;
   channelSlug?: string;
-  expirySelected: boolean;
-  expiryType: GiftCardExpiryType;
-  expiryPeriodType: TimePeriodTypeEnum;
-  expiryPeriodAmount: number;
-  requiresActivation: boolean;
-  tag: string;
-  balanceAmount: number;
-  balanceCurrency: string;
-  expiryDate: string;
 }
 
 const initialCustomer = { email: "", name: "" };
@@ -159,7 +145,7 @@ const GiftCardCreateDialogForm: React.FC<GiftCardCreateDialogFormProps> = ({
   return (
     <>
       <DialogContent>
-        <GiftCardCreateDialogMoneyInput {...commonFormProps} set={set} />
+        <GiftCardCreateMoneyInput {...commonFormProps} set={set} />
         <CardSpacer />
         <GiftCardTagInput
           error={formErrors?.tag}
@@ -192,18 +178,9 @@ const GiftCardCreateDialogForm: React.FC<GiftCardCreateDialogFormProps> = ({
         <VerticalSpacer />
         <Label text={intl.formatMessage(messages.noteSubtitle)} />
         <VerticalSpacer spacing={2} />
-        <ControlledCheckbox
-          name="requiresActivation"
-          label={
-            <>
-              <FormattedMessage {...messages.requiresActivationLabel} />
-              <Typography variant="caption">
-                <FormattedMessage {...messages.requiresActivationCaption} />
-              </Typography>
-            </>
-          }
-          checked={requiresActivation}
+        <GiftCardCreateRequiresActivationSection
           onChange={change}
+          checked={requiresActivation}
         />
       </DialogContent>
       <DialogButtons
