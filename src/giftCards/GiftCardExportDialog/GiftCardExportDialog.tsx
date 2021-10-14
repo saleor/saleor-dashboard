@@ -4,8 +4,11 @@ import {
   DialogContent,
   DialogTitle
 } from "@material-ui/core";
+import ConfirmButton from "@saleor/components/ConfirmButton";
+import { Task } from "@saleor/containers/BackgroundTasks/types";
+import useBackgroundTask from "@saleor/hooks/useBackgroundTask";
 import useForm from "@saleor/hooks/useForm";
-import { ConfirmButton } from "@saleor/macaw-ui";
+import useNotifier from "@saleor/hooks/useNotifier";
 import ExportDialogSettings from "@saleor/products/components/ProductExportDialog/ExportDialogSettings";
 import {
   ExportSettingsFormData,
@@ -21,12 +24,16 @@ import useGiftCardListBulkActions from "../GiftCardsList/providers/GiftCardListP
 import { useGiftCardTotalCountQuery } from "../GiftCardsList/queries";
 import { giftCardExportDialogMessages as messages } from "./messages";
 import { useGiftCardExportMutation } from "./mutations";
+import { ExportGiftCards } from "./types/ExportGiftCards";
 
 const GiftCardExportDialog: React.FC<DialogActionHandlersProps> = ({
   closeDialog,
   open
 }) => {
   const intl = useIntl();
+  const notify = useNotifier();
+  const { queue } = useBackgroundTask();
+
   const {
     loading: loadingGiftCardList,
     totalCount: filteredGiftCardsCount
@@ -41,13 +48,34 @@ const GiftCardExportDialog: React.FC<DialogActionHandlersProps> = ({
 
   const loading = loadingGiftCardList || loadingGiftCardCount;
 
-  const [exportGiftCards, exportGiftCardsOpts] = useGiftCardExportMutation({});
+  const handleSubmitComplete = (data: ExportGiftCards) => {
+    const errors = data?.exportGiftCards?.errors;
+
+    if (!errors.length) {
+      notify({
+        text: intl.formatMessage(messages.successAlertDescription),
+        title: intl.formatMessage(messages.successAlertTitle)
+      });
+
+      queue(Task.EXPORT, {
+        id: data.exportGiftCards.exportFile.id
+      });
+
+      closeDialog();
+    }
+  };
+
+  const [exportGiftCards, exportGiftCardsOpts] = useGiftCardExportMutation({
+    onCompleted: handleSubmitComplete
+  });
 
   const handleSubmit = (data: ExportSettingsFormData) => {
     exportGiftCards({
       variables: {
-        fileType: data?.fileType,
-        scope: data?.scope
+        input: {
+          fileType: data?.fileType,
+          scope: data?.scope
+        }
       }
     });
   };
@@ -66,6 +94,7 @@ const GiftCardExportDialog: React.FC<DialogActionHandlersProps> = ({
         <ContentWithProgress>
           {!loading && (
             <ExportDialogSettings
+              errors={exportGiftCardsOpts?.data?.exportGiftCards?.errors}
               onChange={change}
               selectedItems={listElements.length}
               itemsQuantity={{
@@ -80,7 +109,7 @@ const GiftCardExportDialog: React.FC<DialogActionHandlersProps> = ({
       </DialogContent>
       <DialogActions>
         <ConfirmButton
-          transitionState={confirmButtonState}
+          transitionState={exportGiftCardsOpts.status}
           variant="contained"
           type="submit"
           data-test="submit"

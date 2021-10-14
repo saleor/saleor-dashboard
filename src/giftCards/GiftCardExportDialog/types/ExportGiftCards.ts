@@ -15,9 +15,15 @@ export interface ExportGiftCards_exportGiftCards_errors {
   field: string | null;
 }
 
+export interface ExportGiftCards_exportGiftCards_exportFile {
+  __typename: "ExportFile";
+  id: string;
+}
+
 export interface ExportGiftCards_exportGiftCards {
   __typename: "ExportGiftCards";
   errors: ExportGiftCards_exportGiftCards_errors[];
+  exportFile: ExportGiftCards_exportGiftCards_exportFile | null;
 }
 
 export interface ExportGiftCards {
