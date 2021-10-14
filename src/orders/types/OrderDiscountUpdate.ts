@@ -160,6 +160,9 @@ export interface OrderDiscountUpdate_orderDiscountUpdate_order_events {
   discount: OrderDiscountUpdate_orderDiscountUpdate_order_events_discount | null;
   relatedOrder: OrderDiscountUpdate_orderDiscountUpdate_order_events_relatedOrder | null;
   message: string | null;
+  pspReference: string | null;
+  grapqhlPaymentId: string | null;
+  paymentGateway: string | null;
   quantity: number | null;
   transactionReference: string | null;
   type: OrderEventsEnum | null;

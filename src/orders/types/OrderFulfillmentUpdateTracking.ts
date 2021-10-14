@@ -160,6 +160,9 @@ export interface OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_o
   discount: OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_order_events_discount | null;
   relatedOrder: OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_order_events_relatedOrder | null;
   message: string | null;
+  pspReference: string | null;
+  grapqhlPaymentId: string | null;
+  paymentGateway: string | null;
   quantity: number | null;
   transactionReference: string | null;
   type: OrderEventsEnum | null;

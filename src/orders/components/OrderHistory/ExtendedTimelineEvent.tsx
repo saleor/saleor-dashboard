@@ -246,9 +246,6 @@ const ExtendedTimelineEvent: React.FC<ExtendedTimelineEventProps> = ({
       case OrderEventsEnum.PAYMENT_AUTHORIZED: {
         return [title];
       }
-      case OrderEventsEnum.PAYMENT_AUTHORIZED_FAILED: {
-        return [title];
-      }
       case OrderEventsEnum.PAYMENT_CAPTURED: {
         return [title];
       }
