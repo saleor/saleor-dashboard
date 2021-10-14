@@ -81,7 +81,7 @@ export interface ProductUpdateFormData extends MetadataFormData {
   taxCode: string;
   trackInventory: boolean;
   isPreorder: boolean;
-  globalThreshold: number;
+  globalThreshold: string;
   globalSoldUnits: number;
   hasPreorderEndDate: boolean;
   preorderEndDateTime?: string;
