@@ -8,7 +8,6 @@ import SaveFilterTabDialog, {
   SaveFilterTabDialogFormData
 } from "@saleor/components/SaveFilterTabDialog";
 import { useShopLimitsQuery } from "@saleor/components/Shop/query";
-import { DEFAULT_INITIAL_PAGINATION_DATA } from "@saleor/config";
 import useBulkActions from "@saleor/hooks/useBulkActions";
 import useListSettings from "@saleor/hooks/useListSettings";
 import useNavigator from "@saleor/hooks/useNavigator";

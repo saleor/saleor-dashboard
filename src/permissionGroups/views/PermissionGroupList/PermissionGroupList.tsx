@@ -1,4 +1,3 @@
-import { DEFAULT_INITIAL_PAGINATION_DATA } from "@saleor/config";
 import { configurationMenuUrl } from "@saleor/configuration";
 import { PermissionGroupErrorFragment } from "@saleor/fragments/types/PermissionGroupErrorFragment";
 import useListSettings from "@saleor/hooks/useListSettings";

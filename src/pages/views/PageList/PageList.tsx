@@ -1,7 +1,6 @@
 import { Button, DialogContentText, IconButton } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
 import ActionDialog from "@saleor/components/ActionDialog";
-import { DEFAULT_INITIAL_PAGINATION_DATA } from "@saleor/config";
 import { configurationMenuUrl } from "@saleor/configuration";
 import useBulkActions from "@saleor/hooks/useBulkActions";
 import useListSettings from "@saleor/hooks/useListSettings";

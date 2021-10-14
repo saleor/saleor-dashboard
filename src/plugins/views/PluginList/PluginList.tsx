@@ -2,7 +2,6 @@ import DeleteFilterTabDialog from "@saleor/components/DeleteFilterTabDialog";
 import SaveFilterTabDialog, {
   SaveFilterTabDialogFormData
 } from "@saleor/components/SaveFilterTabDialog";
-import { DEFAULT_INITIAL_PAGINATION_DATA } from "@saleor/config";
 import { configurationMenuUrl } from "@saleor/configuration";
 import { useChannelsSearchWithLoadMore } from "@saleor/hooks/useChannelsSearchWithLoadMore";
 import useListSettings from "@saleor/hooks/useListSettings";
