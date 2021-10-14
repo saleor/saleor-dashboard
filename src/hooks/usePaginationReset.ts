@@ -61,6 +61,7 @@ export const usePaginationReset = (
       ),
     [rowNumber]
   );
+
   useEffect(
     () =>
       navigate(
