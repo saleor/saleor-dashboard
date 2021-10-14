@@ -32,7 +32,7 @@ export const messages = defineMessages({
     id: "authorize amount title"
   },
   pspReference: {
-    defaultMessage: "PSP REFERENCE",
+    defaultMessage: "PSP Reference",
     description: "psp reference title",
     id: "psp reference title"
   },
