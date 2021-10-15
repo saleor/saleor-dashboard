@@ -414,7 +414,7 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
       }),
       false,
       false,
-      true
+      false
     );
 
   const disableFormSave =
@@ -601,7 +601,7 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
         fetchReferenceProducts={searchProducts}
         fetchMoreReferenceProducts={fetchMoreReferenceProducts}
         fetchMoreAttributeValues={fetchMoreAttributeValues}
-        onCloseDialog={() => navigate(productUrl(id))}
+        onCloseDialog={() => navigate(productUrl(id), false, false, false)}
         onAttributeSelectBlur={searchAttributeReset}
       />
       <ActionDialog
