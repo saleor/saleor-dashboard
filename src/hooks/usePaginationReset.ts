@@ -1,53 +1,14 @@
-import { CategoryListUrlQueryParams } from "@saleor/categories/urls";
-import { CollectionListUrlQueryParams } from "@saleor/collections/urls";
 import { DEFAULT_INITIAL_PAGINATION_DATA } from "@saleor/config";
-import { CustomerListUrlQueryParams } from "@saleor/customers/urls";
-import {
-  SaleListUrlQueryParams,
-  VoucherListUrlQueryParams
-} from "@saleor/discounts/urls";
-import { MenuListUrlQueryParams } from "@saleor/navigation/urls";
-import {
-  OrderDraftListUrlQueryParams,
-  OrderListUrlQueryParams
-} from "@saleor/orders/urls";
-import { PageListUrlQueryParams } from "@saleor/pages/urls";
-import { PageTypeListUrlQueryParams } from "@saleor/pageTypes/urls";
-import { PermissionGroupListUrlQueryParams } from "@saleor/permissionGroups/urls";
-import { PluginListUrlQueryParams } from "@saleor/plugins/urls";
-import { ProductListUrlQueryParams } from "@saleor/products/urls";
-import { ProductTypeListUrlQueryParams } from "@saleor/productTypes/urls";
-import { ShippingZonesListUrlQueryParams } from "@saleor/shipping/urls";
-import { StaffListUrlQueryParams } from "@saleor/staff/urls";
-import { WarehouseListUrlQueryParams } from "@saleor/warehouses/urls";
+import { Pagination } from "@saleor/types";
 import { useEffect } from "react";
 
 import useNavigator from "./useNavigator";
 
-export type QueryParams =
-  | CollectionListUrlQueryParams
-  | CategoryListUrlQueryParams
-  | CustomerListUrlQueryParams
-  | SaleListUrlQueryParams
-  | VoucherListUrlQueryParams
-  | MenuListUrlQueryParams
-  | OrderDraftListUrlQueryParams
-  | OrderListUrlQueryParams
-  | PageTypeListUrlQueryParams
-  | PageListUrlQueryParams
-  | PermissionGroupListUrlQueryParams
-  | PluginListUrlQueryParams
-  | ProductTypeListUrlQueryParams
-  | ProductListUrlQueryParams
-  | ShippingZonesListUrlQueryParams
-  | StaffListUrlQueryParams
-  | WarehouseListUrlQueryParams;
-
-export const usePaginationReset = (
-  urlFunc: (params: QueryParams) => string,
-  params: QueryParams,
+export function usePaginationReset<T extends Pagination>(
+  urlFunc: (params: T) => string,
+  params: T,
   rowNumber: number
-) => {
+) {
   const navigate = useNavigator();
 
   useEffect(
@@ -72,4 +33,4 @@ export const usePaginationReset = (
       ),
     [params.before, params.after]
   );
-};
+}
