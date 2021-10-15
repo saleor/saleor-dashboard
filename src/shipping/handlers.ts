@@ -4,7 +4,6 @@ import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { commonMessages } from "@saleor/intl";
 import { getMutationErrors, getMutationState } from "@saleor/misc";
-import { FormData as ShippingZoneRatesPageFormData } from "@saleor/shipping/components/ShippingZoneRatesPage";
 import { CreateShippingRateVariables } from "@saleor/shipping/types/CreateShippingRate";
 import { ShippingMethodChannelListingUpdateVariables } from "@saleor/shipping/types/ShippingMethodChannelListingUpdate";
 import { UpdateShippingRateVariables } from "@saleor/shipping/types/UpdateShippingRate";
@@ -17,6 +16,7 @@ import { getParsedDataForJsonStringField } from "@saleor/utils/richText/misc";
 import differenceBy from "lodash/differenceBy";
 import { useIntl } from "react-intl";
 
+import { ShippingZoneRateCommonFormData } from "./components/ShippingZoneRatesPage/types";
 import {
   useShippingMethodChannelListingUpdate,
   useShippingRateCreate,
@@ -61,7 +61,7 @@ const getPostalCodeRulesToAdd = (
     );
 
 export function getCreateShippingPriceRateVariables(
-  data: ShippingZoneRatesPageFormData,
+  data: ShippingZoneRateCommonFormData,
   id: string,
   addPostalCodeRules: ShippingMethodFragment_postalCodeRules[],
   inclusionType: PostalCodeRuleInclusionTypeEnum
@@ -84,7 +84,7 @@ export function getCreateShippingPriceRateVariables(
 }
 
 export function getCreateShippingWeightRateVariables(
-  data: ShippingZoneRatesPageFormData,
+  data: ShippingZoneRateCommonFormData,
   id: string,
   addPostalCodeRules: ShippingMethodFragment_postalCodeRules[],
   inclusionType: PostalCodeRuleInclusionTypeEnum
@@ -93,7 +93,7 @@ export function getCreateShippingWeightRateVariables(
   const parsedMaxValue = parseFloat(data.maxValue);
   const parsedMinDays = parseInt(data.minDays, 10);
   const parsedMaxDays = parseInt(data.maxDays, 10);
-  const isWeightSet = !data.noLimits;
+  const isWeightSet = data.orderValueRestricted;
   const postalCodeRules = getPostalCodeRulesToAdd(addPostalCodeRules);
   return {
     input: {
@@ -112,7 +112,7 @@ export function getCreateShippingWeightRateVariables(
 }
 
 export function getUpdateShippingPriceRateVariables(
-  data: ShippingZoneRatesPageFormData,
+  data: ShippingZoneRateCommonFormData,
   id: string,
   rateId: string,
   addPostalCodeRules: ShippingMethodFragment_postalCodeRules[],
@@ -140,7 +140,7 @@ export function getUpdateShippingPriceRateVariables(
 }
 
 export function getUpdateShippingWeightRateVariables(
-  data: ShippingZoneRatesPageFormData,
+  data: ShippingZoneRateCommonFormData,
   id: string,
   rateId: string,
   addPostalCodeRules: ShippingMethodFragment_postalCodeRules[],
@@ -150,7 +150,7 @@ export function getUpdateShippingWeightRateVariables(
   const parsedMaxValue = parseFloat(data.maxValue);
   const parsedMinDays = parseInt(data.minDays, 10);
   const parsedMaxDays = parseInt(data.maxDays, 10);
-  const isWeightSet = !data.noLimits;
+  const isWeightSet = data.orderValueRestricted;
   const postalCodeRules = getPostalCodeRulesToAdd(addPostalCodeRules);
   return {
     id: rateId,
@@ -173,7 +173,7 @@ export function getUpdateShippingWeightRateVariables(
 }
 export function getShippingMethodChannelVariables(
   id: string,
-  noLimits: boolean,
+  orderValueRestricted: boolean,
   formChannels: ChannelShippingData[],
   prevChannels?: ChannelShippingData[]
 ): ShippingMethodChannelListingUpdateVariables {
@@ -188,9 +188,9 @@ export function getShippingMethodChannelVariables(
         formChannels?.map(channel => ({
           channelId: channel.id,
           maximumOrderPrice:
-            channel.maxValue && !noLimits ? channel.maxValue : null,
+            channel.maxValue && orderValueRestricted ? channel.maxValue : null,
           minimumOrderPrice:
-            channel.minValue && !noLimits ? channel.minValue : null,
+            channel.minValue && orderValueRestricted ? channel.minValue : null,
           price: channel.price || null
         })) || [],
       removeChannels
@@ -226,7 +226,7 @@ export function useShippingRateCreator(
       ? shippingPriceRatesEditUrl
       : shippingWeightRatesEditUrl;
 
-  const createShippingRate = async (data: ShippingZoneRatesPageFormData) => {
+  const createShippingRate = async (data: ShippingZoneRateCommonFormData) => {
     const response = await createBaseShippingRate({
       variables: getVariables(data, shippingZoneId, postalCodes, inclusionType)
     });
@@ -239,7 +239,7 @@ export function useShippingRateCreator(
         updateShippingMethodChannelListing({
           variables: getShippingMethodChannelVariables(
             rateId,
-            data.noLimits,
+            data.orderValueRestricted,
             data.channelListings
           )
         })
