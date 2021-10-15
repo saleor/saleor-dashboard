@@ -74,7 +74,7 @@ const useStyles = makeStyles(
     },
     container: {
       [theme.breakpoints.up("md")]: {
-        marginLeft: drawerWidthExpanded
+        width: `calc(100vw - ${drawerWidthExpanded}px)`
       }
     }
   }),

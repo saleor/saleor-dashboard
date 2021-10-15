@@ -1,4 +1,16 @@
+import { drawerWidthExpanded } from "@saleor/components/AppLayout/consts";
 import { makeStyles } from "@saleor/macaw-ui";
+
+export const usePageStyles = makeStyles(
+  theme => ({
+    container: {
+      [theme.breakpoints.up("md")]: {
+        width: `calc(100vw - ${drawerWidthExpanded}px)`
+      }
+    }
+  }),
+  { name: "GiftCardsListPage" }
+);
 
 export const useTableStyles = makeStyles(
   () => ({
