@@ -37,7 +37,7 @@ export const OrderWeight: React.FC<OrderWeightProps> = ({
 }) => {
   const classes = useStyles({});
   const intl = useIntl();
-  const { defaultWeightUnit } = useShop();
+  const shop = useShop();
 
   const formFields = ["minimumOrderWeight", "maximumOrderWeight"];
   const formErrors = getFormErrors(formFields, errors);
@@ -96,7 +96,7 @@ export const OrderWeight: React.FC<OrderWeightProps> = ({
                   inputProps: { min: 0 },
                   endAdornment: (
                     <InputAdornment position="end">
-                      <Typography>{defaultWeightUnit}</Typography>
+                      <Typography>{shop?.defaultWeightUnit}</Typography>
                     </InputAdornment>
                   )
                 }}
@@ -120,7 +120,7 @@ export const OrderWeight: React.FC<OrderWeightProps> = ({
                   inputProps: { min: minValue },
                   endAdornment: (
                     <InputAdornment position="end">
-                      <Typography>{defaultWeightUnit}</Typography>
+                      <Typography>{shop?.defaultWeightUnit}</Typography>
                     </InputAdornment>
                   )
                 }}
