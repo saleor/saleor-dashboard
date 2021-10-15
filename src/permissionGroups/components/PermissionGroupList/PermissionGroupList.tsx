@@ -160,9 +160,6 @@ const PermissionGroupList: React.FC<PermissionGroupListProps> = props => {
                         <DeleteIcon />
                       </IconButton>
                     )}
-                    <IconButton color="primary">
-                      <EditIcon />
-                    </IconButton>
                   </>
                 ) : (
                   <Skeleton />
