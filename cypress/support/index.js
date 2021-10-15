@@ -11,6 +11,7 @@ import "./customCommands/sharedElementsOperations/progressBar.js";
 import "./customCommands/sharedElementsOperations/selects.js";
 import "./customCommands/sharedElementsOperations/tables";
 import "cypress-mailhog";
+import "cypress-file-upload";
 
 import { urlList } from "../fixtures/urlList";
 

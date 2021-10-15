@@ -205,7 +205,7 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
     deactivatePreorder,
     deactivatePreoderOpts
   ] = useProductVariantPreorderDeactivateMutation({});
-  const handleDeactivateVariantPreorder = async (id: string) =>
+  const handleDeactivateVariantPreorder = (id: string) =>
     deactivatePreorder({ variables: { id } });
 
   const [
@@ -282,7 +282,9 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
         trackInventory: data.trackInventory,
         preorder: data.isPreorder
           ? {
-              globalThreshold: data.globalThreshold,
+              globalThreshold: data.globalThreshold
+                ? parseInt(data.globalThreshold, 10)
+                : null,
               endDate: data?.preorderEndDateTime || null
             }
           : null,

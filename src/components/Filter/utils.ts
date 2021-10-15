@@ -16,12 +16,26 @@ export const isAutocompleteFilterFieldValid = function<T extends string>({
   return !!compact(value).length;
 };
 
+export const isNumberFilterFieldValid = function<T extends string>({
+  value
+}: IFilterElement<T>) {
+  const [min, max] = value;
+
+  if (!min && !max) {
+    return false;
+  }
+
+  return true;
+};
+
 export const isFilterFieldValid = function<T extends string>(
   filter: IFilterElement<T>
 ) {
   const { type } = filter;
 
   switch (type) {
+    case FieldType.number:
+      return isNumberFilterFieldValid(filter);
     case FieldType.boolean:
     case FieldType.autocomplete:
       return isAutocompleteFilterFieldValid(filter);

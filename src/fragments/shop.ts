@@ -41,5 +41,7 @@ export const shopFragment = gql`
       host
     }
     name
+    reserveStockDurationAnonymousUser
+    reserveStockDurationAuthenticatedUser
   }
 `;

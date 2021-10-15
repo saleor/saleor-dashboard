@@ -11,14 +11,14 @@ import { useIntl } from "react-intl";
 
 import { SiteSettingsPageFormData } from "../SiteSettingsPage";
 
-interface SiteSettingsDetailsProps {
+interface SiteDetailsSettingsCardProps {
   data: SiteSettingsPageFormData;
   errors: ShopErrorFragment[];
   disabled: boolean;
   onChange: (event: React.ChangeEvent<any>) => void;
 }
 
-const SiteSettingsDetails: React.FC<SiteSettingsDetailsProps> = ({
+const SiteDetailsSettingsCard: React.FC<SiteDetailsSettingsCardProps> = ({
   data,
   disabled,
   errors,
@@ -104,5 +104,5 @@ const SiteSettingsDetails: React.FC<SiteSettingsDetailsProps> = ({
     </Card>
   );
 };
-SiteSettingsDetails.displayName = "SiteSettingsDetails";
-export default SiteSettingsDetails;
+SiteDetailsSettingsCard.displayName = "SiteDetailsSettingsCard";
+export default SiteDetailsSettingsCard;

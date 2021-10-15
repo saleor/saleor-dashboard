@@ -227,7 +227,7 @@ export interface ProductUpdatePageFormData extends MetadataFormData {
   trackInventory: boolean;
   weight: string;
   isPreorder: boolean;
-  globalThreshold: number;
+  globalThreshold: string;
   globalSoldUnits: number;
   hasPreorderEndDate: boolean;
   preorderEndDateTime?: string;
@@ -273,7 +273,7 @@ export function getProductUpdatePageFormData(
     trackInventory: !!variant?.trackInventory,
     weight: product?.weight?.value.toString() || "",
     isPreorder: !!variant?.preorder || false,
-    globalThreshold: variant?.preorder?.globalThreshold || 0,
+    globalThreshold: variant?.preorder?.globalThreshold?.toString() || "",
     globalSoldUnits: variant?.preorder?.globalSoldUnits || 0,
     hasPreorderEndDate: !!variant?.preorder?.endDate,
     preorderEndDateTime: variant?.preorder?.endDate
