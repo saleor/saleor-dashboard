@@ -212,19 +212,19 @@
     "string": "No orders ready to fulfill"
   },
   "homeNotificationTableOrders": {
-    "string": "{amount, plural,one {One order is ready to fulfill} other {{amount} Orders are ready to fulfill}}"
+    "string": "{amount, plural,one {One order is ready to fulfill} other {{amount} orders are ready to fulfill}}"
   },
   "homeNotificationTablePayments": {
-    "string": "{amount, plural,one {One payment to capture}other {{amount} Payments to capture}}"
+    "string": "{amount, plural,one {One payment to capture}other {{amount} payments to capture}}"
   },
   "homeNotificationTableProducts": {
-    "string": "{amount, plural,one {One product out of stock}other {{amount} Products out of stock}}"
+    "string": "{amount, plural,one {One product out of stock}other {{amount} products out of stock}}"
   },
   "homeNotificationsNoPayments": {
     "string": "No payments waiting for capture"
   },
   "homeNotificationsTableNoProducts": {
-    "string": "No products out of stock"
+    "string": "No products are out of stock"
   },
   "homeProductListCardOrders": {
     "context": "number of ordered products",
