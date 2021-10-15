@@ -411,7 +411,10 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
       productUrl(id, {
         action: "assign-attribute-value",
         id: attribute.id
-      })
+      }),
+      false,
+      false,
+      true
     );
 
   const disableFormSave =
