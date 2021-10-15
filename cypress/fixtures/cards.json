@@ -35,7 +35,6 @@
     }
   },
   "stripe":{
-    "publicApiKey": "pk_test_vCGxadUDOSzXpcRVZdKNo4V600j3JQOm6l",
     "simpleCardNumber": "5555555555554444"
   }
 }

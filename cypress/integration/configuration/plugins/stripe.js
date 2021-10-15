@@ -3,18 +3,23 @@
 
 import faker from "faker";
 
-import { urlList } from "../../../fixtures/urlList";
+import { stripeConfirmationUrl, urlList } from "../../../fixtures/urlList";
 import {
   addShippingMethod,
   completeCheckout,
   createCheckout
 } from "../../../support/api/requests/Checkout";
 import { getOrder } from "../../../support/api/requests/Order";
+import {
+  getPaymentMethodStripeId,
+  sendConfirmationToStripe
+} from "../../../support/api/requests/stripe";
 import { getDefaultChannel } from "../../../support/api/utils/channelsUtils";
 import { addStripePayment } from "../../../support/api/utils/ordersUtils";
 import {
   createProductInChannel,
   createTypeAttributeAndCategoryForProduct,
+  deleteProductsAndCreateNewOneWithNewDataAndDefaultChannel,
   deleteProductsStartsWith
 } from "../../../support/api/utils/products/productsUtils";
 import {
@@ -28,6 +33,8 @@ filterTests({ definedTags: ["stagedOnly"] }, () => {
     const startsWith = "Stripe-";
     const name = startsWith + faker.datatype.number();
     const email = `example@example.com`;
+    // TODO - remove secretKey and add in github to secrets
+    const stripeAuthBearer = `Bearer sk_test_u2tDALpvCQxFVEMKyIcGwjEP00DqpiRdiq`;
 
     let address;
     let defaultChannel;
@@ -40,53 +47,56 @@ filterTests({ definedTags: ["stagedOnly"] }, () => {
 
     before(() => {
       cy.clearSessionData().loginUserViaRequest();
-      deleteProductsStartsWith(startsWith);
       deleteShippingStartsWith(startsWith);
       cy.fixture("cards").then(({ stripe }) => {
         paymentCards = stripe;
         cardData = {
-          token: paymentCards.token,
+          publicKey: paymentCards.publicApiKey,
           encryptedExpiryMonth: "10",
           encryptedExpiryYear: "24",
           encryptedSecurityCode: "123"
         };
       });
-      cy.fixture("addresses")
-        .then(addresses => {
-          address = addresses.usAddress;
-          getDefaultChannel();
-        })
-        .then(channelResp => {
-          defaultChannel = channelResp;
-          createShipping({
-            channelId: channelResp.id,
-            name,
-            address,
-            price: 10
-          });
-        })
-        .then(
-          ({
-            warehouse: warehouseResp,
-            shippingZone: shippingZoneResp,
-            shippingMethod: shippingMethodResp
-          }) => {
-            warehouse = warehouseResp;
-            shippingMethod = shippingMethodResp;
-          }
-        );
-      createTypeAttributeAndCategoryForProduct({ name })
-        .then(({ productType, attribute, category }) => {
-          createProductInChannel({
-            name,
-            channelId: defaultChannel.id,
-            warehouseId: warehouse.id,
-            productTypeId: productType.id,
-            attributeId: attribute.id,
-            categoryId: category.id
-          });
-        })
-        .then(({ variantsList: variants }) => (variantsList = variants));
+      // cy.fixture("addresses")
+      //   .then(addresses => {
+      //     address = addresses.usAddress;
+      //     getDefaultChannel();
+      //   })
+      //   .then(channelResp => {
+      //     defaultChannel = channelResp;
+      //     createShipping({
+      //       channelId: channelResp.id,
+      //       name,
+      //       address,
+      //       price: 10
+      //     });
+      //   })
+      //   .then(
+      //     ({
+      //       warehouse: warehouseResp,
+      //       shippingZone: shippingZoneResp,
+      //       shippingMethod: shippingMethodResp
+      //     }) => {
+      //       warehouse = warehouseResp;
+      //       shippingMethod = shippingMethodResp;
+      //     }
+      //   );
+      // deleteProductsAndCreateNewOneWithNewDataAndDefaultChannel(startsWith)
+      //   .then(({ variantsList: variants }) => {
+      //     variantsList = variants
+      //   })
+      // createTypeAttributeAndCategoryForProduct({ name })
+      //   .then(({ productType, attribute, category }) => {
+      //     createProductInChannel({
+      //       name,
+      //       channelId: defaultChannel.id,
+      //       warehouseId: warehouse.id,
+      //       productTypeId: productType.id,
+      //       attributeId: attribute.id,
+      //       categoryId: category.id
+      //     });
+      //   })
+      //   .then(({ variantsList: variants }) => (variantsList = variants));
     });
 
     beforeEach(() => {
@@ -105,32 +115,21 @@ filterTests({ definedTags: ["stagedOnly"] }, () => {
         })
         .then(({ checkout: checkoutResp }) => {
           checkout = checkoutResp;
-          addStripePayment(checkout.id, checkoutResp.totalPrice.gross.amount);
         });
     });
 
     it("should purchase products with simple card", () => {
       const simpleCard = cardData;
+      let paymentMethodId;
       simpleCard.encryptedCardNumber = paymentCards.simpleCardNumber;
-      cy.request({
-        url: urlList.stripeApi,
-        method: "POST",
-        form: true,
-        body: {
-          type: "card",
-          "card[number]": simpleCard.encryptedCardNumber,
-          "card[cvc]": 212,
-          "card[exp_month]": 10,
-          "card[exp_year]": 24,
-          pasted_fields: "number",
-          key: simpleCard.publicApiKey
-        },
-        headers: {
-          // TODO - remove secretKey and add in github to secrets
-          Authorization: `Bearer `
-        }
+      getPaymentMethodStripeId({
+        cardNumber: simpleCard.encryptedCardNumber,
+        cvc: 123,
+        expMonth: 10,
+        expYear: 50
       })
         .then(resp => {
+          paymentMethodId = resp.body.id;
           addStripePayment(
             checkout.id,
             checkout.totalPrice.gross.amount,
@@ -138,7 +137,14 @@ filterTests({ definedTags: ["stagedOnly"] }, () => {
           );
         })
         .then(() => {
-          completeCheckout(checkout.id, simpleCard);
+          completeCheckout(checkout.id);
+        })
+        .then(resp => {
+          const confirmationData = JSON.parse(resp.confirmationData);
+          sendConfirmationToStripe(paymentMethodId, confirmationData.id);
+        })
+        .then(() => {
+          completeCheckout(checkout.id);
         })
         .then(({ order }) => {
           getOrder(order.id);

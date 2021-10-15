@@ -107,15 +107,15 @@ export function deleteProductsStartsWith(startsWith) {
   );
 }
 
-export function loginDeleteProductsAndCreateNewOneWithNewDataAndDefaultChannel({
+export function deleteProductsAndCreateNewOneWithNewDataAndDefaultChannel({
   name,
-  description = name
+  description = name,
+  warehouseId
 }) {
   let defaultChannel;
   let collection;
   let attribute;
 
-  cy.clearSessionData().loginUserViaRequest();
   deleteProductsStartsWith(name);
   deleteCollectionsStartsWith(name);
   return getDefaultChannel()
@@ -136,8 +136,49 @@ export function loginDeleteProductsAndCreateNewOneWithNewDataAndDefaultChannel({
         channelId: defaultChannel.id,
         name,
         collectionId: collection.id,
-        description
+        description,
+        warehouseId
       });
     })
     .then(({ product: productResp }) => productResp);
+}
+
+export function createProductWithShipping({ name }) {
+  let address;
+  let warehouse;
+  let shippingMethod;
+
+  cy.fixture("addresses")
+    .then(addresses => {
+      address = addresses.usAddress;
+      getDefaultChannel();
+    })
+    .then(channelResp => {
+      createShipping({
+        channelId: channelResp.id,
+        name,
+        address,
+        price: 10
+      });
+    })
+    .then(
+      ({
+        warehouse: warehouseResp,
+        shippingZone: shippingZoneResp,
+        shippingMethod: shippingMethodResp
+      }) => {
+        warehouse = warehouseResp;
+        shippingMethod = shippingMethodResp;
+        deleteProductsAndCreateNewOneWithNewDataAndDefaultChannel({
+          name,
+          warehouse
+        });
+      }
+    )
+    .then(({ variantsList, product }) => ({
+      variantsList,
+      product,
+      warehouse,
+      shippingZone
+    }));
 }
