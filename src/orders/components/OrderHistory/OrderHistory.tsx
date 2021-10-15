@@ -213,11 +213,6 @@ export const getEventMessage = (
         defaultMessage: "Payment was captured",
         description: "order history message"
       });
-    case OrderEventsEnum.PAYMENT_FAILED:
-      return intl.formatMessage({
-        defaultMessage: "Payment failed",
-        description: "order history message"
-      });
     case OrderEventsEnum.PAYMENT_REFUNDED:
       return intl.formatMessage({
         defaultMessage: "Payment was refunded",
