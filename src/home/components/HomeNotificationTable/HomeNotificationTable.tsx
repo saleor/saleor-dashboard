@@ -15,7 +15,7 @@ import { PermissionEnum } from "@saleor/types/globalTypes";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import { HomeNotificationTableMessages as messages } from "./messages";
+import { homeNotificationTableMessages as messages } from "./messages";
 
 const useStyles = makeStyles(
   () => ({
