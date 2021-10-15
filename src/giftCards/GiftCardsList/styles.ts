@@ -12,7 +12,7 @@ export const useTableStyles = makeStyles(
       alignItems: "baseline"
     },
     colCardCode: {
-      minWidth: "47%"
+      minWidth: "auto"
     },
     colDelete: {
       width: "10%"
