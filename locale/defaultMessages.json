@@ -6731,6 +6731,10 @@
     "context": "max price in channel",
     "string": "Max. value"
   },
+  "src_dot_shipping_dot_components_dot_OrderValue_dot_1064401942": {
+    "context": "price rates info",
+    "string": "This rate will apply to all orders"
+  },
   "src_dot_shipping_dot_components_dot_OrderValue_dot_1449127001": {
     "string": "Min Value"
   },
@@ -6742,9 +6746,9 @@
     "context": "card title",
     "string": "Order Value"
   },
-  "src_dot_shipping_dot_components_dot_OrderValue_dot_4226393146": {
-    "context": "price rates info",
-    "string": "This rate will apply to all orders of all prices"
+  "src_dot_shipping_dot_components_dot_OrderValue_dot_491724403": {
+    "context": "checkbox label",
+    "string": "Restrict order value"
   },
   "src_dot_shipping_dot_components_dot_OrderValue_dot_507892781": {
     "context": "channel name",
@@ -6757,13 +6761,13 @@
     "context": "min price in channel",
     "string": "Min. value"
   },
-  "src_dot_shipping_dot_components_dot_OrderValue_dot_882649212": {
-    "context": "checkbox label",
-    "string": "There are no value limits"
-  },
   "src_dot_shipping_dot_components_dot_OrderWeight_dot_1064401942": {
     "context": "info text",
     "string": "This rate will apply to all orders"
+  },
+  "src_dot_shipping_dot_components_dot_OrderWeight_dot_1648082334": {
+    "context": "checkbox label",
+    "string": "Restrict order weight"
   },
   "src_dot_shipping_dot_components_dot_OrderWeight_dot_2211490913": {
     "context": "card title",
@@ -6771,10 +6775,6 @@
   },
   "src_dot_shipping_dot_components_dot_OrderWeight_dot_2935375344": {
     "string": "Min. Order Weight"
-  },
-  "src_dot_shipping_dot_components_dot_OrderWeight_dot_882649212": {
-    "context": "checkbox label",
-    "string": "There are no value limits"
   },
   "src_dot_shipping_dot_components_dot_OrderWeight_dot_959089677": {
     "string": "Max. Order Weight"
