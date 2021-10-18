@@ -120,6 +120,20 @@ export const ProductTypeUpdate: React.FC<ProductTypeUpdateProps> = ({
   ] = React.useState<string[]>([]);
 
   const handleProductTypeUpdate = async (formData: ProductTypeForm) => {
+    const operations = formData.variantAttributes.map(variantAttribute => ({
+      id: variantAttribute.value,
+      variantSelection: selectedVariantAttributes.includes(
+        variantAttribute.value
+      )
+    }));
+
+    const productAttributeUpdateResult = await updateProductAttributes({
+      variables: {
+        productTypeId: id,
+        operations
+      }
+    });
+
     const result = await updateProductType({
       variables: {
         id,
@@ -137,20 +151,6 @@ export const ProductTypeUpdate: React.FC<ProductTypeUpdateProps> = ({
           ),
           weight: formData.weight
         }
-      }
-    });
-
-    const operations = formData.variantAttributes.map(variantAttribute => ({
-      id: variantAttribute.value,
-      variantSelection: selectedVariantAttributes.includes(
-        variantAttribute.value
-      )
-    }));
-
-    const productAttributeUpdateResult = await updateProductAttributes({
-      variables: {
-        productTypeId: id,
-        operations
       }
     });
 
