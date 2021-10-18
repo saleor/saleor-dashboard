@@ -5,7 +5,6 @@ import SaveFilterTabDialog, {
   SaveFilterTabDialogFormData
 } from "@saleor/components/SaveFilterTabDialog";
 import TypeDeleteWarningDialog from "@saleor/components/TypeDeleteWarningDialog";
-import { DEFAULT_INITIAL_PAGINATION_DATA } from "@saleor/config";
 import useBulkActions from "@saleor/hooks/useBulkActions";
 import useListSettings from "@saleor/hooks/useListSettings";
 import useNavigator from "@saleor/hooks/useNavigator";
@@ -65,13 +64,7 @@ export const PageTypeList: React.FC<PageTypeListProps> = ({ params }) => {
   const intl = useIntl();
   const { settings } = useListSettings(ListViews.PAGES_LIST);
 
-  usePaginationReset(
-    pageTypeListUrl({
-      ...params,
-      ...DEFAULT_INITIAL_PAGINATION_DATA
-    }),
-    settings.rowNumber
-  );
+  usePaginationReset(pageTypeListUrl, params, settings.rowNumber);
 
   const paginationState = createPaginationState(settings.rowNumber, params);
   const queryVariables = React.useMemo(
