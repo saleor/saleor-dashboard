@@ -208,24 +208,6 @@
     "context": "subheader",
     "string": "Here is some information we gathered about your store"
   },
-  "homeNotificationTableNoOrders": {
-    "string": "No orders ready to fulfill"
-  },
-  "homeNotificationTableOrders": {
-    "string": "{amount, plural,one {One order is ready to fulfill} other {{amount} Orders are ready to fulfill}}"
-  },
-  "homeNotificationTablePayments": {
-    "string": "{amount, plural,one {One payment to capture}other {{amount} Payments to capture}}"
-  },
-  "homeNotificationTableProducts": {
-    "string": "{amount, plural,one {One product out of stock}other {{amount} Products out of stock}}"
-  },
-  "homeNotificationsNoPayments": {
-    "string": "No payments waiting for capture"
-  },
-  "homeNotificationsTableNoProducts": {
-    "string": "No products out of stock"
-  },
   "homeProductListCardOrders": {
     "context": "number of ordered products",
     "string": "{amount, plural,one {One ordered}other {{amount} Ordered}}"
@@ -3422,6 +3404,24 @@
   },
   "src_dot_home_dot_components_dot_HomeNotificationTable_dot_createNewChannel": {
     "string": "Create new channel"
+  },
+  "src_dot_home_dot_components_dot_HomeNotificationTable_dot_noOrders": {
+    "string": "No orders ready to fulfill"
+  },
+  "src_dot_home_dot_components_dot_HomeNotificationTable_dot_noPaymentWaiting": {
+    "string": "No payments waiting for capture"
+  },
+  "src_dot_home_dot_components_dot_HomeNotificationTable_dot_noProductsOut": {
+    "string": "No products are out of stock"
+  },
+  "src_dot_home_dot_components_dot_HomeNotificationTable_dot_orderReady": {
+    "string": "{amount, plural,one {One order is ready to fulfill} other {{amount} orders are ready to fulfill}}"
+  },
+  "src_dot_home_dot_components_dot_HomeNotificationTable_dot_paymentCapture": {
+    "string": "{amount, plural,one {One payment to capture}other {{amount} payments to capture}}"
+  },
+  "src_dot_home_dot_components_dot_HomeNotificationTable_dot_productOut": {
+    "string": "{amount, plural,one {One product out of stock}other {{amount} products out of stock}}"
   },
   "src_dot_hooks_dot_3382262667": {
     "string": "Variant {name} has been set as default."
