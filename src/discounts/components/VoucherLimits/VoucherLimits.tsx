@@ -1,6 +1,7 @@
-import { Card, CardContent, TextField } from "@material-ui/core";
+import { Card, CardContent, TextField, Typography } from "@material-ui/core";
 import CardTitle from "@saleor/components/CardTitle";
 import { ControlledCheckbox } from "@saleor/components/ControlledCheckbox";
+import { Grid } from "@saleor/components/Grid";
 import { DiscountErrorFragment } from "@saleor/fragments/types/DiscountErrorFragment";
 import { getFormErrors } from "@saleor/utils/errors";
 import getDiscountErrorMessage from "@saleor/utils/errors/discounts";
@@ -9,6 +10,7 @@ import { useIntl } from "react-intl";
 
 import { VoucherDetailsPageFormData } from "../VoucherDetailsPage";
 import messages from "./messages";
+import { useStyles } from "./styles";
 
 interface VoucherLimitsProps {
   data: VoucherDetailsPageFormData;
@@ -24,13 +26,14 @@ const VoucherLimits = ({
   onChange
 }: VoucherLimitsProps) => {
   const intl = useIntl();
+  const classes = useStyles();
 
   const formErrors = getFormErrors(["usageLimit"], errors);
 
   return (
     <Card>
       <CardTitle title={intl.formatMessage(messages.usageLimitsTitle)} />
-      <CardContent>
+      <CardContent className={classes.cardContent}>
         <ControlledCheckbox
           checked={data.hasUsageLimit}
           label={intl.formatMessage(messages.hasUsageLimit)}
@@ -38,20 +41,27 @@ const VoucherLimits = ({
           onChange={onChange}
         />
         {data.hasUsageLimit && (
-          <TextField
-            disabled={disabled}
-            error={!!formErrors.usageLimit}
-            helperText={getDiscountErrorMessage(formErrors.usageLimit, intl)}
-            label={intl.formatMessage(messages.usageLimit)}
-            name={"usageLimit" as keyof VoucherDetailsPageFormData}
-            value={data.usageLimit}
-            onChange={onChange}
-            type="number"
-            inputProps={{
-              min: 0
-            }}
-            fullWidth
-          />
+          <Grid variant="uniform">
+            <TextField
+              disabled={disabled}
+              error={!!formErrors.usageLimit}
+              helperText={getDiscountErrorMessage(formErrors.usageLimit, intl)}
+              label={intl.formatMessage(messages.usageLimit)}
+              name={"usageLimit" as keyof VoucherDetailsPageFormData}
+              value={data.usageLimit}
+              onChange={onChange}
+              type="number"
+              inputProps={{
+                min: 0
+              }}
+            />
+            <div className={classes.usesLeftLabelWrapper}>
+              <Typography variant="caption">
+                {intl.formatMessage(messages.usesLeftCaption)}
+              </Typography>
+              <Typography>1234567</Typography>
+            </div>
+          </Grid>
         )}
         <ControlledCheckbox
           checked={data.applyOncePerCustomer}
