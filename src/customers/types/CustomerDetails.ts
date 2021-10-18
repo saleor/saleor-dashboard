@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { PaymentChargeStatusEnum } from "./../../types/globalTypes";
+import { OrderPaymentStatusEnum } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL query operation: CustomerDetails
@@ -81,7 +81,7 @@ export interface CustomerDetails_user_orders_edges_node {
   id: string;
   created: any;
   number: string | null;
-  paymentStatus: PaymentChargeStatusEnum;
+  paymentStatus: OrderPaymentStatusEnum;
   total: CustomerDetails_user_orders_edges_node_total;
 }
 

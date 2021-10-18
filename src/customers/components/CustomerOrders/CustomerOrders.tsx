@@ -16,7 +16,11 @@ import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { maybe, renderCollection, transformPaymentStatus } from "../../../misc";
+import {
+  maybe,
+  renderCollection,
+  transformOrderPaymentStatus
+} from "../../../misc";
 import { CustomerDetails_user_orders_edges_node } from "../../types/CustomerDetails";
 
 const useStyles = makeStyles(
@@ -46,7 +50,7 @@ const CustomerOrders: React.FC<CustomerOrdersProps> = props => {
   const orderList = orders
     ? orders.map(order => ({
         ...order,
-        paymentStatus: transformPaymentStatus(order.paymentStatus, intl)
+        paymentStatus: transformOrderPaymentStatus(order.paymentStatus, intl)
       }))
     : undefined;
   return (
