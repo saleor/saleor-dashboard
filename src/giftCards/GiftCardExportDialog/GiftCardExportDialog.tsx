@@ -14,7 +14,7 @@ import {
   ExportSettingsFormData,
   exportSettingsInitialFormData
 } from "@saleor/products/components/ProductExportDialog/types";
-import { DialogActionHandlersProps } from "@saleor/utils/handlers/dialogActionHandlers";
+import { DialogProps } from "@saleor/types";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -26,10 +26,7 @@ import { giftCardExportDialogMessages as messages } from "./messages";
 import { useGiftCardExportMutation } from "./mutations";
 import { ExportGiftCards } from "./types/ExportGiftCards";
 
-const GiftCardExportDialog: React.FC<DialogActionHandlersProps> = ({
-  closeDialog,
-  open
-}) => {
+const GiftCardExportDialog: React.FC<DialogProps> = ({ onClose, open }) => {
   const intl = useIntl();
   const notify = useNotifier();
   const { queue } = useBackgroundTask();
@@ -61,7 +58,7 @@ const GiftCardExportDialog: React.FC<DialogActionHandlersProps> = ({
         id: data.exportGiftCards.exportFile.id
       });
 
-      closeDialog();
+      onClose();
     }
   };
 
@@ -73,8 +70,8 @@ const GiftCardExportDialog: React.FC<DialogActionHandlersProps> = ({
     exportGiftCards({
       variables: {
         input: {
-          fileType: data?.fileType,
-          scope: data?.scope
+          fileType: data.fileType,
+          scope: data.scope
         }
       }
     });
@@ -86,7 +83,7 @@ const GiftCardExportDialog: React.FC<DialogActionHandlersProps> = ({
   );
 
   return (
-    <Dialog onClose={closeDialog} open={open} maxWidth="sm" fullWidth>
+    <Dialog onClose={onClose} open={open} maxWidth="sm" fullWidth>
       <DialogTitle>
         <FormattedMessage {...messages.title} />
       </DialogTitle>
