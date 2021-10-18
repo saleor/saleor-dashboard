@@ -7,7 +7,6 @@ import SaveFilterTabDialog, {
   SaveFilterTabDialogFormData
 } from "@saleor/components/SaveFilterTabDialog";
 import { WindowTitle } from "@saleor/components/WindowTitle";
-import { DEFAULT_INITIAL_PAGINATION_DATA } from "@saleor/config";
 import useBulkActions from "@saleor/hooks/useBulkActions";
 import useListSettings from "@saleor/hooks/useListSettings";
 import useNavigator from "@saleor/hooks/useNavigator";
@@ -65,13 +64,7 @@ export const VoucherList: React.FC<VoucherListProps> = ({ params }) => {
     ListViews.VOUCHER_LIST
   );
 
-  usePaginationReset(
-    voucherListUrl({
-      ...params,
-      ...DEFAULT_INITIAL_PAGINATION_DATA
-    }),
-    settings.rowNumber
-  );
+  usePaginationReset(voucherListUrl, params, settings.rowNumber);
 
   const intl = useIntl();
 
