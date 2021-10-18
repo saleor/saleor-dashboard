@@ -15,8 +15,8 @@ import {
   getEmployeeNameLink,
   getOrderNumberLink,
   hasOrderLineDiscountWithNoPreviousValue,
-  isPaymentEvent,
-  isTimelineEventOfDiscountType
+  isTimelineEventOfDiscountType,
+  isTimelineEventOfType
 } from "./utils";
 
 const useStyles = makeStyles(
@@ -240,27 +240,13 @@ const ExtendedTimelineEvent: React.FC<ExtendedTimelineEventProps> = ({
       case OrderEventsEnum.DRAFT_CREATED_FROM_REPLACE: {
         return [title, orderNumber, by, employeeName];
       }
-      case OrderEventsEnum.ORDER_DISCOUNT_AUTOMATICALLY_UPDATED: {
-        return [title];
-      }
-      case OrderEventsEnum.PAYMENT_AUTHORIZED: {
-        return [title];
-      }
-      case OrderEventsEnum.PAYMENT_CAPTURED: {
-        return [title];
-      }
-      case OrderEventsEnum.PAYMENT_CAPTURE_FAILED: {
-        return [title];
-      }
-      case OrderEventsEnum.PAYMENT_REFUNDED: {
-        return [title];
-      }
-      case OrderEventsEnum.PAYMENT_REFUND_FAILED: {
-        return [title];
-      }
-      case OrderEventsEnum.PAYMENT_VOIDED: {
-        return [title];
-      }
+      case OrderEventsEnum.ORDER_DISCOUNT_AUTOMATICALLY_UPDATED:
+      case OrderEventsEnum.PAYMENT_AUTHORIZED:
+      case OrderEventsEnum.PAYMENT_CAPTURED:
+      case OrderEventsEnum.PAYMENT_CAPTURE_FAILED:
+      case OrderEventsEnum.PAYMENT_REFUNDED:
+      case OrderEventsEnum.PAYMENT_REFUND_FAILED:
+      case OrderEventsEnum.PAYMENT_VOIDED:
       case OrderEventsEnum.PAYMENT_VOID_FAILED: {
         return [title];
       }
@@ -279,7 +265,7 @@ const ExtendedTimelineEvent: React.FC<ExtendedTimelineEventProps> = ({
     );
   }
 
-  if (isPaymentEvent(type)) {
+  if (isTimelineEventOfType("payment", type)) {
     return (
       <ExtendedPaymentTimelineEvent
         event={event}
