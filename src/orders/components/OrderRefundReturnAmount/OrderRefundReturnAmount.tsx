@@ -101,6 +101,7 @@ const useStyles = makeStyles(
       paddingBottom: 12
     },
     refundNotification: {
+      color: "#3D3D3D",
       backgroundColor: "#FFF4E4",
       padding: 20,
       borderRadius: 4,
