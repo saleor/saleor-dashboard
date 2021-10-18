@@ -23,7 +23,7 @@ function createDialogActionHandlers<
         id: undefined,
         ids: undefined
       }),
-      true
+      { replace: true }
     );
   const open = (action: TAction, newParams?: TParams) =>
     navigate(

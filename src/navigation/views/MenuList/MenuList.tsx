@@ -59,7 +59,7 @@ const MenuList: React.FC<MenuListProps> = ({ params }) => {
         id: undefined,
         ids: undefined
       }),
-      true
+      { replace: true }
     );
 
   const paginationState = createPaginationState(settings.rowNumber, params);

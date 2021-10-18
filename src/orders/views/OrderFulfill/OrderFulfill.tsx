@@ -35,7 +35,7 @@ const OrderFulfill: React.FC<OrderFulfillProps> = ({ orderId }) => {
   const [fulfillOrder, fulfillOrderOpts] = useOrderFulfill({
     onCompleted: data => {
       if (data.orderFulfill.errors.length === 0) {
-        navigate(orderUrl(orderId), true);
+        navigate(orderUrl(orderId), { replace: true });
         notify({
           status: "success",
           text: intl.formatMessage({

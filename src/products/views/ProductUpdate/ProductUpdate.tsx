@@ -412,9 +412,7 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
         action: "assign-attribute-value",
         id: attribute.id
       }),
-      false,
-      false,
-      false
+      { resetScroll: false }
     );
 
   const disableFormSave =
@@ -601,7 +599,7 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
         fetchReferenceProducts={searchProducts}
         fetchMoreReferenceProducts={fetchMoreReferenceProducts}
         fetchMoreAttributeValues={fetchMoreAttributeValues}
-        onCloseDialog={() => navigate(productUrl(id), false, false, false)}
+        onCloseDialog={() => navigate(productUrl(id), { resetScroll: false })}
         onAttributeSelectBlur={searchAttributeReset}
       />
       <ActionDialog

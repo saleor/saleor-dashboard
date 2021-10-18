@@ -99,7 +99,9 @@ export const ProductImage: React.FC<ProductMediaProps> = ({
         saveButtonBarState={updateResult.status}
       />
       <ActionDialog
-        onClose={() => navigate(productImageUrl(productId, mediaId), true)}
+        onClose={() =>
+          navigate(productImageUrl(productId, mediaId), { replace: true })
+        }
         onConfirm={handleDelete}
         open={params.action === "remove"}
         title={intl.formatMessage({

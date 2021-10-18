@@ -56,7 +56,7 @@ export function handleDelete(
       status: "success",
       text: intl.formatMessage(commonMessages.savedChanges)
     });
-    navigate(menuListUrl(), true);
+    navigate(menuListUrl(), { replace: true });
   }
 }
 

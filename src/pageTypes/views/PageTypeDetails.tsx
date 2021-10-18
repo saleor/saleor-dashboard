@@ -74,7 +74,7 @@ export const PageTypeDetails: React.FC<PageTypeDetailsProps> = ({
             defaultMessage: "Page type deleted"
           })
         });
-        navigate(pageTypeListUrl(), true);
+        navigate(pageTypeListUrl(), { replace: true });
       }
     }
   });
@@ -175,7 +175,7 @@ export const PageTypeDetails: React.FC<PageTypeDetailsProps> = ({
     return <NotFoundPage onBack={handleBack} />;
   }
 
-  const closeModal = () => navigate(pageTypeUrl(id), true);
+  const closeModal = () => navigate(pageTypeUrl(id), { replace: true });
 
   const handleSubmit = createMetadataUpdateHandler(
     data?.pageType,

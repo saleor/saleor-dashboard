@@ -18,7 +18,7 @@ function createSortHandler<T extends string>(
         ...getSortUrlVariables(field, params),
         ...DEFAULT_INITIAL_PAGINATION_DATA
       }),
-      true
+      { replace: true }
     );
 }
 

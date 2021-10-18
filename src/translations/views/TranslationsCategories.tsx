@@ -49,7 +49,7 @@ const TranslationsCategories: React.FC<TranslationsCategoriesProps> = ({
         stringifyQs({
           activeField: field
         }),
-      true
+      { replace: true }
     );
   const onUpdate = (data: UpdateCategoryTranslations) => {
     if (data.categoryTranslate.errors.length === 0) {
@@ -58,11 +58,11 @@ const TranslationsCategories: React.FC<TranslationsCategoriesProps> = ({
         status: "success",
         text: intl.formatMessage(commonMessages.savedChanges)
       });
-      navigate("?", true);
+      navigate("?", { replace: true });
     }
   };
   const onDiscard = () => {
-    navigate("?", true);
+    navigate("?", { replace: true });
   };
 
   return (

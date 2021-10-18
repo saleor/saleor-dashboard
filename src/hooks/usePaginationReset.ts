@@ -18,7 +18,7 @@ export function usePaginationReset<T extends Pagination>(
           ...params,
           ...DEFAULT_INITIAL_PAGINATION_DATA
         }),
-        true
+        {replace: true}
       ),
     [rowNumber]
   );
@@ -29,7 +29,7 @@ export function usePaginationReset<T extends Pagination>(
         urlFunc({
           ...params
         }),
-        true
+        {replace: true}
       ),
     [params.before, params.after]
   );

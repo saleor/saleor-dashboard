@@ -2,9 +2,11 @@ import useRouter from "use-react-router";
 
 export type UseNavigatorResult = (
   url: string,
-  replace?: boolean,
-  preserveQs?: boolean,
-  resetScroll?: boolean
+  opts?: {
+    replace?: boolean;
+    preserveQs?: boolean;
+    resetScroll?: boolean;
+  }
 ) => void;
 function useNavigator(): UseNavigatorResult {
   const {
@@ -14,9 +16,7 @@ function useNavigator(): UseNavigatorResult {
 
   return (
     url: string,
-    replace = false,
-    preserveQs = false,
-    resetScroll = true
+    { replace = false, preserveQs = false, resetScroll = true }
   ) => {
     const targetUrl = preserveQs ? url + search : url;
     if (replace) {
