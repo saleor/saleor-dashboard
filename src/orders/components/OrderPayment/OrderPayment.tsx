@@ -8,7 +8,7 @@ import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { maybe, transformPaymentStatus } from "../../../misc";
+import { maybe, transformOrderPaymentStatus } from "../../../misc";
 import {
   OrderAction,
   OrderDiscountType,
@@ -55,7 +55,7 @@ const OrderPayment: React.FC<OrderPaymentProps> = props => {
   const canMarkAsPaid = maybe(() => order.actions, []).includes(
     OrderAction.MARK_AS_PAID
   );
-  const payment = transformPaymentStatus(
+  const payment = transformOrderPaymentStatus(
     maybe(() => order.paymentStatus),
     intl
   );

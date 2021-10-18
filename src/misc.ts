@@ -17,8 +17,8 @@ import {
   AddressInput,
   CountryCode,
   DateRangeInput,
-  OrderStatus,
-  PaymentChargeStatusEnum
+  OrderPaymentStatusEnum,
+  OrderStatus
 } from "./types/globalTypes";
 
 export type RequireAtLeastOne<T, Keys extends keyof T = keyof T> = Pick<
@@ -91,27 +91,27 @@ const paymentStatusMessages = defineMessages({
   }
 });
 
-export const transformPaymentStatus = (
+export const transformOrderPaymentStatus = (
   status: string,
   intl: IntlShape
 ): { localized: string; status: StatusLabelProps["status"] } => {
   switch (status) {
-    case PaymentChargeStatusEnum.PARTIALLY_CHARGED:
+    case OrderPaymentStatusEnum.PARTIALLY_CHARGED:
       return {
         localized: intl.formatMessage(paymentStatusMessages.partiallyPaid),
         status: "error"
       };
-    case PaymentChargeStatusEnum.FULLY_CHARGED:
+    case OrderPaymentStatusEnum.FULLY_CHARGED:
       return {
         localized: intl.formatMessage(paymentStatusMessages.paid),
         status: "success"
       };
-    case PaymentChargeStatusEnum.PARTIALLY_REFUNDED:
+    case OrderPaymentStatusEnum.PARTIALLY_REFUNDED:
       return {
         localized: intl.formatMessage(paymentStatusMessages.partiallyRefunded),
         status: "error"
       };
-    case PaymentChargeStatusEnum.FULLY_REFUNDED:
+    case OrderPaymentStatusEnum.FULLY_REFUNDED:
       return {
         localized: intl.formatMessage(paymentStatusMessages.refunded),
         status: "success"
