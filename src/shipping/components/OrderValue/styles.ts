@@ -2,9 +2,6 @@ import { makeStyles } from "@saleor/macaw-ui";
 
 export const useStyles = makeStyles(
   theme => ({
-    caption: {
-      marginBottom: theme.spacing(2)
-    },
     colName: {
       fontSize: 14,
       paddingLeft: 0,
@@ -16,11 +13,7 @@ export const useStyles = makeStyles(
       width: 200
     },
     content: {
-      "&:last-child": {
-        paddingBottom: 0
-      },
-      paddingLeft: 0,
-      paddingRight: 0
+      padding: theme.spacing(3, 0, 3, 0)
     },
     info: {
       fontSize: 14
@@ -29,7 +22,7 @@ export const useStyles = makeStyles(
       verticalAlign: "top"
     },
     subheader: {
-      padding: theme.spacing(0, 3, 2, 3)
+      padding: theme.spacing(0, 3, 0, 3)
     },
     table: {
       tableLayout: "fixed"

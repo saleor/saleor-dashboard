@@ -72,7 +72,7 @@ export interface ProductCreateFormData extends MetadataFormData {
   taxCode: string;
   trackInventory: boolean;
   isPreorder: boolean;
-  globalThreshold: number;
+  globalThreshold: string;
   globalSoldUnits: number;
   hasPreorderEndDate: boolean;
   preorderEndDateTime: string;
@@ -185,7 +185,7 @@ function useProductCreateForm(
     trackInventory: false,
     weight: "",
     globalSoldUnits: 0,
-    globalThreshold: 0,
+    globalThreshold: "",
     isPreorder: false,
     hasPreorderEndDate: false,
     preorderEndDateTime: ""

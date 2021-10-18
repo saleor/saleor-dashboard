@@ -23,6 +23,7 @@ import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { giftCardUpdatePageHeaderMessages as giftCardStatusChipMessages } from "../../GiftCardUpdate/GiftCardUpdatePageHeader/messages";
+import GiftCardListSearchAndFilters from "../GiftCardListSearchAndFilters";
 import { giftCardsListTableMessages as messages } from "../messages";
 import useGiftCardListDialogs from "../providers/GiftCardListDialogsProvider/hooks/useGiftCardListDialogs";
 import useGiftCardList from "../providers/GiftCardListProvider/hooks/useGiftCardList";
@@ -77,6 +78,7 @@ const GiftCardsListTable: React.FC = () => {
 
   return (
     <Card>
+      <GiftCardListSearchAndFilters />
       <ResponsiveTable>
         <GiftCardsListTableHeader />
         <GiftCardsListTableFooter />

@@ -4,6 +4,8 @@ export const PRODUCTS_LIST = {
   createProductBtn: "[data-test='add-product']",
   searchProducts: "[placeholder='Search Products...']",
   emptyProductRow: "[data-test-id='skeleton']",
+  productImage: "[class='MuiAvatar-img']",
+  tableCellAvatar: "[data-test-id='tableCellAvatar']",
   productRowElements: {
     name: '[data-test="name"]',
     type: '[data-test="product-type"]',
