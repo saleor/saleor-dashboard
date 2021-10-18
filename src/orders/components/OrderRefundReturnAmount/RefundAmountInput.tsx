@@ -52,7 +52,7 @@ interface RefundAmountInputProps {
 
 const messages = defineMessages({
   amountTooBig: {
-    defaultMessage: "Amount cannot be bigger than max refund",
+    defaultMessage: "Amount cannot be bigger than methods captured amount",
     description: "Amount error message"
   },
   amountTooSmall: {

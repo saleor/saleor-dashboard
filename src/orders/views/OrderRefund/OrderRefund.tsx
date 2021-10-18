@@ -116,7 +116,7 @@ const OrderRefund: React.FC<OrderRefundProps> = ({ orderId }) => {
   ) => {
     const response = await refundOrder({
       variables: {
-        // TODO amount ?
+        // TODO: remove amount
         amount: 0,
         id: orderId,
         paymentsToRefund: formData.paymentsToRefund

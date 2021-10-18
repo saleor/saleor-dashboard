@@ -234,21 +234,24 @@ export const getPaymentsAmount = (
   payments: OrderRefundData_order_payments[]
 ) => {
   const amounts = [];
-  let remainingAmount = (refundTotalAmount && refundTotalAmount.amount) || 0.0;
-  for (const payment of payments) {
-    const amount =
-      remainingAmount >= payment.capturedAmount.amount
-        ? payment.capturedAmount.amount
-        : remainingAmount > 0
-        ? remainingAmount
-        : 0;
+  if (payments) {
+    let remainingAmount =
+      (refundTotalAmount && refundTotalAmount.amount) || 0.0;
+    for (const payment of payments) {
+      const amount =
+        remainingAmount >= payment.capturedAmount.amount
+          ? payment.capturedAmount.amount
+          : remainingAmount > 0
+          ? remainingAmount
+          : 0;
 
-    remainingAmount -= amount;
-    amounts.push({
-      id: payment.id,
-      amount,
-      currency: payment.capturedAmount.currency
-    });
+      remainingAmount -= amount;
+      amounts.push({
+        id: payment.id,
+        amount,
+        currency: payment.capturedAmount.currency
+      });
+    }
   }
   return amounts;
 };

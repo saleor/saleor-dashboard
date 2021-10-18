@@ -89,6 +89,10 @@ const useStyles = makeStyles(
       paddingBottom: 12,
       width: "100%"
     },
+    paymentCellManual: {
+      paddingLeft: "0!important",
+      paddingRight: 0
+    },
     amountCell: {
       fontWeight: 600,
       paddingLeft: 5,
@@ -201,11 +205,13 @@ const OrderRefundAmount: React.FC<OrderRefundAmountProps> = props => {
     ? disableSubmitButton ||
       isAmountTooSmall ||
       isAmountTooBig ||
-      remainingBalance?.amount < 0
+      (remainingBalance?.amount < 0 &&
+        data.amountCalculationMode === OrderRefundAmountCalculationMode.MANUAL)
     : !selectedRefundAmount ||
       isAmountTooBig ||
       isAmountTooSmall ||
-      remainingBalance?.amount < 0;
+      (remainingBalance?.amount < 0 &&
+        data.amountCalculationMode === OrderRefundAmountCalculationMode.MANUAL);
 
   const paymentsAmount = getPaymentsAmount(refundTotalAmount, payments);
 
@@ -353,33 +359,7 @@ const OrderRefundAmount: React.FC<OrderRefundAmountProps> = props => {
                 </Table>
                 <Table>
                   <TableBody>
-                    {order &&
-                      renderCollection(
-                        order.payments.filter(
-                          payment =>
-                            payment.availableRefundAmount?.amount === 0 ||
-                            payment.availableRefundAmount === null
-                        ),
-                        payment => (
-                          <TableRow
-                            key={payment.id}
-                            className={classes.sortableRow}
-                          >
-                            <TableCell className={classes.paymentCell}>
-                              {payment.gatewayName}
-                              <Typography
-                                variant="caption"
-                                color="textSecondary"
-                              >
-                                <FormattedMessage
-                                  defaultMessage={"Fully refunded"}
-                                  description={"payment status"}
-                                />
-                              </Typography>
-                            </TableCell>
-                          </TableRow>
-                        )
-                      )}
+                    <OrderRefundedPayments order={order} isManual={false} />
                   </TableBody>
                 </Table>
               </>
@@ -412,33 +392,47 @@ const OrderRefundAmount: React.FC<OrderRefundAmountProps> = props => {
                   selectedProductsValue={selectedProductsValue}
                   shipmentCost={data.refundShipmentCosts && shipmentCost}
                 />
-                {order &&
-                  renderCollection(
-                    order.payments.filter(
-                      payment => payment.availableRefundAmount?.amount > 0
-                    ),
-                    payment => (
-                      <div key={payment.id}>
-                        {payment.gatewayName}
-                        <RefundAmountInput
-                          payment={payment}
-                          data={data as OrderRefundFormData}
-                          amountTooSmall={isAmountTooSmall}
-                          amountTooBig={isAmountTooBig}
-                          currencySymbol={amountCurrency}
-                          disabled={disabled}
-                          onChange={event =>
-                            onPaymentAmountChange(
-                              payment.id,
-                              event.target.value
-                            )
-                          }
-                          errors={errors}
-                        />
-                        <Hr className={classes.hr} />
-                      </div>
-                    )
-                  )}
+                {previouslyRefunded?.amount < 0 && (
+                  <Typography className={classes.refundNotification}>
+                    <FormattedMessage
+                      defaultMessage="You cannot refund the whole value of selected products because of previous refunds"
+                      description="order refund"
+                    />
+                  </Typography>
+                )}
+                <Table>
+                  <TableBody>
+                    {order &&
+                      renderCollection(
+                        order.payments.filter(
+                          payment => payment.availableRefundAmount?.amount > 0
+                        ),
+                        payment => (
+                          <TableRow key={payment.id}>
+                            <TableCell className={classes.paymentCellManual}>
+                              {payment.gatewayName}
+                              <RefundAmountInput
+                                payment={payment}
+                                data={data as OrderRefundFormData}
+                                amountTooSmall={isAmountTooSmall}
+                                amountTooBig={isAmountTooBig}
+                                currencySymbol={amountCurrency}
+                                disabled={disabled}
+                                onChange={event =>
+                                  onPaymentAmountChange(
+                                    payment.id,
+                                    event.target.value
+                                  )
+                                }
+                                errors={errors}
+                              />
+                            </TableCell>
+                          </TableRow>
+                        )
+                      )}
+                    <OrderRefundedPayments order={order} isManual={true} />
+                  </TableBody>
+                </Table>
                 <CardSpacer />
                 <OrderRefundAmountValues remainingBalance={remainingBalance} />
                 <Typography
@@ -469,30 +463,47 @@ const OrderRefundAmount: React.FC<OrderRefundAmountProps> = props => {
                 description="order refund amount"
               />
             </Typography>
-            {order &&
-              renderCollection(
-                order.payments.filter(
-                  payment => payment.availableRefundAmount?.amount > 0
-                ),
-                payment => (
-                  <div key={payment.id}>
-                    {payment.gatewayName}
-                    <RefundAmountInput
-                      payment={payment}
-                      data={data as OrderRefundFormData}
-                      amountTooSmall={isAmountTooSmall}
-                      amountTooBig={isAmountTooBig}
-                      currencySymbol={amountCurrency}
-                      disabled={disabled}
-                      onChange={event =>
-                        onPaymentAmountChange(payment.id, event.target.value)
-                      }
-                      errors={errors}
-                    />
-                    <Hr className={classes.hr} />
-                  </div>
-                )
-              )}
+            {previouslyRefunded?.amount < 0 && (
+              <Typography className={classes.refundNotification}>
+                <FormattedMessage
+                  defaultMessage="You cannot refund the whole value of selected products because of previous refunds"
+                  description="order refund"
+                />
+              </Typography>
+            )}
+            <Table>
+              <TableBody>
+                {order &&
+                  renderCollection(
+                    order.payments.filter(
+                      payment => payment.availableRefundAmount?.amount > 0
+                    ),
+                    payment => (
+                      <TableRow key={payment.id}>
+                        <TableCell className={classes.paymentCellManual}>
+                          {payment.gatewayName}
+                          <RefundAmountInput
+                            payment={payment}
+                            data={data as OrderRefundFormData}
+                            amountTooSmall={isAmountTooSmall}
+                            amountTooBig={isAmountTooBig}
+                            currencySymbol={amountCurrency}
+                            disabled={disabled}
+                            onChange={event =>
+                              onPaymentAmountChange(
+                                payment.id,
+                                event.target.value
+                              )
+                            }
+                            errors={errors}
+                          />
+                        </TableCell>
+                      </TableRow>
+                    )
+                  )}
+                <OrderRefundedPayments order={order} isManual={false} />
+              </TableBody>
+            </Table>
           </>
         )}
         <Button
@@ -526,3 +537,44 @@ const OrderRefundAmount: React.FC<OrderRefundAmountProps> = props => {
 };
 OrderRefundAmount.displayName = "OrderRefundAmount";
 export default OrderRefundAmount;
+
+interface OrderRefundedPaymentsProps {
+  order: OrderRefundData_order | OrderDetails_order;
+  isManual: boolean;
+}
+
+const OrderRefundedPayments: React.FC<OrderRefundedPaymentsProps> = props => {
+  const { order, isManual } = props;
+
+  const classes = useStyles(props);
+
+  return (
+    <>
+      {order &&
+        renderCollection(
+          order.payments.filter(
+            payment =>
+              payment.availableRefundAmount?.amount === 0 ||
+              payment.availableRefundAmount === null
+          ),
+          payment => (
+            <TableRow key={payment.id} className={classes.sortableRow}>
+              <TableCell
+                className={
+                  isManual ? classes.paymentCellManual : classes.paymentCell
+                }
+              >
+                {payment.gatewayName}
+                <Typography variant="caption" color="textSecondary">
+                  <FormattedMessage
+                    defaultMessage={"Fully refunded"}
+                    description={"payment status"}
+                  />
+                </Typography>
+              </TableCell>
+            </TableRow>
+          )
+        )}
+    </>
+  );
+};
