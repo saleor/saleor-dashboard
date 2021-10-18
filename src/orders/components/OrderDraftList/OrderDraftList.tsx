@@ -11,8 +11,8 @@ import { makeStyles } from "@saleor/macaw-ui";
 import {
   maybe,
   renderCollection,
-  transformOrderStatus,
-  transformPaymentStatus
+  transformOrderPaymentStatus,
+  transformOrderStatus
 } from "@saleor/misc";
 import { OrderDraftListUrlSortField } from "@saleor/orders/urls";
 import { ListActions, ListProps, SortPage } from "@saleor/types";
@@ -85,7 +85,7 @@ export const OrderDraftList: React.FC<OrderDraftListProps> = props => {
   const orderDraftList = orders
     ? orders.map(order => ({
         ...order,
-        paymentStatus: transformPaymentStatus(order.paymentStatus, intl),
+        paymentStatus: transformOrderPaymentStatus(order.paymentStatus, intl),
         status: transformOrderStatus(order.status, intl)
       }))
     : undefined;

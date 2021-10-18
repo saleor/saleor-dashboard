@@ -8,6 +8,7 @@
 //==============================================================
 
 export enum AccountErrorCode {
+  ACCOUNT_NOT_CONFIRMED = "ACCOUNT_NOT_CONFIRMED",
   ACTIVATE_OWN_ACCOUNT = "ACTIVATE_OWN_ACCOUNT",
   ACTIVATE_SUPERUSER_ACCOUNT = "ACTIVATE_SUPERUSER_ACCOUNT",
   CHANNEL_INACTIVE = "CHANNEL_INACTIVE",
@@ -1342,6 +1343,8 @@ export enum OrderDiscountType {
 }
 
 export enum OrderErrorCode {
+  AMOUNT_TO_CAPTURE_TOO_BIG = "AMOUNT_TO_CAPTURE_TOO_BIG",
+  AMOUNT_TO_REFUND_TOO_BIG = "AMOUNT_TO_REFUND_TOO_BIG",
   BILLING_ADDRESS_NOT_SET = "BILLING_ADDRESS_NOT_SET",
   CANNOT_CANCEL_FULFILLMENT = "CANNOT_CANCEL_FULFILLMENT",
   CANNOT_CANCEL_ORDER = "CANNOT_CANCEL_ORDER",
@@ -1359,7 +1362,9 @@ export enum OrderErrorCode {
   NOT_AVAILABLE_IN_CHANNEL = "NOT_AVAILABLE_IN_CHANNEL",
   NOT_EDITABLE = "NOT_EDITABLE",
   NOT_FOUND = "NOT_FOUND",
+  ORDER_HAS_MULTIPLE_PAYMENTS = "ORDER_HAS_MULTIPLE_PAYMENTS",
   ORDER_NO_SHIPPING_ADDRESS = "ORDER_NO_SHIPPING_ADDRESS",
+  PAYMENTS_DO_NOT_BELONG_TO_ORDER = "PAYMENTS_DO_NOT_BELONG_TO_ORDER",
   PAYMENT_ERROR = "PAYMENT_ERROR",
   PAYMENT_MISSING = "PAYMENT_MISSING",
   PRODUCT_NOT_PUBLISHED = "PRODUCT_NOT_PUBLISHED",
@@ -1368,6 +1373,7 @@ export enum OrderErrorCode {
   SHIPPING_METHOD_NOT_APPLICABLE = "SHIPPING_METHOD_NOT_APPLICABLE",
   SHIPPING_METHOD_REQUIRED = "SHIPPING_METHOD_REQUIRED",
   TAX_ERROR = "TAX_ERROR",
+  TOO_MANY_OR_NONE_FIELDS_SPECIFIED = "TOO_MANY_OR_NONE_FIELDS_SPECIFIED",
   UNIQUE = "UNIQUE",
   VOID_INACTIVE_PAYMENT = "VOID_INACTIVE_PAYMENT",
   ZERO_QUANTITY = "ZERO_QUANTITY",
@@ -1420,7 +1426,6 @@ export enum OrderEventsEnum {
   PAYMENT_AUTHORIZED = "PAYMENT_AUTHORIZED",
   PAYMENT_CAPTURED = "PAYMENT_CAPTURED",
   PAYMENT_CAPTURE_FAILED = "PAYMENT_CAPTURE_FAILED",
-  PAYMENT_FAILED = "PAYMENT_FAILED",
   PAYMENT_REFUNDED = "PAYMENT_REFUNDED",
   PAYMENT_REFUND_FAILED = "PAYMENT_REFUND_FAILED",
   PAYMENT_VOIDED = "PAYMENT_VOIDED",
@@ -1430,6 +1435,15 @@ export enum OrderEventsEnum {
   REMOVED_PRODUCTS = "REMOVED_PRODUCTS",
   TRACKING_UPDATED = "TRACKING_UPDATED",
   UPDATED_ADDRESS = "UPDATED_ADDRESS",
+}
+
+export enum OrderPaymentStatusEnum {
+  FULLY_CHARGED = "FULLY_CHARGED",
+  FULLY_REFUNDED = "FULLY_REFUNDED",
+  NOT_CHARGED = "NOT_CHARGED",
+  OVERPAID = "OVERPAID",
+  PARTIALLY_CHARGED = "PARTIALLY_CHARGED",
+  PARTIALLY_REFUNDED = "PARTIALLY_REFUNDED",
 }
 
 export enum OrderSettingsErrorCode {
@@ -1458,6 +1472,7 @@ export enum OrderStatus {
 export enum OrderStatusFilter {
   CANCELED = "CANCELED",
   FULFILLED = "FULFILLED",
+  OVERPAID = "OVERPAID",
   PARTIALLY_FULFILLED = "PARTIALLY_FULFILLED",
   READY_TO_CAPTURE = "READY_TO_CAPTURE",
   READY_TO_FULFILL = "READY_TO_FULFILL",
@@ -1486,17 +1501,6 @@ export enum PageSortField {
 export enum PageTypeSortField {
   NAME = "NAME",
   SLUG = "SLUG",
-}
-
-export enum PaymentChargeStatusEnum {
-  CANCELLED = "CANCELLED",
-  FULLY_CHARGED = "FULLY_CHARGED",
-  FULLY_REFUNDED = "FULLY_REFUNDED",
-  NOT_CHARGED = "NOT_CHARGED",
-  PARTIALLY_CHARGED = "PARTIALLY_CHARGED",
-  PARTIALLY_REFUNDED = "PARTIALLY_REFUNDED",
-  PENDING = "PENDING",
-  REFUSED = "REFUSED",
 }
 
 export enum PermissionEnum {
@@ -2175,7 +2179,7 @@ export interface OrderDraftFilterInput {
 }
 
 export interface OrderFilterInput {
-  paymentStatus?: (PaymentChargeStatusEnum | null)[] | null;
+  paymentStatus?: (OrderPaymentStatusEnum | null)[] | null;
   status?: (OrderStatusFilter | null)[] | null;
   customer?: string | null;
   created?: DateRangeInput | null;
@@ -2223,6 +2227,7 @@ export interface OrderRefundLineInput {
 export interface OrderRefundProductsInput {
   orderLines?: OrderRefundLineInput[] | null;
   fulfillmentLines?: OrderRefundFulfillmentLineInput[] | null;
+  paymentsToRefund?: (PaymentToRefundInput | null)[] | null;
   amountToRefund?: any | null;
   includeShippingCosts?: boolean | null;
 }
@@ -2242,6 +2247,7 @@ export interface OrderReturnLineInput {
 export interface OrderReturnProductsInput {
   orderLines?: OrderReturnLineInput[] | null;
   fulfillmentLines?: OrderReturnFulfillmentLineInput[] | null;
+  paymentsToRefund?: (PaymentToRefundInput | null)[] | null;
   amountToRefund?: any | null;
   includeShippingCosts?: boolean | null;
   refund?: boolean | null;
@@ -2326,6 +2332,11 @@ export interface PageTypeUpdateInput {
   slug?: string | null;
   addAttributes?: string[] | null;
   removeAttributes?: string[] | null;
+}
+
+export interface PaymentToRefundInput {
+  paymentId: string;
+  amount?: any | null;
 }
 
 export interface PermissionGroupCreateInput {

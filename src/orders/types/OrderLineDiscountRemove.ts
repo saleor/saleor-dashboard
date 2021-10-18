@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { OrderErrorCode, AddressTypeEnum, OrderDiscountType, DiscountValueTypeEnum, OrderEventsEmailsEnum, OrderEventsEnum, FulfillmentStatus, PaymentChargeStatusEnum, OrderStatus, OrderAction, JobStatusEnum } from "./../../types/globalTypes";
+import { OrderErrorCode, AddressTypeEnum, OrderDiscountType, DiscountValueTypeEnum, OrderEventsEmailsEnum, OrderEventsEnum, FulfillmentStatus, OrderPaymentStatusEnum, OrderStatus, OrderAction, JobStatusEnum } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: OrderLineDiscountRemove
@@ -501,7 +501,7 @@ export interface OrderLineDiscountRemove_orderLineDiscountRemove_order {
   fulfillments: (OrderLineDiscountRemove_orderLineDiscountRemove_order_fulfillments | null)[];
   lines: (OrderLineDiscountRemove_orderLineDiscountRemove_order_lines | null)[];
   number: string | null;
-  paymentStatus: PaymentChargeStatusEnum;
+  paymentStatus: OrderPaymentStatusEnum;
   shippingAddress: OrderLineDiscountRemove_orderLineDiscountRemove_order_shippingAddress | null;
   shippingMethod: OrderLineDiscountRemove_orderLineDiscountRemove_order_shippingMethod | null;
   shippingMethodName: string | null;

@@ -2,8 +2,8 @@
 import { FormsetData } from "@saleor/hooks/useFormset";
 import {
   FulfillmentStatus,
-  OrderStatus,
-  PaymentChargeStatusEnum
+  OrderPaymentStatusEnum,
+  OrderStatus
 } from "@saleor/types/globalTypes";
 
 import { LineItemData } from "../components/OrderReturnPage/form";
@@ -54,7 +54,7 @@ const orderBase: OrderDetails_order = {
   created: "2018-09-11T09:37:30.124154+00:00",
   id: "T3JkZXI6MTk=",
   number: "19",
-  paymentStatus: PaymentChargeStatusEnum.FULLY_CHARGED,
+  paymentStatus: OrderPaymentStatusEnum.FULLY_CHARGED,
   status: OrderStatus.FULFILLED,
   // @ts-ignore
   total: {
