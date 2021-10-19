@@ -45,7 +45,8 @@ export interface FormData extends MetadataFormData {
   startDate: string;
   startTime: string;
   type: VoucherTypeEnum;
-  usageLimit: string;
+  usageLimit: number;
+  used: number;
   value: number;
 }
 
@@ -95,7 +96,8 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
     startDate: "",
     startTime: "",
     type: VoucherTypeEnum.ENTIRE_ORDER,
-    usageLimit: "0",
+    usageLimit: 0,
+    used: 0,
     value: 0,
     metadata: [],
     privateMetadata: []
