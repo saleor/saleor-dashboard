@@ -170,6 +170,38 @@
     "context": "order line discount updated title",
     "string": "{productName} discount was updated by "
   },
+  "event title payment authorize failed": {
+    "context": "authorize payment fail event title",
+    "string": "Payment authorize failed"
+  },
+  "event title payment authorized": {
+    "context": "authorized payment event title",
+    "string": "Payment authorized"
+  },
+  "event title payment capture failed": {
+    "context": "capture payment fail event title",
+    "string": "Payment capture failed"
+  },
+  "event title payment captured": {
+    "context": "captured payment event title",
+    "string": "Payment captured"
+  },
+  "event title payment refund failed": {
+    "context": "refund payment fail event title",
+    "string": "Refund failed"
+  },
+  "event title payment refunded": {
+    "context": "refund payment event title",
+    "string": "Payment refunded"
+  },
+  "event title payment void failed": {
+    "context": "void payment fail event title",
+    "string": "Payment void failed"
+  },
+  "event title payment voided": {
+    "context": "voided payment event title",
+    "string": "Payment voided"
+  },
   "event title refunded": {
     "context": "refunded event title",
     "string": "Products were refunded by "
@@ -4041,6 +4073,30 @@
   "src_dot_orders_dot_components_dot_OrderHistory_dot_ExtendedDiscountTimelineEvent_dot_reasonLabel": {
     "context": "reason for discount label",
     "string": "Reason for discount"
+  },
+  "src_dot_orders_dot_components_dot_OrderHistory_dot_ExtendedPaymentTimelineEvent_dot_authorizedAmount": {
+    "context": "authorize amount title",
+    "string": "Authorized amount"
+  },
+  "src_dot_orders_dot_components_dot_OrderHistory_dot_ExtendedPaymentTimelineEvent_dot_capturedAmount": {
+    "context": "capture amount title",
+    "string": "Captured amount"
+  },
+  "src_dot_orders_dot_components_dot_OrderHistory_dot_ExtendedPaymentTimelineEvent_dot_failReason": {
+    "context": "fail reason title",
+    "string": "Fail reason"
+  },
+  "src_dot_orders_dot_components_dot_OrderHistory_dot_ExtendedPaymentTimelineEvent_dot_pspReference": {
+    "context": "psp reference title",
+    "string": "PSP reference"
+  },
+  "src_dot_orders_dot_components_dot_OrderHistory_dot_ExtendedPaymentTimelineEvent_dot_refundedAmount": {
+    "context": "refund amount title",
+    "string": "Refunded amount"
+  },
+  "src_dot_orders_dot_components_dot_OrderHistory_dot_ExtendedPaymentTimelineEvent_dot_voidedAmount": {
+    "context": "void amount title",
+    "string": "Voided amount"
   },
   "src_dot_orders_dot_components_dot_OrderHistory_dot_description": {
     "context": "replacement created order history message description",

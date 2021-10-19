@@ -359,6 +359,7 @@ const OrderHistory: React.FC<OrderHistoryProps> = props => {
                   <ExtendedTimelineEvent
                     event={event}
                     orderCurrency={orderCurrency}
+                    key={id}
                   />
                 );
               }

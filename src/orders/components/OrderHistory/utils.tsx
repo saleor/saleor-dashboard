@@ -40,7 +40,14 @@ const timelineEventTypes = {
     OrderEventsEnum.ORDER_DISCOUNT_ADDED,
     OrderEventsEnum.ORDER_DISCOUNT_AUTOMATICALLY_UPDATED,
     OrderEventsEnum.ORDER_DISCOUNT_UPDATED,
-    OrderEventsEnum.ORDER_LINE_DISCOUNT_UPDATED
+    OrderEventsEnum.ORDER_LINE_DISCOUNT_UPDATED,
+    OrderEventsEnum.PAYMENT_CAPTURED,
+    OrderEventsEnum.PAYMENT_CAPTURE_FAILED,
+    OrderEventsEnum.PAYMENT_REFUNDED,
+    OrderEventsEnum.PAYMENT_REFUND_FAILED,
+    OrderEventsEnum.PAYMENT_VOIDED,
+    OrderEventsEnum.PAYMENT_VOID_FAILED,
+    OrderEventsEnum.PAYMENT_AUTHORIZED
   ],
   linked: [
     OrderEventsEnum.ORDER_REPLACEMENT_CREATED,
@@ -52,7 +59,21 @@ const timelineEventTypes = {
     OrderEventsEnum.OTHER,
     OrderEventsEnum.EXTERNAL_SERVICE_NOTIFICATION
   ],
-  secondaryTitle: [OrderEventsEnum.ORDER_MARKED_AS_PAID]
+  secondaryTitle: [OrderEventsEnum.ORDER_MARKED_AS_PAID],
+  payment: [
+    OrderEventsEnum.PAYMENT_AUTHORIZED,
+    OrderEventsEnum.PAYMENT_CAPTURED,
+    OrderEventsEnum.PAYMENT_CAPTURE_FAILED,
+    OrderEventsEnum.PAYMENT_REFUNDED,
+    OrderEventsEnum.PAYMENT_REFUND_FAILED,
+    OrderEventsEnum.PAYMENT_VOIDED,
+    OrderEventsEnum.PAYMENT_VOID_FAILED
+  ],
+  paymentFail: [
+    OrderEventsEnum.PAYMENT_CAPTURE_FAILED,
+    OrderEventsEnum.PAYMENT_REFUND_FAILED,
+    OrderEventsEnum.PAYMENT_VOID_FAILED
+  ]
 };
 
 export const isTimelineEventOfType = (
@@ -62,7 +83,9 @@ export const isTimelineEventOfType = (
     | "rawMessage"
     | "note"
     | "linked"
-    | "discount",
+    | "discount"
+    | "payment"
+    | "paymentFail",
   eventType: OrderEventsEnum
 ) => !!timelineEventTypes[type]?.includes(eventType);
 

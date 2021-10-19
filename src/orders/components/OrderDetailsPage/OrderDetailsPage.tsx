@@ -248,6 +248,7 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
                 {order?.fulfillments?.map(fulfillment => (
                   <React.Fragment key={fulfillment.id}>
                     <OrderFulfilledProductsCard
+                      key={fulfillment.id}
                       fulfillment={fulfillment}
                       orderNumber={order.number}
                       onOrderFulfillmentCancel={() =>

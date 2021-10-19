@@ -840,6 +840,9 @@ export const order = (placeholder: string): OrderDetails_order => ({
       relatedOrder: null,
       shippingCostsIncluded: false,
       transactionReference: "123",
+      pspReference: null,
+      grapqhlPaymentId: null,
+      paymentGateway: null,
       type: OrderEventsEnum.FULFILLMENT_FULFILLED_ITEMS,
       app: {
         id: "ZXCkcmVasdwoxTW==",
@@ -895,6 +898,9 @@ export const order = (placeholder: string): OrderDetails_order => ({
       relatedOrder: null,
       shippingCostsIncluded: true,
       transactionReference: "123",
+      pspReference: null,
+      grapqhlPaymentId: null,
+      paymentGateway: null,
       type: OrderEventsEnum.FULFILLMENT_REFUNDED,
       app: {
         id: "ZXCkcmVasdwoxTW==",
@@ -925,6 +931,9 @@ export const order = (placeholder: string): OrderDetails_order => ({
       relatedOrder: null,
       shippingCostsIncluded: false,
       transactionReference: "124",
+      pspReference: null,
+      grapqhlPaymentId: null,
+      paymentGateway: null,
       type: OrderEventsEnum.NOTE_ADDED,
       user: null,
       app: null
@@ -944,6 +953,9 @@ export const order = (placeholder: string): OrderDetails_order => ({
       relatedOrder: null,
       shippingCostsIncluded: false,
       transactionReference: "125",
+      pspReference: null,
+      grapqhlPaymentId: null,
+      paymentGateway: null,
       type: OrderEventsEnum.NOTE_ADDED,
       user: null,
       app: null
@@ -963,6 +975,9 @@ export const order = (placeholder: string): OrderDetails_order => ({
       relatedOrder: null,
       shippingCostsIncluded: false,
       transactionReference: "126",
+      pspReference: null,
+      grapqhlPaymentId: null,
+      paymentGateway: null,
       type: OrderEventsEnum.EXTERNAL_SERVICE_NOTIFICATION,
       user: null,
       app: null
@@ -982,6 +997,9 @@ export const order = (placeholder: string): OrderDetails_order => ({
       relatedOrder: null,
       shippingCostsIncluded: false,
       transactionReference: "127",
+      pspReference: null,
+      grapqhlPaymentId: null,
+      paymentGateway: null,
       type: OrderEventsEnum.EMAIL_SENT,
       user: null,
       app: null
@@ -1001,6 +1019,9 @@ export const order = (placeholder: string): OrderDetails_order => ({
       relatedOrder: null,
       shippingCostsIncluded: false,
       transactionReference: "128",
+      pspReference: null,
+      grapqhlPaymentId: null,
+      paymentGateway: null,
       type: OrderEventsEnum.EMAIL_SENT,
       user: null,
       app: null
@@ -1020,6 +1041,9 @@ export const order = (placeholder: string): OrderDetails_order => ({
       relatedOrder: null,
       shippingCostsIncluded: false,
       transactionReference: "129",
+      pspReference: null,
+      grapqhlPaymentId: null,
+      paymentGateway: null,
       type: OrderEventsEnum.PAYMENT_AUTHORIZED,
       user: null,
       app: null
