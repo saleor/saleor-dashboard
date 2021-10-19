@@ -160,6 +160,9 @@ export interface OrderDraftCancel_draftOrderDelete_order_events {
   discount: OrderDraftCancel_draftOrderDelete_order_events_discount | null;
   relatedOrder: OrderDraftCancel_draftOrderDelete_order_events_relatedOrder | null;
   message: string | null;
+  pspReference: string | null;
+  grapqhlPaymentId: string | null;
+  paymentGateway: string | null;
   quantity: number | null;
   transactionReference: string | null;
   type: OrderEventsEnum | null;

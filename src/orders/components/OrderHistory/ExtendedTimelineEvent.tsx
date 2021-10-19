@@ -9,12 +9,14 @@ import { defineMessages, useIntl } from "react-intl";
 
 import { OrderDetails_order_events } from "../../types/OrderDetails";
 import ExtendedDiscountTimelineEvent from "./ExtendedDiscountTimelineEvent";
+import ExtendedPaymentTimelineEvent from "./ExtendedPaymentTimelineEvent";
 import Label from "./Label";
 import {
   getEmployeeNameLink,
   getOrderNumberLink,
   hasOrderLineDiscountWithNoPreviousValue,
-  isTimelineEventOfDiscountType
+  isTimelineEventOfDiscountType,
+  isTimelineEventOfType
 } from "./utils";
 
 const useStyles = makeStyles(
@@ -114,6 +116,46 @@ export const titles = defineMessages({
     defaultMessage: "Order was marked as paid by",
     description: "order marked as paid event title",
     id: "event title marked as paid"
+  },
+  paymentRefunded: {
+    defaultMessage: "Payment refunded",
+    description: "refund payment event title",
+    id: "event title payment refunded"
+  },
+  paymentRefundFailed: {
+    defaultMessage: "Refund failed",
+    description: "refund payment fail event title",
+    id: "event title payment refund failed"
+  },
+  paymentAuthorized: {
+    defaultMessage: "Payment authorized",
+    description: "authorized payment event title",
+    id: "event title payment authorized"
+  },
+  paymentAuthorizedFailed: {
+    defaultMessage: "Payment authorize failed",
+    description: "authorize payment fail event title",
+    id: "event title payment authorize failed"
+  },
+  paymentCaptured: {
+    defaultMessage: "Payment captured",
+    description: "captured payment event title",
+    id: "event title payment captured"
+  },
+  paymentCaptureFailed: {
+    defaultMessage: "Payment capture failed",
+    description: "capture payment fail event title",
+    id: "event title payment capture failed"
+  },
+  paymentVoided: {
+    defaultMessage: "Payment voided",
+    description: "voided payment event title",
+    id: "event title payment voided"
+  },
+  paymentVoidFailed: {
+    defaultMessage: "Payment void failed",
+    description: "void payment fail event title",
+    id: "event title payment void failed"
   }
 });
 
@@ -198,7 +240,14 @@ const ExtendedTimelineEvent: React.FC<ExtendedTimelineEventProps> = ({
       case OrderEventsEnum.DRAFT_CREATED_FROM_REPLACE: {
         return [title, orderNumber, by, employeeName];
       }
-      case OrderEventsEnum.ORDER_DISCOUNT_AUTOMATICALLY_UPDATED: {
+      case OrderEventsEnum.ORDER_DISCOUNT_AUTOMATICALLY_UPDATED:
+      case OrderEventsEnum.PAYMENT_AUTHORIZED:
+      case OrderEventsEnum.PAYMENT_CAPTURED:
+      case OrderEventsEnum.PAYMENT_CAPTURE_FAILED:
+      case OrderEventsEnum.PAYMENT_REFUNDED:
+      case OrderEventsEnum.PAYMENT_REFUND_FAILED:
+      case OrderEventsEnum.PAYMENT_VOIDED:
+      case OrderEventsEnum.PAYMENT_VOID_FAILED: {
         return [title];
       }
       default: {
@@ -212,6 +261,16 @@ const ExtendedTimelineEvent: React.FC<ExtendedTimelineEventProps> = ({
       <ExtendedDiscountTimelineEvent
         event={event}
         titleElements={selectTitleElements()}
+      />
+    );
+  }
+
+  if (isTimelineEventOfType("payment", type)) {
+    return (
+      <ExtendedPaymentTimelineEvent
+        event={event}
+        titleElements={selectTitleElements()}
+        orderCurrency={orderCurrency}
       />
     );
   }

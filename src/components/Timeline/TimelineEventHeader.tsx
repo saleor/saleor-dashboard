@@ -60,10 +60,11 @@ export const TimelineEventHeader: React.FC<TimelineEventHeaderProps> = props => 
       {title && <Typography>{title}</Typography>}
       {titleElements && (
         <div className={classes.elementsContainer}>
-          {titleElements.filter(Boolean).map(({ text, link }) => {
+          {titleElements.filter(Boolean).map(({ text, link }, index) => {
             if (link) {
               return (
                 <Link
+                  key={`${text}-${index}`}
                   className={classes.titleElement}
                   onClick={() => navigate(link)}
                 >
@@ -73,7 +74,12 @@ export const TimelineEventHeader: React.FC<TimelineEventHeaderProps> = props => 
             }
 
             return (
-              <Typography className={classes.titleElement}>{text}</Typography>
+              <Typography
+                key={`${text}-${index}`}
+                className={classes.titleElement}
+              >
+                {text}
+              </Typography>
             );
           })}
         </div>

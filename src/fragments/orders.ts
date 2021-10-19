@@ -33,6 +33,9 @@ export const fragmentOrderEvent = gql`
       number
     }
     message
+    pspReference
+    grapqhlPaymentId
+    paymentGateway
     quantity
     transactionReference
     type
