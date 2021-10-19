@@ -3051,6 +3051,10 @@
     "context": "voucher usage limit, header",
     "string": "Usage Limit"
   },
+  "src_dot_discounts_dot_components_dot_VoucherLimits_dot_usesLeftCaption": {
+    "context": "usage limit uses left caption",
+    "string": "Uses left"
+  },
   "src_dot_discounts_dot_components_dot_VoucherListPage_dot_1112241061": {
     "context": "tab name",
     "string": "All Vouchers"
