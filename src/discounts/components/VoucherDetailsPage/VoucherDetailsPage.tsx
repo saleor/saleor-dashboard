@@ -74,7 +74,8 @@ export interface VoucherDetailsPageFormData extends MetadataFormData {
   startDate: string;
   startTime: string;
   type: VoucherTypeEnum;
-  usageLimit: string;
+  usageLimit: number;
+  used: number;
 }
 
 export interface VoucherDetailsPageProps
@@ -191,7 +192,8 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
     startDate: splitDateTime(voucher?.startDate ?? "").date,
     startTime: splitDateTime(voucher?.startDate ?? "").time,
     type: voucher?.type ?? VoucherTypeEnum.ENTIRE_ORDER,
-    usageLimit: voucher?.usageLimit?.toString() ?? "0",
+    usageLimit: voucher?.usageLimit ?? 0,
+    used: voucher?.used ?? 0,
     metadata: voucher?.metadata.map(mapMetadataItemToInput),
     privateMetadata: voucher?.privateMetadata.map(mapMetadataItemToInput)
   };

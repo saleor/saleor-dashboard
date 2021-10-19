@@ -30,6 +30,8 @@ const VoucherLimits = ({
 
   const formErrors = getFormErrors(["usageLimit"], errors);
 
+  const usesLeft = data.usageLimit - data.used;
+
   return (
     <Card>
       <CardTitle title={intl.formatMessage(messages.usageLimitsTitle)} />
@@ -59,7 +61,7 @@ const VoucherLimits = ({
               <Typography variant="caption">
                 {intl.formatMessage(messages.usesLeftCaption)}
               </Typography>
-              <Typography>1234567</Typography>
+              <Typography>{usesLeft}</Typography>
             </div>
           </Grid>
         )}
