@@ -20,23 +20,21 @@ import Savebar from "@saleor/components/Savebar";
 import Skeleton from "@saleor/components/Skeleton";
 import TableCellAvatar from "@saleor/components/TableCellAvatar";
 import { WarehouseFragment } from "@saleor/fragments/types/WarehouseFragment";
-import useFormset, { FormsetData } from "@saleor/hooks/useFormset";
+import { FormsetChange, FormsetData } from "@saleor/hooks/useFormset";
 import { Backlink } from "@saleor/macaw-ui";
 import { makeStyles } from "@saleor/macaw-ui";
 import { renderCollection } from "@saleor/misc";
-import { FulfillOrder_orderFulfill_errors } from "@saleor/orders/types/FulfillOrder";
 import {
   OrderFulfillData_order,
   OrderFulfillData_order_lines
 } from "@saleor/orders/types/OrderFulfillData";
-import {
-  OrderErrorCode,
-  OrderFulfillStockInput
-} from "@saleor/types/globalTypes";
+import { OrderFulfillStockInput } from "@saleor/types/globalTypes";
 import { update } from "@saleor/utils/lists";
 import classNames from "classnames";
-import React from "react";
+import React, { Dispatch, SetStateAction } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
+
+import { getAllocatedQuantityForLine } from "../OrderFulfillStockExceededDialog/utils";
 
 type ClassKey =
   | "actionBar"
@@ -47,10 +45,12 @@ type ClassKey =
   | "colQuantityTotal"
   | "colSku"
   | "error"
+  | "warning"
   | "full"
   | "quantityInnerInput"
   | "quantityInnerInputNoRemaining"
   | "remainingQuantity";
+
 const useStyles = makeStyles<OrderFulfillPageProps, ClassKey>(
   theme => {
     const inputPadding: CSSProperties = {
@@ -95,6 +95,10 @@ const useStyles = makeStyles<OrderFulfillPageProps, ClassKey>(
       error: {
         color: theme.palette.error.main
       },
+      warning: {
+        color: theme.palette.warning.main,
+        borderColor: theme.palette.warning.main + " !important"
+      },
       full: {
         fontWeight: 600
       },
@@ -121,13 +125,17 @@ const useStyles = makeStyles<OrderFulfillPageProps, ClassKey>(
 
 interface OrderFulfillFormData {
   sendInfo: boolean;
+  allowStockToBeExceeded: boolean;
 }
 interface OrderFulfillSubmitData extends OrderFulfillFormData {
   items: FormsetData<null, OrderFulfillStockInput[]>;
 }
 export interface OrderFulfillPageProps {
   loading: boolean;
-  errors: FulfillOrder_orderFulfill_errors[];
+  formsetChange: FormsetChange<OrderFulfillStockInput[]>;
+  formsetData: FormsetData<null, OrderFulfillStockInput[]>;
+  sendInfo: boolean;
+  setSendInfo: Dispatch<SetStateAction<boolean>>;
   order: OrderFulfillData_order;
   saveButtonBar: ConfirmButtonTransitionState;
   warehouses: WarehouseFragment[];
@@ -136,7 +144,8 @@ export interface OrderFulfillPageProps {
 }
 
 const initialFormData: OrderFulfillFormData = {
-  sendInfo: true
+  sendInfo: true,
+  allowStockToBeExceeded: false
 };
 
 function getRemainingQuantity(line: OrderFulfillData_order_lines): number {
@@ -150,39 +159,19 @@ function isFulfillable(line: OrderFulfillData_order_lines): boolean {
 const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
   const {
     loading,
-    errors,
     order,
     saveButtonBar,
     warehouses,
+    formsetData,
+    formsetChange,
+    sendInfo,
+    setSendInfo,
     onBack,
     onSubmit
   } = props;
 
   const intl = useIntl();
   const classes = useStyles(props);
-
-  const { change: formsetChange, data: formsetData } = useFormset<
-    null,
-    OrderFulfillStockInput[]
-  >(
-    order?.lines
-      .filter(line => isFulfillable(line))
-      .map(line => ({
-        data: null,
-        id: line.id,
-        label: line.variant.attributes
-          .map(attribute =>
-            attribute.values
-              .map(attributeValue => attributeValue.name)
-              .join(" , ")
-          )
-          .join(" / "),
-        value: line.variant.stocks.map(stock => ({
-          quantity: 0,
-          warehouse: stock.warehouse.id
-        }))
-      }))
-  );
 
   const handleSubmit = (formData: OrderFulfillFormData) =>
     onSubmit({
@@ -219,31 +208,6 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
     return isAtLeastOneFulfilled && areProperlyFulfilled;
   };
 
-  const isStockError = (
-    overfulfill: boolean,
-    formsetStock: { quantity: number },
-    availableQuantity: number,
-    warehouse: WarehouseFragment,
-    line: OrderFulfillData_order_lines,
-    errors: FulfillOrder_orderFulfill_errors[]
-  ) => {
-    if (overfulfill) {
-      return true;
-    }
-
-    const isQuantityLargerThanAvailable =
-      line.variant.trackInventory && formsetStock.quantity > availableQuantity;
-
-    const isError = !!errors?.find(
-      err =>
-        err.warehouse === warehouse.id &&
-        err.orderLines.find((id: string) => id === line.id) &&
-        err.code === OrderErrorCode.INSUFFICIENT_STOCK
-    );
-
-    return isQuantityLargerThanAvailable || isError;
-  };
-
   return (
     <Container>
       <Backlink onClick={onBack}>
@@ -274,7 +238,7 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
         )}
       />
       <Form initial={initialFormData} onSubmit={handleSubmit}>
-        {({ change, data, submit }) => (
+        {({ submit }) => (
           <>
             <Card>
               <CardTitle
@@ -295,6 +259,12 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
                         description="product's sku"
                       />
                     </TableCell>
+                    <TableCell className={classes.colQuantityTotal}>
+                      <FormattedMessage
+                        defaultMessage="Quantity to fulfill"
+                        description="quantity of fulfilled products"
+                      />
+                    </TableCell>
                     {warehouses?.map(warehouse => (
                       <TableCell
                         key={warehouse.id}
@@ -306,12 +276,6 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
                         {warehouse.name}
                       </TableCell>
                     ))}
-                    <TableCell className={classes.colQuantityTotal}>
-                      <FormattedMessage
-                        defaultMessage="Quantity to fulfill"
-                        description="quantity of fulfilled products"
-                      />
-                    </TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -327,6 +291,10 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
                             <TableCell className={classes.colSku}>
                               <Skeleton />
                             </TableCell>
+                            <TableCell className={classes.colQuantityTotal}>
+                              {" "}
+                              <Skeleton />
+                            </TableCell>
                             {warehouses?.map(warehouse => (
                               <TableCell
                                 className={classes.colQuantity}
@@ -335,10 +303,6 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
                                 <Skeleton />
                               </TableCell>
                             ))}
-                            <TableCell className={classes.colQuantityTotal}>
-                              {" "}
-                              <Skeleton />
-                            </TableCell>
                           </TableRow>
                         );
                       }
@@ -346,12 +310,14 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
                       const remainingQuantity = getRemainingQuantity(line);
                       const quantityToFulfill = formsetData[
                         lineIndex
-                      ].value.reduce(
+                      ]?.value.reduce(
                         (quantityToFulfill, lineInput) =>
                           quantityToFulfill + (lineInput.quantity || 0),
                         0
                       );
-                      const overfulfill = remainingQuantity < quantityToFulfill;
+                      const overfulfill =
+                        typeof quantityToFulfill === "number" &&
+                        remainingQuantity < quantityToFulfill;
 
                       return (
                         <TableRow key={line.id}>
@@ -373,13 +339,28 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
                           <TableCell className={classes.colSku}>
                             {line.variant.sku}
                           </TableCell>
+                          <TableCell
+                            className={classes.colQuantityTotal}
+                            key="total"
+                          >
+                            <span
+                              className={classNames({
+                                [classes.error]: overfulfill,
+                                [classes.full]:
+                                  remainingQuantity <= quantityToFulfill
+                              })}
+                            >
+                              {quantityToFulfill}
+                            </span>{" "}
+                            / {remainingQuantity}
+                          </TableCell>
                           {warehouses?.map(warehouse => {
                             const warehouseStock = line.variant.stocks.find(
                               stock => stock.warehouse.id === warehouse.id
                             );
                             const formsetStock = formsetData[
                               lineIndex
-                            ].value.find(
+                            ]?.value.find(
                               line => line.warehouse === warehouse.id
                             );
 
@@ -400,16 +381,20 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
                               );
                             }
 
-                            const warehouseAllocation = line.allocations.find(
-                              allocation =>
-                                allocation.warehouse.id === warehouse.id
+                            const allocatedQuantityForLine = getAllocatedQuantityForLine(
+                              line,
+                              warehouse
                             );
-                            const allocatedQuantityForLine =
-                              warehouseAllocation?.quantity || 0;
+
                             const availableQuantity =
                               warehouseStock.quantity -
                               warehouseStock.quantityAllocated +
                               allocatedQuantityForLine;
+
+                            const isStockExceeded =
+                              formsetData[lineIndex]?.value.find(
+                                el => el.warehouse === warehouse.id
+                              ).quantity > availableQuantity;
 
                             return (
                               <TableCell
@@ -423,18 +408,15 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
                                       classes.quantityInnerInput,
                                       {
                                         [classes.quantityInnerInputNoRemaining]: !line
-                                          .variant.trackInventory
+                                          .variant.trackInventory,
+                                        [classes.warning]: isStockExceeded
                                       }
                                     ),
-                                    max: (
-                                      line.variant.trackInventory &&
-                                      availableQuantity
-                                    ).toString(),
                                     min: 0,
                                     style: { textAlign: "right" }
                                   }}
                                   fullWidth
-                                  value={formsetStock.quantity}
+                                  value={formsetStock?.quantity}
                                   onChange={event =>
                                     formsetChange(
                                       line.id,
@@ -446,20 +428,20 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
                                           ),
                                           warehouse: warehouse.id
                                         },
-                                        formsetData[lineIndex].value,
+                                        formsetData[lineIndex]?.value,
                                         (a, b) => a.warehouse === b.warehouse
                                       )
                                     )
                                   }
-                                  error={isStockError(
-                                    overfulfill,
-                                    formsetStock,
-                                    availableQuantity,
-                                    warehouse,
-                                    line,
-                                    errors
-                                  )}
+                                  error={overfulfill}
+                                  variant="outlined"
                                   InputProps={{
+                                    classes: {
+                                      ...(isStockExceeded &&
+                                        !overfulfill && {
+                                          notchedOutline: classes.warning
+                                        })
+                                    },
                                     endAdornment: line.variant
                                       .trackInventory && (
                                       <div
@@ -473,22 +455,6 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
                               </TableCell>
                             );
                           })}
-
-                          <TableCell
-                            className={classes.colQuantityTotal}
-                            key="total"
-                          >
-                            <span
-                              className={classNames({
-                                [classes.error]: overfulfill,
-                                [classes.full]:
-                                  remainingQuantity <= quantityToFulfill
-                              })}
-                            >
-                              {quantityToFulfill}
-                            </span>{" "}
-                            / {remainingQuantity}
-                          </TableCell>
                         </TableRow>
                       );
                     }
@@ -497,13 +463,15 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
               </ResponsiveTable>
               <CardActions className={classes.actionBar}>
                 <ControlledCheckbox
-                  checked={data.sendInfo}
+                  checked={sendInfo}
                   label={intl.formatMessage({
                     defaultMessage: "Send shipment details to customer",
                     description: "checkbox"
                   })}
                   name="sendInfo"
-                  onChange={change}
+                  onChange={() => {
+                    setSendInfo(!sendInfo);
+                  }}
                 />
               </CardActions>
             </Card>
