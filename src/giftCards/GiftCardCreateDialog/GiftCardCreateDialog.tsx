@@ -16,11 +16,13 @@ import GiftCardCreateDialogForm, {
 import { giftCardCreateMessages as messages } from "./messages";
 import { useGiftCardCreateMutation } from "./mutations";
 import { useChannelCurrencies } from "./queries";
+import { GiftCardCreateFormCustomer } from "./types";
 import { GiftCardCreate } from "./types/GiftCardCreate";
 import { getGiftCardExpiryInputData } from "./utils";
 
 interface GiftCardCreateDialogProps extends DialogProps {
   refetchQueries: string[];
+  initialCustomer?: GiftCardCreateFormCustomer | null;
 }
 
 const GiftCardCreateDialog: React.FC<GiftCardCreateDialogProps> = ({

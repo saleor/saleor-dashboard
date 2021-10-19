@@ -89,7 +89,7 @@ const CustomerGiftCardsCard: React.FC = () => {
       </Card>
       <GiftCardCreateDialog
         open={openCreateDialog}
-        closeDialog={closeCreateDialog}
+        onClose={closeCreateDialog}
         refetchQueries={[CUSTOMER_GIFT_CARD_LIST_QUERY]}
         initialCustomer={{
           email: customer?.email,
