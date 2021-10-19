@@ -547,17 +547,17 @@ export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_o
   email: string;
 }
 
-export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_availableShippingMethods_price {
+export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_shippingMethods_price {
   __typename: "Money";
   amount: number;
   currency: string;
 }
 
-export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_availableShippingMethods {
+export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_shippingMethods {
   __typename: "ShippingMethod";
   id: string;
   name: string;
-  price: OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_availableShippingMethods_price | null;
+  price: OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_shippingMethods_price | null;
 }
 
 export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_invoices {
@@ -607,7 +607,7 @@ export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_o
   undiscountedTotal: OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_undiscountedTotal;
   user: OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_user | null;
   userEmail: string | null;
-  availableShippingMethods: (OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_availableShippingMethods | null)[] | null;
+  shippingMethods: (OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_shippingMethods | null)[] | null;
   invoices: (OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_invoices | null)[] | null;
   channel: OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_channel;
   isPaid: boolean;

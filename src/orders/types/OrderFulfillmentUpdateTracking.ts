@@ -452,17 +452,17 @@ export interface OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_o
   email: string;
 }
 
-export interface OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_order_availableShippingMethods_price {
+export interface OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_order_shippingMethods_price {
   __typename: "Money";
   amount: number;
   currency: string;
 }
 
-export interface OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_order_availableShippingMethods {
+export interface OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_order_shippingMethods {
   __typename: "ShippingMethod";
   id: string;
   name: string;
-  price: OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_order_availableShippingMethods_price | null;
+  price: OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_order_shippingMethods_price | null;
 }
 
 export interface OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_order_invoices {
@@ -512,7 +512,7 @@ export interface OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_o
   undiscountedTotal: OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_order_undiscountedTotal;
   user: OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_order_user | null;
   userEmail: string | null;
-  availableShippingMethods: (OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_order_availableShippingMethods | null)[] | null;
+  shippingMethods: (OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_order_shippingMethods | null)[] | null;
   invoices: (OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_order_invoices | null)[] | null;
   channel: OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_order_channel;
   isPaid: boolean;

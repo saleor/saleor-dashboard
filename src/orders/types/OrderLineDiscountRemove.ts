@@ -452,17 +452,17 @@ export interface OrderLineDiscountRemove_orderLineDiscountRemove_order_user {
   email: string;
 }
 
-export interface OrderLineDiscountRemove_orderLineDiscountRemove_order_availableShippingMethods_price {
+export interface OrderLineDiscountRemove_orderLineDiscountRemove_order_shippingMethods_price {
   __typename: "Money";
   amount: number;
   currency: string;
 }
 
-export interface OrderLineDiscountRemove_orderLineDiscountRemove_order_availableShippingMethods {
+export interface OrderLineDiscountRemove_orderLineDiscountRemove_order_shippingMethods {
   __typename: "ShippingMethod";
   id: string;
   name: string;
-  price: OrderLineDiscountRemove_orderLineDiscountRemove_order_availableShippingMethods_price | null;
+  price: OrderLineDiscountRemove_orderLineDiscountRemove_order_shippingMethods_price | null;
 }
 
 export interface OrderLineDiscountRemove_orderLineDiscountRemove_order_invoices {
@@ -512,7 +512,7 @@ export interface OrderLineDiscountRemove_orderLineDiscountRemove_order {
   undiscountedTotal: OrderLineDiscountRemove_orderLineDiscountRemove_order_undiscountedTotal;
   user: OrderLineDiscountRemove_orderLineDiscountRemove_order_user | null;
   userEmail: string | null;
-  availableShippingMethods: (OrderLineDiscountRemove_orderLineDiscountRemove_order_availableShippingMethods | null)[] | null;
+  shippingMethods: (OrderLineDiscountRemove_orderLineDiscountRemove_order_shippingMethods | null)[] | null;
   invoices: (OrderLineDiscountRemove_orderLineDiscountRemove_order_invoices | null)[] | null;
   channel: OrderLineDiscountRemove_orderLineDiscountRemove_order_channel;
   isPaid: boolean;

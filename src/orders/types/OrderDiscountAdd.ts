@@ -452,17 +452,17 @@ export interface OrderDiscountAdd_orderDiscountAdd_order_user {
   email: string;
 }
 
-export interface OrderDiscountAdd_orderDiscountAdd_order_availableShippingMethods_price {
+export interface OrderDiscountAdd_orderDiscountAdd_order_shippingMethods_price {
   __typename: "Money";
   amount: number;
   currency: string;
 }
 
-export interface OrderDiscountAdd_orderDiscountAdd_order_availableShippingMethods {
+export interface OrderDiscountAdd_orderDiscountAdd_order_shippingMethods {
   __typename: "ShippingMethod";
   id: string;
   name: string;
-  price: OrderDiscountAdd_orderDiscountAdd_order_availableShippingMethods_price | null;
+  price: OrderDiscountAdd_orderDiscountAdd_order_shippingMethods_price | null;
 }
 
 export interface OrderDiscountAdd_orderDiscountAdd_order_invoices {
@@ -512,7 +512,7 @@ export interface OrderDiscountAdd_orderDiscountAdd_order {
   undiscountedTotal: OrderDiscountAdd_orderDiscountAdd_order_undiscountedTotal;
   user: OrderDiscountAdd_orderDiscountAdd_order_user | null;
   userEmail: string | null;
-  availableShippingMethods: (OrderDiscountAdd_orderDiscountAdd_order_availableShippingMethods | null)[] | null;
+  shippingMethods: (OrderDiscountAdd_orderDiscountAdd_order_shippingMethods | null)[] | null;
   invoices: (OrderDiscountAdd_orderDiscountAdd_order_invoices | null)[] | null;
   channel: OrderDiscountAdd_orderDiscountAdd_order_channel;
   isPaid: boolean;

@@ -16,17 +16,17 @@ export interface OrderShippingMethodUpdate_orderUpdateShipping_errors {
   addressType: AddressTypeEnum | null;
 }
 
-export interface OrderShippingMethodUpdate_orderUpdateShipping_order_availableShippingMethods_price {
+export interface OrderShippingMethodUpdate_orderUpdateShipping_order_shippingMethods_price {
   __typename: "Money";
   amount: number;
   currency: string;
 }
 
-export interface OrderShippingMethodUpdate_orderUpdateShipping_order_availableShippingMethods {
+export interface OrderShippingMethodUpdate_orderUpdateShipping_order_shippingMethods {
   __typename: "ShippingMethod";
   id: string;
   name: string;
-  price: OrderShippingMethodUpdate_orderUpdateShipping_order_availableShippingMethods_price | null;
+  price: OrderShippingMethodUpdate_orderUpdateShipping_order_shippingMethods_price | null;
 }
 
 export interface OrderShippingMethodUpdate_orderUpdateShipping_order_total_tax {
@@ -493,7 +493,7 @@ export interface OrderShippingMethodUpdate_orderUpdateShipping_order_channel {
 
 export interface OrderShippingMethodUpdate_orderUpdateShipping_order {
   __typename: "Order";
-  availableShippingMethods: (OrderShippingMethodUpdate_orderUpdateShipping_order_availableShippingMethods | null)[] | null;
+  shippingMethods: (OrderShippingMethodUpdate_orderUpdateShipping_order_shippingMethods | null)[] | null;
   total: OrderShippingMethodUpdate_orderUpdateShipping_order_total;
   id: string;
   shippingMethod: OrderShippingMethodUpdate_orderUpdateShipping_order_shippingMethod | null;

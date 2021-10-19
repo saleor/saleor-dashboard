@@ -761,7 +761,7 @@ export const order = (placeholder: string): OrderDetails_order => ({
     OrderAction.REFUND,
     OrderAction.VOID
   ],
-  availableShippingMethods: [
+  shippingMethods: [
     {
       __typename: "ShippingMethod",
       id: "U2hpcHBpbmdNZXRob2Q6NQ==",
@@ -1385,7 +1385,7 @@ export const order = (placeholder: string): OrderDetails_order => ({
 export const draftOrder = (placeholder: string): OrderDetails_order => ({
   __typename: "Order" as "Order",
   actions: [OrderAction.CAPTURE],
-  availableShippingMethods: null,
+  shippingMethods: null,
   billingAddress: null,
   canFinalize: true,
   channel: {

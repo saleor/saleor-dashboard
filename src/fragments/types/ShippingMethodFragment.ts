@@ -9,7 +9,7 @@ import { PostalCodeRuleInclusionTypeEnum, WeightUnitsEnum, ShippingMethodTypeEnu
 // GraphQL fragment: ShippingMethodFragment
 // ====================================================
 
-export interface ShippingMethodFragment_postalCodeRules {
+export interface ShippingMethodTypeFragment_postalCodeRules {
   __typename: "ShippingMethodPostalCodeRule";
   id: string;
   inclusionType: PostalCodeRuleInclusionTypeEnum | null;
@@ -17,62 +17,62 @@ export interface ShippingMethodFragment_postalCodeRules {
   end: string | null;
 }
 
-export interface ShippingMethodFragment_metadata {
+export interface ShippingMethodTypeFragment_metadata {
   __typename: "MetadataItem";
   key: string;
   value: string;
 }
 
-export interface ShippingMethodFragment_privateMetadata {
+export interface ShippingMethodTypeFragment_privateMetadata {
   __typename: "MetadataItem";
   key: string;
   value: string;
 }
 
-export interface ShippingMethodFragment_minimumOrderWeight {
+export interface ShippingMethodTypeFragment_minimumOrderWeight {
   __typename: "Weight";
   unit: WeightUnitsEnum;
   value: number;
 }
 
-export interface ShippingMethodFragment_maximumOrderWeight {
+export interface ShippingMethodTypeFragment_maximumOrderWeight {
   __typename: "Weight";
   unit: WeightUnitsEnum;
   value: number;
 }
 
-export interface ShippingMethodFragment_channelListings_channel {
+export interface ShippingMethodTypeFragment_channelListings_channel {
   __typename: "Channel";
   id: string;
   name: string;
   currencyCode: string;
 }
 
-export interface ShippingMethodFragment_channelListings_price {
+export interface ShippingMethodTypeFragment_channelListings_price {
   __typename: "Money";
   amount: number;
   currency: string;
 }
 
-export interface ShippingMethodFragment_channelListings_minimumOrderPrice {
+export interface ShippingMethodTypeFragment_channelListings_minimumOrderPrice {
   __typename: "Money";
   amount: number;
   currency: string;
 }
 
-export interface ShippingMethodFragment_channelListings_maximumOrderPrice {
+export interface ShippingMethodTypeFragment_channelListings_maximumOrderPrice {
   __typename: "Money";
   amount: number;
   currency: string;
 }
 
-export interface ShippingMethodFragment_channelListings {
+export interface ShippingMethodTypeFragment_channelListings {
   __typename: "ShippingMethodChannelListing";
   id: string;
-  channel: ShippingMethodFragment_channelListings_channel;
-  price: ShippingMethodFragment_channelListings_price | null;
-  minimumOrderPrice: ShippingMethodFragment_channelListings_minimumOrderPrice | null;
-  maximumOrderPrice: ShippingMethodFragment_channelListings_maximumOrderPrice | null;
+  channel: ShippingMethodTypeFragment_channelListings_channel;
+  price: ShippingMethodTypeFragment_channelListings_price | null;
+  minimumOrderPrice: ShippingMethodTypeFragment_channelListings_minimumOrderPrice | null;
+  maximumOrderPrice: ShippingMethodTypeFragment_channelListings_maximumOrderPrice | null;
 }
 
 export interface ShippingMethodFragment {
