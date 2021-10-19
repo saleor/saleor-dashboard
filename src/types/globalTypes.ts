@@ -8,6 +8,7 @@
 //==============================================================
 
 export enum AccountErrorCode {
+  ACCOUNT_NOT_CONFIRMED = "ACCOUNT_NOT_CONFIRMED",
   ACTIVATE_OWN_ACCOUNT = "ACTIVATE_OWN_ACCOUNT",
   ACTIVATE_SUPERUSER_ACCOUNT = "ACTIVATE_SUPERUSER_ACCOUNT",
   CHANNEL_INACTIVE = "CHANNEL_INACTIVE",
@@ -2528,6 +2529,12 @@ export interface PriceRangeInput {
 export interface ProductAttributeAssignInput {
   id: string;
   type: ProductAttributeType;
+  variantSelection?: boolean | null;
+}
+
+export interface ProductAttributeAssignmentUpdateInput {
+  id: string;
+  variantSelection: boolean;
 }
 
 export interface ProductChannelListingAddInput {

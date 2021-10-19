@@ -32,6 +32,7 @@ import ProductTypeAttributes from "../ProductTypeAttributes/ProductTypeAttribute
 import ProductTypeDetails from "../ProductTypeDetails/ProductTypeDetails";
 import ProductTypeShipping from "../ProductTypeShipping/ProductTypeShipping";
 import ProductTypeTaxes from "../ProductTypeTaxes/ProductTypeTaxes";
+import ProductTypeVariantAttributes from "../ProductTypeVariantAttributes/ProductTypeVariantAttributes";
 
 interface ChoiceType {
   label: string;
@@ -67,6 +68,8 @@ export interface ProductTypeDetailsPageProps {
   onDelete: () => void;
   onHasVariantsToggle: (hasVariants: boolean) => void;
   onSubmit: (data: ProductTypeForm) => SubmitPromise;
+  setSelectedVariantAttributes: (data: string[]) => void;
+  selectedVariantAttributes: string[];
 }
 
 function handleTaxTypeChange(
@@ -98,7 +101,9 @@ const ProductTypeDetailsPage: React.FC<ProductTypeDetailsPageProps> = ({
   onBack,
   onDelete,
   onHasVariantsToggle,
-  onSubmit
+  onSubmit,
+  setSelectedVariantAttributes,
+  selectedVariantAttributes
 }) => {
   const intl = useIntl();
   const {
@@ -156,7 +161,7 @@ const ProductTypeDetailsPage: React.FC<ProductTypeDetailsPageProps> = ({
 
   return (
     <Form initial={formInitialData} onSubmit={handleSubmit} confirmLeave>
-      {({ change, data, hasChanged, submit }) => {
+      {({ change, data, hasChanged, submit, setChanged }) => {
         const changeMetadata = makeMetadataChangeHandler(change);
 
         return (
@@ -217,9 +222,11 @@ const ProductTypeDetailsPage: React.FC<ProductTypeDetailsPageProps> = ({
                 {data.hasVariants && (
                   <>
                     <CardSpacer />
-                    <ProductTypeAttributes
+                    <ProductTypeVariantAttributes
                       testId="assignVariantsAttributes"
-                      attributes={maybe(() => productType.variantAttributes)}
+                      assignedVariantAttributes={
+                        productType?.assignedVariantAttributes
+                      }
                       disabled={disabled}
                       type={ProductAttributeType.VARIANT}
                       onAttributeAssign={onAttributeAdd}
@@ -228,6 +235,11 @@ const ProductTypeDetailsPage: React.FC<ProductTypeDetailsPageProps> = ({
                         onAttributeReorder(event, ProductAttributeType.VARIANT)
                       }
                       onAttributeUnassign={onAttributeUnassign}
+                      onAttributeVariantSelection={setChanged}
+                      setSelectedVariantAttributes={
+                        setSelectedVariantAttributes
+                      }
+                      selectedVariantAttributes={selectedVariantAttributes}
                       {...variantAttributeList}
                     />
                   </>

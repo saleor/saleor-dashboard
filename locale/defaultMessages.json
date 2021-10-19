@@ -5727,10 +5727,6 @@
     "context": "section header",
     "string": "Product Attributes"
   },
-  "src_dot_productTypes_dot_components_dot_ProductTypeAttributes_dot_888493112": {
-    "context": "section header",
-    "string": "Variant Attributes"
-  },
   "src_dot_productTypes_dot_components_dot_ProductTypeDetailsPage_dot_1217376589": {
     "context": "switch button",
     "string": "Product type uses Variant Attributes"
@@ -5826,6 +5822,31 @@
   },
   "src_dot_productTypes_dot_components_dot_ProductTypeShipping_dot_746695941": {
     "string": "Weight"
+  },
+  "src_dot_productTypes_dot_components_dot_ProductTypeVariantAttributes_dot_1192828581": {
+    "string": "No attributes found"
+  },
+  "src_dot_productTypes_dot_components_dot_ProductTypeVariantAttributes_dot_1228425832": {
+    "string": "Attribute name"
+  },
+  "src_dot_productTypes_dot_components_dot_ProductTypeVariantAttributes_dot_1656462109": {
+    "context": "button",
+    "string": "Assign attribute"
+  },
+  "src_dot_productTypes_dot_components_dot_ProductTypeVariantAttributes_dot_1779771890": {
+    "string": "{inputType} attributes cannot be used as variant selection attributes."
+  },
+  "src_dot_productTypes_dot_components_dot_ProductTypeVariantAttributes_dot_1835784218": {
+    "context": "variant attribute checkbox",
+    "string": "Variant Selection"
+  },
+  "src_dot_productTypes_dot_components_dot_ProductTypeVariantAttributes_dot_3478065224": {
+    "context": "attribute internal name",
+    "string": "Slug"
+  },
+  "src_dot_productTypes_dot_components_dot_ProductTypeVariantAttributes_dot_888493112": {
+    "context": "section header",
+    "string": "Variant Attributes"
   },
   "src_dot_productTypes_dot_hooks_dot_useProductTypeDelete_dot_title": {
     "context": "ProductTypeDeleteWarningDialog title",
