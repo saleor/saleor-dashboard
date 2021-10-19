@@ -119,7 +119,7 @@ const CustomerDetailsPage: React.FC<CustomerDetailsPageProps> = ({
                 <CardSpacer />
                 <CustomerStats customer={customer} />
                 <CardSpacer />
-                <CustomerGiftCardsCard customerId={customer?.id} />
+                <CustomerGiftCardsCard />
               </div>
             </Grid>
             <Savebar

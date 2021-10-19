@@ -26,7 +26,8 @@ interface GiftCardCreateDialogProps extends DialogProps {
 const GiftCardCreateDialog: React.FC<GiftCardCreateDialogProps> = ({
   onClose,
   open,
-  refetchQueries
+  refetchQueries,
+  initialCustomer
 }) => {
   const intl = useIntl();
   const notify = useNotifier();
@@ -121,6 +122,7 @@ const GiftCardCreateDialog: React.FC<GiftCardCreateDialogProps> = ({
               onClose={handleClose}
               apiErrors={createGiftCardOpts?.data?.giftCardCreate?.errors}
               onSubmit={handleSubmit}
+              initialCustomer={initialCustomer}
             />
           ))}
       </ContentWithProgress>
