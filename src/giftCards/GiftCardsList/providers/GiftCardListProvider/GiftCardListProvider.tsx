@@ -81,7 +81,7 @@ export const GiftCardsListProvider: React.FC<GiftCardsListProviderProps> = ({
 
   const providerValues: GiftCardsListConsumerProps = {
     giftCards,
-    totalCount: data?.giftCards?.totalCount,
+    totalCount: data?.giftCards?.totalCount || 0,
     loading,
     isSelected,
     listElements,
