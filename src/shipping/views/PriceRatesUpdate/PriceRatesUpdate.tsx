@@ -24,9 +24,8 @@ import useProductSearch from "@saleor/searches/useProductSearch";
 import DeleteShippingRateDialog from "@saleor/shipping/components/DeleteShippingRateDialog";
 import ShippingMethodProductsAddDialog from "@saleor/shipping/components/ShippingMethodProductsAddDialog";
 import ShippingZonePostalCodeRangeDialog from "@saleor/shipping/components/ShippingZonePostalCodeRangeDialog";
-import ShippingZoneRatesPage, {
-  FormData
-} from "@saleor/shipping/components/ShippingZoneRatesPage";
+import ShippingZoneRatesPage from "@saleor/shipping/components/ShippingZoneRatesPage";
+import { ShippingZoneRateUpdateFormData } from "@saleor/shipping/components/ShippingZoneRatesPage/types";
 import UnassignDialog from "@saleor/shipping/components/UnassignDialog";
 import {
   getShippingMethodChannelVariables,
@@ -211,7 +210,9 @@ export const PriceRatesUpdate: React.FC<PriceRatesUpdateProps> = ({
     });
   };
 
-  const updateData = async (formData: FormData): Promise<unknown[]> => {
+  const updateData = async (
+    formData: ShippingZoneRateUpdateFormData
+  ): Promise<unknown[]> => {
     const response = await updateShippingRate({
       variables: getUpdateShippingPriceRateVariables(
         formData,
@@ -229,7 +230,7 @@ export const PriceRatesUpdate: React.FC<PriceRatesUpdateProps> = ({
       updateShippingMethodChannelListing({
         variables: getShippingMethodChannelVariables(
           rateId,
-          formData.noLimits,
+          formData.orderValueRestricted,
           formData.channelListings,
           shippingChannels
         )
