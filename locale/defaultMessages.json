@@ -59,17 +59,9 @@
     "context": "amount title",
     "string": "Refunded amount"
   },
-  "authorize amount title": {
-    "context": "authorize amount title",
-    "string": "Authorized amount"
-  },
   "by preposition": {
     "context": "by preposition",
     "string": "by"
-  },
-  "capture amount title": {
-    "context": "capture amount title",
-    "string": "Captured amount"
   },
   "channel hidden": {
     "context": "channel publication status",
@@ -221,10 +213,6 @@
   "event title returned": {
     "context": "returned event title",
     "string": "Products were returned by"
-  },
-  "fail reason title": {
-    "context": "fail reason title",
-    "string": "Fail reason"
   },
   "fixed amount subtitle id": {
     "context": "Fixed amount subtitle",
@@ -524,17 +512,9 @@
     "context": "no warehouses info",
     "string": "There are no warehouses set up for your store. To add stock quantity to the product please <a>configure a warehouse</a>"
   },
-  "psp reference title": {
-    "context": "psp reference title",
-    "string": "PSP Reference"
-  },
   "published channel": {
     "context": "product label",
     "string": "Published"
-  },
-  "refund amount title": {
-    "context": "refund amount title",
-    "string": "Refunded amount"
   },
   "saleDetailsPageCategoriesQuantity": {
     "context": "number of categories",
@@ -7683,10 +7663,6 @@
   "unavailable for purchase": {
     "context": "product unavailability",
     "string": "Unavailable for purchase"
-  },
-  "void amount title": {
-    "context": "void amount title",
-    "string": "Voided amount"
   },
   "voucherDetailsUnassignCategory": {
     "context": "unassign category from voucher, button",
