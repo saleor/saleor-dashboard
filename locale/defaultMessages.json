@@ -4102,6 +4102,30 @@
     "context": "reason for discount label",
     "string": "Reason for discount"
   },
+  "src_dot_orders_dot_components_dot_OrderHistory_dot_ExtendedPaymentTimelineEvent_dot_authorizedAmount": {
+    "context": "authorize amount title",
+    "string": "Authorized amount"
+  },
+  "src_dot_orders_dot_components_dot_OrderHistory_dot_ExtendedPaymentTimelineEvent_dot_capturedAmount": {
+    "context": "capture amount title",
+    "string": "Captured amount"
+  },
+  "src_dot_orders_dot_components_dot_OrderHistory_dot_ExtendedPaymentTimelineEvent_dot_failReason": {
+    "context": "fail reason title",
+    "string": "Fail reason"
+  },
+  "src_dot_orders_dot_components_dot_OrderHistory_dot_ExtendedPaymentTimelineEvent_dot_pspReference": {
+    "context": "psp reference title",
+    "string": "PSP reference"
+  },
+  "src_dot_orders_dot_components_dot_OrderHistory_dot_ExtendedPaymentTimelineEvent_dot_refundedAmount": {
+    "context": "refund amount title",
+    "string": "Refunded amount"
+  },
+  "src_dot_orders_dot_components_dot_OrderHistory_dot_ExtendedPaymentTimelineEvent_dot_voidedAmount": {
+    "context": "void amount title",
+    "string": "Voided amount"
+  },
   "src_dot_orders_dot_components_dot_OrderHistory_dot_description": {
     "context": "replacement created order history message description",
     "string": "was created for replaced products"
