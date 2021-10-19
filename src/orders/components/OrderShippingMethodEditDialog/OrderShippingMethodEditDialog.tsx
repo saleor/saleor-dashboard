@@ -22,7 +22,7 @@ import getOrderErrorMessage from "@saleor/utils/errors/order";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { OrderDetails_order_availableShippingMethods } from "../../types/OrderDetails";
+import { OrderDetails_order_shippingMethods } from "../../types/OrderDetails";
 
 export interface FormData {
   shippingMethod: string;
@@ -60,7 +60,7 @@ export interface OrderShippingMethodEditDialogProps {
   errors: OrderErrorFragment[];
   open: boolean;
   shippingMethod: string;
-  shippingMethods?: OrderDetails_order_availableShippingMethods[];
+  shippingMethods?: OrderDetails_order_shippingMethods[];
   onClose();
   onSubmit?(data: FormData);
 }

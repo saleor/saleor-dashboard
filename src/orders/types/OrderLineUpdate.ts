@@ -524,17 +524,17 @@ export interface OrderLineUpdate_orderLineUpdate_order_user {
   email: string;
 }
 
-export interface OrderLineUpdate_orderLineUpdate_order_availableShippingMethods_price {
+export interface OrderLineUpdate_orderLineUpdate_order_shippingMethods_price {
   __typename: "Money";
   amount: number;
   currency: string;
 }
 
-export interface OrderLineUpdate_orderLineUpdate_order_availableShippingMethods {
+export interface OrderLineUpdate_orderLineUpdate_order_shippingMethods {
   __typename: "ShippingMethod";
   id: string;
   name: string;
-  price: OrderLineUpdate_orderLineUpdate_order_availableShippingMethods_price | null;
+  price: OrderLineUpdate_orderLineUpdate_order_shippingMethods_price | null;
 }
 
 export interface OrderLineUpdate_orderLineUpdate_order_invoices {
@@ -595,7 +595,7 @@ export interface OrderLineUpdate_orderLineUpdate_order {
   undiscountedTotal: OrderLineUpdate_orderLineUpdate_order_undiscountedTotal;
   user: OrderLineUpdate_orderLineUpdate_order_user | null;
   userEmail: string | null;
-  availableShippingMethods: (OrderLineUpdate_orderLineUpdate_order_availableShippingMethods | null)[] | null;
+  shippingMethods: (OrderLineUpdate_orderLineUpdate_order_shippingMethods | null)[] | null;
   invoices: (OrderLineUpdate_orderLineUpdate_order_invoices | null)[] | null;
   channel: OrderLineUpdate_orderLineUpdate_order_channel;
 }

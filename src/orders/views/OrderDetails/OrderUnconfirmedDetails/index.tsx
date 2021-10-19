@@ -165,7 +165,7 @@ export const OrderUnconfirmedDetails: React.FC<OrderUnconfirmedDetailsProps> = (
                   .errors || [])
               ]
             )}
-            shippingMethods={data?.order?.availableShippingMethods || []}
+            shippingMethods={data?.order?.shippingMethods || []}
             userPermissions={user?.userPermissions || []}
             onOrderCancel={() => openModal("cancel")}
             onOrderFulfill={() => navigate(orderFulfillUrl(id))}
@@ -245,7 +245,7 @@ export const OrderUnconfirmedDetails: React.FC<OrderUnconfirmedDetailsProps> = (
         }
         open={params.action === "edit-shipping"}
         shippingMethod={order?.shippingMethod?.id}
-        shippingMethods={order?.availableShippingMethods}
+        shippingMethods={order?.shippingMethods}
         onClose={closeModal}
         onSubmit={variables =>
           orderShippingMethodUpdate.mutate({
