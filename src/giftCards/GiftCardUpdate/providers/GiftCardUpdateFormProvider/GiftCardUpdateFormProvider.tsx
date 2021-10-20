@@ -79,8 +79,7 @@ const GiftCardUpdateFormProvider: React.FC<GiftCardUpdateFormProviderProps> = ({
 
   const onSubmit = (data: GiftCardUpdate) => {
     const errors = data.giftCardUpdate.errors;
-    const hasExpiryError =
-      errors.filter(error => error.field === "expiryDate").length > 0;
+    const hasExpiryError = errors.some(error => error.field === "expiryDate");
 
     notify(
       hasExpiryError
