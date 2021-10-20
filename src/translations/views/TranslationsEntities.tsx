@@ -50,7 +50,7 @@ const TranslationsEntities: React.FC<TranslationsEntitiesProps> = ({
         stringifyQs({
           tab: TranslatableEntities.categories
         }),
-      true
+      { replace: true }
     );
   }
 

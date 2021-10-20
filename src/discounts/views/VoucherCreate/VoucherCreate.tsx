@@ -79,7 +79,7 @@ export const VoucherCreateView: React.FC<VoucherCreateProps> = ({ params }) => {
           defaultMessage: "Successfully created voucher"
         })
       });
-      navigate(voucherUrl(data.voucherCreate.voucher.id), true);
+      navigate(voucherUrl(data.voucherCreate.voucher.id), { replace: true });
     }
   };
 

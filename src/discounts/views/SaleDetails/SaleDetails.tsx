@@ -159,7 +159,7 @@ export const SaleDetails: React.FC<SaleDetailsProps> = ({ id, params }) => {
           defaultMessage: "Removed sale"
         })
       });
-      navigate(saleListUrl(), true);
+      navigate(saleListUrl(), { replace: true });
     }
   };
 
