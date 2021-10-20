@@ -52,7 +52,7 @@ const GiftCardListDialogsProvider: React.FC<GiftCardListDialogsProviderProps> = 
     params?.action === type;
 
   const handleDeleteDialogOpen = (id?: string) => {
-    openDialog(DELETE, typeof id === "string" ? { id } : undefined);
+    openDialog(DELETE, id ? { id } : undefined);
   };
 
   const providerValues: GiftCardListDialogsConsumerProps = {
