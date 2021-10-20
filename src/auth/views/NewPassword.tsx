@@ -24,7 +24,7 @@ const NewPassword: React.FC<RouteComponentProps> = ({ location }) => {
         data.setPassword.csrfToken,
         data.setPassword.user
       );
-      navigate("/", true);
+      navigate("/", { replace: true });
     }
   };
 

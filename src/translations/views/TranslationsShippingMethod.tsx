@@ -48,7 +48,7 @@ const TranslationsShippingMethod: React.FC<TranslationsShippingMethodProps> = ({
         stringifyQs({
           activeField: field
         }),
-      true
+      { replace: true }
     );
   const onUpdate = (data: UpdateShippingMethodTranslations) => {
     if (data.shippingPriceTranslate.errors.length === 0) {
@@ -57,11 +57,11 @@ const TranslationsShippingMethod: React.FC<TranslationsShippingMethodProps> = ({
         status: "success",
         text: intl.formatMessage(commonMessages.savedChanges)
       });
-      navigate("?", true);
+      navigate("?", { replace: true });
     }
   };
   const onDiscard = () => {
-    navigate("?", true);
+    navigate("?", { replace: true });
   };
 
   return (

@@ -74,7 +74,7 @@ export const SaleCreateView: React.FC<SaleCreateProps> = ({ params }) => {
           defaultMessage: "Successfully created sale"
         })
       });
-      navigate(saleUrl(data.saleCreate.sale.id), true);
+      navigate(saleUrl(data.saleCreate.sale.id), { replace: true });
     }
   };
 

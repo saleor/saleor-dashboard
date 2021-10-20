@@ -49,7 +49,7 @@ const TranslationsVouchers: React.FC<TranslationsVouchersProps> = ({
         stringifyQs({
           activeField: field
         }),
-      true
+      { replace: true }
     );
   const onUpdate = (data: UpdateVoucherTranslations) => {
     if (data.voucherTranslate.errors.length === 0) {
@@ -58,11 +58,11 @@ const TranslationsVouchers: React.FC<TranslationsVouchersProps> = ({
         status: "success",
         text: intl.formatMessage(commonMessages.savedChanges)
       });
-      navigate("?", true);
+      navigate("?", { replace: true });
     }
   };
   const onDiscard = () => {
-    navigate("?", true);
+    navigate("?", { replace: true });
   };
 
   return (
