@@ -26,11 +26,9 @@ const CustomerGiftCardsCardListItem: React.FC<CustomerGiftCardsCardListItemProps
 }) => {
   const intl = useIntl();
   const classes = useListWrapperStyles();
-  const [, setIsLoading] = useState(false);
   const [openDeleteGiftCard, setOpenDeleteGiftCard] = useState(false);
   const { isExpired, isActive } = giftCard;
 
-  const handleActionCompleted = () => setIsLoading(false);
   const onGiftCardDeleteDialogClose = () => setOpenDeleteGiftCard(false);
 
   const {
@@ -39,13 +37,10 @@ const CustomerGiftCardsCardListItem: React.FC<CustomerGiftCardsCardListItemProps
     giftCardActivateOpts,
     giftCardDeactivateOpts
   } = useGiftCardActivationDeactivation({
-    onActivateActionComplete: handleActionCompleted,
-    onDeactivateActionComplete: handleActionCompleted,
     isActive
   });
 
   const handleGiftCardActivate = () => {
-    setIsLoading(true);
     giftCardActivate({
       variables: {
         id: giftCard.id
@@ -54,7 +49,6 @@ const CustomerGiftCardsCardListItem: React.FC<CustomerGiftCardsCardListItemProps
   };
 
   const handleGiftCardDeactivate = () => {
-    setIsLoading(true);
     giftCardDeactivate({
       variables: {
         id: giftCard.id
