@@ -72,7 +72,7 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
   );
 
   const handleOrderCapture = (data: OrderCapture) => {
-    const errs = data.orderCapture?.errors ?? [];
+    const errs = data.orderCapture?.errors || [];
     if (errs.length === 0) {
       pushMessage({
         status: "success",
@@ -85,7 +85,7 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
   };
 
   const handlePaymentCapture = (data: PaymentCapture) => {
-    const errs = data.paymentCapture?.errors ?? [];
+    const errs = data.paymentCapture?.errors || [];
     if (errs.length === 0) {
       pushMessage({
         status: "success",
@@ -98,7 +98,7 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
   };
 
   const handleOrderMarkAsPaid = (data: OrderMarkAsPaid) => {
-    const errs = data.orderMarkAsPaid?.errors ?? [];
+    const errs = data.orderMarkAsPaid?.errors || [];
     if (errs.length === 0) {
       pushMessage({
         status: "success",
@@ -110,7 +110,7 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
     }
   };
   const handleOrderCancel = (data: OrderCancel) => {
-    const errs = data.orderCancel?.errors ?? [];
+    const errs = data.orderCancel?.errors || [];
     if (errs.length === 0) {
       pushMessage({
         status: "success",
@@ -122,7 +122,7 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
     }
   };
   const handleDraftCancel = (data: OrderDraftCancel) => {
-    const errs = data.draftOrderDelete?.errors ?? [];
+    const errs = data.draftOrderDelete?.errors || [];
     if (errs.length === 0) {
       pushMessage({
         status: "success",
@@ -134,7 +134,7 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
     }
   };
   const handleOrderVoid = (data: OrderVoid) => {
-    const errs = data.orderVoid?.errors ?? [];
+    const errs = data.orderVoid?.errors || [];
     if (errs.length === 0) {
       pushMessage({
         status: "success",
@@ -146,7 +146,7 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
     }
   };
   const handlePaymentVoid = (data: PaymentVoid) => {
-    const errs = data.paymentVoid?.errors ?? [];
+    const errs = data.paymentVoid?.errors || [];
     if (errs.length === 0) {
       pushMessage({
         status: "success",
@@ -158,7 +158,7 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
     }
   };
   const handleNoteAdd = (data: OrderAddNote) => {
-    const errs = data.orderAddNote?.errors ?? [];
+    const errs = data.orderAddNote?.errors || [];
     if (errs.length === 0) {
       pushMessage({
         status: "success",
@@ -169,7 +169,7 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
     }
   };
   const handleUpdate = (data: OrderUpdate) => {
-    const errs = data.orderUpdate?.errors ?? [];
+    const errs = data.orderUpdate?.errors || [];
     if (errs.length === 0) {
       pushMessage({
         status: "success",
@@ -181,7 +181,7 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
     }
   };
   const handleDraftUpdate = (data: OrderDraftUpdate) => {
-    const errs = data.draftOrderUpdate?.errors ?? [];
+    const errs = data.draftOrderUpdate?.errors || [];
     if (errs.length === 0) {
       pushMessage({
         status: "success",
@@ -193,7 +193,7 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
     }
   };
   const handleShippingMethodUpdate = (data: OrderShippingMethodUpdate) => {
-    const errs = data.orderUpdateShipping?.errors ?? [];
+    const errs = data.orderUpdateShipping?.errors || [];
     if (errs.length === 0) {
       pushMessage({
         status: "success",
@@ -205,7 +205,7 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
     }
   };
   const handleOrderLineDelete = (data: OrderLineDelete) => {
-    const errs = data.orderLineDelete?.errors ?? [];
+    const errs = data.orderLineDelete?.errors || [];
     if (errs.length === 0) {
       pushMessage({
         status: "success",
@@ -216,7 +216,7 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
     }
   };
   const handleOrderLinesAdd = (data: OrderLinesAdd) => {
-    const errs = data.orderLinesCreate?.errors ?? [];
+    const errs = data.orderLinesCreate?.errors || [];
     if (errs.length === 0) {
       pushMessage({
         status: "success",
@@ -228,7 +228,7 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
     }
   };
   const handleOrderLineUpdate = (data: OrderLineUpdate) => {
-    const errs = data.orderLineUpdate?.errors ?? [];
+    const errs = data.orderLineUpdate?.errors || [];
     if (errs.length === 0) {
       pushMessage({
         status: "success",
@@ -246,7 +246,7 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
     }
   };
   const handleOrderFulfillmentCancel = (data: OrderFulfillmentCancel) => {
-    const errs = data.orderFulfillmentCancel?.errors ?? [];
+    const errs = data.orderFulfillmentCancel?.errors || [];
     if (errs.length === 0) {
       pushMessage({
         status: "success",
@@ -260,7 +260,7 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
   const handleOrderFulfillmentUpdate = (
     data: OrderFulfillmentUpdateTracking
   ) => {
-    const errs = data.orderFulfillmentUpdateTracking?.errors ?? [];
+    const errs = data.orderFulfillmentUpdateTracking?.errors || [];
     if (errs.length === 0) {
       pushMessage({
         status: "success",
@@ -272,7 +272,7 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
     }
   };
   const handleDraftFinalize = (data: OrderDraftFinalize) => {
-    const errs = data.draftOrderComplete?.errors ?? [];
+    const errs = data.draftOrderComplete?.errors || [];
     if (errs.length === 0) {
       pushMessage({
         status: "success",
@@ -283,7 +283,7 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
     }
   };
   const handleInvoiceGeneratePending = (data: InvoiceRequest) => {
-    const errs = data.invoiceRequest?.errors ?? [];
+    const errs = data.invoiceRequest?.errors || [];
     if (errs.length === 0) {
       pushMessage({
         text: intl.formatMessage({
@@ -298,7 +298,7 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
     }
   };
   const handleInvoiceGenerateFinished = (data: InvoiceRequest) => {
-    const errs = data.invoiceRequest?.errors ?? [];
+    const errs = data.invoiceRequest?.errors || [];
     if (errs.length === 0) {
       pushMessage({
         status: "success",
@@ -309,7 +309,7 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
     }
   };
   const handleInvoiceSend = (data: InvoiceEmailSend) => {
-    const errs = data.invoiceSendNotification?.errors ?? [];
+    const errs = data.invoiceSendNotification?.errors || [];
     if (errs.length === 0) {
       pushMessage({
         text: intl.formatMessage({

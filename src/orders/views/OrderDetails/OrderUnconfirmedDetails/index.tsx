@@ -38,6 +38,7 @@ interface OrderUnconfirmedDetailsProps {
   id: string;
   params: OrderUrlQueryParams;
   data: any;
+  initialPaymentAmount: number;
   orderAddNote: any;
   orderLineUpdate: any;
   orderLineDelete: any;
@@ -64,6 +65,7 @@ export const OrderUnconfirmedDetails: React.FC<OrderUnconfirmedDetailsProps> = (
   id,
   params,
   data,
+  initialPaymentAmount,
   orderAddNote,
   orderLineUpdate,
   orderLineDelete,
@@ -308,12 +310,7 @@ export const OrderUnconfirmedDetails: React.FC<OrderUnconfirmedDetailsProps> = (
       <OrderPaymentDialog
         confirmButtonState={paymentCapture.opts.status}
         errors={paymentCapture.opts.data?.paymentCapture.errors || []}
-        initial={
-          params.id
-            ? order?.payments.find(payment => payment.id === params.id)?.total
-                .amount
-            : ""
-        }
+        initial={initialPaymentAmount}
         open={params.action === "payment-capture"}
         onClose={closeModal}
         onSubmit={variables =>
