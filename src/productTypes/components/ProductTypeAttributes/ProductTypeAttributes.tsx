@@ -89,25 +89,12 @@ const ProductTypeAttributes: React.FC<ProductTypeAttributesProps> = props => {
   const intl = useIntl();
 
   return (
-    <Card
-      data-test={
-        type === ProductAttributeType.PRODUCT
-          ? "product-attributes"
-          : "variant-attributes"
-      }
-    >
+    <Card data-test="product-attributes">
       <CardTitle
-        title={
-          type === ProductAttributeType.PRODUCT
-            ? intl.formatMessage({
-                defaultMessage: "Product Attributes",
-                description: "section header"
-              })
-            : intl.formatMessage({
-                defaultMessage: "Variant Attributes",
-                description: "section header"
-              })
-        }
+        title={intl.formatMessage({
+          defaultMessage: "Product Attributes",
+          description: "section header"
+        })}
         toolbar={
           <Button
             data-test-id={testId}

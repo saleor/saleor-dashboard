@@ -208,24 +208,6 @@
     "context": "subheader",
     "string": "Here is some information we gathered about your store"
   },
-  "homeNotificationTableNoOrders": {
-    "string": "No orders ready to fulfill"
-  },
-  "homeNotificationTableOrders": {
-    "string": "{amount, plural,one {One order is ready to fulfill} other {{amount} Orders are ready to fulfill}}"
-  },
-  "homeNotificationTablePayments": {
-    "string": "{amount, plural,one {One payment to capture}other {{amount} Payments to capture}}"
-  },
-  "homeNotificationTableProducts": {
-    "string": "{amount, plural,one {One product out of stock}other {{amount} Products out of stock}}"
-  },
-  "homeNotificationsNoPayments": {
-    "string": "No payments waiting for capture"
-  },
-  "homeNotificationsTableNoProducts": {
-    "string": "No products out of stock"
-  },
   "homeProductListCardOrders": {
     "context": "number of ordered products",
     "string": "{amount, plural,one {One ordered}other {{amount} Ordered}}"
@@ -3952,6 +3934,24 @@
   "src_dot_home_dot_components_dot_HomeNotificationTable_dot_createNewChannel": {
     "string": "Create new channel"
   },
+  "src_dot_home_dot_components_dot_HomeNotificationTable_dot_noOrders": {
+    "string": "No orders ready to fulfill"
+  },
+  "src_dot_home_dot_components_dot_HomeNotificationTable_dot_noPaymentWaiting": {
+    "string": "No payments waiting for capture"
+  },
+  "src_dot_home_dot_components_dot_HomeNotificationTable_dot_noProductsOut": {
+    "string": "No products are out of stock"
+  },
+  "src_dot_home_dot_components_dot_HomeNotificationTable_dot_orderReady": {
+    "string": "{amount, plural,one {One order is ready to fulfill} other {{amount} orders are ready to fulfill}}"
+  },
+  "src_dot_home_dot_components_dot_HomeNotificationTable_dot_paymentCapture": {
+    "string": "{amount, plural,one {One payment to capture}other {{amount} payments to capture}}"
+  },
+  "src_dot_home_dot_components_dot_HomeNotificationTable_dot_productOut": {
+    "string": "{amount, plural,one {One product out of stock}other {{amount} products out of stock}}"
+  },
   "src_dot_hooks_dot_3382262667": {
     "string": "Variant {name} has been set as default."
   },
@@ -5727,10 +5727,6 @@
     "context": "section header",
     "string": "Product Attributes"
   },
-  "src_dot_productTypes_dot_components_dot_ProductTypeAttributes_dot_888493112": {
-    "context": "section header",
-    "string": "Variant Attributes"
-  },
   "src_dot_productTypes_dot_components_dot_ProductTypeDetailsPage_dot_1217376589": {
     "context": "switch button",
     "string": "Product type uses Variant Attributes"
@@ -5826,6 +5822,31 @@
   },
   "src_dot_productTypes_dot_components_dot_ProductTypeShipping_dot_746695941": {
     "string": "Weight"
+  },
+  "src_dot_productTypes_dot_components_dot_ProductTypeVariantAttributes_dot_1192828581": {
+    "string": "No attributes found"
+  },
+  "src_dot_productTypes_dot_components_dot_ProductTypeVariantAttributes_dot_1228425832": {
+    "string": "Attribute name"
+  },
+  "src_dot_productTypes_dot_components_dot_ProductTypeVariantAttributes_dot_1656462109": {
+    "context": "button",
+    "string": "Assign attribute"
+  },
+  "src_dot_productTypes_dot_components_dot_ProductTypeVariantAttributes_dot_1779771890": {
+    "string": "{inputType} attributes cannot be used as variant selection attributes."
+  },
+  "src_dot_productTypes_dot_components_dot_ProductTypeVariantAttributes_dot_1835784218": {
+    "context": "variant attribute checkbox",
+    "string": "Variant Selection"
+  },
+  "src_dot_productTypes_dot_components_dot_ProductTypeVariantAttributes_dot_3478065224": {
+    "context": "attribute internal name",
+    "string": "Slug"
+  },
+  "src_dot_productTypes_dot_components_dot_ProductTypeVariantAttributes_dot_888493112": {
+    "context": "section header",
+    "string": "Variant Attributes"
   },
   "src_dot_productTypes_dot_hooks_dot_useProductTypeDelete_dot_title": {
     "context": "ProductTypeDeleteWarningDialog title",
@@ -6731,6 +6752,10 @@
     "context": "max price in channel",
     "string": "Max. value"
   },
+  "src_dot_shipping_dot_components_dot_OrderValue_dot_1064401942": {
+    "context": "price rates info",
+    "string": "This rate will apply to all orders"
+  },
   "src_dot_shipping_dot_components_dot_OrderValue_dot_1449127001": {
     "string": "Min Value"
   },
@@ -6742,9 +6767,9 @@
     "context": "card title",
     "string": "Order Value"
   },
-  "src_dot_shipping_dot_components_dot_OrderValue_dot_4226393146": {
-    "context": "price rates info",
-    "string": "This rate will apply to all orders of all prices"
+  "src_dot_shipping_dot_components_dot_OrderValue_dot_491724403": {
+    "context": "checkbox label",
+    "string": "Restrict order value"
   },
   "src_dot_shipping_dot_components_dot_OrderValue_dot_507892781": {
     "context": "channel name",
@@ -6757,13 +6782,13 @@
     "context": "min price in channel",
     "string": "Min. value"
   },
-  "src_dot_shipping_dot_components_dot_OrderValue_dot_882649212": {
-    "context": "checkbox label",
-    "string": "There are no value limits"
-  },
   "src_dot_shipping_dot_components_dot_OrderWeight_dot_1064401942": {
     "context": "info text",
     "string": "This rate will apply to all orders"
+  },
+  "src_dot_shipping_dot_components_dot_OrderWeight_dot_1648082334": {
+    "context": "checkbox label",
+    "string": "Restrict order weight"
   },
   "src_dot_shipping_dot_components_dot_OrderWeight_dot_2211490913": {
     "context": "card title",
@@ -6771,10 +6796,6 @@
   },
   "src_dot_shipping_dot_components_dot_OrderWeight_dot_2935375344": {
     "string": "Min. Order Weight"
-  },
-  "src_dot_shipping_dot_components_dot_OrderWeight_dot_882649212": {
-    "context": "checkbox label",
-    "string": "There are no value limits"
   },
   "src_dot_shipping_dot_components_dot_OrderWeight_dot_959089677": {
     "string": "Max. Order Weight"
