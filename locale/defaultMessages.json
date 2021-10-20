@@ -399,14 +399,6 @@
     "context": "shipping address is not set in draft order",
     "string": "Not set"
   },
-  "orderPaymentShippingDoesNotApply": {
-    "context": "order does not require shipping",
-    "string": "does not apply"
-  },
-  "orderPaymentVATDoesNotApply": {
-    "context": "vat not included in order price",
-    "string": "does not apply"
-  },
   "pageTypeCreateHeader": {
     "context": "window title",
     "string": "Create Page Type"
@@ -3659,14 +3651,6 @@
   "src_dot_orders_dot_components_dot_OrderCustomer_dot_4282475982": {
     "string": "Billing Address"
   },
-  "src_dot_orders_dot_components_dot_OrderDetailsPage_dot_2000958703": {
-    "context": "order payment",
-    "string": "Order is overpaid"
-  },
-  "src_dot_orders_dot_components_dot_OrderDetailsPage_dot_3895346684": {
-    "context": "order payment",
-    "string": "Authorized/Captured payment total is higher than the value of the order."
-  },
   "src_dot_orders_dot_components_dot_OrderDetailsPage_dot_cancelOrder": {
     "context": "cancel button",
     "string": "Cancel order"
@@ -3674,6 +3658,14 @@
   "src_dot_orders_dot_components_dot_OrderDetailsPage_dot_confirmOrder": {
     "context": "save button",
     "string": "Confirm order"
+  },
+  "src_dot_orders_dot_components_dot_OrderDetailsPage_dot_orderOverpaid": {
+    "context": "order payment",
+    "string": "Order is overpaid"
+  },
+  "src_dot_orders_dot_components_dot_OrderDetailsPage_dot_orderOverpaidDescription": {
+    "context": "order payment",
+    "string": "Authorized/Captured payment total is higher than the value of the order."
   },
   "src_dot_orders_dot_components_dot_OrderDetailsPage_dot_returnOrder": {
     "context": "return button",
@@ -4218,29 +4210,29 @@
     "context": "dialog header",
     "string": "Mark Order as Paid"
   },
-  "src_dot_orders_dot_components_dot_OrderPaymentDetails_dot_2320183694": {
-    "context": "order payment",
-    "string": "Captured amount"
-  },
-  "src_dot_orders_dot_components_dot_OrderPaymentDetails_dot_2444197639": {
-    "context": "void payment, button",
-    "string": "Void"
-  },
-  "src_dot_orders_dot_components_dot_OrderPaymentDetails_dot_2755509952": {
-    "context": "order payment",
-    "string": "PSP reference:"
-  },
-  "src_dot_orders_dot_components_dot_OrderPaymentDetails_dot_3768782744": {
-    "context": "order payment",
-    "string": "Preauthorized amount"
-  },
-  "src_dot_orders_dot_components_dot_OrderPaymentDetails_dot_4211710217": {
+  "src_dot_orders_dot_components_dot_OrderPaymentDetails_dot_capturePayment": {
     "context": "capture payment, button",
     "string": "Capture"
   },
-  "src_dot_orders_dot_components_dot_OrderPaymentDetails_dot_440215216": {
+  "src_dot_orders_dot_components_dot_OrderPaymentDetails_dot_capturedAmount": {
+    "context": "order payment",
+    "string": "Captured amount"
+  },
+  "src_dot_orders_dot_components_dot_OrderPaymentDetails_dot_gatewayPayment": {
     "context": "payment header with gateway name",
     "string": "{gatewayName} Payment"
+  },
+  "src_dot_orders_dot_components_dot_OrderPaymentDetails_dot_preauthorizedAmount": {
+    "context": "order payment",
+    "string": "Preauthorized amount"
+  },
+  "src_dot_orders_dot_components_dot_OrderPaymentDetails_dot_pspReference": {
+    "context": "order payment",
+    "string": "PSP reference:"
+  },
+  "src_dot_orders_dot_components_dot_OrderPaymentDetails_dot_voidPayment": {
+    "context": "void payment, button",
+    "string": "Void"
   },
   "src_dot_orders_dot_components_dot_OrderPaymentDialog_dot_1466130374": {
     "context": "dialog header",
@@ -4250,11 +4242,29 @@
     "context": "amount of refunded money",
     "string": "Amount"
   },
-  "src_dot_orders_dot_components_dot_OrderPaymentStatus_dot_1229222266": {
+  "src_dot_orders_dot_components_dot_OrderPaymentStatus_dot_paymentMethod": {
+    "context": "payment method",
     "string": "Payment method"
   },
-  "src_dot_orders_dot_components_dot_OrderPaymentStatus_dot_1756106276": {
+  "src_dot_orders_dot_components_dot_OrderPaymentStatus_dot_paymentStatus": {
+    "context": "payment status",
     "string": "Status"
+  },
+  "src_dot_orders_dot_components_dot_OrderPaymentToolbar_dot_capture": {
+    "context": "capture payment, button",
+    "string": "Capture"
+  },
+  "src_dot_orders_dot_components_dot_OrderPaymentToolbar_dot_markAsPaid": {
+    "context": "order, button",
+    "string": "Mark as paid"
+  },
+  "src_dot_orders_dot_components_dot_OrderPaymentToolbar_dot_refund": {
+    "context": "button",
+    "string": "Refund"
+  },
+  "src_dot_orders_dot_components_dot_OrderPaymentToolbar_dot_void": {
+    "context": "void payment, button",
+    "string": "Void"
   },
   "src_dot_orders_dot_components_dot_OrderPaymentVoidDialog_dot_2217048637": {
     "string": "Are you sure you want to void this payment?"
@@ -4263,76 +4273,69 @@
     "context": "dialog header",
     "string": "Void Payment"
   },
-  "src_dot_orders_dot_components_dot_OrderPayment_dot_1325966144": {
-    "context": "order shipping method name",
-    "string": "Shipping"
-  },
-  "src_dot_orders_dot_components_dot_OrderPayment_dot_1817306106": {
-    "context": "vat included in order price",
-    "string": "VAT included"
-  },
-  "src_dot_orders_dot_components_dot_OrderPayment_dot_1934027242": {
-    "context": "voucher type order discount",
-    "string": "Voucher"
-  },
-  "src_dot_orders_dot_components_dot_OrderPayment_dot_2183023165": {
-    "context": "ordered products",
-    "string": "{quantity} items"
-  },
-  "src_dot_orders_dot_components_dot_OrderPayment_dot_2392156856": {
-    "context": "staff added type order discount",
-    "string": "Staff added"
-  },
-  "src_dot_orders_dot_components_dot_OrderPayment_dot_2444197639": {
-    "context": "void payment, button",
-    "string": "Void"
-  },
-  "src_dot_orders_dot_components_dot_OrderPayment_dot_2696879815": {
-    "context": "order payment",
-    "string": "Total captured"
-  },
-  "src_dot_orders_dot_components_dot_OrderPayment_dot_2845258362": {
-    "context": "button",
-    "string": "Refund"
-  },
-  "src_dot_orders_dot_components_dot_OrderPayment_dot_3500506678": {
-    "context": "order, button",
-    "string": "Mark as paid"
-  },
-  "src_dot_orders_dot_components_dot_OrderPayment_dot_353147224": {
-    "context": "order payment",
-    "string": "Outstanding Balance"
-  },
-  "src_dot_orders_dot_components_dot_OrderPayment_dot_3720114122": {
+  "src_dot_orders_dot_components_dot_OrderPayment_dot_discount": {
     "context": "order discount",
     "string": "Discount"
   },
-  "src_dot_orders_dot_components_dot_OrderPayment_dot_3916362286": {
+  "src_dot_orders_dot_components_dot_OrderPayment_dot_discountStaffAdded": {
+    "context": "staff added type order discount",
+    "string": "Staff added"
+  },
+  "src_dot_orders_dot_components_dot_OrderPayment_dot_discountVoucher": {
+    "context": "voucher type order discount",
+    "string": "Voucher"
+  },
+  "src_dot_orders_dot_components_dot_OrderPayment_dot_outstandingBalance": {
+    "context": "order payment",
+    "string": "Outstanding Balance"
+  },
+  "src_dot_orders_dot_components_dot_OrderPayment_dot_paymentStatus": {
     "context": "capture payment, button",
     "string": "Payment status"
   },
-  "src_dot_orders_dot_components_dot_OrderPayment_dot_3955023266": {
-    "string": "Taxes"
+  "src_dot_orders_dot_components_dot_OrderPayment_dot_shipping": {
+    "context": "order shipping method name",
+    "string": "Shipping"
   },
-  "src_dot_orders_dot_components_dot_OrderPayment_dot_4143734263": {
-    "context": "order payment",
-    "string": "Total preauthorized"
+  "src_dot_orders_dot_components_dot_OrderPayment_dot_shippingNotIncluded": {
+    "context": "order does not require shipping",
+    "string": "does not apply"
   },
-  "src_dot_orders_dot_components_dot_OrderPayment_dot_4211710217": {
-    "context": "capture payment, button",
-    "string": "Capture"
-  },
-  "src_dot_orders_dot_components_dot_OrderPayment_dot_781550514": {
+  "src_dot_orders_dot_components_dot_OrderPayment_dot_subtotal": {
     "context": "order subtotal price",
     "string": "Subtotal"
   },
-  "src_dot_orders_dot_components_dot_OrderPayment_dot_878013594": {
+  "src_dot_orders_dot_components_dot_OrderPayment_dot_subtotalQuantity": {
+    "context": "ordered products",
+    "string": "{quantity} items"
+  },
+  "src_dot_orders_dot_components_dot_OrderPayment_dot_taxes": {
+    "context": "order taxes",
+    "string": "Taxes"
+  },
+  "src_dot_orders_dot_components_dot_OrderPayment_dot_total": {
     "context": "order total price",
     "string": "Total"
   },
-  "src_dot_orders_dot_components_dot_OrderPayment_dot_903272629": {
+  "src_dot_orders_dot_components_dot_OrderPayment_dot_totalCaptured": {
+    "context": "order payment",
+    "string": "Total captured"
+  },
+  "src_dot_orders_dot_components_dot_OrderPayment_dot_totalPreauthorized": {
+    "context": "order payment",
+    "string": "Total preauthorized"
+  },
+  "src_dot_orders_dot_components_dot_OrderPayment_dot_totalRefunded": {
     "context": "order payment",
     "string": "Total refunded"
+  },
+  "src_dot_orders_dot_components_dot_OrderPayment_dot_vatIncluded": {
+    "context": "vat included in order price",
+    "string": "VAT included"
+  },
+  "src_dot_orders_dot_components_dot_OrderPayment_dot_vatNotIncluded": {
+    "context": "vat not included in order price",
+    "string": "does not apply"
   },
   "src_dot_orders_dot_components_dot_OrderProductAddDialog_dot_2272209368": {
     "context": "variant sku",
