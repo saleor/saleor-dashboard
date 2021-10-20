@@ -213,6 +213,27 @@ const ProductExportDialog: React.FC<ProductExportDialogProps> = ({
       }
     });
 
+  const exportScopeLabels = {
+    allItems: intl.formatMessage(
+      {
+        defaultMessage: "All products ({number})",
+        description: "export all items to csv file"
+      },
+      {
+        number: productQuantity.all || "..."
+      }
+    ),
+    selectedItems: intl.formatMessage(
+      {
+        defaultMessage: "Selected products ({number})",
+        description: "export selected items to csv file"
+      },
+      {
+        number: selectedProducts
+      }
+    )
+  };
+
   return (
     <Dialog onClose={onClose} open={open} maxWidth="sm" fullWidth>
       <>
@@ -246,10 +267,10 @@ const ProductExportDialog: React.FC<ProductExportDialogProps> = ({
             <ExportDialogSettings
               data={data}
               errors={dialogErrors}
+              onChange={change}
               itemsQuantity={productQuantity}
               selectedItems={selectedProducts}
-              onChange={change}
-              exportTypeLabel={intl.formatMessage(messages.productsLabel)}
+              exportScopeLabels={exportScopeLabels}
             />
           )}
         </DialogContent>

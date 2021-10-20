@@ -31,12 +31,17 @@ const useStyles = makeStyles(
 
 export type ExportItemsQuantity = Record<"all" | "filter", number>;
 
+export interface ExportScopeLabels {
+  allItems: string;
+  selectedItems: string;
+}
+
 export interface ExportDialogSettingsProps {
   data: ExportSettingsInput;
   errors: ExportErrorFragment[];
   itemsQuantity: ExportItemsQuantity;
   selectedItems: number;
-  exportTypeLabel: string;
+  exportScopeLabels: ExportScopeLabels;
   onChange: (event: ChangeEvent) => void;
 }
 
@@ -46,56 +51,14 @@ const ExportDialogSettings: React.FC<ExportDialogSettingsProps> = ({
   data,
   errors,
   onChange,
-  itemsQuantity,
   selectedItems,
-  exportTypeLabel
+  itemsQuantity,
+  exportScopeLabels
 }) => {
   const classes = useStyles({});
   const intl = useIntl();
 
   const formErrors = getFormErrors(formFields, errors);
-
-  const productsToExportChoices: Array<RadioGroupFieldChoice<ExportScope>> = [
-    {
-      label: intl.formatMessage(
-        {
-          defaultMessage: "All {exportTypeLabel} ({number})",
-          description: "export all items to csv file"
-        },
-        {
-          number: itemsQuantity.all || "...",
-          exportTypeLabel
-        }
-      ),
-      value: ExportScope.ALL
-    },
-    {
-      disabled: selectedItems === 0,
-      label: intl.formatMessage(
-        {
-          defaultMessage: "Selected {exportTypeLabel} ({number})",
-          description: "export selected items to csv file"
-        },
-        {
-          number: selectedItems,
-          exportTypeLabel
-        }
-      ),
-      value: ExportScope.IDS
-    },
-    {
-      label: intl.formatMessage(
-        {
-          defaultMessage: "Current search ({number})",
-          description: "export filtered items to csv file"
-        },
-        {
-          number: itemsQuantity.filter || "..."
-        }
-      ),
-      value: ExportScope.FILTER
-    }
-  ];
 
   const productExportTypeChoices: Array<RadioGroupFieldChoice<
     FileTypesEnum
@@ -116,10 +79,34 @@ const ExportDialogSettings: React.FC<ExportDialogSettingsProps> = ({
     }
   ];
 
+  const exportScopeChoices = [
+    {
+      label: exportScopeLabels.allItems,
+      value: ExportScope.ALL
+    },
+    {
+      disabled: selectedItems === 0,
+      label: exportScopeLabels.selectedItems,
+      value: ExportScope.IDS
+    },
+    {
+      label: intl.formatMessage(
+        {
+          defaultMessage: "Current search ({number})",
+          description: "export filtered items to csv file"
+        },
+        {
+          number: itemsQuantity.filter || "..."
+        }
+      ),
+      value: ExportScope.FILTER
+    }
+  ];
+
   return (
     <>
       <RadioGroupField
-        choices={productsToExportChoices}
+        choices={exportScopeChoices}
         error={!!formErrors.scope}
         hint={getExportErrorMessage(formErrors.scope, intl)}
         label={intl.formatMessage({
