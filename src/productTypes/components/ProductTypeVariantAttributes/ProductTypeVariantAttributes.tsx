@@ -3,9 +3,11 @@ import {
   Card,
   IconButton,
   TableCell,
-  TableRow
+  TableRow,
+  Tooltip
 } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
+import HelpOutline from "@material-ui/icons/HelpOutline";
 import CardTitle from "@saleor/components/CardTitle";
 import Checkbox from "@saleor/components/Checkbox";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
@@ -19,11 +21,12 @@ import { makeStyles } from "@saleor/macaw-ui";
 import { maybe, renderCollection, stopPropagation } from "@saleor/misc";
 import { ListActions, ReorderAction } from "@saleor/types";
 import { ProductAttributeType } from "@saleor/types/globalTypes";
-import React from "react";
+import capitalize from "lodash/capitalize";
+import React, { useEffect } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import {
-  ProductTypeDetails_productType_productAttributes,
+  ProductTypeDetails_productType_assignedVariantAttributes,
   ProductTypeDetails_productType_variantAttributes
 } from "../../types/ProductTypeDetails";
 
@@ -38,9 +41,25 @@ const useStyles = makeStyles(
     colGrab: {
       width: 60
     },
-    colName: {},
+    colName: {
+      width: 200
+    },
     colSlug: {
-      width: 300
+      width: 200
+    },
+    colVariant: {
+      width: 150
+    },
+    colVariantContent: {
+      display: "flex",
+      alignItems: "center"
+    },
+    colVariantDisabled: {
+      fill: "#28234A",
+      fillOpacity: 0.6,
+      "&:hover": {
+        fillOpacity: 1
+      }
     },
     link: {
       cursor: "pointer"
@@ -52,25 +71,42 @@ const useStyles = makeStyles(
   { name: "ProductTypeAttributes" }
 );
 
-interface ProductTypeAttributesProps extends ListActions {
-  attributes:
-    | ProductTypeDetails_productType_productAttributes[]
-    | ProductTypeDetails_productType_variantAttributes[];
+interface ProductTypeVariantAttributesProps extends ListActions {
+  assignedVariantAttributes: ProductTypeDetails_productType_assignedVariantAttributes[];
   disabled: boolean;
   type: string;
   testId?: string;
+  selectedVariantAttributes: string[];
   onAttributeAssign: (type: ProductAttributeType) => void;
   onAttributeClick: (id: string) => void;
   onAttributeReorder: ReorderAction;
   onAttributeUnassign: (id: string) => void;
+  onAttributeVariantSelection?: (isActive: boolean) => void;
+  setSelectedVariantAttributes?: (data: string[]) => void;
 }
 
-const numberOfColumns = 5;
+function handleContainerAssign(
+  variantID: string,
+  isSelected: boolean,
+  selectedAttributes: string[],
+  setSelectedAttributes: (data: string[]) => void
+) {
+  if (isSelected) {
+    setSelectedAttributes(
+      selectedAttributes.filter(
+        selectedContainer => selectedContainer !== variantID
+      )
+    );
+  } else {
+    setSelectedAttributes([...selectedAttributes, variantID]);
+  }
+}
 
-const ProductTypeAttributes: React.FC<ProductTypeAttributesProps> = props => {
+const numberOfColumns = 6;
+
+const ProductTypeVariantAttributes: React.FC<ProductTypeVariantAttributesProps> = props => {
   const {
-    attributes,
-
+    assignedVariantAttributes,
     disabled,
     isChecked,
     selected,
@@ -82,17 +118,29 @@ const ProductTypeAttributes: React.FC<ProductTypeAttributesProps> = props => {
     onAttributeAssign,
     onAttributeClick,
     onAttributeReorder,
-    onAttributeUnassign
+    onAttributeUnassign,
+    onAttributeVariantSelection,
+    setSelectedVariantAttributes,
+    selectedVariantAttributes
   } = props;
   const classes = useStyles(props);
 
   const intl = useIntl();
 
+  useEffect(() => {
+    // Populate initial selection - populated inside this component to preserve it's state between data reloads
+    setSelectedVariantAttributes(
+      assignedVariantAttributes
+        .map(elem => (elem.variantSelection ? elem.attribute.id : undefined))
+        .filter(Boolean) || []
+    );
+  }, []);
+
   return (
-    <Card data-test="product-attributes">
+    <Card data-test="variant-attributes">
       <CardTitle
         title={intl.formatMessage({
-          defaultMessage: "Product Attributes",
+          defaultMessage: "Variant Attributes",
           description: "section header"
         })}
         toolbar={
@@ -115,15 +163,18 @@ const ProductTypeAttributes: React.FC<ProductTypeAttributesProps> = props => {
           <col />
           <col className={classes.colName} />
           <col className={classes.colSlug} />
+          <col className={classes.colVariant} />
           <col className={classes.colAction} />
         </colgroup>
-        {attributes?.length > 0 && (
+        {assignedVariantAttributes?.length > 0 && (
           <TableHead
             colSpan={numberOfColumns}
             disabled={disabled}
             dragRows
             selected={selected}
-            items={attributes}
+            items={
+              (assignedVariantAttributes as unknown) as ProductTypeDetails_productType_variantAttributes[]
+            }
             toggleAll={toggleAll}
             toolbar={toolbar}
           >
@@ -136,18 +187,39 @@ const ProductTypeAttributes: React.FC<ProductTypeAttributesProps> = props => {
                 description="attribute internal name"
               />
             </TableCell>
+            <TableCell className={classes.colName}>
+              <FormattedMessage
+                defaultMessage="Variant Selection"
+                description="variant attribute checkbox"
+              />
+            </TableCell>
             <TableCell />
           </TableHead>
         )}
         <SortableTableBody onSortEnd={onAttributeReorder}>
           {renderCollection(
-            attributes,
-            (attribute, attributeIndex) => {
-              const isSelected = attribute ? isChecked(attribute.id) : false;
+            assignedVariantAttributes,
+            (assignedVariantAttribute, attributeIndex) => {
+              const { attribute } = assignedVariantAttribute;
+              const isVariantSelected = assignedVariantAttribute
+                ? isChecked(attribute.id)
+                : false;
+              const isSelected = !!selectedVariantAttributes.find(
+                selectedAttribute => selectedAttribute === attribute.id
+              );
+              const variantSelectionDisabled = ![
+                "DROPDOWN",
+                "BOOLEAN",
+                "SWATCH",
+                "NUMERIC"
+              ].includes(attribute.inputType);
+              const readableAttributeInputType = capitalize(
+                attribute.inputType.split("_").join(" ")
+              );
 
               return (
                 <SortableTableRow
-                  selected={isSelected}
+                  selected={isVariantSelected}
                   className={!!attribute ? classes.link : undefined}
                   hover={!!attribute}
                   onClick={
@@ -162,18 +234,14 @@ const ProductTypeAttributes: React.FC<ProductTypeAttributesProps> = props => {
                 >
                   <TableCell padding="checkbox">
                     <Checkbox
-                      checked={isSelected}
+                      checked={isVariantSelected}
                       disabled={disabled}
                       disableClickPropagation
                       onChange={() => toggle(attribute.id)}
                     />
                   </TableCell>
                   <TableCell className={classes.colName} data-test="name">
-                    {maybe(() => attribute.name) ? (
-                      attribute.name
-                    ) : (
-                      <Skeleton />
-                    )}
+                    {attribute.name ?? <Skeleton />}
                   </TableCell>
                   <TableCell className={classes.colSlug} data-test="slug">
                     {maybe(() => attribute.slug) ? (
@@ -181,6 +249,41 @@ const ProductTypeAttributes: React.FC<ProductTypeAttributesProps> = props => {
                     ) : (
                       <Skeleton />
                     )}
+                  </TableCell>
+                  <TableCell
+                    className={classes.colVariant}
+                    data-test="variant-selection"
+                  >
+                    <div className={classes.colVariantContent}>
+                      <Checkbox
+                        checked={isSelected}
+                        disabled={disabled || variantSelectionDisabled}
+                        disableClickPropagation
+                        onChange={() => {
+                          onAttributeVariantSelection(true);
+                          handleContainerAssign(
+                            attribute.id,
+                            isSelected,
+                            selectedVariantAttributes,
+                            setSelectedVariantAttributes
+                          );
+                        }}
+                      />
+                      {!!variantSelectionDisabled && (
+                        <Tooltip
+                          title={
+                            <FormattedMessage
+                              defaultMessage={
+                                "{inputType} attributes cannot be used as variant selection attributes."
+                              }
+                              values={{ inputType: readableAttributeInputType }}
+                            />
+                          }
+                        >
+                          <HelpOutline className={classes.colVariantDisabled} />
+                        </Tooltip>
+                      )}
+                    </div>
                   </TableCell>
                   <TableCell className={classes.colAction}>
                     <IconButton
@@ -207,5 +310,5 @@ const ProductTypeAttributes: React.FC<ProductTypeAttributesProps> = props => {
     </Card>
   );
 };
-ProductTypeAttributes.displayName = "ProductTypeAttributes";
-export default ProductTypeAttributes;
+ProductTypeVariantAttributes.displayName = "ProductTypeVariantAttributes";
+export default ProductTypeVariantAttributes;
