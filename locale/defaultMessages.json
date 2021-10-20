@@ -1971,7 +1971,8 @@
     "context": "unassign multiple attributes from item",
     "string": "{counter,plural,one{Are you sure you want to unassign this attribute from {itemTypeName}?} other{Are you sure you want to unassign {attributeQuantity} attributes from {itemTypeName}?}}"
   },
-  "src_dot_components_dot_CardMenu_dot_4078124637": {
+  "src_dot_components_dot_CardMenu_dot_cardMenuItemLoading": {
+    "context": "menu item loading",
     "string": "working..."
   },
   "src_dot_components_dot_ChannelsAvailabilityCard_dot_3326160357": {
@@ -3879,6 +3880,10 @@
   "src_dot_giftCards_dot_components_dot_GiftCardCustomerCard_dot_customerGiftCardsAbsentSubtitle": {
     "context": "subtitle",
     "string": "There are no gift cards assigned to this customer"
+  },
+  "src_dot_giftCards_dot_components_dot_GiftCardCustomerCard_dot_customerGiftCardsCardTitle": {
+    "context": "title",
+    "string": "Gift Cards"
   },
   "src_dot_giftCards_dot_components_dot_GiftCardCustomerCard_dot_customerGiftCardsIssueNewCardButton": {
     "context": "button",
