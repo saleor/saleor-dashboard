@@ -46,7 +46,7 @@ function makeMutation<TData, TVariables>(
             status: "error",
             text: intl.formatMessage(commonMessages.readOnly)
           });
-        } else if (err.graphQLErrors.some(isJwtError)) {
+        } else if (err?.graphQLErrors?.some(isJwtError)) {
           user.logout();
           notify({
             status: "error",
