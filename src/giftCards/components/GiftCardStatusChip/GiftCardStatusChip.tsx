@@ -21,7 +21,7 @@ function GiftCardStatusChip<
   const { isExpired, isActive } = giftCard;
   const intl = useIntl();
 
-  const getGiftCardData = () => {
+  const getStatusChipData = () => {
     if (isExpired) {
       return {
         status: StatusType.NEUTRAL,
@@ -44,7 +44,7 @@ function GiftCardStatusChip<
     };
   };
 
-  return <StatusChip size="md" {...getGiftCardData()} />;
+  return <StatusChip size="md" {...getStatusChipData()} />;
 }
 
 export default GiftCardStatusChip;
