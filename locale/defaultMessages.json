@@ -59,17 +59,9 @@
     "context": "amount title",
     "string": "Refunded amount"
   },
-  "authorize amount title": {
-    "context": "authorize amount title",
-    "string": "Authorized amount"
-  },
   "by preposition": {
     "context": "by preposition",
     "string": "by"
-  },
-  "capture amount title": {
-    "context": "capture amount title",
-    "string": "Captured amount"
   },
   "channel hidden": {
     "context": "channel publication status",
@@ -221,10 +213,6 @@
   "event title returned": {
     "context": "returned event title",
     "string": "Products were returned by"
-  },
-  "fail reason title": {
-    "context": "fail reason title",
-    "string": "Fail reason"
   },
   "fixed amount subtitle id": {
     "context": "Fixed amount subtitle",
@@ -524,17 +512,9 @@
     "context": "no warehouses info",
     "string": "There are no warehouses set up for your store. To add stock quantity to the product please <a>configure a warehouse</a>"
   },
-  "psp reference title": {
-    "context": "psp reference title",
-    "string": "PSP Reference"
-  },
   "published channel": {
     "context": "product label",
     "string": "Published"
-  },
-  "refund amount title": {
-    "context": "refund amount title",
-    "string": "Refunded amount"
   },
   "saleDetailsPageCategoriesQuantity": {
     "context": "number of categories",
@@ -4101,6 +4081,30 @@
   "src_dot_orders_dot_components_dot_OrderHistory_dot_ExtendedDiscountTimelineEvent_dot_reasonLabel": {
     "context": "reason for discount label",
     "string": "Reason for discount"
+  },
+  "src_dot_orders_dot_components_dot_OrderHistory_dot_ExtendedPaymentTimelineEvent_dot_authorizedAmount": {
+    "context": "authorize amount title",
+    "string": "Authorized amount"
+  },
+  "src_dot_orders_dot_components_dot_OrderHistory_dot_ExtendedPaymentTimelineEvent_dot_capturedAmount": {
+    "context": "capture amount title",
+    "string": "Captured amount"
+  },
+  "src_dot_orders_dot_components_dot_OrderHistory_dot_ExtendedPaymentTimelineEvent_dot_failReason": {
+    "context": "fail reason title",
+    "string": "Fail reason"
+  },
+  "src_dot_orders_dot_components_dot_OrderHistory_dot_ExtendedPaymentTimelineEvent_dot_pspReference": {
+    "context": "psp reference title",
+    "string": "PSP reference"
+  },
+  "src_dot_orders_dot_components_dot_OrderHistory_dot_ExtendedPaymentTimelineEvent_dot_refundedAmount": {
+    "context": "refund amount title",
+    "string": "Refunded amount"
+  },
+  "src_dot_orders_dot_components_dot_OrderHistory_dot_ExtendedPaymentTimelineEvent_dot_voidedAmount": {
+    "context": "void amount title",
+    "string": "Voided amount"
   },
   "src_dot_orders_dot_components_dot_OrderHistory_dot_description": {
     "context": "replacement created order history message description",
@@ -7695,10 +7699,6 @@
   "unavailable for purchase": {
     "context": "product unavailability",
     "string": "Unavailable for purchase"
-  },
-  "void amount title": {
-    "context": "void amount title",
-    "string": "Voided amount"
   },
   "voucherDetailsUnassignCategory": {
     "context": "unassign category from voucher, button",
