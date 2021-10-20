@@ -40,8 +40,8 @@ export interface GiftCardDeleteDialogContentProps<
       >
     > {
   id?: string;
+  giftCard?: TGiftCard;
   singleDeletion: boolean;
-  giftCard: TGiftCard;
 }
 
 function GiftCardDeleteDialogContent<

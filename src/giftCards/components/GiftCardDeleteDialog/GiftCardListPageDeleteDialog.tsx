@@ -1,3 +1,4 @@
+import { ActionDialogProps } from "@saleor/components/ActionDialog";
 import useGiftCardListDialogs from "@saleor/giftCards/GiftCardsList/providers/GiftCardListDialogsProvider/hooks/useGiftCardListDialogs";
 import useGiftCardList from "@saleor/giftCards/GiftCardsList/providers/GiftCardListProvider/hooks/useGiftCardList";
 import useGiftCardListBulkActions from "@saleor/giftCards/GiftCardsList/providers/GiftCardListProvider/hooks/useGiftCardListBulkActions";
@@ -6,7 +7,6 @@ import { DialogProps } from "@saleor/types";
 import React from "react";
 
 import GiftCardDeleteDialogContent, {
-  GiftCardDeleteDialogContentProps,
   SINGLE
 } from "./GiftCardDeleteDialogContent";
 import useGiftCardBulkDelete from "./useGiftCardBulkDelete";
@@ -45,7 +45,7 @@ const GiftCardDeleteDialog: React.FC<GiftCardDeleteDialogProps> = ({
   });
 
   const dialogProps: Pick<
-    GiftCardDeleteDialogContentProps,
+    ActionDialogProps,
     "onConfirm" | "confirmButtonState"
   > = singleDeletion
     ? {
