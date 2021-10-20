@@ -9,12 +9,19 @@ import { GiftCardFilterInput } from "./../../../../types/globalTypes";
 // GraphQL query operation: CustomerGiftCardList
 // ====================================================
 
+export interface CustomerGiftCardList_giftCards_edges_node_currentBalance {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
 export interface CustomerGiftCardList_giftCards_edges_node {
   __typename: "GiftCard";
   id: string;
   displayCode: string;
   expiryDate: any | null;
   isActive: boolean;
+  currentBalance: CustomerGiftCardList_giftCards_edges_node_currentBalance | null;
 }
 
 export interface CustomerGiftCardList_giftCards_edges {

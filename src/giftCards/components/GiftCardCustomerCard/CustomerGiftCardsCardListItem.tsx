@@ -3,7 +3,6 @@ import { bulkEnableDisableSectionMessages } from "@saleor/giftCards/GiftCardsLis
 import { giftCardsListTableMessages } from "@saleor/giftCards/GiftCardsList/messages";
 import useGiftCardActivationDeactivation from "@saleor/giftCards/GiftCardUpdate/GiftCardUpdatePageHeader/hooks/useGiftCardActivationDeactivation";
 import { ExtendedGiftCard } from "@saleor/giftCards/GiftCardUpdate/providers/GiftCardDetailsProvider/types";
-import { GiftCardDetails_giftCard } from "@saleor/giftCards/GiftCardUpdate/types/GiftCardDetails";
 import * as React from "react";
 import { useState } from "react";
 import { FormattedMessage } from "react-intl";
@@ -113,7 +112,7 @@ const CustomerGiftCardsCardListItem: React.FC<CustomerGiftCardsCardListItemProps
       </div>
       <GiftCardDeleteDialogContent
         singleDeletion
-        giftCard={giftCard as ExtendedGiftCard<GiftCardDetails_giftCard>}
+        giftCard={giftCard}
         open={openDeleteGiftCard}
         onClose={onGiftCardDeleteDialogClose}
         onConfirm={onDeleteGiftCard}

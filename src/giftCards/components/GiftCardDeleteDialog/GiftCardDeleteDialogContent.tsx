@@ -9,7 +9,8 @@ import ActionDialog, {
 import DeleteWarningDialogConsentContent from "@saleor/components/TypeDeleteWarningDialog/DeleteWarningDialogConsentContent";
 import { UseGiftCardListProps } from "@saleor/giftCards/GiftCardsList/providers/GiftCardListProvider/hooks/useGiftCardList";
 import { UseGiftCardListBulkActionsProps } from "@saleor/giftCards/GiftCardsList/providers/GiftCardListProvider/hooks/useGiftCardListBulkActions";
-import { GiftCardDetailsConsumerProps } from "@saleor/giftCards/GiftCardUpdate/providers/GiftCardDetailsProvider";
+import { ExtendedGiftCard } from "@saleor/giftCards/GiftCardUpdate/providers/GiftCardDetailsProvider/types";
+import { GiftCardDetails_giftCard } from "@saleor/giftCards/GiftCardUpdate/types/GiftCardDetails";
 import { getById } from "@saleor/orders/components/OrderReturnPage/utils";
 import React, { useEffect, useState } from "react";
 import { useIntl } from "react-intl";
@@ -19,7 +20,14 @@ import { useGiftCardDeleteDialogContentStyles as useStyles } from "./styles";
 
 export const SINGLE = 1;
 
-export interface GiftCardDeleteDialogContentProps
+type DeleteDialogContentGiftCard = Pick<
+  ExtendedGiftCard<GiftCardDetails_giftCard>,
+  "currentBalance" | "id"
+>;
+
+export interface GiftCardDeleteDialogContentProps<
+  TGiftCard extends DeleteDialogContentGiftCard
+>
   extends Pick<
       ActionDialogProps,
       "open" | "onClose" | "onConfirm" | "confirmButtonState"
@@ -30,13 +38,15 @@ export interface GiftCardDeleteDialogContentProps
         UseGiftCardListBulkActionsProps,
         "listElements" | "selectedItemsCount"
       >
-    >,
-    Partial<Pick<GiftCardDetailsConsumerProps, "giftCard">> {
+    > {
   id?: string;
   singleDeletion: boolean;
+  giftCard: TGiftCard;
 }
 
-const GiftCardDeleteDialogContent: React.FC<GiftCardDeleteDialogContentProps> = ({
+function GiftCardDeleteDialogContent<
+  TGiftCard extends DeleteDialogContentGiftCard
+>({
   id,
   open,
   onClose,
@@ -48,7 +58,7 @@ const GiftCardDeleteDialogContent: React.FC<GiftCardDeleteDialogContentProps> = 
   giftCards,
   giftCard,
   loading
-}) => {
+}: GiftCardDeleteDialogContentProps<TGiftCard>) {
   const intl = useIntl();
   const classes = useStyles({});
 
@@ -118,6 +128,6 @@ const GiftCardDeleteDialogContent: React.FC<GiftCardDeleteDialogContentProps> = 
       )}
     </ActionDialog>
   );
-};
+}
 
 export default GiftCardDeleteDialogContent;

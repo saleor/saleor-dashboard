@@ -1,3 +1,4 @@
+import { fragmentMoney } from "@saleor/fragments/products";
 import makeQuery from "@saleor/hooks/makeQuery";
 import gql from "graphql-tag";
 
@@ -7,6 +8,7 @@ import {
 } from "./types/CustomerGiftCardList";
 
 const customerGiftCardListQuery = gql`
+  ${fragmentMoney}
   query CustomerGiftCardList($first: Int, $filter: GiftCardFilterInput) {
     giftCards(first: $first, filter: $filter) {
       edges {
@@ -15,6 +17,9 @@ const customerGiftCardListQuery = gql`
           displayCode
           expiryDate
           isActive
+          currentBalance {
+            ...Money
+          }
         }
       }
     }
