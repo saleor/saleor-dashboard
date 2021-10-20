@@ -1,16 +1,18 @@
 import { Button, Card, CardActions } from "@material-ui/core";
 import VerticalSpacer from "@saleor/apps/components/VerticalSpacer";
 import CardTitle from "@saleor/components/CardTitle";
-import { CustomerDetailsContext } from "@saleor/customers/providers/CustomerDetailsProvider";
+import CollectionWithDividers from "@saleor/components/CollectionWithDividers";
+import Skeleton from "@saleor/components/Skeleton";
 import GiftCardCreateDialog from "@saleor/giftCards/GiftCardCreateDialog/GiftCardCreateDialog";
+import { getExtendedGiftCard } from "@saleor/giftCards/GiftCardUpdate/providers/GiftCardDetailsProvider/utils";
 import { getFullName } from "@saleor/misc";
 import { mapEdgesToItems } from "@saleor/utils/maps";
 import * as React from "react";
-import { useContext } from "react";
 import { useState } from "react";
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 
-import CustomerGiftCardsList from "./CustomerGiftCardsList";
+import CustomerGiftCardsCardListItem from "./CustomerGiftCardsCardListItem";
+import { useCustomerDetails } from "./hooks/useCustomerDetails";
 import { giftCardCustomerCardMessages as messages } from "./messages";
 import {
   CUSTOMER_GIFT_CARD_LIST_QUERY,
@@ -19,7 +21,9 @@ import {
 import { useCardActionsStyles } from "./styles";
 
 const CustomerGiftCardsCard: React.FC = () => {
-  const customerDetails = useContext(CustomerDetailsContext);
+  const intl = useIntl();
+  const [openCreateDialog, setOpenCreateDialog] = useState(false);
+  const customerDetails = useCustomerDetails();
   const customer = customerDetails?.customer?.user;
   const id = customer?.id;
 
@@ -31,7 +35,7 @@ const CustomerGiftCardsCard: React.FC = () => {
       }
     }
   });
-  const [openCreateDialog, setOpenCreateDialog] = useState(false);
+
   const closeCreateDialog = () => setOpenCreateDialog(false);
 
   const giftCards = mapEdgesToItems(data?.giftCards);
@@ -52,7 +56,7 @@ const CustomerGiftCardsCard: React.FC = () => {
     <>
       <Card>
         <CardTitle
-          title="Gift Cards"
+          title={intl.formatMessage(messages.customerGiftCardsCardTitle)}
           toolbar={
             !!giftCards?.length && (
               <Button
@@ -74,7 +78,19 @@ const CustomerGiftCardsCard: React.FC = () => {
           />
           <VerticalSpacer spacing={2} />
         </CardTitle>
-        <CustomerGiftCardsList giftCards={giftCards} loading={loading} />
+        <Skeleton>
+          {!loading && giftCards && (
+            <CollectionWithDividers
+              collection={giftCards}
+              renderItem={giftCard => (
+                <CustomerGiftCardsCardListItem
+                  giftCard={getExtendedGiftCard(giftCard)}
+                />
+              )}
+              withOuterDividers
+            />
+          )}
+        </Skeleton>
         <CardActions className={classes.cardActions}>
           <Button
             variant="text"
@@ -93,10 +109,7 @@ const CustomerGiftCardsCard: React.FC = () => {
         refetchQueries={[CUSTOMER_GIFT_CARD_LIST_QUERY]}
         initialCustomer={{
           email: customer?.email,
-          name: getFullName({
-            firstName: customer?.firstName,
-            lastName: customer?.lastName
-          })
+          name: getFullName(customer)
         }}
       />
     </>

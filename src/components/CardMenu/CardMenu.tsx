@@ -16,6 +16,8 @@ import * as React from "react";
 import { useEffect, useRef, useState } from "react";
 import { FormattedMessage } from "react-intl";
 
+import { cardMenuMessages as messages } from "./messages";
+
 const ITEM_HEIGHT = 48;
 export interface CardMenuItem {
   disabled?: boolean;
@@ -172,12 +174,14 @@ const CardMenu: React.FC<CardMenuProps> = props => {
                         {menuItem.loading ? (
                           <>
                             <Typography variant="subtitle1">
-                              <FormattedMessage defaultMessage="working..." />
+                              <FormattedMessage
+                                {...messages.cardMenuItemLoading}
+                              />
                             </Typography>
                             <CircularProgress size={24} />
                           </>
                         ) : (
-                          menuItem.label
+                          <Typography>{menuItem.label}</Typography>
                         )}
                       </div>
                     </MenuItem>
