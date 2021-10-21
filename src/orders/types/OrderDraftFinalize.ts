@@ -535,6 +535,8 @@ export interface OrderDraftFinalize_draftOrderComplete_order_shippingMethods {
   id: string;
   name: string;
   price: OrderDraftFinalize_draftOrderComplete_order_shippingMethods_price;
+  active: boolean;
+  message: string | null;
 }
 
 export interface OrderDraftFinalize_draftOrderComplete_order_invoices {

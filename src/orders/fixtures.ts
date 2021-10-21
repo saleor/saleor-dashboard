@@ -788,7 +788,9 @@ export const order = (placeholder: string): OrderDetails_order => ({
         __typename: "Money",
         amount: 12.41,
         currency: "USD"
-      }
+      },
+      active: false,
+      message: "shipping method is disactive"
     },
     {
       __typename: "ShippingMethod",
@@ -798,7 +800,9 @@ export const order = (placeholder: string): OrderDetails_order => ({
         __typename: "Money",
         amount: 9.12,
         currency: "USD"
-      }
+      },
+      active: true,
+      message: null
     },
     {
       __typename: "ShippingMethod",
@@ -808,7 +812,9 @@ export const order = (placeholder: string): OrderDetails_order => ({
         __typename: "Money",
         amount: 7.6,
         currency: "USD"
-      }
+      },
+      active: true,
+      message: null
     }
   ],
   billingAddress: {

@@ -535,6 +535,8 @@ export interface OrderVoid_orderVoid_order_shippingMethods {
   id: string;
   name: string;
   price: OrderVoid_orderVoid_order_shippingMethods_price;
+  active: boolean;
+  message: string | null;
 }
 
 export interface OrderVoid_orderVoid_order_invoices {

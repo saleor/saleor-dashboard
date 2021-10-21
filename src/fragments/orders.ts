@@ -303,6 +303,8 @@ export const fragmentOrderDetails = gql`
       price {
         ...Money
       }
+      active
+      message
     }
     invoices {
       ...InvoiceFragment

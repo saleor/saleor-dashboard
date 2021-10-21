@@ -535,6 +535,8 @@ export interface OrderLineDiscountRemove_orderLineDiscountRemove_order_shippingM
   id: string;
   name: string;
   price: OrderLineDiscountRemove_orderLineDiscountRemove_order_shippingMethods_price;
+  active: boolean;
+  message: string | null;
 }
 
 export interface OrderLineDiscountRemove_orderLineDiscountRemove_order_invoices {

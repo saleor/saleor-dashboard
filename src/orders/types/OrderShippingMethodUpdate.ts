@@ -27,6 +27,8 @@ export interface OrderShippingMethodUpdate_orderUpdateShipping_order_shippingMet
   id: string;
   name: string;
   price: OrderShippingMethodUpdate_orderUpdateShipping_order_shippingMethods_price;
+  active: boolean;
+  message: string | null;
 }
 
 export interface OrderShippingMethodUpdate_orderUpdateShipping_order_total_tax {

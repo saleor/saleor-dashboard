@@ -535,6 +535,8 @@ export interface OrderLineDelete_orderLineDelete_order_shippingMethods {
   id: string;
   name: string;
   price: OrderLineDelete_orderLineDelete_order_shippingMethods_price;
+  active: boolean;
+  message: string | null;
 }
 
 export interface OrderLineDelete_orderLineDelete_order_invoices {

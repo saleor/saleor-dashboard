@@ -535,6 +535,8 @@ export interface OrderCancel_orderCancel_order_shippingMethods {
   id: string;
   name: string;
   price: OrderCancel_orderCancel_order_shippingMethods_price;
+  active: boolean;
+  message: string | null;
 }
 
 export interface OrderCancel_orderCancel_order_invoices {

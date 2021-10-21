@@ -535,6 +535,8 @@ export interface OrderDiscountAdd_orderDiscountAdd_order_shippingMethods {
   id: string;
   name: string;
   price: OrderDiscountAdd_orderDiscountAdd_order_shippingMethods_price;
+  active: boolean;
+  message: string | null;
 }
 
 export interface OrderDiscountAdd_orderDiscountAdd_order_invoices {

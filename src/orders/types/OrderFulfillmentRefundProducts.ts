@@ -637,6 +637,8 @@ export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_o
   id: string;
   name: string;
   price: OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_shippingMethods_price;
+  active: boolean;
+  message: string | null;
 }
 
 export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_invoices {

@@ -535,6 +535,8 @@ export interface OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_o
   id: string;
   name: string;
   price: OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_order_shippingMethods_price;
+  active: boolean;
+  message: string | null;
 }
 
 export interface OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_order_invoices {

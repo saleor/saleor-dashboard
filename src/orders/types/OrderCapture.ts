@@ -535,6 +535,8 @@ export interface OrderCapture_orderCapture_order_shippingMethods {
   id: string;
   name: string;
   price: OrderCapture_orderCapture_order_shippingMethods_price;
+  active: boolean;
+  message: string | null;
 }
 
 export interface OrderCapture_orderCapture_order_invoices {
