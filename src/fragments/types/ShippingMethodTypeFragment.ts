@@ -6,7 +6,7 @@
 import { PostalCodeRuleInclusionTypeEnum, WeightUnitsEnum, ShippingMethodTypeEnum } from "./../../types/globalTypes";
 
 // ====================================================
-// GraphQL fragment: ShippingMethodFragment
+// GraphQL fragment: ShippingMethodTypeFragment
 // ====================================================
 
 export interface ShippingMethodTypeFragment_postalCodeRules {
@@ -75,18 +75,18 @@ export interface ShippingMethodTypeFragment_channelListings {
   maximumOrderPrice: ShippingMethodTypeFragment_channelListings_maximumOrderPrice | null;
 }
 
-export interface ShippingMethodFragment {
-  __typename: "ShippingMethod";
+export interface ShippingMethodTypeFragment {
+  __typename: "ShippingMethodType";
   id: string;
-  postalCodeRules: (ShippingMethodFragment_postalCodeRules | null)[] | null;
-  metadata: (ShippingMethodFragment_metadata | null)[];
-  privateMetadata: (ShippingMethodFragment_privateMetadata | null)[];
-  minimumOrderWeight: ShippingMethodFragment_minimumOrderWeight | null;
-  maximumOrderWeight: ShippingMethodFragment_maximumOrderWeight | null;
+  postalCodeRules: (ShippingMethodTypeFragment_postalCodeRules | null)[] | null;
+  metadata: (ShippingMethodTypeFragment_metadata | null)[];
+  privateMetadata: (ShippingMethodTypeFragment_privateMetadata | null)[];
+  minimumOrderWeight: ShippingMethodTypeFragment_minimumOrderWeight | null;
+  maximumOrderWeight: ShippingMethodTypeFragment_maximumOrderWeight | null;
   minimumDeliveryDays: number | null;
   maximumDeliveryDays: number | null;
   name: string;
   description: any | null;
   type: ShippingMethodTypeEnum | null;
-  channelListings: ShippingMethodFragment_channelListings[] | null;
+  channelListings: ShippingMethodTypeFragment_channelListings[] | null;
 }

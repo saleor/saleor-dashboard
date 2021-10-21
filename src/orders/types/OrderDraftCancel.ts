@@ -534,7 +534,7 @@ export interface OrderDraftCancel_draftOrderDelete_order_shippingMethods {
   __typename: "ShippingMethod";
   id: string;
   name: string;
-  price: OrderDraftCancel_draftOrderDelete_order_shippingMethods_price | null;
+  price: OrderDraftCancel_draftOrderDelete_order_shippingMethods_price;
 }
 
 export interface OrderDraftCancel_draftOrderDelete_order_invoices {

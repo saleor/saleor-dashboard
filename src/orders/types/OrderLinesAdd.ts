@@ -534,7 +534,7 @@ export interface OrderLinesAdd_orderLinesCreate_order_shippingMethods {
   __typename: "ShippingMethod";
   id: string;
   name: string;
-  price: OrderLinesAdd_orderLinesCreate_order_shippingMethods_price | null;
+  price: OrderLinesAdd_orderLinesCreate_order_shippingMethods_price;
 }
 
 export interface OrderLinesAdd_orderLinesCreate_order_invoices {

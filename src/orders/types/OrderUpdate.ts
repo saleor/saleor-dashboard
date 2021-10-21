@@ -534,7 +534,7 @@ export interface OrderUpdate_orderUpdate_order_shippingMethods {
   __typename: "ShippingMethod";
   id: string;
   name: string;
-  price: OrderUpdate_orderUpdate_order_shippingMethods_price | null;
+  price: OrderUpdate_orderUpdate_order_shippingMethods_price;
 }
 
 export interface OrderUpdate_orderUpdate_order_invoices {

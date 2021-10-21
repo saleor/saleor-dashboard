@@ -26,7 +26,7 @@ export interface OrderShippingMethodUpdate_orderUpdateShipping_order_shippingMet
   __typename: "ShippingMethod";
   id: string;
   name: string;
-  price: OrderShippingMethodUpdate_orderUpdateShipping_order_shippingMethods_price | null;
+  price: OrderShippingMethodUpdate_orderUpdateShipping_order_shippingMethods_price;
 }
 
 export interface OrderShippingMethodUpdate_orderUpdateShipping_order_total_tax {
@@ -64,7 +64,7 @@ export interface OrderShippingMethodUpdate_orderUpdateShipping_order_shippingMet
   __typename: "ShippingMethod";
   id: string;
   name: string;
-  price: OrderShippingMethodUpdate_orderUpdateShipping_order_shippingMethod_price | null;
+  price: OrderShippingMethodUpdate_orderUpdateShipping_order_shippingMethod_price;
 }
 
 export interface OrderShippingMethodUpdate_orderUpdateShipping_order_shippingPrice_gross {

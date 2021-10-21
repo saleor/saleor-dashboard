@@ -534,7 +534,7 @@ export interface OrderCapture_orderCapture_order_shippingMethods {
   __typename: "ShippingMethod";
   id: string;
   name: string;
-  price: OrderCapture_orderCapture_order_shippingMethods_price | null;
+  price: OrderCapture_orderCapture_order_shippingMethods_price;
 }
 
 export interface OrderCapture_orderCapture_order_invoices {

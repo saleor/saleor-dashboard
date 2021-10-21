@@ -534,7 +534,7 @@ export interface OrderFulfillmentCancel_orderFulfillmentCancel_order_shippingMet
   __typename: "ShippingMethod";
   id: string;
   name: string;
-  price: OrderFulfillmentCancel_orderFulfillmentCancel_order_shippingMethods_price | null;
+  price: OrderFulfillmentCancel_orderFulfillmentCancel_order_shippingMethods_price;
 }
 
 export interface OrderFulfillmentCancel_orderFulfillmentCancel_order_invoices {

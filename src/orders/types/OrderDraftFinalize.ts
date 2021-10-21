@@ -534,7 +534,7 @@ export interface OrderDraftFinalize_draftOrderComplete_order_shippingMethods {
   __typename: "ShippingMethod";
   id: string;
   name: string;
-  price: OrderDraftFinalize_draftOrderComplete_order_shippingMethods_price | null;
+  price: OrderDraftFinalize_draftOrderComplete_order_shippingMethods_price;
 }
 
 export interface OrderDraftFinalize_draftOrderComplete_order_invoices {
