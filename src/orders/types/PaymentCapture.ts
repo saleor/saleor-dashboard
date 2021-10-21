@@ -36,6 +36,7 @@ export interface PaymentCapture_paymentCapture_payment_order_totalCaptured {
 
 export interface PaymentCapture_paymentCapture_payment_order {
   __typename: "Order";
+  id: string;
   paymentStatus: OrderPaymentStatusEnum;
   totalCaptured: PaymentCapture_paymentCapture_payment_order_totalCaptured;
   actions: (OrderAction | null)[];

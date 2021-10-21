@@ -419,6 +419,7 @@ const paymentVoidMutation = gql`
       payment {
         ...PaymentFragment
         order {
+          id
           paymentStatus
           totalCaptured {
             amount
@@ -484,6 +485,7 @@ const paymentCaptureMutation = gql`
       payment {
         ...PaymentFragment
         order {
+          id
           paymentStatus
           totalCaptured {
             amount

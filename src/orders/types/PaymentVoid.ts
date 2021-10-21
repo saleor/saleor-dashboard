@@ -36,6 +36,7 @@ export interface PaymentVoid_paymentVoid_payment_order_totalCaptured {
 
 export interface PaymentVoid_paymentVoid_payment_order {
   __typename: "Order";
+  id: string;
   paymentStatus: OrderPaymentStatusEnum;
   totalCaptured: PaymentVoid_paymentVoid_payment_order_totalCaptured;
   actions: (OrderAction | null)[];
