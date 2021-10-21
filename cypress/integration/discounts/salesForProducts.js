@@ -18,11 +18,12 @@ import filterTests from "../../support/filterTests";
 import {
   assignProducts,
   createSale,
+  createSaleWithNewProduct,
   discountOptions
 } from "../../support/pages/discounts/salesPage";
 
 filterTests({ definedTags: ["all"] }, () => {
-  describe("Sales discounts", () => {
+  describe("Sales discounts for products", () => {
     const startsWith = "CySales-";
 
     let productType;
@@ -80,38 +81,20 @@ filterTests({ definedTags: ["all"] }, () => {
       const discountValue = 50;
       const productPrice = 100;
 
-      productsUtils
-        .createProductInChannel({
-          name: saleName,
-          channelId: defaultChannel.id,
-          warehouseId: warehouse.id,
-          productTypeId: productType.id,
-          attributeId: attribute.id,
-          categoryId: category.id,
-          price: productPrice
-        })
-        .then(({ product: productResp }) => {
-          /* Uncomment after fixing SALEOR-3367 bug
-           cy.clearSessionData()
-          .loginUserViaRequest("auth", ONE_PERMISSION_USERS.discount) 
-          */
-
-          cy.visit(urlList.sales);
-          cy.softExpectSkeletonIsVisible();
-          const product = productResp;
-          createSale({
-            saleName,
-            channelName: defaultChannel.name,
-            discountValue,
-            discountOption: discountOptions.PERCENTAGE
-          });
-          assignProducts(product.name);
-          getProductPrice(product.id, defaultChannel.slug);
-        })
-        .then(price => {
-          const expectedPrice = (productPrice * discountValue) / 100;
-          expect(expectedPrice).to.be.eq(price);
-        });
+      createSaleWithNewProduct({
+        name: saleName,
+        channel: defaultChannel,
+        warehouseId: warehouse.id,
+        productTypeId: productType.id,
+        attributeId: attribute.id,
+        categoryId: category.id,
+        price: productPrice,
+        discountOption: discountOptions.PERCENTAGE,
+        discountValue
+      }).then(price => {
+        const expectedPrice = (productPrice * discountValue) / 100;
+        expect(expectedPrice).to.be.eq(price);
+      });
     });
 
     it("should create fixed price discount", () => {
@@ -119,38 +102,20 @@ filterTests({ definedTags: ["all"] }, () => {
       const discountValue = 50;
       const productPrice = 100;
 
-      productsUtils
-        .createProductInChannel({
-          name: saleName,
-          channelId: defaultChannel.id,
-          warehouseId: warehouse.id,
-          productTypeId: productType.id,
-          attributeId: attribute.id,
-          categoryId: category.id,
-          price: productPrice
-        })
-        .then(({ product: productResp }) => {
-          /* Uncomment after fixing SALEOR-3367 bug
-           cy.clearSessionData()
-          .loginUserViaRequest("auth", ONE_PERMISSION_USERS.discount) 
-          */
-
-          cy.visit(urlList.sales);
-          cy.softExpectSkeletonIsVisible();
-          const product = productResp;
-          createSale({
-            saleName,
-            channelName: defaultChannel.name,
-            discountValue,
-            discountOption: discountOptions.FIXED
-          });
-          assignProducts(product.name);
-          getProductPrice(product.id, defaultChannel.slug);
-        })
-        .then(price => {
-          const expectedPrice = productPrice - discountValue;
-          expect(expectedPrice).to.be.eq(price);
-        });
+      createSaleWithNewProduct({
+        name: saleName,
+        channel: defaultChannel,
+        warehouseId: warehouse.id,
+        productTypeId: productType.id,
+        attributeId: attribute.id,
+        categoryId: category.id,
+        price: productPrice,
+        discountOption: discountOptions.FIXED,
+        discountValue
+      }).then(price => {
+        const expectedPrice = productPrice - discountValue;
+        expect(expectedPrice).to.be.eq(price);
+      });
     });
 
     it("should not displayed discount not assign to channel", () => {
