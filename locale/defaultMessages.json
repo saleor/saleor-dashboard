@@ -3594,6 +3594,14 @@
     "context": "issue gift card dialog title",
     "string": "Issue gift card"
   },
+  "src_dot_giftCards_dot_GiftCardExportDialog_dot_2086397658": {
+    "context": "export all items to csv file",
+    "string": "All gift cards ({number})"
+  },
+  "src_dot_giftCards_dot_GiftCardExportDialog_dot_701638571": {
+    "context": "export selected items to csv file",
+    "string": "Selected giftCards ({number})"
+  },
   "src_dot_giftCards_dot_GiftCardExportDialog_dot_confirmButtonLabel": {
     "context": "gift card export dialog confirm button label",
     "string": "Export codes"
@@ -5890,13 +5898,17 @@
     "context": "informations about product seo, header",
     "string": "SEO Information"
   },
-  "src_dot_products_dot_components_dot_ProductExportDialog_dot_2130477038": {
+  "src_dot_products_dot_components_dot_ProductExportDialog_dot_2167661409": {
     "context": "export selected items to csv file",
-    "string": "Selected {exportTypeLabel} ({number})"
+    "string": "Selected products ({number})"
   },
   "src_dot_products_dot_components_dot_ProductExportDialog_dot_2318723509": {
     "context": "export items to csv file, choice field label",
     "string": "Export information for:"
+  },
+  "src_dot_products_dot_components_dot_ProductExportDialog_dot_2355065897": {
+    "context": "export all items to csv file",
+    "string": "All products ({number})"
   },
   "src_dot_products_dot_components_dot_ProductExportDialog_dot_2474350154": {
     "context": "list of warehouses",
@@ -5939,10 +5951,6 @@
   "src_dot_products_dot_components_dot_ProductExportDialog_dot_472026385": {
     "context": "select product informations to be exported",
     "string": "Information exported:"
-  },
-  "src_dot_products_dot_components_dot_ProductExportDialog_dot_52281295": {
-    "context": "export all items to csv file",
-    "string": "All {exportTypeLabel} ({number})"
   },
   "src_dot_products_dot_components_dot_ProductExportDialog_dot_524117994": {
     "context": "input helper text, search attributes",
