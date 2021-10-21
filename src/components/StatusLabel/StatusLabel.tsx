@@ -6,6 +6,8 @@ import Label from "@saleor/orders/components/OrderHistory/Label";
 import classNames from "classnames";
 import React from "react";
 
+import { StatusType } from "../StatusChip/types";
+
 export const useStyles = makeStyles(
   theme => {
     const dot = {
@@ -60,7 +62,7 @@ export const useStyles = makeStyles(
 
 export interface StatusLabelProps {
   label: string | React.ReactNode;
-  status: "success" | "alert" | "neutral" | "error" | undefined;
+  status: StatusType;
   subtitle?: string;
   className?: string;
 }
@@ -84,10 +86,10 @@ const StatusLabel: React.FC<StatusLabelProps> = ({
         className={classNames({
           [className]: true,
           [classes.dotVertical]: !!subtitle,
-          [classes.successDot]: status === "success",
-          [classes.alertDot]: status === "alert",
-          [classes.neutralDot]: status === "neutral",
-          [classes.errorDot]: status === "error"
+          [classes.successDot]: status === StatusType.SUCCESS,
+          [classes.alertDot]: status === StatusType.ALERT,
+          [classes.neutralDot]: status === StatusType.NEUTRAL,
+          [classes.errorDot]: status === StatusType.ERROR
         })}
       ></div>
       <div className={classes.textContainer}>

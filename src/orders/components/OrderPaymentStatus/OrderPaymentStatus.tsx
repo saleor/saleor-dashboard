@@ -7,6 +7,7 @@ import {
   Typography
 } from "@material-ui/core";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
+import { StatusType } from "@saleor/components/StatusChip/types";
 import StatusLabel from "@saleor/components/StatusLabel";
 import TableCellHeader from "@saleor/components/TableCellHeader";
 import { OrderList_orders_edges_node_payments } from "@saleor/orders/types/OrderList";
@@ -20,7 +21,7 @@ import { useStyles } from "./styles";
 export interface OrderPaymentStatusProps {
   payments: OrderList_orders_edges_node_payments[];
   label: string | React.ReactNode;
-  status: "success" | "alert" | "neutral" | "error" | undefined;
+  status: StatusType;
 }
 
 const OrderPaymentStatus: React.FC<OrderPaymentStatusProps> = ({

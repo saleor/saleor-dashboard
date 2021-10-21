@@ -8,6 +8,7 @@ import {
 import Checkbox from "@saleor/components/Checkbox";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
+import { StatusType } from "@saleor/components/StatusChip/types";
 import StatusLabel from "@saleor/components/StatusLabel";
 import TableCellHeader from "@saleor/components/TableCellHeader";
 import TableHead from "@saleor/components/TableHead";
@@ -191,7 +192,11 @@ const PageList: React.FC<PageListProps> = props => {
                                   description: "page status"
                                 })
                           }
-                          status={page.isPublished ? "success" : "error"}
+                          status={
+                            page.isPublished
+                              ? StatusType.SUCCESS
+                              : StatusType.ERROR
+                          }
                         />
                       ),
                       <Skeleton />
