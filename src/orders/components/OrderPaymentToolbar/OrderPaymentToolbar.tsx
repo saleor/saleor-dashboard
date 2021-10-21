@@ -1,6 +1,6 @@
 import { Button } from "@material-ui/core";
 import React from "react";
-import { useIntl } from "react-intl";
+import { FormattedMessage } from "react-intl";
 
 import { OrderAction } from "../../../types/globalTypes";
 import { OrderDetails_order } from "../../types/OrderDetails";
@@ -22,8 +22,6 @@ const OrderPaymentToolbar: React.FC<OrderPaymentToolbarProps> = props => {
   const canRefund = !!order?.actions?.includes(OrderAction.REFUND);
   const canMarkAsPaid = !!order?.actions?.includes(OrderAction.MARK_AS_PAID);
 
-  const intl = useIntl();
-
   return (
     <>
       {canRefund && (
@@ -33,22 +31,22 @@ const OrderPaymentToolbar: React.FC<OrderPaymentToolbarProps> = props => {
           onClick={onRefund}
           data-test-id="refund-button"
         >
-          {intl.formatMessage(messages.refund)}
+          <FormattedMessage {...messages.refund} />
         </Button>
       )}
       {canVoid && (
         <Button color="primary" variant="text" onClick={onVoid}>
-          {intl.formatMessage(messages.void)}
+          <FormattedMessage {...messages.void} />
         </Button>
       )}
       {canCapture && (
         <Button color="primary" variant="text" onClick={onCapture}>
-          {intl.formatMessage(messages.capture)}
+          <FormattedMessage {...messages.capture} />
         </Button>
       )}
       {canMarkAsPaid && (
         <Button color="primary" variant="text" onClick={onMarkAsPaid}>
-          {intl.formatMessage(messages.markAsPaid)}
+          <FormattedMessage {...messages.markAsPaid} />
         </Button>
       )}
     </>

@@ -11,7 +11,7 @@ import StatusLabel from "@saleor/components/StatusLabel";
 import TableCellHeader from "@saleor/components/TableCellHeader";
 import { OrderList_orders_edges_node_payments } from "@saleor/orders/types/OrderList";
 import React from "react";
-import { useIntl } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import { transformChargeStatus } from "../../../misc";
 import { orderPaymentStatusMessages as messages } from "./messages";
@@ -81,13 +81,13 @@ const OrderPaymentStatus: React.FC<OrderPaymentStatusProps> = ({
               <TableHead>
                 <TableRow>
                   <TableCellHeader className={classes.tableCellHeader}>
-                    {intl.formatMessage(messages.paymentMethod)}
+                    <FormattedMessage {...messages.paymentMethod} />
                   </TableCellHeader>
                   <TableCellHeader
                     textAlign="right"
                     className={classes.tableCellHeader}
                   >
-                    {intl.formatMessage(messages.paymentStatus)}
+                    <FormattedMessage {...messages.paymentStatus} />
                   </TableCellHeader>
                 </TableRow>
               </TableHead>

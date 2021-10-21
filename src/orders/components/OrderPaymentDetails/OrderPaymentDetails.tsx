@@ -4,7 +4,7 @@ import Money from "@saleor/components/Money";
 import StatusLabel from "@saleor/components/StatusLabel";
 import classNames from "classnames";
 import React from "react";
-import { useIntl } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import { transformChargeStatus } from "../../../misc";
 import { OrderAction } from "../../../types/globalTypes";
@@ -41,9 +41,12 @@ const OrderPaymentDetails: React.FC<OrderPaymentDetailsProps> = props => {
             <tr>
               <td>
                 <b>
-                  {intl.formatMessage(messages.gatewayPayment, {
-                    gatewayName: payment.gatewayName
-                  })}
+                  <FormattedMessage
+                    {...messages.gatewayPayment}
+                    values={{
+                      gatewayName: payment.gatewayName
+                    }}
+                  />
                 </b>
                 <IconButton
                   data-test="expand"
@@ -66,19 +69,23 @@ const OrderPaymentDetails: React.FC<OrderPaymentDetailsProps> = props => {
                 {payment.pspReference && (
                   <tr>
                     <td colSpan={2} className={classes.reference}>
-                      {intl.formatMessage(messages.pspReference)}{" "}
+                      <FormattedMessage {...messages.pspReference} />{" "}
                       {payment.pspReference}
                     </td>
                   </tr>
                 )}
                 <tr>
-                  <td>{intl.formatMessage(messages.preauthorizedAmount)}</td>
+                  <td>
+                    <FormattedMessage {...messages.preauthorizedAmount} />
+                  </td>
                   <td className={classes.textRight}>
                     <Money money={payment.total} />
                   </td>
                 </tr>
                 <tr>
-                  <td>{intl.formatMessage(messages.capturedAmount)}</td>
+                  <td>
+                    <FormattedMessage {...messages.capturedAmount} />
+                  </td>
                   <td className={classes.textRight}>
                     <Money money={payment.capturedAmount} />
                   </td>
@@ -95,7 +102,7 @@ const OrderPaymentDetails: React.FC<OrderPaymentDetailsProps> = props => {
                         onClick={() => onPaymentVoid(payment.id)}
                         className={classes.actions}
                       >
-                        {intl.formatMessage(messages.voidPayment)}
+                        <FormattedMessage {...messages.voidPayment} />
                       </Button>
                     )}
                     {canCapture && (
@@ -105,7 +112,7 @@ const OrderPaymentDetails: React.FC<OrderPaymentDetailsProps> = props => {
                         onClick={() => onPaymentCapture(payment.id)}
                         className={classes.actions}
                       >
-                        {intl.formatMessage(messages.capturePayment)}
+                        <FormattedMessage {...messages.capturePayment} />
                       </Button>
                     )}
                   </td>

@@ -18,7 +18,7 @@ import { UserPermissionProps } from "@saleor/types";
 import { mapMetadataItemToInput } from "@saleor/utils/maps";
 import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
 import React from "react";
-import { useIntl } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import { OrderStatus } from "../../../types/globalTypes";
 import { OrderDetails_order } from "../../types/OrderDetails";
@@ -184,7 +184,7 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
         return (
           <Container>
             <Backlink onClick={onBack}>
-              {intl.formatMessage(sectionNames.orders)}
+              <FormattedMessage {...sectionNames.orders} />
             </Backlink>
             <PageHeader
               className={classes.header}
@@ -211,7 +211,9 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
                       close={false}
                       title={intl.formatMessage(messages.orderOverpaid)}
                     >
-                      {intl.formatMessage(messages.orderOverpaidDescription)}
+                      <FormattedMessage
+                        {...messages.orderOverpaidDescription}
+                      />
                     </Alert>
                     <CardSpacer />
                   </>

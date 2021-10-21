@@ -7,7 +7,7 @@ import StatusLabel from "@saleor/components/StatusLabel";
 import OrderPaymentDetails from "@saleor/orders/components/OrderPaymentDetails";
 import classNames from "classnames";
 import React from "react";
-import { useIntl } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import { transformOrderPaymentStatus } from "../../../misc";
 import { OrderDiscountType, OrderStatus } from "../../../types/globalTypes";
@@ -56,7 +56,7 @@ const OrderPayment: React.FC<OrderPaymentProps> = props => {
           (order?.paymentStatus && (
             <div className={classes.paymentStatus}>
               <span className={classes.paymentStatusTitle}>
-                {intl.formatMessage(messages.paymentStatus)}
+                <FormattedMessage {...messages.paymentStatus} />
               </span>
               <StatusLabel label={payment.localized} status={payment.status} />
             </div>
@@ -78,7 +78,9 @@ const OrderPayment: React.FC<OrderPaymentProps> = props => {
         <table className={classes.root}>
           <tbody>
             <tr className={classes.disabled}>
-              <td>{intl.formatMessage(messages.subtotal)}</td>
+              <td>
+                <FormattedMessage {...messages.subtotal} />
+              </td>
               <td>
                 {(order?.lines &&
                   intl.formatMessage(messages.subtotalQuantity, {
@@ -94,7 +96,9 @@ const OrderPayment: React.FC<OrderPaymentProps> = props => {
               </td>
             </tr>
             <tr>
-              <td>{intl.formatMessage(messages.taxes)}</td>
+              <td>
+                <FormattedMessage {...messages.taxes} />
+              </td>
               <td className={classes.disabled}>
                 {(order &&
                   intl.formatMessage(
@@ -110,7 +114,9 @@ const OrderPayment: React.FC<OrderPaymentProps> = props => {
               </td>
             </tr>
             <tr>
-              <td>{intl.formatMessage(messages.shipping)}</td>
+              <td>
+                <FormattedMessage {...messages.shipping} />
+              </td>
               <td className={classes.disabled}>
                 {(order &&
                   ((order.shippingMethodName === null &&
@@ -125,7 +131,9 @@ const OrderPayment: React.FC<OrderPaymentProps> = props => {
             </tr>
             {order?.discounts?.map(discount => (
               <tr key={discount.id}>
-                <td>{intl.formatMessage(messages.discount)}</td>
+                <td>
+                  <FormattedMessage {...messages.discount} />
+                </td>
                 <td>
                   {intl.formatMessage(
                     discount.type === OrderDiscountType.MANUAL
@@ -139,7 +147,9 @@ const OrderPayment: React.FC<OrderPaymentProps> = props => {
               </tr>
             ))}
             <tr className={classes.totalRow}>
-              <td>{intl.formatMessage(messages.total)}</td>
+              <td>
+                <FormattedMessage {...messages.total} />
+              </td>
               <td />
               <td className={classes.textRight}>
                 {(order?.total.gross && (
@@ -166,7 +176,7 @@ const OrderPayment: React.FC<OrderPaymentProps> = props => {
           <tbody>
             <tr>
               <td className={classes.totalRow}>
-                {intl.formatMessage(messages.totalPreauthorized)}
+                <FormattedMessage {...messages.totalPreauthorized} />
               </td>
               <td className={classes.textRight}>
                 {(order?.totalAuthorized && (
@@ -180,7 +190,7 @@ const OrderPayment: React.FC<OrderPaymentProps> = props => {
                   isOrderOverpaid ? classes.overpaid : classes.totalRow
                 }
               >
-                {intl.formatMessage(messages.totalCaptured)}
+                <FormattedMessage {...messages.totalCaptured} />
               </td>
               <td
                 className={classNames(classes.textRight, {
@@ -194,7 +204,7 @@ const OrderPayment: React.FC<OrderPaymentProps> = props => {
             </tr>
             <tr>
               <td className={classes.totalRow}>
-                {intl.formatMessage(messages.totalRefunded)}
+                <FormattedMessage {...messages.totalRefunded} />
               </td>
               <td className={classes.textRight}>
                 {refundedAmount?.amount === undefined ? (
@@ -208,7 +218,7 @@ const OrderPayment: React.FC<OrderPaymentProps> = props => {
               <td
                 className={classNames({ [classes.overpaid]: isOrderOverpaid })}
               >
-                {intl.formatMessage(messages.outstandingBalance)}
+                <FormattedMessage {...messages.outstandingBalance} />
               </td>
               <td
                 className={classNames(classes.textRight, {
