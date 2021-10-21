@@ -17,17 +17,16 @@ export function createSaleInChannel({
   channelId,
   discountValue = value
 }) {
-  let sale;
   return createSale({
     name,
     type,
     value
   })
     .then(saleResp => {
-      sale = saleResp;
       addChannelToSale(sale.id, channelId, discountValue);
+      
+      return saleResp
     })
-    .then(() => sale);
 }
 
 export function createSaleInChannelWithProduct({
