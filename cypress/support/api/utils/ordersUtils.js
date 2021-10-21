@@ -3,7 +3,7 @@ import * as orderRequest from "../requests/Order";
 import {
   getPaymentMethodStripeId,
   sendConfirmationToStripe
-} from "../requests/Stripe";
+} from "../requests/stripe";
 import { createProductInChannel } from "./products/productsUtils";
 
 export function createWaitingForCaptureOrder({
