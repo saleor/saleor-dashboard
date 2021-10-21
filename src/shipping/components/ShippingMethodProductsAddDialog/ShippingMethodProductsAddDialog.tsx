@@ -39,7 +39,11 @@ const useStyles = makeStyles(
       paddingLeft: 0
     },
     content: {
-      overflowY: "scroll"
+      overflowY: "scroll",
+      height: 450
+    },
+    searchBar: {
+      marginBottom: theme.spacing(3)
     },
     loadMoreLoaderContainer: {
       alignItems: "center",
@@ -125,104 +129,100 @@ const ShippingMethodProductsAddDialog: React.FC<ShippingMethodProductsAddDialogP
   };
 
   return (
-    <Dialog
-      onClose={handleClose}
-      open={open}
-      classes={{ paper: classes.overflow }}
-      fullWidth
-      maxWidth="sm"
-    >
+    <Dialog onClose={handleClose} open={open} fullWidth maxWidth="sm">
       <DialogTitle>
         <FormattedMessage
           defaultMessage="Assign Products"
           description="dialog header"
         />
       </DialogTitle>
-      <DialogContent className={classes.overflow}>
-        <TextField
-          name="query"
-          value={query}
-          onChange={onQueryChange}
-          label={intl.formatMessage({
-            defaultMessage: "Search Products"
-          })}
-          placeholder={intl.formatMessage({
-            defaultMessage: "Search Products"
-          })}
-          fullWidth
-          InputProps={{
-            autoComplete: "off",
-            endAdornment: loading && <CircularProgress size={16} />
-          }}
-        />
-      </DialogContent>
-      <DialogContent className={classes.content} id={scrollableTargetId}>
-        <InfiniteScroll
-          dataLength={products?.length}
-          next={onFetchMore}
-          hasMore={hasMore}
-          scrollThreshold="100px"
-          loader={
-            <div key="loader" className={classes.loadMoreLoaderContainer}>
-              <CircularProgress size={16} />
-            </div>
-          }
-          scrollableTarget={scrollableTargetId}
-        >
-          <ResponsiveTable key="table">
-            <TableBody>
-              {renderCollection(
-                products,
-                (product, productIndex) => {
-                  const isSelected = selectedProducts.some(
-                    selectedProduct => selectedProduct.id === product.id
-                  );
-                  return (
-                    <React.Fragment
-                      key={product ? product.id : `skeleton-${productIndex}`}
-                    >
-                      <TableRow>
-                        <TableCell
-                          padding="checkbox"
-                          className={classes.productCheckboxCell}
-                        >
-                          {product && (
-                            <Checkbox
-                              checked={isSelected}
-                              disabled={loading}
-                              onChange={() =>
-                                handleProductAssign(
-                                  product,
-                                  isSelected,
-                                  selectedProducts,
-                                  setSelectedProducts
-                                )
-                              }
-                            />
-                          )}
-                        </TableCell>
-                        <TableCellAvatar
-                          className={classes.avatar}
-                          thumbnail={product?.thumbnail?.url}
-                        />
-                        <TableCell className={classes.colName} colSpan={2}>
-                          {product?.name || <Skeleton />}
-                        </TableCell>
-                      </TableRow>
-                    </React.Fragment>
-                  );
-                },
-                () => (
-                  <TableRow>
-                    <TableCell colSpan={4}>
-                      <FormattedMessage defaultMessage="No products matching given query" />
-                    </TableCell>
-                  </TableRow>
-                )
-              )}
-            </TableBody>
-          </ResponsiveTable>
-        </InfiniteScroll>
+      <DialogContent>
+        <div className={classes.searchBar}>
+          <TextField
+            name="query"
+            value={query}
+            onChange={onQueryChange}
+            label={intl.formatMessage({
+              defaultMessage: "Search Products"
+            })}
+            placeholder={intl.formatMessage({
+              defaultMessage: "Search Products"
+            })}
+            fullWidth
+            InputProps={{
+              autoComplete: "off",
+              endAdornment: loading && <CircularProgress size={16} />
+            }}
+          />
+        </div>
+        <div className={classes.content} id={scrollableTargetId}>
+          <InfiniteScroll
+            dataLength={products?.length}
+            next={onFetchMore}
+            hasMore={hasMore}
+            scrollThreshold="100px"
+            loader={
+              <div key="loader" className={classes.loadMoreLoaderContainer}>
+                <CircularProgress size={16} />
+              </div>
+            }
+            scrollableTarget={scrollableTargetId}
+          >
+            <ResponsiveTable key="table">
+              <TableBody>
+                {renderCollection(
+                  products,
+                  (product, productIndex) => {
+                    const isSelected = selectedProducts.some(
+                      selectedProduct => selectedProduct.id === product.id
+                    );
+                    return (
+                      <React.Fragment
+                        key={product ? product.id : `skeleton-${productIndex}`}
+                      >
+                        <TableRow>
+                          <TableCell
+                            padding="checkbox"
+                            className={classes.productCheckboxCell}
+                          >
+                            {product && (
+                              <Checkbox
+                                checked={isSelected}
+                                disabled={loading}
+                                onChange={() =>
+                                  handleProductAssign(
+                                    product,
+                                    isSelected,
+                                    selectedProducts,
+                                    setSelectedProducts
+                                  )
+                                }
+                              />
+                            )}
+                          </TableCell>
+                          <TableCellAvatar
+                            className={classes.avatar}
+                            thumbnail={product?.thumbnail?.url}
+                          />
+                          <TableCell className={classes.colName} colSpan={2}>
+                            {product?.name || <Skeleton />}
+                          </TableCell>
+                        </TableRow>
+                      </React.Fragment>
+                    );
+                  },
+                  () => (
+                    <TableRow>
+                      <TableCell colSpan={4}>
+                        <FormattedMessage defaultMessage="No products matching given query" />
+                      </TableCell>
+                    </TableRow>
+                  )
+                )}
+              </TableBody>
+            </ResponsiveTable>
+          </InfiniteScroll>
+        </div>
       </DialogContent>
       <DialogActions>
         <Button onClick={handleClose}>
