@@ -10,23 +10,23 @@ import ConfirmButton, {
   ConfirmButtonTransitionState
 } from "@saleor/components/ConfirmButton";
 import FormSpacer from "@saleor/components/FormSpacer";
-import { PaymentErrorFragment } from "@saleor/fragments/types/PaymentErrorFragment";
+import { OrderErrorFragment } from "@saleor/fragments/types/OrderErrorFragment";
 import { buttonMessages } from "@saleor/intl";
-import getOrderPaymentErrorMessage from "@saleor/utils/errors/orderPayment";
+import getOrderErrorMessage from "@saleor/utils/errors/order";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { orderPaymentVoidDialogMessages as messages } from "./messages";
+import { orderVoidDialogMessages as messages } from "./messages";
 
-export interface OrderPaymentVoidDialogProps {
+export interface OrderVoidDialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
-  errors: PaymentErrorFragment[];
+  errors: OrderErrorFragment[];
   open: boolean;
   onClose?();
   onConfirm?();
 }
 
-const OrderPaymentVoidDialog: React.FC<OrderPaymentVoidDialogProps> = ({
+const OrderVoidDialog: React.FC<OrderVoidDialogProps> = ({
   confirmButtonState,
   errors,
   open,
@@ -38,18 +38,18 @@ const OrderPaymentVoidDialog: React.FC<OrderPaymentVoidDialogProps> = ({
   return (
     <Dialog onClose={onClose} open={open}>
       <DialogTitle>
-        <FormattedMessage {...messages.voidPayment} />
+        <FormattedMessage {...messages.voidOrder} />
       </DialogTitle>
       <DialogContent>
         <DialogContentText>
-          <FormattedMessage {...messages.voidPaymentConfirm} />
+          <FormattedMessage {...messages.voidOrderConfirm} />
         </DialogContentText>
         {errors.length > 0 && (
           <>
             <FormSpacer />
             {errors.map((err, index) => (
               <DialogContentText color="error" key={index}>
-                {getOrderPaymentErrorMessage(err, intl)}
+                {getOrderErrorMessage(err, intl)}
               </DialogContentText>
             ))}
           </>
@@ -71,5 +71,5 @@ const OrderPaymentVoidDialog: React.FC<OrderPaymentVoidDialogProps> = ({
     </Dialog>
   );
 };
-OrderPaymentVoidDialog.displayName = "OrderPaymentVoidDialog";
-export default OrderPaymentVoidDialog;
+OrderVoidDialog.displayName = "OrderVoidDialog";
+export default OrderVoidDialog;

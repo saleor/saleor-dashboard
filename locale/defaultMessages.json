@@ -3564,6 +3564,14 @@
   "src_dot_orders_dot_components_dot_OrderCannotCancelOrderDialog_dot_775268031": {
     "string": "There are still fulfillments created for this order. Cancel the fulfillments first before you cancel the order."
   },
+  "src_dot_orders_dot_components_dot_OrderCaptureDialog_dot_captureAmount": {
+    "context": "amount of refunded money",
+    "string": "Amount"
+  },
+  "src_dot_orders_dot_components_dot_OrderCaptureDialog_dot_captureOrder": {
+    "context": "dialog header",
+    "string": "Capture Order Payments"
+  },
   "src_dot_orders_dot_components_dot_OrderChannelSectionCard_dot_1243773440": {
     "context": "section header",
     "string": "Sales channel"
@@ -4210,6 +4218,14 @@
     "context": "dialog header",
     "string": "Mark Order as Paid"
   },
+  "src_dot_orders_dot_components_dot_OrderPaymentCaptureDialog_dot_captureAmount": {
+    "context": "amount of refunded money",
+    "string": "Amount"
+  },
+  "src_dot_orders_dot_components_dot_OrderPaymentCaptureDialog_dot_capturePayment": {
+    "context": "dialog header",
+    "string": "Capture Payment"
+  },
   "src_dot_orders_dot_components_dot_OrderPaymentDetails_dot_capturePayment": {
     "context": "capture payment, button",
     "string": "Capture"
@@ -4233,14 +4249,6 @@
   "src_dot_orders_dot_components_dot_OrderPaymentDetails_dot_voidPayment": {
     "context": "void payment, button",
     "string": "Void"
-  },
-  "src_dot_orders_dot_components_dot_OrderPaymentDialog_dot_1466130374": {
-    "context": "dialog header",
-    "string": "Capture Payment"
-  },
-  "src_dot_orders_dot_components_dot_OrderPaymentDialog_dot_75546233": {
-    "context": "amount of refunded money",
-    "string": "Amount"
   },
   "src_dot_orders_dot_components_dot_OrderPaymentStatus_dot_paymentMethod": {
     "context": "payment method",
@@ -4266,12 +4274,12 @@
     "context": "void payment, button",
     "string": "Void"
   },
-  "src_dot_orders_dot_components_dot_OrderPaymentVoidDialog_dot_2217048637": {
-    "string": "Are you sure you want to void this payment?"
-  },
-  "src_dot_orders_dot_components_dot_OrderPaymentVoidDialog_dot_3089049828": {
+  "src_dot_orders_dot_components_dot_OrderPaymentVoidDialog_dot_voidPayment": {
     "context": "dialog header",
     "string": "Void Payment"
+  },
+  "src_dot_orders_dot_components_dot_OrderPaymentVoidDialog_dot_voidPaymentConfirm": {
+    "string": "Are you sure you want to void this payment?"
   },
   "src_dot_orders_dot_components_dot_OrderPayment_dot_discount": {
     "context": "order discount",
@@ -4678,6 +4686,13 @@
   "src_dot_orders_dot_components_dot_OrderUnfulfilledProductsCard_dot_fulfillButton": {
     "context": "Fulfill button",
     "string": "Fulfill"
+  },
+  "src_dot_orders_dot_components_dot_OrderVoidDialog_dot_voidOrder": {
+    "context": "dialog header",
+    "string": "Void Order Payments"
+  },
+  "src_dot_orders_dot_components_dot_OrderVoidDialog_dot_voidOrderConfirm": {
+    "string": "Are you sure you want to void order payments?"
   },
   "src_dot_orders_dot_views_dot_OrderDetails_dot_1039259580": {
     "string": "We’re generating the invoice you requested. Please wait a couple of moments"
@@ -7177,6 +7192,10 @@
   "src_dot_utils_dot_errors_dot_channelUnique": {
     "string": "Slug must be unique"
   },
+  "src_dot_utils_dot_errors_dot_defaultError": {
+    "context": "default payment error message",
+    "string": "Somethig went wrong"
+  },
   "src_dot_utils_dot_errors_dot_duplicated": {
     "string": "The same object cannot be in both lists"
   },
@@ -7261,6 +7280,10 @@
   },
   "src_dot_utils_dot_errors_dot_passwordNumeric": {
     "string": "Password cannot be entirely numeric"
+  },
+  "src_dot_utils_dot_errors_dot_paymentError": {
+    "context": "payment error message",
+    "string": "There was a problem processing your payment"
   },
   "src_dot_utils_dot_errors_dot_paymentMissing": {
     "context": "error message",
