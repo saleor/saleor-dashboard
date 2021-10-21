@@ -61,7 +61,7 @@ const OrderReturn: React.FC<OrderReturnProps> = ({ orderId }) => {
         return;
       }
 
-      if (errors[0]?.code === OrderErrorCode.CANNOT_REFUND) {
+      if (errors?.map(err => err.code).includes(OrderErrorCode.CANNOT_REFUND)) {
         notify({
           autohide: 5000,
           status: "error",
