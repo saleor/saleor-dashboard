@@ -54,7 +54,10 @@ const useStyles = makeStyles(
     },
 
     content: {
-      flex: 1
+      flex: 1,
+      [theme.breakpoints.up("md")]: {
+        width: 0 // workaround for flex children width expansion affected by their contents
+      }
     },
     darkThemeSwitch: {
       [theme.breakpoints.down("sm")]: {
