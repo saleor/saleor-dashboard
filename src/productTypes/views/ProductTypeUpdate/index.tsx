@@ -175,7 +175,8 @@ export const ProductTypeUpdate: React.FC<ProductTypeUpdateProps> = ({
           return <NotFoundPage onBack={handleBack} />;
         }
 
-        const closeModal = () => navigate(productTypeUrl(id), true);
+        const closeModal = () =>
+          navigate(productTypeUrl(id), { replace: true });
 
         const handleAttributeAssignSuccess = (data: AssignProductAttribute) => {
           if (data.productAttributeAssign.errors.length === 0) {
@@ -217,7 +218,7 @@ export const ProductTypeUpdate: React.FC<ProductTypeUpdateProps> = ({
                 defaultMessage: "Product type deleted"
               })
             });
-            navigate(productTypeListUrl(), true);
+            navigate(productTypeListUrl(), { replace: true });
           }
         };
         const handleSubmit = createMetadataUpdateHandler(

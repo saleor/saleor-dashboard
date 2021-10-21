@@ -120,7 +120,7 @@ export const CollectionDetails: React.FC<CollectionDetailsProps> = ({
               defaultMessage: "Added product to collection"
             })
           });
-          navigate(collectionUrl(id), true);
+          navigate(collectionUrl(id), { replace: true });
         }
       }
     }
