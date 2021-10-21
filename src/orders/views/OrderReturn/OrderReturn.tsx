@@ -50,7 +50,7 @@ const OrderReturn: React.FC<OrderReturnProps> = ({ orderId }) => {
     onCompleted: ({
       orderFulfillmentReturnProducts: { errors, replaceOrder }
     }) => {
-      if (!errors.length) {
+      if (!errors?.length) {
         notify({
           status: "success",
           text: intl.formatMessage(messages.successAlert)
@@ -61,7 +61,7 @@ const OrderReturn: React.FC<OrderReturnProps> = ({ orderId }) => {
         return;
       }
 
-      if (errors?.map(err => err.code).includes(OrderErrorCode.CANNOT_REFUND)) {
+      if (errors.some(err => err.code === OrderErrorCode.CANNOT_REFUND)) {
         notify({
           autohide: 5000,
           status: "error",
