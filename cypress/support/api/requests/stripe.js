@@ -41,7 +41,6 @@ export function sendConfirmationToStripe(paymentMethodId, confirmationId) {
     },
     body: {
       payment_method: paymentMethodId,
-      // use_stripe_sdk: "true",
       return_url: Cypress.config().baseUrl,
       webauthn_uvpa_available: "true",
       spc_eligible: "false",
