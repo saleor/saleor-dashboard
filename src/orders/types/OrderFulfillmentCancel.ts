@@ -463,6 +463,8 @@ export interface OrderFulfillmentCancel_orderFulfillmentCancel_order_shippingMet
   id: string;
   name: string;
   price: OrderFulfillmentCancel_orderFulfillmentCancel_order_shippingMethods_price;
+  active: boolean;
+  message: string | null;
 }
 
 export interface OrderFulfillmentCancel_orderFulfillmentCancel_order_invoices {

@@ -463,6 +463,8 @@ export interface OrderConfirm_orderConfirm_order_shippingMethods {
   id: string;
   name: string;
   price: OrderConfirm_orderConfirm_order_shippingMethods_price;
+  active: boolean;
+  message: string | null;
 }
 
 export interface OrderConfirm_orderConfirm_order_invoices {

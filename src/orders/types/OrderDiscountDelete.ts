@@ -463,6 +463,8 @@ export interface OrderDiscountDelete_orderDiscountDelete_order_shippingMethods {
   id: string;
   name: string;
   price: OrderDiscountDelete_orderDiscountDelete_order_shippingMethods_price;
+  active: boolean;
+  message: string | null;
 }
 
 export interface OrderDiscountDelete_orderDiscountDelete_order_invoices {

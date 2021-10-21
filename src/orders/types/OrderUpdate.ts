@@ -463,6 +463,8 @@ export interface OrderUpdate_orderUpdate_order_shippingMethods {
   id: string;
   name: string;
   price: OrderUpdate_orderUpdate_order_shippingMethods_price;
+  active: boolean;
+  message: string | null;
 }
 
 export interface OrderUpdate_orderUpdate_order_invoices {

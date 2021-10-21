@@ -463,6 +463,8 @@ export interface OrderLinesAdd_orderLinesCreate_order_shippingMethods {
   id: string;
   name: string;
   price: OrderLinesAdd_orderLinesCreate_order_shippingMethods_price;
+  active: boolean;
+  message: string | null;
 }
 
 export interface OrderLinesAdd_orderLinesCreate_order_invoices {

@@ -456,6 +456,8 @@ export interface OrderDetails_order_shippingMethods {
   id: string;
   name: string;
   price: OrderDetails_order_shippingMethods_price;
+  active: boolean;
+  message: string | null;
 }
 
 export interface OrderDetails_order_invoices {

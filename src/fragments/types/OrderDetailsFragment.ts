@@ -456,6 +456,8 @@ export interface OrderDetailsFragment_shippingMethods {
   id: string;
   name: string;
   price: OrderDetailsFragment_shippingMethods_price;
+  active: boolean;
+  message: string | null;
 }
 
 export interface OrderDetailsFragment_invoices {

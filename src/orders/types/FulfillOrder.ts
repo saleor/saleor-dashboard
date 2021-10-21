@@ -465,6 +465,8 @@ export interface FulfillOrder_orderFulfill_order_shippingMethods {
   id: string;
   name: string;
   price: FulfillOrder_orderFulfill_order_shippingMethods_price;
+  active: boolean;
+  message: string | null;
 }
 
 export interface FulfillOrder_orderFulfill_order_invoices {
