@@ -7,11 +7,12 @@ import {
   Typography
 } from "@material-ui/core";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
+import { StatusType } from "@saleor/components/StatusChip/types";
 import StatusLabel from "@saleor/components/StatusLabel";
 import TableCellHeader from "@saleor/components/TableCellHeader";
 import { OrderList_orders_edges_node_payments } from "@saleor/orders/types/OrderList";
 import React from "react";
-import { useIntl } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import { transformChargeStatus } from "../../../misc";
 import { orderPaymentStatusMessages as messages } from "./messages";
@@ -20,7 +21,7 @@ import { useStyles } from "./styles";
 export interface OrderPaymentStatusProps {
   payments: OrderList_orders_edges_node_payments[];
   label: string | React.ReactNode;
-  status: "success" | "alert" | "neutral" | "error" | undefined;
+  status: StatusType;
 }
 
 const OrderPaymentStatus: React.FC<OrderPaymentStatusProps> = ({
@@ -81,13 +82,13 @@ const OrderPaymentStatus: React.FC<OrderPaymentStatusProps> = ({
               <TableHead>
                 <TableRow>
                   <TableCellHeader className={classes.tableCellHeader}>
-                    {intl.formatMessage(messages.paymentMethod)}
+                    <FormattedMessage {...messages.paymentMethod} />
                   </TableCellHeader>
                   <TableCellHeader
                     textAlign="right"
                     className={classes.tableCellHeader}
                   >
-                    {intl.formatMessage(messages.paymentStatus)}
+                    <FormattedMessage {...messages.paymentStatus} />
                   </TableCellHeader>
                 </TableRow>
               </TableHead>

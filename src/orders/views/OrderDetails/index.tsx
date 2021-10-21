@@ -114,27 +114,9 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
                 onNoteAdd={orderMessages.handleNoteAdd}
                 onOrderCancel={orderMessages.handleOrderCancel}
                 onOrderVoid={orderMessages.handleOrderVoid}
-                onPaymentVoid={data => {
-                  if (data.paymentVoid.payment !== null) {
-                    order.paymentStatus =
-                      data.paymentVoid.payment.order.paymentStatus;
-                    order.totalCaptured =
-                      data.paymentVoid.payment.order.totalCaptured;
-                    order.actions = data.paymentVoid.payment.order.actions;
-                  }
-                  orderMessages.handlePaymentVoid(data);
-                }}
+                onPaymentVoid={orderMessages.handlePaymentVoid}
                 onOrderCapture={orderMessages.handleOrderCapture}
-                onPaymentCapture={data => {
-                  if (data.paymentCapture.payment !== null) {
-                    order.paymentStatus =
-                      data.paymentCapture.payment.order.paymentStatus;
-                    order.totalCaptured =
-                      data.paymentCapture.payment.order.totalCaptured;
-                    order.actions = data.paymentCapture.payment.order.actions;
-                  }
-                  orderMessages.handlePaymentCapture(data);
-                }}
+                onPaymentCapture={orderMessages.handlePaymentCapture}
                 onUpdate={orderMessages.handleUpdate}
                 onDraftUpdate={orderMessages.handleDraftUpdate}
                 onShippingMethodUpdate={data => {

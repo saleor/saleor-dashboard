@@ -1,6 +1,6 @@
 import { Button } from "@material-ui/core";
 import React from "react";
-import { useIntl } from "react-intl";
+import { FormattedMessage } from "react-intl";
 
 import { OrderAction } from "../../../types/globalTypes";
 import { OrderDetails_order } from "../../types/OrderDetails";
@@ -17,38 +17,34 @@ interface OrderPaymentToolbarProps {
 const OrderPaymentToolbar: React.FC<OrderPaymentToolbarProps> = props => {
   const { order, onCapture, onMarkAsPaid, onRefund, onVoid } = props;
 
-  const canCapture = !!order?.actions?.includes(OrderAction.CAPTURE);
-  const canVoid = !!order?.actions?.includes(OrderAction.VOID);
-  const canRefund = !!order?.actions?.includes(OrderAction.REFUND);
-  const canMarkAsPaid = !!order?.actions?.includes(OrderAction.MARK_AS_PAID);
-
-  const intl = useIntl();
+  const canPerformOrderAction = (actionType: OrderAction) =>
+    !!order?.actions?.includes(actionType);
 
   return (
     <>
-      {canRefund && (
+      {canPerformOrderAction(OrderAction.REFUND) && (
         <Button
           color="primary"
           variant="text"
           onClick={onRefund}
           data-test-id="refund-button"
         >
-          {intl.formatMessage(messages.refund)}
+          <FormattedMessage {...messages.refund} />
         </Button>
       )}
-      {canVoid && (
+      {canPerformOrderAction(OrderAction.VOID) && (
         <Button color="primary" variant="text" onClick={onVoid}>
-          {intl.formatMessage(messages.void)}
+          <FormattedMessage {...messages.void} />
         </Button>
       )}
-      {canCapture && (
+      {canPerformOrderAction(OrderAction.CAPTURE) && (
         <Button color="primary" variant="text" onClick={onCapture}>
-          {intl.formatMessage(messages.capture)}
+          <FormattedMessage {...messages.capture} />
         </Button>
       )}
-      {canMarkAsPaid && (
+      {canPerformOrderAction(OrderAction.MARK_AS_PAID) && (
         <Button color="primary" variant="text" onClick={onMarkAsPaid}>
-          {intl.formatMessage(messages.markAsPaid)}
+          <FormattedMessage {...messages.markAsPaid} />
         </Button>
       )}
     </>
