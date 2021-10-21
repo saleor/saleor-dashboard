@@ -1,5 +1,9 @@
 import * as checkoutRequest from "../requests/Checkout";
 import * as orderRequest from "../requests/Order";
+import {
+  getPaymentMethodStripeId,
+  sendConfirmationToStripe
+} from "../requests/Stripe";
 import { createProductInChannel } from "./products/productsUtils";
 
 export function createWaitingForCaptureOrder({
@@ -233,4 +237,26 @@ export function createOrderWithNewProduct({
       });
     })
     .then(({ order, checkout }) => ({ order, checkout, variantsList }));
+}
+
+export function addStripePaymentAndGetConfirmationData({
+  card,
+  checkoutId,
+  amount
+}) {
+  let paymentMethodId;
+
+  return getPaymentMethodStripeId(card)
+    .then(resp => {
+      paymentMethodId = resp.body.id;
+      addStripePayment(checkoutId, amount, resp.body.id);
+    })
+    .then(() => {
+      checkoutRequest.completeCheckout(checkoutId);
+    })
+    .then(resp => {
+      const confirmationData = JSON.parse(resp.confirmationData);
+      sendConfirmationToStripe(paymentMethodId, confirmationData.id, false);
+    })
+    .then(resp => resp);
 }

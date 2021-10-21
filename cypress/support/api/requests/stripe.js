@@ -1,8 +1,9 @@
 import { stripeConfirmationUrl, urlList } from "../../../fixtures/urlList";
+import { getValueWithDefault } from "./utils/Utils";
 
 // TODO - remove secretKey and add in github to secrets
-const stripeAuthBearer = `Bearer `;
-const stripePublicKey = "";
+const stripeAuthBearer = `Bearer ${Cypress.env("STRIPE_SECRET_KEY")}`;
+const stripePublicKey = Cypress.env("STRIPE_PUBLIC_KEY");
 
 export function getPaymentMethodStripeId({
   cardNumber,
@@ -34,15 +35,74 @@ export function sendConfirmationToStripe(paymentMethodId, confirmationId) {
     method: "POST",
     url: stripeConfirmationUrl(confirmationId),
     form: true,
+    failOnStatusCode: false,
     headers: {
       Authorization: stripeAuthBearer
     },
     body: {
       payment_method: paymentMethodId,
-      use_stripe_sdk: "true",
+      // use_stripe_sdk: "true",
+      return_url: Cypress.config().baseUrl,
       webauthn_uvpa_available: "true",
       spc_eligible: "false",
       key: stripePublicKey
     }
   });
+}
+
+export function confirmThreeDSecure(nextActionUrl, withSuccess = true) {
+  let returnUrl;
+  const paRes = getValueWithDefault(withSuccess, "success", "failure");
+
+  return cy
+    .request(nextActionUrl)
+    .then(resp => {
+      const { body } = new DOMParser().parseFromString(resp.body, "text/html");
+      const formUrl = body.querySelector('[id="form"]').getAttribute("action");
+      const source = body
+        .querySelector('[name="source"]')
+        .getAttribute("value");
+      returnUrl = body
+        .querySelector('[name="return_url"]')
+        .getAttribute("value");
+      const amount = body
+        .querySelector('[name="amount"]')
+        .getAttribute("value");
+      const currency = body
+        .querySelector('[name="currency"]')
+        .getAttribute("value");
+      const usage = body.querySelector('[name="usage"]').getAttribute("value");
+
+      const url = `${formUrl}?source=${source}&livemode=false&type=three_d_secure&pass_through=&return_url=${returnUrl}&amount=${amount}&currency=
+    ${currency}&usage=${usage}`;
+      cy.request(url);
+    })
+    .then(() => {
+      cy.request({
+        url: returnUrl,
+        method: "POST",
+        form: true,
+        body: {
+          PaRes: "success",
+          MD: ""
+        }
+      });
+    })
+    .then(resp => {
+      const { body } = new DOMParser().parseFromString(resp.body, "text/html");
+      const formUrl = body.querySelector('[id="form"]').getAttribute("action");
+      const merchant = body
+        .querySelector('[name="merchant"]')
+        .getAttribute("value");
+      cy.request({
+        url: formUrl,
+        method: "POST",
+        form: true,
+        body: {
+          PaRes: paRes,
+          MD: "",
+          Merchant: merchant
+        }
+      });
+    });
 }

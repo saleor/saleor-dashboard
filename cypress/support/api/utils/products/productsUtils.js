@@ -10,6 +10,7 @@ import {
 import { deleteAttributesStartsWith } from "../attributes/attributeUtils";
 import { deleteCollectionsStartsWith } from "../catalog/collectionsUtils";
 import { getDefaultChannel } from "../channelsUtils";
+import { createShipping } from "../shippingUtils";
 
 export function createProductInChannel({
   name,
@@ -140,22 +141,26 @@ export function deleteProductsAndCreateNewOneWithNewDataAndDefaultChannel({
         warehouseId
       });
     })
-    .then(({ product: productResp }) => productResp);
+    .then(({ product, variantsList }) => ({ product, variantsList }));
 }
 
 export function createProductWithShipping({ name }) {
   let address;
   let warehouse;
   let shippingMethod;
+  let defaultChannel;
+  let shippingZone;
 
-  cy.fixture("addresses")
+  return cy
+    .fixture("addresses")
     .then(addresses => {
       address = addresses.usAddress;
       getDefaultChannel();
     })
     .then(channelResp => {
+      defaultChannel = channelResp;
       createShipping({
-        channelId: channelResp.id,
+        channelId: defaultChannel.id,
         name,
         address,
         price: 10
@@ -169,9 +174,10 @@ export function createProductWithShipping({ name }) {
       }) => {
         warehouse = warehouseResp;
         shippingMethod = shippingMethodResp;
+        shippingZone = shippingZoneResp;
         deleteProductsAndCreateNewOneWithNewDataAndDefaultChannel({
           name,
-          warehouse
+          warehouseId: warehouse.id
         });
       }
     )
@@ -179,6 +185,9 @@ export function createProductWithShipping({ name }) {
       variantsList,
       product,
       warehouse,
-      shippingZone
+      shippingZone,
+      defaultChannel,
+      shippingMethod,
+      address
     }));
 }

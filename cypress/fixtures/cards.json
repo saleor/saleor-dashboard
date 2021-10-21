@@ -35,6 +35,8 @@
     }
   },
   "stripe":{
-    "simpleCardNumber": "5555555555554444"
+    "simpleCardNumber": "5555555555554444",
+    "insufficientFundsCard": "4000000000009995",
+    "threeDSecureAuthCard": "4000002760003184"
   }
 }
