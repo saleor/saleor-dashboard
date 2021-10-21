@@ -425,6 +425,10 @@ const paymentVoidMutation = gql`
             amount
             currency
           }
+          totalAuthorized {
+            amount
+            currency
+          }
           actions
         }
       }
@@ -488,6 +492,10 @@ const paymentCaptureMutation = gql`
           id
           paymentStatus
           totalCaptured {
+            amount
+            currency
+          }
+          totalAuthorized {
             amount
             currency
           }

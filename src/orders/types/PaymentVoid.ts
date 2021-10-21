@@ -34,11 +34,18 @@ export interface PaymentVoid_paymentVoid_payment_order_totalCaptured {
   currency: string;
 }
 
+export interface PaymentVoid_paymentVoid_payment_order_totalAuthorized {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
 export interface PaymentVoid_paymentVoid_payment_order {
   __typename: "Order";
   id: string;
   paymentStatus: OrderPaymentStatusEnum;
   totalCaptured: PaymentVoid_paymentVoid_payment_order_totalCaptured;
+  totalAuthorized: PaymentVoid_paymentVoid_payment_order_totalAuthorized;
   actions: (OrderAction | null)[];
 }
 
