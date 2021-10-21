@@ -3836,6 +3836,14 @@
     "context": "GiftCardsListHeader menu item settings",
     "string": "Export card codes"
   },
+  "src_dot_giftCards_dot_GiftCardsList_dot_giftCardInvalidExpiryDateContent": {
+    "context": "invalid date in expirydate field content",
+    "string": "Gift Card with past expiration date cannot be created"
+  },
+  "src_dot_giftCards_dot_GiftCardsList_dot_giftCardInvalidExpiryDateHeader": {
+    "context": "invalid date in expirydate field header",
+    "string": "Incorrect date entered"
+  },
   "src_dot_giftCards_dot_GiftCardsList_dot_giftCardProduct": {
     "context": "GiftCardsListHeader alert",
     "string": "gift card product"
