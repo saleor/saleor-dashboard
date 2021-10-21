@@ -80,3 +80,14 @@ export const giftCardsListTableMessages = defineMessages({
     description: "GiftCardsListTable no cards found title"
   }
 });
+
+export const giftCardUpdateFormMessages = defineMessages({
+  giftCardInvalidExpiryDateHeader: {
+    defaultMessage: "Incorrect date entered",
+    description: "invalid date in expirydate field header"
+  },
+  giftCardInvalidExpiryDateContent: {
+    defaultMessage: "Gift Card with past expiration date cannot be created",
+    description: "invalid date in expirydate field content"
+  }
+});
