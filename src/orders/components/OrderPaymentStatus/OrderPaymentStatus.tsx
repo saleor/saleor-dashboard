@@ -9,45 +9,19 @@ import {
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import StatusLabel from "@saleor/components/StatusLabel";
 import TableCellHeader from "@saleor/components/TableCellHeader";
-import { makeStyles } from "@saleor/macaw-ui";
 import { OrderList_orders_edges_node_payments } from "@saleor/orders/types/OrderList";
 import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+import { useIntl } from "react-intl";
 
 import { transformChargeStatus } from "../../../misc";
+import { orderPaymentStatusMessages as messages } from "./messages";
+import { useStyles } from "./styles";
 
 export interface OrderPaymentStatusProps {
   payments: OrderList_orders_edges_node_payments[];
   label: string | React.ReactNode;
   status: "success" | "alert" | "neutral" | "error" | undefined;
 }
-
-const useStyles = makeStyles(
-  theme => ({
-    popover: {
-      pointerEvents: "none"
-    },
-    paper: {
-      padding: theme.spacing(2)
-    },
-    paymentStatusList: {
-      maxWidth: 400
-    },
-    tableCellHeader: {
-      height: 0,
-      borderBottom: "none"
-    },
-    tableCell: {
-      height: 0,
-      borderBottom: "none"
-    },
-    statusCell: {
-      display: "flex",
-      flexDirection: "row-reverse"
-    }
-  }),
-  { name: "OrderPaymentStatus" }
-);
 
 const OrderPaymentStatus: React.FC<OrderPaymentStatusProps> = ({
   status,
@@ -58,7 +32,7 @@ const OrderPaymentStatus: React.FC<OrderPaymentStatusProps> = ({
   const intl = useIntl();
 
   const [anchorEl, setAnchorEl] = React.useState(null);
-  const open = Boolean(anchorEl);
+  const open = !!anchorEl;
 
   const handlePopoverOpen = event => {
     setAnchorEl(event.currentTarget);
@@ -68,12 +42,11 @@ const OrderPaymentStatus: React.FC<OrderPaymentStatusProps> = ({
     setAnchorEl(null);
   };
 
-  const paymentsList = payments
-    ? payments.map(payment => ({
-        ...payment,
-        status: transformChargeStatus(payment.chargeStatus, intl)
-      }))
-    : [];
+  const paymentsList =
+    payments?.map(payment => ({
+      ...payment,
+      status: transformChargeStatus(payment.chargeStatus, intl)
+    })) || [];
 
   return (
     <Typography
@@ -108,19 +81,19 @@ const OrderPaymentStatus: React.FC<OrderPaymentStatusProps> = ({
               <TableHead>
                 <TableRow>
                   <TableCellHeader className={classes.tableCellHeader}>
-                    <FormattedMessage defaultMessage="Payment method" />
+                    {intl.formatMessage(messages.paymentMethod)}
                   </TableCellHeader>
                   <TableCellHeader
                     textAlign="right"
                     className={classes.tableCellHeader}
                   >
-                    <FormattedMessage defaultMessage="Status" />
+                    {intl.formatMessage(messages.paymentStatus)}
                   </TableCellHeader>
                 </TableRow>
               </TableHead>
               <TableBody>
-                {paymentsList.map((payment, key) => (
-                  <TableRow key={key}>
+                {paymentsList.map((payment, index) => (
+                  <TableRow key={index}>
                     <TableCell className={classes.tableCell}>
                       {payment.gatewayName}
                     </TableCell>

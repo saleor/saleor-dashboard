@@ -5,6 +5,7 @@ import useBackgroundTask from "@saleor/hooks/useBackgroundTask";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { commonMessages } from "@saleor/intl";
+import { getById } from "@saleor/orders/components/OrderReturnPage/utils";
 import { useOrderConfirmMutation } from "@saleor/orders/mutations";
 import { InvoiceRequest } from "@saleor/orders/types/InvoiceRequest";
 import getOrderErrorMessage from "@saleor/utils/errors/order";
@@ -76,7 +77,9 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
         if (order === null) {
           return <NotFoundPage onBack={handleBack} />;
         }
-
+        const initialPaymentAmount = params.id
+          ? order?.payments.find(getById(params.id))?.total.amount
+          : 0;
         const isOrderUnconfirmed = order?.status === OrderStatus.UNCONFIRMED;
         const isOrderDraft = order?.status === OrderStatus.DRAFT;
 
@@ -194,6 +197,7 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
                         id={id}
                         params={params}
                         data={data}
+                        initialPaymentAmount={initialPaymentAmount}
                         orderAddNote={orderAddNote}
                         orderInvoiceRequest={orderInvoiceRequest}
                         handleSubmit={handleSubmit}
@@ -237,6 +241,7 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
                         id={id}
                         params={params}
                         data={data}
+                        initialPaymentAmount={initialPaymentAmount}
                         orderAddNote={orderAddNote}
                         orderLineUpdate={orderLineUpdate}
                         orderLineDelete={orderLineDelete}
