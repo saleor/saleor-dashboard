@@ -81,6 +81,28 @@ const GiftCardExportDialog: React.FC<DialogProps> = ({ onClose, open }) => {
     exportSettingsInitialFormData,
     handleSubmit
   );
+  const allGiftCardsCount = allGiftCardsCountData?.giftCards?.totalCount;
+
+  const exportScopeLabels = {
+    allItems: intl.formatMessage(
+      {
+        defaultMessage: "All gift cards ({number})",
+        description: "export all items to csv file"
+      },
+      {
+        number: allGiftCardsCount || "..."
+      }
+    ),
+    selectedItems: intl.formatMessage(
+      {
+        defaultMessage: "Selected giftCards ({number})",
+        description: "export selected items to csv file"
+      },
+      {
+        number: filteredGiftCardsCount
+      }
+    )
+  };
 
   return (
     <Dialog onClose={onClose} open={open} maxWidth="sm" fullWidth>
@@ -94,12 +116,12 @@ const GiftCardExportDialog: React.FC<DialogProps> = ({ onClose, open }) => {
               errors={exportGiftCardsOpts?.data?.exportGiftCards?.errors}
               onChange={change}
               selectedItems={listElements.length}
+              data={data}
+              exportScopeLabels={exportScopeLabels}
               itemsQuantity={{
                 filter: filteredGiftCardsCount,
-                all: allGiftCardsCountData?.giftCards?.totalCount
+                all: allGiftCardsCount
               }}
-              data={data}
-              exportTypeLabel={intl.formatMessage(messages.exportTypeLabel)}
             />
           )}
         </ContentWithProgress>
