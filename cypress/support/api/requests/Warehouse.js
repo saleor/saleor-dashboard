@@ -83,3 +83,21 @@ export function getWarehouse(warehouseId) {
   }`;
   return cy.sendRequestWithQuery(query).its("body.data.warehouse");
 }
+export function updateWarehouse({
+  id,
+  isPrivate,
+  clickAndCollectOption = "ALL"
+}) {
+  const mutation = `mutation{
+    updateWarehouse(id:"${id}" input:{
+      isPrivate:${isPrivate}
+      clickAndCollectOption:${clickAndCollectOption}
+    }){
+      errors{
+        field
+        message
+      }
+    }
+  }`;
+  return cy.sendRequestWithQuery(mutation).its("body.data");
+}

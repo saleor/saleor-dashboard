@@ -108,6 +108,24 @@ export function getOrder(orderId) {
         key
         value
       }
+      shippingAddress{
+        companyName
+        streetAddress1
+        streetAddress2
+        city
+        postalCode
+        countryArea
+        phone
+      }
+      billingAddress{
+        companyName
+        streetAddress1
+        streetAddress2
+        city
+        postalCode
+        countryArea
+        phone
+      }
     }
   }`;
   cy.sendRequestWithQuery(query).its("body.data.order");

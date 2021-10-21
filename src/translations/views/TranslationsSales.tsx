@@ -48,7 +48,7 @@ const TranslationsSales: React.FC<TranslationsSalesProps> = ({
         stringifyQs({
           activeField: field
         }),
-      true
+      { replace: true }
     );
   const onUpdate = (data: UpdateSaleTranslations) => {
     if (data.saleTranslate.errors.length === 0) {
@@ -57,11 +57,11 @@ const TranslationsSales: React.FC<TranslationsSalesProps> = ({
         status: "success",
         text: intl.formatMessage(commonMessages.savedChanges)
       });
-      navigate("?", true);
+      navigate("?", { replace: true });
     }
   };
   const onDiscard = () => {
-    navigate("?", true);
+    navigate("?", { replace: true });
   };
 
   return (

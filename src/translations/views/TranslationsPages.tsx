@@ -51,7 +51,7 @@ const TranslationsPages: React.FC<TranslationsPagesProps> = ({
         stringifyQs({
           activeField: field
         }),
-      true
+      { replace: true }
     );
 
   const onUpdate = (errors: unknown[]) => {
@@ -61,12 +61,12 @@ const TranslationsPages: React.FC<TranslationsPagesProps> = ({
         status: "success",
         text: intl.formatMessage(commonMessages.savedChanges)
       });
-      navigate("?", true);
+      navigate("?", { replace: true });
     }
   };
 
   const onDiscard = () => {
-    navigate("?", true);
+    navigate("?", { replace: true });
   };
 
   return (

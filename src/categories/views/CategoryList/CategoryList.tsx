@@ -132,7 +132,7 @@ export const CategoryList: React.FC<CategoryListProps> = ({ params }) => {
 
   const handleCategoryBulkDelete = (data: CategoryBulkDelete) => {
     if (data.categoryBulkDelete.errors.length === 0) {
-      navigate(categoryListUrl(), true);
+      navigate(categoryListUrl(), { replace: true });
       refetch();
       reset();
     }
