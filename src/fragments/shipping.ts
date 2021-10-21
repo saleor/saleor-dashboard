@@ -18,7 +18,7 @@ export const shippingZoneFragment = gql`
 `;
 
 export const shippingMethodWithPostalCodesFragment = gql`
-  fragment ShippingMethodWithPostalCodesFragment on ShippingMethod {
+  fragment ShippingMethodWithPostalCodesFragment on ShippingMethodType {
     id
     postalCodeRules {
       id
@@ -28,11 +28,11 @@ export const shippingMethodWithPostalCodesFragment = gql`
     }
   }
 `;
-export const shippingMethodFragment = gql`
+export const shippingMethodTypeFragment = gql`
   ${metadataFragment}
   ${fragmentMoney}
   ${shippingMethodWithPostalCodesFragment}
-  fragment ShippingMethodFragment on ShippingMethod {
+  fragment ShippingMethodTypeFragment on ShippingMethodType {
     ...ShippingMethodWithPostalCodesFragment
     ...MetadataFragment
     minimumOrderWeight {
@@ -69,9 +69,9 @@ export const shippingMethodFragment = gql`
 `;
 export const shippingMethodWithExcludedProductsFragment = gql`
   ${fragmentMoney}
-  ${shippingMethodFragment}
-  fragment ShippingMethodWithExcludedProductsFragment on ShippingMethod {
-    ...ShippingMethodFragment
+  ${shippingMethodTypeFragment}
+  fragment ShippingMethodWithExcludedProductsFragment on ShippingMethodType {
+    ...ShippingMethodTypeFragment
     excludedProducts(
       before: $before
       after: $after
@@ -99,12 +99,12 @@ export const shippingMethodWithExcludedProductsFragment = gql`
 
 export const shippingZoneDetailsFragment = gql`
   ${shippingZoneFragment}
-  ${shippingMethodFragment}
+  ${shippingMethodTypeFragment}
   fragment ShippingZoneDetailsFragment on ShippingZone {
     ...ShippingZoneFragment
     default
     shippingMethods {
-      ...ShippingMethodFragment
+      ...ShippingMethodTypeFragment
     }
     warehouses {
       id

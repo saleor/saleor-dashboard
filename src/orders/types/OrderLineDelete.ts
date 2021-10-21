@@ -462,7 +462,7 @@ export interface OrderLineDelete_orderLineDelete_order_shippingMethods {
   __typename: "ShippingMethod";
   id: string;
   name: string;
-  price: OrderLineDelete_orderLineDelete_order_shippingMethods_price | null;
+  price: OrderLineDelete_orderLineDelete_order_shippingMethods_price;
 }
 
 export interface OrderLineDelete_orderLineDelete_order_invoices {

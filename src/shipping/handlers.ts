@@ -1,5 +1,5 @@
 import { ChannelShippingData } from "@saleor/channels/utils";
-import { ShippingMethodFragment_postalCodeRules } from "@saleor/fragments/types/ShippingMethodFragment";
+import { ShippingMethodTypeFragment_postalCodeRules } from "@saleor/fragments/types/ShippingMethodTypeFragment";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { commonMessages } from "@saleor/intl";
@@ -48,7 +48,7 @@ export const createChannelsChangeHandler = (
 };
 
 const getPostalCodeRulesToAdd = (
-  rules: ShippingMethodFragment_postalCodeRules[]
+  rules: ShippingMethodTypeFragment_postalCodeRules[]
 ) =>
   rules
     .filter(code => !code.id || code.id === "0")
@@ -63,7 +63,7 @@ const getPostalCodeRulesToAdd = (
 export function getCreateShippingPriceRateVariables(
   data: ShippingZoneRatesPageFormData,
   id: string,
-  addPostalCodeRules: ShippingMethodFragment_postalCodeRules[],
+  addPostalCodeRules: ShippingMethodTypeFragment_postalCodeRules[],
   inclusionType: PostalCodeRuleInclusionTypeEnum
 ): CreateShippingRateVariables {
   const parsedMinDays = parseInt(data.minDays, 10);
@@ -86,7 +86,7 @@ export function getCreateShippingPriceRateVariables(
 export function getCreateShippingWeightRateVariables(
   data: ShippingZoneRatesPageFormData,
   id: string,
-  addPostalCodeRules: ShippingMethodFragment_postalCodeRules[],
+  addPostalCodeRules: ShippingMethodTypeFragment_postalCodeRules[],
   inclusionType: PostalCodeRuleInclusionTypeEnum
 ): CreateShippingRateVariables {
   const parsedMinValue = parseFloat(data.minValue);
@@ -115,7 +115,7 @@ export function getUpdateShippingPriceRateVariables(
   data: ShippingZoneRatesPageFormData,
   id: string,
   rateId: string,
-  addPostalCodeRules: ShippingMethodFragment_postalCodeRules[],
+  addPostalCodeRules: ShippingMethodTypeFragment_postalCodeRules[],
   deletePostalCodeRules: string[]
 ): UpdateShippingRateVariables {
   const parsedMinDays = parseInt(data.minDays, 10);
@@ -143,7 +143,7 @@ export function getUpdateShippingWeightRateVariables(
   data: ShippingZoneRatesPageFormData,
   id: string,
   rateId: string,
-  addPostalCodeRules: ShippingMethodFragment_postalCodeRules[],
+  addPostalCodeRules: ShippingMethodTypeFragment_postalCodeRules[],
   deletePostalCodeRules: string[]
 ): UpdateShippingRateVariables {
   const parsedMinValue = parseFloat(data.minValue);
@@ -201,7 +201,7 @@ export function getShippingMethodChannelVariables(
 export function useShippingRateCreator(
   shippingZoneId: string,
   type: ShippingMethodTypeEnum,
-  postalCodes: ShippingMethodFragment_postalCodeRules[],
+  postalCodes: ShippingMethodTypeFragment_postalCodeRules[],
   inclusionType: PostalCodeRuleInclusionTypeEnum
 ) {
   const intl = useIntl();

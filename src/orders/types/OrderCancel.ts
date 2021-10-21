@@ -462,7 +462,7 @@ export interface OrderCancel_orderCancel_order_shippingMethods {
   __typename: "ShippingMethod";
   id: string;
   name: string;
-  price: OrderCancel_orderCancel_order_shippingMethods_price | null;
+  price: OrderCancel_orderCancel_order_shippingMethods_price;
 }
 
 export interface OrderCancel_orderCancel_order_invoices {

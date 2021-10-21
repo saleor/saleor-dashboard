@@ -557,7 +557,7 @@ export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_o
   __typename: "ShippingMethod";
   id: string;
   name: string;
-  price: OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_shippingMethods_price | null;
+  price: OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_shippingMethods_price;
 }
 
 export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_invoices {

@@ -462,7 +462,7 @@ export interface OrderLineDiscountRemove_orderLineDiscountRemove_order_shippingM
   __typename: "ShippingMethod";
   id: string;
   name: string;
-  price: OrderLineDiscountRemove_orderLineDiscountRemove_order_shippingMethods_price | null;
+  price: OrderLineDiscountRemove_orderLineDiscountRemove_order_shippingMethods_price;
 }
 
 export interface OrderLineDiscountRemove_orderLineDiscountRemove_order_invoices {

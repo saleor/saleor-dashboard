@@ -462,7 +462,7 @@ export interface OrderVoid_orderVoid_order_shippingMethods {
   __typename: "ShippingMethod";
   id: string;
   name: string;
-  price: OrderVoid_orderVoid_order_shippingMethods_price | null;
+  price: OrderVoid_orderVoid_order_shippingMethods_price;
 }
 
 export interface OrderVoid_orderVoid_order_invoices {

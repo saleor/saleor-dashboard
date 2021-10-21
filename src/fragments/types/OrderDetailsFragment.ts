@@ -455,7 +455,7 @@ export interface OrderDetailsFragment_shippingMethods {
   __typename: "ShippingMethod";
   id: string;
   name: string;
-  price: OrderDetailsFragment_shippingMethods_price | null;
+  price: OrderDetailsFragment_shippingMethods_price;
 }
 
 export interface OrderDetailsFragment_invoices {

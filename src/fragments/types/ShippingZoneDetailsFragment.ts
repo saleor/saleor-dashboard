@@ -94,7 +94,7 @@ export interface ShippingZoneDetailsFragment_shippingMethods_channelListings {
 }
 
 export interface ShippingZoneDetailsFragment_shippingMethods {
-  __typename: "ShippingMethod";
+  __typename: "ShippingMethodType";
   id: string;
   postalCodeRules: (ShippingZoneDetailsFragment_shippingMethods_postalCodeRules | null)[] | null;
   metadata: (ShippingZoneDetailsFragment_shippingMethods_metadata | null)[];

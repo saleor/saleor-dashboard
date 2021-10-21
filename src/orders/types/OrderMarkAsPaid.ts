@@ -462,7 +462,7 @@ export interface OrderMarkAsPaid_orderMarkAsPaid_order_shippingMethods {
   __typename: "ShippingMethod";
   id: string;
   name: string;
-  price: OrderMarkAsPaid_orderMarkAsPaid_order_shippingMethods_price | null;
+  price: OrderMarkAsPaid_orderMarkAsPaid_order_shippingMethods_price;
 }
 
 export interface OrderMarkAsPaid_orderMarkAsPaid_order_invoices {

@@ -462,7 +462,7 @@ export interface OrderRefund_orderRefund_order_shippingMethods {
   __typename: "ShippingMethod";
   id: string;
   name: string;
-  price: OrderRefund_orderRefund_order_shippingMethods_price | null;
+  price: OrderRefund_orderRefund_order_shippingMethods_price;
 }
 
 export interface OrderRefund_orderRefund_order_invoices {

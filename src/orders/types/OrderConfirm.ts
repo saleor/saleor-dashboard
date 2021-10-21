@@ -462,7 +462,7 @@ export interface OrderConfirm_orderConfirm_order_shippingMethods {
   __typename: "ShippingMethod";
   id: string;
   name: string;
-  price: OrderConfirm_orderConfirm_order_shippingMethods_price | null;
+  price: OrderConfirm_orderConfirm_order_shippingMethods_price;
 }
 
 export interface OrderConfirm_orderConfirm_order_invoices {
