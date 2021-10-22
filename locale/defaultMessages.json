@@ -7315,6 +7315,10 @@
     "context": "event",
     "string": "Refund payment"
   },
+  "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_1985653237": {
+    "context": "event",
+    "string": "Filter shipping methods for order"
+  },
   "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_2126893364": {
     "context": "event",
     "string": "Product variant updated"
@@ -7390,6 +7394,10 @@
   "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_3742472683": {
     "context": "event",
     "string": "Capture payment"
+  },
+  "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_3818344155": {
+    "context": "event",
+    "string": "Filter shipping methods for checkout"
   },
   "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_3907151399": {
     "context": "event",

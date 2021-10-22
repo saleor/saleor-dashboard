@@ -512,7 +512,7 @@ export interface OrderLineUpdate_orderLineUpdate_order {
   undiscountedTotal: OrderLineUpdate_orderLineUpdate_order_undiscountedTotal;
   user: OrderLineUpdate_orderLineUpdate_order_user | null;
   userEmail: string | null;
-  shippingMethods: (OrderLineUpdate_orderLineUpdate_order_shippingMethods | null)[] | null;
+  shippingMethods: OrderLineUpdate_orderLineUpdate_order_shippingMethods[];
   invoices: (OrderLineUpdate_orderLineUpdate_order_invoices | null)[] | null;
   channel: OrderLineUpdate_orderLineUpdate_order_channel;
   isPaid: boolean;

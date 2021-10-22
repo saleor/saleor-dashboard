@@ -512,7 +512,7 @@ export interface OrderMarkAsPaid_orderMarkAsPaid_order {
   undiscountedTotal: OrderMarkAsPaid_orderMarkAsPaid_order_undiscountedTotal;
   user: OrderMarkAsPaid_orderMarkAsPaid_order_user | null;
   userEmail: string | null;
-  shippingMethods: (OrderMarkAsPaid_orderMarkAsPaid_order_shippingMethods | null)[] | null;
+  shippingMethods: OrderMarkAsPaid_orderMarkAsPaid_order_shippingMethods[];
   invoices: (OrderMarkAsPaid_orderMarkAsPaid_order_invoices | null)[] | null;
   channel: OrderMarkAsPaid_orderMarkAsPaid_order_channel;
   isPaid: boolean;

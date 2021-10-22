@@ -512,7 +512,7 @@ export interface OrderDiscountAdd_orderDiscountAdd_order {
   undiscountedTotal: OrderDiscountAdd_orderDiscountAdd_order_undiscountedTotal;
   user: OrderDiscountAdd_orderDiscountAdd_order_user | null;
   userEmail: string | null;
-  shippingMethods: (OrderDiscountAdd_orderDiscountAdd_order_shippingMethods | null)[] | null;
+  shippingMethods: OrderDiscountAdd_orderDiscountAdd_order_shippingMethods[];
   invoices: (OrderDiscountAdd_orderDiscountAdd_order_invoices | null)[] | null;
   channel: OrderDiscountAdd_orderDiscountAdd_order_channel;
   isPaid: boolean;

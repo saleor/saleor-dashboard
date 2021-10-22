@@ -505,7 +505,7 @@ export interface OrderDetailsFragment {
   undiscountedTotal: OrderDetailsFragment_undiscountedTotal;
   user: OrderDetailsFragment_user | null;
   userEmail: string | null;
-  shippingMethods: (OrderDetailsFragment_shippingMethods | null)[] | null;
+  shippingMethods: OrderDetailsFragment_shippingMethods[];
   invoices: (OrderDetailsFragment_invoices | null)[] | null;
   channel: OrderDetailsFragment_channel;
   isPaid: boolean;
