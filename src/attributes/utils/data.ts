@@ -209,6 +209,7 @@ export const getAttributesOfUploadedFiles = (
 
     return {
       file: uploadFileResult.data.fileUpload.uploadedFile.url,
+      contentType: uploadFileResult.data.fileUpload.uploadedFile.contentType,
       id: attribute.id,
       values: []
     };
