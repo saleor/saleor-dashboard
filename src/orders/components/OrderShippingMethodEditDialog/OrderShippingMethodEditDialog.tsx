@@ -55,9 +55,6 @@ const useStyles = makeStyles(
     },
     message: {
       width: "100%"
-    },
-    unavailableLabel: {
-      fontSize: "12px"
     }
   }),
   { name: "OrderShippingMethodEditDialog" }
