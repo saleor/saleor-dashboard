@@ -445,17 +445,19 @@ export interface OrderDetails_order_user {
   email: string;
 }
 
-export interface OrderDetails_order_availableShippingMethods_price {
+export interface OrderDetails_order_shippingMethods_price {
   __typename: "Money";
   amount: number;
   currency: string;
 }
 
-export interface OrderDetails_order_availableShippingMethods {
+export interface OrderDetails_order_shippingMethods {
   __typename: "ShippingMethod";
   id: string;
   name: string;
-  price: OrderDetails_order_availableShippingMethods_price | null;
+  price: OrderDetails_order_shippingMethods_price;
+  active: boolean;
+  message: string | null;
 }
 
 export interface OrderDetails_order_invoices {
@@ -505,7 +507,7 @@ export interface OrderDetails_order {
   undiscountedTotal: OrderDetails_order_undiscountedTotal;
   user: OrderDetails_order_user | null;
   userEmail: string | null;
-  availableShippingMethods: (OrderDetails_order_availableShippingMethods | null)[] | null;
+  shippingMethods: OrderDetails_order_shippingMethods[];
   invoices: (OrderDetails_order_invoices | null)[] | null;
   channel: OrderDetails_order_channel;
   isPaid: boolean;

@@ -29,7 +29,7 @@ export interface UpdateShippingMethodTranslations_shippingPriceTranslate_shippin
 }
 
 export interface UpdateShippingMethodTranslations_shippingPriceTranslate_shippingMethod {
-  __typename: "ShippingMethod";
+  __typename: "ShippingMethodType";
   id: string;
   name: string;
   description: any | null;

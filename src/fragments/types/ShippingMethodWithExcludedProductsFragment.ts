@@ -107,7 +107,7 @@ export interface ShippingMethodWithExcludedProductsFragment_excludedProducts {
 }
 
 export interface ShippingMethodWithExcludedProductsFragment {
-  __typename: "ShippingMethod";
+  __typename: "ShippingMethodType";
   id: string;
   postalCodeRules: (ShippingMethodWithExcludedProductsFragment_postalCodeRules | null)[] | null;
   metadata: (ShippingMethodWithExcludedProductsFragment_metadata | null)[];

@@ -14,7 +14,7 @@ import CardTitle from "@saleor/components/CardTitle";
 import RadioGroupField from "@saleor/components/RadioGroupField";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
-import { ShippingMethodFragment_postalCodeRules } from "@saleor/fragments/types/ShippingMethodFragment";
+import { ShippingMethodTypeFragment_postalCodeRules } from "@saleor/fragments/types/ShippingMethodTypeFragment";
 import ArrowDropdown from "@saleor/icons/ArrowDropdown";
 import { makeStyles } from "@saleor/macaw-ui";
 import { renderCollection } from "@saleor/misc";
@@ -26,11 +26,13 @@ import { FormattedMessage, useIntl } from "react-intl";
 export interface ShippingZonePostalCodesProps {
   disabled: boolean;
   initialExpanded?: boolean;
-  postalCodes: ShippingMethodFragment_postalCodeRules[] | undefined;
+  postalCodes: ShippingMethodTypeFragment_postalCodeRules[] | undefined;
   onPostalCodeInclusionChange: (
     inclusion: PostalCodeRuleInclusionTypeEnum
   ) => void;
-  onPostalCodeDelete: (code: ShippingMethodFragment_postalCodeRules) => void;
+  onPostalCodeDelete: (
+    code: ShippingMethodTypeFragment_postalCodeRules
+  ) => void;
   onPostalCodeRangeAdd: () => void;
 }
 
@@ -91,7 +93,7 @@ const ShippingZonePostalCodes: React.FC<ShippingZonePostalCodesProps> = ({
   };
 
   const getPostalCodeRangeLabel = (
-    postalCodeRange: ShippingMethodFragment_postalCodeRules
+    postalCodeRange: ShippingMethodTypeFragment_postalCodeRules
   ) => {
     if (!postalCodeRange?.start) {
       return <Skeleton />;

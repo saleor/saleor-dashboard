@@ -262,12 +262,14 @@ export const fragmentOrderDetails = gql`
       email
     }
     userEmail
-    availableShippingMethods {
+    shippingMethods {
       id
       name
       price {
         ...Money
       }
+      active
+      message
     }
     invoices {
       ...InvoiceFragment
