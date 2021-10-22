@@ -3,6 +3,7 @@ import VerticalSpacer from "@saleor/apps/components/VerticalSpacer";
 import CardTitle from "@saleor/components/CardTitle";
 import CollectionWithDividers from "@saleor/components/CollectionWithDividers";
 import Skeleton from "@saleor/components/Skeleton";
+import { useCustomerDetails } from "@saleor/customers/hooks/useCustomerDetails";
 import GiftCardCreateDialog from "@saleor/giftCards/GiftCardCreateDialog/GiftCardCreateDialog";
 import { getExtendedGiftCard } from "@saleor/giftCards/GiftCardUpdate/providers/GiftCardDetailsProvider/utils";
 import { getFullName } from "@saleor/misc";
@@ -12,7 +13,6 @@ import { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import CustomerGiftCardsCardListItem from "./CustomerGiftCardsCardListItem";
-import { useCustomerDetails } from "./hooks/useCustomerDetails";
 import { giftCardCustomerCardMessages as messages } from "./messages";
 import {
   CUSTOMER_GIFT_CARD_LIST_QUERY,
