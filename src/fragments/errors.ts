@@ -71,6 +71,14 @@ export const orderErrorFragment = gql`
   }
 `;
 
+export const paymentErrorFragment = gql`
+  fragment PaymentErrorFragment on PaymentError {
+    code
+    field
+    message
+  }
+`;
+
 export const orderSettingsErrorFragment = gql`
   fragment OrderSettingsErrorFragment on OrderSettingsError {
     code

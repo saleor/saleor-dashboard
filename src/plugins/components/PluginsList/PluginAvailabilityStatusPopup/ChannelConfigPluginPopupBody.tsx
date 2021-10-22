@@ -1,6 +1,7 @@
 import { CardContent, Divider, Typography } from "@material-ui/core";
 import CardSpacer from "@saleor/components/CardSpacer";
 import CollectionWithDividers from "@saleor/components/CollectionWithDividers";
+import { StatusType } from "@saleor/components/StatusChip/types";
 import StatusLabel from "@saleor/components/StatusLabel";
 import { statusLabelMessages } from "@saleor/components/StatusLabel/messages";
 import { PluginBaseFragment } from "@saleor/fragments/types/PluginBaseFragment";
@@ -57,7 +58,7 @@ const ChannelConfigPluginPopupBody: React.FC<ChannelConfigPluginPopupBodyProps> 
               <StatusLabel
                 key={channel.id}
                 label={channel.name}
-                status={active ? "success" : "error"}
+                status={active ? StatusType.SUCCESS : StatusType.ERROR}
                 subtitle={intl.formatMessage(
                   active
                     ? statusLabelMessages.active

@@ -5,6 +5,7 @@ import useBackgroundTask from "@saleor/hooks/useBackgroundTask";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { commonMessages } from "@saleor/intl";
+import { getById } from "@saleor/orders/components/OrderReturnPage/utils";
 import { useOrderConfirmMutation } from "@saleor/orders/mutations";
 import { InvoiceRequest } from "@saleor/orders/types/InvoiceRequest";
 import getOrderErrorMessage from "@saleor/utils/errors/order";
@@ -76,7 +77,9 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
         if (order === null) {
           return <NotFoundPage onBack={handleBack} />;
         }
-
+        const initialPaymentAmount = params.id
+          ? order?.payments.find(getById(params.id))?.total.amount
+          : 0;
         const isOrderUnconfirmed = order?.status === OrderStatus.UNCONFIRMED;
         const isOrderDraft = order?.status === OrderStatus.DRAFT;
 
@@ -111,6 +114,8 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
                 onNoteAdd={orderMessages.handleNoteAdd}
                 onOrderCancel={orderMessages.handleOrderCancel}
                 onOrderVoid={orderMessages.handleOrderVoid}
+                onPaymentVoid={orderMessages.handlePaymentVoid}
+                onOrderCapture={orderMessages.handleOrderCapture}
                 onPaymentCapture={orderMessages.handlePaymentCapture}
                 onUpdate={orderMessages.handleUpdate}
                 onDraftUpdate={orderMessages.handleDraftUpdate}
@@ -154,8 +159,10 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
                   orderLinesAdd,
                   orderLineDelete,
                   orderLineUpdate,
-                  orderPaymentCapture,
+                  orderCapture,
+                  paymentCapture,
                   orderVoid,
+                  paymentVoid,
                   orderShippingMethodUpdate,
                   orderUpdate,
                   orderFulfillmentCancel,
@@ -172,13 +179,16 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
                         id={id}
                         params={params}
                         data={data}
+                        initialPaymentAmount={initialPaymentAmount}
                         orderAddNote={orderAddNote}
                         orderInvoiceRequest={orderInvoiceRequest}
                         handleSubmit={handleSubmit}
                         orderCancel={orderCancel}
                         orderPaymentMarkAsPaid={orderPaymentMarkAsPaid}
                         orderVoid={orderVoid}
-                        orderPaymentCapture={orderPaymentCapture}
+                        paymentVoid={paymentVoid}
+                        orderCapture={orderCapture}
+                        paymentCapture={paymentCapture}
                         orderFulfillmentCancel={orderFulfillmentCancel}
                         orderFulfillmentUpdateTracking={
                           orderFulfillmentUpdateTracking
@@ -213,6 +223,7 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
                         id={id}
                         params={params}
                         data={data}
+                        initialPaymentAmount={initialPaymentAmount}
                         orderAddNote={orderAddNote}
                         orderLineUpdate={orderLineUpdate}
                         orderLineDelete={orderLineDelete}
@@ -223,7 +234,9 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
                         orderLinesAdd={orderLinesAdd}
                         orderPaymentMarkAsPaid={orderPaymentMarkAsPaid}
                         orderVoid={orderVoid}
-                        orderPaymentCapture={orderPaymentCapture}
+                        paymentVoid={paymentVoid}
+                        orderCapture={orderCapture}
+                        paymentCapture={paymentCapture}
                         orderFulfillmentCancel={orderFulfillmentCancel}
                         orderFulfillmentUpdateTracking={
                           orderFulfillmentUpdateTracking

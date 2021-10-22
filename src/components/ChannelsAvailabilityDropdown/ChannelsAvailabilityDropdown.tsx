@@ -6,6 +6,7 @@ import useDateLocalize from "@saleor/hooks/useDateLocalize";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
+import { StatusType } from "../StatusChip/types";
 import { useStyles } from "./styles";
 
 type Channels = Pick<
@@ -58,7 +59,11 @@ export const ChannelsAvailabilityDropdown: React.FC<ChannelsAvailabilityDropdown
             }
           )}
           status={
-            showStatus ? (activeInAllChannels ? "success" : "error") : undefined
+            showStatus
+              ? activeInAllChannels
+                ? StatusType.SUCCESS
+                : StatusType.ERROR
+              : undefined
           }
         />
       </div>
@@ -115,7 +120,9 @@ export const ChannelsAvailabilityDropdown: React.FC<ChannelsAvailabilityDropdown
             <MenuItem key={channelData.channel.id} className={classes.menuItem}>
               <StatusLabel
                 label={channelData.channel.name}
-                status={isActive(channelData) ? "success" : "error"}
+                status={
+                  isActive(channelData) ? StatusType.SUCCESS : StatusType.ERROR
+                }
               />
               <div>
                 <Typography variant="caption" className={classes.caption}>

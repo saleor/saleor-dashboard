@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { OrderUpdateInput, OrderErrorCode, AddressTypeEnum, OrderDiscountType, DiscountValueTypeEnum, OrderEventsEmailsEnum, OrderEventsEnum, FulfillmentStatus, OrderPaymentStatusEnum, OrderStatus, OrderAction, JobStatusEnum } from "./../../types/globalTypes";
+import { OrderUpdateInput, OrderErrorCode, AddressTypeEnum, OrderDiscountType, DiscountValueTypeEnum, OrderEventsEmailsEnum, OrderEventsEnum, FulfillmentStatus, PaymentChargeStatusEnum, OrderAction, OrderPaymentStatusEnum, OrderStatus, JobStatusEnum } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: OrderUpdate
@@ -338,6 +338,29 @@ export interface OrderUpdate_orderUpdate_order_lines {
   thumbnail: OrderUpdate_orderUpdate_order_lines_thumbnail | null;
 }
 
+export interface OrderUpdate_orderUpdate_order_payments_total {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderUpdate_orderUpdate_order_payments_capturedAmount {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderUpdate_orderUpdate_order_payments {
+  __typename: "Payment";
+  id: string;
+  total: OrderUpdate_orderUpdate_order_payments_total | null;
+  capturedAmount: OrderUpdate_orderUpdate_order_payments_capturedAmount | null;
+  gatewayName: string;
+  pspReference: string | null;
+  chargeStatus: PaymentChargeStatusEnum;
+  actions: (OrderAction | null)[];
+}
+
 export interface OrderUpdate_orderUpdate_order_shippingAddress_country {
   __typename: "CountryDisplay";
   code: string;
@@ -501,6 +524,7 @@ export interface OrderUpdate_orderUpdate_order {
   fulfillments: (OrderUpdate_orderUpdate_order_fulfillments | null)[];
   lines: (OrderUpdate_orderUpdate_order_lines | null)[];
   number: string | null;
+  payments: (OrderUpdate_orderUpdate_order_payments | null)[] | null;
   paymentStatus: OrderPaymentStatusEnum;
   shippingAddress: OrderUpdate_orderUpdate_order_shippingAddress | null;
   shippingMethod: OrderUpdate_orderUpdate_order_shippingMethod | null;

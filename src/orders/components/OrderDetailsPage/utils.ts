@@ -1,4 +1,5 @@
 import { OrderDetails_order } from "@saleor/orders/types/OrderDetails";
+import { OrderPaymentStatusEnum } from "@saleor/types/globalTypes";
 
 import {
   getFulfilledFulfillemnts,
@@ -16,6 +17,9 @@ export const hasAnyItemsReplaceable = (order?: OrderDetails_order) => {
 
   return hasAnyUnfulfilledItems || hasAnyFulfilmentsToReturn;
 };
+
+export const isOverpaid = (order?: OrderDetails_order) =>
+  order?.paymentStatus === OrderPaymentStatusEnum.OVERPAID;
 
 export interface ConditionalItem {
   shouldExist: boolean;

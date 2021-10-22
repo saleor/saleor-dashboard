@@ -2,7 +2,24 @@ import { WindowTitle } from "@saleor/components/WindowTitle";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useUser from "@saleor/hooks/useUser";
 import OrderCannotCancelOrderDialog from "@saleor/orders/components/OrderCannotCancelOrderDialog";
+import OrderCaptureDialog from "@saleor/orders/components/OrderCaptureDialog";
 import OrderInvoiceEmailSendDialog from "@saleor/orders/components/OrderInvoiceEmailSendDialog";
+import OrderPaymentCaptureDialog from "@saleor/orders/components/OrderPaymentCaptureDialog";
+import OrderVoidDialog from "@saleor/orders/components/OrderVoidDialog";
+import {
+  OrderCapture,
+  OrderCaptureVariables
+} from "@saleor/orders/types/OrderCapture";
+import { OrderVoid, OrderVoidVariables } from "@saleor/orders/types/OrderVoid";
+import {
+  PaymentCapture,
+  PaymentCaptureVariables
+} from "@saleor/orders/types/PaymentCapture";
+import {
+  PaymentVoid,
+  PaymentVoidVariables
+} from "@saleor/orders/types/PaymentVoid";
+import { PartialMutationProviderOutput } from "@saleor/types";
 import { mapEdgesToItems } from "@saleor/utils/maps";
 import { useWarehouseList } from "@saleor/warehouses/queries";
 import React from "react";
@@ -17,7 +34,6 @@ import OrderDetailsPage from "../../../components/OrderDetailsPage";
 import OrderFulfillmentCancelDialog from "../../../components/OrderFulfillmentCancelDialog";
 import OrderFulfillmentTrackingDialog from "../../../components/OrderFulfillmentTrackingDialog";
 import OrderMarkAsPaidDialog from "../../../components/OrderMarkAsPaidDialog/OrderMarkAsPaidDialog";
-import OrderPaymentDialog from "../../../components/OrderPaymentDialog";
 import OrderPaymentVoidDialog from "../../../components/OrderPaymentVoidDialog";
 import {
   orderFulfillUrl,
@@ -32,13 +48,22 @@ interface OrderNormalDetailsProps {
   id: string;
   params: OrderUrlQueryParams;
   data: any;
+  initialPaymentAmount: number;
   orderAddNote: any;
   orderInvoiceRequest: any;
   handleSubmit: any;
   orderCancel: any;
   orderPaymentMarkAsPaid: any;
-  orderVoid: any;
-  orderPaymentCapture: any;
+  orderVoid: PartialMutationProviderOutput<OrderVoid, OrderVoidVariables>;
+  paymentVoid: PartialMutationProviderOutput<PaymentVoid, PaymentVoidVariables>;
+  orderCapture: PartialMutationProviderOutput<
+    OrderCapture,
+    OrderCaptureVariables
+  >;
+  paymentCapture: PartialMutationProviderOutput<
+    PaymentCapture,
+    PaymentCaptureVariables
+  >;
   orderFulfillmentCancel: any;
   orderFulfillmentUpdateTracking: any;
   orderInvoiceSend: any;
@@ -52,13 +77,16 @@ export const OrderNormalDetails: React.FC<OrderNormalDetailsProps> = ({
   id,
   params,
   data,
+  initialPaymentAmount,
   orderAddNote,
   orderInvoiceRequest,
   handleSubmit,
   orderCancel,
   orderPaymentMarkAsPaid,
   orderVoid,
-  orderPaymentCapture,
+  paymentVoid,
+  orderCapture,
+  paymentCapture,
   orderFulfillmentCancel,
   orderFulfillmentUpdateTracking,
   orderInvoiceSend,
@@ -140,8 +168,10 @@ export const OrderNormalDetails: React.FC<OrderNormalDetailsProps> = ({
             })
           )
         }
-        onPaymentCapture={() => openModal("capture")}
-        onPaymentVoid={() => openModal("void")}
+        onCapture={() => openModal("capture")}
+        onPaymentCapture={id => openModal("payment-capture", { id })}
+        onVoid={() => openModal("void")}
+        onPaymentVoid={id => openModal("payment-void", { id })}
         onPaymentRefund={() => navigate(orderRefundUrl(id))}
         onProductClick={id => () => navigate(productUrl(id))}
         onBillingAddressEdit={() => openModal("edit-billing-address")}
@@ -199,23 +229,43 @@ export const OrderNormalDetails: React.FC<OrderNormalDetailsProps> = ({
           setTransactionReference(target.value)
         }
       />
-      <OrderPaymentVoidDialog
+      <OrderVoidDialog
         confirmButtonState={orderVoid.opts.status}
         errors={orderVoid.opts.data?.orderVoid.errors || []}
         open={params.action === "void"}
         onClose={closeModal}
         onConfirm={() => orderVoid.mutate({ id })}
       />
-      <OrderPaymentDialog
-        confirmButtonState={orderPaymentCapture.opts.status}
-        errors={orderPaymentCapture.opts.data?.orderCapture.errors || []}
+      <OrderPaymentVoidDialog
+        confirmButtonState={paymentVoid.opts.status}
+        errors={paymentVoid.opts.data?.paymentVoid.errors || []}
+        open={params.action === "payment-void"}
+        onClose={closeModal}
+        onConfirm={() => paymentVoid.mutate({ id: params.id })}
+      />
+      <OrderCaptureDialog
+        confirmButtonState={orderCapture.opts.status}
+        errors={orderCapture.opts.data?.orderCapture.errors || []}
         initial={order?.total.gross.amount}
         open={params.action === "capture"}
         onClose={closeModal}
         onSubmit={variables =>
-          orderPaymentCapture.mutate({
+          orderCapture.mutate({
             ...variables,
             id
+          })
+        }
+      />
+      <OrderPaymentCaptureDialog
+        confirmButtonState={paymentCapture.opts.status}
+        errors={paymentCapture.opts.data?.paymentCapture.errors || []}
+        initial={initialPaymentAmount}
+        open={params.action === "payment-capture"}
+        onClose={closeModal}
+        onSubmit={variables =>
+          paymentCapture.mutate({
+            ...variables,
+            id: params.id
           })
         }
       />

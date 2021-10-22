@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { OrderRefundProductsInput, OrderErrorCode, AddressTypeEnum, DiscountValueTypeEnum, FulfillmentStatus, OrderDiscountType, OrderEventsEmailsEnum, OrderEventsEnum, OrderPaymentStatusEnum, OrderStatus, OrderAction, JobStatusEnum } from "./../../types/globalTypes";
+import { OrderRefundProductsInput, OrderErrorCode, AddressTypeEnum, DiscountValueTypeEnum, FulfillmentStatus, OrderDiscountType, OrderEventsEmailsEnum, OrderEventsEnum, PaymentChargeStatusEnum, OrderAction, OrderPaymentStatusEnum, OrderStatus, JobStatusEnum } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: OrderFulfillmentRefundProducts
@@ -433,6 +433,29 @@ export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_o
   thumbnail: OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_lines_thumbnail | null;
 }
 
+export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_payments_total {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_payments_capturedAmount {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_payments {
+  __typename: "Payment";
+  id: string;
+  total: OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_payments_total | null;
+  capturedAmount: OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_payments_capturedAmount | null;
+  gatewayName: string;
+  pspReference: string | null;
+  chargeStatus: PaymentChargeStatusEnum;
+  actions: (OrderAction | null)[];
+}
+
 export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_shippingAddress_country {
   __typename: "CountryDisplay";
   code: string;
@@ -596,6 +619,7 @@ export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_o
   fulfillments: (OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_fulfillments | null)[];
   lines: (OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_lines | null)[];
   number: string | null;
+  payments: (OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_payments | null)[] | null;
   paymentStatus: OrderPaymentStatusEnum;
   shippingAddress: OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_shippingAddress | null;
   shippingMethod: OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_shippingMethod | null;

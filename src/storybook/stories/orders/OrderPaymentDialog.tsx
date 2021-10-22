@@ -2,12 +2,12 @@ import { OrderErrorCode } from "@saleor/types/globalTypes";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
-import OrderPaymentDialog, {
-  OrderPaymentDialogProps
-} from "../../../orders/components/OrderPaymentDialog";
+import OrderCaptureDialog, {
+  OrderCaptureDialogProps
+} from "../../../orders/components/OrderCaptureDialog";
 import Decorator from "../../Decorator";
 
-const props: OrderPaymentDialogProps = {
+const props: OrderCaptureDialogProps = {
   confirmButtonState: "default",
   errors: [],
   initial: 0,
@@ -16,11 +16,11 @@ const props: OrderPaymentDialogProps = {
   open: true
 };
 
-storiesOf("Orders / OrderPaymentDialog", module)
+storiesOf("Orders / OrderCaptureDialog", module)
   .addDecorator(Decorator)
-  .add("capture payment", () => <OrderPaymentDialog {...props} />)
+  .add("capture payment", () => <OrderCaptureDialog {...props} />)
   .add("errors", () => (
-    <OrderPaymentDialog
+    <OrderCaptureDialog
       {...props}
       errors={[
         {

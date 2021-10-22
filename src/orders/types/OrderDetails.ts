@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { OrderDiscountType, DiscountValueTypeEnum, OrderEventsEmailsEnum, OrderEventsEnum, FulfillmentStatus, OrderPaymentStatusEnum, OrderStatus, OrderAction, JobStatusEnum, WeightUnitsEnum } from "./../../types/globalTypes";
+import { OrderDiscountType, DiscountValueTypeEnum, OrderEventsEmailsEnum, OrderEventsEnum, FulfillmentStatus, PaymentChargeStatusEnum, OrderAction, OrderPaymentStatusEnum, OrderStatus, JobStatusEnum, WeightUnitsEnum } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL query operation: OrderDetails
@@ -331,6 +331,29 @@ export interface OrderDetails_order_lines {
   thumbnail: OrderDetails_order_lines_thumbnail | null;
 }
 
+export interface OrderDetails_order_payments_total {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderDetails_order_payments_capturedAmount {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderDetails_order_payments {
+  __typename: "Payment";
+  id: string;
+  total: OrderDetails_order_payments_total | null;
+  capturedAmount: OrderDetails_order_payments_capturedAmount | null;
+  gatewayName: string;
+  pspReference: string | null;
+  chargeStatus: PaymentChargeStatusEnum;
+  actions: (OrderAction | null)[];
+}
+
 export interface OrderDetails_order_shippingAddress_country {
   __typename: "CountryDisplay";
   code: string;
@@ -494,6 +517,7 @@ export interface OrderDetails_order {
   fulfillments: (OrderDetails_order_fulfillments | null)[];
   lines: (OrderDetails_order_lines | null)[];
   number: string | null;
+  payments: (OrderDetails_order_payments | null)[] | null;
   paymentStatus: OrderPaymentStatusEnum;
   shippingAddress: OrderDetails_order_shippingAddress | null;
   shippingMethod: OrderDetails_order_shippingMethod | null;

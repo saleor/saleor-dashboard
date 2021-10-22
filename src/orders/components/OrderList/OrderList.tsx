@@ -20,6 +20,7 @@ import {
   transformOrderPaymentStatus,
   transformOrderStatus
 } from "@saleor/misc";
+import OrderPaymentStatus from "@saleor/orders/components/OrderPaymentStatus";
 import { OrderListUrlSortField } from "@saleor/orders/urls";
 import { ListProps, SortPage } from "@saleor/types";
 import { getArrowDirection } from "@saleor/utils/sort";
@@ -227,9 +228,10 @@ export const OrderList: React.FC<OrderListProps> = props => {
               <TableCell className={classes.colPayment}>
                 {maybe(() => order.paymentStatus.status) !== undefined ? (
                   order.paymentStatus.status === null ? null : (
-                    <StatusLabel
+                    <OrderPaymentStatus
                       status={order.paymentStatus.status}
                       label={order.paymentStatus.localized}
+                      payments={order.payments}
                     />
                   )
                 ) : (

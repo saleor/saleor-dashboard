@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { OrderDiscountType, DiscountValueTypeEnum, OrderEventsEmailsEnum, OrderEventsEnum, FulfillmentStatus, OrderPaymentStatusEnum, OrderStatus, OrderAction, JobStatusEnum } from "./../../types/globalTypes";
+import { OrderDiscountType, DiscountValueTypeEnum, OrderEventsEmailsEnum, OrderEventsEnum, FulfillmentStatus, PaymentChargeStatusEnum, OrderAction, OrderPaymentStatusEnum, OrderStatus, JobStatusEnum } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL fragment: OrderDetailsFragment
@@ -331,6 +331,29 @@ export interface OrderDetailsFragment_lines {
   thumbnail: OrderDetailsFragment_lines_thumbnail | null;
 }
 
+export interface OrderDetailsFragment_payments_total {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderDetailsFragment_payments_capturedAmount {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderDetailsFragment_payments {
+  __typename: "Payment";
+  id: string;
+  total: OrderDetailsFragment_payments_total | null;
+  capturedAmount: OrderDetailsFragment_payments_capturedAmount | null;
+  gatewayName: string;
+  pspReference: string | null;
+  chargeStatus: PaymentChargeStatusEnum;
+  actions: (OrderAction | null)[];
+}
+
 export interface OrderDetailsFragment_shippingAddress_country {
   __typename: "CountryDisplay";
   code: string;
@@ -494,6 +517,7 @@ export interface OrderDetailsFragment {
   fulfillments: (OrderDetailsFragment_fulfillments | null)[];
   lines: (OrderDetailsFragment_lines | null)[];
   number: string | null;
+  payments: (OrderDetailsFragment_payments | null)[] | null;
   paymentStatus: OrderPaymentStatusEnum;
   shippingAddress: OrderDetailsFragment_shippingAddress | null;
   shippingMethod: OrderDetailsFragment_shippingMethod | null;
