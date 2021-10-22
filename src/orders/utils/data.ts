@@ -212,8 +212,8 @@ export function mergeRepeatedOrderLines(
 export function getPaymentsTotalAmount(
   paymentsToRefund: FormsetData<LineItemData, string | number>
 ) {
-  return paymentsToRefund?.reduce(
-    (sum, payment) => sum + Number(payment?.value || 0),
+  return paymentsToRefund.reduce(
+    (sum, payment) => sum + Number(payment.value || 0),
     0
   );
 }

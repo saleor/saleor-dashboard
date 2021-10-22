@@ -66,7 +66,7 @@ const OrderPaymentDetails: React.FC<OrderPaymentDetailsProps> = props => {
             </tr>
             {expanded && (
               <>
-                {payment.pspReference && (
+                {!!payment.pspReference && (
                   <tr>
                     <td colSpan={2} className={classes.reference}>
                       <FormattedMessage {...messages.pspReference} />{" "}
@@ -79,9 +79,9 @@ const OrderPaymentDetails: React.FC<OrderPaymentDetailsProps> = props => {
                     <FormattedMessage {...messages.preauthorizedAmount} />
                   </td>
                   <td className={classes.textRight}>
-                    {(payment.availableCaptureAmount && (
+                    {payment.availableCaptureAmount ? (
                       <Money money={payment.availableCaptureAmount} />
-                    )) || (
+                    ) : (
                       <Money
                         money={{ amount: 0, currency: payment.total.currency }}
                       />

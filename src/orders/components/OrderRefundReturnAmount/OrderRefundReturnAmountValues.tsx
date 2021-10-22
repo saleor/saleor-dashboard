@@ -129,7 +129,7 @@ const OrderRefundAmountValues: React.FC<OrderRefundAmountValuesProps> = props =>
         <div
           className={classNames(classes.row, {
             [classes.highlightedRow]: highlighted,
-            [classes.errorRow]: data?.amount < 0 ? true : false
+            [classes.errorRow]: data?.amount && data.amount < 0
           })}
           key={key}
         >

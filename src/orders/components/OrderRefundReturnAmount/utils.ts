@@ -233,25 +233,24 @@ export const getPaymentsAmount = (
   refundTotalAmount: IMoney,
   payments: OrderRefundData_order_payments[]
 ) => {
-  const amounts = [];
-  if (payments) {
-    let remainingAmount =
-      (refundTotalAmount && refundTotalAmount.amount) || 0.0;
-    for (const payment of payments) {
-      const amount =
-        remainingAmount >= payment.capturedAmount.amount
-          ? payment.capturedAmount.amount
-          : remainingAmount > 0
-          ? remainingAmount
-          : 0;
-
-      remainingAmount -= amount;
-      amounts.push({
-        id: payment.id,
-        amount,
-        currency: payment.capturedAmount.currency
-      });
-    }
+  if (!payments) {
+    return [];
   }
-  return amounts;
+
+  let remainingAmount = refundTotalAmount?.amount ?? 0;
+
+  return payments.map(({ id, capturedAmount }) => {
+    const amount =
+      remainingAmount >= capturedAmount.amount
+        ? capturedAmount.amount
+        : remainingAmount;
+
+    remainingAmount = remainingAmount - amount;
+
+    return {
+      id,
+      amount,
+      currency: capturedAmount.currency
+    };
+  });
 };

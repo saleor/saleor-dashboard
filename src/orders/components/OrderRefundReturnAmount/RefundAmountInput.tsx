@@ -67,16 +67,22 @@ const RefundAmountInput: React.FC<RefundAmountInputProps> = props => {
   const { payment, data, currencySymbol, disabled, errors, onChange } = props;
   const intl = useIntl();
   const classes = useStyles(props);
-  const maxRefund = payment?.availableRefundAmount;
-  const currentPayment = data.paymentsToRefund?.find(p => p.id === payment?.id);
+  const maxRefund = payment.availableRefundAmount;
+  const currentPayment = data.paymentsToRefund?.find(p => p.id === payment.id);
   const amountTooBig =
-    Number(currentPayment?.value) > payment?.availableRefundAmount?.amount;
+    Number(currentPayment?.value) > payment.availableRefundAmount?.amount;
   const amountTooSmall =
     currentPayment?.value && Number(currentPayment?.value) <= 0;
 
   const formErrors = getFormErrors(["paymentsToRefund"], errors);
   const isError =
     !!formErrors.paymentsToRefund || amountTooSmall || amountTooBig;
+
+  const getHintText = (): string =>
+    getOrderErrorMessage(formErrors.paymentsToRefund, intl) ||
+    (amountTooSmall && intl.formatMessage(messages.amountTooSmall)) ||
+    (amountTooBig && intl.formatMessage(messages.amountTooBig)) ||
+    "";
 
   return (
     <PriceField
@@ -95,11 +101,7 @@ const RefundAmountInput: React.FC<RefundAmountInputProps> = props => {
         max: maxRefund?.amount
       }}
       error={isError}
-      hint={
-        getOrderErrorMessage(formErrors.paymentsToRefund, intl) ||
-        (amountTooSmall && intl.formatMessage(messages.amountTooSmall)) ||
-        (amountTooBig && intl.formatMessage(messages.amountTooBig))
-      }
+      hint={getHintText()}
     />
   );
 };
