@@ -4,7 +4,8 @@ import {
   DialogActions,
   DialogContent,
   DialogContentText,
-  DialogTitle
+  DialogTitle,
+  Typography
 } from "@material-ui/core";
 import ConfirmButton, {
   ConfirmButtonTransitionState
@@ -35,7 +36,8 @@ const useStyles = makeStyles(
     },
     menuItem: {
       display: "flex",
-      width: "100%"
+      width: "100%",
+      flexWrap: "wrap"
     },
     price: {
       marginRight: theme.spacing(3)
@@ -50,6 +52,12 @@ const useStyles = makeStyles(
       flex: 1,
       overflowX: "hidden",
       textOverflow: "ellipsis"
+    },
+    message: {
+      width: "100%"
+    },
+    unavailableLabel: {
+      fontSize: "12px"
     }
   }),
   { name: "OrderShippingMethodEditDialog" }
@@ -84,18 +92,26 @@ const OrderShippingMethodEditDialog: React.FC<OrderShippingMethodEditDialogProps
   const nonFieldErrors = errors.filter(err => !formFields.includes(err.field));
 
   const choices = shippingMethods
-    ? shippingMethods.map(s => ({
-        label: (
-          <div className={classes.menuItem}>
-            <span className={classes.shippingMethodName}>{s.name}</span>
-            &nbsp;
-            <span className={classes.price}>
-              <Money money={s.price} />
-            </span>
-          </div>
-        ),
-        value: s.id
-      }))
+    ? shippingMethods
+        .map(s => ({
+          label: (
+            <div className={classes.menuItem}>
+              <span className={classes.shippingMethodName}>{s.name}</span>
+              &nbsp;
+              <span className={classes.price}>
+                <Money money={s.price} />
+              </span>
+              {!s.active && (
+                <Typography className={classes.message} variant="caption">
+                  {s.message}
+                </Typography>
+              )}
+            </div>
+          ),
+          disabled: !s.active,
+          value: s.id
+        }))
+        .sort((x, y) => (x.disabled === y.disabled ? 0 : x.disabled ? 1 : -1))
     : [];
   const initialForm: FormData = {
     shippingMethod
