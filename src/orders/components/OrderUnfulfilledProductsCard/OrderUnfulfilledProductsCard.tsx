@@ -1,7 +1,7 @@
 import { Button, Card, CardActions, TableBody } from "@material-ui/core";
 import CardSpacer from "@saleor/components/CardSpacer";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
-import { makeStyles, Tooltip } from "@saleor/macaw-ui";
+import { makeStyles } from "@saleor/macaw-ui";
 import { renderCollection } from "@saleor/misc";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -36,8 +36,6 @@ const OrderUnfulfilledProductsCard: React.FC<OrderUnfulfilledProductsCardProps> 
     return null;
   }
 
-  const noProductsAvailable = lines.every(el => !el.variant);
-
   return (
     <>
       <Card>
@@ -46,34 +44,20 @@ const OrderUnfulfilledProductsCard: React.FC<OrderUnfulfilledProductsCardProps> 
           <TableHeader />
           <TableBody>
             {renderCollection(lines, line => (
-              <TableLine isOrderLine line={line} isFulfilled={false} />
+              <TableLine
+                key={line.id}
+                isOrderLine
+                line={line}
+                isFulfilled={false}
+              />
             ))}
           </TableBody>
         </ResponsiveTable>
         {canFulfill && (
           <CardActions>
-            {noProductsAvailable ? (
-              <Tooltip
-                title={intl.formatMessage(messages.deletedVariantDetected)}
-                variant="error"
-                placement={"left"}
-              >
-                <div>
-                  <Button
-                    disabled
-                    variant="text"
-                    color="primary"
-                    onClick={onFulfill}
-                  >
-                    {intl.formatMessage(messages.fulfillButton)}
-                  </Button>
-                </div>
-              </Tooltip>
-            ) : (
-              <Button variant="text" color="primary" onClick={onFulfill}>
-                {intl.formatMessage(messages.fulfillButton)}
-              </Button>
-            )}
+            <Button variant="text" color="primary" onClick={onFulfill}>
+              {intl.formatMessage(messages.fulfillButton)}
+            </Button>
           </CardActions>
         )}
       </Card>
