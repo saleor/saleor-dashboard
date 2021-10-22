@@ -17,13 +17,13 @@ export const useCardActionsStyles = makeStyles(
 
 export const useListWrapperStyles = makeStyles(
   theme => ({
-    listingWrapper: () => ({
+    listingWrapper: {
       display: "grid",
       gridTemplateColumns: "max-content 1fr min-content",
-      margin: `${theme.spacing(2)} ${theme.spacing(3)}`,
+      margin: theme.spacing(2, 3),
       alignItems: "center",
       justifyItems: "center"
-    }),
+    },
     listingMenu: {
       gridColumn: "3"
     }

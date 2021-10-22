@@ -1,5 +1,4 @@
 import { Divider } from "@material-ui/core";
-import initial from "lodash/initial";
 import React from "react";
 
 interface CollectionWithDividersProps<T> {
@@ -13,6 +12,23 @@ interface CollectionWithDividersProps<T> {
     collection: T[]
   ) => any;
 }
+
+const Wrapper: React.FC<{
+  withOuterDividers?: boolean;
+  SelectedDivider?: React.FunctionComponent;
+}> = ({ withOuterDividers, SelectedDivider, children }) => (
+  <div>
+    {withOuterDividers && SelectedDivider ? (
+      <>
+        <SelectedDivider />
+        {children}
+        <SelectedDivider />
+      </>
+    ) : (
+      <>{children}</>
+    )}
+  </div>
+);
 
 function CollectionWithDividers<T>({
   withOuterDividers = false,
@@ -33,24 +49,21 @@ function CollectionWithDividers<T>({
 
   const SelectedDividerComponent = DividerComponent || Divider;
 
-  const collectionToRender = initial(
-    collection.reduce(
-      (result, item, index) => [
-        ...result,
-        renderItem(item, index, collection),
-        <SelectedDividerComponent />
-      ],
-      []
-    )
+  return (
+    <Wrapper
+      withOuterDividers={withOuterDividers}
+      SelectedDivider={SelectedDividerComponent}
+    >
+      <>
+        {collection.map((item, index) => (
+          <>
+            {renderItem(item, index, collection)}
+            <SelectedDividerComponent />
+          </>
+        ))}
+      </>
+    </Wrapper>
   );
-
-  const collectionWithOuterDividers = () => [
-    <SelectedDividerComponent />,
-    ...collectionToRender,
-    <SelectedDividerComponent />
-  ];
-
-  return withOuterDividers ? collectionWithOuterDividers() : collectionToRender;
 }
 
 export default CollectionWithDividers;

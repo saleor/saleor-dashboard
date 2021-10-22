@@ -56,7 +56,7 @@ const useStyles = makeStyles(
       width: "100%",
       display: "grid",
       gridTemplateColumns: "1fr 24px",
-      gap: "16px",
+      gap: theme.spacing(2),
       alignItems: "center",
       justifyContent: "flex-end"
     }
