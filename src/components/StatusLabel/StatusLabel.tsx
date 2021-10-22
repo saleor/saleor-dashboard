@@ -83,7 +83,7 @@ const StatusLabel: React.FC<StatusLabelProps> = ({
     >
       <div
         className={classNames({
-          [className]: true,
+          [className]: !!className,
           [classes.dotVertical]: !!subtitle,
           [classes.successDot]: status === StatusType.SUCCESS,
           [classes.alertDot]: status === StatusType.ALERT,
