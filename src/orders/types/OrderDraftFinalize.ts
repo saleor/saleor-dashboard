@@ -221,7 +221,7 @@ export interface OrderDraftFinalize_draftOrderComplete_order_fulfillments_lines_
 export interface OrderDraftFinalize_draftOrderComplete_order_fulfillments_lines_orderLine_variant {
   __typename: "ProductVariant";
   id: string;
-  quantityAvailable: number;
+  quantityAvailable: number | null;
   preorder: OrderDraftFinalize_draftOrderComplete_order_fulfillments_lines_orderLine_variant_preorder | null;
 }
 
@@ -323,7 +323,7 @@ export interface OrderDraftFinalize_draftOrderComplete_order_lines_variant_preor
 export interface OrderDraftFinalize_draftOrderComplete_order_lines_variant {
   __typename: "ProductVariant";
   id: string;
-  quantityAvailable: number;
+  quantityAvailable: number | null;
   preorder: OrderDraftFinalize_draftOrderComplete_order_lines_variant_preorder | null;
 }
 

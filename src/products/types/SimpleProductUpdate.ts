@@ -318,6 +318,7 @@ export interface SimpleProductUpdate_productUpdate_product_variants {
   trackInventory: boolean;
   preorder: SimpleProductUpdate_productUpdate_product_variants_preorder | null;
   channelListings: SimpleProductUpdate_productUpdate_product_variants_channelListings[] | null;
+  quantityLimitPerCustomer: number | null;
 }
 
 export interface SimpleProductUpdate_productUpdate_product_weight {
@@ -717,6 +718,7 @@ export interface SimpleProductUpdate_productVariantUpdate_productVariant {
   trackInventory: boolean;
   preorder: SimpleProductUpdate_productVariantUpdate_productVariant_preorder | null;
   weight: SimpleProductUpdate_productVariantUpdate_productVariant_weight | null;
+  quantityLimitPerCustomer: number | null;
 }
 
 export interface SimpleProductUpdate_productVariantUpdate {
@@ -1079,6 +1081,7 @@ export interface SimpleProductUpdate_productVariantStocksCreate_productVariant {
   trackInventory: boolean;
   preorder: SimpleProductUpdate_productVariantStocksCreate_productVariant_preorder | null;
   weight: SimpleProductUpdate_productVariantStocksCreate_productVariant_weight | null;
+  quantityLimitPerCustomer: number | null;
 }
 
 export interface SimpleProductUpdate_productVariantStocksCreate {
@@ -1440,6 +1443,7 @@ export interface SimpleProductUpdate_productVariantStocksDelete_productVariant {
   trackInventory: boolean;
   preorder: SimpleProductUpdate_productVariantStocksDelete_productVariant_preorder | null;
   weight: SimpleProductUpdate_productVariantStocksDelete_productVariant_weight | null;
+  quantityLimitPerCustomer: number | null;
 }
 
 export interface SimpleProductUpdate_productVariantStocksDelete {
@@ -1802,6 +1806,7 @@ export interface SimpleProductUpdate_productVariantStocksUpdate_productVariant {
   trackInventory: boolean;
   preorder: SimpleProductUpdate_productVariantStocksUpdate_productVariant_preorder | null;
   weight: SimpleProductUpdate_productVariantStocksUpdate_productVariant_weight | null;
+  quantityLimitPerCustomer: number | null;
 }
 
 export interface SimpleProductUpdate_productVariantStocksUpdate {

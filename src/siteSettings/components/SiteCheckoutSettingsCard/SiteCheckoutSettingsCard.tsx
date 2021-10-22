@@ -3,6 +3,7 @@ import CardTitle from "@saleor/components/CardTitle";
 import FormSpacer from "@saleor/components/FormSpacer";
 import { ShopErrorFragment } from "@saleor/fragments/types/ShopErrorFragment";
 import { getFormErrors } from "@saleor/utils/errors";
+import createPositiveValueChangeHandler from "@saleor/utils/handlers/positiveValueChangeHandler";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -27,10 +28,13 @@ const SiteCheckoutSettingsCard: React.FC<SiteCheckoutSettingsCardProps> = ({
   const formErrors = getFormErrors(
     [
       "reserveStockDurationAuthenticatedUser",
-      "reserveStockDurationAnonymousUser"
+      "reserveStockDurationAnonymousUser",
+      "limitQuantityPerCheckout"
     ],
     errors
   );
+
+  const handleQuantityChange = createPositiveValueChangeHandler(onChange);
 
   return (
     <Card>
@@ -80,6 +84,30 @@ const SiteCheckoutSettingsCard: React.FC<SiteCheckoutSettingsCardProps> = ({
           InputProps={{
             inputProps: {
               autoComplete: "none"
+            }
+          }}
+        />
+      </CardContent>
+      <CardTitle title={intl.formatMessage(messages.checkoutLimits)} />
+      <CardContent>
+        <TextField
+          disabled={disabled}
+          error={!!formErrors.reserveStockDurationAuthenticatedUser}
+          type="number"
+          fullWidth
+          name="limitQuantityPerCheckout"
+          label={intl.formatMessage(messages.checkoutLineLimit)}
+          helperText={intl.formatMessage(messages.checkoutLimitsDescription)}
+          value={
+            !!data.limitQuantityPerCheckout
+              ? String(data.limitQuantityPerCheckout)
+              : ""
+          }
+          onChange={handleQuantityChange}
+          InputProps={{
+            inputProps: {
+              autoComplete: "none",
+              min: 0
             }
           }}
         />

@@ -595,6 +595,7 @@ export const product: (
       __typename: "ProductVariant",
       channelListings: [],
       id: "pv75934",
+      quantityLimitPerCustomer: 30,
       margin: 2,
       media: [
         {
@@ -640,6 +641,7 @@ export const product: (
     },
     {
       __typename: "ProductVariant",
+      quantityLimitPerCustomer: null,
       channelListings: [
         {
           __typename: "ProductVariantChannelListing",
@@ -2985,6 +2987,7 @@ export const variant = (placeholderImage: string): ProductVariant => ({
     }
   ],
   id: "var1",
+  quantityLimitPerCustomer: 300,
   media: [
     {
       __typename: "ProductMedia",

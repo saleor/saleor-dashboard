@@ -356,4 +356,5 @@ export interface ProductVariant {
   trackInventory: boolean;
   preorder: ProductVariant_preorder | null;
   weight: ProductVariant_weight | null;
+  quantityLimitPerCustomer: number | null;
 }

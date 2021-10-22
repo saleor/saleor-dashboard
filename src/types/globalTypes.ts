@@ -1859,6 +1859,7 @@ export enum WebhookEventTypeEnum {
   SALE_CREATED = "SALE_CREATED",
   SALE_DELETED = "SALE_DELETED",
   SALE_UPDATED = "SALE_UPDATED",
+  SHIPPING_LIST_METHODS_FOR_CHECKOUT = "SHIPPING_LIST_METHODS_FOR_CHECKOUT",
   TRANSLATION_CREATED = "TRANSLATION_CREATED",
   TRANSLATION_UPDATED = "TRANSLATION_UPDATED",
 }
@@ -2212,6 +2213,7 @@ export interface GiftCardCreateInput {
 
 export interface GiftCardFilterInput {
   isActive?: boolean | null;
+  metadata?: (MetadataFilter | null)[] | null;
   tag?: string | null;
   tags?: (string | null)[] | null;
   products?: (string | null)[] | null;
@@ -2646,6 +2648,7 @@ export interface ProductVariantBulkCreateInput {
   trackInventory?: boolean | null;
   weight?: any | null;
   preorder?: PreorderSettingsInput | null;
+  quantityLimitPerCustomer?: number | null;
   stocks?: StockInput[] | null;
   channelListings?: ProductVariantChannelListingAddInput[] | null;
 }
@@ -2663,6 +2666,7 @@ export interface ProductVariantCreateInput {
   trackInventory?: boolean | null;
   weight?: any | null;
   preorder?: PreorderSettingsInput | null;
+  quantityLimitPerCustomer?: number | null;
   product: string;
   stocks?: StockInput[] | null;
 }
@@ -2673,6 +2677,7 @@ export interface ProductVariantInput {
   trackInventory?: boolean | null;
   weight?: any | null;
   preorder?: PreorderSettingsInput | null;
+  quantityLimitPerCustomer?: number | null;
 }
 
 export interface PublishableChannelListingInput {
@@ -2810,6 +2815,7 @@ export interface ShopSettingsInput {
   customerSetPasswordUrl?: string | null;
   reserveStockDurationAnonymousUser?: number | null;
   reserveStockDurationAuthenticatedUser?: number | null;
+  limitQuantityPerCheckout?: number | null;
 }
 
 export interface SiteDomainInput {

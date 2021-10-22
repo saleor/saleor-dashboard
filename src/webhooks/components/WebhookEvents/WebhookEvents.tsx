@@ -182,6 +182,12 @@ const WebhookEvents: React.FC<WebhookEventsProps> = ({
       defaultMessage: "Product variant out of stock",
       description: "event"
     }),
+    [WebhookEventTypeEnum.SHIPPING_LIST_METHODS_FOR_CHECKOUT]: intl.formatMessage(
+      {
+        defaultMessage: "Shipping methods for checkout listed",
+        description: "event"
+      }
+    ),
     [WebhookEventTypeEnum.FULFILLMENT_CANCELED]: intl.formatMessage({
       defaultMessage: "Fulfillment canceled",
       description: "event"

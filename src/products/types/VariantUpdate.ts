@@ -363,6 +363,7 @@ export interface VariantUpdate_productVariantUpdate_productVariant {
   trackInventory: boolean;
   preorder: VariantUpdate_productVariantUpdate_productVariant_preorder | null;
   weight: VariantUpdate_productVariantUpdate_productVariant_weight | null;
+  quantityLimitPerCustomer: number | null;
 }
 
 export interface VariantUpdate_productVariantUpdate {
@@ -725,6 +726,7 @@ export interface VariantUpdate_productVariantStocksUpdate_productVariant {
   trackInventory: boolean;
   preorder: VariantUpdate_productVariantStocksUpdate_productVariant_preorder | null;
   weight: VariantUpdate_productVariantStocksUpdate_productVariant_weight | null;
+  quantityLimitPerCustomer: number | null;
 }
 
 export interface VariantUpdate_productVariantStocksUpdate {
@@ -811,6 +813,7 @@ export interface VariantUpdateVariables {
   id: string;
   attributes?: AttributeValueInput[] | null;
   sku?: string | null;
+  quantityLimitPerCustomer?: number | null;
   trackInventory: boolean;
   stocks: StockInput[];
   preorder?: PreorderSettingsInput | null;

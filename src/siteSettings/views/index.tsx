@@ -84,7 +84,9 @@ export const SiteSettings: React.FC<SiteSettingsProps> = () => {
                     reserveStockDurationAnonymousUser:
                       data.reserveStockDurationAnonymousUser || null,
                     reserveStockDurationAuthenticatedUser:
-                      data.reserveStockDurationAuthenticatedUser || null
+                      data.reserveStockDurationAuthenticatedUser || null,
+                    limitQuantityPerCheckout:
+                      data.limitQuantityPerCheckout || null
                   },
                   isCloudInstance: IS_CLOUD_INSTANCE
                 }

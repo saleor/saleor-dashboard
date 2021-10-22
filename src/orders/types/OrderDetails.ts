@@ -214,7 +214,7 @@ export interface OrderDetails_order_fulfillments_lines_orderLine_variant_preorde
 export interface OrderDetails_order_fulfillments_lines_orderLine_variant {
   __typename: "ProductVariant";
   id: string;
-  quantityAvailable: number;
+  quantityAvailable: number | null;
   preorder: OrderDetails_order_fulfillments_lines_orderLine_variant_preorder | null;
 }
 
@@ -316,7 +316,7 @@ export interface OrderDetails_order_lines_variant_preorder {
 export interface OrderDetails_order_lines_variant {
   __typename: "ProductVariant";
   id: string;
-  quantityAvailable: number;
+  quantityAvailable: number | null;
   preorder: OrderDetails_order_lines_variant_preorder | null;
 }
 
