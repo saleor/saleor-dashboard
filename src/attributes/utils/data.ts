@@ -25,6 +25,7 @@ import { MutationFetchResult } from "react-apollo";
 
 import { AttributePageFormData } from "../components/AttributePage";
 import { AttributeValueEditDialogFormData } from "../components/AttributeValueEditDialog";
+import { AtributesOfFiles } from "../types/AttributeOfUploadedFile";
 import { AttributeValueDelete } from "../types/AttributeValueDelete";
 
 export const ATTRIBUTE_TYPES_WITH_DEDICATED_VALUES = [
@@ -193,17 +194,18 @@ export const getFileValuesRemovedFromAttributes = (
 
 export const getAttributesOfRemovedFiles = (
   fileAttributesRemoved: FormsetData<null, File>
-) =>
+): AtributesOfFiles[] =>
   fileAttributesRemoved.map(attribute => ({
     file: undefined,
     id: attribute.id,
+    contentType: attribute.value?.type,
     values: []
   }));
 
 export const getAttributesOfUploadedFiles = (
   fileValuesToUpload: FormsetData<null, File>,
   uploadFilesResult: Array<MutationFetchResult<FileUpload>>
-) =>
+): AtributesOfFiles[] =>
   uploadFilesResult.map((uploadFileResult, index) => {
     const attribute = fileValuesToUpload[index];
 
