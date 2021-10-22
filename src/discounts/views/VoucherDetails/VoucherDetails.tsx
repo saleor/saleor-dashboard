@@ -201,7 +201,7 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
       currentChannels.map(choice => choice.id)
     );
 
-    return !(added.length === 0 && added.length === removed.length);
+    return added.length !== 0 || removed.length !== 0;
   };
 
   return (
