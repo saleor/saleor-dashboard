@@ -514,7 +514,7 @@ export interface OrderLineDiscountRemove_orderLineDiscountRemove_order {
   undiscountedTotal: OrderLineDiscountRemove_orderLineDiscountRemove_order_undiscountedTotal;
   user: OrderLineDiscountRemove_orderLineDiscountRemove_order_user | null;
   userEmail: string | null;
-  shippingMethods: (OrderLineDiscountRemove_orderLineDiscountRemove_order_shippingMethods | null)[] | null;
+  shippingMethods: OrderLineDiscountRemove_orderLineDiscountRemove_order_shippingMethods[];
   invoices: (OrderLineDiscountRemove_orderLineDiscountRemove_order_invoices | null)[] | null;
   channel: OrderLineDiscountRemove_orderLineDiscountRemove_order_channel;
   isPaid: boolean;

@@ -514,7 +514,7 @@ export interface OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_o
   undiscountedTotal: OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_order_undiscountedTotal;
   user: OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_order_user | null;
   userEmail: string | null;
-  shippingMethods: (OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_order_shippingMethods | null)[] | null;
+  shippingMethods: OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_order_shippingMethods[];
   invoices: (OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_order_invoices | null)[] | null;
   channel: OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_order_channel;
   isPaid: boolean;

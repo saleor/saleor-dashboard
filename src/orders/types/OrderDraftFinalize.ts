@@ -514,7 +514,7 @@ export interface OrderDraftFinalize_draftOrderComplete_order {
   undiscountedTotal: OrderDraftFinalize_draftOrderComplete_order_undiscountedTotal;
   user: OrderDraftFinalize_draftOrderComplete_order_user | null;
   userEmail: string | null;
-  shippingMethods: (OrderDraftFinalize_draftOrderComplete_order_shippingMethods | null)[] | null;
+  shippingMethods: OrderDraftFinalize_draftOrderComplete_order_shippingMethods[];
   invoices: (OrderDraftFinalize_draftOrderComplete_order_invoices | null)[] | null;
   channel: OrderDraftFinalize_draftOrderComplete_order_channel;
   isPaid: boolean;
