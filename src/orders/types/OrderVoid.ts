@@ -597,7 +597,7 @@ export interface OrderVoid_orderVoid_order {
   undiscountedTotal: OrderVoid_orderVoid_order_undiscountedTotal;
   user: OrderVoid_orderVoid_order_user | null;
   userEmail: string | null;
-  shippingMethods: (OrderVoid_orderVoid_order_shippingMethods | null)[] | null;
+  shippingMethods: OrderVoid_orderVoid_order_shippingMethods[];
   invoices: (OrderVoid_orderVoid_order_invoices | null)[] | null;
   channel: OrderVoid_orderVoid_order_channel;
 }
