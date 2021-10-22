@@ -6262,6 +6262,18 @@
     "context": "product label",
     "string": "Published"
   },
+  "src_dot_products_dot_components_dot_ProductVariantCheckoutSettings_dot_checkoutLimits": {
+    "context": "title",
+    "string": "Checkout limits"
+  },
+  "src_dot_products_dot_components_dot_ProductVariantCheckoutSettings_dot_checkoutLimitsDescription": {
+    "context": "input helper text",
+    "string": "Your customer won't be allowed to buy bigger quantity per checkout than shown here."
+  },
+  "src_dot_products_dot_components_dot_ProductVariantCheckoutSettings_dot_checkoutLineLimit": {
+    "context": "input label",
+    "string": "Limit quantity per checkout (optional)"
+  },
   "src_dot_products_dot_components_dot_ProductVariantCreateDialog_dot_description": {
     "context": "create product variants",
     "string": "How would you like to create variants:"
@@ -7148,6 +7160,18 @@
     "context": "site settings section name",
     "string": "Site Settings"
   },
+  "src_dot_siteSettings_dot_components_dot_SiteCheckoutSettingsCard_dot_checkoutLimits": {
+    "context": "title",
+    "string": "Checkout limits"
+  },
+  "src_dot_siteSettings_dot_components_dot_SiteCheckoutSettingsCard_dot_checkoutLimitsDescription": {
+    "context": "input helper text",
+    "string": "This number defines quantity of items in checkout line that can be bought. You can override this setting per variant. Leaving this setting empty mean that there is no limits."
+  },
+  "src_dot_siteSettings_dot_components_dot_SiteCheckoutSettingsCard_dot_checkoutLineLimit": {
+    "context": "input label",
+    "string": "Checkout line limit."
+  },
   "src_dot_siteSettings_dot_components_dot_SiteCheckoutSettingsCard_dot_reservedStock": {
     "context": "title",
     "string": "Reserved stock"
@@ -8016,6 +8040,10 @@
   "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_1368317066": {
     "context": "event",
     "string": "Invoice deleted"
+  },
+  "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_1368438665": {
+    "context": "event",
+    "string": "Shipping methods for checkout listed"
   },
   "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_1436364351": {
     "context": "section header",
