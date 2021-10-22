@@ -7,7 +7,7 @@ import {
   createCheckout
 } from "../../../support/api/requests/Checkout";
 import { getOrder } from "../../../support/api/requests/Order";
-import { confirmThreeDSecure } from "../../../support/api/requests/Stripe";
+import { confirmThreeDSecure } from "../../../support/api/requests/stripe";
 import { addStripePaymentAndGetConfirmationData } from "../../../support/api/utils/ordersUtils";
 import { createProductWithShipping } from "../../../support/api/utils/products/productsUtils";
 import { deleteShippingStartsWith } from "../../../support/api/utils/shippingUtils";
