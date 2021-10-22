@@ -7,8 +7,8 @@ import {
   SaleorTheme,
   Sidebar,
   SidebarDrawer,
+  useActionBar,
   useBacklink,
-  useSavebar,
   useTheme
 } from "@saleor/macaw-ui";
 import { staffMemberDetailsUrl } from "@saleor/staff/urls";
@@ -121,7 +121,7 @@ interface AppLayoutProps {
 const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
   const classes = useStyles({});
   const { themeType, setTheme } = useTheme();
-  const { anchor: appActionAnchor, docked } = useSavebar();
+  const { anchor: appActionAnchor, docked } = useActionBar();
   const appHeaderAnchor = useBacklink();
   const { logout, user } = useUser();
   const navigate = useNavigator();
