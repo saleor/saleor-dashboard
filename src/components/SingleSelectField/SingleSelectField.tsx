@@ -31,10 +31,10 @@ const useStyles = makeStyles(
   { name: "SingleSelectField" }
 );
 
-export interface Choice<T = string, L = string | React.ReactNode, D = boolean> {
+export interface Choice<T = string, L = string | React.ReactNode> {
   value: T;
   label: L;
-  disabled?: D;
+  disabled?: boolean;
 }
 
 export type Choices = Choice[];
