@@ -415,8 +415,6 @@ const OrderRefundAmount: React.FC<OrderRefundAmountProps> = props => {
                               <RefundAmountInput
                                 payment={payment}
                                 data={data as OrderRefundFormData}
-                                amountTooSmall={isAmountTooSmall}
-                                amountTooBig={isAmountTooBig}
                                 currencySymbol={amountCurrency}
                                 disabled={disabled}
                                 onChange={event =>
@@ -486,8 +484,6 @@ const OrderRefundAmount: React.FC<OrderRefundAmountProps> = props => {
                           <RefundAmountInput
                             payment={payment}
                             data={data as OrderRefundFormData}
-                            amountTooSmall={isAmountTooSmall}
-                            amountTooBig={isAmountTooBig}
                             currencySymbol={amountCurrency}
                             disabled={disabled}
                             onChange={event =>
