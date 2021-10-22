@@ -18,7 +18,8 @@ import {
   CountryCode,
   DateRangeInput,
   OrderPaymentStatusEnum,
-  OrderStatus
+  OrderStatus,
+  PaymentChargeStatusEnum
 } from "./types/globalTypes";
 
 export type RequireAtLeastOne<T, Keys extends keyof T = keyof T> = Pick<
@@ -69,25 +70,64 @@ export const removeDoubleSlashes = (url: string) =>
   url.replace(/([^:]\/)\/+/g, "$1");
 
 const paymentStatusMessages = defineMessages({
-  paid: {
+  orderPaid: {
     defaultMessage: "Fully paid",
-    description: "payment status"
+    description: "order payment status"
   },
-  partiallyPaid: {
+  orderPartiallyPaid: {
     defaultMessage: "Partially paid",
-    description: "payment status"
+    description: "order payment status"
+  },
+  orderPartiallyRefunded: {
+    defaultMessage: "Partially refunded",
+    description: "order payment status"
+  },
+  orderRefunded: {
+    defaultMessage: "Fully refunded",
+    description: "order payment status"
+  },
+  orderUnpaid: {
+    defaultMessage: "Unpaid",
+    description: "order payment status"
+  }
+});
+
+const chargeStatusMessages = defineMessages({
+  notCharged: {
+    defaultMessage: "Not charged",
+    description: "payment charge status"
+  },
+  authorized: {
+    defaultMessage: "Authorized",
+    description: "payment charge status"
+  },
+  pending: {
+    defaultMessage: "Pending",
+    description: "payment charge status"
+  },
+  partiallyCharged: {
+    defaultMessage: "Partially captured",
+    description: "payment charge status"
+  },
+  fullyCharged: {
+    defaultMessage: "Captured",
+    description: "payment charge status"
   },
   partiallyRefunded: {
     defaultMessage: "Partially refunded",
-    description: "payment status"
+    description: "payment charge status"
   },
-  refunded: {
+  fullyRefunded: {
     defaultMessage: "Fully refunded",
-    description: "payment status"
+    description: "payment charge status"
   },
-  unpaid: {
-    defaultMessage: "Unpaid",
-    description: "payment status"
+  refused: {
+    defaultMessage: "Refused",
+    description: "payment charge status"
+  },
+  voided: {
+    defaultMessage: "Voided",
+    description: "payment charge status"
   }
 });
 
@@ -98,28 +138,88 @@ export const transformOrderPaymentStatus = (
   switch (status) {
     case OrderPaymentStatusEnum.PARTIALLY_CHARGED:
       return {
-        localized: intl.formatMessage(paymentStatusMessages.partiallyPaid),
-        status: "error"
+        localized: intl.formatMessage(paymentStatusMessages.orderPartiallyPaid),
+        status: StatusType.ERROR
       };
     case OrderPaymentStatusEnum.FULLY_CHARGED:
       return {
-        localized: intl.formatMessage(paymentStatusMessages.paid),
-        status: "success"
+        localized: intl.formatMessage(paymentStatusMessages.orderPaid),
+        status: StatusType.SUCCESS
       };
     case OrderPaymentStatusEnum.PARTIALLY_REFUNDED:
       return {
-        localized: intl.formatMessage(paymentStatusMessages.partiallyRefunded),
-        status: "error"
+        localized: intl.formatMessage(
+          paymentStatusMessages.orderPartiallyRefunded
+        ),
+        status: StatusType.ERROR
       };
     case OrderPaymentStatusEnum.FULLY_REFUNDED:
       return {
-        localized: intl.formatMessage(paymentStatusMessages.refunded),
-        status: "success"
+        localized: intl.formatMessage(paymentStatusMessages.orderRefunded),
+        status: StatusType.SUCCESS
       };
     default:
       return {
-        localized: intl.formatMessage(paymentStatusMessages.unpaid),
-        status: "error"
+        localized: intl.formatMessage(paymentStatusMessages.orderUnpaid),
+        status: StatusType.ERROR
+      };
+  }
+};
+
+export const transformChargeStatus = (
+  status: string,
+  intl: IntlShape
+): { localized: string; status: StatusLabelProps["status"] } => {
+  switch (status) {
+    case PaymentChargeStatusEnum.NOT_CHARGED:
+      return {
+        localized: intl.formatMessage(chargeStatusMessages.notCharged),
+        status: StatusType.NEUTRAL
+      };
+    case PaymentChargeStatusEnum.AUTHORIZED:
+      return {
+        localized: intl.formatMessage(chargeStatusMessages.authorized),
+        status: StatusType.NEUTRAL
+      };
+    case PaymentChargeStatusEnum.PENDING:
+      return {
+        localized: intl.formatMessage(chargeStatusMessages.pending),
+        status: StatusType.ALERT
+      };
+    case PaymentChargeStatusEnum.PARTIALLY_CHARGED:
+      return {
+        localized: intl.formatMessage(chargeStatusMessages.partiallyCharged),
+        status: StatusType.SUCCESS
+      };
+    case PaymentChargeStatusEnum.FULLY_CHARGED:
+      return {
+        localized: intl.formatMessage(chargeStatusMessages.fullyCharged),
+        status: StatusType.SUCCESS
+      };
+    case PaymentChargeStatusEnum.PARTIALLY_REFUNDED:
+      return {
+        localized: intl.formatMessage(chargeStatusMessages.partiallyCharged),
+        status: StatusType.NEUTRAL
+      };
+    case PaymentChargeStatusEnum.FULLY_REFUNDED:
+      return {
+        localized: intl.formatMessage(chargeStatusMessages.fullyCharged),
+        status: StatusType.NEUTRAL
+      };
+    case PaymentChargeStatusEnum.REFUSED:
+      return {
+        localized: intl.formatMessage(chargeStatusMessages.refused),
+        status: StatusType.ERROR
+      };
+    case PaymentChargeStatusEnum.CANCELLED:
+      return {
+        localized: intl.formatMessage(chargeStatusMessages.voided),
+        status: StatusType.NEUTRAL
+      };
+    default:
+      return {
+        localized: intl.formatMessage(chargeStatusMessages.pending),
+        status: StatusType.ALERT
       };
   }
 };

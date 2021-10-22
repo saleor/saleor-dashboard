@@ -1,5 +1,6 @@
 import { CardContent, Typography } from "@material-ui/core";
 import CardSpacer from "@saleor/components/CardSpacer";
+import { StatusType } from "@saleor/components/StatusChip/types";
 import StatusLabel from "@saleor/components/StatusLabel";
 import { statusLabelMessages } from "@saleor/components/StatusLabel/messages";
 import { PluginBaseFragment } from "@saleor/fragments/types/PluginBaseFragment";
@@ -29,7 +30,7 @@ const GlobalConfigPluginPopupBody: React.FC<GlobalConfigPluginPopupBodyProps> = 
         </Typography>
         <CardSpacer />
         <StatusLabel
-          status={active ? "success" : "error"}
+          status={active ? StatusType.SUCCESS : StatusType.ERROR}
           label={intl.formatMessage(
             active ? statusLabelMessages.active : statusLabelMessages.inactive
           )}

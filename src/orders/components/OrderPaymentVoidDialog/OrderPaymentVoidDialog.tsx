@@ -10,15 +10,17 @@ import ConfirmButton, {
   ConfirmButtonTransitionState
 } from "@saleor/components/ConfirmButton";
 import FormSpacer from "@saleor/components/FormSpacer";
-import { OrderErrorFragment } from "@saleor/fragments/types/OrderErrorFragment";
+import { PaymentErrorFragment } from "@saleor/fragments/types/PaymentErrorFragment";
 import { buttonMessages } from "@saleor/intl";
-import getOrderErrorMessage from "@saleor/utils/errors/order";
+import getOrderPaymentErrorMessage from "@saleor/utils/errors/orderPayment";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
+import { orderPaymentVoidDialogMessages as messages } from "./messages";
+
 export interface OrderPaymentVoidDialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
-  errors: OrderErrorFragment[];
+  errors: PaymentErrorFragment[];
   open: boolean;
   onClose?();
   onConfirm?();
@@ -36,21 +38,18 @@ const OrderPaymentVoidDialog: React.FC<OrderPaymentVoidDialogProps> = ({
   return (
     <Dialog onClose={onClose} open={open}>
       <DialogTitle>
-        <FormattedMessage
-          defaultMessage="Void Payment"
-          description="dialog header"
-        />
+        <FormattedMessage {...messages.voidPayment} />
       </DialogTitle>
       <DialogContent>
         <DialogContentText>
-          <FormattedMessage defaultMessage="Are you sure you want to void this payment?" />
+          <FormattedMessage {...messages.voidPaymentConfirm} />
         </DialogContentText>
         {errors.length > 0 && (
           <>
             <FormSpacer />
             {errors.map((err, index) => (
               <DialogContentText color="error" key={index}>
-                {getOrderErrorMessage(err, intl)}
+                {getOrderPaymentErrorMessage(err, intl)}
               </DialogContentText>
             ))}
           </>

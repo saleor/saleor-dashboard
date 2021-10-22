@@ -12,16 +12,14 @@ import Savebar from "@saleor/components/Savebar";
 import Skeleton from "@saleor/components/Skeleton";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import { sectionNames } from "@saleor/intl";
-import { Backlink } from "@saleor/macaw-ui";
-import { makeStyles } from "@saleor/macaw-ui";
+import { Alert, Backlink } from "@saleor/macaw-ui";
 import OrderChannelSectionCard from "@saleor/orders/components/OrderChannelSectionCard";
 import { UserPermissionProps } from "@saleor/types";
 import { mapMetadataItemToInput } from "@saleor/utils/maps";
 import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
 import React from "react";
-import { defineMessages, useIntl } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 
-import { maybe } from "../../../misc";
 import { OrderStatus } from "../../../types/globalTypes";
 import { OrderDetails_order } from "../../types/OrderDetails";
 import OrderCustomer from "../OrderCustomer";
@@ -33,24 +31,14 @@ import OrderHistory, { FormData as HistoryFormData } from "../OrderHistory";
 import OrderInvoiceList from "../OrderInvoiceList";
 import OrderPayment from "../OrderPayment/OrderPayment";
 import OrderUnfulfilledProductsCard from "../OrderUnfulfilledProductsCard";
+import { orderDetailsPageMessages as messages } from "./messages";
+import { useStyles } from "./styles";
 import Title from "./Title";
-import { filteredConditionalItems, hasAnyItemsReplaceable } from "./utils";
-
-const useStyles = makeStyles(
-  theme => ({
-    date: {
-      marginBottom: theme.spacing(3)
-    },
-    header: {
-      display: "flex",
-      justifyContent: "space-between",
-      marginBottom: 0
-    }
-  }),
-  {
-    name: "OrderDetailsPage"
-  }
-);
+import {
+  filteredConditionalItems,
+  hasAnyItemsReplaceable,
+  isOverpaid
+} from "./utils";
 
 export interface OrderDetailsPageProps extends UserPermissionProps {
   order: OrderDetails_order;
@@ -73,10 +61,12 @@ export interface OrderDetailsPageProps extends UserPermissionProps {
   onFulfillmentTrackingNumberUpdate(id: string);
   onOrderFulfill();
   onProductClick?(id: string);
-  onPaymentCapture();
+  onCapture();
+  onPaymentCapture(id: string);
   onPaymentPaid();
   onPaymentRefund();
-  onPaymentVoid();
+  onVoid();
+  onPaymentVoid(id: string);
   onShippingAddressEdit();
   onOrderCancel();
   onNoteAdd(data: HistoryFormData);
@@ -87,21 +77,6 @@ export interface OrderDetailsPageProps extends UserPermissionProps {
   onInvoiceSend(invoiceId: string);
   onSubmit(data: MetadataFormData): SubmitPromise;
 }
-
-const messages = defineMessages({
-  cancelOrder: {
-    defaultMessage: "Cancel order",
-    description: "cancel button"
-  },
-  confirmOrder: {
-    defaultMessage: "Confirm order",
-    description: "save button"
-  },
-  returnOrder: {
-    defaultMessage: "Return / Replace order",
-    description: "return button"
-  }
-});
 
 const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
   const {
@@ -116,9 +91,11 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
     onNoteAdd,
     onOrderCancel,
     onOrderFulfill,
+    onCapture,
     onPaymentCapture,
     onPaymentPaid,
     onPaymentRefund,
+    onVoid,
     onPaymentVoid,
     onShippingAddressEdit,
     onProfileView,
@@ -207,7 +184,7 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
         return (
           <Container>
             <Backlink onClick={onBack}>
-              {intl.formatMessage(sectionNames.orders)}
+              <FormattedMessage {...sectionNames.orders} />
             </Backlink>
             <PageHeader
               className={classes.header}
@@ -227,6 +204,20 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
             </div>
             <Grid>
               <div data-test-id="orderFulfillment">
+                {isOverpaid(order) && (
+                  <>
+                    <Alert
+                      variant="error"
+                      close={false}
+                      title={intl.formatMessage(messages.orderOverpaid)}
+                    >
+                      <FormattedMessage
+                        {...messages.orderOverpaidDescription}
+                      />
+                    </Alert>
+                    <CardSpacer />
+                  </>
+                )}
                 {!isOrderUnconfirmed ? (
                   <OrderUnfulfilledProductsCard
                     canFulfill={canFulfill}
@@ -265,10 +256,12 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
                   <>
                     <OrderPayment
                       order={order}
-                      onCapture={onPaymentCapture}
+                      onCapture={onCapture}
                       onMarkAsPaid={onPaymentPaid}
                       onRefund={onPaymentRefund}
-                      onVoid={onPaymentVoid}
+                      onVoid={onVoid}
+                      onPaymentCapture={onPaymentCapture}
+                      onPaymentVoid={onPaymentVoid}
                     />
                     <CardSpacer />
                     <Metadata data={data} onChange={changeMetadata} />
@@ -306,7 +299,7 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
                     <CardSpacer />
                   </>
                 )}
-                <OrderCustomerNote note={maybe(() => order.customerNote)} />
+                <OrderCustomerNote note={order?.customerNote || ""} />
               </div>
             </Grid>
             <Savebar

@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { OrderErrorCode, AddressTypeEnum, OrderDiscountType, DiscountValueTypeEnum, OrderEventsEmailsEnum, OrderEventsEnum, FulfillmentStatus, OrderPaymentStatusEnum, OrderStatus, OrderAction, JobStatusEnum } from "./../../types/globalTypes";
+import { OrderErrorCode, AddressTypeEnum, OrderDiscountType, DiscountValueTypeEnum, OrderEventsEmailsEnum, OrderEventsEnum, FulfillmentStatus, PaymentChargeStatusEnum, OrderAction, OrderPaymentStatusEnum, OrderStatus, JobStatusEnum } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: OrderDiscountDelete
@@ -338,6 +338,29 @@ export interface OrderDiscountDelete_orderDiscountDelete_order_lines {
   thumbnail: OrderDiscountDelete_orderDiscountDelete_order_lines_thumbnail | null;
 }
 
+export interface OrderDiscountDelete_orderDiscountDelete_order_payments_total {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderDiscountDelete_orderDiscountDelete_order_payments_capturedAmount {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderDiscountDelete_orderDiscountDelete_order_payments {
+  __typename: "Payment";
+  id: string;
+  total: OrderDiscountDelete_orderDiscountDelete_order_payments_total | null;
+  capturedAmount: OrderDiscountDelete_orderDiscountDelete_order_payments_capturedAmount | null;
+  gatewayName: string;
+  pspReference: string | null;
+  chargeStatus: PaymentChargeStatusEnum;
+  actions: (OrderAction | null)[];
+}
+
 export interface OrderDiscountDelete_orderDiscountDelete_order_shippingAddress_country {
   __typename: "CountryDisplay";
   code: string;
@@ -501,6 +524,7 @@ export interface OrderDiscountDelete_orderDiscountDelete_order {
   fulfillments: (OrderDiscountDelete_orderDiscountDelete_order_fulfillments | null)[];
   lines: (OrderDiscountDelete_orderDiscountDelete_order_lines | null)[];
   number: string | null;
+  payments: (OrderDiscountDelete_orderDiscountDelete_order_payments | null)[] | null;
   paymentStatus: OrderPaymentStatusEnum;
   shippingAddress: OrderDiscountDelete_orderDiscountDelete_order_shippingAddress | null;
   shippingMethod: OrderDiscountDelete_orderDiscountDelete_order_shippingMethod | null;

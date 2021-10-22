@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { OrderFilterInput, OrderSortingInput, OrderPaymentStatusEnum, OrderStatus } from "./../../types/globalTypes";
+import { OrderFilterInput, OrderSortingInput, OrderPaymentStatusEnum, PaymentChargeStatusEnum, OrderStatus } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL query operation: OrderList
@@ -31,6 +31,12 @@ export interface OrderList_orders_edges_node_billingAddress {
   streetAddress2: string;
 }
 
+export interface OrderList_orders_edges_node_payments {
+  __typename: "Payment";
+  chargeStatus: PaymentChargeStatusEnum;
+  gatewayName: string;
+}
+
 export interface OrderList_orders_edges_node_total_gross {
   __typename: "Money";
   amount: number;
@@ -49,6 +55,7 @@ export interface OrderList_orders_edges_node {
   id: string;
   number: string | null;
   paymentStatus: OrderPaymentStatusEnum;
+  payments: (OrderList_orders_edges_node_payments | null)[] | null;
   status: OrderStatus;
   total: OrderList_orders_edges_node_total;
   userEmail: string | null;

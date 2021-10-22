@@ -173,10 +173,29 @@ export const invoiceFragment = gql`
   }
 `;
 
+export const paymentFragment = gql`
+  fragment PaymentFragment on Payment {
+    id
+    total {
+      amount
+      currency
+    }
+    capturedAmount {
+      amount
+      currency
+    }
+    gatewayName
+    pspReference
+    chargeStatus
+    actions
+  }
+`;
+
 export const fragmentOrderDetails = gql`
   ${fragmentAddress}
   ${fragmentOrderEvent}
   ${fragmentOrderLine}
+  ${paymentFragment}
   ${fulfillmentFragment}
   ${invoiceFragment}
   ${metadataFragment}
@@ -211,6 +230,9 @@ export const fragmentOrderDetails = gql`
       ...OrderLineFragment
     }
     number
+    payments {
+      ...PaymentFragment
+    }
     paymentStatus
     shippingAddress {
       ...AddressFragment

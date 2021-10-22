@@ -3,6 +3,8 @@ import useDateLocalize from "@saleor/hooks/useDateLocalize";
 import React from "react";
 import { useIntl } from "react-intl";
 
+import { StatusType } from "../StatusChip/types";
+
 export const AvailabilityStatusLabel = ({ channel, messages }) => {
   const intl = useIntl();
   const localizeDate = useDateLocalize();
@@ -22,9 +24,9 @@ export const AvailabilityStatusLabel = ({ channel, messages }) => {
       status={
         channel.publicationDate
           ? channel.isPublished
-            ? "success"
-            : "alert"
-          : "error"
+            ? StatusType.SUCCESS
+            : StatusType.ALERT
+          : StatusType.ERROR
       }
     />
   );

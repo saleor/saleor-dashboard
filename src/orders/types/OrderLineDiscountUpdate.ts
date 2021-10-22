@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { OrderDiscountCommonInput, OrderErrorCode, AddressTypeEnum, OrderDiscountType, DiscountValueTypeEnum, OrderEventsEmailsEnum, OrderEventsEnum, FulfillmentStatus, OrderPaymentStatusEnum, OrderStatus, OrderAction, JobStatusEnum } from "./../../types/globalTypes";
+import { OrderDiscountCommonInput, OrderErrorCode, AddressTypeEnum, OrderDiscountType, DiscountValueTypeEnum, OrderEventsEmailsEnum, OrderEventsEnum, FulfillmentStatus, PaymentChargeStatusEnum, OrderAction, OrderPaymentStatusEnum, OrderStatus, JobStatusEnum } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: OrderLineDiscountUpdate
@@ -338,6 +338,29 @@ export interface OrderLineDiscountUpdate_orderLineDiscountUpdate_order_lines {
   thumbnail: OrderLineDiscountUpdate_orderLineDiscountUpdate_order_lines_thumbnail | null;
 }
 
+export interface OrderLineDiscountUpdate_orderLineDiscountUpdate_order_payments_total {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderLineDiscountUpdate_orderLineDiscountUpdate_order_payments_capturedAmount {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderLineDiscountUpdate_orderLineDiscountUpdate_order_payments {
+  __typename: "Payment";
+  id: string;
+  total: OrderLineDiscountUpdate_orderLineDiscountUpdate_order_payments_total | null;
+  capturedAmount: OrderLineDiscountUpdate_orderLineDiscountUpdate_order_payments_capturedAmount | null;
+  gatewayName: string;
+  pspReference: string | null;
+  chargeStatus: PaymentChargeStatusEnum;
+  actions: (OrderAction | null)[];
+}
+
 export interface OrderLineDiscountUpdate_orderLineDiscountUpdate_order_shippingAddress_country {
   __typename: "CountryDisplay";
   code: string;
@@ -501,6 +524,7 @@ export interface OrderLineDiscountUpdate_orderLineDiscountUpdate_order {
   fulfillments: (OrderLineDiscountUpdate_orderLineDiscountUpdate_order_fulfillments | null)[];
   lines: (OrderLineDiscountUpdate_orderLineDiscountUpdate_order_lines | null)[];
   number: string | null;
+  payments: (OrderLineDiscountUpdate_orderLineDiscountUpdate_order_payments | null)[] | null;
   paymentStatus: OrderPaymentStatusEnum;
   shippingAddress: OrderLineDiscountUpdate_orderLineDiscountUpdate_order_shippingAddress | null;
   shippingMethod: OrderLineDiscountUpdate_orderLineDiscountUpdate_order_shippingMethod | null;

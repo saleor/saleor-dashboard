@@ -2,12 +2,12 @@ import { OrderErrorCode } from "@saleor/types/globalTypes";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
-import OrderPaymentVoidDialog, {
-  OrderPaymentVoidDialogProps
-} from "../../../orders/components/OrderPaymentVoidDialog";
+import OrderVoidDialog, {
+  OrderVoidDialogProps
+} from "../../../orders/components/OrderVoidDialog";
 import Decorator from "../../Decorator";
 
-const props: OrderPaymentVoidDialogProps = {
+const props: OrderVoidDialogProps = {
   confirmButtonState: "default",
   errors: [],
   onClose: () => undefined,
@@ -15,11 +15,11 @@ const props: OrderPaymentVoidDialogProps = {
   open: true
 };
 
-storiesOf("Orders / OrderPaymentVoidDialog", module)
+storiesOf("Orders / OrderVoidDialog", module)
   .addDecorator(Decorator)
-  .add("default", () => <OrderPaymentVoidDialog {...props} />)
+  .add("default", () => <OrderVoidDialog {...props} />)
   .add("errors", () => (
-    <OrderPaymentVoidDialog
+    <OrderVoidDialog
       {...props}
       errors={[
         {

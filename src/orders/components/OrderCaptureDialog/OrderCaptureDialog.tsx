@@ -19,11 +19,13 @@ import getOrderErrorMessage from "@saleor/utils/errors/order";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
+import { orderCaptureDialogMessages as messages } from "./messages";
+
 export interface FormData {
   amount: number;
 }
 
-export interface OrderPaymentDialogProps {
+export interface OrderCaptureDialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
   errors: OrderErrorFragment[];
   open: boolean;
@@ -32,7 +34,7 @@ export interface OrderPaymentDialogProps {
   onSubmit: (data: FormData) => void;
 }
 
-const OrderPaymentDialog: React.FC<OrderPaymentDialogProps> = ({
+const OrderCaptureDialog: React.FC<OrderCaptureDialogProps> = ({
   confirmButtonState,
   errors,
   open,
@@ -56,20 +58,14 @@ const OrderPaymentDialog: React.FC<OrderPaymentDialogProps> = ({
         {({ data, change, submit }) => (
           <>
             <DialogTitle>
-              {intl.formatMessage({
-                defaultMessage: "Capture Payment",
-                description: "dialog header"
-              })}
+              <FormattedMessage {...messages.captureOrder} />
             </DialogTitle>
             <DialogContent>
               <TextField
                 error={!!formErrors.payment}
                 fullWidth
                 helperText={getOrderErrorMessage(formErrors.payment, intl)}
-                label={intl.formatMessage({
-                  defaultMessage: "Amount",
-                  description: "amount of refunded money"
-                })}
+                label={intl.formatMessage(messages.captureAmount)}
                 name="amount"
                 onChange={change}
                 inputProps={{
@@ -110,5 +106,5 @@ const OrderPaymentDialog: React.FC<OrderPaymentDialogProps> = ({
     </Dialog>
   );
 };
-OrderPaymentDialog.displayName = "OrderPaymentDialog";
-export default OrderPaymentDialog;
+OrderCaptureDialog.displayName = "OrderCaptureDialog";
+export default OrderCaptureDialog;

@@ -1,37 +1,21 @@
-import { Button, Card, CardActions, CardContent } from "@material-ui/core";
+import { Card, CardContent } from "@material-ui/core";
 import CardTitle from "@saleor/components/CardTitle";
 import { Hr } from "@saleor/components/Hr";
 import Money, { subtractMoney } from "@saleor/components/Money";
 import Skeleton from "@saleor/components/Skeleton";
 import StatusLabel from "@saleor/components/StatusLabel";
-import { makeStyles } from "@saleor/macaw-ui";
+import OrderPaymentDetails from "@saleor/orders/components/OrderPaymentDetails";
+import classNames from "classnames";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { maybe, transformOrderPaymentStatus } from "../../../misc";
-import {
-  OrderAction,
-  OrderDiscountType,
-  OrderStatus
-} from "../../../types/globalTypes";
+import { transformOrderPaymentStatus } from "../../../misc";
+import { OrderDiscountType, OrderStatus } from "../../../types/globalTypes";
 import { OrderDetails_order } from "../../types/OrderDetails";
-
-const useStyles = makeStyles(
-  theme => ({
-    root: {
-      ...theme.typography.body1,
-      lineHeight: 1.9,
-      width: "100%"
-    },
-    textRight: {
-      textAlign: "right"
-    },
-    totalRow: {
-      fontWeight: 600
-    }
-  }),
-  { name: "OrderPayment" }
-);
+import { isOverpaid } from "../OrderDetailsPage/utils";
+import OrderPaymentToolbar from "../OrderPaymentToolbar";
+import { orderPaymentMessages as messages } from "./messages";
+import { useStyles } from "./styles";
 
 interface OrderPaymentProps {
   order: OrderDetails_order;
@@ -39,150 +23,122 @@ interface OrderPaymentProps {
   onMarkAsPaid: () => void;
   onRefund: () => void;
   onVoid: () => void;
+  onPaymentCapture: (id: string) => void;
+  onPaymentVoid: (id: string) => void;
 }
 
 const OrderPayment: React.FC<OrderPaymentProps> = props => {
-  const { order, onCapture, onMarkAsPaid, onRefund, onVoid } = props;
+  const {
+    order,
+    onCapture,
+    onMarkAsPaid,
+    onRefund,
+    onVoid,
+    onPaymentCapture,
+    onPaymentVoid
+  } = props;
   const classes = useStyles(props);
 
   const intl = useIntl();
 
-  const canCapture = maybe(() => order.actions, []).includes(
-    OrderAction.CAPTURE
-  );
-  const canVoid = maybe(() => order.actions, []).includes(OrderAction.VOID);
-  const canRefund = maybe(() => order.actions, []).includes(OrderAction.REFUND);
-  const canMarkAsPaid = maybe(() => order.actions, []).includes(
-    OrderAction.MARK_AS_PAID
-  );
-  const payment = transformOrderPaymentStatus(
-    maybe(() => order.paymentStatus),
-    intl
-  );
+  const payment = transformOrderPaymentStatus(order?.paymentStatus, intl);
   const refundedAmount =
     order?.totalCaptured &&
     order?.total?.gross &&
     subtractMoney(order.totalCaptured, order.total.gross);
+
+  const isOrderOverpaid = isOverpaid(order);
+
   return (
     <Card>
       <CardTitle
         title={
-          maybe(() => order.paymentStatus) === undefined ? (
-            <Skeleton />
-          ) : (
-            <StatusLabel label={payment.localized} status={payment.status} />
+          (order?.paymentStatus && (
+            <div className={classes.paymentStatus}>
+              <span className={classes.paymentStatusTitle}>
+                <FormattedMessage {...messages.paymentStatus} />
+              </span>
+              <StatusLabel label={payment.localized} status={payment.status} />
+            </div>
+          )) || <Skeleton />
+        }
+        toolbar={
+          order?.status !== OrderStatus.CANCELED && (
+            <OrderPaymentToolbar
+              order={order}
+              onCapture={onCapture}
+              onMarkAsPaid={onMarkAsPaid}
+              onRefund={onRefund}
+              onVoid={onVoid}
+            />
           )
         }
       />
       <CardContent>
         <table className={classes.root}>
           <tbody>
-            <tr>
+            <tr className={classes.disabled}>
               <td>
-                <FormattedMessage
-                  defaultMessage="Subtotal"
-                  description="order subtotal price"
-                />
+                <FormattedMessage {...messages.subtotal} />
               </td>
               <td>
-                {maybe(() => order.lines) === undefined ? (
-                  <Skeleton />
-                ) : (
-                  <FormattedMessage
-                    defaultMessage="{quantity} items"
-                    description="ordered products"
-                    values={{
-                      quantity: order.lines
-                        .map(line => line.quantity)
-                        .reduce((curr, prev) => prev + curr, 0)
-                    }}
-                  />
-                )}
+                {(order?.lines &&
+                  intl.formatMessage(messages.subtotalQuantity, {
+                    quantity: order.lines
+                      .map(line => line.quantity)
+                      .reduce((curr, prev) => prev + curr, 0)
+                  })) || <Skeleton />}
               </td>
               <td className={classes.textRight}>
-                {maybe(() => order.subtotal.gross) === undefined ? (
-                  <Skeleton />
-                ) : (
+                {(order?.subtotal.gross && (
                   <Money money={order.subtotal.gross} />
+                )) || <Skeleton />}
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <FormattedMessage {...messages.taxes} />
+              </td>
+              <td className={classes.disabled}>
+                {(order &&
+                  intl.formatMessage(
+                    order.total.tax.amount > 0
+                      ? messages.vatIncluded
+                      : messages.vatNotIncluded
+                  )) || <Skeleton />}
+              </td>
+              <td className={classes.textRight}>
+                {(order?.total.tax && <Money money={order.total.tax} />) || (
+                  <Skeleton />
                 )}
               </td>
             </tr>
             <tr>
               <td>
-                <FormattedMessage defaultMessage="Taxes" />
+                <FormattedMessage {...messages.shipping} />
               </td>
-              <td>
-                {maybe(() => order.total.tax) === undefined ? (
-                  <Skeleton />
-                ) : order.total.tax.amount > 0 ? (
-                  intl.formatMessage({
-                    defaultMessage: "VAT included",
-                    description: "vat included in order price"
-                  })
-                ) : (
-                  intl.formatMessage({
-                    defaultMessage: "does not apply",
-                    description: "vat not included in order price",
-                    id: "orderPaymentVATDoesNotApply"
-                  })
-                )}
+              <td className={classes.disabled}>
+                {(order &&
+                  ((order.shippingMethodName === null &&
+                    intl.formatMessage(messages.shippingNotIncluded)) ||
+                    order.shippingMethodName)) || <Skeleton />}
               </td>
               <td className={classes.textRight}>
-                {maybe(() => order.total.tax) === undefined ? (
-                  <Skeleton />
-                ) : (
-                  <Money money={order.total.tax} />
-                )}
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <FormattedMessage
-                  defaultMessage="Shipping"
-                  description="order shipping method name"
-                />
-              </td>
-              <td>
-                {maybe(() => order.shippingMethodName) === undefined &&
-                maybe(() => order.shippingPrice) === undefined ? (
-                  <Skeleton />
-                ) : order.shippingMethodName === null ? (
-                  intl.formatMessage({
-                    defaultMessage: "does not apply",
-                    description: "order does not require shipping",
-                    id: "orderPaymentShippingDoesNotApply"
-                  })
-                ) : (
-                  order.shippingMethodName
-                )}
-              </td>
-              <td className={classes.textRight}>
-                {maybe(() => order.shippingPrice.gross) === undefined ? (
-                  <Skeleton />
-                ) : (
+                {(order?.shippingPrice.gross && (
                   <Money money={order.shippingPrice.gross} />
-                )}
+                )) || <Skeleton />}
               </td>
             </tr>
             {order?.discounts?.map(discount => (
-              <tr>
+              <tr key={discount.id}>
                 <td>
-                  <FormattedMessage
-                    defaultMessage="Discount"
-                    description="order discount"
-                  />
+                  <FormattedMessage {...messages.discount} />
                 </td>
                 <td>
-                  {discount.type === OrderDiscountType.MANUAL ? (
-                    <FormattedMessage
-                      defaultMessage="Staff added"
-                      description="staff added type order discount"
-                    />
-                  ) : (
-                    <FormattedMessage
-                      defaultMessage="Voucher"
-                      description="voucher type order discount"
-                    />
+                  {intl.formatMessage(
+                    discount.type === OrderDiscountType.MANUAL
+                      ? messages.discountStaffAdded
+                      : messages.discountVoucher
                   )}
                 </td>
                 <td className={classes.textRight}>
@@ -192,63 +148,63 @@ const OrderPayment: React.FC<OrderPaymentProps> = props => {
             ))}
             <tr className={classes.totalRow}>
               <td>
-                <FormattedMessage
-                  defaultMessage="Total"
-                  description="order total price"
-                />
+                <FormattedMessage {...messages.total} />
               </td>
               <td />
               <td className={classes.textRight}>
-                {maybe(() => order.total.gross) === undefined ? (
-                  <Skeleton />
-                ) : (
+                {(order?.total.gross && (
                   <Money money={order.total.gross} />
-                )}
+                )) || <Skeleton />}
               </td>
             </tr>
           </tbody>
         </table>
       </CardContent>
+
       <Hr />
+      {order?.payments?.map(payment => (
+        <OrderPaymentDetails
+          key={payment.id}
+          payment={payment}
+          onPaymentCapture={onPaymentCapture}
+          onPaymentVoid={onPaymentVoid}
+        />
+      ))}
+
       <CardContent>
         <table className={classes.root}>
           <tbody>
             <tr>
-              <td>
-                <FormattedMessage
-                  defaultMessage="Preauthorized amount"
-                  description="order payment"
-                />
+              <td className={classes.totalRow}>
+                <FormattedMessage {...messages.totalPreauthorized} />
               </td>
               <td className={classes.textRight}>
-                {maybe(() => order.totalAuthorized.amount) === undefined ? (
-                  <Skeleton />
-                ) : (
+                {(order?.totalAuthorized && (
                   <Money money={order.totalAuthorized} />
-                )}
+                )) || <Skeleton />}
               </td>
             </tr>
             <tr>
-              <td>
-                <FormattedMessage
-                  defaultMessage="Captured amount"
-                  description="order payment"
-                />
+              <td
+                className={
+                  isOrderOverpaid ? classes.overpaid : classes.totalRow
+                }
+              >
+                <FormattedMessage {...messages.totalCaptured} />
               </td>
-              <td className={classes.textRight}>
-                {maybe(() => order.totalCaptured.amount) === undefined ? (
-                  <Skeleton />
-                ) : (
+              <td
+                className={classNames(classes.textRight, {
+                  [classes.overpaid]: isOrderOverpaid
+                })}
+              >
+                {(order?.totalCaptured && (
                   <Money money={order.totalCaptured} />
-                )}
+                )) || <Skeleton />}
               </td>
             </tr>
             <tr>
-              <td>
-                <FormattedMessage
-                  defaultMessage="Refunded amount"
-                  description="order payment"
-                />
+              <td className={classes.totalRow}>
+                <FormattedMessage {...messages.totalRefunded} />
               </td>
               <td className={classes.textRight}>
                 {refundedAmount?.amount === undefined ? (
@@ -259,75 +215,29 @@ const OrderPayment: React.FC<OrderPaymentProps> = props => {
               </td>
             </tr>
             <tr className={classes.totalRow}>
-              <td>
-                <FormattedMessage
-                  defaultMessage="Outstanding Balance"
-                  description="order payment"
-                />
+              <td
+                className={classNames({ [classes.overpaid]: isOrderOverpaid })}
+              >
+                <FormattedMessage {...messages.outstandingBalance} />
               </td>
-              <td className={classes.textRight}>
-                {maybe(
-                  () => order.total.gross.amount && order.totalCaptured.amount
-                ) === undefined ? (
-                  <Skeleton />
-                ) : (
+              <td
+                className={classNames(classes.textRight, {
+                  [classes.overpaid]: isOrderOverpaid
+                })}
+              >
+                {(order?.total.gross && order?.totalCaptured && (
                   <Money
                     money={subtractMoney(
-                      order.totalCaptured,
-                      order.total.gross
+                      order.total.gross,
+                      order.totalCaptured
                     )}
                   />
-                )}
+                )) || <Skeleton />}
               </td>
             </tr>
           </tbody>
         </table>
       </CardContent>
-      {maybe(() => order.status) !== OrderStatus.CANCELED &&
-        (canCapture || canRefund || canVoid || canMarkAsPaid) && (
-          <>
-            <Hr />
-            <CardActions>
-              {canCapture && (
-                <Button color="primary" variant="text" onClick={onCapture}>
-                  <FormattedMessage
-                    defaultMessage="Capture"
-                    description="capture payment, button"
-                  />
-                </Button>
-              )}
-              {canRefund && (
-                <Button
-                  color="primary"
-                  variant="text"
-                  onClick={onRefund}
-                  data-test-id="refund-button"
-                >
-                  <FormattedMessage
-                    defaultMessage="Refund"
-                    description="button"
-                  />
-                </Button>
-              )}
-              {canVoid && (
-                <Button color="primary" variant="text" onClick={onVoid}>
-                  <FormattedMessage
-                    defaultMessage="Void"
-                    description="void payment, button"
-                  />
-                </Button>
-              )}
-              {canMarkAsPaid && (
-                <Button color="primary" variant="text" onClick={onMarkAsPaid}>
-                  <FormattedMessage
-                    defaultMessage="Mark as paid"
-                    description="order, button"
-                  />
-                </Button>
-              )}
-            </CardActions>
-          </>
-        )}
     </Card>
   );
 };

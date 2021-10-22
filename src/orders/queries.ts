@@ -58,6 +58,10 @@ export const orderListQuery = gql`
           id
           number
           paymentStatus
+          payments {
+            chargeStatus
+            gatewayName
+          }
           status
           total {
             __typename
