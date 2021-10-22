@@ -571,6 +571,6 @@ export interface OrderRefund {
 
 export interface OrderRefundVariables {
   id: string;
-  amount: any;
+  amount?: any | null;
   paymentsToRefund?: (OrderPaymentToRefundInput | null)[] | null;
 }
