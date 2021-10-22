@@ -101,8 +101,6 @@ const useStyles = makeStyles(
     },
 
     view: {
-      flex: 1,
-      flexGrow: 1,
       marginLeft: 0,
       paddingBottom: theme.spacing(),
       [theme.breakpoints.up("sm")]: {
