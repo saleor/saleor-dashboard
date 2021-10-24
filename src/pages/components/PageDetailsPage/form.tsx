@@ -14,7 +14,6 @@ import { ExitFormDialogContext } from "@saleor/components/Form/ExitFormDialogPro
 import { MetadataFormData } from "@saleor/components/Metadata";
 import { RichTextEditorChange } from "@saleor/components/RichTextEditor";
 import useForm, {
-  CommonUseFormResult,
   CommonUseFormResultWithHandlers,
   FormChange,
   SubmitPromise
@@ -140,7 +139,7 @@ function usePageForm(
     setChanged,
     hasChanged,
     data: formData
-  } = useForm<PageFormData>(getInitialFormData(page), undefined, {
+  } = useForm(getInitialFormData(page), undefined, {
     confirmLeave: true
   });
 
@@ -231,7 +230,7 @@ function usePageForm(
   const submit = () =>
     handleFormSubmit(
       getSubmitData(),
-      onSubmit,
+      handleSubmit,
       setChanged,
       setEnableExitDialog
     );

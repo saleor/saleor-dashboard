@@ -12,8 +12,9 @@ import useChannels from "@saleor/hooks/useChannels";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import useShop from "@saleor/hooks/useShop";
-import { getMutationErrors } from "@saleor/misc";
-import ProductCreatePage from "@saleor/products/components/ProductCreatePage";
+import ProductCreatePage, {
+  ProductCreateData
+} from "@saleor/products/components/ProductCreatePage";
 import {
   useProductChannelListingUpdate,
   useProductDeleteMutation,
@@ -193,8 +194,8 @@ export const ProductCreateView: React.FC<ProductCreateProps> = ({ params }) => {
     }
   });
 
-  const handleSubmit = async data => {
-    const result = await createMetadataCreateHandler(
+  const handleSubmit = async (data: ProductCreateData) => {
+    const errors = await createMetadataCreateHandler(
       createHandler(
         selectedProductType.productType,
         variables => uploadFile({ variables }),
@@ -208,11 +209,11 @@ export const ProductCreateView: React.FC<ProductCreateProps> = ({ params }) => {
       updatePrivateMetadata
     )(data);
 
-    if (result) {
+    if (!errors?.length) {
       setProductCreateComplete(true);
     }
 
-    return getMutationErrors(result);
+    return errors;
   };
 
   const handleAssignAttributeReferenceClick = (attribute: AttributeInput) =>

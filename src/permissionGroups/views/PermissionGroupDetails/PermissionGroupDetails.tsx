@@ -7,6 +7,7 @@ import useShop from "@saleor/hooks/useShop";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import useUser from "@saleor/hooks/useUser";
 import { commonMessages } from "@saleor/intl";
+import { extractMutationErrors } from "@saleor/misc";
 import MembersErrorDialog from "@saleor/permissionGroups/components/MembersErrorDialog";
 import {
   arePermissionsExceeded,
@@ -134,20 +135,19 @@ export const PermissionGroupDetails: React.FC<PermissionGroupDetailsProps> = ({
   );
   const disabled = loading || !isGroupEditable || permissionsExceeded;
 
-  const handleSubmit = async (formData: PermissionGroupDetailsPageFormData) => {
-    const result = await permissionGroupUpdate({
-      variables: {
-        id,
-        input: {
-          name: formData.name,
-          ...permissionsDiff(data?.permissionGroup, formData),
-          ...usersDiff(data?.permissionGroup, formData)
+  const handleSubmit = async (formData: PermissionGroupDetailsPageFormData) =>
+    extractMutationErrors(
+      permissionGroupUpdate({
+        variables: {
+          id,
+          input: {
+            name: formData.name,
+            ...permissionsDiff(data?.permissionGroup, formData),
+            ...usersDiff(data?.permissionGroup, formData)
+          }
         }
-      }
-    });
-
-    return result.data.permissionGroupUpdate.errors;
-  };
+      })
+    );
 
   return (
     <>

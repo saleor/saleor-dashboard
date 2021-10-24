@@ -6,6 +6,7 @@ import Form from "@saleor/components/Form";
 import Grid from "@saleor/components/Grid";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
 import { PermissionGroupErrorFragment } from "@saleor/fragments/types/PermissionGroupErrorFragment";
+import { SubmitPromise } from "@saleor/hooks/useForm";
 import { sectionNames } from "@saleor/intl";
 import { PermissionEnum } from "@saleor/types/globalTypes";
 import { getFormErrors } from "@saleor/utils/errors";
@@ -16,14 +17,14 @@ import { useIntl } from "react-intl";
 import { PermissionData } from "../PermissionGroupDetailsPage";
 import PermissionGroupInfo from "../PermissionGroupInfo";
 
-export interface PermissionGroupCreatePageFormData {
+export interface PermissionGroupCreateFormData {
   name: string;
   hasFullAccess: boolean;
   isActive: boolean;
   permissions: PermissionEnum[];
 }
 
-const initialForm: PermissionGroupCreatePageFormData = {
+const initialForm: PermissionGroupCreateFormData = {
   hasFullAccess: false,
   isActive: false,
   name: "",
@@ -36,7 +37,7 @@ export interface PermissionGroupCreatePageProps {
   permissions: PermissionData[];
   saveButtonBarState: ConfirmButtonTransitionState;
   onBack: () => void;
-  onSubmit(data: PermissionGroupCreatePageFormData);
+  onSubmit: (data: PermissionGroupCreateFormData) => SubmitPromise;
 }
 
 const PermissionGroupCreatePage: React.FC<PermissionGroupCreatePageProps> = ({
@@ -56,7 +57,7 @@ const PermissionGroupCreatePage: React.FC<PermissionGroupCreatePageProps> = ({
   );
 
   return (
-    <Form confirmLeave initial={initialForm} onSubmit={onSubmit} confirmLeave>
+    <Form confirmLeave initial={initialForm} onSubmit={onSubmit}>
       {({ data, change, submit, hasChanged }) => (
         <Container>
           <AppHeader onBack={onBack}>

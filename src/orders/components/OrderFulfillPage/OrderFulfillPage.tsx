@@ -21,6 +21,7 @@ import SaveButtonBar from "@saleor/components/SaveButtonBar";
 import Skeleton from "@saleor/components/Skeleton";
 import TableCellAvatar from "@saleor/components/TableCellAvatar";
 import { WarehouseFragment } from "@saleor/fragments/types/WarehouseFragment";
+import { SubmitPromise } from "@saleor/hooks/useForm";
 import useFormset, { FormsetData } from "@saleor/hooks/useFormset";
 import { renderCollection } from "@saleor/misc";
 import { FulfillOrder_orderFulfill_errors } from "@saleor/orders/types/FulfillOrder";
@@ -132,7 +133,7 @@ export interface OrderFulfillPageProps {
   saveButtonBar: ConfirmButtonTransitionState;
   warehouses: WarehouseFragment[];
   onBack: () => void;
-  onSubmit: (data: OrderFulfillSubmitData) => void;
+  onSubmit: (data: OrderFulfillSubmitData) => SubmitPromise;
 }
 
 const initialFormData: OrderFulfillFormData = {

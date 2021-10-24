@@ -21,7 +21,8 @@ import { RichTextEditorChange } from "@saleor/components/RichTextEditor";
 import { SingleAutocompleteChoiceType } from "@saleor/components/SingleAutocompleteSelectField";
 import useForm, {
   CommonUseFormResultWithHandlers,
-  FormChange
+  FormChange,
+  SubmitPromise
 } from "@saleor/hooks/useForm";
 import useFormset, {
   FormsetChange,
@@ -147,12 +148,12 @@ export interface UseProductCreateFormOpts
 export interface ProductCreateFormProps extends UseProductCreateFormOpts {
   children: (props: UseProductCreateFormResult) => React.ReactNode;
   initial?: Partial<ProductCreateFormData>;
-  onSubmit: (data: ProductCreateData) => Promise<boolean>;
+  onSubmit: (data: ProductCreateData) => SubmitPromise;
 }
 
 function useProductCreateForm(
   initial: Partial<ProductCreateFormData>,
-  onSubmit: (data: ProductCreateData) => Promise<boolean>,
+  onSubmit: (data: ProductCreateData) => SubmitPromise,
   opts: UseProductCreateFormOpts
 ): UseProductCreateFormResult {
   const defaultInitialFormData: ProductCreateFormData &
