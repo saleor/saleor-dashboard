@@ -9,6 +9,7 @@ import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
 import { CountryFragment } from "@saleor/fragments/types/CountryFragment";
 import { ShippingErrorFragment } from "@saleor/fragments/types/ShippingErrorFragment";
+import { SubmitPromise } from "@saleor/hooks/useForm";
 import { sectionNames } from "@saleor/intl";
 import React from "react";
 import { defineMessages, useIntl } from "react-intl";
@@ -16,7 +17,7 @@ import { defineMessages, useIntl } from "react-intl";
 import ShippingZoneCountriesAssignDialog from "../ShippingZoneCountriesAssignDialog";
 import ShippingZoneInfo from "../ShippingZoneInfo";
 
-export interface FormData {
+export interface ShippingZoneCreateFormData {
   countries: string[];
   default: boolean;
   description: string;
@@ -48,7 +49,7 @@ export interface ShippingZoneCreatePageProps {
   errors: ShippingErrorFragment[];
   saveButtonBarState: ConfirmButtonTransitionState;
   onBack: () => void;
-  onSubmit: (data: FormData) => void;
+  onSubmit: (data: ShippingZoneCreateFormData) => SubmitPromise;
 }
 
 const ShippingZoneCreatePage: React.FC<ShippingZoneCreatePageProps> = ({
@@ -63,7 +64,7 @@ const ShippingZoneCreatePage: React.FC<ShippingZoneCreatePageProps> = ({
   const [isModalOpened, setModalStatus] = React.useState(false);
   const toggleModal = () => setModalStatus(!isModalOpened);
 
-  const initialForm: FormData = {
+  const initialForm: ShippingZoneCreateFormData = {
     countries: [],
     default: false,
     description: "",

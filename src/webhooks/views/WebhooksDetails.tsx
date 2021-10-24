@@ -9,8 +9,10 @@ import { WebhookUpdate } from "@saleor/webhooks/types/WebhookUpdate";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import { getStringOrPlaceholder } from "../../misc";
-import WebhooksDetailsPage from "../components/WebhooksDetailsPage";
+import { extractMutationErrors, getStringOrPlaceholder } from "../../misc";
+import WebhooksDetailsPage, {
+  WebhookUpdateFormData
+} from "../components/WebhooksDetailsPage";
 import { useWebhookUpdateMutation } from "../mutations";
 import { useWebhooksDetailsQuery } from "../queries";
 
@@ -52,6 +54,24 @@ export const WebhooksDetails: React.FC<WebhooksDetailsProps> = ({ id }) => {
     return <NotFoundPage onBack={handleOnBack} />;
   }
 
+  const handleSubmit = (data: WebhookUpdateFormData) =>
+    extractMutationErrors(
+      webhookUpdate({
+        variables: {
+          id,
+          input: {
+            events: data.allEvents
+              ? [WebhookEventTypeEnum.ANY_EVENTS]
+              : data.events,
+            isActive: data.isActive,
+            name: data.name,
+            secretKey: data.secretKey,
+            targetUrl: data.targetUrl
+          }
+        }
+      })
+    );
+
   return (
     <>
       <WindowTitle
@@ -64,22 +84,7 @@ export const WebhooksDetails: React.FC<WebhooksDetailsProps> = ({ id }) => {
         saveButtonBarState={webhookUpdateOpts.status}
         webhook={webhook}
         onBack={handleOnBack}
-        onSubmit={data => {
-          webhookUpdate({
-            variables: {
-              id,
-              input: {
-                events: data.allEvents
-                  ? [WebhookEventTypeEnum.ANY_EVENTS]
-                  : data.events,
-                isActive: data.isActive,
-                name: data.name,
-                secretKey: data.secretKey,
-                targetUrl: data.targetUrl
-              }
-            }
-          });
-        }}
+        onSubmit={handleSubmit}
       />
     </>
   );

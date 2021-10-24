@@ -14,6 +14,7 @@ import SaveButtonBar from "@saleor/components/SaveButtonBar";
 import { ShippingChannelsErrorFragment } from "@saleor/fragments/types/ShippingChannelsErrorFragment";
 import { ShippingErrorFragment } from "@saleor/fragments/types/ShippingErrorFragment";
 import { ShippingMethodFragment_postalCodeRules } from "@saleor/fragments/types/ShippingMethodFragment";
+import { SubmitPromise } from "@saleor/hooks/useForm";
 import { validatePrice } from "@saleor/products/utils/validation";
 import OrderValue from "@saleor/shipping/components/OrderValue";
 import OrderWeight from "@saleor/shipping/components/OrderWeight";
@@ -65,7 +66,7 @@ export interface ShippingZoneRatesPageProps
   postalCodeRules: ShippingZone_shippingZone_shippingMethods_postalCodeRules[];
   onBack: () => void;
   onDelete?: () => void;
-  onSubmit: (data: FormData) => void;
+  onSubmit: (data: FormData) => SubmitPromise;
   onPostalCodeInclusionChange: (
     inclusion: PostalCodeRuleInclusionTypeEnum
   ) => void;

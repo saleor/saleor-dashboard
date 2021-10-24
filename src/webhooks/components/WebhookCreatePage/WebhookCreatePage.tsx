@@ -7,6 +7,7 @@ import Grid from "@saleor/components/Grid";
 import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
 import { WebhookErrorFragment } from "@saleor/fragments/types/WebhookErrorFragment";
+import { SubmitPromise } from "@saleor/hooks/useForm";
 import { WebhookEventTypeEnum } from "@saleor/types/globalTypes";
 import WebhookEvents from "@saleor/webhooks/components/WebhookEvents";
 import WebhookInfo from "@saleor/webhooks/components/WebhookInfo";
@@ -14,7 +15,7 @@ import WebhookStatus from "@saleor/webhooks/components/WebhookStatus";
 import React from "react";
 import { useIntl } from "react-intl";
 
-export interface FormData {
+export interface WebhookCreateFormData {
   events: WebhookEventTypeEnum[];
   isActive: boolean;
   name: string;
@@ -29,7 +30,7 @@ export interface WebhookCreatePageProps {
   errors: WebhookErrorFragment[];
   saveButtonBarState: ConfirmButtonTransitionState;
   onBack: () => void;
-  onSubmit: (data: FormData) => void;
+  onSubmit: (data: WebhookCreateFormData) => SubmitPromise;
 }
 
 const WebhookCreatePage: React.FC<WebhookCreatePageProps> = ({
@@ -41,7 +42,7 @@ const WebhookCreatePage: React.FC<WebhookCreatePageProps> = ({
   onSubmit
 }) => {
   const intl = useIntl();
-  const initialForm: FormData = {
+  const initialForm: WebhookCreateFormData = {
     allEvents: false,
     events: [],
     isActive: false,

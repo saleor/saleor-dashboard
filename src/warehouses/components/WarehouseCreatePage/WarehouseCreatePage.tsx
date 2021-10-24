@@ -11,6 +11,7 @@ import { ShopInfo_shop_countries } from "@saleor/components/Shop/types/ShopInfo"
 import { AddressTypeInput } from "@saleor/customers/types";
 import { WarehouseErrorFragment } from "@saleor/fragments/types/WarehouseErrorFragment";
 import useAddressValidation from "@saleor/hooks/useAddressValidation";
+import { SubmitPromise } from "@saleor/hooks/useForm";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { sectionNames } from "@saleor/intl";
 import createSingleAutocompleteSelectHandler from "@saleor/utils/handlers/singleAutocompleteSelectChangeHandler";
@@ -29,7 +30,7 @@ export interface WarehouseCreatePageProps {
   errors: WarehouseErrorFragment[];
   saveButtonBarState: ConfirmButtonTransitionState;
   onBack: () => void;
-  onSubmit: (data: WarehouseCreatePageFormData) => void;
+  onSubmit: (data: WarehouseCreatePageFormData) => SubmitPromise;
 }
 
 const initialForm: WarehouseCreatePageFormData = {

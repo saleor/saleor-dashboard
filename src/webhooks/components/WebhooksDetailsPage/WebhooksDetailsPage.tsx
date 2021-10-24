@@ -7,7 +7,8 @@ import Grid from "@saleor/components/Grid";
 import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
 import { WebhookErrorFragment } from "@saleor/fragments/types/WebhookErrorFragment";
-import { getStringOrPlaceholder } from "@saleor/misc";
+import { SubmitPromise } from "@saleor/hooks/useForm";
+import { extractMutationErrors, getStringOrPlaceholder } from "@saleor/misc";
 import { WebhookEventTypeEnum } from "@saleor/types/globalTypes";
 import WebhookEvents from "@saleor/webhooks/components/WebhookEvents";
 import WebhookInfo from "@saleor/webhooks/components/WebhookInfo";
@@ -17,7 +18,9 @@ import { isUnnamed } from "@saleor/webhooks/utils";
 import React from "react";
 import { useIntl } from "react-intl";
 
-export interface FormData {
+import { WebhookCreateFormData } from "../WebhookCreatePage";
+
+export interface WebhookUpdateFormData {
   events: WebhookEventTypeEnum[];
   isActive: boolean;
   name: string;
@@ -33,7 +36,7 @@ export interface WebhooksDetailsPageProps {
   webhook: WebhookDetails_webhook;
   saveButtonBarState: ConfirmButtonTransitionState;
   onBack: () => void;
-  onSubmit: (data: FormData) => void;
+  onSubmit: (data: WebhookUpdateFormData) => SubmitPromise;
 }
 
 const WebhooksDetailsPage: React.FC<WebhooksDetailsPageProps> = ({
@@ -46,7 +49,7 @@ const WebhooksDetailsPage: React.FC<WebhooksDetailsPageProps> = ({
   onSubmit
 }) => {
   const intl = useIntl();
-  const initialForm: FormData = {
+  const initialForm: WebhookUpdateFormData = {
     allEvents: !!webhook?.events?.find(
       event => event.eventType === WebhookEventTypeEnum.ANY_EVENTS
     ),

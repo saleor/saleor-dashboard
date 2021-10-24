@@ -2,10 +2,13 @@ import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import useShop from "@saleor/hooks/useShop";
 import { commonMessages } from "@saleor/intl";
+import { extractMutationErrors } from "@saleor/misc";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import ShippingZoneCreatePage from "../components/ShippingZoneCreatePage";
+import ShippingZoneCreatePage, {
+  ShippingZoneCreateFormData
+} from "../components/ShippingZoneCreatePage";
 import { useShippingZoneCreate } from "../mutations";
 import { shippingZonesListUrl, shippingZoneUrl } from "../urls";
 
@@ -26,19 +29,23 @@ const ShippingZoneCreate: React.FC<{}> = () => {
       }
     }
   });
+
+  const handleSubmit = (data: ShippingZoneCreateFormData) =>
+    extractMutationErrors(
+      createShippingZone({
+        variables: {
+          input: data
+        }
+      })
+    );
+
   return (
     <ShippingZoneCreatePage
       countries={shop?.countries || []}
       disabled={createShippingZoneOpts.loading}
       errors={createShippingZoneOpts.data?.shippingZoneCreate.errors || []}
       onBack={() => navigate(shippingZonesListUrl())}
-      onSubmit={formData =>
-        createShippingZone({
-          variables: {
-            input: formData
-          }
-        })
-      }
+      onSubmit={handleSubmit}
       saveButtonBarState={createShippingZoneOpts.status}
     />
   );

@@ -19,6 +19,7 @@ import FormSpacer from "@saleor/components/FormSpacer";
 import Hr from "@saleor/components/Hr";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import { ShopInfo_shop_countries } from "@saleor/components/Shop/types/ShopInfo";
+import { SubmitPromise } from "@saleor/hooks/useForm";
 import { buttonMessages } from "@saleor/intl";
 import { makeStyles } from "@saleor/theme";
 import { filter } from "fuzzaldrin";
@@ -38,7 +39,7 @@ export interface ShippingZoneCountriesAssignDialogProps {
   isDefault: boolean;
   open: boolean;
   onClose: () => void;
-  onConfirm: (data: FormData) => void;
+  onConfirm: (data: FormData) => SubmitPromise;
 }
 
 const useStyles = makeStyles(
@@ -83,7 +84,7 @@ const ShippingZoneCountriesAssignDialog: React.FC<ShippingZoneCountriesAssignDia
   };
   return (
     <Dialog onClose={onClose} open={open} fullWidth maxWidth="sm">
-      <Form confirmLeave initial={initialForm} onSubmit={onConfirm}>
+      <Form initial={initialForm} onSubmit={onConfirm}>
         {({ data, change }) => {
           const countrySelectionMap = countries.reduce((acc, country) => {
             acc[country.code] = !!data.countries.find(

@@ -5,6 +5,7 @@ import Form from "@saleor/components/Form";
 import Grid from "@saleor/components/Grid";
 import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
+import { SubmitPromise } from "@saleor/hooks/useForm";
 import { sectionNames } from "@saleor/intl";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -14,7 +15,7 @@ import { CountryList_shop } from "../../types/CountryList";
 import CountryList from "../CountryList";
 import TaxConfiguration from "../TaxConfiguration";
 
-export interface FormData {
+export interface TaxesConfigurationFormData {
   includeTax: boolean;
   showGross: boolean;
   chargeTaxesOnShipping: boolean;
@@ -25,7 +26,7 @@ export interface CountryListPageProps {
   shop: CountryList_shop;
   onBack: () => void;
   onRowClick: (code: string) => void;
-  onSubmit: (data: FormData) => void;
+  onSubmit: (data: TaxesConfigurationFormData) => SubmitPromise;
   onTaxFetch: () => void;
 }
 
@@ -40,7 +41,7 @@ const CountryListPage: React.FC<CountryListPageProps> = ({
 }) => {
   const intl = useIntl();
 
-  const initialForm: FormData = {
+  const initialForm: TaxesConfigurationFormData = {
     chargeTaxesOnShipping: maybe(() => shop.chargeTaxesOnShipping, false),
     includeTax: maybe(() => shop.includeTaxesInPrices, false),
     showGross: maybe(() => shop.displayGrossPrices, false)
@@ -64,7 +65,7 @@ const CountryListPage: React.FC<CountryListPageProps> = ({
                 <TaxConfiguration
                   data={data}
                   disabled={disabled}
-                  onChange={event => change(event, submit)}
+                  onChange={event => change(event)}
                   onTaxFetch={onTaxFetch}
                 />
               </div>

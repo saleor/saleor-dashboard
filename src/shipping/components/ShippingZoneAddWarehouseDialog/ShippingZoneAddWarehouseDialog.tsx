@@ -17,6 +17,7 @@ import { ShopInfo_shop_countries } from "@saleor/components/Shop/types/ShopInfo"
 import { AddressTypeInput } from "@saleor/customers/types";
 import { WarehouseErrorFragment } from "@saleor/fragments/types/WarehouseErrorFragment";
 import useAddressValidation from "@saleor/hooks/useAddressValidation";
+import { SubmitPromise } from "@saleor/hooks/useForm";
 import useModalDialogErrors from "@saleor/hooks/useModalDialogErrors";
 import useModalDialogOpen from "@saleor/hooks/useModalDialogOpen";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
@@ -37,7 +38,7 @@ export interface ShippingZoneAddWarehouseDialogProps extends DialogProps {
   countries: ShopInfo_shop_countries[];
   disabled: boolean;
   errors: WarehouseErrorFragment[];
-  onSubmit: (data: ShippingZoneAddWarehouseDialogSubmitData) => void;
+  onSubmit: (data: ShippingZoneAddWarehouseDialogSubmitData) => SubmitPromise;
 }
 
 const initialForm: ShippingZoneAddWarehouseDialogSubmitData = {
@@ -104,7 +105,7 @@ const ShippingZoneAddWarehouseDialog: React.FC<ShippingZoneAddWarehouseDialogPro
           description="header, dialog"
         />
       </DialogTitle>
-      <Form confirmLeave initial={initialForm} onSubmit={handleSubmit}>
+      <Form initial={initialForm} onSubmit={handleSubmit}>
         {({ change, data }) => {
           const handleCountrySelect = createSingleAutocompleteSelectHandler(
             change,
