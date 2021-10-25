@@ -91,6 +91,10 @@ export function createFilterStructure(
           {
             label: intl.formatMessage(orderStatusMessages.readyToFulfill),
             value: OrderStatusFilter.READY_TO_FULFILL
+          },
+          {
+            label: intl.formatMessage(orderStatusMessages.overpaid),
+            value: OrderStatusFilter.OVERPAID
           }
         ]
       ),
