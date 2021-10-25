@@ -1,5 +1,20 @@
 import { ProductFieldEnum } from "@saleor/types/globalTypes";
-import { useIntl } from "react-intl";
+import { defineMessages, useIntl } from "react-intl";
+
+export const productExportDialogMessages = defineMessages({
+  title: {
+    defaultMessage: "Export Information",
+    description: "export products to csv file, dialog header"
+  },
+  confirmButtonLabel: {
+    defaultMessage: "export products",
+    description: "export products to csv file, button"
+  },
+  productsLabel: {
+    defaultMessage: "products",
+    description: "products export type label"
+  }
+});
 
 function useProductExportFieldMessages() {
   const intl = useIntl();

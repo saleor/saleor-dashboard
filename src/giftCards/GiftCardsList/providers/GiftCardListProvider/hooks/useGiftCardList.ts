@@ -19,10 +19,12 @@ const useGiftCardList = (): UseGiftCardListProps => {
     params,
     settings,
     updateListSettings,
-    numberOfColumns
+    numberOfColumns,
+    totalCount
   } = useContext(GiftCardsListContext);
 
   return {
+    totalCount,
     giftCards,
     loading,
     pageInfo,

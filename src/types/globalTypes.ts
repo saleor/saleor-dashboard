@@ -2173,6 +2173,13 @@ export interface DraftOrderInput {
   redirectUrl?: string | null;
 }
 
+export interface ExportGiftCardsInput {
+  scope: ExportScope;
+  filter?: GiftCardFilterInput | null;
+  ids?: string[] | null;
+  fileType: FileTypesEnum;
+}
+
 export interface ExportInfoInput {
   attributes?: string[] | null;
   warehouses?: string[] | null;
