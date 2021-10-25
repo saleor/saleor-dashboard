@@ -1,6 +1,8 @@
 import HorizontalSpacer from "@saleor/apps/components/HorizontalSpacer";
 import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
+
+import ExtendedPageHeader from "../ExtendedPageHeader";
 export interface PageTitleWithStatusChipProps {
   title: string;
 }
@@ -22,11 +24,15 @@ const PageTitleWithStatusChip: React.FC<PageTitleWithStatusChipProps> = ({
   const classes = useStyles({});
 
   return (
-    <div className={classes.container}>
-      {title}
-      <HorizontalSpacer spacing={2} />
-      {children}
-    </div>
+    <ExtendedPageHeader
+      title={title}
+      childrenWrapperClassName={classes.container}
+    >
+      <>
+        <HorizontalSpacer spacing={2} />
+        {children}
+      </>
+    </ExtendedPageHeader>
   );
 };
 
