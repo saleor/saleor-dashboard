@@ -72,17 +72,24 @@ const RefundAmountInput: React.FC<RefundAmountInputProps> = props => {
   const amountTooBig =
     Number(currentPayment?.value) > payment.availableRefundAmount?.amount;
   const amountTooSmall =
-    currentPayment?.value && Number(currentPayment?.value) <= 0;
+    currentPayment?.value && Number(currentPayment.value) <= 0;
 
   const formErrors = getFormErrors(["paymentsToRefund"], errors);
   const isError =
     !!formErrors.paymentsToRefund || amountTooSmall || amountTooBig;
 
-  const getHintText = (): string =>
-    getOrderErrorMessage(formErrors.paymentsToRefund, intl) ||
-    (amountTooSmall && intl.formatMessage(messages.amountTooSmall)) ||
-    (amountTooBig && intl.formatMessage(messages.amountTooBig)) ||
-    "";
+  const getHintText = (): string => {
+    if (formErrors.paymentsToRefund) {
+      return getOrderErrorMessage(formErrors.paymentsToRefund, intl);
+    }
+    if (amountTooSmall) {
+      return intl.formatMessage(messages.amountTooSmall);
+    }
+    if (amountTooBig) {
+      return intl.formatMessage(messages.amountTooBig);
+    }
+    return "";
+  };
 
   return (
     <PriceField
