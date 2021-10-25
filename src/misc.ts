@@ -264,6 +264,10 @@ export const orderStatusMessages = defineMessages({
   unfulfilled: {
     defaultMessage: "Unfulfilled",
     description: "order status"
+  },
+  overpaid: {
+    defaultMessage: "Overpaid",
+    description: "order status"
   }
 });
 

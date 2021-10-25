@@ -4841,6 +4841,10 @@
     "context": "order returned success message",
     "string": "Successfully returned products!"
   },
+  "src_dot_overpaid": {
+    "context": "order status",
+    "string": "Overpaid"
+  },
   "src_dot_pageTypes": {
     "context": "page types section name",
     "string": "Page Types"
