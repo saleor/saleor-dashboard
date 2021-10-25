@@ -210,13 +210,14 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
           triggerChange
         );
         const formDisabled =
-          data.discountType.toString() !== "SHIPPING" &&
-          data.channelListings?.some(
-            channel =>
-              validatePrice(channel.discountValue) ||
-              (data.requirementsPicker === RequirementsPicker.ORDER &&
-                validatePrice(channel.minSpent))
-          );
+          (data.discountType.toString() !== "SHIPPING" &&
+            data.channelListings?.some(
+              channel =>
+                validatePrice(channel.discountValue) ||
+                (data.requirementsPicker === RequirementsPicker.ORDER &&
+                  validatePrice(channel.minSpent))
+            )) ||
+          data.usageLimit <= 0;
         const changeMetadata = makeMetadataChangeHandler(change);
 
         return (

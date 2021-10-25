@@ -46,7 +46,7 @@ const VoucherLimits = ({
           <Grid variant="uniform">
             <TextField
               disabled={disabled}
-              error={!!formErrors.usageLimit}
+              error={!!formErrors.usageLimit || data.usageLimit <= 0}
               helperText={getDiscountErrorMessage(formErrors.usageLimit, intl)}
               label={intl.formatMessage(messages.usageLimit)}
               name={"usageLimit" as keyof VoucherDetailsPageFormData}
@@ -54,14 +54,14 @@ const VoucherLimits = ({
               onChange={onChange}
               type="number"
               inputProps={{
-                min: 0
+                min: 1
               }}
             />
             <div className={classes.usesLeftLabelWrapper}>
               <Typography variant="caption">
                 {intl.formatMessage(messages.usesLeftCaption)}
               </Typography>
-              <Typography>{usesLeft}</Typography>
+              <Typography>{usesLeft >= 0 ? usesLeft : 0}</Typography>
             </div>
           </Grid>
         )}
