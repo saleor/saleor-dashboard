@@ -1,7 +1,6 @@
 import { DialogContentText, IconButton } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
 import ActionDialog from "@saleor/components/ActionDialog";
-import { DEFAULT_INITIAL_PAGINATION_DATA } from "@saleor/config";
 import { configurationMenuUrl } from "@saleor/configuration";
 import useBulkActions from "@saleor/hooks/useBulkActions";
 import useListSettings from "@saleor/hooks/useListSettings";
@@ -56,13 +55,7 @@ export const ShippingZonesList: React.FC<ShippingZonesListProps> = ({
     ListViews.SHIPPING_METHODS_LIST
   );
 
-  usePaginationReset(
-    shippingZonesListUrl({
-      ...params,
-      ...DEFAULT_INITIAL_PAGINATION_DATA
-    }),
-    settings.rowNumber
-  );
+  usePaginationReset(shippingZonesListUrl, params, settings.rowNumber);
 
   const intl = useIntl();
 
