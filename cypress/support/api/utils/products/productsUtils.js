@@ -1,3 +1,4 @@
+import { returnValueDependsOnShopVersion } from "../../../formatData/dataDependingOnVersion";
 import * as attributeRequest from "../../requests/Attribute";
 import * as categoryRequest from "../../requests/Category";
 import { createCollection } from "../../requests/Collections";
@@ -5,7 +6,8 @@ import * as productRequest from "../../requests/Product";
 import {
   createTypeProduct,
   deleteProductType,
-  getProductTypes
+  getProductTypes,
+  productAttributeAssignmentUpdate
 } from "../../requests/ProductType";
 import { deleteAttributesStartsWith } from "../attributes/attributeUtils";
 import { deleteCollectionsStartsWith } from "../catalog/collectionsUtils";
@@ -84,6 +86,13 @@ export function createTypeAttributeAndCategoryForProduct({
     })
     .then(productTypeResp => {
       productType = productTypeResp;
+      const updateAssign = returnValueDependsOnShopVersion("3.1", true, false);
+      if (updateAssign) {
+        updateAssign({
+          productTypeId: productType.id,
+          attributeId: attribute.id
+        });
+      }
       categoryRequest.createCategory(name);
     })
     .then(categoryResp => {
