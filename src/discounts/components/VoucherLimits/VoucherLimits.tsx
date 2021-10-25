@@ -16,14 +16,18 @@ interface VoucherLimitsProps {
   data: VoucherDetailsPageFormData;
   disabled: boolean;
   errors: DiscountErrorFragment[];
+  initialUsageLimit: number;
   onChange: (event: React.ChangeEvent<any>) => void;
+  setData: (data: Partial<VoucherDetailsPageFormData>) => void;
 }
 
 const VoucherLimits = ({
   data,
   disabled,
   errors,
-  onChange
+  initialUsageLimit,
+  onChange,
+  setData
 }: VoucherLimitsProps) => {
   const intl = useIntl();
   const classes = useStyles();
@@ -40,7 +44,10 @@ const VoucherLimits = ({
           checked={data.hasUsageLimit}
           label={intl.formatMessage(messages.hasUsageLimit)}
           name={"hasUsageLimit" as keyof VoucherDetailsPageFormData}
-          onChange={onChange}
+          onChange={evt => {
+            onChange(evt);
+            setData({ usageLimit: initialUsageLimit });
+          }}
         />
         {data.hasUsageLimit && (
           <Grid variant="uniform">

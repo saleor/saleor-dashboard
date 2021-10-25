@@ -105,7 +105,7 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
 
   return (
     <Form initial={initialForm} onSubmit={onSubmit}>
-      {({ change, data, hasChanged, submit, triggerChange }) => {
+      {({ change, data, hasChanged, submit, triggerChange, set }) => {
         const handleDiscountTypeChange = createDiscountTypeChangeHandler(
           change
         );
@@ -175,9 +175,11 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
                 <CardSpacer />
                 <VoucherLimits
                   data={data}
+                  initialUsageLimit={initialForm.usageLimit}
                   disabled={disabled}
                   errors={errors}
                   onChange={change}
+                  setData={set}
                 />
                 <CardSpacer />
                 <VoucherDates
