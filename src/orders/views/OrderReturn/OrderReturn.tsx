@@ -50,7 +50,7 @@ const OrderReturn: React.FC<OrderReturnProps> = ({ orderId }) => {
     onCompleted: ({
       orderFulfillmentReturnProducts: { errors, replaceOrder }
     }) => {
-      if (!errors?.length) {
+      if (!errors.length) {
         notify({
           status: "success",
           text: intl.formatMessage(messages.successAlert)
