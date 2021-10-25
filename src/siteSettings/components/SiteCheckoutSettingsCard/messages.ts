@@ -23,7 +23,7 @@ export const messages = defineMessages({
     description: "input label"
   },
   checkoutLineLimit: {
-    defaultMessage: "Checkout line limit.",
+    defaultMessage: "Checkout line limit",
     description: "input label"
   },
   stockWillNotBeReserved: {
