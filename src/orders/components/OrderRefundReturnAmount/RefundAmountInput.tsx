@@ -8,6 +8,7 @@ import React from "react";
 import { defineMessages, useIntl } from "react-intl";
 
 import { OrderRefundFormData } from "../OrderRefundPage/form";
+import { getById } from "../OrderReturnPage/utils";
 
 const useStyles = makeStyles(
   theme => ({
@@ -68,7 +69,7 @@ const RefundAmountInput: React.FC<RefundAmountInputProps> = props => {
   const intl = useIntl();
   const classes = useStyles(props);
   const maxRefund = payment.availableRefundAmount;
-  const currentPayment = data.paymentsToRefund?.find(p => p.id === payment.id);
+  const currentPayment = data.paymentsToRefund?.find(getById(payment.id));
   const amountTooBig =
     Number(currentPayment?.value) > payment.availableRefundAmount?.amount;
   const amountTooSmall =

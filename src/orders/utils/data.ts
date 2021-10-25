@@ -1,5 +1,8 @@
 import { IMoney, subtractMoney } from "@saleor/components/Money";
-import { FormsetData } from "@saleor/hooks/useFormset";
+import useFormset, {
+  FormsetData,
+  UseFormsetOutput
+} from "@saleor/hooks/useFormset";
 
 import {
   LineItemData,
@@ -215,5 +218,20 @@ export function getPaymentsTotalAmount(
   return paymentsToRefund.reduce(
     (sum, payment) => sum + Number(payment.value || 0),
     0
+  );
+}
+
+export function getPaymentsToRefund(
+  order: OrderRefundData_order
+): UseFormsetOutput<null, string> {
+  return useFormset<null, string>(
+    order?.payments
+      .filter(payment => payment.availableRefundAmount?.amount > 0)
+      .map(payment => ({
+        data: null,
+        id: payment.id,
+        label: null,
+        value: ""
+      }))
   );
 }

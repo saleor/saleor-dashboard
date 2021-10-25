@@ -4,6 +4,7 @@ import useFormset, {
   FormsetData
 } from "@saleor/hooks/useFormset";
 import { OrderRefundData_order } from "@saleor/orders/types/OrderRefundData";
+import { getPaymentsToRefund } from "@saleor/orders/utils/data";
 import handleFormSubmit from "@saleor/utils/handlers/handleFormSubmit";
 import React from "react";
 
@@ -103,16 +104,7 @@ function useOrderRefundForm(
       )
   );
 
-  const paymentsToRefund = useFormset<null, string>(
-    order?.payments
-      .filter(payment => payment.availableRefundAmount?.amount > 0)
-      .map(payment => ({
-        data: null,
-        id: payment.id,
-        label: null,
-        value: ""
-      }))
-  );
+  const paymentsToRefund = getPaymentsToRefund(order);
 
   const handleChange: FormChange = (event, cb) => {
     form.change(event, cb);

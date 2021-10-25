@@ -4,6 +4,7 @@ import useFormset, {
   FormsetData
 } from "@saleor/hooks/useFormset";
 import { OrderDetails_order } from "@saleor/orders/types/OrderDetails";
+import { getPaymentsToRefund } from "@saleor/orders/utils/data";
 import { FulfillmentStatus } from "@saleor/types/globalTypes";
 import handleFormSubmit from "@saleor/utils/handlers/handleFormSubmit";
 import React, { useState } from "react";
@@ -80,16 +81,7 @@ function useOrderReturnForm(
   const form = useForm(getOrderRefundPageFormData());
   const [hasChanged, setHasChanged] = useState(false);
 
-  const paymentsToRefund = useFormset<null, string>(
-    order?.payments
-      .filter(payment => payment.availableRefundAmount?.amount > 0)
-      .map(payment => ({
-        data: null,
-        id: payment.id,
-        label: null,
-        value: ""
-      }))
-  );
+  const paymentsToRefund = getPaymentsToRefund(order);
 
   const handleChange: FormChange = (event, cb) => {
     form.change(event, cb);
@@ -194,11 +186,6 @@ function useOrderReturnForm(
     fulfiledItemsQuatities.set(newQuantities);
   };
 
-  const handlePaymentAmountChange = (id: string, value: string) => {
-    triggerChange();
-    paymentsToRefund.change(id, value);
-  };
-
   const data: OrderReturnFormData = {
     fulfilledItemsQuantities: fulfiledItemsQuatities.data,
     itemsToBeReplaced: itemsToBeReplaced.data,
@@ -231,7 +218,7 @@ function useOrderReturnForm(
       ),
       handleSetMaximalFulfiledItemsQuantities,
       handleSetMaximalUnfulfiledItemsQuantities,
-      changePaymentAmount: handlePaymentAmountChange
+      changePaymentAmount: handleHandlerChange(paymentsToRefund.change)
     },
     hasChanged,
     submit

@@ -229,26 +229,30 @@ export const getRefundProductsAmountValues = (
     paymentsToRefund
   );
 
+const calcPaymentAmount = (
+  remainingAmount: number,
+  capturedAmount: number
+): number => {
+  if (remainingAmount >= capturedAmount) {
+    return capturedAmount;
+  }
+  return remainingAmount > 0 ? remainingAmount : 0;
+};
+
 export const getPaymentsAmount = (
   refundTotalAmount: IMoney,
   payments: OrderRefundData_order_payments[]
-) => {
+): IMoney[] => {
   if (!payments) {
     return [];
   }
 
   let remainingAmount = refundTotalAmount?.amount ?? 0;
+  return payments.map(({ capturedAmount }) => {
+    const amount = calcPaymentAmount(remainingAmount, capturedAmount.amount);
 
-  return payments.map(({ id, capturedAmount }) => {
-    const amount =
-      remainingAmount >= capturedAmount.amount
-        ? capturedAmount.amount
-        : remainingAmount;
-
-    remainingAmount = remainingAmount - amount;
-
+    remainingAmount -= amount;
     return {
-      id,
       amount,
       currency: capturedAmount.currency
     };

@@ -79,13 +79,14 @@ const OrderPaymentDetails: React.FC<OrderPaymentDetailsProps> = props => {
                     <FormattedMessage {...messages.preauthorizedAmount} />
                   </td>
                   <td className={classes.textRight}>
-                    {payment.availableCaptureAmount ? (
-                      <Money money={payment.availableCaptureAmount} />
-                    ) : (
-                      <Money
-                        money={{ amount: 0, currency: payment.total.currency }}
-                      />
-                    )}
+                    <Money
+                      money={
+                        payment.availableCaptureAmount || {
+                          amount: 0,
+                          currency: payment.total.currency
+                        }
+                      }
+                    />
                   </td>
                 </tr>
                 <tr>
