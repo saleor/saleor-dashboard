@@ -1,7 +1,6 @@
 import { stripeConfirmationUrl, urlList } from "../../../fixtures/urlList";
 import { getValueWithDefault } from "./utils/Utils";
 
-// TODO - remove secretKey and add in github to secrets
 const stripeAuthBearer = `Bearer ${Cypress.env("STRIPE_SECRET_KEY")}`;
 const stripePublicKey = Cypress.env("STRIPE_PUBLIC_KEY");
 
