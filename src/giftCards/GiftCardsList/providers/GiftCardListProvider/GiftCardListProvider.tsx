@@ -36,6 +36,7 @@ export interface GiftCardListDataProps {
   params: GiftCardListUrlQueryParams;
   paginationState: PaginationState;
   numberOfColumns: number;
+  totalCount: number;
 }
 
 export interface GiftCardsListConsumerProps
@@ -80,6 +81,7 @@ export const GiftCardsListProvider: React.FC<GiftCardsListProviderProps> = ({
 
   const providerValues: GiftCardsListConsumerProps = {
     giftCards,
+    totalCount: data?.giftCards?.totalCount || 0,
     loading,
     isSelected,
     listElements,

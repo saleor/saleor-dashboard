@@ -3594,6 +3594,34 @@
     "context": "issue gift card dialog title",
     "string": "Issue gift card"
   },
+  "src_dot_giftCards_dot_GiftCardExportDialog_dot_2086397658": {
+    "context": "export all items to csv file",
+    "string": "All gift cards ({number})"
+  },
+  "src_dot_giftCards_dot_GiftCardExportDialog_dot_701638571": {
+    "context": "export selected items to csv file",
+    "string": "Selected giftCards ({number})"
+  },
+  "src_dot_giftCards_dot_GiftCardExportDialog_dot_confirmButtonLabel": {
+    "context": "gift card export dialog confirm button label",
+    "string": "Export codes"
+  },
+  "src_dot_giftCards_dot_GiftCardExportDialog_dot_exportTypeLabel": {
+    "context": "gift card export type label",
+    "string": "gift cards"
+  },
+  "src_dot_giftCards_dot_GiftCardExportDialog_dot_successAlertDescription": {
+    "context": "gift card export success alert description",
+    "string": "We are currently exporting your gift card codes. As soon as your file is available it will be sent to your email address"
+  },
+  "src_dot_giftCards_dot_GiftCardExportDialog_dot_successAlertTitle": {
+    "context": "gift card export success alert title",
+    "string": "Exporting CSV"
+  },
+  "src_dot_giftCards_dot_GiftCardExportDialog_dot_title": {
+    "context": "gift card export dialog title",
+    "string": "Export Gift Card Codes"
+  },
   "src_dot_giftCards_dot_GiftCardSettings_dot_GiftCardExpirySettingsCard_dot_expiryDateSectionDescription": {
     "string": "You can set gift cards to expire after a certain time after their purchase. Remember that in some countries, gift cards expiry is prohibited by law."
   },
@@ -5879,15 +5907,15 @@
     "string": "SEO Information"
   },
   "src_dot_products_dot_components_dot_ProductExportDialog_dot_2167661409": {
-    "context": "export selected products to csv file",
+    "context": "export selected items to csv file",
     "string": "Selected products ({number})"
   },
   "src_dot_products_dot_components_dot_ProductExportDialog_dot_2318723509": {
-    "context": "export products to csv file, choice field label",
+    "context": "export items to csv file, choice field label",
     "string": "Export information for:"
   },
   "src_dot_products_dot_components_dot_ProductExportDialog_dot_2355065897": {
-    "context": "export all products to csv file",
+    "context": "export all items to csv file",
     "string": "All products ({number})"
   },
   "src_dot_products_dot_components_dot_ProductExportDialog_dot_2474350154": {
@@ -5899,16 +5927,8 @@
     "string": "Information exported"
   },
   "src_dot_products_dot_components_dot_ProductExportDialog_dot_2693217446": {
-    "context": "export products as csv or spreadsheet file",
+    "context": "export items as csv or spreadsheet file",
     "string": "Export as:"
-  },
-  "src_dot_products_dot_components_dot_ProductExportDialog_dot_2883720012": {
-    "context": "export products to csv file, button",
-    "string": "export products"
-  },
-  "src_dot_products_dot_components_dot_ProductExportDialog_dot_3012202273": {
-    "context": "export products to csv file, dialog header",
-    "string": "Export Information"
   },
   "src_dot_products_dot_components_dot_ProductExportDialog_dot_3365843236": {
     "context": "product export to csv file, header",
@@ -5919,7 +5939,7 @@
     "string": "Select All"
   },
   "src_dot_products_dot_components_dot_ProductExportDialog_dot_3518309850": {
-    "context": "export products as spreadsheet",
+    "context": "export items as spreadsheet",
     "string": "Spreadsheet for Excel, Numbers etc."
   },
   "src_dot_products_dot_components_dot_ProductExportDialog_dot_3599582104": {
@@ -5933,7 +5953,7 @@
     "string": "Inventory Information"
   },
   "src_dot_products_dot_components_dot_ProductExportDialog_dot_4118932547": {
-    "context": "export products as csv file",
+    "context": "export items as csv file",
     "string": "Plain CSV file"
   },
   "src_dot_products_dot_components_dot_ProductExportDialog_dot_472026385": {
@@ -5945,12 +5965,24 @@
     "string": "Search by attribute name"
   },
   "src_dot_products_dot_components_dot_ProductExportDialog_dot_700651641": {
-    "context": "export filtered products to csv file",
+    "context": "export filtered items to csv file",
     "string": "Current search ({number})"
   },
   "src_dot_products_dot_components_dot_ProductExportDialog_dot_734825715": {
     "context": "informations about product prices etc, header",
     "string": "Financial Information"
+  },
+  "src_dot_products_dot_components_dot_ProductExportDialog_dot_confirmButtonLabel": {
+    "context": "export products to csv file, button",
+    "string": "export products"
+  },
+  "src_dot_products_dot_components_dot_ProductExportDialog_dot_productsLabel": {
+    "context": "products export type label",
+    "string": "products"
+  },
+  "src_dot_products_dot_components_dot_ProductExportDialog_dot_title": {
+    "context": "export products to csv file, dialog header",
+    "string": "Export Information"
   },
   "src_dot_products_dot_components_dot_ProductExternalMediaDialog_dot_4146081479": {
     "context": "modal header",
