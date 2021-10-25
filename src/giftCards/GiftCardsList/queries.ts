@@ -5,6 +5,7 @@ import gql from "graphql-tag";
 
 import { GiftCardList, GiftCardListVariables } from "./types/GiftCardList";
 import { GiftCardProductsCount } from "./types/GiftCardProductsCount";
+import { GiftCardTotalCount } from "./types/GiftCardTotalCount";
 
 export const giftCardList = gql`
   ${fragmentUserBase}
@@ -43,6 +44,7 @@ export const giftCardList = gql`
           }
         }
       }
+      totalCount
       pageInfo {
         endCursor
         hasNextPage
@@ -52,6 +54,18 @@ export const giftCardList = gql`
     }
   }
 `;
+
+export const giftCardTotalCount = gql`
+  query GiftCardTotalCount {
+    giftCards {
+      totalCount
+    }
+  }
+`;
+
+export const useGiftCardTotalCountQuery = makeQuery<GiftCardTotalCount, {}>(
+  giftCardTotalCount
+);
 
 export const useGiftCardListQuery = makeQuery<
   GiftCardList,
