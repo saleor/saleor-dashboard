@@ -96,7 +96,7 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
     startDate: "",
     startTime: "",
     type: VoucherTypeEnum.ENTIRE_ORDER,
-    usageLimit: 0,
+    usageLimit: 1,
     used: 0,
     value: 0,
     metadata: [],
@@ -180,6 +180,7 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
                   errors={errors}
                   onChange={change}
                   setData={set}
+                  isNewVoucher
                 />
                 <CardSpacer />
                 <VoucherDates

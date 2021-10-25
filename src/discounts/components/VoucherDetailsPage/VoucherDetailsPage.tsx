@@ -192,7 +192,7 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
     startDate: splitDateTime(voucher?.startDate ?? "").date,
     startTime: splitDateTime(voucher?.startDate ?? "").time,
     type: voucher?.type ?? VoucherTypeEnum.ENTIRE_ORDER,
-    usageLimit: voucher?.usageLimit ?? 0,
+    usageLimit: voucher?.usageLimit ?? 1,
     used: voucher?.used ?? 0,
     metadata: voucher?.metadata.map(mapMetadataItemToInput),
     privateMetadata: voucher?.privateMetadata.map(mapMetadataItemToInput)
@@ -406,6 +406,7 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
                   errors={errors}
                   onChange={change}
                   setData={set}
+                  isNewVoucher={false}
                 />
                 <CardSpacer />
                 <DiscountDates

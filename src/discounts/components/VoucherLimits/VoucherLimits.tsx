@@ -19,6 +19,7 @@ interface VoucherLimitsProps {
   initialUsageLimit: number;
   onChange: (event: React.ChangeEvent<any>) => void;
   setData: (data: Partial<VoucherDetailsPageFormData>) => void;
+  isNewVoucher: boolean;
 }
 
 const VoucherLimits = ({
@@ -27,7 +28,8 @@ const VoucherLimits = ({
   errors,
   initialUsageLimit,
   onChange,
-  setData
+  setData,
+  isNewVoucher
 }: VoucherLimitsProps) => {
   const intl = useIntl();
   const classes = useStyles();
@@ -49,8 +51,8 @@ const VoucherLimits = ({
             setData({ usageLimit: initialUsageLimit });
           }}
         />
-        {data.hasUsageLimit && (
-          <Grid variant="uniform">
+        {data.hasUsageLimit &&
+          (isNewVoucher ? (
             <TextField
               disabled={disabled}
               error={!!formErrors.usageLimit || data.usageLimit <= 0}
@@ -60,18 +62,37 @@ const VoucherLimits = ({
               value={data.usageLimit}
               onChange={onChange}
               type="number"
+              fullWidth
               inputProps={{
                 min: 1
               }}
             />
-            <div className={classes.usesLeftLabelWrapper}>
-              <Typography variant="caption">
-                {intl.formatMessage(messages.usesLeftCaption)}
-              </Typography>
-              <Typography>{usesLeft >= 0 ? usesLeft : 0}</Typography>
-            </div>
-          </Grid>
-        )}
+          ) : (
+            <Grid variant="uniform">
+              <TextField
+                disabled={disabled}
+                error={!!formErrors.usageLimit || data.usageLimit <= 0}
+                helperText={getDiscountErrorMessage(
+                  formErrors.usageLimit,
+                  intl
+                )}
+                label={intl.formatMessage(messages.usageLimit)}
+                name={"usageLimit" as keyof VoucherDetailsPageFormData}
+                value={data.usageLimit}
+                onChange={onChange}
+                type="number"
+                inputProps={{
+                  min: 1
+                }}
+              />
+              <div className={classes.usesLeftLabelWrapper}>
+                <Typography variant="caption">
+                  {intl.formatMessage(messages.usesLeftCaption)}
+                </Typography>
+                <Typography>{usesLeft >= 0 ? usesLeft : 0}</Typography>
+              </div>
+            </Grid>
+          ))}
         <ControlledCheckbox
           checked={data.applyOncePerCustomer}
           label={intl.formatMessage(messages.applyOncePerCustomer)}
