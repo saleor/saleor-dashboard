@@ -96,13 +96,7 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
     ListViews.PRODUCT_LIST
   );
 
-  usePaginationReset(
-    productListUrl({
-      ...params,
-      ...DEFAULT_INITIAL_PAGINATION_DATA
-    }),
-    settings.rowNumber
-  );
+  usePaginationReset(productListUrl, params, settings.rowNumber);
 
   const intl = useIntl();
   const {
