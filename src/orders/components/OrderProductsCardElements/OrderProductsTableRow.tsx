@@ -104,25 +104,20 @@ const TableLine: React.FC<TableLineProps> = ({
         className={classes.colName}
         thumbnail={maybe(() => line.orderLine.thumbnail.url)}
         badge={
-          isDeleted ? (
-            isFulfilled ? (
-              <StatusBadge
-                variant="warning"
-                description={intl.formatMessage(
-                  messages.fulfilledVariantDeleted
-                )}
-              />
-            ) : (
-              <StatusBadge
-                variant="error"
-                description={intl.formatMessage(
-                  messages.unfulfilledVariantDeleted
-                )}
-              />
-            )
+          isDeleted &&
+          (isFulfilled ? (
+            <StatusBadge
+              variant="warning"
+              description={intl.formatMessage(messages.fulfilledVariantDeleted)}
+            />
           ) : (
-            undefined
-          )
+            <StatusBadge
+              variant="error"
+              description={intl.formatMessage(
+                messages.unfulfilledVariantDeleted
+              )}
+            />
+          ))
         }
       >
         {maybe(() => line.orderLine.productName) || <Skeleton />}
