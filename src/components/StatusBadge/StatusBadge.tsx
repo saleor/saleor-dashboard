@@ -7,6 +7,9 @@ import { makeStyles } from "@saleor/macaw-ui";
 
 export const useStyles = makeStyles(
   () => ({
+    badgeContainer: {
+      marginRight: "1rem"
+    },
     iconContainer: {
       height: 40,
       width: 40
@@ -36,7 +39,7 @@ export const StatusBadge: React.FC<StatusBadgeProps> = ({
   const classes = useStyles();
 
   return (
-    <div style={{ marginRight: "1rem" }}>
+    <div className={classes.badgeContainer}>
       <Tooltip title={description} variant={variant}>
         <div className={classes.iconContainer}>{getIcon(variant)}</div>
       </Tooltip>
