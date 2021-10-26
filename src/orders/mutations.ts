@@ -349,7 +349,7 @@ const orderRefundMutation = gql`
   mutation OrderRefund(
     $id: ID!
     $amount: PositiveDecimal
-    $paymentsToRefund: [OrderPaymentToRefundInput]
+    $paymentsToRefund: [OrderPaymentToRefundInput!]
   ) {
     orderRefund(id: $id, amount: $amount, paymentsToRefund: $paymentsToRefund) {
       errors {

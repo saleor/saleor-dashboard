@@ -3585,7 +3585,7 @@ type Mutation {
   orderLineDiscountUpdate(input: OrderDiscountCommonInput!, orderLineId: ID!): OrderLineDiscountUpdate
   orderLineDiscountRemove(orderLineId: ID!): OrderLineDiscountRemove
   orderMarkAsPaid(id: ID!, transactionReference: String): OrderMarkAsPaid
-  orderRefund(amount: PositiveDecimal, id: ID!, paymentsToRefund: [OrderPaymentToRefundInput]): OrderRefund
+  orderRefund(amount: PositiveDecimal, id: ID!, paymentsToRefund: [OrderPaymentToRefundInput!]): OrderRefund
   orderUpdate(id: ID!, input: OrderUpdateInput!): OrderUpdate
   orderUpdateShipping(order: ID!, input: OrderUpdateShippingInput): OrderUpdateShipping
   orderVoid(id: ID!): OrderVoid
@@ -3943,8 +3943,7 @@ enum OrderErrorCode {
   PAYMENTS_DO_NOT_BELONG_TO_ORDER
   ORDER_HAS_MULTIPLE_PAYMENTS
   TOO_MANY_OR_NONE_FIELDS_SPECIFIED
-  AMOUNT_TO_REFUND_TOO_BIG
-  AMOUNT_TO_CAPTURE_TOO_BIG
+  AMOUNT_TOO_HIGH
 }
 
 type OrderEvent implements Node {
@@ -4208,7 +4207,7 @@ input OrderRefundLineInput {
 input OrderRefundProductsInput {
   orderLines: [OrderRefundLineInput!]
   fulfillmentLines: [OrderRefundFulfillmentLineInput!]
-  paymentsToRefund: [PaymentToRefundInput]
+  paymentsToRefund: [PaymentToRefundInput!]
   amountToRefund: PositiveDecimal
   includeShippingCosts: Boolean = false
 }
@@ -4228,7 +4227,7 @@ input OrderReturnLineInput {
 input OrderReturnProductsInput {
   orderLines: [OrderReturnLineInput!]
   fulfillmentLines: [OrderReturnFulfillmentLineInput!]
-  paymentsToRefund: [PaymentToRefundInput]
+  paymentsToRefund: [PaymentToRefundInput!]
   amountToRefund: PositiveDecimal
   includeShippingCosts: Boolean = false
   refund: Boolean = false
@@ -4598,7 +4597,7 @@ type Payment implements Node {
   pspReference: String
   chargeStatus: PaymentChargeStatusEnum!
   actions: [OrderAction]!
-  partial: Boolean
+  partial: Boolean!
   total: Money
   capturedAmount: Money
   transactions: [Transaction]
