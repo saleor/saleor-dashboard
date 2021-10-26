@@ -26,6 +26,7 @@ import { useGiftCardTotalCountQuery } from "../GiftCardsList/queries";
 import { giftCardExportDialogMessages as messages } from "./messages";
 import { useGiftCardExportMutation } from "./mutations";
 import { ExportGiftCards } from "./types/ExportGiftCards";
+import { getExportGiftCardsInput } from "./utils";
 
 const GiftCardExportDialog: React.FC<DialogProps & {
   idsToExport?: string[] | null;
@@ -34,7 +35,7 @@ const GiftCardExportDialog: React.FC<DialogProps & {
   const notify = useNotifier();
   const { queue } = useBackgroundTask();
 
-  const hasIdsToExport = !!idsToExport;
+  const hasIdsToExport = !!idsToExport?.length;
 
   const {
     loading: loadingGiftCardList,
@@ -76,11 +77,10 @@ const GiftCardExportDialog: React.FC<DialogProps & {
   const handleSubmit = (data: ExportSettingsFormData) => {
     exportGiftCards({
       variables: {
-        input: {
-          fileType: data.fileType,
-          scope: data.scope,
+        input: getExportGiftCardsInput({
+          data,
           ids: selectedIds
-        }
+        })
       }
     });
   };
@@ -128,7 +128,7 @@ const GiftCardExportDialog: React.FC<DialogProps & {
               selectedItems={selectedIds?.length}
               data={data}
               exportScopeLabels={exportScopeLabels}
-              allowScopeSelection={!!!idsToExport?.length}
+              allowScopeSelection={!hasIdsToExport}
               itemsQuantity={{
                 filter: filteredGiftCardsCount,
                 all: allGiftCardsCount
