@@ -114,7 +114,7 @@ const TableLine: React.FC<TableLineProps> = ({
               />
             ) : (
               <StatusBadge
-                variant="warning"
+                variant="error"
                 description={intl.formatMessage(
                   messages.unfulfilledVariantDeleted
                 )}

@@ -1,4 +1,4 @@
-import { NotAllowedInvertedIcon, Tooltip, WarningIcon } from "@saleor/macaw-ui";
+import { NotAllowedIcon, Tooltip, WarningIcon } from "@saleor/macaw-ui";
 import React from "react";
 
 export type BadgeVariant = "warning" | "error";
@@ -25,7 +25,7 @@ const getIcon = (variant: BadgeVariant) => {
     case "warning":
       return <WarningIcon />;
     case "error":
-      return <NotAllowedInvertedIcon />;
+      return <NotAllowedIcon />;
   }
 };
 
