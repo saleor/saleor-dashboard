@@ -6,6 +6,7 @@ import {
   DialogTitle,
   Typography
 } from "@material-ui/core";
+import { DialogProps } from "@saleor/types";
 import React from "react";
 import { useState } from "react";
 import { FormattedMessage } from "react-intl";
@@ -14,19 +15,17 @@ import { useIntl } from "react-intl";
 import GiftCardExportDialog from "../GiftCardExportDialog";
 import { giftCardCreateMessages as messages } from "./messages";
 
-interface GiftCardCreateSuccessDialogProps {
-  open: boolean;
-  onClose: () => void;
+interface GiftCardBulkCreateSuccessDialogProps extends DialogProps {
   idsToExport: string[] | null;
 }
 
-const GiftCardCreateSuccessDialog: React.FC<GiftCardCreateSuccessDialogProps> = ({
+const GiftCardBulkCreateSuccessDialog: React.FC<GiftCardBulkCreateSuccessDialogProps> = ({
   open,
   onClose,
   idsToExport
 }) => {
   const intl = useIntl();
-  const [openEmailExport, setOpenEmailExport] = useState<boolean>(false);
+  const [openEmailExport, setOpenEmailExport] = useState(false);
 
   const onExportDialogClose = () => {
     setOpenEmailExport(false);
@@ -66,4 +65,4 @@ const GiftCardCreateSuccessDialog: React.FC<GiftCardCreateSuccessDialogProps> = 
   );
 };
 
-export default GiftCardCreateSuccessDialog;
+export default GiftCardBulkCreateSuccessDialog;

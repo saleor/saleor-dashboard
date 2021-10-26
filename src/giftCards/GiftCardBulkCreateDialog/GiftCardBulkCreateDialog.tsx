@@ -10,7 +10,7 @@ import React, { useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 
 import ContentWithProgress from "../GiftCardCreateDialog/ContentWithProgress";
-import GiftCardCreateSuccessDialog from "../GiftCardCreateDialog/GiftCardCreateSuccessDialog";
+import GiftCardBulkCreateSuccessDialog from "../GiftCardCreateDialog/GiftCardBulkCreateSuccessDialog";
 import { useChannelCurrencies } from "../GiftCardCreateDialog/queries";
 import { getGiftCardExpiryInputData } from "../GiftCardCreateDialog/utils";
 import { GIFT_CARD_LIST_QUERY } from "../GiftCardsList/types";
@@ -147,7 +147,7 @@ const GiftCardBulkCreateDialog: React.FC<DialogProps> = ({ onClose, open }) => {
           )}
         </ContentWithProgress>
       </Dialog>
-      <GiftCardCreateSuccessDialog
+      <GiftCardBulkCreateSuccessDialog
         onClose={onIssueSuccessDialogClose}
         open={openIssueSuccessDialog}
         idsToExport={issuedIds}
