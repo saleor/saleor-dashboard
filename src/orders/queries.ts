@@ -147,6 +147,12 @@ export const orderDetailsQuery = gql`
   query OrderDetails($id: ID!) {
     order(id: $id) {
       ...OrderDetailsFragment
+      payments {
+        availableRefundAmount {
+          amount
+          currency
+        }
+      }
     }
     shop {
       countries {
@@ -316,6 +322,29 @@ const orderRefundData = gql`
             ...RefundOrderLineFragment
           }
         }
+      }
+      payments {
+        id
+        total {
+          amount
+          currency
+        }
+        capturedAmount {
+          amount
+          currency
+        }
+        availableCaptureAmount {
+          amount
+          currency
+        }
+        availableRefundAmount {
+          amount
+          currency
+        }
+        gatewayName
+        pspReference
+        chargeStatus
+        actions
       }
     }
   }

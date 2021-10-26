@@ -2243,6 +2243,11 @@ export interface OrderLineInput {
   quantity: number;
 }
 
+export interface OrderPaymentToRefundInput {
+  paymentId: string;
+  amount: any;
+}
+
 export interface OrderRefundFulfillmentLineInput {
   fulfillmentLineId: string;
   quantity: number;

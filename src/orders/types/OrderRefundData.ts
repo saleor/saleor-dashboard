@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { FulfillmentStatus } from "./../../types/globalTypes";
+import { FulfillmentStatus, PaymentChargeStatusEnum, OrderAction } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL query operation: OrderRefundData
@@ -115,6 +115,43 @@ export interface OrderRefundData_order_fulfillments {
   lines: (OrderRefundData_order_fulfillments_lines | null)[] | null;
 }
 
+export interface OrderRefundData_order_payments_total {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderRefundData_order_payments_capturedAmount {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderRefundData_order_payments_availableCaptureAmount {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderRefundData_order_payments_availableRefundAmount {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderRefundData_order_payments {
+  __typename: "Payment";
+  id: string;
+  total: OrderRefundData_order_payments_total | null;
+  capturedAmount: OrderRefundData_order_payments_capturedAmount | null;
+  availableCaptureAmount: OrderRefundData_order_payments_availableCaptureAmount | null;
+  availableRefundAmount: OrderRefundData_order_payments_availableRefundAmount | null;
+  gatewayName: string;
+  pspReference: string | null;
+  chargeStatus: PaymentChargeStatusEnum;
+  actions: (OrderAction | null)[];
+}
+
 export interface OrderRefundData_order {
   __typename: "Order";
   id: string;
@@ -124,6 +161,7 @@ export interface OrderRefundData_order {
   shippingPrice: OrderRefundData_order_shippingPrice;
   lines: (OrderRefundData_order_lines | null)[];
   fulfillments: (OrderRefundData_order_fulfillments | null)[];
+  payments: (OrderRefundData_order_payments | null)[] | null;
 }
 
 export interface OrderRefundData {

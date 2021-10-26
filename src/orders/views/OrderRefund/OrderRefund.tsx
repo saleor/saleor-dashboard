@@ -1,5 +1,6 @@
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
+import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import OrderRefundPage from "@saleor/orders/components/OrderRefundPage";
 import {
   OrderRefundAmountCalculationMode,
@@ -11,13 +12,20 @@ import {
   useOrderRefundMutation
 } from "@saleor/orders/mutations";
 import { useOrderRefundData } from "@saleor/orders/queries";
+import { OrderDetails_order_payments } from "@saleor/orders/types/OrderDetails";
 import { orderUrl } from "@saleor/orders/urls";
+import { ReorderEvent } from "@saleor/types";
+import { move } from "@saleor/utils/lists";
 import React from "react";
 import { useIntl } from "react-intl";
 
 const getAutomaticallyCalculatedProductsRefundInput = (
-  formData: OrderRefundSubmitData
+  formData: OrderRefundSubmitData,
+  payments: OrderDetails_order_payments[]
 ) => ({
+  paymentsToRefund: payments.map(payment => ({
+    paymentId: payment.id
+  })),
   fulfillmentLines: formData.refundedFulfilledProductQuantities
     .filter(line => line.value !== "0")
     .map(line => ({
@@ -35,7 +43,12 @@ const getAutomaticallyCalculatedProductsRefundInput = (
 const getManuallySetProductsRefundInput = (
   formData: OrderRefundSubmitData
 ) => ({
-  amountToRefund: formData.amount,
+  paymentsToRefund: formData.paymentsToRefund
+    .filter(payment => Number(payment.value) > 0)
+    .map(payment => ({
+      paymentId: payment.id,
+      amount: payment.value
+    })),
   fulfillmentLines: formData.refundedFulfilledProductQuantities
     .filter(line => line.value !== "0")
     .map(line => ({
@@ -103,8 +116,13 @@ const OrderRefund: React.FC<OrderRefundProps> = ({ orderId }) => {
   ) => {
     const response = await refundOrder({
       variables: {
-        amount: formData.amount,
-        id: orderId
+        id: orderId,
+        paymentsToRefund: formData.paymentsToRefund
+          .filter(payment => Number(payment.value) > 0)
+          .map(field => ({
+            paymentId: field.id,
+            amount: field.value
+          }))
       }
     });
 
@@ -117,7 +135,7 @@ const OrderRefund: React.FC<OrderRefundProps> = ({ orderId }) => {
     const input =
       formData.amountCalculationMode ===
       OrderRefundAmountCalculationMode.AUTOMATIC
-        ? getAutomaticallyCalculatedProductsRefundInput(formData)
+        ? getAutomaticallyCalculatedProductsRefundInput(formData, payments)
         : getManuallySetProductsRefundInput(formData);
 
     const response = await refundOrderFulfillmentProducts({
@@ -135,9 +153,26 @@ const OrderRefund: React.FC<OrderRefundProps> = ({ orderId }) => {
       ? handleSubmitMiscellaneousRefund(formData)
       : handleSubmitProductsRefund(formData);
 
+  const [payments, setPayments] = useStateFromProps(
+    data?.order.payments.filter(
+      payment => payment.availableRefundAmount?.amount > 0
+    )
+  );
+
+  const handlePaymentsReorder = (event: ReorderEvent) => {
+    const reorderedPayments = move(
+      payments[event.oldIndex],
+      payments,
+      (a, b) => a === b,
+      event.newIndex
+    );
+    setPayments(reorderedPayments);
+  };
+
   return (
     <OrderRefundPage
       order={data?.order}
+      payments={payments}
       disabled={
         loading ||
         refundOrderOpts.loading ||
@@ -148,8 +183,9 @@ const OrderRefund: React.FC<OrderRefundProps> = ({ orderId }) => {
         ...(refundOrderFulfillmentProductsOpts.data
           ?.orderFulfillmentRefundProducts.errors || [])
       ]}
-      onSubmit={handleSubmit}
+      onSubmit={data => handleSubmit(data)}
       onBack={() => navigate(orderUrl(orderId))}
+      onPaymentsReorder={handlePaymentsReorder}
     />
   );
 };

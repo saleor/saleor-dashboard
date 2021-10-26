@@ -350,12 +350,26 @@ export interface OrderVoid_orderVoid_order_payments_capturedAmount {
   currency: string;
 }
 
+export interface OrderVoid_orderVoid_order_payments_availableCaptureAmount {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderVoid_orderVoid_order_payments_availableRefundAmount {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
 export interface OrderVoid_orderVoid_order_payments {
   __typename: "Payment";
   id: string;
   total: OrderVoid_orderVoid_order_payments_total | null;
   capturedAmount: OrderVoid_orderVoid_order_payments_capturedAmount | null;
   gatewayName: string;
+  availableCaptureAmount: OrderVoid_orderVoid_order_payments_availableCaptureAmount | null;
+  availableRefundAmount: OrderVoid_orderVoid_order_payments_availableRefundAmount | null;
   pspReference: string | null;
   chargeStatus: PaymentChargeStatusEnum;
   actions: (OrderAction | null)[];

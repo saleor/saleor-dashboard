@@ -198,12 +198,12 @@ export const transformChargeStatus = (
       };
     case PaymentChargeStatusEnum.PARTIALLY_REFUNDED:
       return {
-        localized: intl.formatMessage(chargeStatusMessages.partiallyCharged),
+        localized: intl.formatMessage(chargeStatusMessages.partiallyRefunded),
         status: StatusType.NEUTRAL
       };
     case PaymentChargeStatusEnum.FULLY_REFUNDED:
       return {
-        localized: intl.formatMessage(chargeStatusMessages.fullyCharged),
+        localized: intl.formatMessage(chargeStatusMessages.fullyRefunded),
         status: StatusType.NEUTRAL
       };
     case PaymentChargeStatusEnum.REFUSED:

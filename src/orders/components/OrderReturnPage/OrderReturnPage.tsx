@@ -7,6 +7,8 @@ import { SubmitPromise } from "@saleor/hooks/useForm";
 import { Backlink } from "@saleor/macaw-ui";
 import { renderCollection } from "@saleor/misc";
 import { OrderDetails_order } from "@saleor/orders/types/OrderDetails";
+import { OrderRefundData_order_payments } from "@saleor/orders/types/OrderRefundData";
+import { ReorderEvent } from "@saleor/types";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -23,14 +25,24 @@ import {
 
 export interface OrderReturnPageProps {
   order: OrderDetails_order;
+  payments: OrderRefundData_order_payments[];
   loading: boolean;
   errors?: OrderErrorFragment[];
   onBack: () => void;
   onSubmit: (data: OrderRefundSubmitData) => SubmitPromise;
+  onPaymentsReorder: (event: ReorderEvent) => void;
 }
 
 const OrderRefundPage: React.FC<OrderReturnPageProps> = props => {
-  const { order, loading, errors = [], onBack, onSubmit } = props;
+  const {
+    order,
+    payments,
+    loading,
+    errors = [],
+    onBack,
+    onSubmit,
+    onPaymentsReorder
+  } = props;
 
   const intl = useIntl();
   return (
@@ -102,11 +114,14 @@ const OrderRefundPage: React.FC<OrderReturnPageProps> = props => {
                   amountData={getReturnProductsAmountValues(order, data)}
                   data={data}
                   order={order}
+                  payments={payments}
                   disableSubmitButton={!hasAnyItemsSelected}
                   disabled={loading}
                   errors={errors}
                   onChange={change}
                   onRefund={submit}
+                  onPaymentAmountChange={handlers.changePaymentAmount}
+                  onPaymentsReorder={onPaymentsReorder}
                 />
               </div>
             </Grid>

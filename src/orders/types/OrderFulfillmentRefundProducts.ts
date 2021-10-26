@@ -445,12 +445,26 @@ export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_o
   currency: string;
 }
 
+export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_payments_availableCaptureAmount {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_payments_availableRefundAmount {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
 export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_payments {
   __typename: "Payment";
   id: string;
   total: OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_payments_total | null;
   capturedAmount: OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_payments_capturedAmount | null;
   gatewayName: string;
+  availableCaptureAmount: OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_payments_availableCaptureAmount | null;
+  availableRefundAmount: OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_payments_availableRefundAmount | null;
   pspReference: string | null;
   chargeStatus: PaymentChargeStatusEnum;
   actions: (OrderAction | null)[];

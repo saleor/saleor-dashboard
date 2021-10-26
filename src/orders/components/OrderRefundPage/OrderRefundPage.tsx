@@ -6,7 +6,11 @@ import { OrderErrorFragment } from "@saleor/fragments/types/OrderErrorFragment";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import { Backlink } from "@saleor/macaw-ui";
 import { renderCollection } from "@saleor/misc";
-import { OrderRefundData_order } from "@saleor/orders/types/OrderRefundData";
+import {
+  OrderRefundData_order,
+  OrderRefundData_order_payments
+} from "@saleor/orders/types/OrderRefundData";
+import { ReorderEvent } from "@saleor/types";
 import { FulfillmentStatus } from "@saleor/types/globalTypes";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -31,21 +35,25 @@ export const refundFulfilledStatuses = [
 
 export interface OrderRefundPageProps {
   order: OrderRefundData_order;
+  payments: OrderRefundData_order_payments[];
   defaultType?: OrderRefundType;
   disabled: boolean;
   errors: OrderErrorFragment[];
   onBack: () => void;
   onSubmit: (data: OrderRefundSubmitData) => SubmitPromise;
+  onPaymentsReorder: (event: ReorderEvent) => void;
 }
 
 const OrderRefundPage: React.FC<OrderRefundPageProps> = props => {
   const {
     order,
+    payments,
     defaultType = OrderRefundType.PRODUCTS,
     disabled,
     errors = [],
     onBack,
-    onSubmit
+    onSubmit,
+    onPaymentsReorder
   } = props;
 
   const intl = useIntl();
@@ -149,14 +157,17 @@ const OrderRefundPage: React.FC<OrderRefundPageProps> = props => {
                   amountData={
                     isProductRefund
                       ? getRefundProductsAmountValues(order, data)
-                      : getMiscellaneousAmountValues(order)
+                      : getMiscellaneousAmountValues(order, data)
                   }
                   data={data}
                   order={order}
+                  payments={payments}
                   disabled={disabled}
                   errors={errors}
                   onChange={change}
                   onRefund={submit}
+                  onPaymentAmountChange={handlers.changePaymentAmount}
+                  onPaymentsReorder={onPaymentsReorder}
                 />
               </div>
             </Grid>

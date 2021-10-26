@@ -40,7 +40,7 @@ const OrderRefund: React.FC<OrderRefundProps> = props => {
     <Card>
       <CardTitle
         title={intl.formatMessage({
-          defaultMessage: "Refund Order",
+          defaultMessage: "Refund type",
           description: "section header"
         })}
       />

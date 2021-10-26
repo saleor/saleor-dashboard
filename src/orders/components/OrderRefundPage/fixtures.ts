@@ -1,7 +1,11 @@
 /* eslint-disable sort-keys */
 
 import { OrderRefundData_order } from "@saleor/orders/types/OrderRefundData";
-import { FulfillmentStatus } from "@saleor/types/globalTypes";
+import {
+  FulfillmentStatus,
+  OrderAction,
+  PaymentChargeStatusEnum
+} from "@saleor/types/globalTypes";
 
 export const orderToRefund = (placeholder: string): OrderRefundData_order => ({
   __typename: "Order",
@@ -74,6 +78,41 @@ export const orderToRefund = (placeholder: string): OrderRefundData_order => ({
           currency: "USD"
         }
       }
+    }
+  ],
+  payments: [
+    {
+      __typename: "Payment",
+      id: "UGF5bWVudDo5",
+      actions: [
+        OrderAction.CAPTURE,
+        OrderAction.MARK_AS_PAID,
+        OrderAction.REFUND,
+        OrderAction.VOID
+      ],
+      total: {
+        __typename: "Money",
+        amount: 128.62,
+        currency: "USD"
+      },
+      capturedAmount: {
+        __typename: "Money",
+        amount: 0,
+        currency: "USD"
+      },
+      availableCaptureAmount: {
+        __typename: "Money",
+        amount: 0,
+        currency: "USD"
+      },
+      availableRefundAmount: {
+        __typename: "Money",
+        amount: 0,
+        currency: "USD"
+      },
+      gatewayName: "Stripe",
+      pspReference: "evt_1J7IKBH1Vac4G4dbPB6uERAp",
+      chargeStatus: PaymentChargeStatusEnum.NOT_CHARGED
     }
   ],
   fulfillments: [

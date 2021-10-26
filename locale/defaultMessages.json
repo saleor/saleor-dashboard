@@ -4441,25 +4441,45 @@
     "context": "page header with order number",
     "string": "Order #{orderNumber}"
   },
-  "src_dot_orders_dot_components_dot_OrderRefundReturnAmount_dot_2256869831": {
+  "src_dot_orders_dot_components_dot_OrderRefundReturnAmount_dot_1072489830": {
+    "context": "order refund amount",
+    "string": "Refund Amount"
+  },
+  "src_dot_orders_dot_components_dot_OrderRefundReturnAmount_dot_126410507": {
+    "context": "label",
+    "string": "Manual"
+  },
+  "src_dot_orders_dot_components_dot_OrderRefundReturnAmount_dot_1818180244": {
+    "context": "order refund method",
+    "string": "Refund Method"
+  },
+  "src_dot_orders_dot_components_dot_OrderRefundReturnAmount_dot_2320183694": {
+    "context": "order refund",
+    "string": "Captured amount"
+  },
+  "src_dot_orders_dot_components_dot_OrderRefundReturnAmount_dot_2845258362": {
     "context": "section header",
-    "string": "Refunded Amount"
+    "string": "Refund"
+  },
+  "src_dot_orders_dot_components_dot_OrderRefundReturnAmount_dot_3532691554": {
+    "context": "order refund",
+    "string": "You cannot refund the whole value of selected products because of previous refunds"
   },
   "src_dot_orders_dot_components_dot_OrderRefundReturnAmount_dot_40513382": {
     "context": "order refund amount, input button",
     "string": "Refund {currency} {amount}"
   },
-  "src_dot_orders_dot_components_dot_OrderRefundReturnAmount_dot_4224226791": {
+  "src_dot_orders_dot_components_dot_OrderRefundReturnAmount_dot_4060071846": {
     "context": "label",
-    "string": "Automatic Amount"
-  },
-  "src_dot_orders_dot_components_dot_OrderRefundReturnAmount_dot_508357513": {
-    "context": "label",
-    "string": "Manual Amount"
+    "string": "Automatic"
   },
   "src_dot_orders_dot_components_dot_OrderRefundReturnAmount_dot_553737700": {
     "context": "checkbox",
     "string": "Refund shipment costs"
+  },
+  "src_dot_orders_dot_components_dot_OrderRefundReturnAmount_dot_766901262": {
+    "context": "payment status",
+    "string": "Fully refunded"
   },
   "src_dot_orders_dot_components_dot_OrderRefundReturnAmount_dot_982301568": {
     "context": "label",
@@ -4467,7 +4487,7 @@
   },
   "src_dot_orders_dot_components_dot_OrderRefundReturnAmount_dot_amountTooBig": {
     "context": "Amount error message",
-    "string": "Amount cannot be bigger than max refund"
+    "string": "Amount cannot be bigger than methods captured amount"
   },
   "src_dot_orders_dot_components_dot_OrderRefundReturnAmount_dot_amountTooSmall": {
     "context": "Amount error message",
@@ -4505,13 +4525,21 @@
     "context": "order refund amount",
     "string": "Refund total amount"
   },
+  "src_dot_orders_dot_components_dot_OrderRefundReturnAmount_dot_remainingBalance": {
+    "context": "order refund amount",
+    "string": "Remaining balance"
+  },
+  "src_dot_orders_dot_components_dot_OrderRefundReturnAmount_dot_remainingBalanceCaption": {
+    "context": "order refund amount",
+    "string": "This is how much money will be left captured for these products after refund"
+  },
   "src_dot_orders_dot_components_dot_OrderRefundReturnAmount_dot_replacedProductsValue": {
     "context": "order refund amount",
     "string": "Replaced Products Value"
   },
   "src_dot_orders_dot_components_dot_OrderRefundReturnAmount_dot_returnButton": {
     "context": "order return amount button",
-    "string": "Return & Replace products"
+    "string": "Replace & Return products"
   },
   "src_dot_orders_dot_components_dot_OrderRefundReturnAmount_dot_returnCannotBeFulfilled": {
     "context": "order return subtitle",
@@ -4524,6 +4552,14 @@
   "src_dot_orders_dot_components_dot_OrderRefundReturnAmount_dot_shipmentCost": {
     "context": "order refund amount",
     "string": "Shipment Cost"
+  },
+  "src_dot_orders_dot_components_dot_OrderRefundReturnAmount_dot_totalPaymentsMade": {
+    "context": "order refund amount",
+    "string": "Total payments made"
+  },
+  "src_dot_orders_dot_components_dot_OrderRefundReturnAmount_dot_totalPaymentsMadeCaption": {
+    "context": "order refund amount",
+    "string": "This is how much money will be left captured when returning those products"
   },
   "src_dot_orders_dot_components_dot_OrderRefundUnfulfilledProducts_dot_1134347598": {
     "context": "tabel column header",
@@ -4564,9 +4600,9 @@
     "context": "tooltip content when a deleted variant is detected",
     "string": "This product is no longer in the database. It won't be restocked."
   },
-  "src_dot_orders_dot_components_dot_OrderRefund_dot_1275363773": {
+  "src_dot_orders_dot_components_dot_OrderRefund_dot_2572276359": {
     "context": "section header",
-    "string": "Refund Order"
+    "string": "Refund type"
   },
   "src_dot_orders_dot_components_dot_OrderRefund_dot_refundMiscellaneous": {
     "context": "refund type",
