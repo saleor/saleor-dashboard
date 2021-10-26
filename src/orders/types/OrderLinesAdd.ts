@@ -350,12 +350,26 @@ export interface OrderLinesAdd_orderLinesCreate_order_payments_capturedAmount {
   currency: string;
 }
 
+export interface OrderLinesAdd_orderLinesCreate_order_payments_availableCaptureAmount {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderLinesAdd_orderLinesCreate_order_payments_availableRefundAmount {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
 export interface OrderLinesAdd_orderLinesCreate_order_payments {
   __typename: "Payment";
   id: string;
   total: OrderLinesAdd_orderLinesCreate_order_payments_total | null;
   capturedAmount: OrderLinesAdd_orderLinesCreate_order_payments_capturedAmount | null;
   gatewayName: string;
+  availableCaptureAmount: OrderLinesAdd_orderLinesCreate_order_payments_availableCaptureAmount | null;
+  availableRefundAmount: OrderLinesAdd_orderLinesCreate_order_payments_availableRefundAmount | null;
   pspReference: string | null;
   chargeStatus: PaymentChargeStatusEnum;
   actions: (OrderAction | null)[];

@@ -28,6 +28,18 @@ export interface PaymentVoid_paymentVoid_payment_capturedAmount {
   currency: string;
 }
 
+export interface PaymentVoid_paymentVoid_payment_availableCaptureAmount {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface PaymentVoid_paymentVoid_payment_availableRefundAmount {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
 export interface PaymentVoid_paymentVoid_payment_order_totalCaptured {
   __typename: "Money";
   amount: number;
@@ -55,6 +67,8 @@ export interface PaymentVoid_paymentVoid_payment {
   total: PaymentVoid_paymentVoid_payment_total | null;
   capturedAmount: PaymentVoid_paymentVoid_payment_capturedAmount | null;
   gatewayName: string;
+  availableCaptureAmount: PaymentVoid_paymentVoid_payment_availableCaptureAmount | null;
+  availableRefundAmount: PaymentVoid_paymentVoid_payment_availableRefundAmount | null;
   pspReference: string | null;
   chargeStatus: PaymentChargeStatusEnum;
   actions: (OrderAction | null)[];

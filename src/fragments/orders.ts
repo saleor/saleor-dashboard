@@ -185,6 +185,14 @@ export const paymentFragment = gql`
       currency
     }
     gatewayName
+    availableCaptureAmount {
+      amount
+      currency
+    }
+    availableRefundAmount {
+      amount
+      currency
+    }
     pspReference
     chargeStatus
     actions

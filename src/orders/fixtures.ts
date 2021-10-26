@@ -1479,6 +1479,16 @@ export const order = (placeholder: string): OrderDetails_order => ({
         amount: 0,
         currency: "USD"
       },
+      availableCaptureAmount: {
+        __typename: "Money",
+        amount: 0,
+        currency: "USD"
+      },
+      availableRefundAmount: {
+        __typename: "Money",
+        amount: 0,
+        currency: "USD"
+      },
       gatewayName: "Stripe",
       pspReference: "evt_1J7IKBH1Vac4G4dbPB6uERAp",
       chargeStatus: PaymentChargeStatusEnum.NOT_CHARGED

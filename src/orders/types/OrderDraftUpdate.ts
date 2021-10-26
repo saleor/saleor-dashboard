@@ -350,12 +350,26 @@ export interface OrderDraftUpdate_draftOrderUpdate_order_payments_capturedAmount
   currency: string;
 }
 
+export interface OrderDraftUpdate_draftOrderUpdate_order_payments_availableCaptureAmount {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderDraftUpdate_draftOrderUpdate_order_payments_availableRefundAmount {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
 export interface OrderDraftUpdate_draftOrderUpdate_order_payments {
   __typename: "Payment";
   id: string;
   total: OrderDraftUpdate_draftOrderUpdate_order_payments_total | null;
   capturedAmount: OrderDraftUpdate_draftOrderUpdate_order_payments_capturedAmount | null;
   gatewayName: string;
+  availableCaptureAmount: OrderDraftUpdate_draftOrderUpdate_order_payments_availableCaptureAmount | null;
+  availableRefundAmount: OrderDraftUpdate_draftOrderUpdate_order_payments_availableRefundAmount | null;
   pspReference: string | null;
   chargeStatus: PaymentChargeStatusEnum;
   actions: (OrderAction | null)[];

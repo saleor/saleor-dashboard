@@ -346,8 +346,12 @@ export const TypedOrderDraftFinalizeMutation = TypedMutation<
 const orderRefundMutation = gql`
   ${fragmentOrderDetails}
   ${orderErrorFragment}
-  mutation OrderRefund($id: ID!, $amount: PositiveDecimal!) {
-    orderRefund(id: $id, amount: $amount) {
+  mutation OrderRefund(
+    $id: ID!
+    $amount: PositiveDecimal
+    $paymentsToRefund: [OrderPaymentToRefundInput]
+  ) {
+    orderRefund(id: $id, amount: $amount, paymentsToRefund: $paymentsToRefund) {
       errors {
         ...OrderErrorFragment
       }

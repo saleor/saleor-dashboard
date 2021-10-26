@@ -4,6 +4,7 @@ import useFormset, {
   FormsetData
 } from "@saleor/hooks/useFormset";
 import { OrderRefundData_order } from "@saleor/orders/types/OrderRefundData";
+import { getPaymentsToRefund } from "@saleor/orders/utils/data";
 import handleFormSubmit from "@saleor/utils/handlers/handleFormSubmit";
 import React from "react";
 
@@ -20,7 +21,6 @@ export enum OrderRefundAmountCalculationMode {
 }
 
 export interface OrderRefundData {
-  amount: number | string;
   type: OrderRefundType;
   refundShipmentCosts: boolean;
   amountCalculationMode: OrderRefundAmountCalculationMode;
@@ -31,11 +31,13 @@ export interface OrderRefundHandlers {
   setMaximalRefundedProductQuantities: () => void;
   changeRefundedFulfilledProductQuantity: FormsetChange<string>;
   setMaximalRefundedFulfilledProductQuantities: (fulfillmentId: string) => void;
+  changePaymentAmount: FormsetChange<string>;
 }
 
 export interface OrderRefundFormData extends OrderRefundData {
   refundedProductQuantities: FormsetData<null, string>;
   refundedFulfilledProductQuantities: FormsetData<null, string>;
+  paymentsToRefund: FormsetData<null, string>;
 }
 
 export type OrderRefundSubmitData = OrderRefundFormData;
@@ -60,7 +62,6 @@ function getOrderRefundPageFormData(
   defaultType: OrderRefundType
 ): OrderRefundData {
   return {
-    amount: undefined,
     amountCalculationMode: OrderRefundAmountCalculationMode.AUTOMATIC,
     refundShipmentCosts: false,
     type: defaultType
@@ -102,6 +103,8 @@ function useOrderRefundForm(
         []
       )
   );
+
+  const paymentsToRefund = getPaymentsToRefund(order);
 
   const handleChange: FormChange = (event, cb) => {
     form.change(event, cb);
@@ -164,10 +167,16 @@ function useOrderRefundForm(
     triggerChange();
   };
 
+  const handlePaymentAmountChange = (id: string, value: string) => {
+    triggerChange();
+    paymentsToRefund.change(id, value);
+  };
+
   const data: OrderRefundFormData = {
     ...form.data,
     refundedFulfilledProductQuantities: refundedFulfilledProductQuantities.data,
-    refundedProductQuantities: refundedProductQuantities.data
+    refundedProductQuantities: refundedProductQuantities.data,
+    paymentsToRefund: paymentsToRefund.data
   };
 
   const submit = () => handleFormSubmit(data, onSubmit, setChanged);
@@ -182,7 +191,8 @@ function useOrderRefundForm(
       changeRefundedFulfilledProductQuantity: handleRefundedFulFilledProductQuantityChange,
       changeRefundedProductQuantity: handleRefundedProductQuantityChange,
       setMaximalRefundedFulfilledProductQuantities: handleMaximalRefundedFulfilledProductQuantitiesSet,
-      setMaximalRefundedProductQuantities: handleMaximalRefundedProductQuantitiesSet
+      setMaximalRefundedProductQuantities: handleMaximalRefundedProductQuantitiesSet,
+      changePaymentAmount: handlePaymentAmountChange
     },
     hasChanged: changed,
     submit

@@ -1,9 +1,13 @@
 import { IMoney } from "@saleor/components/Money";
 import { FormsetData } from "@saleor/hooks/useFormset";
 import { OrderDetails_order } from "@saleor/orders/types/OrderDetails";
-import { OrderRefundData_order } from "@saleor/orders/types/OrderRefundData";
+import {
+  OrderRefundData_order,
+  OrderRefundData_order_payments
+} from "@saleor/orders/types/OrderRefundData";
 import {
   getAllFulfillmentLinesPriceSum,
+  getPaymentsTotalAmount,
   getPreviouslyRefundedPrice,
   getRefundedLinesPriceSum,
   getReplacedProductsAmount,
@@ -15,16 +19,22 @@ import { LineItemData, OrderReturnFormData } from "../OrderReturnPage/form";
 import { OrderRefundAmountValuesProps } from "./OrderRefundReturnAmountValues";
 
 export const getMiscellaneousAmountValues = (
-  order: OrderRefundData_order
+  order: OrderRefundData_order,
+  { paymentsToRefund }: OrderRefundFormData
 ): OrderRefundAmountValuesProps => {
   const authorizedAmount = order?.total?.gross;
   const previouslyRefunded = getPreviouslyRefundedPrice(order);
   const maxRefund = order?.totalCaptured;
+  const paymentsTotalAmount = authorizedAmount?.currency && {
+    amount: getPaymentsTotalAmount(paymentsToRefund),
+    currency: authorizedAmount.currency
+  };
 
   return {
     authorizedAmount,
     maxRefund,
-    previouslyRefunded
+    previouslyRefunded,
+    paymentsTotalAmount
   };
 };
 
@@ -44,7 +54,8 @@ export const getProductsAmountValues = (
   order: OrderRefundData_order,
   fulfilledItemsQuantities: FormsetData<null | LineItemData, string | number>,
   unfulfilledItemsQuantities: FormsetData<null | LineItemData, string | number>,
-  shipmentCosts
+  shipmentCosts,
+  paymentsToRefund: FormsetData<null | LineItemData, string | number>
 ): OrderRefundAmountValuesProps => {
   const authorizedAmount = getAuthorizedAmount(order);
   const shipmentCost = getShipmentCost(order);
@@ -82,6 +93,16 @@ export const getProductsAmountValues = (
     currency: authorizedAmount.currency
   };
 
+  const paymentsTotalAmount = authorizedAmount?.currency && {
+    amount: getPaymentsTotalAmount(paymentsToRefund),
+    currency: authorizedAmount.currency
+  };
+
+  const remainingBalance = authorizedAmount?.currency && {
+    amount: calculatedTotalAmount - paymentsTotalAmount.amount,
+    currency: authorizedAmount.currency
+  };
+
   return {
     authorizedAmount,
     maxRefund,
@@ -89,7 +110,9 @@ export const getProductsAmountValues = (
     proposedRefundAmount,
     refundTotalAmount,
     selectedProductsValue,
-    shipmentCost
+    shipmentCost,
+    remainingBalance,
+    paymentsTotalAmount
   };
 };
 
@@ -115,7 +138,7 @@ const getCalculatedTotalAmount = ({
     ? allLinesSum + shipmentCostValue
     : allLinesSum;
 
-  return calculatedTotalAmount;
+  return Number(calculatedTotalAmount.toFixed(2));
 };
 
 const getReturnTotalAmount = ({
@@ -151,7 +174,8 @@ export const getReturnProductsAmountValues = (
   const {
     fulfilledItemsQuantities,
     unfulfilledItemsQuantities,
-    refundShipmentCosts
+    refundShipmentCosts,
+    paymentsToRefund
   } = formData;
 
   const replacedProductsValue = authorizedAmount?.currency && {
@@ -179,7 +203,8 @@ export const getReturnProductsAmountValues = (
       order,
       fulfilledItemsQuantities,
       unfulfilledItemsQuantities,
-      refundShipmentCosts
+      refundShipmentCosts,
+      paymentsToRefund
     ),
     refundTotalAmount,
     replacedProductsValue,
@@ -192,12 +217,44 @@ export const getRefundProductsAmountValues = (
   {
     refundedFulfilledProductQuantities,
     refundShipmentCosts,
-    refundedProductQuantities
+    refundedProductQuantities,
+    paymentsToRefund
   }: OrderRefundFormData
 ) =>
   getProductsAmountValues(
     order,
     refundedFulfilledProductQuantities,
     refundedProductQuantities,
-    refundShipmentCosts
+    refundShipmentCosts,
+    paymentsToRefund
   );
+
+const calcPaymentAmount = (
+  remainingAmount: number,
+  capturedAmount: number
+): number => {
+  if (remainingAmount >= capturedAmount) {
+    return capturedAmount;
+  }
+  return remainingAmount > 0 ? remainingAmount : 0;
+};
+
+export const getPaymentsAmount = (
+  refundTotalAmount: IMoney,
+  payments: OrderRefundData_order_payments[]
+): IMoney[] => {
+  if (!payments) {
+    return [];
+  }
+
+  let remainingAmount = refundTotalAmount?.amount ?? 0;
+  return payments.map(({ capturedAmount }) => {
+    const amount = calcPaymentAmount(remainingAmount, capturedAmount.amount);
+
+    remainingAmount -= amount;
+    return {
+      amount,
+      currency: capturedAmount.currency
+    };
+  });
+};

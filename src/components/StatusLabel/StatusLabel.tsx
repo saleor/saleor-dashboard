@@ -74,7 +74,6 @@ const StatusLabel: React.FC<StatusLabelProps> = ({
   subtitle
 }) => {
   const classes = useStyles({});
-
   return (
     <div
       className={classNames({
@@ -84,11 +83,11 @@ const StatusLabel: React.FC<StatusLabelProps> = ({
     >
       <div
         className={classNames({
-          [className]: true,
+          [className]: !!className,
           [classes.dotVertical]: !!subtitle,
           [classes.successDot]: status === StatusType.SUCCESS,
           [classes.alertDot]: status === StatusType.ALERT,
-          [classes.neutralDot]: status === StatusType.NEUTRAL,
+          [classes.neutralDot]: status === StatusType.NEUTRAL || !status,
           [classes.errorDot]: status === StatusType.ERROR
         })}
       ></div>

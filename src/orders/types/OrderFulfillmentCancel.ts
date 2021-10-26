@@ -350,12 +350,26 @@ export interface OrderFulfillmentCancel_orderFulfillmentCancel_order_payments_ca
   currency: string;
 }
 
+export interface OrderFulfillmentCancel_orderFulfillmentCancel_order_payments_availableCaptureAmount {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderFulfillmentCancel_orderFulfillmentCancel_order_payments_availableRefundAmount {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
 export interface OrderFulfillmentCancel_orderFulfillmentCancel_order_payments {
   __typename: "Payment";
   id: string;
   total: OrderFulfillmentCancel_orderFulfillmentCancel_order_payments_total | null;
   capturedAmount: OrderFulfillmentCancel_orderFulfillmentCancel_order_payments_capturedAmount | null;
   gatewayName: string;
+  availableCaptureAmount: OrderFulfillmentCancel_orderFulfillmentCancel_order_payments_availableCaptureAmount | null;
+  availableRefundAmount: OrderFulfillmentCancel_orderFulfillmentCancel_order_payments_availableRefundAmount | null;
   pspReference: string | null;
   chargeStatus: PaymentChargeStatusEnum;
   actions: (OrderAction | null)[];
