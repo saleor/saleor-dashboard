@@ -1343,8 +1343,7 @@ export enum OrderDiscountType {
 }
 
 export enum OrderErrorCode {
-  AMOUNT_TO_CAPTURE_TOO_BIG = "AMOUNT_TO_CAPTURE_TOO_BIG",
-  AMOUNT_TO_REFUND_TOO_BIG = "AMOUNT_TO_REFUND_TOO_BIG",
+  AMOUNT_TOO_HIGH = "AMOUNT_TOO_HIGH",
   BILLING_ADDRESS_NOT_SET = "BILLING_ADDRESS_NOT_SET",
   CANNOT_CANCEL_FULFILLMENT = "CANNOT_CANCEL_FULFILLMENT",
   CANNOT_CANCEL_ORDER = "CANNOT_CANCEL_ORDER",
@@ -2261,7 +2260,7 @@ export interface OrderRefundLineInput {
 export interface OrderRefundProductsInput {
   orderLines?: OrderRefundLineInput[] | null;
   fulfillmentLines?: OrderRefundFulfillmentLineInput[] | null;
-  paymentsToRefund?: (PaymentToRefundInput | null)[] | null;
+  paymentsToRefund?: PaymentToRefundInput[] | null;
   amountToRefund?: any | null;
   includeShippingCosts?: boolean | null;
 }
@@ -2281,7 +2280,7 @@ export interface OrderReturnLineInput {
 export interface OrderReturnProductsInput {
   orderLines?: OrderReturnLineInput[] | null;
   fulfillmentLines?: OrderReturnFulfillmentLineInput[] | null;
-  paymentsToRefund?: (PaymentToRefundInput | null)[] | null;
+  paymentsToRefund?: PaymentToRefundInput[] | null;
   amountToRefund?: any | null;
   includeShippingCosts?: boolean | null;
   refund?: boolean | null;
