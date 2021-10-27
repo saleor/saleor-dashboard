@@ -108,7 +108,7 @@ const OrderRefund: React.FC<OrderRefundProps> = ({ orderId }) => {
       }
     });
 
-    return response.errors || [];
+    return response?.errors || [];
   };
 
   const handleSubmitProductsRefund = async (
@@ -127,7 +127,7 @@ const OrderRefund: React.FC<OrderRefundProps> = ({ orderId }) => {
       }
     });
 
-    return response.errors || [];
+    return response?.errors || [];
   };
 
   const handleSubmit = async (formData: OrderRefundSubmitData) =>
