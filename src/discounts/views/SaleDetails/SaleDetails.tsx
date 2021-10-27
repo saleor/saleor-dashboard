@@ -159,7 +159,7 @@ export const SaleDetails: React.FC<SaleDetailsProps> = ({ id, params }) => {
         status: "success",
         text: intl.formatMessage(messages.saleDetailsSaleDeleteDialog)
       });
-      navigate(saleListUrl(), true);
+      navigate(saleListUrl(), { replace: true });
     }
   };
 

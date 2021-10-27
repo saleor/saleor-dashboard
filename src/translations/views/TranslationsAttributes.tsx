@@ -86,7 +86,7 @@ const TranslationsAttributes: React.FC<TranslationsAttributesProps> = ({
         stringifyQs({
           activeField: field
         }),
-      true
+      { replace: true }
     );
   const onAttributeUpdate = (data: UpdateAttributeTranslations) => {
     if (data.attributeTranslate.errors.length === 0) {
@@ -95,7 +95,7 @@ const TranslationsAttributes: React.FC<TranslationsAttributesProps> = ({
         status: "success",
         text: intl.formatMessage(commonMessages.savedChanges)
       });
-      navigate("?", true);
+      navigate("?", { replace: true });
     }
   };
   const onAttributeValueUpdate = (data: UpdateAttributeValueTranslations) => {
@@ -105,11 +105,11 @@ const TranslationsAttributes: React.FC<TranslationsAttributesProps> = ({
         status: "success",
         text: intl.formatMessage(commonMessages.savedChanges)
       });
-      navigate("?", true);
+      navigate("?", { replace: true });
     }
   };
   const onDiscard = () => {
-    navigate("?", true);
+    navigate("?", { replace: true });
   };
 
   return (

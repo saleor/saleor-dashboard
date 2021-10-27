@@ -5,7 +5,6 @@ import DeleteFilterTabDialog from "@saleor/components/DeleteFilterTabDialog";
 import SaveFilterTabDialog, {
   SaveFilterTabDialogFormData
 } from "@saleor/components/SaveFilterTabDialog";
-import { DEFAULT_INITIAL_PAGINATION_DATA } from "@saleor/config";
 import useBulkActions from "@saleor/hooks/useBulkActions";
 import useListSettings from "@saleor/hooks/useListSettings";
 import useNavigator from "@saleor/hooks/useNavigator";
@@ -59,13 +58,7 @@ export const CategoryList: React.FC<CategoryListProps> = ({ params }) => {
     ListViews.CATEGORY_LIST
   );
 
-  usePaginationReset(
-    categoryListUrl({
-      ...params,
-      ...DEFAULT_INITIAL_PAGINATION_DATA
-    }),
-    settings.rowNumber
-  );
+  usePaginationReset(categoryListUrl, params, settings.rowNumber);
 
   const intl = useIntl();
 
@@ -132,7 +125,7 @@ export const CategoryList: React.FC<CategoryListProps> = ({ params }) => {
 
   const handleCategoryBulkDelete = (data: CategoryBulkDelete) => {
     if (data.categoryBulkDelete.errors.length === 0) {
-      navigate(categoryListUrl(), true);
+      navigate(categoryListUrl(), { replace: true });
       refetch();
       reset();
     }
