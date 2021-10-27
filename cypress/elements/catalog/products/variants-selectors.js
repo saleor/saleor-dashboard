@@ -9,5 +9,6 @@ export const VARIANTS_SELECTORS = {
   addWarehouseButton: "button[class*='MuiIconButton-colorPrimary']",
   warehouseOption: "[role='menuitem']",
   saveButton: "[data-test='button-bar-confirm']",
-  skuInputInAddVariant: "[name='sku']"
+  skuInputInAddVariant: "[name='sku']",
+  stockInput: "[data-test-id='stock-input']"
 };
