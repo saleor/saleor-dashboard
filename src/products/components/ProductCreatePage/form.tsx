@@ -306,13 +306,14 @@ function useProductCreateForm(
   const submit = () => onSubmit(data);
 
   const disabled =
-    !opts.selectedProductType?.hasVariants &&
-    (!data.sku ||
-      data.channelListings.some(
-        channel =>
-          validatePrice(channel.price) || validateCostPrice(channel.costPrice)
-      ) ||
-      !data.category);
+    (!opts.selectedProductType?.hasVariants &&
+      (!data.sku ||
+        data.channelListings.some(
+          channel =>
+            validatePrice(channel.price) || validateCostPrice(channel.costPrice)
+        ) ||
+        !data.category)) ||
+    !data.name;
 
   return {
     change: handleChange,

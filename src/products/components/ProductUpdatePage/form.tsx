@@ -352,12 +352,13 @@ function useProductUpdateForm(
     handleFormSubmit(getSubmitData(), handleSubmit, setChanged);
 
   const disabled =
-    !opts.hasVariants &&
-    (!data.sku ||
-      data.channelListings.some(
-        channel =>
-          validatePrice(channel.price) || validateCostPrice(channel.costPrice)
-      ));
+    (!opts.hasVariants &&
+      (!data.sku ||
+        data.channelListings.some(
+          channel =>
+            validatePrice(channel.price) || validateCostPrice(channel.costPrice)
+        ))) ||
+    !data.name;
 
   return {
     change: handleChange,
