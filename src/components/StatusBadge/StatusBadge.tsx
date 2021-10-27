@@ -1,10 +1,22 @@
-import errorIcon from "@assets/images/error.svg";
-import warningIcon from "@assets/images/warning.svg";
-import { Tooltip } from "@saleor/macaw-ui";
+import { NotAllowedIcon, Tooltip, WarningIcon } from "@saleor/macaw-ui";
 import React from "react";
-import SVG from "react-inlinesvg";
 
 export type BadgeVariant = "warning" | "error";
+
+import { makeStyles } from "@saleor/macaw-ui";
+
+export const useStyles = makeStyles(
+  () => ({
+    badgeContainer: {
+      marginRight: "1rem"
+    },
+    iconContainer: {
+      height: 40,
+      width: 40
+    }
+  }),
+  { name: "StatusBadge" }
+);
 
 export interface StatusBadgeProps {
   variant: BadgeVariant;
@@ -14,23 +26,25 @@ export interface StatusBadgeProps {
 const getIcon = (variant: BadgeVariant) => {
   switch (variant) {
     case "warning":
-      return warningIcon;
+      return <WarningIcon />;
     case "error":
-      return errorIcon;
+      return <NotAllowedIcon />;
   }
 };
 
 export const StatusBadge: React.FC<StatusBadgeProps> = ({
   variant,
   description
-}) => (
-  <div style={{ marginRight: "1rem" }}>
-    <Tooltip title={description} variant={variant}>
-      <div style={{ height: 40, width: 40 }}>
-        <SVG src={getIcon(variant)} width="100%" height="100%" />
-      </div>
-    </Tooltip>
-  </div>
-);
+}) => {
+  const classes = useStyles();
+
+  return (
+    <div className={classes.badgeContainer}>
+      <Tooltip title={description} variant={variant}>
+        <div className={classes.iconContainer}>{getIcon(variant)}</div>
+      </Tooltip>
+    </div>
+  );
+};
 
 export default StatusBadge;

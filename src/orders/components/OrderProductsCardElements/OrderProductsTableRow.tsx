@@ -99,7 +99,7 @@ const TableLine: React.FC<TableLineProps> = ({
   const isDeleted = !line.orderLine.variant;
 
   return (
-    <TableRow className={classes.clickableRow} hover key={line.id}>
+    <TableRow className={classes.clickableRow} hover>
       <TableCellAvatar
         className={classes.colName}
         thumbnail={maybe(() => line.orderLine.thumbnail.url)}
