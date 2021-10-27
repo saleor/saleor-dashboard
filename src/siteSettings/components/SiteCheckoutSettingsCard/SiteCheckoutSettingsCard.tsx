@@ -3,7 +3,6 @@ import CardTitle from "@saleor/components/CardTitle";
 import FormSpacer from "@saleor/components/FormSpacer";
 import { ShopErrorFragment } from "@saleor/fragments/types/ShopErrorFragment";
 import { getFormErrors } from "@saleor/utils/errors";
-import createPositiveValueChangeHandler from "@saleor/utils/handlers/positiveValueChangeHandler";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -33,8 +32,6 @@ const SiteCheckoutSettingsCard: React.FC<SiteCheckoutSettingsCardProps> = ({
     ],
     errors
   );
-
-  const handleQuantityChange = createPositiveValueChangeHandler(onChange);
 
   return (
     <Card>
@@ -103,7 +100,7 @@ const SiteCheckoutSettingsCard: React.FC<SiteCheckoutSettingsCardProps> = ({
               ? String(data.limitQuantityPerCheckout)
               : ""
           }
-          onChange={handleQuantityChange}
+          onChange={onChange}
           InputProps={{
             inputProps: {
               autoComplete: "none",

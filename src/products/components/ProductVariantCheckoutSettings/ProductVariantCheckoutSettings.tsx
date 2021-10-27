@@ -1,8 +1,8 @@
 import { Card, CardContent, TextField } from "@material-ui/core";
 import CardTitle from "@saleor/components/CardTitle";
 import { ProductErrorFragment } from "@saleor/fragments/types/ProductErrorFragment";
+import { FormChange } from "@saleor/hooks/useForm";
 import { getFormErrors } from "@saleor/utils/errors";
-import createPositiveValueChangeHandler from "@saleor/utils/handlers/positiveValueChangeHandler";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -14,7 +14,7 @@ interface ProductVariantCheckoutSettingsProps {
   };
   disabled: boolean;
   errors: ProductErrorFragment[];
-  onChange: (event: React.ChangeEvent<any>) => void;
+  onChange: FormChange;
 }
 
 const ProductVariantCheckoutSettings: React.FC<ProductVariantCheckoutSettingsProps> = props => {
@@ -23,7 +23,6 @@ const ProductVariantCheckoutSettings: React.FC<ProductVariantCheckoutSettingsPro
   const intl = useIntl();
 
   const formErrors = getFormErrors(["quantityLimitPerCustomer"], errors);
-  const handleChange = createPositiveValueChangeHandler(onChange);
 
   return (
     <Card>
@@ -42,7 +41,7 @@ const ProductVariantCheckoutSettings: React.FC<ProductVariantCheckoutSettingsPro
               ? String(data.quantityLimitPerCustomer)
               : ""
           }
-          onChange={handleChange}
+          onChange={onChange}
           InputProps={{
             inputProps: {
               autoComplete: "none",
