@@ -51,13 +51,22 @@ import { VoucherUpdate, VoucherUpdateVariables } from "./types/VoucherUpdate";
 const saleUpdate = gql`
   ${discountErrorFragment}
   ${saleFragment}
-  mutation SaleUpdate($input: SaleInput!, $id: ID!) {
+  mutation SaleUpdate(
+    $input: SaleInput!
+    $id: ID!
+    $channelInput: SaleChannelListingInput!
+  ) {
     saleUpdate(id: $id, input: $input) {
       errors {
         ...DiscountErrorFragment
       }
       sale {
         ...SaleFragment
+      }
+    }
+    saleChannelListingUpdate(id: $id, input: $channelInput) {
+      errors {
+        ...DiscountErrorFragment
       }
     }
   }
