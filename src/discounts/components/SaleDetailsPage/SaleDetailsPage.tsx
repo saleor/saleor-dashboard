@@ -1,4 +1,4 @@
-import { ChannelSaleData } from "@saleor/channels/utils";
+import { Channel, ChannelSaleData } from "@saleor/channels/utils";
 import CardSpacer from "@saleor/components/CardSpacer";
 import ChannelsAvailabilityCard from "@saleor/components/ChannelsAvailabilityCard";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
@@ -37,8 +37,12 @@ import SaleSummary from "../SaleSummary";
 import SaleType from "../SaleType";
 import SaleValue from "../SaleValue";
 
+export interface ChannelSaleFormData extends ChannelSaleData {
+  percentageValue: string;
+  fixedValue: string;
+}
 export interface SaleDetailsPageFormData extends MetadataFormData {
-  channelListings: ChannelSaleData[];
+  channelListings: ChannelSaleFormData[];
   endDate: string;
   endTime: string;
   hasEndDate: boolean;
@@ -78,7 +82,7 @@ export interface SaleDetailsPageProps
   errors: DiscountErrorFragment[];
   sale: SaleDetails_sale;
   allChannelsCount: number;
-  channelListings: ChannelSaleData[];
+  channelListings: ChannelSaleFormData[];
   hasChannelChanged: boolean;
   saveButtonBarState: ConfirmButtonTransitionState;
   onBack: () => void;
@@ -97,7 +101,7 @@ export interface SaleDetailsPageProps
   onRemove: () => void;
   onSubmit: (data: SaleDetailsPageFormData) => void;
   onTabClick: (index: SaleDetailsPageTab) => void;
-  onChannelsChange: (data: ChannelSaleData[]) => void;
+  onChannelsChange: (data: ChannelSaleFormData[]) => void;
   openChannelsModal: () => void;
 }
 
@@ -169,10 +173,15 @@ const SaleDetailsPage: React.FC<SaleDetailsPageProps> = ({
         const handleChannelChange = createSaleChannelsChangeHandler(
           data.channelListings,
           onChannelsChange,
-          triggerChange
+          triggerChange,
+          data.type
         );
         const formDisabled = data.channelListings?.some(channel =>
-          validatePrice(channel.discountValue)
+          validatePrice(
+            data.type === SaleTypeEnum.PERCENTAGE
+              ? channel.percentageValue
+              : channel.fixedValue
+          )
         );
         const changeMetadata = makeMetadataChangeHandler(change);
 
