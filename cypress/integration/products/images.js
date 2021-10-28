@@ -67,6 +67,7 @@ filterTests({ definedTags: ["all"] }, () => {
     it("Should upload saved image", () => {
       const name = "CyImages";
 
+      cy.clearSessionData().loginUserViaRequest();
       loginDeleteProductsAndCreateNewOneWithNewDataAndDefaultChannel({ name })
         .then(product => {
           cy.visit(productDetailsUrl(product.id))

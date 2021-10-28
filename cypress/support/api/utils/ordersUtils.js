@@ -1,5 +1,9 @@
 import * as checkoutRequest from "../requests/Checkout";
 import * as orderRequest from "../requests/Order";
+import {
+  getPaymentMethodStripeId,
+  sendConfirmationToStripe
+} from "../requests/stripe";
 import { createProductInChannel } from "./products/productsUtils";
 
 export function createWaitingForCaptureOrder({
@@ -172,6 +176,14 @@ export function addAdyenPayment(checkoutId, amount) {
     amount
   });
 }
+export function addStripePayment(checkoutId, amount, token) {
+  return checkoutRequest.addPayment({
+    checkoutId,
+    gateway: "saleor.payments.stripe",
+    amount,
+    token
+  });
+}
 
 export function createAndCompleteCheckoutWithoutShipping({
   channelSlug,
@@ -225,4 +237,26 @@ export function createOrderWithNewProduct({
       });
     })
     .then(({ order, checkout }) => ({ order, checkout, variantsList }));
+}
+
+export function addStripePaymentAndGetConfirmationData({
+  card,
+  checkoutId,
+  amount
+}) {
+  let paymentMethodId;
+
+  return getPaymentMethodStripeId(card)
+    .then(resp => {
+      paymentMethodId = resp.body.id;
+      addStripePayment(checkoutId, amount, resp.body.id);
+    })
+    .then(() => {
+      checkoutRequest.completeCheckout(checkoutId);
+    })
+    .then(resp => {
+      const confirmationData = JSON.parse(resp.confirmationData);
+      sendConfirmationToStripe(paymentMethodId, confirmationData.id, false);
+    })
+    .then(resp => resp);
 }
