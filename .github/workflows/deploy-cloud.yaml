@@ -32,8 +32,8 @@ jobs:
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
-          aws-access-key-id: ${{ secrets.AWS_PROD_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_PROD_SECRET_ACCESS_KEY }}
+          aws-access-key-id: ${{ secrets.AWS_DASHBOARD_PROD_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_DASHBOARD_PROD_SECRET_ACCESS_KEY }}
           aws-region: us-east-1
       - name: Deploy
         run: |
@@ -61,6 +61,6 @@ jobs:
           JOB_DEPLOYMENT_KIND: production
           JOB_STATUS: ${{ job.status }}
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_CLOUD_DEPLOYMENTS_WEBHOOK_URL }}
-          JOB_TITLE: "Dashboard deployment to {{ env.ENVIRONMENT }}"
+          JOB_TITLE: "Dashboard deployment to ${{ env.ENVIRONMENT }}"
         run: |
           python3 ./.github/workflows/notify/notify-slack.py

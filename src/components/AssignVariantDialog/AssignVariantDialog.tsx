@@ -220,7 +220,10 @@ const AssignVariantDialog: React.FC<AssignVariantDialogProps> = props => {
                     </TableRow>
                     {maybe(() => product.variants, []).map(
                       (variant, variantIndex) => (
-                        <TableRow key={variant.id}>
+                        <TableRow
+                          key={variant.id}
+                          data-test-id="assign-variant-table-row"
+                        >
                           <TableCell />
                           <TableCell className={classes.colVariantCheckbox}>
                             <Checkbox

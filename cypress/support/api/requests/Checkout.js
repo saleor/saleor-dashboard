@@ -46,6 +46,7 @@ export function createCheckout({
       }
       created
       checkout{
+        token
         id
         token
         availableShippingMethods{
@@ -82,6 +83,7 @@ export function addShippingMethod(checkoutId, shippingMethodId) {
         field
     	}
     	checkout{
+        id
         shippingMethod{
           id
           name
@@ -99,6 +101,18 @@ export function addShippingMethod(checkoutId, shippingMethodId) {
     .its("body.data.checkoutShippingMethodUpdate");
 }
 
+export function deliveryMethodUpdate(deliveryMethodId, checkoutToken) {
+  const mutation = `mutation{
+    checkoutDeliveryMethodUpdate(deliveryMethodId:"${deliveryMethodId}", token:"${checkoutToken}"){
+      errors{
+        field
+        message
+      }
+    }
+  }`;
+  cy.sendRequestWithQuery(mutation);
+}
+
 export function addPayment({ checkoutId, gateway, token, amount }) {
   const tokenLine = getValueWithDefault(token, `token:"${token}"`);
   const amountLine = getValueWithDefault(amount, `amount: ${amount}`);
@@ -108,6 +122,7 @@ export function addPayment({ checkoutId, gateway, token, amount }) {
       gateway: "${gateway}"
       ${tokenLine}
       ${amountLine}
+      returnUrl: "https://qa.storefront.staging.saleor.cloud/checkout/payment-confirm"
     }){
       paymentErrors{
         field

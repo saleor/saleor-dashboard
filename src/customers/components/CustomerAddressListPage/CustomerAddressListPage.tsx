@@ -63,7 +63,7 @@ const useStyles = makeStyles(
     },
     root: {
       display: "grid",
-      gap: `${theme.spacing(3)}px`,
+      gap: theme.spacing(3),
       gridTemplateColumns: "repeat(3, 1fr)",
       [theme.breakpoints.down("md")]: {
         gridTemplateColumns: "repeat(2, 1fr)"

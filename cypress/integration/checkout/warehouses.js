@@ -3,8 +3,16 @@
 
 import faker from "faker";
 
-import { createCheckout } from "../../support/api/requests/Checkout";
+import { WAREHOUSES_DETAILS } from "../../elements/warehouses/warehouse-details";
+import {
+  completeCheckout,
+  createCheckout,
+  deliveryMethodUpdate
+} from "../../support/api/requests/Checkout";
+import { getOrder } from "../../support/api/requests/Order";
+import { updateWarehouse } from "../../support/api/requests/Warehouse";
 import { getDefaultChannel } from "../../support/api/utils/channelsUtils";
+import { addPayment } from "../../support/api/utils/ordersUtils";
 import {
   createProductInChannel,
   createTypeAttributeAndCategoryForProduct,
@@ -16,6 +24,7 @@ import {
 } from "../../support/api/utils/shippingUtils";
 import filterTests from "../../support/filterTests";
 import {
+  createWarehouse,
   pickupOptions,
   visitAndEnablePickup,
   visitSetPublicStockAndEnablePickup
@@ -26,6 +35,7 @@ filterTests({ definedTags: ["all"] }, () => {
     const startsWith = `CyWarehouseCheckout`;
     let defaultChannel;
     let usAddress;
+    let secondUsAddress;
     let plAddress;
     let productData;
     let checkoutData;
@@ -38,6 +48,7 @@ filterTests({ definedTags: ["all"] }, () => {
       cy.fixture("addresses")
         .then(addresses => {
           usAddress = addresses.usAddress;
+          secondUsAddress = addresses.secondUsAddress;
           plAddress = addresses.plAddress;
           getDefaultChannel();
         })
@@ -57,17 +68,18 @@ filterTests({ definedTags: ["all"] }, () => {
             returnAvailableCollectionPoints: true,
             channelSlug: defaultChannel.slug,
             email: "example@example.com",
-            address: plAddress
+            address: secondUsAddress
           };
           createShipping({
             channelId: defaultChannel.id,
             name: startsWith,
-            address: plAddress
+            address: secondUsAddress
           });
         })
         .then(({ warehouse: warehouseResp }) => {
           productData.name = startsWith;
           productData.warehouseId = warehouseResp.id;
+          updateWarehouse({ id: productData.warehouseId, isPrivate: false });
           createProductInChannel(productData);
         })
         .then(({ variantsList }) => {
@@ -86,7 +98,7 @@ filterTests({ definedTags: ["all"] }, () => {
       createShipping({
         channelId: defaultChannel.id,
         name,
-        address: plAddress
+        address: secondUsAddress
       })
         .then(({ warehouse: warehouseResp }) => {
           warehouse = warehouseResp;
@@ -102,7 +114,9 @@ filterTests({ definedTags: ["all"] }, () => {
           createCheckout(checkoutData);
         })
         .then(({ checkout }) => {
-          const clickAndCollectOption = checkout.availableCollectionPoints[0];
+          const clickAndCollectOption = checkout.availableCollectionPoints.find(
+            element => element.id === warehouse.id
+          );
           expect(clickAndCollectOption.clickAndCollectOption).to.eq("ALL");
           expect(clickAndCollectOption.id).to.eq(warehouse.id);
           expect(clickAndCollectOption.isPrivate).to.eq(true);
@@ -117,7 +131,7 @@ filterTests({ definedTags: ["all"] }, () => {
       createShipping({
         channelId: defaultChannel.id,
         name,
-        address: plAddress
+        address: secondUsAddress
       })
         .then(({ warehouse: warehouseResp }) => {
           warehouse = warehouseResp;
@@ -133,7 +147,9 @@ filterTests({ definedTags: ["all"] }, () => {
           createCheckout(checkoutData);
         })
         .then(({ checkout }) => {
-          const clickAndCollectOption = checkout.availableCollectionPoints[0];
+          const clickAndCollectOption = checkout.availableCollectionPoints.find(
+            element => element.id === warehouse.id
+          );
           expect(clickAndCollectOption.clickAndCollectOption).to.eq("ALL");
           expect(clickAndCollectOption.id).to.eq(warehouse.id);
           expect(clickAndCollectOption.isPrivate).to.eq(false);
@@ -149,7 +165,7 @@ filterTests({ definedTags: ["all"] }, () => {
       createShipping({
         channelId: defaultChannel.id,
         name,
-        address: plAddress
+        address: secondUsAddress
       })
         .then(({ warehouse: warehouseResp }) => {
           warehouse = warehouseResp;
@@ -167,8 +183,8 @@ filterTests({ definedTags: ["all"] }, () => {
         })
         .then(({ checkout }) => {
           expect(checkout.availableCollectionPoints).to.have.length(
-            0,
-            "there should be no available collection point"
+            1,
+            "there should be no available collection point for local stock"
           );
           checkoutData.variantsList = variantsInLocalStock;
           createCheckout(checkoutData);
@@ -182,6 +198,39 @@ filterTests({ definedTags: ["all"] }, () => {
         });
     });
 
+    it("should not be possible to set local pickup when private stock", () => {
+      const name = `${startsWith}${faker.datatype.number()}`;
+      createWarehouse({ name, address: usAddress });
+      cy.get(WAREHOUSES_DETAILS.clickAndCollectLocalStockRadioButton).should(
+        "not.exist"
+      );
+    });
+
+    it("should create order with warehouse address", () => {
+      const name = `${startsWith}${faker.datatype.number()}`;
+      let checkout;
+      checkoutData.variantsList = variantsInOtherWarehouse;
+      createCheckout(checkoutData)
+        .then(({ checkout: checkoutResp }) => {
+          checkout = checkoutResp;
+          const clickAndCollectOption = checkout.availableCollectionPoints[0];
+          deliveryMethodUpdate(clickAndCollectOption.id, checkout.token);
+        })
+        .then(() => {
+          addPayment(checkout.id);
+        })
+        .then(() => {
+          completeCheckout(checkout.id);
+        })
+        .then(({ order }) => {
+          getOrder(order.id);
+        })
+        .then(order => {
+          cy.expectCorrectBasicAddress(order.shippingAddress, secondUsAddress);
+          cy.expectCorrectBasicAddress(order.billingAddress, usAddress);
+        });
+    });
+
     it("should not be possible to buy product for country not listed in warehouse", () => {
       const name = `${startsWith}${faker.datatype.number()}`;
       let warehouse;
@@ -189,7 +238,7 @@ filterTests({ definedTags: ["all"] }, () => {
       createShipping({
         channelId: defaultChannel.id,
         name,
-        address: usAddress
+        address: plAddress
       })
         .then(({ warehouse: warehouseResp }) => {
           warehouse = warehouseResp;

@@ -1,6 +1,6 @@
 import GiftCardListPageDeleteDialog from "@saleor/giftCards/components/GiftCardDeleteDialog/GiftCardListPageDeleteDialog";
 import GiftCardCreateDialog from "@saleor/giftCards/GiftCardCreateDialog";
-import { giftCardsListUrl } from "@saleor/giftCards/urls";
+import { giftCardListUrl } from "@saleor/giftCards/urls";
 import useNavigator from "@saleor/hooks/useNavigator";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import React, { createContext } from "react";
@@ -18,6 +18,8 @@ interface GiftCardListDialogsProviderProps {
 export interface GiftCardListDialogsConsumerProps {
   openCreateDialog: () => void;
   openDeleteDialog: (id?: string | React.MouseEvent) => void;
+  openSearchSaveDialog: () => void;
+  openSearchDeleteDialog: () => void;
   closeDialog: () => void;
   id: string;
 }
@@ -37,7 +39,7 @@ const GiftCardListDialogsProvider: React.FC<GiftCardListDialogsProviderProps> = 
   const [openDialog, closeDialog] = createDialogActionHandlers<
     GiftCardListActionParamsEnum,
     GiftCardListUrlQueryParams
-  >(navigate, giftCardsListUrl, params);
+  >(navigate, giftCardListUrl, params);
 
   const openCreateDialog = () =>
     openDialog(GiftCardListActionParamsEnum.CREATE);
@@ -55,9 +57,17 @@ const GiftCardListDialogsProvider: React.FC<GiftCardListDialogsProviderProps> = 
     );
   };
 
+  const openSearchDeleteDialog = () =>
+    openDialog(GiftCardListActionParamsEnum.DELETE_SEARCH);
+
+  const openSearchSaveDialog = () =>
+    openDialog(GiftCardListActionParamsEnum.SAVE_SEARCH);
+
   const providerValues: GiftCardListDialogsConsumerProps = {
     openCreateDialog,
     openDeleteDialog: handleDeleteDialogOpen,
+    openSearchSaveDialog,
+    openSearchDeleteDialog,
     closeDialog,
     id
   };

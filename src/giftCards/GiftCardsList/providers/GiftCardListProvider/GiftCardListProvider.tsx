@@ -15,6 +15,7 @@ import { ListViews } from "@saleor/types";
 import { mapEdgesToItems } from "@saleor/utils/maps";
 import React, { createContext } from "react";
 
+import { getFilterVariables } from "../../GiftCardListSearchAndFilters/filters";
 import { useGiftCardListQuery } from "../../queries";
 import { GiftCardListColummns, GiftCardListUrlQueryParams } from "../../types";
 import {
@@ -65,7 +66,8 @@ export const GiftCardsListProvider: React.FC<GiftCardsListProviderProps> = ({
 
   const queryVariables = React.useMemo<GiftCardListVariables>(
     () => ({
-      ...paginationState
+      ...paginationState,
+      filter: getFilterVariables(params)
     }),
     [params]
   );

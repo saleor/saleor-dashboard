@@ -28,6 +28,7 @@ export function getFirstProducts(first, search) {
     .sendRequestWithQuery(query)
     .then(resp => resp.body.data.products.edges);
 }
+
 export function updateProduct(productId, input) {
   const mutation = `mutation {
     productUpdate(id:"${productId}", input:${stringify(input)} ){

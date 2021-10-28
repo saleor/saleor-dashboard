@@ -9,6 +9,7 @@ import {
   UpdatePrivateMetadata,
   UpdatePrivateMetadataVariables
 } from "../metadata/types/UpdatePrivateMetadata";
+import { filterMetadataArray } from "./filterMetadataArray";
 
 function createMetadataCreateHandler<T extends MetadataFormData>(
   create: (data: T) => Promise<string>,
@@ -29,7 +30,7 @@ function createMetadataCreateHandler<T extends MetadataFormData>(
       const updateMetaResult = await setMetadata({
         variables: {
           id,
-          input: data.metadata,
+          input: filterMetadataArray(data.metadata),
           keysToDelete: []
         }
       });
@@ -47,7 +48,7 @@ function createMetadataCreateHandler<T extends MetadataFormData>(
       const updatePrivateMetaResult = await setPrivateMetadata({
         variables: {
           id,
-          input: data.privateMetadata,
+          input: filterMetadataArray(data.privateMetadata),
           keysToDelete: []
         }
       });

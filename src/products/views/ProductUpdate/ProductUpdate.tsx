@@ -30,6 +30,7 @@ import useShop from "@saleor/hooks/useShop";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { commonMessages, errorMessages } from "@saleor/intl";
 import ProductVariantCreateDialog from "@saleor/products/components/ProductVariantCreateDialog";
+import ProductVariantEndPreorderDialog from "@saleor/products/components/ProductVariantEndPreorderDialog";
 import {
   useProductChannelListingUpdate,
   useProductDeleteMutation,
@@ -39,6 +40,7 @@ import {
   useProductUpdateMutation,
   useProductVariantBulkDeleteMutation,
   useProductVariantChannelListingUpdate,
+  useProductVariantPreorderDeactivateMutation,
   useProductVariantReorderMutation,
   useSimpleProductUpdateMutation,
   useVariantCreateMutation
@@ -265,6 +267,11 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
     ProductUrlQueryParams
   >(navigate, params => productUrl(id, params), params);
 
+  const [
+    isEndPreorderModalOpened,
+    setIsEndPreorderModalOpened
+  ] = React.useState(false);
+
   const product = data?.product;
 
   const allChannels: ChannelData[] = createChannelsDataWithPrice(
@@ -406,12 +413,25 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
     reorderProductVariants({ variables })
   );
 
+  const handleDeactivatePreorder = async () => {
+    await handleDeactivateVariantPreorder(product.variants[0].id);
+    setIsEndPreorderModalOpened(false);
+  };
+
+  const [
+    deactivatePreorder,
+    deactivatePreoderOpts
+  ] = useProductVariantPreorderDeactivateMutation({});
+  const handleDeactivateVariantPreorder = (id: string) =>
+    deactivatePreorder({ variables: { id } });
+
   const handleAssignAttributeReferenceClick = (attribute: AttributeInput) =>
     navigate(
       productUrl(id, {
         action: "assign-attribute-value",
         id: attribute.id
-      })
+      }),
+      { resetScroll: false }
     );
 
   const disableFormSave =
@@ -424,6 +444,7 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
     updateChannelsOpts.loading ||
     updateVariantChannelsOpts.loading ||
     productVariantCreateOpts.loading ||
+    deactivatePreoderOpts.loading ||
     deleteAttributeValueOpts.loading ||
     createProductMediaOpts.loading ||
     loading;
@@ -563,6 +584,7 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
         onVariantShow={variantId => () =>
           navigate(productVariantEditUrl(product.id, variantId))}
         onVariantReorder={handleVariantReorder}
+        onVariantEndPreorderDialogOpen={() => setIsEndPreorderModalOpened(true)}
         onImageUpload={handleImageUpload}
         onImageEdit={handleImageEdit}
         onImageDelete={handleImageDelete}
@@ -598,7 +620,7 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
         fetchReferenceProducts={searchProducts}
         fetchMoreReferenceProducts={fetchMoreReferenceProducts}
         fetchMoreAttributeValues={fetchMoreAttributeValues}
-        onCloseDialog={() => navigate(productUrl(id))}
+        onCloseDialog={() => navigate(productUrl(id), { resetScroll: false })}
         onAttributeSelectBlur={searchAttributeReset}
       />
       <ActionDialog
@@ -647,6 +669,15 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
           option === "multiple" ? handleVariantsAdd() : handleVariantAdd()
         }
       />
+      {isSimpleProduct && !!product?.variants?.[0].preorder && (
+        <ProductVariantEndPreorderDialog
+          confirmButtonState={deactivatePreoderOpts.status}
+          onClose={() => setIsEndPreorderModalOpened(false)}
+          onConfirm={handleDeactivatePreorder}
+          open={isEndPreorderModalOpened}
+          variantGlobalSoldUnits={product.variants[0].preorder.globalSoldUnits}
+        />
+      )}
     </>
   );
 };

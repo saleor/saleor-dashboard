@@ -8,7 +8,7 @@ export const giftCardsSectionUrlName = "/gift-cards";
 
 export const giftCardsListPath = `${giftCardsSectionUrlName}/`;
 
-export const giftCardsListUrl = (params?: GiftCardListUrlQueryParams) =>
+export const giftCardListUrl = (params?: GiftCardListUrlQueryParams) =>
   giftCardsListPath + "?" + stringifyQs(params);
 
 export const giftCardUrl = (

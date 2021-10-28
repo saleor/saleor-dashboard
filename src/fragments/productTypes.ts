@@ -30,6 +30,12 @@ export const productTypeDetailsFragment = gql`
     variantAttributes {
       ...AttributeFragment
     }
+    assignedVariantAttributes {
+      attribute {
+        ...AttributeFragment
+      }
+      variantSelection
+    }
     weight {
       unit
       value
