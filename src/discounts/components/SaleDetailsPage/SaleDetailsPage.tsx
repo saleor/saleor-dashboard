@@ -1,4 +1,4 @@
-import { Channel, ChannelSaleData } from "@saleor/channels/utils";
+import { ChannelSaleData, validateSalePrice } from "@saleor/channels/utils";
 import CardSpacer from "@saleor/components/CardSpacer";
 import ChannelsAvailabilityCard from "@saleor/components/ChannelsAvailabilityCard";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
@@ -177,11 +177,7 @@ const SaleDetailsPage: React.FC<SaleDetailsPageProps> = ({
           data.type
         );
         const formDisabled = data.channelListings?.some(channel =>
-          validatePrice(
-            data.type === SaleTypeEnum.PERCENTAGE
-              ? channel.percentageValue
-              : channel.fixedValue
-          )
+          validateSalePrice(data, channel)
         );
         const changeMetadata = makeMetadataChangeHandler(change);
 

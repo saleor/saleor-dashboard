@@ -1,6 +1,9 @@
 import { Channels_channels } from "@saleor/channels/types/Channels";
 import { CollectionDetails_collection } from "@saleor/collections/types/CollectionDetails";
-import { ChannelSaleFormData } from "@saleor/discounts/components/SaleDetailsPage";
+import {
+  ChannelSaleFormData,
+  SaleDetailsPageFormData
+} from "@saleor/discounts/components/SaleDetailsPage";
 import { SaleDetails_sale } from "@saleor/discounts/types/SaleDetails";
 import { VoucherDetails_voucher } from "@saleor/discounts/types/VoucherDetails";
 import { RequireOnlyOne } from "@saleor/misc";
@@ -9,6 +12,7 @@ import {
   ProductDetails_product_variants
 } from "@saleor/products/types/ProductDetails";
 import { ProductVariantDetails_productVariant } from "@saleor/products/types/ProductVariantDetails";
+import { validatePrice } from "@saleor/products/utils/validation";
 import {
   ShippingZone_shippingZone_channels,
   ShippingZone_shippingZone_shippingMethods_channelListings
@@ -99,7 +103,9 @@ export const createSaleChannels = (data?: BaseChannels_channels[]) =>
     currency: channel.currencyCode,
     discountValue: "",
     id: channel.id,
-    name: channel.name
+    name: channel.name,
+    percentageValue: "",
+    fixedValue: ""
   }));
 
 export const createVariantChannels = (
@@ -363,3 +369,13 @@ export const getChannelsCurrencyChoices = (
         )
       )
     : [];
+
+export const validateSalePrice = (
+  data: SaleDetailsPageFormData,
+  channel: ChannelSaleFormData
+) =>
+  validatePrice(
+    data.type === SaleType.PERCENTAGE
+      ? channel.percentageValue
+      : channel.fixedValue
+  );
