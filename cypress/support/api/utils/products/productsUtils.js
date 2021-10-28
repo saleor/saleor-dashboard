@@ -10,6 +10,7 @@ import {
 import { deleteAttributesStartsWith } from "../attributes/attributeUtils";
 import { deleteCollectionsStartsWith } from "../catalog/collectionsUtils";
 import { getDefaultChannel } from "../channelsUtils";
+import { createShipping } from "../shippingUtils";
 
 export function createProductInChannel({
   name,
@@ -107,15 +108,15 @@ export function deleteProductsStartsWith(startsWith) {
   );
 }
 
-export function loginDeleteProductsAndCreateNewOneWithNewDataAndDefaultChannel({
+export function deleteProductsAndCreateNewOneWithNewDataAndDefaultChannel({
   name,
-  description = name
+  description = name,
+  warehouseId
 }) {
   let defaultChannel;
   let collection;
   let attribute;
 
-  cy.clearSessionData().loginUserViaRequest();
   deleteProductsStartsWith(name);
   deleteCollectionsStartsWith(name);
   return getDefaultChannel()
@@ -136,8 +137,57 @@ export function loginDeleteProductsAndCreateNewOneWithNewDataAndDefaultChannel({
         channelId: defaultChannel.id,
         name,
         collectionId: collection.id,
-        description
+        description,
+        warehouseId
       });
     })
-    .then(({ product: productResp }) => productResp);
+    .then(({ product, variantsList }) => ({ product, variantsList }));
+}
+
+export function createProductWithShipping({ name }) {
+  let address;
+  let warehouse;
+  let shippingMethod;
+  let defaultChannel;
+  let shippingZone;
+
+  return cy
+    .fixture("addresses")
+    .then(addresses => {
+      address = addresses.usAddress;
+      getDefaultChannel();
+    })
+    .then(channelResp => {
+      defaultChannel = channelResp;
+      createShipping({
+        channelId: defaultChannel.id,
+        name,
+        address,
+        price: 10
+      });
+    })
+    .then(
+      ({
+        warehouse: warehouseResp,
+        shippingZone: shippingZoneResp,
+        shippingMethod: shippingMethodResp
+      }) => {
+        warehouse = warehouseResp;
+        shippingMethod = shippingMethodResp;
+        shippingZone = shippingZoneResp;
+        deleteProductsAndCreateNewOneWithNewDataAndDefaultChannel({
+          name,
+          warehouseId: warehouse.id
+        });
+      }
+    )
+    .then(({ variantsList, product }) => ({
+      variantsList,
+      product,
+      warehouse,
+      shippingZone,
+      defaultChannel,
+      shippingMethod,
+      address
+    }));
 }

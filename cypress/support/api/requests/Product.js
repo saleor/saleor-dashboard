@@ -1,5 +1,9 @@
 import { stringify } from "../.././formatData/formatJson";
-import { getValueWithDefault, getVariantsListIds } from "./utils/Utils";
+import {
+  getValuesInArray,
+  getValueWithDefault,
+  getVariantsListIds
+} from "./utils/Utils";
 
 export function getFirstProducts(first, search) {
   const filter = search
@@ -148,7 +152,8 @@ export function createVariant({
   price = 1,
   costPrice = 1,
   trackInventory = true,
-  weight = 1
+  weight = 1,
+  attributeValues = ["value"]
 }) {
   const channelListings = getValueWithDefault(
     channelId,
@@ -171,7 +176,7 @@ export function createVariant({
     productVariantBulkCreate(product: "${productId}", variants: {
       attributes: [{
         id:"${attributeId}"
-        values: ["value"]
+        values: ${getValuesInArray(attributeValues)}
       }]
       weight: ${weight}
       sku: "${sku}"
