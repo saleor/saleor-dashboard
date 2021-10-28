@@ -1,9 +1,4 @@
-import { SaleType } from "@saleor/types/globalTypes";
-
-export type SaleValueInputChangeType = (
+export type SaleValueInputOnChangeType = (
   channelId: string,
-  discountValue: string,
-  percentageValue: string,
-  fixedValue: string,
-  saleType: SaleType
+  passedValue: string
 ) => void;
