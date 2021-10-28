@@ -5,7 +5,7 @@ import { useIntl } from "react-intl";
 
 import { bulkEnableDisableSectionMessages as buttonMessages } from "../../GiftCardsList/GiftCardsListTable/GiftCardsListTableHeader/messages";
 import useGiftCardDetails from "../providers/GiftCardDetailsProvider/hooks/useGiftCardDetails";
-import useGiftCardActivationDeactivation from "./hooks/useGiftCardActivationDeactivation";
+import useGiftCardActivateToggle from "./hooks/useGiftCardActivateToggle";
 
 const GiftCardEnableDisableSection: React.FC = () => {
   const intl = useIntl();
@@ -22,7 +22,7 @@ const GiftCardEnableDisableSection: React.FC = () => {
     giftCardActivate,
     giftCardDeactivate,
     currentOpts
-  } = useGiftCardActivationDeactivation({
+  } = useGiftCardActivateToggle({
     isActive
   });
 

@@ -10,17 +10,17 @@ import {
 import { GiftCardActivate } from "../types/GiftCardActivate";
 import { GiftCardDeactivate } from "../types/GiftCardDeactivate";
 
-interface UseGiftCardActivationDeactivationProps {
+interface useGiftCardActivateToggleProps {
   onActivateActionComplete?: () => void | undefined;
   onDeactivateActionComplete?: () => void | undefined;
   isActive?: boolean;
 }
 
-const useGiftCardActivationDeactivation = ({
+const useGiftCardActivateToggle = ({
   onActivateActionComplete,
   onDeactivateActionComplete,
   isActive
-}: UseGiftCardActivationDeactivationProps) => {
+}: useGiftCardActivateToggleProps) => {
   const intl = useIntl();
   const notify = useNotifier();
 
@@ -89,4 +89,4 @@ const useGiftCardActivationDeactivation = ({
   };
 };
 
-export default useGiftCardActivationDeactivation;
+export default useGiftCardActivateToggle;

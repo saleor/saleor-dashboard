@@ -1,7 +1,7 @@
 import CardMenu, { CardMenuItem } from "@saleor/components/CardMenu";
 import { bulkEnableDisableSectionMessages } from "@saleor/giftCards/GiftCardsList/GiftCardsListTable/GiftCardsListTableHeader/messages";
 import { giftCardsListTableMessages } from "@saleor/giftCards/GiftCardsList/messages";
-import useGiftCardActivationDeactivation from "@saleor/giftCards/GiftCardUpdate/GiftCardUpdatePageHeader/hooks/useGiftCardActivationDeactivation";
+import useGiftCardActivateToggle from "@saleor/giftCards/GiftCardUpdate/GiftCardUpdatePageHeader/hooks/useGiftCardActivateToggle";
 import { ExtendedGiftCard } from "@saleor/giftCards/GiftCardUpdate/providers/GiftCardDetailsProvider/types";
 import * as React from "react";
 import { useState } from "react";
@@ -35,7 +35,7 @@ const CustomerGiftCardsCardListItem: React.FC<CustomerGiftCardsCardListItemProps
     giftCardDeactivate,
     giftCardActivateOpts,
     giftCardDeactivateOpts
-  } = useGiftCardActivationDeactivation({
+  } = useGiftCardActivateToggle({
     isActive
   });
 
