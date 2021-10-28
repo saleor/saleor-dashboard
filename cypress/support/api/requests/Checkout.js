@@ -48,8 +48,22 @@ export function createCheckout({
       checkout{
         token
         id
+        token
         availableShippingMethods{
           name
+        }
+        lines{
+          variant{
+            id
+            pricing{
+              onSale
+              price{
+                gross{
+                  amount
+                }
+              }
+            }
+          }
         }
         ${availableCollectionPointsLines}
       }
