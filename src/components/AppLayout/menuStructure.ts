@@ -61,7 +61,10 @@ function createMenuStructure(intl: IntlShape, user: User): SidebarMenuItem[] {
       ],
       iconSrc: catalogIcon,
       label: intl.formatMessage(commonMessages.catalog),
-      permissions: [PermissionEnum.MANAGE_PRODUCTS],
+      permissions: [
+        PermissionEnum.MANAGE_GIFT_CARD,
+        PermissionEnum.MANAGE_PRODUCTS
+      ],
       id: "catalogue"
     },
     {
