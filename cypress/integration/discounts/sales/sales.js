@@ -6,12 +6,9 @@ import faker from "faker";
 import { SALES_SELECTORS } from "../../../elements/discounts/sales";
 import { BUTTON_SELECTORS } from "../../../elements/shared/button-selectors";
 import { SHARED_ELEMENTS } from "../../../elements/shared/sharedElements";
-import { saleDetailsUrl, urlList } from "../../../fixtures/urlList";
+import { saleDetailsUrl } from "../../../fixtures/urlList";
 import { createCheckout } from "../../../support/api/requests/Checkout";
-import {
-  deleteSale,
-  updateSale
-} from "../../../support/api/requests/Discounts/Sales";
+import { updateSale } from "../../../support/api/requests/Discounts/Sales";
 import {
   createVariant,
   getVariant
