@@ -155,6 +155,8 @@ export function createVariant({
   weight = 1,
   attributeValues = ["value"]
 }) {
+  const skuLines = getValueWithDefault(sku, `sku: "${sku}"`);
+
   const channelListings = getValueWithDefault(
     channelId,
     `channelListings:{
@@ -179,7 +181,7 @@ export function createVariant({
         values: ${getValuesInArray(attributeValues)}
       }]
       weight: ${weight}
-      sku: "${sku}"
+      ${skuLines}
       ${channelListings}
       trackInventory:${trackInventory}
       ${stocks}
