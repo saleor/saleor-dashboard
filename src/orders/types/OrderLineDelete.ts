@@ -492,17 +492,19 @@ export interface OrderLineDelete_orderLineDelete_order_user {
   email: string;
 }
 
-export interface OrderLineDelete_orderLineDelete_order_availableShippingMethods_price {
+export interface OrderLineDelete_orderLineDelete_order_shippingMethods_price {
   __typename: "Money";
   amount: number;
   currency: string;
 }
 
-export interface OrderLineDelete_orderLineDelete_order_availableShippingMethods {
+export interface OrderLineDelete_orderLineDelete_order_shippingMethods {
   __typename: "ShippingMethod";
   id: string;
   name: string;
-  price: OrderLineDelete_orderLineDelete_order_availableShippingMethods_price | null;
+  price: OrderLineDelete_orderLineDelete_order_shippingMethods_price;
+  active: boolean;
+  message: string | null;
 }
 
 export interface OrderLineDelete_orderLineDelete_order_invoices {
@@ -553,7 +555,7 @@ export interface OrderLineDelete_orderLineDelete_order {
   undiscountedTotal: OrderLineDelete_orderLineDelete_order_undiscountedTotal;
   user: OrderLineDelete_orderLineDelete_order_user | null;
   userEmail: string | null;
-  availableShippingMethods: (OrderLineDelete_orderLineDelete_order_availableShippingMethods | null)[] | null;
+  shippingMethods: OrderLineDelete_orderLineDelete_order_shippingMethods[];
   invoices: (OrderLineDelete_orderLineDelete_order_invoices | null)[] | null;
   channel: OrderLineDelete_orderLineDelete_order_channel;
   isPaid: boolean;

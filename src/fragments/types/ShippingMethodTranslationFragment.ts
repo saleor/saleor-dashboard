@@ -10,7 +10,7 @@ import { LanguageCodeEnum } from "./../../types/globalTypes";
 // ====================================================
 
 export interface ShippingMethodTranslationFragment_shippingMethod {
-  __typename: "ShippingMethod";
+  __typename: "ShippingMethodType";
   id: string;
 }
 

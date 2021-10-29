@@ -193,6 +193,16 @@ const WebhookEvents: React.FC<WebhookEventsProps> = ({
     [WebhookEventTypeEnum.TRANSLATION_UPDATED]: intl.formatMessage({
       defaultMessage: "Translation updated",
       description: "event"
+    }),
+    [WebhookEventTypeEnum.CHECKOUT_FILTER_SHIPPING_METHODS]: intl.formatMessage(
+      {
+        defaultMessage: "Filter shipping methods for checkout",
+        description: "event"
+      }
+    ),
+    [WebhookEventTypeEnum.ORDER_FILTER_SHIPPING_METHODS]: intl.formatMessage({
+      defaultMessage: "Filter shipping methods for order",
+      description: "event"
     })
   };
 
