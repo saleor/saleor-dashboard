@@ -12,6 +12,7 @@ import {
   UpdatePrivateMetadata,
   UpdatePrivateMetadataVariables
 } from "../metadata/types/UpdatePrivateMetadata";
+import { filterMetadataArray } from "./filterMetadataArray";
 
 interface ObjectWithMetadata {
   id: string;
@@ -47,9 +48,10 @@ function createMetadataUpdateHandler<TData extends MetadataFormData, TError>(
 
         const updateMetaResult = await updateMetadata({
           id: initial.id,
-          input: data.metadata,
+          input: filterMetadataArray(data.metadata),
           keysToDelete: keyDiff.removed
         });
+
         const updateMetaErrors = [
           ...(updateMetaResult.data.deleteMetadata.errors || []),
           ...(updateMetaResult.data.updateMetadata.errors || [])
@@ -68,7 +70,7 @@ function createMetadataUpdateHandler<TData extends MetadataFormData, TError>(
 
         const updatePrivateMetaResult = await updatePrivateMetadata({
           id: initial.id,
-          input: data.privateMetadata,
+          input: filterMetadataArray(data.privateMetadata),
           keysToDelete: keyDiff.removed
         });
 
