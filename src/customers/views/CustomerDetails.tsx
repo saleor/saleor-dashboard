@@ -1,36 +1,18 @@
-import { DialogContentText } from "@material-ui/core";
-import ActionDialog from "@saleor/components/ActionDialog";
-import NotFoundPage from "@saleor/components/NotFoundPage";
-import { WindowTitle } from "@saleor/components/WindowTitle";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { commonMessages } from "@saleor/intl";
-import { getStringOrPlaceholder } from "@saleor/misc";
-import createMetadataUpdateHandler from "@saleor/utils/handlers/metadataUpdateHandler";
-import {
-  useMetadataUpdate,
-  usePrivateMetadataUpdate
-} from "@saleor/utils/metadata/updateMetadata";
 import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+import { useIntl } from "react-intl";
 
-import { orderListUrl, orderUrl } from "../../orders/urls";
-import CustomerDetailsPage, {
-  CustomerDetailsPageFormData
-} from "../components/CustomerDetailsPage/CustomerDetailsPage";
 import {
   TypedRemoveCustomerMutation,
   TypedUpdateCustomerMutation
 } from "../mutations";
-import { TypedCustomerDetailsQuery } from "../queries";
+import { CustomerDetailsProvider } from "../providers/CustomerDetailsProvider";
 import { RemoveCustomer } from "../types/RemoveCustomer";
 import { UpdateCustomer } from "../types/UpdateCustomer";
-import {
-  customerAddressesUrl,
-  customerListUrl,
-  customerUrl,
-  CustomerUrlQueryParams
-} from "../urls";
+import { customerListUrl, CustomerUrlQueryParams } from "../urls";
+import { CustomerDetailsContent } from "./CustomerDetailsContent";
 
 interface CustomerDetailsViewProps {
   id: string;
@@ -75,107 +57,18 @@ export const CustomerDetailsView: React.FC<CustomerDetailsViewProps> = ({
       {(removeCustomer, removeCustomerOpts) => (
         <TypedUpdateCustomerMutation onCompleted={handleCustomerUpdateSuccess}>
           {(updateCustomer, updateCustomerOpts) => (
-            <TypedCustomerDetailsQuery displayLoader variables={{ id }}>
-              {customerDetails => {
-                const user = customerDetails.data?.user;
-
-                if (user === null) {
-                  return <NotFoundPage onBack={handleBack} />;
-                }
-
-                const [updateMetadata] = useMetadataUpdate({});
-                const [updatePrivateMetadata] = usePrivateMetadataUpdate({});
-
-                const updateData = async (
-                  data: CustomerDetailsPageFormData
-                ) => {
-                  const result = await updateCustomer({
-                    variables: {
-                      id,
-                      input: {
-                        email: data.email,
-                        firstName: data.firstName,
-                        isActive: data.isActive,
-                        lastName: data.lastName,
-                        note: data.note
-                      }
-                    }
-                  });
-
-                  return result.data.customerUpdate.errors;
-                };
-
-                const handleSubmit = createMetadataUpdateHandler(
-                  user,
-                  updateData,
-                  variables => updateMetadata({ variables }),
-                  variables => updatePrivateMetadata({ variables })
-                );
-
-                return (
-                  <>
-                    <WindowTitle title={user?.email} />
-                    <CustomerDetailsPage
-                      customer={user}
-                      disabled={
-                        customerDetails.loading ||
-                        updateCustomerOpts.loading ||
-                        removeCustomerOpts.loading
-                      }
-                      errors={
-                        updateCustomerOpts.data?.customerUpdate.errors || []
-                      }
-                      saveButtonBar={updateCustomerOpts.status}
-                      onAddressManageClick={() =>
-                        navigate(customerAddressesUrl(id))
-                      }
-                      onBack={handleBack}
-                      onRowClick={id => navigate(orderUrl(id))}
-                      onSubmit={handleSubmit}
-                      onDelete={() =>
-                        navigate(
-                          customerUrl(id, {
-                            action: "remove"
-                          })
-                        )
-                      }
-                      onViewAllOrdersClick={() =>
-                        navigate(
-                          orderListUrl({
-                            customer: user?.email
-                          })
-                        )
-                      }
-                    />
-                    <ActionDialog
-                      confirmButtonState={removeCustomerOpts.status}
-                      onClose={() => navigate(customerUrl(id), true)}
-                      onConfirm={() => removeCustomer()}
-                      title={intl.formatMessage({
-                        defaultMessage: "Delete Customer",
-                        description: "dialog header"
-                      })}
-                      variant="delete"
-                      open={params.action === "remove"}
-                    >
-                      <DialogContentText>
-                        <FormattedMessage
-                          defaultMessage="Are you sure you want to delete {email}?"
-                          description="delete customer, dialog content"
-                          values={{
-                            email: (
-                              <strong>
-                                {getStringOrPlaceholder(user?.email)}
-                              </strong>
-                            )
-                          }}
-                        />
-                      </DialogContentText>
-                    </ActionDialog>
-                  </>
-                );
-              }}
-            </TypedCustomerDetailsQuery>
+            <CustomerDetailsProvider id={id}>
+              <CustomerDetailsContent
+                handleBack={handleBack}
+                id={id}
+                navigate={navigate}
+                params={params}
+                removeCustomer={removeCustomer}
+                removeCustomerOpts={removeCustomerOpts}
+                updateCustomer={updateCustomer}
+                updateCustomerOpts={updateCustomerOpts}
+              />
+            </CustomerDetailsProvider>
           )}
         </TypedUpdateCustomerMutation>
       )}

@@ -54,6 +54,7 @@ const useStyles = makeStyles(
 interface ExtendedPageHeaderProps {
   children?: React.ReactNode;
   className?: string;
+  childrenWrapperClassName?: string;
   inline?: boolean;
   underline?: boolean;
   title?: React.ReactNode;
@@ -61,7 +62,15 @@ interface ExtendedPageHeaderProps {
 }
 
 const ExtendedPageHeader: React.FC<ExtendedPageHeaderProps> = props => {
-  const { children, className, inline, underline, title, testId } = props;
+  const {
+    children,
+    className,
+    childrenWrapperClassName,
+    inline,
+    underline,
+    title,
+    testId
+  } = props;
 
   const classes = useStyles(props);
 
@@ -75,7 +84,9 @@ const ExtendedPageHeader: React.FC<ExtendedPageHeaderProps> = props => {
         })}
       >
         {title}
-        <div className={classes.action}>{children}</div>
+        <div className={classNames(classes.action, childrenWrapperClassName)}>
+          {children}
+        </div>
       </div>
       {underline && (
         <div className={classes.underline}>
