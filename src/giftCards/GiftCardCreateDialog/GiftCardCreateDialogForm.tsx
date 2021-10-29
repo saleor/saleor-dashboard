@@ -36,8 +36,6 @@ export interface GiftCardCreateFormData extends GiftCardCreateCommonFormData {
   channelSlug?: string;
 }
 
-const initialCustomer = { email: "", name: "" };
-
 export const initialData: GiftCardCreateFormData = {
   tag: "",
   balanceAmount: 1,
@@ -51,19 +49,22 @@ export const initialData: GiftCardCreateFormData = {
   expiryPeriodAmount: 12,
   requiresActivation: true
 };
-
 interface GiftCardCreateDialogFormProps {
   opts: { status: ConfirmButtonTransitionState };
   apiErrors: GiftCardError[];
   onSubmit: (data: GiftCardCreateFormData) => void;
   onClose: () => void;
+  initialCustomer?: GiftCardCreateFormCustomer | null;
 }
+
+const defaultInitialCustomer = { email: "", name: "" };
 
 const GiftCardCreateDialogForm: React.FC<GiftCardCreateDialogFormProps> = ({
   onSubmit,
   opts,
   onClose,
-  apiErrors
+  apiErrors,
+  initialCustomer
 }) => {
   const intl = useIntl();
   const classes = useStyles({});
@@ -75,7 +76,7 @@ const GiftCardCreateDialogForm: React.FC<GiftCardCreateDialogFormProps> = ({
 
   const [selectedCustomer, setSelectedCustomer] = useState<
     GiftCardCreateFormCustomer
-  >(initialCustomer);
+  >(initialCustomer || defaultInitialCustomer);
 
   const handleSubmit = (data: GiftCardCreateFormData) =>
     onSubmit({ ...data, selectedCustomer });
@@ -103,7 +104,8 @@ const GiftCardCreateDialogForm: React.FC<GiftCardCreateDialogFormProps> = ({
       ...initialData,
       ...getInitialExpirySettingsData(),
       balanceCurrency: "",
-      channelSlug: ""
+      channelSlug: "",
+      sendToCustomerSelected: !!initialCustomer
     },
     handleSubmit
   );
@@ -161,6 +163,7 @@ const GiftCardCreateDialogForm: React.FC<GiftCardCreateDialogFormProps> = ({
           sendToCustomerSelected={sendToCustomerSelected}
           selectedCustomer={selectedCustomer}
           setSelectedCustomer={setSelectedCustomer}
+          disabled={!!initialCustomer}
         />
         <Divider />
         <VerticalSpacer />
