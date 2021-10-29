@@ -3807,6 +3807,10 @@
     "context": "used by filter label",
     "string": "Used by"
   },
+  "src_dot_giftCards_dot_GiftCardsList_dot_GiftCardsListTable_dot_GiftCardsListTableHeader_dot_deleteLabel": {
+    "context": "GiftCardEnableDisableSection enable label",
+    "string": "Delete"
+  },
   "src_dot_giftCards_dot_GiftCardsList_dot_GiftCardsListTable_dot_GiftCardsListTableHeader_dot_disableLabel": {
     "context": "GiftCardEnableDisableSection enable label",
     "string": "Deactivate"
