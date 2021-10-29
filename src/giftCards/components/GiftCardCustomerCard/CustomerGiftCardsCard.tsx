@@ -6,6 +6,8 @@ import Skeleton from "@saleor/components/Skeleton";
 import { useCustomerDetails } from "@saleor/customers/hooks/useCustomerDetails";
 import GiftCardCreateDialog from "@saleor/giftCards/GiftCardCreateDialog/GiftCardCreateDialog";
 import { getExtendedGiftCard } from "@saleor/giftCards/GiftCardUpdate/providers/GiftCardDetailsProvider/utils";
+import { giftCardListUrl } from "@saleor/giftCards/urls";
+import useNavigator from "@saleor/hooks/useNavigator";
 import { getFullName } from "@saleor/misc";
 import { mapEdgesToItems } from "@saleor/utils/maps";
 import * as React from "react";
@@ -22,6 +24,7 @@ import { useCardActionsStyles } from "./styles";
 
 const CustomerGiftCardsCard: React.FC = () => {
   const intl = useIntl();
+  const navigate = useNavigator();
   const [openCreateDialog, setOpenCreateDialog] = useState(false);
   const customerDetails = useCustomerDetails();
   const customer = customerDetails?.customer?.user;
@@ -45,7 +48,11 @@ const CustomerGiftCardsCard: React.FC = () => {
   });
 
   const handleViewAllButton = () => {
-    // history push to filtered gift cards
+    navigate(
+      giftCardListUrl({
+        usedBy: [id]
+      })
+    );
   };
 
   const handleCreateNewCardButton = () => {
