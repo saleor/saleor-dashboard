@@ -27,6 +27,10 @@ export function getVariantsLines(variantsList, quantity) {
   );
 }
 
+export function getVariantsIdsLines(variantsList) {
+  return variantsList.map(variant => `${variant.id}`);
+}
+
 export function getVariantsListIds(variantsList) {
   return variantsList.map(variant => `"${variant.id}"`).join();
 }
@@ -35,3 +39,6 @@ export const getPaymentDataLine = paymentData =>
   paymentData
     ? `, paymentData:"{\\"riskData\\":{\\"clientData\\":\\"${paymentData.clientData}\\"}, \\"paymentMethod\\":{\\"type\\":\\"scheme\\", \\"encryptedCardNumber\\":\\"${paymentData.encryptedCardNumber}\\", \\"encryptedExpiryMonth\\":\\"${paymentData.encryptedExpiryMonth}\\", \\"encryptedExpiryYear\\":\\"${paymentData.encryptedExpiryYear}\\", \\"encryptedSecurityCode\\":\\"${paymentData.encryptedSecurityCode}\\", \\"brand\\":\\"${paymentData.brand}\\"}}"`
     : "";
+
+export const getValuesInArray = array =>
+  getValueWithDefault(array.length === 1, `["${array}"]`, `${array}`);

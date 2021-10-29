@@ -26,6 +26,8 @@ module.exports = async (on, config) => {
   config.env.APP_MOUNT_URI = process.env.APP_MOUNT_URI;
   config.env.mailHogUrl = process.env.CYPRESS_MAILHOG;
   config.env.SHOP = await getShopInfo(process.env);
+  config.env.STRIPE_SECRET_KEY = process.env.STRIPE_SECRET_KEY;
+  config.env.STRIPE_PUBLIC_KEY = process.env.STRIPE_PUBLIC_KEY;
 
   on("before:browser:launch", (browser = {}, launchOptions) => {
     launchOptions.args.push("--proxy-bypass-list=<-loopback>");
