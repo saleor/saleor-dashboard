@@ -43,7 +43,7 @@ const GiftCardListSearchAndFilters: React.FC = () => {
   const { reset } = useGiftCardListBulkActions();
 
   const {
-    closeDialog,
+    onClose,
     openSearchDeleteDialog,
     openSearchSaveDialog
   } = useGiftCardListDialogs();
@@ -168,13 +168,13 @@ const GiftCardListSearchAndFilters: React.FC = () => {
       <SaveFilterTabDialog
         open={params.action === GiftCardListActionParamsEnum.SAVE_SEARCH}
         confirmButtonState="default"
-        onClose={closeDialog}
+        onClose={onClose}
         onSubmit={handleTabSave}
       />
       <DeleteFilterTabDialog
         open={params.action === GiftCardListActionParamsEnum.DELETE_SEARCH}
         confirmButtonState="default"
-        onClose={closeDialog}
+        onClose={onClose}
         onSubmit={handleTabDelete}
         tabName={maybe(() => tabs[currentTab - 1].name, "...")}
       />
