@@ -27,6 +27,9 @@ const useStyles = makeStyles(
       fontWeight: 500,
       lineHeight: 1
     },
+    subtitle: {
+      fontWeight: 400
+    },
     toolbar: {
       marginRight: theme.spacing(-1)
     }
@@ -39,6 +42,7 @@ interface CardTitleProps {
   className?: string;
   height?: "default" | "const";
   title: string | React.ReactNode;
+  subtitle?: string | React.ReactNode;
   toolbar?: React.ReactNode;
   onClick?: (event: React.MouseEvent<any>) => void;
 }
@@ -49,6 +53,7 @@ const CardTitle: React.FC<CardTitleProps> = props => {
     children,
     height,
     title,
+    subtitle,
     toolbar,
     onClick,
     ...rest
