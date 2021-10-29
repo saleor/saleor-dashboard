@@ -126,7 +126,7 @@ export const CustomerDetailsContent: React.FC<CustomerDetailsContentProps> = ({
       />
       <ActionDialog
         confirmButtonState={removeCustomerOpts.status}
-        onClose={() => navigate(customerUrl(id), true)}
+        onClose={() => navigate(customerUrl(id), { replace: true })}
         onConfirm={() => removeCustomer()}
         title={intl.formatMessage({
           defaultMessage: "Delete Customer",
