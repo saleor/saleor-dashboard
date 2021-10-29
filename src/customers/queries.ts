@@ -90,7 +90,8 @@ const customerDetails = gql`
     }
   }
 `;
-export const TypedCustomerDetailsQuery = TypedQuery<
+
+export const useCustomerDetails = makeQuery<
   CustomerDetails,
   CustomerDetailsVariables
 >(customerDetails);
