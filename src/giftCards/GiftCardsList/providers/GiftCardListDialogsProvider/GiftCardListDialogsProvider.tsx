@@ -3,6 +3,7 @@ import GiftCardBulkCreateDialog from "@saleor/giftCards/GiftCardBulkCreateDialog
 import GiftCardCreateDialog from "@saleor/giftCards/GiftCardCreateDialog";
 import { giftCardListUrl } from "@saleor/giftCards/urls";
 import GiftCardExportDialog from "@saleor/giftCards/GiftCardExportDialog";
+import GiftCardExportDialog from "@saleor/giftCards/GiftCardExportDialog";
 import useNavigator from "@saleor/hooks/useNavigator";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import React, { createContext } from "react";
