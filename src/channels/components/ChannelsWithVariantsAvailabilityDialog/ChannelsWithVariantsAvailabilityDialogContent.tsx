@@ -126,16 +126,6 @@ const ChannelsWithVariantsAvailabilityDialogContent: React.FC<ChannelsWithVarian
       ? addVariantToChannel(channelId, variantId)
       : removeVariantFromChannel(channelId, variantId);
 
-  const selectChannelIcon = (channelId: string) =>
-    areAllChannelVariantsSelected(
-      allVariants?.map(variant => variant.id),
-      channelVariantListingDiffToDict(channelsWithVariants)[channelId]
-    ) ? (
-      <IconCheckboxChecked />
-    ) : (
-      <IconCheckboxSemiChecked />
-    );
-
   return (
     <>
       {map(channelsWithVariants, ({ selectedVariantsIds }, channelId) => {
@@ -172,7 +162,25 @@ const ChannelsWithVariantsAvailabilityDialogContent: React.FC<ChannelsWithVarian
                 <div className={classes.channelCheckboxContainer}>
                   <ControlledCheckbox
                     checked={isChannelSelected(channelId)}
-                    checkedIcon={selectChannelIcon(channelId)}
+                    indeterminate={(() => {
+                      const selectedChannels = channelVariantListingDiffToDict(
+                        channelsWithVariants
+                      )[channelId];
+                      if (selectedChannels.length === 0) {
+                        return false;
+                      }
+
+                      if (
+                        areAllChannelVariantsSelected(
+                          allVariants?.map(variant => variant.id),
+                          selectedChannels
+                        )
+                      ) {
+                        return false;
+                      } else {
+                        return true;
+                      }
+                    })()}
                     name={name}
                     label={
                       <div className={classes.channelTitleContainer}>
