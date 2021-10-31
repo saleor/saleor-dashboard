@@ -6,8 +6,6 @@ import {
   Typography
 } from "@material-ui/core";
 import { ChannelData } from "@saleor/channels/utils";
-import IconCheckboxChecked from "@saleor/icons/CheckboxChecked";
-import IconCheckboxSemiChecked from "@saleor/icons/CheckboxSemiChecked";
 import IconChevronDown from "@saleor/icons/ChevronDown";
 import { makeStyles } from "@saleor/macaw-ui";
 import Label from "@saleor/orders/components/OrderHistory/Label";
