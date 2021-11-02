@@ -62,9 +62,12 @@ export function createVariant({
   cy.get(VARIANTS_SELECTORS.saveButton)
     .click()
     .get(BUTTON_SELECTORS.back)
-    .click();
+    .click()
+    .addAliasToGraphRequest("ProductChannelListingUpdate");
   selectChannelVariantInDetailsPage(channelName, attributeName);
-  cy.get(BUTTON_SELECTORS.confirm).click();
+  cy.get(BUTTON_SELECTORS.confirm)
+    .click()
+    .waitForRequestAndCheckIfNoErrors("@ProductChannelListingUpdate");
   cy.contains(PRODUCT_DETAILS.variantRow, attributeName)
     .click()
     .get(PRICE_LIST.priceInput)

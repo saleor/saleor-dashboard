@@ -88,7 +88,7 @@ export function createTypeAttributeAndCategoryForProduct({
       productType = productTypeResp;
       const updateAssign = returnValueDependsOnShopVersion("3.1", true, false);
       if (updateAssign) {
-        updateAssign({
+        productAttributeAssignmentUpdate({
           productTypeId: productType.id,
           attributeId: attribute.id
         });
