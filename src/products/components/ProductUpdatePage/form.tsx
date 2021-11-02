@@ -351,14 +351,24 @@ function useProductUpdateForm(
   const submit = async () =>
     handleFormSubmit(getSubmitData(), handleSubmit, setChanged);
 
-  const disabled =
-    (!opts.hasVariants &&
-      (!data.sku ||
-        data.channelListings.some(
-          channel =>
-            validatePrice(channel.price) || validateCostPrice(channel.costPrice)
-        ))) ||
-    !data.name;
+  const shouldEnableSave = () => {
+    if (!data.name) {
+      return false;
+    }
+
+    if (!!opts.hasVariants) {
+      return true;
+    }
+
+    const hasInvalidChannelListingPrices = data.channelListings.some(
+      channel =>
+        validatePrice(channel.price) || validateCostPrice(channel.costPrice)
+    );
+
+    return !data.sku || hasInvalidChannelListingPrices;
+  };
+
+  const disabled = shouldEnableSave();
 
   return {
     change: handleChange,
