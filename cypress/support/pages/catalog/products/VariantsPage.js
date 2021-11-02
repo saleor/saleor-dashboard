@@ -45,24 +45,48 @@ export function createVariant({
   costPrice = price,
   channelName
 }) {
-  cy.get(PRODUCT_DETAILS.addVariantsButton)
+  cy.get(PRODUCT_DETAILS.addVariantsButton).click();
+  fillUpGeneralVariantInputs({ attributeName, warehouseName, sku });
+  cy.get(VARIANTS_SELECTORS.saveButton)
     .click()
-    .get(VARIANTS_SELECTORS.attributeSelector)
+    .get(BUTTON_SELECTORS.back)
+    .click();
+  selectChannelForVariantAndFillUpPrices({
+    channelName,
+    attributeName,
+    price,
+    costPrice
+  });
+}
+
+export function fillUpGeneralVariantInputs({
+  attributeName,
+  warehouseName,
+  sku
+}) {
+  fillUpVariantAttributeAndSku({ attributeName, sku });
+  cy.get(VARIANTS_SELECTORS.addWarehouseButton).click();
+  cy.contains(VARIANTS_SELECTORS.warehouseOption, warehouseName).click({
+    force: true
+  });
+}
+
+export function fillUpVariantAttributeAndSku({ attributeName, sku }) {
+  cy.get(VARIANTS_SELECTORS.attributeSelector)
     .click()
     .get(VARIANTS_SELECTORS.attributeOption)
     .contains(attributeName)
     .click()
     .get(VARIANTS_SELECTORS.skuInputInAddVariant)
-    .type(sku)
-    .get(VARIANTS_SELECTORS.addWarehouseButton)
-    .click();
-  cy.contains(VARIANTS_SELECTORS.warehouseOption, warehouseName).click({
-    force: true
-  });
-  cy.get(VARIANTS_SELECTORS.saveButton)
-    .click()
-    .get(BUTTON_SELECTORS.back)
-    .click();
+    .type(sku);
+}
+
+export function selectChannelForVariantAndFillUpPrices({
+  channelName,
+  attributeName,
+  price,
+  costPrice = price
+}) {
   selectChannelVariantInDetailsPage(channelName, attributeName);
   cy.get(BUTTON_SELECTORS.confirm).click();
   cy.contains(PRODUCT_DETAILS.variantRow, attributeName)

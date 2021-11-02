@@ -10,7 +10,7 @@ import {
 import { deleteAttributesStartsWith } from "../attributes/attributeUtils";
 import { deleteCollectionsStartsWith } from "../catalog/collectionsUtils";
 import { getDefaultChannel } from "../channelsUtils";
-import { createShipping } from "../shippingUtils";
+import { createShipping, deleteShippingStartsWith } from "../shippingUtils";
 
 export function createProductInChannel({
   name,
@@ -111,7 +111,8 @@ export function deleteProductsStartsWith(startsWith) {
 export function deleteProductsAndCreateNewOneWithNewDataAndDefaultChannel({
   name,
   description = name,
-  warehouseId
+  warehouseId,
+  attributeValues = ["value"]
 }) {
   let defaultChannel;
   let collection;
@@ -126,7 +127,7 @@ export function deleteProductsAndCreateNewOneWithNewDataAndDefaultChannel({
     })
     .then(collectionResp => {
       collection = collectionResp;
-      createTypeAttributeAndCategoryForProduct({ name });
+      createTypeAttributeAndCategoryForProduct({ name, attributeValues });
     })
     .then(({ attribute: attributeResp, category, productType }) => {
       attribute = attributeResp;
@@ -144,13 +145,17 @@ export function deleteProductsAndCreateNewOneWithNewDataAndDefaultChannel({
     .then(({ product, variantsList }) => ({ product, variantsList }));
 }
 
-export function createProductWithShipping({ name }) {
+export function createProductWithShipping({
+  name,
+  attributeValues = ["value"]
+}) {
   let address;
   let warehouse;
   let shippingMethod;
   let defaultChannel;
   let shippingZone;
 
+  deleteShippingStartsWith(name);
   return cy
     .fixture("addresses")
     .then(addresses => {
@@ -177,7 +182,8 @@ export function createProductWithShipping({ name }) {
         shippingZone = shippingZoneResp;
         deleteProductsAndCreateNewOneWithNewDataAndDefaultChannel({
           name,
-          warehouseId: warehouse.id
+          warehouseId: warehouse.id,
+          attributeValues
         });
       }
     )

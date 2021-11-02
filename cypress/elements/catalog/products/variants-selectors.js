@@ -9,5 +9,10 @@ export const VARIANTS_SELECTORS = {
   addWarehouseButton: "button[class*='MuiIconButton-colorPrimary']",
   warehouseOption: "[role='menuitem']",
   saveButton: "[data-test='button-bar-confirm']",
-  skuInputInAddVariant: "[name='sku']"
+  skuInputInAddVariant: "[name='sku']",
+  preorderCheckbox: "[name='isPreorder']",
+  setUpEndDateButton: "[name='hasPreorderEndDate']",
+  preorderEndDateInput: "[name='preorderEndDateTime:date']",
+  preorderEndTimeInput: "[name='preorderEndDateTime:time']",
+  globalThresholdInput: "[name='globalThreshold']"
 };
