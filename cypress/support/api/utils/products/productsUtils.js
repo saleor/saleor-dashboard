@@ -1,3 +1,4 @@
+import { returnValueDependsOnShopVersion } from "../../../formatData/dataDependingOnVersion";
 import * as attributeRequest from "../../requests/Attribute";
 import * as categoryRequest from "../../requests/Category";
 import { createCollection } from "../../requests/Collections";
@@ -5,7 +6,8 @@ import * as productRequest from "../../requests/Product";
 import {
   createTypeProduct,
   deleteProductType,
-  getProductTypes
+  getProductTypes,
+  productAttributeAssignmentUpdate
 } from "../../requests/ProductType";
 import { deleteAttributesStartsWith } from "../attributes/attributeUtils";
 import { deleteCollectionsStartsWith } from "../catalog/collectionsUtils";
@@ -85,6 +87,13 @@ export function createTypeAttributeAndCategoryForProduct({
     })
     .then(productTypeResp => {
       productType = productTypeResp;
+      const updateAssign = returnValueDependsOnShopVersion("3.1", true, false);
+      if (updateAssign) {
+        productAttributeAssignmentUpdate({
+          productTypeId: productType.id,
+          attributeId: attribute.id
+        });
+      }
       categoryRequest.createCategory(name);
     })
     .then(categoryResp => {
@@ -111,7 +120,8 @@ export function deleteProductsStartsWith(startsWith) {
 export function deleteProductsAndCreateNewOneWithNewDataAndDefaultChannel({
   name,
   description = name,
-  warehouseId
+  warehouseId,
+  productPrice = 10
 }) {
   let defaultChannel;
   let collection;
@@ -138,13 +148,18 @@ export function deleteProductsAndCreateNewOneWithNewDataAndDefaultChannel({
         name,
         collectionId: collection.id,
         description,
-        warehouseId
+        warehouseId,
+        price: productPrice
       });
     })
     .then(({ product, variantsList }) => ({ product, variantsList }));
 }
 
-export function createProductWithShipping({ name }) {
+export function createProductWithShipping({
+  name,
+  productPrice = 10,
+  shippingPrice = 10
+}) {
   let address;
   let warehouse;
   let shippingMethod;
@@ -163,7 +178,7 @@ export function createProductWithShipping({ name }) {
         channelId: defaultChannel.id,
         name,
         address,
-        price: 10
+        price: shippingPrice
       });
     })
     .then(
@@ -177,7 +192,8 @@ export function createProductWithShipping({ name }) {
         shippingZone = shippingZoneResp;
         deleteProductsAndCreateNewOneWithNewDataAndDefaultChannel({
           name,
-          warehouseId: warehouse.id
+          warehouseId: warehouse.id,
+          productPrice
         });
       }
     )
