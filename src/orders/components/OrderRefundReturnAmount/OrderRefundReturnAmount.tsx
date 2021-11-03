@@ -39,6 +39,7 @@ import {
   OrderRefundType
 } from "../OrderRefundPage/form";
 import { OrderReturnFormData } from "../OrderReturnPage/form";
+import { getById } from "../OrderReturnPage/utils";
 import OrderRefundAmountValues, {
   OrderRefundAmountValuesProps
 } from "./OrderRefundReturnAmountValues";
@@ -200,8 +201,29 @@ const OrderRefundAmount: React.FC<OrderRefundAmountProps> = props => {
       ? refundTotalAmount?.amount
       : paymentsTotalAmount?.amount;
 
-  const isAmountTooSmall = selectedRefundAmount && selectedRefundAmount <= 0;
-  const isAmountTooBig = selectedRefundAmount > maxRefund?.amount;
+  const isAnyPaymentAmountTooSmall =
+    order?.payments.filter(payment => {
+      const currentPayment = data.paymentsToRefund?.find(getById(payment.id));
+      return (
+        payment.availableRefundAmount?.amount > 0 &&
+        Number(currentPayment?.value) < 0
+      );
+    }).length > 0;
+
+  const isAnyPaymentAmountTooBig =
+    order?.payments.filter(payment => {
+      const currentPayment = data.paymentsToRefund?.find(getById(payment.id));
+      return (
+        payment.availableRefundAmount?.amount > 0 &&
+        Number(currentPayment?.value) > payment.availableRefundAmount?.amount
+      );
+    }).length > 0;
+
+  const isAmountTooSmall =
+    (!!selectedRefundAmount && selectedRefundAmount < 0) ||
+    isAnyPaymentAmountTooSmall;
+  const isAmountTooBig =
+    selectedRefundAmount > maxRefund?.amount || isAnyPaymentAmountTooBig;
   const disableRefundButton = isReturn
     ? disableSubmitButton ||
       isAmountTooSmall ||

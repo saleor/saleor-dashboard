@@ -55,7 +55,7 @@ const messages = defineMessages({
     description: "Amount error message"
   },
   amountTooSmall: {
-    defaultMessage: "Amount must be bigger than 0",
+    defaultMessage: "Amount can not be less than 0",
     description: "Amount error message"
   },
   label: {
@@ -73,7 +73,7 @@ const RefundAmountInput: React.FC<RefundAmountInputProps> = props => {
   const amountTooBig =
     Number(currentPayment?.value) > payment.availableRefundAmount?.amount;
   const amountTooSmall =
-    currentPayment?.value && Number(currentPayment.value) <= 0;
+    currentPayment?.value && Number(currentPayment.value) < 0;
 
   const formErrors = getFormErrors(["paymentsToRefund"], errors);
   const isError =

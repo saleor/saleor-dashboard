@@ -43,12 +43,10 @@ const getAutomaticallyCalculatedProductsRefundInput = (
 const getManuallySetProductsRefundInput = (
   formData: OrderRefundSubmitData
 ) => ({
-  paymentsToRefund: formData.paymentsToRefund
-    .filter(payment => Number(payment.value) > 0)
-    .map(payment => ({
-      paymentId: payment.id,
-      amount: payment.value
-    })),
+  paymentsToRefund: formData.paymentsToRefund.map(payment => ({
+    paymentId: payment.id,
+    amount: Number(payment.value) > 0 ? payment.value : 0
+  })),
   fulfillmentLines: formData.refundedFulfilledProductQuantities
     .filter(line => line.value !== "0")
     .map(line => ({
