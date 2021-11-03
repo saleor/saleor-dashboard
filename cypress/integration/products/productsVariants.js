@@ -58,7 +58,7 @@ filterTests({ definedTags: ["all", "critical"] }, () => {
         )
         .then(({ warehouse: warehouseResp }) => {
           warehouse = warehouseResp;
-          createChannel({ isActive: true, name, currencyCode: "PLN" });
+          createChannel({ isActive: true, name, currencyCode: "USD" });
         })
         .then(resp => (newChannel = resp));
 
