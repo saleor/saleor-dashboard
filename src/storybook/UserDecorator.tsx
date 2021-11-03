@@ -6,6 +6,8 @@ export const UserDecorator = (user: User) => storyFn => (
   <UserContext.Provider
     value={{
       login: undefined,
+      requestLoginByExternalPlugin: undefined,
+      loginByExternalPlugin: undefined,
       logout: undefined,
       setPassword: undefined,
       user,
