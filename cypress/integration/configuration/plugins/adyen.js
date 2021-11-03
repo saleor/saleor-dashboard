@@ -42,7 +42,7 @@ filterTests({ definedTags: ["stagedOnly"] }, () => {
       deleteProductsStartsWith(startsWith);
       deleteShippingStartsWith(startsWith);
       cy.fixture("cards").then(cardsResp => {
-        paymentCards = cardsResp;
+        paymentCards = cardsResp.adyen;
         cardData = {
           clientData: paymentCards.clientData,
           encryptedExpiryMonth: paymentCards.encryptedExpiryMonth,

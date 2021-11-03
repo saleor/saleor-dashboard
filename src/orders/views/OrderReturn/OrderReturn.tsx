@@ -5,6 +5,7 @@ import OrderReturnPage from "@saleor/orders/components/OrderReturnPage";
 import { OrderReturnFormData } from "@saleor/orders/components/OrderReturnPage/form";
 import { useOrderReturnCreateMutation } from "@saleor/orders/mutations";
 import { useOrderQuery } from "@saleor/orders/queries";
+import { FulfillmentReturnProducts_orderFulfillmentReturnProducts } from "@saleor/orders/types/FulfillmentReturnProducts";
 import { orderUrl } from "@saleor/orders/urls";
 import { OrderErrorCode } from "@saleor/types/globalTypes";
 import React from "react";
@@ -56,9 +57,11 @@ const OrderReturn: React.FC<OrderReturnProps> = ({ orderId }) => {
         });
 
         navigateToOrder(replaceOrder?.id);
+
+        return;
       }
 
-      if (errors[0].code === OrderErrorCode.CANNOT_REFUND) {
+      if (errors.some(err => err.code === OrderErrorCode.CANNOT_REFUND)) {
         notify({
           autohide: 5000,
           status: "error",
@@ -90,8 +93,10 @@ const OrderReturn: React.FC<OrderReturnProps> = ({ orderId }) => {
     });
 
     const {
-      data: { orderFulfillmentReturnProducts }
-    } = result;
+      data: {
+        orderFulfillmentReturnProducts = {} as FulfillmentReturnProducts_orderFulfillmentReturnProducts
+      } = {}
+    } = result || {};
 
     return orderFulfillmentReturnProducts.errors;
   };
