@@ -27,6 +27,7 @@ export const urlList = {
   stripeApiPaymentMethods: "https://api.stripe.com/v1/payment_methods",
   translations: "translations/",
   vouchers: "discounts/vouchers/",
+  variant: "variant/",
   warehouses: "warehouses/",
   weightRete: "weight/"
 };
@@ -75,6 +76,9 @@ export const giftCardDetailsUrl = giftCardId =>
 export const saleDetailsUrl = saleId => `${urlList.sales}${saleId}`;
 
 export const voucherDetailsUrl = voucherId => `${urlList.vouchers}${voucherId}`;
+
+export const variantDetailsUrl = (productId, variantId) =>
+  `${urlList.products}${productId}/${urlList.variant}${variantId}`;
 
 export const stripeConfirmationUrl = id =>
   `https://api.stripe.com/v1/payment_intents/${id}/confirm`;

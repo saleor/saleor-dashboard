@@ -2,40 +2,52 @@
 /// <reference types="../../support"/>
 
 import { PRODUCT_DETAILS } from "../../elements/catalog/products/product-details";
-import { VARIANTS_SELECTORS } from "../../elements/catalog/products/variants-selectors";
 import { BUTTON_SELECTORS } from "../../elements/shared/button-selectors";
-import { productDetailsUrl } from "../../fixtures/urlList";
-import { getVariant } from "../../support/api/requests/Product";
+import { productDetailsUrl, variantDetailsUrl } from "../../fixtures/urlList";
+import {
+  activatePreorderOnVariant,
+  deactivatePreorderOnVariant,
+  getVariant
+} from "../../support/api/requests/Product";
 import { createWaitingForCaptureOrder } from "../../support/api/utils/ordersUtils";
 import { createProductWithShipping } from "../../support/api/utils/products/productsUtils";
 import filterTests from "../../support/filterTests";
 import { formatDate, formatTime } from "../../support/formatData/formatDate";
 import {
+  enablePreorderWithThreshold,
   fillUpVariantAttributeAndSku,
-  selectChannelForVariantAndFillUpPrices
+  saveVariant,
+  selectChannelForVariantAndFillUpPrices,
+  setUpPreorderEndDate
 } from "../../support/pages/catalog/products/VariantsPage";
 
 filterTests({ definedTags: ["all"], version: "3.1.0" }, () => {
   describe("Creating variants", () => {
     const startsWith = "CreatePreOrder";
     const attributeValues = ["value1", "value2", "value3"];
+    const threshold = 100;
     const futureDate = new Date().setDate(new Date().getDate() + 14);
     const endDate = formatDate(futureDate);
     const endTime = formatTime(futureDate);
 
     let defaultChannel;
     let product;
-    let address;
-    let shippingMethod;
+    let variantsList;
+    let checkoutData;
 
     before(() => {
       cy.clearSessionData().loginUserViaRequest();
       createProductWithShipping({ name: startsWith, attributeValues }).then(
         resp => {
+          checkoutData = {
+            address: resp.address,
+            channelSlug: resp.defaultChannel.slug,
+            email: "example@example.com",
+            shippingMethodId: resp.shippingMethod.id
+          };
           defaultChannel = resp.defaultChannel;
           product = resp.product;
-          address = resp.address;
-          shippingMethod = resp.shippingMethod;
+          variantsList = resp.variantsList;
         }
       );
     });
@@ -45,7 +57,6 @@ filterTests({ definedTags: ["all"], version: "3.1.0" }, () => {
     });
 
     it("should create variant in preorder", () => {
-      const threshold = 100;
       let variant;
 
       cy.visit(productDetailsUrl(product.id))
@@ -55,23 +66,11 @@ filterTests({ definedTags: ["all"], version: "3.1.0" }, () => {
         attributeName: attributeValues[1],
         sku: attributeValues[1]
       });
-      cy.get(VARIANTS_SELECTORS.preorderCheckbox)
-        .click()
-        .get(VARIANTS_SELECTORS.setUpEndDateButton)
-        .click()
-        .get(VARIANTS_SELECTORS.preorderEndDateInput)
-        .type(endDate)
-        .get(VARIANTS_SELECTORS.preorderEndTimeInput)
-        .type(endTime)
-        .get(VARIANTS_SELECTORS.globalThresholdInput)
-        .type(threshold)
-        .addAliasToGraphRequest("VariantCreate")
-        .get(BUTTON_SELECTORS.confirm)
-        .click()
-        .waitForRequestAndCheckIfNoErrors("@VariantCreate")
+      enablePreorderWithThreshold(threshold);
+      setUpPreorderEndDate(endDate, endTime);
+      saveVariant()
         .then(({ response }) => {
           variant = response.body.data.productVariantCreate.productVariant;
-          expect(variant.id).to.be.ok;
           cy.get(BUTTON_SELECTORS.back).click();
           selectChannelForVariantAndFillUpPrices({
             channelName: defaultChannel.name,
@@ -80,13 +79,8 @@ filterTests({ definedTags: ["all"], version: "3.1.0" }, () => {
           });
         })
         .then(() => {
-          createWaitingForCaptureOrder({
-            address,
-            channelSlug: defaultChannel.slug,
-            email: "example@example.com",
-            shippingMethodId: shippingMethod.id,
-            variantsList: [variant]
-          });
+          checkoutData.variantsList = [variant];
+          createWaitingForCaptureOrder(checkoutData);
         })
         .then(({ order }) => {
           expect(order.id).to.be.ok;
@@ -100,6 +94,40 @@ filterTests({ definedTags: ["all"], version: "3.1.0" }, () => {
           expect(endDate).to.eq(formatDate(respEndDate));
           expect(endTime).to.eq(formatTime(respEndDate));
         });
+    });
+
+    it("should enable preorder on active variant", () => {
+      const variant = variantsList[0];
+      checkoutData.variantsList = [variant];
+
+      deactivatePreorderOnVariant(variant.id);
+      cy.visit(variantDetailsUrl(product.id, variant.id));
+      enablePreorderWithThreshold(threshold);
+      saveVariant("VariantUpdate");
+      createWaitingForCaptureOrder(checkoutData)
+        .then(({ order }) => {
+          expect(order.id).to.be.ok;
+          getVariant(variant.id, defaultChannel.slug);
+        })
+        .then(({ preorder }) => {
+          expect(preorder.globalThreshold).to.eq(threshold);
+          expect(preorder.globalSoldUnits).to.eq(1);
+        });
+    });
+
+    it("should set end date on preorder variant", () => {
+      const variant = variantsList[0];
+      checkoutData.variantsList = [variant];
+
+      activatePreorderOnVariant(variant.id);
+      cy.visit(variantDetailsUrl(product.id, variant.id));
+      setUpPreorderEndDate(endDate, endTime);
+      saveVariant("VariantUpdate");
+      getVariant(variant.id, defaultChannel.slug).then(({ preorder }) => {
+        const respEndDate = new Date(preorder.endDate);
+        expect(endDate).to.eq(formatDate(respEndDate));
+        expect(endTime).to.eq(formatTime(respEndDate));
+      });
     });
   });
 });

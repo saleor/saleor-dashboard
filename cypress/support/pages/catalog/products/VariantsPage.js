@@ -87,8 +87,11 @@ export function selectChannelForVariantAndFillUpPrices({
   price,
   costPrice = price
 }) {
+  cy.addAliasToGraphRequest("ProductChannelListingUpdate");
   selectChannelVariantInDetailsPage(channelName, attributeName);
-  cy.get(BUTTON_SELECTORS.confirm).click();
+  cy.get(BUTTON_SELECTORS.confirm)
+    .click()
+    .waitForRequestAndCheckIfNoErrors("@ProductChannelListingUpdate");
   cy.contains(PRODUCT_DETAILS.variantRow, attributeName)
     .click()
     .get(PRICE_LIST.priceInput)
@@ -104,4 +107,28 @@ export function selectChannelForVariantAndFillUpPrices({
     .waitForProgressBarToNotBeVisible()
     .get(AVAILABLE_CHANNELS_FORM.menageChannelsButton)
     .should("be.visible");
+}
+
+export function enablePreorderWithThreshold(threshold) {
+  cy.get(VARIANTS_SELECTORS.preorderCheckbox)
+    .click()
+    .get(VARIANTS_SELECTORS.globalThresholdInput)
+    .type(threshold);
+}
+
+export function setUpPreorderEndDate(endDate, endTime) {
+  cy.get(VARIANTS_SELECTORS.setUpEndDateButton)
+    .click()
+    .get(VARIANTS_SELECTORS.preorderEndDateInput)
+    .type(endDate)
+    .get(VARIANTS_SELECTORS.preorderEndTimeInput)
+    .type(endTime);
+}
+
+export function saveVariant(waitForAlias = "VariantCreate") {
+  return cy
+    .addAliasToGraphRequest(waitForAlias)
+    .get(BUTTON_SELECTORS.confirm)
+    .click()
+    .waitForRequestAndCheckIfNoErrors(`@${waitForAlias}`);
 }
