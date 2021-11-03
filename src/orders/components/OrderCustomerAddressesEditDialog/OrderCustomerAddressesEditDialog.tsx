@@ -140,7 +140,7 @@ const OrderCustomerAddressesEditDialog: React.FC<OrderCustomerAddressesEditDialo
             <DialogTitle>
               <FormattedMessage {...dialogMessages.title} />
             </DialogTitle>
-            <DialogContent className={classes.overflow}>
+            <DialogContent className={classes.scrollableContent}>
               <Typography>
                 {customerAddresses.length > 0 ? (
                   <FormattedMessage
