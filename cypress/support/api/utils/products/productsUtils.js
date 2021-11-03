@@ -120,7 +120,8 @@ export function deleteProductsStartsWith(startsWith) {
 export function deleteProductsAndCreateNewOneWithNewDataAndDefaultChannel({
   name,
   description = name,
-  warehouseId
+  warehouseId,
+  productPrice = 10
 }) {
   let defaultChannel;
   let collection;
@@ -147,13 +148,18 @@ export function deleteProductsAndCreateNewOneWithNewDataAndDefaultChannel({
         name,
         collectionId: collection.id,
         description,
-        warehouseId
+        warehouseId,
+        price: productPrice
       });
     })
     .then(({ product, variantsList }) => ({ product, variantsList }));
 }
 
-export function createProductWithShipping({ name }) {
+export function createProductWithShipping({
+  name,
+  productPrice = 10,
+  shippingPrice = 10
+}) {
   let address;
   let warehouse;
   let shippingMethod;
@@ -172,7 +178,7 @@ export function createProductWithShipping({ name }) {
         channelId: defaultChannel.id,
         name,
         address,
-        price: 10
+        price: shippingPrice
       });
     })
     .then(
@@ -186,7 +192,8 @@ export function createProductWithShipping({ name }) {
         shippingZone = shippingZoneResp;
         deleteProductsAndCreateNewOneWithNewDataAndDefaultChannel({
           name,
-          warehouseId: warehouse.id
+          warehouseId: warehouse.id,
+          productPrice
         });
       }
     )
