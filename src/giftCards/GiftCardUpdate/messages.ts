@@ -12,6 +12,21 @@ export const giftCardUpdateDetailsCardMessages = defineMessages({
   }
 });
 
+export const giftCardUpdateActionBarMessages = defineMessages({
+  delete: {
+    defaultMessage: "Delete",
+    description: "delete button"
+  },
+  back: {
+    defaultMessage: "Back",
+    description: "back button"
+  },
+  save: {
+    defaultMessage: "Save",
+    description: "save button"
+  }
+});
+
 const giftCardErrorMessages = defineMessages({
   notFound: {
     defaultMessage: "Couldn't find gift card",

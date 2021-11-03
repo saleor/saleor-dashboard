@@ -3743,9 +3743,21 @@
     "context": "GiftCardEnableDisableSection enable success",
     "string": "Successfully enabled gift card"
   },
+  "src_dot_giftCards_dot_GiftCardUpdate_dot_back": {
+    "context": "back button",
+    "string": "Back"
+  },
+  "src_dot_giftCards_dot_GiftCardUpdate_dot_delete": {
+    "context": "delete button",
+    "string": "Delete"
+  },
   "src_dot_giftCards_dot_GiftCardUpdate_dot_notFound": {
     "context": "giftCardErrorMessages not found",
     "string": "Couldn't find gift card"
+  },
+  "src_dot_giftCards_dot_GiftCardUpdate_dot_save": {
+    "context": "save button",
+    "string": "Save"
   },
   "src_dot_giftCards_dot_GiftCardUpdate_dot_title": {
     "context": "GiftCardUpdateDetailsCard title",

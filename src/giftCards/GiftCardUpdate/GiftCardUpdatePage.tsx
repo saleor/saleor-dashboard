@@ -11,6 +11,7 @@ import { FormattedMessage } from "react-intl";
 import GiftCardUpdateDetailsCard from "./GiftCardUpdateDetailsCard";
 import GiftCardUpdateInfoCard from "./GiftCardUpdateInfoCard";
 import GiftCardUpdatePageHeader from "./GiftCardUpdatePageHeader";
+import { giftCardUpdateActionBarMessages as messages } from "./messages";
 import useGiftCardDetails from "./providers/GiftCardDetailsProvider/hooks/useGiftCardDetails";
 import useGiftCardUpdateDialogs from "./providers/GiftCardUpdateDialogsProvider/hooks/useGiftCardUpdateDialogs";
 import useGiftCardUpdate from "./providers/GiftCardUpdateFormProvider/hooks/useGiftCardUpdate";
@@ -52,7 +53,7 @@ const GiftCardUpdatePage: React.FC = () => {
           className={classes.deleteButton}
           variant="contained"
         >
-          <FormattedMessage defaultMessage="Delete" />
+          <FormattedMessage {...messages.delete} />
         </Button>
         <div className={classes.spacer} />
         {!giftCard?.isExpired && (
@@ -62,7 +63,7 @@ const GiftCardUpdatePage: React.FC = () => {
               className={classes.cancelButton}
               variant="text"
             >
-              <FormattedMessage defaultMessage="Back" />
+              <FormattedMessage {...messages.back} />
             </Button>
             <ConfirmButton
               onClick={submit}
@@ -70,7 +71,7 @@ const GiftCardUpdatePage: React.FC = () => {
               variant="contained"
               disabled={loadingUpdate || !hasChanged}
             >
-              <FormattedMessage defaultMessage="Save" />
+              <FormattedMessage {...messages.save} />
             </ConfirmButton>
           </>
         )}
