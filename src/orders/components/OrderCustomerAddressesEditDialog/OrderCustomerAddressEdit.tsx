@@ -92,7 +92,7 @@ const OrderCustomerAddressEdit: React.FC<OrderCustomerAddressEditProps> = props 
         className={classes.optionLabel}
       />
       {addressInputOption === AddressInputOptionEnum.CUSTOMER_ADDRESS && (
-        <>
+        <div className={classes.scrollabeWrapper}>
           {customerAddresses.map(customerAddress => (
             <React.Fragment key={customerAddress.id}>
               <CardSpacer />
@@ -104,7 +104,7 @@ const OrderCustomerAddressEdit: React.FC<OrderCustomerAddressEditProps> = props 
             </React.Fragment>
           ))}
           <FormSpacer />
-        </>
+        </div>
       )}
       <FormControlLabel
         value={AddressInputOptionEnum.NEW_ADDRESS}
