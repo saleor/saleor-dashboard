@@ -60,13 +60,13 @@ const saleUpdate = gql`
       errors {
         ...DiscountErrorFragment
       }
-      sale {
-        ...SaleFragment
-      }
     }
     saleChannelListingUpdate(id: $id, input: $channelInput) {
       errors {
         ...DiscountErrorFragment
+      }
+      sale {
+        ...SaleFragment
       }
     }
   }
