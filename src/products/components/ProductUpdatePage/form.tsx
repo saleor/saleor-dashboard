@@ -368,7 +368,7 @@ function useProductUpdateForm(
     return !data.sku || hasInvalidChannelListingPrices;
   };
 
-  const disabled = shouldEnableSave();
+  const disabled = !shouldEnableSave();
 
   return {
     change: handleChange,

@@ -322,7 +322,7 @@ function useProductCreateForm(
     return !data.sku || !data.category || hasInvalidChannelListingPrices;
   };
 
-  const disabled = shouldEnableSave();
+  const disabled = !shouldEnableSave();
 
   return {
     change: handleChange,
