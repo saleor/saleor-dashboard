@@ -18,7 +18,7 @@ const NewPassword: React.FC<RouteComponentProps> = ({ location }) => {
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState<
     Array<Pick<AccountErrorFragment, "code" | "field">>
-  >();
+  >([]);
 
   const params: NewPasswordUrlQueryParams = parseQs(location.search.substr(1));
 
@@ -31,15 +31,19 @@ const NewPassword: React.FC<RouteComponentProps> = ({ location }) => {
       token: params.token
     });
 
-    setErrors(result.data?.setPassword?.errors);
+    const errors = result.data?.setPassword?.errors || [];
+
+    setErrors(errors);
     setLoading(false);
 
-    navigate("/", { replace: true });
+    if (!errors.length) {
+      navigate("/", { replace: true });
+    }
   };
 
   return (
     <NewPasswordPage
-      errors={errors || []}
+      errors={errors}
       disabled={loading}
       onSubmit={handleSubmit}
     />

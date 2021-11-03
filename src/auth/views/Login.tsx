@@ -1,6 +1,9 @@
+import { APP_DEFAULT_URI, APP_MOUNT_URI } from "@saleor/config";
+import useLocalStorage from "@saleor/hooks/useLocalStorage";
 import useNavigator from "@saleor/hooks/useNavigator";
 import React, { useEffect, useState } from "react";
 import { useQuery } from "react-apollo";
+import urlJoin from "url-join";
 import useRouter from "use-react-router";
 
 import { useAuth } from "../AuthProvider";
@@ -21,7 +24,12 @@ interface LoginViewProps {
 const LoginView: React.FC<LoginViewProps> = ({ params }) => {
   const navigate = useNavigator();
   const { location } = useRouter();
-  const { login, authenticating } = useAuth();
+  const {
+    login,
+    requestLoginByExternalPlugin,
+    loginByExternalPlugin,
+    authenticating
+  } = useAuth();
   const [isError, setIsError] = useState(false);
   const [isExternalError, setIsExternalError] = useState(false);
   const {
@@ -29,6 +37,10 @@ const LoginView: React.FC<LoginViewProps> = ({ params }) => {
     loading: externalAuthenticationsLoading
   } = useQuery<AvailableExternalAuthentications>(
     availableExternalAuthentications
+  );
+  const [externalPluginIdLogin, setExternalPluginIdLogin] = useLocalStorage(
+    "externalPluginIdLogin",
+    null
   );
 
   const handleSubmit = async (data: LoginFormData) => {
@@ -40,34 +52,46 @@ const LoginView: React.FC<LoginViewProps> = ({ params }) => {
     return errors;
   };
 
-  const handleRequestExternalAuthentication = (/* pluginId: string */) =>
-    undefined;
-  // requestLoginByExternalPlugin(pluginId, {
-  //   redirectUri: urlJoin(
-  //     window.location.origin,
-  //     APP_MOUNT_URI === APP_DEFAULT_URI ? "" : APP_MOUNT_URI,
-  //     loginCallbackPath
-  //   )
-  // });
+  const handleRequestExternalAuthentication = async (pluginId: string) => {
+    const result = await requestLoginByExternalPlugin(pluginId, {
+      redirectUri: urlJoin(
+        window.location.origin,
+        APP_MOUNT_URI === APP_DEFAULT_URI ? "" : APP_MOUNT_URI,
+        loginCallbackPath
+      )
+    });
+    const errors = result?.errors || [];
+    const data = JSON.parse(result?.authenticationData || "");
+    setIsError(false);
+    if (!data || errors?.length > 0) {
+      setIsExternalError(true);
+    } else {
+      setExternalPluginIdLogin(pluginId);
+      window.location.href = data.authorizationUrl;
+    }
+  };
 
-  // const handleExternalAuthentication = async (code: string, state: string) => {
-  // const result = await loginByExternalPlugin({ code, state });
-  // const errors = result?.errors || [];
-  // setIsError(false);
-  // if (!result || errors?.length > 0) {
-  //   setIsExternalError(true);
-  // } else {
-  //   navigate(APP_DEFAULT_URI);
-  // }
-  // return errors;
-  // };
+  const handleExternalAuthentication = async (code: string, state: string) => {
+    const result = await loginByExternalPlugin(externalPluginIdLogin, {
+      code,
+      state
+    });
+    const errors = result?.errors || [];
+    setIsError(false);
+    if (!result || errors?.length > 0) {
+      setIsExternalError(true);
+    } else {
+      navigate(APP_DEFAULT_URI);
+    }
+    return errors;
+  };
 
   useEffect(() => {
     const { code, state } = params;
     const isCallbackPath = location.pathname.includes(loginCallbackPath);
 
     if (code && state && isCallbackPath) {
-      // handleExternalAuthentication(code, state);
+      handleExternalAuthentication(code, state);
     }
   }, []);
 

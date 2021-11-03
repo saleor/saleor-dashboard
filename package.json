@@ -29,7 +29,7 @@
     "@material-ui/lab": "^4.0.0-alpha.58",
     "@material-ui/styles": "^4.11.4",
     "@saleor/macaw-ui": "^0.2.7",
-    "@saleor/sdk": "^0.4.0-7",
+    "@saleor/sdk": "github:mirumee/saleor-sdk#8cb74a8",
     "@sentry/react": "^6.0.0",
     "@types/faker": "^5.1.6",
     "@uiw/react-color-hue": "0.0.34",

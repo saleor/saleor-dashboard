@@ -2,6 +2,8 @@ import { User } from "@saleor/fragments/types/User";
 import {
   AccountErrorFragment,
   CreateToken,
+  ExternalAuthenticationUrl,
+  ExternalObtainAccessTokens,
   MutationSetPasswordArgs,
   SetPasswordMutation,
   UserFragment
@@ -12,6 +14,10 @@ import React, { MutableRefObject } from "react";
 import { Route, RouteComponentProps, Switch } from "react-router-dom";
 
 import Layout from "./components/Layout";
+import {
+  ExternalLoginInput,
+  RequestExternalLoginInput
+} from "./hooks/useAuthProvider";
 import {
   LoginUrlQueryParams,
   newPasswordPath,
@@ -35,19 +41,29 @@ interface UserContext {
     username: string,
     password: string
   ) => Promise<
-    Pick<CreateToken, "refreshToken" | "token" | "csrfToken"> & {
+    Pick<CreateToken, "csrfToken" | "token"> & {
       errors: AccountErrorFragment[];
-      user?: UserFragment;
+      user: UserFragment;
     }
   >;
-  // loginByExternalPlugin: (
-  //   input: ExternalLoginInput
-  // ) => Promise<ExternalObtainAccessTokens_externalObtainAccessTokens>;
+  loginByExternalPlugin: (
+    pluginId: string,
+    input: ExternalLoginInput
+  ) => Promise<
+    Pick<ExternalObtainAccessTokens, "csrfToken" | "token"> & {
+      user: UserFragment;
+      errors: AccountErrorFragment[];
+    }
+  >;
   logout: () => Promise<void>;
-  // requestLoginByExternalPlugin: (
-  //   pluginId: string,
-  //   input: RequestExternalLoginInput
-  // ) => Promise<void>;
+  requestLoginByExternalPlugin: (
+    pluginId: string,
+    input: RequestExternalLoginInput
+  ) => Promise<
+    Pick<ExternalAuthenticationUrl, "authenticationData"> & {
+      errors: AccountErrorFragment[];
+    }
+  >;
   setPassword: (
     opts: MutationSetPasswordArgs
   ) => Promise<
@@ -61,9 +77,9 @@ interface UserContext {
 
 export const UserContext = React.createContext<UserContext>({
   login: undefined,
-  // loginByExternalPlugin: undefined,
+  loginByExternalPlugin: undefined,
   logout: undefined,
-  // requestLoginByExternalPlugin: undefined,
+  requestLoginByExternalPlugin: undefined,
   setPassword: undefined,
   authenticating: false,
   authenticated: false
