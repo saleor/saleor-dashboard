@@ -55,7 +55,7 @@ const messages = defineMessages({
     description: "Amount error message"
   },
   amountTooSmall: {
-    defaultMessage: "Amount can not be less than 0",
+    defaultMessage: "Amount cannot be less than 0",
     description: "Amount error message"
   },
   label: {

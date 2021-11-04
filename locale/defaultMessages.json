@@ -4527,7 +4527,7 @@
   },
   "src_dot_orders_dot_components_dot_OrderRefundReturnAmount_dot_amountTooSmall": {
     "context": "Amount error message",
-    "string": "Amount can not be less than 0"
+    "string": "Amount cannot be less than 0"
   },
   "src_dot_orders_dot_components_dot_OrderRefundReturnAmount_dot_authorizedAmount": {
     "context": "order refund amount",
