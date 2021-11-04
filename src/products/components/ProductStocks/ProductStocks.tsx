@@ -602,6 +602,7 @@ const ProductStocks: React.FC<ProductStocksProps> = ({
                   </TableCell>
                   <TableCell className={classes.colQuantity}>
                     <TextField
+                      name="channel-threshold"
                       disabled={disabled}
                       fullWidth
                       inputProps={{

@@ -84,3 +84,11 @@ export function createVariant({
     .get(AVAILABLE_CHANNELS_FORM.menageChannelsButton)
     .should("be.visible");
 }
+
+export function saveVariant(waitForAlias = "VariantCreate") {
+  return cy
+    .addAliasToGraphRequest(waitForAlias)
+    .get(BUTTON_SELECTORS.confirm)
+    .click()
+    .waitForRequestAndCheckIfNoErrors(`@${waitForAlias}`);
+}

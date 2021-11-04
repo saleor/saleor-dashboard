@@ -26,6 +26,7 @@ export const urlList = {
   staffMembers: "staff/",
   stripeApiPaymentMethods: "https://api.stripe.com/v1/payment_methods",
   translations: "translations/",
+  variant: "variant/",
   vouchers: "discounts/vouchers/",
   warehouses: "warehouses/",
   weightRete: "weight/"
@@ -73,6 +74,9 @@ export const giftCardDetailsUrl = giftCardId =>
   `${urlList.giftCards}${giftCardId}`;
 
 export const saleDetailsUrl = saleId => `${urlList.sales}${saleId}`;
+
+export const variantDetailsUrl = (productId, variantId) =>
+  `${urlList.products}${productId}/${urlList.variant}${variantId}`;
 
 export const voucherDetailsUrl = voucherId => `${urlList.vouchers}${voucherId}`;
 

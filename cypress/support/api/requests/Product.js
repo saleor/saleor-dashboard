@@ -153,8 +153,14 @@ export function createVariant({
   costPrice = 1,
   trackInventory = true,
   weight = 1,
-  attributeValues = ["value"]
+  attributeValues = ["value"],
+  preorder
 }) {
+  const preorderLines = getValueWithDefault(
+    preorder,
+    `preorder:${stringify(preorder)}`
+  );
+
   const channelListings = getValueWithDefault(
     channelId,
     `channelListings:{
@@ -174,6 +180,7 @@ export function createVariant({
 
   const mutation = `mutation{
     productVariantBulkCreate(product: "${productId}", variants: {
+      ${preorderLines}
       attributes: [{
         id:"${attributeId}"
         values: ${getValuesInArray(attributeValues)}
@@ -231,11 +238,17 @@ export function getVariants(variantsList) {
   return cy.sendRequestWithQuery(query).its("body.data.productVariants");
 }
 
-export function getVariant(id, channel, auth = "auth") {
+export function getVariant(id, channelSlug, auth = "auth") {
   const query = `query{
-    productVariant(id:"${id}" channel:"${channel}"){
+    productVariant(id:"${id}" channel:"${channelSlug}"){
       id
       name
+      stocks{
+        warehouse{
+          id
+        }
+        quantityAllocated
+      }
       pricing{
         onSale
         discount{
