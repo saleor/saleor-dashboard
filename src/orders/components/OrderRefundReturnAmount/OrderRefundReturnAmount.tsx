@@ -39,7 +39,7 @@ import {
   OrderRefundType
 } from "../OrderRefundPage/form";
 import { OrderReturnFormData } from "../OrderReturnPage/form";
-import { getById } from "../OrderReturnPage/utils";
+import { getCurrentPaymentValue } from "../OrderReturnPage/utils";
 import OrderRefundAmountValues, {
   OrderRefundAmountValuesProps
 } from "./OrderRefundReturnAmountValues";
@@ -201,23 +201,27 @@ const OrderRefundAmount: React.FC<OrderRefundAmountProps> = props => {
       ? refundTotalAmount?.amount
       : paymentsTotalAmount?.amount;
 
-  const isAnyPaymentAmountTooSmall =
-    order?.payments.filter(payment => {
-      const currentPayment = data.paymentsToRefund?.find(getById(payment.id));
-      return (
-        payment.availableRefundAmount?.amount > 0 &&
-        Number(currentPayment?.value) < 0
-      );
-    }).length > 0;
+  const isAnyPaymentAmountTooSmall = order?.payments.some(payment => {
+    const currentPaymentValue = getCurrentPaymentValue(
+      data.paymentsToRefund,
+      payment.id
+    );
+    return (
+      payment.availableRefundAmount?.amount > 0 &&
+      Number(currentPaymentValue) < 0
+    );
+  });
 
-  const isAnyPaymentAmountTooBig =
-    order?.payments.filter(payment => {
-      const currentPayment = data.paymentsToRefund?.find(getById(payment.id));
-      return (
-        payment.availableRefundAmount?.amount > 0 &&
-        Number(currentPayment?.value) > payment.availableRefundAmount?.amount
-      );
-    }).length > 0;
+  const isAnyPaymentAmountTooBig = order?.payments.some(payment => {
+    const currentPaymentValue = getCurrentPaymentValue(
+      data.paymentsToRefund,
+      payment.id
+    );
+    return (
+      payment.availableRefundAmount?.amount > 0 &&
+      Number(currentPaymentValue) > payment.availableRefundAmount?.amount
+    );
+  });
 
   const isAmountTooSmall =
     (!!selectedRefundAmount && selectedRefundAmount < 0) ||
