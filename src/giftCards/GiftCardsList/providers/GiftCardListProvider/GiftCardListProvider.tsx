@@ -8,22 +8,32 @@ import useListSettings, {
   UseListSettings
 } from "@saleor/hooks/useListSettings";
 import { usePaginationReset } from "@saleor/hooks/usePaginationReset";
+import useNavigator from "@saleor/hooks/useNavigator";
+import useNotifier from "@saleor/hooks/useNotifier";
 import {
   createPaginationState,
   PageInfo,
   PaginationState
 } from "@saleor/hooks/usePaginator";
-import { ListViews } from "@saleor/types";
+import { ListViews, SortPage } from "@saleor/types";
+import createSortHandler from "@saleor/utils/handlers/sortHandler";
 import { mapEdgesToItems } from "@saleor/utils/maps";
+import { getSortParams } from "@saleor/utils/sort";
+import { ApolloError } from "apollo-client";
 import React, { createContext } from "react";
 
 import { getFilterVariables } from "../../GiftCardListSearchAndFilters/filters";
 import { useGiftCardListQuery } from "../../queries";
-import { GiftCardListColummns, GiftCardListUrlQueryParams } from "../../types";
+import {
+  GiftCardListColummns,
+  GiftCardListUrlQueryParams,
+  GiftCardUrlSortField
+} from "../../types";
 import {
   GiftCardList_giftCards_edges_node,
   GiftCardListVariables
 } from "../../types/GiftCardList";
+import { getSortQueryVariables } from "./sort";
 
 const numberOfColumns = 7;
 
@@ -45,7 +55,8 @@ export interface GiftCardListDataProps {
 export interface GiftCardsListConsumerProps
   extends UseBulkActionsProps,
     GiftCardListDataProps,
-    UseListSettings<GiftCardListColummns> {
+    UseListSettings<GiftCardListColummns>,
+    SortPage<GiftCardUrlSortField> {
   selectedItemsCount: number;
 }
 
@@ -57,6 +68,9 @@ export const GiftCardsListProvider: React.FC<GiftCardsListProviderProps> = ({
   children,
   params
 }) => {
+  const navigate = useNavigator();
+  const notify = useNotifier();
+
   const { isSelected, listElements, reset, toggle, toggleAll } = useBulkActions(
     []
   );
@@ -69,23 +83,37 @@ export const GiftCardsListProvider: React.FC<GiftCardsListProviderProps> = ({
 
   const paginationState = createPaginationState(settings.rowNumber, params);
 
+  const handleSort = createSortHandler(navigate, giftCardListUrl, params);
+
   const queryVariables = React.useMemo<GiftCardListVariables>(
     () => ({
       ...paginationState,
-      filter: getFilterVariables(params)
+      filter: getFilterVariables(params),
+      sort: getSortQueryVariables(params)
     }),
     [params, paginationState]
   );
 
+  const handleGiftCardListError = (error: ApolloError) => {
+    const { message } = error.graphQLErrors[0];
+    notify({
+      status: "error",
+      text: message
+    });
+  };
+
   const { data, loading } = useGiftCardListQuery({
     displayLoader: true,
-    variables: queryVariables
+    variables: queryVariables,
+    handleError: handleGiftCardListError
   });
 
   const giftCards =
     mapEdgesToItems(data?.giftCards)?.map(getExtendedGiftCard) || [];
 
   const providerValues: GiftCardsListConsumerProps = {
+    onSort: handleSort,
+    sort: getSortParams(params),
     giftCards,
     totalCount: data?.giftCards?.totalCount || 0,
     loading,
