@@ -188,11 +188,13 @@ function getFileInput(
   if (updatedFileAttribute) {
     return {
       file: updatedFileAttribute.file,
-      id: updatedFileAttribute.id
+      id: updatedFileAttribute.id,
+      contentType: updatedFileAttribute.contentType
     };
   }
   return {
     file: attribute.data.selectedValues?.[0]?.file?.url,
+    contentType: attribute.data.selectedValues?.[0]?.file.contentType,
     id: attribute.id
   };
 }
