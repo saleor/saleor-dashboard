@@ -136,7 +136,7 @@ const OrderRefundAmount: React.FC<OrderRefundAmountProps> = props => {
     ? maxRefund
     : refundTotalAmount;
 
-  const shouldDisableRefundButton = () => {
+  const shouldRefundButtonBeDisabled = () => {
     if (isAmountTooSmall) {
       return true;
     }
@@ -156,7 +156,7 @@ const OrderRefundAmount: React.FC<OrderRefundAmountProps> = props => {
     return !selectedRefundAmount;
   };
 
-  const disableRefundButton = shouldDisableRefundButton();
+  const disableRefundButton = shouldRefundButtonBeDisabled();
 
   return (
     <Card>
