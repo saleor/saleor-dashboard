@@ -310,7 +310,7 @@ function useProductCreateForm(
       return false;
     }
 
-    if (!!opts.selectedProductType?.hasVariants) {
+    if (!opts.selectedProductType?.hasVariants) {
       return true;
     }
 

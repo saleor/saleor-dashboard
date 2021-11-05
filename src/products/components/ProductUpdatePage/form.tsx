@@ -356,7 +356,7 @@ function useProductUpdateForm(
       return false;
     }
 
-    if (!!opts.hasVariants) {
+    if (!opts.hasVariants) {
       return true;
     }
 
