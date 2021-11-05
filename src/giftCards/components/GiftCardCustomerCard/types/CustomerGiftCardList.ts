@@ -18,7 +18,7 @@ export interface CustomerGiftCardList_giftCards_edges_node_currentBalance {
 export interface CustomerGiftCardList_giftCards_edges_node {
   __typename: "GiftCard";
   id: string;
-  displayCode: string;
+  last4CodeChars: string;
   expiryDate: any | null;
   isActive: boolean;
   currentBalance: CustomerGiftCardList_giftCards_edges_node_currentBalance | null;

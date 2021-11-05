@@ -25,10 +25,10 @@ const GiftCardUpdatePageHeader: React.FC = () => {
 
   const { openResendCodeDialog } = useGiftCardUpdateDialogs();
 
-  const { displayCode, isExpired } = giftCard;
+  const { last4CodeChars, isExpired } = giftCard;
 
   const title = intl.formatMessage(tableMessages.codeEndingWithLabel, {
-    displayCode
+    last4CodeChars
   });
 
   return (
