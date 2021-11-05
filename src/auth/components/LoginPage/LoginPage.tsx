@@ -180,7 +180,6 @@ const LoginCard: React.FC<LoginCardProps> = props => {
                 color="primary"
                 fullWidth
                 variant="outlined"
-                size="large"
                 onClick={() =>
                   onExternalAuthentication(externalAuthentication.id)
                 }
