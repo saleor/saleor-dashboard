@@ -1,4 +1,4 @@
-import { AccountErrorCode as SdkAccountErrorCode } from "@saleor/sdk/dist/apollo/types";
+import { SetPasswordData } from "@saleor/sdk";
 import { AccountErrorCode } from "@saleor/types/globalTypes";
 import { defineMessages, IntlShape } from "react-intl";
 
@@ -32,7 +32,7 @@ const messages = defineMessages({
 });
 
 interface ErrorFragment {
-  code: AccountErrorCode | SdkAccountErrorCode;
+  code: AccountErrorCode | SetPasswordData["errors"][number]["code"];
 }
 
 function getAccountErrorMessage(err: ErrorFragment, intl: IntlShape): string {

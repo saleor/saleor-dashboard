@@ -14,8 +14,7 @@ function renderAuthProvider() {
   const notify = jest.fn();
   const saleorClient = createSaleorClient({
     apiUrl: process.env.API_URI || "http://localhost:8000/graphql/",
-    channel: "",
-    autologin: true
+    channel: ""
   });
   const wrapper = ({ children }) => (
     <SaleorProvider client={saleorClient}>{children}</SaleorProvider>

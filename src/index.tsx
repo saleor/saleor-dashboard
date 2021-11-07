@@ -119,8 +119,7 @@ const apolloClient = new ApolloClient({
 
 const saleorClient = createSaleorClient({
   apiUrl: API_URI,
-  channel: "",
-  autologin: true
+  channel: ""
 });
 
 const App: React.FC = () => (
@@ -165,7 +164,7 @@ const Routes: React.FC = () => {
 
   const channelLoaded = typeof channel !== "undefined";
 
-  const homePageLoaded = channelLoaded && authenticated && !authenticating;
+  const homePageLoaded = channelLoaded && authenticated;
 
   const homePageLoading = (authenticated && !channelLoaded) || authenticating;
 

@@ -17,3 +17,7 @@ export function isJwtError(error: GraphQLError): boolean {
 
   return jwtError;
 }
+
+export function isTokenExpired(error: GraphQLError): boolean {
+  return error.extensions.exception.code === JWTError.expired;
+}

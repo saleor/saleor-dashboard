@@ -1,83 +1,27 @@
 import { IMessageContext } from "@saleor/components/messages";
 import { APP_DEFAULT_URI, APP_MOUNT_URI, DEMO_MODE } from "@saleor/config";
-import { User } from "@saleor/fragments/types/User";
 import { useAuth, useAuthState } from "@saleor/sdk";
-import {
-  AccountErrorFragment,
-  CreateToken,
-  ExternalAuthenticationUrl,
-  ExternalObtainAccessTokens,
-  MutationSetPasswordArgs,
-  SetPasswordMutation,
-  UserFragment
-} from "@saleor/sdk/dist/apollo/types";
 import {
   isSupported as isCredentialsManagementAPISupported,
   login as loginWithCredentialsManagementAPI,
   saveCredentials
 } from "@saleor/utils/credentialsManagement";
 import ApolloClient from "apollo-client";
-import { FetchResult } from "apollo-link";
-import { MutableRefObject, useEffect, useRef } from "react";
+import { useEffect } from "react";
 import { useQuery } from "react-apollo";
 import { IntlShape } from "react-intl";
 import urlJoin from "url-join";
 
 import { userDetailsQuery } from "../queries";
+import {
+  ExternalLoginInput,
+  RequestExternalLoginInput,
+  RequestExternalLogoutInput,
+  UserContext
+} from "../types";
 import { UserDetails } from "../types/UserDetails";
 import { displayDemoMessage } from "../utils";
 
-export interface RequestExternalLoginInput {
-  redirectUri: string;
-}
-
-export interface ExternalLoginInput {
-  code: string;
-  state: string;
-}
-
-export interface RequestExternalLogoutInput {
-  returnTo: string;
-}
-
-export interface UseAuthProvider {
-  login: (
-    username: string,
-    password: string
-  ) => Promise<
-    Pick<CreateToken, "csrfToken" | "token"> & {
-      errors: AccountErrorFragment[];
-      user: UserFragment;
-    }
-  >;
-  requestLoginByExternalPlugin: (
-    pluginId: string,
-    input: RequestExternalLoginInput
-  ) => Promise<
-    Pick<ExternalAuthenticationUrl, "authenticationData"> & {
-      errors: AccountErrorFragment[];
-    }
-  >;
-  loginByExternalPlugin: (
-    pluginId: string,
-    input: ExternalLoginInput
-  ) => Promise<
-    Pick<ExternalObtainAccessTokens, "csrfToken" | "token"> & {
-      user: UserFragment;
-      errors: AccountErrorFragment[];
-    }
-  >;
-  logout: () => Promise<void>;
-  setPassword: (
-    opts: MutationSetPasswordArgs
-  ) => Promise<
-    FetchResult<SetPasswordMutation, Record<string, any>, Record<string, any>>
-  >;
-  authenticated: boolean;
-  authenticating: boolean;
-  user?: User;
-  autologinPromise?: MutableRefObject<Promise<any>>;
-}
 export interface UseAuthProviderOpts {
   intl: IntlShape;
   notify: IMessageContext;
@@ -88,25 +32,24 @@ export function useAuthProvider({
   intl,
   notify,
   apolloClient
-}: UseAuthProviderOpts): UseAuthProvider {
+}: UseAuthProviderOpts): UserContext {
   const {
     login,
     getExternalAuthUrl,
     getExternalAccessToken,
-    logout,
-    setPassword
+    logout
   } = useAuth();
   const { authenticated, authenticating } = useAuthState();
 
-  const autologinPromise = useRef<Promise<any>>();
-
   useEffect(() => {
-    autologinPromise.current = loginWithCredentialsManagementAPI(handleLogin);
-  }, []);
+    if (!authenticated && !authenticating) {
+      loginWithCredentialsManagementAPI(handleLogin);
+    }
+  }, [authenticated, authenticating]);
 
   const userDetails = useQuery<UserDetails>(userDetailsQuery, {
     client: apolloClient,
-    skip: !authenticated || authenticating
+    skip: !authenticated
   });
 
   const handleLogout = async () => {
@@ -123,10 +66,14 @@ export function useAuthProvider({
       navigator.credentials.preventSilentAccess();
     }
 
-    const errors = result?.errors || [];
+    if (!result) {
+      return;
+    }
+
+    const errors = result.errors || [];
     const logoutUrl = JSON.parse(
-      result?.data?.externalLogout?.logoutData || "{}"
-    ).logoutUrl;
+      result.data?.externalLogout?.logoutData || null
+    )?.logoutUrl;
     if (!errors.length && logoutUrl) {
       window.location.href = logoutUrl;
     }
@@ -137,10 +84,6 @@ export function useAuthProvider({
       email,
       password
     });
-
-    if (result?.data.tokenCreate.errors.length > 0) {
-      logout();
-    }
 
     if (result && !result.data.tokenCreate.errors.length) {
       if (DEMO_MODE) {
@@ -173,10 +116,6 @@ export function useAuthProvider({
       input: JSON.stringify(input)
     });
 
-    if (result?.data?.externalObtainAccessTokens.errors.length > 0) {
-      logout();
-    }
-
     if (result && !result.data?.externalObtainAccessTokens.errors.length) {
       if (DEMO_MODE) {
         displayDemoMessage(intl, notify);
@@ -191,10 +130,8 @@ export function useAuthProvider({
     requestLoginByExternalPlugin: handleRequestExternalLogin,
     loginByExternalPlugin: handleExternalLogin,
     logout: handleLogout,
-    setPassword,
     authenticating,
     authenticated,
-    user: userDetails.data?.me,
-    autologinPromise
+    user: userDetails.data?.me
   };
 }

@@ -4,7 +4,7 @@ import { commonMessages } from "@saleor/intl";
 import { ApolloError } from "apollo-client";
 import { IntlShape } from "react-intl";
 
-import { isJwtError } from "./errors";
+import { isJwtError, isTokenExpired } from "./errors";
 
 export const displayDemoMessage = (
   intl: IntlShape,
@@ -23,10 +23,17 @@ export async function handleQueryAuthError(
 ) {
   if (error.graphQLErrors.some(isJwtError)) {
     logout();
-    notify({
-      status: "error",
-      text: intl.formatMessage(commonMessages.sessionExpired)
-    });
+    if (error.graphQLErrors.every(isTokenExpired)) {
+      notify({
+        status: "error",
+        text: intl.formatMessage(commonMessages.sessionExpired)
+      });
+    } else {
+      notify({
+        status: "error",
+        text: intl.formatMessage(commonMessages.somethingWentWrong)
+      });
+    }
   } else if (
     !error.graphQLErrors.every(
       err => err.extensions?.exception?.code === "PermissionDenied"

@@ -1,6 +1,5 @@
 import useNavigator from "@saleor/hooks/useNavigator";
-import { useAuth } from "@saleor/sdk";
-import { AccountErrorFragment } from "@saleor/sdk/dist/apollo/types";
+import { SetPasswordData, useAuth } from "@saleor/sdk";
 import { parse as parseQs } from "qs";
 import React, { useState } from "react";
 import { RouteComponentProps } from "react-router";
@@ -16,9 +15,7 @@ const NewPassword: React.FC<RouteComponentProps> = ({ location }) => {
   const { setPassword } = useAuth();
 
   const [loading, setLoading] = useState(false);
-  const [errors, setErrors] = useState<
-    Array<Pick<AccountErrorFragment, "code" | "field">>
-  >([]);
+  const [errors, setErrors] = useState<SetPasswordData["errors"]>([]);
 
   const params: NewPasswordUrlQueryParams = parseQs(location.search.substr(1));
 
