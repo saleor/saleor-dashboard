@@ -2,7 +2,7 @@ import { Button, TextField, Typography } from "@material-ui/core";
 import Form from "@saleor/components/Form";
 import FormSpacer from "@saleor/components/FormSpacer";
 import { makeStyles } from "@saleor/macaw-ui";
-import { AccountErrorFragment } from "@saleor/sdk/dist/apollo/types";
+import { SetPasswordData } from "@saleor/sdk";
 import getAccountErrorMessage from "@saleor/utils/errors/account";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -33,7 +33,7 @@ export interface NewPasswordPageFormData {
 }
 export interface NewPasswordPageProps {
   disabled: boolean;
-  errors: Array<Pick<AccountErrorFragment, "code" | "field">>;
+  errors: SetPasswordData["errors"];
   onSubmit: (data: NewPasswordPageFormData) => void;
 }
 

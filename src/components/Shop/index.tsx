@@ -14,10 +14,10 @@ type ShopContext = ShopInfo_shop;
 export const ShopContext = React.createContext<ShopContext>(undefined);
 
 export const ShopProvider: React.FC = ({ children }) => {
-  const { authenticated, authenticating } = useAuth();
+  const { authenticated } = useAuth();
 
   return (
-    <TypedShopInfoQuery skip={!authenticated || authenticating}>
+    <TypedShopInfoQuery skip={!authenticated}>
       {({ data }) => (
         <>
           <Helmet>

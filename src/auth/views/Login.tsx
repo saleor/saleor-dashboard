@@ -38,10 +38,10 @@ const LoginView: React.FC<LoginViewProps> = ({ params }) => {
   } = useQuery<AvailableExternalAuthentications>(
     availableExternalAuthentications
   );
-  const [externalPluginIdLogin, setExternalPluginIdLogin] = useLocalStorage(
-    "externalPluginIdLogin",
-    null
-  );
+  const [
+    requestedExternalPluginId,
+    setRequestedExternalPluginId
+  ] = useLocalStorage("requestedExternalPluginId", null);
 
   const handleSubmit = async (data: LoginFormData) => {
     const result = await login(data.email, data.password);
@@ -66,13 +66,13 @@ const LoginView: React.FC<LoginViewProps> = ({ params }) => {
     if (!data || errors?.length > 0) {
       setIsExternalError(true);
     } else {
-      setExternalPluginIdLogin(pluginId);
+      setRequestedExternalPluginId(pluginId);
       window.location.href = data.authorizationUrl;
     }
   };
 
   const handleExternalAuthentication = async (code: string, state: string) => {
-    const result = await loginByExternalPlugin(externalPluginIdLogin, {
+    const result = await loginByExternalPlugin(requestedExternalPluginId, {
       code,
       state
     });

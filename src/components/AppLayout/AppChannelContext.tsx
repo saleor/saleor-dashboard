@@ -45,10 +45,10 @@ export const AppChannelProvider: React.FC<AppChannelProviderProps> = ({
   children,
   onChannelChange
 }) => {
-  const { authenticated, authenticating } = useAuth();
+  const { authenticated } = useAuth();
   const [selectedChannel, setSelectedChannel] = useLocalStorage("channel", "");
   const { data: channelData, refetch } = useBaseChannelsList({
-    skip: !authenticated || authenticating
+    skip: !authenticated
   });
 
   const [isPickerActive, setPickerActive] = React.useState(false);
