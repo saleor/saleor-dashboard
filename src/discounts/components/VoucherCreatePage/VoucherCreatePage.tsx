@@ -45,7 +45,8 @@ export interface FormData extends MetadataFormData {
   startDate: string;
   startTime: string;
   type: VoucherTypeEnum;
-  usageLimit: string;
+  usageLimit: number;
+  used: number;
   value: number;
 }
 
@@ -95,7 +96,8 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
     startDate: "",
     startTime: "",
     type: VoucherTypeEnum.ENTIRE_ORDER,
-    usageLimit: "0",
+    usageLimit: 1,
+    used: 0,
     value: 0,
     metadata: [],
     privateMetadata: []
@@ -103,7 +105,7 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
 
   return (
     <Form initial={initialForm} onSubmit={onSubmit}>
-      {({ change, data, hasChanged, submit, triggerChange }) => {
+      {({ change, data, hasChanged, submit, triggerChange, set }) => {
         const handleDiscountTypeChange = createDiscountTypeChangeHandler(
           change
         );
@@ -173,9 +175,12 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
                 <CardSpacer />
                 <VoucherLimits
                   data={data}
+                  initialUsageLimit={initialForm.usageLimit}
                   disabled={disabled}
                   errors={errors}
                   onChange={change}
+                  setData={set}
+                  isNewVoucher
                 />
                 <CardSpacer />
                 <VoucherDates
