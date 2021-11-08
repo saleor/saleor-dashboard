@@ -2,7 +2,7 @@ name: E2E
 
 on:
   pull_request:
-    types: [reopened, synchronize, labeled]
+    types: [reopened, synchronize, labeled, opened]
     branches: ["*"]
 
 jobs:
@@ -110,4 +110,3 @@ jobs:
         with:
           name: cypress-videos
           path: cypress/videos
-          
