@@ -8,7 +8,7 @@ import React from "react";
 import { defineMessages, useIntl } from "react-intl";
 
 import { OrderRefundFormData } from "../OrderRefundPage/form";
-import { getById } from "../OrderReturnPage/utils";
+import { getCurrentPaymentValue } from "../OrderReturnPage/utils";
 
 const useStyles = makeStyles(
   theme => ({
@@ -55,7 +55,7 @@ const messages = defineMessages({
     description: "Amount error message"
   },
   amountTooSmall: {
-    defaultMessage: "Amount must be bigger than 0",
+    defaultMessage: "Amount cannot be less than 0",
     description: "Amount error message"
   },
   label: {
@@ -69,11 +69,13 @@ const RefundAmountInput: React.FC<RefundAmountInputProps> = props => {
   const intl = useIntl();
   const classes = useStyles(props);
   const maxRefund = payment.availableRefundAmount;
-  const currentPayment = data.paymentsToRefund?.find(getById(payment.id));
+  const currentPaymentValue = getCurrentPaymentValue(
+    data.paymentsToRefund,
+    payment.id
+  );
   const amountTooBig =
-    Number(currentPayment?.value) > payment.availableRefundAmount?.amount;
-  const amountTooSmall =
-    currentPayment?.value && Number(currentPayment.value) <= 0;
+    Number(currentPaymentValue) > payment.availableRefundAmount?.amount;
+  const amountTooSmall = Number(currentPaymentValue) < 0;
 
   const formErrors = getFormErrors(["paymentsToRefund"], errors);
   const isError =
@@ -100,7 +102,7 @@ const RefundAmountInput: React.FC<RefundAmountInputProps> = props => {
         "/ " + currencySymbol + " " + maxRefund?.amount.toFixed(2)
       }
       name={"amount" as keyof FormData}
-      value={currentPayment?.value}
+      value={currentPaymentValue}
       label={intl.formatMessage(messages.label)}
       className={classes.priceField}
       InputProps={{ inputProps: { max: maxRefund?.amount } }}
