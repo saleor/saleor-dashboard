@@ -41,12 +41,10 @@ class ReturnFormDataParser {
 
     const paymentsToRefundValues =
       amountCalculationMode === OrderRefundAmountCalculationMode.MANUAL
-        ? paymentsToRefund
-            .filter(payment => Number(payment.value) > 0)
-            .map(field => ({
-              paymentId: field.id,
-              amount: field.value
-            }))
+        ? paymentsToRefund.map(field => ({
+            paymentId: field.id,
+            amount: Number(field.value) > 0 ? field.value : 0
+          }))
         : paymentsToRefund.map(field => ({
             paymentId: field.id
           }));

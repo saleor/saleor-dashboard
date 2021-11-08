@@ -1,4 +1,5 @@
 import { OrderDetailsFragment_fulfillments_lines } from "@saleor/fragments/types/OrderDetailsFragment";
+import { FormsetData } from "@saleor/hooks/useFormset";
 import {
   OrderDetails_order,
   OrderDetails_order_fulfillments
@@ -120,4 +121,12 @@ export function getByUnmatchingIds<T extends Node>(
   arrayToCompare: string[] | T[]
 ) {
   return (obj: Node) => !isIncludedInIds(arrayToCompare, obj);
+}
+
+export function getCurrentPaymentValue(
+  paymentsToRefund: FormsetData<null, string>,
+  paymentId: string
+): string {
+  const currentPayment = paymentsToRefund?.find(getById(paymentId));
+  return currentPayment?.value || "";
 }
