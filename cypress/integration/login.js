@@ -2,7 +2,10 @@
 /// <reference types="../support"/>
 
 import { LOGIN_SELECTORS } from "../elements/account/login-selectors";
+import { BUTTON_SELECTORS } from "../elements/shared/button-selectors";
 import { urlList } from "../fixtures/urlList";
+import { USER_WITHOUT_NAME } from "../fixtures/users";
+import { getMailActivationLinkForUser } from "../support/api/utils/users";
 import filterTests from "../support/filterTests";
 
 filterTests({ definedTags: ["all"] }, () => {
@@ -11,13 +14,13 @@ filterTests({ definedTags: ["all"] }, () => {
       cy.clearSessionData();
     });
 
-    it("should successfully log in an user", () => {
+    xit("should successfully log in an user", () => {
       cy.visit(urlList.homePage);
       cy.loginUser();
-      cy.get(LOGIN_SELECTORS.welcomePage);
+      cy.get(LOGIN_SELECTORS.welcomePage).should("be.visible");
     });
 
-    it("should fail for wrong password", () => {
+    xit("should fail for wrong password", () => {
       cy.visit(urlList.homePage)
         .get(LOGIN_SELECTORS.emailAddressInput)
         .type("admin@example.com")
@@ -25,20 +28,20 @@ filterTests({ definedTags: ["all"] }, () => {
         .type("wrong-password")
         .get(LOGIN_SELECTORS.signInButton)
         .click()
-        .get(LOGIN_SELECTORS.warningCredentialMessage);
+        .get(LOGIN_SELECTORS.warningCredentialMessage)
+        .should("be.visible");
     });
 
-    it("should successfully log out an user", () => {
-      cy.window().then(win => {
-        win.sessionStorage.clear();
-      });
-      cy.visit(urlList.homePage);
-      cy.loginUser();
-      cy.get(LOGIN_SELECTORS.userMenu)
+    xit("should successfully log out an user", () => {
+      cy.clearSessionData()
+        .loginUserViaRequest()
+        .visit(urlList.homePage)
+        .get(LOGIN_SELECTORS.userMenu)
         .click()
-        .get(LOGIN_SELECTORS.accountSettings)
-        .click();
-      cy.location("pathname").should("contains", "/staff/");
+        .get(LOGIN_SELECTORS.logOutButton)
+        .click()
+        .get(LOGIN_SELECTORS.emailAddressInput)
+        .should("be.visible");
     });
   });
 });
