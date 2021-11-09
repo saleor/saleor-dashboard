@@ -14,7 +14,6 @@ import {
   deleteStaffMembersStartsWith,
   updateStaffMember
 } from "../support/api/requests/StaffMembers";
-import { getDefaultChannel } from "../support/api/utils/channelsUtils";
 import {
   getMailActivationLinkForUser,
   getMailActivationLinkForUserAndSubject,
@@ -57,7 +56,7 @@ filterTests({ definedTags: ["stagedOnly"] }, () => {
       cy.clearSessionData().loginUserViaRequest();
     });
 
-    xit("should invite user", () => {
+    it("should invite user", () => {
       const firstName = faker.name.firstName();
       const emailInvite = `${startsWith}${firstName}@example.com`;
 
@@ -73,7 +72,7 @@ filterTests({ definedTags: ["stagedOnly"] }, () => {
       });
     });
 
-    xit("should deactivate user", () => {
+    it("should deactivate user", () => {
       updateStaffMember({ userId: user.id, isActive: true });
       updateUserActiveFlag(user.id);
       cy.clearSessionData()
@@ -90,7 +89,7 @@ filterTests({ definedTags: ["stagedOnly"] }, () => {
         });
     });
 
-    xit("should activate user", () => {
+    it("should activate user", () => {
       updateStaffMember({ userId: user.id, isActive: false });
       updateUserActiveFlag(user.id);
       cy.clearSessionData()
@@ -99,7 +98,7 @@ filterTests({ definedTags: ["stagedOnly"] }, () => {
       expectWelcomeMessageIncludes(email);
     });
 
-    xit("should remove user permissions", () => {
+    it("should remove user permissions", () => {
       cy.visit(userDetailsUrl(user.id))
         .get(STAFF_MEMBER_DETAILS.removePermissionButton)
         .click()

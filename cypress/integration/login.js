@@ -2,10 +2,7 @@
 /// <reference types="../support"/>
 
 import { LOGIN_SELECTORS } from "../elements/account/login-selectors";
-import { BUTTON_SELECTORS } from "../elements/shared/button-selectors";
 import { urlList } from "../fixtures/urlList";
-import { USER_WITHOUT_NAME } from "../fixtures/users";
-import { getMailActivationLinkForUser } from "../support/api/utils/users";
 import filterTests from "../support/filterTests";
 
 filterTests({ definedTags: ["all"] }, () => {
@@ -14,13 +11,13 @@ filterTests({ definedTags: ["all"] }, () => {
       cy.clearSessionData();
     });
 
-    xit("should successfully log in an user", () => {
+    it("should successfully log in an user", () => {
       cy.visit(urlList.homePage);
       cy.loginUser();
       cy.get(LOGIN_SELECTORS.welcomePage).should("be.visible");
     });
 
-    xit("should fail for wrong password", () => {
+    it("should fail for wrong password", () => {
       cy.visit(urlList.homePage)
         .get(LOGIN_SELECTORS.emailAddressInput)
         .type("admin@example.com")
@@ -32,7 +29,7 @@ filterTests({ definedTags: ["all"] }, () => {
         .should("be.visible");
     });
 
-    xit("should successfully log out an user", () => {
+    it("should successfully log out an user", () => {
       cy.clearSessionData()
         .loginUserViaRequest()
         .visit(urlList.homePage)
