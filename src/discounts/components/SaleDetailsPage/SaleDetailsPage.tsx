@@ -14,6 +14,7 @@ import { DiscountErrorFragment } from "@saleor/fragments/types/DiscountErrorFrag
 import { sectionNames } from "@saleor/intl";
 import { Backlink } from "@saleor/macaw-ui";
 import { validatePrice } from "@saleor/products/utils/validation";
+import { mapEdgesToItems } from "@saleor/utils/maps";
 import { mapMetadataItemToInput } from "@saleor/utils/maps";
 import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
 import React from "react";
@@ -30,6 +31,7 @@ import DiscountCategories from "../DiscountCategories";
 import DiscountCollections from "../DiscountCollections";
 import DiscountDates from "../DiscountDates";
 import DiscountProducts from "../DiscountProducts";
+import DiscountVariants from "../DiscountVariants";
 import SaleInfo from "../SaleInfo";
 import SaleSummary from "../SaleSummary";
 import SaleType from "../SaleType";
@@ -49,20 +51,27 @@ export interface SaleDetailsPageFormData extends MetadataFormData {
 export enum SaleDetailsPageTab {
   categories = "categories",
   collections = "collections",
-  products = "products"
+  products = "products",
+  variants = "variants"
 }
+
 export function saleDetailsPageTab(tab: string): SaleDetailsPageTab {
   return tab === SaleDetailsPageTab.products
     ? SaleDetailsPageTab.products
     : tab === SaleDetailsPageTab.collections
     ? SaleDetailsPageTab.collections
-    : SaleDetailsPageTab.categories;
+    : tab === SaleDetailsPageTab.categories
+    ? SaleDetailsPageTab.categories
+    : SaleDetailsPageTab.variants;
 }
 
 export interface SaleDetailsPageProps
   extends Pick<ListProps, Exclude<keyof ListProps, "onRowClick">>,
     TabListActions<
-      "categoryListToolbar" | "collectionListToolbar" | "productListToolbar"
+      | "categoryListToolbar"
+      | "collectionListToolbar"
+      | "productListToolbar"
+      | "variantListToolbar"
     >,
     ChannelProps {
   activeTab: SaleDetailsPageTab;
@@ -82,6 +91,9 @@ export interface SaleDetailsPageProps
   onProductAssign: () => void;
   onProductUnassign: (id: string) => void;
   onProductClick: (id: string) => () => void;
+  onVariantAssign: () => void;
+  onVariantUnassign: (id: string) => void;
+  onVariantClick: (productId: string, variantId: string) => () => void;
   onRemove: () => void;
   onSubmit: (data: SaleDetailsPageFormData) => void;
   onTabClick: (index: SaleDetailsPageTab) => void;
@@ -92,6 +104,7 @@ export interface SaleDetailsPageProps
 const CategoriesTab = Tab(SaleDetailsPageTab.categories);
 const CollectionsTab = Tab(SaleDetailsPageTab.collections);
 const ProductsTab = Tab(SaleDetailsPageTab.products);
+const VariantsTab = Tab(SaleDetailsPageTab.variants);
 
 const SaleDetailsPage: React.FC<SaleDetailsPageProps> = ({
   activeTab,
@@ -120,9 +133,13 @@ const SaleDetailsPage: React.FC<SaleDetailsPageProps> = ({
   onProductAssign,
   onProductUnassign,
   onProductClick,
+  onVariantAssign,
+  onVariantUnassign,
+  onVariantClick,
   categoryListToolbar,
   collectionListToolbar,
   productListToolbar,
+  variantListToolbar,
   isChecked,
   selected,
   selectedChannelId,
@@ -239,6 +256,25 @@ const SaleDetailsPage: React.FC<SaleDetailsPageProps> = ({
                       }
                     )}
                   </ProductsTab>
+                  <VariantsTab
+                    testId="variants-tab"
+                    isActive={activeTab === SaleDetailsPageTab.variants}
+                    changeTab={onTabClick}
+                  >
+                    {intl.formatMessage(
+                      {
+                        defaultMessage: "Variants ({quantity})",
+                        description: "number of variants",
+                        id: "saleDetailsPageVariantsQuantity"
+                      },
+                      {
+                        quantity: maybe(
+                          () => sale.variants.totalCount.toString(),
+                          "…"
+                        )
+                      }
+                    )}
+                  </VariantsTab>
                 </TabContainer>
                 <CardSpacer />
                 {activeTab === SaleDetailsPageTab.categories ? (
@@ -273,7 +309,7 @@ const SaleDetailsPage: React.FC<SaleDetailsPageProps> = ({
                     toggleAll={toggleAll}
                     toolbar={collectionListToolbar}
                   />
-                ) : (
+                ) : activeTab === SaleDetailsPageTab.products ? (
                   <DiscountProducts
                     disabled={disabled}
                     onNextPage={onNextPage}
@@ -282,13 +318,29 @@ const SaleDetailsPage: React.FC<SaleDetailsPageProps> = ({
                     onProductUnassign={onProductUnassign}
                     onRowClick={onProductClick}
                     pageInfo={pageInfo}
-                    discount={sale}
+                    products={mapEdgesToItems(sale?.products)}
                     channelsCount={allChannelsCount}
                     isChecked={isChecked}
                     selected={selected}
                     toggle={toggle}
                     toggleAll={toggleAll}
                     toolbar={productListToolbar}
+                  />
+                ) : (
+                  <DiscountVariants
+                    disabled={disabled}
+                    onNextPage={onNextPage}
+                    onPreviousPage={onPreviousPage}
+                    onVariantAssign={onVariantAssign}
+                    onVariantUnassign={onVariantUnassign}
+                    onRowClick={onVariantClick}
+                    pageInfo={pageInfo}
+                    variants={mapEdgesToItems(sale?.variants)}
+                    isChecked={isChecked}
+                    selected={selected}
+                    toggle={toggle}
+                    toggleAll={toggleAll}
+                    toolbar={variantListToolbar}
                   />
                 )}
                 <CardSpacer />

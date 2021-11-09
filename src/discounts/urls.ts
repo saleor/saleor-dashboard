@@ -53,9 +53,11 @@ export type SaleUrlDialog =
   | "assign-category"
   | "assign-collection"
   | "assign-product"
+  | "assign-variant"
   | "unassign-category"
   | "unassign-collection"
   | "unassign-product"
+  | "unassign-variant"
   | "remove"
   | ChannelsAction;
 export type SaleUrlQueryParams = Pagination &
