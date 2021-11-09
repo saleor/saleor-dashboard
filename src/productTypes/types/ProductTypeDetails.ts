@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { AttributeTypeEnum, MeasurementUnitsEnum, AttributeInputTypeEnum, WeightUnitsEnum } from "./../../types/globalTypes";
+import { ProductTypeKindEnum, AttributeTypeEnum, MeasurementUnitsEnum, AttributeInputTypeEnum, WeightUnitsEnum } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL query operation: ProductTypeDetails
@@ -53,6 +53,25 @@ export interface ProductTypeDetails_productType_variantAttributes {
   inputType: AttributeInputTypeEnum | null;
 }
 
+export interface ProductTypeDetails_productType_assignedVariantAttributes_attribute {
+  __typename: "Attribute";
+  id: string;
+  name: string | null;
+  slug: string | null;
+  type: AttributeTypeEnum | null;
+  visibleInStorefront: boolean;
+  filterableInDashboard: boolean;
+  filterableInStorefront: boolean;
+  unit: MeasurementUnitsEnum | null;
+  inputType: AttributeInputTypeEnum | null;
+}
+
+export interface ProductTypeDetails_productType_assignedVariantAttributes {
+  __typename: "AssignedVariantAttribute";
+  attribute: ProductTypeDetails_productType_assignedVariantAttributes_attribute;
+  variantSelection: boolean;
+}
+
 export interface ProductTypeDetails_productType_weight {
   __typename: "Weight";
   unit: WeightUnitsEnum;
@@ -63,6 +82,7 @@ export interface ProductTypeDetails_productType {
   __typename: "ProductType";
   id: string;
   name: string;
+  kind: ProductTypeKindEnum;
   hasVariants: boolean;
   isShippingRequired: boolean;
   taxType: ProductTypeDetails_productType_taxType | null;
@@ -70,6 +90,7 @@ export interface ProductTypeDetails_productType {
   privateMetadata: (ProductTypeDetails_productType_privateMetadata | null)[];
   productAttributes: (ProductTypeDetails_productType_productAttributes | null)[] | null;
   variantAttributes: (ProductTypeDetails_productType_variantAttributes | null)[] | null;
+  assignedVariantAttributes: (ProductTypeDetails_productType_assignedVariantAttributes | null)[] | null;
   weight: ProductTypeDetails_productType_weight | null;
 }
 

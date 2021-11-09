@@ -1,17 +1,19 @@
+/// <reference types="cypress"/>
+/// <reference types="../support"/>
+
 import faker from "faker";
 
+import { CUSTOMER_DETAILS } from "../elements/customers/customer-details";
+import { BUTTON_SELECTORS } from "../elements/shared/button-selectors";
+import { customerDetailsUrl } from "../fixtures/urlList";
 import {
   confirmAccount,
   customerRegistration,
   deleteCustomersStartsWith
-} from "../apiRequests/Customer";
-import { CUSTOMER_DETAILS } from "../elements/customers/customer-details";
-import { BUTTON_SELECTORS } from "../elements/shared/button-selectors";
-import { confirmationMessageShouldDisappear } from "../steps/shared/confirmationMessages";
+} from "../support/api/requests/Customer";
+import { getDefaultChannel } from "../support/api/utils/channelsUtils";
+import { getMailActivationLinkForUser } from "../support/api/utils/users";
 import filterTests from "../support/filterTests";
-import { customerDetailsUrl } from "../url/urlList";
-import { getDefaultChannel } from "../utils/channelsUtils";
-import { getMailActivationLinkForUser } from "../utils/users";
 
 describe("Tests for customer registration", () => {
   const startsWith = "Registration";
@@ -27,7 +29,7 @@ describe("Tests for customer registration", () => {
     });
   });
 
-  filterTests(["stagedOnly"], () => {
+  filterTests({ definedTags: ["stagedOnly"] }, () => {
     it("should register customer", () => {
       const email = `${startsWith}${faker.datatype.number()}@example.com`;
       customerRegistration({ email, channel: defaultChannel.slug });
@@ -72,9 +74,9 @@ describe("Tests for customer registration", () => {
             .get(CUSTOMER_DETAILS.isActiveCheckbox)
             .click()
             .get(BUTTON_SELECTORS.confirm)
-            .click();
-          confirmationMessageShouldDisappear();
-          cy.clearSessionData()
+            .click()
+            .confirmationMessageShouldDisappear()
+            .clearSessionData()
             .loginUserViaRequest("token", {
               email,
               password: Cypress.env("USER_PASSWORD")

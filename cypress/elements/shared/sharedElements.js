@@ -10,6 +10,9 @@ export const SHARED_ELEMENTS = {
   dialog: '[role="dialog"]',
   searchInput: '[data-test-id="searchInput"]',
   selectOption: '[data-test="selectFieldOption"]',
+  svgImage: "svg",
+  fileInput: 'input[type="file"]',
+  urlInput: 'input[type="url"]',
   richTextEditor: {
     loader: '[class*="codex-editor__loader"]',
     empty: '[class*="codex-editor--empty"]'

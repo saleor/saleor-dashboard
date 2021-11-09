@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { DraftOrderInput, OrderErrorCode, AddressTypeEnum, OrderDiscountType, DiscountValueTypeEnum, OrderEventsEmailsEnum, OrderEventsEnum, FulfillmentStatus, PaymentChargeStatusEnum, WarehouseClickAndCollectOptionEnum, OrderStatus, OrderAction, JobStatusEnum } from "./../../types/globalTypes";
+import { DraftOrderInput, OrderErrorCode, AddressTypeEnum, GiftCardEventsEnum, OrderDiscountType, DiscountValueTypeEnum, OrderEventsEmailsEnum, OrderEventsEnum, FulfillmentStatus, PaymentChargeStatusEnum, WarehouseClickAndCollectOptionEnum, OrderStatus, OrderAction, JobStatusEnum } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: OrderDraftUpdate
@@ -48,6 +48,51 @@ export interface OrderDraftUpdate_draftOrderUpdate_order_billingAddress {
   postalCode: string;
   streetAddress1: string;
   streetAddress2: string;
+}
+
+export interface OrderDraftUpdate_draftOrderUpdate_order_giftCards_events_balance_initialBalance {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderDraftUpdate_draftOrderUpdate_order_giftCards_events_balance_currentBalance {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderDraftUpdate_draftOrderUpdate_order_giftCards_events_balance_oldInitialBalance {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderDraftUpdate_draftOrderUpdate_order_giftCards_events_balance_oldCurrentBalance {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderDraftUpdate_draftOrderUpdate_order_giftCards_events_balance {
+  __typename: "GiftCardEventBalance";
+  initialBalance: OrderDraftUpdate_draftOrderUpdate_order_giftCards_events_balance_initialBalance | null;
+  currentBalance: OrderDraftUpdate_draftOrderUpdate_order_giftCards_events_balance_currentBalance;
+  oldInitialBalance: OrderDraftUpdate_draftOrderUpdate_order_giftCards_events_balance_oldInitialBalance | null;
+  oldCurrentBalance: OrderDraftUpdate_draftOrderUpdate_order_giftCards_events_balance_oldCurrentBalance | null;
+}
+
+export interface OrderDraftUpdate_draftOrderUpdate_order_giftCards_events {
+  __typename: "GiftCardEvent";
+  id: string;
+  type: GiftCardEventsEnum | null;
+  orderId: string | null;
+  balance: OrderDraftUpdate_draftOrderUpdate_order_giftCards_events_balance | null;
+}
+
+export interface OrderDraftUpdate_draftOrderUpdate_order_giftCards {
+  __typename: "GiftCard";
+  events: OrderDraftUpdate_draftOrderUpdate_order_giftCards_events[];
 }
 
 export interface OrderDraftUpdate_draftOrderUpdate_order_discounts_amount {
@@ -168,10 +213,16 @@ export interface OrderDraftUpdate_draftOrderUpdate_order_events {
   lines: (OrderDraftUpdate_draftOrderUpdate_order_events_lines | null)[] | null;
 }
 
+export interface OrderDraftUpdate_draftOrderUpdate_order_fulfillments_lines_orderLine_variant_preorder {
+  __typename: "PreorderData";
+  endDate: any | null;
+}
+
 export interface OrderDraftUpdate_draftOrderUpdate_order_fulfillments_lines_orderLine_variant {
   __typename: "ProductVariant";
   id: string;
   quantityAvailable: number;
+  preorder: OrderDraftUpdate_draftOrderUpdate_order_fulfillments_lines_orderLine_variant_preorder | null;
 }
 
 export interface OrderDraftUpdate_draftOrderUpdate_order_fulfillments_lines_orderLine_unitDiscount {
@@ -228,7 +279,7 @@ export interface OrderDraftUpdate_draftOrderUpdate_order_fulfillments_lines_orde
   isShippingRequired: boolean;
   variant: OrderDraftUpdate_draftOrderUpdate_order_fulfillments_lines_orderLine_variant | null;
   productName: string;
-  productSku: string;
+  productSku: string | null;
   quantity: number;
   quantityFulfilled: number;
   quantityToFulfill: number;
@@ -264,10 +315,16 @@ export interface OrderDraftUpdate_draftOrderUpdate_order_fulfillments {
   warehouse: OrderDraftUpdate_draftOrderUpdate_order_fulfillments_warehouse | null;
 }
 
+export interface OrderDraftUpdate_draftOrderUpdate_order_lines_variant_preorder {
+  __typename: "PreorderData";
+  endDate: any | null;
+}
+
 export interface OrderDraftUpdate_draftOrderUpdate_order_lines_variant {
   __typename: "ProductVariant";
   id: string;
   quantityAvailable: number;
+  preorder: OrderDraftUpdate_draftOrderUpdate_order_lines_variant_preorder | null;
 }
 
 export interface OrderDraftUpdate_draftOrderUpdate_order_lines_unitDiscount {
@@ -324,7 +381,7 @@ export interface OrderDraftUpdate_draftOrderUpdate_order_lines {
   isShippingRequired: boolean;
   variant: OrderDraftUpdate_draftOrderUpdate_order_lines_variant | null;
   productName: string;
-  productSku: string;
+  productSku: string | null;
   quantity: number;
   quantityFulfilled: number;
   quantityToFulfill: number;
@@ -504,6 +561,7 @@ export interface OrderDraftUpdate_draftOrderUpdate_order {
   metadata: (OrderDraftUpdate_draftOrderUpdate_order_metadata | null)[];
   privateMetadata: (OrderDraftUpdate_draftOrderUpdate_order_privateMetadata | null)[];
   billingAddress: OrderDraftUpdate_draftOrderUpdate_order_billingAddress | null;
+  giftCards: (OrderDraftUpdate_draftOrderUpdate_order_giftCards | null)[] | null;
   isShippingRequired: boolean;
   canFinalize: boolean;
   created: any;

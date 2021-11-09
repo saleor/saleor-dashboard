@@ -113,6 +113,7 @@ export interface ProductUpdatePageProps extends ListActions, ChannelProps {
   onVariantsAdd: () => void;
   onVariantShow: (id: string) => () => void;
   onVariantReorder: ReorderAction;
+  onVariantEndPreorderDialogOpen: () => void;
   onImageDelete: (id: string) => () => void;
   onSubmit: (data: ProductUpdatePageSubmitData) => SubmitPromise;
   openChannelsModal: () => void;
@@ -183,6 +184,7 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
   onSetDefaultVariant,
   onVariantShow,
   onVariantReorder,
+  onVariantEndPreorderDialogOpen,
   onWarehouseConfigure,
   isChecked,
   isMediaUrlModalVisible,
@@ -286,6 +288,7 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
       {({
         change,
         data,
+        formErrors,
         disabled: formDisabled,
         handlers,
         hasChanged,
@@ -380,14 +383,25 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                     />
                     <CardSpacer />
                     <ProductStocks
+                      onVariantChannelListingChange={
+                        handlers.changeChannelPreorder
+                      }
+                      productVariantChannelListings={data.channelListings}
+                      onEndPreorderTrigger={
+                        !!variants?.[0]?.preorder
+                          ? () => onVariantEndPreorderDialogOpen()
+                          : null
+                      }
                       data={data}
                       disabled={disabled}
                       hasVariants={false}
                       errors={errors}
+                      formErrors={formErrors}
                       stocks={data.stocks}
                       warehouses={warehouses}
                       onChange={handlers.changeStock}
                       onFormDataChange={change}
+                      onChangePreorderEndDate={handlers.changePreorderEndDate}
                       onWarehouseStockAdd={handlers.addStock}
                       onWarehouseStockDelete={handlers.deleteStock}
                       onWarehouseConfigure={onWarehouseConfigure}

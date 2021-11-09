@@ -18,6 +18,7 @@ export const attributeValueFragment = gql`
     boolean
     date
     dateTime
+    value
   }
 `;
 

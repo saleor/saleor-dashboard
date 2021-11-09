@@ -14,6 +14,7 @@ import Skeleton from "@saleor/components/Skeleton";
 import StatusChip from "@saleor/components/StatusChip";
 import { StatusType } from "@saleor/components/StatusChip/types";
 import { customerUrl } from "@saleor/customers/urls";
+import { PLACEHOLDER } from "@saleor/giftCards/GiftCardUpdate/types";
 import { giftCardUrl } from "@saleor/giftCards/urls";
 import useNavigator from "@saleor/hooks/useNavigator";
 import { renderCollection } from "@saleor/misc";
@@ -21,27 +22,63 @@ import { productUrl } from "@saleor/products/urls";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
+import { giftCardUpdatePageHeaderMessages as giftCardStatusChipMessages } from "../../GiftCardUpdate/GiftCardUpdatePageHeader/messages";
+import GiftCardListSearchAndFilters from "../GiftCardListSearchAndFilters";
 import { giftCardsListTableMessages as messages } from "../messages";
-import useGiftCardList from "../providers/hooks/useGiftCardList";
-import useGiftCardListBulkActions from "../providers/hooks/useGiftCardListBulkActions";
+import useGiftCardListDialogs from "../providers/GiftCardListDialogsProvider/hooks/useGiftCardListDialogs";
+import useGiftCardList from "../providers/GiftCardListProvider/hooks/useGiftCardList";
+import useGiftCardListBulkActions from "../providers/GiftCardListProvider/hooks/useGiftCardListBulkActions";
 import { useTableStyles as useStyles } from "../styles";
 import GiftCardsListTableFooter from "./GiftCardsListTableFooter";
 import GiftCardsListTableHeader from "./GiftCardsListTableHeader";
-
-const PLACEHOLDER = "-";
 
 const GiftCardsListTable: React.FC = () => {
   const intl = useIntl();
   const classes = useStyles({});
   const navigate = useNavigator();
+
   const { giftCards, numberOfColumns, loading } = useGiftCardList();
   const { toggle, isSelected } = useGiftCardListBulkActions();
+  const { openDeleteDialog } = useGiftCardListDialogs();
 
   const redirectToGiftCardUpdate = (id: string) => () =>
     navigate(giftCardUrl(id));
 
+  const selectGiftCardStatusChip = ({
+    isActive,
+    isExpired
+  }: {
+    isActive: boolean;
+    isExpired: boolean;
+  }) => {
+    if (isExpired) {
+      return (
+        <StatusChip
+          size="md"
+          status={StatusType.NEUTRAL}
+          label={intl.formatMessage(
+            giftCardStatusChipMessages.expiredStatusLabel
+          )}
+        />
+      );
+    }
+
+    if (!isActive) {
+      return (
+        <StatusChip
+          size="md"
+          status={StatusType.ERROR}
+          label={intl.formatMessage(
+            giftCardStatusChipMessages.disabledStatusLabel
+          )}
+        />
+      );
+    }
+  };
+
   return (
     <Card>
+      <GiftCardListSearchAndFilters />
       <ResponsiveTable>
         <GiftCardsListTableHeader />
         <GiftCardsListTableFooter />
@@ -56,7 +93,8 @@ const GiftCardsListTable: React.FC = () => {
               tag,
               isActive,
               product,
-              currentBalance
+              currentBalance,
+              isExpired
             }) => (
               <TableRow
                 onClick={redirectToGiftCardUpdate(id)}
@@ -77,18 +115,10 @@ const GiftCardsListTable: React.FC = () => {
                         displayCode
                       })}
                     </Typography>
-                    {!isActive && (
-                      <>
-                        <HorizontalSpacer spacing={2} />
-                        <StatusChip
-                          size="md"
-                          status={StatusType.ERROR}
-                          label={intl.formatMessage(
-                            messages.giftCardDisabledLabel
-                          )}
-                        />
-                      </>
-                    )}
+                    <>
+                      <HorizontalSpacer spacing={2} />
+                      {selectGiftCardStatusChip({ isActive, isExpired })}
+                    </>
                   </div>
                 </TableCell>
                 <TableCell>
@@ -122,7 +152,12 @@ const GiftCardsListTable: React.FC = () => {
                   </div>
                 </TableCell>
                 <TableCell className={classes.colDelete}>
-                  <DeleteIconButton />
+                  <DeleteIconButton
+                    onClick={event => {
+                      event.stopPropagation();
+                      openDeleteDialog(id);
+                    }}
+                  />
                 </TableCell>
               </TableRow>
             ),

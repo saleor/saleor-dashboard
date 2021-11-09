@@ -15,7 +15,7 @@ export const OrderSettings: React.FC = () => {
   const navigate = useNavigator();
   const notify = useNotifier();
 
-  const { data, loading } = useOrderSettingsQuery({});
+  const { data, loading } = useOrderSettingsQuery();
 
   const [
     orderSettingsUpdate,
@@ -24,12 +24,14 @@ export const OrderSettings: React.FC = () => {
 
   const handleSubmit = async ({
     automaticallyConfirmAllNewOrders,
+    automaticallyFulfillNonShippableGiftCard,
     fulfillmentAutoApprove,
     fulfillmentAllowUnpaid
   }: OrderSettingsFormData) => {
     const result = await orderSettingsUpdate({
       variables: {
         orderSettingsInput: {
+          automaticallyFulfillNonShippableGiftCard,
           automaticallyConfirmAllNewOrders
         },
         shopSettingsInput: {

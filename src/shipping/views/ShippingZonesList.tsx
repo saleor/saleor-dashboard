@@ -6,6 +6,7 @@ import useBulkActions from "@saleor/hooks/useBulkActions";
 import useListSettings from "@saleor/hooks/useListSettings";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
+import { usePaginationReset } from "@saleor/hooks/usePaginationReset";
 import usePaginator, {
   createPaginationState
 } from "@saleor/hooks/usePaginator";
@@ -53,9 +54,19 @@ export const ShippingZonesList: React.FC<ShippingZonesListProps> = ({
   const { updateListSettings, settings } = useListSettings(
     ListViews.SHIPPING_METHODS_LIST
   );
+
+  usePaginationReset(shippingZonesListUrl, params, settings.rowNumber);
+
   const intl = useIntl();
 
   const paginationState = createPaginationState(settings.rowNumber, params);
+
+  const queryVariables = React.useMemo(
+    () => ({
+      ...paginationState
+    }),
+    [params, settings.rowNumber]
+  );
 
   const [openModal, closeModal] = createDialogActionHandlers<
     ShippingZonesListUrlDialog,
@@ -64,7 +75,7 @@ export const ShippingZonesList: React.FC<ShippingZonesListProps> = ({
 
   const { data, loading, refetch } = useShippingZoneList({
     displayLoader: true,
-    variables: paginationState
+    variables: queryVariables
   });
 
   const [deleteShippingZone, deleteShippingZoneOpts] = useShippingZoneDelete({
@@ -116,6 +127,7 @@ export const ShippingZonesList: React.FC<ShippingZonesListProps> = ({
     paginationState,
     params
   );
+
   return (
     <>
       <ShippingZonesListPage

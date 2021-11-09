@@ -7,8 +7,8 @@ type CreateCloseModal<
   TParams extends Dialog<TAction>
 > = [(action: TAction, newParams?: TParams) => void, () => void];
 
-export interface DialogActionHandlers {
-  onClose: () => void;
+export interface DialogActionHandlersProps {
+  closeDialog: () => void;
   open: boolean;
 }
 
@@ -28,7 +28,7 @@ function createDialogActionHandlers<
         id: undefined,
         ids: undefined
       }),
-      true
+      { replace: true }
     );
   const open = (action: TAction, newParams?: TParams) =>
     navigate(

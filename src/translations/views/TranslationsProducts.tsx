@@ -52,7 +52,7 @@ const TranslationsProducts: React.FC<TranslationsProductsProps> = ({
         stringifyQs({
           activeField: field
         }),
-      true
+      { replace: true }
     );
 
   const onUpdate = (errors: unknown[]) => {
@@ -62,12 +62,12 @@ const TranslationsProducts: React.FC<TranslationsProductsProps> = ({
         status: "success",
         text: intl.formatMessage(commonMessages.savedChanges)
       });
-      navigate("?", true);
+      navigate("?", { replace: true });
     }
   };
 
   const onDiscard = () => {
-    navigate("?", true);
+    navigate("?", { replace: true });
   };
 
   return (

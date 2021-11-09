@@ -9,19 +9,11 @@ import { product as productFixture } from "../../../products/fixtures";
 import Decorator from "../../Decorator";
 
 const product = productFixture(placeholderImage);
-const channels = product.channelListings.map(listing => ({
-  costPrice: null,
-  currency: listing.channel.currencyCode,
-  id: listing.channel.id,
-  name: listing.channel.name,
-  price: null
-}));
 
 storiesOf("Views / Products / Create product variant", module)
   .addDecorator(Decorator)
   .add("default", () => (
     <ProductVariantCreatePage
-      channels={channels}
       weightUnit="kg"
       disabled={false}
       errors={[]}
@@ -45,7 +37,6 @@ storiesOf("Views / Products / Create product variant", module)
   ))
   .add("with errors", () => (
     <ProductVariantCreatePage
-      channels={channels}
       weightUnit="kg"
       disabled={false}
       errors={[
@@ -88,7 +79,6 @@ storiesOf("Views / Products / Create product variant", module)
   ))
   .add("when loading data", () => (
     <ProductVariantCreatePage
-      channels={channels}
       weightUnit="kg"
       disabled={true}
       errors={[]}
@@ -112,7 +102,6 @@ storiesOf("Views / Products / Create product variant", module)
   ))
   .add("add first variant", () => (
     <ProductVariantCreatePage
-      channels={channels}
       weightUnit="kg"
       disabled={false}
       errors={[]}
@@ -139,7 +128,6 @@ storiesOf("Views / Products / Create product variant", module)
   ))
   .add("no warehouses", () => (
     <ProductVariantCreatePage
-      channels={channels}
       weightUnit="kg"
       disabled={false}
       errors={[]}

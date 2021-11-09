@@ -19,6 +19,7 @@ import useBulkActions from "@saleor/hooks/useBulkActions";
 import useListSettings from "@saleor/hooks/useListSettings";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
+import { usePaginationReset } from "@saleor/hooks/usePaginationReset";
 import usePaginator, {
   createPaginationState
 } from "@saleor/hooks/usePaginator";
@@ -68,11 +69,11 @@ import {
   useProductExport
 } from "../../mutations";
 import {
-  areFiltersApplied,
   deleteFilterTab,
   getActiveFilters,
   getFilterOpts,
   getFilterQueryParam,
+  getFiltersCurrentTab,
   getFilterTabs,
   getFilterVariables,
   saveFilterTab
@@ -94,10 +95,13 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
   const { updateListSettings, settings } = useListSettings<ProductListColumns>(
     ListViews.PRODUCT_LIST
   );
+
+  usePaginationReset(productListUrl, params, settings.rowNumber);
+
   const intl = useIntl();
   const {
     data: initialFilterAttributes
-  } = useInitialProductFilterAttributesQuery({});
+  } = useInitialProductFilterAttributesQuery();
   const {
     data: initialFilterCategories
   } = useInitialProductFilterCategoriesQuery({
@@ -177,27 +181,9 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
     ProductListUrlQueryParams
   >(navigate, productListUrl, params);
 
-  // Reset pagination
-  React.useEffect(
-    () =>
-      navigate(
-        productListUrl({
-          ...params,
-          ...DEFAULT_INITIAL_PAGINATION_DATA
-        }),
-        true
-      ),
-    [settings.rowNumber]
-  );
-
   const tabs = getFilterTabs();
 
-  const currentTab =
-    params.activeTab === undefined
-      ? areFiltersApplied(params)
-        ? tabs.length + 1
-        : 0
-      : parseInt(params.activeTab, 0);
+  const currentTab = getFiltersCurrentTab(params, tabs);
 
   const countAllProducts = useProductCountQuery({
     skip: params.action !== "export"

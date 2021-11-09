@@ -36,7 +36,13 @@ export const getSimpleProductVariables = (
   productVariantId: productId,
   productVariantInput: {
     sku: data.sku,
-    trackInventory: data.trackInventory
+    trackInventory: data.trackInventory,
+    preorder: {
+      globalThreshold: data.globalThreshold
+        ? parseInt(data.globalThreshold, 10)
+        : null,
+      endDate: data.preorderEndDateTime
+    }
   },
   updateStocks: data.updateStocks.map(mapFormsetStockToStockInput)
 });
@@ -188,5 +194,6 @@ export const getVariantChannelsInput = ({
   channelListings.map(listing => ({
     channelId: listing.id,
     costPrice: listing.costPrice || null,
-    price: listing.price
+    price: listing.price,
+    preorderThreshold: listing.preorderThreshold
   }));

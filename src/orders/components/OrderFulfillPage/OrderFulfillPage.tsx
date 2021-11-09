@@ -9,7 +9,6 @@ import {
   Typography
 } from "@material-ui/core";
 import { CSSProperties } from "@material-ui/styles";
-import { drawerWidthExpanded } from "@saleor/components/AppLayout/consts";
 import CardTitle from "@saleor/components/CardTitle";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
 import Container from "@saleor/components/Container";
@@ -50,11 +49,6 @@ const useStyles = makeStyles(
     };
 
     return {
-      container: {
-        [theme.breakpoints.up("md")]: {
-          width: `calc(100vw - ${drawerWidthExpanded}px)`
-        }
-      },
       actionBar: {
         flexDirection: "row",
         paddingLeft: `calc(${theme.spacing(2)} + 2px)`
@@ -213,7 +207,7 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
   };
 
   return (
-    <Container className={classes.container}>
+    <Container>
       <Backlink onClick={onBack}>
         {order?.number
           ? intl.formatMessage(messages.headerOrderNumber, {
@@ -296,6 +290,7 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
                         0
                       );
                       const overfulfill = remainingQuantity < quantityToFulfill;
+                      const isPreorder = !!line.variant?.preorder;
 
                       return (
                         <TableRow key={line.id}>
@@ -318,6 +313,18 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
                             {line.variant?.sku}
                           </TableCell>
                           {warehouses?.map(warehouse => {
+                            if (isPreorder) {
+                              return (
+                                <TableCell
+                                  key="skeleton"
+                                  className={classNames(
+                                    classes.colQuantity,
+                                    classes.error
+                                  )}
+                                />
+                              );
+                            }
+
                             const warehouseStock = line.variant?.stocks?.find(
                               stock => stock.warehouse.id === warehouse.id
                             );
@@ -419,16 +426,20 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
                             className={classes.colQuantityTotal}
                             key="total"
                           >
-                            <span
-                              className={classNames({
-                                [classes.error]: overfulfill,
-                                [classes.full]:
-                                  remainingQuantity <= quantityToFulfill
-                              })}
-                            >
-                              {quantityToFulfill}
-                            </span>{" "}
-                            / {remainingQuantity}
+                            {!isPreorder && (
+                              <>
+                                <span
+                                  className={classNames({
+                                    [classes.error]: overfulfill,
+                                    [classes.full]:
+                                      remainingQuantity <= quantityToFulfill
+                                  })}
+                                >
+                                  {quantityToFulfill}
+                                </span>{" "}
+                                / {remainingQuantity}
+                              </>
+                            )}
                           </TableCell>
                         </TableRow>
                       );

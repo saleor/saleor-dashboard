@@ -1,0 +1,66 @@
+name: Deploy to cloud
+on:
+  repository_dispatch:
+    types: cloud-deployment
+
+jobs:
+  build:
+    runs-on: ubuntu-20.04
+    env:
+      API_URI: /graphql/
+      APP_MOUNT_URI: /dashboard/
+      STATIC_URL: /dashboard/static/
+      SENTRY_ORG: saleor
+      SENTRY_PROJECT: dashboard
+      SENTRY_URL_PREFIX: "~/dashboard/static"
+      ENVIRONMENT: ${{ github.event.client_payload.deployment_name }}
+      REGION: ${{ github.event.client_payload.region }}
+      SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
+      SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+      IS_CLOUD_INSTANCE: true
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          ref: ${{ github.event.client_payload.ref }}
+      - name: Package
+        timeout-minutes: 15
+        run: |
+          npm ci
+      - name: Build
+        run: |
+          npm run build
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_DASHBOARD_PROD_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_DASHBOARD_PROD_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
+      - name: Deploy
+        run: |
+          if [[ "$REGION" == "us" ]]; then
+            BUCKET=${{ secrets.AWS_PROD_US_DEPLOYMENT_BUCKET }}
+            CF_ID=${{ secrets.AWS_PROD_US_CF_DIST_ID }}
+          elif [[ "$REGION" == "eu" ]]; then
+            BUCKET=${{ secrets.AWS_PROD_EU_DEPLOYMENT_BUCKET }}
+            CF_ID=${{ secrets.AWS_PROD_EU_CF_DIST_ID }}
+            CF_2_ID=${{ secrets.AWS_PROD_EU_CF_2_DIST_ID }}
+          else
+            echo "Unknown region provided"
+            exit 1
+          fi
+
+          aws s3 sync build/dashboard s3://${BUCKET}/${ENVIRONMENT}/static/
+          aws s3 cp build/dashboard/index.html s3://${BUCKET}/${ENVIRONMENT}/
+          aws cloudfront create-invalidation --distribution-id ${CF_ID} --paths "/dashboard*"
+          if [[ -n "$CF_2_ID" ]]; then
+            aws cloudfront create-invalidation --distribution-id ${CF_2_ID} --paths "/dashboard*"
+          fi
+      - name: Notify Slack
+        if: ${{ always() }}
+        env:
+          JOB_DEPLOYMENT_KIND: production
+          JOB_STATUS: ${{ job.status }}
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_CLOUD_DEPLOYMENTS_WEBHOOK_URL }}
+          JOB_TITLE: "Dashboard deployment to ${{ env.ENVIRONMENT }}"
+        run: |
+          python3 ./.github/workflows/notify/notify-slack.py

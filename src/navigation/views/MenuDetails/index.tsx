@@ -77,7 +77,7 @@ const MenuDetails: React.FC<MenuDetailsProps> = ({ id, params }) => {
         action: undefined,
         id: undefined
       }),
-      true
+      { replace: true }
     );
 
   const handleItemClick = (id: string, type: MenuItemType) => {

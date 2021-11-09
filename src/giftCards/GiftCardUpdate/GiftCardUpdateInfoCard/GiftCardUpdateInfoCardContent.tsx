@@ -8,6 +8,7 @@ import useNavigator from "@saleor/hooks/useNavigator";
 import { getFullName, getStringOrPlaceholder } from "@saleor/misc";
 import Label from "@saleor/orders/components/OrderHistory/Label";
 import { getOrderNumberLinkObject } from "@saleor/orders/components/OrderHistory/utils";
+import { getByType } from "@saleor/orders/components/OrderReturnPage/utils";
 import { productUrl } from "@saleor/products/urls";
 import { staffMemberDetailsUrl } from "@saleor/staff/urls";
 import { GiftCardEventsEnum } from "@saleor/types/globalTypes";
@@ -15,9 +16,8 @@ import React from "react";
 import { MessageDescriptor, useIntl } from "react-intl";
 
 import useGiftCardDetails from "../providers/GiftCardDetailsProvider/hooks/useGiftCardDetails";
+import { PLACEHOLDER } from "../types";
 import { giftCardUpdateInfoCardMessages as messages } from "./messages";
-
-const PLACEHOLDER = "-";
 
 const GiftCardUpdateInfoCardContent: React.FC = () => {
   const intl = useIntl();
@@ -32,14 +32,12 @@ const GiftCardUpdateInfoCardContent: React.FC = () => {
     createdBy,
     usedByEmail,
     usedBy,
-    app,
     product,
     events
   } = giftCard;
 
-  const cardIssuedEvent = events.find(
-    ({ type }) => type === GiftCardEventsEnum.ISSUED
-  );
+  const cardIssuedEvent = events.find(getByType(GiftCardEventsEnum.ISSUED));
+  const cardBoughtEvent = events.find(getByType(GiftCardEventsEnum.BOUGHT));
 
   const getBuyerFieldData = (): {
     label: MessageDescriptor;
@@ -49,12 +47,22 @@ const GiftCardUpdateInfoCardContent: React.FC = () => {
     // createdBy can be either customer or staff hence
     // we check for issued event
     if (cardIssuedEvent) {
+      const { app } = cardIssuedEvent;
+
+      if (app) {
+        return {
+          label: messages.issuedByAppLabel,
+          name: app?.name,
+          url: appUrl(app?.id)
+        };
+      }
+
       const userName = getFullName(createdBy);
 
       return {
         label: messages.issuedByLabel,
         name: userName || createdByEmail,
-        url: staffMemberDetailsUrl(createdBy.id)
+        url: staffMemberDetailsUrl(createdBy?.id)
       };
     }
 
@@ -65,14 +73,6 @@ const GiftCardUpdateInfoCardContent: React.FC = () => {
       };
     }
 
-    if (app) {
-      return {
-        label: messages.issuedByAppLabel,
-        name: app.name,
-        url: appUrl(app.id)
-      };
-    }
-
     return {
       label: messages.boughtByLabel,
       name: getFullName(createdBy),
@@ -80,19 +80,39 @@ const GiftCardUpdateInfoCardContent: React.FC = () => {
     };
   };
 
-  const orderData =
-    cardIssuedEvent && cardIssuedEvent.orderId
-      ? getOrderNumberLinkObject({
-          id: cardIssuedEvent.orderId,
-          number: cardIssuedEvent.orderNumber
-        })
-      : null;
+  const getOrderData = () => {
+    if (cardIssuedEvent) {
+      const { orderId, orderNumber } = cardIssuedEvent;
+
+      if (!orderId) {
+        return null;
+      }
+
+      return getOrderNumberLinkObject({
+        id: orderId,
+        number: orderNumber
+      });
+    }
+
+    if (cardBoughtEvent) {
+      const { orderId, orderNumber } = cardBoughtEvent;
+
+      return getOrderNumberLinkObject({
+        id: orderId,
+        number: orderNumber
+      });
+    }
+
+    return null;
+  };
 
   const {
     label: buyerLabelMessage,
     name: buyerName,
     url: buyerUrl
   } = getBuyerFieldData();
+
+  const orderData = getOrderData();
 
   return (
     <>

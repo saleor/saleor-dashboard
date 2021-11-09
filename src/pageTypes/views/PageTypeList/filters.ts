@@ -26,7 +26,10 @@ export const {
   saveFilterTab
 } = createFilterTabUtils<PageTypeListUrlFilters>(PAGE_TYPE_FILTERS_KEY);
 
-export const { areFiltersApplied, getActiveFilters } = createFilterUtils<
-  PageTypeListUrlQueryParams,
-  PageTypeListUrlFilters
->(PageTypeListUrlFiltersEnum);
+export const {
+  areFiltersApplied,
+  getActiveFilters,
+  getFiltersCurrentTab
+} = createFilterUtils<PageTypeListUrlQueryParams, PageTypeListUrlFilters>(
+  PageTypeListUrlFiltersEnum
+);

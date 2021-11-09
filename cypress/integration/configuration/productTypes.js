@@ -1,20 +1,20 @@
+/// <reference types="cypress"/>
+/// <reference types="../../support"/>
+
 import faker from "faker";
 
-import { createAttribute } from "../../apiRequests/Attribute";
+import { PRODUCT_TYPE_DETAILS } from "../../elements/productTypes/productTypeDetails";
+import { productTypeDetailsUrl, urlList } from "../../fixtures/urlList";
+import { createAttribute } from "../../support/api/requests/Attribute";
 import {
   createTypeProduct,
   getProductType
-} from "../../apiRequests/productType";
-import { PRODUCT_TYPE_DETAILS } from "../../elements/productTypes/productTypeDetails";
-import { createProductType } from "../../steps/productTypeSteps";
-import { assignElements } from "../../steps/shared/assignElements";
-import { confirmationMessageShouldDisappear } from "../../steps/shared/confirmationMessages";
-import { visitAndWaitForProgressBarToDisappear } from "../../steps/shared/progressBar";
+} from "../../support/api/requests/ProductType";
+import { deleteProductsStartsWith } from "../../support/api/utils/products/productsUtils";
 import filterTests from "../../support/filterTests";
-import { productTypeDetailsUrl, urlList } from "../../url/urlList";
-import { deleteProductsStartsWith } from "../../utils/products/productsUtils";
+import { createProductType } from "../../support/pages/productTypePage";
 
-filterTests(["all"], () => {
+filterTests({ definedTags: ["all"] }, () => {
   describe("Tests for product types", () => {
     const startsWith = "ProductType";
 
@@ -64,15 +64,15 @@ filterTests(["all"], () => {
 
       createTypeProduct({ name })
         .then(productType => {
-          visitAndWaitForProgressBarToDisappear(
+          cy.visitAndWaitForProgressBarToDisappear(
             productTypeDetailsUrl(productType.id)
           )
             .get(PRODUCT_TYPE_DETAILS.assignProductAttributeButton)
-            .click();
-          cy.addAliasToGraphRequest("AssignProductAttribute");
-          assignElements(startsWith, false);
-          confirmationMessageShouldDisappear();
-          cy.wait("@AssignProductAttribute");
+            .click()
+            .addAliasToGraphRequest("AssignProductAttribute")
+            .assignElements(startsWith, false)
+            .confirmationMessageShouldDisappear()
+            .waitForRequestAndCheckIfNoErrors("@AssignProductAttribute");
           getProductType(productType.id);
         })
         .then(productType => {
@@ -85,17 +85,17 @@ filterTests(["all"], () => {
 
       createTypeProduct({ name, hasVariants: false })
         .then(productType => {
-          visitAndWaitForProgressBarToDisappear(
+          cy.visitAndWaitForProgressBarToDisappear(
             productTypeDetailsUrl(productType.id)
           )
             .get(PRODUCT_TYPE_DETAILS.hasVariantsButton)
             .click()
             .get(PRODUCT_TYPE_DETAILS.assignVariantAttributeButton)
-            .click();
-          cy.addAliasToGraphRequest("AssignProductAttribute");
-          assignElements(startsWith, false);
-          confirmationMessageShouldDisappear();
-          cy.wait("@AssignProductAttribute");
+            .click()
+            .addAliasToGraphRequest("AssignProductAttribute")
+            .assignElements(startsWith, false)
+            .confirmationMessageShouldDisappear()
+            .wait("@AssignProductAttribute");
           getProductType(productType.id);
         })
         .then(productType => {

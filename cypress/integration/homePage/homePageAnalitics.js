@@ -1,25 +1,28 @@
+/// <reference types="cypress"/>
+/// <reference types="../../support"/>
+
 import faker from "faker";
 
+import { HOMEPAGE_SELECTORS } from "../../elements/homePage/homePage-selectors";
+import { urlList } from "../../fixtures/urlList";
 import {
   createCustomer,
   deleteCustomersStartsWith
-} from "../../apiRequests/Customer";
-import { HOMEPAGE_SELECTORS } from "../../elements/homePage/homePage-selectors";
-import { changeChannel } from "../../steps/homePageSteps";
-import filterTests from "../../support/filterTests";
-import { urlList } from "../../url/urlList";
-import { getDefaultChannel } from "../../utils/channelsUtils";
-import * as homePageUtils from "../../utils/homePageUtils";
+} from "../../support/api/requests/Customer";
+import { getDefaultChannel } from "../../support/api/utils/channelsUtils";
+import * as homePageUtils from "../../support/api/utils/homePageUtils";
 import {
   createReadyToFulfillOrder,
   createWaitingForCaptureOrder
-} from "../../utils/ordersUtils";
-import * as productsUtils from "../../utils/products/productsUtils";
-import * as shippingUtils from "../../utils/shippingUtils";
+} from "../../support/api/utils/ordersUtils";
+import * as productsUtils from "../../support/api/utils/products/productsUtils";
+import * as shippingUtils from "../../support/api/utils/shippingUtils";
+import filterTests from "../../support/filterTests";
+import { changeChannel } from "../../support/pages/homePage";
 
 // <reference types="cypress" />
 
-filterTests(["all", "critical"], () => {
+filterTests({ definedTags: ["all", "critical"] }, () => {
   describe("Homepage analytics", () => {
     const startsWith = "CyHomeAnalytics";
 
@@ -69,7 +72,9 @@ filterTests(["all", "critical"], () => {
           }) => {
             warehouse = warehouseResp;
             shippingMethod = shippingMethodResp;
-            productsUtils.createTypeAttributeAndCategoryForProduct(randomName);
+            productsUtils.createTypeAttributeAndCategoryForProduct({
+              name: randomName
+            });
           }
         )
         .then(

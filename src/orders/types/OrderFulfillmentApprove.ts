@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { OrderErrorCode, AddressTypeEnum, OrderDiscountType, DiscountValueTypeEnum, OrderEventsEmailsEnum, OrderEventsEnum, FulfillmentStatus, PaymentChargeStatusEnum, WarehouseClickAndCollectOptionEnum, OrderStatus, OrderAction, JobStatusEnum } from "./../../types/globalTypes";
+import { OrderErrorCode, AddressTypeEnum, GiftCardEventsEnum, OrderDiscountType, DiscountValueTypeEnum, OrderEventsEmailsEnum, OrderEventsEnum, FulfillmentStatus, PaymentChargeStatusEnum, WarehouseClickAndCollectOptionEnum, OrderStatus, OrderAction, JobStatusEnum } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: OrderFulfillmentApprove
@@ -48,6 +48,51 @@ export interface OrderFulfillmentApprove_orderFulfillmentApprove_order_billingAd
   postalCode: string;
   streetAddress1: string;
   streetAddress2: string;
+}
+
+export interface OrderFulfillmentApprove_orderFulfillmentApprove_order_giftCards_events_balance_initialBalance {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderFulfillmentApprove_orderFulfillmentApprove_order_giftCards_events_balance_currentBalance {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderFulfillmentApprove_orderFulfillmentApprove_order_giftCards_events_balance_oldInitialBalance {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderFulfillmentApprove_orderFulfillmentApprove_order_giftCards_events_balance_oldCurrentBalance {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderFulfillmentApprove_orderFulfillmentApprove_order_giftCards_events_balance {
+  __typename: "GiftCardEventBalance";
+  initialBalance: OrderFulfillmentApprove_orderFulfillmentApprove_order_giftCards_events_balance_initialBalance | null;
+  currentBalance: OrderFulfillmentApprove_orderFulfillmentApprove_order_giftCards_events_balance_currentBalance;
+  oldInitialBalance: OrderFulfillmentApprove_orderFulfillmentApprove_order_giftCards_events_balance_oldInitialBalance | null;
+  oldCurrentBalance: OrderFulfillmentApprove_orderFulfillmentApprove_order_giftCards_events_balance_oldCurrentBalance | null;
+}
+
+export interface OrderFulfillmentApprove_orderFulfillmentApprove_order_giftCards_events {
+  __typename: "GiftCardEvent";
+  id: string;
+  type: GiftCardEventsEnum | null;
+  orderId: string | null;
+  balance: OrderFulfillmentApprove_orderFulfillmentApprove_order_giftCards_events_balance | null;
+}
+
+export interface OrderFulfillmentApprove_orderFulfillmentApprove_order_giftCards {
+  __typename: "GiftCard";
+  events: OrderFulfillmentApprove_orderFulfillmentApprove_order_giftCards_events[];
 }
 
 export interface OrderFulfillmentApprove_orderFulfillmentApprove_order_discounts_amount {
@@ -168,10 +213,16 @@ export interface OrderFulfillmentApprove_orderFulfillmentApprove_order_events {
   lines: (OrderFulfillmentApprove_orderFulfillmentApprove_order_events_lines | null)[] | null;
 }
 
+export interface OrderFulfillmentApprove_orderFulfillmentApprove_order_fulfillments_lines_orderLine_variant_preorder {
+  __typename: "PreorderData";
+  endDate: any | null;
+}
+
 export interface OrderFulfillmentApprove_orderFulfillmentApprove_order_fulfillments_lines_orderLine_variant {
   __typename: "ProductVariant";
   id: string;
   quantityAvailable: number;
+  preorder: OrderFulfillmentApprove_orderFulfillmentApprove_order_fulfillments_lines_orderLine_variant_preorder | null;
 }
 
 export interface OrderFulfillmentApprove_orderFulfillmentApprove_order_fulfillments_lines_orderLine_unitDiscount {
@@ -228,7 +279,7 @@ export interface OrderFulfillmentApprove_orderFulfillmentApprove_order_fulfillme
   isShippingRequired: boolean;
   variant: OrderFulfillmentApprove_orderFulfillmentApprove_order_fulfillments_lines_orderLine_variant | null;
   productName: string;
-  productSku: string;
+  productSku: string | null;
   quantity: number;
   quantityFulfilled: number;
   quantityToFulfill: number;
@@ -264,10 +315,16 @@ export interface OrderFulfillmentApprove_orderFulfillmentApprove_order_fulfillme
   warehouse: OrderFulfillmentApprove_orderFulfillmentApprove_order_fulfillments_warehouse | null;
 }
 
+export interface OrderFulfillmentApprove_orderFulfillmentApprove_order_lines_variant_preorder {
+  __typename: "PreorderData";
+  endDate: any | null;
+}
+
 export interface OrderFulfillmentApprove_orderFulfillmentApprove_order_lines_variant {
   __typename: "ProductVariant";
   id: string;
   quantityAvailable: number;
+  preorder: OrderFulfillmentApprove_orderFulfillmentApprove_order_lines_variant_preorder | null;
 }
 
 export interface OrderFulfillmentApprove_orderFulfillmentApprove_order_lines_unitDiscount {
@@ -324,7 +381,7 @@ export interface OrderFulfillmentApprove_orderFulfillmentApprove_order_lines {
   isShippingRequired: boolean;
   variant: OrderFulfillmentApprove_orderFulfillmentApprove_order_lines_variant | null;
   productName: string;
-  productSku: string;
+  productSku: string | null;
   quantity: number;
   quantityFulfilled: number;
   quantityToFulfill: number;
@@ -504,6 +561,7 @@ export interface OrderFulfillmentApprove_orderFulfillmentApprove_order {
   metadata: (OrderFulfillmentApprove_orderFulfillmentApprove_order_metadata | null)[];
   privateMetadata: (OrderFulfillmentApprove_orderFulfillmentApprove_order_privateMetadata | null)[];
   billingAddress: OrderFulfillmentApprove_orderFulfillmentApprove_order_billingAddress | null;
+  giftCards: (OrderFulfillmentApprove_orderFulfillmentApprove_order_giftCards | null)[] | null;
   isShippingRequired: boolean;
   canFinalize: boolean;
   created: any;

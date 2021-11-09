@@ -13,49 +13,33 @@ import {
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import useSearchQuery from "@saleor/hooks/useSearchQuery";
 import { buttonMessages } from "@saleor/intl";
-import { makeStyles } from "@saleor/macaw-ui";
 import useScrollableDialogStyle from "@saleor/styles/useScrollableDialogStyle";
-import { FetchMoreProps, Node } from "@saleor/types";
+import { DialogProps, FetchMoreProps, Node } from "@saleor/types";
 import React from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { FormattedMessage } from "react-intl";
 
 import Checkbox from "../Checkbox";
 import ConfirmButton, { ConfirmButtonTransitionState } from "../ConfirmButton";
+import { messages } from "./messages";
+import { useStyles } from "./styles";
 
-export interface FormData {
+export interface AssignContainerDialogFormData {
   containers: string[];
   query: string;
 }
 
-const useStyles = makeStyles(
-  {
-    avatar: {
-      "&:first-child": {
-        paddingLeft: 0
-      }
-    },
-    checkboxCell: {
-      paddingLeft: 0
-    },
-    wideCell: {
-      width: "100%"
-    }
-  },
-  { name: "AssignContainerDialog" }
-);
-
 interface Container extends Node {
   name: string;
 }
-export interface AssignContainerDialogProps extends FetchMoreProps {
+export interface AssignContainerDialogProps
+  extends FetchMoreProps,
+    DialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
   containers: Container[];
   loading: boolean;
-  open: boolean;
   search: Record<"label" | "placeholder", string>;
   title: string;
-  onClose: () => void;
   onFetch: (value: string) => void;
   onSubmit: (data: string[]) => void;
 }
@@ -188,7 +172,7 @@ const AssignContainerDialog: React.FC<AssignContainerDialogProps> = props => {
           type="submit"
           onClick={handleSubmit}
         >
-          <FormattedMessage defaultMessage="Assign" description="button" />
+          <FormattedMessage {...messages.assignContainerDialogButton} />
         </ConfirmButton>
       </DialogActions>
     </Dialog>

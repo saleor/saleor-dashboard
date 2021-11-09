@@ -222,3 +222,10 @@ export const giftCardErrorFragment = gql`
     field
   }
 `;
+
+export const giftCardSettingsErrorFragment = gql`
+  fragment GiftCardSettingsErrorFragment on GiftCardSettingsError {
+    code
+    field
+  }
+`;

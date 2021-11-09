@@ -1,139 +1,63 @@
-import useStateFromProps from "@saleor/hooks/useStateFromProps";
-import isEmpty from "lodash/isEmpty";
-import reduce from "lodash/reduce";
-import { useEffect, useRef, useState } from "react";
+import { ChannelData } from "@saleor/channels/utils";
+import uniq from "lodash/uniq";
 
+import { UseChannelsWithProductVariants } from "./types";
+import useChannelVariantListings from "./useChannelVariantListings";
 import {
-  CHANNELS_AVAILIABILITY_MODAL_SELECTOR,
-  ChannelsWithVariantsData,
-  UseChannelsWithProductVariants,
-  UseChannelsWithProductVariantsProps
-} from "./types";
-import {
-  areAllVariantsAtAllChannelsSelected,
-  areAnyChannelVariantsSelected,
-  getChannelVariantToggleData,
-  getChannelWithAddedVariantData,
-  getChannelWithRemovedVariantData,
-  getParsedChannelsWithVariantsDataFromChannels
+  addAllVariantsToAllChannels,
+  getChannelVariantToggleData
 } from "./utils";
 
-const useChannelsWithProductVariants = ({
-  channels,
-  variants,
-  openModal,
-  closeModal,
-  action
-}: UseChannelsWithProductVariantsProps): UseChannelsWithProductVariants => {
-  const [channelsData, setChannelsData] = useStateFromProps(channels);
-
-  const initialChannelsWithVariantsData = getParsedChannelsWithVariantsDataFromChannels(
-    channels
-  );
-
-  const [
+const useChannelsWithProductVariants = (
+  channels: ChannelData[],
+  variants: string[]
+): UseChannelsWithProductVariants => {
+  const {
     channelsWithVariantsData,
-    setChannelsWithVariantsData
-  ] = useStateFromProps<ChannelsWithVariantsData>(
-    initialChannelsWithVariantsData
-  );
-
-  const channelsWithVariantsDataRef = useRef(channelsWithVariantsData);
-
-  const [hasChanged, setHasChanged] = useState(false);
-
-  const handleSetHasChanged = () => {
-    const isDataRefEmpty = isEmpty(channelsWithVariantsDataRef.current);
-    const isDataEmpty = isEmpty(channelsWithVariantsData);
-
-    const hasFilledInitialData = isDataRefEmpty && !isDataEmpty;
-
-    const hasNoDataFilled = isDataRefEmpty && isDataEmpty;
-
-    channelsWithVariantsDataRef.current = channelsWithVariantsData;
-
-    if (hasNoDataFilled || hasFilledInitialData) {
-      return;
-    }
-
-    setHasChanged(true);
-  };
-
-  useEffect(handleSetHasChanged, [channelsWithVariantsData]);
+    hasChanged,
+    setChannelVariantListing,
+    channelVariantListing,
+    reset
+  } = useChannelVariantListings(channels);
 
   const handleAddVariant = (channelId: string, variantId: string) =>
-    setChannelsWithVariantsData({
-      ...channelsWithVariantsData,
-      ...getChannelWithAddedVariantData({
-        channelWithVariantsData: channelsWithVariantsData[channelId],
-        channelId,
-        variantId
-      })
-    });
+    setChannelVariantListing(listings => ({
+      ...listings,
+      [channelId]: uniq([...listings[channelId], variantId])
+    }));
 
   const handleRemoveVariant = (channelId: string, variantId: string) =>
-    setChannelsWithVariantsData({
-      ...channelsWithVariantsData,
-      ...getChannelWithRemovedVariantData({
-        channelWithVariantsData: channelsWithVariantsData[channelId],
-        channelId,
-        variantId
-      })
-    });
+    setChannelVariantListing(listings => ({
+      ...listings,
+      [channelId]: listings[channelId].filter(
+        selectedVariantId => selectedVariantId !== variantId
+      )
+    }));
 
-  const toggleAllChannelVariants = (channelId: string) => () => {
-    const isChannelSelected = areAnyChannelVariantsSelected(
-      channelsWithVariantsData[channelId]
-    );
+  const toggleAllChannelVariants = (channelId: string) => {
+    const isChannelSelected = channelVariantListing[channelId].length > 0;
 
-    setChannelsWithVariantsData({
-      ...channelsWithVariantsData,
+    setChannelVariantListing({
+      ...channelVariantListing,
       [channelId]: getChannelVariantToggleData(variants, isChannelSelected)
     });
   };
 
-  const toggleAllChannels = () => {
-    const areAllChannelsSelected = areAllVariantsAtAllChannelsSelected(
-      variants,
-      channelsWithVariantsData
+  const toggleAllChannels = () =>
+    setChannelVariantListing(listings =>
+      addAllVariantsToAllChannels(listings, variants)
     );
-
-    const updatedData: ChannelsWithVariantsData = reduce(
-      channelsWithVariantsData,
-      (result, _, channelId) => ({
-        ...result,
-        [channelId]: getChannelVariantToggleData(
-          variants,
-          areAllChannelsSelected
-        )
-      }),
-      {}
-    );
-
-    setChannelsWithVariantsData(updatedData);
-  };
-
-  const onChannelsWithVariantsConfirm = () => closeModal();
-
-  const handleModalOpen = () =>
-    openModal(CHANNELS_AVAILIABILITY_MODAL_SELECTOR);
-
-  const isModalOpen = action === CHANNELS_AVAILIABILITY_MODAL_SELECTOR;
 
   return {
     channelsWithVariantsData,
-    setChannelsData,
-    channelsData,
+    channelVariantListing,
     addVariantToChannel: handleAddVariant,
     removeVariantFromChannel: handleRemoveVariant,
-    onChannelsAvailiabilityModalOpen: handleModalOpen,
-    onChannelsAvailiabilityModalClose: closeModal,
-    isChannelsAvailabilityModalOpen: isModalOpen,
-    haveChannelsWithVariantsDataChanged: hasChanged,
+    hasChanged,
     toggleAllChannelVariants,
     toggleAllChannels,
-    onChannelsWithVariantsConfirm,
-    setHaveChannelsWithVariantsChanged: setHasChanged
+    setChannelVariantListing,
+    reset
   };
 };
 

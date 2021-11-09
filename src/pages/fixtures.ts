@@ -72,7 +72,8 @@ export const page: PageDetails_page = {
                 richText: null,
                 boolean: null,
                 date: null,
-                dateTime: null
+                dateTime: null,
+                value: null
               }
             },
             {
@@ -88,7 +89,8 @@ export const page: PageDetails_page = {
                 richText: null,
                 boolean: null,
                 date: null,
-                dateTime: null
+                dateTime: null,
+                value: null
               }
             },
             {
@@ -104,7 +106,8 @@ export const page: PageDetails_page = {
                 richText: null,
                 boolean: null,
                 date: null,
-                dateTime: null
+                dateTime: null,
+                value: null
               }
             }
           ]
@@ -122,7 +125,8 @@ export const page: PageDetails_page = {
           richText: null,
           boolean: null,
           date: null,
-          dateTime: null
+          dateTime: null,
+          value: null
         }
       ],
       __typename: "SelectedAttribute"
@@ -159,7 +163,8 @@ export const page: PageDetails_page = {
                 richText: null,
                 boolean: null,
                 date: null,
-                dateTime: null
+                dateTime: null,
+                value: null
               }
             },
             {
@@ -175,7 +180,8 @@ export const page: PageDetails_page = {
                 richText: null,
                 boolean: null,
                 date: null,
-                dateTime: null
+                dateTime: null,
+                value: null
               }
             },
             {
@@ -191,7 +197,8 @@ export const page: PageDetails_page = {
                 richText: null,
                 boolean: null,
                 date: null,
-                dateTime: null
+                dateTime: null,
+                value: null
               }
             },
             {
@@ -207,7 +214,8 @@ export const page: PageDetails_page = {
                 richText: null,
                 boolean: null,
                 date: null,
-                dateTime: null
+                dateTime: null,
+                value: null
               }
             }
           ]
@@ -225,7 +233,8 @@ export const page: PageDetails_page = {
           richText: null,
           boolean: null,
           date: null,
-          dateTime: null
+          dateTime: null,
+          value: null
         }
       ],
       __typename: "SelectedAttribute"
@@ -275,7 +284,8 @@ export const page: PageDetails_page = {
                 richText: null,
                 boolean: null,
                 date: null,
-                dateTime: null
+                dateTime: null,
+                value: null
               }
             },
             {
@@ -291,7 +301,8 @@ export const page: PageDetails_page = {
                 richText: null,
                 boolean: null,
                 date: null,
-                dateTime: null
+                dateTime: null,
+                value: null
               }
             },
             {
@@ -307,7 +318,8 @@ export const page: PageDetails_page = {
                 richText: null,
                 boolean: null,
                 date: null,
-                dateTime: null
+                dateTime: null,
+                value: null
               }
             }
           ]
@@ -343,7 +355,8 @@ export const page: PageDetails_page = {
                 richText: null,
                 boolean: null,
                 date: null,
-                dateTime: null
+                dateTime: null,
+                value: null
               }
             },
             {
@@ -359,7 +372,8 @@ export const page: PageDetails_page = {
                 richText: null,
                 boolean: null,
                 date: null,
-                dateTime: null
+                dateTime: null,
+                value: null
               }
             },
             {
@@ -375,7 +389,8 @@ export const page: PageDetails_page = {
                 richText: null,
                 boolean: null,
                 date: null,
-                dateTime: null
+                dateTime: null,
+                value: null
               }
             },
             {
@@ -391,7 +406,8 @@ export const page: PageDetails_page = {
                 richText: null,
                 boolean: null,
                 date: null,
-                dateTime: null
+                dateTime: null,
+                value: null
               }
             }
           ]

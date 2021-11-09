@@ -7,6 +7,7 @@ export const productTypeFragment = gql`
   fragment ProductTypeFragment on ProductType {
     id
     name
+    kind
     hasVariants
     isShippingRequired
     taxType {
@@ -28,6 +29,12 @@ export const productTypeDetailsFragment = gql`
     }
     variantAttributes {
       ...AttributeFragment
+    }
+    assignedVariantAttributes {
+      attribute {
+        ...AttributeFragment
+      }
+      variantSelection
     }
     weight {
       unit

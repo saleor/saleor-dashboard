@@ -1,4 +1,5 @@
 import { WindowTitle } from "@saleor/components/WindowTitle";
+import { IS_CLOUD_INSTANCE } from "@saleor/config";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { commonMessages, sectionNames } from "@saleor/intl";
@@ -28,9 +29,11 @@ export const SiteSettings: React.FC<SiteSettingsProps> = () => {
 
   const handleSiteSettingsSuccess = (data: ShopSettingsUpdate) => {
     if (
-      data.shopDomainUpdate.errors.length === 0 &&
-      data.shopSettingsUpdate.errors.length === 0 &&
-      data.shopAddressUpdate.errors.length === 0
+      [
+        ...data.shopAddressUpdate.errors,
+        ...data.shopSettingsUpdate.errors,
+        ...(data.shopDomainUpdate?.errors || [])
+      ].length === 0
     ) {
       notify({
         status: "success",
@@ -45,7 +48,7 @@ export const SiteSettings: React.FC<SiteSettingsProps> = () => {
         <TypedShopSettingsUpdate onCompleted={handleSiteSettingsSuccess}>
           {(updateShopSettings, updateShopSettingsOpts) => {
             const errors = [
-              ...(updateShopSettingsOpts.data?.shopDomainUpdate.errors || []),
+              ...(updateShopSettingsOpts.data?.shopDomainUpdate?.errors || []),
               ...(updateShopSettingsOpts.data?.shopSettingsUpdate.errors || []),
               ...(updateShopSettingsOpts.data?.shopAddressUpdate.errors || [])
             ];
@@ -77,14 +80,19 @@ export const SiteSettings: React.FC<SiteSettingsProps> = () => {
                     name: data.name
                   },
                   shopSettingsInput: {
-                    description: data.description
-                  }
+                    description: data.description,
+                    reserveStockDurationAnonymousUser:
+                      data.reserveStockDurationAnonymousUser || null,
+                    reserveStockDurationAuthenticatedUser:
+                      data.reserveStockDurationAuthenticatedUser || null
+                  },
+                  isCloudInstance: IS_CLOUD_INSTANCE
                 }
               });
 
               return [
                 ...result.data.shopAddressUpdate.errors,
-                ...result.data.shopDomainUpdate.errors,
+                ...(result.data.shopDomainUpdate?.errors || []),
                 ...result.data.shopSettingsUpdate.errors
               ];
             };

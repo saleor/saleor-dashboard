@@ -4,6 +4,7 @@ import {
   SingleAutocompleteChoiceType
 } from "@saleor/components/SingleAutocompleteSelectField";
 import { MetadataItem } from "@saleor/fragments/types/MetadataItem";
+import { getFullName } from "@saleor/misc";
 import { SearchPages_search_edges_node } from "@saleor/searches/types/SearchPages";
 import { Node, SlugNode, TagNode } from "@saleor/types";
 import { MetadataInput } from "@saleor/types/globalTypes";
@@ -44,6 +45,7 @@ export function mapNodeToChoice<
   T extends ExtendedNode | Node,
   K extends ChoiceValue
 >(nodes: T[], getterFn: (node: T) => K): Array<SingleAutocompleteChoiceType<K>>;
+
 export function mapNodeToChoice<T extends ExtendedNode>(
   nodes: T[],
   getterFn?: (node: T) => any
@@ -90,4 +92,23 @@ export function mapSingleValueNodeToChoice<T extends Record<string, any>>(
   }
 
   return (nodes as T[]).map(node => ({ label: node[key], value: node[key] }));
+}
+
+interface Person {
+  firstName: string;
+  lastName: string;
+  id: string;
+}
+
+export function mapPersonNodeToChoice<T extends Person>(
+  nodes: T[]
+): SingleAutocompleteChoiceType[] {
+  if (!nodes) {
+    return [];
+  }
+
+  return nodes.map(({ firstName, lastName, id }) => ({
+    value: id,
+    label: getFullName({ firstName, lastName })
+  }));
 }

@@ -96,7 +96,7 @@ const TableLine: React.FC<TableLineProps> = ({
         {maybe(() => line.orderLine.productName) || <Skeleton />}
       </TableCellAvatar>
       <TableCell className={classes.colSku}>
-        {line?.orderLine.productSku || <Skeleton />}
+        {line?.orderLine ? line.orderLine.productSku : <Skeleton />}
       </TableCell>
       <TableCell className={classes.colQuantity}>
         {quantityToDisplay || <Skeleton />}

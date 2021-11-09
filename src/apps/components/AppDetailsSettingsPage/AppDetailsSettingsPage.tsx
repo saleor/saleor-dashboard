@@ -5,7 +5,6 @@ import Grid from "@saleor/components/Grid";
 import Hr from "@saleor/components/Hr";
 import { sectionNames } from "@saleor/intl";
 import { Backlink } from "@saleor/macaw-ui";
-import { useTheme } from "@saleor/macaw-ui";
 import classNames from "classnames";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -16,7 +15,6 @@ import { useStyles } from "./styles";
 import useSettingsBreadcrumbs from "./useSettingsBreadcrumbs";
 
 export interface AppDetailsSettingsPageProps {
-  backendHost: string;
   data: App_app;
   navigateToDashboard: () => void;
   onBack: () => void;
@@ -24,7 +22,6 @@ export interface AppDetailsSettingsPageProps {
 }
 
 export const AppDetailsSettingsPage: React.FC<AppDetailsSettingsPageProps> = ({
-  backendHost,
   data,
   navigateToDashboard,
   onBack,
@@ -33,7 +30,6 @@ export const AppDetailsSettingsPage: React.FC<AppDetailsSettingsPageProps> = ({
   const intl = useIntl();
   const classes = useStyles({});
   const [breadcrumbs, onBreadcrumbClick] = useSettingsBreadcrumbs();
-  const { sendThemeToExtension } = useTheme();
 
   return (
     <Container>
@@ -104,9 +100,7 @@ export const AppDetailsSettingsPage: React.FC<AppDetailsSettingsPageProps> = ({
         {data && (
           <AppFrame
             src={data.configurationUrl}
-            backendHost={backendHost}
             appToken={data.accessToken}
-            onLoad={sendThemeToExtension}
             onError={onError}
           />
         )}

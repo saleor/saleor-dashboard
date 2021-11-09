@@ -6,6 +6,7 @@ import useBulkActions from "@saleor/hooks/useBulkActions";
 import useListSettings from "@saleor/hooks/useListSettings";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
+import { usePaginationReset } from "@saleor/hooks/usePaginationReset";
 import usePaginator, {
   createPaginationState
 } from "@saleor/hooks/usePaginator";
@@ -46,6 +47,9 @@ export const PageList: React.FC<PageListProps> = ({ params }) => {
   const { updateListSettings, settings } = useListSettings(
     ListViews.PAGES_LIST
   );
+
+  usePaginationReset(pageListUrl, params, settings.rowNumber);
+
   const intl = useIntl();
 
   const paginationState = createPaginationState(settings.rowNumber, params);

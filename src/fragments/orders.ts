@@ -81,6 +81,9 @@ export const fragmentOrderLine = gql`
     variant {
       id
       quantityAvailable
+      preorder {
+        endDate
+      }
     }
     productName
     productSku
@@ -181,6 +184,27 @@ export const fragmentOrderDetails = gql`
     ...MetadataFragment
     billingAddress {
       ...AddressFragment
+    }
+    giftCards {
+      events {
+        id
+        type
+        orderId
+        balance {
+          initialBalance {
+            ...Money
+          }
+          currentBalance {
+            ...Money
+          }
+          oldInitialBalance {
+            ...Money
+          }
+          oldCurrentBalance {
+            ...Money
+          }
+        }
+      }
     }
     isShippingRequired
     canFinalize
@@ -296,6 +320,7 @@ export const fragmentOrderDetails = gql`
 export const fragmentOrderSettings = gql`
   fragment OrderSettingsFragment on OrderSettings {
     automaticallyConfirmAllNewOrders
+    automaticallyFulfillNonShippableGiftCard
   }
 `;
 

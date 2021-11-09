@@ -26,7 +26,10 @@ export const {
   saveFilterTab
 } = createFilterTabUtils<WarehouseListUrlFilters>(WAREHOUSE_FILTERS_KEY);
 
-export const { areFiltersApplied, getActiveFilters } = createFilterUtils<
-  WarehouseListUrlQueryParams,
-  WarehouseListUrlFilters
->(WarehouseListUrlFiltersEnum);
+export const {
+  areFiltersApplied,
+  getActiveFilters,
+  getFiltersCurrentTab
+} = createFilterUtils<WarehouseListUrlQueryParams, WarehouseListUrlFilters>(
+  WarehouseListUrlFiltersEnum
+);

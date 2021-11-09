@@ -18,6 +18,23 @@ export const searchProducts = gql`
           thumbnail {
             url
           }
+          variants {
+            id
+            name
+            sku
+            channelListings {
+              channel {
+                id
+                isActive
+                name
+                currencyCode
+              }
+              price {
+                amount
+                currency
+              }
+            }
+          }
         }
       }
       pageInfo {

@@ -34,6 +34,7 @@ export interface PageAttributesFragment_attributes_attribute_choices_edges_node 
   boolean: boolean | null;
   date: any | null;
   dateTime: any | null;
+  value: string | null;
 }
 
 export interface PageAttributesFragment_attributes_attribute_choices_edges {
@@ -77,6 +78,7 @@ export interface PageAttributesFragment_attributes_values {
   boolean: boolean | null;
   date: any | null;
   dateTime: any | null;
+  value: string | null;
 }
 
 export interface PageAttributesFragment_attributes {
@@ -110,6 +112,7 @@ export interface PageAttributesFragment_pageType_attributes_choices_edges_node {
   boolean: boolean | null;
   date: any | null;
   dateTime: any | null;
+  value: string | null;
 }
 
 export interface PageAttributesFragment_pageType_attributes_choices_edges {

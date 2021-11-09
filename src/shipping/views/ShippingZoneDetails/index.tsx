@@ -100,7 +100,7 @@ const ShippingZoneDetails: React.FC<ShippingZoneDetailsProps> = ({
           status: "success",
           text: intl.formatMessage(commonMessages.savedChanges)
         });
-        navigate(shippingZonesListUrl(), true);
+        navigate(shippingZonesListUrl(), { replace: true });
       }
     }
   });

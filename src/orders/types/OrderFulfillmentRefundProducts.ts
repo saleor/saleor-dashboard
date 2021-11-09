@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { OrderRefundProductsInput, OrderErrorCode, AddressTypeEnum, DiscountValueTypeEnum, FulfillmentStatus, OrderDiscountType, OrderEventsEmailsEnum, OrderEventsEnum, PaymentChargeStatusEnum, WarehouseClickAndCollectOptionEnum, OrderStatus, OrderAction, JobStatusEnum } from "./../../types/globalTypes";
+import { OrderRefundProductsInput, OrderErrorCode, AddressTypeEnum, DiscountValueTypeEnum, FulfillmentStatus, GiftCardEventsEnum, OrderDiscountType, OrderEventsEmailsEnum, OrderEventsEnum, PaymentChargeStatusEnum, WarehouseClickAndCollectOptionEnum, OrderStatus, OrderAction, JobStatusEnum } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: OrderFulfillmentRefundProducts
@@ -16,10 +16,16 @@ export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_e
   addressType: AddressTypeEnum | null;
 }
 
+export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_fulfillment_lines_orderLine_variant_preorder {
+  __typename: "PreorderData";
+  endDate: any | null;
+}
+
 export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_fulfillment_lines_orderLine_variant {
   __typename: "ProductVariant";
   id: string;
   quantityAvailable: number;
+  preorder: OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_fulfillment_lines_orderLine_variant_preorder | null;
 }
 
 export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_fulfillment_lines_orderLine_unitDiscount {
@@ -76,7 +82,7 @@ export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_f
   isShippingRequired: boolean;
   variant: OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_fulfillment_lines_orderLine_variant | null;
   productName: string;
-  productSku: string;
+  productSku: string | null;
   quantity: number;
   quantityFulfilled: number;
   quantityToFulfill: number;
@@ -144,6 +150,51 @@ export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_o
   postalCode: string;
   streetAddress1: string;
   streetAddress2: string;
+}
+
+export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_giftCards_events_balance_initialBalance {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_giftCards_events_balance_currentBalance {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_giftCards_events_balance_oldInitialBalance {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_giftCards_events_balance_oldCurrentBalance {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_giftCards_events_balance {
+  __typename: "GiftCardEventBalance";
+  initialBalance: OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_giftCards_events_balance_initialBalance | null;
+  currentBalance: OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_giftCards_events_balance_currentBalance;
+  oldInitialBalance: OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_giftCards_events_balance_oldInitialBalance | null;
+  oldCurrentBalance: OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_giftCards_events_balance_oldCurrentBalance | null;
+}
+
+export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_giftCards_events {
+  __typename: "GiftCardEvent";
+  id: string;
+  type: GiftCardEventsEnum | null;
+  orderId: string | null;
+  balance: OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_giftCards_events_balance | null;
+}
+
+export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_giftCards {
+  __typename: "GiftCard";
+  events: OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_giftCards_events[];
 }
 
 export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_discounts_amount {
@@ -264,10 +315,16 @@ export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_o
   lines: (OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_events_lines | null)[] | null;
 }
 
+export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_fulfillments_lines_orderLine_variant_preorder {
+  __typename: "PreorderData";
+  endDate: any | null;
+}
+
 export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_fulfillments_lines_orderLine_variant {
   __typename: "ProductVariant";
   id: string;
   quantityAvailable: number;
+  preorder: OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_fulfillments_lines_orderLine_variant_preorder | null;
 }
 
 export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_fulfillments_lines_orderLine_unitDiscount {
@@ -324,7 +381,7 @@ export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_o
   isShippingRequired: boolean;
   variant: OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_fulfillments_lines_orderLine_variant | null;
   productName: string;
-  productSku: string;
+  productSku: string | null;
   quantity: number;
   quantityFulfilled: number;
   quantityToFulfill: number;
@@ -360,10 +417,16 @@ export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_o
   warehouse: OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_fulfillments_warehouse | null;
 }
 
+export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_lines_variant_preorder {
+  __typename: "PreorderData";
+  endDate: any | null;
+}
+
 export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_lines_variant {
   __typename: "ProductVariant";
   id: string;
   quantityAvailable: number;
+  preorder: OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_lines_variant_preorder | null;
 }
 
 export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_lines_unitDiscount {
@@ -420,7 +483,7 @@ export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_o
   isShippingRequired: boolean;
   variant: OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_lines_variant | null;
   productName: string;
-  productSku: string;
+  productSku: string | null;
   quantity: number;
   quantityFulfilled: number;
   quantityToFulfill: number;
@@ -600,6 +663,7 @@ export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_o
   metadata: (OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_metadata | null)[];
   privateMetadata: (OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_privateMetadata | null)[];
   billingAddress: OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_billingAddress | null;
+  giftCards: (OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_giftCards | null)[] | null;
   isShippingRequired: boolean;
   canFinalize: boolean;
   created: any;

@@ -1,11 +1,11 @@
 import {
   Card,
-  CardContent,
   TableBody,
   TableCell,
   TableRow,
   Typography
 } from "@material-ui/core";
+import VerticalSpacer from "@saleor/apps/components/VerticalSpacer";
 import { ChannelShippingData } from "@saleor/channels/utils";
 import CardTitle from "@saleor/components/CardTitle";
 import ControlledCheckbox from "@saleor/components/ControlledCheckbox";
@@ -32,7 +32,7 @@ export interface OrderValueProps {
   channels: ChannelShippingData[];
   errors: ShippingChannelsErrorFragment[];
   disabled: boolean;
-  noLimits: boolean;
+  orderValueRestricted: boolean;
   onChange: (event: ChangeEvent) => void;
   onChannelsChange: (channelId: string, value: Value) => void;
 }
@@ -42,7 +42,7 @@ const numberOfColumns = 3;
 export const OrderValue: React.FC<OrderValueProps> = ({
   channels,
   errors,
-  noLimits,
+  orderValueRestricted,
   disabled,
   onChannelsChange,
   onChange
@@ -62,37 +62,36 @@ export const OrderValue: React.FC<OrderValueProps> = ({
           description: "card title"
         })}
       />
-      <CardContent className={classes.content}>
+      <div className={classes.content}>
         <div className={classes.subheader}>
           <ControlledCheckbox
-            name="noLimits"
+            name="orderValueRestricted"
             label={
               <>
                 <FormattedMessage
-                  defaultMessage="There are no value limits"
+                  defaultMessage="Restrict order value"
                   description="checkbox label"
                 />
-                <Typography variant="caption" className={classes.caption}>
+                <Typography variant="caption">
                   {intl.formatMessage({
-                    defaultMessage:
-                      "This rate will apply to all orders of all prices",
+                    defaultMessage: "This rate will apply to all orders",
                     description: "price rates info"
                   })}
                 </Typography>
               </>
             }
-            checked={noLimits}
+            checked={orderValueRestricted}
             onChange={onChange}
             disabled={disabled}
           />
-          <Typography variant="caption" className={classes.info}>
-            <FormattedMessage
-              defaultMessage="Channels that don’t have assigned discounts will use their parent channel to define the price. Price will be converted to channel’s currency"
-              description="channels discount info"
-            />
-          </Typography>
+          <VerticalSpacer />
+          <FormattedMessage
+            defaultMessage="Channels that don’t have assigned discounts will use their parent channel to define the price. Price will be converted to channel’s currency"
+            description="channels discount info"
+          />
+          <VerticalSpacer />
         </div>
-        {!noLimits && (
+        {orderValueRestricted && (
           <ResponsiveTable className={classes.table}>
             <TableHead colSpan={numberOfColumns} disabled={disabled} items={[]}>
               <TableCell className={classes.colName}>
@@ -185,7 +184,7 @@ export const OrderValue: React.FC<OrderValueProps> = ({
             </TableBody>
           </ResponsiveTable>
         )}
-      </CardContent>
+      </div>
     </Card>
   );
 };

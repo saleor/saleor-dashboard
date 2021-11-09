@@ -119,7 +119,7 @@ const FilterContent: React.FC<FilterContentProps> = ({
       if (filterField.multipleFields) {
         return filterField.multipleFields.reduce(
           getAutocompleteValuesWithNewValues,
-          {}
+          acc
         );
       }
 
@@ -212,6 +212,7 @@ const FilterContent: React.FC<FilterContentProps> = ({
                 key={filter.name}
                 classes={expanderClasses}
                 data-test="channel-availability-item"
+                data-test-id={filter.name}
                 expanded={filter.name === openedFilter?.name}
               >
                 <AccordionSummary
@@ -226,7 +227,7 @@ const FilterContent: React.FC<FilterContentProps> = ({
                     }
                   />
                 </AccordionSummary>
-                {currentFilter.active && (
+                {currentFilter?.active && (
                   <FilterErrorsList
                     errors={errors?.[filter.name]}
                     errorMessages={errorMessages}

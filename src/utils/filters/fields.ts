@@ -83,7 +83,7 @@ export function createOptionsField<T extends string>(
 export function createAutocompleteField<T extends string>(
   name: T,
   label: string,
-  defaultValue: string[],
+  defaultValue: string[] = [],
   displayValues: MultiAutocompleteChoiceType[],
   multiple: boolean,
   options: MultiAutocompleteChoiceType[],

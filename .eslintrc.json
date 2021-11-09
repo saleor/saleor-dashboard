@@ -167,7 +167,7 @@
     "sort-imports": "off", // imports are handled by simple-import-sort/sort
     "sort-keys": "off",
     "space-before-function-paren": "off",
-    "spaced-comment": "error",
+    "spaced-comment": ["error", "always", { "markers": ["/"] }],
     "use-isnan": "error",
     "valid-typeof": "off",
     "no-restricted-imports": [

@@ -181,7 +181,7 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
   };
 
   const saveLabel = isOrderUnconfirmed
-    ? intl.formatMessage(messages.confirmOrder)
+    ? { confirm: intl.formatMessage(messages.confirmOrder) }
     : undefined;
 
   const allowSave = (hasChanged: boolean) => {
@@ -325,7 +325,7 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
               </div>
             </Grid>
             <Savebar
-              labels={{ confirm: saveLabel }}
+              labels={saveLabel}
               onCancel={onBack}
               onSubmit={submit}
               state={saveButtonBarState}

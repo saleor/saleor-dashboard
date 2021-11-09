@@ -1,5 +1,4 @@
 import { Button, Typography } from "@material-ui/core";
-import { drawerWidthExpanded } from "@saleor/components/AppLayout/consts";
 import Container from "@saleor/components/Container";
 import Hr from "@saleor/components/Hr";
 import PageHeader from "@saleor/components/PageHeader";
@@ -28,14 +27,7 @@ const useStyles = makeStyles(
       marginLeft: theme.spacing(2)
     },
     content: {
-      overflowX: "visible",
-      [theme.breakpoints.up("md")]: {
-        position: "absolute",
-        width: `calc(100vw - ${drawerWidthExpanded}px + ${theme.spacing(6)}px)`,
-        maxWidth: `calc(${theme.breakpoints.width("lg")}px - ${theme.spacing(
-          6
-        )}px)`
-      }
+      overflowX: "visible"
     },
     description: {
       marginTop: theme.spacing()
@@ -82,10 +74,8 @@ function canHitNext(
 
       return true;
     case ProductVariantCreatorStep.summary:
-      return !data.variants.some(
-        variant =>
-          variant.sku === "" ||
-          variant.channelListings.some(channel => validatePrice(channel.price))
+      return !data.variants.some(variant =>
+        variant.channelListings.some(channel => validatePrice(channel.price))
       );
 
     default:

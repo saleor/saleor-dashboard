@@ -7,8 +7,8 @@ import {
   SaleorTheme,
   Sidebar,
   SidebarDrawer,
+  useActionBar,
   useBacklink,
-  useSavebar,
   useTheme
 } from "@saleor/macaw-ui";
 import { isDarkTheme } from "@saleor/misc";
@@ -55,7 +55,10 @@ const useStyles = makeStyles(
     },
 
     content: {
-      flex: 1
+      flex: 1,
+      [theme.breakpoints.up("md")]: {
+        width: 0 // workaround for flex children width expansion affected by their contents
+      }
     },
     darkThemeSwitch: {
       [theme.breakpoints.down("sm")]: {
@@ -98,8 +101,6 @@ const useStyles = makeStyles(
     },
 
     view: {
-      flex: 1,
-      flexGrow: 1,
       marginLeft: 0,
       paddingBottom: theme.spacing(),
       [theme.breakpoints.up("sm")]: {
@@ -122,7 +123,7 @@ interface AppLayoutProps {
 const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
   const classes = useStyles({});
   const { themeType, setTheme } = useTheme();
-  const { anchor: appActionAnchor, docked } = useSavebar();
+  const { anchor: appActionAnchor, docked } = useActionBar();
   const appHeaderAnchor = useBacklink();
   const { logout, user } = useUser();
   const navigate = useNavigator();

@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { StockInput, AttributeValueInput, ProductErrorCode, AttributeInputTypeEnum, AttributeEntityTypeEnum, MeasurementUnitsEnum, ProductMediaType, WeightUnitsEnum, StockErrorCode } from "./../../types/globalTypes";
+import { StockInput, AttributeValueInput, PreorderSettingsInput, ProductErrorCode, AttributeInputTypeEnum, AttributeEntityTypeEnum, MeasurementUnitsEnum, ProductMediaType, WeightUnitsEnum, StockErrorCode } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: VariantUpdate
@@ -53,6 +53,7 @@ export interface VariantUpdate_productVariantUpdate_productVariant_selectionAttr
   boolean: boolean | null;
   date: any | null;
   dateTime: any | null;
+  value: string | null;
 }
 
 export interface VariantUpdate_productVariantUpdate_productVariant_selectionAttributes_attribute_choices_edges {
@@ -96,6 +97,7 @@ export interface VariantUpdate_productVariantUpdate_productVariant_selectionAttr
   boolean: boolean | null;
   date: any | null;
   dateTime: any | null;
+  value: string | null;
 }
 
 export interface VariantUpdate_productVariantUpdate_productVariant_selectionAttributes {
@@ -129,6 +131,7 @@ export interface VariantUpdate_productVariantUpdate_productVariant_nonSelectionA
   boolean: boolean | null;
   date: any | null;
   dateTime: any | null;
+  value: string | null;
 }
 
 export interface VariantUpdate_productVariantUpdate_productVariant_nonSelectionAttributes_attribute_choices_edges {
@@ -172,6 +175,7 @@ export interface VariantUpdate_productVariantUpdate_productVariant_nonSelectionA
   boolean: boolean | null;
   date: any | null;
   dateTime: any | null;
+  value: string | null;
 }
 
 export interface VariantUpdate_productVariantUpdate_productVariant_nonSelectionAttributes {
@@ -268,7 +272,7 @@ export interface VariantUpdate_productVariantUpdate_productVariant_product_varia
   __typename: "ProductVariant";
   id: string;
   name: string;
-  sku: string;
+  sku: string | null;
   media: VariantUpdate_productVariantUpdate_productVariant_product_variants_media[] | null;
 }
 
@@ -302,11 +306,18 @@ export interface VariantUpdate_productVariantUpdate_productVariant_channelListin
   currency: string;
 }
 
+export interface VariantUpdate_productVariantUpdate_productVariant_channelListings_preorderThreshold {
+  __typename: "PreorderThreshold";
+  quantity: number | null;
+  soldUnits: number;
+}
+
 export interface VariantUpdate_productVariantUpdate_productVariant_channelListings {
   __typename: "ProductVariantChannelListing";
   channel: VariantUpdate_productVariantUpdate_productVariant_channelListings_channel;
   price: VariantUpdate_productVariantUpdate_productVariant_channelListings_price | null;
   costPrice: VariantUpdate_productVariantUpdate_productVariant_channelListings_costPrice | null;
+  preorderThreshold: VariantUpdate_productVariantUpdate_productVariant_channelListings_preorderThreshold | null;
 }
 
 export interface VariantUpdate_productVariantUpdate_productVariant_stocks_warehouse {
@@ -321,6 +332,13 @@ export interface VariantUpdate_productVariantUpdate_productVariant_stocks {
   quantity: number;
   quantityAllocated: number;
   warehouse: VariantUpdate_productVariantUpdate_productVariant_stocks_warehouse;
+}
+
+export interface VariantUpdate_productVariantUpdate_productVariant_preorder {
+  __typename: "PreorderData";
+  globalThreshold: number | null;
+  globalSoldUnits: number;
+  endDate: any | null;
 }
 
 export interface VariantUpdate_productVariantUpdate_productVariant_weight {
@@ -340,9 +358,10 @@ export interface VariantUpdate_productVariantUpdate_productVariant {
   name: string;
   product: VariantUpdate_productVariantUpdate_productVariant_product;
   channelListings: VariantUpdate_productVariantUpdate_productVariant_channelListings[] | null;
-  sku: string;
+  sku: string | null;
   stocks: (VariantUpdate_productVariantUpdate_productVariant_stocks | null)[] | null;
   trackInventory: boolean;
+  preorder: VariantUpdate_productVariantUpdate_productVariant_preorder | null;
   weight: VariantUpdate_productVariantUpdate_productVariant_weight | null;
 }
 
@@ -396,6 +415,7 @@ export interface VariantUpdate_productVariantStocksUpdate_productVariant_selecti
   boolean: boolean | null;
   date: any | null;
   dateTime: any | null;
+  value: string | null;
 }
 
 export interface VariantUpdate_productVariantStocksUpdate_productVariant_selectionAttributes_attribute_choices_edges {
@@ -439,6 +459,7 @@ export interface VariantUpdate_productVariantStocksUpdate_productVariant_selecti
   boolean: boolean | null;
   date: any | null;
   dateTime: any | null;
+  value: string | null;
 }
 
 export interface VariantUpdate_productVariantStocksUpdate_productVariant_selectionAttributes {
@@ -472,6 +493,7 @@ export interface VariantUpdate_productVariantStocksUpdate_productVariant_nonSele
   boolean: boolean | null;
   date: any | null;
   dateTime: any | null;
+  value: string | null;
 }
 
 export interface VariantUpdate_productVariantStocksUpdate_productVariant_nonSelectionAttributes_attribute_choices_edges {
@@ -515,6 +537,7 @@ export interface VariantUpdate_productVariantStocksUpdate_productVariant_nonSele
   boolean: boolean | null;
   date: any | null;
   dateTime: any | null;
+  value: string | null;
 }
 
 export interface VariantUpdate_productVariantStocksUpdate_productVariant_nonSelectionAttributes {
@@ -611,7 +634,7 @@ export interface VariantUpdate_productVariantStocksUpdate_productVariant_product
   __typename: "ProductVariant";
   id: string;
   name: string;
-  sku: string;
+  sku: string | null;
   media: VariantUpdate_productVariantStocksUpdate_productVariant_product_variants_media[] | null;
 }
 
@@ -645,11 +668,18 @@ export interface VariantUpdate_productVariantStocksUpdate_productVariant_channel
   currency: string;
 }
 
+export interface VariantUpdate_productVariantStocksUpdate_productVariant_channelListings_preorderThreshold {
+  __typename: "PreorderThreshold";
+  quantity: number | null;
+  soldUnits: number;
+}
+
 export interface VariantUpdate_productVariantStocksUpdate_productVariant_channelListings {
   __typename: "ProductVariantChannelListing";
   channel: VariantUpdate_productVariantStocksUpdate_productVariant_channelListings_channel;
   price: VariantUpdate_productVariantStocksUpdate_productVariant_channelListings_price | null;
   costPrice: VariantUpdate_productVariantStocksUpdate_productVariant_channelListings_costPrice | null;
+  preorderThreshold: VariantUpdate_productVariantStocksUpdate_productVariant_channelListings_preorderThreshold | null;
 }
 
 export interface VariantUpdate_productVariantStocksUpdate_productVariant_stocks_warehouse {
@@ -664,6 +694,13 @@ export interface VariantUpdate_productVariantStocksUpdate_productVariant_stocks 
   quantity: number;
   quantityAllocated: number;
   warehouse: VariantUpdate_productVariantStocksUpdate_productVariant_stocks_warehouse;
+}
+
+export interface VariantUpdate_productVariantStocksUpdate_productVariant_preorder {
+  __typename: "PreorderData";
+  globalThreshold: number | null;
+  globalSoldUnits: number;
+  endDate: any | null;
 }
 
 export interface VariantUpdate_productVariantStocksUpdate_productVariant_weight {
@@ -683,9 +720,10 @@ export interface VariantUpdate_productVariantStocksUpdate_productVariant {
   name: string;
   product: VariantUpdate_productVariantStocksUpdate_productVariant_product;
   channelListings: VariantUpdate_productVariantStocksUpdate_productVariant_channelListings[] | null;
-  sku: string;
+  sku: string | null;
   stocks: (VariantUpdate_productVariantStocksUpdate_productVariant_stocks | null)[] | null;
   trackInventory: boolean;
+  preorder: VariantUpdate_productVariantStocksUpdate_productVariant_preorder | null;
   weight: VariantUpdate_productVariantStocksUpdate_productVariant_weight | null;
 }
 
@@ -775,6 +813,7 @@ export interface VariantUpdateVariables {
   sku?: string | null;
   trackInventory: boolean;
   stocks: StockInput[];
+  preorder?: PreorderSettingsInput | null;
   weight?: any | null;
   firstValues?: number | null;
   afterValues?: string | null;

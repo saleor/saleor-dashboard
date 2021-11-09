@@ -1,5 +1,3 @@
-import { Typography } from "@material-ui/core";
-import VerticalSpacer from "@saleor/apps/components/VerticalSpacer";
 import SingleAutocompleteSelectField, {
   SingleAutocompleteSelectFieldProps
 } from "@saleor/components/SingleAutocompleteSelectField";
@@ -24,12 +22,10 @@ interface GiftCardTagInputProps
   extends Pick<SingleAutocompleteSelectFieldProps, "name"> {
   change: FormChange;
   value: string;
-  withTopLabel?: boolean;
   error: GiftCardError;
 }
 
 const GiftCardTagInput: React.FC<GiftCardTagInputProps> = ({
-  withTopLabel = false,
   change,
   name,
   value,
@@ -47,30 +43,22 @@ const GiftCardTagInput: React.FC<GiftCardTagInputProps> = ({
   );
 
   return (
-    <>
-      {withTopLabel && (
-        <>
-          <Typography>{intl.formatMessage(messages.label)}</Typography>
-          <VerticalSpacer />
-        </>
-      )}
-      <SingleAutocompleteSelectField
-        error={!!error}
-        helperText={getGiftCardErrorMessage(error, intl)}
-        allowCustomValues
-        name={name || "giftCardTag"}
-        label={`${intl.formatMessage(
-          messages.placeholder
-        )} *${intl.formatMessage(commonMessages.optionalField)}`}
-        data-test-id="gift-card-tag-select-field"
-        value={value}
-        displayValue={value}
-        choices={choices}
-        fetchChoices={search}
-        onChange={change}
-        onFetchMore={loadMore}
-      />
-    </>
+    <SingleAutocompleteSelectField
+      error={!!error}
+      helperText={getGiftCardErrorMessage(error, intl)}
+      allowCustomValues
+      name={name || "giftCardTag"}
+      label={`${intl.formatMessage(messages.placeholder)} *${intl.formatMessage(
+        commonMessages.optionalField
+      )}`}
+      data-test-id="gift-card-tag-select-field"
+      value={value}
+      displayValue={value}
+      choices={choices}
+      fetchChoices={search}
+      onChange={change}
+      onFetchMore={loadMore}
+    />
   );
 };
 

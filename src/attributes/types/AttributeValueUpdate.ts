@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { AttributeValueCreateInput, AttributeErrorCode } from "./../../types/globalTypes";
+import { AttributeValueUpdateInput, AttributeErrorCode } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: AttributeValueUpdate
@@ -34,6 +34,7 @@ export interface AttributeValueUpdate_attributeValueUpdate_attribute_choices_edg
   boolean: boolean | null;
   date: any | null;
   dateTime: any | null;
+  value: string | null;
 }
 
 export interface AttributeValueUpdate_attributeValueUpdate_attribute_choices_edges {
@@ -72,7 +73,7 @@ export interface AttributeValueUpdate {
 
 export interface AttributeValueUpdateVariables {
   id: string;
-  input: AttributeValueCreateInput;
+  input: AttributeValueUpdateInput;
   firstValues?: number | null;
   afterValues?: string | null;
   lastValues?: number | null;

@@ -1,9 +1,8 @@
 import { PermissionGroupErrorFragment } from "@saleor/fragments/types/PermissionGroupErrorFragment";
-import { commonMessages } from "@saleor/intl";
 import { PermissionGroupErrorCode } from "@saleor/types/globalTypes";
 import { defineMessages, IntlShape } from "react-intl";
 
-import commonErrorMessages from "./common";
+import { getCommonFormFieldErrorMessage } from "./common";
 
 const messages = defineMessages({
   assignNonStaffMember: {
@@ -39,14 +38,10 @@ function getPermissionGroupErrorMessage(
         return intl.formatMessage(messages.cannotRemoveFromLastGroup);
       case PermissionGroupErrorCode.UNIQUE:
         return intl.formatMessage(messages.unique);
-      case PermissionGroupErrorCode.REQUIRED:
-        return intl.formatMessage(commonMessages.requiredField);
-      default:
-        return intl.formatMessage(commonErrorMessages.unknownError);
     }
   }
 
-  return undefined;
+  return getCommonFormFieldErrorMessage(err, intl);
 }
 
 export default getPermissionGroupErrorMessage;

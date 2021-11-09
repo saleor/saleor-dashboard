@@ -1,26 +1,28 @@
-// <reference types="cypress" />
+/// <reference types="cypress"/>
+/// <reference types="../../../../support"/>
+
 import faker from "faker";
 
-import { createCheckout } from "../../../../apiRequests/Checkout";
-import { createShippingZone } from "../../../../apiRequests/ShippingMethod";
-import { createWarehouse } from "../../../../apiRequests/Warehouse";
-import { ONE_PERMISSION_USERS } from "../../../../Data/users";
-import {
-  createShippingRate,
-  rateOptions
-} from "../../../../steps/shippingMethodSteps";
-import filterTests from "../../../../support/filterTests";
-import { shippingZoneDetailsUrl } from "../../../../url/urlList";
-import { getDefaultChannel } from "../../../../utils/channelsUtils";
+import { shippingZoneDetailsUrl } from "../../../../fixtures/urlList";
+import { ONE_PERMISSION_USERS } from "../../../../fixtures/users";
+import { createCheckout } from "../../../../support/api/requests/Checkout";
+import { createShippingZone } from "../../../../support/api/requests/ShippingMethod";
+import { createWarehouse } from "../../../../support/api/requests/Warehouse";
+import { getDefaultChannel } from "../../../../support/api/utils/channelsUtils";
 import {
   createProductInChannel,
   createTypeAttributeAndCategoryForProduct,
   deleteProductsStartsWith
-} from "../../../../utils/products/productsUtils";
-import { deleteShippingStartsWith } from "../../../../utils/shippingUtils";
-import { isShippingAvailableInCheckout } from "../../../../utils/storeFront/checkoutUtils";
+} from "../../../../support/api/utils/products/productsUtils";
+import { deleteShippingStartsWith } from "../../../../support/api/utils/shippingUtils";
+import { isShippingAvailableInCheckout } from "../../../../support/api/utils/storeFront/checkoutUtils";
+import filterTests from "../../../../support/filterTests";
+import {
+  createShippingRate,
+  rateOptions
+} from "../../../../support/pages/shippingMethodPage";
 
-filterTests(["all"], () => {
+filterTests({ definedTags: ["all"] }, () => {
   describe("Shipping weight limits", () => {
     const startsWith = "CyWeightRates-";
     const name = `${startsWith}${faker.datatype.number()}`;
@@ -57,7 +59,7 @@ filterTests(["all"], () => {
         })
         .then(warehouseResp => {
           warehouse = warehouseResp;
-          createTypeAttributeAndCategoryForProduct(name);
+          createTypeAttributeAndCategoryForProduct({ name });
         })
         .then(({ attribute, productType, category }) => {
           createProductInChannel({

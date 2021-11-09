@@ -169,7 +169,7 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
           defaultMessage: "Deleted voucher"
         })
       });
-      navigate(voucherListUrl(), true);
+      navigate(voucherListUrl(), { replace: true });
     }
   };
 
@@ -533,9 +533,7 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
                                   ...paginationState,
                                   id,
                                   input: {
-                                    products: products.map(
-                                      product => product.id
-                                    )
+                                    products
                                   }
                                 }
                               })

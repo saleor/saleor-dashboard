@@ -1,0 +1,55 @@
+name: Deploy Dashboard to main staging
+on:
+  push:
+    branches:
+      - main
+      - ci/staging/**
+  workflow_dispatch:
+jobs:
+  build:
+    runs-on: ubuntu-20.04
+    env:
+      API_URI: /graphql/
+      APP_MOUNT_URI: /dashboard/
+      STATIC_URL: /dashboard/static/
+      SENTRY_ORG: saleor
+      SENTRY_PROJECT: dashboard
+      SENTRY_URL_PREFIX: "~/dashboard/static"
+      SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
+      SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+      ENVIRONMENT: saleor-master-staging
+      IS_CLOUD_INSTANCE: true
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Package
+        timeout-minutes: 15
+        run: |
+          npm ci
+
+      - name: Build
+        run: |
+          npm run build
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_DASHBOARD_STAGING_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_DASHBOARD_STAGING_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
+
+      - name: Deploy
+        run: |
+          aws s3 sync build/dashboard s3://${{ secrets.AWS_STAGING_DEPLOYMENT_BUCKET }}/${ENVIRONMENT}/static/
+          aws s3 cp build/dashboard/index.html s3://${{ secrets.AWS_STAGING_DEPLOYMENT_BUCKET }}/${ENVIRONMENT}/
+          aws cloudfront create-invalidation --distribution-id ${{ secrets.AWS_STAGING_CF_DIST_ID }} --paths "/dashboard*"
+
+      - name: Notify Slack
+        if: ${{ always() }}
+        env:
+          JOB_DEPLOYMENT_KIND: staging
+          JOB_STATUS: ${{ job.status }}
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_CLOUD_DEPLOYMENTS_WEBHOOK_URL }}
+          JOB_TITLE: "Dashboard deployment to ${{ env.ENVIRONMENT }}"
+        run: |
+          python3 ./.github/workflows/notify/notify-slack.py

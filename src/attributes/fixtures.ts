@@ -52,7 +52,8 @@ export const attribute: AttributeDetails_attribute = {
           richText: null,
           boolean: null,
           date: null,
-          dateTime: null
+          dateTime: null,
+          value: null
         }
       },
       {
@@ -68,7 +69,8 @@ export const attribute: AttributeDetails_attribute = {
           richText: null,
           boolean: null,
           date: null,
-          dateTime: null
+          dateTime: null,
+          value: null
         }
       }
     ]

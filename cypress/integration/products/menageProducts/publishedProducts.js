@@ -1,17 +1,18 @@
+/// <reference types="cypress"/>
+/// <reference types="../../../support"/>
+
 import faker from "faker";
 
-import { getProductDetails } from "../../../apiRequests/storeFront/ProductDetails";
-import { ONE_PERMISSION_USERS } from "../../../Data/users";
-import { updateProductPublish } from "../../../steps/catalog/products/productSteps";
+import { productDetailsUrl } from "../../../fixtures/urlList";
+import { ONE_PERMISSION_USERS } from "../../../fixtures/users";
+import { getProductDetails } from "../../../support/api/requests/storeFront/ProductDetails";
+import { getDefaultChannel } from "../../../support/api/utils/channelsUtils";
+import * as productsUtils from "../../../support/api/utils/products/productsUtils";
+import { isProductVisible } from "../../../support/api/utils/storeFront/storeFrontProductUtils";
 import filterTests from "../../../support/filterTests";
-import { productDetailsUrl } from "../../../url/urlList";
-import { getDefaultChannel } from "../../../utils/channelsUtils";
-import * as productsUtils from "../../../utils/products/productsUtils";
-import { isProductVisible } from "../../../utils/storeFront/storeFrontProductUtils";
+import { updateProductPublish } from "../../../support/pages/catalog/products/productDetailsPage";
 
-// <reference types="cypress" />
-
-filterTests(["all"], () => {
+filterTests({ definedTags: ["all"] }, () => {
   describe("Published products", () => {
     const startsWith = "CyPublishedProducts-";
     const name = `${startsWith}${faker.datatype.number()}`;
@@ -24,7 +25,7 @@ filterTests(["all"], () => {
       cy.clearSessionData().loginUserViaRequest();
       productsUtils.deleteProductsStartsWith(startsWith);
       productsUtils
-        .createTypeAttributeAndCategoryForProduct(name)
+        .createTypeAttributeAndCategoryForProduct({ name })
         .then(
           ({
             attribute: attributeResp,

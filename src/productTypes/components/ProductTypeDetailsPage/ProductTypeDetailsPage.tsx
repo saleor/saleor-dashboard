@@ -16,6 +16,7 @@ import { maybe } from "@saleor/misc";
 import { ListActions, ReorderEvent, UserError } from "@saleor/types";
 import {
   ProductAttributeType,
+  ProductTypeKindEnum,
   WeightUnitsEnum
 } from "@saleor/types/globalTypes";
 import { mapMetadataItemToInput } from "@saleor/utils/maps";
@@ -31,6 +32,7 @@ import ProductTypeAttributes from "../ProductTypeAttributes/ProductTypeAttribute
 import ProductTypeDetails from "../ProductTypeDetails/ProductTypeDetails";
 import ProductTypeShipping from "../ProductTypeShipping/ProductTypeShipping";
 import ProductTypeTaxes from "../ProductTypeTaxes/ProductTypeTaxes";
+import ProductTypeVariantAttributes from "../ProductTypeVariantAttributes/ProductTypeVariantAttributes";
 
 interface ChoiceType {
   label: string;
@@ -39,6 +41,7 @@ interface ChoiceType {
 
 export interface ProductTypeForm extends MetadataFormData {
   name: string;
+  kind: ProductTypeKindEnum;
   hasVariants: boolean;
   isShippingRequired: boolean;
   taxType: string;
@@ -65,6 +68,8 @@ export interface ProductTypeDetailsPageProps {
   onDelete: () => void;
   onHasVariantsToggle: (hasVariants: boolean) => void;
   onSubmit: (data: ProductTypeForm) => SubmitPromise;
+  setSelectedVariantAttributes: (data: string[]) => void;
+  selectedVariantAttributes: string[];
 }
 
 function handleTaxTypeChange(
@@ -96,7 +101,9 @@ const ProductTypeDetailsPage: React.FC<ProductTypeDetailsPageProps> = ({
   onBack,
   onDelete,
   onHasVariantsToggle,
-  onSubmit
+  onSubmit,
+  setSelectedVariantAttributes,
+  selectedVariantAttributes
 }) => {
   const intl = useIntl();
   const {
@@ -119,6 +126,7 @@ const ProductTypeDetailsPage: React.FC<ProductTypeDetailsPageProps> = ({
         : false,
     metadata: productType?.metadata?.map(mapMetadataItemToInput),
     name: maybe(() => productType.name) !== undefined ? productType.name : "",
+    kind: productType?.kind || ProductTypeKindEnum.NORMAL,
     privateMetadata: productType?.privateMetadata?.map(mapMetadataItemToInput),
     productAttributes:
       maybe(() => productType.productAttributes) !== undefined
@@ -153,7 +161,7 @@ const ProductTypeDetailsPage: React.FC<ProductTypeDetailsPageProps> = ({
 
   return (
     <Form initial={formInitialData} onSubmit={handleSubmit} confirmLeave>
-      {({ change, data, hasChanged, submit }) => {
+      {({ change, data, hasChanged, submit, setChanged }) => {
         const changeMetadata = makeMetadataChangeHandler(change);
 
         return (
@@ -169,6 +177,7 @@ const ProductTypeDetailsPage: React.FC<ProductTypeDetailsPageProps> = ({
                   disabled={disabled}
                   errors={errors}
                   onChange={change}
+                  onKindChange={change}
                 />
                 <CardSpacer />
                 <ProductTypeTaxes
@@ -213,9 +222,11 @@ const ProductTypeDetailsPage: React.FC<ProductTypeDetailsPageProps> = ({
                 {data.hasVariants && (
                   <>
                     <CardSpacer />
-                    <ProductTypeAttributes
+                    <ProductTypeVariantAttributes
                       testId="assignVariantsAttributes"
-                      attributes={maybe(() => productType.variantAttributes)}
+                      assignedVariantAttributes={
+                        productType?.assignedVariantAttributes
+                      }
                       disabled={disabled}
                       type={ProductAttributeType.VARIANT}
                       onAttributeAssign={onAttributeAdd}
@@ -224,6 +235,11 @@ const ProductTypeDetailsPage: React.FC<ProductTypeDetailsPageProps> = ({
                         onAttributeReorder(event, ProductAttributeType.VARIANT)
                       }
                       onAttributeUnassign={onAttributeUnassign}
+                      onAttributeVariantSelection={setChanged}
+                      setSelectedVariantAttributes={
+                        setSelectedVariantAttributes
+                      }
+                      selectedVariantAttributes={selectedVariantAttributes}
                       {...variantAttributeList}
                     />
                   </>
