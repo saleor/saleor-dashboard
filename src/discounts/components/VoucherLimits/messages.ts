@@ -13,6 +13,10 @@ export default defineMessages({
     defaultMessage: "Limit of Uses",
     description: "limit voucher"
   },
+  usesLeftCaption: {
+    defaultMessage: "Uses left",
+    description: "usage limit uses left caption"
+  },
   applyOncePerCustomer: {
     defaultMessage: "Limit to one use per customer",
     description: "limit voucher"
