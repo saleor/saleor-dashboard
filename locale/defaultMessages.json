@@ -5621,7 +5621,7 @@
   },
   "src_dot_products_dot_components_dot_ProductList_dot_updatedAt": {
     "context": "product updated at",
-    "string": "Updated At"
+    "string": "Last updated"
   },
   "src_dot_products_dot_components_dot_ProductList_dot_willBePublished": {
     "context": "product publication date",
