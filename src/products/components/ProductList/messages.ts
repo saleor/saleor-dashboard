@@ -29,7 +29,7 @@ export const columnsMessages = defineMessages({
     description: "product type"
   },
   updatedAt: {
-    defaultMessage: "Updated At",
+    defaultMessage: "Last updated",
     description: "product updated at"
   }
 });
