@@ -9,7 +9,6 @@ import {
   Typography
 } from "@material-ui/core";
 import { CSSProperties } from "@material-ui/styles";
-import { drawerWidthExpanded } from "@saleor/components/AppLayout/consts";
 import CardTitle from "@saleor/components/CardTitle";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
 import Container from "@saleor/components/Container";
@@ -50,11 +49,6 @@ const useStyles = makeStyles(
     };
 
     return {
-      container: {
-        [theme.breakpoints.up("md")]: {
-          width: `calc(100vw - ${drawerWidthExpanded}px)`
-        }
-      },
       actionBar: {
         flexDirection: "row",
         paddingLeft: `calc(${theme.spacing(2)} + 2px)`
@@ -213,7 +207,7 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
   };
 
   return (
-    <Container className={classes.container}>
+    <Container>
       <Backlink onClick={onBack}>
         {order?.number
           ? intl.formatMessage(messages.headerOrderNumber, {
