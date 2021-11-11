@@ -280,7 +280,6 @@ export const ProductCreateView: React.FC<ProductCreateProps> = ({ params }) => {
       {!!allChannels?.length && (
         <ChannelsAvailabilityDialog
           isSelected={isChannelSelected}
-          disabled={!channelListElements.length}
           channels={allChannels}
           onChange={channelsToggle}
           onClose={handleChannelsModalClose}

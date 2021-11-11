@@ -1,8 +1,8 @@
 import {
+  Accordion,
+  AccordionSummary,
   CardContent,
   Divider,
-  ExpansionPanel,
-  ExpansionPanelSummary,
   Typography
 } from "@material-ui/core";
 import Skeleton from "@saleor/components/Skeleton";
@@ -138,8 +138,8 @@ const VariantDetailsChannelsAvailabilityCard: React.FC<VariantDetailsChannelsAva
 
   return (
     <CardContainer>
-      <ExpansionPanel classes={expanderClasses}>
-        <ExpansionPanelSummary
+      <Accordion classes={expanderClasses}>
+        <AccordionSummary
           expandIcon={<IconChevronDown />}
           classes={summaryClasses}
           data-test-id="channels-variant-availability-summary"
@@ -150,7 +150,7 @@ const VariantDetailsChannelsAvailabilityCard: React.FC<VariantDetailsChannelsAva
               availableChannelsCount: allAvailableChannelsListings.length
             })}
           </Typography>
-        </ExpansionPanelSummary>
+        </AccordionSummary>
 
         {channelListings.map(({ channel }) => (
           <React.Fragment key={channel.id}>
@@ -170,7 +170,7 @@ const VariantDetailsChannelsAvailabilityCard: React.FC<VariantDetailsChannelsAva
             </CardContent>
           </React.Fragment>
         ))}
-      </ExpansionPanel>
+      </Accordion>
     </CardContainer>
   );
 };

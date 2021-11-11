@@ -75,7 +75,8 @@ export interface VoucherDetailsPageFormData extends MetadataFormData {
   startDate: string;
   startTime: string;
   type: VoucherTypeEnum;
-  usageLimit: string;
+  usageLimit: number;
+  used: number;
 }
 
 export interface VoucherDetailsPageProps
@@ -192,14 +193,15 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
     startDate: splitDateTime(voucher?.startDate ?? "").date,
     startTime: splitDateTime(voucher?.startDate ?? "").time,
     type: voucher?.type ?? VoucherTypeEnum.ENTIRE_ORDER,
-    usageLimit: voucher?.usageLimit?.toString() ?? "0",
+    usageLimit: voucher?.usageLimit ?? 1,
+    used: voucher?.used ?? 0,
     metadata: voucher?.metadata.map(mapMetadataItemToInput),
     privateMetadata: voucher?.privateMetadata.map(mapMetadataItemToInput)
   };
 
   return (
     <Form initial={initialForm} onSubmit={onSubmit}>
-      {({ change, data, hasChanged, submit, triggerChange }) => {
+      {({ change, data, hasChanged, submit, triggerChange, set }) => {
         const handleDiscountTypeChange = createDiscountTypeChangeHandler(
           change
         );
@@ -209,13 +211,14 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
           triggerChange
         );
         const formDisabled =
-          data.discountType.toString() !== "SHIPPING" &&
-          data.channelListings?.some(
-            channel =>
-              validatePrice(channel.discountValue) ||
-              (data.requirementsPicker === RequirementsPicker.ORDER &&
-                validatePrice(channel.minSpent))
-          );
+          (data.discountType.toString() !== "SHIPPING" &&
+            data.channelListings?.some(
+              channel =>
+                validatePrice(channel.discountValue) ||
+                (data.requirementsPicker === RequirementsPicker.ORDER &&
+                  validatePrice(channel.minSpent))
+            )) ||
+          data.usageLimit <= 0;
         const changeMetadata = makeMetadataChangeHandler(change);
 
         return (
@@ -399,9 +402,12 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
                 <CardSpacer />
                 <VoucherLimits
                   data={data}
+                  initialUsageLimit={initialForm.usageLimit}
                   disabled={disabled}
                   errors={errors}
                   onChange={change}
+                  setData={set}
+                  isNewVoucher={false}
                 />
                 <CardSpacer />
                 <DiscountDates
