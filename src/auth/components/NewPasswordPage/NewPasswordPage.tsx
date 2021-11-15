@@ -1,6 +1,8 @@
 import { TextField, Typography } from "@material-ui/core";
+import { SetPassword_setPassword_errors } from "@saleor/auth/types/SetPassword";
 import Form from "@saleor/components/Form";
 import FormSpacer from "@saleor/components/FormSpacer";
+import { SubmitPromise } from "@saleor/hooks/useForm";
 import { Button } from "@saleor/macaw-ui";
 import { SetPasswordData } from "@saleor/sdk";
 import getAccountErrorMessage from "@saleor/utils/errors/account";
@@ -16,7 +18,9 @@ export interface NewPasswordPageFormData {
 export interface NewPasswordPageProps {
   disabled: boolean;
   errors: SetPasswordData["errors"];
-  onSubmit: (data: NewPasswordPageFormData) => void;
+  onSubmit: (
+    data: NewPasswordPageFormData
+  ) => SubmitPromise<SetPassword_setPassword_errors[]>;
 }
 
 const initialForm: NewPasswordPageFormData = {

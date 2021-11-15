@@ -33,7 +33,7 @@ import { getParsedDataForJsonStringField } from "@saleor/utils/richText/misc";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { getMutationState, maybe } from "../../misc";
+import { getMutationErrors, getMutationState, maybe } from "../../misc";
 import { productUrl } from "../../products/urls";
 import { CollectionInput } from "../../types/globalTypes";
 import CollectionDetailsPage from "../components/CollectionDetailsPage/CollectionDetailsPage";
@@ -242,8 +242,9 @@ export const CollectionDetails: React.FC<CollectionDetailsProps> = ({
             }
           });
 
-          return result.data.collectionUpdate.errors;
+          return getMutationErrors(result);
         };
+
         const handleSubmit = createMetadataUpdateHandler(
           data?.collection,
           handleUpdate,

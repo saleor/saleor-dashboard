@@ -43,7 +43,7 @@ export interface ProductTypeCreatePageProps {
   kind: ProductTypeKindEnum;
   onChangeKind: (kind: ProductTypeKindEnum) => void;
   onBack: () => void;
-  onSubmit: (data: ProductTypeForm) => void;
+  onSubmit: (data: ProductTypeForm) => SubmitPromise;
 }
 
 const formInitialData: ProductTypeForm = {
@@ -92,7 +92,7 @@ const ProductTypeCreatePage: React.FC<ProductTypeCreatePageProps> = ({
   };
 
   return (
-    <Form initial={initialData} onSubmit={onSubmit} confirmLeave>
+    <Form confirmLeave initial={initialData} onSubmit={onSubmit}>
       {({ change, data, hasChanged, submit }) => {
         const changeMetadata = makeMetadataChangeHandler(change);
 

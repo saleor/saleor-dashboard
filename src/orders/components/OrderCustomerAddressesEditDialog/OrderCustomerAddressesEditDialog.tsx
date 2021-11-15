@@ -135,6 +135,11 @@ const OrderCustomerAddressesEditDialog: React.FC<OrderCustomerAddressesEditDialo
     if (adressesInput.shippingAddress && adressesInput.billingAddress) {
       onConfirm(adressesInput);
     }
+
+    return Promise.resolve([
+      ...shippingValidationErrors,
+      ...billingValidationErrors
+    ]);
   };
 
   const countryChoices = mapCountriesToChoices(countries);

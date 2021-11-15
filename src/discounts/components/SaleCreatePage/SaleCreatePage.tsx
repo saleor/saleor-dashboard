@@ -8,7 +8,9 @@ import Metadata, { MetadataFormData } from "@saleor/components/Metadata";
 import PageHeader from "@saleor/components/PageHeader";
 import Savebar from "@saleor/components/Savebar";
 import { createSaleChannelsChangeHandler } from "@saleor/discounts/handlers";
+import { SaleCreate_saleCreate_errors } from "@saleor/discounts/types/SaleCreate";
 import { DiscountErrorFragment } from "@saleor/fragments/types/DiscountErrorFragment";
+import { SubmitPromise } from "@saleor/hooks/useForm";
 import { sectionNames } from "@saleor/intl";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import { Backlink } from "@saleor/macaw-ui";
@@ -47,7 +49,7 @@ export interface SaleCreatePageProps {
   onBack: () => void;
   onChannelsChange: (data: ChannelSaleFormData[]) => void;
   openChannelsModal: () => void;
-  onSubmit: (data: FormData) => void;
+  onSubmit: (data: FormData) => SubmitPromise<SaleCreate_saleCreate_errors[]>;
 }
 
 const SaleCreatePage: React.FC<SaleCreatePageProps> = ({
@@ -80,7 +82,7 @@ const SaleCreatePage: React.FC<SaleCreatePageProps> = ({
     privateMetadata: []
   };
   return (
-    <Form initial={initialForm} onSubmit={onSubmit}>
+    <Form confirmLeave initial={initialForm} onSubmit={onSubmit}>
       {({ change, data, hasChanged, submit, triggerChange }) => {
         const handleChannelChange = createSaleChannelsChangeHandler(
           data.channelListings,

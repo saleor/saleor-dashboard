@@ -6,6 +6,7 @@ import PageHeader from "@saleor/components/PageHeader";
 import Savebar from "@saleor/components/Savebar";
 import { ShopInfo_shop_permissions } from "@saleor/components/Shop/types/ShopInfo";
 import { AppErrorFragment } from "@saleor/fragments/types/AppErrorFragment";
+import { SubmitPromise } from "@saleor/hooks/useForm";
 import { sectionNames } from "@saleor/intl";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import { Backlink } from "@saleor/macaw-ui";
@@ -28,7 +29,9 @@ export interface CustomAppCreatePageProps {
   permissions: ShopInfo_shop_permissions[];
   saveButtonBarState: ConfirmButtonTransitionState;
   onBack: () => void;
-  onSubmit: (data: CustomAppCreatePageFormData) => void;
+  onSubmit: (
+    data: CustomAppCreatePageFormData
+  ) => SubmitPromise<AppErrorFragment[]>;
 }
 
 const CustomAppCreatePage: React.FC<CustomAppCreatePageProps> = props => {
@@ -52,7 +55,7 @@ const CustomAppCreatePage: React.FC<CustomAppCreatePageProps> = props => {
   const permissionsError = getAppErrorMessage(formErrors.permissions, intl);
 
   return (
-    <Form initial={initialForm} onSubmit={onSubmit} confirmLeave>
+    <Form confirmLeave initial={initialForm} onSubmit={onSubmit}>
       {({ data, change, hasChanged, submit }) => (
         <Container>
           <Backlink onClick={onBack}>

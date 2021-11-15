@@ -1,5 +1,6 @@
 import { TextField, Typography } from "@material-ui/core";
 import Form from "@saleor/components/Form";
+import { SubmitPromise } from "@saleor/hooks/useForm";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -12,7 +13,7 @@ interface TranslationFieldsLongProps {
   initial: string;
   saveButtonState: ConfirmButtonTransitionState;
   onDiscard: () => void;
-  onSubmit: (data: string) => void;
+  onSubmit: (data: string) => SubmitPromise;
 }
 
 const TranslationFieldsLong: React.FC<TranslationFieldsLongProps> = ({

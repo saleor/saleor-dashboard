@@ -91,7 +91,7 @@ const CustomerAddressDialog: React.FC<CustomerAddressDialogProps> = ({
       fullWidth
       maxWidth="sm"
     >
-      <Form initial={initialForm} onSubmit={handleSubmit}>
+      <Form confirmLeave initial={initialForm} onSubmit={handleSubmit}>
         {({ change, data }) => {
           const handleCountrySelect = createSingleAutocompleteSelectHandler(
             change,

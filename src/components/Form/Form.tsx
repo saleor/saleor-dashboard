@@ -3,17 +3,17 @@ import React from "react";
 
 import { ExitFormPromptData } from "./ExitFormPromptProvider";
 
-export interface FormProps<T>
+export interface FormProps<TData, TErrors>
   extends Omit<React.HTMLProps<HTMLFormElement>, "onSubmit">,
     ExitFormPromptData {
-  children: (props: UseFormResult<T>) => React.ReactNode;
+  children: (props: UseFormResult<TData>) => React.ReactNode;
   confirmLeave?: boolean;
-  initial?: T;
+  initial?: TData;
   resetOnSubmit?: boolean;
-  onSubmit?: (data: T) => SubmitPromise | void;
+  onSubmit?: (data: TData) => SubmitPromise<TErrors[]> | void;
 }
 
-function Form<T>({
+function Form<TData, Terrors>({
   children,
   initial,
   resetOnSubmit,
@@ -22,7 +22,7 @@ function Form<T>({
   setIsDirty,
   formRef,
   ...rest
-}: FormProps<T>) {
+}: FormProps<TData, Terrors>) {
   const renderProps = useForm(initial, onSubmit, { confirmLeave, formId });
 
   function handleSubmit(event?: React.FormEvent<any>, cb?: () => void) {

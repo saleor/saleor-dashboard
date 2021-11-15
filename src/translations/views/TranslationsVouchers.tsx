@@ -6,8 +6,13 @@ import { stringifyQs } from "@saleor/utils/urls";
 import React from "react";
 import { useIntl } from "react-intl";
 
+import { extractMutationErrors, maybe } from "../../misc";
 import { maybe } from "../../misc";
 import { LanguageCodeEnum } from "../../types/globalTypes";
+import { LanguageCodeEnum } from "../../types/globalTypes";
+import TranslationsVouchersPage, {
+  fieldNames
+} from "../components/TranslationsVouchersPage";
 import TranslationsVouchersPage from "../components/TranslationsVouchersPage";
 import { TypedUpdateVoucherTranslations } from "../mutations";
 import { useVoucherTranslationDetails } from "../queries";
@@ -71,18 +76,19 @@ const TranslationsVouchers: React.FC<TranslationsVouchersProps> = ({
         const handleSubmit = (
           { name: fieldName }: TranslationField<TranslationInputFieldName>,
           data: string
-        ) => {
-          updateTranslations({
-            variables: {
-              id,
-              input: getParsedTranslationInputData({
-                data,
-                fieldName
-              }),
-              language: languageCode
-            }
-          });
-        };
+        ) =>
+          extractMutationErrors(
+            updateTranslations({
+              variables: {
+                id,
+                input: getParsedTranslationInputData({
+                  data,
+                  fieldName
+                }),
+                language: languageCode
+              }
+            })
+          );
 
         const translation = voucherTranslations?.data?.translation;
 

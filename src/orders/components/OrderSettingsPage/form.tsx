@@ -45,14 +45,12 @@ function useOrderSettingsForm(
   onSubmit: (data: OrderSettingsFormData) => SubmitPromise
 ): UseOrderSettingsFormResult {
   const [changed, setChanged] = React.useState(false);
-  const triggerChange = () => setChanged(true);
 
-  const form = useForm(getOrderSeettingsFormData(orderSettings, shop));
-
-  const handleChange: FormChange = (event, cb) => {
-    form.change(event, cb);
-    triggerChange();
-  };
+  const form = useForm(
+    getOrderSeettingsFormData(orderSettings, shop),
+    undefined,
+    { confirmLeave: true }
+  );
 
   const data: OrderSettingsFormData = {
     ...form.data
@@ -61,7 +59,7 @@ function useOrderSettingsForm(
   const submit = () => handleFormSubmit(form.data, onSubmit, setChanged);
 
   return {
-    change: handleChange,
+    change: form.handleChange,
     data,
     hasChanged: changed,
     submit

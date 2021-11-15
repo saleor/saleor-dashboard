@@ -6,6 +6,7 @@ import useLocalPaginator, {
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { commonMessages } from "@saleor/intl";
+import { extractMutationErrors, maybe } from "@saleor/misc";
 import { ListViews, ReorderEvent } from "@saleor/types";
 import getAttributeErrorMessage from "@saleor/utils/errors/attribute";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
@@ -15,6 +16,7 @@ import {
   useMetadataUpdate,
   usePrivateMetadataUpdate
 } from "@saleor/utils/metadata/updateMetadata";
+import omit from "lodash/omit";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -209,25 +211,23 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ id, params }) => {
       }
     });
 
-  const handleUpdate = async (data: AttributePageFormData) => {
-    const input = {
-      ...data,
-      entityType: undefined,
-      inputType: undefined,
-      metadata: undefined,
-      privateMetadata: undefined,
-      storefrontSearchPosition: parseInt(data?.storefrontSearchPosition, 0)
-    };
-
-    const result = await attributeUpdate({
-      variables: {
-        id,
-        input
-      }
-    });
-
-    return result.data?.attributeUpdate.errors;
-  };
+  const handleUpdate = async (data: AttributePageFormData) =>
+    extractMutationErrors(
+      attributeUpdate({
+        variables: {
+          id,
+          input: {
+            ...omit(data, [
+              "entityType",
+              "inputType",
+              "metadata",
+              "privateMetadata"
+            ]),
+            storefrontSearchPosition: parseInt(data.storefrontSearchPosition, 0)
+          }
+        }
+      })
+    );
 
   const handleSubmit = createMetadataUpdateHandler(
     data?.attribute,

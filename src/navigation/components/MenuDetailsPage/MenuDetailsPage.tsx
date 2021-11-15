@@ -82,7 +82,7 @@ const MenuDetailsPage: React.FC<MenuDetailsPageProps> = ({
   };
 
   return (
-    <Form initial={initialForm} onSubmit={handleSubmit}>
+    <Form confirmLeave initial={initialForm} onSubmit={handleSubmit}>
       {({ change, data, hasChanged, submit }) => (
         <Container>
           <Backlink onClick={onBack}>

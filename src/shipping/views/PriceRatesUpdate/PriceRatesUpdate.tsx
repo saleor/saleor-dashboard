@@ -223,8 +223,11 @@ export const PriceRatesUpdate: React.FC<PriceRatesUpdateProps> = ({
         state.codesToDelete
       )
     });
+
     dispatch({ codesToDelete: [] });
+
     const errors = response.data.shippingPriceUpdate.errors;
+
     if (errors.length === 0) {
       handleSuccess();
       dispatch({ havePostalCodesChanged: false });

@@ -9,8 +9,9 @@ import { WebhookUpdate } from "@saleor/webhooks/types/WebhookUpdate";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import { getStringOrPlaceholder } from "../../misc";
+import { extractMutationErrors, getStringOrPlaceholder } from "../../misc";
 import WebhookDetailsPage from "../components/WebhookDetailsPage";
+import { WebhookUpdateFormData } from "../components/WebhooksDetailsPage/WebhooksDetailsPage";
 import { useWebhookUpdateMutation } from "../mutations";
 import { useWebhooksDetailsQuery } from "../queries";
 
@@ -52,6 +53,27 @@ export const WebhooksDetails: React.FC<WebhooksDetailsProps> = ({ id }) => {
     return <NotFoundPage onBack={handleOnBack} />;
   }
 
+  const handleSubmit = (data: WebhookUpdateFormData) =>
+    extractMutationErrors(
+      webhookUpdate({
+        variables: {
+          id,
+          input: {
+            syncEvents: data.syncEvents,
+            asyncEvents: data.asyncEvents.includes(
+              WebhookEventTypeAsyncEnum.ANY_EVENTS
+            )
+              ? [WebhookEventTypeAsyncEnum.ANY_EVENTS]
+              : data.asyncEvents,
+            isActive: data.isActive,
+            name: data.name,
+            secretKey: data.secretKey,
+            targetUrl: data.targetUrl
+          }
+        }
+      })
+    );
+
   return (
     <>
       <WindowTitle
@@ -64,25 +86,7 @@ export const WebhooksDetails: React.FC<WebhooksDetailsProps> = ({ id }) => {
         saveButtonBarState={webhookUpdateOpts.status}
         webhook={webhook}
         onBack={handleOnBack}
-        onSubmit={data => {
-          webhookUpdate({
-            variables: {
-              id,
-              input: {
-                syncEvents: data.syncEvents,
-                asyncEvents: data.asyncEvents.includes(
-                  WebhookEventTypeAsyncEnum.ANY_EVENTS
-                )
-                  ? [WebhookEventTypeAsyncEnum.ANY_EVENTS]
-                  : data.asyncEvents,
-                isActive: data.isActive,
-                name: data.name,
-                secretKey: data.secretKey,
-                targetUrl: data.targetUrl
-              }
-            }
-          });
-        }}
+        onSubmit={handleSubmit}
       />
     </>
   );

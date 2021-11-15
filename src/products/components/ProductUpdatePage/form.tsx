@@ -15,13 +15,14 @@ import {
   ChannelPriceArgs
 } from "@saleor/channels/utils";
 import { AttributeInput } from "@saleor/components/Attributes";
+import { ExitFormDialogContext } from "@saleor/components/Form/ExitFormDialogProvider";
 import { MetadataFormData } from "@saleor/components/Metadata";
 import { MultiAutocompleteChoiceType } from "@saleor/components/MultiAutocompleteSelectField";
 import { RichTextEditorChange } from "@saleor/components/RichTextEditor";
 import { SingleAutocompleteChoiceType } from "@saleor/components/SingleAutocompleteSelectField";
 import useForm, {
+  CommonUseFormResultWithHandlers,
   FormChange,
-  FormErrors,
   SubmitPromise
 } from "@saleor/hooks/useForm";
 import useFormset, {
@@ -58,7 +59,7 @@ import createSingleAutocompleteSelectHandler from "@saleor/utils/handlers/single
 import getMetadata from "@saleor/utils/metadata/getMetadata";
 import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
 import useRichText from "@saleor/utils/richText/useRichText";
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import { useIntl } from "react-intl";
 
 import { ProductStockFormsetData, ProductStockInput } from "../ProductStocks";
@@ -147,14 +148,13 @@ export interface ProductUpdateHandlers
   fetchReferences: (value: string) => void;
   fetchMoreReferences: FetchMoreProps;
 }
-export interface UseProductUpdateFormResult {
-  change: FormChange;
-  data: ProductUpdateData;
-  formErrors: FormErrors<ProductUpdateSubmitData>;
+export interface UseProductUpdateFormResult
+  extends CommonUseFormResultWithHandlers<
+    ProductUpdateData,
+    ProductUpdateHandlers
+  > {
   disabled: boolean;
-  handlers: ProductUpdateHandlers;
-  hasChanged: boolean;
-  submit: () => Promise<boolean>;
+  formErrors: FormErrors<ProductUpdateSubmitData>;
 }
 
 export interface UseProductUpdateFormOpts
@@ -221,8 +221,6 @@ function useProductUpdateForm(
   opts: UseProductUpdateFormOpts
 ): UseProductUpdateFormResult {
   const intl = useIntl();
-  const [changed, setChanged] = React.useState(false);
-  const triggerChange = () => setChanged(true);
 
   const form = useForm(
     getProductUpdatePageFormData(
@@ -231,8 +229,20 @@ function useProductUpdateForm(
       opts.currentChannels,
       opts.channelsData,
       opts.channelsWithVariants
-    )
+    ),
+    undefined,
+    { confirmLeave: true }
   );
+
+  const {
+    handleChange,
+    triggerChange,
+    toggleValue,
+    data: formData,
+    setChanged,
+    hasChanged
+  } = form;
+
   const attributes = useFormset(getAttributeInputFromProduct(product));
   const attributesWithNewFileValue = useFormset<null, File>([]);
   const stocks = useFormset(getStockInputFromProduct(product));
@@ -241,18 +251,18 @@ function useProductUpdateForm(
     triggerChange
   });
 
+  const { setExitDialogSubmitRef, setEnableExitDialog } = useContext(
+    ExitFormDialogContext
+  );
+
   const {
     isMetadataModified,
     isPrivateMetadataModified,
     makeChangeHandler: makeMetadataChangeHandler
   } = useMetadataChangeTrigger();
 
-  const handleChange: FormChange = (event, cb) => {
-    form.change(event, cb);
-    triggerChange();
-  };
   const handleCollectionSelect = createMultiAutocompleteSelectHandler(
-    event => form.toggleValue(event, triggerChange),
+    event => toggleValue(event),
     opts.setSelectedCollections,
     opts.selectedCollections,
     opts.collections
@@ -350,7 +360,7 @@ function useProductUpdateForm(
   );
 
   const data: ProductUpdateData = {
-    ...form.data,
+    ...formData,
     channelListings: opts.currentChannels,
     channelsData: opts.channelsData,
     attributes: getAttributesDisplayData(
@@ -384,7 +394,14 @@ function useProductUpdateForm(
   };
 
   const submit = async () =>
-    handleFormSubmit(getSubmitData(), handleSubmit, setChanged);
+    handleFormSubmit(
+      getSubmitData(),
+      handleSubmit,
+      setChanged,
+      setEnableExitDialog
+    );
+
+  useEffect(() => setExitDialogSubmitRef(submit), [submit]);
 
   const shouldEnableSave = () => {
     if (!data.name) {
@@ -442,7 +459,7 @@ function useProductUpdateForm(
       selectCollection: handleCollectionSelect,
       selectTaxRate: handleTaxTypeSelect
     },
-    hasChanged: changed,
+    hasChanged,
     submit
   };
 }

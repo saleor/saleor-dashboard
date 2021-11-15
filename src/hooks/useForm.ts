@@ -16,14 +16,14 @@ export interface ChangeEvent<TData = any> {
 }
 export type SubmitPromise<TData = any> = Promise<TData>;
 
-export type FormChange = (event: ChangeEvent, cb?: () => void) => void;
+export type FormChange = (event: ChangeEvent) => void;
 
 export type FormErrors<T> = {
   [field in keyof T]?: string | React.ReactNode;
 };
 
 export interface UseFormOpts {
-  confirmLeave?: boolean;
+  confirmLeave: boolean;
 }
 
 export interface UseFormResult<TData> extends CommonUseFormResult<TData> {
@@ -31,18 +31,23 @@ export interface UseFormResult<TData> extends CommonUseFormResult<TData> {
   set: (data: Partial<TData>) => void;
   triggerChange: () => void;
   setChanged: (value: boolean) => void;
+  handleChange: FormChange;
   toggleValue: FormChange;
   errors: FormErrors<TData>;
   setError: (name: keyof TData, error: string | React.ReactNode) => void;
   clearErrors: (name?: keyof TData | Array<keyof TData>) => void;
-  confirmLeave?: boolean;
 }
 
 export interface CommonUseFormResult<TData> {
   data: TData;
   change: FormChange;
   hasChanged: boolean;
-  submit: () => void;
+  submit: (dataOrEvent?: any) => SubmitPromise<boolean>;
+}
+
+export interface CommonUseFormResultWithHandlers<TData, THandlers>
+  extends CommonUseFormResult<TData> {
+  handlers: THandlers;
 }
 
 type FormData = Record<string, any | any[]>;
@@ -70,17 +75,17 @@ function handleRefresh<T extends FormData>(
   }
 }
 
-function useForm<T extends FormData>(
+function useForm<T extends FormData, TErrors>(
   initialData: T,
-  onSubmit?: (data: T) => SubmitPromise | void,
-  opts: UseFormOpts = {}
+  onSubmit?: (data: T) => SubmitPromise<TErrors[]> | void,
+  opts?: UseFormOpts
 ): UseFormResult<T> {
   const { confirmLeave } = opts;
   const [hasChanged, setChanged] = useState(false);
   const [errors, setErrors] = useState<FormErrors<T>>({});
   const [data, setData] = useStateFromProps(initialData, {
     mergeFunc: merge,
-    onRefresh: newData => handleRefresh(data, newData, setChanged)
+    onRefresh: newData => handleRefresh(data, newData, handleSetChanged)
   });
 
   const {
@@ -89,11 +94,13 @@ function useForm<T extends FormData>(
     setEnableExitDialog
   } = useContext(ExitFormDialogContext);
 
-  useEffect(() => {
+  const handleSetChanged = (value: boolean = true) => {
+    setChanged(value);
+
     if (confirmLeave) {
-      setIsFormDirtyInExitDialog(hasChanged);
+      setIsFormDirtyInExitDialog(value);
     }
-  }, [confirmLeave, hasChanged]);
+  };
 
   const setExitDialogData = () => {
     setEnableExitDialog(true);
@@ -113,7 +120,7 @@ function useForm<T extends FormData>(
 
     if (Array.isArray(field)) {
       if (!hasChanged) {
-        setChanged(true);
+        handleSetChanged(true);
       }
 
       setData({
@@ -127,6 +134,11 @@ function useForm<T extends FormData>(
     }
   }
 
+  const handleChange: FormChange = event => {
+    change(event);
+    handleSetChanged(true);
+  };
+
   function change(event: ChangeEvent) {
     const { name, value } = event.target;
 
@@ -135,7 +147,7 @@ function useForm<T extends FormData>(
       return;
     } else {
       if (data[name] !== value) {
-        setChanged(true);
+        handleSetChanged(true);
       }
       setData(data => ({
         ...data,
@@ -153,7 +165,7 @@ function useForm<T extends FormData>(
       ...data,
       ...newData
     }));
-    setChanged(setHasChanged);
+    handleSetChanged(setHasChanged);
   }
 
   async function submit() {
@@ -161,7 +173,7 @@ function useForm<T extends FormData>(
       const result = handleFormSubmit(
         data,
         onSubmit,
-        setChanged,
+        handleSetChanged,
         setEnableExitDialog
       );
 
@@ -195,8 +207,9 @@ function useForm<T extends FormData>(
     set,
     submit,
     toggleValue,
-    triggerChange,
-    setChanged
+    handleChange,
+    triggerChange: handleSetChanged,
+    setChanged: handleSetChanged
   };
 }
 

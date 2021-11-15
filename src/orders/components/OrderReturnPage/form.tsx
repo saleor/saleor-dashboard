@@ -1,4 +1,8 @@
-import useForm, { FormChange, SubmitPromise } from "@saleor/hooks/useForm";
+import { ExitFormDialogContext } from "@saleor/components/Form/ExitFormDialogProvider";
+import useForm, {
+  CommonUseFormResultWithHandlers,
+  SubmitPromise
+} from "@saleor/hooks/useForm";
 import useFormset, {
   FormsetChange,
   FormsetData
@@ -6,7 +10,7 @@ import useFormset, {
 import { OrderDetails_order } from "@saleor/orders/types/OrderDetails";
 import { FulfillmentStatus } from "@saleor/types/globalTypes";
 import handleFormSubmit from "@saleor/utils/handlers/handleFormSubmit";
-import React, { useState } from "react";
+import React, { useContext, useEffect } from "react";
 
 import { OrderRefundAmountCalculationMode } from "../OrderRefundPage/form";
 import {
@@ -55,13 +59,10 @@ export interface OrderReturnFormData extends OrderReturnData {
 
 export type OrderRefundSubmitData = OrderReturnFormData;
 
-export interface UseOrderRefundFormResult {
-  change: FormChange;
-  hasChanged: boolean;
-  data: OrderReturnFormData;
-  handlers: OrderReturnHandlers;
-  submit: () => Promise<boolean>;
-}
+export type UseOrderRefundFormResult = CommonUseFormResultWithHandlers<
+  OrderReturnFormData,
+  OrderReturnHandlers
+>;
 
 interface OrderReturnProps {
   children: (props: UseOrderRefundFormResult) => React.ReactNode;
@@ -79,12 +80,19 @@ function useOrderReturnForm(
   order: OrderDetails_order,
   onSubmit: (data: OrderRefundSubmitData) => SubmitPromise
 ): UseOrderRefundFormResult {
-  const form = useForm(getOrderRefundPageFormData());
-  const [hasChanged, setHasChanged] = useState(false);
+  const {
+    handleChange,
+    setChanged,
+    hasChanged,
+    data: formData,
+    triggerChange
+  } = useForm(getOrderRefundPageFormData(), undefined, {
+    confirmLeave: true
+  });
 
-  const handleChange: FormChange = (event, cb) => {
-    form.change(event, cb);
-  };
+  const { setExitDialogSubmitRef, setEnableExitDialog } = useContext(
+    ExitFormDialogContext
+  );
 
   const unfulfiledItemsQuantites = useFormset<LineItemData, number>(
     getOrderUnfulfilledLines(order).map(getParsedLineData({ initialValue: 0 }))
@@ -215,12 +223,13 @@ function useOrderReturnForm(
     waitingItemsQuantities: waitingItemsQuantities.data,
     itemsToBeReplaced: itemsToBeReplaced.data,
     unfulfilledItemsQuantities: unfulfiledItemsQuantites.data,
-    ...form.data
+    ...formData
   };
 
-  const submit = () => handleFormSubmit(data, onSubmit, setHasChanged);
+  const submit = () =>
+    handleFormSubmit(data, onSubmit, setChanged, setEnableExitDialog);
 
-  const triggerChange = () => setHasChanged(true);
+  useEffect(() => setExitDialogSubmitRef(submit), [submit]);
 
   function handleHandlerChange<T>(callback: (id: string, value: T) => void) {
     return (id: string, value: T) => {

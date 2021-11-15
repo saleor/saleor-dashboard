@@ -90,7 +90,7 @@ const PermissionGroupDetailsPage: React.FC<PermissionGroupDetailsPageProps> = ({
   );
 
   return (
-    <Form initial={initialForm} onSubmit={onSubmit} confirmLeave>
+    <Form confirmLeave initial={initialForm} onSubmit={onSubmit}>
       {({ data, change, submit, hasChanged }) => (
         <Container>
           <Backlink onClick={onBack}>

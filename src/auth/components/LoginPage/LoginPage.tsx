@@ -6,6 +6,7 @@ import {
 } from "@material-ui/core";
 import { UserContextError } from "@saleor/auth/types";
 import { AvailableExternalAuthentications_shop_availableExternalAuthentications } from "@saleor/auth/types/AvailableExternalAuthentications";
+import Form from "@saleor/components/Form";
 import { FormSpacer } from "@saleor/components/FormSpacer";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import { commonMessages } from "@saleor/intl";

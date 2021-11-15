@@ -1,5 +1,6 @@
 import { Typography } from "@material-ui/core";
 import Container from "@saleor/components/Container";
+import Form from "@saleor/components/Form";
 import Grid from "@saleor/components/Grid";
 import PageHeader from "@saleor/components/PageHeader";
 import Savebar from "@saleor/components/Savebar";
@@ -14,7 +15,8 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import OrderFulfillmentSettings from "../OrderFulfillmentSettings";
 import OrderSettings from "../OrderSettings/OrderSettings";
-import OrderSettingsForm, { OrderSettingsFormData } from "./form";
+import OrderSettingsForm from "./form";
+import { OrderSettingsFormData } from "./types";
 
 export interface OrderSettingsPageProps {
   orderSettings: OrderSettingsFragment;
@@ -76,7 +78,7 @@ const OrderSettingsPage: React.FC<OrderSettingsPageProps> = props => {
           />
         </Container>
       )}
-    </OrderSettingsForm>
+    </Form>
   );
 };
 OrderSettingsPage.displayName = "OrderSettingsPage";
