@@ -3651,6 +3651,10 @@
     "context": "dsc",
     "string": "Gift card was issued by {issuedBy}"
   },
+  "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardHistory_dot_1845168723": {
+    "context": "gift card history message",
+    "string": "Gift card was deactivated by {deactivatedBy}"
+  },
   "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardHistory_dot_271824222": {
     "context": "gift card history message",
     "string": "Gift card tag was updated"
@@ -3658,10 +3662,6 @@
   "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardHistory_dot_3002545469": {
     "context": "gift card history message",
     "string": "Gift card was resent"
-  },
-  "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardHistory_dot_3212347997": {
-    "context": "gift card history message",
-    "string": "Gift card was deactivated {deactivatedBy}"
   },
   "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardHistory_dot_3246193128": {
     "context": "gift card history message",
