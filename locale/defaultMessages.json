@@ -3635,6 +3635,62 @@
     "context": "header",
     "string": "Gift Cards Settings"
   },
+  "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardHistory_dot_1246654630": {
+    "context": "gift card history message",
+    "string": "Gift card was updated"
+  },
+  "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardHistory_dot_1474208554": {
+    "context": "gift card history message",
+    "string": "Gift card was sent to customer"
+  },
+  "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardHistory_dot_1506811541": {
+    "context": "gift card history message",
+    "string": "Gift card was bought in order #{orderNumber}"
+  },
+  "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardHistory_dot_1656409893": {
+    "context": "dsc",
+    "string": "Gift card was issued by {issuedBy}"
+  },
+  "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardHistory_dot_271824222": {
+    "context": "gift card history message",
+    "string": "Gift card tag was updated"
+  },
+  "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardHistory_dot_3002545469": {
+    "context": "gift card history message",
+    "string": "Gift card was resent"
+  },
+  "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardHistory_dot_3212347997": {
+    "context": "gift card history message",
+    "string": "Gift card was deactivated {deactivatedBy}"
+  },
+  "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardHistory_dot_3246193128": {
+    "context": "gift card history message",
+    "string": "Gift card was used as a payment method on order {orderLink}"
+  },
+  "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardHistory_dot_4134081751": {
+    "context": "gift card history message",
+    "string": "Gift card balance was reset by {resetBy}"
+  },
+  "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardHistory_dot_4248690348": {
+    "context": "gift card history message",
+    "string": "Gift card expiry date was updated by {expiryUpdatedBy}"
+  },
+  "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardHistory_dot_507735806": {
+    "context": "gift card history message",
+    "string": "Gift card was activated by {activatedBy}"
+  },
+  "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardHistory_dot_historyHeaderTitle": {
+    "context": "section header title",
+    "string": "Gift Card Timeline"
+  },
+  "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardHistory_dot_noteAddError": {
+    "context": "notifier message",
+    "string": "There was an error adding a note"
+  },
+  "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardHistory_dot_noteAddedSuccessfully": {
+    "context": "notifier message",
+    "string": "Note was added sucessfully"
+  },
   "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardResendCodeDialog_dot_consentCheckboxLabel": {
     "context": "GiftCardResendCodeDialog consentCheckboxLabel",
     "string": "Yes, I want to send gift card to different address"
