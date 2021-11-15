@@ -11,12 +11,11 @@ import useNotifier from "@saleor/hooks/useNotifier";
 import { orderPath } from "@saleor/orders/urls";
 import { staffMemberDetailsPath } from "@saleor/staff/urls";
 import { GiftCardEventsEnum } from "@saleor/types/globalTypes";
-import React, { useContext } from "react";
+import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import { IntlShape } from "react-intl";
 
 import { useGiftCardTimelineNoteAddMutation } from "../mutations";
-import { GiftCardDetailsContext } from "../providers/GiftCardDetailsProvider";
 import { GIFT_CARD_DETAILS_QUERY } from "../queries";
 import { GiftCardAddNote } from "../types/GiftCardAddNote";
 import { GiftCardDetails_giftCard_events } from "../types/GiftCardDetails";
