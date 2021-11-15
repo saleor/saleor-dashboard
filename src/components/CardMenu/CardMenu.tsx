@@ -148,7 +148,8 @@ const CardMenu: React.FC<CardMenuProps> = props => {
             {...TransitionProps}
             style={{
               transformOrigin:
-                placement === "bottom" ? "right top" : "right bottom"
+                placement === "bottom" ? "right top" : "right bottom",
+              overflowY: "auto"
             }}
           >
             <Paper className={classes.paper}>
