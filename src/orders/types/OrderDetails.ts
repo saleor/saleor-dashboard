@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { OrderDiscountType, DiscountValueTypeEnum, OrderEventsEmailsEnum, OrderEventsEnum, FulfillmentStatus, PaymentChargeStatusEnum, OrderStatus, OrderAction, JobStatusEnum, WeightUnitsEnum } from "./../../types/globalTypes";
+import { GiftCardEventsEnum, OrderDiscountType, DiscountValueTypeEnum, OrderEventsEmailsEnum, OrderEventsEnum, FulfillmentStatus, PaymentChargeStatusEnum, WarehouseClickAndCollectOptionEnum, OrderStatus, OrderAction, JobStatusEnum, WeightUnitsEnum } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL query operation: OrderDetails
@@ -41,6 +41,51 @@ export interface OrderDetails_order_billingAddress {
   postalCode: string;
   streetAddress1: string;
   streetAddress2: string;
+}
+
+export interface OrderDetails_order_giftCards_events_balance_initialBalance {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderDetails_order_giftCards_events_balance_currentBalance {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderDetails_order_giftCards_events_balance_oldInitialBalance {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderDetails_order_giftCards_events_balance_oldCurrentBalance {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderDetails_order_giftCards_events_balance {
+  __typename: "GiftCardEventBalance";
+  initialBalance: OrderDetails_order_giftCards_events_balance_initialBalance | null;
+  currentBalance: OrderDetails_order_giftCards_events_balance_currentBalance;
+  oldInitialBalance: OrderDetails_order_giftCards_events_balance_oldInitialBalance | null;
+  oldCurrentBalance: OrderDetails_order_giftCards_events_balance_oldCurrentBalance | null;
+}
+
+export interface OrderDetails_order_giftCards_events {
+  __typename: "GiftCardEvent";
+  id: string;
+  type: GiftCardEventsEnum | null;
+  orderId: string | null;
+  balance: OrderDetails_order_giftCards_events_balance | null;
+}
+
+export interface OrderDetails_order_giftCards {
+  __typename: "GiftCard";
+  events: OrderDetails_order_giftCards_events[];
 }
 
 export interface OrderDetails_order_discounts_amount {
@@ -94,6 +139,13 @@ export interface OrderDetails_order_events_user {
   email: string;
   firstName: string;
   lastName: string;
+}
+
+export interface OrderDetails_order_events_app {
+  __typename: "App";
+  id: string;
+  name: string | null;
+  appUrl: string | null;
 }
 
 export interface OrderDetails_order_events_lines_discount_amount {
@@ -150,13 +202,20 @@ export interface OrderDetails_order_events {
   transactionReference: string | null;
   type: OrderEventsEnum | null;
   user: OrderDetails_order_events_user | null;
+  app: OrderDetails_order_events_app | null;
   lines: (OrderDetails_order_events_lines | null)[] | null;
+}
+
+export interface OrderDetails_order_fulfillments_lines_orderLine_variant_preorder {
+  __typename: "PreorderData";
+  endDate: any | null;
 }
 
 export interface OrderDetails_order_fulfillments_lines_orderLine_variant {
   __typename: "ProductVariant";
   id: string;
   quantityAvailable: number;
+  preorder: OrderDetails_order_fulfillments_lines_orderLine_variant_preorder | null;
 }
 
 export interface OrderDetails_order_fulfillments_lines_orderLine_unitDiscount {
@@ -213,9 +272,10 @@ export interface OrderDetails_order_fulfillments_lines_orderLine {
   isShippingRequired: boolean;
   variant: OrderDetails_order_fulfillments_lines_orderLine_variant | null;
   productName: string;
-  productSku: string;
+  productSku: string | null;
   quantity: number;
   quantityFulfilled: number;
+  quantityToFulfill: number;
   unitDiscount: OrderDetails_order_fulfillments_lines_orderLine_unitDiscount;
   unitDiscountValue: any;
   unitDiscountReason: string | null;
@@ -248,10 +308,16 @@ export interface OrderDetails_order_fulfillments {
   warehouse: OrderDetails_order_fulfillments_warehouse | null;
 }
 
+export interface OrderDetails_order_lines_variant_preorder {
+  __typename: "PreorderData";
+  endDate: any | null;
+}
+
 export interface OrderDetails_order_lines_variant {
   __typename: "ProductVariant";
   id: string;
   quantityAvailable: number;
+  preorder: OrderDetails_order_lines_variant_preorder | null;
 }
 
 export interface OrderDetails_order_lines_unitDiscount {
@@ -308,9 +374,10 @@ export interface OrderDetails_order_lines {
   isShippingRequired: boolean;
   variant: OrderDetails_order_lines_variant | null;
   productName: string;
-  productSku: string;
+  productSku: string | null;
   quantity: number;
   quantityFulfilled: number;
+  quantityToFulfill: number;
   unitDiscount: OrderDetails_order_lines_unitDiscount;
   unitDiscountValue: any;
   unitDiscountReason: string | null;
@@ -341,6 +408,19 @@ export interface OrderDetails_order_shippingAddress {
   streetAddress1: string;
   streetAddress2: string;
 }
+
+export interface OrderDetails_order_deliveryMethod_ShippingMethod {
+  __typename: "ShippingMethod";
+  id: string;
+}
+
+export interface OrderDetails_order_deliveryMethod_Warehouse {
+  __typename: "Warehouse";
+  id: string;
+  clickAndCollectOption: WarehouseClickAndCollectOptionEnum;
+}
+
+export type OrderDetails_order_deliveryMethod = OrderDetails_order_deliveryMethod_ShippingMethod | OrderDetails_order_deliveryMethod_Warehouse;
 
 export interface OrderDetails_order_shippingMethod {
   __typename: "ShippingMethod";
@@ -474,6 +554,7 @@ export interface OrderDetails_order {
   metadata: (OrderDetails_order_metadata | null)[];
   privateMetadata: (OrderDetails_order_privateMetadata | null)[];
   billingAddress: OrderDetails_order_billingAddress | null;
+  giftCards: (OrderDetails_order_giftCards | null)[] | null;
   isShippingRequired: boolean;
   canFinalize: boolean;
   created: any;
@@ -483,10 +564,13 @@ export interface OrderDetails_order {
   fulfillments: (OrderDetails_order_fulfillments | null)[];
   lines: (OrderDetails_order_lines | null)[];
   number: string | null;
+  isPaid: boolean;
   paymentStatus: PaymentChargeStatusEnum;
   shippingAddress: OrderDetails_order_shippingAddress | null;
+  deliveryMethod: OrderDetails_order_deliveryMethod | null;
   shippingMethod: OrderDetails_order_shippingMethod | null;
   shippingMethodName: string | null;
+  collectionPointName: string | null;
   shippingPrice: OrderDetails_order_shippingPrice;
   status: OrderStatus;
   subtotal: OrderDetails_order_subtotal;
@@ -500,7 +584,6 @@ export interface OrderDetails_order {
   availableShippingMethods: (OrderDetails_order_availableShippingMethods | null)[] | null;
   invoices: (OrderDetails_order_invoices | null)[] | null;
   channel: OrderDetails_order_channel;
-  isPaid: boolean;
 }
 
 export interface OrderDetails_shop_countries {
@@ -513,6 +596,8 @@ export interface OrderDetails_shop {
   __typename: "Shop";
   countries: OrderDetails_shop_countries[];
   defaultWeightUnit: WeightUnitsEnum | null;
+  fulfillmentAllowUnpaid: boolean;
+  fulfillmentAutoApprove: boolean;
 }
 
 export interface OrderDetails {

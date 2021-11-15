@@ -70,7 +70,7 @@ const OrderRefund: React.FC<OrderRefundProps> = ({ orderId }) => {
   const [refundOrder, refundOrderOpts] = useOrderRefundMutation({
     onCompleted: data => {
       if (data.orderRefund.errors.length === 0) {
-        navigate(orderUrl(orderId), true);
+        navigate(orderUrl(orderId), { replace: true });
         notify({
           status: "success",
           text: intl.formatMessage({
@@ -87,7 +87,7 @@ const OrderRefund: React.FC<OrderRefundProps> = ({ orderId }) => {
   ] = useOrderFulfillmentRefundProductsMutation({
     onCompleted: data => {
       if (data.orderFulfillmentRefundProducts.errors.length === 0) {
-        navigate(orderUrl(orderId), true);
+        navigate(orderUrl(orderId), { replace: true });
         notify({
           status: "success",
           text: intl.formatMessage({

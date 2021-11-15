@@ -9,8 +9,8 @@ import {
   TimelineEventProps,
   TimelineNote
 } from "@saleor/components/Timeline";
+import { makeStyles } from "@saleor/macaw-ui";
 import { OrderDetails_order_events } from "@saleor/orders/types/OrderDetails";
-import { makeStyles } from "@saleor/theme";
 import {
   OrderEventsEmailsEnum,
   OrderEventsEnum
@@ -26,6 +26,15 @@ export const getEventMessage = (
   event: OrderDetails_order_events,
   intl: IntlShape
 ) => {
+  const getUserOrApp = () => {
+    if (event.user) {
+      return event.user.email;
+    }
+    if (event.app) {
+      return event.app.name;
+    }
+  };
+
   switch (event.type) {
     case OrderEventsEnum.CANCELED:
       return intl.formatMessage({
@@ -107,7 +116,7 @@ export const getEventMessage = (
           description: "order history message"
         },
         {
-          requestedBy: event.user ? event.user.email : null
+          requestedBy: getUserOrApp()
         }
       );
     case OrderEventsEnum.INVOICE_GENERATED:
@@ -118,7 +127,7 @@ export const getEventMessage = (
           description: "order history message"
         },
         {
-          generatedBy: event.user ? event.user.email : null,
+          generatedBy: getUserOrApp(),
           invoiceNumber: event.invoiceNumber
         }
       );
@@ -139,9 +148,14 @@ export const getEventMessage = (
           description: "order history message"
         },
         {
-          sentBy: event.user ? event.user.email : null
+          sentBy: getUserOrApp()
         }
       );
+    case OrderEventsEnum.FULFILLMENT_AWAITS_APPROVAL:
+      return intl.formatMessage({
+        defaultMessage: "Fulfillment awaits approval",
+        description: "order history message"
+      });
     case OrderEventsEnum.FULFILLMENT_FULFILLED_ITEMS:
       return intl.formatMessage(
         {
@@ -159,7 +173,7 @@ export const getEventMessage = (
           description: "order history message"
         },
         {
-          refundedBy: event.user ? event.user.email : null
+          refundedBy: getUserOrApp()
         }
       );
     case OrderEventsEnum.FULFILLMENT_RESTOCKED_ITEMS:

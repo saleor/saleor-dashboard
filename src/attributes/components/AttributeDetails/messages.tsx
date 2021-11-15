@@ -73,6 +73,18 @@ export const inputTypeMessages = defineMessages({
   boolean: {
     defaultMessage: "Boolean",
     description: "boolean attribute type"
+  },
+  date: {
+    defaultMessage: "Date",
+    description: "date attribute type"
+  },
+  dateTime: {
+    defaultMessage: "Date Time",
+    description: "date time attribute type"
+  },
+  swatch: {
+    defaultMessage: "Swatch",
+    description: "swatch attribute type"
   }
 });
 

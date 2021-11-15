@@ -1,14 +1,14 @@
 import { Typography } from "@material-ui/core";
-import AppHeader from "@saleor/components/AppHeader";
 import CardSpacer from "@saleor/components/CardSpacer";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
 import Container from "@saleor/components/Container";
 import Form from "@saleor/components/Form";
 import Grid from "@saleor/components/Grid";
-import SaveButtonBar from "@saleor/components/SaveButtonBar";
+import Savebar from "@saleor/components/Savebar";
 import { MenuErrorFragment } from "@saleor/fragments/types/MenuErrorFragment";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import { sectionNames } from "@saleor/intl";
+import { Backlink } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -85,9 +85,9 @@ const MenuDetailsPage: React.FC<MenuDetailsPageProps> = ({
     <Form confirmLeave initial={initialForm} onSubmit={handleSubmit}>
       {({ change, data, hasChanged, submit }) => (
         <Container>
-          <AppHeader onBack={onBack}>
+          <Backlink onClick={onBack}>
             {intl.formatMessage(sectionNames.navigation)}
-          </AppHeader>
+          </Backlink>
           <Grid variant="inverted">
             <div>
               <Typography variant="h5">
@@ -125,11 +125,11 @@ const MenuDetailsPage: React.FC<MenuDetailsPageProps> = ({
               />
             </div>
           </Grid>
-          <SaveButtonBar
+          <Savebar
             disabled={disabled || (!hasChanged && treeOperations.length === 0)}
             onCancel={onBack}
             onDelete={onDelete}
-            onSave={submit}
+            onSubmit={submit}
             state={saveButtonState}
           />
         </Container>

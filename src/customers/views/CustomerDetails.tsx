@@ -5,6 +5,7 @@ import { WindowTitle } from "@saleor/components/WindowTitle";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { commonMessages } from "@saleor/intl";
+import { getStringOrPlaceholder } from "@saleor/misc";
 import createMetadataUpdateHandler from "@saleor/utils/handlers/metadataUpdateHandler";
 import {
   useMetadataUpdate,
@@ -111,11 +112,9 @@ export const CustomerDetailsView: React.FC<CustomerDetailsViewProps> = ({
 
                 return (
                   <>
-                    <WindowTitle
-                      title={maybe(() => customerDetails.data.user.email)}
-                    />
+                    <WindowTitle title={user?.email} />
                     <CustomerDetailsPage
-                      customer={maybe(() => customerDetails.data.user)}
+                      customer={user}
                       disabled={
                         customerDetails.loading ||
                         updateCustomerOpts.loading ||
@@ -141,16 +140,16 @@ export const CustomerDetailsView: React.FC<CustomerDetailsViewProps> = ({
                       onViewAllOrdersClick={() =>
                         navigate(
                           orderListUrl({
-                            customer: maybe(
-                              () => customerDetails.data.user.email
-                            )
+                            customer: user?.email
                           })
                         )
                       }
                     />
                     <ActionDialog
                       confirmButtonState={removeCustomerOpts.status}
-                      onClose={() => navigate(customerUrl(id), true)}
+                      onClose={() =>
+                        navigate(customerUrl(id), { replace: true })
+                      }
                       onConfirm={() => removeCustomer()}
                       title={intl.formatMessage({
                         defaultMessage: "Delete Customer",
@@ -166,10 +165,7 @@ export const CustomerDetailsView: React.FC<CustomerDetailsViewProps> = ({
                           values={{
                             email: (
                               <strong>
-                                {maybe(
-                                  () => customerDetails.data.user.email,
-                                  "..."
-                                )}
+                                {getStringOrPlaceholder(user?.email)}
                               </strong>
                             )
                           }}

@@ -16,3 +16,11 @@ export const fragmentUser = gql`
     }
   }
 `;
+
+export const fragmentUserBase = gql`
+  fragment UserBase on User {
+    id
+    firstName
+    lastName
+  }
+`;

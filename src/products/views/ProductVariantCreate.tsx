@@ -3,7 +3,6 @@ import {
   handleUploadMultipleFiles,
   prepareAttributesInput
 } from "@saleor/attributes/utils/handlers";
-import { ChannelPriceData } from "@saleor/channels/utils";
 import { AttributeInput } from "@saleor/components/Attributes";
 import NotFoundPage from "@saleor/components/NotFoundPage";
 import { WindowTitle } from "@saleor/components/WindowTitle";
@@ -13,7 +12,7 @@ import useNavigator from "@saleor/hooks/useNavigator";
 import useShop from "@saleor/hooks/useShop";
 import usePageSearch from "@saleor/searches/usePageSearch";
 import useProductSearch from "@saleor/searches/useProductSearch";
-import createAttributeValueSearchHandler from "@saleor/utils/handlers/attributeValueSearchHandler";
+import useAttributeValueSearchHandler from "@saleor/utils/handlers/attributeValueSearchHandler";
 import createMetadataCreateHandler from "@saleor/utils/handlers/metadataCreateHandler";
 import { mapEdgesToItems } from "@saleor/utils/maps";
 import {
@@ -73,16 +72,6 @@ export const ProductVariant: React.FC<ProductVariantCreateProps> = ({
 
   const product = data?.product;
 
-  const channels: ChannelPriceData[] = product?.channelListings.map(
-    listing => ({
-      costPrice: null,
-      currency: listing.channel.currencyCode,
-      id: listing.channel.id,
-      name: listing.channel.name,
-      price: null
-    })
-  );
-
   const [variantCreate, variantCreateResult] = useVariantCreateMutation({});
 
   const [updateMetadata] = useMetadataUpdate({});
@@ -129,7 +118,15 @@ export const ProductVariant: React.FC<ProductVariantCreateProps> = ({
             warehouse: stock.id
           })),
           trackInventory: true,
-          weight: weight(formData.weight)
+          weight: weight(formData.weight),
+          preorder: formData.isPreorder
+            ? {
+                globalThreshold: formData.globalThreshold
+                  ? parseInt(formData.globalThreshold, 10)
+                  : null,
+                endDate: formData.preorderEndDateTime || null
+              }
+            : null
         },
         firstValues: 10
       }
@@ -172,8 +169,9 @@ export const ProductVariant: React.FC<ProductVariantCreateProps> = ({
   const {
     loadMore: loadMoreAttributeValues,
     search: searchAttributeValues,
-    result: searchAttributeValuesOpts
-  } = createAttributeValueSearchHandler(DEFAULT_INITIAL_SEARCH_DATA);
+    result: searchAttributeValuesOpts,
+    reset: searchAttributeReset
+  } = useAttributeValueSearchHandler(DEFAULT_INITIAL_SEARCH_DATA);
 
   const fetchMoreReferencePages = {
     hasMore: searchPagesOpts.data?.search?.pageInfo?.hasNextPage,
@@ -192,9 +190,8 @@ export const ProductVariant: React.FC<ProductVariantCreateProps> = ({
     onFetchMore: loadMoreAttributeValues
   };
 
-  const attributeValues = mapEdgesToItems(
-    searchAttributeValuesOpts?.data?.attribute.choices
-  );
+  const attributeValues =
+    mapEdgesToItems(searchAttributeValuesOpts?.data?.attribute.choices) || [];
 
   const disableForm =
     productLoading ||
@@ -211,7 +208,6 @@ export const ProductVariant: React.FC<ProductVariantCreateProps> = ({
         })}
       />
       <ProductVariantCreatePage
-        channels={channels}
         disabled={disableForm}
         errors={variantCreateResult.data?.productVariantCreate.errors || []}
         header={intl.formatMessage({
@@ -226,14 +222,16 @@ export const ProductVariant: React.FC<ProductVariantCreateProps> = ({
         onWarehouseConfigure={() => navigate(warehouseAddPath)}
         onVariantReorder={handleVariantReorder}
         saveButtonBarState={variantCreateResult.status}
-        warehouses={mapEdgesToItems(warehouses?.data?.warehouses)}
+        warehouses={mapEdgesToItems(warehouses?.data?.warehouses) || []}
         weightUnit={shop?.defaultWeightUnit}
         assignReferencesAttributeId={
           params.action === "assign-attribute-value" && params.id
         }
         onAssignReferencesClick={handleAssignAttributeReferenceClick}
-        referencePages={mapEdgesToItems(searchPagesOpts?.data?.search)}
-        referenceProducts={mapEdgesToItems(searchProductsOpts?.data?.search)}
+        referencePages={mapEdgesToItems(searchPagesOpts?.data?.search) || []}
+        referenceProducts={
+          mapEdgesToItems(searchProductsOpts?.data?.search) || []
+        }
         fetchReferencePages={searchPages}
         fetchMoreReferencePages={fetchMoreReferencePages}
         fetchReferenceProducts={searchProducts}
@@ -241,6 +239,7 @@ export const ProductVariant: React.FC<ProductVariantCreateProps> = ({
         fetchAttributeValues={searchAttributeValues}
         fetchMoreAttributeValues={fetchMoreAttributeValues}
         onCloseDialog={() => navigate(productVariantAddUrl(productId))}
+        onAttributeSelectBlur={searchAttributeReset}
       />
     </>
   );

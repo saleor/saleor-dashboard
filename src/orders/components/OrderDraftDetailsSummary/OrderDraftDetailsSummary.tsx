@@ -2,17 +2,17 @@ import { Typography } from "@material-ui/core";
 import HorizontalSpacer from "@saleor/apps/components/HorizontalSpacer";
 import Link from "@saleor/components/Link";
 import Money from "@saleor/components/Money";
+import { makeStyles } from "@saleor/macaw-ui";
 import { OrderDiscountContextConsumerProps } from "@saleor/products/components/OrderDiscountProviders/OrderDiscountProvider";
 import { OrderDiscountData } from "@saleor/products/components/OrderDiscountProviders/types";
-import { makeStyles } from "@saleor/theme";
 import { DiscountValueTypeEnum } from "@saleor/types/globalTypes";
 import React, { useRef } from "react";
 import { useIntl } from "react-intl";
-import { defineMessages } from "react-intl";
 
 import { OrderDetails_order } from "../../types/OrderDetails";
 import OrderDiscountCommonModal from "../OrderDiscountCommonModal";
 import { ORDER_DISCOUNT } from "../OrderDiscountCommonModal/types";
+import { messages } from "./messages";
 
 const useStyles = makeStyles(
   theme => ({
@@ -45,41 +45,6 @@ const useStyles = makeStyles(
   }),
   { name: "OrderDraftDetailsSummary" }
 );
-
-const messages = defineMessages({
-  addCustomerInfo: {
-    defaultMessage: "add customer first",
-    description: "add customer first label"
-  },
-  subtotal: {
-    defaultMessage: "Subtotal",
-    description: "subtotal price"
-  },
-  addDiscount: {
-    defaultMessage: "Add Discount",
-    description: "add discount button"
-  },
-  discount: {
-    defaultMessage: "Discount",
-    description: "discount button"
-  },
-  addShippingCarrier: {
-    defaultMessage: "Add shipping carrier",
-    description: "add shipping carrier button"
-  },
-  noShippingCarriers: {
-    defaultMessage: "No applicable shipping carriers",
-    description: "no shipping carriers title"
-  },
-  total: {
-    defaultMessage: "Total",
-    description: "total price"
-  },
-  taxes: {
-    defaultMessage: "Taxes (VAT included)",
-    description: "taxes title"
-  }
-});
 
 const PRICE_PLACEHOLDER = "---";
 
@@ -181,7 +146,9 @@ const OrderDraftDetailsSummary: React.FC<OrderDraftDetailsSummaryProps> = props 
       );
     }
 
-    const addCustomerInfo = intl.formatMessage(messages.addCustomerInfo);
+    const addShippingAddressInfo = intl.formatMessage(
+      messages.addShippingAddressInfo
+    );
 
     return (
       <div className={classes.shippingMethodContainer}>
@@ -189,7 +156,7 @@ const OrderDraftDetailsSummary: React.FC<OrderDraftDetailsSummaryProps> = props 
           {shippingCarrierBase}
         </Link>
         <HorizontalSpacer />
-        <Typography variant="caption">{`(${addCustomerInfo})`}</Typography>
+        <Typography variant="caption">{`(${addShippingAddressInfo})`}</Typography>
       </div>
     );
   };

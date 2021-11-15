@@ -16,6 +16,18 @@ export interface SaleCataloguesRemove_saleCataloguesRemove_errors {
   channels: string[] | null;
 }
 
+export interface SaleCataloguesRemove_saleCataloguesRemove_sale_metadata {
+  __typename: "MetadataItem";
+  key: string;
+  value: string;
+}
+
+export interface SaleCataloguesRemove_saleCataloguesRemove_sale_privateMetadata {
+  __typename: "MetadataItem";
+  key: string;
+  value: string;
+}
+
 export interface SaleCataloguesRemove_saleCataloguesRemove_sale_channelListings_channel {
   __typename: "Channel";
   id: string;
@@ -29,6 +41,70 @@ export interface SaleCataloguesRemove_saleCataloguesRemove_sale_channelListings 
   channel: SaleCataloguesRemove_saleCataloguesRemove_sale_channelListings_channel;
   discountValue: number;
   currency: string;
+}
+
+export interface SaleCataloguesRemove_saleCataloguesRemove_sale_variants_edges_node_product_thumbnail {
+  __typename: "Image";
+  url: string;
+}
+
+export interface SaleCataloguesRemove_saleCataloguesRemove_sale_variants_edges_node_product_productType {
+  __typename: "ProductType";
+  id: string;
+  name: string;
+}
+
+export interface SaleCataloguesRemove_saleCataloguesRemove_sale_variants_edges_node_product_channelListings_channel {
+  __typename: "Channel";
+  id: string;
+  name: string;
+  currencyCode: string;
+}
+
+export interface SaleCataloguesRemove_saleCataloguesRemove_sale_variants_edges_node_product_channelListings {
+  __typename: "ProductChannelListing";
+  isPublished: boolean;
+  publicationDate: any | null;
+  isAvailableForPurchase: boolean | null;
+  availableForPurchase: any | null;
+  visibleInListings: boolean;
+  channel: SaleCataloguesRemove_saleCataloguesRemove_sale_variants_edges_node_product_channelListings_channel;
+}
+
+export interface SaleCataloguesRemove_saleCataloguesRemove_sale_variants_edges_node_product {
+  __typename: "Product";
+  id: string;
+  name: string;
+  thumbnail: SaleCataloguesRemove_saleCataloguesRemove_sale_variants_edges_node_product_thumbnail | null;
+  productType: SaleCataloguesRemove_saleCataloguesRemove_sale_variants_edges_node_product_productType;
+  channelListings: SaleCataloguesRemove_saleCataloguesRemove_sale_variants_edges_node_product_channelListings[] | null;
+}
+
+export interface SaleCataloguesRemove_saleCataloguesRemove_sale_variants_edges_node {
+  __typename: "ProductVariant";
+  id: string;
+  name: string;
+  product: SaleCataloguesRemove_saleCataloguesRemove_sale_variants_edges_node_product;
+}
+
+export interface SaleCataloguesRemove_saleCataloguesRemove_sale_variants_edges {
+  __typename: "ProductVariantCountableEdge";
+  node: SaleCataloguesRemove_saleCataloguesRemove_sale_variants_edges_node;
+}
+
+export interface SaleCataloguesRemove_saleCataloguesRemove_sale_variants_pageInfo {
+  __typename: "PageInfo";
+  endCursor: string | null;
+  hasNextPage: boolean;
+  hasPreviousPage: boolean;
+  startCursor: string | null;
+}
+
+export interface SaleCataloguesRemove_saleCataloguesRemove_sale_variants {
+  __typename: "ProductVariantCountableConnection";
+  edges: SaleCataloguesRemove_saleCataloguesRemove_sale_variants_edges[];
+  pageInfo: SaleCataloguesRemove_saleCataloguesRemove_sale_variants_pageInfo;
+  totalCount: number | null;
 }
 
 export interface SaleCataloguesRemove_saleCataloguesRemove_sale_products_edges_node_productType {
@@ -154,12 +230,15 @@ export interface SaleCataloguesRemove_saleCataloguesRemove_sale_collections {
 
 export interface SaleCataloguesRemove_saleCataloguesRemove_sale {
   __typename: "Sale";
+  metadata: (SaleCataloguesRemove_saleCataloguesRemove_sale_metadata | null)[];
+  privateMetadata: (SaleCataloguesRemove_saleCataloguesRemove_sale_privateMetadata | null)[];
   id: string;
   name: string;
   type: SaleType;
   startDate: any;
   endDate: any | null;
   channelListings: SaleCataloguesRemove_saleCataloguesRemove_sale_channelListings[] | null;
+  variants: SaleCataloguesRemove_saleCataloguesRemove_sale_variants | null;
   products: SaleCataloguesRemove_saleCataloguesRemove_sale_products | null;
   categories: SaleCataloguesRemove_saleCataloguesRemove_sale_categories | null;
   collections: SaleCataloguesRemove_saleCataloguesRemove_sale_collections | null;

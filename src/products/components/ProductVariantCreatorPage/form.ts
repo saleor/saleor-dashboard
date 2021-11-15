@@ -29,7 +29,7 @@ export interface Stock {
 }
 export interface Attribute {
   id: string;
-  values: Array<AttributeValue<AttributeValueFragment>>;
+  values: Array<AttributeValue<Partial<AttributeValueFragment>>>;
 }
 export interface ProductVariantCreateFormData {
   attributes: Attribute[];

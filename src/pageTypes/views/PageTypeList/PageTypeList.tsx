@@ -9,6 +9,7 @@ import useBulkActions from "@saleor/hooks/useBulkActions";
 import useListSettings from "@saleor/hooks/useListSettings";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
+import { usePaginationReset } from "@saleor/hooks/usePaginationReset";
 import usePaginator, {
   createPaginationState
 } from "@saleor/hooks/usePaginator";
@@ -36,9 +37,9 @@ import {
   pageTypeUrl
 } from "../../urls";
 import {
-  areFiltersApplied,
   deleteFilterTab,
   getActiveFilters,
+  getFiltersCurrentTab,
   getFilterTabs,
   getFilterVariables,
   saveFilterTab
@@ -63,6 +64,8 @@ export const PageTypeList: React.FC<PageTypeListProps> = ({ params }) => {
   const intl = useIntl();
   const { settings } = useListSettings(ListViews.PAGES_LIST);
 
+  usePaginationReset(pageTypeListUrl, params, settings.rowNumber);
+
   const paginationState = createPaginationState(settings.rowNumber, params);
   const queryVariables = React.useMemo(
     () => ({
@@ -70,7 +73,7 @@ export const PageTypeList: React.FC<PageTypeListProps> = ({ params }) => {
       filter: getFilterVariables(params),
       sort: getSortQueryVariables(params)
     }),
-    [params]
+    [params, settings.rowNumber]
   );
   const { data, loading, refetch } = usePageTypeListQuery({
     displayLoader: true,
@@ -79,12 +82,7 @@ export const PageTypeList: React.FC<PageTypeListProps> = ({ params }) => {
 
   const tabs = getFilterTabs();
 
-  const currentTab =
-    params.activeTab === undefined
-      ? areFiltersApplied(params)
-        ? tabs.length + 1
-        : 0
-      : parseInt(params.activeTab, 0);
+  const currentTab = getFiltersCurrentTab(params, tabs);
 
   const changeFilterField = (filter: PageTypeListUrlFilters) => {
     reset();
@@ -206,15 +204,17 @@ export const PageTypeList: React.FC<PageTypeListProps> = ({ params }) => {
           </IconButton>
         }
       />
-      <TypeDeleteWarningDialog
-        {...pageTypeDeleteData}
-        typesData={pageTypesData}
-        typesToDelete={selectedPageTypes}
-        onClose={closeModal}
-        onDelete={hanldePageTypeBulkDelete}
-        deleteButtonState={pageTypeBulkDeleteOpts.status}
-        showViewAssignedItemsButton={false}
-      />
+      {pageTypesData && (
+        <TypeDeleteWarningDialog
+          {...pageTypeDeleteData}
+          typesData={pageTypesData}
+          typesToDelete={selectedPageTypes}
+          onClose={closeModal}
+          onDelete={hanldePageTypeBulkDelete}
+          deleteButtonState={pageTypeBulkDeleteOpts.status}
+          showViewAssignedItemsButton={false}
+        />
+      )}
       <SaveFilterTabDialog
         open={params.action === "save-search"}
         confirmButtonState="default"

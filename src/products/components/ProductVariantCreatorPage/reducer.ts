@@ -76,7 +76,7 @@ export interface ProductVariantCreateReducerAction {
   };
   selectValue?: {
     attributeId: string;
-    value: AttributeValue<AttributeValueFragment>;
+    value: AttributeValue<Partial<AttributeValueFragment>>;
   };
   type: ProductVariantCreateReducerActionType;
 }
@@ -84,11 +84,12 @@ export interface ProductVariantCreateReducerAction {
 function selectValue(
   prevState: ProductVariantCreateFormData,
   attributeId: string,
-  value: AttributeValue<AttributeValueFragment>
+  value: AttributeValue<Partial<AttributeValueFragment>>
 ): ProductVariantCreateFormData {
   const attribute = prevState.attributes.find(
     attribute => attribute.id === attributeId
   );
+
   const values = toggle(value, attribute.values, (a, b) => a.slug === b.slug);
   const updatedAttributes = add(
     {

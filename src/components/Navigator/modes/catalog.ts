@@ -19,8 +19,8 @@ export function searchInCatalog(
   navigate: UseNavigatorResult,
   catalog: SearchCatalog
 ): QuickSearchAction[] {
-  const categories: QuickSearchActionInput[] = mapEdgesToItems(
-    catalog?.categories
+  const categories: QuickSearchActionInput[] = (
+    mapEdgesToItems(catalog?.categories) || []
   )
     .map<QuickSearchActionInput>(category => ({
       caption: intl.formatMessage(messages.category),
@@ -35,8 +35,8 @@ export function searchInCatalog(
     }))
     .sort(sortScores);
 
-  const collections: QuickSearchActionInput[] = mapEdgesToItems(
-    catalog?.collections
+  const collections: QuickSearchActionInput[] = (
+    mapEdgesToItems(catalog?.collections) || []
   )
     .map<QuickSearchActionInput>(collection => ({
       caption: intl.formatMessage(messages.collection),
@@ -51,7 +51,9 @@ export function searchInCatalog(
     }))
     .sort(sortScores);
 
-  const products: QuickSearchActionInput[] = mapEdgesToItems(catalog?.products)
+  const products: QuickSearchActionInput[] = (
+    mapEdgesToItems(catalog?.products) || []
+  )
     .map<QuickSearchActionInput>(product => ({
       caption: intl.formatMessage(messages.product),
       extraInfo: product.category.name,

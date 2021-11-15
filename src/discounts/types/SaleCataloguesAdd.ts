@@ -16,6 +16,18 @@ export interface SaleCataloguesAdd_saleCataloguesAdd_errors {
   channels: string[] | null;
 }
 
+export interface SaleCataloguesAdd_saleCataloguesAdd_sale_metadata {
+  __typename: "MetadataItem";
+  key: string;
+  value: string;
+}
+
+export interface SaleCataloguesAdd_saleCataloguesAdd_sale_privateMetadata {
+  __typename: "MetadataItem";
+  key: string;
+  value: string;
+}
+
 export interface SaleCataloguesAdd_saleCataloguesAdd_sale_channelListings_channel {
   __typename: "Channel";
   id: string;
@@ -29,6 +41,70 @@ export interface SaleCataloguesAdd_saleCataloguesAdd_sale_channelListings {
   channel: SaleCataloguesAdd_saleCataloguesAdd_sale_channelListings_channel;
   discountValue: number;
   currency: string;
+}
+
+export interface SaleCataloguesAdd_saleCataloguesAdd_sale_variants_edges_node_product_thumbnail {
+  __typename: "Image";
+  url: string;
+}
+
+export interface SaleCataloguesAdd_saleCataloguesAdd_sale_variants_edges_node_product_productType {
+  __typename: "ProductType";
+  id: string;
+  name: string;
+}
+
+export interface SaleCataloguesAdd_saleCataloguesAdd_sale_variants_edges_node_product_channelListings_channel {
+  __typename: "Channel";
+  id: string;
+  name: string;
+  currencyCode: string;
+}
+
+export interface SaleCataloguesAdd_saleCataloguesAdd_sale_variants_edges_node_product_channelListings {
+  __typename: "ProductChannelListing";
+  isPublished: boolean;
+  publicationDate: any | null;
+  isAvailableForPurchase: boolean | null;
+  availableForPurchase: any | null;
+  visibleInListings: boolean;
+  channel: SaleCataloguesAdd_saleCataloguesAdd_sale_variants_edges_node_product_channelListings_channel;
+}
+
+export interface SaleCataloguesAdd_saleCataloguesAdd_sale_variants_edges_node_product {
+  __typename: "Product";
+  id: string;
+  name: string;
+  thumbnail: SaleCataloguesAdd_saleCataloguesAdd_sale_variants_edges_node_product_thumbnail | null;
+  productType: SaleCataloguesAdd_saleCataloguesAdd_sale_variants_edges_node_product_productType;
+  channelListings: SaleCataloguesAdd_saleCataloguesAdd_sale_variants_edges_node_product_channelListings[] | null;
+}
+
+export interface SaleCataloguesAdd_saleCataloguesAdd_sale_variants_edges_node {
+  __typename: "ProductVariant";
+  id: string;
+  name: string;
+  product: SaleCataloguesAdd_saleCataloguesAdd_sale_variants_edges_node_product;
+}
+
+export interface SaleCataloguesAdd_saleCataloguesAdd_sale_variants_edges {
+  __typename: "ProductVariantCountableEdge";
+  node: SaleCataloguesAdd_saleCataloguesAdd_sale_variants_edges_node;
+}
+
+export interface SaleCataloguesAdd_saleCataloguesAdd_sale_variants_pageInfo {
+  __typename: "PageInfo";
+  endCursor: string | null;
+  hasNextPage: boolean;
+  hasPreviousPage: boolean;
+  startCursor: string | null;
+}
+
+export interface SaleCataloguesAdd_saleCataloguesAdd_sale_variants {
+  __typename: "ProductVariantCountableConnection";
+  edges: SaleCataloguesAdd_saleCataloguesAdd_sale_variants_edges[];
+  pageInfo: SaleCataloguesAdd_saleCataloguesAdd_sale_variants_pageInfo;
+  totalCount: number | null;
 }
 
 export interface SaleCataloguesAdd_saleCataloguesAdd_sale_products_edges_node_productType {
@@ -154,12 +230,15 @@ export interface SaleCataloguesAdd_saleCataloguesAdd_sale_collections {
 
 export interface SaleCataloguesAdd_saleCataloguesAdd_sale {
   __typename: "Sale";
+  metadata: (SaleCataloguesAdd_saleCataloguesAdd_sale_metadata | null)[];
+  privateMetadata: (SaleCataloguesAdd_saleCataloguesAdd_sale_privateMetadata | null)[];
   id: string;
   name: string;
   type: SaleType;
   startDate: any;
   endDate: any | null;
   channelListings: SaleCataloguesAdd_saleCataloguesAdd_sale_channelListings[] | null;
+  variants: SaleCataloguesAdd_saleCataloguesAdd_sale_variants | null;
   products: SaleCataloguesAdd_saleCataloguesAdd_sale_products | null;
   categories: SaleCataloguesAdd_saleCataloguesAdd_sale_categories | null;
   collections: SaleCataloguesAdd_saleCataloguesAdd_sale_collections | null;

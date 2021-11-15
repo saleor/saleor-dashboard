@@ -8,7 +8,7 @@ import {
   Popper
 } from "@material-ui/core";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
-import { makeStyles } from "@saleor/theme";
+import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 
 const ITEM_HEIGHT = 48;
@@ -40,7 +40,8 @@ const useStyles = makeStyles(
     },
     paper: {
       marginTop: theme.spacing(2),
-      maxHeight: ITEM_HEIGHT * 4.5
+      maxHeight: ITEM_HEIGHT * 4.5,
+      overflowY: "scroll"
     }
   }),
   { name: "CardMenu" }

@@ -1,4 +1,5 @@
-import { makeStyles } from "@saleor/theme";
+import { Divider } from "@material-ui/core";
+import { makeStyles } from "@saleor/macaw-ui";
 import classNames from "classnames";
 import React from "react";
 
@@ -17,14 +18,17 @@ const useStyles = makeStyles(
         }
       }
     },
+    underline: {
+      marginBottom: theme.spacing(4)
+    },
     grid: {
       padding: theme.spacing(2)
     },
     menuButton: {
       flex: "0 0 auto",
-      marginLeft: -theme.spacing(2),
+      marginLeft: theme.spacing(-2),
       marginRight: theme.spacing(3),
-      marginTop: -theme.spacing(2)
+      marginTop: theme.spacing(-2)
     },
     root: {
       alignItems: "center",
@@ -51,25 +55,34 @@ interface ExtendedPageHeaderProps {
   children?: React.ReactNode;
   className?: string;
   inline?: boolean;
+  underline?: boolean;
   title?: React.ReactNode;
   testId?: string;
 }
 
 const ExtendedPageHeader: React.FC<ExtendedPageHeaderProps> = props => {
-  const { children, className, inline, title, testId } = props;
+  const { children, className, inline, underline, title, testId } = props;
 
   const classes = useStyles(props);
 
   return (
-    <div
-      data-test-id={testId}
-      className={classNames(classes.root, className, {
-        [classes.block]: !inline
-      })}
-    >
-      {title}
-      <div className={classes.action}>{children}</div>
-    </div>
+    <>
+      <div
+        data-test-id={testId}
+        className={classNames(classes.root, className, {
+          [classes.block]: !inline,
+          [classes.underline]: underline
+        })}
+      >
+        {title}
+        <div className={classes.action}>{children}</div>
+      </div>
+      {underline && (
+        <div className={classes.underline}>
+          <Divider />
+        </div>
+      )}
+    </>
   );
 };
 ExtendedPageHeader.displayName = "ExtendedPageHeader";

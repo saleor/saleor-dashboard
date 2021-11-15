@@ -24,9 +24,8 @@ import useProductSearch from "@saleor/searches/useProductSearch";
 import DeleteShippingRateDialog from "@saleor/shipping/components/DeleteShippingRateDialog";
 import ShippingMethodProductsAddDialog from "@saleor/shipping/components/ShippingMethodProductsAddDialog";
 import ShippingZonePostalCodeRangeDialog from "@saleor/shipping/components/ShippingZonePostalCodeRangeDialog";
-import ShippingZoneRatesPage, {
-  FormData
-} from "@saleor/shipping/components/ShippingZoneRatesPage";
+import ShippingZoneRatesPage from "@saleor/shipping/components/ShippingZoneRatesPage";
+import { ShippingZoneRateUpdateFormData } from "@saleor/shipping/components/ShippingZoneRatesPage/types";
 import UnassignDialog from "@saleor/shipping/components/UnassignDialog";
 import {
   getShippingMethodChannelVariables,
@@ -233,7 +232,7 @@ export const WeightRatesUpdate: React.FC<WeightRatesUpdateProps> = ({
   const [updateMetadata] = useMetadataUpdate({});
   const [updatePrivateMetadata] = usePrivateMetadataUpdate({});
 
-  const updateData = async (data: FormData) => {
+  const updateData = async (data: ShippingZoneRateUpdateFormData) => {
     const response = await updateShippingRate({
       variables: getUpdateShippingWeightRateVariables(
         data,
@@ -250,7 +249,7 @@ export const WeightRatesUpdate: React.FC<WeightRatesUpdateProps> = ({
       updateShippingMethodChannelListing({
         variables: getShippingMethodChannelVariables(
           rateId,
-          data.noLimits,
+          data.orderValueRestricted,
           data.channelListings,
           shippingChannels
         )
@@ -343,7 +342,7 @@ export const WeightRatesUpdate: React.FC<WeightRatesUpdateProps> = ({
         loading={productsSearchOpts.loading}
         open={params.action === "assign-product"}
         hasMore={productsSearchOpts.data?.search?.pageInfo.hasNextPage}
-        products={mapEdgesToItems(productsSearchOpts?.data?.search).filter(
+        products={mapEdgesToItems(productsSearchOpts?.data?.search)?.filter(
           suggestedProduct => suggestedProduct.id
         )}
         onClose={closeModal}

@@ -3,7 +3,6 @@ import {
   mergeAttributeValues
 } from "@saleor/attributes/utils/data";
 import { ChannelPriceData } from "@saleor/channels/utils";
-import AppHeader from "@saleor/components/AppHeader";
 import AssignAttributeValueDialog from "@saleor/components/AssignAttributeValueDialog";
 import Attributes, {
   AttributeInput,
@@ -16,11 +15,12 @@ import Grid from "@saleor/components/Grid";
 import { MetadataFormData } from "@saleor/components/Metadata";
 import Metadata from "@saleor/components/Metadata/Metadata";
 import PageHeader from "@saleor/components/PageHeader";
-import SaveButtonBar from "@saleor/components/SaveButtonBar";
+import Savebar from "@saleor/components/Savebar";
 import { ProductChannelListingErrorFragment } from "@saleor/fragments/types/ProductChannelListingErrorFragment";
 import { ProductErrorWithAttributesFragment } from "@saleor/fragments/types/ProductErrorWithAttributesFragment";
 import { ProductVariant } from "@saleor/fragments/types/ProductVariant";
 import { WarehouseFragment } from "@saleor/fragments/types/WarehouseFragment";
+import { Backlink } from "@saleor/macaw-ui";
 import { VariantUpdate_productVariantUpdate_errors } from "@saleor/products/types/VariantUpdate";
 import { SearchAttributeValues_attribute_choices_edges_node } from "@saleor/searches/types/SearchAttributeValues";
 import { SearchPages_search_edges_node } from "@saleor/searches/types/SearchPages";
@@ -32,6 +32,7 @@ import { defineMessages, useIntl } from "react-intl";
 import { maybe } from "../../../misc";
 import ProductShipping from "../ProductShipping/ProductShipping";
 import ProductStocks, { ProductStockInput } from "../ProductStocks";
+import ProductVariantEndPreorderDialog from "../ProductVariantEndPreorderDialog";
 import ProductVariantMediaSelectDialog from "../ProductVariantImageSelectDialog";
 import ProductVariantMedia from "../ProductVariantMedia";
 import ProductVariantNavigation from "../ProductVariantNavigation";
@@ -97,7 +98,10 @@ interface ProductVariantPageProps {
   fetchAttributeValues: (query: string, attributeId: string) => void;
   onAssignReferencesClick: (attribute: AttributeInput) => void;
   onCloseDialog: () => void;
+  onVariantPreorderDeactivate: (id: string) => void;
+  variantDeactivatePreoderButtonState: ConfirmButtonTransitionState;
   onVariantReorder: ReorderAction;
+  onAttributeSelectBlur: () => void;
   onAdd();
   onBack();
   onDelete();
@@ -129,6 +133,8 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
   onMediaSelect,
   onSubmit,
   onVariantClick,
+  onVariantPreorderDeactivate,
+  variantDeactivatePreoderButtonState,
   onVariantReorder,
   onSetDefaultVariant,
   onWarehouseConfigure,
@@ -140,12 +146,18 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
   fetchMoreReferencePages,
   fetchMoreReferenceProducts,
   fetchMoreAttributeValues,
-  onCloseDialog
+  onCloseDialog,
+  onAttributeSelectBlur
 }) => {
   const intl = useIntl();
 
   const [isModalOpened, setModalStatus] = React.useState(false);
   const toggleModal = () => setModalStatus(!isModalOpened);
+
+  const [
+    isEndPreorderModalOpened,
+    setIsEndPreorderModalOpened
+  ] = React.useState(false);
 
   const variantMedia = variant?.media?.map(image => image.id);
   const productMedia = variant?.product?.media?.sort((prev, next) =>
@@ -156,6 +168,11 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
     .sort((prev, next) => (prev.sortOrder > next.sortOrder ? 1 : -1));
 
   const canOpenAssignReferencesAttributeDialog = !!assignReferencesAttributeId;
+
+  const handleDeactivatePreorder = async () => {
+    await onVariantPreorderDeactivate(variant.id);
+    setIsEndPreorderModalOpened(false);
+  };
 
   const handleAssignReferenceAttribute = (
     attributeValues: string[],
@@ -176,7 +193,7 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
   return (
     <>
       <Container>
-        <AppHeader onBack={onBack}>{variant?.product?.name}</AppHeader>
+        <Backlink onClick={onBack}>{variant?.product?.name}</Backlink>
         <PageHeader title={header}>
           {variant?.product?.defaultVariant?.id !== variant?.id && (
             <ProductVariantSetDefault
@@ -200,6 +217,7 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
           {({
             change,
             data,
+            formErrors,
             disabled: formDisabled,
             handlers,
             hasChanged,
@@ -227,6 +245,7 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
                 <div>
                   <VariantDetailsChannelsAvailabilityCard variant={variant} />
                   <Attributes
+                    entityId={variant?.id}
                     title={intl.formatMessage(messages.nonSelectionAttributes)}
                     attributes={data.attributes.filter(
                       attribute =>
@@ -245,9 +264,11 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
                     onReferencesReorder={handlers.reorderAttributeValue}
                     fetchAttributeValues={fetchAttributeValues}
                     fetchMoreAttributeValues={fetchMoreAttributeValues}
+                    onAttributeSelectBlur={onAttributeSelectBlur}
                   />
                   <CardSpacer />
                   <Attributes
+                    entityId={variant?.id}
                     title={intl.formatMessage(
                       messages.selectionAttributesHeader
                     )}
@@ -268,6 +289,7 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
                     onReferencesReorder={handlers.reorderAttributeValue}
                     fetchAttributeValues={fetchAttributeValues}
                     fetchMoreAttributeValues={fetchMoreAttributeValues}
+                    onAttributeSelectBlur={onAttributeSelectBlur}
                   />
                   <CardSpacer />
                   <ProductVariantMedia
@@ -299,14 +321,28 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
                   />
                   <CardSpacer />
                   <ProductStocks
+                    productVariantChannelListings={data.channelListings.map(
+                      channel => ({
+                        ...channel.data,
+                        ...channel.value
+                      })
+                    )}
+                    onVariantChannelListingChange={handlers.changeChannels}
                     data={data}
                     disabled={loading}
                     hasVariants={true}
                     errors={errors}
+                    formErrors={formErrors}
                     stocks={data.stocks}
                     warehouses={warehouses}
                     onChange={handlers.changeStock}
                     onFormDataChange={change}
+                    onChangePreorderEndDate={handlers.changePreorderEndDate}
+                    onEndPreorderTrigger={
+                      !!variant?.preorder
+                        ? () => setIsEndPreorderModalOpened(true)
+                        : null
+                    }
                     onWarehouseStockAdd={handlers.addStock}
                     onWarehouseStockDelete={handlers.deleteStock}
                     onWarehouseConfigure={onWarehouseConfigure}
@@ -315,12 +351,12 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
                   <Metadata data={data} onChange={handlers.changeMetadata} />
                 </div>
               </Grid>
-              <SaveButtonBar
+              <Savebar
                 disabled={loading || formDisabled || !hasChanged}
                 state={saveButtonBarState}
                 onCancel={onBack}
                 onDelete={onDelete}
-                onSave={submit}
+                onSubmit={submit}
               />
               {canOpenAssignReferencesAttributeDialog && (
                 <AssignAttributeValueDialog
@@ -356,6 +392,15 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
           open={isModalOpened}
           media={productMedia}
           selectedMedia={maybe(() => variant.media.map(image => image.id))}
+        />
+      )}
+      {!!variant?.preorder && (
+        <ProductVariantEndPreorderDialog
+          confirmButtonState={variantDeactivatePreoderButtonState}
+          onClose={() => setIsEndPreorderModalOpened(false)}
+          onConfirm={handleDeactivatePreorder}
+          open={isEndPreorderModalOpened}
+          variantGlobalSoldUnits={variant?.preorder?.globalSoldUnits}
         />
       )}
     </>

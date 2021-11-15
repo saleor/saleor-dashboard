@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { OrderSettingsUpdateInput, OrderSettingsErrorCode } from "./../../types/globalTypes";
+import { OrderSettingsUpdateInput, ShopSettingsInput, OrderSettingsErrorCode, ShopErrorCode } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: OrderSettingsUpdate
@@ -18,6 +18,7 @@ export interface OrderSettingsUpdate_orderSettingsUpdate_errors {
 export interface OrderSettingsUpdate_orderSettingsUpdate_orderSettings {
   __typename: "OrderSettings";
   automaticallyConfirmAllNewOrders: boolean;
+  automaticallyFulfillNonShippableGiftCard: boolean;
 }
 
 export interface OrderSettingsUpdate_orderSettingsUpdate {
@@ -26,10 +27,30 @@ export interface OrderSettingsUpdate_orderSettingsUpdate {
   orderSettings: OrderSettingsUpdate_orderSettingsUpdate_orderSettings | null;
 }
 
+export interface OrderSettingsUpdate_shopSettingsUpdate_errors {
+  __typename: "ShopError";
+  code: ShopErrorCode;
+  field: string | null;
+}
+
+export interface OrderSettingsUpdate_shopSettingsUpdate_shop {
+  __typename: "Shop";
+  fulfillmentAutoApprove: boolean;
+  fulfillmentAllowUnpaid: boolean;
+}
+
+export interface OrderSettingsUpdate_shopSettingsUpdate {
+  __typename: "ShopSettingsUpdate";
+  errors: OrderSettingsUpdate_shopSettingsUpdate_errors[];
+  shop: OrderSettingsUpdate_shopSettingsUpdate_shop | null;
+}
+
 export interface OrderSettingsUpdate {
   orderSettingsUpdate: OrderSettingsUpdate_orderSettingsUpdate | null;
+  shopSettingsUpdate: OrderSettingsUpdate_shopSettingsUpdate | null;
 }
 
 export interface OrderSettingsUpdateVariables {
-  input: OrderSettingsUpdateInput;
+  orderSettingsInput: OrderSettingsUpdateInput;
+  shopSettingsInput: ShopSettingsInput;
 }

@@ -37,7 +37,7 @@ import useProductSearch from "@saleor/searches/useProductSearch";
 import useProductTypeSearch from "@saleor/searches/useProductTypeSearch";
 import { useTaxTypeList } from "@saleor/taxes/queries";
 import { getProductErrorMessage } from "@saleor/utils/errors";
-import createAttributeValueSearchHandler from "@saleor/utils/handlers/attributeValueSearchHandler";
+import useAttributeValueSearchHandler from "@saleor/utils/handlers/attributeValueSearchHandler";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import createMetadataCreateHandler from "@saleor/utils/handlers/metadataCreateHandler";
 import { mapEdgesToItems } from "@saleor/utils/maps";
@@ -111,8 +111,9 @@ export const ProductCreateView: React.FC<ProductCreateProps> = ({ params }) => {
   const {
     loadMore: loadMoreAttributeValues,
     search: searchAttributeValues,
-    result: searchAttributeValuesOpts
-  } = createAttributeValueSearchHandler(DEFAULT_INITIAL_SEARCH_DATA);
+    result: searchAttributeValuesOpts,
+    reset: searchAttributeReset
+  } = useAttributeValueSearchHandler(DEFAULT_INITIAL_SEARCH_DATA);
   const warehouses = useWarehouseList({
     displayLoader: true,
     variables: {
@@ -130,7 +131,8 @@ export const ProductCreateView: React.FC<ProductCreateProps> = ({ params }) => {
     skip: !selectedProductTypeId
   });
 
-  const productTypes = mapEdgesToItems(searchProductTypesOpts?.data?.search);
+  const productTypes =
+    mapEdgesToItems(searchProductTypesOpts?.data?.search) || [];
 
   const { availableChannels } = useAppChannel(false);
   const allChannels: ChannelData[] = createSortedChannelsData(
@@ -282,7 +284,6 @@ export const ProductCreateView: React.FC<ProductCreateProps> = ({ params }) => {
       {!!allChannels?.length && (
         <ChannelsAvailabilityDialog
           isSelected={isChannelSelected}
-          disabled={!channelListElements.length}
           channels={allChannels}
           onChange={channelsToggle}
           onClose={handleChannelsModalClose}
@@ -299,11 +300,12 @@ export const ProductCreateView: React.FC<ProductCreateProps> = ({ params }) => {
       <ProductCreatePage
         allChannelsCount={allChannels?.length}
         currentChannels={currentChannels}
-        categories={mapEdgesToItems(searchCategoryOpts?.data?.search)}
-        collections={mapEdgesToItems(searchCollectionOpts?.data?.search)}
-        attributeValues={mapEdgesToItems(
-          searchAttributeValuesOpts?.data?.attribute.choices
-        )}
+        categories={mapEdgesToItems(searchCategoryOpts?.data?.search) || []}
+        collections={mapEdgesToItems(searchCollectionOpts?.data?.search) || []}
+        attributeValues={
+          mapEdgesToItems(searchAttributeValuesOpts?.data?.attribute.choices) ||
+          []
+        }
         loading={loading}
         channelsErrors={
           updateVariantChannelsOpts.data?.productVariantChannelListingUpdate
@@ -329,7 +331,7 @@ export const ProductCreateView: React.FC<ProductCreateProps> = ({ params }) => {
         fetchMoreCategories={fetchMoreCategories}
         fetchMoreCollections={fetchMoreCollections}
         fetchMoreProductTypes={fetchMoreProductTypes}
-        warehouses={mapEdgesToItems(warehouses?.data?.warehouses)}
+        warehouses={mapEdgesToItems(warehouses?.data?.warehouses) || []}
         taxTypes={taxTypes.data?.taxTypes || []}
         weightUnit={shop?.defaultWeightUnit}
         openChannelsModal={handleChannelsModalOpen}
@@ -338,8 +340,10 @@ export const ProductCreateView: React.FC<ProductCreateProps> = ({ params }) => {
           params.action === "assign-attribute-value" && params.id
         }
         onAssignReferencesClick={handleAssignAttributeReferenceClick}
-        referencePages={mapEdgesToItems(searchPagesOpts?.data?.search)}
-        referenceProducts={mapEdgesToItems(searchProductsOpts?.data?.search)}
+        referencePages={mapEdgesToItems(searchPagesOpts?.data?.search) || []}
+        referenceProducts={
+          mapEdgesToItems(searchProductsOpts?.data?.search) || []
+        }
         fetchReferencePages={searchPages}
         fetchMoreReferencePages={fetchMoreReferencePages}
         fetchReferenceProducts={searchProducts}
@@ -348,6 +352,7 @@ export const ProductCreateView: React.FC<ProductCreateProps> = ({ params }) => {
         onCloseDialog={() => navigate(productAddUrl())}
         selectedProductType={selectedProductType?.productType}
         onSelectProductType={id => setSelectedProductTypeId(id)}
+        onAttributeSelectBlur={searchAttributeReset}
       />
     </>
   );

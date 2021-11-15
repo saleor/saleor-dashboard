@@ -1,6 +1,5 @@
 import { FormData } from "@saleor/channels/components/ChannelForm/ChannelForm";
 import { ChannelCreate } from "@saleor/channels/types/ChannelCreate";
-import AppHeader from "@saleor/components/AppHeader";
 import Container from "@saleor/components/Container";
 import PageHeader from "@saleor/components/PageHeader";
 import { WindowTitle } from "@saleor/components/WindowTitle";
@@ -9,7 +8,9 @@ import { getSearchFetchMoreProps } from "@saleor/hooks/makeTopLevelSearch/utils"
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { getDefaultNotifierSuccessErrorData } from "@saleor/hooks/useNotifier/utils";
+import useShop from "@saleor/hooks/useShop";
 import { sectionNames } from "@saleor/intl";
+import { Backlink } from "@saleor/macaw-ui";
 import { extractMutationErrors } from "@saleor/misc";
 import useShippingZonesSearch from "@saleor/searches/useShippingZonesSearch";
 import currencyCodes from "currency-codes";
@@ -24,6 +25,7 @@ export const ChannelCreateView = ({}) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();
+  const shop = useShop();
 
   const handleBack = () => navigate(channelsListUrl());
 
@@ -86,9 +88,9 @@ export const ChannelCreateView = ({}) => {
         })}
       />
       <Container>
-        <AppHeader onBack={handleBack}>
+        <Backlink onClick={handleBack}>
           {intl.formatMessage(sectionNames.channels)}
-        </AppHeader>
+        </Backlink>
         <PageHeader
           title={intl.formatMessage({
             defaultMessage: "New Channel",
@@ -108,6 +110,7 @@ export const ChannelCreateView = ({}) => {
           onSubmit={handleSubmit}
           onBack={handleBack}
           saveButtonBarState={createChannelOpts.status}
+          countries={shop?.countries || []}
         />
       </Container>
     </>

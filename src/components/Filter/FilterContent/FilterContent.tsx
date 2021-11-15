@@ -1,6 +1,6 @@
 import {
-  ExpansionPanel,
-  ExpansionPanelSummary,
+  Accordion,
+  AccordionSummary,
   makeStyles,
   Paper,
   Typography
@@ -16,9 +16,9 @@ import { FilterReducerAction } from "../reducer";
 import {
   FieldType,
   FilterErrorMessages,
-  FilterErrors,
   IFilter,
-  IFilterElement
+  IFilterElement,
+  InvalidFilters
 } from "../types";
 import FilterContentBody, { FilterContentBodyProps } from "./FilterContentBody";
 import FilterContentBodyNameField from "./FilterContentBodyNameField";
@@ -80,7 +80,7 @@ export interface FilterContentProps<T extends string = string> {
   onSubmit: () => void;
   currencySymbol?: string;
   dataStructure: IFilter<T>;
-  errors?: FilterErrors;
+  errors?: InvalidFilters<T>;
   errorMessages?: FilterErrorMessages<T>;
 }
 
@@ -119,7 +119,7 @@ const FilterContent: React.FC<FilterContentProps> = ({
       if (filterField.multipleFields) {
         return filterField.multipleFields.reduce(
           getAutocompleteValuesWithNewValues,
-          {}
+          acc
         );
       }
 
@@ -165,13 +165,14 @@ const FilterContent: React.FC<FilterContentProps> = ({
     filter: IFilterElement<string>
   ) {
     const switchToActive = action.payload.update.active;
-
     if (switchToActive && filter.name !== openedFilter?.name) {
       handleFilterAttributeFocus(filter);
     } else if (!switchToActive && filter.name === openedFilter?.name) {
       handleFilterAttributeFocus(undefined);
     }
-
+    if (!switchToActive) {
+      action.payload.update.value = [];
+    }
     onFilterPropertyChange(action);
   };
 
@@ -179,7 +180,6 @@ const FilterContent: React.FC<FilterContentProps> = ({
     action: FilterReducerAction<T>
   ) {
     const { update } = action.payload;
-
     onFilterPropertyChange({
       ...action,
       payload: { ...action.payload, update: { ...update, active: true } }
@@ -204,55 +204,64 @@ const FilterContent: React.FC<FilterContentProps> = ({
         <Hr />
         {dataStructure
           .sort((a, b) => (a.name > b.name ? 1 : -1))
-          .map(filter => (
-            <ExpansionPanel
-              key={filter.name}
-              classes={expanderClasses}
-              data-test="channel-availability-item"
-              expanded={filter.name === openedFilter?.name}
-            >
-              <ExpansionPanelSummary
-                expandIcon={<IconChevronDown />}
-                classes={summaryClasses}
-                onClick={() => handleFilterOpen(filter)}
+          .map(filter => {
+            const currentFilter = getFilterFromCurrentData(filter);
+
+            return (
+              <Accordion
+                key={filter.name}
+                classes={expanderClasses}
+                data-test="channel-availability-item"
+                data-test-id={filter.name}
+                expanded={filter.name === openedFilter?.name}
               >
-                <FilterContentBodyNameField
-                  filter={getFilterFromCurrentData(filter)}
-                  onFilterPropertyChange={action =>
-                    handleFilterPropertyGroupChange(action, filter)
-                  }
-                />
-              </ExpansionPanelSummary>
-              <FilterErrorsList
-                errors={errors}
-                errorMessages={errorMessages}
-                filter={filter}
-              />
-              {filter.multipleFields ? (
-                <CollectionWithDividers
-                  collection={filter.multipleFields}
-                  renderItem={filterField => (
-                    <FilterContentBody
-                      {...commonFilterBodyProps}
-                      onFilterPropertyChange={handleMultipleFieldPropertyChange}
-                      filter={{
-                        ...getFilterFromCurrentData(filterField),
-                        active: getFilterFromCurrentData(filter).active
-                      }}
-                    >
-                      <Typography>{filterField.label}</Typography>
-                    </FilterContentBody>
-                  )}
-                />
-              ) : (
-                <FilterContentBody
-                  {...commonFilterBodyProps}
-                  onFilterPropertyChange={onFilterPropertyChange}
-                  filter={getFilterFromCurrentData(filter)}
-                />
-              )}
-            </ExpansionPanel>
-          ))}
+                <AccordionSummary
+                  expandIcon={<IconChevronDown />}
+                  classes={summaryClasses}
+                  onClick={() => handleFilterOpen(filter)}
+                >
+                  <FilterContentBodyNameField
+                    filter={currentFilter}
+                    onFilterPropertyChange={action =>
+                      handleFilterPropertyGroupChange(action, filter)
+                    }
+                  />
+                </AccordionSummary>
+                {currentFilter?.active && (
+                  <FilterErrorsList
+                    errors={errors?.[filter.name]}
+                    errorMessages={errorMessages}
+                    filter={filter}
+                  />
+                )}
+                {filter.multipleFields ? (
+                  <CollectionWithDividers
+                    collection={filter.multipleFields}
+                    renderItem={filterField => (
+                      <FilterContentBody
+                        {...commonFilterBodyProps}
+                        onFilterPropertyChange={
+                          handleMultipleFieldPropertyChange
+                        }
+                        filter={{
+                          ...getFilterFromCurrentData(filterField),
+                          active: currentFilter.active
+                        }}
+                      >
+                        <Typography>{filterField.label}</Typography>
+                      </FilterContentBody>
+                    )}
+                  />
+                ) : (
+                  <FilterContentBody
+                    {...commonFilterBodyProps}
+                    onFilterPropertyChange={onFilterPropertyChange}
+                    filter={currentFilter}
+                  />
+                )}
+              </Accordion>
+            );
+          })}
       </form>
     </Paper>
   );

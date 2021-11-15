@@ -1,4 +1,4 @@
-import { makeStyles } from "@saleor/theme";
+import { makeStyles } from "@saleor/macaw-ui";
 
 export const useTypeDeleteWarningDialogStyles = makeStyles(
   theme => ({

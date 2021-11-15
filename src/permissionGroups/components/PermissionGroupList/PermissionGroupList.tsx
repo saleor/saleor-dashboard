@@ -7,15 +7,14 @@ import {
   TableRow
 } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
-import EditIcon from "@material-ui/icons/Edit";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
 import TableCellHeader from "@saleor/components/TableCellHeader";
 import TablePagination from "@saleor/components/TablePagination";
+import { makeStyles } from "@saleor/macaw-ui";
 import { maybe, renderCollection, stopPropagation } from "@saleor/misc";
 import { PermissionGroupList_permissionGroups_edges_node } from "@saleor/permissionGroups/types/PermissionGroupList";
 import { PermissionGroupListUrlSortField } from "@saleor/permissionGroups/urls";
-import { makeStyles } from "@saleor/theme";
 import { ListProps, SortPage } from "@saleor/types";
 import { getArrowDirection } from "@saleor/utils/sort";
 import React from "react";
@@ -160,9 +159,6 @@ const PermissionGroupList: React.FC<PermissionGroupListProps> = props => {
                         <DeleteIcon />
                       </IconButton>
                     )}
-                    <IconButton color="primary">
-                      <EditIcon />
-                    </IconButton>
                   </>
                 ) : (
                   <Skeleton />

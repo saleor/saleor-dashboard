@@ -1,4 +1,3 @@
-import AppHeader from "@saleor/components/AppHeader";
 import { CardSpacer } from "@saleor/components/CardSpacer";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
 import Container from "@saleor/components/Container";
@@ -7,11 +6,12 @@ import Grid from "@saleor/components/Grid";
 import Metadata from "@saleor/components/Metadata/Metadata";
 import { MetadataFormData } from "@saleor/components/Metadata/types";
 import PageHeader from "@saleor/components/PageHeader";
-import SaveButtonBar from "@saleor/components/SaveButtonBar";
+import Savebar from "@saleor/components/Savebar";
 import { UpdateCustomer_customerUpdate_errors } from "@saleor/customers/types/UpdateCustomer";
 import { AccountErrorFragment } from "@saleor/fragments/types/AccountErrorFragment";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import { sectionNames } from "@saleor/intl";
+import { Backlink } from "@saleor/macaw-ui";
 import { mapEdgesToItems, mapMetadataItemToInput } from "@saleor/utils/maps";
 import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
 import React from "react";
@@ -83,9 +83,9 @@ const CustomerDetailsPage: React.FC<CustomerDetailsPageProps> = ({
 
         return (
           <Container>
-            <AppHeader onBack={onBack}>
+            <Backlink onClick={onBack}>
               {intl.formatMessage(sectionNames.customers)}
-            </AppHeader>
+            </Backlink>
             <PageHeader title={getUserName(customer, true)} />
             <Grid>
               <div>
@@ -122,10 +122,10 @@ const CustomerDetailsPage: React.FC<CustomerDetailsPageProps> = ({
                 <CustomerStats customer={customer} />
               </div>
             </Grid>
-            <SaveButtonBar
+            <Savebar
               disabled={disabled || !hasChanged}
               state={saveButtonBar}
-              onSave={submit}
+              onSubmit={submit}
               onCancel={onBack}
               onDelete={onDelete}
             />

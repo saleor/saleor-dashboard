@@ -1,22 +1,26 @@
 import { Typography } from "@material-ui/core";
-import AppHeader from "@saleor/components/AppHeader";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
 import Container from "@saleor/components/Container";
 import Form from "@saleor/components/Form";
 import Grid from "@saleor/components/Grid";
 import PageHeader from "@saleor/components/PageHeader";
-import SaveButtonBar from "@saleor/components/SaveButtonBar";
+import Savebar from "@saleor/components/Savebar";
 import { OrderSettingsFragment } from "@saleor/fragments/types/OrderSettingsFragment";
+import { ShopOrderSettingsFragment } from "@saleor/fragments/types/ShopOrderSettingsFragment";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import { sectionNames } from "@saleor/intl";
+import { Backlink } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
+import OrderFulfillmentSettings from "../OrderFulfillmentSettings";
 import OrderSettings from "../OrderSettings/OrderSettings";
+import OrderSettingsForm from "./form";
 import { OrderSettingsFormData } from "./types";
 
 export interface OrderSettingsPageProps {
-  data: OrderSettingsFragment;
+  orderSettings: OrderSettingsFragment;
+  shop: ShopOrderSettingsFragment;
   disabled: boolean;
   saveButtonBarState: ConfirmButtonTransitionState;
   onBack: () => void;
@@ -24,21 +28,33 @@ export interface OrderSettingsPageProps {
 }
 
 const OrderSettingsPage: React.FC<OrderSettingsPageProps> = props => {
-  const { data, disabled, saveButtonBarState, onBack, onSubmit } = props;
+  const {
+    orderSettings,
+    shop,
+    disabled,
+    saveButtonBarState,
+    onBack,
+    onSubmit
+  } = props;
   const intl = useIntl();
 
   return (
-    <Form confirmLeave initial={data} onSubmit={onSubmit}>
+    <OrderSettingsForm
+      orderSettings={orderSettings}
+      shop={shop}
+      onSubmit={onSubmit}
+    >
       {({ data, submit, hasChanged, change }) => (
         <Container>
-          <AppHeader onBack={onBack}>
+          <Backlink onClick={onBack}>
             {intl.formatMessage(sectionNames.orders)}
-          </AppHeader>
+          </Backlink>
           <PageHeader
             title={intl.formatMessage({
               defaultMessage: "Order settings",
               description: "header"
             })}
+            underline={true}
           />
           <Grid variant="inverted">
             <div>
@@ -47,10 +63,16 @@ const OrderSettingsPage: React.FC<OrderSettingsPageProps> = props => {
               </Typography>
             </div>
             <OrderSettings data={data} disabled={disabled} onChange={change} />
+            <div />
+            <OrderFulfillmentSettings
+              data={data}
+              disabled={disabled}
+              onChange={change}
+            />
           </Grid>
-          <SaveButtonBar
+          <Savebar
             onCancel={onBack}
-            onSave={submit}
+            onSubmit={submit}
             disabled={disabled || !hasChanged}
             state={saveButtonBarState}
           />

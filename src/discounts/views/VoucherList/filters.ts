@@ -1,4 +1,5 @@
 import { IFilterElement } from "@saleor/components/Filter";
+import { SingleAutocompleteChoiceType } from "@saleor/components/SingleAutocompleteSelectField";
 import {
   VoucherFilterKeys,
   VoucherListFilterOpts
@@ -16,7 +17,8 @@ import {
   dedupeFilter,
   getGteLteVariables,
   getMinMaxQueryParam,
-  getMultipleEnumValueQueryParam
+  getMultipleEnumValueQueryParam,
+  getSingleValueQueryParam
 } from "../../../utils/filters";
 import {
   VoucherListUrlFilters,
@@ -28,17 +30,20 @@ import {
 export const VOUCHER_FILTERS_KEY = "voucherFilters";
 
 export function getFilterOpts(
-  params: VoucherListUrlFilters
+  params: VoucherListUrlFilters,
+  channels: SingleAutocompleteChoiceType[]
 ): VoucherListFilterOpts {
   return {
+    channel: {
+      active: params?.channel !== undefined,
+      choices: channels,
+      value: params?.channel
+    },
     saleType: {
       active: !!maybe(() => params.type),
-      value: maybe(
-        () =>
-          dedupeFilter(
-            params.type.map(type => findValueInEnum(type, VoucherDiscountType))
-          ),
-        []
+      value: dedupeFilter(
+        params.type?.map(type => findValueInEnum(type, VoucherDiscountType)) ||
+          []
       )
     },
     started: {
@@ -56,14 +61,10 @@ export function getFilterOpts(
     },
     status: {
       active: !!maybe(() => params.status),
-      value: maybe(
-        () =>
-          dedupeFilter(
-            params.status.map(status =>
-              findValueInEnum(status, DiscountStatusEnum)
-            )
-          ),
-        []
+      value: dedupeFilter(
+        params.status?.map(status =>
+          findValueInEnum(status, DiscountStatusEnum)
+        ) || []
       )
     },
     timesUsed: {
@@ -137,6 +138,12 @@ export function getFilterQueryParam(
         VoucherListUrlFiltersWithMultipleValues.status,
         DiscountStatusEnum
       );
+
+    case VoucherFilterKeys.channel:
+      return getSingleValueQueryParam(
+        filter,
+        VoucherListUrlFiltersEnum.channel
+      );
   }
 }
 
@@ -146,10 +153,11 @@ export const {
   saveFilterTab
 } = createFilterTabUtils<VoucherListUrlFilters>(VOUCHER_FILTERS_KEY);
 
-export const { areFiltersApplied, getActiveFilters } = createFilterUtils<
-  VoucherListUrlQueryParams,
-  VoucherListUrlFilters
->({
+export const {
+  areFiltersApplied,
+  getActiveFilters,
+  getFiltersCurrentTab
+} = createFilterUtils<VoucherListUrlQueryParams, VoucherListUrlFilters>({
   ...VoucherListUrlFiltersEnum,
   ...VoucherListUrlFiltersWithMultipleValues
 });

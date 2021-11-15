@@ -6,6 +6,7 @@ import { configurationMenuUrl } from "@saleor/configuration";
 import { useChannelsSearchWithLoadMore } from "@saleor/hooks/useChannelsSearchWithLoadMore";
 import useListSettings from "@saleor/hooks/useListSettings";
 import useNavigator from "@saleor/hooks/useNavigator";
+import { usePaginationReset } from "@saleor/hooks/usePaginationReset";
 import usePaginator, {
   createPaginationState
 } from "@saleor/hooks/usePaginator";
@@ -27,11 +28,11 @@ import {
   pluginUrl
 } from "../../urls";
 import {
-  areFiltersApplied,
   deleteFilterTab,
   getActiveFilters,
   getFilterOpts,
   getFilterQueryParam,
+  getFiltersCurrentTab,
   getFilterTabs,
   getFilterVariables,
   saveFilterTab
@@ -49,6 +50,8 @@ export const PluginsList: React.FC<PluginsListProps> = ({ params }) => {
     ListViews.PLUGINS_LIST
   );
 
+  usePaginationReset(pluginListUrl, params, settings.rowNumber);
+
   const paginationState = createPaginationState(settings.rowNumber, params);
   const queryVariables = React.useMemo(
     () => ({
@@ -56,7 +59,7 @@ export const PluginsList: React.FC<PluginsListProps> = ({ params }) => {
       filter: getFilterVariables(params),
       sort: getSortQueryVariables(params)
     }),
-    [params]
+    [params, settings.rowNumber]
   );
   const { data, loading } = usePluginsListQuery({
     displayLoader: true,
@@ -65,12 +68,7 @@ export const PluginsList: React.FC<PluginsListProps> = ({ params }) => {
 
   const tabs = getFilterTabs();
 
-  const currentTab =
-    params.activeTab === undefined
-      ? areFiltersApplied(params)
-        ? tabs.length + 1
-        : 0
-      : parseInt(params.activeTab, 0);
+  const currentTab = getFiltersCurrentTab(params, tabs);
 
   const [
     changeFilters,

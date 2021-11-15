@@ -1,0 +1,50 @@
+name: Deploy to demo
+on:
+  repository_dispatch:
+    types: demo-deployment
+
+jobs:
+  build:
+    runs-on: ubuntu-20.04
+    env:
+      API_URI: /graphql/
+      APP_MOUNT_URI: /dashboard/
+      STATIC_URL: /dashboard/static/
+      SENTRY_ORG: saleor
+      SENTRY_PROJECT: dashboard
+      SENTRY_URL_PREFIX: "~/dashboard/static"
+      SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
+      SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+      ENVIRONMENT: demo
+      DEMO_MODE: true
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          ref: ${{ github.event.client_payload.ref }}
+      - name: Package
+        timeout-minutes: 15
+        run: |
+          npm ci
+      - name: Build
+        run: |
+          npm run build
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_DASHBOARD_PROD_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_DASHBOARD_PROD_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
+      - name: Deploy
+        run: |
+          aws s3 sync build/dashboard s3://${{ secrets.AWS_DEMO_DEPLOYMENT_BUCKET }}/dashboard/static/
+          aws s3 cp build/dashboard/index.html s3://${{ secrets.AWS_DEMO_DEPLOYMENT_BUCKET }}/dashboard/
+          aws cloudfront create-invalidation --distribution-id ${{ secrets.AWS_DEMO_CF_DIST_ID }} --paths "/dashboard*"
+      - name: Notify Slack
+        if: ${{ always() }}
+        env:
+          JOB_DEPLOYMENT_KIND: production
+          JOB_STATUS: ${{ job.status }}
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_CLOUD_DEPLOYMENTS_WEBHOOK_URL }}
+          JOB_TITLE: "Dashboard deployment to ${{ env.ENVIRONMENT }}"
+        run: |
+          python3 ./.github/workflows/notify/notify-slack.py

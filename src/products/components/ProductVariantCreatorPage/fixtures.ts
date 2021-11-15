@@ -30,7 +30,10 @@ export const attributes = [
           file: null,
           reference: null,
           richText: null,
-          boolean: null
+          boolean: null,
+          date: null,
+          dateTime: null,
+          value: null
         }
       }))
   },
@@ -48,7 +51,10 @@ export const attributes = [
           file: null,
           reference: null,
           richText: null,
-          boolean: null
+          boolean: null,
+          date: null,
+          dateTime: null,
+          value: null
         }
       }))
   },
@@ -66,7 +72,10 @@ export const attributes = [
           file: null,
           reference: null,
           richText: null,
-          boolean: null
+          boolean: null,
+          date: null,
+          dateTime: null,
+          value: null
         }
       }))
   },
@@ -84,7 +93,10 @@ export const attributes = [
           file: null,
           reference: null,
           richText: null,
-          boolean: null
+          boolean: null,
+          date: null,
+          dateTime: null,
+          value: null
         }
       }))
   }

@@ -32,6 +32,9 @@ export interface PageType_pageType_attributes_choices_edges_node {
   reference: string | null;
   richText: any | null;
   boolean: boolean | null;
+  date: any | null;
+  dateTime: any | null;
+  value: string | null;
 }
 
 export interface PageType_pageType_attributes_choices_edges {

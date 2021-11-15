@@ -1,10 +1,11 @@
-import AppHeader from "@saleor/components/AppHeader";
 import CardSpacer from "@saleor/components/CardSpacer";
 import Container from "@saleor/components/Container";
 import LanguageSwitch from "@saleor/components/LanguageSwitch";
 import PageHeader from "@saleor/components/PageHeader";
 import { ProductTranslationFragment } from "@saleor/fragments/types/ProductTranslationFragment";
 import { commonMessages, sectionNames } from "@saleor/intl";
+import { Backlink } from "@saleor/macaw-ui";
+import { getStringOrPlaceholder } from "@saleor/misc";
 import {
   TranslationInputFieldName,
   TranslationsEntitiesPageProps
@@ -13,14 +14,18 @@ import React from "react";
 import { useIntl } from "react-intl";
 
 import { LanguageCodeEnum } from "../../../types/globalTypes";
+import ProductContextSwitcher from "../ProductContextSwitcher";
 import TranslationFields from "../TranslationFields";
 
 export interface TranslationsProductsPageProps
   extends TranslationsEntitiesPageProps {
   data: ProductTranslationFragment;
+  productId: string;
+  onAttributeValueSubmit: TranslationsEntitiesPageProps["onSubmit"];
 }
 
 const TranslationsProductsPage: React.FC<TranslationsProductsPageProps> = ({
+  productId,
   activeField,
   disabled,
   languageCode,
@@ -31,15 +36,16 @@ const TranslationsProductsPage: React.FC<TranslationsProductsPageProps> = ({
   onDiscard,
   onEdit,
   onLanguageChange,
-  onSubmit
+  onSubmit,
+  onAttributeValueSubmit
 }) => {
   const intl = useIntl();
 
   return (
     <Container>
-      <AppHeader onBack={onBack}>
+      <Backlink onClick={onBack}>
         {intl.formatMessage(sectionNames.translations)}
-      </AppHeader>
+      </Backlink>
       <PageHeader
         title={intl.formatMessage(
           {
@@ -49,10 +55,15 @@ const TranslationsProductsPage: React.FC<TranslationsProductsPageProps> = ({
           },
           {
             languageCode,
-            productName: data?.product?.name || "..."
+            productName: getStringOrPlaceholder(data?.product?.name)
           }
         )}
       >
+        <ProductContextSwitcher
+          languageCode={languageCode}
+          productId={productId}
+          selectedId={productId}
+        />
         <LanguageSwitch
           currentLanguage={LanguageCodeEnum[languageCode]}
           languages={languages}
@@ -85,6 +96,7 @@ const TranslationsProductsPage: React.FC<TranslationsProductsPageProps> = ({
           }
         ]}
         saveButtonState={saveButtonState}
+        richTextResetKey={languageCode}
         onEdit={onEdit}
         onDiscard={onDiscard}
         onSubmit={onSubmit}
@@ -118,10 +130,46 @@ const TranslationsProductsPage: React.FC<TranslationsProductsPageProps> = ({
           }
         ]}
         saveButtonState={saveButtonState}
+        richTextResetKey={languageCode}
         onEdit={onEdit}
         onDiscard={onDiscard}
         onSubmit={onSubmit}
       />
+      <CardSpacer />
+      {data?.attributeValues?.length > 0 && (
+        <>
+          <TranslationFields
+            activeField={activeField}
+            disabled={disabled}
+            initialState={true}
+            title={intl.formatMessage(commonMessages.translationAttributes)}
+            fields={
+              data.attributeValues.map((attrVal, i) => ({
+                id: attrVal.attributeValue.id,
+                displayName: intl.formatMessage(
+                  {
+                    defaultMessage: "Attribute {number}",
+                    description: "attribute list"
+                  },
+                  {
+                    number: i + 1
+                  }
+                ),
+                name: attrVal?.name,
+                translation: attrVal?.translation?.richText || null,
+                type: "rich" as "rich",
+                value: attrVal?.richText
+              })) || []
+            }
+            saveButtonState={saveButtonState}
+            richTextResetKey={languageCode}
+            onEdit={onEdit}
+            onDiscard={onDiscard}
+            onSubmit={onAttributeValueSubmit}
+          />
+          <CardSpacer />
+        </>
+      )}
     </Container>
   );
 };

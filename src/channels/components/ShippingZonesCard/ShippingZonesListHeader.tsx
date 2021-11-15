@@ -1,8 +1,8 @@
-import { ExpansionPanelSummary, Typography } from "@material-ui/core";
+import { AccordionSummary, Typography } from "@material-ui/core";
 import HorizontalSpacer from "@saleor/apps/components/HorizontalSpacer";
 import { ChannelShippingZones } from "@saleor/channels/pages/ChannelDetailsPage/types";
 import IconChevronDown from "@saleor/icons/ChevronDown";
-import { makeStyles } from "@saleor/theme";
+import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import { defineMessages, useIntl } from "react-intl";
 
@@ -58,13 +58,13 @@ const ShippingZonesListHeader: React.FC<ShippingZonesListHeaderProps> = ({
 
   return (
     <div className={classes.container}>
-      <ExpansionPanelSummary expandIcon={<IconChevronDown />} classes={classes}>
+      <AccordionSummary expandIcon={<IconChevronDown />} classes={classes}>
         <Typography variant="subtitle2" color="textSecondary">
           {intl.formatMessage(messages.title, {
             zonesCount: shippingZones.length
           })}
         </Typography>
-      </ExpansionPanelSummary>
+      </AccordionSummary>
       <HorizontalSpacer spacing={1.5} />
     </div>
   );

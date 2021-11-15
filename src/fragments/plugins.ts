@@ -10,39 +10,54 @@ export const configurationItemFragment = gql`
   }
 `;
 
-export const pluginConfigurationFragment = gql`
-  ${configurationItemFragment}
-  fragment PluginConfigurationFragment on PluginConfiguration {
+export const pluginConfigurationBaseFragment = gql`
+  fragment PluginConfigurationBaseFragment on PluginConfiguration {
     active
     channel {
       id
       name
       slug
     }
+  }
+`;
+
+export const pluginConfigurationExtendedFragment = gql`
+  ${configurationItemFragment}
+  ${pluginConfigurationBaseFragment}
+  fragment PluginConfigurationExtendedFragment on PluginConfiguration {
+    ...PluginConfigurationBaseFragment
     configuration {
       ...ConfigurationItemFragment
     }
   }
 `;
 
-export const pluginsFragment = gql`
-  ${pluginConfigurationFragment}
-  fragment PluginFragment on Plugin {
+export const pluginBaseFragment = gql`
+  ${pluginConfigurationBaseFragment}
+  fragment PluginBaseFragment on Plugin {
     id
     name
     description
-    globalConfiguration {
-      ...PluginConfigurationFragment
-    }
     channelConfigurations {
-      ...PluginConfigurationFragment
+      ...PluginConfigurationBaseFragment
+    }
+    globalConfiguration {
+      ...PluginConfigurationBaseFragment
     }
   }
 `;
 
 export const pluginsDetailsFragment = gql`
-  ${pluginsFragment}
+  ${pluginConfigurationExtendedFragment}
   fragment PluginsDetailsFragment on Plugin {
-    ...PluginFragment
+    id
+    name
+    description
+    globalConfiguration {
+      ...PluginConfigurationExtendedFragment
+    }
+    channelConfigurations {
+      ...PluginConfigurationExtendedFragment
+    }
   }
 `;

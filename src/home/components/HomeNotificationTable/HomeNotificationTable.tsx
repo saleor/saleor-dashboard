@@ -9,50 +9,19 @@ import KeyboardArrowRight from "@material-ui/icons/KeyboardArrowRight";
 import RequirePermissions from "@saleor/components/RequirePermissions";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
-import { makeStyles } from "@saleor/theme";
+import { makeStyles } from "@saleor/macaw-ui";
 import { UserPermissionProps } from "@saleor/types";
 import { PermissionEnum } from "@saleor/types/globalTypes";
 import React from "react";
-import { defineMessages, useIntl } from "react-intl";
+import { useIntl } from "react-intl";
 
-const messages = defineMessages({
-  createNewChannel: {
-    defaultMessage: "Create new channel"
-  },
-  noOrders: {
-    defaultMessage: "No orders ready to fulfill",
-    id: "homeNotificationTableNoOrders"
-  },
-  noPaymentWaiting: {
-    defaultMessage: "No payments waiting for capture",
-    id: "homeNotificationsNoPayments"
-  },
-  noProductsOut: {
-    defaultMessage: "No products out of stock",
-    id: "homeNotificationsTableNoProducts"
-  },
-  orderReady: {
-    defaultMessage:
-      "{amount, plural,one {One order is ready to fulfill} other {{amount} Orders are ready to fulfill}}",
-    id: "homeNotificationTableOrders"
-  },
-  paymentCapture: {
-    defaultMessage:
-      "{amount, plural,one {One payment to capture}other {{amount} Payments to capture}}",
-    id: "homeNotificationTablePayments"
-  },
-  productOut: {
-    defaultMessage:
-      "{amount, plural,one {One product out of stock}other {{amount} Products out of stock}}",
-    id: "homeNotificationTableProducts"
-  }
-});
+import { homeNotificationTableMessages as messages } from "./messages";
 
 const useStyles = makeStyles(
   () => ({
     arrowIcon: {
       textAlign: "right",
-      width: "auto"
+      width: 100
     },
     tableCard: {
       overflow: "hidden"

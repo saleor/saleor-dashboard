@@ -9,7 +9,11 @@ import {
   createFetchMoreReferencesHandler,
   createFetchReferencesHandler
 } from "@saleor/attributes/utils/handlers";
-import { ChannelData, ChannelPriceArgs } from "@saleor/channels/utils";
+import {
+  ChannelData,
+  ChannelPreorderArgs,
+  ChannelPriceArgs
+} from "@saleor/channels/utils";
 import { AttributeInput } from "@saleor/components/Attributes";
 import { ExitFormDialogContext } from "@saleor/components/Form/ExitFormDialogProvider";
 import { MetadataFormData } from "@saleor/components/Metadata";
@@ -26,6 +30,7 @@ import useFormset, {
   FormsetChange,
   FormsetData
 } from "@saleor/hooks/useFormset";
+import { errorMessages } from "@saleor/intl";
 import { ProductDetails_product } from "@saleor/products/types/ProductDetails";
 import {
   getAttributeInputFromProduct,
@@ -34,7 +39,9 @@ import {
 } from "@saleor/products/utils/data";
 import {
   createChannelsChangeHandler,
-  createChannelsPriceChangeHandler
+  createChannelsPreorderChangeHandler,
+  createChannelsPriceChangeHandler,
+  createPreorderEndDateChangeHandler
 } from "@saleor/products/utils/handlers";
 import {
   validateCostPrice,
@@ -45,14 +52,15 @@ import { SearchPages_search_edges_node } from "@saleor/searches/types/SearchPage
 import { SearchProducts_search_edges_node } from "@saleor/searches/types/SearchProducts";
 import { SearchWarehouses_search_edges_node } from "@saleor/searches/types/SearchWarehouses";
 import { FetchMoreProps, ReorderEvent } from "@saleor/types";
+import { arrayDiff } from "@saleor/utils/arrays";
 import handleFormSubmit from "@saleor/utils/handlers/handleFormSubmit";
 import createMultiAutocompleteSelectHandler from "@saleor/utils/handlers/multiAutocompleteSelectChangeHandler";
 import createSingleAutocompleteSelectHandler from "@saleor/utils/handlers/singleAutocompleteSelectChangeHandler";
 import getMetadata from "@saleor/utils/metadata/getMetadata";
 import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
 import useRichText from "@saleor/utils/richText/useRichText";
-import { diff } from "fast-array-diff";
 import React, { useContext, useEffect } from "react";
+import { useIntl } from "react-intl";
 
 import { ProductStockFormsetData, ProductStockInput } from "../ProductStocks";
 
@@ -73,6 +81,11 @@ export interface ProductUpdateFormData extends MetadataFormData {
   sku: string;
   taxCode: string;
   trackInventory: boolean;
+  isPreorder: boolean;
+  globalThreshold: string;
+  globalSoldUnits: number;
+  hasPreorderEndDate: boolean;
+  preorderEndDateTime?: string;
   weight: string;
 }
 export interface FileAttributeInputData {
@@ -116,6 +129,10 @@ export interface ProductUpdateHandlers
     >,
     Record<"changeChannelPrice", (id: string, data: ChannelPriceArgs) => void>,
     Record<
+      "changeChannelPreorder",
+      (id: string, data: ChannelPreorderArgs) => void
+    >,
+    Record<
       "changeChannels",
       (
         id: string,
@@ -127,6 +144,7 @@ export interface ProductUpdateHandlers
     Record<"reorderAttributeValue", FormsetChange<ReorderEvent>>,
     Record<"addStock" | "deleteStock", (id: string) => void> {
   changeDescription: RichTextEditorChange;
+  changePreorderEndDate: FormChange;
   fetchReferences: (value: string) => void;
   fetchMoreReferences: FetchMoreProps;
 }
@@ -136,6 +154,7 @@ export interface UseProductUpdateFormResult
     ProductUpdateHandlers
   > {
   disabled: boolean;
+  formErrors: FormErrors<ProductUpdateSubmitData>;
 }
 
 export interface UseProductUpdateFormOpts
@@ -183,7 +202,7 @@ const getStocksData = (
   const dataStocks = stocks.map(stock => stock.id);
   const variantStocks =
     product?.variants[0]?.stocks.map(stock => stock.warehouse.id) || [];
-  const stockDiff = diff(variantStocks, dataStocks);
+  const stockDiff = arrayDiff(variantStocks, dataStocks);
 
   return {
     addStocks: stocks.filter(stock =>
@@ -201,14 +220,9 @@ function useProductUpdateForm(
   onSubmit: (data: ProductUpdateSubmitData) => SubmitPromise,
   opts: UseProductUpdateFormOpts
 ): UseProductUpdateFormResult {
-  const {
-    handleChange,
-    triggerChange,
-    toggleValue,
-    data: formData,
-    setChanged,
-    hasChanged
-  } = useForm(
+  const intl = useIntl();
+
+  const form = useForm(
     getProductUpdatePageFormData(
       product,
       product?.variants,
@@ -219,6 +233,16 @@ function useProductUpdateForm(
     undefined,
     { confirmLeave: true }
   );
+
+  const {
+    handleChange,
+    triggerChange,
+    toggleValue,
+    data: formData,
+    setChanged,
+    hasChanged
+  } = form;
+
   const attributes = useFormset(getAttributeInputFromProduct(product));
   const attributesWithNewFileValue = useFormset<null, File>([]);
   const stocks = useFormset(getStockInputFromProduct(product));
@@ -317,10 +341,22 @@ function useProductUpdateForm(
     triggerChange
   );
 
+  const handleChannelPreorderChange = createChannelsPreorderChangeHandler(
+    opts.isSimpleProduct ? opts.currentChannels : opts.channelsData,
+    opts.isSimpleProduct ? opts.setChannels : opts.setChannelsData,
+    triggerChange
+  );
+
   const handleChannelPriceChange = createChannelsPriceChangeHandler(
     opts.isSimpleProduct ? opts.currentChannels : opts.channelsData,
     opts.isSimpleProduct ? opts.setChannels : opts.setChannelsData,
     triggerChange
+  );
+
+  const handlePreorderEndDateChange = createPreorderEndDateChangeHandler(
+    form,
+    triggerChange,
+    intl.formatMessage(errorMessages.preorderEndDateInFutureErrorText)
   );
 
   const data: ProductUpdateData = {
@@ -368,24 +404,29 @@ function useProductUpdateForm(
   useEffect(() => setExitDialogSubmitRef(submit), [submit]);
 
   const disabled =
-    !opts.hasVariants &&
-    (!data.sku ||
+    (!opts.hasVariants &&
       data.channelListings.some(
         channel =>
           validatePrice(channel.price) || validateCostPrice(channel.costPrice)
-      ));
+      )) ||
+    (data.isPreorder &&
+      data.hasPreorderEndDate &&
+      !!form.errors.preorderEndDateTime);
 
   return {
     change: handleChange,
     data,
     disabled,
+    formErrors: form.errors,
     handlers: {
       addStock: handleStockAdd,
       changeChannelPrice: handleChannelPriceChange,
+      changeChannelPreorder: handleChannelPreorderChange,
       changeChannels: handleChannelsChange,
       changeDescription,
       changeMetadata,
       changeStock: handleStockChange,
+      changePreorderEndDate: handlePreorderEndDateChange,
       deleteStock: handleStockDelete,
       fetchMoreReferences: handleFetchMoreReferences,
       fetchReferences: handleFetchReferences,

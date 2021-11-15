@@ -1,4 +1,4 @@
-import { makeStyles } from "@saleor/theme";
+import { makeStyles } from "@saleor/macaw-ui";
 import classNames from "classnames";
 import React from "react";
 
@@ -33,14 +33,17 @@ interface SkeletonProps {
   className?: string;
   primary?: boolean;
   style?: React.CSSProperties;
+  children?: React.ReactNode;
 }
 
 const Skeleton: React.FC<SkeletonProps> = props => {
-  const { className, primary, style } = props;
+  const { className, primary, style, children } = props;
 
   const classes = useStyles(props);
 
-  return (
+  return children ? (
+    <>{children}</>
+  ) : (
     <span
       data-test-id="skeleton"
       className={classNames(classes.skeleton, className, {

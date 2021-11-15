@@ -28,6 +28,16 @@ const props: VoucherListPageProps = {
   ...tabPageProps,
   ...filterPageProps,
   filterOpts: {
+    channel: {
+      active: false,
+      value: "default-channel",
+      choices: [
+        {
+          value: "default-channel",
+          label: "Default channel"
+        }
+      ]
+    },
     saleType: {
       active: false,
       value: [VoucherDiscountType.FIXED, VoucherDiscountType.PERCENTAGE]

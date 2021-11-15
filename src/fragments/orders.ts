@@ -42,6 +42,11 @@ export const fragmentOrderEvent = gql`
       firstName
       lastName
     }
+    app {
+      id
+      name
+      appUrl
+    }
     lines {
       quantity
       itemName
@@ -76,11 +81,15 @@ export const fragmentOrderLine = gql`
     variant {
       id
       quantityAvailable
+      preorder {
+        endDate
+      }
     }
     productName
     productSku
     quantity
     quantityFulfilled
+    quantityToFulfill
     unitDiscount {
       amount
       currency
@@ -176,6 +185,27 @@ export const fragmentOrderDetails = gql`
     billingAddress {
       ...AddressFragment
     }
+    giftCards {
+      events {
+        id
+        type
+        orderId
+        balance {
+          initialBalance {
+            ...Money
+          }
+          currentBalance {
+            ...Money
+          }
+          oldInitialBalance {
+            ...Money
+          }
+          oldCurrentBalance {
+            ...Money
+          }
+        }
+      }
+    }
     isShippingRequired
     canFinalize
     created
@@ -200,14 +230,26 @@ export const fragmentOrderDetails = gql`
       ...OrderLineFragment
     }
     number
+    isPaid
     paymentStatus
     shippingAddress {
       ...AddressFragment
+    }
+    deliveryMethod {
+      __typename
+      ... on ShippingMethod {
+        id
+      }
+      ... on Warehouse {
+        id
+        clickAndCollectOption
+      }
     }
     shippingMethod {
       id
     }
     shippingMethodName
+    collectionPointName
     shippingPrice {
       gross {
         amount
@@ -278,5 +320,13 @@ export const fragmentOrderDetails = gql`
 export const fragmentOrderSettings = gql`
   fragment OrderSettingsFragment on OrderSettings {
     automaticallyConfirmAllNewOrders
+    automaticallyFulfillNonShippableGiftCard
+  }
+`;
+
+export const fragmentShopOrderSettings = gql`
+  fragment ShopOrderSettingsFragment on Shop {
+    fulfillmentAutoApprove
+    fulfillmentAllowUnpaid
   }
 `;

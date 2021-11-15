@@ -3,7 +3,7 @@ import ConfirmButton, {
   ConfirmButtonTransitionState
 } from "@saleor/components/ConfirmButton";
 import { buttonMessages } from "@saleor/intl";
-import { makeStyles } from "@saleor/theme";
+import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
@@ -37,6 +37,7 @@ const TranslationFieldsSave: React.FC<TranslationFieldsSaveProps> = props => {
   return (
     <div className={classes.root}>
       <ConfirmButton
+        data-test="button-bar-confirm"
         className={classes.confirmButton}
         transitionState={saveButtonState}
         onClick={onSave}

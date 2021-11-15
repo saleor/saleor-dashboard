@@ -1,25 +1,23 @@
 import { Button, Card } from "@material-ui/core";
+import HorizontalSpacer from "@saleor/apps/components/HorizontalSpacer";
 import CardTitle from "@saleor/components/CardTitle";
-import { SingleAutocompleteChoiceType } from "@saleor/components/SingleAutocompleteSelectField";
+import { InternalLink } from "@saleor/components/InternalLink";
+import { productListUrl } from "@saleor/products/urls";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { ChannelProps, ListActions, PageListProps } from "../../../types";
+import { ListActions, PageListProps } from "../../../types";
 import { CategoryDetails_category_products_edges_node } from "../../types/CategoryDetails";
 import CategoryProductList from "../CategoryProductList";
+import { useStyles } from "./styles";
 
-interface CategoryProductsProps
-  extends PageListProps,
-    ListActions,
-    ChannelProps {
+interface CategoryProductsProps extends PageListProps, ListActions {
   products: CategoryDetails_category_products_edges_node[];
-  channelChoices: SingleAutocompleteChoiceType[];
-  channelsCount: number;
   categoryName: string;
+  categoryId: string;
 }
 
 export const CategoryProducts: React.FC<CategoryProductsProps> = ({
-  channelsCount,
   products,
   disabled,
   pageInfo,
@@ -27,15 +25,16 @@ export const CategoryProducts: React.FC<CategoryProductsProps> = ({
   onNextPage,
   onPreviousPage,
   onRowClick,
+  categoryId,
   categoryName,
   isChecked,
   selected,
-  selectedChannelId,
   toggle,
   toggleAll,
   toolbar
 }) => {
   const intl = useIntl();
+  const classes = useStyles();
 
   return (
     <Card>
@@ -48,17 +47,39 @@ export const CategoryProducts: React.FC<CategoryProductsProps> = ({
           { categoryName }
         )}
         toolbar={
-          <Button color="primary" variant="text" onClick={onAdd}>
-            <FormattedMessage
-              defaultMessage="Add product"
-              description="button"
-            />
-          </Button>
+          <div className={classes.toolbar}>
+            <InternalLink
+              to={productListUrl({
+                categories: [categoryId]
+              })}
+            >
+              <Button
+                color="primary"
+                variant="text"
+                data-test-id="viewProducts"
+              >
+                <FormattedMessage
+                  defaultMessage="View products"
+                  description="button"
+                />
+              </Button>
+            </InternalLink>
+            <HorizontalSpacer />
+            <Button
+              color="primary"
+              variant="text"
+              onClick={onAdd}
+              data-test-id="addProducts"
+            >
+              <FormattedMessage
+                defaultMessage="Add product"
+                description="button"
+              />
+            </Button>
+          </div>
         }
       />
       <CategoryProductList
-        channelsCount={channelsCount}
-        selectedChannelId={selectedChannelId}
         products={products}
         disabled={disabled}
         pageInfo={pageInfo}

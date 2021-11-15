@@ -39,6 +39,9 @@ export interface PageUpdate_pageUpdate_page_attributes_attribute_choices_edges_n
   reference: string | null;
   richText: any | null;
   boolean: boolean | null;
+  date: any | null;
+  dateTime: any | null;
+  value: string | null;
 }
 
 export interface PageUpdate_pageUpdate_page_attributes_attribute_choices_edges {
@@ -80,6 +83,9 @@ export interface PageUpdate_pageUpdate_page_attributes_values {
   reference: string | null;
   richText: any | null;
   boolean: boolean | null;
+  date: any | null;
+  dateTime: any | null;
+  value: string | null;
 }
 
 export interface PageUpdate_pageUpdate_page_attributes {
@@ -111,6 +117,9 @@ export interface PageUpdate_pageUpdate_page_pageType_attributes_choices_edges_no
   reference: string | null;
   richText: any | null;
   boolean: boolean | null;
+  date: any | null;
+  dateTime: any | null;
+  value: string | null;
 }
 
 export interface PageUpdate_pageUpdate_page_pageType_attributes_choices_edges {

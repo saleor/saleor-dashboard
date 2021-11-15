@@ -1,40 +1,26 @@
 import { FormControlLabel, Radio, TextField } from "@material-ui/core";
 import { fade } from "@material-ui/core/styles/colorManipulator";
-import FormSpacer from "@saleor/components/FormSpacer";
+import { FilterDateTimeField } from "@saleor/components/Filter/FilterContent/FilterDateTimeField";
+import { FilterNumericField } from "@saleor/components/Filter/FilterContent/FilterNumericField";
+import { FilterSingleSelectField } from "@saleor/components/Filter/FilterContent/FilterSingleSelectField";
+import { useCommonStyles } from "@saleor/components/Filter/FilterContent/utils";
 import { MultiAutocompleteChoiceType } from "@saleor/components/MultiAutocompleteSelectField";
-import SingleSelectField from "@saleor/components/SingleSelectField";
-import { makeStyles } from "@saleor/theme";
+import { makeStyles } from "@saleor/macaw-ui";
 import classNames from "classnames";
 import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
 
-import Arrow from "../Arrow";
 import FilterAutocompleteField, {
   FilterAutocompleteDisplayValues
 } from "../FilterAutocompleteField";
 import FilterOptionField from "../FilterOptionField";
 import { FilterReducerAction } from "../reducer";
-import { FieldType, FilterType, IFilterElement } from "../types";
-import { getIsFilterMultipleChoices } from "./utils";
+import { FieldType, IFilterElement } from "../types";
 
 const useStyles = makeStyles(
   theme => ({
-    andLabel: {
-      margin: theme.spacing(0, 2)
-    },
-    arrow: {
-      marginRight: theme.spacing(2)
-    },
     filterSettings: {
       background: fade(theme.palette.primary.main, 0.1),
       padding: theme.spacing(2, 3)
-    },
-    input: {
-      padding: "12px 0 9px 12px"
-    },
-    inputRange: {
-      alignItems: "center",
-      display: "flex"
     },
 
     option: {
@@ -71,8 +57,15 @@ const FilterContentBody: React.FC<FilterContentBodyProps> = ({
   setAutocompleteDisplayValues,
   initialAutocompleteDisplayValues
 }) => {
-  const intl = useIntl();
   const classes = useStyles({});
+  const commonClasses = useCommonStyles({});
+
+  const isDateField = [FieldType.date, FieldType.dateTime].includes(
+    filter.type
+  );
+  const isNumericField = [FieldType.price, FieldType.number].includes(
+    filter.type
+  );
 
   return (
     <div className={classes.filterSettings}>
@@ -83,11 +76,7 @@ const FilterContentBody: React.FC<FilterContentBodyProps> = ({
           data-test-id={filter.name}
           fullWidth
           name={filter.name}
-          InputProps={{
-            classes: {
-              input: classes.input
-            }
-          }}
+          InputProps={{ classes: { input: commonClasses.input } }}
           value={filter.value[0]}
           onChange={event =>
             onFilterPropertyChange({
@@ -102,137 +91,32 @@ const FilterContentBody: React.FC<FilterContentBodyProps> = ({
           }
         />
       )}
-      {[FieldType.date, FieldType.price, FieldType.number].includes(
-        filter.type
-      ) && (
+      {isDateField && (
         <>
-          <SingleSelectField
-            data-test="filterRangeTypeChoice"
-            choices={getIsFilterMultipleChoices(intl)}
-            value={filter.multiple ? FilterType.MULTIPLE : FilterType.SINGULAR}
-            InputProps={{
-              classes: {
-                input: classes.input
-              }
-            }}
-            onChange={event =>
-              onFilterPropertyChange({
-                payload: {
-                  name: filter.name,
-                  update: {
-                    multiple: event.target.value === FilterType.MULTIPLE
-                  }
-                },
-                type: "set-property"
-              })
-            }
+          <FilterSingleSelectField
+            filter={filter}
+            onFilterPropertyChange={onFilterPropertyChange}
           />
-          <FormSpacer />
-          <div className={classes.inputRange}>
-            <div>
-              <Arrow className={classes.arrow} />
-            </div>
-            {filter.multiple ? (
-              <>
-                <TextField
-                  data-test={filterTestingContext}
-                  data-test-id={filter.name}
-                  data-test-range-type="min"
-                  fullWidth
-                  name={filter.name + "_min"}
-                  InputProps={{
-                    classes: {
-                      input: classes.input
-                    },
-                    endAdornment:
-                      filter.type === FieldType.price && currencySymbol,
-                    type: filter.type === FieldType.date ? "date" : "number"
-                  }}
-                  value={filter.value[0]}
-                  onChange={event =>
-                    onFilterPropertyChange({
-                      payload: {
-                        name: filter.name,
-                        update: {
-                          value: [event.target.value, filter.value[1]]
-                        }
-                      },
-                      type: "set-property"
-                    })
-                  }
-                />
-                <span className={classes.andLabel}>
-                  <FormattedMessage
-                    defaultMessage="and"
-                    description="filter range separator"
-                  />
-                </span>
-                <TextField
-                  data-test={filterTestingContext}
-                  data-test-id={filter.name}
-                  data-test-range-type="max"
-                  fullWidth
-                  name={filter.name + "_max"}
-                  InputProps={{
-                    classes: {
-                      input: classes.input
-                    },
-                    endAdornment:
-                      filter.type === FieldType.price && currencySymbol,
-                    type: filter.type === FieldType.date ? "date" : "number"
-                  }}
-                  value={filter.value[1]}
-                  onChange={event =>
-                    onFilterPropertyChange({
-                      payload: {
-                        name: filter.name,
-                        update: {
-                          value: [filter.value[0], event.target.value]
-                        }
-                      },
-                      type: "set-property"
-                    })
-                  }
-                />
-              </>
-            ) : (
-              <TextField
-                data-test={filterTestingContext}
-                data-test-id={filter.name}
-                fullWidth
-                name={filter.name}
-                InputProps={{
-                  classes: {
-                    input: classes.input
-                  },
-                  endAdornment:
-                    filter.type === FieldType.price && currencySymbol,
-                  type:
-                    filter.type === FieldType.date
-                      ? "date"
-                      : [FieldType.number, FieldType.price].includes(
-                          filter.type
-                        )
-                      ? "number"
-                      : "text"
-                }}
-                value={filter.value[0]}
-                onChange={event =>
-                  onFilterPropertyChange({
-                    payload: {
-                      name: filter.name,
-                      update: {
-                        value: [event.target.value, filter.value[1]]
-                      }
-                    },
-                    type: "set-property"
-                  })
-                }
-              />
-            )}
-          </div>
+          <FilterDateTimeField
+            filter={filter}
+            onFilterPropertyChange={onFilterPropertyChange}
+          />
         </>
       )}
+      {isNumericField && (
+        <>
+          <FilterSingleSelectField
+            filter={filter}
+            onFilterPropertyChange={onFilterPropertyChange}
+          />
+          <FilterNumericField
+            filter={filter}
+            onFilterPropertyChange={onFilterPropertyChange}
+            currencySymbol={currencySymbol}
+          />
+        </>
+      )}
+
       {filter.type === FieldType.options && (
         <FilterOptionField
           data-test={filterTestingContext}
@@ -272,7 +156,7 @@ const FilterContentBody: React.FC<FilterContentBodyProps> = ({
             />
           </div>
         ))}
-      {filter.type === FieldType.autocomplete && filter.multiple && (
+      {filter.type === FieldType.autocomplete && (
         <FilterAutocompleteField
           data-test={filterTestingContext}
           data-test-id={filter.name}

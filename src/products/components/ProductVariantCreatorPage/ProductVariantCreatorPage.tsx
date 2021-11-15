@@ -1,13 +1,12 @@
 import { Button, Typography } from "@material-ui/core";
-import { drawerWidthExpanded } from "@saleor/components/AppLayout/consts";
 import Container from "@saleor/components/Container";
 import Hr from "@saleor/components/Hr";
 import PageHeader from "@saleor/components/PageHeader";
 import { RefreshLimits_shop_limits } from "@saleor/components/Shop/types/RefreshLimits";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import useWizard from "@saleor/hooks/useWizard";
+import { makeStyles } from "@saleor/macaw-ui";
 import { validatePrice } from "@saleor/products/utils/validation";
-import { makeStyles } from "@saleor/theme";
 import React from "react";
 import { FormattedMessage, IntlShape, useIntl } from "react-intl";
 
@@ -29,14 +28,7 @@ const useStyles = makeStyles(
       marginLeft: theme.spacing(2)
     },
     content: {
-      overflowX: "visible",
-      [theme.breakpoints.up("md")]: {
-        position: "absolute",
-        width: `calc(100vw - ${drawerWidthExpanded}px + ${theme.spacing(6)}px)`,
-        maxWidth: `calc(${theme.breakpoints.width("lg")}px - ${theme.spacing(
-          6
-        )}px)`
-      }
+      overflowX: "visible"
     },
     description: {
       marginTop: theme.spacing()
@@ -56,9 +48,8 @@ function canHitNext(
   switch (step) {
     case ProductVariantCreatorStep.values:
       return (
-        (data.attributes.every(attribute => attribute.values.length > 0) &&
-          variantsLeft === null) ||
-        getVariantsNumber(data) <= variantsLeft
+        data.attributes.every(attribute => attribute.values.length > 0) &&
+        (variantsLeft === null || getVariantsNumber(data) <= variantsLeft)
       );
     case ProductVariantCreatorStep.prices:
       if (data.price.mode === "all") {
@@ -84,10 +75,8 @@ function canHitNext(
 
       return true;
     case ProductVariantCreatorStep.summary:
-      return !data.variants.some(
-        variant =>
-          variant.sku === "" ||
-          variant.channelListings.some(channel => validatePrice(channel.price))
+      return !data.variants.some(variant =>
+        variant.channelListings.some(channel => validatePrice(channel.price))
       );
 
     default:

@@ -1,13 +1,13 @@
 import { ChannelVoucherData } from "@saleor/channels/utils";
-import AppHeader from "@saleor/components/AppHeader";
 import CardSpacer from "@saleor/components/CardSpacer";
 import ChannelsAvailabilityCard from "@saleor/components/ChannelsAvailabilityCard";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
 import Container from "@saleor/components/Container";
 import Form from "@saleor/components/Form";
 import Grid from "@saleor/components/Grid";
+import Metadata, { MetadataFormData } from "@saleor/components/Metadata";
 import PageHeader from "@saleor/components/PageHeader";
-import SaveButtonBar from "@saleor/components/SaveButtonBar";
+import Savebar from "@saleor/components/Savebar";
 import {
   createChannelsChangeHandler,
   createDiscountTypeChangeHandler
@@ -15,36 +15,23 @@ import {
 import { DiscountErrorFragment } from "@saleor/fragments/types/DiscountErrorFragment";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import { sectionNames } from "@saleor/intl";
+import { Backlink } from "@saleor/macaw-ui";
 import { validatePrice } from "@saleor/products/utils/validation";
+import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
 import React from "react";
 import { useIntl } from "react-intl";
 
 import { PermissionEnum, VoucherTypeEnum } from "../../../types/globalTypes";
 import { DiscountTypeEnum, RequirementsPicker } from "../../types";
 import VoucherDates from "../VoucherDates";
+import { VoucherDetailsPageFormData } from "../VoucherDetailsPage";
 import VoucherInfo from "../VoucherInfo";
 import VoucherLimits from "../VoucherLimits";
 import VoucherRequirements from "../VoucherRequirements";
 import VoucherTypes from "../VoucherTypes";
 import VoucherValue from "../VoucherValue";
 
-export interface FormData {
-  applyOncePerCustomer: boolean;
-  applyOncePerOrder: boolean;
-  onlyForStaff: boolean;
-  channelListings: ChannelVoucherData[];
-  code: string;
-  discountType: DiscountTypeEnum;
-  endDate: string;
-  endTime: string;
-  hasEndDate: boolean;
-  hasUsageLimit: boolean;
-  minCheckoutItemsQuantity: string;
-  requirementsPicker: RequirementsPicker;
-  startDate: string;
-  startTime: string;
-  type: VoucherTypeEnum;
-  usageLimit: string;
+export interface FormData extends VoucherDetailsPageFormData {
   value: number;
 }
 
@@ -74,6 +61,9 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
   openChannelsModal
 }) => {
   const intl = useIntl();
+  const {
+    makeChangeHandler: makeMetadataChangeHandler
+  } = useMetadataChangeTrigger();
 
   const initialForm: FormData = {
     applyOncePerCustomer: false,
@@ -91,13 +81,16 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
     startDate: "",
     startTime: "",
     type: VoucherTypeEnum.ENTIRE_ORDER,
-    usageLimit: "0",
-    value: 0
+    usageLimit: 1,
+    used: 0,
+    value: 0,
+    metadata: [],
+    privateMetadata: []
   };
 
   return (
     <Form confirmLeave initial={initialForm} onSubmit={onSubmit}>
-      {({ change, data, hasChanged, submit, triggerChange }) => {
+      {({ change, data, hasChanged, submit, triggerChange, set }) => {
         const handleDiscountTypeChange = createDiscountTypeChangeHandler(
           change
         );
@@ -114,11 +107,13 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
               (data.requirementsPicker === RequirementsPicker.ORDER &&
                 validatePrice(channel.minSpent))
           );
+        const changeMetadata = makeMetadataChangeHandler(change);
+
         return (
           <Container>
-            <AppHeader onBack={onBack}>
+            <Backlink onClick={onBack}>
               {intl.formatMessage(sectionNames.vouchers)}
-            </AppHeader>
+            </Backlink>
             <PageHeader
               title={intl.formatMessage({
                 defaultMessage: "Create Voucher",
@@ -165,9 +160,12 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
                 <CardSpacer />
                 <VoucherLimits
                   data={data}
+                  initialUsageLimit={initialForm.usageLimit}
                   disabled={disabled}
                   errors={errors}
                   onChange={change}
+                  setData={set}
+                  isNewVoucher
                 />
                 <CardSpacer />
                 <VoucherDates
@@ -190,13 +188,14 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
                   openModal={openChannelsModal}
                 />
               </div>
+              <Metadata data={data} onChange={changeMetadata} />
             </Grid>
-            <SaveButtonBar
+            <Savebar
               disabled={
                 disabled || formDisabled || (!hasChanged && !hasChannelChanged)
               }
               onCancel={onBack}
-              onSave={submit}
+              onSubmit={submit}
               state={saveButtonBarState}
             />
           </Container>

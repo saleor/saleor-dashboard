@@ -7,47 +7,11 @@ import {
   Radio,
   RadioGroup
 } from "@material-ui/core";
-import { makeStyles } from "@saleor/theme";
 import classNames from "classnames";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
-const useStyles = makeStyles(
-  theme => ({
-    alignTop: {
-      alignSelf: "baseline",
-      position: "relative",
-      top: -6
-    },
-    formLabel: {
-      marginBottom: theme.spacing(1)
-    },
-    radioGroupInline: {
-      flexDirection: "row"
-    },
-    radioLabel: {
-      marginBottom: -theme.spacing(0.5)
-    },
-    radioLabelInline: {
-      marginRight: theme.spacing(4)
-    },
-    root: {
-      "& $radioLabel": {
-        "&:last-of-type": {
-          marginBottom: 0
-        }
-      },
-      padding: 0,
-      width: "100%"
-    },
-    rootNoLabel: {
-      marginTop: -theme.spacing(1.5)
-    }
-  }),
-  {
-    name: "RadioGroupField"
-  }
-);
+import { useStyles } from "./styles";
 
 export interface RadioGroupFieldChoice<
   T extends string | number = string | number
@@ -119,6 +83,9 @@ export const RadioGroupField: React.FC<RadioGroupFieldProps> = props => {
                 [classes.radioLabel]: variant !== "inline",
                 [classes.radioLabelInline]: variant === "inline"
               })}
+              classes={{
+                label: classes.label
+              }}
               control={
                 <Radio
                   className={classNames({

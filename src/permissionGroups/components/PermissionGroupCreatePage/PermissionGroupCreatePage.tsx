@@ -1,13 +1,13 @@
 import AccountPermissions from "@saleor/components/AccountPermissions";
-import AppHeader from "@saleor/components/AppHeader";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
 import Container from "@saleor/components/Container";
 import Form from "@saleor/components/Form";
 import Grid from "@saleor/components/Grid";
-import SaveButtonBar from "@saleor/components/SaveButtonBar";
+import Savebar from "@saleor/components/Savebar";
 import { PermissionGroupErrorFragment } from "@saleor/fragments/types/PermissionGroupErrorFragment";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import { sectionNames } from "@saleor/intl";
+import { Backlink } from "@saleor/macaw-ui";
 import { PermissionEnum } from "@saleor/types/globalTypes";
 import { getFormErrors } from "@saleor/utils/errors";
 import getPermissionGroupErrorMessage from "@saleor/utils/errors/permissionGroups";
@@ -60,9 +60,9 @@ const PermissionGroupCreatePage: React.FC<PermissionGroupCreatePageProps> = ({
     <Form confirmLeave initial={initialForm} onSubmit={onSubmit}>
       {({ data, change, submit, hasChanged }) => (
         <Container>
-          <AppHeader onBack={onBack}>
+          <Backlink onClick={onBack}>
             {intl.formatMessage(sectionNames.permissionGroups)}
-          </AppHeader>
+          </Backlink>
           <Grid>
             <div>
               <PermissionGroupInfo
@@ -93,9 +93,9 @@ const PermissionGroupCreatePage: React.FC<PermissionGroupCreatePageProps> = ({
             </div>
           </Grid>
           <div>
-            <SaveButtonBar
+            <Savebar
               onCancel={onBack}
-              onSave={submit}
+              onSubmit={submit}
               state={saveButtonBarState}
               disabled={disabled || !hasChanged}
             />

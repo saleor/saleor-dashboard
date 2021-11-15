@@ -1,7 +1,7 @@
 import { InputBase, TextField } from "@material-ui/core";
 import { InputProps } from "@material-ui/core/Input";
 import { ExtendedFormHelperTextProps } from "@saleor/channels/components/ChannelForm/types";
-import { makeStyles } from "@saleor/theme";
+import { makeStyles } from "@saleor/macaw-ui";
 import { FetchMoreProps } from "@saleor/types";
 import classNames from "classnames";
 import Downshift from "downshift";
@@ -23,6 +23,12 @@ const useStyles = makeStyles(
     },
     nakedInput: {
       padding: theme.spacing(2, 3)
+    },
+    adornment: {
+      cursor: "pointer",
+      "&:active": {
+        pointerEvents: "none"
+      }
     }
   }),
   { name: "SingleAutocompleteSelectField" }
@@ -36,7 +42,7 @@ export interface SingleAutocompleteSelectFieldProps
   name: string;
   displayValue: string;
   emptyOption?: boolean;
-  choices: SingleAutocompleteChoiceType[];
+  choices: Array<SingleAutocompleteChoiceType<string, string | JSX.Element>>;
   value: string;
   disabled?: boolean;
   placeholder?: string;
@@ -49,6 +55,7 @@ export interface SingleAutocompleteSelectFieldProps
   fetchOnFocus?: boolean;
   FormHelperTextProps?: ExtendedFormHelperTextProps;
   nakedInput?: boolean;
+  onBlur?: () => void;
 }
 
 const DebounceAutocomplete: React.ComponentType<DebounceProps<
@@ -79,6 +86,7 @@ const SingleAutocompleteSelectFieldComponent: React.FC<SingleAutocompleteSelectF
     fetchOnFocus,
     FormHelperTextProps,
     nakedInput = false,
+    onBlur,
     ...rest
   } = props;
   const classes = useStyles(props);
@@ -101,6 +109,14 @@ const SingleAutocompleteSelectFieldComponent: React.FC<SingleAutocompleteSelectF
           onInputValueChange={value => debounceFn(value)}
           onSelect={handleChange}
           selectedItem={value || ""}
+          // this is to prevent unwanted state updates when the dropdown is closed with an empty value,
+          // which downshift interprets as the value being updated with an empty string, causing side-effects
+          stateReducer={(_, changes) => {
+            if (changes.isOpen === false) {
+              delete changes.inputValue;
+            }
+            return changes;
+          }}
         >
           {({
             getInputProps,
@@ -134,7 +150,7 @@ const SingleAutocompleteSelectFieldComponent: React.FC<SingleAutocompleteSelectF
               }
 
               if (isValueInValues && !isValueInLabels) {
-                reset({ inputValue: choiceFromInputValue.label });
+                reset({ inputValue: choiceFromInputValue.value });
                 return;
               }
 
@@ -150,6 +166,9 @@ const SingleAutocompleteSelectFieldComponent: React.FC<SingleAutocompleteSelectF
 
             const handleBlur = () => {
               ensureProperValues(true);
+              if (onBlur) {
+                onBlur();
+              }
               closeMenu();
             };
 
@@ -161,7 +180,7 @@ const SingleAutocompleteSelectFieldComponent: React.FC<SingleAutocompleteSelectF
                 placeholder
               }),
               endAdornment: (
-                <div>
+                <div className={classes.adornment}>
                   <ArrowDropdownIcon />
                 </div>
               ),
@@ -199,6 +218,7 @@ const SingleAutocompleteSelectFieldComponent: React.FC<SingleAutocompleteSelectF
                   FormHelperTextProps={FormHelperTextProps}
                   label={label}
                   fullWidth={true}
+                  onBlur={onBlur}
                 />
                 {isOpen && (!!inputValue || !!choices.length) && (
                   <SingleAutocompleteSelectFieldContent
@@ -242,15 +262,11 @@ const SingleAutocompleteSelectField: React.FC<SingleAutocompleteSelectFieldProps
 
   if (fetchChoices) {
     return (
-      <DebounceAutocomplete debounceFn={fetchChoices}>
-        {debounceFn => (
-          <SingleAutocompleteSelectFieldComponent
-            choices={choices}
-            {...rest}
-            fetchChoices={debounceFn}
-          />
-        )}
-      </DebounceAutocomplete>
+      <SingleAutocompleteSelectFieldComponent
+        choices={choices}
+        {...rest}
+        fetchChoices={fetchChoices}
+      />
     );
   }
 

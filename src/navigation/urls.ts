@@ -1,4 +1,4 @@
-import { stringify as stringifyQs } from "qs";
+import { stringifyQs } from "@saleor/utils/urls";
 import urlJoin from "url-join";
 
 import { BulkAction, Dialog, Pagination, SingleAction, Sort } from "../types";

@@ -1,5 +1,8 @@
+import DemoBanner from "@saleor/components/DemoBanner";
 import useAppState from "@saleor/hooks/useAppState";
+import { ThemeProvider } from "@saleor/macaw-ui";
 import { defaultDataIdFromObject, InMemoryCache } from "apollo-cache-inmemory";
+import { IntrospectionFragmentMatcher } from "apollo-cache-inmemory";
 import { ApolloClient } from "apollo-client";
 import { ApolloLink } from "apollo-link";
 import { BatchHttpLink } from "apollo-link-batch-http";
@@ -12,7 +15,9 @@ import TagManager from "react-gtm-module";
 import { useIntl } from "react-intl";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 
+import introspectionQueryResultData from "../fragmentTypes.json";
 import AppsSection from "./apps";
+import { ExternalAppProvider } from "./apps/components/ExternalAppContext";
 import { appsSection } from "./apps/urls";
 import AttributeSection from "./attributes";
 import { attributeSection } from "./attributes/urls";
@@ -21,7 +26,6 @@ import AuthProvider, { useAuth } from "./auth/AuthProvider";
 import LoginLoading from "./auth/components/LoginLoading/LoginLoading";
 import SectionRoute from "./auth/components/SectionRoute";
 import authLink from "./auth/link";
-import { hasPermission } from "./auth/misc";
 import CategorySection from "./categories";
 import ChannelsSection from "./channels";
 import { channelsSection } from "./channels/urls";
@@ -35,15 +39,17 @@ import ExitFormDialogProvider from "./components/Form/ExitFormDialogProvider";
 import { LocaleProvider } from "./components/Locale";
 import MessageManagerProvider from "./components/messages";
 import { ShopProvider } from "./components/Shop";
-import ThemeProvider from "./components/Theme";
 import { WindowTitle } from "./components/WindowTitle";
-import { API_URI, APP_MOUNT_URI, GTM_ID } from "./config";
-import ConfigurationSection, { createConfigurationMenu } from "./configuration";
+import { API_URI, APP_MOUNT_URI, DEMO_MODE, GTM_ID } from "./config";
+import ConfigurationSection from "./configuration";
+import { getConfigMenuItemsPermissions } from "./configuration/utils";
 import AppStateProvider from "./containers/AppState";
 import BackgroundTasksProvider from "./containers/BackgroundTasks";
 import ServiceWorker from "./containers/ServiceWorker/ServiceWorker";
 import { CustomerSection } from "./customers";
 import DiscountSection from "./discounts";
+import GiftCardSection from "./giftCards";
+import { giftCardsSectionUrlName } from "./giftCards/urls";
 import HomePage from "./home";
 import { commonMessages } from "./intl";
 import NavigationSection from "./navigation";
@@ -61,6 +67,7 @@ import ShippingSection from "./shipping";
 import SiteSettingsSection from "./siteSettings";
 import StaffSection from "./staff";
 import TaxesSection from "./taxes";
+import themeOverrides from "./themeOverrides";
 import TranslationsSection from "./translations";
 import { PermissionEnum } from "./types/globalTypes";
 import WarehouseSection from "./warehouses";
@@ -91,8 +98,13 @@ const link = ApolloLink.split(
   uploadLink
 );
 
+const fragmentMatcher = new IntrospectionFragmentMatcher({
+  introspectionQueryResultData
+});
+
 const apolloClient = new ApolloClient({
   cache: new InMemoryCache({
+    fragmentMatcher,
     dataIdFromObject: (obj: any) => {
       // We need to set manually shop's ID, since it is singleton and
       // API does not return its ID
@@ -105,38 +117,38 @@ const apolloClient = new ApolloClient({
   link: authLink.concat(link)
 });
 
-const App: React.FC = () => {
-  const isDark = localStorage.getItem("theme") === "true";
-
-  return (
-    <ApolloProvider client={apolloClient}>
-      <BrowserRouter basename={APP_MOUNT_URI}>
-        <ThemeProvider isDefaultDark={isDark}>
-          <DateProvider>
-            <LocaleProvider>
-              <MessageManagerProvider>
-                <ServiceWorker />
-                <BackgroundTasksProvider>
-                  <AppStateProvider>
+const App: React.FC = () => (
+  <ApolloProvider client={apolloClient}>
+    <BrowserRouter basename={APP_MOUNT_URI}>
+      <ThemeProvider overrides={themeOverrides}>
+        <DateProvider>
+          <LocaleProvider>
+            <MessageManagerProvider>
+              <ServiceWorker />
+              <BackgroundTasksProvider>
+                <AppStateProvider>
+                  <AuthProvider>
                     <ShopProvider>
                       <AuthProvider>
                         <AppChannelProvider>
                           <ExitFormDialogProvider>
-                            <Routes />
+                            <ExternalAppProvider>
+                              <Routes />
+                            </ExternalAppProvider>
                           </ExitFormDialogProvider>
                         </AppChannelProvider>
                       </AuthProvider>
                     </ShopProvider>
-                  </AppStateProvider>
-                </BackgroundTasksProvider>
-              </MessageManagerProvider>
-            </LocaleProvider>
-          </DateProvider>
-        </ThemeProvider>
-      </BrowserRouter>
-    </ApolloProvider>
-  );
-};
+                  </AuthProvider>
+                </AppStateProvider>
+              </BackgroundTasksProvider>
+            </MessageManagerProvider>
+          </LocaleProvider>
+        </DateProvider>
+      </ThemeProvider>
+    </BrowserRouter>
+  </ApolloProvider>
+);
 
 const Routes: React.FC = () => {
   const intl = useIntl();
@@ -145,9 +157,9 @@ const Routes: React.FC = () => {
     hasToken,
     isAuthenticated,
     tokenAuthLoading,
-    tokenVerifyLoading,
-    user
+    tokenVerifyLoading
   } = useAuth();
+
   const { channel } = useAppChannel(false);
 
   const channelLoaded = typeof channel !== "undefined";
@@ -164,6 +176,7 @@ const Routes: React.FC = () => {
   return (
     <>
       <WindowTitle title={intl.formatMessage(commonMessages.dashboard)} />
+      {DEMO_MODE && <DemoBanner />}
       {homePageLoaded ? (
         <AppLayout>
           <ErrorBoundary
@@ -197,6 +210,11 @@ const Routes: React.FC = () => {
                 component={CustomerSection}
               />
               <SectionRoute
+                permissions={[PermissionEnum.MANAGE_GIFT_CARD]}
+                path={giftCardsSectionUrlName}
+                component={GiftCardSection}
+              />
+              <SectionRoute
                 permissions={[PermissionEnum.MANAGE_DISCOUNTS]}
                 path="/discounts"
                 component={DiscountSection}
@@ -207,9 +225,13 @@ const Routes: React.FC = () => {
                 component={PageSection}
               />
               <SectionRoute
-                permissions={[PermissionEnum.MANAGE_PAGES]}
+                permissions={[
+                  PermissionEnum.MANAGE_PAGES,
+                  PermissionEnum.MANAGE_PAGE_TYPES_AND_ATTRIBUTES
+                ]}
                 path="/page-types"
                 component={PageTypesSection}
+                matchPermission="any"
               />
               <SectionRoute
                 permissions={[PermissionEnum.MANAGE_PLUGINS]}
@@ -270,10 +292,12 @@ const Routes: React.FC = () => {
               />
               <SectionRoute
                 permissions={[
-                  PermissionEnum.MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES
+                  PermissionEnum.MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES,
+                  PermissionEnum.MANAGE_PAGE_TYPES_AND_ATTRIBUTES
                 ]}
                 path={attributeSection}
                 component={AttributeSection}
+                matchPermission="any"
               />
               <SectionRoute
                 permissions={[PermissionEnum.MANAGE_APPS]}
@@ -290,15 +314,13 @@ const Routes: React.FC = () => {
                 path={channelsSection}
                 component={ChannelsSection}
               />
-              {createConfigurationMenu(intl).filter(menu =>
-                menu.menuItems.map(item => hasPermission(item.permission, user))
-              ).length > 0 && (
-                <SectionRoute
-                  exact
-                  path="/configuration"
-                  component={ConfigurationSection}
-                />
-              )}
+              <SectionRoute
+                matchPermission="any"
+                permissions={getConfigMenuItemsPermissions(intl)}
+                exact
+                path="/configuration"
+                component={ConfigurationSection}
+              />
               <Route component={NotFound} />
             </Switch>
           </ErrorBoundary>

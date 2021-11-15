@@ -3,7 +3,7 @@ import { fade } from "@material-ui/core/styles/colorManipulator";
 import CloseIcon from "@material-ui/icons/Close";
 import Debounce, { DebounceProps } from "@saleor/components/Debounce";
 import ArrowDropdownIcon from "@saleor/icons/ArrowDropdown";
-import { makeStyles } from "@saleor/theme";
+import { makeStyles } from "@saleor/macaw-ui";
 import { FetchMoreProps } from "@saleor/types";
 import Downshift, { ControllerStateAndHelpers } from "downshift";
 import { filter } from "fuzzaldrin";
@@ -63,6 +63,15 @@ const useStyles = makeStyles(
       margin: theme.spacing(1, 0),
       paddingLeft: theme.spacing(2),
       paddingRight: theme.spacing(1)
+    },
+    adornment: {
+      display: "flex",
+      alignItems: "center",
+      userSelect: "none",
+      cursor: "pointer",
+      "&:active": {
+        pointerEvents: "none"
+      }
     }
   }),
   { name: "MultiAutocompleteSelectField" }
@@ -85,7 +94,9 @@ export interface MultiAutocompleteSelectFieldProps
   testId?: string;
   fetchChoices?: (value: string) => void;
   onChange: (event: React.ChangeEvent<any>) => void;
+  onBlur?: () => void;
   fetchOnFocus?: boolean;
+  endAdornment?: React.ReactNode;
 }
 
 const DebounceAutocomplete: React.ComponentType<DebounceProps<
@@ -110,8 +121,10 @@ const MultiAutocompleteSelectFieldComponent: React.FC<MultiAutocompleteSelectFie
     testId,
     fetchChoices,
     onChange,
+    onBlur,
     onFetchMore,
     fetchOnFocus,
+    endAdornment,
     ...rest
   } = props;
   const classes = useStyles(props);
@@ -121,7 +134,7 @@ const MultiAutocompleteSelectFieldComponent: React.FC<MultiAutocompleteSelectFie
     downshiftOpts?: ControllerStateAndHelpers
   ) => {
     if (downshiftOpts) {
-      downshiftOpts.reset({ inputValue: "" });
+      downshiftOpts.reset({ inputValue: "", isOpen: true });
     }
     onChange({
       target: { name, value: item }
@@ -136,6 +149,14 @@ const MultiAutocompleteSelectFieldComponent: React.FC<MultiAutocompleteSelectFie
             onInputValueChange={value => debounceFn(value)}
             onSelect={handleSelect}
             itemToString={() => ""}
+            // this is to prevent unwanted state updates when the dropdown is closed with an empty value,
+            // which downshift interprets as the value being updated with an empty string, causing side-effects
+            stateReducer={(state, changes) => {
+              if (changes.isOpen === false && state.inputValue === "") {
+                delete changes.inputValue;
+              }
+              return changes;
+            }}
           >
             {({
               closeMenu,
@@ -163,11 +184,13 @@ const MultiAutocompleteSelectFieldComponent: React.FC<MultiAutocompleteSelectFie
                         placeholder
                       }),
                       endAdornment: (
-                        <div>
-                          <ArrowDropdownIcon onClick={() => toggleMenu()} />
+                        <div className={classes.adornment}>
+                          {endAdornment}
+                          <ArrowDropdownIcon />
                         </div>
                       ),
                       id: undefined,
+                      onBlur,
                       onClick: toggleMenu,
                       onFocus: () => {
                         if (fetchOnFocus) {
@@ -181,7 +204,7 @@ const MultiAutocompleteSelectFieldComponent: React.FC<MultiAutocompleteSelectFie
                     fullWidth={true}
                     disabled={disabled}
                   />
-                  {isOpen && (!!inputValue || !!choices.length) && (
+                  {isOpen && (
                     <MultiAutocompleteSelectFieldContent
                       add={
                         add && {
@@ -249,16 +272,12 @@ const MultiAutocompleteSelectField: React.FC<MultiAutocompleteSelectFieldProps> 
 
   if (fetchChoices) {
     return (
-      <DebounceAutocomplete debounceFn={fetchChoices}>
-        {debounceFn => (
-          <MultiAutocompleteSelectFieldComponent
-            testId={testId}
-            choices={choices}
-            {...props}
-            fetchChoices={debounceFn}
-          />
-        )}
-      </DebounceAutocomplete>
+      <MultiAutocompleteSelectFieldComponent
+        testId={testId}
+        choices={choices}
+        {...props}
+        fetchChoices={fetchChoices}
+      />
     );
   }
 

@@ -2,7 +2,6 @@ import ChannelDeleteDialog from "@saleor/channels/components/ChannelDeleteDialog
 import { FormData } from "@saleor/channels/components/ChannelForm/ChannelForm";
 import { ChannelDelete } from "@saleor/channels/types/ChannelDelete";
 import { getChannelsCurrencyChoices } from "@saleor/channels/utils";
-import AppHeader from "@saleor/components/AppHeader";
 import Container from "@saleor/components/Container";
 import PageHeader from "@saleor/components/PageHeader";
 import { WindowTitle } from "@saleor/components/WindowTitle";
@@ -12,7 +11,9 @@ import { getSearchFetchMoreProps } from "@saleor/hooks/makeTopLevelSearch/utils"
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { getDefaultNotifierSuccessErrorData } from "@saleor/hooks/useNotifier/utils";
+import useShop from "@saleor/hooks/useShop";
 import { sectionNames } from "@saleor/intl";
+import { Backlink } from "@saleor/macaw-ui";
 import { extractMutationErrors } from "@saleor/misc";
 import useShippingZonesSearch from "@saleor/searches/useShippingZonesSearch";
 import { useChannelShippingZones } from "@saleor/shipping/queries";
@@ -49,6 +50,7 @@ export const ChannelDetails: React.FC<ChannelDetailsProps> = ({
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();
+  const shop = useShop();
 
   const handleBack = () => navigate(channelsListUrl());
 
@@ -101,7 +103,8 @@ export const ChannelDetails: React.FC<ChannelDetailsProps> = ({
     name,
     slug,
     shippingZonesIdsToRemove,
-    shippingZonesIdsToAdd
+    shippingZonesIdsToAdd,
+    defaultCountry
   }: FormData) =>
     extractMutationErrors(
       updateChannel({
@@ -110,6 +113,7 @@ export const ChannelDetails: React.FC<ChannelDetailsProps> = ({
           input: {
             name,
             slug,
+            defaultCountry,
             addShippingZones: shippingZonesIdsToAdd,
             removeShippingZones: shippingZonesIdsToRemove
           }
@@ -181,9 +185,9 @@ export const ChannelDetails: React.FC<ChannelDetailsProps> = ({
         })}
       />
       <Container>
-        <AppHeader onBack={handleBack}>
+        <Backlink onClick={handleBack}>
           {intl.formatMessage(sectionNames.channels)}
-        </AppHeader>
+        </Backlink>
         <PageHeader title={data?.channel?.name} />
         <ChannelDetailsPage
           channelShippingZones={channelShippingZonesData?.shippingZones?.edges?.map(
@@ -212,6 +216,7 @@ export const ChannelDetails: React.FC<ChannelDetailsProps> = ({
               : activateChannel({ variables: { id } })
           }
           saveButtonBarState={updateChannelOpts.status}
+          countries={shop?.countries || []}
         />
       </Container>
       <ChannelDeleteDialog

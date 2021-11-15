@@ -8,6 +8,7 @@ import SaveFilterTabDialog, {
 import useBulkActions from "@saleor/hooks/useBulkActions";
 import useListSettings from "@saleor/hooks/useListSettings";
 import useNavigator from "@saleor/hooks/useNavigator";
+import { usePaginationReset } from "@saleor/hooks/usePaginationReset";
 import usePaginator, {
   createPaginationState
 } from "@saleor/hooks/usePaginator";
@@ -33,9 +34,9 @@ import {
   categoryUrl
 } from "../../urls";
 import {
-  areFiltersApplied,
   deleteFilterTab,
   getActiveFilters,
+  getFiltersCurrentTab,
   getFilterTabs,
   getFilterVariables,
   saveFilterTab
@@ -49,12 +50,16 @@ interface CategoryListProps {
 export const CategoryList: React.FC<CategoryListProps> = ({ params }) => {
   const navigate = useNavigator();
   const paginate = usePaginator();
+
   const { isSelected, listElements, toggle, toggleAll, reset } = useBulkActions(
     params.ids
   );
   const { updateListSettings, settings } = useListSettings(
     ListViews.CATEGORY_LIST
   );
+
+  usePaginationReset(categoryListUrl, params, settings.rowNumber);
+
   const intl = useIntl();
 
   const paginationState = createPaginationState(settings.rowNumber, params);
@@ -64,7 +69,7 @@ export const CategoryList: React.FC<CategoryListProps> = ({ params }) => {
       filter: getFilterVariables(params),
       sort: getSortQueryVariables(params)
     }),
-    [params]
+    [params, settings.rowNumber]
   );
   const { data, loading, refetch } = useRootCategoriesQuery({
     displayLoader: true,
@@ -73,12 +78,7 @@ export const CategoryList: React.FC<CategoryListProps> = ({ params }) => {
 
   const tabs = getFilterTabs();
 
-  const currentTab =
-    params.activeTab === undefined
-      ? areFiltersApplied(params)
-        ? tabs.length + 1
-        : 0
-      : parseInt(params.activeTab, 0);
+  const currentTab = getFiltersCurrentTab(params, tabs);
 
   const changeFilterField = (filter: CategoryListUrlFilters) => {
     reset();
@@ -125,7 +125,7 @@ export const CategoryList: React.FC<CategoryListProps> = ({ params }) => {
 
   const handleCategoryBulkDelete = (data: CategoryBulkDelete) => {
     if (data.categoryBulkDelete.errors.length === 0) {
-      navigate(categoryListUrl(), true);
+      navigate(categoryListUrl(), { replace: true });
       refetch();
       reset();
     }

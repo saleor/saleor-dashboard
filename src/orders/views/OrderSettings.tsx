@@ -38,20 +38,33 @@ export const OrderSettings: React.FC = () => {
     }
   });
 
-  const handleSubmit = async (data: OrderSettingsFormData) =>
+  const handleBack = () => navigate(orderListUrl());
+
+  const handleSubmit = async ({
+    automaticallyConfirmAllNewOrders,
+    automaticallyFulfillNonShippableGiftCard,
+    fulfillmentAutoApprove,
+    fulfillmentAllowUnpaid
+  }: OrderSettingsFormData) =>
     extractMutationErrors(
       orderSettingsUpdate({
         variables: {
-          input: data
+          orderSettingsInput: {
+            automaticallyFulfillNonShippableGiftCard,
+            automaticallyConfirmAllNewOrders
+          },
+          shopSettingsInput: {
+            fulfillmentAutoApprove,
+            fulfillmentAllowUnpaid
+          }
         }
       })
     );
 
-  const handleBack = () => navigate(orderListUrl());
-
   return (
     <OrderSettingsPage
-      data={data?.orderSettings}
+      orderSettings={data?.orderSettings}
+      shop={data?.shop}
       disabled={loading || orderSettingsUpdateOpts.loading}
       onSubmit={handleSubmit}
       onBack={handleBack}

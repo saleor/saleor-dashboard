@@ -3,6 +3,7 @@ import {
   CollectionListFilterOpts
 } from "@saleor/collections/components/CollectionListPage";
 import { IFilterElement } from "@saleor/components/Filter";
+import { SingleAutocompleteChoiceType } from "@saleor/components/SingleAutocompleteSelectField";
 import { findValueInEnum, maybe } from "@saleor/misc";
 import {
   CollectionFilterInput,
@@ -12,7 +13,8 @@ import {
 import {
   createFilterTabUtils,
   createFilterUtils,
-  getSingleEnumValueQueryParam
+  getSingleEnumValueQueryParam,
+  getSingleValueQueryParam
 } from "../../../utils/filters";
 import {
   CollectionListUrlFilters,
@@ -23,9 +25,15 @@ import {
 export const COLLECTION_FILTERS_KEY = "collectionFilters";
 
 export function getFilterOpts(
-  params: CollectionListUrlFilters
+  params: CollectionListUrlFilters,
+  channels: SingleAutocompleteChoiceType[]
 ): CollectionListFilterOpts {
   return {
+    channel: {
+      active: params?.channel !== undefined,
+      choices: channels,
+      value: params?.channel
+    },
     status: {
       active: maybe(() => params.status !== undefined, false),
       value: maybe(() => findValueInEnum(status, CollectionPublished))
@@ -56,6 +64,11 @@ export function getFilterQueryParam(
         CollectionListUrlFiltersEnum.status,
         CollectionPublished
       );
+    case CollectionFilterKeys.channel:
+      return getSingleValueQueryParam(
+        filter,
+        CollectionListUrlFiltersEnum.channel
+      );
   }
 }
 
@@ -65,7 +78,10 @@ export const {
   saveFilterTab
 } = createFilterTabUtils<CollectionListUrlFilters>(COLLECTION_FILTERS_KEY);
 
-export const { areFiltersApplied, getActiveFilters } = createFilterUtils<
-  CollectionListUrlQueryParams,
-  CollectionListUrlFilters
->(CollectionListUrlFiltersEnum);
+export const {
+  areFiltersApplied,
+  getActiveFilters,
+  getFiltersCurrentTab
+} = createFilterUtils<CollectionListUrlQueryParams, CollectionListUrlFilters>(
+  CollectionListUrlFiltersEnum
+);

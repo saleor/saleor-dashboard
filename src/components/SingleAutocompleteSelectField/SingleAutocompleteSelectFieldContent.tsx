@@ -9,11 +9,11 @@ import Add from "@material-ui/icons/Add";
 import useElementScroll, {
   isScrolledToBottom
 } from "@saleor/hooks/useElementScroll";
-import { makeStyles } from "@saleor/theme";
+import { makeStyles } from "@saleor/macaw-ui";
 import { FetchMoreProps } from "@saleor/types";
 import classNames from "classnames";
 import { GetItemPropsOptions } from "downshift";
-import React from "react";
+import React, { ReactElement } from "react";
 import SVG from "react-inlinesvg";
 import { FormattedMessage } from "react-intl";
 
@@ -23,9 +23,13 @@ const menuItemHeight = 46;
 const maxMenuItems = 5;
 const offset = 24;
 
-export interface SingleAutocompleteChoiceType {
-  label: string;
-  value: any;
+export type ChoiceValue = string;
+export interface SingleAutocompleteChoiceType<
+  V extends ChoiceValue = ChoiceValue,
+  L = string
+> {
+  label: L;
+  value: V;
 }
 export interface SingleAutocompleteActionType {
   label: string;
@@ -34,7 +38,7 @@ export interface SingleAutocompleteActionType {
 export interface SingleAutocompleteSelectFieldContentProps
   extends Partial<FetchMoreProps> {
   add?: SingleAutocompleteActionType;
-  choices: SingleAutocompleteChoiceType[];
+  choices: Array<SingleAutocompleteChoiceType<string, string | JSX.Element>>;
   displayCustomValue: boolean;
   emptyOption: boolean;
   getItemProps: (options: GetItemPropsOptions) => any;
@@ -73,7 +77,9 @@ const useStyles = makeStyles(
       width: "100%"
     },
     content: {
-      maxHeight: menuItemHeight * maxMenuItems + theme.spacing(2),
+      maxHeight: `calc(${menuItemHeight * maxMenuItems}px + ${theme.spacing(
+        2
+      )})`,
       overflow: "scroll",
       padding: 8
     },
@@ -261,11 +267,16 @@ const SingleAutocompleteSelectFieldContent: React.FC<SingleAutocompleteSelectFie
                 displayCustomValue,
                 !!add
               );
+              const key = React.isValidElement(suggestion.label)
+                ? `${index}${suggestion.value}${
+                    ((suggestion as unknown) as ReactElement).props
+                  }`
+                : JSON.stringify(suggestion);
 
               return (
                 <MenuItem
                   className={classes.menuItem}
-                  key={JSON.stringify(suggestion)}
+                  key={key}
                   selected={selectedItem === suggestion.value}
                   component="div"
                   {...getItemProps({
@@ -303,7 +314,7 @@ const SingleAutocompleteSelectFieldContent: React.FC<SingleAutocompleteSelectFie
         <div className={classes.arrowContainer}>
           <div
             className={classNames(classes.arrowInnerContainer, {
-              // Needs to be explicitely compared to false because
+              // Needs to be explicitly compared to false because
               // scrolledToBottom can be either true, false or undefined
               [classes.hide]: scrolledToBottom !== false
             })}

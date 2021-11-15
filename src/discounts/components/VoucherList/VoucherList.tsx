@@ -9,8 +9,9 @@ import TableCellHeader from "@saleor/components/TableCellHeader";
 import TableHead from "@saleor/components/TableHead";
 import TablePagination from "@saleor/components/TablePagination";
 import { VoucherListUrlSortField } from "@saleor/discounts/urls";
+import { canBeSorted } from "@saleor/discounts/views/VoucherList/sort";
+import { makeStyles } from "@saleor/macaw-ui";
 import { maybe, renderCollection } from "@saleor/misc";
-import { makeStyles } from "@saleor/theme";
 import { ChannelProps, ListActions, ListProps, SortPage } from "@saleor/types";
 import { DiscountValueTypeEnum } from "@saleor/types/globalTypes";
 import { getArrowDirection } from "@saleor/utils/sort";
@@ -130,6 +131,9 @@ const VoucherList: React.FC<VoucherListProps> = props => {
           }
           textAlign="right"
           onClick={() => onSort(VoucherListUrlSortField.minSpent)}
+          disabled={
+            !canBeSorted(VoucherListUrlSortField.minSpent, !!selectedChannelId)
+          }
           className={classes.colMinSpent}
         >
           <FormattedMessage
@@ -175,6 +179,9 @@ const VoucherList: React.FC<VoucherListProps> = props => {
           }
           textAlign="right"
           onClick={() => onSort(VoucherListUrlSortField.value)}
+          disabled={
+            !canBeSorted(VoucherListUrlSortField.minSpent, !!selectedChannelId)
+          }
           className={classes.colValue}
         >
           <FormattedMessage

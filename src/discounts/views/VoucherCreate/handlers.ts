@@ -49,9 +49,7 @@ export function createHandler(
           formData.discountType === DiscountTypeEnum.SHIPPING
             ? VoucherTypeEnum.SHIPPING
             : formData.type,
-        usageLimit: formData.hasUsageLimit
-          ? parseInt(formData.usageLimit, 10)
-          : null
+        usageLimit: formData.hasUsageLimit ? formData.usageLimit : null
       }
     });
 
@@ -65,6 +63,7 @@ export function createHandler(
           formData.channelListings
         )
       });
+      return response.data.voucherCreate.voucher.id;
     }
 
     return errors;

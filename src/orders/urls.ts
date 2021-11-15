@@ -1,4 +1,4 @@
-import { stringify as stringifyQs } from "qs";
+import { stringifyQs } from "@saleor/utils/urls";
 import urlJoin from "url-join";
 
 import {
@@ -6,7 +6,6 @@ import {
   BulkAction,
   Dialog,
   Filters,
-  FiltersAsDictWithMultipleValues,
   FiltersWithMultipleValues,
   Pagination,
   SingleAction,
@@ -27,16 +26,12 @@ export enum OrderListUrlFiltersEnum {
   query = "query"
 }
 export enum OrderListUrlFiltersWithMultipleValues {
-  status = "status"
-}
-
-export enum OrderListUrlFiltersDictWithMultipleValues {
+  status = "status",
   channel = "channel"
 }
 
 export type OrderListUrlFilters = Filters<OrderListUrlFiltersEnum> &
-  FiltersWithMultipleValues<OrderListUrlFiltersWithMultipleValues> &
-  FiltersAsDictWithMultipleValues<OrderListUrlFiltersDictWithMultipleValues>;
+  FiltersWithMultipleValues<OrderListUrlFiltersWithMultipleValues>;
 export type OrderListUrlDialog = "cancel" | CreateOrderDialog | TabActionDialog;
 export enum OrderListUrlSortField {
   number = "number",
@@ -102,6 +97,7 @@ export const orderPath = (id: string) => urlJoin(orderSectionUrl, id);
 
 export type OrderUrlDialog =
   | "add-order-line"
+  | "approve-fulfillment"
   | "cancel"
   | "cancel-fulfillment"
   | "capture"

@@ -1,21 +1,21 @@
-import { Button, Card } from "@material-ui/core";
-import Alert from "@saleor/components/Alert/Alert";
+import { Card } from "@material-ui/core";
+import { mapToMenuItems, useExtensions } from "@saleor/apps/useExtensions";
+import { ButtonWithSelect } from "@saleor/components/ButtonWithSelect";
 import CardMenu from "@saleor/components/CardMenu";
 import ColumnPicker, {
   ColumnPickerChoice
 } from "@saleor/components/ColumnPicker";
 import Container from "@saleor/components/Container";
 import FilterBar from "@saleor/components/FilterBar";
+import LimitReachedAlert from "@saleor/components/LimitReachedAlert";
 import PageHeader from "@saleor/components/PageHeader";
 import { RefreshLimits_shop_limits } from "@saleor/components/Shop/types/RefreshLimits";
 import { ProductListColumns } from "@saleor/config";
 import { sectionNames } from "@saleor/intl";
-import {
-  GridAttributes_availableInGrid_edges_node,
-  GridAttributes_grid_edges_node
-} from "@saleor/products/types/GridAttributes";
+import { makeStyles } from "@saleor/macaw-ui";
+import { AvailableInGridAttributes_availableInGrid_edges_node } from "@saleor/products/types/AvailableInGridAttributes";
+import { GridAttributes_grid_edges_node } from "@saleor/products/types/GridAttributes";
 import { ProductList_products_edges_node } from "@saleor/products/types/ProductList";
-import { makeStyles } from "@saleor/theme";
 import {
   ChannelProps,
   FetchMoreProps,
@@ -24,6 +24,10 @@ import {
   PageListProps,
   SortPage
 } from "@saleor/types";
+import {
+  AppExtensionTypeEnum,
+  AppExtensionViewEnum
+} from "@saleor/types/globalTypes";
 import { hasLimits, isLimitReached } from "@saleor/utils/limits";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -44,7 +48,7 @@ export interface ProductListPageProps
     SortPage<ProductListUrlSortField>,
     ChannelProps {
   activeAttributeSortId: string;
-  availableInGridAttributes: GridAttributes_availableInGrid_edges_node[];
+  availableInGridAttributes: AvailableInGridAttributes_availableInGrid_edges_node[];
   channelsCount: number;
   currencySymbol: string;
   gridAttributes: GridAttributes_grid_edges_node[];
@@ -131,17 +135,30 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
   ];
 
   const limitReached = isLimitReached(limits, "productVariants");
+  const { create, moreActions } = useExtensions(
+    AppExtensionViewEnum.PRODUCT,
+    AppExtensionTypeEnum.OVERVIEW
+  );
+
+  const extensionMenuItems = mapToMenuItems(moreActions);
+  const extensionCreateButtonItems = mapToMenuItems(create);
 
   return (
     <Container>
       <PageHeader
         title={intl.formatMessage(sectionNames.products)}
-        limit={
-          hasLimits(limits, "productVariants") && {
-            data: limits,
-            key: "productVariants",
-            text: "SKUs used"
-          }
+        limitText={
+          hasLimits(limits, "productVariants") &&
+          intl.formatMessage(
+            {
+              defaultMessage: "{count}/{max} SKUs used",
+              description: "created products counter"
+            },
+            {
+              count: limits.currentUsage.productVariants,
+              max: limits.allowedUsage.productVariants
+            }
+          )
         }
       >
         <CardMenu
@@ -154,7 +171,8 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
               }),
               onSelect: onExport,
               testId: "export"
-            }
+            },
+            ...extensionMenuItems
           ]}
           data-test="menu"
         />
@@ -163,7 +181,6 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
           columns={columns}
           defaultColumns={defaultSettings.columns}
           hasMore={hasMore}
-          loading={loading}
           initialColumns={settings.columns}
           total={
             columns.length -
@@ -173,28 +190,28 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
           onFetchMore={onFetchMore}
           onSave={handleSave}
         />
-        <Button
+        <ButtonWithSelect
+          options={extensionCreateButtonItems}
+          data-test="add-product"
           disabled={limitReached}
           onClick={onAdd}
-          color="primary"
-          variant="contained"
-          data-test="add-product"
         >
           <FormattedMessage
             defaultMessage="Create Product"
             description="button"
           />
-        </Button>
+        </ButtonWithSelect>
       </PageHeader>
-      <Alert
-        show={limitReached}
-        title={intl.formatMessage({
-          defaultMessage: "SKU limit reached",
-          description: "alert"
-        })}
-      >
-        <FormattedMessage defaultMessage="You have reached your SKU limit, you will be no longer able to add SKUs to your store. If you would like to up your limit, contact your administration staff about raising your limits." />
-      </Alert>
+      {limitReached && (
+        <LimitReachedAlert
+          title={intl.formatMessage({
+            defaultMessage: "SKU limit reached",
+            description: "alert"
+          })}
+        >
+          <FormattedMessage defaultMessage="You have reached your SKU limit, you will be no longer able to add SKUs to your store. If you would like to up your limit, contact your administration staff about raising your limits." />
+        </LimitReachedAlert>
+      )}
       <Card>
         <FilterBar
           currencySymbol={currencySymbol}

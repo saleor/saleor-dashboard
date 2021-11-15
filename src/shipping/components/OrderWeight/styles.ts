@@ -1,10 +1,7 @@
-import { makeStyles } from "@saleor/theme";
+import { makeStyles } from "@saleor/macaw-ui";
 
 export const useStyles = makeStyles(
   theme => ({
-    caption: {
-      marginBottom: theme.spacing(2)
-    },
     grid: {
       display: "grid",
       gridColumnGap: theme.spacing(2),

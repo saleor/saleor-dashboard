@@ -3,9 +3,10 @@ import CardSpacer from "@saleor/components/CardSpacer";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
 import Form from "@saleor/components/Form";
 import Grid from "@saleor/components/Grid";
-import SaveButtonBar from "@saleor/components/SaveButtonBar";
+import Savebar from "@saleor/components/Savebar";
 import { SingleAutocompleteChoiceType } from "@saleor/components/SingleAutocompleteSelectField";
 import { ChannelErrorFragment } from "@saleor/fragments/types/ChannelErrorFragment";
+import { CountryFragment } from "@saleor/fragments/types/CountryFragment";
 import { SearchData } from "@saleor/hooks/makeTopLevelSearch";
 import { getParsedSearchData } from "@saleor/hooks/makeTopLevelSearch/utils";
 import { SubmitPromise } from "@saleor/hooks/useForm";
@@ -16,7 +17,9 @@ import {
 } from "@saleor/orders/components/OrderReturnPage/utils";
 import { SearchShippingZones_search_edges_node } from "@saleor/searches/types/SearchShippingZones";
 import { FetchMoreProps } from "@saleor/types";
+import { CountryCode } from "@saleor/types/globalTypes";
 import createSingleAutocompleteSelectHandler from "@saleor/utils/handlers/singleAutocompleteSelectChangeHandler";
+import { mapCountriesToChoices } from "@saleor/utils/maps";
 import React, { useState } from "react";
 
 import { ChannelForm, FormData } from "../../components/ChannelForm";
@@ -32,14 +35,15 @@ export interface ChannelDetailsPageProps<TErrors> {
   disabledStatus?: boolean;
   errors: ChannelErrorFragment[];
   saveButtonBarState: ConfirmButtonTransitionState;
+  searchShippingZonesData?: SearchData;
+  fetchMoreShippingZones: FetchMoreProps;
+  channelShippingZones?: ChannelShippingZones;
+  countries: CountryFragment[];
   onBack?: () => void;
   onDelete?: () => void;
   onSubmit: (data: FormData) => SubmitPromise<TErrors[]>;
   updateChannelStatus?: () => void;
   searchShippingZones: (query: string) => void;
-  searchShippingZonesData?: SearchData;
-  fetchMoreShippingZones: FetchMoreProps;
-  channelShippingZones?: ChannelShippingZones;
 }
 
 const ChannelDetailsPage = function<TErrors>({
@@ -56,21 +60,30 @@ const ChannelDetailsPage = function<TErrors>({
   searchShippingZones,
   searchShippingZonesData,
   fetchMoreShippingZones,
+  countries,
   channelShippingZones = []
 }: ChannelDetailsPageProps<TErrors>) {
   const [selectedCurrencyCode, setSelectedCurrencyCode] = useState("");
+  const [
+    selectedCountryDisplayName,
+    setSelectedCountryDisplayName
+  ] = useStateFromProps(channel?.defaultCountry.country || "");
 
   const [shippingZonesToDisplay, setShippingZonesToDisplay] = useStateFromProps<
     ChannelShippingZones
   >(channelShippingZones);
 
+  const countryChoices = mapCountriesToChoices(countries || []);
+
+  const { defaultCountry, ...formData } = channel || {};
   const initialData: FormData = {
     currencyCode: "",
     name: "",
     slug: "",
     shippingZonesIdsToAdd: [],
     shippingZonesIdsToRemove: [],
-    ...channel
+    defaultCountry: (defaultCountry?.code || "") as CountryCode,
+    ...formData
   };
 
   const getFilteredShippingZonesChoices = (): SearchShippingZones_search_edges_node[] =>
@@ -86,6 +99,11 @@ const ChannelDetailsPage = function<TErrors>({
           change,
           setSelectedCurrencyCode,
           currencyCodes
+        );
+        const handleDefaultCountrySelect = createSingleAutocompleteSelectHandler(
+          change,
+          setSelectedCountryDisplayName,
+          countryChoices
         );
 
         const addShippingZone = (zoneId: string) => {
@@ -127,7 +145,12 @@ const ChannelDetailsPage = function<TErrors>({
           );
         };
 
-        const formDisabled = !data.name || !data.slug || !data.currencyCode;
+        const formDisabled =
+          !data.name ||
+          !data.slug ||
+          !data.currencyCode ||
+          !data.defaultCountry ||
+          !(data.name.trim().length > 0);
 
         return (
           <>
@@ -137,9 +160,12 @@ const ChannelDetailsPage = function<TErrors>({
                   data={data}
                   disabled={disabled}
                   currencyCodes={currencyCodes}
+                  countries={countryChoices}
                   selectedCurrencyCode={selectedCurrencyCode}
+                  selectedCountryDisplayName={selectedCountryDisplayName}
                   onChange={change}
                   onCurrencyCodeChange={handleCurrencyCodeSelect}
+                  onDefaultCountryChange={handleDefaultCountrySelect}
                   errors={errors}
                 />
               </div>
@@ -164,9 +190,9 @@ const ChannelDetailsPage = function<TErrors>({
                 />
               </div>
             </Grid>
-            <SaveButtonBar
+            <Savebar
               onCancel={onBack}
-              onSave={submit}
+              onSubmit={submit}
               onDelete={onDelete}
               state={saveButtonBarState}
               disabled={disabled || formDisabled || !onSubmit || !hasChanged}

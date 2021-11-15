@@ -7,6 +7,8 @@ import { warehouseList } from "@saleor/warehouses/fixtures";
 export const orderToFulfill: OrderFulfillData_order = {
   __typename: "Order",
   id: "T3JkZXI6Mg==",
+  isPaid: true,
+  deliveryMethod: null,
   lines: [
     {
       __typename: "OrderLine",
@@ -16,11 +18,13 @@ export const orderToFulfill: OrderFulfillData_order = {
       productName: "T-Shirt",
       quantity: 3,
       quantityFulfilled: 1,
+      quantityToFulfill: 2,
       variant: {
         __typename: "ProductVariant",
         id: "UHJvZHVjdFZhcmlhbnQ6Mjk2",
         name: "S",
         sku: "62783187",
+        preorder: null,
         attributes: [
           {
             __typename: "SelectedAttribute",
@@ -78,11 +82,13 @@ export const orderToFulfill: OrderFulfillData_order = {
       productName: "Lemon Juice",
       quantity: 4,
       quantityFulfilled: 0,
+      quantityToFulfill: 4,
       variant: {
         __typename: "ProductVariant",
         id: "UHJvZHVjdFZhcmlhbnQ6MTgx",
         name: "2.5l",
         sku: "998323583",
+        preorder: null,
         attributes: [
           {
             __typename: "SelectedAttribute",
@@ -133,11 +139,13 @@ export const orderToFulfill: OrderFulfillData_order = {
       productName: "Orange Juice",
       quantity: 3,
       quantityFulfilled: 2,
+      quantityToFulfill: 1,
       variant: {
         __typename: "ProductVariant",
         id: "UHJvZHVjdFZhcmlhbnQ6MTgy",
         name: "5l",
         sku: "998323584",
+        preorder: null,
         attributes: [
           {
             __typename: "SelectedAttribute",

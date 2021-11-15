@@ -19,6 +19,7 @@ import {
   useShippingZoneDelete,
   useShippingZoneUpdate
 } from "@saleor/shipping/mutations";
+import { arrayDiff } from "@saleor/utils/arrays";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import createMetadataUpdateHandler from "@saleor/utils/handlers/metadataUpdateHandler";
 import { mapEdgesToItems } from "@saleor/utils/maps";
@@ -27,7 +28,6 @@ import {
   usePrivateMetadataUpdate
 } from "@saleor/utils/metadata/updateMetadata";
 import { useWarehouseCreate } from "@saleor/warehouses/mutations";
-import { diff } from "fast-array-diff";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -107,7 +107,7 @@ const ShippingZoneDetails: React.FC<ShippingZoneDetailsProps> = ({
           status: "success",
           text: intl.formatMessage(commonMessages.savedChanges)
         });
-        navigate(shippingZonesListUrl(), true);
+        navigate(shippingZonesListUrl(), { replace: true });
       }
     }
   });
@@ -147,7 +147,7 @@ const ShippingZoneDetails: React.FC<ShippingZoneDetailsProps> = ({
       submitData.warehouses
     );
 
-    const channelsDiff = diff(
+    const channelsDiff = arrayDiff(
       data.shippingZone.channels.map(channel => channel.id),
       submitData.channels
     );
@@ -214,7 +214,7 @@ const ShippingZoneDetails: React.FC<ShippingZoneDetailsProps> = ({
         }
         saveButtonBarState={updateShippingZoneOpts.status}
         shippingZone={data?.shippingZone}
-        warehouses={mapEdgesToItems(searchWarehousesOpts?.data?.search)}
+        warehouses={mapEdgesToItems(searchWarehousesOpts?.data?.search) || []}
         hasMore={searchWarehousesOpts.data?.search?.pageInfo?.hasNextPage}
         loading={searchWarehousesOpts.loading}
         onFetchMore={loadMore}

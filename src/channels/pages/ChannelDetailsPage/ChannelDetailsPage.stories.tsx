@@ -1,3 +1,4 @@
+import { countries } from "@saleor/fixtures";
 import { ChannelErrorFragment } from "@saleor/fragments/types/ChannelErrorFragment";
 import Decorator from "@saleor/storybook/Decorator";
 import { storiesOf } from "@storybook/react";
@@ -22,6 +23,11 @@ const props: ChannelDetailsPageProps<ChannelErrorFragment[]> = {
   updateChannelStatus: () => undefined,
   searchShippingZones: () => undefined,
   searchShippingZonesData: undefined,
+  countries: countries.map(({ name, code }) => ({
+    code,
+    country: name,
+    __typename: "CountryDisplay"
+  })),
   channelShippingZones: [
     {
       __typename: "ShippingZone",

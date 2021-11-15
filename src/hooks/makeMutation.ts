@@ -15,13 +15,17 @@ import { useIntl } from "react-intl";
 import useNotifier from "./useNotifier";
 import useUser from "./useUser";
 
+export type MutationResultWithOpts<TData> = MutationResult<TData> &
+  MutationResultAdditionalProps;
+
 export type UseMutation<TData, TVariables> = [
   MutationFunction<TData, TVariables>,
-  MutationResult<TData> & MutationResultAdditionalProps
+  MutationResultWithOpts<TData>
 ];
 export type UseMutationCbs<TData> = Partial<{
   onCompleted: (data: TData) => void;
   onError: (error: ApolloError) => void;
+  refetchQueries?: string[];
 }>;
 export type UseMutationHook<TData, TVariables> = (
   cbs: UseMutationCbs<TData>
@@ -32,7 +36,8 @@ function makeMutation<TData, TVariables>(
 ): UseMutationHook<TData, TVariables> {
   function useMutation<TData, TVariables>({
     onCompleted,
-    onError
+    onError,
+    refetchQueries = []
   }: UseMutationCbs<TData>): UseMutation<TData, TVariables> {
     const notify = useNotifier();
     const intl = useIntl();
@@ -40,6 +45,7 @@ function makeMutation<TData, TVariables>(
 
     const [mutateFn, result] = useBaseMutation(mutation, {
       onCompleted,
+      refetchQueries,
       onError: (err: ApolloError) => {
         if (hasError(err, GqlErrors.ReadOnlyException)) {
           notify({

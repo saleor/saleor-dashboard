@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { FulfillmentCancelInput, OrderErrorCode, AddressTypeEnum, OrderDiscountType, DiscountValueTypeEnum, OrderEventsEmailsEnum, OrderEventsEnum, FulfillmentStatus, PaymentChargeStatusEnum, OrderStatus, OrderAction, JobStatusEnum } from "./../../types/globalTypes";
+import { FulfillmentCancelInput, OrderErrorCode, AddressTypeEnum, GiftCardEventsEnum, OrderDiscountType, DiscountValueTypeEnum, OrderEventsEmailsEnum, OrderEventsEnum, FulfillmentStatus, PaymentChargeStatusEnum, WarehouseClickAndCollectOptionEnum, OrderStatus, OrderAction, JobStatusEnum } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: OrderFulfillmentCancel
@@ -48,6 +48,51 @@ export interface OrderFulfillmentCancel_orderFulfillmentCancel_order_billingAddr
   postalCode: string;
   streetAddress1: string;
   streetAddress2: string;
+}
+
+export interface OrderFulfillmentCancel_orderFulfillmentCancel_order_giftCards_events_balance_initialBalance {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderFulfillmentCancel_orderFulfillmentCancel_order_giftCards_events_balance_currentBalance {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderFulfillmentCancel_orderFulfillmentCancel_order_giftCards_events_balance_oldInitialBalance {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderFulfillmentCancel_orderFulfillmentCancel_order_giftCards_events_balance_oldCurrentBalance {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderFulfillmentCancel_orderFulfillmentCancel_order_giftCards_events_balance {
+  __typename: "GiftCardEventBalance";
+  initialBalance: OrderFulfillmentCancel_orderFulfillmentCancel_order_giftCards_events_balance_initialBalance | null;
+  currentBalance: OrderFulfillmentCancel_orderFulfillmentCancel_order_giftCards_events_balance_currentBalance;
+  oldInitialBalance: OrderFulfillmentCancel_orderFulfillmentCancel_order_giftCards_events_balance_oldInitialBalance | null;
+  oldCurrentBalance: OrderFulfillmentCancel_orderFulfillmentCancel_order_giftCards_events_balance_oldCurrentBalance | null;
+}
+
+export interface OrderFulfillmentCancel_orderFulfillmentCancel_order_giftCards_events {
+  __typename: "GiftCardEvent";
+  id: string;
+  type: GiftCardEventsEnum | null;
+  orderId: string | null;
+  balance: OrderFulfillmentCancel_orderFulfillmentCancel_order_giftCards_events_balance | null;
+}
+
+export interface OrderFulfillmentCancel_orderFulfillmentCancel_order_giftCards {
+  __typename: "GiftCard";
+  events: OrderFulfillmentCancel_orderFulfillmentCancel_order_giftCards_events[];
 }
 
 export interface OrderFulfillmentCancel_orderFulfillmentCancel_order_discounts_amount {
@@ -101,6 +146,13 @@ export interface OrderFulfillmentCancel_orderFulfillmentCancel_order_events_user
   email: string;
   firstName: string;
   lastName: string;
+}
+
+export interface OrderFulfillmentCancel_orderFulfillmentCancel_order_events_app {
+  __typename: "App";
+  id: string;
+  name: string | null;
+  appUrl: string | null;
 }
 
 export interface OrderFulfillmentCancel_orderFulfillmentCancel_order_events_lines_discount_amount {
@@ -157,13 +209,20 @@ export interface OrderFulfillmentCancel_orderFulfillmentCancel_order_events {
   transactionReference: string | null;
   type: OrderEventsEnum | null;
   user: OrderFulfillmentCancel_orderFulfillmentCancel_order_events_user | null;
+  app: OrderFulfillmentCancel_orderFulfillmentCancel_order_events_app | null;
   lines: (OrderFulfillmentCancel_orderFulfillmentCancel_order_events_lines | null)[] | null;
+}
+
+export interface OrderFulfillmentCancel_orderFulfillmentCancel_order_fulfillments_lines_orderLine_variant_preorder {
+  __typename: "PreorderData";
+  endDate: any | null;
 }
 
 export interface OrderFulfillmentCancel_orderFulfillmentCancel_order_fulfillments_lines_orderLine_variant {
   __typename: "ProductVariant";
   id: string;
   quantityAvailable: number;
+  preorder: OrderFulfillmentCancel_orderFulfillmentCancel_order_fulfillments_lines_orderLine_variant_preorder | null;
 }
 
 export interface OrderFulfillmentCancel_orderFulfillmentCancel_order_fulfillments_lines_orderLine_unitDiscount {
@@ -220,9 +279,10 @@ export interface OrderFulfillmentCancel_orderFulfillmentCancel_order_fulfillment
   isShippingRequired: boolean;
   variant: OrderFulfillmentCancel_orderFulfillmentCancel_order_fulfillments_lines_orderLine_variant | null;
   productName: string;
-  productSku: string;
+  productSku: string | null;
   quantity: number;
   quantityFulfilled: number;
+  quantityToFulfill: number;
   unitDiscount: OrderFulfillmentCancel_orderFulfillmentCancel_order_fulfillments_lines_orderLine_unitDiscount;
   unitDiscountValue: any;
   unitDiscountReason: string | null;
@@ -255,10 +315,16 @@ export interface OrderFulfillmentCancel_orderFulfillmentCancel_order_fulfillment
   warehouse: OrderFulfillmentCancel_orderFulfillmentCancel_order_fulfillments_warehouse | null;
 }
 
+export interface OrderFulfillmentCancel_orderFulfillmentCancel_order_lines_variant_preorder {
+  __typename: "PreorderData";
+  endDate: any | null;
+}
+
 export interface OrderFulfillmentCancel_orderFulfillmentCancel_order_lines_variant {
   __typename: "ProductVariant";
   id: string;
   quantityAvailable: number;
+  preorder: OrderFulfillmentCancel_orderFulfillmentCancel_order_lines_variant_preorder | null;
 }
 
 export interface OrderFulfillmentCancel_orderFulfillmentCancel_order_lines_unitDiscount {
@@ -315,9 +381,10 @@ export interface OrderFulfillmentCancel_orderFulfillmentCancel_order_lines {
   isShippingRequired: boolean;
   variant: OrderFulfillmentCancel_orderFulfillmentCancel_order_lines_variant | null;
   productName: string;
-  productSku: string;
+  productSku: string | null;
   quantity: number;
   quantityFulfilled: number;
+  quantityToFulfill: number;
   unitDiscount: OrderFulfillmentCancel_orderFulfillmentCancel_order_lines_unitDiscount;
   unitDiscountValue: any;
   unitDiscountReason: string | null;
@@ -348,6 +415,19 @@ export interface OrderFulfillmentCancel_orderFulfillmentCancel_order_shippingAdd
   streetAddress1: string;
   streetAddress2: string;
 }
+
+export interface OrderFulfillmentCancel_orderFulfillmentCancel_order_deliveryMethod_ShippingMethod {
+  __typename: "ShippingMethod";
+  id: string;
+}
+
+export interface OrderFulfillmentCancel_orderFulfillmentCancel_order_deliveryMethod_Warehouse {
+  __typename: "Warehouse";
+  id: string;
+  clickAndCollectOption: WarehouseClickAndCollectOptionEnum;
+}
+
+export type OrderFulfillmentCancel_orderFulfillmentCancel_order_deliveryMethod = OrderFulfillmentCancel_orderFulfillmentCancel_order_deliveryMethod_ShippingMethod | OrderFulfillmentCancel_orderFulfillmentCancel_order_deliveryMethod_Warehouse;
 
 export interface OrderFulfillmentCancel_orderFulfillmentCancel_order_shippingMethod {
   __typename: "ShippingMethod";
@@ -481,6 +561,7 @@ export interface OrderFulfillmentCancel_orderFulfillmentCancel_order {
   metadata: (OrderFulfillmentCancel_orderFulfillmentCancel_order_metadata | null)[];
   privateMetadata: (OrderFulfillmentCancel_orderFulfillmentCancel_order_privateMetadata | null)[];
   billingAddress: OrderFulfillmentCancel_orderFulfillmentCancel_order_billingAddress | null;
+  giftCards: (OrderFulfillmentCancel_orderFulfillmentCancel_order_giftCards | null)[] | null;
   isShippingRequired: boolean;
   canFinalize: boolean;
   created: any;
@@ -490,10 +571,13 @@ export interface OrderFulfillmentCancel_orderFulfillmentCancel_order {
   fulfillments: (OrderFulfillmentCancel_orderFulfillmentCancel_order_fulfillments | null)[];
   lines: (OrderFulfillmentCancel_orderFulfillmentCancel_order_lines | null)[];
   number: string | null;
+  isPaid: boolean;
   paymentStatus: PaymentChargeStatusEnum;
   shippingAddress: OrderFulfillmentCancel_orderFulfillmentCancel_order_shippingAddress | null;
+  deliveryMethod: OrderFulfillmentCancel_orderFulfillmentCancel_order_deliveryMethod | null;
   shippingMethod: OrderFulfillmentCancel_orderFulfillmentCancel_order_shippingMethod | null;
   shippingMethodName: string | null;
+  collectionPointName: string | null;
   shippingPrice: OrderFulfillmentCancel_orderFulfillmentCancel_order_shippingPrice;
   status: OrderStatus;
   subtotal: OrderFulfillmentCancel_orderFulfillmentCancel_order_subtotal;
@@ -507,7 +591,6 @@ export interface OrderFulfillmentCancel_orderFulfillmentCancel_order {
   availableShippingMethods: (OrderFulfillmentCancel_orderFulfillmentCancel_order_availableShippingMethods | null)[] | null;
   invoices: (OrderFulfillmentCancel_orderFulfillmentCancel_order_invoices | null)[] | null;
   channel: OrderFulfillmentCancel_orderFulfillmentCancel_order_channel;
-  isPaid: boolean;
 }
 
 export interface OrderFulfillmentCancel_orderFulfillmentCancel {

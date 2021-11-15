@@ -1,7 +1,7 @@
 import { Card, CardContent } from "@material-ui/core";
 import CardTitle from "@saleor/components/CardTitle";
 import Skeleton from "@saleor/components/Skeleton";
-import { makeStyles } from "@saleor/theme";
+import { makeStyles } from "@saleor/macaw-ui";
 import classNames from "classnames";
 import React from "react";
 import { defineMessages, useIntl } from "react-intl";
@@ -28,7 +28,6 @@ const useStyles = makeStyles(
       width: "100%"
     },
     imageContainer: {
-      background: "#ffffff",
       border: "2px solid #eaeaea",
       borderRadius: theme.spacing(),
       cursor: "pointer",
@@ -43,7 +42,7 @@ const useStyles = makeStyles(
       gridRowGap: theme.spacing(1),
       gridTemplateColumns: "repeat(4, 1fr)"
     },
-    toolbar: { marginTop: -theme.spacing(0.5) }
+    toolbar: { marginTop: theme.spacing(-0.5) }
   }),
   { name: "ProductMediaNavigation" }
 );

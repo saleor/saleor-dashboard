@@ -1,5 +1,5 @@
 import { fade } from "@material-ui/core/styles/colorManipulator";
-import { makeStyles } from "@saleor/theme";
+import { makeStyles } from "@saleor/macaw-ui";
 
 const useStyles = makeStyles(
   theme => {
@@ -11,6 +11,9 @@ const useStyles = makeStyles(
 
     return {
       editor: {
+        "& .codex-editor": {
+          zIndex: 2
+        },
         "& .cdx-quote__text": {
           minHeight: 24
         },

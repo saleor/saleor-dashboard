@@ -1,13 +1,13 @@
-import AppHeader from "@saleor/components/AppHeader";
 import { CardSpacer } from "@saleor/components/CardSpacer";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
 import Container from "@saleor/components/Container";
 import Metadata from "@saleor/components/Metadata";
 import PageHeader from "@saleor/components/PageHeader";
-import SaveButtonBar from "@saleor/components/SaveButtonBar";
+import Savebar from "@saleor/components/Savebar";
 import SeoForm from "@saleor/components/SeoForm";
 import { ProductErrorFragment } from "@saleor/fragments/types/ProductErrorFragment";
 import { sectionNames } from "@saleor/intl";
+import { Backlink } from "@saleor/macaw-ui";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -35,9 +35,9 @@ export const CategoryCreatePage: React.FC<CategoryCreatePageProps> = ({
     <CategoryCreateForm onSubmit={onSubmit}>
       {({ data, change, handlers, submit, hasChanged }) => (
         <Container>
-          <AppHeader onBack={onBack}>
+          <Backlink onClick={onBack}>
             {intl.formatMessage(sectionNames.categories)}
-          </AppHeader>
+          </Backlink>
           <PageHeader
             title={intl.formatMessage({
               defaultMessage: "Create New Category",
@@ -71,9 +71,9 @@ export const CategoryCreatePage: React.FC<CategoryCreatePageProps> = ({
             />
             <CardSpacer />
             <Metadata data={data} onChange={handlers.changeMetadata} />
-            <SaveButtonBar
+            <Savebar
               onCancel={onBack}
-              onSave={submit}
+              onSubmit={submit}
               state={saveButtonBarState}
               disabled={disabled || !hasChanged}
             />

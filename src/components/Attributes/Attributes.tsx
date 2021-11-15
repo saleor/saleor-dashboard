@@ -7,7 +7,7 @@ import { AttributeValueFragment } from "@saleor/fragments/types/AttributeValueFr
 import { PageErrorWithAttributesFragment } from "@saleor/fragments/types/PageErrorWithAttributesFragment";
 import { ProductErrorWithAttributesFragment } from "@saleor/fragments/types/ProductErrorWithAttributesFragment";
 import { FormsetAtomicData } from "@saleor/hooks/useFormset";
-import { makeStyles } from "@saleor/theme";
+import { makeStyles } from "@saleor/macaw-ui";
 import { FetchMoreProps } from "@saleor/types";
 import {
   AttributeEntityTypeEnum,
@@ -18,8 +18,8 @@ import classNames from "classnames";
 import React from "react";
 import { defineMessages, FormattedMessage, useIntl } from "react-intl";
 
-import AttributeRow, { AttributeRowHandlers } from "./AttributeRow";
-import { VariantAttributeScope } from "./types";
+import AttributeRow from "./AttributeRow";
+import { AttributeRowHandlers, VariantAttributeScope } from "./types";
 
 export interface AttributeInputData {
   inputType: AttributeInputTypeEnum;
@@ -38,12 +38,14 @@ export interface AttributesProps extends AttributeRowHandlers {
   attributeValues: AttributeValueFragment[];
   fetchAttributeValues: (query: string, attributeId: string) => void;
   fetchMoreAttributeValues: FetchMoreProps;
+  onAttributeSelectBlur: () => void;
   disabled: boolean;
   loading: boolean;
   errors: Array<
     ProductErrorWithAttributesFragment | PageErrorWithAttributesFragment
   >;
   title?: React.ReactNode;
+  entityId?: string;
 }
 
 const useStyles = makeStyles(
@@ -94,7 +96,7 @@ const useStyles = makeStyles(
     uploadFileContent: {
       color: theme.palette.primary.main,
       float: "right",
-      fontSize: "1rem"
+      fontSize: theme.typography.body1.fontSize
     }
   }),
   { name: "Attributes" }
@@ -116,6 +118,8 @@ const Attributes: React.FC<AttributesProps> = ({
   attributeValues,
   errors,
   title,
+  onAttributeSelectBlur,
+  entityId = "_defaultId",
   ...props
 }) => {
   const intl = useIntl();
@@ -162,9 +166,11 @@ const Attributes: React.FC<AttributesProps> = ({
                 <React.Fragment key={attribute.id}>
                   {attributeIndex > 0 && <Hr />}
                   <AttributeRow
+                    entityId={entityId}
                     attribute={attribute}
                     attributeValues={attributeValues}
                     error={error}
+                    onAttributeSelectBlur={onAttributeSelectBlur}
                     {...props}
                   />
                 </React.Fragment>

@@ -5,7 +5,7 @@ on: [pull_request]
 
 jobs:
   deploy:
-    if: github.event.pull_request.head.repo.full_name == 'mirumee/saleor-dashboard'
+    if: github.event.pull_request.head.repo.full_name == 'saleor/saleor-dashboard'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -62,6 +62,7 @@ jobs:
           API_URI: ${{ steps.api_uri.outputs.custom_api_uri || 'https://qa.staging.saleor.cloud/graphql/' }}
           APP_MOUNT_URI: /
           STATIC_URL: /
+          IS_CLOUD_INSTANCE: true
         run: |
           npm run build
 

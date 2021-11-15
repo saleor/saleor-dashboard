@@ -1,8 +1,15 @@
-import { Button, Card, CardActions, TableBody } from "@material-ui/core";
+import {
+  Button,
+  Card,
+  CardActions,
+  TableBody,
+  Typography
+} from "@material-ui/core";
 import CardSpacer from "@saleor/components/CardSpacer";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
+import { commonMessages } from "@saleor/intl";
+import { makeStyles } from "@saleor/macaw-ui";
 import { renderCollection } from "@saleor/misc";
-import { makeStyles } from "@saleor/theme";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
@@ -21,13 +28,19 @@ const useStyles = makeStyles(
 );
 
 interface OrderUnfulfilledProductsCardProps {
-  canFulfill: boolean;
+  showFulfillmentAction: boolean;
+  notAllowedToFulfillUnpaid: boolean;
   lines: OrderDetails_order_lines[];
   onFulfill: () => void;
 }
 
 const OrderUnfulfilledProductsCard: React.FC<OrderUnfulfilledProductsCardProps> = props => {
-  const { canFulfill, lines, onFulfill } = props;
+  const {
+    showFulfillmentAction,
+    notAllowedToFulfillUnpaid,
+    lines,
+    onFulfill
+  } = props;
   const classes = useStyles({});
 
   if (!lines.length) {
@@ -46,11 +59,23 @@ const OrderUnfulfilledProductsCard: React.FC<OrderUnfulfilledProductsCardProps> 
             ))}
           </TableBody>
         </ResponsiveTable>
-        {canFulfill && (
+        {showFulfillmentAction && (
           <CardActions>
-            <Button variant="text" color="primary" onClick={onFulfill}>
+            <Button
+              variant="text"
+              color="primary"
+              onClick={onFulfill}
+              disabled={notAllowedToFulfillUnpaid}
+            >
               <FormattedMessage defaultMessage="Fulfill" description="button" />
             </Button>
+            {notAllowedToFulfillUnpaid && (
+              <Typography color="error" variant="caption">
+                <FormattedMessage
+                  {...commonMessages.cannotFullfillUnpaidOrder}
+                />
+              </Typography>
+            )}
           </CardActions>
         )}
       </Card>

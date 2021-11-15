@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { OrderFulfillInput, OrderErrorCode, AddressTypeEnum, OrderDiscountType, DiscountValueTypeEnum, OrderEventsEmailsEnum, OrderEventsEnum, FulfillmentStatus, PaymentChargeStatusEnum, OrderStatus, OrderAction, JobStatusEnum } from "./../../types/globalTypes";
+import { OrderFulfillInput, OrderErrorCode, AddressTypeEnum, GiftCardEventsEnum, OrderDiscountType, DiscountValueTypeEnum, OrderEventsEmailsEnum, OrderEventsEnum, FulfillmentStatus, PaymentChargeStatusEnum, WarehouseClickAndCollectOptionEnum, OrderStatus, OrderAction, JobStatusEnum } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: FulfillOrder
@@ -50,6 +50,51 @@ export interface FulfillOrder_orderFulfill_order_billingAddress {
   postalCode: string;
   streetAddress1: string;
   streetAddress2: string;
+}
+
+export interface FulfillOrder_orderFulfill_order_giftCards_events_balance_initialBalance {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface FulfillOrder_orderFulfill_order_giftCards_events_balance_currentBalance {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface FulfillOrder_orderFulfill_order_giftCards_events_balance_oldInitialBalance {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface FulfillOrder_orderFulfill_order_giftCards_events_balance_oldCurrentBalance {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface FulfillOrder_orderFulfill_order_giftCards_events_balance {
+  __typename: "GiftCardEventBalance";
+  initialBalance: FulfillOrder_orderFulfill_order_giftCards_events_balance_initialBalance | null;
+  currentBalance: FulfillOrder_orderFulfill_order_giftCards_events_balance_currentBalance;
+  oldInitialBalance: FulfillOrder_orderFulfill_order_giftCards_events_balance_oldInitialBalance | null;
+  oldCurrentBalance: FulfillOrder_orderFulfill_order_giftCards_events_balance_oldCurrentBalance | null;
+}
+
+export interface FulfillOrder_orderFulfill_order_giftCards_events {
+  __typename: "GiftCardEvent";
+  id: string;
+  type: GiftCardEventsEnum | null;
+  orderId: string | null;
+  balance: FulfillOrder_orderFulfill_order_giftCards_events_balance | null;
+}
+
+export interface FulfillOrder_orderFulfill_order_giftCards {
+  __typename: "GiftCard";
+  events: FulfillOrder_orderFulfill_order_giftCards_events[];
 }
 
 export interface FulfillOrder_orderFulfill_order_discounts_amount {
@@ -103,6 +148,13 @@ export interface FulfillOrder_orderFulfill_order_events_user {
   email: string;
   firstName: string;
   lastName: string;
+}
+
+export interface FulfillOrder_orderFulfill_order_events_app {
+  __typename: "App";
+  id: string;
+  name: string | null;
+  appUrl: string | null;
 }
 
 export interface FulfillOrder_orderFulfill_order_events_lines_discount_amount {
@@ -159,13 +211,20 @@ export interface FulfillOrder_orderFulfill_order_events {
   transactionReference: string | null;
   type: OrderEventsEnum | null;
   user: FulfillOrder_orderFulfill_order_events_user | null;
+  app: FulfillOrder_orderFulfill_order_events_app | null;
   lines: (FulfillOrder_orderFulfill_order_events_lines | null)[] | null;
+}
+
+export interface FulfillOrder_orderFulfill_order_fulfillments_lines_orderLine_variant_preorder {
+  __typename: "PreorderData";
+  endDate: any | null;
 }
 
 export interface FulfillOrder_orderFulfill_order_fulfillments_lines_orderLine_variant {
   __typename: "ProductVariant";
   id: string;
   quantityAvailable: number;
+  preorder: FulfillOrder_orderFulfill_order_fulfillments_lines_orderLine_variant_preorder | null;
 }
 
 export interface FulfillOrder_orderFulfill_order_fulfillments_lines_orderLine_unitDiscount {
@@ -222,9 +281,10 @@ export interface FulfillOrder_orderFulfill_order_fulfillments_lines_orderLine {
   isShippingRequired: boolean;
   variant: FulfillOrder_orderFulfill_order_fulfillments_lines_orderLine_variant | null;
   productName: string;
-  productSku: string;
+  productSku: string | null;
   quantity: number;
   quantityFulfilled: number;
+  quantityToFulfill: number;
   unitDiscount: FulfillOrder_orderFulfill_order_fulfillments_lines_orderLine_unitDiscount;
   unitDiscountValue: any;
   unitDiscountReason: string | null;
@@ -257,10 +317,16 @@ export interface FulfillOrder_orderFulfill_order_fulfillments {
   warehouse: FulfillOrder_orderFulfill_order_fulfillments_warehouse | null;
 }
 
+export interface FulfillOrder_orderFulfill_order_lines_variant_preorder {
+  __typename: "PreorderData";
+  endDate: any | null;
+}
+
 export interface FulfillOrder_orderFulfill_order_lines_variant {
   __typename: "ProductVariant";
   id: string;
   quantityAvailable: number;
+  preorder: FulfillOrder_orderFulfill_order_lines_variant_preorder | null;
 }
 
 export interface FulfillOrder_orderFulfill_order_lines_unitDiscount {
@@ -317,9 +383,10 @@ export interface FulfillOrder_orderFulfill_order_lines {
   isShippingRequired: boolean;
   variant: FulfillOrder_orderFulfill_order_lines_variant | null;
   productName: string;
-  productSku: string;
+  productSku: string | null;
   quantity: number;
   quantityFulfilled: number;
+  quantityToFulfill: number;
   unitDiscount: FulfillOrder_orderFulfill_order_lines_unitDiscount;
   unitDiscountValue: any;
   unitDiscountReason: string | null;
@@ -350,6 +417,19 @@ export interface FulfillOrder_orderFulfill_order_shippingAddress {
   streetAddress1: string;
   streetAddress2: string;
 }
+
+export interface FulfillOrder_orderFulfill_order_deliveryMethod_ShippingMethod {
+  __typename: "ShippingMethod";
+  id: string;
+}
+
+export interface FulfillOrder_orderFulfill_order_deliveryMethod_Warehouse {
+  __typename: "Warehouse";
+  id: string;
+  clickAndCollectOption: WarehouseClickAndCollectOptionEnum;
+}
+
+export type FulfillOrder_orderFulfill_order_deliveryMethod = FulfillOrder_orderFulfill_order_deliveryMethod_ShippingMethod | FulfillOrder_orderFulfill_order_deliveryMethod_Warehouse;
 
 export interface FulfillOrder_orderFulfill_order_shippingMethod {
   __typename: "ShippingMethod";
@@ -483,6 +563,7 @@ export interface FulfillOrder_orderFulfill_order {
   metadata: (FulfillOrder_orderFulfill_order_metadata | null)[];
   privateMetadata: (FulfillOrder_orderFulfill_order_privateMetadata | null)[];
   billingAddress: FulfillOrder_orderFulfill_order_billingAddress | null;
+  giftCards: (FulfillOrder_orderFulfill_order_giftCards | null)[] | null;
   isShippingRequired: boolean;
   canFinalize: boolean;
   created: any;
@@ -492,10 +573,13 @@ export interface FulfillOrder_orderFulfill_order {
   fulfillments: (FulfillOrder_orderFulfill_order_fulfillments | null)[];
   lines: (FulfillOrder_orderFulfill_order_lines | null)[];
   number: string | null;
+  isPaid: boolean;
   paymentStatus: PaymentChargeStatusEnum;
   shippingAddress: FulfillOrder_orderFulfill_order_shippingAddress | null;
+  deliveryMethod: FulfillOrder_orderFulfill_order_deliveryMethod | null;
   shippingMethod: FulfillOrder_orderFulfill_order_shippingMethod | null;
   shippingMethodName: string | null;
+  collectionPointName: string | null;
   shippingPrice: FulfillOrder_orderFulfill_order_shippingPrice;
   status: OrderStatus;
   subtotal: FulfillOrder_orderFulfill_order_subtotal;
@@ -509,7 +593,6 @@ export interface FulfillOrder_orderFulfill_order {
   availableShippingMethods: (FulfillOrder_orderFulfill_order_availableShippingMethods | null)[] | null;
   invoices: (FulfillOrder_orderFulfill_order_invoices | null)[] | null;
   channel: FulfillOrder_orderFulfill_order_channel;
-  isPaid: boolean;
 }
 
 export interface FulfillOrder_orderFulfill {

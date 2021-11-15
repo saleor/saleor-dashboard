@@ -2,7 +2,7 @@ import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import useShop from "@saleor/hooks/useShop";
 import { commonMessages } from "@saleor/intl";
-import { stringify as stringifyQs } from "qs";
+import { stringifyQs } from "@saleor/utils/urls";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -11,7 +11,7 @@ import { LanguageCodeEnum } from "../../types/globalTypes";
 import TranslationsCollectionsPage from "../components/TranslationsCollectionsPage";
 import { TypedUpdateCollectionTranslations } from "../mutations";
 import { useCollectionTranslationDetails } from "../queries";
-import { TranslationInputFieldName } from "../types";
+import { TranslationField, TranslationInputFieldName } from "../types";
 import { UpdateCollectionTranslations } from "../types/UpdateCollectionTranslations";
 import {
   languageEntitiesUrl,
@@ -49,7 +49,7 @@ const TranslationsCollections: React.FC<TranslationsCollectionsProps> = ({
         stringifyQs({
           activeField: field
         }),
-      true
+      { replace: true }
     );
   const onUpdate = (data: UpdateCollectionTranslations) => {
     if (data.collectionTranslate.errors.length === 0) {
@@ -58,11 +58,11 @@ const TranslationsCollections: React.FC<TranslationsCollectionsProps> = ({
         status: "success",
         text: intl.formatMessage(commonMessages.savedChanges)
       });
-      navigate("?", true);
+      navigate("?", { replace: true });
     }
   };
   const onDiscard = () => {
-    navigate("?", true);
+    navigate("?", { replace: true });
   };
   const translation = collectionTranslations?.data?.translation;
 
@@ -70,14 +70,17 @@ const TranslationsCollections: React.FC<TranslationsCollectionsProps> = ({
     <TypedUpdateCollectionTranslations onCompleted={onUpdate}>
       {(updateTranslations, updateTranslationsOpts) => {
         const handleSubmit = (
-          fieldName: TranslationInputFieldName,
+          { name: fieldName }: TranslationField<TranslationInputFieldName>,
           data: string
         ) =>
           extractMutationErrors(
             updateTranslations({
               variables: {
                 id,
-                input: getParsedTranslationInputData({ data, fieldName }),
+                input: getParsedTranslationInputData({
+                  data,
+                  fieldName
+                }),
                 language: languageCode
               }
             })

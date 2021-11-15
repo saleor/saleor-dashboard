@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { OrderDiscountCommonInput, OrderErrorCode, AddressTypeEnum, OrderDiscountType, DiscountValueTypeEnum, OrderEventsEmailsEnum, OrderEventsEnum, FulfillmentStatus, PaymentChargeStatusEnum, OrderStatus, OrderAction, JobStatusEnum } from "./../../types/globalTypes";
+import { OrderDiscountCommonInput, OrderErrorCode, AddressTypeEnum, GiftCardEventsEnum, OrderDiscountType, DiscountValueTypeEnum, OrderEventsEmailsEnum, OrderEventsEnum, FulfillmentStatus, PaymentChargeStatusEnum, WarehouseClickAndCollectOptionEnum, OrderStatus, OrderAction, JobStatusEnum } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: OrderLineDiscountUpdate
@@ -48,6 +48,51 @@ export interface OrderLineDiscountUpdate_orderLineDiscountUpdate_order_billingAd
   postalCode: string;
   streetAddress1: string;
   streetAddress2: string;
+}
+
+export interface OrderLineDiscountUpdate_orderLineDiscountUpdate_order_giftCards_events_balance_initialBalance {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderLineDiscountUpdate_orderLineDiscountUpdate_order_giftCards_events_balance_currentBalance {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderLineDiscountUpdate_orderLineDiscountUpdate_order_giftCards_events_balance_oldInitialBalance {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderLineDiscountUpdate_orderLineDiscountUpdate_order_giftCards_events_balance_oldCurrentBalance {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderLineDiscountUpdate_orderLineDiscountUpdate_order_giftCards_events_balance {
+  __typename: "GiftCardEventBalance";
+  initialBalance: OrderLineDiscountUpdate_orderLineDiscountUpdate_order_giftCards_events_balance_initialBalance | null;
+  currentBalance: OrderLineDiscountUpdate_orderLineDiscountUpdate_order_giftCards_events_balance_currentBalance;
+  oldInitialBalance: OrderLineDiscountUpdate_orderLineDiscountUpdate_order_giftCards_events_balance_oldInitialBalance | null;
+  oldCurrentBalance: OrderLineDiscountUpdate_orderLineDiscountUpdate_order_giftCards_events_balance_oldCurrentBalance | null;
+}
+
+export interface OrderLineDiscountUpdate_orderLineDiscountUpdate_order_giftCards_events {
+  __typename: "GiftCardEvent";
+  id: string;
+  type: GiftCardEventsEnum | null;
+  orderId: string | null;
+  balance: OrderLineDiscountUpdate_orderLineDiscountUpdate_order_giftCards_events_balance | null;
+}
+
+export interface OrderLineDiscountUpdate_orderLineDiscountUpdate_order_giftCards {
+  __typename: "GiftCard";
+  events: OrderLineDiscountUpdate_orderLineDiscountUpdate_order_giftCards_events[];
 }
 
 export interface OrderLineDiscountUpdate_orderLineDiscountUpdate_order_discounts_amount {
@@ -101,6 +146,13 @@ export interface OrderLineDiscountUpdate_orderLineDiscountUpdate_order_events_us
   email: string;
   firstName: string;
   lastName: string;
+}
+
+export interface OrderLineDiscountUpdate_orderLineDiscountUpdate_order_events_app {
+  __typename: "App";
+  id: string;
+  name: string | null;
+  appUrl: string | null;
 }
 
 export interface OrderLineDiscountUpdate_orderLineDiscountUpdate_order_events_lines_discount_amount {
@@ -157,13 +209,20 @@ export interface OrderLineDiscountUpdate_orderLineDiscountUpdate_order_events {
   transactionReference: string | null;
   type: OrderEventsEnum | null;
   user: OrderLineDiscountUpdate_orderLineDiscountUpdate_order_events_user | null;
+  app: OrderLineDiscountUpdate_orderLineDiscountUpdate_order_events_app | null;
   lines: (OrderLineDiscountUpdate_orderLineDiscountUpdate_order_events_lines | null)[] | null;
+}
+
+export interface OrderLineDiscountUpdate_orderLineDiscountUpdate_order_fulfillments_lines_orderLine_variant_preorder {
+  __typename: "PreorderData";
+  endDate: any | null;
 }
 
 export interface OrderLineDiscountUpdate_orderLineDiscountUpdate_order_fulfillments_lines_orderLine_variant {
   __typename: "ProductVariant";
   id: string;
   quantityAvailable: number;
+  preorder: OrderLineDiscountUpdate_orderLineDiscountUpdate_order_fulfillments_lines_orderLine_variant_preorder | null;
 }
 
 export interface OrderLineDiscountUpdate_orderLineDiscountUpdate_order_fulfillments_lines_orderLine_unitDiscount {
@@ -220,9 +279,10 @@ export interface OrderLineDiscountUpdate_orderLineDiscountUpdate_order_fulfillme
   isShippingRequired: boolean;
   variant: OrderLineDiscountUpdate_orderLineDiscountUpdate_order_fulfillments_lines_orderLine_variant | null;
   productName: string;
-  productSku: string;
+  productSku: string | null;
   quantity: number;
   quantityFulfilled: number;
+  quantityToFulfill: number;
   unitDiscount: OrderLineDiscountUpdate_orderLineDiscountUpdate_order_fulfillments_lines_orderLine_unitDiscount;
   unitDiscountValue: any;
   unitDiscountReason: string | null;
@@ -255,10 +315,16 @@ export interface OrderLineDiscountUpdate_orderLineDiscountUpdate_order_fulfillme
   warehouse: OrderLineDiscountUpdate_orderLineDiscountUpdate_order_fulfillments_warehouse | null;
 }
 
+export interface OrderLineDiscountUpdate_orderLineDiscountUpdate_order_lines_variant_preorder {
+  __typename: "PreorderData";
+  endDate: any | null;
+}
+
 export interface OrderLineDiscountUpdate_orderLineDiscountUpdate_order_lines_variant {
   __typename: "ProductVariant";
   id: string;
   quantityAvailable: number;
+  preorder: OrderLineDiscountUpdate_orderLineDiscountUpdate_order_lines_variant_preorder | null;
 }
 
 export interface OrderLineDiscountUpdate_orderLineDiscountUpdate_order_lines_unitDiscount {
@@ -315,9 +381,10 @@ export interface OrderLineDiscountUpdate_orderLineDiscountUpdate_order_lines {
   isShippingRequired: boolean;
   variant: OrderLineDiscountUpdate_orderLineDiscountUpdate_order_lines_variant | null;
   productName: string;
-  productSku: string;
+  productSku: string | null;
   quantity: number;
   quantityFulfilled: number;
+  quantityToFulfill: number;
   unitDiscount: OrderLineDiscountUpdate_orderLineDiscountUpdate_order_lines_unitDiscount;
   unitDiscountValue: any;
   unitDiscountReason: string | null;
@@ -348,6 +415,19 @@ export interface OrderLineDiscountUpdate_orderLineDiscountUpdate_order_shippingA
   streetAddress1: string;
   streetAddress2: string;
 }
+
+export interface OrderLineDiscountUpdate_orderLineDiscountUpdate_order_deliveryMethod_ShippingMethod {
+  __typename: "ShippingMethod";
+  id: string;
+}
+
+export interface OrderLineDiscountUpdate_orderLineDiscountUpdate_order_deliveryMethod_Warehouse {
+  __typename: "Warehouse";
+  id: string;
+  clickAndCollectOption: WarehouseClickAndCollectOptionEnum;
+}
+
+export type OrderLineDiscountUpdate_orderLineDiscountUpdate_order_deliveryMethod = OrderLineDiscountUpdate_orderLineDiscountUpdate_order_deliveryMethod_ShippingMethod | OrderLineDiscountUpdate_orderLineDiscountUpdate_order_deliveryMethod_Warehouse;
 
 export interface OrderLineDiscountUpdate_orderLineDiscountUpdate_order_shippingMethod {
   __typename: "ShippingMethod";
@@ -481,6 +561,7 @@ export interface OrderLineDiscountUpdate_orderLineDiscountUpdate_order {
   metadata: (OrderLineDiscountUpdate_orderLineDiscountUpdate_order_metadata | null)[];
   privateMetadata: (OrderLineDiscountUpdate_orderLineDiscountUpdate_order_privateMetadata | null)[];
   billingAddress: OrderLineDiscountUpdate_orderLineDiscountUpdate_order_billingAddress | null;
+  giftCards: (OrderLineDiscountUpdate_orderLineDiscountUpdate_order_giftCards | null)[] | null;
   isShippingRequired: boolean;
   canFinalize: boolean;
   created: any;
@@ -490,10 +571,13 @@ export interface OrderLineDiscountUpdate_orderLineDiscountUpdate_order {
   fulfillments: (OrderLineDiscountUpdate_orderLineDiscountUpdate_order_fulfillments | null)[];
   lines: (OrderLineDiscountUpdate_orderLineDiscountUpdate_order_lines | null)[];
   number: string | null;
+  isPaid: boolean;
   paymentStatus: PaymentChargeStatusEnum;
   shippingAddress: OrderLineDiscountUpdate_orderLineDiscountUpdate_order_shippingAddress | null;
+  deliveryMethod: OrderLineDiscountUpdate_orderLineDiscountUpdate_order_deliveryMethod | null;
   shippingMethod: OrderLineDiscountUpdate_orderLineDiscountUpdate_order_shippingMethod | null;
   shippingMethodName: string | null;
+  collectionPointName: string | null;
   shippingPrice: OrderLineDiscountUpdate_orderLineDiscountUpdate_order_shippingPrice;
   status: OrderStatus;
   subtotal: OrderLineDiscountUpdate_orderLineDiscountUpdate_order_subtotal;
@@ -507,7 +591,6 @@ export interface OrderLineDiscountUpdate_orderLineDiscountUpdate_order {
   availableShippingMethods: (OrderLineDiscountUpdate_orderLineDiscountUpdate_order_availableShippingMethods | null)[] | null;
   invoices: (OrderLineDiscountUpdate_orderLineDiscountUpdate_order_invoices | null)[] | null;
   channel: OrderLineDiscountUpdate_orderLineDiscountUpdate_order_channel;
-  isPaid: boolean;
 }
 
 export interface OrderLineDiscountUpdate_orderLineDiscountUpdate {

@@ -19,6 +19,7 @@ import useBulkActions from "@saleor/hooks/useBulkActions";
 import useListSettings from "@saleor/hooks/useListSettings";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
+import { usePaginationReset } from "@saleor/hooks/usePaginationReset";
 import usePaginator, {
   createPaginationState
 } from "@saleor/hooks/usePaginator";
@@ -31,6 +32,7 @@ import {
 } from "@saleor/products/components/ProductListPage/utils";
 import {
   useAvailableInGridAttributesQuery,
+  useGridAttributesQuery,
   useInitialProductFilterAttributesQuery,
   useInitialProductFilterCategoriesQuery,
   useInitialProductFilterCollectionsQuery,
@@ -55,7 +57,7 @@ import useProductTypeSearch from "@saleor/searches/useProductTypeSearch";
 import { ListViews } from "@saleor/types";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import createFilterHandlers from "@saleor/utils/handlers/filterHandlers";
-import { mapEdgesToItems } from "@saleor/utils/maps";
+import { mapEdgesToItems, mapNodeToChoice } from "@saleor/utils/maps";
 import { getSortUrlVariables } from "@saleor/utils/sort";
 import { useWarehouseList } from "@saleor/warehouses/queries";
 import React, { useEffect, useState } from "react";
@@ -67,16 +69,16 @@ import {
   useProductExport
 } from "../../mutations";
 import {
-  areFiltersApplied,
   deleteFilterTab,
   getActiveFilters,
   getFilterOpts,
   getFilterQueryParam,
+  getFiltersCurrentTab,
   getFilterTabs,
   getFilterVariables,
   saveFilterTab
 } from "./filters";
-import { getSortQueryVariables } from "./sort";
+import { canBeSorted, DEFAULT_SORT_KEY, getSortQueryVariables } from "./sort";
 
 interface ProductListProps {
   params: ProductListUrlQueryParams;
@@ -93,10 +95,13 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
   const { updateListSettings, settings } = useListSettings<ProductListColumns>(
     ListViews.PRODUCT_LIST
   );
+
+  usePaginationReset(productListUrl, params, settings.rowNumber);
+
   const intl = useIntl();
   const {
     data: initialFilterAttributes
-  } = useInitialProductFilterAttributesQuery({});
+  } = useInitialProductFilterAttributesQuery();
   const {
     data: initialFilterCategories
   } = useInitialProductFilterCategoriesQuery({
@@ -160,41 +165,25 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
     },
     skip: params.action !== "export"
   });
-  const { availableChannels, channel } = useAppChannel();
+  const { availableChannels } = useAppChannel(false);
   const limitOpts = useShopLimitsQuery({
     variables: {
       productVariants: true
     }
   });
 
-  const noChannel = !channel && typeof channel !== "undefined";
+  const selectedChannel = availableChannels.find(
+    channel => channel.slug === params.channel
+  );
 
   const [openModal, closeModal] = createDialogActionHandlers<
     ProductListUrlDialog,
     ProductListUrlQueryParams
   >(navigate, productListUrl, params);
 
-  // Reset pagination
-  React.useEffect(
-    () =>
-      navigate(
-        productListUrl({
-          ...params,
-          ...DEFAULT_INITIAL_PAGINATION_DATA
-        }),
-        true
-      ),
-    [settings.rowNumber]
-  );
-
   const tabs = getFilterTabs();
 
-  const currentTab =
-    params.activeTab === undefined
-      ? areFiltersApplied(params)
-        ? tabs.length + 1
-        : 0
-      : parseInt(params.activeTab, 0);
+  const currentTab = getFiltersCurrentTab(params, tabs);
 
   const countAllProducts = useProductCountQuery({
     skip: params.action !== "export"
@@ -238,7 +227,7 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
     const sortWithQuery = ProductListUrlSortField.rank;
     const sortWithoutQuery =
       params.sort === ProductListUrlSortField.rank
-        ? ProductListUrlSortField.name
+        ? DEFAULT_SORT_KEY
         : params.sort;
     navigate(
       productListUrl({
@@ -248,6 +237,17 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
       })
     );
   }, [params.query]);
+
+  useEffect(() => {
+    if (!canBeSorted(params.sort, !!selectedChannel)) {
+      navigate(
+        productListUrl({
+          ...params,
+          sort: DEFAULT_SORT_KEY
+        })
+      );
+    }
+  }, [params]);
 
   const handleTabChange = (tab: number) => {
     reset();
@@ -281,17 +281,21 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
     );
 
   const paginationState = createPaginationState(settings.rowNumber, params);
-  const channelSlug = noChannel ? null : channel.slug;
-  const filter = getFilterVariables(params, channelSlug);
-  const sort = getSortQueryVariables(params, channelSlug);
+  const channelOpts = availableChannels
+    ? mapNodeToChoice(availableChannels, channel => channel.slug)
+    : null;
+  const filter = getFilterVariables(params, !!selectedChannel);
+  const sort = getSortQueryVariables(params, !!selectedChannel);
   const queryVariables = React.useMemo<ProductListVariables>(
     () => ({
       ...paginationState,
       filter,
-      sort
+      sort,
+      channel: selectedChannel?.slug
     }),
     [params, settings.rowNumber]
   );
+  // TODO: When channel is undefined we should skip detailed pricing listings
   const { data, loading, refetch } = useProductListQuery({
     displayLoader: true,
     variables: queryVariables
@@ -302,8 +306,11 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
       .filter(isAttributeColumnValue)
       .map(getAttributeIdFromColumnValue);
   }
-  const attributes = useAvailableInGridAttributesQuery({
-    variables: { first: 6, ids: filterColumnIds(settings.columns) }
+  const availableInGridAttributes = useAvailableInGridAttributesQuery({
+    variables: { first: 24 }
+  });
+  const gridAttributes = useGridAttributesQuery({
+    variables: { ids: filterColumnIds(settings.columns) }
   });
 
   const [
@@ -326,20 +333,21 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
 
   const filterOpts = getFilterOpts(
     params,
-    mapEdgesToItems(initialFilterAttributes?.attributes),
+    mapEdgesToItems(initialFilterAttributes?.attributes) || [],
     searchAttributeValues,
     {
-      initial: mapEdgesToItems(initialFilterCategories?.categories),
+      initial: mapEdgesToItems(initialFilterCategories?.categories) || [],
       search: searchCategories
     },
     {
-      initial: mapEdgesToItems(initialFilterCollections?.collections),
+      initial: mapEdgesToItems(initialFilterCollections?.collections) || [],
       search: searchCollections
     },
     {
-      initial: mapEdgesToItems(initialFilterProductTypes?.productTypes),
+      initial: mapEdgesToItems(initialFilterProductTypes?.productTypes) || [],
       search: searchProductTypes
-    }
+    },
+    channelOpts
   );
 
   const { loadNextPage, loadPreviousPage, pageInfo } = paginate(
@@ -357,22 +365,24 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
           sort: params.sort
         }}
         onSort={handleSort}
-        availableInGridAttributes={mapEdgesToItems(
-          attributes?.data?.availableInGrid
-        )}
-        currencySymbol={channel?.currencyCode || ""}
+        availableInGridAttributes={
+          mapEdgesToItems(availableInGridAttributes?.data?.availableInGrid) ||
+          []
+        }
+        currencySymbol={selectedChannel?.currencyCode || ""}
         currentTab={currentTab}
         defaultSettings={defaultListSettings[ListViews.PRODUCT_LIST]}
         filterOpts={filterOpts}
-        gridAttributes={mapEdgesToItems(attributes?.data?.grid)}
+        gridAttributes={mapEdgesToItems(gridAttributes?.data?.grid) || []}
         totalGridAttributes={maybe(
-          () => attributes.data.availableInGrid.totalCount,
+          () => availableInGridAttributes.data.availableInGrid.totalCount,
           0
         )}
         settings={settings}
-        loading={attributes.loading}
+        loading={availableInGridAttributes.loading || gridAttributes.loading}
         hasMore={maybe(
-          () => attributes.data.availableInGrid.pageInfo.hasNextPage,
+          () =>
+            availableInGridAttributes.data.availableInGrid.pageInfo.hasNextPage,
           false
         )}
         onAdd={() => navigate(productAddUrl())}
@@ -380,7 +390,7 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
         limits={limitOpts.data?.shop.limits}
         products={mapEdgesToItems(data?.products)}
         onFetchMore={() =>
-          attributes.loadMore(
+          availableInGridAttributes.loadMore(
             (prev, next) => {
               if (
                 prev.availableInGrid.pageInfo.endCursor ===
@@ -401,7 +411,9 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
               };
             },
             {
-              after: attributes.data.availableInGrid.pageInfo.endCursor
+              after:
+                availableInGridAttributes.data.availableInGrid.pageInfo
+                  .endCursor
             }
           )
         }
@@ -437,7 +449,7 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
         tabs={getFilterTabs().map(tab => tab.name)}
         onExport={() => openModal("export")}
         channelsCount={availableChannels?.length}
-        selectedChannelId={channel?.id}
+        selectedChannelId={selectedChannel?.id}
       />
       <ActionDialog
         open={params.action === "delete"}
@@ -466,7 +478,9 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
         </DialogContentText>
       </ActionDialog>
       <ProductExportDialog
-        attributes={mapEdgesToItems(searchAttributes?.result?.data?.search)}
+        attributes={
+          mapEdgesToItems(searchAttributes?.result?.data?.search) || []
+        }
         hasMore={searchAttributes.result.data?.search.pageInfo.hasNextPage}
         loading={
           searchAttributes.result.loading ||
@@ -483,7 +497,7 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
           filter: data?.products.totalCount
         }}
         selectedProducts={listElements.length}
-        warehouses={mapEdgesToItems(warehouses?.data?.warehouses)}
+        warehouses={mapEdgesToItems(warehouses?.data?.warehouses) || []}
         channels={availableChannels}
         onClose={closeModal}
         onSubmit={data =>

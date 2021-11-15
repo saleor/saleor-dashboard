@@ -1,6 +1,6 @@
 # Changelog
 
-All notable, unreleased changes to this project will be documented in this file. For the released changes, please visit the [Releases](https://github.com/mirumee/saleor-dashboard/releases) page.
+All notable, unreleased changes to this project will be documented in this file. For the released changes, please visit the [Releases](https://github.com/saleor/saleor-dashboard/releases) page.
 
 ## [Unreleased]
 
@@ -47,12 +47,42 @@ All notable, unreleased changes to this project will be documented in this file.
 - Add service worker - #1073 by @dominik-zeglen
 - Choosing user shipping and billing addresses for draft order - #1082 by @orzechdev
 - Fix EditorJS inline formatting - #1096 by @orzechdev
+- Add product / page delete warning - #1095 by @mmarkusik
+- Channels per plugin - #1093 by @mmarkusik
 - Add pagination on attribute values - #1112 by @orzechdev
 - Paginate attribute values in filters - #1152 by @orzechdev
 - Fix attribute values input display - #1156 by @orzechdev
 - Fix product type translations - #1163 by @orzechdev
 - Support staff only voucher - #1174 by @orzechdev
 - Fix label names in reference attributes - #1184 by @orzechdev
+- Fix failing product update with file attribute - #1190 by @orzechdev
+- Fix breaking select popups in filters - #1193 by @orzechdev
+- Create channel filters in product, sales and voucher lists - #1187 by @jwm0
+- Add generic filter validation - #1187 by @jwm0
+- Fix duplicated labels in column picker - #1197 by @orzechdev
+- Fix forbidden null sending as attribute value - #1201 by @orzechdev
+- Fix missing call for update metadata mutation - #1207 by @orzechdev
+- Disable next step when no value selected in variant selector - #1218 by @orzechdev
+- Add boolean attributes - #1157 by @piotrgrundas
+- Add date & date time attributes - #1180 by @piotrgrundas
+- Fix order links on home page - #1219 by @jwm0
+- Fix incorrectly handled image upload errors - #1223 by @kamilpastuszka
+- Fix huge payload issue for plugins view - #1203 by @kamilpastuszka
+- Fix content type validation in create page view - #1205 by @orzechdev
+- Fix list pagination crash on search - #1230 by @orzechdev
+- Fix positive float number input validation - #1233 by @orzechdev
+- Use MacawUI - #1229 by @dominik-zeglen
+- Add Metadata for Sale & Voucher - #7653 by @piotrgrundas
+- Add variant create options dialog - #1238 by @orzechdev
+- Fix for errors on changing channel availability - #1264 by @krzysztofwolski
+- Fixed navigation menu items reordering issue - #1239 by @kamilpastuszka
+- Fixed issue with modals containing invalid, redundant scrolls #1240 by @kamilpastuszka
+- Add text attribute for product and page translations - #1276 by @kamilpastuszka
+- Add swatch attributes - #1301 by @piotrgrundas
+- Add app dashboard extensions - #1292 by @jwm0
+- Introduce fulfillment creation - #1241 by @orzechdev
+- Introduce Click&Collect feature - #1268 by @kuchichan
+- Add Demo Banner - #1331 by @kamilpastuszka
 
 # 2.11.1
 
@@ -169,7 +199,6 @@ All notable, unreleased changes to this project will be documented in this file.
 - Update product stock management to newest design - #515 by @dominik-zeglen
 - Handle untracked products - #523 by @dominik-zeglen
 - Display correct error if there were no graphql errors - #525 by @dominik-zeglen
-- Add boolean attributes - #1157 by @piotrgrundas
 
 ## 2.0.0
 

@@ -2,18 +2,28 @@ import { Typography } from "@material-ui/core";
 import DefaultCardTitle from "@saleor/components/CardTitle";
 import { StatusType } from "@saleor/components/StatusChip/types";
 import StatusLabel from "@saleor/components/StatusLabel";
-import { makeStyles } from "@saleor/theme";
+import { makeStyles } from "@saleor/macaw-ui";
 import { FulfillmentStatus } from "@saleor/types/globalTypes";
 import camelCase from "lodash/camelCase";
 import React from "react";
+import { FormattedMessage } from "react-intl";
 import { defineMessages } from "react-intl";
 import { useIntl } from "react-intl";
 
 const useStyles = makeStyles(
   theme => ({
+    title: {
+      width: "100%",
+      display: "flex"
+    },
     orderNumber: {
       display: "inline",
       marginLeft: theme.spacing(1)
+    },
+    warehouseName: {
+      float: "right",
+      color: theme.palette.text.secondary,
+      margin: `auto ${theme.spacing(1)} auto auto`
     }
   }),
   { name: "CardTitle" }
@@ -44,9 +54,17 @@ const messages = defineMessages({
     defaultMessage: "Returned ({quantity})",
     description: "refunded fulfillment, section header"
   },
+  waitingForApproval: {
+    defaultMessage: "Waiting for approval ({quantity})",
+    description: "unapproved fulfillment, section header"
+  },
   unfulfilled: {
     defaultMessage: "Unfulfilled",
     description: "section header"
+  },
+  fulfilledFrom: {
+    defaultMessage: "Fulfilled from {warehouseName}",
+    description: "fulfilled fulfillment, section header"
   }
 });
 
@@ -62,6 +80,7 @@ interface CardTitleProps {
   status: CardTitleStatus;
   toolbar?: React.ReactNode;
   orderNumber?: string;
+  warehouseName?: string;
   withStatus?: boolean;
 }
 
@@ -77,6 +96,8 @@ const selectStatus = (status: CardTitleStatus) => {
       return StatusType.NEUTRAL;
     case FulfillmentStatus.REFUNDED_AND_RETURNED:
       return StatusType.NEUTRAL;
+    case FulfillmentStatus.WAITING_FOR_APPROVAL:
+      return StatusType.ALERT;
     case FulfillmentStatus.CANCELED:
       return StatusType.ERROR;
     default:
@@ -89,6 +110,7 @@ const CardTitle: React.FC<CardTitleProps> = ({
   fulfillmentOrder,
   status,
   orderNumber = "",
+  warehouseName,
   withStatus = false,
   toolbar
 }) => {
@@ -108,7 +130,7 @@ const CardTitle: React.FC<CardTitleProps> = ({
   );
 
   const title = (
-    <>
+    <div className={classes.title}>
       {intl.formatMessage(messageForStatus, {
         fulfillmentName,
         quantity: totalQuantity
@@ -116,7 +138,17 @@ const CardTitle: React.FC<CardTitleProps> = ({
       <Typography className={classes.orderNumber} variant="body1">
         {fulfillmentName}
       </Typography>
-    </>
+      {!!warehouseName && (
+        <Typography className={classes.warehouseName} variant="caption">
+          <FormattedMessage
+            {...messages.fulfilledFrom}
+            values={{
+              warehouseName
+            }}
+          />
+        </Typography>
+      )}
+    </div>
   );
 
   return (

@@ -36,7 +36,7 @@ export function getAttributeInputFromPageType(
       entityType: attribute.entityType,
       inputType: attribute.inputType,
       isRequired: attribute.valueRequired,
-      values: mapEdgesToItems(attribute.choices)
+      values: mapEdgesToItems(attribute.choices) || []
     },
     id: attribute.id,
     label: attribute.name,

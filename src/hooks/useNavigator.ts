@@ -4,8 +4,11 @@ import useRouter from "use-react-router";
 
 export type UseNavigatorResult = (
   url: string,
-  replace?: boolean,
-  preserveQs?: boolean
+  opts?: {
+    replace?: boolean;
+    preserveQs?: boolean;
+    resetScroll?: boolean;
+  }
 ) => void;
 function useNavigator(): UseNavigatorResult {
   const {
@@ -15,7 +18,10 @@ function useNavigator(): UseNavigatorResult {
 
   const { shouldBlockNavigation } = useContext(ExitFormDialogContext);
 
-  return (url: string, replace = false, preserveQs = false) => {
+  return (
+    url: string,
+    { replace = false, preserveQs = false, resetScroll = true } = {}
+  ) => {
     if (shouldBlockNavigation()) {
       return;
     }
@@ -27,8 +33,9 @@ function useNavigator(): UseNavigatorResult {
     } else {
       history.push(targetUrl);
     }
-
-    window.scrollTo({ behavior: "smooth", top: 0 });
+    if (resetScroll) {
+      window.scrollTo({ behavior: "smooth", top: 0 });
+    }
   };
 }
 

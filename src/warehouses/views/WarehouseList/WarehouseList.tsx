@@ -8,6 +8,7 @@ import { configurationMenuUrl } from "@saleor/configuration";
 import useListSettings from "@saleor/hooks/useListSettings";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
+import { usePaginationReset } from "@saleor/hooks/usePaginationReset";
 import usePaginator, {
   createPaginationState
 } from "@saleor/hooks/usePaginator";
@@ -35,9 +36,9 @@ import React from "react";
 import { useIntl } from "react-intl";
 
 import {
-  areFiltersApplied,
   deleteFilterTab,
   getActiveFilters,
+  getFiltersCurrentTab,
   getFilterTabs,
   getFilterVariables,
   saveFilterTab
@@ -57,6 +58,8 @@ const WarehouseList: React.FC<WarehouseListProps> = ({ params }) => {
   );
   const intl = useIntl();
 
+  usePaginationReset(warehouseListUrl, params, settings.rowNumber);
+
   const paginationState = createPaginationState(settings.rowNumber, params);
   const queryVariables = React.useMemo(
     () => ({
@@ -64,7 +67,7 @@ const WarehouseList: React.FC<WarehouseListProps> = ({ params }) => {
       filter: getFilterVariables(params),
       sort: getSortQueryVariables(params)
     }),
-    [params]
+    [params, settings.rowNumber]
   );
   const { data, loading, refetch } = useWarehouseList({
     displayLoader: true,
@@ -91,12 +94,7 @@ const WarehouseList: React.FC<WarehouseListProps> = ({ params }) => {
 
   const tabs = getFilterTabs();
 
-  const currentTab =
-    params.activeTab === undefined
-      ? areFiltersApplied(params)
-        ? tabs.length + 1
-        : 0
-      : parseInt(params.activeTab, 0);
+  const currentTab = getFiltersCurrentTab(params, tabs);
 
   const [, resetFilters, handleSearchChange] = createFilterHandlers({
     createUrl: warehouseListUrl,
@@ -167,7 +165,7 @@ const WarehouseList: React.FC<WarehouseListProps> = ({ params }) => {
       />
       <WarehouseDeleteDialog
         confirmButtonState={deleteTransitionState}
-        name={mapEdgesToItems(data?.warehouses).find(getById(params.id))?.name}
+        name={mapEdgesToItems(data?.warehouses)?.find(getById(params.id))?.name}
         open={params.action === "delete"}
         onClose={closeModal}
         onConfirm={() =>

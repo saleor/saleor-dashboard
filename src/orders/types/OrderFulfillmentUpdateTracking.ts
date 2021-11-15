@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { FulfillmentUpdateTrackingInput, OrderErrorCode, AddressTypeEnum, OrderDiscountType, DiscountValueTypeEnum, OrderEventsEmailsEnum, OrderEventsEnum, FulfillmentStatus, PaymentChargeStatusEnum, OrderStatus, OrderAction, JobStatusEnum } from "./../../types/globalTypes";
+import { FulfillmentUpdateTrackingInput, OrderErrorCode, AddressTypeEnum, GiftCardEventsEnum, OrderDiscountType, DiscountValueTypeEnum, OrderEventsEmailsEnum, OrderEventsEnum, FulfillmentStatus, PaymentChargeStatusEnum, WarehouseClickAndCollectOptionEnum, OrderStatus, OrderAction, JobStatusEnum } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: OrderFulfillmentUpdateTracking
@@ -48,6 +48,51 @@ export interface OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_o
   postalCode: string;
   streetAddress1: string;
   streetAddress2: string;
+}
+
+export interface OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_order_giftCards_events_balance_initialBalance {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_order_giftCards_events_balance_currentBalance {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_order_giftCards_events_balance_oldInitialBalance {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_order_giftCards_events_balance_oldCurrentBalance {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_order_giftCards_events_balance {
+  __typename: "GiftCardEventBalance";
+  initialBalance: OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_order_giftCards_events_balance_initialBalance | null;
+  currentBalance: OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_order_giftCards_events_balance_currentBalance;
+  oldInitialBalance: OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_order_giftCards_events_balance_oldInitialBalance | null;
+  oldCurrentBalance: OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_order_giftCards_events_balance_oldCurrentBalance | null;
+}
+
+export interface OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_order_giftCards_events {
+  __typename: "GiftCardEvent";
+  id: string;
+  type: GiftCardEventsEnum | null;
+  orderId: string | null;
+  balance: OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_order_giftCards_events_balance | null;
+}
+
+export interface OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_order_giftCards {
+  __typename: "GiftCard";
+  events: OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_order_giftCards_events[];
 }
 
 export interface OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_order_discounts_amount {
@@ -101,6 +146,13 @@ export interface OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_o
   email: string;
   firstName: string;
   lastName: string;
+}
+
+export interface OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_order_events_app {
+  __typename: "App";
+  id: string;
+  name: string | null;
+  appUrl: string | null;
 }
 
 export interface OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_order_events_lines_discount_amount {
@@ -157,13 +209,20 @@ export interface OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_o
   transactionReference: string | null;
   type: OrderEventsEnum | null;
   user: OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_order_events_user | null;
+  app: OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_order_events_app | null;
   lines: (OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_order_events_lines | null)[] | null;
+}
+
+export interface OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_order_fulfillments_lines_orderLine_variant_preorder {
+  __typename: "PreorderData";
+  endDate: any | null;
 }
 
 export interface OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_order_fulfillments_lines_orderLine_variant {
   __typename: "ProductVariant";
   id: string;
   quantityAvailable: number;
+  preorder: OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_order_fulfillments_lines_orderLine_variant_preorder | null;
 }
 
 export interface OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_order_fulfillments_lines_orderLine_unitDiscount {
@@ -220,9 +279,10 @@ export interface OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_o
   isShippingRequired: boolean;
   variant: OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_order_fulfillments_lines_orderLine_variant | null;
   productName: string;
-  productSku: string;
+  productSku: string | null;
   quantity: number;
   quantityFulfilled: number;
+  quantityToFulfill: number;
   unitDiscount: OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_order_fulfillments_lines_orderLine_unitDiscount;
   unitDiscountValue: any;
   unitDiscountReason: string | null;
@@ -255,10 +315,16 @@ export interface OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_o
   warehouse: OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_order_fulfillments_warehouse | null;
 }
 
+export interface OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_order_lines_variant_preorder {
+  __typename: "PreorderData";
+  endDate: any | null;
+}
+
 export interface OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_order_lines_variant {
   __typename: "ProductVariant";
   id: string;
   quantityAvailable: number;
+  preorder: OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_order_lines_variant_preorder | null;
 }
 
 export interface OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_order_lines_unitDiscount {
@@ -315,9 +381,10 @@ export interface OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_o
   isShippingRequired: boolean;
   variant: OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_order_lines_variant | null;
   productName: string;
-  productSku: string;
+  productSku: string | null;
   quantity: number;
   quantityFulfilled: number;
+  quantityToFulfill: number;
   unitDiscount: OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_order_lines_unitDiscount;
   unitDiscountValue: any;
   unitDiscountReason: string | null;
@@ -348,6 +415,19 @@ export interface OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_o
   streetAddress1: string;
   streetAddress2: string;
 }
+
+export interface OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_order_deliveryMethod_ShippingMethod {
+  __typename: "ShippingMethod";
+  id: string;
+}
+
+export interface OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_order_deliveryMethod_Warehouse {
+  __typename: "Warehouse";
+  id: string;
+  clickAndCollectOption: WarehouseClickAndCollectOptionEnum;
+}
+
+export type OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_order_deliveryMethod = OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_order_deliveryMethod_ShippingMethod | OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_order_deliveryMethod_Warehouse;
 
 export interface OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_order_shippingMethod {
   __typename: "ShippingMethod";
@@ -481,6 +561,7 @@ export interface OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_o
   metadata: (OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_order_metadata | null)[];
   privateMetadata: (OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_order_privateMetadata | null)[];
   billingAddress: OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_order_billingAddress | null;
+  giftCards: (OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_order_giftCards | null)[] | null;
   isShippingRequired: boolean;
   canFinalize: boolean;
   created: any;
@@ -490,10 +571,13 @@ export interface OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_o
   fulfillments: (OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_order_fulfillments | null)[];
   lines: (OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_order_lines | null)[];
   number: string | null;
+  isPaid: boolean;
   paymentStatus: PaymentChargeStatusEnum;
   shippingAddress: OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_order_shippingAddress | null;
+  deliveryMethod: OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_order_deliveryMethod | null;
   shippingMethod: OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_order_shippingMethod | null;
   shippingMethodName: string | null;
+  collectionPointName: string | null;
   shippingPrice: OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_order_shippingPrice;
   status: OrderStatus;
   subtotal: OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_order_subtotal;
@@ -507,7 +591,6 @@ export interface OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_o
   availableShippingMethods: (OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_order_availableShippingMethods | null)[] | null;
   invoices: (OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_order_invoices | null)[] | null;
   channel: OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_order_channel;
-  isPaid: boolean;
 }
 
 export interface OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking {

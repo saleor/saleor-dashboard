@@ -1,5 +1,5 @@
 import { ChannelsAction } from "@saleor/channels/urls";
-import { stringify as stringifyQs } from "qs";
+import { stringifyQs } from "@saleor/utils/urls";
 import urlJoin from "url-join";
 
 import {
@@ -23,7 +23,8 @@ export enum SaleListUrlFiltersEnum {
   type = "type",
   startedFrom = "startedFrom",
   startedTo = "startedTo",
-  query = "query"
+  query = "query",
+  channel = "channel"
 }
 export enum SaleListUrlFiltersWithMultipleValues {
   status = "status"
@@ -52,9 +53,11 @@ export type SaleUrlDialog =
   | "assign-category"
   | "assign-collection"
   | "assign-product"
+  | "assign-variant"
   | "unassign-category"
   | "unassign-collection"
   | "unassign-product"
+  | "unassign-variant"
   | "remove"
   | ChannelsAction;
 export type SaleUrlQueryParams = Pagination &
@@ -75,7 +78,8 @@ export enum VoucherListUrlFiltersEnum {
   startedTo = "startedTo",
   timesUsedFrom = "timesUsedFrom",
   timesUsedTo = "timesUsedTo",
-  query = "query"
+  query = "query",
+  channel = "channel"
 }
 export enum VoucherListUrlFiltersWithMultipleValues {
   status = "status",

@@ -5,7 +5,8 @@ import { DiscountTypeEnum, RequirementsPicker } from "@saleor/discounts/types";
 import { ChangeEvent, FormChange } from "@saleor/hooks/useForm";
 import { RequireOnlyOne } from "@saleor/misc";
 import { VoucherTypeEnum } from "@saleor/types/globalTypes";
-import { diff } from "fast-array-diff";
+import { arrayDiff } from "@saleor/utils/arrays";
+
 export interface ChannelArgs {
   discountValue: string;
   minSpent: string;
@@ -96,13 +97,10 @@ export const getChannelsVariables = (
   formData: VoucherDetailsPageFormData,
   prevChannels?: ChannelVoucherData[]
 ) => {
-  const removeChannels = prevChannels
-    ? diff(
-        prevChannels,
-        formData.channelListings,
-        (a, b) => a.id === b.id
-      ).removed?.map(removedChannel => removedChannel.id)
-    : [];
+  const initialIds = prevChannels.map(channel => channel.id);
+  const modifiedIds = formData.channelListings.map(channel => channel.id);
+
+  const idsDiff = arrayDiff(initialIds, modifiedIds);
 
   return {
     id,
@@ -121,7 +119,7 @@ export const getChannelsVariables = (
               ? 0
               : channel.minSpent
         })) || [],
-      removeChannels
+      removeChannels: idsDiff.removed
     }
   };
 };
@@ -131,13 +129,10 @@ export const getSaleChannelsVariables = (
   formData: SaleDetailsPageFormData,
   prevChannels?: ChannelSaleData[]
 ) => {
-  const removeChannels = prevChannels
-    ? diff(
-        prevChannels,
-        formData.channelListings,
-        (a, b) => a.id === b.id
-      ).removed?.map(removedChannel => removedChannel.id)
-    : [];
+  const initialIds = prevChannels?.map(channel => channel.id) || [];
+  const modifiedIds = formData.channelListings.map(channel => channel.id);
+
+  const idsDiff = arrayDiff(initialIds, modifiedIds);
 
   return {
     id,
@@ -147,7 +142,7 @@ export const getSaleChannelsVariables = (
           channelId: channel.id,
           discountValue: channel.discountValue
         })) || [],
-      removeChannels
+      removeChannels: idsDiff.removed
     }
   };
 };

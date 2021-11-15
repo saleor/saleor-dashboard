@@ -5,11 +5,12 @@ import useBulkActions from "@saleor/hooks/useBulkActions";
 import useListSettings from "@saleor/hooks/useListSettings";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
+import { usePaginationReset } from "@saleor/hooks/usePaginationReset";
 import usePaginator, {
   createPaginationState
 } from "@saleor/hooks/usePaginator";
 import { buttonMessages, commonMessages } from "@saleor/intl";
-import { maybe } from "@saleor/misc";
+import { getStringOrPlaceholder, maybe } from "@saleor/misc";
 import { getById } from "@saleor/orders/components/OrderReturnPage/utils";
 import { ListViews } from "@saleor/types";
 import createSortHandler from "@saleor/utils/handlers/sortHandler";
@@ -45,6 +46,9 @@ const MenuList: React.FC<MenuListProps> = ({ params }) => {
   const { updateListSettings, settings } = useListSettings(
     ListViews.NAVIGATION_LIST
   );
+
+  usePaginationReset(menuListUrl, params, settings.rowNumber);
+
   const intl = useIntl();
 
   const closeModal = () =>
@@ -55,7 +59,7 @@ const MenuList: React.FC<MenuListProps> = ({ params }) => {
         id: undefined,
         ids: undefined
       }),
-      true
+      { replace: true }
     );
 
   const paginationState = createPaginationState(settings.rowNumber, params);
@@ -64,7 +68,7 @@ const MenuList: React.FC<MenuListProps> = ({ params }) => {
       ...paginationState,
       sort: getSortQueryVariables(params)
     }),
-    [params]
+    [params, settings.rowNumber]
   );
   const { data, loading, refetch } = useMenuListQuery({
     displayLoader: true,
@@ -209,10 +213,11 @@ const MenuList: React.FC<MenuListProps> = ({ params }) => {
                         defaultMessage="Are you sure you want to delete {menuName}?"
                         id="menuListDeleteMenuContent"
                         values={{
-                          menuName:
-                            mapEdgesToItems(data?.menus).find(
+                          menuName: getStringOrPlaceholder(
+                            mapEdgesToItems(data?.menus)?.find(
                               getById(params.id)
-                            )?.name || "..."
+                            )?.name
+                          )
                         }}
                       />
                     </DialogContentText>

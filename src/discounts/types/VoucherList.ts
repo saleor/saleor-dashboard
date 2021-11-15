@@ -9,6 +9,18 @@ import { VoucherFilterInput, VoucherSortingInput, VoucherTypeEnum, DiscountValue
 // GraphQL query operation: VoucherList
 // ====================================================
 
+export interface VoucherList_vouchers_edges_node_metadata {
+  __typename: "MetadataItem";
+  key: string;
+  value: string;
+}
+
+export interface VoucherList_vouchers_edges_node_privateMetadata {
+  __typename: "MetadataItem";
+  key: string;
+  value: string;
+}
+
 export interface VoucherList_vouchers_edges_node_countries {
   __typename: "CountryDisplay";
   code: string;
@@ -39,6 +51,8 @@ export interface VoucherList_vouchers_edges_node_channelListings {
 
 export interface VoucherList_vouchers_edges_node {
   __typename: "Voucher";
+  metadata: (VoucherList_vouchers_edges_node_metadata | null)[];
+  privateMetadata: (VoucherList_vouchers_edges_node_privateMetadata | null)[];
   id: string;
   code: string;
   startDate: any;
@@ -81,4 +95,5 @@ export interface VoucherListVariables {
   last?: number | null;
   filter?: VoucherFilterInput | null;
   sort?: VoucherSortingInput | null;
+  channel?: string | null;
 }

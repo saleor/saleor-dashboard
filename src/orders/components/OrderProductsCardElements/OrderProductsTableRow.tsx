@@ -3,12 +3,12 @@ import Money from "@saleor/components/Money";
 import Skeleton from "@saleor/components/Skeleton";
 import TableCellAvatar from "@saleor/components/TableCellAvatar";
 import { AVATAR_MARGIN } from "@saleor/components/TableCellAvatar/Avatar";
+import { makeStyles } from "@saleor/macaw-ui";
 import { maybe } from "@saleor/misc";
 import {
   OrderDetails_order_fulfillments_lines,
   OrderDetails_order_lines
 } from "@saleor/orders/types/OrderDetails";
-import { makeStyles } from "@saleor/theme";
 import React from "react";
 
 const useStyles = makeStyles(
@@ -72,7 +72,7 @@ const TableLine: React.FC<TableLineProps> = ({
   isOrderLine = false
 }) => {
   const classes = useStyles({});
-  const { quantity, quantityFulfilled } = lineData as OrderDetails_order_lines;
+  const { quantity, quantityToFulfill } = lineData as OrderDetails_order_lines;
 
   if (!lineData) {
     return <Skeleton />;
@@ -85,9 +85,7 @@ const TableLine: React.FC<TableLineProps> = ({
       } as OrderDetails_order_fulfillments_lines)
     : (lineData as OrderDetails_order_fulfillments_lines);
 
-  const quantityToDisplay = isOrderLine
-    ? quantity - quantityFulfilled
-    : quantity;
+  const quantityToDisplay = isOrderLine ? quantityToFulfill : quantity;
 
   return (
     <TableRow className={classes.clickableRow} hover key={line.id}>
@@ -98,7 +96,7 @@ const TableLine: React.FC<TableLineProps> = ({
         {maybe(() => line.orderLine.productName) || <Skeleton />}
       </TableCellAvatar>
       <TableCell className={classes.colSku}>
-        {line?.orderLine.productSku || <Skeleton />}
+        {line?.orderLine ? line.orderLine.productSku : <Skeleton />}
       </TableCell>
       <TableCell className={classes.colQuantity}>
         {quantityToDisplay || <Skeleton />}

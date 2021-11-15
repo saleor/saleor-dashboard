@@ -6,6 +6,7 @@ export const APP_MOUNT_URI = process.env.APP_MOUNT_URI;
 export const APP_DEFAULT_URI = "/";
 export const API_URI = process.env.API_URI;
 export const SW_INTERVAL = parseInt(process.env.SW_INTERVAL, 0);
+export const IS_CLOUD_INSTANCE = process.env.IS_CLOUD_INSTANCE === "true";
 
 export const DEFAULT_INITIAL_SEARCH_DATA: SearchVariables = {
   after: null,
@@ -22,6 +23,7 @@ export const PAGINATE_BY = 20;
 export const VALUES_PAGINATE_BY = 10;
 
 export type ProductListColumns = "productType" | "availability" | "price";
+
 export interface AppListViewSettings {
   [ListViews.APPS_LIST]: ListSettings;
   [ListViews.ATTRIBUTE_VALUE_LIST]: ListSettings;
@@ -42,7 +44,9 @@ export interface AppListViewSettings {
   [ListViews.WAREHOUSE_LIST]: ListSettings;
   [ListViews.WEBHOOK_LIST]: ListSettings;
   [ListViews.TRANSLATION_ATTRIBUTE_VALUE_LIST]: ListSettings;
+  [ListViews.GIFT_CARD_LIST]: ListSettings;
 }
+
 export const defaultListSettings: AppListViewSettings = {
   [ListViews.APPS_LIST]: {
     rowNumber: 10
@@ -101,10 +105,14 @@ export const defaultListSettings: AppListViewSettings = {
   },
   [ListViews.TRANSLATION_ATTRIBUTE_VALUE_LIST]: {
     rowNumber: 10
+  },
+  [ListViews.GIFT_CARD_LIST]: {
+    rowNumber: PAGINATE_BY
   }
 };
 
 export const APP_VERSION = packageInfo.version;
+
 export const DEMO_MODE = process.env.DEMO_MODE === "true";
 export const GTM_ID = process.env.GTM_ID;
 

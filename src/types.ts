@@ -42,7 +42,8 @@ export enum ListViews {
   VOUCHER_LIST = "VOUCHER_LIST",
   WAREHOUSE_LIST = "WAREHOUSE_LIST",
   WEBHOOK_LIST = "WEBHOOK_LIST",
-  TRANSLATION_ATTRIBUTE_VALUE_LIST = "TRANSLATION_ATTRIBUTE_VALUE_LIST"
+  TRANSLATION_ATTRIBUTE_VALUE_LIST = "TRANSLATION_ATTRIBUTE_VALUE_LIST",
+  GIFT_CARD_LIST = " GIFT_CARD_LIST"
 }
 
 export interface ListProps<TColumns extends string = string> {
@@ -139,6 +140,10 @@ export interface SlugNode {
   slug: string;
 }
 
+export interface TagNode {
+  tag: string;
+}
+
 export type Pagination = Partial<{
   after: string;
   before: string;
@@ -204,8 +209,8 @@ export interface FilterOpts<T> {
 }
 
 export interface AutocompleteFilterOpts
-  extends FetchMoreProps,
-    SearchPageProps {
+  extends Partial<FetchMoreProps>,
+    Partial<SearchPageProps> {
   choices: MultiAutocompleteChoiceType[];
   displayValues: MultiAutocompleteChoiceType[];
 }

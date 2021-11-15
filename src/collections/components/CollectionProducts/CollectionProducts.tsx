@@ -17,13 +17,13 @@ import TableCellAvatar from "@saleor/components/TableCellAvatar";
 import { AVATAR_MARGIN } from "@saleor/components/TableCellAvatar/Avatar";
 import TableHead from "@saleor/components/TableHead";
 import TablePagination from "@saleor/components/TablePagination";
-import { makeStyles } from "@saleor/theme";
+import { makeStyles } from "@saleor/macaw-ui";
 import { mapEdgesToItems } from "@saleor/utils/maps";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { maybe, renderCollection } from "../../../misc";
-import { ChannelProps, ListActions, PageListProps } from "../../../types";
+import { ListActions, PageListProps } from "../../../types";
 import { CollectionDetails_collection } from "../../types/CollectionDetails";
 
 const useStyles = makeStyles(
@@ -32,7 +32,7 @@ const useStyles = makeStyles(
       "&:last-child": {
         paddingRight: 0
       },
-      width: 76 + theme.spacing(0.5)
+      width: `calc(76px + ${theme.spacing(0.5)})`
     },
     colName: {
       paddingLeft: 0,
@@ -57,10 +57,7 @@ const useStyles = makeStyles(
   { name: "CollectionProducts" }
 );
 
-export interface CollectionProductsProps
-  extends PageListProps,
-    ListActions,
-    ChannelProps {
+export interface CollectionProductsProps extends PageListProps, ListActions {
   collection: CollectionDetails_collection;
   channelsCount: number;
   onProductUnassign: (id: string, event: React.MouseEvent<any>) => void;
@@ -79,7 +76,6 @@ const CollectionProducts: React.FC<CollectionProductsProps> = props => {
     onProductUnassign,
     onRowClick,
     pageInfo,
-    selectedChannelId,
     isChecked,
     selected,
     toggle,
@@ -170,10 +166,6 @@ const CollectionProducts: React.FC<CollectionProductsProps> = props => {
             mapEdgesToItems(collection?.products),
             product => {
               const isSelected = product ? isChecked(product.id) : false;
-              const channel =
-                product?.channelListings.find(
-                  listing => listing.channel.id === selectedChannelId
-                ) || product?.channelListings[0];
 
               return (
                 <TableRow
@@ -209,7 +201,6 @@ const CollectionProducts: React.FC<CollectionProductsProps> = props => {
                     ) : product?.channelListings !== undefined ? (
                       <ChannelsAvailabilityDropdown
                         allChannelsCount={channelsCount}
-                        currentChannel={channel}
                         channels={product?.channelListings}
                       />
                     ) : (

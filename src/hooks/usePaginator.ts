@@ -1,4 +1,4 @@
-import { stringify as stringifyQs } from "qs";
+import { stringifyQs } from "@saleor/utils/urls";
 
 import { Pagination } from "../types";
 import useNavigator from "./useNavigator";
@@ -52,7 +52,7 @@ function usePaginator() {
             after: pageInfo.endCursor,
             before: undefined
           }),
-        true
+        { replace: true }
       );
 
     const loadPreviousPage = () =>
@@ -63,7 +63,7 @@ function usePaginator() {
             after: undefined,
             before: pageInfo.startCursor
           }),
-        true
+        { replace: true }
       );
 
     const newPageInfo = pageInfo

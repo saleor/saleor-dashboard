@@ -1,6 +1,7 @@
 import { Typography } from "@material-ui/core";
 import Grid from "@saleor/components/Grid";
-import { makeStyles } from "@saleor/theme";
+import { makeStyles } from "@saleor/macaw-ui";
+import classNames from "classnames";
 import React from "react";
 
 const useStyles = makeStyles(
@@ -15,6 +16,15 @@ const useStyles = makeStyles(
     attributeSectionLabel: {
       alignItems: "center",
       display: "flex"
+    },
+    flex: {
+      columnGap: theme.spacing(2) + "px",
+      display: "flex",
+      flexDirection: "row",
+      [theme.breakpoints.down("md")]: {
+        flexDirection: "column",
+        rowGap: theme.spacing(2) + "px"
+      }
     }
   }),
   { name: "BasicAttributeRow" }
@@ -22,11 +32,15 @@ const useStyles = makeStyles(
 
 interface BasicAttributeRowProps {
   label: string | React.ReactNode;
+  flexValueContainer?: boolean;
 }
 
-const BasicAttributeRow: React.FC<BasicAttributeRowProps> = props => {
-  const { label, children } = props;
-  const classes = useStyles(props);
+const BasicAttributeRow: React.FC<BasicAttributeRowProps> = ({
+  label,
+  children,
+  flexValueContainer
+}) => {
+  const classes = useStyles();
 
   return (
     <Grid className={classes.attributeSection} variant="uniform">
@@ -36,7 +50,14 @@ const BasicAttributeRow: React.FC<BasicAttributeRowProps> = props => {
       >
         <Typography>{label}</Typography>
       </div>
-      <div data-test="attribute-value">{children}</div>
+      <div
+        data-test="attribute-value"
+        className={classNames({
+          [classes.flex]: flexValueContainer
+        })}
+      >
+        {children}
+      </div>
     </Grid>
   );
 };

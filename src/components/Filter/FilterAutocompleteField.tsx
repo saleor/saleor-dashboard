@@ -1,5 +1,5 @@
 import { FormControlLabel, TextField, Typography } from "@material-ui/core";
-import { makeStyles } from "@saleor/theme";
+import { makeStyles } from "@saleor/macaw-ui";
 import { toggle } from "@saleor/utils/lists";
 import React from "react";
 import { FormattedMessage } from "react-intl";
@@ -38,7 +38,7 @@ const useStyles = makeStyles(
       marginTop: theme.spacing(1)
     },
     option: {
-      left: -theme.spacing(0.5),
+      left: theme.spacing(-0.5),
       position: "relative"
     },
     showMore: {
@@ -69,25 +69,36 @@ const FilterAutocompleteField: React.FC<FilterAutocompleteFieldProps> = ({
   const displayNoResults =
     availableOptions.length === 0 && fieldDisplayValues.length === 0;
 
+  const getUpdatedFilterValue = (option: MultiAutocompleteChoiceType) => {
+    if (filterField.multiple) {
+      return toggle(option.value, filterField.value, (a, b) => a === b);
+    }
+
+    return [option.value];
+  };
+
   const handleChange = (option: MultiAutocompleteChoiceType) => {
     onFilterPropertyChange({
       payload: {
         name: filterField.name,
         update: {
-          value: toggle(option.value, filterField.value, (a, b) => a === b)
+          active: true,
+          value: getUpdatedFilterValue(option)
         }
       },
       type: "set-property"
     });
 
-    setDisplayValues({
-      ...displayValues,
-      [filterField.name]: toggle(
-        option,
-        fieldDisplayValues,
-        (a, b) => a.value === b.value
-      )
-    });
+    if (filterField.multiple) {
+      setDisplayValues({
+        ...displayValues,
+        [filterField.name]: toggle(
+          option,
+          fieldDisplayValues,
+          (a, b) => a.value === b.value
+        )
+      });
+    }
   };
 
   const isValueChecked = (displayValue: MultiAutocompleteChoiceType) =>
@@ -105,18 +116,20 @@ const FilterAutocompleteField: React.FC<FilterAutocompleteFieldProps> = ({
 
   return (
     <div {...rest}>
-      <TextField
-        data-test="filterFieldAutocompleteInput"
-        className={classes.inputContainer}
-        fullWidth
-        name={filterField.name + "_autocomplete"}
-        InputProps={{
-          classes: {
-            input: classes.input
-          }
-        }}
-        onChange={event => filterField.onSearchChange(event.target.value)}
-      />
+      {filterField?.onSearchChange && (
+        <TextField
+          data-test="filterFieldAutocompleteInput"
+          className={classes.inputContainer}
+          fullWidth
+          name={filterField.name + "_autocomplete"}
+          InputProps={{
+            classes: {
+              input: classes.input
+            }
+          }}
+          onChange={event => filterField.onSearchChange(event.target.value)}
+        />
+      )}
       {filteredValuesChecked.map(displayValue => (
         <div className={classes.option} key={displayValue.value}>
           <FormControlLabel

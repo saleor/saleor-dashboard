@@ -65,4 +65,5 @@ export interface CollectionListVariables {
   before?: string | null;
   filter?: CollectionFilterInput | null;
   sort?: CollectionSortingInput | null;
+  channel?: string | null;
 }

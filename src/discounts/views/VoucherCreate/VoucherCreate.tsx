@@ -11,6 +11,11 @@ import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { sectionNames } from "@saleor/intl";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
+import createMetadataCreateHandler from "@saleor/utils/handlers/metadataCreateHandler";
+import {
+  useMetadataUpdate,
+  usePrivateMetadataUpdate
+} from "@saleor/utils/metadata/updateMetadata";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -37,6 +42,8 @@ export const VoucherCreateView: React.FC<VoucherCreateProps> = ({ params }) => {
   const notify = useNotifier();
   const intl = useIntl();
 
+  const [updateMetadata] = useMetadataUpdate({});
+  const [updatePrivateMetadata] = usePrivateMetadataUpdate({});
   const [openModal, closeModal] = createDialogActionHandlers<
     ChannelsAction,
     VoucherCreateUrlQueryParams
@@ -72,17 +79,23 @@ export const VoucherCreateView: React.FC<VoucherCreateProps> = ({ params }) => {
           defaultMessage: "Successfully created voucher"
         })
       });
-      navigate(voucherUrl(data.voucherCreate.voucher.id), true);
+      navigate(voucherUrl(data.voucherCreate.voucher.id), { replace: true });
     }
   };
 
   return (
     <TypedVoucherCreate onCompleted={handleVoucherCreate}>
       {(voucherCreate, voucherCreateOpts) => {
-        const handleSubmit = createHandler(
+        const handleCreate = createHandler(
           variables => voucherCreate({ variables }),
           updateChannels
         );
+        const handleSubmit = createMetadataCreateHandler(
+          handleCreate,
+          updateMetadata,
+          updatePrivateMetadata
+        );
+
         return (
           <>
             {!!allChannels?.length && (

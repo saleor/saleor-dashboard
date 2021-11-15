@@ -78,6 +78,30 @@ const WebhookEvents: React.FC<WebhookEventsProps> = ({
       defaultMessage: "Order updated",
       description: "event"
     }),
+    [WebhookEventTypeEnum.DRAFT_ORDER_CREATED]: intl.formatMessage({
+      defaultMessage: "Draft order created",
+      description: "event"
+    }),
+    [WebhookEventTypeEnum.DRAFT_ORDER_DELETED]: intl.formatMessage({
+      defaultMessage: "Draft order deleted",
+      description: "event"
+    }),
+    [WebhookEventTypeEnum.DRAFT_ORDER_UPDATED]: intl.formatMessage({
+      defaultMessage: "Draft order updated",
+      description: "event"
+    }),
+    [WebhookEventTypeEnum.SALE_CREATED]: intl.formatMessage({
+      defaultMessage: "Sale created",
+      description: "event"
+    }),
+    [WebhookEventTypeEnum.SALE_UPDATED]: intl.formatMessage({
+      defaultMessage: "Sale updated",
+      description: "event"
+    }),
+    [WebhookEventTypeEnum.SALE_DELETED]: intl.formatMessage({
+      defaultMessage: "Sale deleted",
+      description: "event"
+    }),
     [WebhookEventTypeEnum.PAGE_CREATED]: intl.formatMessage({
       defaultMessage: "Page created",
       description: "event"
@@ -130,6 +154,14 @@ const WebhookEvents: React.FC<WebhookEventsProps> = ({
       defaultMessage: "Product deleted",
       description: "event"
     }),
+    [WebhookEventTypeEnum.PRODUCT_VARIANT_BACK_IN_STOCK]: intl.formatMessage({
+      defaultMessage: "Product variant back in stock",
+      description: "event"
+    }),
+    [WebhookEventTypeEnum.PRODUCT_VARIANT_OUT_OF_STOCK]: intl.formatMessage({
+      defaultMessage: "Product variant out of stock",
+      description: "event"
+    }),
     [WebhookEventTypeEnum.PRODUCT_VARIANT_CREATED]: intl.formatMessage({
       defaultMessage: "Product variant created",
       description: "event"
@@ -142,8 +174,24 @@ const WebhookEvents: React.FC<WebhookEventsProps> = ({
       defaultMessage: "Product variant deleted",
       description: "event"
     }),
+    [WebhookEventTypeEnum.PRODUCT_VARIANT_BACK_IN_STOCK]: intl.formatMessage({
+      defaultMessage: "Product variant back in stock",
+      description: "event"
+    }),
+    [WebhookEventTypeEnum.PRODUCT_VARIANT_OUT_OF_STOCK]: intl.formatMessage({
+      defaultMessage: "Product variant out of stock",
+      description: "event"
+    }),
+    [WebhookEventTypeEnum.FULFILLMENT_CANCELED]: intl.formatMessage({
+      defaultMessage: "Fulfillment canceled",
+      description: "event"
+    }),
     [WebhookEventTypeEnum.FULFILLMENT_CREATED]: intl.formatMessage({
       defaultMessage: "Fulfillment created",
+      description: "event"
+    }),
+    [WebhookEventTypeEnum.FULFILLMENT_CANCELED]: intl.formatMessage({
+      defaultMessage: "Fulfillment canceled",
       description: "event"
     }),
     [WebhookEventTypeEnum.INVOICE_REQUESTED]: intl.formatMessage({
@@ -172,6 +220,18 @@ const WebhookEvents: React.FC<WebhookEventsProps> = ({
     }),
     [WebhookEventTypeEnum.NOTIFY_USER]: intl.formatMessage({
       defaultMessage: "User notified",
+      description: "event"
+    }),
+    [WebhookEventTypeEnum.TRANSLATION_CREATED]: intl.formatMessage({
+      defaultMessage: "Translation created",
+      description: "event"
+    }),
+    [WebhookEventTypeEnum.TRANSLATION_UPDATED]: intl.formatMessage({
+      defaultMessage: "Translation updated",
+      description: "event"
+    }),
+    [WebhookEventTypeEnum.FULFILLMENT_CANCELED]: intl.formatMessage({
+      defaultMessage: "Translation updated",
       description: "event"
     })
   };

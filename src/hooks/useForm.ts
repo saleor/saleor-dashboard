@@ -194,6 +194,8 @@ function useForm<T extends FormData, TErrors>(
     }
   };
 
+  const triggerChange = () => setChanged(true);
+
   return {
     setError,
     errors,

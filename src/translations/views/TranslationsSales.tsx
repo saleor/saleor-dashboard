@@ -3,25 +3,22 @@ import useNotifier from "@saleor/hooks/useNotifier";
 import useShop from "@saleor/hooks/useShop";
 import { commonMessages } from "@saleor/intl";
 import { extractMutationErrors } from "@saleor/misc";
-import { stringify as stringifyQs } from "qs";
+import { stringifyQs } from "@saleor/utils/urls";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import {
-  LanguageCodeEnum,
-  NameTranslationInput
-} from "../../types/globalTypes";
-import TranslationsSalesPage, {
-  fieldNames
-} from "../components/TranslationsSalesPage";
+import { LanguageCodeEnum } from "../../types/globalTypes";
+import TranslationsSalesPage from "../components/TranslationsSalesPage";
 import { TypedUpdateSaleTranslations } from "../mutations";
 import { useSaleTranslationDetails } from "../queries";
+import { TranslationField, TranslationInputFieldName } from "../types";
 import { UpdateSaleTranslations } from "../types/UpdateSaleTranslations";
 import {
   languageEntitiesUrl,
   languageEntityUrl,
   TranslatableEntities
 } from "../urls";
+import { getParsedTranslationInputData } from "../utils";
 
 export interface TranslationsSalesQueryParams {
   activeField: string;
@@ -52,7 +49,7 @@ const TranslationsSales: React.FC<TranslationsSalesProps> = ({
         stringifyQs({
           activeField: field
         }),
-      true
+      { replace: true }
     );
   const onUpdate = (data: UpdateSaleTranslations) => {
     if (data.saleTranslate.errors.length === 0) {
@@ -61,32 +58,33 @@ const TranslationsSales: React.FC<TranslationsSalesProps> = ({
         status: "success",
         text: intl.formatMessage(commonMessages.savedChanges)
       });
-      navigate("?", true);
+      navigate("?", { replace: true });
     }
   };
   const onDiscard = () => {
-    navigate("?", true);
+    navigate("?", { replace: true });
   };
 
   return (
     <TypedUpdateSaleTranslations onCompleted={onUpdate}>
       {(updateTranslations, updateTranslationsOpts) => {
-        const handleSubmit = (field: string, data: string) => {
-          const input: NameTranslationInput = {};
-          if (field === fieldNames.name) {
-            input.name = data;
-          }
-
-          return extractMutationErrors(
+        const handleSubmit = (
+          { name: fieldName }: TranslationField<TranslationInputFieldName>,
+          data: string
+        ) =>
+          extractMutationErrors(
             updateTranslations({
               variables: {
                 id,
-                input,
+                input: getParsedTranslationInputData({
+                  data,
+                  fieldName
+                }),
                 language: languageCode
               }
             })
           );
-        };
+
         const translation = saleTranslations?.data?.translation;
 
         return (

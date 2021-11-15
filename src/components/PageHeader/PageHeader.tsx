@@ -1,10 +1,8 @@
 import { Typography } from "@material-ui/core";
-import { LimitInfoFragment } from "@saleor/fragments/types/LimitInfoFragment";
-import { makeStyles } from "@saleor/theme";
+import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 
 import ExtendedPageHeader from "../ExtendedPageHeader";
-import { RefreshLimits_shop_limits } from "../Shop/types/RefreshLimits";
 import Skeleton from "../Skeleton";
 
 const useStyles = makeStyles(
@@ -32,35 +30,26 @@ const useStyles = makeStyles(
         marginTop: theme.spacing(2),
         padding: 0
       },
+      fontWeight: 700,
       alignSelf: "flex-start",
       flex: 1,
-      fontSize: 24
+      fontSize: 48
     }
   }),
   { name: "PageHeader" }
 );
 
-interface LimitInfo {
-  data: RefreshLimits_shop_limits;
-  key: keyof LimitInfoFragment;
-  text: string;
-}
 interface PageHeaderProps {
   children?: React.ReactNode;
   className?: string;
   inline?: boolean;
-  limit?: LimitInfo;
+  underline?: boolean;
+  limitText?: string;
   title?: React.ReactNode;
 }
 
-function formatLimit(limit: LimitInfo): string {
-  return `${limit.data.currentUsage[limit.key]}/${
-    limit.data.allowedUsage[limit.key]
-  } ${limit.text}`;
-}
-
 const PageHeader: React.FC<PageHeaderProps> = props => {
-  const { children, className, inline, limit, title } = props;
+  const { children, className, inline, underline, limitText, title } = props;
 
   const classes = useStyles(props);
 
@@ -69,6 +58,7 @@ const PageHeader: React.FC<PageHeaderProps> = props => {
       testId="page-header"
       className={className}
       inline={inline}
+      underline={underline}
       title={
         <Typography className={classes.title} variant="h5">
           {title !== undefined ? title : <Skeleton style={{ width: "10em" }} />}
@@ -76,9 +66,9 @@ const PageHeader: React.FC<PageHeaderProps> = props => {
       }
     >
       <div className={classes.root}>
-        {limit && (
+        {limitText && (
           <Typography className={classes.limit} color="textSecondary">
-            {formatLimit(limit)}
+            {limitText}
           </Typography>
         )}
         {children}

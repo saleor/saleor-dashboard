@@ -1,6 +1,5 @@
 import { AttributeDetails_attribute_choices } from "@saleor/attributes/types/AttributeDetails";
 import { ATTRIBUTE_TYPES_WITH_DEDICATED_VALUES } from "@saleor/attributes/utils/data";
-import AppHeader from "@saleor/components/AppHeader";
 import CardSpacer from "@saleor/components/CardSpacer";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
 import Container from "@saleor/components/Container";
@@ -9,12 +8,13 @@ import Grid from "@saleor/components/Grid";
 import Metadata from "@saleor/components/Metadata/Metadata";
 import { MetadataFormData } from "@saleor/components/Metadata/types";
 import PageHeader from "@saleor/components/PageHeader";
-import SaveButtonBar from "@saleor/components/SaveButtonBar";
+import Savebar from "@saleor/components/Savebar";
 import { ListSettingsUpdate } from "@saleor/components/TablePagination";
 import { AttributeDetailsFragment } from "@saleor/fragments/types/AttributeDetailsFragment";
 import { AttributeErrorFragment } from "@saleor/fragments/types/AttributeErrorFragment";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import { sectionNames } from "@saleor/intl";
+import { Backlink } from "@saleor/macaw-ui";
 import { maybe } from "@saleor/misc";
 import { ListSettings, ReorderAction } from "@saleor/types";
 import {
@@ -55,6 +55,7 @@ export interface AttributePageProps {
   };
   onNextPage: () => void;
   onPreviousPage: () => void;
+  children: (data: AttributePageFormData) => React.ReactNode;
 }
 
 export interface AttributePageFormData extends MetadataFormData {
@@ -89,7 +90,8 @@ const AttributePage: React.FC<AttributePageProps> = ({
   onUpdateListSettings,
   pageInfo,
   onNextPage,
-  onPreviousPage
+  onPreviousPage,
+  children
 }) => {
   const intl = useIntl();
   const {
@@ -169,80 +171,84 @@ const AttributePage: React.FC<AttributePageProps> = ({
         const changeMetadata = makeMetadataChangeHandler(change);
 
         return (
-          <Container>
-            <AppHeader onBack={onBack}>
-              {intl.formatMessage(sectionNames.attributes)}
-            </AppHeader>
-            <PageHeader
-              title={
-                attribute === null
-                  ? intl.formatMessage({
-                      defaultMessage: "Create New Attribute",
-                      description: "page title"
-                    })
-                  : maybe(() => attribute.name)
-              }
-            />
-            <Grid>
-              <div>
-                <AttributeDetails
-                  canChangeType={attribute === null}
-                  data={data}
-                  disabled={disabled}
-                  apiErrors={apiErrors}
-                  onChange={change}
-                  set={set}
-                  errors={errors}
-                  setError={setError}
-                  clearErrors={clearErrors}
-                />
-                {ATTRIBUTE_TYPES_WITH_DEDICATED_VALUES.includes(
-                  data.inputType
-                ) && (
-                  <>
-                    <CardSpacer />
-                    <AttributeValues
-                      disabled={disabled}
-                      values={mapEdgesToItems(values)}
-                      onValueAdd={onValueAdd}
-                      onValueDelete={onValueDelete}
-                      onValueReorder={onValueReorder}
-                      onValueUpdate={onValueUpdate}
-                      settings={settings}
-                      onUpdateListSettings={onUpdateListSettings}
-                      pageInfo={pageInfo}
-                      onNextPage={onNextPage}
-                      onPreviousPage={onPreviousPage}
-                    />
-                  </>
-                )}
-                <CardSpacer />
-                <Metadata data={data} onChange={changeMetadata} />
-              </div>
-              <div>
-                <AttributeOrganization
-                  canChangeType={attribute === null}
-                  data={data}
-                  disabled={disabled}
-                  onChange={change}
-                />
-                <CardSpacer />
-                <AttributeProperties
-                  data={data}
-                  errors={apiErrors}
-                  disabled={disabled}
-                  onChange={change}
-                />
-              </div>
-            </Grid>
-            <SaveButtonBar
-              disabled={disabled || !hasChanged}
-              state={saveButtonBarState}
-              onCancel={onBack}
-              onSave={submit}
-              onDelete={attribute === null ? undefined : onDelete}
-            />
-          </Container>
+          <>
+            <Container>
+              <Backlink onClick={onBack}>
+                {intl.formatMessage(sectionNames.attributes)}
+              </Backlink>
+              <PageHeader
+                title={
+                  attribute === null
+                    ? intl.formatMessage({
+                        defaultMessage: "Create New Attribute",
+                        description: "page title"
+                      })
+                    : maybe(() => attribute.name)
+                }
+              />
+              <Grid>
+                <div>
+                  <AttributeDetails
+                    canChangeType={attribute === null}
+                    data={data}
+                    disabled={disabled}
+                    apiErrors={apiErrors}
+                    onChange={change}
+                    set={set}
+                    errors={errors}
+                    setError={setError}
+                    clearErrors={clearErrors}
+                  />
+                  {ATTRIBUTE_TYPES_WITH_DEDICATED_VALUES.includes(
+                    data.inputType
+                  ) && (
+                    <>
+                      <CardSpacer />
+                      <AttributeValues
+                        inputType={data.inputType}
+                        disabled={disabled}
+                        values={mapEdgesToItems(values)}
+                        onValueAdd={onValueAdd}
+                        onValueDelete={onValueDelete}
+                        onValueReorder={onValueReorder}
+                        onValueUpdate={onValueUpdate}
+                        settings={settings}
+                        onUpdateListSettings={onUpdateListSettings}
+                        pageInfo={pageInfo}
+                        onNextPage={onNextPage}
+                        onPreviousPage={onPreviousPage}
+                      />
+                    </>
+                  )}
+                  <CardSpacer />
+                  <Metadata data={data} onChange={changeMetadata} />
+                </div>
+                <div>
+                  <AttributeOrganization
+                    canChangeType={attribute === null}
+                    data={data}
+                    disabled={disabled}
+                    onChange={change}
+                  />
+                  <CardSpacer />
+                  <AttributeProperties
+                    data={data}
+                    errors={apiErrors}
+                    disabled={disabled}
+                    onChange={change}
+                  />
+                </div>
+              </Grid>
+              <Savebar
+                disabled={disabled || !hasChanged}
+                state={saveButtonBarState}
+                onCancel={onBack}
+                onSubmit={submit}
+                onDelete={attribute === null ? undefined : onDelete}
+              />
+            </Container>
+            {children(data)}
+          </>
         );
       }}
     </Form>

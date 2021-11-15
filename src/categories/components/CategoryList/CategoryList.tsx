@@ -7,8 +7,8 @@ import TableCellHeader from "@saleor/components/TableCellHeader";
 import TableHead from "@saleor/components/TableHead";
 import TablePagination from "@saleor/components/TablePagination";
 import { CategoryFragment } from "@saleor/fragments/types/CategoryFragment";
+import { makeStyles } from "@saleor/macaw-ui";
 import { maybe, renderCollection } from "@saleor/misc";
-import { makeStyles } from "@saleor/theme";
 import { ListActions, ListProps, SortPage } from "@saleor/types";
 import { getArrowDirection } from "@saleor/utils/sort";
 import React from "react";
@@ -18,7 +18,7 @@ const useStyles = makeStyles(
   theme => ({
     [theme.breakpoints.up("lg")]: {
       colName: {
-        width: 840
+        width: "auto"
       },
       colProducts: {
         width: 160
@@ -94,7 +94,7 @@ const CategoryList: React.FC<CategoryListProps> = props => {
           }
           arrowPosition="right"
           className={classes.colName}
-          disableClick={!isRoot}
+          disabled={!isRoot}
           onClick={() => isRoot && onSort(CategoryListUrlSortField.name)}
         >
           <FormattedMessage defaultMessage="Category Name" />
@@ -106,7 +106,7 @@ const CategoryList: React.FC<CategoryListProps> = props => {
               : undefined
           }
           className={classes.colSubcategories}
-          disableClick={!isRoot}
+          disabled={!isRoot}
           onClick={() =>
             isRoot && onSort(CategoryListUrlSortField.subcategoryCount)
           }
@@ -123,7 +123,7 @@ const CategoryList: React.FC<CategoryListProps> = props => {
               : undefined
           }
           className={classes.colProducts}
-          disableClick={!isRoot}
+          disabled={!isRoot}
           onClick={() =>
             isRoot && onSort(CategoryListUrlSortField.productCount)
           }

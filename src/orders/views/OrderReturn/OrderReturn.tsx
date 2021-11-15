@@ -57,9 +57,11 @@ const OrderReturn: React.FC<OrderReturnProps> = ({ orderId }) => {
         });
 
         navigateToOrder(replaceOrder?.id);
+
+        return;
       }
 
-      if (errors[0].code === OrderErrorCode.CANNOT_REFUND) {
+      if (errors.some(err => err.code === OrderErrorCode.CANNOT_REFUND)) {
         notify({
           autohide: 5000,
           status: "error",

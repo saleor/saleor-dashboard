@@ -1,4 +1,5 @@
-import { stringify as stringifyQs } from "qs";
+import { ProductTypeKindEnum } from "@saleor/types/globalTypes";
+import { stringifyQs } from "@saleor/utils/urls";
 import urlJoin from "url-join";
 
 import {
@@ -36,8 +37,13 @@ export type ProductTypeListUrlQueryParams = ActiveTab &
 export const productTypeListUrl = (params?: ProductTypeListUrlQueryParams) =>
   productTypeListPath + "?" + stringifyQs(params);
 
+export interface ProductTypeAddUrlKind {
+  kind?: ProductTypeKindEnum;
+}
+export type ProductTypeAddUrlQueryParams = ProductTypeAddUrlKind;
 export const productTypeAddPath = urlJoin(productTypeSection, "add");
-export const productTypeAddUrl = productTypeAddPath;
+export const productTypeAddUrl = (params?: ProductTypeAddUrlQueryParams) =>
+  productTypeAddPath + "?" + stringifyQs(params);
 
 export const productTypePath = (id: string) => urlJoin(productTypeSection, id);
 export type ProductTypeUrlDialog =

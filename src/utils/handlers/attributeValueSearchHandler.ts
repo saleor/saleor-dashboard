@@ -1,4 +1,8 @@
-import { SearchAttributeValuesVariables } from "@saleor/searches/types/SearchAttributeValues";
+import { UseSearchResult } from "@saleor/hooks/makeSearch";
+import {
+  SearchAttributeValues,
+  SearchAttributeValuesVariables
+} from "@saleor/searches/types/SearchAttributeValues";
 import useAttributeValueSearch from "@saleor/searches/useAttributeValueSearch";
 import { useEffect, useState } from "react";
 
@@ -7,9 +11,18 @@ interface AttributeValueSearchHandlerState {
   query: string;
 }
 
-function createAttributeValueSearchHandler(
+export interface UseAttributeValueSearchHandler
+  extends Omit<
+    UseSearchResult<SearchAttributeValues, SearchAttributeValuesVariables>,
+    "search"
+  > {
+  reset: () => void;
+  search: (query: string, id: string | null) => void;
+}
+
+function useAttributeValueSearchHandler(
   variables: SearchAttributeValuesVariables
-) {
+): UseAttributeValueSearchHandler {
   const [state, setState] = useState<AttributeValueSearchHandlerState>({
     id: null,
     query: variables.query
@@ -35,6 +48,8 @@ function createAttributeValueSearchHandler(
     }
   };
 
+  const reset = () => setState(prevState => ({ ...prevState, id: null }));
+
   useEffect(() => {
     if (state.id) {
       search("");
@@ -44,8 +59,14 @@ function createAttributeValueSearchHandler(
   return {
     loadMore,
     search: handleSearch,
-    result
+    reset,
+    result: state.id
+      ? result
+      : {
+          ...result,
+          data: undefined
+        }
   };
 }
 
-export default createAttributeValueSearchHandler;
+export default useAttributeValueSearchHandler;

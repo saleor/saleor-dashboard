@@ -1,8 +1,8 @@
 import { Button } from "@material-ui/core";
-import AppHeader from "@saleor/components/AppHeader";
 import Container from "@saleor/components/Container";
 import PageHeader from "@saleor/components/PageHeader";
 import { sectionNames } from "@saleor/intl";
+import { Backlink } from "@saleor/macaw-ui";
 import { PageListUrlSortField } from "@saleor/pages/urls";
 import { ListActions, PageListProps, SortPage } from "@saleor/types";
 import React from "react";
@@ -28,11 +28,16 @@ const PageListPage: React.FC<PageListPageProps> = ({
 
   return (
     <Container>
-      <AppHeader onBack={onBack}>
+      <Backlink onClick={onBack}>
         {intl.formatMessage(sectionNames.configuration)}
-      </AppHeader>
+      </Backlink>
       <PageHeader title={intl.formatMessage(sectionNames.pages)}>
-        <Button onClick={onAdd} variant="contained" color="primary">
+        <Button
+          onClick={onAdd}
+          variant="contained"
+          color="primary"
+          data-test-id="createPage"
+        >
           <FormattedMessage defaultMessage="Create page" description="button" />
         </Button>
       </PageHeader>

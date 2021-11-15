@@ -1,8 +1,16 @@
-import { Card, CardContent, TextField, Typography } from "@material-ui/core";
+import {
+  Card,
+  CardContent,
+  InputAdornment,
+  TextField,
+  Typography
+} from "@material-ui/core";
+import VerticalSpacer from "@saleor/apps/components/VerticalSpacer";
 import CardTitle from "@saleor/components/CardTitle";
 import ControlledCheckbox from "@saleor/components/ControlledCheckbox";
 import { ShippingErrorFragment } from "@saleor/fragments/types/ShippingErrorFragment";
 import { ChangeEvent } from "@saleor/hooks/useForm";
+import useShop from "@saleor/hooks/useShop";
 import { getShippingWeightRateErrorMessage } from "@saleor/shipping/errors";
 import { getFormErrors } from "@saleor/utils/errors";
 import React from "react";
@@ -13,14 +21,14 @@ import { useStyles } from "./styles";
 export interface OrderWeightProps {
   disabled: boolean;
   errors: ShippingErrorFragment[];
-  noLimits: boolean;
+  orderValueRestricted: boolean;
   maxValue: string;
   minValue: string;
   onChange: (event: ChangeEvent) => void;
 }
 
 export const OrderWeight: React.FC<OrderWeightProps> = ({
-  noLimits,
+  orderValueRestricted,
   disabled,
   errors,
   maxValue = "",
@@ -29,6 +37,7 @@ export const OrderWeight: React.FC<OrderWeightProps> = ({
 }) => {
   const classes = useStyles({});
   const intl = useIntl();
+  const shop = useShop();
 
   const formFields = ["minimumOrderWeight", "maximumOrderWeight"];
   const formErrors = getFormErrors(formFields, errors);
@@ -43,14 +52,14 @@ export const OrderWeight: React.FC<OrderWeightProps> = ({
       />
       <CardContent>
         <ControlledCheckbox
-          name="noLimits"
+          name="orderValueRestricted"
           label={
             <>
               <FormattedMessage
-                defaultMessage="There are no value limits"
+                defaultMessage="Restrict order weight"
                 description="checkbox label"
               />
-              <Typography variant="caption" className={classes.caption}>
+              <Typography variant="caption">
                 <FormattedMessage
                   defaultMessage="This rate will apply to all orders"
                   description="info text"
@@ -58,52 +67,68 @@ export const OrderWeight: React.FC<OrderWeightProps> = ({
               </Typography>
             </>
           }
-          checked={noLimits}
+          checked={orderValueRestricted}
           onChange={onChange}
           disabled={disabled}
         />
-
-        {!noLimits && (
-          <div className={classes.grid}>
-            <TextField
-              disabled={disabled}
-              helperText={getShippingWeightRateErrorMessage(
-                formErrors.minimumOrderWeight,
-                intl
-              )}
-              error={!!formErrors.minimumOrderWeight}
-              fullWidth
-              label={intl.formatMessage({
-                defaultMessage: "Min. Order Weight"
-              })}
-              name="minValue"
-              type="number"
-              inputProps={{
-                min: 0,
-                type: "number"
-              }}
-              InputProps={{ inputProps: { min: 0 } }}
-              value={minValue}
-              onChange={onChange}
-            />
-            <TextField
-              disabled={disabled}
-              helperText={getShippingWeightRateErrorMessage(
-                formErrors.maximumOrderWeight,
-                intl
-              )}
-              error={!!formErrors.maximumOrderWeight}
-              fullWidth
-              label={intl.formatMessage({
-                defaultMessage: "Max. Order Weight"
-              })}
-              name="maxValue"
-              type="number"
-              InputProps={{ inputProps: { min: minValue } }}
-              value={maxValue}
-              onChange={onChange}
-            />
-          </div>
+        {orderValueRestricted && (
+          <>
+            <VerticalSpacer spacing={2} />
+            <div className={classes.grid}>
+              <TextField
+                disabled={disabled}
+                helperText={getShippingWeightRateErrorMessage(
+                  formErrors.minimumOrderWeight,
+                  intl
+                )}
+                error={!!formErrors.minimumOrderWeight}
+                fullWidth
+                label={intl.formatMessage({
+                  defaultMessage: "Min. Order Weight"
+                })}
+                name="minValue"
+                type="number"
+                inputProps={{
+                  min: 0,
+                  type: "number"
+                }}
+                InputProps={{
+                  inputProps: { min: 0 },
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <Typography>{shop?.defaultWeightUnit}</Typography>
+                    </InputAdornment>
+                  )
+                }}
+                value={minValue}
+                onChange={onChange}
+              />
+              <TextField
+                disabled={disabled}
+                helperText={getShippingWeightRateErrorMessage(
+                  formErrors.maximumOrderWeight,
+                  intl
+                )}
+                error={!!formErrors.maximumOrderWeight}
+                fullWidth
+                label={intl.formatMessage({
+                  defaultMessage: "Max. Order Weight"
+                })}
+                name="maxValue"
+                type="number"
+                InputProps={{
+                  inputProps: { min: minValue },
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <Typography>{shop?.defaultWeightUnit}</Typography>
+                    </InputAdornment>
+                  )
+                }}
+                value={maxValue}
+                onChange={onChange}
+              />
+            </div>
+          </>
         )}
       </CardContent>
     </Card>

@@ -1,4 +1,5 @@
 import { Card, CardContent, Typography } from "@material-ui/core";
+import CardSpacer from "@saleor/components/CardSpacer";
 import CardTitle from "@saleor/components/CardTitle";
 import ControlledCheckbox from "@saleor/components/ControlledCheckbox";
 import React from "react";
@@ -29,9 +30,7 @@ const OrderSettings: React.FC<OrderSettingsProps> = ({
       />
       <CardContent>
         <ControlledCheckbox
-          name={
-            "automaticallyConfirmAllNewOrders" as keyof OrderSettingsFormData
-          }
+          name="automaticallyConfirmAllNewOrders"
           label={
             <>
               <FormattedMessage
@@ -50,6 +49,28 @@ const OrderSettings: React.FC<OrderSettingsProps> = ({
           onChange={onChange}
           disabled={disabled}
           data-test="automaticallyConfirmAllNewOrdersCheckbox"
+        />
+        <CardSpacer />
+        <ControlledCheckbox
+          name="automaticallyFulfillNonShippableGiftCard"
+          label={
+            <>
+              <FormattedMessage
+                defaultMessage="Automatically fulfill non shippable gift cards"
+                description="checkbox gift cards label"
+              />
+              <Typography variant="caption">
+                <FormattedMessage
+                  defaultMessage="when activated non-shippable gift cards will be automatically set as fulfilled and sent to customer"
+                  description="checkbox gift cards label description"
+                />
+              </Typography>
+            </>
+          }
+          checked={data.automaticallyFulfillNonShippableGiftCard}
+          onChange={onChange}
+          disabled={disabled}
+          data-test="automaticallyFulfillNonShippableGiftCardsCheckbox"
         />
       </CardContent>
     </Card>

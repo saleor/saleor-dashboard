@@ -15,14 +15,14 @@ import Money from "@saleor/components/Money";
 import Skeleton from "@saleor/components/Skeleton";
 import TableCellAvatar from "@saleor/components/TableCellAvatar";
 import { FormsetChange } from "@saleor/hooks/useFormset";
+import { makeStyles } from "@saleor/macaw-ui";
 import { renderCollection } from "@saleor/misc";
 import { OrderRefundData_order_fulfillments } from "@saleor/orders/types/OrderRefundData";
-import { makeStyles } from "@saleor/theme";
-import { FulfillmentStatus } from "@saleor/types/globalTypes";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { OrderRefundFormData } from "../OrderRefundPage/form";
+import { getTitle } from "./messages";
 
 const useStyles = makeStyles(
   theme => {
@@ -93,15 +93,7 @@ const OrderRefundFulfilledProducts: React.FC<OrderRefundFulfilledProductsProps> 
       <CardTitle
         title={
           <>
-            {fulfillment.status === FulfillmentStatus.RETURNED
-              ? intl.formatMessage({
-                  defaultMessage: "Fulfillment returned",
-                  description: "section header returned"
-                })
-              : intl.formatMessage({
-                  defaultMessage: "Fulfillment",
-                  description: "section header"
-                })}
+            {getTitle(fulfillment.status, intl)}
             {fulfillment && (
               <Typography className={classes.orderNumber} variant="body1">
                 {`#${orderNumber}-${fulfillment?.fulfillmentOrder}`}

@@ -47,7 +47,12 @@ import useCategorySearch from "@saleor/searches/useCategorySearch";
 import useCollectionSearch from "@saleor/searches/useCollectionSearch";
 import useProductSearch from "@saleor/searches/useProductSearch";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
+import createMetadataUpdateHandler from "@saleor/utils/handlers/metadataUpdateHandler";
 import { mapEdgesToItems } from "@saleor/utils/maps";
+import {
+  useMetadataUpdate,
+  usePrivateMetadataUpdate
+} from "@saleor/utils/metadata/updateMetadata";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -95,6 +100,8 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
   } = useProductSearch({
     variables: DEFAULT_INITIAL_SEARCH_DATA
   });
+  const [updateMetadata] = useMetadataUpdate({});
+  const [updatePrivateMetadata] = usePrivateMetadataUpdate({});
 
   const paginationState = createPaginationState(PAGINATE_BY, params);
   const changeTab = (tab: VoucherDetailsPageTab) => {
@@ -119,7 +126,7 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
     VoucherUrlQueryParams
   >(navigate, params => voucherUrl(id, params), params);
 
-  const { channel, availableChannels } = useAppChannel();
+  const { channel, availableChannels } = useAppChannel(false);
 
   const allChannels: ChannelVoucherData[] = createChannelsDataWithDiscountPrice(
     data?.voucher,
@@ -162,7 +169,7 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
           defaultMessage: "Deleted voucher"
         })
       });
-      navigate(voucherListUrl(), true);
+      navigate(voucherListUrl(), { replace: true });
     }
   };
 
@@ -218,11 +225,18 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
                 {(voucherUpdate, voucherUpdateOpts) => (
                   <TypedVoucherDelete onCompleted={handleVoucherDelete}>
                     {(voucherDelete, voucherDeleteOpts) => {
-                      const handleSubmit = createUpdateHandler(
+                      const handleUpdate = createUpdateHandler(
                         data?.voucher,
                         voucherChannelsChoices,
                         variables => voucherUpdate({ variables }),
                         updateChannels
+                      );
+
+                      const handleSubmit = createMetadataUpdateHandler(
+                        data?.voucher,
+                        handleUpdate,
+                        variables => updateMetadata({ variables }),
+                        variables => updatePrivateMetadata({ variables })
                       );
 
                       const tabPageInfo =
@@ -426,7 +440,9 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
                           <AssignCategoriesDialog
                             categories={mapEdgesToItems(
                               searchCategoriesOpts?.data?.search
-                            ).filter(suggestedCategory => suggestedCategory.id)}
+                            )?.filter(
+                              suggestedCategory => suggestedCategory.id
+                            )}
                             confirmButtonState={voucherCataloguesAddOpts.status}
                             hasMore={
                               searchCategoriesOpts.data?.search.pageInfo
@@ -452,7 +468,9 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
                           <AssignCollectionDialog
                             collections={mapEdgesToItems(
                               searchCollectionsOpts?.data?.search
-                            ).filter(suggestedCategory => suggestedCategory.id)}
+                            )?.filter(
+                              suggestedCategory => suggestedCategory.id
+                            )}
                             confirmButtonState={voucherCataloguesAddOpts.status}
                             hasMore={
                               searchCollectionsOpts.data?.search.pageInfo
@@ -515,16 +533,14 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
                                   ...paginationState,
                                   id,
                                   input: {
-                                    products: products.map(
-                                      product => product.id
-                                    )
+                                    products
                                   }
                                 }
                               })
                             }
                             products={mapEdgesToItems(
                               searchProductsOpts?.data?.search
-                            ).filter(suggestedProduct => suggestedProduct.id)}
+                            )?.filter(suggestedProduct => suggestedProduct.id)}
                           />
                           <ActionDialog
                             open={

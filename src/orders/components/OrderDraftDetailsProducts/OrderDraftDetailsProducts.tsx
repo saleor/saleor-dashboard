@@ -1,11 +1,11 @@
 import { TableBody, TableCell, TableHead, TableRow } from "@material-ui/core";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import { AVATAR_MARGIN } from "@saleor/components/TableCellAvatar/Avatar";
+import { makeStyles } from "@saleor/macaw-ui";
 import {
   OrderLineDiscountConsumer,
   OrderLineDiscountContextConsumerProps
 } from "@saleor/products/components/OrderDiscountProviders/OrderLineDiscountProvider";
-import { makeStyles } from "@saleor/theme";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
@@ -23,7 +23,7 @@ const useStyles = makeStyles(
       "&:last-child": {
         paddingRight: 0
       },
-      width: 76 + theme.spacing(0.5)
+      width: theme.spacing(10)
     },
     colName: {
       width: "auto"
@@ -32,16 +32,13 @@ const useStyles = makeStyles(
       marginLeft: AVATAR_MARGIN
     },
     colPrice: {
-      textAlign: "right",
-      width: 150
+      textAlign: "right"
     },
     colQuantity: {
-      textAlign: "right",
-      width: 80
+      textAlign: "right"
     },
     colTotal: {
-      textAlign: "right",
-      width: 150
+      textAlign: "right"
     },
     errorInfo: {
       color: theme.palette.error.main

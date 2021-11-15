@@ -1,9 +1,10 @@
 import useLocalStorage from "@saleor/hooks/useLocalStorage";
-import { useEffect } from "react";
+import merge from "lodash/merge";
 
 import { AppListViewSettings, defaultListSettings } from "./../config";
 import { ListSettings, ListViews } from "./../types";
 
+export const listSettingsStorageKey = "listConfig";
 export interface UseListSettings<TColumns extends string = string> {
   settings: ListSettings<TColumns>;
   updateListSettings: <T extends keyof ListSettings<TColumns>>(
@@ -15,18 +16,15 @@ export default function useListSettings<TColumns extends string = string>(
   listName: ListViews
 ): UseListSettings<TColumns> {
   const [settings, setListSettings] = useLocalStorage<AppListViewSettings>(
-    "listConfig",
-    defaultListSettings
-  );
+    listSettingsStorageKey,
+    storedListSettings => {
+      if (typeof storedListSettings !== "object") {
+        return defaultListSettings;
+      }
 
-  useEffect(() => {
-    if (settings[listName] === undefined) {
-      setListSettings(settings => ({
-        ...settings,
-        [listName]: defaultListSettings[listName]
-      }));
+      return merge({}, defaultListSettings, storedListSettings);
     }
-  }, []);
+  );
 
   const updateListSettings = <T extends keyof ListSettings>(
     key: T,

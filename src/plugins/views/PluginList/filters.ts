@@ -54,7 +54,7 @@ export function getFilterOpts(
       loading,
       onFetchMore,
       onSearchChange,
-      value: maybe(() => dedupeFilter(params.channels), [])
+      value: dedupeFilter(params.channels || [])
     },
     type: {
       active: !!params.type,
@@ -63,7 +63,8 @@ export function getFilterOpts(
     status: {
       active: !!params.channels?.length && params.active !== undefined,
       value:
-        !!dedupeFilter(params.channels)?.length && params.active !== undefined
+        !!dedupeFilter(params.channels || [])?.length &&
+        params.active !== undefined
     }
   };
 }
@@ -122,7 +123,10 @@ export const {
   saveFilterTab
 } = createFilterTabUtils<PluginListUrlFilters>(PLUGIN_FILTERS_KEY);
 
-export const { areFiltersApplied, getActiveFilters } = createFilterUtils<
-  PluginListUrlQueryParams,
-  PluginListUrlFilters
->(PluginListUrlFiltersEnum);
+export const {
+  areFiltersApplied,
+  getActiveFilters,
+  getFiltersCurrentTab
+} = createFilterUtils<PluginListUrlQueryParams, PluginListUrlFilters>(
+  PluginListUrlFiltersEnum
+);

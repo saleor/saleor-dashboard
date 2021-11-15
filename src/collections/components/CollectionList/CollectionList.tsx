@@ -1,5 +1,7 @@
 import { TableBody, TableCell, TableFooter, TableRow } from "@material-ui/core";
 import { CollectionListUrlSortField } from "@saleor/collections/urls";
+import { canBeSorted } from "@saleor/collections/views/CollectionList/sort";
+import AvailabilityStatusLabel from "@saleor/components/AvailabilityStatusLabel";
 import { ChannelsAvailabilityDropdown } from "@saleor/components/ChannelsAvailabilityDropdown";
 import Checkbox from "@saleor/components/Checkbox";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
@@ -7,14 +9,15 @@ import Skeleton from "@saleor/components/Skeleton";
 import TableCellHeader from "@saleor/components/TableCellHeader";
 import TableHead from "@saleor/components/TableHead";
 import TablePagination from "@saleor/components/TablePagination";
+import { makeStyles } from "@saleor/macaw-ui";
 import { maybe, renderCollection } from "@saleor/misc";
-import { makeStyles } from "@saleor/theme";
 import { ChannelProps, ListActions, ListProps, SortPage } from "@saleor/types";
 import { getArrowDirection } from "@saleor/utils/sort";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
 import { CollectionList_collections_edges_node } from "../../types/CollectionList";
+import { messages } from "./messages";
 
 const useStyles = makeStyles(
   theme => ({
@@ -116,6 +119,12 @@ const CollectionList: React.FC<CollectionListProps> = props => {
           }
           onClick={() => onSort(CollectionListUrlSortField.available)}
           className={classes.colAvailability}
+          disabled={
+            !canBeSorted(
+              CollectionListUrlSortField.available,
+              !!selectedChannelId
+            )
+          }
         >
           <FormattedMessage
             defaultMessage="Availability"
@@ -178,19 +187,20 @@ const CollectionList: React.FC<CollectionListProps> = props => {
                   data-test="availability"
                   data-test-availability={!!collection?.channelListings?.length}
                 >
-                  {collection && !collection?.channelListings?.length ? (
-                    "-"
-                  ) : collection?.channelListings !== undefined ? (
-                    channel ? (
+                  {(!collection && <Skeleton />) ||
+                    (!collection?.channelListings?.length && "-") ||
+                    (collection?.channelListings !== undefined && channel ? (
+                      <AvailabilityStatusLabel
+                        channel={channel}
+                        messages={messages}
+                      />
+                    ) : (
                       <ChannelsAvailabilityDropdown
                         allChannelsCount={channelsCount}
-                        currentChannel={channel}
                         channels={collection?.channelListings}
+                        showStatus
                       />
-                    ) : null
-                  ) : (
-                    <Skeleton />
-                  )}
+                    ))}
                 </TableCell>
               </TableRow>
             );

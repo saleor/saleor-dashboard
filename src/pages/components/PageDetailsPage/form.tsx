@@ -77,10 +77,10 @@ export interface PageUpdateHandlers {
   fetchMoreReferences: FetchMoreProps;
 }
 
-export type UsePageUpdateFormResult = CommonUseFormResultWithHandlers<
-  PageData,
-  PageUpdateHandlers
->;
+export interface UsePageUpdateFormResult
+  extends CommonUseFormResultWithHandlers<PageData, PageUpdateHandlers> {
+  valid: boolean;
+}
 
 export interface UsePageFormOpts {
   pageTypes?: SearchPageTypes_search_edges_node[];
@@ -237,9 +237,12 @@ function usePageForm(
 
   useEffect(() => setExitDialogSubmitRef(submit), [submit]);
 
+  const valid = pageExists || !!opts.selectedPageType;
+
   return {
     change: handleChange,
     data: getData(),
+    valid,
     handlers: {
       changeContent,
       changeMetadata,

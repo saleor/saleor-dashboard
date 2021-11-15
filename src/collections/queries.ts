@@ -25,6 +25,7 @@ export const collectionList = gql`
     $before: String
     $filter: CollectionFilterInput
     $sort: CollectionSortingInput
+    $channel: String
   ) {
     collections(
       first: $first
@@ -33,6 +34,7 @@ export const collectionList = gql`
       last: $last
       filter: $filter
       sortBy: $sort
+      channel: $channel
     ) {
       edges {
         node {

@@ -1,10 +1,11 @@
-import AppHeader from "@saleor/components/AppHeader";
 import CardSpacer from "@saleor/components/CardSpacer";
 import Container from "@saleor/components/Container";
 import LanguageSwitch from "@saleor/components/LanguageSwitch";
 import PageHeader from "@saleor/components/PageHeader";
 import { PageTranslationFragment } from "@saleor/fragments/types/PageTranslationFragment";
 import { commonMessages, sectionNames } from "@saleor/intl";
+import { Backlink } from "@saleor/macaw-ui";
+import { getStringOrPlaceholder } from "@saleor/misc";
 import {
   PageTranslationInputFieldName,
   TranslationsEntitiesPageProps
@@ -18,6 +19,7 @@ import TranslationFields from "../TranslationFields";
 export interface TranslationsPagesPageProps
   extends TranslationsEntitiesPageProps {
   data: PageTranslationFragment;
+  onAttributeValueSubmit: Pick<TranslationsEntitiesPageProps, "onSubmit">;
 }
 
 const TranslationsPagesPage: React.FC<TranslationsPagesPageProps> = ({
@@ -31,15 +33,16 @@ const TranslationsPagesPage: React.FC<TranslationsPagesPageProps> = ({
   onDiscard,
   onEdit,
   onLanguageChange,
-  onSubmit
+  onSubmit,
+  onAttributeValueSubmit
 }) => {
   const intl = useIntl();
 
   return (
     <Container>
-      <AppHeader onBack={onBack}>
+      <Backlink onClick={onBack}>
         {intl.formatMessage(sectionNames.translations)}
-      </AppHeader>
+      </Backlink>
       <PageHeader
         title={intl.formatMessage(
           {
@@ -48,7 +51,7 @@ const TranslationsPagesPage: React.FC<TranslationsPagesPageProps> = ({
           },
           {
             languageCode,
-            pageName: data?.page?.title || "..."
+            pageName: getStringOrPlaceholder(data?.page?.title)
           }
         )}
       >
@@ -85,10 +88,12 @@ const TranslationsPagesPage: React.FC<TranslationsPagesPageProps> = ({
           }
         ]}
         saveButtonState={saveButtonState}
+        richTextResetKey={languageCode}
         onEdit={onEdit}
         onDiscard={onDiscard}
         onSubmit={onSubmit}
       />
+
       <CardSpacer />
       <TranslationFields
         activeField={activeField}
@@ -118,10 +123,46 @@ const TranslationsPagesPage: React.FC<TranslationsPagesPageProps> = ({
           }
         ]}
         saveButtonState={saveButtonState}
+        richTextResetKey={languageCode}
         onEdit={onEdit}
         onDiscard={onDiscard}
         onSubmit={onSubmit}
       />
+      <CardSpacer />
+      {data?.attributeValues?.length > 0 && (
+        <>
+          <TranslationFields
+            activeField={activeField}
+            disabled={disabled}
+            initialState={true}
+            title={intl.formatMessage(commonMessages.translationAttributes)}
+            fields={
+              data.attributeValues.map((attrVal, i) => ({
+                id: attrVal.attributeValue.id,
+                displayName: intl.formatMessage(
+                  {
+                    defaultMessage: "Attribute {number}",
+                    description: "attribute list"
+                  },
+                  {
+                    number: i + 1
+                  }
+                ),
+                name: attrVal?.name,
+                translation: attrVal?.translation?.richText || null,
+                type: "rich" as "rich",
+                value: attrVal?.richText
+              })) || []
+            }
+            saveButtonState={saveButtonState}
+            richTextResetKey={languageCode}
+            onEdit={onEdit}
+            onDiscard={onDiscard}
+            onSubmit={onAttributeValueSubmit}
+          />
+          <CardSpacer />
+        </>
+      )}
     </Container>
   );
 };

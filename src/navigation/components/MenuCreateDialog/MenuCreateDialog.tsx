@@ -82,6 +82,7 @@ const MenuCreateDialog: React.FC<MenuCreateDialogProps> = ({
                 color="primary"
                 variant="contained"
                 onClick={submit}
+                data-test="submit"
               >
                 <FormattedMessage {...buttonMessages.save} />
               </ConfirmButton>

@@ -30,40 +30,41 @@ export function createUpdateHandler(
 ) {
   return async (formData: VoucherDetailsPageFormData) => {
     const { id } = voucher;
-    const result = await updateVoucher({
-      id,
-      input: {
-        applyOncePerCustomer: formData.applyOncePerCustomer,
-        applyOncePerOrder: formData.applyOncePerOrder,
-        onlyForStaff: formData.onlyForStaff,
-        discountValueType:
-          formData.discountType === DiscountTypeEnum.VALUE_PERCENTAGE
-            ? DiscountValueTypeEnum.PERCENTAGE
-            : formData.discountType === DiscountTypeEnum.VALUE_FIXED
-            ? DiscountValueTypeEnum.FIXED
-            : DiscountValueTypeEnum.PERCENTAGE,
-        endDate: formData.hasEndDate
-          ? joinDateTime(formData.endDate, formData.endTime)
-          : null,
-        minCheckoutItemsQuantity:
-          formData.requirementsPicker !== RequirementsPicker.ITEM
-            ? 0
-            : parseFloat(formData.minCheckoutItemsQuantity),
-        startDate: joinDateTime(formData.startDate, formData.startTime),
-        type:
-          formData.discountType === DiscountTypeEnum.SHIPPING
-            ? VoucherTypeEnum.SHIPPING
-            : formData.type,
-        usageLimit: formData.hasUsageLimit
-          ? parseInt(formData.usageLimit, 10)
-          : null
-      }
-    });
 
-    updateChannels({
-      variables: getChannelsVariables(id, formData, voucherChannelsChoices)
-    });
+    const errors = await Promise.all([
+      updateVoucher({
+        id,
+        input: {
+          applyOncePerCustomer: formData.applyOncePerCustomer,
+          applyOncePerOrder: formData.applyOncePerOrder,
+          onlyForStaff: formData.onlyForStaff,
+          discountValueType:
+            formData.discountType === DiscountTypeEnum.VALUE_PERCENTAGE
+              ? DiscountValueTypeEnum.PERCENTAGE
+              : formData.discountType === DiscountTypeEnum.VALUE_FIXED
+              ? DiscountValueTypeEnum.FIXED
+              : DiscountValueTypeEnum.PERCENTAGE,
+          endDate: formData.hasEndDate
+            ? joinDateTime(formData.endDate, formData.endTime)
+            : null,
+          minCheckoutItemsQuantity:
+            formData.requirementsPicker !== RequirementsPicker.ITEM
+              ? 0
+              : parseFloat(formData.minCheckoutItemsQuantity),
+          startDate: joinDateTime(formData.startDate, formData.startTime),
+          type:
+            formData.discountType === DiscountTypeEnum.SHIPPING
+              ? VoucherTypeEnum.SHIPPING
+              : formData.type,
+          usageLimit: formData.hasUsageLimit ? formData.usageLimit : null
+        }
+      }).then(({ data }) => data?.voucherUpdate.errors ?? []),
 
-    return getMutationErrors(result);
+      updateChannels({
+        variables: getChannelsVariables(id, formData, voucherChannelsChoices)
+      }).then(({ data }) => data?.voucherChannelListingUpdate.errors ?? [])
+    ]);
+
+    return errors.flat();
   };
 }

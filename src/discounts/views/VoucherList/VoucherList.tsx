@@ -11,6 +11,7 @@ import useBulkActions from "@saleor/hooks/useBulkActions";
 import useListSettings from "@saleor/hooks/useListSettings";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
+import { usePaginationReset } from "@saleor/hooks/usePaginationReset";
 import usePaginator, {
   createPaginationState
 } from "@saleor/hooks/usePaginator";
@@ -20,9 +21,9 @@ import { ListViews } from "@saleor/types";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import createFilterHandlers from "@saleor/utils/handlers/filterHandlers";
 import createSortHandler from "@saleor/utils/handlers/sortHandler";
-import { mapEdgesToItems } from "@saleor/utils/maps";
+import { mapEdgesToItems, mapNodeToChoice } from "@saleor/utils/maps";
 import { getSortParams } from "@saleor/utils/sort";
-import React from "react";
+import React, { useEffect } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import VoucherListPage from "../../components/VoucherListPage";
@@ -37,16 +38,16 @@ import {
   voucherUrl
 } from "../../urls";
 import {
-  areFiltersApplied,
   deleteFilterTab,
   getActiveFilters,
   getFilterOpts,
   getFilterQueryParam,
+  getFiltersCurrentTab,
   getFilterTabs,
   getFilterVariables,
   saveFilterTab
 } from "./filters";
-import { getSortQueryVariables } from "./sort";
+import { canBeSorted, DEFAULT_SORT_KEY, getSortQueryVariables } from "./sort";
 
 interface VoucherListProps {
   params: VoucherListUrlQueryParams;
@@ -62,9 +63,18 @@ export const VoucherList: React.FC<VoucherListProps> = ({ params }) => {
   const { updateListSettings, settings } = useListSettings(
     ListViews.VOUCHER_LIST
   );
+
+  usePaginationReset(voucherListUrl, params, settings.rowNumber);
+
   const intl = useIntl();
 
-  const { channel } = useAppChannel();
+  const { availableChannels } = useAppChannel(false);
+  const selectedChannel = availableChannels.find(
+    channel => channel.slug === params.channel
+  );
+  const channelOpts = availableChannels
+    ? mapNodeToChoice(availableChannels, channel => channel.slug)
+    : null;
 
   const [openModal, closeModal] = createDialogActionHandlers<
     VoucherListUrlDialog,
@@ -76,9 +86,10 @@ export const VoucherList: React.FC<VoucherListProps> = ({ params }) => {
     () => ({
       ...paginationState,
       filter: getFilterVariables(params),
-      sort: getSortQueryVariables(params, channel?.slug)
+      sort: getSortQueryVariables(params),
+      channel: params.channel
     }),
-    [params]
+    [params, settings.rowNumber]
   );
   const { data, loading, refetch } = useVoucherListQuery({
     displayLoader: true,
@@ -87,12 +98,7 @@ export const VoucherList: React.FC<VoucherListProps> = ({ params }) => {
 
   const tabs = getFilterTabs();
 
-  const currentTab =
-    params.activeTab === undefined
-      ? areFiltersApplied(params)
-        ? tabs.length + 1
-        : 0
-      : parseInt(params.activeTab, 0);
+  const currentTab = getFiltersCurrentTab(params, tabs);
 
   const [
     changeFilters,
@@ -105,6 +111,17 @@ export const VoucherList: React.FC<VoucherListProps> = ({ params }) => {
     navigate,
     params
   });
+
+  useEffect(() => {
+    if (!canBeSorted(params.sort, !!selectedChannel)) {
+      navigate(
+        voucherListUrl({
+          ...params,
+          sort: DEFAULT_SORT_KEY
+        })
+      );
+    }
+  }, [params]);
 
   const handleTabChange = (tab: number) => {
     reset();
@@ -164,7 +181,7 @@ export const VoucherList: React.FC<VoucherListProps> = ({ params }) => {
             <WindowTitle title={intl.formatMessage(sectionNames.vouchers)} />
             <VoucherListPage
               currentTab={currentTab}
-              filterOpts={getFilterOpts(params)}
+              filterOpts={getFilterOpts(params, channelOpts)}
               initialSearch={params.query || ""}
               onSearchChange={handleSearchChange}
               onFilterChange={filter => changeFilters(filter)}
@@ -200,7 +217,7 @@ export const VoucherList: React.FC<VoucherListProps> = ({ params }) => {
                   <DeleteIcon />
                 </IconButton>
               }
-              selectedChannelId={channel?.id}
+              selectedChannelId={selectedChannel?.id}
             />
             <ActionDialog
               confirmButtonState={voucherBulkDeleteOpts.status}

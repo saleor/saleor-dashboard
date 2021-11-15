@@ -7,11 +7,13 @@ import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import useUser from "@saleor/hooks/useUser";
 import { commonMessages } from "@saleor/intl";
+import { commonMessages, errorMessages } from "@saleor/intl";
 import {
   extractMutationErrors,
   getStringOrPlaceholder,
   maybe
 } from "@saleor/misc";
+import { getStringOrPlaceholder, maybe } from "@saleor/misc";
 import usePermissionGroupSearch from "@saleor/searches/usePermissionGroupSearch";
 import { mapEdgesToItems } from "@saleor/utils/maps";
 import React from "react";
@@ -122,6 +124,12 @@ export const StaffDetails: React.FC<OrderListProps> = ({ id, params }) => {
             notify({
               status: "success",
               text: intl.formatMessage(commonMessages.savedChanges)
+            });
+          } else {
+            notify({
+              status: "error",
+              title: intl.formatMessage(errorMessages.imgageUploadErrorTitle),
+              text: intl.formatMessage(errorMessages.imageUploadErrorText)
             });
           }
         };

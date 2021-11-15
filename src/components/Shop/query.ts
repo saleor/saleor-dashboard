@@ -34,6 +34,7 @@ const shopInfo = gql`
         code
         name
       }
+      version
     }
   }
 `;

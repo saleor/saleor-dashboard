@@ -23,7 +23,21 @@
     "postalCode": "70957",
     "country": "US",
     "countryArea": "LA",
-    "phone": "2025550189",
+    "phone": "+12025550189",
+    "currency": "USD",
+    "countryFullName": "United States of America"
+  },
+  "secondUsAddress": {
+    "firstName": "test",
+    "lastName": "test",
+    "companyName": "Test2",
+    "streetAddress1": "Antonio Ridge",
+    "streetAddress2": "34930",
+    "city": "North Patrickfort",
+    "postalCode": "70958",
+    "country": "US",
+    "countryArea": "LA",
+    "phone": "+12025550169",
     "currency": "USD",
     "countryFullName": "United States of America"
   }

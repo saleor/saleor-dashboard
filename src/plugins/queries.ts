@@ -1,6 +1,6 @@
 import {
-  pluginsDetailsFragment,
-  pluginsFragment
+  pluginBaseFragment,
+  pluginsDetailsFragment
 } from "@saleor/fragments/plugins";
 import makeQuery from "@saleor/hooks/makeQuery";
 import gql from "graphql-tag";
@@ -9,7 +9,7 @@ import { Plugin, PluginVariables } from "./types/Plugin";
 import { Plugins, PluginsVariables } from "./types/Plugins";
 
 const pluginsList = gql`
-  ${pluginsFragment}
+  ${pluginBaseFragment}
   query Plugins(
     $first: Int
     $after: String
@@ -28,7 +28,7 @@ const pluginsList = gql`
     ) {
       edges {
         node {
-          ...PluginFragment
+          ...PluginBaseFragment
         }
       }
       pageInfo {

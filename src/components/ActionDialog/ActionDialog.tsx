@@ -2,26 +2,26 @@ import { Dialog, DialogContent, DialogTitle } from "@material-ui/core";
 import { DialogProps } from "@saleor/types";
 import React from "react";
 
-import { ConfirmButtonTransitionState } from "../ConfirmButton/ConfirmButton";
+import { ConfirmButtonTransitionState } from "../ConfirmButton";
 import DialogButtons from "./DialogButtons";
-import { ActionDialogVariant } from "./types";
+import { ActionDialogVariant, Size } from "./types";
 
-interface ActionDialogProps extends DialogProps {
+export interface ActionDialogProps extends DialogProps {
   children?: React.ReactNode;
   confirmButtonLabel?: string;
   confirmButtonState: ConfirmButtonTransitionState;
   disabled?: boolean;
-  maxWidth?: "xs" | "sm" | "md" | "lg" | "xl" | false;
+  maxWidth?: Size | false;
   title: string;
   variant?: ActionDialogVariant;
   onConfirm();
 }
 
 const ActionDialog: React.FC<ActionDialogProps> = props => {
-  const { children, open, title, onClose, variant, ...rest } = props;
+  const { children, open, title, onClose, variant, maxWidth, ...rest } = props;
 
   return (
-    <Dialog fullWidth onClose={onClose} open={open} {...rest}>
+    <Dialog fullWidth onClose={onClose} open={open} maxWidth={maxWidth}>
       <DialogTitle>{title}</DialogTitle>
       <DialogContent>{children}</DialogContent>
       <DialogButtons {...rest} onClose={onClose} variant={variant} />

@@ -8,15 +8,15 @@ import {
   TableRow
 } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
-import Alert from "@saleor/components/Alert/Alert";
-import AppHeader from "@saleor/components/AppHeader";
 import Container from "@saleor/components/Container";
+import LimitReachedAlert from "@saleor/components/LimitReachedAlert";
 import PageHeader from "@saleor/components/PageHeader";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import { RefreshLimits_shop_limits } from "@saleor/components/Shop/types/RefreshLimits";
 import Skeleton from "@saleor/components/Skeleton";
 import TableCellHeader from "@saleor/components/TableCellHeader";
 import { sectionNames } from "@saleor/intl";
+import { Backlink } from "@saleor/macaw-ui";
 import { renderCollection, stopPropagation } from "@saleor/misc";
 import { hasLimits, isLimitReached } from "@saleor/utils/limits";
 import React from "react";
@@ -51,17 +51,23 @@ export const ChannelsListPage: React.FC<ChannelsListPageProps> = ({
 
   return (
     <Container>
-      <AppHeader onBack={onBack}>
+      <Backlink onClick={onBack}>
         {intl.formatMessage(sectionNames.configuration)}
-      </AppHeader>
+      </Backlink>
       <PageHeader
         title={intl.formatMessage(sectionNames.channels)}
-        limit={
-          hasLimits(limits, "channels") && {
-            data: limits,
-            key: "channels",
-            text: "channels used"
-          }
+        limitText={
+          hasLimits(limits, "channels") &&
+          intl.formatMessage(
+            {
+              defaultMessage: "{count}/{max} channels used",
+              description: "created channels counter"
+            },
+            {
+              count: limits.currentUsage.channels,
+              max: limits.allowedUsage.channels
+            }
+          )
         }
       >
         <Button
@@ -77,15 +83,16 @@ export const ChannelsListPage: React.FC<ChannelsListPageProps> = ({
           />
         </Button>
       </PageHeader>
-      <Alert
-        show={limitReached}
-        title={intl.formatMessage({
-          defaultMessage: "Channel limit reached",
-          description: "alert"
-        })}
-      >
-        <FormattedMessage defaultMessage="You have reached your channel limit, you will be no longer able to add channels to your store. If you would like to up your limit, contact your administration staff about raising your limits." />
-      </Alert>
+      {limitReached && (
+        <LimitReachedAlert
+          title={intl.formatMessage({
+            defaultMessage: "Channel limit reached",
+            description: "alert"
+          })}
+        >
+          <FormattedMessage defaultMessage="You have reached your channel limit, you will be no longer able to add channels to your store. If you would like to up your limit, contact your administration staff about raising your limits." />
+        </LimitReachedAlert>
+      )}
       <Card>
         <ResponsiveTable>
           <TableHead>

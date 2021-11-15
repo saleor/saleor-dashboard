@@ -215,3 +215,17 @@ export const uploadErrorFragment = gql`
     field
   }
 `;
+
+export const giftCardErrorFragment = gql`
+  fragment GiftCardError on GiftCardError {
+    code
+    field
+  }
+`;
+
+export const giftCardSettingsErrorFragment = gql`
+  fragment GiftCardSettingsErrorFragment on GiftCardSettingsError {
+    code
+    field
+  }
+`;

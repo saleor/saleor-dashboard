@@ -17,7 +17,10 @@ const attributes: FormsetData<AttributeInputData, string[]> = [
           reference: null,
           slug: "attr-1-v-1",
           richText: null,
-          boolean: null
+          boolean: null,
+          date: null,
+          dateTime: null,
+          value: null
         }
       ]
     },
@@ -38,7 +41,10 @@ const attributes: FormsetData<AttributeInputData, string[]> = [
           reference: null,
           slug: "attr-2-v-1",
           richText: null,
-          boolean: null
+          boolean: null,
+          date: null,
+          dateTime: null,
+          value: null
         },
         {
           __typename: "AttributeValue",
@@ -48,7 +54,10 @@ const attributes: FormsetData<AttributeInputData, string[]> = [
           reference: null,
           slug: "attr-2-v-2",
           richText: null,
-          boolean: null
+          boolean: null,
+          date: null,
+          dateTime: null,
+          value: null
         },
         {
           __typename: "AttributeValue",
@@ -58,7 +67,10 @@ const attributes: FormsetData<AttributeInputData, string[]> = [
           reference: null,
           slug: "attr-2-v-3",
           richText: null,
-          boolean: null
+          boolean: null,
+          date: null,
+          dateTime: null,
+          value: null
         }
       ]
     },
@@ -83,7 +95,10 @@ const attributes: FormsetData<AttributeInputData, string[]> = [
           reference: null,
           slug: "file-first-value",
           richText: null,
-          boolean: null
+          boolean: null,
+          date: null,
+          dateTime: null,
+          value: null
         }
       ]
     },

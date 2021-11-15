@@ -21,11 +21,14 @@ import useNotifier from "@saleor/hooks/useNotifier";
 import useOnSetDefaultVariant from "@saleor/hooks/useOnSetDefaultVariant";
 import useShop from "@saleor/hooks/useShop";
 import { commonMessages } from "@saleor/intl";
-import { useProductVariantChannelListingUpdate } from "@saleor/products/mutations";
+import {
+  useProductVariantChannelListingUpdate,
+  useProductVariantPreorderDeactivateMutation
+} from "@saleor/products/mutations";
 import { ProductVariantDetails_productVariant } from "@saleor/products/types/ProductVariantDetails";
 import usePageSearch from "@saleor/searches/usePageSearch";
 import useProductSearch from "@saleor/searches/useProductSearch";
-import createAttributeValueSearchHandler from "@saleor/utils/handlers/attributeValueSearchHandler";
+import useAttributeValueSearchHandler from "@saleor/utils/handlers/attributeValueSearchHandler";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import createMetadataUpdateHandler from "@saleor/utils/handlers/metadataUpdateHandler";
 import { mapEdgesToItems } from "@saleor/utils/maps";
@@ -155,23 +158,36 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
     data: ProductVariantUpdateSubmitData,
     variant: ProductVariantDetails_productVariant
   ) => {
-    const isChannelPriceChange = data.channelListings.some(channel => {
+    const channelsHaveChanged = data.channelListings.some(channel => {
       const variantChannel = variant.channelListings.find(
         variantChannel => variantChannel.channel.id === channel.id
       );
+
+      const priceHasChanged =
+        channel.value.price !== variantChannel?.price?.amount.toString();
+
+      const costPriceHasChanged =
+        channel.value.costPrice !==
+        variantChannel?.costPrice?.amount.toString();
+
+      const preorderThresholdHasChanged =
+        channel.value?.preorderThreshold !==
+        variantChannel.preorderThreshold.quantity;
+
       return (
-        channel.value.price !== variantChannel?.price?.amount.toString() ||
-        channel.value.costPrice !== variantChannel?.costPrice?.amount.toString()
+        priceHasChanged || costPriceHasChanged || preorderThresholdHasChanged
       );
     });
-    if (isChannelPriceChange) {
+
+    if (channelsHaveChanged) {
       await updateChannels({
         variables: {
           id: variant.id,
           input: data.channelListings.map(listing => ({
             channelId: listing.id,
             costPrice: listing.value.costPrice || null,
-            price: listing.value.price
+            price: listing.value.price,
+            preorderThreshold: listing.value.preorderThreshold
           }))
         }
       });
@@ -184,6 +200,13 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
   if (variant === null) {
     return <NotFoundPage onBack={handleBack} />;
   }
+
+  const [
+    deactivatePreorder,
+    deactivatePreoderOpts
+  ] = useProductVariantPreorderDeactivateMutation({});
+  const handleDeactivateVariantPreorder = (id: string) =>
+    deactivatePreorder({ variables: { id } });
 
   const [
     reorderProductVariants,
@@ -204,6 +227,7 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
     updateVariantOpts.loading ||
     assignMediaOpts.loading ||
     unassignMediaOpts.loading ||
+    deactivatePreoderOpts.loading ||
     reorderProductVariantsOpts.loading ||
     deleteAttributeValueOpts.loading;
 
@@ -256,6 +280,14 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
         sku: data.sku,
         stocks: data.updateStocks.map(mapFormsetStockToStockInput),
         trackInventory: data.trackInventory,
+        preorder: data.isPreorder
+          ? {
+              globalThreshold: data.globalThreshold
+                ? parseInt(data.globalThreshold, 10)
+                : null,
+              endDate: data?.preorderEndDateTime || null
+            }
+          : null,
         weight: weight(data.weight),
         firstValues: 10
       }
@@ -303,8 +335,9 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
   const {
     loadMore: loadMoreAttributeValues,
     search: searchAttributeValues,
-    result: searchAttributeValuesOpts
-  } = createAttributeValueSearchHandler(DEFAULT_INITIAL_SEARCH_DATA);
+    result: searchAttributeValuesOpts,
+    reset: searchAttributeReset
+  } = useAttributeValueSearchHandler(DEFAULT_INITIAL_SEARCH_DATA);
 
   const fetchMoreReferencePages = {
     hasMore: searchPagesOpts.data?.search?.pageInfo?.hasNextPage,
@@ -323,9 +356,8 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
     onFetchMore: loadMoreAttributeValues
   };
 
-  const attributeValues = mapEdgesToItems(
-    searchAttributeValuesOpts?.data?.attribute.choices
-  );
+  const attributeValues =
+    mapEdgesToItems(searchAttributeValuesOpts?.data?.attribute.choices) || [];
 
   return (
     <>
@@ -346,7 +378,7 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
         placeholderImage={placeholderImg}
         variant={variant}
         header={variant?.name || variant?.sku}
-        warehouses={mapEdgesToItems(warehouses?.data?.warehouses)}
+        warehouses={mapEdgesToItems(warehouses?.data?.warehouses) || []}
         onAdd={() => navigate(productVariantAddUrl(productId))}
         onBack={handleBack}
         onDelete={() => openModal("remove")}
@@ -359,13 +391,17 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
         onVariantClick={variantId => {
           navigate(productVariantEditUrl(productId, variantId));
         }}
+        onVariantPreorderDeactivate={handleDeactivateVariantPreorder}
+        variantDeactivatePreoderButtonState={deactivatePreoderOpts.status}
         onVariantReorder={handleVariantReorder}
         assignReferencesAttributeId={
           params.action === "assign-attribute-value" && params.id
         }
         onAssignReferencesClick={handleAssignAttributeReferenceClick}
-        referencePages={mapEdgesToItems(searchPagesOpts?.data?.search)}
-        referenceProducts={mapEdgesToItems(searchProductsOpts?.data?.search)}
+        referencePages={mapEdgesToItems(searchPagesOpts?.data?.search) || []}
+        referenceProducts={
+          mapEdgesToItems(searchProductsOpts?.data?.search) || []
+        }
         fetchReferencePages={searchPages}
         fetchMoreReferencePages={fetchMoreReferencePages}
         fetchReferenceProducts={searchProducts}
@@ -375,6 +411,7 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
         onCloseDialog={() =>
           navigate(productVariantEditUrl(productId, variantId))
         }
+        onAttributeSelectBlur={searchAttributeReset}
       />
       <ProductVariantDeleteDialog
         confirmButtonState={deleteVariantOpts.status}

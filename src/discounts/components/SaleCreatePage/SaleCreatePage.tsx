@@ -1,19 +1,21 @@
 import { ChannelSaleData } from "@saleor/channels/utils";
-import AppHeader from "@saleor/components/AppHeader";
 import CardSpacer from "@saleor/components/CardSpacer";
 import ChannelsAvailabilityCard from "@saleor/components/ChannelsAvailabilityCard";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
 import Container from "@saleor/components/Container";
 import Form from "@saleor/components/Form";
 import Grid from "@saleor/components/Grid";
+import Metadata, { MetadataFormData } from "@saleor/components/Metadata";
 import PageHeader from "@saleor/components/PageHeader";
-import SaveButtonBar from "@saleor/components/SaveButtonBar";
+import Savebar from "@saleor/components/Savebar";
 import { createSaleChannelsChangeHandler } from "@saleor/discounts/handlers";
 import { SaleCreate_saleCreate_errors } from "@saleor/discounts/types/SaleCreate";
 import { DiscountErrorFragment } from "@saleor/fragments/types/DiscountErrorFragment";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import { sectionNames } from "@saleor/intl";
+import { Backlink } from "@saleor/macaw-ui";
 import { validatePrice } from "@saleor/products/utils/validation";
+import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -26,7 +28,7 @@ import SaleInfo from "../SaleInfo";
 import SaleType from "../SaleType";
 import SaleValue from "../SaleValue";
 
-export interface FormData {
+export interface FormData extends MetadataFormData {
   channelListings: ChannelSaleData[];
   endDate: string;
   endTime: string;
@@ -62,6 +64,9 @@ const SaleCreatePage: React.FC<SaleCreatePageProps> = ({
   onBack
 }) => {
   const intl = useIntl();
+  const {
+    makeChangeHandler: makeMetadataChangeHandler
+  } = useMetadataChangeTrigger();
 
   const initialForm: FormData = {
     channelListings,
@@ -72,7 +77,9 @@ const SaleCreatePage: React.FC<SaleCreatePageProps> = ({
     startDate: "",
     startTime: "",
     type: SaleTypeEnum.FIXED,
-    value: ""
+    value: "",
+    metadata: [],
+    privateMetadata: []
   };
   return (
     <Form confirmLeave initial={initialForm} onSubmit={onSubmit}>
@@ -85,11 +92,13 @@ const SaleCreatePage: React.FC<SaleCreatePageProps> = ({
         const formDisabled = data.channelListings?.some(channel =>
           validatePrice(channel?.discountValue)
         );
+        const changeMetadata = makeMetadataChangeHandler(change);
+
         return (
           <Container>
-            <AppHeader onBack={onBack}>
+            <Backlink onClick={onBack}>
               {intl.formatMessage(sectionNames.sales)}
-            </AppHeader>
+            </Backlink>
             <PageHeader
               title={intl.formatMessage({
                 defaultMessage: "Create Sale",
@@ -134,11 +143,12 @@ const SaleCreatePage: React.FC<SaleCreatePageProps> = ({
                   openModal={openChannelsModal}
                 />
               </div>
+              <Metadata data={data} onChange={changeMetadata} />
             </Grid>
-            <SaveButtonBar
+            <Savebar
               disabled={disabled || formDisabled || !hasChanged}
               onCancel={onBack}
-              onSave={submit}
+              onSubmit={submit}
               state={saveButtonBarState}
             />
           </Container>

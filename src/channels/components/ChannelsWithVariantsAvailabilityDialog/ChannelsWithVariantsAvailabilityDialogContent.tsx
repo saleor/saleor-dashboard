@@ -1,20 +1,23 @@
 import placeholderImage from "@assets/images/placeholder60x60.png";
 import {
+  Accordion,
+  AccordionSummary,
   Divider,
-  ExpansionPanel,
-  ExpansionPanelSummary,
   Typography
 } from "@material-ui/core";
 import { ChannelData } from "@saleor/channels/utils";
 import IconCheckboxChecked from "@saleor/icons/CheckboxChecked";
 import IconCheckboxSemiChecked from "@saleor/icons/CheckboxSemiChecked";
 import IconChevronDown from "@saleor/icons/ChevronDown";
+import { makeStyles } from "@saleor/macaw-ui";
 import Label from "@saleor/orders/components/OrderHistory/Label";
 import { getById } from "@saleor/orders/components/OrderReturnPage/utils";
 import { ProductDetails_product_variants } from "@saleor/products/types/ProductDetails";
 import { ChannelsWithVariantsData } from "@saleor/products/views/ProductUpdate/types";
-import { areAllChannelVariantsSelected } from "@saleor/products/views/ProductUpdate/utils";
-import { makeStyles } from "@saleor/theme";
+import {
+  areAllChannelVariantsSelected,
+  channelVariantListingDiffToDict
+} from "@saleor/products/views/ProductUpdate/utils";
 import map from "lodash/map";
 import React, { ChangeEvent } from "react";
 import { defineMessages, useIntl } from "react-intl";
@@ -75,7 +78,8 @@ const useSummaryStyles = makeStyles(
       height: theme.spacing(10),
       padding: 0,
       margin: 0,
-      minHeight: 0
+      minHeight: 0,
+      paddingRight: theme.spacing(2.5)
     },
     content: {
       margin: 0
@@ -95,7 +99,7 @@ interface ChannelsWithVariantsAvailabilityDialogContentProps {
   addVariantToChannel: (channelId: string, variantId: string) => void;
   removeVariantFromChannel: (channelId: string, variantId: string) => void;
   channelsWithVariants: ChannelsWithVariantsData;
-  toggleAllChannelVariants: (channelId: string) => () => void;
+  toggleAllChannelVariants: (channelId: string) => void;
   isChannelSelected: (channelId: string) => boolean;
   channels: ChannelData[];
   allVariants: ProductDetails_product_variants[];
@@ -124,8 +128,8 @@ const ChannelsWithVariantsAvailabilityDialogContent: React.FC<ChannelsWithVarian
 
   const selectChannelIcon = (channelId: string) =>
     areAllChannelVariantsSelected(
-      allVariants,
-      channelsWithVariants[channelId]
+      allVariants?.map(variant => variant.id),
+      channelVariantListingDiffToDict(channelsWithVariants)[channelId]
     ) ? (
       <IconCheckboxChecked />
     ) : (
@@ -135,7 +139,13 @@ const ChannelsWithVariantsAvailabilityDialogContent: React.FC<ChannelsWithVarian
   return (
     <>
       {map(channelsWithVariants, ({ selectedVariantsIds }, channelId) => {
-        const { name } = channels.find(getById(channelId));
+        const filteredChannel = channels.find(getById(channelId));
+
+        if (!filteredChannel) {
+          return null;
+        }
+
+        const { name } = filteredChannel;
 
         const isVariantSelected = (variantId: string) =>
           selectedVariantsIds.includes(variantId);
@@ -145,11 +155,12 @@ const ChannelsWithVariantsAvailabilityDialogContent: React.FC<ChannelsWithVarian
           placeholderImage;
 
         return (
-          <ExpansionPanel
+          <Accordion
             classes={expanderClasses}
             data-test-id="expand-channel-row"
+            key={channelId}
           >
-            <ExpansionPanelSummary
+            <AccordionSummary
               expandIcon={<IconChevronDown />}
               classes={summaryClasses}
             >
@@ -176,14 +187,14 @@ const ChannelsWithVariantsAvailabilityDialogContent: React.FC<ChannelsWithVarian
                         />
                       </div>
                     }
-                    onChange={toggleAllChannelVariants(channelId)}
+                    onChange={() => toggleAllChannelVariants(channelId)}
                   />
                 </div>
                 <Divider />
               </div>
-            </ExpansionPanelSummary>
+            </AccordionSummary>
             {allVariants.map(({ id: variantId, name }) => (
-              <>
+              <React.Fragment key={variantId}>
                 <div
                   data-test-id="channel-variant-row"
                   key={variantId}
@@ -202,9 +213,9 @@ const ChannelsWithVariantsAvailabilityDialogContent: React.FC<ChannelsWithVarian
                   />
                 </div>
                 <Divider />
-              </>
+              </React.Fragment>
             ))}
-          </ExpansionPanel>
+          </Accordion>
         );
       })}
     </>

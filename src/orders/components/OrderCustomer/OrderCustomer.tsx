@@ -2,6 +2,7 @@ import { Button, Card, CardContent, Typography } from "@material-ui/core";
 import CardTitle from "@saleor/components/CardTitle";
 import ExternalLink from "@saleor/components/ExternalLink";
 import Form from "@saleor/components/Form";
+import FormSpacer from "@saleor/components/FormSpacer";
 import Hr from "@saleor/components/Hr";
 import Link from "@saleor/components/Link";
 import RequirePermissions from "@saleor/components/RequirePermissions";
@@ -9,8 +10,8 @@ import SingleAutocompleteSelectField from "@saleor/components/SingleAutocomplete
 import Skeleton from "@saleor/components/Skeleton";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { buttonMessages } from "@saleor/intl";
+import { makeStyles } from "@saleor/macaw-ui";
 import { SearchCustomers_search_edges_node } from "@saleor/searches/types/SearchCustomers";
-import { makeStyles } from "@saleor/theme";
 import { FetchMoreProps, UserPermissionProps } from "@saleor/types";
 import { PermissionEnum } from "@saleor/types/globalTypes";
 import createSingleAutocompleteSelectHandler from "@saleor/utils/handlers/singleAutocompleteSelectChangeHandler";
@@ -20,6 +21,8 @@ import { FormattedMessage, useIntl } from "react-intl";
 import { customerUrl } from "../../../customers/urls";
 import { createHref, maybe } from "../../../misc";
 import { OrderDetails_order } from "../../types/OrderDetails";
+import { WarehouseClickAndCollectOptionEnum } from "./../../../types/globalTypes";
+import messages from "./messages";
 
 const useStyles = makeStyles(
   theme => ({
@@ -35,7 +38,7 @@ const useStyles = makeStyles(
       textTransform: "uppercase"
     },
     sectionHeaderToolbar: {
-      marginRight: -theme.spacing(2)
+      marginRight: theme.spacing(-2)
     },
     userEmail: {
       fontWeight: 600 as 600,
@@ -98,6 +101,25 @@ const OrderCustomer: React.FC<OrderCustomerProps> = props => {
 
   const billingAddress = maybe(() => order.billingAddress);
   const shippingAddress = maybe(() => order.shippingAddress);
+
+  const pickupAnnotation = order => {
+    if (order?.deliveryMethod?.__typename === "Warehouse") {
+      return (
+        <>
+          <FormSpacer />
+          <Typography variant="caption" color="textSecondary">
+            {order?.deliveryMethod?.clickAndCollectOption ===
+            WarehouseClickAndCollectOptionEnum.LOCAL ? (
+              <FormattedMessage {...messages.orderCustomerFulfillmentLocal} />
+            ) : (
+              <FormattedMessage {...messages.orderCustomerFulfillmentAll} />
+            )}
+          </Typography>
+        </>
+      );
+    }
+    return "";
+  };
 
   return (
     <Card>
@@ -305,6 +327,7 @@ const OrderCustomer: React.FC<OrderCustomerProps> = props => {
                 : shippingAddress.country.country}
             </Typography>
             <Typography>{shippingAddress.phone}</Typography>
+            {pickupAnnotation(order)}
           </>
         )}
       </CardContent>

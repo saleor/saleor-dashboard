@@ -8,7 +8,7 @@ import {
 import { CollectionErrorFragment } from "@saleor/fragments/types/CollectionErrorFragment";
 import { PageErrorFragment } from "@saleor/fragments/types/PageErrorFragment";
 import { ProductErrorFragment } from "@saleor/fragments/types/ProductErrorFragment";
-import { makeStyles } from "@saleor/theme";
+import { makeStyles } from "@saleor/macaw-ui";
 import { getFieldError, getProductErrorMessage } from "@saleor/utils/errors";
 import getPageErrorMessage from "@saleor/utils/errors/page";
 import classNames from "classnames";

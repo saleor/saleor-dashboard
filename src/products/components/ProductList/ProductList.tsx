@@ -5,6 +5,7 @@ import {
   TableRow,
   Typography
 } from "@material-ui/core";
+import AvailabilityStatusLabel from "@saleor/components/AvailabilityStatusLabel";
 import { ChannelsAvailabilityDropdown } from "@saleor/components/ChannelsAvailabilityDropdown";
 import Checkbox from "@saleor/components/Checkbox";
 import MoneyRange from "@saleor/components/MoneyRange";
@@ -16,6 +17,7 @@ import TableCellHeader from "@saleor/components/TableCellHeader";
 import TableHead from "@saleor/components/TableHead";
 import TablePagination from "@saleor/components/TablePagination";
 import { ProductListColumns } from "@saleor/config";
+import { makeStyles } from "@saleor/macaw-ui";
 import { maybe, renderCollection } from "@saleor/misc";
 import {
   getAttributeIdFromColumnValue,
@@ -24,7 +26,7 @@ import {
 import { GridAttributes_grid_edges_node } from "@saleor/products/types/GridAttributes";
 import { ProductList_products_edges_node } from "@saleor/products/types/ProductList";
 import { ProductListUrlSortField } from "@saleor/products/urls";
-import { makeStyles } from "@saleor/theme";
+import { canBeSorted } from "@saleor/products/views/ProductList/sort";
 import { ChannelProps, ListActions, ListProps, SortPage } from "@saleor/types";
 import TDisplayColumn, {
   DisplayColumnProps
@@ -34,11 +36,13 @@ import classNames from "classnames";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
+import { messages } from "./messages";
+
 const useStyles = makeStyles(
   theme => ({
-    [theme.breakpoints.up("lg")]: {
+    [theme.breakpoints.up("md")]: {
       colName: {
-        width: "auto"
+        minWidth: 250
       },
       colPrice: {
         width: 300
@@ -215,6 +219,12 @@ export const ProductList: React.FC<ProductListProps> = props => {
                   : undefined
               }
               onClick={() => onSort(ProductListUrlSortField.status)}
+              disabled={
+                !canBeSorted(
+                  ProductListUrlSortField.status,
+                  !!selectedChannelId
+                )
+              }
             >
               <FormattedMessage
                 defaultMessage="Availability"
@@ -262,6 +272,9 @@ export const ProductList: React.FC<ProductListProps> = props => {
               }
               textAlign="right"
               onClick={() => onSort(ProductListUrlSortField.price)}
+              disabled={
+                !canBeSorted(ProductListUrlSortField.price, !!selectedChannelId)
+              }
             >
               <FormattedMessage
                 defaultMessage="Price"
@@ -313,7 +326,6 @@ export const ProductList: React.FC<ProductListProps> = props => {
                     />
                   </TableCell>
                   <TableCellAvatar
-                    className={classes.colName}
                     thumbnail={maybe(() => product.thumbnail.url)}
                   >
                     {product?.productType ? (
@@ -361,17 +373,20 @@ export const ProductList: React.FC<ProductListProps> = props => {
                         !!product?.channelListings?.length
                       }
                     >
-                      {product && !product?.channelListings?.length ? (
-                        "-"
-                      ) : product?.channelListings !== undefined ? (
-                        <ChannelsAvailabilityDropdown
-                          allChannelsCount={channelsCount}
-                          currentChannel={channel}
-                          channels={product?.channelListings}
-                        />
-                      ) : (
-                        <Skeleton />
-                      )}
+                      {(!product && <Skeleton />) ||
+                        (!product?.channelListings?.length && "-") ||
+                        (product?.channelListings !== undefined && channel ? (
+                          <AvailabilityStatusLabel
+                            channel={channel}
+                            messages={messages}
+                          />
+                        ) : (
+                          <ChannelsAvailabilityDropdown
+                            allChannelsCount={channelsCount}
+                            channels={product?.channelListings}
+                            showStatus
+                          />
+                        ))}
                     </TableCell>
                   </DisplayColumn>
                   {gridAttributesFromSettings.map(gridAttribute => (

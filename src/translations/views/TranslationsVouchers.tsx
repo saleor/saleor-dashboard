@@ -2,26 +2,28 @@ import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import useShop from "@saleor/hooks/useShop";
 import { commonMessages } from "@saleor/intl";
-import { stringify as stringifyQs } from "qs";
+import { stringifyQs } from "@saleor/utils/urls";
 import React from "react";
 import { useIntl } from "react-intl";
 
 import { extractMutationErrors, maybe } from "../../misc";
-import {
-  LanguageCodeEnum,
-  NameTranslationInput
-} from "../../types/globalTypes";
+import { maybe } from "../../misc";
+import { LanguageCodeEnum } from "../../types/globalTypes";
+import { LanguageCodeEnum } from "../../types/globalTypes";
 import TranslationsVouchersPage, {
   fieldNames
 } from "../components/TranslationsVouchersPage";
+import TranslationsVouchersPage from "../components/TranslationsVouchersPage";
 import { TypedUpdateVoucherTranslations } from "../mutations";
 import { useVoucherTranslationDetails } from "../queries";
+import { TranslationField, TranslationInputFieldName } from "../types";
 import { UpdateVoucherTranslations } from "../types/UpdateVoucherTranslations";
 import {
   languageEntitiesUrl,
   languageEntityUrl,
   TranslatableEntities
 } from "../urls";
+import { getParsedTranslationInputData } from "../utils";
 
 export interface TranslationsVouchersQueryParams {
   activeField: string;
@@ -52,7 +54,7 @@ const TranslationsVouchers: React.FC<TranslationsVouchersProps> = ({
         stringifyQs({
           activeField: field
         }),
-      true
+      { replace: true }
     );
   const onUpdate = (data: UpdateVoucherTranslations) => {
     if (data.voucherTranslate.errors.length === 0) {
@@ -61,32 +63,32 @@ const TranslationsVouchers: React.FC<TranslationsVouchersProps> = ({
         status: "success",
         text: intl.formatMessage(commonMessages.savedChanges)
       });
-      navigate("?", true);
+      navigate("?", { replace: true });
     }
   };
   const onDiscard = () => {
-    navigate("?", true);
+    navigate("?", { replace: true });
   };
 
   return (
     <TypedUpdateVoucherTranslations onCompleted={onUpdate}>
       {(updateTranslations, updateTranslationsOpts) => {
-        const handleSubmit = (field: string, data: string) => {
-          const input: NameTranslationInput = {};
-          if (field === fieldNames.name) {
-            input.name = data;
-          }
-
-          return extractMutationErrors(
+        const handleSubmit = (
+          { name: fieldName }: TranslationField<TranslationInputFieldName>,
+          data: string
+        ) =>
+          extractMutationErrors(
             updateTranslations({
               variables: {
                 id,
-                input,
+                input: getParsedTranslationInputData({
+                  data,
+                  fieldName
+                }),
                 language: languageCode
               }
             })
           );
-        };
 
         const translation = voucherTranslations?.data?.translation;
 

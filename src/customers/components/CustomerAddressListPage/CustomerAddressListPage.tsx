@@ -1,9 +1,9 @@
 import { Button, Typography } from "@material-ui/core";
-import AppHeader from "@saleor/components/AppHeader";
 import Container from "@saleor/components/Container";
 import PageHeader from "@saleor/components/PageHeader";
-import { renderCollection } from "@saleor/misc";
-import { makeStyles } from "@saleor/theme";
+import { Backlink } from "@saleor/macaw-ui";
+import { makeStyles } from "@saleor/macaw-ui";
+import { getStringOrPlaceholder, renderCollection } from "@saleor/misc";
 import React from "react";
 import { defineMessages, useIntl } from "react-intl";
 
@@ -34,6 +34,11 @@ const messages = defineMessages({
     defaultMessage: "{fullName}'s Address Book",
     description: "customer's address book, header"
   },
+  noNameToShow: {
+    defaultMessage: "Address Book",
+    description:
+      "customer's address book when no customer name is available, header"
+  },
   fullNameDetail: {
     defaultMessage: "{fullName} Details",
     description: "customer details, header"
@@ -58,7 +63,7 @@ const useStyles = makeStyles(
     },
     root: {
       display: "grid",
-      gap: `${theme.spacing(3)}px`,
+      gap: theme.spacing(3),
       gridTemplateColumns: "repeat(3, 1fr)",
       [theme.breakpoints.down("md")]: {
         gridTemplateColumns: "repeat(2, 1fr)"
@@ -86,16 +91,24 @@ const CustomerAddressListPage: React.FC<CustomerAddressListPageProps> = props =>
   const intl = useIntl();
 
   const isEmpty = customer?.addresses?.length === 0;
-  const fullName = [customer?.firstName, customer?.lastName].join(" ") || "...";
+  const fullName = getStringOrPlaceholder(
+    customer && [customer.firstName, customer.lastName].join(" ")
+  );
 
   return (
     <Container>
-      <AppHeader onBack={onBack}>
-        {intl.formatMessage(messages.fullNameDetail, { fullName })}
-      </AppHeader>
+      <Backlink onClick={onBack}>
+        {fullName.trim().length > 0
+          ? intl.formatMessage(messages.fullNameDetail, { fullName })
+          : intl.formatMessage(messages.noNameToShow)}
+      </Backlink>
       {!isEmpty && (
         <PageHeader
-          title={intl.formatMessage(messages.fullNameAddress, { fullName })}
+          title={
+            fullName.trim().length > 0
+              ? intl.formatMessage(messages.fullNameAddress, { fullName })
+              : intl.formatMessage(messages.noNameToShow)
+          }
         >
           <Button color="primary" variant="contained" onClick={onAdd}>
             {intl.formatMessage(messages.addAddress)}

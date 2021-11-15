@@ -1,5 +1,4 @@
 import { Typography } from "@material-ui/core";
-import AppHeader from "@saleor/components/AppHeader";
 import CardMenu from "@saleor/components/CardMenu";
 import { CardSpacer } from "@saleor/components/CardSpacer";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
@@ -9,12 +8,13 @@ import Form from "@saleor/components/Form";
 import Grid from "@saleor/components/Grid";
 import Metadata, { MetadataFormData } from "@saleor/components/Metadata";
 import PageHeader from "@saleor/components/PageHeader";
-import SaveButtonBar from "@saleor/components/SaveButtonBar";
+import Savebar from "@saleor/components/Savebar";
 import Skeleton from "@saleor/components/Skeleton";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import { sectionNames } from "@saleor/intl";
+import { Backlink } from "@saleor/macaw-ui";
+import { makeStyles } from "@saleor/macaw-ui";
 import OrderChannelSectionCard from "@saleor/orders/components/OrderChannelSectionCard";
-import { makeStyles } from "@saleor/theme";
 import { UserPermissionProps } from "@saleor/types";
 import { mapMetadataItemToInput } from "@saleor/utils/maps";
 import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
@@ -23,7 +23,10 @@ import { defineMessages, useIntl } from "react-intl";
 
 import { getMutationErrors, maybe } from "../../../misc";
 import { OrderStatus } from "../../../types/globalTypes";
-import { OrderDetails_order } from "../../types/OrderDetails";
+import {
+  OrderDetails_order,
+  OrderDetails_shop
+} from "../../types/OrderDetails";
 import OrderCustomer from "../OrderCustomer";
 import OrderCustomerNote from "../OrderCustomerNote";
 import OrderDraftDetails from "../OrderDraftDetails/OrderDraftDetails";
@@ -54,6 +57,7 @@ const useStyles = makeStyles(
 
 export interface OrderDetailsPageProps extends UserPermissionProps {
   order: OrderDetails_order;
+  shop: OrderDetails_shop;
   shippingMethods?: Array<{
     id: string;
     name: string;
@@ -69,6 +73,7 @@ export interface OrderDetailsPageProps extends UserPermissionProps {
   onShippingMethodEdit?: () => void;
   onBack();
   onBillingAddressEdit();
+  onFulfillmentApprove(id: string);
   onFulfillmentCancel(id: string);
   onFulfillmentTrackingNumberUpdate(id: string);
   onOrderFulfill();
@@ -107,10 +112,12 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
   const {
     disabled,
     order,
+    shop,
     saveButtonBarState,
     userPermissions,
     onBack,
     onBillingAddressEdit,
+    onFulfillmentApprove,
     onFulfillmentCancel,
     onFulfillmentTrackingNumberUpdate,
     onNoteAdd,
@@ -146,8 +153,12 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
   const canCancel = order?.status !== OrderStatus.CANCELED;
   const canEditAddresses = order?.status !== OrderStatus.CANCELED;
   const canFulfill = order?.status !== OrderStatus.CANCELED;
+  const notAllowedToFulfillUnpaid =
+    shop?.fulfillmentAutoApprove &&
+    !shop?.fulfillmentAllowUnpaid &&
+    !order?.isPaid;
   const unfulfilled = (order?.lines || []).filter(
-    line => line.quantityFulfilled < line.quantity
+    line => line.quantityToFulfill > 0
   );
 
   const handleSubmit = async (data: MetadataFormData) => {
@@ -170,7 +181,7 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
   };
 
   const saveLabel = isOrderUnconfirmed
-    ? intl.formatMessage(messages.confirmOrder)
+    ? { confirm: intl.formatMessage(messages.confirmOrder) }
     : undefined;
 
   const allowSave = (hasChanged: boolean) => {
@@ -206,9 +217,9 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
 
         return (
           <Container>
-            <AppHeader onBack={onBack}>
+            <Backlink onClick={onBack}>
               {intl.formatMessage(sectionNames.orders)}
-            </AppHeader>
+            </Backlink>
             <PageHeader
               className={classes.header}
               inline
@@ -218,7 +229,7 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
             </PageHeader>
             <div className={classes.date}>
               {order && order.created ? (
-                <Typography variant="caption">
+                <Typography variant="body2">
                   <DateTime date={order.created} />
                 </Typography>
               ) : (
@@ -229,7 +240,8 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
               <div data-test-id="orderFulfillment">
                 {!isOrderUnconfirmed ? (
                   <OrderUnfulfilledProductsCard
-                    canFulfill={canFulfill}
+                    showFulfillmentAction={canFulfill}
+                    notAllowedToFulfillUnpaid={notAllowedToFulfillUnpaid}
                     lines={unfulfilled}
                     onFulfill={onOrderFulfill}
                   />
@@ -249,7 +261,8 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
                   <React.Fragment key={fulfillment.id}>
                     <OrderFulfilledProductsCard
                       fulfillment={fulfillment}
-                      orderNumber={order.number}
+                      fulfillmentAllowUnpaid={shop?.fulfillmentAllowUnpaid}
+                      order={order}
                       onOrderFulfillmentCancel={() =>
                         onFulfillmentCancel(fulfillment.id)
                       }
@@ -257,6 +270,9 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
                         onFulfillmentTrackingNumberUpdate(fulfillment.id)
                       }
                       onRefund={onPaymentRefund}
+                      onOrderFulfillmentApprove={() =>
+                        onFulfillmentApprove(fulfillment.id)
+                      }
                     />
                   </React.Fragment>
                 ))}
@@ -308,10 +324,10 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
                 <OrderCustomerNote note={maybe(() => order.customerNote)} />
               </div>
             </Grid>
-            <SaveButtonBar
-              labels={{ save: saveLabel }}
+            <Savebar
+              labels={saveLabel}
               onCancel={onBack}
-              onSave={submit}
+              onSubmit={submit}
               state={saveButtonBarState}
               disabled={allowSave(hasChanged)}
             />

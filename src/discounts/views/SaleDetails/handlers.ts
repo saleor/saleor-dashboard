@@ -10,7 +10,7 @@ import {
   SaleUpdate,
   SaleUpdateVariables
 } from "@saleor/discounts/types/SaleUpdate";
-import { getMutationErrors, joinDateTime } from "@saleor/misc";
+import { joinDateTime } from "@saleor/misc";
 import { DiscountValueTypeEnum, SaleType } from "@saleor/types/globalTypes";
 import { MutationFetchResult } from "react-apollo";
 
@@ -32,22 +32,24 @@ export function createUpdateHandler(
 ) {
   return async (formData: SaleDetailsPageFormData) => {
     const { id } = sale;
-    const result = await updateSale({
-      id,
-      input: {
-        endDate: formData.hasEndDate
-          ? joinDateTime(formData.endDate, formData.endTime)
-          : null,
-        name: formData.name,
-        startDate: joinDateTime(formData.startDate, formData.startTime),
-        type: discountValueTypeEnum(formData.type)
-      }
-    });
+    const errors = await Promise.all([
+      updateSale({
+        id,
+        input: {
+          endDate: formData.hasEndDate
+            ? joinDateTime(formData.endDate, formData.endTime)
+            : null,
+          name: formData.name,
+          startDate: joinDateTime(formData.startDate, formData.startTime),
+          type: discountValueTypeEnum(formData.type)
+        }
+      }).then(({ data }) => data?.saleUpdate.errors ?? []),
 
-    updateChannels({
-      variables: getSaleChannelsVariables(id, formData, saleChannelsChoices)
-    });
+      updateChannels({
+        variables: getSaleChannelsVariables(id, formData, saleChannelsChoices)
+      }).then(({ data }) => data?.saleChannelListingUpdate.errors ?? [])
+    ]);
 
-    return getMutationErrors(result);
+    return errors.flat();
   };
 }

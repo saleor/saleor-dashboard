@@ -6,9 +6,9 @@ import {
   VoucherDiscountType
 } from "@saleor/types/globalTypes";
 import { getFilterQueryParams } from "@saleor/utils/filters";
+import { stringifyQs } from "@saleor/utils/urls";
 import { getExistingKeys, setFilterOptsStatus } from "@test/filters";
 import { config } from "@test/intl";
-import { stringify as stringifyQs } from "qs";
 import { createIntl } from "react-intl";
 
 import { getFilterQueryParam, getFilterVariables } from "./filters";
@@ -40,6 +40,16 @@ describe("Filtering URL params", () => {
   const intl = createIntl(config);
 
   const filters = createFilterStructure(intl, {
+    channel: {
+      active: false,
+      choices: [
+        {
+          value: "default-channel",
+          label: "Default channel"
+        }
+      ],
+      value: "default-channel"
+    },
     saleType: {
       active: false,
       value: [VoucherDiscountType.FIXED, VoucherDiscountType.SHIPPING]

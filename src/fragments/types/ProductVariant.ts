@@ -44,6 +44,9 @@ export interface ProductVariant_selectionAttributes_attribute_choices_edges_node
   reference: string | null;
   richText: any | null;
   boolean: boolean | null;
+  date: any | null;
+  dateTime: any | null;
+  value: string | null;
 }
 
 export interface ProductVariant_selectionAttributes_attribute_choices_edges {
@@ -85,6 +88,9 @@ export interface ProductVariant_selectionAttributes_values {
   reference: string | null;
   richText: any | null;
   boolean: boolean | null;
+  date: any | null;
+  dateTime: any | null;
+  value: string | null;
 }
 
 export interface ProductVariant_selectionAttributes {
@@ -116,6 +122,9 @@ export interface ProductVariant_nonSelectionAttributes_attribute_choices_edges_n
   reference: string | null;
   richText: any | null;
   boolean: boolean | null;
+  date: any | null;
+  dateTime: any | null;
+  value: string | null;
 }
 
 export interface ProductVariant_nonSelectionAttributes_attribute_choices_edges {
@@ -157,6 +166,9 @@ export interface ProductVariant_nonSelectionAttributes_values {
   reference: string | null;
   richText: any | null;
   boolean: boolean | null;
+  date: any | null;
+  dateTime: any | null;
+  value: string | null;
 }
 
 export interface ProductVariant_nonSelectionAttributes {
@@ -253,7 +265,7 @@ export interface ProductVariant_product_variants {
   __typename: "ProductVariant";
   id: string;
   name: string;
-  sku: string;
+  sku: string | null;
   media: ProductVariant_product_variants_media[] | null;
 }
 
@@ -287,11 +299,18 @@ export interface ProductVariant_channelListings_costPrice {
   currency: string;
 }
 
+export interface ProductVariant_channelListings_preorderThreshold {
+  __typename: "PreorderThreshold";
+  quantity: number | null;
+  soldUnits: number;
+}
+
 export interface ProductVariant_channelListings {
   __typename: "ProductVariantChannelListing";
   channel: ProductVariant_channelListings_channel;
   price: ProductVariant_channelListings_price | null;
   costPrice: ProductVariant_channelListings_costPrice | null;
+  preorderThreshold: ProductVariant_channelListings_preorderThreshold | null;
 }
 
 export interface ProductVariant_stocks_warehouse {
@@ -306,6 +325,13 @@ export interface ProductVariant_stocks {
   quantity: number;
   quantityAllocated: number;
   warehouse: ProductVariant_stocks_warehouse;
+}
+
+export interface ProductVariant_preorder {
+  __typename: "PreorderData";
+  globalThreshold: number | null;
+  globalSoldUnits: number;
+  endDate: any | null;
 }
 
 export interface ProductVariant_weight {
@@ -325,8 +351,9 @@ export interface ProductVariant {
   name: string;
   product: ProductVariant_product;
   channelListings: ProductVariant_channelListings[] | null;
-  sku: string;
+  sku: string | null;
   stocks: (ProductVariant_stocks | null)[] | null;
   trackInventory: boolean;
+  preorder: ProductVariant_preorder | null;
   weight: ProductVariant_weight | null;
 }

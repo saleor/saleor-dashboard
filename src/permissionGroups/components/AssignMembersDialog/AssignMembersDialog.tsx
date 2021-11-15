@@ -21,13 +21,13 @@ import Skeleton from "@saleor/components/Skeleton";
 import useElementScroll from "@saleor/hooks/useElementScroll";
 import useSearchQuery from "@saleor/hooks/useSearchQuery";
 import { buttonMessages } from "@saleor/intl";
+import { makeStyles } from "@saleor/macaw-ui";
 import { getUserInitials, getUserName } from "@saleor/misc";
 import { SearchStaffMembers_search_edges_node } from "@saleor/searches/types/SearchStaffMembers";
-import { makeStyles } from "@saleor/theme";
 import { DialogProps, FetchMoreProps, SearchPageProps } from "@saleor/types";
 import classNames from "classnames";
 import React from "react";
-import InfiniteScroll from "react-infinite-scroller";
+import InfiniteScroll from "react-infinite-scroll-component";
 import { FormattedMessage, useIntl } from "react-intl";
 
 const useStyles = makeStyles(
@@ -47,9 +47,10 @@ const useStyles = makeStyles(
       width: 32
     },
     avatarDefault: {
-      "& p": {
+      "& div": {
         color: "#fff",
-        lineHeight: "47px"
+        lineHeight: 2.8,
+        fontSize: "0.75rem"
       },
       background: theme.palette.primary.main,
       height: 32,
@@ -93,7 +94,11 @@ const useStyles = makeStyles(
     scrollArea: {
       maxHeight: 400,
       overflowY: "scroll",
-      paddingTop: 0
+      paddingTop: 0,
+      paddingBottom: 0
+    },
+    table: {
+      marginBottom: theme.spacing(3)
     },
     statusText: {
       color: "#9E9D9D"
@@ -131,6 +136,8 @@ function handleStaffMemberAssign(
     setSelectedMembers([...selectedMembers, member]);
   }
 }
+
+const scrollableTargetId = "assignMembersScrollableDialog";
 
 const AssignMembersDialog: React.FC<AssignMembersDialogProps> = ({
   confirmButtonState,
@@ -187,16 +194,23 @@ const AssignMembersDialog: React.FC<AssignMembersDialogProps> = ({
           disabled={disabled}
         />
       </DialogContent>
-      <DialogContent className={classes.scrollArea}>
+      <DialogContent className={classes.scrollArea} id={scrollableTargetId}>
         <InfiniteScroll
-          pageStart={0}
-          loadMore={onFetchMore}
+          dataLength={staffMembers?.length}
+          next={onFetchMore}
           hasMore={hasMore}
-          useWindow={false}
-          threshold={100}
-          key="infinite-scroll"
+          scrollThreshold="100px"
+          loader={
+            <>
+              {staffMembers?.length > 0 && <CardSpacer />}
+              <div className={classes.loadMoreLoaderContainer}>
+                <CircularProgress size={24} />
+              </div>
+            </>
+          }
+          scrollableTarget={scrollableTargetId}
         >
-          <ResponsiveTable>
+          <ResponsiveTable className={classes.table}>
             <TableBody>
               {staffMembers &&
                 staffMembers.map(member => {
@@ -267,14 +281,6 @@ const AssignMembersDialog: React.FC<AssignMembersDialogProps> = ({
                 })}
             </TableBody>
           </ResponsiveTable>
-          {loading && (
-            <>
-              {staffMembers?.length > 0 && <CardSpacer />}
-              <div className={classes.loadMoreLoaderContainer}>
-                <CircularProgress size={24} />
-              </div>
-            </>
-          )}
         </InfiniteScroll>
       </DialogContent>
       <DialogActions

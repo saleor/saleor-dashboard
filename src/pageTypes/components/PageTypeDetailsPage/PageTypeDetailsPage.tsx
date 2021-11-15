@@ -1,5 +1,4 @@
 import { Typography } from "@material-ui/core";
-import AppHeader from "@saleor/components/AppHeader";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
 import Container from "@saleor/components/Container";
 import Form from "@saleor/components/Form";
@@ -8,12 +7,13 @@ import Hr from "@saleor/components/Hr";
 import Metadata from "@saleor/components/Metadata/Metadata";
 import { MetadataFormData } from "@saleor/components/Metadata/types";
 import PageHeader from "@saleor/components/PageHeader";
-import SaveButtonBar from "@saleor/components/SaveButtonBar";
+import Savebar from "@saleor/components/Savebar";
 import { SingleAutocompleteChoiceType } from "@saleor/components/SingleAutocompleteSelectField";
 import { PageErrorFragment } from "@saleor/fragments/types/PageErrorFragment";
 import { commonMessages, sectionNames } from "@saleor/intl";
+import { Backlink } from "@saleor/macaw-ui";
+import { makeStyles } from "@saleor/macaw-ui";
 import { PageTypeDetails_pageType } from "@saleor/pageTypes/types/PageTypeDetails";
-import { makeStyles } from "@saleor/theme";
 import { ListActions, ReorderEvent } from "@saleor/types";
 import { AttributeTypeEnum } from "@saleor/types/globalTypes";
 import { mapMetadataItemToInput } from "@saleor/utils/maps";
@@ -112,9 +112,9 @@ const PageTypeDetailsPage: React.FC<PageTypeDetailsPageProps> = props => {
 
         return (
           <Container>
-            <AppHeader onBack={onBack}>
+            <Backlink onClick={onBack}>
               {intl.formatMessage(sectionNames.pageTypes)}
-            </AppHeader>
+            </Backlink>
             <PageHeader title={pageTitle} />
             <Grid variant="inverted">
               <div>
@@ -166,10 +166,10 @@ const PageTypeDetailsPage: React.FC<PageTypeDetailsPageProps> = props => {
               </div>
               <Metadata data={data} onChange={changeMetadata} />
             </Grid>
-            <SaveButtonBar
+            <Savebar
               onCancel={onBack}
               onDelete={onDelete}
-              onSave={submit}
+              onSubmit={submit}
               disabled={disabled || !hasChanged}
               state={saveButtonBarState}
             />

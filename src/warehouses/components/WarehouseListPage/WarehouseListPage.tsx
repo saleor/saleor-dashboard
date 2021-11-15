@@ -1,12 +1,12 @@
 import { Button, Card } from "@material-ui/core";
-import Alert from "@saleor/components/Alert/Alert";
-import AppHeader from "@saleor/components/AppHeader";
 import Container from "@saleor/components/Container";
+import LimitReachedAlert from "@saleor/components/LimitReachedAlert";
 import PageHeader from "@saleor/components/PageHeader";
 import SearchBar from "@saleor/components/SearchBar";
 import { RefreshLimits_shop_limits } from "@saleor/components/Shop/types/RefreshLimits";
 import { WarehouseWithShippingFragment } from "@saleor/fragments/types/WarehouseWithShippingFragment";
 import { sectionNames } from "@saleor/intl";
+import { Backlink } from "@saleor/macaw-ui";
 import {
   PageListProps,
   SearchPageProps,
@@ -60,20 +60,27 @@ export const WarehouseListPage: React.FC<WarehouseListPageProps> = ({
 
   return (
     <Container>
-      <AppHeader onBack={onBack}>
+      <Backlink onClick={onBack}>
         <FormattedMessage {...sectionNames.configuration} />
-      </AppHeader>
+      </Backlink>
       <PageHeader
         title={intl.formatMessage(sectionNames.warehouses)}
-        limit={
-          hasLimits(limits, "warehouses") && {
-            data: limits,
-            key: "warehouses",
-            text: "warehouses used"
-          }
+        limitText={
+          hasLimits(limits, "warehouses") &&
+          intl.formatMessage(
+            {
+              defaultMessage: "{count}/{max} warehouses used",
+              description: "used warehouses counter"
+            },
+            {
+              count: limits.currentUsage.warehouses,
+              max: limits.allowedUsage.warehouses
+            }
+          )
         }
       >
         <Button
+          data-test-id="createWarehouse"
           color="primary"
           disabled={limitReached}
           variant="contained"
@@ -85,15 +92,16 @@ export const WarehouseListPage: React.FC<WarehouseListPageProps> = ({
           />
         </Button>
       </PageHeader>
-      <Alert
-        show={limitReached}
-        title={intl.formatMessage({
-          defaultMessage: "Warehouse limit reached",
-          description: "alert"
-        })}
-      >
-        <FormattedMessage defaultMessage="You have reached your warehouse limit, you will be no longer able to add warehouses to your store. If you would like to up your limit, contact your administration staff about raising your limits." />
-      </Alert>
+      {limitReached && (
+        <LimitReachedAlert
+          title={intl.formatMessage({
+            defaultMessage: "Warehouse limit reached",
+            description: "alert"
+          })}
+        >
+          <FormattedMessage defaultMessage="You have reached your warehouse limit, you will be no longer able to add warehouses to your store. If you would like to up your limit, contact your administration staff about raising your limits." />
+        </LimitReachedAlert>
+      )}
       <Card>
         <SearchBar
           allTabLabel={intl.formatMessage({

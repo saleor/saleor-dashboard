@@ -4,7 +4,7 @@ import { Hr } from "@saleor/components/Hr";
 import Money, { subtractMoney } from "@saleor/components/Money";
 import Skeleton from "@saleor/components/Skeleton";
 import StatusLabel from "@saleor/components/StatusLabel";
-import { makeStyles } from "@saleor/theme";
+import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -15,6 +15,8 @@ import {
   OrderStatus
 } from "../../../types/globalTypes";
 import { OrderDetails_order } from "../../types/OrderDetails";
+import messages from "./messages";
+import { extractOrderGiftCardUsedAmount } from "./utils";
 
 const useStyles = makeStyles(
   theme => ({
@@ -63,6 +65,30 @@ const OrderPayment: React.FC<OrderPaymentProps> = props => {
     order?.totalCaptured &&
     order?.total?.gross &&
     subtractMoney(order.totalCaptured, order.total.gross);
+
+  const getDeliveryMethodName = order => {
+    if (
+      order?.shippingMethodName === undefined &&
+      order?.shippingPrice === undefined &&
+      order?.collectionPointName === undefined
+    ) {
+      return <Skeleton />;
+    }
+
+    if (order.shippingMethodName === null) {
+      return order.collectionPointName == null ? (
+        <FormattedMessage {...messages.orderPaymentShippingDoesNotApply} />
+      ) : (
+        <FormattedMessage
+          {...messages.orderPaymentClickAndCollectShippingMethod}
+        />
+      );
+    }
+    return order.shippingMethodName;
+  };
+
+  const usedGiftCardAmount = extractOrderGiftCardUsedAmount(order);
+
   return (
     <Card>
       <CardTitle
@@ -142,20 +168,7 @@ const OrderPayment: React.FC<OrderPaymentProps> = props => {
                   description="order shipping method name"
                 />
               </td>
-              <td>
-                {maybe(() => order.shippingMethodName) === undefined &&
-                maybe(() => order.shippingPrice) === undefined ? (
-                  <Skeleton />
-                ) : order.shippingMethodName === null ? (
-                  intl.formatMessage({
-                    defaultMessage: "does not apply",
-                    description: "order does not require shipping",
-                    id: "orderPaymentShippingDoesNotApply"
-                  })
-                ) : (
-                  order.shippingMethodName
-                )}
-              </td>
+              <td>{getDeliveryMethodName(order)}</td>
               <td className={classes.textRight}>
                 {maybe(() => order.shippingPrice.gross) === undefined ? (
                   <Skeleton />
@@ -213,6 +226,24 @@ const OrderPayment: React.FC<OrderPaymentProps> = props => {
       <CardContent>
         <table className={classes.root}>
           <tbody>
+            {!!usedGiftCardAmount && (
+              <tr>
+                <td>
+                  <FormattedMessage
+                    defaultMessage="Paid with Gift Card"
+                    description="order payment"
+                  />
+                </td>
+                <td className={classes.textRight}>
+                  <Money
+                    money={{
+                      amount: usedGiftCardAmount,
+                      currency: order?.total?.gross?.currency
+                    }}
+                  />
+                </td>
+              </tr>
+            )}
             <tr>
               <td>
                 <FormattedMessage

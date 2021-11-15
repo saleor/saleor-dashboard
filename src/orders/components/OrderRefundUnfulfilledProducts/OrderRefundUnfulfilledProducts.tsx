@@ -15,9 +15,9 @@ import Money from "@saleor/components/Money";
 import Skeleton from "@saleor/components/Skeleton";
 import TableCellAvatar from "@saleor/components/TableCellAvatar";
 import { FormsetChange } from "@saleor/hooks/useFormset";
+import { makeStyles } from "@saleor/macaw-ui";
 import { renderCollection } from "@saleor/misc";
 import { OrderRefundData_order_lines } from "@saleor/orders/types/OrderRefundData";
-import { makeStyles } from "@saleor/theme";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -148,7 +148,7 @@ const OrderRefundUnfulfilledProducts: React.FC<OrderRefundUnfulfilledProductsPro
               const selectedLineQuantity = data.refundedProductQuantities.find(
                 refundedLine => refundedLine.id === line.id
               );
-              const lineQuantity = line?.quantity - line?.quantityFulfilled;
+              const lineQuantity = line?.quantityToFulfill;
               const isError =
                 Number(selectedLineQuantity?.value) > lineQuantity ||
                 Number(selectedLineQuantity?.value) < 0;

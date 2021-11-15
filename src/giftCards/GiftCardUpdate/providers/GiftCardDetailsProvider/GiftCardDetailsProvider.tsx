@@ -1,0 +1,43 @@
+import React, { createContext } from "react";
+
+import { useGiftCardDetailsQuery } from "../../queries";
+import { GiftCardDetails_giftCard } from "../../types/GiftCardDetails";
+import { ExtendedGiftCard } from "./types";
+import { getExtendedGiftCard } from "./utils";
+
+interface GiftCardDetailsProviderProps {
+  children: React.ReactNode;
+  id: string;
+}
+
+export interface GiftCardDetailsConsumerProps {
+  giftCard: ExtendedGiftCard<GiftCardDetails_giftCard> | undefined;
+  loading: boolean;
+}
+
+export const GiftCardDetailsContext = createContext<
+  GiftCardDetailsConsumerProps
+>(null);
+
+const GiftCardDetailsProvider: React.FC<GiftCardDetailsProviderProps> = ({
+  children,
+  id
+}) => {
+  const { data, loading } = useGiftCardDetailsQuery({
+    displayLoader: true,
+    variables: { id }
+  });
+
+  const providerValues: GiftCardDetailsConsumerProps = {
+    giftCard: getExtendedGiftCard(data?.giftCard),
+    loading
+  };
+
+  return (
+    <GiftCardDetailsContext.Provider value={providerValues}>
+      {children}
+    </GiftCardDetailsContext.Provider>
+  );
+};
+
+export default GiftCardDetailsProvider;

@@ -58,6 +58,8 @@ export interface ShopSettingsUpdate_shopSettingsUpdate_shop {
   description: string | null;
   domain: ShopSettingsUpdate_shopSettingsUpdate_shop_domain;
   name: string;
+  reserveStockDurationAnonymousUser: number | null;
+  reserveStockDurationAuthenticatedUser: number | null;
 }
 
 export interface ShopSettingsUpdate_shopSettingsUpdate {
@@ -138,4 +140,5 @@ export interface ShopSettingsUpdateVariables {
   shopDomainInput: SiteDomainInput;
   shopSettingsInput: ShopSettingsInput;
   addressInput?: AddressInput | null;
+  isCloudInstance: boolean;
 }

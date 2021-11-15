@@ -49,6 +49,7 @@ export function createHandler(
           formData
         )
       });
+      return response.data.saleCreate.sale.id;
     }
 
     return errors;

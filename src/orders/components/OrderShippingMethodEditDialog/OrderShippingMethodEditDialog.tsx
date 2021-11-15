@@ -16,7 +16,7 @@ import { SingleSelectField } from "@saleor/components/SingleSelectField";
 import { OrderErrorFragment } from "@saleor/fragments/types/OrderErrorFragment";
 import useModalDialogErrors from "@saleor/hooks/useModalDialogErrors";
 import { buttonMessages } from "@saleor/intl";
-import { makeStyles } from "@saleor/theme";
+import { makeStyles } from "@saleor/macaw-ui";
 import { getFormErrors } from "@saleor/utils/errors";
 import getOrderErrorMessage from "@saleor/utils/errors/order";
 import React from "react";
@@ -42,7 +42,9 @@ const useStyles = makeStyles(
     },
     root: {
       overflowY: "visible",
-      width: theme.breakpoints.values.sm
+      width: theme.breakpoints.values.sm,
+      margin: 0,
+      padding: theme.spacing(3)
     },
     shippingMethodName: {
       flex: 1,
@@ -139,6 +141,7 @@ const OrderShippingMethodEditDialog: React.FC<OrderShippingMethodEditDialogProps
                 color="primary"
                 variant="contained"
                 type="submit"
+                disabled={!data.shippingMethod}
               >
                 <FormattedMessage {...buttonMessages.confirm} />
               </ConfirmButton>

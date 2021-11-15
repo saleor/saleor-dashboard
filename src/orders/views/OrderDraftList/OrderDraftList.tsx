@@ -7,10 +7,12 @@ import DeleteFilterTabDialog from "@saleor/components/DeleteFilterTabDialog";
 import SaveFilterTabDialog, {
   SaveFilterTabDialogFormData
 } from "@saleor/components/SaveFilterTabDialog";
+import { useShopLimitsQuery } from "@saleor/components/Shop/query";
 import useBulkActions from "@saleor/hooks/useBulkActions";
 import useListSettings from "@saleor/hooks/useListSettings";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
+import { usePaginationReset } from "@saleor/hooks/usePaginationReset";
 import usePaginator, {
   createPaginationState
 } from "@saleor/hooks/usePaginator";
@@ -39,11 +41,11 @@ import {
   orderUrl
 } from "../../urls";
 import {
-  areFiltersApplied,
   deleteFilterTab,
   getActiveFilters,
   getFilterOpts,
   getFilterQueryParam,
+  getFiltersCurrentTab,
   getFilterTabs,
   getFilterVariables,
   saveFilterTab
@@ -64,6 +66,9 @@ export const OrderDraftList: React.FC<OrderDraftListProps> = ({ params }) => {
   const { updateListSettings, settings } = useListSettings(
     ListViews.DRAFT_LIST
   );
+
+  usePaginationReset(orderDraftListUrl, params, settings.rowNumber);
+
   const intl = useIntl();
 
   const handleCreateOrderCreateSuccess = (data: OrderDraftCreate) => {
@@ -80,16 +85,16 @@ export const OrderDraftList: React.FC<OrderDraftListProps> = ({ params }) => {
     onCompleted: handleCreateOrderCreateSuccess
   });
 
-  const { channel, availableChannels } = useAppChannel();
+  const { channel, availableChannels } = useAppChannel(false);
+  const limitOpts = useShopLimitsQuery({
+    variables: {
+      orders: true
+    }
+  });
 
   const tabs = getFilterTabs();
 
-  const currentTab =
-    params.activeTab === undefined
-      ? areFiltersApplied(params)
-        ? tabs.length + 1
-        : 0
-      : parseInt(params.activeTab, 0);
+  const currentTab = getFiltersCurrentTab(params, tabs);
 
   const [
     changeFilters,
@@ -136,7 +141,7 @@ export const OrderDraftList: React.FC<OrderDraftListProps> = ({ params }) => {
       filter: getFilterVariables(params),
       sort: getSortQueryVariables(params)
     }),
-    [params]
+    [params, settings.rowNumber]
   );
   const { data, loading, refetch } = useOrderDraftListQuery({
     displayLoader: true,
@@ -183,6 +188,7 @@ export const OrderDraftList: React.FC<OrderDraftListProps> = ({ params }) => {
               <OrderDraftListPage
                 currentTab={currentTab}
                 filterOpts={getFilterOpts(params)}
+                limits={limitOpts.data?.shop.limits}
                 initialSearch={params.query || ""}
                 onSearchChange={handleSearchChange}
                 onFilterChange={changeFilters}

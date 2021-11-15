@@ -1,17 +1,17 @@
 import { Button } from "@material-ui/core";
 import AccountPermissions from "@saleor/components/AccountPermissions";
-import AppHeader from "@saleor/components/AppHeader";
 import CardSpacer from "@saleor/components/CardSpacer";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
 import Container from "@saleor/components/Container";
 import Form from "@saleor/components/Form";
 import Grid from "@saleor/components/Grid";
 import PageHeader from "@saleor/components/PageHeader";
-import SaveButtonBar from "@saleor/components/SaveButtonBar";
+import Savebar from "@saleor/components/Savebar";
 import { ShopInfo_shop_permissions } from "@saleor/components/Shop/types/ShopInfo";
 import { AppErrorFragment } from "@saleor/fragments/types/AppErrorFragment";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import { sectionNames } from "@saleor/intl";
+import { Backlink } from "@saleor/macaw-ui";
 import { PermissionEnum } from "@saleor/types/globalTypes";
 import { getFormErrors } from "@saleor/utils/errors";
 import getAppErrorMessage from "@saleor/utils/errors/app";
@@ -100,9 +100,9 @@ const CustomAppDetailsPage: React.FC<CustomAppDetailsPageProps> = props => {
     <Form confirmLeave initial={initialForm} onSubmit={onSubmit}>
       {({ data, change, hasChanged, submit }) => (
         <Container>
-          <AppHeader onBack={onBack}>
+          <Backlink onClick={onBack}>
             {intl.formatMessage(sectionNames.apps)}
-          </AppHeader>
+          </Backlink>
           <PageHeader title={app?.name}>
             <Button
               variant="text"
@@ -178,11 +178,11 @@ const CustomAppDetailsPage: React.FC<CustomAppDetailsPageProps> = props => {
               />
             </div>
           </Grid>
-          <SaveButtonBar
+          <Savebar
             disabled={disabled || !hasChanged}
             state={saveButtonBarState}
             onCancel={onBack}
-            onSave={submit}
+            onSubmit={submit}
           />
         </Container>
       )}

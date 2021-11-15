@@ -1,0 +1,429 @@
+{
+  "__schema": {
+    "types": [
+      {
+        "kind": "UNION",
+        "name": "DeliveryMethod",
+        "possibleTypes": [
+          {
+            "name": "Warehouse"
+          },
+          {
+            "name": "ShippingMethod"
+          }
+        ]
+      },
+      {
+        "kind": "INTERFACE",
+        "name": "Job",
+        "possibleTypes": [
+          {
+            "name": "AppInstallation"
+          },
+          {
+            "name": "ExportFile"
+          },
+          {
+            "name": "Invoice"
+          }
+        ]
+      },
+      {
+        "kind": "INTERFACE",
+        "name": "Node",
+        "possibleTypes": [
+          {
+            "name": "Address"
+          },
+          {
+            "name": "Allocation"
+          },
+          {
+            "name": "App"
+          },
+          {
+            "name": "AppExtension"
+          },
+          {
+            "name": "AppInstallation"
+          },
+          {
+            "name": "AppToken"
+          },
+          {
+            "name": "Attribute"
+          },
+          {
+            "name": "AttributeTranslatableContent"
+          },
+          {
+            "name": "AttributeTranslation"
+          },
+          {
+            "name": "AttributeValue"
+          },
+          {
+            "name": "AttributeValueTranslatableContent"
+          },
+          {
+            "name": "AttributeValueTranslation"
+          },
+          {
+            "name": "Category"
+          },
+          {
+            "name": "CategoryTranslatableContent"
+          },
+          {
+            "name": "CategoryTranslation"
+          },
+          {
+            "name": "Channel"
+          },
+          {
+            "name": "Checkout"
+          },
+          {
+            "name": "CheckoutLine"
+          },
+          {
+            "name": "Collection"
+          },
+          {
+            "name": "CollectionChannelListing"
+          },
+          {
+            "name": "CollectionTranslatableContent"
+          },
+          {
+            "name": "CollectionTranslation"
+          },
+          {
+            "name": "CustomerEvent"
+          },
+          {
+            "name": "DigitalContent"
+          },
+          {
+            "name": "DigitalContentUrl"
+          },
+          {
+            "name": "ExportEvent"
+          },
+          {
+            "name": "ExportFile"
+          },
+          {
+            "name": "Fulfillment"
+          },
+          {
+            "name": "FulfillmentLine"
+          },
+          {
+            "name": "GiftCard"
+          },
+          {
+            "name": "GiftCardEvent"
+          },
+          {
+            "name": "Group"
+          },
+          {
+            "name": "Invoice"
+          },
+          {
+            "name": "Menu"
+          },
+          {
+            "name": "MenuItem"
+          },
+          {
+            "name": "MenuItemTranslatableContent"
+          },
+          {
+            "name": "MenuItemTranslation"
+          },
+          {
+            "name": "Order"
+          },
+          {
+            "name": "OrderDiscount"
+          },
+          {
+            "name": "OrderEvent"
+          },
+          {
+            "name": "OrderLine"
+          },
+          {
+            "name": "Page"
+          },
+          {
+            "name": "PageTranslatableContent"
+          },
+          {
+            "name": "PageTranslation"
+          },
+          {
+            "name": "PageType"
+          },
+          {
+            "name": "Payment"
+          },
+          {
+            "name": "Product"
+          },
+          {
+            "name": "ProductChannelListing"
+          },
+          {
+            "name": "ProductMedia"
+          },
+          {
+            "name": "ProductTranslatableContent"
+          },
+          {
+            "name": "ProductTranslation"
+          },
+          {
+            "name": "ProductType"
+          },
+          {
+            "name": "ProductVariant"
+          },
+          {
+            "name": "ProductVariantChannelListing"
+          },
+          {
+            "name": "ProductVariantTranslatableContent"
+          },
+          {
+            "name": "ProductVariantTranslation"
+          },
+          {
+            "name": "Sale"
+          },
+          {
+            "name": "SaleChannelListing"
+          },
+          {
+            "name": "SaleTranslatableContent"
+          },
+          {
+            "name": "SaleTranslation"
+          },
+          {
+            "name": "ShippingMethod"
+          },
+          {
+            "name": "ShippingMethodChannelListing"
+          },
+          {
+            "name": "ShippingMethodPostalCodeRule"
+          },
+          {
+            "name": "ShippingMethodTranslatableContent"
+          },
+          {
+            "name": "ShippingMethodTranslation"
+          },
+          {
+            "name": "ShippingZone"
+          },
+          {
+            "name": "ShopTranslation"
+          },
+          {
+            "name": "StaffNotificationRecipient"
+          },
+          {
+            "name": "Stock"
+          },
+          {
+            "name": "Transaction"
+          },
+          {
+            "name": "User"
+          },
+          {
+            "name": "Voucher"
+          },
+          {
+            "name": "VoucherChannelListing"
+          },
+          {
+            "name": "VoucherTranslatableContent"
+          },
+          {
+            "name": "VoucherTranslation"
+          },
+          {
+            "name": "Warehouse"
+          },
+          {
+            "name": "Webhook"
+          }
+        ]
+      },
+      {
+        "kind": "INTERFACE",
+        "name": "ObjectWithMetadata",
+        "possibleTypes": [
+          {
+            "name": "App"
+          },
+          {
+            "name": "Attribute"
+          },
+          {
+            "name": "Category"
+          },
+          {
+            "name": "Checkout"
+          },
+          {
+            "name": "Collection"
+          },
+          {
+            "name": "DigitalContent"
+          },
+          {
+            "name": "Fulfillment"
+          },
+          {
+            "name": "GiftCard"
+          },
+          {
+            "name": "Invoice"
+          },
+          {
+            "name": "Menu"
+          },
+          {
+            "name": "MenuItem"
+          },
+          {
+            "name": "Order"
+          },
+          {
+            "name": "Page"
+          },
+          {
+            "name": "PageType"
+          },
+          {
+            "name": "Payment"
+          },
+          {
+            "name": "Product"
+          },
+          {
+            "name": "ProductType"
+          },
+          {
+            "name": "ProductVariant"
+          },
+          {
+            "name": "Sale"
+          },
+          {
+            "name": "ShippingMethod"
+          },
+          {
+            "name": "ShippingZone"
+          },
+          {
+            "name": "User"
+          },
+          {
+            "name": "Voucher"
+          },
+          {
+            "name": "Warehouse"
+          }
+        ]
+      },
+      {
+        "kind": "UNION",
+        "name": "TranslatableItem",
+        "possibleTypes": [
+          {
+            "name": "ProductTranslatableContent"
+          },
+          {
+            "name": "CollectionTranslatableContent"
+          },
+          {
+            "name": "CategoryTranslatableContent"
+          },
+          {
+            "name": "AttributeTranslatableContent"
+          },
+          {
+            "name": "AttributeValueTranslatableContent"
+          },
+          {
+            "name": "ProductVariantTranslatableContent"
+          },
+          {
+            "name": "PageTranslatableContent"
+          },
+          {
+            "name": "ShippingMethodTranslatableContent"
+          },
+          {
+            "name": "SaleTranslatableContent"
+          },
+          {
+            "name": "VoucherTranslatableContent"
+          },
+          {
+            "name": "MenuItemTranslatableContent"
+          }
+        ]
+      },
+      {
+        "kind": "UNION",
+        "name": "_Entity",
+        "possibleTypes": [
+          {
+            "name": "App"
+          },
+          {
+            "name": "Address"
+          },
+          {
+            "name": "User"
+          },
+          {
+            "name": "Group"
+          },
+          {
+            "name": "ProductVariant"
+          },
+          {
+            "name": "Product"
+          },
+          {
+            "name": "ProductType"
+          },
+          {
+            "name": "Collection"
+          },
+          {
+            "name": "Category"
+          },
+          {
+            "name": "ProductMedia"
+          },
+          {
+            "name": "ProductImage"
+          },
+          {
+            "name": "PageType"
+          }
+        ]
+      }
+    ]
+  }
+}

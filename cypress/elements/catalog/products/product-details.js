@@ -7,14 +7,21 @@ export const PRODUCT_DETAILS = {
   autocompleteDropdown: "[data-test='autocomplete-dropdown']",
   firstCategoryItem: "#downshift-0-item-0",
   visibleRadioBtn: "[name='isPublished']",
-  confirmationMsg: "[data-test='notification-success']",
   channelAvailabilityItem: "[data-test='channel-availability-item']",
   addVariantsButton: "[data-test*='button-add-variant']",
+  addVariantsOptionDialog: {
+    optionMultiple: '[data-test-id="variant-create-option-multiple"]',
+    optionSingle: '[data-test-id="variant-create-option-single"]'
+  },
   descriptionInput: "[data-test-id='description']",
   ratingInput: "[name='rating']",
   skuInput: "[name='sku']",
   variantRow: "[data-test-id='product-variant-row']",
   variantPrice: '[data-test="price"]',
   collectionRemoveButtons: '[data-test-id="collectionRemove"]',
-  variantRow: "[data-test-id='product-variant-row']"
+  productImage: '[data-test="product-image"]',
+  uploadImageButton: '[data-test="button-upload-image"]',
+  uploadSavedImagesButton: '[data-test="uploadImages"]',
+  uploadMediaUrlButton: '[data-test="uploadMediaUrl"]',
+  saveUploadUrlButton: '[data-test-id="upload-url-button"]'
 };

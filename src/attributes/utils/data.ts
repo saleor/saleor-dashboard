@@ -4,6 +4,7 @@ import {
 } from "@saleor/components/Attributes";
 import { FileUpload } from "@saleor/files/types/FileUpload";
 import { AttributeErrorFragment } from "@saleor/fragments/types/AttributeErrorFragment";
+import { AttributeValueFragment } from "@saleor/fragments/types/AttributeValueFragment";
 import { SelectedVariantAttributeFragment } from "@saleor/fragments/types/SelectedVariantAttributeFragment";
 import { UploadErrorFragment } from "@saleor/fragments/types/UploadErrorFragment";
 import { FormsetData } from "@saleor/hooks/useFormset";
@@ -24,23 +25,46 @@ import {
 import { MutationFetchResult } from "react-apollo";
 
 import { AttributePageFormData } from "../components/AttributePage";
-import { AttributeValueEditDialogFormData } from "../components/AttributeValueEditDialog";
+import { AtributesOfFiles } from "../types/AttributeOfUploadedFile";
 import { AttributeValueDelete } from "../types/AttributeValueDelete";
 
 export const ATTRIBUTE_TYPES_WITH_DEDICATED_VALUES = [
   AttributeInputTypeEnum.DROPDOWN,
-  AttributeInputTypeEnum.MULTISELECT
+  AttributeInputTypeEnum.MULTISELECT,
+  AttributeInputTypeEnum.SWATCH
 ];
 
 export const ATTRIBUTE_TYPES_WITH_CONFIGURABLE_FACED_NAVIGATION = [
   AttributeInputTypeEnum.DROPDOWN,
   AttributeInputTypeEnum.MULTISELECT,
-  AttributeInputTypeEnum.BOOLEAN
+  AttributeInputTypeEnum.BOOLEAN,
+  AttributeInputTypeEnum.DATE,
+  AttributeInputTypeEnum.DATE_TIME,
+  AttributeInputTypeEnum.NUMERIC,
+  AttributeInputTypeEnum.SWATCH
 ];
 
 export interface AttributeReference {
   label: string;
   value: string;
+}
+
+export interface AttributeValueEditDialogFormData {
+  name: string;
+  value?: string;
+  fileUrl?: string;
+  contentType?: string;
+}
+
+export function attributeValueFragmentToFormData(
+  data: AttributeValueFragment | null
+): AttributeValueEditDialogFormData {
+  return {
+    name: data?.name,
+    value: data?.value,
+    contentType: data?.file?.contentType,
+    fileUrl: data?.file?.url
+  };
 }
 
 function getSimpleAttributeData(
@@ -55,6 +79,31 @@ function getSimpleAttributeData(
     values: values.map(value => ({
       name: value.name
     }))
+  };
+}
+
+function getAttributeValueTypeFields({
+  fileUrl,
+  value,
+  name,
+  contentType
+}: AttributeValueEditDialogFormData) {
+  return {
+    name,
+    ...(fileUrl ? { fileUrl, contentType } : { value })
+  };
+}
+
+function getSwatchAttributeData(
+  data: AttributePageFormData,
+  values: AttributeValueEditDialogFormData[]
+) {
+  return {
+    ...data,
+    metadata: undefined,
+    privateMetadata: undefined,
+    storefrontSearchPosition: parseInt(data.storefrontSearchPosition, 10),
+    values: values.map(getAttributeValueTypeFields)
   };
 }
 
@@ -74,7 +123,9 @@ export function getAttributeData(
   data: AttributePageFormData,
   values: AttributeValueEditDialogFormData[]
 ) {
-  if (ATTRIBUTE_TYPES_WITH_DEDICATED_VALUES.includes(data.inputType)) {
+  if (data.inputType === AttributeInputTypeEnum.SWATCH) {
+    return getSwatchAttributeData(data, values);
+  } else if (ATTRIBUTE_TYPES_WITH_DEDICATED_VALUES.includes(data.inputType)) {
     return getSimpleAttributeData(data, values);
   } else {
     return getFileOrReferenceAttributeData(data, values);
@@ -99,6 +150,12 @@ export function getSelectedAttributeValues(
 
     case AttributeInputTypeEnum.BOOLEAN:
       return [attribute.values[0]?.boolean ?? "false"];
+
+    case AttributeInputTypeEnum.DATE:
+      return [attribute.values[0]?.date];
+
+    case AttributeInputTypeEnum.DATE_TIME:
+      return [attribute.values[0]?.dateTime];
 
     default:
       return attribute.values.map(value => value.slug);
@@ -154,7 +211,7 @@ export const mergeChoicesWithValues = (
     | PageDetails_page_attributes
     | SelectedVariantAttributeFragment
 ) => {
-  const choices = mapEdgesToItems(attribute.attribute.choices);
+  const choices = mapEdgesToItems(attribute.attribute.choices) || [];
   const valuesToConcat = attribute.values.filter(
     value => !choices.some(choice => choice.id === value.id)
   );
@@ -184,22 +241,24 @@ export const getFileValuesRemovedFromAttributes = (
 
 export const getAttributesOfRemovedFiles = (
   fileAttributesRemoved: FormsetData<null, File>
-) =>
+): AtributesOfFiles[] =>
   fileAttributesRemoved.map(attribute => ({
     file: undefined,
     id: attribute.id,
+    contentType: attribute.value?.type,
     values: []
   }));
 
 export const getAttributesOfUploadedFiles = (
   fileValuesToUpload: FormsetData<null, File>,
   uploadFilesResult: Array<MutationFetchResult<FileUpload>>
-) =>
+): AtributesOfFiles[] =>
   uploadFilesResult.map((uploadFileResult, index) => {
     const attribute = fileValuesToUpload[index];
 
     return {
       file: uploadFileResult.data.fileUpload.uploadedFile.url,
+      contentType: uploadFileResult.data.fileUpload.uploadedFile.contentType,
       id: attribute.id,
       values: []
     };

@@ -8,6 +8,7 @@ import { useShopLimitsQuery } from "@saleor/components/Shop/query";
 import useListSettings from "@saleor/hooks/useListSettings";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
+import { usePaginationReset } from "@saleor/hooks/usePaginationReset";
 import usePaginator, {
   createPaginationState
 } from "@saleor/hooks/usePaginator";
@@ -33,11 +34,11 @@ import {
   orderUrl
 } from "../../urls";
 import {
-  areFiltersApplied,
   deleteFilterTab,
   getActiveFilters,
   getFilterOpts,
   getFilterQueryParam,
+  getFiltersCurrentTab,
   getFilterTabs,
   getFilterVariables,
   saveFilterTab
@@ -55,6 +56,9 @@ export const OrderList: React.FC<OrderListProps> = ({ params }) => {
   const { updateListSettings, settings } = useListSettings(
     ListViews.ORDER_LIST
   );
+
+  usePaginationReset(orderListUrl, params, settings.rowNumber);
+
   const intl = useIntl();
 
   const handleCreateOrderCreateSuccess = (data: OrderDraftCreate) => {
@@ -71,7 +75,7 @@ export const OrderList: React.FC<OrderListProps> = ({ params }) => {
     onCompleted: handleCreateOrderCreateSuccess
   });
 
-  const { channel, availableChannels } = useAppChannel();
+  const { channel, availableChannels } = useAppChannel(false);
   const limitOpts = useShopLimitsQuery({
     variables: {
       orders: true
@@ -85,12 +89,7 @@ export const OrderList: React.FC<OrderListProps> = ({ params }) => {
 
   const tabs = getFilterTabs();
 
-  const currentTab =
-    params.activeTab === undefined
-      ? areFiltersApplied(params)
-        ? tabs.length + 1
-        : 0
-      : parseInt(params.activeTab, 0);
+  const currentTab = getFiltersCurrentTab(params, tabs);
 
   const [
     changeFilters,

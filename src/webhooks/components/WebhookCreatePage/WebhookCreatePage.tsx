@@ -1,13 +1,13 @@
-import AppHeader from "@saleor/components/AppHeader";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
 import Container from "@saleor/components/Container";
 import Form from "@saleor/components/Form";
 import FormSpacer from "@saleor/components/FormSpacer";
 import Grid from "@saleor/components/Grid";
 import PageHeader from "@saleor/components/PageHeader";
-import SaveButtonBar from "@saleor/components/SaveButtonBar";
+import Savebar from "@saleor/components/Savebar";
 import { WebhookErrorFragment } from "@saleor/fragments/types/WebhookErrorFragment";
 import { SubmitPromise } from "@saleor/hooks/useForm";
+import { Backlink } from "@saleor/macaw-ui";
 import { WebhookEventTypeEnum } from "@saleor/types/globalTypes";
 import WebhookEvents from "@saleor/webhooks/components/WebhookEvents";
 import WebhookInfo from "@saleor/webhooks/components/WebhookInfo";
@@ -55,7 +55,7 @@ const WebhookCreatePage: React.FC<WebhookCreatePageProps> = ({
     <Form confirmLeave initial={initialForm} onSubmit={onSubmit}>
       {({ data, hasChanged, submit, change }) => (
         <Container>
-          <AppHeader onBack={onBack}>{appName}</AppHeader>
+          <Backlink onClick={onBack}>{appName}</Backlink>
           <PageHeader
             title={intl.formatMessage({
               defaultMessage: "Create Webhook",
@@ -85,11 +85,11 @@ const WebhookCreatePage: React.FC<WebhookCreatePageProps> = ({
               />
             </div>
           </Grid>
-          <SaveButtonBar
+          <Savebar
             disabled={disabled || !hasChanged}
             state={saveButtonBarState}
             onCancel={onBack}
-            onSave={submit}
+            onSubmit={submit}
           />
         </Container>
       )}

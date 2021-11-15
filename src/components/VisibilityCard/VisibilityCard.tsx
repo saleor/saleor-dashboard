@@ -3,16 +3,16 @@ import CardTitle from "@saleor/components/CardTitle";
 import ControlledCheckbox from "@saleor/components/ControlledCheckbox";
 import Hr from "@saleor/components/Hr";
 import RadioSwitchField from "@saleor/components/RadioSwitchField";
+import useCurrentDate from "@saleor/hooks/useCurrentDate";
 import useDateLocalize from "@saleor/hooks/useDateLocalize";
 import { ChangeEvent } from "@saleor/hooks/useForm";
-import { makeStyles } from "@saleor/theme";
+import { makeStyles } from "@saleor/macaw-ui";
 import { UserError } from "@saleor/types";
 import { getFieldError } from "@saleor/utils/errors";
 import classNames from "classnames";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import { DateContext } from "../Date/DateContext";
 import FormSpacer from "../FormSpacer";
 import DateVisibilitySelector from "./DateVisibilitySelector";
 
@@ -103,7 +103,7 @@ export const VisibilityCard: React.FC<VisibilityCardProps> = props => {
   const classes = useStyles(props);
   const intl = useIntl();
   const localizeDate = useDateLocalize();
-  const dateNow = React.useContext(DateContext);
+  const dateNow = useCurrentDate();
   const hasAvailableProps =
     isAvailable !== undefined && availableForPurchase !== undefined;
 

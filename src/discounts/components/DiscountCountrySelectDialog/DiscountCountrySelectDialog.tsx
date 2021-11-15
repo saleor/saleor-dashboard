@@ -22,7 +22,7 @@ import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import { ShopInfo_shop_countries } from "@saleor/components/Shop/types/ShopInfo";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import { buttonMessages } from "@saleor/intl";
-import { makeStyles } from "@saleor/theme";
+import { makeStyles } from "@saleor/macaw-ui";
 import { filter } from "fuzzaldrin";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -47,11 +47,16 @@ const useStyles = makeStyles(
     checkboxCell: {
       paddingLeft: 0
     },
+    containerTitle: {
+      padding: theme.spacing(1.25, 0)
+    },
     container: {
-      maxHeight: 500
+      maxHeight: 500,
+      paddingTop: 0,
+      marginBottom: theme.spacing(3)
     },
     heading: {
-      marginBottom: theme.spacing(2),
+      marginBottom: theme.spacing(1),
       marginTop: theme.spacing(2)
     },
     wideCell: {
@@ -120,13 +125,16 @@ const DiscountCountrySelectDialog: React.FC<DiscountCountrySelectDialogProps> = 
                 />
               </DialogContent>
               <Hr />
-              <DialogContent className={classes.container}>
+
+              <DialogContent className={classes.containerTitle}>
                 <Typography className={classes.heading} variant="subtitle1">
                   <FormattedMessage
                     defaultMessage="Countries A to Z"
                     description="country selection"
                   />
                 </Typography>
+              </DialogContent>
+              <DialogContent className={classes.container}>
                 <ResponsiveTable>
                   <TableBody>
                     {filter(countries, data.query, {

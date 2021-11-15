@@ -188,12 +188,14 @@ function getFileInput(
   if (updatedFileAttribute) {
     return {
       file: updatedFileAttribute.file,
-      id: updatedFileAttribute.id
+      id: updatedFileAttribute.id,
+      contentType: updatedFileAttribute.contentType
     };
   }
   return {
-    file: updatedFileAttribute.file,
-    id: updatedFileAttribute.id
+    file: attribute.data.selectedValues?.[0]?.file?.url,
+    contentType: attribute.data.selectedValues?.[0]?.file.contentType,
+    id: attribute.id
   };
 }
 
@@ -218,10 +220,26 @@ function getBooleanInput(attribute: AttributeInput) {
   };
 }
 
+function getDateInput(attribute: AttributeInput) {
+  return {
+    id: attribute.id,
+    date: attribute.value[0]
+  };
+}
+
+function getDateTimeInput(attribute: AttributeInput) {
+  return {
+    id: attribute.id,
+    dateTime: attribute.value[0]
+  };
+}
+
 function getDefaultInput(attribute: AttributeInput) {
   return {
     id: attribute.id,
-    values: attribute.value[0] === "" ? [] : attribute.value
+    values: ["", undefined, null].includes(attribute.value[0])
+      ? []
+      : attribute.value
   };
 }
 
@@ -242,6 +260,12 @@ export const prepareAttributesInput = ({
 
       case AttributeInputTypeEnum.BOOLEAN:
         return getBooleanInput(attribute);
+
+      case AttributeInputTypeEnum.DATE:
+        return getDateInput(attribute);
+
+      case AttributeInputTypeEnum.DATE_TIME:
+        return getDateTimeInput(attribute);
 
       default:
         return getDefaultInput(attribute);

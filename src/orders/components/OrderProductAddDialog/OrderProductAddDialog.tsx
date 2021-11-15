@@ -24,12 +24,12 @@ import useModalDialogErrors from "@saleor/hooks/useModalDialogErrors";
 import useModalDialogOpen from "@saleor/hooks/useModalDialogOpen";
 import useSearchQuery from "@saleor/hooks/useSearchQuery";
 import { buttonMessages } from "@saleor/intl";
+import { makeStyles } from "@saleor/macaw-ui";
 import { maybe, renderCollection } from "@saleor/misc";
-import { makeStyles } from "@saleor/theme";
 import { ChannelProps, FetchMoreProps } from "@saleor/types";
 import getOrderErrorMessage from "@saleor/utils/errors/order";
 import React from "react";
-import InfiniteScroll from "react-infinite-scroller";
+import InfiniteScroll from "react-infinite-scroll-component";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import {
@@ -50,7 +50,9 @@ const useStyles = makeStyles(
       padding: 0
     },
     content: {
-      overflowY: "scroll"
+      overflowY: "scroll",
+      paddingTop: 0,
+      marginBottom: theme.spacing(3)
     },
     grayText: {
       color: theme.palette.text.disabled
@@ -63,7 +65,12 @@ const useStyles = makeStyles(
       marginTop: theme.spacing(3)
     },
     overflow: {
-      overflowY: "visible"
+      overflowY: "hidden"
+    },
+    topArea: {
+      overflowY: "hidden",
+      paddingBottom: theme.spacing(6),
+      margin: theme.spacing(0, 3, 3, 3)
     },
     productCheckboxCell: {
       "&:first-child": {
@@ -164,6 +171,8 @@ const onVariantAdd = (
       )
     : setVariants([...variants, variant]);
 
+const scrollableTargetId = "orderProductAddScrollableDialog";
+
 const OrderProductAddDialog: React.FC<OrderProductAddDialogProps> = props => {
   const {
     confirmButtonState,
@@ -248,7 +257,7 @@ const OrderProductAddDialog: React.FC<OrderProductAddDialogProps> = props => {
           description="dialog header"
         />
       </DialogTitle>
-      <DialogContent className={classes.overflow} data-test-id="searchQuery">
+      <DialogContent className={classes.topArea} data-test-id="searchQuery">
         <TextField
           name="query"
           value={query}
@@ -267,18 +276,18 @@ const OrderProductAddDialog: React.FC<OrderProductAddDialogProps> = props => {
           }}
         />
       </DialogContent>
-      <DialogContent className={classes.content}>
+      <DialogContent className={classes.content} id={scrollableTargetId}>
         <InfiniteScroll
-          pageStart={0}
-          loadMore={onFetchMore}
+          dataLength={productChoicesWithValidVariants?.length}
+          next={onFetchMore}
           hasMore={hasMore}
-          useWindow={false}
+          scrollThreshold="100px"
           loader={
             <div className={classes.loadMoreLoaderContainer}>
               <CircularProgress size={16} />
             </div>
           }
-          threshold={10}
+          scrollableTarget={scrollableTargetId}
         >
           <ResponsiveTable key="table">
             <TableBody>
@@ -343,15 +352,17 @@ const OrderProductAddDialog: React.FC<OrderProductAddDialogProps> = props => {
                           </TableCell>
                           <TableCell className={classes.colName}>
                             <div>{variant.name}</div>
-                            <div className={classes.grayText}>
-                              <FormattedMessage
-                                defaultMessage="SKU {sku}"
-                                description="variant sku"
-                                values={{
-                                  sku: variant.sku
-                                }}
-                              />
-                            </div>
+                            {variant.sku && (
+                              <div className={classes.grayText}>
+                                <FormattedMessage
+                                  defaultMessage="SKU {sku}"
+                                  description="variant sku"
+                                  values={{
+                                    sku: variant.sku
+                                  }}
+                                />
+                              </div>
+                            )}
                           </TableCell>
                           <TableCell className={classes.textRight}>
                             {variant?.channelListings[0]?.price && (

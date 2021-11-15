@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { ProductTypeInput, AttributeTypeEnum, MeasurementUnitsEnum, AttributeInputTypeEnum, WeightUnitsEnum } from "./../../types/globalTypes";
+import { ProductTypeInput, ProductTypeKindEnum, AttributeTypeEnum, MeasurementUnitsEnum, AttributeInputTypeEnum, WeightUnitsEnum } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: ProductTypeUpdate
@@ -59,6 +59,25 @@ export interface ProductTypeUpdate_productTypeUpdate_productType_variantAttribut
   inputType: AttributeInputTypeEnum | null;
 }
 
+export interface ProductTypeUpdate_productTypeUpdate_productType_assignedVariantAttributes_attribute {
+  __typename: "Attribute";
+  id: string;
+  name: string | null;
+  slug: string | null;
+  type: AttributeTypeEnum | null;
+  visibleInStorefront: boolean;
+  filterableInDashboard: boolean;
+  filterableInStorefront: boolean;
+  unit: MeasurementUnitsEnum | null;
+  inputType: AttributeInputTypeEnum | null;
+}
+
+export interface ProductTypeUpdate_productTypeUpdate_productType_assignedVariantAttributes {
+  __typename: "AssignedVariantAttribute";
+  attribute: ProductTypeUpdate_productTypeUpdate_productType_assignedVariantAttributes_attribute;
+  variantSelection: boolean;
+}
+
 export interface ProductTypeUpdate_productTypeUpdate_productType_weight {
   __typename: "Weight";
   unit: WeightUnitsEnum;
@@ -69,6 +88,7 @@ export interface ProductTypeUpdate_productTypeUpdate_productType {
   __typename: "ProductType";
   id: string;
   name: string;
+  kind: ProductTypeKindEnum;
   hasVariants: boolean;
   isShippingRequired: boolean;
   taxType: ProductTypeUpdate_productTypeUpdate_productType_taxType | null;
@@ -76,6 +96,7 @@ export interface ProductTypeUpdate_productTypeUpdate_productType {
   privateMetadata: (ProductTypeUpdate_productTypeUpdate_productType_privateMetadata | null)[];
   productAttributes: (ProductTypeUpdate_productTypeUpdate_productType_productAttributes | null)[] | null;
   variantAttributes: (ProductTypeUpdate_productTypeUpdate_productType_variantAttributes | null)[] | null;
+  assignedVariantAttributes: (ProductTypeUpdate_productTypeUpdate_productType_assignedVariantAttributes | null)[] | null;
   weight: ProductTypeUpdate_productTypeUpdate_productType_weight | null;
 }
 

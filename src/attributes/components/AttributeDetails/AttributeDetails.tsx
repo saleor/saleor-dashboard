@@ -7,7 +7,7 @@ import SingleSelectField from "@saleor/components/SingleSelectField";
 import { AttributeErrorFragment } from "@saleor/fragments/types/AttributeErrorFragment";
 import { UseFormResult } from "@saleor/hooks/useForm";
 import { commonMessages } from "@saleor/intl";
-import { makeStyles } from "@saleor/theme";
+import { makeStyles } from "@saleor/macaw-ui";
 import {
   AttributeEntityTypeEnum,
   AttributeInputTypeEnum
@@ -36,11 +36,11 @@ const entityTypeMessages = defineMessages({
 const useStyles = makeStyles(
   theme => ({
     inputTypeSection: {
-      columnGap: theme.spacing(2) + "px",
+      columnGap: theme.spacing(2),
       display: "flex",
       [theme.breakpoints.down("md")]: {
         flexFlow: "wrap",
-        rowGap: theme.spacing(3) + "px"
+        rowGap: theme.spacing(3)
       }
     }
   }),
@@ -100,6 +100,18 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = props => {
     {
       label: intl.formatMessage(inputTypeMessages.boolean),
       value: AttributeInputTypeEnum.BOOLEAN
+    },
+    {
+      label: intl.formatMessage(inputTypeMessages.date),
+      value: AttributeInputTypeEnum.DATE
+    },
+    {
+      label: intl.formatMessage(inputTypeMessages.dateTime),
+      value: AttributeInputTypeEnum.DATE_TIME
+    },
+    {
+      label: intl.formatMessage(inputTypeMessages.swatch),
+      value: AttributeInputTypeEnum.SWATCH
     }
   ];
   const entityTypeChoices = [
