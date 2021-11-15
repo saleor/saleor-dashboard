@@ -20,18 +20,13 @@ import { GiftCardDetailsContext } from "../providers/GiftCardDetailsProvider";
 import { GIFT_CARD_DETAILS_QUERY } from "../queries";
 import { GiftCardAddNote } from "../types/GiftCardAddNote";
 import { GiftCardDetails_giftCard_events } from "../types/GiftCardDetails";
+import useGiftCardHistoryEvents from "./hooks/useGiftCardHistoryEvents";
 import messages from "./messages";
 import useStyles from "./styles";
 
 interface FormData {
   message: string;
 }
-
-const useGiftCardHistoryEvents = () => {
-  const { giftCard } = useContext(GiftCardDetailsContext);
-
-  return { id: giftCard?.id, events: giftCard?.events };
-};
 
 const getEventMessage = (
   event: GiftCardDetails_giftCard_events,
@@ -168,7 +163,7 @@ const getEventMessage = (
 const GiftCardHistory: React.FC = () => {
   const intl = useIntl();
   const notify = useNotifier();
-  const { id, events } = useGiftCardHistoryEvents();
+  const { id, events, isExpired } = useGiftCardHistoryEvents();
   const classes = useStyles();
 
   const onTimelineNoteAddCompleted = ({ giftCardAddNote }: GiftCardAddNote) => {
@@ -218,6 +213,7 @@ const GiftCardHistory: React.FC = () => {
                     reset={reset}
                     onChange={change}
                     onSubmit={submit}
+                    disabled={isExpired}
                   />
                 )}
               </Form>
