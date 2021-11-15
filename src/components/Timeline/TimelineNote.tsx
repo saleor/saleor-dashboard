@@ -77,7 +77,7 @@ export const TimelineNote: React.FC<TimelineNoteProps> = props => {
   const classes = useStyles(props);
 
   const getUserTitleOrEmail = () => {
-    if (user.firstName && user.lastName) {
+    if (user?.firstName && user?.lastName) {
       return `${user.firstName} ${user.lastName}`;
     }
 
