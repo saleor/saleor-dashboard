@@ -23,7 +23,7 @@ export type FormErrors<T> = {
 };
 
 export interface UseFormOpts {
-  confirmLeave: boolean;
+  confirmLeave?: boolean;
 }
 
 export interface UseFormResult<TData> extends CommonUseFormResult<TData> {
@@ -85,7 +85,7 @@ function useForm<T extends FormData, TErrors>(
   const [errors, setErrors] = useState<FormErrors<T>>({});
   const [data, setData] = useStateFromProps(initialData, {
     mergeFunc: merge,
-    onRefresh: newData => handleRefresh(data, newData, handleSetChanged)
+    onRefresh: newData => handleRefresh(data, newData, setChanged)
   });
 
   const {
@@ -94,13 +94,11 @@ function useForm<T extends FormData, TErrors>(
     setEnableExitDialog
   } = useContext(ExitFormDialogContext);
 
-  const handleSetChanged = (value: boolean = true) => {
-    setChanged(value);
-
+  useEffect(() => {
     if (confirmLeave) {
-      setIsFormDirtyInExitDialog(value);
+      setIsFormDirtyInExitDialog(hasChanged);
     }
-  };
+  }, [confirmLeave, hasChanged]);
 
   const setExitDialogData = () => {
     setEnableExitDialog(true);
@@ -120,7 +118,7 @@ function useForm<T extends FormData, TErrors>(
 
     if (Array.isArray(field)) {
       if (!hasChanged) {
-        handleSetChanged(true);
+        setChanged(true);
       }
 
       setData({
@@ -147,7 +145,7 @@ function useForm<T extends FormData, TErrors>(
       return;
     } else {
       if (data[name] !== value) {
-        handleSetChanged(true);
+        setChanged(true);
       }
       setData(data => ({
         ...data,
@@ -165,7 +163,7 @@ function useForm<T extends FormData, TErrors>(
       ...data,
       ...newData
     }));
-    handleSetChanged(setHasChanged);
+    setChanged(setHasChanged);
   }
 
   async function submit() {
@@ -173,7 +171,7 @@ function useForm<T extends FormData, TErrors>(
       const result = handleFormSubmit(
         data,
         onSubmit,
-        handleSetChanged,
+        setChanged,
         setEnableExitDialog
       );
 
@@ -193,6 +191,8 @@ function useForm<T extends FormData, TErrors>(
       );
     }
   };
+
+  const triggerChange = () => setChanged(true);
 
   return {
     setError,
