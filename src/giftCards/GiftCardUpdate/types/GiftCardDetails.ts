@@ -126,7 +126,7 @@ export interface GiftCardDetails_giftCard {
   __typename: "GiftCard";
   metadata: (GiftCardDetails_giftCard_metadata | null)[];
   privateMetadata: (GiftCardDetails_giftCard_privateMetadata | null)[];
-  displayCode: string;
+  last4CodeChars: string;
   boughtInChannel: string | null;
   createdBy: GiftCardDetails_giftCard_createdBy | null;
   product: GiftCardDetails_giftCard_product | null;
