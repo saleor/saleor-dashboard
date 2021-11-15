@@ -80,7 +80,7 @@ export interface TimelineEventProps {
   children?: React.ReactNode;
   date: string;
   secondaryTitle?: string;
-  title?: string;
+  title?: string | React.ReactNode;
   titleElements?: TitleElement[];
 }
 
