@@ -81,7 +81,7 @@ export const TimelineNote: React.FC<TimelineNoteProps> = props => {
       return `${user.firstName} ${user.lastName}`;
     }
 
-    return user.email;
+    return user?.email;
   };
 
   return (
