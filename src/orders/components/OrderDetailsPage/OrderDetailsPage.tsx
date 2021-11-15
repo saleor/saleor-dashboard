@@ -21,7 +21,7 @@ import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTr
 import React from "react";
 import { defineMessages, useIntl } from "react-intl";
 
-import { maybe } from "../../../misc";
+import { getMutationErrors, maybe } from "../../../misc";
 import { OrderStatus } from "../../../types/globalTypes";
 import {
   OrderDetails_order,
@@ -172,7 +172,7 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
       privateMetadata
     });
     resetMetadataChanged();
-    return result;
+    return getMutationErrors(result);
   };
 
   const initial: MetadataFormData = {
@@ -211,7 +211,7 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
   ]);
 
   return (
-    <Form initial={initial} onSubmit={handleSubmit}>
+    <Form confirmLeave initial={initial} onSubmit={handleSubmit}>
       {({ change, data, hasChanged, submit }) => {
         const changeMetadata = makeMetadataChangeHandler(change);
 

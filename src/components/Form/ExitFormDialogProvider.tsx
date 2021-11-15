@@ -8,7 +8,9 @@ import ExitFormDialog from "./ExitFormDialog";
 export interface ExitFormDialogData {
   setIsDirty: (isDirty: boolean) => void;
   setEnableExitDialog: (value: boolean) => void;
-  setExitDialogSubmitRef: (submitFn: () => SubmitPromise<boolean>) => void;
+  setExitDialogSubmitRef: (
+    submitFn: (dataOrEvent?: any) => SubmitPromise<boolean>
+  ) => void;
   shouldBlockNavigation: () => boolean;
 }
 
@@ -86,7 +88,9 @@ const ExitFormDialogProvider = ({ children }) => {
       return true;
     });
 
-    return unblock;
+    return () => {
+      unblock();
+    };
   };
 
   useEffect(handleNavigationBlock, []);

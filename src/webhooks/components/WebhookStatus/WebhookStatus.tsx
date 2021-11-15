@@ -5,8 +5,6 @@ import { ChangeEvent } from "@saleor/hooks/useForm";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import { FormData } from "../WebhooksDetailsPage";
-
 interface WebhookStatusProps {
   data: boolean;
   disabled: boolean;
@@ -36,7 +34,7 @@ const WebhookStatus: React.FC<WebhookStatusProps> = ({
           })}
         </Typography>
         <ControlledCheckbox
-          name={"isActive" as keyof FormData}
+          name={"isActive"}
           label={intl.formatMessage({
             defaultMessage: "Webhook is active",
             description: "webhooks active"

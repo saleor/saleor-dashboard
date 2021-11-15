@@ -10,6 +10,7 @@ import { ShopInfo_shop_countries } from "@saleor/components/Shop/types/ShopInfo"
 import { AddressTypeInput } from "@saleor/customers/types";
 import { WarehouseErrorFragment } from "@saleor/fragments/types/WarehouseErrorFragment";
 import useAddressValidation from "@saleor/hooks/useAddressValidation";
+import { SubmitPromise } from "@saleor/hooks/useForm";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { sectionNames } from "@saleor/intl";
 import { Backlink } from "@saleor/macaw-ui";
@@ -29,7 +30,7 @@ export interface WarehouseCreatePageProps {
   errors: WarehouseErrorFragment[];
   saveButtonBarState: ConfirmButtonTransitionState;
   onBack: () => void;
-  onSubmit: (data: WarehouseCreatePageFormData) => void;
+  onSubmit: (data: WarehouseCreatePageFormData) => SubmitPromise;
 }
 
 const initialForm: WarehouseCreatePageFormData = {
@@ -61,7 +62,7 @@ const WarehouseCreatePage: React.FC<WarehouseCreatePageProps> = ({
   } = useAddressValidation(onSubmit);
 
   return (
-    <Form initial={initialForm} onSubmit={handleSubmit}>
+    <Form confirmLeave initial={initialForm} onSubmit={handleSubmit}>
       {({ change, data, submit }) => {
         const countryChoices = mapCountriesToChoices(countries);
         const handleCountryChange = createSingleAutocompleteSelectHandler(

@@ -4,11 +4,14 @@ import { WindowTitle } from "@saleor/components/WindowTitle";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { commonMessages } from "@saleor/intl";
+import { extractMutationErrors } from "@saleor/misc";
 import { WebhookEventTypeEnum } from "@saleor/types/globalTypes";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import WebhookCreatePage, { FormData } from "../components/WebhookCreatePage";
+import WebhookCreatePage, {
+  WebhookCreateFormData
+} from "../components/WebhookCreatePage";
 import { useWebhookCreateMutation } from "../mutations";
 import { WebhookCreate as WebhookCreateData } from "../types/WebhookCreate";
 import { webhookUrl } from "../urls";
@@ -39,21 +42,23 @@ export const WebhooksCreate: React.FC<WebhooksCreateProps> = ({ id }) => {
 
   const handleBack = () => navigate(customAppUrl(id));
 
-  const handleSubmit = (data: FormData) =>
-    webhookCreate({
-      variables: {
-        input: {
-          app: id,
-          events: data.allEvents
-            ? [WebhookEventTypeEnum.ANY_EVENTS]
-            : data.events,
-          isActive: data.isActive,
-          name: data.name,
-          secretKey: data.secretKey,
-          targetUrl: data.targetUrl
+  const handleSubmit = (data: WebhookCreateFormData) =>
+    extractMutationErrors(
+      webhookCreate({
+        variables: {
+          input: {
+            app: id,
+            events: data.allEvents
+              ? [WebhookEventTypeEnum.ANY_EVENTS]
+              : data.events,
+            isActive: data.isActive,
+            name: data.name,
+            secretKey: data.secretKey,
+            targetUrl: data.targetUrl
+          }
         }
-      }
-    });
+      })
+    );
 
   return (
     <>

@@ -12,6 +12,7 @@ import {
 import { useFileUploadMutation } from "@saleor/files/mutations";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
+import { getMutationErrors } from "@saleor/misc";
 import usePageSearch from "@saleor/searches/usePageSearch";
 import usePageTypeSearch from "@saleor/searches/usePageTypeSearch";
 import useProductSearch from "@saleor/searches/useProductSearch";
@@ -170,8 +171,12 @@ export const PageCreate: React.FC<PageCreateProps> = ({ params }) => {
             }
           });
 
-          return result.data.pageCreate.page?.id || null;
+          return {
+            id: result.data.pageCreate.page?.id || null,
+            errors: getMutationErrors(result)
+          };
         };
+
         const handleSubmit = createMetadataCreateHandler(
           handleCreate,
           updateMetadata,

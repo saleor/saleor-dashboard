@@ -49,7 +49,7 @@ const OrderFulfillmentTrackingDialog: React.FC<OrderFulfillmentTrackingDialogPro
 
   return (
     <Dialog onClose={onClose} open={open} fullWidth maxWidth="xs">
-      <Form initial={{ trackingNumber }} onSubmit={onConfirm}>
+      <Form confirmLeave initial={{ trackingNumber }} onSubmit={onConfirm}>
         {({ change, data, submit }) => (
           <>
             <DialogTitle>

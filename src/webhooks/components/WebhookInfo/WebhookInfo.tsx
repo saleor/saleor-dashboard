@@ -10,10 +10,10 @@ import getWebhookErrorMessage from "@saleor/utils/errors/webhooks";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import { FormData } from "../WebhooksDetailsPage";
+import { WebhookUpdateFormData } from "../WebhooksDetailsPage";
 
 interface WebhookInfoProps {
-  data: FormData;
+  data: WebhookUpdateFormData;
   disabled: boolean;
   errors: WebhookErrorFragment[];
   onChange: (event: React.ChangeEvent<any>) => void;

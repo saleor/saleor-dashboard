@@ -3,6 +3,7 @@ import Container from "@saleor/components/Container";
 import Hr from "@saleor/components/Hr";
 import PageHeader from "@saleor/components/PageHeader";
 import { RefreshLimits_shop_limits } from "@saleor/components/Shop/types/RefreshLimits";
+import { SubmitPromise } from "@saleor/hooks/useForm";
 import useWizard from "@saleor/hooks/useWizard";
 import { makeStyles } from "@saleor/macaw-ui";
 import { validatePrice } from "@saleor/products/utils/validation";
@@ -89,7 +90,7 @@ export interface ProductVariantCreatePageProps
     "data" | "dispatchFormDataAction" | "step" | "variantsLeft" | "onStepClick"
   > {
   limits: RefreshLimits_shop_limits;
-  onSubmit: (data: ProductVariantBulkCreateInput[]) => void;
+  onSubmit: (data: ProductVariantBulkCreateInput[]) => SubmitPromise;
 }
 
 function getTitle(step: ProductVariantCreatorStep, intl: IntlShape): string {

@@ -1,7 +1,10 @@
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
-import OrderFulfillPage from "@saleor/orders/components/OrderFulfillPage";
+import { extractMutationErrors } from "@saleor/misc";
+import OrderFulfillPage, {
+  OrderFulfillSubmitData
+} from "@saleor/orders/components/OrderFulfillPage";
 import { useOrderFulfill } from "@saleor/orders/mutations";
 import {
   useOrderFulfillData,
@@ -100,19 +103,21 @@ const OrderFulfill: React.FC<OrderFulfillProps> = ({ orderId }) => {
         errors={fulfillOrderOpts.data?.orderFulfill.errors}
         onBack={() => navigate(orderUrl(orderId))}
         onSubmit={formData =>
-          fulfillOrder({
-            variables: {
-              input: {
-                lines: formData.items.map(line => ({
-                  orderLineId: line.id,
-                  stocks: line.value
-                })),
-                notifyCustomer:
-                  settings?.shop?.fulfillmentAutoApprove && formData.sendInfo
-              },
-              orderId
-            }
-          })
+          extractMutationErrors(
+            fulfillOrder({
+              variables: {
+                input: {
+                  lines: formData.items.map(line => ({
+                    orderLineId: line.id,
+                    stocks: line.value
+                  })),
+                  notifyCustomer:
+                    settings?.shop?.fulfillmentAutoApprove && formData.sendInfo
+                },
+                orderId
+              }
+            })
+          )
         }
         order={data?.order}
         saveButtonBar="default"

@@ -1,5 +1,6 @@
 import useNavigator from "@saleor/hooks/useNavigator";
 import useUser from "@saleor/hooks/useUser";
+import { extractMutationErrors } from "@saleor/misc";
 import { parse as parseQs } from "qs";
 import React from "react";
 import { RouteComponentProps } from "react-router";
@@ -32,13 +33,15 @@ const NewPassword: React.FC<RouteComponentProps> = ({ location }) => {
     <SetPasswordMutation onCompleted={handleSetPassword}>
       {(setPassword, setPasswordOpts) => {
         const handleSubmit = (data: NewPasswordPageFormData) =>
-          setPassword({
-            variables: {
-              email: params.email,
-              password: data.password,
-              token: params.token
-            }
-          });
+          extractMutationErrors(
+            setPassword({
+              variables: {
+                email: params.email,
+                password: data.password,
+                token: params.token
+              }
+            })
+          );
 
         return (
           <NewPasswordPage

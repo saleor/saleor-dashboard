@@ -8,10 +8,10 @@ import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { FormData } from "../CountryListPage";
+import { TaxesConfigurationFormData } from "../CountryListPage";
 
 interface TaxConfigurationProps {
-  data: FormData;
+  data: TaxesConfigurationFormData;
   disabled: boolean;
   onChange: (event: React.ChangeEvent<any>) => void;
   onTaxFetch: () => void;

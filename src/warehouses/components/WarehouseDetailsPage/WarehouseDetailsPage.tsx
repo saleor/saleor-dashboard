@@ -85,8 +85,8 @@ const WarehouseDetailsPage: React.FC<WarehouseDetailsPageProps> = ({
   };
 
   return (
-    <Form initial={initialForm} onSubmit={handleSubmit}>
-      {({ change, data, hasChanged, set, submit }) => {
+    <Form confirmLeave initial={initialForm} onSubmit={handleSubmit}>
+      {({ change, data, hasChanged, submit, set }) => {
         const countryChoices = mapCountriesToChoices(countries);
         const handleCountryChange = createSingleAutocompleteSelectHandler(
           change,

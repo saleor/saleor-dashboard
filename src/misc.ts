@@ -1,6 +1,10 @@
 import { ThemeType } from "@saleor/macaw-ui";
 import moment from "moment-timezone";
-import { MutationFunction, MutationResult } from "react-apollo";
+import {
+  MutationFetchResult,
+  MutationFunction,
+  MutationResult
+} from "react-apollo";
 import { defineMessages, IntlShape } from "react-intl";
 import urlJoin from "url-join";
 
@@ -283,20 +287,34 @@ export interface SaleorMutationResult {
   errors?: any[];
 }
 
-export function getMutationErrors<
-  TData extends SaleorMutationResult,
-  TErrors extends Pick<TData, "errors">
->(data: TData): TErrors[] {
-  return Object.values(data).reduce(
-    (acc: TErrors[], mut) => [...acc, ...maybe(() => mut.errors, [])],
-    []
-  );
-}
+type InferPromiseResult<T> = T extends Promise<infer V> ? V : never;
+
+export const extractMutationErrors = async <
+  TData extends InferPromiseResult<TPromise>,
+  TPromise extends Promise<MutationFetchResult<TData>>
+  // TErrors extends ReturnType<typeof getMutationErrors>
+>(
+  submitPromise: TPromise
+): Promise<any[]> /* Promise<TErrors> */ => {
+  const result = await submitPromise;
+
+  const e = getMutationErrors(result);
+  // @ts-ignore
+  return e;
+};
+
+export const getMutationErrors = <
+  T extends MutationFetchResult<any>,
+  TData extends T["data"],
+  TErrors extends TData[keyof TData]["errors"]
+>(
+  result: T
+): TErrors => result.data?.errors;
 
 export function getMutationStatus<
   TData extends Record<string, SaleorMutationResult | any>
 >(opts: MutationResult<TData>): ConfirmButtonTransitionState {
-  const errors = opts.data ? getMutationErrors(opts.data) : [];
+  const errors = getMutationErrors(opts);
 
   return getMutationState(opts.called, opts.loading, errors);
 }

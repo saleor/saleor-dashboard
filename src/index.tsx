@@ -131,11 +131,11 @@ const App: React.FC = () => (
                     <ShopProvider>
                       <AuthProvider>
                         <AppChannelProvider>
-                          <ExitFormPromptProvider>
+                          <ExitFormDialogProvider>
                             <ExternalAppProvider>
                               <Routes />
                             </ExternalAppProvider>
-                          </ExitFormPromptProvider>
+                          </ExitFormDialogProvider>
                         </AppChannelProvider>
                       </AuthProvider>
                     </ShopProvider>

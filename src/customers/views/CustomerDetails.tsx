@@ -14,6 +14,7 @@ import {
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
+import { extractMutationErrors, maybe } from "../../misc";
 import { orderListUrl, orderUrl } from "../../orders/urls";
 import CustomerDetailsPage, {
   CustomerDetailsPageFormData
@@ -86,28 +87,25 @@ export const CustomerDetailsView: React.FC<CustomerDetailsViewProps> = ({
                 const [updateMetadata] = useMetadataUpdate({});
                 const [updatePrivateMetadata] = usePrivateMetadataUpdate({});
 
-                const updateData = async (
-                  data: CustomerDetailsPageFormData
-                ) => {
-                  const result = await updateCustomer({
-                    variables: {
-                      id,
-                      input: {
-                        email: data.email,
-                        firstName: data.firstName,
-                        isActive: data.isActive,
-                        lastName: data.lastName,
-                        note: data.note
+                const onSubmit = async (data: CustomerDetailsPageFormData) =>
+                  extractMutationErrors(
+                    updateCustomer({
+                      variables: {
+                        id,
+                        input: {
+                          email: data.email,
+                          firstName: data.firstName,
+                          isActive: data.isActive,
+                          lastName: data.lastName,
+                          note: data.note
+                        }
                       }
-                    }
-                  });
-
-                  return result.data.customerUpdate.errors;
-                };
+                    })
+                  );
 
                 const handleSubmit = createMetadataUpdateHandler(
                   user,
-                  updateData,
+                  onSubmit,
                   variables => updateMetadata({ variables }),
                   variables => updatePrivateMetadata({ variables })
                 );

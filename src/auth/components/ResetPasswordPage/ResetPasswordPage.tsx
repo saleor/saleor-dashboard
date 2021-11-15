@@ -1,6 +1,8 @@
 import { Button, TextField, Typography } from "@material-ui/core";
+import { RequestPasswordReset_requestPasswordReset_errors } from "@saleor/auth/types/RequestPasswordReset";
 import Form from "@saleor/components/Form";
 import FormSpacer from "@saleor/components/FormSpacer";
+import { SubmitPromise } from "@saleor/hooks/useForm";
 import { commonMessages } from "@saleor/intl";
 import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
@@ -32,7 +34,9 @@ export interface ResetPasswordPageFormData {
 export interface ResetPasswordPageProps {
   disabled: boolean;
   error: string;
-  onSubmit: (data: ResetPasswordPageFormData) => void;
+  onSubmit: (
+    data: ResetPasswordPageFormData
+  ) => SubmitPromise<RequestPasswordReset_requestPasswordReset_errors[]>;
 }
 
 const ResetPasswordPage: React.FC<ResetPasswordPageProps> = props => {

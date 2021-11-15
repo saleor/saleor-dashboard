@@ -4,6 +4,7 @@ import Form from "@saleor/components/Form";
 import Grid from "@saleor/components/Grid";
 import PageHeader from "@saleor/components/PageHeader";
 import Savebar from "@saleor/components/Savebar";
+import { SubmitPromise } from "@saleor/hooks/useForm";
 import { sectionNames } from "@saleor/intl";
 import { Backlink } from "@saleor/macaw-ui";
 import React from "react";
@@ -14,7 +15,7 @@ import { CountryList_shop } from "../../types/CountryList";
 import CountryList from "../CountryList";
 import TaxConfiguration from "../TaxConfiguration";
 
-export interface FormData {
+export interface TaxesConfigurationFormData {
   includeTax: boolean;
   showGross: boolean;
   chargeTaxesOnShipping: boolean;
@@ -25,7 +26,7 @@ export interface CountryListPageProps {
   shop: CountryList_shop;
   onBack: () => void;
   onRowClick: (code: string) => void;
-  onSubmit: (data: FormData) => void;
+  onSubmit: (data: TaxesConfigurationFormData) => SubmitPromise;
   onTaxFetch: () => void;
 }
 
@@ -40,13 +41,13 @@ const CountryListPage: React.FC<CountryListPageProps> = ({
 }) => {
   const intl = useIntl();
 
-  const initialForm: FormData = {
+  const initialForm: TaxesConfigurationFormData = {
     chargeTaxesOnShipping: maybe(() => shop.chargeTaxesOnShipping, false),
     includeTax: maybe(() => shop.includeTaxesInPrices, false),
     showGross: maybe(() => shop.displayGrossPrices, false)
   };
   return (
-    <Form initial={initialForm} onSubmit={onSubmit}>
+    <Form confirmLeave initial={initialForm} onSubmit={onSubmit}>
       {({ change, data, hasChanged, submit }) => (
         <>
           <Container>
@@ -64,7 +65,7 @@ const CountryListPage: React.FC<CountryListPageProps> = ({
                 <TaxConfiguration
                   data={data}
                   disabled={disabled}
-                  onChange={event => change(event, submit)}
+                  onChange={event => change(event)}
                   onTaxFetch={onTaxFetch}
                 />
               </div>

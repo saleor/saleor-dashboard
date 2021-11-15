@@ -25,6 +25,7 @@ function useNavigator(): UseNavigatorResult {
     if (shouldBlockNavigation()) {
       return;
     }
+
     const targetUrl = preserveQs ? url + search : url;
 
     if (replace) {

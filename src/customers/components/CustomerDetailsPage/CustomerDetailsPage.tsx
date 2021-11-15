@@ -7,6 +7,7 @@ import Metadata from "@saleor/components/Metadata/Metadata";
 import { MetadataFormData } from "@saleor/components/Metadata/types";
 import PageHeader from "@saleor/components/PageHeader";
 import Savebar from "@saleor/components/Savebar";
+import { UpdateCustomer_customerUpdate_errors } from "@saleor/customers/types/UpdateCustomer";
 import { AccountErrorFragment } from "@saleor/fragments/types/AccountErrorFragment";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import { sectionNames } from "@saleor/intl";
@@ -38,7 +39,9 @@ export interface CustomerDetailsPageProps {
   errors: AccountErrorFragment[];
   saveButtonBar: ConfirmButtonTransitionState;
   onBack: () => void;
-  onSubmit: (data: CustomerDetailsPageFormData) => SubmitPromise;
+  onSubmit: (
+    data: CustomerDetailsPageFormData
+  ) => SubmitPromise<UpdateCustomer_customerUpdate_errors[]>;
   onViewAllOrdersClick: () => void;
   onRowClick: (id: string) => void;
   onAddressManageClick: () => void;
@@ -74,7 +77,7 @@ const CustomerDetailsPage: React.FC<CustomerDetailsPageProps> = ({
   } = useMetadataChangeTrigger();
 
   return (
-    <Form initial={initialForm} onSubmit={onSubmit} confirmLeave>
+    <Form confirmLeave initial={initialForm} onSubmit={onSubmit}>
       {({ change, data, hasChanged, submit }) => {
         const changeMetadata = makeMetadataChangeHandler(change);
 

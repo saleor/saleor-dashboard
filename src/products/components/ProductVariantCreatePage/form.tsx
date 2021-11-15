@@ -9,8 +9,13 @@ import {
   createFetchReferencesHandler
 } from "@saleor/attributes/utils/handlers";
 import { AttributeInput } from "@saleor/components/Attributes";
+import { ExitFormDialogContext } from "@saleor/components/Form/ExitFormDialogProvider";
 import { MetadataFormData } from "@saleor/components/Metadata";
-import useForm, { FormChange, FormErrors } from "@saleor/hooks/useForm";
+import useForm, {
+  CommonUseFormResultWithHandlers,
+  FormChange,
+  FormErrors
+} from "@saleor/hooks/useForm";
 import useFormset, {
   FormsetChange,
   FormsetData
@@ -23,8 +28,9 @@ import { SearchPages_search_edges_node } from "@saleor/searches/types/SearchPage
 import { SearchProducts_search_edges_node } from "@saleor/searches/types/SearchProducts";
 import { SearchWarehouses_search_edges_node } from "@saleor/searches/types/SearchWarehouses";
 import { FetchMoreProps, ReorderEvent } from "@saleor/types";
+import handleFormSubmit from "@saleor/utils/handlers/handleFormSubmit";
 import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import { useIntl } from "react-intl";
 
 import { ProductStockFormsetData, ProductStockInput } from "../ProductStocks";
@@ -71,15 +77,13 @@ export interface ProductVariantCreateHandlers
   fetchMoreReferences: FetchMoreProps;
 }
 
-export interface UseProductVariantCreateFormResult {
-  change: FormChange;
-  data: ProductVariantCreateData;
+export interface UseProductVariantCreateFormResult
+  extends CommonUseFormResultWithHandlers<
+    ProductVariantCreateData,
+    ProductVariantCreateHandlers
+  > {
   formErrors: FormErrors<ProductVariantCreateData>;
   disabled: boolean;
-  // TODO: type FormsetChange
-  handlers: ProductVariantCreateHandlers;
-  hasChanged: boolean;
-  submit: () => void;
 }
 
 export interface ProductVariantCreateFormProps
@@ -108,23 +112,30 @@ function useProductVariantCreateForm(
   opts: UseProductVariantCreateFormOpts
 ): UseProductVariantCreateFormResult {
   const intl = useIntl();
-  const [changed, setChanged] = React.useState(false);
-  const triggerChange = () => setChanged(true);
-
   const attributeInput = getVariantAttributeInputFromProduct(product);
 
-  const form = useForm(initial);
+  const form = useForm(initial, undefined, { confirmLeave: true });
+
+  const {
+    setChanged,
+    triggerChange,
+    handleChange,
+    hasChanged,
+    data: formData
+  } = form;
+
   const attributes = useFormset(attributeInput);
   const attributesWithNewFileValue = useFormset<null, File>([]);
   const stocks = useFormset<ProductStockFormsetData, string>([]);
+
+  const { setExitDialogSubmitRef, setEnableExitDialog } = useContext(
+    ExitFormDialogContext
+  );
+
   const {
     makeChangeHandler: makeMetadataChangeHandler
   } = useMetadataChangeTrigger();
 
-  const handleChange: FormChange = (event, cb) => {
-    form.change(event, cb);
-    triggerChange();
-  };
   const changeMetadata = makeMetadataChangeHandler(handleChange);
   const handleAttributeChange = createAttributeChangeHandler(
     attributes.change,
@@ -190,7 +201,7 @@ function useProductVariantCreateForm(
   );
 
   const data: ProductVariantCreateData = {
-    ...form.data,
+    ...formData,
     attributes: getAttributesDisplayData(
       attributes.data,
       attributesWithNewFileValue.data,
@@ -201,7 +212,10 @@ function useProductVariantCreateForm(
     stocks: stocks.data
   };
 
-  const submit = () => onSubmit(data);
+  const submit = () =>
+    handleFormSubmit(data, onSubmit, setChanged, setEnableExitDialog);
+
+  useEffect(() => setExitDialogSubmitRef(submit), [submit]);
 
   return {
     change: handleChange,
@@ -225,7 +239,7 @@ function useProductVariantCreateForm(
       selectAttributeMultiple: handleAttributeMultiChange,
       selectAttributeReference: handleAttributeReferenceChange
     },
-    hasChanged: changed,
+    hasChanged,
     submit
   };
 }

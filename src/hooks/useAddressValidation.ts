@@ -42,7 +42,8 @@ function useAddressValidation<TInput, TOutput>(
         );
         return onSubmit(transformFormToAddressInput(data));
       } catch {
-        setValidationErrors(add(countryRequiredError, validationErrors));
+        const errors = add(countryRequiredError, validationErrors);
+        setValidationErrors(errors);
       }
     }
   };
