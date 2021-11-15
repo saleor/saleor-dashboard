@@ -2,6 +2,7 @@ import useNotifier from "@saleor/hooks/useNotifier";
 import commonErrorMessages from "@saleor/utils/errors/common";
 import { useIntl } from "react-intl";
 
+import { GIFT_CARD_DETAILS_QUERY } from "../../queries";
 import { giftCardEnableDisableSectionMessages as messages } from "../messages";
 import {
   useGiftCardActivateMutation,
@@ -68,14 +69,16 @@ const useGiftCardActivateToggle = ({
   };
 
   const [giftCardActivate, giftCardActivateOpts] = useGiftCardActivateMutation({
-    onCompleted: onActivateCompleted
+    onCompleted: onActivateCompleted,
+    refetchQueries: [GIFT_CARD_DETAILS_QUERY]
   });
 
   const [
     giftCardDeactivate,
     giftCardDeactivateOpts
   ] = useGiftCardDeactivateMutation({
-    onCompleted: onDeactivateCompleted
+    onCompleted: onDeactivateCompleted,
+    refetchQueries: [GIFT_CARD_DETAILS_QUERY]
   });
 
   const currentOpts = isActive ? giftCardDeactivateOpts : giftCardActivateOpts;
