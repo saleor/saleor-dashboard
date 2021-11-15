@@ -29,7 +29,7 @@
     "@material-ui/lab": "^4.0.0-alpha.58",
     "@material-ui/styles": "^4.11.4",
     "@saleor/macaw-ui": "^0.2.7",
-    "@saleor/sdk": "github:mirumee/saleor-sdk#3a8afae",
+    "@saleor/sdk": "github:mirumee/saleor-sdk#4c8f6ca",
     "@sentry/react": "^6.0.0",
     "@types/faker": "^5.1.6",
     "apollo": "^2.32.5",

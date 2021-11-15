@@ -125,9 +125,7 @@ const App: React.FC = () => (
                   <AppStateProvider>
                     <AuthProvider>
                       <ShopProvider>
-                        <AppChannelProvider
-                          onChannelChange={saleorClient.config.setChannel}
-                        >
+                        <AppChannelProvider>
                           <Routes />
                         </AppChannelProvider>
                       </ShopProvider>
