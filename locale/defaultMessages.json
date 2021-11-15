@@ -3858,7 +3858,7 @@
   },
   "src_dot_giftCards_dot_GiftCardsList_dot_codeEndingWithLabel": {
     "context": "GiftCardsListTable code ending with label",
-    "string": "Code ending with {displayCode}"
+    "string": "Code ending with {last4CodeChars}"
   },
   "src_dot_giftCards_dot_GiftCardsList_dot_createGiftCardProduct": {
     "context": "GiftCardsListHeader alert",

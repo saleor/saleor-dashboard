@@ -69,7 +69,7 @@ export interface GiftCardResend_giftCardResend_giftCard {
   __typename: "GiftCard";
   metadata: (GiftCardResend_giftCardResend_giftCard_metadata | null)[];
   privateMetadata: (GiftCardResend_giftCardResend_giftCard_privateMetadata | null)[];
-  displayCode: string;
+  last4CodeChars: string;
   boughtInChannel: string | null;
   createdBy: GiftCardResend_giftCardResend_giftCard_createdBy | null;
   product: GiftCardResend_giftCardResend_giftCard_product | null;
