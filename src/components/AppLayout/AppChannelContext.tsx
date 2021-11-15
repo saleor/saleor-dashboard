@@ -4,6 +4,7 @@ import { BaseChannels_channels } from "@saleor/channels/types/BaseChannels";
 import { ChannelFragment } from "@saleor/fragments/types/ChannelFragment";
 import useLocalStorage from "@saleor/hooks/useLocalStorage";
 import { getById } from "@saleor/orders/components/OrderReturnPage/utils";
+import { useSaleorConfig } from "@saleor/sdk";
 import React from "react";
 
 interface UseAppChannel {
@@ -37,14 +38,8 @@ const isValidChannel = (
   return channelList?.some(getById(channelId));
 };
 
-interface AppChannelProviderProps {
-  onChannelChange: (channel: string) => void;
-}
-
-export const AppChannelProvider: React.FC<AppChannelProviderProps> = ({
-  children,
-  onChannelChange
-}) => {
+export const AppChannelProvider: React.FC = ({ children }) => {
+  const { setChannel } = useSaleorConfig();
   const { authenticated } = useAuth();
   const [selectedChannel, setSelectedChannel] = useLocalStorage("channel", "");
   const { data: channelData, refetch } = useBaseChannelsList({
@@ -62,7 +57,7 @@ export const AppChannelProvider: React.FC<AppChannelProviderProps> = ({
   }, [channelData]);
 
   React.useEffect(() => {
-    onChannelChange(selectedChannel);
+    setChannel(selectedChannel);
   }, [selectedChannel]);
 
   const availableChannels = channelData?.channels || [];
