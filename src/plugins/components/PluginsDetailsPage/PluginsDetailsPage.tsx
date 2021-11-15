@@ -8,7 +8,7 @@ import Grid from "@saleor/components/Grid";
 import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
 import { PluginErrorFragment } from "@saleor/fragments/types/PluginErrorFragment";
-import { ChangeEvent } from "@saleor/hooks/useForm";
+import { ChangeEvent, SubmitPromise } from "@saleor/hooks/useForm";
 import { sectionNames } from "@saleor/intl";
 import { getStringOrPlaceholder } from "@saleor/misc";
 import { isSecretField } from "@saleor/plugins/utils";
@@ -36,7 +36,7 @@ export interface PluginsDetailsPageProps {
   onBack: () => void;
   onClear: (field: string) => void;
   onEdit: (field: string) => void;
-  onSubmit: (data: PluginDetailsPageFormData) => void;
+  onSubmit: (data: PluginDetailsPageFormData) => SubmitPromise;
   selectedConfig?: PluginConfiguration;
   setSelectedChannelId: (channelId: string) => void;
 }

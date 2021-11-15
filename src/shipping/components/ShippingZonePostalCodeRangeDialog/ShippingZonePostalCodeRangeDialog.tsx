@@ -12,7 +12,6 @@ import ConfirmButton, {
 } from "@saleor/components/ConfirmButton";
 import Form from "@saleor/components/Form";
 import Grid from "@saleor/components/Grid";
-import { SubmitPromise } from "@saleor/hooks/useForm";
 import { buttonMessages, commonMessages } from "@saleor/intl";
 import { makeStyles } from "@saleor/theme";
 import { DialogProps, MinMax } from "@saleor/types";
@@ -21,7 +20,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 export interface ShippingZonePostalCodeRangeDialogProps extends DialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
-  onSubmit: (range: MinMax) => SubmitPromise;
+  onSubmit: (range: MinMax) => void;
 }
 
 const useStyles = makeStyles(

@@ -2,6 +2,7 @@ import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import useShop from "@saleor/hooks/useShop";
 import { commonMessages } from "@saleor/intl";
+import { extractMutationErrors } from "@saleor/misc";
 import { stringify as stringifyQs } from "qs";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -67,18 +68,20 @@ const TranslationsShippingMethod: React.FC<TranslationsShippingMethodProps> = ({
   return (
     <TypedUpdateShippingMethodTranslations onCompleted={onUpdate}>
       {(updateTranslations, updateTranslationsOpts) => {
-        const handleSubmit = (
-          field: TranslationInputFieldName,
-          data: string
-        ) => {
-          updateTranslations({
-            variables: {
-              id,
-              input: getParsedTranslationInputData({ fieldName: field, data }),
-              language: languageCode
-            }
-          });
-        };
+        const handleSubmit = (field: TranslationInputFieldName, data: string) =>
+          extractMutationErrors(
+            updateTranslations({
+              variables: {
+                id,
+                input: getParsedTranslationInputData({
+                  fieldName: field,
+                  data
+                }),
+                language: languageCode
+              }
+            })
+          );
+
         const translation = shippingMethodTranslations?.data?.translation;
 
         return (

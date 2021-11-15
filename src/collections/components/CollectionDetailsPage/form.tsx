@@ -75,9 +75,7 @@ function useCollectionUpdateForm(
     triggerChange,
     setChanged,
     hasChanged
-  } = useForm<CollectionUpdateFormData>(
-    getInitialData(collection, currentChannels)
-  );
+  } = useForm(getInitialData(collection, currentChannels));
 
   const { setExitDialogSubmitRef, setEnableExitDialog } = useContext(
     ExitFormDialogContext

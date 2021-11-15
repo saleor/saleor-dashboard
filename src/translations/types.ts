@@ -1,6 +1,7 @@
 import { OutputData } from "@editorjs/editorjs";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
 import { ShopInfo_shop_languages } from "@saleor/components/Shop/types/ShopInfo";
+import { SubmitPromise } from "@saleor/hooks/useForm";
 
 export interface TranslationsEntitiesPageProps {
   activeField: string;
@@ -12,7 +13,7 @@ export interface TranslationsEntitiesPageProps {
   onEdit: (field: string) => void;
   onDiscard: () => void;
   onLanguageChange: (lang: string) => void;
-  onSubmit: (field: string, data: string | OutputData) => void;
+  onSubmit: (field: string, data: string | OutputData) => SubmitPromise;
 }
 
 export enum TranslationInputFieldName {

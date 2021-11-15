@@ -25,10 +25,7 @@ import { defineMessages, FormattedMessage, useIntl } from "react-intl";
 import { getStringOrPlaceholder } from "../../../misc";
 import { ChannelProps, FetchMoreProps, SearchProps } from "../../../types";
 import { ShippingMethodTypeEnum } from "../../../types/globalTypes";
-import {
-  FormData,
-  ShippingZoneUpdateFormData
-} from "../../components/ShippingZoneDetailsPage/types";
+import { ShippingZoneUpdateFormData } from "../../components/ShippingZoneDetailsPage/types";
 import ShippingZoneInfo from "../ShippingZoneInfo";
 import ShippingZoneRates from "../ShippingZoneRates";
 import ShippingZoneSettingsCard from "../ShippingZoneSettingsCard";

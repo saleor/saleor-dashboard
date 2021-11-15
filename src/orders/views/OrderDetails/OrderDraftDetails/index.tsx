@@ -21,7 +21,10 @@ import React from "react";
 import { useIntl } from "react-intl";
 
 import { customerUrl } from "../../../../customers/urls";
-import { getStringOrPlaceholder } from "../../../../misc";
+import {
+  extractMutationErrors,
+  getStringOrPlaceholder
+} from "../../../../misc";
 import { productUrl } from "../../../../products/urls";
 import OrderDraftCancelDialog from "../../../components/OrderDraftCancelDialog/OrderDraftCancelDialog";
 import OrderDraftPage from "../../../components/OrderDraftPage";
@@ -239,15 +242,17 @@ export const OrderDraftDetails: React.FC<OrderDraftDetailsProps> = ({
         onClose={closeModal}
         onFetch={variantSearch}
         onFetchMore={loadMore}
-        onSubmit={variants => {
-          const lol = orderLinesAdd.mutate({
-            id,
-            input: variants.map(variant => ({
-              quantity: 1,
-              variantId: variant.id
-            }))
-          });
-        }}
+        onSubmit={variants =>
+          extractMutationErrors(
+            orderLinesAdd.mutate({
+              id,
+              input: variants.map(variant => ({
+                quantity: 1,
+                variantId: variant.id
+              }))
+            })
+          )
+        }
       />
       <OrderCustomerChangeDialog
         open={params.action === "customer-change"}

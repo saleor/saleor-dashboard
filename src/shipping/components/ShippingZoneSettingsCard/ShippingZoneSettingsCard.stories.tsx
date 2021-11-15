@@ -4,7 +4,7 @@ import CommonDecorator from "@saleor/storybook/Decorator";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
-import { FormData } from "../../components/ShippingZoneDetailsPage/types";
+import { ShippingZoneUpdateFormData } from "../../components/ShippingZoneDetailsPage/types";
 import ShippingZoneSettingsCard, {
   ShippingZoneSettingsCardProps
 } from "./ShippingZoneSettingsCard";
@@ -13,7 +13,7 @@ const props: ShippingZoneSettingsCardProps = {
   formData: {
     channels: ["channel1"],
     warehouses: ["warehouse1", "warehouse2"]
-  } as FormData,
+  } as ShippingZoneUpdateFormData,
   warehousesDisplayValues: [
     {
       value: "warehouse1",

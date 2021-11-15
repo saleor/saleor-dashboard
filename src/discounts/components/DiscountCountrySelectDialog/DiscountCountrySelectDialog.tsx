@@ -20,6 +20,7 @@ import Hr from "@saleor/components/Hr";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 // tslint:disable no-submodule-imports
 import { ShopInfo_shop_countries } from "@saleor/components/Shop/types/ShopInfo";
+import { SubmitPromise } from "@saleor/hooks/useForm";
 import { buttonMessages } from "@saleor/intl";
 import { makeStyles } from "@saleor/theme";
 import { filter } from "fuzzaldrin";
@@ -38,7 +39,7 @@ export interface DiscountCountrySelectDialogProps {
   initial: string[];
   open: boolean;
   onClose: () => void;
-  onConfirm: (data: FormData) => void;
+  onConfirm: (data: FormData) => SubmitPromise;
 }
 
 const useStyles = makeStyles(

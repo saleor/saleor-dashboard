@@ -8,6 +8,7 @@ import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
 import { AccountErrorFragment } from "@saleor/fragments/types/AccountErrorFragment";
 import useAddressValidation from "@saleor/hooks/useAddressValidation";
+import { SubmitPromise } from "@saleor/hooks/useForm";
 import { sectionNames } from "@saleor/intl";
 import { AddressInput } from "@saleor/types/globalTypes";
 import createSingleAutocompleteSelectHandler from "@saleor/utils/handlers/singleAutocompleteSelectChangeHandler";
@@ -56,7 +57,7 @@ export interface CustomerCreatePageProps {
   errors: AccountErrorFragment[];
   saveButtonBar: ConfirmButtonTransitionState;
   onBack: () => void;
-  onSubmit: (data: CustomerCreatePageSubmitData) => void;
+  onSubmit: (data: CustomerCreatePageSubmitData) => SubmitPromise;
 }
 
 const CustomerCreatePage: React.FC<CustomerCreatePageProps> = ({

@@ -13,6 +13,7 @@ import {
   createDiscountTypeChangeHandler
 } from "@saleor/discounts/handlers";
 import { DiscountErrorFragment } from "@saleor/fragments/types/DiscountErrorFragment";
+import { SubmitPromise } from "@saleor/hooks/useForm";
 import { sectionNames } from "@saleor/intl";
 import { validatePrice } from "@saleor/products/utils/validation";
 import React from "react";
@@ -57,7 +58,7 @@ export interface VoucherCreatePageProps {
   onBack: () => void;
   onChannelsChange: (data: ChannelVoucherData[]) => void;
   openChannelsModal: () => void;
-  onSubmit: (data: FormData) => void;
+  onSubmit: (data: FormData) => SubmitPromise;
 }
 
 const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({

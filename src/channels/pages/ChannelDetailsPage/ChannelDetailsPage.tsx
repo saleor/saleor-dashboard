@@ -34,7 +34,7 @@ export interface ChannelDetailsPageProps<TErrors> {
   saveButtonBarState: ConfirmButtonTransitionState;
   onBack?: () => void;
   onDelete?: () => void;
-  onSubmit: (data: FormData) => SubmitPromise<TErrors>;
+  onSubmit: (data: FormData) => SubmitPromise<TErrors[]>;
   updateChannelStatus?: () => void;
   searchShippingZones: (query: string) => void;
   searchShippingZonesData?: SearchData;

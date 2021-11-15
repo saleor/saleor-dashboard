@@ -6,7 +6,7 @@ import { stringify as stringifyQs } from "qs";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import { maybe } from "../../misc";
+import { extractMutationErrors, maybe } from "../../misc";
 import { LanguageCodeEnum } from "../../types/globalTypes";
 import TranslationsProductsPage from "../components/TranslationsProductsPage";
 import { TypedUpdateProductTranslations } from "../mutations";
@@ -71,15 +71,17 @@ const TranslationsProducts: React.FC<TranslationsProductsProps> = ({
         const handleSubmit = (
           fieldName: TranslationInputFieldName,
           data: string
-        ) => {
-          updateTranslations({
-            variables: {
-              id,
-              input: getParsedTranslationInputData({ data, fieldName }),
-              language: languageCode
-            }
-          });
-        };
+        ) =>
+          extractMutationErrors(
+            updateTranslations({
+              variables: {
+                id,
+                input: getParsedTranslationInputData({ data, fieldName }),
+                language: languageCode
+              }
+            })
+          );
+
         const translation = productTranslations?.data?.translation;
 
         return (

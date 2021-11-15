@@ -1,8 +1,5 @@
 import { ExitFormDialogContext } from "@saleor/components/Form/ExitFormDialogProvider";
-import useForm, {
-  CommonUseFormResult,
-  SubmitPromise
-} from "@saleor/hooks/useForm";
+import useForm, { CommonUseFormResult } from "@saleor/hooks/useForm";
 import handleFormSubmit from "@saleor/utils/handlers/handleFormSubmit";
 import React, { useContext, useEffect } from "react";
 
@@ -22,7 +19,7 @@ type UseOrderCustomerChangeFormResult = CommonUseFormResult<
 export interface OrderCustomerChangeFormProps {
   children: (props: UseOrderCustomerChangeFormResult) => React.ReactNode;
   initial?: Partial<OrderCustomerChangeData>;
-  onSubmit: (data: OrderCustomerChangeData) => SubmitPromise<any[]>;
+  onSubmit: (data: OrderCustomerChangeData) => void;
 }
 
 const defaultInitialFormData: OrderCustomerChangeData = {
@@ -31,7 +28,7 @@ const defaultInitialFormData: OrderCustomerChangeData = {
 
 function useOrderCustomerChangeForm(
   initial: Partial<OrderCustomerChangeData> = {},
-  onSubmit: (data: OrderCustomerChangeData) => SubmitPromise<any[]>
+  onSubmit: (data: OrderCustomerChangeData) => void
 ): UseOrderCustomerChangeFormResult {
   const { handleChange, hasChanged, data, setChanged } = useForm({
     ...initial,

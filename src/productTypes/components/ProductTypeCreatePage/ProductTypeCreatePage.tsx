@@ -7,7 +7,7 @@ import Grid from "@saleor/components/Grid";
 import Metadata, { MetadataFormData } from "@saleor/components/Metadata";
 import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
-import { ChangeEvent, FormChange } from "@saleor/hooks/useForm";
+import { ChangeEvent, FormChange, SubmitPromise } from "@saleor/hooks/useForm";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { sectionNames } from "@saleor/intl";
 import { ProductTypeDetails_taxTypes } from "@saleor/productTypes/types/ProductTypeDetails";
@@ -36,7 +36,7 @@ export interface ProductTypeCreatePageProps {
   saveButtonBarState: ConfirmButtonTransitionState;
   taxTypes: ProductTypeDetails_taxTypes[];
   onBack: () => void;
-  onSubmit: (data: ProductTypeForm) => void;
+  onSubmit: (data: ProductTypeForm) => SubmitPromise;
 }
 
 const formInitialData: ProductTypeForm = {
@@ -77,12 +77,7 @@ const ProductTypeCreatePage: React.FC<ProductTypeCreatePageProps> = ({
   } = useMetadataChangeTrigger();
 
   return (
-    <Form
-      confirmLeave
-      initial={formInitialData}
-      onSubmit={onSubmit}
-      confirmLeave
-    >
+    <Form confirmLeave initial={formInitialData} onSubmit={onSubmit}>
       {({ change, data, hasChanged, submit }) => {
         const changeMetadata = makeMetadataChangeHandler(change);
 

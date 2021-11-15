@@ -6,7 +6,7 @@ import { stringify as stringifyQs } from "qs";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import { maybe } from "../../misc";
+import { extractMutationErrors, maybe } from "../../misc";
 import {
   LanguageCodeEnum,
   NameTranslationInput
@@ -76,13 +76,16 @@ const TranslationsVouchers: React.FC<TranslationsVouchersProps> = ({
           if (field === fieldNames.name) {
             input.name = data;
           }
-          updateTranslations({
-            variables: {
-              id,
-              input,
-              language: languageCode
-            }
-          });
+
+          return extractMutationErrors(
+            updateTranslations({
+              variables: {
+                id,
+                input,
+                language: languageCode
+              }
+            })
+          );
         };
 
         const translation = voucherTranslations?.data?.translation;

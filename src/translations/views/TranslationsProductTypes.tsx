@@ -12,7 +12,7 @@ import { stringify as stringifyQs } from "qs";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import { getMutationState, maybe } from "../../misc";
+import { extractMutationErrors, getMutationState, maybe } from "../../misc";
 import { LanguageCodeEnum } from "../../types/globalTypes";
 import TranslationsProductTypesPage, {
   fieldNames
@@ -136,15 +136,18 @@ const TranslationsProductTypes: React.FC<TranslationsProductTypesProps> = ({
                 [fieldNames.value, fieldNames.richTextValue].includes(fieldName)
               ) {
                 const isRichText = fieldName === fieldNames.richTextValue;
-                updateAttributeValueTranslations({
-                  variables: {
-                    id: fieldId,
-                    input: isRichText
-                      ? { richText: JSON.stringify(data) }
-                      : { name: data as string },
-                    language: languageCode
-                  }
-                });
+
+                return extractMutationErrors(
+                  updateAttributeValueTranslations({
+                    variables: {
+                      id: fieldId,
+                      input: isRichText
+                        ? { richText: JSON.stringify(data) }
+                        : { name: data as string },
+                      language: languageCode
+                    }
+                  })
+                );
               }
             };
 

@@ -8,7 +8,7 @@ import PageHeader from "@saleor/components/PageHeader";
 import SaveButtonBar from "@saleor/components/SaveButtonBar";
 import { WebhookErrorFragment } from "@saleor/fragments/types/WebhookErrorFragment";
 import { SubmitPromise } from "@saleor/hooks/useForm";
-import { extractMutationErrors, getStringOrPlaceholder } from "@saleor/misc";
+import { getStringOrPlaceholder } from "@saleor/misc";
 import { WebhookEventTypeEnum } from "@saleor/types/globalTypes";
 import WebhookEvents from "@saleor/webhooks/components/WebhookEvents";
 import WebhookInfo from "@saleor/webhooks/components/WebhookInfo";
@@ -20,14 +20,7 @@ import { useIntl } from "react-intl";
 
 import { WebhookCreateFormData } from "../WebhookCreatePage";
 
-export interface WebhookUpdateFormData {
-  events: WebhookEventTypeEnum[];
-  isActive: boolean;
-  name: string;
-  secretKey: string | null;
-  targetUrl: string;
-  allEvents: boolean;
-}
+export type WebhookUpdateFormData = WebhookCreateFormData;
 
 export interface WebhooksDetailsPageProps {
   appName: string;

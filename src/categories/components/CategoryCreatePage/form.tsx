@@ -47,9 +47,13 @@ const initialData: CategoryCreateFormData = {
 function useCategoryCreateForm(
   onSubmit: (data: CategoryCreateData) => Promise<any[]>
 ): UseCategoryCreateFormResult {
-  const { handleChange, data, hasChanged, triggerChange, setChanged } = useForm<
-    CategoryCreateFormData
-  >(initialData, undefined, { confirmLeave: true });
+  const {
+    handleChange,
+    data,
+    hasChanged,
+    triggerChange,
+    setChanged
+  } = useForm(initialData, undefined, { confirmLeave: true });
 
   const { setExitDialogSubmitRef, setEnableExitDialog } = useContext(
     ExitFormDialogContext

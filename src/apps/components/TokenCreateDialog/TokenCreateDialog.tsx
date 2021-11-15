@@ -14,6 +14,7 @@ import ConfirmButton, {
 } from "@saleor/components/ConfirmButton";
 import Form from "@saleor/components/Form";
 import FormSpacer from "@saleor/components/FormSpacer";
+import { SubmitPromise } from "@saleor/hooks/useForm";
 import useModalDialogOpen from "@saleor/hooks/useModalDialogOpen";
 import { buttonMessages } from "@saleor/intl";
 import React from "react";
@@ -26,7 +27,7 @@ export interface TokenCreateDialogProps {
   open: boolean;
   token: string | undefined;
   onClose: () => void;
-  onCreate: (name: string) => void;
+  onCreate: (name: string) => SubmitPromise;
 }
 
 type TokenCreateStep = "form" | "summary";

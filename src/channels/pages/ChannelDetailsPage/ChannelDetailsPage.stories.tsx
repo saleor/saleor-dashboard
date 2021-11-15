@@ -1,3 +1,4 @@
+import { ChannelErrorFragment } from "@saleor/fragments/types/ChannelErrorFragment";
 import Decorator from "@saleor/storybook/Decorator";
 import { storiesOf } from "@storybook/react";
 import React from "react";
@@ -7,7 +8,7 @@ import ChannelDetailsPage, {
   ChannelDetailsPageProps
 } from "./ChannelDetailsPage";
 
-const props: ChannelDetailsPageProps = {
+const props: ChannelDetailsPageProps<ChannelErrorFragment[]> = {
   currencyCodes: [
     { label: "USD", value: "USD" },
     { label: "PLN", value: "PLN" }

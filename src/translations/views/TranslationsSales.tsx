@@ -2,6 +2,7 @@ import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import useShop from "@saleor/hooks/useShop";
 import { commonMessages } from "@saleor/intl";
+import { extractMutationErrors } from "@saleor/misc";
 import { stringify as stringifyQs } from "qs";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -75,13 +76,16 @@ const TranslationsSales: React.FC<TranslationsSalesProps> = ({
           if (field === fieldNames.name) {
             input.name = data;
           }
-          updateTranslations({
-            variables: {
-              id,
-              input,
-              language: languageCode
-            }
-          });
+
+          return extractMutationErrors(
+            updateTranslations({
+              variables: {
+                id,
+                input,
+                language: languageCode
+              }
+            })
+          );
         };
         const translation = saleTranslations?.data?.translation;
 

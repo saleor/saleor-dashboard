@@ -152,12 +152,7 @@ const ProductTypeDetailsPage: React.FC<ProductTypeDetailsPageProps> = ({
   };
 
   return (
-    <Form
-      confirmLeave
-      initial={formInitialData}
-      onSubmit={handleSubmit}
-      confirmLeave
-    >
+    <Form confirmLeave initial={formInitialData} onSubmit={handleSubmit}>
       {({ change, data, hasChanged, submit }) => {
         const changeMetadata = makeMetadataChangeHandler(change);
 

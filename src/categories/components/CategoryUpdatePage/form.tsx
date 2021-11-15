@@ -54,9 +54,13 @@ function useCategoryUpdateForm(
   category: CategoryDetails_category,
   onSubmit: (data: CategoryUpdateData) => Promise<any[]>
 ): UseCategoryUpdateFormResult {
-  const { handleChange, data, triggerChange, hasChanged, setChanged } = useForm<
-    CategoryUpdateFormData
-  >(getInitialData(category), undefined, { confirmLeave: true });
+  const {
+    handleChange,
+    data,
+    triggerChange,
+    hasChanged,
+    setChanged
+  } = useForm(getInitialData(category), undefined, { confirmLeave: true });
 
   const { setExitDialogSubmitRef, setEnableExitDialog } = useContext(
     ExitFormDialogContext

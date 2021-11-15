@@ -13,6 +13,7 @@ import Grid from "@saleor/components/Grid";
 import Hr from "@saleor/components/Hr";
 import Skeleton from "@saleor/components/Skeleton";
 import TablePagination from "@saleor/components/TablePagination";
+import { SubmitPromise } from "@saleor/hooks/useForm";
 import { buttonMessages } from "@saleor/intl";
 import { makeStyles } from "@saleor/theme";
 import { ListProps } from "@saleor/types";
@@ -47,7 +48,7 @@ export interface TranslationFieldsProps {
   pagination?: Pagination;
   onEdit: (field: string) => void;
   onDiscard: () => void;
-  onSubmit: (field: string, data: string | OutputData) => void;
+  onSubmit: (field: string, data: string | OutputData) => SubmitPromise;
 }
 
 const useStyles = makeStyles(

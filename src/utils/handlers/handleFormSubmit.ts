@@ -2,7 +2,7 @@ import { SubmitPromise } from "@saleor/hooks/useForm";
 
 async function handleFormSubmit<TData, TErrors>(
   data: TData,
-  onSubmit: (data: TData) => SubmitPromise<TErrors[]>,
+  onSubmit: (data: TData) => SubmitPromise<TErrors[]> | void,
   setChanged: (changed: boolean) => void,
   setEnableExitDialog?: (value: boolean) => void
 ): Promise<boolean> {

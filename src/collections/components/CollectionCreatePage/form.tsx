@@ -78,7 +78,7 @@ function useCollectionCreateForm(
     triggerChange,
     setChanged,
     hasChanged
-  } = useForm<CollectionCreateFormData>(getInitialData(currentChannels));
+  } = useForm(getInitialData(currentChannels));
 
   const { setExitDialogSubmitRef, setEnableExitDialog } = useContext(
     ExitFormDialogContext
