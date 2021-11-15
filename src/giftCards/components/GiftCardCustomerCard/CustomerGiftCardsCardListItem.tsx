@@ -14,7 +14,6 @@ import GiftCardStatusChip from "../GiftCardStatusChip/GiftCardStatusChip";
 import { CUSTOMER_GIFT_CARD_LIST_QUERY } from "./queries";
 import { useListWrapperStyles } from "./styles";
 import { CustomerGiftCardList_giftCards_edges_node } from "./types/CustomerGiftCardList";
-import { getGiftCardDisplayCode } from "./utils";
 
 interface CustomerGiftCardsCardListItemProps {
   giftCard: ExtendedGiftCard<CustomerGiftCardList_giftCards_edges_node>;
@@ -26,7 +25,7 @@ const CustomerGiftCardsCardListItem: React.FC<CustomerGiftCardsCardListItemProps
   const intl = useIntl();
   const classes = useListWrapperStyles();
   const [openDeleteGiftCard, setOpenDeleteGiftCard] = useState(false);
-  const { isExpired, isActive } = giftCard;
+  const { isExpired, isActive, last4CodeChars } = giftCard;
 
   const onGiftCardDeleteDialogClose = () => setOpenDeleteGiftCard(false);
 
@@ -103,7 +102,7 @@ const CustomerGiftCardsCardListItem: React.FC<CustomerGiftCardsCardListItemProps
       <div className={classes.listingWrapper}>
         <FormattedMessage
           values={{
-            displayCode: getGiftCardDisplayCode(giftCard)
+            last4CodeChars
           }}
           {...giftCardsListTableMessages.codeEndingWithLabel}
         />
