@@ -89,7 +89,7 @@ const getEventMessage = (
     case GiftCardEventsEnum.DEACTIVATED:
       return intl.formatMessage(
         {
-          defaultMessage: "Gift card was deactivated {deactivatedBy}",
+          defaultMessage: "Gift card was deactivated by {deactivatedBy}",
           description: "gift card history message"
         },
         {
@@ -157,7 +157,6 @@ const getEventMessage = (
           description: "gift card history message"
         },
         {
-          orderNumber: event.orderNumber,
           orderLink: (
             <Link href={orderPath(event.orderId)}>#{event.orderNumber}</Link>
           )
