@@ -2,7 +2,7 @@ import { giftCardErrorFragment } from "@saleor/fragments/errors";
 import makeMutation from "@saleor/hooks/makeMutation";
 import gql from "graphql-tag";
 
-import { giftCardDataFragment } from "./queries";
+import { giftCardDataFragment, giftCardEventsFragment } from "./queries";
 import {
   GiftCardAddNote,
   GiftCardAddNoteVariables
@@ -15,6 +15,7 @@ import {
 const giftCardUpdate = gql`
   ${giftCardDataFragment}
   ${giftCardErrorFragment}
+  ${giftCardEventsFragment}
   mutation GiftCardUpdate($id: ID!, $input: GiftCardUpdateInput!) {
     giftCardUpdate(id: $id, input: $input) {
       errors {
@@ -22,6 +23,9 @@ const giftCardUpdate = gql`
       }
       giftCard {
         ...GiftCardData
+        events {
+          ...GiftCardEvent
+        }
       }
     }
   }
@@ -35,6 +39,7 @@ export const useGiftCardUpdateMutation = makeMutation<
 export const giftCardTimelineNoteAdd = gql`
   ${giftCardDataFragment}
   ${giftCardErrorFragment}
+  ${giftCardEventsFragment}
   mutation GiftCardAddNote($id: ID!, $input: GiftCardAddNoteInput!) {
     giftCardAddNote(id: $id, input: $input) {
       errors {
@@ -45,38 +50,7 @@ export const giftCardTimelineNoteAdd = gql`
         ...GiftCardData
       }
       event {
-        expiryDate
-        oldExpiryDate
-        id
-        date
-        type
-        user {
-          ...UserBase
-        }
-        app {
-          id
-          name
-        }
-        message
-        email
-        orderId
-        orderNumber
-        tag
-        oldTag
-        balance {
-          initialBalance {
-            ...Money
-          }
-          currentBalance {
-            ...Money
-          }
-          oldInitialBalance {
-            ...Money
-          }
-          oldCurrentBalance {
-            ...Money
-          }
-        }
+        ...GiftCardEvent
       }
     }
   }
