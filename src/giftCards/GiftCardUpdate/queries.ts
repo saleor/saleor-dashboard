@@ -65,13 +65,13 @@ export const giftCardDetails = gql`
         type
         user {
           ...UserBase
+          email
         }
         app {
           id
           name
         }
         message
-        email
         orderId
         orderNumber
         tag
@@ -99,3 +99,5 @@ export const useGiftCardDetailsQuery = makeQuery<
   GiftCardDetails,
   GiftCardDetailsVariables
 >(giftCardDetails);
+
+export const GIFT_CARD_DETAILS_QUERY = "GiftCardDetails";
