@@ -78,7 +78,7 @@ const OrderSettingsPage: React.FC<OrderSettingsPageProps> = props => {
           />
         </Container>
       )}
-    </Form>
+    </OrderSettingsForm>
   );
 };
 OrderSettingsPage.displayName = "OrderSettingsPage";
