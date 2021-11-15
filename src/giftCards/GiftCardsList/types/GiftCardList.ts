@@ -32,7 +32,7 @@ export interface GiftCardList_giftCards_edges_node {
   __typename: "GiftCard";
   id: string;
   usedByEmail: string | null;
-  displayCode: string;
+  last4CodeChars: string;
   isActive: boolean;
   expiryDate: any | null;
   product: GiftCardList_giftCards_edges_node_product | null;

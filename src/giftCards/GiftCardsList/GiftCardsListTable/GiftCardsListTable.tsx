@@ -54,7 +54,7 @@ const GiftCardsListTable: React.FC = () => {
             giftCard => {
               const {
                 id,
-                displayCode,
+                last4CodeChars,
                 usedBy,
                 usedByEmail,
                 tag,
@@ -79,7 +79,7 @@ const GiftCardsListTable: React.FC = () => {
                     <div className={classes.cardCodeContainer}>
                       <Typography>
                         {intl.formatMessage(messages.codeEndingWithLabel, {
-                          displayCode
+                          last4CodeChars
                         })}
                       </Typography>
                       <>

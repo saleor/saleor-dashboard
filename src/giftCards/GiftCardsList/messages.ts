@@ -72,7 +72,7 @@ export const giftCardsListTableMessages = defineMessages({
     description: "GiftCardsListTable column title balance"
   },
   codeEndingWithLabel: {
-    defaultMessage: "Code ending with {displayCode}",
+    defaultMessage: "Code ending with {last4CodeChars}",
     description: "GiftCardsListTable code ending with label"
   },
   noGiftCardsFound: {

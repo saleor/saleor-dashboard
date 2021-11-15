@@ -14,7 +14,7 @@ const customerGiftCardListQuery = gql`
       edges {
         node {
           id
-          displayCode
+          last4CodeChars
           expiryDate
           isActive
           currentBalance {
