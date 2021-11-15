@@ -164,6 +164,9 @@ export const ProductList: React.FC<ProductListProps> = props => {
           {gridAttributesFromSettings.map(gridAttribute => (
             <col className={classes.colAttribute} key={gridAttribute} />
           ))}
+          <DisplayColumn column="date" displayColumns={settings.columns}>
+            <col className={classes.colDate} />
+          </DisplayColumn>
           <DisplayColumn column="price" displayColumns={settings.columns}>
             <col className={classes.colPrice} />
           </DisplayColumn>
@@ -259,6 +262,20 @@ export const ProductList: React.FC<ProductListProps> = props => {
               </TableCellHeader>
             );
           })}
+          <DisplayColumn column="date" displayColumns={settings.columns}>
+            <TableCellHeader
+              data-test-id="colDateHeader"
+              className={classes.colDate}
+              direction={
+                sort.sort === ProductListUrlSortField.date
+                  ? getArrowDirection(sort.asc)
+                  : undefined
+              }
+              onClick={() => onSort(ProductListUrlSortField.date)}
+            >
+              <FormattedMessage {...columnsMessages.updatedAt} />
+            </TableCellHeader>
+          </DisplayColumn>
           <DisplayColumn column="price" displayColumns={settings.columns}>
             <TableCellHeader
               data-test-id="colPriceHeader"
@@ -275,20 +292,6 @@ export const ProductList: React.FC<ProductListProps> = props => {
               }
             >
               <FormattedMessage {...columnsMessages.price} />
-            </TableCellHeader>
-          </DisplayColumn>
-          <DisplayColumn column="date" displayColumns={settings.columns}>
-            <TableCellHeader
-              data-test-id="colDateHeader"
-              className={classes.colDate}
-              direction={
-                sort.sort === ProductListUrlSortField.date
-                  ? getArrowDirection(sort.asc)
-                  : undefined
-              }
-              onClick={() => onSort(ProductListUrlSortField.date)}
-            >
-              <FormattedMessage {...columnsMessages.updatedAt} />
             </TableCellHeader>
           </DisplayColumn>
         </TableHead>
@@ -423,6 +426,18 @@ export const ProductList: React.FC<ProductListProps> = props => {
                     </TableCell>
                   ))}
                   <DisplayColumn
+                    column="date"
+                    displayColumns={settings.columns}
+                  >
+                    <TableCell className={classes.colDate} data-test="date">
+                      {product?.updatedAt ? (
+                        <Date date={product.updatedAt} />
+                      ) : (
+                        <Skeleton />
+                      )}
+                    </TableCell>
+                  </DisplayColumn>
+                  <DisplayColumn
                     column="price"
                     displayColumns={settings.columns}
                   >
@@ -432,18 +447,6 @@ export const ProductList: React.FC<ProductListProps> = props => {
                           from={channel?.pricing?.priceRange?.start?.net}
                           to={channel?.pricing?.priceRange?.stop?.net}
                         />
-                      ) : (
-                        <Skeleton />
-                      )}
-                    </TableCell>
-                  </DisplayColumn>
-                  <DisplayColumn
-                    column="date"
-                    displayColumns={settings.columns}
-                  >
-                    <TableCell className={classes.colDate} data-test="date">
-                      {product?.updatedAt ? (
-                        <Date date={product.updatedAt} />
                       ) : (
                         <Skeleton />
                       )}
