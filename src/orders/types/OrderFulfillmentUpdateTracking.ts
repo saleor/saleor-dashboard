@@ -486,6 +486,7 @@ export interface OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_o
 export interface OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_order {
   __typename: "Order";
   id: string;
+  token: string;
   metadata: (OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_order_metadata | null)[];
   privateMetadata: (OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_order_privateMetadata | null)[];
   billingAddress: OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_order_billingAddress | null;

@@ -486,6 +486,7 @@ export interface OrderLineUpdate_orderLineUpdate_order_channel {
 export interface OrderLineUpdate_orderLineUpdate_order {
   __typename: "Order";
   id: string;
+  token: string;
   metadata: (OrderLineUpdate_orderLineUpdate_order_metadata | null)[];
   privateMetadata: (OrderLineUpdate_orderLineUpdate_order_privateMetadata | null)[];
   billingAddress: OrderLineUpdate_orderLineUpdate_order_billingAddress | null;

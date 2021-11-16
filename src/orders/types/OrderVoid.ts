@@ -486,6 +486,7 @@ export interface OrderVoid_orderVoid_order_channel {
 export interface OrderVoid_orderVoid_order {
   __typename: "Order";
   id: string;
+  token: string;
   metadata: (OrderVoid_orderVoid_order_metadata | null)[];
   privateMetadata: (OrderVoid_orderVoid_order_privateMetadata | null)[];
   billingAddress: OrderVoid_orderVoid_order_billingAddress | null;

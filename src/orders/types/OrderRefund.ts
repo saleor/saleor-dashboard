@@ -486,6 +486,7 @@ export interface OrderRefund_orderRefund_order_channel {
 export interface OrderRefund_orderRefund_order {
   __typename: "Order";
   id: string;
+  token: string;
   metadata: (OrderRefund_orderRefund_order_metadata | null)[];
   privateMetadata: (OrderRefund_orderRefund_order_privateMetadata | null)[];
   billingAddress: OrderRefund_orderRefund_order_billingAddress | null;

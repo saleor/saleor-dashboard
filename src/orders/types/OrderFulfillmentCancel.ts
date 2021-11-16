@@ -486,6 +486,7 @@ export interface OrderFulfillmentCancel_orderFulfillmentCancel_order_channel {
 export interface OrderFulfillmentCancel_orderFulfillmentCancel_order {
   __typename: "Order";
   id: string;
+  token: string;
   metadata: (OrderFulfillmentCancel_orderFulfillmentCancel_order_metadata | null)[];
   privateMetadata: (OrderFulfillmentCancel_orderFulfillmentCancel_order_privateMetadata | null)[];
   billingAddress: OrderFulfillmentCancel_orderFulfillmentCancel_order_billingAddress | null;
