@@ -72,7 +72,7 @@ const OrderAddressEditDialog: React.FC<OrderAddressEditDialogProps> = props => {
 
   return (
     <Dialog onClose={onClose} open={open} classes={{ paper: classes.overflow }}>
-      <Form confirmLeave initial={address} onSubmit={handleSubmit}>
+      <Form initial={address} onSubmit={handleSubmit}>
         {({ change, data }) => {
           const handleCountrySelect = createSingleAutocompleteSelectHandler(
             change,

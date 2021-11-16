@@ -12,6 +12,7 @@ async function handleFormSubmit<TData, TErrors>(
     const errors = await result;
 
     if (errors?.length === 0) {
+      console.log("HANDELE FORM SUBMIT");
       setChanged(false);
 
       if (!!setEnableExitDialog) {

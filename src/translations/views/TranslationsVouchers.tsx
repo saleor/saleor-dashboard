@@ -7,12 +7,7 @@ import React from "react";
 import { useIntl } from "react-intl";
 
 import { extractMutationErrors, maybe } from "../../misc";
-import { maybe } from "../../misc";
 import { LanguageCodeEnum } from "../../types/globalTypes";
-import { LanguageCodeEnum } from "../../types/globalTypes";
-import TranslationsVouchersPage, {
-  fieldNames
-} from "../components/TranslationsVouchersPage";
 import TranslationsVouchersPage from "../components/TranslationsVouchersPage";
 import { TypedUpdateVoucherTranslations } from "../mutations";
 import { useVoucherTranslationDetails } from "../queries";

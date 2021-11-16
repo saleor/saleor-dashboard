@@ -18,7 +18,11 @@ import React from "react";
 import { useIntl } from "react-intl";
 
 import { customerUrl } from "../../../../customers/urls";
-import { getMutationState, getStringOrPlaceholder } from "../../../../misc";
+import {
+  extractMutationErrors,
+  getMutationState,
+  getStringOrPlaceholder
+} from "../../../../misc";
 import { productUrl } from "../../../../products/urls";
 import { FulfillmentStatus } from "../../../../types/globalTypes";
 import OrderCancelDialog from "../../../components/OrderCancelDialog";
@@ -136,10 +140,12 @@ export const OrderUnconfirmedDetails: React.FC<OrderUnconfirmedDetailsProps> = (
               updateMetadataOpts.loading || updatePrivateMetadataOpts.loading
             }
             onNoteAdd={variables =>
-              orderAddNote.mutate({
-                input: variables,
-                order: id
-              })
+              extractMutationErrors(
+                orderAddNote.mutate({
+                  input: variables,
+                  order: id
+                })
+              )
             }
             onBack={handleBack}
             order={order}
@@ -248,12 +254,14 @@ export const OrderUnconfirmedDetails: React.FC<OrderUnconfirmedDetailsProps> = (
         shippingMethods={order?.shippingMethods}
         onClose={closeModal}
         onSubmit={variables =>
-          orderShippingMethodUpdate.mutate({
-            id,
-            input: {
-              shippingMethod: variables.shippingMethod
-            }
-          })
+          extractMutationErrors(
+            orderShippingMethodUpdate.mutate({
+              id,
+              input: {
+                shippingMethod: variables.shippingMethod
+              }
+            })
+          )
         }
       />
       <OrderProductAddDialog

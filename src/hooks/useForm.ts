@@ -78,7 +78,7 @@ function handleRefresh<T extends FormData>(
 function useForm<T extends FormData, TErrors>(
   initialData: T,
   onSubmit?: (data: T) => SubmitPromise<TErrors[]> | void,
-  opts?: UseFormOpts
+  opts: UseFormOpts = { confirmLeave: false }
 ): UseFormResult<T> {
   const { confirmLeave } = opts;
   const [hasChanged, setChanged] = useState(false);
@@ -193,8 +193,6 @@ function useForm<T extends FormData, TErrors>(
       );
     }
   };
-
-  const triggerChange = () => setChanged(true);
 
   return {
     setError,
