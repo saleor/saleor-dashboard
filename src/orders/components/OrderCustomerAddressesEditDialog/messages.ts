@@ -39,3 +39,29 @@ export const addressEditMessages = defineMessages({
     description: "address type"
   }
 });
+
+export const addressSearchMessages = defineMessages({
+  shippingTitle: {
+    defaultMessage: "Shipping address",
+    description: "search modal shipping title"
+  },
+  billingTitle: {
+    defaultMessage: "Blling address",
+    description: "search modal billing title"
+  },
+  searchInfo: {
+    defaultMessage: "Select an address you want to use from the list below",
+    description: "modal information under title"
+  }
+});
+
+export const choiceCardMessages = defineMessages({
+  editLabel: {
+    defaultMessage: "Edit",
+    description: "Edit label"
+  },
+  selectedLabel: {
+    defaultMessage: "Selected",
+    description: "Selected label"
+  }
+});

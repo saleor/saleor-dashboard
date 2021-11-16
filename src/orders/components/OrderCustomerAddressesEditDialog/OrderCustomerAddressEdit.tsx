@@ -33,6 +33,7 @@ export interface OrderCustomerAddressEditProps {
   ) => void;
   onChangeFormAddress: (event: React.ChangeEvent<any>) => void;
   onChangeFormAddressCountry: (event: React.ChangeEvent<any>) => void;
+  onEdit?: () => void;
 }
 
 const OrderCustomerAddressEdit: React.FC<OrderCustomerAddressEditProps> = props => {
@@ -49,7 +50,8 @@ const OrderCustomerAddressEdit: React.FC<OrderCustomerAddressEditProps> = props 
     formErrors,
     onChangeCustomerAddress,
     onChangeFormAddress,
-    onChangeFormAddressCountry
+    onChangeFormAddressCountry,
+    onEdit
   } = props;
 
   const classes = useStyles(props);
@@ -93,16 +95,12 @@ const OrderCustomerAddressEdit: React.FC<OrderCustomerAddressEditProps> = props 
       />
       {addressInputOption === AddressInputOptionEnum.CUSTOMER_ADDRESS && (
         <div className={classes.scrollableWrapper}>
-          {customerAddresses.map(customerAddress => (
-            <React.Fragment key={customerAddress.id}>
-              <CardSpacer />
-              <CustomerAddressChoiceCard
-                address={customerAddress}
-                selected={customerAddress.id === customerAddressId}
-                onSelect={() => onChangeCustomerAddress(customerAddress)}
-              />
-            </React.Fragment>
-          ))}
+          <CardSpacer />
+          <CustomerAddressChoiceCard
+            address={customerAddresses[0]}
+            editable
+            onEdit={onEdit}
+          />
           <FormSpacer />
         </div>
       )}
