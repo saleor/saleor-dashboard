@@ -8,7 +8,7 @@ const useStyles = makeStyles(
     },
     root: { marginTop: theme.spacing(4) }
   }),
-  { name: "styles" }
+  { name: "GiftCardHistory" }
 );
 
 export default useStyles;
