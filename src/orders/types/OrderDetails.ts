@@ -551,6 +551,7 @@ export interface OrderDetails_order_channel {
 export interface OrderDetails_order {
   __typename: "Order";
   id: string;
+  token: string;
   metadata: (OrderDetails_order_metadata | null)[];
   privateMetadata: (OrderDetails_order_privateMetadata | null)[];
   billingAddress: OrderDetails_order_billingAddress | null;

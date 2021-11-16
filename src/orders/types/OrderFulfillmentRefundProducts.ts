@@ -660,6 +660,7 @@ export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_o
 export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order {
   __typename: "Order";
   id: string;
+  token: string;
   metadata: (OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_metadata | null)[];
   privateMetadata: (OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_privateMetadata | null)[];
   billingAddress: OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_billingAddress | null;
