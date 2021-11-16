@@ -73,7 +73,7 @@ const ExitFormDialogProvider = ({ children }) => {
       return false;
     }
 
-    return blockNav;
+    return blockNav.current;
   };
 
   const handleNavigationBlock = () => {
@@ -88,9 +88,7 @@ const ExitFormDialogProvider = ({ children }) => {
       return true;
     });
 
-    return () => {
-      unblock();
-    };
+    return unblock;
   };
 
   useEffect(handleNavigationBlock, []);
@@ -136,11 +134,15 @@ const ExitFormDialogProvider = ({ children }) => {
   // Set either on generic form load or on every custom form data change
   // but doesn't cause re-renders
   function setSubmitRef<T extends () => SubmitPromise<boolean>>(submitFn: T) {
+    console.log({ submitFn });
     submitRef.current = submitFn;
   }
 
   const providerData: ExitFormDialogData = {
-    setIsDirty,
+    setIsDirty: value => {
+      // console.log("GOEN", { value });
+      setIsDirty(value);
+    },
     shouldBlockNavigation,
     setEnableExitDialog,
     setExitDialogSubmitRef: setSubmitRef
