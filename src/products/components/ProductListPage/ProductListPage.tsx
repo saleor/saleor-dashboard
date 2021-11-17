@@ -28,6 +28,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import { ProductListUrlSortField } from "../../urls";
 import ProductList from "../ProductList";
+import { columnsMessages } from "../ProductList/messages";
 import {
   createFilterStructure,
   ProductFilterKeys,
@@ -109,18 +110,16 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
 
   const columns: ColumnPickerChoice[] = [
     {
-      label: intl.formatMessage({
-        defaultMessage: "Price",
-        description: "product price"
-      }),
+      label: intl.formatMessage(columnsMessages.price),
       value: "price" as ProductListColumns
     },
     {
-      label: intl.formatMessage({
-        defaultMessage: "Type",
-        description: "product type"
-      }),
+      label: intl.formatMessage(columnsMessages.type),
       value: "productType" as ProductListColumns
+    },
+    {
+      label: intl.formatMessage(columnsMessages.updatedAt),
+      value: "date" as ProductListColumns
     },
     ...availableInGridAttributes.map(attribute => ({
       label: attribute.name,

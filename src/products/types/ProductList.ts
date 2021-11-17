@@ -109,6 +109,7 @@ export interface ProductList_products_edges_node {
   thumbnail: ProductList_products_edges_node_thumbnail | null;
   productType: ProductList_products_edges_node_productType;
   channelListings: ProductList_products_edges_node_channelListings[] | null;
+  updatedAt: any | null;
   attributes: ProductList_products_edges_node_attributes[];
 }
 
