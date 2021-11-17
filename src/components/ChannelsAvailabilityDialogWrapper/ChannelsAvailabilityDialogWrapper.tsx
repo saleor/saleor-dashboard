@@ -32,7 +32,10 @@ export const useStyles = makeStyles(
       paddingBottom: theme.spacing(2)
     },
     scrollArea: {
-      maxHeight: 400,
+      maxHeight: "calc(100vh - 400px)",
+      "@media (min-height: 800px)": {
+        maxHeight: 400
+      },
       overflowY: "scroll",
       overflowX: "hidden",
       marginBottom: theme.spacing(3)
