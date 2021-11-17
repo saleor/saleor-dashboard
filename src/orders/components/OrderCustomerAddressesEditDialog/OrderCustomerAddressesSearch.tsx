@@ -10,13 +10,13 @@ import CustomerAddressChoiceCard from "@saleor/customers/components/CustomerAddr
 import { CustomerAddresses_user_addresses } from "@saleor/customers/types/CustomerAddresses";
 import { SearchIcon } from "@saleor/macaw-ui";
 import { ConfirmButton } from "@saleor/macaw-ui";
-import { flatten } from "@saleor/misc";
 import { AddressTypeEnum } from "@saleor/types/globalTypes";
 import React from "react";
 import { useIntl } from "react-intl";
 
 import { addressSearchMessages as messages } from "./messages";
 import { useStyles } from "./styles";
+import { parseAddress, parseQuery } from "./utils";
 
 export interface OrderCustomerAddressesSearchProps {
   type: AddressTypeEnum;
@@ -40,15 +40,10 @@ const OrderCustomerAddressesSearch: React.FC<OrderCustomerAddressesSearchProps> 
     setQuery(e.target.value);
   };
 
-  const parseAddress = (address: Partial<CustomerAddresses_user_addresses>) => {
-    const { id, ...addressWithoutId } = address;
-    return Object.values(flatten(addressWithoutId)).join(" ");
-  };
-
   const filteredCustomerAddresses = customerAddresses.filter(address => {
     const parsedAddress = parseAddress(address);
 
-    return parsedAddress.search(new RegExp(query, "i")) >= 0;
+    return parsedAddress.search(new RegExp(parseQuery(query), "i")) >= 0;
   });
 
   return (
