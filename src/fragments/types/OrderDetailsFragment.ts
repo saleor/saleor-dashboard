@@ -479,6 +479,7 @@ export interface OrderDetailsFragment_channel {
 export interface OrderDetailsFragment {
   __typename: "Order";
   id: string;
+  token: string;
   metadata: (OrderDetailsFragment_metadata | null)[];
   privateMetadata: (OrderDetailsFragment_privateMetadata | null)[];
   billingAddress: OrderDetailsFragment_billingAddress | null;

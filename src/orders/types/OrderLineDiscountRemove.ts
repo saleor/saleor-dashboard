@@ -486,6 +486,7 @@ export interface OrderLineDiscountRemove_orderLineDiscountRemove_order_channel {
 export interface OrderLineDiscountRemove_orderLineDiscountRemove_order {
   __typename: "Order";
   id: string;
+  token: string;
   metadata: (OrderLineDiscountRemove_orderLineDiscountRemove_order_metadata | null)[];
   privateMetadata: (OrderLineDiscountRemove_orderLineDiscountRemove_order_privateMetadata | null)[];
   billingAddress: OrderLineDiscountRemove_orderLineDiscountRemove_order_billingAddress | null;

@@ -488,6 +488,7 @@ export interface FulfillOrder_orderFulfill_order_channel {
 export interface FulfillOrder_orderFulfill_order {
   __typename: "Order";
   id: string;
+  token: string;
   metadata: (FulfillOrder_orderFulfill_order_metadata | null)[];
   privateMetadata: (FulfillOrder_orderFulfill_order_privateMetadata | null)[];
   billingAddress: FulfillOrder_orderFulfill_order_billingAddress | null;

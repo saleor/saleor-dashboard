@@ -486,6 +486,7 @@ export interface OrderDiscountDelete_orderDiscountDelete_order_channel {
 export interface OrderDiscountDelete_orderDiscountDelete_order {
   __typename: "Order";
   id: string;
+  token: string;
   metadata: (OrderDiscountDelete_orderDiscountDelete_order_metadata | null)[];
   privateMetadata: (OrderDiscountDelete_orderDiscountDelete_order_privateMetadata | null)[];
   billingAddress: OrderDiscountDelete_orderDiscountDelete_order_billingAddress | null;

@@ -486,6 +486,7 @@ export interface OrderConfirm_orderConfirm_order_channel {
 export interface OrderConfirm_orderConfirm_order {
   __typename: "Order";
   id: string;
+  token: string;
   metadata: (OrderConfirm_orderConfirm_order_metadata | null)[];
   privateMetadata: (OrderConfirm_orderConfirm_order_privateMetadata | null)[];
   billingAddress: OrderConfirm_orderConfirm_order_billingAddress | null;

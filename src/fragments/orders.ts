@@ -180,6 +180,7 @@ export const fragmentOrderDetails = gql`
   ${fragmentMoney}
   fragment OrderDetailsFragment on Order {
     id
+    token
     ...MetadataFragment
     billingAddress {
       ...AddressFragment
