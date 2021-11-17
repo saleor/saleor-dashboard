@@ -3635,49 +3635,45 @@
     "context": "header",
     "string": "Gift Cards Settings"
   },
-  "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardHistory_dot_1246654630": {
+  "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardHistory_dot_giftCardActivated": {
     "context": "gift card history message",
-    "string": "Gift card was updated"
+    "string": "Gift card was activated by {activatedBy}"
   },
-  "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardHistory_dot_1474208554": {
-    "context": "gift card history message",
-    "string": "Gift card was sent to customer"
-  },
-  "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardHistory_dot_1506811541": {
-    "context": "gift card history message",
-    "string": "Gift card was bought in order #{orderNumber}"
-  },
-  "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardHistory_dot_1656409893": {
-    "context": "dsc",
-    "string": "Gift card was issued by {issuedBy}"
-  },
-  "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardHistory_dot_1845168723": {
-    "context": "gift card history message",
-    "string": "Gift card was deactivated by {deactivatedBy}"
-  },
-  "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardHistory_dot_271824222": {
-    "context": "gift card history message",
-    "string": "Gift card tag was updated"
-  },
-  "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardHistory_dot_3002545469": {
-    "context": "gift card history message",
-    "string": "Gift card was resent"
-  },
-  "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardHistory_dot_3246193128": {
-    "context": "gift card history message",
-    "string": "Gift card was used as a payment method on order {orderLink}"
-  },
-  "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardHistory_dot_4134081751": {
+  "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardHistory_dot_giftCardBalanceReset": {
     "context": "gift card history message",
     "string": "Gift card balance was reset by {resetBy}"
   },
-  "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardHistory_dot_4248690348": {
+  "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardHistory_dot_giftCardBought": {
+    "context": "gift card history message",
+    "string": "Gift card was bought in order {orderNumber}"
+  },
+  "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardHistory_dot_giftCardDeactivated": {
+    "context": "gift card history message",
+    "string": "Gift card was deactivated by {deactivatedBy}"
+  },
+  "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardHistory_dot_giftCardExpiryDateUpdate": {
     "context": "gift card history message",
     "string": "Gift card expiry date was updated by {expiryUpdatedBy}"
   },
-  "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardHistory_dot_507735806": {
+  "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardHistory_dot_giftCardIssued": {
+    "context": "dsc",
+    "string": "Gift card was issued by {issuedBy}"
+  },
+  "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardHistory_dot_giftCardResent": {
     "context": "gift card history message",
-    "string": "Gift card was activated by {activatedBy}"
+    "string": "Gift card was resent"
+  },
+  "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardHistory_dot_giftCardSentToCustomer": {
+    "context": "gift card history message",
+    "string": "Gift card was sent to customer"
+  },
+  "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardHistory_dot_giftCardTagUpdated": {
+    "context": "gift card history message",
+    "string": "Gift card tag was updated"
+  },
+  "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardHistory_dot_giftCardUsedInOrder": {
+    "context": "gift card history message",
+    "string": "Gift card was used as a payment method on order {orderLink}"
   },
   "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardHistory_dot_historyHeaderTitle": {
     "context": "section header title",
