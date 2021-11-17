@@ -558,6 +558,7 @@ export interface OrderLineDelete_orderLineDelete_order_channel {
 export interface OrderLineDelete_orderLineDelete_order {
   __typename: "Order";
   id: string;
+  token: string;
   metadata: (OrderLineDelete_orderLineDelete_order_metadata | null)[];
   privateMetadata: (OrderLineDelete_orderLineDelete_order_privateMetadata | null)[];
   billingAddress: OrderLineDelete_orderLineDelete_order_billingAddress | null;

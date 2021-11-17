@@ -13,6 +13,7 @@ export interface ProductAttributeAssignmentUpdate_productAttributeAssignmentUpda
   __typename: "ProductError";
   field: string | null;
   message: string | null;
+  attributes: string[] | null;
 }
 
 export interface ProductAttributeAssignmentUpdate_productAttributeAssignmentUpdate_productType_taxType {

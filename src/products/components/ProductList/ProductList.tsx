@@ -8,6 +8,7 @@ import {
 import AvailabilityStatusLabel from "@saleor/components/AvailabilityStatusLabel";
 import { ChannelsAvailabilityDropdown } from "@saleor/components/ChannelsAvailabilityDropdown";
 import Checkbox from "@saleor/components/Checkbox";
+import Date from "@saleor/components/Date";
 import MoneyRange from "@saleor/components/MoneyRange";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
@@ -36,7 +37,7 @@ import classNames from "classnames";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
-import { messages } from "./messages";
+import { columnsMessages, messages } from "./messages";
 
 const useStyles = makeStyles(
   theme => ({
@@ -51,6 +52,9 @@ const useStyles = makeStyles(
         width: 200
       },
       colType: {
+        width: 200
+      },
+      colDate: {
         width: 200
       }
     },
@@ -160,6 +164,9 @@ export const ProductList: React.FC<ProductListProps> = props => {
           {gridAttributesFromSettings.map(gridAttribute => (
             <col className={classes.colAttribute} key={gridAttribute} />
           ))}
+          <DisplayColumn column="date" displayColumns={settings.columns}>
+            <col className={classes.colDate} />
+          </DisplayColumn>
           <DisplayColumn column="price" displayColumns={settings.columns}>
             <col className={classes.colPrice} />
           </DisplayColumn>
@@ -200,10 +207,7 @@ export const ProductList: React.FC<ProductListProps> = props => {
               }
               onClick={() => onSort(ProductListUrlSortField.productType)}
             >
-              <FormattedMessage
-                defaultMessage="Type"
-                description="product type"
-              />
+              <FormattedMessage {...columnsMessages.type} />
             </TableCellHeader>
           </DisplayColumn>
           <DisplayColumn
@@ -226,10 +230,7 @@ export const ProductList: React.FC<ProductListProps> = props => {
                 )
               }
             >
-              <FormattedMessage
-                defaultMessage="Availability"
-                description="product channels"
-              />
+              <FormattedMessage {...columnsMessages.availability} />
             </TableCellHeader>
           </DisplayColumn>
           {gridAttributesFromSettings.map(gridAttributeFromSettings => {
@@ -261,6 +262,20 @@ export const ProductList: React.FC<ProductListProps> = props => {
               </TableCellHeader>
             );
           })}
+          <DisplayColumn column="date" displayColumns={settings.columns}>
+            <TableCellHeader
+              data-test-id="colDateHeader"
+              className={classes.colDate}
+              direction={
+                sort.sort === ProductListUrlSortField.date
+                  ? getArrowDirection(sort.asc)
+                  : undefined
+              }
+              onClick={() => onSort(ProductListUrlSortField.date)}
+            >
+              <FormattedMessage {...columnsMessages.updatedAt} />
+            </TableCellHeader>
+          </DisplayColumn>
           <DisplayColumn column="price" displayColumns={settings.columns}>
             <TableCellHeader
               data-test-id="colPriceHeader"
@@ -276,10 +291,7 @@ export const ProductList: React.FC<ProductListProps> = props => {
                 !canBeSorted(ProductListUrlSortField.price, !!selectedChannelId)
               }
             >
-              <FormattedMessage
-                defaultMessage="Price"
-                description="product price"
-              />
+              <FormattedMessage {...columnsMessages.price} />
             </TableCellHeader>
           </DisplayColumn>
         </TableHead>
@@ -413,6 +425,18 @@ export const ProductList: React.FC<ProductListProps> = props => {
                       }, <Skeleton />)}
                     </TableCell>
                   ))}
+                  <DisplayColumn
+                    column="date"
+                    displayColumns={settings.columns}
+                  >
+                    <TableCell className={classes.colDate} data-test="date">
+                      {product?.updatedAt ? (
+                        <Date date={product.updatedAt} />
+                      ) : (
+                        <Skeleton />
+                      )}
+                    </TableCell>
+                  </DisplayColumn>
                   <DisplayColumn
                     column="price"
                     displayColumns={settings.columns}

@@ -558,6 +558,7 @@ export interface OrderMarkAsPaid_orderMarkAsPaid_order_channel {
 export interface OrderMarkAsPaid_orderMarkAsPaid_order {
   __typename: "Order";
   id: string;
+  token: string;
   metadata: (OrderMarkAsPaid_orderMarkAsPaid_order_metadata | null)[];
   privateMetadata: (OrderMarkAsPaid_orderMarkAsPaid_order_privateMetadata | null)[];
   billingAddress: OrderMarkAsPaid_orderMarkAsPaid_order_billingAddress | null;

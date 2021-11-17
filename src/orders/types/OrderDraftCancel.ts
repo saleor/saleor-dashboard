@@ -558,6 +558,7 @@ export interface OrderDraftCancel_draftOrderDelete_order_channel {
 export interface OrderDraftCancel_draftOrderDelete_order {
   __typename: "Order";
   id: string;
+  token: string;
   metadata: (OrderDraftCancel_draftOrderDelete_order_metadata | null)[];
   privateMetadata: (OrderDraftCancel_draftOrderDelete_order_privateMetadata | null)[];
   billingAddress: OrderDraftCancel_draftOrderDelete_order_billingAddress | null;
