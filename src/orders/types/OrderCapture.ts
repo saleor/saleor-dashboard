@@ -558,6 +558,7 @@ export interface OrderCapture_orderCapture_order_channel {
 export interface OrderCapture_orderCapture_order {
   __typename: "Order";
   id: string;
+  token: string;
   metadata: (OrderCapture_orderCapture_order_metadata | null)[];
   privateMetadata: (OrderCapture_orderCapture_order_privateMetadata | null)[];
   billingAddress: OrderCapture_orderCapture_order_billingAddress | null;
