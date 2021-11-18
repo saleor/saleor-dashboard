@@ -126,7 +126,7 @@ export const ProductVariant: React.FC<ProductVariantCreateProps> = ({
                   : null,
                 endDate: formData.preorderEndDateTime || null
               }
-            : null
+            : undefined
         },
         firstValues: 10
       }

@@ -528,7 +528,6 @@ const ProductStocks: React.FC<ProductStocksProps> = ({
                 defaultMessage: "Global threshold"
               })}
               name="globalThreshold"
-              required
               onChange={onThresholdChange}
               value={data.globalThreshold ?? ""}
               className={classes.thresholdInput}
