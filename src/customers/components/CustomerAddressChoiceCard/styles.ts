@@ -16,6 +16,12 @@ export const useStyles = makeStyles(
       flexDirection: "row",
       justifyContent: "space-between",
       alignItems: "flex-start"
+    },
+    selectedLabel: {
+      fontSize: "1.4rem",
+      lineHeight: "1.75",
+      fontWeight: 600,
+      textTransform: "uppercase"
     }
   }),
   { name: "CustomerAddressChoiceCard" }

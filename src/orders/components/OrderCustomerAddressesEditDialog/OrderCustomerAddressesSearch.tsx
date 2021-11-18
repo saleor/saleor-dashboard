@@ -2,6 +2,7 @@ import {
   Button,
   DialogActions,
   DialogContent,
+  DialogTitle,
   InputAdornment,
   TextField
 } from "@material-ui/core";
@@ -12,7 +13,7 @@ import { SearchIcon } from "@saleor/macaw-ui";
 import { ConfirmButton } from "@saleor/macaw-ui";
 import { AddressTypeEnum } from "@saleor/types/globalTypes";
 import React from "react";
-import { useIntl } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import { addressSearchMessages as messages } from "./messages";
 import { useStyles } from "./styles";
@@ -48,11 +49,17 @@ const OrderCustomerAddressesSearch: React.FC<OrderCustomerAddressesSearchProps> 
 
   return (
     <>
+      <DialogTitle>
+        {type === AddressTypeEnum.SHIPPING ? (
+          <FormattedMessage {...messages.shippingTitle} />
+        ) : (
+          <FormattedMessage {...messages.billingTitle} />
+        )}
+      </DialogTitle>
       <DialogContent>
         {intl.formatMessage(messages.searchInfo)}
         <CardSpacer />
         <TextField
-          // name="query"
           value={query}
           variant="outlined"
           onChange={handleChange}
@@ -72,7 +79,7 @@ const OrderCustomerAddressesSearch: React.FC<OrderCustomerAddressesSearchProps> 
         <div className={classes.scrollableWrapper}>
           {filteredCustomerAddresses?.map(address => (
             <React.Fragment key={address.id}>
-              <CustomerAddressChoiceCard address={address} />
+              <CustomerAddressChoiceCard selected address={address} />
               <CardSpacer />
             </React.Fragment>
           ))}

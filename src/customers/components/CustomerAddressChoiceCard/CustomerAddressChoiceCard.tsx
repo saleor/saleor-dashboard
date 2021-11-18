@@ -1,9 +1,11 @@
-import { Button, Card, CardContent } from "@material-ui/core";
+import { Button, Card, CardContent, Typography } from "@material-ui/core";
 import AddressFormatter from "@saleor/components/AddressFormatter";
 import classNames from "classnames";
 import React from "react";
+import { useIntl } from "react-intl";
 
 import { CustomerAddresses_user_addresses } from "../../types/CustomerAddresses";
+import { addressChoiceCardMessages as messages } from "./messages";
 import { useStyles } from "./styles";
 
 export interface CustomerAddressChoiceCardProps {
@@ -18,6 +20,8 @@ const CustomerAddressChoiceCard: React.FC<CustomerAddressChoiceCardProps> = prop
   const { address, selected, editable, onSelect, onEdit } = props;
   const classes = useStyles(props);
 
+  const intl = useIntl();
+
   return (
     <Card
       className={classNames(classes.card, { [classes.cardSelected]: selected })}
@@ -26,8 +30,13 @@ const CustomerAddressChoiceCard: React.FC<CustomerAddressChoiceCardProps> = prop
         <AddressFormatter address={address} />
         {editable && (
           <Button color="primary" onClick={onEdit}>
-            Edit
+            {intl.formatMessage(messages.editLabel)}
           </Button>
+        )}
+        {selected && (
+          <Typography color="primary" className={classes.selectedLabel}>
+            {intl.formatMessage(messages.selectedLabel)}
+          </Typography>
         )}
       </CardContent>
     </Card>
