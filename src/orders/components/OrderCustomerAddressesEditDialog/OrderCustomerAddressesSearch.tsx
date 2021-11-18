@@ -21,12 +21,13 @@ import { parseAddress, parseQuery } from "./utils";
 
 export interface OrderCustomerAddressesSearchProps {
   type: AddressTypeEnum;
+  isCustomerEdit: boolean;
   customerAddresses: CustomerAddresses_user_addresses[];
   exitSearch();
 }
 
 const OrderCustomerAddressesSearch: React.FC<OrderCustomerAddressesSearchProps> = props => {
-  const { type, customerAddresses, exitSearch } = props;
+  const { type, isCustomerEdit, customerAddresses, exitSearch } = props;
 
   const intl = useIntl();
   const classes = useStyles(props);

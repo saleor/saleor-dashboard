@@ -146,23 +146,18 @@ const OrderCustomerAddressesEditDialog: React.FC<OrderCustomerAddressesEditDialo
       >
         {({ change, data, handlers }) => (
           <>
-            <DialogTitle>
-              {!addressSearchState.open ? (
-                <FormattedMessage {...dialogMessages.title} />
-              ) : addressSearchState.type === AddressTypeEnum.SHIPPING ? (
-                <FormattedMessage {...addressSearchMessages.shippingTitle} />
-              ) : (
-                <FormattedMessage {...addressSearchMessages.billingTitle} />
-              )}
-            </DialogTitle>
             {addressSearchState.open ? (
               <OrderCustomerAddressesSearch
                 type={addressSearchState?.type}
                 customerAddresses={customerAddresses}
                 exitSearch={() => setAddressSearchState({ open: false })}
+                isCustomerEdit
               />
             ) : (
               <>
+                <DialogTitle>
+                  <FormattedMessage {...dialogMessages.title} />
+                </DialogTitle>
                 <DialogContent className={classes.scrollableContent}>
                   <Typography>
                     {customerAddresses.length > 0 ? (
