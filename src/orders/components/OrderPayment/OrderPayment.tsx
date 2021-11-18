@@ -30,7 +30,8 @@ const useStyles = makeStyles(
       width: "100%"
     },
     textRight: {
-      textAlign: "right"
+      display: "flex",
+      justifyContent: "end"
     },
     totalRow: {
       fontWeight: 600
