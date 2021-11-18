@@ -17,9 +17,6 @@ import { orderProductsCardElementsMessages as messages } from "./messages";
 
 const useStyles = makeStyles(
   theme => ({
-    clickableRow: {
-      cursor: "pointer"
-    },
     colName: {
       width: "auto"
     },
@@ -99,7 +96,7 @@ const TableLine: React.FC<TableLineProps> = ({
   const isDeleted = !line.orderLine.variant;
 
   return (
-    <TableRow className={classes.clickableRow} hover>
+    <TableRow>
       <TableCellAvatar
         className={classes.colName}
         thumbnail={maybe(() => line.orderLine.thumbnail.url)}
