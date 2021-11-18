@@ -1,3 +1,3 @@
 export const ORDER_REFUND = {
-  productsQuantityInput: '[data-test-id="quantityInput"]'
+  productsQuantityInput: '[data-test="quantityInput"]'
 };

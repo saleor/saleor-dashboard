@@ -1,10 +1,19 @@
-import "./user";
-import "./softAssertions";
-import "./deleteElement/index.js";
-import "./elements/index";
-import "cypress-mailhog";
+// / <reference types="cypress" />
 
-import { urlList } from "../url/urlList";
+import "./customCommands/user";
+import "./customCommands/basicOperations";
+import "./customCommands/deleteElementsViaApi";
+import "./customCommands/softAssertions";
+import "./customCommands/sharedElementsOperations/addressForm.js";
+import "./customCommands/sharedElementsOperations/assignElementsForm.js";
+import "./customCommands/sharedElementsOperations/confirmationMessages.js";
+import "./customCommands/sharedElementsOperations/progressBar.js";
+import "./customCommands/sharedElementsOperations/selects.js";
+import "./customCommands/sharedElementsOperations/tables";
+import "cypress-mailhog";
+import "cypress-file-upload";
+
+import { urlList } from "../fixtures/urlList";
 
 Cypress.Commands.add("clearSessionData", () => {
   // Because of known cypress bug, not all local storage data are cleared.

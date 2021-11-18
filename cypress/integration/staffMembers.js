@@ -1,28 +1,31 @@
+// / <reference types="cypress"/>
+// / <reference types="../support"/>
+
 import faker from "faker";
 
-import {
-  deleteStaffMembersStartsWith,
-  updateStaffMember
-} from "../apiRequests/StaffMembers";
 import { LEFT_MENU_SELECTORS } from "../elements/account/left-menu/left-menu-selectors";
 import { BUTTON_SELECTORS } from "../elements/shared/button-selectors";
 import { STAFF_MEMBER_DETAILS } from "../elements/staffMembers/staffMemberDetails";
 import { STAFF_MEMBERS_LIST } from "../elements/staffMembers/staffMembersList";
-import { expectWelcomeMessageIncludes } from "../steps/homePageSteps";
-import { getDisplayedSelectors } from "../steps/permissions";
+import { urlList, userDetailsUrl } from "../fixtures/urlList";
+import {
+  deleteStaffMembersStartsWith,
+  updateStaffMember
+} from "../support/api/requests/StaffMembers";
+import {
+  getMailActivationLinkForUser,
+  inviteStaffMemberWithFirstPermission
+} from "../support/api/utils/users";
+import filterTests from "../support/filterTests";
+import { expectWelcomeMessageIncludes } from "../support/pages/homePage";
+import { getDisplayedSelectors } from "../support/pages/permissionsPage";
 import {
   fillUpSetPassword,
   fillUpUserDetails,
   updateUserActiveFlag
-} from "../steps/user";
-import filterTests from "../support/filterTests";
-import { urlList, userDetailsUrl } from "../url/urlList";
-import {
-  getMailActivationLinkForUser,
-  inviteStaffMemberWithFirstPermission
-} from "../utils/users";
+} from "../support/pages/userPage";
 
-filterTests(["stagedOnly"], () => {
+filterTests({ definedTags: ["stagedOnly"] }, () => {
   describe("Staff members", () => {
     const startsWith = "StaffMembers";
     const password = Cypress.env("USER_PASSWORD");
@@ -78,7 +81,7 @@ filterTests(["stagedOnly"], () => {
               tokenCreate.errors[0].code,
               "logging in should return error"
             )
-            .to.be.eq("INVALID_CREDENTIALS");
+            .to.be.eq("INACTIVE");
           expect(tokenCreate.token).to.be.not.ok;
         });
     });
@@ -99,7 +102,8 @@ filterTests(["stagedOnly"], () => {
         .addAliasToGraphRequest("StaffMemberUpdate")
         .get(BUTTON_SELECTORS.confirm)
         .click()
-        .wait("@StaffMemberUpdate")
+        .confirmationMessageShouldDisappear()
+        .waitForRequestAndCheckIfNoErrors("@StaffMemberUpdate")
         .clearSessionData()
         .loginUserViaRequest("auth", { email, password })
         .visit(urlList.homePage);

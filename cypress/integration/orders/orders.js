@@ -1,34 +1,38 @@
-// <reference types="cypress" />
+// / <reference types="cypress"/>
+// / <reference types="../../support"/>
+
 import faker from "faker";
 
-import {
-  createCustomer,
-  deleteCustomersStartsWith
-} from "../../apiRequests/Customer";
-import { getOrder } from "../../apiRequests/Order";
-import { ONE_PERMISSION_USERS } from "../../Data/users";
 import { ORDER_REFUND } from "../../elements/orders/order-refund";
 import { ORDERS_SELECTORS } from "../../elements/orders/orders-selectors";
 import { BUTTON_SELECTORS } from "../../elements/shared/button-selectors";
 import { SHARED_ELEMENTS } from "../../elements/shared/sharedElements";
-import { selectChannelInPicker } from "../../steps/channelsSteps";
-import { finalizeDraftOrder } from "../../steps/draftOrderSteps";
-import { fillAutocompleteSelect } from "../../steps/shared/selects";
-import filterTests from "../../support/filterTests";
-import { urlList } from "../../url/urlList";
-import { getDefaultChannel } from "../../utils/channelsUtils";
+import { urlList } from "../../fixtures/urlList";
+import { ONE_PERMISSION_USERS } from "../../fixtures/users";
+import {
+  createCustomer,
+  deleteCustomersStartsWith
+} from "../../support/api/requests/Customer";
+import {
+  getOrder,
+  updateOrdersSettings
+} from "../../support/api/requests/Order";
+import { getDefaultChannel } from "../../support/api/utils/channelsUtils";
 import {
   createFulfilledOrder,
   createOrder,
   createReadyToFulfillOrder
-} from "../../utils/ordersUtils";
-import * as productsUtils from "../../utils/products/productsUtils";
+} from "../../support/api/utils/ordersUtils";
+import * as productsUtils from "../../support/api/utils/products/productsUtils";
 import {
   createShipping,
   deleteShippingStartsWith
-} from "../../utils/shippingUtils";
+} from "../../support/api/utils/shippingUtils";
+import filterTests from "../../support/filterTests";
+import { selectChannelInPicker } from "../../support/pages/channelsPage";
+import { finalizeDraftOrder } from "../../support/pages/draftOrderPage";
 
-filterTests(["all"], () => {
+filterTests({ definedTags: ["all"] }, () => {
   describe("Orders", () => {
     const startsWith = "CyOrders-";
     const randomName = startsWith + faker.datatype.number();
@@ -46,6 +50,7 @@ filterTests(["all"], () => {
       deleteShippingStartsWith(startsWith);
       productsUtils.deleteProductsStartsWith(startsWith);
 
+      updateOrdersSettings();
       getDefaultChannel()
         .then(channel => {
           defaultChannel = channel;
@@ -77,7 +82,9 @@ filterTests(["all"], () => {
           }) => {
             shippingMethod = shippingMethodResp;
             warehouse = warehouseResp;
-            productsUtils.createTypeAttributeAndCategoryForProduct(randomName);
+            productsUtils.createTypeAttributeAndCategoryForProduct({
+              name: randomName
+            });
           }
         )
         .then(
@@ -158,20 +165,18 @@ filterTests(["all"], () => {
           cy.contains(ORDERS_SELECTORS.orderRow, order.number).click();
           cy.get(SHARED_ELEMENTS.skeleton)
             .should("not.exist")
-            .get(ORDERS_SELECTORS.orderFulfillmentFrame)
-            .find(BUTTON_SELECTORS.showMoreButton)
+            .get(ORDERS_SELECTORS.fulfillMenuButton)
             .click()
             .get(ORDERS_SELECTORS.cancelFulfillment)
-            .click();
-        })
-        .then(() => {
-          fillAutocompleteSelect(
-            ORDERS_SELECTORS.cancelFulfillmentSelectField,
-            warehouse.name
-          );
-          cy.addAliasToGraphRequest("OrderFulfillmentCancel");
-          cy.get(BUTTON_SELECTORS.submit).click();
-          cy.wait("@OrderFulfillmentCancel");
+            .click()
+            .fillAutocompleteSelect(
+              ORDERS_SELECTORS.cancelFulfillmentSelectField,
+              warehouse.name
+            )
+            .addAliasToGraphRequest("OrderFulfillmentCancel")
+            .get(BUTTON_SELECTORS.submit)
+            .click()
+            .waitForRequestAndCheckIfNoErrors("@OrderFulfillmentCancel");
           getOrder(order.id);
         })
         .then(orderResp => {
@@ -200,7 +205,9 @@ filterTests(["all"], () => {
             .addAliasToGraphRequest("OrderFulfillmentRefundProducts");
           cy.get(BUTTON_SELECTORS.submit)
             .click()
-            .wait("@OrderFulfillmentRefundProducts");
+            .waitForRequestAndCheckIfNoErrors(
+              "@OrderFulfillmentRefundProducts"
+            );
           getOrder(order.id);
         })
         .then(orderResp => {

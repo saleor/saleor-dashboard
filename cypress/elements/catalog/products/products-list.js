@@ -4,6 +4,8 @@ export const PRODUCTS_LIST = {
   createProductBtn: "[data-test='add-product']",
   searchProducts: "[placeholder='Search Products...']",
   emptyProductRow: "[data-test-id='skeleton']",
+  productImage: "[class='MuiAvatar-img']",
+  tableCellAvatar: "[data-test-id='tableCellAvatar']",
   productRowElements: {
     name: '[data-test="name"]',
     type: '[data-test="product-type"]',
@@ -29,6 +31,7 @@ export const PRODUCTS_LIST = {
       channel: '[data-test="filterGroupActive"][data-test-id="channel"]'
     },
     filterField: {
+      filterField: '[data-test="filter-field"]',
       category: '[data-test="filter-field"][data-test-id="categories"]',
       collection: '[data-test="filter-field"][data-test-id="collections"]',
       productType: '[data-test="filter-field"][data-test-id="productType"]',

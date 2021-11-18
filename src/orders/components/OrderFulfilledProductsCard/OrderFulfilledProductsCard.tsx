@@ -76,6 +76,7 @@ const OrderFulfilledProductsCard: React.FC<OrderFulfilledProductsCardProps> = pr
           toolbar={
             maybe(() => fulfillment.status) === FulfillmentStatus.FULFILLED && (
               <CardMenu
+                data-test-id="fulfill-menu"
                 menuItems={[
                   {
                     label: intl.formatMessage({

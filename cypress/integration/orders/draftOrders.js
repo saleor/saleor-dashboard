@@ -1,24 +1,27 @@
-// <reference types="cypress" />
+// / <reference types="cypress"/>
+// / <reference types="../../support"/>
+
 import faker from "faker";
 
+import { DRAFT_ORDERS_LIST_SELECTORS } from "../../elements/orders/draft-orders-list-selectors";
+import { ORDERS_SELECTORS } from "../../elements/orders/orders-selectors";
+import { urlList } from "../../fixtures/urlList";
 import {
   createCustomer,
   deleteCustomersStartsWith
-} from "../../apiRequests/Customer";
-import { DRAFT_ORDERS_LIST_SELECTORS } from "../../elements/orders/draft-orders-list-selectors";
-import { ORDERS_SELECTORS } from "../../elements/orders/orders-selectors";
-import { selectChannelInPicker } from "../../steps/channelsSteps";
-import { finalizeDraftOrder } from "../../steps/draftOrderSteps";
-import filterTests from "../../support/filterTests";
-import { urlList } from "../../url/urlList";
-import { getDefaultChannel } from "../../utils/channelsUtils";
-import * as productsUtils from "../../utils/products/productsUtils";
+} from "../../support/api/requests/Customer";
+import { updateOrdersSettings } from "../../support/api/requests/Order";
+import { getDefaultChannel } from "../../support/api/utils/channelsUtils";
+import * as productsUtils from "../../support/api/utils/products/productsUtils";
 import {
   createShipping,
   deleteShippingStartsWith
-} from "../../utils/shippingUtils";
+} from "../../support/api/utils/shippingUtils";
+import filterTests from "../../support/filterTests";
+import { selectChannelInPicker } from "../../support/pages/channelsPage";
+import { finalizeDraftOrder } from "../../support/pages/draftOrderPage";
 
-filterTests(["all"], () => {
+filterTests({ definedTags: ["all"] }, () => {
   describe("Draft orders", () => {
     const startsWith = "CyDraftOrders-";
     const randomName = startsWith + faker.datatype.number();
@@ -33,6 +36,7 @@ filterTests(["all"], () => {
       deleteShippingStartsWith(startsWith);
       productsUtils.deleteProductsStartsWith(startsWith);
 
+      updateOrdersSettings();
       getDefaultChannel()
         .then(channel => {
           defaultChannel = channel;
@@ -56,7 +60,9 @@ filterTests(["all"], () => {
         })
         .then(({ warehouse: warehouseResp }) => {
           warehouse = warehouseResp;
-          productsUtils.createTypeAttributeAndCategoryForProduct(randomName);
+          productsUtils.createTypeAttributeAndCategoryForProduct({
+            name: randomName
+          });
         })
         .then(
           ({
