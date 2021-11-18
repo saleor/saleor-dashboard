@@ -15,26 +15,48 @@ import { AddressTypeEnum } from "@saleor/types/globalTypes";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
+import { getById } from "../OrderReturnPage/utils";
 import { addressSearchMessages as messages } from "./messages";
 import { useStyles } from "./styles";
 import { parseAddress, parseQuery } from "./utils";
 
 export interface OrderCustomerAddressesSearchProps {
   type: AddressTypeEnum;
+  selectedCustomerAddressId?: string;
   isCustomerEdit: boolean;
   customerAddresses: CustomerAddresses_user_addresses[];
+  onChangeCustomerAddress: (
+    customerAddress: CustomerAddresses_user_addresses
+  ) => void;
   exitSearch();
 }
 
 const OrderCustomerAddressesSearch: React.FC<OrderCustomerAddressesSearchProps> = props => {
-  const { type, isCustomerEdit, customerAddresses, exitSearch } = props;
+  const {
+    type,
+    selectedCustomerAddressId,
+    isCustomerEdit,
+    customerAddresses,
+    onChangeCustomerAddress,
+    exitSearch
+  } = props;
 
   const intl = useIntl();
   const classes = useStyles(props);
 
+  const initialAddress = customerAddresses.find(
+    getById(selectedCustomerAddressId)
+  );
+
   const [query, setQuery] = React.useState("");
+  const [
+    temporarySelectedAddress,
+    setTemporarySelectedAddress
+  ] = React.useState(initialAddress);
 
   const handleSelect = () => {
+    onChangeCustomerAddress(temporarySelectedAddress);
+
     exitSearch();
   };
 
@@ -74,13 +96,16 @@ const OrderCustomerAddressesSearch: React.FC<OrderCustomerAddressesSearchProps> 
             )
           }}
           inputProps={{ className: classes.searchInput }}
-          // InputLabelProps={{ disabled: true }}
         />
         <CardSpacer />
         <div className={classes.scrollableWrapper}>
           {filteredCustomerAddresses?.map(address => (
             <React.Fragment key={address.id}>
-              <CustomerAddressChoiceCard selected address={address} />
+              <CustomerAddressChoiceCard
+                selected={address.id === temporarySelectedAddress.id}
+                onSelect={() => setTemporarySelectedAddress(address)}
+                address={address}
+              />
               <CardSpacer />
             </React.Fragment>
           ))}

@@ -16,6 +16,12 @@ export const useStyles = makeStyles(
       justifyContent: "space-between",
       alignItems: "flex-start"
     },
+    selectableCard: {
+      "&:hover": {
+        cursor: "pointer",
+        borderColor: theme.palette.primary.light
+      }
+    },
     selectedLabel: {
       fontSize: "1.4rem",
       lineHeight: "1.75",

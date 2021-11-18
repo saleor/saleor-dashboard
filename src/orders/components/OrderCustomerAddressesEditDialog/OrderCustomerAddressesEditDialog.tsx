@@ -90,9 +90,11 @@ const OrderCustomerAddressesEditDialog: React.FC<OrderCustomerAddressesEditDialo
     open
   );
 
-  const getCustomerAddress = (customerAddressId: string): AddressInput =>
+  const getCustomerAddress = (
+    selectedCustomerAddressID: string
+  ): AddressInput =>
     transformAddressToAddressInput(
-      customerAddresses.find(getById(customerAddressId))
+      customerAddresses.find(getById(selectedCustomerAddressID))
     );
 
   const handleAddressesSubmit = (data: OrderCustomerAddressesEditFormData) => {
@@ -150,6 +152,14 @@ const OrderCustomerAddressesEditDialog: React.FC<OrderCustomerAddressesEditDialo
               <OrderCustomerAddressesSearch
                 type={addressSearchState?.type}
                 customerAddresses={customerAddresses}
+                // fix billing case
+                selectedCustomerAddressId={data.customerShippingAddress?.id}
+                onChangeCustomerAddress={customerAddress =>
+                  handlers.changeCustomerAddress(
+                    customerAddress,
+                    "customerShippingAddress"
+                  )
+                }
                 exitSearch={() => setAddressSearchState({ open: false })}
                 isCustomerEdit
               />
@@ -178,7 +188,7 @@ const OrderCustomerAddressesEditDialog: React.FC<OrderCustomerAddressesEditDialo
                     addressInputName="shippingAddressInputOption"
                     onChangeAddressInputOption={change}
                     customerAddresses={customerAddresses}
-                    customerAddressId={data.customerShippingAddress?.id}
+                    selectedCustomerAddressId={data.customerShippingAddress?.id}
                     formAddress={data.shippingAddress}
                     formAddressCountryDisplayName={
                       data.shippingCountryDisplayName
@@ -248,7 +258,9 @@ const OrderCustomerAddressesEditDialog: React.FC<OrderCustomerAddressesEditDialo
                         addressInputName="billingAddressInputOption"
                         onChangeAddressInputOption={change}
                         customerAddresses={customerAddresses}
-                        customerAddressId={data.customerBillingAddress?.id}
+                        selectedCustomerAddressId={
+                          data.customerBillingAddress?.id
+                        }
                         formAddress={data.billingAddress}
                         formAddressCountryDisplayName={
                           data.billingCountryDisplayName

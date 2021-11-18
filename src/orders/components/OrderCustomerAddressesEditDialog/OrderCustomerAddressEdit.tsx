@@ -13,6 +13,7 @@ import { FormChange } from "@saleor/hooks/useForm";
 import React from "react";
 import { useIntl } from "react-intl";
 
+import { getById } from "../OrderReturnPage/utils";
 import { AddressInputOptionEnum } from "./form";
 import { addressEditMessages } from "./messages";
 import { useStyles } from "./styles";
@@ -24,7 +25,7 @@ export interface OrderCustomerAddressEditProps {
   addressInputOption: AddressInputOptionEnum;
   addressInputName: string;
   onChangeAddressInputOption: FormChange;
-  customerAddressId: string;
+  selectedCustomerAddressId: string;
   formAddress: AddressTypeInput;
   formAddressCountryDisplayName: string;
   formErrors: Array<AccountErrorFragment | OrderErrorFragment>;
@@ -44,7 +45,7 @@ const OrderCustomerAddressEdit: React.FC<OrderCustomerAddressEditProps> = props 
     addressInputOption,
     addressInputName,
     onChangeAddressInputOption,
-    customerAddressId,
+    selectedCustomerAddressId,
     formAddress,
     formAddressCountryDisplayName,
     formErrors,
@@ -97,7 +98,7 @@ const OrderCustomerAddressEdit: React.FC<OrderCustomerAddressEditProps> = props 
         <div className={classes.scrollableWrapper}>
           <CardSpacer />
           <CustomerAddressChoiceCard
-            address={customerAddresses[0]}
+            address={customerAddresses.find(getById(selectedCustomerAddressId))}
             editable
             onEdit={onEdit}
           />

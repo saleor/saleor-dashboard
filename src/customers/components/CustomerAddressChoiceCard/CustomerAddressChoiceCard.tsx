@@ -25,7 +25,11 @@ const CustomerAddressChoiceCard: React.FC<CustomerAddressChoiceCardProps> = prop
 
   return (
     <Card
-      className={classNames(classes.card, { [classes.cardSelected]: selected })}
+      className={classNames(classes.card, {
+        [classes.cardSelected]: selected,
+        [classes.selectableCard]: !editable
+      })}
+      onClick={onSelect}
     >
       <CardContent className={classes.cardContent}>
         <AddressFormatter address={address} />
