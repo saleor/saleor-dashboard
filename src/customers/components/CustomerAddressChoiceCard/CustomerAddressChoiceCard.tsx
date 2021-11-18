@@ -1,4 +1,4 @@
-import { Button, Card, CardContent, Typography } from "@material-ui/core";
+import { Card, CardContent, Typography } from "@material-ui/core";
 import AddressFormatter from "@saleor/components/AddressFormatter";
 import { commonMessages } from "@saleor/intl";
 import { EditIcon } from "@saleor/macaw-ui";

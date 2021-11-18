@@ -38,6 +38,7 @@ import { dialogMessages } from "./messages";
 import OrderCustomerAddressEdit from "./OrderCustomerAddressEdit";
 import OrderCustomerAddressesSearch from "./OrderCustomerAddressesSearch";
 import { useStyles } from "./styles";
+import { validateDefaultAddress } from "./utils";
 
 export interface OrderCustomerSearchAddressState {
   open: boolean;
@@ -138,12 +139,21 @@ const OrderCustomerAddressesEditDialog: React.FC<OrderCustomerAddressesEditDialo
     OrderCustomerSearchAddressState
   >({ open: false });
 
+  const parsedDefaultShippingAddress = validateDefaultAddress(
+    defaultShippingAddress,
+    customerAddresses
+  );
+  const parsedDefaultBillingAddress = validateDefaultAddress(
+    defaultBillingAddress,
+    customerAddresses
+  );
+
   return (
     <Dialog onClose={onClose} open={open} fullWidth>
       <OrderCustomerAddressesEditForm
         countryChoices={countryChoices}
-        defaultShippingAddress={defaultShippingAddress}
-        defaultBillingAddress={defaultBillingAddress}
+        defaultShippingAddress={parsedDefaultShippingAddress}
+        defaultBillingAddress={parsedDefaultBillingAddress}
         onSubmit={handleSubmit}
       >
         {({ change, data, handlers }) => (
@@ -205,12 +215,6 @@ const OrderCustomerAddressesEditDialog: React.FC<OrderCustomerAddressesEditDialo
                     formErrors={dialogErrors.filter(
                       error => error.addressType === AddressTypeEnum.SHIPPING
                     )}
-                    onChangeCustomerAddress={customerAddress =>
-                      handlers.changeCustomerAddress(
-                        customerAddress,
-                        "customerShippingAddress"
-                      )
-                    }
                     onChangeFormAddress={event =>
                       handlers.changeFormAddress(event, "shippingAddress")
                     }
@@ -277,12 +281,6 @@ const OrderCustomerAddressesEditDialog: React.FC<OrderCustomerAddressesEditDialo
                         formErrors={dialogErrors.filter(
                           error => error.addressType === AddressTypeEnum.BILLING
                         )}
-                        onChangeCustomerAddress={customerAddress =>
-                          handlers.changeCustomerAddress(
-                            customerAddress,
-                            "customerBillingAddress"
-                          )
-                        }
                         onChangeFormAddress={event =>
                           handlers.changeFormAddress(event, "billingAddress")
                         }

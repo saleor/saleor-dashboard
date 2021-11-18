@@ -19,7 +19,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 import { getById } from "../OrderReturnPage/utils";
 import { addressSearchMessages as messages } from "./messages";
 import { useStyles } from "./styles";
-import { parseAddress, parseQuery } from "./utils";
+import { parseQuery, stringifyAddress } from "./utils";
 
 export interface OrderCustomerAddressesSearchProps {
   type: AddressTypeEnum;
@@ -73,7 +73,7 @@ const OrderCustomerAddressesSearch: React.FC<OrderCustomerAddressesSearchProps> 
   };
 
   const filteredCustomerAddresses = customerAddresses.filter(address => {
-    const parsedAddress = parseAddress(address);
+    const parsedAddress = stringifyAddress(address);
 
     return parsedAddress.search(new RegExp(parseQuery(query), "i")) >= 0;
   });
@@ -120,6 +120,9 @@ const OrderCustomerAddressesSearch: React.FC<OrderCustomerAddressesSearchProps> 
                 </React.Fragment>
               ))}
         </div>
+        {!isCustomerEdit &&
+          // @TODO implement "set the same for shipping/billing address" checkbox
+          undefined}
       </DialogContent>
       <DialogActions>
         <Button onClick={() => exitSearch()} color="primary">

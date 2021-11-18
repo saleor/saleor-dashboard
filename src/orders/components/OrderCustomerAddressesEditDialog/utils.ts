@@ -1,4 +1,9 @@
-import { CustomerAddresses_user_addresses } from "@saleor/customers/types/CustomerAddresses";
+import {
+  CustomerAddresses_user_addresses,
+  CustomerAddresses_user_defaultShippingAddress
+} from "@saleor/customers/types/CustomerAddresses";
+
+import { getById } from "../OrderReturnPage/utils";
 
 export const flatten = (obj: unknown) => {
   // Be cautious that repeated keys are overwritten
@@ -16,7 +21,7 @@ export const flatten = (obj: unknown) => {
   return result;
 };
 
-export const parseAddress = (
+export const stringifyAddress = (
   address: Partial<CustomerAddresses_user_addresses>
 ): string => {
   const { id, ...addressWithoutId } = address;
@@ -25,3 +30,24 @@ export const parseAddress = (
 
 export const parseQuery = (query: string) =>
   query.replace(/([.?*+\-=:^$\\[\]<>(){}|])/g, "\\$&");
+
+export function validateDefaultAddress<
+  T extends CustomerAddresses_user_defaultShippingAddress
+>(
+  defaultAddress: CustomerAddresses_user_defaultShippingAddress,
+  customerAddresses: T[]
+): CustomerAddresses_user_defaultShippingAddress {
+  // first address is fallback when default address fails for some reason
+  const fallbackAddress = {
+    id: customerAddresses[0]?.id
+  } as CustomerAddresses_user_defaultShippingAddress;
+  // no default address provided
+  if (!defaultAddress) {
+    return fallbackAddress;
+  }
+  // none of customer addresses matches default
+  if (!customerAddresses.some(getById(defaultAddress.id))) {
+    return fallbackAddress;
+  }
+  return defaultAddress;
+}

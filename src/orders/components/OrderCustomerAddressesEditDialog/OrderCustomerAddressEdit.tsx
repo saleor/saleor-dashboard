@@ -29,9 +29,6 @@ export interface OrderCustomerAddressEditProps {
   formAddress: AddressTypeInput;
   formAddressCountryDisplayName: string;
   formErrors: Array<AccountErrorFragment | OrderErrorFragment>;
-  onChangeCustomerAddress: (
-    customerAddress: CustomerAddresses_user_addresses
-  ) => void;
   onChangeFormAddress: (event: React.ChangeEvent<any>) => void;
   onChangeFormAddressCountry: (event: React.ChangeEvent<any>) => void;
   onEdit?: () => void;
@@ -49,7 +46,6 @@ const OrderCustomerAddressEdit: React.FC<OrderCustomerAddressEditProps> = props 
     formAddress,
     formAddressCountryDisplayName,
     formErrors,
-    onChangeCustomerAddress,
     onChangeFormAddress,
     onChangeFormAddressCountry,
     onEdit
