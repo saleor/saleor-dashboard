@@ -1,9 +1,9 @@
-import { ExitFormDialogContext } from "@saleor/components/Form/ExitFormDialogProvider";
+import useExitFormDialog from "@saleor/components/Form/useExitFormDialog";
 import handleFormSubmit from "@saleor/utils/handlers/handleFormSubmit";
 import { toggle } from "@saleor/utils/lists";
 import isEqual from "lodash/isEqual";
 import omit from "lodash/omit";
-import React, { useContext, useEffect } from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 
 import useStateFromProps from "./useStateFromProps";
@@ -92,7 +92,7 @@ function useForm<T extends FormData, TErrors>(
     setIsDirty: setIsFormDirtyInExitDialog,
     setExitDialogSubmitRef,
     setEnableExitDialog
-  } = useContext(ExitFormDialogContext);
+  } = useExitFormDialog();
 
   const handleSetChanged = (value: boolean = true) => {
     setChanged(value);

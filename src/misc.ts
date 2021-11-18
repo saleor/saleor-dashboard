@@ -267,7 +267,7 @@ export const getMutationErrors = <
   TErrors extends TData[keyof TData]["errors"]
 >(
   result: T
-): TErrors => result.data?.errors;
+): TErrors => result.data?.errors || [];
 
 export function getMutationStatus<
   TData extends Record<string, SaleorMutationResult | any>
