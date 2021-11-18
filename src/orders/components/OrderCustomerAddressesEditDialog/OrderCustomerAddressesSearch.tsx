@@ -26,7 +26,10 @@ export interface OrderCustomerAddressesSearchProps {
   selectedCustomerAddressId?: string;
   isCustomerEdit: boolean;
   customerAddresses: CustomerAddresses_user_addresses[];
-  onChangeCustomerAddress: (
+  onChangeCustomerShippingAddress: (
+    customerAddress: CustomerAddresses_user_addresses
+  ) => void;
+  onChangeCustomerBillingAddress: (
     customerAddress: CustomerAddresses_user_addresses
   ) => void;
   exitSearch();
@@ -38,7 +41,8 @@ const OrderCustomerAddressesSearch: React.FC<OrderCustomerAddressesSearchProps> 
     selectedCustomerAddressId,
     isCustomerEdit,
     customerAddresses,
-    onChangeCustomerAddress,
+    onChangeCustomerShippingAddress,
+    onChangeCustomerBillingAddress,
     exitSearch
   } = props;
 
@@ -56,8 +60,11 @@ const OrderCustomerAddressesSearch: React.FC<OrderCustomerAddressesSearchProps> 
   ] = React.useState(initialAddress);
 
   const handleSelect = () => {
-    onChangeCustomerAddress(temporarySelectedAddress);
-
+    if (type === AddressTypeEnum.SHIPPING) {
+      onChangeCustomerShippingAddress(temporarySelectedAddress);
+    } else {
+      onChangeCustomerBillingAddress(temporarySelectedAddress);
+    }
     exitSearch();
   };
 

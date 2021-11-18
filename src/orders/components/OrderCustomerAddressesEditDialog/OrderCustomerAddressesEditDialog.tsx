@@ -34,7 +34,7 @@ import OrderCustomerAddressesEditForm, {
   AddressInputOptionEnum,
   OrderCustomerAddressesEditFormData
 } from "./form";
-import { addressSearchMessages, dialogMessages } from "./messages";
+import { dialogMessages } from "./messages";
 import OrderCustomerAddressEdit from "./OrderCustomerAddressEdit";
 import OrderCustomerAddressesSearch from "./OrderCustomerAddressesSearch";
 import { useStyles } from "./styles";
@@ -152,12 +152,21 @@ const OrderCustomerAddressesEditDialog: React.FC<OrderCustomerAddressesEditDialo
               <OrderCustomerAddressesSearch
                 type={addressSearchState?.type}
                 customerAddresses={customerAddresses}
-                // fix billing case
-                selectedCustomerAddressId={data.customerShippingAddress?.id}
-                onChangeCustomerAddress={customerAddress =>
+                selectedCustomerAddressId={
+                  addressSearchState.type === AddressTypeEnum.SHIPPING
+                    ? data.customerShippingAddress?.id
+                    : data.customerBillingAddress?.id
+                }
+                onChangeCustomerShippingAddress={customerAddress =>
                   handlers.changeCustomerAddress(
                     customerAddress,
                     "customerShippingAddress"
+                  )
+                }
+                onChangeCustomerBillingAddress={customerAddress =>
+                  handlers.changeCustomerAddress(
+                    customerAddress,
+                    "customerBillingAddress"
                   )
                 }
                 exitSearch={() => setAddressSearchState({ open: false })}
@@ -279,6 +288,12 @@ const OrderCustomerAddressesEditDialog: React.FC<OrderCustomerAddressesEditDialo
                         }
                         onChangeFormAddressCountry={
                           handlers.selectBillingCountry
+                        }
+                        onEdit={() =>
+                          setAddressSearchState({
+                            open: true,
+                            type: AddressTypeEnum.BILLING
+                          })
                         }
                       />
                     </>
