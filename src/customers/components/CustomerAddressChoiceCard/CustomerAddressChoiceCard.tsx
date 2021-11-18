@@ -1,12 +1,12 @@
 import { Button, Card, CardContent, Typography } from "@material-ui/core";
 import AddressFormatter from "@saleor/components/AddressFormatter";
+import { commonMessages } from "@saleor/intl";
 import { EditIcon } from "@saleor/macaw-ui";
 import classNames from "classnames";
 import React from "react";
 import { useIntl } from "react-intl";
 
 import { CustomerAddresses_user_addresses } from "../../types/CustomerAddresses";
-import { addressChoiceCardMessages as messages } from "./messages";
 import { useStyles } from "./styles";
 
 export interface CustomerAddressChoiceCardProps {
@@ -40,7 +40,7 @@ const CustomerAddressChoiceCard: React.FC<CustomerAddressChoiceCardProps> = prop
         )}
         {selected && (
           <Typography color="primary" className={classes.selectedLabel}>
-            {intl.formatMessage(messages.selectedLabel)}
+            {intl.formatMessage(commonMessages.selected)}
           </Typography>
         )}
       </CardContent>

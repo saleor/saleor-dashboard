@@ -52,16 +52,8 @@ export const addressSearchMessages = defineMessages({
   searchInfo: {
     defaultMessage: "Select an address you want to use from the list below",
     description: "modal information under title"
-  }
-});
-
-export const choiceCardMessages = defineMessages({
-  editLabel: {
-    defaultMessage: "Edit",
-    description: "Edit label"
   },
-  selectedLabel: {
-    defaultMessage: "Selected",
-    description: "Selected label"
+  noResultsFound: {
+    defaultMessage: "No results found"
   }
 });

@@ -100,16 +100,18 @@ const OrderCustomerAddressesSearch: React.FC<OrderCustomerAddressesSearchProps> 
         />
         <CardSpacer />
         <div className={classes.scrollableWrapper}>
-          {filteredCustomerAddresses?.map(address => (
-            <React.Fragment key={address.id}>
-              <CustomerAddressChoiceCard
-                selected={address.id === temporarySelectedAddress.id}
-                onSelect={() => setTemporarySelectedAddress(address)}
-                address={address}
-              />
-              <CardSpacer />
-            </React.Fragment>
-          ))}
+          {filteredCustomerAddresses.length === 0
+            ? intl.formatMessage(messages.noResultsFound)
+            : filteredCustomerAddresses?.map(address => (
+                <React.Fragment key={address.id}>
+                  <CustomerAddressChoiceCard
+                    selected={address.id === temporarySelectedAddress.id}
+                    onSelect={() => setTemporarySelectedAddress(address)}
+                    address={address}
+                  />
+                  <CardSpacer />
+                </React.Fragment>
+              ))}
         </div>
       </DialogContent>
       <DialogActions>
