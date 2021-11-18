@@ -46,7 +46,7 @@ export const addressSearchMessages = defineMessages({
     description: "search modal shipping title"
   },
   billingTitle: {
-    defaultMessage: "Blling address",
+    defaultMessage: "Billing address",
     description: "search modal billing title"
   },
   searchInfo: {
