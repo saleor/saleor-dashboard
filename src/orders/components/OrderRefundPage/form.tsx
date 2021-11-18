@@ -1,4 +1,4 @@
-import { ExitFormDialogContext } from "@saleor/components/Form/ExitFormDialogProvider";
+import useExitFormDialog from "@saleor/components/Form/useExitFormDialog";
 import useForm, {
   CommonUseFormResultWithHandlers,
   SubmitPromise
@@ -9,7 +9,7 @@ import useFormset, {
 } from "@saleor/hooks/useFormset";
 import { OrderRefundData_order } from "@saleor/orders/types/OrderRefundData";
 import handleFormSubmit from "@saleor/utils/handlers/handleFormSubmit";
-import React, { useContext, useEffect } from "react";
+import React, { useEffect } from "react";
 
 import { refundFulfilledStatuses } from "./OrderRefundPage";
 
@@ -85,9 +85,7 @@ function useOrderRefundForm(
     confirmLeave: true
   });
 
-  const { setExitDialogSubmitRef, setEnableExitDialog } = useContext(
-    ExitFormDialogContext
-  );
+  const { setExitDialogSubmitRef, setEnableExitDialog } = useExitFormDialog();
 
   const refundedProductQuantities = useFormset<null, string>(
     order?.lines

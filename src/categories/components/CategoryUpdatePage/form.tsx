@@ -1,6 +1,6 @@
 import { OutputData } from "@editorjs/editorjs";
 import { CategoryDetails_category } from "@saleor/categories/types/CategoryDetails";
-import { ExitFormDialogContext } from "@saleor/components/Form/ExitFormDialogProvider";
+import useExitFormDialog from "@saleor/components/Form/useExitFormDialog";
 import { MetadataFormData } from "@saleor/components/Metadata";
 import { RichTextEditorChange } from "@saleor/components/RichTextEditor";
 import useForm, {
@@ -12,7 +12,7 @@ import { mapMetadataItemToInput } from "@saleor/utils/maps";
 import getMetadata from "@saleor/utils/metadata/getMetadata";
 import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
 import useRichText from "@saleor/utils/richText/useRichText";
-import React, { useContext, useEffect } from "react";
+import React, { useEffect } from "react";
 
 export interface CategoryUpdateFormData extends MetadataFormData {
   backgroundImageAlt: string;
@@ -62,9 +62,7 @@ function useCategoryUpdateForm(
     setChanged
   } = useForm(getInitialData(category), undefined, { confirmLeave: true });
 
-  const { setExitDialogSubmitRef, setEnableExitDialog } = useContext(
-    ExitFormDialogContext
-  );
+  const { setExitDialogSubmitRef, setEnableExitDialog } = useExitFormDialog();
 
   const [description, changeDescription] = useRichText({
     initial: category?.description,

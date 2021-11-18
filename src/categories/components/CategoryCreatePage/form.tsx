@@ -1,5 +1,5 @@
 import { OutputData } from "@editorjs/editorjs";
-import { ExitFormDialogContext } from "@saleor/components/Form/ExitFormDialogProvider";
+import useExitFormDialog from "@saleor/components/Form/useExitFormDialog";
 import { MetadataFormData } from "@saleor/components/Metadata";
 import { RichTextEditorChange } from "@saleor/components/RichTextEditor";
 import useForm, {
@@ -9,7 +9,7 @@ import useForm, {
 import handleFormSubmit from "@saleor/utils/handlers/handleFormSubmit";
 import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
 import useRichText from "@saleor/utils/richText/useRichText";
-import React, { useContext, useEffect } from "react";
+import React, { useEffect } from "react";
 
 export interface CategoryCreateFormData extends MetadataFormData {
   name: string;
@@ -55,9 +55,7 @@ function useCategoryCreateForm(
     setChanged
   } = useForm(initialData, undefined, { confirmLeave: true });
 
-  const { setExitDialogSubmitRef, setEnableExitDialog } = useContext(
-    ExitFormDialogContext
-  );
+  const { setExitDialogSubmitRef, setEnableExitDialog } = useExitFormDialog();
 
   const [description, changeDescription] = useRichText({
     initial: null,

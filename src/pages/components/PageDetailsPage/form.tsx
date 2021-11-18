@@ -10,7 +10,7 @@ import {
   createFetchReferencesHandler
 } from "@saleor/attributes/utils/handlers";
 import { AttributeInput } from "@saleor/components/Attributes";
-import { ExitFormDialogContext } from "@saleor/components/Form/ExitFormDialogProvider";
+import useExitFormDialog from "@saleor/components/Form/useExitFormDialog";
 import { MetadataFormData } from "@saleor/components/Metadata";
 import { RichTextEditorChange } from "@saleor/components/RichTextEditor";
 import useForm, {
@@ -42,7 +42,7 @@ import { mapMetadataItemToInput } from "@saleor/utils/maps";
 import getMetadata from "@saleor/utils/metadata/getMetadata";
 import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
 import useRichText from "@saleor/utils/richText/useRichText";
-import React, { useContext, useEffect } from "react";
+import React, { useEffect } from "react";
 
 export interface PageFormData extends MetadataFormData {
   isPublished: boolean;
@@ -118,9 +118,7 @@ function usePageForm(
   onSubmit: (data: PageData) => SubmitPromise,
   opts: UsePageFormOpts
 ): UsePageUpdateFormResult {
-  const { setExitDialogSubmitRef, setEnableExitDialog } = useContext(
-    ExitFormDialogContext
-  );
+  const { setExitDialogSubmitRef, setEnableExitDialog } = useExitFormDialog();
 
   const pageExists = page !== null;
 

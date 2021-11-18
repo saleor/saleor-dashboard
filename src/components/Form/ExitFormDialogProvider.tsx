@@ -21,6 +21,8 @@ interface FormData {
   submitFn: SubmitFn | null;
 }
 
+// Do not use this context directly in components
+// use useExitFormDialog hook instead
 export const ExitFormDialogContext = React.createContext<ExitFormDialogData>({
   setIsDirty: () => undefined,
   setEnableExitDialog: () => undefined,
@@ -149,6 +151,7 @@ const ExitFormDialogProvider = ({ children }) => {
     getFormsDataValuesArray().some(({ submitFn }) => !!submitFn);
 
   const handleSubmit = async () => {
+    console.log(111, getDirtyFormsSubmitFn());
     if (!hasAnySubmitFn()) {
       return;
     }

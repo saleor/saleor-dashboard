@@ -2,7 +2,7 @@ import { OutputData } from "@editorjs/editorjs";
 import { ChannelCollectionData } from "@saleor/channels/utils";
 import { CollectionDetails_collection } from "@saleor/collections/types/CollectionDetails";
 import { createChannelsChangeHandler } from "@saleor/collections/utils";
-import { ExitFormDialogContext } from "@saleor/components/Form/ExitFormDialogProvider";
+import useExitFormDialog from "@saleor/components/Form/useExitFormDialog";
 import { MetadataFormData } from "@saleor/components/Metadata";
 import { RichTextEditorChange } from "@saleor/components/RichTextEditor";
 import useForm, {
@@ -14,7 +14,7 @@ import { mapMetadataItemToInput } from "@saleor/utils/maps";
 import getMetadata from "@saleor/utils/metadata/getMetadata";
 import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
 import useRichText from "@saleor/utils/richText/useRichText";
-import React, { useContext, useEffect } from "react";
+import React, { useEffect } from "react";
 
 export interface CollectionUpdateFormData extends MetadataFormData {
   backgroundImageAlt: string;
@@ -77,9 +77,7 @@ function useCollectionUpdateForm(
     hasChanged
   } = useForm(getInitialData(collection, currentChannels));
 
-  const { setExitDialogSubmitRef, setEnableExitDialog } = useContext(
-    ExitFormDialogContext
-  );
+  const { setExitDialogSubmitRef, setEnableExitDialog } = useExitFormDialog();
 
   const [description, changeDescription] = useRichText({
     initial: collection?.description,

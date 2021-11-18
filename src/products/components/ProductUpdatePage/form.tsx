@@ -15,7 +15,7 @@ import {
   ChannelPriceArgs
 } from "@saleor/channels/utils";
 import { AttributeInput } from "@saleor/components/Attributes";
-import { ExitFormDialogContext } from "@saleor/components/Form/ExitFormDialogProvider";
+import useExitFormDialog from "@saleor/components/Form/useExitFormDialog";
 import { MetadataFormData } from "@saleor/components/Metadata";
 import { MultiAutocompleteChoiceType } from "@saleor/components/MultiAutocompleteSelectField";
 import { RichTextEditorChange } from "@saleor/components/RichTextEditor";
@@ -23,6 +23,7 @@ import { SingleAutocompleteChoiceType } from "@saleor/components/SingleAutocompl
 import useForm, {
   CommonUseFormResultWithHandlers,
   FormChange,
+  FormErrors,
   SubmitPromise
 } from "@saleor/hooks/useForm";
 import useFormset, {
@@ -59,7 +60,7 @@ import createSingleAutocompleteSelectHandler from "@saleor/utils/handlers/single
 import getMetadata from "@saleor/utils/metadata/getMetadata";
 import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
 import useRichText from "@saleor/utils/richText/useRichText";
-import React, { useContext, useEffect } from "react";
+import React, { useEffect } from "react";
 import { useIntl } from "react-intl";
 
 import { ProductStockFormsetData, ProductStockInput } from "../ProductStocks";
@@ -251,9 +252,7 @@ function useProductUpdateForm(
     triggerChange
   });
 
-  const { setExitDialogSubmitRef, setEnableExitDialog } = useContext(
-    ExitFormDialogContext
-  );
+  const { setExitDialogSubmitRef, setEnableExitDialog } = useExitFormDialog();
 
   const {
     isMetadataModified,

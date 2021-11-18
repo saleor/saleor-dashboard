@@ -1,4 +1,4 @@
-import { ExitFormDialogContext } from "@saleor/components/Form/ExitFormDialogProvider";
+import useExitFormDialog from "@saleor/components/Form/useExitFormDialog";
 import { SingleAutocompleteChoiceType } from "@saleor/components/SingleAutocompleteSelectField";
 import { AddressTypeInput } from "@saleor/customers/types";
 import {
@@ -13,7 +13,7 @@ import useForm, {
 } from "@saleor/hooks/useForm";
 import handleFormSubmit from "@saleor/utils/handlers/handleFormSubmit";
 import createSingleAutocompleteSelectHandler from "@saleor/utils/handlers/singleAutocompleteSelectChangeHandler";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 
 export enum AddressInputOptionEnum {
   CUSTOMER_ADDRESS = "customerAddress",
@@ -106,9 +106,7 @@ function useOrderCustomerAddressesEditForm(
     ...getDefaultInitialFormData(opts)
   });
 
-  const { setExitDialogSubmitRef, setEnableExitDialog } = useContext(
-    ExitFormDialogContext
-  );
+  const { setExitDialogSubmitRef, setEnableExitDialog } = useExitFormDialog();
 
   const [shippingCountryDisplayName, setShippingCountryDisplayName] = useState(
     ""

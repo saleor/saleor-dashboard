@@ -14,7 +14,7 @@ import {
   AttributeInput,
   AttributeInputData
 } from "@saleor/components/Attributes";
-import { ExitFormDialogContext } from "@saleor/components/Form/ExitFormDialogProvider";
+import useExitFormDialog from "@saleor/components/Form/useExitFormDialog";
 import { MetadataFormData } from "@saleor/components/Metadata";
 import { MultiAutocompleteChoiceType } from "@saleor/components/MultiAutocompleteSelectField";
 import { RichTextEditorChange } from "@saleor/components/RichTextEditor";
@@ -53,7 +53,7 @@ import createMultiAutocompleteSelectHandler from "@saleor/utils/handlers/multiAu
 import createSingleAutocompleteSelectHandler from "@saleor/utils/handlers/singleAutocompleteSelectChangeHandler";
 import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
 import useRichText from "@saleor/utils/richText/useRichText";
-import React, { useContext, useEffect } from "react";
+import React, { useEffect } from "react";
 import { useIntl } from "react-intl";
 
 import { createPreorderEndDateChangeHandler } from "../../utils/handlers";
@@ -223,9 +223,7 @@ function useProductCreateForm(
     triggerChange
   });
 
-  const { setExitDialogSubmitRef, setEnableExitDialog } = useContext(
-    ExitFormDialogContext
-  );
+  const { setExitDialogSubmitRef, setEnableExitDialog } = useExitFormDialog();
 
   const {
     makeChangeHandler: makeMetadataChangeHandler
