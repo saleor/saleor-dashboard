@@ -2,11 +2,11 @@ import { defineMessages } from "react-intl";
 
 export const dialogMessages = defineMessages({
   title: {
-    defaultMessage: "Shipping address for order",
+    defaultMessage: "Change address for order",
     description: "dialog header"
   },
   billingSameAsShipping: {
-    defaultMessage: "Billing address same as shipping address",
+    defaultMessage: "Set the same for billing address",
     description: "checkbox label"
   },
   shippingAddressDescription: {

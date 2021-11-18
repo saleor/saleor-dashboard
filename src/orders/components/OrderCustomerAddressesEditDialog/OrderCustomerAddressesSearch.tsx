@@ -7,10 +7,11 @@ import {
   TextField
 } from "@material-ui/core";
 import CardSpacer from "@saleor/components/CardSpacer";
+import { ConfirmButton } from "@saleor/components/ConfirmButton";
 import CustomerAddressChoiceCard from "@saleor/customers/components/CustomerAddressChoiceCard";
 import { CustomerAddresses_user_addresses } from "@saleor/customers/types/CustomerAddresses";
+import { buttonMessages } from "@saleor/intl";
 import { SearchIcon } from "@saleor/macaw-ui";
-import { ConfirmButton } from "@saleor/macaw-ui";
 import { AddressTypeEnum } from "@saleor/types/globalTypes";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -113,14 +114,16 @@ const OrderCustomerAddressesSearch: React.FC<OrderCustomerAddressesSearchProps> 
       </DialogContent>
       <DialogActions>
         <Button onClick={() => exitSearch()} color="primary">
-          Cancel
+          <FormattedMessage {...buttonMessages.cancel} />
         </Button>
         <ConfirmButton
           variant="contained"
+          color="primary"
           transitionState="default"
-          labels={{ confirm: "Select", error: "error" }}
           onClick={handleSelect}
-        />
+        >
+          <FormattedMessage {...buttonMessages.select} />
+        </ConfirmButton>
       </DialogActions>
     </>
   );

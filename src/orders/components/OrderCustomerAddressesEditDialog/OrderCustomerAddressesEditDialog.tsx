@@ -292,7 +292,7 @@ const OrderCustomerAddressesEditDialog: React.FC<OrderCustomerAddressesEditDialo
                     type="submit"
                     data-test="submit"
                   >
-                    <FormattedMessage {...buttonMessages.select} />
+                    <FormattedMessage {...buttonMessages.save} />
                   </ConfirmButton>
                 </DialogActions>
               </>
