@@ -35,6 +35,11 @@ export const useStyles = makeStyles(
       maxHeight: 400,
       overflowY: "scroll",
       overflowX: "hidden",
+      // overflowX can't be "visible" when overflowY is "scroll"
+      // workaround for visible button ripples:
+      marginLeft: -15,
+      paddingLeft: 15,
+
       marginBottom: theme.spacing(3)
     },
     text: {
