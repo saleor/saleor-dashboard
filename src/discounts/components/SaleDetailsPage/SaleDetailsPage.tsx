@@ -13,7 +13,6 @@ import { createSaleChannelsChangeHandler } from "@saleor/discounts/handlers";
 import { DiscountErrorFragment } from "@saleor/fragments/types/DiscountErrorFragment";
 import { sectionNames } from "@saleor/intl";
 import { Backlink } from "@saleor/macaw-ui";
-import { validatePrice } from "@saleor/products/utils/validation";
 import { mapEdgesToItems } from "@saleor/utils/maps";
 import { mapMetadataItemToInput } from "@saleor/utils/maps";
 import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
