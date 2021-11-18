@@ -1,4 +1,4 @@
-import { ExitFormDialogContext } from "@saleor/components/Form/ExitFormDialogProvider";
+import useExitFormDialog from "@saleor/components/Form/useExitFormDialog";
 import useForm, {
   CommonUseFormResultWithHandlers,
   SubmitPromise
@@ -10,7 +10,7 @@ import useFormset, {
 import { OrderDetails_order } from "@saleor/orders/types/OrderDetails";
 import { FulfillmentStatus } from "@saleor/types/globalTypes";
 import handleFormSubmit from "@saleor/utils/handlers/handleFormSubmit";
-import React, { useContext, useEffect } from "react";
+import React, { useEffect } from "react";
 
 import { OrderRefundAmountCalculationMode } from "../OrderRefundPage/form";
 import {
@@ -90,9 +90,7 @@ function useOrderReturnForm(
     confirmLeave: true
   });
 
-  const { setExitDialogSubmitRef, setEnableExitDialog } = useContext(
-    ExitFormDialogContext
-  );
+  const { setExitDialogSubmitRef, setEnableExitDialog } = useExitFormDialog();
 
   const unfulfiledItemsQuantites = useFormset<LineItemData, number>(
     getOrderUnfulfilledLines(order).map(getParsedLineData({ initialValue: 0 }))

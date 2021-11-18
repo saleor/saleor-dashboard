@@ -13,7 +13,7 @@ import {
   IChannelPriceAndPreorderArgs
 } from "@saleor/channels/utils";
 import { AttributeInput } from "@saleor/components/Attributes";
-import { ExitFormDialogContext } from "@saleor/components/Form/ExitFormDialogProvider";
+import useExitFormDialog from "@saleor/components/Form/useExitFormDialog";
 import { MetadataFormData } from "@saleor/components/Metadata";
 import { ProductVariant } from "@saleor/fragments/types/ProductVariant";
 import useForm, {
@@ -47,8 +47,7 @@ import { arrayDiff } from "@saleor/utils/arrays";
 import { mapMetadataItemToInput } from "@saleor/utils/maps";
 import getMetadata from "@saleor/utils/metadata/getMetadata";
 import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
-import { diff } from "fast-array-diff";
-import React, { useContext, useEffect } from "react";
+import React, { useEffect } from "react";
 import { useIntl } from "react-intl";
 
 import handleFormSubmit from "../../../utils/handlers/handleFormSubmit";
@@ -155,9 +154,7 @@ function useProductVariantUpdateForm(
 
   const channelsInput = getChannelsInput(currentChannelsWithPreorderInfo);
 
-  const { setExitDialogSubmitRef, setEnableExitDialog } = useContext(
-    ExitFormDialogContext
-  );
+  const { setExitDialogSubmitRef, setEnableExitDialog } = useExitFormDialog();
 
   const initial: ProductVariantUpdateFormData = {
     metadata: variant?.metadata?.map(mapMetadataItemToInput),
