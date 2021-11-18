@@ -21,6 +21,13 @@ export const useStyles = makeStyles(
       lineHeight: "1.75",
       fontWeight: 600,
       textTransform: "uppercase"
+    },
+    editIcon: {
+      color: theme.palette.grey[600],
+      "&:hover": {
+        color: theme.palette.primary.light,
+        cursor: "pointer"
+      }
     }
   }),
   { name: "CustomerAddressChoiceCard" }

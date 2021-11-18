@@ -1,5 +1,6 @@
 import { Button, Card, CardContent, Typography } from "@material-ui/core";
 import AddressFormatter from "@saleor/components/AddressFormatter";
+import { EditIcon } from "@saleor/macaw-ui";
 import classNames from "classnames";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -29,9 +30,9 @@ const CustomerAddressChoiceCard: React.FC<CustomerAddressChoiceCardProps> = prop
       <CardContent className={classes.cardContent}>
         <AddressFormatter address={address} />
         {editable && (
-          <Button color="primary" onClick={onEdit}>
-            {intl.formatMessage(messages.editLabel)}
-          </Button>
+          <div onClick={onEdit}>
+            <EditIcon className={classes.editIcon} />
+          </div>
         )}
         {selected && (
           <Typography color="primary" className={classes.selectedLabel}>
