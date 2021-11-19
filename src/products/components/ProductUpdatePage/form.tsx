@@ -241,7 +241,8 @@ function useProductUpdateForm(
     toggleValue,
     data: formData,
     setChanged,
-    hasChanged
+    hasChanged,
+    formId
   } = form;
 
   const attributes = useFormset(getAttributeInputFromProduct(product));
@@ -252,7 +253,9 @@ function useProductUpdateForm(
     triggerChange
   });
 
-  const { setExitDialogSubmitRef, setEnableExitDialog } = useExitFormDialog();
+  const { setExitDialogSubmitRef, setEnableExitDialog } = useExitFormDialog({
+    formId
+  });
 
   const {
     isMetadataModified,
