@@ -99,6 +99,9 @@ export const commonMessages = defineMessages({
   status: {
     defaultMessage: "Status"
   },
+  paymentStatus: {
+    defaultMessage: "Payment status"
+  },
   summary: {
     defaultMessage: "Summary"
   },
