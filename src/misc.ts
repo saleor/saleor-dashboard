@@ -68,7 +68,14 @@ export function weight(value: string) {
 export const removeDoubleSlashes = (url: string) =>
   url.replace(/([^:]\/)\/+/g, "$1");
 
-const paymentStatusMessages = defineMessages({
+export const commonStatusMessages = defineMessages({
+  cancelled: {
+    defaultMessage: "Cancelled",
+    description: "payment status"
+  }
+});
+
+export const paymentStatusMessages = defineMessages({
   paid: {
     defaultMessage: "Fully paid",
     description: "payment status"
@@ -88,6 +95,14 @@ const paymentStatusMessages = defineMessages({
   unpaid: {
     defaultMessage: "Unpaid",
     description: "payment status"
+  },
+  pending: {
+    defaultMessage: "Pending",
+    description: "payment status"
+  },
+  refused: {
+    defaultMessage: "Refused",
+    description: "payment status"
   }
 });
 
@@ -99,36 +114,51 @@ export const transformPaymentStatus = (
     case PaymentChargeStatusEnum.PARTIALLY_CHARGED:
       return {
         localized: intl.formatMessage(paymentStatusMessages.partiallyPaid),
-        status: "error"
+        status: StatusType.ERROR
       };
     case PaymentChargeStatusEnum.FULLY_CHARGED:
       return {
         localized: intl.formatMessage(paymentStatusMessages.paid),
-        status: "success"
+        status: StatusType.SUCCESS
       };
     case PaymentChargeStatusEnum.PARTIALLY_REFUNDED:
       return {
         localized: intl.formatMessage(paymentStatusMessages.partiallyRefunded),
-        status: "error"
+        status: StatusType.ERROR
       };
     case PaymentChargeStatusEnum.FULLY_REFUNDED:
       return {
         localized: intl.formatMessage(paymentStatusMessages.refunded),
-        status: "success"
+        status: StatusType.SUCCESS
       };
-    default:
+    case PaymentChargeStatusEnum.PENDING:
+      return {
+        localized: intl.formatMessage(paymentStatusMessages.pending),
+        status: StatusType.NEUTRAL
+      };
+    case PaymentChargeStatusEnum.REFUSED:
+      return {
+        localized: intl.formatMessage(paymentStatusMessages.refused),
+        status: StatusType.ERROR
+      };
+    case PaymentChargeStatusEnum.CANCELLED:
+      return {
+        localized: intl.formatMessage(commonStatusMessages.cancelled),
+        status: StatusType.ERROR
+      };
+    case PaymentChargeStatusEnum.NOT_CHARGED:
       return {
         localized: intl.formatMessage(paymentStatusMessages.unpaid),
-        status: "error"
+        status: StatusType.ERROR
       };
   }
+  return {
+    localized: status,
+    status: StatusType.ERROR
+  };
 };
 
 export const orderStatusMessages = defineMessages({
-  cancelled: {
-    defaultMessage: "Cancelled",
-    description: "order status"
-  },
   draft: {
     defaultMessage: "Draft",
     description: "order status"
@@ -189,7 +219,7 @@ export const transformOrderStatus = (
       };
     case OrderStatus.CANCELED:
       return {
-        localized: intl.formatMessage(orderStatusMessages.cancelled),
+        localized: intl.formatMessage(commonStatusMessages.cancelled),
         status: StatusType.ERROR
       };
     case OrderStatus.DRAFT:
