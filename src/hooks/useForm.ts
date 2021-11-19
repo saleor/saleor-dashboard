@@ -1,4 +1,6 @@
-import useExitFormDialog from "@saleor/components/Form/useExitFormDialog";
+import useExitFormDialog, {
+  UseExitFormDialogResult
+} from "@saleor/components/Form/useExitFormDialog";
 import handleFormSubmit from "@saleor/utils/handlers/handleFormSubmit";
 import { toggle } from "@saleor/utils/lists";
 import isEqual from "lodash/isEqual";
@@ -26,7 +28,9 @@ export interface UseFormOpts {
   confirmLeave: boolean;
 }
 
-export interface UseFormResult<TData> extends CommonUseFormResult<TData> {
+export interface UseFormResult<TData>
+  extends CommonUseFormResult<TData>,
+    Pick<UseExitFormDialogResult, "formId"> {
   reset: () => void;
   set: (data: Partial<TData>) => void;
   triggerChange: () => void;
@@ -91,7 +95,8 @@ function useForm<T extends FormData, TErrors>(
   const {
     setIsDirty: setIsFormDirtyInExitDialog,
     setExitDialogSubmitRef,
-    setEnableExitDialog
+    setEnableExitDialog,
+    formId
   } = useExitFormDialog();
 
   const handleSetChanged = (value: boolean = true) => {
@@ -195,6 +200,7 @@ function useForm<T extends FormData, TErrors>(
   };
 
   return {
+    formId,
     setError,
     errors,
     change,

@@ -1,4 +1,5 @@
 import { SubmitPromise } from "@saleor/hooks/useForm";
+import flatten from "lodash-es/flatten";
 import React, { useEffect, useRef, useState } from "react";
 import { useHistory } from "react-router";
 import useRouter from "use-react-router";
@@ -151,19 +152,23 @@ const ExitFormDialogProvider = ({ children }) => {
     getFormsDataValuesArray().some(({ submitFn }) => !!submitFn);
 
   const handleSubmit = async () => {
-    console.log(111, getDirtyFormsSubmitFn());
+    // console.log(
+    //   555,
+    //   getDirtyFormsSubmitFn().map(submitFn => submitFn())
+    // );
     if (!hasAnySubmitFn()) {
       return;
     }
 
     setShowDialog(false);
 
-    const response = await Promise.all(
+    const errors = await Promise.all(
       getDirtyFormsSubmitFn().map(submitFn => submitFn())
     );
 
-    const isError = response.some(result => !result);
+    const isError = flatten(errors).some(errors => errors);
 
+    // console.log({ errors: flatten(errors), isError });
     if (!isError) {
       continueNavigation();
     }

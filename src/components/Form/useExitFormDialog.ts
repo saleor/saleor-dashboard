@@ -13,10 +13,17 @@ export interface UseExitFormDialogResult
   > {
   setIsDirty: (isDirty: boolean) => void;
   setExitDialogSubmitRef: (submitFn: SubmitFn) => void;
+  formId: symbol;
 }
 
-const useExitFormDialog = (): UseExitFormDialogResult => {
-  const id = useRef(Symbol()).current;
+export interface UseExitFormDialogProps {
+  formId: symbol;
+}
+
+const useExitFormDialog = (
+  { formId }: UseExitFormDialogProps = { formId: null }
+): UseExitFormDialogResult => {
+  const id = useRef(formId || Symbol()).current;
 
   const { setIsDirty, setExitDialogSubmitRef, ...rest } = useContext(
     ExitFormDialogContext
@@ -24,6 +31,7 @@ const useExitFormDialog = (): UseExitFormDialogResult => {
 
   return {
     ...rest,
+    formId: id,
     setIsDirty: (value: boolean) => setIsDirty(id, value),
     setExitDialogSubmitRef: (submitFn: SubmitFn) =>
       setExitDialogSubmitRef(id, submitFn)

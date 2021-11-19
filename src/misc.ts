@@ -256,7 +256,10 @@ export const extractMutationErrors = async <
 ): Promise<any[]> /* Promise<TErrors> */ => {
   const result = await submitPromise;
 
+  console.log(555, { result });
   const e = getMutationErrors(result);
+
+  console.log(666, { result, e });
   // @ts-ignore
   return e;
 };
@@ -267,7 +270,17 @@ export const getMutationErrors = <
   TErrors extends TData[keyof TData]["errors"]
 >(
   result: T
-): TErrors => result.data?.errors || [];
+): TErrors => {
+  if (!result?.data) {
+    // @ts-ignore
+    return [] as TError[];
+  }
+  // @ts-ignore
+  return Object.values(result.data).reduce(
+    (acc: TErrors[], mut: TData) => [...acc, ...(mut.errors || [])],
+    [] as TErrors[]
+  );
+};
 
 export function getMutationStatus<
   TData extends Record<string, SaleorMutationResult | any>
