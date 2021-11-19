@@ -60,7 +60,7 @@ export const giftCardCreateMessages = defineMessages({
     description: "gift card bulk create modal bottom explanation"
   },
   bulkCreateIssuedTitle: {
-    defaultMessage: "Bulk Issue Gift cards",
+    defaultMessage: "Bulk Issue Gift Cards",
     description: "gift card bulk create success dialog title"
   },
   bulkCreateIssuedExplanation: {
