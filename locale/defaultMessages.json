@@ -6143,6 +6143,10 @@
     "context": "product is hidden",
     "string": "Hidden"
   },
+  "src_dot_products_dot_components_dot_ProductListPage_dot_kind": {
+    "context": "product kind",
+    "string": "Product Kind"
+  },
   "src_dot_products_dot_components_dot_ProductListPage_dot_outOfStock": {
     "context": "product status",
     "string": "Out Of Stock"
