@@ -79,6 +79,7 @@ import {
   saveFilterTab
 } from "./filters";
 import { canBeSorted, DEFAULT_SORT_KEY, getSortQueryVariables } from "./sort";
+import { getAvailableProductKinds, getProductKindOpts } from "./utils";
 
 interface ProductListProps {
   params: ProductListUrlQueryParams;
@@ -165,6 +166,7 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
     },
     skip: params.action !== "export"
   });
+  const availableProductKinds = getAvailableProductKinds();
   const { availableChannels } = useAppChannel(false);
   const limitOpts = useShopLimitsQuery({
     variables: {
@@ -280,6 +282,7 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
       })
     );
 
+  const kindOpts = getProductKindOpts(availableProductKinds);
   const paginationState = createPaginationState(settings.rowNumber, params);
   const channelOpts = availableChannels
     ? mapNodeToChoice(availableChannels, channel => channel.slug)
@@ -347,6 +350,7 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
       initial: mapEdgesToItems(initialFilterProductTypes?.productTypes) || [],
       search: searchProductTypes
     },
+    kindOpts,
     channelOpts
   );
 
