@@ -57,6 +57,7 @@ import {
   ProductListUrlFiltersWithMultipleValues,
   ProductListUrlQueryParams
 } from "../../urls";
+import { getProductGiftCardFilterParam } from "./utils";
 export const PRODUCT_FILTERS_KEY = "productFilters";
 
 export function getFilterOpts(
@@ -320,10 +321,7 @@ export function getFilterVariables(
     productTypes:
       params.productTypes !== undefined ? params.productTypes : null,
     search: params.query,
-    giftCard:
-      params.productKind !== undefined
-        ? params.productKind === ProductTypeKindEnum.GIFT_CARD
-        : null,
+    giftCard: getProductGiftCardFilterParam(params.productKind),
     stockAvailability:
       params.stockStatus !== undefined
         ? findValueInEnum(params.stockStatus, StockAvailability)

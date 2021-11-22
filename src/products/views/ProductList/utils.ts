@@ -1,3 +1,4 @@
+import { findInEnum, isInEnum } from "@saleor/misc";
 import { ProductTypeKindEnum } from "@saleor/types/globalTypes";
 
 interface ProductKindChoice {
@@ -28,3 +29,14 @@ export const getProductKindOpts = (
         };
     }
   });
+
+export const getProductGiftCardFilterParam = (productKind?: string) => {
+  if (
+    productKind === undefined ||
+    !isInEnum(productKind, ProductTypeKindEnum)
+  ) {
+    return null;
+  }
+
+  return productKind === ProductTypeKindEnum.GIFT_CARD;
+};
