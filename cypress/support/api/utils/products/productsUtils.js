@@ -116,6 +116,7 @@ export function deleteProductsAndCreateNewOneWithNewDataAndDefaultChannel({
   name,
   description = name,
   warehouseId,
+  sku = name,
   productPrice = 10
 }) {
   let defaultChannel;
@@ -144,6 +145,7 @@ export function deleteProductsAndCreateNewOneWithNewDataAndDefaultChannel({
         collectionId: collection.id,
         description,
         warehouseId,
+        sku,
         price: productPrice
       });
     })
@@ -152,6 +154,7 @@ export function deleteProductsAndCreateNewOneWithNewDataAndDefaultChannel({
 
 export function createProductWithShipping({
   name,
+  sku = name,
   productPrice = 10,
   shippingPrice = 10
 }) {
@@ -188,6 +191,7 @@ export function createProductWithShipping({
         deleteProductsAndCreateNewOneWithNewDataAndDefaultChannel({
           name,
           warehouseId: warehouse.id,
+          sku,
           productPrice
         });
       }
