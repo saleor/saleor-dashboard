@@ -36,7 +36,6 @@ import moment from "moment-timezone";
 import { IFilterElement } from "../../../components/Filter";
 import {
   ProductFilterInput,
-  ProductTypeKindEnum,
   StockAvailability
 } from "../../../types/globalTypes";
 import {

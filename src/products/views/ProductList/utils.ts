@@ -1,4 +1,4 @@
-import { findInEnum, isInEnum } from "@saleor/misc";
+import { isInEnum } from "@saleor/misc";
 import { ProductTypeKindEnum } from "@saleor/types/globalTypes";
 
 interface ProductKindChoice {
