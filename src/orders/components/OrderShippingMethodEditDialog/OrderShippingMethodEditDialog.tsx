@@ -4,7 +4,8 @@ import {
   DialogActions,
   DialogContent,
   DialogContentText,
-  DialogTitle
+  DialogTitle,
+  Typography
 } from "@material-ui/core";
 import ConfirmButton, {
   ConfirmButtonTransitionState
@@ -22,7 +23,7 @@ import getOrderErrorMessage from "@saleor/utils/errors/order";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { OrderDetails_order_availableShippingMethods } from "../../types/OrderDetails";
+import { OrderDetails_order_shippingMethods } from "../../types/OrderDetails";
 
 export interface FormData {
   shippingMethod: string;
@@ -35,7 +36,8 @@ const useStyles = makeStyles(
     },
     menuItem: {
       display: "flex",
-      width: "100%"
+      width: "100%",
+      flexWrap: "wrap"
     },
     price: {
       marginRight: theme.spacing(3)
@@ -50,6 +52,9 @@ const useStyles = makeStyles(
       flex: 1,
       overflowX: "hidden",
       textOverflow: "ellipsis"
+    },
+    message: {
+      width: "100%"
     }
   }),
   { name: "OrderShippingMethodEditDialog" }
@@ -60,7 +65,7 @@ export interface OrderShippingMethodEditDialogProps {
   errors: OrderErrorFragment[];
   open: boolean;
   shippingMethod: string;
-  shippingMethods?: OrderDetails_order_availableShippingMethods[];
+  shippingMethods?: OrderDetails_order_shippingMethods[];
   onClose();
   onSubmit?(data: FormData);
 }
@@ -84,18 +89,26 @@ const OrderShippingMethodEditDialog: React.FC<OrderShippingMethodEditDialogProps
   const nonFieldErrors = errors.filter(err => !formFields.includes(err.field));
 
   const choices = shippingMethods
-    ? shippingMethods.map(s => ({
-        label: (
-          <div className={classes.menuItem}>
-            <span className={classes.shippingMethodName}>{s.name}</span>
-            &nbsp;
-            <span className={classes.price}>
-              <Money money={s.price} />
-            </span>
-          </div>
-        ),
-        value: s.id
-      }))
+    ? shippingMethods
+        .map(s => ({
+          label: (
+            <div className={classes.menuItem}>
+              <span className={classes.shippingMethodName}>{s.name}</span>
+              &nbsp;
+              <span className={classes.price}>
+                <Money money={s.price} />
+              </span>
+              {!s.active && (
+                <Typography className={classes.message} variant="caption">
+                  {s.message}
+                </Typography>
+              )}
+            </div>
+          ),
+          disabled: !s.active,
+          value: s.id
+        }))
+        .sort((x, y) => (x.disabled === y.disabled ? 0 : x.disabled ? 1 : -1))
     : [];
   const initialForm: FormData = {
     shippingMethod

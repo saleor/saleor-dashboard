@@ -452,17 +452,19 @@ export interface OrderMarkAsPaid_orderMarkAsPaid_order_user {
   email: string;
 }
 
-export interface OrderMarkAsPaid_orderMarkAsPaid_order_availableShippingMethods_price {
+export interface OrderMarkAsPaid_orderMarkAsPaid_order_shippingMethods_price {
   __typename: "Money";
   amount: number;
   currency: string;
 }
 
-export interface OrderMarkAsPaid_orderMarkAsPaid_order_availableShippingMethods {
+export interface OrderMarkAsPaid_orderMarkAsPaid_order_shippingMethods {
   __typename: "ShippingMethod";
   id: string;
   name: string;
-  price: OrderMarkAsPaid_orderMarkAsPaid_order_availableShippingMethods_price | null;
+  price: OrderMarkAsPaid_orderMarkAsPaid_order_shippingMethods_price;
+  active: boolean;
+  message: string | null;
 }
 
 export interface OrderMarkAsPaid_orderMarkAsPaid_order_invoices {
@@ -513,7 +515,7 @@ export interface OrderMarkAsPaid_orderMarkAsPaid_order {
   undiscountedTotal: OrderMarkAsPaid_orderMarkAsPaid_order_undiscountedTotal;
   user: OrderMarkAsPaid_orderMarkAsPaid_order_user | null;
   userEmail: string | null;
-  availableShippingMethods: (OrderMarkAsPaid_orderMarkAsPaid_order_availableShippingMethods | null)[] | null;
+  shippingMethods: OrderMarkAsPaid_orderMarkAsPaid_order_shippingMethods[];
   invoices: (OrderMarkAsPaid_orderMarkAsPaid_order_invoices | null)[] | null;
   channel: OrderMarkAsPaid_orderMarkAsPaid_order_channel;
   isPaid: boolean;

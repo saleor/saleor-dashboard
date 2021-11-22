@@ -445,17 +445,19 @@ export interface OrderDetailsFragment_user {
   email: string;
 }
 
-export interface OrderDetailsFragment_availableShippingMethods_price {
+export interface OrderDetailsFragment_shippingMethods_price {
   __typename: "Money";
   amount: number;
   currency: string;
 }
 
-export interface OrderDetailsFragment_availableShippingMethods {
+export interface OrderDetailsFragment_shippingMethods {
   __typename: "ShippingMethod";
   id: string;
   name: string;
-  price: OrderDetailsFragment_availableShippingMethods_price | null;
+  price: OrderDetailsFragment_shippingMethods_price;
+  active: boolean;
+  message: string | null;
 }
 
 export interface OrderDetailsFragment_invoices {
@@ -506,7 +508,7 @@ export interface OrderDetailsFragment {
   undiscountedTotal: OrderDetailsFragment_undiscountedTotal;
   user: OrderDetailsFragment_user | null;
   userEmail: string | null;
-  availableShippingMethods: (OrderDetailsFragment_availableShippingMethods | null)[] | null;
+  shippingMethods: OrderDetailsFragment_shippingMethods[];
   invoices: (OrderDetailsFragment_invoices | null)[] | null;
   channel: OrderDetailsFragment_channel;
   isPaid: boolean;

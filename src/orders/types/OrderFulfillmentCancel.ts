@@ -452,17 +452,19 @@ export interface OrderFulfillmentCancel_orderFulfillmentCancel_order_user {
   email: string;
 }
 
-export interface OrderFulfillmentCancel_orderFulfillmentCancel_order_availableShippingMethods_price {
+export interface OrderFulfillmentCancel_orderFulfillmentCancel_order_shippingMethods_price {
   __typename: "Money";
   amount: number;
   currency: string;
 }
 
-export interface OrderFulfillmentCancel_orderFulfillmentCancel_order_availableShippingMethods {
+export interface OrderFulfillmentCancel_orderFulfillmentCancel_order_shippingMethods {
   __typename: "ShippingMethod";
   id: string;
   name: string;
-  price: OrderFulfillmentCancel_orderFulfillmentCancel_order_availableShippingMethods_price | null;
+  price: OrderFulfillmentCancel_orderFulfillmentCancel_order_shippingMethods_price;
+  active: boolean;
+  message: string | null;
 }
 
 export interface OrderFulfillmentCancel_orderFulfillmentCancel_order_invoices {
@@ -513,7 +515,7 @@ export interface OrderFulfillmentCancel_orderFulfillmentCancel_order {
   undiscountedTotal: OrderFulfillmentCancel_orderFulfillmentCancel_order_undiscountedTotal;
   user: OrderFulfillmentCancel_orderFulfillmentCancel_order_user | null;
   userEmail: string | null;
-  availableShippingMethods: (OrderFulfillmentCancel_orderFulfillmentCancel_order_availableShippingMethods | null)[] | null;
+  shippingMethods: OrderFulfillmentCancel_orderFulfillmentCancel_order_shippingMethods[];
   invoices: (OrderFulfillmentCancel_orderFulfillmentCancel_order_invoices | null)[] | null;
   channel: OrderFulfillmentCancel_orderFulfillmentCancel_order_channel;
   isPaid: boolean;

@@ -125,7 +125,7 @@ export interface ShippingZone_shippingZone_shippingMethods_excludedProducts {
 }
 
 export interface ShippingZone_shippingZone_shippingMethods {
-  __typename: "ShippingMethod";
+  __typename: "ShippingMethodType";
   id: string;
   postalCodeRules: (ShippingZone_shippingZone_shippingMethods_postalCodeRules | null)[] | null;
   metadata: (ShippingZone_shippingZone_shippingMethods_metadata | null)[];
