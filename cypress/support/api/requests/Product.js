@@ -153,8 +153,20 @@ export function createVariant({
   costPrice = 1,
   trackInventory = true,
   weight = 1,
+  attributeName = "value",
   attributeValues = ["value"]
 }) {
+  const skuLines = getValueWithDefault(sku, `sku: "${sku}"`);
+
+  const attributeLines = getValueWithDefault(
+    attributeId,
+    `attributes: [{
+    id:"${attributeId}"
+    values: ["${attributeName}"]
+  }]`,
+    "attributes:[]"
+  );
+
   const channelListings = getValueWithDefault(
     channelId,
     `channelListings:{
@@ -174,12 +186,9 @@ export function createVariant({
 
   const mutation = `mutation{
     productVariantBulkCreate(product: "${productId}", variants: {
-      attributes: [{
-        id:"${attributeId}"
-        values: ${getValuesInArray(attributeValues)}
-      }]
+      ${attributeLines}
       weight: ${weight}
-      sku: "${sku}"
+      ${skuLines}
       ${channelListings}
       trackInventory:${trackInventory}
       ${stocks}
@@ -236,6 +245,7 @@ export function getVariant(id, channel, auth = "auth") {
     productVariant(id:"${id}" channel:"${channel}"){
       id
       name
+      sku
       pricing{
         onSale
         discount{
