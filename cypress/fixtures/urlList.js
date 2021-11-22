@@ -76,12 +76,6 @@ export const weightRateUrl = (shippingZoneId, weightRateId) =>
 export const warehouseDetailsUrl = warehouseId =>
   `${urlList.warehouses}${warehouseId}`;
 
-export const productTypeDetailsUrl = productTypeId =>
-  `${urlList.productTypes}${productTypeId}`;
-
-export const giftCardDetailsUrl = giftCardId =>
-  `${urlList.giftCards}${giftCardId}`;
-
 export const saleDetailsUrl = saleId => `${urlList.sales}${saleId}`;
 
 export const voucherDetailsUrl = voucherId => `${urlList.vouchers}${voucherId}`;
