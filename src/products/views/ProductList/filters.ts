@@ -320,9 +320,10 @@ export function getFilterVariables(
     productTypes:
       params.productTypes !== undefined ? params.productTypes : null,
     search: params.query,
-    giftCard: params.productKind
-      ? params.productKind === ProductTypeKindEnum.GIFT_CARD
-      : undefined,
+    giftCard:
+      params.productKind !== undefined
+        ? params.productKind === ProductTypeKindEnum.GIFT_CARD
+        : null,
     stockAvailability:
       params.stockStatus !== undefined
         ? findValueInEnum(params.stockStatus, StockAvailability)
