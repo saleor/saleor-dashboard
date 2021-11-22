@@ -121,18 +121,42 @@ const OrderRefundAmount: React.FC<OrderRefundAmountProps> = props => {
     replacedProductsValue
   } = amountData;
 
-  const selectedRefundAmount =
+  const isRefundAutomatic =
     type === OrderRefundType.PRODUCTS &&
-    data.amountCalculationMode === OrderRefundAmountCalculationMode.AUTOMATIC
-      ? refundTotalAmount?.amount
-      : data.amount;
+    data.amountCalculationMode === OrderRefundAmountCalculationMode.AUTOMATIC;
+
+  const selectedRefundAmount = isRefundAutomatic
+    ? refundTotalAmount?.amount
+    : data.amount;
 
   const isAmountTooSmall = selectedRefundAmount && selectedRefundAmount <= 0;
   const isAmountTooBig = selectedRefundAmount > maxRefund?.amount;
 
-  const disableRefundButton = isReturn
-    ? disableSubmitButton || isAmountTooSmall || isAmountTooBig
-    : !selectedRefundAmount || isAmountTooBig || isAmountTooSmall;
+  const parsedRefundTotalAmount = isAmountTooBig
+    ? maxRefund
+    : refundTotalAmount;
+
+  const shouldRefundButtonBeDisabled = () => {
+    if (isAmountTooSmall) {
+      return true;
+    }
+
+    if (
+      data.amountCalculationMode === OrderRefundAmountCalculationMode.MANUAL ||
+      type === OrderRefundType.MISCELLANEOUS
+    ) {
+      if (isAmountTooBig) {
+        return true;
+      }
+    }
+
+    if (isReturn) {
+      return disableSubmitButton;
+    }
+    return !selectedRefundAmount;
+  };
+
+  const disableRefundButton = shouldRefundButtonBeDisabled();
 
   return (
     <Card>
@@ -199,7 +223,7 @@ const OrderRefundAmount: React.FC<OrderRefundAmountProps> = props => {
                   previouslyRefunded={previouslyRefunded}
                   maxRefund={maxRefund}
                   selectedProductsValue={selectedProductsValue}
-                  refundTotalAmount={refundTotalAmount}
+                  refundTotalAmount={parsedRefundTotalAmount}
                   shipmentCost={data.refundShipmentCosts && shipmentCost}
                   replacedProductsValue={replacedProductsValue}
                 />
@@ -285,7 +309,9 @@ const OrderRefundAmount: React.FC<OrderRefundAmountProps> = props => {
               defaultMessage="Refund {currency} {amount}"
               description="order refund amount, input button"
               values={{
-                amount: Number(selectedRefundAmount).toFixed(2),
+                amount: isRefundAutomatic
+                  ? parsedRefundTotalAmount.amount.toFixed(2)
+                  : Number(selectedRefundAmount).toFixed(2),
                 currency: amountCurrency
               }}
             />

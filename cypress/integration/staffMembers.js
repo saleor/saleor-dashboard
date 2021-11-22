@@ -81,7 +81,7 @@ filterTests({ definedTags: ["stagedOnly"] }, () => {
               tokenCreate.errors[0].code,
               "logging in should return error"
             )
-            .to.be.eq("INVALID_CREDENTIALS");
+            .to.be.eq("INACTIVE");
           expect(tokenCreate.token).to.be.not.ok;
         });
     });

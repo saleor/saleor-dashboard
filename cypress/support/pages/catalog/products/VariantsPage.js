@@ -6,12 +6,18 @@ import { BUTTON_SELECTORS } from "../../../../elements/shared/button-selectors";
 import { selectChannelVariantInDetailsPage } from "../../channelsPage";
 import { fillUpPriceList } from "./priceListComponent";
 
-export function variantsShouldBeVisible({ name, price }) {
-  cy.contains(PRODUCT_DETAILS.variantRow, name).should("be.visible");
+export function variantsShouldBeVisible({ price }) {
+  cy.get(PRODUCT_DETAILS.variantRow).should("be.visible");
   cy.contains(PRODUCT_DETAILS.variantPrice, price);
 }
 
-export function createFirstVariant({ sku, warehouseId, price, attribute }) {
+export function createFirstVariant({
+  sku,
+  warehouseId,
+  price,
+  attribute,
+  quantity = 1
+}) {
   cy.get(PRODUCT_DETAILS.addVariantsButton).click();
   cy.get(PRODUCT_DETAILS.addVariantsOptionDialog.optionMultiple).click();
   cy.get(BUTTON_SELECTORS.submit).click();
@@ -24,11 +30,14 @@ export function createFirstVariant({ sku, warehouseId, price, attribute }) {
   fillUpPriceList(price);
   cy.get(`[name*='${warehouseId}']`)
     .click()
+    .get(VARIANTS_SELECTORS.stockInput)
+    .type(quantity)
     .get(VARIANTS_SELECTORS.nextButton)
-    .click()
-    .get(VARIANTS_SELECTORS.skuInput)
-    .type(sku)
-    .addAliasToGraphRequest("ProductVariantBulkCreate")
+    .click();
+  if (sku) {
+    cy.get(VARIANTS_SELECTORS.skuInput).type(sku);
+  }
+  cy.addAliasToGraphRequest("ProductVariantBulkCreate")
     .get(VARIANTS_SELECTORS.nextButton)
     .click()
     .waitForRequestAndCheckIfNoErrors("@ProductVariantBulkCreate")
@@ -43,7 +52,8 @@ export function createVariant({
   attributeName,
   price,
   costPrice = price,
-  channelName
+  channelName,
+  quantity = 10
 }) {
   cy.get(PRODUCT_DETAILS.addVariantsButton)
     .click()
@@ -51,20 +61,26 @@ export function createVariant({
     .click()
     .get(VARIANTS_SELECTORS.attributeOption)
     .contains(attributeName)
-    .click()
-    .get(VARIANTS_SELECTORS.skuInputInAddVariant)
-    .type(sku)
-    .get(VARIANTS_SELECTORS.addWarehouseButton)
     .click();
-  cy.contains(VARIANTS_SELECTORS.warehouseOption, warehouseName).click({
-    force: true
-  });
-  cy.get(VARIANTS_SELECTORS.saveButton)
+  if (sku) {
+    cy.get(VARIANTS_SELECTORS.skuInputInAddVariant).type(sku);
+  }
+  cy.get(VARIANTS_SELECTORS.addWarehouseButton).click();
+  cy.contains(VARIANTS_SELECTORS.warehouseOption, warehouseName)
+    .click({
+      force: true
+    })
+    .get(VARIANTS_SELECTORS.stockInput)
+    .type(quantity)
+    .get(VARIANTS_SELECTORS.saveButton)
     .click()
     .get(BUTTON_SELECTORS.back)
-    .click();
+    .click()
+    .addAliasToGraphRequest("ProductChannelListingUpdate");
   selectChannelVariantInDetailsPage(channelName, attributeName);
-  cy.get(BUTTON_SELECTORS.confirm).click();
+  cy.get(BUTTON_SELECTORS.confirm)
+    .click()
+    .waitForRequestAndCheckIfNoErrors("@ProductChannelListingUpdate");
   cy.contains(PRODUCT_DETAILS.variantRow, attributeName)
     .click()
     .get(PRICE_LIST.priceInput)

@@ -558,6 +558,7 @@ export interface OrderLinesAdd_orderLinesCreate_order_channel {
 export interface OrderLinesAdd_orderLinesCreate_order {
   __typename: "Order";
   id: string;
+  token: string;
   metadata: (OrderLinesAdd_orderLinesCreate_order_metadata | null)[];
   privateMetadata: (OrderLinesAdd_orderLinesCreate_order_privateMetadata | null)[];
   billingAddress: OrderLinesAdd_orderLinesCreate_order_billingAddress | null;

@@ -1,5 +1,9 @@
 import { stringify } from "../.././formatData/formatJson";
-import { getValueWithDefault, getVariantsListIds } from "./utils/Utils";
+import {
+  getValuesInArray,
+  getValueWithDefault,
+  getVariantsListIds
+} from "./utils/Utils";
 
 export function getFirstProducts(first, search) {
   const filter = search
@@ -149,7 +153,8 @@ export function createVariant({
   costPrice = 1,
   trackInventory = true,
   weight = 1,
-  attributeName = "value"
+  attributeName = "value",
+  attributeValues = ["value"]
 }) {
   const skuLines = getValueWithDefault(sku, `sku: "${sku}"`);
 

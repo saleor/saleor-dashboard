@@ -24,6 +24,7 @@ export const urlList = {
   shippingMethods: "shipping/",
   siteSettings: "site-settings/",
   staffMembers: "staff/",
+  stripeApiPaymentMethods: "https://api.stripe.com/v1/payment_methods",
   translations: "translations/",
   variants: "variant/",
   vouchers: "discounts/vouchers/",
@@ -74,3 +75,16 @@ export const weightRateUrl = (shippingZoneId, weightRateId) =>
 
 export const warehouseDetailsUrl = warehouseId =>
   `${urlList.warehouses}${warehouseId}`;
+
+export const productTypeDetailsUrl = productTypeId =>
+  `${urlList.productTypes}${productTypeId}`;
+
+export const giftCardDetailsUrl = giftCardId =>
+  `${urlList.giftCards}${giftCardId}`;
+
+export const saleDetailsUrl = saleId => `${urlList.sales}${saleId}`;
+
+export const voucherDetailsUrl = voucherId => `${urlList.vouchers}${voucherId}`;
+
+export const stripeConfirmationUrl = id =>
+  `https://api.stripe.com/v1/payment_intents/${id}/confirm`;

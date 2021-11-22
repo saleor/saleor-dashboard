@@ -1,3 +1,4 @@
+import { returnValueDependsOnShopVersion } from "../../../formatData/dataDependingOnVersion";
 import * as attributeRequest from "../../requests/Attribute";
 import * as categoryRequest from "../../requests/Category";
 import { createCollection } from "../../requests/Collections";
@@ -5,11 +6,13 @@ import * as productRequest from "../../requests/Product";
 import {
   createTypeProduct,
   deleteProductType,
-  getProductTypes
+  getProductTypes,
+  productAttributeAssignmentUpdate
 } from "../../requests/ProductType";
 import { deleteAttributesStartsWith } from "../attributes/attributeUtils";
 import { deleteCollectionsStartsWith } from "../catalog/collectionsUtils";
 import { getDefaultChannel } from "../channelsUtils";
+import { createShipping } from "../shippingUtils";
 
 export function createProductInChannel({
   name,
@@ -79,6 +82,13 @@ export function createTypeAttributeAndCategoryForProduct({
     })
     .then(productTypeResp => {
       productType = productTypeResp;
+      const updateAssign = returnValueDependsOnShopVersion("3.1", true, false);
+      if (updateAssign) {
+        productAttributeAssignmentUpdate({
+          productTypeId: productType.id,
+          attributeId: attribute.id
+        });
+      }
       categoryRequest.createCategory(name);
     })
     .then(categoryResp => {
@@ -102,15 +112,16 @@ export function deleteProductsStartsWith(startsWith) {
   );
 }
 
-export function loginDeleteProductsAndCreateNewOneWithNewDataAndDefaultChannel({
+export function deleteProductsAndCreateNewOneWithNewDataAndDefaultChannel({
   name,
-  description = name
+  description = name,
+  warehouseId,
+  productPrice = 10
 }) {
   let defaultChannel;
   let collection;
   let attribute;
 
-  cy.clearSessionData().loginUserViaRequest();
   deleteProductsStartsWith(name);
   deleteCollectionsStartsWith(name);
   return getDefaultChannel()
@@ -131,10 +142,65 @@ export function loginDeleteProductsAndCreateNewOneWithNewDataAndDefaultChannel({
         channelId: defaultChannel.id,
         name,
         collectionId: collection.id,
-        description
+        description,
+        warehouseId,
+        price: productPrice
       });
     })
-    .then(({ product: productResp }) => productResp);
+    .then(({ product, variantsList }) => ({ product, variantsList }));
+}
+
+export function createProductWithShipping({
+  name,
+  productPrice = 10,
+  shippingPrice = 10
+}) {
+  let address;
+  let warehouse;
+  let shippingMethod;
+  let defaultChannel;
+  let shippingZone;
+
+  return cy
+    .fixture("addresses")
+    .then(addresses => {
+      address = addresses.usAddress;
+      getDefaultChannel();
+    })
+    .then(channelResp => {
+      defaultChannel = channelResp;
+      createShipping({
+        channelId: defaultChannel.id,
+        name,
+        address,
+        price: shippingPrice
+      });
+    })
+    .then(
+      ({
+        warehouse: warehouseResp,
+        shippingZone: shippingZoneResp,
+        shippingMethod: shippingMethodResp
+      }) => {
+        warehouse = warehouseResp;
+        shippingMethod = shippingMethodResp;
+        shippingZone = shippingZoneResp;
+        deleteProductsAndCreateNewOneWithNewDataAndDefaultChannel({
+          name,
+          warehouseId: warehouse.id,
+          productPrice
+        });
+      }
+    )
+    .then(({ variantsList, product }) => ({
+      variantsList,
+      product,
+      warehouse,
+      shippingZone,
+      defaultChannel,
+      shippingMethod,
+      address
+    }));
 }
 
 export function createProductInChannelWithoutVariants({

@@ -158,6 +158,7 @@ const productListQuery = gql`
       edges {
         node {
           ...ProductFragment
+          updatedAt
           attributes {
             attribute {
               id
