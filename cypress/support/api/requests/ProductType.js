@@ -90,6 +90,23 @@ export function deleteProductType(productTypeId) {
   return cy.sendRequestWithQuery(mutation);
 }
 
+export function productAttributeAssignmentUpdate({
+  productTypeId,
+  attributeId,
+  variantSelection = true
+}) {
+  const mutation = `mutation {
+    productAttributeAssignmentUpdate(
+      operations: {id: "${attributeId}", variantSelection: ${variantSelection}}    productTypeId:"${productTypeId}") {
+      errors {
+        field
+        message
+      }
+    }
+  }`;
+  return cy.sendRequestWithQuery(mutation);
+}
+
 export function getProductType(productTypeId) {
   const query = `query{
     productType(id:"${productTypeId}"){
