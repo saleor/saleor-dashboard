@@ -85,7 +85,7 @@ export function selectChannelInDetailsPages(channelName) {
   }
   cy.get(SELECT_CHANNELS_TO_ASSIGN.selectChannelsForm)
     .find(BUTTON_SELECTORS.submit)
-    .click();
+    .click({ force: true });
 }
 
 export function selectChannelVariantInDetailsPage(channelName, attributeName) {
@@ -99,7 +99,7 @@ export function selectChannelVariantInDetailsPage(channelName, attributeName) {
     .click();
   cy.get(SELECT_CHANNELS_TO_ASSIGN.selectChannelsForm)
     .find(BUTTON_SELECTORS.submit)
-    .click();
+    .click({ force: true });
 }
 
 export function enterHomePageAndChangeChannel(channelName) {

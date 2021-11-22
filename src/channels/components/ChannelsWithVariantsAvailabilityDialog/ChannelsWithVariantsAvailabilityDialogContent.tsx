@@ -1,13 +1,11 @@
 import placeholderImage from "@assets/images/placeholder60x60.png";
 import {
+  Accordion,
+  AccordionSummary,
   Divider,
-  ExpansionPanel,
-  ExpansionPanelSummary,
   Typography
 } from "@material-ui/core";
 import { ChannelData } from "@saleor/channels/utils";
-import IconCheckboxChecked from "@saleor/icons/CheckboxChecked";
-import IconCheckboxSemiChecked from "@saleor/icons/CheckboxSemiChecked";
 import IconChevronDown from "@saleor/icons/ChevronDown";
 import { makeStyles } from "@saleor/macaw-ui";
 import Label from "@saleor/orders/components/OrderHistory/Label";
@@ -126,15 +124,19 @@ const ChannelsWithVariantsAvailabilityDialogContent: React.FC<ChannelsWithVarian
       ? addVariantToChannel(channelId, variantId)
       : removeVariantFromChannel(channelId, variantId);
 
-  const selectChannelIcon = (channelId: string) =>
-    areAllChannelVariantsSelected(
+  const isChannelPartiallySelected = (channelId: string) => {
+    const selectedVariants = channelVariantListingDiffToDict(
+      channelsWithVariants
+    )[channelId];
+
+    if (selectedVariants.length === 0) {
+      return false;
+    }
+    return !areAllChannelVariantsSelected(
       allVariants?.map(variant => variant.id),
-      channelVariantListingDiffToDict(channelsWithVariants)[channelId]
-    ) ? (
-      <IconCheckboxChecked />
-    ) : (
-      <IconCheckboxSemiChecked />
+      selectedVariants
     );
+  };
 
   return (
     <>
@@ -155,12 +157,12 @@ const ChannelsWithVariantsAvailabilityDialogContent: React.FC<ChannelsWithVarian
           placeholderImage;
 
         return (
-          <ExpansionPanel
+          <Accordion
             classes={expanderClasses}
             data-test-id="expand-channel-row"
             key={channelId}
           >
-            <ExpansionPanelSummary
+            <AccordionSummary
               expandIcon={<IconChevronDown />}
               classes={summaryClasses}
             >
@@ -172,7 +174,7 @@ const ChannelsWithVariantsAvailabilityDialogContent: React.FC<ChannelsWithVarian
                 <div className={classes.channelCheckboxContainer}>
                   <ControlledCheckbox
                     checked={isChannelSelected(channelId)}
-                    checkedIcon={selectChannelIcon(channelId)}
+                    indeterminate={isChannelPartiallySelected(channelId)}
                     name={name}
                     label={
                       <div className={classes.channelTitleContainer}>
@@ -192,7 +194,7 @@ const ChannelsWithVariantsAvailabilityDialogContent: React.FC<ChannelsWithVarian
                 </div>
                 <Divider />
               </div>
-            </ExpansionPanelSummary>
+            </AccordionSummary>
             {allVariants.map(({ id: variantId, name }) => (
               <React.Fragment key={variantId}>
                 <div
@@ -215,7 +217,7 @@ const ChannelsWithVariantsAvailabilityDialogContent: React.FC<ChannelsWithVarian
                 <Divider />
               </React.Fragment>
             ))}
-          </ExpansionPanel>
+          </Accordion>
         );
       })}
     </>
