@@ -3532,6 +3532,22 @@
     "context": "gift card bulk create modal bottom explanation",
     "string": "After creation Saleor will create a list of gift card codes that you will be able to download. "
   },
+  "src_dot_giftCards_dot_GiftCardCreateDialog_dot_bulkCreateIssuedAccept": {
+    "context": "gift card bulk create success dialog accept button",
+    "string": "Ok"
+  },
+  "src_dot_giftCards_dot_GiftCardCreateDialog_dot_bulkCreateIssuedExplanation": {
+    "context": "gift card bulk create success dialog content",
+    "string": "We have issued all of your requested gift cards. You can download the list of new gift cards using the button below."
+  },
+  "src_dot_giftCards_dot_GiftCardCreateDialog_dot_bulkCreateIssuedExportToEmail": {
+    "context": "gift card bulk create success dialog export button",
+    "string": "Export To Email"
+  },
+  "src_dot_giftCards_dot_GiftCardCreateDialog_dot_bulkCreateIssuedTitle": {
+    "context": "gift card bulk create success dialog title",
+    "string": "Bulk Issue Gift Cards"
+  },
   "src_dot_giftCards_dot_GiftCardCreateDialog_dot_copiedToClipboardTitle": {
     "context": "copied to clipboard alert title",
     "string": "Copied to clipboard"
