@@ -180,7 +180,6 @@ const OrderCustomerAddressesEditDialog: React.FC<OrderCustomerAddressesEditDialo
                   )
                 }
                 exitSearch={() => setAddressSearchState({ open: false })}
-                isCustomerEdit
               />
             ) : (
               <>

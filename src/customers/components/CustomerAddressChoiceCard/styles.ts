@@ -19,7 +19,7 @@ export const useStyles = makeStyles(
     selectableCard: {
       "&:hover": {
         cursor: "pointer",
-        borderColor: theme.palette.primary.light
+        borderColor: theme.palette.primary.main
       }
     },
     selectedLabel: {
@@ -31,7 +31,7 @@ export const useStyles = makeStyles(
     editIcon: {
       color: theme.palette.grey[600],
       "&:hover": {
-        color: theme.palette.primary.light,
+        color: theme.palette.primary.main,
         cursor: "pointer"
       }
     }

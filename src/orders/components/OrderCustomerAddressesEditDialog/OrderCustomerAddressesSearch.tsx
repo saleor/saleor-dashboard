@@ -24,7 +24,6 @@ import { parseQuery, stringifyAddress } from "./utils";
 export interface OrderCustomerAddressesSearchProps {
   type: AddressTypeEnum;
   selectedCustomerAddressId?: string;
-  isCustomerEdit: boolean;
   customerAddresses: CustomerAddresses_user_addresses[];
   onChangeCustomerShippingAddress: (
     customerAddress: CustomerAddresses_user_addresses
@@ -39,7 +38,6 @@ const OrderCustomerAddressesSearch: React.FC<OrderCustomerAddressesSearchProps> 
   const {
     type,
     selectedCustomerAddressId,
-    isCustomerEdit,
     customerAddresses,
     onChangeCustomerShippingAddress,
     onChangeCustomerBillingAddress,
@@ -120,9 +118,6 @@ const OrderCustomerAddressesSearch: React.FC<OrderCustomerAddressesSearchProps> 
                 </React.Fragment>
               ))}
         </div>
-        {!isCustomerEdit &&
-          // @TODO implement "set the same for shipping/billing address" checkbox
-          undefined}
       </DialogContent>
       <DialogActions>
         <Button onClick={() => exitSearch()} color="primary">

@@ -37,7 +37,6 @@ export function validateDefaultAddress<
   defaultAddress: CustomerAddresses_user_defaultShippingAddress,
   customerAddresses: T[]
 ): CustomerAddresses_user_defaultShippingAddress {
-  // first address is fallback when default address fails for some reason
   const fallbackAddress = {
     id: customerAddresses[0]?.id
   } as CustomerAddresses_user_defaultShippingAddress;
