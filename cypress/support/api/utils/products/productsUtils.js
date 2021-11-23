@@ -29,33 +29,28 @@ export function createProductInChannel({
   collectionId = null,
   description = null,
   trackInventory = true,
-  weight = 1
+  weight = 1,
+  sku = name
 }) {
   let product;
   let variantsList;
-  return productRequest
-    .createProduct({
-      attributeId,
-      name,
-      productTypeId,
-      categoryId,
-      collectionId,
-      description
-    })
+  return createProductInChannelWithoutVariants({
+    name,
+    channelId,
+    productTypeId,
+    attributeId,
+    categoryId,
+    isPublished,
+    isAvailableForPurchase,
+    visibleInListings,
+    collectionId,
+    description
+  })
     .then(productResp => {
       product = productResp;
-      productRequest.updateChannelInProduct({
-        productId: product.id,
-        channelId,
-        isPublished,
-        isAvailableForPurchase,
-        visibleInListings
-      });
-    })
-    .then(() => {
       productRequest.createVariant({
         productId: product.id,
-        sku: name,
+        sku,
         attributeId,
         warehouseId,
         quantityInWarehouse,
@@ -121,6 +116,7 @@ export function deleteProductsAndCreateNewOneWithNewDataAndDefaultChannel({
   name,
   description = name,
   warehouseId,
+  sku = name,
   productPrice = 10
 }) {
   let defaultChannel;
@@ -149,6 +145,7 @@ export function deleteProductsAndCreateNewOneWithNewDataAndDefaultChannel({
         collectionId: collection.id,
         description,
         warehouseId,
+        sku,
         price: productPrice
       });
     })
@@ -157,6 +154,7 @@ export function deleteProductsAndCreateNewOneWithNewDataAndDefaultChannel({
 
 export function createProductWithShipping({
   name,
+  sku = name,
   productPrice = 10,
   shippingPrice = 10
 }) {
@@ -193,6 +191,7 @@ export function createProductWithShipping({
         deleteProductsAndCreateNewOneWithNewDataAndDefaultChannel({
           name,
           warehouseId: warehouse.id,
+          sku,
           productPrice
         });
       }
@@ -206,4 +205,39 @@ export function createProductWithShipping({
       shippingMethod,
       address
     }));
+}
+
+export function createProductInChannelWithoutVariants({
+  name,
+  channelId,
+  productTypeId,
+  attributeId,
+  categoryId,
+  isPublished = true,
+  isAvailableForPurchase = true,
+  visibleInListings = true,
+  collectionId = null,
+  description = null
+}) {
+  let product;
+  return productRequest
+    .createProduct({
+      attributeId,
+      name,
+      productTypeId,
+      categoryId,
+      collectionId,
+      description
+    })
+    .then(productResp => {
+      product = productResp;
+      productRequest.updateChannelInProduct({
+        productId: product.id,
+        channelId,
+        isPublished,
+        isAvailableForPurchase,
+        visibleInListings
+      });
+    })
+    .then(() => product);
 }

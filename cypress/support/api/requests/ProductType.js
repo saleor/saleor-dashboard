@@ -43,23 +43,6 @@ export function createTypeProduct({
     .its("body.data.productTypeCreate.productType");
 }
 
-export function productAttributeAssignmentUpdate({
-  productTypeId,
-  attributeId,
-  variantSelection = true
-}) {
-  const mutation = `mutation {
-    productAttributeAssignmentUpdate(
-      operations: {id: "${attributeId}", variantSelection: ${variantSelection}}    productTypeId:"${productTypeId}") {
-      errors {
-        field
-        message
-      }
-    }
-  }`;
-  return cy.sendRequestWithQuery(mutation);
-}
-
 export function getProductTypes(first, search) {
   const query = `query{
     productTypes(first:${first}, filter:{
@@ -82,6 +65,23 @@ export function deleteProductType(productTypeId) {
   const mutation = `mutation{
     productTypeDelete(id:"${productTypeId}"){
       productErrors{
+        field
+        message
+      }
+    }
+  }`;
+  return cy.sendRequestWithQuery(mutation);
+}
+
+export function productAttributeAssignmentUpdate({
+  productTypeId,
+  attributeId,
+  variantSelection = true
+}) {
+  const mutation = `mutation {
+    productAttributeAssignmentUpdate(
+      operations: {id: "${attributeId}", variantSelection: ${variantSelection}}    productTypeId:"${productTypeId}") {
+      errors {
         field
         message
       }
