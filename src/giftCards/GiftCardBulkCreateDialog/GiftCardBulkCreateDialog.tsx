@@ -10,6 +10,7 @@ import React, { useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 
 import ContentWithProgress from "../GiftCardCreateDialog/ContentWithProgress";
+import GiftCardBulkCreateSuccessDialog from "../GiftCardCreateDialog/GiftCardBulkCreateSuccessDialog";
 import { useChannelCurrencies } from "../GiftCardCreateDialog/queries";
 import { getGiftCardExpiryInputData } from "../GiftCardCreateDialog/utils";
 import { GIFT_CARD_LIST_QUERY } from "../GiftCardsList/types";
@@ -30,6 +31,12 @@ const GiftCardBulkCreateDialog: React.FC<DialogProps> = ({ onClose, open }) => {
   const [formErrors, setFormErrors] = useState<GiftCardBulkCreateFormErrors>(
     null
   );
+  const [issuedIds, setIssuedIds] = useState<string[] | null>(null);
+  const [openIssueSuccessDialog, setOpenIssueSuccessDialog] = useState<boolean>(
+    false
+  );
+
+  const onIssueSuccessDialogClose = () => setOpenIssueSuccessDialog(false);
 
   const { loading: loadingChannelCurrencies } = useChannelCurrencies({});
 
@@ -55,6 +62,10 @@ const GiftCardBulkCreateDialog: React.FC<DialogProps> = ({ onClose, open }) => {
     setFormErrors(getFormErrors(giftCardBulkCreateErrorKeys, errors));
 
     if (!errors.length) {
+      setIssuedIds(
+        data?.giftCardBulkCreate?.giftCards?.map(giftCard => giftCard.id)
+      );
+      setOpenIssueSuccessDialog(true);
       onClose();
     }
   };
@@ -122,19 +133,26 @@ const GiftCardBulkCreateDialog: React.FC<DialogProps> = ({ onClose, open }) => {
   useEffect(handleSetSchemaErrors, [apiErrors]);
 
   return (
-    <Dialog open={open} maxWidth="sm">
-      <DialogTitle>{intl.formatMessage(messages.title)}</DialogTitle>
-      <ContentWithProgress>
-        {!loadingChannelCurrencies && (
-          <GiftCardBulkCreateDialogForm
-            opts={bulkCreateGiftCardOpts}
-            onClose={onClose}
-            formErrors={formErrors}
-            onSubmit={handleSubmit}
-          />
-        )}
-      </ContentWithProgress>
-    </Dialog>
+    <>
+      <Dialog open={open} maxWidth="sm">
+        <DialogTitle>{intl.formatMessage(messages.title)}</DialogTitle>
+        <ContentWithProgress>
+          {!loadingChannelCurrencies && (
+            <GiftCardBulkCreateDialogForm
+              opts={bulkCreateGiftCardOpts}
+              onClose={onClose}
+              formErrors={formErrors}
+              onSubmit={handleSubmit}
+            />
+          )}
+        </ContentWithProgress>
+      </Dialog>
+      <GiftCardBulkCreateSuccessDialog
+        onClose={onIssueSuccessDialogClose}
+        open={openIssueSuccessDialog}
+        idsToExport={issuedIds}
+      />
+    </>
   );
 };
 
