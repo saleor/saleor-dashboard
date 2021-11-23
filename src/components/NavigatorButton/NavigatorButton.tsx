@@ -1,7 +1,7 @@
 import navigatorIcon from "@assets/images/navigator.svg";
-import { Grow, IconButton, Paper, Popper } from "@material-ui/core";
+import { Grow, Paper, Popper } from "@material-ui/core";
 import { IconButtonProps } from "@material-ui/core/IconButton";
-import { makeStyles } from "@saleor/macaw-ui";
+import { IconButton, makeStyles } from "@saleor/macaw-ui";
 import classNames from "classnames";
 import React from "react";
 import ReactSVG from "react-inlinesvg";
@@ -110,6 +110,7 @@ const NavigatorButton: React.FC<NavigatorButtonProps> = ({
   return (
     <>
       <IconButton
+        variant="secondary"
         className={classNames(className, classes.root)}
         data-test="navigator"
         onMouseEnter={setHelper}

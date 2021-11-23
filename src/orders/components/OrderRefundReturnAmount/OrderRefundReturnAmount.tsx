@@ -1,5 +1,4 @@
 import {
-  Button,
   Card,
   CardContent,
   FormControlLabel,
@@ -12,7 +11,7 @@ import CardTitle from "@saleor/components/CardTitle";
 import ControlledCheckbox from "@saleor/components/ControlledCheckbox";
 import Hr from "@saleor/components/Hr";
 import { OrderErrorFragment } from "@saleor/fragments/types/OrderErrorFragment";
-import { makeStyles } from "@saleor/macaw-ui";
+import { Button, makeStyles } from "@saleor/macaw-ui";
 import { OrderDetails_order } from "@saleor/orders/types/OrderDetails";
 import { OrderRefundData_order } from "@saleor/orders/types/OrderRefundData";
 import React from "react";
@@ -295,10 +294,8 @@ const OrderRefundAmount: React.FC<OrderRefundAmountProps> = props => {
           </>
         )}
         <Button
-          color="primary"
-          variant="contained"
+          variant="primary"
           fullWidth
-          size="large"
           onClick={onRefund}
           className={classes.refundButton}
           disabled={disableRefundButton}

@@ -1,5 +1,4 @@
 import {
-  Button,
   CircularProgress,
   Dialog,
   DialogActions,
@@ -18,6 +17,7 @@ import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import TableCellAvatar from "@saleor/components/TableCellAvatar";
 import useSearchQuery from "@saleor/hooks/useSearchQuery";
 import { buttonMessages } from "@saleor/intl";
+import { Button } from "@saleor/macaw-ui";
 import { maybe, renderCollection } from "@saleor/misc";
 import {
   getById,
@@ -284,7 +284,7 @@ const AssignVariantDialog: React.FC<AssignVariantDialogProps> = props => {
           data-test="submit"
           transitionState={confirmButtonState}
           color="primary"
-          variant="contained"
+          variant="primary"
           type="submit"
           onClick={handleSubmit}
         >

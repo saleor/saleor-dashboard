@@ -1,8 +1,6 @@
 import {
-  Button,
   Card,
   CardContent,
-  IconButton,
   TableBody,
   TableCell,
   TableRow
@@ -13,7 +11,7 @@ import CardTitle from "@saleor/components/CardTitle";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
 import { CountryFragment } from "@saleor/fragments/types/CountryFragment";
-import { makeStyles } from "@saleor/macaw-ui";
+import { Button, IconButton, makeStyles } from "@saleor/macaw-ui";
 import classNames from "classnames";
 import React from "react";
 import { FormattedMessage } from "react-intl";
@@ -101,7 +99,6 @@ const CountryList: React.FC<CountryListProps> = props => {
         title={title}
         toolbar={
           <Button
-            color="primary"
             disabled={disabled}
             onClick={onCountryAssign}
             data-test-id="assign-country"
@@ -131,7 +128,7 @@ const CountryList: React.FC<CountryListProps> = props => {
               <TableCell
                 className={classNames(classes.textRight, classes.iconCell)}
               >
-                <IconButton>
+                <IconButton variant="secondary">
                   <ArrowDropDownIcon
                     className={classNames({
                       [classes.rotate]: !isCollapsed

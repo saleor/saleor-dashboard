@@ -1,5 +1,4 @@
 import {
-  Button,
   Dialog,
   DialogActions,
   DialogContent,
@@ -17,7 +16,7 @@ import { SingleSelectField } from "@saleor/components/SingleSelectField";
 import { OrderErrorFragment } from "@saleor/fragments/types/OrderErrorFragment";
 import useModalDialogErrors from "@saleor/hooks/useModalDialogErrors";
 import { buttonMessages } from "@saleor/intl";
-import { makeStyles } from "@saleor/macaw-ui";
+import { Button, makeStyles } from "@saleor/macaw-ui";
 import { getFormErrors } from "@saleor/utils/errors";
 import getOrderErrorMessage from "@saleor/utils/errors/order";
 import React from "react";
@@ -152,7 +151,7 @@ const OrderShippingMethodEditDialog: React.FC<OrderShippingMethodEditDialogProps
               <ConfirmButton
                 transitionState={confirmButtonState}
                 color="primary"
-                variant="contained"
+                variant="primary"
                 type="submit"
                 disabled={!data.shippingMethod}
               >

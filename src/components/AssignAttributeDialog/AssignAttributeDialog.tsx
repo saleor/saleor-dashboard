@@ -1,5 +1,4 @@
 import {
-  Button,
   CircularProgress,
   Dialog,
   DialogActions,
@@ -25,7 +24,7 @@ import useModalDialogErrors from "@saleor/hooks/useModalDialogErrors";
 import useModalDialogOpen from "@saleor/hooks/useModalDialogOpen";
 import useSearchQuery from "@saleor/hooks/useSearchQuery";
 import { buttonMessages } from "@saleor/intl";
-import { makeStyles } from "@saleor/macaw-ui";
+import { Button, makeStyles } from "@saleor/macaw-ui";
 import { maybe, renderCollection } from "@saleor/misc";
 import { FetchMoreProps } from "@saleor/types";
 import classNames from "classnames";
@@ -217,7 +216,7 @@ const AssignAttributeDialog: React.FC<AssignAttributeDialogProps> = ({
         <ConfirmButton
           transitionState={confirmButtonState}
           color="primary"
-          variant="contained"
+          variant="primary"
           type="submit"
           onClick={onSubmit}
         >

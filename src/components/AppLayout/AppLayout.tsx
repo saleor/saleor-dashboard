@@ -167,7 +167,7 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
       <div className={classes.root}>
         {isMdUp && (
           <Sidebar
-            active={activeMenu}
+            activeId={activeMenu}
             menuItems={menuStructure}
             onMenuItemClick={navigate}
           />

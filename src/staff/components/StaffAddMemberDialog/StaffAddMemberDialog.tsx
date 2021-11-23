@@ -1,5 +1,4 @@
 import {
-  Button,
   Dialog,
   DialogActions,
   DialogContent,
@@ -14,7 +13,7 @@ import FormSpacer from "@saleor/components/FormSpacer";
 import { StaffErrorFragment } from "@saleor/fragments/types/StaffErrorFragment";
 import useModalDialogErrors from "@saleor/hooks/useModalDialogErrors";
 import { buttonMessages, commonMessages } from "@saleor/intl";
-import { makeStyles } from "@saleor/macaw-ui";
+import { Button, makeStyles } from "@saleor/macaw-ui";
 import { SearchPermissionGroups_search_edges_node } from "@saleor/searches/types/SearchPermissionGroups";
 import { FetchMoreProps, SearchPageProps } from "@saleor/types";
 import { getFormErrors } from "@saleor/utils/errors";
@@ -142,7 +141,7 @@ const StaffAddMemberDialog: React.FC<StaffAddMemberDialogProps> = props => {
                 data-test="submit"
                 color="primary"
                 disabled={!hasChanged}
-                variant="contained"
+                variant="primary"
                 type="submit"
                 transitionState={confirmButtonState}
               >

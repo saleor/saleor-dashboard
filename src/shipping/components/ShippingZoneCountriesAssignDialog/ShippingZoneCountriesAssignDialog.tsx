@@ -1,5 +1,4 @@
 import {
-  Button,
   Dialog,
   DialogActions,
   DialogContent,
@@ -20,6 +19,7 @@ import Hr from "@saleor/components/Hr";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import { ShopInfo_shop_countries } from "@saleor/components/Shop/types/ShopInfo";
 import { buttonMessages } from "@saleor/intl";
+import { Button, makeStyles } from "@saleor/macaw-ui";
 import useScrollableDialogStyle from "@saleor/styles/useScrollableDialogStyle";
 import { filter } from "fuzzaldrin";
 import React from "react";
@@ -198,7 +198,7 @@ const ShippingZoneCountriesAssignDialog: React.FC<ShippingZoneCountriesAssignDia
                 <ConfirmButton
                   transitionState={confirmButtonState}
                   color="primary"
-                  variant="contained"
+                  variant="primary"
                   type="submit"
                 >
                   <FormattedMessage

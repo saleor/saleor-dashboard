@@ -1,9 +1,10 @@
-import { Button, Card } from "@material-ui/core";
+import { Card } from "@material-ui/core";
 import Container from "@saleor/components/Container";
 import FilterBar from "@saleor/components/FilterBar";
 import PageHeader from "@saleor/components/PageHeader";
 import { CustomerListUrlSortField } from "@saleor/customers/urls";
 import { sectionNames } from "@saleor/intl";
+import { Button } from "@saleor/macaw-ui";
 import {
   FilterPageProps,
   ListActions,
@@ -52,12 +53,7 @@ const CustomerListPage: React.FC<CustomerListPageProps> = ({
   return (
     <Container>
       <PageHeader title={intl.formatMessage(sectionNames.customers)}>
-        <Button
-          color="primary"
-          variant="contained"
-          onClick={onAdd}
-          data-test-id="createCustomer"
-        >
+        <Button variant="primary" onClick={onAdd} data-test-id="createCustomer">
           <FormattedMessage
             defaultMessage="Create customer"
             description="button"

@@ -246,7 +246,7 @@ const OrderCustomerAddressesEditDialog: React.FC<OrderCustomerAddressesEditDialo
               <ConfirmButton
                 transitionState={confirmButtonState}
                 color="primary"
-                variant="contained"
+                variant="primary"
                 type="submit"
                 data-test="submit"
               >

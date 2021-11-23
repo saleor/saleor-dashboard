@@ -1,8 +1,8 @@
-import { Button, TextField, Typography } from "@material-ui/core";
+import { TextField, Typography } from "@material-ui/core";
 import Form from "@saleor/components/Form";
 import FormSpacer from "@saleor/components/FormSpacer";
 import { commonMessages } from "@saleor/intl";
-import { makeStyles } from "@saleor/macaw-ui";
+import { Button, makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -72,9 +72,8 @@ const ResetPasswordPage: React.FC<ResetPasswordPageProps> = props => {
           <FormSpacer />
           <Button
             className={classes.submit}
-            color="primary"
             disabled={disabled}
-            variant="contained"
+            variant="primary"
             onClick={handleSubmit}
             type="submit"
           >

@@ -1,5 +1,4 @@
 import {
-  Button,
   Dialog,
   DialogActions,
   DialogContent,
@@ -13,6 +12,7 @@ import Form from "@saleor/components/Form";
 import Skeleton from "@saleor/components/Skeleton";
 import { PluginConfigurationFragment_configuration } from "@saleor/fragments/types/PluginConfigurationFragment";
 import { buttonMessages } from "@saleor/intl";
+import { Button } from "@saleor/macaw-ui";
 import { maybe } from "@saleor/misc";
 import { DialogProps } from "@saleor/types";
 import { ConfigurationTypeFieldEnum } from "@saleor/types/globalTypes";
@@ -87,7 +87,7 @@ const PluginSecretFieldDialog: React.FC<PluginSecretFieldDialogProps> = ({
               <ConfirmButton
                 transitionState={confirmButtonState}
                 color="primary"
-                variant="contained"
+                variant="primary"
                 onClick={submit}
               >
                 <FormattedMessage {...buttonMessages.confirm} />

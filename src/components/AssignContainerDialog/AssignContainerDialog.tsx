@@ -1,5 +1,4 @@
 import {
-  Button,
   CircularProgress,
   Dialog,
   DialogActions,
@@ -13,6 +12,7 @@ import {
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import useSearchQuery from "@saleor/hooks/useSearchQuery";
 import { buttonMessages } from "@saleor/intl";
+import { Button } from "@saleor/macaw-ui";
 import useScrollableDialogStyle from "@saleor/styles/useScrollableDialogStyle";
 import { DialogProps, FetchMoreProps, Node } from "@saleor/types";
 import React from "react";
@@ -168,7 +168,7 @@ const AssignContainerDialog: React.FC<AssignContainerDialogProps> = props => {
         <ConfirmButton
           transitionState={confirmButtonState}
           color="primary"
-          variant="contained"
+          variant="primary"
           type="submit"
           onClick={handleSubmit}
         >

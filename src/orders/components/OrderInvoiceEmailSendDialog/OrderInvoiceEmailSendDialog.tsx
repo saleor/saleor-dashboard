@@ -1,5 +1,4 @@
 import {
-  Button,
   Dialog,
   DialogActions,
   DialogContent,
@@ -13,6 +12,7 @@ import FormSpacer from "@saleor/components/FormSpacer";
 import { InvoiceErrorFragment } from "@saleor/fragments/types/InvoiceErrorFragment";
 import { InvoiceFragment } from "@saleor/fragments/types/InvoiceFragment";
 import { buttonMessages } from "@saleor/intl";
+import { Button } from "@saleor/macaw-ui";
 import { DialogProps } from "@saleor/types";
 import getInvoiceErrorMessage from "@saleor/utils/errors/invoice";
 import React from "react";
@@ -70,7 +70,7 @@ const OrderInvoiceEmailSendDialog: React.FC<OrderInvoiceEmailSendDialogProps> = 
         <ConfirmButton
           transitionState={confirmButtonState}
           color="primary"
-          variant="contained"
+          variant="primary"
           onClick={onSend}
         >
           <FormattedMessage {...buttonMessages.send} />

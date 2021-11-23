@@ -1,4 +1,4 @@
-import { Button, DialogContentText } from "@material-ui/core";
+import { DialogContentText } from "@material-ui/core";
 import {
   createCollectionChannels,
   createCollectionChannelsData
@@ -19,6 +19,7 @@ import usePaginator, {
   createPaginationState
 } from "@saleor/hooks/usePaginator";
 import { commonMessages, errorMessages } from "@saleor/intl";
+import { Button } from "@saleor/macaw-ui";
 import useProductSearch from "@saleor/searches/useProductSearch";
 import { arrayDiff } from "@saleor/utils/arrays";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
@@ -319,7 +320,6 @@ export const CollectionDetails: React.FC<CollectionDetailsProps> = ({
               saveButtonBarState={formTransitionState}
               toolbar={
                 <Button
-                  color="primary"
                   onClick={() =>
                     openModal("unassign", {
                       ids: listElements

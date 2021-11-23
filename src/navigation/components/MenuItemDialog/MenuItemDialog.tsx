@@ -1,5 +1,4 @@
 import {
-  Button,
   Dialog,
   DialogActions,
   DialogContent,
@@ -17,6 +16,7 @@ import useModalDialogErrors from "@saleor/hooks/useModalDialogErrors";
 import useModalDialogOpen from "@saleor/hooks/useModalDialogOpen";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { buttonMessages, sectionNames } from "@saleor/intl";
+import { Button } from "@saleor/macaw-ui";
 import { SearchCategories_search_edges_node } from "@saleor/searches/types/SearchCategories";
 import { SearchCollections_search_edges_node } from "@saleor/searches/types/SearchCollections";
 import { SearchPages_search_edges_node } from "@saleor/searches/types/SearchPages";
@@ -299,7 +299,7 @@ const MenuItemDialog: React.FC<MenuItemDialogProps> = ({
           data-test="submit"
           transitionState={confirmButtonState}
           color="primary"
-          variant="contained"
+          variant="primary"
           onClick={handleSubmit}
         >
           <FormattedMessage {...buttonMessages.confirm} />

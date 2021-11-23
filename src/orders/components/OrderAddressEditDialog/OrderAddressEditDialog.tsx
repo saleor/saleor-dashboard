@@ -1,5 +1,4 @@
 import {
-  Button,
   Dialog,
   DialogActions,
   DialogContent,
@@ -17,7 +16,7 @@ import useAddressValidation from "@saleor/hooks/useAddressValidation";
 import useModalDialogErrors from "@saleor/hooks/useModalDialogErrors";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { buttonMessages } from "@saleor/intl";
-import { makeStyles } from "@saleor/macaw-ui";
+import { Button, makeStyles } from "@saleor/macaw-ui";
 import { AddressInput } from "@saleor/types/globalTypes";
 import createSingleAutocompleteSelectHandler from "@saleor/utils/handlers/singleAutocompleteSelectChangeHandler";
 import { mapCountriesToChoices } from "@saleor/utils/maps";
@@ -113,7 +112,7 @@ const OrderAddressEditDialog: React.FC<OrderAddressEditDialogProps> = props => {
                   data-test-id="order-address-edit-dialog-confirm-button"
                   transitionState={confirmButtonState}
                   color="primary"
-                  variant="contained"
+                  variant="primary"
                   type="submit"
                 >
                   <FormattedMessage {...buttonMessages.confirm} />

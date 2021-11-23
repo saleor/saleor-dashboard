@@ -103,7 +103,7 @@ const ProductVariantCreateDialog: React.FC<ProductVariantCreateDialogProps> = pr
               <ConfirmButton
                 transitionState="default"
                 color="primary"
-                variant="contained"
+                variant="primary"
                 type="submit"
                 data-test-id="submit"
                 data-test="submit"

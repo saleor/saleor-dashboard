@@ -1,17 +1,10 @@
-import {
-  Button,
-  Card,
-  CardActions,
-  IconButton,
-  Paper,
-  Typography
-} from "@material-ui/core";
+import { Card, CardActions, Paper, Typography } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
 import EditIcon from "@material-ui/icons/Edit";
 import CardTitle from "@saleor/components/CardTitle";
 import Skeleton from "@saleor/components/Skeleton";
 import { buttonMessages } from "@saleor/intl";
-import { useTheme } from "@saleor/macaw-ui";
+import { Button, IconButton, useTheme } from "@saleor/macaw-ui";
 import { makeStyles } from "@saleor/macaw-ui";
 import classNames from "classnames";
 import React from "react";
@@ -176,10 +169,10 @@ const Node: React.FC<NodeRendererProps> = props => {
           {node.title}
         </Typography>
         <div className={classes.spacer} />
-        <Button color="primary" onClick={node.onClick}>
+        <Button onClick={node.onClick}>
           <FormattedMessage {...buttonMessages.show} />
         </Button>
-        <IconButton color="primary" onClick={node.onEdit}>
+        <IconButton variant="secondary" color="primary" onClick={node.onEdit}>
           <EditIcon />
         </IconButton>
         <IconButton
@@ -224,7 +217,7 @@ const MenuItems: React.FC<MenuItemsProps> = props => {
           id: "menuItemsHeader"
         })}
         toolbar={
-          <Button color="primary" disabled={!canUndo} onClick={onUndo}>
+          <Button disabled={!canUndo} onClick={onUndo}>
             <FormattedMessage {...buttonMessages.undo} />
           </Button>
         }
@@ -273,11 +266,7 @@ const MenuItems: React.FC<MenuItemsProps> = props => {
         )}
       </div>
       <CardActions className={classes.actions}>
-        <Button
-          color="primary"
-          onClick={onItemAdd}
-          data-test-id="createNewMenuItem"
-        >
+        <Button onClick={onItemAdd} data-test-id="createNewMenuItem">
           <FormattedMessage
             defaultMessage="Create new item"
             description="add new menu item"

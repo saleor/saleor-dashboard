@@ -1,9 +1,10 @@
-import { Button, Card } from "@material-ui/core";
+import { Card } from "@material-ui/core";
 import { CollectionListUrlSortField } from "@saleor/collections/urls";
 import { Container } from "@saleor/components/Container";
 import FilterBar from "@saleor/components/FilterBar";
 import PageHeader from "@saleor/components/PageHeader";
 import { sectionNames } from "@saleor/intl";
+import { Button } from "@saleor/macaw-ui";
 import {
   ChannelProps,
   FilterPageProps,
@@ -60,9 +61,8 @@ const CollectionListPage: React.FC<CollectionListPageProps> = ({
     <Container>
       <PageHeader title={intl.formatMessage(sectionNames.collections)}>
         <Button
-          color="primary"
           disabled={disabled}
-          variant="contained"
+          variant="primary"
           onClick={onAdd}
           data-test-id="create-collection"
         >

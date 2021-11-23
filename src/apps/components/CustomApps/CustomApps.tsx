@@ -1,7 +1,5 @@
 import {
-  Button,
   CardHeader,
-  IconButton,
   TableBody,
   TableCell,
   TableRow,
@@ -9,6 +7,7 @@ import {
 } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
 import { commonMessages } from "@saleor/intl";
+import { Button, IconButton } from "@saleor/macaw-ui";
 import { renderCollection, stopPropagation } from "@saleor/misc";
 import React from "react";
 import { FormattedMessage } from "react-intl";
@@ -43,7 +42,6 @@ const CustomApps: React.FC<CustomAppsProps> = ({
             action={
               !!navigateToCustomAppCreate && (
                 <Button
-                  color="primary"
                   onClick={navigateToCustomAppCreate}
                   data-test-id="createApp"
                 >
@@ -90,6 +88,7 @@ const CustomApps: React.FC<CustomAppsProps> = ({
                 </TableCell>
                 <TableCell className={classes.colAction}>
                   <IconButton
+                    variant="secondary"
                     color="primary"
                     onClick={stopPropagation(() => onRemove(app.node.id))}
                   >

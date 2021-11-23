@@ -1,7 +1,5 @@
 import {
-  Button,
   Card,
-  IconButton,
   TableBody,
   TableCell,
   TableFooter,
@@ -15,7 +13,7 @@ import Skeleton from "@saleor/components/Skeleton";
 import TableHead from "@saleor/components/TableHead";
 import TablePagination from "@saleor/components/TablePagination";
 import { ShippingZoneFragment } from "@saleor/fragments/types/ShippingZoneFragment";
-import { makeStyles } from "@saleor/macaw-ui";
+import { Button, IconButton, makeStyles } from "@saleor/macaw-ui";
 import { maybe, renderCollection } from "@saleor/misc";
 import { ListActions, ListProps } from "@saleor/types";
 import { getFooterColSpanWithBulkActions } from "@saleor/utils/tables";
@@ -82,11 +80,7 @@ const ShippingZonesList: React.FC<ShippingZonesListProps> = props => {
           description: "sort shipping methods by zone, section header"
         })}
         toolbar={
-          <Button
-            color="primary"
-            onClick={onAdd}
-            data-test-id="add-shipping-zone"
-          >
+          <Button onClick={onAdd} data-test-id="add-shipping-zone">
             <FormattedMessage
               defaultMessage="Create shipping zone"
               description="button"
@@ -170,6 +164,7 @@ const ShippingZonesList: React.FC<ShippingZonesListProps> = props => {
                   </TableCell>
                   <TableCell className={classes.colAction}>
                     <IconButton
+                      variant="secondary"
                       color="primary"
                       disabled={disabled}
                       onClick={event => {

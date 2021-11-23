@@ -1,9 +1,9 @@
-import { Button, Card } from "@material-ui/core";
+import { Card } from "@material-ui/core";
 import Container from "@saleor/components/Container";
 import PageHeader from "@saleor/components/PageHeader";
 import SearchBar from "@saleor/components/SearchBar";
 import { sectionNames } from "@saleor/intl";
-import { Backlink } from "@saleor/macaw-ui";
+import { Backlink, Button } from "@saleor/macaw-ui";
 import { PageTypeList_pageTypes_edges_node } from "@saleor/pageTypes/types/PageTypeList";
 import { PageTypeListUrlSortField } from "@saleor/pageTypes/urls";
 import React from "react";
@@ -48,12 +48,7 @@ const PageTypeListPage: React.FC<PageTypeListPageProps> = ({
         {intl.formatMessage(sectionNames.configuration)}
       </Backlink>
       <PageHeader title={intl.formatMessage(sectionNames.pageTypes)}>
-        <Button
-          color="primary"
-          variant="contained"
-          onClick={onAdd}
-          data-test-id="createPageType"
-        >
+        <Button variant="primary" onClick={onAdd} data-test-id="createPageType">
           <FormattedMessage
             defaultMessage="create page type"
             description="button"

@@ -1,5 +1,4 @@
 import {
-  Button,
   CircularProgress,
   FormControlLabel,
   TextField,
@@ -17,7 +16,7 @@ import { ChannelFragment } from "@saleor/fragments/types/ChannelFragment";
 import { ChangeEvent, FormChange } from "@saleor/hooks/useForm";
 import useSearchQuery from "@saleor/hooks/useSearchQuery";
 import { sectionNames } from "@saleor/intl";
-import { makeStyles } from "@saleor/macaw-ui";
+import { Button, makeStyles } from "@saleor/macaw-ui";
 import { FetchMoreProps } from "@saleor/types";
 import {
   ExportProductsInput,
@@ -433,7 +432,7 @@ const ProductExportDialogInfo: React.FC<ProductExportDialogInfoProps> = ({
         {(hasMore || loading) && (
           <div className={classes.loadMoreContainer}>
             {hasMore && !loading && (
-              <Button color="primary" onClick={onFetchMore}>
+              <Button onClick={onFetchMore}>
                 <FormattedMessage
                   defaultMessage="Load More"
                   description="button"

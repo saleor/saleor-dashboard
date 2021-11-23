@@ -1,5 +1,4 @@
 import {
-  Button,
   Dialog,
   DialogActions,
   DialogContent,
@@ -12,6 +11,7 @@ import ConfirmButton, {
 import Form from "@saleor/components/Form";
 import { MenuErrorFragment } from "@saleor/fragments/types/MenuErrorFragment";
 import { buttonMessages } from "@saleor/intl";
+import { Button } from "@saleor/macaw-ui";
 import { getFormErrors } from "@saleor/utils/errors";
 import getMenuErrorMessage from "@saleor/utils/errors/menu";
 import React from "react";
@@ -80,7 +80,7 @@ const MenuCreateDialog: React.FC<MenuCreateDialogProps> = ({
               <ConfirmButton
                 transitionState={confirmButtonState}
                 color="primary"
-                variant="contained"
+                variant="primary"
                 onClick={submit}
                 data-test="submit"
               >

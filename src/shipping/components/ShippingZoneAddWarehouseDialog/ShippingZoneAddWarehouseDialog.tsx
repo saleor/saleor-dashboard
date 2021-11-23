@@ -1,5 +1,4 @@
 import {
-  Button,
   Dialog,
   DialogActions,
   DialogContent,
@@ -21,7 +20,7 @@ import useModalDialogErrors from "@saleor/hooks/useModalDialogErrors";
 import useModalDialogOpen from "@saleor/hooks/useModalDialogOpen";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { buttonMessages } from "@saleor/intl";
-import { makeStyles } from "@saleor/macaw-ui";
+import { Button, makeStyles } from "@saleor/macaw-ui";
 import { DialogProps } from "@saleor/types";
 import createSingleAutocompleteSelectHandler from "@saleor/utils/handlers/singleAutocompleteSelectChangeHandler";
 import { mapCountriesToChoices } from "@saleor/utils/maps";
@@ -144,7 +143,7 @@ const ShippingZoneAddWarehouseDialog: React.FC<ShippingZoneAddWarehouseDialogPro
                 <ConfirmButton
                   transitionState={confirmButtonState}
                   color="primary"
-                  variant="contained"
+                  variant="primary"
                   type="submit"
                 >
                   <FormattedMessage {...buttonMessages.create} />

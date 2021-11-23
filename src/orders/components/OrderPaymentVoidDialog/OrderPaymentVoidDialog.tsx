@@ -1,5 +1,4 @@
 import {
-  Button,
   Dialog,
   DialogActions,
   DialogContent,
@@ -12,6 +11,7 @@ import ConfirmButton, {
 import FormSpacer from "@saleor/components/FormSpacer";
 import { OrderErrorFragment } from "@saleor/fragments/types/OrderErrorFragment";
 import { buttonMessages } from "@saleor/intl";
+import { Button } from "@saleor/macaw-ui";
 import getOrderErrorMessage from "@saleor/utils/errors/order";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -63,7 +63,7 @@ const OrderPaymentVoidDialog: React.FC<OrderPaymentVoidDialogProps> = ({
         <ConfirmButton
           transitionState={confirmButtonState}
           color="primary"
-          variant="contained"
+          variant="primary"
           onClick={onConfirm}
         >
           <FormattedMessage {...buttonMessages.confirm} />
