@@ -3546,7 +3546,7 @@
   },
   "src_dot_giftCards_dot_GiftCardCreateDialog_dot_bulkCreateIssuedTitle": {
     "context": "gift card bulk create success dialog title",
-    "string": "Bulk Issue Gift cards"
+    "string": "Bulk Issue Gift Cards"
   },
   "src_dot_giftCards_dot_GiftCardCreateDialog_dot_copiedToClipboardTitle": {
     "context": "copied to clipboard alert title",
