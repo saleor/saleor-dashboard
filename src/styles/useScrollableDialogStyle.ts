@@ -6,6 +6,12 @@ const useScrollableDialogStyle = makeStyles(
       height: "calc(100% - 64px)",
       maxHeight: 700
     },
+    form: {
+      display: "flex",
+      flexDirection: "column",
+      height: "100%",
+      overflowY: "auto"
+    },
     loadMoreLoaderContainer: {
       alignItems: "center",
       display: "flex",
