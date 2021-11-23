@@ -1,10 +1,8 @@
-import { ChannelSaleData } from "@saleor/channels/utils";
-import { SaleDetailsPageFormData } from "@saleor/discounts/components/SaleDetailsPage";
-import { getSaleChannelsVariables } from "@saleor/discounts/handlers";
 import {
-  SaleChannelListingUpdate,
-  SaleChannelListingUpdateVariables
-} from "@saleor/discounts/types/SaleChannelListingUpdate";
+  ChannelSaleFormData,
+  SaleDetailsPageFormData
+} from "@saleor/discounts/components/SaleDetailsPage";
+import { getSaleChannelsVariables } from "@saleor/discounts/handlers";
 import { SaleDetails_sale } from "@saleor/discounts/types/SaleDetails";
 import {
   SaleUpdate,
@@ -22,13 +20,10 @@ function discountValueTypeEnum(type: SaleType): DiscountValueTypeEnum {
 
 export function createUpdateHandler(
   sale: SaleDetails_sale,
-  saleChannelsChoices: ChannelSaleData[],
+  saleChannelsChoices: ChannelSaleFormData[],
   updateSale: (
     variables: SaleUpdateVariables
-  ) => Promise<MutationFetchResult<SaleUpdate>>,
-  updateChannels: (options: {
-    variables: SaleChannelListingUpdateVariables;
-  }) => Promise<MutationFetchResult<SaleChannelListingUpdate>>
+  ) => Promise<MutationFetchResult<SaleUpdate>>
 ) {
   return async (formData: SaleDetailsPageFormData) => {
     const { id } = sale;
@@ -42,12 +37,13 @@ export function createUpdateHandler(
           name: formData.name,
           startDate: joinDateTime(formData.startDate, formData.startTime),
           type: discountValueTypeEnum(formData.type)
-        }
-      }).then(({ data }) => data?.saleUpdate.errors ?? []),
-
-      updateChannels({
-        variables: getSaleChannelsVariables(id, formData, saleChannelsChoices)
-      }).then(({ data }) => data?.saleChannelListingUpdate.errors ?? [])
+        },
+        channelInput: getSaleChannelsVariables(
+          id,
+          formData,
+          saleChannelsChoices.map(channel => channel.id)
+        ).input
+      }).then(({ data }) => data?.saleUpdate.errors ?? [])
     ]);
 
     return errors.flat();
