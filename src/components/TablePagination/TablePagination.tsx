@@ -22,32 +22,38 @@ const messages = defineMessages({
 
 export interface PaginationProps
   extends Omit<MacawPaginationProps, "labels" | "rowNumber"> {
+  component?: React.ElementType;
   colSpan?: number;
   settings?: ListSettings;
   onUpdateListSettings?: ListSettingsUpdate;
 }
 export const TablePagination: React.FC<PaginationProps> = ({
+  component,
   colSpan,
   settings,
   onUpdateListSettings,
   ...rest
 }) => {
   const intl = useIntl();
+  const Wrapper = component || TableCell;
 
   return (
-    <TableCell colSpan={colSpan || 1000}>
+    <Wrapper colSpan={colSpan || 1000}>
       <MacawPagination
         {...rest}
         labels={{
           noOfRows: intl.formatMessage(messages.noOfRows)
         }}
         rowNumber={settings?.rowNumber}
-        onRowNumberUpdate={value => onUpdateListSettings("rowNumber", value)}
+        onRowNumberUpdate={
+          onUpdateListSettings
+            ? value => onUpdateListSettings("rowNumber", value)
+            : undefined
+        }
       />
-    </TableCell>
+    </Wrapper>
   );
 };
-TablePagination.displayName = "Pagination";
 
 TablePagination.displayName = "TablePagination";
 export default TablePagination;
