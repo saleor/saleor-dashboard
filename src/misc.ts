@@ -1,7 +1,7 @@
 import { ThemeType } from "@saleor/macaw-ui";
 import moment from "moment-timezone";
 import { MutationFunction, MutationResult } from "react-apollo";
-import { defineMessages, IntlShape } from "react-intl";
+import { IntlShape } from "react-intl";
 import urlJoin from "url-join";
 
 import { ConfirmButtonTransitionState } from "./components/ConfirmButton";
@@ -9,6 +9,11 @@ import { StatusType } from "./components/StatusChip/types";
 import { StatusLabelProps } from "./components/StatusLabel";
 import { APP_MOUNT_URI } from "./config";
 import { AddressType, AddressTypeInput } from "./customers/types";
+import {
+  commonStatusMessages,
+  orderStatusMessages,
+  paymentStatusMessages
+} from "./intl";
 import {
   MutationResultAdditionalProps,
   PartialMutationProviderOutput,
@@ -69,44 +74,6 @@ export function weight(value: string) {
 export const removeDoubleSlashes = (url: string) =>
   url.replace(/([^:]\/)\/+/g, "$1");
 
-export const commonStatusMessages = defineMessages({
-  cancelled: {
-    defaultMessage: "Cancelled",
-    description: "payment status"
-  }
-});
-
-export const paymentStatusMessages = defineMessages({
-  paid: {
-    defaultMessage: "Fully paid",
-    description: "payment status"
-  },
-  partiallyPaid: {
-    defaultMessage: "Partially paid",
-    description: "payment status"
-  },
-  partiallyRefunded: {
-    defaultMessage: "Partially refunded",
-    description: "payment status"
-  },
-  refunded: {
-    defaultMessage: "Fully refunded",
-    description: "payment status"
-  },
-  unpaid: {
-    defaultMessage: "Unpaid",
-    description: "payment status"
-  },
-  pending: {
-    defaultMessage: "Pending",
-    description: "payment status"
-  },
-  refused: {
-    defaultMessage: "Refused",
-    description: "payment status"
-  }
-});
-
 export const transformPaymentStatus = (
   status: string,
   intl: IntlShape
@@ -158,45 +125,6 @@ export const transformPaymentStatus = (
     status: StatusType.ERROR
   };
 };
-
-export const orderStatusMessages = defineMessages({
-  draft: {
-    defaultMessage: "Draft",
-    description: "order status"
-  },
-  fulfilled: {
-    defaultMessage: "Fulfilled",
-    description: "order status"
-  },
-  partiallyFulfilled: {
-    defaultMessage: "Partially fulfilled",
-    description: "order status"
-  },
-  partiallyReturned: {
-    defaultMessage: "Partially returned",
-    description: "order status"
-  },
-  readyToCapture: {
-    defaultMessage: "Ready to capture",
-    description: "order status"
-  },
-  readyToFulfill: {
-    defaultMessage: "Ready to fulfill",
-    description: "order status"
-  },
-  returned: {
-    defaultMessage: "Returned",
-    description: "order status"
-  },
-  unconfirmed: {
-    defaultMessage: "Unconfirmed",
-    description: "order status"
-  },
-  unfulfilled: {
-    defaultMessage: "Unfulfilled",
-    description: "order status"
-  }
-});
 
 export const transformOrderStatus = (
   status: string,
