@@ -12,7 +12,8 @@ import useNotifier from "@saleor/hooks/useNotifier";
 import ExportDialogSettings from "@saleor/products/components/ProductExportDialog/ExportDialogSettings";
 import {
   ExportSettingsFormData,
-  exportSettingsInitialFormData
+  exportSettingsInitialFormData,
+  exportSettingsInitialFormDataWithIds
 } from "@saleor/products/components/ProductExportDialog/types";
 import { DialogProps } from "@saleor/types";
 import React from "react";
@@ -25,11 +26,16 @@ import { useGiftCardTotalCountQuery } from "../GiftCardsList/queries";
 import { giftCardExportDialogMessages as messages } from "./messages";
 import { useGiftCardExportMutation } from "./mutations";
 import { ExportGiftCards } from "./types/ExportGiftCards";
+import { getExportGiftCardsInput } from "./utils";
 
-const GiftCardExportDialog: React.FC<DialogProps> = ({ onClose, open }) => {
+const GiftCardExportDialog: React.FC<DialogProps & {
+  idsToExport?: string[] | null;
+}> = ({ onClose, open, idsToExport }) => {
   const intl = useIntl();
   const notify = useNotifier();
   const { queue } = useBackgroundTask();
+
+  const hasIdsToExport = !!idsToExport?.length;
 
   const {
     loading: loadingGiftCardList,
@@ -37,6 +43,8 @@ const GiftCardExportDialog: React.FC<DialogProps> = ({ onClose, open }) => {
   } = useGiftCardList();
 
   const { listElements } = useGiftCardListBulkActions();
+
+  const selectedIds = idsToExport ?? listElements;
 
   const {
     data: allGiftCardsCountData,
@@ -69,16 +77,18 @@ const GiftCardExportDialog: React.FC<DialogProps> = ({ onClose, open }) => {
   const handleSubmit = (data: ExportSettingsFormData) => {
     exportGiftCards({
       variables: {
-        input: {
-          fileType: data.fileType,
-          scope: data.scope
-        }
+        input: getExportGiftCardsInput({
+          data,
+          ids: selectedIds
+        })
       }
     });
   };
 
   const { data, change, submit } = useForm(
-    exportSettingsInitialFormData,
+    hasIdsToExport
+      ? exportSettingsInitialFormDataWithIds
+      : exportSettingsInitialFormData,
     handleSubmit
   );
   const allGiftCardsCount = allGiftCardsCountData?.giftCards?.totalCount;
@@ -99,7 +109,7 @@ const GiftCardExportDialog: React.FC<DialogProps> = ({ onClose, open }) => {
         description: "export selected items to csv file"
       },
       {
-        number: filteredGiftCardsCount
+        number: listElements.length
       }
     )
   };
@@ -115,9 +125,10 @@ const GiftCardExportDialog: React.FC<DialogProps> = ({ onClose, open }) => {
             <ExportDialogSettings
               errors={exportGiftCardsOpts?.data?.exportGiftCards?.errors}
               onChange={change}
-              selectedItems={listElements.length}
+              selectedItems={selectedIds?.length}
               data={data}
               exportScopeLabels={exportScopeLabels}
+              allowScopeSelection={!hasIdsToExport}
               itemsQuantity={{
                 filter: filteredGiftCardsCount,
                 all: allGiftCardsCount

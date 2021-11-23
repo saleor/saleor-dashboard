@@ -58,5 +58,22 @@ export const giftCardCreateMessages = defineMessages({
     defaultMessage:
       "After creation Saleor will create a list of gift card codes that you will be able to download. ",
     description: "gift card bulk create modal bottom explanation"
+  },
+  bulkCreateIssuedTitle: {
+    defaultMessage: "Bulk Issue Gift Cards",
+    description: "gift card bulk create success dialog title"
+  },
+  bulkCreateIssuedExplanation: {
+    defaultMessage:
+      "We have issued all of your requested gift cards. You can download the list of new gift cards using the button below.",
+    description: "gift card bulk create success dialog content"
+  },
+  bulkCreateIssuedAccept: {
+    defaultMessage: "Ok",
+    description: "gift card bulk create success dialog accept button"
+  },
+  bulkCreateIssuedExportToEmail: {
+    defaultMessage: "Export To Email",
+    description: "gift card bulk create success dialog export button"
   }
 });
