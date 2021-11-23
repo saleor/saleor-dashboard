@@ -28,10 +28,7 @@ const OrderPaymentDetails: React.FC<OrderPaymentDetailsProps> = props => {
 
   const intl = useIntl();
 
-  const paymentStatus = transformChargeStatus(
-    payment?.chargeStatus || "",
-    intl
-  );
+  const paymentStatus = transformChargeStatus(payment?.chargeStatus, intl);
 
   return (
     <>

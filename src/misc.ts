@@ -89,6 +89,10 @@ const paymentStatusMessages = defineMessages({
   orderUnpaid: {
     defaultMessage: "Unpaid",
     description: "order payment status"
+  },
+  orderOverpaid: {
+    defaultMessage: "Overpaid",
+    description: "order payment status"
   }
 });
 
@@ -132,7 +136,7 @@ const chargeStatusMessages = defineMessages({
 });
 
 export const transformOrderPaymentStatus = (
-  status: string,
+  status: OrderPaymentStatusEnum,
   intl: IntlShape
 ): { localized: string; status: StatusLabelProps["status"] } => {
   switch (status) {
@@ -158,16 +162,28 @@ export const transformOrderPaymentStatus = (
         localized: intl.formatMessage(paymentStatusMessages.orderRefunded),
         status: StatusType.SUCCESS
       };
-    default:
+    case OrderPaymentStatusEnum.OVERPAID:
+      return {
+        localized: intl.formatMessage(paymentStatusMessages.orderOverpaid),
+        status: StatusType.ERROR
+      };
+    case OrderPaymentStatusEnum.NOT_CHARGED:
       return {
         localized: intl.formatMessage(paymentStatusMessages.orderUnpaid),
         status: StatusType.ERROR
+      };
+    default:
+      const localized: never = status;
+
+      return {
+        status: StatusType.NEUTRAL,
+        localized
       };
   }
 };
 
 export const transformChargeStatus = (
-  status: string,
+  status: PaymentChargeStatusEnum,
   intl: IntlShape
 ): { localized: string; status: StatusLabelProps["status"] } => {
   switch (status) {
@@ -217,9 +233,11 @@ export const transformChargeStatus = (
         status: StatusType.NEUTRAL
       };
     default:
+      const localized: never = status;
+
       return {
-        localized: intl.formatMessage(chargeStatusMessages.pending),
-        status: StatusType.ALERT
+        status: StatusType.NEUTRAL,
+        localized
       };
   }
 };
