@@ -43,6 +43,7 @@ export interface ExportDialogSettingsProps {
   selectedItems: number;
   exportScopeLabels: ExportScopeLabels;
   onChange: (event: ChangeEvent) => void;
+  allowScopeSelection?: boolean;
 }
 
 const formFields: Array<keyof ExportSettingsInput> = ["fileType", "scope"];
@@ -53,7 +54,8 @@ const ExportDialogSettings: React.FC<ExportDialogSettingsProps> = ({
   onChange,
   selectedItems,
   itemsQuantity,
-  exportScopeLabels
+  exportScopeLabels,
+  allowScopeSelection = true
 }) => {
   const classes = useStyles({});
   const intl = useIntl();
@@ -105,19 +107,23 @@ const ExportDialogSettings: React.FC<ExportDialogSettingsProps> = ({
 
   return (
     <>
-      <RadioGroupField
-        choices={exportScopeChoices}
-        error={!!formErrors.scope}
-        hint={getExportErrorMessage(formErrors.scope, intl)}
-        label={intl.formatMessage({
-          defaultMessage: "Export information for:",
-          description: "export items to csv file, choice field label"
-        })}
-        name={"scope" as keyof ExportProductsInput}
-        onChange={onChange}
-        value={data.scope}
-      />
-      <Hr className={classes.hr} />
+      {allowScopeSelection && (
+        <>
+          <RadioGroupField
+            choices={exportScopeChoices}
+            error={!!formErrors.scope}
+            hint={getExportErrorMessage(formErrors.scope, intl)}
+            label={intl.formatMessage({
+              defaultMessage: "Export information for:",
+              description: "export items to csv file, choice field label"
+            })}
+            name={"scope" as keyof ExportProductsInput}
+            onChange={onChange}
+            value={data.scope}
+          />
+          <Hr className={classes.hr} />
+        </>
+      )}
       <RadioGroupField
         choices={productExportTypeChoices}
         error={!!formErrors.fileType}
