@@ -16,49 +16,9 @@ export interface SaleUpdate_saleUpdate_errors {
   channels: string[] | null;
 }
 
-export interface SaleUpdate_saleUpdate_sale_metadata {
-  __typename: "MetadataItem";
-  key: string;
-  value: string;
-}
-
-export interface SaleUpdate_saleUpdate_sale_privateMetadata {
-  __typename: "MetadataItem";
-  key: string;
-  value: string;
-}
-
-export interface SaleUpdate_saleUpdate_sale_channelListings_channel {
-  __typename: "Channel";
-  id: string;
-  name: string;
-  currencyCode: string;
-}
-
-export interface SaleUpdate_saleUpdate_sale_channelListings {
-  __typename: "SaleChannelListing";
-  id: string;
-  channel: SaleUpdate_saleUpdate_sale_channelListings_channel;
-  discountValue: number;
-  currency: string;
-}
-
-export interface SaleUpdate_saleUpdate_sale {
-  __typename: "Sale";
-  metadata: (SaleUpdate_saleUpdate_sale_metadata | null)[];
-  privateMetadata: (SaleUpdate_saleUpdate_sale_privateMetadata | null)[];
-  id: string;
-  name: string;
-  type: SaleType;
-  startDate: any;
-  endDate: any | null;
-  channelListings: SaleUpdate_saleUpdate_sale_channelListings[] | null;
-}
-
 export interface SaleUpdate_saleUpdate {
   __typename: "SaleUpdate";
   errors: SaleUpdate_saleUpdate_errors[];
-  sale: SaleUpdate_saleUpdate_sale | null;
 }
 
 export interface SaleUpdate_saleChannelListingUpdate_errors {
