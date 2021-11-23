@@ -5,7 +5,7 @@ import {
   commonStatusMessages,
   orderStatusMessages,
   paymentStatusMessages
-} from "@saleor/misc";
+} from "@saleor/intl";
 import { FilterOpts, MinMax } from "@saleor/types";
 import {
   OrderStatusFilter,
