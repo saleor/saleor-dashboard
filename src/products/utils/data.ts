@@ -1,4 +1,5 @@
 import {
+  getDefaultAttributeValues,
   getSelectedAttributeValues,
   mergeChoicesWithValues
 } from "@saleor/attributes/utils/data";
@@ -97,7 +98,7 @@ export function getAttributeInputFromAttributes(
     },
     id: attribute.id,
     label: attribute.name,
-    value: []
+    value: getDefaultAttributeValues(attribute)
   }));
 }
 
