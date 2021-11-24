@@ -16,6 +16,7 @@ import { ChannelProps, ListActions, ListProps, SortPage } from "@saleor/types";
 import { DiscountValueTypeEnum } from "@saleor/types/globalTypes";
 import { getArrowDirection } from "@saleor/utils/sort";
 import { getFooterColSpanWithBulkActions } from "@saleor/utils/tables";
+import classNames from "classnames";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
@@ -72,6 +73,10 @@ const useStyles = makeStyles(
     },
     textRight: {
       textAlign: "right"
+    },
+    textOverflow: {
+      textOverflow: "ellipsis",
+      overflow: "hidden"
     }
   }),
   { name: "VoucherList" }
@@ -243,7 +248,9 @@ const VoucherList: React.FC<VoucherListProps> = props => {
                     onChange={() => toggle(voucher.id)}
                   />
                 </TableCell>
-                <TableCell className={classes.colName}>
+                <TableCell
+                  className={classNames(classes.colName, classes.textOverflow)}
+                >
                   {maybe<React.ReactNode>(() => voucher.code, <Skeleton />)}
                 </TableCell>
                 <TableCell className={classes.colMinSpent}>
