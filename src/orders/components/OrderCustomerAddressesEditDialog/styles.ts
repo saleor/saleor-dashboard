@@ -4,11 +4,12 @@ export const useStyles = makeStyles(
   theme => ({
     scrollableContent: {
       maxHeight: `calc(100vh - 250px)`,
-      overflow: "scroll"
+      overflowY: "scroll",
+      overflowX: "hidden"
     },
     scrollableWrapper: {
       maxHeight: 400,
-      overflow: "scroll"
+      overflow: "auto"
     },
     container: {
       display: "block"
