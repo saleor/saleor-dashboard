@@ -27,6 +27,7 @@ export enum OrderListUrlFiltersEnum {
 }
 export enum OrderListUrlFiltersWithMultipleValues {
   status = "status",
+  paymentStatus = "paymentStatus",
   channel = "channel"
 }
 

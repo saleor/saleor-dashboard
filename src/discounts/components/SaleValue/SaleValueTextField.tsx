@@ -1,18 +1,17 @@
 import { TextField } from "@material-ui/core";
-import { ChannelSaleData } from "@saleor/channels/utils";
 import { SaleType } from "@saleor/types/globalTypes";
 import React from "react";
-import { useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 
-import { SaleValueInputChangeType } from "./types";
+import { ChannelSaleFormData } from "../SaleDetailsPage";
+import { SaleValueInputOnChangeType } from "./types";
 
 interface SaleValueTextFieldProps {
-  dataType: keyof typeof SaleType;
+  dataType: SaleType;
   helperText: string;
   disabled: boolean;
-  listing: ChannelSaleData;
-  onChange: SaleValueInputChangeType;
+  listing: ChannelSaleFormData;
+  onChange: SaleValueInputOnChangeType;
 }
 
 const SaleValueTextField: React.FC<SaleValueTextFieldProps> = ({
@@ -24,30 +23,9 @@ const SaleValueTextField: React.FC<SaleValueTextFieldProps> = ({
 }) => {
   const intl = useIntl();
 
-  const [fixedValue, setFixedValue] = useState("");
-  const [percentageValue, setPercentageValue] = useState("");
+  const { id, percentageValue, fixedValue } = listing;
 
-  const handleChange = (value: string) => {
-    onChange(listing.id, value);
-  };
-
-  const setCurrentValue = (value: string) => {
-    if (dataType === SaleType.PERCENTAGE) {
-      setPercentageValue(value);
-    } else {
-      setFixedValue(value);
-    }
-  };
-
-  useEffect(() => {
-    setCurrentValue(listing.discountValue);
-  }, []);
-
-  useEffect(() => {
-    handleChange(getTextFieldValue());
-  }, [dataType]);
-
-  const getTextFieldValue = () =>
+  const getTextFieldValue = (dataType: SaleType) =>
     dataType === SaleType.PERCENTAGE ? percentageValue : fixedValue;
 
   return (
@@ -56,14 +34,13 @@ const SaleValueTextField: React.FC<SaleValueTextFieldProps> = ({
       helperText={helperText || ""}
       name="value"
       onChange={e => {
-        handleChange(e.target.value);
-        setCurrentValue(e.target.value);
+        onChange(id, e.target.value);
       }}
       label={intl.formatMessage({
         defaultMessage: "Discount Value",
         description: "sale discount"
       })}
-      value={getTextFieldValue()}
+      value={getTextFieldValue(dataType) || ""}
       type="number"
       fullWidth
       inputProps={{
