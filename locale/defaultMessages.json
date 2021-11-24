@@ -1273,7 +1273,7 @@
     "string": "Cancel"
   },
   "src_dot_cancelled": {
-    "context": "order status",
+    "context": "payment status",
     "string": "Cancelled"
   },
   "src_dot_catalog": {
@@ -5011,6 +5011,13 @@
     "context": "order status",
     "string": "Partially returned"
   },
+  "src_dot_paymentStatus": {
+    "string": "Payment status"
+  },
+  "src_dot_pending": {
+    "context": "payment status",
+    "string": "Pending"
+  },
   "src_dot_permissionGroups": {
     "context": "permission groups section name",
     "string": "Permission Groups"
@@ -6158,6 +6165,10 @@
   "src_dot_refunded": {
     "context": "payment status",
     "string": "Fully refunded"
+  },
+  "src_dot_refused": {
+    "context": "payment status",
+    "string": "Refused"
   },
   "src_dot_remove": {
     "context": "button",

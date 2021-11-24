@@ -1,7 +1,10 @@
 import { date } from "@saleor/fixtures";
 import { createFilterStructure } from "@saleor/orders/components/OrderListPage";
 import { OrderListUrlFilters } from "@saleor/orders/urls";
-import { OrderStatusFilter } from "@saleor/types/globalTypes";
+import {
+  OrderStatusFilter,
+  PaymentChargeStatusEnum
+} from "@saleor/types/globalTypes";
 import { getFilterQueryParams } from "@saleor/utils/filters";
 import { stringifyQs } from "@saleor/utils/urls";
 import { getExistingKeys, setFilterOptsStatus } from "@test/filters";
@@ -63,6 +66,13 @@ describe("Filtering URL params", () => {
       value: [
         OrderStatusFilter.FULFILLED,
         OrderStatusFilter.PARTIALLY_FULFILLED
+      ]
+    },
+    paymentStatus: {
+      active: false,
+      value: [
+        PaymentChargeStatusEnum.FULLY_CHARGED,
+        PaymentChargeStatusEnum.PARTIALLY_CHARGED
       ]
     }
   });
