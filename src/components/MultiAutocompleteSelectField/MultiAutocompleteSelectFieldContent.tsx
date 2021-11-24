@@ -203,7 +203,7 @@ const MultiAutocompleteSelectFieldContent: React.FC<MultiAutocompleteSelectField
   const hasValuesToDisplay =
     displayValues.length > 0 || displayCustomValue || choices.length > 0;
   return (
-    <Paper className={classes.root}>
+    <Paper className={classes.root} elevation={8}>
       {hasValuesToDisplay && (
         <div
           className={classes.content}

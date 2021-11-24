@@ -129,19 +129,15 @@ export const AppInstallPage: React.FC<AppInstallPageProps> = ({
       <Grid container justify="space-between">
         <Grid xs={6} item>
           <Button variant="secondary" onClick={navigateToAppsList}>
-            <Typography>
-              <FormattedMessage {...buttonMessages.cancel} />
-            </Typography>
+            <FormattedMessage {...buttonMessages.cancel} />
           </Button>
         </Grid>
         <Grid xs={6} item className={classes.alignRight}>
           <Button variant="primary" onClick={onSubmit}>
-            <Typography className={classes.installText}>
-              <FormattedMessage
-                defaultMessage="Install App"
-                description="install button"
-              />
-            </Typography>
+            <FormattedMessage
+              defaultMessage="Install App"
+              description="install button"
+            />
           </Button>
         </Grid>
       </Grid>

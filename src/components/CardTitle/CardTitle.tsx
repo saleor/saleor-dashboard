@@ -76,7 +76,6 @@ const CardTitle: React.FC<CardTitleProps> = props => {
         <div className={classes.toolbar}>{toolbar}</div>
       </div>
       <div className={classes.children}>{children}</div>
-      <hr className={classes.hr} />
     </>
   );
 };

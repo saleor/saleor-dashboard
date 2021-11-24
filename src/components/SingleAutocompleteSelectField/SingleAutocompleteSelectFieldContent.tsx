@@ -199,7 +199,7 @@ const SingleAutocompleteSelectFieldContent: React.FC<SingleAutocompleteSelectFie
   const choicesToDisplay = choices.slice(0, slice);
 
   return (
-    <Paper className={classes.root}>
+    <Paper className={classes.root} elevation={8}>
       <div
         className={classes.content}
         ref={anchor}
