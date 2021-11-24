@@ -8,7 +8,8 @@ import {
 import { IFilterElement } from "../../../components/Filter";
 import {
   OrderFilterInput,
-  OrderStatusFilter
+  OrderStatusFilter,
+  PaymentChargeStatusEnum
 } from "../../../types/globalTypes";
 import {
   createFilterTabUtils,
@@ -60,6 +61,14 @@ export function getFilterOpts(
           findValueInEnum(status, OrderStatusFilter)
         ) || []
       )
+    },
+    paymentStatus: {
+      active: params?.paymentStatus !== undefined,
+      value: dedupeFilter(
+        params.paymentStatus?.map(paymentStatus =>
+          findValueInEnum(paymentStatus, PaymentChargeStatusEnum)
+        ) || []
+      )
     }
   };
 }
@@ -75,7 +84,12 @@ export function getFilterVariables(
     }),
     customer: params.customer,
     search: params.query,
-    status: params?.status?.map(status => findInEnum(status, OrderStatusFilter))
+    status: params?.status?.map(status =>
+      findInEnum(status, OrderStatusFilter)
+    ),
+    paymentStatus: params?.paymentStatus?.map(paymentStatus =>
+      findInEnum(paymentStatus, PaymentChargeStatusEnum)
+    )
   };
 }
 
@@ -97,6 +111,13 @@ export function getFilterQueryParam(
         filter,
         OrderListUrlFiltersWithMultipleValues.status,
         OrderStatusFilter
+      );
+
+    case OrderFilterKeys.paymentStatus:
+      return getMultipleEnumValueQueryParam(
+        filter,
+        OrderListUrlFiltersWithMultipleValues.paymentStatus,
+        PaymentChargeStatusEnum
       );
 
     case OrderFilterKeys.channel:
