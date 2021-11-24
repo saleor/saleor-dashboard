@@ -44,7 +44,7 @@ const OrderFulfillStockExceededDialogLines: React.FC<OrderFulfillStockExceededDi
     <TableRow key={line?.id + stock?.id}>
       <TableCellAvatar
         className={classes.colName}
-        thumbnail={line?.thumbnail.url}
+        thumbnail={line?.thumbnail?.url}
       >
         {line?.productName}
         <Typography color="textSecondary" variant="caption">
