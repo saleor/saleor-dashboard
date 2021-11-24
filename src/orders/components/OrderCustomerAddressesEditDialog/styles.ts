@@ -9,7 +9,7 @@ export const useStyles = makeStyles(
     },
     scrollableWrapper: {
       maxHeight: 400,
-      overflow: "auto"
+      overflowY: "scroll"
     },
     container: {
       display: "block"

@@ -91,7 +91,7 @@ const OrderCustomerAddressEdit: React.FC<OrderCustomerAddressEditProps> = props 
         className={classes.optionLabel}
       />
       {addressInputOption === AddressInputOptionEnum.CUSTOMER_ADDRESS && (
-        <div className={classes.scrollableWrapper}>
+        <>
           <CardSpacer />
           <CustomerAddressChoiceCard
             address={customerAddresses.find(getById(selectedCustomerAddressId))}
@@ -99,7 +99,7 @@ const OrderCustomerAddressEdit: React.FC<OrderCustomerAddressEditProps> = props 
             onEdit={onEdit}
           />
           <FormSpacer />
-        </div>
+        </>
       )}
       <FormControlLabel
         value={AddressInputOptionEnum.NEW_ADDRESS}
