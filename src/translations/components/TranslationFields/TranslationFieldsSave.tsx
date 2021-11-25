@@ -38,6 +38,7 @@ const TranslationFieldsSave: React.FC<TranslationFieldsSaveProps> = props => {
     <div className={classes.root}>
       <ConfirmButton
         className={classes.confirmButton}
+        data-test="button-bar-confirm"
         transitionState={saveButtonState}
         onClick={onSave}
       >

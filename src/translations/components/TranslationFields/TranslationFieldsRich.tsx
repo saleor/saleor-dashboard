@@ -47,6 +47,7 @@ const TranslationFieldsRich: React.FC<TranslationFieldsRichProps> = ({
           defaultMessage: "Translation"
         })}
         name="translation"
+        data-test-id="translation"
         onChange={change}
       />
       <TranslationFieldsSave

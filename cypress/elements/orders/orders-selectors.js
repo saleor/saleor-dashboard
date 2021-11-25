@@ -6,5 +6,6 @@ export const ORDERS_SELECTORS = {
   cancelFulfillment: "[data-test-id='cancelFulfillmentButton']",
   cancelFulfillmentSelectField: "[data-test-id='cancelFulfillmentSelectField']",
   orderFulfillmentFrame: "[data-test-id='orderFulfillment']",
-  refundButton: '[data-test-id="refund-button"]'
+  refundButton: '[data-test-id="refund-button"]',
+  fulfillMenuButton: '[data-test-id="fulfill-menu"]'
 };

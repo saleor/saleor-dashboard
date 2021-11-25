@@ -41,6 +41,7 @@ const TranslationFieldsLong: React.FC<TranslationFieldsLongProps> = ({
             })}
             name="translation"
             value={data.translation || ""}
+            data-test-id="translation"
             onChange={change}
           />
           <TranslationFieldsSave
