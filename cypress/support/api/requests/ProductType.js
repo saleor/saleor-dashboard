@@ -7,12 +7,12 @@ export function createTypeProduct({
   hasVariants = true,
   slug = name,
   shippable = true,
-  kind = "NORMAL"
+  kind = "NORMAL",
+  productAttributes = true
 }) {
   const kindLines = returnValueDependsOnShopVersion("3.1", `kind: ${kind}`);
   const productAttributesLine = getValueWithDefault(
-    attributeId,
-    `productAttributes: "${attributeId}"`
+    productAttributes && attributeId`productAttributes: "${attributeId}"`
   );
   const variantAttributesLine = getValueWithDefault(
     hasVariants && attributeId,

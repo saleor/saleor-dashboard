@@ -28,5 +28,6 @@ export const PRODUCT_DETAILS = {
   warehouseOption: "[role='menuitem']",
   stockInput: '[data-test-id="stock-input"]',
   costPriceInput: '[name*="costPrice"]',
-  sellingPriceInput: '[name*="channel-price"]'
+  sellingPriceInput: '[name*="channel-price"]',
+  createSingleVariantCheckbox: '[value="single"]'
 };

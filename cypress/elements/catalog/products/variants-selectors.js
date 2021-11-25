@@ -5,10 +5,12 @@ export const VARIANTS_SELECTORS = {
   warehouseCheckboxes: "[name*='warehouse:']",
   skuInput: "[ data-test-id='sku-input']",
   attributeSelector: "[data-test='attribute-value']",
-  attributeOption: "[data-test-type='option']",
+  attributeOption:
+    "[data-test-type='option'], [data-test='multiautocomplete-select-option']",
   addWarehouseButton: "button[class*='MuiIconButton-colorPrimary']",
   warehouseOption: "[role='menuitem']",
   saveButton: "[data-test='button-bar-confirm']",
   skuInputInAddVariant: "[name='sku']",
-  stockInput: "[data-test-id='stock-input']"
+  stockInput: "[data-test-id='stock-input']",
+  booleanAttributeCheckbox: "[name*='attribute'][type='checkbox']"
 };
