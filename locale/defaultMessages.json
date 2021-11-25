@@ -3823,6 +3823,10 @@
     "context": "used by filter label",
     "string": "Used by"
   },
+  "src_dot_giftCards_dot_GiftCardsList_dot_GiftCardsListOrderCard_dot_giftCardOrderMessage": {
+    "context": "alert card message",
+    "string": "Gift cards will appear after their order is fullfilled. {orderPageLink}"
+  },
   "src_dot_giftCards_dot_GiftCardsList_dot_GiftCardsListTable_dot_GiftCardsListTableHeader_dot_deleteLabel": {
     "context": "GiftCardEnableDisableSection enable label",
     "string": "Delete"
@@ -4722,6 +4726,18 @@
   "src_dot_orders_dot_components_dot_OrderListPage_dot_customer": {
     "context": "order",
     "string": "Customer"
+  },
+  "src_dot_orders_dot_components_dot_OrderListPage_dot_giftCard": {
+    "context": "order",
+    "string": "Gift Card"
+  },
+  "src_dot_orders_dot_components_dot_OrderListPage_dot_giftCardOrdered": {
+    "context": "order",
+    "string": "Gift Card ordered"
+  },
+  "src_dot_orders_dot_components_dot_OrderListPage_dot_giftCardPaid": {
+    "context": "order",
+    "string": "Paid with Gift Card"
   },
   "src_dot_orders_dot_components_dot_OrderListPage_dot_placed": {
     "context": "order",
