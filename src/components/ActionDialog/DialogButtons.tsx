@@ -36,7 +36,12 @@ const DialogButtons: React.FC<DialogButtonsProps> = props => {
     <DialogActions>
       {children}
       {showBackButton && (
-        <Button data-test="back" onClick={onClose} variant="secondary">
+        <Button
+          data-test="back"
+          color="text"
+          onClick={onClose}
+          variant="secondary"
+        >
           <FormattedMessage {...buttonMessages.back} />
         </Button>
       )}
