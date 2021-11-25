@@ -1,6 +1,6 @@
 import { TableCell } from "@material-ui/core";
 import {
-  Pagination as MacawPagination,
+  Pagination,
   PaginationProps as MacawPaginationProps
 } from "@saleor/macaw-ui";
 import React from "react";
@@ -39,7 +39,7 @@ export const TablePagination: React.FC<PaginationProps> = ({
 
   return (
     <Wrapper colSpan={colSpan || 1000}>
-      <MacawPagination
+      <Pagination
         {...rest}
         labels={{
           noOfRows: intl.formatMessage(messages.noOfRows)
