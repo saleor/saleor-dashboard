@@ -96,7 +96,8 @@ const useStyles = makeStyles(
     progress: {},
     progressContainer: {
       display: "flex",
-      justifyContent: "center"
+      justifyContent: "center",
+      padding: theme.spacing(1, 0)
     },
     root: {
       borderBottomLeftRadius: 8,
