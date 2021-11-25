@@ -251,7 +251,7 @@ const VoucherList: React.FC<VoucherListProps> = props => {
                 <TableCell
                   className={classNames(classes.colName, classes.textOverflow)}
                 >
-                  {maybe<React.ReactNode>(() => voucher.code, <Skeleton />)}
+                  {voucher?.code ?? <Skeleton />}
                 </TableCell>
                 <TableCell className={classes.colMinSpent}>
                   {voucher?.code ? (
