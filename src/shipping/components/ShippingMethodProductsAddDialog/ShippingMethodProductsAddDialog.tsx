@@ -229,8 +229,6 @@ const ShippingMethodProductsAddDialog: React.FC<ShippingMethodProductsAddDialogP
         </Button>
         <ConfirmButton
           transitionState={confirmButtonState}
-          color="primary"
-          variant="primary"
           type="submit"
           disabled={loading || !selectedProducts?.length}
           onClick={handleSubmit}

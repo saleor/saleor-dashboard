@@ -139,9 +139,7 @@ const StaffAddMemberDialog: React.FC<StaffAddMemberDialogProps> = props => {
               </Button>
               <ConfirmButton
                 data-test="submit"
-                color="primary"
                 disabled={!hasChanged}
-                variant="primary"
                 type="submit"
                 transitionState={confirmButtonState}
               >

@@ -142,8 +142,6 @@ const ShippingZoneAddWarehouseDialog: React.FC<ShippingZoneAddWarehouseDialogPro
                 </Button>
                 <ConfirmButton
                   transitionState={confirmButtonState}
-                  color="primary"
-                  variant="primary"
                   type="submit"
                 >
                   <FormattedMessage {...buttonMessages.create} />

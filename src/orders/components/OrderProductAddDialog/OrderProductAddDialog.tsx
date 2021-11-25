@@ -398,8 +398,6 @@ const OrderProductAddDialog: React.FC<OrderProductAddDialogProps> = props => {
         </Button>
         <ConfirmButton
           transitionState={confirmButtonState}
-          color="primary"
-          variant="primary"
           type="submit"
           onClick={handleSubmit}
         >

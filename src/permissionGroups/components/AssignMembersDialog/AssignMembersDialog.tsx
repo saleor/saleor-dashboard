@@ -292,8 +292,6 @@ const AssignMembersDialog: React.FC<AssignMembersDialogProps> = ({
         </Button>
         <ConfirmButton
           data-test="submit"
-          color="primary"
-          variant="primary"
           type="submit"
           transitionState={confirmButtonState}
           onClick={() => {

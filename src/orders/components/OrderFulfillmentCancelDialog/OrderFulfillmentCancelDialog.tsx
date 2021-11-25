@@ -131,7 +131,6 @@ const OrderFulfillmentCancelDialog: React.FC<OrderFulfillmentCancelDialogProps> 
                   data-test="submit"
                   disabled={formData.warehouseId === null}
                   transitionState={confirmButtonState}
-                  variant="primary"
                   onClick={submit}
                 >
                   <FormattedMessage {...buttonMessages.accept} />

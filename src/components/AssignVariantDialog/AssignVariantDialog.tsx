@@ -283,8 +283,6 @@ const AssignVariantDialog: React.FC<AssignVariantDialogProps> = props => {
         <ConfirmButton
           data-test="submit"
           transitionState={confirmButtonState}
-          color="primary"
-          variant="primary"
           type="submit"
           onClick={handleSubmit}
         >

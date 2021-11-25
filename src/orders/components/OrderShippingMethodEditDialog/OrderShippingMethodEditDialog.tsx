@@ -150,8 +150,6 @@ const OrderShippingMethodEditDialog: React.FC<OrderShippingMethodEditDialogProps
               </Button>
               <ConfirmButton
                 transitionState={confirmButtonState}
-                color="primary"
-                variant="primary"
                 type="submit"
                 disabled={!data.shippingMethod}
               >

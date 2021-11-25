@@ -164,8 +164,6 @@ const DiscountCountrySelectDialog: React.FC<DiscountCountrySelectDialogProps> = 
                 </Button>
                 <ConfirmButton
                   transitionState={confirmButtonState}
-                  color="primary"
-                  variant="primary"
                   type="submit"
                 >
                   <FormattedMessage

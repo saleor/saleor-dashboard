@@ -167,8 +167,6 @@ const AssignContainerDialog: React.FC<AssignContainerDialogProps> = props => {
         </Button>
         <ConfirmButton
           transitionState={confirmButtonState}
-          color="primary"
-          variant="primary"
           type="submit"
           onClick={handleSubmit}
         >

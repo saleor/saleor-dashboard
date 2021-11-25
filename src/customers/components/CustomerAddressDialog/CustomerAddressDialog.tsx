@@ -131,8 +131,6 @@ const CustomerAddressDialog: React.FC<CustomerAddressDialogProps> = ({
                 </Button>
                 <ConfirmButton
                   transitionState={confirmButtonState}
-                  color="primary"
-                  variant="primary"
                   type="submit"
                 >
                   <FormattedMessage {...buttonMessages.save} />

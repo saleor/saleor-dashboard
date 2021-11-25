@@ -97,8 +97,6 @@ const OrderPaymentDialog: React.FC<OrderPaymentDialogProps> = ({
               </Button>
               <ConfirmButton
                 transitionState={confirmButtonState}
-                color="primary"
-                variant="primary"
                 onClick={submit}
               >
                 <FormattedMessage {...buttonMessages.confirm} />

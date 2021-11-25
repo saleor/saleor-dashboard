@@ -60,12 +60,7 @@ const OrderPaymentVoidDialog: React.FC<OrderPaymentVoidDialogProps> = ({
         <Button onClick={onClose}>
           <FormattedMessage {...buttonMessages.back} />
         </Button>
-        <ConfirmButton
-          transitionState={confirmButtonState}
-          color="primary"
-          variant="primary"
-          onClick={onConfirm}
-        >
+        <ConfirmButton transitionState={confirmButtonState} onClick={onConfirm}>
           <FormattedMessage {...buttonMessages.confirm} />
         </ConfirmButton>
       </DialogActions>

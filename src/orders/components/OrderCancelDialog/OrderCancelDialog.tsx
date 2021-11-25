@@ -76,7 +76,6 @@ const OrderCancelDialog: React.FC<OrderCancelDialogProps> = props => {
         <ConfirmButton
           onClick={onSubmit}
           transitionState={confirmButtonState}
-          variant="primary"
           type="submit"
         >
           <FormattedMessage {...buttonMessages.accept} />

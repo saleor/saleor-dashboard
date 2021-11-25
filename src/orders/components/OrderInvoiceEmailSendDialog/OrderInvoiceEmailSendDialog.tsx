@@ -67,12 +67,7 @@ const OrderInvoiceEmailSendDialog: React.FC<OrderInvoiceEmailSendDialogProps> = 
         <Button onClick={onClose}>
           <FormattedMessage {...buttonMessages.back} />
         </Button>
-        <ConfirmButton
-          transitionState={confirmButtonState}
-          color="primary"
-          variant="primary"
-          onClick={onSend}
-        >
+        <ConfirmButton transitionState={confirmButtonState} onClick={onSend}>
           <FormattedMessage {...buttonMessages.send} />
         </ConfirmButton>
       </DialogActions>

@@ -215,8 +215,6 @@ const AssignAttributeDialog: React.FC<AssignAttributeDialogProps> = ({
         </Button>
         <ConfirmButton
           transitionState={confirmButtonState}
-          color="primary"
-          variant="primary"
           type="submit"
           onClick={onSubmit}
         >

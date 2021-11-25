@@ -77,8 +77,6 @@ const SaveFilterTabDialog: React.FC<SaveFilterTabDialogProps> = ({
               </Button>
               <ConfirmButton
                 transitionState={confirmButtonState}
-                color="primary"
-                variant="primary"
                 onClick={submit}
               >
                 <FormattedMessage {...buttonMessages.save} />

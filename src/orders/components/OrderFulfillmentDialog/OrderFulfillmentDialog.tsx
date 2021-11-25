@@ -227,8 +227,6 @@ const OrderFulfillmentDialog: React.FC<OrderFulfillmentDialogProps> = props => {
                 </Button>
                 <ConfirmButton
                   transitionState={confirmButtonState}
-                  color="primary"
-                  variant="primary"
                   type="submit"
                 >
                   <FormattedMessage {...buttonMessages.confirm} />

@@ -59,8 +59,6 @@ const DialogButtons: React.FC<DialogButtonsProps> = props => {
         <ConfirmButton
           disabled={disabled}
           transitionState={confirmButtonState}
-          color="primary"
-          variant="primary"
           onClick={onConfirm}
           className={classNames({
             [classes.deleteButton]: variant === "delete"

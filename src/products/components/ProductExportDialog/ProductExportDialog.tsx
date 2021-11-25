@@ -288,7 +288,6 @@ const ProductExportDialog: React.FC<ProductExportDialogProps> = ({
           {step === ProductExportStep.SETTINGS && (
             <ConfirmButton
               transitionState={confirmButtonState}
-              variant="primary"
               type="submit"
               data-test="submit"
               onClick={submit}

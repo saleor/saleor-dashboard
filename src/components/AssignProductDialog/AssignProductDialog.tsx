@@ -171,8 +171,6 @@ const AssignProductDialog: React.FC<AssignProductDialogProps> = props => {
         <ConfirmButton
           data-test="submit"
           transitionState={confirmButtonState}
-          color="primary"
-          variant="primary"
           type="submit"
           onClick={handleSubmit}
         >

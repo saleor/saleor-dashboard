@@ -65,7 +65,6 @@ const ProductVariantDeleteDialog: React.FC<ProductVariantDeleteDialogProps> = pr
         <ConfirmButton
           transitionState={confirmButtonState}
           className={classes.deleteButton}
-          variant="primary"
           onClick={onConfirm}
         >
           <FormattedMessage

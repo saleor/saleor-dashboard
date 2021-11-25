@@ -298,8 +298,6 @@ const MenuItemDialog: React.FC<MenuItemDialogProps> = ({
         <ConfirmButton
           data-test="submit"
           transitionState={confirmButtonState}
-          color="primary"
-          variant="primary"
           onClick={handleSubmit}
         >
           <FormattedMessage {...buttonMessages.confirm} />

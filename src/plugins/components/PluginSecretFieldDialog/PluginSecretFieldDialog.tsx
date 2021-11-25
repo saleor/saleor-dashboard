@@ -86,8 +86,6 @@ const PluginSecretFieldDialog: React.FC<PluginSecretFieldDialogProps> = ({
               </Button>
               <ConfirmButton
                 transitionState={confirmButtonState}
-                color="primary"
-                variant="primary"
                 onClick={submit}
               >
                 <FormattedMessage {...buttonMessages.confirm} />
