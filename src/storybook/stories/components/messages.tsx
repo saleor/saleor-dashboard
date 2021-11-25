@@ -1,5 +1,3 @@
-import "@material-ui/core";
-
 import { IMessage } from "@saleor/components/messages";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { Button } from "@saleor/macaw-ui";

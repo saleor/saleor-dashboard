@@ -1,5 +1,3 @@
-import "@material-ui/core";
-
 import { buttonMessages } from "@saleor/intl";
 import { Button, makeStyles } from "@saleor/macaw-ui";
 import React from "react";

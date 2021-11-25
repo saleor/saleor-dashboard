@@ -1,5 +1,3 @@
-import "@material-ui/core";
-
 import ConfirmButton, {
   ConfirmButtonTransitionState
 } from "@saleor/components/ConfirmButton";

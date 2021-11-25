@@ -1,5 +1,3 @@
-import "@material-ui/core";
-
 import {
   createShippingChannelsFromRate,
   createSortedShippingChannels

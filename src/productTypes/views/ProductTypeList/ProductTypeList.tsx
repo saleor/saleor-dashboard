@@ -1,5 +1,3 @@
-import "@material-ui/core";
-
 import DeleteIcon from "@material-ui/icons/Delete";
 import DeleteFilterTabDialog from "@saleor/components/DeleteFilterTabDialog";
 import SaveFilterTabDialog, {

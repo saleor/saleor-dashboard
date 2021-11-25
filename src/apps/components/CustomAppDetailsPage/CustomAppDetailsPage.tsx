@@ -1,5 +1,3 @@
-import "@material-ui/core";
-
 import AccountPermissions from "@saleor/components/AccountPermissions";
 import CardSpacer from "@saleor/components/CardSpacer";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";

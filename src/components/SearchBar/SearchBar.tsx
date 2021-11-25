@@ -1,5 +1,3 @@
-import "@material-ui/core";
-
 import { Button, makeStyles } from "@saleor/macaw-ui";
 import { SearchPageProps, TabPageProps } from "@saleor/types";
 import React from "react";
