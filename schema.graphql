@@ -5169,6 +5169,8 @@ input OrderFilterInput {
   search: String
   metadata: [MetadataFilter]
   channels: [ID]
+  giftCardUsed: Boolean
+  giftCardBought: Boolean
 }
 
 type OrderFulfill {
