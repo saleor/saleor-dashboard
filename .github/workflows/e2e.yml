@@ -4,7 +4,8 @@ on:
   pull_request:
     types: [reopened, synchronize, labeled, opened]
     branches: ["*"]
-
+  workflow_dispatch:
+    branches: ["*"]
 jobs:
   cypress-run:
     if: github.event.pull_request.head.repo.full_name == 'saleor/saleor-dashboard' && (((github.event.action == 'labeled') && (github.event.label.name == 'run e2e')) || ((github.event.action != 'labeled') && contains(github.event.pull_request.labels.*.name, 'run e2e')))
