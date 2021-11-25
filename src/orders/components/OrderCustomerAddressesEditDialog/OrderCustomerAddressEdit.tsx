@@ -96,7 +96,7 @@ const OrderCustomerAddressEdit: React.FC<OrderCustomerAddressEditProps> = props 
           <CustomerAddressChoiceCard
             address={customerAddresses.find(getById(selectedCustomerAddressId))}
             editable
-            onEdit={onEdit}
+            onEditClick={onEdit}
           />
           <FormSpacer />
         </>

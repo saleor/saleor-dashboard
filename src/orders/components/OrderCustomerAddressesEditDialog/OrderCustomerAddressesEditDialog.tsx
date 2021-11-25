@@ -42,7 +42,7 @@ import { validateDefaultAddress } from "./utils";
 
 export interface OrderCustomerSearchAddressState {
   open: boolean;
-  type?: AddressTypeEnum;
+  type: AddressTypeEnum;
 }
 export interface OrderCustomerAddressesEditDialogOutput {
   shippingAddress: AddressInput;
@@ -61,6 +61,11 @@ export interface OrderCustomerAddressesEditDialogProps {
   onClose();
   onConfirm(data: OrderCustomerAddressesEditDialogOutput): SubmitPromise;
 }
+
+const defaultSearchState: OrderCustomerSearchAddressState = {
+  open: false,
+  type: undefined
+};
 
 const OrderCustomerAddressesEditDialog: React.FC<OrderCustomerAddressesEditDialogProps> = props => {
   const {
@@ -137,13 +142,13 @@ const OrderCustomerAddressesEditDialog: React.FC<OrderCustomerAddressesEditDialo
 
   const [addressSearchState, setAddressSearchState] = React.useState<
     OrderCustomerSearchAddressState
-  >({ open: false });
+  >(defaultSearchState);
 
-  const parsedDefaultShippingAddress = validateDefaultAddress(
+  const validatedDefaultShippingAddress = validateDefaultAddress(
     defaultShippingAddress,
     customerAddresses
   );
-  const parsedDefaultBillingAddress = validateDefaultAddress(
+  const validatedDefaultBillingAddress = validateDefaultAddress(
     defaultBillingAddress,
     customerAddresses
   );
@@ -152,8 +157,8 @@ const OrderCustomerAddressesEditDialog: React.FC<OrderCustomerAddressesEditDialo
     <Dialog onClose={onClose} open={open} fullWidth>
       <OrderCustomerAddressesEditForm
         countryChoices={countryChoices}
-        defaultShippingAddress={parsedDefaultShippingAddress}
-        defaultBillingAddress={parsedDefaultBillingAddress}
+        defaultShippingAddress={validatedDefaultShippingAddress}
+        defaultBillingAddress={validatedDefaultBillingAddress}
         onSubmit={handleSubmit}
       >
         {({ change, data, handlers }) => (
@@ -179,7 +184,7 @@ const OrderCustomerAddressesEditDialog: React.FC<OrderCustomerAddressesEditDialo
                     "customerBillingAddress"
                   )
                 }
-                exitSearch={() => setAddressSearchState({ open: false })}
+                exitSearch={() => setAddressSearchState(defaultSearchState)}
               />
             ) : (
               <>

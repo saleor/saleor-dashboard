@@ -2,24 +2,9 @@ import {
   CustomerAddresses_user_addresses,
   CustomerAddresses_user_defaultShippingAddress
 } from "@saleor/customers/types/CustomerAddresses";
+import { flatten } from "@saleor/misc";
 
 import { getById } from "../OrderReturnPage/utils";
-
-export const flatten = (obj: unknown) => {
-  // Be cautious that repeated keys are overwritten
-
-  const result = {};
-
-  Object.keys(obj).forEach(key => {
-    if (typeof obj[key] === "object" && obj[key] !== null) {
-      Object.assign(result, flatten(obj[key]));
-    } else {
-      result[key] = obj[key];
-    }
-  });
-
-  return result;
-};
 
 export const stringifyAddress = (
   address: Partial<CustomerAddresses_user_addresses>
