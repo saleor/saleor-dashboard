@@ -1,6 +1,7 @@
 import { MultiAutocompleteChoiceType } from "@saleor/components/MultiAutocompleteSelectField";
 import { findInEnum, findValueInEnum } from "@saleor/misc";
 import {
+  OrderFilterGiftCard,
   OrderFilterKeys,
   OrderListFilterOpts
 } from "@saleor/orders/components/OrderListPage/filters";
@@ -49,6 +50,14 @@ export function getFilterOpts(
         min: params?.createdFrom || ""
       }
     },
+    giftCard: {
+      active: params?.giftCard !== undefined,
+      value: dedupeFilter(
+        params.giftCard?.map(
+          status => findValueInEnum(status, OrderFilterGiftCard) || []
+        )
+      ) as OrderFilterGiftCard[]
+    },
     customer: {
       active: !!params?.customer,
       value: params?.customer
@@ -75,7 +84,15 @@ export function getFilterVariables(
     }),
     customer: params.customer,
     search: params.query,
-    status: params?.status?.map(status => findInEnum(status, OrderStatusFilter))
+    status: params?.status?.map(status =>
+      findInEnum(status, OrderStatusFilter)
+    ),
+    giftCardBought:
+      params?.giftCard?.some(param => param === OrderFilterGiftCard.bought) ||
+      undefined,
+    giftCardUsed:
+      params?.giftCard?.some(param => param === OrderFilterGiftCard.paid) ||
+      undefined
   };
 }
 
@@ -107,6 +124,13 @@ export function getFilterQueryParam(
 
     case OrderFilterKeys.customer:
       return getSingleValueQueryParam(filter, OrderListUrlFiltersEnum.customer);
+
+    case OrderFilterKeys.giftCard:
+      return getMultipleEnumValueQueryParam(
+        filter,
+        OrderListUrlFiltersWithMultipleValues.giftCard,
+        OrderFilterGiftCard
+      );
   }
 }
 

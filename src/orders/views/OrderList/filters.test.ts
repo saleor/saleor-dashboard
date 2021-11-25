@@ -1,5 +1,8 @@
 import { date } from "@saleor/fixtures";
-import { createFilterStructure } from "@saleor/orders/components/OrderListPage";
+import {
+  createFilterStructure,
+  OrderFilterGiftCard
+} from "@saleor/orders/components/OrderListPage";
 import { OrderListUrlFilters } from "@saleor/orders/urls";
 import { OrderStatusFilter } from "@saleor/types/globalTypes";
 import { getFilterQueryParams } from "@saleor/utils/filters";
@@ -64,6 +67,10 @@ describe("Filtering URL params", () => {
         OrderStatusFilter.FULFILLED,
         OrderStatusFilter.PARTIALLY_FULFILLED
       ]
+    },
+    giftCard: {
+      active: false,
+      value: [OrderFilterGiftCard.paid, OrderFilterGiftCard.bought]
     }
   });
 
