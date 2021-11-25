@@ -51,7 +51,7 @@ filterTests({ definedTags: ["all"], version: "3.1.0" }, () => {
       cy.clearSessionData().loginUserViaRequest();
     });
 
-    xit("should allocate variants bought in preorder to correct warehouses", () => {
+    it("should allocate variants bought in preorder to correct warehouses", () => {
       let order;
       createWaitingForCaptureOrder(checkoutData)
         .then(({ order: orderResp }) => {
@@ -93,8 +93,10 @@ filterTests({ definedTags: ["all"], version: "3.1.0" }, () => {
     it("should not be able to order more products then channel threshold", () => {
       cy.visit(variantDetailsUrl(product.id, variantsList[0].id))
         .get(VARIANTS_SELECTORS.channelThresholdInput)
-        .type(5);
+        .type(5)
+        .addAliasToGraphRequest("ProductVariantChannelListingUpdate");
       saveVariant("VariantUpdate");
+      cy.wait("@ProductVariantChannelListingUpdate");
       checkoutData.productQuantity = 7;
       createCheckout(checkoutData).then(({ errors }) => {
         expect(errors[0].field).to.eq("quantity");
