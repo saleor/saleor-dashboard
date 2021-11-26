@@ -203,6 +203,7 @@ const ProductVariantCreatorStock: React.FC<ProductVariantCreatorStockProps> = pr
                         }
                       </Typography>
                       <TextField
+                        data-test-id="stock-input"
                         fullWidth
                         inputProps={{
                           min: 0,

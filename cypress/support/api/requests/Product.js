@@ -1,10 +1,6 @@
 import { stringify } from "../.././formatData/formatJson";
 import { returnValueDependsOnShopVersion } from "../../formatData/dataDependingOnVersion";
-import {
-  getValuesInArray,
-  getValueWithDefault,
-  getVariantsListIds
-} from "./utils/Utils";
+import { getValueWithDefault, getVariantsListIds } from "./utils/Utils";
 
 export function getFirstProducts(first, search) {
   const filter = search
@@ -154,8 +150,20 @@ export function createVariant({
   costPrice = 1,
   trackInventory = true,
   weight = 1,
+  attributeName = "value",
   attributeValues = ["value"]
 }) {
+  const skuLines = getValueWithDefault(sku, `sku: "${sku}"`);
+
+  const attributeLines = getValueWithDefault(
+    attributeId,
+    `attributes: [{
+    id:"${attributeId}"
+    values: ["${attributeName}"]
+  }]`,
+    "attributes:[]"
+  );
+
   const channelListings = getValueWithDefault(
     channelId,
     `channelListings:{
@@ -175,12 +183,9 @@ export function createVariant({
 
   const mutation = `mutation{
     productVariantBulkCreate(product: "${productId}", variants: {
-      attributes: [{
-        id:"${attributeId}"
-        values: ${getValuesInArray(attributeValues)}
-      }]
+      ${attributeLines}
       weight: ${weight}
-      sku: "${sku}"
+      ${skuLines}
       ${channelListings}
       trackInventory:${trackInventory}
       ${stocks}
@@ -247,6 +252,7 @@ export function getVariant(id, channel, auth = "auth") {
       id
       name
       ${preorder}
+      sku
       pricing{
         onSale
         discount{

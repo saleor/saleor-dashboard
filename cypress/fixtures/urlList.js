@@ -26,6 +26,7 @@ export const urlList = {
   staffMembers: "staff/",
   stripeApiPaymentMethods: "https://api.stripe.com/v1/payment_methods",
   translations: "translations/",
+  variants: "variant/",
   vouchers: "discounts/vouchers/",
   variant: "variant/",
   warehouses: "warehouses/",
@@ -43,6 +44,9 @@ export const categoryDetailsUrl = categoryId =>
 export const customerDetailsUrl = customerId =>
   `${urlList.customers}${customerId}`;
 
+export const giftCardDetailsUrl = giftCardId =>
+  `${urlList.giftCards}${giftCardId}`;
+
 export const menuDetailsUrl = menuId => `${urlList.navigation}${menuId}`;
 
 export const pageTypeDetailsUrl = pageTypeId =>
@@ -52,6 +56,12 @@ export const permissionGroupDetails = permissionGroupId =>
   `${urlList.permissionsGroups}${permissionGroupId}`;
 
 export const productDetailsUrl = productId => `${urlList.products}${productId}`;
+
+export const productVariantDetailUrl = (productId, variantId) =>
+  `${urlList.products}${productId}/${urlList.variants}${variantId}`;
+
+export const productTypeDetailsUrl = productTypeId =>
+  `${urlList.productTypes}${productTypeId}`;
 
 export const staffMemberDetailsUrl = staffMemberId =>
   `${urlList.staffMembers}${staffMemberId}`;
@@ -66,12 +76,6 @@ export const weightRateUrl = (shippingZoneId, weightRateId) =>
 
 export const warehouseDetailsUrl = warehouseId =>
   `${urlList.warehouses}${warehouseId}`;
-
-export const productTypeDetailsUrl = productTypeId =>
-  `${urlList.productTypes}${productTypeId}`;
-
-export const giftCardDetailsUrl = giftCardId =>
-  `${urlList.giftCards}${giftCardId}`;
 
 export const saleDetailsUrl = saleId => `${urlList.sales}${saleId}`;
 

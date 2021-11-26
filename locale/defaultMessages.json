@@ -1293,7 +1293,7 @@
     "string": "Cancel"
   },
   "src_dot_cancelled": {
-    "context": "order status",
+    "context": "payment status",
     "string": "Cancelled"
   },
   "src_dot_cannotFullfillUnpaidOrder": {
@@ -3122,6 +3122,10 @@
   "src_dot_discounts_dot_components_dot_VoucherLimits_dot_usageLimitsTitle": {
     "context": "voucher usage limit, header",
     "string": "Usage Limit"
+  },
+  "src_dot_discounts_dot_components_dot_VoucherLimits_dot_usesLeftCaption": {
+    "context": "usage limit uses left caption",
+    "string": "Uses left"
   },
   "src_dot_discounts_dot_components_dot_VoucherListPage_dot_1112241061": {
     "context": "tab name",
@@ -5452,6 +5456,13 @@
     "context": "order status",
     "string": "Partially returned"
   },
+  "src_dot_paymentStatus": {
+    "string": "Payment status"
+  },
+  "src_dot_pending": {
+    "context": "payment status",
+    "string": "Pending"
+  },
   "src_dot_permissionGroups": {
     "context": "permission groups section name",
     "string": "Permission Groups"
@@ -6009,17 +6020,9 @@
     "context": "modal button",
     "string": "Upload URL"
   },
-  "src_dot_products_dot_components_dot_ProductListPage_dot_1134347598": {
-    "context": "product price",
-    "string": "Price"
-  },
   "src_dot_products_dot_components_dot_ProductListPage_dot_1542417144": {
     "context": "button",
     "string": "Create Product"
-  },
-  "src_dot_products_dot_components_dot_ProductListPage_dot_1952810469": {
-    "context": "product type",
-    "string": "Type"
   },
   "src_dot_products_dot_components_dot_ProductListPage_dot_2059406063": {
     "context": "export products to csv file, button",
@@ -6074,10 +6077,6 @@
     "context": "product is visible",
     "string": "Visible"
   },
-  "src_dot_products_dot_components_dot_ProductList_dot_1134347598": {
-    "context": "product price",
-    "string": "Price"
-  },
   "src_dot_products_dot_components_dot_ProductList_dot_150865454": {
     "context": "product type",
     "string": "Simple"
@@ -6085,29 +6084,37 @@
   "src_dot_products_dot_components_dot_ProductList_dot_1657559629": {
     "string": "No products found"
   },
-  "src_dot_products_dot_components_dot_ProductList_dot_1952810469": {
-    "context": "product type",
-    "string": "Type"
-  },
   "src_dot_products_dot_components_dot_ProductList_dot_2754779425": {
     "context": "product type",
     "string": "Configurable"
-  },
-  "src_dot_products_dot_components_dot_ProductList_dot_3326160357": {
-    "context": "product channels",
-    "string": "Availability"
   },
   "src_dot_products_dot_components_dot_ProductList_dot_636461959": {
     "context": "product",
     "string": "Name"
   },
+  "src_dot_products_dot_components_dot_ProductList_dot_availability": {
+    "context": "product channels",
+    "string": "Availability"
+  },
+  "src_dot_products_dot_components_dot_ProductList_dot_price": {
+    "context": "product price",
+    "string": "Price"
+  },
   "src_dot_products_dot_components_dot_ProductList_dot_published": {
     "context": "product publication date",
     "string": "Published on {date}"
   },
+  "src_dot_products_dot_components_dot_ProductList_dot_type": {
+    "context": "product type",
+    "string": "Type"
+  },
   "src_dot_products_dot_components_dot_ProductList_dot_unpublished": {
     "context": "product publication date",
     "string": "Unpublished"
+  },
+  "src_dot_products_dot_components_dot_ProductList_dot_updatedAt": {
+    "context": "product updated at",
+    "string": "Last updated"
   },
   "src_dot_products_dot_components_dot_ProductList_dot_willBePublished": {
     "context": "product publication date",
@@ -6698,6 +6705,10 @@
   "src_dot_refunded": {
     "context": "payment status",
     "string": "Fully refunded"
+  },
+  "src_dot_refused": {
+    "context": "payment status",
+    "string": "Refused"
   },
   "src_dot_remove": {
     "context": "button",

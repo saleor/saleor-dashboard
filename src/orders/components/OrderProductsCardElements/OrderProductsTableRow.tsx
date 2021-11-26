@@ -13,9 +13,6 @@ import React from "react";
 
 const useStyles = makeStyles(
   theme => ({
-    clickableRow: {
-      cursor: "pointer"
-    },
     colName: {
       width: "auto"
     },
@@ -88,7 +85,7 @@ const TableLine: React.FC<TableLineProps> = ({
   const quantityToDisplay = isOrderLine ? quantityToFulfill : quantity;
 
   return (
-    <TableRow className={classes.clickableRow} hover key={line.id}>
+    <TableRow key={line.id}>
       <TableCellAvatar
         className={classes.colName}
         thumbnail={maybe(() => line.orderLine.thumbnail.url)}

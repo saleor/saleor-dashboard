@@ -571,6 +571,7 @@ export interface OrderShippingMethodUpdate_orderUpdateShipping_order {
   shippingMethod: OrderShippingMethodUpdate_orderUpdateShipping_order_shippingMethod | null;
   shippingMethodName: string | null;
   shippingPrice: OrderShippingMethodUpdate_orderUpdateShipping_order_shippingPrice;
+  token: string;
   metadata: (OrderShippingMethodUpdate_orderUpdateShipping_order_metadata | null)[];
   privateMetadata: (OrderShippingMethodUpdate_orderUpdateShipping_order_privateMetadata | null)[];
   billingAddress: OrderShippingMethodUpdate_orderUpdateShipping_order_billingAddress | null;
