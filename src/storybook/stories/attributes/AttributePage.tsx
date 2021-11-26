@@ -43,7 +43,7 @@ storiesOf("Views / Attributes / Attribute details", module)
       values={undefined}
     />
   ))
-  .add("no values", () => <AttributePage {...props} values={undefined} />)
+  .add("no values", () => <AttributePage {...props} values={[]} />)
   .add("form errors", () => (
     <AttributePage
       {...props}
