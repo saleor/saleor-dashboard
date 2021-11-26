@@ -5,6 +5,7 @@ import {
   TextField,
   Typography
 } from "@material-ui/core";
+import { UserContextError } from "@saleor/auth/types";
 import { AvailableExternalAuthentications_shop_availableExternalAuthentications } from "@saleor/auth/types/AvailableExternalAuthentications";
 import { FormSpacer } from "@saleor/components/FormSpacer";
 import { SubmitPromise } from "@saleor/hooks/useForm";
@@ -49,8 +50,7 @@ const useStyles = makeStyles(
 );
 
 export interface LoginCardProps {
-  error: boolean;
-  externalError: boolean;
+  error?: UserContextError;
   disabled: boolean;
   loading: boolean;
   externalAuthentications?: AvailableExternalAuthentications_shop_availableExternalAuthentications[];
@@ -62,7 +62,6 @@ export interface LoginCardProps {
 const LoginCard: React.FC<LoginCardProps> = props => {
   const {
     error,
-    externalError,
     disabled,
     loading,
     externalAuthentications = [],
@@ -86,14 +85,14 @@ const LoginCard: React.FC<LoginCardProps> = props => {
     <LoginForm onSubmit={onSubmit}>
       {({ change: handleChange, data, submit: handleSubmit }) => (
         <>
-          {error && (
+          {error === "loginError" && (
             <div className={classes.panel} data-test="loginErrorMessage">
               <Typography variant="caption">
                 <FormattedMessage defaultMessage="Sorry, your username and/or password are incorrect. Please try again." />
               </Typography>
             </div>
           )}
-          {externalError && (
+          {error === "externalLoginError" && (
             <div className={classes.panel} data-test="loginErrorMessage">
               <Typography variant="caption">
                 <FormattedMessage defaultMessage="Sorry, login went wrong. Please try again." />

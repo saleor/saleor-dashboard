@@ -1,7 +1,7 @@
 import { APP_DEFAULT_URI, APP_MOUNT_URI } from "@saleor/config";
 import useLocalStorage from "@saleor/hooks/useLocalStorage";
 import useNavigator from "@saleor/hooks/useNavigator";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useQuery } from "react-apollo";
 import urlJoin from "url-join";
 import useRouter from "use-react-router";
@@ -28,10 +28,9 @@ const LoginView: React.FC<LoginViewProps> = ({ params }) => {
     login,
     requestLoginByExternalPlugin,
     loginByExternalPlugin,
-    authenticating
+    authenticating,
+    error
   } = useAuth();
-  const [isError, setIsError] = useState(false);
-  const [isExternalError, setIsExternalError] = useState(false);
   const {
     data: externalAuthentications,
     loading: externalAuthenticationsLoading
@@ -47,8 +46,6 @@ const LoginView: React.FC<LoginViewProps> = ({ params }) => {
     const result = await login(data.email, data.password);
     const errors = result?.errors || [];
 
-    setIsExternalError(false);
-    setIsError(!result || errors?.length > 0);
     return errors;
   };
 
@@ -60,12 +57,8 @@ const LoginView: React.FC<LoginViewProps> = ({ params }) => {
         loginCallbackPath
       )
     });
-    const errors = result?.errors || [];
     const data = JSON.parse(result?.authenticationData || "");
-    setIsError(false);
-    if (!data || errors?.length > 0) {
-      setIsExternalError(true);
-    } else {
+    if (data && !result?.errors?.length) {
       setRequestedExternalPluginId(pluginId);
       window.location.href = data.authorizationUrl;
     }
@@ -76,14 +69,9 @@ const LoginView: React.FC<LoginViewProps> = ({ params }) => {
       code,
       state
     });
-    const errors = result?.errors || [];
-    setIsError(false);
-    if (!result || errors?.length > 0) {
-      setIsExternalError(true);
-    } else {
+    if (result && !result?.errors?.length) {
       navigate(APP_DEFAULT_URI);
     }
-    return errors;
   };
 
   useEffect(() => {
@@ -97,8 +85,7 @@ const LoginView: React.FC<LoginViewProps> = ({ params }) => {
 
   return (
     <LoginPage
-      error={isError}
-      externalError={isExternalError}
+      error={error}
       disabled={authenticating}
       externalAuthentications={
         externalAuthentications?.shop?.availableExternalAuthentications
