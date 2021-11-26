@@ -1,10 +1,4 @@
-import {
-  Card,
-  CardContent,
-  TableBody,
-  TableCell,
-  TableRow
-} from "@material-ui/core";
+import { Card, TableBody, TableCell, TableRow } from "@material-ui/core";
 import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
 import DeleteIcon from "@material-ui/icons/Delete";
 import CardTitle from "@saleor/components/CardTitle";
