@@ -1,6 +1,5 @@
 import { Card } from "@material-ui/core";
 import { mapToMenuItems, useExtensions } from "@saleor/apps/useExtensions";
-import { drawerWidthExpanded } from "@saleor/components/AppLayout/consts";
 import { ButtonWithSelect } from "@saleor/components/ButtonWithSelect";
 import CardMenu from "@saleor/components/CardMenu";
 import ColumnPicker, {
@@ -35,6 +34,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import { ProductListUrlSortField } from "../../urls";
 import ProductList from "../ProductList";
+import { columnsMessages } from "../ProductList/messages";
 import {
   createFilterStructure,
   ProductFilterKeys,
@@ -71,11 +71,6 @@ const useStyles = makeStyles(
     },
     settings: {
       marginRight: theme.spacing(2)
-    },
-    container: {
-      [theme.breakpoints.up("md")]: {
-        marginLeft: drawerWidthExpanded
-      }
     }
   }),
   { name: "ProductListPage" }
@@ -121,18 +116,16 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
 
   const columns: ColumnPickerChoice[] = [
     {
-      label: intl.formatMessage({
-        defaultMessage: "Price",
-        description: "product price"
-      }),
+      label: intl.formatMessage(columnsMessages.price),
       value: "price" as ProductListColumns
     },
     {
-      label: intl.formatMessage({
-        defaultMessage: "Type",
-        description: "product type"
-      }),
+      label: intl.formatMessage(columnsMessages.type),
       value: "productType" as ProductListColumns
+    },
+    {
+      label: intl.formatMessage(columnsMessages.updatedAt),
+      value: "date" as ProductListColumns
     },
     ...availableInGridAttributes.map(attribute => ({
       label: attribute.name,
@@ -150,7 +143,7 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
   const extensionCreateButtonItems = mapToMenuItems(create);
 
   return (
-    <Container className={classes.container}>
+    <Container>
       <PageHeader
         title={intl.formatMessage(sectionNames.products)}
         limitText={

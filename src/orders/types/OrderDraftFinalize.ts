@@ -558,6 +558,7 @@ export interface OrderDraftFinalize_draftOrderComplete_order_channel {
 export interface OrderDraftFinalize_draftOrderComplete_order {
   __typename: "Order";
   id: string;
+  token: string;
   metadata: (OrderDraftFinalize_draftOrderComplete_order_metadata | null)[];
   privateMetadata: (OrderDraftFinalize_draftOrderComplete_order_privateMetadata | null)[];
   billingAddress: OrderDraftFinalize_draftOrderComplete_order_billingAddress | null;

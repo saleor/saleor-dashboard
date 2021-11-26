@@ -51,6 +51,30 @@ filterTests({ definedTags: ["all"], version: "3.1.0" }, () => {
       cy.clearSessionData().loginUserViaRequest();
     });
 
+    it("should not be able to order more products then channel threshold", () => {
+      cy.visit(variantDetailsUrl(product.id, variantsList[0].id))
+        .get(VARIANTS_SELECTORS.channelThresholdInput)
+        .type(5)
+        .addAliasToGraphRequest("ProductVariantChannelListingUpdate");
+      saveVariant("VariantUpdate");
+      cy.wait("@ProductVariantChannelListingUpdate");
+      checkoutData.productQuantity = 7;
+      createCheckout(checkoutData).then(({ errors }) => {
+        expect(errors[0].field).to.eq("quantity");
+      });
+    });
+
+    it("should not be able to order more products then threshold even if channel is not exceeded", () => {
+      cy.visit(variantDetailsUrl(product.id, variantsList[0].id))
+        .get(VARIANTS_SELECTORS.channelThresholdInput)
+        .type(40);
+      saveVariant("VariantUpdate");
+      checkoutData.productQuantity = 20;
+      createCheckout(checkoutData).then(({ errors }) => {
+        expect(errors[0].field).to.eq("quantity");
+      });
+    });
+
     it("should allocate variants bought in preorder to correct warehouses", () => {
       let order;
       createWaitingForCaptureOrder(checkoutData)
@@ -88,30 +112,6 @@ filterTests({ definedTags: ["all"], version: "3.1.0" }, () => {
         .then(({ errors }) => {
           expect(errors, "no errors when fulfilling order").to.be.empty;
         });
-    });
-
-    it("should not be able to order more products then channel threshold", () => {
-      cy.visit(variantDetailsUrl(product.id, variantsList[0].id))
-        .get(VARIANTS_SELECTORS.channelThresholdInput)
-        .type(5)
-        .addAliasToGraphRequest("ProductVariantChannelListingUpdate");
-      saveVariant("VariantUpdate");
-      cy.wait("@ProductVariantChannelListingUpdate");
-      checkoutData.productQuantity = 7;
-      createCheckout(checkoutData).then(({ errors }) => {
-        expect(errors[0].field).to.eq("quantity");
-      });
-    });
-
-    it("should not be able to order more products then threshold even if channel is not exceeded", () => {
-      cy.visit(variantDetailsUrl(product.id, variantsList[0].id))
-        .get(VARIANTS_SELECTORS.channelThresholdInput)
-        .type(40);
-      saveVariant("VariantUpdate");
-      checkoutData.productQuantity = 20;
-      createCheckout(checkoutData).then(({ errors }) => {
-        expect(errors[0].field).to.eq("quantity");
-      });
     });
   });
 });

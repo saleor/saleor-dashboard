@@ -1,9 +1,6 @@
 import { stringify } from "../.././formatData/formatJson";
-import {
-  getValuesInArray,
-  getValueWithDefault,
-  getVariantsListIds
-} from "./utils/Utils";
+import { returnValueDependsOnShopVersion } from "../../formatData/dataDependingOnVersion";
+import { getValueWithDefault, getVariantsListIds } from "./utils/Utils";
 
 export function getFirstProducts(first, search) {
   const filter = search
@@ -154,11 +151,22 @@ export function createVariant({
   trackInventory = true,
   weight = 1,
   attributeValues = ["value"],
+  attributeName = "value",
   preorder
 }) {
   const preorderLines = getValueWithDefault(
     preorder,
     `preorder:${stringify(preorder)}`
+  );
+  const skuLines = getValueWithDefault(sku, `sku: "${sku}"`);
+
+  const attributeLines = getValueWithDefault(
+    attributeId,
+    `attributes: [{
+    id:"${attributeId}"
+    values: ["${attributeName}"]
+  }]`,
+    "attributes:[]"
   );
 
   const channelListings = getValueWithDefault(
@@ -181,12 +189,9 @@ export function createVariant({
   const mutation = `mutation{
     productVariantBulkCreate(product: "${productId}", variants: {
       ${preorderLines}
-      attributes: [{
-        id:"${attributeId}"
-        values: ${getValuesInArray(attributeValues)}
-      }]
+      ${attributeLines}
       weight: ${weight}
-      sku: "${sku}"
+      ${skuLines}
       ${channelListings}
       trackInventory:${trackInventory}
       ${stocks}
@@ -239,6 +244,15 @@ export function getVariants(variantsList) {
 }
 
 export function getVariant(id, channelSlug, auth = "auth") {
+  const preorder = returnValueDependsOnShopVersion(
+    "3.1",
+    `preorder{
+    globalThreshold
+    globalSoldUnits
+    endDate
+  }`
+  );
+
   const query = `query{
     productVariant(id:"${id}" channel:"${channelSlug}"){
       id
@@ -249,6 +263,8 @@ export function getVariant(id, channelSlug, auth = "auth") {
         }
         quantityAllocated
       }
+      ${preorder}
+      sku
       pricing{
         onSale
         discount{
@@ -270,4 +286,42 @@ export function getVariant(id, channelSlug, auth = "auth") {
     }
   }`;
   return cy.sendRequestWithQuery(query, auth).its("body.data.productVariant");
+}
+
+export function deactivatePreorderOnVariant(variantId) {
+  const mutation = `mutation{
+    productVariantPreorderDeactivate(id:"${variantId}"){
+      errors{
+        field
+        message
+      }
+    }
+  }`;
+  return cy
+    .sendRequestWithQuery(mutation)
+    .its("body.data.productVariantPreorderDeactivate");
+}
+
+export function activatePreorderOnVariant(variantId, threshold, endDate) {
+  const thresholdLine = getValueWithDefault(
+    threshold,
+    `globalThreshold:${threshold}`
+  );
+  const endDateLine = getValueWithDefault(threshold, `endDate:${endDate}`);
+  const mutation = `mutation{
+    productVariantUpdate(id:"${variantId}", input:{
+      preorder:{
+        ${thresholdLine}
+        ${endDateLine}
+      }
+    }){
+      errors{
+        field
+        message
+      }
+    }
+  }`;
+  return cy
+    .sendRequestWithQuery(mutation)
+    .its("body.data.productVariantUpdate");
 }

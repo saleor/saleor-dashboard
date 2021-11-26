@@ -1,9 +1,16 @@
 import { IFilter } from "@saleor/components/Filter";
 import { MultiAutocompleteChoiceType } from "@saleor/components/MultiAutocompleteSelectField";
 import { commonMessages } from "@saleor/intl";
-import { orderStatusMessages } from "@saleor/misc";
+import {
+  commonStatusMessages,
+  orderStatusMessages,
+  paymentStatusMessages
+} from "@saleor/intl";
 import { FilterOpts, MinMax } from "@saleor/types";
-import { OrderStatusFilter } from "@saleor/types/globalTypes";
+import {
+  OrderStatusFilter,
+  PaymentChargeStatusEnum
+} from "@saleor/types/globalTypes";
 import {
   createDateField,
   createOptionsField,
@@ -15,6 +22,7 @@ export enum OrderFilterKeys {
   created = "created",
   customer = "customer",
   status = "status",
+  paymentStatus = "paymentStatus",
   channel = "channel"
 }
 
@@ -22,6 +30,7 @@ export interface OrderListFilterOpts {
   created: FilterOpts<MinMax>;
   customer: FilterOpts<string>;
   status: FilterOpts<OrderStatusFilter[]>;
+  paymentStatus: FilterOpts<PaymentChargeStatusEnum[]>;
   channel?: FilterOpts<MultiAutocompleteChoiceType[]>;
 }
 
@@ -69,7 +78,7 @@ export function createFilterStructure(
         true,
         [
           {
-            label: intl.formatMessage(orderStatusMessages.cancelled),
+            label: intl.formatMessage(commonStatusMessages.cancelled),
             value: OrderStatusFilter.CANCELED
           },
           {
@@ -91,10 +100,57 @@ export function createFilterStructure(
           {
             label: intl.formatMessage(orderStatusMessages.readyToFulfill),
             value: OrderStatusFilter.READY_TO_FULFILL
+          },
+          {
+            label: intl.formatMessage(orderStatusMessages.unconfirmed),
+            value: OrderStatusFilter.UNCONFIRMED
           }
         ]
       ),
       active: opts.status.active
+    },
+    {
+      ...createOptionsField(
+        OrderFilterKeys.paymentStatus,
+        intl.formatMessage(commonMessages.paymentStatus),
+        opts.paymentStatus.value,
+        true,
+        [
+          {
+            label: intl.formatMessage(paymentStatusMessages.paid),
+            value: PaymentChargeStatusEnum.FULLY_CHARGED
+          },
+          {
+            label: intl.formatMessage(paymentStatusMessages.partiallyPaid),
+            value: PaymentChargeStatusEnum.PARTIALLY_CHARGED
+          },
+          {
+            label: intl.formatMessage(paymentStatusMessages.unpaid),
+            value: PaymentChargeStatusEnum.NOT_CHARGED
+          },
+          {
+            label: intl.formatMessage(paymentStatusMessages.refunded),
+            value: PaymentChargeStatusEnum.FULLY_REFUNDED
+          },
+          {
+            label: intl.formatMessage(paymentStatusMessages.partiallyRefunded),
+            value: PaymentChargeStatusEnum.PARTIALLY_REFUNDED
+          },
+          {
+            label: intl.formatMessage(commonStatusMessages.cancelled),
+            value: PaymentChargeStatusEnum.CANCELLED
+          },
+          {
+            label: intl.formatMessage(paymentStatusMessages.pending),
+            value: PaymentChargeStatusEnum.PENDING
+          },
+          {
+            label: intl.formatMessage(paymentStatusMessages.refused),
+            value: PaymentChargeStatusEnum.REFUSED
+          }
+        ]
+      ),
+      active: opts.paymentStatus.active
     },
     ...(opts?.channel?.value.length
       ? [

@@ -1186,6 +1186,7 @@ export const order = (placeholder: string): OrderDetails_order => ({
     }
   ],
   id: "T3JkZXI6OQ==",
+  token: "e5cfc543-6a62-472f-8b80-6a2311f9ff14",
   invoices: [
     {
       __typename: "Invoice",
@@ -1431,6 +1432,7 @@ export const draftOrder = (placeholder: string): OrderDetails_order => ({
   events: [],
   fulfillments: [],
   id: "T3JkZXI6MjQ=",
+  token: "e5cfc543-6a62-472f-8b80-6a2311f9ff14",
   invoices: [
     {
       __typename: "Invoice",
