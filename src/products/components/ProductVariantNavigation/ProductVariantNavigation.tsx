@@ -31,7 +31,7 @@ const useStyles = makeStyles(
       display: "block"
     },
     firstVariant: {
-      width: 88
+      width: 104
     },
     link: {
       cursor: "pointer"

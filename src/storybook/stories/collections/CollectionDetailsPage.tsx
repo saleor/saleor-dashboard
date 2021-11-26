@@ -74,6 +74,5 @@ storiesOf("Views / Collections / Collection detailsCollection details", module)
           edges: []
         }
       }}
-      disabled={true}
     />
   ));

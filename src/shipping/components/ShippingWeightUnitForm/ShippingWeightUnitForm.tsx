@@ -53,7 +53,6 @@ const ShippingWeightUnitForm: React.FC<ShippingWeightUnitFormProps> = ({
               onChange={change}
             />
           </CardContent>
-          <Hr />
           <CardActions>
             <Button onClick={submit} data-test-id="saveUnit">
               <FormattedMessage {...buttonMessages.save} />
