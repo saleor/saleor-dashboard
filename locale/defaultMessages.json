@@ -6743,6 +6743,14 @@
   "src_dot_products_dot_views_dot_ProductList_dot_44832327": {
     "string": "We are currently exporting your requested CSV. As soon as it is available it will be sent to your email address"
   },
+  "src_dot_products_dot_views_dot_ProductList_dot_giftCardLabel": {
+    "context": "label",
+    "string": "Gift Card"
+  },
+  "src_dot_products_dot_views_dot_ProductList_dot_normalLabel": {
+    "context": "label",
+    "string": "Normal"
+  },
   "src_dot_products_dot_views_dot_ProductUpdate_dot_3423943948": {
     "string": "Manage Products Channel Availability"
   },

@@ -1,5 +1,8 @@
 import { isInEnum } from "@saleor/misc";
 import { ProductTypeKindEnum } from "@saleor/types/globalTypes";
+import { useIntl } from "react-intl";
+
+import { productKindMessages as messages } from "./messages";
 
 interface ProductKindChoice {
   label: string;
@@ -14,21 +17,24 @@ export const getAvailableProductKinds = (): ProductKindChoice[] =>
 
 export const getProductKindOpts = (
   availableProducts: ProductKindChoice[]
-): ProductKindChoice[] =>
-  availableProducts.map(kind => {
+): ProductKindChoice[] => {
+  const intl = useIntl();
+
+  return availableProducts.map(kind => {
     switch (kind.value) {
       case ProductTypeKindEnum.GIFT_CARD:
         return {
           ...kind,
-          label: "Gift Card"
+          label: intl.formatMessage(messages.giftCardLabel)
         };
       case ProductTypeKindEnum.NORMAL:
         return {
           ...kind,
-          label: "Normal"
+          label: intl.formatMessage(messages.normalLabel)
         };
     }
   });
+};
 
 export const getProductGiftCardFilterParam = (productKind?: string) => {
   if (
