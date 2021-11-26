@@ -7,7 +7,7 @@ import {
   saveCredentials
 } from "@saleor/utils/credentialsManagement";
 import ApolloClient from "apollo-client";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useQuery } from "react-apollo";
 import { IntlShape } from "react-intl";
 import urlJoin from "url-join";
@@ -17,7 +17,8 @@ import {
   ExternalLoginInput,
   RequestExternalLoginInput,
   RequestExternalLogoutInput,
-  UserContext
+  UserContext,
+  UserContextError
 } from "../types";
 import { UserDetails } from "../types/UserDetails";
 import { displayDemoMessage } from "../utils";
@@ -40,6 +41,7 @@ export function useAuthProvider({
     logout
   } = useAuth();
   const { authenticated, authenticating } = useAuthState();
+  const [error, setError] = useState<UserContextError>();
 
   useEffect(() => {
     if (!authenticated && !authenticating) {
@@ -90,6 +92,9 @@ export function useAuthProvider({
         displayDemoMessage(intl, notify);
       }
       saveCredentials(result.data.tokenCreate.user, password);
+      setError(undefined);
+    } else {
+      setError("loginError");
     }
 
     return result.data.tokenCreate;
@@ -120,6 +125,9 @@ export function useAuthProvider({
       if (DEMO_MODE) {
         displayDemoMessage(intl, notify);
       }
+      setError(undefined);
+    } else {
+      setError("externalLoginError");
     }
 
     return result?.data?.externalObtainAccessTokens;
@@ -132,6 +140,7 @@ export function useAuthProvider({
     logout: handleLogout,
     authenticating,
     authenticated,
-    user: userDetails.data?.me
+    user: userDetails.data?.me,
+    error
   };
 }
