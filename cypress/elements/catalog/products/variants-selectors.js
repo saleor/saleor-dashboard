@@ -10,5 +10,10 @@ export const VARIANTS_SELECTORS = {
   warehouseOption: "[role='menuitem']",
   saveButton: "[data-test='button-bar-confirm']",
   skuInputInAddVariant: "[name='sku']",
+  preorderCheckbox: "[name='isPreorder']",
+  setUpEndDateButton: "[name='hasPreorderEndDate']",
+  preorderEndDateInput: "[name='preorderEndDateTime:date']",
+  preorderEndTimeInput: "[name='preorderEndDateTime:time']",
+  globalThresholdInput: "[name='globalThreshold']",
   stockInput: "[data-test-id='stock-input']"
 };
