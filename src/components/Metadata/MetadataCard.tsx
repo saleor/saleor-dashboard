@@ -203,7 +203,7 @@ const MetadataCard: React.FC<MetadataCardProps> = ({
                   </TableBody>
                 </Table>
               )}
-              <CardActions>
+              <CardActions className={classes.actions}>
                 <Button
                   data-test="addField"
                   onClick={() =>
