@@ -1,5 +1,4 @@
 import {
-  Button,
   CircularProgress,
   Divider,
   TextField,
@@ -9,7 +8,7 @@ import { AvailableExternalAuthentications_shop_availableExternalAuthentications 
 import { FormSpacer } from "@saleor/components/FormSpacer";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import { commonMessages } from "@saleor/intl";
-import { makeStyles } from "@saleor/macaw-ui";
+import { Button, makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -133,9 +132,8 @@ const LoginCard: React.FC<LoginCardProps> = props => {
           <div className={classes.buttonContainer}>
             <Button
               className={classes.loginButton}
-              color="primary"
               disabled={disabled}
-              variant="contained"
+              variant="primary"
               onClick={handleSubmit}
               type="submit"
               data-test="submit"
@@ -177,9 +175,8 @@ const LoginCard: React.FC<LoginCardProps> = props => {
             <React.Fragment key={externalAuthentication.id}>
               <FormSpacer />
               <Button
-                color="primary"
                 fullWidth
-                variant="outlined"
+                variant="secondary"
                 size="large"
                 onClick={() =>
                   onExternalAuthentication(externalAuthentication.id)

@@ -1,5 +1,4 @@
 import {
-  Button,
   Checkbox,
   CircularProgress,
   Dialog,
@@ -21,7 +20,7 @@ import Skeleton from "@saleor/components/Skeleton";
 import useElementScroll from "@saleor/hooks/useElementScroll";
 import useSearchQuery from "@saleor/hooks/useSearchQuery";
 import { buttonMessages } from "@saleor/intl";
-import { makeStyles } from "@saleor/macaw-ui";
+import { Button, makeStyles } from "@saleor/macaw-ui";
 import { getUserInitials, getUserName } from "@saleor/misc";
 import { SearchStaffMembers_search_edges_node } from "@saleor/searches/types/SearchStaffMembers";
 import { DialogProps, FetchMoreProps, SearchPageProps } from "@saleor/types";
@@ -293,8 +292,6 @@ const AssignMembersDialog: React.FC<AssignMembersDialogProps> = ({
         </Button>
         <ConfirmButton
           data-test="submit"
-          color="primary"
-          variant="contained"
           type="submit"
           transitionState={confirmButtonState}
           onClick={() => {

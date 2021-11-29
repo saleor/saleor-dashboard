@@ -1,5 +1,6 @@
-import { Button, Card, CardContent, Typography } from "@material-ui/core";
+import { Card, CardContent, Typography } from "@material-ui/core";
 import CardTitle from "@saleor/components/CardTitle";
+import { Button } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -42,7 +43,6 @@ export const ChannelStatus: React.FC<ChannelStatusProps> = ({
           )}
         </Typography>
         <Button
-          color="primary"
           className={classes.activeBtn}
           disabled={disabled}
           onClick={() => updateChannelStatus()}

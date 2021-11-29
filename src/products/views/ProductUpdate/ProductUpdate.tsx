@@ -1,5 +1,5 @@
 import placeholderImg from "@assets/images/placeholder255x255.png";
-import { DialogContentText, IconButton } from "@material-ui/core";
+import { DialogContentText } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
 import { useAttributeValueDeleteMutation } from "@saleor/attributes/mutations";
 import ChannelsWithVariantsAvailabilityDialog from "@saleor/channels/components/ChannelsWithVariantsAvailabilityDialog";
@@ -29,6 +29,7 @@ import useOnSetDefaultVariant from "@saleor/hooks/useOnSetDefaultVariant";
 import useShop from "@saleor/hooks/useShop";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { commonMessages, errorMessages } from "@saleor/intl";
+import { IconButton } from "@saleor/macaw-ui";
 import ProductVariantCreateDialog from "@saleor/products/components/ProductVariantCreateDialog";
 import {
   useProductChannelListingUpdate,
@@ -569,6 +570,7 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
         onImageDelete={handleImageDelete}
         toolbar={
           <IconButton
+            variant="secondary"
             color="primary"
             onClick={() =>
               openModal("remove-variants", {

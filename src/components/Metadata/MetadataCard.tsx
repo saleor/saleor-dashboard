@@ -1,10 +1,8 @@
 import emptyMetadata from "@assets/images/empty-metadata.svg";
 import {
-  Button,
   Card,
   CardActions,
   CardContent,
-  IconButton,
   Table,
   TableBody,
   TableCell,
@@ -16,6 +14,7 @@ import {
 import ToggleIcon from "@material-ui/icons/ArrowDropDown";
 import DeleteIcon from "@material-ui/icons/Delete";
 import { FormChange } from "@saleor/hooks/useForm";
+import { Button, IconButton } from "@saleor/macaw-ui";
 import { MetadataInput } from "@saleor/types/globalTypes";
 import React, { useEffect } from "react";
 import SVG from "react-inlinesvg";
@@ -94,6 +93,7 @@ const MetadataCard: React.FC<MetadataCardProps> = ({
                   />
                 </Typography>
                 <IconButton
+                  variant="secondary"
                   data-test="expand"
                   onClick={() => setExpanded(!expanded)}
                 >
@@ -205,7 +205,6 @@ const MetadataCard: React.FC<MetadataCardProps> = ({
               )}
               <CardActions>
                 <Button
-                  color="primary"
                   data-test="addField"
                   onClick={() =>
                     onChange({

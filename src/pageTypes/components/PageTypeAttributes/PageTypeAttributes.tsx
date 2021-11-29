@@ -1,10 +1,4 @@
-import {
-  Button,
-  Card,
-  IconButton,
-  TableCell,
-  TableRow
-} from "@material-ui/core";
+import { Card, TableCell, TableRow } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
 import CardTitle from "@saleor/components/CardTitle";
 import Checkbox from "@saleor/components/Checkbox";
@@ -15,7 +9,7 @@ import {
   SortableTableRow
 } from "@saleor/components/SortableTable";
 import TableHead from "@saleor/components/TableHead";
-import { makeStyles } from "@saleor/macaw-ui";
+import { Button, IconButton, makeStyles } from "@saleor/macaw-ui";
 import { renderCollection, stopPropagation } from "@saleor/misc";
 import { PageTypeDetails_pageType_attributes } from "@saleor/pageTypes/types/PageTypeDetails";
 import { ListActions, ReorderAction } from "@saleor/types";
@@ -88,8 +82,7 @@ const PageTypeAttributes: React.FC<PageTypeAttributesProps> = props => {
         })}
         toolbar={
           <Button
-            color="primary"
-            variant="text"
+            variant="tertiary"
             onClick={() => onAttributeAssign(AttributeTypeEnum[type])}
             data-test-id="assignAttributes"
           >
@@ -167,6 +160,7 @@ const PageTypeAttributes: React.FC<PageTypeAttributesProps> = props => {
                   </TableCell>
                   <TableCell className={classes.colAction}>
                     <IconButton
+                      variant="secondary"
                       onClick={stopPropagation(() =>
                         onAttributeUnassign(attribute.id)
                       )}

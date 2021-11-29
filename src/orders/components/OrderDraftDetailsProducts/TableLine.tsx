@@ -1,11 +1,11 @@
-import { IconButton, TableCell, TableRow, Typography } from "@material-ui/core";
+import { TableCell, TableRow, Typography } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
 import Link from "@saleor/components/Link";
 import Money from "@saleor/components/Money";
 import StatusBadge from "@saleor/components/StatusBadge";
 import TableCellAvatar from "@saleor/components/TableCellAvatar";
 import { AVATAR_MARGIN } from "@saleor/components/TableCellAvatar/Avatar";
-import { makeStyles } from "@saleor/macaw-ui";
+import { IconButton, makeStyles } from "@saleor/macaw-ui";
 import { OrderLineDiscountContextConsumerProps } from "@saleor/products/components/OrderDiscountProviders/OrderLineDiscountProvider";
 import React, { useRef } from "react";
 import { useIntl } from "react-intl";
@@ -144,7 +144,7 @@ const TableLine: React.FC<TableLineProps> = ({
         />
       </TableCell>
       <TableCell className={classes.colAction}>
-        <IconButton onClick={() => onOrderLineRemove(id)}>
+        <IconButton variant="secondary" onClick={() => onOrderLineRemove(id)}>
           <DeleteIcon color="primary" />
         </IconButton>
       </TableCell>

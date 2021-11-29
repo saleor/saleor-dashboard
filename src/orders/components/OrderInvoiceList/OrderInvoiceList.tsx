@@ -1,5 +1,4 @@
 import {
-  Button,
   Card,
   CardContent,
   TableBody,
@@ -13,7 +12,7 @@ import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
 import { InvoiceFragment } from "@saleor/fragments/types/InvoiceFragment";
 import { buttonMessages } from "@saleor/intl";
-import { makeStyles } from "@saleor/macaw-ui";
+import { Button, makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -77,7 +76,7 @@ const OrderInvoiceList: React.FC<OrderInvoiceListProps> = props => {
         })}
         toolbar={
           onInvoiceGenerate && (
-            <Button color="primary" onClick={onInvoiceGenerate}>
+            <Button onClick={onInvoiceGenerate}>
               <FormattedMessage
                 defaultMessage="Generate"
                 description="generate invoice button"
@@ -126,7 +125,7 @@ const OrderInvoiceList: React.FC<OrderInvoiceListProps> = props => {
                       className={classes.colAction}
                       onClick={() => onInvoiceSend(invoice.id)}
                     >
-                      <Button color="primary">
+                      <Button>
                         <FormattedMessage {...buttonMessages.send} />
                       </Button>
                     </TableCell>

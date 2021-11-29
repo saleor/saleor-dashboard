@@ -1,8 +1,8 @@
-import { Button, TextField, Typography } from "@material-ui/core";
+import { TextField, Typography } from "@material-ui/core";
 import { SetPassword_setPassword_errors } from "@saleor/auth/types/SetPassword";
 import Form from "@saleor/components/Form";
 import FormSpacer from "@saleor/components/FormSpacer";
-import { makeStyles } from "@saleor/macaw-ui";
+import { Button, makeStyles } from "@saleor/macaw-ui";
 import getAccountErrorMessage from "@saleor/utils/errors/account";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -114,9 +114,8 @@ const NewPasswordPage: React.FC<NewPasswordPageProps> = props => {
             <Button
               data-test="button-bar-confirm"
               className={classes.submit}
-              color="primary"
               disabled={(passwordError && data.password.length > 0) || disabled}
-              variant="contained"
+              variant="primary"
               onClick={handleSubmit}
               type="submit"
             >

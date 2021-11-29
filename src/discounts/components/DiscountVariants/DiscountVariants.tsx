@@ -1,7 +1,5 @@
 import {
-  Button,
   Card,
-  IconButton,
   TableBody,
   TableCell,
   TableFooter,
@@ -15,6 +13,7 @@ import Skeleton from "@saleor/components/Skeleton";
 import TableCellAvatar from "@saleor/components/TableCellAvatar";
 import TableHead from "@saleor/components/TableHead";
 import TablePagination from "@saleor/components/TablePagination";
+import { Button, IconButton } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -59,11 +58,7 @@ const DiscountVariants: React.FC<SaleVariantsProps> = props => {
       <CardTitle
         title={intl.formatMessage(messages.discountVariantsHeader)}
         toolbar={
-          <Button
-            color="primary"
-            onClick={onVariantAssign}
-            data-test-id="assign-variant"
-          >
+          <Button onClick={onVariantAssign} data-test-id="assign-variant">
             <FormattedMessage {...messages.discountVariantsButton} />
           </Button>
         }
@@ -160,6 +155,7 @@ const DiscountVariants: React.FC<SaleVariantsProps> = props => {
                   </TableCell>
                   <TableCell className={classes.colActions}>
                     <IconButton
+                      variant="secondary"
                       disabled={!variant || disabled}
                       onClick={event => {
                         event.stopPropagation();

@@ -1,4 +1,4 @@
-import { Button, DialogContentText } from "@material-ui/core";
+import { DialogContentText } from "@material-ui/core";
 import {
   ChannelVoucherData,
   createChannelsDataWithDiscountPrice,
@@ -43,6 +43,7 @@ import usePaginator, {
 } from "@saleor/hooks/usePaginator";
 import useShop from "@saleor/hooks/useShop";
 import { commonMessages, sectionNames } from "@saleor/intl";
+import { Button } from "@saleor/macaw-ui";
 import useCategorySearch from "@saleor/searches/useCategorySearch";
 import useCollectionSearch from "@saleor/searches/useCollectionSearch";
 import useProductSearch from "@saleor/searches/useProductSearch";
@@ -386,7 +387,6 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
                             saveButtonBarState={voucherUpdateOpts.status}
                             categoryListToolbar={
                               <Button
-                                color="primary"
                                 onClick={() =>
                                   openModal("unassign-category", {
                                     ids: listElements
@@ -402,7 +402,6 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
                             }
                             collectionListToolbar={
                               <Button
-                                color="primary"
                                 onClick={() =>
                                   openModal("unassign-collection", {
                                     ids: listElements
@@ -418,7 +417,6 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
                             }
                             productListToolbar={
                               <Button
-                                color="primary"
                                 onClick={() =>
                                   openModal("unassign-product", {
                                     ids: listElements

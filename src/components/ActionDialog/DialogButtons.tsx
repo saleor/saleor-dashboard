@@ -1,6 +1,6 @@
-import { Button, DialogActions } from "@material-ui/core";
+import { DialogActions } from "@material-ui/core";
 import { buttonMessages } from "@saleor/intl";
-import { makeStyles } from "@saleor/macaw-ui";
+import { Button, makeStyles } from "@saleor/macaw-ui";
 import classNames from "classnames";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -59,8 +59,6 @@ const DialogButtons: React.FC<DialogButtonsProps> = props => {
         <ConfirmButton
           disabled={disabled}
           transitionState={confirmButtonState}
-          color="primary"
-          variant="contained"
           onClick={onConfirm}
           className={classNames({
             [classes.deleteButton]: variant === "delete"

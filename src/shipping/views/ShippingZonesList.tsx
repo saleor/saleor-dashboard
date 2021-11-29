@@ -1,4 +1,4 @@
-import { DialogContentText, IconButton } from "@material-ui/core";
+import { DialogContentText } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
 import ActionDialog from "@saleor/components/ActionDialog";
 import { configurationMenuUrl } from "@saleor/configuration";
@@ -13,6 +13,7 @@ import usePaginator, {
 import useShop from "@saleor/hooks/useShop";
 import useUser from "@saleor/hooks/useUser";
 import { commonMessages } from "@saleor/intl";
+import { IconButton } from "@saleor/macaw-ui";
 import { getStringOrPlaceholder, maybe } from "@saleor/misc";
 import { getById } from "@saleor/orders/components/OrderReturnPage/utils";
 import { ListViews } from "@saleor/types";
@@ -162,6 +163,7 @@ export const ShippingZonesList: React.FC<ShippingZonesListProps> = ({
         toggleAll={toggleAll}
         toolbar={
           <IconButton
+            variant="secondary"
             color="primary"
             onClick={() =>
               openModal("remove-many", {

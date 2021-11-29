@@ -1,5 +1,4 @@
 import {
-  Button,
   Dialog,
   DialogActions,
   DialogContent,
@@ -14,6 +13,7 @@ import FormSpacer from "@saleor/components/FormSpacer";
 import { AccountErrorFragment } from "@saleor/fragments/types/AccountErrorFragment";
 import useModalDialogErrors from "@saleor/hooks/useModalDialogErrors";
 import { buttonMessages } from "@saleor/intl";
+import { Button } from "@saleor/macaw-ui";
 import { DialogProps } from "@saleor/types";
 import { getFormErrors } from "@saleor/utils/errors";
 import getAccountErrorMessage from "@saleor/utils/errors/account";
@@ -104,8 +104,6 @@ const StaffPasswordResetDialog: React.FC<StaffPasswordResetDialogProps> = ({
               <ConfirmButton
                 disabled={data.newPassword.length < 8}
                 transitionState={confirmButtonState}
-                color="primary"
-                variant="contained"
                 type="submit"
                 onClick={submit}
               >

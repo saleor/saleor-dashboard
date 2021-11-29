@@ -1,4 +1,4 @@
-import { DialogContentText, IconButton } from "@material-ui/core";
+import { DialogContentText } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
 import ActionDialog from "@saleor/components/ActionDialog";
 import NotFoundPage from "@saleor/components/NotFoundPage";
@@ -10,6 +10,7 @@ import usePaginator, {
   createPaginationState
 } from "@saleor/hooks/usePaginator";
 import { commonMessages, errorMessages } from "@saleor/intl";
+import { IconButton } from "@saleor/macaw-ui";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import createMetadataUpdateHandler from "@saleor/utils/handlers/metadataUpdateHandler";
 import { mapEdgesToItems } from "@saleor/utils/maps";
@@ -251,6 +252,7 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
         subcategories={mapEdgesToItems(data?.category?.children)}
         subcategoryListToolbar={
           <IconButton
+            variant="secondary"
             color="primary"
             onClick={() =>
               openModal("delete-categories", {

@@ -1,7 +1,5 @@
 import {
-  Button,
   Card,
-  IconButton,
   TableBody,
   TableCell,
   TableHead,
@@ -16,7 +14,7 @@ import { RefreshLimits_shop_limits } from "@saleor/components/Shop/types/Refresh
 import Skeleton from "@saleor/components/Skeleton";
 import TableCellHeader from "@saleor/components/TableCellHeader";
 import { sectionNames } from "@saleor/intl";
-import { Backlink } from "@saleor/macaw-ui";
+import { Backlink, Button, IconButton } from "@saleor/macaw-ui";
 import { renderCollection, stopPropagation } from "@saleor/misc";
 import { hasLimits, isLimitReached } from "@saleor/utils/limits";
 import React from "react";
@@ -73,8 +71,7 @@ export const ChannelsListPage: React.FC<ChannelsListPageProps> = ({
         <Button
           disabled={limitReached}
           onClick={navigateToChannelCreate}
-          color="primary"
-          variant="contained"
+          variant="primary"
           data-test="add-channel"
         >
           <FormattedMessage
@@ -129,6 +126,7 @@ export const ChannelsListPage: React.FC<ChannelsListPageProps> = ({
                   <TableCell className={classes.colAction}>
                     {channelsList?.length > 1 && (
                       <IconButton
+                        variant="secondary"
                         color="primary"
                         onClick={
                           channel

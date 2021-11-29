@@ -1,6 +1,4 @@
 import {
-  Button,
-  IconButton,
   TableBody,
   TableCell,
   TableFooter,
@@ -10,6 +8,7 @@ import {
 import DeleteIcon from "@material-ui/icons/Delete";
 import CardTitle from "@saleor/components/CardTitle";
 import TablePagination from "@saleor/components/TablePagination";
+import { Button, IconButton } from "@saleor/macaw-ui";
 import { renderCollection, stopPropagation } from "@saleor/misc";
 import { ListProps } from "@saleor/types";
 import React from "react";
@@ -92,16 +91,14 @@ const InstalledApps: React.FC<InstalledAppsProps> = ({
                     )}
                   </TableCell>
                   <TableCell className={classes.colAction}>
-                    <Button
-                      color="primary"
-                      onClick={stopPropagation(onRowClick(app.node.id))}
-                    >
+                    <Button onClick={stopPropagation(onRowClick(app.node.id))}>
                       <FormattedMessage
                         defaultMessage="About"
                         description="about app"
                       />
                     </Button>
                     <IconButton
+                      variant="secondary"
                       color="primary"
                       onClick={stopPropagation(() => onRemove(app.node.id))}
                     >

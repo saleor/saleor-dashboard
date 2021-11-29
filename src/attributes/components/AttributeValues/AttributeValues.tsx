@@ -1,7 +1,5 @@
 import {
-  Button,
   Card,
-  IconButton,
   TableCell,
   TableFooter,
   TableHead,
@@ -17,7 +15,7 @@ import {
 } from "@saleor/components/SortableTable";
 import TablePagination from "@saleor/components/TablePagination";
 import { AttributeValueListFragment_edges_node } from "@saleor/fragments/types/AttributeValueListFragment";
-import { makeStyles } from "@saleor/macaw-ui";
+import { Button, IconButton, makeStyles } from "@saleor/macaw-ui";
 import { maybe, renderCollection, stopPropagation } from "@saleor/misc";
 import { ListProps, ReorderAction } from "@saleor/types";
 import React from "react";
@@ -87,8 +85,7 @@ const AttributeValues: React.FC<AttributeValuesProps> = ({
         })}
         toolbar={
           <Button
-            color="primary"
-            variant="text"
+            variant="tertiary"
             onClick={onValueAdd}
             data-test-id="assignValueButton"
           >
@@ -152,6 +149,7 @@ const AttributeValues: React.FC<AttributeValuesProps> = ({
                 </TableCell>
                 <TableCell className={classes.iconCell}>
                   <IconButton
+                    variant="secondary"
                     disabled={disabled}
                     onClick={stopPropagation(() => onValueDelete(value.id))}
                   >
