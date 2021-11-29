@@ -303,7 +303,6 @@ export const WeightRatesUpdate: React.FC<WeightRatesUpdateProps> = ({
       {!!allChannels?.length && (
         <ChannelsAvailabilityDialog
           isSelected={isChannelSelected}
-          disabled={!channelListElements.length}
           channels={allChannels}
           onChange={channelsToggle}
           onClose={handleChannelsModalClose}
