@@ -1,7 +1,7 @@
 import { Button, Card, CardActions, CardContent } from "@material-ui/core";
 import CardTitle from "@saleor/components/CardTitle";
 import { Hr } from "@saleor/components/Hr";
-import Money, { subtractMoney } from "@saleor/components/Money";
+import Money from "@saleor/components/Money";
 import Skeleton from "@saleor/components/Skeleton";
 import StatusLabel from "@saleor/components/StatusLabel";
 import { makeStyles } from "@saleor/macaw-ui";
@@ -16,7 +16,11 @@ import {
 } from "../../../types/globalTypes";
 import { OrderDetails_order } from "../../types/OrderDetails";
 import messages from "./messages";
-import { extractOrderGiftCardUsedAmount } from "./utils";
+import {
+  extractOrderGiftCardUsedAmount,
+  extractOutstandingBalance,
+  extractRefundedAmount
+} from "./utils";
 
 const useStyles = makeStyles(
   theme => ({
@@ -26,7 +30,8 @@ const useStyles = makeStyles(
       width: "100%"
     },
     textRight: {
-      textAlign: "right"
+      display: "flex",
+      justifyContent: "end"
     },
     totalRow: {
       fontWeight: 600
@@ -61,10 +66,9 @@ const OrderPayment: React.FC<OrderPaymentProps> = props => {
     maybe(() => order.paymentStatus),
     intl
   );
-  const refundedAmount =
-    order?.totalCaptured &&
-    order?.total?.gross &&
-    subtractMoney(order.totalCaptured, order.total.gross);
+  const refundedAmount = extractRefundedAmount(order);
+  const outstandingBalance = extractOutstandingBalance(order);
+  const usedGiftCardAmount = extractOrderGiftCardUsedAmount(order);
 
   const getDeliveryMethodName = order => {
     if (
@@ -86,8 +90,6 @@ const OrderPayment: React.FC<OrderPaymentProps> = props => {
     }
     return order.shippingMethodName;
   };
-
-  const usedGiftCardAmount = extractOrderGiftCardUsedAmount(order);
 
   return (
     <Card>
@@ -297,17 +299,10 @@ const OrderPayment: React.FC<OrderPaymentProps> = props => {
                 />
               </td>
               <td className={classes.textRight}>
-                {maybe(
-                  () => order.total.gross.amount && order.totalCaptured.amount
-                ) === undefined ? (
+                {outstandingBalance?.amount === undefined ? (
                   <Skeleton />
                 ) : (
-                  <Money
-                    money={subtractMoney(
-                      order.totalCaptured,
-                      order.total.gross
-                    )}
-                  />
+                  <Money money={outstandingBalance} />
                 )}
               </td>
             </tr>

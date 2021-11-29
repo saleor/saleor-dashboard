@@ -211,7 +211,7 @@ export const OrderDraftList: React.FC<OrderDraftListProps> = props => {
                 </TableCell>
                 <TableCell className={classes.colTotal}>
                   {maybe(() => order.total.gross) ? (
-                    <Money money={order.total.gross} />
+                    <Money money={order.total.gross} align="right" />
                   ) : (
                     <Skeleton />
                   )}
