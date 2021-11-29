@@ -10,7 +10,6 @@ import React from "react";
 import ChannelsAvailabilityCard, {
   ChannelsAvailabilityCardProps
 } from "./ChannelsAvailabilityCard";
-import { Messages } from "./types";
 
 const user: User = {
   __typename: "User",
