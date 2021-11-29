@@ -6,7 +6,7 @@ const useStyles = makeStyles(
   theme => ({
     tabsRoot: {
       borderBottom: `1px solid ${theme.palette.divider}`,
-      paddingLeft: theme.spacing(3)
+      paddingLeft: theme.spacing(4)
     }
   }),
   { name: "FilterTabs" }

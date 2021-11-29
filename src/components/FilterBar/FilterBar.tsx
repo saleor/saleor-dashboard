@@ -22,12 +22,12 @@ const useStyles = makeStyles(
       borderBottom: `1px solid ${theme.palette.divider}`,
       display: "flex",
       flexWrap: "wrap",
-      padding: theme.spacing(1, 3)
+      padding: theme.spacing(1, 4)
     },
     tabActionButton: {
       marginLeft: theme.spacing(2),
-      paddingLeft: theme.spacing(3),
-      paddingRight: theme.spacing(3)
+      paddingLeft: theme.spacing(4),
+      paddingRight: theme.spacing(4)
     }
   }),
   {
