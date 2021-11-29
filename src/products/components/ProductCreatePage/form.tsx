@@ -306,11 +306,11 @@ function useProductCreateForm(
   const submit = () => onSubmit(data);
 
   const shouldEnableSave = () => {
-    if (!data.name) {
+    if (!data.name || !data.productType) {
       return false;
     }
 
-    if (!opts.selectedProductType?.hasVariants) {
+    if (opts.selectedProductType?.hasVariants) {
       return true;
     }
 
@@ -319,7 +319,10 @@ function useProductCreateForm(
         validatePrice(channel.price) || validateCostPrice(channel.costPrice)
     );
 
-    return !data.sku || !data.category || hasInvalidChannelListingPrices;
+    if (!data.sku || hasInvalidChannelListingPrices) {
+      return false;
+    }
+    return true;
   };
 
   const disabled = !shouldEnableSave();

@@ -356,7 +356,7 @@ function useProductUpdateForm(
       return false;
     }
 
-    if (!opts.hasVariants) {
+    if (opts.hasVariants) {
       return true;
     }
 
@@ -365,7 +365,10 @@ function useProductUpdateForm(
         validatePrice(channel.price) || validateCostPrice(channel.costPrice)
     );
 
-    return !data.sku || hasInvalidChannelListingPrices;
+    if (!data.sku || hasInvalidChannelListingPrices) {
+      return false;
+    }
+    return true;
   };
 
   const disabled = !shouldEnableSave();
