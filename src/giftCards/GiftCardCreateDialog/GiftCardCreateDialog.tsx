@@ -1,10 +1,8 @@
 import { Dialog, DialogTitle } from "@material-ui/core";
-import { IMessage } from "@saleor/components/messages";
 import useCurrentDate from "@saleor/hooks/useCurrentDate";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { DialogProps } from "@saleor/types";
 import { GiftCardCreateInput } from "@saleor/types/globalTypes";
-import commonErrorMessages from "@saleor/utils/errors/common";
 import React, { useState } from "react";
 import { useIntl } from "react-intl";
 
@@ -18,7 +16,10 @@ import { useGiftCardCreateMutation } from "./mutations";
 import { useChannelCurrencies } from "./queries";
 import { GiftCardCreateFormCustomer } from "./types";
 import { GiftCardCreate } from "./types/GiftCardCreate";
-import { getGiftCardExpiryInputData } from "./utils";
+import {
+  getGiftCardCreateOnCompletedMessage,
+  getGiftCardExpiryInputData
+} from "./utils";
 
 interface GiftCardCreateDialogProps extends DialogProps {
   refetchQueries: string[];
@@ -41,17 +42,7 @@ const GiftCardCreateDialog: React.FC<GiftCardCreateDialogProps> = ({
   const onCompleted = (data: GiftCardCreate) => {
     const errors = data?.giftCardCreate?.errors;
 
-    const notifierData: IMessage = !!errors?.length
-      ? {
-          status: "error",
-          text: intl.formatMessage(commonErrorMessages.unknownError)
-        }
-      : {
-          status: "success",
-          text: intl.formatMessage(messages.createdSuccessAlertTitle)
-        };
-
-    notify(notifierData);
+    notify(getGiftCardCreateOnCompletedMessage(errors, intl));
 
     if (!errors?.length) {
       setCardCode(data?.giftCardCreate?.giftCard?.code);
