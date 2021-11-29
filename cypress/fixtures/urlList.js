@@ -39,6 +39,9 @@ export const attributeDetailsUrl = attributeId =>
 export const categoryDetailsUrl = categoryId =>
   `${urlList.categories}${categoryId}`;
 
+export const collectionDetailsUrl = collectionId =>
+  `${urlList.collections}${collectionId}`;
+
 export const customerDetailsUrl = customerId =>
   `${urlList.customers}${customerId}`;
 
