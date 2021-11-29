@@ -1,6 +1,6 @@
 import { isInEnum } from "@saleor/misc";
 import { ProductTypeKindEnum } from "@saleor/types/globalTypes";
-import { useIntl } from "react-intl";
+import { IntlShape } from "react-intl";
 
 import { productKindMessages as messages } from "./messages";
 
@@ -16,11 +16,10 @@ export const getAvailableProductKinds = (): ProductKindChoice[] =>
   }));
 
 export const getProductKindOpts = (
-  availableProducts: ProductKindChoice[]
-): ProductKindChoice[] => {
-  const intl = useIntl();
-
-  return availableProducts.map(kind => {
+  availableProducts: ProductKindChoice[],
+  intl: IntlShape
+): ProductKindChoice[] =>
+  availableProducts.map(kind => {
     switch (kind.value) {
       case ProductTypeKindEnum.GIFT_CARD:
         return {
@@ -34,7 +33,6 @@ export const getProductKindOpts = (
         };
     }
   });
-};
 
 export const getProductGiftCardFilterParam = (productKind?: string) => {
   if (

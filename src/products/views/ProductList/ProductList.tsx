@@ -282,7 +282,7 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
       })
     );
 
-  const kindOpts = getProductKindOpts(availableProductKinds);
+  const kindOpts = getProductKindOpts(availableProductKinds, intl);
   const paginationState = createPaginationState(settings.rowNumber, params);
   const channelOpts = availableChannels
     ? mapNodeToChoice(availableChannels, channel => channel.slug)
