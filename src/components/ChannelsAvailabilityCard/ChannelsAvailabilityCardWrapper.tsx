@@ -32,7 +32,6 @@ export const ChannelsAvailabilityWrapper: React.FC<ChannelsAvailabilityWrapperPr
     {
       defaultMessage:
         "Available at {selectedChannelsCount} out of {allChannelsCount, plural, one {# channel} other {# channels}}",
-
       description: "channels availability text"
     },
     {
