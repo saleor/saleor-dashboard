@@ -25,11 +25,9 @@ export function validateDefaultAddress<
   const fallbackAddress = {
     id: customerAddresses[0]?.id
   } as CustomerAddresses_user_defaultShippingAddress;
-  // no default address provided
   if (!defaultAddress) {
     return fallbackAddress;
   }
-  // none of customer addresses matches default
   if (!customerAddresses.some(getById(defaultAddress.id))) {
     return fallbackAddress;
   }
