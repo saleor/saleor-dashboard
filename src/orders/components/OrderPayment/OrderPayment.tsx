@@ -1,7 +1,7 @@
 import { Button, Card, CardActions, CardContent } from "@material-ui/core";
 import CardTitle from "@saleor/components/CardTitle";
 import { Hr } from "@saleor/components/Hr";
-import Money, { subtractMoney } from "@saleor/components/Money";
+import Money from "@saleor/components/Money";
 import Skeleton from "@saleor/components/Skeleton";
 import StatusLabel from "@saleor/components/StatusLabel";
 import { makeStyles } from "@saleor/macaw-ui";
@@ -15,6 +15,7 @@ import {
   OrderStatus
 } from "../../../types/globalTypes";
 import { OrderDetails_order } from "../../types/OrderDetails";
+import { extractOutstandingBalance, extractRefundedAmount } from "./utils";
 
 const useStyles = makeStyles(
   theme => ({
@@ -59,10 +60,9 @@ const OrderPayment: React.FC<OrderPaymentProps> = props => {
     maybe(() => order.paymentStatus),
     intl
   );
-  const refundedAmount =
-    order?.totalCaptured &&
-    order?.total?.gross &&
-    subtractMoney(order.totalCaptured, order.total.gross);
+  const refundedAmount = extractRefundedAmount(order);
+  const outstandingBalance = extractOutstandingBalance(order);
+
   return (
     <Card>
       <CardTitle
@@ -266,17 +266,10 @@ const OrderPayment: React.FC<OrderPaymentProps> = props => {
                 />
               </td>
               <td className={classes.textRight}>
-                {maybe(
-                  () => order.total.gross.amount && order.totalCaptured.amount
-                ) === undefined ? (
+                {outstandingBalance?.amount === undefined ? (
                   <Skeleton />
                 ) : (
-                  <Money
-                    money={subtractMoney(
-                      order.totalCaptured,
-                      order.total.gross
-                    )}
-                  />
+                  <Money money={outstandingBalance} />
                 )}
               </td>
             </tr>
