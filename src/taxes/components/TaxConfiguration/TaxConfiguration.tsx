@@ -67,7 +67,6 @@ export const TaxConfiguration: React.FC<TaxConfigurationProps> = props => {
         />
         <FormSpacer />
       </CardContent>
-      <Hr />
       <CardActions>
         <Button disabled={disabled} onClick={onTaxFetch}>
           <FormattedMessage defaultMessage="Fetch taxes" description="button" />

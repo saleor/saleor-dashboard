@@ -27,7 +27,7 @@ const useStyles = makeStyles(
       "&:last-child": {
         paddingRight: 0
       },
-      width: 80
+      width: 84
     },
     colGrab: {
       width: 60
@@ -104,6 +104,7 @@ const ProductTypeAttributes: React.FC<ProductTypeAttributesProps> = props => {
         }
         toolbar={
           <Button
+            disabled={disabled}
             data-test-id={testId}
             variant="tertiary"
             onClick={() => onAttributeAssign(ProductAttributeType[type])}
@@ -190,12 +191,13 @@ const ProductTypeAttributes: React.FC<ProductTypeAttributesProps> = props => {
                   </TableCell>
                   <TableCell className={classes.colAction}>
                     <IconButton
+                      disabled={disabled}
                       variant="secondary"
                       onClick={stopPropagation(() =>
                         onAttributeUnassign(attribute.id)
                       )}
                     >
-                      <DeleteIcon color="primary" />
+                      <DeleteIcon />
                     </IconButton>
                   </TableCell>
                 </SortableTableRow>
