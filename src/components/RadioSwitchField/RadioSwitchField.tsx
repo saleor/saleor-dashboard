@@ -9,7 +9,7 @@ import classNames from "classnames";
 import React from "react";
 
 const useStyles = makeStyles(
-  {
+  theme => ({
     formControl: {
       padding: 0,
       width: "100%"
@@ -20,14 +20,15 @@ const useStyles = makeStyles(
     },
     radioLabel: {
       "& > span": {
-        padding: "10px 6px"
+        paddingTop: theme.spacing(),
+        paddingBottom: theme.spacing()
       }
     },
     secondLabel: {
       display: "block",
       fontSize: "12px"
     }
-  },
+  }),
   { name: "RadioSwitchField" }
 );
 
