@@ -1,4 +1,4 @@
-import { Button, Card, TableCell, TableRow } from "@material-ui/core";
+import { Card, TableCell, TableRow } from "@material-ui/core";
 import { fade } from "@material-ui/core/styles/colorManipulator";
 import CardTitle from "@saleor/components/CardTitle";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
@@ -8,7 +8,7 @@ import {
   SortableTableRow
 } from "@saleor/components/SortableTable";
 import TableCellAvatar from "@saleor/components/TableCellAvatar";
-import { makeStyles } from "@saleor/macaw-ui";
+import { Button, makeStyles } from "@saleor/macaw-ui";
 import { ReorderAction } from "@saleor/types";
 import classNames from "classnames";
 import React from "react";
@@ -131,7 +131,7 @@ const ProductVariantNavigation: React.FC<ProductVariantNavigationProps> = props 
           {onAdd ? (
             <TableRow>
               <TableCell colSpan={3}>
-                <Button color="primary" onClick={onAdd}>
+                <Button onClick={onAdd}>
                   <FormattedMessage
                     defaultMessage="Add variant"
                     description="button"

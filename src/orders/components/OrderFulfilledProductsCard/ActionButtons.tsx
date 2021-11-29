@@ -1,4 +1,5 @@
-import { Button, CardActions } from "@material-ui/core";
+import { CardActions } from "@material-ui/core";
+import { Button } from "@saleor/macaw-ui";
 import { FulfillmentStatus } from "@saleor/types/globalTypes";
 import React from "react";
 import { FormattedMessage } from "react-intl";
@@ -30,7 +31,7 @@ const ActionButtons: React.FC<AcionButtonsProps> = ({
   if (status === FulfillmentStatus.RETURNED) {
     return (
       <CardActions>
-        <Button color="primary" onClick={onRefund}>
+        <Button onClick={onRefund}>
           <FormattedMessage
             defaultMessage="Refund"
             description="refund button"
@@ -42,7 +43,7 @@ const ActionButtons: React.FC<AcionButtonsProps> = ({
 
   return hasTrackingNumber ? (
     <CardActions>
-      <Button color="primary" onClick={onTrackingCodeAdd}>
+      <Button onClick={onTrackingCodeAdd}>
         <FormattedMessage
           defaultMessage="Edit tracking"
           description="edit tracking button"
@@ -51,7 +52,7 @@ const ActionButtons: React.FC<AcionButtonsProps> = ({
     </CardActions>
   ) : (
     <CardActions>
-      <Button color="primary" onClick={onTrackingCodeAdd}>
+      <Button onClick={onTrackingCodeAdd}>
         <FormattedMessage
           defaultMessage="Add tracking"
           description="add tracking button"

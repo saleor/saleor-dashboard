@@ -1,7 +1,5 @@
 import {
-  Button,
   Card,
-  IconButton,
   TableBody,
   TableCell,
   TableRow,
@@ -14,7 +12,7 @@ import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
 import TableCellHeader from "@saleor/components/TableCellHeader";
 import TableHead from "@saleor/components/TableHead";
-import { makeStyles } from "@saleor/macaw-ui";
+import { Button, IconButton, makeStyles } from "@saleor/macaw-ui";
 import {
   getUserInitials,
   getUserName,
@@ -257,6 +255,7 @@ const PermissionGroupMemberList: React.FC<PermissionGroupProps> = props => {
                       {user ? (
                         <>
                           <IconButton
+                            variant="secondary"
                             data-test-id="removeUser"
                             disabled={disabled}
                             color="primary"

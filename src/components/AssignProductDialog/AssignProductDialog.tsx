@@ -1,5 +1,4 @@
 import {
-  Button,
   CircularProgress,
   Dialog,
   DialogActions,
@@ -17,6 +16,7 @@ import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import TableCellAvatar from "@saleor/components/TableCellAvatar";
 import useSearchQuery from "@saleor/hooks/useSearchQuery";
 import { buttonMessages } from "@saleor/intl";
+import { Button } from "@saleor/macaw-ui";
 import { maybe } from "@saleor/misc";
 import { SearchProducts_search_edges_node } from "@saleor/searches/types/SearchProducts";
 import useScrollableDialogStyle from "@saleor/styles/useScrollableDialogStyle";
@@ -171,8 +171,6 @@ const AssignProductDialog: React.FC<AssignProductDialogProps> = props => {
         <ConfirmButton
           data-test="submit"
           transitionState={confirmButtonState}
-          color="primary"
-          variant="contained"
           type="submit"
           onClick={handleSubmit}
         >

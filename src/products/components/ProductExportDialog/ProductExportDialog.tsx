@@ -1,5 +1,4 @@
 import {
-  Button,
   Dialog,
   DialogActions,
   DialogContent,
@@ -18,6 +17,7 @@ import useModalDialogErrors from "@saleor/hooks/useModalDialogErrors";
 import useModalDialogOpen from "@saleor/hooks/useModalDialogOpen";
 import useWizard from "@saleor/hooks/useWizard";
 import { buttonMessages } from "@saleor/intl";
+import { Button } from "@saleor/macaw-ui";
 import { SearchAttributes_search_edges_node } from "@saleor/searches/types/SearchAttributes";
 import { DialogProps, FetchMoreProps } from "@saleor/types";
 import {
@@ -281,19 +281,13 @@ const ProductExportDialog: React.FC<ProductExportDialogProps> = ({
             </Button>
           )}
           {step === ProductExportStep.INFO && (
-            <Button
-              color="primary"
-              variant="contained"
-              onClick={next}
-              data-test="next"
-            >
+            <Button variant="primary" onClick={next} data-test="next">
               <FormattedMessage {...buttonMessages.nextStep} />
             </Button>
           )}
           {step === ProductExportStep.SETTINGS && (
             <ConfirmButton
               transitionState={confirmButtonState}
-              variant="contained"
               type="submit"
               data-test="submit"
               onClick={submit}

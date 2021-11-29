@@ -1,5 +1,4 @@
 import {
-  Button,
   Dialog,
   DialogActions,
   DialogContent,
@@ -14,6 +13,7 @@ import Form from "@saleor/components/Form";
 import { AttributeErrorFragment } from "@saleor/fragments/types/AttributeErrorFragment";
 import useModalDialogErrors from "@saleor/hooks/useModalDialogErrors";
 import { buttonMessages } from "@saleor/intl";
+import { Button } from "@saleor/macaw-ui";
 import { maybe } from "@saleor/misc";
 import { getFormErrors } from "@saleor/utils/errors";
 import React from "react";
@@ -93,8 +93,6 @@ const AttributeValueEditDialog: React.FC<AttributeValueEditDialogProps> = ({
               <ConfirmButton
                 data-test="submit"
                 transitionState={confirmButtonState}
-                color="primary"
-                variant="contained"
                 onClick={submit}
               >
                 <FormattedMessage {...buttonMessages.save} />

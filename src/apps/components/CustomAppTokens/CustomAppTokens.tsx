@@ -1,7 +1,5 @@
 import {
-  Button,
   Card,
-  IconButton,
   TableBody,
   TableCell,
   TableHead,
@@ -11,6 +9,7 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import CardTitle from "@saleor/components/CardTitle";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
+import { Button, IconButton } from "@saleor/macaw-ui";
 import { renderCollection } from "@saleor/misc";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -39,7 +38,7 @@ const CustomAppTokens: React.FC<CustomAppTokensProps> = props => {
           description: "header"
         })}
         toolbar={
-          <Button color="primary" onClick={onCreate} data-test-id="createToken">
+          <Button onClick={onCreate} data-test-id="createToken">
             <FormattedMessage
               defaultMessage="Create Token"
               description="button"
@@ -80,6 +79,7 @@ const CustomAppTokens: React.FC<CustomAppTokensProps> = props => {
                 </TableCell>
                 <TableCell className={classes.colActions}>
                   <IconButton
+                    variant="secondary"
                     color="primary"
                     onClick={() => onDelete(token.id)}
                   >

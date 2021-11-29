@@ -1,5 +1,4 @@
 import {
-  Button,
   Dialog,
   DialogActions,
   DialogContent,
@@ -10,7 +9,7 @@ import ConfirmButton, {
   ConfirmButtonTransitionState
 } from "@saleor/components/ConfirmButton";
 import { buttonMessages } from "@saleor/intl";
-import { makeStyles } from "@saleor/macaw-ui";
+import { Button, makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
@@ -66,7 +65,6 @@ const ProductVariantDeleteDialog: React.FC<ProductVariantDeleteDialogProps> = pr
         <ConfirmButton
           transitionState={confirmButtonState}
           className={classes.deleteButton}
-          variant="contained"
           onClick={onConfirm}
         >
           <FormattedMessage

@@ -1,10 +1,11 @@
-import { Button, Card } from "@material-ui/core";
+import { Card } from "@material-ui/core";
 import { CategoryListUrlSortField } from "@saleor/categories/urls";
 import Container from "@saleor/components/Container";
 import PageHeader from "@saleor/components/PageHeader";
 import SearchBar from "@saleor/components/SearchBar";
 import { CategoryFragment } from "@saleor/fragments/types/CategoryFragment";
 import { sectionNames } from "@saleor/intl";
+import { Button } from "@saleor/macaw-ui";
 import {
   ListActions,
   PageListProps,
@@ -56,12 +57,7 @@ export const CategoryListPage: React.FC<CategoryTableProps> = ({
   return (
     <Container>
       <PageHeader title={intl.formatMessage(sectionNames.categories)}>
-        <Button
-          color="primary"
-          variant="contained"
-          onClick={onAdd}
-          data-test-id="createCategory"
-        >
+        <Button variant="primary" onClick={onAdd} data-test-id="createCategory">
           <FormattedMessage
             defaultMessage="Create category"
             description="button"
