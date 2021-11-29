@@ -1,4 +1,4 @@
-import { Card, IconButton, TextField } from "@material-ui/core";
+import { Card, TextField } from "@material-ui/core";
 import blue from "@material-ui/core/colors/blue";
 import cyan from "@material-ui/core/colors/cyan";
 import green from "@material-ui/core/colors/green";
@@ -10,7 +10,7 @@ import CardTitle from "@saleor/components/CardTitle";
 import Hr from "@saleor/components/Hr";
 import PriceField from "@saleor/components/PriceField";
 import { WarehouseFragment } from "@saleor/fragments/types/WarehouseFragment";
-import { makeStyles } from "@saleor/macaw-ui";
+import { IconButton, makeStyles } from "@saleor/macaw-ui";
 import { ProductVariantBulkCreate_productVariantBulkCreate_errors } from "@saleor/products/types/ProductVariantBulkCreate";
 import { ProductVariantBulkCreateInput } from "@saleor/types/globalTypes";
 import { getFormErrors } from "@saleor/utils/errors";
@@ -318,6 +318,7 @@ const ProductVariantCreatorSummary: React.FC<ProductVariantCreatorSummaryProps> 
               </div>
               <div className={classes.col}>
                 <IconButton
+                  variant="secondary"
                   className={classes.delete}
                   color="primary"
                   onClick={() => onVariantDelete(variantIndex)}

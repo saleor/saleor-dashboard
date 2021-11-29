@@ -1,5 +1,4 @@
 import {
-  Button,
   Card,
   TableBody,
   TableCell,
@@ -12,7 +11,7 @@ import Money from "@saleor/components/Money";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
 import StatusLabel from "@saleor/components/StatusLabel";
-import { makeStyles } from "@saleor/macaw-ui";
+import { Button, makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -57,7 +56,7 @@ const CustomerOrders: React.FC<CustomerOrdersProps> = props => {
           description: "section header"
         })}
         toolbar={
-          <Button variant="text" color="primary" onClick={onViewAllOrdersClick}>
+          <Button variant="tertiary" onClick={onViewAllOrdersClick}>
             <FormattedMessage
               defaultMessage="View all orders"
               description="button"

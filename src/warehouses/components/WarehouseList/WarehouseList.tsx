@@ -1,5 +1,4 @@
 import {
-  IconButton,
   TableBody,
   TableCell,
   TableFooter,
@@ -13,7 +12,7 @@ import Skeleton from "@saleor/components/Skeleton";
 import TableCellHeader from "@saleor/components/TableCellHeader";
 import TablePagination from "@saleor/components/TablePagination";
 import { WarehouseWithShippingFragment } from "@saleor/fragments/types/WarehouseWithShippingFragment";
-import { makeStyles } from "@saleor/macaw-ui";
+import { IconButton, makeStyles } from "@saleor/macaw-ui";
 import { maybe, renderCollection, stopPropagation } from "@saleor/misc";
 import { ListProps, SortPage } from "@saleor/types";
 import { mapEdgesToItems } from "@saleor/utils/maps";
@@ -150,7 +149,11 @@ const WarehouseList: React.FC<WarehouseListProps> = props => {
               </TableCell>
               <TableCell className={classes.colActions}>
                 <div className={classes.actions}>
-                  <IconButton color="primary" data-test="editButton">
+                  <IconButton
+                    variant="secondary"
+                    color="primary"
+                    data-test="editButton"
+                  >
                     <EditIcon />
                   </IconButton>
                   <IconButton

@@ -1,5 +1,4 @@
-import { Button } from "@material-ui/core";
-import { makeStyles } from "@saleor/macaw-ui";
+import { Button, makeStyles } from "@saleor/macaw-ui";
 import { SearchPageProps, TabPageProps } from "@saleor/types";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -83,11 +82,7 @@ const SearchBar: React.FC<SearchBarProps> = props => {
         />
         {displayTabAction &&
           (displayTabAction === "save" ? (
-            <Button
-              className={classes.tabActionButton}
-              color="primary"
-              onClick={onTabSave}
-            >
+            <Button className={classes.tabActionButton} onClick={onTabSave}>
               <FormattedMessage
                 defaultMessage="Save Search"
                 description="button"
@@ -95,11 +90,7 @@ const SearchBar: React.FC<SearchBarProps> = props => {
             </Button>
           ) : (
             displayTabAction === "delete" && (
-              <Button
-                className={classes.tabActionButton}
-                color="primary"
-                onClick={onTabDelete}
-              >
+              <Button className={classes.tabActionButton} onClick={onTabDelete}>
                 <FormattedMessage
                   defaultMessage="Delete Search"
                   description="button"

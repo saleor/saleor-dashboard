@@ -1,5 +1,4 @@
 import {
-  Button,
   Dialog,
   DialogActions,
   DialogContent,
@@ -16,6 +15,7 @@ import Form from "@saleor/components/Form";
 import FormSpacer from "@saleor/components/FormSpacer";
 import useModalDialogOpen from "@saleor/hooks/useModalDialogOpen";
 import { buttonMessages } from "@saleor/intl";
+import { Button } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -94,7 +94,6 @@ const TokenCreateDialog: React.FC<TokenCreateDialogProps> = props => {
                     </Typography>
                     <Button
                       className={classes.copy}
-                      color="primary"
                       onClick={() => handleCopy(token)}
                     >
                       <FormattedMessage
@@ -109,11 +108,7 @@ const TokenCreateDialog: React.FC<TokenCreateDialogProps> = props => {
             <DialogActions>
               {step === "form" ? (
                 <>
-                  <Button
-                    className={classes.cancel}
-                    color="primary"
-                    onClick={onClose}
-                  >
+                  <Button className={classes.cancel} onClick={onClose}>
                     <FormattedMessage {...buttonMessages.back} />
                   </Button>
                   <ConfirmButton
@@ -128,12 +123,7 @@ const TokenCreateDialog: React.FC<TokenCreateDialogProps> = props => {
                   </ConfirmButton>
                 </>
               ) : (
-                <Button
-                  color="primary"
-                  variant="contained"
-                  onClick={onClose}
-                  data-test-id="done"
-                >
+                <Button variant="primary" onClick={onClose} data-test-id="done">
                   <FormattedMessage {...buttonMessages.done} />
                 </Button>
               )}

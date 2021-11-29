@@ -1,7 +1,5 @@
 import {
-  Button,
   Card,
-  IconButton,
   TableBody,
   TableCell,
   TableFooter,
@@ -16,7 +14,7 @@ import Skeleton from "@saleor/components/Skeleton";
 import TableCellAvatar from "@saleor/components/TableCellAvatar";
 import TableHead from "@saleor/components/TableHead";
 import TablePagination from "@saleor/components/TablePagination";
-import { makeStyles } from "@saleor/macaw-ui";
+import { Button, IconButton, makeStyles } from "@saleor/macaw-ui";
 import { renderCollection } from "@saleor/misc";
 import { ShippingZone_shippingZone_shippingMethods_excludedProducts_edges_node } from "@saleor/shipping/types/ShippingZone";
 import { ListActions, ListProps } from "@saleor/types";
@@ -82,7 +80,7 @@ const ShippingMethodProducts: React.FC<ShippingMethodProductsProps> = props => {
           description: "section header"
         })}
         toolbar={
-          <Button color="primary" variant="text" onClick={onProductAssign}>
+          <Button variant="tertiary" onClick={onProductAssign}>
             <FormattedMessage
               defaultMessage="Assign products"
               description="button"
@@ -156,7 +154,10 @@ const ShippingMethodProducts: React.FC<ShippingMethodProductsProps> = props => {
                     )}
                   </TableCellAvatar>
                   <TableCell className={classes.colAction}>
-                    <IconButton onClick={() => onProductUnassign([product.id])}>
+                    <IconButton
+                      variant="secondary"
+                      onClick={() => onProductUnassign([product.id])}
+                    >
                       <DeleteIcon color="primary" />
                     </IconButton>
                   </TableCell>

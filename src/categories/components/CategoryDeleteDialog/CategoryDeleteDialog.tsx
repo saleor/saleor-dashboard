@@ -1,5 +1,4 @@
 import {
-  Button,
   Dialog,
   DialogActions,
   DialogContent,
@@ -7,7 +6,7 @@ import {
   DialogTitle
 } from "@material-ui/core";
 import { buttonMessages } from "@saleor/intl";
-import { makeStyles } from "@saleor/macaw-ui";
+import { Button, makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
@@ -63,7 +62,7 @@ const CategoryDeleteDialog: React.FC<CategoryDeleteDialogProps> = props => {
         </Button>
         <Button
           className={classes.deleteButton}
-          variant="contained"
+          variant="primary"
           onClick={onConfirm}
         >
           <FormattedMessage {...buttonMessages.save} />

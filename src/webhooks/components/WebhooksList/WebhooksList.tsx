@@ -1,7 +1,5 @@
 import {
-  Button,
   Card,
-  IconButton,
   TableBody,
   TableCell,
   TableHead,
@@ -13,6 +11,7 @@ import CardTitle from "@saleor/components/CardTitle";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
 import TableCellHeader from "@saleor/components/TableCellHeader";
+import { Button, IconButton } from "@saleor/macaw-ui";
 import { renderCollection, stopPropagation } from "@saleor/misc";
 import { isUnnamed } from "@saleor/webhooks/utils";
 import classNames from "classnames";
@@ -47,11 +46,7 @@ const WebhooksList: React.FC<WebhooksListProps> = ({
         })}
         toolbar={
           !!onCreate && (
-            <Button
-              color="primary"
-              onClick={onCreate}
-              data-test-id="createWebhook"
-            >
+            <Button onClick={onCreate} data-test-id="createWebhook">
               <FormattedMessage
                 defaultMessage="Create Webhook"
                 description="button"
@@ -104,6 +99,7 @@ const WebhooksList: React.FC<WebhooksListProps> = ({
                   className={classNames(classes.colAction, classes.colRight)}
                 >
                   <IconButton
+                    variant="secondary"
                     color="primary"
                     onClick={
                       webhook

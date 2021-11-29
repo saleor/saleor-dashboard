@@ -1,5 +1,4 @@
 import {
-  Button,
   Dialog,
   DialogActions,
   DialogContent,
@@ -7,7 +6,7 @@ import {
   DialogTitle
 } from "@material-ui/core";
 import { buttonMessages } from "@saleor/intl";
-import { makeStyles } from "@saleor/macaw-ui";
+import { Button, makeStyles } from "@saleor/macaw-ui";
 import { DialogProps } from "@saleor/types";
 import React from "react";
 import { FormattedMessage } from "react-intl";
@@ -43,11 +42,7 @@ const OrderCannotCancelOrderDialog: React.FC<DialogProps> = ({
         </DialogContentText>
       </DialogContent>
       <DialogActions>
-        <Button
-          variant="contained"
-          className={classes.button}
-          onClick={onClose}
-        >
+        <Button variant="primary" className={classes.button} onClick={onClose}>
           <FormattedMessage {...buttonMessages.ok} />
         </Button>
       </DialogActions>

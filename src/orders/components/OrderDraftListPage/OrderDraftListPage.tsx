@@ -1,9 +1,10 @@
-import { Button, Card } from "@material-ui/core";
+import { Card } from "@material-ui/core";
 import Container from "@saleor/components/Container";
 import FilterBar from "@saleor/components/FilterBar";
 import PageHeader from "@saleor/components/PageHeader";
 import { RefreshLimits_shop_limits } from "@saleor/components/Shop/types/RefreshLimits";
 import { sectionNames } from "@saleor/intl";
+import { Button } from "@saleor/macaw-ui";
 import { OrderDraftListUrlSortField } from "@saleor/orders/urls";
 import {
   FilterPageProps,
@@ -74,8 +75,7 @@ const OrderDraftListPage: React.FC<OrderDraftListPageProps> = ({
         }
       >
         <Button
-          color="primary"
-          variant="contained"
+          variant="primary"
           disabled={disabled || limitsReached}
           onClick={onAdd}
         >

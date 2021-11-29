@@ -1,10 +1,4 @@
-import {
-  Button,
-  Card,
-  IconButton,
-  TableCell,
-  TableRow
-} from "@material-ui/core";
+import { Card, TableCell, TableRow } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
 import CardTitle from "@saleor/components/CardTitle";
 import Checkbox from "@saleor/components/Checkbox";
@@ -15,7 +9,7 @@ import {
   SortableTableRow
 } from "@saleor/components/SortableTable";
 import TableHead from "@saleor/components/TableHead";
-import { makeStyles } from "@saleor/macaw-ui";
+import { Button, IconButton, makeStyles } from "@saleor/macaw-ui";
 import { maybe, renderCollection, stopPropagation } from "@saleor/misc";
 import { ListActions, ReorderAction } from "@saleor/types";
 import { ProductAttributeType } from "@saleor/types/globalTypes";
@@ -111,8 +105,7 @@ const ProductTypeAttributes: React.FC<ProductTypeAttributesProps> = props => {
         toolbar={
           <Button
             data-test-id={testId}
-            color="primary"
-            variant="text"
+            variant="tertiary"
             onClick={() => onAttributeAssign(ProductAttributeType[type])}
           >
             <FormattedMessage
@@ -197,6 +190,7 @@ const ProductTypeAttributes: React.FC<ProductTypeAttributesProps> = props => {
                   </TableCell>
                   <TableCell className={classes.colAction}>
                     <IconButton
+                      variant="secondary"
                       onClick={stopPropagation(() =>
                         onAttributeUnassign(attribute.id)
                       )}

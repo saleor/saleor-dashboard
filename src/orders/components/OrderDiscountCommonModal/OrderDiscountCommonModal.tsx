@@ -324,7 +324,6 @@ const OrderDiscountCommonModal: React.FC<OrderDiscountCommonModalProps> = ({
               <ConfirmButton
                 data-test="button-remove"
                 onClick={onRemove}
-                variant="contained"
                 className={classes.removeButton}
                 transitionState={removeStatus}
               >

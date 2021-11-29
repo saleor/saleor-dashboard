@@ -1,4 +1,4 @@
-import { Card, CardContent, IconButton, Typography } from "@material-ui/core";
+import { Card, CardContent, Typography } from "@material-ui/core";
 import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
 import { AttributeReference } from "@saleor/attributes/utils/data";
 import CardTitle from "@saleor/components/CardTitle";
@@ -7,7 +7,7 @@ import { AttributeValueFragment } from "@saleor/fragments/types/AttributeValueFr
 import { PageErrorWithAttributesFragment } from "@saleor/fragments/types/PageErrorWithAttributesFragment";
 import { ProductErrorWithAttributesFragment } from "@saleor/fragments/types/ProductErrorWithAttributesFragment";
 import { FormsetAtomicData } from "@saleor/hooks/useFormset";
-import { makeStyles } from "@saleor/macaw-ui";
+import { IconButton, makeStyles } from "@saleor/macaw-ui";
 import { FetchMoreProps } from "@saleor/types";
 import {
   AttributeEntityTypeEnum,
@@ -143,6 +143,7 @@ const Attributes: React.FC<AttributesProps> = ({
             </Typography>
           </div>
           <IconButton
+            variant="secondary"
             className={classes.expansionBarButton}
             onClick={toggleExpansion}
             data-test="attributes-expand"
