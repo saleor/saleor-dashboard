@@ -1,5 +1,4 @@
 import {
-  Button,
   Dialog,
   DialogActions,
   DialogContent,
@@ -18,9 +17,9 @@ import Form from "@saleor/components/Form";
 import FormSpacer from "@saleor/components/FormSpacer";
 import Hr from "@saleor/components/Hr";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
-// tslint:disable no-submodule-imports
 import { ShopInfo_shop_countries } from "@saleor/components/Shop/types/ShopInfo";
 import { buttonMessages } from "@saleor/intl";
+import { Button } from "@saleor/macaw-ui";
 import useScrollableDialogStyle from "@saleor/styles/useScrollableDialogStyle";
 import { filter } from "fuzzaldrin";
 import React from "react";
@@ -165,8 +164,6 @@ const DiscountCountrySelectDialog: React.FC<DiscountCountrySelectDialogProps> = 
                 </Button>
                 <ConfirmButton
                   transitionState={confirmButtonState}
-                  color="primary"
-                  variant="contained"
                   type="submit"
                 >
                   <FormattedMessage

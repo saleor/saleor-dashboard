@@ -1,7 +1,5 @@
 import {
-  Button,
   CircularProgress as Progress,
-  IconButton,
   TableBody,
   TableCell,
   TableRow,
@@ -11,6 +9,7 @@ import {
 import DeleteIcon from "@material-ui/icons/Delete";
 import ErrorIcon from "@material-ui/icons/Error";
 import CardTitle from "@saleor/components/CardTitle";
+import { Button, IconButton } from "@saleor/macaw-ui";
 import { renderCollection, stopPropagation } from "@saleor/misc";
 import classNames from "classnames";
 import React from "react";
@@ -94,13 +93,14 @@ const AppsInProgress: React.FC<AppsInProgressProps> = ({
                     <ErrorIcon />
                   </Tooltip>
                 </Typography>
-                <Button color="primary" onClick={() => onAppInstallRetry(id)}>
+                <Button onClick={() => onAppInstallRetry(id)}>
                   <FormattedMessage
                     defaultMessage="Retry"
                     description="retry installation"
                   />
                 </Button>
                 <IconButton
+                  variant="secondary"
                   color="primary"
                   onClick={stopPropagation(() => onRemove(id))}
                 >

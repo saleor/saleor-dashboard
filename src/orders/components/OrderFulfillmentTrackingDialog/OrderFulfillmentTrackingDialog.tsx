@@ -1,5 +1,4 @@
 import {
-  Button,
   Dialog,
   DialogActions,
   DialogContent,
@@ -15,6 +14,7 @@ import FormSpacer from "@saleor/components/FormSpacer";
 import { OrderErrorFragment } from "@saleor/fragments/types/OrderErrorFragment";
 import useModalDialogErrors from "@saleor/hooks/useModalDialogErrors";
 import { buttonMessages } from "@saleor/intl";
+import { Button } from "@saleor/macaw-ui";
 import { getFormErrors } from "@saleor/utils/errors";
 import getOrderErrorMessage from "@saleor/utils/errors/order";
 import React from "react";
@@ -92,8 +92,6 @@ const OrderFulfillmentTrackingDialog: React.FC<OrderFulfillmentTrackingDialogPro
               </Button>
               <ConfirmButton
                 transitionState={confirmButtonState}
-                color="primary"
-                variant="contained"
                 onClick={submit}
               >
                 <FormattedMessage {...buttonMessages.confirm} />

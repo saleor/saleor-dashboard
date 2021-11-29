@@ -1,4 +1,3 @@
-import { Button } from "@material-ui/core";
 import { attributeUrl } from "@saleor/attributes/urls";
 import AssignAttributeDialog from "@saleor/components/AssignAttributeDialog";
 import AttributeUnassignDialog from "@saleor/components/AttributeUnassignDialog";
@@ -11,6 +10,7 @@ import useBulkActions from "@saleor/hooks/useBulkActions";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { commonMessages } from "@saleor/intl";
+import { Button } from "@saleor/macaw-ui";
 import { getStringOrPlaceholder, maybe } from "@saleor/misc";
 import useProductTypeDelete from "@saleor/productTypes/hooks/useProductTypeDelete";
 import { useProductTypeUpdateMutation } from "@saleor/productTypes/mutations";
@@ -301,7 +301,6 @@ export const ProductTypeUpdate: React.FC<ProductTypeUpdateProps> = ({
                       toggleAll: productAttributeListActions.toggleAll,
                       toolbar: (
                         <Button
-                          color="primary"
                           onClick={() =>
                             navigate(
                               productTypeUrl(id, {
@@ -325,7 +324,6 @@ export const ProductTypeUpdate: React.FC<ProductTypeUpdateProps> = ({
                       toggleAll: variantAttributeListActions.toggleAll,
                       toolbar: (
                         <Button
-                          color="primary"
                           onClick={() =>
                             navigate(
                               productTypeUrl(id, {

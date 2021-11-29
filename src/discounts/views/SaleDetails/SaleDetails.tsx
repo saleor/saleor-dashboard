@@ -1,4 +1,4 @@
-import { Button, DialogContentText } from "@material-ui/core";
+import { DialogContentText } from "@material-ui/core";
 import { categoryUrl } from "@saleor/categories/urls";
 import {
   ChannelSaleData,
@@ -44,6 +44,7 @@ import useLocalStorage from "@saleor/hooks/useLocalStorage";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { commonMessages, sectionNames } from "@saleor/intl";
+import { Button } from "@saleor/macaw-ui";
 import { maybe } from "@saleor/misc";
 import { productUrl, productVariantEditPath } from "@saleor/products/urls";
 import useCategorySearch from "@saleor/searches/useCategorySearch";
@@ -345,7 +346,6 @@ export const SaleDetails: React.FC<SaleDetailsProps> = ({ id, params }) => {
                             saveButtonBarState={saleUpdateOpts.status}
                             categoryListToolbar={
                               <Button
-                                color="primary"
                                 onClick={() =>
                                   openModal("unassign-category", {
                                     ids: listElements
@@ -359,7 +359,6 @@ export const SaleDetails: React.FC<SaleDetailsProps> = ({ id, params }) => {
                             }
                             collectionListToolbar={
                               <Button
-                                color="primary"
                                 onClick={() =>
                                   openModal("unassign-collection", {
                                     ids: listElements
@@ -373,7 +372,6 @@ export const SaleDetails: React.FC<SaleDetailsProps> = ({ id, params }) => {
                             }
                             productListToolbar={
                               <Button
-                                color="primary"
                                 onClick={() =>
                                   openModal("unassign-product", {
                                     ids: listElements
@@ -387,7 +385,6 @@ export const SaleDetails: React.FC<SaleDetailsProps> = ({ id, params }) => {
                             }
                             variantListToolbar={
                               <Button
-                                color="primary"
                                 onClick={() =>
                                   openModal("unassign-variant", {
                                     ids: listElements

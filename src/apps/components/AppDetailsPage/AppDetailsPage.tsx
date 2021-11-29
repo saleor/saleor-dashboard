@@ -1,4 +1,4 @@
-import { Button, Card, CardContent, Typography } from "@material-ui/core";
+import { Card, CardContent, Typography } from "@material-ui/core";
 import CardSpacer from "@saleor/components/CardSpacer";
 import CardTitle from "@saleor/components/CardTitle";
 import Container from "@saleor/components/Container";
@@ -6,7 +6,7 @@ import ExternalLink from "@saleor/components/ExternalLink";
 import PageHeader from "@saleor/components/PageHeader";
 import Skeleton from "@saleor/components/Skeleton";
 import { sectionNames } from "@saleor/intl";
-import { Backlink } from "@saleor/macaw-ui";
+import { Backlink, Button } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import ReactMarkdown from "react-markdown";
@@ -51,9 +51,9 @@ export const AppDetailsPage: React.FC<AppDetailsPageProps> = ({
         }
       >
         <Button
+          component="a"
           href={data?.homepageUrl}
-          color="primary"
-          variant="contained"
+          variant="primary"
           data-tc="open-app"
           target="_blank"
         >
@@ -75,7 +75,6 @@ export const AppDetailsPage: React.FC<AppDetailsPageProps> = ({
               />
             </ExternalLink>
             <Button
-              color="primary"
               className={classes.headerLinkContainer}
               onClick={navigateToAppSettings}
             >
@@ -87,8 +86,7 @@ export const AppDetailsPage: React.FC<AppDetailsPageProps> = ({
               />
             </Button>
             <Button
-              variant="text"
-              color="primary"
+              variant="tertiary"
               className={classes.headerLinkContainer}
               disableFocusRipple
               onClick={data.isActive ? onAppDeactivateOpen : onAppActivateOpen}

@@ -3,7 +3,6 @@ import {
   CardContent,
   ClickAwayListener,
   Grow,
-  IconButton,
   MenuItem,
   Paper,
   Popper,
@@ -27,7 +26,7 @@ import { ProductErrorFragment } from "@saleor/fragments/types/ProductErrorFragme
 import { WarehouseFragment } from "@saleor/fragments/types/WarehouseFragment";
 import { FormChange } from "@saleor/hooks/useForm";
 import { FormsetAtomicData, FormsetChange } from "@saleor/hooks/useFormset";
-import { makeStyles } from "@saleor/macaw-ui";
+import { IconButton, makeStyles } from "@saleor/macaw-ui";
 import { ICONBUTTON_SIZE } from "@saleor/macaw-ui";
 import { renderCollection } from "@saleor/misc";
 import { getFormErrors, getProductErrorMessage } from "@saleor/utils/errors";
@@ -287,6 +286,7 @@ const ProductStocks: React.FC<ProductStocksProps> = ({
                   </TableCell>
                   <TableCell className={classes.colAction}>
                     <IconButton
+                      variant="secondary"
                       color="primary"
                       onClick={() => onWarehouseStockDelete(stock.id)}
                     >

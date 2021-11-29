@@ -1,4 +1,4 @@
-import { Button, Card } from "@material-ui/core";
+import { Card } from "@material-ui/core";
 import CardMenu from "@saleor/components/CardMenu";
 import ColumnPicker, {
   ColumnPickerChoice
@@ -10,7 +10,7 @@ import PageHeader from "@saleor/components/PageHeader";
 import { RefreshLimits_shop_limits } from "@saleor/components/Shop/types/RefreshLimits";
 import { ProductListColumns } from "@saleor/config";
 import { sectionNames } from "@saleor/intl";
-import { makeStyles } from "@saleor/macaw-ui";
+import { Button, makeStyles } from "@saleor/macaw-ui";
 import { AvailableInGridAttributes_availableInGrid_edges_node } from "@saleor/products/types/AvailableInGridAttributes";
 import { GridAttributes_grid_edges_node } from "@saleor/products/types/GridAttributes";
 import { ProductList_products_edges_node } from "@saleor/products/types/ProductList";
@@ -178,8 +178,7 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
         <Button
           disabled={limitReached}
           onClick={onAdd}
-          color="primary"
-          variant="contained"
+          variant="primary"
           data-test="add-product"
         >
           <FormattedMessage

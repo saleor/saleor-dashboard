@@ -1,9 +1,9 @@
-import { Button, Card, CardContent, Typography } from "@material-ui/core";
+import { Card, CardContent, Typography } from "@material-ui/core";
 import CardTitle from "@saleor/components/CardTitle";
 import Hr from "@saleor/components/Hr";
 import { PluginConfigurationFragment_configuration } from "@saleor/fragments/types/PluginConfigurationFragment";
 import { buttonMessages } from "@saleor/intl";
-import { makeStyles } from "@saleor/macaw-ui";
+import { Button, makeStyles } from "@saleor/macaw-ui";
 import { isSecretField } from "@saleor/plugins/utils";
 import { ConfigurationTypeFieldEnum } from "@saleor/types/globalTypes";
 import React from "react";
@@ -71,19 +71,17 @@ const PluginAuthorization: React.FC<PluginAuthorizationProps> = props => {
               {field.value === null ? (
                 <Button
                   className={classes.button}
-                  color="primary"
                   onClick={() => onEdit(field.name)}
                 >
                   <FormattedMessage {...buttonMessages.create} />
                 </Button>
               ) : (
                 <>
-                  <Button color="primary" onClick={() => onClear(field.name)}>
+                  <Button onClick={() => onClear(field.name)}>
                     <FormattedMessage {...buttonMessages.clear} />
                   </Button>
                   <Button
                     className={classes.button}
-                    color="primary"
                     onClick={() => onEdit(field.name)}
                   >
                     <FormattedMessage {...buttonMessages.edit} />

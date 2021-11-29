@@ -1,5 +1,4 @@
 import {
-  Button,
   CircularProgress,
   Dialog,
   DialogActions,
@@ -19,7 +18,7 @@ import Skeleton from "@saleor/components/Skeleton";
 import TableCellAvatar from "@saleor/components/TableCellAvatar";
 import useSearchQuery from "@saleor/hooks/useSearchQuery";
 import { buttonMessages } from "@saleor/intl";
-import { makeStyles } from "@saleor/macaw-ui";
+import { Button, makeStyles } from "@saleor/macaw-ui";
 import { renderCollection } from "@saleor/misc";
 import { SearchProducts_search_edges_node } from "@saleor/searches/types/SearchProducts";
 import { ShippingPriceExcludeProduct } from "@saleor/shipping/types/ShippingPriceExcludeProduct";
@@ -230,8 +229,6 @@ const ShippingMethodProductsAddDialog: React.FC<ShippingMethodProductsAddDialogP
         </Button>
         <ConfirmButton
           transitionState={confirmButtonState}
-          color="primary"
-          variant="contained"
           type="submit"
           disabled={loading || !selectedProducts?.length}
           onClick={handleSubmit}

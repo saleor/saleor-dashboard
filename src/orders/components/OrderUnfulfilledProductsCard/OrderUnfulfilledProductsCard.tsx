@@ -1,7 +1,7 @@
-import { Button, Card, CardActions, TableBody } from "@material-ui/core";
+import { Card, CardActions, TableBody } from "@material-ui/core";
 import CardSpacer from "@saleor/components/CardSpacer";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
-import { makeStyles, Tooltip } from "@saleor/macaw-ui";
+import { Button, makeStyles, Tooltip } from "@saleor/macaw-ui";
 import { renderCollection } from "@saleor/misc";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -64,18 +64,13 @@ const OrderUnfulfilledProductsCard: React.FC<OrderUnfulfilledProductsCardProps> 
                 placement={"left"}
               >
                 <div>
-                  <Button
-                    disabled
-                    variant="text"
-                    color="primary"
-                    onClick={onFulfill}
-                  >
+                  <Button disabled variant="tertiary" onClick={onFulfill}>
                     {intl.formatMessage(messages.fulfillButton)}
                   </Button>
                 </div>
               </Tooltip>
             ) : (
-              <Button variant="text" color="primary" onClick={onFulfill}>
+              <Button variant="tertiary" onClick={onFulfill}>
                 {intl.formatMessage(messages.fulfillButton)}
               </Button>
             )}

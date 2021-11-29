@@ -1,5 +1,4 @@
 import {
-  Button,
   Dialog,
   DialogActions,
   DialogContent,
@@ -15,7 +14,7 @@ import SingleAutocompleteSelectField from "@saleor/components/SingleAutocomplete
 import { OrderErrorFragment } from "@saleor/fragments/types/OrderErrorFragment";
 import { WarehouseFragment } from "@saleor/fragments/types/WarehouseFragment";
 import { buttonMessages } from "@saleor/intl";
-import { makeStyles } from "@saleor/macaw-ui";
+import { Button, makeStyles } from "@saleor/macaw-ui";
 import getOrderErrorMessage from "@saleor/utils/errors/order";
 import createSingleAutocompleteSelectHandler from "@saleor/utils/handlers/singleAutocompleteSelectChangeHandler";
 import React from "react";
@@ -132,7 +131,6 @@ const OrderFulfillmentCancelDialog: React.FC<OrderFulfillmentCancelDialogProps> 
                   data-test="submit"
                   disabled={formData.warehouseId === null}
                   transitionState={confirmButtonState}
-                  variant="contained"
                   onClick={submit}
                 >
                   <FormattedMessage {...buttonMessages.accept} />

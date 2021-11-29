@@ -1,9 +1,9 @@
-import { IconButton, TextField, Typography } from "@material-ui/core";
+import { TextField, Typography } from "@material-ui/core";
 import { fade } from "@material-ui/core/styles/colorManipulator";
 import CloseIcon from "@material-ui/icons/Close";
 import Debounce, { DebounceProps } from "@saleor/components/Debounce";
 import ArrowDropdownIcon from "@saleor/icons/ArrowDropdown";
-import { makeStyles } from "@saleor/macaw-ui";
+import { IconButton, makeStyles } from "@saleor/macaw-ui";
 import { FetchMoreProps } from "@saleor/types";
 import Downshift, { ControllerStateAndHelpers } from "downshift";
 import { filter } from "fuzzaldrin";
@@ -247,6 +247,7 @@ const MultiAutocompleteSelectFieldComponent: React.FC<MultiAutocompleteSelectFie
               </Typography>
 
               <IconButton
+                variant="secondary"
                 data-test-id={testId ? `${testId}Remove` : "remove"}
                 className={classes.chipClose}
                 disabled={value.disabled}
