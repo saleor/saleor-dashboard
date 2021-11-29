@@ -1,6 +1,7 @@
 import { ClickAwayListener } from "@material-ui/core";
 import { ChannelShippingZones } from "@saleor/channels/pages/ChannelDetailsPage/types";
 import SingleAutocompleteSelectField from "@saleor/components/SingleAutocompleteSelectField";
+import { makeStyles } from "@saleor/macaw-ui";
 import CardAddItemsFooter from "@saleor/products/components/ProductStocks/CardAddItemsFooter";
 import { mapNodeToChoice } from "@saleor/utils/maps";
 import React, { useEffect, useRef, useState } from "react";
@@ -15,6 +16,15 @@ const messages = defineMessages({
   }
 });
 
+const useStyles = makeStyles(
+  theme => ({
+    root: {
+      paddingRight: theme.spacing(1)
+    }
+  }),
+  { name: "ShippingZonesCardListFooter" }
+);
+
 type ShippingZonesCardListFooterProps = ShippingZonesProps;
 
 const ShippingZonesCardListFooter: React.FC<ShippingZonesCardListFooterProps> = ({
@@ -24,6 +34,8 @@ const ShippingZonesCardListFooter: React.FC<ShippingZonesCardListFooterProps> = 
   addShippingZone,
   shippingZones
 }) => {
+  const classes = useStyles();
+
   const [isChoicesSelectShown, setIsChoicesSelectShown] = useState(false);
   const shippingZonesRef = useRef<ChannelShippingZones>(shippingZones);
 
@@ -49,7 +61,7 @@ const ShippingZonesCardListFooter: React.FC<ShippingZonesCardListFooterProps> = 
 
   return isChoicesSelectShown ? (
     <ClickAwayListener onClickAway={handleFooterClickAway}>
-      <div>
+      <div className={classes.root}>
         <SingleAutocompleteSelectField
           data-test-id="shippingAutoCompleteSelect"
           value=""

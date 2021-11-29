@@ -28,11 +28,12 @@ const messages = defineMessages({
 });
 
 const useExpanderStyles = makeStyles(
-  () => ({
+  theme => ({
     // empty expanded needed for mui to use root styles
     expanded: {},
     root: {
       boxShadow: "none",
+      padding: theme.spacing(1, 4),
 
       "&:before": {
         content: "none"

@@ -7,7 +7,7 @@ import React from "react";
 const useStyles = makeStyles(
   theme => ({
     container: {
-      paddingLeft: theme.spacing(3),
+      padding: theme.spacing(1, 0),
       display: "flex",
       flexDirection: "row",
       justifyContent: "space-between",
