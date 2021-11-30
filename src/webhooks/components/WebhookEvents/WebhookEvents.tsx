@@ -1,258 +1,95 @@
 import { Card, CardContent, Typography } from "@material-ui/core";
+import CardSpacer from "@saleor/components/CardSpacer";
 import CardTitle from "@saleor/components/CardTitle";
-import ControlledCheckbox from "@saleor/components/ControlledCheckbox";
 import Hr from "@saleor/components/Hr";
+import MultiAutocompleteSelectField, {
+  MultiAutocompleteChoiceType
+} from "@saleor/components/MultiAutocompleteSelectField";
 import { ChangeEvent } from "@saleor/hooks/useForm";
-import { WebhookEventTypeEnum } from "@saleor/types/globalTypes";
-import { toggle } from "@saleor/utils/lists";
+import {
+  WebhookEventTypeAsync,
+  WebhookEventTypeSync
+} from "@saleor/types/globalTypes";
+import {
+  mapAsyncEventsToChoices,
+  mapSyncEventsToChoices
+} from "@saleor/webhooks/utils";
 import React from "react";
+import { FormattedMessage } from "react-intl";
 import { useIntl } from "react-intl";
+
+import { messages } from "./messages";
 
 interface WebhookEventsProps {
   data: {
-    allEvents: boolean;
-    events: string[];
+    syncEvents: WebhookEventTypeSync[];
+    asyncEvents: WebhookEventTypeAsync[];
   };
-  disabled: boolean;
-  onChange: (event: ChangeEvent, cb?: () => void) => void;
+  syncEventsChoices: MultiAutocompleteChoiceType[];
+  asyncEventsChoices: MultiAutocompleteChoiceType[];
+  onSyncEventChange: (event: ChangeEvent) => void;
+  onAsyncEventChange: (event: ChangeEvent) => void;
 }
 
 const WebhookEvents: React.FC<WebhookEventsProps> = ({
   data,
-  disabled,
-  onChange
+  syncEventsChoices,
+  asyncEventsChoices,
+  onSyncEventChange,
+  onAsyncEventChange
 }) => {
   const intl = useIntl();
-  const eventsEnum = Object.values(WebhookEventTypeEnum);
-
-  const translatedEvents: Record<WebhookEventTypeEnum, string> = {
-    [WebhookEventTypeEnum.ANY_EVENTS]: intl.formatMessage({
-      defaultMessage: "All events",
-      description: "event"
-    }),
-    [WebhookEventTypeEnum.CHECKOUT_CREATED]: intl.formatMessage({
-      defaultMessage: "Checkout created",
-      description: "event"
-    }),
-    [WebhookEventTypeEnum.CHECKOUT_UPDATED]: intl.formatMessage({
-      defaultMessage: "Checkout updated",
-      description: "event"
-    }),
-    [WebhookEventTypeEnum.CUSTOMER_CREATED]: intl.formatMessage({
-      defaultMessage: "Customer created",
-      description: "event"
-    }),
-    [WebhookEventTypeEnum.CUSTOMER_UPDATED]: intl.formatMessage({
-      defaultMessage: "Customer updated",
-      description: "event"
-    }),
-    [WebhookEventTypeEnum.CHECKOUT_CREATED]: intl.formatMessage({
-      defaultMessage: "Checkout created",
-      description: "event"
-    }),
-    [WebhookEventTypeEnum.CHECKOUT_UPDATED]: intl.formatMessage({
-      defaultMessage: "Checkout updated",
-      description: "event"
-    }),
-    [WebhookEventTypeEnum.ORDER_CANCELLED]: intl.formatMessage({
-      defaultMessage: "Order cancelled",
-      description: "event"
-    }),
-    [WebhookEventTypeEnum.ORDER_CREATED]: intl.formatMessage({
-      defaultMessage: "Order created",
-      description: "event"
-    }),
-    [WebhookEventTypeEnum.ORDER_CONFIRMED]: intl.formatMessage({
-      defaultMessage: "Order confirmed",
-      description: "event"
-    }),
-    [WebhookEventTypeEnum.ORDER_FULFILLED]: intl.formatMessage({
-      defaultMessage: "Order fulfilled",
-      description: "event"
-    }),
-    [WebhookEventTypeEnum.ORDER_FULLY_PAID]: intl.formatMessage({
-      defaultMessage: "Order fully paid",
-      description: "event"
-    }),
-    [WebhookEventTypeEnum.ORDER_UPDATED]: intl.formatMessage({
-      defaultMessage: "Order updated",
-      description: "event"
-    }),
-    [WebhookEventTypeEnum.DRAFT_ORDER_CREATED]: intl.formatMessage({
-      defaultMessage: "Draft order created",
-      description: "event"
-    }),
-    [WebhookEventTypeEnum.DRAFT_ORDER_DELETED]: intl.formatMessage({
-      defaultMessage: "Draft order deleted",
-      description: "event"
-    }),
-    [WebhookEventTypeEnum.DRAFT_ORDER_UPDATED]: intl.formatMessage({
-      defaultMessage: "Draft order updated",
-      description: "event"
-    }),
-    [WebhookEventTypeEnum.PAGE_CREATED]: intl.formatMessage({
-      defaultMessage: "Page created",
-      description: "event"
-    }),
-    [WebhookEventTypeEnum.PAGE_DELETED]: intl.formatMessage({
-      defaultMessage: "Page deleted",
-      description: "event"
-    }),
-    [WebhookEventTypeEnum.PAGE_UPDATED]: intl.formatMessage({
-      defaultMessage: "Page updated",
-      description: "event"
-    }),
-    [WebhookEventTypeEnum.PAYMENT_AUTHORIZE]: intl.formatMessage({
-      defaultMessage: "Authorize payment",
-      description: "event"
-    }),
-    [WebhookEventTypeEnum.PAYMENT_CAPTURE]: intl.formatMessage({
-      defaultMessage: "Capture payment",
-      description: "event"
-    }),
-    [WebhookEventTypeEnum.PAYMENT_CONFIRM]: intl.formatMessage({
-      defaultMessage: "Confirm payment",
-      description: "event"
-    }),
-    [WebhookEventTypeEnum.PAYMENT_LIST_GATEWAYS]: intl.formatMessage({
-      defaultMessage: "List payment gateways",
-      description: "event"
-    }),
-    [WebhookEventTypeEnum.PAYMENT_PROCESS]: intl.formatMessage({
-      defaultMessage: "Process payment",
-      description: "event"
-    }),
-    [WebhookEventTypeEnum.PAYMENT_REFUND]: intl.formatMessage({
-      defaultMessage: "Refund payment",
-      description: "event"
-    }),
-    [WebhookEventTypeEnum.PAYMENT_VOID]: intl.formatMessage({
-      defaultMessage: "Void payment",
-      description: "event"
-    }),
-    [WebhookEventTypeEnum.PRODUCT_CREATED]: intl.formatMessage({
-      defaultMessage: "Product created",
-      description: "event"
-    }),
-    [WebhookEventTypeEnum.PRODUCT_UPDATED]: intl.formatMessage({
-      defaultMessage: "Product updated",
-      description: "event"
-    }),
-    [WebhookEventTypeEnum.PRODUCT_DELETED]: intl.formatMessage({
-      defaultMessage: "Product deleted",
-      description: "event"
-    }),
-    [WebhookEventTypeEnum.PRODUCT_VARIANT_CREATED]: intl.formatMessage({
-      defaultMessage: "Product variant created",
-      description: "event"
-    }),
-    [WebhookEventTypeEnum.PRODUCT_VARIANT_UPDATED]: intl.formatMessage({
-      defaultMessage: "Product variant updated",
-      description: "event"
-    }),
-    [WebhookEventTypeEnum.PRODUCT_VARIANT_DELETED]: intl.formatMessage({
-      defaultMessage: "Product variant deleted",
-      description: "event"
-    }),
-    [WebhookEventTypeEnum.FULFILLMENT_CREATED]: intl.formatMessage({
-      defaultMessage: "Fulfillment created",
-      description: "event"
-    }),
-    [WebhookEventTypeEnum.INVOICE_REQUESTED]: intl.formatMessage({
-      defaultMessage: "Invoice requested",
-      description: "event"
-    }),
-    [WebhookEventTypeEnum.INVOICE_SENT]: intl.formatMessage({
-      defaultMessage: "Invoice sent",
-      description: "event"
-    }),
-    [WebhookEventTypeEnum.INVOICE_DELETED]: intl.formatMessage({
-      defaultMessage: "Invoice deleted",
-      description: "event"
-    }),
-    [WebhookEventTypeEnum.PAGE_CREATED]: intl.formatMessage({
-      defaultMessage: "Page created",
-      description: "event"
-    }),
-    [WebhookEventTypeEnum.PAGE_UPDATED]: intl.formatMessage({
-      defaultMessage: "Page updated",
-      description: "event"
-    }),
-    [WebhookEventTypeEnum.PAGE_DELETED]: intl.formatMessage({
-      defaultMessage: "Page deleted",
-      description: "event"
-    }),
-    [WebhookEventTypeEnum.NOTIFY_USER]: intl.formatMessage({
-      defaultMessage: "User notified",
-      description: "event"
-    }),
-    [WebhookEventTypeEnum.TRANSLATION_CREATED]: intl.formatMessage({
-      defaultMessage: "Translation created",
-      description: "event"
-    }),
-    [WebhookEventTypeEnum.TRANSLATION_UPDATED]: intl.formatMessage({
-      defaultMessage: "Translation updated",
-      description: "event"
-    }),
-    [WebhookEventTypeEnum.CHECKOUT_FILTER_SHIPPING_METHODS]: intl.formatMessage(
-      {
-        defaultMessage: "Filter shipping methods for checkout",
-        description: "event"
-      }
-    ),
-    [WebhookEventTypeEnum.ORDER_FILTER_SHIPPING_METHODS]: intl.formatMessage({
-      defaultMessage: "Filter shipping methods for order",
-      description: "event"
-    })
-  };
-
-  const handleEventsChange = (event: ChangeEvent) =>
-    onChange({
-      target: {
-        name: "events",
-        value: toggle(event.target.name, data.events, (a, b) => a === b)
-      }
-    });
 
   return (
     <Card>
-      <CardTitle
-        title={intl.formatMessage({
-          defaultMessage: "Events",
-          description: "section header"
-        })}
-      />
+      <CardTitle title={intl.formatMessage(messages.events)} />
       <CardContent>
-        <Typography>
-          {intl.formatMessage({
-            defaultMessage:
-              "Expand or restrict webhooks permissions to register certain events in Saleor system.",
-            description: "webhook events"
-          })}
+        <Typography variant="caption">
+          <FormattedMessage {...messages.synchronousEvents} />
         </Typography>
-        <ControlledCheckbox
-          checked={data.allEvents}
-          disabled={disabled}
-          label={translatedEvents.ANY_EVENTS}
-          name="allEvents"
-          onChange={onChange}
+        <CardSpacer />
+        <Typography variant="body1">
+          <FormattedMessage
+            {...messages.assignPermissionsToSynchronousEvents}
+          />
+        </Typography>
+        <CardSpacer />
+        <MultiAutocompleteSelectField
+          displayValues={mapSyncEventsToChoices(data.syncEvents)}
+          label={intl.formatMessage(messages.registeredEvents)}
+          choices={syncEventsChoices}
+          name="syncEvents"
+          value={data.syncEvents}
+          onChange={onSyncEventChange}
+          data-test="syncEvents"
+          testId="syncEvent"
         />
-        {!data.allEvents && (
-          <>
-            <Hr />
-            {eventsEnum.slice(1).map(event => (
-              <div key={event}>
-                <ControlledCheckbox
-                  checked={data.events.includes(event)}
-                  disabled={disabled}
-                  label={translatedEvents[event]}
-                  name={event}
-                  onChange={handleEventsChange}
-                />
-              </div>
-            ))}
-          </>
-        )}
+        <CardSpacer />
+        <Hr />
+        <CardSpacer />
+        <Typography variant="caption">
+          <FormattedMessage {...messages.asynchronousEvents} />
+        </Typography>
+        <CardSpacer />
+        <Typography variant="body1">
+          <FormattedMessage
+            {...messages.assignPermissionsToAsynchronousEvents}
+          />
+        </Typography>
+        <CardSpacer />
+        <MultiAutocompleteSelectField
+          displayValues={mapAsyncEventsToChoices(
+            data.asyncEvents,
+            data.asyncEvents
+          )}
+          label={intl.formatMessage(messages.registeredEvents)}
+          choices={asyncEventsChoices}
+          name="asyncEvents"
+          value={data.asyncEvents}
+          onChange={onAsyncEventChange}
+          data-test="asyncEvents"
+          testId="asyncEvent"
+        />
       </CardContent>
     </Card>
   );

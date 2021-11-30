@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { WebhookEventTypeEnum } from "./../../types/globalTypes";
+import { WebhookEventTypeSync, WebhookEventTypeAsync } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL query operation: WebhookDetails
@@ -15,9 +15,14 @@ export interface WebhookDetails_webhook_app {
   name: string | null;
 }
 
-export interface WebhookDetails_webhook_events {
-  __typename: "WebhookEvent";
-  eventType: WebhookEventTypeEnum;
+export interface WebhookDetails_webhook_syncEvents {
+  __typename: "WebhookEventSync";
+  eventType: WebhookEventTypeSync;
+}
+
+export interface WebhookDetails_webhook_asyncEvents {
+  __typename: "WebhookEventAsync";
+  eventType: WebhookEventTypeAsync;
 }
 
 export interface WebhookDetails_webhook {
@@ -26,7 +31,8 @@ export interface WebhookDetails_webhook {
   name: string;
   isActive: boolean;
   app: WebhookDetails_webhook_app;
-  events: WebhookDetails_webhook_events[];
+  syncEvents: WebhookDetails_webhook_syncEvents[];
+  asyncEvents: WebhookDetails_webhook_asyncEvents[];
   secretKey: string | null;
   targetUrl: string;
 }

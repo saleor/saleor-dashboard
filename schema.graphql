@@ -733,6 +733,12 @@ type BulkStockError {
   index: Int
 }
 
+input CardInput {
+  code: String!
+  cvc: String
+  money: MoneyInput!
+}
+
 input CatalogueInput {
   products: [ID]
   categories: [ID]
@@ -1030,6 +1036,7 @@ type CheckoutError {
   message: String
   code: CheckoutErrorCode!
   variants: [ID!]
+  lines: [ID!]
   addressType: AddressTypeEnum
 }
 
@@ -1057,6 +1064,14 @@ enum CheckoutErrorCode {
   MISSING_CHANNEL_SLUG
   CHANNEL_INACTIVE
   UNAVAILABLE_VARIANT_IN_CHANNEL
+}
+
+input CheckoutFilterInput {
+  customer: String
+  created: DateRangeInput
+  search: String
+  metadata: [MetadataFilter]
+  channels: [ID]
 }
 
 type CheckoutLanguageCodeUpdate {
@@ -1101,6 +1116,11 @@ type CheckoutLinesAdd {
   errors: [CheckoutError!]!
 }
 
+type CheckoutLinesDelete {
+  checkout: Checkout
+  errors: [CheckoutError!]!
+}
+
 type CheckoutLinesUpdate {
   checkout: Checkout
   checkoutErrors: [CheckoutError!]! @deprecated(reason: "Use errors field instead. This field will be removed in Saleor 4.0.")
@@ -1130,6 +1150,17 @@ type CheckoutShippingMethodUpdate {
   checkout: Checkout
   checkoutErrors: [CheckoutError!]! @deprecated(reason: "Use errors field instead. This field will be removed in Saleor 4.0.")
   errors: [CheckoutError!]!
+}
+
+enum CheckoutSortField {
+  CREATION_DATE
+  CUSTOMER
+  PAYMENT
+}
+
+input CheckoutSortingInput {
+  direction: OrderDirection!
+  field: CheckoutSortField!
 }
 
 type ChoiceValue {
@@ -3443,6 +3474,11 @@ type Money {
   amount: Float!
 }
 
+input MoneyInput {
+  currency: String!
+  amount: PositiveDecimal!
+}
+
 type MoneyRange {
   start: Money
   stop: Money
@@ -3539,6 +3575,7 @@ type Mutation {
   paymentRefund(amount: PositiveDecimal, paymentId: ID!): PaymentRefund
   paymentVoid(paymentId: ID!): PaymentVoid
   paymentInitialize(channel: String, gateway: String!, paymentData: JSONString): PaymentInitialize
+  paymentCheckBalance(input: PaymentCheckBalanceInput!): PaymentCheckBalance
   pageCreate(input: PageCreateInput!): PageCreate
   pageDelete(id: ID!): PageDelete
   pageBulkDelete(ids: [ID]!): PageBulkDelete
@@ -3633,10 +3670,11 @@ type Mutation {
   checkoutCustomerAttach(checkoutId: ID, customerId: ID, token: UUID): CheckoutCustomerAttach
   checkoutCustomerDetach(checkoutId: ID, token: UUID): CheckoutCustomerDetach
   checkoutEmailUpdate(checkoutId: ID, email: String!, token: UUID): CheckoutEmailUpdate
-  checkoutLineDelete(checkoutId: ID, lineId: ID, token: UUID): CheckoutLineDelete
+  checkoutLineDelete(checkoutId: ID, lineId: ID, token: UUID): CheckoutLineDelete @deprecated(reason: "DEPRECATED: Will be removed in Saleor 4.0. Use `checkoutLinesDelete` instead.")
+  checkoutLinesDelete(linesIds: [ID]!, token: UUID!): CheckoutLinesDelete
   checkoutLinesAdd(checkoutId: ID, lines: [CheckoutLineInput]!, token: UUID): CheckoutLinesAdd
   checkoutLinesUpdate(checkoutId: ID, lines: [CheckoutLineInput]!, token: UUID): CheckoutLinesUpdate
-  checkoutRemovePromoCode(checkoutId: ID, promoCode: String!, token: UUID): CheckoutRemovePromoCode
+  checkoutRemovePromoCode(checkoutId: ID, promoCode: String, promoCodeId: ID, token: UUID): CheckoutRemovePromoCode
   checkoutPaymentCreate(checkoutId: ID, input: PaymentInput!, token: UUID): CheckoutPaymentCreate
   checkoutShippingAddressUpdate(checkoutId: ID, shippingAddress: AddressInput!, token: UUID): CheckoutShippingAddressUpdate
   checkoutShippingMethodUpdate(checkoutId: ID, shippingMethodId: ID!, token: UUID): CheckoutShippingMethodUpdate
@@ -4587,6 +4625,19 @@ enum PaymentChargeStatusEnum {
   CANCELLED
 }
 
+type PaymentCheckBalance {
+  data: JSONString
+  paymentErrors: [PaymentError!]! @deprecated(reason: "This field will be removed in Saleor 4.0. Use `errors` field instead.")
+  errors: [PaymentError!]!
+}
+
+input PaymentCheckBalanceInput {
+  gatewayId: String!
+  method: String!
+  channel: String!
+  card: CardInput!
+}
+
 type PaymentCountableConnection {
   pageInfo: PageInfo!
   edges: [PaymentCountableEdge!]!
@@ -4618,6 +4669,7 @@ enum PaymentErrorCode {
   PAYMENT_ERROR
   NOT_SUPPORTED_GATEWAY
   CHANNEL_INACTIVE
+  BALANCE_CHECK_ERROR
 }
 
 input PaymentFilterInput {
@@ -5541,7 +5593,7 @@ type Query {
   exportFiles(filter: ExportFileFilterInput, sortBy: ExportFileSortingInput, before: String, after: String, first: Int, last: Int): ExportFileCountableConnection
   taxTypes: [TaxType]
   checkout(token: UUID): Checkout
-  checkouts(channel: String, before: String, after: String, first: Int, last: Int): CheckoutCountableConnection
+  checkouts(sortBy: CheckoutSortingInput, filter: CheckoutFilterInput, channel: String, before: String, after: String, first: Int, last: Int): CheckoutCountableConnection
   checkoutLines(before: String, after: String, first: Int, last: Int): CheckoutLineCountableConnection
   channel(id: ID): Channel
   channels: [Channel!]
@@ -6222,6 +6274,7 @@ type Stock implements Node {
   quantity: Int!
   id: ID!
   quantityAllocated: Int!
+  quantityReserved: Int!
 }
 
 enum StockAvailability {
@@ -6807,7 +6860,9 @@ type Webhook implements Node {
   isActive: Boolean!
   secretKey: String
   id: ID!
-  events: [WebhookEvent!]!
+  events: [WebhookEvent!]! @deprecated(reason: "This field will be removed in Saleor 4.0. Use `asyncEvents` or `syncEvents` instead.")
+  syncEvents: [WebhookEventSync!]!
+  asyncEvents: [WebhookEventAsync!]!
   app: App!
 }
 
@@ -6821,6 +6876,8 @@ input WebhookCreateInput {
   name: String
   targetUrl: String
   events: [WebhookEventTypeEnum]
+  asyncEvents: [WebhookEventTypeAsync!]
+  syncEvents: [WebhookEventTypeSync!]
   app: ID
   isActive: Boolean
   secretKey: String
@@ -6849,6 +6906,55 @@ enum WebhookErrorCode {
 type WebhookEvent {
   eventType: WebhookEventTypeEnum!
   name: String!
+}
+
+type WebhookEventAsync {
+  eventType: WebhookEventTypeAsync!
+  name: String!
+}
+
+type WebhookEventSync {
+  eventType: WebhookEventTypeSync!
+  name: String!
+}
+
+enum WebhookEventTypeAsync {
+  ANY_EVENTS
+  ORDER_CREATED
+  ORDER_CONFIRMED
+  ORDER_FULLY_PAID
+  ORDER_UPDATED
+  ORDER_CANCELLED
+  ORDER_FULFILLED
+  DRAFT_ORDER_CREATED
+  DRAFT_ORDER_UPDATED
+  DRAFT_ORDER_DELETED
+  SALE_CREATED
+  SALE_UPDATED
+  SALE_DELETED
+  INVOICE_REQUESTED
+  INVOICE_DELETED
+  INVOICE_SENT
+  CUSTOMER_CREATED
+  CUSTOMER_UPDATED
+  PRODUCT_CREATED
+  PRODUCT_UPDATED
+  PRODUCT_DELETED
+  PRODUCT_VARIANT_CREATED
+  PRODUCT_VARIANT_UPDATED
+  PRODUCT_VARIANT_DELETED
+  PRODUCT_VARIANT_OUT_OF_STOCK
+  PRODUCT_VARIANT_BACK_IN_STOCK
+  CHECKOUT_CREATED
+  CHECKOUT_UPDATED
+  FULFILLMENT_CREATED
+  FULFILLMENT_CANCELED
+  NOTIFY_USER
+  PAGE_CREATED
+  PAGE_UPDATED
+  PAGE_DELETED
+  TRANSLATION_CREATED
+  TRANSLATION_UPDATED
 }
 
 enum WebhookEventTypeEnum {
@@ -6889,8 +6995,20 @@ enum WebhookEventTypeEnum {
   PAYMENT_PROCESS
   PAYMENT_REFUND
   PAYMENT_VOID
+  SHIPPING_LIST_METHODS_FOR_CHECKOUT
   TRANSLATION_CREATED
   TRANSLATION_UPDATED
+}
+
+enum WebhookEventTypeSync {
+  PAYMENT_AUTHORIZE
+  PAYMENT_CAPTURE
+  PAYMENT_CONFIRM
+  PAYMENT_LIST_GATEWAYS
+  PAYMENT_PROCESS
+  PAYMENT_REFUND
+  PAYMENT_VOID
+  SHIPPING_LIST_METHODS_FOR_CHECKOUT
 }
 
 enum WebhookSampleEventTypeEnum {
@@ -6930,6 +7048,7 @@ enum WebhookSampleEventTypeEnum {
   PAYMENT_PROCESS
   PAYMENT_REFUND
   PAYMENT_VOID
+  SHIPPING_LIST_METHODS_FOR_CHECKOUT
   TRANSLATION_CREATED
   TRANSLATION_UPDATED
 }
@@ -6944,6 +7063,8 @@ input WebhookUpdateInput {
   name: String
   targetUrl: String
   events: [WebhookEventTypeEnum]
+  asyncEvents: [WebhookEventTypeAsync!]
+  syncEvents: [WebhookEventTypeSync!]
   app: ID
   isActive: Boolean
   secretKey: String
