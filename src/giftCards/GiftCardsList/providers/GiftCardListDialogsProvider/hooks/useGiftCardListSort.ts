@@ -1,17 +1,12 @@
-import { useContext } from "react";
+import { GiftCardUrlSortField } from "@saleor/giftCards/GiftCardsList/types";
+import { SortPage } from "@saleor/types";
 
-import {
-  GiftCardsListConsumerProps,
-  GiftCardsListContext
-} from "../../GiftCardListProvider";
+import useGiftCardList from "../../GiftCardListProvider/hooks/useGiftCardList";
 
-type GiftCardSortListProps = Pick<
-  GiftCardsListConsumerProps,
-  "onSort" | "sort"
->;
+type GiftCardSortListProps = SortPage<GiftCardUrlSortField>;
 
 const useGiftCardListSort = (): GiftCardSortListProps => {
-  const { onSort, sort } = useContext(GiftCardsListContext);
+  const { onSort, sort } = useGiftCardList();
 
   return { onSort, sort };
 };

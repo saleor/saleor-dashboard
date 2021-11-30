@@ -42,7 +42,7 @@ interface GiftCardsListProviderProps {
   params: GiftCardListUrlQueryParams;
 }
 
-export interface GiftCardListDataProps {
+export interface GiftCardListDataProps extends SortPage<GiftCardUrlSortField> {
   giftCards: Array<ExtendedGiftCard<GiftCardList_giftCards_edges_node>>;
   pageInfo: PageInfo;
   loading: boolean;
@@ -95,11 +95,14 @@ export const GiftCardsListProvider: React.FC<GiftCardsListProviderProps> = ({
   );
 
   const handleGiftCardListError = (error: ApolloError) => {
-    const { message } = error.graphQLErrors[0];
-    notify({
-      status: "error",
-      text: message
-    });
+    const { message } = error?.graphQLErrors[0];
+
+    if (message) {
+      notify({
+        status: "error",
+        text: message
+      });
+    }
   };
 
   const { data, loading } = useGiftCardListQuery({
