@@ -38,6 +38,9 @@ const useStyles = makeStyles(
       justifyContent: "space-between"
     },
     actionBarContainer: {
+      "&&": {
+        padding: theme.spacing(2)
+      },
       boxShadow: `0px 0px 0px 0px ${theme.palette.background.paper}`,
       transition: theme.transitions.duration.short + "ms"
     },

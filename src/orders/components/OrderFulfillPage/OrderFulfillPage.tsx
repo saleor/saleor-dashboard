@@ -71,7 +71,7 @@ const useStyles = makeStyles<OrderFulfillPageProps, ClassKey>(
       },
       actionBar: {
         flexDirection: "row",
-        paddingLeft: `calc(${theme.spacing(2)} + 2px)`
+        padding: theme.spacing(1, 4)
       },
       colName: {
         width: 250

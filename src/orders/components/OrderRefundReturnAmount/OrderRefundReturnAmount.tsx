@@ -30,6 +30,9 @@ import RefundAmountInput from "./RefundAmountInput";
 
 const useStyles = makeStyles(
   theme => ({
+    content: {
+      paddingTop: theme.spacing(1.5)
+    },
     hr: {
       margin: theme.spacing(1, 0)
     },
@@ -165,7 +168,7 @@ const OrderRefundAmount: React.FC<OrderRefundAmountProps> = props => {
           description: "section header"
         })}
       />
-      <CardContent>
+      <CardContent className={classes.content}>
         {type === OrderRefundType.PRODUCTS && (
           <RadioGroup
             value={data.amountCalculationMode}

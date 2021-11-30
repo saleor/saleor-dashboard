@@ -4,6 +4,8 @@ import { FulfillmentStatus } from "@saleor/types/globalTypes";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
+import useStyles from "./styles";
+
 interface AcionButtonsProps {
   status: FulfillmentStatus;
   trackingNumber?: string;
@@ -22,6 +24,8 @@ const ActionButtons: React.FC<AcionButtonsProps> = ({
   trackingNumber,
   onRefund
 }) => {
+  const classes = useStyles();
+
   const hasTrackingNumber = !!trackingNumber;
 
   if (!statusesToShow.includes(status)) {
@@ -30,8 +34,8 @@ const ActionButtons: React.FC<AcionButtonsProps> = ({
 
   if (status === FulfillmentStatus.RETURNED) {
     return (
-      <CardActions>
-        <Button onClick={onRefund}>
+      <CardActions className={classes.actions}>
+        <Button variant="primary" onClick={onRefund}>
           <FormattedMessage
             defaultMessage="Refund"
             description="refund button"
@@ -42,8 +46,8 @@ const ActionButtons: React.FC<AcionButtonsProps> = ({
   }
 
   return hasTrackingNumber ? (
-    <CardActions>
-      <Button onClick={onTrackingCodeAdd}>
+    <CardActions className={classes.actions}>
+      <Button variant="primary" onClick={onTrackingCodeAdd}>
         <FormattedMessage
           defaultMessage="Edit tracking"
           description="edit tracking button"
@@ -51,8 +55,8 @@ const ActionButtons: React.FC<AcionButtonsProps> = ({
       </Button>
     </CardActions>
   ) : (
-    <CardActions>
-      <Button onClick={onTrackingCodeAdd}>
+    <CardActions className={classes.actions}>
+      <Button variant="primary" onClick={onTrackingCodeAdd}>
         <FormattedMessage
           defaultMessage="Add tracking"
           description="add tracking button"

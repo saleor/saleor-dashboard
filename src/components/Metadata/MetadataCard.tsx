@@ -183,7 +183,7 @@ const MetadataCard: React.FC<MetadataCardProps> = ({
                         </TableCell>
                         <TableCell className={classes.colAction}>
                           <IconButton
-                            color="primary"
+                            variant="secondary"
                             data-test="deleteField"
                             data-test-id={fieldIndex}
                             onClick={() =>

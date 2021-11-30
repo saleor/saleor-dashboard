@@ -96,6 +96,10 @@ const useStyles = makeStyles(
     },
     warehousesLabel: {
       marginBottom: theme.spacing(2)
+    },
+    scrollable: {
+      maxHeight: `calc(100vh - 350px)`,
+      overflowY: "scroll"
     }
   }),
   {
@@ -295,7 +299,7 @@ const ProductExportDialogInfo: React.FC<ProductExportDialogInfoProps> = ({
     onSelectAllChannels(channels, channels.length);
 
   return (
-    <>
+    <div className={classes.scrollable}>
       <Typography className={classes.dialogLabel}>
         <FormattedMessage
           defaultMessage="Information exported:"
@@ -599,7 +603,7 @@ const ProductExportDialogInfo: React.FC<ProductExportDialogInfoProps> = ({
         onToggleAll={handleToggleAllFields}
         data-test="seo"
       />
-    </>
+    </div>
   );
 };
 

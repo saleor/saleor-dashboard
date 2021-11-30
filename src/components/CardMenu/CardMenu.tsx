@@ -6,8 +6,7 @@ import {
   Paper,
   Popper
 } from "@material-ui/core";
-import MoreVertIcon from "@material-ui/icons/MoreVert";
-import { IconButton, makeStyles } from "@saleor/macaw-ui";
+import { IconButton, makeStyles, MoreIcon } from "@saleor/macaw-ui";
 import React from "react";
 
 const ITEM_HEIGHT = 48;
@@ -23,6 +22,7 @@ export interface CardMenuProps {
   className?: string;
   disabled?: boolean;
   menuItems: CardMenuItem[];
+  outlined?: boolean;
 }
 
 const useStyles = makeStyles(
@@ -46,7 +46,7 @@ const useStyles = makeStyles(
 );
 
 const CardMenu: React.FC<CardMenuProps> = props => {
-  const { className, disabled, menuItems, ...rest } = props;
+  const { className, disabled, menuItems, outlined, ...rest } = props;
   const classes = useStyles(props);
 
   const anchorRef = React.useRef<HTMLButtonElement | null>(null);
@@ -89,18 +89,17 @@ const CardMenu: React.FC<CardMenuProps> = props => {
   return (
     <div className={className} {...rest}>
       <IconButton
-        variant="secondary"
         data-test-id="showMoreButton"
         aria-label="More"
         aria-owns={open ? "long-menu" : null}
         aria-haspopup="true"
-        className={classes.iconButton}
         color="primary"
         disabled={disabled}
         ref={anchorRef}
         onClick={handleToggle}
+        variant={outlined ? "primary" : "secondary"}
       >
-        <MoreVertIcon />
+        <MoreIcon />
       </IconButton>
       <Popper
         placement="bottom-end"
