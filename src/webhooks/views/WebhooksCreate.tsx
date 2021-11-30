@@ -8,7 +8,7 @@ import { WebhookEventTypeAsync } from "@saleor/types/globalTypes";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import WebhookCreatePage, { FormData } from "../components/WebhookCreatePage";
+import WebhookDetailsPage, { FormData } from "../components/WebhookDetailsPage";
 import { useWebhookCreateMutation } from "../mutations";
 import { WebhookCreate as WebhookCreateData } from "../types/WebhookCreate";
 import { webhookUrl } from "../urls";
@@ -66,7 +66,7 @@ export const WebhooksCreate: React.FC<WebhooksCreateProps> = ({ id }) => {
           description: "window title"
         })}
       />
-      <WebhookCreatePage
+      <WebhookDetailsPage
         appName={data?.app?.name}
         disabled={false}
         errors={webhookCreateOpts.data?.webhookCreate.errors || []}
