@@ -7402,10 +7402,6 @@
     "context": "webhooks section name",
     "string": "Webhooks"
   },
-  "src_dot_webhooks_dot_components_dot_WebhookCreatePage_dot_3493926696": {
-    "context": "header",
-    "string": "Create Webhook"
-  },
   "src_dot_webhooks_dot_components_dot_WebhookDeleteDialog_dot_216945727": {
     "context": "delete webhook",
     "string": "Are you sure you want to delete this webhook?"
@@ -7417,6 +7413,18 @@
   "src_dot_webhooks_dot_components_dot_WebhookDeleteDialog_dot_3514087611": {
     "context": "dialog header",
     "string": "Delete Webhook"
+  },
+  "src_dot_webhooks_dot_components_dot_WebhookDetailsPage_dot_header": {
+    "context": "header",
+    "string": "Unnamed Webhook Details"
+  },
+  "src_dot_webhooks_dot_components_dot_WebhookDetailsPage_dot_headerCreate": {
+    "context": "header",
+    "string": "Create Webhook"
+  },
+  "src_dot_webhooks_dot_components_dot_WebhookDetailsPage_dot_headerNamed": {
+    "context": "header",
+    "string": "{webhookName} Details"
   },
   "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_assignPermissionsToAsynchronousEvents": {
     "context": "section description",
@@ -7442,53 +7450,41 @@
     "context": "section subheader",
     "string": "Synchronous events"
   },
-  "src_dot_webhooks_dot_components_dot_WebhookInfo_dot_1089569085": {
-    "context": "webhook",
+  "src_dot_webhooks_dot_components_dot_WebhookInfo_dot_secretKey": {
+    "context": "webhook input label",
     "string": "Secret Key"
   },
-  "src_dot_webhooks_dot_components_dot_WebhookInfo_dot_1690209105": {
-    "context": "webhook",
+  "src_dot_webhooks_dot_components_dot_WebhookInfo_dot_secretKeyDescription": {
+    "context": "webhook input help text",
+    "string": "secret key is used to create a hash signature with each payload. *optional field"
+  },
+  "src_dot_webhooks_dot_components_dot_WebhookInfo_dot_targetUrl": {
+    "context": "webhook input label",
     "string": "Target URL"
   },
-  "src_dot_webhooks_dot_components_dot_WebhookInfo_dot_1826224431": {
-    "context": "webhook",
-    "string": "Webhook Name"
+  "src_dot_webhooks_dot_components_dot_WebhookInfo_dot_targetUrlDescription": {
+    "context": "webhook input help text",
+    "string": "This URL will receive webhook POST requests"
   },
-  "src_dot_webhooks_dot_components_dot_WebhookInfo_dot_330298209": {
+  "src_dot_webhooks_dot_components_dot_WebhookInfo_dot_webhookInformation": {
     "context": "section header",
     "string": "Webhook Information"
   },
-  "src_dot_webhooks_dot_components_dot_WebhookInfo_dot_3763861707": {
-    "context": "webhook target url help text",
-    "string": "This URL will receive webhook POST requests"
+  "src_dot_webhooks_dot_components_dot_WebhookInfo_dot_webhookName": {
+    "context": "webhook input label",
+    "string": "Webhook Name"
   },
-  "src_dot_webhooks_dot_components_dot_WebhookInfo_dot_3809115222": {
-    "context": "webhook secret key help text",
-    "string": "secret key is used to create a hash signature with each payload. *optional field"
-  },
-  "src_dot_webhooks_dot_components_dot_WebhookInfo_dot_4194304040": {
-    "context": "webhook specific information",
-    "string": "Webhook specific information"
-  },
-  "src_dot_webhooks_dot_components_dot_WebhookStatus_dot_2772025990": {
-    "context": "webhooks active",
+  "src_dot_webhooks_dot_components_dot_WebhookStatus_dot_webhookActive": {
+    "context": "webhooks active label",
     "string": "Webhook is active"
   },
-  "src_dot_webhooks_dot_components_dot_WebhookStatus_dot_313090629": {
-    "context": "webhook active",
+  "src_dot_webhooks_dot_components_dot_WebhookStatus_dot_webhookActiveDescription": {
+    "context": "webhook active description",
     "string": "If you want to disable this webhook please uncheck the box below."
   },
-  "src_dot_webhooks_dot_components_dot_WebhookStatus_dot_596557805": {
+  "src_dot_webhooks_dot_components_dot_WebhookStatus_dot_webhookStatus": {
     "context": "section header",
     "string": "Webhook Status"
-  },
-  "src_dot_webhooks_dot_components_dot_WebhooksDetailsPage_dot_1595053355": {
-    "context": "header",
-    "string": "Unnamed Webhook Details"
-  },
-  "src_dot_webhooks_dot_components_dot_WebhooksDetailsPage_dot_408706360": {
-    "context": "header",
-    "string": "{webhookName} Details"
   },
   "src_dot_webhooks_dot_components_dot_WebhooksList_dot_1153324159": {
     "string": "No webhooks found"

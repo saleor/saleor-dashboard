@@ -4,13 +4,13 @@ import FormSpacer from "@saleor/components/FormSpacer";
 import Hr from "@saleor/components/Hr";
 import { WebhookErrorFragment } from "@saleor/fragments/types/WebhookErrorFragment";
 import { commonMessages } from "@saleor/intl";
-import { makeStyles } from "@saleor/macaw-ui";
 import { getFormErrors } from "@saleor/utils/errors";
 import getWebhookErrorMessage from "@saleor/utils/errors/webhooks";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import { FormData } from "../WebhooksDetailsPage";
+import { FormData } from "../WebhookDetailsPage";
+import { messages } from "./messages";
 
 interface WebhookInfoProps {
   data: FormData;
@@ -19,51 +19,29 @@ interface WebhookInfoProps {
   onChange: (event: React.ChangeEvent<any>) => void;
 }
 
-const useStyles = makeStyles(
-  () => ({
-    status: {
-      paddingTop: 20
-    },
-    title: {
-      fontSize: 16,
-      lineHeight: 1.9,
-      paddingBottom: 10
-    }
-  }),
-  { name: "WebhookInfo" }
-);
-
 const WebhookInfo: React.FC<WebhookInfoProps> = ({
   data,
   disabled,
   errors,
   onChange
 }) => {
-  const classes = useStyles({});
   const intl = useIntl();
 
   const formErrors = getFormErrors(["name", "targetUrl", "secretKey"], errors);
 
   return (
     <Card>
-      <CardTitle
-        title={intl.formatMessage({
-          defaultMessage: "Webhook Information",
-          description: "section header"
-        })}
-      />
+      <CardTitle title={intl.formatMessage(messages.webhookInformation)} />
       <CardContent>
-        <Typography className={classes.title}>
+        <Typography variant="caption">
           {intl.formatMessage(commonMessages.generalInformations)}
         </Typography>
+        <FormSpacer />
         <TextField
           disabled={disabled}
           error={!!formErrors.name}
           helperText={getWebhookErrorMessage(formErrors.name, intl)}
-          label={intl.formatMessage({
-            defaultMessage: "Webhook Name",
-            description: "webhook"
-          })}
+          label={intl.formatMessage(messages.webhookName)}
           fullWidth
           name="name"
           value={data.name}
@@ -72,27 +50,14 @@ const WebhookInfo: React.FC<WebhookInfoProps> = ({
         <FormSpacer />
         <Hr />
         <FormSpacer />
-        <Typography className={classes.title}>
-          {intl.formatMessage({
-            defaultMessage: "Webhook specific information",
-            description: "webhook specific information"
-          })}
-        </Typography>
-        <FormSpacer />
         <TextField
           disabled={disabled}
           error={!!formErrors.targetUrl}
           helperText={
             getWebhookErrorMessage(formErrors.targetUrl, intl) ||
-            intl.formatMessage({
-              defaultMessage: "This URL will receive webhook POST requests",
-              description: "webhook target url help text"
-            })
+            intl.formatMessage(messages.targetUrlDescription)
           }
-          label={intl.formatMessage({
-            defaultMessage: "Target URL",
-            description: "webhook"
-          })}
+          label={intl.formatMessage(messages.targetUrl)}
           fullWidth
           name="targetUrl"
           value={data.targetUrl}
@@ -104,16 +69,9 @@ const WebhookInfo: React.FC<WebhookInfoProps> = ({
           error={!!formErrors.secretKey}
           helperText={
             getWebhookErrorMessage(formErrors.secretKey, intl) ||
-            intl.formatMessage({
-              defaultMessage:
-                "secret key is used to create a hash signature with each payload. *optional field",
-              description: "webhook secret key help text"
-            })
+            intl.formatMessage(messages.secretKeyDescription)
           }
-          label={intl.formatMessage({
-            defaultMessage: "Secret Key",
-            description: "webhook"
-          })}
+          label={intl.formatMessage(messages.secretKey)}
           fullWidth
           name="secretKey"
           value={data.secretKey}

@@ -10,7 +10,7 @@ import React from "react";
 import { useIntl } from "react-intl";
 
 import { getStringOrPlaceholder } from "../../misc";
-import WebhooksDetailsPage from "../components/WebhooksDetailsPage";
+import WebhookDetailsPage from "../components/WebhookDetailsPage";
 import { useWebhookUpdateMutation } from "../mutations";
 import { useWebhooksDetailsQuery } from "../queries";
 
@@ -57,7 +57,7 @@ export const WebhooksDetails: React.FC<WebhooksDetailsProps> = ({ id }) => {
       <WindowTitle
         title={getStringOrPlaceholder(webhookDetails?.webhook?.name)}
       />
-      <WebhooksDetailsPage
+      <WebhookDetailsPage
         appName={webhook?.app?.name}
         disabled={loading}
         errors={formErrors}
