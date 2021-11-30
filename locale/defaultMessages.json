@@ -3825,11 +3825,7 @@
   },
   "src_dot_giftCards_dot_GiftCardsList_dot_GiftCardsListOrderInfoCard_dot_giftCardOrderInfoMessage": {
     "context": "alert card message",
-    "string": "Gift cards will appear after their order is fullfilled. "
-  },
-  "src_dot_giftCards_dot_GiftCardsList_dot_GiftCardsListOrderInfoCard_dot_giftCardOrderInfoMessageLink": {
-    "context": "alert card message link",
-    "string": "View Orders with Gift Cards"
+    "string": "Gift cards will appear after their order is fullfilled. <link>View Orders with Gift Cards</link>"
   },
   "src_dot_giftCards_dot_GiftCardsList_dot_GiftCardsListTable_dot_GiftCardsListTableHeader_dot_deleteLabel": {
     "context": "GiftCardEnableDisableSection enable label",

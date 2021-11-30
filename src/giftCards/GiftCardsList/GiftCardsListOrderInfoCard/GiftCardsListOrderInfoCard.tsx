@@ -9,10 +9,14 @@ import { giftCardListOrderCardMessages as messages } from "./messages";
 const GiftCardsListOrderInfoCard: React.FC = () => (
   <Alert variant="info" close={false}>
     <Typography>
-      <FormattedMessage {...messages.giftCardOrderInfoMessage} />
-      <Link href={orderGiftCardBoughtPath()}>
-        <FormattedMessage {...messages.giftCardOrderInfoMessageLink} />
-      </Link>
+      <FormattedMessage
+        {...messages.giftCardOrderInfoMessage}
+        values={{
+          link: content => (
+            <Link href={orderGiftCardBoughtPath()}>{content}</Link>
+          )
+        }}
+      />
     </Typography>
   </Alert>
 );
