@@ -2,7 +2,6 @@ import { Card, TableBody } from "@material-ui/core";
 import CardMenu from "@saleor/components/CardMenu";
 import CardSpacer from "@saleor/components/CardSpacer";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
-import { makeStyles } from "@saleor/macaw-ui";
 import { mergeRepeatedOrderLines } from "@saleor/orders/utils/data";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -15,15 +14,7 @@ import TableLine from "../OrderProductsCardElements/OrderProductsTableRow";
 import CardTitle from "../OrderReturnPage/OrderReturnRefundItemsCard/CardTitle";
 import ActionButtons from "./ActionButtons";
 import ExtraInfoLines from "./ExtraInfoLines";
-
-const useStyles = makeStyles(
-  () => ({
-    table: {
-      tableLayout: "fixed"
-    }
-  }),
-  { name: "OrderFulfillment" }
-);
+import useStyles from "./styles";
 
 interface OrderFulfilledProductsCardProps {
   fulfillment: OrderDetails_order_fulfillments;

@@ -13,7 +13,11 @@ import CardTitle from "../OrderReturnPage/OrderReturnRefundItemsCard/CardTitle";
 import { messages } from "./messages";
 
 const useStyles = makeStyles(
-  () => ({
+  theme => ({
+    actions: {
+      flexDirection: "row-reverse",
+      padding: theme.spacing(2, 3)
+    },
     table: {
       tableLayout: "fixed"
     }
@@ -56,7 +60,7 @@ const OrderUnfulfilledProductsCard: React.FC<OrderUnfulfilledProductsCardProps> 
           </TableBody>
         </ResponsiveTable>
         {canFulfill && (
-          <CardActions>
+          <CardActions className={classes.actions}>
             {noProductsAvailable ? (
               <Tooltip
                 title={intl.formatMessage(messages.deletedVariantDetected)}
@@ -64,13 +68,13 @@ const OrderUnfulfilledProductsCard: React.FC<OrderUnfulfilledProductsCardProps> 
                 placement={"left"}
               >
                 <div>
-                  <Button disabled variant="tertiary" onClick={onFulfill}>
+                  <Button disabled variant="primary" onClick={onFulfill}>
                     {intl.formatMessage(messages.fulfillButton)}
                   </Button>
                 </div>
               </Tooltip>
             ) : (
-              <Button variant="tertiary" onClick={onFulfill}>
+              <Button variant="primary" onClick={onFulfill}>
                 {intl.formatMessage(messages.fulfillButton)}
               </Button>
             )}

@@ -8,7 +8,6 @@ import useShop from "@saleor/hooks/useShop";
 import Attributes from "@saleor/icons/Attributes";
 import Channels from "@saleor/icons/Channels";
 import Navigation from "@saleor/icons/Navigation";
-import Pages from "@saleor/icons/Pages";
 import PageTypes from "@saleor/icons/PageTypes";
 import PermissionGroups from "@saleor/icons/PermissionGroups";
 import Plugins from "@saleor/icons/Plugins";
@@ -21,7 +20,6 @@ import Warehouses from "@saleor/icons/Warehouses";
 import { sectionNames } from "@saleor/intl";
 import { maybe } from "@saleor/misc";
 import { menuListUrl } from "@saleor/navigation/urls";
-import { pageListUrl } from "@saleor/pages/urls";
 import { pageTypeListUrl } from "@saleor/pageTypes/urls";
 import { permissionGroupListUrl } from "@saleor/permissionGroups/urls";
 import { pluginListUrl } from "@saleor/plugins/urls";
@@ -184,17 +182,6 @@ export function createConfigurationMenu(intl: IntlShape): MenuSection[] {
           title: intl.formatMessage(sectionNames.pageTypes),
           url: pageTypeListUrl(),
           testId: "configurationMenuPageTypes"
-        },
-        {
-          description: intl.formatMessage({
-            defaultMessage: "Manage and add additional pages",
-            id: "configurationMenuPages"
-          }),
-          icon: <Pages fontSize="inherit" viewBox="0 0 44 44" />,
-          permissions: [PermissionEnum.MANAGE_PAGES],
-          title: intl.formatMessage(sectionNames.pages),
-          url: pageListUrl(),
-          testId: "configurationMenuPages"
         }
       ]
     },

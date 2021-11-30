@@ -92,7 +92,7 @@ const LanguageSwitch: React.FC<LanguageSwitchProps> = props => {
                 placement === "bottom" ? "right top" : "right bottom"
             }}
           >
-            <Paper className={classes.menuPaper}>
+            <Paper className={classes.menuPaper} elevation={8}>
               <ClickAwayListener
                 onClickAway={() => setExpandedState(false)}
                 mouseEvent="onClick"

@@ -214,7 +214,7 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
               inline
               title={<Title order={order} />}
             >
-              <CardMenu menuItems={selectCardMenuItems} />
+              <CardMenu outlined menuItems={selectCardMenuItems} />
             </PageHeader>
             <div className={classes.date}>
               {order && order.created ? (

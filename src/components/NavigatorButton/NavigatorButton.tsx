@@ -1,10 +1,8 @@
-import navigatorIcon from "@assets/images/navigator.svg";
 import { Grow, Paper, Popper } from "@material-ui/core";
 import { IconButtonProps } from "@material-ui/core/IconButton";
-import { IconButton, makeStyles } from "@saleor/macaw-ui";
+import { LayoutButton, makeStyles, NavigatorIcon } from "@saleor/macaw-ui";
 import classNames from "classnames";
 import React from "react";
-import ReactSVG from "react-inlinesvg";
 import { FormattedMessage } from "react-intl";
 
 const useStyles = makeStyles(
@@ -58,21 +56,11 @@ const useStyles = makeStyles(
       },
 
       root: {
-        "& path": {
+        "&:hover path": {
           color: theme.palette.primary.main
         },
-        "&:not(:hover)": {
-          backgroundColor: theme.palette.background.paper
-        },
-        [theme.breakpoints.down("sm")]: {
-          border: "none",
-          borderRadius: 16
-        },
-        border: `1px solid ${theme.palette.divider}`,
-        height: 40,
         marginRight: theme.spacing(2),
-        padding: 6,
-        width: 40
+        width: 48
       }
     };
   },
@@ -109,8 +97,7 @@ const NavigatorButton: React.FC<NavigatorButtonProps> = ({
 
   return (
     <>
-      <IconButton
-        variant="secondary"
+      <LayoutButton
         className={classNames(className, classes.root)}
         data-test="navigator"
         onMouseEnter={setHelper}
@@ -118,13 +105,12 @@ const NavigatorButton: React.FC<NavigatorButtonProps> = ({
         {...props}
         ref={anchor}
       >
-        <ReactSVG src={navigatorIcon} />
-      </IconButton>
+        <NavigatorIcon />
+      </LayoutButton>
       <Popper
         open={helperVisibility}
         anchorEl={anchor.current}
         transition
-        disablePortal
         placement="bottom-start"
       >
         {({ TransitionProps, placement }) => (
@@ -135,7 +121,7 @@ const NavigatorButton: React.FC<NavigatorButtonProps> = ({
                 placement === "bottom" ? "right top" : "right bottom"
             }}
           >
-            <Paper className={classes.paper} elevation={0}>
+            <Paper className={classes.paper} elevation={8}>
               <FormattedMessage defaultMessage="Navigator" />
               <div className={classes.keyTile}>
                 <span className={classes.keyTileLabel}>
