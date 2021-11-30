@@ -1,25 +1,11 @@
 import { DialogActions } from "@material-ui/core";
 import { buttonMessages } from "@saleor/intl";
-import { Button, makeStyles } from "@saleor/macaw-ui";
-import classNames from "classnames";
+import { Button } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import ConfirmButton, { ConfirmButtonTransitionState } from "../ConfirmButton";
 import { ActionDialogVariant } from "./types";
-
-const useStyles = makeStyles(
-  theme => ({
-    deleteButton: {
-      "&:hover": {
-        backgroundColor: theme.palette.error.main
-      },
-      backgroundColor: theme.palette.error.main,
-      color: theme.palette.error.contrastText
-    }
-  }),
-  { name: "ActionDialog" }
-);
 
 interface DialogButtonsProps {
   onClose: () => void;
@@ -44,14 +30,18 @@ const DialogButtons: React.FC<DialogButtonsProps> = props => {
     showBackButton = true
   } = props;
 
-  const classes = useStyles(props);
   const intl = useIntl();
 
   return (
     <DialogActions>
       {children}
       {showBackButton && (
-        <Button data-test="back" onClick={onClose} color="secondary">
+        <Button
+          data-test="back"
+          color="text"
+          onClick={onClose}
+          variant="secondary"
+        >
           <FormattedMessage {...buttonMessages.back} />
         </Button>
       )}
@@ -60,9 +50,7 @@ const DialogButtons: React.FC<DialogButtonsProps> = props => {
           disabled={disabled}
           transitionState={confirmButtonState}
           onClick={onConfirm}
-          className={classNames({
-            [classes.deleteButton]: variant === "delete"
-          })}
+          error={variant === "delete"}
           data-test-id="submit"
           data-test="submit"
         >

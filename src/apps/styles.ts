@@ -37,7 +37,7 @@ export const useStyles = makeStyles(
     },
     colAction: {
       "&&": {
-        paddingRight: theme.spacing(1),
+        paddingRight: theme.spacing(1.5),
         textAlign: "right"
       },
       textAlign: "right"
@@ -77,6 +77,9 @@ export const useStyles = makeStyles(
       margin: theme.spacing(0, 1, 0.7, 0)
     },
     headerLinkContainer: {
+      "& svg": {
+        marginRight: theme.spacing()
+      },
       "& span": {
         fontWeight: 500
       },
