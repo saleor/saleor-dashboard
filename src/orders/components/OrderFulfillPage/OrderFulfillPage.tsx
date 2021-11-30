@@ -210,7 +210,7 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
 
   const filteredWarehouses = warehouses?.filter(warehouse =>
     order?.lines.some(line =>
-      line.variant.stocks.some(stock => stock.warehouse.id === warehouse.id)
+      line.variant?.stocks.some(stock => stock.warehouse.id === warehouse.id)
     )
   );
 
