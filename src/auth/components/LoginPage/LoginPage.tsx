@@ -170,7 +170,6 @@ const LoginCard: React.FC<LoginCardProps> = props => {
               <Button
                 fullWidth
                 variant="secondary"
-                size="large"
                 onClick={() =>
                   onExternalAuthentication(externalAuthentication.id)
                 }

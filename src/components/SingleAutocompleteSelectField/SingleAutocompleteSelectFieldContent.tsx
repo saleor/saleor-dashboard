@@ -96,7 +96,8 @@ const useStyles = makeStyles(
     progress: {},
     progressContainer: {
       display: "flex",
-      justifyContent: "center"
+      justifyContent: "center",
+      padding: theme.spacing(1, 0)
     },
     root: {
       borderBottomLeftRadius: 8,
@@ -199,7 +200,7 @@ const SingleAutocompleteSelectFieldContent: React.FC<SingleAutocompleteSelectFie
   const choicesToDisplay = choices.slice(0, slice);
 
   return (
-    <Paper className={classes.root}>
+    <Paper className={classes.root} elevation={8}>
       <div
         className={classes.content}
         ref={anchor}

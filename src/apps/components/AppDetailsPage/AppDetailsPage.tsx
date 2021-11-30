@@ -8,6 +8,7 @@ import Skeleton from "@saleor/components/Skeleton";
 import { sectionNames } from "@saleor/intl";
 import { Backlink, Button } from "@saleor/macaw-ui";
 import React from "react";
+import SVG from "react-inlinesvg";
 import { FormattedMessage, useIntl } from "react-intl";
 import ReactMarkdown from "react-markdown";
 
@@ -68,7 +69,7 @@ export const AppDetailsPage: React.FC<AppDetailsPageProps> = ({
               href={data.supportUrl}
               target="_blank"
             >
-              <img src={supportIcon} alt="" />
+              <SVG src={supportIcon} />
               <FormattedMessage
                 defaultMessage="Get Support"
                 description="link"
@@ -78,7 +79,7 @@ export const AppDetailsPage: React.FC<AppDetailsPageProps> = ({
               className={classes.headerLinkContainer}
               onClick={navigateToAppSettings}
             >
-              <img src={settingsIcon} alt="" />
+              <SVG src={settingsIcon} />
 
               <FormattedMessage
                 defaultMessage="Edit settings"
@@ -91,7 +92,7 @@ export const AppDetailsPage: React.FC<AppDetailsPageProps> = ({
               disableFocusRipple
               onClick={data.isActive ? onAppDeactivateOpen : onAppActivateOpen}
             >
-              <img src={activateIcon} alt="" />
+              <SVG src={activateIcon} />
               {data?.isActive ? (
                 <FormattedMessage
                   defaultMessage="Deactivate"
