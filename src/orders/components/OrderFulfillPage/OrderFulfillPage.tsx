@@ -208,6 +208,12 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
     return isAtLeastOneFulfilled && areProperlyFulfilled;
   };
 
+  const filteredWarehouses = warehouses?.filter(warehouse =>
+    order?.lines.some(line =>
+      line.variant.stocks.some(stock => stock.warehouse.id === warehouse.id)
+    )
+  );
+
   return (
     <Container>
       <Backlink onClick={onBack}>
@@ -265,7 +271,7 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
                         description="quantity of fulfilled products"
                       />
                     </TableCell>
-                    {warehouses?.map(warehouse => (
+                    {filteredWarehouses?.map(warehouse => (
                       <TableCell
                         key={warehouse.id}
                         className={classNames(
@@ -295,7 +301,7 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
                               {" "}
                               <Skeleton />
                             </TableCell>
-                            {warehouses?.map(warehouse => (
+                            {filteredWarehouses?.map(warehouse => (
                               <TableCell
                                 className={classes.colQuantity}
                                 key={warehouse.id}
@@ -354,7 +360,7 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
                             </span>{" "}
                             / {remainingQuantity}
                           </TableCell>
-                          {warehouses?.map(warehouse => {
+                          {filteredWarehouses?.map(warehouse => {
                             const warehouseStock = line.variant.stocks.find(
                               stock => stock.warehouse.id === warehouse.id
                             );
