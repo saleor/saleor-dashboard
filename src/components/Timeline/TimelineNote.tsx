@@ -41,8 +41,7 @@ const useStyles = makeStyles(
     cardContent: {
       "&:last-child": {
         padding: 16
-      },
-      boxShadow: "0px 5px 10px rgba(0, 0, 0, 0.05)"
+      }
     },
     root: {
       position: "relative"
@@ -90,7 +89,7 @@ export const TimelineNote: React.FC<TimelineNoteProps> = props => {
           <DateTime date={date} />
         </Typography>
       </div>
-      <Card className={classes.card}>
+      <Card className={classes.card} elevation={16}>
         <CardContent className={classes.cardContent}>
           <Typography
             dangerouslySetInnerHTML={{
