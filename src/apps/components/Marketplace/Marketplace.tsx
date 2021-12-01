@@ -4,18 +4,15 @@ import { Button } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { useStyles } from "../../styles";
-
 interface MarketplaceProps {
   link?: () => void;
 }
 
 const Marketplace: React.FC<MarketplaceProps> = ({ link }) => {
   const intl = useIntl();
-  const classes = useStyles({});
 
   return (
-    <div className={classes.appContainer}>
+    <div>
       <Card>
         <CardTitle
           title={intl.formatMessage({
@@ -23,7 +20,7 @@ const Marketplace: React.FC<MarketplaceProps> = ({ link }) => {
             description: "section header"
           })}
         />
-        <CardContent className={classes.marketplaceContent}>
+        <CardContent>
           {!!link ? (
             <>
               <Typography variant="body2">

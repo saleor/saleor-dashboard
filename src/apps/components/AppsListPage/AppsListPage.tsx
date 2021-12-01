@@ -1,3 +1,4 @@
+import CardSpacer from "@saleor/components/CardSpacer";
 import Container from "@saleor/components/Container";
 import PageHeader from "@saleor/components/PageHeader";
 import { sectionNames } from "@saleor/intl";
@@ -48,12 +49,15 @@ const AppsListPage: React.FC<AppsListPageProps> = ({
     <Container>
       <PageHeader title={intl.formatMessage(sectionNames.apps)} />
       {!!appsInProgress?.length && (
-        <AppsInProgress
-          appsList={appsInProgress}
-          disabled={loadingAppsInProgress}
-          onAppInstallRetry={onAppInstallRetry}
-          onRemove={onAppInProgressRemove}
-        />
+        <>
+          <AppsInProgress
+            appsList={appsInProgress}
+            disabled={loadingAppsInProgress}
+            onAppInstallRetry={onAppInstallRetry}
+            onRemove={onAppInProgressRemove}
+          />
+          <CardSpacer />
+        </>
       )}
       <InstalledApps
         appsList={installedAppsList}
@@ -61,12 +65,14 @@ const AppsListPage: React.FC<AppsListPageProps> = ({
         onSettingsRowClick={onSettingsRowClick}
         {...listProps}
       />
+      <CardSpacer />
       <CustomApps
         appsList={customAppsList}
         navigateToCustomApp={navigateToCustomApp}
         navigateToCustomAppCreate={navigateToCustomAppCreate}
         onRemove={onCustomAppRemove}
       />
+      <CardSpacer />
       <Marketplace />
     </Container>
   );
