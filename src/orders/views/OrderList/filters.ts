@@ -52,11 +52,11 @@ export function getFilterOpts(
     },
     giftCard: {
       active: params?.giftCard !== undefined,
-      value: dedupeFilter(
-        params.giftCard?.map(
-          status => findValueInEnum(status, OrderFilterGiftCard) || []
-        )
-      ) as OrderFilterGiftCard[]
+      value: params.giftCard?.length
+        ? params.giftCard?.map(status =>
+            findValueInEnum(status, OrderFilterGiftCard)
+          )
+        : ([] as OrderFilterGiftCard[])
     },
     customer: {
       active: !!params?.customer,
