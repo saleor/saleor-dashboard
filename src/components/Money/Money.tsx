@@ -1,5 +1,6 @@
 import { makeStyles, Typography, TypographyProps } from "@material-ui/core";
 import HorizontalSpacer from "@saleor/apps/components/HorizontalSpacer";
+import classNames from "classnames";
 import React from "react";
 
 export interface IMoney {
@@ -16,6 +17,9 @@ const useStyles = makeStyles(
     container: {
       display: "flex",
       alignItems: "baseline"
+    },
+    containerRight: {
+      justifyContent: "end"
     }
   }),
   { name: "Money" }
@@ -29,7 +33,11 @@ export const Money: React.FC<MoneyProps> = ({ money, ...rest }) => {
   }
 
   return (
-    <div className={classes.container}>
+    <div
+      className={classNames(classes.container, {
+        [classes.containerRight]: rest.align === "right"
+      })}
+    >
       <Typography variant="caption" {...rest}>
         {money.currency}
       </Typography>

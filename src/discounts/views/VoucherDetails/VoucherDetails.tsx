@@ -46,6 +46,7 @@ import { commonMessages, sectionNames } from "@saleor/intl";
 import useCategorySearch from "@saleor/searches/useCategorySearch";
 import useCollectionSearch from "@saleor/searches/useCollectionSearch";
 import useProductSearch from "@saleor/searches/useProductSearch";
+import { arrayDiff } from "@saleor/utils/arrays";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import createMetadataUpdateHandler from "@saleor/utils/handlers/metadataUpdateHandler";
 import { mapEdgesToItems } from "@saleor/utils/maps";
@@ -53,7 +54,7 @@ import {
   useMetadataUpdate,
   usePrivateMetadataUpdate
 } from "@saleor/utils/metadata/updateMetadata";
-import React from "react";
+import React, { useMemo } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { categoryUrl } from "../../../categories/urls";
@@ -132,9 +133,11 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
     data?.voucher,
     availableChannels
   );
-  const voucherChannelsChoices: ChannelVoucherData[] = createSortedChannelsDataFromVoucher(
-    data?.voucher
+  const voucherChannelsChoices: ChannelVoucherData[] = useMemo(
+    () => createSortedChannelsDataFromVoucher(data?.voucher),
+    [data?.voucher]
   );
+
   const {
     channelListElements,
     channelsToggle,
@@ -150,12 +153,6 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
     closeModal,
     openModal
   });
-
-  React.useEffect(() => {
-    if (!currentChannels.length && voucherChannelsChoices.length) {
-      setCurrentChannels(voucherChannelsChoices);
-    }
-  }, [voucherChannelsChoices]);
 
   const [updateChannels, updateChannelsOpts] = useVoucherChannelListingUpdate(
     {}
@@ -198,12 +195,21 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
 
   const canOpenBulkActionDialog = maybe(() => params.ids.length > 0);
 
+  const hasArrChanged = () => {
+    const { added, removed } = arrayDiff(
+      voucherChannelsChoices.map(choice => choice.id),
+      currentChannels.map(choice => choice.id)
+    );
+
+    return added.length !== 0 || removed.length !== 0;
+  };
+
   return (
     <>
       {!!allChannels?.length && (
         <ChannelsAvailabilityDialog
           isSelected={isChannelSelected}
-          disabled={!channelListElements.length}
+          disabled={false}
           channels={allChannels}
           onChange={channelsToggle}
           onClose={handleChannelsModalClose}
@@ -295,10 +301,7 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
                             voucher={data?.voucher}
                             allChannelsCount={allChannels?.length}
                             channelListings={currentChannels}
-                            hasChannelChanged={
-                              voucherChannelsChoices?.length !==
-                              currentChannels?.length
-                            }
+                            hasChannelChanged={hasArrChanged()}
                             disabled={
                               loading ||
                               voucherCataloguesRemoveOpts.loading ||

@@ -248,7 +248,7 @@ export const OrderList: React.FC<OrderListProps> = props => {
               </TableCell>
               <TableCell className={classes.colTotal}>
                 {maybe(() => order.total.gross) ? (
-                  <Money money={order.total.gross} />
+                  <Money money={order.total.gross} align="right" />
                 ) : (
                   <Skeleton />
                 )}
