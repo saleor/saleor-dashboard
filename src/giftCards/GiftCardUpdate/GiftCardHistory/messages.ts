@@ -54,7 +54,7 @@ const giftCardHistoryTimelineMessages = defineMessages({
   },
   giftCardUsedInOrder: {
     defaultMessage:
-      "Gift card was used as a payment method on order {orderLink}",
+      "Gift card was used as a payment method on order {orderLink} <buyer>by</buyer>",
     description: "gift card history message"
   }
 });

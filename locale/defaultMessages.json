@@ -3673,7 +3673,7 @@
   },
   "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardHistory_dot_giftCardUsedInOrder": {
     "context": "gift card history message",
-    "string": "Gift card was used as a payment method on order {orderLink}"
+    "string": "Gift card was used as a payment method on order {orderLink} <buyer>by</buyer>"
   },
   "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardHistory_dot_historyHeaderTitle": {
     "context": "section header title",

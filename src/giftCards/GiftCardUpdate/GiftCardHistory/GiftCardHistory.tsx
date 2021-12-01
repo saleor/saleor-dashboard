@@ -1,4 +1,5 @@
 import { Link, Typography } from "@material-ui/core";
+import { appPath } from "@saleor/apps/urls";
 import Form from "@saleor/components/Form";
 import Hr from "@saleor/components/Hr";
 import Skeleton from "@saleor/components/Skeleton";
@@ -7,6 +8,7 @@ import Timeline, {
   TimelineEvent,
   TimelineNote
 } from "@saleor/components/Timeline";
+import { customerPath } from "@saleor/customers/urls";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { orderPath } from "@saleor/orders/urls";
 import { staffMemberDetailsPath } from "@saleor/staff/urls";
@@ -36,11 +38,27 @@ const getEventMessage = (
 ) => {
   const getUserOrApp = () => {
     if (event.user) {
-      const { firstName, lastName } = event.user;
+      const { firstName, lastName, email } = event.user;
+
+      if (lastName === "" || firstName === "") {
+        return email;
+      }
+
       return `${firstName} ${lastName}`;
     }
+
     if (event.app) {
       return event.app.name;
+    }
+  };
+
+  const getUserOrAppLink = () => {
+    if (event.user) {
+      return customerPath(event.user.id);
+    }
+
+    if (event.app) {
+      return appPath(event.app.id);
     }
   };
 
@@ -103,7 +121,13 @@ const getEventMessage = (
       return intl.formatMessage(timelineMessages.giftCardUsedInOrder, {
         orderLink: (
           <Link href={orderPath(event.orderId)}>#{event.orderNumber}</Link>
-        )
+        ),
+        buyer: content =>
+          getUserOrApp() ? (
+            <Link
+              href={getUserOrAppLink()}
+            >{`${content} ${getUserOrApp()}`}</Link>
+          ) : null
       });
   }
 };
