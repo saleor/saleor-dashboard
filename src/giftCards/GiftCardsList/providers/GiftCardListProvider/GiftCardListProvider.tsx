@@ -70,7 +70,7 @@ export const GiftCardsListProvider: React.FC<GiftCardsListProviderProps> = ({
       ...paginationState,
       filter: getFilterVariables(params)
     }),
-    [params]
+    [params, paginationState]
   );
 
   const { data, loading } = useGiftCardListQuery({
