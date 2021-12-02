@@ -6,8 +6,6 @@ import { useIntl } from "react-intl";
 import { Route, RouteComponentProps, Switch } from "react-router-dom";
 
 import { WindowTitle } from "../components/WindowTitle";
-import { saleDetailsPageTab } from "./components/SaleDetailsPage";
-import { voucherDetailsPageTab } from "./components/VoucherDetailsPage";
 import {
   saleAddPath,
   SaleCreateUrlQueryParams,
@@ -41,11 +39,8 @@ const SaleDetailsView: React.FC<RouteComponentProps<{ id: string }>> = ({
   match,
   location
 }) => {
-  const { activeTab, ...qs } = parseQs(location.search.substr(1));
-  const params: SaleUrlQueryParams = {
-    ...qs,
-    activeTab: saleDetailsPageTab(activeTab)
-  };
+  const qs = parseQs(location.search.substr(1));
+  const params: SaleUrlQueryParams = qs;
 
   return (
     <SaleDetailsViewComponent
@@ -76,11 +71,9 @@ const VoucherDetailsView: React.FC<RouteComponentProps<{ id: string }>> = ({
   match,
   location
 }) => {
-  const { activeTab, ...qs } = parseQs(location.search.substr(1));
-  const params: VoucherUrlQueryParams = {
-    ...qs,
-    activeTab: voucherDetailsPageTab(activeTab)
-  };
+  const qs = parseQs(location.search.substr(1));
+  const params: VoucherUrlQueryParams = qs;
+
   return (
     <VoucherDetailsViewComponent
       id={decodeURIComponent(match.params.id)}

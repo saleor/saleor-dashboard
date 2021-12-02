@@ -12,8 +12,6 @@ import {
   Sort,
   TabActionDialog
 } from "../types";
-import { SaleDetailsPageTab } from "./components/SaleDetailsPage";
-import { VoucherDetailsPageTab } from "./components/VoucherDetailsPage";
 
 export const discountSection = "/discounts/";
 
@@ -60,10 +58,7 @@ export type SaleUrlDialog =
   | "unassign-variant"
   | "remove"
   | ChannelsAction;
-export type SaleUrlQueryParams = Pagination &
-  BulkAction &
-  Dialog<SaleUrlDialog> &
-  ActiveTab<SaleDetailsPageTab>;
+export type SaleUrlQueryParams = BulkAction & Dialog<SaleUrlDialog>;
 export type SaleCreateUrlQueryParams = Dialog<ChannelsAction>;
 export const saleUrl = (id: string, params?: SaleUrlQueryParams) =>
   salePath(encodeURIComponent(id)) + "?" + stringifyQs(params);
@@ -117,10 +112,7 @@ export type VoucherUrlDialog =
   | "unassign-product"
   | "remove"
   | ChannelsAction;
-export type VoucherUrlQueryParams = Pagination &
-  BulkAction &
-  Dialog<VoucherUrlDialog> &
-  ActiveTab<VoucherDetailsPageTab>;
+export type VoucherUrlQueryParams = BulkAction & Dialog<VoucherUrlDialog>;
 export type VoucherCreateUrlQueryParams = Dialog<ChannelsAction>;
 export const voucherUrl = (id: string, params?: VoucherUrlQueryParams) =>
   voucherPath(encodeURIComponent(id)) + "?" + stringifyQs(params);
