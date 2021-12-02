@@ -66,8 +66,6 @@ const useStyles = makeStyles(
   { name: "SaleList" }
 );
 
-const numberOfColumns = 5;
-
 const SaleList: React.FC<SaleListProps> = props => {
   const {
     settings,
@@ -89,6 +87,7 @@ const SaleList: React.FC<SaleListProps> = props => {
   } = props;
 
   const classes = useStyles(props);
+  const numberOfColumns = sales?.length === 0 ? 4 : 5;
 
   return (
     <ResponsiveTable>

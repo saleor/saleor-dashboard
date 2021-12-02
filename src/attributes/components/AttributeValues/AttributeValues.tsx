@@ -46,10 +46,7 @@ const useStyles = makeStyles(
       cursor: "grab"
     },
     iconCell: {
-      "&:last-child": {
-        paddingRight: theme.spacing()
-      },
-      width: 80
+      width: 84
     },
     link: {
       cursor: "pointer"
@@ -85,6 +82,7 @@ const AttributeValues: React.FC<AttributeValuesProps> = ({
         })}
         toolbar={
           <Button
+            disabled={disabled}
             variant="tertiary"
             onClick={onValueAdd}
             data-test-id="assignValueButton"
@@ -153,7 +151,7 @@ const AttributeValues: React.FC<AttributeValuesProps> = ({
                     disabled={disabled}
                     onClick={stopPropagation(() => onValueDelete(value.id))}
                   >
-                    <DeleteIcon color="primary" />
+                    <DeleteIcon />
                   </IconButton>
                 </TableCell>
               </SortableTableRow>

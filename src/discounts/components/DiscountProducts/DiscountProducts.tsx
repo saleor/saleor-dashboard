@@ -167,7 +167,7 @@ const DiscountProducts: React.FC<SaleProductsProps> = props => {
                         onProductUnassign(product.id);
                       }}
                     >
-                      <DeleteIcon color="primary" />
+                      <DeleteIcon />
                     </IconButton>
                   </TableCell>
                 </TableRow>
