@@ -20,8 +20,8 @@ export const messages = defineMessages({
 });
 
 export const getHeaderTitle = (
-  webhook: WebhookDetails_webhook,
-  intl: IntlShape
+  intl: IntlShape,
+  webhook?: WebhookDetails_webhook
 ) => {
   if (!webhook) {
     return intl.formatMessage(messages.headerCreate);
