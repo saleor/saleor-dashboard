@@ -67,7 +67,7 @@ jobs:
 
       - name: Run jest
         run: |
-          npm run test
+          npm run test --unhandled-rejections=warn
 
   translation-messages:
     runs-on: ubuntu-latest
