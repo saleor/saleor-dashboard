@@ -3,10 +3,7 @@ import { makeStyles } from "@saleor/macaw-ui";
 export const useStyles = makeStyles(
   {
     colActions: {
-      "&:last-child": {
-        paddingRight: 0
-      },
-      width: 80
+      width: 84
     },
     colName: {
       width: "auto"

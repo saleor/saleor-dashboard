@@ -33,7 +33,6 @@ const useStyles = makeStyles(
         paddingTop: theme.spacing()
       },
       emptyContainer: {
-        borderBottom: `1px solid ${theme.palette.divider}`,
         paddingBottom: theme.spacing(4),
         paddingTop: theme.spacing(3),
         textAlign: "center"
