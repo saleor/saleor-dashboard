@@ -39,7 +39,7 @@ const useStyles = makeStyles(
       display: "flex",
       justifyContent: "flex-end",
       position: "relative",
-      right: theme.spacing(-2)
+      right: theme.spacing(-1.5)
     },
     colActions: {
       textAlign: "right"
@@ -157,6 +157,7 @@ const WarehouseList: React.FC<WarehouseListProps> = props => {
                     <EditIcon />
                   </IconButton>
                   <IconButton
+                    variant="secondary"
                     color="primary"
                     onClick={stopPropagation(() => onRemove(warehouse.id))}
                   >

@@ -144,7 +144,7 @@ const DiscountCollections: React.FC<DiscountCollectionsProps> = props => {
                         onCollectionUnassign(collection.id);
                       }}
                     >
-                      <DeleteIcon color="primary" />
+                      <DeleteIcon />
                     </IconButton>
                   </TableCell>
                 </TableRow>

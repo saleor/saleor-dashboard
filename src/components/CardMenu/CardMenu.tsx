@@ -116,7 +116,7 @@ const CardMenu: React.FC<CardMenuProps> = props => {
                 placement === "bottom" ? "right top" : "right bottom"
             }}
           >
-            <Paper className={classes.paper}>
+            <Paper className={classes.paper} elevation={8}>
               <ClickAwayListener onClickAway={handleClose}>
                 <MenuList
                   autoFocusItem={open}

@@ -143,7 +143,7 @@ const DiscountCategories: React.FC<DiscountCategoriesProps> = props => {
                         onCategoryUnassign(category.id);
                       }}
                     >
-                      <DeleteIcon color="primary" />
+                      <DeleteIcon />
                     </IconButton>
                   </TableCell>
                 </TableRow>

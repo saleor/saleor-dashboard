@@ -27,10 +27,8 @@ import { CollectionDetails_collection } from "../../types/CollectionDetails";
 const useStyles = makeStyles(
   theme => ({
     colActions: {
-      "&:last-child": {
-        paddingRight: 0
-      },
-      width: `calc(76px + ${theme.spacing(0.5)})`
+      width: `calc(76px + ${theme.spacing(1)})`,
+      marginRight: theme.spacing(-2)
     },
     colName: {
       paddingLeft: 0,
@@ -61,8 +59,6 @@ export interface CollectionProductsProps extends PageListProps, ListActions {
   onProductUnassign: (id: string, event: React.MouseEvent<any>) => void;
 }
 
-const numberOfColumns = 5;
-
 const CollectionProducts: React.FC<CollectionProductsProps> = props => {
   const {
     channelsCount,
@@ -83,6 +79,9 @@ const CollectionProducts: React.FC<CollectionProductsProps> = props => {
 
   const classes = useStyles(props);
   const intl = useIntl();
+
+  const products = mapEdgesToItems(collection?.products);
+  const numberOfColumns = products.length === 0 ? 4 : 5;
 
   return (
     <Card>
@@ -160,7 +159,7 @@ const CollectionProducts: React.FC<CollectionProductsProps> = props => {
         </TableFooter>
         <TableBody>
           {renderCollection(
-            mapEdgesToItems(collection?.products),
+            products,
             product => {
               const isSelected = product ? isChecked(product.id) : false;
 
@@ -210,7 +209,7 @@ const CollectionProducts: React.FC<CollectionProductsProps> = props => {
                       disabled={!product}
                       onClick={event => onProductUnassign(product.id, event)}
                     >
-                      <DeleteIcon color="primary" />
+                      <DeleteIcon />
                     </IconButton>
                   </TableCell>
                 </TableRow>
@@ -218,7 +217,6 @@ const CollectionProducts: React.FC<CollectionProductsProps> = props => {
             },
             () => (
               <TableRow>
-                <TableCell />
                 <TableCell colSpan={numberOfColumns}>
                   <FormattedMessage defaultMessage="No products found" />
                 </TableCell>
