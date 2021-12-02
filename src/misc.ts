@@ -434,3 +434,18 @@ export function getFullName<T extends { firstName: string; lastName: string }>(
 
   return `${data.firstName} ${data.lastName}`;
 }
+export const flatten = (obj: unknown) => {
+  // Be cautious that repeated keys are overwritten
+
+  const result = {};
+
+  Object.keys(obj).forEach(key => {
+    if (typeof obj[key] === "object" && obj[key] !== null) {
+      Object.assign(result, flatten(obj[key]));
+    } else {
+      result[key] = obj[key];
+    }
+  });
+
+  return result;
+};

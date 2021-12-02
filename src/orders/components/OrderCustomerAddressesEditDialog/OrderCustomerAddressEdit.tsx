@@ -13,6 +13,7 @@ import { FormChange } from "@saleor/hooks/useForm";
 import React from "react";
 import { useIntl } from "react-intl";
 
+import { getById } from "../OrderReturnPage/utils";
 import { AddressInputOptionEnum } from "./form";
 import { addressEditMessages } from "./messages";
 import { useStyles } from "./styles";
@@ -24,15 +25,13 @@ export interface OrderCustomerAddressEditProps {
   addressInputOption: AddressInputOptionEnum;
   addressInputName: string;
   onChangeAddressInputOption: FormChange;
-  customerAddressId: string;
+  selectedCustomerAddressId: string;
   formAddress: AddressTypeInput;
   formAddressCountryDisplayName: string;
   formErrors: Array<AccountErrorFragment | OrderErrorFragment>;
-  onChangeCustomerAddress: (
-    customerAddress: CustomerAddresses_user_addresses
-  ) => void;
   onChangeFormAddress: (event: React.ChangeEvent<any>) => void;
   onChangeFormAddressCountry: (event: React.ChangeEvent<any>) => void;
+  onEdit?: () => void;
 }
 
 const OrderCustomerAddressEdit: React.FC<OrderCustomerAddressEditProps> = props => {
@@ -43,13 +42,13 @@ const OrderCustomerAddressEdit: React.FC<OrderCustomerAddressEditProps> = props 
     addressInputOption,
     addressInputName,
     onChangeAddressInputOption,
-    customerAddressId,
+    selectedCustomerAddressId,
     formAddress,
     formAddressCountryDisplayName,
     formErrors,
-    onChangeCustomerAddress,
     onChangeFormAddress,
-    onChangeFormAddressCountry
+    onChangeFormAddressCountry,
+    onEdit
   } = props;
 
   const classes = useStyles(props);
@@ -92,19 +91,15 @@ const OrderCustomerAddressEdit: React.FC<OrderCustomerAddressEditProps> = props 
         className={classes.optionLabel}
       />
       {addressInputOption === AddressInputOptionEnum.CUSTOMER_ADDRESS && (
-        <div className={classes.scrollableWrapper}>
-          {customerAddresses.map(customerAddress => (
-            <React.Fragment key={customerAddress.id}>
-              <CardSpacer />
-              <CustomerAddressChoiceCard
-                address={customerAddress}
-                selected={customerAddress.id === customerAddressId}
-                onSelect={() => onChangeCustomerAddress(customerAddress)}
-              />
-            </React.Fragment>
-          ))}
+        <>
+          <CardSpacer />
+          <CustomerAddressChoiceCard
+            address={customerAddresses.find(getById(selectedCustomerAddressId))}
+            editable
+            onEditClick={onEdit}
+          />
           <FormSpacer />
-        </div>
+        </>
       )}
       <FormControlLabel
         value={AddressInputOptionEnum.NEW_ADDRESS}
