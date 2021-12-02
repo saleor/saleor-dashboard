@@ -1,6 +1,6 @@
-import { OptionalIntlConfig } from "react-intl/src/components/provider";
+import { IntlConfig } from "react-intl";
 
-export const config: OptionalIntlConfig = {
+export const config: Partial<IntlConfig> = {
   defaultLocale: "en",
   locale: "en"
 };
