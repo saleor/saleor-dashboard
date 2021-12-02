@@ -5936,19 +5936,15 @@
   },
   "src_dot_productTypes_dot_components_dot_ProductTypeDetails_dot_optionGiftCardDescription": {
     "context": "option description",
-    "string": "This product type can be used to create voucher/gift card type products that user will be able to pay with during checkout process"
+    "string": "This product will act as a payment method"
   },
   "src_dot_productTypes_dot_components_dot_ProductTypeDetails_dot_optionGiftCardTitle": {
     "context": "option",
-    "string": "Products of this type can be used as gift card/voucher"
-  },
-  "src_dot_productTypes_dot_components_dot_ProductTypeDetails_dot_optionNormalDescription": {
-    "context": "option description",
-    "string": "This product type can be used to create shipping passes for your customers"
+    "string": "Gift card product type"
   },
   "src_dot_productTypes_dot_components_dot_ProductTypeDetails_dot_optionNormalTitle": {
     "context": "option",
-    "string": "This is a normal product"
+    "string": "Regular product type"
   },
   "src_dot_productTypes_dot_components_dot_ProductTypeDetails_dot_productTypeName": {
     "context": "label",
