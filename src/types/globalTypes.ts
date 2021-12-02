@@ -2321,6 +2321,8 @@ export interface OrderFilterInput {
   search?: string | null;
   metadata?: (MetadataFilter | null)[] | null;
   channels?: (string | null)[] | null;
+  isClickAndCollect?: boolean | null;
+  isPreorder?: boolean | null;
 }
 
 export interface OrderFulfillInput {

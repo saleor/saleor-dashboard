@@ -4623,6 +4623,10 @@
     "context": "order",
     "string": "Channel"
   },
+  "src_dot_orders_dot_components_dot_OrderListPage_dot_clickAndCollect": {
+    "context": "click and collect",
+    "string": "Click&Collect"
+  },
   "src_dot_orders_dot_components_dot_OrderListPage_dot_customer": {
     "context": "order",
     "string": "Customer"
@@ -4630,6 +4634,10 @@
   "src_dot_orders_dot_components_dot_OrderListPage_dot_placed": {
     "context": "order",
     "string": "Created"
+  },
+  "src_dot_orders_dot_components_dot_OrderListPage_dot_preorder": {
+    "context": "is preorder",
+    "string": "Preorder"
   },
   "src_dot_orders_dot_components_dot_OrderList_dot_1198046928": {
     "string": "Fulfillment status"

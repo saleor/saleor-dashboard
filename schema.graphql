@@ -4337,6 +4337,8 @@ input OrderFilterInput {
   search: String
   metadata: [MetadataFilter]
   channels: [ID]
+  isClickAndCollect: Boolean
+  isPreorder: Boolean
 }
 
 type OrderFulfill {

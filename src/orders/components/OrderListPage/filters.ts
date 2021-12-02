@@ -12,6 +12,7 @@ import {
   PaymentChargeStatusEnum
 } from "@saleor/types/globalTypes";
 import {
+  createBooleanField,
   createDateField,
   createOptionsField,
   createTextField
@@ -23,7 +24,9 @@ export enum OrderFilterKeys {
   customer = "customer",
   status = "status",
   paymentStatus = "paymentStatus",
-  channel = "channel"
+  channel = "channel",
+  clickAndCollect = "clickAndCollect",
+  preorder = "preorder"
 }
 
 export interface OrderListFilterOpts {
@@ -32,9 +35,19 @@ export interface OrderListFilterOpts {
   status: FilterOpts<OrderStatusFilter[]>;
   paymentStatus: FilterOpts<PaymentChargeStatusEnum[]>;
   channel?: FilterOpts<MultiAutocompleteChoiceType[]>;
+  clickAndCollect: FilterOpts<boolean>;
+  preorder: FilterOpts<boolean>;
 }
 
 const messages = defineMessages({
+  preorder: {
+    defaultMessage: "Preorder",
+    description: "is preorder"
+  },
+  clickAndCollect: {
+    defaultMessage: "Click&Collect",
+    description: "click and collect"
+  },
   channel: {
     defaultMessage: "Channel",
     description: "order"
@@ -54,6 +67,30 @@ export function createFilterStructure(
   opts: OrderListFilterOpts
 ): IFilter<OrderFilterKeys> {
   return [
+    {
+      ...createBooleanField(
+        OrderFilterKeys.clickAndCollect,
+        intl.formatMessage(messages.clickAndCollect),
+        opts.clickAndCollect.value,
+        {
+          negative: intl.formatMessage(commonMessages.no),
+          positive: intl.formatMessage(commonMessages.yes)
+        }
+      ),
+      active: opts.clickAndCollect.active
+    },
+    {
+      ...createBooleanField(
+        OrderFilterKeys.preorder,
+        intl.formatMessage(messages.preorder),
+        opts.preorder.value,
+        {
+          negative: intl.formatMessage(commonMessages.no),
+          positive: intl.formatMessage(commonMessages.yes)
+        }
+      ),
+      active: opts.preorder.active
+    },
     {
       ...createTextField(
         OrderFilterKeys.customer,

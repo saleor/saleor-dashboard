@@ -26,6 +26,14 @@ const props: OrderListPageProps = {
   ...filterPageProps,
   ...sortPageProps,
   filterOpts: {
+    preorder: {
+      active: false,
+      value: false
+    },
+    clickAndCollect: {
+      active: false,
+      value: false
+    },
     channel: {
       active: false,
       value: [
