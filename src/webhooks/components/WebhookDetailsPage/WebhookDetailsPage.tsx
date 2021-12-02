@@ -94,7 +94,7 @@ const WebhookDetailsPage: React.FC<WebhookDetailsPageProps> = ({
         return (
           <Container>
             <Backlink onClick={onBack}>{appName}</Backlink>
-            <PageHeader title={getHeaderTitle(webhook, intl)} />
+            <PageHeader title={getHeaderTitle(intl, webhook)} />
             <Grid>
               <div>
                 <WebhookInfo
