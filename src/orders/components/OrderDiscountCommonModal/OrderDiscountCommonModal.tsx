@@ -14,6 +14,7 @@ import ConfirmButton, {
 import PriceField from "@saleor/components/PriceField";
 import RadioGroupField from "@saleor/components/RadioGroupField";
 import { Money } from "@saleor/fragments/types/Money";
+import { useUpdateEffect } from "@saleor/hooks/useUpdateEffect";
 import { buttonMessages } from "@saleor/intl";
 import { makeStyles } from "@saleor/macaw-ui";
 import { DiscountValueTypeEnum } from "@saleor/types/globalTypes";
@@ -258,7 +259,7 @@ const OrderDiscountCommonModal: React.FC<OrderDiscountCommonModalProps> = ({
     setValue(recalculatedValue);
   };
 
-  useEffect(handleValueConversion, [calculationMode]);
+  useUpdateEffect(handleValueConversion, [calculationMode]);
 
   const dialogTitle =
     modalType === ORDER_LINE_DISCOUNT
