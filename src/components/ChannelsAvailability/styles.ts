@@ -47,9 +47,7 @@ export const useStyles = makeStyles(
       marginTop: theme.spacing(1)
     },
     hr: {
-      left: theme.spacing(-3),
-      position: "relative",
-      width: `calc(100% + ${theme.spacing(6)}px)`
+      position: "relative"
     },
     label: {
       lineHeight: 1.2,

@@ -1,10 +1,4 @@
-import {
-  Card,
-  CardContent,
-  TableBody,
-  TableCell,
-  TableRow
-} from "@material-ui/core";
+import { Card, TableBody, TableCell, TableRow } from "@material-ui/core";
 import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
 import DeleteIcon from "@material-ui/icons/Delete";
 import CardTitle from "@saleor/components/CardTitle";
@@ -31,9 +25,9 @@ const useStyles = makeStyles(
   theme => ({
     iconCell: {
       "&:last-child": {
-        paddingRight: 0
+        paddingRight: theme.spacing(2)
       },
-      width: `calc(48px + ${theme.spacing(2)})`
+      width: `calc(48px + ${theme.spacing(4)})`
     },
     indicator: {
       color: theme.palette.text.disabled,
@@ -110,82 +104,77 @@ const CountryList: React.FC<CountryListProps> = props => {
           </Button>
         }
       />
-      <CardContent className={classes.root}>
-        <ResponsiveTable>
-          <TableBody>
-            <TableRow className={classes.pointer} onClick={toggleCollapse}>
-              <TableCell
-                className={classNames(classes.wideColumn, classes.toLeft)}
-              >
-                <FormattedMessage
-                  defaultMessage="{number} Countries"
-                  description="number of countries"
-                  values={{
-                    number: getStringOrPlaceholder(countries?.length.toString())
-                  }}
+      <ResponsiveTable>
+        <TableBody>
+          <TableRow className={classes.pointer} onClick={toggleCollapse}>
+            <TableCell
+              className={classNames(classes.wideColumn, classes.toLeft)}
+            >
+              <FormattedMessage
+                defaultMessage="{number} Countries"
+                description="number of countries"
+                values={{
+                  number: getStringOrPlaceholder(countries?.length.toString())
+                }}
+              />
+            </TableCell>
+            <TableCell
+              className={classNames(classes.textRight, classes.iconCell)}
+            >
+              <IconButton variant="secondary">
+                <ArrowDropDownIcon
+                  className={classNames({
+                    [classes.rotate]: !isCollapsed
+                  })}
                 />
-              </TableCell>
-              <TableCell
-                className={classNames(classes.textRight, classes.iconCell)}
-              >
-                <IconButton variant="secondary">
-                  <ArrowDropDownIcon
-                    className={classNames({
-                      [classes.rotate]: !isCollapsed
-                    })}
-                  />
-                </IconButton>
-              </TableCell>
-            </TableRow>
-            {!isCollapsed &&
-              renderCollection(
-                sortCountries(countries),
-                (country, countryIndex) => (
-                  <TableRow key={country ? country.code : "skeleton"}>
-                    <TableCell className={classes.offsetCell}>
-                      {maybe<React.ReactNode>(
-                        () => (
-                          <>
-                            {(countryIndex === 0 ||
-                              countries[countryIndex].country[0] !==
-                                countries[countryIndex - 1].country[0]) && (
-                              <span className={classes.indicator}>
-                                {country.country[0]}
-                              </span>
-                            )}
-                            {country.country}
-                          </>
-                        ),
-                        <Skeleton />
-                      )}
-                    </TableCell>
-                    <TableCell
-                      className={classNames(
-                        classes.textRight,
-                        classes.iconCell
-                      )}
+              </IconButton>
+            </TableCell>
+          </TableRow>
+          {!isCollapsed &&
+            renderCollection(
+              sortCountries(countries),
+              (country, countryIndex) => (
+                <TableRow key={country ? country.code : "skeleton"}>
+                  <TableCell className={classes.offsetCell}>
+                    {maybe<React.ReactNode>(
+                      () => (
+                        <>
+                          {(countryIndex === 0 ||
+                            countries[countryIndex].country[0] !==
+                              countries[countryIndex - 1].country[0]) && (
+                            <span className={classes.indicator}>
+                              {country.country[0]}
+                            </span>
+                          )}
+                          {country.country}
+                        </>
+                      ),
+                      <Skeleton />
+                    )}
+                  </TableCell>
+                  <TableCell
+                    className={classNames(classes.textRight, classes.iconCell)}
+                  >
+                    <IconButton
+                      color="primary"
+                      disabled={!country || disabled}
+                      onClick={() => onCountryUnassign(country.code)}
                     >
-                      <IconButton
-                        color="primary"
-                        disabled={!country || disabled}
-                        onClick={() => onCountryUnassign(country.code)}
-                      >
-                        <DeleteIcon />
-                      </IconButton>
-                    </TableCell>
-                  </TableRow>
-                ),
-                () => (
-                  <TableRow>
-                    <TableCell className={classes.toLeft} colSpan={2}>
-                      {emptyText}
-                    </TableCell>
-                  </TableRow>
-                )
-              )}
-          </TableBody>
-        </ResponsiveTable>
-      </CardContent>
+                      <DeleteIcon />
+                    </IconButton>
+                  </TableCell>
+                </TableRow>
+              ),
+              () => (
+                <TableRow>
+                  <TableCell className={classes.toLeft} colSpan={2}>
+                    {emptyText}
+                  </TableCell>
+                </TableRow>
+              )
+            )}
+        </TableBody>
+      </ResponsiveTable>
     </Card>
   );
 };

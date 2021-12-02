@@ -1,7 +1,6 @@
 import { Card, CardActions, CardContent } from "@material-ui/core";
 import CardTitle from "@saleor/components/CardTitle";
 import Form from "@saleor/components/Form";
-import Hr from "@saleor/components/Hr";
 import SingleSelectField from "@saleor/components/SingleSelectField";
 import { buttonMessages, sectionNames } from "@saleor/intl";
 import { Button } from "@saleor/macaw-ui";
@@ -53,7 +52,6 @@ const ShippingWeightUnitForm: React.FC<ShippingWeightUnitFormProps> = ({
               onChange={change}
             />
           </CardContent>
-          <Hr />
           <CardActions>
             <Button onClick={submit} data-test-id="saveUnit">
               <FormattedMessage {...buttonMessages.save} />

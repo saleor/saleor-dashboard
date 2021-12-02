@@ -112,6 +112,7 @@ const useStyles = makeStyles(
         color: theme.palette.primary.main,
         fontWeight: 700
       },
+      paddingLeft: theme.spacing(1.5),
       borderRadius: 4,
       display: "grid",
       gridColumnGap: theme.spacing(1),

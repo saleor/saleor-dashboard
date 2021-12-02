@@ -146,7 +146,8 @@ export const useStyles = makeStyles(
         color: theme.palette.primary.main,
         textDecoration: "none"
       },
-      color: theme.palette.text.hint
+      color: theme.palette.text.hint,
+      marginTop: theme.spacing(1)
     },
     installSaleorIcon: {
       backgroundColor: theme.palette.secondary.main,

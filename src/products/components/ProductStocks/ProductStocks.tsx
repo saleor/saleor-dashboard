@@ -314,6 +314,7 @@ const ProductStocks: React.FC<ProductStocksProps> = ({
                       <IconButton
                         data-test-id="add-warehouse"
                         color="primary"
+                        variant="secondary"
                         onClick={() => setExpansionState(!isExpanded)}
                       >
                         <AddIcon />

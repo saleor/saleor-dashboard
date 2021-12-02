@@ -57,76 +57,71 @@ const SaleValue: React.FC<SaleValueProps> = ({
             description="channels sale info"
           />
         </Typography>
-        <div className={classes.tableContainer}>
-          <ResponsiveTable className={classes.table}>
-            <TableHead colSpan={numberOfColumns} disabled={disabled} items={[]}>
-              <TableCell className={classes.colName}>
-                <span>
-                  <FormattedMessage
-                    defaultMessage="Channel name"
-                    description="column title"
-                  />
-                </span>
-              </TableCell>
-              <TableCell className={classes.colType}>
-                <span>
-                  <FormattedMessage
-                    defaultMessage="Value"
-                    description="sale value, header"
-                  />
-                </span>
-              </TableCell>
-            </TableHead>
-            <TableBody>
-              {renderCollection(
-                data.channelListings,
-                (listing, index) => {
-                  const error = formErrors.value?.channels?.find(
-                    id => id === listing.id
-                  );
-                  return (
-                    <TableRow
-                      key={listing?.id || `skeleton-${index}`}
-                      className={classes.row}
-                    >
-                      <TableCell>
-                        <Typography>{listing?.name || <Skeleton />}</Typography>
-                      </TableCell>
-                      <TableCell>
-                        {listing ? (
-                          <SaleValueTextField
-                            dataType={type}
-                            helperText={
-                              error
-                                ? getDiscountErrorMessage(
-                                    formErrors.value,
-                                    intl
-                                  )
-                                : ""
-                            }
-                            disabled={disabled}
-                            listing={listing}
-                            onChange={onChange}
-                          />
-                        ) : (
-                          <Skeleton />
-                        )}
-                      </TableCell>
-                    </TableRow>
-                  );
-                },
-                () => (
-                  <TableRow>
-                    <TableCell colSpan={numberOfColumns}>
-                      <FormattedMessage defaultMessage="No channels found" />
-                    </TableCell>
-                  </TableRow>
-                )
-              )}
-            </TableBody>
-          </ResponsiveTable>
-        </div>
       </CardContent>
+      <ResponsiveTable className={classes.table}>
+        <TableHead colSpan={numberOfColumns} disabled={disabled} items={[]}>
+          <TableCell className={classes.colName}>
+            <span>
+              <FormattedMessage
+                defaultMessage="Channel name"
+                description="column title"
+              />
+            </span>
+          </TableCell>
+          <TableCell className={classes.colType}>
+            <span>
+              <FormattedMessage
+                defaultMessage="Value"
+                description="sale value, header"
+              />
+            </span>
+          </TableCell>
+        </TableHead>
+        <TableBody>
+          {renderCollection(
+            data.channelListings,
+            (listing, index) => {
+              const error = formErrors.value?.channels?.find(
+                id => id === listing.id
+              );
+              return (
+                <TableRow
+                  key={listing?.id || `skeleton-${index}`}
+                  className={classes.row}
+                >
+                  <TableCell>
+                    <Typography>{listing?.name || <Skeleton />}</Typography>
+                  </TableCell>
+                  <TableCell>
+                    {listing ? (
+                      <SaleValueTextField
+                        dataType={type}
+                        helperText={
+                          error
+                            ? getDiscountErrorMessage(formErrors.value, intl)
+                            : ""
+                        }
+                        disabled={disabled}
+                        listing={listing}
+                        onChange={onChange}
+                      />
+                    ) : (
+                      <Skeleton />
+                    )}
+                  </TableCell>
+                </TableRow>
+              );
+            },
+            () => (
+              <TableRow>
+                <TableCell colSpan={numberOfColumns}>
+                  <FormattedMessage defaultMessage="No channels found" />
+                </TableCell>
+              </TableRow>
+            )
+          )}
+        </TableBody>
+      </ResponsiveTable>
     </Card>
   );
 };
