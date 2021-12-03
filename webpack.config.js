@@ -163,7 +163,7 @@ module.exports = speedMeasureWrapper((env, argv) => {
           "./node_modules/@material-ui/styles"
         )
       },
-      extensions: [".js", ".jsx", ".ts", ".tsx"],
+      extensions: [".mjs", ".js", ".jsx", ".ts", ".tsx"],
       plugins: [pathsPlugin]
     }
   };
