@@ -1,11 +1,13 @@
 import { ExtendedGiftCard } from "@saleor/giftCards/GiftCardUpdate/providers/GiftCardDetailsProvider/types";
 import { getExtendedGiftCard } from "@saleor/giftCards/GiftCardUpdate/providers/GiftCardDetailsProvider/utils";
+import { giftCardListUrl } from "@saleor/giftCards/urls";
 import useBulkActions, {
   UseBulkActionsProps
 } from "@saleor/hooks/useBulkActions";
 import useListSettings, {
   UseListSettings
 } from "@saleor/hooks/useListSettings";
+import { usePaginationReset } from "@saleor/hooks/usePaginationReset";
 import {
   createPaginationState,
   PageInfo,
@@ -63,6 +65,8 @@ export const GiftCardsListProvider: React.FC<GiftCardsListProviderProps> = ({
     GiftCardListColummns
   >(ListViews.GIFT_CARD_LIST);
 
+  usePaginationReset(giftCardListUrl, params, settings.rowNumber);
+
   const paginationState = createPaginationState(settings.rowNumber, params);
 
   const queryVariables = React.useMemo<GiftCardListVariables>(
@@ -70,7 +74,7 @@ export const GiftCardsListProvider: React.FC<GiftCardsListProviderProps> = ({
       ...paginationState,
       filter: getFilterVariables(params)
     }),
-    [params]
+    [params, paginationState]
   );
 
   const { data, loading } = useGiftCardListQuery({
