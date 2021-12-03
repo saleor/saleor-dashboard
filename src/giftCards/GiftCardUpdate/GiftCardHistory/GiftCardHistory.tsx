@@ -135,7 +135,7 @@ const getEventMessage = (
 const GiftCardHistory: React.FC = () => {
   const intl = useIntl();
   const notify = useNotifier();
-  const { id, events, isExpired } = useGiftCardHistoryEvents();
+  const { id, events } = useGiftCardHistoryEvents();
   const classes = useStyles();
 
   const onTimelineNoteAddCompleted = ({ giftCardAddNote }: GiftCardAddNote) => {
@@ -154,7 +154,7 @@ const GiftCardHistory: React.FC = () => {
     }
   };
 
-  const [addTimelineNote] = useGiftCardTimelineNoteAddMutation({
+  const [addTimelineNote, { loading }] = useGiftCardTimelineNoteAddMutation({
     refetchQueries: [GIFT_CARD_DETAILS_QUERY],
     onCompleted: onTimelineNoteAddCompleted
   });
@@ -185,7 +185,7 @@ const GiftCardHistory: React.FC = () => {
                     reset={reset}
                     onChange={change}
                     onSubmit={submit}
-                    disabled={isExpired}
+                    disabled={loading}
                   />
                 )}
               </Form>
