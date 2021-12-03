@@ -18,7 +18,7 @@ import { makeStyles } from "@saleor/macaw-ui";
 import { ProductDetails_product_productType_variantAttributes } from "@saleor/products/types/ProductDetails";
 import { isSelected } from "@saleor/utils/lists";
 import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+import { defineMessages, FormattedMessage, useIntl } from "react-intl";
 
 import {
   ProductVariantCreateFormData,
@@ -80,6 +80,12 @@ const useStyles = makeStyles(
   }),
   { name: "ProductVariantCreatorStock" }
 );
+
+const messages = defineMessages({
+  stock: {
+    defaultMessage: "Stock"
+  }
+});
 
 export interface ProductVariantCreatorStockProps {
   attributes: ProductDetails_product_productType_variantAttributes[];
@@ -209,10 +215,7 @@ const ProductVariantCreatorStock: React.FC<ProductVariantCreatorStockProps> = pr
                           min: 0,
                           type: "number"
                         }}
-                        label={intl.formatMessage({
-                          defaultMessage: "Stock",
-                          id: "productVariantCreatePricesStockInputLabel"
-                        })}
+                        label={intl.formatMessage(messages.stock)}
                         value={data.stock.value[warehouseIndex]}
                         onChange={event =>
                           onApplyToAllStockChange(
@@ -278,11 +281,7 @@ const ProductVariantCreatorStock: React.FC<ProductVariantCreatorStockProps> = pr
                                       min: 0,
                                       type: "number"
                                     }}
-                                    label={intl.formatMessage({
-                                      defaultMessage: "Stock",
-                                      id:
-                                        "productVariantCreatePricesStockInputLabel"
-                                    })}
+                                    label={intl.formatMessage(messages.stock)}
                                     value={
                                       data.stock.values.find(
                                         value =>
