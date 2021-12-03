@@ -18,7 +18,7 @@ const useStyles = makeStyles(
 );
 
 export interface FilterContentBodyNameFieldProps<T extends string = string> {
-  filter: IFilterElement<T>;
+  filter?: IFilterElement<T>;
   onFilterPropertyChange: React.Dispatch<FilterReducerAction<T>>;
 }
 
@@ -38,8 +38,8 @@ const FilterContentBodyNameField: React.FC<FilterContentBodyNameFieldProps> = ({
         control={
           <Checkbox
             data-test="filterGroupActive"
-            data-test-id={filter.name}
-            checked={filter.active}
+            data-test-id={filter?.name}
+            checked={filter?.active}
           />
         }
         label={filter.label}
@@ -49,7 +49,7 @@ const FilterContentBodyNameField: React.FC<FilterContentBodyNameFieldProps> = ({
             payload: {
               name: filter.name,
               update: {
-                active: !filter.active
+                active: !filter?.active
               }
             },
             type: "set-property"
