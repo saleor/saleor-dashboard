@@ -1,6 +1,12 @@
 import { IMessageContext } from "@saleor/components/messages";
 import { APP_DEFAULT_URI, APP_MOUNT_URI, DEMO_MODE } from "@saleor/config";
-import { useAuth, useAuthState } from "@saleor/sdk";
+import { commonMessages } from "@saleor/intl";
+import {
+  GetExternalAccessTokenData,
+  LoginData,
+  useAuth,
+  useAuthState
+} from "@saleor/sdk";
 import {
   isSupported as isCredentialsManagementAPISupported,
   login as loginWithCredentialsManagementAPI,
@@ -40,7 +46,7 @@ export function useAuthProvider({
     getExternalAccessToken,
     logout
   } = useAuth();
-  const { authenticated, authenticating } = useAuthState();
+  const { authenticated, authenticating, user } = useAuthState();
   const [error, setError] = useState<UserContextError>();
 
   useEffect(() => {
@@ -97,6 +103,8 @@ export function useAuthProvider({
       setError("loginError");
     }
 
+    await logoutNonStaffUser(result.data.tokenCreate);
+
     return result.data.tokenCreate;
   };
 
@@ -130,7 +138,22 @@ export function useAuthProvider({
       setError("externalLoginError");
     }
 
+    await logoutNonStaffUser(result.data.externalObtainAccessTokens);
+
     return result?.data?.externalObtainAccessTokens;
+  };
+
+  const logoutNonStaffUser = async (
+    data: LoginData | GetExternalAccessTokenData
+  ) => {
+    if (data.user && !data.user.isStaff) {
+      notify({
+        status: "error",
+        text: intl.formatMessage(commonMessages.unauthorizedDashboardAccess),
+        title: intl.formatMessage(commonMessages.insufficientPermissions)
+      });
+      await handleLogout();
+    }
   };
 
   return {
@@ -139,7 +162,7 @@ export function useAuthProvider({
     loginByExternalPlugin: handleExternalLogin,
     logout: handleLogout,
     authenticating,
-    authenticated,
+    authenticated: authenticated && user?.isStaff,
     user: userDetails.data?.me,
     error
   };
