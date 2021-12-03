@@ -558,6 +558,7 @@ export interface OrderFulfillmentApprove_orderFulfillmentApprove_order_channel {
 export interface OrderFulfillmentApprove_orderFulfillmentApprove_order {
   __typename: "Order";
   id: string;
+  token: string;
   metadata: (OrderFulfillmentApprove_orderFulfillmentApprove_order_metadata | null)[];
   privateMetadata: (OrderFulfillmentApprove_orderFulfillmentApprove_order_privateMetadata | null)[];
   billingAddress: OrderFulfillmentApprove_orderFulfillmentApprove_order_billingAddress | null;

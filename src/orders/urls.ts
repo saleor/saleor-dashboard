@@ -23,10 +23,13 @@ export enum OrderListUrlFiltersEnum {
   createdTo = "createdTo",
   customer = "customer",
   payment = "payment",
-  query = "query"
+  query = "query",
+  clickAndCollect = "clickAndCollect",
+  preorder = "preorder"
 }
 export enum OrderListUrlFiltersWithMultipleValues {
   status = "status",
+  paymentStatus = "paymentStatus",
   channel = "channel"
 }
 

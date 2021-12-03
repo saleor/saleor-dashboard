@@ -23,5 +23,10 @@ export const PRODUCT_DETAILS = {
   uploadImageButton: '[data-test="button-upload-image"]',
   uploadSavedImagesButton: '[data-test="uploadImages"]',
   uploadMediaUrlButton: '[data-test="uploadMediaUrl"]',
-  saveUploadUrlButton: '[data-test-id="upload-url-button"]'
+  saveUploadUrlButton: '[data-test-id="upload-url-button"]',
+  addWarehouseButton: '[data-test-id="add-warehouse"]',
+  warehouseOption: "[role='menuitem']",
+  stockInput: '[data-test-id="stock-input"]',
+  costPriceInput: '[name*="costPrice"]',
+  sellingPriceInput: '[name*="channel-price"]'
 };

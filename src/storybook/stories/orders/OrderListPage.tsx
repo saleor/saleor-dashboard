@@ -2,7 +2,10 @@ import OrderListPage, {
   OrderListPageProps
 } from "@saleor/orders/components/OrderListPage";
 import { OrderListUrlSortField } from "@saleor/orders/urls";
-import { OrderStatusFilter } from "@saleor/types/globalTypes";
+import {
+  OrderStatusFilter,
+  PaymentChargeStatusEnum
+} from "@saleor/types/globalTypes";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
@@ -23,6 +26,14 @@ const props: OrderListPageProps = {
   ...filterPageProps,
   ...sortPageProps,
   filterOpts: {
+    preorder: {
+      active: false,
+      value: false
+    },
+    clickAndCollect: {
+      active: false,
+      value: false
+    },
     channel: {
       active: false,
       value: [
@@ -46,6 +57,13 @@ const props: OrderListPageProps = {
     status: {
       active: false,
       value: [OrderStatusFilter.CANCELED, OrderStatusFilter.FULFILLED]
+    },
+    paymentStatus: {
+      active: false,
+      value: [
+        PaymentChargeStatusEnum.CANCELLED,
+        PaymentChargeStatusEnum.FULLY_CHARGED
+      ]
     }
   },
   limits,

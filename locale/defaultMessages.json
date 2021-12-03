@@ -1293,7 +1293,7 @@
     "string": "Cancel"
   },
   "src_dot_cancelled": {
-    "context": "order status",
+    "context": "payment status",
     "string": "Cancelled"
   },
   "src_dot_cannotFullfillUnpaidOrder": {
@@ -4047,7 +4047,11 @@
   },
   "src_dot_orders_dot_components_dot_OrderCustomerAddressesEditDialog_dot_billingSameAsShipping": {
     "context": "checkbox label",
-    "string": "Billing address same as shipping address"
+    "string": "Set the same for billing address"
+  },
+  "src_dot_orders_dot_components_dot_OrderCustomerAddressesEditDialog_dot_billingTitle": {
+    "context": "search modal billing title",
+    "string": "Billing address"
   },
   "src_dot_orders_dot_components_dot_OrderCustomerAddressesEditDialog_dot_customerAddress": {
     "context": "address type",
@@ -4065,13 +4069,24 @@
     "context": "address type",
     "string": "Add new address"
   },
+  "src_dot_orders_dot_components_dot_OrderCustomerAddressesEditDialog_dot_noResultsFound": {
+    "string": "No results found"
+  },
+  "src_dot_orders_dot_components_dot_OrderCustomerAddressesEditDialog_dot_searchInfo": {
+    "context": "modal information under title",
+    "string": "Select an address you want to use from the list below"
+  },
   "src_dot_orders_dot_components_dot_OrderCustomerAddressesEditDialog_dot_shippingAddressDescription": {
     "context": "dialog content",
     "string": "This customer doesn’t have any shipping addresses. Provide address for order:"
   },
+  "src_dot_orders_dot_components_dot_OrderCustomerAddressesEditDialog_dot_shippingTitle": {
+    "context": "search modal shipping title",
+    "string": "Shipping address"
+  },
   "src_dot_orders_dot_components_dot_OrderCustomerAddressesEditDialog_dot_title": {
     "context": "dialog header",
-    "string": "Shipping address for order"
+    "string": "Change address for order"
   },
   "src_dot_orders_dot_components_dot_OrderCustomerChangeDialog_dot_changeAddress": {
     "context": "option label",
@@ -4623,6 +4638,10 @@
     "context": "order",
     "string": "Channel"
   },
+  "src_dot_orders_dot_components_dot_OrderListPage_dot_clickAndCollect": {
+    "context": "click and collect",
+    "string": "Click&Collect"
+  },
   "src_dot_orders_dot_components_dot_OrderListPage_dot_customer": {
     "context": "order",
     "string": "Customer"
@@ -4630,6 +4649,10 @@
   "src_dot_orders_dot_components_dot_OrderListPage_dot_placed": {
     "context": "order",
     "string": "Created"
+  },
+  "src_dot_orders_dot_components_dot_OrderListPage_dot_preorder": {
+    "context": "is preorder",
+    "string": "Preorder"
   },
   "src_dot_orders_dot_components_dot_OrderList_dot_1198046928": {
     "string": "Fulfillment status"
@@ -5456,6 +5479,13 @@
     "context": "order status",
     "string": "Partially returned"
   },
+  "src_dot_paymentStatus": {
+    "string": "Payment status"
+  },
+  "src_dot_pending": {
+    "context": "payment status",
+    "string": "Pending"
+  },
   "src_dot_permissionGroups": {
     "context": "permission groups section name",
     "string": "Permission Groups"
@@ -6013,17 +6043,9 @@
     "context": "modal button",
     "string": "Upload URL"
   },
-  "src_dot_products_dot_components_dot_ProductListPage_dot_1134347598": {
-    "context": "product price",
-    "string": "Price"
-  },
   "src_dot_products_dot_components_dot_ProductListPage_dot_1542417144": {
     "context": "button",
     "string": "Create Product"
-  },
-  "src_dot_products_dot_components_dot_ProductListPage_dot_1952810469": {
-    "context": "product type",
-    "string": "Type"
   },
   "src_dot_products_dot_components_dot_ProductListPage_dot_2059406063": {
     "context": "export products to csv file, button",
@@ -6078,10 +6100,6 @@
     "context": "product is visible",
     "string": "Visible"
   },
-  "src_dot_products_dot_components_dot_ProductList_dot_1134347598": {
-    "context": "product price",
-    "string": "Price"
-  },
   "src_dot_products_dot_components_dot_ProductList_dot_150865454": {
     "context": "product type",
     "string": "Simple"
@@ -6089,29 +6107,37 @@
   "src_dot_products_dot_components_dot_ProductList_dot_1657559629": {
     "string": "No products found"
   },
-  "src_dot_products_dot_components_dot_ProductList_dot_1952810469": {
-    "context": "product type",
-    "string": "Type"
-  },
   "src_dot_products_dot_components_dot_ProductList_dot_2754779425": {
     "context": "product type",
     "string": "Configurable"
-  },
-  "src_dot_products_dot_components_dot_ProductList_dot_3326160357": {
-    "context": "product channels",
-    "string": "Availability"
   },
   "src_dot_products_dot_components_dot_ProductList_dot_636461959": {
     "context": "product",
     "string": "Name"
   },
+  "src_dot_products_dot_components_dot_ProductList_dot_availability": {
+    "context": "product channels",
+    "string": "Availability"
+  },
+  "src_dot_products_dot_components_dot_ProductList_dot_price": {
+    "context": "product price",
+    "string": "Price"
+  },
   "src_dot_products_dot_components_dot_ProductList_dot_published": {
     "context": "product publication date",
     "string": "Published on {date}"
   },
+  "src_dot_products_dot_components_dot_ProductList_dot_type": {
+    "context": "product type",
+    "string": "Type"
+  },
   "src_dot_products_dot_components_dot_ProductList_dot_unpublished": {
     "context": "product publication date",
     "string": "Unpublished"
+  },
+  "src_dot_products_dot_components_dot_ProductList_dot_updatedAt": {
+    "context": "product updated at",
+    "string": "Last updated"
   },
   "src_dot_products_dot_components_dot_ProductList_dot_willBePublished": {
     "context": "product publication date",
@@ -6703,6 +6729,10 @@
     "context": "payment status",
     "string": "Fully refunded"
   },
+  "src_dot_refused": {
+    "context": "payment status",
+    "string": "Refused"
+  },
   "src_dot_remove": {
     "context": "button",
     "string": "Remove"
@@ -6732,6 +6762,9 @@
   "src_dot_selectAll": {
     "context": "select all options, button",
     "string": "Select All"
+  },
+  "src_dot_selected": {
+    "string": "Selected"
   },
   "src_dot_send": {
     "context": "button",

@@ -36,8 +36,14 @@ import OrderCustomerAddressesEditForm, {
 } from "./form";
 import { dialogMessages } from "./messages";
 import OrderCustomerAddressEdit from "./OrderCustomerAddressEdit";
+import OrderCustomerAddressesSearch from "./OrderCustomerAddressesSearch";
 import { useStyles } from "./styles";
+import { validateDefaultAddress } from "./utils";
 
+export interface OrderCustomerSearchAddressState {
+  open: boolean;
+  type: AddressTypeEnum;
+}
 export interface OrderCustomerAddressesEditDialogOutput {
   shippingAddress: AddressInput;
   billingAddress: AddressInput;
@@ -55,6 +61,11 @@ export interface OrderCustomerAddressesEditDialogProps {
   onClose();
   onConfirm(data: OrderCustomerAddressesEditDialogOutput): SubmitPromise;
 }
+
+const defaultSearchState: OrderCustomerSearchAddressState = {
+  open: false,
+  type: undefined
+};
 
 const OrderCustomerAddressesEditDialog: React.FC<OrderCustomerAddressesEditDialogProps> = props => {
   const {
@@ -85,9 +96,11 @@ const OrderCustomerAddressesEditDialog: React.FC<OrderCustomerAddressesEditDialo
     open
   );
 
-  const getCustomerAddress = (customerAddressId: string): AddressInput =>
+  const getCustomerAddress = (
+    selectedCustomerAddressID: string
+  ): AddressInput =>
     transformAddressToAddressInput(
-      customerAddresses.find(getById(customerAddressId))
+      customerAddresses.find(getById(selectedCustomerAddressID))
     );
 
   const handleAddressesSubmit = (data: OrderCustomerAddressesEditFormData) => {
@@ -127,88 +140,73 @@ const OrderCustomerAddressesEditDialog: React.FC<OrderCustomerAddressesEditDialo
 
   const countryChoices = mapCountriesToChoices(countries);
 
+  const [addressSearchState, setAddressSearchState] = React.useState<
+    OrderCustomerSearchAddressState
+  >(defaultSearchState);
+
+  const validatedDefaultShippingAddress = validateDefaultAddress(
+    defaultShippingAddress,
+    customerAddresses
+  );
+  const validatedDefaultBillingAddress = validateDefaultAddress(
+    defaultBillingAddress,
+    customerAddresses
+  );
+
   return (
-    <Dialog onClose={onClose} open={open}>
+    <Dialog
+      onClose={() => {
+        setAddressSearchState(defaultSearchState);
+        onClose();
+      }}
+      open={open}
+      fullWidth
+    >
       <OrderCustomerAddressesEditForm
         countryChoices={countryChoices}
-        defaultShippingAddress={defaultShippingAddress}
-        defaultBillingAddress={defaultBillingAddress}
+        defaultShippingAddress={validatedDefaultShippingAddress}
+        defaultBillingAddress={validatedDefaultBillingAddress}
         onSubmit={handleSubmit}
       >
         {({ change, data, handlers }) => (
           <>
-            <DialogTitle>
-              <FormattedMessage {...dialogMessages.title} />
-            </DialogTitle>
-            <DialogContent className={classes.scrollableContent}>
-              <Typography>
-                {customerAddresses.length > 0 ? (
-                  <FormattedMessage
-                    {...dialogMessages.customerShippingAddressDescription}
-                  />
-                ) : (
-                  <FormattedMessage
-                    {...dialogMessages.shippingAddressDescription}
-                  />
-                )}
-              </Typography>
-              <FormSpacer />
-              <OrderCustomerAddressEdit
-                loading={loading}
-                countryChoices={countryChoices}
-                addressInputOption={data.shippingAddressInputOption}
-                addressInputName="shippingAddressInputOption"
-                onChangeAddressInputOption={change}
+            {addressSearchState.open ? (
+              <OrderCustomerAddressesSearch
+                type={addressSearchState?.type}
                 customerAddresses={customerAddresses}
-                customerAddressId={data.customerShippingAddress?.id}
-                formAddress={data.shippingAddress}
-                formAddressCountryDisplayName={data.shippingCountryDisplayName}
-                formErrors={dialogErrors.filter(
-                  error => error.addressType === AddressTypeEnum.SHIPPING
-                )}
-                onChangeCustomerAddress={customerAddress =>
+                selectedCustomerAddressId={
+                  addressSearchState.type === AddressTypeEnum.SHIPPING
+                    ? data.customerShippingAddress?.id
+                    : data.customerBillingAddress?.id
+                }
+                onChangeCustomerShippingAddress={customerAddress =>
                   handlers.changeCustomerAddress(
                     customerAddress,
                     "customerShippingAddress"
                   )
                 }
-                onChangeFormAddress={event =>
-                  handlers.changeFormAddress(event, "shippingAddress")
+                onChangeCustomerBillingAddress={customerAddress =>
+                  handlers.changeCustomerAddress(
+                    customerAddress,
+                    "customerBillingAddress"
+                  )
                 }
-                onChangeFormAddressCountry={handlers.selectShippingCountry}
+                exitSearch={() => setAddressSearchState(defaultSearchState)}
               />
-              <FormSpacer />
-              <Divider />
-              <FormSpacer />
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    checked={data.billingSameAsShipping}
-                    name="billingSameAsShipping"
-                    onChange={() =>
-                      change({
-                        target: {
-                          name: "billingSameAsShipping",
-                          value: !data.billingSameAsShipping
-                        }
-                      })
-                    }
-                    data-test="billingSameAsShipping"
-                  />
-                }
-                label={intl.formatMessage(dialogMessages.billingSameAsShipping)}
-              />
-              {!data.billingSameAsShipping && (
-                <>
-                  <FormSpacer />
+            ) : (
+              <>
+                <DialogTitle>
+                  <FormattedMessage {...dialogMessages.title} />
+                </DialogTitle>
+                <DialogContent className={classes.scrollableContent}>
                   <Typography>
                     {customerAddresses.length > 0 ? (
                       <FormattedMessage
-                        {...dialogMessages.customerBillingAddressDescription}
+                        {...dialogMessages.customerShippingAddressDescription}
                       />
                     ) : (
                       <FormattedMessage
-                        {...dialogMessages.billingAddressDescription}
+                        {...dialogMessages.shippingAddressDescription}
                       />
                     )}
                   </Typography>
@@ -216,43 +214,113 @@ const OrderCustomerAddressesEditDialog: React.FC<OrderCustomerAddressesEditDialo
                   <OrderCustomerAddressEdit
                     loading={loading}
                     countryChoices={countryChoices}
-                    addressInputOption={data.billingAddressInputOption}
-                    addressInputName="billingAddressInputOption"
+                    addressInputOption={data.shippingAddressInputOption}
+                    addressInputName="shippingAddressInputOption"
                     onChangeAddressInputOption={change}
                     customerAddresses={customerAddresses}
-                    customerAddressId={data.customerBillingAddress?.id}
-                    formAddress={data.billingAddress}
+                    selectedCustomerAddressId={data.customerShippingAddress?.id}
+                    formAddress={data.shippingAddress}
                     formAddressCountryDisplayName={
-                      data.billingCountryDisplayName
+                      data.shippingCountryDisplayName
                     }
                     formErrors={dialogErrors.filter(
-                      error => error.addressType === AddressTypeEnum.BILLING
+                      error => error.addressType === AddressTypeEnum.SHIPPING
                     )}
-                    onChangeCustomerAddress={customerAddress =>
-                      handlers.changeCustomerAddress(
-                        customerAddress,
-                        "customerBillingAddress"
-                      )
-                    }
                     onChangeFormAddress={event =>
-                      handlers.changeFormAddress(event, "billingAddress")
+                      handlers.changeFormAddress(event, "shippingAddress")
                     }
-                    onChangeFormAddressCountry={handlers.selectBillingCountry}
+                    onChangeFormAddressCountry={handlers.selectShippingCountry}
+                    onEdit={() =>
+                      setAddressSearchState({
+                        open: true,
+                        type: AddressTypeEnum.SHIPPING
+                      })
+                    }
                   />
-                </>
-              )}
-            </DialogContent>
-            <DialogActions>
-              <ConfirmButton
-                transitionState={confirmButtonState}
-                color="primary"
-                variant="contained"
-                type="submit"
-                data-test="submit"
-              >
-                <FormattedMessage {...buttonMessages.select} />
-              </ConfirmButton>
-            </DialogActions>
+                  <FormSpacer />
+                  <Divider />
+                  <FormSpacer />
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        checked={data.billingSameAsShipping}
+                        name="billingSameAsShipping"
+                        onChange={() =>
+                          change({
+                            target: {
+                              name: "billingSameAsShipping",
+                              value: !data.billingSameAsShipping
+                            }
+                          })
+                        }
+                        data-test="billingSameAsShipping"
+                      />
+                    }
+                    label={intl.formatMessage(
+                      dialogMessages.billingSameAsShipping
+                    )}
+                  />
+                  {!data.billingSameAsShipping && (
+                    <>
+                      <FormSpacer />
+                      <Typography>
+                        {customerAddresses.length > 0 ? (
+                          <FormattedMessage
+                            {...dialogMessages.customerBillingAddressDescription}
+                          />
+                        ) : (
+                          <FormattedMessage
+                            {...dialogMessages.billingAddressDescription}
+                          />
+                        )}
+                      </Typography>
+                      <FormSpacer />
+                      <OrderCustomerAddressEdit
+                        loading={loading}
+                        countryChoices={countryChoices}
+                        addressInputOption={data.billingAddressInputOption}
+                        addressInputName="billingAddressInputOption"
+                        onChangeAddressInputOption={change}
+                        customerAddresses={customerAddresses}
+                        selectedCustomerAddressId={
+                          data.customerBillingAddress?.id
+                        }
+                        formAddress={data.billingAddress}
+                        formAddressCountryDisplayName={
+                          data.billingCountryDisplayName
+                        }
+                        formErrors={dialogErrors.filter(
+                          error => error.addressType === AddressTypeEnum.BILLING
+                        )}
+                        onChangeFormAddress={event =>
+                          handlers.changeFormAddress(event, "billingAddress")
+                        }
+                        onChangeFormAddressCountry={
+                          handlers.selectBillingCountry
+                        }
+                        onEdit={() =>
+                          setAddressSearchState({
+                            open: true,
+                            type: AddressTypeEnum.BILLING
+                          })
+                        }
+                      />
+                    </>
+                  )}
+                </DialogContent>
+                <DialogActions>
+                  <ConfirmButton
+                    transitionState={confirmButtonState}
+                    color="primary"
+                    variant="contained"
+                    type="submit"
+                    data-test="submit"
+                  >
+                    <FormattedMessage {...buttonMessages.save} />
+                  </ConfirmButton>
+                </DialogActions>
+              </>
+            )}
           </>
         )}
       </OrderCustomerAddressesEditForm>
