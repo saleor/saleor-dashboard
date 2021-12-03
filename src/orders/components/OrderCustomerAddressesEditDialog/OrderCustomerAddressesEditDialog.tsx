@@ -154,7 +154,14 @@ const OrderCustomerAddressesEditDialog: React.FC<OrderCustomerAddressesEditDialo
   );
 
   return (
-    <Dialog onClose={onClose} open={open} fullWidth>
+    <Dialog
+      onClose={() => {
+        setAddressSearchState(defaultSearchState);
+        onClose();
+      }}
+      open={open}
+      fullWidth
+    >
       <OrderCustomerAddressesEditForm
         countryChoices={countryChoices}
         defaultShippingAddress={validatedDefaultShippingAddress}
