@@ -226,7 +226,7 @@ const FilterContent: React.FC<FilterContentProps> = ({
                     }
                   />
                 </ExpansionPanelSummary>
-                {currentFilter.active && (
+                {currentFilter?.active && (
                   <FilterErrorsList
                     errors={errors?.[filter.name]}
                     errorMessages={errorMessages}
@@ -235,7 +235,7 @@ const FilterContent: React.FC<FilterContentProps> = ({
                 )}
                 {filter.multipleFields ? (
                   <CollectionWithDividers
-                    collection={filter.multipleFields}
+                    collection={filter?.multipleFields}
                     renderItem={filterField => (
                       <FilterContentBody
                         {...commonFilterBodyProps}
@@ -244,7 +244,7 @@ const FilterContent: React.FC<FilterContentProps> = ({
                         }
                         filter={{
                           ...getFilterFromCurrentData(filterField),
-                          active: currentFilter.active
+                          active: currentFilter?.active
                         }}
                       >
                         <Typography>{filterField.label}</Typography>
