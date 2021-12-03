@@ -1,6 +1,6 @@
 import { OutputData } from "@editorjs/editorjs";
-import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
 import { ShopInfo_shop_languages } from "@saleor/components/Shop/types/ShopInfo";
+import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 
 export enum TranslationInputFieldName {
   description = "description",

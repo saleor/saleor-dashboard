@@ -12,7 +12,7 @@ import {
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import useSearchQuery from "@saleor/hooks/useSearchQuery";
 import { buttonMessages } from "@saleor/intl";
-import { Button } from "@saleor/macaw-ui";
+import { Button, ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import useScrollableDialogStyle from "@saleor/styles/useScrollableDialogStyle";
 import { DialogProps, FetchMoreProps, Node } from "@saleor/types";
 import React from "react";
@@ -20,7 +20,7 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import { FormattedMessage } from "react-intl";
 
 import Checkbox from "../Checkbox";
-import ConfirmButton, { ConfirmButtonTransitionState } from "../ConfirmButton";
+import ConfirmButton from "../ConfirmButton";
 import { messages } from "./messages";
 import { useStyles } from "./styles";
 

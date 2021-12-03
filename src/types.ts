@@ -1,6 +1,6 @@
+import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import { MutationResult } from "react-apollo";
 
-import { ConfirmButtonTransitionState } from "./components/ConfirmButton";
 import { IFilter } from "./components/Filter";
 import { MultiAutocompleteChoiceType } from "./components/MultiAutocompleteSelectField";
 import { User_userPermissions } from "./fragments/types/User";
