@@ -5,5 +5,8 @@ export const LOGIN_SELECTORS = {
   signInButton: "[data-test=submit]",
   userMenu: "[data-test=userMenu]",
   warningCredentialMessage: "[data-test=loginErrorMessage]",
-  welcomePage: "[data-test=welcomeHeader]"
+  welcomePage: "[data-test=welcomeHeader]",
+  logOutButton: "[data-test='logOutButton']",
+  resetPasswordLink: "[data-test-id='reset-password-link']",
+  confirmPassword: "[name='confirmPassword']"
 };
