@@ -17,7 +17,10 @@ import {
   deleteChannelsStartsWith,
   getDefaultChannel
 } from "../../../support/api/utils/channelsUtils";
-import { getMailsForUser } from "../../../support/api/utils/users";
+import {
+  getMailActivationLinkForUserAndSubject,
+  getMailsForUser
+} from "../../../support/api/utils/users";
 import filterTests from "../../../support/filterTests";
 
 filterTests({ definedTags: ["stagedOnly"], version: "3.1.1" }, () => {
@@ -76,10 +79,13 @@ filterTests({ definedTags: ["stagedOnly"], version: "3.1.1" }, () => {
         .confirmationMessageShouldDisappear();
       requestPasswordReset(Cypress.env("USER_NAME"), defaultChannel.slug)
         .then(() => {
-          getMailsForUser(customerEmail);
+          getMailActivationLinkForUserAndSubject(
+            Cypress.env("USER_NAME"),
+            randomName
+          );
         })
-        .then(mails => {
-          expect(mails[0].Content.Headers.Subject[0]).to.eq(randomName);
+        .then(link => {
+          expect(link).to.be.ok;
         });
     });
   });

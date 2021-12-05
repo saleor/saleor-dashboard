@@ -11,6 +11,7 @@ export const VARIANTS_SELECTORS = {
   saveButton: "[data-test='button-bar-confirm']",
   skuInputInAddVariant: "[name='sku']",
   preorderCheckbox: "[name='isPreorder']",
+  channelThresholdInput: "[name='channel-threshold']",
   setUpEndDateButton: "[name='hasPreorderEndDate']",
   preorderEndDateInput: "[name='preorderEndDateTime:date']",
   preorderEndTimeInput: "[name='preorderEndDateTime:time']",
