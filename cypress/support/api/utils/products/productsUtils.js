@@ -30,6 +30,7 @@ export function createProductInChannel({
   description = null,
   trackInventory = true,
   weight = 1,
+  preorder,
   sku = name
 }) {
   let product;
@@ -57,7 +58,8 @@ export function createProductInChannel({
         channelId,
         price,
         trackInventory,
-        weight
+        weight,
+        preorder
       });
     })
     .then(variantsResp => {
@@ -116,6 +118,7 @@ export function deleteProductsAndCreateNewOneWithNewDataAndDefaultChannel({
   name,
   description = name,
   warehouseId,
+  preorder,
   attributeValues = ["value"],
   sku = name,
   productPrice = 10
@@ -146,8 +149,9 @@ export function deleteProductsAndCreateNewOneWithNewDataAndDefaultChannel({
         collectionId: collection.id,
         description,
         warehouseId,
-        sku,
-        price: productPrice
+        price: productPrice,
+        preorder,
+        sku
       });
     })
     .then(({ product, variantsList }) => ({ product, variantsList }));
@@ -158,7 +162,8 @@ export function createProductWithShipping({
   attributeValues = ["value"],
   sku = name,
   productPrice = 10,
-  shippingPrice = 10
+  shippingPrice = 10,
+  preorder
 }) {
   let address;
   let warehouse;
@@ -194,9 +199,10 @@ export function createProductWithShipping({
         deleteProductsAndCreateNewOneWithNewDataAndDefaultChannel({
           name,
           warehouseId: warehouse.id,
+          productPrice,
+          preorder,
           attributeValues,
-          sku,
-          productPrice
+          sku
         });
       }
     )

@@ -79,10 +79,10 @@ export const warehouseDetailsUrl = warehouseId =>
 
 export const saleDetailsUrl = saleId => `${urlList.sales}${saleId}`;
 
-export const voucherDetailsUrl = voucherId => `${urlList.vouchers}${voucherId}`;
-
 export const variantDetailsUrl = (productId, variantId) =>
-  `${urlList.products}${productId}/${urlList.variant}${variantId}`;
+  `${urlList.products}${productId}/${urlList.variants}${variantId}`;
+
+export const voucherDetailsUrl = voucherId => `${urlList.vouchers}${voucherId}`;
 
 export const stripeConfirmationUrl = id =>
   `https://api.stripe.com/v1/payment_intents/${id}/confirm`;
