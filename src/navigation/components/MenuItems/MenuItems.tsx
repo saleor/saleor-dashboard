@@ -32,6 +32,9 @@ export interface MenuItemsProps {
 const useStyles = makeStyles(
   theme => ({
     actions: {
+      "&&": {
+        padding: theme.spacing(2, 4)
+      },
       flexDirection: "row"
     },
     container: {
@@ -172,12 +175,13 @@ const Node: React.FC<NodeRendererProps> = props => {
         <Button onClick={node.onClick}>
           <FormattedMessage {...buttonMessages.show} />
         </Button>
-        <IconButton variant="secondary" color="primary" onClick={node.onEdit}>
+        <IconButton variant="secondary" hoverOutline onClick={node.onEdit}>
           <EditIcon />
         </IconButton>
         <IconButton
           className={classes.deleteButton}
-          color="primary"
+          variant="secondary"
+          hoverOutline
           onClick={() =>
             node.onChange({
               id: node.id as any,

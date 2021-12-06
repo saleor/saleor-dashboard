@@ -20,6 +20,7 @@ const useStyles = makeStyles(
       width: "100%",
       border: "none",
       marginRight: theme.spacing(1),
+      padding: 0,
       paddingBottom: theme.spacing(2),
       minHeight: 0,
 
@@ -28,7 +29,6 @@ const useStyles = makeStyles(
       }
     },
     content: {
-      paddingLeft: theme.spacing(1),
       margin: 0,
 
       "&$expanded": {

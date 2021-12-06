@@ -22,7 +22,7 @@ const useStyles = makeStyles(
       position: "relative"
     },
     nakedInput: {
-      padding: theme.spacing(2, 3)
+      padding: theme.spacing(2, 0)
     },
     adornment: {
       cursor: "pointer",
