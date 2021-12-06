@@ -49,6 +49,7 @@ export const ChannelsAvailabilityDropdown: React.FC<ChannelsAvailabilityDropdown
         <StatusLabel
           label={intl.formatMessage(
             {
+              id: "9DnWEE",
               defaultMessage: "{count}/{allCount} channels",
               description: "product status title"
             },
@@ -81,6 +82,7 @@ export const ChannelsAvailabilityDropdown: React.FC<ChannelsAvailabilityDropdown
       >
         <Typography className={classes.title}>
           <FormattedMessage
+            id="/hs20V"
             defaultMessage="Available in {count} out of {allCount, plural, one {# channel} other {# channels}}"
             description="product status"
             values={{
@@ -93,6 +95,7 @@ export const ChannelsAvailabilityDropdown: React.FC<ChannelsAvailabilityDropdown
         {channels.map(channelData => {
           const notPublishedText = intl.formatMessage(
             {
+              id: "pjFabA",
               defaultMessage: "Will become available on {date}",
               description: "product channel publication date"
             },
@@ -103,6 +106,7 @@ export const ChannelsAvailabilityDropdown: React.FC<ChannelsAvailabilityDropdown
 
           const publishedText = intl.formatMessage(
             {
+              id: "pG70pm",
               defaultMessage: "published since {date}",
               description: "product channel  publication date"
             },
@@ -126,6 +130,7 @@ export const ChannelsAvailabilityDropdown: React.FC<ChannelsAvailabilityDropdown
                     : channelData.isPublished
                     ? ""
                     : intl.formatMessage({
+                        id: "qgYKM/",
                         defaultMessage: "hidden",
                         description: "product channel publication status"
                       })}

@@ -42,6 +42,7 @@ export const AppDetails: React.FC<AppDetailsProps> = ({ id, params }) => {
         notify({
           status: "success",
           text: intl.formatMessage({
+            id: "D/+84n",
             defaultMessage: "App activated",
             description: "snackbar text"
           })
@@ -65,6 +66,7 @@ export const AppDetails: React.FC<AppDetailsProps> = ({ id, params }) => {
         notify({
           status: "success",
           text: intl.formatMessage({
+            id: "USO8PB",
             defaultMessage: "App deactivated",
             description: "snackbar text"
           })

@@ -88,7 +88,7 @@ const CustomerList: React.FC<CustomerListProps> = props => {
           onClick={() => onSort(CustomerListUrlSortField.name)}
           className={classes.colName}
         >
-          <FormattedMessage defaultMessage="Customer Name" />
+          <FormattedMessage id="Gr1SAu" defaultMessage="Customer Name" />
         </TableCellHeader>
         <TableCellHeader
           direction={
@@ -99,7 +99,7 @@ const CustomerList: React.FC<CustomerListProps> = props => {
           onClick={() => onSort(CustomerListUrlSortField.email)}
           className={classes.colEmail}
         >
-          <FormattedMessage defaultMessage="Customer Email" />
+          <FormattedMessage id="97l2MO" defaultMessage="Customer Email" />
         </TableCellHeader>
         <TableCellHeader
           direction={
@@ -111,7 +111,7 @@ const CustomerList: React.FC<CustomerListProps> = props => {
           onClick={() => onSort(CustomerListUrlSortField.orders)}
           className={classes.colOrders}
         >
-          <FormattedMessage defaultMessage="No. of Orders" />
+          <FormattedMessage id="E8VDeH" defaultMessage="No. of Orders" />
         </TableCellHeader>
       </TableHead>
       <TableFooter>
@@ -169,7 +169,10 @@ const CustomerList: React.FC<CustomerListProps> = props => {
           () => (
             <TableRow>
               <TableCell colSpan={numberOfColumns}>
-                <FormattedMessage defaultMessage="No customers found" />
+                <FormattedMessage
+                  id="FpIcp9"
+                  defaultMessage="No customers found"
+                />
               </TableCell>
             </TableRow>
           )

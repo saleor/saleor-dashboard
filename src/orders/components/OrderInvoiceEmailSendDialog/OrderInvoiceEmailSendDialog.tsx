@@ -39,6 +39,7 @@ const OrderInvoiceEmailSendDialog: React.FC<OrderInvoiceEmailSendDialogProps> = 
     <Dialog onClose={onClose} open={open} fullWidth maxWidth="xs">
       <DialogTitle>
         {intl.formatMessage({
+          id: "5JT4v2",
           defaultMessage: "Send Invoice",
           description: "dialog header"
         })}
@@ -46,6 +47,7 @@ const OrderInvoiceEmailSendDialog: React.FC<OrderInvoiceEmailSendDialogProps> = 
       <DialogContent>
         <DialogContentText>
           <FormattedMessage
+            id="MPfyne"
             defaultMessage="Are you sure you want to send this invoice: {invoiceNumber} to the customer?"
             values={{
               invoiceNumber: <strong>{invoice?.number}</strong>

@@ -72,6 +72,7 @@ export const SaleCreateView: React.FC<SaleCreateProps> = ({ params }) => {
       pushMessage({
         status: "success",
         text: intl.formatMessage({
+          id: "n7Fg8i",
           defaultMessage: "Successfully created sale"
         })
       });
@@ -90,6 +91,7 @@ export const SaleCreateView: React.FC<SaleCreateProps> = ({ params }) => {
           onClose={handleChannelsModalClose}
           open={isChannelsModalOpen}
           title={intl.formatMessage({
+            id: "ESDTC/",
             defaultMessage: "Manage Sales Channel Availability"
           })}
           confirmButtonState="default"

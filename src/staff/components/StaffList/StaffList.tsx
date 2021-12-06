@@ -111,6 +111,7 @@ const StaffList: React.FC<StaffListProps> = props => {
             className={classes.wideColumn}
           >
             <FormattedMessage
+              id="W32xfN"
               defaultMessage="Name"
               description="staff member full name"
             />
@@ -123,7 +124,7 @@ const StaffList: React.FC<StaffListProps> = props => {
             }
             onClick={() => onSort(StaffListUrlSortField.email)}
           >
-            <FormattedMessage defaultMessage="Email Address" />
+            <FormattedMessage id="xxQxLE" defaultMessage="Email Address" />
           </TableCellHeader>
         </TableRow>
       </TableHead>
@@ -177,10 +178,12 @@ const StaffList: React.FC<StaffListProps> = props => {
                     () =>
                       staffMember.isActive
                         ? intl.formatMessage({
+                            id: "9Zlogd",
                             defaultMessage: "Active",
                             description: "staff member status"
                           })
                         : intl.formatMessage({
+                            id: "7WzUxn",
                             defaultMessage: "Inactive",
                             description: "staff member status"
                           }),
@@ -196,7 +199,10 @@ const StaffList: React.FC<StaffListProps> = props => {
           () => (
             <TableRow>
               <TableCell colSpan={numberOfColumns}>
-                <FormattedMessage defaultMessage="No staff members found" />
+                <FormattedMessage
+                  id="xJQX5t"
+                  defaultMessage="No staff members found"
+                />
               </TableCell>
             </TableRow>
           )

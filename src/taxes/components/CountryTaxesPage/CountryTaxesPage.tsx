@@ -50,6 +50,7 @@ const CountryTaxesPage: React.FC<CountryTaxesPageProps> = props => {
           countryName
             ? intl.formatMessage(
                 {
+                  id: "QHB48n",
                   defaultMessage: "Tax Rates in {countryName}",
                   description: "header"
                 },
@@ -67,10 +68,10 @@ const CountryTaxesPage: React.FC<CountryTaxesPageProps> = props => {
               <TableHead>
                 <TableRow>
                   <TableCell className={classes.wideColumn}>
-                    <FormattedMessage defaultMessage="Category" />
+                    <FormattedMessage id="ccXLVi" defaultMessage="Category" />
                   </TableCell>
                   <TableCell>
-                    <FormattedMessage defaultMessage="Tax Rate" />
+                    <FormattedMessage id="la9cZ4" defaultMessage="Tax Rate" />
                   </TableCell>
                 </TableRow>
               </TableHead>
@@ -95,7 +96,10 @@ const CountryTaxesPage: React.FC<CountryTaxesPageProps> = props => {
                   () => (
                     <TableRow>
                       <TableCell colSpan={2}>
-                        <FormattedMessage defaultMessage="No reduced tax categories found" />
+                        <FormattedMessage
+                          id="Ubath+"
+                          defaultMessage="No reduced tax categories found"
+                        />
                       </TableCell>
                     </TableRow>
                   )

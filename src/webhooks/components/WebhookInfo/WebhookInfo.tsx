@@ -48,6 +48,7 @@ const WebhookInfo: React.FC<WebhookInfoProps> = ({
     <Card>
       <CardTitle
         title={intl.formatMessage({
+          id: "WDy0tF",
           defaultMessage: "Webhook Information",
           description: "section header"
         })}
@@ -61,6 +62,7 @@ const WebhookInfo: React.FC<WebhookInfoProps> = ({
           error={!!formErrors.name}
           helperText={getWebhookErrorMessage(formErrors.name, intl)}
           label={intl.formatMessage({
+            id: "aP3drn",
             defaultMessage: "Webhook Name",
             description: "webhook"
           })}
@@ -74,6 +76,7 @@ const WebhookInfo: React.FC<WebhookInfoProps> = ({
         <FormSpacer />
         <Typography className={classes.title}>
           {intl.formatMessage({
+            id: "oEriGO",
             defaultMessage: "Webhook specific information",
             description: "webhook specific information"
           })}
@@ -85,11 +88,13 @@ const WebhookInfo: React.FC<WebhookInfoProps> = ({
           helperText={
             getWebhookErrorMessage(formErrors.targetUrl, intl) ||
             intl.formatMessage({
+              id: "QgOYGu",
               defaultMessage: "This URL will receive webhook POST requests",
               description: "webhook target url help text"
             })
           }
           label={intl.formatMessage({
+            id: "5Xrsdh",
             defaultMessage: "Target URL",
             description: "webhook"
           })}
@@ -105,12 +110,14 @@ const WebhookInfo: React.FC<WebhookInfoProps> = ({
           helperText={
             getWebhookErrorMessage(formErrors.secretKey, intl) ||
             intl.formatMessage({
+              id: "JC/4wg",
               defaultMessage:
                 "secret key is used to create a hash signature with each payload. *optional field",
               description: "webhook secret key help text"
             })
           }
           label={intl.formatMessage({
+            id: "QCtulm",
             defaultMessage: "Secret Key",
             description: "webhook"
           })}

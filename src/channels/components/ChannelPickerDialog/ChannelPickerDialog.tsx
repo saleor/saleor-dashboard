@@ -40,6 +40,7 @@ const ChannelPickerDialog: React.FC<ChannelPickerDialogProps> = ({
       onClose={onClose}
       onConfirm={() => onConfirm(choice)}
       title={intl.formatMessage({
+        id: "G/pgG3",
         defaultMessage: "Select a channel",
         description: "dialog header"
       })}
@@ -50,6 +51,7 @@ const ChannelPickerDialog: React.FC<ChannelPickerDialogProps> = ({
             choices={channelsChoices}
             name="channels"
             label={intl.formatMessage({
+              id: "nKwgxY",
               defaultMessage: "Channel name",
               description: "select label"
             })}

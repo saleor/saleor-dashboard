@@ -76,6 +76,7 @@ export const CustomAppDetails: React.FC<OrderListProps> = ({
         notify({
           status: "success",
           text: intl.formatMessage({
+            id: "D/+84n",
             defaultMessage: "App activated",
             description: "snackbar text"
           })
@@ -99,6 +100,7 @@ export const CustomAppDetails: React.FC<OrderListProps> = ({
         notify({
           status: "success",
           text: intl.formatMessage({
+            id: "USO8PB",
             defaultMessage: "App deactivated",
             description: "snackbar text"
           })

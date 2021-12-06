@@ -231,6 +231,7 @@ export const StaffDetails: React.FC<OrderListProps> = ({ id, params }) => {
                                 <ActionDialog
                                   open={params.action === "remove"}
                                   title={intl.formatMessage({
+                                    id: "GhXwO/",
                                     defaultMessage: "delete Staff User",
                                     description: "dialog header"
                                   })}
@@ -241,6 +242,7 @@ export const StaffDetails: React.FC<OrderListProps> = ({ id, params }) => {
                                 >
                                   <DialogContentText>
                                     <FormattedMessage
+                                      id="gxPjIQ"
                                       defaultMessage="Are you sure you want to delete {email} from staff members?"
                                       values={{
                                         email: getStringOrPlaceholder(
@@ -253,6 +255,7 @@ export const StaffDetails: React.FC<OrderListProps> = ({ id, params }) => {
                                 <ActionDialog
                                   open={params.action === "remove-avatar"}
                                   title={intl.formatMessage({
+                                    id: "VKWPBf",
                                     defaultMessage: "Delete Staff User Avatar",
                                     description: "dialog header"
                                   })}
@@ -263,6 +266,7 @@ export const StaffDetails: React.FC<OrderListProps> = ({ id, params }) => {
                                 >
                                   <DialogContentText>
                                     <FormattedMessage
+                                      id="fzpXvv"
                                       defaultMessage="Are you sure you want to remove {email} avatar?"
                                       values={{
                                         email: (

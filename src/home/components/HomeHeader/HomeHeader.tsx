@@ -41,9 +41,9 @@ const HomeOrdersCard: React.FC<HomeOrdersCardProps> = props => {
         >
           {userName ? (
             <FormattedMessage
+              id="By5ZBp"
               defaultMessage="Hello there, {userName}"
               description="header"
-              id="homeHeaderText"
               values={{
                 userName
               }}
@@ -55,9 +55,9 @@ const HomeOrdersCard: React.FC<HomeOrdersCardProps> = props => {
         <Typography className={classes.subtitle}>
           {userName ? (
             <FormattedMessage
+              id="aCX8rl"
               defaultMessage="Here is some information we gathered about your store"
               description="subheader"
-              id="homeHeaderTextCaption"
             />
           ) : (
             <Skeleton style={{ width: "10em" }} />

@@ -30,6 +30,7 @@ const CustomAppInformation: React.FC<CustomAppInfoProps> = ({
     <Card>
       <CardTitle
         title={intl.formatMessage({
+          id: "imYxM9",
           defaultMessage: "App Information",
           description: "header"
         })}
@@ -39,6 +40,7 @@ const CustomAppInformation: React.FC<CustomAppInfoProps> = ({
           disabled={disabled}
           error={!!formErrors.name}
           label={intl.formatMessage({
+            id: "foNlhn",
             defaultMessage: "App Name",
             description: "custom app name"
           })}

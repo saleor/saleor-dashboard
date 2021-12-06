@@ -102,6 +102,7 @@ export const TimelineAddNote: React.FC<TimelineAddNoteProps> = props => {
         <TextField
           className={classes.input}
           placeholder={intl.formatMessage({
+            id: "3evXPj",
             defaultMessage: "Leave your note here..."
           })}
           onChange={onChange}
@@ -117,6 +118,7 @@ export const TimelineAddNote: React.FC<TimelineAddNoteProps> = props => {
                 onClick={e => submit(e)}
               >
                 <FormattedMessage
+                  id="v/1VA6"
                   defaultMessage="Send"
                   description="add order note, button"
                 />

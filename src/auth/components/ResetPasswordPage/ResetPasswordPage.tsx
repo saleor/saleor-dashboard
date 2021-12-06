@@ -53,7 +53,10 @@ const ResetPasswordPage: React.FC<ResetPasswordPageProps> = props => {
             </div>
           )}
           <Typography>
-            <FormattedMessage defaultMessage="Forgot your password? Don't worry, we'll reset it for you." />
+            <FormattedMessage
+              id="3ublOS"
+              defaultMessage="Forgot your password? Don't worry, we'll reset it for you."
+            />
           </Typography>
           <FormSpacer />
           <TextField
@@ -79,6 +82,7 @@ const ResetPasswordPage: React.FC<ResetPasswordPageProps> = props => {
             type="submit"
           >
             <FormattedMessage
+              id="PkrH7Z"
               defaultMessage="Send Instructions"
               description="password reset, button"
             />

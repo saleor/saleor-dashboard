@@ -143,6 +143,7 @@ export const CollectionCreate: React.FC<CollectionCreateProps> = ({
     <>
       <WindowTitle
         title={intl.formatMessage({
+          id: "ttMauu",
           defaultMessage: "Create collection",
           description: "window title"
         })}
@@ -156,6 +157,7 @@ export const CollectionCreate: React.FC<CollectionCreateProps> = ({
           onClose={handleChannelsModalClose}
           open={isChannelsModalOpen}
           title={intl.formatMessage({
+            id: "I1Mz7h",
             defaultMessage: "Manage Collection Channel Availability"
           })}
           confirmButtonState="default"

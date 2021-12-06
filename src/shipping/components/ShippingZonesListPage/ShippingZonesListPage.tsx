@@ -41,6 +41,7 @@ const ShippingZonesListPage: React.FC<ShippingZonesListPageProps> = ({
       </Backlink>
       <PageHeader
         title={intl.formatMessage({
+          id: "uULcph",
           defaultMessage: "Shipping",
           description: "header"
         })}

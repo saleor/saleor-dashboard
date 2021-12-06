@@ -51,6 +51,7 @@ const TranslationsProductsPage: React.FC<TranslationsProductsPageProps> = ({
       <PageHeader
         title={intl.formatMessage(
           {
+            id: "98WMlR",
             defaultMessage:
               'Translation Product Variant "{productName}" - {languageCode}',
             description: "header"
@@ -80,6 +81,7 @@ const TranslationsProductsPage: React.FC<TranslationsProductsPageProps> = ({
         fields={[
           {
             displayName: intl.formatMessage({
+              id: "T1f2Yl",
               defaultMessage: "Variant Name"
             }),
             name: TranslationInputFieldName.name,
@@ -107,6 +109,7 @@ const TranslationsProductsPage: React.FC<TranslationsProductsPageProps> = ({
                 id: attrVal.attributeValue.id,
                 displayName: intl.formatMessage(
                   {
+                    id: "PajjqE",
                     defaultMessage: "Attribute {number}",
                     description: "attribute list"
                   },

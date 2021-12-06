@@ -5,6 +5,7 @@ import { defineMessages, IntlShape } from "react-intl";
 
 export const giftCardUpdateDetailsCardMessages = defineMessages({
   title: {
+    id: "jY/HEW",
     defaultMessage: "Details",
     description: "GiftCardUpdateDetailsCard title"
   }
@@ -12,6 +13,7 @@ export const giftCardUpdateDetailsCardMessages = defineMessages({
 
 const giftCardErrorMessages = defineMessages({
   notFound: {
+    id: "x6b0r6",
     defaultMessage: "Couldn't find gift card",
     description: "giftCardErrorMessages not found"
   }

@@ -98,6 +98,7 @@ export const PageCreate: React.FC<PageCreateProps> = ({ params }) => {
       notify({
         status: "success",
         text: intl.formatMessage({
+          id: "JMbFNo",
           defaultMessage: "Successfully created new page"
         })
       });
@@ -182,6 +183,7 @@ export const PageCreate: React.FC<PageCreateProps> = ({ params }) => {
           <>
             <WindowTitle
               title={intl.formatMessage({
+                id: "mX7zJJ",
                 defaultMessage: "Create Page",
                 description: "header"
               })}

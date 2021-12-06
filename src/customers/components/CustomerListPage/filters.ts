@@ -18,10 +18,12 @@ export interface CustomerListFilterOpts {
 
 const messages = defineMessages({
   joinDate: {
+    id: "icz/jb",
     defaultMessage: "Join Date",
     description: "customer"
   },
   numberOfOrders: {
+    id: "fhksPD",
     defaultMessage: "Number of Orders"
   }
 });

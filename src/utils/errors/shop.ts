@@ -6,6 +6,7 @@ import { getCommonFormFieldErrorMessage } from "./common";
 
 const messages = defineMessages({
   alreadyExists: {
+    id: "m8cjcK",
     defaultMessage: "Authorization key with this type already exists",
     description: "add authorization key error"
   }

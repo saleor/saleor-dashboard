@@ -67,6 +67,7 @@ const CollectionListPage: React.FC<CollectionListPageProps> = ({
           data-test-id="create-collection"
         >
           <FormattedMessage
+            id="jyaAlB"
             defaultMessage="Create collection"
             description="button"
           />
@@ -75,6 +76,7 @@ const CollectionListPage: React.FC<CollectionListPageProps> = ({
       <Card>
         <FilterBar
           allTabLabel={intl.formatMessage({
+            id: "G4g5Ii",
             defaultMessage: "All Collections",
             description: "tab name"
           })}
@@ -89,6 +91,7 @@ const CollectionListPage: React.FC<CollectionListPageProps> = ({
           onTabDelete={onTabDelete}
           onTabSave={onTabSave}
           searchPlaceholder={intl.formatMessage({
+            id: "s97tLq",
             defaultMessage: "Search Collections"
           })}
           tabs={tabs}

@@ -24,26 +24,32 @@ export interface AttributeListFilterOpts {
 
 const messages = defineMessages({
   availableInGrid: {
+    id: "15IqlZ",
     defaultMessage: "Can be used as column",
     description: "attribute can be column in product list table"
   },
   filterableInDashboard: {
+    id: "kaC4SV",
     defaultMessage: "Filterable in Dashboard",
     description: "use attribute in filtering"
   },
   filterableInStorefront: {
+    id: "PsRG+v",
     defaultMessage: "Filterable in Storefront",
     description: "use attribute in filtering"
   },
   isVariantOnly: {
+    id: "rvk9ls",
     defaultMessage: "Variant Only",
     description: "attribute can be used only in variants"
   },
   valueRequired: {
+    id: "HQR2y0",
     defaultMessage: "Value Required",
     description: "attribute value is required"
   },
   visibleInStorefront: {
+    id: "cvbqJu",
     defaultMessage: "Visible on Product Page in Storefront",
     description: "attribute"
   }

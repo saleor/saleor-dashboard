@@ -57,6 +57,7 @@ const WebhookCreatePage: React.FC<WebhookCreatePageProps> = ({
           <Backlink onClick={onBack}>{appName}</Backlink>
           <PageHeader
             title={intl.formatMessage({
+              id: "Ryh3iR",
               defaultMessage: "Create Webhook",
               description: "header"
             })}

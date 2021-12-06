@@ -70,11 +70,13 @@ const PluginsListPage: React.FC<PluginsListPageProps> = ({
           onTabSave={onTabSave}
           tabs={tabs}
           allTabLabel={intl.formatMessage({
+            id: "aOelhW",
             defaultMessage: "All Plugins",
             description: "tab name"
           })}
           filterStructure={filterStructure}
           searchPlaceholder={intl.formatMessage({
+            id: "BtErCZ",
             defaultMessage: "Search Plugins..."
           })}
         />

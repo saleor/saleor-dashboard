@@ -217,9 +217,9 @@ const ProductStocks: React.FC<ProductStocksProps> = ({
     <Card>
       <CardTitle
         title={intl.formatMessage({
+          id: "4qe6hO",
           defaultMessage: "Inventory",
-          description: "product stock, section header",
-          id: "productStockHeader"
+          description: "product stock, section header"
         })}
       />
       <CardContent>
@@ -231,6 +231,7 @@ const ProductStocks: React.FC<ProductStocksProps> = ({
             fullWidth
             helperText={getProductErrorMessage(formErrors.sku, intl)}
             label={intl.formatMessage({
+              id: "xB7BTp",
               defaultMessage: "SKU (Stock Keeping Unit)"
             })}
             name="sku"
@@ -249,6 +250,7 @@ const ProductStocks: React.FC<ProductStocksProps> = ({
           disabled={disabled}
           label={
             <FormattedMessage
+              id="eAFU/E"
               defaultMessage="Variant currently in preorder"
               description="product inventory, checkbox"
             />
@@ -266,11 +268,15 @@ const ProductStocks: React.FC<ProductStocksProps> = ({
               label={
                 <>
                   <FormattedMessage
+                    id="TjGYna"
                     defaultMessage="Track Inventory"
                     description="product inventory, checkbox"
                   />
                   <Typography variant="caption">
-                    <FormattedMessage defaultMessage="Active inventory tracking will automatically calculate changes of stock" />
+                    <FormattedMessage
+                      id="jABdx1"
+                      defaultMessage="Active inventory tracking will automatically calculate changes of stock"
+                    />
                   </Typography>
                 </>
               }
@@ -285,6 +291,7 @@ const ProductStocks: React.FC<ProductStocksProps> = ({
             <div className={classes.quantityHeader}>
               <span>
                 <FormattedMessage
+                  id="bp/i0x"
                   defaultMessage="Quantity"
                   description="header"
                 />
@@ -300,9 +307,9 @@ const ProductStocks: React.FC<ProductStocksProps> = ({
               {hasVariants ? (
                 <>
                   <FormattedMessage
+                    id="D8nsBc"
                     defaultMessage="There are no warehouses set up for your store. To add stock quantity to the variant please <a>configure a warehouse</a>"
                     description="no warehouses info"
-                    id="productVariantWarehouseSectionDescription"
                     values={{
                       a: chunks => (
                         <Link onClick={onWarehouseConfigure}>{chunks}</Link>
@@ -313,9 +320,9 @@ const ProductStocks: React.FC<ProductStocksProps> = ({
               ) : (
                 <>
                   <FormattedMessage
+                    id="RLBLPQ"
                     defaultMessage="There are no warehouses set up for your store. To add stock quantity to the product please <a>configure a warehouse</a>"
                     description="no warehouses info"
-                    id="productWarehouseSectionDescription"
                     values={{
                       a: chunks => (
                         <Link onClick={onWarehouseConfigure}>{chunks}</Link>
@@ -339,22 +346,23 @@ const ProductStocks: React.FC<ProductStocksProps> = ({
             <TableRow>
               <TableCell className={classes.colName}>
                 <FormattedMessage
+                  id="KTAg0f"
                   defaultMessage="Warehouse Name"
                   description="tabel column header"
                 />
               </TableCell>
               <TableCell className={classes.colQuantity}>
                 <FormattedMessage
+                  id="g/FRtd"
                   defaultMessage="Allocated"
                   description="table column header, allocated product quantity"
-                  id="tableColAllocated"
                 />
               </TableCell>
               <TableCell className={classes.colQuantity}>
                 <FormattedMessage
+                  id="ge/xFX"
                   defaultMessage="Quantity"
                   description="table column header"
-                  id="tableColQuantity"
                 />
               </TableCell>
               <TableCell className={classes.colAction} />
@@ -404,6 +412,7 @@ const ProductStocks: React.FC<ProductStocksProps> = ({
                 <TableCell colSpan={3}>
                   <Typography variant="body2">
                     <FormattedMessage
+                      id="cBHRxx"
                       defaultMessage="Assign Warehouse"
                       description="button"
                     />
@@ -462,6 +471,7 @@ const ProductStocks: React.FC<ProductStocksProps> = ({
         <CardContent>
           <Typography variant="caption" className={classes.caption}>
             {intl.formatMessage({
+              id: "REVk27",
               defaultMessage:
                 "Set up an end date of preorder. When end date will be reached product will be automatically taken from preorder to standard selling",
               description: "info text"
@@ -503,11 +513,18 @@ const ProductStocks: React.FC<ProductStocksProps> = ({
             }
           >
             {data.hasPreorderEndDate
-              ? intl.formatMessage({ defaultMessage: "CANCEL END DATE" })
-              : intl.formatMessage({ defaultMessage: "SETUP END DATE" })}
+              ? intl.formatMessage({
+                  id: "2qJc9y",
+                  defaultMessage: "CANCEL END DATE"
+                })
+              : intl.formatMessage({
+                  id: "7Ii5ZQ",
+                  defaultMessage: "SETUP END DATE"
+                })}
           </Button>
           <Typography variant="caption" className={classes.preorderLimitInfo}>
             {intl.formatMessage({
+              id: "Gz+4CI",
               defaultMessage:
                 "Preordered products will be available in all warehouses. You can set a threshold for sold quantity. Leaving input blank will be interpreted as no limit to sale. Sold items will be allocated at the warehouse assigned to chosen shipping zone.",
               description: "info text"
@@ -521,10 +538,12 @@ const ProductStocks: React.FC<ProductStocksProps> = ({
               disabled={disabled}
               fullWidth
               helperText={intl.formatMessage({
+                id: "NcY4ph",
                 defaultMessage:
                   "Threshold that cannot be exceeded even if per channel thresholds are still available"
               })}
               label={intl.formatMessage({
+                id: "RJ5QxE",
                 defaultMessage: "Global threshold"
               })}
               name="globalThreshold"
@@ -541,14 +560,15 @@ const ProductStocks: React.FC<ProductStocksProps> = ({
                 {data.globalThreshold
                   ? intl.formatMessage(
                       {
+                        id: "7wkGxW",
                         defaultMessage: "{unitsLeft} units left",
                         description: "app has been installed"
                       },
                       { unitsLeft }
                     )
                   : intl.formatMessage({
+                      id: "CEavJt",
                       defaultMessage: "Unlimited",
-                      id: "unlimitedUnitsLeft",
                       description: "section header"
                     })}
               </Typography>
@@ -568,22 +588,23 @@ const ProductStocks: React.FC<ProductStocksProps> = ({
             <TableRow>
               <TableCell className={classes.colName}>
                 <FormattedMessage
+                  id="JyQEHU"
                   defaultMessage="Channels"
                   description="tabel column header"
                 />
               </TableCell>
               <TableCell className={classes.colSoldUnits}>
                 <FormattedMessage
+                  id="HcQEUk"
                   defaultMessage="Sold units"
                   description="table column header, sold units preorder quantity"
-                  id="tableColSoldUnits"
                 />
               </TableCell>
               <TableCell className={classes.colThreshold}>
                 <FormattedMessage
+                  id="MNZY28"
                   defaultMessage="Channel threshold"
                   description="table column header"
-                  id="tableColChannelThreshold"
                 />
               </TableCell>
             </TableRow>
@@ -612,6 +633,7 @@ const ProductStocks: React.FC<ProductStocksProps> = ({
                         type: "number"
                       }}
                       placeholder={intl.formatMessage({
+                        id: "ekXood",
                         defaultMessage: "Unlimited"
                       })}
                       onChange={e => {

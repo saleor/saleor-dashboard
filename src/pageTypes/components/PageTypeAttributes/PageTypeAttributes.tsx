@@ -83,6 +83,7 @@ const PageTypeAttributes: React.FC<PageTypeAttributesProps> = props => {
     <Card data-test="page-attributes">
       <CardTitle
         title={intl.formatMessage({
+          id: "iQxjow",
           defaultMessage: "Content Attributes",
           description: "section header"
         })}
@@ -94,6 +95,7 @@ const PageTypeAttributes: React.FC<PageTypeAttributesProps> = props => {
             data-test-id="assignAttributes"
           >
             <FormattedMessage
+              id="uxPpRx"
               defaultMessage="Assign attribute"
               description="button"
             />
@@ -119,10 +121,11 @@ const PageTypeAttributes: React.FC<PageTypeAttributesProps> = props => {
             toolbar={toolbar}
           >
             <TableCell className={classes.colName}>
-              <FormattedMessage defaultMessage="Attribute name" />
+              <FormattedMessage id="kTr2o8" defaultMessage="Attribute name" />
             </TableCell>
             <TableCell className={classes.colName}>
               <FormattedMessage
+                id="nf3XSt"
                 defaultMessage="Slug"
                 description="attribute internal name"
               />
@@ -180,7 +183,10 @@ const PageTypeAttributes: React.FC<PageTypeAttributesProps> = props => {
             () => (
               <TableRow>
                 <TableCell colSpan={numberOfColumns}>
-                  <FormattedMessage defaultMessage="No attributes found" />
+                  <FormattedMessage
+                    id="ztQgD8"
+                    defaultMessage="No attributes found"
+                  />
                 </TableCell>
               </TableRow>
             )

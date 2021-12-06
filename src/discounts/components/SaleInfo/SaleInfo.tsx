@@ -39,6 +39,7 @@ const SaleInfo: React.FC<SaleInfoProps> = ({
           name={"name" as keyof SaleDetailsPageFormData}
           onChange={onChange}
           label={intl.formatMessage({
+            id: "F56hOz",
             defaultMessage: "Name",
             description: "sale name"
           })}

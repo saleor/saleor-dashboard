@@ -42,6 +42,7 @@ export const CategoryDetailsForm: React.FC<CategoryDetailsFormProps> = ({
         <div>
           <TextField
             label={intl.formatMessage({
+              id: "vEYtiq",
               defaultMessage: "Category Name"
             })}
             name="name"
@@ -60,6 +61,7 @@ export const CategoryDetailsForm: React.FC<CategoryDetailsFormProps> = ({
           error={!!formErrors.description}
           helperText={getProductErrorMessage(formErrors.description, intl)}
           label={intl.formatMessage({
+            id: "8HRy+U",
             defaultMessage: "Category Description"
           })}
           name="description"

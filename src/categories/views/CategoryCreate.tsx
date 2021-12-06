@@ -34,6 +34,7 @@ export const CategoryCreateView: React.FC<CategoryCreateViewProps> = ({
       notify({
         status: "success",
         text: intl.formatMessage({
+          id: "xl7Fag",
           defaultMessage: "Category created"
         })
       });
@@ -73,6 +74,7 @@ export const CategoryCreateView: React.FC<CategoryCreateViewProps> = ({
     <>
       <WindowTitle
         title={intl.formatMessage({
+          id: "Irflxf",
           defaultMessage: "Create category",
           description: "window title"
         })}

@@ -14,14 +14,17 @@ export interface StaffListFilterOpts {
 
 const messages = defineMessages({
   active: {
+    id: "HR9OTW",
     defaultMessage: "Active",
     description: "staff member's account"
   },
   deactivated: {
+    id: "Fc3O3r",
     defaultMessage: "Deactivated",
     description: "staff member's account"
   },
   status: {
+    id: "utaSh3",
     defaultMessage: "Status",
     description: "staff member's account"
   }

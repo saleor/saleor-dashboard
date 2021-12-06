@@ -108,6 +108,7 @@ const LanguageSwitch: React.FC<LanguageSwitchProps> = props => {
                       }}
                     >
                       <FormattedMessage
+                        id="62T585"
                         defaultMessage="{languageName} - {languageCode}"
                         description="button"
                         values={{

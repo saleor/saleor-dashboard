@@ -142,6 +142,7 @@ export const WeightRatesCreate: React.FC<WeightRatesCreateProps> = ({
           onClose={handleChannelsModalClose}
           open={isChannelsModalOpen}
           title={intl.formatMessage({
+            id: "eR3vfw",
             defaultMessage: "Manage Channels Availability"
           })}
           confirmButtonState="default"

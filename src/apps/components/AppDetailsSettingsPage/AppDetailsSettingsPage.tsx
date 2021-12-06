@@ -66,7 +66,11 @@ export const AppDetailsSettingsPage: React.FC<AppDetailsSettingsPageProps> = ({
             variant="contained"
             color="primary"
           >
-            <FormattedMessage defaultMessage="Dashboard" description="button" />
+            <FormattedMessage
+              id="2X33E9"
+              defaultMessage="Dashboard"
+              description="button"
+            />
           </Button>
           <Button
             href={data?.homepageUrl}
@@ -75,7 +79,11 @@ export const AppDetailsSettingsPage: React.FC<AppDetailsSettingsPageProps> = ({
             data-tc="open-app"
             target="_blank"
           >
-            <FormattedMessage defaultMessage="My App" description="button" />
+            <FormattedMessage
+              id="mATKA1"
+              defaultMessage="My App"
+              description="button"
+            />
           </Button>
           <Button
             href={data?.supportUrl}
@@ -85,6 +93,7 @@ export const AppDetailsSettingsPage: React.FC<AppDetailsSettingsPageProps> = ({
             target="_blank"
           >
             <FormattedMessage
+              id="hdcGSJ"
               defaultMessage="Support/FAQ"
               description="button"
             />

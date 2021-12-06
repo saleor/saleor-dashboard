@@ -37,6 +37,7 @@ const SaleValueTextField: React.FC<SaleValueTextFieldProps> = ({
         onChange(id, e.target.value);
       }}
       label={intl.formatMessage({
+        id: "x3g4Ry",
         defaultMessage: "Discount Value",
         description: "sale discount"
       })}

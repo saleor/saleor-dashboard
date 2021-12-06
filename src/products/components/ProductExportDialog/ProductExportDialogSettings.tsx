@@ -54,6 +54,7 @@ const ProductExportDialogSettings: React.FC<ProductExportDialogSettingsProps> = 
     {
       label: intl.formatMessage(
         {
+          id: "A3vscs",
           defaultMessage: "All products ({number})",
           description: "export all products to csv file"
         },
@@ -67,6 +68,7 @@ const ProductExportDialogSettings: React.FC<ProductExportDialogSettingsProps> = 
       disabled: selectedProducts === 0,
       label: intl.formatMessage(
         {
+          id: "rpWd01",
           defaultMessage: "Selected products ({number})",
           description: "export selected products to csv file"
         },
@@ -79,6 +81,7 @@ const ProductExportDialogSettings: React.FC<ProductExportDialogSettingsProps> = 
     {
       label: intl.formatMessage(
         {
+          id: "NSLOzz",
           defaultMessage: "Current search ({number})",
           description: "export filtered products to csv file"
         },
@@ -95,6 +98,7 @@ const ProductExportDialogSettings: React.FC<ProductExportDialogSettingsProps> = 
   >> = [
     {
       label: intl.formatMessage({
+        id: "WvBKlP",
         defaultMessage: "Spreadsheet for Excel, Numbers etc.",
         description: "export products as spreadsheet"
       }),
@@ -102,6 +106,7 @@ const ProductExportDialogSettings: React.FC<ProductExportDialogSettingsProps> = 
     },
     {
       label: intl.formatMessage({
+        id: "GEaa/6",
         defaultMessage: "Plain CSV file",
         description: "export products as csv file"
       }),
@@ -116,6 +121,7 @@ const ProductExportDialogSettings: React.FC<ProductExportDialogSettingsProps> = 
         error={!!formErrors.scope}
         hint={getExportErrorMessage(formErrors.scope, intl)}
         label={intl.formatMessage({
+          id: "Q91GFo",
           defaultMessage: "Export information for:",
           description: "export products to csv file, choice field label"
         })}
@@ -129,6 +135,7 @@ const ProductExportDialogSettings: React.FC<ProductExportDialogSettingsProps> = 
         error={!!formErrors.fileType}
         hint={getExportErrorMessage(formErrors.fileType, intl)}
         label={intl.formatMessage({
+          id: "OWdFaj",
           defaultMessage: "Export as:",
           description: "export products as csv or spreadsheet file"
         })}

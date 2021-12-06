@@ -79,6 +79,7 @@ export const ChannelForm: React.FC<ChannelFormProps> = ({
             disabled={disabled}
             fullWidth
             label={intl.formatMessage({
+              id: "UymotP",
               defaultMessage: "Channel name",
               description: "channel name"
             })}
@@ -98,6 +99,7 @@ export const ChannelForm: React.FC<ChannelFormProps> = ({
               } as ExtendedFormHelperTextProps
             }
             label={intl.formatMessage({
+              id: "74Zo/H",
               defaultMessage: "Slug",
               description: "channel slug"
             })}
@@ -114,11 +116,13 @@ export const ChannelForm: React.FC<ChannelFormProps> = ({
                 >
                   {copied ? (
                     <FormattedMessage
+                      id="r86alc"
                       defaultMessage="Copied"
                       description="button"
                     />
                   ) : (
                     <FormattedMessage
+                      id="ZhaXLU"
                       defaultMessage="Copy"
                       description="button"
                     />
@@ -134,6 +138,7 @@ export const ChannelForm: React.FC<ChannelFormProps> = ({
       <Card>
         <CardTitle
           title={intl.formatMessage({
+            id: "3y4r+z",
             defaultMessage: "Channel Settings",
             description: "channel settings"
           })}
@@ -155,6 +160,7 @@ export const ChannelForm: React.FC<ChannelFormProps> = ({
               )}
               disabled={disabled}
               label={intl.formatMessage({
+                id: "9Sz0By",
                 defaultMessage: "Currency",
                 description: "channel currency"
               })}
@@ -168,6 +174,7 @@ export const ChannelForm: React.FC<ChannelFormProps> = ({
             <>
               <Typography variant="caption" className={classes.label}>
                 <FormattedMessage
+                  id="39yi8w"
                   defaultMessage="Selected currency"
                   description="selected currency"
                 />
@@ -190,6 +197,7 @@ export const ChannelForm: React.FC<ChannelFormProps> = ({
             )}
             disabled={disabled}
             label={intl.formatMessage({
+              id: "tV+Dcm",
               defaultMessage: "Default country"
             })}
             choices={countries}

@@ -157,6 +157,7 @@ export const ProductCreateView: React.FC<ProductCreateProps> = ({ params }) => {
     notify({
       status: "success",
       text: intl.formatMessage({
+        id: "DO8+uV",
         defaultMessage: "Product created"
       })
     });
@@ -273,6 +274,7 @@ export const ProductCreateView: React.FC<ProductCreateProps> = ({ params }) => {
     <>
       <WindowTitle
         title={intl.formatMessage({
+          id: "PXx4Jk",
           defaultMessage: "Create Product",
           description: "window title"
         })}
@@ -285,6 +287,7 @@ export const ProductCreateView: React.FC<ProductCreateProps> = ({ params }) => {
           onClose={handleChannelsModalClose}
           open={isChannelsModalOpen}
           title={intl.formatMessage({
+            id: "Eau5AV",
             defaultMessage: "Manage Products Channel Availability"
           })}
           confirmButtonState="default"
@@ -316,6 +319,7 @@ export const ProductCreateView: React.FC<ProductCreateProps> = ({ params }) => {
         fetchProductTypes={searchProductTypes}
         fetchAttributeValues={searchAttributeValues}
         header={intl.formatMessage({
+          id: "NBP8uu",
           defaultMessage: "New Product",
           description: "page header"
         })}

@@ -309,6 +309,7 @@ export const PriceRatesUpdate: React.FC<PriceRatesUpdateProps> = ({
           onClose={handleChannelsModalClose}
           open={isChannelsModalOpen}
           title={intl.formatMessage({
+            id: "EM730i",
             defaultMessage: "Manage Channel Availability"
           })}
           selected={channelListElements.length}
@@ -387,6 +388,7 @@ export const PriceRatesUpdate: React.FC<PriceRatesUpdateProps> = ({
         toolbar={
           <Button color="primary" onClick={() => openModal("unassign-product")}>
             <FormattedMessage
+              id="YdeHZX"
               defaultMessage="Unassign"
               description="unassign products from shipping method, button"
             />

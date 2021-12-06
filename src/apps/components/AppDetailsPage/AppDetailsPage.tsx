@@ -57,7 +57,11 @@ export const AppDetailsPage: React.FC<AppDetailsPageProps> = ({
           data-tc="open-app"
           target="_blank"
         >
-          <FormattedMessage defaultMessage="Open App" description="button" />
+          <FormattedMessage
+            id="HtfL5/"
+            defaultMessage="Open App"
+            description="button"
+          />
         </Button>
       </PageHeader>
       <div className={classes.appHeader}>
@@ -70,6 +74,7 @@ export const AppDetailsPage: React.FC<AppDetailsPageProps> = ({
             >
               <img src={supportIcon} alt="" />
               <FormattedMessage
+                id="Gjb6eq"
                 defaultMessage="Get Support"
                 description="link"
               />
@@ -82,6 +87,7 @@ export const AppDetailsPage: React.FC<AppDetailsPageProps> = ({
               <img src={settingsIcon} alt="" />
 
               <FormattedMessage
+                id="89PSdB"
                 defaultMessage="Edit settings"
                 description="link"
               />
@@ -96,11 +102,13 @@ export const AppDetailsPage: React.FC<AppDetailsPageProps> = ({
               <img src={activateIcon} alt="" />
               {data?.isActive ? (
                 <FormattedMessage
+                  id="whTEcF"
                   defaultMessage="Deactivate"
                   description="link"
                 />
               ) : (
                 <FormattedMessage
+                  id="P5twxk"
                   defaultMessage="Activate"
                   description="link"
                 />
@@ -116,6 +124,7 @@ export const AppDetailsPage: React.FC<AppDetailsPageProps> = ({
       <Card>
         <CardTitle
           title={intl.formatMessage({
+            id: "jDIRQV",
             defaultMessage: "About this app",
             description: "section header"
           })}
@@ -128,6 +137,7 @@ export const AppDetailsPage: React.FC<AppDetailsPageProps> = ({
       <Card>
         <CardTitle
           title={intl.formatMessage({
+            id: "VsGcdP",
             defaultMessage: "App permissions",
             description: "section header"
           })}
@@ -137,6 +147,7 @@ export const AppDetailsPage: React.FC<AppDetailsPageProps> = ({
             <>
               <Typography>
                 <FormattedMessage
+                  id="7oQUMG"
                   defaultMessage="This app has permissions to:"
                   description="apps about permissions"
                 />
@@ -159,6 +170,7 @@ export const AppDetailsPage: React.FC<AppDetailsPageProps> = ({
       <Card>
         <CardTitle
           title={intl.formatMessage({
+            id: "a55zOn",
             defaultMessage: "Data privacy",
             description: "section header"
           })}
@@ -173,6 +185,7 @@ export const AppDetailsPage: React.FC<AppDetailsPageProps> = ({
                 target="_blank"
               >
                 <FormattedMessage
+                  id="Go50v2"
                   defaultMessage="View this app’s privacy policy"
                   description="app privacy policy link"
                 />

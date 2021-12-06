@@ -24,6 +24,7 @@ const ResetPasswordView: React.FC = () => {
       if (data.requestPasswordReset.errors.find(err => err.field === "email")) {
         setError(
           intl.formatMessage({
+            id: "C0JLNW",
             defaultMessage:
               "Provided email address does not exist in our database."
           })

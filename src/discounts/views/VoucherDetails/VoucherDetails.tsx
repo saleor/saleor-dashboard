@@ -163,6 +163,7 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
       notify({
         status: "success",
         text: intl.formatMessage({
+          id: "MiYkuJ",
           defaultMessage: "Deleted voucher"
         })
       });
@@ -215,6 +216,7 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
           onClose={handleChannelsModalClose}
           open={isChannelsModalOpen}
           title={intl.formatMessage({
+            id: "EM730i",
             defaultMessage: "Manage Channel Availability"
           })}
           selected={channelListElements.length}
@@ -397,9 +399,9 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
                                 }
                               >
                                 <FormattedMessage
+                                  id="i18B1c"
                                   defaultMessage="Unassign"
                                   description="unassign category from voucher, button"
-                                  id="voucherDetailsUnassignCategory"
                                 />
                               </Button>
                             }
@@ -413,9 +415,9 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
                                 }
                               >
                                 <FormattedMessage
+                                  id="W6nRwB"
                                   defaultMessage="Unassign"
                                   description="unassign collection from voucher, button"
-                                  id="voucherDetailsUnassignCollection"
                                 />
                               </Button>
                             }
@@ -429,9 +431,9 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
                                 }
                               >
                                 <FormattedMessage
+                                  id="Gw7glu"
                                   defaultMessage="Unassign"
                                   description="unassign product from voucher, button"
-                                  id="voucherDetailsUnassignProduct"
                                 />
                               </Button>
                             }
@@ -551,6 +553,7 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
                               canOpenBulkActionDialog
                             }
                             title={intl.formatMessage({
+                              id: "LOSNq0",
                               defaultMessage:
                                 "Unassign Categories From Voucher",
                               description: "dialog header"
@@ -566,6 +569,7 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
                             {canOpenBulkActionDialog && (
                               <DialogContentText>
                                 <FormattedMessage
+                                  id="GiJm1v"
                                   defaultMessage="{counter,plural,one{Are you sure you want to unassign this category?} other{Are you sure you want to unassign {displayQuantity} categories?}}"
                                   description="dialog content"
                                   values={{
@@ -584,6 +588,7 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
                               canOpenBulkActionDialog
                             }
                             title={intl.formatMessage({
+                              id: "MmGlkp",
                               defaultMessage:
                                 "Unassign Collections From Voucher",
                               description: "dialog header"
@@ -599,6 +604,7 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
                             {canOpenBulkActionDialog && (
                               <DialogContentText>
                                 <FormattedMessage
+                                  id="UjoSZB"
                                   defaultMessage="{counter,plural,one{Are you sure you want to unassign this collection?} other{Are you sure you want to unassign {displayQuantity} collections?}}"
                                   description="dialog content"
                                   values={{
@@ -617,6 +623,7 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
                               canOpenBulkActionDialog
                             }
                             title={intl.formatMessage({
+                              id: "cKCfSW",
                               defaultMessage: "Unassign Products From Voucher",
                               description: "dialog header"
                             })}
@@ -629,6 +636,7 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
                             {canOpenBulkActionDialog && (
                               <DialogContentText>
                                 <FormattedMessage
+                                  id="AHK0K9"
                                   defaultMessage="{counter,plural,one{Are you sure you want to unassign this product?} other{Are you sure you want to unassign {displayQuantity} products?}}"
                                   description="dialog content"
                                   values={{
@@ -644,6 +652,7 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
                           <ActionDialog
                             open={params.action === "remove"}
                             title={intl.formatMessage({
+                              id: "Hgz44z",
                               defaultMessage: "Delete Voucher",
                               description: "dialog header"
                             })}
@@ -658,6 +667,7 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
                           >
                             <DialogContentText>
                               <FormattedMessage
+                                id="NEJo1I"
                                 defaultMessage="Are you sure you want to delete {voucherCode}?"
                                 description="dialog content"
                                 values={{

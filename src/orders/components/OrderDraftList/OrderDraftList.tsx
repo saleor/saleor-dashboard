@@ -110,7 +110,7 @@ export const OrderDraftList: React.FC<OrderDraftListProps> = props => {
           onClick={() => onSort(OrderDraftListUrlSortField.number)}
           className={classes.colNumber}
         >
-          <FormattedMessage defaultMessage="No. of Order" />
+          <FormattedMessage id="ps0WUQ" defaultMessage="No. of Order" />
         </TableCellHeader>
         <TableCellHeader
           direction={
@@ -122,6 +122,7 @@ export const OrderDraftList: React.FC<OrderDraftListProps> = props => {
           className={classes.colDate}
         >
           <FormattedMessage
+            id="mCP0UD"
             defaultMessage="Date"
             description="order draft creation date"
           />
@@ -135,10 +136,11 @@ export const OrderDraftList: React.FC<OrderDraftListProps> = props => {
           onClick={() => onSort(OrderDraftListUrlSortField.customer)}
           className={classes.colCustomer}
         >
-          <FormattedMessage defaultMessage="Customer" />
+          <FormattedMessage id="hkENym" defaultMessage="Customer" />
         </TableCellHeader>
         <TableCellHeader textAlign="right" className={classes.colTotal}>
           <FormattedMessage
+            id="1Uj0Wd"
             defaultMessage="Total"
             description="order draft total price"
           />
@@ -222,7 +224,10 @@ export const OrderDraftList: React.FC<OrderDraftListProps> = props => {
           () => (
             <TableRow>
               <TableCell colSpan={numberOfColumns}>
-                <FormattedMessage defaultMessage="No draft orders found" />
+                <FormattedMessage
+                  id="KIh25E"
+                  defaultMessage="No draft orders found"
+                />
               </TableCell>
             </TableRow>
           )

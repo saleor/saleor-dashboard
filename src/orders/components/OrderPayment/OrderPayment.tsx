@@ -108,6 +108,7 @@ const OrderPayment: React.FC<OrderPaymentProps> = props => {
             <tr>
               <td>
                 <FormattedMessage
+                  id="T8rvXs"
                   defaultMessage="Subtotal"
                   description="order subtotal price"
                 />
@@ -117,6 +118,7 @@ const OrderPayment: React.FC<OrderPaymentProps> = props => {
                   <Skeleton />
                 ) : (
                   <FormattedMessage
+                    id="pr513b"
                     defaultMessage="{quantity} items"
                     description="ordered products"
                     values={{
@@ -137,21 +139,22 @@ const OrderPayment: React.FC<OrderPaymentProps> = props => {
             </tr>
             <tr>
               <td>
-                <FormattedMessage defaultMessage="Taxes" />
+                <FormattedMessage id="r+dgiv" defaultMessage="Taxes" />
               </td>
               <td>
                 {maybe(() => order.total.tax) === undefined ? (
                   <Skeleton />
                 ) : order.total.tax.amount > 0 ? (
                   intl.formatMessage({
+                    id: "dJVXIb",
                     defaultMessage: "VAT included",
                     description: "vat included in order price"
                   })
                 ) : (
                   intl.formatMessage({
+                    id: "5Jo3C5",
                     defaultMessage: "does not apply",
-                    description: "vat not included in order price",
-                    id: "orderPaymentVATDoesNotApply"
+                    description: "vat not included in order price"
                   })
                 )}
               </td>
@@ -166,6 +169,7 @@ const OrderPayment: React.FC<OrderPaymentProps> = props => {
             <tr>
               <td>
                 <FormattedMessage
+                  id="+CeEe3"
                   defaultMessage="Shipping"
                   description="order shipping method name"
                 />
@@ -183,6 +187,7 @@ const OrderPayment: React.FC<OrderPaymentProps> = props => {
               <tr>
                 <td>
                   <FormattedMessage
+                    id="u0S2be"
                     defaultMessage="Discount"
                     description="order discount"
                   />
@@ -190,11 +195,13 @@ const OrderPayment: React.FC<OrderPaymentProps> = props => {
                 <td>
                   {discount.type === OrderDiscountType.MANUAL ? (
                     <FormattedMessage
+                      id="QJG+d/"
                       defaultMessage="Staff added"
                       description="staff added type order discount"
                     />
                   ) : (
                     <FormattedMessage
+                      id="sEjRyz"
                       defaultMessage="Voucher"
                       description="voucher type order discount"
                     />
@@ -208,6 +215,7 @@ const OrderPayment: React.FC<OrderPaymentProps> = props => {
             <tr className={classes.totalRow}>
               <td>
                 <FormattedMessage
+                  id="zb4eBO"
                   defaultMessage="Total"
                   description="order total price"
                 />
@@ -232,6 +240,7 @@ const OrderPayment: React.FC<OrderPaymentProps> = props => {
               <tr>
                 <td>
                   <FormattedMessage
+                    id="vM9quW"
                     defaultMessage="Paid with Gift Card"
                     description="order payment"
                   />
@@ -249,6 +258,7 @@ const OrderPayment: React.FC<OrderPaymentProps> = props => {
             <tr>
               <td>
                 <FormattedMessage
+                  id="uUsZ7m"
                   defaultMessage="Preauthorized amount"
                   description="order payment"
                 />
@@ -264,6 +274,7 @@ const OrderPayment: React.FC<OrderPaymentProps> = props => {
             <tr>
               <td>
                 <FormattedMessage
+                  id="V+gwx7"
                   defaultMessage="Captured amount"
                   description="order payment"
                 />
@@ -279,6 +290,7 @@ const OrderPayment: React.FC<OrderPaymentProps> = props => {
             <tr>
               <td>
                 <FormattedMessage
+                  id="q+gCyP"
                   defaultMessage="Refunded amount"
                   description="order payment"
                 />
@@ -294,6 +306,7 @@ const OrderPayment: React.FC<OrderPaymentProps> = props => {
             <tr className={classes.totalRow}>
               <td>
                 <FormattedMessage
+                  id="5te3Tp"
                   defaultMessage="Outstanding Balance"
                   description="order payment"
                 />
@@ -317,6 +330,7 @@ const OrderPayment: React.FC<OrderPaymentProps> = props => {
               {canCapture && (
                 <Button color="primary" variant="text" onClick={onCapture}>
                   <FormattedMessage
+                    id="BZ7BkQ"
                     defaultMessage="Capture"
                     description="capture payment, button"
                   />
@@ -330,6 +344,7 @@ const OrderPayment: React.FC<OrderPaymentProps> = props => {
                   data-test-id="refund-button"
                 >
                   <FormattedMessage
+                    id="HaQ8cg"
                     defaultMessage="Refund"
                     description="button"
                   />
@@ -338,6 +353,7 @@ const OrderPayment: React.FC<OrderPaymentProps> = props => {
               {canVoid && (
                 <Button color="primary" variant="text" onClick={onVoid}>
                   <FormattedMessage
+                    id="ttOhRi"
                     defaultMessage="Void"
                     description="void payment, button"
                   />
@@ -346,6 +362,7 @@ const OrderPayment: React.FC<OrderPaymentProps> = props => {
               {canMarkAsPaid && (
                 <Button color="primary" variant="text" onClick={onMarkAsPaid}>
                   <FormattedMessage
+                    id="+5HkZN"
                     defaultMessage="Mark as paid"
                     description="order, button"
                   />

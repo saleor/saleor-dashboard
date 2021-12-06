@@ -66,10 +66,12 @@ const MetadataCard: React.FC<MetadataCardProps> = ({
         title={
           isPrivate
             ? intl.formatMessage({
+                id: "ETHnjq",
                 defaultMessage: "Private Metadata",
                 description: "header"
               })
             : intl.formatMessage({
+                id: "VcI+Zh",
                 defaultMessage: "Metadata",
                 description: "header"
               })
@@ -86,6 +88,7 @@ const MetadataCard: React.FC<MetadataCardProps> = ({
               <div className={classes.togglable}>
                 <Typography color="textSecondary" variant="body2">
                   <FormattedMessage
+                    id="cSbZKV"
                     defaultMessage="{number,plural,one{{number} Field} other{{number} Fields}}"
                     description="number of metadata fields in model"
                     values={{
@@ -110,11 +113,13 @@ const MetadataCard: React.FC<MetadataCardProps> = ({
                   <Typography color="textSecondary">
                     {isPrivate ? (
                       <FormattedMessage
+                        id="CqestX"
                         defaultMessage="There is no private metadata created for this element."
                         description="empty metadata text"
                       />
                     ) : (
                       <FormattedMessage
+                        id="MEajfd"
                         defaultMessage="There is no metadata created for this element."
                         description="empty metadata text"
                       />
@@ -123,6 +128,7 @@ const MetadataCard: React.FC<MetadataCardProps> = ({
 
                   <Typography color="textSecondary">
                     <FormattedMessage
+                      id="BM+zfY"
                       defaultMessage="Use the button below to add new metadata field"
                       description="empty metadata text"
                     />
@@ -134,18 +140,21 @@ const MetadataCard: React.FC<MetadataCardProps> = ({
                     <TableRow>
                       <TableCell className={classes.colNameHeader}>
                         <FormattedMessage
+                          id="nudPsY"
                           defaultMessage="Field"
                           description="metadata field name, header"
                         />
                       </TableCell>
                       <TableCell className={classes.colValue}>
                         <FormattedMessage
+                          id="LkuDEb"
                           defaultMessage="Value"
                           description="metadata field value, header"
                         />
                       </TableCell>
                       <TableCell className={classes.colActionHeader}>
                         <FormattedMessage
+                          id="nEixpu"
                           defaultMessage="Actions"
                           description="table action"
                         />
@@ -218,6 +227,7 @@ const MetadataCard: React.FC<MetadataCardProps> = ({
                   }
                 >
                   <FormattedMessage
+                    id="GiDxS4"
                     defaultMessage="Add Field"
                     description="add metadata field,button"
                   />

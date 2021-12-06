@@ -31,6 +31,7 @@ export const AppDetailsSettings: React.FC<AppDetailsSetttingsProps> = ({
         notify({
           status: "error",
           text: intl.formatMessage({
+            id: "ac+Y98",
             defaultMessage: "Failed to fetch app settings",
             description: "app settings error"
           })

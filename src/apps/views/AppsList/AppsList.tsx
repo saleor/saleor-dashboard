@@ -119,12 +119,14 @@ export const AppsList: React.FC<AppsListProps> = ({ params }) => {
       status: "success",
       text: intl.formatMessage(
         {
+          id: "ZprV2g",
           defaultMessage: "{name} is ready to be used",
           description: "app has been installed"
         },
         { name }
       ),
       title: intl.formatMessage({
+        id: "0fM/pV",
         defaultMessage: "App installed",
         description: "message title"
       })
@@ -211,6 +213,7 @@ export const AppsList: React.FC<AppsListProps> = ({ params }) => {
             text: item.message,
             title: intl.formatMessage(
               {
+                id: "5t/4um",
                 defaultMessage: "Couldn’t Install {name}",
                 description: "message title"
               },
@@ -251,6 +254,7 @@ export const AppsList: React.FC<AppsListProps> = ({ params }) => {
     notify({
       status: "success",
       text: intl.formatMessage({
+        id: "uIPD1i",
         defaultMessage: "App successfully removed",
         description: "app has been removed"
       })

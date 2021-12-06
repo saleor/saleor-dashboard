@@ -31,6 +31,7 @@ const VoucherTypes = ({
   const voucherTypeChoices = [
     {
       label: intl.formatMessage({
+        id: "vXFPD6",
         defaultMessage: "Fixed Amount",
         description: "voucher discount type"
       }),
@@ -38,6 +39,7 @@ const VoucherTypes = ({
     },
     {
       label: intl.formatMessage({
+        id: "fEfCtO",
         defaultMessage: "Percentage",
         description: "voucher discount type"
       }),
@@ -45,6 +47,7 @@ const VoucherTypes = ({
     },
     {
       label: intl.formatMessage({
+        id: "sS5aVm",
         defaultMessage: "Free Shipping",
         description: "voucher discount type"
       }),
@@ -56,6 +59,7 @@ const VoucherTypes = ({
     <Card>
       <CardTitle
         title={intl.formatMessage({
+          id: "6cq+c+",
           defaultMessage: "Discount Type",
           description: "header"
         })}

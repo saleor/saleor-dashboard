@@ -89,6 +89,7 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ id, params }) => {
         notify({
           status: "success",
           text: intl.formatMessage({
+            id: "V/VAHG",
             defaultMessage: "Attribute deleted"
           })
         });
@@ -106,6 +107,7 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ id, params }) => {
         notify({
           status: "success",
           text: intl.formatMessage({
+            id: "7H2D5m",
             defaultMessage: "Value deleted",
             description: "attribute value deleted"
           })
@@ -150,6 +152,7 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ id, params }) => {
         notify({
           status: "success",
           text: intl.formatMessage({
+            id: "xVn5B0",
             defaultMessage: "Added new value",
             description: "added new attribute value"
           })

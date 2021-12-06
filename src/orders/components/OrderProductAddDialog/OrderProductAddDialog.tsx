@@ -253,6 +253,7 @@ const OrderProductAddDialog: React.FC<OrderProductAddDialogProps> = props => {
     >
       <DialogTitle>
         <FormattedMessage
+          id="myyWNp"
           defaultMessage="Add Product"
           description="dialog header"
         />
@@ -263,9 +264,11 @@ const OrderProductAddDialog: React.FC<OrderProductAddDialogProps> = props => {
           value={query}
           onChange={onQueryChange}
           label={intl.formatMessage({
+            id: "/TF6BZ",
             defaultMessage: "Search Products"
           })}
           placeholder={intl.formatMessage({
+            id: "SHm7ee",
             defaultMessage:
               "Search by product name, attribute, product type etc..."
           })}
@@ -355,6 +358,7 @@ const OrderProductAddDialog: React.FC<OrderProductAddDialogProps> = props => {
                             {variant.sku && (
                               <div className={classes.grayText}>
                                 <FormattedMessage
+                                  id="+HuipK"
                                   defaultMessage="SKU {sku}"
                                   description="variant sku"
                                   values={{
@@ -376,7 +380,10 @@ const OrderProductAddDialog: React.FC<OrderProductAddDialogProps> = props => {
                 () => (
                   <TableRow>
                     <TableCell colSpan={4}>
-                      <FormattedMessage defaultMessage="No products available in order channel matching given query" />
+                      <FormattedMessage
+                        id="WQnltU"
+                        defaultMessage="No products available in order channel matching given query"
+                      />
                     </TableCell>
                   </TableRow>
                 )

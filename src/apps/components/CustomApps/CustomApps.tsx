@@ -48,6 +48,7 @@ const CustomApps: React.FC<CustomAppsProps> = ({
                   data-test-id="createApp"
                 >
                   <FormattedMessage
+                    id="XB2Jj9"
                     defaultMessage="Create App"
                     description="create app button"
                   />
@@ -105,6 +106,7 @@ const CustomApps: React.FC<CustomAppsProps> = ({
               <TableCell className={classes.colName}>
                 <Typography className={classes.text} variant="body2">
                   <FormattedMessage
+                    id="WGD+fL"
                     defaultMessage="Your custom created apps will be shown here."
                     description="custom apps content"
                   />

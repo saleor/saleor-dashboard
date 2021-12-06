@@ -52,6 +52,7 @@ export const ChannelsList: React.FC<ChannelsListProps> = ({ params }) => {
       notify({
         status: "success",
         text: intl.formatMessage({
+          id: "AkyGP2",
           defaultMessage: "Channel deleted"
         })
       });

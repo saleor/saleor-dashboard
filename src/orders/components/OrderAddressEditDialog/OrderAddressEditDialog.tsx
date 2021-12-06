@@ -87,10 +87,12 @@ const OrderAddressEditDialog: React.FC<OrderAddressEditDialogProps> = props => {
               <DialogTitle>
                 {variant === "billing"
                   ? intl.formatMessage({
+                      id: "iSsCpH",
                       defaultMessage: "Edit Billing Address",
                       description: "dialog header"
                     })
                   : intl.formatMessage({
+                      id: "jF+oTo",
                       defaultMessage: "Edit Shipping Address",
                       description: "dialog header"
                     })}

@@ -19,9 +19,9 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ user }) => {
       <PageHeader
         title={intl.formatMessage(
           {
+            id: "By5ZBp",
             defaultMessage: "Hello there, {userName}",
-            description: "header",
-            id: "homeScreenHeader"
+            description: "header"
           },
           { userName: user.email }
         )}
@@ -29,22 +29,22 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ user }) => {
       <Card>
         <CardTitle
           title={intl.formatMessage({
+            id: "6L6Fy2",
             defaultMessage: "Disclaimer",
-            description: "header",
-            id: "homeScreenDisclaimer"
+            description: "header"
           })}
         />
         <CardContent>
           <Typography>
             <FormattedMessage
+              id="5LRkEs"
               defaultMessage="The new dashboard and the GraphQL API are preview-quality software."
-              id="homeScreenDisclaimerText1"
             />
           </Typography>
           <Typography>
             <FormattedMessage
+              id="G7mu0y"
               defaultMessage="The GraphQL API is beta quality. It is not fully optimized and some mutations or queries may be missing."
-              id="homeScreenDisclaimerText2"
             />
           </Typography>
         </CardContent>

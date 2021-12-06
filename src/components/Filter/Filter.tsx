@@ -150,7 +150,11 @@ const Filter: React.FC<FilterProps> = props => {
           data-test-id="show-filters-button"
         >
           <Typography className={classes.addFilterText}>
-            <FormattedMessage defaultMessage="Filters" description="button" />
+            <FormattedMessage
+              id="FNpv6K"
+              defaultMessage="Filters"
+              description="button"
+            />
           </Typography>
           {isFilterActive && (
             <>

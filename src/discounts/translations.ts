@@ -4,14 +4,17 @@ import { VoucherTypeEnum } from "../types/globalTypes";
 
 const messages = defineMessages({
   order: {
+    id: "bP7ZLP",
     defaultMessage: "Entire order",
     description: "voucher discount"
   },
   products: {
+    id: "45zP+r",
     defaultMessage: "Specific products",
     description: "voucher discount"
   },
   shipment: {
+    id: "WasHjQ",
     defaultMessage: "Shipment",
     description: "voucher discount"
   }

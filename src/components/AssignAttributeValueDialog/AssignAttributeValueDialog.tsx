@@ -8,14 +8,17 @@ import AssignContainerDialog, {
 
 const messages = defineMessages({
   header: {
+    id: "GUlwXU",
     defaultMessage: "Assign Attribute Value",
     description: "dialog header"
   },
   searchLabel: {
+    id: "RoKOQJ",
     defaultMessage: "Search Attribute Value",
     description: "label"
   },
   searchPlaceholder: {
+    id: "NsgWhZ",
     defaultMessage: "Search by value name, etc...",
     description: "placeholder"
   }

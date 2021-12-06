@@ -10,6 +10,7 @@ import { ShippingZonesProps } from "./types";
 
 const messages = defineMessages({
   addZoneTitle: {
+    id: "8CbACQ",
     defaultMessage: "Add Shipping Zones",
     description: "add shipping zone title"
   }

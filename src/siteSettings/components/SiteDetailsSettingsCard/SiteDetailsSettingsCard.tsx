@@ -40,11 +40,13 @@ const SiteDetailsSettingsCard: React.FC<SiteDetailsSettingsCardProps> = ({
           fullWidth
           name="name"
           label={intl.formatMessage({
+            id: "jA7MDD",
             defaultMessage: "Name of your store"
           })}
           helperText={
             getShopErrorMessage(formErrors.name, intl) ||
             intl.formatMessage({
+              id: "Nz24W4",
               defaultMessage:
                 "Name of your store is shown on tab in web browser"
             })
@@ -64,6 +66,7 @@ const SiteDetailsSettingsCard: React.FC<SiteDetailsSettingsCardProps> = ({
           fullWidth
           name="domain"
           label={intl.formatMessage({
+            id: "U7jtzn",
             defaultMessage: "Store domain"
           })}
           helperText={getShopErrorMessage(formErrors.domain, intl)}
@@ -83,11 +86,13 @@ const SiteDetailsSettingsCard: React.FC<SiteDetailsSettingsCardProps> = ({
           fullWidth
           name="description"
           label={intl.formatMessage({
+            id: "dO3Zcx",
             defaultMessage: "Store description"
           })}
           helperText={
             getShopErrorMessage(formErrors.description, intl) ||
             intl.formatMessage({
+              id: "HXsmnA",
               defaultMessage:
                 "Store description is shown on taskbar after your store name"
             })

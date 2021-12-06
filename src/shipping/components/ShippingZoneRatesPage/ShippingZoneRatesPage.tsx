@@ -133,7 +133,7 @@ export const ShippingZoneRatesPage: React.FC<ShippingZoneRatesPageProps> = ({
         return (
           <Container>
             <Backlink onClick={onBack}>
-              <FormattedMessage defaultMessage="Shipping" />
+              <FormattedMessage id="PRlD0A" defaultMessage="Shipping" />
             </Backlink>
             <PageHeader title={rate?.name} />
             <Grid>

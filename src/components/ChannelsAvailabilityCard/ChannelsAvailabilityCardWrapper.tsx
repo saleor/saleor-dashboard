@@ -30,6 +30,7 @@ export const ChannelsAvailabilityWrapper: React.FC<ChannelsAvailabilityWrapperPr
   const { user } = useUser();
   const channelsAvailabilityText = intl.formatMessage(
     {
+      id: "vY2lpx",
       defaultMessage:
         "Available at {selectedChannelsCount} out of {allChannelsCount, plural, one {# channel} other {# channels}}",
       description: "channels availability text"
@@ -45,6 +46,7 @@ export const ChannelsAvailabilityWrapper: React.FC<ChannelsAvailabilityWrapperPr
       <Card>
         <CardTitle
           title={intl.formatMessage({
+            id: "5A6/2C",
             defaultMessage: "Availability",
             description: "section header"
           })}
@@ -59,6 +61,7 @@ export const ChannelsAvailabilityWrapper: React.FC<ChannelsAvailabilityWrapperPr
                 data-test-id="channels-availiability-manage-button"
               >
                 {intl.formatMessage({
+                  id: "2i81/P",
                   defaultMessage: "Manage",
                   description: "section header button"
                 })}

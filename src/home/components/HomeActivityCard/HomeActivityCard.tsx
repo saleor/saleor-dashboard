@@ -45,9 +45,9 @@ const HomeActivityCard: React.FC<HomeActivityCardProps> = props => {
     <Card data-test-id={testId}>
       <CardTitle
         title={intl.formatMessage({
+          id: "BXkF8Z",
           defaultMessage: "Activity",
-          description: "header",
-          id: "homeActivityCardHeader"
+          description: "header"
         })}
       />
       <List dense={true}>
@@ -79,8 +79,8 @@ const HomeActivityCard: React.FC<HomeActivityCardProps> = props => {
                 primary={
                   <Typography>
                     <FormattedMessage
+                      id="wWTUrM"
                       defaultMessage="No activities found"
-                      id="homeActivityCardNoActivities"
                     />
                   </Typography>
                 }

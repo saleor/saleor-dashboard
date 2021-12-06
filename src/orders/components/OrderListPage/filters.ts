@@ -41,22 +41,27 @@ export interface OrderListFilterOpts {
 
 const messages = defineMessages({
   preorder: {
+    id: "JYvf8/",
     defaultMessage: "Preorder",
     description: "is preorder"
   },
   clickAndCollect: {
+    id: "biAxKR",
     defaultMessage: "Click&Collect",
     description: "click and collect"
   },
   channel: {
+    id: "lJP1iw",
     defaultMessage: "Channel",
     description: "order"
   },
   customer: {
+    id: "PzXIXh",
     defaultMessage: "Customer",
     description: "order"
   },
   placed: {
+    id: "a4qX2+",
     defaultMessage: "Created",
     description: "order"
   }

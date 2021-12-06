@@ -71,16 +71,22 @@ const ErrorPage: React.FC<ErrorPageProps> = props => {
         <div className={classes.innerContainer}>
           <div>
             <Typography className={classes.upperHeader} variant="h4">
-              <FormattedMessage defaultMessage="Ooops!..." />
+              <FormattedMessage id="yH56V+" defaultMessage="Ooops!..." />
             </Typography>
             <Typography className={classes.bottomHeader} variant="h3">
-              <FormattedMessage defaultMessage="Error" />
+              <FormattedMessage id="KN7zKn" defaultMessage="Error" />
             </Typography>
             <Typography>
-              <FormattedMessage defaultMessage="We've encountered a problem..." />
+              <FormattedMessage
+                id="QnOvJw"
+                defaultMessage="We've encountered a problem..."
+              />
             </Typography>
             <Typography>
-              <FormattedMessage defaultMessage="Don't worry, everything is gonna be fine" />
+              <FormattedMessage
+                id="c1b4T+"
+                defaultMessage="Don't worry, everything is gonna be fine"
+              />
             </Typography>
             {!!id && (
               <Typography variant="subtitle2" className={classes.errorId}>
@@ -96,6 +102,7 @@ const ErrorPage: React.FC<ErrorPageProps> = props => {
               onClick={onBack}
             >
               <FormattedMessage
+                id="vjkcAv"
                 defaultMessage="Back to home"
                 description="button"
               />

@@ -90,6 +90,7 @@ export const InstallAppCreate: React.FC<InstallAppCreateProps> = ({
     <>
       <WindowTitle
         title={intl.formatMessage({
+          id: "2cjt25",
           defaultMessage: "Install App",
           description: "window title"
         })}

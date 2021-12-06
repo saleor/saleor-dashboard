@@ -8,14 +8,17 @@ import { defineMessages, useIntl } from "react-intl";
 
 const messages = defineMessages({
   chooseMedia: {
+    id: "2J6EFz",
     defaultMessage: "Choose media",
     description: "button"
   },
   media: {
+    id: "/Mcvt4",
     defaultMessage: "Media",
     description: "section header"
   },
   selectSpecificVariant: {
+    id: "JfKvrV",
     defaultMessage: "Select a specific variant media from product media",
     description: "select variant media"
   }

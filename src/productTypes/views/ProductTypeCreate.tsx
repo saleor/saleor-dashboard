@@ -42,6 +42,7 @@ export const ProductTypeCreate: React.FC<ProductTypeCreateProps> = ({
       notify({
         status: "success",
         text: intl.formatMessage({
+          id: "paa4m0",
           defaultMessage: "Successfully created product type"
         })
       });
@@ -88,9 +89,9 @@ export const ProductTypeCreate: React.FC<ProductTypeCreateProps> = ({
               <>
                 <WindowTitle
                   title={intl.formatMessage({
+                    id: "SSWFo8",
                     defaultMessage: "Create Product Type",
-                    description: "window title",
-                    id: "productTypeCreateHeader"
+                    description: "window title"
                   })}
                 />
                 <ProductTypeCreatePage
@@ -100,9 +101,9 @@ export const ProductTypeCreate: React.FC<ProductTypeCreateProps> = ({
                     createProductTypeOpts.data?.productTypeCreate.errors || []
                   }
                   pageTitle={intl.formatMessage({
+                    id: "bq1eEx",
                     defaultMessage: "Create Product Type",
-                    description: "header",
-                    id: "productTypeCreatePageHeader"
+                    description: "header"
                   })}
                   saveButtonBarState={createProductTypeOpts.status}
                   taxTypes={data?.taxTypes || []}

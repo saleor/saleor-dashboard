@@ -22,6 +22,7 @@ const StaffPreferences: React.FC<StaffPreferencesProps> = ({
     <Card>
       <CardTitle
         title={intl.formatMessage({
+          id: "CLeDae",
           defaultMessage: "Preferences",
           description: "section header"
         })}
@@ -34,10 +35,12 @@ const StaffPreferences: React.FC<StaffPreferencesProps> = ({
           }))}
           displayValue={localeNames[locale]}
           helperText={intl.formatMessage({
+            id: "JJgJwi",
             defaultMessage:
               "Selecting this will change the language of your dashboard"
           })}
           label={intl.formatMessage({
+            id: "mr9jbO",
             defaultMessage: "Preferred Language"
           })}
           name="locale"
@@ -46,7 +49,10 @@ const StaffPreferences: React.FC<StaffPreferencesProps> = ({
         />
         <FormSpacer />
         <Typography>
-          <FormattedMessage defaultMessage="Please note, while all currency and date adjustments are complete, language translations are at varying degrees of completion." />
+          <FormattedMessage
+            id="e822us"
+            defaultMessage="Please note, while all currency and date adjustments are complete, language translations are at varying degrees of completion."
+          />
         </Typography>
       </CardContent>
     </Card>

@@ -2,6 +2,7 @@ import { defineMessages } from "react-intl";
 
 export const pluginAvailabilityStatusMessages = defineMessages({
   channelTitle: {
+    id: "53s8Pt",
     defaultMessage: "Active in {activeChannelsCount}",
     description: "plugin channel availability status title"
   }
@@ -9,6 +10,7 @@ export const pluginAvailabilityStatusMessages = defineMessages({
 
 export const channelConfigPluginMessages = defineMessages({
   title: {
+    id: "8u7els",
     defaultMessage:
       "Assigned to {activeChannelsCount} of {allChannelsCount} channels",
     description: "channel config plugin status popup title"
@@ -17,11 +19,12 @@ export const channelConfigPluginMessages = defineMessages({
 
 export const globalConfigPluginMessages = defineMessages({
   title: {
+    id: "T4wa2Y",
     defaultMessage: "Global Plugin",
-    description: "global config plugin status popup title",
-    id: "globalConfigPluginMessages title"
+    description: "global config plugin status popup title"
   },
   description: {
+    id: "reP5Uf",
     defaultMessage:
       "Global plugins are set across all channels in your ecommerce. Only status is shown for those types of plugins",
     description: "global config plugin status popup description"
@@ -30,14 +33,17 @@ export const globalConfigPluginMessages = defineMessages({
 
 export const pluginsListTableHeadMessages = defineMessages({
   nameLabel: {
+    id: "QH74y5",
     defaultMessage: "Name",
     description: "table header name col label"
   },
   confLabel: {
+    id: "AijtXU",
     defaultMessage: "Configuration",
     description: "table header configuration col label"
   },
   channelLabel: {
+    id: "ycrTBX",
     defaultMessage: "Channel",
     description: "table header channel col label"
   }
@@ -45,12 +51,13 @@ export const pluginsListTableHeadMessages = defineMessages({
 
 export const pluginChannelConfigurationCellMessages = defineMessages({
   globalLabel: {
+    id: "xTIKA/",
     defaultMessage: "Global",
     description: "PluginChannelConfigurationCell global title"
   },
   channelLabel: {
+    id: "gz9v22",
     defaultMessage: "Per channel",
-    description: "PluginChannelConfigurationCell channel title",
-    id: "pluginChannelConfigurationCellMessages per channel"
+    description: "PluginChannelConfigurationCell channel title"
   }
 });

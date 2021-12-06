@@ -21,6 +21,7 @@ export const CustomerCreate: React.FC<{}> = () => {
       notify({
         status: "success",
         text: intl.formatMessage({
+          id: "ftcHpD",
           defaultMessage: "Customer created"
         })
       });
@@ -35,6 +36,7 @@ export const CustomerCreate: React.FC<{}> = () => {
             <>
               <WindowTitle
                 title={intl.formatMessage({
+                  id: "nX2pCU",
                   defaultMessage: "Create customer",
                   description: "window title"
                 })}

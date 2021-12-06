@@ -82,13 +82,17 @@ const ShippingZoneCountriesAssignDialog: React.FC<ShippingZoneCountriesAssignDia
             <>
               <DialogTitle>
                 <FormattedMessage
+                  id="cvVIV/"
                   defaultMessage="Assign Countries"
                   description="dialog header"
                 />
               </DialogTitle>
               <DialogContent>
                 <Typography>
-                  <FormattedMessage defaultMessage="Choose countries you want to add to shipping zone from list below" />
+                  <FormattedMessage
+                    id="WDTCZi"
+                    defaultMessage="Choose countries you want to add to shipping zone from list below"
+                  />
                 </Typography>
                 <FormSpacer />
                 <TextField
@@ -96,9 +100,11 @@ const ShippingZoneCountriesAssignDialog: React.FC<ShippingZoneCountriesAssignDia
                   value={data.query}
                   onChange={event => change(event, () => fetch(data.query))}
                   label={intl.formatMessage({
+                    id: "jBmHIr",
                     defaultMessage: "Search Countries"
                   })}
                   placeholder={intl.formatMessage({
+                    id: "Im+6VU",
                     defaultMessage: "Search by country name"
                   })}
                   fullWidth
@@ -107,16 +113,22 @@ const ShippingZoneCountriesAssignDialog: React.FC<ShippingZoneCountriesAssignDia
                 <Hr />
                 <FormSpacer />
                 <Typography variant="subtitle1">
-                  <FormattedMessage defaultMessage="Quick Pick" />
+                  <FormattedMessage id="HPEyPj" defaultMessage="Quick Pick" />
                 </Typography>
                 <FormSpacer />
                 <ResponsiveTable className={classes.table}>
                   <TableBody>
                     <TableRow>
                       <TableCell className={classes.wideCell}>
-                        <FormattedMessage defaultMessage="Rest of the World" />
+                        <FormattedMessage
+                          id="jKMIbC"
+                          defaultMessage="Rest of the World"
+                        />
                         <Typography variant="caption">
-                          <FormattedMessage defaultMessage="If selected, this will add all of the countries not selected to other shipping zones" />
+                          <FormattedMessage
+                            id="6Sxp1x"
+                            defaultMessage="If selected, this will add all of the countries not selected to other shipping zones"
+                          />
                         </Typography>
                       </TableCell>
                       <TableCell
@@ -141,6 +153,7 @@ const ShippingZoneCountriesAssignDialog: React.FC<ShippingZoneCountriesAssignDia
                 <FormSpacer />
                 <Typography variant="subtitle1">
                   <FormattedMessage
+                    id="wgA48T"
                     defaultMessage="Countries A to Z"
                     description="country selection"
                   />
@@ -202,6 +215,7 @@ const ShippingZoneCountriesAssignDialog: React.FC<ShippingZoneCountriesAssignDia
                   type="submit"
                 >
                   <FormattedMessage
+                    id="zZCCqz"
                     defaultMessage="Assign countries"
                     description="button"
                   />

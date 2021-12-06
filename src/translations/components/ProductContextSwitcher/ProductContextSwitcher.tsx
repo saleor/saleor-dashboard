@@ -84,7 +84,10 @@ const ProductContextSwitcher: React.FC<ProductContextSwitcherProps> = ({
 
   const items = [
     {
-      label: intl.formatMessage({ defaultMessage: "Main Product" }),
+      label: intl.formatMessage({
+        id: "QUyUJy",
+        defaultMessage: "Main Product"
+      }),
       value: productId,
       onClick: () =>
         navigate(
@@ -105,7 +108,7 @@ const ProductContextSwitcher: React.FC<ProductContextSwitcherProps> = ({
   return (
     <div className={classes.container}>
       <Typography className={classes.label}>
-        <FormattedMessage defaultMessage="Translating" />:
+        <FormattedMessage id="tUlsq+" defaultMessage="Translating" />:
       </Typography>
       <div ref={anchor}>
         <Card

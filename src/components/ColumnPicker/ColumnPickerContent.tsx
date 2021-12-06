@@ -109,6 +109,7 @@ const ColumnPickerContent: React.FC<ColumnPickerContentProps> = props => {
       <CardContent className={classes.titleContainer}>
         <Typography color="textSecondary">
           <FormattedMessage
+            id="6PCKMS"
             defaultMessage="{numberOfSelected} columns selected out of {numberOfTotal}"
             description="pick columns to display"
             values={{
@@ -161,7 +162,11 @@ const ColumnPickerContent: React.FC<ColumnPickerContentProps> = props => {
       >
         <div className={classes.actionBar}>
           <Button color="default" onClick={onReset}>
-            <FormattedMessage defaultMessage="Reset" description="button" />
+            <FormattedMessage
+              id="TOMgXz"
+              defaultMessage="Reset"
+              description="button"
+            />
           </Button>
           <div>
             <Button

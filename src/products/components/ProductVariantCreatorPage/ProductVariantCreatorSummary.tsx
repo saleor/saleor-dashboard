@@ -150,6 +150,7 @@ const ProductVariantCreatorSummary: React.FC<ProductVariantCreatorSummaryProps> 
     <Card className={classes.card}>
       <CardTitle
         title={intl.formatMessage({
+          id: "S5PVx1",
           defaultMessage: "Created Variants",
           description: "variant creator summary card header"
         })}
@@ -163,6 +164,7 @@ const ProductVariantCreatorSummary: React.FC<ProductVariantCreatorSummaryProps> 
           )}
         >
           <FormattedMessage
+            id="V76IV7"
             defaultMessage="Variant"
             description="variant name"
           />
@@ -178,6 +180,7 @@ const ProductVariantCreatorSummary: React.FC<ProductVariantCreatorSummaryProps> 
             )}
           >
             <FormattedMessage
+              id="CrbI/c"
               defaultMessage="{channel} Price"
               description="variant channel price"
               values={{
@@ -202,7 +205,7 @@ const ProductVariantCreatorSummary: React.FC<ProductVariantCreatorSummaryProps> 
         <div
           className={classNames(classes.col, classes.colHeader, classes.colSku)}
         >
-          <FormattedMessage defaultMessage="SKU" />
+          <FormattedMessage id="k4brJy" defaultMessage="SKU" />
         </div>
         <div className={classNames(classes.col, classes.colHeader)} />
         <Hr className={classes.hr} />

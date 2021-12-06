@@ -47,10 +47,12 @@ import VariantDetailsChannelsAvailabilityCard from "./VariantDetailsChannelsAvai
 
 const messages = defineMessages({
   nonSelectionAttributes: {
+    id: "f3B4tc",
     defaultMessage: "Variant Attributes",
     description: "attributes, section header"
   },
   selectionAttributesHeader: {
+    id: "o6260f",
     defaultMessage: "Variant Selection Attributes",
     description: "attributes, section header"
   }

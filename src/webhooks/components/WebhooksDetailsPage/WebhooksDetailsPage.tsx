@@ -69,11 +69,13 @@ const WebhooksDetailsPage: React.FC<WebhooksDetailsPageProps> = ({
             title={
               isUnnamed(webhook)
                 ? intl.formatMessage({
+                    id: "snUby7",
                     defaultMessage: "Unnamed Webhook Details",
                     description: "header"
                   })
                 : intl.formatMessage(
                     {
+                      id: "OPtrMg",
                       defaultMessage: "{webhookName} Details",
                       description: "header"
                     },

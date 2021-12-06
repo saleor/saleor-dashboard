@@ -65,6 +65,7 @@ const PluginSettings: React.FC<PluginSettingsProps> = ({
     <Card>
       <CardTitle
         title={intl.formatMessage({
+          id: "Egyh2T",
           defaultMessage: "Plugin Settings",
           description: "section header"
         })}

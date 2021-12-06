@@ -33,13 +33,17 @@ const OrderCannotCancelOrderDialog: React.FC<DialogProps> = ({
     <Dialog onClose={onClose} open={open} maxWidth="sm">
       <DialogTitle>
         <FormattedMessage
+          id="NhQboB"
           defaultMessage="Saleor couldn’t cancel order"
           description="dialog header"
         />
       </DialogTitle>
       <DialogContent>
         <DialogContentText>
-          <FormattedMessage defaultMessage="There are still fulfillments created for this order. Cancel the fulfillments first before you cancel the order." />
+          <FormattedMessage
+            id="b+jcaN"
+            defaultMessage="There are still fulfillments created for this order. Cancel the fulfillments first before you cancel the order."
+          />
         </DialogContentText>
       </DialogContent>
       <DialogActions>

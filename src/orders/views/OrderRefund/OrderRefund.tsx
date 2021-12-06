@@ -73,6 +73,7 @@ const OrderRefund: React.FC<OrderRefundProps> = ({ orderId }) => {
         notify({
           status: "success",
           text: intl.formatMessage({
+            id: "XRf1Bi",
             defaultMessage: "Refunded Items",
             description: "order refunded success message"
           })
@@ -90,6 +91,7 @@ const OrderRefund: React.FC<OrderRefundProps> = ({ orderId }) => {
         notify({
           status: "success",
           text: intl.formatMessage({
+            id: "XRf1Bi",
             defaultMessage: "Refunded Items",
             description: "order refunded success message"
           })

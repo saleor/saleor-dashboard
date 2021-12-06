@@ -47,11 +47,13 @@ const PluginSecretFieldDialog: React.FC<PluginSecretFieldDialogProps> = ({
         {field ? (
           field.value === null ? (
             intl.formatMessage({
+              id: "qCH2eZ",
               defaultMessage: "Add Value to Authorization Field",
               description: "header"
             })
           ) : (
             intl.formatMessage({
+              id: "Xy2T+y",
               defaultMessage: "Edit Authorization Field",
               description: "header"
             })

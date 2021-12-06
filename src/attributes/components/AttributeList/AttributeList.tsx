@@ -102,7 +102,7 @@ const AttributeList: React.FC<AttributeListProps> = ({
           arrowPosition="right"
           onClick={() => onSort(AttributeListUrlSortField.slug)}
         >
-          <FormattedMessage defaultMessage="Attribute Code" />
+          <FormattedMessage id="oJkeS6" defaultMessage="Attribute Code" />
         </TableCellHeader>
         <TableCellHeader
           className={classes.colName}
@@ -114,6 +114,7 @@ const AttributeList: React.FC<AttributeListProps> = ({
           onClick={() => onSort(AttributeListUrlSortField.name)}
         >
           <FormattedMessage
+            id="HjUoHK"
             defaultMessage="Default Label"
             description="attribute's label'"
           />
@@ -129,6 +130,7 @@ const AttributeList: React.FC<AttributeListProps> = ({
           onClick={() => onSort(AttributeListUrlSortField.visible)}
         >
           <FormattedMessage
+            id="k6WDZl"
             defaultMessage="Visible"
             description="attribute is visible"
           />
@@ -144,6 +146,7 @@ const AttributeList: React.FC<AttributeListProps> = ({
           onClick={() => onSort(AttributeListUrlSortField.searchable)}
         >
           <FormattedMessage
+            id="yKuba7"
             defaultMessage="Searchable"
             description="attribute can be searched in dashboard"
           />
@@ -159,6 +162,7 @@ const AttributeList: React.FC<AttributeListProps> = ({
           onClick={() => onSort(AttributeListUrlSortField.useInFacetedSearch)}
         >
           <FormattedMessage
+            id="cbPfB1"
             defaultMessage="Use in faceted search"
             description="attribute can be searched in storefront"
           />
@@ -250,7 +254,10 @@ const AttributeList: React.FC<AttributeListProps> = ({
           () => (
             <TableRow>
               <TableCell colSpan={numberOfColumns}>
-                <FormattedMessage defaultMessage="No attributes found" />
+                <FormattedMessage
+                  id="ztQgD8"
+                  defaultMessage="No attributes found"
+                />
               </TableCell>
             </TableRow>
           )

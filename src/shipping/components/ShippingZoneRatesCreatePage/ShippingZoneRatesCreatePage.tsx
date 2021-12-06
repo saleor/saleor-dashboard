@@ -103,16 +103,18 @@ export const ShippingZoneRatesCreatePage: React.FC<ShippingZoneRatesCreatePagePr
         return (
           <Container>
             <Backlink onClick={onBack}>
-              <FormattedMessage defaultMessage="Shipping" />
+              <FormattedMessage id="PRlD0A" defaultMessage="Shipping" />
             </Backlink>
             <PageHeader
               title={
                 isPriceVariant
                   ? intl.formatMessage({
+                      id: "RXPGi/",
                       defaultMessage: "Price Rate Create",
                       description: "page title"
                     })
                   : intl.formatMessage({
+                      id: "NDm2Fe",
                       defaultMessage: "Weight Rate Create",
                       description: "page title"
                     })

@@ -68,7 +68,10 @@ const NewPasswordPage: React.FC<NewPasswordPageProps> = props => {
               </div>
             )}
             <Typography>
-              <FormattedMessage defaultMessage="Please set up a new password." />
+              <FormattedMessage
+                id="9A1NDT"
+                defaultMessage="Please set up a new password."
+              />
             </Typography>
             <FormSpacer />
             <TextField
@@ -77,6 +80,7 @@ const NewPasswordPage: React.FC<NewPasswordPageProps> = props => {
               autoComplete="none"
               disabled={disabled}
               label={intl.formatMessage({
+                id: "Ev6SEF",
                 defaultMessage: "New Password"
               })}
               name="password"
@@ -94,6 +98,7 @@ const NewPasswordPage: React.FC<NewPasswordPageProps> = props => {
               autoComplete="none"
               disabled={disabled}
               label={intl.formatMessage({
+                id: "vfG+nh",
                 defaultMessage: "Confirm Password"
               })}
               name="confirmPassword"
@@ -103,6 +108,7 @@ const NewPasswordPage: React.FC<NewPasswordPageProps> = props => {
               helperText={
                 passwordError &&
                 intl.formatMessage({
+                  id: "7Chrsf",
                   defaultMessage: "Passwords do not match"
                 })
               }
@@ -121,6 +127,7 @@ const NewPasswordPage: React.FC<NewPasswordPageProps> = props => {
               type="submit"
             >
               <FormattedMessage
+                id="S22jIs"
                 defaultMessage="Set new password"
                 description="button"
               />

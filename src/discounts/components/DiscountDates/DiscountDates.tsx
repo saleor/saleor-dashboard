@@ -36,6 +36,7 @@ const DiscountDates = ({
     <Card>
       <CardTitle
         title={intl.formatMessage({
+          id: "zKOGkU",
           defaultMessage: "Active Dates",
           description: "time during discount is active, header"
         })}
@@ -74,6 +75,7 @@ const DiscountDates = ({
         <ControlledCheckbox
           checked={data.hasEndDate}
           label={intl.formatMessage({
+            id: "AVF5T5",
             defaultMessage: "Set end date",
             description: "voucher end date, switch button"
           })}

@@ -36,6 +36,7 @@ function useOnSetDefaultVariant(
             status: "success",
             text: intl.formatMessage(
               {
+                id: "gSQ0Ge",
                 defaultMessage: "Variant {name} has been set as default."
               },
               { name: defaultVariant.name }

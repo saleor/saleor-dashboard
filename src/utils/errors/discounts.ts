@@ -6,6 +6,7 @@ import { getCommonFormFieldErrorMessage } from "./common";
 
 const messages = defineMessages({
   alreadyExists: {
+    id: "stjHjY",
     defaultMessage: "Promo code already exists",
     description: "error message"
   }

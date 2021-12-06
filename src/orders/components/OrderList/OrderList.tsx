@@ -112,7 +112,7 @@ export const OrderList: React.FC<OrderListProps> = props => {
             onClick={() => onSort(OrderListUrlSortField.number)}
             className={classes.colNumber}
           >
-            <FormattedMessage defaultMessage="No. of Order" />
+            <FormattedMessage id="ps0WUQ" defaultMessage="No. of Order" />
           </TableCellHeader>
           <TableCellHeader
             direction={
@@ -124,6 +124,7 @@ export const OrderList: React.FC<OrderListProps> = props => {
             className={classes.colDate}
           >
             <FormattedMessage
+              id="PHUcrU"
               defaultMessage="Date"
               description="date when order was placed"
             />
@@ -138,6 +139,7 @@ export const OrderList: React.FC<OrderListProps> = props => {
             className={classes.colCustomer}
           >
             <FormattedMessage
+              id="5blVMu"
               defaultMessage="Customer"
               description="e-mail or full name"
             />
@@ -152,6 +154,7 @@ export const OrderList: React.FC<OrderListProps> = props => {
             className={classes.colPayment}
           >
             <FormattedMessage
+              id="p+UDec"
               defaultMessage="Payment"
               description="payment status"
             />
@@ -165,10 +168,11 @@ export const OrderList: React.FC<OrderListProps> = props => {
             onClick={() => onSort(OrderListUrlSortField.fulfillment)}
             className={classes.colFulfillment}
           >
-            <FormattedMessage defaultMessage="Fulfillment status" />
+            <FormattedMessage id="NWxomz" defaultMessage="Fulfillment status" />
           </TableCellHeader>
           <TableCellHeader textAlign="right" className={classes.colTotal}>
             <FormattedMessage
+              id="k9hf7F"
               defaultMessage="Total"
               description="total order price"
             />
@@ -258,7 +262,10 @@ export const OrderList: React.FC<OrderListProps> = props => {
           () => (
             <TableRow>
               <TableCell colSpan={numberOfColumns}>
-                <FormattedMessage defaultMessage="No orders found" />
+                <FormattedMessage
+                  id="RlfqSV"
+                  defaultMessage="No orders found"
+                />
               </TableCell>
             </TableRow>
           )

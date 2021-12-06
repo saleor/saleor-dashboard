@@ -64,11 +64,13 @@ const AttributeValueEditDialog: React.FC<AttributeValueEditDialogProps> = ({
       <DialogTitle>
         {attributeValue === null ? (
           <FormattedMessage
+            id="PqMbma"
             defaultMessage="Add Value"
             description="add attribute value"
           />
         ) : (
           <FormattedMessage
+            id="XYhE8p"
             defaultMessage="Edit Value"
             description="edit attribute value"
           />
@@ -90,6 +92,7 @@ const AttributeValueEditDialog: React.FC<AttributeValueEditDialogProps> = ({
                 )}
                 name={"name" as keyof AttributeValueEditDialogFormData}
                 label={intl.formatMessage({
+                  id: "UhcALJ",
                   defaultMessage: "Name",
                   description: "attribute name"
                 })}

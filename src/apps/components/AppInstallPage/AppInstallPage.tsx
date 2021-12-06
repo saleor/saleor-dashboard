@@ -43,6 +43,7 @@ export const AppInstallPage: React.FC<AppInstallPageProps> = ({
             ) : (
               intl.formatMessage(
                 {
+                  id: "Id7C0X",
                   defaultMessage: `You are about to install {name}`,
                   description: "section header"
                 },
@@ -76,6 +77,7 @@ export const AppInstallPage: React.FC<AppInstallPageProps> = ({
       <Card>
         <CardTitle
           title={intl.formatMessage({
+            id: "VsGcdP",
             defaultMessage: "App permissions",
             description: "section header"
           })}
@@ -87,6 +89,7 @@ export const AppInstallPage: React.FC<AppInstallPageProps> = ({
             <>
               <Typography className={classes.installPermissionTitle}>
                 <FormattedMessage
+                  id="BL/Lbk"
                   defaultMessage="Installing this app will give it following permissions:"
                   description="install app permissions"
                 />
@@ -105,6 +108,7 @@ export const AppInstallPage: React.FC<AppInstallPageProps> = ({
                 className={classes.installPrivacyText}
               >
                 <FormattedMessage
+                  id="t1UYU6"
                   defaultMessage="Uninstalling the app will remove all your customer’s personal data stored by {name}. "
                   description="install app privacy"
                   values={{ name }}
@@ -115,6 +119,7 @@ export const AppInstallPage: React.FC<AppInstallPageProps> = ({
                   target="_blank"
                 >
                   <FormattedMessage
+                    id="k5lHFp"
                     defaultMessage="Learn more about data privacy"
                     description="app data privacy link"
                   />
@@ -141,6 +146,7 @@ export const AppInstallPage: React.FC<AppInstallPageProps> = ({
           <Button variant="contained" color="primary" onClick={onSubmit}>
             <Typography className={classes.installText}>
               <FormattedMessage
+                id="PkCmGU"
                 defaultMessage="Install App"
                 description="install button"
               />

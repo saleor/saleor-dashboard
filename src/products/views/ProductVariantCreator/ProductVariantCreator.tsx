@@ -39,6 +39,7 @@ const ProductVariantCreator: React.FC<ProductVariantCreatorProps> = ({
         notify({
           status: "success",
           text: intl.formatMessage({
+            id: "oChkS4",
             defaultMessage: "Successfully created variants",
             description: "success message"
           })
@@ -74,6 +75,7 @@ const ProductVariantCreator: React.FC<ProductVariantCreatorProps> = ({
     <>
       <WindowTitle
         title={intl.formatMessage({
+          id: "z+wMgQ",
           defaultMessage: "Create Variants",
           description: "window title"
         })}

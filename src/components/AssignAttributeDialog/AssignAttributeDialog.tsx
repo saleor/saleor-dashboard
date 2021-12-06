@@ -113,6 +113,7 @@ const AssignAttributeDialog: React.FC<AssignAttributeDialogProps> = ({
     <Dialog onClose={onClose} open={open} fullWidth maxWidth="sm">
       <DialogTitle>
         <FormattedMessage
+          id="QM9P8G"
           defaultMessage="Assign Attribute"
           description="dialog header"
         />
@@ -123,9 +124,11 @@ const AssignAttributeDialog: React.FC<AssignAttributeDialogProps> = ({
           value={query}
           onChange={onQueryChange}
           label={intl.formatMessage({
+            id: "mYs7O2",
             defaultMessage: "Search Attributes"
           })}
           placeholder={intl.formatMessage({
+            id: "9kzAW9",
             defaultMessage: "Search by attribute name"
           })}
           fullWidth
@@ -188,7 +191,10 @@ const AssignAttributeDialog: React.FC<AssignAttributeDialogProps> = ({
                   !loading && (
                     <TableRow>
                       <TableCell colSpan={2}>
-                        <FormattedMessage defaultMessage="No results found" />
+                        <FormattedMessage
+                          id="hX5PAb"
+                          defaultMessage="No results found"
+                        />
                       </TableCell>
                     </TableRow>
                   )
@@ -222,6 +228,7 @@ const AssignAttributeDialog: React.FC<AssignAttributeDialogProps> = ({
           onClick={onSubmit}
         >
           <FormattedMessage
+            id="Oyu9jL"
             defaultMessage="Assign attributes"
             description="button"
           />

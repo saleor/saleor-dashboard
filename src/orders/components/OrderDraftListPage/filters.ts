@@ -15,10 +15,12 @@ export interface OrderDraftListFilterOpts {
 
 const messages = defineMessages({
   created: {
+    id: "vwMO04",
     defaultMessage: "Created",
     description: "draft order"
   },
   customer: {
+    id: "iEeIhY",
     defaultMessage: "Customer",
     description: "draft order"
   }

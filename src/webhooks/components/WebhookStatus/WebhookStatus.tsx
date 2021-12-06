@@ -23,6 +23,7 @@ const WebhookStatus: React.FC<WebhookStatusProps> = ({
     <Card>
       <CardTitle
         title={intl.formatMessage({
+          id: "1+M/52",
           defaultMessage: "Webhook Status",
           description: "section header"
         })}
@@ -30,6 +31,7 @@ const WebhookStatus: React.FC<WebhookStatusProps> = ({
       <CardContent>
         <Typography>
           {intl.formatMessage({
+            id: "bpR/Z1",
             defaultMessage:
               "If you want to disable this webhook please uncheck the box below.",
             description: "webhook active"
@@ -38,6 +40,7 @@ const WebhookStatus: React.FC<WebhookStatusProps> = ({
         <ControlledCheckbox
           name={"isActive" as keyof FormData}
           label={intl.formatMessage({
+            id: "D+v6qv",
             defaultMessage: "Webhook is active",
             description: "webhooks active"
           })}

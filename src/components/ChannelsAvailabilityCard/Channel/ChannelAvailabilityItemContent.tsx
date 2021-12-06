@@ -59,6 +59,7 @@ const ChannelContent: React.FC<ChannelContentProps> = ({
   const visibleMessage = (date: string) =>
     intl.formatMessage(
       {
+        id: "UjsI4o",
         defaultMessage: "since {date}",
         description: "date"
       },
@@ -118,6 +119,7 @@ const ChannelContent: React.FC<ChannelContentProps> = ({
             onClick={() => setPublicationDate(!isPublicationDate)}
           >
             {intl.formatMessage({
+              id: "U3BQKA",
               defaultMessage: "Set publication date"
             })}
           </Typography>
@@ -126,6 +128,7 @@ const ChannelContent: React.FC<ChannelContentProps> = ({
               error={!!formErrors.publicationDate}
               disabled={disabled}
               label={intl.formatMessage({
+                id: "Jt3DwJ",
                 defaultMessage: "Publish on",
                 description: "publish on date"
               })}
@@ -204,6 +207,7 @@ const ChannelContent: React.FC<ChannelContentProps> = ({
                   error={!!formErrors.availableForPurchaseDate}
                   disabled={disabled}
                   label={intl.formatMessage({
+                    id: "Y7Vy19",
                     defaultMessage: "Set available on",
                     description: "available on date"
                   })}
@@ -247,11 +251,13 @@ const ChannelContent: React.FC<ChannelContentProps> = ({
               <>
                 <p className={classNames(classes.label, classes.listingLabel)}>
                   {intl.formatMessage({
+                    id: "0cVk9I",
                     defaultMessage: "Show in product listings"
                   })}
                 </p>
                 <span className={classes.secondLabel}>
                   {intl.formatMessage({
+                    id: "5ukAFZ",
                     defaultMessage:
                       "Disabling this checkbox will remove product from search and category pages. It will be available on collection pages."
                   })}

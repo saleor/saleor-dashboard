@@ -213,6 +213,7 @@ const ProductTypeDetailsPage: React.FC<ProductTypeDetailsPageProps> = ({
                   checked={data.hasVariants}
                   disabled={disabled}
                   label={intl.formatMessage({
+                    id: "5pHBSU",
                     defaultMessage: "Product type uses Variant Attributes",
                     description: "switch button"
                   })}

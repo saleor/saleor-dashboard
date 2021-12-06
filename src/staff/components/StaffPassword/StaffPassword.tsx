@@ -14,12 +14,14 @@ const StaffPassword: React.FC<StaffPasswordProps> = ({ onChangePassword }) => {
     <Card>
       <CardTitle
         title={intl.formatMessage({
+          id: "ZhDQel",
           defaultMessage: "Password",
           description: "header"
         })}
         toolbar={
           <Button color="primary" onClick={onChangePassword}>
             <FormattedMessage
+              id="N3Zot1"
               defaultMessage="Change your password"
               description="button"
             />
@@ -28,7 +30,10 @@ const StaffPassword: React.FC<StaffPasswordProps> = ({ onChangePassword }) => {
       />
       <CardContent>
         <Typography>
-          <FormattedMessage defaultMessage="You should change your password every month to avoid security issues." />
+          <FormattedMessage
+            id="mm0CXe"
+            defaultMessage="You should change your password every month to avoid security issues."
+          />
         </Typography>
       </CardContent>
     </Card>

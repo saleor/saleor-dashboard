@@ -45,7 +45,11 @@ const TranslationFieldsSave: React.FC<TranslationFieldsSaveProps> = props => {
         <FormattedMessage {...buttonMessages.save} />
       </ConfirmButton>
       <Button onClick={onDiscard} type="submit">
-        <FormattedMessage defaultMessage="Discard" description="button" />
+        <FormattedMessage
+          id="vTN5DZ"
+          defaultMessage="Discard"
+          description="button"
+        />
       </Button>
     </div>
   );

@@ -33,18 +33,22 @@ import { getInitialFormData } from "./utils";
 
 const messages = defineMessages({
   countries: {
+    id: "55LMJv",
     defaultMessage: "Countries",
     description: "country list header"
   },
   defaultZone: {
+    id: "ddWFtA",
     defaultMessage:
       "This is default shipping zone, which means that it covers all of the countries which are not assigned to other shipping zones"
   },
   noCountriesAssigned: {
+    id: "y7mfbl",
     defaultMessage:
       "Currently, there are no countries assigned to this shipping zone"
   },
   shipping: {
+    id: "G0+gAp",
     defaultMessage: "Shipping",
     description: "shipping section header"
   }

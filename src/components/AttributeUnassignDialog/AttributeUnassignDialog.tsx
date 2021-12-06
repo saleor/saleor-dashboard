@@ -32,6 +32,7 @@ const AttributeUnassignDialog: React.FC<AttributeUnassignDialogProps> = ({
   >
     <DialogContentText>
       <FormattedMessage
+        id="V1Tj/B"
         defaultMessage="Are you sure you want to unassign {attributeName} from {itemTypeName}?"
         values={{
           attributeName: <strong>{attributeName}</strong>,

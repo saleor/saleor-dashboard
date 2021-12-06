@@ -26,6 +26,7 @@ const MembersErrorDialog: React.FC<MembersErrorDialogProps> = ({
       onClose={onClose}
       onConfirm={onConfirm}
       title={intl.formatMessage({
+        id: "lT5MYM",
         defaultMessage: "Unassign users",
         description: "dialog title"
       })}
@@ -33,6 +34,7 @@ const MembersErrorDialog: React.FC<MembersErrorDialogProps> = ({
     >
       <DialogContentText>
         <FormattedMessage
+          id="H/o4Ex"
           defaultMessage="You are not able to modify this group members. Solve this problem to continue with request."
           description="dialog content"
         />

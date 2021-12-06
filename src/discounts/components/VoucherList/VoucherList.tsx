@@ -126,7 +126,11 @@ const VoucherList: React.FC<VoucherListProps> = props => {
           onClick={() => onSort(VoucherListUrlSortField.code)}
           className={classes.colName}
         >
-          <FormattedMessage defaultMessage="Code" description="voucher code" />
+          <FormattedMessage
+            id="JsPIOX"
+            defaultMessage="Code"
+            description="voucher code"
+          />
         </TableCellHeader>
         <TableCellHeader
           direction={
@@ -142,6 +146,7 @@ const VoucherList: React.FC<VoucherListProps> = props => {
           className={classes.colMinSpent}
         >
           <FormattedMessage
+            id="tuYPlG"
             defaultMessage="Min. Spent"
             description="minimum amount of spent money to activate voucher"
           />
@@ -157,6 +162,7 @@ const VoucherList: React.FC<VoucherListProps> = props => {
           className={classes.colStart}
         >
           <FormattedMessage
+            id="5u7b3V"
             defaultMessage="Starts"
             description="voucher is active from date"
           />
@@ -172,6 +178,7 @@ const VoucherList: React.FC<VoucherListProps> = props => {
           className={classes.colEnd}
         >
           <FormattedMessage
+            id="b6L9n7"
             defaultMessage="Ends"
             description="voucher is active until date"
           />
@@ -190,6 +197,7 @@ const VoucherList: React.FC<VoucherListProps> = props => {
           className={classes.colValue}
         >
           <FormattedMessage
+            id="JV+EiM"
             defaultMessage="Value"
             description="voucher value"
           />
@@ -204,7 +212,11 @@ const VoucherList: React.FC<VoucherListProps> = props => {
           onClick={() => onSort(VoucherListUrlSortField.limit)}
           className={classes.colUses}
         >
-          <FormattedMessage defaultMessage="Uses" description="voucher uses" />
+          <FormattedMessage
+            id="yHwvLL"
+            defaultMessage="Uses"
+            description="voucher uses"
+          />
         </TableCellHeader>
       </TableHead>
       <TableFooter>
@@ -319,7 +331,10 @@ const VoucherList: React.FC<VoucherListProps> = props => {
           () => (
             <TableRow>
               <TableCell colSpan={numberOfColumns}>
-                <FormattedMessage defaultMessage="No vouchers found" />
+                <FormattedMessage
+                  id="U2mOqA"
+                  defaultMessage="No vouchers found"
+                />
               </TableCell>
             </TableRow>
           )

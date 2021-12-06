@@ -41,6 +41,7 @@ export const CategoryProducts: React.FC<CategoryProductsProps> = ({
       <CardTitle
         title={intl.formatMessage(
           {
+            id: "+43JV5",
             defaultMessage: "Products in {categoryName}",
             description: "header"
           },
@@ -59,6 +60,7 @@ export const CategoryProducts: React.FC<CategoryProductsProps> = ({
                 data-test-id="viewProducts"
               >
                 <FormattedMessage
+                  id="z8jo8h"
                   defaultMessage="View products"
                   description="button"
                 />
@@ -72,6 +74,7 @@ export const CategoryProducts: React.FC<CategoryProductsProps> = ({
               data-test-id="addProducts"
             >
               <FormattedMessage
+                id="x/pIZ9"
                 defaultMessage="Add product"
                 description="button"
               />

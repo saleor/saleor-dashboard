@@ -33,6 +33,7 @@ const WarehouseCreate: React.FC = () => {
     <>
       <WindowTitle
         title={intl.formatMessage({
+          id: "GhcypC",
           defaultMessage: "Create Warehouse",
           description: "header"
         })}

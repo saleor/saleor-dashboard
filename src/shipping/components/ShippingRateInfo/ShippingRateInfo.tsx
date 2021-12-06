@@ -15,18 +15,22 @@ import { defineMessages, useIntl } from "react-intl";
 
 const messages = defineMessages({
   maxDays: {
+    id: "v17Lly",
     defaultMessage: "Max Delivery Time",
     description: "label"
   },
   minDays: {
+    id: "GD/bom",
     defaultMessage: "Min Delivery Time",
     description: "label"
   },
   name: {
+    id: "FkDObY",
     defaultMessage: "Shipping rate name",
     description: "label"
   },
   description: {
+    id: "TLYeo5",
     defaultMessage: "Shipping Rate Description",
     description: "label"
   }

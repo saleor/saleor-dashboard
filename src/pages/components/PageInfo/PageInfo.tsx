@@ -51,6 +51,7 @@ const PageInfo: React.FC<PageInfoProps> = props => {
           fullWidth
           helperText={getPageErrorMessage(formErrors.title, intl)}
           label={intl.formatMessage({
+            id: "gr+oXW",
             defaultMessage: "Title",
             description: "page title"
           })}
@@ -65,6 +66,7 @@ const PageInfo: React.FC<PageInfoProps> = props => {
           error={!!formErrors.content}
           helperText={getPageErrorMessage(formErrors.content, intl)}
           label={intl.formatMessage({
+            id: "gMwpNC",
             defaultMessage: "Content",
             description: "page content"
           })}

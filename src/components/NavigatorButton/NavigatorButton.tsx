@@ -135,7 +135,7 @@ const NavigatorButton: React.FC<NavigatorButtonProps> = ({
             }}
           >
             <Paper className={classes.paper} elevation={0}>
-              <FormattedMessage defaultMessage="Navigator" />
+              <FormattedMessage id="EEW+ND" defaultMessage="Navigator" />
               <div className={classes.keyTile}>
                 <span className={classes.keyTileLabel}>
                   {isMac ? "⌘" : "Ctrl"}

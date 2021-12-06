@@ -31,6 +31,7 @@ const ProductCategoryAndCollectionsForm = ({
     <Card>
       <PageHeader
         title={intl.formatMessage({
+          id: "fyE8BN",
           defaultMessage: "Organization",
           description: "product organization, header"
         })}
@@ -41,6 +42,7 @@ const ProductCategoryAndCollectionsForm = ({
           error={!!errors.category}
           hint={errors.category}
           label={intl.formatMessage({
+            id: "ccXLVi",
             defaultMessage: "Category"
           })}
           choices={loading ? [] : categories}
@@ -54,6 +56,7 @@ const ProductCategoryAndCollectionsForm = ({
           error={!!errors.collections}
           hint={errors.collections}
           label={intl.formatMessage({
+            id: "ulh3kf",
             defaultMessage: "Collections"
           })}
           choices={loading ? [] : collections}

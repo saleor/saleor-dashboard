@@ -57,6 +57,7 @@ export const CustomAppCreate: React.FC<CustomAppCreateProps> = ({
     <>
       <WindowTitle
         title={intl.formatMessage({
+          id: "agZQkB",
           defaultMessage: "Create App",
           description: "window title"
         })}

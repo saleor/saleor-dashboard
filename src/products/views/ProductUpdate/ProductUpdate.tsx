@@ -89,18 +89,22 @@ import useChannelVariantListings from "./useChannelVariantListings";
 
 const messages = defineMessages({
   deleteProductDialogTitle: {
+    id: "TWVx7O",
     defaultMessage: "Delete Product",
     description: "delete product dialog title"
   },
   deleteProductDialogSubtitle: {
+    id: "ZHF4Z9",
     defaultMessage: "Are you sure you want to delete {name}?",
     description: "delete product dialog subtitle"
   },
   deleteVariantDialogTitle: {
+    id: "6iw4VR",
     defaultMessage: "Delete Product Variants",
     description: "delete variant dialog title"
   },
   deleteVariantDialogSubtitle: {
+    id: "ukdRUv",
     defaultMessage:
       "{counter,plural,one{Are you sure you want to delete this variant?} other{Are you sure you want to delete {displayQuantity} variants?}}",
     description: "delete variant dialog subtitle"
@@ -215,6 +219,7 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
       notify({
         status: "success",
         text: intl.formatMessage({
+          id: "vlVTmY",
           defaultMessage: "Product removed"
         })
       });
@@ -521,6 +526,7 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
             onClose={handleChannelsModalClose}
             open={isChannelsModalOpen}
             title={intl.formatMessage({
+              id: "Eau5AV",
               defaultMessage: "Manage Products Channel Availability"
             })}
             confirmButtonState="default"

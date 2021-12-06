@@ -52,6 +52,7 @@ const PluginInfo: React.FC<PluginInfoProps> = ({
     <Card>
       <CardTitle
         title={intl.formatMessage({
+          id: "w424P4",
           defaultMessage: "Plugin Information and Status",
           description: "section header"
         })}
@@ -59,6 +60,7 @@ const PluginInfo: React.FC<PluginInfoProps> = ({
       <CardContent>
         <Typography className={classes.title} variant="h6">
           {intl.formatMessage({
+            id: "IUeGzv",
             defaultMessage: "Plugin Name",
             description: "plugin name"
           })}
@@ -76,6 +78,7 @@ const PluginInfo: React.FC<PluginInfoProps> = ({
         <Hr />
         <Typography className={classes.status}>
           {intl.formatMessage({
+            id: "bL/Wrc",
             defaultMessage: "Status",
             description: "plugin status"
           })}
@@ -83,6 +86,7 @@ const PluginInfo: React.FC<PluginInfoProps> = ({
         <ControlledCheckbox
           name={"active" as keyof PluginDetailsPageFormData}
           label={intl.formatMessage({
+            id: "ITdIcx",
             defaultMessage: "Set plugin as Active"
           })}
           checked={data.active}

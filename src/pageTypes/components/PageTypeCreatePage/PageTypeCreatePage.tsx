@@ -66,6 +66,7 @@ const PageTypeCreatePage: React.FC<PageTypeCreatePageProps> = props => {
             </Backlink>
             <PageHeader
               title={intl.formatMessage({
+                id: "caqRmN",
                 defaultMessage: "Create Page Type",
                 description: "header"
               })}
@@ -76,7 +77,10 @@ const PageTypeCreatePage: React.FC<PageTypeCreatePageProps> = props => {
                   {intl.formatMessage(commonMessages.generalInformations)}
                 </Typography>
                 <Typography variant="body2">
-                  <FormattedMessage defaultMessage="These are general information about this Content Type." />
+                  <FormattedMessage
+                    id="kZfIl/"
+                    defaultMessage="These are general information about this Content Type."
+                  />
                 </Typography>
               </div>
               <PageTypeDetails
@@ -89,6 +93,7 @@ const PageTypeCreatePage: React.FC<PageTypeCreatePageProps> = props => {
               <div>
                 <Typography>
                   <FormattedMessage
+                    id="OVOU1z"
                     defaultMessage="Metadata"
                     description="section header"
                   />

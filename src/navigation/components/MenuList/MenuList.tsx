@@ -101,10 +101,7 @@ const MenuList: React.FC<MenuListProps> = props => {
             onClick={() => onSort(MenuListUrlSortField.name)}
             className={classes.colTitle}
           >
-            <FormattedMessage
-              defaultMessage="Menu Title"
-              id="menuListMenutitle"
-            />
+            <FormattedMessage id="jhh/D6" defaultMessage="Menu Title" />
           </TableCellHeader>
           <TableCellHeader
             direction={
@@ -117,9 +114,9 @@ const MenuList: React.FC<MenuListProps> = props => {
             className={classes.colItems}
           >
             <FormattedMessage
+              id="0nL1D6"
               defaultMessage="Items"
               description="number of menu items"
-              id="menuListItems"
             />
           </TableCellHeader>
           <TableCell className={classes.colAction} />
@@ -184,8 +181,8 @@ const MenuList: React.FC<MenuListProps> = props => {
               <TableRow>
                 <TableCell colSpan={numberOfColumns}>
                   <FormattedMessage
+                    id="DWs4ba"
                     defaultMessage="No menus found"
-                    id="menuListNoMenus"
                   />
                 </TableCell>
               </TableRow>

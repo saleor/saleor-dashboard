@@ -171,6 +171,7 @@ const AssignMembersDialog: React.FC<AssignMembersDialogProps> = ({
     <Dialog onClose={onClose} open={open} maxWidth="sm" fullWidth>
       <DialogTitle>
         <FormattedMessage
+          id="DPz5y6"
           defaultMessage="Assign Staff Members"
           description="dialog header"
         />
@@ -181,9 +182,11 @@ const AssignMembersDialog: React.FC<AssignMembersDialogProps> = ({
           value={query}
           onChange={onQueryChange}
           label={intl.formatMessage({
+            id: "26+yUu",
             defaultMessage: "Search Staff Members"
           })}
           placeholder={intl.formatMessage({
+            id: "NIos8u",
             defaultMessage: "Search by name, email, etc..."
           })}
           fullWidth
@@ -262,11 +265,13 @@ const AssignMembersDialog: React.FC<AssignMembersDialogProps> = ({
                           {!!member ? (
                             member.isActive ? (
                               intl.formatMessage({
+                                id: "9Zlogd",
                                 defaultMessage: "Active",
                                 description: "staff member status"
                               })
                             ) : (
                               intl.formatMessage({
+                                id: "7WzUxn",
                                 defaultMessage: "Inactive",
                                 description: "staff member status"
                               })
@@ -301,7 +306,11 @@ const AssignMembersDialog: React.FC<AssignMembersDialogProps> = ({
             onSubmit(selectedMembers);
           }}
         >
-          <FormattedMessage defaultMessage="Assign" description="button" />
+          <FormattedMessage
+            id="oiuwOl"
+            defaultMessage="Assign"
+            description="button"
+          />
         </ConfirmButton>
       </DialogActions>
     </Dialog>

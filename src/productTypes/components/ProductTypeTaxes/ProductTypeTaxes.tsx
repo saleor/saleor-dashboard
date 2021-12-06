@@ -38,9 +38,9 @@ const ProductTypeTaxes: React.FC<ProductTypeTaxesProps> = props => {
     <Card className={classes.root}>
       <CardTitle
         title={intl.formatMessage({
+          id: "mUb8Gt",
           defaultMessage: "Taxes",
-          description: "section header",
-          id: "productTypeTaxesHeader"
+          description: "section header"
         })}
       />
       <CardContent>
@@ -48,8 +48,8 @@ const ProductTypeTaxes: React.FC<ProductTypeTaxesProps> = props => {
           disabled={disabled}
           displayValue={taxTypeDisplayName}
           label={intl.formatMessage({
-            defaultMessage: "Taxes",
-            id: "productTypeTaxesInputLabel"
+            id: "r+dgiv",
+            defaultMessage: "Taxes"
           })}
           name={"taxType" as keyof ProductTypeForm}
           onChange={onChange}

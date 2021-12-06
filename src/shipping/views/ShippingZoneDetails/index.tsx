@@ -234,6 +234,7 @@ const ShippingZoneDetails: React.FC<ShippingZoneDetailsProps> = ({
         }
         open={params.action === "remove"}
         title={intl.formatMessage({
+          id: "k3EI/U",
           defaultMessage: "Delete Shipping Zone",
           description: "dialog header"
         })}
@@ -241,9 +242,9 @@ const ShippingZoneDetails: React.FC<ShippingZoneDetailsProps> = ({
       >
         <DialogContentText>
           <FormattedMessage
+            id="LsgHmZ"
             defaultMessage="Are you sure you want to delete {name}?"
             description="delete shipping zone"
-            id="shippingZoneDetailsDialogsDeleteShippingZone"
             values={{
               name: (
                 <strong>
@@ -292,6 +293,7 @@ const ShippingZoneDetails: React.FC<ShippingZoneDetailsProps> = ({
         }
         open={params.action === "unassign-country"}
         title={intl.formatMessage({
+          id: "PNE6Jk",
           defaultMessage: "Delete from Shipping Zone",
           description: "unassign country, dialog header"
         })}
@@ -299,6 +301,7 @@ const ShippingZoneDetails: React.FC<ShippingZoneDetailsProps> = ({
       >
         <DialogContentText>
           <FormattedMessage
+            id="3iznRW"
             defaultMessage="Are you sure you want to delete {countryName} from this shipping zone?"
             description="unassign country"
             values={{

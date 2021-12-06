@@ -125,6 +125,7 @@ const OrderCustomer: React.FC<OrderCustomerProps> = props => {
     <Card>
       <CardTitle
         title={intl.formatMessage({
+          id: "Y7M1YQ",
           defaultMessage: "Customer",
           description: "section header"
         })}
@@ -183,6 +184,7 @@ const OrderCustomer: React.FC<OrderCustomerProps> = props => {
                   hasMore={hasMoreUsers}
                   loading={loading}
                   placeholder={intl.formatMessage({
+                    id: "hkSkNx",
                     defaultMessage: "Search Customers"
                   })}
                   onChange={handleUserChange}
@@ -196,7 +198,7 @@ const OrderCustomer: React.FC<OrderCustomerProps> = props => {
         ) : user === null ? (
           userEmail === null ? (
             <Typography>
-              <FormattedMessage defaultMessage="Anonymous user" />
+              <FormattedMessage id="Qovenh" defaultMessage="Anonymous user" />
             </Typography>
           ) : (
             <Typography className={classes.userEmail}>{userEmail}</Typography>
@@ -220,6 +222,7 @@ const OrderCustomer: React.FC<OrderCustomerProps> = props => {
                   onClick={onProfileView}
                 >
                   <FormattedMessage
+                    id="VCzrEZ"
                     defaultMessage="View Profile"
                     description="link"
                   />
@@ -230,6 +233,7 @@ const OrderCustomer: React.FC<OrderCustomerProps> = props => {
                     orders by customer */}
             {/* <div>
                 <Link underline={false} href={}>
+                  id="J4NBVR"
                   <FormattedMessage defaultMessage="View Orders"
                     description="link"
                      />
@@ -245,6 +249,7 @@ const OrderCustomer: React.FC<OrderCustomerProps> = props => {
             <div className={classes.sectionHeader}>
               <Typography className={classes.sectionHeaderTitle}>
                 <FormattedMessage
+                  id="4Jp83O"
                   defaultMessage="Contact Information"
                   description="subheader"
                 />
@@ -256,9 +261,9 @@ const OrderCustomer: React.FC<OrderCustomerProps> = props => {
             ) : order.userEmail === null ? (
               <Typography>
                 <FormattedMessage
+                  id="PX2zWy"
                   defaultMessage="Not set"
                   description="customer is not set in draft order"
-                  id="orderCustomerCustomerNotSet"
                 />
               </Typography>
             ) : (
@@ -276,7 +281,7 @@ const OrderCustomer: React.FC<OrderCustomerProps> = props => {
       <CardContent>
         <div className={classes.sectionHeader}>
           <Typography className={classes.sectionHeaderTitle}>
-            <FormattedMessage defaultMessage="Shipping Address" />
+            <FormattedMessage id="DP5VOH" defaultMessage="Shipping Address" />
           </Typography>
           {canEditAddresses && (
             <div className={classes.sectionHeaderToolbar}>
@@ -297,9 +302,9 @@ const OrderCustomer: React.FC<OrderCustomerProps> = props => {
         ) : shippingAddress === null ? (
           <Typography>
             <FormattedMessage
+              id="e7yOai"
               defaultMessage="Not set"
               description="shipping address is not set in draft order"
-              id="orderCustomerShippingAddressNotSet"
             />
           </Typography>
         ) : (
@@ -335,7 +340,7 @@ const OrderCustomer: React.FC<OrderCustomerProps> = props => {
       <CardContent>
         <div className={classes.sectionHeader}>
           <Typography className={classes.sectionHeaderTitle}>
-            <FormattedMessage defaultMessage="Billing Address" />
+            <FormattedMessage id="c7/79+" defaultMessage="Billing Address" />
           </Typography>
           {canEditAddresses && (
             <div className={classes.sectionHeaderToolbar}>
@@ -356,14 +361,15 @@ const OrderCustomer: React.FC<OrderCustomerProps> = props => {
         ) : billingAddress === null ? (
           <Typography>
             <FormattedMessage
+              id="YI6Fhj"
               defaultMessage="Not set"
               description="no address is set in draft order"
-              id="orderCustomerBillingAddressNotSet"
             />
           </Typography>
         ) : maybe(() => shippingAddress.id) === billingAddress.id ? (
           <Typography>
             <FormattedMessage
+              id="GLX9II"
               defaultMessage="Same as shipping address"
               description="billing address"
             />

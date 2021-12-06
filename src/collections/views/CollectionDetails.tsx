@@ -117,6 +117,7 @@ export const CollectionDetails: React.FC<CollectionDetailsProps> = ({
           notify({
             status: "success",
             text: intl.formatMessage({
+              id: "56vUeQ",
               defaultMessage: "Added product to collection"
             })
           });
@@ -135,6 +136,7 @@ export const CollectionDetails: React.FC<CollectionDetailsProps> = ({
         notify({
           status: "success",
           text: intl.formatMessage({
+            id: "WW+Ruy",
             defaultMessage: "Deleted product from collection"
           })
         });
@@ -150,6 +152,7 @@ export const CollectionDetails: React.FC<CollectionDetailsProps> = ({
         notify({
           status: "success",
           text: intl.formatMessage({
+            id: "Q8wHwJ",
             defaultMessage: "Deleted collection"
           })
         });
@@ -271,6 +274,7 @@ export const CollectionDetails: React.FC<CollectionDetailsProps> = ({
                 onClose={handleChannelsModalClose}
                 open={isChannelsModalOpen}
                 title={intl.formatMessage({
+                  id: "I1Mz7h",
                   defaultMessage: "Manage Collection Channel Availability"
                 })}
                 confirmButtonState="default"
@@ -327,6 +331,7 @@ export const CollectionDetails: React.FC<CollectionDetailsProps> = ({
                   }
                 >
                   <FormattedMessage
+                    id="67V0c0"
                     defaultMessage="Unassign"
                     description="unassign product from collection, button"
                   />
@@ -376,6 +381,7 @@ export const CollectionDetails: React.FC<CollectionDetailsProps> = ({
               }
               open={params.action === "remove"}
               title={intl.formatMessage({
+                id: "+wpvnk",
                 defaultMessage: "Delete Collection",
                 description: "dialog title"
               })}
@@ -383,6 +389,7 @@ export const CollectionDetails: React.FC<CollectionDetailsProps> = ({
             >
               <DialogContentText>
                 <FormattedMessage
+                  id="pVFoOk"
                   defaultMessage="Are you sure you want to delete {collectionName}?"
                   values={{
                     collectionName: (
@@ -408,12 +415,14 @@ export const CollectionDetails: React.FC<CollectionDetailsProps> = ({
               }
               open={params.action === "unassign"}
               title={intl.formatMessage({
+                id: "5OtU+V",
                 defaultMessage: "Unassign products from collection",
                 description: "dialog title"
               })}
             >
               <DialogContentText>
                 <FormattedMessage
+                  id="AulH/n"
                   defaultMessage="{counter,plural,one{Are you sure you want to unassign this product?} other{Are you sure you want to unassign {displayQuantity} products?}}"
                   values={{
                     counter: maybe(() => params.ids.length),
@@ -439,13 +448,17 @@ export const CollectionDetails: React.FC<CollectionDetailsProps> = ({
               }
               open={params.action === "removeImage"}
               title={intl.formatMessage({
+                id: "fzk04H",
                 defaultMessage: "Delete image",
                 description: "dialog title"
               })}
               variant="delete"
             >
               <DialogContentText>
-                <FormattedMessage defaultMessage="Are you sure you want to delete collection's image?" />
+                <FormattedMessage
+                  id="MxhVZv"
+                  defaultMessage="Are you sure you want to delete collection's image?"
+                />
               </DialogContentText>
             </ActionDialog>
           </>

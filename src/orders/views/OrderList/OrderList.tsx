@@ -65,6 +65,7 @@ export const OrderList: React.FC<OrderListProps> = ({ params }) => {
     notify({
       status: "success",
       text: intl.formatMessage({
+        id: "6udlH+",
         defaultMessage: "Order draft successfully created"
       })
     });

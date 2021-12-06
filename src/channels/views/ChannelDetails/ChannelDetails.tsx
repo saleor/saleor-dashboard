@@ -124,6 +124,7 @@ export const ChannelDetails: React.FC<ChannelDetailsProps> = ({
       notify({
         status: "success",
         text: intl.formatMessage({
+          id: "AkyGP2",
           defaultMessage: "Channel deleted"
         })
       });
@@ -177,6 +178,7 @@ export const ChannelDetails: React.FC<ChannelDetailsProps> = ({
     <>
       <WindowTitle
         title={intl.formatMessage({
+          id: "D9Rg+F",
           defaultMessage: "Channel details",
           description: "window title"
         })}

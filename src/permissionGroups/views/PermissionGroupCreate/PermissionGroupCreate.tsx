@@ -24,6 +24,7 @@ const PermissionGroupCreateView: React.FC = () => {
       notify({
         status: "success",
         text: intl.formatMessage({
+          id: "eUjFjW",
           defaultMessage: "Permission group created"
         })
       });
@@ -70,6 +71,7 @@ const PermissionGroupCreateView: React.FC = () => {
     <>
       <WindowTitle
         title={intl.formatMessage({
+          id: "Irflxf",
           defaultMessage: "Create category",
           description: "window title"
         })}

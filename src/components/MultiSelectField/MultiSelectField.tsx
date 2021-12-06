@@ -110,7 +110,7 @@ export const MultiSelectField: React.FC<MultiSelectFieldProps> = props => {
           })
         ) : (
           <MenuItem disabled={true}>
-            <FormattedMessage defaultMessage="No results found" />
+            <FormattedMessage id="hX5PAb" defaultMessage="No results found" />
           </MenuItem>
         )}
       </Select>

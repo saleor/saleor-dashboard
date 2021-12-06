@@ -88,6 +88,7 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ params }) => {
         notify({
           status: "success",
           text: intl.formatMessage({
+            id: "jTifz+",
             defaultMessage: "Successfully created attribute"
           })
         });

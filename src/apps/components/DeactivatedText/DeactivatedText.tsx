@@ -9,6 +9,7 @@ export const DeactivatedText: React.FC<{}> = () => {
   return (
     <Typography className={classes.root}>
       <FormattedMessage
+        id="5+Xcrz"
         defaultMessage="Deactivated"
         description="app deactivated"
       />

@@ -97,6 +97,7 @@ const ProductVariantPrice: React.FC<ProductVariantPriceProps> = props => {
       <Card>
         <CardTitle
           title={intl.formatMessage({
+            id: "Xm9qOu",
             defaultMessage: "Pricing",
             description: "product pricing, section header"
           })}
@@ -105,9 +106,9 @@ const ProductVariantPrice: React.FC<ProductVariantPriceProps> = props => {
           <Typography variant="caption">
             {intl.formatMessage(
               disabledMessage || {
+                id: "e48Igh",
                 defaultMessage: "There is no channel to define prices for",
-                description: "variant pricing section subtitle",
-                id: "product variant pricing card disabled subtitle"
+                description: "variant pricing section subtitle"
               }
             )}
           </Typography>
@@ -120,6 +121,7 @@ const ProductVariantPrice: React.FC<ProductVariantPriceProps> = props => {
     <Card>
       <CardTitle
         title={intl.formatMessage({
+          id: "Xm9qOu",
           defaultMessage: "Pricing",
           description: "product pricing, section header"
         })}
@@ -127,6 +129,7 @@ const ProductVariantPrice: React.FC<ProductVariantPriceProps> = props => {
       <CardContent className={classes.pricingContent}>
         <Typography variant="caption" className={classes.caption}>
           {intl.formatMessage({
+            id: "VvA7ai",
             defaultMessage:
               "Channels that don’t have assigned prices will use their parent channel to define the price. Price will be converted to channel’s currency",
             description: "info text"
@@ -137,18 +140,21 @@ const ProductVariantPrice: React.FC<ProductVariantPriceProps> = props => {
             <TableRow>
               <TableCell>
                 <FormattedMessage
+                  id="c8UT0c"
                   defaultMessage="Channel Name"
                   description="tabel column header"
                 />
               </TableCell>
               <TableCell className={classes.colType}>
                 <FormattedMessage
+                  id="JFtFgc"
                   defaultMessage="Selling Price"
                   description="tabel column header"
                 />
               </TableCell>
               <TableCell className={classes.colType}>
                 <FormattedMessage
+                  id="HEOBp6"
                   defaultMessage="Cost Price"
                   description="tabel column header"
                 />
@@ -177,6 +183,7 @@ const ProductVariantPrice: React.FC<ProductVariantPriceProps> = props => {
                           className={classes.input}
                           error={!!priceError}
                           label={intl.formatMessage({
+                            id: "b1zuN9",
                             defaultMessage: "Price"
                           })}
                           name={`${listing.id}-channel-price`}
@@ -206,6 +213,7 @@ const ProductVariantPrice: React.FC<ProductVariantPriceProps> = props => {
                           className={classes.input}
                           error={!!costPriceError}
                           label={intl.formatMessage({
+                            id: "HEOBp6",
                             defaultMessage: "Cost Price",
                             description: "tabel column header"
                           })}
@@ -236,7 +244,10 @@ const ProductVariantPrice: React.FC<ProductVariantPriceProps> = props => {
               () => (
                 <TableRow>
                   <TableCell colSpan={numberOfColumns}>
-                    <FormattedMessage defaultMessage="No channels found" />
+                    <FormattedMessage
+                      id="/glQgs"
+                      defaultMessage="No channels found"
+                    />
                   </TableCell>
                 </TableRow>
               )

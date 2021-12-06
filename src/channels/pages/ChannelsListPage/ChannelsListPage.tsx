@@ -60,6 +60,7 @@ export const ChannelsListPage: React.FC<ChannelsListPageProps> = ({
           hasLimits(limits, "channels") &&
           intl.formatMessage(
             {
+              id: "rZMT44",
               defaultMessage: "{count}/{max} channels used",
               description: "created channels counter"
             },
@@ -78,6 +79,7 @@ export const ChannelsListPage: React.FC<ChannelsListPageProps> = ({
           data-test="add-channel"
         >
           <FormattedMessage
+            id="OGm8wO"
             defaultMessage="Create Channel"
             description="button"
           />
@@ -86,11 +88,15 @@ export const ChannelsListPage: React.FC<ChannelsListPageProps> = ({
       {limitReached && (
         <LimitReachedAlert
           title={intl.formatMessage({
+            id: "PTW56s",
             defaultMessage: "Channel limit reached",
             description: "alert"
           })}
         >
-          <FormattedMessage defaultMessage="You have reached your channel limit, you will be no longer able to add channels to your store. If you would like to up your limit, contact your administration staff about raising your limits." />
+          <FormattedMessage
+            id="ZMy18J"
+            defaultMessage="You have reached your channel limit, you will be no longer able to add channels to your store. If you would like to up your limit, contact your administration staff about raising your limits."
+          />
         </LimitReachedAlert>
       )}
       <Card>
@@ -99,12 +105,14 @@ export const ChannelsListPage: React.FC<ChannelsListPageProps> = ({
             <TableRow>
               <TableCellHeader>
                 <FormattedMessage
+                  id="j/vV0n"
                   defaultMessage="Channel Name"
                   description="channel name"
                 />
               </TableCellHeader>
               <TableCell className={classes.colRight}>
                 <FormattedMessage
+                  id="VHuzgq"
                   defaultMessage="Actions"
                   description="table actions"
                 />
@@ -145,7 +153,10 @@ export const ChannelsListPage: React.FC<ChannelsListPageProps> = ({
               () => (
                 <TableRow>
                   <TableCell colSpan={numberOfColumns}>
-                    <FormattedMessage defaultMessage="No channels found" />
+                    <FormattedMessage
+                      id="/glQgs"
+                      defaultMessage="No channels found"
+                    />
                   </TableCell>
                 </TableRow>
               )

@@ -49,6 +49,7 @@ export const ProductDetailsForm: React.FC<ProductDetailsFormProps> = ({
           disabled={disabled}
           fullWidth
           label={intl.formatMessage({
+            id: "6AMFki",
             defaultMessage: "Name",
             description: "product name"
           })}
@@ -76,6 +77,7 @@ export const ProductDetailsForm: React.FC<ProductDetailsFormProps> = ({
             helperText={getProductErrorMessage(formErrors.rating, intl)}
             disabled={disabled}
             label={intl.formatMessage({
+              id: "L7N+0y",
               defaultMessage: "Product Rating",
               description: "product rating"
             })}

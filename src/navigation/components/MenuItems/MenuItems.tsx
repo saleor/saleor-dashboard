@@ -123,8 +123,8 @@ const Placeholder: React.FC = props => {
     <Paper className={classes.row} elevation={0}>
       <Typography>
         <FormattedMessage
+          id="WwZfNK"
           defaultMessage="Add new menu item to begin creating menu"
-          id="menuItemsPlaceholder"
         />
       </Typography>
     </Paper>
@@ -219,9 +219,9 @@ const MenuItems: React.FC<MenuItemsProps> = props => {
     <Card>
       <CardTitle
         title={intl.formatMessage({
+          id: "dEUZg2",
           defaultMessage: "Menu Items",
-          description: "header",
-          id: "menuItemsHeader"
+          description: "header"
         })}
         toolbar={
           <Button color="primary" disabled={!canUndo} onClick={onUndo}>
@@ -279,9 +279,9 @@ const MenuItems: React.FC<MenuItemsProps> = props => {
           data-test-id="createNewMenuItem"
         >
           <FormattedMessage
+            id="Uf3oHA"
             defaultMessage="Create new item"
             description="add new menu item"
-            id="menuItemsAddItem"
           />
         </Button>
       </CardActions>

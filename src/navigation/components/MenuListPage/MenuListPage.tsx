@@ -39,9 +39,9 @@ const MenuListPage: React.FC<MenuListPageProps> = ({
           data-test-id="addMenu"
         >
           <FormattedMessage
+            id="JXRYQg"
             defaultMessage="Create Menu"
             description="button"
-            id="menuListPageAddMenu"
           />
         </Button>
       </PageHeader>

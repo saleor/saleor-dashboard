@@ -59,6 +59,7 @@ const CustomerListPage: React.FC<CustomerListPageProps> = ({
           data-test-id="createCustomer"
         >
           <FormattedMessage
+            id="QLVddq"
             defaultMessage="Create customer"
             description="button"
           />
@@ -67,6 +68,7 @@ const CustomerListPage: React.FC<CustomerListPageProps> = ({
       <Card>
         <FilterBar
           allTabLabel={intl.formatMessage({
+            id: "xQK2EC",
             defaultMessage: "All Customers",
             description: "tab name"
           })}
@@ -74,6 +76,7 @@ const CustomerListPage: React.FC<CustomerListPageProps> = ({
           filterStructure={structure}
           initialSearch={initialSearch}
           searchPlaceholder={intl.formatMessage({
+            id: "2mRLis",
             defaultMessage: "Search Customer"
           })}
           tabs={tabs}

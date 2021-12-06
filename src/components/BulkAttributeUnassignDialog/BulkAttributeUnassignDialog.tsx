@@ -32,6 +32,7 @@ const BulkAttributeUnassignDialog: React.FC<BulkAttributeUnassignDialogProps> = 
   >
     <DialogContentText>
       <FormattedMessage
+        id="XwrKOi"
         defaultMessage="{counter,plural,one{Are you sure you want to unassign this attribute from {itemTypeName}?} other{Are you sure you want to unassign {attributeQuantity} attributes from {itemTypeName}?}}"
         description="unassign multiple attributes from item"
         values={{

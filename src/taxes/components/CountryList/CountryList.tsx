@@ -43,13 +43,16 @@ const CountryList: React.FC<CountryListProps> = props => {
         <TableHead>
           <TableRow>
             <TableCell>
-              <FormattedMessage defaultMessage="Country Code" />
+              <FormattedMessage id="07KB2d" defaultMessage="Country Code" />
             </TableCell>
             <TableCell>
-              <FormattedMessage defaultMessage="Country Name" />
+              <FormattedMessage id="0GJfWd" defaultMessage="Country Name" />
             </TableCell>
             <TableCell className={classes.textRight}>
-              <FormattedMessage defaultMessage="Reduced Tax Rates" />
+              <FormattedMessage
+                id="/JENWS"
+                defaultMessage="Reduced Tax Rates"
+              />
             </TableCell>
           </TableRow>
         </TableHead>
@@ -82,7 +85,10 @@ const CountryList: React.FC<CountryListProps> = props => {
             () => (
               <TableRow>
                 <TableCell colSpan={3}>
-                  <FormattedMessage defaultMessage="No countries found" />
+                  <FormattedMessage
+                    id="3BTtL2"
+                    defaultMessage="No countries found"
+                  />
                 </TableCell>
               </TableRow>
             )

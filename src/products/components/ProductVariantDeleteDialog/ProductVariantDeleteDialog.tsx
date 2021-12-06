@@ -44,6 +44,7 @@ const ProductVariantDeleteDialog: React.FC<ProductVariantDeleteDialogProps> = pr
     <Dialog onClose={onClose} open={open}>
       <DialogTitle>
         <FormattedMessage
+          id="GFJabu"
           defaultMessage="Delete Variant"
           description="dialog header"
         />
@@ -51,6 +52,7 @@ const ProductVariantDeleteDialog: React.FC<ProductVariantDeleteDialogProps> = pr
       <DialogContent>
         <DialogContentText>
           <FormattedMessage
+            id="WwNtFn"
             defaultMessage="Are you sure you want to delete {name}?"
             description="delete product variant"
             values={{
@@ -70,6 +72,7 @@ const ProductVariantDeleteDialog: React.FC<ProductVariantDeleteDialogProps> = pr
           onClick={onConfirm}
         >
           <FormattedMessage
+            id="rbkmfG"
             defaultMessage="Delete variant"
             description="button"
           />

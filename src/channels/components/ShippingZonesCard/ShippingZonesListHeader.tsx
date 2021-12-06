@@ -41,6 +41,7 @@ const useStyles = makeStyles(
 
 const messages = defineMessages({
   title: {
+    id: "r/gr4q",
     defaultMessage: "{zonesCount} Shipping Zones",
     description: "title"
   }

@@ -36,6 +36,7 @@ const PermissionGroupInfo: React.FC<PermissionGroupInfoProps> = ({
         <TextField
           name="name"
           label={intl.formatMessage({
+            id: "rs815i",
             defaultMessage: "Group name",
             description: "text field label"
           })}

@@ -46,6 +46,7 @@ export const OrderWeight: React.FC<OrderWeightProps> = ({
     <Card>
       <CardTitle
         title={intl.formatMessage({
+          id: "vWapBZ",
           defaultMessage: "Order Weight",
           description: "card title"
         })}
@@ -56,11 +57,13 @@ export const OrderWeight: React.FC<OrderWeightProps> = ({
           label={
             <>
               <FormattedMessage
+                id="r2dojI"
                 defaultMessage="Restrict order weight"
                 description="checkbox label"
               />
               <Typography variant="caption">
                 <FormattedMessage
+                  id="7v8suW"
                   defaultMessage="This rate will apply to all orders"
                   description="info text"
                 />
@@ -84,6 +87,7 @@ export const OrderWeight: React.FC<OrderWeightProps> = ({
                 error={!!formErrors.minimumOrderWeight}
                 fullWidth
                 label={intl.formatMessage({
+                  id: "w+5Djm",
                   defaultMessage: "Min. Order Weight"
                 })}
                 name="minValue"
@@ -112,6 +116,7 @@ export const OrderWeight: React.FC<OrderWeightProps> = ({
                 error={!!formErrors.maximumOrderWeight}
                 fullWidth
                 label={intl.formatMessage({
+                  id: "u0V06N",
                   defaultMessage: "Max. Order Weight"
                 })}
                 name="maxValue"

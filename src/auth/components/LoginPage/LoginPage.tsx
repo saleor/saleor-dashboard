@@ -89,14 +89,20 @@ const LoginCard: React.FC<LoginCardProps> = props => {
           {error && (
             <div className={classes.panel} data-test="loginErrorMessage">
               <Typography variant="caption">
-                <FormattedMessage defaultMessage="Sorry, your username and/or password are incorrect. Please try again." />
+                <FormattedMessage
+                  id="vHCQ9e"
+                  defaultMessage="Sorry, your username and/or password are incorrect. Please try again."
+                />
               </Typography>
             </div>
           )}
           {externalError && (
             <div className={classes.panel} data-test="loginErrorMessage">
               <Typography variant="caption">
-                <FormattedMessage defaultMessage="Sorry, login went wrong. Please try again." />
+                <FormattedMessage
+                  id="VhoPoT"
+                  defaultMessage="Sorry, login went wrong. Please try again."
+                />
               </Typography>
             </div>
           )}
@@ -118,6 +124,7 @@ const LoginCard: React.FC<LoginCardProps> = props => {
             fullWidth
             autoComplete="password"
             label={intl.formatMessage({
+              id: "5sg7KC",
               defaultMessage: "Password"
             })}
             name="password"
@@ -140,18 +147,24 @@ const LoginCard: React.FC<LoginCardProps> = props => {
               type="submit"
               data-test="submit"
             >
-              <FormattedMessage defaultMessage="Login" description="button" />
+              <FormattedMessage
+                id="x8piIu"
+                defaultMessage="Login"
+                description="button"
+              />
             </Button>
           </div>
           <FormSpacer />
           <Typography>
             <FormattedMessage
+              id="tpUtKP"
               defaultMessage="Forgot password? {resetPasswordLink}"
               description="description"
               values={{
                 resetPasswordLink: (
                   <a className={classes.link} onClick={onPasswordRecovery}>
                     <FormattedMessage
+                      id="rVkNwf"
                       defaultMessage="Use this link to recover it"
                       description="link"
                     />
@@ -167,6 +180,7 @@ const LoginCard: React.FC<LoginCardProps> = props => {
               <FormSpacer />
               <Typography>
                 <FormattedMessage
+                  id="ENBELI"
                   defaultMessage="or login using"
                   description="description"
                 />

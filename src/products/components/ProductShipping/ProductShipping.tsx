@@ -34,6 +34,7 @@ const ProductShipping: React.FC<ProductShippingProps> = props => {
     <Card>
       <CardTitle
         title={intl.formatMessage({
+          id: "3rIMq/",
           defaultMessage: "Shipping",
           description: "product shipping"
         })}
@@ -43,6 +44,7 @@ const ProductShipping: React.FC<ProductShippingProps> = props => {
           <TextField
             disabled={disabled}
             label={intl.formatMessage({
+              id: "SUbxSK",
               defaultMessage: "Weight",
               description: "product weight"
             })}

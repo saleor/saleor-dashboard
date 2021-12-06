@@ -308,6 +308,7 @@ export const WeightRatesUpdate: React.FC<WeightRatesUpdateProps> = ({
           onClose={handleChannelsModalClose}
           open={isChannelsModalOpen}
           title={intl.formatMessage({
+            id: "eR3vfw",
             defaultMessage: "Manage Channels Availability"
           })}
           confirmButtonState="default"
@@ -387,6 +388,7 @@ export const WeightRatesUpdate: React.FC<WeightRatesUpdateProps> = ({
         toolbar={
           <Button color="primary" onClick={() => openModal("unassign-product")}>
             <FormattedMessage
+              id="YdeHZX"
               defaultMessage="Unassign"
               description="unassign products from shipping method, button"
             />
