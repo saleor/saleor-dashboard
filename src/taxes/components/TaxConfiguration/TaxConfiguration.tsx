@@ -2,7 +2,6 @@ import { Card, CardActions, CardContent } from "@material-ui/core";
 import CardTitle from "@saleor/components/CardTitle";
 import ControlledCheckbox from "@saleor/components/ControlledCheckbox";
 import FormSpacer from "@saleor/components/FormSpacer";
-import Hr from "@saleor/components/Hr";
 import { sectionNames } from "@saleor/intl";
 import { Button, makeStyles } from "@saleor/macaw-ui";
 import React from "react";
@@ -67,7 +66,6 @@ export const TaxConfiguration: React.FC<TaxConfigurationProps> = props => {
         />
         <FormSpacer />
       </CardContent>
-      <Hr />
       <CardActions>
         <Button disabled={disabled} onClick={onTaxFetch}>
           <FormattedMessage defaultMessage="Fetch taxes" description="button" />

@@ -51,6 +51,7 @@ const useStyles = makeStyles(
     loadMoreLoaderContainer: {
       alignItems: "center",
       display: "flex",
+      marginTop: theme.spacing(2),
       height: theme.spacing(3),
       justifyContent: "center"
     },
@@ -147,7 +148,7 @@ const AssignAttributeDialog: React.FC<AssignAttributeDialogProps> = ({
         id={scrollableTargetId}
       >
         <InfiniteScroll
-          dataLength={attributes?.length}
+          dataLength={attributes?.length || 0}
           next={onFetchMore}
           hasMore={hasMore}
           scrollThreshold="100px"
