@@ -10,7 +10,6 @@ import {
   Sort,
   TabActionDialog
 } from "../types";
-import { CategoryPageTab } from "./components/CategoryUpdatePage";
 
 const categorySectionUrl = "/categories/";
 
@@ -40,10 +39,7 @@ export type CategoryUrlDialog =
   | "delete"
   | "delete-categories"
   | "delete-products";
-export type CategoryUrlQueryParams = BulkAction &
-  Dialog<CategoryUrlDialog> &
-  Pagination &
-  ActiveTab<CategoryPageTab>;
+export type CategoryUrlQueryParams = BulkAction & Dialog<CategoryUrlDialog>;
 export const categoryUrl = (id: string, params?: CategoryUrlQueryParams) =>
   categoryPath(encodeURIComponent(id)) + "?" + stringifyQs(params);
 

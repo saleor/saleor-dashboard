@@ -52,14 +52,6 @@ export enum VoucherDetailsPageTab {
   products = "products"
 }
 
-export function voucherDetailsPageTab(tab: string): VoucherDetailsPageTab {
-  return tab === VoucherDetailsPageTab.products
-    ? VoucherDetailsPageTab.products
-    : tab === VoucherDetailsPageTab.collections
-    ? VoucherDetailsPageTab.collections
-    : VoucherDetailsPageTab.categories;
-}
-
 export interface VoucherDetailsPageFormData extends MetadataFormData {
   applyOncePerCustomer: boolean;
   applyOncePerOrder: boolean;
