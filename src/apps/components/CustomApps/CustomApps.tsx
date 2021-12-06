@@ -86,7 +86,7 @@ const CustomApps: React.FC<CustomAppsProps> = ({
                 <TableCell className={classes.colName}>
                   <Typography className={classes.text} variant="body2">
                     <FormattedMessage
-                      defaultMessage="Your custom created apps will be shown here."
+                      defaultMessage="Your custom-created apps will be shown here."
                       description="custom apps content"
                     />
                   </Typography>
