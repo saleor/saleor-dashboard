@@ -1,4 +1,4 @@
-import { Card, CardContent, Typography } from "@material-ui/core";
+import { ButtonBase, Card, CardContent, Typography } from "@material-ui/core";
 import CardSpacer from "@saleor/components/CardSpacer";
 import CardTitle from "@saleor/components/CardTitle";
 import Container from "@saleor/components/Container";
@@ -75,8 +75,9 @@ export const AppDetailsPage: React.FC<AppDetailsPageProps> = ({
                 description="link"
               />
             </ExternalLink>
-            <Button
+            <ButtonBase
               className={classes.headerLinkContainer}
+              disableRipple
               onClick={navigateToAppSettings}
             >
               <SVG src={settingsIcon} />
@@ -85,11 +86,10 @@ export const AppDetailsPage: React.FC<AppDetailsPageProps> = ({
                 defaultMessage="Edit settings"
                 description="link"
               />
-            </Button>
-            <Button
-              variant="tertiary"
+            </ButtonBase>
+            <ButtonBase
               className={classes.headerLinkContainer}
-              disableFocusRipple
+              disableRipple
               onClick={data.isActive ? onAppDeactivateOpen : onAppActivateOpen}
             >
               <SVG src={activateIcon} />
@@ -104,7 +104,7 @@ export const AppDetailsPage: React.FC<AppDetailsPageProps> = ({
                   description="link"
                 />
               )}
-            </Button>
+            </ButtonBase>
           </div>
         ) : (
           <Skeleton />
