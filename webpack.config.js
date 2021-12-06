@@ -17,7 +17,7 @@ const resolve = path.resolve.bind(path, __dirname);
 let bundleAnalyzerPlugin;
 let speedMeasureWrapper = fn => fn;
 const analyze = process.env.ANALYZE;
-if (!!analyze) {
+if (analyze) {
   const smp = new SpeedMeasurePlugin();
   speedMeasureWrapper = smp.wrap;
   bundleAnalyzerPlugin = new BundleAnalyzerPlugin();
@@ -118,12 +118,17 @@ module.exports = speedMeasureWrapper((env, argv) => {
     module: {
       rules: [
         {
+          test: /\.(jsx?|tsx?)$/,
           exclude: /node_modules/,
-          loader: "babel-loader",
-          options: {
-            configFile: resolve("./babel.config.js")
-          },
-          test: /\.(jsx?|tsx?)$/
+          use: [
+            {
+              loader: "esbuild-loader",
+              options: {
+                loader: "tsx",
+                target: "es2015"
+              }
+            }
+          ]
         },
         {
           include: [
