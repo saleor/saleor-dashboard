@@ -23,7 +23,8 @@ const useStyles = makeStyles(
     menuItem: {
       "&:not(:last-of-type)": {
         marginBottom: theme.spacing()
-      }
+      },
+      borderRadius: 4
     },
     paper: {
       padding: theme.spacing()

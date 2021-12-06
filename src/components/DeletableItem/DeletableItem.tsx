@@ -1,19 +1,5 @@
-import { makeStyles } from "@material-ui/core/styles";
-import TrashIcon from "@saleor/icons/Trash";
+import { DeleteIcon, IconButton } from "@saleor/macaw-ui";
 import React from "react";
-
-const useStyles = makeStyles(
-  theme => ({
-    container: {
-      cursor: "pointer",
-      padding: theme.spacing(3),
-      display: "flex",
-      justifyContent: "center",
-      alignItems: "center"
-    }
-  }),
-  { name: "DeletableItem" }
-);
 
 interface DeletableItemProps {
   onDelete: (id: string) => void;
@@ -21,14 +7,12 @@ interface DeletableItemProps {
 }
 
 const DeletableItem: React.FC<DeletableItemProps> = ({ onDelete, id }) => {
-  const classes = useStyles({});
-
   const handleDelete = () => onDelete(id);
 
   return (
-    <div className={classes.container} onClick={handleDelete}>
-      <TrashIcon />
-    </div>
+    <IconButton variant="secondary" hoverOutline onClick={handleDelete}>
+      <DeleteIcon />
+    </IconButton>
   );
 };
 

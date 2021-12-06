@@ -9,7 +9,7 @@ import classNames from "classnames";
 import React from "react";
 
 const useStyles = makeStyles(
-  {
+  theme => ({
     formControl: {
       padding: 0,
       width: "100%"
@@ -20,18 +20,20 @@ const useStyles = makeStyles(
     },
     radioLabel: {
       "& > span": {
-        padding: "10px 6px"
+        paddingTop: theme.spacing(),
+        paddingBottom: theme.spacing()
       }
     },
     secondLabel: {
       display: "block",
       fontSize: "12px"
     }
-  },
+  }),
   { name: "RadioSwitchField" }
 );
 
 interface RadioSwitchFieldProps {
+  classes?: Record<"radioLabel", string>;
   className?: string;
   disabled?: boolean;
   error?: boolean;
@@ -44,6 +46,7 @@ interface RadioSwitchFieldProps {
 
 export const RadioSwitchField: React.FC<RadioSwitchFieldProps> = props => {
   const {
+    classes: overrideClasses,
     className,
     disabled,
     error,
@@ -80,14 +83,20 @@ export const RadioSwitchField: React.FC<RadioSwitchFieldProps> = props => {
       >
         <FormControlLabel
           value="true"
-          className={classes.radioLabel}
+          className={classNames(
+            classes.radioLabel,
+            overrideClasses?.radioLabel
+          )}
           control={<Radio color="primary" />}
           label={firstOptionLabel}
           name={name}
         />
         <FormControlLabel
           value="false"
-          className={classes.radioLabel}
+          className={classNames(
+            classes.radioLabel,
+            overrideClasses?.radioLabel
+          )}
           control={<Radio color="primary" />}
           label={secondOptionLabel}
           name={name}

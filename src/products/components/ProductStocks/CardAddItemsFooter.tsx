@@ -9,8 +9,6 @@ const useStyles = makeStyles(
     container: {
       paddingTop: theme.spacing(1),
       paddingBottom: theme.spacing(1),
-      paddingLeft: theme.spacing(3),
-      paddingRight: theme.spacing(2),
       display: "flex",
       flexDirection: "row",
       justifyContent: "space-between",
@@ -48,6 +46,7 @@ const CardAddItemsFooter: React.FC<CardAddItemsFooterProps> = ({
         {intl.formatMessage(title)}
       </Link>
       <IconButton
+        hoverOutline
         variant="secondary"
         data-test-id={testIds.button}
         color="primary"

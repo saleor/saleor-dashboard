@@ -41,7 +41,7 @@ const useStyles = makeStyles(
       colTitle: {}
     },
     colAction: {
-      width: 80
+      width: 84
     },
     colItems: {
       textAlign: "right"
