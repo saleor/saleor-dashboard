@@ -4,9 +4,9 @@ import useAppChannel from "@saleor/components/AppLayout/AppChannelContext";
 import NotFoundPage from "@saleor/components/NotFoundPage";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@saleor/config";
 import { PAGINATE_BY } from "@saleor/config";
+import { useLocalPaginationState } from "@saleor/hooks/useLocalPaginator";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
-import { createPaginationState } from "@saleor/hooks/usePaginator";
 import useShop from "@saleor/hooks/useShop";
 import { commonMessages } from "@saleor/intl";
 import { getById } from "@saleor/orders/components/OrderReturnPage/utils";
@@ -61,7 +61,7 @@ const ShippingZoneDetails: React.FC<ShippingZoneDetailsProps> = ({
   const intl = useIntl();
   const shop = useShop();
 
-  const paginationState = createPaginationState(PAGINATE_BY, params);
+  const [paginationState] = useLocalPaginationState(PAGINATE_BY);
 
   const { result: searchWarehousesOpts, loadMore, search } = useWarehouseSearch(
     {

@@ -9,11 +9,11 @@ import { DEFAULT_INITIAL_SEARCH_DATA } from "@saleor/config";
 import { PAGINATE_BY } from "@saleor/config";
 import useBulkActions from "@saleor/hooks/useBulkActions";
 import useChannels from "@saleor/hooks/useChannels";
+import useLocalPaginator, {
+  useLocalPaginationState
+} from "@saleor/hooks/useLocalPaginator";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
-import usePaginator, {
-  createPaginationState
-} from "@saleor/hooks/usePaginator";
 import { sectionNames } from "@saleor/intl";
 import { commonMessages } from "@saleor/intl";
 import {
@@ -80,9 +80,11 @@ export const WeightRatesUpdate: React.FC<WeightRatesUpdateProps> = ({
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();
-  const paginate = usePaginator();
 
-  const paginationState = createPaginationState(PAGINATE_BY, params);
+  const [paginationState, setPaginationState] = useLocalPaginationState(
+    PAGINATE_BY
+  );
+  const paginate = useLocalPaginator(setPaginationState);
 
   const { data, loading, refetch } = useShippingZone({
     displayLoader: true,
@@ -159,8 +161,7 @@ export const WeightRatesUpdate: React.FC<WeightRatesUpdateProps> = ({
 
   const { loadNextPage, loadPreviousPage, pageInfo } = paginate(
     rate?.excludedProducts.pageInfo,
-    paginationState,
-    params
+    paginationState
   );
 
   const [

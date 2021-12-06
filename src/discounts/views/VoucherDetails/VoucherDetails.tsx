@@ -36,11 +36,11 @@ import {
 } from "@saleor/discounts/urls";
 import useBulkActions from "@saleor/hooks/useBulkActions";
 import useChannels from "@saleor/hooks/useChannels";
+import useLocalPaginator, {
+  useSectionLocalPaginationState
+} from "@saleor/hooks/useLocalPaginator";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
-import usePaginator, {
-  createPaginationState
-} from "@saleor/hooks/usePaginator";
 import useShop from "@saleor/hooks/useShop";
 import { commonMessages, sectionNames } from "@saleor/intl";
 import useCategorySearch from "@saleor/searches/useCategorySearch";
@@ -54,7 +54,7 @@ import {
   useMetadataUpdate,
   usePrivateMetadataUpdate
 } from "@saleor/utils/metadata/updateMetadata";
-import React, { useMemo } from "react";
+import React, { useMemo, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { categoryUrl } from "../../../categories/urls";
@@ -73,7 +73,6 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
   params
 }) => {
   const navigate = useNavigator();
-  const paginate = usePaginator();
   const notify = useNotifier();
   const shop = useShop();
   const { isSelected, listElements, reset, toggle, toggleAll } = useBulkActions(
@@ -104,14 +103,17 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
   const [updateMetadata] = useMetadataUpdate({});
   const [updatePrivateMetadata] = usePrivateMetadataUpdate({});
 
-  const paginationState = createPaginationState(PAGINATE_BY, params);
+  const [activeTab, setActiveTab] = useState<VoucherDetailsPageTab>(
+    VoucherDetailsPageTab.categories
+  );
+  const [paginationState, setPaginationState] = useSectionLocalPaginationState(
+    PAGINATE_BY,
+    activeTab
+  );
+  const paginate = useLocalPaginator(setPaginationState);
   const changeTab = (tab: VoucherDetailsPageTab) => {
     reset();
-    navigate(
-      voucherUrl(id, {
-        activeTab: tab
-      })
-    );
+    setActiveTab(tab);
   };
 
   const { data, loading } = useVoucherDetails({
@@ -246,10 +248,9 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
                       );
 
                       const tabPageInfo =
-                        params.activeTab === VoucherDetailsPageTab.categories
+                        activeTab === VoucherDetailsPageTab.categories
                           ? maybe(() => data.voucher.categories.pageInfo)
-                          : params.activeTab ===
-                            VoucherDetailsPageTab.collections
+                          : activeTab === VoucherDetailsPageTab.collections
                           ? maybe(() => data.voucher.collections.pageInfo)
                           : maybe(() => data.voucher.products.pageInfo);
 
@@ -290,7 +291,7 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
                         loadNextPage,
                         loadPreviousPage,
                         pageInfo
-                      } = paginate(tabPageInfo, paginationState, params);
+                      } = paginate(tabPageInfo, paginationState);
 
                       return (
                         <>
@@ -379,7 +380,7 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
                             }
                             onProductClick={id => () =>
                               navigate(productUrl(id))}
-                            activeTab={params.activeTab}
+                            activeTab={activeTab}
                             onBack={() => navigate(voucherListUrl())}
                             onTabClick={changeTab}
                             onSubmit={handleSubmit}
