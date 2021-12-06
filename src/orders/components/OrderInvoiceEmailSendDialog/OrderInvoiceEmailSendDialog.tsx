@@ -5,12 +5,13 @@ import {
   DialogContentText,
   DialogTitle
 } from "@material-ui/core";
+import BackButton from "@saleor/components/BackButton";
 import ConfirmButton from "@saleor/components/ConfirmButton";
 import FormSpacer from "@saleor/components/FormSpacer";
 import { InvoiceErrorFragment } from "@saleor/fragments/types/InvoiceErrorFragment";
 import { InvoiceFragment } from "@saleor/fragments/types/InvoiceFragment";
 import { buttonMessages } from "@saleor/intl";
-import { Button, ConfirmButtonTransitionState } from "@saleor/macaw-ui";
+import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import { DialogProps } from "@saleor/types";
 import getInvoiceErrorMessage from "@saleor/utils/errors/invoice";
 import React from "react";
@@ -62,9 +63,7 @@ const OrderInvoiceEmailSendDialog: React.FC<OrderInvoiceEmailSendDialogProps> = 
         )}
       </DialogContent>
       <DialogActions>
-        <Button onClick={onClose}>
-          <FormattedMessage {...buttonMessages.back} />
-        </Button>
+        <BackButton onClick={onClose} />
         <ConfirmButton transitionState={confirmButtonState} onClick={onSend}>
           <FormattedMessage {...buttonMessages.send} />
         </ConfirmButton>

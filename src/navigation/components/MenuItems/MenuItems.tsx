@@ -174,13 +174,12 @@ const Node: React.FC<NodeRendererProps> = props => {
         <Button onClick={node.onClick}>
           <FormattedMessage {...buttonMessages.show} />
         </Button>
-        <IconButton variant="secondary" hoverOutline onClick={node.onEdit}>
+        <IconButton variant="secondary" onClick={node.onEdit}>
           <EditIcon />
         </IconButton>
         <IconButton
           className={classes.deleteButton}
           variant="secondary"
-          hoverOutline
           onClick={() =>
             node.onChange({
               id: node.id as any,

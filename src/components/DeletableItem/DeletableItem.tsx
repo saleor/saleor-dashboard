@@ -10,7 +10,7 @@ const DeletableItem: React.FC<DeletableItemProps> = ({ onDelete, id }) => {
   const handleDelete = () => onDelete(id);
 
   return (
-    <IconButton variant="secondary" hoverOutline onClick={handleDelete}>
+    <IconButton variant="secondary" onClick={handleDelete}>
       <DeleteIcon />
     </IconButton>
   );

@@ -1,4 +1,3 @@
-import emptyMetadata from "@assets/images/empty-metadata.svg";
 import {
   Card,
   CardActions,
@@ -11,12 +10,11 @@ import {
   TextField,
   Typography
 } from "@material-ui/core";
-import ToggleIcon from "@material-ui/icons/ArrowDropDown";
 import { FormChange } from "@saleor/hooks/useForm";
-import { Button, DeleteIcon, IconButton } from "@saleor/macaw-ui";
+import { Button, DeleteIcon, ExpandIcon, IconButton } from "@saleor/macaw-ui";
 import { MetadataInput } from "@saleor/types/globalTypes";
+import classNames from "classnames";
 import React, { useEffect } from "react";
-import SVG from "react-inlinesvg";
 import { useIntl } from "react-intl";
 import { FormattedMessage } from "react-intl";
 
@@ -61,16 +59,30 @@ const MetadataCard: React.FC<MetadataCardProps> = ({
       data-test-expanded={expanded}
     >
       <CardTitle
+        className={classes.header}
         title={
-          isPrivate
-            ? intl.formatMessage({
-                defaultMessage: "Private Metadata",
-                description: "header"
-              })
-            : intl.formatMessage({
-                defaultMessage: "Metadata",
-                description: "header"
-              })
+          <>
+            {isPrivate
+              ? intl.formatMessage({
+                  defaultMessage: "Private Metadata",
+                  description: "header"
+                })
+              : intl.formatMessage({
+                  defaultMessage: "Metadata",
+                  description: "header"
+                })}
+            <IconButton
+              className={classNames(classes.expandBtn, {
+                [classes.rotate]: expanded
+              })}
+              hoverOutline={false}
+              variant="secondary"
+              data-test="expand"
+              onClick={() => setExpanded(!expanded)}
+            >
+              <ExpandIcon />
+            </IconButton>
+          </>
         }
       />
       {data === undefined ? (
@@ -81,52 +93,28 @@ const MetadataCard: React.FC<MetadataCardProps> = ({
         <>
           <CardContent className={classes.content}>
             {data.length > 0 && (
-              <div className={classes.togglable}>
-                <Typography color="textSecondary" variant="body2">
-                  <FormattedMessage
-                    defaultMessage="{number,plural,one{{number} Field} other{{number} Fields}}"
-                    description="number of metadata fields in model"
-                    values={{
-                      number: data.length
-                    }}
-                  />
-                </Typography>
-                <IconButton
-                  variant="secondary"
-                  hoverOutline
-                  data-test="expand"
-                  onClick={() => setExpanded(!expanded)}
-                >
-                  <ToggleIcon />
-                </IconButton>
-              </div>
+              <Typography color="textSecondary" variant="body2">
+                <FormattedMessage
+                  defaultMessage="{number,plural,one{{number} string} other{{number} strings}}"
+                  description="number of metadata fields in model"
+                  values={{
+                    number: data.length
+                  }}
+                />
+              </Typography>
             )}
           </CardContent>
           {expanded && (
             <>
               {data.length === 0 ? (
-                <div className={classes.emptyContainer}>
-                  <SVG className={classes.emptyImage} src={emptyMetadata} />
-                  <Typography color="textSecondary">
-                    {isPrivate ? (
-                      <FormattedMessage
-                        defaultMessage="There is no private metadata created for this element."
-                        description="empty metadata text"
-                      />
-                    ) : (
-                      <FormattedMessage
-                        defaultMessage="There is no metadata created for this element."
-                        description="empty metadata text"
-                      />
-                    )}
-                  </Typography>
-                  <Typography color="textSecondary">
+                <CardContent className={classes.emptyContainer}>
+                  <Typography variant="body2" color="textSecondary">
                     <FormattedMessage
-                      defaultMessage="Use the button below to add new metadata field"
+                      defaultMessage="No metadata created for this element. Use the button below to add new metadata field."
                       description="empty metadata text"
                     />
                   </Typography>
-                </div>
+                </CardContent>
               ) : (
                 <Table className={classes.table}>
                   <TableHead>
@@ -205,6 +193,7 @@ const MetadataCard: React.FC<MetadataCardProps> = ({
               )}
               <CardActions className={classes.actions}>
                 <Button
+                  variant="secondary"
                   data-test="addField"
                   onClick={() =>
                     onChange({

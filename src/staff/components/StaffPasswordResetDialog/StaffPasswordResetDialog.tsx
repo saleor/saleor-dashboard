@@ -5,13 +5,14 @@ import {
   DialogTitle,
   TextField
 } from "@material-ui/core";
+import BackButton from "@saleor/components/BackButton";
 import ConfirmButton from "@saleor/components/ConfirmButton";
 import Form from "@saleor/components/Form";
 import FormSpacer from "@saleor/components/FormSpacer";
 import { AccountErrorFragment } from "@saleor/fragments/types/AccountErrorFragment";
 import useModalDialogErrors from "@saleor/hooks/useModalDialogErrors";
 import { buttonMessages } from "@saleor/intl";
-import { Button, ConfirmButtonTransitionState } from "@saleor/macaw-ui";
+import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import { DialogProps } from "@saleor/types";
 import { getFormErrors } from "@saleor/utils/errors";
 import getAccountErrorMessage from "@saleor/utils/errors/account";
@@ -96,9 +97,7 @@ const StaffPasswordResetDialog: React.FC<StaffPasswordResetDialogProps> = ({
               />
             </DialogContent>
             <DialogActions>
-              <Button onClick={onClose}>
-                <FormattedMessage {...buttonMessages.back} />
-              </Button>
+              <BackButton onClick={onClose} />
               <ConfirmButton
                 disabled={data.newPassword.length < 8}
                 transitionState={confirmButtonState}

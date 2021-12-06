@@ -5,11 +5,12 @@ import {
   DialogTitle,
   TextField
 } from "@material-ui/core";
+import BackButton from "@saleor/components/BackButton";
 import ConfirmButton from "@saleor/components/ConfirmButton";
 import Form from "@saleor/components/Form";
 import { MenuErrorFragment } from "@saleor/fragments/types/MenuErrorFragment";
 import { buttonMessages } from "@saleor/intl";
-import { Button, ConfirmButtonTransitionState } from "@saleor/macaw-ui";
+import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import { getFormErrors } from "@saleor/utils/errors";
 import getMenuErrorMessage from "@saleor/utils/errors/menu";
 import React from "react";
@@ -72,9 +73,7 @@ const MenuCreateDialog: React.FC<MenuCreateDialogProps> = ({
               />
             </DialogContent>
             <DialogActions>
-              <Button onClick={onClose}>
-                <FormattedMessage {...buttonMessages.back} />
-              </Button>
+              <BackButton onClick={onClose} />
               <ConfirmButton
                 transitionState={confirmButtonState}
                 onClick={submit}

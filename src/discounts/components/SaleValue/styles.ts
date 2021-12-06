@@ -7,6 +7,9 @@ export const useStyles = makeStyles(
         paddingBottom: 0
       }
     },
+    colValue: {
+      width: 300
+    },
     colName: {
       fontSize: 14,
       paddingLeft: 0,

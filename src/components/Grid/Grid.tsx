@@ -18,6 +18,9 @@ const useStyles = makeStyles(
       gridTemplateColumns: "4fr 9fr"
     },
     root: {
+      "& > div": {
+        overflow: "hidden"
+      },
       display: "grid",
       gridColumnGap: theme.spacing(3),
       gridRowGap: theme.spacing(3),

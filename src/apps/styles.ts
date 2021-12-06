@@ -87,6 +87,7 @@ export const useStyles = makeStyles(
         fontWeight: 500
       },
       alignItems: "center",
+      color: theme.palette.text.primary,
       display: "flex",
       fontSize: theme.spacing(2),
       fontWeight: 500,

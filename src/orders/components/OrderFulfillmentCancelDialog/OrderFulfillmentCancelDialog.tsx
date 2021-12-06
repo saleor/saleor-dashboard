@@ -5,6 +5,7 @@ import {
   DialogContentText,
   DialogTitle
 } from "@material-ui/core";
+import BackButton from "@saleor/components/BackButton";
 import ConfirmButton from "@saleor/components/ConfirmButton";
 import Form from "@saleor/components/Form";
 import FormSpacer from "@saleor/components/FormSpacer";
@@ -12,11 +13,7 @@ import SingleAutocompleteSelectField from "@saleor/components/SingleAutocomplete
 import { OrderErrorFragment } from "@saleor/fragments/types/OrderErrorFragment";
 import { WarehouseFragment } from "@saleor/fragments/types/WarehouseFragment";
 import { buttonMessages } from "@saleor/intl";
-import {
-  Button,
-  ConfirmButtonTransitionState,
-  makeStyles
-} from "@saleor/macaw-ui";
+import { ConfirmButtonTransitionState, makeStyles } from "@saleor/macaw-ui";
 import getOrderErrorMessage from "@saleor/utils/errors/order";
 import createSingleAutocompleteSelectHandler from "@saleor/utils/handlers/singleAutocompleteSelectChangeHandler";
 import React from "react";
@@ -126,9 +123,7 @@ const OrderFulfillmentCancelDialog: React.FC<OrderFulfillmentCancelDialogProps> 
                 )}
               </DialogContent>
               <DialogActions>
-                <Button onClick={onClose}>
-                  <FormattedMessage {...buttonMessages.back} />
-                </Button>
+                <BackButton onClick={onClose} />
                 <ConfirmButton
                   data-test="submit"
                   disabled={formData.warehouseId === null}

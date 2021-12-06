@@ -9,6 +9,7 @@ import {
   TextField,
   Typography
 } from "@material-ui/core";
+import BackButton from "@saleor/components/BackButton";
 import Checkbox from "@saleor/components/Checkbox";
 import ConfirmButton from "@saleor/components/ConfirmButton";
 import Form from "@saleor/components/Form";
@@ -16,8 +17,7 @@ import FormSpacer from "@saleor/components/FormSpacer";
 import Hr from "@saleor/components/Hr";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import { ShopInfo_shop_countries } from "@saleor/components/Shop/types/ShopInfo";
-import { buttonMessages } from "@saleor/intl";
-import { Button, ConfirmButtonTransitionState } from "@saleor/macaw-ui";
+import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import useScrollableDialogStyle from "@saleor/styles/useScrollableDialogStyle";
 import { filter } from "fuzzaldrin";
 import React from "react";
@@ -190,9 +190,7 @@ const ShippingZoneCountriesAssignDialog: React.FC<ShippingZoneCountriesAssignDia
                 </ResponsiveTable>
               </DialogContent>
               <DialogActions>
-                <Button onClick={onClose}>
-                  <FormattedMessage {...buttonMessages.back} />
-                </Button>
+                <BackButton onClick={onClose} />
                 <ConfirmButton
                   transitionState={confirmButtonState}
                   type="submit"
