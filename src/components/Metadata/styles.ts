@@ -28,6 +28,12 @@ const useStyles = makeStyles(
         ...colName
       },
       colValue: {},
+      actions: {
+        "&&": {
+          paddingBottom: theme.spacing(2),
+          paddingTop: theme.spacing(2)
+        }
+      },
       content: {
         paddingBottom: 0,
         paddingTop: theme.spacing()

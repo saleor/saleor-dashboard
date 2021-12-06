@@ -50,9 +50,7 @@ export const useStyles = makeStyles(
       position: "relative"
     },
     label: {
-      lineHeight: 1.2,
-      marginBottom: 5,
-      marginTop: 0
+      lineHeight: 1.2
     },
     listingLabel: {
       marginTop: 9
