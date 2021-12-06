@@ -20,6 +20,6 @@ export const giftCardExportDialogMessages = defineMessages({
   },
   successAlertTitle: {
     defaultMessage: "Exporting CSV",
-    description: "gift card export success alert title"
+    description: "gift card export csv success alert title"
   }
 });
