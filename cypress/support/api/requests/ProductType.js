@@ -109,3 +109,22 @@ export function getProductType(productTypeId) {
   }`;
   return cy.sendRequestWithQuery(query).its("body.data.productType");
 }
+
+export function createDigitalContent(variantId) {
+  const mutation = `mutation{
+    digitalContentCreate(input:{
+      useDefaultSettings:true,
+      automaticFulfillment: true,
+      contentFile:""
+    }, variantId:"${variantId}"){
+      content{
+        id
+      }
+      errors{
+        field
+        message
+      }
+    }
+  }`;
+  return cy.sendRequestWithQuery(mutation);
+}
