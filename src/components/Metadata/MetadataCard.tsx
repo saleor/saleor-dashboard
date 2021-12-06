@@ -93,7 +93,6 @@ const MetadataCard: React.FC<MetadataCardProps> = ({
                 </Typography>
                 <IconButton
                   variant="secondary"
-                  hoverOutline
                   data-test="expand"
                   onClick={() => setExpanded(!expanded)}
                 >
