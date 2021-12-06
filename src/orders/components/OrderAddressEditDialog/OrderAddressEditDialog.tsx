@@ -5,6 +5,7 @@ import {
   DialogTitle
 } from "@material-ui/core";
 import AddressEdit from "@saleor/components/AddressEdit";
+import BackButton from "@saleor/components/BackButton";
 import ConfirmButton from "@saleor/components/ConfirmButton";
 import Form from "@saleor/components/Form";
 import { ShopInfo_shop_countries } from "@saleor/components/Shop/types/ShopInfo";
@@ -14,11 +15,7 @@ import useAddressValidation from "@saleor/hooks/useAddressValidation";
 import useModalDialogErrors from "@saleor/hooks/useModalDialogErrors";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { buttonMessages } from "@saleor/intl";
-import {
-  Button,
-  ConfirmButtonTransitionState,
-  makeStyles
-} from "@saleor/macaw-ui";
+import { ConfirmButtonTransitionState, makeStyles } from "@saleor/macaw-ui";
 import { AddressInput } from "@saleor/types/globalTypes";
 import createSingleAutocompleteSelectHandler from "@saleor/utils/handlers/singleAutocompleteSelectChangeHandler";
 import { mapCountriesToChoices } from "@saleor/utils/maps";
@@ -107,9 +104,7 @@ const OrderAddressEditDialog: React.FC<OrderAddressEditDialogProps> = props => {
                 />
               </DialogContent>
               <DialogActions>
-                <Button onClick={onClose}>
-                  <FormattedMessage {...buttonMessages.back} />
-                </Button>
+                <BackButton onClick={onClose} />
                 <ConfirmButton
                   data-test-id="order-address-edit-dialog-confirm-button"
                   transitionState={confirmButtonState}

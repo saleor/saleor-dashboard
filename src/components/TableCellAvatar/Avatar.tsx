@@ -1,10 +1,7 @@
 import { Avatar as MuiAvatar } from "@material-ui/core";
-import Cached from "@material-ui/icons/Cached";
-import { makeStyles } from "@saleor/macaw-ui";
+import { ImageIcon, makeStyles } from "@saleor/macaw-ui";
 import classNames from "classnames";
 import React from "react";
-
-import Image from "../../icons/Image";
 
 export const AVATAR_MARGIN = 40;
 
@@ -64,13 +61,9 @@ const Avatar: React.FC<AvatarProps> = ({
       })}
     >
       {badge}
-      {thumbnail === undefined ? (
+      {!thumbnail ? (
         <MuiAvatar className={classNames(classes.avatar, avatarProps)}>
-          <Cached color="primary" />
-        </MuiAvatar>
-      ) : thumbnail === null ? (
-        <MuiAvatar className={classNames(classes.avatar, avatarProps)}>
-          <Image color="primary" />
+          <ImageIcon color="primary" />
         </MuiAvatar>
       ) : (
         <MuiAvatar

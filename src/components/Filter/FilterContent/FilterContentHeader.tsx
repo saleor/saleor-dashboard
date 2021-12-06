@@ -37,7 +37,12 @@ const FilterContentHeader: React.FC<FilterContentHeaderProps> = ({
         <FormattedMessage defaultMessage="Filters" />
       </Typography>
       <div>
-        <Button data-test="clear" className={classes.clear} onClick={onClear}>
+        <Button
+          data-test="clear"
+          variant="secondary"
+          className={classes.clear}
+          onClick={onClear}
+        >
           <FormattedMessage {...buttonMessages.clear} />
         </Button>
         <Button data-test="submit" variant="primary" type="submit">

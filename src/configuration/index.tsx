@@ -3,7 +3,6 @@ import { useUser } from "@saleor/auth";
 import { channelsListUrl } from "@saleor/channels/urls";
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import { APP_VERSION as dashboardVersion } from "@saleor/config";
-import useNavigator from "@saleor/hooks/useNavigator";
 import useShop from "@saleor/hooks/useShop";
 import Attributes from "@saleor/icons/Attributes";
 import Channels from "@saleor/icons/Channels";
@@ -47,7 +46,7 @@ export function createConfigurationMenu(intl: IntlShape): MenuSection[] {
             defaultMessage: "Determine attributes used to create product types",
             id: "configurationMenuAttributes"
           }),
-          icon: <Attributes fontSize="inherit" viewBox="0 0 44 44" />,
+          icon: <Attributes />,
           permissions: [
             PermissionEnum.MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES,
             PermissionEnum.MANAGE_PAGE_TYPES_AND_ATTRIBUTES
@@ -61,7 +60,7 @@ export function createConfigurationMenu(intl: IntlShape): MenuSection[] {
             defaultMessage: "Define types of products you sell",
             id: "configurationMenuProductTypes"
           }),
-          icon: <ProductTypes fontSize="inherit" viewBox="0 0 44 44" />,
+          icon: <ProductTypes />,
           permissions: [PermissionEnum.MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES],
           title: intl.formatMessage(sectionNames.productTypes),
           url: productTypeListUrl(),
@@ -79,7 +78,7 @@ export function createConfigurationMenu(intl: IntlShape): MenuSection[] {
             defaultMessage: "Manage how your store charges tax",
             id: "configurationMenuTaxes"
           }),
-          icon: <Taxes fontSize="inherit" viewBox="0 0 44 44" />,
+          icon: <Taxes />,
           permissions: [PermissionEnum.MANAGE_SETTINGS],
           title: intl.formatMessage(sectionNames.taxes),
           url: taxSection,
@@ -97,7 +96,7 @@ export function createConfigurationMenu(intl: IntlShape): MenuSection[] {
             defaultMessage: "Manage your employees and their permissions",
             id: "configurationMenuStaff"
           }),
-          icon: <StaffMembers fontSize="inherit" viewBox="0 0 44 44" />,
+          icon: <StaffMembers />,
           permissions: [PermissionEnum.MANAGE_STAFF],
           title: intl.formatMessage(sectionNames.staff),
           url: staffListUrl(),
@@ -109,7 +108,7 @@ export function createConfigurationMenu(intl: IntlShape): MenuSection[] {
               "Manage your permission groups and their permissions",
             id: "configurationMenuPermissionGroups"
           }),
-          icon: <PermissionGroups fontSize="inherit" viewBox="0 0 44 44" />,
+          icon: <PermissionGroups />,
           permissions: [PermissionEnum.MANAGE_STAFF],
           title: intl.formatMessage(sectionNames.permissionGroups),
           url: permissionGroupListUrl(),
@@ -127,7 +126,7 @@ export function createConfigurationMenu(intl: IntlShape): MenuSection[] {
             defaultMessage: "Manage how you ship out orders",
             id: "configurationMenuShipping"
           }),
-          icon: <ShippingMethods fontSize="inherit" viewBox="0 0 44 44" />,
+          icon: <ShippingMethods />,
           permissions: [PermissionEnum.MANAGE_SHIPPING],
           title: intl.formatMessage(sectionNames.shipping),
           url: shippingZonesListUrl(),
@@ -138,7 +137,7 @@ export function createConfigurationMenu(intl: IntlShape): MenuSection[] {
             defaultMessage: "Manage and update your warehouse information",
             id: "configurationMenuWarehouses"
           }),
-          icon: <Warehouses fontSize="inherit" viewBox="0 0 44 44" />,
+          icon: <Warehouses />,
           permissions: [PermissionEnum.MANAGE_PRODUCTS],
           title: intl.formatMessage(sectionNames.warehouses),
           url: warehouseSection,
@@ -156,7 +155,7 @@ export function createConfigurationMenu(intl: IntlShape): MenuSection[] {
             defaultMessage: "Define and manage your sales channels",
             id: "configurationMenuChannels"
           }),
-          icon: <Channels fontSize="inherit" viewBox="0 0 44 44" />,
+          icon: <Channels />,
           permissions: [PermissionEnum.MANAGE_CHANNELS],
           title: intl.formatMessage(sectionNames.channels),
           url: channelsListUrl(),
@@ -174,7 +173,7 @@ export function createConfigurationMenu(intl: IntlShape): MenuSection[] {
             defaultMessage: "Define types of content pages used in your store",
             id: "configurationMenuPageTypes"
           }),
-          icon: <PageTypes fontSize="inherit" viewBox="0 0 44 44" />,
+          icon: <PageTypes />,
           permissions: [
             PermissionEnum.MANAGE_PAGES,
             PermissionEnum.MANAGE_PAGE_TYPES_AND_ATTRIBUTES
@@ -195,7 +194,7 @@ export function createConfigurationMenu(intl: IntlShape): MenuSection[] {
             defaultMessage: "Define how users can navigate through your store",
             id: "configurationMenuNavigation"
           }),
-          icon: <Navigation fontSize="inherit" viewBox="0 0 44 44" />,
+          icon: <Navigation />,
           permissions: [PermissionEnum.MANAGE_MENUS],
           title: intl.formatMessage(sectionNames.navigation),
           url: menuListUrl(),
@@ -206,7 +205,7 @@ export function createConfigurationMenu(intl: IntlShape): MenuSection[] {
             defaultMessage: "View and update your site settings",
             id: "configurationMenuSiteSettings"
           }),
-          icon: <SiteSettings fontSize="inherit" viewBox="0 0 44 44" />,
+          icon: <SiteSettings />,
           permissions: [PermissionEnum.MANAGE_SETTINGS],
           title: intl.formatMessage(sectionNames.siteSettings),
           url: siteSettingsUrl(),
@@ -243,7 +242,6 @@ export const ConfigurationSection: React.FC = () => {
     coreVersion
   };
 
-  const navigate = useNavigator();
   const user = useUser();
   const intl = useIntl();
 
@@ -253,7 +251,6 @@ export const ConfigurationSection: React.FC = () => {
       <ConfigurationPage
         menu={createConfigurationMenu(intl)}
         user={maybe(() => user.user)}
-        onSectionClick={navigate}
         versionInfo={versions}
       />
     </>

@@ -42,7 +42,6 @@ import VoucherInfo from "../VoucherInfo";
 import VoucherLimits from "../VoucherLimits";
 import VoucherRequirements from "../VoucherRequirements";
 import VoucherSummary from "../VoucherSummary";
-import { useStyles } from "../VoucherSummary/styles";
 import VoucherTypes from "../VoucherTypes";
 import VoucherValue from "../VoucherValue";
 
@@ -147,7 +146,6 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
   productListToolbar
 }) => {
   const intl = useIntl();
-  const classes = useStyles();
   const {
     makeChangeHandler: makeMetadataChangeHandler
   } = useMetadataChangeTrigger();
@@ -220,10 +218,7 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
             <Backlink onClick={onBack}>
               {intl.formatMessage(sectionNames.vouchers)}
             </Backlink>
-            <PageHeader
-              className={classes.wrapAnywhere}
-              title={voucher?.code}
-            />
+            <PageHeader title={voucher?.code} />
             <Grid>
               <div>
                 <VoucherInfo

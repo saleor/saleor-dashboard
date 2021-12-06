@@ -1,11 +1,10 @@
 import { Typography } from "@material-ui/core";
 import { fade } from "@material-ui/core/styles/colorManipulator";
-import { makeStyles } from "@saleor/macaw-ui";
+import { ImageIcon, makeStyles } from "@saleor/macaw-ui";
 import classNames from "classnames";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
-import ImageIcon from "../../icons/Image";
 import Dropzone from "../Dropzone";
 
 interface ImageUploadProps {
@@ -41,9 +40,9 @@ const useStyles = makeStyles(
       width: 148
     },
     photosIcon: {
-      height: "64px",
+      height: 32,
       margin: "0 auto",
-      width: "64px"
+      width: 32
     },
     photosIconContainer: {
       padding: theme.spacing(5, 0),

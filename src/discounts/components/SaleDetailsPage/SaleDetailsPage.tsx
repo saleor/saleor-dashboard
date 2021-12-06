@@ -33,7 +33,6 @@ import DiscountProducts from "../DiscountProducts";
 import DiscountVariants from "../DiscountVariants";
 import SaleInfo from "../SaleInfo";
 import SaleSummary from "../SaleSummary";
-import { useStyles } from "../SaleSummary/styles";
 import SaleType from "../SaleType";
 import SaleValue from "../SaleValue";
 
@@ -141,7 +140,6 @@ const SaleDetailsPage: React.FC<SaleDetailsPageProps> = ({
   toggleAll
 }) => {
   const intl = useIntl();
-  const classes = useStyles();
   const {
     makeChangeHandler: makeMetadataChangeHandler
   } = useMetadataChangeTrigger();
@@ -177,7 +175,7 @@ const SaleDetailsPage: React.FC<SaleDetailsPageProps> = ({
             <Backlink onClick={onBack}>
               {intl.formatMessage(sectionNames.sales)}
             </Backlink>
-            <PageHeader className={classes.wrapAnywhere} title={sale?.name} />
+            <PageHeader title={sale?.name} />
             <Grid>
               <div>
                 <SaleInfo

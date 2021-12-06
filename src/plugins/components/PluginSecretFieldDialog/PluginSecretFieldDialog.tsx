@@ -5,12 +5,13 @@ import {
   DialogTitle,
   TextField
 } from "@material-ui/core";
+import BackButton from "@saleor/components/BackButton";
 import ConfirmButton from "@saleor/components/ConfirmButton";
 import Form from "@saleor/components/Form";
 import Skeleton from "@saleor/components/Skeleton";
 import { PluginConfigurationFragment_configuration } from "@saleor/fragments/types/PluginConfigurationFragment";
 import { buttonMessages } from "@saleor/intl";
-import { Button, ConfirmButtonTransitionState } from "@saleor/macaw-ui";
+import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import { maybe } from "@saleor/misc";
 import { DialogProps } from "@saleor/types";
 import { ConfigurationTypeFieldEnum } from "@saleor/types/globalTypes";
@@ -79,9 +80,7 @@ const PluginSecretFieldDialog: React.FC<PluginSecretFieldDialogProps> = ({
               />
             </DialogContent>
             <DialogActions>
-              <Button onClick={onClose}>
-                <FormattedMessage {...buttonMessages.back} />
-              </Button>
+              <BackButton onClick={onClose} />
               <ConfirmButton
                 transitionState={confirmButtonState}
                 onClick={submit}

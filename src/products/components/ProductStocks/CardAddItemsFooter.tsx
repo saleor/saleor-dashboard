@@ -46,7 +46,6 @@ const CardAddItemsFooter: React.FC<CardAddItemsFooterProps> = ({
         {intl.formatMessage(title)}
       </Link>
       <IconButton
-        hoverOutline
         variant="secondary"
         data-test-id={testIds.button}
         color="primary"

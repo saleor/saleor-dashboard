@@ -3,13 +3,13 @@ import {
   CardContent,
   TableBody,
   TableCell,
+  TableHead,
   TableRow,
   Typography
 } from "@material-ui/core";
 import CardTitle from "@saleor/components/CardTitle";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
-import TableHead from "@saleor/components/TableHead";
 import { DiscountErrorFragment } from "@saleor/fragments/types/DiscountErrorFragment";
 import { renderCollection } from "@saleor/misc";
 import { getFormErrors } from "@saleor/utils/errors";
@@ -59,7 +59,11 @@ const SaleValue: React.FC<SaleValueProps> = ({
         </Typography>
       </CardContent>
       <ResponsiveTable className={classes.table}>
-        <TableHead colSpan={numberOfColumns} disabled={disabled} items={[]}>
+        <colgroup>
+          <col />
+          <col className={classes.colValue} />
+        </colgroup>
+        <TableHead>
           <TableCell className={classes.colName}>
             <span>
               <FormattedMessage

@@ -1,5 +1,4 @@
-import Draggable from "@saleor/icons/Draggable";
-import { makeStyles } from "@saleor/macaw-ui";
+import { DragIcon, makeStyles } from "@saleor/macaw-ui";
 import classNames from "classnames";
 import React from "react";
 import { SortableHandle as SortableHandleHoc } from "react-sortable-hoc";
@@ -22,7 +21,7 @@ const SortableHandle = SortableHandleHoc(props => {
   const classes = useStyles(props);
 
   return (
-    <Draggable className={classNames(classes.drag, className)} {...restProps} />
+    <DragIcon className={classNames(classes.drag, className)} {...restProps} />
   );
 });
 
