@@ -1,21 +1,9 @@
 import { Divider, Typography } from "@material-ui/core";
-import { makeStyles } from "@material-ui/core/styles";
 import { ChannelShippingZone } from "@saleor/channels/pages/ChannelDetailsPage/types";
 import DeletableItem from "@saleor/components/DeletableItem";
 import React from "react";
 
-const useStyles = makeStyles(
-  theme => ({
-    container: {
-      padding: theme.spacing(1, 0),
-      display: "flex",
-      flexDirection: "row",
-      justifyContent: "space-between",
-      alignItems: "center"
-    }
-  }),
-  { name: "ShippingZoneItem" }
-);
+import useStyles from "./styles";
 
 interface ShippingZoneItemProps {
   zone: ChannelShippingZone;

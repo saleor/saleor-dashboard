@@ -1,12 +1,12 @@
 import { ClickAwayListener } from "@material-ui/core";
 import { ChannelShippingZones } from "@saleor/channels/pages/ChannelDetailsPage/types";
 import SingleAutocompleteSelectField from "@saleor/components/SingleAutocompleteSelectField";
-import { makeStyles } from "@saleor/macaw-ui";
 import CardAddItemsFooter from "@saleor/products/components/ProductStocks/CardAddItemsFooter";
 import { mapNodeToChoice } from "@saleor/utils/maps";
 import React, { useEffect, useRef, useState } from "react";
 import { defineMessages } from "react-intl";
 
+import useStyles from "./styles";
 import { ShippingZonesProps } from "./types";
 
 const messages = defineMessages({
@@ -15,15 +15,6 @@ const messages = defineMessages({
     description: "add shipping zone title"
   }
 });
-
-const useStyles = makeStyles(
-  theme => ({
-    root: {
-      paddingRight: theme.spacing(1)
-    }
-  }),
-  { name: "ShippingZonesCardListFooter" }
-);
 
 type ShippingZonesCardListFooterProps = ShippingZonesProps;
 
