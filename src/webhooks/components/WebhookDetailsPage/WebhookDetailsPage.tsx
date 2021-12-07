@@ -82,13 +82,11 @@ const WebhookDetailsPage: React.FC<WebhookDetailsPageProps> = ({
 
         const handleSyncEventsSelect = createSyncEventsSelectHandler(
           change,
-          data.syncEvents,
-          syncEventsChoices
+          data.syncEvents
         );
         const handleAsyncEventsSelect = createAsyncEventsSelectHandler(
           change,
-          data.asyncEvents,
-          asyncEventsChoices
+          data.asyncEvents
         );
 
         return (

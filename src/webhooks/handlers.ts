@@ -1,45 +1,37 @@
-import { MultiAutocompleteChoiceType } from "@saleor/components/MultiAutocompleteSelectField";
 import { ChangeEvent } from "@saleor/hooks/useForm";
 import {
   WebhookEventTypeAsync,
   WebhookEventTypeSync
 } from "@saleor/types/globalTypes";
-import createMultiAutocompleteSelectHandler from "@saleor/utils/handlers/multiAutocompleteSelectChangeHandler";
+import { toggle } from "@saleor/utils/lists";
 
-import { mapAsyncEventsToChoices, mapSyncEventsToChoices } from "./utils";
+import { filterSelectedAsyncEvents } from "./utils";
 
 export const createSyncEventsSelectHandler = (
   change: (event: ChangeEvent, cb?: () => void) => void,
-  syncEvents: WebhookEventTypeSync[],
-  syncEventsChoices: MultiAutocompleteChoiceType[]
-) =>
-  createMultiAutocompleteSelectHandler(
-    event => change(event),
-    syncEvents =>
-      change({
-        target: {
-          name: "syncEvents",
-          value: syncEvents.map(event => event.value)
-        }
-      }),
-    mapSyncEventsToChoices(syncEvents),
-    syncEventsChoices
-  );
+  syncEvents: WebhookEventTypeSync[]
+) => (event: ChangeEvent) => {
+  const events = toggle(event.target.value, syncEvents, (a, b) => a === b);
+
+  change({
+    target: {
+      name: "syncEvents",
+      value: events
+    }
+  });
+};
 
 export const createAsyncEventsSelectHandler = (
   change: (event: ChangeEvent, cb?: () => void) => void,
-  asyncEvents: WebhookEventTypeAsync[],
-  asyncEventsChoices: MultiAutocompleteChoiceType[]
-) =>
-  createMultiAutocompleteSelectHandler(
-    event => change(event),
-    asyncEvents =>
-      change({
-        target: {
-          name: "asyncEvents",
-          value: asyncEvents.map(event => event.value)
-        }
-      }),
-    mapAsyncEventsToChoices(asyncEvents, asyncEvents),
-    asyncEventsChoices
-  );
+  asyncEvents: WebhookEventTypeAsync[]
+) => (event: ChangeEvent) => {
+  const events = toggle(event.target.value, asyncEvents, (a, b) => a === b);
+  const filteredEvents = filterSelectedAsyncEvents(events);
+
+  change({
+    target: {
+      name: "asyncEvents",
+      value: filteredEvents
+    }
+  });
+};
