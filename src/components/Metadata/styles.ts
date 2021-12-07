@@ -39,12 +39,18 @@ const useStyles = makeStyles(
         paddingTop: theme.spacing()
       },
       emptyContainer: {
-        paddingBottom: theme.spacing(4),
-        paddingTop: theme.spacing(3),
-        textAlign: "center"
+        paddingBottom: 0,
+        paddingTop: 0
       },
-      emptyImage: {
-        marginBottom: theme.spacing(2)
+      expandBtn: {
+        position: "relative",
+        left: theme.spacing(1),
+        top: -2
+      },
+      header: {
+        "&&": {
+          paddingBottom: theme.spacing(1)
+        }
       },
       input: {
         padding: theme.spacing(0.5, 2)
@@ -53,12 +59,8 @@ const useStyles = makeStyles(
         padding: `13px 16px`
       },
       table: {
+        marginTop: theme.spacing(2),
         tableLayout: "fixed"
-      },
-      togglable: {
-        alignItems: "center",
-        display: "flex",
-        justifyContent: "space-between"
       }
     };
   },

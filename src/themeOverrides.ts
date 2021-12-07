@@ -7,6 +7,9 @@ const themeOverrides: Partial<Theme> = {
         paddingBottom: 8,
         paddingTop: 8
       },
+      head: {
+        height: 32
+      },
       root: {
         height: 56,
         paddingBottom: 4,
