@@ -10,4 +10,7 @@ const props: Omit<ErrorPageProps, "classes"> = {
 
 storiesOf("Views / Error page", module)
   .addDecorator(Decorator)
-  .add("default", () => <ErrorPage {...props} />);
+  .add("default", () => <ErrorPage {...props} />)
+  .add("with error id", () => (
+    <ErrorPage {...props} id="LS5E4RahA4Dc+mNICEUKXPaVkOR1ChT=" />
+  ));
