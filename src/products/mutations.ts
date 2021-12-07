@@ -337,6 +337,7 @@ export const variantUpdateMutation = gql`
     $id: ID!
     $attributes: [AttributeValueInput!]
     $sku: String
+    $quantityLimitPerCustomer: Int
     $trackInventory: Boolean!
     $stocks: [StockInput!]!
     $preorder: PreorderSettingsInput
@@ -354,6 +355,7 @@ export const variantUpdateMutation = gql`
         trackInventory: $trackInventory
         preorder: $preorder
         weight: $weight
+        quantityLimitPerCustomer: $quantityLimitPerCustomer
       }
     ) {
       errors {

@@ -27,7 +27,8 @@ const SiteCheckoutSettingsCard: React.FC<SiteCheckoutSettingsCardProps> = ({
   const formErrors = getFormErrors(
     [
       "reserveStockDurationAuthenticatedUser",
-      "reserveStockDurationAnonymousUser"
+      "reserveStockDurationAnonymousUser",
+      "limitQuantityPerCheckout"
     ],
     errors
   );
@@ -80,6 +81,30 @@ const SiteCheckoutSettingsCard: React.FC<SiteCheckoutSettingsCardProps> = ({
           InputProps={{
             inputProps: {
               autoComplete: "none"
+            }
+          }}
+        />
+      </CardContent>
+      <CardTitle title={intl.formatMessage(messages.checkoutLimits)} />
+      <CardContent>
+        <TextField
+          disabled={disabled}
+          error={!!formErrors.reserveStockDurationAuthenticatedUser}
+          type="number"
+          fullWidth
+          name="limitQuantityPerCheckout"
+          label={intl.formatMessage(messages.checkoutLineLimit)}
+          helperText={intl.formatMessage(messages.checkoutLimitsDescription)}
+          value={
+            !!data.limitQuantityPerCheckout
+              ? String(data.limitQuantityPerCheckout)
+              : ""
+          }
+          onChange={onChange}
+          InputProps={{
+            inputProps: {
+              autoComplete: "none",
+              min: 0
             }
           }}
         />
