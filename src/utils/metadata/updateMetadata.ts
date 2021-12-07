@@ -24,6 +24,12 @@ const updateMetadata = gql`
       errors {
         ...MetadataErrorFragment
       }
+      item {
+        ...MetadataFragment
+        ... on Node {
+          id
+        }
+      }
     }
     deleteMetadata(id: $id, keys: $keysToDelete) {
       errors {
