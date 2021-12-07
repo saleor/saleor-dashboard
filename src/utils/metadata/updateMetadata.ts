@@ -61,6 +61,12 @@ const updatePrivateMetadata = gql`
       errors {
         ...MetadataErrorFragment
       }
+      item {
+        ...MetadataFragment
+        ... on Node {
+          id
+        }
+      }
     }
     deletePrivateMetadata(id: $id, keys: $keysToDelete) {
       errors {
