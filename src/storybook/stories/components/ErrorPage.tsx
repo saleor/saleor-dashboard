@@ -5,7 +5,8 @@ import React from "react";
 import Decorator from "../../Decorator";
 
 const props: Omit<ErrorPageProps, "classes"> = {
-  onBack: () => undefined
+  onBack: () => undefined,
+  onRefresh: () => undefined
 };
 
 storiesOf("Views / Error page", module)

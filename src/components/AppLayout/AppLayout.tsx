@@ -223,6 +223,7 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
                     <ErrorPage
                       id={appState.error.id}
                       onBack={handleErrorBack}
+                      onRefresh={() => window.location.reload()}
                     />
                   )
                 : children}
