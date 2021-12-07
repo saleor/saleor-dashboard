@@ -33,3 +33,15 @@ export function mapAsyncEventsToChoices(
       event !== WebhookEventTypeAsync.ANY_EVENTS && isAnyAsyncEventSelected
   }));
 }
+
+export const filterSelectedAsyncEvents = (
+  asyncEvents: WebhookEventTypeAsync[]
+) => {
+  const anyEvent = asyncEvents.find(
+    event => event === WebhookEventTypeAsync.ANY_EVENTS
+  );
+  if (anyEvent) {
+    return [anyEvent];
+  }
+  return asyncEvents;
+};
