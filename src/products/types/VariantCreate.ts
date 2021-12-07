@@ -363,6 +363,7 @@ export interface VariantCreate_productVariantCreate_productVariant {
   trackInventory: boolean;
   preorder: VariantCreate_productVariantCreate_productVariant_preorder | null;
   weight: VariantCreate_productVariantCreate_productVariant_weight | null;
+  quantityLimitPerCustomer: number | null;
 }
 
 export interface VariantCreate_productVariantCreate {

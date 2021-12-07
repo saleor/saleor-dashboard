@@ -32,6 +32,7 @@ import { defineMessages, useIntl } from "react-intl";
 import { maybe } from "../../../misc";
 import ProductShipping from "../ProductShipping/ProductShipping";
 import ProductStocks, { ProductStockInput } from "../ProductStocks";
+import ProductVariantCheckoutSettings from "../ProductVariantCheckoutSettings/ProductVariantCheckoutSettings";
 import ProductVariantEndPreorderDialog from "../ProductVariantEndPreorderDialog";
 import ProductVariantMediaSelectDialog from "../ProductVariantImageSelectDialog";
 import ProductVariantMedia from "../ProductVariantMedia";
@@ -312,6 +313,14 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
                     onChange={handlers.changeChannels}
                   />
                   <CardSpacer />
+                  <ProductVariantCheckoutSettings
+                    data={data}
+                    disabled={loading}
+                    errors={errors}
+                    onChange={change}
+                  />
+                  <CardSpacer />
+
                   <ProductShipping
                     data={data}
                     disabled={loading}

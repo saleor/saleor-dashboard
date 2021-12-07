@@ -52,4 +52,5 @@ export interface ShopFragment {
   name: string;
   reserveStockDurationAnonymousUser: number | null;
   reserveStockDurationAuthenticatedUser: number | null;
+  limitQuantityPerCheckout: number | null;
 }

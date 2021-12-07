@@ -52,6 +52,7 @@ export interface SiteSettings_shop {
   name: string;
   reserveStockDurationAnonymousUser: number | null;
   reserveStockDurationAuthenticatedUser: number | null;
+  limitQuantityPerCheckout: number | null;
 }
 
 export interface SiteSettings {
