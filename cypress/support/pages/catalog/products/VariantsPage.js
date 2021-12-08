@@ -56,11 +56,9 @@ export function createVariant({
   quantity = 10
 }) {
   cy.get(PRODUCT_DETAILS.addVariantsButton).click();
-  fillUpGeneralVariantInputs({ attributeName, warehouseName, sku });
-  cy.get(VARIANTS_SELECTORS.saveButton)
-    .click()
-    .get(BUTTON_SELECTORS.back)
-    .click();
+  fillUpGeneralVariantInputs({ attributeName, warehouseName, sku, quantity });
+  saveVariant();
+  cy.get(BUTTON_SELECTORS.back).click();
   selectChannelForVariantAndFillUpPrices({
     channelName,
     attributeName,
@@ -72,7 +70,8 @@ export function createVariant({
 export function fillUpGeneralVariantInputs({
   attributeName,
   warehouseName,
-  sku
+  sku,
+  quantity
 }) {
   fillUpVariantAttributeAndSku({ attributeName, sku });
   cy.get(VARIANTS_SELECTORS.addWarehouseButton).click();
@@ -87,9 +86,10 @@ export function fillUpVariantAttributeAndSku({ attributeName, sku }) {
     .click()
     .get(VARIANTS_SELECTORS.attributeOption)
     .contains(attributeName)
-    .click()
-    .get(VARIANTS_SELECTORS.skuInputInAddVariant)
-    .type(sku);
+    .click();
+  if (sku) {
+    cy.get(VARIANTS_SELECTORS.skuInputInAddVariant).type(sku);
+  }
 }
 
 export function selectChannelForVariantAndFillUpPrices({
@@ -98,7 +98,9 @@ export function selectChannelForVariantAndFillUpPrices({
   price,
   costPrice = price
 }) {
-  cy.addAliasToGraphRequest("ProductChannelListingUpdate");
+  cy.waitForProgressBarToNotBeVisible().addAliasToGraphRequest(
+    "ProductChannelListingUpdate"
+  );
   selectChannelVariantInDetailsPage(channelName, attributeName);
   cy.get(BUTTON_SELECTORS.confirm)
     .click()

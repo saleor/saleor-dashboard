@@ -7,7 +7,7 @@ import { SHARED_ELEMENTS } from "../../elements/shared/sharedElements";
 import { demoProductsNames } from "../../fixtures/products";
 import { productDetailsUrl, urlList } from "../../fixtures/urlList";
 import { getFirstProducts } from "../../support/api/requests/Product";
-import { loginDeleteProductsAndCreateNewOneWithNewDataAndDefaultChannel } from "../../support/api/utils/products/productsUtils";
+import { deleteProductsAndCreateNewOneWithNewDataAndDefaultChannel } from "../../support/api/utils/products/productsUtils";
 import filterTests from "../../support/filterTests";
 
 filterTests({ definedTags: ["all"] }, () => {
@@ -68,8 +68,8 @@ filterTests({ definedTags: ["all"] }, () => {
       const name = "CyImages";
 
       cy.clearSessionData().loginUserViaRequest();
-      loginDeleteProductsAndCreateNewOneWithNewDataAndDefaultChannel({ name })
-        .then(product => {
+      deleteProductsAndCreateNewOneWithNewDataAndDefaultChannel({ name })
+        .then(({ product }) => {
           cy.visit(productDetailsUrl(product.id))
             .get(PRODUCT_DETAILS.uploadImageButton)
             .click()

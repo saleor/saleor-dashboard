@@ -96,6 +96,7 @@ filterTests({ definedTags: ["all"] }, () => {
       let variantOnSale;
 
       productData.name = productName;
+      productData.sku = productName;
       createProductInChannel(productData)
         .then(({ product, variantsList }) => {
           variantNotOnSale = variantsList;
@@ -103,7 +104,7 @@ filterTests({ definedTags: ["all"] }, () => {
           productData.sku = name;
           productData.productId = product.id;
           productData.quantityInWarehouse = 10;
-          productData.attributeValues = ["value2"];
+          productData.attributeName = "value2";
           createVariant(productData);
         })
         .then(variantsList => {
@@ -141,6 +142,7 @@ filterTests({ definedTags: ["all"] }, () => {
       let variants;
       let saleToDelete;
       productData.name = name;
+      productData.sku = name;
       createProductInChannel(productData)
         .then(({ variantsList }) => {
           variants = variantsList;
@@ -183,6 +185,7 @@ filterTests({ definedTags: ["all"] }, () => {
       let product;
       let variants;
       productData.name = name;
+      productData.sku = name;
       createProductInChannel(productData)
         .then(({ variantsList, product: productResp }) => {
           product = productResp;
