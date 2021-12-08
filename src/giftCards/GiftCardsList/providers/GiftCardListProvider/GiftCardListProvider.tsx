@@ -7,9 +7,9 @@ import useBulkActions, {
 import useListSettings, {
   UseListSettings
 } from "@saleor/hooks/useListSettings";
-import { usePaginationReset } from "@saleor/hooks/usePaginationReset";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
+import { usePaginationReset } from "@saleor/hooks/usePaginationReset";
 import {
   createPaginationState,
   PageInfo,
