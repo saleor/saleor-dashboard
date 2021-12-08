@@ -219,12 +219,14 @@ const FilterContent: React.FC<FilterContentProps> = ({
                   classes={summaryClasses}
                   onClick={() => handleFilterOpen(filter)}
                 >
-                  <FilterContentBodyNameField
-                    filter={currentFilter}
-                    onFilterPropertyChange={action =>
-                      handleFilterPropertyGroupChange(action, filter)
-                    }
-                  />
+                  {currentFilter && (
+                    <FilterContentBodyNameField
+                      filter={currentFilter}
+                      onFilterPropertyChange={action =>
+                        handleFilterPropertyGroupChange(action, filter)
+                      }
+                    />
+                  )}
                 </ExpansionPanelSummary>
                 {currentFilter?.active && (
                   <FilterErrorsList
@@ -235,7 +237,7 @@ const FilterContent: React.FC<FilterContentProps> = ({
                 )}
                 {filter.multipleFields ? (
                   <CollectionWithDividers
-                    collection={filter?.multipleFields}
+                    collection={filter.multipleFields}
                     renderItem={filterField => (
                       <FilterContentBody
                         {...commonFilterBodyProps}
