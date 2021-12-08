@@ -125,6 +125,12 @@ const ShippingZoneCreatePage: React.FC<ShippingZoneCreatePageProps> = ({
             onConfirm={formData => {
               change({
                 target: {
+                  name: "default",
+                  value: formData.restOfTheWorld
+                }
+              });
+              change({
+                target: {
                   name: "countries",
                   value: formData.restOfTheWorld ? [] : formData.countries
                 }
