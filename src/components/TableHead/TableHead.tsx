@@ -26,10 +26,7 @@ export interface TableHeadProps extends MuiTableHeadProps {
 const useStyles = makeStyles(
   theme => ({
     cell: {
-      padding: 0
-    },
-    checkboxSelected: {
-      backgroundColor: theme.palette.saleor.active[5]
+      height: 56
     },
     container: {
       alignItems: "center",
@@ -47,7 +44,6 @@ const useStyles = makeStyles(
       }
     },
     root: {
-      backgroundColor: theme.palette.saleor.active[5],
       paddingLeft: 0,
       paddingRight: 24
     },
@@ -57,7 +53,8 @@ const useStyles = makeStyles(
     toolbar: {
       "& > *": {
         marginLeft: theme.spacing(1)
-      }
+      },
+      marginRight: theme.spacing(1.5)
     }
   }),
   { name: "TableHead" }
@@ -88,18 +85,11 @@ const TableHead: React.FC<TableHeadProps> = props => {
   return (
     <MuiTableHead {...muiTableHeadProps}>
       <TableRow>
-        {dragRows && (items === undefined || items.length > 0) && (
-          <TableCell
-            className={classNames({
-              [classes.checkboxSelected]: selected
-            })}
-          />
-        )}
+        {dragRows && (items === undefined || items.length > 0) && <TableCell />}
         {(items === undefined || items.length > 0) && (
           <TableCell
             padding="checkbox"
-            className={classNames({
-              [classes.checkboxSelected]: selected,
+            className={classNames(classes.cell, {
               [classes.dragRows]: dragRows
             })}
           >
@@ -114,7 +104,7 @@ const TableHead: React.FC<TableHeadProps> = props => {
         {selected ? (
           <>
             <TableCell
-              className={classNames(classes.root)}
+              className={classNames(classes.cell, classes.root)}
               colSpan={getColSpan(colSpan, dragRows)}
             >
               <div className={classes.container}>
