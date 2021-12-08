@@ -64,6 +64,7 @@ export interface GiftCardDetails_giftCard_events_user {
   id: string;
   firstName: string;
   lastName: string;
+  email: string;
 }
 
 export interface GiftCardDetails_giftCard_events_app {
@@ -114,7 +115,6 @@ export interface GiftCardDetails_giftCard_events {
   user: GiftCardDetails_giftCard_events_user | null;
   app: GiftCardDetails_giftCard_events_app | null;
   message: string | null;
-  email: string | null;
   orderId: string | null;
   orderNumber: string | null;
   tag: string | null;
