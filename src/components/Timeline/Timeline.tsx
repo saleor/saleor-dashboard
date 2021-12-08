@@ -65,6 +65,7 @@ interface TimelineProps {
 }
 
 interface TimelineAddNoteProps {
+  disabled?: boolean;
   message: string;
   reset: () => void;
   onChange(event: React.ChangeEvent<any>);
@@ -80,7 +81,7 @@ export const Timeline: React.FC<TimelineProps> = props => {
 };
 
 export const TimelineAddNote: React.FC<TimelineAddNoteProps> = props => {
-  const { message, onChange, onSubmit, reset } = props;
+  const { message, onChange, onSubmit, reset, disabled } = props;
   const classes = useStyles(props);
 
   const intl = useIntl();
@@ -100,6 +101,7 @@ export const TimelineAddNote: React.FC<TimelineAddNoteProps> = props => {
           <PersonIcon />
         </Avatar>
         <TextField
+          disabled={disabled}
           className={classes.input}
           placeholder={intl.formatMessage({
             defaultMessage: "Leave your note here..."
@@ -115,6 +117,7 @@ export const TimelineAddNote: React.FC<TimelineAddNoteProps> = props => {
                 className={classes.button}
                 color="primary"
                 onClick={e => submit(e)}
+                disabled={disabled}
               >
                 <FormattedMessage
                   defaultMessage="Send"

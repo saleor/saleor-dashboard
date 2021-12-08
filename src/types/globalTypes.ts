@@ -2205,6 +2205,10 @@ export interface FulfillmentUpdateTrackingInput {
   notifyCustomer?: boolean | null;
 }
 
+export interface GiftCardAddNoteInput {
+  message: string;
+}
+
 export interface GiftCardBulkCreateInput {
   count: number;
   balance: PriceInput;

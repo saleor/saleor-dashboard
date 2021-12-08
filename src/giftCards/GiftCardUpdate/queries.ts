@@ -65,13 +65,13 @@ export const giftCardDetails = gql`
         type
         user {
           ...UserBase
+          email
         }
         app {
           id
           name
         }
         message
-        email
         orderId
         orderNumber
         tag
@@ -95,7 +95,46 @@ export const giftCardDetails = gql`
   }
 `;
 
+export const giftCardEventsFragment = gql`
+  fragment GiftCardEvent on GiftCardEvent {
+    expiryDate
+    oldExpiryDate
+    id
+    date
+    type
+    user {
+      ...UserBase
+    }
+    app {
+      id
+      name
+    }
+    message
+    email
+    orderId
+    orderNumber
+    tag
+    oldTag
+    balance {
+      initialBalance {
+        ...Money
+      }
+      currentBalance {
+        ...Money
+      }
+      oldInitialBalance {
+        ...Money
+      }
+      oldCurrentBalance {
+        ...Money
+      }
+    }
+  }
+`;
+
 export const useGiftCardDetailsQuery = makeQuery<
   GiftCardDetails,
   GiftCardDetailsVariables
 >(giftCardDetails);
+
+export const GIFT_CARD_DETAILS_QUERY = "GiftCardDetails";
