@@ -46,9 +46,14 @@ export const getGiftCardExpiryError = (intl: IntlShape): IMessage => ({
 
 export const getGiftCardCreateOnCompletedMessage = (
   errors: GiftCardCreate_giftCardCreate_errors[],
-  intl: IntlShape
+  intl: IntlShape,
+  successMessage?: IMessage
 ): IMessage => {
   const hasExpiryError = errors.some(error => error.field === "expiryDate");
+  const successGiftCardMessage = successMessage || {
+    status: "success",
+    text: intl.formatMessage(messages.createdSuccessAlertTitle)
+  };
 
   if (hasExpiryError) {
     return getGiftCardExpiryError(intl);
@@ -59,10 +64,7 @@ export const getGiftCardCreateOnCompletedMessage = (
         status: "error",
         text: intl.formatMessage(commonErrorMessages.unknownError)
       }
-    : {
-        status: "success",
-        text: intl.formatMessage(messages.createdSuccessAlertTitle)
-      };
+    : successGiftCardMessage;
 };
 
 export const getGiftCardExpiryInputData = (
