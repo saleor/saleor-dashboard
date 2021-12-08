@@ -15,9 +15,29 @@ export interface UpdateMetadata_updateMetadata_errors {
   field: string | null;
 }
 
+export interface UpdateMetadata_updateMetadata_item_metadata {
+  __typename: "MetadataItem";
+  key: string;
+  value: string;
+}
+
+export interface UpdateMetadata_updateMetadata_item_privateMetadata {
+  __typename: "MetadataItem";
+  key: string;
+  value: string;
+}
+
+export interface UpdateMetadata_updateMetadata_item {
+  __typename: "App" | "Attribute" | "Category" | "Checkout" | "Collection" | "DigitalContent" | "Fulfillment" | "Invoice" | "Menu" | "MenuItem" | "Order" | "Page" | "PageType" | "Product" | "ProductType" | "ProductVariant" | "Sale" | "ShippingMethod" | "ShippingMethodType" | "ShippingZone" | "User" | "Voucher" | "Warehouse";
+  metadata: (UpdateMetadata_updateMetadata_item_metadata | null)[];
+  privateMetadata: (UpdateMetadata_updateMetadata_item_privateMetadata | null)[];
+  id: string;
+}
+
 export interface UpdateMetadata_updateMetadata {
   __typename: "UpdateMetadata";
   errors: UpdateMetadata_updateMetadata_errors[];
+  item: UpdateMetadata_updateMetadata_item | null;
 }
 
 export interface UpdateMetadata_deleteMetadata_errors {
@@ -39,7 +59,7 @@ export interface UpdateMetadata_deleteMetadata_item_privateMetadata {
 }
 
 export interface UpdateMetadata_deleteMetadata_item {
-  __typename: "App" | "Warehouse" | "ShippingZone" | "ShippingMethodType" | "Product" | "ProductType" | "Attribute" | "Category" | "ProductVariant" | "DigitalContent" | "Collection" | "Page" | "PageType" | "Sale" | "Voucher" | "MenuItem" | "Menu" | "ShippingMethod" | "User" | "Checkout" | "Order" | "Fulfillment" | "Invoice";
+  __typename: "App" | "Attribute" | "Category" | "Checkout" | "Collection" | "DigitalContent" | "Fulfillment" | "Invoice" | "Menu" | "MenuItem" | "Order" | "Page" | "PageType" | "Product" | "ProductType" | "ProductVariant" | "Sale" | "ShippingMethod" | "ShippingMethodType" | "ShippingZone" | "User" | "Voucher" | "Warehouse";
   metadata: (UpdateMetadata_deleteMetadata_item_metadata | null)[];
   privateMetadata: (UpdateMetadata_deleteMetadata_item_privateMetadata | null)[];
   id: string;
