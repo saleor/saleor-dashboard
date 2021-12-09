@@ -5173,6 +5173,8 @@ input OrderFilterInput {
   channels: [ID]
   isClickAndCollect: Boolean
   isPreorder: Boolean
+  giftCardUsed: Boolean
+  giftCardBought: Boolean
 }
 
 type OrderFulfill {
