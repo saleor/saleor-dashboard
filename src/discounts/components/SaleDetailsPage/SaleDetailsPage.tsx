@@ -59,16 +59,6 @@ export enum SaleDetailsPageTab {
   variants = "variants"
 }
 
-export function saleDetailsPageTab(tab: string): SaleDetailsPageTab {
-  return tab === SaleDetailsPageTab.products
-    ? SaleDetailsPageTab.products
-    : tab === SaleDetailsPageTab.collections
-    ? SaleDetailsPageTab.collections
-    : tab === SaleDetailsPageTab.categories
-    ? SaleDetailsPageTab.categories
-    : SaleDetailsPageTab.variants;
-}
-
 export interface SaleDetailsPageProps
   extends Pick<ListProps, Exclude<keyof ListProps, "onRowClick">>,
     TabListActions<

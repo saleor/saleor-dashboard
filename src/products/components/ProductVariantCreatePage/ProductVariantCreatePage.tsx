@@ -27,6 +27,7 @@ import { defineMessages, useIntl } from "react-intl";
 import { ProductVariantCreateData_product } from "../../types/ProductVariantCreateData";
 import ProductShipping from "../ProductShipping/ProductShipping";
 import ProductStocks from "../ProductStocks";
+import ProductVariantCheckoutSettings from "../ProductVariantCheckoutSettings/ProductVariantCheckoutSettings";
 import ProductVariantNavigation from "../ProductVariantNavigation";
 import ProductVariantPrice from "../ProductVariantPrice";
 import ProductVariantCreateForm, {
@@ -214,6 +215,13 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
                 fetchAttributeValues={fetchAttributeValues}
                 fetchMoreAttributeValues={fetchMoreAttributeValues}
                 onAttributeSelectBlur={onAttributeSelectBlur}
+              />
+              <CardSpacer />
+              <ProductVariantCheckoutSettings
+                data={data}
+                disabled={disabled}
+                errors={errors}
+                onChange={change}
               />
               <CardSpacer />
               <ProductShipping

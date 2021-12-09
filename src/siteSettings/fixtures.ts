@@ -38,5 +38,6 @@ export const shop: SiteSettings_shop = {
   },
   name: "Saleor e-commerce",
   reserveStockDurationAnonymousUser: 10,
-  reserveStockDurationAuthenticatedUser: 10
+  reserveStockDurationAuthenticatedUser: 10,
+  limitQuantityPerCheckout: 50
 };

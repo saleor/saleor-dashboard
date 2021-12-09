@@ -42,6 +42,7 @@ export interface SiteSettingsPageFormData
   name: string;
   reserveStockDurationAnonymousUser: number;
   reserveStockDurationAuthenticatedUser: number;
+  limitQuantityPerCheckout: number;
 }
 
 export interface SiteSettingsPageProps {
@@ -118,7 +119,8 @@ const SiteSettingsPage: React.FC<SiteSettingsPageProps> = props => {
     name: shop?.name || "",
     reserveStockDurationAnonymousUser: shop?.reserveStockDurationAnonymousUser,
     reserveStockDurationAuthenticatedUser:
-      shop?.reserveStockDurationAuthenticatedUser
+      shop?.reserveStockDurationAuthenticatedUser,
+    limitQuantityPerCheckout: shop?.limitQuantityPerCheckout
   };
 
   return (

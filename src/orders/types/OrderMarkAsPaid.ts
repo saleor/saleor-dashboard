@@ -221,7 +221,7 @@ export interface OrderMarkAsPaid_orderMarkAsPaid_order_fulfillments_lines_orderL
 export interface OrderMarkAsPaid_orderMarkAsPaid_order_fulfillments_lines_orderLine_variant {
   __typename: "ProductVariant";
   id: string;
-  quantityAvailable: number;
+  quantityAvailable: number | null;
   preorder: OrderMarkAsPaid_orderMarkAsPaid_order_fulfillments_lines_orderLine_variant_preorder | null;
 }
 
@@ -323,7 +323,7 @@ export interface OrderMarkAsPaid_orderMarkAsPaid_order_lines_variant_preorder {
 export interface OrderMarkAsPaid_orderMarkAsPaid_order_lines_variant {
   __typename: "ProductVariant";
   id: string;
-  quantityAvailable: number;
+  quantityAvailable: number | null;
   preorder: OrderMarkAsPaid_orderMarkAsPaid_order_lines_variant_preorder | null;
 }
 
