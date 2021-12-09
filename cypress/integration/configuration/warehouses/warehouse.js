@@ -38,7 +38,7 @@ filterTests({ definedTags: ["all"] }, () => {
       cy.clearSessionData().loginUserViaRequest();
     });
 
-    it("should create warehouse", () => {
+    xit("should create warehouse", () => {
       const name = `${startsWith}${faker.datatype.number()}`;
       cy.visit(urlList.warehouses)
         .get(WAREHOUSES_LIST.createNewButton)
@@ -61,7 +61,7 @@ filterTests({ definedTags: ["all"] }, () => {
         });
     });
 
-    it("should add warehouse to shipping zone", () => {
+    xit("should add warehouse to shipping zone", () => {
       const name = `${startsWith}${faker.datatype.number()}`;
       let defaultChannel;
       let warehouse;
@@ -99,7 +99,7 @@ filterTests({ definedTags: ["all"] }, () => {
         });
     });
 
-    it("should delete warehouse", () => {
+    xit("should delete warehouse", () => {
       const name = `${startsWith}${faker.datatype.number()}`;
       createWarehouseViaApi({
         name,
@@ -114,6 +114,46 @@ filterTests({ definedTags: ["all"] }, () => {
           .waitForRequestAndCheckIfNoErrors("@WarehouseDelete");
         getWarehouse(warehouse.id).should("be.null");
       });
+    });
+
+    it("should add warehouse to shipping zone", () => {
+      const name = `${startsWith}${faker.datatype.number()}`;
+      let defaultChannel;
+      let warehouse;
+      let shippingZone;
+
+      getDefaultChannel()
+        .then(channelResp => {
+          defaultChannel = channelResp;
+          createShippingZone(name, "US", defaultChannel.id);
+        })
+        .then(shippingZoneResp => {
+          shippingZone = shippingZoneResp;
+          createWarehouseViaApi({
+            name,
+            shippingZone: shippingZone.id,
+            address: usAddress
+          });
+        })
+        .then(warehouseResp => {
+          warehouse = warehouseResp;
+          cy.visit(shippingZoneDetailsUrl(shippingZone.id))
+            .pause()
+            .fillAutocompleteSelect(
+              SHIPPING_ZONE_DETAILS.warehouseSelector,
+              warehouse.name
+            )
+            .addAliasToGraphRequest("UpdateShippingZone")
+            .get(BUTTON_SELECTORS.confirm)
+            .click()
+            .waitForRequestAndCheckIfNoErrors("@UpdateShippingZone");
+          getWarehouse(warehouse.id);
+        })
+        .then(warehouseResp => {
+          expect(warehouseResp.shippingZones.edges[0].node.id).to.be.eq(
+            shippingZone.id
+          );
+        });
     });
   });
 });
