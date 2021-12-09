@@ -11,7 +11,9 @@ import CardSpacer from "@saleor/components/CardSpacer";
 import ConfirmButton from "@saleor/components/ConfirmButton";
 import PriceField from "@saleor/components/PriceField";
 import RadioGroupField from "@saleor/components/RadioGroupField";
+import { Money } from "@saleor/fragments/types/Money";
 import { DiscountValueTypeEnum, MoneyFragment } from "@saleor/graphql";
+import { usePrevious } from "@saleor/hooks/usePrevious";
 import { useUpdateEffect } from "@saleor/hooks/useUpdateEffect";
 import { buttonMessages } from "@saleor/intl";
 import { ConfirmButtonTransitionState, makeStyles } from "@saleor/macaw-ui";
@@ -19,7 +21,6 @@ import React, {
   ChangeEvent,
   MutableRefObject,
   useEffect,
-  useRef,
   useState
 } from "react";
 import { defineMessages, useIntl } from "react-intl";
@@ -164,7 +165,7 @@ const OrderDiscountCommonModal: React.FC<OrderDiscountCommonModalProps> = ({
   const [calculationMode, setCalculationMode] = useState<DiscountValueTypeEnum>(
     initialData.calculationMode
   );
-  const previousCalculationMode = useRef(calculationMode);
+  const previousCalculationMode = usePrevious(calculationMode);
 
   const classes = useStyles({});
   const intl = useIntl();
@@ -234,7 +235,7 @@ const OrderDiscountCommonModal: React.FC<OrderDiscountCommonModalProps> = ({
     }
 
     const changedFromPercentageToFixed =
-      previousCalculationMode.current === DiscountValueTypeEnum.PERCENTAGE &&
+      previousCalculationMode === DiscountValueTypeEnum.PERCENTAGE &&
       calculationMode === DiscountValueTypeEnum.FIXED;
 
     const recalculatedValueFromPercentageToFixed = (
