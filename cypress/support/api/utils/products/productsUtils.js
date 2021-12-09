@@ -4,10 +4,12 @@ import * as categoryRequest from "../../requests/Category";
 import { createCollection } from "../../requests/Collections";
 import * as productRequest from "../../requests/Product";
 import {
+  createDigitalContent,
   createTypeProduct,
   deleteProductType,
   getProductTypes,
-  productAttributeAssignmentUpdate
+  productAttributeAssignmentUpdate,
+  setProductTypeAsDigital
 } from "../../requests/ProductType";
 import { deleteAttributesStartsWith } from "../attributes/attributeUtils";
 import { deleteCollectionsStartsWith } from "../catalog/collectionsUtils";
@@ -206,4 +208,15 @@ export function createProductWithShipping({
       shippingMethod,
       address
     }));
+}
+
+export function addDigitalContentAndUpdateProductType(
+  variantId,
+  productTypeId,
+  channelId,
+  price = 1
+) {
+  createDigitalContent(variantId);
+  setProductTypeAsDigital(productTypeId);
+  productRequest.updateVariantPrice({ variantId, channelId, price });
 }

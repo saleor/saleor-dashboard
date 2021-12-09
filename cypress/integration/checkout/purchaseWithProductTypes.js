@@ -24,6 +24,7 @@ import {
   createWaitingForCaptureOrder
 } from "../../support/api/utils/ordersUtils";
 import {
+  addDigitalContentAndUpdateProductType,
   createProductInChannel,
   deleteProductsStartsWith
 } from "../../support/api/utils/products/productsUtils";
@@ -111,7 +112,11 @@ filterTests({ definedTags: ["all", "critical"] }, () => {
         })
         .then(({ variantsList }) => {
           variants = variantsList;
-          createDigitalContent(variantsList[0].id);
+          addDigitalContentAndUpdateProductType(
+            variants[0].id,
+            createProductData.productTypeId,
+            defaultChannel.id
+          );
         })
         .then(() => {
           createAndCompleteCheckoutWithoutShipping({
@@ -167,7 +172,7 @@ filterTests({ definedTags: ["all", "critical"] }, () => {
         });
     });
 
-    it("should purchase multiple products with all product types", () => {
+    xit("should purchase multiple products with all product types", () => {
       const physicalName = `${startsWith}${faker.datatype.number()}`;
       const digitalName = `${startsWith}${faker.datatype.number()}`;
       let digitalProductVariantsList;

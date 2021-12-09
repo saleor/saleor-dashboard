@@ -22,6 +22,7 @@ export function createTypeProduct({
     productTypeCreate(input: {
       name: "${name}"
       slug: "${slug}"
+      isDigital: ${!shippable}
       ${productAttributesLine}
       hasVariants: ${hasVariants}
       ${variantAttributesLine}
@@ -126,5 +127,19 @@ export function createDigitalContent(variantId) {
       }
     }
   }`;
+  return cy.sendRequestWithQuery(mutation);
+}
+
+export function setProductTypeAsDigital(productTypeId, isDigital = true) {
+  const mutation = `mutation updateProductType{
+    productTypeUpdate(id:"${productTypeId}", input:{
+     isDigital:${isDigital}
+    }){
+     errors{
+       field
+       message
+     } 
+    }
+   }`;
   return cy.sendRequestWithQuery(mutation);
 }
