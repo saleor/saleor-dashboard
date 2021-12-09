@@ -342,6 +342,10 @@ export function generateCode(charNum: number) {
   return result;
 }
 
+export function isInEnum<TEnum extends {}>(needle: string, haystack: TEnum) {
+  return Object.keys(haystack).includes(needle);
+}
+
 export function findInEnum<TEnum extends {}>(needle: string, haystack: TEnum) {
   const match = Object.keys(haystack).find(key => key === needle);
   if (!!match) {
