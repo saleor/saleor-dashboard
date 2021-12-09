@@ -1,8 +1,8 @@
+import { useUser } from "@saleor/auth";
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@saleor/config";
 import { useCustomerAddressesQuery } from "@saleor/customers/queries";
 import useNavigator from "@saleor/hooks/useNavigator";
-import useUser from "@saleor/hooks/useUser";
 import { CustomerEditData } from "@saleor/orders/components/OrderCustomer";
 import OrderCustomerAddressesEditDialog, {
   OrderCustomerAddressesEditDialogOutput

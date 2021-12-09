@@ -4,10 +4,9 @@ import React from "react";
 import { Query, QueryResult } from "react-apollo";
 import { useIntl } from "react-intl";
 
-import { handleQueryAuthError } from "./auth";
+import { handleQueryAuthError, useUser } from "./auth";
 import useAppState from "./hooks/useAppState";
 import useNotifier from "./hooks/useNotifier";
-import useUser from "./hooks/useUser";
 import { RequireAtLeastOne } from "./misc";
 
 export interface LoadMore<TData, TVariables> {

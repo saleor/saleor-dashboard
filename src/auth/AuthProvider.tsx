@@ -1,5 +1,5 @@
 import useNotifier from "@saleor/hooks/useNotifier";
-import React, { useContext } from "react";
+import React from "react";
 import { useApolloClient } from "react-apollo";
 import { useIntl } from "react-intl";
 
@@ -20,12 +20,6 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   return (
     <UserContext.Provider value={authProvider}>{children}</UserContext.Provider>
   );
-};
-
-export const useAuth = () => {
-  const userContext = useContext(UserContext);
-
-  return userContext;
 };
 
 export default AuthProvider;

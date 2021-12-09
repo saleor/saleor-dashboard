@@ -6,7 +6,7 @@ import { useQuery } from "react-apollo";
 import urlJoin from "url-join";
 import useRouter from "use-react-router";
 
-import { useAuth } from "../AuthProvider";
+import { useUser } from "..";
 import LoginPage from "../components/LoginPage";
 import { LoginFormData } from "../components/LoginPage/form";
 import { availableExternalAuthentications } from "../queries";
@@ -30,7 +30,7 @@ const LoginView: React.FC<LoginViewProps> = ({ params }) => {
     loginByExternalPlugin,
     authenticating,
     error
-  } = useAuth();
+  } = useUser();
   const {
     data: externalAuthentications,
     loading: externalAuthenticationsLoading

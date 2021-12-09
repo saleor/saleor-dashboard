@@ -1,4 +1,5 @@
 import { handleQueryAuthError } from "@saleor/auth";
+import { useUser } from "@saleor/auth";
 import { RequireAtLeastOne } from "@saleor/misc";
 import { ApolloQueryResult } from "apollo-client";
 import { DocumentNode } from "graphql";
@@ -11,7 +12,6 @@ import { PrefixedPermissions } from "../types/extendedTypes";
 import { PermissionEnum } from "../types/globalTypes";
 import useAppState from "./useAppState";
 import useNotifier from "./useNotifier";
-import useUser from "./useUser";
 
 const getPermissionKey = (permission: string) =>
   `PERMISSION_${permission}` as PrefixedPermissions;

@@ -1,5 +1,5 @@
 import { parse as parseQs } from "qs";
-import React from "react";
+import React, { useContext } from "react";
 import { Route, RouteComponentProps, Switch } from "react-router-dom";
 
 import Layout from "./components/Layout";
@@ -46,3 +46,4 @@ AuthRouter.displayName = "AuthRouter";
 export default AuthRouter;
 
 export * from "./utils";
+export const useUser = () => useContext(UserContext);

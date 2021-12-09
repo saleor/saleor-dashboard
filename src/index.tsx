@@ -19,8 +19,8 @@ import AppsSection from "./apps";
 import { appsSection } from "./apps/urls";
 import AttributeSection from "./attributes";
 import { attributeSection } from "./attributes/urls";
-import Auth from "./auth";
-import AuthProvider, { useAuth } from "./auth/AuthProvider";
+import Auth, { useUser } from "./auth";
+import AuthProvider from "./auth/AuthProvider";
 import LoginLoading from "./auth/components/LoginLoading/LoginLoading";
 import SectionRoute from "./auth/components/SectionRoute";
 import CategorySection from "./categories";
@@ -144,7 +144,7 @@ const App: React.FC = () => (
 const Routes: React.FC = () => {
   const intl = useIntl();
   const [, dispatchAppState] = useAppState();
-  const { authenticated, authenticating } = useAuth();
+  const { authenticated, authenticating } = useUser();
 
   const { channel } = useAppChannel(false);
 

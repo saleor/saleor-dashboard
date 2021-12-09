@@ -1,4 +1,4 @@
-import { useAuth } from "@saleor/auth/AuthProvider";
+import { useUser } from "@saleor/auth";
 import { useBaseChannelsList } from "@saleor/channels/queries";
 import { BaseChannels_channels } from "@saleor/channels/types/BaseChannels";
 import { ChannelFragment } from "@saleor/fragments/types/ChannelFragment";
@@ -40,7 +40,7 @@ const isValidChannel = (
 
 export const AppChannelProvider: React.FC = ({ children }) => {
   const { setChannel } = useSaleorConfig();
-  const { authenticated } = useAuth();
+  const { authenticated } = useUser();
   const [selectedChannel, setSelectedChannel] = useLocalStorage("channel", "");
   const { data: channelData, refetch } = useBaseChannelsList({
     skip: !authenticated
