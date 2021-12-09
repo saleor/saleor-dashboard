@@ -5320,6 +5320,8 @@ input OrderFilterInput {
   isClickAndCollect: Boolean
   isPreorder: Boolean
   ids: [ID]
+  giftCardUsed: Boolean
+  giftCardBought: Boolean
 }
 
 type OrderFulfill {

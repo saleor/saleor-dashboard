@@ -12,6 +12,7 @@ import {
   Sort,
   TabActionDialog
 } from "../types";
+import { OrderFilterGiftCard } from "./components/OrderListPage";
 
 const orderSectionUrl = "/orders";
 
@@ -30,7 +31,8 @@ export enum OrderListUrlFiltersEnum {
 export enum OrderListUrlFiltersWithMultipleValues {
   status = "status",
   paymentStatus = "paymentStatus",
-  channel = "channel"
+  channel = "channel",
+  giftCard = "giftCard"
 }
 
 export type OrderListUrlFilters = Filters<OrderListUrlFiltersEnum> &
@@ -137,3 +139,8 @@ export const orderRefundUrl = (id: string) =>
 
 export const orderReturnUrl = (id: string) =>
   orderReturnPath(encodeURIComponent(id));
+
+export const orderGiftCardBoughtPath = () =>
+  orderListUrl({
+    giftCard: [OrderFilterGiftCard.paid]
+  });

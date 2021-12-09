@@ -2404,6 +2404,8 @@ export interface OrderFilterInput {
   isClickAndCollect?: boolean | null;
   isPreorder?: boolean | null;
   ids?: (string | null)[] | null;
+  giftCardUsed?: boolean | null;
+  giftCardBought?: boolean | null;
 }
 
 export interface OrderFulfillInput {
