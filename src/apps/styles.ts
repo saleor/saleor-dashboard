@@ -12,8 +12,8 @@ export const useStyles = makeStyles(
     alignRight: {
       textAlign: "right"
     },
-    appContainer: {
-      marginBottom: theme.spacing(3)
+    apps: {
+      marginBottom: theme.spacing(4)
     },
     appContent: {
       "&:last-child": {
@@ -37,7 +37,7 @@ export const useStyles = makeStyles(
     },
     colAction: {
       "&&": {
-        paddingRight: theme.spacing(1.5),
+        paddingRight: theme.spacing(3),
         textAlign: "right"
       },
       textAlign: "right"
@@ -57,6 +57,9 @@ export const useStyles = makeStyles(
       },
       paddingLeft: theme.spacing(3),
       paddingRight: theme.spacing(2)
+    },
+    customApps: {
+      marginBottom: theme.spacing(4)
     },
     customTooltip: {
       "& > div": {
@@ -197,11 +200,6 @@ export const useStyles = makeStyles(
     },
     text: {
       color: theme.palette.text.secondary
-    },
-    title: {
-      flex: 1,
-      fontWeight: 500,
-      lineHeight: 1
     },
     activateButton: {
       "& img": {

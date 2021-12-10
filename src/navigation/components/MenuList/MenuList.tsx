@@ -5,7 +5,6 @@ import {
   TableFooter,
   TableRow
 } from "@material-ui/core";
-import DeleteIcon from "@material-ui/icons/Delete";
 import Checkbox from "@saleor/components/Checkbox";
 import IconButtonTableCell from "@saleor/components/IconButtonTableCell";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
@@ -13,7 +12,7 @@ import Skeleton from "@saleor/components/Skeleton";
 import TableCellHeader from "@saleor/components/TableCellHeader";
 import TableHead from "@saleor/components/TableHead";
 import TablePagination from "@saleor/components/TablePagination";
-import { makeStyles } from "@saleor/macaw-ui";
+import { DeleteIcon, makeStyles } from "@saleor/macaw-ui";
 import { maybe, renderCollection } from "@saleor/misc";
 import { MenuListUrlSortField } from "@saleor/navigation/urls";
 import { ListActions, ListProps, SortPage } from "@saleor/types";

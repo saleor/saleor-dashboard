@@ -1,8 +1,7 @@
 import { Typography } from "@material-ui/core";
-import DeleteIcon from "@material-ui/icons/Delete";
 import { FileFragment } from "@saleor/fragments/types/FileFragment";
 import { commonMessages } from "@saleor/intl";
-import { Button, IconButton, makeStyles } from "@saleor/macaw-ui";
+import { Button, DeleteIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import { useIntl } from "react-intl";
 

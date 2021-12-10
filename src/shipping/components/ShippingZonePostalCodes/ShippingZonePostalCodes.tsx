@@ -7,14 +7,13 @@ import {
   TableRow,
   Typography
 } from "@material-ui/core";
-import DeleteIcon from "@material-ui/icons/Delete";
 import CardTitle from "@saleor/components/CardTitle";
 import RadioGroupField from "@saleor/components/RadioGroupField";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
 import { ShippingMethodTypeFragment_postalCodeRules } from "@saleor/fragments/types/ShippingMethodTypeFragment";
 import ArrowDropdown from "@saleor/icons/ArrowDropdown";
-import { Button, IconButton, makeStyles } from "@saleor/macaw-ui";
+import { Button, DeleteIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
 import { renderCollection } from "@saleor/misc";
 import { PostalCodeRuleInclusionTypeEnum } from "@saleor/types/globalTypes";
 import classNames from "classnames";

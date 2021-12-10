@@ -9,7 +9,7 @@ export const AppsSkeleton = () => {
 
   return (
     <TableRow className={classes.tableRow}>
-      <TableCell className={classes.colName}>
+      <TableCell colSpan={2} className={classes.colName}>
         <Skeleton />
       </TableCell>
     </TableRow>

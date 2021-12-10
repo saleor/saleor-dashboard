@@ -7,16 +7,14 @@ import {
   Typography
 } from "@material-ui/core";
 import AutocompleteSelectMenu from "@saleor/components/AutocompleteSelectMenu";
-import ConfirmButton, {
-  ConfirmButtonTransitionState
-} from "@saleor/components/ConfirmButton";
+import ConfirmButton from "@saleor/components/ConfirmButton";
 import FormSpacer from "@saleor/components/FormSpacer";
 import { MenuErrorFragment } from "@saleor/fragments/types/MenuErrorFragment";
 import useModalDialogErrors from "@saleor/hooks/useModalDialogErrors";
 import useModalDialogOpen from "@saleor/hooks/useModalDialogOpen";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { buttonMessages, sectionNames } from "@saleor/intl";
-import { Button } from "@saleor/macaw-ui";
+import { Button, ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import { SearchCategories_search_edges_node } from "@saleor/searches/types/SearchCategories";
 import { SearchCollections_search_edges_node } from "@saleor/searches/types/SearchCollections";
 import { SearchPages_search_edges_node } from "@saleor/searches/types/SearchPages";

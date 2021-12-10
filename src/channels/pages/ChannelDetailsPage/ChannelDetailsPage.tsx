@@ -1,6 +1,5 @@
 import ShippingZonesCard from "@saleor/channels/components/ShippingZonesCard/ShippingZonesCard";
 import CardSpacer from "@saleor/components/CardSpacer";
-import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
 import Form from "@saleor/components/Form";
 import Grid from "@saleor/components/Grid";
 import Savebar from "@saleor/components/Savebar";
@@ -10,6 +9,7 @@ import { CountryFragment } from "@saleor/fragments/types/CountryFragment";
 import { SearchData } from "@saleor/hooks/makeTopLevelSearch";
 import { getParsedSearchData } from "@saleor/hooks/makeTopLevelSearch/utils";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
+import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import {
   getById,
   getByUnmatchingId

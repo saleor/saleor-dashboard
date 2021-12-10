@@ -1,13 +1,14 @@
 import {
+  Card,
   TableBody,
   TableCell,
   TableFooter,
   TableRow,
   Typography
 } from "@material-ui/core";
-import DeleteIcon from "@material-ui/icons/Delete";
 import CardTitle from "@saleor/components/CardTitle";
 import TablePagination from "@saleor/components/TablePagination";
+import { DeleteIcon, ResponsiveTable } from "@saleor/macaw-ui";
 import { Button, IconButton } from "@saleor/macaw-ui";
 import { renderCollection, stopPropagation } from "@saleor/misc";
 import { ListProps } from "@saleor/types";
@@ -17,7 +18,6 @@ import { FormattedMessage, useIntl } from "react-intl";
 import { useStyles } from "../../styles";
 import { AppsList_apps_edges } from "../../types/AppsList";
 import AppsSkeleton from "../AppsSkeleton";
-import CardContainer from "../CardContainer";
 import DeactivatedText from "../DeactivatedText";
 
 export interface InstalledAppsProps extends ListProps {
@@ -44,17 +44,14 @@ const InstalledApps: React.FC<InstalledAppsProps> = ({
   const classes = useStyles(props);
 
   return (
-    <CardContainer
-      header={
-        <CardTitle
-          title={intl.formatMessage({
-            defaultMessage: "Third-party Apps",
-            description: "section header"
-          })}
-        />
-      }
-    >
-      <>
+    <Card className={classes.apps}>
+      <CardTitle
+        title={intl.formatMessage({
+          defaultMessage: "Third-party Apps",
+          description: "section header"
+        })}
+      />
+      <ResponsiveTable>
         <TableFooter>
           <TableRow>
             <TablePagination
@@ -123,8 +120,8 @@ const InstalledApps: React.FC<InstalledAppsProps> = ({
             )
           )}
         </TableBody>
-      </>
-    </CardContainer>
+      </ResponsiveTable>
+    </Card>
   );
 };
 

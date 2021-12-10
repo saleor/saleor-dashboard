@@ -1,7 +1,7 @@
 /* eslint-disable sort-keys */
-import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { getDefaultNotifierSuccessErrorData } from "@saleor/hooks/useNotifier/utils";
+import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import { OrderDiscountCommonInput } from "@saleor/orders/components/OrderDiscountCommonModal/types";
 import {
   useOrderDiscountAddMutation,
