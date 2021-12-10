@@ -11,7 +11,7 @@ export const useStyles = makeStyles(
     },
     colAction: {
       "&&": {
-        paddingRight: theme.spacing(1.5)
+        paddingRight: theme.spacing(3)
       },
       textAlign: "right",
       width: 140

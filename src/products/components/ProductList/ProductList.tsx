@@ -144,13 +144,14 @@ export const ProductList: React.FC<ProductListProps> = props => {
   const gridAttributesFromSettings = settings.columns.filter(
     isAttributeColumnValue
   );
-  const numberOfColumns = 2 + settings.columns.length;
+  const numberOfColumns =
+    (products?.length === 0 ? 1 : 2) + settings.columns.length;
 
   return (
     <div className={classes.tableContainer}>
       <ResponsiveTable className={classes.table}>
         <colgroup>
-          <col />
+          {products?.length !== 0 && <col />}
           <col className={classes.colName} />
           <DisplayColumn column="productType" displayColumns={settings.columns}>
             <col className={classes.colType} />

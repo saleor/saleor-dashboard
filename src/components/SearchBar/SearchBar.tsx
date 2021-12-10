@@ -17,7 +17,7 @@ const useStyles = makeStyles(
       borderBottom: `1px solid ${theme.palette.divider}`,
       display: "flex",
       flexWrap: "wrap",
-      padding: theme.spacing(1, 3)
+      padding: theme.spacing(1, 4)
     },
     tabActionButton: {
       marginLeft: theme.spacing(2),

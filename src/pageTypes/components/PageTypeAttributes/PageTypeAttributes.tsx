@@ -1,5 +1,4 @@
 import { Card, TableCell, TableRow } from "@material-ui/core";
-import DeleteIcon from "@material-ui/icons/Delete";
 import CardTitle from "@saleor/components/CardTitle";
 import Checkbox from "@saleor/components/Checkbox";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
@@ -9,7 +8,7 @@ import {
   SortableTableRow
 } from "@saleor/components/SortableTable";
 import TableHead from "@saleor/components/TableHead";
-import { Button, IconButton, makeStyles } from "@saleor/macaw-ui";
+import { Button, DeleteIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
 import { renderCollection, stopPropagation } from "@saleor/misc";
 import { PageTypeDetails_pageType_attributes } from "@saleor/pageTypes/types/PageTypeDetails";
 import { ListActions, ReorderAction } from "@saleor/types";

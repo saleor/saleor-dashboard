@@ -5,7 +5,6 @@ import {
   TableHead,
   TableRow
 } from "@material-ui/core";
-import DeleteIcon from "@material-ui/icons/Delete";
 import CardTitle from "@saleor/components/CardTitle";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
@@ -15,7 +14,7 @@ import {
 } from "@saleor/components/SortableTable";
 import TablePagination from "@saleor/components/TablePagination";
 import { AttributeValueListFragment_edges_node } from "@saleor/fragments/types/AttributeValueListFragment";
-import { Button, IconButton, makeStyles } from "@saleor/macaw-ui";
+import { Button, DeleteIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
 import { maybe, renderCollection, stopPropagation } from "@saleor/misc";
 import { ListProps, ReorderAction } from "@saleor/types";
 import React from "react";

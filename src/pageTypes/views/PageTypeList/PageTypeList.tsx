@@ -1,4 +1,3 @@
-import DeleteIcon from "@material-ui/icons/Delete";
 import DeleteFilterTabDialog from "@saleor/components/DeleteFilterTabDialog";
 import SaveFilterTabDialog, {
   SaveFilterTabDialogFormData
@@ -13,7 +12,7 @@ import usePaginator, {
   createPaginationState
 } from "@saleor/hooks/usePaginator";
 import { commonMessages } from "@saleor/intl";
-import { IconButton } from "@saleor/macaw-ui";
+import { DeleteIcon, IconButton } from "@saleor/macaw-ui";
 import { getStringOrPlaceholder } from "@saleor/misc";
 import usePageTypeDelete from "@saleor/pageTypes/hooks/usePageTypeDelete";
 import { usePageTypeBulkDeleteMutation } from "@saleor/pageTypes/mutations";

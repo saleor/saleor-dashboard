@@ -1,6 +1,5 @@
-import DeleteIcon from "@material-ui/icons/Delete";
 import PageHeader from "@saleor/components/PageHeader";
-import { IconButton } from "@saleor/macaw-ui";
+import { DeleteIcon, IconButton } from "@saleor/macaw-ui";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 

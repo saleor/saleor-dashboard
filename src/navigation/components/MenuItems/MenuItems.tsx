@@ -1,10 +1,9 @@
 import { Card, CardActions, Paper, Typography } from "@material-ui/core";
-import DeleteIcon from "@material-ui/icons/Delete";
 import EditIcon from "@material-ui/icons/Edit";
 import CardTitle from "@saleor/components/CardTitle";
 import Skeleton from "@saleor/components/Skeleton";
 import { buttonMessages } from "@saleor/intl";
-import { Button, IconButton, useTheme } from "@saleor/macaw-ui";
+import { Button, DeleteIcon, IconButton, useTheme } from "@saleor/macaw-ui";
 import { makeStyles } from "@saleor/macaw-ui";
 import classNames from "classnames";
 import React from "react";

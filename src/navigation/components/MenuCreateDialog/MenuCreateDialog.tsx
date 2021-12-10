@@ -5,13 +5,11 @@ import {
   DialogTitle,
   TextField
 } from "@material-ui/core";
-import ConfirmButton, {
-  ConfirmButtonTransitionState
-} from "@saleor/components/ConfirmButton";
+import ConfirmButton from "@saleor/components/ConfirmButton";
 import Form from "@saleor/components/Form";
 import { MenuErrorFragment } from "@saleor/fragments/types/MenuErrorFragment";
 import { buttonMessages } from "@saleor/intl";
-import { Button } from "@saleor/macaw-ui";
+import { Button, ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import { getFormErrors } from "@saleor/utils/errors";
 import getMenuErrorMessage from "@saleor/utils/errors/menu";
 import React from "react";
