@@ -5,13 +5,12 @@ import {
   TableHead,
   TableRow
 } from "@material-ui/core";
-import DeleteIcon from "@material-ui/icons/Delete";
 import { App_app_webhooks } from "@saleor/apps/types/App";
 import CardTitle from "@saleor/components/CardTitle";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
 import TableCellHeader from "@saleor/components/TableCellHeader";
-import { Button, IconButton } from "@saleor/macaw-ui";
+import { Button, DeleteIcon, IconButton } from "@saleor/macaw-ui";
 import { renderCollection, stopPropagation } from "@saleor/misc";
 import { isUnnamed } from "@saleor/webhooks/utils";
 import classNames from "classnames";

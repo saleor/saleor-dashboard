@@ -37,6 +37,9 @@ const useStyles = makeStyles(
       cursor: "pointer"
     },
     noHandle: {
+      "&&&": {
+        paddingRight: theme.spacing(3)
+      },
       textAlign: "right"
     },
     tabActive: {

@@ -6,11 +6,11 @@ import {
   TextField
 } from "@material-ui/core";
 import { buttonMessages } from "@saleor/intl";
-import { Button } from "@saleor/macaw-ui";
+import { Button, ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import ConfirmButton, { ConfirmButtonTransitionState } from "../ConfirmButton";
+import ConfirmButton from "../ConfirmButton";
 import Form from "../Form";
 
 export interface SaveFilterTabDialogFormData {

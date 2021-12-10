@@ -6,7 +6,7 @@ import React from "react";
 
 import Image from "../../icons/Image";
 
-export const AVATAR_MARGIN = 32;
+export const AVATAR_MARGIN = 40;
 
 const useStyles = makeStyles(
   theme => ({

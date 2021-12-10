@@ -12,9 +12,7 @@ import {
   Typography
 } from "@material-ui/core";
 import CardSpacer from "@saleor/components/CardSpacer";
-import ConfirmButton, {
-  ConfirmButtonTransitionState
-} from "@saleor/components/ConfirmButton";
+import ConfirmButton from "@saleor/components/ConfirmButton";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
 import useElementScroll, {
@@ -22,7 +20,11 @@ import useElementScroll, {
 } from "@saleor/hooks/useElementScroll";
 import useSearchQuery from "@saleor/hooks/useSearchQuery";
 import { buttonMessages } from "@saleor/intl";
-import { Button, makeStyles } from "@saleor/macaw-ui";
+import {
+  Button,
+  ConfirmButtonTransitionState,
+  makeStyles
+} from "@saleor/macaw-ui";
 import { getUserInitials, getUserName, renderCollection } from "@saleor/misc";
 import { SearchStaffMembers_search_edges_node } from "@saleor/searches/types/SearchStaffMembers";
 import { DialogProps, FetchMoreProps, SearchPageProps } from "@saleor/types";

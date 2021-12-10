@@ -144,6 +144,7 @@ const Attributes: React.FC<AttributesProps> = ({
           </div>
           <IconButton
             variant="secondary"
+            hoverOutline
             className={classes.expansionBarButton}
             onClick={toggleExpansion}
             data-test="attributes-expand"
