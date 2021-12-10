@@ -60,7 +60,7 @@ const useStyles = makeStyles(
           color: theme.palette.primary.main
         },
         marginRight: theme.spacing(2),
-        width: 48
+        width: 40
       }
     };
   },
