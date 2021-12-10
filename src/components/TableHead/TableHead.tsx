@@ -4,7 +4,6 @@ import {
   TableRow,
   Typography
 } from "@material-ui/core";
-import { fade } from "@material-ui/core/styles/colorManipulator";
 import { TableHeadProps as MuiTableHeadProps } from "@material-ui/core/TableHead";
 import { makeStyles } from "@saleor/macaw-ui";
 import classNames from "classnames";
@@ -30,7 +29,7 @@ const useStyles = makeStyles(
       padding: 0
     },
     checkboxSelected: {
-      backgroundColor: fade(theme.palette.primary.main, 0.05)
+      backgroundColor: theme.palette.saleor.active[5]
     },
     container: {
       alignItems: "center",
@@ -48,7 +47,7 @@ const useStyles = makeStyles(
       }
     },
     root: {
-      backgroundColor: fade(theme.palette.primary.main, 0.05),
+      backgroundColor: theme.palette.saleor.active[5],
       paddingLeft: 0,
       paddingRight: 24
     },

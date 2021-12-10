@@ -12,9 +12,8 @@ import {
   Typography
 } from "@material-ui/core";
 import ToggleIcon from "@material-ui/icons/ArrowDropDown";
-import DeleteIcon from "@material-ui/icons/Delete";
 import { FormChange } from "@saleor/hooks/useForm";
-import { Button, IconButton } from "@saleor/macaw-ui";
+import { Button, DeleteIcon, IconButton } from "@saleor/macaw-ui";
 import { MetadataInput } from "@saleor/types/globalTypes";
 import React, { useEffect } from "react";
 import SVG from "react-inlinesvg";
@@ -94,6 +93,7 @@ const MetadataCard: React.FC<MetadataCardProps> = ({
                 </Typography>
                 <IconButton
                   variant="secondary"
+                  hoverOutline
                   data-test="expand"
                   onClick={() => setExpanded(!expanded)}
                 >

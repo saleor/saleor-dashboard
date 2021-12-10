@@ -1,5 +1,4 @@
 import { ClickAwayListener, MenuItem, Paper, Popper } from "@material-ui/core";
-import { fade } from "@material-ui/core/styles/colorManipulator";
 import { FormChange } from "@saleor/hooks/useForm";
 import ArrowDropdown from "@saleor/icons/ArrowDropdown";
 import { makeStyles } from "@saleor/macaw-ui";
@@ -30,7 +29,6 @@ const useStyles = makeStyles(
       padding: theme.spacing()
     },
     popper: {
-      boxShadow: `0px 5px 10px 0 ${fade(theme.palette.common.black, 0.05)}`,
       marginTop: theme.spacing(1),
       zIndex: 2
     },

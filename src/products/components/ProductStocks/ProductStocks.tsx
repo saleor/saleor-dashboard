@@ -14,9 +14,6 @@ import {
   TextField,
   Typography
 } from "@material-ui/core";
-import { fade } from "@material-ui/core/styles/colorManipulator";
-import AddIcon from "@material-ui/icons/Add";
-import DeleteIcon from "@material-ui/icons/Delete";
 import CardTitle from "@saleor/components/CardTitle";
 import ControlledCheckbox from "@saleor/components/ControlledCheckbox";
 import FormSpacer from "@saleor/components/FormSpacer";
@@ -26,7 +23,7 @@ import { ProductErrorFragment } from "@saleor/fragments/types/ProductErrorFragme
 import { WarehouseFragment } from "@saleor/fragments/types/WarehouseFragment";
 import { FormChange } from "@saleor/hooks/useForm";
 import { FormsetAtomicData, FormsetChange } from "@saleor/hooks/useFormset";
-import { IconButton, makeStyles } from "@saleor/macaw-ui";
+import { DeleteIcon, IconButton, makeStyles, PlusIcon } from "@saleor/macaw-ui";
 import { ICONBUTTON_SIZE } from "@saleor/macaw-ui";
 import { renderCollection } from "@saleor/misc";
 import { getFormErrors, getProductErrorMessage } from "@saleor/utils/errors";
@@ -90,7 +87,6 @@ const useStyles = makeStyles(
       padding: theme.spacing(2)
     },
     popper: {
-      boxShadow: `0px 5px 10px 0 ${fade(theme.palette.common.black, 0.05)}`,
       marginTop: theme.spacing(1),
       zIndex: 2
     },
@@ -317,7 +313,7 @@ const ProductStocks: React.FC<ProductStocksProps> = ({
                         variant="secondary"
                         onClick={() => setExpansionState(!isExpanded)}
                       >
-                        <AddIcon />
+                        <PlusIcon />
                       </IconButton>
                       <Popper
                         className={classes.popper}
@@ -333,7 +329,7 @@ const ProductStocks: React.FC<ProductStocksProps> = ({
                               transformOrigin: "right top"
                             }}
                           >
-                            <Paper className={classes.paper}>
+                            <Paper className={classes.paper} elevation={8}>
                               {warehousesToAssign.map(warehouse => (
                                 <MenuItem
                                   className={classes.menuItem}
