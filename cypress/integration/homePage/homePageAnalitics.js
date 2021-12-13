@@ -153,7 +153,7 @@ filterTests({ definedTags: ["all", "critical"] }, () => {
         channelSlug: defaultChannel.slug,
         email: randomEmail,
         variantsList: createdVariants,
-        shippingMethodId: shippingMethod.id,
+        shippingMethodName: shippingMethod.name,
         address: addresses.plAddress
       });
 

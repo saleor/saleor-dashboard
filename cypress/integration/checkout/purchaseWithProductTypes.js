@@ -13,7 +13,10 @@ import {
   createCheckout
 } from "../../support/api/requests/Checkout";
 import { getOrder } from "../../support/api/requests/Order";
-import { createTypeProduct } from "../../support/api/requests/ProductType";
+import {
+  createDigitalContent,
+  createTypeProduct
+} from "../../support/api/requests/ProductType";
 import { getDefaultChannel } from "../../support/api/utils/channelsUtils";
 import {
   addPayment,
@@ -21,6 +24,7 @@ import {
   createWaitingForCaptureOrder
 } from "../../support/api/utils/ordersUtils";
 import {
+  addDigitalContentAndUpdateProductType,
   createProductInChannel,
   deleteProductsStartsWith
 } from "../../support/api/utils/products/productsUtils";
@@ -94,6 +98,8 @@ filterTests({ definedTags: ["all", "critical"] }, () => {
 
     it("should purchase digital product", () => {
       const digitalName = `${startsWith}${faker.datatype.number()}`;
+      let variants;
+
       createTypeProduct({
         name: digitalName,
         attributeId: attribute.id,
@@ -105,11 +111,19 @@ filterTests({ definedTags: ["all", "critical"] }, () => {
           createProductInChannel(createProductData);
         })
         .then(({ variantsList }) => {
+          variants = variantsList;
+          addDigitalContentAndUpdateProductType(
+            variants[0].id,
+            createProductData.productTypeId,
+            defaultChannel.id
+          );
+        })
+        .then(() => {
           createAndCompleteCheckoutWithoutShipping({
             channelSlug: defaultChannel.slug,
             email,
             billingAddress: address,
-            variantsList,
+            variantsList: variants,
             auth: "token"
           });
         })
@@ -142,7 +156,7 @@ filterTests({ definedTags: ["all", "critical"] }, () => {
             channelSlug: defaultChannel.slug,
             email,
             variantsList,
-            shippingMethodId: shippingMethod.id,
+            shippingMethodName: shippingMethod.name,
             address
           });
         })
@@ -175,6 +189,9 @@ filterTests({ definedTags: ["all", "critical"] }, () => {
         })
         .then(({ variantsList }) => {
           digitalProductVariantsList = variantsList;
+          createDigitalContent(variantsList[0].id);
+        })
+        .then(() => {
           createCheckout({
             channelSlug: defaultChannel.slug,
             email,
