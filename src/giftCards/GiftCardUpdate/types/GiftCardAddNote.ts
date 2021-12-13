@@ -70,7 +70,7 @@ export interface GiftCardAddNote_giftCardAddNote_giftCard {
   __typename: "GiftCard";
   metadata: (GiftCardAddNote_giftCardAddNote_giftCard_metadata | null)[];
   privateMetadata: (GiftCardAddNote_giftCardAddNote_giftCard_privateMetadata | null)[];
-  displayCode: string;
+  last4CodeChars: string;
   boughtInChannel: string | null;
   createdBy: GiftCardAddNote_giftCardAddNote_giftCard_createdBy | null;
   product: GiftCardAddNote_giftCardAddNote_giftCard_product | null;
