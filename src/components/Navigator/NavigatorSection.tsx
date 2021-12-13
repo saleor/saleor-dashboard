@@ -35,8 +35,7 @@ const useStyles = makeStyles(
       "&:last-child": {
         marginBottom: 0
       },
-      margin: theme.spacing(2, 0),
-      padding: theme.spacing(0, 1)
+      margin: theme.spacing(2, 0)
     },
     spacer: {
       flex: 1
@@ -61,12 +60,11 @@ const NavigatorSection: React.FC<NavigatorSectionProps> = props => {
     <div className={classes.root}>
       <Typography
         className={classes.label}
-        variant="body2"
+        variant="caption"
         color="textSecondary"
       >
         {label}
       </Typography>
-      <Hr />
       {items.map((item, itemIndex) => {
         const index = offset + itemIndex;
         const itemProps = getItemProps({
