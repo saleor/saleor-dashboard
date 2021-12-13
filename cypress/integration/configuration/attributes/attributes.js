@@ -160,7 +160,7 @@ filterTests({ definedTags: ["all"] }, () => {
             valueRequired: true
           });
           cy.get(ATTRIBUTES_DETAILS.swatchValueImage)
-            .invoke("have.attr", "style")
+            .invoke("attr", "style")
             .should("include", "saleorDemoProductSneakers");
         });
     });
