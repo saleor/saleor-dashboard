@@ -247,6 +247,7 @@ const MultiAutocompleteSelectFieldComponent: React.FC<MultiAutocompleteSelectFie
               </Typography>
 
               <IconButton
+                hoverOutline={false}
                 variant="secondary"
                 data-test-id={testId ? `${testId}Remove` : "remove"}
                 className={classes.chipClose}

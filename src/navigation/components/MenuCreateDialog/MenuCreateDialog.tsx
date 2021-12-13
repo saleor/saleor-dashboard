@@ -72,7 +72,7 @@ const MenuCreateDialog: React.FC<MenuCreateDialogProps> = ({
               />
             </DialogContent>
             <DialogActions>
-              <Button onClick={onClose}>
+              <Button variant="secondary" onClick={onClose}>
                 <FormattedMessage {...buttonMessages.back} />
               </Button>
               <ConfirmButton
