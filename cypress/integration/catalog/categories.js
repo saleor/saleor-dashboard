@@ -79,8 +79,7 @@ filterTests({ definedTags: ["all"] }, () => {
         })
         .then(newCategory => {
           expect(newCategory.name).to.eq(categoryName);
-          // Uncomment this expect after fixing bug SALEOR-3728
-          // expect(newCategory.description).to.eq(categoryName);
+          expect(newCategory.description).to.eq(categoryName);
         });
     });
 
