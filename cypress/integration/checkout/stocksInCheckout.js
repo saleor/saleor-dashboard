@@ -83,7 +83,7 @@ filterTests({ definedTags: ["all", "critical"] }, () => {
         channel: defaultChannel,
         name: productName,
         warehouseId: warehouse.id,
-        shippingMethodId: shippingMethod.id,
+        shippingMethod,
         address
       }).then(({ order }) => {
         expect(order, "order should be created").to.be.ok;
@@ -137,7 +137,7 @@ filterTests({ definedTags: ["all", "critical"] }, () => {
         warehouseId: warehouse.id,
         quantityInWarehouse: 0,
         trackInventory: false,
-        shippingMethodId: shippingMethod.id,
+        shippingMethod,
         address
       }).then(({ order }) => {
         expect(order, "order should be created").to.be.ok;
@@ -156,7 +156,7 @@ filterTests({ definedTags: ["all", "critical"] }, () => {
         warehouseId: warehouse.id,
         quantityInWarehouse: 10,
         trackInventory: true,
-        shippingMethodId: shippingMethod.id,
+        shippingMethod,
         address
       })
         .then(({ variantsList }) => {

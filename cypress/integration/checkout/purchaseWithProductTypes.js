@@ -156,7 +156,7 @@ filterTests({ definedTags: ["all", "critical"] }, () => {
             channelSlug: defaultChannel.slug,
             email,
             variantsList,
-            shippingMethodId: shippingMethod.id,
+            shippingMethodName: shippingMethod.name,
             address
           });
         })
@@ -172,7 +172,7 @@ filterTests({ definedTags: ["all", "critical"] }, () => {
         });
     });
 
-    xit("should purchase multiple products with all product types", () => {
+    it("should purchase multiple products with all product types", () => {
       const physicalName = `${startsWith}${faker.datatype.number()}`;
       const digitalName = `${startsWith}${faker.datatype.number()}`;
       let digitalProductVariantsList;

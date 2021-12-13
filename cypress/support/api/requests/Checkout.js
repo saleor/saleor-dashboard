@@ -51,6 +51,7 @@ export function createCheckout({
         token
         availableShippingMethods{
           name
+          id
         }
         lines{
           variant{
@@ -245,4 +246,8 @@ export function addProductsToCheckout(
     }
   }`;
   return cy.sendRequestWithQuery(mutation).its("body.data.checkoutLinesUpdate");
+}
+
+export function getCheckout(checkoutId) {
+  const mutation = ``;
 }
