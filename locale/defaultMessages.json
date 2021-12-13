@@ -8046,10 +8046,6 @@
     "context": "webhooks section name",
     "string": "Webhooks"
   },
-  "src_dot_webhooks_dot_components_dot_WebhookCreatePage_dot_3493926696": {
-    "context": "header",
-    "string": "Create Webhook"
-  },
   "src_dot_webhooks_dot_components_dot_WebhookDeleteDialog_dot_216945727": {
     "context": "delete webhook",
     "string": "Are you sure you want to delete this webhook?"
@@ -8062,237 +8058,77 @@
     "context": "dialog header",
     "string": "Delete Webhook"
   },
-  "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_1013231747": {
-    "context": "event",
-    "string": "Confirm payment"
-  },
-  "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_1087314240": {
-    "context": "event",
-    "string": "Checkout updated"
-  },
-  "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_1366770851": {
-    "context": "event",
-    "string": "Order confirmed"
-  },
-  "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_1368317066": {
-    "context": "event",
-    "string": "Invoice deleted"
-  },
-  "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_1368438665": {
-    "context": "event",
-    "string": "Shipping methods for checkout listed"
-  },
-  "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_1436364351": {
-    "context": "section header",
-    "string": "Events"
-  },
-  "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_144149815": {
-    "context": "event",
-    "string": "Product variant deleted"
-  },
-  "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_1564545489": {
-    "context": "event",
-    "string": "Draft order deleted"
-  },
-  "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_1594316266": {
-    "context": "event",
-    "string": "Fulfillment canceled"
-  },
-  "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_1606361075": {
-    "context": "event",
-    "string": "Order updated"
-  },
-  "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_1616635110": {
-    "context": "event",
-    "string": "User notified"
-  },
-  "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_1624692657": {
-    "context": "event",
-    "string": "Refund payment"
-  },
-  "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_2126893364": {
-    "context": "event",
-    "string": "Product variant updated"
-  },
-  "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_2240725235": {
-    "context": "event",
-    "string": "Checkout created"
-  },
-  "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_2315238863": {
-    "context": "event",
-    "string": "Product variant out of stock"
-  },
-  "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_2328272362": {
-    "context": "event",
-    "string": "Sale deleted"
-  },
-  "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_2454751033": {
-    "context": "event",
-    "string": "All events"
-  },
-  "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_2745028894": {
-    "context": "event",
-    "string": "Page deleted"
-  },
-  "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_2862596150": {
-    "context": "event",
-    "string": "Invoice sent"
-  },
-  "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_2899821092": {
-    "context": "event",
-    "string": "Product created"
-  },
-  "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_3051538277": {
-    "context": "webhook events",
-    "string": "Expand or restrict webhooks permissions to register certain events in Saleor system."
-  },
-  "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_3285325968": {
-    "context": "event",
-    "string": "Product variant created"
-  },
-  "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_3316426878": {
-    "context": "event",
-    "string": "Product updated"
-  },
-  "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_3345061702": {
-    "context": "event",
-    "string": "Order fully paid"
-  },
-  "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_337693660": {
-    "context": "event",
-    "string": "Void payment"
-  },
-  "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_3400883706": {
-    "context": "event",
-    "string": "Order created"
-  },
-  "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_3418398751": {
-    "context": "event",
-    "string": "Draft order updated"
-  },
-  "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_36047288": {
-    "context": "event",
-    "string": "Translation created"
-  },
-  "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_3610454973": {
-    "context": "event",
-    "string": "Draft order created"
-  },
-  "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_3617444329": {
-    "context": "event",
-    "string": "Order cancelled"
-  },
-  "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_3618648517": {
-    "context": "event",
-    "string": "Page updated"
-  },
-  "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_3671033983": {
-    "context": "event",
-    "string": "Product deleted"
-  },
-  "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_3742472683": {
-    "context": "event",
-    "string": "Capture payment"
-  },
-  "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_3907151399": {
-    "context": "event",
-    "string": "Order fulfilled"
-  },
-  "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_3970234993": {
-    "context": "event",
-    "string": "Customer created"
-  },
-  "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_4053089191": {
-    "context": "event",
-    "string": "List payment gateways"
-  },
-  "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_4175628606": {
-    "context": "event",
-    "string": "Sale created"
-  },
-  "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_4186057882": {
-    "context": "event",
-    "string": "Invoice requested"
-  },
-  "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_4281441551": {
-    "context": "event",
-    "string": "Fulfillment created"
-  },
-  "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_4292269645": {
-    "context": "event",
-    "string": "Process payment"
-  },
-  "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_482477254": {
-    "context": "event",
-    "string": "Translation updated"
-  },
-  "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_523513128": {
-    "context": "event",
-    "string": "Sale updated"
-  },
-  "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_679080833": {
-    "context": "event",
-    "string": "Page created"
-  },
-  "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_69923590": {
-    "context": "event",
-    "string": "Product variant back in stock"
-  },
-  "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_759562905": {
-    "context": "event",
-    "string": "Authorize payment"
-  },
-  "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_787792649": {
-    "context": "event",
-    "string": "Customer updated"
-  },
-  "src_dot_webhooks_dot_components_dot_WebhookInfo_dot_1089569085": {
-    "context": "webhook",
-    "string": "Secret Key"
-  },
-  "src_dot_webhooks_dot_components_dot_WebhookInfo_dot_1690209105": {
-    "context": "webhook",
-    "string": "Target URL"
-  },
-  "src_dot_webhooks_dot_components_dot_WebhookInfo_dot_1826224431": {
-    "context": "webhook",
-    "string": "Webhook Name"
-  },
-  "src_dot_webhooks_dot_components_dot_WebhookInfo_dot_330298209": {
-    "context": "section header",
-    "string": "Webhook Information"
-  },
-  "src_dot_webhooks_dot_components_dot_WebhookInfo_dot_3763861707": {
-    "context": "webhook target url help text",
-    "string": "This URL will receive webhook POST requests"
-  },
-  "src_dot_webhooks_dot_components_dot_WebhookInfo_dot_3809115222": {
-    "context": "webhook secret key help text",
-    "string": "secret key is used to create a hash signature with each payload. *optional field"
-  },
-  "src_dot_webhooks_dot_components_dot_WebhookInfo_dot_4194304040": {
-    "context": "webhook specific information",
-    "string": "Webhook specific information"
-  },
-  "src_dot_webhooks_dot_components_dot_WebhookStatus_dot_2772025990": {
-    "context": "webhooks active",
-    "string": "Webhook is active"
-  },
-  "src_dot_webhooks_dot_components_dot_WebhookStatus_dot_313090629": {
-    "context": "webhook active",
-    "string": "If you want to disable this webhook please uncheck the box below."
-  },
-  "src_dot_webhooks_dot_components_dot_WebhookStatus_dot_596557805": {
-    "context": "section header",
-    "string": "Webhook Status"
-  },
-  "src_dot_webhooks_dot_components_dot_WebhooksDetailsPage_dot_1595053355": {
+  "src_dot_webhooks_dot_components_dot_WebhookDetailsPage_dot_header": {
     "context": "header",
     "string": "Unnamed Webhook Details"
   },
-  "src_dot_webhooks_dot_components_dot_WebhooksDetailsPage_dot_408706360": {
+  "src_dot_webhooks_dot_components_dot_WebhookDetailsPage_dot_headerCreate": {
+    "context": "header",
+    "string": "Create Webhook"
+  },
+  "src_dot_webhooks_dot_components_dot_WebhookDetailsPage_dot_headerNamed": {
     "context": "header",
     "string": "{webhookName} Details"
+  },
+  "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_assignPermissionsToAsynchronousEvents": {
+    "context": "section description",
+    "string": "Assign permissions to register asynchronous events for this webhook."
+  },
+  "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_assignPermissionsToSynchronousEvents": {
+    "context": "section description",
+    "string": "Assign permissions to register synchronous events for this webhook."
+  },
+  "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_asynchronousEvents": {
+    "context": "section subheader",
+    "string": "Asynchronous events"
+  },
+  "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_events": {
+    "context": "section header",
+    "string": "Events"
+  },
+  "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_registeredEvents": {
+    "context": "input label",
+    "string": "Registered events"
+  },
+  "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_synchronousEvents": {
+    "context": "section subheader",
+    "string": "Synchronous events"
+  },
+  "src_dot_webhooks_dot_components_dot_WebhookInfo_dot_secretKey": {
+    "context": "webhook input label",
+    "string": "Secret Key"
+  },
+  "src_dot_webhooks_dot_components_dot_WebhookInfo_dot_secretKeyDescription": {
+    "context": "webhook input help text",
+    "string": "secret key is used to create a hash signature with each payload. *optional field"
+  },
+  "src_dot_webhooks_dot_components_dot_WebhookInfo_dot_targetUrl": {
+    "context": "webhook input label",
+    "string": "Target URL"
+  },
+  "src_dot_webhooks_dot_components_dot_WebhookInfo_dot_targetUrlDescription": {
+    "context": "webhook input help text",
+    "string": "This URL will receive webhook POST requests"
+  },
+  "src_dot_webhooks_dot_components_dot_WebhookInfo_dot_webhookInformation": {
+    "context": "section header",
+    "string": "Webhook Information"
+  },
+  "src_dot_webhooks_dot_components_dot_WebhookInfo_dot_webhookName": {
+    "context": "webhook input label",
+    "string": "Webhook Name"
+  },
+  "src_dot_webhooks_dot_components_dot_WebhookStatus_dot_webhookActive": {
+    "context": "webhooks active label",
+    "string": "Webhook is active"
+  },
+  "src_dot_webhooks_dot_components_dot_WebhookStatus_dot_webhookActiveDescription": {
+    "context": "webhook active description",
+    "string": "If you want to disable this webhook please uncheck the box below."
+  },
+  "src_dot_webhooks_dot_components_dot_WebhookStatus_dot_webhookStatus": {
+    "context": "section header",
+    "string": "Webhook Status"
   },
   "src_dot_webhooks_dot_components_dot_WebhooksList_dot_1153324159": {
     "string": "No webhooks found"
