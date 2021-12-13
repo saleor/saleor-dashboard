@@ -126,6 +126,9 @@
             "name": "GiftCardEvent"
           },
           {
+            "name": "GiftCardTag"
+          },
+          {
             "name": "Group"
           },
           {

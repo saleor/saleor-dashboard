@@ -11,7 +11,7 @@ export interface GiftCardCreateFormCustomer {
 }
 
 export type GiftCardCreateCommonFormErrors = Record<
-  "tag" | "expiryDate" | "currency" | "amount" | "balance",
+  "tags" | "expiryDate" | "currency" | "amount" | "balance",
   GiftCardError
 >;
 

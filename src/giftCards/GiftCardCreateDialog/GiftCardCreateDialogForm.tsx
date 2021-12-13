@@ -37,7 +37,7 @@ export interface GiftCardCreateFormData extends GiftCardCreateCommonFormData {
 }
 
 export const initialData: GiftCardCreateFormData = {
-  tag: "",
+  tags: [],
   balanceAmount: 1,
   balanceCurrency: null,
   note: "",
@@ -111,12 +111,12 @@ const GiftCardCreateDialogForm: React.FC<GiftCardCreateDialogFormProps> = ({
   );
 
   const formErrors = getFormErrors(
-    ["tag", "expiryDate", "customer", "currency", "amount", "balance"],
+    ["tags", "expiryDate", "customer", "currency", "amount", "balance"],
     apiErrors
   );
 
   const {
-    tag,
+    tags,
     sendToCustomerSelected,
     channelSlug,
     balanceAmount,
@@ -150,9 +150,9 @@ const GiftCardCreateDialogForm: React.FC<GiftCardCreateDialogFormProps> = ({
         <GiftCardCreateMoneyInput {...commonFormProps} set={set} />
         <CardSpacer />
         <GiftCardTagInput
-          error={formErrors?.tag}
-          name="tag"
-          value={tag}
+          error={formErrors?.tags}
+          name="tags"
+          values={tags}
           change={change}
         />
         <CardSpacer />

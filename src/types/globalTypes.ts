@@ -2219,13 +2219,13 @@ export interface GiftCardAddNoteInput {
 export interface GiftCardBulkCreateInput {
   count: number;
   balance: PriceInput;
-  tag: string;
+  tags?: string[] | null;
   expiryDate?: any | null;
   isActive: boolean;
 }
 
 export interface GiftCardCreateInput {
-  tag?: string | null;
+  addTags?: string[] | null;
   expiryDate?: any | null;
   startDate?: any | null;
   endDate?: any | null;
@@ -2240,7 +2240,6 @@ export interface GiftCardCreateInput {
 export interface GiftCardFilterInput {
   isActive?: boolean | null;
   metadata?: (MetadataFilter | null)[] | null;
-  tag?: string | null;
   tags?: (string | null)[] | null;
   products?: (string | null)[] | null;
   usedBy?: (string | null)[] | null;
@@ -2267,7 +2266,8 @@ export interface GiftCardSortingInput {
 }
 
 export interface GiftCardUpdateInput {
-  tag?: string | null;
+  addTags?: string[] | null;
+  removeTags?: string[] | null;
   expiryDate?: any | null;
   startDate?: any | null;
   endDate?: any | null;

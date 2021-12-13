@@ -48,7 +48,9 @@ export const giftCardDataFragment = gql`
     }
 
     id
-    tag
+    tags {
+      name
+    }
   }
 `;
 
@@ -74,8 +76,8 @@ export const giftCardDetails = gql`
         message
         orderId
         orderNumber
-        tag
-        oldTag
+        tags
+        oldTags
         balance {
           initialBalance {
             ...Money

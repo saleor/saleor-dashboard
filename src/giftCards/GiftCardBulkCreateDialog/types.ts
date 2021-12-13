@@ -5,7 +5,7 @@ import { TimePeriodTypeEnum } from "@saleor/types/globalTypes";
 import { GiftCardExpiryType } from "../GiftCardCreateDialog/types";
 
 export type GiftCardErrorKey =
-  | "tag"
+  | "tags"
   | "expiryDate"
   | "currency"
   | "expiryPeriod"
@@ -14,7 +14,7 @@ export type GiftCardErrorKey =
   | "count";
 
 export const giftCardBulkCreateErrorKeys: GiftCardErrorKey[] = [
-  "tag",
+  "tags",
   "expiryDate",
   "currency",
   "amount",
@@ -45,7 +45,7 @@ export interface GiftCardCreateCommonFormData {
   expiryPeriodType: TimePeriodTypeEnum;
   expiryPeriodAmount: number;
   requiresActivation: boolean;
-  tag: string;
+  tags: string[];
   balanceAmount: number;
   balanceCurrency: string;
   expiryDate: string;

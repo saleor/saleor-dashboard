@@ -31,7 +31,7 @@ interface GiftCardUpdateFormProviderProps {
 }
 
 export type GiftCardUpdateFormData = MetadataFormData &
-  Pick<GiftCardCreateFormData, "tag" | "expiryDate">;
+  Pick<GiftCardCreateFormData, "tags" | "expiryDate">;
 
 export interface GiftCardUpdateFormConsumerData
   extends GiftCardUpdateFormErrors {
@@ -39,7 +39,7 @@ export interface GiftCardUpdateFormConsumerData
 }
 
 export interface GiftCardUpdateFormErrors {
-  formErrors: Record<"tag" | "expiryDate", GiftCardError>;
+  formErrors: Record<"tags" | "expiryDate", GiftCardError>;
   handlers: { changeMetadata: FormChange };
 }
 
@@ -67,10 +67,10 @@ const GiftCardUpdateFormProvider: React.FC<GiftCardUpdateFormProviderProps> = ({
       return { ...emptyFormData, metadata: [], privateMetadata: [] };
     }
 
-    const { tag, expiryDate, privateMetadata, metadata } = giftCard;
+    const { tags, expiryDate, privateMetadata, metadata } = giftCard;
 
     return {
-      tag,
+      tags: tags.map(({ name }) => name),
       expiryDate,
       privateMetadata: privateMetadata?.map(mapMetadataItemToInput),
       metadata: metadata?.map(mapMetadataItemToInput)
@@ -100,13 +100,15 @@ const GiftCardUpdateFormProvider: React.FC<GiftCardUpdateFormProviderProps> = ({
     onCompleted: onSubmit
   });
 
-  const submit = async ({ tag, expiryDate }: GiftCardUpdateFormData) => {
+  const submit = async ({ tags, expiryDate }: GiftCardUpdateFormData) => {
     const result = await updateGiftCard({
       variables: {
         id: giftCard?.id,
         input: {
-          tag,
-          expiryDate
+          // tags: [tag],
+          expiryDate,
+          removeTags: [null],
+          addTags: [null]
         }
       }
     });
@@ -142,7 +144,7 @@ const GiftCardUpdateFormProvider: React.FC<GiftCardUpdateFormProviderProps> = ({
     handleFormSubmit(submitData, handleSubmit, setChanged);
 
   const formErrors = getFormErrors(
-    ["tag", "expiryDate"],
+    ["tags", "expiryDate"],
     updateGiftCardOpts?.data?.giftCardUpdate?.errors
   );
 

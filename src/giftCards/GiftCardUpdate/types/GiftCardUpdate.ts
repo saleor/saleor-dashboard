@@ -128,6 +128,11 @@ export interface GiftCardUpdate_giftCardUpdate_giftCard_events {
   balance: GiftCardUpdate_giftCardUpdate_giftCard_events_balance | null;
 }
 
+export interface GiftCardUpdate_giftCardUpdate_giftCard_tags {
+  __typename: "GiftCardTag";
+  name: string;
+}
+
 export interface GiftCardUpdate_giftCardUpdate_giftCard {
   __typename: "GiftCard";
   metadata: (GiftCardUpdate_giftCardUpdate_giftCard_metadata | null)[];
@@ -147,8 +152,8 @@ export interface GiftCardUpdate_giftCardUpdate_giftCard {
   initialBalance: GiftCardUpdate_giftCardUpdate_giftCard_initialBalance | null;
   currentBalance: GiftCardUpdate_giftCardUpdate_giftCard_currentBalance | null;
   id: string;
-  tag: string | null;
   events: GiftCardUpdate_giftCardUpdate_giftCard_events[];
+  tags: GiftCardUpdate_giftCardUpdate_giftCard_tags[] | null;
 }
 
 export interface GiftCardUpdate_giftCardUpdate {

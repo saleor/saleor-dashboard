@@ -2670,7 +2670,7 @@ type GiftCard implements Node & ObjectWithMetadata {
   code: String!
   isActive: Boolean!
   expiryDate: Date
-  tag: String
+  tags: [GiftCardTag!]
   created: DateTime!
   lastUsedOn: DateTime
   initialBalance: Money
@@ -2732,7 +2732,7 @@ type GiftCardBulkCreate {
 input GiftCardBulkCreateInput {
   count: Int!
   balance: PriceInput!
-  tag: String!
+  tags: [String!]
   expiryDate: Date
   isActive: Boolean!
 }
@@ -2753,6 +2753,21 @@ type GiftCardCountableConnection {
   totalCount: Int
 }
 
+type GiftCardTagCountableConnection {
+  pageInfo: PageInfo!
+  edges: [GiftCardTagCountableEdge!]!
+  totalCount: Int
+}
+
+type GiftCardTagCountableEdge {
+  node: GiftCardTag!
+  cursor: String!
+}
+
+input GiftCardTagFilterInput {
+  search: String
+}
+
 type GiftCardCountableEdge {
   node: GiftCard!
   cursor: String!
@@ -2768,7 +2783,7 @@ type GiftCardCreate {
 }
 
 input GiftCardCreateInput {
-  tag: String
+  addTags: [String!]
   expiryDate: Date
   startDate: Date
   endDate: Date
@@ -2823,8 +2838,8 @@ type GiftCardEvent implements Node {
   email: String
   orderId: ID
   orderNumber: String
-  tag: String
-  oldTag: String
+  tags: [String!]
+  oldTags: [String!]
   balance: GiftCardEventBalance
   expiryDate: Date
   oldExpiryDate: Date
@@ -2855,7 +2870,6 @@ enum GiftCardEventsEnum {
 input GiftCardFilterInput {
   isActive: Boolean
   metadata: [MetadataFilter]
-  tag: String
   tags: [String]
   products: [ID]
   usedBy: [ID]
@@ -2920,6 +2934,11 @@ input GiftCardSortingInput {
   field: GiftCardSortField!
 }
 
+type GiftCardTag implements Node {
+  id: ID!
+  name: String!
+}
+
 type GiftCardUpdate {
   giftCardErrors: [GiftCardError!]!
     @deprecated(
@@ -2930,7 +2949,8 @@ type GiftCardUpdate {
 }
 
 input GiftCardUpdateInput {
-  tag: String
+  addTags: [String!]
+  removeTags: [String!]
   expiryDate: Date
   startDate: Date
   endDate: Date
@@ -7131,6 +7151,13 @@ type Query {
     first: Int
     last: Int
   ): GiftCardCountableConnection
+  giftCardTags(
+    filter: GiftCardTagFilterInput
+    before: String
+    after: String
+    first: Int
+    last: Int
+  ): GiftCardTagCountableConnection
   giftCardCurrencies: [String!]!
   plugin(id: ID!): Plugin
   plugins(
