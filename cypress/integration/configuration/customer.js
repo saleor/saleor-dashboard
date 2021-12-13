@@ -7,24 +7,45 @@ import { CUSTOMER_DETAILS } from "../../elements/customer/customer-details";
 import { CUSTOMERS_LIST } from "../../elements/customer/customers-list";
 import { BUTTON_SELECTORS } from "../../elements/shared/button-selectors";
 import { SHARED_ELEMENTS } from "../../elements/shared/sharedElements";
-import { urlList } from "../../fixtures/urlList";
+import { customerDetailsUrl, urlList } from "../../fixtures/urlList";
 import { ONE_PERMISSION_USERS } from "../../fixtures/users";
-import { getCustomer } from "../../support/api/requests/Customer";
+import {
+  createCustomer,
+  deleteCustomersStartsWith,
+  getCustomer
+} from "../../support/api/requests/Customer";
 import filterTests from "../../support/filterTests";
 
 filterTests({ definedTags: ["all"] }, () => {
   describe("Tests for customer", () => {
-    const channelStartsWith = `Customers`;
+    const startsWith = `Customers`;
+    let address;
 
-    it("should create customer", () => {
-      const randomName = `${channelStartsWith}${faker.datatype.number()}`;
+    before(() => {
+      cy.clearSessionData().loginUserViaRequest();
+      deleteCustomersStartsWith(startsWith);
+      cy.fixture("addresses").then(({ usAddress }) => {
+        address = usAddress;
+      });
+    });
+
+    beforeEach(() => {
+      cy.clearSessionData().loginUserViaRequest(
+        "auth",
+        ONE_PERMISSION_USERS.user
+      );
+    });
+
+    xit("should create customer", () => {
+      const randomName = `${startsWith}${faker.datatype.number()}`;
       const email = `${randomName}@example.com`;
       const note = faker.lorem.paragraph();
-      let address;
 
-      cy.clearSessionData()
-        .loginUserViaRequest("auth", ONE_PERMISSION_USERS.user)
-        .visit(urlList.customers)
+      cy.clearSessionData().loginUserViaRequest(
+        "auth",
+        ONE_PERMISSION_USERS.user
+      );
+      cy.visit(urlList.customers)
         .get(CUSTOMERS_LIST.createCustomerButton)
         .click()
         .get(SHARED_ELEMENTS.progressBar)
@@ -35,11 +56,7 @@ filterTests({ definedTags: ["all"] }, () => {
         .type(randomName)
         .get(CUSTOMER_DETAILS.emailInput)
         .type(email)
-        .fixture("addresses")
-        .then(({ usAddress }) => {
-          address = usAddress;
-          cy.fillUpAddressForm(address);
-        })
+        .fillUpAddressForm(address)
         .get(CUSTOMER_DETAILS.noteInput)
         .type(note)
         .addAliasToGraphRequest("CreateCustomer")
@@ -62,6 +79,14 @@ filterTests({ definedTags: ["all"] }, () => {
           chai.softExpect(customer.note, "Expect correct note").to.eq(note);
           cy.expectCorrectFullAddress(customer.addresses[0], address);
         });
+    });
+
+    it("should add address to customer", () => {
+      const randomName = `${startsWith}${faker.datatype.number()}`;
+      const email = `${randomName}@example.com`;
+      createCustomer(email, randomName, address).then(({ user }) => {
+        cy.visit(customerDetailsUrl(user.id));
+      });
     });
   });
 });
