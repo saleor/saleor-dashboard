@@ -8,6 +8,9 @@ import SingleSelectField from "../SingleSelectField";
 
 const useStyles = makeStyles(
   theme => ({
+    input: {
+      height: 40
+    },
     root: {
       "&& fieldset": {
         borderColor: theme.palette.divider
@@ -36,6 +39,9 @@ const AppChannelSelect: React.FC<AppChannelSelectProps> = ({
   return (
     <div className={classes.root}>
       <SingleSelectField
+        InputProps={{
+          className: classes.input
+        }}
         testId="app-channel-select"
         choices={mapNodeToChoice(channels)}
         value={selectedChannelId}
