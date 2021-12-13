@@ -1,4 +1,4 @@
-import createSvgIcon from "@material-ui/icons/utils/createSvgIcon";
+import { createSvgIcon } from "@material-ui/core/utils";
 import { useTheme } from "@saleor/macaw-ui";
 import React from "react";
 
