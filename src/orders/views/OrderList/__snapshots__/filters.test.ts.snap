@@ -7,15 +7,15 @@ Object {
   "createdFrom": "2019-12-09",
   "createdTo": "2019-12-38",
   "customer": "email@example.com",
+  "giftCard": Array [
+    "paid",
+    "bought",
+  ],
   "paymentStatus": Array [
     "FULLY_CHARGED",
     "PARTIALLY_CHARGED",
   ],
   "preorder": "false",
-  "giftCard": Array [
-    "paid",
-    "bought",
-  ],
   "status": Array [
     "FULFILLED",
     "PARTIALLY_FULFILLED",
@@ -23,4 +23,4 @@ Object {
 }
 `;
 
-exports[`Filtering URL params should not be empty if active filters are present 2`] = `"clickAndCollect=false&preorder=false&customer=email%40example.com&createdFrom=2019-12-09&createdTo=2019-12-38&status%5B%5D=FULFILLED&status%5B%5D=PARTIALLY_FULFILLED&paymentStatus%5B%5D=FULLY_CHARGED&paymentStatus%5B%5D=PARTIALLY_CHARGED"`;
+exports[`Filtering URL params should not be empty if active filters are present 2`] = `"clickAndCollect=false&preorder=false&customer=email%40example.com&createdFrom=2019-12-09&createdTo=2019-12-38&giftCard%5B%5D=paid&giftCard%5B%5D=bought&status%5B%5D=FULFILLED&status%5B%5D=PARTIALLY_FULFILLED&paymentStatus%5B%5D=FULLY_CHARGED&paymentStatus%5B%5D=PARTIALLY_CHARGED"`;
