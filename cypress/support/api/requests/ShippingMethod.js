@@ -26,6 +26,7 @@ export function createShippingRate({
     }){
       shippingMethod{
         id
+        name
       }
       errors{
         field
