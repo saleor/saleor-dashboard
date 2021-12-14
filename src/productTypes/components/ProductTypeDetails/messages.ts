@@ -6,21 +6,15 @@ export const messages = defineMessages({
     description: "label"
   },
   optionNormalTitle: {
-    defaultMessage: "This is a normal product",
+    defaultMessage: "Regular product type",
     description: "option"
   },
-  optionNormalDescription: {
-    defaultMessage:
-      "This product type can be used to create shipping passes for your customers",
-    description: "option description"
-  },
   optionGiftCardTitle: {
-    defaultMessage: "Products of this type can be used as gift card/voucher",
+    defaultMessage: "Gift card product type",
     description: "option"
   },
   optionGiftCardDescription: {
-    defaultMessage:
-      "This product type can be used to create voucher/gift card type products that user will be able to pay with during checkout process",
+    defaultMessage: "This product will act as a payment method",
     description: "option description"
   }
 });
