@@ -20,6 +20,7 @@ export type GiftCardCreateFormErrors = GiftCardCreateCommonFormErrors &
 
 export interface GiftCardCreateFormCommonProps {
   change: FormChange;
+  toggleValue: FormChange;
   errors: GiftCardCreateFormErrors;
   data: GiftCardCreateFormData;
 }

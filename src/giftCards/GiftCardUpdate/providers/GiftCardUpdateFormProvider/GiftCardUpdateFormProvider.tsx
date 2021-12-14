@@ -54,25 +54,6 @@ export const GiftCardUpdateFormContext = createContext<
   GiftCardUpdateFormConsumerProps
 >(null);
 
-// const useGiftCardTagsAddRemove = (
-//   initTags: string[],
-//   changedTags: string[]
-// ) => {
-//   const [tags] = useStateFromProps(initTags);
-
-//   const removed = difference(tags, changedTags);
-//   const added = difference(changedTags, tags);
-
-//   // console.log({ removed, added });
-
-//   // return addTags, removeTags
-
-//   return {
-//     addTags: added,
-//     removeTags: removed
-//   };
-// };
-
 const getGiftCardTagsAddRemoveData = (
   initTags: string[],
   changedTags: string[]
@@ -139,10 +120,7 @@ const GiftCardUpdateFormProvider: React.FC<GiftCardUpdateFormProviderProps> = ({
       variables: {
         id: giftCard?.id,
         input: {
-          // tags: [tag],
           expiryDate,
-          // removeTags: [null],
-          // addTags: [null]
           ...getGiftCardTagsAddRemoveData(
             giftCard.tags.map(el => el.name),
             tags
@@ -157,8 +135,6 @@ const GiftCardUpdateFormProvider: React.FC<GiftCardUpdateFormProviderProps> = ({
   const formProps = useForm<GiftCardUpdateFormData>(getInitialData());
 
   const { data, change, setChanged, hasChanged } = formProps;
-
-  // console.log({ data });
 
   const {
     isMetadataModified,

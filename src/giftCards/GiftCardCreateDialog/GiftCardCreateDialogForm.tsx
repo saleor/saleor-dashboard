@@ -99,7 +99,7 @@ const GiftCardCreateDialogForm: React.FC<GiftCardCreateDialogFormProps> = ({
     };
   };
 
-  const { submit, change, data, set } = useForm(
+  const { submit, change, toggleValue, data, set } = useForm(
     {
       ...initialData,
       ...getInitialExpirySettingsData(),
@@ -141,6 +141,7 @@ const GiftCardCreateDialogForm: React.FC<GiftCardCreateDialogFormProps> = ({
   const commonFormProps: GiftCardCreateFormCommonProps = {
     data,
     errors: formErrors,
+    toggleValue,
     change
   };
 
@@ -153,7 +154,7 @@ const GiftCardCreateDialogForm: React.FC<GiftCardCreateDialogFormProps> = ({
           error={formErrors?.tags}
           name="tags"
           values={tags}
-          change={change}
+          toggleChange={toggleValue}
         />
         <CardSpacer />
         <Divider />

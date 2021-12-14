@@ -27,18 +27,9 @@ import useGiftCardListDialogs from "../providers/GiftCardListDialogsProvider/hoo
 import useGiftCardList from "../providers/GiftCardListProvider/hooks/useGiftCardList";
 import useGiftCardListBulkActions from "../providers/GiftCardListProvider/hooks/useGiftCardListBulkActions";
 import { useTableStyles as useStyles } from "../styles";
-import { GiftCardList_giftCards_edges_node_tags } from "../types/GiftCardList";
 import GiftCardsListTableFooter from "./GiftCardsListTableFooter";
 import GiftCardsListTableHeader from "./GiftCardsListTableHeader";
-
-const getTagCellText = (tags: GiftCardList_giftCards_edges_node_tags[]) => {
-  // console.log({ tags });
-  if (!!tags.length) {
-    return tags.map(({ name }) => name).reduce((el, acc) => `${el}, ${acc}`);
-  }
-
-  return PLACEHOLDER;
-};
+import { getTagCellText } from "./utils";
 
 const GiftCardsListTable: React.FC = () => {
   const intl = useIntl();

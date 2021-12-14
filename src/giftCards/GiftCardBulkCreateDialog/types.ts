@@ -35,6 +35,7 @@ export type GiftCardBulkCreateFormErrors = Partial<
 
 export interface GiftCardBulkCreateFormCommonProps {
   change: FormChange;
+  toggleValue: FormChange;
   errors: GiftCardBulkCreateFormErrors;
   data: GiftCardBulkCreateFormData;
 }

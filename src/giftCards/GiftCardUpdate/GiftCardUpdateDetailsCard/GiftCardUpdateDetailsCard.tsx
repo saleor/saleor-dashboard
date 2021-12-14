@@ -26,7 +26,6 @@ const GiftCardUpdateDetailsCard: React.FC = () => {
   const { loading, giftCard } = useGiftCardDetails();
   const { openSetBalanceDialog } = useGiftCardUpdateDialogs();
   const {
-    change,
     toggleValue,
     data: { tags },
     formErrors
@@ -65,7 +64,7 @@ const GiftCardUpdateDetailsCard: React.FC = () => {
                 error={formErrors?.tags}
                 name="tags"
                 values={tags}
-                change={change}
+                toggleChange={toggleValue}
               />
               <CardSpacer />
               <GiftCardUpdateExpirySelect />
