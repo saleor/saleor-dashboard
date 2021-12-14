@@ -115,8 +115,8 @@ export const giftCardEventsFragment = gql`
     email
     orderId
     orderNumber
-    tag
-    oldTag
+    tags
+    oldTags
     balance {
       initialBalance {
         ...Money
