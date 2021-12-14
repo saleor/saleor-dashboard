@@ -14,6 +14,8 @@ function createMultiAutocompleteSelectHandler(
   return (event: ChangeEvent) => {
     change(event);
 
+    // console.log(event.target, choices, selected);
+
     const id = event.target.value;
     const choice = choices.find(choice => choice.value === id);
 

@@ -67,7 +67,7 @@ const GiftCardCreateDialog: React.FC<GiftCardCreateDialogProps> = ({
       balanceAmount,
       balanceCurrency,
       note,
-      tag,
+      tags,
       sendToCustomerSelected,
       selectedCustomer,
       requiresActivation,
@@ -76,7 +76,7 @@ const GiftCardCreateDialog: React.FC<GiftCardCreateDialogProps> = ({
 
     return {
       note: note || null,
-      tag: tag || null,
+      addTags: tags || null,
       userEmail: (sendToCustomerSelected && selectedCustomer.email) || null,
       channel: (sendToCustomerSelected && channelSlug) || null,
       balance: {

@@ -5,6 +5,7 @@ import { MutationResultWithOpts } from "@saleor/hooks/makeMutation";
 import useForm, { FormChange, UseFormResult } from "@saleor/hooks/useForm";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { getDefaultNotifierSuccessErrorData } from "@saleor/hooks/useNotifier/utils";
+import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { getFormErrors } from "@saleor/utils/errors";
 import handleFormSubmit from "@saleor/utils/handlers/handleFormSubmit";
 import createMetadataUpdateHandler from "@saleor/utils/handlers/metadataUpdateHandler";
@@ -15,6 +16,7 @@ import {
   usePrivateMetadataUpdate
 } from "@saleor/utils/metadata/updateMetadata";
 import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
+import difference from "lodash/difference";
 import React, { createContext } from "react";
 import { useIntl } from "react-intl";
 
@@ -51,6 +53,38 @@ export type GiftCardUpdateFormConsumerProps = UseFormResult<
 export const GiftCardUpdateFormContext = createContext<
   GiftCardUpdateFormConsumerProps
 >(null);
+
+// const useGiftCardTagsAddRemove = (
+//   initTags: string[],
+//   changedTags: string[]
+// ) => {
+//   const [tags] = useStateFromProps(initTags);
+
+//   const removed = difference(tags, changedTags);
+//   const added = difference(changedTags, tags);
+
+//   // console.log({ removed, added });
+
+//   // return addTags, removeTags
+
+//   return {
+//     addTags: added,
+//     removeTags: removed
+//   };
+// };
+
+const getGiftCardTagsAddRemoveData = (
+  initTags: string[],
+  changedTags: string[]
+) => {
+  const removed = difference(initTags, changedTags);
+  const added = difference(changedTags, initTags);
+
+  return {
+    addTags: added,
+    removeTags: removed
+  };
+};
 
 const GiftCardUpdateFormProvider: React.FC<GiftCardUpdateFormProviderProps> = ({
   children
@@ -107,8 +141,12 @@ const GiftCardUpdateFormProvider: React.FC<GiftCardUpdateFormProviderProps> = ({
         input: {
           // tags: [tag],
           expiryDate,
-          removeTags: [null],
-          addTags: [null]
+          // removeTags: [null],
+          // addTags: [null]
+          ...getGiftCardTagsAddRemoveData(
+            giftCard.tags.map(el => el.name),
+            tags
+          )
         }
       }
     });
@@ -119,6 +157,8 @@ const GiftCardUpdateFormProvider: React.FC<GiftCardUpdateFormProviderProps> = ({
   const formProps = useForm<GiftCardUpdateFormData>(getInitialData());
 
   const { data, change, setChanged, hasChanged } = formProps;
+
+  // console.log({ data });
 
   const {
     isMetadataModified,

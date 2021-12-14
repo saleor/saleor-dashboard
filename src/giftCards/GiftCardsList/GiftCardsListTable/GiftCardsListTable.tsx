@@ -27,8 +27,18 @@ import useGiftCardListDialogs from "../providers/GiftCardListDialogsProvider/hoo
 import useGiftCardList from "../providers/GiftCardListProvider/hooks/useGiftCardList";
 import useGiftCardListBulkActions from "../providers/GiftCardListProvider/hooks/useGiftCardListBulkActions";
 import { useTableStyles as useStyles } from "../styles";
+import { GiftCardList_giftCards_edges_node_tags } from "../types/GiftCardList";
 import GiftCardsListTableFooter from "./GiftCardsListTableFooter";
 import GiftCardsListTableHeader from "./GiftCardsListTableHeader";
+
+const getTagCellText = (tags: GiftCardList_giftCards_edges_node_tags[]) => {
+  // console.log({ tags });
+  if (!!tags.length) {
+    return tags.map(({ name }) => name).reduce((el, acc) => `${el}, ${acc}`);
+  }
+
+  return PLACEHOLDER;
+};
 
 const GiftCardsListTable: React.FC = () => {
   const intl = useIntl();
@@ -57,10 +67,13 @@ const GiftCardsListTable: React.FC = () => {
                 last4CodeChars,
                 usedBy,
                 usedByEmail,
-                tag,
+                tags,
                 product,
                 currentBalance
               } = giftCard;
+
+              // NOTE: This is temporary
+              // const tag = !!tags[0] ? tags[0].name : null;
 
               return (
                 <TableRow
@@ -89,7 +102,7 @@ const GiftCardsListTable: React.FC = () => {
                     </div>
                   </TableCell>
                   <TableCell>
-                    <Typography>{tag || PLACEHOLDER}</Typography>
+                    <Typography>{getTagCellText(tags)}</Typography>
                   </TableCell>
                   <TableCell>
                     {product ? (
