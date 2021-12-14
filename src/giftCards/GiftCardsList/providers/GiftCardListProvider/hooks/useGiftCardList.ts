@@ -20,7 +20,9 @@ const useGiftCardList = (): UseGiftCardListProps => {
     settings,
     updateListSettings,
     numberOfColumns,
-    totalCount
+    totalCount,
+    sort,
+    onSort
   } = useContext(GiftCardsListContext);
 
   return {
@@ -32,7 +34,9 @@ const useGiftCardList = (): UseGiftCardListProps => {
     params,
     settings,
     updateListSettings,
-    numberOfColumns
+    numberOfColumns,
+    sort,
+    onSort
   };
 };
 

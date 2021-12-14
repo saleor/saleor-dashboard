@@ -3,7 +3,8 @@ import {
   Dialog,
   Pagination,
   Search,
-  SingleAction
+  SingleAction,
+  Sort
 } from "@saleor/types";
 
 import { GiftCardListUrlFilters } from "./GiftCardListSearchAndFilters/types";
@@ -14,6 +15,15 @@ export type GiftCardListColummns =
   | "balance"
   | "usedBy"
   | "product";
+
+export enum GiftCardUrlSortField {
+  tag = "tag",
+  usedBy = "usedBy",
+  balance = "balance",
+  product = "product"
+}
+
+export type GiftCardUrlSort = Sort<GiftCardUrlSortField>;
 
 export enum GiftCardListActionParamsEnum {
   CREATE = "gift-card-create",
@@ -28,6 +38,7 @@ export type GiftCardListUrlQueryParams = Pagination &
   Dialog<GiftCardListActionParamsEnum> &
   SingleAction &
   GiftCardListUrlFilters &
+  GiftCardUrlSort &
   ActiveTab &
   Search;
 
