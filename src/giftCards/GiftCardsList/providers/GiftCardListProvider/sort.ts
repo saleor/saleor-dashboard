@@ -7,8 +7,6 @@ export const getSortQueryField = (
   sort: GiftCardUrlSortField
 ): GiftCardSortField => {
   switch (sort) {
-    case GiftCardUrlSortField.tag:
-      return GiftCardSortField.TAG;
     case GiftCardUrlSortField.balance:
       return GiftCardSortField.CURRENT_BALANCE;
     case GiftCardUrlSortField.product:

@@ -523,7 +523,6 @@ export enum GiftCardSettingsExpiryTypeEnum {
 export enum GiftCardSortField {
   CURRENT_BALANCE = "CURRENT_BALANCE",
   PRODUCT = "PRODUCT",
-  TAG = "TAG",
   USED_BY = "USED_BY",
 }
 
