@@ -4653,7 +4653,8 @@ type Mutation {
   ): CheckoutLinesUpdate
   checkoutRemovePromoCode(
     checkoutId: ID
-    promoCode: String!
+    promoCode: String
+    promoCodeId: ID
     token: UUID
   ): CheckoutRemovePromoCode
   checkoutPaymentCreate(
@@ -6597,7 +6598,7 @@ type ProductType implements Node & ObjectWithMetadata {
   taxType: TaxType
   variantAttributes(variantSelection: VariantAttributeScope): [Attribute]
     @deprecated(
-      reason: "This field will be removed in Saleor 4.0. use `assignedVariantAttributes` instead."
+      reason: "This field will be removed in Saleor 4.0. Use `assignedVariantAttributes` instead."
     )
   assignedVariantAttributes(
     variantSelection: VariantAttributeScope
@@ -9016,7 +9017,6 @@ union _Entity =
   | Collection
   | Category
   | ProductMedia
-  | ProductImage
   | PageType
 
 type _Service {
