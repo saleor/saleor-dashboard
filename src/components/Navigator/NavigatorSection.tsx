@@ -3,7 +3,6 @@ import { makeStyles } from "@saleor/macaw-ui";
 import { GetItemPropsOptions } from "downshift";
 import React from "react";
 
-import Hr from "../Hr";
 import { QuickSearchAction } from "./types";
 
 interface NavigatorSectionProps {
