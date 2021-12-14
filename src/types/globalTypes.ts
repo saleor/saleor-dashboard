@@ -520,6 +520,13 @@ export enum GiftCardSettingsExpiryTypeEnum {
   NEVER_EXPIRE = "NEVER_EXPIRE",
 }
 
+export enum GiftCardSortField {
+  CURRENT_BALANCE = "CURRENT_BALANCE",
+  PRODUCT = "PRODUCT",
+  TAG = "TAG",
+  USED_BY = "USED_BY",
+}
+
 export enum InvoiceErrorCode {
   EMAIL_NOT_SET = "EMAIL_NOT_SET",
   INVALID_STATUS = "INVALID_STATUS",
@@ -2303,6 +2310,11 @@ export interface GiftCardResendInput {
 export interface GiftCardSettingsUpdateInput {
   expiryType?: GiftCardSettingsExpiryTypeEnum | null;
   expiryPeriod?: TimePeriodInputType | null;
+}
+
+export interface GiftCardSortingInput {
+  direction: OrderDirection;
+  field: GiftCardSortField;
 }
 
 export interface GiftCardUpdateInput {
