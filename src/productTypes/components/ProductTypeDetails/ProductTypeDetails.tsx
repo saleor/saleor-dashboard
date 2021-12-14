@@ -50,7 +50,6 @@ const ProductTypeDetails: React.FC<ProductTypeDetailsProps> = props => {
   const kindOptions = [
     {
       title: messages.optionNormalTitle,
-      subtitle: messages.optionNormalDescription,
       type: ProductTypeKindEnum.NORMAL
     },
     {
@@ -90,9 +89,11 @@ const ProductTypeDetails: React.FC<ProductTypeDetailsProps> = props => {
                 <Typography variant="body1">
                   <FormattedMessage {...option.title} />
                 </Typography>
-                <Typography color="textSecondary" variant="caption">
-                  <FormattedMessage {...option.subtitle} />
-                </Typography>
+                {option.subtitle && (
+                  <Typography color="textSecondary" variant="caption">
+                    <FormattedMessage {...option.subtitle} />
+                  </Typography>
+                )}
               </div>
             ),
             value: option.type
