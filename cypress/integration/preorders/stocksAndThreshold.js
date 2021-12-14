@@ -13,8 +13,8 @@ import filterTests from "../../support/filterTests";
 import { saveVariant } from "../../support/pages/catalog/products/VariantsPage";
 
 filterTests({ definedTags: ["all"], version: "3.1.0" }, () => {
-  describe("Creating variants", () => {
-    const startsWith = "CreatePreOrder";
+  describe("Stocks and threshold in preorder variants", () => {
+    const startsWith = "StocksThreshold";
     const attributeValues = ["value1", "value2"];
     const preorder = {
       globalThreshold: 15

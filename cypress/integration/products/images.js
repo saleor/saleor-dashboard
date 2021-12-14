@@ -26,7 +26,8 @@ filterTests({ definedTags: ["all"] }, () => {
             element.data.hasOwnProperty("products")
           ).data;
           const products = data.products.edges;
-          cy.get(PRODUCTS_LIST.productImage)
+          cy.get(PRODUCTS_LIST.productsList)
+            .find(PRODUCTS_LIST.productImage)
             .each($image => {
               cy.wrap($image)
                 .invoke("attr", "src")
@@ -71,6 +72,7 @@ filterTests({ definedTags: ["all"] }, () => {
       deleteProductsAndCreateNewOneWithNewDataAndDefaultChannel({ name })
         .then(({ product }) => {
           cy.visit(productDetailsUrl(product.id))
+            .waitForProgressBarToNotBeVisible()
             .get(PRODUCT_DETAILS.uploadImageButton)
             .click()
             .get(PRODUCT_DETAILS.uploadSavedImagesButton)
