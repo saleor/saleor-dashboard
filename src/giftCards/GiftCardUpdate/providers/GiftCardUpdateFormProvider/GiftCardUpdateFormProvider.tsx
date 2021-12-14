@@ -5,7 +5,6 @@ import { MutationResultWithOpts } from "@saleor/hooks/makeMutation";
 import useForm, { FormChange, UseFormResult } from "@saleor/hooks/useForm";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { getDefaultNotifierSuccessErrorData } from "@saleor/hooks/useNotifier/utils";
-import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { getFormErrors } from "@saleor/utils/errors";
 import handleFormSubmit from "@saleor/utils/handlers/handleFormSubmit";
 import createMetadataUpdateHandler from "@saleor/utils/handlers/metadataUpdateHandler";

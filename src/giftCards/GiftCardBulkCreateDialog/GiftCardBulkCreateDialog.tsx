@@ -78,14 +78,14 @@ const GiftCardBulkCreateDialog: React.FC<DialogProps> = ({ onClose, open }) => {
     const {
       balanceAmount,
       balanceCurrency,
-      tag = null,
+      tags = [],
       requiresActivation,
       cardsAmount
     } = formData;
 
     return {
       count: cardsAmount,
-      tag,
+      tags,
       balance: {
         amount: balanceAmount,
         currency: balanceCurrency
