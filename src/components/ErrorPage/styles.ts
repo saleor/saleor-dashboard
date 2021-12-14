@@ -22,7 +22,10 @@ const useStyles = makeStyles(
       margin: theme.spacing(0, 1)
     },
     errorId: {
-      marginTop: theme.spacing(3)
+      marginTop: theme.spacing(3),
+      letterSpacing: "0.1rem",
+      textTransform: "uppercase",
+      fontWeight: 500
     },
     innerContainer: {
       [theme.breakpoints.down("sm")]: {

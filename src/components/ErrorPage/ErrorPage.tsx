@@ -30,9 +30,16 @@ const ErrorPage: React.FC<ErrorPageProps> = ({ onBack, onRefresh, id }) => {
               <FormattedMessage {...messages.content} />
             </Typography>
             {!!id && (
-              <Typography variant="subtitle2" className={classes.errorId}>
-                Error ID: {id}
-              </Typography>
+              <div>
+                <Typography
+                  variant="caption"
+                  color="textSecondary"
+                  className={classes.errorId}
+                >
+                  Error ID
+                </Typography>
+                <Typography variant="body1">{id}</Typography>
+              </div>
             )}
           </div>
           <div className={classes.buttonContainer}>
