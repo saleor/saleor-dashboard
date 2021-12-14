@@ -63,9 +63,6 @@ const GiftCardsListTable: React.FC = () => {
                 currentBalance
               } = giftCard;
 
-              // NOTE: This is temporary
-              // const tag = !!tags[0] ? tags[0].name : null;
-
               return (
                 <TableRow
                   onClick={redirectToGiftCardUpdate(id)}

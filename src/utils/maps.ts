@@ -73,12 +73,6 @@ export function mapTagNodeToChoice(
   return mapNodeToChoice(nodes, node => node.tag);
 }
 
-export function mapMultiTagNodeToChoice(
-  nodes: Array<Node & TagNode>
-): MultiAutocompleteChoiceType[] {
-  return mapNodeToChoice(nodes, node => node.tag);
-}
-
 export function mapMetadataItemToInput(item: MetadataItem): MetadataInput {
   return {
     key: item.key,
