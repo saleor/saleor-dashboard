@@ -45,6 +45,9 @@ const useStyles = makeStyles(
     cancelButton: {
       marginRight: theme.spacing(2)
     },
+    dialogPaper: {
+      overflow: "hidden"
+    },
     content: {
       [theme.breakpoints.down("sm")]: {
         gridTemplateColumns: "repeat(2, 1fr)"
@@ -71,7 +74,8 @@ const useStyles = makeStyles(
       justifyContent: "center"
     },
     root: {
-      boxShadow: "0px 4px 4px rgba(0, 0, 0, 0.25)"
+      boxShadow: "0px 4px 4px rgba(0, 0, 0, 0.25)",
+      overflow: "hidden"
     },
     titleContainer: {
       padding: theme.spacing(1.5, 3.5)
