@@ -1,5 +1,6 @@
 import { ATTRIBUTES_DETAILS } from "../../elements/attribute/attributes_details";
 import { BUTTON_SELECTORS } from "../../elements/shared/button-selectors";
+import { SHARED_ELEMENTS } from "../../elements/shared/sharedElements";
 import { attributeDetailsUrl } from "../../fixtures/urlList";
 
 export function createAttributeWithInputType({
@@ -7,10 +8,15 @@ export function createAttributeWithInputType({
   attributeType,
   entityType,
   numericSystemType,
+  swatchImage,
   valueRequired = true
 }) {
   fillUpAttributeCreateFields({ name, attributeType, valueRequired });
-  if (attributeType === "DROPDOWN" || attributeType === "MULTISELECT") {
+  if (
+    attributeType === "DROPDOWN" ||
+    attributeType === "MULTISELECT" ||
+    (attributeType === "SWATCH" && !swatchImage)
+  ) {
     addSingleValue(name);
   }
   if (attributeType === "REFERENCE") {
@@ -18,6 +24,9 @@ export function createAttributeWithInputType({
   }
   if (attributeType === "NUMERIC" && numericSystemType.unitsOf) {
     selectNumericSystem(numericSystemType);
+  }
+  if (attributeType === "SWATCH" && swatchImage) {
+    selectSwatchImage(name, swatchImage);
   }
   return saveAttribute();
 }
@@ -93,4 +102,21 @@ export function enterAttributeAndChanegeIsFilterableInDashbord(attributeId) {
     .get(ATTRIBUTES_DETAILS.dashboardProperties.useInFilteringCheckbox)
     .click();
   submitAttribute();
+}
+
+export function selectSwatchImage(valueName, image) {
+  cy.get(ATTRIBUTES_DETAILS.assignValuesButton)
+    .click()
+    .get(ATTRIBUTES_DETAILS.valueNameInput)
+    .type(valueName)
+    .get(ATTRIBUTES_DETAILS.imageCheckbox)
+    .click()
+    .get(ATTRIBUTES_DETAILS.uploadFileButton)
+    .click()
+    .get(SHARED_ELEMENTS.fileInput)
+    .attachFile(image)
+    .get(ATTRIBUTES_DETAILS.uploadFileButton)
+    .should("be.enabled")
+    .get(BUTTON_SELECTORS.submit)
+    .click();
 }
