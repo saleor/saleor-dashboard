@@ -41,7 +41,7 @@ import { warehouseAddPath } from "@saleor/warehouses/urls";
 import React, { useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 
-import { weight } from "../../misc";
+import { extractMutationErrors, weight } from "../../misc";
 import ProductVariantDeleteDialog from "../components/ProductVariantDeleteDialog";
 import ProductVariantPage from "../components/ProductVariantPage";
 import { ProductVariantUpdateSubmitData } from "../components/ProductVariantPage/form";
@@ -180,17 +180,19 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
     });
 
     if (channelsHaveChanged) {
-      await updateChannels({
-        variables: {
-          id: variant.id,
-          input: data.channelListings.map(listing => ({
-            channelId: listing.id,
-            costPrice: listing.value.costPrice || null,
-            price: listing.value.price,
-            preorderThreshold: listing.value.preorderThreshold
-          }))
-        }
-      });
+      return extractMutationErrors(
+        updateChannels({
+          variables: {
+            id: variant.id,
+            input: data.channelListings.map(listing => ({
+              channelId: listing.id,
+              costPrice: listing.value.costPrice || null,
+              price: listing.value.price,
+              preorderThreshold: listing.value.preorderThreshold
+            }))
+          }
+        })
+      );
     }
   };
 
@@ -385,8 +387,9 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
         onDelete={() => openModal("remove")}
         onMediaSelect={handleMediaSelect}
         onSubmit={async data => {
-          await handleSubmit(data);
-          await handleSubmitChannels(data, variant);
+          const errors = await handleSubmit(data);
+          const channelErrors = await handleSubmitChannels(data, variant);
+          return [...errors, ...channelErrors];
         }}
         onWarehouseConfigure={() => navigate(warehouseAddPath)}
         onVariantClick={variantId => {

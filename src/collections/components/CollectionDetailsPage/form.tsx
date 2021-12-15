@@ -2,6 +2,7 @@ import { OutputData } from "@editorjs/editorjs";
 import { ChannelCollectionData } from "@saleor/channels/utils";
 import { CollectionDetails_collection } from "@saleor/collections/types/CollectionDetails";
 import { createChannelsChangeHandler } from "@saleor/collections/utils";
+import { COLLECTION_DETAILS_FORM_ID } from "@saleor/collections/views/types";
 import useExitFormDialog from "@saleor/components/Form/useExitFormDialog";
 import { MetadataFormData } from "@saleor/components/Metadata";
 import { RichTextEditorChange } from "@saleor/components/RichTextEditor";
@@ -75,9 +76,14 @@ function useCollectionUpdateForm(
     triggerChange,
     setChanged,
     hasChanged
-  } = useForm(getInitialData(collection, currentChannels));
+  } = useForm(getInitialData(collection, currentChannels), undefined, {
+    confirmLeave: true,
+    formId: COLLECTION_DETAILS_FORM_ID
+  });
 
-  const { setExitDialogSubmitRef, setEnableExitDialog } = useExitFormDialog();
+  const { setExitDialogSubmitRef, setEnableExitDialog } = useExitFormDialog({
+    formId: COLLECTION_DETAILS_FORM_ID
+  });
 
   const [description, changeDescription] = useRichText({
     initial: collection?.description,

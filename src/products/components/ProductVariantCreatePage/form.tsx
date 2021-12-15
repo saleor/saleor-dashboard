@@ -123,14 +123,17 @@ function useProductVariantCreateForm(
     triggerChange,
     handleChange,
     hasChanged,
-    data: formData
+    data: formData,
+    formId
   } = form;
 
   const attributes = useFormset(attributeInput);
   const attributesWithNewFileValue = useFormset<null, File>([]);
   const stocks = useFormset<ProductStockFormsetData, string>([]);
 
-  const { setExitDialogSubmitRef, setEnableExitDialog } = useExitFormDialog();
+  const { setExitDialogSubmitRef, setEnableExitDialog } = useExitFormDialog({
+    formId
+  });
 
   const {
     makeChangeHandler: makeMetadataChangeHandler

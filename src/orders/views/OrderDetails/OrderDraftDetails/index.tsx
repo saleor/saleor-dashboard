@@ -175,10 +175,12 @@ export const OrderDraftDetails: React.FC<OrderDraftDetailsProps> = ({
           <OrderDraftPage
             disabled={loading}
             onNoteAdd={variables =>
-              orderAddNote.mutate({
-                input: variables,
-                order: id
-              })
+              extractMutationErrors(
+                orderAddNote.mutate({
+                  input: variables,
+                  order: id
+                })
+              )
             }
             users={mapEdgesToItems(users?.data?.search)}
             hasMore={users?.data?.search?.pageInfo?.hasNextPage || false}

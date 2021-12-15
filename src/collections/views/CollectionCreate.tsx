@@ -31,6 +31,7 @@ import {
   collectionListUrl,
   collectionUrl
 } from "../urls";
+import { COLLECTION_CREATE_FORM_ID } from "./types";
 
 interface CollectionCreateProps {
   params: CollectionCreateUrlQueryParams;
@@ -73,7 +74,12 @@ export const CollectionCreate: React.FC<CollectionCreateProps> = ({
     isChannelsModalOpen,
     setCurrentChannels,
     toggleAllChannels
-  } = useChannels(allChannels, params?.action, { closeModal, openModal });
+  } = useChannels(
+    allChannels,
+    params?.action,
+    { closeModal, openModal },
+    { formId: COLLECTION_CREATE_FORM_ID }
+  );
 
   const [createCollection, createCollectionOpts] = useCollectionCreateMutation({
     onCompleted: data => {

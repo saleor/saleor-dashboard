@@ -3,7 +3,7 @@ import { ShippingMethodFragment_postalCodeRules } from "@saleor/fragments/types/
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { commonMessages } from "@saleor/intl";
-import { getMutationErrors, getMutationState } from "@saleor/misc";
+import { extractMutationErrors, getMutationState } from "@saleor/misc";
 import { CreateShippingRateVariables } from "@saleor/shipping/types/CreateShippingRate";
 import { ShippingMethodChannelListingUpdateVariables } from "@saleor/shipping/types/ShippingMethodChannelListingUpdate";
 import { UpdateShippingRateVariables } from "@saleor/shipping/types/UpdateShippingRate";
@@ -232,34 +232,43 @@ export function useShippingRateCreator(
     });
 
     const createErrors = response.data.shippingPriceCreate.errors;
-    if (createErrors.length === 0) {
-      const rateId = response.data.shippingPriceCreate.shippingMethod.id;
 
-      const mutationResults = await Promise.all([
-        updateShippingMethodChannelListing({
-          variables: getShippingMethodChannelVariables(
-            rateId,
-            data.orderValueRestricted,
-            data.channelListings
-          )
-        })
-      ]);
+    if (createErrors.length > 0) {
+      return createErrors;
+    }
 
-      if (
-        mutationResults.find(result => getMutationErrors(result).length > 0)
-      ) {
-        deleteShippingRate({
-          variables: {
-            id: rateId
-          }
-        });
-      } else {
-        notify({
-          status: "success",
-          text: intl.formatMessage(commonMessages.savedChanges)
-        });
-        navigate(getUrl(shippingZoneId, rateId));
-      }
+    const rateId = response.data.shippingPriceCreate.shippingMethod.id;
+
+    const errors = await extractMutationErrors(
+      updateShippingMethodChannelListing({
+        variables: getShippingMethodChannelVariables(
+          rateId,
+          data.orderValueRestricted,
+          data.channelListings
+        )
+      })
+    );
+
+    if (errors.length > 0) {
+      deleteShippingRate({
+        variables: {
+          id: rateId
+        }
+      });
+
+      notify({
+        status: "error",
+        text: intl.formatMessage(commonMessages.somethingWentWrong)
+      });
+
+      return errors;
+    } else {
+      notify({
+        status: "success",
+        text: intl.formatMessage(commonMessages.savedChanges)
+      });
+      navigate(getUrl(shippingZoneId, rateId));
+      return [];
     }
   };
 

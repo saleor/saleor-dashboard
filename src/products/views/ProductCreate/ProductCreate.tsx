@@ -51,6 +51,7 @@ import React from "react";
 import { useIntl } from "react-intl";
 
 import { createHandler } from "./handlers";
+import { PRODUCT_CREATE_FORM_ID } from "./types";
 
 interface ProductCreateProps {
   params: ProductCreateUrlQueryParams;
@@ -150,10 +151,17 @@ export const ProductCreateView: React.FC<ProductCreateProps> = ({ params }) => {
     isChannelsModalOpen,
     setCurrentChannels,
     toggleAllChannels
-  } = useChannels(allChannels, params?.action, {
-    closeModal,
-    openModal
-  });
+  } = useChannels(
+    allChannels,
+    params?.action,
+    {
+      closeModal,
+      openModal
+    },
+    {
+      formId: PRODUCT_CREATE_FORM_ID
+    }
+  );
 
   const handleSuccess = (productId: string) => {
     notify({
@@ -199,7 +207,7 @@ export const ProductCreateView: React.FC<ProductCreateProps> = ({ params }) => {
   const handleSubmit = async (data: ProductCreateData) => {
     const errors = await createMetadataCreateHandler(
       createHandler(
-        selectedProductType.productType,
+        selectedProductType?.productType,
         variables => uploadFile({ variables }),
         variables => productCreate({ variables }),
         variables => productVariantCreate({ variables }),

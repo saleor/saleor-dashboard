@@ -1,10 +1,12 @@
 import { OutputData } from "@editorjs/editorjs";
 import { Typography } from "@material-ui/core";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
+import useExitFormDialog from "@saleor/components/Form/useExitFormDialog";
 import RichTextEditor from "@saleor/components/RichTextEditor";
 import RichTextEditorContent from "@saleor/components/RichTextEditor/RichTextEditorContent";
+import { SubmitPromise } from "@saleor/hooks/useForm";
 import useRichText from "@saleor/utils/richText/useRichText";
-import React from "react";
+import React, { useEffect } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import TranslationFieldsSave from "./TranslationFieldsSave";
@@ -16,7 +18,7 @@ interface TranslationFieldsRichProps {
   saveButtonState: ConfirmButtonTransitionState;
   resetKey: string;
   onDiscard: () => void;
-  onSubmit: (data: OutputData) => void;
+  onSubmit: (data: OutputData) => SubmitPromise;
 }
 
 const TranslationFieldsRich: React.FC<TranslationFieldsRichProps> = ({
@@ -29,10 +31,15 @@ const TranslationFieldsRich: React.FC<TranslationFieldsRichProps> = ({
   onSubmit
 }) => {
   const intl = useIntl();
+
+  const { setIsDirty, setExitDialogSubmitRef } = useExitFormDialog();
+
   const [content, change] = useRichText({
     initial,
-    triggerChange: () => undefined
+    triggerChange: () => setIsDirty(true)
   });
+
+  useEffect(() => setExitDialogSubmitRef(onSubmit), [content]);
 
   const submit = () => onSubmit(content.current);
 

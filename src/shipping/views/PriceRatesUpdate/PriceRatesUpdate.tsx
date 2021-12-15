@@ -66,6 +66,8 @@ import {
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
+import { PRICE_RATES_UPDATE_FORM_ID } from "./types";
+
 export interface PriceRatesUpdateProps {
   id: string;
   rateId: string;
@@ -158,7 +160,12 @@ export const PriceRatesUpdate: React.FC<PriceRatesUpdateProps> = ({
     isChannelsModalOpen,
     setCurrentChannels,
     toggleAllChannels
-  } = useChannels(shippingChannels, params?.action, { closeModal, openModal });
+  } = useChannels(
+    shippingChannels,
+    params?.action,
+    { closeModal, openModal },
+    { formId: PRICE_RATES_UPDATE_FORM_ID }
+  );
 
   const [updateShippingRate, updateShippingRateOpts] = useShippingRateUpdate(
     {}
@@ -355,6 +362,7 @@ export const PriceRatesUpdate: React.FC<PriceRatesUpdateProps> = ({
         onSubmit={handleProductAssign}
       />
       <ShippingZoneRatesPage
+        formId={PRICE_RATES_UPDATE_FORM_ID}
         allChannelsCount={allChannels?.length}
         shippingChannels={currentChannels}
         disabled={

@@ -36,11 +36,7 @@ const TableLineForm: React.FC<TableLineFormProps> = ({
   const { id, quantity } = line;
 
   return (
-    <Form
-      confirmLeave
-      initial={{ quantity }}
-      onSubmit={data => onOrderLineChange(id, data)}
-    >
+    <Form initial={{ quantity }} onSubmit={data => onOrderLineChange(id, data)}>
       {({ change, data, hasChanged, submit }) => {
         const handleQuantityChange = createNonNegativeValueChangeHandler(
           change

@@ -28,6 +28,7 @@ const TranslationFieldsLong: React.FC<TranslationFieldsLongProps> = ({
 
   return edit ? (
     <Form
+      confirmLeave
       initial={{ translation: initial }}
       onSubmit={data => onSubmit(data.translation)}
     >

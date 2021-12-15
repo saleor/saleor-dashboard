@@ -257,10 +257,8 @@ export const extractMutationErrors = async <
 ): Promise<any[]> /* Promise<TErrors> */ => {
   const result = await submitPromise;
 
-  console.log(555, { result });
   const e = getMutationErrors(result);
 
-  console.log(666, { result, e });
   // @ts-ignore
   return e;
 };

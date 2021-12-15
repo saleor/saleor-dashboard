@@ -154,8 +154,6 @@ function useProductVariantUpdateForm(
 
   const channelsInput = getChannelsInput(currentChannelsWithPreorderInfo);
 
-  const { setExitDialogSubmitRef, setEnableExitDialog } = useExitFormDialog();
-
   const initial: ProductVariantUpdateFormData = {
     metadata: variant?.metadata?.map(mapMetadataItemToInput),
     privateMetadata: variant?.privateMetadata?.map(mapMetadataItemToInput),
@@ -170,14 +168,23 @@ function useProductVariantUpdateForm(
     quantityLimitPerCustomer: variant?.quantityLimitPerCustomer || null
   };
 
-  const form = useForm(initial, undefined, { confirmLeave: true });
+  const form = useForm(initial, undefined, {
+    confirmLeave: true
+  });
+
   const {
     handleChange,
     triggerChange,
     data: formData,
     setChanged,
-    hasChanged
+    hasChanged,
+    formId
   } = form;
+
+  const { setExitDialogSubmitRef, setEnableExitDialog } = useExitFormDialog({
+    formId
+  });
+
   const attributes = useFormset(attributeInput);
   const attributesWithNewFileValue = useFormset<null, File>([]);
   const stocks = useFormset(stockInput);

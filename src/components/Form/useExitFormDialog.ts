@@ -1,19 +1,21 @@
 import { useContext, useRef } from "react";
 
+import { v4 as uuid } from "uuid";
 import {
   ExitFormDialogContext,
   ExitFormDialogData,
-  SubmitFn
+  SubmitFn,
+  WithFormId
 } from "./ExitFormDialogProvider";
 
 export interface UseExitFormDialogResult
   extends Pick<
-    ExitFormDialogData,
-    "setEnableExitDialog" | "shouldBlockNavigation"
-  > {
+      ExitFormDialogData,
+      "setEnableExitDialog" | "shouldBlockNavigation"
+    >,
+    WithFormId {
   setIsDirty: (isDirty: boolean) => void;
   setExitDialogSubmitRef: (submitFn: SubmitFn) => void;
-  formId: symbol;
 }
 
 export interface UseExitFormDialogProps {
@@ -21,9 +23,10 @@ export interface UseExitFormDialogProps {
 }
 
 const useExitFormDialog = (
-  { formId }: UseExitFormDialogProps = { formId: null }
+  { formId }: UseExitFormDialogProps = { formId: undefined }
 ): UseExitFormDialogResult => {
   const id = useRef(formId || Symbol()).current;
+  // const id = useRef(formId || uuid()).current;
 
   const { setIsDirty, setExitDialogSubmitRef, ...rest } = useContext(
     ExitFormDialogContext
