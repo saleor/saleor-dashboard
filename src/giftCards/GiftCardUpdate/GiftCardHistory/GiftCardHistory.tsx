@@ -113,10 +113,10 @@ const getEventMessage = (
       return intl.formatMessage(timelineMessages.giftCardResent);
     case GiftCardEventsEnum.SENT_TO_CUSTOMER:
       return intl.formatMessage(timelineMessages.giftCardSentToCustomer);
-    case GiftCardEventsEnum.TAG_UPDATED:
-      return intl.formatMessage(timelineMessages.giftCardTagUpdated);
+    case GiftCardEventsEnum.TAGS_UPDATED:
+      return intl.formatMessage(timelineMessages.giftCardTagsUpdated);
     case GiftCardEventsEnum.UPDATED:
-      return intl.formatMessage(timelineMessages.giftCardTagUpdated);
+      return intl.formatMessage(timelineMessages.giftCardTagsUpdated);
     case GiftCardEventsEnum.USED_IN_ORDER:
       return intl.formatMessage(timelineMessages.giftCardUsedInOrder, {
         orderLink: (

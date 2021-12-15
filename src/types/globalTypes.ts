@@ -504,7 +504,7 @@ export enum GiftCardEventsEnum {
   NOTE_ADDED = "NOTE_ADDED",
   RESENT = "RESENT",
   SENT_TO_CUSTOMER = "SENT_TO_CUSTOMER",
-  TAG_UPDATED = "TAG_UPDATED",
+  TAGS_UPDATED = "TAGS_UPDATED",
   UPDATED = "UPDATED",
   USED_IN_ORDER = "USED_IN_ORDER",
 }
@@ -523,6 +523,7 @@ export enum GiftCardSettingsExpiryTypeEnum {
 export enum GiftCardSortField {
   CURRENT_BALANCE = "CURRENT_BALANCE",
   PRODUCT = "PRODUCT",
+  TAG = "TAG",
   USED_BY = "USED_BY",
 }
 
