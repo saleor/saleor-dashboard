@@ -219,14 +219,16 @@ const FilterContent: React.FC<FilterContentProps> = ({
                   classes={summaryClasses}
                   onClick={() => handleFilterOpen(filter)}
                 >
-                  <FilterContentBodyNameField
-                    filter={currentFilter}
-                    onFilterPropertyChange={action =>
-                      handleFilterPropertyGroupChange(action, filter)
-                    }
-                  />
+                  {currentFilter && (
+                    <FilterContentBodyNameField
+                      filter={currentFilter}
+                      onFilterPropertyChange={action =>
+                        handleFilterPropertyGroupChange(action, filter)
+                      }
+                    />
+                  )}
                 </ExpansionPanelSummary>
-                {currentFilter.active && (
+                {currentFilter?.active && (
                   <FilterErrorsList
                     errors={errors?.[filter.name]}
                     errorMessages={errorMessages}
@@ -244,7 +246,7 @@ const FilterContent: React.FC<FilterContentProps> = ({
                         }
                         filter={{
                           ...getFilterFromCurrentData(filterField),
-                          active: currentFilter.active
+                          active: currentFilter?.active
                         }}
                       >
                         <Typography>{filterField.label}</Typography>
