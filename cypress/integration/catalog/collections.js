@@ -102,6 +102,7 @@ filterTests({ definedTags: ["all"] }, () => {
     it("should display collections", () => {
       const collectionName = `${startsWith}${faker.datatype.number()}`;
       let collection;
+
       cy.visit(urlList.collections);
       cy.softExpectSkeletonIsVisible();
 
@@ -200,6 +201,7 @@ filterTests({ definedTags: ["all"] }, () => {
 
     it("should delete collection", () => {
       const collectionName = `${startsWith}${faker.datatype.number()}`;
+
       createCollectionRequest(collectionName).then(collectionResp => {
         cy.visit(collectionDetailsUrl(collectionResp.id))
           .get(BUTTON_SELECTORS.deleteButton)
@@ -217,6 +219,7 @@ filterTests({ definedTags: ["all"] }, () => {
     it("should update collection", () => {
       const collectionName = `${startsWith}${faker.datatype.number()}`;
       const updatedName = `${startsWith}updatedCollection`;
+
       createCollectionRequest(collectionName)
         .then(collectionResp => {
           cy.visitAndWaitForProgressBarToDisappear(

@@ -89,6 +89,7 @@ filterTests({ definedTags: ["all"] }, () => {
 
     it("should add subcategory", () => {
       const categoryName = `${startsWith}${faker.datatype.number()}`;
+
       cy.visit(categoryDetailsUrl(category.id))
         .get(CATEGORY_DETAILS.createSubcategoryButton)
         .click();
@@ -142,6 +143,7 @@ filterTests({ definedTags: ["all"] }, () => {
 
     it("should delete category", () => {
       const categoryName = `${startsWith}${faker.datatype.number()}`;
+
       createCategoryRequest(categoryName).then(categoryResp => {
         cy.visit(categoryDetailsUrl(categoryResp.id))
           .get(BUTTON_SELECTORS.deleteButton)
@@ -157,6 +159,7 @@ filterTests({ definedTags: ["all"] }, () => {
     it("should update category", () => {
       const categoryName = `${startsWith}${faker.datatype.number()}`;
       const updatedName = `${startsWith}updatedCategory`;
+
       createCategoryRequest(categoryName)
         .then(categoryResp => {
           cy.visitAndWaitForProgressBarToDisappear(
