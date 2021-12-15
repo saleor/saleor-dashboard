@@ -43,6 +43,7 @@ import {
   validateCostPrice,
   validatePrice
 } from "@saleor/products/utils/validation";
+import { PRODUCT_CREATE_FORM_ID } from "@saleor/products/views/ProductCreate/types";
 import { SearchPages_search_edges_node } from "@saleor/searches/types/SearchPages";
 import { SearchProducts_search_edges_node } from "@saleor/searches/types/SearchProducts";
 import { SearchProductTypes_search_edges_node } from "@saleor/searches/types/SearchProductTypes";
@@ -195,6 +196,15 @@ function useProductCreateForm(
     preorderEndDateTime: ""
   };
 
+  const form = useForm(
+    {
+      ...initial,
+      ...defaultInitialFormData
+    },
+    undefined,
+    { confirmLeave: true, formId: PRODUCT_CREATE_FORM_ID }
+  );
+
   const {
     triggerChange,
     toggleValue,
@@ -202,14 +212,7 @@ function useProductCreateForm(
     hasChanged,
     data: formData,
     setChanged
-  } = useForm(
-    {
-      ...initial,
-      ...defaultInitialFormData
-    },
-    undefined,
-    { confirmLeave: true }
-  );
+  } = form;
 
   const attributes = useFormset<AttributeInputData>(
     opts.selectedProductType
@@ -223,7 +226,9 @@ function useProductCreateForm(
     triggerChange
   });
 
-  const { setExitDialogSubmitRef, setEnableExitDialog } = useExitFormDialog();
+  const { setExitDialogSubmitRef, setEnableExitDialog } = useExitFormDialog({
+    formId: PRODUCT_CREATE_FORM_ID
+  });
 
   const {
     makeChangeHandler: makeMetadataChangeHandler

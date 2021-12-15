@@ -52,10 +52,13 @@ function useCategoryCreateForm(
     data,
     hasChanged,
     triggerChange,
-    setChanged
+    setChanged,
+    formId
   } = useForm(initialData, undefined, { confirmLeave: true });
 
-  const { setExitDialogSubmitRef, setEnableExitDialog } = useExitFormDialog();
+  const { setExitDialogSubmitRef, setEnableExitDialog } = useExitFormDialog({
+    formId
+  });
 
   const [description, changeDescription] = useRichText({
     initial: null,

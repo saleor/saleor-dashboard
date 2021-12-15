@@ -1,6 +1,7 @@
 import useForm, { SubmitPromise, UseFormResult } from "@saleor/hooks/useForm";
 import React from "react";
 
+import { FormId } from "./ExitFormDialogProvider";
 import { ExitFormPromptData } from "./ExitFormPromptProvider";
 
 export interface FormProps<TData, TErrors>
@@ -11,6 +12,7 @@ export interface FormProps<TData, TErrors>
   initial?: TData;
   resetOnSubmit?: boolean;
   onSubmit?: (data: TData) => SubmitPromise<TErrors[]> | void;
+  formId?: FormId;
 }
 
 function Form<TData, Terrors>({

@@ -7,7 +7,7 @@ import React from "react";
 import { useIntl } from "react-intl";
 
 import { configurationMenuUrl } from "../../configuration";
-import { findInEnum } from "../../misc";
+import { extractMutationErrors, findInEnum } from "../../misc";
 import { CountryCode } from "../../types/globalTypes";
 import SiteSettingsPage, {
   areAddressInputFieldsModified,
@@ -72,31 +72,26 @@ export const SiteSettings: React.FC<SiteSettingsProps> = () => {
                 : {
                     companyName: data.companyName
                   };
-              const result = await updateShopSettings({
-                variables: {
-                  addressInput,
-                  shopDomainInput: {
-                    domain: data.domain,
-                    name: data.name
-                  },
-                  shopSettingsInput: {
-                    description: data.description,
-                    reserveStockDurationAnonymousUser:
-                      data.reserveStockDurationAnonymousUser || null,
-                    reserveStockDurationAuthenticatedUser:
-                      data.reserveStockDurationAuthenticatedUser || null,
-                    limitQuantityPerCheckout:
-                      data.limitQuantityPerCheckout || null
-                  },
-                  isCloudInstance: IS_CLOUD_INSTANCE
-                }
-              });
 
-              return [
-                ...result.data.shopAddressUpdate.errors,
-                ...(result.data.shopDomainUpdate?.errors || []),
-                ...result.data.shopSettingsUpdate.errors
-              ];
+              return extractMutationErrors(
+                updateShopSettings({
+                  variables: {
+                    addressInput,
+                    shopDomainInput: {
+                      domain: data.domain,
+                      name: data.name
+                    },
+                    shopSettingsInput: {
+                      description: data.description,
+                      reserveStockDurationAnonymousUser:
+                        data.reserveStockDurationAnonymousUser || null,
+                      reserveStockDurationAuthenticatedUser:
+                        data.reserveStockDurationAuthenticatedUser || null
+                    },
+                    isCloudInstance: IS_CLOUD_INSTANCE
+                  }
+                })
+              );
             };
 
             return (

@@ -28,6 +28,7 @@ const TranslationFieldsShort: React.FC<TranslationFieldsShortProps> = ({
 
   return edit ? (
     <Form
+      confirmLeave
       initial={{ translation: initial }}
       onSubmit={data => onSubmit(data.translation)}
     >

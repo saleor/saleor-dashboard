@@ -118,8 +118,6 @@ function usePageForm(
   onSubmit: (data: PageData) => SubmitPromise,
   opts: UsePageFormOpts
 ): UsePageUpdateFormResult {
-  const { setExitDialogSubmitRef, setEnableExitDialog } = useExitFormDialog();
-
   const pageExists = page !== null;
 
   const attributes = useFormset(
@@ -136,9 +134,14 @@ function usePageForm(
     triggerChange,
     setChanged,
     hasChanged,
-    data: formData
+    data: formData,
+    formId
   } = useForm(getInitialFormData(page), undefined, {
     confirmLeave: true
+  });
+
+  const { setExitDialogSubmitRef, setEnableExitDialog } = useExitFormDialog({
+    formId
   });
 
   const [content, changeContent] = useRichText({

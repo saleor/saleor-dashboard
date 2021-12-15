@@ -66,6 +66,8 @@ import {
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
+import { WEIGHT_RATES_UPDATE_FORM_ID } from "./types";
+
 export interface WeightRatesUpdateProps {
   id: string;
   rateId: string;
@@ -208,7 +210,12 @@ export const WeightRatesUpdate: React.FC<WeightRatesUpdateProps> = ({
     isChannelsModalOpen,
     setCurrentChannels,
     toggleAllChannels
-  } = useChannels(shippingChannels, params?.action, { closeModal, openModal });
+  } = useChannels(
+    shippingChannels,
+    params?.action,
+    { closeModal, openModal },
+    { formId: WEIGHT_RATES_UPDATE_FORM_ID }
+  );
 
   const [updateShippingRate, updateShippingRateOpts] = useShippingRateUpdate(
     {}
@@ -351,6 +358,7 @@ export const WeightRatesUpdate: React.FC<WeightRatesUpdateProps> = ({
         onSubmit={handleProductAssign}
       />
       <ShippingZoneRatesPage
+        formId={WEIGHT_RATES_UPDATE_FORM_ID}
         allChannelsCount={allChannels?.length}
         shippingChannels={currentChannels}
         disabled={

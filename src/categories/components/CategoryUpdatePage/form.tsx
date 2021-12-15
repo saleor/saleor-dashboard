@@ -59,10 +59,13 @@ function useCategoryUpdateForm(
     data,
     triggerChange,
     hasChanged,
-    setChanged
+    setChanged,
+    formId
   } = useForm(getInitialData(category), undefined, { confirmLeave: true });
 
-  const { setExitDialogSubmitRef, setEnableExitDialog } = useExitFormDialog();
+  const { setExitDialogSubmitRef, setEnableExitDialog } = useExitFormDialog({
+    formId
+  });
 
   const [description, changeDescription] = useRichText({
     initial: category?.description,

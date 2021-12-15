@@ -54,7 +54,7 @@ const MenuCreateDialog: React.FC<MenuCreateDialogProps> = ({
           id="menuCreateDialogHeader"
         />
       </DialogTitle>
-      <Form confirmLeave initial={initialForm} onSubmit={onConfirm}>
+      <Form initial={initialForm} onSubmit={onConfirm}>
         {({ change, data, submit }) => (
           <>
             <DialogContent>

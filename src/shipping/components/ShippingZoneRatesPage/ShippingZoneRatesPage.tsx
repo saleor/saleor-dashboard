@@ -4,6 +4,7 @@ import CardSpacer from "@saleor/components/CardSpacer";
 import ChannelsAvailabilityCard from "@saleor/components/ChannelsAvailabilityCard";
 import Container from "@saleor/components/Container";
 import Form from "@saleor/components/Form";
+import { WithFormId } from "@saleor/components/Form/ExitFormDialogProvider";
 import Grid from "@saleor/components/Grid";
 import Metadata from "@saleor/components/Metadata/Metadata";
 import PageHeader from "@saleor/components/PageHeader";
@@ -41,7 +42,8 @@ import { ShippingZoneRateUpdateFormData } from "./types";
 
 export interface ShippingZoneRatesPageProps
   extends Pick<ListProps, Exclude<keyof ListProps, "onRowClick">>,
-    ListActions {
+    ListActions,
+    WithFormId {
   allChannelsCount?: number;
   shippingChannels: ChannelShippingData[];
   disabled: boolean;
@@ -91,6 +93,7 @@ export const ShippingZoneRatesPage: React.FC<ShippingZoneRatesPageProps> = ({
   saveButtonBarState,
   postalCodeRules,
   variant,
+  formId,
   ...listProps
 }) => {
   const isPriceVariant = variant === ShippingMethodTypeEnum.PRICE;
@@ -114,7 +117,12 @@ export const ShippingZoneRatesPage: React.FC<ShippingZoneRatesPageProps> = ({
   } = useMetadataChangeTrigger();
 
   return (
-    <Form confirmLeave initial={initialForm} onSubmit={onSubmit}>
+    <Form
+      confirmLeave
+      initial={initialForm}
+      onSubmit={onSubmit}
+      formId={formId}
+    >
       {({ change, data, hasChanged, submit, set, triggerChange }) => {
         const handleChannelsChange = createChannelsChangeHandler(
           shippingChannels,

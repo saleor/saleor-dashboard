@@ -15,7 +15,13 @@ export interface ExitFormDialogData {
 
 export type SubmitFn = (dataOrEvent?: any) => SubmitPromise<boolean>;
 
-type FormsData = Record<symbol, FormData>;
+export type FormId = symbol;
+
+type FormsData = Record<FormId, FormData>;
+
+export interface WithFormId {
+  formId: FormId;
+}
 
 interface FormData {
   isDirty: boolean;
@@ -51,6 +57,7 @@ const ExitFormDialogProvider = ({ children }) => {
   const blockNav = useRef(defaultValues.blockNav);
   const navAction = useRef(defaultValues.navAction);
   const enableExitDialog = useRef(defaultValues.enableExitDialog);
+  const currentPath = useRef(window.location.pathname);
 
   // Set either on generic form load or on every custom form data change
   // but doesn't cause re-renders
@@ -69,11 +76,13 @@ const ExitFormDialogProvider = ({ children }) => {
     formsData.current = defaultValues.formsData;
   };
 
+  const setCurrentPath = (newPath: string) => {
+    currentPath.current = newPath;
+  };
+
   const setFormData = (id: symbol, newData: Partial<FormData>) => {
-    // will spread copy it all properly?
     const updatedFormData = { ...formsData.current[id], ...newData };
 
-    // will spread copy it all properly?
     formsData.current = {
       ...formsData.current,
       [id]: updatedFormData
@@ -81,6 +90,11 @@ const ExitFormDialogProvider = ({ children }) => {
   };
 
   const setIsDirty = (id: symbol, value: boolean) => {
+    // in case of race conitions between forms and transitions
+    if (!formsData.current[id]) {
+      return;
+    }
+
     setFormData(id, { isDirty: value });
 
     if (value) {
@@ -102,6 +116,7 @@ const ExitFormDialogProvider = ({ children }) => {
   };
 
   const getFormsDataValuesArray = () =>
+    // Object.keys(formsData.current).map(key => formsData.current[key]);
     Object.getOwnPropertySymbols(formsData.current).map(
       key => formsData.current[key]
     );
@@ -111,14 +126,32 @@ const ExitFormDialogProvider = ({ children }) => {
 
   const shouldBlockNav = () => {
     if (!enableExitDialog.current || !hasAnyFormsDirty()) {
+      // console.log("SA WHAT");
       return false;
     }
 
     return blockNav.current;
   };
 
+  const isOnlyQuerying = transition => {
+    // console.log({
+    //   transition,
+    //   wnd: window.location
+    // });
+    // wee need to compare to current path and not window location
+    // so it works with browser back button as well
+    return transition.pathname === currentPath.current;
+  };
+
   const handleNavigationBlock = () => {
     const unblock = history.block(transition => {
+      console.log(111, formsData.current);
+      // needs to be done before the shouldBlockNav condition
+      // so it doesnt trigger setting default values
+      if (isOnlyQuerying(transition)) {
+        return true;
+      }
+
       if (shouldBlockNav()) {
         navAction.current = transition;
         setShowDialog(true);
@@ -126,6 +159,7 @@ const ExitFormDialogProvider = ({ children }) => {
       }
 
       setStateDefaultValues();
+      setCurrentPath(transition.pathname);
       return true;
     });
 
@@ -137,6 +171,8 @@ const ExitFormDialogProvider = ({ children }) => {
   const continueNavigation = () => {
     setBlockNav(false);
     setDefaultFormsData();
+
+    setCurrentPath(navAction.current.pathname);
     // because our useNavigator navigate action may be blocked
     // by exit dialog we want to avoid using it doing this transition
     routerHistory.push(navAction.current.pathname);
@@ -152,10 +188,6 @@ const ExitFormDialogProvider = ({ children }) => {
     getFormsDataValuesArray().some(({ submitFn }) => !!submitFn);
 
   const handleSubmit = async () => {
-    // console.log(
-    //   555,
-    //   getDirtyFormsSubmitFn().map(submitFn => submitFn())
-    // );
     if (!hasAnySubmitFn()) {
       return;
     }
@@ -166,9 +198,9 @@ const ExitFormDialogProvider = ({ children }) => {
       getDirtyFormsSubmitFn().map(submitFn => submitFn())
     );
 
+    console.log({ errors });
     const isError = flatten(errors).some(errors => errors);
 
-    // console.log({ errors: flatten(errors), isError });
     if (!isError) {
       continueNavigation();
     }

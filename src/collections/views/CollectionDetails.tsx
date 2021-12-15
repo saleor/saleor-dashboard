@@ -53,6 +53,7 @@ import {
   CollectionUrlDialog,
   CollectionUrlQueryParams
 } from "../urls";
+import { COLLECTION_DETAILS_FORM_ID } from "./types";
 
 interface CollectionDetailsProps {
   id: string;
@@ -196,10 +197,15 @@ export const CollectionDetails: React.FC<CollectionDetailsProps> = ({
           isChannelsModalOpen,
           setCurrentChannels,
           toggleAllChannels
-        } = useChannels(collectionChannelsChoices, params?.action, {
-          closeModal,
-          openModal
-        });
+        } = useChannels(
+          collectionChannelsChoices,
+          params?.action,
+          {
+            closeModal,
+            openModal
+          },
+          { formId: COLLECTION_DETAILS_FORM_ID }
+        );
 
         const handleUpdate = async (formData: CollectionUpdateData) => {
           const input: CollectionInput = {

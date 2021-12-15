@@ -6,6 +6,7 @@ import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { commonMessages } from "@saleor/intl";
+import { extractMutationErrors } from "@saleor/misc";
 import { ConfigurationItemInput } from "@saleor/types/globalTypes";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import React from "react";
@@ -13,7 +14,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import PluginsDetailsPage, {
   PluginDetailsPageFormData
-} from "../components/PluginsDetailsPage"; // PluginDetailsPageFormData
+} from "../components/PluginsDetailsPage";
 import PluginSecretFieldDialog from "../components/PluginSecretFieldDialog";
 import { TypedPluginUpdate } from "../mutations";
 import { usePluginDetails } from "../queries";
@@ -115,23 +116,22 @@ export const PluginsDetails: React.FC<PluginsDetailsProps> = ({
             }
           });
 
-        const handleSubmit = async (formData: PluginDetailsPageFormData) => {
-          const result = await pluginUpdate({
-            variables: {
-              channelId: selectedChannelId,
-              id,
-              input: {
-                active: formData.active,
-                configuration: getConfigurationInput(
-                  selectedConfig?.configuration,
-                  formData.configuration
-                )
+        const handleSubmit = async (formData: PluginDetailsPageFormData) =>
+          extractMutationErrors(
+            pluginUpdate({
+              variables: {
+                channelId: selectedChannelId,
+                id,
+                input: {
+                  active: formData.active,
+                  configuration: getConfigurationInput(
+                    selectedConfig?.configuration,
+                    formData.configuration
+                  )
+                }
               }
-            }
-          });
-
-          return result.data.pluginUpdate.errors;
-        };
+            })
+          );
 
         return (
           <>

@@ -70,6 +70,7 @@ const PluginsDetailsPage: React.FC<PluginsDetailsPageProps> = ({
 
   return (
     <Form
+      confirmLeave
       initial={initialFormData()}
       onSubmit={onSubmit}
       key={selectedChannelId}

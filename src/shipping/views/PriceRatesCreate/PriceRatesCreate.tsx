@@ -29,6 +29,8 @@ import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandl
 import React from "react";
 import { useIntl } from "react-intl";
 
+import { PRICE_RATES_CREATE_FORM_ID } from "./types";
+
 export interface PriceRatesCreateProps {
   id: string;
   params: ShippingRateCreateUrlQueryParams;
@@ -69,7 +71,12 @@ export const PriceRatesCreate: React.FC<PriceRatesCreateProps> = ({
     isChannelsModalOpen,
     setCurrentChannels,
     toggleAllChannels
-  } = useChannels(allChannels, params?.action, { closeModal, openModal });
+  } = useChannels(
+    allChannels,
+    params?.action,
+    { closeModal, openModal },
+    { formId: PRICE_RATES_CREATE_FORM_ID }
+  );
 
   const [state, dispatch] = React.useReducer(postalCodesReducer, {
     codesToDelete: [],
@@ -146,6 +153,7 @@ export const PriceRatesCreate: React.FC<PriceRatesCreateProps> = ({
       )}
 
       <ShippingZoneRatesCreatePage
+        formId={PRICE_RATES_CREATE_FORM_ID}
         allChannelsCount={allChannels?.length}
         shippingChannels={currentChannels}
         disabled={channelsLoading || status === "loading"}

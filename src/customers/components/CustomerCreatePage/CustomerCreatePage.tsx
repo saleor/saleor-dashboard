@@ -118,16 +118,16 @@ const CustomerCreatePage: React.FC<CustomerCreatePageProps> = ({
       .some(field => field !== "");
 
     if (areAddressInputFieldsModified) {
-      handleSubmitWithAddress(formData);
-    } else {
-      onSubmit({
-        address: null,
-        customerFirstName: formData.customerFirstName,
-        customerLastName: formData.customerLastName,
-        email: formData.email,
-        note: formData.note
-      });
+      return handleSubmitWithAddress(formData);
     }
+
+    return onSubmit({
+      address: null,
+      customerFirstName: formData.customerFirstName,
+      customerLastName: formData.customerLastName,
+      email: formData.email,
+      note: formData.note
+    });
   };
 
   return (

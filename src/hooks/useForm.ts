@@ -1,3 +1,7 @@
+import {
+  FormId,
+  WithFormId
+} from "@saleor/components/Form/ExitFormDialogProvider";
 import useExitFormDialog, {
   UseExitFormDialogResult
 } from "@saleor/components/Form/useExitFormDialog";
@@ -26,6 +30,7 @@ export type FormErrors<T> = {
 
 export interface UseFormOpts {
   confirmLeave: boolean;
+  formId?: FormId;
 }
 
 export interface UseFormResult<TData>
@@ -82,9 +87,9 @@ function handleRefresh<T extends FormData>(
 function useForm<T extends FormData, TErrors>(
   initialData: T,
   onSubmit?: (data: T) => SubmitPromise<TErrors[]> | void,
-  opts: UseFormOpts = { confirmLeave: false }
+  opts: UseFormOpts = { confirmLeave: false, formId: undefined }
 ): UseFormResult<T> {
-  const { confirmLeave } = opts;
+  const { confirmLeave, formId: propsFormId } = opts;
   const [hasChanged, setChanged] = useState(false);
   const [errors, setErrors] = useState<FormErrors<T>>({});
   const [data, setData] = useStateFromProps(initialData, {
@@ -97,7 +102,7 @@ function useForm<T extends FormData, TErrors>(
     setExitDialogSubmitRef,
     setEnableExitDialog,
     formId
-  } = useExitFormDialog();
+  } = useExitFormDialog({ formId: propsFormId });
 
   const handleSetChanged = (value: boolean = true) => {
     setChanged(value);
