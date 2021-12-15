@@ -3672,9 +3672,9 @@
     "context": "gift card history message",
     "string": "Gift card was sent to customer"
   },
-  "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardHistory_dot_giftCardTagUpdated": {
+  "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardHistory_dot_giftCardTagsUpdated": {
     "context": "gift card history message",
-    "string": "Gift card tag was updated"
+    "string": "Gift card tags were updated"
   },
   "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardHistory_dot_giftCardUsedInOrder": {
     "context": "gift card history message",
