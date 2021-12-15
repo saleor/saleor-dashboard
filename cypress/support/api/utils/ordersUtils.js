@@ -10,7 +10,7 @@ export function createWaitingForCaptureOrder({
   channelSlug,
   email,
   variantsList,
-  shippingMethodId,
+  shippingMethodName,
   address
 }) {
   let checkout;
@@ -27,6 +27,10 @@ export function createWaitingForCaptureOrder({
     })
     .then(({ checkout: checkoutResp }) => {
       checkout = checkoutResp;
+      const shippingMethodId = getShippingMethodIdFromCheckout(
+        checkout,
+        shippingMethodName
+      );
       checkoutRequest.addShippingMethod(checkout.id, shippingMethodId);
     })
     .then(() => addPayment(checkout.id))
@@ -34,12 +38,18 @@ export function createWaitingForCaptureOrder({
     .then(({ order }) => ({ checkout, order }));
 }
 
+export function getShippingMethodIdFromCheckout(checkout, shippingMethodName) {
+  return checkout.availableShippingMethods.find(
+    element => element.name === shippingMethodName
+  ).id;
+}
+
 export function createCheckoutWithVoucher({
   channelSlug,
   email = "email@example.com",
   variantsList,
   address,
-  shippingMethodId,
+  shippingMethodName,
   voucherCode,
   auth
 }) {
@@ -55,6 +65,10 @@ export function createCheckoutWithVoucher({
     })
     .then(({ checkout: checkoutResp }) => {
       checkout = checkoutResp;
+      const shippingMethodId = getShippingMethodIdFromCheckout(
+        checkout,
+        shippingMethodName
+      );
       checkoutRequest.addShippingMethod(checkout.id, shippingMethodId);
     })
     .then(() => {
@@ -71,7 +85,7 @@ export function purchaseProductWithPromoCode({
   email = "email@example.com",
   variantsList,
   address,
-  shippingMethodId,
+  shippingMethod,
   voucherCode,
   auth
 }) {
@@ -82,7 +96,7 @@ export function purchaseProductWithPromoCode({
     email,
     variantsList,
     address,
-    shippingMethodId,
+    shippingMethodName: shippingMethod.name,
     voucherCode,
     auth
   })
@@ -212,7 +226,7 @@ export function createOrderWithNewProduct({
   warehouseId,
   quantityInWarehouse = 1,
   trackInventory = true,
-  shippingMethodId,
+  shippingMethod,
   address
 }) {
   let variantsList;
@@ -232,7 +246,7 @@ export function createOrderWithNewProduct({
         channelSlug: channel.slug,
         email: "email@example.com",
         variantsList,
-        shippingMethodId,
+        shippingMethodName: shippingMethod.name,
         address
       });
     })
