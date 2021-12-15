@@ -135,6 +135,7 @@ const CustomerAddressDialog: React.FC<CustomerAddressDialogProps> = ({
                   color="primary"
                   variant="contained"
                   type="submit"
+                  data-test="submit"
                 >
                   <FormattedMessage {...buttonMessages.save} />
                 </ConfirmButton>
