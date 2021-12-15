@@ -12,7 +12,10 @@ const webhooksDetails = gql`
   query WebhookDetails($id: ID!) {
     webhook(id: $id) {
       ...WebhookFragment
-      events {
+      syncEvents {
+        eventType
+      }
+      asyncEvents {
         eventType
       }
       secretKey
