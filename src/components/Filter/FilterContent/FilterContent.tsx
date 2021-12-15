@@ -220,12 +220,14 @@ const FilterContent: React.FC<FilterContentProps> = ({
                   classes={summaryClasses}
                   onClick={() => handleFilterOpen(filter)}
                 >
-                  <FilterContentBodyNameField
-                    filter={currentFilter}
-                    onFilterPropertyChange={action =>
-                      handleFilterPropertyGroupChange(action, filter)
-                    }
-                  />
+                  {currentFilter && (
+                    <FilterContentBodyNameField
+                      filter={currentFilter}
+                      onFilterPropertyChange={action =>
+                        handleFilterPropertyGroupChange(action, filter)
+                      }
+                    />
+                  )}
                 </AccordionSummary>
                 {currentFilter?.active && (
                   <FilterErrorsList
@@ -245,7 +247,7 @@ const FilterContent: React.FC<FilterContentProps> = ({
                         }
                         filter={{
                           ...getFilterFromCurrentData(filterField),
-                          active: currentFilter.active
+                          active: currentFilter?.active
                         }}
                       >
                         <Typography>{filterField.label}</Typography>

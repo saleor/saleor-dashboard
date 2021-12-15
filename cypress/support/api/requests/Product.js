@@ -313,7 +313,21 @@ export function activatePreorderOnVariant(variantId, threshold, endDate) {
       preorder:{
         ${thresholdLine}
         ${endDateLine}
+      }errors{
+        field
+        message
       }
+    }
+  }`;
+  return cy.sendRequestWithQuery(mutation);
+}
+
+export function updateVariantPrice({ variantId, channelId, price }) {
+  const mutation = `mutation {
+    productVariantChannelListingUpdate(id:"${variantId}", input:{
+      channelId:"${channelId}"
+      price:${price}
+      costPrice:${price}
     }){
       errors{
         field
