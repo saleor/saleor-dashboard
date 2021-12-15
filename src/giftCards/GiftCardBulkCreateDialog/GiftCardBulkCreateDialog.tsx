@@ -5,14 +5,16 @@ import useNotifier from "@saleor/hooks/useNotifier";
 import { DialogProps } from "@saleor/types";
 import { GiftCardBulkCreateInput } from "@saleor/types/globalTypes";
 import { getFormErrors } from "@saleor/utils/errors";
-import commonErrorMessages from "@saleor/utils/errors/common";
 import React, { useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 
 import ContentWithProgress from "../GiftCardCreateDialog/ContentWithProgress";
 import GiftCardBulkCreateSuccessDialog from "../GiftCardCreateDialog/GiftCardBulkCreateSuccessDialog";
 import { useChannelCurrencies } from "../GiftCardCreateDialog/queries";
-import { getGiftCardExpiryInputData } from "../GiftCardCreateDialog/utils";
+import {
+  getGiftCardCreateOnCompletedMessage,
+  getGiftCardExpiryInputData
+} from "../GiftCardCreateDialog/utils";
 import { GIFT_CARD_LIST_QUERY } from "../GiftCardsList/types";
 import GiftCardBulkCreateDialogForm from "./GiftCardBulkCreateDialogForm";
 import { giftCardBulkCreateDialogMessages as messages } from "./messages";
@@ -44,20 +46,21 @@ const GiftCardBulkCreateDialog: React.FC<DialogProps> = ({ onClose, open }) => {
     const errors = data?.giftCardBulkCreate?.errors;
     const cardsAmount = data?.giftCardBulkCreate?.giftCards?.length || 0;
 
-    const notifierData: IMessage = !!errors?.length
-      ? {
-          status: "error",
-          text: intl.formatMessage(commonErrorMessages.unknownError)
-        }
-      : {
-          status: "success",
-          title: intl.formatMessage(messages.createdSuccessAlertTitle),
-          text: intl.formatMessage(messages.createdSuccessAlertDescription, {
-            cardsAmount
-          })
-        };
+    const giftCardsBulkIssueSuccessMessage: IMessage = {
+      status: "success",
+      title: intl.formatMessage(messages.createdSuccessAlertTitle),
+      text: intl.formatMessage(messages.createdSuccessAlertDescription, {
+        cardsAmount
+      })
+    };
 
-    notify(notifierData);
+    notify(
+      getGiftCardCreateOnCompletedMessage(
+        errors,
+        intl,
+        giftCardsBulkIssueSuccessMessage
+      )
+    );
 
     setFormErrors(getFormErrors(giftCardBulkCreateErrorKeys, errors));
 
