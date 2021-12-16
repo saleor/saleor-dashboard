@@ -5,7 +5,6 @@ export const createChannelsChangeHandler = (
   updateChannels: (data: ChannelCollectionData[]) => void,
   triggerChange: () => void
 ) => (id: string, data: Omit<ChannelCollectionData, "name" | "id">) => {
-  console.log("HENLO");
   const channelIndex = channelListings.findIndex(channel => channel.id === id);
   const channel = channelListings[channelIndex];
 
@@ -18,6 +17,5 @@ export const createChannelsChangeHandler = (
     ...channelListings.slice(channelIndex + 1)
   ];
   updateChannels(updatedChannels);
-  console.log("TRIGGR");
   triggerChange();
 };
