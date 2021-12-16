@@ -2,9 +2,7 @@ import { WindowTitle } from "@saleor/components/WindowTitle";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { extractMutationErrors } from "@saleor/misc";
-import OrderFulfillPage, {
-  OrderFulfillSubmitData
-} from "@saleor/orders/components/OrderFulfillPage";
+import OrderFulfillPage from "@saleor/orders/components/OrderFulfillPage";
 import { useOrderFulfill } from "@saleor/orders/mutations";
 import {
   useOrderFulfillData,

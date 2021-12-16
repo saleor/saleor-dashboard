@@ -7,6 +7,7 @@ import Grid from "@saleor/components/Grid";
 import PageHeader from "@saleor/components/PageHeader";
 import Savebar from "@saleor/components/Savebar";
 import Skeleton from "@saleor/components/Skeleton";
+import { SubmitPromise } from "@saleor/hooks/useForm";
 import { sectionNames } from "@saleor/intl";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import { Backlink } from "@saleor/macaw-ui";
@@ -50,7 +51,7 @@ export interface OrderDraftPageProps
   onCustomerEdit: (data: CustomerEditData) => void;
   onDraftFinalize: () => void;
   onDraftRemove: () => void;
-  onNoteAdd: (data: HistoryFormData) => void;
+  onNoteAdd: (data: HistoryFormData) => SubmitPromise<any[]>;
   onOrderLineAdd: () => void;
   onOrderLineChange: (
     id: string,

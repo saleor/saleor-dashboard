@@ -131,7 +131,7 @@ const GiftCardUpdateFormProvider: React.FC<GiftCardUpdateFormProviderProps> = ({
     return result?.data?.giftCardUpdate?.errors;
   };
 
-  const formProps = useForm<GiftCardUpdateFormData>(getInitialData());
+  const formProps = useForm(getInitialData());
 
   const { data, change, setChanged, hasChanged } = formProps;
 

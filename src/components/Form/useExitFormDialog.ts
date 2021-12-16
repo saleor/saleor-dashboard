@@ -1,6 +1,5 @@
 import { useContext, useRef } from "react";
 
-import { v4 as uuid } from "uuid";
 import {
   ExitFormDialogContext,
   ExitFormDialogData,
@@ -26,7 +25,6 @@ const useExitFormDialog = (
   { formId }: UseExitFormDialogProps = { formId: undefined }
 ): UseExitFormDialogResult => {
   const id = useRef(formId || Symbol()).current;
-  // const id = useRef(formId || uuid()).current;
 
   const { setIsDirty, setExitDialogSubmitRef, ...rest } = useContext(
     ExitFormDialogContext

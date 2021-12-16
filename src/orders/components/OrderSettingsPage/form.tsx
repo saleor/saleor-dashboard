@@ -15,7 +15,7 @@ export interface UseOrderSettingsFormResult {
   change: FormChange;
   data: OrderSettingsFormData;
   hasChanged: boolean;
-  submit: () => Promise<boolean>;
+  submit: () => SubmitPromise<any[]>;
 }
 
 export interface OrderSettingsFormProps {

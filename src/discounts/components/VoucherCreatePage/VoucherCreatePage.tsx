@@ -4,13 +4,14 @@ import ChannelsAvailabilityCard from "@saleor/components/ChannelsAvailabilityCar
 import Container from "@saleor/components/Container";
 import Form from "@saleor/components/Form";
 import Grid from "@saleor/components/Grid";
-import Metadata, { MetadataFormData } from "@saleor/components/Metadata";
+import Metadata from "@saleor/components/Metadata";
 import PageHeader from "@saleor/components/PageHeader";
 import Savebar from "@saleor/components/Savebar";
 import {
   createChannelsChangeHandler,
   createDiscountTypeChangeHandler
 } from "@saleor/discounts/handlers";
+import { VOUCHER_CREATE_FORM_ID } from "@saleor/discounts/views/VoucherCreate/types";
 import { DiscountErrorFragment } from "@saleor/fragments/types/DiscountErrorFragment";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import { sectionNames } from "@saleor/intl";
@@ -89,7 +90,12 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
   };
 
   return (
-    <Form confirmLeave initial={initialForm} onSubmit={onSubmit}>
+    <Form
+      confirmLeave
+      initial={initialForm}
+      onSubmit={onSubmit}
+      formId={VOUCHER_CREATE_FORM_ID}
+    >
       {({ change, data, hasChanged, submit, triggerChange, set }) => {
         const handleDiscountTypeChange = createDiscountTypeChangeHandler(
           change

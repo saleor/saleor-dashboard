@@ -9,7 +9,7 @@ import PageHeader from "@saleor/components/PageHeader";
 import Savebar from "@saleor/components/Savebar";
 import { Tab, TabContainer } from "@saleor/components/Tab";
 import { createSaleChannelsChangeHandler } from "@saleor/discounts/handlers";
-import { SaleUpdate_saleUpdate_errors } from "@saleor/discounts/types/SaleUpdate";
+import { SALE_UPDATE_FORM_ID } from "@saleor/discounts/views/SaleDetails/types";
 import { DiscountErrorFragment } from "@saleor/fragments/types/DiscountErrorFragment";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import { sectionNames } from "@saleor/intl";
@@ -90,9 +90,7 @@ export interface SaleDetailsPageProps
   onVariantUnassign: (id: string) => void;
   onVariantClick: (productId: string, variantId: string) => () => void;
   onRemove: () => void;
-  onSubmit: (
-    data: SaleDetailsPageFormData
-  ) => SubmitPromise<SaleUpdate_saleUpdate_errors[]>;
+  onSubmit: (data: SaleDetailsPageFormData) => SubmitPromise<any[]>;
   onTabClick: (index: SaleDetailsPageTab) => void;
   onChannelsChange: (data: ChannelSaleFormData[]) => void;
   openChannelsModal: () => void;
@@ -161,7 +159,12 @@ const SaleDetailsPage: React.FC<SaleDetailsPageProps> = ({
     privateMetadata: sale?.privateMetadata.map(mapMetadataItemToInput)
   };
   return (
-    <Form confirmLeave initial={initialForm} onSubmit={onSubmit}>
+    <Form
+      confirmLeave
+      initial={initialForm}
+      onSubmit={onSubmit}
+      formId={SALE_UPDATE_FORM_ID}
+    >
       {({ change, data, hasChanged, submit, triggerChange }) => {
         const handleChannelChange = createSaleChannelsChangeHandler(
           data.channelListings,

@@ -58,7 +58,7 @@ export interface OrderCustomerAddressesEditDialogProps {
   defaultShippingAddress?: CustomerAddresses_user_defaultShippingAddress;
   defaultBillingAddress?: CustomerAddresses_user_defaultBillingAddress;
   onClose();
-  onConfirm(data: OrderCustomerAddressesEditDialogOutput): SubmitPromise;
+  onConfirm(data: OrderCustomerAddressesEditDialogOutput): SubmitPromise<any[]>;
 }
 
 const defaultSearchState: OrderCustomerSearchAddressState = {
@@ -133,7 +133,7 @@ const OrderCustomerAddressesEditDialog: React.FC<OrderCustomerAddressesEditDialo
     const adressesInput = handleAddressesSubmit(data);
 
     if (adressesInput.shippingAddress && adressesInput.billingAddress) {
-      onConfirm(adressesInput);
+      onConfirm(adressesInput as OrderCustomerAddressesEditDialogOutput);
     }
 
     return Promise.resolve([

@@ -30,6 +30,7 @@ import React from "react";
 import { useIntl } from "react-intl";
 
 import { createHandler } from "./handlers";
+import { SALE_CREATE_FORM_ID } from "./types";
 
 interface SaleCreateProps {
   params: SaleCreateUrlQueryParams;
@@ -63,7 +64,12 @@ export const SaleCreateView: React.FC<SaleCreateProps> = ({ params }) => {
     isChannelsModalOpen,
     setCurrentChannels,
     toggleAllChannels
-  } = useChannels(allChannels, params?.action, { closeModal, openModal });
+  } = useChannels(
+    allChannels,
+    params?.action,
+    { closeModal, openModal },
+    { formId: SALE_CREATE_FORM_ID }
+  );
 
   const [updateChannels, updateChannelsOpts] = useSaleChannelListingUpdate({});
 
