@@ -31,7 +31,7 @@ const useStyles = makeStyles(
       "&:last-child": {
         paddingRight: theme.spacing(1)
       },
-      width: 80
+      width: 92
     },
     colCountries: {
       width: 180
@@ -46,7 +46,7 @@ const useStyles = makeStyles(
   { name: "ShippingZonesList" }
 );
 
-const numberOfColumns = 3;
+const numberOfColumns = 4;
 
 const ShippingZonesList: React.FC<ShippingZonesListProps> = props => {
   const {
@@ -88,6 +88,12 @@ const ShippingZonesList: React.FC<ShippingZonesListProps> = props => {
         }
       />
       <ResponsiveTable>
+        <colgroup>
+          <col />
+          <col className={classes.colName} />
+          <col className={classes.colCountries} />
+          <col className={classes.colAction} />
+        </colgroup>
         <TableHead
           colSpan={numberOfColumns}
           selected={selected}
@@ -110,10 +116,7 @@ const ShippingZonesList: React.FC<ShippingZonesListProps> = props => {
         <TableFooter>
           <TableRow>
             <TablePagination
-              colSpan={getFooterColSpanWithBulkActions(
-                shippingZones,
-                numberOfColumns
-              )}
+              colSpan={numberOfColumns}
               settings={settings}
               hasNextPage={pageInfo && !disabled ? pageInfo.hasNextPage : false}
               onNextPage={onNextPage}
