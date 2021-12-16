@@ -80,13 +80,26 @@ export function enterAndFillUpShippingRate({
   weightLimits,
   deliveryTime
 }) {
-  cy.get(rateOption)
-    .click()
-    .waitForProgressBarToNotBeVisible()
+  cy.get(rateOption).click();
+  fillUpShippingRate({
+    rateName,
+    price,
+    weightLimits,
+    deliveryTime
+  });
+}
+
+export function fillUpShippingRate({
+  rateName,
+  price,
+  weightLimits,
+  deliveryTime
+}) {
+  cy.waitForProgressBarToNotBeVisible()
     .get(SHARED_ELEMENTS.richTextEditor.empty)
     .should("exist")
     .get(SHIPPING_RATE_DETAILS.inputName)
-    .type(rateName);
+    .clearAndType(rateName);
   if (deliveryTime) {
     fillUpDeliveryTime(deliveryTime);
   }
@@ -94,7 +107,7 @@ export function enterAndFillUpShippingRate({
     fillUpWeightLimits(weightLimits);
   }
   cy.get(SHIPPING_RATE_DETAILS.priceInput).each($priceInput => {
-    cy.wrap($priceInput).type(price);
+    cy.wrap($priceInput).clearAndType(price);
   });
 }
 
@@ -132,6 +145,15 @@ export function saveRate() {
     .its("response.body.0.data.shippingZone");
 }
 
+export function saveRateAfterUpdate() {
+  return cy
+    .addAliasToGraphRequest("ShippingMethodChannelListingUpdate")
+    .get(BUTTON_SELECTORS.confirm)
+    .click()
+    .confirmationMessageShouldDisappear()
+    .waitForRequestAndCheckIfNoErrors(`@ShippingMethodChannelListingUpdate`);
+}
+
 export function fillUpWeightLimits({ max, min }) {
   cy.get(SHIPPING_RATE_DETAILS.minWeightInput)
     .type(min)
@@ -141,9 +163,9 @@ export function fillUpWeightLimits({ max, min }) {
 
 export function fillUpDeliveryTime({ min, max }) {
   cy.get(SHIPPING_RATE_DETAILS.minDeliveryTimeInput)
-    .type(min)
+    .clearAndType(min)
     .get(SHIPPING_RATE_DETAILS.maxDeliveryTimeInput)
-    .type(max);
+    .clearAndType(max);
 }
 
 export const rateOptions = {

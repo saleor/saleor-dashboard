@@ -144,6 +144,22 @@ export function getShippingZone(shippingZoneId) {
       shippingMethods{
         id
         name
+        minimumDeliveryDays
+        maximumDeliveryDays
+        minimumOrderWeight{
+          value
+        }
+        maximumOrderWeight{
+          value
+        }
+        channelListings{
+          minimumOrderPrice{
+            amount
+          }
+          maximumOrderPrice{
+            amount
+          }
+        }
       }
     }
   }`;
