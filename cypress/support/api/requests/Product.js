@@ -110,12 +110,17 @@ export function createProduct({
     attributeValue,
     `values:["${attributeValue}"]`
   );
+  const attributesLines = getValueWithDefault(
+    attributeId,
+    `attributes:[{
+    id:"${attributeId}"
+    ${attributeValuesLine}
+  }]`
+  );
+
   const mutation = `mutation{
     productCreate(input:{
-      attributes:[{
-        id:"${attributeId}"
-        ${attributeValuesLine}
-      }]
+      ${attributesLines}
       name:"${name}"
       slug:"${name}"
       seo:{title:"${name}" description:""}
@@ -265,6 +270,14 @@ export function getVariant(id, channelSlug, auth = "auth") {
       }
       ${preorder}
       sku
+      attributes{
+        attribute{
+          inputType
+        }
+        values{
+          name
+        }
+      }
       pricing{
         onSale
         discount{
@@ -302,18 +315,24 @@ export function deactivatePreorderOnVariant(variantId) {
     .its("body.data.productVariantPreorderDeactivate");
 }
 
-export function activatePreorderOnVariant(variantId, threshold, endDate) {
+export function activatePreorderOnVariant({
+  variantId,
+  threshold = 50,
+  endDate
+}) {
   const thresholdLine = getValueWithDefault(
     threshold,
     `globalThreshold:${threshold}`
   );
-  const endDateLine = getValueWithDefault(threshold, `endDate:${endDate}`);
+  const endDateLine = getValueWithDefault(endDate, `endDate:${endDate}`);
   const mutation = `mutation{
     productVariantUpdate(id:"${variantId}", input:{
       preorder:{
         ${thresholdLine}
         ${endDateLine}
-      }errors{
+      }
+    }){
+      errors{
         field
         message
       }

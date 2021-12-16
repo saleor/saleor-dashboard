@@ -153,7 +153,6 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
         formErrors,
         disabled: formDisabled,
         handlers,
-        hasChanged,
         submit
       }) => (
         <Container>
@@ -256,7 +255,7 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
             </div>
           </Grid>
           <Savebar
-            disabled={disabled || formDisabled || !onSubmit || !hasChanged}
+            disabled={disabled || formDisabled || !onSubmit}
             labels={{
               confirm: intl.formatMessage(messages.saveVariant),
               delete: intl.formatMessage(messages.deleteVariant)
