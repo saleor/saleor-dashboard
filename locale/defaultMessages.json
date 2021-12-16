@@ -877,6 +877,10 @@
     "context": "snackbar text",
     "string": "App deactivated"
   },
+  "src_dot_assign": {
+    "context": "button",
+    "string": "Assign"
+  },
   "src_dot_attributes": {
     "context": "attributes section name",
     "string": "Attributes"
@@ -1807,22 +1811,25 @@
   "src_dot_components_dot_AddressEdit_dot_944851093": {
     "string": "Country area"
   },
-  "src_dot_components_dot_AssignAttributeDialog_dot_2173976534": {
+  "src_dot_components_dot_AssignAttributeDialog_dot_assignButton": {
     "context": "button",
     "string": "Assign attributes"
   },
-  "src_dot_components_dot_AssignAttributeDialog_dot_3922579741": {
-    "context": "dialog header",
-    "string": "Assign Attribute"
-  },
-  "src_dot_components_dot_AssignAttributeDialog_dot_4205644805": {
+  "src_dot_components_dot_AssignAttributeDialog_dot_noMembersFound": {
+    "context": "description",
     "string": "No results found"
   },
-  "src_dot_components_dot_AssignAttributeDialog_dot_524117994": {
+  "src_dot_components_dot_AssignAttributeDialog_dot_searchInputLabel": {
+    "context": "input label",
+    "string": "Search Attributes"
+  },
+  "src_dot_components_dot_AssignAttributeDialog_dot_searchInputPlaceholder": {
+    "context": "input placeholder",
     "string": "Search by attribute name"
   },
-  "src_dot_components_dot_AssignAttributeDialog_dot_902296540": {
-    "string": "Search Attributes"
+  "src_dot_components_dot_AssignAttributeDialog_dot_title": {
+    "context": "dialog header",
+    "string": "Assign Attribute"
   },
   "src_dot_components_dot_AssignAttributeValueDialog_dot_header": {
     "context": "dialog header",
@@ -5037,27 +5044,29 @@
     "context": "permission groups section name",
     "string": "Permission Groups"
   },
-  "src_dot_permissionGroups_dot_components_dot_AssignMembersDialog_dot_1004218338": {
-    "context": "staff member status",
-    "string": "Inactive"
+  "src_dot_permissionGroups_dot_components_dot_AssignMembersDialog_dot_noMembersFound": {
+    "context": "description",
+    "string": "No members found"
   },
-  "src_dot_permissionGroups_dot_components_dot_AssignMembersDialog_dot_1731102929": {
-    "context": "button",
-    "string": "Assign"
+  "src_dot_permissionGroups_dot_components_dot_AssignMembersDialog_dot_searchInputLabel": {
+    "context": "input label",
+    "string": "Search Staff Members"
   },
-  "src_dot_permissionGroups_dot_components_dot_AssignMembersDialog_dot_2986043376": {
-    "context": "dialog header",
-    "string": "Assign Staff Members"
-  },
-  "src_dot_permissionGroups_dot_components_dot_AssignMembersDialog_dot_3111990517": {
+  "src_dot_permissionGroups_dot_components_dot_AssignMembersDialog_dot_searchInputPlaceholder": {
+    "context": "input placeholder",
     "string": "Search by name, email, etc..."
   },
-  "src_dot_permissionGroups_dot_components_dot_AssignMembersDialog_dot_3247064221": {
+  "src_dot_permissionGroups_dot_components_dot_AssignMembersDialog_dot_staffActive": {
     "context": "staff member status",
     "string": "Active"
   },
-  "src_dot_permissionGroups_dot_components_dot_AssignMembersDialog_dot_3532084010": {
-    "string": "Search Staff Members"
+  "src_dot_permissionGroups_dot_components_dot_AssignMembersDialog_dot_staffInactive": {
+    "context": "staff member status",
+    "string": "Inactive"
+  },
+  "src_dot_permissionGroups_dot_components_dot_AssignMembersDialog_dot_title": {
+    "context": "dialog header",
+    "string": "Assign Staff Members"
   },
   "src_dot_permissionGroups_dot_components_dot_MembersErrorDialog_dot_3005518110": {
     "context": "dialog title",
