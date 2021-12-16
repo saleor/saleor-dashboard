@@ -48,7 +48,10 @@ import {
   validateCostPrice,
   validatePrice
 } from "@saleor/products/utils/validation";
-import { ChannelsWithVariantsData } from "@saleor/products/views/ProductUpdate/types";
+import {
+  ChannelsWithVariantsData,
+  PRODUCT_UPDATE_FORM_ID
+} from "@saleor/products/views/ProductUpdate/types";
 import { SearchPages_search_edges_node } from "@saleor/searches/types/SearchPages";
 import { SearchProducts_search_edges_node } from "@saleor/searches/types/SearchProducts";
 import { SearchWarehouses_search_edges_node } from "@saleor/searches/types/SearchWarehouses";
@@ -232,7 +235,7 @@ function useProductUpdateForm(
       opts.channelsWithVariants
     ),
     undefined,
-    { confirmLeave: true }
+    { confirmLeave: true, formId: PRODUCT_UPDATE_FORM_ID }
   );
 
   const {
@@ -241,8 +244,7 @@ function useProductUpdateForm(
     toggleValue,
     data: formData,
     setChanged,
-    hasChanged,
-    formId
+    hasChanged
   } = form;
 
   const attributes = useFormset(getAttributeInputFromProduct(product));
@@ -254,7 +256,7 @@ function useProductUpdateForm(
   });
 
   const { setExitDialogSubmitRef, setEnableExitDialog } = useExitFormDialog({
-    formId
+    formId: PRODUCT_UPDATE_FORM_ID
   });
 
   const {

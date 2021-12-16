@@ -41,5 +41,5 @@ export interface TranslationsEntitiesPageProps {
   onSubmit: (
     field: TranslationField,
     data: string | OutputData
-  ) => SubmitPromise;
+  ) => SubmitPromise<any[]>;
 }
