@@ -48,5 +48,6 @@ declare namespace Cypress {
     createNewOption(selectSelector: string, newOption: string): Chainable<any>;
     findElementOnTable(elementName: string): Chainable<any>;
     searchInTable(query: string): Chainable<any>;
+    deleteElementWithReqAlias(alias: string): Chainable<any>;
   }
 }

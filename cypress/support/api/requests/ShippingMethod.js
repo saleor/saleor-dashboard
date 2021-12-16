@@ -137,6 +137,14 @@ export function getShippingZone(shippingZoneId) {
     shippingZone(id:"${shippingZoneId}"){
       id
       name
+      description
+      warehouses{
+        name
+        id
+      }
+      countries{
+        code
+      }
       channels{
         name
         id
@@ -153,6 +161,9 @@ export function getShippingZone(shippingZoneId) {
           value
         }
         channelListings{
+          price{
+            amount
+          }
           minimumOrderPrice{
             amount
           }

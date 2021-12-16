@@ -10,10 +10,25 @@ export function createShippingZone(
   country,
   channelName
 ) {
-  cy.get(SHIPPING_ZONES_LIST.addShippingZone)
-    .click()
-    .get(SHIPPING_ZONE_DETAILS.nameInput)
-    .type(shippingName)
+  cy.get(SHIPPING_ZONES_LIST.addShippingZone).click();
+  fillUpShippingZoneData({
+    shippingName,
+    warehouseName,
+    country,
+    channelName
+  });
+}
+
+export function fillUpShippingZoneData({
+  shippingName,
+  warehouseName,
+  country,
+  channelName
+}) {
+  cy.get(SHIPPING_ZONE_DETAILS.nameInput)
+    .clearAndType(shippingName)
+    .get(SHIPPING_ZONE_DETAILS.descriptionInput)
+    .clearAndType(shippingName)
     .get(SHIPPING_ZONE_DETAILS.assignCountryButton)
     .click()
     .get(SHIPPING_ZONE_DETAILS.searchInput)
@@ -32,7 +47,8 @@ export function createShippingZone(
     .type(warehouseName)
     .get(SHIPPING_ZONE_DETAILS.autocompleteContentDialog)
     .scrollTo("bottom");
-  cy.contains(SHIPPING_ZONE_DETAILS.option, warehouseName)
+  return cy
+    .contains(SHIPPING_ZONE_DETAILS.option, warehouseName)
     .click({ force: true })
     .get(SHIPPING_ZONE_DETAILS.channelSelector)
     .click()
