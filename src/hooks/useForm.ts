@@ -19,7 +19,7 @@ export interface ChangeEvent<TData = any> {
 }
 export type SubmitPromise<TData = any> = Promise<TData>;
 
-export type FormChange = (event: ChangeEvent) => void;
+export type FormChange = (event: ChangeEvent, cb?: () => void) => void;
 
 export type FormErrors<T> = {
   [field in keyof T]?: string | React.ReactNode;

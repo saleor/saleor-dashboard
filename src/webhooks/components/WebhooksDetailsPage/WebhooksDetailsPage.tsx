@@ -8,31 +8,47 @@ import Savebar from "@saleor/components/Savebar";
 import { WebhookErrorFragment } from "@saleor/fragments/types/WebhookErrorFragment";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import { Backlink } from "@saleor/macaw-ui";
-import { getStringOrPlaceholder } from "@saleor/misc";
-import { WebhookEventTypeEnum } from "@saleor/types/globalTypes";
+import {
+  WebhookEventTypeAsync,
+  WebhookEventTypeSync
+} from "@saleor/types/globalTypes";
 import WebhookEvents from "@saleor/webhooks/components/WebhookEvents";
 import WebhookInfo from "@saleor/webhooks/components/WebhookInfo";
 import WebhookStatus from "@saleor/webhooks/components/WebhookStatus";
+import {
+  createAsyncEventsSelectHandler,
+  createSyncEventsSelectHandler
+} from "@saleor/webhooks/handlers";
 import { WebhookDetails_webhook } from "@saleor/webhooks/types/WebhookDetails";
-import { isUnnamed } from "@saleor/webhooks/utils";
+import {
+  mapAsyncEventsToChoices,
+  mapSyncEventsToChoices
+} from "@saleor/webhooks/utils";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import { WebhookCreateFormData } from "../WebhookCreatePage";
+import { getHeaderTitle } from "./messages";
 
-export type WebhookUpdateFormData = WebhookCreateFormData;
+export interface WebhookFormData {
+  syncEvents: WebhookEventTypeSync[];
+  asyncEvents: WebhookEventTypeAsync[];
+  isActive: boolean;
+  name: string;
+  secretKey: string | null;
+  targetUrl: string;
+}
 
-export interface WebhooksDetailsPageProps {
+export interface WebhookDetailsPageProps {
   appName: string;
   disabled: boolean;
   errors: WebhookErrorFragment[];
-  webhook: WebhookDetails_webhook;
+  webhook?: WebhookDetails_webhook;
   saveButtonBarState: ConfirmButtonTransitionState;
   onBack: () => void;
-  onSubmit: (data: WebhookUpdateFormData) => SubmitPromise;
+  onSubmit: (data: WebhookFormData) => SubmitPromise<any[]>;
 }
 
-const WebhooksDetailsPage: React.FC<WebhooksDetailsPageProps> = ({
+const WebhookDetailsPage: React.FC<WebhookDetailsPageProps> = ({
   appName,
   disabled,
   errors,
@@ -42,14 +58,10 @@ const WebhooksDetailsPage: React.FC<WebhooksDetailsPageProps> = ({
   onSubmit
 }) => {
   const intl = useIntl();
-  const initialForm: WebhookUpdateFormData = {
-    allEvents: !!webhook?.events?.find(
-      event => event.eventType === WebhookEventTypeEnum.ANY_EVENTS
-    ),
-    events:
-      webhook?.events
-        ?.map(event => event.eventType)
-        .filter(event => event !== WebhookEventTypeEnum.ANY_EVENTS) || [],
+
+  const initialForm: WebhookFormData = {
+    syncEvents: webhook?.syncEvents?.map(event => event.eventType) || [],
+    asyncEvents: webhook?.asyncEvents?.map(event => event.eventType) || [],
     isActive: !!webhook?.isActive,
     name: webhook?.name || "",
     secretKey: webhook?.secretKey || "",
@@ -58,60 +70,66 @@ const WebhooksDetailsPage: React.FC<WebhooksDetailsPageProps> = ({
 
   return (
     <Form confirmLeave initial={initialForm} onSubmit={onSubmit}>
-      {({ data, hasChanged, submit, change }) => (
-        <Container>
-          <Backlink onClick={onBack}>{appName}</Backlink>
-          <PageHeader
-            title={
-              isUnnamed(webhook)
-                ? intl.formatMessage({
-                    defaultMessage: "Unnamed Webhook Details",
-                    description: "header"
-                  })
-                : intl.formatMessage(
-                    {
-                      defaultMessage: "{webhookName} Details",
-                      description: "header"
-                    },
-                    {
-                      webhookName: getStringOrPlaceholder(webhook?.name)
-                    }
-                  )
-            }
-          />
-          <Grid>
-            <div>
-              <WebhookInfo
-                data={data}
-                disabled={disabled}
-                errors={errors}
-                onChange={change}
-              />
-            </div>
-            <div>
-              <WebhookEvents
-                data={data}
-                onChange={change}
-                disabled={disabled}
-              />
-              <FormSpacer />
-              <WebhookStatus
-                data={data.isActive}
-                disabled={disabled}
-                onChange={change}
-              />
-            </div>
-          </Grid>
-          <Savebar
-            disabled={disabled || !hasChanged}
-            state={saveButtonBarState}
-            onCancel={onBack}
-            onSubmit={submit}
-          />
-        </Container>
-      )}
+      {({ data, hasChanged, submit, change }) => {
+        const syncEventsChoices = disabled
+          ? []
+          : mapSyncEventsToChoices(Object.values(WebhookEventTypeSync));
+        const asyncEventsChoices = disabled
+          ? []
+          : mapAsyncEventsToChoices(
+              Object.values(WebhookEventTypeAsync),
+              data.asyncEvents
+            );
+
+        const handleSyncEventsSelect = createSyncEventsSelectHandler(
+          change,
+          data.syncEvents
+        );
+        const handleAsyncEventsSelect = createAsyncEventsSelectHandler(
+          change,
+          data.asyncEvents
+        );
+
+        return (
+          <Container>
+            <Backlink onClick={onBack}>{appName}</Backlink>
+            <PageHeader title={getHeaderTitle(intl, webhook)} />
+            <Grid>
+              <div>
+                <WebhookInfo
+                  data={data}
+                  disabled={disabled}
+                  errors={errors}
+                  onChange={change}
+                />
+              </div>
+              <div>
+                <WebhookEvents
+                  data={data}
+                  syncEventsChoices={syncEventsChoices}
+                  asyncEventsChoices={asyncEventsChoices}
+                  onSyncEventChange={handleSyncEventsSelect}
+                  onAsyncEventChange={handleAsyncEventsSelect}
+                />
+                <FormSpacer />
+                <WebhookStatus
+                  data={data.isActive}
+                  disabled={disabled}
+                  onChange={change}
+                />
+              </div>
+            </Grid>
+            <Savebar
+              disabled={disabled || !hasChanged}
+              state={saveButtonBarState}
+              onCancel={onBack}
+              onSubmit={submit}
+            />
+          </Container>
+        );
+      }}
     </Form>
   );
 };
-WebhooksDetailsPage.displayName = "WebhooksDetailsPage";
-export default WebhooksDetailsPage;
+WebhookDetailsPage.displayName = "WebhookDetailsPage";
+export default WebhookDetailsPage;

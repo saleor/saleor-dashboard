@@ -18,3 +18,5 @@ export interface UseChannelsWithProductVariants {
   setChannelVariantListing: (listings: ChannelVariantListing) => void;
   reset: () => void;
 }
+
+export const PRODUCT_UPDATE_FORM_ID = Symbol();

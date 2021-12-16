@@ -9,15 +9,11 @@ import getWebhookErrorMessage from "@saleor/utils/errors/webhooks";
 import React from "react";
 import { useIntl } from "react-intl";
 
-<<<<<<< HEAD
-import { FormData } from "../WebhookDetailsPage";
+import { WebhookFormData } from "../WebhooksDetailsPage/WebhooksDetailsPage";
 import { messages } from "./messages";
-=======
-import { WebhookUpdateFormData } from "../WebhooksDetailsPage";
->>>>>>> Add exit dialog to everywhere WIP (#1600)
 
 interface WebhookInfoProps {
-  data: WebhookUpdateFormData;
+  data: WebhookFormData;
   disabled: boolean;
   errors: WebhookErrorFragment[];
   onChange: (event: React.ChangeEvent<any>) => void;

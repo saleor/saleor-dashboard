@@ -19,7 +19,7 @@ import TranslationFields from "../TranslationFields";
 export interface TranslationsPagesPageProps
   extends TranslationsEntitiesPageProps {
   data: PageTranslationFragment;
-  onAttributeValueSubmit: Pick<TranslationsEntitiesPageProps, "onSubmit">;
+  onAttributeValueSubmit: TranslationsEntitiesPageProps["onSubmit"];
 }
 
 const TranslationsPagesPage: React.FC<TranslationsPagesPageProps> = ({

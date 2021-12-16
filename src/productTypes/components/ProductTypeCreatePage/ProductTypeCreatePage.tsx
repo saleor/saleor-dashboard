@@ -5,7 +5,7 @@ import Grid from "@saleor/components/Grid";
 import Metadata, { MetadataFormData } from "@saleor/components/Metadata";
 import PageHeader from "@saleor/components/PageHeader";
 import Savebar from "@saleor/components/Savebar";
-import { ChangeEvent, FormChange } from "@saleor/hooks/useForm";
+import { ChangeEvent, FormChange, SubmitPromise } from "@saleor/hooks/useForm";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { sectionNames } from "@saleor/intl";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
@@ -43,7 +43,7 @@ export interface ProductTypeCreatePageProps {
   kind: ProductTypeKindEnum;
   onChangeKind: (kind: ProductTypeKindEnum) => void;
   onBack: () => void;
-  onSubmit: (data: ProductTypeForm) => SubmitPromise;
+  onSubmit: (data: ProductTypeForm) => SubmitPromise<any[]>;
 }
 
 const formInitialData: ProductTypeForm = {

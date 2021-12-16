@@ -85,6 +85,7 @@ import {
   createUpdateHandler,
   createVariantReorderHandler
 } from "./handlers";
+import { PRODUCT_UPDATE_FORM_ID } from "./types";
 import useChannelVariantListings from "./useChannelVariantListings";
 
 const messages = defineMessages({
@@ -304,10 +305,15 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
     isChannelsModalOpen,
     setCurrentChannels,
     toggleAllChannels
-  } = useChannels(productChannelsChoices, params?.action, {
-    closeModal,
-    openModal
-  });
+  } = useChannels(
+    productChannelsChoices,
+    params?.action,
+    {
+      closeModal,
+      openModal
+    },
+    { formId: PRODUCT_UPDATE_FORM_ID }
+  );
 
   const [updateChannels, updateChannelsOpts] = useProductChannelListingUpdate({
     onCompleted: data => {

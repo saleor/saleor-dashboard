@@ -5,7 +5,7 @@ import {
   ChannelPriceArgs,
   ChannelPriceData
 } from "@saleor/channels/utils";
-import { ChangeEvent, FormChange, UseFormResult } from "@saleor/hooks/useForm";
+import { FormChange, UseFormResult } from "@saleor/hooks/useForm";
 import moment from "moment";
 
 export function createChannelsPriceChangeHandler(
@@ -145,7 +145,7 @@ export const createPreorderEndDateChangeHandler = (
   form: UseFormResult<{ preorderEndDateTime?: string }>,
   triggerChange: () => void,
   preorderPastDateErrorMessage: string
-): ((event: ChangeEvent<any>, cb: () => any) => void) => (event, cb) => {
+): FormChange => (event, cb) => {
   form.change(event, cb);
   if (moment(event.target.value).isSameOrBefore(Date.now())) {
     form.setError("preorderEndDateTime", preorderPastDateErrorMessage);
