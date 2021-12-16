@@ -51,7 +51,7 @@ const useStyles = makeStyles(
         height: "auto"
       },
       height: 500,
-      maxWidth: 600,
+      maxWidth: 900,
       outline: 0,
       width: "100%"
     }

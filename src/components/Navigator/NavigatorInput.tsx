@@ -8,7 +8,7 @@ const useStyles = makeStyles(
   theme => {
     const typography = {
       ...theme.typography.body1,
-      color: theme.palette.text.primary,
+      color: theme.palette.saleor.main[1],
       fontWeight: 500,
       letterSpacing: "0.02rem"
     };
@@ -23,6 +23,9 @@ const useStyles = makeStyles(
         width: 32
       },
       input: {
+        "&::placeholder": {
+          color: theme.palette.saleor.main[3]
+        },
         ...typography,
         background: "transparent",
         border: "none",
