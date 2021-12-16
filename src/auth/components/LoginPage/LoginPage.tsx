@@ -84,7 +84,7 @@ const LoginCard: React.FC<LoginCardProps> = props => {
 
   return (
     <LoginForm onSubmit={onSubmit}>
-      {({ change: handleChange, data, submit: handleSubmit }) => (
+      {({ change: handleChange, data }) => (
         <>
           {error && (
             <div className={classes.panel} data-test="loginErrorMessage">
@@ -129,7 +129,6 @@ const LoginCard: React.FC<LoginCardProps> = props => {
               color="primary"
               disabled={disabled}
               variant="contained"
-              onClick={handleSubmit}
               type="submit"
               data-test="submit"
             >
