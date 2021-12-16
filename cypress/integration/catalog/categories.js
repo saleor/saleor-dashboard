@@ -83,7 +83,8 @@ filterTests({ definedTags: ["all"] }, () => {
         })
         .then(newCategory => {
           expect(newCategory.name).to.eq(categoryName);
-          expect(newCategory.description).to.eq(categoryName);
+          const descriptionResp = JSON.parse(newCategory.description);
+          expect(descriptionResp.blocks[0].data.text).to.eq(categoryName);
         });
     });
 

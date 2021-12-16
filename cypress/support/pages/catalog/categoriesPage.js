@@ -28,7 +28,8 @@ export function fillUpCategoryGeneralInfo({ name, description }) {
 }
 
 export function saveCategory(alias = "CategoryCreate") {
-  cy.addAliasToGraphRequest(alias)
+  return cy
+    .addAliasToGraphRequest(alias)
     .get(BUTTON_SELECTORS.confirm)
     .click()
     .waitForRequestAndCheckIfNoErrors(`@${alias}`);
