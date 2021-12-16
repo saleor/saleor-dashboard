@@ -16,6 +16,7 @@ import { maybe } from "../../../misc";
 import { DiscountValueTypeEnum } from "../../../types/globalTypes";
 import { translateVoucherTypes } from "../../translations";
 import { VoucherDetails_voucher } from "../../types/VoucherDetails";
+import useStyles from "./styles";
 
 export interface VoucherSummaryProps extends ChannelProps {
   voucher: VoucherDetails_voucher;
@@ -26,6 +27,7 @@ const VoucherSummary: React.FC<VoucherSummaryProps> = ({
   voucher
 }) => {
   const intl = useIntl();
+  const classes = useStyles();
 
   const translatedVoucherTypes = translateVoucherTypes(intl);
   const channel = voucher?.channelListings?.find(
@@ -39,7 +41,7 @@ const VoucherSummary: React.FC<VoucherSummaryProps> = ({
         <Typography variant="caption">
           <FormattedMessage defaultMessage="Code" description="voucher code" />
         </Typography>
-        <Typography>
+        <Typography className={classes.ellipsis}>
           {maybe<React.ReactNode>(() => voucher.code, <Skeleton />)}
         </Typography>
         <FormSpacer />
