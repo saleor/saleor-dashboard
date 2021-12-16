@@ -33,6 +33,8 @@ import React from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { FormattedMessage, useIntl } from "react-intl";
 
+import { messages } from "./messages";
+
 const useStyles = makeStyles(
   theme => ({
     actions: {
@@ -40,6 +42,9 @@ const useStyles = makeStyles(
     },
     checkboxCell: {
       paddingLeft: 0
+    },
+    dialogPaper: {
+      overflow: "hidden"
     },
     dropShadow: {
       boxShadow: `0px -5px 10px 0px ${theme.palette.divider}`
@@ -110,24 +115,25 @@ const AssignAttributeDialog: React.FC<AssignAttributeDialogProps> = ({
   });
 
   return (
-    <Dialog onClose={onClose} open={open} fullWidth maxWidth="sm">
+    <Dialog
+      onClose={onClose}
+      open={open}
+      fullWidth
+      maxWidth="sm"
+      classes={{
+        paper: classes.dialogPaper
+      }}
+    >
       <DialogTitle>
-        <FormattedMessage
-          defaultMessage="Assign Attribute"
-          description="dialog header"
-        />
+        <FormattedMessage {...messages.title} />
       </DialogTitle>
       <DialogContent className={classes.searchArea}>
         <TextField
           name="query"
           value={query}
           onChange={onQueryChange}
-          label={intl.formatMessage({
-            defaultMessage: "Search Attributes"
-          })}
-          placeholder={intl.formatMessage({
-            defaultMessage: "Search by attribute name"
-          })}
+          label={intl.formatMessage(messages.searchInputLabel)}
+          placeholder={intl.formatMessage(messages.searchInputPlaceholder)}
           fullWidth
           InputProps={{
             autoComplete: "off",
@@ -188,7 +194,7 @@ const AssignAttributeDialog: React.FC<AssignAttributeDialogProps> = ({
                   !loading && (
                     <TableRow>
                       <TableCell colSpan={2}>
-                        <FormattedMessage defaultMessage="No results found" />
+                        <FormattedMessage {...messages.noMembersFound} />
                       </TableCell>
                     </TableRow>
                   )
@@ -221,10 +227,7 @@ const AssignAttributeDialog: React.FC<AssignAttributeDialogProps> = ({
           type="submit"
           onClick={onSubmit}
         >
-          <FormattedMessage
-            defaultMessage="Assign attributes"
-            description="button"
-          />
+          <FormattedMessage {...messages.assignButton} />
         </ConfirmButton>
       </DialogActions>
     </Dialog>
