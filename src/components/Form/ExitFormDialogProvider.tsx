@@ -116,7 +116,6 @@ const ExitFormDialogProvider = ({ children }) => {
   };
 
   const getFormsDataValuesArray = () =>
-    // Object.keys(formsData.current).map(key => formsData.current[key]);
     Object.getOwnPropertySymbols(formsData.current).map(
       key => formsData.current[key]
     );
@@ -126,7 +125,6 @@ const ExitFormDialogProvider = ({ children }) => {
 
   const shouldBlockNav = () => {
     if (!enableExitDialog.current || !hasAnyFormsDirty()) {
-      // console.log("SA WHAT");
       return false;
     }
 
