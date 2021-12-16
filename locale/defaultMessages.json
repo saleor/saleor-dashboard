@@ -1234,19 +1234,25 @@
     "context": "link",
     "string": "Use this link to recover it"
   },
-  "src_dot_auth_dot_components_dot_LoginPage_dot_3476994590": {
-    "string": "Sorry, your username and/or password are incorrect. Please try again."
-  },
   "src_dot_auth_dot_components_dot_LoginPage_dot_3762459576": {
     "context": "description",
     "string": "or login using"
   },
-  "src_dot_auth_dot_components_dot_LoginPage_dot_534894384": {
-    "string": "Sorry, login went wrong. Please try again."
-  },
   "src_dot_auth_dot_components_dot_LoginPage_dot_599516345": {
     "context": "description",
     "string": "Forgot password? {resetPasswordLink}"
+  },
+  "src_dot_auth_dot_components_dot_LoginPage_dot_externalLoginError": {
+    "context": "error message",
+    "string": "Sorry, login went wrong. Please try again."
+  },
+  "src_dot_auth_dot_components_dot_LoginPage_dot_loginError": {
+    "context": "error message",
+    "string": "Sorry, your username and/or password are incorrect. Please try again."
+  },
+  "src_dot_auth_dot_components_dot_LoginPage_dot_serverError": {
+    "context": "error message",
+    "string": "Sorry, connecting to server failed. Please try again."
   },
   "src_dot_auth_dot_components_dot_NewPasswordPage_dot_1254879564": {
     "string": "New Password"

@@ -50,6 +50,12 @@ export function useAuthProvider({
   const [error, setError] = useState<UserContextError>();
 
   useEffect(() => {
+    if (authenticating && error) {
+      setError(undefined);
+    }
+  }, [authenticating]);
+
+  useEffect(() => {
     if (!authenticated && !authenticating) {
       loginWithCredentialsManagementAPI(handleLogin);
     }
@@ -88,24 +94,27 @@ export function useAuthProvider({
   };
 
   const handleLogin = async (email: string, password: string) => {
-    const result = await login({
-      email,
-      password
-    });
+    try {
+      const result = await login({
+        email,
+        password
+      });
 
-    if (result && !result.data.tokenCreate.errors.length) {
-      if (DEMO_MODE) {
-        displayDemoMessage(intl, notify);
+      if (result && !result.data.tokenCreate.errors.length) {
+        if (DEMO_MODE) {
+          displayDemoMessage(intl, notify);
+        }
+        saveCredentials(result.data.tokenCreate.user, password);
+      } else {
+        setError("loginError");
       }
-      saveCredentials(result.data.tokenCreate.user, password);
-      setError(undefined);
-    } else {
-      setError("loginError");
+
+      await logoutNonStaffUser(result.data.tokenCreate);
+
+      return result.data.tokenCreate;
+    } catch (error) {
+      setError("serverError");
     }
-
-    await logoutNonStaffUser(result.data.tokenCreate);
-
-    return result.data.tokenCreate;
   };
 
   const handleRequestExternalLogin = async (
@@ -124,23 +133,26 @@ export function useAuthProvider({
     pluginId: string,
     input: ExternalLoginInput
   ) => {
-    const result = await getExternalAccessToken({
-      pluginId,
-      input: JSON.stringify(input)
-    });
+    try {
+      const result = await getExternalAccessToken({
+        pluginId,
+        input: JSON.stringify(input)
+      });
 
-    if (result && !result.data?.externalObtainAccessTokens.errors.length) {
-      if (DEMO_MODE) {
-        displayDemoMessage(intl, notify);
+      if (result && !result.data?.externalObtainAccessTokens.errors.length) {
+        if (DEMO_MODE) {
+          displayDemoMessage(intl, notify);
+        }
+      } else {
+        setError("externalLoginError");
       }
-      setError(undefined);
-    } else {
-      setError("externalLoginError");
+
+      await logoutNonStaffUser(result.data.externalObtainAccessTokens);
+
+      return result?.data?.externalObtainAccessTokens;
+    } catch (error) {
+      setError("serverError");
     }
-
-    await logoutNonStaffUser(result.data.externalObtainAccessTokens);
-
-    return result?.data?.externalObtainAccessTokens;
   };
 
   const logoutNonStaffUser = async (
@@ -161,7 +173,7 @@ export function useAuthProvider({
     requestLoginByExternalPlugin: handleRequestExternalLogin,
     loginByExternalPlugin: handleExternalLogin,
     logout: handleLogout,
-    authenticating,
+    authenticating: authenticating && !error,
     authenticated: authenticated && user?.isStaff,
     user: userDetails.data?.me,
     error

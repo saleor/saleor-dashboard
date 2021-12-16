@@ -15,6 +15,7 @@ import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import LoginForm, { LoginFormData } from "./form";
+import { getErrorMessage } from "./messages";
 
 const useStyles = makeStyles(
   theme => ({
@@ -85,17 +86,10 @@ const LoginCard: React.FC<LoginCardProps> = props => {
     <LoginForm onSubmit={onSubmit}>
       {({ change: handleChange, data, submit: handleSubmit }) => (
         <>
-          {error === "loginError" && (
+          {error && (
             <div className={classes.panel} data-test="loginErrorMessage">
               <Typography variant="caption">
-                <FormattedMessage defaultMessage="Sorry, your username and/or password are incorrect. Please try again." />
-              </Typography>
-            </div>
-          )}
-          {error === "externalLoginError" && (
-            <div className={classes.panel} data-test="loginErrorMessage">
-              <Typography variant="caption">
-                <FormattedMessage defaultMessage="Sorry, login went wrong. Please try again." />
+                {getErrorMessage(error, intl)}
               </Typography>
             </div>
           )}
