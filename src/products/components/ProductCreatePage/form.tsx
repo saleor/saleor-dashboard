@@ -22,6 +22,7 @@ import { SingleAutocompleteChoiceType } from "@saleor/components/SingleAutocompl
 import useForm, {
   CommonUseFormResultWithHandlers,
   FormChange,
+  FormErrors,
   SubmitPromise
 } from "@saleor/hooks/useForm";
 import useFormset, {
@@ -29,6 +30,7 @@ import useFormset, {
   FormsetData
 } from "@saleor/hooks/useFormset";
 import { errorMessages } from "@saleor/intl";
+import { ProductCreate_productCreate_errors } from "@saleor/products/types/ProductCreate";
 import { ProductType_productType } from "@saleor/products/types/ProductType";
 import {
   getAttributeInputFromProductType,
@@ -127,6 +129,7 @@ export interface UseProductCreateFormResult
     ProductCreateHandlers
   > {
   disabled: boolean;
+  formErrors: FormErrors<ProductCreateData>;
 }
 
 export interface UseProductCreateFormOpts
@@ -345,7 +348,12 @@ function useProductCreateForm(
   const data = getData();
 
   const submit = () =>
-    handleFormSubmit(data, onSubmit, setChanged, setEnableExitDialog);
+    handleFormSubmit<ProductCreateData, ProductCreate_productCreate_errors>(
+      data,
+      onSubmit,
+      setChanged,
+      setEnableExitDialog
+    );
 
   useEffect(() => setExitDialogSubmitRef(submit), [submit]);
 

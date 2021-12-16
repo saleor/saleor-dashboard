@@ -8,21 +8,23 @@ async function handleFormSubmit<TData, TErrors>(
 ): Promise<TErrors[]> {
   const result = onSubmit(data);
 
-  if (result) {
-    const errors = await result;
+  if (!result) {
+    return [];
+  }
 
-    if (errors?.length === 0) {
-      setChanged(false);
+  const errors = await result;
 
-      if (!!setEnableExitDialog) {
-        setEnableExitDialog(false);
-      }
+  if (errors?.length === 0) {
+    setChanged(false);
 
-      return [];
+    if (!!setEnableExitDialog) {
+      setEnableExitDialog(false);
     }
 
-    return errors;
+    return [];
   }
+
+  return errors;
 }
 
 export default handleFormSubmit;
