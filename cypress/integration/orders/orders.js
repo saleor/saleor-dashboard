@@ -116,8 +116,6 @@ filterTests({ definedTags: ["all"] }, () => {
     });
 
     it("should create order with selected channel", () => {
-      // Remove login as admin after fixing SALEOR-3154
-      // cy.clearSessionData().loginUserViaRequest();
       cy.visit(urlList.orders)
         .get(ORDERS_SELECTORS.createOrder)
         .click();
