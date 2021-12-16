@@ -62,6 +62,7 @@ import { collectionUrl } from "../../../collections/urls";
 import { maybe } from "../../../misc";
 import { productUrl } from "../../../products/urls";
 import { createUpdateHandler } from "./handlers";
+import { VOUCHER_UPDATE_FORM_ID } from "./types";
 
 interface VoucherDetailsProps {
   id: string;
@@ -151,10 +152,15 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({
     isChannelsModalOpen,
     setCurrentChannels,
     toggleAllChannels
-  } = useChannels(voucherChannelsChoices, params?.action, {
-    closeModal,
-    openModal
-  });
+  } = useChannels(
+    voucherChannelsChoices,
+    params?.action,
+    {
+      closeModal,
+      openModal
+    },
+    { formId: VOUCHER_UPDATE_FORM_ID }
+  );
 
   const [updateChannels, updateChannelsOpts] = useVoucherChannelListingUpdate(
     {}

@@ -11,8 +11,13 @@ import {
 } from "../metadata/types/UpdatePrivateMetadata";
 import { filterMetadataArray } from "./filterMetadataArray";
 
+export interface CreateMetadataHandlerFunctionResult<TError> {
+  id?: string;
+  errors?: TError[];
+}
+
 function createMetadataCreateHandler<T extends MetadataFormData, TError>(
-  create: (data: T) => Promise<{ id?: string; errors?: TError[] }>,
+  create: (data: T) => Promise<CreateMetadataHandlerFunctionResult<TError>>,
   setMetadata: MutationFunction<UpdateMetadata, UpdateMetadataVariables>,
   setPrivateMetadata: MutationFunction<
     UpdatePrivateMetadata,

@@ -61,6 +61,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import { createUpdateHandler } from "./handlers";
 import { messages } from "./messages";
+import { SALE_UPDATE_FORM_ID } from "./types";
 
 interface SaleDetailsProps {
   id: string;
@@ -143,10 +144,15 @@ export const SaleDetails: React.FC<SaleDetailsProps> = ({ id, params }) => {
     isChannelsModalOpen,
     setCurrentChannels,
     toggleAllChannels
-  } = useChannels(saleChannelsChoices, params?.action, {
-    closeModal,
-    openModal
-  });
+  } = useChannels(
+    saleChannelsChoices,
+    params?.action,
+    {
+      closeModal,
+      openModal
+    },
+    { formId: SALE_UPDATE_FORM_ID }
+  );
 
   const [selectedChannel] = useLocalStorage("salesListChannel", "");
 

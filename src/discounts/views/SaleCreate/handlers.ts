@@ -8,7 +8,11 @@ import {
   SaleCreate,
   SaleCreateVariables
 } from "@saleor/discounts/types/SaleCreate";
-import { getMutationErrors, joinDateTime } from "@saleor/misc";
+import {
+  extractMutationErrors,
+  getMutationErrors,
+  joinDateTime
+} from "@saleor/misc";
 import { decimal } from "@saleor/misc";
 import { DiscountValueTypeEnum, SaleType } from "@saleor/types/globalTypes";
 import { MutationFetchResult } from "react-apollo";
@@ -42,16 +46,23 @@ export function createHandler(
 
     const errors = getMutationErrors(response);
 
-    if (!errors.length) {
+    if (errors.length > 0) {
+      return { errors };
+    }
+
+    const updateChannelsErrors = await extractMutationErrors(
       updateChannels({
         variables: getSaleChannelsVariables(
           response.data.saleCreate.sale.id,
           formData
         )
-      });
-      return response.data.saleCreate.sale.id;
+      })
+    );
+
+    if (updateChannelsErrors.length > 0) {
+      return { errors: updateChannelsErrors };
     }
 
-    return errors;
+    return { id: response.data.saleCreate.sale.id };
   };
 }

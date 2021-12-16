@@ -19,7 +19,7 @@ export interface ChangeEvent<TData = any> {
 }
 export type SubmitPromise<TData = any> = Promise<TData>;
 
-export type FormChange = (event: ChangeEvent, cb?: () => void) => void;
+export type FormChange = (event: ChangeEvent) => void;
 
 export type FormErrors<T> = {
   [field in keyof T]?: string | React.ReactNode;
@@ -146,7 +146,7 @@ function useForm<T extends FormData, TErrors>(
     handleSetChanged(true);
   };
 
-  function change(event: ChangeEvent, cb?: () => any) {
+  function change(event: ChangeEvent) {
     const { name, value } = event.target;
 
     if (!(name in data)) {

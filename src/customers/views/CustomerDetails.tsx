@@ -14,7 +14,7 @@ import {
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { extractMutationErrors, maybe } from "../../misc";
+import { extractMutationErrors } from "../../misc";
 import { orderListUrl, orderUrl } from "../../orders/urls";
 import CustomerDetailsPage, {
   CustomerDetailsPageFormData

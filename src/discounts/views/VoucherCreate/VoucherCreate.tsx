@@ -32,6 +32,7 @@ import {
   voucherUrl
 } from "../../urls";
 import { createHandler } from "./handlers";
+import { VOUCHER_CREATE_FORM_ID } from "./types";
 
 interface VoucherCreateProps {
   params: VoucherCreateUrlQueryParams;
@@ -65,7 +66,12 @@ export const VoucherCreateView: React.FC<VoucherCreateProps> = ({ params }) => {
     isChannelsModalOpen,
     setCurrentChannels,
     toggleAllChannels
-  } = useChannels(allChannels, params?.action, { closeModal, openModal });
+  } = useChannels(
+    allChannels,
+    params?.action,
+    { closeModal, openModal },
+    { formId: VOUCHER_CREATE_FORM_ID }
+  );
 
   const [updateChannels, updateChannelsOpts] = useVoucherChannelListingUpdate(
     {}

@@ -11,7 +11,7 @@ import {
   VoucherUpdate,
   VoucherUpdateVariables
 } from "@saleor/discounts/types/VoucherUpdate";
-import { getMutationErrors, joinDateTime } from "@saleor/misc";
+import { joinDateTime } from "@saleor/misc";
 import {
   DiscountValueTypeEnum,
   VoucherTypeEnum
