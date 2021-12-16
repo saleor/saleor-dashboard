@@ -15,7 +15,6 @@ import { ShippingZoneFragment } from "@saleor/fragments/types/ShippingZoneFragme
 import { Button, DeleteIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
 import { maybe, renderCollection } from "@saleor/misc";
 import { ListActions, ListProps } from "@saleor/types";
-import { getFooterColSpanWithBulkActions } from "@saleor/utils/tables";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
