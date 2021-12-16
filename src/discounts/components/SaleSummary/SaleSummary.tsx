@@ -15,6 +15,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 import { maybe } from "../../../misc";
 import { SaleType } from "../../../types/globalTypes";
 import { SaleDetails_sale } from "../../types/SaleDetails";
+import useStyles from "./styles";
 
 export interface SaleSummaryProps extends ChannelProps {
   sale: SaleDetails_sale;
@@ -24,6 +25,7 @@ const SaleSummary: React.FC<SaleSummaryProps> = ({
   selectedChannelId,
   sale
 }) => {
+  const classes = useStyles();
   const intl = useIntl();
 
   const channel = sale?.channelListings?.find(
@@ -36,7 +38,7 @@ const SaleSummary: React.FC<SaleSummaryProps> = ({
         <Typography variant="caption">
           <FormattedMessage defaultMessage="Name" description="sale name" />
         </Typography>
-        <Typography>
+        <Typography className={classes.ellipsis}>
           {maybe<React.ReactNode>(() => sale.name, <Skeleton />)}
         </Typography>
         <FormSpacer />

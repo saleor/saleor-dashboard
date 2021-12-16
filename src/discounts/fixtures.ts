@@ -278,7 +278,8 @@ export const sale: SaleDetails_sale = {
   },
   endDate: null,
   id: "U2FsZTo1",
-  name: "Happy minute day!",
+  name:
+    "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
   products: {
     __typename: "ProductCountableConnection",
     edges: [

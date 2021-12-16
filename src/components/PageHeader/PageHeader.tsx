@@ -31,7 +31,10 @@ const useStyles = makeStyles(
         padding: 0
       },
       alignSelf: "flex-start",
-      flex: 1
+      flex: 1,
+      whiteSpace: "nowrap",
+      overflow: "hidden",
+      textOverflow: "ellipsis"
     }
   }),
   { name: "PageHeader" }
