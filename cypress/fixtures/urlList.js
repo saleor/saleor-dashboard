@@ -28,6 +28,7 @@ export const urlList = {
   translations: "translations/",
   variants: "variant/",
   vouchers: "discounts/vouchers/",
+  variant: "variant/",
   warehouses: "warehouses/",
   weightRete: "weight/"
 };
@@ -77,6 +78,9 @@ export const warehouseDetailsUrl = warehouseId =>
   `${urlList.warehouses}${warehouseId}`;
 
 export const saleDetailsUrl = saleId => `${urlList.sales}${saleId}`;
+
+export const variantDetailsUrl = (productId, variantId) =>
+  `${urlList.products}${productId}/${urlList.variants}${variantId}`;
 
 export const voucherDetailsUrl = voucherId => `${urlList.vouchers}${voucherId}`;
 

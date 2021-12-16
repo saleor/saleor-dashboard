@@ -169,6 +169,7 @@ const AttributeValues: React.FC<AttributeValuesProps> = ({
                 {isSwatch && (
                   <TableCell className={classes.columnSwatch}>
                     <div
+                      data-test-id="swatch-image"
                       className={classes.swatch}
                       style={
                         value?.file

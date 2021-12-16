@@ -15,7 +15,7 @@ import {
   CategoryUrlQueryParams
 } from "./urls";
 import { CategoryCreateView } from "./views/CategoryCreate";
-import CategoryDetailsView, { getActiveTab } from "./views/CategoryDetails";
+import CategoryDetailsView from "./views/CategoryDetails";
 import CategoryListComponent from "./views/CategoryList";
 
 interface CategoryDetailsRouteParams {
@@ -25,10 +25,7 @@ const CategoryDetails: React.FC<RouteComponentProps<
   CategoryDetailsRouteParams
 >> = ({ location, match }) => {
   const qs = parseQs(location.search.substr(1));
-  const params: CategoryUrlQueryParams = {
-    ...qs,
-    activeTab: getActiveTab(qs.activeTab)
-  };
+  const params: CategoryUrlQueryParams = qs;
 
   return (
     <CategoryDetailsView

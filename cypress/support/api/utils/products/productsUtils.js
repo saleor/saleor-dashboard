@@ -4,15 +4,17 @@ import * as categoryRequest from "../../requests/Category";
 import { createCollection } from "../../requests/Collections";
 import * as productRequest from "../../requests/Product";
 import {
+  createDigitalContent,
   createTypeProduct,
   deleteProductType,
   getProductTypes,
-  productAttributeAssignmentUpdate
+  productAttributeAssignmentUpdate,
+  setProductTypeAsDigital
 } from "../../requests/ProductType";
 import { deleteAttributesStartsWith } from "../attributes/attributeUtils";
 import { deleteCollectionsStartsWith } from "../catalog/collectionsUtils";
 import { getDefaultChannel } from "../channelsUtils";
-import { createShipping } from "../shippingUtils";
+import { createShipping, deleteShippingStartsWith } from "../shippingUtils";
 
 export function createProductInChannel({
   name,
@@ -30,6 +32,7 @@ export function createProductInChannel({
   description = null,
   trackInventory = true,
   weight = 1,
+  preorder,
   sku = name
 }) {
   let product;
@@ -57,7 +60,8 @@ export function createProductInChannel({
         channelId,
         price,
         trackInventory,
-        weight
+        weight,
+        preorder
       });
     })
     .then(variantsResp => {
@@ -116,6 +120,8 @@ export function deleteProductsAndCreateNewOneWithNewDataAndDefaultChannel({
   name,
   description = name,
   warehouseId,
+  preorder,
+  attributeValues = ["value"],
   sku = name,
   productPrice = 10
 }) {
@@ -132,7 +138,7 @@ export function deleteProductsAndCreateNewOneWithNewDataAndDefaultChannel({
     })
     .then(collectionResp => {
       collection = collectionResp;
-      createTypeAttributeAndCategoryForProduct({ name });
+      createTypeAttributeAndCategoryForProduct({ name, attributeValues });
     })
     .then(({ attribute: attributeResp, category, productType }) => {
       attribute = attributeResp;
@@ -145,8 +151,9 @@ export function deleteProductsAndCreateNewOneWithNewDataAndDefaultChannel({
         collectionId: collection.id,
         description,
         warehouseId,
-        sku,
-        price: productPrice
+        price: productPrice,
+        preorder,
+        sku
       });
     })
     .then(({ product, variantsList }) => ({ product, variantsList }));
@@ -154,9 +161,11 @@ export function deleteProductsAndCreateNewOneWithNewDataAndDefaultChannel({
 
 export function createProductWithShipping({
   name,
+  attributeValues = ["value"],
   sku = name,
   productPrice = 10,
-  shippingPrice = 10
+  shippingPrice = 10,
+  preorder
 }) {
   let address;
   let warehouse;
@@ -164,6 +173,7 @@ export function createProductWithShipping({
   let defaultChannel;
   let shippingZone;
 
+  deleteShippingStartsWith(name);
   return cy
     .fixture("addresses")
     .then(addresses => {
@@ -191,8 +201,10 @@ export function createProductWithShipping({
         deleteProductsAndCreateNewOneWithNewDataAndDefaultChannel({
           name,
           warehouseId: warehouse.id,
-          sku,
-          productPrice
+          productPrice,
+          preorder,
+          attributeValues,
+          sku
         });
       }
     )
@@ -240,4 +252,15 @@ export function createProductInChannelWithoutVariants({
       });
     })
     .then(() => product);
+}
+
+export function addDigitalContentAndUpdateProductType(
+  variantId,
+  productTypeId,
+  channelId,
+  price = 1
+) {
+  createDigitalContent(variantId);
+  setProductTypeAsDigital(productTypeId);
+  productRequest.updateVariantPrice({ variantId, channelId, price });
 }

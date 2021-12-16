@@ -307,7 +307,8 @@ export const handleDeleteMultipleAttributeValues = async (
 
       if (fileValueUnused) {
         return deleteAttributeValue({
-          id: existingAttribute.values[0].id
+          id: existingAttribute.values[0].id,
+          firstValues: 20
         });
       }
     })

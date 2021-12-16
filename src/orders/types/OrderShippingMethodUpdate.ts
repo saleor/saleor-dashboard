@@ -283,7 +283,7 @@ export interface OrderShippingMethodUpdate_orderUpdateShipping_order_fulfillment
 export interface OrderShippingMethodUpdate_orderUpdateShipping_order_fulfillments_lines_orderLine_variant {
   __typename: "ProductVariant";
   id: string;
-  quantityAvailable: number;
+  quantityAvailable: number | null;
   preorder: OrderShippingMethodUpdate_orderUpdateShipping_order_fulfillments_lines_orderLine_variant_preorder | null;
 }
 
@@ -385,7 +385,7 @@ export interface OrderShippingMethodUpdate_orderUpdateShipping_order_lines_varia
 export interface OrderShippingMethodUpdate_orderUpdateShipping_order_lines_variant {
   __typename: "ProductVariant";
   id: string;
-  quantityAvailable: number;
+  quantityAvailable: number | null;
   preorder: OrderShippingMethodUpdate_orderUpdateShipping_order_lines_variant_preorder | null;
 }
 

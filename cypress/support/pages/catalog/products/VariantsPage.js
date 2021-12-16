@@ -59,28 +59,31 @@ export function createVariant({
 }) {
   cy.get(PRODUCT_DETAILS.addVariantsButton).click();
   fillUpVariantDetails({ attributeName, sku, warehouseName, quantity });
-  cy.get(BUTTON_SELECTORS.back)
+  cy.get(BUTTON_SELECTORS.back);
+  cy.get(VARIANTS_SELECTORS.saveButton)
     .click()
-    .addAliasToGraphRequest("ProductChannelListingUpdate");
-  selectChannelVariantInDetailsPage(channelName, attributeName);
-  cy.get(BUTTON_SELECTORS.confirm)
-    .click()
-    .waitForRequestAndCheckIfNoErrors("@ProductChannelListingUpdate");
-  cy.contains(PRODUCT_DETAILS.variantRow, attributeName)
-    .click()
-    .get(PRICE_LIST.priceInput)
-    .type(price)
-    .get(PRICE_LIST.costPriceInput)
-    .type(costPrice)
-    .addAliasToGraphRequest("ProductVariantChannelListingUpdate")
-    .get(VARIANTS_SELECTORS.saveButton)
-    .click()
-    .waitForRequestAndCheckIfNoErrors("@ProductVariantChannelListingUpdate")
     .get(BUTTON_SELECTORS.back)
-    .click()
-    .waitForProgressBarToNotBeVisible()
-    .get(AVAILABLE_CHANNELS_FORM.menageChannelsButton)
-    .should("be.visible");
+    .click();
+  selectChannelForVariantAndFillUpPrices({
+    channelName,
+    attributeName,
+    price,
+    costPrice
+  });
+}
+
+export function fillUpGeneralVariantInputs({
+  attributeName,
+  warehouseName,
+  sku,
+  quantity
+}) {
+  fillUpVariantAttributeAndSku({ attributeName, sku });
+  cy.get(VARIANTS_SELECTORS.addWarehouseButton).click();
+  cy.contains(VARIANTS_SELECTORS.warehouseOption, warehouseName).click({
+    force: true
+  });
+  cy.get(VARIANTS_SELECTORS.stockInput).type(quantity);
 }
 
 export function fillUpVariantDetails({
@@ -104,6 +107,44 @@ export function fillUpVariantDetails({
       .type(quantity);
   }
   cy.get(VARIANTS_SELECTORS.saveButton).click();
+}
+
+export function fillUpVariantAttributeAndSku({ attributeName, sku }) {
+  cy.get(VARIANTS_SELECTORS.attributeSelector)
+    .click()
+    .get(VARIANTS_SELECTORS.attributeOption)
+    .contains(attributeName)
+    .click()
+    .get(VARIANTS_SELECTORS.skuInputInAddVariant)
+    .type(sku);
+}
+
+export function selectChannelForVariantAndFillUpPrices({
+  channelName,
+  attributeName,
+  price,
+  costPrice = price
+}) {
+  cy.addAliasToGraphRequest("ProductChannelListingUpdate");
+  selectChannelVariantInDetailsPage(channelName, attributeName);
+  cy.get(BUTTON_SELECTORS.confirm)
+    .click()
+    .waitForRequestAndCheckIfNoErrors("@ProductChannelListingUpdate");
+  cy.contains(PRODUCT_DETAILS.variantRow, attributeName)
+    .click()
+    .get(PRICE_LIST.priceInput)
+    .type(price)
+    .get(PRICE_LIST.costPriceInput)
+    .type(costPrice)
+    .addAliasToGraphRequest("ProductVariantChannelListingUpdate")
+    .get(VARIANTS_SELECTORS.saveButton)
+    .click()
+    .waitForRequestAndCheckIfNoErrors("@ProductVariantChannelListingUpdate")
+    .get(BUTTON_SELECTORS.back)
+    .click()
+    .waitForProgressBarToNotBeVisible()
+    .get(AVAILABLE_CHANNELS_FORM.menageChannelsButton)
+    .should("be.visible");
 }
 
 export function selectOptionsAttribute(attributeName) {
@@ -142,4 +183,28 @@ export function selectAttributeWithType({ attributeType, attributeName }) {
     default:
       selectOptionsAttribute(attributeName);
   }
+}
+
+export function enablePreorderWithThreshold(threshold) {
+  cy.get(VARIANTS_SELECTORS.preorderCheckbox)
+    .click()
+    .get(VARIANTS_SELECTORS.globalThresholdInput)
+    .type(threshold);
+}
+
+export function setUpPreorderEndDate(endDate, endTime) {
+  cy.get(VARIANTS_SELECTORS.setUpEndDateButton)
+    .click()
+    .get(VARIANTS_SELECTORS.preorderEndDateInput)
+    .type(endDate)
+    .get(VARIANTS_SELECTORS.preorderEndTimeInput)
+    .type(endTime);
+}
+
+export function saveVariant(waitForAlias = "VariantCreate") {
+  return cy
+    .addAliasToGraphRequest(waitForAlias)
+    .get(BUTTON_SELECTORS.confirm)
+    .click()
+    .waitForRequestAndCheckIfNoErrors(`@${waitForAlias}`);
 }

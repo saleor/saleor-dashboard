@@ -12,7 +12,8 @@ export function createTypeProduct({
 }) {
   const kindLines = returnValueDependsOnShopVersion("3.1", `kind: ${kind}`);
   const productAttributesLine = getValueWithDefault(
-    productAttributes && attributeId`productAttributes: "${attributeId}"`
+    productAttributes && attributeId,
+    `productAttributes: "${attributeId}"`
   );
   const variantAttributesLine = getValueWithDefault(
     hasVariants && attributeId,
@@ -22,6 +23,7 @@ export function createTypeProduct({
     productTypeCreate(input: {
       name: "${name}"
       slug: "${slug}"
+      isDigital: ${!shippable}
       ${productAttributesLine}
       hasVariants: ${hasVariants}
       ${variantAttributesLine}
@@ -108,4 +110,37 @@ export function getProductType(productTypeId) {
     }
   }`;
   return cy.sendRequestWithQuery(query).its("body.data.productType");
+}
+
+export function createDigitalContent(variantId) {
+  const mutation = `mutation{
+    digitalContentCreate(input:{
+      useDefaultSettings:true,
+      automaticFulfillment: true,
+      contentFile:""
+    }, variantId:"${variantId}"){
+      content{
+        id
+      }
+      errors{
+        field
+        message
+      }
+    }
+  }`;
+  return cy.sendRequestWithQuery(mutation);
+}
+
+export function setProductTypeAsDigital(productTypeId, isDigital = true) {
+  const mutation = `mutation updateProductType{
+    productTypeUpdate(id:"${productTypeId}", input:{
+     isDigital:${isDigital}
+    }){
+     errors{
+       field
+       message
+     } 
+    }
+   }`;
+  return cy.sendRequestWithQuery(mutation);
 }
