@@ -31,7 +31,7 @@ const OrderFulfill: React.FC<OrderFulfillProps> = ({ orderId }) => {
   const { data: warehouseData, loading: warehousesLoading } = useWarehouseList({
     displayLoader: true,
     variables: {
-      first: 20
+      first: 50
     }
   });
 
@@ -47,7 +47,9 @@ const OrderFulfill: React.FC<OrderFulfillProps> = ({ orderId }) => {
     OrderFulfillStockInput[]
   >(
     data?.order?.lines
-      .filter(line => line.quantity - line.quantityFulfilled > 0)
+      .filter(
+        line => line.quantity - line.quantityFulfilled > 0 && !!line.variant
+      )
       .map(line => ({
         data: null,
         id: line.id,

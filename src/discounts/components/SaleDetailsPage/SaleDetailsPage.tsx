@@ -33,6 +33,7 @@ import DiscountProducts from "../DiscountProducts";
 import DiscountVariants from "../DiscountVariants";
 import SaleInfo from "../SaleInfo";
 import SaleSummary from "../SaleSummary";
+import { useStyles } from "../SaleSummary/styles";
 import SaleType from "../SaleType";
 import SaleValue from "../SaleValue";
 
@@ -56,16 +57,6 @@ export enum SaleDetailsPageTab {
   collections = "collections",
   products = "products",
   variants = "variants"
-}
-
-export function saleDetailsPageTab(tab: string): SaleDetailsPageTab {
-  return tab === SaleDetailsPageTab.products
-    ? SaleDetailsPageTab.products
-    : tab === SaleDetailsPageTab.collections
-    ? SaleDetailsPageTab.collections
-    : tab === SaleDetailsPageTab.categories
-    ? SaleDetailsPageTab.categories
-    : SaleDetailsPageTab.variants;
 }
 
 export interface SaleDetailsPageProps
@@ -150,6 +141,7 @@ const SaleDetailsPage: React.FC<SaleDetailsPageProps> = ({
   toggleAll
 }) => {
   const intl = useIntl();
+  const classes = useStyles();
   const {
     makeChangeHandler: makeMetadataChangeHandler
   } = useMetadataChangeTrigger();
@@ -185,7 +177,7 @@ const SaleDetailsPage: React.FC<SaleDetailsPageProps> = ({
             <Backlink onClick={onBack}>
               {intl.formatMessage(sectionNames.sales)}
             </Backlink>
-            <PageHeader title={maybe(() => sale.name)} />
+            <PageHeader className={classes.wrapAnywhere} title={sale?.name} />
             <Grid>
               <div>
                 <SaleInfo

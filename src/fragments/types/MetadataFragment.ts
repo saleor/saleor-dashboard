@@ -20,7 +20,7 @@ export interface MetadataFragment_privateMetadata {
 }
 
 export interface MetadataFragment {
-  __typename: "App" | "Warehouse" | "ShippingZone" | "ShippingMethodType" | "Product" | "ProductType" | "Attribute" | "Category" | "ProductVariant" | "DigitalContent" | "Collection" | "Page" | "PageType" | "Sale" | "Voucher" | "MenuItem" | "Menu" | "ShippingMethod" | "User" | "Checkout" | "Order" | "Fulfillment" | "Invoice";
+  __typename: "App" | "Attribute" | "Category" | "Checkout" | "Collection" | "DigitalContent" | "Fulfillment" | "Invoice" | "Menu" | "MenuItem" | "Order" | "Page" | "PageType" | "Product" | "ProductType" | "ProductVariant" | "Sale" | "ShippingMethod" | "ShippingMethodType" | "ShippingZone" | "User" | "Voucher" | "Warehouse";
   metadata: (MetadataFragment_metadata | null)[];
   privateMetadata: (MetadataFragment_privateMetadata | null)[];
 }

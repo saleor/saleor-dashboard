@@ -34,8 +34,7 @@ export type ShippingZoneUrlQueryParams = Dialog<ShippingZoneUrlDialog> &
   SingleAction &
   Partial<{
     type: ShippingMethodTypeEnum;
-  }> &
-  Pagination;
+  }>;
 export const shippingZoneUrl = (
   id: string,
   params?: ShippingZoneUrlQueryParams
@@ -50,8 +49,7 @@ export type ShippingRateUrlDialog =
 
 export type ShippingRateUrlQueryParams = Dialog<ShippingRateUrlDialog> &
   SingleAction &
-  BulkAction &
-  Pagination;
+  BulkAction;
 export type ShippingRateCreateUrlDialog = ZipCodeRangeActions | ChannelsAction;
 export type ShippingRateCreateUrlQueryParams = Dialog<
   ShippingRateCreateUrlDialog

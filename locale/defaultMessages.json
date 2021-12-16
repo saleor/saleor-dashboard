@@ -2677,13 +2677,13 @@
     "context": "note about customer",
     "string": "Note"
   },
-  "src_dot_customers_dot_components_dot_CustomerInfo_dot_252313757": {
-    "context": "customer informations, header",
-    "string": "Personal Informations"
-  },
-  "src_dot_customers_dot_components_dot_CustomerInfo_dot_778526801": {
+  "src_dot_customers_dot_components_dot_CustomerInfo_dot_2312694610": {
     "context": "customer contact section, header",
-    "string": "Contact Informations"
+    "string": "Contact Information"
+  },
+  "src_dot_customers_dot_components_dot_CustomerInfo_dot_4121042904": {
+    "context": "account information, header",
+    "string": "Account Information"
   },
   "src_dot_customers_dot_components_dot_CustomerListPage_dot_1643417013": {
     "string": "Search Customer"
@@ -3596,7 +3596,11 @@
   },
   "src_dot_orders_dot_components_dot_OrderCustomerAddressesEditDialog_dot_billingSameAsShipping": {
     "context": "checkbox label",
-    "string": "Billing address same as shipping address"
+    "string": "Set the same for billing address"
+  },
+  "src_dot_orders_dot_components_dot_OrderCustomerAddressesEditDialog_dot_billingTitle": {
+    "context": "search modal billing title",
+    "string": "Billing address"
   },
   "src_dot_orders_dot_components_dot_OrderCustomerAddressesEditDialog_dot_customerAddress": {
     "context": "address type",
@@ -3614,13 +3618,24 @@
     "context": "address type",
     "string": "Add new address"
   },
+  "src_dot_orders_dot_components_dot_OrderCustomerAddressesEditDialog_dot_noResultsFound": {
+    "string": "No results found"
+  },
+  "src_dot_orders_dot_components_dot_OrderCustomerAddressesEditDialog_dot_searchInfo": {
+    "context": "modal information under title",
+    "string": "Select an address you want to use from the list below"
+  },
   "src_dot_orders_dot_components_dot_OrderCustomerAddressesEditDialog_dot_shippingAddressDescription": {
     "context": "dialog content",
     "string": "This customer doesn’t have any shipping addresses. Provide address for order:"
   },
+  "src_dot_orders_dot_components_dot_OrderCustomerAddressesEditDialog_dot_shippingTitle": {
+    "context": "search modal shipping title",
+    "string": "Shipping address"
+  },
   "src_dot_orders_dot_components_dot_OrderCustomerAddressesEditDialog_dot_title": {
     "context": "dialog header",
-    "string": "Shipping address for order"
+    "string": "Change address for order"
   },
   "src_dot_orders_dot_components_dot_OrderCustomerChangeDialog_dot_changeAddress": {
     "context": "option label",
@@ -6199,6 +6214,9 @@
   "src_dot_selectAll": {
     "context": "select all options, button",
     "string": "Select All"
+  },
+  "src_dot_selected": {
+    "string": "Selected"
   },
   "src_dot_send": {
     "context": "button",

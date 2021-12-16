@@ -1,6 +1,6 @@
 import { getValueWithDefault } from "../utils/Utils";
 
-export function getProductDetails(productId, channelId, auth = "token") {
+export function getProductDetails(productId, channelSlug, auth = "token") {
   const privateMetadataLine = getValueWithDefault(
     auth === "auth",
     `privateMetadata{key value}`
@@ -36,6 +36,7 @@ export function getProductDetails(productId, channelId, auth = "token") {
     productType{
       id
       name
+      isDigital
     }
   }
   
@@ -62,7 +63,7 @@ export function getProductDetails(productId, channelId, auth = "token") {
   }
   
   query ProductDetails{
-    product(id: "${productId}", channel: "${channelId}") {
+    product(id: "${productId}", channel: "${channelSlug}") {
       ...BasicProductFields
       variants {
         ...ProductVariantFields

@@ -23,8 +23,8 @@ export const useStyles = makeStyles(
       margin: theme.spacing(2)
     },
     scrollable: {
-      height: 450,
-      overflow: "scroll"
+      maxHeight: 450,
+      overflowY: "scroll"
     }
   }),
   { name: "OrderFulfillStockExceededDialog" }

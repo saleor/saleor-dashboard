@@ -6,6 +6,7 @@ import { FileUpload } from "@saleor/files/types/FileUpload";
 import { AttributeErrorFragment } from "@saleor/fragments/types/AttributeErrorFragment";
 import { SelectedVariantAttributeFragment } from "@saleor/fragments/types/SelectedVariantAttributeFragment";
 import { UploadErrorFragment } from "@saleor/fragments/types/UploadErrorFragment";
+import { VariantAttributeFragment } from "@saleor/fragments/types/VariantAttributeFragment";
 import { FormsetData } from "@saleor/hooks/useFormset";
 import { PageDetails_page_attributes } from "@saleor/pages/types/PageDetails";
 import { ProductDetails_product_attributes } from "@saleor/products/types/ProductDetails";
@@ -82,6 +83,16 @@ export function getAttributeData(
     return getSimpleAttributeData(data, values);
   } else {
     return getFileOrReferenceAttributeData(data, values);
+  }
+}
+
+export function getDefaultAttributeValues(attribute: VariantAttributeFragment) {
+  switch (attribute.inputType) {
+    case AttributeInputTypeEnum.BOOLEAN:
+      return ["false"];
+
+    default:
+      return [];
   }
 }
 

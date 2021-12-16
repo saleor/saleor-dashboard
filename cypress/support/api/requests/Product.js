@@ -258,3 +258,19 @@ export function getVariant(id, channel, auth = "auth") {
   }`;
   return cy.sendRequestWithQuery(query, auth).its("body.data.productVariant");
 }
+
+export function updateVariantPrice({ variantId, channelId, price }) {
+  const mutation = `mutation {
+    productVariantChannelListingUpdate(id:"${variantId}", input:{
+      channelId:"${channelId}"
+      price:${price}
+      costPrice:${price}
+    }){
+      errors{
+        field
+        message
+      }
+    }
+  }`;
+  return cy.sendRequestWithQuery(mutation);
+}

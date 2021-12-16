@@ -14,6 +14,11 @@ export interface PaginationState {
   last?: number;
 }
 
+/**
+ * Local pagination state.
+ * @param paginateBy Number of items per page.
+ * @returns Pagination state and setter.
+ */
 export function useLocalPaginationState(
   paginateBy: number
 ): [PaginationState, (paginationState: PaginationState) => void] {
@@ -44,6 +49,39 @@ export function useLocalPaginationState(
   }, [paginateBy]);
 
   return [state, setPaginationState];
+}
+
+/**
+ * Local pagination state persisted as long as section is not changed.
+ * @param paginateBy Number of items per page.
+ * @param section Section name. When changed, pagination state is reset.
+ * @returns Pagination state and setter.
+ */
+export function useSectionLocalPaginationState(
+  paginateBy: number,
+  section: string
+): [PaginationState, (paginationState: PaginationState) => void] {
+  const [paginationSection, setPaginationSection] = useState(section);
+  const [paginationState, setPaginationState] = useLocalPaginationState(
+    paginateBy
+  );
+
+  useEffect(() => {
+    if (section !== paginationSection) {
+      setPaginationState({});
+    }
+  }, [section]);
+
+  useEffect(() => {
+    if (section !== paginationSection) {
+      setPaginationSection(section);
+    }
+  }, [paginationState]);
+
+  return [
+    section === paginationSection ? paginationState : {},
+    setPaginationState
+  ];
 }
 
 function useLocalPaginator(

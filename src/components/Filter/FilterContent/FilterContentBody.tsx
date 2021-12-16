@@ -5,6 +5,7 @@ import { FilterNumericField } from "@saleor/components/Filter/FilterContent/Filt
 import { FilterSingleSelectField } from "@saleor/components/Filter/FilterContent/FilterSingleSelectField";
 import { useCommonStyles } from "@saleor/components/Filter/FilterContent/utils";
 import { MultiAutocompleteChoiceType } from "@saleor/components/MultiAutocompleteSelectField";
+import Skeleton from "@saleor/components/Skeleton";
 import { makeStyles } from "@saleor/macaw-ui";
 import classNames from "classnames";
 import React from "react";
@@ -59,6 +60,10 @@ const FilterContentBody: React.FC<FilterContentBodyProps> = ({
 }) => {
   const classes = useStyles({});
   const commonClasses = useCommonStyles({});
+
+  if (!filter) {
+    return <Skeleton />;
+  }
 
   const isDateField = [FieldType.date, FieldType.dateTime].includes(
     filter.type
