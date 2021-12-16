@@ -1,7 +1,4 @@
-import {
-  FormId,
-  WithFormId
-} from "@saleor/components/Form/ExitFormDialogProvider";
+import { FormId } from "@saleor/components/Form/ExitFormDialogProvider";
 import useExitFormDialog, {
   UseExitFormDialogResult
 } from "@saleor/components/Form/useExitFormDialog";
@@ -51,7 +48,7 @@ export interface CommonUseFormResult<TData> {
   data: TData;
   change: FormChange;
   hasChanged: boolean;
-  submit: (dataOrEvent?: any) => SubmitPromise<boolean>;
+  submit: (dataOrEvent?: any) => SubmitPromise<any[]>;
 }
 
 export interface CommonUseFormResultWithHandlers<TData, THandlers>
@@ -149,7 +146,7 @@ function useForm<T extends FormData, TErrors>(
     handleSetChanged(true);
   };
 
-  function change(event: ChangeEvent) {
+  function change(event: ChangeEvent, cb?: () => any) {
     const { name, value } = event.target;
 
     if (!(name in data)) {

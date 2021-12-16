@@ -54,7 +54,7 @@ interface UseOrderCustomerAddressesEditFormResult
     OrderCustomerAddressesEditData,
     OrderCustomerAddressesEditHandlers
   > {
-  submit: (event: React.FormEvent<any>) => SubmitPromise<boolean>;
+  submit: (event: React.FormEvent<any>) => SubmitPromise<any[]>;
 }
 
 interface UseOrderCustomerAddressesEditFormOpts {

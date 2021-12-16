@@ -13,7 +13,7 @@ export interface ExitFormDialogData {
   shouldBlockNavigation: () => boolean;
 }
 
-export type SubmitFn = (dataOrEvent?: any) => SubmitPromise<boolean>;
+export type SubmitFn = (dataOrEvent?: any) => SubmitPromise<any[]>;
 
 export type FormId = symbol;
 
@@ -61,7 +61,7 @@ const ExitFormDialogProvider = ({ children }) => {
 
   // Set either on generic form load or on every custom form data change
   // but doesn't cause re-renders
-  function setSubmitRef<T extends () => SubmitPromise<boolean>>(
+  function setSubmitRef<T extends () => SubmitPromise<any[]>>(
     id: symbol,
     submitFn: T
   ) {
@@ -133,19 +133,13 @@ const ExitFormDialogProvider = ({ children }) => {
     return blockNav.current;
   };
 
-  const isOnlyQuerying = transition => {
-    // console.log({
-    //   transition,
-    //   wnd: window.location
-    // });
+  const isOnlyQuerying = transition =>
     // wee need to compare to current path and not window location
     // so it works with browser back button as well
-    return transition.pathname === currentPath.current;
-  };
+    transition.pathname === currentPath.current;
 
   const handleNavigationBlock = () => {
     const unblock = history.block(transition => {
-      console.log(111, formsData.current);
       // needs to be done before the shouldBlockNav condition
       // so it doesnt trigger setting default values
       if (isOnlyQuerying(transition)) {
@@ -198,7 +192,6 @@ const ExitFormDialogProvider = ({ children }) => {
       getDirtyFormsSubmitFn().map(submitFn => submitFn())
     );
 
-    console.log({ errors });
     const isError = flatten(errors).some(errors => errors);
 
     if (!isError) {
