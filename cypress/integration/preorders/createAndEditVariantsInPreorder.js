@@ -43,7 +43,7 @@ filterTests({ definedTags: ["all"], version: "3.1.0" }, () => {
             address: resp.address,
             channelSlug: resp.defaultChannel.slug,
             email: "example@example.com",
-            shippingMethodId: resp.shippingMethod.id
+            shippingMethodName: resp.shippingMethod.name
           };
           defaultChannel = resp.defaultChannel;
           product = resp.product;
@@ -119,7 +119,7 @@ filterTests({ definedTags: ["all"], version: "3.1.0" }, () => {
       const variant = variantsList[0];
       checkoutData.variantsList = [variant];
 
-      activatePreorderOnVariant(variant.id);
+      activatePreorderOnVariant({ variantId: variant.id });
       cy.visit(variantDetailsUrl(product.id, variant.id));
       setUpPreorderEndDate(endDate, endTime);
       saveVariant("VariantUpdate");
