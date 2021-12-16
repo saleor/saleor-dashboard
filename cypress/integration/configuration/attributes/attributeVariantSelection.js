@@ -55,6 +55,7 @@ filterTests({ definedTags: ["all"], version: "3.1.0" }, () => {
         const attributeValues = ["1", "2"];
         let productType;
         let attribute;
+
         createAttribute({
           name,
           inputType,
