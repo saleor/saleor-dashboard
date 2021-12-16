@@ -13,6 +13,7 @@ import {
 import { FormChange } from "@saleor/hooks/useForm";
 import { Button, DeleteIcon, ExpandIcon, IconButton } from "@saleor/macaw-ui";
 import { MetadataInput } from "@saleor/types/globalTypes";
+import classNames from "classnames";
 import React, { useEffect } from "react";
 import { useIntl } from "react-intl";
 import { FormattedMessage } from "react-intl";
@@ -71,7 +72,10 @@ const MetadataCard: React.FC<MetadataCardProps> = ({
                   description: "header"
                 })}
             <IconButton
-              className={classes.expandBtn}
+              className={classNames(classes.expandBtn, {
+                [classes.rotate]: expanded
+              })}
+              hoverOutline={false}
               variant="secondary"
               data-test="expand"
               onClick={() => setExpanded(!expanded)}

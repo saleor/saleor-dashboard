@@ -45,7 +45,10 @@ const useStyles = makeStyles(
       expandBtn: {
         position: "relative",
         left: theme.spacing(1),
-        top: -2
+        top: -2,
+        transition: theme.transitions.create("transform", {
+          duration: theme.transitions.duration.shorter
+        })
       },
       header: {
         "&&": {
@@ -61,6 +64,9 @@ const useStyles = makeStyles(
       table: {
         marginTop: theme.spacing(2),
         tableLayout: "fixed"
+      },
+      rotate: {
+        transform: "rotate(-180deg)"
       }
     };
   },
