@@ -546,6 +546,11 @@ export interface OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_o
   status: JobStatusEnum;
 }
 
+export interface OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_order_channel_defaultCountry {
+  __typename: "CountryDisplay";
+  code: string;
+}
+
 export interface OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_order_channel {
   __typename: "Channel";
   isActive: boolean;
@@ -553,6 +558,7 @@ export interface OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_o
   name: string;
   currencyCode: string;
   slug: string;
+  defaultCountry: OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_order_channel_defaultCountry;
 }
 
 export interface OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_order {
