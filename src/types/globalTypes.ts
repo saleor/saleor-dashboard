@@ -525,6 +525,7 @@ export enum InvoiceErrorCode {
   INVALID_STATUS = "INVALID_STATUS",
   NOT_FOUND = "NOT_FOUND",
   NOT_READY = "NOT_READY",
+  NO_INVOICE_PLUGIN = "NO_INVOICE_PLUGIN",
   NUMBER_NOT_SET = "NUMBER_NOT_SET",
   REQUIRED = "REQUIRED",
   URL_NOT_SET = "URL_NOT_SET",
@@ -1817,7 +1818,7 @@ export enum WebhookErrorCode {
   UNIQUE = "UNIQUE",
 }
 
-export enum WebhookEventTypeAsync {
+export enum WebhookEventTypeAsyncEnum {
   ANY_EVENTS = "ANY_EVENTS",
   CHECKOUT_CREATED = "CHECKOUT_CREATED",
   CHECKOUT_UPDATED = "CHECKOUT_UPDATED",
@@ -1903,7 +1904,7 @@ export enum WebhookEventTypeEnum {
   TRANSLATION_UPDATED = "TRANSLATION_UPDATED",
 }
 
-export enum WebhookEventTypeSync {
+export enum WebhookEventTypeSyncEnum {
   PAYMENT_AUTHORIZE = "PAYMENT_AUTHORIZE",
   PAYMENT_CAPTURE = "PAYMENT_CAPTURE",
   PAYMENT_CONFIRM = "PAYMENT_CONFIRM",
@@ -2375,6 +2376,7 @@ export interface OrderFilterInput {
   channels?: (string | null)[] | null;
   isClickAndCollect?: boolean | null;
   isPreorder?: boolean | null;
+  ids?: (string | null)[] | null;
 }
 
 export interface OrderFulfillInput {
@@ -3013,8 +3015,8 @@ export interface WebhookCreateInput {
   name?: string | null;
   targetUrl?: string | null;
   events?: (WebhookEventTypeEnum | null)[] | null;
-  asyncEvents?: WebhookEventTypeAsync[] | null;
-  syncEvents?: WebhookEventTypeSync[] | null;
+  asyncEvents?: WebhookEventTypeAsyncEnum[] | null;
+  syncEvents?: WebhookEventTypeSyncEnum[] | null;
   app?: string | null;
   isActive?: boolean | null;
   secretKey?: string | null;
@@ -3024,8 +3026,8 @@ export interface WebhookUpdateInput {
   name?: string | null;
   targetUrl?: string | null;
   events?: (WebhookEventTypeEnum | null)[] | null;
-  asyncEvents?: WebhookEventTypeAsync[] | null;
-  syncEvents?: WebhookEventTypeSync[] | null;
+  asyncEvents?: WebhookEventTypeAsyncEnum[] | null;
+  syncEvents?: WebhookEventTypeSyncEnum[] | null;
   app?: string | null;
   isActive?: boolean | null;
   secretKey?: string | null;
