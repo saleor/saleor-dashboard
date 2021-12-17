@@ -3,6 +3,8 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
+import { AddressInput } from "./../../types/globalTypes";
+
 // ====================================================
 // GraphQL query operation: SearchOrderVariant
 // ====================================================
@@ -10,6 +12,35 @@
 export interface SearchOrderVariant_search_edges_node_thumbnail {
   __typename: "Image";
   url: string;
+}
+
+export interface SearchOrderVariant_search_edges_node_variants_pricing_priceUndiscounted_gross {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface SearchOrderVariant_search_edges_node_variants_pricing_priceUndiscounted {
+  __typename: "TaxedMoney";
+  gross: SearchOrderVariant_search_edges_node_variants_pricing_priceUndiscounted_gross;
+}
+
+export interface SearchOrderVariant_search_edges_node_variants_pricing_price_gross {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface SearchOrderVariant_search_edges_node_variants_pricing_price {
+  __typename: "TaxedMoney";
+  gross: SearchOrderVariant_search_edges_node_variants_pricing_price_gross;
+}
+
+export interface SearchOrderVariant_search_edges_node_variants_pricing {
+  __typename: "VariantPricingInfo";
+  priceUndiscounted: SearchOrderVariant_search_edges_node_variants_pricing_priceUndiscounted | null;
+  price: SearchOrderVariant_search_edges_node_variants_pricing_price | null;
+  onSale: boolean | null;
 }
 
 export interface SearchOrderVariant_search_edges_node_variants_channelListings_channel {
@@ -37,6 +68,7 @@ export interface SearchOrderVariant_search_edges_node_variants {
   id: string;
   name: string;
   sku: string;
+  pricing: SearchOrderVariant_search_edges_node_variants_pricing | null;
   channelListings: SearchOrderVariant_search_edges_node_variants_channelListings[] | null;
 }
 
@@ -76,4 +108,5 @@ export interface SearchOrderVariantVariables {
   first: number;
   query: string;
   after?: string | null;
+  address?: AddressInput | null;
 }

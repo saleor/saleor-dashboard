@@ -476,6 +476,11 @@ export interface OrderMarkAsPaid_orderMarkAsPaid_order_invoices {
   status: JobStatusEnum;
 }
 
+export interface OrderMarkAsPaid_orderMarkAsPaid_order_channel_defaultCountry {
+  __typename: "CountryDisplay";
+  code: string;
+}
+
 export interface OrderMarkAsPaid_orderMarkAsPaid_order_channel {
   __typename: "Channel";
   isActive: boolean;
@@ -483,6 +488,7 @@ export interface OrderMarkAsPaid_orderMarkAsPaid_order_channel {
   name: string;
   currencyCode: string;
   slug: string;
+  defaultCountry: OrderMarkAsPaid_orderMarkAsPaid_order_channel_defaultCountry;
 }
 
 export interface OrderMarkAsPaid_orderMarkAsPaid_order {

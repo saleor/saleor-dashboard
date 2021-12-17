@@ -469,6 +469,11 @@ export interface OrderDetails_order_invoices {
   status: JobStatusEnum;
 }
 
+export interface OrderDetails_order_channel_defaultCountry {
+  __typename: "CountryDisplay";
+  code: string;
+}
+
 export interface OrderDetails_order_channel {
   __typename: "Channel";
   isActive: boolean;
@@ -476,6 +481,7 @@ export interface OrderDetails_order_channel {
   name: string;
   currencyCode: string;
   slug: string;
+  defaultCountry: OrderDetails_order_channel_defaultCountry;
 }
 
 export interface OrderDetails_order {

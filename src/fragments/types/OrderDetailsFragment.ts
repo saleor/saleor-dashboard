@@ -469,6 +469,11 @@ export interface OrderDetailsFragment_invoices {
   status: JobStatusEnum;
 }
 
+export interface OrderDetailsFragment_channel_defaultCountry {
+  __typename: "CountryDisplay";
+  code: string;
+}
+
 export interface OrderDetailsFragment_channel {
   __typename: "Channel";
   isActive: boolean;
@@ -476,6 +481,7 @@ export interface OrderDetailsFragment_channel {
   name: string;
   currencyCode: string;
   slug: string;
+  defaultCountry: OrderDetailsFragment_channel_defaultCountry;
 }
 
 export interface OrderDetailsFragment {
