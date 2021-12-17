@@ -32,6 +32,7 @@ export interface OrderCustomerAddressEditProps {
   onChangeFormAddress: (event: React.ChangeEvent<any>) => void;
   onChangeFormAddressCountry: (event: React.ChangeEvent<any>) => void;
   onEdit?: () => void;
+  hideCard?: boolean;
 }
 
 const OrderCustomerAddressEdit: React.FC<OrderCustomerAddressEditProps> = props => {
@@ -48,7 +49,8 @@ const OrderCustomerAddressEdit: React.FC<OrderCustomerAddressEditProps> = props 
     formErrors,
     onChangeFormAddress,
     onChangeFormAddressCountry,
-    onEdit
+    onEdit,
+    hideCard = false
   } = props;
 
   const classes = useStyles(props);
@@ -91,17 +93,20 @@ const OrderCustomerAddressEdit: React.FC<OrderCustomerAddressEditProps> = props 
         label={intl.formatMessage(addressEditMessages.customerAddress)}
         className={classes.optionLabel}
       />
-      {addressInputOption === AddressInputOptionEnum.CUSTOMER_ADDRESS && (
-        <>
-          <CardSpacer />
-          <CustomerAddressChoiceCard
-            address={customerAddresses.find(getById(selectedCustomerAddressId))}
-            editable
-            onEditClick={onEdit}
-          />
-          <FormSpacer />
-        </>
-      )}
+      {addressInputOption === AddressInputOptionEnum.CUSTOMER_ADDRESS &&
+        hideCard && (
+          <>
+            <CardSpacer />
+            <CustomerAddressChoiceCard
+              address={customerAddresses.find(
+                getById(selectedCustomerAddressId)
+              )}
+              editable
+              onEditClick={onEdit}
+            />
+            <FormSpacer />
+          </>
+        )}
       <FormControlLabel
         value={AddressInputOptionEnum.NEW_ADDRESS}
         control={

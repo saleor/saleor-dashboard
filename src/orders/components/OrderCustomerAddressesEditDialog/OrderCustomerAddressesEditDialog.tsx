@@ -10,12 +10,14 @@ import {
 import Checkbox from "@saleor/components/Checkbox";
 import ConfirmButton from "@saleor/components/ConfirmButton";
 import FormSpacer from "@saleor/components/FormSpacer";
+import { data } from "@saleor/components/RichTextEditor/RichTextEditor.stories";
 import { ShopInfo_shop_countries } from "@saleor/components/Shop/types/ShopInfo";
 import {
   CustomerAddresses_user_addresses,
   CustomerAddresses_user_defaultBillingAddress,
   CustomerAddresses_user_defaultShippingAddress
 } from "@saleor/customers/types/CustomerAddresses";
+import { address } from "@saleor/fixtures";
 import { OrderErrorFragment } from "@saleor/fragments/types/OrderErrorFragment";
 import useAddressValidation from "@saleor/hooks/useAddressValidation";
 import { SubmitPromise } from "@saleor/hooks/useForm";
@@ -107,6 +109,13 @@ const OrderCustomerAddressesEditDialog: React.FC<OrderCustomerAddressesEditDialo
     open
   );
 
+  const continueToSearchAddressesState = (
+    data: OrderCustomerAddressesEditFormData
+  ): boolean =>
+    !hasCustomerChanged &&
+    !addressSearchState.open &&
+    data.shippingAddressInputOption === AddressInputOptionEnum.CUSTOMER_ADDRESS;
+
   const getCustomerAddress = (
     selectedCustomerAddressID: string
   ): AddressInput =>
@@ -161,6 +170,16 @@ const OrderCustomerAddressesEditDialog: React.FC<OrderCustomerAddressesEditDialo
   };
 
   const handleSubmit = (data: OrderCustomerAddressesEditFormData) => {
+    if (continueToSearchAddressesState(data)) {
+      setAddressSearchState({
+        open: true,
+        type:
+          variant === AddressEditDialogVariant.CHANGE_SHIPPING_ADDRESS
+            ? AddressTypeEnum.SHIPPING
+            : AddressTypeEnum.BILLING
+      });
+    }
+
     const adressesInput = handleAddressesSubmit(data);
 
     if (adressesInput.shippingAddress && adressesInput.billingAddress) {
@@ -341,7 +360,11 @@ const OrderCustomerAddressesEditDialog: React.FC<OrderCustomerAddressesEditDialo
                     type="submit"
                     data-test-id="submit"
                   >
-                    <FormattedMessage {...buttonMessages.save} />
+                    <FormattedMessage
+                      {...(continueToSearchAddressesState(data)
+                        ? buttonMessages.save
+                        : buttonMessages.continue)}
+                    />
                   </ConfirmButton>
                 </DialogActions>
               </>

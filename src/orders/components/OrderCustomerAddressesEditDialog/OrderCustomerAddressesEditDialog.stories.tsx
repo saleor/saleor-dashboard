@@ -4,6 +4,7 @@ import React from "react";
 
 import { countries, order as orderFixture } from "../../fixtures";
 import OrderCustomerAddressesEditDialog, {
+  AddressEditDialogVariant,
   OrderCustomerAddressesEditDialogProps
 } from "./OrderCustomerAddressesEditDialog";
 
@@ -11,6 +12,7 @@ const order = orderFixture("");
 
 const props: OrderCustomerAddressesEditDialogProps = {
   confirmButtonState: "default",
+  variant: AddressEditDialogVariant.CHANGE_CUSTOMER,
   loading: false,
   onClose: () => undefined,
   onConfirm: () => undefined,
