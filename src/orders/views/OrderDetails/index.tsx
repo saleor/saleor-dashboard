@@ -17,7 +17,11 @@ import {
 import React from "react";
 import { useIntl } from "react-intl";
 
-import { JobStatusEnum, OrderStatus } from "../../../types/globalTypes";
+import {
+  InvoiceErrorCode,
+  JobStatusEnum,
+  OrderStatus
+} from "../../../types/globalTypes";
 import OrderOperations from "../../containers/OrderOperations";
 import { TypedOrderDetailsQuery } from "../../queries";
 import {
@@ -135,6 +139,23 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
                 onDraftCancel={orderMessages.handleDraftCancel}
                 onOrderMarkAsPaid={orderMessages.handleOrderMarkAsPaid}
                 onInvoiceRequest={(data: InvoiceRequest) => {
+                  if (
+                    data.invoiceRequest.errors.some(
+                      err => err.code === InvoiceErrorCode.NO_INVOICE_PLUGIN
+                    )
+                  ) {
+                    notify({
+                      title: intl.formatMessage({
+                        defaultMessage: "Could not generate invoice",
+                        description: "snackbar title"
+                      }),
+                      text: intl.formatMessage({
+                        defaultMessage: "No invoice plugin installed",
+                        description: "error message"
+                      }),
+                      status: "error"
+                    });
+                  }
                   if (
                     data.invoiceRequest.invoice.status === JobStatusEnum.SUCCESS
                   ) {

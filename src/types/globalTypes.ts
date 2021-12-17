@@ -474,6 +474,7 @@ export enum InvoiceErrorCode {
   INVALID_STATUS = "INVALID_STATUS",
   NOT_FOUND = "NOT_FOUND",
   NOT_READY = "NOT_READY",
+  NO_INVOICE_PLUGIN = "NO_INVOICE_PLUGIN",
   NUMBER_NOT_SET = "NUMBER_NOT_SET",
   REQUIRED = "REQUIRED",
   URL_NOT_SET = "URL_NOT_SET",
@@ -2734,6 +2735,7 @@ export interface VoucherInput {
   endDate?: any | null;
   discountValueType?: DiscountValueTypeEnum | null;
   products?: (string | null)[] | null;
+  variants?: (string | null)[] | null;
   collections?: (string | null)[] | null;
   categories?: (string | null)[] | null;
   minCheckoutItemsQuantity?: number | null;
