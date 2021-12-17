@@ -15,10 +15,6 @@ const useStyles = makeStyles(theme => ({
     alignItems: "flex-end",
     justifyContent: "flex-end"
   },
-  subtitle: {
-    color: theme.palette.grey[500],
-    paddingRight: theme.spacing(1)
-  },
   strike: {
     textDecoration: "line-through",
     color: theme.palette.grey[400],
