@@ -28,7 +28,7 @@ const useStyles = makeStyles(
 const OrderPriceLabel: React.FC<OrderPriceLabelProps> = ({ pricing }) => {
   const classes = useStyles();
 
-  if (!!pricing.onSale) {
+  if (pricing.onSale) {
     const { price, priceUndiscounted } = pricing;
     return (
       <div className={classes.percentDiscountLabelContainer}>
