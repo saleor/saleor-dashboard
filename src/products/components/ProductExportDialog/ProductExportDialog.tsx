@@ -269,12 +269,22 @@ const ProductExportDialog: React.FC<ProductExportDialogProps> = ({
 
         <DialogActions>
           {step === ProductExportStep.INFO && (
-            <Button onClick={onClose} data-test="cancel">
+            <Button
+              variant="secondary"
+              color="text"
+              onClick={onClose}
+              data-test="cancel"
+            >
               <FormattedMessage {...buttonMessages.cancel} />
             </Button>
           )}
           {step === ProductExportStep.SETTINGS && (
-            <Button onClick={prev} data-test="back">
+            <Button
+              variant="secondary"
+              color="text"
+              onClick={prev}
+              data-test="back"
+            >
               <FormattedMessage {...buttonMessages.back} />
             </Button>
           )}

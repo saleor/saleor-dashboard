@@ -7,6 +7,7 @@ import {
   TextField,
   Typography
 } from "@material-ui/core";
+import BackButton from "@saleor/components/BackButton";
 import CardSpacer from "@saleor/components/CardSpacer";
 import ConfirmButton from "@saleor/components/ConfirmButton";
 import Form from "@saleor/components/Form";
@@ -106,9 +107,7 @@ const TokenCreateDialog: React.FC<TokenCreateDialogProps> = props => {
             <DialogActions>
               {step === "form" ? (
                 <>
-                  <Button className={classes.cancel} onClick={onClose}>
-                    <FormattedMessage {...buttonMessages.back} />
-                  </Button>
+                  <BackButton className={classes.cancel} onClick={onClose} />
                   <ConfirmButton
                     data-test="submit"
                     transitionState={confirmButtonState}

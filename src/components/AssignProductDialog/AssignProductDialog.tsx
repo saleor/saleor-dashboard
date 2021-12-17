@@ -13,8 +13,7 @@ import ConfirmButton from "@saleor/components/ConfirmButton";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import TableCellAvatar from "@saleor/components/TableCellAvatar";
 import useSearchQuery from "@saleor/hooks/useSearchQuery";
-import { buttonMessages } from "@saleor/intl";
-import { Button, ConfirmButtonTransitionState } from "@saleor/macaw-ui";
+import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import { maybe } from "@saleor/misc";
 import { SearchProducts_search_edges_node } from "@saleor/searches/types/SearchProducts";
 import useScrollableDialogStyle from "@saleor/styles/useScrollableDialogStyle";
@@ -23,6 +22,7 @@ import React from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { FormattedMessage, useIntl } from "react-intl";
 
+import BackButton from "../BackButton";
 import Checkbox from "../Checkbox";
 import { messages } from "./messages";
 import { useStyles } from "./styles";
@@ -163,9 +163,7 @@ const AssignProductDialog: React.FC<AssignProductDialogProps> = props => {
         </InfiniteScroll>
       </DialogContent>
       <DialogActions>
-        <Button onClick={onClose}>
-          <FormattedMessage {...buttonMessages.back} />
-        </Button>
+        <BackButton onClick={onClose} />
         <ConfirmButton
           data-test="submit"
           transitionState={confirmButtonState}

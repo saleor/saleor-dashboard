@@ -5,6 +5,7 @@ import {
   DialogTitle,
   TextField
 } from "@material-ui/core";
+import BackButton from "@saleor/components/BackButton";
 import CompanyAddressForm from "@saleor/components/CompanyAddressInput/CompanyAddressForm";
 import ConfirmButton from "@saleor/components/ConfirmButton";
 import Form from "@saleor/components/Form";
@@ -18,11 +19,7 @@ import useModalDialogErrors from "@saleor/hooks/useModalDialogErrors";
 import useModalDialogOpen from "@saleor/hooks/useModalDialogOpen";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { buttonMessages } from "@saleor/intl";
-import {
-  Button,
-  ConfirmButtonTransitionState,
-  makeStyles
-} from "@saleor/macaw-ui";
+import { ConfirmButtonTransitionState, makeStyles } from "@saleor/macaw-ui";
 import { DialogProps } from "@saleor/types";
 import createSingleAutocompleteSelectHandler from "@saleor/utils/handlers/singleAutocompleteSelectChangeHandler";
 import { mapCountriesToChoices } from "@saleor/utils/maps";
@@ -139,9 +136,7 @@ const ShippingZoneAddWarehouseDialog: React.FC<ShippingZoneAddWarehouseDialogPro
                 />
               </DialogContent>
               <DialogActions>
-                <Button onClick={onClose}>
-                  <FormattedMessage {...buttonMessages.back} />
-                </Button>
+                <BackButton onClick={onClose} />
                 <ConfirmButton
                   transitionState={confirmButtonState}
                   type="submit"

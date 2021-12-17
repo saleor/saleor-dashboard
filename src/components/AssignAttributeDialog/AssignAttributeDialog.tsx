@@ -21,18 +21,15 @@ import useElementScroll, {
 import useModalDialogErrors from "@saleor/hooks/useModalDialogErrors";
 import useModalDialogOpen from "@saleor/hooks/useModalDialogOpen";
 import useSearchQuery from "@saleor/hooks/useSearchQuery";
-import { buttonMessages } from "@saleor/intl";
-import {
-  Button,
-  ConfirmButtonTransitionState,
-  makeStyles
-} from "@saleor/macaw-ui";
+import { ConfirmButtonTransitionState, makeStyles } from "@saleor/macaw-ui";
 import { maybe, renderCollection } from "@saleor/misc";
 import { FetchMoreProps } from "@saleor/types";
 import classNames from "classnames";
 import React from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { FormattedMessage, useIntl } from "react-intl";
+
+import BackButton from "../BackButton";
 
 const useStyles = makeStyles(
   theme => ({
@@ -213,9 +210,7 @@ const AssignAttributeDialog: React.FC<AssignAttributeDialogProps> = ({
           [classes.dropShadow]: !isScrolledToBottom(anchor, position)
         })}
       >
-        <Button onClick={onClose}>
-          <FormattedMessage {...buttonMessages.back} />
-        </Button>
+        <BackButton onClick={onClose} />
         <ConfirmButton
           transitionState={confirmButtonState}
           type="submit"

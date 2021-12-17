@@ -11,14 +11,14 @@ import {
 } from "@material-ui/core";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import useSearchQuery from "@saleor/hooks/useSearchQuery";
-import { buttonMessages } from "@saleor/intl";
-import { Button, ConfirmButtonTransitionState } from "@saleor/macaw-ui";
+import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import useScrollableDialogStyle from "@saleor/styles/useScrollableDialogStyle";
 import { DialogProps, FetchMoreProps, Node } from "@saleor/types";
 import React from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { FormattedMessage } from "react-intl";
 
+import BackButton from "../BackButton";
 import Checkbox from "../Checkbox";
 import ConfirmButton from "../ConfirmButton";
 import { messages } from "./messages";
@@ -162,9 +162,7 @@ const AssignContainerDialog: React.FC<AssignContainerDialogProps> = props => {
         </InfiniteScroll>
       </DialogContent>
       <DialogActions>
-        <Button onClick={onClose}>
-          <FormattedMessage {...buttonMessages.back} />
-        </Button>
+        <BackButton onClick={onClose} />
         <ConfirmButton
           transitionState={confirmButtonState}
           type="submit"

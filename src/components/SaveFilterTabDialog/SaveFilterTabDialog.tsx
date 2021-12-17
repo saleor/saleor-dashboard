@@ -6,10 +6,11 @@ import {
   TextField
 } from "@material-ui/core";
 import { buttonMessages } from "@saleor/intl";
-import { Button, ConfirmButtonTransitionState } from "@saleor/macaw-ui";
+import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
+import BackButton from "../BackButton";
 import ConfirmButton from "../ConfirmButton";
 import Form from "../Form";
 
@@ -72,9 +73,7 @@ const SaveFilterTabDialog: React.FC<SaveFilterTabDialogProps> = ({
               />
             </DialogContent>
             <DialogActions>
-              <Button onClick={onClose}>
-                <FormattedMessage {...buttonMessages.back} />
-              </Button>
+              <BackButton onClick={onClose} />
               <ConfirmButton
                 transitionState={confirmButtonState}
                 onClick={submit}
