@@ -8,6 +8,10 @@ import SVG from "react-inlinesvg";
 
 const useStyles = makeStyles(
   theme => ({
+    footer: {
+      position: "absolute",
+      bottom: theme.spacing(4)
+    },
     logo: {
       display: "block",
       height: 40,
@@ -33,27 +37,30 @@ const useStyles = makeStyles(
         width: 328
       },
       "@media (min-width: 1440px)": {
-        width: 464
+        width: 380
       },
       margin: "auto",
       width: "100%"
     },
     root: {
       [theme.breakpoints.up("lg")]: {
-        gridTemplateColumns: "376px 1fr"
+        gridTemplateColumns: "560px 1fr"
       },
       "@media (min-width: 1440px)": {
-        gridTemplateColumns: "520px 1fr"
+        gridTemplateColumns: "780px 1fr"
       },
       display: "grid",
       gridTemplateColumns: "1fr",
+      gap: theme.spacing(3),
       height: "100vh",
       overflow: "hidden",
+      position: "relative",
       width: "100vw"
     },
     sidebar: {
       [theme.breakpoints.up("lg")]: {
-        display: "block"
+        alignItems: "center",
+        display: "flex"
       },
       display: "none"
     },
@@ -76,9 +83,6 @@ const Layout: React.FC = props => {
 
   return (
     <div className={classes.root}>
-      <div className={classes.sidebar}>
-        <SVG className={classes.sidebarArt} src={backgroundArt} />
-      </div>
       <div className={classes.mainPanel}>
         <div className={classes.mainPanelContent}>
           <SVG
@@ -86,7 +90,13 @@ const Layout: React.FC = props => {
             src={themeType === "dark" ? saleorDarkLogo : saleorLightLogo}
           />
           {children}
+          <footer className={classes.footer}>
+            ©2021 Saleor Commerce. All rights reserved
+          </footer>
         </div>
+      </div>
+      <div className={classes.sidebar}>
+        <SVG className={classes.sidebarArt} src={backgroundArt} />
       </div>
     </div>
   );
