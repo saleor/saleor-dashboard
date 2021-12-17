@@ -22,7 +22,7 @@ import {
 } from "../../support/pages/catalog/products/VariantsPage";
 
 filterTests({ definedTags: ["all"], version: "3.1.0" }, () => {
-  describe("Creating variants", () => {
+  describe("Creating variants in preorder", () => {
     const startsWith = "CreatePreOrder";
     const attributeValues = ["value1", "value2", "value3"];
     const threshold = 100;

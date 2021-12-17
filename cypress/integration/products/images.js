@@ -7,7 +7,7 @@ import { SHARED_ELEMENTS } from "../../elements/shared/sharedElements";
 import { demoProductsNames } from "../../fixtures/products";
 import { productDetailsUrl, urlList } from "../../fixtures/urlList";
 import { getFirstProducts } from "../../support/api/requests/Product";
-import { loginDeleteProductsAndCreateNewOneWithNewDataAndDefaultChannel } from "../../support/api/utils/products/productsUtils";
+import { deleteProductsAndCreateNewOneWithNewDataAndDefaultChannel } from "../../support/api/utils/products/productsUtils";
 import filterTests from "../../support/filterTests";
 
 filterTests({ definedTags: ["all"] }, () => {
@@ -26,7 +26,8 @@ filterTests({ definedTags: ["all"] }, () => {
             element.data.hasOwnProperty("products")
           ).data;
           const products = data.products.edges;
-          cy.get(PRODUCTS_LIST.productImage)
+          cy.get(PRODUCTS_LIST.productsList)
+            .find(PRODUCTS_LIST.productImage)
             .each($image => {
               cy.wrap($image)
                 .invoke("attr", "src")
@@ -68,9 +69,10 @@ filterTests({ definedTags: ["all"] }, () => {
       const name = "CyImages";
 
       cy.clearSessionData().loginUserViaRequest();
-      loginDeleteProductsAndCreateNewOneWithNewDataAndDefaultChannel({ name })
-        .then(product => {
+      deleteProductsAndCreateNewOneWithNewDataAndDefaultChannel({ name })
+        .then(({ product }) => {
           cy.visit(productDetailsUrl(product.id))
+            .waitForProgressBarToNotBeVisible()
             .get(PRODUCT_DETAILS.uploadImageButton)
             .click()
             .get(PRODUCT_DETAILS.uploadSavedImagesButton)
