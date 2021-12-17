@@ -1232,7 +1232,7 @@
   },
   "src_dot_auth_dot_components_dot_LoginPage_dot_serverError": {
     "context": "error message",
-    "string": "Sorry, connecting to server failed. Please try again."
+    "string": "Saleor is unavailable, please check your network connection and try again."
   },
   "src_dot_auth_dot_components_dot_NewPasswordPage_dot_1254879564": {
     "string": "New Password"

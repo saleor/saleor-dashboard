@@ -12,7 +12,8 @@ export const errorMessages = defineMessages({
     description: "error message"
   },
   serverError: {
-    defaultMessage: "Sorry, connecting to server failed. Please try again.",
+    defaultMessage:
+      "Saleor is unavailable, please check your network connection and try again.",
     description: "error message"
   }
 });
