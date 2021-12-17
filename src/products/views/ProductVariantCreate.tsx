@@ -119,6 +119,8 @@ export const ProductVariant: React.FC<ProductVariantCreateProps> = ({
           })),
           trackInventory: true,
           weight: weight(formData.weight),
+          quantityLimitPerCustomer:
+            Number(formData.quantityLimitPerCustomer) || null,
           preorder: formData.isPreorder
             ? {
                 globalThreshold: formData.globalThreshold
