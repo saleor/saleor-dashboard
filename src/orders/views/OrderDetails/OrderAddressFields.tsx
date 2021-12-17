@@ -17,7 +17,7 @@ import React from "react";
 
 interface OrderAddressFieldsProps {
   action: string;
-  id: string;
+  id?: string;
   isDraft: boolean;
   customerAddressesLoading: boolean;
   customer: CustomerAddresses_user;
@@ -36,7 +36,6 @@ interface OrderAddressFieldsProps {
 
 const OrderAddressFields = ({
   action,
-  id,
   isDraft,
   customerAddressesLoading,
   customer,
