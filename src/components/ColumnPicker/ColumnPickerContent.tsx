@@ -168,13 +168,14 @@ const ColumnPickerContent: React.FC<ColumnPickerContentProps> = props => {
         })}
       >
         <div className={classes.actionBar}>
-          <Button color="text" onClick={onReset}>
+          <Button variant="secondary" color="text" onClick={onReset}>
             <FormattedMessage defaultMessage="Reset" description="button" />
           </Button>
           <div>
             <Button
               className={classes.cancelButton}
               color="text"
+              variant="secondary"
               onClick={onCancel}
             >
               <FormattedMessage {...buttonMessages.cancel} />
