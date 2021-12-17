@@ -4,9 +4,7 @@ import { DEFAULT_INITIAL_SEARCH_DATA } from "@saleor/config";
 import { useCustomerAddressesQuery } from "@saleor/customers/queries";
 import useNavigator from "@saleor/hooks/useNavigator";
 import { CustomerEditData } from "@saleor/orders/components/OrderCustomer";
-import OrderCustomerAddressesEditDialog, {
-  OrderCustomerAddressesEditDialogOutput
-} from "@saleor/orders/components/OrderCustomerAddressesEditDialog";
+import { OrderCustomerAddressesEditDialogOutput } from "@saleor/orders/components/OrderCustomerAddressesEditDialog";
 import {
   CustomerChangeActionEnum,
   OrderCustomerChangeData
@@ -31,6 +29,7 @@ import OrderShippingMethodEditDialog from "../../../components/OrderShippingMeth
 import { useOrderVariantSearch } from "../../../queries";
 import { OrderUrlDialog, OrderUrlQueryParams } from "../../../urls";
 import { orderDraftListUrl } from "../../../urls";
+import OrderAddressFields from "../OrderAddressFields";
 
 interface OrderDraftDetailsProps {
   id: string;
@@ -89,6 +88,22 @@ export const OrderDraftDetails: React.FC<OrderDraftDetailsProps> = ({
     variables: DEFAULT_INITIAL_SEARCH_DATA
   });
 
+  const isAnyAddressEditModalOpen = (uri: string | undefined): boolean => {
+    if (!uri) {
+      return false;
+    }
+    if (uri === "edit-customer-addresses") {
+      return true;
+    }
+    if (uri === "edit-shipping-address") {
+      return true;
+    }
+    if (uri === "edit-billing-address") {
+      return true;
+    }
+    return false;
+  };
+
   const {
     data: customerAddresses,
     loading: customerAddressesLoading
@@ -96,7 +111,7 @@ export const OrderDraftDetails: React.FC<OrderDraftDetailsProps> = ({
     variables: {
       id: order?.user?.id
     },
-    skip: params.action !== "edit-customer-addresses"
+    skip: !isAnyAddressEditModalOpen(params.action)
   });
 
   const intl = useIntl();
@@ -259,17 +274,16 @@ export const OrderDraftDetails: React.FC<OrderDraftDetailsProps> = ({
         onClose={closeModal}
         onConfirm={handleCustomerChangeAction}
       />
-      <OrderCustomerAddressesEditDialog
-        open={params.action === "edit-customer-addresses"}
-        loading={customerAddressesLoading}
-        confirmButtonState={orderDraftUpdate.opts.status}
-        errors={orderDraftUpdate.opts.data?.draftOrderUpdate?.errors || []}
+      <OrderAddressFields
+        action={params?.action}
+        customerAddressesLoading={customerAddressesLoading}
+        id={id}
+        isDraft
         countries={data?.shop?.countries}
-        customerAddresses={customerAddresses?.user?.addresses}
-        defaultShippingAddress={customerAddresses?.user?.defaultShippingAddress}
-        defaultBillingAddress={customerAddresses?.user?.defaultBillingAddress}
+        customer={customerAddresses?.user}
         onClose={closeModal}
         onConfirm={handleCustomerChangeAdresses}
+        orderDraftUpdate={orderDraftUpdate}
       />
     </>
   );

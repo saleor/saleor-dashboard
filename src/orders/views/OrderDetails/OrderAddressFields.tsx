@@ -1,6 +1,9 @@
-import { transformAddressToForm } from "@saleor/misc";
-import OrderAddressEditDialog from "@saleor/orders/components/OrderAddressEditDialog";
-import { OrderDetails } from "@saleor/orders/types/OrderDetails";
+import { CustomerAddresses_user } from "@saleor/customers/types/CustomerAddresses";
+import OrderCustomerAddressesEditDialog, {
+  AddressEditDialogVariant,
+  OrderCustomerAddressesEditDialogOutput
+} from "@saleor/orders/components/OrderCustomerAddressesEditDialog";
+import { OrderDetails_shop_countries } from "@saleor/orders/types/OrderDetails";
 import {
   OrderDraftUpdate,
   OrderDraftUpdateVariables
@@ -10,22 +13,22 @@ import {
   OrderUpdateVariables
 } from "@saleor/orders/types/OrderUpdate";
 import { PartialMutationProviderOutput } from "@saleor/types";
-import { AddressInput } from "@saleor/types/globalTypes";
 import React from "react";
 
-enum FieldType {
-  shipping = "shippingAddress",
-  billing = "billingAddress"
-}
-
-interface Props {
+interface OrderAddressFieldsProps {
   action: string;
   id: string;
   isDraft: boolean;
-  data: OrderDetails;
+  customerAddressesLoading: boolean;
+  customer: CustomerAddresses_user;
+  countries: OrderDetails_shop_countries[];
   onClose: () => void;
-  orderUpdate: PartialMutationProviderOutput<OrderUpdate, OrderUpdateVariables>;
-  orderDraftUpdate: PartialMutationProviderOutput<
+  onConfirm: (data: OrderCustomerAddressesEditDialogOutput) => Promise<any>;
+  orderUpdate?: PartialMutationProviderOutput<
+    OrderUpdate,
+    OrderUpdateVariables
+  >;
+  orderDraftUpdate?: PartialMutationProviderOutput<
     OrderDraftUpdate,
     OrderDraftUpdateVariables
   >;
@@ -33,52 +36,55 @@ interface Props {
 
 const OrderAddressFields = ({
   action,
-  isDraft,
   id,
+  isDraft,
+  customerAddressesLoading,
+  customer,
+  countries,
   onClose,
+  onConfirm,
   orderUpdate,
-  orderDraftUpdate,
-  data
-}: Props) => {
-  const order = data?.order;
-
-  const handleConfirm = (type: FieldType) => (value: AddressInput) => {
-    const updateMutation = isDraft ? orderDraftUpdate : orderUpdate;
-
-    updateMutation.mutate({
-      id,
-      input: {
-        [type]: value
-      }
-    });
-  };
+  orderDraftUpdate
+}: OrderAddressFieldsProps) => {
+  if (!orderUpdate && !orderDraftUpdate) {
+    return;
+  }
 
   const addressFieldCommonProps = {
+    loading: customerAddressesLoading,
     confirmButtonState: isDraft
       ? orderDraftUpdate.opts.status
       : orderUpdate.opts.status,
-    countries: data?.shop?.countries,
+    countries,
     errors: isDraft
       ? orderDraftUpdate.opts.data?.draftOrderUpdate.errors
       : orderUpdate.opts.data?.orderUpdate.errors,
-    onClose
+    customerAddresses: customer?.addresses,
+    defaultShippingAddress: customer?.defaultShippingAddress,
+    defaultBillingAddress: customer?.defaultBillingAddress,
+    onClose,
+    onConfirm
   };
 
   return (
     <>
-      <OrderAddressEditDialog
-        {...addressFieldCommonProps}
-        address={transformAddressToForm(order?.shippingAddress)}
+      {isDraft && (
+        <OrderCustomerAddressesEditDialog
+          open={action === "edit-customer-addresses"}
+          variant={AddressEditDialogVariant.CHANGE_CUSTOMER}
+          {...addressFieldCommonProps}
+        />
+      )}
+
+      <OrderCustomerAddressesEditDialog
         open={action === "edit-shipping-address"}
-        variant="shipping"
-        onConfirm={handleConfirm(FieldType.shipping)}
-      />
-      <OrderAddressEditDialog
+        variant={AddressEditDialogVariant.CHANGE_SHIPPING_ADDRESS}
         {...addressFieldCommonProps}
-        address={transformAddressToForm(order?.billingAddress)}
+      />
+      <OrderCustomerAddressesEditDialog
         open={action === "edit-billing-address"}
-        variant="billing"
-        onConfirm={handleConfirm(FieldType.billing)}
+        variant={AddressEditDialogVariant.CHANGE_BILLING_ADDRESS}
+        {...addressFieldCommonProps}
       />
     </>
   );
