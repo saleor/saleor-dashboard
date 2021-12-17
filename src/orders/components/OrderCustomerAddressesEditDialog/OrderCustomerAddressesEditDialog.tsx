@@ -10,14 +10,12 @@ import {
 import Checkbox from "@saleor/components/Checkbox";
 import ConfirmButton from "@saleor/components/ConfirmButton";
 import FormSpacer from "@saleor/components/FormSpacer";
-import { data } from "@saleor/components/RichTextEditor/RichTextEditor.stories";
 import { ShopInfo_shop_countries } from "@saleor/components/Shop/types/ShopInfo";
 import {
   CustomerAddresses_user_addresses,
   CustomerAddresses_user_defaultBillingAddress,
   CustomerAddresses_user_defaultShippingAddress
 } from "@saleor/customers/types/CustomerAddresses";
-import { address } from "@saleor/fixtures";
 import { OrderErrorFragment } from "@saleor/fragments/types/OrderErrorFragment";
 import useAddressValidation from "@saleor/hooks/useAddressValidation";
 import { SubmitPromise } from "@saleor/hooks/useForm";
@@ -178,6 +176,7 @@ const OrderCustomerAddressesEditDialog: React.FC<OrderCustomerAddressesEditDialo
             ? AddressTypeEnum.SHIPPING
             : AddressTypeEnum.BILLING
       });
+      return;
     }
 
     const adressesInput = handleAddressesSubmit(data);
@@ -185,6 +184,7 @@ const OrderCustomerAddressesEditDialog: React.FC<OrderCustomerAddressesEditDialo
     if (adressesInput.shippingAddress && adressesInput.billingAddress) {
       onConfirm(adressesInput);
     }
+    setAddressSearchState(defaultSearchState);
   };
 
   const countryChoices = mapCountriesToChoices(countries);
@@ -222,7 +222,9 @@ const OrderCustomerAddressesEditDialog: React.FC<OrderCustomerAddressesEditDialo
             {addressSearchState.open ? (
               <OrderCustomerAddressesSearch
                 type={addressSearchState?.type}
+                data={data}
                 customerAddresses={customerAddresses}
+                submit={handleSubmit}
                 selectedCustomerAddressId={
                   addressSearchState.type === AddressTypeEnum.SHIPPING
                     ? data.customerShippingAddress?.id
@@ -249,6 +251,7 @@ const OrderCustomerAddressesEditDialog: React.FC<OrderCustomerAddressesEditDialo
                   <Typography>{getDialogDescription()}</Typography>
                   <FormSpacer />
                   <OrderCustomerAddressEdit
+                    hideCard={!hasCustomerChanged}
                     loading={loading}
                     countryChoices={countryChoices}
                     addressInputOption={data.shippingAddressInputOption}
@@ -274,9 +277,9 @@ const OrderCustomerAddressesEditDialog: React.FC<OrderCustomerAddressesEditDialo
                       })
                     }
                   />
-                  <FormSpacer />
                   {hasCustomerChanged && (
                     <>
+                      <FormSpacer />
                       <Divider />
                       <FormSpacer />
                       <FormControlLabel
@@ -362,8 +365,8 @@ const OrderCustomerAddressesEditDialog: React.FC<OrderCustomerAddressesEditDialo
                   >
                     <FormattedMessage
                       {...(continueToSearchAddressesState(data)
-                        ? buttonMessages.save
-                        : buttonMessages.continue)}
+                        ? buttonMessages.continue
+                        : buttonMessages.save)}
                     />
                   </ConfirmButton>
                 </DialogActions>
