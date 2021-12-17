@@ -215,7 +215,7 @@ filterTests({ definedTags: ["all"] }, () => {
         channelSlug: defaultChannel.slug,
         variantsList: variants,
         address,
-        shippingMethodId: shippingMethod.id,
+        shippingMethodName: shippingMethod.name,
         voucherCode,
         auth: "token"
       });

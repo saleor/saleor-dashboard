@@ -3,6 +3,8 @@ import { PRODUCT_DETAILS } from "../../../../elements/catalog/products/product-d
 import { VARIANTS_SELECTORS } from "../../../../elements/catalog/products/variants-selectors";
 import { AVAILABLE_CHANNELS_FORM } from "../../../../elements/channels/available-channels-form";
 import { BUTTON_SELECTORS } from "../../../../elements/shared/button-selectors";
+import { SHARED_ELEMENTS } from "../../../../elements/shared/sharedElements";
+import { formatDate } from "../../../formatData/formatDate";
 import { selectChannelVariantInDetailsPage } from "../../channelsPage";
 import { fillUpPriceList } from "./priceListComponent";
 
@@ -56,9 +58,12 @@ export function createVariant({
   quantity = 10
 }) {
   cy.get(PRODUCT_DETAILS.addVariantsButton).click();
-  fillUpGeneralVariantInputs({ attributeName, warehouseName, sku, quantity });
-  saveVariant();
-  cy.get(BUTTON_SELECTORS.back).click();
+  fillUpVariantDetails({ attributeName, sku, warehouseName, quantity });
+  cy.get(BUTTON_SELECTORS.back);
+  cy.get(VARIANTS_SELECTORS.saveButton)
+    .click()
+    .get(BUTTON_SELECTORS.back)
+    .click();
   selectChannelForVariantAndFillUpPrices({
     channelName,
     attributeName,
@@ -79,6 +84,29 @@ export function fillUpGeneralVariantInputs({
     force: true
   });
   cy.get(VARIANTS_SELECTORS.stockInput).type(quantity);
+}
+
+export function fillUpVariantDetails({
+  attributeName,
+  attributeType = "DROPDOWN",
+  sku,
+  warehouseName,
+  quantity
+}) {
+  selectAttributeWithType({ attributeType, attributeName });
+  if (sku) {
+    cy.get(VARIANTS_SELECTORS.skuInputInAddVariant).type(sku);
+  }
+  if (warehouseName) {
+    cy.get(VARIANTS_SELECTORS.addWarehouseButton).click();
+    cy.contains(VARIANTS_SELECTORS.warehouseOption, warehouseName)
+      .click({
+        force: true
+      })
+      .get(VARIANTS_SELECTORS.stockInput)
+      .type(quantity);
+  }
+  cy.get(VARIANTS_SELECTORS.saveButton).click();
 }
 
 export function fillUpVariantAttributeAndSku({ attributeName, sku }) {
@@ -120,6 +148,44 @@ export function selectChannelForVariantAndFillUpPrices({
     .waitForProgressBarToNotBeVisible()
     .get(AVAILABLE_CHANNELS_FORM.menageChannelsButton)
     .should("be.visible");
+}
+
+export function selectOptionsAttribute(attributeName) {
+  cy.get(VARIANTS_SELECTORS.attributeSelector)
+    .click()
+    .get(VARIANTS_SELECTORS.attributeOption)
+    .contains(attributeName)
+    .click();
+}
+
+export function selectBooleanAttributeToTrue() {
+  cy.get(VARIANTS_SELECTORS.booleanAttributeCheckbox).click();
+}
+
+export function selectDateAttribute() {
+  cy.get(VARIANTS_SELECTORS.attributeSelector)
+    .find("input")
+    .type(formatDate(new Date()));
+}
+
+export function selectNumericAttribute(numeric) {
+  cy.get(VARIANTS_SELECTORS.attributeSelector).type(numeric);
+}
+
+export function selectAttributeWithType({ attributeType, attributeName }) {
+  switch (attributeType) {
+    case "DATE":
+      selectDateAttribute();
+      break;
+    case "BOOLEAN":
+      selectBooleanAttributeToTrue();
+      break;
+    case "NUMERIC":
+      selectNumericAttribute(attributeName);
+      break;
+    default:
+      selectOptionsAttribute(attributeName);
+  }
 }
 
 export function enablePreorderWithThreshold(threshold) {

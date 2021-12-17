@@ -7,7 +7,8 @@ export const webhook: WebhookDetails_webhook = {
     id: "Jzx1ss23sEt==",
     name: "Test App 2"
   },
-  events: [],
+  syncEvents: [],
+  asyncEvents: [],
   id: "Jzx123sEt==",
   isActive: true,
   name: "Webhook Test 2",
