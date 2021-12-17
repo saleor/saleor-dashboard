@@ -18,7 +18,7 @@ export const urlList = {
   pageTypes: "page-types/",
   permissionsGroups: "permission-groups/",
   plugins: "plugins/",
-  priceRete: "price/",
+  priceRate: "price/",
   products: "products/",
   productTypes: "product-types/",
   sales: "discounts/sales/",
