@@ -1,12 +1,12 @@
 import { IMoney, subtractMoney } from "@saleor/components/Money";
 import { WarehouseFragment } from "@saleor/fragments/types/WarehouseFragment";
 import { FormsetData } from "@saleor/hooks/useFormset";
-import {
-  FulfillmentStatus,
-  OrderErrorCode,
-  AddressInput
-} from "@saleor/types/globalTypes";
 import { addressToAddressInput } from "@saleor/misc";
+import {
+  AddressInput,
+  FulfillmentStatus,
+  OrderErrorCode
+} from "@saleor/types/globalTypes";
 
 import {
   LineItemData,
