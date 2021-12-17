@@ -1,7 +1,12 @@
 import { IMoney, subtractMoney } from "@saleor/components/Money";
 import { WarehouseFragment } from "@saleor/fragments/types/WarehouseFragment";
 import { FormsetData } from "@saleor/hooks/useFormset";
-import { FulfillmentStatus, OrderErrorCode } from "@saleor/types/globalTypes";
+import {
+  FulfillmentStatus,
+  OrderErrorCode,
+  AddressInput
+} from "@saleor/types/globalTypes";
+import { addressToAddressInput } from "@saleor/misc";
 
 import {
   LineItemData,
@@ -297,4 +302,16 @@ export const isStockError = (
   );
 
   return isQuantityLargerThanAvailable || isError;
+};
+
+export const getVariantSearchAddress = (order: OrderDetails_order) => {
+  if (!!order.shippingAddress) {
+    return addressToAddressInput(order.shippingAddress);
+  }
+
+  if (!!order.billingAddress) {
+    return addressToAddressInput(order.billingAddress);
+  }
+
+  return { country: order.channel.defaultCountry.code } as AddressInput;
 };

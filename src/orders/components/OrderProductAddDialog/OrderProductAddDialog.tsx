@@ -36,6 +36,7 @@ import {
   SearchOrderVariant_search_edges_node,
   SearchOrderVariant_search_edges_node_variants
 } from "../../types/SearchOrderVariant";
+import OrderPriceLabel from "../OrderPriceLabel/OrderPriceLabel";
 
 const useStyles = makeStyles(
   theme => ({
@@ -365,9 +366,7 @@ const OrderProductAddDialog: React.FC<OrderProductAddDialogProps> = props => {
                             )}
                           </TableCell>
                           <TableCell className={classes.textRight}>
-                            {variant?.channelListings[0]?.price && (
-                              <Money money={variant.channelListings[0].price} />
-                            )}
+                            <OrderPriceLabel pricing={variant.pricing} />
                           </TableCell>
                         </TableRow>
                       ))}
