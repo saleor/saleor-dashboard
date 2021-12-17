@@ -1,8 +1,8 @@
 import { Button, Card, CardContent, Typography } from "@material-ui/core";
+import { useUser } from "@saleor/auth";
 import CardTitle from "@saleor/components/CardTitle";
 import Hr from "@saleor/components/Hr";
 import RequirePermissions from "@saleor/components/RequirePermissions";
-import useUser from "@saleor/hooks/useUser";
 import { PermissionEnum } from "@saleor/types/globalTypes";
 import React from "react";
 import { useIntl } from "react-intl";

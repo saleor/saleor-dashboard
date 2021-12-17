@@ -7,14 +7,7 @@ function getStaffErrorMessage(
   err: StaffErrorFragment,
   intl: IntlShape
 ): string {
-  return getAccountErrorMessage(
-    err && {
-      ...err,
-      __typename: "AccountError",
-      addressType: null
-    },
-    intl
-  );
+  return getAccountErrorMessage(err, intl);
 }
 
 export default getStaffErrorMessage;
