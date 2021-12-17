@@ -1,7 +1,7 @@
 import { LinearProgress, useMediaQuery } from "@material-ui/core";
+import { useUser } from "@saleor/auth";
 import useAppState from "@saleor/hooks/useAppState";
 import useNavigator from "@saleor/hooks/useNavigator";
-import useUser from "@saleor/hooks/useUser";
 import {
   makeStyles,
   SaleorTheme,

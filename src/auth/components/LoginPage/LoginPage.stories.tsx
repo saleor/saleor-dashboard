@@ -7,7 +7,6 @@ import LoginPage, { LoginCardProps } from "../../../auth/components/LoginPage";
 
 const props: Omit<LoginCardProps, "classes"> = {
   disabled: false,
-  error: false,
   externalAuthentications: [
     {
       __typename: "ExternalAuthentication",
@@ -15,7 +14,6 @@ const props: Omit<LoginCardProps, "classes"> = {
       name: "Example auth plugin"
     }
   ],
-  externalError: false,
   loading: false,
   onExternalAuthentication: () => undefined,
   onPasswordRecovery: undefined,
@@ -26,6 +24,9 @@ storiesOf("Views / Authentication / Log in", module)
   .addDecorator(CardDecorator)
   .addDecorator(Decorator)
   .add("default", () => <LoginPage {...props} />)
-  .add("error", () => <LoginPage {...props} error={true} />)
+  .add("error login", () => <LoginPage {...props} error={"loginError"} />)
+  .add("error external login", () => (
+    <LoginPage {...props} error={"externalLoginError"} />
+  ))
   .add("disabled", () => <LoginPage {...props} disabled={true} />)
   .add("loading", () => <LoginPage {...props} loading={true} />);

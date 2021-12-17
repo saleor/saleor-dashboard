@@ -114,9 +114,10 @@ export function fillUpVariantAttributeAndSku({ attributeName, sku }) {
     .click()
     .get(VARIANTS_SELECTORS.attributeOption)
     .contains(attributeName)
-    .click()
-    .get(VARIANTS_SELECTORS.skuInputInAddVariant)
-    .type(sku);
+    .click();
+  if (sku) {
+    cy.get(VARIANTS_SELECTORS.skuInputInAddVariant).type(sku);
+  }
 }
 
 export function selectChannelForVariantAndFillUpPrices({
@@ -125,7 +126,9 @@ export function selectChannelForVariantAndFillUpPrices({
   price,
   costPrice = price
 }) {
-  cy.addAliasToGraphRequest("ProductChannelListingUpdate");
+  cy.waitForProgressBarToNotBeVisible().addAliasToGraphRequest(
+    "ProductChannelListingUpdate"
+  );
   selectChannelVariantInDetailsPage(channelName, attributeName);
   cy.get(BUTTON_SELECTORS.confirm)
     .click()

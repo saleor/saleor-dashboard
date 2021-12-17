@@ -18,6 +18,7 @@ import {
   createCheckoutWithVoucher
 } from "../../support/api/utils/ordersUtils";
 import * as productsUtils from "../../support/api/utils/products/productsUtils";
+import { deleteShippingStartsWith } from "../../support/api/utils/shippingUtils";
 import filterTests from "../../support/filterTests";
 import {
   createVoucher,
@@ -41,6 +42,7 @@ filterTests({ definedTags: ["all"] }, () => {
       cy.clearSessionData().loginUserViaRequest();
       channelsUtils.deleteChannelsStartsWith(startsWith);
       deleteVouchersStartsWith(startsWith);
+      deleteShippingStartsWith(startsWith);
       const name = `${startsWith}${faker.datatype.number()}`;
       productsUtils
         .createProductWithShipping({ name, productPrice, shippingPrice })

@@ -155,7 +155,6 @@ export function createVariant({
   costPrice = 1,
   trackInventory = true,
   weight = 1,
-  attributeValues = ["value"],
   attributeName = "value",
   preorder
 }) {
@@ -205,7 +204,7 @@ export function createVariant({
         id
         name
       }
-      bulkProductErrors{
+      errors{
         field
         message
       }
