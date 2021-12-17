@@ -49,8 +49,8 @@ const CustomerInfo: React.FC<CustomerInfoProps> = props => {
       <CardTitle
         title={
           <FormattedMessage
-            defaultMessage="Personal Informations"
-            description="customer informations, header"
+            defaultMessage="Account Information"
+            description="account information, header"
           />
         }
       />
@@ -85,7 +85,7 @@ const CustomerInfo: React.FC<CustomerInfoProps> = props => {
         <Hr className={classes.hr} />
         <Typography className={classes.sectionHeader}>
           <FormattedMessage
-            defaultMessage="Contact Informations"
+            defaultMessage="Contact Information"
             description="customer contact section, header"
           />
         </Typography>

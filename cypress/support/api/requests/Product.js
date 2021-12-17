@@ -110,12 +110,17 @@ export function createProduct({
     attributeValue,
     `values:["${attributeValue}"]`
   );
+  const attributesLines = getValueWithDefault(
+    attributeId,
+    `attributes:[{
+    id:"${attributeId}"
+    ${attributeValuesLine}
+  }]`
+  );
+
   const mutation = `mutation{
     productCreate(input:{
-      attributes:[{
-        id:"${attributeId}"
-        ${attributeValuesLine}
-      }]
+      ${attributesLines}
       name:"${name}"
       slug:"${name}"
       seo:{title:"${name}" description:""}
@@ -150,7 +155,6 @@ export function createVariant({
   costPrice = 1,
   trackInventory = true,
   weight = 1,
-  attributeValues = ["value"],
   attributeName = "value",
   preorder
 }) {
@@ -200,7 +204,7 @@ export function createVariant({
         id
         name
       }
-      bulkProductErrors{
+      errors{
         field
         message
       }
@@ -265,6 +269,14 @@ export function getVariant(id, channelSlug, auth = "auth") {
       }
       ${preorder}
       sku
+      attributes{
+        attribute{
+          inputType
+        }
+        values{
+          name
+        }
+      }
       pricing{
         onSale
         discount{
@@ -302,18 +314,38 @@ export function deactivatePreorderOnVariant(variantId) {
     .its("body.data.productVariantPreorderDeactivate");
 }
 
-export function activatePreorderOnVariant(variantId, threshold, endDate) {
+export function activatePreorderOnVariant({
+  variantId,
+  threshold = 50,
+  endDate
+}) {
   const thresholdLine = getValueWithDefault(
     threshold,
     `globalThreshold:${threshold}`
   );
-  const endDateLine = getValueWithDefault(threshold, `endDate:${endDate}`);
+  const endDateLine = getValueWithDefault(endDate, `endDate:${endDate}`);
   const mutation = `mutation{
     productVariantUpdate(id:"${variantId}", input:{
       preorder:{
         ${thresholdLine}
         ${endDateLine}
       }
+    }){
+      errors{
+        field
+        message
+      }
+    }
+  }`;
+  return cy.sendRequestWithQuery(mutation);
+}
+
+export function updateVariantPrice({ variantId, channelId, price }) {
+  const mutation = `mutation {
+    productVariantChannelListingUpdate(id:"${variantId}", input:{
+      channelId:"${channelId}"
+      price:${price}
+      costPrice:${price}
     }){
       errors{
         field

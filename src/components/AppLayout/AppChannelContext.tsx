@@ -1,9 +1,10 @@
-import { useAuth } from "@saleor/auth/AuthProvider";
+import { useUser } from "@saleor/auth";
 import { useBaseChannelsList } from "@saleor/channels/queries";
 import { BaseChannels_channels } from "@saleor/channels/types/BaseChannels";
 import { ChannelFragment } from "@saleor/fragments/types/ChannelFragment";
 import useLocalStorage from "@saleor/hooks/useLocalStorage";
 import { getById } from "@saleor/orders/components/OrderReturnPage/utils";
+import { useSaleorConfig } from "@saleor/sdk";
 import React from "react";
 
 interface UseAppChannel {
@@ -38,10 +39,11 @@ const isValidChannel = (
 };
 
 export const AppChannelProvider: React.FC = ({ children }) => {
-  const { isAuthenticated } = useAuth();
+  const { setChannel } = useSaleorConfig();
+  const { authenticated } = useUser();
   const [selectedChannel, setSelectedChannel] = useLocalStorage("channel", "");
   const { data: channelData, refetch } = useBaseChannelsList({
-    skip: !isAuthenticated
+    skip: !authenticated
   });
 
   const [isPickerActive, setPickerActive] = React.useState(false);
@@ -53,6 +55,10 @@ export const AppChannelProvider: React.FC = ({ children }) => {
       setSelectedChannel(channelData.channels[0].id);
     }
   }, [channelData]);
+
+  React.useEffect(() => {
+    setChannel(selectedChannel);
+  }, [selectedChannel]);
 
   const availableChannels = channelData?.channels || [];
 
