@@ -1,7 +1,7 @@
+import { useUser } from "@saleor/auth";
 import { channelsListUrl } from "@saleor/channels/urls";
 import useAppChannel from "@saleor/components/AppLayout/AppChannelContext";
 import useNavigator from "@saleor/hooks/useNavigator";
-import useUser from "@saleor/hooks/useUser";
 import { mapEdgesToItems } from "@saleor/utils/maps";
 import React from "react";
 

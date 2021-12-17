@@ -1,3 +1,4 @@
+import { useUser } from "@saleor/auth";
 import { isJwtError } from "@saleor/auth/errors";
 import { commonMessages } from "@saleor/intl";
 import { getMutationStatus } from "@saleor/misc";
@@ -13,7 +14,6 @@ import {
 import { useIntl } from "react-intl";
 
 import useNotifier from "./useNotifier";
-import useUser from "./useUser";
 
 export type UseMutation<TData, TVariables> = [
   MutationFunction<TData, TVariables>,

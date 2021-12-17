@@ -21,7 +21,8 @@ storiesOf("Views / Authentication / Set up a new password", module)
         __typename: "AccountError",
         code: AccountErrorCode.PASSWORD_TOO_SHORT,
         field,
-        addressType: null
+        addressType: null,
+        message: null
       }))}
       disabled={false}
       onSubmit={() => undefined}

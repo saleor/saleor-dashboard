@@ -4,9 +4,9 @@ import React from "react";
 import { Mutation, MutationFunction, MutationResult } from "react-apollo";
 import { useIntl } from "react-intl";
 
+import { useUser } from "./auth";
 import { isJwtError } from "./auth/errors";
 import useNotifier from "./hooks/useNotifier";
-import useUser from "./hooks/useUser";
 import { commonMessages } from "./intl";
 import { getMutationStatus } from "./misc";
 import { MutationResultAdditionalProps } from "./types";
