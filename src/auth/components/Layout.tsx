@@ -26,7 +26,7 @@ const useStyles = makeStyles(
       flexDirection: "column",
       height: "100vh",
       justifyContent: "center",
-      padding: theme.spacing(6),
+      padding: theme.spacing(5, 6, 4, 6),
       width: "100%"
     },
     mainPanelContent: {
@@ -84,16 +84,14 @@ const Layout: React.FC = props => {
   return (
     <div className={classes.root}>
       <div className={classes.mainPanel}>
-        <div className={classes.mainPanelContent}>
-          <SVG
-            className={classes.logo}
-            src={themeType === "dark" ? saleorDarkLogo : saleorLightLogo}
-          />
-          {children}
-          <footer className={classes.footer}>
-            ©2021 Saleor Commerce. All rights reserved
-          </footer>
-        </div>
+        <SVG
+          className={classes.logo}
+          src={themeType === "dark" ? saleorDarkLogo : saleorLightLogo}
+        />
+        <div className={classes.mainPanelContent}>{children}</div>
+        <footer className={classes.footer}>
+          ©2021 Saleor Commerce. All rights reserved
+        </footer>
       </div>
       <div className={classes.sidebar}>
         <SVG className={classes.sidebarArt} src={backgroundArt} />
