@@ -504,7 +504,7 @@ export enum GiftCardEventsEnum {
   NOTE_ADDED = "NOTE_ADDED",
   RESENT = "RESENT",
   SENT_TO_CUSTOMER = "SENT_TO_CUSTOMER",
-  TAG_UPDATED = "TAG_UPDATED",
+  TAGS_UPDATED = "TAGS_UPDATED",
   UPDATED = "UPDATED",
   USED_IN_ORDER = "USED_IN_ORDER",
 }
@@ -2278,13 +2278,13 @@ export interface GiftCardAddNoteInput {
 export interface GiftCardBulkCreateInput {
   count: number;
   balance: PriceInput;
-  tag: string;
+  tags?: string[] | null;
   expiryDate?: any | null;
   isActive: boolean;
 }
 
 export interface GiftCardCreateInput {
-  tag?: string | null;
+  addTags?: string[] | null;
   expiryDate?: any | null;
   startDate?: any | null;
   endDate?: any | null;
@@ -2299,7 +2299,6 @@ export interface GiftCardCreateInput {
 export interface GiftCardFilterInput {
   isActive?: boolean | null;
   metadata?: (MetadataFilter | null)[] | null;
-  tag?: string | null;
   tags?: (string | null)[] | null;
   products?: (string | null)[] | null;
   usedBy?: (string | null)[] | null;
@@ -2326,7 +2325,8 @@ export interface GiftCardSortingInput {
 }
 
 export interface GiftCardUpdateInput {
-  tag?: string | null;
+  addTags?: string[] | null;
+  removeTags?: string[] | null;
   expiryDate?: any | null;
   startDate?: any | null;
   endDate?: any | null;

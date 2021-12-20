@@ -66,6 +66,11 @@ export interface GiftCardAddNote_giftCardAddNote_giftCard_currentBalance {
   currency: string;
 }
 
+export interface GiftCardAddNote_giftCardAddNote_giftCard_tags {
+  __typename: "GiftCardTag";
+  name: string;
+}
+
 export interface GiftCardAddNote_giftCardAddNote_giftCard {
   __typename: "GiftCard";
   metadata: (GiftCardAddNote_giftCardAddNote_giftCard_metadata | null)[];
@@ -85,7 +90,7 @@ export interface GiftCardAddNote_giftCardAddNote_giftCard {
   initialBalance: GiftCardAddNote_giftCardAddNote_giftCard_initialBalance | null;
   currentBalance: GiftCardAddNote_giftCardAddNote_giftCard_currentBalance | null;
   id: string;
-  tag: string | null;
+  tags: GiftCardAddNote_giftCardAddNote_giftCard_tags[] | null;
 }
 
 export interface GiftCardAddNote_giftCardAddNote_event_user {
@@ -146,8 +151,8 @@ export interface GiftCardAddNote_giftCardAddNote_event {
   email: string | null;
   orderId: string | null;
   orderNumber: string | null;
-  tag: string | null;
-  oldTag: string | null;
+  tags: string[] | null;
+  oldTags: string[] | null;
   balance: GiftCardAddNote_giftCardAddNote_event_balance | null;
 }
 

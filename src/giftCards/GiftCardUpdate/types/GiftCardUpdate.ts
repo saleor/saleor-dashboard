@@ -65,6 +65,11 @@ export interface GiftCardUpdate_giftCardUpdate_giftCard_currentBalance {
   currency: string;
 }
 
+export interface GiftCardUpdate_giftCardUpdate_giftCard_tags {
+  __typename: "GiftCardTag";
+  name: string;
+}
+
 export interface GiftCardUpdate_giftCardUpdate_giftCard_events_user {
   __typename: "User";
   id: string;
@@ -123,8 +128,8 @@ export interface GiftCardUpdate_giftCardUpdate_giftCard_events {
   email: string | null;
   orderId: string | null;
   orderNumber: string | null;
-  tag: string | null;
-  oldTag: string | null;
+  tags: string[] | null;
+  oldTags: string[] | null;
   balance: GiftCardUpdate_giftCardUpdate_giftCard_events_balance | null;
 }
 
@@ -147,7 +152,7 @@ export interface GiftCardUpdate_giftCardUpdate_giftCard {
   initialBalance: GiftCardUpdate_giftCardUpdate_giftCard_initialBalance | null;
   currentBalance: GiftCardUpdate_giftCardUpdate_giftCard_currentBalance | null;
   id: string;
-  tag: string | null;
+  tags: GiftCardUpdate_giftCardUpdate_giftCard_tags[] | null;
   events: GiftCardUpdate_giftCardUpdate_giftCard_events[];
 }
 

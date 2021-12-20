@@ -17,7 +17,6 @@ export type GiftCardListColummns =
   | "product";
 
 export enum GiftCardUrlSortField {
-  tag = "tag",
   usedBy = "usedBy",
   balance = "balance",
   product = "product"

@@ -65,6 +65,11 @@ export interface GiftCardResend_giftCardResend_giftCard_currentBalance {
   currency: string;
 }
 
+export interface GiftCardResend_giftCardResend_giftCard_tags {
+  __typename: "GiftCardTag";
+  name: string;
+}
+
 export interface GiftCardResend_giftCardResend_giftCard {
   __typename: "GiftCard";
   metadata: (GiftCardResend_giftCardResend_giftCard_metadata | null)[];
@@ -84,7 +89,7 @@ export interface GiftCardResend_giftCardResend_giftCard {
   initialBalance: GiftCardResend_giftCardResend_giftCard_initialBalance | null;
   currentBalance: GiftCardResend_giftCardResend_giftCard_currentBalance | null;
   id: string;
-  tag: string | null;
+  tags: GiftCardResend_giftCardResend_giftCard_tags[] | null;
 }
 
 export interface GiftCardResend_giftCardResend {

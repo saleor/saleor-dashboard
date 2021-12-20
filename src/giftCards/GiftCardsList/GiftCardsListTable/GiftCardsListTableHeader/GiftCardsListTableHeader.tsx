@@ -49,9 +49,7 @@ const GiftCardsListTableHeader: React.FC = () => {
       }
     },
     {
-      title: messages.giftCardsTableColumnTagTitle,
-      onClick: () => onSort(GiftCardUrlSortField.tag),
-      direction: getDirection(GiftCardUrlSortField.tag)
+      title: messages.giftCardsTableColumnTagTitle
     },
     {
       title: messages.giftCardsTableColumnProductTitle,

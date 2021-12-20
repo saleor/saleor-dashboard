@@ -31,7 +31,7 @@ import {
 } from "./types";
 
 export const initialData: GiftCardBulkCreateFormData = {
-  tag: "",
+  tags: [],
   balanceAmount: 1,
   balanceCurrency: null,
   expirySelected: false,
@@ -82,7 +82,7 @@ const GiftCardBulkCreateDialogForm: React.FC<GiftCardBulkCreateDialogFormProps> 
     };
   };
 
-  const { submit, change, data, set } = useForm(
+  const { submit, toggleValue, change, data, set } = useForm(
     {
       ...initialData,
       ...getInitialExpirySettingsData(),
@@ -91,11 +91,12 @@ const GiftCardBulkCreateDialogForm: React.FC<GiftCardBulkCreateDialogFormProps> 
     onSubmit
   );
 
-  const { tag, requiresActivation, cardsAmount } = data;
+  const { tags, requiresActivation, cardsAmount } = data;
 
   const commonFormProps: GiftCardBulkCreateFormCommonProps = {
     data,
     errors: formErrors,
+    toggleValue,
     change
   };
 
@@ -116,10 +117,10 @@ const GiftCardBulkCreateDialogForm: React.FC<GiftCardBulkCreateDialogFormProps> 
         <VerticalSpacer spacing={2} />
         <GiftCardTagInput
           optional={false}
-          error={formErrors?.tag}
-          name="tag"
-          value={tag}
-          change={change}
+          error={formErrors?.tags}
+          name="tags"
+          values={tags}
+          toggleChange={toggleValue}
         />
         <CardSpacer />
         <Divider />

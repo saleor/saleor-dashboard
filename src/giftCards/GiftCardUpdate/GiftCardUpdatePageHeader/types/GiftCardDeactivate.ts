@@ -65,6 +65,11 @@ export interface GiftCardDeactivate_giftCardDeactivate_giftCard_currentBalance {
   currency: string;
 }
 
+export interface GiftCardDeactivate_giftCardDeactivate_giftCard_tags {
+  __typename: "GiftCardTag";
+  name: string;
+}
+
 export interface GiftCardDeactivate_giftCardDeactivate_giftCard {
   __typename: "GiftCard";
   metadata: (GiftCardDeactivate_giftCardDeactivate_giftCard_metadata | null)[];
@@ -84,7 +89,7 @@ export interface GiftCardDeactivate_giftCardDeactivate_giftCard {
   initialBalance: GiftCardDeactivate_giftCardDeactivate_giftCard_initialBalance | null;
   currentBalance: GiftCardDeactivate_giftCardDeactivate_giftCard_currentBalance | null;
   id: string;
-  tag: string | null;
+  tags: GiftCardDeactivate_giftCardDeactivate_giftCard_tags[] | null;
 }
 
 export interface GiftCardDeactivate_giftCardDeactivate {

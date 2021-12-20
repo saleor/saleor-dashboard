@@ -1,15 +1,11 @@
-import SingleAutocompleteSelectField, {
-  SingleAutocompleteSelectFieldProps
-} from "@saleor/components/SingleAutocompleteSelectField";
+import MultiAutocompleteSelectField from "@saleor/components/MultiAutocompleteSelectField";
+import { SingleAutocompleteSelectFieldProps } from "@saleor/components/SingleAutocompleteSelectField";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@saleor/config";
 import { GiftCardBulkCreateFormError } from "@saleor/giftCards/GiftCardBulkCreateDialog/types";
 import { getGiftCardErrorMessage } from "@saleor/giftCards/GiftCardUpdate/messages";
 import { FormChange } from "@saleor/hooks/useForm";
 import { commonMessages } from "@saleor/intl";
-import {
-  mapEdgesToItems,
-  mapSingleValueNodeToChoice
-} from "@saleor/utils/maps";
+import { mapEdgesToItems, mapMultiValueNodeToChoice } from "@saleor/utils/maps";
 import compact from "lodash/compact";
 import uniq from "lodash/uniq";
 import React from "react";
@@ -17,21 +13,24 @@ import { useIntl } from "react-intl";
 
 import { giftCardTagInputMessages as messages } from "./messages";
 import useGiftCardTagsSearch from "./useGiftCardTagsSearch";
+import { getMultiChoices } from "./utils";
 
 interface GiftCardTagInputProps
   extends Pick<SingleAutocompleteSelectFieldProps, "name"> {
-  change: FormChange;
-  value: string;
+  toggleChange: FormChange;
+  values: string[];
   error: GiftCardBulkCreateFormError;
   optional?: boolean;
+  loading?: boolean;
 }
 
 const GiftCardTagInput: React.FC<GiftCardTagInputProps> = ({
-  change,
+  toggleChange,
   name,
-  value,
+  values,
   error,
-  optional = true
+  optional = true,
+  loading
 }) => {
   const intl = useIntl();
 
@@ -39,9 +38,11 @@ const GiftCardTagInput: React.FC<GiftCardTagInputProps> = ({
     variables: DEFAULT_INITIAL_SEARCH_DATA
   });
 
-  const choices = mapSingleValueNodeToChoice(
-    uniq(compact(mapEdgesToItems(result?.data?.search)?.map(({ tag }) => tag))),
-    "tag"
+  const choices = mapMultiValueNodeToChoice(
+    uniq(
+      compact(mapEdgesToItems(result?.data?.search)?.map(({ name }) => name))
+    ),
+    "tags"
   );
 
   const label = optional
@@ -51,19 +52,20 @@ const GiftCardTagInput: React.FC<GiftCardTagInputProps> = ({
     : intl.formatMessage(messages.placeholder);
 
   return (
-    <SingleAutocompleteSelectField
+    <MultiAutocompleteSelectField
       error={!!error}
       helperText={getGiftCardErrorMessage(error, intl)}
-      allowCustomValues
       name={name || "giftCardTag"}
       label={label}
       data-test-id="gift-card-tag-select-field"
-      value={value}
-      displayValue={value}
+      value={values}
+      displayValues={getMultiChoices(values)}
       choices={choices}
       fetchChoices={search}
-      onChange={change}
+      onChange={toggleChange}
       onFetchMore={loadMore}
+      loading={result?.loading || loading}
+      allowCustomValues
     />
   );
 };
