@@ -12,7 +12,7 @@ export interface UseLoginFormResult {
   change: FormChange;
   data: LoginFormData;
   hasChanged: boolean;
-  submit: (event: React.FormEvent<HTMLFormElement>) => Promise<boolean>;
+  submit: () => Promise<boolean>;
 }
 
 export interface LoginFormProps {
@@ -53,11 +53,7 @@ function useLoginForm(
     return errors;
   };
 
-  const submit = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-
-    return handleFormSubmit(data, handleSubmit, setChanged);
-  };
+  const submit = async () => handleFormSubmit(data, handleSubmit, setChanged);
 
   return {
     change: handleChange,

@@ -83,7 +83,7 @@ const LoginCard: React.FC<LoginCardProps> = props => {
 
   return (
     <LoginForm onSubmit={onSubmit}>
-      {({ change: handleChange, data,submit }) => (
+      {({ change: handleChange, data, submit }) => (
         <>
           {error && (
             <div className={classes.panel} data-test="loginErrorMessage">
