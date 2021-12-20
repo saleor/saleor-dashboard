@@ -37,7 +37,9 @@ export const giftCardList = gql`
             id
             name
           }
-          tag
+          tags {
+            name
+          }
           usedBy {
             ...UserBase
           }

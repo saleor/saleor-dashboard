@@ -35,7 +35,7 @@ const GiftCardList: React.FC<RouteComponentProps<any>> = () => {
   const params: GiftCardListUrlQueryParams = asSortParams(
     qs,
     GiftCardUrlSortField,
-    GiftCardUrlSortField.tag
+    GiftCardUrlSortField.usedBy
   );
 
   return <GiftCardListComponent params={params} />;

@@ -11,7 +11,7 @@ export interface GiftCardCreateFormCustomer {
 }
 
 export type GiftCardCreateCommonFormErrors = Record<
-  "tag" | "expiryDate" | "currency" | "amount" | "balance",
+  "tags" | "expiryDate" | "currency" | "amount" | "balance",
   GiftCardError
 >;
 
@@ -20,6 +20,7 @@ export type GiftCardCreateFormErrors = GiftCardCreateCommonFormErrors &
 
 export interface GiftCardCreateFormCommonProps {
   change: FormChange;
+  toggleValue: FormChange;
   errors: GiftCardCreateFormErrors;
   data: GiftCardCreateFormData;
 }

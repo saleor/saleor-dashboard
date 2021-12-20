@@ -67,7 +67,7 @@ export interface GiftCardEvent {
   email: string | null;
   orderId: string | null;
   orderNumber: string | null;
-  tag: string | null;
-  oldTag: string | null;
+  tags: string[] | null;
+  oldTags: string[] | null;
   balance: GiftCardEvent_balance | null;
 }

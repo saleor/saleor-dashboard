@@ -29,6 +29,7 @@ import useGiftCardListBulkActions from "../providers/GiftCardListProvider/hooks/
 import { useTableStyles as useStyles } from "../styles";
 import GiftCardsListTableFooter from "./GiftCardsListTableFooter";
 import GiftCardsListTableHeader from "./GiftCardsListTableHeader";
+import { getTagCellText } from "./utils";
 
 const GiftCardsListTable: React.FC = () => {
   const intl = useIntl();
@@ -57,7 +58,7 @@ const GiftCardsListTable: React.FC = () => {
                 last4CodeChars,
                 usedBy,
                 usedByEmail,
-                tag,
+                tags,
                 product,
                 currentBalance
               } = giftCard;
@@ -89,7 +90,7 @@ const GiftCardsListTable: React.FC = () => {
                     </div>
                   </TableCell>
                   <TableCell>
-                    <Typography>{tag || PLACEHOLDER}</Typography>
+                    <Typography>{getTagCellText(tags)}</Typography>
                   </TableCell>
                   <TableCell>
                     {product ? (

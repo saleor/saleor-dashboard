@@ -15,6 +15,11 @@ export interface GiftCardList_giftCards_edges_node_product {
   name: string;
 }
 
+export interface GiftCardList_giftCards_edges_node_tags {
+  __typename: "GiftCardTag";
+  name: string;
+}
+
 export interface GiftCardList_giftCards_edges_node_usedBy {
   __typename: "User";
   id: string;
@@ -36,7 +41,7 @@ export interface GiftCardList_giftCards_edges_node {
   isActive: boolean;
   expiryDate: any | null;
   product: GiftCardList_giftCards_edges_node_product | null;
-  tag: string | null;
+  tags: GiftCardList_giftCards_edges_node_tags[] | null;
   usedBy: GiftCardList_giftCards_edges_node_usedBy | null;
   currentBalance: GiftCardList_giftCards_edges_node_currentBalance | null;
 }

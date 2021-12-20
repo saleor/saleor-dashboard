@@ -48,8 +48,8 @@ const giftCardHistoryTimelineMessages = defineMessages({
     defaultMessage: "Gift card was sent to customer",
     description: "gift card history message"
   },
-  giftCardTagUpdated: {
-    defaultMessage: "Gift card tag was updated",
+  giftCardTagsUpdated: {
+    defaultMessage: "Gift card tags were updated",
     description: "gift card history message"
   },
   giftCardUsedInOrder: {

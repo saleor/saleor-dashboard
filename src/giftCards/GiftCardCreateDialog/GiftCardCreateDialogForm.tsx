@@ -37,7 +37,7 @@ export interface GiftCardCreateFormData extends GiftCardCreateCommonFormData {
 }
 
 export const initialData: GiftCardCreateFormData = {
-  tag: "",
+  tags: [],
   balanceAmount: 1,
   balanceCurrency: null,
   note: "",
@@ -99,7 +99,7 @@ const GiftCardCreateDialogForm: React.FC<GiftCardCreateDialogFormProps> = ({
     };
   };
 
-  const { submit, change, data, set } = useForm(
+  const { submit, change, toggleValue, data, set } = useForm(
     {
       ...initialData,
       ...getInitialExpirySettingsData(),
@@ -111,12 +111,12 @@ const GiftCardCreateDialogForm: React.FC<GiftCardCreateDialogFormProps> = ({
   );
 
   const formErrors = getFormErrors(
-    ["tag", "expiryDate", "customer", "currency", "amount", "balance"],
+    ["tags", "expiryDate", "customer", "currency", "amount", "balance"],
     apiErrors
   );
 
   const {
-    tag,
+    tags,
     sendToCustomerSelected,
     channelSlug,
     balanceAmount,
@@ -141,19 +141,25 @@ const GiftCardCreateDialogForm: React.FC<GiftCardCreateDialogFormProps> = ({
   const commonFormProps: GiftCardCreateFormCommonProps = {
     data,
     errors: formErrors,
+    toggleValue,
     change
   };
 
   return (
     <>
-      <DialogContent>
+      <DialogContent
+        style={{
+          overflowY: "auto",
+          overflowX: "hidden"
+        }}
+      >
         <GiftCardCreateMoneyInput {...commonFormProps} set={set} />
         <CardSpacer />
         <GiftCardTagInput
-          error={formErrors?.tag}
-          name="tag"
-          value={tag}
-          change={change}
+          error={formErrors?.tags}
+          name="tags"
+          values={tags}
+          toggleChange={toggleValue}
         />
         <CardSpacer />
         <Divider />

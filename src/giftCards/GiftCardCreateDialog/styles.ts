@@ -20,7 +20,11 @@ export const useGiftCardCreateFormStyles = makeStyles(
       width: 100
     },
     fullWidthContainer: { width: "100%" },
-    dialogContent: { minWidth: 550 }
+    dialogContent: {
+      minWidth: 550,
+      overflowY: "auto",
+      overflowX: "hidden"
+    }
   }),
   { name: "GiftCardCreateDialogForm" }
 );

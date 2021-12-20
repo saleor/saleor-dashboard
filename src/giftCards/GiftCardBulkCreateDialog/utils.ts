@@ -24,7 +24,7 @@ export const validateField = (
 
   switch (key) {
     case "cardsAmount":
-    case "tag":
+    case "tags":
     case "balanceCurrency":
     case "balanceAmount":
       return !value ? error : null;
