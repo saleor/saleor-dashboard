@@ -99,6 +99,7 @@ const LoginCard: React.FC<LoginCardProps> = props => {
             <IconButton
               className={classes.showPasswordBtn}
               variant="secondary"
+              hoverOutline={false}
               onMouseDown={() => setShowPassword(true)}
               onMouseUp={() => setShowPassword(false)}
             >
