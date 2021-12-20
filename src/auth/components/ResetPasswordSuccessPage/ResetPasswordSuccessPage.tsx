@@ -1,19 +1,10 @@
 import { Typography } from "@material-ui/core";
 import FormSpacer from "@saleor/components/FormSpacer";
-import { Button, makeStyles } from "@saleor/macaw-ui";
+import { Button } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
-const useStyles = makeStyles(
-  {
-    submit: {
-      width: "100%"
-    }
-  },
-  {
-    name: "ResetPasswordSuccessPage"
-  }
-);
+import useStyles from "../styles";
 
 export interface ResetPasswordSuccessPageFormData {
   email: string;

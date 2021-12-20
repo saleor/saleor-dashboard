@@ -1,31 +1,13 @@
-import { SetPasswordData } from "@saleor/sdk";
 import { TextField, Typography } from "@material-ui/core";
 import Form from "@saleor/components/Form";
 import FormSpacer from "@saleor/components/FormSpacer";
-import { Button, makeStyles } from "@saleor/macaw-ui";
+import { Button } from "@saleor/macaw-ui";
+import { SetPasswordData } from "@saleor/sdk";
 import getAccountErrorMessage from "@saleor/utils/errors/account";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-const useStyles = makeStyles(
-  theme => ({
-    errorText: {
-      color: theme.palette.error.contrastText
-    },
-    panel: {
-      background: theme.palette.error.main,
-      borderRadius: theme.spacing(),
-      marginBottom: theme.spacing(3),
-      padding: theme.spacing(1.5)
-    },
-    submit: {
-      width: "100%"
-    }
-  }),
-  {
-    name: "NewPasswordPage"
-  }
-);
+import useStyles from "../styles";
 
 export interface NewPasswordPageFormData {
   password: string;
@@ -60,13 +42,7 @@ const NewPasswordPage: React.FC<NewPasswordPageProps> = props => {
 
         return (
           <>
-            {!!error && (
-              <div className={classes.panel}>
-                <Typography variant="caption" className={classes.errorText}>
-                  {error}
-                </Typography>
-              </div>
-            )}
+            {!!error && <div className={classes.panel}>{error}</div>}
             <Typography>
               <FormattedMessage defaultMessage="Please set up a new password." />
             </Typography>
