@@ -361,7 +361,7 @@ export function addressToAddressInput<T>(
   const { id, __typename, ...rest } = address;
   return {
     ...rest,
-    country: findInEnum(address?.country?.code, CountryCode)
+    country: findInEnum(address.country.code, CountryCode)
   };
 }
 
