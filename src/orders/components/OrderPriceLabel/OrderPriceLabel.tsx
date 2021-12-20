@@ -2,6 +2,7 @@ import DiscountedPrice from "@saleor/components/DiscountedPrice/DiscountedPrice"
 import Money from "@saleor/components/Money";
 import { SearchOrderVariant_search_edges_node_variants_pricing } from "@saleor/orders/types/SearchOrderVariant";
 import * as React from "react";
+
 import { useStyles } from "./styles";
 
 interface OrderPriceLabelProps {
