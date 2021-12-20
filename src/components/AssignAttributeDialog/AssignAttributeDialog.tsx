@@ -61,6 +61,7 @@ const useStyles = makeStyles(
       paddingBottom: theme.spacing(6)
     },
     scrollArea: {
+      maxHeight: 700,
       overflowY: "scroll",
       paddingTop: 0,
       marginBottom: theme.spacing(3)
