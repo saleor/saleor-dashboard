@@ -112,24 +112,27 @@ const OrderRefundPage: React.FC<OrderReturnPageProps> = props => {
                 )}
                 {renderCollection(
                   getFulfilledFulfillemnts(order),
-                  ({ id, lines }) => (
-                    <React.Fragment key={id}>
-                      <ItemsCard
-                        errors={errors}
-                        order={order}
-                        fulfilmentId={id}
-                        lines={getParsedLines(lines)}
-                        itemsQuantities={data.fulfilledItemsQuantities}
-                        itemsSelections={data.itemsToBeReplaced}
-                        onChangeQuantity={handlers.changeFulfiledItemsQuantity}
-                        onSetMaxQuantity={handlers.handleSetMaximalItemsQuantities(
-                          id
-                        )}
-                        onChangeSelected={handlers.changeItemsToBeReplaced}
-                      />
-                      <CardSpacer />
-                    </React.Fragment>
-                  )
+                  ({ id, lines }) =>
+                    !!lines.length && (
+                      <React.Fragment key={id}>
+                        <ItemsCard
+                          errors={errors}
+                          order={order}
+                          fulfilmentId={id}
+                          lines={getParsedLines(lines)}
+                          itemsQuantities={data.fulfilledItemsQuantities}
+                          itemsSelections={data.itemsToBeReplaced}
+                          onChangeQuantity={
+                            handlers.changeFulfiledItemsQuantity
+                          }
+                          onSetMaxQuantity={handlers.handleSetMaximalItemsQuantities(
+                            id
+                          )}
+                          onChangeSelected={handlers.changeItemsToBeReplaced}
+                        />
+                        <CardSpacer />
+                      </React.Fragment>
+                    )
                 )}
               </div>
               <div>
