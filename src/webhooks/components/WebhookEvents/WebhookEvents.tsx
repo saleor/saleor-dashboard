@@ -7,8 +7,8 @@ import MultiAutocompleteSelectField, {
 } from "@saleor/components/MultiAutocompleteSelectField";
 import { ChangeEvent } from "@saleor/hooks/useForm";
 import {
-  WebhookEventTypeAsync,
-  WebhookEventTypeSync
+  WebhookEventTypeAsyncEnum,
+  WebhookEventTypeSyncEnum
 } from "@saleor/types/globalTypes";
 import {
   mapAsyncEventsToChoices,
@@ -22,8 +22,8 @@ import { messages } from "./messages";
 
 interface WebhookEventsProps {
   data: {
-    syncEvents: WebhookEventTypeSync[];
-    asyncEvents: WebhookEventTypeAsync[];
+    syncEvents: WebhookEventTypeSyncEnum[];
+    asyncEvents: WebhookEventTypeAsyncEnum[];
   };
   syncEventsChoices: MultiAutocompleteChoiceType[];
   asyncEventsChoices: MultiAutocompleteChoiceType[];

@@ -4,7 +4,7 @@ import { WindowTitle } from "@saleor/components/WindowTitle";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { commonMessages } from "@saleor/intl";
-import { WebhookEventTypeAsync } from "@saleor/types/globalTypes";
+import { WebhookEventTypeAsyncEnum } from "@saleor/types/globalTypes";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -46,9 +46,9 @@ export const WebhooksCreate: React.FC<WebhooksCreateProps> = ({ id }) => {
           app: id,
           syncEvents: data.syncEvents,
           asyncEvents: data.asyncEvents.includes(
-            WebhookEventTypeAsync.ANY_EVENTS
+            WebhookEventTypeAsyncEnum.ANY_EVENTS
           )
-            ? [WebhookEventTypeAsync.ANY_EVENTS]
+            ? [WebhookEventTypeAsyncEnum.ANY_EVENTS]
             : data.asyncEvents,
           isActive: data.isActive,
           name: data.name,
