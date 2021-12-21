@@ -215,11 +215,12 @@ function useProductVariantUpdateForm(
     stock => !stockDiff.added.some(addedStock => addedStock === stock.id)
   );
 
-  const disabled = channels?.data.some(
-    channelData =>
-      validatePrice(channelData.value.price) ||
-      validateCostPrice(channelData.value.costPrice)
-  );
+  const disabled =
+    channels?.data.some(
+      channelData =>
+        validatePrice(channelData.value.price) ||
+        validateCostPrice(channelData.value.costPrice)
+    ) || !form.data.sku;
   const data: ProductVariantUpdateData = {
     ...form.data,
     attributes: getAttributesDisplayData(
