@@ -11,7 +11,7 @@ import { ConfirmButton } from "@saleor/components/ConfirmButton";
 import CustomerAddressChoiceCard from "@saleor/customers/components/CustomerAddressChoiceCard";
 import { CustomerAddresses_user_addresses } from "@saleor/customers/types/CustomerAddresses";
 import { buttonMessages } from "@saleor/intl";
-import { SearchIcon } from "@saleor/macaw-ui";
+import { ConfirmButtonTransitionState, SearchIcon } from "@saleor/macaw-ui";
 import { AddressTypeEnum } from "@saleor/types/globalTypes";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -27,7 +27,7 @@ import { parseQuery, stringifyAddress } from "./utils";
 
 export interface OrderCustomerAddressesSearchProps {
   type: AddressTypeEnum;
-  data: OrderCustomerAddressesEditData;
+  transitionState: ConfirmButtonTransitionState;
   selectedCustomerAddressId?: string;
   customerAddresses: CustomerAddresses_user_addresses[];
   onChangeCustomerShippingAddress: (
@@ -36,13 +36,15 @@ export interface OrderCustomerAddressesSearchProps {
   onChangeCustomerBillingAddress: (
     customerAddress: CustomerAddresses_user_addresses
   ) => void;
-  submit?: (data: OrderCustomerAddressesEditFormData) => void;
+  submit: (data: OrderCustomerAddressesEditFormData) => void;
+  data?: OrderCustomerAddressesEditData;
   exitSearch();
 }
 
 const OrderCustomerAddressesSearch: React.FC<OrderCustomerAddressesSearchProps> = props => {
   const {
     type,
+    transitionState,
     data,
     selectedCustomerAddressId,
     customerAddresses,
@@ -71,10 +73,11 @@ const OrderCustomerAddressesSearch: React.FC<OrderCustomerAddressesSearchProps> 
     } else {
       onChangeCustomerBillingAddress(temporarySelectedAddress);
     }
-    if (submit && data) {
+    if (data) {
       submit(data);
+    } else {
+      exitSearch();
     }
-    exitSearch();
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -136,8 +139,7 @@ const OrderCustomerAddressesSearch: React.FC<OrderCustomerAddressesSearchProps> 
         </Button>
         <ConfirmButton
           variant="primary"
-          transitionState="default"
-          type="submit"
+          transitionState={transitionState}
           onClick={handleSelect}
         >
           <FormattedMessage {...buttonMessages.select} />
