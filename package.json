@@ -29,7 +29,7 @@
     "@material-ui/lab": "^4.0.0-alpha.58",
     "@material-ui/styles": "^4.11.4",
     "@saleor/macaw-ui": "^0.2.7",
-    "@saleor/sdk": "^0.4.0",
+    "@saleor/sdk": "^0.4.1",
     "@sentry/react": "^6.0.0",
     "@types/faker": "^5.1.6",
     "apollo": "^2.32.5",
