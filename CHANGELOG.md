@@ -79,6 +79,7 @@ All notable, unreleased changes to this project will be documented in this file.
 - Fixed issue with modals containing invalid, redundant scrolls #1240 by @kamilpastuszka
 - Add text attribute for product and page translations - #1276 by @kamilpastuszka
 - Add Demo Banner - #1331 by @kamilpastuszka
+- Display error if no invoicing plugin is active - #1701 by @dominik-zeglen
 
 # 2.11.1
 
