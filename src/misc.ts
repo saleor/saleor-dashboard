@@ -434,3 +434,16 @@ export const flatten = (obj: unknown) => {
 
   return result;
 };
+
+export class PromiseQueue {
+  queue = Promise.resolve();
+
+  add(operation: (value: unknown) => PromiseLike<unknown>) {
+    return new Promise((resolve, reject) => {
+      this.queue = this.queue
+        .then(operation)
+        .then(resolve)
+        .catch(reject);
+    });
+  }
+}
