@@ -36,7 +36,7 @@ const ResetPasswordPage: React.FC<ResetPasswordPageProps> = props => {
           </Typography>
           {!!error && <div className={classes.panel}>{error}</div>}
           <Typography variant="caption" color="textSecondary">
-            <FormattedMessage defaultMessage="Provide us with an email - if we find it in out database we will send you a link to reset your password. You should be able to find it in your inbox in next couple of minutes." />
+            <FormattedMessage defaultMessage="Provide us with an email - if we find it in our database we will send you a link to reset your password. You should be able to find it in your inbox in the next couple of minutes." />
           </Typography>
           <FormSpacer />
           <TextField
