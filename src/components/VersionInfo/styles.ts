@@ -13,7 +13,7 @@ export const useStyles = makeStyles(
       [theme.breakpoints.up("md")]: {
         fontSize: theme.spacing(2)
       },
-      color: "rgba(40, 35, 74, 0.6)",
+      color: theme.palette.saleor.main[3],
       lineHeight: theme.spacing(3.2),
       fontSize: theme.spacing(2),
       marginLeft: theme.spacing(1.5),
