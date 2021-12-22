@@ -351,13 +351,27 @@ function useProductUpdateForm(
   const submit = async () =>
     handleFormSubmit(getSubmitData(), handleSubmit, setChanged);
 
-  const disabled =
-    !opts.hasVariants &&
-    (!data.sku ||
-      data.channelListings.some(
-        channel =>
-          validatePrice(channel.price) || validateCostPrice(channel.costPrice)
-      ));
+  const shouldEnableSave = () => {
+    if (!data.name) {
+      return false;
+    }
+
+    if (opts.hasVariants) {
+      return true;
+    }
+
+    const hasInvalidChannelListingPrices = data.channelListings.some(
+      channel =>
+        validatePrice(channel.price) || validateCostPrice(channel.costPrice)
+    );
+
+    if (!data.sku || hasInvalidChannelListingPrices) {
+      return false;
+    }
+    return true;
+  };
+
+  const disabled = !shouldEnableSave();
 
   return {
     change: handleChange,

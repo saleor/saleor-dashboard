@@ -305,14 +305,27 @@ function useProductCreateForm(
   const data = getData();
   const submit = () => onSubmit(data);
 
-  const disabled =
-    !opts.selectedProductType?.hasVariants &&
-    (!data.sku ||
-      data.channelListings.some(
-        channel =>
-          validatePrice(channel.price) || validateCostPrice(channel.costPrice)
-      ) ||
-      !data.category);
+  const shouldEnableSave = () => {
+    if (!data.name || !data.productType) {
+      return false;
+    }
+
+    if (opts.selectedProductType?.hasVariants) {
+      return true;
+    }
+
+    const hasInvalidChannelListingPrices = data.channelListings.some(
+      channel =>
+        validatePrice(channel.price) || validateCostPrice(channel.costPrice)
+    );
+
+    if (!data.sku || hasInvalidChannelListingPrices) {
+      return false;
+    }
+    return true;
+  };
+
+  const disabled = !shouldEnableSave();
 
   return {
     change: handleChange,
