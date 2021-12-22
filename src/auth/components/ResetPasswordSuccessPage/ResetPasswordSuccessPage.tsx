@@ -20,6 +20,9 @@ const ResetPasswordSuccessPage: React.FC<ResetPasswordSuccessPageProps> = props 
 
   return (
     <>
+      <Typography variant="h3" className={classes.header}>
+        <FormattedMessage defaultMessage="Reset password" />
+      </Typography>
       <Typography>
         <FormattedMessage defaultMessage="Success! In a few minutes you’ll receive a message with instructions on how to reset your password." />
       </Typography>
