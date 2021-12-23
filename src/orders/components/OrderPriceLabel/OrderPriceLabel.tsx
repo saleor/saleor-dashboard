@@ -24,7 +24,7 @@ const OrderPriceLabel: React.FC<OrderPriceLabelProps> = ({ pricing }) => {
     );
   }
 
-  return <Money money={pricing.priceUndiscounted.gross} />;
+  return <Money money={pricing.priceUndiscounted.gross} align="right" />;
 };
 
 export default OrderPriceLabel;
