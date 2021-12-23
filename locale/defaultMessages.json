@@ -1560,13 +1560,17 @@
     "context": "add shipping zone title",
     "string": "Add Shipping Zones"
   },
+  "src_dot_channels_dot_components_dot_ShippingZonesCard_dot_allSelectedMessage": {
+    "context": "all selected zones card message",
+    "string": "All available shipping zones have been selected"
+  },
   "src_dot_channels_dot_components_dot_ShippingZonesCard_dot_subtitle": {
     "context": "card subtitle",
     "string": "Select Shipping Zones that will be supplied via this channel. You can assign Shipping Zones to multiple channels."
   },
   "src_dot_channels_dot_components_dot_ShippingZonesCard_dot_title": {
     "context": "title",
-    "string": "{zonesCount} Shipping Zones"
+    "string": "{zonesCount} / {totalCount} Shipping Zones"
   },
   "src_dot_channels_dot_pages_dot_ChannelsListPage_dot_2754800034": {
     "context": "alert",

@@ -24,8 +24,41 @@ const messages = defineMessages({
     defaultMessage:
       "Select Shipping Zones that will be supplied via this channel. You can assign Shipping Zones to multiple channels.",
     description: "card subtitle"
+  },
+  allSelectedMessage: {
+    defaultMessage: "All available shipping zones have been selected",
+    description: "all selected zones card message"
   }
 });
+
+const useStyles = makeStyles(
+  theme => ({
+    infoMessage: {
+      padding: theme.spacing(3)
+    }
+  }),
+  { name: "ShippingZonesCard" }
+);
+
+const useExpanderStyles = makeStyles(
+  () => ({
+    // empty expanded needed for mui to use root styles
+    expanded: {},
+    root: {
+      boxShadow: "none",
+
+      "&:before": {
+        content: "none"
+      },
+
+      "&$expanded": {
+        margin: 0,
+        border: "none"
+      }
+    }
+  }),
+  { name: "ShippingZonesCardExpander" }
+);
 
 type ShippingZonesCardProps = ShippingZonesProps;
 
@@ -37,6 +70,7 @@ const ShippingZonesCard: React.FC<ShippingZonesCardProps> = props => {
   } = props;
 
   const expanderClasses = useExpanderStyles({});
+  const classes = useStyles();
   const intl = useIntl();
 
   const hasMoreZonesToBeSelected = totalCount !== shippingZones.length;
@@ -48,7 +82,10 @@ const ShippingZonesCard: React.FC<ShippingZonesCardProps> = props => {
         <Typography>{intl.formatMessage(messages.subtitle)}</Typography>
       </CardContent>
       <Accordion classes={expanderClasses}>
-        <ShippingZonesListHeader shippingZones={shippingZones} />
+        <ShippingZonesListHeader
+          shippingZones={shippingZones}
+          totalCount={totalCount}
+        />
         <Divider />
         {shippingZones.map(zone => (
           <ShippingZoneItem zone={zone} onDelete={removeShippingZone} />
