@@ -18,6 +18,7 @@ import Hr from "@saleor/components/Hr";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import { ShopInfo_shop_countries } from "@saleor/components/Shop/types/ShopInfo";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
+import { ShippingCountriesNotAssigned_shop_countries } from "@saleor/shipping/types/ShippingCountriesNotAssigned";
 import useScrollableDialogStyle from "@saleor/styles/useScrollableDialogStyle";
 import { filter } from "fuzzaldrin";
 import React from "react";
@@ -34,6 +35,7 @@ interface FormData {
 export interface ShippingZoneCountriesAssignDialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
   countries: ShopInfo_shop_countries[];
+  restWorldCountries: ShippingCountriesNotAssigned_shop_countries[];
   initial: string[];
   isDefault: boolean;
   open: boolean;
@@ -47,6 +49,7 @@ const ShippingZoneCountriesAssignDialog: React.FC<ShippingZoneCountriesAssignDia
     isDefault,
     onClose,
     countries,
+    restWorldCountries,
     open,
     initial,
     onConfirm
@@ -61,6 +64,7 @@ const ShippingZoneCountriesAssignDialog: React.FC<ShippingZoneCountriesAssignDia
     query: "",
     restOfTheWorld: isDefault
   };
+
   return (
     <Dialog onClose={onClose} open={open} fullWidth maxWidth="sm">
       <Form
@@ -75,6 +79,44 @@ const ShippingZoneCountriesAssignDialog: React.FC<ShippingZoneCountriesAssignDia
             );
             return acc;
           }, {});
+          const handleRestOfTheWorldChange = (restOfTheWorld: boolean) => {
+            if (restOfTheWorld) {
+              change({
+                target: {
+                  name: "countries" as keyof FormData,
+                  value: restWorldCountries.map(country => country.code)
+                }
+              } as any);
+            }
+            change({
+              target: {
+                name: "restOfTheWorld" as keyof FormData,
+                value: !data.restOfTheWorld
+              }
+            } as any);
+          };
+          const handleCountryChange = (
+            countryCode: string,
+            checked: boolean
+          ) => {
+            const updatedCountries = checked
+              ? [...data.countries, countryCode]
+              : data.countries.filter(
+                  selectedCountries => selectedCountries !== countryCode
+                );
+            change({
+              target: {
+                name: "countries" as keyof FormData,
+                value: updatedCountries
+              }
+            } as any);
+            change({
+              target: {
+                name: "restOfTheWorld" as keyof FormData,
+                value: false
+              }
+            } as any);
+          };
 
           return (
             <>
@@ -124,12 +166,7 @@ const ShippingZoneCountriesAssignDialog: React.FC<ShippingZoneCountriesAssignDia
                         <Checkbox
                           checked={data.restOfTheWorld}
                           onChange={() =>
-                            change({
-                              target: {
-                                name: "restOfTheWorld" as keyof FormData,
-                                value: !data.restOfTheWorld
-                              }
-                            } as any)
+                            handleRestOfTheWorldChange(!data.restOfTheWorld)
                           }
                         />
                       </TableCell>
@@ -164,22 +201,7 @@ const ShippingZoneCountriesAssignDialog: React.FC<ShippingZoneCountriesAssignDia
                             <Checkbox
                               checked={isChecked}
                               onChange={() =>
-                                isChecked
-                                  ? change({
-                                      target: {
-                                        name: "countries" as keyof FormData,
-                                        value: data.countries.filter(
-                                          selectedCountries =>
-                                            selectedCountries !== country.code
-                                        )
-                                      }
-                                    } as any)
-                                  : change({
-                                      target: {
-                                        name: "countries" as keyof FormData,
-                                        value: [...data.countries, country.code]
-                                      }
-                                    } as any)
+                                handleCountryChange(country.code, !isChecked)
                               }
                             />
                           </TableCell>

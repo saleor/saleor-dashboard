@@ -35,7 +35,10 @@ import { findValueInEnum, getStringOrPlaceholder } from "../../../misc";
 import { CountryCode } from "../../../types/globalTypes";
 import ShippingZoneDetailsPage from "../../components/ShippingZoneDetailsPage";
 import { FormData } from "../../components/ShippingZoneDetailsPage/types";
-import { useShippingZone } from "../../queries";
+import {
+  useShippingCountriesNotAssigned,
+  useShippingZone
+} from "../../queries";
 import {
   shippingPriceRatesEditUrl,
   shippingPriceRatesUrl,
@@ -74,6 +77,8 @@ const ShippingZoneDetails: React.FC<ShippingZoneDetailsProps> = ({
     variables: { id, ...paginationState }
   });
   const { availableChannels, channel } = useAppChannel();
+
+  const { data: restWorldCountries } = useShippingCountriesNotAssigned({});
 
   const [openModal, closeModal] = createDialogActionHandlers<
     ShippingZoneUrlDialog,
@@ -257,6 +262,7 @@ const ShippingZoneDetails: React.FC<ShippingZoneDetailsProps> = ({
       <ShippingZoneCountriesAssignDialog
         confirmButtonState={updateShippingZoneOpts.status}
         countries={shop?.countries || []}
+        restWorldCountries={restWorldCountries.shop?.countries || []}
         initial={
           data?.shippingZone?.countries.map(country => country.code) || []
         }
@@ -267,7 +273,7 @@ const ShippingZoneDetails: React.FC<ShippingZoneDetailsProps> = ({
             variables: {
               id,
               input: {
-                countries: formData.countries,
+                countries: formData.restOfTheWorld ? [] : formData.countries,
                 default: formData.restOfTheWorld
               }
             }
