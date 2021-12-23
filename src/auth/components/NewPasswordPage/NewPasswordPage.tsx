@@ -42,9 +42,15 @@ const NewPasswordPage: React.FC<NewPasswordPageProps> = props => {
 
         return (
           <>
+            <Typography variant="h3" className={classes.header}>
+              <FormattedMessage
+                defaultMessage="Set up new password"
+                description="page title"
+              />
+            </Typography>
             {!!error && <div className={classes.panel}>{error}</div>}
-            <Typography>
-              <FormattedMessage defaultMessage="Please set up a new password." />
+            <Typography variant="caption" color="textSecondary">
+              <FormattedMessage defaultMessage="Please set up a new password for your account. Repeat your new password to make sure you will be able to remember it." />
             </Typography>
             <FormSpacer />
             <TextField

@@ -2,6 +2,12 @@ import { makeStyles } from "@saleor/macaw-ui";
 
 const useStyles = makeStyles(
   theme => ({
+    arrow: {
+      transform: "rotate(180deg)"
+    },
+    backBtn: {
+      marginBottom: theme.spacing(3)
+    },
     buttonContainer: {
       display: "flex",
       justifyContent: "flex-end"
