@@ -10,6 +10,7 @@ import { countries } from "../taxes/fixtures";
 const props: ShippingZoneCountriesAssignDialogProps = {
   confirmButtonState: "default",
   countries,
+  restWorldCountries: countries,
   initial: ["PL", "GB", "DE"],
   isDefault: false,
   onClose: () => undefined,

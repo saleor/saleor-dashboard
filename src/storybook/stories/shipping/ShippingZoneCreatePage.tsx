@@ -35,6 +35,43 @@ const props: ShippingZoneCreatePageProps = {
       country: "France"
     }
   ],
+  restWorldCountries: [
+    {
+      __typename: "CountryDisplay",
+      code: "DE",
+      country: "Germany"
+    },
+    {
+      __typename: "CountryDisplay",
+      code: "GB",
+      country: "Great Britain"
+    },
+    {
+      __typename: "CountryDisplay",
+      code: "PL",
+      country: "Poland"
+    },
+    {
+      __typename: "CountryDisplay",
+      code: "CZ",
+      country: "Czech Republic"
+    },
+    {
+      __typename: "CountryDisplay",
+      code: "FR",
+      country: "France"
+    },
+    {
+      __typename: "CountryDisplay",
+      code: "ES",
+      country: "Spain"
+    },
+    {
+      __typename: "CountryDisplay",
+      code: "US",
+      country: "United States"
+    }
+  ],
   disabled: false,
   errors: [],
   onBack: () => undefined,

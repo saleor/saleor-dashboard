@@ -10,12 +10,28 @@ import {
   ChannelShippingZones,
   ChannelShippingZonesVariables
 } from "./types/ChannelShippingZones";
+import { ShippingCountriesNotAssigned } from "./types/ShippingCountriesNotAssigned";
 import { ShippingZone, ShippingZoneVariables } from "./types/ShippingZone";
 import {
   ShippingZoneChannels,
   ShippingZoneChannelsVariables
 } from "./types/ShippingZoneChannels";
 import { ShippingZones, ShippingZonesVariables } from "./types/ShippingZones";
+
+const shippingCountriesNotAssigned = gql`
+  query ShippingCountriesNotAssigned {
+    shop {
+      countries(inShippingZones: false) {
+        code
+        country
+      }
+    }
+  }
+`;
+export const useShippingCountriesNotAssigned = makeQuery<
+  ShippingCountriesNotAssigned,
+  never
+>(shippingCountriesNotAssigned);
 
 const shippingZones = gql`
   ${pageInfoFragment}

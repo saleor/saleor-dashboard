@@ -11,6 +11,7 @@ import { SubmitPromise } from "@saleor/hooks/useForm";
 import { sectionNames } from "@saleor/intl";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import { Backlink } from "@saleor/macaw-ui";
+import { ShippingCountriesNotAssigned_shop_countries } from "@saleor/shipping/types/ShippingCountriesNotAssigned";
 import React from "react";
 import { defineMessages, useIntl } from "react-intl";
 
@@ -45,6 +46,7 @@ const messages = defineMessages({
 
 export interface ShippingZoneCreatePageProps {
   countries: CountryFragment[];
+  restWorldCountries: ShippingCountriesNotAssigned_shop_countries[];
   disabled: boolean;
   errors: ShippingErrorFragment[];
   saveButtonBarState: ConfirmButtonTransitionState;
@@ -54,6 +56,7 @@ export interface ShippingZoneCreatePageProps {
 
 const ShippingZoneCreatePage: React.FC<ShippingZoneCreatePageProps> = ({
   countries,
+  restWorldCountries,
   disabled,
   errors,
   onBack,
@@ -140,6 +143,7 @@ const ShippingZoneCreatePage: React.FC<ShippingZoneCreatePageProps> = ({
             }}
             confirmButtonState="default"
             countries={countries}
+            restWorldCountries={restWorldCountries}
             initial={data.countries}
             isDefault={data.default}
             onClose={toggleModal}
