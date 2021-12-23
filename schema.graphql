@@ -464,8 +464,6 @@ type AssignedVariantAttribute {
 
 type Attribute implements Node & ObjectWithMetadata {
   id: ID!
-  productTypes(before: String, after: String, first: Int, last: Int): ProductTypeCountableConnection!
-  productVariantTypes(before: String, after: String, first: Int, last: Int): ProductTypeCountableConnection!
   privateMetadata: [MetadataItem]!
   metadata: [MetadataItem]!
   inputType: AttributeInputTypeEnum
@@ -483,6 +481,8 @@ type Attribute implements Node & ObjectWithMetadata {
   translation(languageCode: LanguageCodeEnum!): AttributeTranslation
   storefrontSearchPosition: Int!
   withChoices: Boolean!
+  productTypes(before: String, after: String, first: Int, last: Int): ProductTypeCountableConnection!
+  productVariantTypes(before: String, after: String, first: Int, last: Int): ProductTypeCountableConnection!
 }
 
 type AttributeBulkDelete {
@@ -2611,6 +2611,7 @@ enum InvoiceErrorCode {
   NUMBER_NOT_SET
   NOT_FOUND
   INVALID_STATUS
+  NO_INVOICE_PLUGIN
 }
 
 type InvoiceRequest {
@@ -4378,6 +4379,7 @@ input OrderFilterInput {
   channels: [ID]
   isClickAndCollect: Boolean
   isPreorder: Boolean
+  ids: [ID]
 }
 
 type OrderFulfill {
@@ -5899,7 +5901,7 @@ input PublishableChannelListingInput {
 
 type Query {
   webhook(id: ID!): Webhook
-  webhookEvents: [WebhookEvent]
+  webhookEvents: [WebhookEvent] @deprecated(reason: "This field will be removed in Saleor 4.0. Use `WebhookEventTypeAsyncEnum` and `WebhookEventTypeSyncEnum` to get available event types.")
   webhookSamplePayload(eventType: WebhookSampleEventTypeEnum!): JSONString
   warehouse(id: ID!): Warehouse
   warehouses(filter: WarehouseFilterInput, sortBy: WarehouseSortingInput, before: String, after: String, first: Int, last: Int): WarehouseCountableConnection
@@ -7148,7 +7150,6 @@ type Warehouse implements Node & ObjectWithMetadata {
   id: ID!
   name: String!
   slug: String!
-  shippingZones(before: String, after: String, first: Int, last: Int): ShippingZoneCountableConnection!
   address: Address!
   email: String!
   isPrivate: Boolean!
@@ -7156,6 +7157,7 @@ type Warehouse implements Node & ObjectWithMetadata {
   metadata: [MetadataItem]!
   companyName: String! @deprecated(reason: "This field will be removed in Saleor 4.0. Use `Address.companyName` instead.")
   clickAndCollectOption: WarehouseClickAndCollectOptionEnum!
+  shippingZones(before: String, after: String, first: Int, last: Int): ShippingZoneCountableConnection!
 }
 
 enum WarehouseClickAndCollectOptionEnum {
@@ -7275,8 +7277,8 @@ input WebhookCreateInput {
   name: String
   targetUrl: String
   events: [WebhookEventTypeEnum]
-  asyncEvents: [WebhookEventTypeAsync!]
-  syncEvents: [WebhookEventTypeSync!]
+  asyncEvents: [WebhookEventTypeAsyncEnum!]
+  syncEvents: [WebhookEventTypeSyncEnum!]
   app: ID
   isActive: Boolean
   secretKey: String
@@ -7308,16 +7310,16 @@ type WebhookEvent {
 }
 
 type WebhookEventAsync {
-  eventType: WebhookEventTypeAsync!
+  eventType: WebhookEventTypeAsyncEnum!
   name: String!
 }
 
 type WebhookEventSync {
-  eventType: WebhookEventTypeSync!
+  eventType: WebhookEventTypeSyncEnum!
   name: String!
 }
 
-enum WebhookEventTypeAsync {
+enum WebhookEventTypeAsyncEnum {
   ANY_EVENTS
   ORDER_CREATED
   ORDER_CONFIRMED
@@ -7403,7 +7405,7 @@ enum WebhookEventTypeEnum {
   TRANSLATION_UPDATED
 }
 
-enum WebhookEventTypeSync {
+enum WebhookEventTypeSyncEnum {
   PAYMENT_AUTHORIZE
   PAYMENT_CAPTURE
   PAYMENT_CONFIRM
@@ -7448,14 +7450,6 @@ enum WebhookSampleEventTypeEnum {
   PAGE_CREATED
   PAGE_UPDATED
   PAGE_DELETED
-  PAYMENT_AUTHORIZE
-  PAYMENT_CAPTURE
-  PAYMENT_CONFIRM
-  PAYMENT_LIST_GATEWAYS
-  PAYMENT_PROCESS
-  PAYMENT_REFUND
-  PAYMENT_VOID
-  SHIPPING_LIST_METHODS_FOR_CHECKOUT
   TRANSLATION_CREATED
   TRANSLATION_UPDATED
 }
@@ -7470,8 +7464,8 @@ input WebhookUpdateInput {
   name: String
   targetUrl: String
   events: [WebhookEventTypeEnum]
-  asyncEvents: [WebhookEventTypeAsync!]
-  syncEvents: [WebhookEventTypeSync!]
+  asyncEvents: [WebhookEventTypeAsyncEnum!]
+  syncEvents: [WebhookEventTypeSyncEnum!]
   app: ID
   isActive: Boolean
   secretKey: String

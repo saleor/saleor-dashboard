@@ -8,8 +8,8 @@ import Savebar from "@saleor/components/Savebar";
 import { WebhookErrorFragment } from "@saleor/fragments/types/WebhookErrorFragment";
 import { Backlink } from "@saleor/macaw-ui";
 import {
-  WebhookEventTypeAsync,
-  WebhookEventTypeSync
+  WebhookEventTypeAsyncEnum,
+  WebhookEventTypeSyncEnum
 } from "@saleor/types/globalTypes";
 import WebhookEvents from "@saleor/webhooks/components/WebhookEvents";
 import WebhookInfo from "@saleor/webhooks/components/WebhookInfo";
@@ -29,8 +29,8 @@ import { useIntl } from "react-intl";
 import { getHeaderTitle } from "./messages";
 
 export interface FormData {
-  syncEvents: WebhookEventTypeSync[];
-  asyncEvents: WebhookEventTypeAsync[];
+  syncEvents: WebhookEventTypeSyncEnum[];
+  asyncEvents: WebhookEventTypeAsyncEnum[];
   isActive: boolean;
   name: string;
   secretKey: string | null;
@@ -72,11 +72,11 @@ const WebhookDetailsPage: React.FC<WebhookDetailsPageProps> = ({
       {({ data, hasChanged, submit, change }) => {
         const syncEventsChoices = disabled
           ? []
-          : mapSyncEventsToChoices(Object.values(WebhookEventTypeSync));
+          : mapSyncEventsToChoices(Object.values(WebhookEventTypeSyncEnum));
         const asyncEventsChoices = disabled
           ? []
           : mapAsyncEventsToChoices(
-              Object.values(WebhookEventTypeAsync),
+              Object.values(WebhookEventTypeAsyncEnum),
               data.asyncEvents
             );
 
