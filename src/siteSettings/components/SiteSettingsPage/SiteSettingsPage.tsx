@@ -148,7 +148,10 @@ const SiteSettingsPage: React.FC<SiteSettingsPageProps> = props => {
                   {intl.formatMessage(sectionNames.siteSettings)}
                 </Typography>
                 <Typography variant="body2">
-                  <FormattedMessage defaultMessage="These are general information about your store. They define what is the URL of your store and what is shown in browsers taskbar." />
+                  <FormattedMessage
+                    defaultMessage="These are general information about your store. They define what is the URL of your store and what is shown in browsers taskbar."
+                    description="site settings information description message"
+                  />
                 </Typography>
               </div>
               <SiteSettingsDetails
@@ -166,8 +169,10 @@ const SiteSettingsPage: React.FC<SiteSettingsPageProps> = props => {
                   />
                 </Typography>
                 <Typography variant="body2">
-                  <FormattedMessage defaultMessage="This adress will be used to generate invoices and calculate shipping rates." />
-                  <FormattedMessage defaultMessage="Email adress you provide here will be used as a contact adress for your customers." />
+                  <FormattedMessage
+                    defaultMessage="This address will be used to generate invoices and calculate shipping rates. Email address you provide here will be used as a contact adress for your customers."
+                    description="company information description message"
+                  />
                 </Typography>
               </div>
               <CompanyAddressInput

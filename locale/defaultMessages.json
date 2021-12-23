@@ -6675,9 +6675,6 @@
   "src_dot_siteSettings_dot_components_dot_SiteSettingsDetails_dot_529433178": {
     "string": "Store description is shown on taskbar after your store name"
   },
-  "src_dot_siteSettings_dot_components_dot_SiteSettingsPage_dot_1004240342": {
-    "string": "This adress will be used to generate invoices and calculate shipping rates."
-  },
   "src_dot_siteSettings_dot_components_dot_SiteSettingsPage_dot_229184360": {
     "context": "section header",
     "string": "Store Information"
@@ -6686,10 +6683,12 @@
     "context": "section header",
     "string": "Company Information"
   },
-  "src_dot_siteSettings_dot_components_dot_SiteSettingsPage_dot_3657173399": {
-    "string": "Email adress you provide here will be used as a contact adress for your customers."
+  "src_dot_siteSettings_dot_components_dot_SiteSettingsPage_dot_2966820735": {
+    "context": "company information description message",
+    "string": "This address will be used to generate invoices and calculate shipping rates. Email address you provide here will be used as a contact adress for your customers."
   },
   "src_dot_siteSettings_dot_components_dot_SiteSettingsPage_dot_3799756739": {
+    "context": "site settings information description message",
     "string": "These are general information about your store. They define what is the URL of your store and what is shown in browsers taskbar."
   },
   "src_dot_somethingWentWrong": {
