@@ -16,7 +16,6 @@ import ConfirmButton, {
   ConfirmButtonTransitionState
 } from "@saleor/components/ConfirmButton";
 import FormSpacer from "@saleor/components/FormSpacer";
-import Money from "@saleor/components/Money";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import TableCellAvatar from "@saleor/components/TableCellAvatar";
 import { OrderErrorFragment } from "@saleor/fragments/types/OrderErrorFragment";
@@ -36,6 +35,7 @@ import {
   SearchOrderVariant_search_edges_node,
   SearchOrderVariant_search_edges_node_variants
 } from "../../types/SearchOrderVariant";
+import OrderPriceLabel from "../OrderPriceLabel/OrderPriceLabel";
 
 const useStyles = makeStyles(
   theme => ({
@@ -365,9 +365,7 @@ const OrderProductAddDialog: React.FC<OrderProductAddDialogProps> = props => {
                             )}
                           </TableCell>
                           <TableCell className={classes.textRight}>
-                            {variant?.channelListings[0]?.price && (
-                              <Money money={variant.channelListings[0].price} />
-                            )}
+                            <OrderPriceLabel pricing={variant.pricing} />
                           </TableCell>
                         </TableRow>
                       ))}

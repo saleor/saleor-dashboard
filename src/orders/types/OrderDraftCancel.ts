@@ -546,6 +546,11 @@ export interface OrderDraftCancel_draftOrderDelete_order_invoices {
   status: JobStatusEnum;
 }
 
+export interface OrderDraftCancel_draftOrderDelete_order_channel_defaultCountry {
+  __typename: "CountryDisplay";
+  code: string;
+}
+
 export interface OrderDraftCancel_draftOrderDelete_order_channel {
   __typename: "Channel";
   isActive: boolean;
@@ -553,6 +558,7 @@ export interface OrderDraftCancel_draftOrderDelete_order_channel {
   name: string;
   currencyCode: string;
   slug: string;
+  defaultCountry: OrderDraftCancel_draftOrderDelete_order_channel_defaultCountry;
 }
 
 export interface OrderDraftCancel_draftOrderDelete_order {
