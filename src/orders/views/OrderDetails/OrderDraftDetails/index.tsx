@@ -89,9 +89,6 @@ export const OrderDraftDetails: React.FC<OrderDraftDetailsProps> = ({
   });
 
   const isAnyAddressEditModalOpen = (uri: string | undefined): boolean => {
-    if (!uri) {
-      return false;
-    }
     if (uri === "edit-customer-addresses") {
       return true;
     }
