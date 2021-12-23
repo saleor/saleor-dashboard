@@ -476,6 +476,11 @@ export interface OrderLineDelete_orderLineDelete_order_invoices {
   status: JobStatusEnum;
 }
 
+export interface OrderLineDelete_orderLineDelete_order_channel_defaultCountry {
+  __typename: "CountryDisplay";
+  code: string;
+}
+
 export interface OrderLineDelete_orderLineDelete_order_channel {
   __typename: "Channel";
   isActive: boolean;
@@ -483,6 +488,7 @@ export interface OrderLineDelete_orderLineDelete_order_channel {
   name: string;
   currencyCode: string;
   slug: string;
+  defaultCountry: OrderLineDelete_orderLineDelete_order_channel_defaultCountry;
 }
 
 export interface OrderLineDelete_orderLineDelete_order {

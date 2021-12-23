@@ -478,6 +478,11 @@ export interface FulfillOrder_orderFulfill_order_invoices {
   status: JobStatusEnum;
 }
 
+export interface FulfillOrder_orderFulfill_order_channel_defaultCountry {
+  __typename: "CountryDisplay";
+  code: string;
+}
+
 export interface FulfillOrder_orderFulfill_order_channel {
   __typename: "Channel";
   isActive: boolean;
@@ -485,6 +490,7 @@ export interface FulfillOrder_orderFulfill_order_channel {
   name: string;
   currencyCode: string;
   slug: string;
+  defaultCountry: FulfillOrder_orderFulfill_order_channel_defaultCountry;
 }
 
 export interface FulfillOrder_orderFulfill_order {

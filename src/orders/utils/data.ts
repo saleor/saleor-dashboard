@@ -1,5 +1,7 @@
 import { IMoney, subtractMoney } from "@saleor/components/Money";
 import { FormsetData } from "@saleor/hooks/useFormset";
+import { addressToAddressInput } from "@saleor/misc";
+import { AddressInput, CountryCode } from "@saleor/types/globalTypes";
 
 import {
   LineItemData,
@@ -208,3 +210,17 @@ export function mergeRepeatedOrderLines(
     return prev;
   }, Array<OrderDetails_order_fulfillments_lines>());
 }
+
+export const getVariantSearchAddress = (
+  order: OrderDetails_order
+): AddressInput => {
+  if (order.shippingAddress) {
+    return addressToAddressInput(order.shippingAddress);
+  }
+
+  if (order.billingAddress) {
+    return addressToAddressInput(order.billingAddress);
+  }
+
+  return { country: order.channel.defaultCountry.code as CountryCode };
+};

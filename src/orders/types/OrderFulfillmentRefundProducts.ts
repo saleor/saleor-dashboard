@@ -571,6 +571,11 @@ export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_o
   status: JobStatusEnum;
 }
 
+export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_channel_defaultCountry {
+  __typename: "CountryDisplay";
+  code: string;
+}
+
 export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_channel {
   __typename: "Channel";
   isActive: boolean;
@@ -578,6 +583,7 @@ export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_o
   name: string;
   currencyCode: string;
   slug: string;
+  defaultCountry: OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_channel_defaultCountry;
 }
 
 export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order {

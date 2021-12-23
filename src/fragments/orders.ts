@@ -281,6 +281,9 @@ export const fragmentOrderDetails = gql`
       name
       currencyCode
       slug
+      defaultCountry {
+        code
+      }
     }
     isPaid
   }

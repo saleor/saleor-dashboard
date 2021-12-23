@@ -476,6 +476,11 @@ export interface OrderLineDiscountUpdate_orderLineDiscountUpdate_order_invoices 
   status: JobStatusEnum;
 }
 
+export interface OrderLineDiscountUpdate_orderLineDiscountUpdate_order_channel_defaultCountry {
+  __typename: "CountryDisplay";
+  code: string;
+}
+
 export interface OrderLineDiscountUpdate_orderLineDiscountUpdate_order_channel {
   __typename: "Channel";
   isActive: boolean;
@@ -483,6 +488,7 @@ export interface OrderLineDiscountUpdate_orderLineDiscountUpdate_order_channel {
   name: string;
   currencyCode: string;
   slug: string;
+  defaultCountry: OrderLineDiscountUpdate_orderLineDiscountUpdate_order_channel_defaultCountry;
 }
 
 export interface OrderLineDiscountUpdate_orderLineDiscountUpdate_order {
