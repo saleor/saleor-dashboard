@@ -17,7 +17,7 @@ const DiscountedPrice: React.FC<DiscountedPriceProps> = ({
 
   return (
     <>
-      <Typography className={classes.strike}>
+      <Typography className={classes.strike} color="textSecondary">
         <Money money={regularPrice} />
       </Typography>
       <Money money={discountedPrice} />
