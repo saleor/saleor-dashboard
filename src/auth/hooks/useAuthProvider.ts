@@ -67,12 +67,14 @@ export function useAuthProvider({
   });
 
   const handleLogout = async () => {
+    const returnTo = urlJoin(
+      window.location.origin,
+      APP_MOUNT_URI === APP_DEFAULT_URI ? "" : APP_MOUNT_URI
+    );
+
     const result = await logout({
       input: JSON.stringify({
-        returnTo: urlJoin(
-          window.location.origin,
-          APP_MOUNT_URI === APP_DEFAULT_URI ? "" : APP_MOUNT_URI
-        )
+        returnTo
       } as RequestExternalLogoutInput)
     });
 
@@ -80,17 +82,16 @@ export function useAuthProvider({
       navigator.credentials.preventSilentAccess();
     }
 
-    if (!result) {
-      return;
-    }
+    const errors = result?.errors || [];
+    const logoutUrl = result
+      ? JSON.parse(result.data?.externalLogout?.logoutData || null)?.logoutUrl
+      : returnTo;
 
-    const errors = result.errors || [];
-    const logoutUrl = JSON.parse(
-      result.data?.externalLogout?.logoutData || null
-    )?.logoutUrl;
     if (!errors.length && logoutUrl) {
       window.location.href = logoutUrl;
     }
+
+    return;
   };
 
   const handleLogin = async (email: string, password: string) => {
