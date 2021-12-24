@@ -41,6 +41,9 @@ export const attributeDetailsUrl = attributeId =>
 export const categoryDetailsUrl = categoryId =>
   `${urlList.categories}${categoryId}`;
 
+export const collectionDetailsUrl = collectionId =>
+  `${urlList.collections}${collectionId}`;
+
 export const customerDetailsUrl = customerId =>
   `${urlList.customers}${customerId}`;
 
@@ -48,6 +51,8 @@ export const giftCardDetailsUrl = giftCardId =>
   `${urlList.giftCards}${giftCardId}`;
 
 export const menuDetailsUrl = menuId => `${urlList.navigation}${menuId}`;
+
+export const pageDetailsUrl = pageId => `${urlList.pages}${pageId}`;
 
 export const pageTypeDetailsUrl = pageTypeId =>
   `${urlList.pageTypes}${pageTypeId}`;

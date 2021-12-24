@@ -169,11 +169,13 @@ export const useOrderQuery = makeQuery<OrderDetails, OrderDetailsVariables>(
 );
 
 export const searchOrderVariant = gql`
+  ${fragmentMoney}
   query SearchOrderVariant(
     $channel: String!
     $first: Int!
     $query: String!
     $after: String
+    $address: AddressInput
   ) {
     search: products(
       first: $first
@@ -192,6 +194,19 @@ export const searchOrderVariant = gql`
             id
             name
             sku
+            pricing(address: $address) {
+              priceUndiscounted {
+                gross {
+                  ...Money
+                }
+              }
+              price {
+                gross {
+                  ...Money
+                }
+              }
+              onSale
+            }
             channelListings {
               channel {
                 id

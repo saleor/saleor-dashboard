@@ -5180,11 +5180,19 @@
   "src_dot_orders_dot_views_dot_OrderDetails_dot_4085755992": {
     "string": "Invoice email sent"
   },
+  "src_dot_orders_dot_views_dot_OrderDetails_dot_4207717971": {
+    "context": "snackbar title",
+    "string": "Could not generate invoice"
+  },
   "src_dot_orders_dot_views_dot_OrderDetails_dot_55607988": {
     "string": "Invoice is Generating"
   },
   "src_dot_orders_dot_views_dot_OrderDetails_dot_617145655": {
     "string": "Shipping method successfully updated"
+  },
+  "src_dot_orders_dot_views_dot_OrderDetails_dot_811176136": {
+    "context": "error message",
+    "string": "No invoice plugin installed"
   },
   "src_dot_orders_dot_views_dot_OrderDetails_dot_927945225": {
     "string": "Fulfillment successfully cancelled"
