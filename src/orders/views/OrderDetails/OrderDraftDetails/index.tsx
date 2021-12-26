@@ -150,13 +150,12 @@ export const OrderDraftDetails: React.FC<OrderDraftDetailsProps> = ({
   };
 
   const handleCustomerChangeAddresses = async (
-    data: OrderCustomerAddressesEditDialogOutput
+    data: Partial<OrderCustomerAddressesEditDialogOutput>
   ) => {
     const result = await orderDraftUpdate.mutate({
       id,
       input: {
-        shippingAddress: data.shippingAddress,
-        billingAddress: data.billingAddress
+        ...data
       }
     });
     if (!result?.data?.draftOrderUpdate?.errors?.length) {

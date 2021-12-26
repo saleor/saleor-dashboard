@@ -55,6 +55,7 @@ interface UseOrderCustomerAddressesEditFormOpts {
   countryChoices: SingleAutocompleteChoiceType[];
   defaultShippingAddress: CustomerAddresses_user_defaultShippingAddress;
   defaultBillingAddress: CustomerAddresses_user_defaultBillingAddress;
+  defaultBillingSameAsShipping: boolean;
 }
 
 export interface OrderCustomerAddressesEditFormProps
@@ -77,7 +78,7 @@ function useOrderCustomerAddressesEditForm(
     streetAddress1: ""
   };
   const defaultInitialFormData: OrderCustomerAddressesEditFormData = {
-    billingSameAsShipping: true,
+    billingSameAsShipping: opts.defaultBillingSameAsShipping,
     shippingAddressInputOption: AddressInputOptionEnum.CUSTOMER_ADDRESS,
     billingAddressInputOption: AddressInputOptionEnum.CUSTOMER_ADDRESS,
     customerShippingAddress: opts.defaultShippingAddress,
