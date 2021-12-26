@@ -17,16 +17,13 @@ import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { getById } from "../OrderReturnPage/utils";
-import {
-  OrderCustomerAddressesEditData,
-  OrderCustomerAddressesEditFormData
-} from "./form";
 import { addressSearchMessages as messages } from "./messages";
 import { useStyles } from "./styles";
 import { parseQuery, stringifyAddress } from "./utils";
 
 export interface OrderCustomerAddressesSearchProps {
   type: AddressTypeEnum;
+  openFromCustomerChange: boolean;
   transitionState: ConfirmButtonTransitionState;
   selectedCustomerAddressId?: string;
   customerAddresses: CustomerAddresses_user_addresses[];
@@ -36,8 +33,6 @@ export interface OrderCustomerAddressesSearchProps {
   onChangeCustomerBillingAddress: (
     customerAddress: CustomerAddresses_user_addresses
   ) => void;
-  submit: (data: OrderCustomerAddressesEditFormData) => void;
-  data?: OrderCustomerAddressesEditData;
   exitSearch();
 }
 
@@ -45,13 +40,12 @@ const OrderCustomerAddressesSearch: React.FC<OrderCustomerAddressesSearchProps> 
   const {
     type,
     transitionState,
-    data,
+    openFromCustomerChange,
     selectedCustomerAddressId,
     customerAddresses,
     onChangeCustomerShippingAddress,
     onChangeCustomerBillingAddress,
-    exitSearch,
-    submit
+    exitSearch
   } = props;
 
   const intl = useIntl();
@@ -73,9 +67,7 @@ const OrderCustomerAddressesSearch: React.FC<OrderCustomerAddressesSearchProps> 
     } else {
       onChangeCustomerBillingAddress(temporarySelectedAddress);
     }
-    if (data) {
-      submit(data);
-    } else {
+    if (openFromCustomerChange) {
       exitSearch();
     }
   };
@@ -140,6 +132,7 @@ const OrderCustomerAddressesSearch: React.FC<OrderCustomerAddressesSearchProps> 
         <ConfirmButton
           variant="primary"
           transitionState={transitionState}
+          type={openFromCustomerChange ? undefined : "submit"}
           onClick={handleSelect}
         >
           <FormattedMessage {...buttonMessages.select} />
