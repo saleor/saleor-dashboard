@@ -18,7 +18,7 @@ import {
 } from "@saleor/customers/types/CustomerAddresses";
 import { OrderErrorFragment } from "@saleor/fragments/types/OrderErrorFragment";
 import useAddressValidation from "@saleor/hooks/useAddressValidation";
-import { SubmitPromise } from "@saleor/hooks/useForm";
+import { FormChange, SubmitPromise } from "@saleor/hooks/useForm";
 import useModalDialogErrors from "@saleor/hooks/useModalDialogErrors";
 import { buttonMessages } from "@saleor/intl";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
@@ -31,7 +31,9 @@ import { FormattedMessage, useIntl } from "react-intl";
 import { getById } from "../OrderReturnPage/utils";
 import OrderCustomerAddressesEditForm, {
   AddressInputOptionEnum,
-  OrderCustomerAddressesEditFormData
+  OrderCustomerAddressesEditData,
+  OrderCustomerAddressesEditFormData,
+  OrderCustomerAddressesEditHandlers
 } from "./form";
 import { dialogMessages } from "./messages";
 import OrderCustomerAddressEdit from "./OrderCustomerAddressEdit";
@@ -114,7 +116,10 @@ const OrderCustomerAddressesEditDialog: React.FC<OrderCustomerAddressesEditDialo
   ): boolean =>
     !hasCustomerChanged &&
     !addressSearchState.open &&
-    data.shippingAddressInputOption === AddressInputOptionEnum.CUSTOMER_ADDRESS;
+    (variant === AddressEditDialogVariant.CHANGE_SHIPPING_ADDRESS
+      ? data.shippingAddressInputOption
+      : data.billingAddressInputOption) ===
+      AddressInputOptionEnum.CUSTOMER_ADDRESS;
 
   const getCustomerAddress = (
     selectedCustomerAddressID: string
@@ -132,6 +137,9 @@ const OrderCustomerAddressesEditDialog: React.FC<OrderCustomerAddressesEditDialo
         AddressInputOptionEnum.CUSTOMER_ADDRESS
         ? getCustomerAddress(data.customerShippingAddress.id)
         : handleShippingSubmit(data.shippingAddress);
+
+    // eslint-disable-next-line no-console
+    console.log(shippingAddress);
 
     const billingAddress =
       customerAddresses.length > 0 &&
@@ -179,6 +187,8 @@ const OrderCustomerAddressesEditDialog: React.FC<OrderCustomerAddressesEditDialo
   };
 
   const handleSubmit = async (data: OrderCustomerAddressesEditFormData) => {
+    // eslint-disable-next-line no-console
+    console.log(data);
     if (continueToSearchAddressesState(data)) {
       setAddressSearchState({
         open: true,
@@ -191,6 +201,8 @@ const OrderCustomerAddressesEditDialog: React.FC<OrderCustomerAddressesEditDialo
     }
 
     const addressesInput = handleAddressesSubmit(data);
+    // eslint-disable-next-line no-console
+    console.log(addressesInput);
     if (addressesInput) {
       onConfirm(addressesInput).then(() =>
         setAddressSearchState(defaultSearchState)
@@ -212,6 +224,61 @@ const OrderCustomerAddressesEditDialog: React.FC<OrderCustomerAddressesEditDialo
     defaultBillingAddress,
     customerAddresses
   );
+
+  const addressEditCommonProps = {
+    hideCard: !hasCustomerChanged,
+    loading,
+    countryChoices,
+    customerAddresses
+  };
+  const shippingAddressEditProps = (
+    data: OrderCustomerAddressesEditData,
+    handlers: OrderCustomerAddressesEditHandlers,
+    change: FormChange
+  ) => ({
+    ...addressEditCommonProps,
+    addressInputName: "shippingAddressInputOption",
+    formErrors: dialogErrors.filter(
+      error => error.addressType === AddressTypeEnum.SHIPPING
+    ),
+    onEdit: () =>
+      setAddressSearchState({
+        open: true,
+        type: AddressTypeEnum.SHIPPING
+      }),
+    onChangeAddressInputOption: change,
+    addressInputOption: data.shippingAddressInputOption,
+    selectedCustomerAddressId: data.customerShippingAddress?.id,
+    formAddress: data.shippingAddress,
+    formAddressCountryDisplayName: data.shippingCountryDisplayName,
+    onChangeFormAddress: event =>
+      handlers.changeFormAddress(event, "shippingAddress"),
+    onChangeFormAddressCountry: handlers.selectShippingCountry
+  });
+  const billingAddressEditProps = (
+    data: OrderCustomerAddressesEditData,
+    handlers: OrderCustomerAddressesEditHandlers,
+    change: FormChange
+  ) => ({
+    ...addressEditCommonProps,
+    addressInputName: "billingAddressInputOption",
+    formErrors: dialogErrors.filter(
+      error => error.addressType === AddressTypeEnum.BILLING
+    ),
+    onEdit: () =>
+      setAddressSearchState({
+        open: true,
+        type: AddressTypeEnum.BILLING
+      }),
+    onChangeAddressInputOption: change,
+    addressInputOption: data.billingAddressInputOption,
+    selectedCustomerAddressId: data.customerBillingAddress?.id,
+    formAddress: data.billingAddress,
+    formAddressCountryDisplayName: data.billingCountryDisplayName,
+    onChangeFormAddress: event =>
+      handlers.changeFormAddress(event, "billingAddress"),
+    onChangeFormAddressCountry: handlers.selectBillingCountry
+  });
 
   return (
     <Dialog
@@ -262,35 +329,11 @@ const OrderCustomerAddressesEditDialog: React.FC<OrderCustomerAddressesEditDialo
                 <DialogContent className={classes.scrollableContent}>
                   <Typography>{getDialogDescription()}</Typography>
                   <FormSpacer />
-                  <OrderCustomerAddressEdit
-                    hideCard={!hasCustomerChanged}
-                    loading={loading}
-                    countryChoices={countryChoices}
-                    addressInputOption={data.shippingAddressInputOption}
-                    addressInputName="shippingAddressInputOption"
-                    onChangeAddressInputOption={change}
-                    customerAddresses={customerAddresses}
-                    selectedCustomerAddressId={data.customerShippingAddress?.id}
-                    formAddress={data.shippingAddress}
-                    formAddressCountryDisplayName={
-                      data.shippingCountryDisplayName
-                    }
-                    formErrors={dialogErrors.filter(
-                      error => error.addressType === AddressTypeEnum.SHIPPING
-                    )}
-                    onChangeFormAddress={event =>
-                      handlers.changeFormAddress(event, "shippingAddress")
-                    }
-                    onChangeFormAddressCountry={handlers.selectShippingCountry}
-                    onEdit={() =>
-                      setAddressSearchState({
-                        open: true,
-                        type: AddressTypeEnum.SHIPPING
-                      })
-                    }
-                  />
                   {hasCustomerChanged && (
                     <>
+                      <OrderCustomerAddressEdit
+                        {...shippingAddressEditProps(data, handlers, change)}
+                      />
                       <FormSpacer />
                       <Divider />
                       <FormSpacer />
@@ -330,42 +373,23 @@ const OrderCustomerAddressesEditDialog: React.FC<OrderCustomerAddressesEditDialo
                           </Typography>
                           <FormSpacer />
                           <OrderCustomerAddressEdit
-                            loading={loading}
-                            countryChoices={countryChoices}
-                            addressInputOption={data.billingAddressInputOption}
-                            addressInputName="billingAddressInputOption"
-                            onChangeAddressInputOption={change}
-                            customerAddresses={customerAddresses}
-                            selectedCustomerAddressId={
-                              data.customerBillingAddress?.id
-                            }
-                            formAddress={data.billingAddress}
-                            formAddressCountryDisplayName={
-                              data.billingCountryDisplayName
-                            }
-                            formErrors={dialogErrors.filter(
-                              error =>
-                                error.addressType === AddressTypeEnum.BILLING
-                            )}
-                            onChangeFormAddress={event =>
-                              handlers.changeFormAddress(
-                                event,
-                                "billingAddress"
-                              )
-                            }
-                            onChangeFormAddressCountry={
-                              handlers.selectBillingCountry
-                            }
-                            onEdit={() =>
-                              setAddressSearchState({
-                                open: true,
-                                type: AddressTypeEnum.BILLING
-                              })
-                            }
+                            {...billingAddressEditProps(data, handlers, change)}
                           />
                         </>
                       )}
                     </>
+                  )}
+                  {variant ===
+                    AddressEditDialogVariant.CHANGE_SHIPPING_ADDRESS && (
+                    <OrderCustomerAddressEdit
+                      {...shippingAddressEditProps(data, handlers, change)}
+                    />
+                  )}
+                  {variant ===
+                    AddressEditDialogVariant.CHANGE_BILLING_ADDRESS && (
+                    <OrderCustomerAddressEdit
+                      {...billingAddressEditProps(data, handlers, change)}
+                    />
                   )}
                 </DialogContent>
                 <DialogActions>
