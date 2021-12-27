@@ -27,7 +27,7 @@ export const dialogMessages = defineMessages({
   },
   noAddressDescription: {
     defaultMessage:
-      "This customer doesn’t have any shipping addresses. Provide address for order:",
+      "This customer doesn't have any shipping addresses. Provide address for order:",
     description: "dialog content"
   },
   customerChangeDescription: {
@@ -56,7 +56,8 @@ export const dialogMessages = defineMessages({
     description: "modal information under title"
   },
   noResultsFound: {
-    defaultMessage: "No results found"
+    defaultMessage: "No results found",
+    description: "info when addresses search is unsuccessful"
   }
 });
 
