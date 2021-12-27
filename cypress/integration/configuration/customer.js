@@ -80,6 +80,7 @@ filterTests({ definedTags: ["all"] }, () => {
     it("should add address to customer", () => {
       const randomName = `${startsWith}${faker.datatype.number()}`;
       const email = `${randomName}@example.com`;
+
       createCustomer(email, randomName).then(({ user }) => {
         cy.visit(customerDetailsUrl(user.id))
           .get(CUSTOMER_DETAILS.menageAddressesButton)
@@ -99,6 +100,7 @@ filterTests({ definedTags: ["all"] }, () => {
     it("should remove address from customer", () => {
       const randomName = `${startsWith}${faker.datatype.number()}`;
       const email = `${randomName}@example.com`;
+
       createCustomer(email, randomName, address).then(({ user }) => {
         cy.visit(customerDetailsUrl(user.id))
           .get(CUSTOMER_DETAILS.menageAddressesButton)
@@ -163,6 +165,7 @@ filterTests({ definedTags: ["all"] }, () => {
     it("should update address", () => {
       const randomName = `${startsWith}${faker.datatype.number()}`;
       const email = `${randomName}@example.com`;
+
       createCustomer(email, randomName, address).then(({ user }) => {
         cy.visit(customerDetailsUrl(user.id))
           .get(CUSTOMER_DETAILS.menageAddressesButton)
@@ -190,6 +193,7 @@ filterTests({ definedTags: ["all"] }, () => {
     it("should delete customer", () => {
       const randomName = `${startsWith}${faker.datatype.number()}`;
       const email = `${randomName}@example.com`;
+
       createCustomer(email, randomName, address).then(({ user }) => {
         cy.visit(customerDetailsUrl(user.id))
           .get(BUTTON_SELECTORS.deleteButton)
@@ -205,6 +209,7 @@ filterTests({ definedTags: ["all"] }, () => {
     it("should deactivate customer", () => {
       const randomName = `${startsWith}${faker.datatype.number()}`;
       const email = `${randomName}@example.com`;
+
       createCustomer(email, randomName, address, true).then(({ user }) => {
         cy.visit(customerDetailsUrl(user.id))
           .get(CUSTOMER_DETAILS.activeCheckbox)
@@ -223,6 +228,7 @@ filterTests({ definedTags: ["all"] }, () => {
       const randomName = `${startsWith}${faker.datatype.number()}`;
       const updatedName = `${startsWith}UpdatedName`;
       const email = `${randomName}@example.com`;
+
       createCustomer(email, randomName, address, true).then(({ user }) => {
         cy.visit(customerDetailsUrl(user.id))
           .get(CUSTOMER_DETAILS.nameInput)
