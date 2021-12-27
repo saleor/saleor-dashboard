@@ -1,7 +1,9 @@
 import { useUser } from "@saleor/auth";
 import { WindowTitle } from "@saleor/components/WindowTitle";
+import { useCustomerAddressesQuery } from "@saleor/customers/queries";
 import useNavigator from "@saleor/hooks/useNavigator";
 import OrderCannotCancelOrderDialog from "@saleor/orders/components/OrderCannotCancelOrderDialog";
+import { OrderCustomerAddressesEditDialogOutput } from "@saleor/orders/components/OrderCustomerAddressesEditDialog";
 import OrderInvoiceEmailSendDialog from "@saleor/orders/components/OrderInvoiceEmailSendDialog";
 import { mapEdgesToItems } from "@saleor/utils/maps";
 import { useWarehouseList } from "@saleor/warehouses/queries";
@@ -27,6 +29,8 @@ import {
   orderUrl,
   OrderUrlQueryParams
 } from "../../../urls";
+import OrderAddressFields from "../OrderAddressFields";
+import { isAnyAddressEditModalOpen } from "../OrderDraftDetails";
 
 interface OrderNormalDetailsProps {
   id: string;
@@ -35,6 +39,7 @@ interface OrderNormalDetailsProps {
   orderAddNote: any;
   orderInvoiceRequest: any;
   handleSubmit: any;
+  orderUpdate: any;
   orderCancel: any;
   orderPaymentMarkAsPaid: any;
   orderVoid: any;
@@ -55,6 +60,7 @@ export const OrderNormalDetails: React.FC<OrderNormalDetailsProps> = ({
   orderAddNote,
   orderInvoiceRequest,
   handleSubmit,
+  orderUpdate,
   orderCancel,
   orderPaymentMarkAsPaid,
   orderVoid,
@@ -68,6 +74,7 @@ export const OrderNormalDetails: React.FC<OrderNormalDetailsProps> = ({
   closeModal
 }) => {
   const order = data?.order;
+
   const navigate = useNavigator();
   const { user } = useUser();
 
@@ -77,6 +84,33 @@ export const OrderNormalDetails: React.FC<OrderNormalDetailsProps> = ({
       first: 30
     }
   });
+
+  const {
+    data: customerAddresses,
+    loading: customerAddressesLoading
+  } = useCustomerAddressesQuery({
+    variables: {
+      id: order?.user?.id
+    },
+    skip: !order?.user?.id && !isAnyAddressEditModalOpen(params.action)
+  });
+  const handleCustomerChangeAddresses = async (
+    data: Partial<OrderCustomerAddressesEditDialogOutput>
+  ) => {
+    const result = await orderUpdate.mutate({
+      id,
+      input: {
+        ...data
+      }
+    });
+    // eslint-disable-next-line no-console
+    console.log(result);
+    if (!result?.data?.orderUpdate?.errors?.length) {
+      closeModal();
+    }
+    return result;
+  };
+
   const intl = useIntl();
   const [transactionReference, setTransactionReference] = React.useState("");
 
@@ -264,6 +298,17 @@ export const OrderNormalDetails: React.FC<OrderNormalDetailsProps> = ({
         invoice={order?.invoices?.find(invoice => invoice.id === params.id)}
         onClose={closeModal}
         onSend={() => orderInvoiceSend.mutate({ id: params.id })}
+      />
+      <OrderAddressFields
+        action={params?.action}
+        customerAddressesLoading={customerAddressesLoading}
+        id={id}
+        isDraft={false}
+        countries={data?.shop?.countries}
+        customer={customerAddresses?.user}
+        onClose={closeModal}
+        onConfirm={handleCustomerChangeAddresses}
+        orderUpdate={orderUpdate}
       />
     </>
   );

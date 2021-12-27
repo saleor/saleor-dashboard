@@ -139,9 +139,6 @@ const OrderCustomerAddressesEditDialog: React.FC<OrderCustomerAddressesEditDialo
         ? getCustomerAddress(data.customerShippingAddress.id)
         : handleShippingSubmit(data.shippingAddress);
 
-    // eslint-disable-next-line no-console
-    console.log(shippingAddress);
-
     const billingAddress =
       customerAddresses.length > 0 &&
       data.billingAddressInputOption === AddressInputOptionEnum.CUSTOMER_ADDRESS
@@ -188,8 +185,6 @@ const OrderCustomerAddressesEditDialog: React.FC<OrderCustomerAddressesEditDialo
   };
 
   const handleSubmit = async (data: OrderCustomerAddressesEditFormData) => {
-    // eslint-disable-next-line no-console
-    console.log(data);
     if (continueToSearchAddressesState(data)) {
       setAddressSearchState({
         open: true,
@@ -202,8 +197,6 @@ const OrderCustomerAddressesEditDialog: React.FC<OrderCustomerAddressesEditDialo
     }
 
     const addressesInput = handleAddressesSubmit(data);
-    // eslint-disable-next-line no-console
-    console.log(addressesInput);
     if (addressesInput) {
       onConfirm(addressesInput).then(() =>
         setAddressSearchState(defaultSearchState)

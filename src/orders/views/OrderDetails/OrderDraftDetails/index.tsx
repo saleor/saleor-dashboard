@@ -48,6 +48,11 @@ interface OrderDraftDetailsProps {
   closeModal: any;
 }
 
+export const isAnyAddressEditModalOpen = (uri: string | undefined): boolean =>
+  uri === "edit-customer-addresses" ||
+  uri === "edit-shipping-address" ||
+  uri === "edit-billing-address";
+
 export const OrderDraftDetails: React.FC<OrderDraftDetailsProps> = ({
   id,
   params,
@@ -88,19 +93,6 @@ export const OrderDraftDetails: React.FC<OrderDraftDetailsProps> = ({
     variables: DEFAULT_INITIAL_SEARCH_DATA
   });
 
-  const isAnyAddressEditModalOpen = (uri: string | undefined): boolean => {
-    if (uri === "edit-customer-addresses") {
-      return true;
-    }
-    if (uri === "edit-shipping-address") {
-      return true;
-    }
-    if (uri === "edit-billing-address") {
-      return true;
-    }
-    return false;
-  };
-
   const {
     data: customerAddresses,
     loading: customerAddressesLoading
@@ -108,7 +100,7 @@ export const OrderDraftDetails: React.FC<OrderDraftDetailsProps> = ({
     variables: {
       id: order?.user?.id
     },
-    skip: !isAnyAddressEditModalOpen(params.action)
+    skip: !order?.user?.id && !isAnyAddressEditModalOpen(params.action)
   });
 
   const intl = useIntl();
