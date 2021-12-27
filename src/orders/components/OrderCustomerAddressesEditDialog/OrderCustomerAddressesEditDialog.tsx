@@ -25,6 +25,7 @@ import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import { transformAddressToAddressInput } from "@saleor/misc";
 import { AddressInput, AddressTypeEnum } from "@saleor/types/globalTypes";
 import { mapCountriesToChoices } from "@saleor/utils/maps";
+import classNames from "classnames";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -326,7 +327,11 @@ const OrderCustomerAddressesEditDialog: React.FC<OrderCustomerAddressesEditDialo
             ) : (
               <>
                 <DialogTitle>{getDialogTitle()}</DialogTitle>
-                <DialogContent className={classes.scrollableContent}>
+                <DialogContent
+                  className={classNames(classes.dialogContent, {
+                    [classes.overflowVisible]: !hasCustomerChanged
+                  })}
+                >
                   <Typography>{getDialogDescription()}</Typography>
                   <FormSpacer />
                   {hasCustomerChanged && (
