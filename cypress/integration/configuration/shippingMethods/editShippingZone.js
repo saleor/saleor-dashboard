@@ -16,7 +16,7 @@ import filterTests from "../../../support/filterTests";
 import { fillUpShippingZoneData } from "../../../support/pages/shippingMethodPage";
 
 filterTests({ definedTags: ["all"] }, () => {
-  describe("Edit shipping methods", () => {
+  describe("Edit shipping zone", () => {
     const startsWith = "EditShipping-";
     const name = `${startsWith}${faker.datatype.number()}`;
 
