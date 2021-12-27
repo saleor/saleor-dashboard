@@ -381,15 +381,73 @@ const OrderCustomerAddressesEditDialog: React.FC<OrderCustomerAddressesEditDialo
                   )}
                   {variant ===
                     AddressEditDialogVariant.CHANGE_SHIPPING_ADDRESS && (
-                    <OrderCustomerAddressEdit
-                      {...shippingAddressEditProps(data, handlers, change)}
-                    />
+                    <>
+                      <OrderCustomerAddressEdit
+                        {...shippingAddressEditProps(data, handlers, change)}
+                      />
+                      {data.shippingAddressInputOption ===
+                        AddressInputOptionEnum.NEW_ADDRESS && (
+                        <>
+                          <FormSpacer />
+                          <Divider />
+                          <FormControlLabel
+                            control={
+                              <Checkbox
+                                checked={data.billingSameAsShipping}
+                                name="billingSameAsShipping"
+                                onChange={() =>
+                                  change({
+                                    target: {
+                                      name: "billingSameAsShipping",
+                                      value: !data.billingSameAsShipping
+                                    }
+                                  })
+                                }
+                                data-test="billingSameAsShipping"
+                              />
+                            }
+                            label={intl.formatMessage(
+                              dialogMessages.billingSameAsShipping
+                            )}
+                          />
+                        </>
+                      )}
+                    </>
                   )}
                   {variant ===
                     AddressEditDialogVariant.CHANGE_BILLING_ADDRESS && (
-                    <OrderCustomerAddressEdit
-                      {...billingAddressEditProps(data, handlers, change)}
-                    />
+                    <>
+                      <OrderCustomerAddressEdit
+                        {...billingAddressEditProps(data, handlers, change)}
+                      />
+                      {data.shippingAddressInputOption ===
+                        AddressInputOptionEnum.NEW_ADDRESS && (
+                        <>
+                          <FormSpacer />
+                          <Divider />
+                          <FormControlLabel
+                            control={
+                              <Checkbox
+                                checked={data.billingSameAsShipping}
+                                name="billingSameAsShipping"
+                                onChange={() =>
+                                  change({
+                                    target: {
+                                      name: "billingSameAsShipping",
+                                      value: !data.billingSameAsShipping
+                                    }
+                                  })
+                                }
+                                data-test="billingSameAsShipping"
+                              />
+                            }
+                            label={intl.formatMessage(
+                              dialogMessages.shippingSameAsBilling
+                            )}
+                          />
+                        </>
+                      )}
+                    </>
                   )}
                 </DialogContent>
                 <DialogActions>

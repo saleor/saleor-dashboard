@@ -121,17 +121,14 @@ const OrderCustomerAddressEdit: React.FC<OrderCustomerAddressEditProps> = props 
         className={classes.optionLabel}
       />
       {addressInputOption === AddressInputOptionEnum.NEW_ADDRESS && (
-        <>
-          <FormSpacer />
-          <AddressEdit
-            countries={countryChoices}
-            countryDisplayValue={formAddressCountryDisplayName}
-            data={formAddress}
-            errors={formErrors}
-            onChange={onChangeFormAddress}
-            onCountryChange={onChangeFormAddressCountry}
-          />
-        </>
+        <AddressEdit
+          countries={countryChoices}
+          countryDisplayValue={formAddressCountryDisplayName}
+          data={formAddress}
+          errors={formErrors}
+          onChange={onChangeFormAddress}
+          onCountryChange={onChangeFormAddressCountry}
+        />
       )}
     </RadioGroup>
   );
