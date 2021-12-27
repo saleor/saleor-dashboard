@@ -42,21 +42,7 @@ export const dialogMessages = defineMessages({
   noAddressBillingDescription: {
     defaultMessage: "Add a new address:",
     description: "dialog content"
-  }
-});
-
-export const addressEditMessages = defineMessages({
-  customerAddress: {
-    defaultMessage: "Use one of customer addresses",
-    description: "address type"
   },
-  newAddress: {
-    defaultMessage: "Add new address",
-    description: "address type"
-  }
-});
-
-export const addressSearchMessages = defineMessages({
   shippingTitle: {
     defaultMessage: "Shipping address",
     description: "search modal shipping title"
@@ -71,5 +57,16 @@ export const addressSearchMessages = defineMessages({
   },
   noResultsFound: {
     defaultMessage: "No results found"
+  }
+});
+
+export const addressEditMessages = defineMessages({
+  customerAddress: {
+    defaultMessage: "Use one of customer addresses",
+    description: "address type"
+  },
+  newAddress: {
+    defaultMessage: "Add new address",
+    description: "address type"
   }
 });

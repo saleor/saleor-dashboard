@@ -1,8 +1,10 @@
 import {
   Button,
+  Checkbox,
   DialogActions,
   DialogContent,
   DialogTitle,
+  FormControlLabel,
   InputAdornment,
   TextField
 } from "@material-ui/core";
@@ -10,6 +12,7 @@ import CardSpacer from "@saleor/components/CardSpacer";
 import { ConfirmButton } from "@saleor/components/ConfirmButton";
 import CustomerAddressChoiceCard from "@saleor/customers/components/CustomerAddressChoiceCard";
 import { CustomerAddresses_user_addresses } from "@saleor/customers/types/CustomerAddresses";
+import { FormChange } from "@saleor/hooks/useForm";
 import { buttonMessages } from "@saleor/intl";
 import { ConfirmButtonTransitionState, SearchIcon } from "@saleor/macaw-ui";
 import { AddressTypeEnum } from "@saleor/types/globalTypes";
@@ -17,15 +20,17 @@ import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { getById } from "../OrderReturnPage/utils";
-import { addressSearchMessages as messages } from "./messages";
+import { dialogMessages as messages } from "./messages";
 import { useStyles } from "./styles";
 import { parseQuery, stringifyAddress } from "./utils";
 
 export interface OrderCustomerAddressesSearchProps {
   type: AddressTypeEnum;
+  billingSameAsShipping: boolean;
+  formChange: FormChange;
   openFromCustomerChange: boolean;
   transitionState: ConfirmButtonTransitionState;
-  selectedCustomerAddressId?: string;
+  selectedCustomerAddressId: string;
   customerAddresses: CustomerAddresses_user_addresses[];
   onChangeCustomerShippingAddress: (
     customerAddress: CustomerAddresses_user_addresses
@@ -39,6 +44,8 @@ export interface OrderCustomerAddressesSearchProps {
 const OrderCustomerAddressesSearch: React.FC<OrderCustomerAddressesSearchProps> = props => {
   const {
     type,
+    billingSameAsShipping,
+    formChange,
     transitionState,
     openFromCustomerChange,
     selectedCustomerAddressId,
@@ -124,6 +131,29 @@ const OrderCustomerAddressesSearch: React.FC<OrderCustomerAddressesSearchProps> 
                 </React.Fragment>
               ))}
         </div>
+        {!openFromCustomerChange && (
+          <FormControlLabel
+            control={
+              <Checkbox
+                checked={billingSameAsShipping}
+                name="billingSameAsShipping"
+                onChange={() =>
+                  formChange({
+                    target: {
+                      name: "billingSameAsShipping",
+                      value: !billingSameAsShipping
+                    }
+                  })
+                }
+              />
+            }
+            label={intl.formatMessage(
+              type === AddressTypeEnum.SHIPPING
+                ? messages.billingSameAsShipping
+                : messages.shippingSameAsBilling
+            )}
+          />
+        )}
       </DialogContent>
       <DialogActions>
         <Button onClick={() => exitSearch()} color="primary">

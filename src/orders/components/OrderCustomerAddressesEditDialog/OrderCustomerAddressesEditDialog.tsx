@@ -303,6 +303,8 @@ const OrderCustomerAddressesEditDialog: React.FC<OrderCustomerAddressesEditDialo
               <OrderCustomerAddressesSearch
                 openFromCustomerChange={hasCustomerChanged}
                 type={addressSearchState?.type}
+                billingSameAsShipping={data.billingSameAsShipping}
+                formChange={change}
                 transitionState={confirmButtonState}
                 customerAddresses={customerAddresses}
                 selectedCustomerAddressId={
