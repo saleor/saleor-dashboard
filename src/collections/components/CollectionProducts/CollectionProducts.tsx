@@ -80,7 +80,7 @@ const CollectionProducts: React.FC<CollectionProductsProps> = props => {
   const intl = useIntl();
 
   const products = mapEdgesToItems(collection?.products);
-  const numberOfColumns = products.length === 0 ? 4 : 5;
+  const numberOfColumns = products?.length === 0 ? 4 : 5;
 
   return (
     <Card>
