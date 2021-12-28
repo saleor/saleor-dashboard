@@ -25,7 +25,6 @@ export interface WebhooksListProps {
   onRowClick: (id: string) => () => void;
   onCreate?: () => void;
 }
-const numberOfColumns = 3;
 
 const WebhooksList: React.FC<WebhooksListProps> = ({
   webhooks,
@@ -35,6 +34,7 @@ const WebhooksList: React.FC<WebhooksListProps> = ({
 }) => {
   const intl = useIntl();
   const classes = useStyles({});
+  const numberOfColumns = webhooks?.length === 0 ? 2 : 3;
 
   return (
     <Card>
@@ -45,7 +45,11 @@ const WebhooksList: React.FC<WebhooksListProps> = ({
         })}
         toolbar={
           !!onCreate && (
-            <Button onClick={onCreate} data-test-id="createWebhook">
+            <Button
+              variant="secondary"
+              onClick={onCreate}
+              data-test-id="createWebhook"
+            >
               <FormattedMessage
                 defaultMessage="Create Webhook"
                 description="button"

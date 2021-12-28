@@ -102,7 +102,7 @@ const CustomAppDetailsPage: React.FC<CustomAppDetailsPageProps> = props => {
           </Backlink>
           <PageHeader title={app?.name}>
             <Button
-              variant="tertiary"
+              variant="secondary"
               className={classes.activateButton}
               disableFocusRipple
               onClick={data.isActive ? onAppDeactivateOpen : onAppActivateOpen}

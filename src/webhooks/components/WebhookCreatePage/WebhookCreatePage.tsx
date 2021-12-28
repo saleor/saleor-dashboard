@@ -71,14 +71,14 @@ const WebhookCreatePage: React.FC<WebhookCreatePageProps> = ({
               />
             </div>
             <div>
-              <WebhookEvents
-                data={data}
+              <WebhookStatus
+                data={data.isActive}
                 disabled={disabled}
                 onChange={change}
               />
               <FormSpacer />
-              <WebhookStatus
-                data={data.isActive}
+              <WebhookEvents
+                data={data}
                 disabled={disabled}
                 onChange={change}
               />

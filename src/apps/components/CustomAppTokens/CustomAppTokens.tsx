@@ -37,7 +37,11 @@ const CustomAppTokens: React.FC<CustomAppTokensProps> = props => {
           description: "header"
         })}
         toolbar={
-          <Button onClick={onCreate} data-test-id="createToken">
+          <Button
+            variant="secondary"
+            onClick={onCreate}
+            data-test-id="createToken"
+          >
             <FormattedMessage
               defaultMessage="Create Token"
               description="button"
