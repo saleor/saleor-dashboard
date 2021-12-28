@@ -360,6 +360,16 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
     deleteAttributeValueOpts
   ] = useAttributeValueDeleteMutation({});
 
+  const onSetDefaultVariant = useOnSetDefaultVariant(
+    product ? product.id : null,
+    null
+  );
+
+  const [
+    reorderProductVariants,
+    reorderProductVariantsOpts
+  ] = useProductVariantReorderMutation({});
+
   const handleBack = () => navigate(productListUrl());
 
   if (product === null) {
@@ -396,11 +406,6 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
   const handleImageReorder = createImageReorderHandler(product, variables =>
     reorderProductImages({ variables })
   );
-
-  const [
-    reorderProductVariants,
-    reorderProductVariantsOpts
-  ] = useProductVariantReorderMutation({});
 
   const handleVariantReorder = createVariantReorderHandler(product, variables =>
     reorderProductVariants({ variables })
@@ -452,10 +457,6 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
     ...(productVariantCreateOpts.data?.productVariantCreate.errors || [])
   ];
 
-  const onSetDefaultVariant = useOnSetDefaultVariant(
-    product ? product.id : null,
-    null
-  );
   const channelsErrors = [
     ...(updateChannelsOpts?.data?.productChannelListingUpdate?.errors || []),
     ...(updateVariantChannelsOpts?.data?.productVariantChannelListingUpdate
