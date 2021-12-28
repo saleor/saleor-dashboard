@@ -15,7 +15,7 @@ export enum AddressInputOptionEnum {
 }
 
 export interface OrderCustomerAddressesEditFormData {
-  billingSameAsShipping: boolean;
+  cloneAddress: boolean;
   shippingAddressInputOption: AddressInputOptionEnum;
   billingAddressInputOption: AddressInputOptionEnum;
   customerShippingAddress: CustomerAddresses_user_defaultShippingAddress;
@@ -55,7 +55,7 @@ interface UseOrderCustomerAddressesEditFormOpts {
   countryChoices: SingleAutocompleteChoiceType[];
   defaultShippingAddress: CustomerAddresses_user_defaultShippingAddress;
   defaultBillingAddress: CustomerAddresses_user_defaultBillingAddress;
-  defaultBillingSameAsShipping: boolean;
+  defaultCloneAddress: boolean;
 }
 
 export interface OrderCustomerAddressesEditFormProps
@@ -78,7 +78,7 @@ function useOrderCustomerAddressesEditForm(
     streetAddress1: ""
   };
   const defaultInitialFormData: OrderCustomerAddressesEditFormData = {
-    billingSameAsShipping: opts.defaultBillingSameAsShipping,
+    cloneAddress: opts.defaultCloneAddress,
     shippingAddressInputOption: AddressInputOptionEnum.CUSTOMER_ADDRESS,
     billingAddressInputOption: AddressInputOptionEnum.CUSTOMER_ADDRESS,
     customerShippingAddress: opts.defaultShippingAddress,

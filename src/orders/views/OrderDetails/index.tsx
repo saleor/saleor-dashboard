@@ -261,15 +261,6 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
                         closeModal={closeModal}
                       />
                     )}
-                    {/* <OrderAddressFields
-                      isDraft={order?.status === OrderStatus.DRAFT}
-                      orderUpdate={orderUpdate}
-                      orderDraftUpdate={orderDraftUpdate}
-                      data={data}
-                      id={id}
-                      onClose={closeModal}
-                      action={params.action}
-                    /> */}
                   </>
                 )}
               </OrderOperations>

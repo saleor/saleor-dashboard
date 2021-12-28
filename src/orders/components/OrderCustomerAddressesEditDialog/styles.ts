@@ -7,9 +7,6 @@ export const useStyles = makeStyles(
       overflowY: "scroll",
       overflowX: "hidden"
     },
-    overflowVisible: {
-      overflow: "visible"
-    },
     scrollableWrapper: {
       maxHeight: 400,
       overflowY: "scroll"

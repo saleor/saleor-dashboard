@@ -37,7 +37,6 @@ import {
 } from "../../../urls";
 import OrderAddressFields from "../OrderAddressFields";
 import { isAnyAddressEditModalOpen } from "../OrderDraftDetails";
-// import { isAnyAddressEditModalOpen } from "../OrderDraftDetails";
 
 interface OrderUnconfirmedDetailsProps {
   id: string;

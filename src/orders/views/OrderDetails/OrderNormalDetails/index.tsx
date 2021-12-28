@@ -103,8 +103,6 @@ export const OrderNormalDetails: React.FC<OrderNormalDetailsProps> = ({
         ...data
       }
     });
-    // eslint-disable-next-line no-console
-    console.log(result);
     if (!result?.data?.orderUpdate?.errors?.length) {
       closeModal();
     }

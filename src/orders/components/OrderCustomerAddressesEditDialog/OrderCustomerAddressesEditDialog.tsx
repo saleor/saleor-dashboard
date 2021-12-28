@@ -25,7 +25,6 @@ import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import { transformAddressToAddressInput } from "@saleor/misc";
 import { AddressInput, AddressTypeEnum } from "@saleor/types/globalTypes";
 import { mapCountriesToChoices } from "@saleor/utils/maps";
-import classNames from "classnames";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -148,20 +147,18 @@ const OrderCustomerAddressesEditDialog: React.FC<OrderCustomerAddressesEditDialo
     if (variant === AddressEditDialogVariant.CHANGE_SHIPPING_ADDRESS) {
       return {
         shippingAddress,
-        ...(data.billingSameAsShipping && { billingAddress: shippingAddress })
+        ...(data.cloneAddress && { billingAddress: shippingAddress })
       };
     }
     if (variant === AddressEditDialogVariant.CHANGE_BILLING_ADDRESS) {
       return {
-        ...(data.billingSameAsShipping && { shippingAddress: billingAddress }),
+        ...(data.cloneAddress && { shippingAddress: billingAddress }),
         billingAddress
       };
     }
     return {
       shippingAddress,
-      billingAddress: data.billingSameAsShipping
-        ? shippingAddress
-        : billingAddress
+      billingAddress: data.cloneAddress ? shippingAddress : billingAddress
     };
   };
 
@@ -287,7 +284,7 @@ const OrderCustomerAddressesEditDialog: React.FC<OrderCustomerAddressesEditDialo
         countryChoices={countryChoices}
         defaultShippingAddress={validatedDefaultShippingAddress}
         defaultBillingAddress={validatedDefaultBillingAddress}
-        defaultBillingSameAsShipping={hasCustomerChanged}
+        defaultCloneAddress={hasCustomerChanged}
         onSubmit={handleSubmit}
       >
         {({ change, data, handlers }) => (
@@ -296,7 +293,7 @@ const OrderCustomerAddressesEditDialog: React.FC<OrderCustomerAddressesEditDialo
               <OrderCustomerAddressesSearch
                 openFromCustomerChange={hasCustomerChanged}
                 type={addressSearchState?.type}
-                billingSameAsShipping={data.billingSameAsShipping}
+                billingSameAsShipping={data.cloneAddress}
                 formChange={change}
                 transitionState={confirmButtonState}
                 customerAddresses={customerAddresses}
@@ -322,11 +319,7 @@ const OrderCustomerAddressesEditDialog: React.FC<OrderCustomerAddressesEditDialo
             ) : (
               <>
                 <DialogTitle>{getDialogTitle()}</DialogTitle>
-                <DialogContent
-                  className={classNames(classes.dialogContent, {
-                    [classes.overflowVisible]: !hasCustomerChanged
-                  })}
-                >
+                <DialogContent className={classes.dialogContent}>
                   <Typography>{getDialogDescription()}</Typography>
                   <FormSpacer />
                   {hasCustomerChanged && (
@@ -340,13 +333,13 @@ const OrderCustomerAddressesEditDialog: React.FC<OrderCustomerAddressesEditDialo
                       <FormControlLabel
                         control={
                           <Checkbox
-                            checked={data.billingSameAsShipping}
+                            checked={data.cloneAddress}
                             name="billingSameAsShipping"
                             onChange={() =>
                               change({
                                 target: {
-                                  name: "billingSameAsShipping",
-                                  value: !data.billingSameAsShipping
+                                  name: "cloneAddress",
+                                  value: !data.cloneAddress
                                 }
                               })
                             }
@@ -357,7 +350,7 @@ const OrderCustomerAddressesEditDialog: React.FC<OrderCustomerAddressesEditDialo
                           dialogMessages.billingSameAsShipping
                         )}
                       />
-                      {!data.billingSameAsShipping && (
+                      {!data.cloneAddress && (
                         <>
                           <FormSpacer />
                           <Typography>
@@ -393,13 +386,13 @@ const OrderCustomerAddressesEditDialog: React.FC<OrderCustomerAddressesEditDialo
                           <FormControlLabel
                             control={
                               <Checkbox
-                                checked={data.billingSameAsShipping}
+                                checked={data.cloneAddress}
                                 name="billingSameAsShipping"
                                 onChange={() =>
                                   change({
                                     target: {
-                                      name: "billingSameAsShipping",
-                                      value: !data.billingSameAsShipping
+                                      name: "cloneAddress",
+                                      value: !data.cloneAddress
                                     }
                                   })
                                 }
@@ -428,13 +421,13 @@ const OrderCustomerAddressesEditDialog: React.FC<OrderCustomerAddressesEditDialo
                           <FormControlLabel
                             control={
                               <Checkbox
-                                checked={data.billingSameAsShipping}
-                                name="billingSameAsShipping"
+                                checked={data.cloneAddress}
+                                name="shippingSameAsBilling"
                                 onChange={() =>
                                   change({
                                     target: {
-                                      name: "billingSameAsShipping",
-                                      value: !data.billingSameAsShipping
+                                      name: "cloneAddress",
+                                      value: !data.cloneAddress
                                     }
                                   })
                                 }
