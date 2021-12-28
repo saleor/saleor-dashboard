@@ -37,16 +37,23 @@ const CustomApps: React.FC<CustomAppsProps> = ({
 
   return (
     <Card className={classes.customApps}>
-      <CardTitle title={intl.formatMessage(commonMessages.customApps)}>
-        {!!navigateToCustomAppCreate && (
-          <Button onClick={navigateToCustomAppCreate} data-test-id="createApp">
-            <FormattedMessage
-              defaultMessage="Create App"
-              description="create app button"
-            />
-          </Button>
-        )}
-      </CardTitle>
+      <CardTitle
+        toolbar={
+          !!navigateToCustomAppCreate && (
+            <Button
+              variant="secondary"
+              onClick={navigateToCustomAppCreate}
+              data-test-id="createApp"
+            >
+              <FormattedMessage
+                defaultMessage="Create App"
+                description="create app button"
+              />
+            </Button>
+          )
+        }
+        title={intl.formatMessage(commonMessages.customApps)}
+      />
       <ResponsiveTable>
         <TableBody>
           {renderCollection(
