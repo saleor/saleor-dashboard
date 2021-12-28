@@ -2,11 +2,11 @@ import Decorator from "@saleor/storybook/Decorator";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
-import { countries, order as orderFixture } from "../../fixtures";
 import OrderCustomerAddressesEditDialog, {
   AddressEditDialogVariant,
   OrderCustomerAddressesEditDialogProps
-} from "./OrderCustomerAddressesEditDialog";
+} from "../../../orders/components/OrderCustomerAddressesEditDialog";
+import { countries, order as orderFixture } from "../../../orders/fixtures";
 
 const order = orderFixture("");
 
@@ -17,15 +17,25 @@ const props: OrderCustomerAddressesEditDialogProps = {
   onClose: () => undefined,
   onConfirm: () => undefined,
   open: true,
-  errors: undefined
+  errors: undefined,
+  countries
 };
 
 storiesOf("Orders / OrderCustomerAddressesEditDialog", module)
   .addDecorator(Decorator)
-  .add("default", () => (
+  .add("change customer (default)", () => (
     <OrderCustomerAddressesEditDialog
       {...props}
-      countries={countries}
+      customerAddresses={[
+        order.shippingAddress,
+        { ...order.billingAddress, id: "asdfghjfuunie" }
+      ]}
+    />
+  ))
+  .add("change shipping address", () => (
+    <OrderCustomerAddressesEditDialog
+      {...props}
+      variant={AddressEditDialogVariant.CHANGE_SHIPPING_ADDRESS}
       customerAddresses={[
         order.shippingAddress,
         { ...order.billingAddress, id: "asdfghjfuunie" }
@@ -33,11 +43,7 @@ storiesOf("Orders / OrderCustomerAddressesEditDialog", module)
     />
   ))
   .add("no customer addresses", () => (
-    <OrderCustomerAddressesEditDialog
-      {...props}
-      countries={countries}
-      customerAddresses={[]}
-    />
+    <OrderCustomerAddressesEditDialog {...props} customerAddresses={[]} />
   ))
   .add("loading", () => (
     <OrderCustomerAddressesEditDialog

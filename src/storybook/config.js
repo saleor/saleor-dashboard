@@ -107,10 +107,10 @@ function loadStories() {
   require("./stories/products/ProductVariantPage");
 
   // Orders
-  require("./stories/orders/OrderAddressEditDialog");
   require("./stories/orders/OrderBulkCancelDialog");
   require("./stories/orders/OrderCancelDialog");
   require("./stories/orders/OrderCustomer");
+  require("./stories/orders/OrderCustomerAddressesEditDialog");
   require("./stories/orders/OrderDetailsPage");
   require("./stories/orders/OrderDraftCancelDialog");
   require("./stories/orders/OrderDraftListPage");
