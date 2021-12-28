@@ -50,7 +50,7 @@ const PageTypeListPage: React.FC<PageTypeListPageProps> = ({
       <PageHeader title={intl.formatMessage(sectionNames.pageTypes)}>
         <Button variant="primary" onClick={onAdd} data-test-id="createPageType">
           <FormattedMessage
-            defaultMessage="create page type"
+            defaultMessage="Create page type"
             description="button"
           />
         </Button>
