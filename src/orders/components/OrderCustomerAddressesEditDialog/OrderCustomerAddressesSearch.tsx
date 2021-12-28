@@ -26,7 +26,7 @@ import { parseQuery, stringifyAddress } from "./utils";
 
 export interface OrderCustomerAddressesSearchProps {
   type: AddressTypeEnum;
-  billingSameAsShipping: boolean;
+  cloneAddress: boolean;
   formChange: FormChange;
   openFromCustomerChange: boolean;
   transitionState: ConfirmButtonTransitionState;
@@ -44,7 +44,7 @@ export interface OrderCustomerAddressesSearchProps {
 const OrderCustomerAddressesSearch: React.FC<OrderCustomerAddressesSearchProps> = props => {
   const {
     type,
-    billingSameAsShipping,
+    cloneAddress,
     formChange,
     transitionState,
     openFromCustomerChange,
@@ -131,17 +131,17 @@ const OrderCustomerAddressesSearch: React.FC<OrderCustomerAddressesSearchProps> 
                 </React.Fragment>
               ))}
         </div>
-        {!openFromCustomerChange && (
+        {!openFromCustomerChange && filteredCustomerAddresses.length !== 0 && (
           <FormControlLabel
             control={
               <Checkbox
-                checked={billingSameAsShipping}
-                name="billingSameAsShipping"
+                checked={cloneAddress}
+                name="cloneAddress"
                 onChange={() =>
                   formChange({
                     target: {
-                      name: "billingSameAsShipping",
-                      value: !billingSameAsShipping
+                      name: "cloneAddress",
+                      value: !cloneAddress
                     }
                   })
                 }
