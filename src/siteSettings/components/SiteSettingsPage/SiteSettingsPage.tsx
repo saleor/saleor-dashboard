@@ -170,7 +170,7 @@ const SiteSettingsPage: React.FC<SiteSettingsPageProps> = props => {
                 </Typography>
                 <Typography variant="body2">
                   <FormattedMessage
-                    defaultMessage="This address will be used to generate invoices and calculate shipping rates. Email address you provide here will be used as a contact adress for your customers."
+                    defaultMessage="This address will be used to generate invoices and calculate shipping rates. Email address you provide here will be used as a contact address for your customers."
                     description="company information description message"
                   />
                 </Typography>
