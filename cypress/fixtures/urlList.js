@@ -65,7 +65,7 @@ export const weightRateUrl = (shippingZoneId, weightRateId) =>
   `${urlList.shippingMethods}${shippingZoneId}/${urlList.weightRete}${weightRateId}`;
 
 export const priceRateUrl = (shippingZoneId, priceRateId) =>
-  `${urlList.shippingMethods}${shippingZoneId}/${urlList.priceRete}${priceRateId}`;
+  `${urlList.shippingMethods}${shippingZoneId}/${urlList.priceRate}${priceRateId}`;
 
 export const warehouseDetailsUrl = warehouseId =>
   `${urlList.warehouses}${warehouseId}`;
