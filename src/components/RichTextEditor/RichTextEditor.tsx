@@ -32,7 +32,7 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
   const [isFocused, setFocus] = React.useState(false);
   const editor = React.useRef<EditorJS>();
   const editorContainer = React.useRef<HTMLDivElement>();
-  const togglePromiseQueue = React.useRef(new PromiseQueue()); // used to await subsequent toggle invocations
+  const togglePromiseQueue = React.useRef(PromiseQueue()); // used to await subsequent toggle invocations
   const initialMount = React.useRef(true);
 
   React.useEffect(
