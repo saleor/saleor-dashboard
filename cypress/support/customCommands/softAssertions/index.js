@@ -98,8 +98,8 @@ Cypress.Commands.add(
   "expectCorrectBasicAddress",
   (responseAddress, expectedAddress) => {
     chai
-      .softExpect(responseAddress)
-      .to.have.property("city", expectedAddress.city.toUpperCase());
+      .softExpect(responseAddress.city.toUpperCase())
+      .to.eq(expectedAddress.city.toUpperCase());
     chai
       .softExpect(responseAddress)
       .to.have.property("countryArea", expectedAddress.countryArea);

@@ -106,19 +106,23 @@ const CustomerAddress: React.FC<CustomerAddressProps> = props => {
             menuItems={[
               {
                 label: intl.formatMessage(messages.setDefaultShipping),
-                onSelect: () => onSetAsDefault(AddressTypeEnum.SHIPPING)
+                onSelect: () => onSetAsDefault(AddressTypeEnum.SHIPPING),
+                testId: "set-default-shipping-address"
               },
               {
                 label: intl.formatMessage(messages.setDefaultBilling),
-                onSelect: () => onSetAsDefault(AddressTypeEnum.BILLING)
+                onSelect: () => onSetAsDefault(AddressTypeEnum.BILLING),
+                testId: "set-default-billing-address"
               },
               {
                 label: intl.formatMessage(messages.editAddress),
-                onSelect: () => onEdit()
+                onSelect: () => onEdit(),
+                testId: "edit-address"
               },
               {
                 label: intl.formatMessage(messages.deleteAddress),
-                onSelect: () => onRemove()
+                onSelect: () => onRemove(),
+                testId: "delete-address"
               }
             ]}
           />

@@ -27,6 +27,22 @@ export function getVariantsLines(variantsList, quantity) {
   );
 }
 
+export function getDefaultAddressWithoutType(address, withName = true) {
+  const defaultAddress = `city: "${address.city}" 
+  country: ${address.country}
+  countryArea: "${address.countryArea}"
+  phone: "${address.phone}"
+  postalCode: "${address.postalCode}"
+  streetAddress1: "${address.streetAddress1}"
+  streetAddress2: "${address.streetAddress2}"`;
+  if (withName) {
+    defaultAddress.concat(`firstName: "Test"
+  lastName: "Test"
+  companyName: "${address.companyName}"`);
+  }
+  return defaultAddress;
+}
+
 export function getVariantsIdsLines(variantsList) {
   return variantsList.map(variant => `${variant.id}`);
 }

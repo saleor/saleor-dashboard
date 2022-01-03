@@ -41,6 +41,7 @@ const CustomerAddresses: React.FC<CustomerAddressesProps> = props => {
         })}
         toolbar={
           <Button
+            data-test-id="manageAddresses"
             color="primary"
             disabled={disabled}
             variant="text"
