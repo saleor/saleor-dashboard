@@ -1,8 +1,8 @@
 import {
+  Accordion,
   Card,
   CardContent,
   Divider,
-  ExpansionPanel,
   Typography
 } from "@material-ui/core";
 import CardTitle from "@saleor/components/CardTitle";
@@ -67,7 +67,7 @@ const ShippingZonesCard: React.FC<ShippingZonesCardProps> = props => {
       <CardContent>
         <Typography>{intl.formatMessage(messages.subtitle)}</Typography>
       </CardContent>
-      <ExpansionPanel classes={expanderClasses}>
+      <Accordion classes={expanderClasses}>
         <ShippingZonesListHeader shippingZones={shippingZones} />
         <Divider />
         {shippingZones.map(zone => (
@@ -76,7 +76,7 @@ const ShippingZonesCard: React.FC<ShippingZonesCardProps> = props => {
         {hasMoreZonesToBeSelected ? (
           <ShippingZonesCardListFooter {...props} />
         ) : null}
-      </ExpansionPanel>
+      </Accordion>
     </Card>
   );
 };
