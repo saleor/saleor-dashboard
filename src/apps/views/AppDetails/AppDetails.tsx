@@ -1,3 +1,4 @@
+import NotFoundPage from "@saleor/components/NotFoundPage";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import getAppErrorMessage from "@saleor/utils/errors/app";
@@ -31,6 +32,9 @@ export const AppDetails: React.FC<AppDetailsProps> = ({ id, params }) => {
     displayLoader: true,
     variables: { id }
   });
+
+  const appExists = data?.app !== null;
+
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();
@@ -49,12 +53,14 @@ export const AppDetails: React.FC<AppDetailsProps> = ({ id, params }) => {
         refetch();
         closeModal();
       } else {
-        errors.forEach(error =>
-          notify({
-            status: "error",
-            text: getAppErrorMessage(error, intl)
-          })
-        );
+        if (appExists) {
+          errors.forEach(error =>
+            notify({
+              status: "error",
+              text: getAppErrorMessage(error, intl)
+            })
+          );
+        }
       }
     }
   });
@@ -72,12 +78,14 @@ export const AppDetails: React.FC<AppDetailsProps> = ({ id, params }) => {
         refetch();
         closeModal();
       } else {
-        errors.forEach(error =>
-          notify({
-            status: "error",
-            text: getAppErrorMessage(error, intl)
-          })
-        );
+        if (appExists) {
+          errors.forEach(error =>
+            notify({
+              status: "error",
+              text: getAppErrorMessage(error, intl)
+            })
+          );
+        }
       }
     }
   });
@@ -93,6 +101,10 @@ export const AppDetails: React.FC<AppDetailsProps> = ({ id, params }) => {
   const handleDeactivateConfirm = () => {
     deactivateApp(mutationOpts);
   };
+
+  if (!appExists) {
+    return <NotFoundPage onBack={() => navigate(appsListPath)} />;
+  }
 
   return (
     <>
