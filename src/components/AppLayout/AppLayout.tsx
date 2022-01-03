@@ -107,7 +107,7 @@ const useStyles = makeStyles(
       }
     },
     viewContainer: {
-      minHeight: `calc(100vh + ${appLoaderHeight + 70}px - ${theme.spacing(2)})`
+      minHeight: `calc(100vh - ${appLoaderHeight + 74}px - ${theme.spacing(4)})`
     }
   }),
   {
