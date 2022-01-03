@@ -28,6 +28,7 @@ import StaffPassword from "../StaffPassword/StaffPassword";
 import StaffPreferences from "../StaffPreferences";
 import StaffProperties from "../StaffProperties/StaffProperties";
 import { staffDetailsPageMessages as messages } from "./messages";
+import useStyles from "./styles";
 
 export interface StaffDetailsFormData {
   email: string;
@@ -77,6 +78,7 @@ const StaffDetailsPage: React.FC<StaffDetailsPageProps> = ({
   staffMember
 }: StaffDetailsPageProps) => {
   const intl = useIntl();
+  const classes = useStyles();
   const { locale, setLocale } = useLocale();
   const [
     permissionGroupsDisplayValues,
@@ -151,7 +153,7 @@ const StaffDetailsPage: React.FC<StaffDetailsPageProps> = ({
                       onChange={change}
                     />
                     <CardSpacer />
-                    <Card>
+                    <Card className={classes.noOverflow}>
                       <CardTitle
                         title={intl.formatMessage({
                           defaultMessage: "Permissions",
