@@ -1,6 +1,15 @@
-import { getDefaultAddress } from "./utils/Utils";
+import {
+  getDefaultAddress,
+  getDefaultAddressWithoutType,
+  getValueWithDefault
+} from "./utils/Utils";
 
 export function createCustomer(email, customerName, address, isActive = false) {
+  const addressesLines = getValueWithDefault(
+    address,
+    `${getDefaultAddress(address, "defaultBillingAddress")}
+    ${getDefaultAddress(address, "defaultShippingAddress")}`
+  );
   const mutation = `
   mutation{
     customerCreate(input:{
@@ -8,8 +17,7 @@ export function createCustomer(email, customerName, address, isActive = false) {
       lastName: "${customerName}"
       email: "${email}"
       isActive: ${isActive}
-      ${getDefaultAddress(address, "defaultBillingAddress")}
-      ${getDefaultAddress(address, "defaultShippingAddress")}
+      ${addressesLines}
     }){
       user{
         id
@@ -21,7 +29,7 @@ export function createCustomer(email, customerName, address, isActive = false) {
       }
     }
   }`;
-  return cy.sendRequestWithQuery(mutation);
+  return cy.sendRequestWithQuery(mutation).its("body.data.customerCreate");
 }
 
 export function deleteCustomersStartsWith(startsWith) {
@@ -143,8 +151,24 @@ export function getCustomer(customerId) {
         }
         countryArea
         phone
+        isDefaultShippingAddress
+        isDefaultBillingAddress
       }
     }
   }`;
   return cy.sendRequestWithQuery(query).its("body.data.user");
+}
+
+export function addressCreate(userId, address) {
+  const mutation = `mutation{
+    addressCreate(userId:"${userId}" input:{
+      ${getDefaultAddressWithoutType(address)}
+    }){
+      errors{
+        field
+        message
+      }
+    }
+  }`;
+  return cy.sendRequestWithQuery(mutation);
 }
