@@ -3,7 +3,9 @@ import { makeStyles } from "@saleor/macaw-ui";
 const useStyles = makeStyles(
   () => ({
     noOverflow: {
-      overflow: "visible"
+      "&&": {
+        overflow: "visible"
+      }
     }
   }),
   { name: "StaffDetailsPage" }

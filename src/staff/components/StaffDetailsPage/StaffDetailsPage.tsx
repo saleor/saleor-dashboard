@@ -137,7 +137,7 @@ const StaffDetailsPage: React.FC<StaffDetailsPageProps> = ({
                   </>
                 )}
               </div>
-              <div>
+              <div className={classes.noOverflow}>
                 {canEditPreferences && (
                   <StaffPreferences
                     locale={locale}
@@ -153,7 +153,7 @@ const StaffDetailsPage: React.FC<StaffDetailsPageProps> = ({
                       onChange={change}
                     />
                     <CardSpacer />
-                    <Card className={classes.noOverflow}>
+                    <Card>
                       <CardTitle
                         title={intl.formatMessage({
                           defaultMessage: "Permissions",
