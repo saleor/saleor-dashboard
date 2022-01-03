@@ -137,6 +137,14 @@ export function getShippingZone(shippingZoneId) {
     shippingZone(id:"${shippingZoneId}"){
       id
       name
+      description
+      warehouses{
+        name
+        id
+      }
+      countries{
+        code
+      }
       channels{
         name
         id
@@ -144,6 +152,25 @@ export function getShippingZone(shippingZoneId) {
       shippingMethods{
         id
         name
+        minimumDeliveryDays
+        maximumDeliveryDays
+        minimumOrderWeight{
+          value
+        }
+        maximumOrderWeight{
+          value
+        }
+        channelListings{
+          price{
+            amount
+          }
+          minimumOrderPrice{
+            amount
+          }
+          maximumOrderPrice{
+            amount
+          }
+        }
       }
     }
   }`;
