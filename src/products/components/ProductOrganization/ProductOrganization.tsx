@@ -3,6 +3,7 @@ import CardSpacer from "@saleor/components/CardSpacer";
 import CardTitle from "@saleor/components/CardTitle";
 import { FormSpacer } from "@saleor/components/FormSpacer";
 import Hr from "@saleor/components/Hr";
+import Link from "@saleor/components/Link";
 import MultiAutocompleteSelectField, {
   MultiAutocompleteChoiceType
 } from "@saleor/components/MultiAutocompleteSelectField";
@@ -11,8 +12,10 @@ import SingleAutocompleteSelectField, {
 } from "@saleor/components/SingleAutocompleteSelectField";
 import { ProductErrorFragment } from "@saleor/fragments/types/ProductErrorFragment";
 import { ChangeEvent } from "@saleor/hooks/useForm";
+import useNavigator from "@saleor/hooks/useNavigator";
 import { makeStyles } from "@saleor/macaw-ui";
 import { maybe } from "@saleor/misc";
+import { productTypeUrl } from "@saleor/productTypes/urls";
 import { FetchMoreProps } from "@saleor/types";
 import { getFormErrors, getProductErrorMessage } from "@saleor/utils/errors";
 import React from "react";
@@ -93,6 +96,7 @@ const ProductOrganization: React.FC<ProductOrganizationProps> = props => {
 
   const classes = useStyles(props);
   const intl = useIntl();
+  const navigate = useNavigator();
 
   const formErrors = getFormErrors(
     ["productType", "category", "collections"],
@@ -130,7 +134,14 @@ const ProductOrganization: React.FC<ProductOrganizationProps> = props => {
             <Typography className={classes.label} variant="caption">
               <FormattedMessage defaultMessage="Product Type" />
             </Typography>
-            <Typography>{maybe(() => productType.name, "...")}</Typography>
+            <Link
+              onClick={() =>
+                navigate(productTypeUrl(productType?.id), { resetScroll: true })
+              }
+              disabled={productType?.id === undefined}
+            >
+              {productType?.name ?? "..."}
+            </Link>
             <CardSpacer />
             <Typography className={classes.label} variant="caption">
               <FormattedMessage defaultMessage="Product Type" />
