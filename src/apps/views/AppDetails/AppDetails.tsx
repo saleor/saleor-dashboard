@@ -28,7 +28,7 @@ interface AppDetailsProps {
 }
 
 export const AppDetails: React.FC<AppDetailsProps> = ({ id, params }) => {
-  const { data, loading, refetch } = useAppDetails({
+  const { data, loading, refetch, error } = useAppDetails({
     displayLoader: true,
     variables: { id }
   });
