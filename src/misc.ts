@@ -450,15 +450,17 @@ export const flatten = (obj: unknown) => {
   return result;
 };
 
-export class PromiseQueue {
-  queue = Promise.resolve();
+export function PromiseQueue() {
+  let queue = Promise.resolve();
 
-  add(operation: (value: unknown) => PromiseLike<unknown>) {
+  function add<T>(operation: (value: T | void) => PromiseLike<T>) {
     return new Promise((resolve, reject) => {
-      this.queue = this.queue
+      queue = queue
         .then(operation)
         .then(resolve)
         .catch(reject);
     });
   }
+
+  return { queue, add };
 }
