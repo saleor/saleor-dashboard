@@ -138,7 +138,7 @@ const ProductOrganization: React.FC<ProductOrganizationProps> = props => {
               onClick={() =>
                 navigate(productTypeUrl(productType?.id), { resetScroll: true })
               }
-              disabled={productType?.id === undefined}
+              disabled={!productType?.id}
             >
               {productType?.name ?? "..."}
             </Link>
