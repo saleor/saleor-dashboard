@@ -78,6 +78,7 @@ const ExitFormDialogProvider = ({ children }) => {
   };
 
   const setEnableExitDialog = (value: boolean) => {
+    // dialog should never be toggled to enabled during form submission
     if (isSubmitting.current) {
       return;
     }
@@ -111,7 +112,7 @@ const ExitFormDialogProvider = ({ children }) => {
     setFormData(id, { isDirty: value });
 
     if (value) {
-      enableExitDialog.current = true;
+      setEnableExitDialog(true);
     }
   };
 
@@ -121,6 +122,7 @@ const ExitFormDialogProvider = ({ children }) => {
     (navAction.current = defaultValues.navAction);
 
   const setStateDefaultValues = () => {
+    setIsSubmitting(defaultValues.isSubmitting);
     setDefaultFormsData();
     setShowDialog(defaultValues.showDialog);
     setBlockNav(defaultValues.blockNav);
