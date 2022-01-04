@@ -21,12 +21,13 @@ import {
   getGiftCardExpiryInputData
 } from "./utils";
 
-interface GiftCardCreateDialogProps extends Pick<DialogProps, "onClose"> {
+interface GiftCardCreateDialogContentProps
+  extends Pick<DialogProps, "onClose"> {
   refetchQueries: string[];
   initialCustomer?: GiftCardCreateFormCustomer | null;
 }
 
-const GiftCardCreateDialog: React.FC<GiftCardCreateDialogProps> = ({
+const GiftCardCreateDialogContent: React.FC<GiftCardCreateDialogContentProps> = ({
   onClose,
   refetchQueries,
   initialCustomer
@@ -119,4 +120,4 @@ const GiftCardCreateDialog: React.FC<GiftCardCreateDialogProps> = ({
   );
 };
 
-export default GiftCardCreateDialog;
+export default GiftCardCreateDialogContent;

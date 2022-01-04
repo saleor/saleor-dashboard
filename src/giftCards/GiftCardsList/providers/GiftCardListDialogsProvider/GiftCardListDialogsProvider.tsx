@@ -1,7 +1,7 @@
 import { Dialog } from "@material-ui/core";
 import GiftCardListPageDeleteDialog from "@saleor/giftCards/components/GiftCardDeleteDialog/GiftCardListPageDeleteDialog";
 import GiftCardBulkCreateDialog from "@saleor/giftCards/GiftCardBulkCreateDialog";
-import GiftCardCreateDialog from "@saleor/giftCards/GiftCardCreateDialog";
+import GiftCardCreateDialogContent from "@saleor/giftCards/GiftCardCreateDialog";
 import GiftCardExportDialog from "@saleor/giftCards/GiftCardExportDialog";
 import { giftCardListUrl } from "@saleor/giftCards/urls";
 import useNavigator from "@saleor/hooks/useNavigator";
@@ -80,7 +80,7 @@ const GiftCardListDialogsProvider: React.FC<GiftCardListDialogsProviderProps> = 
     <GiftCardListDialogsContext.Provider value={providerValues}>
       {children}
       <Dialog open={isDialogOpen(CREATE)} maxWidth="sm">
-        <GiftCardCreateDialog
+        <GiftCardCreateDialogContent
           onClose={onClose}
           refetchQueries={[GIFT_CARD_LIST_QUERY]}
         />

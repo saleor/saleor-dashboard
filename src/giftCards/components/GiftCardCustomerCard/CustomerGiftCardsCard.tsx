@@ -4,7 +4,7 @@ import CardTitle from "@saleor/components/CardTitle";
 import CollectionWithDividers from "@saleor/components/CollectionWithDividers";
 import Skeleton from "@saleor/components/Skeleton";
 import { useCustomerDetails } from "@saleor/customers/hooks/useCustomerDetails";
-import GiftCardCreateDialog from "@saleor/giftCards/GiftCardCreateDialog/GiftCardCreateDialog";
+import GiftCardCreateDialogContent from "@saleor/giftCards/GiftCardCreateDialog/GiftCardCreateDialogContent";
 import { getExtendedGiftCard } from "@saleor/giftCards/GiftCardUpdate/providers/GiftCardDetailsProvider/utils";
 import { giftCardListUrl } from "@saleor/giftCards/urls";
 import useNavigator from "@saleor/hooks/useNavigator";
@@ -111,7 +111,7 @@ const CustomerGiftCardsCard: React.FC = () => {
         </CardActions>
       </Card>
       <Dialog open={openCreateDialog} maxWidth="sm">
-        <GiftCardCreateDialog
+        <GiftCardCreateDialogContent
           onClose={closeCreateDialog}
           refetchQueries={[CUSTOMER_GIFT_CARD_LIST_QUERY]}
           initialCustomer={{
