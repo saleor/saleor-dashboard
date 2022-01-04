@@ -156,7 +156,7 @@ const OrderCustomerAddressesSearch: React.FC<OrderCustomerAddressesSearchProps> 
         )}
       </DialogContent>
       <DialogActions>
-        <Button onClick={() => exitSearch()} color="primary">
+        <Button onClick={exitSearch} color="primary">
           <FormattedMessage {...buttonMessages.cancel} />
         </Button>
         <ConfirmButton
