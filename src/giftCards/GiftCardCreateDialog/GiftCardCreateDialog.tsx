@@ -4,6 +4,7 @@ import useNotifier from "@saleor/hooks/useNotifier";
 import { DialogProps } from "@saleor/types";
 import { GiftCardCreateInput } from "@saleor/types/globalTypes";
 import React, { useState } from "react";
+import { useEffect } from "react";
 import { useIntl } from "react-intl";
 
 import ContentWithProgress from "./ContentWithProgress";
@@ -94,10 +95,13 @@ const GiftCardCreateDialog: React.FC<GiftCardCreateDialogProps> = ({
 
   const handleClose = () => {
     onClose();
-    // dialog closing animation runs slower than prop change
-    // and we don't want to show the form for a split second
-    setTimeout(() => setCardCode(null), 0);
   };
+
+  useEffect(() => {
+    if (open) {
+      setCardCode(null);
+    }
+  }, [open]);
 
   return (
     <Dialog open={open} maxWidth="sm">

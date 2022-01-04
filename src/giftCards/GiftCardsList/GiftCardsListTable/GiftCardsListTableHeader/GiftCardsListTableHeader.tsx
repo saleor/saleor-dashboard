@@ -97,7 +97,12 @@ const GiftCardsListTableHeader: React.FC = () => {
         }
       >
         {headerItems.map(({ title, options, onClick, direction }) => (
-          <TableCellHeader {...options} onClick={onClick} direction={direction}>
+          <TableCellHeader
+            {...options}
+            onClick={onClick}
+            direction={direction}
+            key={title.defaultMessage}
+          >
             <Label text={intl.formatMessage(title)} size={LabelSizes.md} />
           </TableCellHeader>
         ))}
