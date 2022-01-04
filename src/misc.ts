@@ -14,6 +14,7 @@ import {
   orderStatusMessages,
   paymentStatusMessages
 } from "./intl";
+import { OrderDetails_order_shippingAddress } from "./orders/types/OrderDetails";
 import {
   MutationResultAdditionalProps,
   PartialMutationProviderOutput,
@@ -352,6 +353,16 @@ export function findInEnum<TEnum extends {}>(needle: string, haystack: TEnum) {
   }
 
   throw new Error(`Key ${needle} not found in enum`);
+}
+
+export function addressToAddressInput<T>(
+  address: T & OrderDetails_order_shippingAddress
+): AddressInput {
+  const { id, __typename, ...rest } = address;
+  return {
+    ...rest,
+    country: findInEnum(address.country.code, CountryCode)
+  };
 }
 
 export function findValueInEnum<TEnum extends {}>(
