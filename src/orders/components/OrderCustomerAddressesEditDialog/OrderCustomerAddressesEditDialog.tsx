@@ -113,13 +113,20 @@ const OrderCustomerAddressesEditDialog: React.FC<OrderCustomerAddressesEditDialo
 
   const continueToSearchAddressesState = (
     data: OrderCustomerAddressesEditFormData
-  ): boolean =>
-    !hasCustomerChanged &&
-    !addressSearchState.open &&
-    (variant === AddressEditDialogVariant.CHANGE_SHIPPING_ADDRESS
-      ? data.shippingAddressInputOption
-      : data.billingAddressInputOption) ===
-      AddressInputOptionEnum.CUSTOMER_ADDRESS;
+  ): boolean => {
+    if (hasCustomerChanged || addressSearchState.open) {
+      return false;
+    }
+    if (variant === AddressEditDialogVariant.CHANGE_SHIPPING_ADDRESS) {
+      return (
+        data.shippingAddressInputOption ===
+        AddressInputOptionEnum.CUSTOMER_ADDRESS
+      );
+    }
+    return (
+      data.billingAddressInputOption === AddressInputOptionEnum.CUSTOMER_ADDRESS
+    );
+  };
 
   const getCustomerAddress = (
     selectedCustomerAddressID: string
