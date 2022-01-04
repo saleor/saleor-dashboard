@@ -57,6 +57,7 @@ import { SearchProducts_search_edges_node } from "@saleor/searches/types/SearchP
 import { SearchWarehouses_search_edges_node } from "@saleor/searches/types/SearchWarehouses";
 import { FetchMoreProps, ReorderEvent } from "@saleor/types";
 import { arrayDiff } from "@saleor/utils/arrays";
+import useHandleFormSubmit from "@saleor/utils/handlers/handleFormSubmit";
 import handleFormSubmit from "@saleor/utils/handlers/handleFormSubmit";
 import createMultiAutocompleteSelectHandler from "@saleor/utils/handlers/multiAutocompleteSelectChangeHandler";
 import createSingleAutocompleteSelectHandler from "@saleor/utils/handlers/singleAutocompleteSelectChangeHandler";
@@ -255,7 +256,7 @@ function useProductUpdateForm(
     triggerChange
   });
 
-  const { setExitDialogSubmitRef, setEnableExitDialog } = useExitFormDialog({
+  const { setExitDialogSubmitRef } = useExitFormDialog({
     formId: PRODUCT_UPDATE_FORM_ID
   });
 
@@ -397,13 +398,13 @@ function useProductUpdateForm(
     return errors;
   };
 
-  const submit = async () =>
-    handleFormSubmit(
-      getSubmitData(),
-      handleSubmit,
-      setChanged,
-      setEnableExitDialog
-    );
+  const handleFormSubmit = useHandleFormSubmit({
+    formId: form.formId,
+    onSubmit: handleSubmit,
+    setChanged
+  });
+
+  const submit = async () => handleFormSubmit(getSubmitData());
 
   useEffect(() => setExitDialogSubmitRef(submit), [submit]);
 

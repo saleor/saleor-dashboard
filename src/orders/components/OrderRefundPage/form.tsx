@@ -8,7 +8,7 @@ import useFormset, {
   FormsetData
 } from "@saleor/hooks/useFormset";
 import { OrderRefundData_order } from "@saleor/orders/types/OrderRefundData";
-import handleFormSubmit from "@saleor/utils/handlers/handleFormSubmit";
+import useHandleFormSubmit from "@saleor/utils/handlers/handleFormSubmit";
 import React, { useEffect } from "react";
 
 import { refundFulfilledStatuses } from "./OrderRefundPage";
@@ -80,12 +80,13 @@ function useOrderRefundForm(
     setChanged,
     hasChanged,
     triggerChange,
-    data: formData
+    data: formData,
+    formId
   } = useForm(getOrderRefundPageFormData(defaultType), undefined, {
     confirmLeave: true
   });
 
-  const { setExitDialogSubmitRef, setEnableExitDialog } = useExitFormDialog();
+  const { setExitDialogSubmitRef } = useExitFormDialog();
 
   const refundedProductQuantities = useFormset<null, string>(
     order?.lines
@@ -177,8 +178,13 @@ function useOrderRefundForm(
     refundedProductQuantities: refundedProductQuantities.data
   };
 
-  const submit = () =>
-    handleFormSubmit(data, onSubmit, setChanged, setEnableExitDialog);
+  const handleFormSubmit = useHandleFormSubmit({
+    formId,
+    onSubmit,
+    setChanged
+  });
+
+  const submit = () => handleFormSubmit(data);
 
   useEffect(() => setExitDialogSubmitRef(submit), [submit]);
 

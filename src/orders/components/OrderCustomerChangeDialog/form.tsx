@@ -1,7 +1,6 @@
-import useExitFormDialog from "@saleor/components/Form/useExitFormDialog";
 import useForm, { CommonUseFormResult } from "@saleor/hooks/useForm";
-import handleFormSubmit from "@saleor/utils/handlers/handleFormSubmit";
-import React, { useEffect } from "react";
+import useHandleFormSubmit from "@saleor/utils/handlers/handleFormSubmit";
+import React from "react";
 
 export enum CustomerChangeActionEnum {
   KEEP_ADDRESS = "keepAddress",
@@ -35,18 +34,18 @@ function useOrderCustomerChangeForm(
     ...defaultInitialFormData
   });
 
-  const { setExitDialogSubmitRef, setEnableExitDialog } = useExitFormDialog();
+  const handleFormSubmit = useHandleFormSubmit({
+    onSubmit,
+    setChanged
+  });
 
-  const handleSubmit = () =>
-    handleFormSubmit(data, onSubmit, setChanged, setEnableExitDialog);
+  const handleSubmit = () => handleFormSubmit(data);
 
   const submit = (event: React.FormEvent<any>) => {
     event.stopPropagation();
     event.preventDefault();
     return handleSubmit();
   };
-
-  useEffect(() => setExitDialogSubmitRef(submit), [submit]);
 
   return {
     change: handleChange,

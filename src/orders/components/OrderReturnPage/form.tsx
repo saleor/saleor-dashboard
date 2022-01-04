@@ -9,7 +9,7 @@ import useFormset, {
 } from "@saleor/hooks/useFormset";
 import { OrderDetails_order } from "@saleor/orders/types/OrderDetails";
 import { FulfillmentStatus } from "@saleor/types/globalTypes";
-import handleFormSubmit from "@saleor/utils/handlers/handleFormSubmit";
+import useHandleFormSubmit from "@saleor/utils/handlers/handleFormSubmit";
 import React, { useEffect } from "react";
 
 import { OrderRefundAmountCalculationMode } from "../OrderRefundPage/form";
@@ -85,12 +85,13 @@ function useOrderReturnForm(
     setChanged,
     hasChanged,
     data: formData,
-    triggerChange
+    triggerChange,
+    formId
   } = useForm(getOrderRefundPageFormData(), undefined, {
     confirmLeave: true
   });
 
-  const { setExitDialogSubmitRef, setEnableExitDialog } = useExitFormDialog();
+  const { setExitDialogSubmitRef } = useExitFormDialog();
 
   const unfulfiledItemsQuantites = useFormset<LineItemData, number>(
     getOrderUnfulfilledLines(order).map(getParsedLineData({ initialValue: 0 }))
@@ -224,8 +225,13 @@ function useOrderReturnForm(
     ...formData
   };
 
-  const submit = () =>
-    handleFormSubmit(data, onSubmit, setChanged, setEnableExitDialog);
+  const handleFormSubmit = useHandleFormSubmit({
+    formId,
+    onSubmit,
+    setChanged
+  });
+
+  const submit = () => handleFormSubmit(data);
 
   useEffect(() => setExitDialogSubmitRef(submit), [submit]);
 

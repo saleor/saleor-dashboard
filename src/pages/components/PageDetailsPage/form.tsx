@@ -37,7 +37,7 @@ import { SearchPageTypes_search_edges_node } from "@saleor/searches/types/Search
 import { SearchProducts_search_edges_node } from "@saleor/searches/types/SearchProducts";
 import { FetchMoreProps, ReorderEvent } from "@saleor/types";
 import getPublicationData from "@saleor/utils/data/getPublicationData";
-import handleFormSubmit from "@saleor/utils/handlers/handleFormSubmit";
+import useHandleFormSubmit from "@saleor/utils/handlers/handleFormSubmit";
 import { mapMetadataItemToInput } from "@saleor/utils/maps";
 import getMetadata from "@saleor/utils/metadata/getMetadata";
 import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
@@ -228,13 +228,13 @@ function usePageForm(
     return errors;
   };
 
-  const submit = () =>
-    handleFormSubmit(
-      getSubmitData(),
-      handleSubmit,
-      setChanged,
-      setEnableExitDialog
-    );
+  const handleFormSubmit = useHandleFormSubmit({
+    formId,
+    onSubmit: handleSubmit,
+    setChanged
+  });
+
+  const submit = () => handleFormSubmit(getSubmitData());
 
   useEffect(() => setExitDialogSubmitRef(submit), [submit]);
 

@@ -6,7 +6,7 @@ import useForm, {
   CommonUseFormResult,
   FormChange
 } from "@saleor/hooks/useForm";
-import handleFormSubmit from "@saleor/utils/handlers/handleFormSubmit";
+import useHandleFormSubmit from "@saleor/utils/handlers/handleFormSubmit";
 import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
 import useRichText from "@saleor/utils/richText/useRichText";
 import React, { useEffect } from "react";
@@ -56,7 +56,13 @@ function useCategoryCreateForm(
     formId
   } = useForm(initialData, undefined, { confirmLeave: true });
 
-  const { setExitDialogSubmitRef, setEnableExitDialog } = useExitFormDialog({
+  const handleFormSubmit = useHandleFormSubmit({
+    formId,
+    onSubmit,
+    setChanged
+  });
+
+  const { setExitDialogSubmitRef } = useExitFormDialog({
     formId
   });
 
@@ -77,8 +83,7 @@ function useCategoryCreateForm(
     description: description.current
   });
 
-  const submit = () =>
-    handleFormSubmit(getData(), onSubmit, setChanged, setEnableExitDialog);
+  const submit = () => handleFormSubmit(getData());
 
   useEffect(() => setExitDialogSubmitRef(submit), [submit]);
 
