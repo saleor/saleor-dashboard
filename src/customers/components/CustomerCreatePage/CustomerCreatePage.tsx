@@ -10,6 +10,7 @@ import useAddressValidation from "@saleor/hooks/useAddressValidation";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import { sectionNames } from "@saleor/intl";
 import { Backlink } from "@saleor/macaw-ui";
+import { extractMutationErrors } from "@saleor/misc";
 import { AddressInput } from "@saleor/types/globalTypes";
 import createSingleAutocompleteSelectHandler from "@saleor/utils/handlers/singleAutocompleteSelectChangeHandler";
 import { mapCountriesToChoices } from "@saleor/utils/maps";
@@ -121,13 +122,15 @@ const CustomerCreatePage: React.FC<CustomerCreatePageProps> = ({
       return handleSubmitWithAddress(formData);
     }
 
-    return onSubmit({
-      address: null,
-      customerFirstName: formData.customerFirstName,
-      customerLastName: formData.customerLastName,
-      email: formData.email,
-      note: formData.note
-    });
+    return extractMutationErrors(
+      onSubmit({
+        address: null,
+        customerFirstName: formData.customerFirstName,
+        customerLastName: formData.customerLastName,
+        email: formData.email,
+        note: formData.note
+      })
+    );
   };
 
   return (

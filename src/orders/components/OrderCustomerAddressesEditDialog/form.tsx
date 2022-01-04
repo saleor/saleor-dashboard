@@ -11,7 +11,7 @@ import useForm, {
   FormChange,
   SubmitPromise
 } from "@saleor/hooks/useForm";
-import handleFormSubmit from "@saleor/utils/handlers/handleFormSubmit";
+import useHandleFormSubmit from "@saleor/utils/handlers/handleFormSubmit";
 import createSingleAutocompleteSelectHandler from "@saleor/utils/handlers/singleAutocompleteSelectChangeHandler";
 import React, { useEffect, useState } from "react";
 
@@ -173,8 +173,12 @@ function useOrderCustomerAddressesEditForm(
     billingCountryDisplayName
   };
 
-  const handleSubmit = () =>
-    handleFormSubmit(data, onSubmit, setChanged, setEnableExitDialog);
+  const handleFormSubmit = useHandleFormSubmit({
+    onSubmit,
+    setChanged
+  });
+
+  const handleSubmit = () => handleFormSubmit(data);
 
   const submit = (event: React.FormEvent<any>) => {
     event.stopPropagation();

@@ -50,7 +50,7 @@ import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTr
 import React, { useEffect } from "react";
 import { useIntl } from "react-intl";
 
-import handleFormSubmit from "../../../utils/handlers/handleFormSubmit";
+import useHandleFormSubmit from "../../../utils/handlers/handleFormSubmit";
 import { ProductStockInput } from "../ProductStocks";
 
 export interface ProductVariantUpdateFormData extends MetadataFormData {
@@ -320,8 +320,13 @@ function useProductVariantUpdateForm(
     return errors;
   };
 
-  const submit = () =>
-    handleFormSubmit(submitData, handleSubmit, setChanged, setEnableExitDialog);
+  const handleFormSubmit = useHandleFormSubmit({
+    formId,
+    onSubmit: handleSubmit,
+    setChanged
+  });
+
+  const submit = () => handleFormSubmit(submitData);
 
   useEffect(() => setExitDialogSubmitRef(submit), [submit]);
 

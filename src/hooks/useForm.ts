@@ -2,7 +2,7 @@ import { FormId } from "@saleor/components/Form/ExitFormDialogProvider";
 import useExitFormDialog, {
   UseExitFormDialogResult
 } from "@saleor/components/Form/useExitFormDialog";
-import handleFormSubmit from "@saleor/utils/handlers/handleFormSubmit";
+import useHandleFormSubmit from "@saleor/utils/handlers/handleFormSubmit";
 import { toggle } from "@saleor/utils/lists";
 import isEqual from "lodash/isEqual";
 import omit from "lodash/omit";
@@ -101,6 +101,12 @@ function useForm<T extends FormData, TErrors>(
     formId
   } = useExitFormDialog({ formId: propsFormId });
 
+  const handleFormSubmit = useHandleFormSubmit({
+    formId,
+    onSubmit,
+    setChanged
+  });
+
   const handleSetChanged = (value: boolean = true) => {
     setChanged(value);
 
@@ -177,12 +183,7 @@ function useForm<T extends FormData, TErrors>(
 
   async function submit() {
     if (typeof onSubmit === "function" && !Object.keys(errors).length) {
-      const result = handleFormSubmit(
-        data,
-        onSubmit,
-        handleSetChanged,
-        setEnableExitDialog
-      );
+      const result = handleFormSubmit(data);
 
       return result;
     }

@@ -10,7 +10,7 @@ import useForm, {
   FormChange,
   SubmitPromise
 } from "@saleor/hooks/useForm";
-import handleFormSubmit from "@saleor/utils/handlers/handleFormSubmit";
+import useHandleFormSubmit from "@saleor/utils/handlers/handleFormSubmit";
 import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
 import useRichText from "@saleor/utils/richText/useRichText";
 import React, { useEffect } from "react";
@@ -85,7 +85,13 @@ function useCollectionCreateForm(
     formId: COLLECTION_CREATE_FORM_ID
   });
 
-  const { setExitDialogSubmitRef, setEnableExitDialog } = useExitFormDialog({
+  const handleFormSubmit = useHandleFormSubmit({
+    formId,
+    onSubmit,
+    setChanged
+  });
+
+  const { setExitDialogSubmitRef } = useExitFormDialog({
     formId
   });
 
@@ -112,8 +118,7 @@ function useCollectionCreateForm(
     triggerChange
   );
 
-  const submit = () =>
-    handleFormSubmit(getData(), onSubmit, setChanged, setEnableExitDialog);
+  const submit = () => handleFormSubmit(getData());
 
   useEffect(() => setExitDialogSubmitRef(submit), [submit]);
 

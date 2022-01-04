@@ -10,7 +10,7 @@ import useForm, {
   CommonUseFormResultWithHandlers,
   FormChange
 } from "@saleor/hooks/useForm";
-import handleFormSubmit from "@saleor/utils/handlers/handleFormSubmit";
+import useHandleFormSubmit from "@saleor/utils/handlers/handleFormSubmit";
 import { mapMetadataItemToInput } from "@saleor/utils/maps";
 import getMetadata from "@saleor/utils/metadata/getMetadata";
 import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
@@ -75,13 +75,20 @@ function useCollectionUpdateForm(
     data: formData,
     triggerChange,
     setChanged,
-    hasChanged
+    hasChanged,
+    formId
   } = useForm(getInitialData(collection, currentChannels), undefined, {
     confirmLeave: true,
     formId: COLLECTION_DETAILS_FORM_ID
   });
 
-  const { setExitDialogSubmitRef, setEnableExitDialog } = useExitFormDialog({
+  const handleFormSubmit = useHandleFormSubmit({
+    formId,
+    onSubmit,
+    setChanged
+  });
+
+  const { setExitDialogSubmitRef } = useExitFormDialog({
     formId: COLLECTION_DETAILS_FORM_ID
   });
 
@@ -115,13 +122,7 @@ function useCollectionUpdateForm(
     triggerChange
   );
 
-  const submit = () =>
-    handleFormSubmit(
-      getSubmitData(),
-      onSubmit,
-      setChanged,
-      setEnableExitDialog
-    );
+  const submit = () => handleFormSubmit(getSubmitData());
 
   useEffect(() => setExitDialogSubmitRef(submit), [submit]);
 
