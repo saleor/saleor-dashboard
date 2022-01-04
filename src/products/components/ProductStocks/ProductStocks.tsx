@@ -225,7 +225,6 @@ const ProductStocks: React.FC<ProductStocksProps> = ({
       <CardContent>
         <div className={classes.skuInputContainer}>
           <TextField
-            data-test-id="sku-input"
             disabled={disabled}
             error={!!formErrors.sku}
             fullWidth

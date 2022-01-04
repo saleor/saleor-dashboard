@@ -30,9 +30,14 @@ export function createFirstVariant({
     .get(VARIANTS_SELECTORS.nextButton)
     .click();
   fillUpPriceList(price);
-  cy.get(`[name*='${warehouseId}']`)
-    .click()
-    .get(VARIANTS_SELECTORS.stockInput)
+  if (warehouseId) {
+    cy.get(`[name*='${warehouseId}']`).click();
+  } else {
+    cy.get(VARIANTS_SELECTORS.warehouseCheckboxes)
+      .first()
+      .click();
+  }
+  cy.get(VARIANTS_SELECTORS.stockInput)
     .type(quantity)
     .get(VARIANTS_SELECTORS.nextButton)
     .click();
@@ -80,9 +85,15 @@ export function fillUpGeneralVariantInputs({
 }) {
   fillUpVariantAttributeAndSku({ attributeName, sku });
   cy.get(VARIANTS_SELECTORS.addWarehouseButton).click();
-  cy.contains(VARIANTS_SELECTORS.warehouseOption, warehouseName).click({
-    force: true
-  });
+  if (warehouseName) {
+    cy.contains(VARIANTS_SELECTORS.warehouseOption, warehouseName).click({
+      force: true
+    });
+  } else {
+    cy.get(VARIANTS_SELECTORS.warehouseOption)
+      .first()
+      .click({ force: true });
+  }
   cy.get(VARIANTS_SELECTORS.stockInput).type(quantity);
 }
 

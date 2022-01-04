@@ -121,6 +121,7 @@ filterTests({ definedTags: ["all", "critical"], version: "3.1.0" }, () => {
             channelId: defaultChannel.id
           });
           cy.visit(`${urlList.products}${createdProduct.id}`);
+          cy.waitForProgressBarToNotBeVisible();
           createFirstVariant({
             warehouseId: warehouse.id,
             price,
@@ -135,7 +136,7 @@ filterTests({ definedTags: ["all", "critical"], version: "3.1.0" }, () => {
             channelSlug: defaultChannel.slug,
             email: "example@example.com",
             variantsList: [variant],
-            shippingMethodId: shippingMethod.id,
+            shippingMethodName: shippingMethod.name,
             address
           });
         })
@@ -180,7 +181,7 @@ filterTests({ definedTags: ["all", "critical"], version: "3.1.0" }, () => {
             channelSlug: defaultChannel.slug,
             email: "example@example.com",
             variantsList: [secondVariant],
-            shippingMethodId: shippingMethod.id,
+            shippingMethodName: shippingMethod.name,
             address
           });
         })
@@ -234,7 +235,7 @@ filterTests({ definedTags: ["all", "critical"], version: "3.1.0" }, () => {
             channelSlug: defaultChannel.slug,
             email: "example@example.com",
             variantsList: variants,
-            shippingMethodId: shippingMethod.id,
+            shippingMethodName: shippingMethod.name,
             address
           });
         });
