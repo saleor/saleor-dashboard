@@ -208,7 +208,6 @@ filterTests({ definedTags: ["all"], version: "3.1.0" }, () => {
             .get(SHARED_ELEMENTS.skeleton)
             .should("not.exist")
             .get(VARIANTS_SELECTORS.skuInput)
-            .find("input")
             .clear()
             .addAliasToGraphRequest("VariantUpdate")
             .get(BUTTON_SELECTORS.confirm)
@@ -267,7 +266,7 @@ filterTests({ definedTags: ["all"], version: "3.1.0" }, () => {
         address,
         channelSlug: defaultChannel.slug,
         email,
-        shippingMethodId: shippingMethod.id,
+        shippingMethodName: shippingMethod.name,
         variantsList: [variant]
       }).then(({ order }) => {
         expect(order.id).to.be.ok;
