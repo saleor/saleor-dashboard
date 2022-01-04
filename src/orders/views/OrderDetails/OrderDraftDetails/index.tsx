@@ -22,6 +22,7 @@ import { useIntl } from "react-intl";
 import { customerUrl } from "../../../../customers/urls";
 import { getStringOrPlaceholder } from "../../../../misc";
 import { productUrl } from "../../../../products/urls";
+import OrderAddressFields from "../../../components/OrderAddressFields/OrderAddressFields";
 import OrderDraftCancelDialog from "../../../components/OrderDraftCancelDialog/OrderDraftCancelDialog";
 import OrderDraftPage from "../../../components/OrderDraftPage";
 import OrderProductAddDialog from "../../../components/OrderProductAddDialog";
@@ -29,7 +30,6 @@ import OrderShippingMethodEditDialog from "../../../components/OrderShippingMeth
 import { useOrderVariantSearch } from "../../../queries";
 import { OrderUrlDialog, OrderUrlQueryParams } from "../../../urls";
 import { orderDraftListUrl } from "../../../urls";
-import OrderAddressFields from "../OrderAddressFields";
 
 interface OrderDraftDetailsProps {
   id: string;
@@ -265,13 +265,13 @@ export const OrderDraftDetails: React.FC<OrderDraftDetailsProps> = ({
       <OrderAddressFields
         action={params?.action}
         customerAddressesLoading={customerAddressesLoading}
-        id={id}
         isDraft
         countries={data?.shop?.countries}
         customer={customerAddresses?.user}
         onClose={closeModal}
         onConfirm={handleCustomerChangeAddresses}
-        orderDraftUpdate={orderDraftUpdate}
+        confirmButtonState={orderDraftUpdate.opts.status}
+        errors={orderDraftUpdate.opts.data?.draftOrderUpdate.errors}
       />
     </>
   );

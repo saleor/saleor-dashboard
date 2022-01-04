@@ -17,6 +17,7 @@ import { customerUrl } from "../../../../customers/urls";
 import { getMutationState, getStringOrPlaceholder } from "../../../../misc";
 import { productUrl } from "../../../../products/urls";
 import { FulfillmentStatus } from "../../../../types/globalTypes";
+import OrderAddressFields from "../../../components/OrderAddressFields/OrderAddressFields";
 import OrderCancelDialog from "../../../components/OrderCancelDialog";
 import OrderDetailsPage from "../../../components/OrderDetailsPage";
 import OrderFulfillmentCancelDialog from "../../../components/OrderFulfillmentCancelDialog";
@@ -35,7 +36,6 @@ import {
   orderUrl,
   OrderUrlQueryParams
 } from "../../../urls";
-import OrderAddressFields from "../OrderAddressFields";
 import { isAnyAddressEditModalOpen } from "../OrderDraftDetails";
 
 interface OrderUnconfirmedDetailsProps {
@@ -373,13 +373,13 @@ export const OrderUnconfirmedDetails: React.FC<OrderUnconfirmedDetailsProps> = (
       <OrderAddressFields
         action={params?.action}
         customerAddressesLoading={customerAddressesLoading}
-        id={id}
         isDraft={false}
         countries={data?.shop?.countries}
         customer={customerAddresses?.user}
         onClose={closeModal}
         onConfirm={handleCustomerChangeAddresses}
-        orderUpdate={orderUpdate}
+        confirmButtonState={orderUpdate.opts.status}
+        errors={orderUpdate.opts.data?.orderUpdate.errors}
       />
     </>
   );

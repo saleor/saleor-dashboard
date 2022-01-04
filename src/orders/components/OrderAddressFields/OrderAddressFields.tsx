@@ -1,40 +1,27 @@
+import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
 import { CustomerAddresses_user } from "@saleor/customers/types/CustomerAddresses";
+import { OrderErrorFragment } from "@saleor/fragments/types/OrderErrorFragment";
+import { SubmitPromise } from "@saleor/hooks/useForm";
 import OrderCustomerAddressesEditDialog, {
   AddressEditDialogVariant,
   OrderCustomerAddressesEditDialogOutput
 } from "@saleor/orders/components/OrderCustomerAddressesEditDialog";
 import { OrderDetails_shop_countries } from "@saleor/orders/types/OrderDetails";
-import {
-  OrderDraftUpdate,
-  OrderDraftUpdateVariables
-} from "@saleor/orders/types/OrderDraftUpdate";
-import {
-  OrderUpdate,
-  OrderUpdateVariables
-} from "@saleor/orders/types/OrderUpdate";
-import { PartialMutationProviderOutput } from "@saleor/types";
 import React from "react";
 
 interface OrderAddressFieldsProps {
   action: string;
-  id?: string;
   isDraft: boolean;
   customerAddressesLoading: boolean;
   customer: CustomerAddresses_user;
   countries: OrderDetails_shop_countries[];
   onClose: () => void;
-  onConfirm: (data: OrderCustomerAddressesEditDialogOutput) => Promise<any>;
-  orderUpdate?: PartialMutationProviderOutput<
-    OrderUpdate,
-    OrderUpdateVariables
-  >;
-  orderDraftUpdate?: PartialMutationProviderOutput<
-    OrderDraftUpdate,
-    OrderDraftUpdateVariables
-  >;
+  onConfirm: (data: OrderCustomerAddressesEditDialogOutput) => SubmitPromise;
+  confirmButtonState: ConfirmButtonTransitionState;
+  errors: OrderErrorFragment[];
 }
 
-const OrderAddressFields = ({
+const OrderAddressFields: React.FC<OrderAddressFieldsProps> = ({
   action,
   isDraft,
   customerAddressesLoading,
@@ -42,22 +29,14 @@ const OrderAddressFields = ({
   countries,
   onClose,
   onConfirm,
-  orderUpdate,
-  orderDraftUpdate
-}: OrderAddressFieldsProps) => {
-  if (!orderUpdate && !orderDraftUpdate) {
-    return;
-  }
-
+  confirmButtonState,
+  errors
+}) => {
   const addressFieldCommonProps = {
     loading: customerAddressesLoading,
-    confirmButtonState: isDraft
-      ? orderDraftUpdate.opts.status
-      : orderUpdate.opts.status,
+    confirmButtonState,
     countries,
-    errors: isDraft
-      ? orderDraftUpdate.opts.data?.draftOrderUpdate.errors
-      : orderUpdate.opts.data?.orderUpdate.errors,
+    errors,
     customerAddresses: customer?.addresses,
     defaultShippingAddress: customer?.defaultShippingAddress,
     defaultBillingAddress: customer?.defaultBillingAddress,
