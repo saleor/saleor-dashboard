@@ -203,9 +203,8 @@ const OrderCustomerAddressesEditDialog: React.FC<OrderCustomerAddressesEditDialo
 
     const addressesInput = handleAddressesSubmit(data);
     if (addressesInput) {
-      onConfirm(addressesInput).then(() =>
-        setAddressSearchState(defaultSearchState)
-      );
+      await onConfirm(addressesInput);
+      setAddressSearchState(defaultSearchState);
     }
   };
 
