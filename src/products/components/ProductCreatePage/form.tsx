@@ -29,8 +29,8 @@ import useFormset, {
   FormsetChange,
   FormsetData
 } from "@saleor/hooks/useFormset";
+import useHandleFormSubmit from "@saleor/hooks/useHandleFormSubmit";
 import { errorMessages } from "@saleor/intl";
-import { ProductCreate_productCreate_errors } from "@saleor/products/types/ProductCreate";
 import { ProductType_productType } from "@saleor/products/types/ProductType";
 import {
   getAttributeInputFromProductType,
@@ -51,7 +51,6 @@ import { SearchProducts_search_edges_node } from "@saleor/searches/types/SearchP
 import { SearchProductTypes_search_edges_node } from "@saleor/searches/types/SearchProductTypes";
 import { SearchWarehouses_search_edges_node } from "@saleor/searches/types/SearchWarehouses";
 import { FetchMoreProps, ReorderEvent } from "@saleor/types";
-import handleFormSubmit from "@saleor/utils/handlers/handleFormSubmit";
 import createMultiAutocompleteSelectHandler from "@saleor/utils/handlers/multiAutocompleteSelectChangeHandler";
 import createSingleAutocompleteSelectHandler from "@saleor/utils/handlers/singleAutocompleteSelectChangeHandler";
 import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
@@ -214,7 +213,8 @@ function useProductCreateForm(
     handleChange,
     hasChanged,
     data: formData,
-    setChanged
+    setChanged,
+    formId
   } = form;
 
   const attributes = useFormset<AttributeInputData>(
@@ -229,7 +229,7 @@ function useProductCreateForm(
     triggerChange
   });
 
-  const { setExitDialogSubmitRef, setEnableExitDialog } = useExitFormDialog({
+  const { setExitDialogSubmitRef } = useExitFormDialog({
     formId: PRODUCT_CREATE_FORM_ID
   });
 
@@ -347,13 +347,13 @@ function useProductCreateForm(
 
   const data = getData();
 
-  const submit = () =>
-    handleFormSubmit<ProductCreateData, ProductCreate_productCreate_errors>(
-      data,
-      onSubmit,
-      setChanged,
-      setEnableExitDialog
-    );
+  const handleFormSubmit = useHandleFormSubmit({
+    formId,
+    onSubmit,
+    setChanged
+  });
+
+  const submit = () => handleFormSubmit(data);
 
   useEffect(() => setExitDialogSubmitRef(submit), [submit]);
 

@@ -7,8 +7,8 @@ import useFormset, {
   FormsetChange,
   FormsetData
 } from "@saleor/hooks/useFormset";
+import useHandleFormSubmit from "@saleor/hooks/useHandleFormSubmit";
 import { OrderRefundData_order } from "@saleor/orders/types/OrderRefundData";
-import useHandleFormSubmit from "@saleor/utils/handlers/handleFormSubmit";
 import React, { useEffect } from "react";
 
 import { refundFulfilledStatuses } from "./OrderRefundPage";

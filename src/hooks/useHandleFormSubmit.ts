@@ -18,16 +18,15 @@ function useHandleFormSubmit<TData, TErrors>({
   });
 
   async function handleFormSubmit(data: TData): Promise<TErrors[]> {
+    setIsSubmitting(true);
+
     const result = onSubmit(data);
 
     if (!result) {
       return [];
     }
 
-    setIsSubmitting(true);
-
     const errors = await result;
-    console.log({ errors });
 
     if (errors?.length === 0) {
       setChanged(false);
