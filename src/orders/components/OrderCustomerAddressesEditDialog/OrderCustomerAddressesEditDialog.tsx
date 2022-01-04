@@ -26,6 +26,7 @@ import { transformAddressToAddressInput } from "@saleor/misc";
 import { AddressInput, AddressTypeEnum } from "@saleor/types/globalTypes";
 import { mapCountriesToChoices } from "@saleor/utils/maps";
 import React from "react";
+import { MessageDescriptor } from "react-intl";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { getById } from "../OrderReturnPage/utils";
@@ -169,23 +170,23 @@ const OrderCustomerAddressesEditDialog: React.FC<OrderCustomerAddressesEditDialo
     };
   };
 
-  const getDialogTitle = () => {
+  const getDialogTitle = (): MessageDescriptor => {
     if (variant === AddressEditDialogVariant.CHANGE_SHIPPING_ADDRESS) {
-      return <FormattedMessage {...dialogMessages.shippingChangeTitle} />;
+      return dialogMessages.shippingChangeTitle;
     }
     if (variant === AddressEditDialogVariant.CHANGE_BILLING_ADDRESS) {
-      return <FormattedMessage {...dialogMessages.billingChangeTitle} />;
+      return dialogMessages.billingChangeTitle;
     }
-    return <FormattedMessage {...dialogMessages.customerChangeTitle} />;
+    return dialogMessages.customerChangeTitle;
   };
-  const getDialogDescription = () => {
+  const getDialogDescription = (): MessageDescriptor => {
     if (customerAddresses.length === 0) {
-      return <FormattedMessage {...dialogMessages.noAddressDescription} />;
+      return dialogMessages.noAddressDescription;
     }
     if (variant === AddressEditDialogVariant.CHANGE_CUSTOMER) {
-      return <FormattedMessage {...dialogMessages.customerChangeDescription} />;
+      return dialogMessages.customerChangeDescription;
     }
-    return <FormattedMessage {...dialogMessages.addressChangeDescription} />;
+    return dialogMessages.addressChangeDescription;
   };
 
   const handleSubmit = async (data: OrderCustomerAddressesEditFormData) => {
@@ -325,9 +326,13 @@ const OrderCustomerAddressesEditDialog: React.FC<OrderCustomerAddressesEditDialo
               />
             ) : (
               <>
-                <DialogTitle>{getDialogTitle()}</DialogTitle>
+                <DialogTitle>
+                  <FormattedMessage {...getDialogTitle()} />
+                </DialogTitle>
                 <DialogContent className={classes.dialogContent}>
-                  <Typography>{getDialogDescription()}</Typography>
+                  <Typography>
+                    <FormattedMessage {...getDialogDescription()} />
+                  </Typography>
                   <FormSpacer />
                   {hasCustomerChanged && (
                     <>
