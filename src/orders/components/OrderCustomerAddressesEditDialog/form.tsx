@@ -11,7 +11,7 @@ import useForm, {
   FormChange,
   SubmitPromise
 } from "@saleor/hooks/useForm";
-import useHandleFormSubmit from "@saleor/utils/handlers/handleFormSubmit";
+import useHandleFormSubmit from "@saleor/hooks/useHandleFormSubmit";
 import createSingleAutocompleteSelectHandler from "@saleor/utils/handlers/singleAutocompleteSelectChangeHandler";
 import React, { useEffect, useState } from "react";
 

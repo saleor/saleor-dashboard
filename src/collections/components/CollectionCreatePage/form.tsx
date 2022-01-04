@@ -10,7 +10,7 @@ import useForm, {
   FormChange,
   SubmitPromise
 } from "@saleor/hooks/useForm";
-import useHandleFormSubmit from "@saleor/utils/handlers/handleFormSubmit";
+import useHandleFormSubmit from "@saleor/hooks/useHandleFormSubmit";
 import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
 import useRichText from "@saleor/utils/richText/useRichText";
 import React, { useEffect } from "react";

@@ -1,5 +1,5 @@
 import useForm, { CommonUseFormResult } from "@saleor/hooks/useForm";
-import useHandleFormSubmit from "@saleor/utils/handlers/handleFormSubmit";
+import useHandleFormSubmit from "@saleor/hooks/useHandleFormSubmit";
 import React from "react";
 
 export enum CustomerChangeActionEnum {

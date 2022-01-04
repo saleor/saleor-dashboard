@@ -1,7 +1,7 @@
 import { OrderSettingsFragment } from "@saleor/fragments/types/OrderSettingsFragment";
 import { ShopOrderSettingsFragment } from "@saleor/fragments/types/ShopOrderSettingsFragment";
 import useForm, { FormChange, SubmitPromise } from "@saleor/hooks/useForm";
-import useHandleFormSubmit from "@saleor/utils/handlers/handleFormSubmit";
+import useHandleFormSubmit from "@saleor/hooks/useHandleFormSubmit";
 import React from "react";
 
 export interface OrderSettingsFormData {

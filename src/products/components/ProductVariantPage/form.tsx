@@ -26,6 +26,7 @@ import useFormset, {
   FormsetChange,
   FormsetData
 } from "@saleor/hooks/useFormset";
+import useHandleFormSubmit from "@saleor/hooks/useHandleFormSubmit";
 import { errorMessages } from "@saleor/intl";
 import {
   getAttributeInputFromVariant,
@@ -50,7 +51,6 @@ import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTr
 import React, { useEffect } from "react";
 import { useIntl } from "react-intl";
 
-import useHandleFormSubmit from "../../../utils/handlers/handleFormSubmit";
 import { ProductStockInput } from "../ProductStocks";
 
 export interface ProductVariantUpdateFormData extends MetadataFormData {
@@ -181,7 +181,7 @@ function useProductVariantUpdateForm(
     formId
   } = form;
 
-  const { setExitDialogSubmitRef, setEnableExitDialog } = useExitFormDialog({
+  const { setExitDialogSubmitRef } = useExitFormDialog({
     formId
   });
 

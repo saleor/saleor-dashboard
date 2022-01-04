@@ -2,7 +2,7 @@ import { FormId } from "@saleor/components/Form/ExitFormDialogProvider";
 import useExitFormDialog, {
   UseExitFormDialogResult
 } from "@saleor/components/Form/useExitFormDialog";
-import useHandleFormSubmit from "@saleor/utils/handlers/handleFormSubmit";
+import useHandleFormSubmit from "@saleor/hooks/useHandleFormSubmit";
 import { toggle } from "@saleor/utils/lists";
 import isEqual from "lodash/isEqual";
 import omit from "lodash/omit";

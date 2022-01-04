@@ -20,6 +20,7 @@ import useFormset, {
   FormsetChange,
   FormsetData
 } from "@saleor/hooks/useFormset";
+import useHandleFormSubmit from "@saleor/hooks/useHandleFormSubmit";
 import { errorMessages } from "@saleor/intl";
 import { ProductVariantCreateData_product } from "@saleor/products/types/ProductVariantCreateData";
 import { getVariantAttributeInputFromProduct } from "@saleor/products/utils/data";
@@ -28,7 +29,6 @@ import { SearchPages_search_edges_node } from "@saleor/searches/types/SearchPage
 import { SearchProducts_search_edges_node } from "@saleor/searches/types/SearchProducts";
 import { SearchWarehouses_search_edges_node } from "@saleor/searches/types/SearchWarehouses";
 import { FetchMoreProps, ReorderEvent } from "@saleor/types";
-import useHandleFormSubmit from "@saleor/utils/handlers/handleFormSubmit";
 import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
 import React, { useEffect } from "react";
 import { useIntl } from "react-intl";
@@ -131,7 +131,7 @@ function useProductVariantCreateForm(
   const attributesWithNewFileValue = useFormset<null, File>([]);
   const stocks = useFormset<ProductStockFormsetData, string>([]);
 
-  const { setExitDialogSubmitRef, setEnableExitDialog } = useExitFormDialog({
+  const { setExitDialogSubmitRef } = useExitFormDialog({
     formId
   });
 
