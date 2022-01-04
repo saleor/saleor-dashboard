@@ -1,4 +1,4 @@
-import { Button, Card, CardActions } from "@material-ui/core";
+import { Button, Card, CardActions, Dialog } from "@material-ui/core";
 import VerticalSpacer from "@saleor/apps/components/VerticalSpacer";
 import CardTitle from "@saleor/components/CardTitle";
 import CollectionWithDividers from "@saleor/components/CollectionWithDividers";
@@ -110,15 +110,16 @@ const CustomerGiftCardsCard: React.FC = () => {
           </Button>
         </CardActions>
       </Card>
-      <GiftCardCreateDialog
-        open={openCreateDialog}
-        onClose={closeCreateDialog}
-        refetchQueries={[CUSTOMER_GIFT_CARD_LIST_QUERY]}
-        initialCustomer={{
-          email: customer?.email,
-          name: getFullName(customer)
-        }}
-      />
+      <Dialog open={openCreateDialog} maxWidth="sm">
+        <GiftCardCreateDialog
+          onClose={closeCreateDialog}
+          refetchQueries={[CUSTOMER_GIFT_CARD_LIST_QUERY]}
+          initialCustomer={{
+            email: customer?.email,
+            name: getFullName(customer)
+          }}
+        />
+      </Dialog>
     </>
   );
 };

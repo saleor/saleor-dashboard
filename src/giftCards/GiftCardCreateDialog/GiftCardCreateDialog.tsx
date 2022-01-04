@@ -1,10 +1,9 @@
-import { Dialog, DialogTitle } from "@material-ui/core";
+import { DialogTitle } from "@material-ui/core";
 import useCurrentDate from "@saleor/hooks/useCurrentDate";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { DialogProps } from "@saleor/types";
 import { GiftCardCreateInput } from "@saleor/types/globalTypes";
 import React, { useState } from "react";
-import { useEffect } from "react";
 import { useIntl } from "react-intl";
 
 import ContentWithProgress from "./ContentWithProgress";
@@ -22,14 +21,13 @@ import {
   getGiftCardExpiryInputData
 } from "./utils";
 
-interface GiftCardCreateDialogProps extends DialogProps {
+interface GiftCardCreateDialogProps extends Pick<DialogProps, "onClose"> {
   refetchQueries: string[];
   initialCustomer?: GiftCardCreateFormCustomer | null;
 }
 
 const GiftCardCreateDialog: React.FC<GiftCardCreateDialogProps> = ({
   onClose,
-  open,
   refetchQueries,
   initialCustomer
 }) => {
@@ -97,14 +95,8 @@ const GiftCardCreateDialog: React.FC<GiftCardCreateDialogProps> = ({
     onClose();
   };
 
-  useEffect(() => {
-    if (open) {
-      setCardCode(null);
-    }
-  }, [open]);
-
   return (
-    <Dialog open={open} maxWidth="sm">
+    <>
       <DialogTitle>{intl.formatMessage(messages.title)}</DialogTitle>
       <ContentWithProgress>
         {!loadingChannelCurrencies &&
@@ -123,7 +115,7 @@ const GiftCardCreateDialog: React.FC<GiftCardCreateDialogProps> = ({
             />
           ))}
       </ContentWithProgress>
-    </Dialog>
+    </>
   );
 };
 
