@@ -11,6 +11,7 @@ export interface ExitFormDialogData {
   setExitDialogSubmitRef: (id: symbol, submitFn: SubmitFn) => void;
   setEnableExitDialog: (value: boolean) => void;
   shouldBlockNavigation: () => boolean;
+  setIsSubmitting: (value: boolean) => void;
 }
 
 export type SubmitFn = (dataOrEvent?: any) => SubmitPromise<any[]>;
@@ -34,7 +35,8 @@ export const ExitFormDialogContext = React.createContext<ExitFormDialogData>({
   setIsDirty: () => undefined,
   setEnableExitDialog: () => undefined,
   setExitDialogSubmitRef: () => undefined,
-  shouldBlockNavigation: () => false
+  shouldBlockNavigation: () => false,
+  setIsSubmitting: () => undefined
 });
 
 const defaultValues = {
@@ -44,6 +46,7 @@ const defaultValues = {
   navAction: null,
   submit: null,
   enableExitDialog: false,
+  isSubmitting: false,
   formsData: {}
 };
 
@@ -53,6 +56,7 @@ const ExitFormDialogProvider = ({ children }) => {
 
   const [showDialog, setShowDialog] = useState(defaultValues.showDialog);
 
+  const isSubmitting = useRef(defaultValues.isSubmitting);
   const formsData = useRef<FormsData>({});
   const blockNav = useRef(defaultValues.blockNav);
   const navAction = useRef(defaultValues.navAction);
@@ -68,7 +72,16 @@ const ExitFormDialogProvider = ({ children }) => {
     setFormData(id, { submitFn });
   }
 
+  const setIsSubmitting = (value: boolean) => {
+    setEnableExitDialog(!value);
+    isSubmitting.current = value;
+  };
+
   const setEnableExitDialog = (value: boolean) => {
+    if (isSubmitting.current) {
+      return;
+    }
+
     enableExitDialog.current = value;
   };
 
@@ -185,12 +198,15 @@ const ExitFormDialogProvider = ({ children }) => {
     }
 
     setShowDialog(false);
+    setIsSubmitting(true);
 
     const errors = await Promise.all(
       getDirtyFormsSubmitFn().map(submitFn => submitFn())
     );
 
     const isError = flatten(errors).some(errors => errors);
+
+    setIsSubmitting(false);
 
     if (!isError) {
       continueNavigation();
@@ -216,7 +232,8 @@ const ExitFormDialogProvider = ({ children }) => {
     setIsDirty,
     shouldBlockNavigation,
     setEnableExitDialog,
-    setExitDialogSubmitRef: setSubmitRef
+    setExitDialogSubmitRef: setSubmitRef,
+    setIsSubmitting
   };
 
   return (

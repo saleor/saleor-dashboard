@@ -10,7 +10,7 @@ import {
 export interface UseExitFormDialogResult
   extends Pick<
       ExitFormDialogData,
-      "setEnableExitDialog" | "shouldBlockNavigation"
+      "setEnableExitDialog" | "shouldBlockNavigation" | "setIsSubmitting"
     >,
     WithFormId {
   setIsDirty: (isDirty: boolean) => void;
