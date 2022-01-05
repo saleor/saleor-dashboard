@@ -1,4 +1,7 @@
-import { ProductVariantBulkCreateInput } from "@saleor/types/globalTypes";
+import {
+  BulkAttributeValueInput,
+  ProductVariantBulkCreateInput
+} from "@saleor/types/globalTypes";
 
 import {
   Attribute,
@@ -81,6 +84,23 @@ function getPriceFromMode(
   }
 }
 
+function getAttributeFromAttributeValueInput({
+  attributeId,
+  attributeBooleanValue,
+  attributeValueSlug
+}: CreateVariantAttributeValueInput): BulkAttributeValueInput {
+  if (attributeBooleanValue === null) {
+    return {
+      id: attributeId,
+      values: attributeValueSlug === null ? [] : [attributeValueSlug]
+    };
+  }
+  return {
+    id: attributeId,
+    boolean: attributeBooleanValue
+  };
+}
+
 function createVariant(
   data: ProductVariantCreateFormData,
   attributes: CreateVariantInput
@@ -97,17 +117,7 @@ function createVariant(
   );
 
   return {
-    attributes: attributes.map(attribute => ({
-      id: attribute.attributeId,
-      ...(attribute.attributeBooleanValue === null
-        ? {
-            values:
-              attribute.attributeValueSlug === null
-                ? []
-                : [attribute.attributeValueSlug]
-          }
-        : { boolean: attribute.attributeBooleanValue })
-    })),
+    attributes: attributes.map(getAttributeFromAttributeValueInput),
     channelListings: price,
     sku: "",
     stocks: stocks.map((quantity, stockIndex) => ({

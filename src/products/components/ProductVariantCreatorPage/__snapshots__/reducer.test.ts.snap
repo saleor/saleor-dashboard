@@ -5,6 +5,7 @@ Object {
   "attributes": Array [
     Object {
       "id": "attr-1",
+      "valueRequired": false,
       "values": Array [
         Object {
           "slug": "val-1-1",
@@ -42,6 +43,7 @@ Object {
     },
     Object {
       "id": "attr-2",
+      "valueRequired": false,
       "values": Array [
         Object {
           "slug": "val-2-2",
@@ -79,6 +81,7 @@ Object {
     },
     Object {
       "id": "attr-4",
+      "valueRequired": false,
       "values": Array [
         Object {
           "slug": "val-4-1",
@@ -650,6 +653,7 @@ Object {
   "attributes": Array [
     Object {
       "id": "attr-1",
+      "valueRequired": false,
       "values": Array [
         Object {
           "slug": "val-1-1",
@@ -687,6 +691,7 @@ Object {
     },
     Object {
       "id": "attr-2",
+      "valueRequired": false,
       "values": Array [
         Object {
           "slug": "val-2-2",
@@ -724,6 +729,7 @@ Object {
     },
     Object {
       "id": "attr-4",
+      "valueRequired": false,
       "values": Array [
         Object {
           "slug": "val-4-1",
@@ -1295,6 +1301,7 @@ Object {
   "attributes": Array [
     Object {
       "id": "attr-1",
+      "valueRequired": false,
       "values": Array [
         Object {
           "slug": "val-1-1",
@@ -1332,6 +1339,7 @@ Object {
     },
     Object {
       "id": "attr-2",
+      "valueRequired": false,
       "values": Array [
         Object {
           "slug": "val-2-2",
@@ -1369,6 +1377,7 @@ Object {
     },
     Object {
       "id": "attr-4",
+      "valueRequired": false,
       "values": Array [
         Object {
           "slug": "val-4-1",
@@ -1440,6 +1449,7 @@ Object {
   "attributes": Array [
     Object {
       "id": "attr-1",
+      "valueRequired": false,
       "values": Array [
         Object {
           "slug": "val-1-1",
@@ -1477,6 +1487,7 @@ Object {
     },
     Object {
       "id": "attr-2",
+      "valueRequired": false,
       "values": Array [
         Object {
           "slug": "val-2-2",
@@ -1514,6 +1525,7 @@ Object {
     },
     Object {
       "id": "attr-4",
+      "valueRequired": false,
       "values": Array [
         Object {
           "slug": "val-4-1",
@@ -2036,6 +2048,7 @@ Object {
   "attributes": Array [
     Object {
       "id": "attr-1",
+      "valueRequired": false,
       "values": Array [
         Object {
           "slug": "val-1-1",
@@ -2073,6 +2086,7 @@ Object {
     },
     Object {
       "id": "attr-2",
+      "valueRequired": false,
       "values": Array [
         Object {
           "slug": "val-2-2",
@@ -2110,6 +2124,7 @@ Object {
     },
     Object {
       "id": "attr-4",
+      "valueRequired": false,
       "values": Array [
         Object {
           "slug": "val-4-1",
@@ -2587,6 +2602,7 @@ Object {
   "attributes": Array [
     Object {
       "id": "attr-1",
+      "valueRequired": false,
       "values": Array [
         Object {
           "slug": "val-1-1",
@@ -2624,6 +2640,7 @@ Object {
     },
     Object {
       "id": "attr-2",
+      "valueRequired": false,
       "values": Array [
         Object {
           "slug": "val-2-2",
@@ -2661,6 +2678,7 @@ Object {
     },
     Object {
       "id": "attr-4",
+      "valueRequired": false,
       "values": Array [
         Object {
           "slug": "val-4-1",
@@ -3183,6 +3201,7 @@ Object {
   "attributes": Array [
     Object {
       "id": "attr-1",
+      "valueRequired": false,
       "values": Array [
         Object {
           "slug": "val-1-1",
@@ -3220,6 +3239,7 @@ Object {
     },
     Object {
       "id": "attr-2",
+      "valueRequired": false,
       "values": Array [
         Object {
           "slug": "val-2-2",
@@ -3257,6 +3277,7 @@ Object {
     },
     Object {
       "id": "attr-4",
+      "valueRequired": false,
       "values": Array [
         Object {
           "slug": "val-4-1",
@@ -3696,6 +3717,7 @@ Object {
   "attributes": Array [
     Object {
       "id": "attr-1",
+      "valueRequired": false,
       "values": Array [
         Object {
           "slug": "val-1-1",
@@ -3733,6 +3755,7 @@ Object {
     },
     Object {
       "id": "attr-2",
+      "valueRequired": false,
       "values": Array [
         Object {
           "slug": "val-2-2",
@@ -3770,6 +3793,7 @@ Object {
     },
     Object {
       "id": "attr-4",
+      "valueRequired": false,
       "values": Array [
         Object {
           "slug": "val-4-1",
