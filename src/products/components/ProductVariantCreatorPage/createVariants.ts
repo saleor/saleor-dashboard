@@ -10,7 +10,7 @@ import {
 
 interface CreateVariantAttributeValueInput {
   attributeId: string;
-  attributeValueSlug: string;
+  attributeValueSlug: string | null;
   attributeBooleanValue: boolean | null;
 }
 
@@ -100,7 +100,12 @@ function createVariant(
     attributes: attributes.map(attribute => ({
       id: attribute.attributeId,
       ...(attribute.attributeBooleanValue === null
-        ? { values: [attribute.attributeValueSlug] }
+        ? {
+            values:
+              attribute.attributeValueSlug === null
+                ? []
+                : [attribute.attributeValueSlug]
+          }
         : { boolean: attribute.attributeBooleanValue })
     })),
     channelListings: price,
@@ -116,6 +121,18 @@ function addAttributeToVariant(
   attribute: Attribute,
   variant: CreateVariantInput
 ): CreateVariantInput[] {
+  if (attribute.values.length === 0) {
+    return [
+      [
+        ...variant,
+        {
+          attributeId: attribute.id,
+          attributeValueSlug: null,
+          attributeBooleanValue: null
+        }
+      ]
+    ];
+  }
   return attribute.values.map(attributeValue => [
     ...variant,
     {

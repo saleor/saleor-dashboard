@@ -59,6 +59,7 @@ const stock: Stock = {
 
 const dataAttributes = selectedAttributes.map(attribute => ({
   id: attribute.id,
+  valueRequired: attribute.valueRequired,
   values: attribute.choices.edges
     .map(value => ({
       slug: value.node.slug,
