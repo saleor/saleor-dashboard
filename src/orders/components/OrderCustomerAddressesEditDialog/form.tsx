@@ -106,7 +106,7 @@ function useOrderCustomerAddressesEditForm(
     ...getDefaultInitialFormData(opts)
   });
 
-  const { setExitDialogSubmitRef, setEnableExitDialog } = useExitFormDialog();
+  const { setExitDialogSubmitRef } = useExitFormDialog();
 
   const [shippingCountryDisplayName, setShippingCountryDisplayName] = useState(
     ""
