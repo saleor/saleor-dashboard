@@ -2,7 +2,7 @@ import { Dialog } from "@material-ui/core";
 import GiftCardListPageDeleteDialog from "@saleor/giftCards/components/GiftCardDeleteDialog/GiftCardListPageDeleteDialog";
 import GiftCardBulkCreateDialog from "@saleor/giftCards/GiftCardBulkCreateDialog";
 import GiftCardCreateDialogContent from "@saleor/giftCards/GiftCardCreateDialog";
-import GiftCardExportDialog from "@saleor/giftCards/GiftCardExportDialog";
+import GiftCardExportDialogContent from "@saleor/giftCards/GiftCardExportDialogContent";
 import { giftCardListUrl } from "@saleor/giftCards/urls";
 import useNavigator from "@saleor/hooks/useNavigator";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
@@ -89,7 +89,9 @@ const GiftCardListDialogsProvider: React.FC<GiftCardListDialogsProviderProps> = 
         open={isDialogOpen(DELETE)}
         onClose={onClose}
       />
-      <GiftCardExportDialog open={isDialogOpen(EXPORT)} onClose={onClose} />
+      <Dialog open={isDialogOpen(EXPORT)} maxWidth="sm">
+        <GiftCardExportDialogContent onClose={onClose} />
+      </Dialog>
       <GiftCardBulkCreateDialog
         open={isDialogOpen(BULK_CREATE)}
         onClose={onClose}
