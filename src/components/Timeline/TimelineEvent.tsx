@@ -22,7 +22,7 @@ const useStyles = makeStyles(
       width: 8
     },
     panel: {
-      "& .MuiExpansionPanelDetails-root": {
+      "& .MuiAccordionDetails-root": {
         padding: 0,
         paddingTop: theme.spacing(2)
       },
@@ -40,13 +40,13 @@ const useStyles = makeStyles(
       width: "100%"
     },
     panelExpander: {
-      "&.MuiExpansionPanelSummary-root.Mui-expanded": {
+      "&.MuiAccordionSummary-root.Mui-expanded": {
         minHeight: 0
       },
-      "&> .MuiExpansionPanelSummary-content": {
+      "&> .MuiAccordionSummary-content": {
         margin: 0
       },
-      "&> .MuiExpansionPanelSummary-expandIcon": {
+      "&> .MuiAccordionSummary-expandIcon": {
         padding: 0,
         position: "absolute",
         right: theme.spacing(20)
