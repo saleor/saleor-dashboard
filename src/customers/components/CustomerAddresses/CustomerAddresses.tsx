@@ -45,7 +45,6 @@ const CustomerAddresses: React.FC<CustomerAddressesProps> = props => {
             disabled={disabled}
             variant="tertiary"
             onClick={onAddressManageClick}
-            data-test-id="manageAddresses"
           >
             <FormattedMessage {...buttonMessages.manage} />
           </Button>
