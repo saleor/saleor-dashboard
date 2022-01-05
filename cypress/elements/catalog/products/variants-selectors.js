@@ -3,7 +3,7 @@ export const VARIANTS_SELECTORS = {
   valueContainer: "[data-test-id='value-container']",
   nextButton: "[class*='MuiButton-containedPrimary']",
   warehouseCheckboxes: "[name*='warehouse:']",
-  skuInput: "[ data-test-id='sku-input']",
+  skuInput: "[ name='sku']",
   attributeSelector: "[data-test='attribute-value']",
   attributeOption:
     "[data-test-type='option'], [data-test='multiautocomplete-select-option']",
