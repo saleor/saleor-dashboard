@@ -18,7 +18,7 @@
   },
   "dependencies": {
     "@apollo/client": "^3.4.15",
-    "@editorjs/editorjs": "^2.19.3",
+    "@editorjs/editorjs": "^2.22.2",
     "@editorjs/header": "^2.6.1",
     "@editorjs/image": "^2.6.0",
     "@editorjs/list": "^1.6.1",
