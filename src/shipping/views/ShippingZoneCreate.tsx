@@ -33,7 +33,7 @@ const ShippingZoneCreate: React.FC<{}> = () => {
   return (
     <ShippingZoneCreatePage
       countries={shop?.countries || []}
-      restWorldCountries={restWorldCountries.shop?.countries || []}
+      restWorldCountries={restWorldCountries?.shop?.countries || []}
       disabled={createShippingZoneOpts.loading}
       errors={createShippingZoneOpts.data?.shippingZoneCreate.errors || []}
       onBack={() => navigate(shippingZonesListUrl())}

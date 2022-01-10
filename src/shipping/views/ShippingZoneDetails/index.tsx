@@ -262,7 +262,7 @@ const ShippingZoneDetails: React.FC<ShippingZoneDetailsProps> = ({
       <ShippingZoneCountriesAssignDialog
         confirmButtonState={updateShippingZoneOpts.status}
         countries={shop?.countries || []}
-        restWorldCountries={restWorldCountries.shop?.countries || []}
+        restWorldCountries={restWorldCountries?.shop?.countries || []}
         initial={
           data?.shippingZone?.countries.map(country => country.code) || []
         }
