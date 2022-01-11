@@ -65,7 +65,7 @@ const Link: React.FC<LinkProps> = props => {
       [classes.disabled]: disabled
     }),
     onClick: event => {
-      if (disabled) {
+      if (disabled || !onClick) {
         return;
       }
 
