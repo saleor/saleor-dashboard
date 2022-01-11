@@ -42,6 +42,11 @@ const LoginView: React.FC<LoginViewProps> = ({ params }) => {
     setRequestedExternalPluginId
   ] = useLocalStorage("requestedExternalPluginId", null);
 
+  const [fallbackUri, setFallbackUri] = useLocalStorage(
+    "externalLoginFallbackUri",
+    null
+  );
+
   const handleSubmit = async (data: LoginFormData) => {
     const result = await login(data.email, data.password);
     const errors = result?.errors || [];
@@ -50,6 +55,8 @@ const LoginView: React.FC<LoginViewProps> = ({ params }) => {
   };
 
   const handleRequestExternalAuthentication = async (pluginId: string) => {
+    setFallbackUri(location.pathname);
+
     const result = await requestLoginByExternalPlugin(pluginId, {
       redirectUri: urlJoin(
         window.location.origin,
@@ -70,7 +77,8 @@ const LoginView: React.FC<LoginViewProps> = ({ params }) => {
       state
     });
     if (result && !result?.errors?.length) {
-      navigate(APP_DEFAULT_URI);
+      navigate(fallbackUri ?? APP_DEFAULT_URI);
+      setFallbackUri(null);
     }
   };
 
