@@ -55,7 +55,15 @@ const ShippingZonesCard: React.FC<ShippingZonesCardProps> = props => {
         ))}
         {hasMoreZonesToBeSelected ? (
           <ShippingZonesCardListFooter {...props} />
-        ) : null}
+        ) : (
+          <Typography
+            color="textSecondary"
+            variant="subtitle1"
+            className={classes.infoMessage}
+          >
+            {intl.formatMessage(messages.allSelectedMessage)}
+          </Typography>
+        )}
       </Accordion>
     </Card>
   );
