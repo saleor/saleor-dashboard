@@ -1,20 +1,18 @@
 import {
-  Button,
   Card,
-  IconButton,
+  CardContent,
   TableBody,
   TableCell,
   TableRow,
   Typography
 } from "@material-ui/core";
-import DeleteIcon from "@material-ui/icons/Delete";
 import CardTitle from "@saleor/components/CardTitle";
 import Checkbox from "@saleor/components/Checkbox";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
 import TableCellHeader from "@saleor/components/TableCellHeader";
 import TableHead from "@saleor/components/TableHead";
-import { makeStyles } from "@saleor/macaw-ui";
+import { Button, DeleteIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
 import {
   getUserInitials,
   getUserName,
@@ -73,8 +71,6 @@ const useStyles = makeStyles(
       textAlign: "right"
     },
     helperText: {
-      marginBottom: theme.spacing(3),
-      marginTop: theme.spacing(3),
       textAlign: "center"
     },
     statusText: {
@@ -137,7 +133,7 @@ const PermissionGroupMemberList: React.FC<PermissionGroupProps> = props => {
         }
       />
       {members?.length === 0 ? (
-        <div className={classNames(classes.helperText)}>
+        <CardContent className={classes.helperText}>
           <Typography color="textSecondary">
             <FormattedMessage
               defaultMessage="You haven’t assigned any member to this permission group yet."
@@ -150,7 +146,7 @@ const PermissionGroupMemberList: React.FC<PermissionGroupProps> = props => {
               description="empty list message"
             />
           </Typography>
-        </div>
+        </CardContent>
       ) : (
         <ResponsiveTable>
           <TableHead
@@ -257,6 +253,7 @@ const PermissionGroupMemberList: React.FC<PermissionGroupProps> = props => {
                       {user ? (
                         <>
                           <IconButton
+                            variant="secondary"
                             data-test-id="removeUser"
                             disabled={disabled}
                             color="primary"

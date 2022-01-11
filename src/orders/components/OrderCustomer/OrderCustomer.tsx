@@ -1,4 +1,4 @@
-import { Button, Card, CardContent, Typography } from "@material-ui/core";
+import { Card, CardContent, Typography } from "@material-ui/core";
 import CardTitle from "@saleor/components/CardTitle";
 import ExternalLink from "@saleor/components/ExternalLink";
 import Form from "@saleor/components/Form";
@@ -9,7 +9,7 @@ import SingleAutocompleteSelectField from "@saleor/components/SingleAutocomplete
 import Skeleton from "@saleor/components/Skeleton";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
 import { buttonMessages } from "@saleor/intl";
-import { makeStyles } from "@saleor/macaw-ui";
+import { Button, makeStyles } from "@saleor/macaw-ui";
 import { SearchCustomers_search_edges_node } from "@saleor/searches/types/SearchCustomers";
 import { FetchMoreProps, UserPermissionProps } from "@saleor/types";
 import { PermissionEnum } from "@saleor/types/globalTypes";
@@ -114,8 +114,7 @@ const OrderCustomer: React.FC<OrderCustomerProps> = props => {
             >
               <Button
                 data-test-id="edit-customer"
-                color="primary"
-                variant="text"
+                variant="tertiary"
                 disabled={!onCustomerEdit}
                 onClick={toggleEditMode}
               >
@@ -260,8 +259,7 @@ const OrderCustomer: React.FC<OrderCustomerProps> = props => {
             <div className={classes.sectionHeaderToolbar}>
               <Button
                 data-test-id="edit-shipping-address"
-                color="primary"
-                variant="text"
+                variant="tertiary"
                 onClick={onShippingAddressEdit}
                 disabled={!onShippingAddressEdit && user === undefined}
               >
@@ -318,8 +316,7 @@ const OrderCustomer: React.FC<OrderCustomerProps> = props => {
             <div className={classes.sectionHeaderToolbar}>
               <Button
                 data-test-id="edit-billing-address"
-                color="primary"
-                variant="text"
+                variant="tertiary"
                 onClick={onBillingAddressEdit}
                 disabled={!onBillingAddressEdit && user === undefined}
               >

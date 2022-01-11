@@ -73,6 +73,9 @@ const ChannelContent: React.FC<ChannelContentProps> = ({
   return (
     <div className={classes.container}>
       <RadioSwitchField
+        classes={{
+          radioLabel: classes.radioLabel
+        }}
         className={classes.radioField}
         disabled={disabled}
         firstOptionLabel={
@@ -156,6 +159,9 @@ const ChannelContent: React.FC<ChannelContentProps> = ({
         <>
           <Hr />
           <RadioSwitchField
+            classes={{
+              radioLabel: classes.radioLabel
+            }}
             className={classes.radioField}
             disabled={disabled}
             firstOptionLabel={

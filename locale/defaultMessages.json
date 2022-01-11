@@ -91,9 +91,6 @@
   "configurationMenuPageTypes": {
     "string": "Define types of content pages used in your store"
   },
-  "configurationMenuPages": {
-    "string": "Manage and add additional pages"
-  },
   "configurationMenuPermissionGroups": {
     "string": "Manage your permission groups and their permissions"
   },
@@ -761,13 +758,13 @@
     "context": "table actions",
     "string": "Actions"
   },
-  "src_dot_apps_dot_components_dot_CustomApps_dot_3152347892": {
-    "context": "custom apps content",
-    "string": "Your custom created apps will be shown here."
-  },
   "src_dot_apps_dot_components_dot_CustomApps_dot_3230241731": {
     "context": "create app button",
     "string": "Create App"
+  },
+  "src_dot_apps_dot_components_dot_CustomApps_dot_4044120866": {
+    "context": "custom apps content",
+    "string": "Your custom-created apps will be shown here."
   },
   "src_dot_apps_dot_components_dot_DeactivatedText_dot_3064552173": {
     "context": "app deactivated",
@@ -1207,24 +1204,24 @@
     "context": "deleted multiple attributes",
     "string": "Attributes successfully delete"
   },
-  "src_dot_auth_dot_components_dot_LoginPage_dot_109182747": {
+  "src_dot_auth_dot_components_dot_LoginPage_dot_1173110163": {
+    "context": "card header",
+    "string": "Sign In"
+  },
+  "src_dot_auth_dot_components_dot_LoginPage_dot_1405865627": {
     "context": "button",
-    "string": "Login"
+    "string": "Sign in"
   },
   "src_dot_auth_dot_components_dot_LoginPage_dot_2237029987": {
     "string": "Password"
   },
-  "src_dot_auth_dot_components_dot_LoginPage_dot_2981302356": {
-    "context": "link",
-    "string": "Use this link to recover it"
+  "src_dot_auth_dot_components_dot_LoginPage_dot_3242928626": {
+    "context": "description",
+    "string": "Forgot password?"
   },
   "src_dot_auth_dot_components_dot_LoginPage_dot_3762459576": {
     "context": "description",
     "string": "or login using"
-  },
-  "src_dot_auth_dot_components_dot_LoginPage_dot_599516345": {
-    "context": "description",
-    "string": "Forgot password? {resetPasswordLink}"
   },
   "src_dot_auth_dot_components_dot_LoginPage_dot_externalLoginError": {
     "context": "error message",
@@ -1241,9 +1238,6 @@
   "src_dot_auth_dot_components_dot_NewPasswordPage_dot_1254879564": {
     "string": "New Password"
   },
-  "src_dot_auth_dot_components_dot_NewPasswordPage_dot_1915811227": {
-    "string": "Please set up a new password."
-  },
   "src_dot_auth_dot_components_dot_NewPasswordPage_dot_2342634351": {
     "context": "button",
     "string": "Set new password"
@@ -1251,19 +1245,32 @@
   "src_dot_auth_dot_components_dot_NewPasswordPage_dot_2799926859": {
     "string": "Confirm Password"
   },
+  "src_dot_auth_dot_components_dot_NewPasswordPage_dot_3349581442": {
+    "string": "Please set up a new password for your account. Repeat your new password to make sure you will be able to remember it."
+  },
   "src_dot_auth_dot_components_dot_NewPasswordPage_dot_4253911811": {
     "string": "Passwords do not match"
   },
-  "src_dot_auth_dot_components_dot_ResetPasswordPage_dot_2370700732": {
-    "string": "Forgot your password? Don't worry, we'll reset it for you."
+  "src_dot_auth_dot_components_dot_NewPasswordPage_dot_533029895": {
+    "context": "page title",
+    "string": "Set up new password"
   },
-  "src_dot_auth_dot_components_dot_ResetPasswordPage_dot_3663311080": {
+  "src_dot_auth_dot_components_dot_ResetPasswordPage_dot_2422931690": {
     "context": "password reset, button",
-    "string": "Send Instructions"
+    "string": "Send an email with reset link"
+  },
+  "src_dot_auth_dot_components_dot_ResetPasswordPage_dot_2925394684": {
+    "string": "Reset password"
+  },
+  "src_dot_auth_dot_components_dot_ResetPasswordPage_dot_365271428": {
+    "string": "Provide us with an email - if we find it in our database we will send you a link to reset your password. You should be able to find it in your inbox in the next couple of minutes."
   },
   "src_dot_auth_dot_components_dot_ResetPasswordSuccessPage_dot_2245157344": {
     "context": "button",
     "string": "Back to login"
+  },
+  "src_dot_auth_dot_components_dot_ResetPasswordSuccessPage_dot_2925394684": {
+    "string": "Reset password"
   },
   "src_dot_auth_dot_components_dot_ResetPasswordSuccessPage_dot_4066297200": {
     "string": "Success! In a few minutes you’ll receive a message with instructions on how to reset your password."
@@ -2096,21 +2103,23 @@
     "context": "header",
     "string": "Error"
   },
-  "src_dot_components_dot_ErrorPage_dot_1723676032": {
-    "context": "button",
-    "string": "Back to home"
+  "src_dot_components_dot_ErrorPage_dot_btnDashboard": {
+    "context": "button linking to dashboard",
+    "string": "Dashboard"
   },
-  "src_dot_components_dot_ErrorPage_dot_2736139139": {
-    "string": "Ooops!..."
+  "src_dot_components_dot_ErrorPage_dot_btnRefresh": {
+    "context": "button refreshing page",
+    "string": "Refresh page"
   },
-  "src_dot_components_dot_ErrorPage_dot_2845142593": {
-    "string": "Error"
+  "src_dot_components_dot_ErrorPage_dot_content": {
+    "string": "Don’t worry we will fix it soon. Try to refresh the page or go back to dashboard."
   },
-  "src_dot_components_dot_ErrorPage_dot_3090161573": {
-    "string": "Don't worry, everything is gonna be fine"
+  "src_dot_components_dot_ErrorPage_dot_header": {
+    "string": "We’ve encountered an unexpected error"
   },
-  "src_dot_components_dot_ErrorPage_dot_3182212440": {
-    "string": "We've encountered a problem..."
+  "src_dot_components_dot_ErrorPage_dot_or": {
+    "context": "conjunction, choice between going to dashboard or refreshing page",
+    "string": "or"
   },
   "src_dot_components_dot_FilterBar_dot_2173195312": {
     "context": "button",
@@ -2177,17 +2186,17 @@
     "context": "header",
     "string": "Private Metadata"
   },
-  "src_dot_components_dot_Metadata_dot_2024779015": {
-    "context": "empty metadata text",
-    "string": "There is no private metadata created for this element."
-  },
-  "src_dot_components_dot_Metadata_dot_2087058956": {
-    "context": "empty metadata text",
-    "string": "There is no metadata created for this element."
+  "src_dot_components_dot_Metadata_dot_1827848527": {
+    "context": "number of metadata fields in model",
+    "string": "{number,plural,one{{number} string} other{{number} strings}}"
   },
   "src_dot_components_dot_Metadata_dot_2537046678": {
     "context": "metadata field name, header",
     "string": "Field"
+  },
+  "src_dot_components_dot_Metadata_dot_2741366539": {
+    "context": "empty metadata text",
+    "string": "No metadata created for this element. Use the button below to add new metadata field."
   },
   "src_dot_components_dot_Metadata_dot_3181473584": {
     "context": "add metadata field,button",
@@ -2196,14 +2205,6 @@
   "src_dot_components_dot_Metadata_dot_4190792473": {
     "context": "table action",
     "string": "Actions"
-  },
-  "src_dot_components_dot_Metadata_dot_549104951": {
-    "context": "number of metadata fields in model",
-    "string": "{number,plural,one{{number} Field} other{{number} Fields}}"
-  },
-  "src_dot_components_dot_Metadata_dot_553451245": {
-    "context": "empty metadata text",
-    "string": "Use the button below to add new metadata field"
   },
   "src_dot_components_dot_MoneyRange_dot_12301532": {
     "context": "money",
@@ -2440,6 +2441,10 @@
   },
   "src_dot_components_dot_TableHead_dot_868570480": {
     "string": "Selected {number} items"
+  },
+  "src_dot_components_dot_TablePagination_dot_noOfRows": {
+    "context": "pagination",
+    "string": "No. of rows"
   },
   "src_dot_components_dot_Timeline_dot_1359200231": {
     "context": "add order note, button",
@@ -3456,7 +3461,7 @@
     "string": "Edit"
   },
   "src_dot_email": {
-    "string": "E-mail Address"
+    "string": "Email address"
   },
   "src_dot_endDate": {
     "string": "End Date"
@@ -4863,12 +4868,12 @@
   "src_dot_pageTypes_dot_components_dot_PageTypeDetails_dot_1631499902": {
     "string": "Content Type Name"
   },
-  "src_dot_pageTypes_dot_components_dot_PageTypeListPage_dot_1793515137": {
-    "context": "button",
-    "string": "create page type"
-  },
   "src_dot_pageTypes_dot_components_dot_PageTypeListPage_dot_1793828289": {
     "string": "Search Page Type"
+  },
+  "src_dot_pageTypes_dot_components_dot_PageTypeListPage_dot_4077151320": {
+    "context": "button",
+    "string": "Create page type"
   },
   "src_dot_pageTypes_dot_components_dot_PageTypeListPage_dot_464566131": {
     "context": "tab name",
@@ -5222,8 +5227,8 @@
     "context": "section header",
     "string": "Plugin Information and Status"
   },
-  "src_dot_plugins_dot_components_dot_PluginInfo_dot_4013064767": {
-    "string": "Set plugin as Active"
+  "src_dot_plugins_dot_components_dot_PluginInfo_dot_3954867850": {
+    "string": "Set plugin as active"
   },
   "src_dot_plugins_dot_components_dot_PluginSecretFieldDialog_dot_3032939398": {
     "context": "header",

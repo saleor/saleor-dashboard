@@ -6,7 +6,7 @@ export const VARIANTS_SELECTORS = {
   skuInput: "input[class*='MuiInputBase'][type='text']",
   attributeSelector: "[data-test='attribute-value']",
   attributeOption: "[data-test-type='option']",
-  addWarehouseButton: "button[class*='MuiIconButton-colorPrimary']",
+  addWarehouseButton: "[data-test-id='add-warehouse']",
   warehouseOption: "[role='menuitem']",
   saveButton: "[data-test='button-bar-confirm']",
   skuInputInAddVariant: "[name='sku']"

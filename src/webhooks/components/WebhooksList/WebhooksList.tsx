@@ -1,18 +1,16 @@
 import {
-  Button,
   Card,
-  IconButton,
   TableBody,
   TableCell,
   TableHead,
   TableRow
 } from "@material-ui/core";
-import DeleteIcon from "@material-ui/icons/Delete";
 import { App_app_webhooks } from "@saleor/apps/types/App";
 import CardTitle from "@saleor/components/CardTitle";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
 import TableCellHeader from "@saleor/components/TableCellHeader";
+import { Button, DeleteIcon, IconButton } from "@saleor/macaw-ui";
 import { renderCollection, stopPropagation } from "@saleor/misc";
 import { isUnnamed } from "@saleor/webhooks/utils";
 import classNames from "classnames";
@@ -27,7 +25,6 @@ export interface WebhooksListProps {
   onRowClick: (id: string) => () => void;
   onCreate?: () => void;
 }
-const numberOfColumns = 3;
 
 const WebhooksList: React.FC<WebhooksListProps> = ({
   webhooks,
@@ -37,6 +34,7 @@ const WebhooksList: React.FC<WebhooksListProps> = ({
 }) => {
   const intl = useIntl();
   const classes = useStyles({});
+  const numberOfColumns = webhooks?.length === 0 ? 2 : 3;
 
   return (
     <Card>
@@ -48,7 +46,7 @@ const WebhooksList: React.FC<WebhooksListProps> = ({
         toolbar={
           !!onCreate && (
             <Button
-              color="primary"
+              variant="secondary"
               onClick={onCreate}
               data-test-id="createWebhook"
             >
@@ -104,6 +102,7 @@ const WebhooksList: React.FC<WebhooksListProps> = ({
                   className={classNames(classes.colAction, classes.colRight)}
                 >
                   <IconButton
+                    variant="secondary"
                     color="primary"
                     onClick={
                       webhook

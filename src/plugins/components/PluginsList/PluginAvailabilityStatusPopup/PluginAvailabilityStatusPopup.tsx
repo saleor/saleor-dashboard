@@ -39,7 +39,7 @@ const PluginAvailabilityStatusPopup: React.FC<PluginAvailabilityStatusPopupProps
       className={classes.container}
       anchorEl={anchor.current}
     >
-      <Card>
+      <Card elevation={8}>
         {isGlobalPlugin ? (
           <GlobalConfigPluginPopupBody plugin={plugin} />
         ) : (

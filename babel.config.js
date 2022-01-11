@@ -6,7 +6,12 @@ module.exports = api => {
   const ignore =
     isTest || isStorybook
       ? []
-      : ["**/*.test.ts", "**/*.test.tsx", "src/storybook"];
+      : [
+          "**/*.test.ts",
+          "**/*.test.tsx",
+          "src/storybook",
+          "node_modules/core-js"
+        ];
 
   const presets = [
     [
