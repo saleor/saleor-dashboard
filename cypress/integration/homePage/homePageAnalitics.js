@@ -57,7 +57,7 @@ filterTests({ definedTags: ["all", "critical"] }, () => {
           createCustomer(randomEmail, randomName, addresses.plAddress)
         )
         .then(resp => {
-          customerId = resp.body.data.customerCreate.user.id;
+          customerId = resp.user.id;
           shippingUtils.createShipping({
             channelId: defaultChannel.id,
             name: randomName,

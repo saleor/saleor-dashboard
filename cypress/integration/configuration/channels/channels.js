@@ -76,7 +76,7 @@ filterTests({ definedTags: ["all"] }, () => {
         .waitForProgressBarToNotExist()
         .get(PRODUCTS_LIST.emptyProductRow)
         .should("not.exist")
-        .get(PRODUCTS_LIST.productsList)
+        .get(PRODUCTS_LIST.productsNames)
         .first()
         .click()
         .get(AVAILABLE_CHANNELS_FORM.menageChannelsButton)
