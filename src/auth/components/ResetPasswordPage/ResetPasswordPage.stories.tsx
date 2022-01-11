@@ -9,6 +9,7 @@ import ResetPasswordPage, { ResetPasswordPageProps } from "./ResetPasswordPage";
 const props: ResetPasswordPageProps = {
   disabled: false,
   error: undefined,
+  onBack: () => undefined,
   onSubmit: () => undefined
 };
 storiesOf("Views / Authentication / Reset password", module)

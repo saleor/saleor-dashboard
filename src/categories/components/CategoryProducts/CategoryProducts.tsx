@@ -1,7 +1,8 @@
-import { Button, Card } from "@material-ui/core";
+import { Card } from "@material-ui/core";
 import HorizontalSpacer from "@saleor/apps/components/HorizontalSpacer";
 import CardTitle from "@saleor/components/CardTitle";
 import { InternalLink } from "@saleor/components/InternalLink";
+import { Button } from "@saleor/macaw-ui";
 import { productListUrl } from "@saleor/products/urls";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -53,11 +54,7 @@ export const CategoryProducts: React.FC<CategoryProductsProps> = ({
                 categories: [categoryId]
               })}
             >
-              <Button
-                color="primary"
-                variant="text"
-                data-test-id="viewProducts"
-              >
+              <Button variant="tertiary" data-test-id="viewProducts">
                 <FormattedMessage
                   defaultMessage="View products"
                   description="button"
@@ -66,8 +63,7 @@ export const CategoryProducts: React.FC<CategoryProductsProps> = ({
             </InternalLink>
             <HorizontalSpacer />
             <Button
-              color="primary"
-              variant="text"
+              variant="tertiary"
               onClick={onAdd}
               data-test-id="addProducts"
             >

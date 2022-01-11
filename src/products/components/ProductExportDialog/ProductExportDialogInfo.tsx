@@ -1,5 +1,4 @@
 import {
-  Button,
   CircularProgress,
   FormControlLabel,
   TextField,
@@ -17,7 +16,7 @@ import { ChannelFragment } from "@saleor/fragments/types/ChannelFragment";
 import { ChangeEvent, FormChange } from "@saleor/hooks/useForm";
 import useSearchQuery from "@saleor/hooks/useSearchQuery";
 import { sectionNames } from "@saleor/intl";
-import { makeStyles } from "@saleor/macaw-ui";
+import { Button, makeStyles } from "@saleor/macaw-ui";
 import { FetchMoreProps } from "@saleor/types";
 import {
   ExportProductsInput,
@@ -306,7 +305,7 @@ const ProductExportDialogInfo: React.FC<ProductExportDialogInfoProps> = ({
     onSelectAllChannels(channels, channels.length);
 
   return (
-    <>
+    <div className={classes.scrollable}>
       <Typography className={classes.dialogLabel}>
         <FormattedMessage
           defaultMessage="Information exported:"
@@ -467,17 +466,70 @@ const ProductExportDialogInfo: React.FC<ProductExportDialogInfoProps> = ({
           onToggleAll={handleToggleAllFields}
           data-test="financial"
         />
-        <Accordion
-          className={classes.accordion}
-          title={intl.formatMessage({
-            defaultMessage: "Inventory Information",
-            description: "informations about product stock, header"
-          })}
-          quickPeek={
-            (data.exportInfo.warehouses.length > 0 ||
-              selectedInventoryFields.length > 0) && (
-              <div className={classes.quickPeekContainer}>
-                {selectedInventoryFields.slice(0, maxChips).map(field => (
+        <Hr className={classes.hr} />
+        {attributes.map(attribute => (
+          <Option
+            checked={data.exportInfo.attributes.includes(attribute.value)}
+            name={attributeNamePrefix + attribute.value}
+            onChange={onAttrtibuteSelect}
+            key={attribute.value}
+          >
+            {attribute.label}
+          </Option>
+        ))}
+        {(hasMore || loading) && (
+          <div className={classes.loadMoreContainer}>
+            {hasMore && !loading && (
+              <Button onClick={onFetchMore}>
+                <FormattedMessage
+                  defaultMessage="Load More"
+                  description="button"
+                />
+              </Button>
+            )}
+            {loading && <CircularProgress size={32} />}
+          </div>
+        )}
+      </Accordion>
+      <FieldAccordion
+        className={classes.accordion}
+        title={intl.formatMessage({
+          defaultMessage: "Financial Information",
+          description: "informations about product prices etc, header"
+        })}
+        data={data}
+        fields={[ProductFieldEnum.CHARGE_TAXES]}
+        onChange={handleFieldChange}
+        onToggleAll={handleToggleAllFields}
+        data-test="financial"
+      />
+      <Accordion
+        className={classes.accordion}
+        title={intl.formatMessage({
+          defaultMessage: "Inventory Information",
+          description: "informations about product stock, header"
+        })}
+        quickPeek={
+          (data.exportInfo.warehouses.length > 0 ||
+            selectedInventoryFields.length > 0) && (
+            <div className={classes.quickPeekContainer}>
+              {selectedInventoryFields.slice(0, maxChips).map(field => (
+                <Chip
+                  className={classes.chip}
+                  label={getFieldLabel(field)}
+                  onClose={() =>
+                    onChange({
+                      target: {
+                        name: field,
+                        value: false
+                      }
+                    })
+                  }
+                />
+              ))}
+              {data.exportInfo.warehouses
+                .slice(0, maxChips - selectedInventoryFields.length)
+                .map(warehouseId => (
                   <Chip
                     className={classes.chip}
                     label={getFieldLabel(field)}
@@ -594,25 +646,60 @@ const ProductExportDialogInfo: React.FC<ProductExportDialogInfoProps> = ({
               {warehouse.label}
             </Option>
           ))}
-        </Accordion>
-        <FieldAccordion
-          title={intl.formatMessage({
-            defaultMessage: "SEO Information",
-            description: "informations about product seo, header"
-          })}
-          data={data}
-          fields={[
-            ProductFieldEnum.DESCRIPTION,
-            ProductFieldEnum.NAME,
-            ProductFieldEnum.PRODUCT_MEDIA,
-            ProductFieldEnum.VARIANT_MEDIA
-          ]}
-          onChange={handleFieldChange}
-          onToggleAll={handleToggleAllFields}
-          data-test="seo"
-        />
-      </div>
-    </>
+        </div>
+        <Hr className={classes.hrWarehouses} />
+        <Typography>
+          <FormattedMessage defaultMessage="Export Product Stock Quantity to CSV" />
+        </Typography>
+        <div>
+          <Option
+            checked={warehouses.every(warehouse =>
+              data.exportInfo.warehouses.includes(warehouse.value)
+            )}
+            name="all-warehouses"
+            onChange={onSelectAllWarehouses}
+          >
+            <FormattedMessage
+              defaultMessage="Export stock for all warehouses"
+              description="option"
+            />
+          </Option>
+        </div>
+        <Hr className={classes.hrWarehouses} />
+        <Typography className={classes.warehousesLabel} variant="subtitle1">
+          <FormattedMessage
+            defaultMessage="Warehouses A to Z"
+            description="list of warehouses"
+          />
+        </Typography>
+        {warehouses.map(warehouse => (
+          <Option
+            checked={data.exportInfo.warehouses.includes(warehouse.value)}
+            name={warehouseNamePrefix + warehouse.value}
+            onChange={onWarehouseSelect}
+            key={warehouse.value}
+          >
+            {warehouse.label}
+          </Option>
+        ))}
+      </Accordion>
+      <FieldAccordion
+        title={intl.formatMessage({
+          defaultMessage: "SEO Information",
+          description: "informations about product seo, header"
+        })}
+        data={data}
+        fields={[
+          ProductFieldEnum.DESCRIPTION,
+          ProductFieldEnum.NAME,
+          ProductFieldEnum.PRODUCT_MEDIA,
+          ProductFieldEnum.VARIANT_MEDIA
+        ]}
+        onChange={handleFieldChange}
+        onToggleAll={handleToggleAllFields}
+        data-test="seo"
+      />
+    </div>
   );
 };
 

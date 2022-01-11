@@ -58,8 +58,6 @@ interface OrderDraftListProps
   orders: OrderDraftList_draftOrders_edges_node[];
 }
 
-const numberOfColumns = 5;
-
 export const OrderDraftList: React.FC<OrderDraftListProps> = props => {
   const {
     disabled,
@@ -78,6 +76,7 @@ export const OrderDraftList: React.FC<OrderDraftListProps> = props => {
     toggleAll,
     toolbar
   } = props;
+
   const classes = useStyles(props);
 
   const intl = useIntl();
@@ -89,6 +88,8 @@ export const OrderDraftList: React.FC<OrderDraftListProps> = props => {
         status: transformOrderStatus(order.status, intl)
       }))
     : undefined;
+
+  const numberOfColumns = orderDraftList?.length === 0 ? 4 : 5;
 
   return (
     <ResponsiveTable>

@@ -173,7 +173,7 @@
     "no-restricted-imports": [
       "error",
       {
-        "paths": ["lodash"]
+        "paths": ["lodash", "@material-ui/icons/Delete"]
       }
     ]
   },

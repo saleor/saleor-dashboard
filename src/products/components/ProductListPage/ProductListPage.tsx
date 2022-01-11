@@ -194,6 +194,7 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
           data-test="add-product"
           disabled={limitReached}
           onClick={onAdd}
+          data-test="add-product"
         >
           <FormattedMessage
             defaultMessage="Create Product"

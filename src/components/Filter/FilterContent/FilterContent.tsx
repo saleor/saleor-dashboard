@@ -193,7 +193,7 @@ const FilterContent: React.FC<FilterContentProps> = ({
   };
 
   return (
-    <Paper>
+    <Paper elevation={8}>
       <form
         onSubmit={event => {
           event.preventDefault();

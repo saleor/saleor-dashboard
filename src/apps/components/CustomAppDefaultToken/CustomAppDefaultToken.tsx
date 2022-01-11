@@ -1,14 +1,8 @@
-import {
-  Button,
-  Card,
-  CardContent,
-  IconButton,
-  Paper,
-  Typography
-} from "@material-ui/core";
+import { Card, CardContent, Paper, Typography } from "@material-ui/core";
 import CloseIcon from "@material-ui/icons/Close";
 import Link from "@saleor/components/Link";
 import useClipboard from "@saleor/hooks/useClipboard";
+import { Button, IconButton } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
@@ -48,7 +42,7 @@ const CustomAppDefaultToken: React.FC<CustomAppDefaultTokenProps> = props => {
             </Typography>
           </div>
           <div className={classes.closeContainer}>
-            <IconButton onClick={onTokenClose}>
+            <IconButton variant="secondary" onClick={onTokenClose}>
               <CloseIcon />
             </IconButton>
           </div>
@@ -58,11 +52,7 @@ const CustomAppDefaultToken: React.FC<CustomAppDefaultTokenProps> = props => {
             <FormattedMessage defaultMessage="Generated Token" />
           </Typography>
           <Typography>{token}</Typography>
-          <Button
-            className={classes.copy}
-            color="primary"
-            onClick={() => copy(token)}
-          >
+          <Button className={classes.copy} onClick={() => copy(token)}>
             {copied ? (
               <FormattedMessage defaultMessage="Copied" description="button" />
             ) : (

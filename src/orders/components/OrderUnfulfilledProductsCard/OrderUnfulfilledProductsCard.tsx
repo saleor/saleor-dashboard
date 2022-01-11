@@ -1,14 +1,8 @@
-import {
-  Button,
-  Card,
-  CardActions,
-  TableBody,
-  Typography
-} from "@material-ui/core";
+import { Card, CardActions, TableBody } from "@material-ui/core";
 import CardSpacer from "@saleor/components/CardSpacer";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import { commonMessages } from "@saleor/intl";
-import { makeStyles } from "@saleor/macaw-ui";
+import { Button, makeStyles } from "@saleor/macaw-ui";
 import { renderCollection } from "@saleor/misc";
 import React from "react";
 import { FormattedMessage } from "react-intl";
@@ -19,7 +13,11 @@ import TableLine from "../OrderProductsCardElements/OrderProductsTableRow";
 import CardTitle from "../OrderReturnPage/OrderReturnRefundItemsCard/CardTitle";
 
 const useStyles = makeStyles(
-  () => ({
+  theme => ({
+    actions: {
+      flexDirection: "row-reverse",
+      padding: theme.spacing(2, 3)
+    },
     table: {
       tableLayout: "fixed"
     }
@@ -62,8 +60,7 @@ const OrderUnfulfilledProductsCard: React.FC<OrderUnfulfilledProductsCardProps> 
         {showFulfillmentAction && (
           <CardActions>
             <Button
-              variant="text"
-              color="primary"
+              variant="tertiary"
               onClick={onFulfill}
               disabled={notAllowedToFulfillUnpaid}
             >

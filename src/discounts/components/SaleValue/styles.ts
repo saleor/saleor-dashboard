@@ -1,11 +1,14 @@
 import { makeStyles } from "@saleor/macaw-ui";
 
 export const useStyles = makeStyles(
-  theme => ({
+  () => ({
     card: {
       "&:last-child": {
         paddingBottom: 0
       }
+    },
+    colValue: {
+      width: 300
     },
     colName: {
       fontSize: 14,
@@ -29,10 +32,6 @@ export const useStyles = makeStyles(
     },
     table: {
       tableLayout: "fixed"
-    },
-    tableContainer: {
-      margin: theme.spacing(0, -3),
-      width: `calc(100% + ${theme.spacing(6)}px)`
     }
   }),
   {

@@ -1,8 +1,7 @@
-import { Button, IconButton, Typography } from "@material-ui/core";
-import DeleteIcon from "@material-ui/icons/Delete";
+import { Typography } from "@material-ui/core";
 import { FileFragment } from "@saleor/fragments/types/FileFragment";
 import { commonMessages } from "@saleor/intl";
-import { makeStyles } from "@saleor/macaw-ui";
+import { Button, DeleteIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -102,6 +101,7 @@ const FileUploadField: React.FC<FileUploadFieldProps> = props => {
               )}
             </div>
             <IconButton
+              variant="secondary"
               color="primary"
               onClick={handleFileDelete}
               disabled={disabled || loading}
@@ -115,8 +115,7 @@ const FileUploadField: React.FC<FileUploadFieldProps> = props => {
             <Button
               onClick={clickFileInput}
               disabled={disabled || loading}
-              variant="outlined"
-              color="primary"
+              variant="secondary"
               data-test="button-upload-file"
             >
               {intl.formatMessage(commonMessages.chooseFile)}

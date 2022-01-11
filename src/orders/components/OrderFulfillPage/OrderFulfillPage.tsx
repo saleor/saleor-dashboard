@@ -10,7 +10,6 @@ import {
 } from "@material-ui/core";
 import { CSSProperties } from "@material-ui/styles";
 import CardTitle from "@saleor/components/CardTitle";
-import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
 import Container from "@saleor/components/Container";
 import ControlledCheckbox from "@saleor/components/ControlledCheckbox";
 import Form from "@saleor/components/Form";
@@ -23,6 +22,7 @@ import { ShopOrderSettingsFragment } from "@saleor/fragments/types/ShopOrderSett
 import { WarehouseFragment } from "@saleor/fragments/types/WarehouseFragment";
 import useFormset, { FormsetData } from "@saleor/hooks/useFormset";
 import { commonMessages } from "@saleor/intl";
+import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import { Backlink } from "@saleor/macaw-ui";
 import { makeStyles } from "@saleor/macaw-ui";
 import { renderCollection } from "@saleor/misc";
@@ -51,7 +51,7 @@ const useStyles = makeStyles(
     return {
       actionBar: {
         flexDirection: "row",
-        paddingLeft: `calc(${theme.spacing(2)} + 2px)`
+        padding: theme.spacing(1, 4)
       },
       colName: {
         width: 250,

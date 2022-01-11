@@ -7,7 +7,7 @@ export const VARIANTS_SELECTORS = {
   attributeSelector: "[data-test='attribute-value']",
   attributeOption:
     "[data-test-type='option'], [data-test='multiautocomplete-select-option']",
-  addWarehouseButton: "button[class*='MuiIconButton-colorPrimary']",
+  addWarehouseButton: "[data-test-id='add-warehouse']",
   warehouseOption: "[role='menuitem']",
   saveButton: "[data-test='button-bar-confirm']",
   skuInputInAddVariant: "[name='sku']",

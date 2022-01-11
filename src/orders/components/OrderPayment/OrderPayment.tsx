@@ -1,10 +1,10 @@
-import { Button, Card, CardActions, CardContent } from "@material-ui/core";
+import { Card, CardActions, CardContent } from "@material-ui/core";
 import CardTitle from "@saleor/components/CardTitle";
 import { Hr } from "@saleor/components/Hr";
 import Money from "@saleor/components/Money";
 import Skeleton from "@saleor/components/Skeleton";
 import StatusLabel from "@saleor/components/StatusLabel";
-import { makeStyles } from "@saleor/macaw-ui";
+import { Button, makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -315,7 +315,7 @@ const OrderPayment: React.FC<OrderPaymentProps> = props => {
             <Hr />
             <CardActions>
               {canCapture && (
-                <Button color="primary" variant="text" onClick={onCapture}>
+                <Button variant="tertiary" onClick={onCapture}>
                   <FormattedMessage
                     defaultMessage="Capture"
                     description="capture payment, button"
@@ -324,8 +324,7 @@ const OrderPayment: React.FC<OrderPaymentProps> = props => {
               )}
               {canRefund && (
                 <Button
-                  color="primary"
-                  variant="text"
+                  variant="tertiary"
                   onClick={onRefund}
                   data-test-id="refund-button"
                 >
@@ -336,7 +335,7 @@ const OrderPayment: React.FC<OrderPaymentProps> = props => {
                 </Button>
               )}
               {canVoid && (
-                <Button color="primary" variant="text" onClick={onVoid}>
+                <Button variant="tertiary" onClick={onVoid}>
                   <FormattedMessage
                     defaultMessage="Void"
                     description="void payment, button"
@@ -344,7 +343,7 @@ const OrderPayment: React.FC<OrderPaymentProps> = props => {
                 </Button>
               )}
               {canMarkAsPaid && (
-                <Button color="primary" variant="text" onClick={onMarkAsPaid}>
+                <Button variant="tertiary" onClick={onMarkAsPaid}>
                   <FormattedMessage
                     defaultMessage="Mark as paid"
                     description="order, button"

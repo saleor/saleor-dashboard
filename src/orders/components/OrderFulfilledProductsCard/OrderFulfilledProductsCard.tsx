@@ -3,7 +3,6 @@ import CardSpacer from "@saleor/components/CardSpacer";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import { OrderDetailsFragment } from "@saleor/fragments/types/OrderDetailsFragment";
 import TrashIcon from "@saleor/icons/Trash";
-import { makeStyles } from "@saleor/macaw-ui";
 import { mergeRepeatedOrderLines } from "@saleor/orders/utils/data";
 import React from "react";
 
@@ -15,21 +14,7 @@ import TableLine from "../OrderProductsCardElements/OrderProductsTableRow";
 import CardTitle from "../OrderReturnPage/OrderReturnRefundItemsCard/CardTitle";
 import ActionButtons from "./ActionButtons";
 import ExtraInfoLines from "./ExtraInfoLines";
-
-const useStyles = makeStyles(
-  theme => ({
-    table: {
-      tableLayout: "fixed"
-    },
-    deleteIcon: {
-      height: 40,
-      paddingRight: 0,
-      paddingLeft: theme.spacing(1),
-      width: 40
-    }
-  }),
-  { name: "OrderFulfillment" }
-);
+import useStyles from "./styles";
 
 interface OrderFulfilledProductsCardProps {
   fulfillment: OrderDetails_order_fulfillments;

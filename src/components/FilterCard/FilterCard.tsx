@@ -1,5 +1,6 @@
-import { Card, CardContent, CardHeader, IconButton } from "@material-ui/core";
+import { Card, CardContent, CardHeader } from "@material-ui/core";
 import RefreshIcon from "@material-ui/icons/Refresh";
+import { IconButton } from "@saleor/macaw-ui";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -15,7 +16,7 @@ const FilterCard: React.FC<FilterCardProps> = ({ children, handleClear }) => {
       <form>
         <CardHeader
           action={
-            <IconButton onClick={handleClear}>
+            <IconButton variant="secondary" onClick={handleClear}>
               <RefreshIcon />
             </IconButton>
           }
