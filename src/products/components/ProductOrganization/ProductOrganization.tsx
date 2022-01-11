@@ -138,7 +138,7 @@ const ProductOrganization: React.FC<ProductOrganizationProps> = props => {
               onClick={() =>
                 navigate(productTypeUrl(productType?.id), { resetScroll: true })
               }
-              href={createHref(productTypeUrl(productType?.id))}
+              href={createHref(productTypeUrl(productType?.id) ?? "")}
               disabled={!productType?.id}
             >
               {productType?.name ?? "..."}
