@@ -1,5 +1,6 @@
 import { IMessageContext } from "@saleor/components/messages";
 import { APP_DEFAULT_URI, APP_MOUNT_URI, DEMO_MODE } from "@saleor/config";
+import useNavigator from "@saleor/hooks/useNavigator";
 import { commonMessages } from "@saleor/intl";
 import {
   GetExternalAccessTokenData,
@@ -46,6 +47,7 @@ export function useAuthProvider({
     getExternalAccessToken,
     logout
   } = useAuth();
+  const navigate = useNavigator();
   const { authenticated, authenticating, user } = useAuthState();
   const [error, setError] = useState<UserContextError>();
 
@@ -67,12 +69,12 @@ export function useAuthProvider({
   });
 
   const handleLogout = async () => {
+    const path = APP_MOUNT_URI === APP_DEFAULT_URI ? "" : APP_MOUNT_URI;
+    const returnTo = urlJoin(window.location.origin, path);
+
     const result = await logout({
       input: JSON.stringify({
-        returnTo: urlJoin(
-          window.location.origin,
-          APP_MOUNT_URI === APP_DEFAULT_URI ? "" : APP_MOUNT_URI
-        )
+        returnTo
       } as RequestExternalLogoutInput)
     });
 
@@ -80,17 +82,21 @@ export function useAuthProvider({
       navigator.credentials.preventSilentAccess();
     }
 
-    if (!result) {
-      return;
+    const errors = result?.errors || [];
+
+    const externalLogoutUrl = result
+      ? JSON.parse(result.data?.externalLogout?.logoutData || null)?.logoutUrl
+      : "";
+
+    if (!errors.length) {
+      if (externalLogoutUrl) {
+        window.location.href = externalLogoutUrl;
+      } else {
+        navigate(path);
+      }
     }
 
-    const errors = result.errors || [];
-    const logoutUrl = JSON.parse(
-      result.data?.externalLogout?.logoutData || null
-    )?.logoutUrl;
-    if (!errors.length && logoutUrl) {
-      window.location.href = logoutUrl;
-    }
+    return;
   };
 
   const handleLogin = async (email: string, password: string) => {
