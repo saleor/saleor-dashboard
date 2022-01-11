@@ -68,6 +68,7 @@ const GiftCardsListTable: React.FC = () => {
                   onClick={redirectToGiftCardUpdate(id)}
                   className={classes.row}
                   key={id}
+                  hover={!!giftCard}
                 >
                   <TableCell padding="checkbox">
                     <Checkbox
