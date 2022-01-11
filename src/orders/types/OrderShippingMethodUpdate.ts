@@ -283,7 +283,7 @@ export interface OrderShippingMethodUpdate_orderUpdateShipping_order_fulfillment
 export interface OrderShippingMethodUpdate_orderUpdateShipping_order_fulfillments_lines_orderLine_variant {
   __typename: "ProductVariant";
   id: string;
-  quantityAvailable: number;
+  quantityAvailable: number | null;
   preorder: OrderShippingMethodUpdate_orderUpdateShipping_order_fulfillments_lines_orderLine_variant_preorder | null;
 }
 
@@ -385,7 +385,7 @@ export interface OrderShippingMethodUpdate_orderUpdateShipping_order_lines_varia
 export interface OrderShippingMethodUpdate_orderUpdateShipping_order_lines_variant {
   __typename: "ProductVariant";
   id: string;
-  quantityAvailable: number;
+  quantityAvailable: number | null;
   preorder: OrderShippingMethodUpdate_orderUpdateShipping_order_lines_variant_preorder | null;
 }
 
@@ -554,6 +554,11 @@ export interface OrderShippingMethodUpdate_orderUpdateShipping_order_invoices {
   status: JobStatusEnum;
 }
 
+export interface OrderShippingMethodUpdate_orderUpdateShipping_order_channel_defaultCountry {
+  __typename: "CountryDisplay";
+  code: string;
+}
+
 export interface OrderShippingMethodUpdate_orderUpdateShipping_order_channel {
   __typename: "Channel";
   isActive: boolean;
@@ -561,6 +566,7 @@ export interface OrderShippingMethodUpdate_orderUpdateShipping_order_channel {
   name: string;
   currencyCode: string;
   slug: string;
+  defaultCountry: OrderShippingMethodUpdate_orderUpdateShipping_order_channel_defaultCountry;
 }
 
 export interface OrderShippingMethodUpdate_orderUpdateShipping_order {
@@ -571,6 +577,7 @@ export interface OrderShippingMethodUpdate_orderUpdateShipping_order {
   shippingMethod: OrderShippingMethodUpdate_orderUpdateShipping_order_shippingMethod | null;
   shippingMethodName: string | null;
   shippingPrice: OrderShippingMethodUpdate_orderUpdateShipping_order_shippingPrice;
+  token: string;
   metadata: (OrderShippingMethodUpdate_orderUpdateShipping_order_metadata | null)[];
   privateMetadata: (OrderShippingMethodUpdate_orderUpdateShipping_order_privateMetadata | null)[];
   billingAddress: OrderShippingMethodUpdate_orderUpdateShipping_order_billingAddress | null;

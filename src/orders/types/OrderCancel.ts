@@ -221,7 +221,7 @@ export interface OrderCancel_orderCancel_order_fulfillments_lines_orderLine_vari
 export interface OrderCancel_orderCancel_order_fulfillments_lines_orderLine_variant {
   __typename: "ProductVariant";
   id: string;
-  quantityAvailable: number;
+  quantityAvailable: number | null;
   preorder: OrderCancel_orderCancel_order_fulfillments_lines_orderLine_variant_preorder | null;
 }
 
@@ -323,7 +323,7 @@ export interface OrderCancel_orderCancel_order_lines_variant_preorder {
 export interface OrderCancel_orderCancel_order_lines_variant {
   __typename: "ProductVariant";
   id: string;
-  quantityAvailable: number;
+  quantityAvailable: number | null;
   preorder: OrderCancel_orderCancel_order_lines_variant_preorder | null;
 }
 
@@ -546,6 +546,11 @@ export interface OrderCancel_orderCancel_order_invoices {
   status: JobStatusEnum;
 }
 
+export interface OrderCancel_orderCancel_order_channel_defaultCountry {
+  __typename: "CountryDisplay";
+  code: string;
+}
+
 export interface OrderCancel_orderCancel_order_channel {
   __typename: "Channel";
   isActive: boolean;
@@ -553,11 +558,13 @@ export interface OrderCancel_orderCancel_order_channel {
   name: string;
   currencyCode: string;
   slug: string;
+  defaultCountry: OrderCancel_orderCancel_order_channel_defaultCountry;
 }
 
 export interface OrderCancel_orderCancel_order {
   __typename: "Order";
   id: string;
+  token: string;
   metadata: (OrderCancel_orderCancel_order_metadata | null)[];
   privateMetadata: (OrderCancel_orderCancel_order_privateMetadata | null)[];
   billingAddress: OrderCancel_orderCancel_order_billingAddress | null;

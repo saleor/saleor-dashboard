@@ -148,6 +148,7 @@ export const ChannelDetailsPage: React.FC<ChannelDetailsPageProps> = ({
           !data.name ||
           !data.slug ||
           !data.currencyCode ||
+          !data.defaultCountry ||
           !(data.name.trim().length > 0);
 
         return (

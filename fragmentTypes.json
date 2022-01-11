@@ -417,9 +417,6 @@
             "name": "ProductMedia"
           },
           {
-            "name": "ProductImage"
-          },
-          {
             "name": "PageType"
           }
         ]

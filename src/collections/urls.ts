@@ -44,9 +44,7 @@ export type CollectionUrlDialog =
   | "assign"
   | "unassign"
   | ChannelsAction;
-export type CollectionUrlQueryParams = BulkAction &
-  Pagination &
-  Dialog<CollectionUrlDialog>;
+export type CollectionUrlQueryParams = BulkAction & Dialog<CollectionUrlDialog>;
 export type CollectionCreateUrlQueryParams = Dialog<ChannelsAction>;
 export const collectionUrl = (id: string, params?: CollectionUrlQueryParams) =>
   collectionPath(encodeURIComponent(id)) + "?" + stringifyQs(params);

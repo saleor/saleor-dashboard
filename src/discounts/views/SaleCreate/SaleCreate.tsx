@@ -1,9 +1,10 @@
 import { ChannelsAction } from "@saleor/channels/urls";
-import { ChannelSaleData, createSortedSaleData } from "@saleor/channels/utils";
+import { createSortedSaleData } from "@saleor/channels/utils";
 import useAppChannel from "@saleor/components/AppLayout/AppChannelContext";
 import ChannelsAvailabilityDialog from "@saleor/components/ChannelsAvailabilityDialog";
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import SaleCreatePage from "@saleor/discounts/components/SaleCreatePage";
+import { ChannelSaleFormData } from "@saleor/discounts/components/SaleDetailsPage";
 import {
   TypedSaleCreate,
   useSaleChannelListingUpdate
@@ -47,7 +48,7 @@ export const SaleCreateView: React.FC<SaleCreateProps> = ({ params }) => {
   >(navigate, params => saleAddUrl(params), params);
 
   const { availableChannels } = useAppChannel(false);
-  const allChannels: ChannelSaleData[] = createSortedSaleData(
+  const allChannels: ChannelSaleFormData[] = createSortedSaleData(
     availableChannels
   );
 

@@ -221,7 +221,7 @@ export interface OrderFulfillmentApprove_orderFulfillmentApprove_order_fulfillme
 export interface OrderFulfillmentApprove_orderFulfillmentApprove_order_fulfillments_lines_orderLine_variant {
   __typename: "ProductVariant";
   id: string;
-  quantityAvailable: number;
+  quantityAvailable: number | null;
   preorder: OrderFulfillmentApprove_orderFulfillmentApprove_order_fulfillments_lines_orderLine_variant_preorder | null;
 }
 
@@ -323,7 +323,7 @@ export interface OrderFulfillmentApprove_orderFulfillmentApprove_order_lines_var
 export interface OrderFulfillmentApprove_orderFulfillmentApprove_order_lines_variant {
   __typename: "ProductVariant";
   id: string;
-  quantityAvailable: number;
+  quantityAvailable: number | null;
   preorder: OrderFulfillmentApprove_orderFulfillmentApprove_order_lines_variant_preorder | null;
 }
 
@@ -546,6 +546,11 @@ export interface OrderFulfillmentApprove_orderFulfillmentApprove_order_invoices 
   status: JobStatusEnum;
 }
 
+export interface OrderFulfillmentApprove_orderFulfillmentApprove_order_channel_defaultCountry {
+  __typename: "CountryDisplay";
+  code: string;
+}
+
 export interface OrderFulfillmentApprove_orderFulfillmentApprove_order_channel {
   __typename: "Channel";
   isActive: boolean;
@@ -553,11 +558,13 @@ export interface OrderFulfillmentApprove_orderFulfillmentApprove_order_channel {
   name: string;
   currencyCode: string;
   slug: string;
+  defaultCountry: OrderFulfillmentApprove_orderFulfillmentApprove_order_channel_defaultCountry;
 }
 
 export interface OrderFulfillmentApprove_orderFulfillmentApprove_order {
   __typename: "Order";
   id: string;
+  token: string;
   metadata: (OrderFulfillmentApprove_orderFulfillmentApprove_order_metadata | null)[];
   privateMetadata: (OrderFulfillmentApprove_orderFulfillmentApprove_order_privateMetadata | null)[];
   billingAddress: OrderFulfillmentApprove_orderFulfillmentApprove_order_billingAddress | null;

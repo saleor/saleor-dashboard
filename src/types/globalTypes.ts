@@ -525,6 +525,7 @@ export enum InvoiceErrorCode {
   INVALID_STATUS = "INVALID_STATUS",
   NOT_FOUND = "NOT_FOUND",
   NOT_READY = "NOT_READY",
+  NO_INVOICE_PLUGIN = "NO_INVOICE_PLUGIN",
   NUMBER_NOT_SET = "NUMBER_NOT_SET",
   REQUIRED = "REQUIRED",
   URL_NOT_SET = "URL_NOT_SET",
@@ -1817,6 +1818,45 @@ export enum WebhookErrorCode {
   UNIQUE = "UNIQUE",
 }
 
+export enum WebhookEventTypeAsyncEnum {
+  ANY_EVENTS = "ANY_EVENTS",
+  CHECKOUT_CREATED = "CHECKOUT_CREATED",
+  CHECKOUT_UPDATED = "CHECKOUT_UPDATED",
+  CUSTOMER_CREATED = "CUSTOMER_CREATED",
+  CUSTOMER_UPDATED = "CUSTOMER_UPDATED",
+  DRAFT_ORDER_CREATED = "DRAFT_ORDER_CREATED",
+  DRAFT_ORDER_DELETED = "DRAFT_ORDER_DELETED",
+  DRAFT_ORDER_UPDATED = "DRAFT_ORDER_UPDATED",
+  FULFILLMENT_CANCELED = "FULFILLMENT_CANCELED",
+  FULFILLMENT_CREATED = "FULFILLMENT_CREATED",
+  INVOICE_DELETED = "INVOICE_DELETED",
+  INVOICE_REQUESTED = "INVOICE_REQUESTED",
+  INVOICE_SENT = "INVOICE_SENT",
+  NOTIFY_USER = "NOTIFY_USER",
+  ORDER_CANCELLED = "ORDER_CANCELLED",
+  ORDER_CONFIRMED = "ORDER_CONFIRMED",
+  ORDER_CREATED = "ORDER_CREATED",
+  ORDER_FULFILLED = "ORDER_FULFILLED",
+  ORDER_FULLY_PAID = "ORDER_FULLY_PAID",
+  ORDER_UPDATED = "ORDER_UPDATED",
+  PAGE_CREATED = "PAGE_CREATED",
+  PAGE_DELETED = "PAGE_DELETED",
+  PAGE_UPDATED = "PAGE_UPDATED",
+  PRODUCT_CREATED = "PRODUCT_CREATED",
+  PRODUCT_DELETED = "PRODUCT_DELETED",
+  PRODUCT_UPDATED = "PRODUCT_UPDATED",
+  PRODUCT_VARIANT_BACK_IN_STOCK = "PRODUCT_VARIANT_BACK_IN_STOCK",
+  PRODUCT_VARIANT_CREATED = "PRODUCT_VARIANT_CREATED",
+  PRODUCT_VARIANT_DELETED = "PRODUCT_VARIANT_DELETED",
+  PRODUCT_VARIANT_OUT_OF_STOCK = "PRODUCT_VARIANT_OUT_OF_STOCK",
+  PRODUCT_VARIANT_UPDATED = "PRODUCT_VARIANT_UPDATED",
+  SALE_CREATED = "SALE_CREATED",
+  SALE_DELETED = "SALE_DELETED",
+  SALE_UPDATED = "SALE_UPDATED",
+  TRANSLATION_CREATED = "TRANSLATION_CREATED",
+  TRANSLATION_UPDATED = "TRANSLATION_UPDATED",
+}
+
 export enum WebhookEventTypeEnum {
   ANY_EVENTS = "ANY_EVENTS",
   CHECKOUT_CREATED = "CHECKOUT_CREATED",
@@ -1859,8 +1899,20 @@ export enum WebhookEventTypeEnum {
   SALE_CREATED = "SALE_CREATED",
   SALE_DELETED = "SALE_DELETED",
   SALE_UPDATED = "SALE_UPDATED",
+  SHIPPING_LIST_METHODS_FOR_CHECKOUT = "SHIPPING_LIST_METHODS_FOR_CHECKOUT",
   TRANSLATION_CREATED = "TRANSLATION_CREATED",
   TRANSLATION_UPDATED = "TRANSLATION_UPDATED",
+}
+
+export enum WebhookEventTypeSyncEnum {
+  PAYMENT_AUTHORIZE = "PAYMENT_AUTHORIZE",
+  PAYMENT_CAPTURE = "PAYMENT_CAPTURE",
+  PAYMENT_CONFIRM = "PAYMENT_CONFIRM",
+  PAYMENT_LIST_GATEWAYS = "PAYMENT_LIST_GATEWAYS",
+  PAYMENT_PROCESS = "PAYMENT_PROCESS",
+  PAYMENT_REFUND = "PAYMENT_REFUND",
+  PAYMENT_VOID = "PAYMENT_VOID",
+  SHIPPING_LIST_METHODS_FOR_CHECKOUT = "SHIPPING_LIST_METHODS_FOR_CHECKOUT",
 }
 
 export enum WeightUnitsEnum {
@@ -2212,6 +2264,7 @@ export interface GiftCardCreateInput {
 
 export interface GiftCardFilterInput {
   isActive?: boolean | null;
+  metadata?: (MetadataFilter | null)[] | null;
   tag?: string | null;
   tags?: (string | null)[] | null;
   products?: (string | null)[] | null;
@@ -2321,6 +2374,9 @@ export interface OrderFilterInput {
   search?: string | null;
   metadata?: (MetadataFilter | null)[] | null;
   channels?: (string | null)[] | null;
+  isClickAndCollect?: boolean | null;
+  isPreorder?: boolean | null;
+  ids?: (string | null)[] | null;
 }
 
 export interface OrderFulfillInput {
@@ -2646,6 +2702,7 @@ export interface ProductVariantBulkCreateInput {
   trackInventory?: boolean | null;
   weight?: any | null;
   preorder?: PreorderSettingsInput | null;
+  quantityLimitPerCustomer?: number | null;
   stocks?: StockInput[] | null;
   channelListings?: ProductVariantChannelListingAddInput[] | null;
 }
@@ -2663,6 +2720,7 @@ export interface ProductVariantCreateInput {
   trackInventory?: boolean | null;
   weight?: any | null;
   preorder?: PreorderSettingsInput | null;
+  quantityLimitPerCustomer?: number | null;
   product: string;
   stocks?: StockInput[] | null;
 }
@@ -2673,6 +2731,7 @@ export interface ProductVariantInput {
   trackInventory?: boolean | null;
   weight?: any | null;
   preorder?: PreorderSettingsInput | null;
+  quantityLimitPerCustomer?: number | null;
 }
 
 export interface PublishableChannelListingInput {
@@ -2810,6 +2869,7 @@ export interface ShopSettingsInput {
   customerSetPasswordUrl?: string | null;
   reserveStockDurationAnonymousUser?: number | null;
   reserveStockDurationAuthenticatedUser?: number | null;
+  limitQuantityPerCheckout?: number | null;
 }
 
 export interface SiteDomainInput {
@@ -2955,6 +3015,8 @@ export interface WebhookCreateInput {
   name?: string | null;
   targetUrl?: string | null;
   events?: (WebhookEventTypeEnum | null)[] | null;
+  asyncEvents?: WebhookEventTypeAsyncEnum[] | null;
+  syncEvents?: WebhookEventTypeSyncEnum[] | null;
   app?: string | null;
   isActive?: boolean | null;
   secretKey?: string | null;
@@ -2964,6 +3026,8 @@ export interface WebhookUpdateInput {
   name?: string | null;
   targetUrl?: string | null;
   events?: (WebhookEventTypeEnum | null)[] | null;
+  asyncEvents?: WebhookEventTypeAsyncEnum[] | null;
+  syncEvents?: WebhookEventTypeSyncEnum[] | null;
   app?: string | null;
   isActive?: boolean | null;
   secretKey?: string | null;

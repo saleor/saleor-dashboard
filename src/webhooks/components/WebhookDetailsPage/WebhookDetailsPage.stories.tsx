@@ -4,11 +4,11 @@ import { storiesOf } from "@storybook/react";
 import React from "react";
 
 import { webhook } from "../../fixtures";
-import WebhooksDetailsPage, {
-  WebhooksDetailsPageProps
-} from "./WebhooksDetailsPage";
+import WebhookDetailsPage, {
+  WebhookDetailsPageProps
+} from "./WebhookDetailsPage";
 
-const props: WebhooksDetailsPageProps = {
+const props: WebhookDetailsPageProps = {
   appName: "app",
   disabled: false,
   errors: [],
@@ -19,15 +19,16 @@ const props: WebhooksDetailsPageProps = {
 };
 storiesOf("Views / Apps / Webhooks / Webhook details", module)
   .addDecorator(Decorator)
-  .add("default", () => <WebhooksDetailsPage {...props} />)
+  .add("default", () => <WebhookDetailsPage {...props} />)
+  .add("undefined", () => <WebhookDetailsPage {...props} webhook={undefined} />)
   .add("unnamed", () => (
-    <WebhooksDetailsPage {...props} webhook={{ ...webhook, name: null }} />
+    <WebhookDetailsPage {...props} webhook={{ ...webhook, name: null }} />
   ))
   .add("loading", () => (
-    <WebhooksDetailsPage {...props} webhook={undefined} disabled={true} />
+    <WebhookDetailsPage {...props} webhook={undefined} disabled={true} />
   ))
   .add("form errors", () => (
-    <WebhooksDetailsPage
+    <WebhookDetailsPage
       {...props}
       errors={["name", "targetUrl", "secretKey", null].map(field => ({
         __typename: "WebhookError",

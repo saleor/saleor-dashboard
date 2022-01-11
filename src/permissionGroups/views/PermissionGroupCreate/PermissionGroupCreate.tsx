@@ -1,8 +1,8 @@
+import { useUser } from "@saleor/auth";
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import useShop from "@saleor/hooks/useShop";
-import useUser from "@saleor/hooks/useUser";
 import { PermissionData } from "@saleor/permissionGroups/components/PermissionGroupDetailsPage";
 import React from "react";
 import { useIntl } from "react-intl";

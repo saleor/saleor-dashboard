@@ -4,16 +4,19 @@
 import faker from "faker";
 
 import { LEFT_MENU_SELECTORS } from "../elements/account/left-menu/left-menu-selectors";
+import { LOGIN_SELECTORS } from "../elements/account/login-selectors";
 import { BUTTON_SELECTORS } from "../elements/shared/button-selectors";
 import { STAFF_MEMBER_DETAILS } from "../elements/staffMembers/staffMemberDetails";
 import { STAFF_MEMBERS_LIST } from "../elements/staffMembers/staffMembersList";
 import { urlList, userDetailsUrl } from "../fixtures/urlList";
+import { updatePlugin } from "../support/api/requests/Plugins";
 import {
   deleteStaffMembersStartsWith,
   updateStaffMember
 } from "../support/api/requests/StaffMembers";
 import {
   getMailActivationLinkForUser,
+  getMailActivationLinkForUserAndSubject,
   inviteStaffMemberWithFirstPermission
 } from "../support/api/utils/users";
 import filterTests from "../support/filterTests";
@@ -114,6 +117,38 @@ filterTests({ definedTags: ["stagedOnly"] }, () => {
           LEFT_MENU_SELECTORS.home
         );
       });
+    });
+
+    it("should reset password", () => {
+      const newPassword = faker.random.alphaNumeric(8);
+      updatePlugin(
+        "mirumee.notifications.admin_email",
+        "staff_password_reset_subject",
+        "Reset"
+      )
+        .then(() => {
+          cy.clearSessionData()
+            .visit(urlList.homePage)
+            .get(LOGIN_SELECTORS.resetPasswordLink)
+            .click()
+            .get(LOGIN_SELECTORS.emailAddressInput)
+            .type(email)
+            .get(BUTTON_SELECTORS.submit)
+            .click();
+          getMailActivationLinkForUserAndSubject(email, "Reset");
+        })
+        .then(link => {
+          cy.visit(link)
+            .get(LOGIN_SELECTORS.emailPasswordInput)
+            .type(newPassword)
+            .get(LOGIN_SELECTORS.confirmPassword)
+            .type(newPassword)
+            .get(BUTTON_SELECTORS.confirm)
+            .click()
+            .get(LOGIN_SELECTORS.welcomePage)
+            .should("be.visible")
+            .loginUserViaRequest({ email, password: newPassword });
+        });
     });
   });
 });

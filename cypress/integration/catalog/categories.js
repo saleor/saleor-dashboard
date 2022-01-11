@@ -9,12 +9,16 @@ import { BUTTON_SELECTORS } from "../../elements/shared/button-selectors";
 import { SHARED_ELEMENTS } from "../../elements/shared/sharedElements";
 import { categoryDetailsUrl, urlList } from "../../fixtures/urlList";
 import { getCategory } from "../../support/api/requests/Category";
+import { createCategory as createCategoryRequest } from "../../support/api/requests/Category";
 import { deleteCategoriesStartsWith } from "../../support/api/utils/catalog/categoryUtils";
 import * as channelsUtils from "../../support/api/utils/channelsUtils";
 import * as productsUtils from "../../support/api/utils/products/productsUtils";
 import { deleteShippingStartsWith } from "../../support/api/utils/shippingUtils";
 import filterTests from "../../support/filterTests";
-import { createCategory } from "../../support/pages/catalog/categoriesPage";
+import {
+  createCategory,
+  updateCategory
+} from "../../support/pages/catalog/categoriesPage";
 
 filterTests({ definedTags: ["all"] }, () => {
   describe("Categories", () => {
@@ -80,11 +84,14 @@ filterTests({ definedTags: ["all"] }, () => {
         .then(newCategory => {
           expect(newCategory.name).to.eq(categoryName);
           expect(newCategory.description).to.eq(categoryName);
+          const descriptionResp = JSON.parse(newCategory.description);
+          expect(descriptionResp.blocks[0].data.text).to.eq(categoryName);
         });
     });
 
     it("should add subcategory", () => {
       const categoryName = `${startsWith}${faker.datatype.number()}`;
+
       cy.visit(categoryDetailsUrl(category.id))
         .get(CATEGORY_DETAILS.createSubcategoryButton)
         .click();
@@ -134,6 +141,41 @@ filterTests({ definedTags: ["all"] }, () => {
         .type(category.name);
       cy.contains(SHARED_ELEMENTS.tableRow, category.name).click();
       cy.contains(SHARED_ELEMENTS.header, category.name).should("be.visible");
+    });
+
+    it("should delete category", () => {
+      const categoryName = `${startsWith}${faker.datatype.number()}`;
+
+      createCategoryRequest(categoryName).then(categoryResp => {
+        cy.visit(categoryDetailsUrl(categoryResp.id))
+          .get(BUTTON_SELECTORS.deleteButton)
+          .click()
+          .addAliasToGraphRequest("CategoryDelete")
+          .get(BUTTON_SELECTORS.submit)
+          .click()
+          .waitForRequestAndCheckIfNoErrors("@CategoryDelete");
+        getCategory(categoryResp.id).should("be.null");
+      });
+    });
+
+    it("should update category", () => {
+      const categoryName = `${startsWith}${faker.datatype.number()}`;
+      const updatedName = `${startsWith}updatedCategory`;
+
+      createCategoryRequest(categoryName)
+        .then(categoryResp => {
+          cy.visitAndWaitForProgressBarToDisappear(
+            categoryDetailsUrl(categoryResp.id)
+          );
+          updateCategory({ name: updatedName, description: updatedName });
+          getCategory(categoryResp.id);
+        })
+        .then(categoryResp => {
+          expect(categoryResp.name).to.eq(updatedName);
+          const descriptionJson = JSON.parse(categoryResp.description);
+          const descriptionText = descriptionJson.blocks[0].data.text;
+          expect(descriptionText).to.eq(updatedName);
+        });
     });
   });
 });

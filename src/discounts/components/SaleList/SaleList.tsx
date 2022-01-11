@@ -15,6 +15,7 @@ import { maybe, renderCollection } from "@saleor/misc";
 import { ChannelProps, ListActions, ListProps, SortPage } from "@saleor/types";
 import { SaleType } from "@saleor/types/globalTypes";
 import { getArrowDirection } from "@saleor/utils/sort";
+import classNames from "classnames";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
@@ -56,6 +57,10 @@ const useStyles = makeStyles(
     },
     tableRow: {
       cursor: "pointer"
+    },
+    textOverflow: {
+      textOverflow: "ellipsis",
+      overflow: "hidden"
     }
   }),
   { name: "SaleList" }
@@ -189,7 +194,9 @@ const SaleList: React.FC<SaleListProps> = props => {
                     onChange={() => toggle(sale.id)}
                   />
                 </TableCell>
-                <TableCell className={classes.colName}>
+                <TableCell
+                  className={classNames(classes.colName, classes.textOverflow)}
+                >
                   {maybe<React.ReactNode>(() => sale.name, <Skeleton />)}
                 </TableCell>
                 <TableCell className={classes.colStart}>

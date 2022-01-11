@@ -37,7 +37,7 @@ filterTests({ definedTags: ["all"], version: "3.1.1" }, () => {
       cy.visit(urlList.translations)
         .get(LANGUAGES_LIST.polishLanguageButton)
         .click()
-        .findElementOnTable(category.name);
+        .findElementOnTable(category.name, "CategoryTranslations");
       cy.get(ELEMENT_TRANSLATION.editNameButton)
         .click()
         .get(SHARED_ELEMENTS.skeleton)

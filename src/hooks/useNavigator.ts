@@ -16,7 +16,7 @@ function useNavigator(): UseNavigatorResult {
 
   return (
     url: string,
-    { replace = false, preserveQs = false, resetScroll = true } = {}
+    { replace = false, preserveQs = false, resetScroll = false } = {}
   ) => {
     const targetUrl = preserveQs ? url + search : url;
     if (replace) {

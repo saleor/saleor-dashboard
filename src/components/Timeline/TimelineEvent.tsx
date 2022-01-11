@@ -1,7 +1,7 @@
 import {
-  ExpansionPanel,
-  ExpansionPanelDetails,
-  ExpansionPanelSummary,
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
   Typography
 } from "@material-ui/core";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
@@ -22,7 +22,7 @@ const useStyles = makeStyles(
       width: 8
     },
     panel: {
-      "& .MuiExpansionPanelDetails-root": {
+      "& .MuiAccordionDetails-root": {
         padding: 0,
         paddingTop: theme.spacing(2)
       },
@@ -40,13 +40,13 @@ const useStyles = makeStyles(
       width: "100%"
     },
     panelExpander: {
-      "&.MuiExpansionPanelSummary-root.Mui-expanded": {
+      "&.MuiAccordionSummary-root.Mui-expanded": {
         minHeight: 0
       },
-      "&> .MuiExpansionPanelSummary-content": {
+      "&> .MuiAccordionSummary-content": {
         margin: 0
       },
-      "&> .MuiExpansionPanelSummary-expandIcon": {
+      "&> .MuiAccordionSummary-expandIcon": {
         padding: 0,
         position: "absolute",
         right: theme.spacing(20)
@@ -93,8 +93,8 @@ export const TimelineEvent: React.FC<TimelineEventProps> = props => {
     <div className={classes.root}>
       <span className={classes.dot} />
       {children ? (
-        <ExpansionPanel className={classes.panel} elevation={0}>
-          <ExpansionPanelSummary
+        <Accordion className={classes.panel} elevation={0}>
+          <AccordionSummary
             className={classes.panelExpander}
             expandIcon={<ExpandMoreIcon />}
           >
@@ -103,11 +103,11 @@ export const TimelineEvent: React.FC<TimelineEventProps> = props => {
               date={date}
               titleElements={titleElements}
             />
-          </ExpansionPanelSummary>
-          <ExpansionPanelDetails>
+          </AccordionSummary>
+          <AccordionDetails>
             <Typography>{children}</Typography>
-          </ExpansionPanelDetails>
-        </ExpansionPanel>
+          </AccordionDetails>
+        </Accordion>
       ) : (
         <TimelineEventHeader
           title={title}

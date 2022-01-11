@@ -221,7 +221,7 @@ export interface OrderLineUpdate_orderLineUpdate_order_fulfillments_lines_orderL
 export interface OrderLineUpdate_orderLineUpdate_order_fulfillments_lines_orderLine_variant {
   __typename: "ProductVariant";
   id: string;
-  quantityAvailable: number;
+  quantityAvailable: number | null;
   preorder: OrderLineUpdate_orderLineUpdate_order_fulfillments_lines_orderLine_variant_preorder | null;
 }
 
@@ -323,7 +323,7 @@ export interface OrderLineUpdate_orderLineUpdate_order_lines_variant_preorder {
 export interface OrderLineUpdate_orderLineUpdate_order_lines_variant {
   __typename: "ProductVariant";
   id: string;
-  quantityAvailable: number;
+  quantityAvailable: number | null;
   preorder: OrderLineUpdate_orderLineUpdate_order_lines_variant_preorder | null;
 }
 
@@ -546,6 +546,11 @@ export interface OrderLineUpdate_orderLineUpdate_order_invoices {
   status: JobStatusEnum;
 }
 
+export interface OrderLineUpdate_orderLineUpdate_order_channel_defaultCountry {
+  __typename: "CountryDisplay";
+  code: string;
+}
+
 export interface OrderLineUpdate_orderLineUpdate_order_channel {
   __typename: "Channel";
   isActive: boolean;
@@ -553,11 +558,13 @@ export interface OrderLineUpdate_orderLineUpdate_order_channel {
   name: string;
   currencyCode: string;
   slug: string;
+  defaultCountry: OrderLineUpdate_orderLineUpdate_order_channel_defaultCountry;
 }
 
 export interface OrderLineUpdate_orderLineUpdate_order {
   __typename: "Order";
   id: string;
+  token: string;
   metadata: (OrderLineUpdate_orderLineUpdate_order_metadata | null)[];
   privateMetadata: (OrderLineUpdate_orderLineUpdate_order_privateMetadata | null)[];
   billingAddress: OrderLineUpdate_orderLineUpdate_order_billingAddress | null;

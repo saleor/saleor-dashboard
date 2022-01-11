@@ -1,7 +1,7 @@
 import { LinearProgress, useMediaQuery } from "@material-ui/core";
+import { useUser } from "@saleor/auth";
 import useAppState from "@saleor/hooks/useAppState";
 import useNavigator from "@saleor/hooks/useNavigator";
-import useUser from "@saleor/hooks/useUser";
 import {
   makeStyles,
   SaleorTheme,
@@ -55,7 +55,10 @@ const useStyles = makeStyles(
     },
 
     content: {
-      flex: 1
+      flex: 1,
+      [theme.breakpoints.up("md")]: {
+        width: 0 // workaround for flex children width expansion affected by their contents
+      }
     },
     darkThemeSwitch: {
       [theme.breakpoints.down("sm")]: {
@@ -98,8 +101,6 @@ const useStyles = makeStyles(
     },
 
     view: {
-      flex: 1,
-      flexGrow: 1,
       marginLeft: 0,
       paddingBottom: theme.spacing(),
       [theme.breakpoints.up("sm")]: {

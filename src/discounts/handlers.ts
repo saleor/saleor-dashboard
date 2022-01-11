@@ -1,10 +1,13 @@
-import { ChannelSaleData, ChannelVoucherData } from "@saleor/channels/utils";
-import { SaleDetailsPageFormData } from "@saleor/discounts/components/SaleDetailsPage";
+import { ChannelVoucherData } from "@saleor/channels/utils";
+import {
+  ChannelSaleFormData,
+  SaleDetailsPageFormData
+} from "@saleor/discounts/components/SaleDetailsPage";
 import { VoucherDetailsPageFormData } from "@saleor/discounts/components/VoucherDetailsPage";
 import { DiscountTypeEnum, RequirementsPicker } from "@saleor/discounts/types";
 import { ChangeEvent, FormChange } from "@saleor/hooks/useForm";
 import { RequireOnlyOne } from "@saleor/misc";
-import { VoucherTypeEnum } from "@saleor/types/globalTypes";
+import { SaleType, VoucherTypeEnum } from "@saleor/types/globalTypes";
 import { arrayDiff } from "@saleor/utils/arrays";
 
 export interface ChannelArgs {
@@ -69,24 +72,32 @@ export function createChannelsChangeHandler(
 }
 
 export function createSaleChannelsChangeHandler(
-  channelListings: ChannelSaleData[],
-  updateChannels: (data: ChannelSaleData[]) => void,
-  triggerChange: () => void
+  channelListings: ChannelSaleFormData[],
+  updateChannels: (data: ChannelSaleFormData[]) => void,
+  triggerChange: () => void,
+  saleType: SaleType
 ) {
-  return (id: string, discountValue: string) => {
+  return (id: string, passedValue: string) => {
     const channelIndex = channelListings.findIndex(
       channel => channel.id === id
     );
     const channel = channelListings[channelIndex];
+    const { percentageValue, fixedValue } = channel;
+
+    const newPercentage =
+      saleType === SaleType.PERCENTAGE ? passedValue : percentageValue;
+    const newFixed = saleType === SaleType.FIXED ? passedValue : fixedValue;
 
     const updatedChannels = [
       ...channelListings.slice(0, channelIndex),
       {
         ...channel,
-        discountValue
+        fixedValue: newFixed,
+        percentageValue: newPercentage
       },
       ...channelListings.slice(channelIndex + 1)
     ];
+
     updateChannels(updatedChannels);
     triggerChange();
   };
@@ -127,12 +138,11 @@ export const getChannelsVariables = (
 export const getSaleChannelsVariables = (
   id: string,
   formData: SaleDetailsPageFormData,
-  prevChannels?: ChannelSaleData[]
+  prevChannelsIds?: string[]
 ) => {
-  const initialIds = prevChannels?.map(channel => channel.id) || [];
   const modifiedIds = formData.channelListings.map(channel => channel.id);
 
-  const idsDiff = arrayDiff(initialIds, modifiedIds);
+  const idsDiff = arrayDiff(prevChannelsIds, modifiedIds);
 
   return {
     id,
@@ -140,7 +150,10 @@ export const getSaleChannelsVariables = (
       addChannels:
         formData.channelListings?.map(channel => ({
           channelId: channel.id,
-          discountValue: channel.discountValue
+          discountValue:
+            formData.type === SaleType.FIXED
+              ? channel.fixedValue
+              : channel.percentageValue
         })) || [],
       removeChannels: idsDiff.removed
     }
