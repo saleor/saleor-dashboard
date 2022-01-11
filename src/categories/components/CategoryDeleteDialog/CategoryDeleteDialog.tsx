@@ -1,13 +1,13 @@
 import {
-  Button,
   Dialog,
   DialogActions,
   DialogContent,
   DialogContentText,
   DialogTitle
 } from "@material-ui/core";
+import BackButton from "@saleor/components/BackButton";
 import { buttonMessages } from "@saleor/intl";
-import { makeStyles } from "@saleor/macaw-ui";
+import { Button, makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
@@ -58,12 +58,10 @@ const CategoryDeleteDialog: React.FC<CategoryDeleteDialogProps> = props => {
         </DialogContentText>
       </DialogContent>
       <DialogActions>
-        <Button onClick={onClose}>
-          <FormattedMessage {...buttonMessages.back} />
-        </Button>
+        <BackButton onClick={onClose} />
         <Button
           className={classes.deleteButton}
-          variant="contained"
+          variant="primary"
           onClick={onConfirm}
         >
           <FormattedMessage {...buttonMessages.save} />

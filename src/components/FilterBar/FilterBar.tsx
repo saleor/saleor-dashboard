@@ -1,5 +1,4 @@
-import { Button } from "@material-ui/core";
-import { makeStyles } from "@saleor/macaw-ui";
+import { Button, makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -23,12 +22,12 @@ const useStyles = makeStyles(
       borderBottom: `1px solid ${theme.palette.divider}`,
       display: "flex",
       flexWrap: "wrap",
-      padding: theme.spacing(1, 3)
+      padding: theme.spacing(1, 4)
     },
     tabActionButton: {
       marginLeft: theme.spacing(2),
-      paddingLeft: theme.spacing(3),
-      paddingRight: theme.spacing(3)
+      paddingLeft: theme.spacing(4),
+      paddingRight: theme.spacing(4)
     }
   }),
   {
@@ -100,11 +99,7 @@ const FilterBar: React.FC<FilterBarProps> = props => {
         />
         {displayTabAction &&
           (displayTabAction === "save" ? (
-            <Button
-              className={classes.tabActionButton}
-              color="primary"
-              onClick={onTabSave}
-            >
+            <Button className={classes.tabActionButton} onClick={onTabSave}>
               <FormattedMessage
                 defaultMessage="Save Search"
                 description="button"
@@ -112,11 +107,7 @@ const FilterBar: React.FC<FilterBarProps> = props => {
             </Button>
           ) : (
             displayTabAction === "delete" && (
-              <Button
-                className={classes.tabActionButton}
-                color="primary"
-                onClick={onTabDelete}
-              >
+              <Button className={classes.tabActionButton} onClick={onTabDelete}>
                 <FormattedMessage
                   defaultMessage="Delete Search"
                   description="button"

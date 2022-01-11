@@ -1,5 +1,4 @@
 import {
-  Button,
   Dialog,
   DialogActions,
   DialogContent,
@@ -7,13 +6,13 @@ import {
   TextField
 } from "@material-ui/core";
 import { getAttributeValueErrorMessage } from "@saleor/attributes/errors";
-import ConfirmButton, {
-  ConfirmButtonTransitionState
-} from "@saleor/components/ConfirmButton";
+import BackButton from "@saleor/components/BackButton";
+import ConfirmButton from "@saleor/components/ConfirmButton";
 import Form from "@saleor/components/Form";
 import { AttributeErrorFragment } from "@saleor/fragments/types/AttributeErrorFragment";
 import useModalDialogErrors from "@saleor/hooks/useModalDialogErrors";
 import { buttonMessages } from "@saleor/intl";
+import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import { maybe } from "@saleor/misc";
 import { getFormErrors } from "@saleor/utils/errors";
 import React from "react";
@@ -87,14 +86,10 @@ const AttributeValueEditDialog: React.FC<AttributeValueEditDialogProps> = ({
               />
             </DialogContent>
             <DialogActions>
-              <Button onClick={onClose}>
-                <FormattedMessage {...buttonMessages.back} />
-              </Button>
+              <BackButton onClick={onClose} />
               <ConfirmButton
                 data-test="submit"
                 transitionState={confirmButtonState}
-                color="primary"
-                variant="contained"
                 onClick={submit}
               >
                 <FormattedMessage {...buttonMessages.save} />

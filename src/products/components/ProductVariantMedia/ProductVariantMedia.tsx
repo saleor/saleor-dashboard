@@ -1,8 +1,8 @@
-import { Button, Card, CardContent, Typography } from "@material-ui/core";
+import { Card, CardContent, Typography } from "@material-ui/core";
 import CardTitle from "@saleor/components/CardTitle";
 import Skeleton from "@saleor/components/Skeleton";
 import { ProductMediaFragment } from "@saleor/fragments/types/ProductMediaFragment";
-import { makeStyles } from "@saleor/macaw-ui";
+import { Button, makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import { defineMessages, useIntl } from "react-intl";
 
@@ -69,12 +69,7 @@ export const ProductVariantMedia: React.FC<ProductVariantMediaProps> = props => 
       <CardTitle
         title={intl.formatMessage(messages.media)}
         toolbar={
-          <Button
-            color="primary"
-            variant="text"
-            disabled={disabled}
-            onClick={onImageAdd}
-          >
+          <Button variant="tertiary" disabled={disabled} onClick={onImageAdd}>
             {intl.formatMessage(messages.chooseMedia)}
           </Button>
         }

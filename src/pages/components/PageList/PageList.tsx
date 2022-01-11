@@ -170,13 +170,13 @@ const PageList: React.FC<PageListProps> = props => {
                       onChange={() => toggle(page.id)}
                     />
                   </TableCell>
-                  <TableCellHeader className={classes.colTitle}>
+                  <TableCell className={classes.colTitle}>
                     {maybe<React.ReactNode>(() => page.title, <Skeleton />)}
-                  </TableCellHeader>
-                  <TableCellHeader className={classes.colSlug}>
+                  </TableCell>
+                  <TableCell className={classes.colSlug}>
                     {maybe<React.ReactNode>(() => page.slug, <Skeleton />)}
-                  </TableCellHeader>
-                  <TableCellHeader className={classes.colVisibility}>
+                  </TableCell>
+                  <TableCell className={classes.colVisibility}>
                     {maybe<React.ReactNode>(
                       () => (
                         <StatusLabel
@@ -196,7 +196,7 @@ const PageList: React.FC<PageListProps> = props => {
                       ),
                       <Skeleton />
                     )}
-                  </TableCellHeader>
+                  </TableCell>
                 </TableRow>
               );
             },

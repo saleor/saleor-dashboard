@@ -1,8 +1,7 @@
-import { IconButton } from "@material-ui/core";
 import { fade } from "@material-ui/core/styles/colorManipulator";
 import ArrowLeft from "@material-ui/icons/ArrowLeft";
 import ArrowRight from "@material-ui/icons/ArrowRight";
-import { makeStyles, useTheme } from "@saleor/macaw-ui";
+import { IconButton, makeStyles, useTheme } from "@saleor/macaw-ui";
 import classNames from "classnames";
 import React from "react";
 
@@ -81,6 +80,7 @@ export const TablePaginationActions: React.FC<TablePaginationActionsProps> = pro
   return (
     <div className={classNames(classes.root, className)} {...other}>
       <IconButton
+        variant="secondary"
         className={classNames(classes.iconButton, {
           [classes.dark]: isDark,
           [classes.disabled]: !hasPreviousPage

@@ -1,7 +1,7 @@
-import { Button, Card, CardActions, TableBody } from "@material-ui/core";
+import { Card, CardActions, TableBody } from "@material-ui/core";
 import CardSpacer from "@saleor/components/CardSpacer";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
-import { makeStyles, Tooltip } from "@saleor/macaw-ui";
+import { Button, makeStyles, Tooltip } from "@saleor/macaw-ui";
 import { renderCollection } from "@saleor/misc";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -13,7 +13,11 @@ import CardTitle from "../OrderReturnPage/OrderReturnRefundItemsCard/CardTitle";
 import { messages } from "./messages";
 
 const useStyles = makeStyles(
-  () => ({
+  theme => ({
+    actions: {
+      flexDirection: "row-reverse",
+      padding: theme.spacing(2, 3)
+    },
     table: {
       tableLayout: "fixed"
     }
@@ -56,7 +60,7 @@ const OrderUnfulfilledProductsCard: React.FC<OrderUnfulfilledProductsCardProps> 
           </TableBody>
         </ResponsiveTable>
         {canFulfill && (
-          <CardActions>
+          <CardActions className={classes.actions}>
             {noProductsAvailable ? (
               <Tooltip
                 title={intl.formatMessage(messages.deletedVariantDetected)}
@@ -64,18 +68,13 @@ const OrderUnfulfilledProductsCard: React.FC<OrderUnfulfilledProductsCardProps> 
                 placement={"left"}
               >
                 <div>
-                  <Button
-                    disabled
-                    variant="text"
-                    color="primary"
-                    onClick={onFulfill}
-                  >
+                  <Button disabled variant="primary" onClick={onFulfill}>
                     {intl.formatMessage(messages.fulfillButton)}
                   </Button>
                 </div>
               </Tooltip>
             ) : (
-              <Button variant="text" color="primary" onClick={onFulfill}>
+              <Button variant="primary" onClick={onFulfill}>
                 {intl.formatMessage(messages.fulfillButton)}
               </Button>
             )}

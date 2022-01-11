@@ -1,6 +1,6 @@
-import { Button } from "@material-ui/core";
 import { IMessage } from "@saleor/components/messages";
 import useNotifier from "@saleor/hooks/useNotifier";
+import { Button } from "@saleor/macaw-ui";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
@@ -23,8 +23,7 @@ const Story: React.FC<IMessage> = ({
 
   return (
     <Button
-      color="primary"
-      variant="contained"
+      variant="primary"
       onClick={() =>
         pushMessage({
           actionBtn,

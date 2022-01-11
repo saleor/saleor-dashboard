@@ -2,6 +2,7 @@ import { createSaleorClient, SaleorProvider } from "@saleor/sdk";
 import setupApi from "@test/api";
 import { act, renderHook } from "@testing-library/react-hooks";
 import React from "react";
+import { MemoryRouter as Router } from "react-router-dom";
 
 import { useAuthProvider } from "./hooks/useAuthProvider";
 
@@ -17,7 +18,9 @@ function renderAuthProvider() {
     channel: ""
   });
   const wrapper = ({ children }) => (
-    <SaleorProvider client={saleorClient}>{children}</SaleorProvider>
+    <Router>
+      <SaleorProvider client={saleorClient}>{children}</SaleorProvider>
+    </Router>
   );
 
   const { result } = renderHook(

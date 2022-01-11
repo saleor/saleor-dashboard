@@ -1,7 +1,7 @@
-import { IconButton, Typography } from "@material-ui/core";
+import { Typography } from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
 import RemoveIcon from "@material-ui/icons/Remove";
-import { makeStyles } from "@saleor/macaw-ui";
+import { IconButton, makeStyles } from "@saleor/macaw-ui";
 import classNames from "classnames";
 import React from "react";
 
@@ -58,7 +58,10 @@ const Accordion: React.FC<AccordionProps> = ({
       <div className={classes.title}>
         <Typography className={classes.titleText}>{title}</Typography>
         <div className={classes.expandButton}>
-          <IconButton onClick={() => setExpanded(!expanded)}>
+          <IconButton
+            variant="secondary"
+            onClick={() => setExpanded(!expanded)}
+          >
             {expanded ? <RemoveIcon /> : <AddIcon />}
           </IconButton>
         </div>

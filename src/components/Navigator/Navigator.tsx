@@ -1,4 +1,4 @@
-import { Fade, Modal, Paper } from "@material-ui/core";
+import { Divider, Fade, Modal, Paper } from "@material-ui/core";
 import { APP_VERSION } from "@saleor/config";
 import useLocalStorage from "@saleor/hooks/useLocalStorage";
 import useNotifier from "@saleor/hooks/useNotifier";
@@ -51,7 +51,7 @@ const useStyles = makeStyles(
         height: "auto"
       },
       height: 500,
-      maxWidth: 600,
+      maxWidth: 900,
       outline: 0,
       width: "100%"
     }
@@ -111,6 +111,12 @@ const Navigator: React.FC<NavigatorProps> = ({ visible, setVisibility }) => {
     return () => hotkeys.unbind(navigatorHotkey);
   }, []);
 
+  const hasAnything =
+    hasViews(actions) ||
+    hasActions(actions) ||
+    hasCustomers(actions) ||
+    hasCatalog(actions);
+
   return (
     <Modal
       className={classes.modal}
@@ -150,6 +156,7 @@ const Navigator: React.FC<NavigatorProps> = ({ visible, setVisibility }) => {
                     })}
                     ref={input}
                   />
+                  {hasAnything && <Divider />}
                   {hasViews(actions) && (
                     <NavigatorSection
                       label={intl.formatMessage({

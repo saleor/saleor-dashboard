@@ -52,8 +52,6 @@ interface CategoryListProps
   onAdd?();
 }
 
-const numberOfColumns = 4;
-
 const CategoryList: React.FC<CategoryListProps> = props => {
   const {
     categories,
@@ -75,6 +73,7 @@ const CategoryList: React.FC<CategoryListProps> = props => {
   } = props;
 
   const classes = useStyles(props);
+  const numberOfColumns = categories?.length === 0 ? 3 : 4;
 
   return (
     <ResponsiveTable>

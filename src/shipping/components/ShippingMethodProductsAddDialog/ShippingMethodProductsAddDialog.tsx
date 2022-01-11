@@ -1,5 +1,4 @@
 import {
-  Button,
   CircularProgress,
   Dialog,
   DialogActions,
@@ -10,16 +9,15 @@ import {
   TableRow,
   TextField
 } from "@material-ui/core";
+import BackButton from "@saleor/components/BackButton";
 import Checkbox from "@saleor/components/Checkbox";
-import ConfirmButton, {
-  ConfirmButtonTransitionState
-} from "@saleor/components/ConfirmButton";
+import ConfirmButton from "@saleor/components/ConfirmButton";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
 import TableCellAvatar from "@saleor/components/TableCellAvatar";
 import useSearchQuery from "@saleor/hooks/useSearchQuery";
 import { buttonMessages } from "@saleor/intl";
-import { makeStyles } from "@saleor/macaw-ui";
+import { ConfirmButtonTransitionState, makeStyles } from "@saleor/macaw-ui";
 import { renderCollection } from "@saleor/misc";
 import { SearchProducts_search_edges_node } from "@saleor/searches/types/SearchProducts";
 import { ShippingPriceExcludeProduct } from "@saleor/shipping/types/ShippingPriceExcludeProduct";
@@ -225,13 +223,9 @@ const ShippingMethodProductsAddDialog: React.FC<ShippingMethodProductsAddDialogP
         </div>
       </DialogContent>
       <DialogActions>
-        <Button onClick={handleClose}>
-          <FormattedMessage {...buttonMessages.back} />
-        </Button>
+        <BackButton onClick={handleClose} />
         <ConfirmButton
           transitionState={confirmButtonState}
-          color="primary"
-          variant="contained"
           type="submit"
           disabled={loading || !selectedProducts?.length}
           onClick={handleSubmit}

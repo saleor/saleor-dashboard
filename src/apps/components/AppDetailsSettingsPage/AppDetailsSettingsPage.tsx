@@ -1,10 +1,10 @@
-import { Button, Typography } from "@material-ui/core";
+import { Typography } from "@material-ui/core";
 import CardSpacer from "@saleor/components/CardSpacer";
 import Container from "@saleor/components/Container";
 import Grid from "@saleor/components/Grid";
 import Hr from "@saleor/components/Hr";
 import { sectionNames } from "@saleor/intl";
-import { Backlink } from "@saleor/macaw-ui";
+import { Backlink, Button } from "@saleor/macaw-ui";
 import { useTheme } from "@saleor/macaw-ui";
 import classNames from "classnames";
 import React from "react";
@@ -69,26 +69,22 @@ export const AppDetailsSettingsPage: React.FC<AppDetailsSettingsPageProps> = ({
           </div>
         </div>
         <div className={classes.appSettingsHeader}>
-          <Button
-            onClick={navigateToDashboard}
-            variant="contained"
-            color="primary"
-          >
+          <Button onClick={navigateToDashboard} variant="primary">
             <FormattedMessage defaultMessage="Dashboard" description="button" />
           </Button>
           <Button
+            component="a"
             href={data?.homepageUrl}
-            variant="contained"
-            color="primary"
+            variant="primary"
             data-tc="open-app"
             target="_blank"
           >
             <FormattedMessage defaultMessage="My App" description="button" />
           </Button>
           <Button
+            component="a"
             href={data?.supportUrl}
-            variant="contained"
-            color="primary"
+            variant="primary"
             data-tc="open-support"
             target="_blank"
           >
