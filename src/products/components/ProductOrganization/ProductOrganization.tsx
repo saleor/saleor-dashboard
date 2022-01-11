@@ -14,7 +14,7 @@ import { ProductErrorFragment } from "@saleor/fragments/types/ProductErrorFragme
 import { ChangeEvent } from "@saleor/hooks/useForm";
 import useNavigator from "@saleor/hooks/useNavigator";
 import { makeStyles } from "@saleor/macaw-ui";
-import { maybe } from "@saleor/misc";
+import { createHref, maybe } from "@saleor/misc";
 import { productTypeUrl } from "@saleor/productTypes/urls";
 import { FetchMoreProps } from "@saleor/types";
 import { getFormErrors, getProductErrorMessage } from "@saleor/utils/errors";
@@ -138,6 +138,7 @@ const ProductOrganization: React.FC<ProductOrganizationProps> = props => {
               onClick={() =>
                 navigate(productTypeUrl(productType?.id), { resetScroll: true })
               }
+              href={createHref(productTypeUrl(productType?.id))}
               disabled={!productType?.id}
             >
               {productType?.name ?? "..."}
