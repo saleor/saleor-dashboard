@@ -62,7 +62,6 @@ export const getFilterOpts = ({
     value: params?.currency,
     choices: mapSingleValueNodeToChoice(currencies),
     displayValues: mapSingleValueNodeToChoice(currencies),
-    initialSearch: "",
     loading: loadingCurrencies
   },
   product: {
@@ -237,20 +236,12 @@ export function createFilterStructure(
       active: opts.currentBalanceAmount.active
     },
     {
-      ...createAutocompleteField(
+      ...createOptionsField(
         GiftCardListFilterKeys.currency,
         intl.formatMessage(messages.currencyLabel),
         [opts.currency.value],
-        opts.currency.displayValues,
         false,
-        opts.currency.choices,
-        {
-          hasMore: opts.currency.hasMore,
-          initialSearch: "",
-          loading: opts.currency.loading,
-          onFetchMore: opts.currency.onFetchMore,
-          onSearchChange: opts.currency.onSearchChange
-        }
+        opts.currency.choices
       ),
       active: opts.currency.active
     },
