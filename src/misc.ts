@@ -292,7 +292,7 @@ export function getUserInitials(user?: User) {
 }
 
 export function createHref(url: string) {
-  return urlJoin(APP_MOUNT_URI, url);
+  return !APP_MOUNT_URI ? url : urlJoin(APP_MOUNT_URI, url);
 }
 
 interface AnyEvent {
