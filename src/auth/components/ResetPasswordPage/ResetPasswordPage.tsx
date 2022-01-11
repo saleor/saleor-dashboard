@@ -1,30 +1,12 @@
-import { Button, TextField, Typography } from "@material-ui/core";
+import { TextField, Typography } from "@material-ui/core";
 import Form from "@saleor/components/Form";
 import FormSpacer from "@saleor/components/FormSpacer";
 import { commonMessages } from "@saleor/intl";
-import { makeStyles } from "@saleor/macaw-ui";
+import { ArrowRightIcon, Button, IconButton } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-const useStyles = makeStyles(
-  theme => ({
-    errorText: {
-      color: theme.palette.error.contrastText
-    },
-    panel: {
-      background: theme.palette.error.main,
-      borderRadius: theme.spacing(),
-      marginBottom: theme.spacing(3),
-      padding: theme.spacing(1.5)
-    },
-    submit: {
-      width: "100%"
-    }
-  }),
-  {
-    name: "ResetPasswordPage"
-  }
-);
+import useStyles from "../styles";
 
 export interface ResetPasswordPageFormData {
   email: string;
@@ -32,11 +14,12 @@ export interface ResetPasswordPageFormData {
 export interface ResetPasswordPageProps {
   disabled: boolean;
   error: string;
+  onBack: () => void;
   onSubmit: (data: ResetPasswordPageFormData) => void;
 }
 
 const ResetPasswordPage: React.FC<ResetPasswordPageProps> = props => {
-  const { disabled, error, onSubmit } = props;
+  const { disabled, error, onBack, onSubmit } = props;
 
   const classes = useStyles(props);
   const intl = useIntl();
@@ -45,15 +28,15 @@ const ResetPasswordPage: React.FC<ResetPasswordPageProps> = props => {
     <Form initial={{ email: "" }} onSubmit={onSubmit}>
       {({ change: handleChange, data, submit: handleSubmit }) => (
         <>
-          {!!error && (
-            <div className={classes.panel}>
-              <Typography variant="caption" className={classes.errorText}>
-                {error}
-              </Typography>
-            </div>
-          )}
-          <Typography>
-            <FormattedMessage defaultMessage="Forgot your password? Don't worry, we'll reset it for you." />
+          <IconButton className={classes.backBtn} onClick={onBack}>
+            <ArrowRightIcon className={classes.arrow} />
+          </IconButton>
+          <Typography variant="h3" className={classes.header}>
+            <FormattedMessage defaultMessage="Reset password" />
+          </Typography>
+          {!!error && <div className={classes.panel}>{error}</div>}
+          <Typography variant="caption" color="textSecondary">
+            <FormattedMessage defaultMessage="Provide us with an email - if we find it in our database we will send you a link to reset your password. You should be able to find it in your inbox in the next couple of minutes." />
           </Typography>
           <FormSpacer />
           <TextField
@@ -72,14 +55,13 @@ const ResetPasswordPage: React.FC<ResetPasswordPageProps> = props => {
           <FormSpacer />
           <Button
             className={classes.submit}
-            color="primary"
             disabled={disabled}
-            variant="contained"
+            variant="primary"
             onClick={handleSubmit}
             type="submit"
           >
             <FormattedMessage
-              defaultMessage="Send Instructions"
+              defaultMessage="Send an email with reset link"
               description="password reset, button"
             />
           </Button>

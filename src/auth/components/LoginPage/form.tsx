@@ -12,7 +12,7 @@ export interface UseLoginFormResult {
   change: FormChange;
   data: LoginFormData;
   hasChanged: boolean;
-  submit: (event: React.FormEvent<HTMLFormElement>) => Promise<boolean>;
+  submit: () => Promise<boolean>;
 }
 
 export interface LoginFormProps {
@@ -53,11 +53,7 @@ function useLoginForm(
     return errors;
   };
 
-  const submit = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-
-    return handleFormSubmit(data, handleSubmit, setChanged);
-  };
+  const submit = async () => handleFormSubmit(data, handleSubmit, setChanged);
 
   return {
     change: handleChange,
@@ -70,7 +66,13 @@ function useLoginForm(
 const LoginForm: React.FC<LoginFormProps> = ({ children, onSubmit }) => {
   const props = useLoginForm(onSubmit);
 
-  return <form onSubmit={props.submit}>{children(props)}</form>;
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    // Cypress tests blow up without it
+    event.preventDefault();
+    props.submit();
+  };
+
+  return <form onSubmit={handleSubmit}>{children(props)}</form>;
 };
 
 LoginForm.displayName = "LoginForm";

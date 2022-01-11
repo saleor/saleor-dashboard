@@ -1,5 +1,3 @@
-import { IconButton } from "@material-ui/core";
-import DeleteIcon from "@material-ui/icons/Delete";
 import DeleteFilterTabDialog from "@saleor/components/DeleteFilterTabDialog";
 import SaveFilterTabDialog, {
   SaveFilterTabDialogFormData
@@ -13,6 +11,7 @@ import usePaginator, {
   createPaginationState
 } from "@saleor/hooks/usePaginator";
 import { commonMessages } from "@saleor/intl";
+import { DeleteIcon, IconButton } from "@saleor/macaw-ui";
 import useProductTypeDelete from "@saleor/productTypes/hooks/useProductTypeDelete";
 import { ListViews } from "@saleor/types";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
@@ -205,6 +204,7 @@ export const ProductTypeList: React.FC<ProductTypeListProps> = ({ params }) => {
               toggleAll={toggleAll}
               toolbar={
                 <IconButton
+                  variant="secondary"
                   color="primary"
                   onClick={() =>
                     openModal("remove", {

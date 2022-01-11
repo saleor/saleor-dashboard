@@ -1,8 +1,8 @@
 import placeholderImage from "@assets/images/placeholder60x60.png";
 import {
+  Accordion,
+  AccordionSummary,
   Divider,
-  ExpansionPanel,
-  ExpansionPanelSummary,
   Typography
 } from "@material-ui/core";
 import { ChannelData } from "@saleor/channels/utils";
@@ -157,12 +157,12 @@ const ChannelsWithVariantsAvailabilityDialogContent: React.FC<ChannelsWithVarian
           placeholderImage;
 
         return (
-          <ExpansionPanel
+          <Accordion
             classes={expanderClasses}
             data-test-id="expand-channel-row"
             key={channelId}
           >
-            <ExpansionPanelSummary
+            <AccordionSummary
               expandIcon={<IconChevronDown />}
               classes={summaryClasses}
             >
@@ -194,7 +194,7 @@ const ChannelsWithVariantsAvailabilityDialogContent: React.FC<ChannelsWithVarian
                 </div>
                 <Divider />
               </div>
-            </ExpansionPanelSummary>
+            </AccordionSummary>
             {allVariants.map(({ id: variantId, name }) => (
               <React.Fragment key={variantId}>
                 <div
@@ -217,7 +217,7 @@ const ChannelsWithVariantsAvailabilityDialogContent: React.FC<ChannelsWithVarian
                 <Divider />
               </React.Fragment>
             ))}
-          </ExpansionPanel>
+          </Accordion>
         );
       })}
     </>

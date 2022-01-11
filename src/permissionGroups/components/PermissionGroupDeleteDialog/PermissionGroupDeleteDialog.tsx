@@ -1,7 +1,7 @@
 import { DialogContentText, Typography } from "@material-ui/core";
 import ActionDialog from "@saleor/components/ActionDialog";
-import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
 import { PermissionGroupErrorFragment } from "@saleor/fragments/types/PermissionGroupErrorFragment";
+import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import { PermissionGroupErrorCode } from "@saleor/types/globalTypes";
 import getPermissionGroupErrorMessage from "@saleor/utils/errors/permissionGroups";
 import React from "react";

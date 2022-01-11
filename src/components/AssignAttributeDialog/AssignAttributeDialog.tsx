@@ -1,5 +1,4 @@
 import {
-  Button,
   CircularProgress,
   Dialog,
   DialogActions,
@@ -13,9 +12,7 @@ import {
   Typography
 } from "@material-ui/core";
 import Checkbox from "@saleor/components/Checkbox";
-import ConfirmButton, {
-  ConfirmButtonTransitionState
-} from "@saleor/components/ConfirmButton";
+import ConfirmButton from "@saleor/components/ConfirmButton";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import { AvailableAttributeFragment } from "@saleor/fragments/types/AvailableAttributeFragment";
 import useElementScroll, {
@@ -24,8 +21,7 @@ import useElementScroll, {
 import useModalDialogErrors from "@saleor/hooks/useModalDialogErrors";
 import useModalDialogOpen from "@saleor/hooks/useModalDialogOpen";
 import useSearchQuery from "@saleor/hooks/useSearchQuery";
-import { buttonMessages } from "@saleor/intl";
-import { makeStyles } from "@saleor/macaw-ui";
+import { ConfirmButtonTransitionState, makeStyles } from "@saleor/macaw-ui";
 import { maybe, renderCollection } from "@saleor/misc";
 import { FetchMoreProps } from "@saleor/types";
 import classNames from "classnames";
@@ -33,6 +29,7 @@ import React from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { FormattedMessage, useIntl } from "react-intl";
 
+import BackButton from "../BackButton";
 import { messages } from "./messages";
 
 const useStyles = makeStyles(
@@ -52,6 +49,7 @@ const useStyles = makeStyles(
     loadMoreLoaderContainer: {
       alignItems: "center",
       display: "flex",
+      marginTop: theme.spacing(2),
       height: theme.spacing(3),
       justifyContent: "center"
     },
@@ -148,7 +146,7 @@ const AssignAttributeDialog: React.FC<AssignAttributeDialogProps> = ({
         id={scrollableTargetId}
       >
         <InfiniteScroll
-          dataLength={attributes?.length}
+          dataLength={attributes?.length || 0}
           next={onFetchMore}
           hasMore={hasMore}
           scrollThreshold="100px"
@@ -218,13 +216,9 @@ const AssignAttributeDialog: React.FC<AssignAttributeDialogProps> = ({
           [classes.dropShadow]: !isScrolledToBottom(anchor, position)
         })}
       >
-        <Button onClick={onClose}>
-          <FormattedMessage {...buttonMessages.back} />
-        </Button>
+        <BackButton onClick={onClose} />
         <ConfirmButton
           transitionState={confirmButtonState}
-          color="primary"
-          variant="contained"
           type="submit"
           onClick={onSubmit}
         >

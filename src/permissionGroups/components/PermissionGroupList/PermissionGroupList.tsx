@@ -1,17 +1,15 @@
 import {
-  IconButton,
   TableBody,
   TableCell,
   TableFooter,
   TableHead,
   TableRow
 } from "@material-ui/core";
-import DeleteIcon from "@material-ui/icons/Delete";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
 import TableCellHeader from "@saleor/components/TableCellHeader";
 import TablePagination from "@saleor/components/TablePagination";
-import { makeStyles } from "@saleor/macaw-ui";
+import { DeleteIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
 import { maybe, renderCollection, stopPropagation } from "@saleor/misc";
 import { PermissionGroupList_permissionGroups_edges_node } from "@saleor/permissionGroups/types/PermissionGroupList";
 import { PermissionGroupListUrlSortField } from "@saleor/permissionGroups/urls";
@@ -150,6 +148,7 @@ const PermissionGroupList: React.FC<PermissionGroupListProps> = props => {
                   <>
                     {permissionGroup.userCanManage && (
                       <IconButton
+                        variant="secondary"
                         data-test-id="deleteIcon"
                         color="primary"
                         onClick={stopPropagation(() =>

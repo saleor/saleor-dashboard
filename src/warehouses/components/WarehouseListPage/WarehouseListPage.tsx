@@ -1,4 +1,4 @@
-import { Button, Card } from "@material-ui/core";
+import { Card } from "@material-ui/core";
 import Container from "@saleor/components/Container";
 import LimitReachedAlert from "@saleor/components/LimitReachedAlert";
 import PageHeader from "@saleor/components/PageHeader";
@@ -6,7 +6,7 @@ import SearchBar from "@saleor/components/SearchBar";
 import { RefreshLimits_shop_limits } from "@saleor/components/Shop/types/RefreshLimits";
 import { WarehouseWithShippingFragment } from "@saleor/fragments/types/WarehouseWithShippingFragment";
 import { sectionNames } from "@saleor/intl";
-import { Backlink } from "@saleor/macaw-ui";
+import { Backlink, Button } from "@saleor/macaw-ui";
 import {
   PageListProps,
   SearchPageProps,
@@ -81,9 +81,8 @@ export const WarehouseListPage: React.FC<WarehouseListPageProps> = ({
       >
         <Button
           data-test-id="createWarehouse"
-          color="primary"
           disabled={limitReached}
-          variant="contained"
+          variant="primary"
           onClick={onAdd}
         >
           <FormattedMessage

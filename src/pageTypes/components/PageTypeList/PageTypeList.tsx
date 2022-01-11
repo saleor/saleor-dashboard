@@ -34,8 +34,6 @@ interface PageTypeListProps
   pageTypes: PageTypeList_pageTypes_edges_node[];
 }
 
-const numberOfColumns = 2;
-
 const PageTypeList: React.FC<PageTypeListProps> = props => {
   const {
     disabled,
@@ -53,6 +51,7 @@ const PageTypeList: React.FC<PageTypeListProps> = props => {
     toolbar
   } = props;
   const classes = useStyles(props);
+  const numberOfColumns = pageTypes?.length === 0 ? 1 : 2;
 
   return (
     <ResponsiveTable>

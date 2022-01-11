@@ -1,5 +1,4 @@
 import {
-  Button,
   CircularProgress,
   FormControlLabel,
   TextField,
@@ -17,7 +16,7 @@ import { ChannelFragment } from "@saleor/fragments/types/ChannelFragment";
 import { ChangeEvent, FormChange } from "@saleor/hooks/useForm";
 import useSearchQuery from "@saleor/hooks/useSearchQuery";
 import { sectionNames } from "@saleor/intl";
-import { makeStyles } from "@saleor/macaw-ui";
+import { Button, makeStyles } from "@saleor/macaw-ui";
 import { FetchMoreProps } from "@saleor/types";
 import {
   ExportProductsInput,
@@ -97,6 +96,10 @@ const useStyles = makeStyles(
     },
     warehousesLabel: {
       marginBottom: theme.spacing(2)
+    },
+    scrollable: {
+      maxHeight: `calc(100vh - 350px)`,
+      overflowY: "scroll"
     }
   }),
   {
@@ -296,7 +299,7 @@ const ProductExportDialogInfo: React.FC<ProductExportDialogInfoProps> = ({
     onSelectAllChannels(channels, channels.length);
 
   return (
-    <>
+    <div className={classes.scrollable}>
       <Typography className={classes.dialogLabel}>
         <FormattedMessage
           defaultMessage="Information exported:"
@@ -433,7 +436,7 @@ const ProductExportDialogInfo: React.FC<ProductExportDialogInfoProps> = ({
         {(hasMore || loading) && (
           <div className={classes.loadMoreContainer}>
             {hasMore && !loading && (
-              <Button color="primary" onClick={onFetchMore}>
+              <Button onClick={onFetchMore}>
                 <FormattedMessage
                   defaultMessage="Load More"
                   description="button"
@@ -600,7 +603,7 @@ const ProductExportDialogInfo: React.FC<ProductExportDialogInfoProps> = ({
         onToggleAll={handleToggleAllFields}
         data-test="seo"
       />
-    </>
+    </div>
   );
 };
 

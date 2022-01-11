@@ -1,6 +1,6 @@
 import {
-  ExpansionPanel,
-  ExpansionPanelSummary,
+  Accordion,
+  AccordionSummary,
   makeStyles,
   Paper,
   Typography
@@ -193,7 +193,7 @@ const FilterContent: React.FC<FilterContentProps> = ({
   };
 
   return (
-    <Paper>
+    <Paper elevation={8}>
       <form
         onSubmit={event => {
           event.preventDefault();
@@ -208,13 +208,13 @@ const FilterContent: React.FC<FilterContentProps> = ({
             const currentFilter = getFilterFromCurrentData(filter);
 
             return (
-              <ExpansionPanel
+              <Accordion
                 key={filter.name}
                 classes={expanderClasses}
                 data-test="channel-availability-item"
                 expanded={filter.name === openedFilter?.name}
               >
-                <ExpansionPanelSummary
+                <AccordionSummary
                   expandIcon={<IconChevronDown />}
                   classes={summaryClasses}
                   onClick={() => handleFilterOpen(filter)}
@@ -227,7 +227,7 @@ const FilterContent: React.FC<FilterContentProps> = ({
                       }
                     />
                   )}
-                </ExpansionPanelSummary>
+                </AccordionSummary>
                 {currentFilter?.active && (
                   <FilterErrorsList
                     errors={errors?.[filter.name]}
@@ -260,7 +260,7 @@ const FilterContent: React.FC<FilterContentProps> = ({
                     filter={currentFilter}
                   />
                 )}
-              </ExpansionPanel>
+              </Accordion>
             );
           })}
       </form>

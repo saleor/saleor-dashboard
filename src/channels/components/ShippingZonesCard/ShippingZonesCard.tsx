@@ -1,18 +1,18 @@
 import {
+  Accordion,
   Card,
   CardContent,
   Divider,
-  ExpansionPanel,
   Typography
 } from "@material-ui/core";
 import CardTitle from "@saleor/components/CardTitle";
-import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import { defineMessages, useIntl } from "react-intl";
 
 import ShippingZoneItem from "./ShippingZoneItem";
 import ShippingZonesCardListFooter from "./ShippingZonesCardListFooter";
 import ShippingZonesListHeader from "./ShippingZonesListHeader";
+import { useExpanderStyles } from "./styles";
 import { ShippingZonesProps } from "./types";
 
 const messages = defineMessages({
@@ -26,26 +26,6 @@ const messages = defineMessages({
     description: "card subtitle"
   }
 });
-
-const useExpanderStyles = makeStyles(
-  () => ({
-    // empty expanded needed for mui to use root styles
-    expanded: {},
-    root: {
-      boxShadow: "none",
-
-      "&:before": {
-        content: "none"
-      },
-
-      "&$expanded": {
-        margin: 0,
-        border: "none"
-      }
-    }
-  }),
-  { name: "ShippingZonesCardExpander" }
-);
 
 type ShippingZonesCardProps = ShippingZonesProps;
 
@@ -67,7 +47,7 @@ const ShippingZonesCard: React.FC<ShippingZonesCardProps> = props => {
       <CardContent>
         <Typography>{intl.formatMessage(messages.subtitle)}</Typography>
       </CardContent>
-      <ExpansionPanel classes={expanderClasses}>
+      <Accordion classes={expanderClasses}>
         <ShippingZonesListHeader shippingZones={shippingZones} />
         <Divider />
         {shippingZones.map(zone => (
@@ -76,7 +56,7 @@ const ShippingZonesCard: React.FC<ShippingZonesCardProps> = props => {
         {hasMoreZonesToBeSelected ? (
           <ShippingZonesCardListFooter {...props} />
         ) : null}
-      </ExpansionPanel>
+      </Accordion>
     </Card>
   );
 };
