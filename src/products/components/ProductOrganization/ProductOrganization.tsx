@@ -12,7 +12,6 @@ import SingleAutocompleteSelectField, {
 } from "@saleor/components/SingleAutocompleteSelectField";
 import { ProductErrorFragment } from "@saleor/fragments/types/ProductErrorFragment";
 import { ChangeEvent } from "@saleor/hooks/useForm";
-import useNavigator from "@saleor/hooks/useNavigator";
 import { makeStyles } from "@saleor/macaw-ui";
 import { createHref, maybe } from "@saleor/misc";
 import { productTypeUrl } from "@saleor/productTypes/urls";
@@ -96,7 +95,6 @@ const ProductOrganization: React.FC<ProductOrganizationProps> = props => {
 
   const classes = useStyles(props);
   const intl = useIntl();
-  const navigate = useNavigator();
 
   const formErrors = getFormErrors(
     ["productType", "category", "collections"],
@@ -135,9 +133,6 @@ const ProductOrganization: React.FC<ProductOrganizationProps> = props => {
               <FormattedMessage defaultMessage="Product Type" />
             </Typography>
             <Link
-              onClick={() =>
-                navigate(productTypeUrl(productType?.id), { resetScroll: true })
-              }
               href={createHref(productTypeUrl(productType?.id) ?? "")}
               disabled={!productType?.id}
             >
