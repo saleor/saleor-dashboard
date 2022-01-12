@@ -24,7 +24,6 @@ export interface UpdateShippingZone_shippingZoneUpdate_shippingZone_countries {
 export interface UpdateShippingZone_shippingZoneUpdate_shippingZone {
   __typename: "ShippingZone";
   countries: (UpdateShippingZone_shippingZoneUpdate_shippingZone_countries | null)[] | null;
-  default: boolean;
   id: string;
   name: string;
 }
