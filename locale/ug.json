@@ -202,7 +202,7 @@
   },
   "homeHeaderText": {
     "context": "header",
-    "string": "ياخشىمۇسىز , {userName}"
+    "string": "{userName} ، ياخشىمۇسىز "
   },
   "homeHeaderTextCaption": {
     "context": "subheader",
@@ -911,7 +911,7 @@
   },
   "src_dot_attributes": {
     "context": "attributes section name",
-    "string": "خاسلىقى"
+    "string": "تەپسىلاتلار"
   },
   "src_dot_attributes_dot_attributeSlugUnique": {
     "string": "Attribute with this slug already exists"
@@ -2522,7 +2522,7 @@
     "string": "مال يەتكۈزۈش تەڭشەكلىرى"
   },
   "src_dot_configuration_dot_1742602794": {
-    "string": "خاسلىقى ۋە مەھسۇلات تۈرلىرى"
+    "string": "تەپسىلاتلار ۋە مەھسۇلات تۈرلىرى"
   },
   "src_dot_configuration_dot_3140151600": {
     "string": "خىزمەتچىلەر تەڭشىكى"
