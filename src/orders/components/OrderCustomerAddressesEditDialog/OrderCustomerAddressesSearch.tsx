@@ -1,5 +1,4 @@
 import {
-  Button,
   Checkbox,
   DialogActions,
   DialogContent,
@@ -14,7 +13,11 @@ import CustomerAddressChoiceCard from "@saleor/customers/components/CustomerAddr
 import { CustomerAddresses_user_addresses } from "@saleor/customers/types/CustomerAddresses";
 import { FormChange } from "@saleor/hooks/useForm";
 import { buttonMessages } from "@saleor/intl";
-import { ConfirmButtonTransitionState, SearchIcon } from "@saleor/macaw-ui";
+import {
+  Button,
+  ConfirmButtonTransitionState,
+  SearchIcon
+} from "@saleor/macaw-ui";
 import { AddressTypeEnum } from "@saleor/types/globalTypes";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -156,7 +159,7 @@ const OrderCustomerAddressesSearch: React.FC<OrderCustomerAddressesSearchProps> 
         )}
       </DialogContent>
       <DialogActions>
-        <Button onClick={exitSearch} color="primary">
+        <Button onClick={exitSearch} variant="secondary">
           <FormattedMessage {...buttonMessages.cancel} />
         </Button>
         <ConfirmButton
