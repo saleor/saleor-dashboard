@@ -1,6 +1,7 @@
 {
   "baseUrl": "http://localhost:9000/",
   "chromeWebSecurity": false,
+  "projectId": "k8be36",
   "defaultCommandTimeout": 15000,
   "requestTimeout": 15000,
   "viewportWidth": 1400,
