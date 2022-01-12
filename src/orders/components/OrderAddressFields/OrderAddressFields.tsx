@@ -1,7 +1,7 @@
-import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
 import { CustomerAddresses_user } from "@saleor/customers/types/CustomerAddresses";
 import { OrderErrorFragment } from "@saleor/fragments/types/OrderErrorFragment";
 import { SubmitPromise } from "@saleor/hooks/useForm";
+import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import OrderCustomerAddressesEditDialog, {
   AddressEditDialogVariant,
   OrderCustomerAddressesEditDialogOutput
