@@ -2,7 +2,6 @@ import {
   Dialog,
   DialogActions,
   DialogContent,
-  DialogTitle,
   Divider,
   FormControlLabel,
   Typography
@@ -21,7 +20,7 @@ import useAddressValidation from "@saleor/hooks/useAddressValidation";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import useModalDialogErrors from "@saleor/hooks/useModalDialogErrors";
 import { buttonMessages } from "@saleor/intl";
-import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
+import { ConfirmButtonTransitionState, DialogHeader } from "@saleor/macaw-ui";
 import { transformAddressToAddressInput } from "@saleor/misc";
 import { AddressInput, AddressTypeEnum } from "@saleor/types/globalTypes";
 import { mapCountriesToChoices } from "@saleor/utils/maps";
@@ -228,15 +227,13 @@ const OrderCustomerAddressesEditDialog: React.FC<OrderCustomerAddressesEditDialo
     customerAddresses
   };
 
+  const exitModal = () => {
+    setAddressSearchState(defaultSearchState);
+    onClose();
+  };
+
   return (
-    <Dialog
-      onClose={() => {
-        setAddressSearchState(defaultSearchState);
-        onClose();
-      }}
-      open={open}
-      fullWidth
-    >
+    <Dialog onClose={exitModal} open={open} fullWidth>
       <OrderCustomerAddressesEditForm
         countryChoices={countryChoices}
         defaultShippingAddress={validatedDefaultShippingAddress}
@@ -291,12 +288,13 @@ const OrderCustomerAddressesEditDialog: React.FC<OrderCustomerAddressesEditDialo
                     )
                   }
                   exitSearch={() => setAddressSearchState(defaultSearchState)}
+                  exitModal={exitModal}
                 />
               ) : (
                 <>
-                  <DialogTitle>
+                  <DialogHeader onClose={exitModal}>
                     <FormattedMessage {...getDialogTitle()} />
-                  </DialogTitle>
+                  </DialogHeader>
                   <DialogContent className={classes.dialogContent}>
                     <Typography>
                       <FormattedMessage {...getDialogDescription()} />

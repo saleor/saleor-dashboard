@@ -2,7 +2,6 @@ import {
   Checkbox,
   DialogActions,
   DialogContent,
-  DialogTitle,
   FormControlLabel,
   InputAdornment,
   TextField
@@ -16,6 +15,7 @@ import { buttonMessages } from "@saleor/intl";
 import {
   Button,
   ConfirmButtonTransitionState,
+  DialogHeader,
   SearchIcon
 } from "@saleor/macaw-ui";
 import { AddressTypeEnum } from "@saleor/types/globalTypes";
@@ -42,6 +42,7 @@ export interface OrderCustomerAddressesSearchProps {
     customerAddress: CustomerAddresses_user_addresses
   ) => void;
   exitSearch();
+  exitModal();
 }
 
 const OrderCustomerAddressesSearch: React.FC<OrderCustomerAddressesSearchProps> = props => {
@@ -55,7 +56,8 @@ const OrderCustomerAddressesSearch: React.FC<OrderCustomerAddressesSearchProps> 
     customerAddresses,
     onChangeCustomerShippingAddress,
     onChangeCustomerBillingAddress,
-    exitSearch
+    exitSearch,
+    exitModal
   } = props;
 
   const intl = useIntl();
@@ -94,13 +96,13 @@ const OrderCustomerAddressesSearch: React.FC<OrderCustomerAddressesSearchProps> 
 
   return (
     <>
-      <DialogTitle>
+      <DialogHeader onClose={exitModal}>
         {type === AddressTypeEnum.SHIPPING ? (
           <FormattedMessage {...messages.shippingTitle} />
         ) : (
           <FormattedMessage {...messages.billingTitle} />
         )}
-      </DialogTitle>
+      </DialogHeader>
       <DialogContent>
         {intl.formatMessage(messages.searchInfo)}
         <CardSpacer />
