@@ -117,7 +117,7 @@ export const OrderUnconfirmedDetails: React.FC<OrderUnconfirmedDetailsProps> = (
     variables: {
       id: order?.user?.id
     },
-    skip: !order?.user?.id && !isAnyAddressEditModalOpen(params.action)
+    skip: !order?.user?.id || !isAnyAddressEditModalOpen(params.action)
   });
 
   const handleCustomerChangeAddresses = async (

@@ -108,7 +108,7 @@ export const OrderDraftDetails: React.FC<OrderDraftDetailsProps> = ({
     variables: {
       id: order?.user?.id
     },
-    skip: !order?.user?.id && !isAnyAddressEditModalOpen(params.action)
+    skip: !order?.user?.id || !isAnyAddressEditModalOpen(params.action)
   });
 
   const intl = useIntl();
