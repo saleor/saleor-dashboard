@@ -92,7 +92,7 @@ const GiftCardsListTableHeader: React.FC = () => {
         toolbar={
           <>
             <BulkEnableDisableSection />
-            <DeleteIconButton onClick={openDeleteDialog} />
+            <DeleteIconButton onClick={() => openDeleteDialog()} />
           </>
         }
       >
