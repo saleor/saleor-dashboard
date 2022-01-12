@@ -23,7 +23,6 @@ jobs:
           fallback_uri: ${{ secrets.CYPRESS_API_URI }}
         run: |
           echo "::set-output name=custom_api_uri::$(echo $pull_request_body | grep -Eo "$prefix$pattern" | sed s/$prefix// | head -n 1)"
-          echo "::set-output name=custom_api_uri::{ read custom_api_uri; if [ -z "$custom_api_uri" ]; then echo "$fallback_uri"; else echo "$custom_api_uri"; fi }
 
       - name: Cypress run full spec
         if: ${{ steps.api_uri.outputs.custom_api_uri == 'https://qa.staging.saleor.cloud/graphql/' }}
