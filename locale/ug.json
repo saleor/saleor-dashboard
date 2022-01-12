@@ -202,7 +202,7 @@
   },
   "homeHeaderText": {
     "context": "header",
-    "string": "{userName} ، ياخشىمۇسىز "
+    "string": "ياخشىمۇسىز ,{userName}"
   },
   "homeHeaderTextCaption": {
     "context": "subheader",
