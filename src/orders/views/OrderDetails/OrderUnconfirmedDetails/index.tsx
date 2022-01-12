@@ -6,8 +6,13 @@ import useNavigator from "@saleor/hooks/useNavigator";
 import OrderCannotCancelOrderDialog from "@saleor/orders/components/OrderCannotCancelOrderDialog";
 import { OrderCustomerAddressesEditDialogOutput } from "@saleor/orders/components/OrderCustomerAddressesEditDialog";
 import OrderInvoiceEmailSendDialog from "@saleor/orders/components/OrderInvoiceEmailSendDialog";
+import {
+  OrderUpdate,
+  OrderUpdateVariables
+} from "@saleor/orders/types/OrderUpdate";
 import { OrderDiscountProvider } from "@saleor/products/components/OrderDiscountProviders/OrderDiscountProvider";
 import { OrderLineDiscountProvider } from "@saleor/products/components/OrderDiscountProviders/OrderLineDiscountProvider";
+import { PartialMutationProviderOutput } from "@saleor/types";
 import { mapEdgesToItems } from "@saleor/utils/maps";
 import { useWarehouseList } from "@saleor/warehouses/queries";
 import React from "react";
@@ -47,7 +52,7 @@ interface OrderUnconfirmedDetailsProps {
   orderLineDelete: any;
   orderInvoiceRequest: any;
   handleSubmit: any;
-  orderUpdate: any;
+  orderUpdate: PartialMutationProviderOutput<OrderUpdate, OrderUpdateVariables>;
   orderCancel: any;
   orderShippingMethodUpdate: any;
   orderLinesAdd: any;
@@ -117,17 +122,18 @@ export const OrderUnconfirmedDetails: React.FC<OrderUnconfirmedDetailsProps> = (
 
   const handleCustomerChangeAddresses = async (
     data: Partial<OrderCustomerAddressesEditDialogOutput>
-  ) => {
-    const result = await orderUpdate.mutate({
+  ): Promise<any> => {
+    await orderUpdate.mutate({
       id,
       input: {
         ...data
       }
     });
-    if (!result?.data?.orderUpdate?.errors?.length) {
+    const errors = orderUpdate?.opts?.data?.orderUpdate?.errors;
+    if (!errors?.length) {
       closeModal();
     }
-    return result;
+    return errors;
   };
 
   const intl = useIntl();

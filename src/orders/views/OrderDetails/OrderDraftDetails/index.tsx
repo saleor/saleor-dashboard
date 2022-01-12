@@ -11,10 +11,15 @@ import {
 } from "@saleor/orders/components/OrderCustomerChangeDialog/form";
 import OrderCustomerChangeDialog from "@saleor/orders/components/OrderCustomerChangeDialog/OrderCustomerChangeDialog";
 import { OrderDetails } from "@saleor/orders/types/OrderDetails";
+import {
+  OrderDraftUpdate,
+  OrderDraftUpdateVariables
+} from "@saleor/orders/types/OrderDraftUpdate";
 import { getVariantSearchAddress } from "@saleor/orders/utils/data";
 import { OrderDiscountProvider } from "@saleor/products/components/OrderDiscountProviders/OrderDiscountProvider";
 import { OrderLineDiscountProvider } from "@saleor/products/components/OrderDiscountProviders/OrderLineDiscountProvider";
 import useCustomerSearch from "@saleor/searches/useCustomerSearch";
+import { PartialMutationProviderOutput } from "@saleor/types";
 import { mapEdgesToItems } from "@saleor/utils/maps";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -41,7 +46,10 @@ interface OrderDraftDetailsProps {
   orderLineDelete: any;
   orderShippingMethodUpdate: any;
   orderLinesAdd: any;
-  orderDraftUpdate: any;
+  orderDraftUpdate: PartialMutationProviderOutput<
+    OrderDraftUpdate,
+    OrderDraftUpdateVariables
+  >;
   orderDraftCancel: any;
   orderDraftFinalize: any;
   openModal: (action: OrderUrlDialog, newParams?: OrderUrlQueryParams) => void;
@@ -117,7 +125,7 @@ export const OrderDraftDetails: React.FC<OrderDraftDetailsProps> = ({
       return;
     }
 
-    const result = await orderDraftUpdate.mutate({
+    await orderDraftUpdate.mutate({
       id,
       input: {
         user,
@@ -125,7 +133,7 @@ export const OrderDraftDetails: React.FC<OrderDraftDetailsProps> = ({
       }
     });
 
-    if (result?.data?.draftOrderUpdate?.errors?.length) {
+    if (orderDraftUpdate?.opts?.data?.draftOrderUpdate?.errors?.length) {
       return;
     }
 
@@ -143,17 +151,18 @@ export const OrderDraftDetails: React.FC<OrderDraftDetailsProps> = ({
 
   const handleCustomerChangeAddresses = async (
     data: Partial<OrderCustomerAddressesEditDialogOutput>
-  ) => {
-    const result = await orderDraftUpdate.mutate({
+  ): Promise<any> => {
+    await orderDraftUpdate.mutate({
       id,
       input: {
         ...data
       }
     });
-    if (!result?.data?.draftOrderUpdate?.errors?.length) {
+    const errors = orderDraftUpdate?.opts?.data?.draftOrderUpdate?.errors;
+    if (!errors?.length) {
       closeModal();
     }
-    return result;
+    return errors;
   };
 
   return (
