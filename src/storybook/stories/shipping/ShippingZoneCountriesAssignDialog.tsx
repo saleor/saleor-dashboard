@@ -12,7 +12,6 @@ const props: ShippingZoneCountriesAssignDialogProps = {
   countries,
   restWorldCountries: countries,
   initial: ["PL", "GB", "DE"],
-  isDefault: false,
   onClose: () => undefined,
   onConfirm: () => undefined,
   open: true

@@ -64,6 +64,8 @@ const ShippingZoneDetails: React.FC<ShippingZoneDetailsProps> = ({
   const intl = useIntl();
   const shop = useShop();
 
+  const { data: restWorldCountries } = useShippingCountriesNotAssigned({});
+
   const [paginationState] = useLocalPaginationState(PAGINATE_BY);
 
   const { result: searchWarehousesOpts, loadMore, search } = useWarehouseSearch(
@@ -77,8 +79,6 @@ const ShippingZoneDetails: React.FC<ShippingZoneDetailsProps> = ({
     variables: { id, ...paginationState }
   });
   const { availableChannels, channel } = useAppChannel();
-
-  const { data: restWorldCountries } = useShippingCountriesNotAssigned({});
 
   const [openModal, closeModal] = createDialogActionHandlers<
     ShippingZoneUrlDialog,
@@ -266,15 +266,13 @@ const ShippingZoneDetails: React.FC<ShippingZoneDetailsProps> = ({
         initial={
           data?.shippingZone?.countries.map(country => country.code) || []
         }
-        isDefault={data?.shippingZone?.default}
         onClose={closeModal}
         onConfirm={formData =>
           updateShippingZone({
             variables: {
               id,
               input: {
-                countries: formData.restOfTheWorld ? [] : formData.countries,
-                default: formData.restOfTheWorld
+                countries: formData.countries
               }
             }
           })

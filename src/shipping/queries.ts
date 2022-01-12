@@ -71,7 +71,6 @@ const shippingZone = gql`
   ) {
     shippingZone(id: $id) {
       ...ShippingZoneFragment
-      default
       shippingMethods {
         ...ShippingMethodWithExcludedProductsFragment
       }

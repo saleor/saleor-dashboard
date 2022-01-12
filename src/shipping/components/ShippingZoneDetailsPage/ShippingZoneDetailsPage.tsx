@@ -36,10 +36,6 @@ const messages = defineMessages({
     defaultMessage: "Countries",
     description: "country list header"
   },
-  defaultZone: {
-    defaultMessage:
-      "This is default shipping zone, which means that it covers all of the countries which are not assigned to other shipping zones"
-  },
   noCountriesAssigned: {
     defaultMessage:
       "Currently, there are no countries assigned to this shipping zone"
@@ -164,11 +160,8 @@ const ShippingZoneDetailsPage: React.FC<ShippingZoneDetailsPageProps> = ({
                   countries={shippingZone?.countries}
                   disabled={disabled}
                   emptyText={getStringOrPlaceholder(
-                    shippingZone?.default === undefined
-                      ? undefined
-                      : shippingZone.default
-                      ? intl.formatMessage(messages.defaultZone)
-                      : intl.formatMessage(messages.noCountriesAssigned)
+                    shippingZone &&
+                      intl.formatMessage(messages.noCountriesAssigned)
                   )}
                   onCountryAssign={onCountryAdd}
                   onCountryUnassign={onCountryRemove}
