@@ -37,6 +37,8 @@ export function getGiftCardWithId(id) {
   const query = `query{
     giftCard(id:"${id}"){
       isActive
+      expiryDate
+      tag
       currentBalance{
         currency
         amount

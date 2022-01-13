@@ -278,6 +278,7 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
         id: variantId,
         removeStocks: data.removeStocks,
         sku: data.sku,
+        quantityLimitPerCustomer: Number(data.quantityLimitPerCustomer) || null,
         stocks: data.updateStocks.map(mapFormsetStockToStockInput),
         trackInventory: data.trackInventory,
         preorder: data.isPreorder

@@ -100,7 +100,7 @@ filterTests({ definedTags: ["all"], version: "3.1.0" }, () => {
             address,
             auth: "token",
             channelSlug: defaultChannel.slug,
-            shippingMethodId: shippingMethod.id,
+            shippingMethodName: shippingMethod.name,
             variantsList: variants
           };
         });

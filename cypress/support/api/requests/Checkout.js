@@ -51,6 +51,7 @@ export function createCheckout({
         token
         availableShippingMethods{
           name
+          id
         }
         lines{
           variant{
@@ -141,6 +142,9 @@ export function completeCheckout(checkoutId, paymentData) {
     checkoutComplete(checkoutId:"${checkoutId}" ${paymentDataLine}){
       order{
         id
+        lines{
+          id
+        }
         paymentStatus
         total{
           gross{
@@ -245,4 +249,8 @@ export function addProductsToCheckout(
     }
   }`;
   return cy.sendRequestWithQuery(mutation).its("body.data.checkoutLinesUpdate");
+}
+
+export function getCheckout(checkoutId) {
+  const mutation = ``;
 }

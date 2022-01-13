@@ -60,6 +60,7 @@ export interface ShopSettingsUpdate_shopSettingsUpdate_shop {
   name: string;
   reserveStockDurationAnonymousUser: number | null;
   reserveStockDurationAuthenticatedUser: number | null;
+  limitQuantityPerCheckout: number | null;
 }
 
 export interface ShopSettingsUpdate_shopSettingsUpdate {

@@ -311,6 +311,7 @@ export interface Product_variants {
   trackInventory: boolean;
   preorder: Product_variants_preorder | null;
   channelListings: Product_variants_channelListings[] | null;
+  quantityLimitPerCustomer: number | null;
 }
 
 export interface Product_weight {

@@ -1,3 +1,4 @@
+import NotFoundPage from "@saleor/components/NotFoundPage";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import React from "react";
@@ -18,9 +19,16 @@ export const AppDetailsSettings: React.FC<AppDetailsSetttingsProps> = ({
     displayLoader: true,
     variables: { id }
   });
+
+  const appExists = data?.app !== null;
+
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();
+
+  if (!appExists) {
+    return <NotFoundPage onBack={() => navigate(appsListPath)} />;
+  }
 
   return (
     <AppDetailsSettingsPage

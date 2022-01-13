@@ -24,7 +24,7 @@ export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_f
 export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_fulfillment_lines_orderLine_variant {
   __typename: "ProductVariant";
   id: string;
-  quantityAvailable: number;
+  quantityAvailable: number | null;
   preorder: OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_fulfillment_lines_orderLine_variant_preorder | null;
 }
 
@@ -323,7 +323,7 @@ export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_o
 export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_fulfillments_lines_orderLine_variant {
   __typename: "ProductVariant";
   id: string;
-  quantityAvailable: number;
+  quantityAvailable: number | null;
   preorder: OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_fulfillments_lines_orderLine_variant_preorder | null;
 }
 
@@ -425,7 +425,7 @@ export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_o
 export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_lines_variant {
   __typename: "ProductVariant";
   id: string;
-  quantityAvailable: number;
+  quantityAvailable: number | null;
   preorder: OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_lines_variant_preorder | null;
 }
 
@@ -648,6 +648,11 @@ export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_o
   status: JobStatusEnum;
 }
 
+export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_channel_defaultCountry {
+  __typename: "CountryDisplay";
+  code: string;
+}
+
 export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_channel {
   __typename: "Channel";
   isActive: boolean;
@@ -655,11 +660,13 @@ export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_o
   name: string;
   currencyCode: string;
   slug: string;
+  defaultCountry: OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_channel_defaultCountry;
 }
 
 export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order {
   __typename: "Order";
   id: string;
+  token: string;
   metadata: (OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_metadata | null)[];
   privateMetadata: (OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_privateMetadata | null)[];
   billingAddress: OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_billingAddress | null;

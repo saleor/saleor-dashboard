@@ -17,7 +17,7 @@ export interface FulfillmentFragment_lines_orderLine_variant_preorder {
 export interface FulfillmentFragment_lines_orderLine_variant {
   __typename: "ProductVariant";
   id: string;
-  quantityAvailable: number;
+  quantityAvailable: number | null;
   preorder: FulfillmentFragment_lines_orderLine_variant_preorder | null;
 }
 

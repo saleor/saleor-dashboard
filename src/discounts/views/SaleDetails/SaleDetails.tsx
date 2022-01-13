@@ -22,8 +22,7 @@ import {
   TypedSaleCataloguesAdd,
   TypedSaleCataloguesRemove,
   TypedSaleDelete,
-  TypedSaleUpdate,
-  useSaleChannelListingUpdate
+  TypedSaleUpdate
 } from "@saleor/discounts/mutations";
 import { useSaleDetails } from "@saleor/discounts/queries";
 import { SaleCataloguesAdd } from "@saleor/discounts/types/SaleCataloguesAdd";
@@ -38,12 +37,12 @@ import {
 } from "@saleor/discounts/urls";
 import useBulkActions from "@saleor/hooks/useBulkActions";
 import useChannels from "@saleor/hooks/useChannels";
+import useLocalPaginator, {
+  useSectionLocalPaginationState
+} from "@saleor/hooks/useLocalPaginator";
 import useLocalStorage from "@saleor/hooks/useLocalStorage";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
-import usePaginator, {
-  createPaginationState
-} from "@saleor/hooks/usePaginator";
 import { commonMessages, sectionNames } from "@saleor/intl";
 import { maybe } from "@saleor/misc";
 import { productUrl, productVariantEditPath } from "@saleor/products/urls";
@@ -57,7 +56,7 @@ import {
   useMetadataUpdate,
   usePrivateMetadataUpdate
 } from "@saleor/utils/metadata/updateMetadata";
-import React from "react";
+import React, { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { createUpdateHandler } from "./handlers";
@@ -72,7 +71,6 @@ export const SaleDetails: React.FC<SaleDetailsProps> = ({ id, params }) => {
   const [updateMetadata] = useMetadataUpdate({});
   const [updatePrivateMetadata] = usePrivateMetadataUpdate({});
   const navigate = useNavigator();
-  const paginate = usePaginator();
   const notify = useNotifier();
   const { isSelected, listElements, reset, toggle, toggleAll } = useBulkActions(
     params.ids
@@ -102,14 +100,17 @@ export const SaleDetails: React.FC<SaleDetailsProps> = ({ id, params }) => {
 
   const { availableChannels } = useAppChannel(false);
 
-  const paginationState = createPaginationState(PAGINATE_BY, params);
+  const [activeTab, setActiveTab] = useState<SaleDetailsPageTab>(
+    SaleDetailsPageTab.categories
+  );
+  const [paginationState, setPaginationState] = useSectionLocalPaginationState(
+    PAGINATE_BY,
+    activeTab
+  );
+  const paginate = useLocalPaginator(setPaginationState);
   const changeTab = (tab: SaleDetailsPageTab) => {
     reset();
-    navigate(
-      saleUrl(id, {
-        activeTab: tab
-      })
-    );
+    setActiveTab(tab);
   };
 
   const { data, loading } = useSaleDetails({
@@ -129,9 +130,7 @@ export const SaleDetails: React.FC<SaleDetailsProps> = ({ id, params }) => {
     data?.sale,
     availableChannels
   );
-  const saleChannelsChoices: ChannelSaleData[] = createSortedChannelsDataFromSale(
-    data?.sale
-  );
+  const saleChannelsChoices = createSortedChannelsDataFromSale(data?.sale);
 
   const {
     channelListElements,
@@ -148,8 +147,6 @@ export const SaleDetails: React.FC<SaleDetailsProps> = ({ id, params }) => {
     closeModal,
     openModal
   });
-
-  const [updateChannels, updateChannelsOpts] = useSaleChannelListingUpdate({});
 
   const [selectedChannel] = useLocalStorage("salesListChannel", "");
 
@@ -215,11 +212,11 @@ export const SaleDetails: React.FC<SaleDetailsProps> = ({ id, params }) => {
                   <TypedSaleDelete onCompleted={handleSaleDelete}>
                     {(saleDelete, saleDeleteOpts) => {
                       const tabPageInfo =
-                        params.activeTab === SaleDetailsPageTab.categories
+                        activeTab === SaleDetailsPageTab.categories
                           ? maybe(() => data.sale.categories.pageInfo)
-                          : params.activeTab === SaleDetailsPageTab.collections
+                          : activeTab === SaleDetailsPageTab.collections
                           ? maybe(() => data.sale.collections.pageInfo)
-                          : params.activeTab === SaleDetailsPageTab.products
+                          : activeTab === SaleDetailsPageTab.products
                           ? maybe(() => data.sale.products.pageInfo)
                           : maybe(() => data.sale.variants.pageInfo);
 
@@ -271,13 +268,12 @@ export const SaleDetails: React.FC<SaleDetailsProps> = ({ id, params }) => {
                         loadNextPage,
                         loadPreviousPage,
                         pageInfo
-                      } = paginate(tabPageInfo, paginationState, params);
+                      } = paginate(tabPageInfo, paginationState);
 
                       const handleUpdate = createUpdateHandler(
                         data?.sale,
                         saleChannelsChoices,
-                        variables => saleUpdate({ variables }),
-                        updateChannels
+                        variables => saleUpdate({ variables })
                       );
                       const handleSubmit = createMetadataUpdateHandler(
                         data?.sale,
@@ -300,15 +296,11 @@ export const SaleDetails: React.FC<SaleDetailsProps> = ({ id, params }) => {
                               currentChannels?.length
                             }
                             disabled={
-                              loading ||
-                              saleCataloguesRemoveOpts.loading ||
-                              updateChannelsOpts.loading
+                              loading || saleCataloguesRemoveOpts.loading
                             }
-                            errors={[
-                              ...(saleUpdateOpts.data?.saleUpdate.errors || []),
-                              ...(updateChannelsOpts.data
-                                ?.saleChannelListingUpdate.errors || [])
-                            ]}
+                            errors={
+                              saleUpdateOpts.data?.saleUpdate.errors || []
+                            }
                             selectedChannelId={selectedChannel}
                             pageInfo={pageInfo}
                             openChannelsModal={handleChannelsModalOpen}
@@ -345,7 +337,7 @@ export const SaleDetails: React.FC<SaleDetailsProps> = ({ id, params }) => {
                               navigate(
                                 productVariantEditPath(productId, variantId)
                               )}
-                            activeTab={params.activeTab}
+                            activeTab={activeTab}
                             onBack={() => navigate(saleListUrl())}
                             onTabClick={changeTab}
                             onSubmit={handleSubmit}

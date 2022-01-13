@@ -18,18 +18,20 @@ export function createCollection(name, slug = name) {
     .sendRequestWithQuery(mutation)
     .its("body.data.collectionCreate.collection");
 }
-export function getCollections(search) {
+
+export function getCollections(first, search) {
   const filter = search
     ? `, filter:{
         search:""
       }`
     : "";
   const query = `query{
-    collections(first:100 ${filter}){
+    collections(first:${first} ${filter}){
       edges{
         node{
           id
           name
+          slug
         }
       }
     }

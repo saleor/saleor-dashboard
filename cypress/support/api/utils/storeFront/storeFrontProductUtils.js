@@ -22,6 +22,7 @@ export const getProductVariants = (productId, channelSlug) => {
   getProductDetails(productId, channelSlug).then(resp => {
     const variantsList = resp.body.data.product.variants;
     return variantsList.map(element => ({
+      id: element.id,
       name: element.name,
       price: element.pricing.price.gross.amount
     }));

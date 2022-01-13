@@ -1,7 +1,7 @@
 import { ThemeType } from "@saleor/macaw-ui";
 import moment from "moment-timezone";
 import { MutationFunction, MutationResult } from "react-apollo";
-import { defineMessages, IntlShape } from "react-intl";
+import { IntlShape } from "react-intl";
 import urlJoin from "url-join";
 
 import { ConfirmButtonTransitionState } from "./components/ConfirmButton";
@@ -9,6 +9,12 @@ import { StatusType } from "./components/StatusChip/types";
 import { StatusLabelProps } from "./components/StatusLabel";
 import { APP_MOUNT_URI } from "./config";
 import { AddressType, AddressTypeInput } from "./customers/types";
+import {
+  commonStatusMessages,
+  orderStatusMessages,
+  paymentStatusMessages
+} from "./intl";
+import { OrderDetails_order_shippingAddress } from "./orders/types/OrderDetails";
 import {
   MutationResultAdditionalProps,
   PartialMutationProviderOutput,
@@ -69,29 +75,6 @@ export function weight(value: string) {
 export const removeDoubleSlashes = (url: string) =>
   url.replace(/([^:]\/)\/+/g, "$1");
 
-const paymentStatusMessages = defineMessages({
-  paid: {
-    defaultMessage: "Fully paid",
-    description: "payment status"
-  },
-  partiallyPaid: {
-    defaultMessage: "Partially paid",
-    description: "payment status"
-  },
-  partiallyRefunded: {
-    defaultMessage: "Partially refunded",
-    description: "payment status"
-  },
-  refunded: {
-    defaultMessage: "Fully refunded",
-    description: "payment status"
-  },
-  unpaid: {
-    defaultMessage: "Unpaid",
-    description: "payment status"
-  }
-});
-
 export const transformPaymentStatus = (
   status: string,
   intl: IntlShape
@@ -100,73 +83,49 @@ export const transformPaymentStatus = (
     case PaymentChargeStatusEnum.PARTIALLY_CHARGED:
       return {
         localized: intl.formatMessage(paymentStatusMessages.partiallyPaid),
-        status: "error"
+        status: StatusType.ERROR
       };
     case PaymentChargeStatusEnum.FULLY_CHARGED:
       return {
         localized: intl.formatMessage(paymentStatusMessages.paid),
-        status: "success"
+        status: StatusType.SUCCESS
       };
     case PaymentChargeStatusEnum.PARTIALLY_REFUNDED:
       return {
         localized: intl.formatMessage(paymentStatusMessages.partiallyRefunded),
-        status: "error"
+        status: StatusType.ERROR
       };
     case PaymentChargeStatusEnum.FULLY_REFUNDED:
       return {
         localized: intl.formatMessage(paymentStatusMessages.refunded),
-        status: "success"
+        status: StatusType.SUCCESS
       };
-    default:
+    case PaymentChargeStatusEnum.PENDING:
+      return {
+        localized: intl.formatMessage(paymentStatusMessages.pending),
+        status: StatusType.NEUTRAL
+      };
+    case PaymentChargeStatusEnum.REFUSED:
+      return {
+        localized: intl.formatMessage(paymentStatusMessages.refused),
+        status: StatusType.ERROR
+      };
+    case PaymentChargeStatusEnum.CANCELLED:
+      return {
+        localized: intl.formatMessage(commonStatusMessages.cancelled),
+        status: StatusType.ERROR
+      };
+    case PaymentChargeStatusEnum.NOT_CHARGED:
       return {
         localized: intl.formatMessage(paymentStatusMessages.unpaid),
-        status: "error"
+        status: StatusType.ERROR
       };
   }
+  return {
+    localized: status,
+    status: StatusType.ERROR
+  };
 };
-
-export const orderStatusMessages = defineMessages({
-  cancelled: {
-    defaultMessage: "Cancelled",
-    description: "order status"
-  },
-  draft: {
-    defaultMessage: "Draft",
-    description: "order status"
-  },
-  fulfilled: {
-    defaultMessage: "Fulfilled",
-    description: "order status"
-  },
-  partiallyFulfilled: {
-    defaultMessage: "Partially fulfilled",
-    description: "order status"
-  },
-  partiallyReturned: {
-    defaultMessage: "Partially returned",
-    description: "order status"
-  },
-  readyToCapture: {
-    defaultMessage: "Ready to capture",
-    description: "order status"
-  },
-  readyToFulfill: {
-    defaultMessage: "Ready to fulfill",
-    description: "order status"
-  },
-  returned: {
-    defaultMessage: "Returned",
-    description: "order status"
-  },
-  unconfirmed: {
-    defaultMessage: "Unconfirmed",
-    description: "order status"
-  },
-  unfulfilled: {
-    defaultMessage: "Unfulfilled",
-    description: "order status"
-  }
-});
 
 export const transformOrderStatus = (
   status: string,
@@ -190,7 +149,7 @@ export const transformOrderStatus = (
       };
     case OrderStatus.CANCELED:
       return {
-        localized: intl.formatMessage(orderStatusMessages.cancelled),
+        localized: intl.formatMessage(commonStatusMessages.cancelled),
         status: StatusType.ERROR
       };
     case OrderStatus.DRAFT:
@@ -396,6 +355,16 @@ export function findInEnum<TEnum extends {}>(needle: string, haystack: TEnum) {
   throw new Error(`Key ${needle} not found in enum`);
 }
 
+export function addressToAddressInput<T>(
+  address: T & OrderDetails_order_shippingAddress
+): AddressInput {
+  const { id, __typename, ...rest } = address;
+  return {
+    ...rest,
+    country: findInEnum(address.country.code, CountryCode)
+  };
+}
+
 export function findValueInEnum<TEnum extends {}>(
   needle: string,
   haystack: TEnum
@@ -475,4 +444,34 @@ export function getFullName<T extends { firstName: string; lastName: string }>(
   }
 
   return `${data.firstName} ${data.lastName}`;
+}
+export const flatten = (obj: unknown) => {
+  // Be cautious that repeated keys are overwritten
+
+  const result = {};
+
+  Object.keys(obj).forEach(key => {
+    if (typeof obj[key] === "object" && obj[key] !== null) {
+      Object.assign(result, flatten(obj[key]));
+    } else {
+      result[key] = obj[key];
+    }
+  });
+
+  return result;
+};
+
+export function PromiseQueue() {
+  let queue = Promise.resolve();
+
+  function add<T>(operation: (value: T | void) => PromiseLike<T>) {
+    return new Promise((resolve, reject) => {
+      queue = queue
+        .then(operation)
+        .then(resolve)
+        .catch(reject);
+    });
+  }
+
+  return { queue, add };
 }

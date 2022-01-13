@@ -221,7 +221,7 @@ export interface OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_o
 export interface OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_order_fulfillments_lines_orderLine_variant {
   __typename: "ProductVariant";
   id: string;
-  quantityAvailable: number;
+  quantityAvailable: number | null;
   preorder: OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_order_fulfillments_lines_orderLine_variant_preorder | null;
 }
 
@@ -323,7 +323,7 @@ export interface OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_o
 export interface OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_order_lines_variant {
   __typename: "ProductVariant";
   id: string;
-  quantityAvailable: number;
+  quantityAvailable: number | null;
   preorder: OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_order_lines_variant_preorder | null;
 }
 
@@ -546,6 +546,11 @@ export interface OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_o
   status: JobStatusEnum;
 }
 
+export interface OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_order_channel_defaultCountry {
+  __typename: "CountryDisplay";
+  code: string;
+}
+
 export interface OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_order_channel {
   __typename: "Channel";
   isActive: boolean;
@@ -553,11 +558,13 @@ export interface OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_o
   name: string;
   currencyCode: string;
   slug: string;
+  defaultCountry: OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_order_channel_defaultCountry;
 }
 
 export interface OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_order {
   __typename: "Order";
   id: string;
+  token: string;
   metadata: (OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_order_metadata | null)[];
   privateMetadata: (OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_order_privateMetadata | null)[];
   billingAddress: OrderFulfillmentUpdateTracking_orderFulfillmentUpdateTracking_order_billingAddress | null;

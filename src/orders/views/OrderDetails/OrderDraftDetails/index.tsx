@@ -1,8 +1,8 @@
+import { useUser } from "@saleor/auth";
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@saleor/config";
 import { useCustomerAddressesQuery } from "@saleor/customers/queries";
 import useNavigator from "@saleor/hooks/useNavigator";
-import useUser from "@saleor/hooks/useUser";
 import { CustomerEditData } from "@saleor/orders/components/OrderCustomer";
 import OrderCustomerAddressesEditDialog, {
   OrderCustomerAddressesEditDialogOutput
@@ -13,6 +13,7 @@ import {
 } from "@saleor/orders/components/OrderCustomerChangeDialog/form";
 import OrderCustomerChangeDialog from "@saleor/orders/components/OrderCustomerChangeDialog/OrderCustomerChangeDialog";
 import { OrderDetails } from "@saleor/orders/types/OrderDetails";
+import { getVariantSearchAddress } from "@saleor/orders/utils/data";
 import { OrderDiscountProvider } from "@saleor/products/components/OrderDiscountProviders/OrderDiscountProvider";
 import { OrderLineDiscountProvider } from "@saleor/products/components/OrderDiscountProviders/OrderLineDiscountProvider";
 import useCustomerSearch from "@saleor/searches/useCustomerSearch";
@@ -73,7 +74,11 @@ export const OrderDraftDetails: React.FC<OrderDraftDetailsProps> = ({
     search: variantSearch,
     result: variantSearchOpts
   } = useOrderVariantSearch({
-    variables: { ...DEFAULT_INITIAL_SEARCH_DATA, channel: order.channel.slug }
+    variables: {
+      ...DEFAULT_INITIAL_SEARCH_DATA,
+      channel: order.channel.slug,
+      address: getVariantSearchAddress(order)
+    }
   });
 
   const {

@@ -91,14 +91,7 @@ filterTests({ definedTags: ["all"] }, () => {
             .should("be.visible")
             .waitForProgressBarToNotExist()
             .addAliasToGraphRequest("ShippingZone")
-            .getTextFromElement(SHARED_ELEMENTS.table);
-        })
-        .then(tableText => {
-          if (!tableText.includes(shippingZone.name)) {
-            cy.get(BUTTON_SELECTORS.nextPaginationButton).click();
-          }
-          cy.contains(shippingZone.name)
-            .click()
+            .findElementOnTable(shippingZone.name, "ShippingZones")
             .waitForRequestAndCheckIfNoErrors("@ShippingZone");
           enterHomePageChangeChannelAndReturn(defaultChannel.name);
           cy.waitForProgressBarToNotBeVisible()

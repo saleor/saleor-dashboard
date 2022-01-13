@@ -17,7 +17,7 @@ type CommonErrorCode = "GRAPHQL_ERROR" | "INVALID" | "REQUIRED";
 
 interface CommonError<ErrorCode> {
   code: ErrorCode | CommonErrorCode;
-  field: string | null;
+  field?: string | null;
 }
 
 export function getCommonFormFieldErrorMessage<ErrorCode>(

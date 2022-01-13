@@ -52,7 +52,7 @@ function usePaginator() {
             after: pageInfo.endCursor,
             before: undefined
           }),
-        { replace: true }
+        { replace: true, resetScroll: true }
       );
 
     const loadPreviousPage = () =>
@@ -63,7 +63,7 @@ function usePaginator() {
             after: undefined,
             before: pageInfo.startCursor
           }),
-        { replace: true }
+        { replace: true, resetScroll: true }
       );
 
     const newPageInfo = pageInfo
