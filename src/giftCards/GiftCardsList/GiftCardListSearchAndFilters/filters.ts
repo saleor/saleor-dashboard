@@ -221,7 +221,8 @@ export function createFilterStructure(
       multiple:
         opts?.initialBalanceAmount?.value?.min !==
         opts?.initialBalanceAmount?.value?.max,
-      active: opts.initialBalanceAmount.active
+      active: opts.initialBalanceAmount.active,
+      dependencies: [GiftCardListFilterKeys.currency]
     },
 
     {
@@ -233,7 +234,8 @@ export function createFilterStructure(
       multiple:
         opts?.currentBalanceAmount?.value?.min !==
         opts?.currentBalanceAmount?.value?.max,
-      active: opts.currentBalanceAmount.active
+      active: opts.currentBalanceAmount.active,
+      dependencies: [GiftCardListFilterKeys.currency]
     },
     {
       ...createOptionsField(
