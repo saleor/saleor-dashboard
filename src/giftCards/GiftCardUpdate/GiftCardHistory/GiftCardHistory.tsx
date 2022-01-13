@@ -1,7 +1,8 @@
-import { Link, Typography } from "@material-ui/core";
+import { Typography } from "@material-ui/core";
 import { appPath } from "@saleor/apps/urls";
 import Form from "@saleor/components/Form";
 import Hr from "@saleor/components/Hr";
+import Link from "@saleor/components/Link";
 import Skeleton from "@saleor/components/Skeleton";
 import Timeline, {
   TimelineAddNote,

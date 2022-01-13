@@ -111,7 +111,7 @@ const GiftCardsListTable: React.FC = () => {
                   </TableCell>
                   <TableCell>
                     {product ? (
-                      <Link onClick={() => navigate(productUrl(product?.id))}>
+                      <Link href={productUrl(product?.id)}>
                         {product?.name}
                       </Link>
                     ) : (
@@ -120,7 +120,7 @@ const GiftCardsListTable: React.FC = () => {
                   </TableCell>
                   <TableCell>
                     {usedBy ? (
-                      <Link onClick={() => navigate(customerUrl(usedBy?.id))}>
+                      <Link href={customerUrl(usedBy?.id)}>
                         {`${usedBy?.firstName} ${usedBy?.lastName}`}
                       </Link>
                     ) : (
