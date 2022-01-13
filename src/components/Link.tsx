@@ -3,6 +3,7 @@ import { TypographyProps } from "@material-ui/core/Typography";
 import { makeStyles } from "@saleor/macaw-ui";
 import classNames from "classnames";
 import React from "react";
+import { Link as RouterLink } from "react-router-dom";
 
 const useStyles = makeStyles(
   theme => ({
@@ -19,6 +20,9 @@ const useStyles = makeStyles(
     underline: {
       textDecoration: "underline"
     },
+    noUnderline: {
+      textDecoration: "none"
+    },
     disabled: {
       cursor: "default",
       color: theme.palette.textHighlighted.inactive
@@ -27,11 +31,14 @@ const useStyles = makeStyles(
   { name: "Link" }
 );
 
+const isExternalURL = url => /^https?:\/\//.test(url);
+
 interface LinkProps extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
+  href?: string;
   color?: "primary" | "secondary";
   underline?: boolean;
   typographyProps?: TypographyProps;
-  onClick: () => void;
+  onClick?: () => void;
   disabled?: boolean;
 }
 
@@ -43,32 +50,47 @@ const Link: React.FC<LinkProps> = props => {
     underline = false,
     onClick,
     disabled,
+    href,
     ...linkProps
   } = props;
 
   const classes = useStyles(props);
 
-  return (
-    <Typography
-      component="a"
-      className={classNames(className, {
-        [classes.root]: true,
-        [classes[color]]: true,
-        [classes.underline]: underline,
-        [classes.disabled]: disabled
-      })}
-      onClick={event => {
-        if (disabled) {
-          return;
-        }
+  const commonLinkProps = {
+    className: classNames(className, {
+      [classes.root]: true,
+      [classes[color]]: true,
+      [classes.underline]: underline,
+      [classes.noUnderline]: !underline,
+      [classes.disabled]: disabled
+    }),
+    onClick: event => {
+      if (disabled || !onClick) {
+        return;
+      }
 
-        event.preventDefault();
-        onClick();
-      }}
-      {...linkProps}
-    >
-      {children}
-    </Typography>
+      event.preventDefault();
+      onClick();
+    },
+    ...linkProps
+  };
+
+  return (
+    <>
+      {!!href && !isExternalURL(href) ? (
+        <RouterLink to={disabled ? undefined : href} {...commonLinkProps}>
+          {children}
+        </RouterLink>
+      ) : (
+        <Typography
+          component="a"
+          href={disabled ? undefined : href}
+          {...commonLinkProps}
+        >
+          {children}
+        </Typography>
+      )}
+    </>
   );
 };
 Link.displayName = "Link";
