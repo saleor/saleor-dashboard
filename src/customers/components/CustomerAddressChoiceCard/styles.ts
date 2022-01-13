@@ -3,12 +3,14 @@ import { makeStyles } from "@saleor/macaw-ui";
 export const useStyles = makeStyles(
   theme => ({
     card: {
-      padding: "1px"
+      padding: "1px",
+      borderColor: theme.palette.grey[200],
+      borderStyle: "solid",
+      borderWidth: "2px"
     },
     cardSelected: {
       borderColor: theme.palette.primary.main,
-      borderWidth: "2px",
-      padding: "0"
+      cursor: "pointer"
     },
     cardContent: {
       display: "flex",
@@ -19,7 +21,7 @@ export const useStyles = makeStyles(
     selectableCard: {
       "&:hover": {
         cursor: "pointer",
-        borderColor: theme.palette.primary.main
+        borderColor: theme.palette.saleor.active[3]
       }
     },
     selectedLabel: {
