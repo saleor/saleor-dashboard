@@ -16,10 +16,6 @@ Object {
     "PARTIALLY_CHARGED",
   ],
   "preorder": "false",
-  "giftCard": Array [
-    "paid",
-    "bought",
-  ],
   "status": Array [
     "FULFILLED",
     "PARTIALLY_FULFILLED",
