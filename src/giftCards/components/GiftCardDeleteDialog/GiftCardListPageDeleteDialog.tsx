@@ -47,7 +47,7 @@ const GiftCardDeleteDialog: React.FC<GiftCardDeleteDialogProps> = ({
   const dialogProps: Pick<
     ActionDialogProps,
     "onConfirm" | "confirmButtonState"
-  > = singleDeletion
+  > = !!id
     ? {
         onConfirm: onDeleteGiftCard,
         confirmButtonState: deleteGiftCardOpts?.status
