@@ -17,6 +17,7 @@ import useGiftCardListDialogs from "../../providers/GiftCardListDialogsProvider/
 import useGiftCardListSort from "../../providers/GiftCardListDialogsProvider/hooks/useGiftCardListSort";
 import useGiftCardList from "../../providers/GiftCardListProvider/hooks/useGiftCardList";
 import useGiftCardListBulkActions from "../../providers/GiftCardListProvider/hooks/useGiftCardListBulkActions";
+import { canBeSorted } from "../../sort";
 import { useTableStyles as useStyles } from "../../styles";
 import { GiftCardUrlSortField } from "../../types";
 import BulkEnableDisableSection from "./BulkEnableDisableSection";
@@ -26,19 +27,22 @@ interface HeaderItem {
   options?: TableCellHeaderProps;
   onClick?: () => void;
   direction?: TableCellHeaderArrowDirection;
+  canBeSorted?: boolean;
 }
 
 const GiftCardsListTableHeader: React.FC = () => {
   const intl = useIntl();
   const classes = useStyles({});
 
-  const { giftCards, numberOfColumns, loading } = useGiftCardList();
+  const { giftCards, numberOfColumns, loading, params } = useGiftCardList();
   const { toggleAll, listElements } = useGiftCardListBulkActions();
   const { openDeleteDialog } = useGiftCardListDialogs();
   const { onSort, sort } = useGiftCardListSort();
 
   const getDirection = (sortField: GiftCardUrlSortField) =>
     sort.sort === sortField ? getArrowDirection(sort.asc) : undefined;
+
+  const isCurrencySelected = !!params.currency;
 
   const headerItems: HeaderItem[] = [
     {
@@ -68,7 +72,8 @@ const GiftCardsListTableHeader: React.FC = () => {
         textAlign: "right"
       },
       onClick: () => onSort(GiftCardUrlSortField.balance),
-      direction: getDirection(GiftCardUrlSortField.balance)
+      direction: getDirection(GiftCardUrlSortField.balance),
+      canBeSorted: canBeSorted(GiftCardUrlSortField.balance, isCurrencySelected)
     }
   ];
 
@@ -96,16 +101,18 @@ const GiftCardsListTableHeader: React.FC = () => {
           </>
         }
       >
-        {headerItems.map(({ title, options, onClick, direction }) => (
-          <TableCellHeader
-            {...options}
-            onClick={onClick}
-            direction={direction}
-            key={title.defaultMessage}
-          >
-            <Label text={intl.formatMessage(title)} size={LabelSizes.md} />
-          </TableCellHeader>
-        ))}
+        {headerItems.map(
+          ({ title, options, onClick, direction, canBeSorted = true }) => (
+            <TableCellHeader
+              {...options}
+              onClick={onClick}
+              disabled={!canBeSorted}
+              direction={direction}
+            >
+              <Label text={intl.formatMessage(title)} size={LabelSizes.md} />
+            </TableCellHeader>
+          )
+        )}
         <TableCell className={classes.colDelete} />
       </TableHead>
     </>
