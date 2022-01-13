@@ -6,6 +6,7 @@ import {
   Typography
 } from "@material-ui/core";
 import CardTitle from "@saleor/components/CardTitle";
+import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import { defineMessages, useIntl } from "react-intl";
 
@@ -38,26 +39,6 @@ const useStyles = makeStyles(
     }
   }),
   { name: "ShippingZonesCard" }
-);
-
-const useExpanderStyles = makeStyles(
-  () => ({
-    // empty expanded needed for mui to use root styles
-    expanded: {},
-    root: {
-      boxShadow: "none",
-
-      "&:before": {
-        content: "none"
-      },
-
-      "&$expanded": {
-        margin: 0,
-        border: "none"
-      }
-    }
-  }),
-  { name: "ShippingZonesCardExpander" }
 );
 
 type ShippingZonesCardProps = ShippingZonesProps;
