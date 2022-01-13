@@ -1,3 +1,4 @@
+import NotFoundPage from "@saleor/components/NotFoundPage";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import getAppErrorMessage from "@saleor/utils/errors/app";
