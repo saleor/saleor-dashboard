@@ -26,7 +26,7 @@ import UserChip from "../UserChip";
 import useAppChannel from "./AppChannelContext";
 import AppChannelSelect from "./AppChannelSelect";
 import { appLoaderHeight } from "./consts";
-import createMenuStructure from "./menuStructure";
+import useMenuStructure from "./menuStructure";
 import { isMenuActive } from "./utils";
 
 const useStyles = makeStyles(
@@ -141,7 +141,7 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
     setChannel
   } = useAppChannel(false);
 
-  const menuStructure = createMenuStructure(intl, user);
+  const menuStructure = useMenuStructure(intl, user);
   const activeMenu = menuStructure.find(menuItem =>
     isMenuActive(location.pathname, menuItem)
   )?.id;

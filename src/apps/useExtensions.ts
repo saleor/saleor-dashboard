@@ -1,7 +1,8 @@
 import {
   AppExtensionTargetEnum,
   AppExtensionTypeEnum,
-  AppExtensionViewEnum
+  AppExtensionViewEnum,
+  PermissionEnum
 } from "@saleor/types/globalTypes";
 import { mapEdgesToItems } from "@saleor/utils/maps";
 
@@ -12,11 +13,20 @@ import { ExtensionList_appExtensions_edges_node } from "./types/ExtensionList";
 interface Extension {
   id: string;
   accessToken: string;
+  permissions: PermissionEnum[];
   label: string;
   url: string;
   open(): void;
 }
-type Target = "create" | "moreActions";
+type Target =
+  | "create"
+  | "moreActions"
+  | "catalog"
+  | "orders"
+  | "customers"
+  | "discounts"
+  | "pages"
+  | "translations";
 
 const filterAndMapToTarget = (
   extensions: ExtensionList_appExtensions_edges_node[],
@@ -25,12 +35,13 @@ const filterAndMapToTarget = (
 ): Extension[] =>
   extensions
     .filter(app => app.target === target)
-    .map(({ id, accessToken, url, label }) => ({
+    .map(({ id, accessToken, permissions, url, label, openAs }) => ({
       id,
       accessToken,
+      permissions: permissions.map(({ code }) => code),
       url,
       label,
-      open: () => openApp({ appToken: accessToken, src: url, label })
+      open: () => openApp({ appToken: accessToken, src: url, label, openAs })
     }));
 
 export const mapToMenuItems = (extensions: Extension[]) =>
@@ -38,6 +49,15 @@ export const mapToMenuItems = (extensions: Extension[]) =>
     label,
     testId: `extension-${id}`,
     onSelect: open
+  }));
+
+export const mapToSidebarMenuItems = (extensions: Extension[]) =>
+  extensions.map(({ label, id, url, permissions }) => ({
+    ariaLabel: id,
+    id,
+    label,
+    url,
+    permissions
   }));
 
 export const useExtensions = (
@@ -66,9 +86,45 @@ export const useExtensions = (
     AppExtensionTargetEnum.MORE_ACTIONS,
     openApp
   );
+  const targetCatalog = filterAndMapToTarget(
+    extensions,
+    AppExtensionTargetEnum.CATALOG,
+    openApp
+  );
+  const targetOrders = filterAndMapToTarget(
+    extensions,
+    AppExtensionTargetEnum.ORDERS,
+    openApp
+  );
+  const targetCustomers = filterAndMapToTarget(
+    extensions,
+    AppExtensionTargetEnum.CUSTOMERS,
+    openApp
+  );
+  const targetDiscounts = filterAndMapToTarget(
+    extensions,
+    AppExtensionTargetEnum.DISCOUNTS,
+    openApp
+  );
+  const targetPages = filterAndMapToTarget(
+    extensions,
+    AppExtensionTargetEnum.PAGES,
+    openApp
+  );
+  const targetTranslations = filterAndMapToTarget(
+    extensions,
+    AppExtensionTargetEnum.TRANSLATIONS,
+    openApp
+  );
 
   return {
     create: targetCreate,
-    moreActions: targetMoreActions
+    moreActions: targetMoreActions,
+    catalog: targetCatalog,
+    orders: targetOrders,
+    customers: targetCustomers,
+    discounts: targetDiscounts,
+    pages: targetPages,
+    translations: targetTranslations
   };
 };

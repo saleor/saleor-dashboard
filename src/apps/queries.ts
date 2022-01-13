@@ -84,7 +84,11 @@ export const extensionList = gql`
           view
           type
           target
+          openAs
           accessToken
+          permissions {
+            code
+          }
         }
       }
     }

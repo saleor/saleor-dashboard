@@ -7,6 +7,10 @@ import homeIcon from "@assets/images/menu-home-icon.svg";
 import ordersIcon from "@assets/images/menu-orders-icon.svg";
 import pagesIcon from "@assets/images/menu-pages-icon.svg";
 import translationIcon from "@assets/images/menu-translation-icon.svg";
+import {
+  mapToSidebarMenuItems,
+  useExtensions
+} from "@saleor/apps/useExtensions";
 import { configurationMenuUrl } from "@saleor/configuration";
 import { getConfigMenuItemsPermissions } from "@saleor/configuration/utils";
 import { User } from "@saleor/fragments/types/User";
@@ -24,14 +28,27 @@ import { saleListUrl, voucherListUrl } from "../../discounts/urls";
 import { orderDraftListUrl, orderListUrl } from "../../orders/urls";
 import { productListUrl } from "../../products/urls";
 import { languageListUrl } from "../../translations/urls";
-import { PermissionEnum } from "../../types/globalTypes";
+import {
+  AppExtensionTypeEnum,
+  AppExtensionViewEnum,
+  PermissionEnum
+} from "../../types/globalTypes";
 
 interface FilterableMenuItem extends Omit<SidebarMenuItem, "children"> {
   children?: FilterableMenuItem[];
   permissions?: PermissionEnum[];
 }
 
-function createMenuStructure(intl: IntlShape, user: User): SidebarMenuItem[] {
+function useMenuStructure(intl: IntlShape, user: User): SidebarMenuItem[] {
+  const {
+    catalog,
+    orders,
+    customers,
+    discounts,
+    // pages, // waiting for macaw-ui pr to be merged
+    translations
+  } = useExtensions(AppExtensionViewEnum.ALL, AppExtensionTypeEnum.NAVIGATION);
+
   const menuItems: FilterableMenuItem[] = [
     {
       ariaLabel: "home",
@@ -70,7 +87,8 @@ function createMenuStructure(intl: IntlShape, user: User): SidebarMenuItem[] {
           id: "giftCards",
           url: giftCardListUrl(),
           permissions: [PermissionEnum.MANAGE_GIFT_CARD]
-        }
+        },
+        ...mapToSidebarMenuItems(catalog)
       ],
       iconSrc: catalogIcon,
       label: intl.formatMessage(commonMessages.catalog),
@@ -96,7 +114,8 @@ function createMenuStructure(intl: IntlShape, user: User): SidebarMenuItem[] {
           permissions: [PermissionEnum.MANAGE_ORDERS],
           id: "order drafts",
           url: orderDraftListUrl()
-        }
+        },
+        ...mapToSidebarMenuItems(orders)
       ],
       iconSrc: ordersIcon,
       label: intl.formatMessage(sectionNames.orders),
@@ -105,6 +124,7 @@ function createMenuStructure(intl: IntlShape, user: User): SidebarMenuItem[] {
     },
     {
       ariaLabel: "customers",
+      children: [...mapToSidebarMenuItems(customers)],
       iconSrc: customerIcon,
       label: intl.formatMessage(sectionNames.customers),
       permissions: [PermissionEnum.MANAGE_USERS],
@@ -126,7 +146,8 @@ function createMenuStructure(intl: IntlShape, user: User): SidebarMenuItem[] {
           label: intl.formatMessage(sectionNames.vouchers),
           id: "vouchers",
           url: voucherListUrl()
-        }
+        },
+        ...mapToSidebarMenuItems(discounts)
       ],
       iconSrc: discountsIcon,
       label: intl.formatMessage(commonMessages.discounts),
@@ -151,6 +172,7 @@ function createMenuStructure(intl: IntlShape, user: User): SidebarMenuItem[] {
     },
     {
       ariaLabel: "translations",
+      children: [...mapToSidebarMenuItems(translations)],
       iconSrc: translationIcon,
       label: intl.formatMessage(sectionNames.translations),
       permissions: [PermissionEnum.MANAGE_TRANSLATIONS],
@@ -194,4 +216,4 @@ function createMenuStructure(intl: IntlShape, user: User): SidebarMenuItem[] {
   );
 }
 
-export default createMenuStructure;
+export default useMenuStructure;

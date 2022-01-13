@@ -64,17 +64,30 @@ export enum AppErrorCode {
   UNIQUE = "UNIQUE",
 }
 
+export enum AppExtensionOpenAsEnum {
+  APP_PAGE = "APP_PAGE",
+  POPUP = "POPUP",
+}
+
 export enum AppExtensionTargetEnum {
+  CATALOG = "CATALOG",
   CREATE = "CREATE",
+  CUSTOMERS = "CUSTOMERS",
+  DISCOUNTS = "DISCOUNTS",
   MORE_ACTIONS = "MORE_ACTIONS",
+  ORDERS = "ORDERS",
+  PAGES = "PAGES",
+  TRANSLATIONS = "TRANSLATIONS",
 }
 
 export enum AppExtensionTypeEnum {
   DETAILS = "DETAILS",
+  NAVIGATION = "NAVIGATION",
   OVERVIEW = "OVERVIEW",
 }
 
 export enum AppExtensionViewEnum {
+  ALL = "ALL",
   PRODUCT = "PRODUCT",
 }
 
@@ -1956,6 +1969,7 @@ export interface AppExtensionFilterInput {
   view?: AppExtensionViewEnum | null;
   type?: AppExtensionTypeEnum | null;
   target?: AppExtensionTargetEnum | null;
+  openAs?: AppExtensionOpenAsEnum | null;
 }
 
 export interface AppFilterInput {

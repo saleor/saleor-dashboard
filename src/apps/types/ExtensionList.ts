@@ -3,11 +3,16 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { AppExtensionFilterInput, AppExtensionViewEnum, AppExtensionTypeEnum, AppExtensionTargetEnum } from "./../../types/globalTypes";
+import { AppExtensionFilterInput, AppExtensionViewEnum, AppExtensionTypeEnum, AppExtensionTargetEnum, AppExtensionOpenAsEnum, PermissionEnum } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL query operation: ExtensionList
 // ====================================================
+
+export interface ExtensionList_appExtensions_edges_node_permissions {
+  __typename: "Permission";
+  code: PermissionEnum;
+}
 
 export interface ExtensionList_appExtensions_edges_node {
   __typename: "AppExtension";
@@ -17,7 +22,9 @@ export interface ExtensionList_appExtensions_edges_node {
   view: AppExtensionViewEnum;
   type: AppExtensionTypeEnum;
   target: AppExtensionTargetEnum;
+  openAs: AppExtensionOpenAsEnum;
   accessToken: string | null;
+  permissions: ExtensionList_appExtensions_edges_node_permissions[];
 }
 
 export interface ExtensionList_appExtensions_edges {

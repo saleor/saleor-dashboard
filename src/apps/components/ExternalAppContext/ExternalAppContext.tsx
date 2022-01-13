@@ -1,3 +1,4 @@
+import { AppExtensionOpenAsEnum } from "@saleor/types/globalTypes";
 import React from "react";
 
 import { AppDialog } from "../AppDialog";
@@ -7,6 +8,7 @@ export interface AppData {
   appToken: string;
   src: string;
   label: string;
+  openAs: AppExtensionOpenAsEnum;
 }
 
 const ExternalAppContext = React.createContext<{
@@ -41,8 +43,12 @@ export const useExternalApp = () => {
   const { open, setOpen, setAppData } = React.useContext(ExternalAppContext);
 
   const openApp = (appData: AppData) => {
-    setOpen(true);
-    setAppData(appData);
+    if (appData.openAs === AppExtensionOpenAsEnum.POPUP) {
+      setOpen(true);
+      setAppData(appData);
+    } else {
+      window.location.href = appData.src;
+    }
   };
 
   const closeApp = () => setOpen(false);
