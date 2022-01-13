@@ -30,19 +30,23 @@ interface HeaderItem {
   canBeSorted?: boolean;
 }
 
-const GiftCardsListTableHeader: React.FC = () => {
+interface GiftCardsListTableHeaderProps {
+  isCurrencySelected: boolean;
+}
+
+const GiftCardsListTableHeader: React.FC<GiftCardsListTableHeaderProps> = ({
+  isCurrencySelected
+}) => {
   const intl = useIntl();
   const classes = useStyles({});
 
-  const { giftCards, numberOfColumns, loading, params } = useGiftCardList();
+  const { giftCards, numberOfColumns, loading } = useGiftCardList();
   const { toggleAll, listElements } = useGiftCardListBulkActions();
   const { openDeleteDialog } = useGiftCardListDialogs();
   const { onSort, sort } = useGiftCardListSort();
 
   const getDirection = (sortField: GiftCardUrlSortField) =>
     sort.sort === sortField ? getArrowDirection(sort.asc) : undefined;
-
-  const isCurrencySelected = !!params.currency;
 
   const headerItems: HeaderItem[] = [
     {
