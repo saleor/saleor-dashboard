@@ -177,44 +177,44 @@ filterTests({ definedTags: ["all"] }, () => {
             .should("include", "saleorDemoProductSneakers");
         });
     });
-  });
 
-  it("should delete attribute", () => {
-    const attributeName = `${startsWith}${faker.datatype.number()}`;
+    it("should delete attribute", () => {
+      const attributeName = `${startsWith}${faker.datatype.number()}`;
 
-    createAttribute({
-      name: attributeName
-    }).then(attribute => {
-      cy.visit(attributeDetailsUrl(attribute.id))
-        .get(BUTTON_SELECTORS.deleteButton)
-        .click()
-        .addAliasToGraphRequest("AttributeDelete")
-        .get(BUTTON_SELECTORS.submit)
-        .click()
-        .waitForRequestAndCheckIfNoErrors("@AttributeDelete");
-      getAttribute(attribute.id).should("be.null");
-    });
-  });
-
-  it("should update attribute", () => {
-    const attributeName = `${startsWith}${faker.datatype.number()}`;
-    const attributeUpdatedName = `${startsWith}${faker.datatype.number()}`;
-
-    createAttribute({
-      name: attributeName
-    })
-      .then(attribute => {
-        cy.visit(attributeDetailsUrl(attribute.id));
-        fillUpAttributeNameAndCode(attributeUpdatedName);
-        cy.addAliasToGraphRequest("AttributeUpdate")
-          .get(BUTTON_SELECTORS.confirm)
+      createAttribute({
+        name: attributeName
+      }).then(attribute => {
+        cy.visit(attributeDetailsUrl(attribute.id))
+          .get(BUTTON_SELECTORS.deleteButton)
           .click()
-          .waitForRequestAndCheckIfNoErrors("@AttributeUpdate");
-        getAttribute(attribute.id);
-      })
-      .then(attribute => {
-        expect(attribute.name).to.eq(attributeUpdatedName);
-        expect(attribute.slug).to.eq(attributeUpdatedName);
+          .addAliasToGraphRequest("AttributeDelete")
+          .get(BUTTON_SELECTORS.submit)
+          .click()
+          .waitForRequestAndCheckIfNoErrors("@AttributeDelete");
+        getAttribute(attribute.id).should("be.null");
       });
+    });
+
+    it("should update attribute", () => {
+      const attributeName = `${startsWith}${faker.datatype.number()}`;
+      const attributeUpdatedName = `${startsWith}${faker.datatype.number()}`;
+
+      createAttribute({
+        name: attributeName
+      })
+        .then(attribute => {
+          cy.visit(attributeDetailsUrl(attribute.id));
+          fillUpAttributeNameAndCode(attributeUpdatedName);
+          cy.addAliasToGraphRequest("AttributeUpdate")
+            .get(BUTTON_SELECTORS.confirm)
+            .click()
+            .waitForRequestAndCheckIfNoErrors("@AttributeUpdate");
+          getAttribute(attribute.id);
+        })
+        .then(attribute => {
+          expect(attribute.name).to.eq(attributeUpdatedName);
+          expect(attribute.slug).to.eq(attributeUpdatedName);
+        });
+    });
   });
 });
