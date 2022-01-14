@@ -214,7 +214,7 @@ export interface OrderDetailsFragment_fulfillments_lines_orderLine_variant_preor
 export interface OrderDetailsFragment_fulfillments_lines_orderLine_variant {
   __typename: "ProductVariant";
   id: string;
-  quantityAvailable: number;
+  quantityAvailable: number | null;
   preorder: OrderDetailsFragment_fulfillments_lines_orderLine_variant_preorder | null;
 }
 
@@ -316,7 +316,7 @@ export interface OrderDetailsFragment_lines_variant_preorder {
 export interface OrderDetailsFragment_lines_variant {
   __typename: "ProductVariant";
   id: string;
-  quantityAvailable: number;
+  quantityAvailable: number | null;
   preorder: OrderDetailsFragment_lines_variant_preorder | null;
 }
 
@@ -539,6 +539,11 @@ export interface OrderDetailsFragment_invoices {
   status: JobStatusEnum;
 }
 
+export interface OrderDetailsFragment_channel_defaultCountry {
+  __typename: "CountryDisplay";
+  code: string;
+}
+
 export interface OrderDetailsFragment_channel {
   __typename: "Channel";
   isActive: boolean;
@@ -546,11 +551,13 @@ export interface OrderDetailsFragment_channel {
   name: string;
   currencyCode: string;
   slug: string;
+  defaultCountry: OrderDetailsFragment_channel_defaultCountry;
 }
 
 export interface OrderDetailsFragment {
   __typename: "Order";
   id: string;
+  token: string;
   metadata: (OrderDetailsFragment_metadata | null)[];
   privateMetadata: (OrderDetailsFragment_privateMetadata | null)[];
   billingAddress: OrderDetailsFragment_billingAddress | null;

@@ -18,6 +18,7 @@ export const urlList = {
   pageTypes: "page-types/",
   permissionsGroups: "permission-groups/",
   plugins: "plugins/",
+  priceRate: "price/",
   products: "products/",
   productTypes: "product-types/",
   sales: "discounts/sales/",
@@ -26,7 +27,9 @@ export const urlList = {
   staffMembers: "staff/",
   stripeApiPaymentMethods: "https://api.stripe.com/v1/payment_methods",
   translations: "translations/",
+  variants: "variant/",
   vouchers: "discounts/vouchers/",
+  variant: "variant/",
   warehouses: "warehouses/",
   weightRete: "weight/"
 };
@@ -39,10 +42,18 @@ export const attributeDetailsUrl = attributeId =>
 export const categoryDetailsUrl = categoryId =>
   `${urlList.categories}${categoryId}`;
 
+export const collectionDetailsUrl = collectionId =>
+  `${urlList.collections}${collectionId}`;
+
 export const customerDetailsUrl = customerId =>
   `${urlList.customers}${customerId}`;
 
+export const giftCardDetailsUrl = giftCardId =>
+  `${urlList.giftCards}${giftCardId}`;
+
 export const menuDetailsUrl = menuId => `${urlList.navigation}${menuId}`;
+
+export const pageDetailsUrl = pageId => `${urlList.pages}${pageId}`;
 
 export const pageTypeDetailsUrl = pageTypeId =>
   `${urlList.pageTypes}${pageTypeId}`;
@@ -51,6 +62,12 @@ export const permissionGroupDetails = permissionGroupId =>
   `${urlList.permissionsGroups}${permissionGroupId}`;
 
 export const productDetailsUrl = productId => `${urlList.products}${productId}`;
+
+export const productVariantDetailUrl = (productId, variantId) =>
+  `${urlList.products}${productId}/${urlList.variants}${variantId}`;
+
+export const productTypeDetailsUrl = productTypeId =>
+  `${urlList.productTypes}${productTypeId}`;
 
 export const staffMemberDetailsUrl = staffMemberId =>
   `${urlList.staffMembers}${staffMemberId}`;
@@ -63,16 +80,16 @@ export const userDetailsUrl = userId => `${urlList.staffMembers}${userId}`;
 export const weightRateUrl = (shippingZoneId, weightRateId) =>
   `${urlList.shippingMethods}${shippingZoneId}/${urlList.weightRete}${weightRateId}`;
 
+export const priceRateUrl = (shippingZoneId, priceRateId) =>
+  `${urlList.shippingMethods}${shippingZoneId}/${urlList.priceRate}${priceRateId}`;
+
 export const warehouseDetailsUrl = warehouseId =>
   `${urlList.warehouses}${warehouseId}`;
 
-export const productTypeDetailsUrl = productTypeId =>
-  `${urlList.productTypes}${productTypeId}`;
-
-export const giftCardDetailsUrl = giftCardId =>
-  `${urlList.giftCards}${giftCardId}`;
-
 export const saleDetailsUrl = saleId => `${urlList.sales}${saleId}`;
+
+export const variantDetailsUrl = (productId, variantId) =>
+  `${urlList.products}${productId}/${urlList.variants}${variantId}`;
 
 export const voucherDetailsUrl = voucherId => `${urlList.vouchers}${voucherId}`;
 

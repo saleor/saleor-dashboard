@@ -4,15 +4,13 @@ import { WindowTitle } from "@saleor/components/WindowTitle";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { commonMessages } from "@saleor/intl";
-import { WebhookEventTypeEnum } from "@saleor/types/globalTypes";
+import { WebhookEventTypeAsyncEnum } from "@saleor/types/globalTypes";
 import { WebhookUpdate } from "@saleor/webhooks/types/WebhookUpdate";
 import React from "react";
 import { useIntl } from "react-intl";
 
 import { extractMutationErrors, getStringOrPlaceholder } from "../../misc";
-import WebhooksDetailsPage, {
-  WebhookUpdateFormData
-} from "../components/WebhooksDetailsPage";
+import WebhookDetailsPage, { FormData } from "../components/WebhookDetailsPage";
 import { useWebhookUpdateMutation } from "../mutations";
 import { useWebhooksDetailsQuery } from "../queries";
 
@@ -54,15 +52,18 @@ export const WebhooksDetails: React.FC<WebhooksDetailsProps> = ({ id }) => {
     return <NotFoundPage onBack={handleOnBack} />;
   }
 
-  const handleSubmit = (data: WebhookUpdateFormData) =>
+  const handleSubmit = (data: FormData) =>
     extractMutationErrors(
       webhookUpdate({
         variables: {
           id,
           input: {
-            events: data.allEvents
-              ? [WebhookEventTypeEnum.ANY_EVENTS]
-              : data.events,
+            syncEvents: data.syncEvents,
+            asyncEvents: data.asyncEvents.includes(
+              WebhookEventTypeAsyncEnum.ANY_EVENTS
+            )
+              ? [WebhookEventTypeAsyncEnum.ANY_EVENTS]
+              : data.asyncEvents,
             isActive: data.isActive,
             name: data.name,
             secretKey: data.secretKey,
@@ -77,7 +78,7 @@ export const WebhooksDetails: React.FC<WebhooksDetailsProps> = ({ id }) => {
       <WindowTitle
         title={getStringOrPlaceholder(webhookDetails?.webhook?.name)}
       />
-      <WebhooksDetailsPage
+      <WebhookDetailsPage
         appName={webhook?.app?.name}
         disabled={loading}
         errors={formErrors}

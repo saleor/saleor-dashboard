@@ -5,6 +5,9 @@ import { ChangeEvent } from "@saleor/hooks/useForm";
 import React from "react";
 import { useIntl } from "react-intl";
 
+import { FormData } from "../WebhookDetailsPage";
+import { messages } from "./messages";
+
 interface WebhookStatusProps {
   data: boolean;
   disabled: boolean;
@@ -19,26 +22,14 @@ const WebhookStatus: React.FC<WebhookStatusProps> = ({
   const intl = useIntl();
   return (
     <Card>
-      <CardTitle
-        title={intl.formatMessage({
-          defaultMessage: "Webhook Status",
-          description: "section header"
-        })}
-      />
+      <CardTitle title={intl.formatMessage(messages.webhookStatus)} />
       <CardContent>
-        <Typography>
-          {intl.formatMessage({
-            defaultMessage:
-              "If you want to disable this webhook please uncheck the box below.",
-            description: "webhook active"
-          })}
+        <Typography variant="body1">
+          {intl.formatMessage(messages.webhookActiveDescription)}
         </Typography>
         <ControlledCheckbox
-          name={"isActive"}
-          label={intl.formatMessage({
-            defaultMessage: "Webhook is active",
-            description: "webhooks active"
-          })}
+          name={"isActive" as keyof FormData}
+          label={intl.formatMessage(messages.webhookActive)}
           checked={data}
           onChange={onChange}
           disabled={disabled}

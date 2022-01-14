@@ -881,6 +881,10 @@
     "context": "snackbar text",
     "string": "App deactivated"
   },
+  "src_dot_assign": {
+    "context": "button",
+    "string": "Assign"
+  },
   "src_dot_attributes": {
     "context": "attributes section name",
     "string": "Attributes"
@@ -1234,19 +1238,25 @@
     "context": "link",
     "string": "Use this link to recover it"
   },
-  "src_dot_auth_dot_components_dot_LoginPage_dot_3476994590": {
-    "string": "Sorry, your username and/or password are incorrect. Please try again."
-  },
   "src_dot_auth_dot_components_dot_LoginPage_dot_3762459576": {
     "context": "description",
     "string": "or login using"
   },
-  "src_dot_auth_dot_components_dot_LoginPage_dot_534894384": {
-    "string": "Sorry, login went wrong. Please try again."
-  },
   "src_dot_auth_dot_components_dot_LoginPage_dot_599516345": {
     "context": "description",
     "string": "Forgot password? {resetPasswordLink}"
+  },
+  "src_dot_auth_dot_components_dot_LoginPage_dot_externalLoginError": {
+    "context": "error message",
+    "string": "Sorry, login went wrong. Please try again."
+  },
+  "src_dot_auth_dot_components_dot_LoginPage_dot_loginError": {
+    "context": "error message",
+    "string": "Sorry, your username and/or password are incorrect. Please try again."
+  },
+  "src_dot_auth_dot_components_dot_LoginPage_dot_serverError": {
+    "context": "error message",
+    "string": "Saleor is unavailable, please check your network connection and try again."
   },
   "src_dot_auth_dot_components_dot_NewPasswordPage_dot_1254879564": {
     "string": "New Password"
@@ -1293,7 +1303,7 @@
     "string": "Cancel"
   },
   "src_dot_cancelled": {
-    "context": "order status",
+    "context": "payment status",
     "string": "Cancelled"
   },
   "src_dot_cannotFullfillUnpaidOrder": {
@@ -1831,22 +1841,25 @@
   "src_dot_components_dot_AddressEdit_dot_944851093": {
     "string": "Country area"
   },
-  "src_dot_components_dot_AssignAttributeDialog_dot_2173976534": {
+  "src_dot_components_dot_AssignAttributeDialog_dot_assignButton": {
     "context": "button",
     "string": "Assign attributes"
   },
-  "src_dot_components_dot_AssignAttributeDialog_dot_3922579741": {
-    "context": "dialog header",
-    "string": "Assign Attribute"
-  },
-  "src_dot_components_dot_AssignAttributeDialog_dot_4205644805": {
+  "src_dot_components_dot_AssignAttributeDialog_dot_noMembersFound": {
+    "context": "description",
     "string": "No results found"
   },
-  "src_dot_components_dot_AssignAttributeDialog_dot_524117994": {
+  "src_dot_components_dot_AssignAttributeDialog_dot_searchInputLabel": {
+    "context": "input label",
+    "string": "Search Attributes"
+  },
+  "src_dot_components_dot_AssignAttributeDialog_dot_searchInputPlaceholder": {
+    "context": "input placeholder",
     "string": "Search by attribute name"
   },
-  "src_dot_components_dot_AssignAttributeDialog_dot_902296540": {
-    "string": "Search Attributes"
+  "src_dot_components_dot_AssignAttributeDialog_dot_title": {
+    "context": "dialog header",
+    "string": "Assign Attribute"
   },
   "src_dot_components_dot_AssignAttributeValueDialog_dot_header": {
     "context": "dialog header",
@@ -2701,13 +2714,13 @@
     "context": "note about customer",
     "string": "Note"
   },
-  "src_dot_customers_dot_components_dot_CustomerInfo_dot_252313757": {
-    "context": "customer informations, header",
-    "string": "Personal Informations"
-  },
-  "src_dot_customers_dot_components_dot_CustomerInfo_dot_778526801": {
+  "src_dot_customers_dot_components_dot_CustomerInfo_dot_2312694610": {
     "context": "customer contact section, header",
-    "string": "Contact Informations"
+    "string": "Contact Information"
+  },
+  "src_dot_customers_dot_components_dot_CustomerInfo_dot_4121042904": {
+    "context": "account information, header",
+    "string": "Account Information"
   },
   "src_dot_customers_dot_components_dot_CustomerListPage_dot_1643417013": {
     "string": "Search Customer"
@@ -4047,7 +4060,11 @@
   },
   "src_dot_orders_dot_components_dot_OrderCustomerAddressesEditDialog_dot_billingSameAsShipping": {
     "context": "checkbox label",
-    "string": "Billing address same as shipping address"
+    "string": "Set the same for billing address"
+  },
+  "src_dot_orders_dot_components_dot_OrderCustomerAddressesEditDialog_dot_billingTitle": {
+    "context": "search modal billing title",
+    "string": "Billing address"
   },
   "src_dot_orders_dot_components_dot_OrderCustomerAddressesEditDialog_dot_customerAddress": {
     "context": "address type",
@@ -4065,13 +4082,24 @@
     "context": "address type",
     "string": "Add new address"
   },
+  "src_dot_orders_dot_components_dot_OrderCustomerAddressesEditDialog_dot_noResultsFound": {
+    "string": "No results found"
+  },
+  "src_dot_orders_dot_components_dot_OrderCustomerAddressesEditDialog_dot_searchInfo": {
+    "context": "modal information under title",
+    "string": "Select an address you want to use from the list below"
+  },
   "src_dot_orders_dot_components_dot_OrderCustomerAddressesEditDialog_dot_shippingAddressDescription": {
     "context": "dialog content",
     "string": "This customer doesn’t have any shipping addresses. Provide address for order:"
   },
+  "src_dot_orders_dot_components_dot_OrderCustomerAddressesEditDialog_dot_shippingTitle": {
+    "context": "search modal shipping title",
+    "string": "Shipping address"
+  },
   "src_dot_orders_dot_components_dot_OrderCustomerAddressesEditDialog_dot_title": {
     "context": "dialog header",
-    "string": "Shipping address for order"
+    "string": "Change address for order"
   },
   "src_dot_orders_dot_components_dot_OrderCustomerChangeDialog_dot_changeAddress": {
     "context": "option label",
@@ -4623,6 +4651,10 @@
     "context": "order",
     "string": "Channel"
   },
+  "src_dot_orders_dot_components_dot_OrderListPage_dot_clickAndCollect": {
+    "context": "click and collect",
+    "string": "Click&Collect"
+  },
   "src_dot_orders_dot_components_dot_OrderListPage_dot_customer": {
     "context": "order",
     "string": "Customer"
@@ -4630,6 +4662,10 @@
   "src_dot_orders_dot_components_dot_OrderListPage_dot_placed": {
     "context": "order",
     "string": "Created"
+  },
+  "src_dot_orders_dot_components_dot_OrderListPage_dot_preorder": {
+    "context": "is preorder",
+    "string": "Preorder"
   },
   "src_dot_orders_dot_components_dot_OrderList_dot_1198046928": {
     "string": "Fulfillment status"
@@ -5144,11 +5180,19 @@
   "src_dot_orders_dot_views_dot_OrderDetails_dot_4085755992": {
     "string": "Invoice email sent"
   },
+  "src_dot_orders_dot_views_dot_OrderDetails_dot_4207717971": {
+    "context": "snackbar title",
+    "string": "Could not generate invoice"
+  },
   "src_dot_orders_dot_views_dot_OrderDetails_dot_55607988": {
     "string": "Invoice is Generating"
   },
   "src_dot_orders_dot_views_dot_OrderDetails_dot_617145655": {
     "string": "Shipping method successfully updated"
+  },
+  "src_dot_orders_dot_views_dot_OrderDetails_dot_811176136": {
+    "context": "error message",
+    "string": "No invoice plugin installed"
   },
   "src_dot_orders_dot_views_dot_OrderDetails_dot_927945225": {
     "string": "Fulfillment successfully cancelled"
@@ -5456,31 +5500,40 @@
     "context": "order status",
     "string": "Partially returned"
   },
+  "src_dot_paymentStatus": {
+    "string": "Payment status"
+  },
+  "src_dot_pending": {
+    "context": "payment status",
+    "string": "Pending"
+  },
   "src_dot_permissionGroups": {
     "context": "permission groups section name",
     "string": "Permission Groups"
   },
-  "src_dot_permissionGroups_dot_components_dot_AssignMembersDialog_dot_1004218338": {
-    "context": "staff member status",
-    "string": "Inactive"
+  "src_dot_permissionGroups_dot_components_dot_AssignMembersDialog_dot_noMembersFound": {
+    "context": "description",
+    "string": "No members found"
   },
-  "src_dot_permissionGroups_dot_components_dot_AssignMembersDialog_dot_1731102929": {
-    "context": "button",
-    "string": "Assign"
+  "src_dot_permissionGroups_dot_components_dot_AssignMembersDialog_dot_searchInputLabel": {
+    "context": "input label",
+    "string": "Search Staff Members"
   },
-  "src_dot_permissionGroups_dot_components_dot_AssignMembersDialog_dot_2986043376": {
-    "context": "dialog header",
-    "string": "Assign Staff Members"
-  },
-  "src_dot_permissionGroups_dot_components_dot_AssignMembersDialog_dot_3111990517": {
+  "src_dot_permissionGroups_dot_components_dot_AssignMembersDialog_dot_searchInputPlaceholder": {
+    "context": "input placeholder",
     "string": "Search by name, email, etc..."
   },
-  "src_dot_permissionGroups_dot_components_dot_AssignMembersDialog_dot_3247064221": {
+  "src_dot_permissionGroups_dot_components_dot_AssignMembersDialog_dot_staffActive": {
     "context": "staff member status",
     "string": "Active"
   },
-  "src_dot_permissionGroups_dot_components_dot_AssignMembersDialog_dot_3532084010": {
-    "string": "Search Staff Members"
+  "src_dot_permissionGroups_dot_components_dot_AssignMembersDialog_dot_staffInactive": {
+    "context": "staff member status",
+    "string": "Inactive"
+  },
+  "src_dot_permissionGroups_dot_components_dot_AssignMembersDialog_dot_title": {
+    "context": "dialog header",
+    "string": "Assign Staff Members"
   },
   "src_dot_permissionGroups_dot_components_dot_MembersErrorDialog_dot_3005518110": {
     "context": "dialog title",
@@ -6013,17 +6066,9 @@
     "context": "modal button",
     "string": "Upload URL"
   },
-  "src_dot_products_dot_components_dot_ProductListPage_dot_1134347598": {
-    "context": "product price",
-    "string": "Price"
-  },
   "src_dot_products_dot_components_dot_ProductListPage_dot_1542417144": {
     "context": "button",
     "string": "Create Product"
-  },
-  "src_dot_products_dot_components_dot_ProductListPage_dot_1952810469": {
-    "context": "product type",
-    "string": "Type"
   },
   "src_dot_products_dot_components_dot_ProductListPage_dot_2059406063": {
     "context": "export products to csv file, button",
@@ -6078,10 +6123,6 @@
     "context": "product is visible",
     "string": "Visible"
   },
-  "src_dot_products_dot_components_dot_ProductList_dot_1134347598": {
-    "context": "product price",
-    "string": "Price"
-  },
   "src_dot_products_dot_components_dot_ProductList_dot_150865454": {
     "context": "product type",
     "string": "Simple"
@@ -6089,29 +6130,37 @@
   "src_dot_products_dot_components_dot_ProductList_dot_1657559629": {
     "string": "No products found"
   },
-  "src_dot_products_dot_components_dot_ProductList_dot_1952810469": {
-    "context": "product type",
-    "string": "Type"
-  },
   "src_dot_products_dot_components_dot_ProductList_dot_2754779425": {
     "context": "product type",
     "string": "Configurable"
-  },
-  "src_dot_products_dot_components_dot_ProductList_dot_3326160357": {
-    "context": "product channels",
-    "string": "Availability"
   },
   "src_dot_products_dot_components_dot_ProductList_dot_636461959": {
     "context": "product",
     "string": "Name"
   },
+  "src_dot_products_dot_components_dot_ProductList_dot_availability": {
+    "context": "product channels",
+    "string": "Availability"
+  },
+  "src_dot_products_dot_components_dot_ProductList_dot_price": {
+    "context": "product price",
+    "string": "Price"
+  },
   "src_dot_products_dot_components_dot_ProductList_dot_published": {
     "context": "product publication date",
     "string": "Published on {date}"
   },
+  "src_dot_products_dot_components_dot_ProductList_dot_type": {
+    "context": "product type",
+    "string": "Type"
+  },
   "src_dot_products_dot_components_dot_ProductList_dot_unpublished": {
     "context": "product publication date",
     "string": "Unpublished"
+  },
+  "src_dot_products_dot_components_dot_ProductList_dot_updatedAt": {
+    "context": "product updated at",
+    "string": "Last updated"
   },
   "src_dot_products_dot_components_dot_ProductList_dot_willBePublished": {
     "context": "product publication date",
@@ -6265,6 +6314,18 @@
   "src_dot_products_dot_components_dot_ProductUpdatePage_dot_3640454975": {
     "context": "product label",
     "string": "Published"
+  },
+  "src_dot_products_dot_components_dot_ProductVariantCheckoutSettings_dot_checkoutLimits": {
+    "context": "title",
+    "string": "Checkout limits"
+  },
+  "src_dot_products_dot_components_dot_ProductVariantCheckoutSettings_dot_checkoutLimitsDescription": {
+    "context": "input helper text",
+    "string": "Your customer won't be allowed to buy bigger quantity per checkout than shown here."
+  },
+  "src_dot_products_dot_components_dot_ProductVariantCheckoutSettings_dot_checkoutLineLimit": {
+    "context": "input label",
+    "string": "Limit quantity per checkout (optional)"
   },
   "src_dot_products_dot_components_dot_ProductVariantCreateDialog_dot_description": {
     "context": "create product variants",
@@ -6703,6 +6764,10 @@
     "context": "payment status",
     "string": "Fully refunded"
   },
+  "src_dot_refused": {
+    "context": "payment status",
+    "string": "Refused"
+  },
   "src_dot_remove": {
     "context": "button",
     "string": "Remove"
@@ -6732,6 +6797,9 @@
   "src_dot_selectAll": {
     "context": "select all options, button",
     "string": "Select All"
+  },
+  "src_dot_selected": {
+    "string": "Selected"
   },
   "src_dot_send": {
     "context": "button",
@@ -7151,6 +7219,18 @@
   "src_dot_siteSettings": {
     "context": "site settings section name",
     "string": "Site Settings"
+  },
+  "src_dot_siteSettings_dot_components_dot_SiteCheckoutSettingsCard_dot_checkoutLimits": {
+    "context": "title",
+    "string": "Checkout limits"
+  },
+  "src_dot_siteSettings_dot_components_dot_SiteCheckoutSettingsCard_dot_checkoutLimitsDescription": {
+    "context": "input helper text",
+    "string": "This number defines quantity of items in checkout line that can be bought. You can override this setting per variant. Leaving this setting empty mean that there is no limits."
+  },
+  "src_dot_siteSettings_dot_components_dot_SiteCheckoutSettingsCard_dot_checkoutLineLimit": {
+    "context": "input label",
+    "string": "Checkout line limit"
   },
   "src_dot_siteSettings_dot_components_dot_SiteCheckoutSettingsCard_dot_reservedStock": {
     "context": "title",
@@ -7989,10 +8069,6 @@
     "context": "webhooks section name",
     "string": "Webhooks"
   },
-  "src_dot_webhooks_dot_components_dot_WebhookCreatePage_dot_3493926696": {
-    "context": "header",
-    "string": "Create Webhook"
-  },
   "src_dot_webhooks_dot_components_dot_WebhookDeleteDialog_dot_216945727": {
     "context": "delete webhook",
     "string": "Are you sure you want to delete this webhook?"
@@ -8005,233 +8081,77 @@
     "context": "dialog header",
     "string": "Delete Webhook"
   },
-  "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_1013231747": {
-    "context": "event",
-    "string": "Confirm payment"
-  },
-  "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_1087314240": {
-    "context": "event",
-    "string": "Checkout updated"
-  },
-  "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_1366770851": {
-    "context": "event",
-    "string": "Order confirmed"
-  },
-  "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_1368317066": {
-    "context": "event",
-    "string": "Invoice deleted"
-  },
-  "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_1436364351": {
-    "context": "section header",
-    "string": "Events"
-  },
-  "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_144149815": {
-    "context": "event",
-    "string": "Product variant deleted"
-  },
-  "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_1564545489": {
-    "context": "event",
-    "string": "Draft order deleted"
-  },
-  "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_1594316266": {
-    "context": "event",
-    "string": "Fulfillment canceled"
-  },
-  "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_1606361075": {
-    "context": "event",
-    "string": "Order updated"
-  },
-  "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_1616635110": {
-    "context": "event",
-    "string": "User notified"
-  },
-  "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_1624692657": {
-    "context": "event",
-    "string": "Refund payment"
-  },
-  "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_2126893364": {
-    "context": "event",
-    "string": "Product variant updated"
-  },
-  "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_2240725235": {
-    "context": "event",
-    "string": "Checkout created"
-  },
-  "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_2315238863": {
-    "context": "event",
-    "string": "Product variant out of stock"
-  },
-  "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_2328272362": {
-    "context": "event",
-    "string": "Sale deleted"
-  },
-  "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_2454751033": {
-    "context": "event",
-    "string": "All events"
-  },
-  "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_2745028894": {
-    "context": "event",
-    "string": "Page deleted"
-  },
-  "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_2862596150": {
-    "context": "event",
-    "string": "Invoice sent"
-  },
-  "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_2899821092": {
-    "context": "event",
-    "string": "Product created"
-  },
-  "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_3051538277": {
-    "context": "webhook events",
-    "string": "Expand or restrict webhooks permissions to register certain events in Saleor system."
-  },
-  "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_3285325968": {
-    "context": "event",
-    "string": "Product variant created"
-  },
-  "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_3316426878": {
-    "context": "event",
-    "string": "Product updated"
-  },
-  "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_3345061702": {
-    "context": "event",
-    "string": "Order fully paid"
-  },
-  "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_337693660": {
-    "context": "event",
-    "string": "Void payment"
-  },
-  "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_3400883706": {
-    "context": "event",
-    "string": "Order created"
-  },
-  "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_3418398751": {
-    "context": "event",
-    "string": "Draft order updated"
-  },
-  "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_36047288": {
-    "context": "event",
-    "string": "Translation created"
-  },
-  "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_3610454973": {
-    "context": "event",
-    "string": "Draft order created"
-  },
-  "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_3617444329": {
-    "context": "event",
-    "string": "Order cancelled"
-  },
-  "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_3618648517": {
-    "context": "event",
-    "string": "Page updated"
-  },
-  "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_3671033983": {
-    "context": "event",
-    "string": "Product deleted"
-  },
-  "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_3742472683": {
-    "context": "event",
-    "string": "Capture payment"
-  },
-  "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_3907151399": {
-    "context": "event",
-    "string": "Order fulfilled"
-  },
-  "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_3970234993": {
-    "context": "event",
-    "string": "Customer created"
-  },
-  "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_4053089191": {
-    "context": "event",
-    "string": "List payment gateways"
-  },
-  "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_4175628606": {
-    "context": "event",
-    "string": "Sale created"
-  },
-  "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_4186057882": {
-    "context": "event",
-    "string": "Invoice requested"
-  },
-  "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_4281441551": {
-    "context": "event",
-    "string": "Fulfillment created"
-  },
-  "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_4292269645": {
-    "context": "event",
-    "string": "Process payment"
-  },
-  "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_482477254": {
-    "context": "event",
-    "string": "Translation updated"
-  },
-  "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_523513128": {
-    "context": "event",
-    "string": "Sale updated"
-  },
-  "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_679080833": {
-    "context": "event",
-    "string": "Page created"
-  },
-  "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_69923590": {
-    "context": "event",
-    "string": "Product variant back in stock"
-  },
-  "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_759562905": {
-    "context": "event",
-    "string": "Authorize payment"
-  },
-  "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_787792649": {
-    "context": "event",
-    "string": "Customer updated"
-  },
-  "src_dot_webhooks_dot_components_dot_WebhookInfo_dot_1089569085": {
-    "context": "webhook",
-    "string": "Secret Key"
-  },
-  "src_dot_webhooks_dot_components_dot_WebhookInfo_dot_1690209105": {
-    "context": "webhook",
-    "string": "Target URL"
-  },
-  "src_dot_webhooks_dot_components_dot_WebhookInfo_dot_1826224431": {
-    "context": "webhook",
-    "string": "Webhook Name"
-  },
-  "src_dot_webhooks_dot_components_dot_WebhookInfo_dot_330298209": {
-    "context": "section header",
-    "string": "Webhook Information"
-  },
-  "src_dot_webhooks_dot_components_dot_WebhookInfo_dot_3763861707": {
-    "context": "webhook target url help text",
-    "string": "This URL will receive webhook POST requests"
-  },
-  "src_dot_webhooks_dot_components_dot_WebhookInfo_dot_3809115222": {
-    "context": "webhook secret key help text",
-    "string": "secret key is used to create a hash signature with each payload. *optional field"
-  },
-  "src_dot_webhooks_dot_components_dot_WebhookInfo_dot_4194304040": {
-    "context": "webhook specific information",
-    "string": "Webhook specific information"
-  },
-  "src_dot_webhooks_dot_components_dot_WebhookStatus_dot_2772025990": {
-    "context": "webhooks active",
-    "string": "Webhook is active"
-  },
-  "src_dot_webhooks_dot_components_dot_WebhookStatus_dot_313090629": {
-    "context": "webhook active",
-    "string": "If you want to disable this webhook please uncheck the box below."
-  },
-  "src_dot_webhooks_dot_components_dot_WebhookStatus_dot_596557805": {
-    "context": "section header",
-    "string": "Webhook Status"
-  },
-  "src_dot_webhooks_dot_components_dot_WebhooksDetailsPage_dot_1595053355": {
+  "src_dot_webhooks_dot_components_dot_WebhookDetailsPage_dot_header": {
     "context": "header",
     "string": "Unnamed Webhook Details"
   },
-  "src_dot_webhooks_dot_components_dot_WebhooksDetailsPage_dot_408706360": {
+  "src_dot_webhooks_dot_components_dot_WebhookDetailsPage_dot_headerCreate": {
+    "context": "header",
+    "string": "Create Webhook"
+  },
+  "src_dot_webhooks_dot_components_dot_WebhookDetailsPage_dot_headerNamed": {
     "context": "header",
     "string": "{webhookName} Details"
+  },
+  "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_assignPermissionsToAsynchronousEvents": {
+    "context": "section description",
+    "string": "Assign permissions to register asynchronous events for this webhook."
+  },
+  "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_assignPermissionsToSynchronousEvents": {
+    "context": "section description",
+    "string": "Assign permissions to register synchronous events for this webhook."
+  },
+  "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_asynchronousEvents": {
+    "context": "section subheader",
+    "string": "Asynchronous events"
+  },
+  "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_events": {
+    "context": "section header",
+    "string": "Events"
+  },
+  "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_registeredEvents": {
+    "context": "input label",
+    "string": "Registered events"
+  },
+  "src_dot_webhooks_dot_components_dot_WebhookEvents_dot_synchronousEvents": {
+    "context": "section subheader",
+    "string": "Synchronous events"
+  },
+  "src_dot_webhooks_dot_components_dot_WebhookInfo_dot_secretKey": {
+    "context": "webhook input label",
+    "string": "Secret Key"
+  },
+  "src_dot_webhooks_dot_components_dot_WebhookInfo_dot_secretKeyDescription": {
+    "context": "webhook input help text",
+    "string": "secret key is used to create a hash signature with each payload. *optional field"
+  },
+  "src_dot_webhooks_dot_components_dot_WebhookInfo_dot_targetUrl": {
+    "context": "webhook input label",
+    "string": "Target URL"
+  },
+  "src_dot_webhooks_dot_components_dot_WebhookInfo_dot_targetUrlDescription": {
+    "context": "webhook input help text",
+    "string": "This URL will receive webhook POST requests"
+  },
+  "src_dot_webhooks_dot_components_dot_WebhookInfo_dot_webhookInformation": {
+    "context": "section header",
+    "string": "Webhook Information"
+  },
+  "src_dot_webhooks_dot_components_dot_WebhookInfo_dot_webhookName": {
+    "context": "webhook input label",
+    "string": "Webhook Name"
+  },
+  "src_dot_webhooks_dot_components_dot_WebhookStatus_dot_webhookActive": {
+    "context": "webhooks active label",
+    "string": "Webhook is active"
+  },
+  "src_dot_webhooks_dot_components_dot_WebhookStatus_dot_webhookActiveDescription": {
+    "context": "webhook active description",
+    "string": "If you want to disable this webhook please uncheck the box below."
+  },
+  "src_dot_webhooks_dot_components_dot_WebhookStatus_dot_webhookStatus": {
+    "context": "section header",
+    "string": "Webhook Status"
   },
   "src_dot_webhooks_dot_components_dot_WebhooksList_dot_1153324159": {
     "string": "No webhooks found"

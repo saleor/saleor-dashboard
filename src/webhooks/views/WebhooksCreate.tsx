@@ -5,13 +5,11 @@ import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { commonMessages } from "@saleor/intl";
 import { extractMutationErrors } from "@saleor/misc";
-import { WebhookEventTypeEnum } from "@saleor/types/globalTypes";
+import { WebhookEventTypeAsyncEnum } from "@saleor/types/globalTypes";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import WebhookCreatePage, {
-  WebhookCreateFormData
-} from "../components/WebhookCreatePage";
+import WebhookDetailsPage, { FormData } from "../components/WebhookDetailsPage";
 import { useWebhookCreateMutation } from "../mutations";
 import { WebhookCreate as WebhookCreateData } from "../types/WebhookCreate";
 import { webhookUrl } from "../urls";
@@ -42,15 +40,18 @@ export const WebhooksCreate: React.FC<WebhooksCreateProps> = ({ id }) => {
 
   const handleBack = () => navigate(customAppUrl(id));
 
-  const handleSubmit = (data: WebhookCreateFormData) =>
+  const handleSubmit = (data: FormData) =>
     extractMutationErrors(
       webhookCreate({
         variables: {
           input: {
             app: id,
-            events: data.allEvents
-              ? [WebhookEventTypeEnum.ANY_EVENTS]
-              : data.events,
+            syncEvents: data.syncEvents,
+            asyncEvents: data.asyncEvents.includes(
+              WebhookEventTypeAsyncEnum.ANY_EVENTS
+            )
+              ? [WebhookEventTypeAsyncEnum.ANY_EVENTS]
+              : data.asyncEvents,
             isActive: data.isActive,
             name: data.name,
             secretKey: data.secretKey,
@@ -68,7 +69,7 @@ export const WebhooksCreate: React.FC<WebhooksCreateProps> = ({ id }) => {
           description: "window title"
         })}
       />
-      <WebhookCreatePage
+      <WebhookDetailsPage
         appName={data?.app?.name}
         disabled={false}
         errors={webhookCreateOpts.data?.webhookCreate.errors || []}

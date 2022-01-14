@@ -20,7 +20,7 @@ function useNavigator(): UseNavigatorResult {
 
   return (
     url: string,
-    { replace = false, preserveQs = false, resetScroll = true } = {}
+    { replace = false, preserveQs = false, resetScroll = false } = {}
   ) => {
     if (shouldBlockNavigation()) {
       return;

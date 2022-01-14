@@ -13,9 +13,6 @@ import React from "react";
 
 const useStyles = makeStyles(
   theme => ({
-    clickableRow: {
-      cursor: "pointer"
-    },
     colName: {
       width: "auto"
     },
@@ -23,7 +20,6 @@ const useStyles = makeStyles(
       marginLeft: AVATAR_MARGIN
     },
     colPrice: {
-      textAlign: "right",
       width: 120
     },
     colQuantity: {
@@ -36,7 +32,6 @@ const useStyles = makeStyles(
       width: 120
     },
     colTotal: {
-      textAlign: "right",
       width: 120
     },
     infoLabel: {
@@ -88,7 +83,7 @@ const TableLine: React.FC<TableLineProps> = ({
   const quantityToDisplay = isOrderLine ? quantityToFulfill : quantity;
 
   return (
-    <TableRow className={classes.clickableRow} hover key={line.id}>
+    <TableRow key={line.id}>
       <TableCellAvatar
         className={classes.colName}
         thumbnail={maybe(() => line.orderLine.thumbnail.url)}
@@ -103,7 +98,7 @@ const TableLine: React.FC<TableLineProps> = ({
       </TableCell>
       <TableCell className={classes.colPrice}>
         {maybe(() => line.orderLine.unitPrice.gross) ? (
-          <Money money={line.orderLine.unitPrice.gross} />
+          <Money money={line.orderLine.unitPrice.gross} align="right" />
         ) : (
           <Skeleton />
         )}
@@ -114,6 +109,7 @@ const TableLine: React.FC<TableLineProps> = ({
             amount: line.quantity * line.orderLine.unitPrice.gross.amount,
             currency: line.orderLine.unitPrice.gross.currency
           }}
+          align="right"
         />
       </TableCell>
     </TableRow>

@@ -83,8 +83,9 @@ export function completeOrder(orderId) {
           id
         }
       }
-      orderErrors{
+      errors{
         message
+        field
       }
     }
   }`;

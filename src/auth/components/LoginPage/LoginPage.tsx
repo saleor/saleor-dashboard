@@ -5,6 +5,7 @@ import {
   TextField,
   Typography
 } from "@material-ui/core";
+import { UserContextError } from "@saleor/auth/types";
 import { AvailableExternalAuthentications_shop_availableExternalAuthentications } from "@saleor/auth/types/AvailableExternalAuthentications";
 import Form from "@saleor/components/Form";
 import { FormSpacer } from "@saleor/components/FormSpacer";
@@ -14,8 +15,8 @@ import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { LoginFormData } from "./types";
-import { getLoginFormInitialData } from "./utils";
+import LoginForm, { LoginFormData } from "./form";
+import { getErrorMessage } from "./messages";
 
 const useStyles = makeStyles(
   theme => ({
@@ -51,8 +52,7 @@ const useStyles = makeStyles(
 );
 
 export interface LoginCardProps {
-  error: boolean;
-  externalError: boolean;
+  error?: UserContextError;
   disabled: boolean;
   loading: boolean;
   externalAuthentications?: AvailableExternalAuthentications_shop_availableExternalAuthentications[];
@@ -64,7 +64,6 @@ export interface LoginCardProps {
 const LoginCard: React.FC<LoginCardProps> = props => {
   const {
     error,
-    externalError,
     disabled,
     loading,
     externalAuthentications = [],
@@ -85,20 +84,13 @@ const LoginCard: React.FC<LoginCardProps> = props => {
   }
 
   return (
-    <Form initial={getLoginFormInitialData()} onSubmit={onSubmit}>
-      {({ change: handleChange, data, submit: handleSubmit }) => (
+    <LoginForm onSubmit={onSubmit}>
+      {({ change: handleChange, data }) => (
         <>
           {error && (
             <div className={classes.panel} data-test="loginErrorMessage">
               <Typography variant="caption">
-                <FormattedMessage defaultMessage="Sorry, your username and/or password are incorrect. Please try again." />
-              </Typography>
-            </div>
-          )}
-          {externalError && (
-            <div className={classes.panel} data-test="loginErrorMessage">
-              <Typography variant="caption">
-                <FormattedMessage defaultMessage="Sorry, login went wrong. Please try again." />
+                {getErrorMessage(error, intl)}
               </Typography>
             </div>
           )}
@@ -138,7 +130,6 @@ const LoginCard: React.FC<LoginCardProps> = props => {
               color="primary"
               disabled={disabled}
               variant="contained"
-              onClick={handleSubmit}
               type="submit"
               data-test="submit"
             >
@@ -152,7 +143,11 @@ const LoginCard: React.FC<LoginCardProps> = props => {
               description="description"
               values={{
                 resetPasswordLink: (
-                  <a className={classes.link} onClick={onPasswordRecovery}>
+                  <a
+                    className={classes.link}
+                    onClick={onPasswordRecovery}
+                    data-test-id="reset-password-link"
+                  >
                     <FormattedMessage
                       defaultMessage="Use this link to recover it"
                       description="link"
@@ -182,7 +177,6 @@ const LoginCard: React.FC<LoginCardProps> = props => {
                 color="primary"
                 fullWidth
                 variant="outlined"
-                size="large"
                 onClick={() =>
                   onExternalAuthentication(externalAuthentication.id)
                 }
@@ -195,7 +189,7 @@ const LoginCard: React.FC<LoginCardProps> = props => {
           ))}
         </>
       )}
-    </Form>
+    </LoginForm>
   );
 };
 LoginCard.displayName = "LoginCard";

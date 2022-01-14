@@ -595,6 +595,7 @@ export const product: (
       __typename: "ProductVariant",
       channelListings: [],
       id: "pv75934",
+      quantityLimitPerCustomer: 30,
       margin: 2,
       media: [
         {
@@ -640,6 +641,7 @@ export const product: (
     },
     {
       __typename: "ProductVariant",
+      quantityLimitPerCustomer: null,
       channelListings: [
         {
           __typename: "ProductVariantChannelListing",
@@ -740,6 +742,7 @@ export const products = (
 ): ProductList_products_edges_node[] => [
   {
     __typename: "Product",
+    updatedAt: "2020-06-22T13:52:05.094636+00:00",
     attributes: [],
     channelListings: [
       {
@@ -830,6 +833,7 @@ export const products = (
   },
   {
     __typename: "Product",
+    updatedAt: "2020-06-22T13:52:05.094636+00:00",
     attributes: [],
     channelListings: [
       {
@@ -920,6 +924,7 @@ export const products = (
   },
   {
     __typename: "Product",
+    updatedAt: "2020-06-22T13:52:05.094636+00:00",
     attributes: [],
     channelListings: [
       {
@@ -1010,6 +1015,7 @@ export const products = (
   },
   {
     __typename: "Product",
+    updatedAt: "2020-06-22T13:52:05.094636+00:00",
     attributes: [
       {
         __typename: "SelectedAttribute",
@@ -1123,6 +1129,7 @@ export const products = (
   },
   {
     __typename: "Product",
+    updatedAt: "2020-06-22T13:52:05.094636+00:00",
     attributes: [
       {
         __typename: "SelectedAttribute",
@@ -1236,6 +1243,7 @@ export const products = (
   },
   {
     __typename: "Product",
+    updatedAt: "2020-06-22T13:52:05.094636+00:00",
     attributes: [
       {
         __typename: "SelectedAttribute",
@@ -1350,6 +1358,7 @@ export const products = (
   },
   {
     __typename: "Product",
+    updatedAt: "2020-06-22T13:52:05.094636+00:00",
     attributes: [
       {
         __typename: "SelectedAttribute",
@@ -1463,6 +1472,7 @@ export const products = (
   },
   {
     __typename: "Product",
+    updatedAt: "2020-06-22T13:52:05.094636+00:00",
     attributes: [
       {
         __typename: "SelectedAttribute",
@@ -1576,6 +1586,7 @@ export const products = (
   },
   {
     __typename: "Product",
+    updatedAt: "2020-06-22T13:52:05.094636+00:00",
     attributes: [
       {
         __typename: "SelectedAttribute",
@@ -1689,6 +1700,7 @@ export const products = (
   },
   {
     __typename: "Product",
+    updatedAt: "2020-06-22T13:52:05.094636+00:00",
     attributes: [
       {
         __typename: "SelectedAttribute",
@@ -1802,6 +1814,7 @@ export const products = (
   },
   {
     __typename: "Product",
+    updatedAt: "2020-06-22T13:52:05.094636+00:00",
     attributes: [
       {
         __typename: "SelectedAttribute",
@@ -1915,6 +1928,7 @@ export const products = (
   },
   {
     __typename: "Product",
+    updatedAt: "2020-06-22T13:52:05.094636+00:00",
     attributes: [
       {
         __typename: "SelectedAttribute",
@@ -2028,6 +2042,7 @@ export const products = (
   },
   {
     __typename: "Product",
+    updatedAt: "2020-06-22T13:52:05.094636+00:00",
     attributes: [
       {
         __typename: "SelectedAttribute",
@@ -2141,6 +2156,7 @@ export const products = (
   },
   {
     __typename: "Product",
+    updatedAt: "2020-06-22T13:52:05.094636+00:00",
     attributes: [
       {
         __typename: "SelectedAttribute",
@@ -2254,6 +2270,7 @@ export const products = (
   },
   {
     __typename: "Product",
+    updatedAt: "2020-06-22T13:52:05.094636+00:00",
     attributes: [
       {
         __typename: "SelectedAttribute",
@@ -2367,6 +2384,7 @@ export const products = (
   },
   {
     __typename: "Product",
+    updatedAt: "2020-06-22T13:52:05.094636+00:00",
     attributes: [
       {
         __typename: "SelectedAttribute",
@@ -2480,6 +2498,7 @@ export const products = (
   },
   {
     __typename: "Product",
+    updatedAt: "2020-06-22T13:52:05.094636+00:00",
     attributes: [
       {
         __typename: "SelectedAttribute",
@@ -2593,6 +2612,7 @@ export const products = (
   },
   {
     __typename: "Product",
+    updatedAt: "2020-06-22T13:52:05.094636+00:00",
     attributes: [
       {
         __typename: "SelectedAttribute",
@@ -2706,6 +2726,7 @@ export const products = (
   },
   {
     __typename: "Product",
+    updatedAt: "2020-06-22T13:52:05.094636+00:00",
     attributes: [
       {
         __typename: "SelectedAttribute",
@@ -2819,6 +2840,7 @@ export const products = (
   },
   {
     __typename: "Product",
+    updatedAt: "2020-06-22T13:52:05.094636+00:00",
     attributes: [
       {
         __typename: "SelectedAttribute",
@@ -2985,6 +3007,7 @@ export const variant = (placeholderImage: string): ProductVariant => ({
     }
   ],
   id: "var1",
+  quantityLimitPerCustomer: 300,
   media: [
     {
       __typename: "ProductMedia",

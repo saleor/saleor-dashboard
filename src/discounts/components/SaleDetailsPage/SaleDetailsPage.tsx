@@ -1,4 +1,4 @@
-import { ChannelSaleData } from "@saleor/channels/utils";
+import { ChannelSaleData, validateSalePrice } from "@saleor/channels/utils";
 import CardSpacer from "@saleor/components/CardSpacer";
 import ChannelsAvailabilityCard from "@saleor/components/ChannelsAvailabilityCard";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
@@ -15,7 +15,6 @@ import { DiscountErrorFragment } from "@saleor/fragments/types/DiscountErrorFrag
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import { sectionNames } from "@saleor/intl";
 import { Backlink } from "@saleor/macaw-ui";
-import { validatePrice } from "@saleor/products/utils/validation";
 import { mapEdgesToItems } from "@saleor/utils/maps";
 import { mapMetadataItemToInput } from "@saleor/utils/maps";
 import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
@@ -36,11 +35,16 @@ import DiscountProducts from "../DiscountProducts";
 import DiscountVariants from "../DiscountVariants";
 import SaleInfo from "../SaleInfo";
 import SaleSummary from "../SaleSummary";
+import { useStyles } from "../SaleSummary/styles";
 import SaleType from "../SaleType";
 import SaleValue from "../SaleValue";
 
+export interface ChannelSaleFormData extends ChannelSaleData {
+  percentageValue: string;
+  fixedValue: string;
+}
 export interface SaleDetailsPageFormData extends MetadataFormData {
-  channelListings: ChannelSaleData[];
+  channelListings: ChannelSaleFormData[];
   endDate: string;
   endTime: string;
   hasEndDate: boolean;
@@ -57,16 +61,6 @@ export enum SaleDetailsPageTab {
   variants = "variants"
 }
 
-export function saleDetailsPageTab(tab: string): SaleDetailsPageTab {
-  return tab === SaleDetailsPageTab.products
-    ? SaleDetailsPageTab.products
-    : tab === SaleDetailsPageTab.collections
-    ? SaleDetailsPageTab.collections
-    : tab === SaleDetailsPageTab.categories
-    ? SaleDetailsPageTab.categories
-    : SaleDetailsPageTab.variants;
-}
-
 export interface SaleDetailsPageProps
   extends Pick<ListProps, Exclude<keyof ListProps, "onRowClick">>,
     TabListActions<
@@ -80,7 +74,7 @@ export interface SaleDetailsPageProps
   errors: DiscountErrorFragment[];
   sale: SaleDetails_sale;
   allChannelsCount: number;
-  channelListings: ChannelSaleData[];
+  channelListings: ChannelSaleFormData[];
   hasChannelChanged: boolean;
   saveButtonBarState: ConfirmButtonTransitionState;
   onBack: () => void;
@@ -101,7 +95,7 @@ export interface SaleDetailsPageProps
     data: SaleDetailsPageFormData
   ) => SubmitPromise<SaleUpdate_saleUpdate_errors[]>;
   onTabClick: (index: SaleDetailsPageTab) => void;
-  onChannelsChange: (data: ChannelSaleData[]) => void;
+  onChannelsChange: (data: ChannelSaleFormData[]) => void;
   openChannelsModal: () => void;
 }
 
@@ -151,6 +145,7 @@ const SaleDetailsPage: React.FC<SaleDetailsPageProps> = ({
   toggleAll
 }) => {
   const intl = useIntl();
+  const classes = useStyles();
   const {
     makeChangeHandler: makeMetadataChangeHandler
   } = useMetadataChangeTrigger();
@@ -173,10 +168,11 @@ const SaleDetailsPage: React.FC<SaleDetailsPageProps> = ({
         const handleChannelChange = createSaleChannelsChangeHandler(
           data.channelListings,
           onChannelsChange,
-          triggerChange
+          triggerChange,
+          data.type
         );
         const formDisabled = data.channelListings?.some(channel =>
-          validatePrice(channel.discountValue)
+          validateSalePrice(data, channel)
         );
         const changeMetadata = makeMetadataChangeHandler(change);
 
@@ -185,7 +181,7 @@ const SaleDetailsPage: React.FC<SaleDetailsPageProps> = ({
             <Backlink onClick={onBack}>
               {intl.formatMessage(sectionNames.sales)}
             </Backlink>
-            <PageHeader title={maybe(() => sale.name)} />
+            <PageHeader className={classes.wrapAnywhere} title={sale?.name} />
             <Grid>
               <div>
                 <SaleInfo

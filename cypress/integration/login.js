@@ -14,7 +14,7 @@ filterTests({ definedTags: ["all"] }, () => {
     it("should successfully log in an user", () => {
       cy.visit(urlList.homePage);
       cy.loginUser();
-      cy.get(LOGIN_SELECTORS.welcomePage);
+      cy.get(LOGIN_SELECTORS.welcomePage).should("be.visible");
     });
 
     it("should fail for wrong password", () => {
@@ -25,20 +25,20 @@ filterTests({ definedTags: ["all"] }, () => {
         .type("wrong-password")
         .get(LOGIN_SELECTORS.signInButton)
         .click()
-        .get(LOGIN_SELECTORS.warningCredentialMessage);
+        .get(LOGIN_SELECTORS.warningCredentialMessage)
+        .should("be.visible");
     });
 
     it("should successfully log out an user", () => {
-      cy.window().then(win => {
-        win.sessionStorage.clear();
-      });
-      cy.visit(urlList.homePage);
-      cy.loginUser();
-      cy.get(LOGIN_SELECTORS.userMenu)
+      cy.clearSessionData()
+        .loginUserViaRequest()
+        .visit(urlList.homePage)
+        .get(LOGIN_SELECTORS.userMenu)
         .click()
-        .get(LOGIN_SELECTORS.accountSettings)
-        .click();
-      cy.location("pathname").should("contains", "/staff/");
+        .get(LOGIN_SELECTORS.logOutButton)
+        .click()
+        .get(LOGIN_SELECTORS.emailAddressInput)
+        .should("be.visible");
     });
   });
 });

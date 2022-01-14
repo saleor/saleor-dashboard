@@ -75,6 +75,7 @@ const ResetPasswordPage: React.FC<ResetPasswordPageProps> = props => {
           />
           <FormSpacer />
           <Button
+            data-test="submit"
             className={classes.submit}
             color="primary"
             disabled={disabled}

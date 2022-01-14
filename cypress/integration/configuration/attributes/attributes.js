@@ -3,6 +3,7 @@
 
 import faker from "faker";
 
+import { ATTRIBUTES_DETAILS } from "../../../elements/attribute/attributes_details";
 import { ATTRIBUTES_LIST } from "../../../elements/attribute/attributes_list";
 import { urlList } from "../../../fixtures/urlList";
 import { getAttribute } from "../../../support/api/requests/Attribute";
@@ -118,6 +119,49 @@ filterTests({ definedTags: ["all"] }, () => {
             attributeType,
             valueRequired: false
           });
+        });
+    });
+
+    it("should create swatch attribute", () => {
+      const attributeType = "SWATCH";
+      const attributeName = `${startsWith}${faker.datatype.number()}`;
+      createAttributeWithInputType({
+        name: attributeName,
+        attributeType
+      })
+        .then(({ attribute }) => {
+          getAttribute(attribute.id);
+        })
+        .then(attribute => {
+          expectCorrectDataInAttribute(attribute, {
+            attributeName,
+            attributeType,
+            valueRequired: true
+          });
+        });
+    });
+
+    it("should create swatch attribute with image", () => {
+      const attributeType = "SWATCH";
+      const attributeName = `${startsWith}${faker.datatype.number()}`;
+      const swatchImage = "images/saleorDemoProductSneakers.png";
+      createAttributeWithInputType({
+        name: attributeName,
+        attributeType,
+        swatchImage
+      })
+        .then(({ attribute }) => {
+          getAttribute(attribute.id);
+        })
+        .then(attribute => {
+          expectCorrectDataInAttribute(attribute, {
+            attributeName,
+            attributeType,
+            valueRequired: true
+          });
+          cy.get(ATTRIBUTES_DETAILS.swatchValueImage)
+            .invoke("attr", "style")
+            .should("include", "saleorDemoProductSneakers");
         });
     });
   });

@@ -104,7 +104,6 @@ filterTests({ definedTags: ["all", "critical"] }, () => {
           cy.visit(`${urlList.products}${createdProduct.id}`);
           createFirstVariant({
             sku: name,
-            warehouseId: warehouse.id,
             price,
             attribute: attributeValues[0]
           });
@@ -139,7 +138,6 @@ filterTests({ definedTags: ["all", "critical"] }, () => {
           cy.visit(`${urlList.products}${createdProduct.id}`);
           createVariant({
             sku: secondVariantSku,
-            warehouseName: warehouse.name,
             attributeName: variants[1].name,
             price: variants[1].price,
             channelName: defaultChannel.name
@@ -187,7 +185,6 @@ filterTests({ definedTags: ["all", "critical"] }, () => {
           cy.visit(`${urlList.products}${createdProduct.id}`);
           createFirstVariant({
             sku: name,
-            warehouseId: warehouse.id,
             price: variantsPrice,
             attribute: attributeValues[0]
           });

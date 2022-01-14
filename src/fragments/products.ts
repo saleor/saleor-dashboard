@@ -245,6 +245,7 @@ export const productFragmentDetails = gql`
       channelListings {
         ...ChannelListingProductVariantFragment
       }
+      quantityLimitPerCustomer
     }
     productType {
       id
@@ -380,6 +381,7 @@ export const fragmentVariant = gql`
     weight {
       ...WeightFragment
     }
+    quantityLimitPerCustomer
   }
 `;
 

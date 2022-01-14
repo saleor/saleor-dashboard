@@ -43,5 +43,6 @@ export const shopFragment = gql`
     name
     reserveStockDurationAnonymousUser
     reserveStockDurationAuthenticatedUser
+    limitQuantityPerCheckout
   }
 `;

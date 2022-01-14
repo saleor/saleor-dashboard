@@ -22,10 +22,12 @@ import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import { ShopInfo_shop_countries } from "@saleor/components/Shop/types/ShopInfo";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import { buttonMessages } from "@saleor/intl";
-import { makeStyles } from "@saleor/macaw-ui";
+import useScrollableDialogStyle from "@saleor/styles/useScrollableDialogStyle";
 import { filter } from "fuzzaldrin";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
+
+import { useStyles } from "./styles";
 
 interface FormData {
   allCountries: boolean;
@@ -42,29 +44,6 @@ export interface DiscountCountrySelectDialogProps {
   onConfirm: (data: FormData) => SubmitPromise;
 }
 
-const useStyles = makeStyles(
-  theme => ({
-    checkboxCell: {
-      paddingLeft: 0
-    },
-    containerTitle: {
-      padding: theme.spacing(1.25, 0)
-    },
-    container: {
-      maxHeight: 500,
-      paddingTop: 0,
-      marginBottom: theme.spacing(3)
-    },
-    heading: {
-      marginBottom: theme.spacing(1),
-      marginTop: theme.spacing(2)
-    },
-    wideCell: {
-      width: "100%"
-    }
-  }),
-  { name: "DiscountCountrySelectDialog" }
-);
 const DiscountCountrySelectDialog: React.FC<DiscountCountrySelectDialogProps> = props => {
   const {
     confirmButtonState,
@@ -75,6 +54,7 @@ const DiscountCountrySelectDialog: React.FC<DiscountCountrySelectDialogProps> = 
     onConfirm
   } = props;
   const classes = useStyles(props);
+  const scrollableDialogClasses = useScrollableDialogStyle();
 
   const intl = useIntl();
 
@@ -85,7 +65,11 @@ const DiscountCountrySelectDialog: React.FC<DiscountCountrySelectDialogProps> = 
   };
   return (
     <Dialog onClose={onClose} open={open} fullWidth maxWidth="sm">
-      <Form confirmLeave initial={initialForm} onSubmit={onConfirm}>
+      <Form
+        initial={initialForm}
+        onSubmit={onConfirm}
+        className={scrollableDialogClasses.form}
+      >
         {({ data, change }) => {
           const countrySelectionMap = countries.reduce((acc, country) => {
             acc[country.code] = !!data.countries.find(
@@ -123,18 +107,17 @@ const DiscountCountrySelectDialog: React.FC<DiscountCountrySelectDialogProps> = 
                   })}
                   fullWidth
                 />
-              </DialogContent>
-              <Hr />
-
-              <DialogContent className={classes.containerTitle}>
-                <Typography className={classes.heading} variant="subtitle1">
+                <FormSpacer />
+                <Hr />
+                <FormSpacer />
+                <Typography variant="subtitle1">
                   <FormattedMessage
                     defaultMessage="Countries A to Z"
                     description="country selection"
                   />
                 </Typography>
               </DialogContent>
-              <DialogContent className={classes.container}>
+              <DialogContent className={scrollableDialogClasses.scrollArea}>
                 <ResponsiveTable>
                   <TableBody>
                     {filter(countries, data.query, {

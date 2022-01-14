@@ -2,7 +2,7 @@ import packageInfo from "../package.json";
 import { SearchVariables } from "./hooks/makeSearch";
 import { ListSettings, ListViews, Pagination } from "./types";
 
-export const APP_MOUNT_URI = process.env.APP_MOUNT_URI;
+export const APP_MOUNT_URI = process.env.APP_MOUNT_URI || "/";
 export const APP_DEFAULT_URI = "/";
 export const API_URI = process.env.API_URI;
 export const SW_INTERVAL = parseInt(process.env.SW_INTERVAL, 0);
@@ -22,7 +22,11 @@ export const DEFAULT_INITIAL_PAGINATION_DATA: Pagination = {
 export const PAGINATE_BY = 20;
 export const VALUES_PAGINATE_BY = 10;
 
-export type ProductListColumns = "productType" | "availability" | "price";
+export type ProductListColumns =
+  | "productType"
+  | "availability"
+  | "price"
+  | "date";
 
 export interface AppListViewSettings {
   [ListViews.APPS_LIST]: ListSettings;
@@ -79,7 +83,7 @@ export const defaultListSettings: AppListViewSettings = {
     rowNumber: PAGINATE_BY
   },
   [ListViews.PRODUCT_LIST]: {
-    columns: ["availability", "price", "productType"],
+    columns: ["availability", "price", "productType", "date"],
     rowNumber: PAGINATE_BY
   },
   [ListViews.SALES_LIST]: {

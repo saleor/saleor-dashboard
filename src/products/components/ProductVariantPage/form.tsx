@@ -61,6 +61,7 @@ export interface ProductVariantUpdateFormData extends MetadataFormData {
   isPreorder: boolean;
   globalThreshold: string;
   globalSoldUnits: number;
+  quantityLimitPerCustomer: number | null;
   hasPreorderEndDate: boolean;
   preorderEndDateTime?: string;
 }
@@ -168,7 +169,8 @@ function useProductVariantUpdateForm(
     globalSoldUnits: variant?.preorder?.globalSoldUnits || 0,
     hasPreorderEndDate: !!variant?.preorder?.endDate,
     preorderEndDateTime: variant?.preorder?.endDate,
-    weight: variant?.weight?.value.toString() || ""
+    weight: variant?.weight?.value.toString() || "",
+    quantityLimitPerCustomer: variant?.quantityLimitPerCustomer || null
   };
 
   const form = useForm(initial, undefined, { confirmLeave: true });

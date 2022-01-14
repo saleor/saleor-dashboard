@@ -4,11 +4,11 @@ import ActionDialog from "@saleor/components/ActionDialog";
 import NotFoundPage from "@saleor/components/NotFoundPage";
 import { WindowTitle } from "@saleor/components/WindowTitle";
 import useBulkActions from "@saleor/hooks/useBulkActions";
+import useLocalPaginator, {
+  useSectionLocalPaginationState
+} from "@saleor/hooks/useLocalPaginator";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
-import usePaginator, {
-  createPaginationState
-} from "@saleor/hooks/usePaginator";
 import { commonMessages, errorMessages } from "@saleor/intl";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import createMetadataUpdateHandler from "@saleor/utils/handlers/metadataUpdateHandler";
@@ -18,7 +18,7 @@ import {
   usePrivateMetadataUpdate
 } from "@saleor/utils/metadata/updateMetadata";
 import { getParsedDataForJsonStringField } from "@saleor/utils/richText/misc";
-import React from "react";
+import React, { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { PAGINATE_BY } from "../../config";
@@ -65,7 +65,6 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
 }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
-  const paginate = usePaginator();
   const { isSelected, listElements, reset, toggle, toggleAll } = useBulkActions(
     params.ids
   );
@@ -73,7 +72,19 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
   const [updateMetadata] = useMetadataUpdate({});
   const [updatePrivateMetadata] = usePrivateMetadataUpdate({});
 
-  const paginationState = createPaginationState(PAGINATE_BY, params);
+  const [activeTab, setActiveTab] = useState<CategoryPageTab>(
+    CategoryPageTab.categories
+  );
+  const [paginationState, setPaginationState] = useSectionLocalPaginationState(
+    PAGINATE_BY,
+    activeTab
+  );
+  const paginate = useLocalPaginator(setPaginationState);
+  const changeTab = (tab: CategoryPageTab) => {
+    reset();
+    setActiveTab(tab);
+  };
+
   const { data, loading, refetch } = useCategoryDetailsQuery({
     displayLoader: true,
     variables: { ...paginationState, id }
@@ -155,26 +166,16 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
     }
   });
 
-  const changeTab = (tabName: CategoryPageTab) => {
-    reset();
-    navigate(
-      categoryUrl(id, {
-        activeTab: tabName
-      })
-    );
-  };
-
   const [openModal, closeModal] = createDialogActionHandlers<
     CategoryUrlDialog,
     CategoryUrlQueryParams
   >(navigate, params => categoryUrl(id, params), params);
 
   const { loadNextPage, loadPreviousPage, pageInfo } = paginate(
-    params.activeTab === CategoryPageTab.categories
+    activeTab === CategoryPageTab.categories
       ? maybe(() => data.category.children.pageInfo)
       : maybe(() => data.category.products.pageInfo),
-    paginationState,
-    params
+    paginationState
   );
 
   const handleUpdate = async (formData: CategoryUpdateData) =>
@@ -208,7 +209,7 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
       <WindowTitle title={maybe(() => data.category.name)} />
       <CategoryUpdatePage
         changeTab={changeTab}
-        currentTab={params.activeTab}
+        currentTab={activeTab}
         category={maybe(() => data.category)}
         disabled={loading}
         errors={updateResult.data?.categoryUpdate.errors || []}

@@ -20,13 +20,13 @@ import { FormattedMessage, useIntl } from "react-intl";
 import { SaleDetailsPageFormData } from "../SaleDetailsPage";
 import SaleValueTextField from "./SaleValueTextField";
 import { useStyles } from "./styles";
-import { SaleValueInputChangeType } from "./types";
+import { SaleValueInputOnChangeType } from "./types";
 
 export interface SaleValueProps {
   data: SaleDetailsPageFormData;
   disabled: boolean;
   errors: DiscountErrorFragment[];
-  onChange: SaleValueInputChangeType;
+  onChange: SaleValueInputOnChangeType;
 }
 
 const numberOfColumns = 2;

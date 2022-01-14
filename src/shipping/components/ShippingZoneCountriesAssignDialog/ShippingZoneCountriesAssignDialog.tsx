@@ -20,10 +20,12 @@ import Hr from "@saleor/components/Hr";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import { ShopInfo_shop_countries } from "@saleor/components/Shop/types/ShopInfo";
 import { buttonMessages } from "@saleor/intl";
-import { makeStyles } from "@saleor/macaw-ui";
+import useScrollableDialogStyle from "@saleor/styles/useScrollableDialogStyle";
 import { filter } from "fuzzaldrin";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
+
+import { useStyles } from "./styles";
 
 interface FormData {
   countries: string[];
@@ -41,32 +43,6 @@ export interface ShippingZoneCountriesAssignDialogProps {
   onConfirm: (data: FormData) => void;
 }
 
-const useStyles = makeStyles(
-  theme => ({
-    checkboxCell: {
-      paddingLeft: 0
-    },
-    heading: {
-      marginBottom: theme.spacing(2),
-      marginTop: theme.spacing(2)
-    },
-    container: {
-      padding: theme.spacing(1.25, 0)
-    },
-    scrollAreaContainer: {
-      maxHeight: 400,
-      padding: theme.spacing(1.25, 0),
-      marginBottom: theme.spacing(3)
-    },
-    table: {
-      border: "1px solid " + theme.palette.grey[200]
-    },
-    wideCell: {
-      width: "100%"
-    }
-  }),
-  { name: "ShippingZoneCountriesAssignDialog" }
-);
 const ShippingZoneCountriesAssignDialog: React.FC<ShippingZoneCountriesAssignDialogProps> = props => {
   const {
     confirmButtonState,
@@ -79,6 +55,7 @@ const ShippingZoneCountriesAssignDialog: React.FC<ShippingZoneCountriesAssignDia
   } = props;
 
   const classes = useStyles(props);
+  const scrollableDialogClasses = useScrollableDialogStyle();
   const intl = useIntl();
 
   const initialForm: FormData = {
@@ -88,7 +65,11 @@ const ShippingZoneCountriesAssignDialog: React.FC<ShippingZoneCountriesAssignDia
   };
   return (
     <Dialog onClose={onClose} open={open} fullWidth maxWidth="sm">
-      <Form initial={initialForm} onSubmit={onConfirm}>
+      <Form
+        initial={initialForm}
+        onSubmit={onConfirm}
+        className={scrollableDialogClasses.form}
+      >
         {({ data, change }) => {
           const countrySelectionMap = countries.reduce((acc, country) => {
             acc[country.code] = !!data.countries.find(
@@ -122,13 +103,13 @@ const ShippingZoneCountriesAssignDialog: React.FC<ShippingZoneCountriesAssignDia
                   })}
                   fullWidth
                 />
-              </DialogContent>
-              <Hr />
-
-              <DialogContent className={classes.container}>
-                <Typography className={classes.heading} variant="subtitle1">
+                <FormSpacer />
+                <Hr />
+                <FormSpacer />
+                <Typography variant="subtitle1">
                   <FormattedMessage defaultMessage="Quick Pick" />
                 </Typography>
+                <FormSpacer />
                 <ResponsiveTable className={classes.table}>
                   <TableBody>
                     <TableRow>
@@ -157,18 +138,15 @@ const ShippingZoneCountriesAssignDialog: React.FC<ShippingZoneCountriesAssignDia
                     </TableRow>
                   </TableBody>
                 </ResponsiveTable>
-              </DialogContent>
-
-              <DialogContent className={classes.container}>
-                <Typography className={classes.heading} variant="subtitle1">
+                <FormSpacer />
+                <Typography variant="subtitle1">
                   <FormattedMessage
                     defaultMessage="Countries A to Z"
                     description="country selection"
                   />
                 </Typography>
               </DialogContent>
-
-              <DialogContent className={classes.scrollAreaContainer}>
+              <DialogContent className={scrollableDialogClasses.scrollArea}>
                 <ResponsiveTable className={classes.table}>
                   <TableBody>
                     {filter(countries, data.query, {

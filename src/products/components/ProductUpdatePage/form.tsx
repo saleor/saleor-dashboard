@@ -403,15 +403,35 @@ function useProductUpdateForm(
 
   useEffect(() => setExitDialogSubmitRef(submit), [submit]);
 
-  const disabled =
-    (!opts.hasVariants &&
-      data.channelListings.some(
-        channel =>
-          validatePrice(channel.price) || validateCostPrice(channel.costPrice)
-      )) ||
-    (data.isPreorder &&
+  const shouldEnableSave = () => {
+    if (!data.name) {
+      return false;
+    }
+
+    if (
+      data.isPreorder &&
       data.hasPreorderEndDate &&
-      !!form.errors.preorderEndDateTime);
+      !!form.errors.preorderEndDateTime
+    ) {
+      return false;
+    }
+
+    if (opts.hasVariants) {
+      return true;
+    }
+
+    const hasInvalidChannelListingPrices = data.channelListings.some(
+      channel =>
+        validatePrice(channel.price) || validateCostPrice(channel.costPrice)
+    );
+
+    if (hasInvalidChannelListingPrices) {
+      return false;
+    }
+    return true;
+  };
+
+  const disabled = !shouldEnableSave();
 
   return {
     change: handleChange,

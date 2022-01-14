@@ -17,7 +17,7 @@ export interface OrderLineFragment_variant_preorder {
 export interface OrderLineFragment_variant {
   __typename: "ProductVariant";
   id: string;
-  quantityAvailable: number;
+  quantityAvailable: number | null;
   preorder: OrderLineFragment_variant_preorder | null;
 }
 

@@ -15,7 +15,8 @@ export const ATTRIBUTES_DETAILS = {
     REFERENCE: '[data-test-id="REFERENCE"]',
     RICH_TEXT: '[data-test-id="RICH_TEXT"]',
     NUMERIC: '[data-test-id="NUMERIC"]',
-    BOOLEAN: '[data-test-id="BOOLEAN"]'
+    BOOLEAN: '[data-test-id="BOOLEAN"]',
+    SWATCH: '[data-test-id="SWATCH"]'
   },
   entityTypeSelect: '[id="mui-component-select-entityType"]',
   entityTypeOptions: {
@@ -38,5 +39,8 @@ export const ATTRIBUTES_DETAILS = {
     CUBIC_CENTIMETER: '[data-test-id="CUBIC_CENTIMETER"]',
     FT: '[data-test-id="FT"]'
   },
-  pageTypeAttributeCheckbox: '[value="PAGE_TYPE"]'
+  imageCheckbox: '[value= "image"]',
+  uploadFileButton: '[data-test="button-upload-file"]',
+  pageTypeAttributeCheckbox: '[value="PAGE_TYPE"]',
+  swatchValueImage: '[data-test-id="swatch-image"]'
 };
