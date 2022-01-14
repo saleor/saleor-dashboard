@@ -27,7 +27,7 @@ export function createAttribute({
           }
         }
       }
-      attributeErrors{
+      errors{
         field
         message
       }

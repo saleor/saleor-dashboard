@@ -6,7 +6,10 @@ import faker from "faker";
 import { ATTRIBUTES_DETAILS } from "../../../elements/attribute/attributes_details";
 import { ATTRIBUTES_LIST } from "../../../elements/attribute/attributes_list";
 import { urlList } from "../../../fixtures/urlList";
-import { getAttribute } from "../../../support/api/requests/Attribute";
+import {
+  createAttribute,
+  getAttribute
+} from "../../../support/api/requests/Attribute";
 import { deleteAttributesStartsWith } from "../../../support/api/utils/attributes/attributeUtils";
 import { expectCorrectDataInAttribute } from "../../../support/api/utils/attributes/checkAttributeData";
 import filterTests from "../../../support/filterTests";
@@ -20,7 +23,9 @@ filterTests({ definedTags: ["all"] }, () => {
       "MULTISELECT",
       "FILE",
       "RICH_TEXT",
-      "BOOLEAN"
+      "BOOLEAN",
+      "DATE",
+      "DATE_TIME"
     ];
     const attributeReferenceType = ["PRODUCT", "PAGE"];
     const attributeNumericType = [
@@ -43,6 +48,7 @@ filterTests({ definedTags: ["all"] }, () => {
         .get(ATTRIBUTES_DETAILS.pageTypeAttributeCheckbox)
         .click();
     });
+
     attributesTypes.forEach(attributeType => {
       it(`should create ${attributeType} attribute`, () => {
         const attributeName = `${startsWith}${faker.datatype.number()}`;
