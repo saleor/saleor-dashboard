@@ -5,14 +5,14 @@ export const isSupported = !!(
 );
 
 export async function login<T>(
-  loginFn: (id: string, password: string) => T
+  loginFn: (id: string, password: string) => Promise<T>
 ): Promise<T | null> {
   let result: T;
 
   try {
     const credential = await navigator.credentials.get({ password: true });
     if (credential instanceof PasswordCredential) {
-      result = loginFn(credential.id, credential.password);
+      result = await loginFn(credential.id, credential.password);
     }
   } catch {
     result = null;

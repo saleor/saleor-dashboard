@@ -18,7 +18,7 @@ jobs:
         # Search for CYPRESS_API_URI in PR description and use default if not defined
         env:
           pull_request_body: ${{ github.event.pull_request.body }}
-          prefix: CYPRESS_API_URI=
+          prefix: API_URI=
           pattern: (http|https)://[a-zA-Z0-9.-]+/graphql/?
           fallback_uri: ${{ secrets.CYPRESS_API_URI }}
         run: |

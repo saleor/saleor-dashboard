@@ -42,7 +42,7 @@ export function createShipping({
 }
 export function createShippingRate({ name, shippingZoneId }) {
   return shippingMethodRequest
-    .createShippingRate({ name, shippingZoneId })
+    .createShippingRate({ name, shippingZone: shippingZoneId })
     .its("body.data.shippingPriceCreate.shippingMethod");
 }
 
