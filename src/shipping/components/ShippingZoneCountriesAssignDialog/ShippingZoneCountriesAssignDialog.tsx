@@ -16,13 +16,13 @@ import Form from "@saleor/components/Form";
 import FormSpacer from "@saleor/components/FormSpacer";
 import Hr from "@saleor/components/Hr";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
+import { ShopCountries_shop_countries } from "@saleor/components/Shop/types/ShopCountries";
 import { ShopInfo_shop_countries } from "@saleor/components/Shop/types/ShopInfo";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import {
   getCountrySelectionMap,
   isRestWorldCountriesSelected
 } from "@saleor/shipping/handlers";
-import { ShippingCountriesNotAssigned_shop_countries } from "@saleor/shipping/types/ShippingCountriesNotAssigned";
 import useScrollableDialogStyle from "@saleor/styles/useScrollableDialogStyle";
 import { filter } from "fuzzaldrin";
 import React from "react";
@@ -38,7 +38,7 @@ interface FormData {
 export interface ShippingZoneCountriesAssignDialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
   countries: ShopInfo_shop_countries[];
-  restWorldCountries: ShippingCountriesNotAssigned_shop_countries[];
+  restWorldCountries: ShopCountries_shop_countries[];
   initial: string[];
   open: boolean;
   onClose: () => void;

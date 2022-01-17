@@ -1,3 +1,4 @@
+import { useShopCountries } from "@saleor/components/Shop/query";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import useShop from "@saleor/hooks/useShop";
@@ -10,7 +11,6 @@ import ShippingZoneCreatePage, {
   ShippingZoneCreateFormData
 } from "../components/ShippingZoneCreatePage";
 import { useShippingZoneCreate } from "../mutations";
-import { useShippingCountriesNotAssigned } from "../queries";
 import { shippingZonesListUrl, shippingZoneUrl } from "../urls";
 
 const ShippingZoneCreate: React.FC<{}> = () => {
@@ -19,7 +19,13 @@ const ShippingZoneCreate: React.FC<{}> = () => {
   const shop = useShop();
   const intl = useIntl();
 
-  const { data: restWorldCountries } = useShippingCountriesNotAssigned({});
+  const { data: restWorldCountries } = useShopCountries({
+    variables: {
+      filter: {
+        inShippingZones: false
+      }
+    }
+  });
 
   const [createShippingZone, createShippingZoneOpts] = useShippingZoneCreate({
     onCompleted: data => {

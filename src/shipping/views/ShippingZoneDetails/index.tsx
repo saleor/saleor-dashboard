@@ -2,6 +2,7 @@ import { DialogContentText } from "@material-ui/core";
 import ActionDialog from "@saleor/components/ActionDialog";
 import useAppChannel from "@saleor/components/AppLayout/AppChannelContext";
 import NotFoundPage from "@saleor/components/NotFoundPage";
+import { useShopCountries } from "@saleor/components/Shop/query";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@saleor/config";
 import { PAGINATE_BY } from "@saleor/config";
 import { useLocalPaginationState } from "@saleor/hooks/useLocalPaginator";
@@ -43,10 +44,7 @@ import {
 } from "../../../types/globalTypes";
 import ShippingZoneDetailsPage from "../../components/ShippingZoneDetailsPage";
 import { ShippingZoneUpdateFormData } from "../../components/ShippingZoneDetailsPage/types";
-import {
-  useShippingCountriesNotAssigned,
-  useShippingZone
-} from "../../queries";
+import { useShippingZone } from "../../queries";
 import {
   shippingPriceRatesEditUrl,
   shippingPriceRatesUrl,
@@ -72,7 +70,13 @@ const ShippingZoneDetails: React.FC<ShippingZoneDetailsProps> = ({
   const intl = useIntl();
   const shop = useShop();
 
-  const { data: restWorldCountries } = useShippingCountriesNotAssigned({});
+  const { data: restWorldCountries } = useShopCountries({
+    variables: {
+      filter: {
+        inShippingZones: false
+      }
+    }
+  });
 
   const [paginationState] = useLocalPaginationState(PAGINATE_BY);
 
