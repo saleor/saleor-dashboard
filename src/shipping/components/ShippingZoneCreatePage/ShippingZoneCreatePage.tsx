@@ -5,12 +5,12 @@ import Form from "@saleor/components/Form";
 import Grid from "@saleor/components/Grid";
 import PageHeader from "@saleor/components/PageHeader";
 import Savebar from "@saleor/components/Savebar";
+import { ShopCountries_shop_countries } from "@saleor/components/Shop/types/ShopCountries";
 import { CountryFragment } from "@saleor/fragments/types/CountryFragment";
 import { ShippingErrorFragment } from "@saleor/fragments/types/ShippingErrorFragment";
 import { sectionNames } from "@saleor/intl";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import { Backlink } from "@saleor/macaw-ui";
-import { ShippingCountriesNotAssigned_shop_countries } from "@saleor/shipping/types/ShippingCountriesNotAssigned";
 import React from "react";
 import { defineMessages, useIntl } from "react-intl";
 
@@ -40,7 +40,7 @@ const messages = defineMessages({
 
 export interface ShippingZoneCreatePageProps {
   countries: CountryFragment[];
-  restWorldCountries: ShippingCountriesNotAssigned_shop_countries[];
+  restWorldCountries: ShopCountries_shop_countries[];
   disabled: boolean;
   errors: ShippingErrorFragment[];
   saveButtonBarState: ConfirmButtonTransitionState;
