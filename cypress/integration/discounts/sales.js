@@ -3,32 +3,29 @@
 
 import faker from "faker";
 
-import { SALES_SELECTORS } from "../../../elements/discounts/sales";
-import { BUTTON_SELECTORS } from "../../../elements/shared/button-selectors";
-import { SHARED_ELEMENTS } from "../../../elements/shared/sharedElements";
-import { saleDetailsUrl } from "../../../fixtures/urlList";
-import { createCheckout } from "../../../support/api/requests/Checkout";
-import { updateSale } from "../../../support/api/requests/Discounts/Sales";
-import {
-  createVariant,
-  getVariant
-} from "../../../support/api/requests/Product";
-import { getDefaultChannel } from "../../../support/api/utils/channelsUtils";
+import { SALES_SELECTORS } from "../../elements/discounts/sales";
+import { BUTTON_SELECTORS } from "../../elements/shared/button-selectors";
+import { SHARED_ELEMENTS } from "../../elements/shared/sharedElements";
+import { saleDetailsUrl } from "../../fixtures/urlList";
+import { createCheckout } from "../../support/api/requests/Checkout";
+import { updateSale } from "../../support/api/requests/Discounts/Sales";
+import { createVariant, getVariant } from "../../support/api/requests/Product";
+import { getDefaultChannel } from "../../support/api/utils/channelsUtils";
 import {
   createSaleInChannel,
   createSaleInChannelWithProduct,
   deleteSalesStartsWith
-} from "../../../support/api/utils/discounts/salesUtils";
+} from "../../support/api/utils/discounts/salesUtils";
 import {
   createProductInChannel,
   createTypeAttributeAndCategoryForProduct,
   deleteProductsStartsWith
-} from "../../../support/api/utils/products/productsUtils";
+} from "../../support/api/utils/products/productsUtils";
 import {
   createShipping,
   deleteShippingStartsWith
-} from "../../../support/api/utils/shippingUtils";
-import filterTests from "../../../support/filterTests";
+} from "../../support/api/utils/shippingUtils";
+import filterTests from "../../support/filterTests";
 
 filterTests({ definedTags: ["all"] }, () => {
   describe("Create sale with assigned products", () => {

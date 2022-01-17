@@ -10,6 +10,8 @@ export const ATTRIBUTES_DETAILS = {
   },
   attributesInputTypes: {
     DROPDOWN: '[data-test-id="DROPDOWN"]',
+    DATE: '[data-test-id="DATE"]',
+    DATE_TIME: '[data-test-id="DATE_TIME"]',
     MULTISELECT: '[data-test-id="MULTISELECT"]',
     FILE: '[data-test-id="FILE"]',
     REFERENCE: '[data-test-id="REFERENCE"]',
