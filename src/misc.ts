@@ -2,11 +2,9 @@ import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import moment from "moment-timezone";
 import { MutationFunction, MutationResult } from "react-apollo";
 import { IntlShape } from "react-intl";
-import urlJoin from "url-join";
 
 import { StatusType } from "./components/StatusChip/types";
 import { StatusLabelProps } from "./components/StatusLabel";
-import { APP_MOUNT_URI } from "./config";
 import { AddressType, AddressTypeInput } from "./customers/types";
 import {
   commonStatusMessages,
@@ -289,10 +287,6 @@ export function getUserInitials(user?: User) {
         : user.email.slice(0, 2)
       ).toUpperCase()
     : undefined;
-}
-
-export function createHref(url: string) {
-  return urlJoin(APP_MOUNT_URI, url);
 }
 
 interface AnyEvent {
