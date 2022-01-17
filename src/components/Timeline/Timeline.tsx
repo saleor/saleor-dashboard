@@ -117,7 +117,6 @@ export const TimelineAddNote: React.FC<TimelineAddNoteProps> = props => {
                 className={classes.button}
                 disabled={disabled}
                 onClick={e => submit(e)}
-                disabled={disabled}
               >
                 <FormattedMessage
                   defaultMessage="Send"

@@ -1,16 +1,11 @@
-import {
-  Button,
-  Card,
-  CardContent,
-  Divider,
-  Typography
-} from "@material-ui/core";
+import { Card, CardContent, Divider, Typography } from "@material-ui/core";
 import VerticalSpacer from "@saleor/apps/components/VerticalSpacer";
 import CardSpacer from "@saleor/components/CardSpacer";
 import CardTitle from "@saleor/components/CardTitle";
 import Skeleton from "@saleor/components/Skeleton";
 import GiftCardTagInput from "@saleor/giftCards/components/GiftCardTagInput";
 import GiftCardUpdateExpirySelect from "@saleor/giftCards/GiftCardUpdate/GiftCardUpdateExpirySelect";
+import { Button } from "@saleor/macaw-ui";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -40,7 +35,6 @@ const GiftCardUpdateDetailsCard: React.FC = () => {
           !giftCard?.isExpired && (
             <Button
               data-test-id="set-balance-button"
-              color="primary"
               onClick={openSetBalanceDialog}
             >
               {intl.formatMessage(messages.setBalanceButtonLabel)}
@@ -56,7 +50,7 @@ const GiftCardUpdateDetailsCard: React.FC = () => {
               <CardSpacer />
               <Divider />
               <CardSpacer />
-              <Typography>
+              <Typography color="textSecondary">
                 {intl.formatMessage(messages.tagInputLabel)}
               </Typography>
               <VerticalSpacer />

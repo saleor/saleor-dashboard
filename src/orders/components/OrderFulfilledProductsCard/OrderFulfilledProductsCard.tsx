@@ -1,8 +1,9 @@
-import { Card, IconButton, TableBody } from "@material-ui/core";
+import { Card, TableBody } from "@material-ui/core";
 import CardSpacer from "@saleor/components/CardSpacer";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import { OrderDetailsFragment } from "@saleor/fragments/types/OrderDetailsFragment";
 import TrashIcon from "@saleor/icons/Trash";
+import { IconButton } from "@saleor/macaw-ui";
 import { mergeRepeatedOrderLines } from "@saleor/orders/utils/data";
 import React from "react";
 
@@ -74,6 +75,7 @@ const OrderFulfilledProductsCard: React.FC<OrderFulfilledProductsCardProps> = pr
           toolbar={
             cancelableStatuses.includes(fulfillment?.status) && (
               <IconButton
+                variant="secondary"
                 className={classes.deleteIcon}
                 onClick={onOrderFulfillmentCancel}
                 data-test-id="cancelFulfillmentButton"

@@ -1,49 +1,49 @@
-import { makeStyles, Typography, TypographyProps } from "@material-ui/core";
-import HorizontalSpacer from "@saleor/apps/components/HorizontalSpacer";
-import classNames from "classnames";
+import useLocale from "@saleor/hooks/useLocale";
+import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
+
+const useStyles = makeStyles(
+  {
+    currency: {
+      fontSize: "0.875em",
+      marginRight: "0.5rem"
+    }
+  },
+  { name: "Money" }
+);
 
 export interface IMoney {
   amount: number;
   currency: string;
 }
 
-export interface MoneyProps extends TypographyProps {
+export interface MoneyProps {
   money: IMoney | null;
 }
 
-const useStyles = makeStyles(
-  () => ({
-    container: {
-      display: "flex",
-      alignItems: "baseline"
-    },
-    containerRight: {
-      justifyContent: "end"
-    }
-  }),
-  { name: "Money" }
-);
-
-export const Money: React.FC<MoneyProps> = ({ money, ...rest }) => {
-  const classes = useStyles({});
+export const Money: React.FC<MoneyProps> = ({ money }) => {
+  const { locale } = useLocale();
+  const classes = useStyles();
 
   if (!money) {
     return null;
   }
 
+  const currencyFractionDigits = new Intl.NumberFormat(locale, {
+    style: "currency",
+    currency: money.currency
+  }).resolvedOptions().maximumFractionDigits;
+
+  const amount = (12345.678).toLocaleString(locale, {
+    maximumFractionDigits: currencyFractionDigits,
+    minimumFractionDigits: currencyFractionDigits
+  });
+
   return (
-    <div
-      className={classNames(classes.container, {
-        [classes.containerRight]: rest.align === "right"
-      })}
-    >
-      <Typography variant="caption" {...rest}>
-        {money.currency}
-      </Typography>
-      <HorizontalSpacer spacing={0.5} />
-      <Typography {...rest}>{money.amount.toFixed(2)}</Typography>
-    </div>
+    <>
+      <span className={classes.currency}>{money.currency}</span>
+      {amount}
+    </>
   );
 };
 

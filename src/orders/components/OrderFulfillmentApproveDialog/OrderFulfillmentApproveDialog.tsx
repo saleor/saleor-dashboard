@@ -1,19 +1,17 @@
 import {
-  Button,
   Dialog,
   DialogActions,
   DialogContent,
   DialogContentText,
   DialogTitle
 } from "@material-ui/core";
-import ConfirmButton, {
-  ConfirmButtonTransitionState
-} from "@saleor/components/ConfirmButton";
+import ConfirmButton from "@saleor/components/ConfirmButton";
 import ControlledCheckbox from "@saleor/components/ControlledCheckbox";
 import Form from "@saleor/components/Form";
 import FormSpacer from "@saleor/components/FormSpacer";
 import { OrderErrorFragment } from "@saleor/fragments/types/OrderErrorFragment";
 import { buttonMessages } from "@saleor/intl";
+import { Button, ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import getOrderErrorMessage from "@saleor/utils/errors/order";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -28,8 +26,8 @@ export interface OrderFulfillmentAcceptDialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
   errors: OrderErrorFragment[];
   open: boolean;
-  onClose();
-  onConfirm(data: OrderFulfillmentAcceptDialogFormData);
+  onClose(): void;
+  onConfirm(data: OrderFulfillmentAcceptDialogFormData): void;
 }
 
 const OrderFulfillmentAcceptDialog: React.FC<OrderFulfillmentAcceptDialogProps> = props => {
@@ -76,7 +74,6 @@ const OrderFulfillmentAcceptDialog: React.FC<OrderFulfillmentAcceptDialogProps> 
               <ConfirmButton
                 data-test="submit"
                 transitionState={confirmButtonState}
-                variant="contained"
                 onClick={submit}
               >
                 <FormattedMessage {...buttonMessages.approve} />

@@ -7,7 +7,9 @@ export const useGiftCardExpirySelectStyles = makeStyles(
       flexDirection: "row"
     },
     dateField: {
-      width: 400
+      display: "block",
+      width: 400,
+      marginTop: theme.spacing(2)
     },
     periodField: {
       display: "flex"

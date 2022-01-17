@@ -1,5 +1,4 @@
 import {
-  Button,
   Card,
   CardContent,
   ClickAwayListener,
@@ -29,7 +28,13 @@ import { ProductErrorFragment } from "@saleor/fragments/types/ProductErrorFragme
 import { WarehouseFragment } from "@saleor/fragments/types/WarehouseFragment";
 import { FormChange, FormErrors } from "@saleor/hooks/useForm";
 import { FormsetAtomicData, FormsetChange } from "@saleor/hooks/useFormset";
-import { DeleteIcon, IconButton, makeStyles, PlusIcon } from "@saleor/macaw-ui";
+import {
+  Button,
+  DeleteIcon,
+  IconButton,
+  makeStyles,
+  PlusIcon
+} from "@saleor/macaw-ui";
 import { ICONBUTTON_SIZE } from "@saleor/macaw-ui";
 import { renderCollection } from "@saleor/misc";
 import { getFormErrors, getProductErrorMessage } from "@saleor/utils/errors";
@@ -486,8 +491,7 @@ const ProductStocks: React.FC<ProductStocksProps> = ({
           )}
           <Button
             name="hasPreorderEndDate"
-            color="primary"
-            variant="text"
+            variant="tertiary"
             disabled={disabled}
             onClick={() =>
               onFormDataChange({

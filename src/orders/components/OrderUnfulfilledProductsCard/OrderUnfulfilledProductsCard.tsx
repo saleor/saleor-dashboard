@@ -1,4 +1,4 @@
-import { Card, CardActions, TableBody } from "@material-ui/core";
+import { Card, CardActions, TableBody, Typography } from "@material-ui/core";
 import CardSpacer from "@saleor/components/CardSpacer";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import { commonMessages } from "@saleor/intl";

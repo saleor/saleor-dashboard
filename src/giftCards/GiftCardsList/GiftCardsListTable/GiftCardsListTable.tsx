@@ -9,6 +9,7 @@ import HorizontalSpacer from "@saleor/apps/components/HorizontalSpacer";
 import Checkbox from "@saleor/components/Checkbox";
 import DeleteIconButton from "@saleor/components/DeleteIconButton";
 import Link from "@saleor/components/Link";
+import Money from "@saleor/components/Money";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
 import { customerUrl } from "@saleor/customers/urls";
@@ -130,13 +131,7 @@ const GiftCardsListTable: React.FC = () => {
                     )}
                   </TableCell>
                   <TableCell align="right" className={classes.colBalance}>
-                    <div className={classes.moneyContainer}>
-                      <Typography variant="caption">
-                        {currentBalance.currency}
-                      </Typography>
-                      <HorizontalSpacer spacing={0.5} />
-                      <Typography>{currentBalance.amount}</Typography>
-                    </div>
+                    <Money money={currentBalance} />
                   </TableCell>
                   <TableCell className={classes.colDelete}>
                     <DeleteIconButton

@@ -129,9 +129,9 @@ const CustomerOrders: React.FC<CustomerOrdersProps> = props => {
                     <Skeleton />
                   )}
                 </TableCell>
-                <TableCell className={classes.textRight}>
+                <TableCell className={classes.textRight} align="right">
                   {maybe(() => order.total.gross) ? (
-                    <Money money={order.total.gross} align="right" />
+                    <Money money={order.total.gross} />
                   ) : (
                     <Skeleton />
                   )}
