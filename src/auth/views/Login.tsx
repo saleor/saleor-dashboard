@@ -77,7 +77,7 @@ const LoginView: React.FC<LoginViewProps> = ({ params }) => {
       state
     });
     if (result && !result?.errors?.length) {
-      navigate(fallbackUri ?? APP_DEFAULT_URI);
+      navigate(fallbackUri ?? "/");
       setFallbackUri(null);
     }
   };
