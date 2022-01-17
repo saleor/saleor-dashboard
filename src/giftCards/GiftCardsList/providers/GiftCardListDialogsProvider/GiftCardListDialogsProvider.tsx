@@ -1,7 +1,8 @@
+import { Dialog } from "@material-ui/core";
 import GiftCardListPageDeleteDialog from "@saleor/giftCards/components/GiftCardDeleteDialog/GiftCardListPageDeleteDialog";
 import GiftCardBulkCreateDialog from "@saleor/giftCards/GiftCardBulkCreateDialog";
-import GiftCardCreateDialog from "@saleor/giftCards/GiftCardCreateDialog";
-import GiftCardExportDialog from "@saleor/giftCards/GiftCardExportDialog";
+import GiftCardCreateDialogContent from "@saleor/giftCards/GiftCardCreateDialog";
+import GiftCardExportDialogContent from "@saleor/giftCards/GiftCardExportDialogContent";
 import { giftCardListUrl } from "@saleor/giftCards/urls";
 import useNavigator from "@saleor/hooks/useNavigator";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
@@ -78,16 +79,19 @@ const GiftCardListDialogsProvider: React.FC<GiftCardListDialogsProviderProps> = 
   return (
     <GiftCardListDialogsContext.Provider value={providerValues}>
       {children}
-      <GiftCardCreateDialog
-        open={isDialogOpen(CREATE)}
-        onClose={onClose}
-        refetchQueries={[GIFT_CARD_LIST_QUERY]}
-      />
+      <Dialog open={isDialogOpen(CREATE)} maxWidth="sm">
+        <GiftCardCreateDialogContent
+          onClose={onClose}
+          refetchQueries={[GIFT_CARD_LIST_QUERY]}
+        />
+      </Dialog>
       <GiftCardListPageDeleteDialog
         open={isDialogOpen(DELETE)}
         onClose={onClose}
       />
-      <GiftCardExportDialog open={isDialogOpen(EXPORT)} onClose={onClose} />
+      <Dialog open={isDialogOpen(EXPORT)} maxWidth="sm">
+        <GiftCardExportDialogContent onClose={onClose} />
+      </Dialog>
       <GiftCardBulkCreateDialog
         open={isDialogOpen(BULK_CREATE)}
         onClose={onClose}

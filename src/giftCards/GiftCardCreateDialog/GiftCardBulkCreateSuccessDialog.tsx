@@ -12,7 +12,7 @@ import { useState } from "react";
 import { FormattedMessage } from "react-intl";
 import { useIntl } from "react-intl";
 
-import GiftCardExportDialog from "../GiftCardExportDialog";
+import GiftCardExportDialogContent from "../GiftCardExportDialogContent";
 import { giftCardCreateMessages as messages } from "./messages";
 
 interface GiftCardBulkCreateSuccessDialogProps extends DialogProps {
@@ -56,11 +56,12 @@ const GiftCardBulkCreateSuccessDialog: React.FC<GiftCardBulkCreateSuccessDialogP
           </Button>
         </DialogActions>
       </Dialog>
-      <GiftCardExportDialog
-        idsToExport={idsToExport}
-        onClose={onExportDialogClose}
-        open={openEmailExport}
-      />
+      <Dialog open={openEmailExport} maxWidth="sm">
+        <GiftCardExportDialogContent
+          idsToExport={idsToExport}
+          onClose={onExportDialogClose}
+        />
+      </Dialog>
     </>
   );
 };
