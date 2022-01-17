@@ -223,32 +223,34 @@ const SingleAutocompleteSelectFieldComponent: React.FC<SingleAutocompleteSelectF
                   ref={anchor}
                 />
                 {isOpen && (!!inputValue || !!choices.length) && (
-                  <Popper anchorEl={anchor.current} open={isOpen}>
-                    {() => (
-                      <SingleAutocompleteSelectFieldContent
-                        add={
-                          !!add && {
-                            ...add,
-                            onClick: () => {
-                              add.onClick();
-                              closeMenu();
-                            }
+                  <Popper
+                    anchorEl={anchor.current}
+                    open={isOpen}
+                    style={{ width: anchor.current.clientWidth, zIndex: 10 }}
+                    placement="bottom-end"
+                  >
+                    <SingleAutocompleteSelectFieldContent
+                      add={
+                        !!add && {
+                          ...add,
+                          onClick: () => {
+                            add.onClick();
+                            closeMenu();
                           }
                         }
-                        choices={choices}
-                        displayCustomValue={displayCustomValue}
-                        emptyOption={emptyOption}
-                        getItemProps={getItemProps}
-                        hasMore={hasMore}
-                        highlightedIndex={highlightedIndex}
-                        loading={loading}
-                        inputValue={inputValue}
-                        isCustomValueSelected={isCustomValueSelected}
-                        selectedItem={selectedItem}
-                        onFetchMore={onFetchMore}
-                        style={{ width: anchor.current.clientWidth }}
-                      />
-                    )}
+                      }
+                      choices={choices}
+                      displayCustomValue={displayCustomValue}
+                      emptyOption={emptyOption}
+                      getItemProps={getItemProps}
+                      hasMore={hasMore}
+                      highlightedIndex={highlightedIndex}
+                      loading={loading}
+                      inputValue={inputValue}
+                      isCustomValueSelected={isCustomValueSelected}
+                      selectedItem={selectedItem}
+                      onFetchMore={onFetchMore}
+                    />
                   </Popper>
                 )}
               </div>

@@ -68,6 +68,7 @@ const useStyles = makeStyles(
           ? theme.palette.grey[50]
           : theme.palette.grey[900],
       bottom: 0,
+      color: theme.palette.primary.main,
       display: "flex",
       height: 30,
       justifyContent: "center",
@@ -103,11 +104,8 @@ const useStyles = makeStyles(
     root: {
       borderBottomLeftRadius: 8,
       borderBottomRightRadius: 8,
-      left: 0,
-      marginTop: theme.spacing(),
+      margin: theme.spacing(2, 0),
       overflow: "hidden",
-      position: "absolute",
-      right: 0,
       zIndex: 22
     }
   }),
