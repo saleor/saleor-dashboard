@@ -1,4 +1,4 @@
-import { Dialog, DialogTitle } from "@material-ui/core";
+import { DialogTitle } from "@material-ui/core";
 import useCurrentDate from "@saleor/hooks/useCurrentDate";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { DialogProps } from "@saleor/types";
@@ -21,14 +21,14 @@ import {
   getGiftCardExpiryInputData
 } from "./utils";
 
-interface GiftCardCreateDialogProps extends DialogProps {
+interface GiftCardCreateDialogContentProps
+  extends Pick<DialogProps, "onClose"> {
   refetchQueries: string[];
   initialCustomer?: GiftCardCreateFormCustomer | null;
 }
 
-const GiftCardCreateDialog: React.FC<GiftCardCreateDialogProps> = ({
+const GiftCardCreateDialogContent: React.FC<GiftCardCreateDialogContentProps> = ({
   onClose,
-  open,
   refetchQueries,
   initialCustomer
 }) => {
@@ -94,13 +94,10 @@ const GiftCardCreateDialog: React.FC<GiftCardCreateDialogProps> = ({
 
   const handleClose = () => {
     onClose();
-    // dialog closing animation runs slower than prop change
-    // and we don't want to show the form for a split second
-    setTimeout(() => setCardCode(null), 0);
   };
 
   return (
-    <Dialog open={open} maxWidth="sm">
+    <>
       <DialogTitle>{intl.formatMessage(messages.title)}</DialogTitle>
       <ContentWithProgress>
         {!loadingChannelCurrencies &&
@@ -119,8 +116,8 @@ const GiftCardCreateDialog: React.FC<GiftCardCreateDialogProps> = ({
             />
           ))}
       </ContentWithProgress>
-    </Dialog>
+    </>
   );
 };
 
-export default GiftCardCreateDialog;
+export default GiftCardCreateDialogContent;

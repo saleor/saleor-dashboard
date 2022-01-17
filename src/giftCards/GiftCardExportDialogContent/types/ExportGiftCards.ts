@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { ExportGiftCardsInput, ExportErrorCode } from "./../../../types/globalTypes";
+import { ExportGiftCardsInput, ExportErrorCode } from "../../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: ExportGiftCards

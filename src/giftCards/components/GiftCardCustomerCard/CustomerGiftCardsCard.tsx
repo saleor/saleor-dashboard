@@ -1,10 +1,10 @@
-import { Button, Card, CardActions } from "@material-ui/core";
+import { Button, Card, CardActions, Dialog } from "@material-ui/core";
 import VerticalSpacer from "@saleor/apps/components/VerticalSpacer";
 import CardTitle from "@saleor/components/CardTitle";
 import CollectionWithDividers from "@saleor/components/CollectionWithDividers";
 import Skeleton from "@saleor/components/Skeleton";
 import { useCustomerDetails } from "@saleor/customers/hooks/useCustomerDetails";
-import GiftCardCreateDialog from "@saleor/giftCards/GiftCardCreateDialog/GiftCardCreateDialog";
+import GiftCardCreateDialogContent from "@saleor/giftCards/GiftCardCreateDialog/GiftCardCreateDialogContent";
 import { getExtendedGiftCard } from "@saleor/giftCards/GiftCardUpdate/providers/GiftCardDetailsProvider/utils";
 import { giftCardListUrl } from "@saleor/giftCards/urls";
 import useNavigator from "@saleor/hooks/useNavigator";
@@ -110,15 +110,16 @@ const CustomerGiftCardsCard: React.FC = () => {
           </Button>
         </CardActions>
       </Card>
-      <GiftCardCreateDialog
-        open={openCreateDialog}
-        onClose={closeCreateDialog}
-        refetchQueries={[CUSTOMER_GIFT_CARD_LIST_QUERY]}
-        initialCustomer={{
-          email: customer?.email,
-          name: getFullName(customer)
-        }}
-      />
+      <Dialog open={openCreateDialog} maxWidth="sm">
+        <GiftCardCreateDialogContent
+          onClose={closeCreateDialog}
+          refetchQueries={[CUSTOMER_GIFT_CARD_LIST_QUERY]}
+          initialCustomer={{
+            email: customer?.email,
+            name: getFullName(customer)
+          }}
+        />
+      </Dialog>
     </>
   );
 };

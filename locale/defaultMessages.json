@@ -3613,31 +3613,31 @@
     "context": "issue gift card dialog title",
     "string": "Issue gift card"
   },
-  "src_dot_giftCards_dot_GiftCardExportDialog_dot_2086397658": {
+  "src_dot_giftCards_dot_GiftCardExportDialogContent_dot_2086397658": {
     "context": "export all items to csv file",
     "string": "All gift cards ({number})"
   },
-  "src_dot_giftCards_dot_GiftCardExportDialog_dot_701638571": {
+  "src_dot_giftCards_dot_GiftCardExportDialogContent_dot_701638571": {
     "context": "export selected items to csv file",
     "string": "Selected giftCards ({number})"
   },
-  "src_dot_giftCards_dot_GiftCardExportDialog_dot_confirmButtonLabel": {
+  "src_dot_giftCards_dot_GiftCardExportDialogContent_dot_confirmButtonLabel": {
     "context": "gift card export dialog confirm button label",
     "string": "Export codes"
   },
-  "src_dot_giftCards_dot_GiftCardExportDialog_dot_exportTypeLabel": {
+  "src_dot_giftCards_dot_GiftCardExportDialogContent_dot_exportTypeLabel": {
     "context": "gift card export type label",
     "string": "gift cards"
   },
-  "src_dot_giftCards_dot_GiftCardExportDialog_dot_successAlertDescription": {
+  "src_dot_giftCards_dot_GiftCardExportDialogContent_dot_successAlertDescription": {
     "context": "gift card export success alert description",
     "string": "We are currently exporting your gift card codes. As soon as your file is available it will be sent to your email address"
   },
-  "src_dot_giftCards_dot_GiftCardExportDialog_dot_successAlertTitle": {
+  "src_dot_giftCards_dot_GiftCardExportDialogContent_dot_successAlertTitle": {
     "context": "gift card export csv success alert title",
     "string": "Exporting CSV"
   },
-  "src_dot_giftCards_dot_GiftCardExportDialog_dot_title": {
+  "src_dot_giftCards_dot_GiftCardExportDialogContent_dot_title": {
     "context": "gift card export dialog title",
     "string": "Export Gift Card Codes"
   },

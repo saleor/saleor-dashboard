@@ -1,9 +1,4 @@
-import {
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle
-} from "@material-ui/core";
+import { DialogActions, DialogContent, DialogTitle } from "@material-ui/core";
 import ConfirmButton from "@saleor/components/ConfirmButton";
 import { Task } from "@saleor/containers/BackgroundTasks/types";
 import useBackgroundTask from "@saleor/hooks/useBackgroundTask";
@@ -28,9 +23,9 @@ import { useGiftCardExportMutation } from "./mutations";
 import { ExportGiftCards } from "./types/ExportGiftCards";
 import { getExportGiftCardsInput } from "./utils";
 
-const GiftCardExportDialog: React.FC<DialogProps & {
+const GiftCardExportDialog: React.FC<Pick<DialogProps, "onClose"> & {
   idsToExport?: string[] | null;
-}> = ({ onClose, open, idsToExport }) => {
+}> = ({ onClose, idsToExport }) => {
   const intl = useIntl();
   const notify = useNotifier();
   const { queue } = useBackgroundTask();
@@ -115,7 +110,7 @@ const GiftCardExportDialog: React.FC<DialogProps & {
   };
 
   return (
-    <Dialog onClose={onClose} open={open} maxWidth="sm" fullWidth>
+    <>
       <DialogTitle>
         <FormattedMessage {...messages.title} />
       </DialogTitle>
@@ -148,7 +143,7 @@ const GiftCardExportDialog: React.FC<DialogProps & {
           <FormattedMessage {...messages.confirmButtonLabel} />
         </ConfirmButton>
       </DialogActions>
-    </Dialog>
+    </>
   );
 };
 
