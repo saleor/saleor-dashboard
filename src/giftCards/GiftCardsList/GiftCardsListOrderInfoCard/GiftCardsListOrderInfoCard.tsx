@@ -1,4 +1,5 @@
-import { Link, Typography } from "@material-ui/core";
+import { Typography } from "@material-ui/core";
+import Link from "@saleor/components/Link";
 import { Alert } from "@saleor/macaw-ui";
 import { orderGiftCardBoughtPath } from "@saleor/orders/urls";
 import React from "react";

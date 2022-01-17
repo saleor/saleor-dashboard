@@ -2,12 +2,12 @@ import { Button, Card, CardActions, Dialog } from "@material-ui/core";
 import VerticalSpacer from "@saleor/apps/components/VerticalSpacer";
 import CardTitle from "@saleor/components/CardTitle";
 import CollectionWithDividers from "@saleor/components/CollectionWithDividers";
+import Link from "@saleor/components/Link";
 import Skeleton from "@saleor/components/Skeleton";
 import { useCustomerDetails } from "@saleor/customers/hooks/useCustomerDetails";
 import GiftCardCreateDialogContent from "@saleor/giftCards/GiftCardCreateDialog/GiftCardCreateDialogContent";
 import { getExtendedGiftCard } from "@saleor/giftCards/GiftCardUpdate/providers/GiftCardDetailsProvider/utils";
 import { giftCardListUrl } from "@saleor/giftCards/urls";
-import useNavigator from "@saleor/hooks/useNavigator";
 import { getFullName } from "@saleor/misc";
 import { mapEdgesToItems } from "@saleor/utils/maps";
 import * as React from "react";
@@ -24,7 +24,6 @@ import { useCardActionsStyles } from "./styles";
 
 const CustomerGiftCardsCard: React.FC = () => {
   const intl = useIntl();
-  const navigate = useNavigator();
   const [openCreateDialog, setOpenCreateDialog] = useState(false);
   const customerDetails = useCustomerDetails();
   const customer = customerDetails?.customer?.user;
@@ -47,13 +46,9 @@ const CustomerGiftCardsCard: React.FC = () => {
     buttonPosition: giftCards?.length > 0 ? "right" : "left"
   });
 
-  const handleViewAllButton = () => {
-    navigate(
-      giftCardListUrl({
-        usedBy: [id]
-      })
-    );
-  };
+  const viewAllGiftCardsUrl = giftCardListUrl({
+    usedBy: [id]
+  });
 
   const handleCreateNewCardButton = () => {
     setOpenCreateDialog(true);
@@ -69,7 +64,8 @@ const CustomerGiftCardsCard: React.FC = () => {
               <Button
                 variant="text"
                 color="primary"
-                onClick={handleViewAllButton}
+                href={viewAllGiftCardsUrl}
+                component={Link}
               >
                 <FormattedMessage
                   {...messages.customerGiftCardsViewAllButton}
