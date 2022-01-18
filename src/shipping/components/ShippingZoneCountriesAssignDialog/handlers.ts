@@ -40,7 +40,11 @@ export function createRestOfTheWorldChangeHandler(
         target: {
           name: "countries" as keyof FormData,
           value: selectedCountries.filter(
-            countryCode => !countrySelectionMap[countryCode]
+            countryCode =>
+              !(
+                countrySelectionMap[countryCode] &&
+                restWorldCountries.includes(countryCode)
+              )
           )
         }
       } as any);

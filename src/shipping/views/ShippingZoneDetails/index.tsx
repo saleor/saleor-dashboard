@@ -76,7 +76,7 @@ const ShippingZoneDetails: React.FC<ShippingZoneDetailsProps> = ({
   const { data: restWorldCountries } = useShopCountries({
     variables: {
       filter: {
-        inShippingZones: false
+        attachedToShippingZones: false
       }
     }
   });
