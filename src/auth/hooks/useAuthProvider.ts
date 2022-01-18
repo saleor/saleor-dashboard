@@ -105,7 +105,7 @@ export function useAuthProvider({
       if (externalLogoutUrl) {
         window.location.href = externalLogoutUrl;
       } else {
-        navigate(path);
+        navigate("/");
       }
     }
 
