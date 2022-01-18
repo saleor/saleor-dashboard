@@ -23,7 +23,10 @@ import {
 import { arrayDiff } from "@saleor/utils/arrays";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
 import createMetadataUpdateHandler from "@saleor/utils/handlers/metadataUpdateHandler";
-import { mapEdgesToItems } from "@saleor/utils/maps";
+import {
+  mapCountriesToCountriesCodes,
+  mapEdgesToItems
+} from "@saleor/utils/maps";
 import {
   useMetadataUpdate,
   usePrivateMetadataUpdate
@@ -266,9 +269,12 @@ const ShippingZoneDetails: React.FC<ShippingZoneDetailsProps> = ({
       <ShippingZoneCountriesAssignDialog
         confirmButtonState={updateShippingZoneOpts.status}
         countries={shop?.countries || []}
-        restWorldCountries={restWorldCountries?.shop?.countries || []}
+        restWorldCountries={
+          mapCountriesToCountriesCodes(restWorldCountries?.shop?.countries) ||
+          []
+        }
         initial={
-          data?.shippingZone?.countries.map(country => country.code) || []
+          mapCountriesToCountriesCodes(data?.shippingZone?.countries) || []
         }
         onClose={closeModal}
         onConfirm={formData =>

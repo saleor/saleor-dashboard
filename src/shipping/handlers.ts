@@ -303,11 +303,11 @@ export function getCountrySelectionMap(
 }
 
 export function isRestWorldCountriesSelected(
-  restWorldCountries?: CountryFragment[],
+  restWorldCountries?: string[],
   countrySelectionMap?: Map<string, boolean>
 ) {
   return (
     countrySelectionMap &&
-    restWorldCountries?.every(country => countrySelectionMap[country.code])
+    restWorldCountries?.every(countryCode => countrySelectionMap[countryCode])
   );
 }

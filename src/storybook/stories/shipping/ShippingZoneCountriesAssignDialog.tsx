@@ -1,3 +1,4 @@
+import { mapCountriesToCountriesCodes } from "@saleor/utils/maps";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
@@ -7,11 +8,15 @@ import ShippingZoneCountriesAssignDialog, {
 import Decorator from "../../Decorator";
 import { countries } from "../taxes/fixtures";
 
+const initialCountries = ["PL", "GB", "DE"];
+
 const props: ShippingZoneCountriesAssignDialogProps = {
   confirmButtonState: "default",
   countries,
-  restWorldCountries: countries,
-  initial: ["PL", "GB", "DE"],
+  restWorldCountries: mapCountriesToCountriesCodes(countries).filter(
+    countryCode => !initialCountries.includes(countryCode)
+  ),
+  initial: initialCountries,
   onClose: () => undefined,
   onConfirm: () => undefined,
   open: true

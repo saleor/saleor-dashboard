@@ -21,6 +21,12 @@ export function mapEdgesToItems<T>(
   return data?.edges?.map(({ node }) => node);
 }
 
+export function mapCountriesToCountriesCodes(
+  countries: ShopInfo_shop_countries[]
+) {
+  return countries.map(country => country.code);
+}
+
 export function mapCountriesToChoices(countries: ShopInfo_shop_countries[]) {
   return countries.map(country => ({
     label: country.country,
