@@ -5,7 +5,9 @@ export const useStyles = makeStyles(
     dialogContent: {
       maxHeight: `calc(100vh - 250px)`,
       overflowY: "scroll",
-      overflowX: "hidden"
+      overflowX: "hidden",
+      padding: "24px",
+      margin: 0
     },
     scrollableWrapper: {
       maxHeight: 400,
