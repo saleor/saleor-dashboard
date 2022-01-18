@@ -57,9 +57,11 @@ interface OrderDraftDetailsProps {
 }
 
 export const isAnyAddressEditModalOpen = (uri: string | undefined): boolean =>
-  uri === "edit-customer-addresses" ||
-  uri === "edit-shipping-address" ||
-  uri === "edit-billing-address";
+  [
+    "edit-customer-addresses",
+    "edit-shipping-address",
+    "edit-billing-address"
+  ].includes(uri);
 
 export const OrderDraftDetails: React.FC<OrderDraftDetailsProps> = ({
   id,
