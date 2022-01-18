@@ -96,7 +96,7 @@ export const FilterDateTimeField: React.FC<FilterDateTimeFieldProps> = ({
           <div className={classes.inputRange}>
             <div className={classes.spacer} />
             <TextField
-              data-test-id={filterTestingContext - filter.name}
+              data-test-id={filterTestingContext + filter.name}
               data-test-range-type="max"
               fullWidth
               name={filter.name + "_max"}
