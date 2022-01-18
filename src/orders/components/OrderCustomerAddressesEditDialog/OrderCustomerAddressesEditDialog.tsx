@@ -221,7 +221,7 @@ const OrderCustomerAddressesEditDialog: React.FC<OrderCustomerAddressesEditDialo
   );
 
   const addressEditCommonProps = {
-    hideCard: !hasCustomerChanged,
+    showCard: hasCustomerChanged,
     loading,
     countryChoices,
     customerAddresses

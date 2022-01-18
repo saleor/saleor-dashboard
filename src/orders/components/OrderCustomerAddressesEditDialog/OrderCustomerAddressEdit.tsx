@@ -32,7 +32,7 @@ export interface OrderCustomerAddressEditProps {
   onChangeFormAddress: (event: React.ChangeEvent<any>) => void;
   onChangeFormAddressCountry: (event: React.ChangeEvent<any>) => void;
   onEdit?: () => void;
-  hideCard?: boolean;
+  showCard?: boolean;
 }
 
 const OrderCustomerAddressEdit: React.FC<OrderCustomerAddressEditProps> = props => {
@@ -50,7 +50,7 @@ const OrderCustomerAddressEdit: React.FC<OrderCustomerAddressEditProps> = props 
     onChangeFormAddress,
     onChangeFormAddressCountry,
     onEdit,
-    hideCard = false
+    showCard = true
   } = props;
 
   const classes = useStyles(props);
@@ -94,7 +94,7 @@ const OrderCustomerAddressEdit: React.FC<OrderCustomerAddressEditProps> = props 
         className={classes.optionLabel}
       />
       {addressInputOption === AddressInputOptionEnum.CUSTOMER_ADDRESS &&
-        !hideCard && (
+        showCard && (
           <>
             <CardSpacer />
             <CustomerAddressChoiceCard

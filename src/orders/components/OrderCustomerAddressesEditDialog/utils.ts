@@ -17,7 +17,7 @@ import {
 import { OrderCustomerAddressEditProps } from "./OrderCustomerAddressEdit";
 
 interface AddressEditCommonProps {
-  hideCard: boolean;
+  showCard: boolean;
   loading: boolean;
   countryChoices: Array<{ label: string; value: string }>;
   customerAddresses: CustomerAddresses_user_addresses[];
