@@ -108,8 +108,11 @@ filterTests({ definedTags: ["all"] }, () => {
               SHIPPING_ZONE_DETAILS.shippingRatePriceTableCell
             )
             .then(text => {
-              expect(text).to.includes(defaultChannelPrice);
-              expect(text).to.includes(defaultChannel.currencyCode);
+              const expectedValue = getFormattedCurrencyAmount(
+                defaultChannelPrice,
+                defaultChannel.currencyCode
+              );
+              expect(text).to.eq(expectedValue);
 
               enterHomePageChangeChannelAndReturn(createdChannel.name);
               cy.waitForProgressBarToNotBeVisible()
