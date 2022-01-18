@@ -7219,18 +7219,12 @@
     "context": "section header",
     "string": "Create New Shipping Zone"
   },
-  "src_dot_shipping_dot_components_dot_ShippingZoneCreatePage_dot_defaultZone": {
-    "string": "This is default shipping zone, which means that it covers all of the countries which are not assigned to other shipping zones"
-  },
   "src_dot_shipping_dot_components_dot_ShippingZoneCreatePage_dot_noCountriesAssigned": {
     "string": "Currently, there are no countries assigned to this shipping zone"
   },
   "src_dot_shipping_dot_components_dot_ShippingZoneDetailsPage_dot_countries": {
     "context": "country list header",
     "string": "Countries"
-  },
-  "src_dot_shipping_dot_components_dot_ShippingZoneDetailsPage_dot_defaultZone": {
-    "string": "This is default shipping zone, which means that it covers all of the countries which are not assigned to other shipping zones"
   },
   "src_dot_shipping_dot_components_dot_ShippingZoneDetailsPage_dot_noCountriesAssigned": {
     "string": "Currently, there are no countries assigned to this shipping zone"

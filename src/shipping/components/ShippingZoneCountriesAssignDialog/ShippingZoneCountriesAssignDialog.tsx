@@ -16,7 +16,6 @@ import Form from "@saleor/components/Form";
 import FormSpacer from "@saleor/components/FormSpacer";
 import Hr from "@saleor/components/Hr";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
-import { ShopCountries_shop_countries } from "@saleor/components/Shop/types/ShopCountries";
 import { ShopInfo_shop_countries } from "@saleor/components/Shop/types/ShopInfo";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import {
@@ -28,6 +27,10 @@ import { filter } from "fuzzaldrin";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
+import {
+  createCountryChangeHandler,
+  createRestOfTheWorldChangeHandler
+} from "./handlers";
 import { useStyles } from "./styles";
 
 interface FormData {
@@ -38,7 +41,7 @@ interface FormData {
 export interface ShippingZoneCountriesAssignDialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
   countries: ShopInfo_shop_countries[];
-  restWorldCountries: ShopCountries_shop_countries[];
+  restWorldCountries: string[];
   initial: string[];
   open: boolean;
   onClose: () => void;
@@ -81,57 +84,16 @@ const ShippingZoneCountriesAssignDialog: React.FC<ShippingZoneCountriesAssignDia
             restWorldCountries,
             countrySelectionMap
           );
-          const handleRestOfTheWorldChange = (restOfTheWorld: boolean) => {
-            if (restOfTheWorld) {
-              change({
-                target: {
-                  name: "countries" as keyof FormData,
-                  value: restWorldCountries.reduce((countries, country) => {
-                    if (
-                      countries.some(
-                        countryCode => countryCode === country.code
-                      )
-                    ) {
-                      return countries;
-                    }
-                    return [...countries, country.code];
-                  }, data.countries)
-                }
-              } as any);
-            }
-            if (!restOfTheWorld) {
-              change({
-                target: {
-                  name: "countries" as keyof FormData,
-                  value: restWorldCountries.reduce((countries, country) => {
-                    const restCountryIndex = countries.findIndex(
-                      countryCode => countryCode === country.code
-                    );
-                    if (restCountryIndex !== -1) {
-                      countries.splice(restCountryIndex, 1);
-                    }
-                    return countries;
-                  }, data.countries)
-                }
-              } as any);
-            }
-          };
-          const handleCountryChange = (
-            countryCode: string,
-            checked: boolean
-          ) => {
-            const updatedCountries = checked
-              ? [...data.countries, countryCode]
-              : data.countries.filter(
-                  selectedCountries => selectedCountries !== countryCode
-                );
-            change({
-              target: {
-                name: "countries" as keyof FormData,
-                value: updatedCountries
-              }
-            } as any);
-          };
+          const handleCountryChange = createCountryChangeHandler(
+            data.countries,
+            change
+          );
+          const handleRestOfTheWorldChange = createRestOfTheWorldChangeHandler(
+            countrySelectionMap,
+            data.countries,
+            restWorldCountries,
+            change
+          );
 
           return (
             <>
