@@ -20,7 +20,7 @@ const ShippingZoneCreate: React.FC<{}> = () => {
   const { data: restWorldCountries } = useShopCountries({
     variables: {
       filter: {
-        inShippingZones: false
+        attachedToShippingZones: false
       }
     }
   });
