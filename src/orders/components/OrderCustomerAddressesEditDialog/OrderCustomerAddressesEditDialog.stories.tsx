@@ -4,9 +4,9 @@ import React from "react";
 
 import { countries, order as orderFixture } from "../../fixtures";
 import OrderCustomerAddressesEditDialog, {
-  AddressEditDialogVariant,
   OrderCustomerAddressesEditDialogProps
 } from ".";
+import { AddressEditDialogVariant } from "./types";
 
 const order = orderFixture("");
 

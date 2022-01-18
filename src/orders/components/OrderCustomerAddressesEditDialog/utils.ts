@@ -9,12 +9,12 @@ import { flatten } from "@saleor/misc";
 import { AddressTypeEnum } from "@saleor/types/globalTypes";
 
 import { getById } from "../OrderReturnPage/utils";
-import { OrderCustomerSearchAddressState } from ".";
 import {
   OrderCustomerAddressesEditData,
   OrderCustomerAddressesEditHandlers
 } from "./form";
 import { OrderCustomerAddressEditProps } from "./OrderCustomerAddressEdit";
+import { OrderCustomerSearchAddressState } from "./types";
 
 interface AddressEditCommonProps {
   showCard: boolean;

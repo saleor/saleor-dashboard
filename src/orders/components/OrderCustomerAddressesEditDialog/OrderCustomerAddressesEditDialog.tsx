@@ -37,22 +37,12 @@ import { dialogMessages } from "./messages";
 import OrderCustomerAddressEdit from "./OrderCustomerAddressEdit";
 import OrderCustomerAddressesSearch from "./OrderCustomerAddressesSearch";
 import { useStyles } from "./styles";
+import {
+  AddressEditDialogVariant,
+  OrderCustomerAddressesEditDialogOutput,
+  OrderCustomerSearchAddressState
+} from "./types";
 import { getAddressEditProps, validateDefaultAddress } from "./utils";
-
-export interface OrderCustomerSearchAddressState {
-  open: boolean;
-  type: AddressTypeEnum;
-}
-export interface OrderCustomerAddressesEditDialogOutput {
-  shippingAddress: AddressInput;
-  billingAddress: AddressInput;
-}
-
-export enum AddressEditDialogVariant {
-  CHANGE_CUSTOMER,
-  CHANGE_SHIPPING_ADDRESS,
-  CHANGE_BILLING_ADDRESS
-}
 
 export interface OrderCustomerAddressesEditDialogProps {
   open: boolean;

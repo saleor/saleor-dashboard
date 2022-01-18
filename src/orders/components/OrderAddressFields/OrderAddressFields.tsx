@@ -2,12 +2,14 @@ import { CustomerAddresses_user } from "@saleor/customers/types/CustomerAddresse
 import { OrderErrorFragment } from "@saleor/fragments/types/OrderErrorFragment";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
-import OrderCustomerAddressesEditDialog, {
-  AddressEditDialogVariant,
-  OrderCustomerAddressesEditDialogOutput
-} from "@saleor/orders/components/OrderCustomerAddressesEditDialog";
 import { OrderDetails_shop_countries } from "@saleor/orders/types/OrderDetails";
 import React from "react";
+
+import OrderCustomerAddressesEditDialog from "../OrderCustomerAddressesEditDialog";
+import {
+  AddressEditDialogVariant,
+  OrderCustomerAddressesEditDialogOutput
+} from "../OrderCustomerAddressesEditDialog/types";
 
 interface OrderAddressFieldsProps {
   action: string;
