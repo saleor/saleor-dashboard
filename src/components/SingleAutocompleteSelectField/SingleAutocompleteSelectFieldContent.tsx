@@ -46,6 +46,7 @@ export interface SingleAutocompleteSelectFieldContentProps
   inputValue: string;
   isCustomValueSelected: boolean;
   selectedItem: any;
+  style?: React.CSSProperties;
 }
 
 const useStyles = makeStyles(
@@ -68,6 +69,7 @@ const useStyles = makeStyles(
           ? theme.palette.grey[50]
           : theme.palette.grey[900],
       bottom: 0,
+      color: theme.palette.primary.main,
       display: "flex",
       height: 30,
       justifyContent: "center",
@@ -103,11 +105,8 @@ const useStyles = makeStyles(
     root: {
       borderBottomLeftRadius: 8,
       borderBottomRightRadius: 8,
-      left: 0,
-      marginTop: theme.spacing(),
+      margin: theme.spacing(1, 0),
       overflow: "hidden",
-      position: "absolute",
-      right: 0,
       zIndex: 22
     }
   }),
@@ -147,7 +146,8 @@ const SingleAutocompleteSelectFieldContent: React.FC<SingleAutocompleteSelectFie
     inputValue,
     isCustomValueSelected,
     selectedItem,
-    onFetchMore
+    onFetchMore,
+    style
   } = props;
 
   if (!!add && !!displayCustomValue) {
@@ -201,7 +201,7 @@ const SingleAutocompleteSelectFieldContent: React.FC<SingleAutocompleteSelectFie
   const choicesToDisplay = choices.slice(0, slice);
 
   return (
-    <Paper className={classes.root} elevation={8}>
+    <Paper className={classes.root} elevation={8} style={style}>
       <div
         className={classes.content}
         ref={anchor}
