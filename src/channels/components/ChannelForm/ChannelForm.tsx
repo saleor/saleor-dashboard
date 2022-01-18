@@ -94,7 +94,7 @@ export const ChannelForm: React.FC<ChannelFormProps> = ({
             fullWidth
             FormHelperTextProps={
               {
-                "data-testid": "slug-text-input-helper-text"
+                "data-test-id": "slug-text-input-helper-text"
               } as ExtendedFormHelperTextProps
             }
             label={intl.formatMessage({
@@ -146,7 +146,7 @@ export const ChannelForm: React.FC<ChannelFormProps> = ({
               error={!!formErrors.currencyCode}
               FormHelperTextProps={
                 {
-                  "data-testid": "currency-text-input-helper-text"
+                  "data-test-id": "currency-text-input-helper-text"
                 } as ExtendedFormHelperTextProps
               }
               helperText={getChannelsErrorMessage(
@@ -181,7 +181,7 @@ export const ChannelForm: React.FC<ChannelFormProps> = ({
             error={!!formErrors.defaultCountry}
             FormHelperTextProps={
               {
-                "data-testid": "country-text-input-helper-text"
+                "data-test-id": "country-text-input-helper-text"
               } as ExtendedFormHelperTextProps
             }
             helperText={getChannelsErrorMessage(

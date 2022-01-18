@@ -37,8 +37,7 @@ const FilterGroupLabel: React.FC<FilterGroupLabelProps> = ({
       <FormControlLabel
         control={
           <Checkbox
-            data-test="filterGroupActive"
-            data-test-id={filter.name}
+            data-test-id={"filter-group-active-" + filter.name}
             checked={filter.active}
           />
         }

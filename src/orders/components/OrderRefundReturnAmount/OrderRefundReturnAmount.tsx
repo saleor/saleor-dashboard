@@ -302,7 +302,7 @@ const OrderRefundAmount: React.FC<OrderRefundAmountProps> = props => {
           onClick={onRefund}
           className={classes.refundButton}
           disabled={disableRefundButton}
-          data-test="submit"
+          data-test-id="submit"
         >
           {!disableRefundButton && !isReturn ? (
             <FormattedMessage

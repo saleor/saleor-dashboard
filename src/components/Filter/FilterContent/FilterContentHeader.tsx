@@ -38,14 +38,14 @@ const FilterContentHeader: React.FC<FilterContentHeaderProps> = ({
       </Typography>
       <div>
         <Button
-          data-test="clear"
+          data-test-id="clear"
           variant="secondary"
           className={classes.clear}
           onClick={onClear}
         >
           <FormattedMessage {...buttonMessages.clear} />
         </Button>
-        <Button data-test="submit" variant="primary" type="submit">
+        <Button data-test-id="submit" variant="primary" type="submit">
           <FormattedMessage {...buttonMessages.done} />
         </Button>
       </div>

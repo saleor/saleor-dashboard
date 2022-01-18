@@ -49,14 +49,14 @@ const SortableChip = SortableElement<SortableChipProps>(props => {
       <div className={classes.content}>
         <SortableHandle
           className={classes.sortableHandle}
-          data-test="button-drag-handle"
+          data-test-id="button-drag-handle"
         />
-        <Typography data-test="chip-label">{label}</Typography>
+        <Typography data-test-id="chip-label">{label}</Typography>
         {onClose && (
           <CloseIcon
             className={classes.closeIcon}
             onClick={onClose}
-            data-test="button-close"
+            data-test-id="button-close"
           />
         )}
       </div>

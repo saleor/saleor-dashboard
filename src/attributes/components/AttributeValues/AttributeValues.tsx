@@ -84,7 +84,7 @@ const AttributeValues: React.FC<AttributeValuesProps> = ({
             disabled={disabled}
             variant="tertiary"
             onClick={onValueAdd}
-            data-test-id="assignValueButton"
+            data-test-id="assign-value-button"
           >
             <FormattedMessage
               defaultMessage="Assign value"

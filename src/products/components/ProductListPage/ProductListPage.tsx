@@ -159,7 +159,7 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
               testId: "export"
             }
           ]}
-          data-test="menu"
+          data-test-id="menu"
         />
         <ColumnPicker
           className={classes.columnPicker}
@@ -179,7 +179,7 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
           disabled={limitReached}
           onClick={onAdd}
           variant="primary"
-          data-test="add-product"
+          data-test-id="add-product"
         >
           <FormattedMessage
             defaultMessage="Create Product"

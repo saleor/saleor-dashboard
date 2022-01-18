@@ -72,7 +72,10 @@ const ChannelContentWrapper: React.FC<ChannelContentWrapperProps> = ({
   const { name } = data;
 
   return (
-    <Accordion classes={expanderClasses} data-test="channel-availability-item">
+    <Accordion
+      classes={expanderClasses}
+      data-test-id="channel-availability-item"
+    >
       <AccordionSummary
         expandIcon={<IconChevronDown />}
         classes={summaryClasses}

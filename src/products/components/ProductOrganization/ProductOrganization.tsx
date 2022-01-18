@@ -124,7 +124,7 @@ const ProductOrganization: React.FC<ProductOrganizationProps> = props => {
             value={data.productType?.id}
             onChange={onProductTypeChange}
             fetchChoices={fetchProductTypes}
-            data-test="product-type"
+            data-test-id="product-type"
             {...fetchMoreProductTypes}
           />
         ) : (
@@ -175,7 +175,7 @@ const ProductOrganization: React.FC<ProductOrganizationProps> = props => {
           value={data.category}
           onChange={onCategoryChange}
           fetchChoices={fetchCategories}
-          data-test="category"
+          data-test-id="category"
           {...fetchMoreCategories}
         />
         <FormSpacer />
@@ -200,7 +200,7 @@ const ProductOrganization: React.FC<ProductOrganizationProps> = props => {
           }
           onChange={onCollectionChange}
           fetchChoices={fetchCollections}
-          data-test="collections"
+          data-test-id="collections"
           testId="collection"
           {...fetchMoreCollections}
         />

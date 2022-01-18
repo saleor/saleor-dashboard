@@ -209,7 +209,7 @@ const MultiAutocompleteSelectFieldContent: React.FC<MultiAutocompleteSelectField
         <div
           className={classes.content}
           ref={anchor}
-          data-test-id="multiautocomplete-select-content"
+          data-test-id="multi-autocomplete-select-content"
         >
           <>
             {add && (
@@ -219,7 +219,7 @@ const MultiAutocompleteSelectFieldContent: React.FC<MultiAutocompleteSelectField
                 {...getItemProps({
                   item: inputValue
                 })}
-                data-test="multiautocomplete-select-option-add"
+                data-test-id="multi-autocomplete-select-option-add"
                 onClick={add.onClick}
               >
                 <AddIcon color="primary" className={classes.addIcon} />
@@ -234,7 +234,7 @@ const MultiAutocompleteSelectFieldContent: React.FC<MultiAutocompleteSelectField
                 {...getItemProps({
                   item: inputValue
                 })}
-                data-test="multiautocomplete-select-option"
+                data-test-id="multi-autocomplete-select-option"
               >
                 <AddIcon className={classes.addIcon} color="primary" />
                 <FormattedMessage
@@ -258,7 +258,7 @@ const MultiAutocompleteSelectFieldContent: React.FC<MultiAutocompleteSelectField
                 {...getItemProps({
                   item: value.value
                 })}
-                data-test="multiautocomplete-select-option"
+                data-test-id="multi-autocomplete-select-option"
               >
                 <Checkbox
                   className={classes.checkbox}
@@ -291,7 +291,7 @@ const MultiAutocompleteSelectFieldContent: React.FC<MultiAutocompleteSelectField
                     index: choiceIndex,
                     item: suggestion.value
                   })}
-                  data-test="multiautocomplete-select-option"
+                  data-test-id="multi-autocomplete-select-option"
                 >
                   <Checkbox
                     checked={false}
@@ -312,7 +312,7 @@ const MultiAutocompleteSelectFieldContent: React.FC<MultiAutocompleteSelectField
         <MenuItem
           disabled={true}
           component="div"
-          data-test="multiautocomplete-select-no-options"
+          data-test-id="multi-autocomplete-select-no-options"
         >
           <FormattedMessage defaultMessage={"No results found"} />
         </MenuItem>

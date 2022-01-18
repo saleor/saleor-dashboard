@@ -80,7 +80,7 @@ export const WarehouseListPage: React.FC<WarehouseListPageProps> = ({
         }
       >
         <Button
-          data-test-id="createWarehouse"
+          data-test-id="create-warehouse"
           disabled={limitReached}
           variant="primary"
           onClick={onAdd}

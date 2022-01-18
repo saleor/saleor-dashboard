@@ -71,7 +71,7 @@ export const ChannelsListPage: React.FC<ChannelsListPageProps> = ({
           disabled={limitReached}
           onClick={navigateToChannelCreate}
           variant="primary"
-          data-test="add-channel"
+          data-test-id="add-channel"
         >
           <FormattedMessage
             defaultMessage="Create Channel"
@@ -118,7 +118,7 @@ export const ChannelsListPage: React.FC<ChannelsListPageProps> = ({
                   onClick={!!channel ? onRowClick(channel.id) : undefined}
                 >
                   <TableCell className={classes.colName}>
-                    <span data-test="name">
+                    <span data-test-id="name">
                       {channel?.name || <Skeleton />}
                     </span>
                   </TableCell>
