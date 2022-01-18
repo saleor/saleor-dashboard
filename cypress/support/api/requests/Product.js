@@ -113,12 +113,16 @@ export function createProduct({
     attributeValue,
     `values:["${attributeValue}"]`
   );
+  const attributes = getValueWithDefault(
+    attributeId,
+    `attributes:[{
+    id:"${attributeId}"
+    ${attributeValuesLine}
+  }]`
+  );
   const mutation = `mutation{
     productCreate(input:{
-      attributes:[{
-        id:"${attributeId}"
-        ${attributeValuesLine}
-      }]
+      ${attributes}
       name:"${name}"
       slug:"${name}"
       seo:{title:"${name}" description:""}

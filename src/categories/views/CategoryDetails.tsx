@@ -265,7 +265,7 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
         }
         productListToolbar={
           <IconButton
-            data-test-id="deleteIcon"
+            data-test-id="delete-icon"
             color="primary"
             onClick={() =>
               openModal("delete-products", {
