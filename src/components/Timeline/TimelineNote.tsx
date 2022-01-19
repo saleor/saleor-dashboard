@@ -68,6 +68,22 @@ interface TimelineNoteProps {
   };
 }
 
+interface NoteMessageProps {
+  message: string;
+}
+
+const NoteMessage: React.FC<NoteMessageProps> = ({ message }) => (
+  <>
+    {message.split("\n").map(string => {
+      if (string === "") {
+        return <br />;
+      }
+
+      return <Typography>{string}</Typography>;
+    })}
+  </>
+);
+
 export const TimelineNote: React.FC<TimelineNoteProps> = props => {
   const { date, user, message } = props;
 
@@ -91,11 +107,7 @@ export const TimelineNote: React.FC<TimelineNoteProps> = props => {
       </div>
       <Card className={classes.card} elevation={16}>
         <CardContent className={classes.cardContent}>
-          <Typography
-            dangerouslySetInnerHTML={{
-              __html: message.replace(/\n/g, "<br />")
-            }}
-          />
+          <NoteMessage message={message} />
         </CardContent>
       </Card>
     </div>
