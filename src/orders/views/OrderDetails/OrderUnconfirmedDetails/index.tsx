@@ -125,15 +125,8 @@ export const OrderUnconfirmedDetails: React.FC<OrderUnconfirmedDetailsProps> = (
   ): Promise<any> => {
     await orderUpdate.mutate({
       id,
-      input: {
-        ...data
-      }
+      input: data
     });
-    const errors = orderUpdate?.opts?.data?.orderUpdate?.errors;
-    if (!errors?.length) {
-      closeModal();
-    }
-    return errors;
   };
 
   const intl = useIntl();
@@ -379,6 +372,8 @@ export const OrderUnconfirmedDetails: React.FC<OrderUnconfirmedDetailsProps> = (
       <OrderAddressFields
         action={params?.action}
         customerAddressesLoading={customerAddressesLoading}
+        orderShippingAddress={order?.shippingAddress}
+        orderBillingAddress={order?.billingAddress}
         isDraft={false}
         countries={data?.shop?.countries}
         customer={customerAddresses?.user}

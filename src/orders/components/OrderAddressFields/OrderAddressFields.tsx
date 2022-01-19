@@ -2,7 +2,12 @@ import { CustomerAddresses_user } from "@saleor/customers/types/CustomerAddresse
 import { OrderErrorFragment } from "@saleor/fragments/types/OrderErrorFragment";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
-import { OrderDetails_shop_countries } from "@saleor/orders/types/OrderDetails";
+import { transformAddressToForm } from "@saleor/misc";
+import {
+  OrderDetails_order_billingAddress,
+  OrderDetails_order_shippingAddress,
+  OrderDetails_shop_countries
+} from "@saleor/orders/types/OrderDetails";
 import React from "react";
 
 import OrderCustomerAddressesEditDialog from "../OrderCustomerAddressesEditDialog";
@@ -21,6 +26,8 @@ interface OrderAddressFieldsProps {
   onConfirm: (data: OrderCustomerAddressesEditDialogOutput) => SubmitPromise;
   confirmButtonState: ConfirmButtonTransitionState;
   errors: OrderErrorFragment[];
+  orderShippingAddress: OrderDetails_order_shippingAddress;
+  orderBillingAddress: OrderDetails_order_billingAddress;
 }
 
 const OrderAddressFields: React.FC<OrderAddressFieldsProps> = ({
@@ -32,13 +39,17 @@ const OrderAddressFields: React.FC<OrderAddressFieldsProps> = ({
   onClose,
   onConfirm,
   confirmButtonState,
-  errors
+  errors,
+  orderShippingAddress,
+  orderBillingAddress
 }) => {
   const addressFieldCommonProps = {
     loading: customerAddressesLoading,
     confirmButtonState,
     countries,
     errors,
+    orderShippingAddress: transformAddressToForm(orderShippingAddress),
+    orderBillingAddress: transformAddressToForm(orderBillingAddress),
     customerAddresses: customer?.addresses,
     defaultShippingAddress: customer?.defaultShippingAddress,
     defaultBillingAddress: customer?.defaultBillingAddress,

@@ -102,17 +102,10 @@ export const OrderNormalDetails: React.FC<OrderNormalDetailsProps> = ({
   const handleCustomerChangeAddresses = async (
     data: Partial<OrderCustomerAddressesEditDialogOutput>
   ): Promise<any> => {
-    await orderUpdate.mutate({
+    orderUpdate.mutate({
       id,
-      input: {
-        ...data
-      }
+      input: data
     });
-    const errors = orderUpdate?.opts?.data?.orderUpdate?.errors;
-    if (!errors?.length) {
-      closeModal();
-    }
-    return errors;
   };
 
   const intl = useIntl();
@@ -305,6 +298,8 @@ export const OrderNormalDetails: React.FC<OrderNormalDetailsProps> = ({
       />
       <OrderAddressFields
         action={params?.action}
+        orderShippingAddress={order?.shippingAddress}
+        orderBillingAddress={order?.billingAddress}
         customerAddressesLoading={customerAddressesLoading}
         isDraft={false}
         countries={data?.shop?.countries}

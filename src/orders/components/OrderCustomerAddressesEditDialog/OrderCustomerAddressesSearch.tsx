@@ -15,7 +15,6 @@ import { buttonMessages } from "@saleor/intl";
 import {
   Button,
   ConfirmButtonTransitionState,
-  DialogHeader,
   SearchIcon
 } from "@saleor/macaw-ui";
 import { AddressTypeEnum } from "@saleor/types/globalTypes";
@@ -42,7 +41,6 @@ export interface OrderCustomerAddressesSearchProps {
     customerAddress: CustomerAddresses_user_addresses
   ) => void;
   exitSearch();
-  exitModal();
 }
 
 const OrderCustomerAddressesSearch: React.FC<OrderCustomerAddressesSearchProps> = props => {
@@ -56,8 +54,7 @@ const OrderCustomerAddressesSearch: React.FC<OrderCustomerAddressesSearchProps> 
     customerAddresses,
     onChangeCustomerShippingAddress,
     onChangeCustomerBillingAddress,
-    exitSearch,
-    exitModal
+    exitSearch
   } = props;
 
   const intl = useIntl();

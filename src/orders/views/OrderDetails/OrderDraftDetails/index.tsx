@@ -154,17 +154,10 @@ export const OrderDraftDetails: React.FC<OrderDraftDetailsProps> = ({
   const handleCustomerChangeAddresses = async (
     data: Partial<OrderCustomerAddressesEditDialogOutput>
   ): Promise<any> => {
-    await orderDraftUpdate.mutate({
+    orderDraftUpdate.mutate({
       id,
-      input: {
-        ...data
-      }
+      input: data
     });
-    const errors = orderDraftUpdate?.opts?.data?.draftOrderUpdate?.errors;
-    if (!errors?.length) {
-      closeModal();
-    }
-    return errors;
   };
 
   return (
@@ -275,6 +268,8 @@ export const OrderDraftDetails: React.FC<OrderDraftDetailsProps> = ({
       />
       <OrderAddressFields
         action={params?.action}
+        orderShippingAddress={order?.shippingAddress}
+        orderBillingAddress={order?.billingAddress}
         customerAddressesLoading={customerAddressesLoading}
         isDraft
         countries={data?.shop?.countries}

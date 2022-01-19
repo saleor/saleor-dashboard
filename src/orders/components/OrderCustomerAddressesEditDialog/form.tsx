@@ -70,7 +70,7 @@ function useOrderCustomerAddressesEditForm(
   onSubmit: (data: OrderCustomerAddressesEditData) => void,
   opts: UseOrderCustomerAddressesEditFormOpts
 ): UseOrderCustomerAddressesEditFormResult {
-  const initialAddress: AddressTypeInput = {
+  const emptyAddress: AddressTypeInput = {
     city: "",
     country: "",
     phone: "",
@@ -83,13 +83,13 @@ function useOrderCustomerAddressesEditForm(
     billingAddressInputOption: AddressInputOptionEnum.CUSTOMER_ADDRESS,
     customerShippingAddress: opts.defaultShippingAddress,
     customerBillingAddress: opts.defaultBillingAddress,
-    shippingAddress: initialAddress,
-    billingAddress: initialAddress
+    shippingAddress: emptyAddress,
+    billingAddress: emptyAddress
   };
 
   const form = useForm({
-    ...initial,
-    ...defaultInitialFormData
+    ...defaultInitialFormData,
+    ...initial
   });
 
   const [changed, setChanged] = useState(false);

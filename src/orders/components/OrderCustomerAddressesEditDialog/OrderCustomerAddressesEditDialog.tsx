@@ -10,6 +10,7 @@ import Checkbox from "@saleor/components/Checkbox";
 import ConfirmButton from "@saleor/components/ConfirmButton";
 import FormSpacer from "@saleor/components/FormSpacer";
 import { ShopInfo_shop_countries } from "@saleor/components/Shop/types/ShopInfo";
+import { AddressTypeInput } from "@saleor/customers/types";
 import {
   CustomerAddresses_user_addresses,
   CustomerAddresses_user_defaultBillingAddress,
@@ -50,6 +51,8 @@ export interface OrderCustomerAddressesEditDialogProps {
   loading: boolean;
   confirmButtonState: ConfirmButtonTransitionState;
   errors: OrderErrorFragment[];
+  orderShippingAddress?: AddressTypeInput;
+  orderBillingAddress?: AddressTypeInput;
   countries?: ShopInfo_shop_countries[];
   customerAddresses?: CustomerAddresses_user_addresses[];
   defaultShippingAddress?: CustomerAddresses_user_defaultShippingAddress;
@@ -77,7 +80,9 @@ const OrderCustomerAddressesEditDialog: React.FC<OrderCustomerAddressesEditDialo
     defaultShippingAddress,
     defaultBillingAddress,
     onClose,
-    onConfirm
+    onConfirm,
+    orderShippingAddress,
+    orderBillingAddress
   } = props;
 
   const classes = useStyles(props);
@@ -94,6 +99,7 @@ const OrderCustomerAddressesEditDialog: React.FC<OrderCustomerAddressesEditDialo
     errors: billingValidationErrors,
     submit: handleBillingSubmit
   } = useAddressValidation(address => address, AddressTypeEnum.BILLING);
+
   const dialogErrors = useModalDialogErrors(
     [...errors, ...shippingValidationErrors, ...billingValidationErrors],
     open
@@ -245,6 +251,10 @@ const OrderCustomerAddressesEditDialog: React.FC<OrderCustomerAddressesEditDialo
         defaultShippingAddress={validatedDefaultShippingAddress}
         defaultBillingAddress={validatedDefaultBillingAddress}
         defaultCloneAddress={hasCustomerChanged}
+        initial={{
+          shippingAddress: orderShippingAddress,
+          billingAddress: orderBillingAddress
+        }}
         onSubmit={handleContinue}
       >
         {({ change, data, handlers }) => {
@@ -258,7 +268,7 @@ const OrderCustomerAddressesEditDialog: React.FC<OrderCustomerAddressesEditDialo
             addressEditCommonProps
           );
           const billingAddressEditProps = getAddressEditProps(
-            "shipping",
+            "billing",
             data,
             handlers,
             change,
@@ -294,7 +304,6 @@ const OrderCustomerAddressesEditDialog: React.FC<OrderCustomerAddressesEditDialo
                     )
                   }
                   exitSearch={() => setAddressSearchState(defaultSearchState)}
-                  exitModal={exitModal}
                 />
               ) : (
                 <>
