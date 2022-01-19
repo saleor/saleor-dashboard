@@ -117,9 +117,7 @@ export const ProductVariant: React.FC<ProductVariantCreateProps> = ({
       variables: {
         input: {
           attributes: prepareAttributesInput({
-            attributes: formData.attributes.filter(
-              attribute => attribute.value?.length && attribute.value[0] !== ""
-            ),
+            attributes: formData.attributes,
             updatedFileAttributes
           }),
           product: productId,
