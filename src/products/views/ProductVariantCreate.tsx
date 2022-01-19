@@ -10,6 +10,7 @@ import { WindowTitle } from "@saleor/components/WindowTitle";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@saleor/config";
 import { useFileUploadMutation } from "@saleor/files/mutations";
 import useNavigator from "@saleor/hooks/useNavigator";
+import useNotifier from "@saleor/hooks/useNotifier";
 import useShop from "@saleor/hooks/useShop";
 import usePageSearch from "@saleor/searches/usePageSearch";
 import useProductSearch from "@saleor/searches/useProductSearch";
@@ -22,7 +23,7 @@ import {
 } from "@saleor/utils/metadata/updateMetadata";
 import { useWarehouseList } from "@saleor/warehouses/queries";
 import { warehouseAddPath } from "@saleor/warehouses/urls";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 
 import { weight } from "../../misc";
@@ -40,6 +41,7 @@ import {
   ProductVariantAddUrlQueryParams,
   productVariantEditUrl
 } from "../urls";
+import { variantCreateMessages as messages } from "./messages";
 import { createVariantReorderHandler } from "./ProductUpdate/handlers";
 
 interface ProductVariantCreateProps {
@@ -52,6 +54,8 @@ export const ProductVariant: React.FC<ProductVariantCreateProps> = ({
   params
 }) => {
   const navigate = useNavigator();
+  const notify = useNotifier();
+
   const shop = useShop();
   const intl = useIntl();
   const warehouses = useWarehouseList({
@@ -60,6 +64,11 @@ export const ProductVariant: React.FC<ProductVariantCreateProps> = ({
       first: 50
     }
   });
+
+  const [
+    productVariantCreateComplete,
+    setProductVariantCreateComplete
+  ] = useState(false);
 
   const { data, loading: productLoading } = useProductVariantCreateQuery({
     displayLoader: true,
@@ -136,6 +145,10 @@ export const ProductVariant: React.FC<ProductVariantCreateProps> = ({
     });
     const id = result.data?.productVariantCreate?.productVariant?.id;
 
+    if (id) {
+      setProductVariantCreateComplete(true);
+    }
+
     return id || null;
   };
   const handleSubmit = createMetadataCreateHandler(
@@ -153,6 +166,23 @@ export const ProductVariant: React.FC<ProductVariantCreateProps> = ({
         id: attribute.id
       })
     );
+
+  const handleProductVariantCreateSuccess = (variantId: string) => {
+    notify({
+      status: "success",
+      text: intl.formatMessage(messages.variantCreatedSuccess)
+    });
+    navigate(productVariantEditUrl(productId, variantId));
+  };
+
+  useEffect(() => {
+    const id =
+      variantCreateResult.data?.productVariantCreate?.productVariant?.id;
+
+    if (id && productVariantCreateComplete) {
+      handleProductVariantCreateSuccess(id);
+    }
+  }, [productVariantCreateComplete]);
 
   const {
     loadMore: loadMorePages,
