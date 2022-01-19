@@ -69,6 +69,7 @@ const LoginView: React.FC<LoginViewProps> = ({ params }) => {
       code,
       state
     });
+    setRequestedExternalPluginId(null);
     if (result && !result?.errors?.length) {
       navigate(APP_DEFAULT_URI);
     }
