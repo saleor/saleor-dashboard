@@ -27,7 +27,7 @@ export const dialogMessages = defineMessages({
   },
   noAddressDescription: {
     defaultMessage:
-      "This customer doesn't have any shipping addresses. Provide address for order:",
+      "This customer doesn't have any addresses in the address book. Provide address for order:",
     description: "dialog content"
   },
   customerChangeDescription: {

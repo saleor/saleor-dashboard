@@ -3645,7 +3645,7 @@
   },
   "src_dot_orders_dot_components_dot_OrderCustomerAddressesEditDialog_dot_noAddressDescription": {
     "context": "dialog content",
-    "string": "This customer doesn't have any shipping addresses. Provide address for order:"
+    "string": "This customer doesn't have any addresses in the address book. Provide address for order:"
   },
   "src_dot_orders_dot_components_dot_OrderCustomerAddressesEditDialog_dot_noResultsFound": {
     "context": "info when addresses search is unsuccessful",
