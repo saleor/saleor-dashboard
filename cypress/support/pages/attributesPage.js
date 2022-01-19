@@ -36,17 +36,22 @@ export function fillUpAttributeCreateFields({
   attributeType,
   valueRequired
 }) {
-  cy.get(ATTRIBUTES_DETAILS.nameInput)
-    .type(name)
-    .get(ATTRIBUTES_DETAILS.codeInput)
-    .type(name)
-    .get(ATTRIBUTES_DETAILS.inputTypeSelect)
+  fillUpAttributeNameAndCode(name);
+  cy.get(ATTRIBUTES_DETAILS.inputTypeSelect)
     .click()
     .get(ATTRIBUTES_DETAILS.attributesInputTypes[attributeType])
     .click();
   if (!valueRequired) {
     cy.get(ATTRIBUTES_DETAILS.valueRequired).click();
   }
+}
+
+export function fillUpAttributeNameAndCode(name, code = name) {
+  return cy
+    .get(ATTRIBUTES_DETAILS.nameInput)
+    .clearAndType(name)
+    .get(ATTRIBUTES_DETAILS.codeInput)
+    .clearAndType(code);
 }
 
 export function saveAttribute() {
