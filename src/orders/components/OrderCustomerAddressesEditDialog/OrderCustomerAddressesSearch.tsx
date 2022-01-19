@@ -96,13 +96,6 @@ const OrderCustomerAddressesSearch: React.FC<OrderCustomerAddressesSearchProps> 
 
   return (
     <>
-      <DialogHeader onClose={exitModal}>
-        {type === AddressTypeEnum.SHIPPING ? (
-          <FormattedMessage {...messages.shippingTitle} />
-        ) : (
-          <FormattedMessage {...messages.billingTitle} />
-        )}
-      </DialogHeader>
       <DialogContent>
         {intl.formatMessage(messages.searchInfo)}
         <CardSpacer />

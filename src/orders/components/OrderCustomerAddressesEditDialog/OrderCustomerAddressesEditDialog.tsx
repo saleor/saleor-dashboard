@@ -105,6 +105,9 @@ const OrderCustomerAddressesEditDialog: React.FC<OrderCustomerAddressesEditDialo
     if (hasCustomerChanged || addressSearchState.open) {
       return false;
     }
+    if (!customerAddresses.length) {
+      return false;
+    }
     if (variant === AddressEditDialogVariant.CHANGE_SHIPPING_ADDRESS) {
       return (
         data.shippingAddressInputOption ===
@@ -158,6 +161,14 @@ const OrderCustomerAddressesEditDialog: React.FC<OrderCustomerAddressesEditDialo
   };
 
   const getDialogTitle = (): MessageDescriptor => {
+    if (addressSearchState.open) {
+      if (variant === AddressEditDialogVariant.CHANGE_SHIPPING_ADDRESS) {
+        return dialogMessages.shippingTitle;
+      }
+      if (variant === AddressEditDialogVariant.CHANGE_BILLING_ADDRESS) {
+        return dialogMessages.billingTitle;
+      }
+    }
     if (variant === AddressEditDialogVariant.CHANGE_SHIPPING_ADDRESS) {
       return dialogMessages.shippingChangeTitle;
     }
@@ -176,7 +187,7 @@ const OrderCustomerAddressesEditDialog: React.FC<OrderCustomerAddressesEditDialo
     return dialogMessages.addressChangeDescription;
   };
 
-  const handleSubmit = async (data: OrderCustomerAddressesEditFormData) => {
+  const handleContinue = (data: OrderCustomerAddressesEditFormData) => {
     if (continueToSearchAddressesState(data)) {
       setAddressSearchState({
         open: true,
@@ -187,7 +198,9 @@ const OrderCustomerAddressesEditDialog: React.FC<OrderCustomerAddressesEditDialo
       });
       return;
     }
-
+    handleSubmit(data);
+  };
+  const handleSubmit = async (data: OrderCustomerAddressesEditFormData) => {
     const addressesInput = handleAddressesSubmit(data);
     if (addressesInput) {
       await onConfirm(addressesInput);
@@ -218,18 +231,21 @@ const OrderCustomerAddressesEditDialog: React.FC<OrderCustomerAddressesEditDialo
   };
 
   const exitModal = () => {
-    setAddressSearchState(defaultSearchState);
     onClose();
+    setAddressSearchState(defaultSearchState);
   };
 
   return (
     <Dialog onClose={exitModal} open={open} fullWidth>
+      <DialogHeader onClose={exitModal}>
+        <FormattedMessage {...getDialogTitle()} />
+      </DialogHeader>
       <OrderCustomerAddressesEditForm
         countryChoices={countryChoices}
         defaultShippingAddress={validatedDefaultShippingAddress}
         defaultBillingAddress={validatedDefaultBillingAddress}
         defaultCloneAddress={hasCustomerChanged}
-        onSubmit={handleSubmit}
+        onSubmit={handleContinue}
       >
         {({ change, data, handlers }) => {
           const shippingAddressEditProps = getAddressEditProps(
@@ -282,9 +298,6 @@ const OrderCustomerAddressesEditDialog: React.FC<OrderCustomerAddressesEditDialo
                 />
               ) : (
                 <>
-                  <DialogHeader onClose={exitModal}>
-                    <FormattedMessage {...getDialogTitle()} />
-                  </DialogHeader>
                   <DialogContent className={classes.dialogContent}>
                     <Typography>
                       <FormattedMessage {...getDialogDescription()} />
