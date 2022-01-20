@@ -210,7 +210,10 @@ const MultiAutocompleteSelectFieldComponent: React.FC<MultiAutocompleteSelectFie
                     <Popper
                       anchorEl={anchor.current}
                       open={isOpen}
-                      style={{ width: anchor.current.clientWidth, zIndex: 10 }}
+                      style={{
+                        width: anchor.current.clientWidth,
+                        zIndex: 1301
+                      }}
                       placement="bottom-end"
                     >
                       <MultiAutocompleteSelectFieldContent
