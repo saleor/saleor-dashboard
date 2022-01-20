@@ -22,10 +22,7 @@ import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTr
 import React from "react";
 import { defineMessages, FormattedMessage, useIntl } from "react-intl";
 
-import {
-  combinedMultiAutocompleteChoices,
-  getStringOrPlaceholder
-} from "../../../misc";
+import { getStringOrPlaceholder } from "../../../misc";
 import { ChannelProps, FetchMoreProps, SearchProps } from "../../../types";
 import { ShippingMethodTypeEnum } from "../../../types/globalTypes";
 import { FormData } from "../../components/ShippingZoneDetailsPage/types";
@@ -136,10 +133,7 @@ const ShippingZoneDetailsPage: React.FC<ShippingZoneDetailsPageProps> = ({
           toggleValue,
           setWarehouseDisplayValues,
           warehouseDisplayValues,
-          combinedMultiAutocompleteChoices(
-            warehouseDisplayValues,
-            warehouseChoices
-          )
+          warehouseChoices
         );
 
         const handleChannelChange = createMultiAutocompleteSelectHandler(

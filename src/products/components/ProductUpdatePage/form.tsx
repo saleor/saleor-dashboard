@@ -21,7 +21,6 @@ import useFormset, {
   FormsetChange,
   FormsetData
 } from "@saleor/hooks/useFormset";
-import { combinedMultiAutocompleteChoices } from "@saleor/misc";
 import { ProductDetails_product } from "@saleor/products/types/ProductDetails";
 import {
   getAttributeInputFromProduct,
@@ -233,7 +232,7 @@ function useProductUpdateForm(
     event => form.toggleValue(event, triggerChange),
     opts.setSelectedCollections,
     opts.selectedCollections,
-    combinedMultiAutocompleteChoices(opts.selectedCollections, opts.collections)
+    opts.collections
   );
   const handleCategorySelect = createSingleAutocompleteSelectHandler(
     handleChange,
