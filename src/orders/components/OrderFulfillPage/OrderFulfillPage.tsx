@@ -408,6 +408,7 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
                                 key={warehouseStock.id}
                               >
                                 <TextField
+                                  data-test-id="quantity-to-fulfill"
                                   type="number"
                                   inputProps={{
                                     className: classNames(

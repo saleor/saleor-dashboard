@@ -74,7 +74,11 @@ const OrderUnfulfilledProductsCard: React.FC<OrderUnfulfilledProductsCardProps> 
                 </div>
               </Tooltip>
             ) : (
-              <Button variant="primary" onClick={onFulfill}>
+              <Button
+                variant="primary"
+                onClick={onFulfill}
+                data-test-id="fulfill-order-button"
+              >
                 {intl.formatMessage(messages.fulfillButton)}
               </Button>
             )}

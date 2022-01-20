@@ -44,7 +44,7 @@ const useStyles = makeStyles(
       textAlign: "justify"
     },
     menuPaper: {
-      maxHeight: `calc(100vh - ${theme.spacing(2)}px)`,
+      maxHeight: 600,
       overflow: "scroll"
     },
     popover: {
@@ -81,7 +81,6 @@ const LanguageSwitch: React.FC<LanguageSwitchProps> = props => {
         open={isExpanded}
         anchorEl={anchor.current}
         transition
-        disablePortal
         placement="bottom-end"
       >
         {({ TransitionProps, placement }) => (

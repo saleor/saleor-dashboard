@@ -21,7 +21,7 @@ function makeTopLevelSearch<
   TVariables extends SearchVariables
 >(query: DocumentNode): UseSearchHook<TData, TVariables> {
   return makeSearch<TData, TVariables>(query, result => {
-    if (result.data.search.pageInfo.hasNextPage) {
+    if (result?.data?.search?.pageInfo?.hasNextPage) {
       result.loadMore(
         (prev, next) => {
           if (
