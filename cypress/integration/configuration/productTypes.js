@@ -34,13 +34,14 @@ filterTests({ definedTags: ["all"] }, () => {
     it("Create product type without shipping required", () => {
       const name = `${startsWith}${faker.datatype.number()}`;
 
-      createProductType(name, false)
+      createProductType({ name })
         .then(productType => {
           getProductType(productType.id);
         })
         .then(productType => {
           expect(productType.name).to.be.eq(name);
           expect(productType.isShippingRequired).to.be.false;
+          expect(productType.kind).to.be.eq("NORMAL");
         });
     });
 
@@ -48,7 +49,7 @@ filterTests({ definedTags: ["all"] }, () => {
       const name = `${startsWith}${faker.datatype.number()}`;
       const shippingWeight = 10;
 
-      createProductType(name, shippingWeight)
+      createProductType({ name, shippingWeight })
         .then(productType => {
           getProductType(productType.id);
         })
@@ -56,6 +57,21 @@ filterTests({ definedTags: ["all"] }, () => {
           expect(productType.name).to.be.eq(name);
           expect(productType.isShippingRequired).to.be.true;
           expect(productType.weight.value).to.eq(shippingWeight);
+          expect(productType.kind).to.be.eq("NORMAL");
+        });
+    });
+
+    it("Create product type with gift card kind", () => {
+      const name = `${startsWith}${faker.datatype.number()}`;
+
+      createProductType({ name, giftCard: true })
+        .then(productType => {
+          getProductType(productType.id);
+        })
+        .then(productType => {
+          expect(productType.name).to.be.eq(name);
+          expect(productType.isShippingRequired).to.be.false;
+          expect(productType.kind).to.be.eq("GIFT_CARD");
         });
     });
 
@@ -89,7 +105,7 @@ filterTests({ definedTags: ["all"] }, () => {
             productTypeDetailsUrl(productType.id)
           )
             .get(PRODUCT_TYPE_DETAILS.hasVariantsButton)
-            .click()
+            .click({ force: true })
             .get(PRODUCT_TYPE_DETAILS.assignVariantAttributeButton)
             .click()
             .addAliasToGraphRequest("AssignProductAttribute")
