@@ -1,5 +1,6 @@
 import { MultiAutocompleteChoiceType } from "@saleor/components/MultiAutocompleteSelectField";
 import { ChangeEvent, FormChange } from "@saleor/hooks/useForm";
+import { combinedMultiAutocompleteChoices } from "@saleor/misc";
 import { toggle } from "@saleor/utils/lists";
 
 /**
@@ -14,8 +15,10 @@ function createMultiAutocompleteSelectHandler(
   return (event: ChangeEvent) => {
     change(event);
 
+    const combinedChoices = combinedMultiAutocompleteChoices(selected, choices);
+
     const id = event.target.value;
-    const choice = choices.find(choice => choice.value === id);
+    const choice = combinedChoices.find(choice => choice.value === id);
 
     setSelected(toggle(choice, selected, (a, b) => a.value === b.value));
   };
