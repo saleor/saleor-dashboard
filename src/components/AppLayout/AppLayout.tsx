@@ -146,6 +146,9 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
     isMenuActive(location.pathname, menuItem)
   )?.id;
 
+  const handleMenuItemClick = (url: string) =>
+    navigate(url, { resetScroll: true });
+
   const handleErrorBack = () => {
     navigate("/");
     dispatchAppState({
@@ -169,7 +172,7 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
           <Sidebar
             active={activeMenu}
             menuItems={menuStructure}
-            onMenuItemClick={navigate}
+            onMenuItemClick={handleMenuItemClick}
           />
         )}
         <div className={classes.content}>
