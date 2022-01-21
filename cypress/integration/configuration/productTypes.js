@@ -31,7 +31,7 @@ filterTests({ definedTags: ["all"] }, () => {
         .softExpectSkeletonIsVisible();
     });
 
-    it("Create product type without shipping required", () => {
+    it("As an admin I should be able to create product type without shipping required", () => {
       const name = `${startsWith}${faker.datatype.number()}`;
 
       createProductType({ name })
@@ -45,7 +45,7 @@ filterTests({ definedTags: ["all"] }, () => {
         });
     });
 
-    it("Create product type with shipping required", () => {
+    it("As an admin I should be able to create product type with shipping required", () => {
       const name = `${startsWith}${faker.datatype.number()}`;
       const shippingWeight = 10;
 
@@ -61,7 +61,7 @@ filterTests({ definedTags: ["all"] }, () => {
         });
     });
 
-    it("Create product type with gift card kind", () => {
+    it("As an admin I should be able to create product type with gift card kind", () => {
       const name = `${startsWith}${faker.datatype.number()}`;
 
       createProductType({ name, giftCard: true })
@@ -75,7 +75,7 @@ filterTests({ definedTags: ["all"] }, () => {
         });
     });
 
-    it("Update product type with product attribute", () => {
+    it("As an admin I should be able to update product type with product attribute", () => {
       const name = `${startsWith}${faker.datatype.number()}`;
 
       createTypeProduct({ name })
@@ -96,7 +96,7 @@ filterTests({ definedTags: ["all"] }, () => {
         });
     });
 
-    it("Update product type with variant attribute", () => {
+    it("As an admin I should be able to update product type with variant attribute", () => {
       const name = `${startsWith}${faker.datatype.number()}`;
 
       createTypeProduct({ name, hasVariants: false })
