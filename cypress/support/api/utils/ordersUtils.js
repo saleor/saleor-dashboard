@@ -85,7 +85,7 @@ export function purchaseProductWithPromoCode({
   email = "email@example.com",
   variantsList,
   address,
-  shippingMethod,
+  shippingMethodName,
   voucherCode,
   auth
 }) {
@@ -96,7 +96,7 @@ export function purchaseProductWithPromoCode({
     email,
     variantsList,
     address,
-    shippingMethodName: shippingMethod.name,
+    shippingMethodName,
     voucherCode,
     auth
   })

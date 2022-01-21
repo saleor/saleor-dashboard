@@ -100,9 +100,11 @@ const GiftCardsListTable: React.FC = () => {
                 onClick={redirectToGiftCardUpdate(id)}
                 className={classes.row}
                 key={id}
+                data-test-id={"gift-card-row-" + id}
               >
                 <TableCell padding="checkbox">
                   <Checkbox
+                    data-test-id="select-gift-card-checkbox"
                     disableClickPropagation
                     checked={isSelected(id)}
                     onChange={() => toggle(id)}

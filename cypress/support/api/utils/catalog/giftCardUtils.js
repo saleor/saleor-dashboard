@@ -1,4 +1,8 @@
-import { deleteGiftCard, getGiftCardsWithTag } from "../../requests/GiftCard";
+import {
+  deleteGiftCard,
+  getGiftCardsWithTag,
+  getGiftCardWithId
+} from "../../requests/GiftCard";
 
 export function deleteGiftCardsWithTagStartsWith(tag) {
   getGiftCardsWithTag(100, tag).then(resp => {
@@ -8,5 +12,26 @@ export function deleteGiftCardsWithTagStartsWith(tag) {
         deleteGiftCard(element.node.id);
       });
     }
+  });
+}
+
+export function isGiftCardDataAsExpected({
+  giftCardId,
+  expectedAmount,
+  userEmail,
+  initialBalance
+}) {
+  let dataAsExpected = true;
+  return getGiftCardWithId(giftCardId).then(giftCard => {
+    if (expectedAmount) {
+      dataAsExpected = expectedAmount === giftCard.currentBalance.amount;
+    }
+    if (userEmail) {
+      dataAsExpected = userEmail === giftCard.usedByEmail;
+    }
+    if (initialBalance) {
+      dataAsExpected = initialBalance === giftCard.initialBalance.amount;
+    }
+    return dataAsExpected;
   });
 }
