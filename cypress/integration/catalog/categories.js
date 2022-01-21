@@ -8,6 +8,7 @@ import { CATEGORY_DETAILS } from "../../elements/catalog/categories/category-det
 import { BUTTON_SELECTORS } from "../../elements/shared/button-selectors";
 import { SHARED_ELEMENTS } from "../../elements/shared/sharedElements";
 import { categoryDetailsUrl, urlList } from "../../fixtures/urlList";
+import { ONE_PERMISSION_USERS } from "../../fixtures/users";
 import { getCategory } from "../../support/api/requests/Category";
 import { createCategory as createCategoryRequest } from "../../support/api/requests/Category";
 import { deleteCategoriesStartsWith } from "../../support/api/utils/catalog/categoryUtils";
@@ -67,7 +68,10 @@ filterTests({ definedTags: ["all"] }, () => {
     });
 
     beforeEach(() => {
-      cy.clearSessionData().loginUserViaRequest();
+      cy.clearSessionData().loginUserViaRequest(
+        "auth",
+        ONE_PERMISSION_USERS.categories
+      );
     });
 
     it("should create category", () => {
