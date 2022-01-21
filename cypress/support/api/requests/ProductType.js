@@ -150,7 +150,7 @@ export function assignAttribute(
   attributeType = "VARIANT"
 ) {
   const mutation = `mutation{
-    productAttributeAssign(productTypeId:"${productTypeId}" operations:{
+    productAttributeAssign(productTypeId:"${productTypeId}", operations:{
       id:"${attributeId}"
       type: ${attributeType}
     }){

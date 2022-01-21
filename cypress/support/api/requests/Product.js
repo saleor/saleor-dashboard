@@ -116,9 +116,9 @@ export function createProduct({
   const attributes = getValueWithDefault(
     attributeId,
     `attributes:[{
-    id:"${attributeId}"
-    ${attributeValuesLine}
-  }]`
+      id:"${attributeId}"
+      ${attributeValuesLine}
+    }]`
   );
   const mutation = `mutation{
     productCreate(input:{
