@@ -8,6 +8,7 @@ import Skeleton from "@saleor/components/Skeleton";
 import TableCellHeader from "@saleor/components/TableCellHeader";
 import TableHead from "@saleor/components/TableHead";
 import TablePagination from "@saleor/components/TablePagination";
+import TooltipTableCellHeader from "@saleor/components/TooltipTableCellHeader";
 import { VoucherListUrlSortField } from "@saleor/discounts/urls";
 import { canBeSorted } from "@saleor/discounts/views/VoucherList/sort";
 import { makeStyles } from "@saleor/macaw-ui";
@@ -101,7 +102,8 @@ const VoucherList: React.FC<VoucherListProps> = props => {
     sort,
     toggle,
     toggleAll,
-    toolbar
+    toolbar,
+    filterDependency
   } = props;
 
   const classes = useStyles(props);
@@ -128,7 +130,7 @@ const VoucherList: React.FC<VoucherListProps> = props => {
         >
           <FormattedMessage defaultMessage="Code" description="voucher code" />
         </TableCellHeader>
-        <TableCellHeader
+        <TooltipTableCellHeader
           direction={
             sort.sort === VoucherListUrlSortField.minSpent
               ? getArrowDirection(sort.asc)
@@ -140,12 +142,13 @@ const VoucherList: React.FC<VoucherListProps> = props => {
             !canBeSorted(VoucherListUrlSortField.minSpent, !!selectedChannelId)
           }
           className={classes.colMinSpent}
+          filterDependency={filterDependency.label}
         >
           <FormattedMessage
             defaultMessage="Min. Spent"
             description="minimum amount of spent money to activate voucher"
           />
-        </TableCellHeader>
+        </TooltipTableCellHeader>
         <TableCellHeader
           direction={
             sort.sort === VoucherListUrlSortField.startDate
@@ -176,7 +179,7 @@ const VoucherList: React.FC<VoucherListProps> = props => {
             description="voucher is active until date"
           />
         </TableCellHeader>
-        <TableCellHeader
+        <TooltipTableCellHeader
           direction={
             sort.sort === VoucherListUrlSortField.value
               ? getArrowDirection(sort.asc)
@@ -188,12 +191,13 @@ const VoucherList: React.FC<VoucherListProps> = props => {
             !canBeSorted(VoucherListUrlSortField.minSpent, !!selectedChannelId)
           }
           className={classes.colValue}
+          filterDependency={filterDependency.label}
         >
           <FormattedMessage
             defaultMessage="Value"
             description="voucher value"
           />
-        </TableCellHeader>
+        </TooltipTableCellHeader>
         <TableCellHeader
           direction={
             sort.sort === VoucherListUrlSortField.limit
