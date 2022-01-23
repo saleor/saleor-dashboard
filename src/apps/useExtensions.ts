@@ -1,3 +1,4 @@
+import { FilterableMenuItem } from "@saleor/components/AppLayout/menuStructure";
 import {
   AppExtensionTargetEnum,
   AppExtensionTypeEnum,
@@ -51,14 +52,24 @@ export const mapToMenuItems = (extensions: Extension[]) =>
     onSelect: open
   }));
 
-export const mapToSidebarMenuItems = (extensions: Extension[]) =>
-  extensions.map(({ label, id, url, permissions }) => ({
-    ariaLabel: id,
-    id,
-    label,
-    url,
-    permissions
-  }));
+export const mapToExtensionsItems = (
+  extensions: Extension[],
+  header: FilterableMenuItem
+) => {
+  const items: FilterableMenuItem[] = extensions.map(
+    ({ label, id, url, permissions }) => ({
+      ariaLabel: id,
+      id,
+      label,
+      url,
+      permissions
+    })
+  );
+  if (items.length) {
+    items.unshift(header);
+  }
+  return items;
+};
 
 export const useExtensions = (
   view: AppExtensionViewEnum,
