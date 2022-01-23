@@ -9,6 +9,7 @@ import Skeleton from "@saleor/components/Skeleton";
 import TableCellHeader from "@saleor/components/TableCellHeader";
 import TableHead from "@saleor/components/TableHead";
 import TablePagination from "@saleor/components/TablePagination";
+import TooltipTableCellHeader from "@saleor/components/TooltipTableCellHeader";
 import { makeStyles } from "@saleor/macaw-ui";
 import { maybe, renderCollection } from "@saleor/misc";
 import { ChannelProps, ListActions, ListProps, SortPage } from "@saleor/types";
@@ -73,7 +74,8 @@ const CollectionList: React.FC<CollectionListProps> = props => {
     selectedChannelId,
     toggle,
     toggleAll,
-    toolbar
+    toolbar,
+    filterDependency
   } = props;
 
   const classes = useStyles(props);
@@ -111,7 +113,7 @@ const CollectionList: React.FC<CollectionListProps> = props => {
         >
           <FormattedMessage defaultMessage="No. of Products" />
         </TableCellHeader>
-        <TableCellHeader
+        <TooltipTableCellHeader
           direction={
             sort.sort === CollectionListUrlSortField.available
               ? getArrowDirection(sort.asc)
@@ -125,12 +127,13 @@ const CollectionList: React.FC<CollectionListProps> = props => {
               !!selectedChannelId
             )
           }
+          filterDependency={filterDependency.label}
         >
           <FormattedMessage
             defaultMessage="Availability"
             description="collection availability"
           />
-        </TableCellHeader>
+        </TooltipTableCellHeader>
       </TableHead>
       <TableFooter>
         <TableRow>
