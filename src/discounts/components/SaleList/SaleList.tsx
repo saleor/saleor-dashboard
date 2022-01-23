@@ -8,6 +8,7 @@ import Skeleton from "@saleor/components/Skeleton";
 import TableCellHeader from "@saleor/components/TableCellHeader";
 import TableHead from "@saleor/components/TableHead";
 import TablePagination from "@saleor/components/TablePagination";
+import TooltipTableCellHeader from "@saleor/components/TooltipTableCellHeader";
 import { SaleListUrlSortField } from "@saleor/discounts/urls";
 import { canBeSorted } from "@saleor/discounts/views/SaleList/sort";
 import { makeStyles } from "@saleor/macaw-ui";
@@ -83,7 +84,8 @@ const SaleList: React.FC<SaleListProps> = props => {
     sort,
     toggle,
     toggleAll,
-    toolbar
+    toolbar,
+    filterDependency
   } = props;
 
   const classes = useStyles(props);
@@ -138,7 +140,7 @@ const SaleList: React.FC<SaleListProps> = props => {
         >
           <FormattedMessage defaultMessage="Ends" description="sale end date" />
         </TableCellHeader>
-        <TableCellHeader
+        <TooltipTableCellHeader
           direction={
             sort.sort === SaleListUrlSortField.value
               ? getArrowDirection(sort.asc)
@@ -149,10 +151,11 @@ const SaleList: React.FC<SaleListProps> = props => {
           disabled={
             !canBeSorted(SaleListUrlSortField.value, !!selectedChannelId)
           }
+          filterDependency={filterDependency.label}
           className={classes.colValue}
         >
           <FormattedMessage defaultMessage="Value" description="sale value" />
-        </TableCellHeader>
+        </TooltipTableCellHeader>
       </TableHead>
       <TableFooter>
         <TableRow>
