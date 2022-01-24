@@ -524,17 +524,19 @@ export interface OrderCapture_orderCapture_order_user {
   email: string;
 }
 
-export interface OrderCapture_orderCapture_order_availableShippingMethods_price {
+export interface OrderCapture_orderCapture_order_shippingMethods_price {
   __typename: "Money";
   amount: number;
   currency: string;
 }
 
-export interface OrderCapture_orderCapture_order_availableShippingMethods {
+export interface OrderCapture_orderCapture_order_shippingMethods {
   __typename: "ShippingMethod";
   id: string;
   name: string;
-  price: OrderCapture_orderCapture_order_availableShippingMethods_price | null;
+  price: OrderCapture_orderCapture_order_shippingMethods_price;
+  active: boolean;
+  message: string | null;
 }
 
 export interface OrderCapture_orderCapture_order_invoices {
@@ -595,7 +597,7 @@ export interface OrderCapture_orderCapture_order {
   undiscountedTotal: OrderCapture_orderCapture_order_undiscountedTotal;
   user: OrderCapture_orderCapture_order_user | null;
   userEmail: string | null;
-  availableShippingMethods: (OrderCapture_orderCapture_order_availableShippingMethods | null)[] | null;
+  shippingMethods: OrderCapture_orderCapture_order_shippingMethods[];
   invoices: (OrderCapture_orderCapture_order_invoices | null)[] | null;
   channel: OrderCapture_orderCapture_order_channel;
 }

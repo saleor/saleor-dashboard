@@ -76,7 +76,7 @@ export interface ShippingMethodChannelListingUpdate_shippingMethodChannelListing
 }
 
 export interface ShippingMethodChannelListingUpdate_shippingMethodChannelListingUpdate_shippingMethod {
-  __typename: "ShippingMethod";
+  __typename: "ShippingMethodType";
   id: string;
   postalCodeRules: (ShippingMethodChannelListingUpdate_shippingMethodChannelListingUpdate_shippingMethod_postalCodeRules | null)[] | null;
   metadata: (ShippingMethodChannelListingUpdate_shippingMethodChannelListingUpdate_shippingMethod_metadata | null)[];

@@ -3,7 +3,7 @@ import {
   shippingErrorFragment
 } from "@saleor/fragments/errors";
 import {
-  shippingMethodFragment,
+  shippingMethodTypeFragment,
   shippingZoneDetailsFragment
 } from "@saleor/fragments/shipping";
 import { countryFragment } from "@saleor/fragments/taxes";
@@ -157,14 +157,14 @@ export const useShippingZoneUpdate = makeMutation<
 
 const updateShippingRate = gql`
   ${shippingErrorFragment}
-  ${shippingMethodFragment}
+  ${shippingMethodTypeFragment}
   mutation UpdateShippingRate($id: ID!, $input: ShippingPriceInput!) {
     shippingPriceUpdate(id: $id, input: $input) {
       errors {
         ...ShippingErrorFragment
       }
       shippingMethod {
-        ...ShippingMethodFragment
+        ...ShippingMethodTypeFragment
       }
     }
   }
@@ -176,7 +176,7 @@ export const useShippingRateUpdate = makeMutation<
 
 const createShippingRate = gql`
   ${shippingErrorFragment}
-  ${shippingMethodFragment}
+  ${shippingMethodTypeFragment}
   ${shippingZoneDetailsFragment}
   mutation CreateShippingRate($input: ShippingPriceInput!) {
     shippingPriceCreate(input: $input) {
@@ -187,7 +187,7 @@ const createShippingRate = gql`
         ...ShippingZoneDetailsFragment
       }
       shippingMethod {
-        ...ShippingMethodFragment
+        ...ShippingMethodTypeFragment
       }
     }
   }
@@ -233,14 +233,14 @@ export const useShippingRateBulkDelete = makeMutation<
 
 export const shippingMethodChannelListingUpdate = gql`
   ${shippingChannelsErrorFragment}
-  ${shippingMethodFragment}
+  ${shippingMethodTypeFragment}
   mutation ShippingMethodChannelListingUpdate(
     $id: ID!
     $input: ShippingMethodChannelListingInput!
   ) {
     shippingMethodChannelListingUpdate(id: $id, input: $input) {
       shippingMethod {
-        ...ShippingMethodFragment
+        ...ShippingMethodTypeFragment
       }
       errors {
         ...ShippingChannelsErrorFragment
