@@ -37,8 +37,8 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
 
   React.useEffect(
     () => {
-      if (data !== undefined) {
-        editor.current = new EditorJS({
+      if (data !== undefined && !editor.current) {
+        const editorjs = new EditorJS({
           data,
           holder: editorContainer.current,
           logLevel: "ERROR" as LogLevels,
@@ -51,6 +51,8 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
             // const undo = new Undo({ editor });
             // undo.initialize(data);
 
+            editor.current = editorjs;
+
             if (onReady) {
               onReady();
             }
@@ -60,7 +62,12 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
         });
       }
 
-      return editor.current?.destroy;
+      return () => {
+        if (editor.current) {
+          editor.current.destroy();
+        }
+        editor.current = null;
+      };
     },
     // Rerender editor only if changed from undefined to defined state
     [data === undefined]
