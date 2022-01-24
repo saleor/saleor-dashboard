@@ -23,7 +23,7 @@ const messages = defineMessages({
   },
   subtitle: {
     defaultMessage:
-      "Select Shipping Zones that will be supplied via this channel. You can assign Shipping Zones to multiple channels.",
+      "Select shipping zones that will be supplied via this channel. You can assign Shipping Zones to multiple channels.",
     description: "card subtitle"
   },
   allSelectedMessage: {
