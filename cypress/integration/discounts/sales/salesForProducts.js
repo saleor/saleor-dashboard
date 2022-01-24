@@ -3,24 +3,24 @@
 
 import faker from "faker";
 
-import { urlList } from "../../fixtures/urlList";
-import { createChannel } from "../../support/api/requests/Channels";
-import { updateChannelInProduct } from "../../support/api/requests/Product";
-import * as channelsUtils from "../../support/api/utils/channelsUtils";
-import { deleteSalesStartsWith } from "../../support/api/utils/discounts/salesUtils";
-import * as productsUtils from "../../support/api/utils/products/productsUtils";
+import { urlList } from "../../../fixtures/urlList";
+import { createChannel } from "../../../support/api/requests/Channels";
+import { updateChannelInProduct } from "../../../support/api/requests/Product";
+import * as channelsUtils from "../../../support/api/utils/channelsUtils";
+import { deleteSalesStartsWith } from "../../../support/api/utils/discounts/salesUtils";
+import * as productsUtils from "../../../support/api/utils/products/productsUtils";
 import {
   createShipping,
   deleteShippingStartsWith
-} from "../../support/api/utils/shippingUtils";
-import { getProductPrice } from "../../support/api/utils/storeFront/storeFrontProductUtils";
-import filterTests from "../../support/filterTests";
+} from "../../../support/api/utils/shippingUtils";
+import { getProductPrice } from "../../../support/api/utils/storeFront/storeFrontProductUtils";
+import filterTests from "../../../support/filterTests";
 import {
   assignProducts,
   createSale,
   createSaleWithNewProduct,
   discountOptions
-} from "../../support/pages/discounts/salesPage";
+} from "../../../support/pages/discounts/salesPage";
 
 filterTests({ definedTags: ["all"] }, () => {
   describe("Sales discounts for products", () => {

@@ -1,28 +1,28 @@
 // / <reference types="cypress"/>
-// / <reference types="../../support"/>
+// / <reference types="../../../support"/>
 
 import faker from "faker";
 
-import { BUTTON_SELECTORS } from "../../elements/shared/button-selectors";
-import { urlList, voucherDetailsUrl } from "../../fixtures/urlList";
-import { ONE_PERMISSION_USERS } from "../../fixtures/users";
-import { createChannel } from "../../support/api/requests/Channels";
-import { completeCheckout } from "../../support/api/requests/Checkout";
-import * as channelsUtils from "../../support/api/utils/channelsUtils";
+import { BUTTON_SELECTORS } from "../../../elements/shared/button-selectors";
+import { urlList, voucherDetailsUrl } from "../../../fixtures/urlList";
+import { ONE_PERMISSION_USERS } from "../../../fixtures/users";
+import { createChannel } from "../../../support/api/requests/Channels";
+import { completeCheckout } from "../../../support/api/requests/Checkout";
+import * as channelsUtils from "../../../support/api/utils/channelsUtils";
 import {
   createVoucherInChannel,
   deleteVouchersStartsWith
-} from "../../support/api/utils/discounts/vouchersUtils";
+} from "../../../support/api/utils/discounts/vouchersUtils";
 import {
   addPayment,
   createCheckoutWithVoucher
-} from "../../support/api/utils/ordersUtils";
-import * as productsUtils from "../../support/api/utils/products/productsUtils";
-import filterTests from "../../support/filterTests";
+} from "../../../support/api/utils/ordersUtils";
+import * as productsUtils from "../../../support/api/utils/products/productsUtils";
+import filterTests from "../../../support/filterTests";
 import {
   createVoucher,
   discountOptions
-} from "../../support/pages/discounts/vouchersPage";
+} from "../../../support/pages/discounts/vouchersPage";
 
 filterTests({ definedTags: ["all"] }, () => {
   describe("Vouchers discounts", () => {
@@ -36,6 +36,7 @@ filterTests({ definedTags: ["all"] }, () => {
     let variants;
     let product;
     let address;
+    let dataForCheckout;
 
     before(() => {
       cy.clearSessionData().loginUserViaRequest();
@@ -62,6 +63,13 @@ filterTests({ definedTags: ["all"] }, () => {
         )
         .then(channel => {
           createdChannel = channel;
+          dataForCheckout = {
+            channelSlug: defaultChannel.slug,
+            variantsList: variants,
+            address,
+            shippingMethodName: shippingMethod.name,
+            auth: "token"
+          };
         });
     });
 
@@ -79,7 +87,8 @@ filterTests({ definedTags: ["all"] }, () => {
       )
         .then(amount => {
           expect(amount).to.be.eq(expectedAmount);
-          createCheckoutForCreatedVoucher(voucherCode);
+          dataForCheckout.voucherCode = voucherCode;
+          createCheckoutWithVoucher(dataForCheckout);
         })
         .then(resp => {
           expect(resp.addPromoCodeResp.checkout.totalPrice.gross.amount).to.eq(
@@ -109,7 +118,8 @@ filterTests({ definedTags: ["all"] }, () => {
       )
         .then(amount => {
           expect(amount).to.be.eq(expectedAmount);
-          createCheckoutForCreatedVoucher(voucherCode);
+          dataForCheckout.voucherCode = voucherCode;
+          createCheckoutWithVoucher(dataForCheckout);
         })
         .then(resp => {
           expect(resp.addPromoCodeResp.checkout.totalPrice.gross.amount).to.eq(
@@ -138,7 +148,8 @@ filterTests({ definedTags: ["all"] }, () => {
       )
         .then(amount => {
           expect(amount).to.be.eq(expectedAmount);
-          createCheckoutForCreatedVoucher(voucherCode);
+          dataForCheckout.voucherCode = voucherCode;
+          createCheckoutWithVoucher(dataForCheckout);
         })
         .then(resp => {
           expect(resp.addPromoCodeResp.checkout.totalPrice.gross.amount).to.eq(
@@ -169,7 +180,8 @@ filterTests({ definedTags: ["all"] }, () => {
         discountOption: discountOptions.PERCENTAGE,
         channelName: createdChannel.name
       });
-      createCheckoutForCreatedVoucher(randomName).then(
+      dataForCheckout.voucherCode = randomName;
+      createCheckoutWithVoucher(dataForCheckout).then(
         ({ addPromoCodeResp }) => {
           const errorField = addPromoCodeResp.checkoutErrors[0].field;
           expect(errorField).to.be.eq("promoCode");
@@ -200,7 +212,8 @@ filterTests({ definedTags: ["all"] }, () => {
             .get(BUTTON_SELECTORS.submit)
             .click()
             .wait("@VoucherDelete");
-          createCheckoutForCreatedVoucher(voucher.code);
+          dataForCheckout.voucherCode = voucherCode;
+          createCheckoutWithVoucher(dataForCheckout);
         })
         .then(({ addPromoCodeResp }) => {
           const errorField = addPromoCodeResp.checkoutErrors[0].field;
@@ -234,7 +247,8 @@ filterTests({ definedTags: ["all"] }, () => {
         discountOption: discount,
         channelName: defaultChannel.name
       });
-      return createCheckoutForCreatedVoucher(voucherCode).its(
+      dataForCheckout.voucherCode = voucherCode;
+      return createCheckoutWithVoucher(dataForCheckout).its(
         "addPromoCodeResp.checkout.totalPrice.gross.amount"
       );
     }
