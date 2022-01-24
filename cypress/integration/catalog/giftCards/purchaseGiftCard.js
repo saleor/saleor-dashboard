@@ -12,7 +12,7 @@ import {
 import filterTests from "../../../support/filterTests";
 
 filterTests({ definedTags: ["all"], version: "3.1.0" }, () => {
-  describe("Gift cards in checkout", () => {
+  describe("As a customer I should be able to purchase gift card as a product", () => {
     const startsWith = "GiftCardsCheckout";
     const productPrice = 50;
     const shippingPrice = 50;

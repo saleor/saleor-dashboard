@@ -15,7 +15,7 @@ import filterTests from "../../../support/filterTests";
 import { formatDate } from "../../../support/formatData/formatDate";
 
 filterTests({ definedTags: ["all"], version: "3.1.0" }, () => {
-  describe("Tests for gift cards", () => {
+  describe("As an admin I want to update gift card", () => {
     const startsWith = "GiftCards";
 
     before(() => {

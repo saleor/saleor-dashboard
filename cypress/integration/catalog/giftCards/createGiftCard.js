@@ -17,7 +17,7 @@ import {
 } from "../../../support/pages/catalog/giftCardPage";
 
 filterTests({ definedTags: ["all"], version: "3.1.0" }, () => {
-  describe("Tests for gift cards", () => {
+  describe("As an admin I want to create gift card", () => {
     const startsWith = "GiftCards";
     const amount = 50;
     const currency = "USD";
@@ -53,7 +53,7 @@ filterTests({ definedTags: ["all"], version: "3.1.0" }, () => {
         });
     });
 
-    it(" As an admin I should be able to create gift card with two moths expiry", () => {
+    it("As an admin I should be able to create gift card with two moths expiry", () => {
       const name = `${startsWith}${faker.datatype.number()}`;
       let giftCardCode;
       const expectedExpiryDate = addToDate(new Date(), 2, "M");

@@ -30,7 +30,7 @@ import {
 } from "../../../support/pages/catalog/giftCardPage";
 
 filterTests({ definedTags: ["all"], version: "3.1.0" }, () => {
-  describe("Gift cards in checkout", () => {
+  describe("As a admin I want to use enabled gift card in checkout", () => {
     const startsWith = "GiftCardsCheckout";
     const productPrice = 50;
     const shippingPrice = 50;
