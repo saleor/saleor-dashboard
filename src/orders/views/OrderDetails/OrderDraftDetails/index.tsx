@@ -127,7 +127,7 @@ export const OrderDraftDetails: React.FC<OrderDraftDetailsProps> = ({
       return;
     }
 
-    await orderDraftUpdate.mutate({
+    const result = await orderDraftUpdate.mutate({
       id,
       input: {
         user,
@@ -135,7 +135,7 @@ export const OrderDraftDetails: React.FC<OrderDraftDetailsProps> = ({
       }
     });
 
-    if (orderDraftUpdate?.opts?.data?.draftOrderUpdate?.errors?.length) {
+    if (result?.data?.draftOrderUpdate?.errors?.length) {
       return;
     }
 
