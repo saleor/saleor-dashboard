@@ -18,6 +18,7 @@ import TableCellHeader from "@saleor/components/TableCellHeader";
 import TableHead from "@saleor/components/TableHead";
 import TablePagination from "@saleor/components/TablePagination";
 import TooltipTableCellHeader from "@saleor/components/TooltipTableCellHeader";
+import { commonTooltipMessages } from "@saleor/components/TooltipTableCellHeader/messages";
 import { ProductListColumns } from "@saleor/config";
 import { makeStyles } from "@saleor/macaw-ui";
 import { maybe, renderCollection } from "@saleor/misc";
@@ -36,7 +37,7 @@ import TDisplayColumn, {
 import { getArrowDirection } from "@saleor/utils/sort";
 import classNames from "classnames";
 import React from "react";
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import { columnsMessages, messages } from "./messages";
 
@@ -143,6 +144,7 @@ export const ProductList: React.FC<ProductListProps> = props => {
   } = props;
 
   const classes = useStyles(props);
+  const intl = useIntl();
   const gridAttributesFromSettings = settings.columns.filter(
     isAttributeColumnValue
   );
@@ -232,7 +234,10 @@ export const ProductList: React.FC<ProductListProps> = props => {
                   !!selectedChannelId
                 )
               }
-              filterDependency={filterDependency.label}
+              tooltip={intl.formatMessage(
+                commonTooltipMessages.noFilterSelected,
+                { filterName: filterDependency.label }
+              )}
             >
               <FormattedMessage {...columnsMessages.availability} />
             </TooltipTableCellHeader>
@@ -294,7 +299,10 @@ export const ProductList: React.FC<ProductListProps> = props => {
               disabled={
                 !canBeSorted(ProductListUrlSortField.price, !!selectedChannelId)
               }
-              filterDependency={filterDependency.label}
+              tooltip={intl.formatMessage(
+                commonTooltipMessages.noFilterSelected,
+                { filterName: filterDependency.label }
+              )}
             >
               <FormattedMessage {...columnsMessages.price} />
             </TooltipTableCellHeader>

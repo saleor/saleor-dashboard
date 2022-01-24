@@ -9,6 +9,7 @@ import TableCellHeader from "@saleor/components/TableCellHeader";
 import TableHead from "@saleor/components/TableHead";
 import TablePagination from "@saleor/components/TablePagination";
 import TooltipTableCellHeader from "@saleor/components/TooltipTableCellHeader";
+import { commonTooltipMessages } from "@saleor/components/TooltipTableCellHeader/messages";
 import { VoucherListUrlSortField } from "@saleor/discounts/urls";
 import { canBeSorted } from "@saleor/discounts/views/VoucherList/sort";
 import { makeStyles } from "@saleor/macaw-ui";
@@ -19,7 +20,7 @@ import { getArrowDirection } from "@saleor/utils/sort";
 import { getFooterColSpanWithBulkActions } from "@saleor/utils/tables";
 import classNames from "classnames";
 import React from "react";
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import { VoucherList_vouchers_edges_node } from "../../types/VoucherList";
 
@@ -107,6 +108,7 @@ const VoucherList: React.FC<VoucherListProps> = props => {
   } = props;
 
   const classes = useStyles(props);
+  const intl = useIntl();
 
   return (
     <ResponsiveTable>
@@ -142,7 +144,9 @@ const VoucherList: React.FC<VoucherListProps> = props => {
             !canBeSorted(VoucherListUrlSortField.minSpent, !!selectedChannelId)
           }
           className={classes.colMinSpent}
-          filterDependency={filterDependency.label}
+          tooltip={intl.formatMessage(commonTooltipMessages.noFilterSelected, {
+            filterName: filterDependency.label
+          })}
         >
           <FormattedMessage
             defaultMessage="Min. Spent"
@@ -191,7 +195,9 @@ const VoucherList: React.FC<VoucherListProps> = props => {
             !canBeSorted(VoucherListUrlSortField.minSpent, !!selectedChannelId)
           }
           className={classes.colValue}
-          filterDependency={filterDependency.label}
+          tooltip={intl.formatMessage(commonTooltipMessages.noFilterSelected, {
+            filterName: filterDependency.label
+          })}
         >
           <FormattedMessage
             defaultMessage="Value"
