@@ -3,7 +3,10 @@
 
 import faker from "faker";
 
-import { CATEGORIES_LIST } from "../../elements/catalog/categories/categories-list";
+import {
+  CATEGORIES_LIST,
+  categoryRow
+} from "../../elements/catalog/categories/categories-list";
 import { CATEGORY_DETAILS } from "../../elements/catalog/categories/category-details";
 import { BUTTON_SELECTORS } from "../../elements/shared/button-selectors";
 import { SHARED_ELEMENTS } from "../../elements/shared/sharedElements";
@@ -22,7 +25,7 @@ import {
 
 filterTests({ definedTags: ["all"] }, () => {
   describe("Categories", () => {
-    const startsWith = "CyCollections";
+    const startsWith = "CyCategories";
     const name = `${startsWith}${faker.datatype.number()}`;
 
     let attribute;
@@ -70,7 +73,7 @@ filterTests({ definedTags: ["all"] }, () => {
       cy.clearSessionData().loginUserViaRequest();
     });
 
-    it("should create category", () => {
+    it("As an admin I should be able to create category", () => {
       const categoryName = `${startsWith}${faker.datatype.number()}`;
 
       cy.visit(urlList.categories)
@@ -88,7 +91,7 @@ filterTests({ definedTags: ["all"] }, () => {
         });
     });
 
-    it("should add subcategory", () => {
+    it("As an admin I should be able to create category as subcategory", () => {
       const categoryName = `${startsWith}${faker.datatype.number()}`;
 
       cy.visit(categoryDetailsUrl(category.id))
@@ -103,7 +106,7 @@ filterTests({ definedTags: ["all"] }, () => {
       });
     });
 
-    it("should add product to category", () => {
+    it("As an admin I should be able to add product to category", () => {
       cy.visit(categoryDetailsUrl(category.id))
         .get(CATEGORY_DETAILS.productsTab)
         .click()
@@ -113,7 +116,7 @@ filterTests({ definedTags: ["all"] }, () => {
         .should("include", urlList.addProduct);
     });
 
-    it("should remove product from category", () => {
+    it("As an admin I should be able to add remove to category", () => {
       cy.visit(categoryDetailsUrl(category.id))
         .get(CATEGORY_DETAILS.productsTab)
         .click();
@@ -134,7 +137,7 @@ filterTests({ definedTags: ["all"] }, () => {
       });
     });
 
-    it("should enter category details page", () => {
+    it("As an admin I should be able to enter category details page", () => {
       cy.visit(urlList.categories)
         .get(SHARED_ELEMENTS.searchInput)
         .type(category.name);
@@ -142,10 +145,10 @@ filterTests({ definedTags: ["all"] }, () => {
       cy.contains(SHARED_ELEMENTS.header, category.name).should("be.visible");
     });
 
-    it("should delete category", () => {
+    it("As an admin I should be able to delete category", () => {
       const categoryName = `${startsWith}${faker.datatype.number()}`;
 
-      createCategoryRequest(categoryName).then(categoryResp => {
+      createCategoryRequest({ name: categoryName }).then(categoryResp => {
         cy.visit(categoryDetailsUrl(categoryResp.id))
           .get(BUTTON_SELECTORS.deleteButton)
           .click()
@@ -157,11 +160,11 @@ filterTests({ definedTags: ["all"] }, () => {
       });
     });
 
-    it("should update category", () => {
+    it("As an admin I should be able to update category", () => {
       const categoryName = `${startsWith}${faker.datatype.number()}`;
       const updatedName = `${startsWith}updatedCategory`;
 
-      createCategoryRequest(categoryName)
+      createCategoryRequest({ name: categoryName })
         .then(categoryResp => {
           cy.visitAndWaitForProgressBarToDisappear(
             categoryDetailsUrl(categoryResp.id)
@@ -174,6 +177,70 @@ filterTests({ definedTags: ["all"] }, () => {
           const descriptionJson = JSON.parse(categoryResp.description);
           const descriptionText = descriptionJson.blocks[0].data.text;
           expect(descriptionText).to.eq(updatedName);
+        });
+    });
+
+    it("As an admin I should be able to delete several categories on categories list page", () => {
+      const firstCategoryName = `${startsWith}${faker.datatype.number()}`;
+      const secondCategoryName = `${startsWith}${faker.datatype.number()}`;
+      let firstCategory;
+      let secondCategory;
+
+      createCategoryRequest({ name: firstCategoryName }).then(categoryResp => {
+        firstCategory = categoryResp;
+      });
+      createCategoryRequest({ name: secondCategoryName }).then(categoryResp => {
+        secondCategory = categoryResp;
+        cy.visit(urlList.categories)
+          .searchInTable(startsWith)
+          .get(categoryRow(firstCategory.id))
+          .find(BUTTON_SELECTORS.checkbox)
+          .click()
+          .get(categoryRow(secondCategory.id))
+          .find(BUTTON_SELECTORS.checkbox)
+          .click()
+          .get(BUTTON_SELECTORS.deleteIcon)
+          .click()
+          .addAliasToGraphRequest("CategoryBulkDelete")
+          .get(BUTTON_SELECTORS.submit)
+          .click()
+          .waitForRequestAndCheckIfNoErrors("@CategoryBulkDelete");
+        getCategory(firstCategory.id).should("be.null");
+        getCategory(secondCategory.id).should("be.null");
+      });
+    });
+
+    it("As an admin I should be able to remove subcategory from category", () => {
+      const subCategoryName = `${startsWith}${faker.datatype.number()}`;
+      const mainCategoryName = `${startsWith}${faker.datatype.number()}`;
+      let subCategory;
+      let mainCategory;
+
+      createCategoryRequest({ name: mainCategoryName })
+        .then(categoryResp => {
+          mainCategory = categoryResp;
+          createCategoryRequest({
+            name: subCategoryName,
+            parent: mainCategory.id
+          });
+        })
+        .then(categoryResp => {
+          subCategory = categoryResp;
+          cy.visit(categoryDetailsUrl(mainCategory.id))
+            .get(categoryRow(subCategory.id))
+            .find(BUTTON_SELECTORS.checkbox)
+            .click()
+            .get(BUTTON_SELECTORS.deleteIcon)
+            .click()
+            .addAliasToGraphRequest("CategoryBulkDelete")
+            .get(BUTTON_SELECTORS.submit)
+            .click()
+            .waitForRequestAndCheckIfNoErrors("@CategoryBulkDelete");
+          getCategory(subCategory.id).should("be.null");
+          getCategory(mainCategory.id);
+        })
+        .then(categoryResp => {
+          expect(categoryResp.children.edges).to.be.empty;
         });
     });
   });
