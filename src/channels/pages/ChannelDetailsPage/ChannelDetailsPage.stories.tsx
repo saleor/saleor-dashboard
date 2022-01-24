@@ -43,7 +43,8 @@ const props: ChannelDetailsPageProps<ChannelErrorFragment[]> = {
   fetchMoreShippingZones: {
     loading: false,
     hasMore: false,
-    onFetchMore: () => undefined
+    onFetchMore: () => undefined,
+    totalCount: 0
   }
 };
 
