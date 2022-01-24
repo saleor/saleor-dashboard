@@ -1,4 +1,9 @@
-import { DialogActions, DialogContent, DialogTitle } from "@material-ui/core";
+import {
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  Typography
+} from "@material-ui/core";
 import ConfirmButton from "@saleor/components/ConfirmButton";
 import { Task } from "@saleor/containers/BackgroundTasks/types";
 import useBackgroundTask from "@saleor/hooks/useBackgroundTask";
@@ -117,18 +122,23 @@ const GiftCardExportDialog: React.FC<Pick<DialogProps, "onClose"> & {
       <DialogContent>
         <ContentWithProgress>
           {!loading && (
-            <ExportDialogSettings
-              errors={exportGiftCardsOpts?.data?.exportGiftCards?.errors}
-              onChange={change}
-              selectedItems={selectedIds?.length}
-              data={data}
-              exportScopeLabels={exportScopeLabels}
-              allowScopeSelection={!hasIdsToExport}
-              itemsQuantity={{
-                filter: filteredGiftCardsCount,
-                all: allGiftCardsCount
-              }}
-            />
+            <>
+              <ExportDialogSettings
+                errors={exportGiftCardsOpts?.data?.exportGiftCards?.errors}
+                onChange={change}
+                selectedItems={selectedIds?.length}
+                data={data}
+                exportScopeLabels={exportScopeLabels}
+                allowScopeSelection={!hasIdsToExport}
+                itemsQuantity={{
+                  filter: filteredGiftCardsCount,
+                  all: allGiftCardsCount
+                }}
+              />
+              <Typography variant="subtitle2">
+                {intl.formatMessage(messages.exportNote)}
+              </Typography>
+            </>
           )}
         </ContentWithProgress>
       </DialogContent>

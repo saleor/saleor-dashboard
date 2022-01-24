@@ -3625,6 +3625,10 @@
     "context": "gift card export dialog confirm button label",
     "string": "Export codes"
   },
+  "src_dot_giftCards_dot_GiftCardExportDialogContent_dot_exportNote": {
+    "context": "note on export gift cards",
+    "string": "Note: Only active and not used gift cards will be expored"
+  },
   "src_dot_giftCards_dot_GiftCardExportDialogContent_dot_exportTypeLabel": {
     "context": "gift card export type label",
     "string": "gift cards"
