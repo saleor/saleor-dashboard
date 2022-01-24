@@ -13,7 +13,7 @@ import filterTests from "../../support/filterTests";
 import { updateTranslationToCategory } from "../../support/pages/translationsPage";
 
 filterTests({ definedTags: ["all"], version: "3.0.0" }, () => {
-  describe("Tests for translations", () => {
+  describe("As an admin I want to manage translations", () => {
     const startsWith = "Translations";
     const randomNumber = faker.datatype.number();
 
@@ -31,7 +31,7 @@ filterTests({ definedTags: ["all"], version: "3.0.0" }, () => {
       cy.clearSessionData().loginUserViaRequest();
     });
 
-    it("should create translation", () => {
+    it("As an admin I want to create translation", () => {
       const translatedName = `TranslatedName${randomNumber}`;
       const translatedDescription = `TranslatedDescription${randomNumber}`;
       const translatedSeoTitle = `TranslatedSeoTitle${randomNumber}`;
@@ -52,7 +52,7 @@ filterTests({ definedTags: ["all"], version: "3.0.0" }, () => {
       });
     });
 
-    it("should update translation", () => {
+    it("As an admin I want to update translation", () => {
       const randomNumber = faker.datatype.number();
       const startWithUpdate = `Translations_Update_${randomNumber}`;
       const seoTitleUpdate = `${startWithUpdate}_seoTitle`;
