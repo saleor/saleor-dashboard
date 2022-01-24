@@ -15,7 +15,7 @@ import filterTests from "../../support/filterTests";
 import { createProductType } from "../../support/pages/productTypePage";
 
 filterTests({ definedTags: ["all"] }, () => {
-  describe("Tests for product types", () => {
+  describe("As an admin I want to manage product types", () => {
     const startsWith = "ProductType";
 
     before(() => {
