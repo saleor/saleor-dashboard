@@ -1,15 +1,14 @@
 export const CONFIGURATION_SELECTORS = {
   channels: "[data-test-id*='channels']",
   shipping: '[data-test-id*="shipping methods"]',
-  taxes: '[data-test-id*="configurationMenuTaxes"]',
-  settings: '[data-test-id*="configurationMenuSiteSettings"]',
-  pageTypes: '[data-test-id*="configurationMenuPageTypes"]',
-  pages: '[data-test-id*="configurationMenuPages"]',
-  navigation: '[data-test-id*="configurationMenuNavigation"]',
-  staffMembers: '[data-test-id*="configurationMenuStaff"]',
-  permissionGroups: '[data-test-id*="configurationMenuPermissionGroups"]',
-  attributes: '[data-test-id*="configurationMenuAttributes"]',
-  productTypes: '[data-test-id*="configurationMenuProductTypes"]',
-  plugin: '[data-test-id*="configurationPluginsPages"]',
-  warehouse: '[data-test-id*="configurationMenuWarehouses"]'
+  taxes: '[data-test-id*="configuration-menu-taxes"]',
+  settings: '[data-test-id*="configuration-menu-site-settings"]',
+  pageTypes: '[data-test-id*="configuration-menu-page-types"]',
+  navigation: '[data-test-id*="configuration-menu-navigation"]',
+  staffMembers: '[data-test-id*="configuration-menu-staff"]',
+  permissionGroups: '[data-test-id*="configuration-menu-permission-groups"]',
+  attributes: '[data-test-id*="configuration-menu-attributes"]',
+  productTypes: '[data-test-id*="configuration-menu-product-types"]',
+  plugin: '[data-test-id*="configuration-plugins-pages"]',
+  warehouse: '[data-test-id*="configuration-menu-warehouses"]'
 };
