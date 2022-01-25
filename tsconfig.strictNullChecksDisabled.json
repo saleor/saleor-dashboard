@@ -1,0 +1,9 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "strictNullChecks": false
+  },
+  "exclude": [
+    "ts-strict-migration-tools"
+  ]
+}

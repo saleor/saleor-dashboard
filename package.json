@@ -117,9 +117,11 @@
     "@types/color-convert": "^2.0.0",
     "@types/enzyme": "^3.10.8",
     "@types/fuzzaldrin": "^2.1.2",
+    "@types/glob": "^7.2.0",
     "@types/jest": "^24.0.24",
     "@types/jscodeshift": "^0.11.3",
     "@types/lodash-es": "^4.17.3",
+    "@types/node": "^17.0.12",
     "@types/pollyjs__adapter-node-http": "^2.0.1",
     "@types/pollyjs__persister-fs": "^2.0.1",
     "@types/react": "^16.9.16",
@@ -163,6 +165,7 @@
     "eslint-plugin-simple-import-sort": "^5.0.3",
     "file-loader": "^5.0.2",
     "fork-ts-checker-webpack-plugin": "^3.1.1",
+    "glob": "^7.2.0",
     "graphql-request": "^3.7.0",
     "html-webpack-plugin": "^3.2.0",
     "husky": "^4.3.0",
@@ -235,7 +238,7 @@
   "husky": {
     "hooks": {
       "pre-commit": "lint-staged",
-      "pre-push": "npm run check-types"
+      "pre-push": "npm run check-types-no-strict-null && npm run check-types"
     }
   },
   "lint-staged": {
@@ -254,7 +257,8 @@
     "build-types": "apollo client:codegen --target=typescript types --globalTypesFile=src/types/globalTypes.ts && npm run generate-fragment-types",
     "build": "npm run generate-fragment-types && webpack -p",
     "check-strict-null-errors": "tsc --noEmit --strictNullChecks | node scripts/count-strict-null-check-errors.js",
-    "check-types": "tsc --noEmit",
+    "check-types": "tsc --noEmit --project tsconfig.strictNullChecks.json",
+    "check-types-no-strict-null": "tsc --noEmit --project tsconfig.strictNullChecksDisabled.json",
     "extract-json-messages": "rimraf build/locale && cross-env NODE_ENV=extract babel src 'src/**/*.{ts,tsx}' -o build/dashboard.bundle.js",
     "extract-messages": "npm run extract-json-messages && npm run transpile-messages",
     "heroku-postbuild": "npm run build",
@@ -274,7 +278,12 @@
     "transpile-messages": "node scripts/transpile-tx.js",
     "lint": "npx eslint \"src/**/*.@(tsx|ts|jsx|js)\" --fix ; npx prettier --check \"src/**/*.@(tsx|ts|jsx|js)\" --write",
     "postbuild": "rimraf ./build/**/*.js.map",
-    "release": "release-it"
+    "release": "release-it",
+    "ts-strict-find-candidates": "tsc --project ./ts-strict-migration-tools/tsconfig.json && node ./ts-strict-migration-tools/findCandidates.js ./tsconfig.strictNullChecks.json",
+    "ts-strict-auto-add": "tsc --project ./ts-strict-migration-tools/tsconfig.json && node ./ts-strict-migration-tools/autoAdd.js ./tsconfig.strictNullChecks.json",
+    "ts-strict-find-cycles": "tsc --project ./ts-strict-migration-tools/tsconfig.json && node ./ts-strict-migration-tools/runFindCycles.js ./tsconfig.strictNullChecks.json",
+    "ts-strict-visualize": "tsc --project ./ts-strict-migration-tools/tsconfig.json && node ./ts-strict-migration-tools/visualize.js ./tsconfig.strictNullChecks.json",
+    "ts-strict-generate-config-exclude": "tsc --project ./ts-strict-migration-tools/tsconfig.json && node ./ts-strict-migration-tools/generateConfig.js ./tsconfig.strictNullChecks.json"
   },
   "description": "![Saleor Dashboard](https://user-images.githubusercontent.com/249912/82305745-5c52fd00-99be-11ea-9ac6-cc04a6f28c91.png)"
 }

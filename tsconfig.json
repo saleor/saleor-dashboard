@@ -6,6 +6,7 @@
     "lib": ["es2017", "dom", "esnext"],
     "skipLibCheck": true,
     "sourceMap": true,
+    "strictNullChecks": true,
     "target": "es5",
     "noUnusedLocals": true,
     "noUnusedParameters": true,
@@ -16,6 +17,5 @@
       "@test/*": ["testUtils/*"]
     },
     "resolveJsonModule": true
-  },
-  "exclude": ["node_modules"]
+  }
 }

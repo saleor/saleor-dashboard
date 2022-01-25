@@ -37,6 +37,7 @@ jobs:
       - name: Run tsc
         run: |
           npm run check-types
+          npm run check-types-no-strict-null
 
       - name: Run lint
         run: |

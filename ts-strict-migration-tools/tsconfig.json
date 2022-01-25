@@ -1,0 +1,18 @@
+{
+  "compilerOptions": {
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "downlevelIteration": true,
+  },
+  "files": [
+    "autoAdd.ts",
+    "errorCounter.ts",
+    "findCandidates.ts",
+    "findCycles.ts",
+    "getStrictNullCheckEligibleFiles.ts",
+    "runFindCycles.ts",
+    "tsHelper.ts",
+    "visualize.ts",
+    "generateConfig.ts"
+  ]
+}

@@ -42,6 +42,8 @@ cypress/videos
 webpack-bundle.json
 /templates/templated_email/compiled/*
 !/templates/templated_email/compiled/.gitkeep
+ts-strict-migration-tools/*.js
+tsconfig.strictNullChecks.jsoncopy*
 
 # Exported results file
 django-queries-results.html
