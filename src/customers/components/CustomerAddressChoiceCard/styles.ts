@@ -4,7 +4,7 @@ export const useStyles = makeStyles(
   theme => ({
     card: {
       padding: "1px",
-      borderColor: theme.palette.grey[200],
+      borderColor: theme.palette.saleor.main[5],
       borderStyle: "solid",
       borderWidth: "2px"
     },
