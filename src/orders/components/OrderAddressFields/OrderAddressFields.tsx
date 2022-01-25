@@ -10,7 +10,9 @@ import {
 } from "@saleor/orders/types/OrderDetails";
 import React from "react";
 
-import OrderCustomerAddressesEditDialog from "../OrderCustomerAddressesEditDialog";
+import OrderCustomerAddressesEditDialog, {
+  OrderCustomerAddressesEditDialogProps
+} from "../OrderCustomerAddressesEditDialog";
 import {
   AddressEditDialogVariant,
   OrderCustomerAddressesEditDialogOutput
@@ -43,7 +45,10 @@ const OrderAddressFields: React.FC<OrderAddressFieldsProps> = ({
   orderShippingAddress,
   orderBillingAddress
 }) => {
-  const addressFieldCommonProps = {
+  const addressFieldCommonProps: Omit<
+    OrderCustomerAddressesEditDialogProps,
+    "open" | "variant"
+  > = {
     loading: customerAddressesLoading,
     confirmButtonState,
     countries,
