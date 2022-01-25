@@ -1,8 +1,7 @@
 import { Tooltip } from "@saleor/macaw-ui";
 import React from "react";
 
-import { TableCellHeaderProps } from "../TableCellHeader";
-import { RefTableCellHeader } from "./RefTableCellHeader";
+import TableCellHeader, { TableCellHeaderProps } from "../TableCellHeader";
 
 interface TooltipTableCellHeaderProps extends TableCellHeaderProps {
   tooltip?: string;
@@ -20,9 +19,9 @@ export const TooltipTableCellHeader: React.FC<TooltipTableCellHeaderProps> = pro
 
   return (
     <Tooltip title={tooltip} placement="top" disabled={tooltipDisabled()}>
-      <RefTableCellHeader disabled={disabled} {...rest}>
+      <TableCellHeader disabled={disabled} {...rest}>
         {children}
-      </RefTableCellHeader>
+      </TableCellHeader>
     </Tooltip>
   );
 };
