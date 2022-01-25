@@ -9,13 +9,14 @@ import {
   giftCardDeactivate
 } from "../../../support/api/requests/GiftCard";
 import {
+  createCheckoutWithDisabledGiftCard,
   deleteGiftCardsWithTagStartsWith,
-  isGiftCardDataAsExpected
+  isGiftCardDataAsExpected,
+  purchaseProductWithActiveGiftCard
 } from "../../../support/api/utils/catalog/giftCardUtils";
 import * as channelsUtils from "../../../support/api/utils/channelsUtils";
 import {
   addPayment,
-  createCheckoutWithVoucher,
   purchaseProductWithPromoCode
 } from "../../../support/api/utils/ordersUtils";
 import * as productsUtils from "../../../support/api/utils/products/productsUtils";
@@ -157,7 +158,8 @@ filterTests({ definedTags: ["all"], version: "3.1.0" }, () => {
         .then(giftCardResp => {
           giftCard = giftCardResp;
           changeGiftCardActiveStatus(giftCard.id);
-          createCheckoutWithDisabledGiftCard(giftCard.code);
+          dataForCheckout.voucherCode = giftCard.code;
+          createCheckoutWithDisabledGiftCard(dataForCheckout);
         })
         .then(checkout => {
           addPayment(checkout.id);
@@ -204,8 +206,10 @@ filterTests({ definedTags: ["all"], version: "3.1.0" }, () => {
             .click()
             .waitForRequestAndCheckIfNoErrors("@GiftCardBulkDeactivate")
             .confirmationMessageShouldDisappear();
-          createCheckoutWithDisabledGiftCard(firstGiftCard.code);
-          createCheckoutWithDisabledGiftCard(secondGiftCard.code);
+          dataForCheckout.voucherCode = firstGiftCard.code;
+          createCheckoutWithDisabledGiftCard(dataForCheckout);
+          dataForCheckout.voucherCode = secondGiftCard.code;
+          createCheckoutWithDisabledGiftCard(dataForCheckout);
         })
         .then(checkout => {
           addPayment(checkout.id);
@@ -227,6 +231,7 @@ filterTests({ definedTags: ["all"], version: "3.1.0" }, () => {
       const firstGiftCardName = `${startsWith}${faker.datatype.number()}`;
       const secondGiftCardName = `${startsWith}${faker.datatype.number()}`;
       const amount = 10;
+      const expectedOrderPrice = shippingPrice + productPrice - amount;
       let firstGiftCard;
       let secondGiftCard;
 
@@ -258,44 +263,17 @@ filterTests({ definedTags: ["all"], version: "3.1.0" }, () => {
           purchaseProductWithActiveGiftCard({
             giftCard: firstGiftCard,
             expectedAmount: 0,
-            initialAmount: amount
+            initialAmount: amount,
+            dataForCheckout,
+            expectedOrderPrice
           }).then(isDataAsExpected => expect(isDataAsExpected).to.be.true);
           purchaseProductWithActiveGiftCard({
             giftCard: secondGiftCard,
             expectedAmount: 0,
-            initialAmount: amount
+            initialAmount: amount,
+            expectedOrderPrice
           }).then(isDataAsExpected => expect(isDataAsExpected).to.be.true);
         });
     });
-
-    function createCheckoutWithDisabledGiftCard(giftCardCode) {
-      dataForCheckout.voucherCode = giftCardCode;
-      return createCheckoutWithVoucher(dataForCheckout).then(
-        ({ addPromoCodeResp, checkout }) => {
-          expect(addPromoCodeResp.checkoutErrors[0].field).to.eq("promoCode");
-          return checkout;
-        }
-      );
-    }
-
-    function purchaseProductWithActiveGiftCard({
-      giftCard,
-      expectedAmount,
-      initialAmount
-    }) {
-      dataForCheckout.voucherCode = giftCard.code;
-      return purchaseProductWithPromoCode(dataForCheckout).then(({ order }) => {
-        expect(order.total.gross.amount).to.eq(
-          shippingPrice + productPrice - initialAmount
-        );
-        expect(order.userEmail).to.eq(email);
-        return isGiftCardDataAsExpected({
-          giftCardId: giftCard.id,
-          expectedAmount,
-          userEmail: email,
-          initialBalance: initialAmount
-        });
-      });
-    }
   });
 });
