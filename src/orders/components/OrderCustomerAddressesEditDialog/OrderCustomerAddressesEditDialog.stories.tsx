@@ -23,7 +23,7 @@ const props: OrderCustomerAddressesEditDialogProps = {
 
 storiesOf("Orders / Changing address in order", module)
   .addDecorator(Decorator)
-  .add("Address change when customer is changed", () => (
+  .add("address change when customer is changed", () => (
     <OrderCustomerAddressesEditDialog
       {...props}
       customerAddresses={[
@@ -32,7 +32,7 @@ storiesOf("Orders / Changing address in order", module)
       ]}
     />
   ))
-  .add("Shipping address change", () => (
+  .add("shipping address change", () => (
     <OrderCustomerAddressesEditDialog
       {...props}
       variant={AddressEditDialogVariant.CHANGE_SHIPPING_ADDRESS}
@@ -42,7 +42,7 @@ storiesOf("Orders / Changing address in order", module)
       ]}
     />
   ))
-  .add("Shipping address change", () => (
+  .add("billing address change", () => (
     <OrderCustomerAddressesEditDialog
       {...props}
       variant={AddressEditDialogVariant.CHANGE_BILLING_ADDRESS}
@@ -52,10 +52,10 @@ storiesOf("Orders / Changing address in order", module)
       ]}
     />
   ))
-  .add("No customer addresses", () => (
+  .add("no customer addresses", () => (
     <OrderCustomerAddressesEditDialog {...props} customerAddresses={[]} />
   ))
-  .add("Loading", () => (
+  .add("loading", () => (
     <OrderCustomerAddressesEditDialog
       {...props}
       loading={true}
