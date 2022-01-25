@@ -49,7 +49,7 @@ export function createCheckout({
         token
         id
         token
-        availableShippingMethods{
+        shippingMethods{
           name
           id
         }
@@ -238,7 +238,7 @@ export function addProductsToCheckout(
     checkoutLinesUpdate(checkoutId:"${checkoutId}" lines:[${lines.join()}]){
       checkout{
         id
-        availableShippingMethods{
+        shippingMethods{
           name
         }
       }
@@ -251,6 +251,30 @@ export function addProductsToCheckout(
   return cy.sendRequestWithQuery(mutation).its("body.data.checkoutLinesUpdate");
 }
 
-export function getCheckout(checkoutId) {
-  const mutation = ``;
+export function getCheckout(token) {
+  const query = `query{
+    checkout(token:"${token}"){
+      token
+      id
+      token
+      shippingMethods{
+        name
+        id
+      }
+      lines{
+        variant{
+          id
+          pricing{
+            onSale
+            price{
+              gross{
+                amount
+              }
+            }
+          }
+        }
+      } 
+    }
+  }`;
+  return cy.sendRequestWithQuery(query).its("body.data.checkout");
 }

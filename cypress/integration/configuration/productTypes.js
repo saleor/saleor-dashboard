@@ -89,7 +89,7 @@ filterTests({ definedTags: ["all"] }, () => {
             productTypeDetailsUrl(productType.id)
           )
             .get(PRODUCT_TYPE_DETAILS.hasVariantsButton)
-            .click()
+            .click({ force: true })
             .get(PRODUCT_TYPE_DETAILS.assignVariantAttributeButton)
             .click()
             .addAliasToGraphRequest("AssignProductAttribute")

@@ -39,9 +39,27 @@ export function createWaitingForCaptureOrder({
 }
 
 export function getShippingMethodIdFromCheckout(checkout, shippingMethodName) {
-  return checkout.availableShippingMethods.find(
-    element => element.name === shippingMethodName
-  ).id;
+  const availableShippingMethodsLength = checkout.shippingMethods.length;
+  if (availableShippingMethodsLength === 0) {
+    return null;
+  } else {
+    return checkout.shippingMethods.find(
+      element => element.name === shippingMethodName
+    ).id;
+  }
+}
+
+export function updateShippingInCheckout(checkoutToken, shippingMethodName) {
+  return checkoutRequest.getCheckout(checkoutToken).then(checkout => {
+    const shippingMethodId = getShippingMethodIdFromCheckout(
+      checkout,
+      shippingMethodName
+    );
+    return checkoutRequest.checkoutShippingMethodUpdate(
+      checkout.id,
+      shippingMethodId
+    );
+  });
 }
 
 export function createCheckoutWithVoucher({

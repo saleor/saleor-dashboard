@@ -6,7 +6,7 @@ export const VARIANTS_SELECTORS = {
   skuInput: "[ name='sku']",
   attributeSelector: "[data-test='attribute-value']",
   attributeOption:
-    "[data-test-type='option'], [data-test='multiautocomplete-select-option']",
+    "[data-test-type='option'], [data-test-id='multiautocomplete-select-option']",
   addWarehouseButton: "button[class*='MuiIconButton-colorPrimary']",
   warehouseOption: "[role='menuitem']",
   saveButton: "[data-test='button-bar-confirm']",
@@ -19,5 +19,6 @@ export const VARIANTS_SELECTORS = {
   preorderEndDateInput: "[name='preorderEndDateTime:date']",
   preorderEndTimeInput: "[name='preorderEndDateTime:time']",
   globalThresholdInput: "[name='globalThreshold']",
-  stockInput: "[data-test-id='stock-input']"
+  stockInput: "[data-test-id='stock-input']",
+  selectOption: "[data-test-id='multiautocomplete-select-option']"
 };
