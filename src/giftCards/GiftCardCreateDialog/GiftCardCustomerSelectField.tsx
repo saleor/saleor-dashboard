@@ -7,17 +7,19 @@ import { mapEdgesToItems } from "@saleor/utils/maps";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import { giftCardCreateDialogMessages as messages } from "./messages";
+import { giftCardCreateMessages as messages } from "./messages";
 import { GiftCardCreateFormCustomer } from "./types";
 
 export interface GiftCardCustomerSelectFieldProps {
   selectedCustomer: GiftCardCreateFormCustomer;
   setSelectedCustomer: (customer: GiftCardCreateFormCustomer) => void;
+  disabled?: boolean;
 }
 
 const GiftCardCustomerSelectField: React.FC<GiftCardCustomerSelectFieldProps> = ({
   selectedCustomer,
-  setSelectedCustomer
+  setSelectedCustomer,
+  disabled = false
 }) => {
   const intl = useIntl();
 
@@ -54,6 +56,7 @@ const GiftCardCustomerSelectField: React.FC<GiftCardCustomerSelectFieldProps> = 
       fetchChoices={search}
       onChange={handleSelect}
       onFetchMore={loadMore}
+      disabled={disabled}
     />
   );
 };

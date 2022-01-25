@@ -1574,7 +1574,7 @@ export const shippingZone: ShippingZone_shippingZone = {
   privateMetadata: [],
   shippingMethods: [
     {
-      __typename: "ShippingMethod",
+      __typename: "ShippingMethodType",
       channelListings: [
         {
           __typename: "ShippingMethodChannelListing",
@@ -1669,7 +1669,7 @@ export const shippingZone: ShippingZone_shippingZone = {
       type: ShippingMethodTypeEnum.WEIGHT
     },
     {
-      __typename: "ShippingMethod",
+      __typename: "ShippingMethodType",
       channelListings: [],
       excludedProducts: {
         __typename: "ProductCountableConnection",
@@ -1734,7 +1734,7 @@ export const shippingZone: ShippingZone_shippingZone = {
       type: ShippingMethodTypeEnum.WEIGHT
     },
     {
-      __typename: "ShippingMethod",
+      __typename: "ShippingMethodType",
       channelListings: [],
       excludedProducts: {
         __typename: "ProductCountableConnection",
@@ -1799,7 +1799,7 @@ export const shippingZone: ShippingZone_shippingZone = {
       type: ShippingMethodTypeEnum.PRICE
     },
     {
-      __typename: "ShippingMethod",
+      __typename: "ShippingMethodType",
       channelListings: [],
       excludedProducts: {
         __typename: "ProductCountableConnection",

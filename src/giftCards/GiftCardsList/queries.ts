@@ -5,6 +5,7 @@ import gql from "graphql-tag";
 
 import { GiftCardList, GiftCardListVariables } from "./types/GiftCardList";
 import { GiftCardProductsCount } from "./types/GiftCardProductsCount";
+import { GiftCardTotalCount } from "./types/GiftCardTotalCount";
 
 export const giftCardList = gql`
   ${fragmentUserBase}
@@ -15,6 +16,7 @@ export const giftCardList = gql`
     $last: Int
     $before: String
     $filter: GiftCardFilterInput
+    $sort: GiftCardSortingInput
   ) {
     giftCards(
       first: $first
@@ -22,19 +24,22 @@ export const giftCardList = gql`
       before: $before
       last: $last
       filter: $filter
+      sortBy: $sort
     ) {
       edges {
         node {
           id
           usedByEmail
-          displayCode
+          last4CodeChars
           isActive
           expiryDate
           product {
             id
             name
           }
-          tag
+          tags {
+            name
+          }
           usedBy {
             ...UserBase
           }
@@ -43,6 +48,7 @@ export const giftCardList = gql`
           }
         }
       }
+      totalCount
       pageInfo {
         endCursor
         hasNextPage
@@ -52,6 +58,18 @@ export const giftCardList = gql`
     }
   }
 `;
+
+export const giftCardTotalCount = gql`
+  query GiftCardTotalCount {
+    giftCards {
+      totalCount
+    }
+  }
+`;
+
+export const useGiftCardTotalCountQuery = makeQuery<GiftCardTotalCount, {}>(
+  giftCardTotalCount
+);
 
 export const useGiftCardListQuery = makeQuery<
   GiftCardList,

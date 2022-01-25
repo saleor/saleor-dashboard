@@ -108,6 +108,12 @@
             "name": "DigitalContentUrl"
           },
           {
+            "name": "EventDelivery"
+          },
+          {
+            "name": "EventDeliveryAttempt"
+          },
+          {
             "name": "ExportEvent"
           },
           {
@@ -124,6 +130,9 @@
           },
           {
             "name": "GiftCardEvent"
+          },
+          {
+            "name": "GiftCardTag"
           },
           {
             "name": "Group"
@@ -228,6 +237,9 @@
             "name": "ShippingMethodTranslation"
           },
           {
+            "name": "ShippingMethodType"
+          },
+          {
             "name": "ShippingZone"
           },
           {
@@ -328,6 +340,9 @@
           },
           {
             "name": "ShippingMethod"
+          },
+          {
+            "name": "ShippingMethodType"
           },
           {
             "name": "ShippingZone"

@@ -16,7 +16,7 @@ const props: OrderShippingMethodEditDialogProps = {
   onSubmit: () => undefined,
   open: true,
   shippingMethod: null,
-  shippingMethods: order.availableShippingMethods
+  shippingMethods: order.shippingMethods
 };
 
 storiesOf("Orders / OrderShippingMethodEditDialog", module)

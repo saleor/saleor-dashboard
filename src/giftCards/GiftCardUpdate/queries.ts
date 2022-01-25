@@ -15,7 +15,7 @@ export const giftCardDataFragment = gql`
   ${fragmentUserBase}
   fragment GiftCardData on GiftCard {
     ...MetadataFragment
-    displayCode
+    last4CodeChars
     boughtInChannel
     createdBy {
       ...UserBase
@@ -48,7 +48,9 @@ export const giftCardDataFragment = gql`
     }
 
     id
-    tag
+    tags {
+      name
+    }
   }
 `;
 
@@ -65,17 +67,17 @@ export const giftCardDetails = gql`
         type
         user {
           ...UserBase
+          email
         }
         app {
           id
           name
         }
         message
-        email
         orderId
         orderNumber
-        tag
-        oldTag
+        tags
+        oldTags
         balance {
           initialBalance {
             ...Money
@@ -95,7 +97,46 @@ export const giftCardDetails = gql`
   }
 `;
 
+export const giftCardEventsFragment = gql`
+  fragment GiftCardEvent on GiftCardEvent {
+    expiryDate
+    oldExpiryDate
+    id
+    date
+    type
+    user {
+      ...UserBase
+    }
+    app {
+      id
+      name
+    }
+    message
+    email
+    orderId
+    orderNumber
+    tags
+    oldTags
+    balance {
+      initialBalance {
+        ...Money
+      }
+      currentBalance {
+        ...Money
+      }
+      oldInitialBalance {
+        ...Money
+      }
+      oldCurrentBalance {
+        ...Money
+      }
+    }
+  }
+`;
+
 export const useGiftCardDetailsQuery = makeQuery<
   GiftCardDetails,
   GiftCardDetailsVariables
 >(giftCardDetails);
+
+export const GIFT_CARD_DETAILS_QUERY = "GiftCardDetails";

@@ -14,7 +14,7 @@ export interface ShippingMethodTranslations_translations_edges_node_ProductTrans
 }
 
 export interface ShippingMethodTranslations_translations_edges_node_ShippingMethodTranslatableContent_shippingMethod {
-  __typename: "ShippingMethod";
+  __typename: "ShippingMethodType";
   id: string;
 }
 
