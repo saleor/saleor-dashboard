@@ -10,7 +10,7 @@ export const SHIPPING_ZONE_DETAILS = {
   shippingRatePriceTableCell: "[data-test-id='shipping-rate-price']",
   autocompleteContentDialog:
     "[data-test-id='multiautocomplete-select-content']",
-  option: "[data-test='multiautocomplete-select-option']",
+  option: "[data-test-id='multiautocomplete-select-option']",
   warehouseSelector: "[placeholder*='Warehouse']",
   channelSelector: "[placeholder*='Channel']",
   removeWarehouseButton: "[data-test-id='warehousesRemove']"

@@ -10,10 +10,10 @@ export function fillUpSetPassword(password) {
     .type(password)
     .get(SET_PASSWORD.passwordInput)
     .type(password)
-    .addAliasToGraphRequest("SetPassword")
+    .addAliasToGraphRequest("setPassword")
     .get(BUTTON_SELECTORS.confirm)
     .click()
-    .waitForRequestAndCheckIfNoErrors("@SetPassword");
+    .waitForRequestAndCheckIfNoErrors("@setPassword");
 }
 
 export function fillUpUserDetails(firstName, lastName, email) {
