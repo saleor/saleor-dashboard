@@ -58,9 +58,9 @@ export const getAddressEditProps = (
   handlers: OrderCustomerAddressesEditHandlers,
   change: FormChange,
   dialogErrors: Array<OrderErrorFragment | AccountErrorFragment>,
-  setAddressSearchState: (
-    newState: React.SetStateAction<OrderCustomerSearchAddressState>
-  ) => void,
+  setAddressSearchState: React.Dispatch<
+    React.SetStateAction<OrderCustomerSearchAddressState>
+  >,
   addressEditCommonProps: AddressEditCommonProps
 ): OrderCustomerAddressEditProps => {
   if (variant === "shipping") {
