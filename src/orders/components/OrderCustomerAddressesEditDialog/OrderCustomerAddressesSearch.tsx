@@ -6,7 +6,7 @@ import {
   InputAdornment,
   TextField
 } from "@material-ui/core";
-import CardSpacer from "@saleor/components/CardSpacer";
+import VerticalSpacer from "@saleor/apps/components/VerticalSpacer";
 import { ConfirmButton } from "@saleor/components/ConfirmButton";
 import CustomerAddressChoiceCard from "@saleor/customers/components/CustomerAddressChoiceCard";
 import { CustomerAddresses_user_addresses } from "@saleor/customers/types/CustomerAddresses";
@@ -95,7 +95,7 @@ const OrderCustomerAddressesSearch: React.FC<OrderCustomerAddressesSearchProps> 
     <>
       <DialogContent>
         {intl.formatMessage(messages.searchInfo)}
-        <CardSpacer />
+        <VerticalSpacer spacing={2} />
         <TextField
           value={query}
           variant="outlined"
@@ -111,7 +111,7 @@ const OrderCustomerAddressesSearch: React.FC<OrderCustomerAddressesSearchProps> 
           }}
           inputProps={{ className: classes.searchInput }}
         />
-        <CardSpacer />
+        <VerticalSpacer spacing={2} />
         <div className={classes.scrollableWrapper}>
           {filteredCustomerAddresses.length === 0
             ? intl.formatMessage(messages.noResultsFound)
@@ -122,7 +122,7 @@ const OrderCustomerAddressesSearch: React.FC<OrderCustomerAddressesSearchProps> 
                     onSelect={() => setTemporarySelectedAddress(address)}
                     address={address}
                   />
-                  <CardSpacer />
+                  <VerticalSpacer spacing={2} />
                 </React.Fragment>
               ))}
         </div>

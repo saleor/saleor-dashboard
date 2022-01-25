@@ -6,6 +6,7 @@ import {
   FormControlLabel,
   Typography
 } from "@material-ui/core";
+import VerticalSpacer from "@saleor/apps/components/VerticalSpacer";
 import Checkbox from "@saleor/components/Checkbox";
 import ConfirmButton from "@saleor/components/ConfirmButton";
 import FormSpacer from "@saleor/components/FormSpacer";
@@ -311,7 +312,7 @@ const OrderCustomerAddressesEditDialog: React.FC<OrderCustomerAddressesEditDialo
                     <Typography>
                       <FormattedMessage {...getDialogDescription()} />
                     </Typography>
-                    <FormSpacer />
+                    <VerticalSpacer />
                     {hasCustomerChanged && (
                       <>
                         <OrderCustomerAddressEdit
