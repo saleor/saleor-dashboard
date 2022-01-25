@@ -3,7 +3,10 @@ import {
   getGiftCardsWithTag,
   getGiftCardWithId
 } from "../../requests/GiftCard";
-import { createCheckoutWithVoucher } from "../ordersUtils";
+import {
+  createCheckoutWithVoucher,
+  purchaseProductWithPromoCode
+} from "../ordersUtils";
 
 export function deleteGiftCardsWithTagStartsWith(tag) {
   getGiftCardsWithTag(100, tag).then(resp => {
@@ -67,7 +70,6 @@ export function purchaseProductWithActiveGiftCard({
   dataForCheckout,
   expectedOrderPrice
 }) {
-  dataForCheckout.voucherCode = giftCard.code;
   return purchaseProductWithPromoCode(dataForCheckout).then(({ order }) => {
     expect(order.total.gross.amount).to.eq(expectedOrderPrice);
     expect(order.userEmail).to.eq(dataForCheckout.email);

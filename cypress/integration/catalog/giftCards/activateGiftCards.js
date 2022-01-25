@@ -260,6 +260,7 @@ filterTests({ definedTags: ["all"], version: "3.1.0" }, () => {
             .click()
             .waitForRequestAndCheckIfNoErrors("@GiftCardBulkActivate")
             .confirmationMessageShouldDisappear();
+          dataForCheckout.voucherCode = firstGiftCard.code;
           purchaseProductWithActiveGiftCard({
             giftCard: firstGiftCard,
             expectedAmount: 0,
@@ -267,10 +268,12 @@ filterTests({ definedTags: ["all"], version: "3.1.0" }, () => {
             dataForCheckout,
             expectedOrderPrice
           }).then(isDataAsExpected => expect(isDataAsExpected).to.be.true);
+          dataForCheckout.voucherCode = secondGiftCard.code;
           purchaseProductWithActiveGiftCard({
             giftCard: secondGiftCard,
             expectedAmount: 0,
             initialAmount: amount,
+            dataForCheckout,
             expectedOrderPrice
           }).then(isDataAsExpected => expect(isDataAsExpected).to.be.true);
         });
