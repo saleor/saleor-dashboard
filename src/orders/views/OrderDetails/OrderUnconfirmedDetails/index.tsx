@@ -122,12 +122,11 @@ export const OrderUnconfirmedDetails: React.FC<OrderUnconfirmedDetailsProps> = (
 
   const handleCustomerChangeAddresses = async (
     data: Partial<OrderCustomerAddressesEditDialogOutput>
-  ): Promise<any> => {
-    await orderUpdate.mutate({
+  ): Promise<any> =>
+    orderUpdate.mutate({
       id,
       input: data
     });
-  };
 
   const intl = useIntl();
   const [transactionReference, setTransactionReference] = React.useState("");

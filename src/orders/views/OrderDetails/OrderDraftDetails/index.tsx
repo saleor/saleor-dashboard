@@ -153,12 +153,11 @@ export const OrderDraftDetails: React.FC<OrderDraftDetailsProps> = ({
 
   const handleCustomerChangeAddresses = async (
     data: Partial<OrderCustomerAddressesEditDialogOutput>
-  ): Promise<any> => {
+  ): Promise<any> =>
     orderDraftUpdate.mutate({
       id,
       input: data
     });
-  };
 
   return (
     <>

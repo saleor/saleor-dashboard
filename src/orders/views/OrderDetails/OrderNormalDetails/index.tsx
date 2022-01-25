@@ -101,12 +101,11 @@ export const OrderNormalDetails: React.FC<OrderNormalDetailsProps> = ({
   });
   const handleCustomerChangeAddresses = async (
     data: Partial<OrderCustomerAddressesEditDialogOutput>
-  ): Promise<any> => {
+  ): Promise<any> =>
     orderUpdate.mutate({
       id,
       input: data
     });
-  };
 
   const intl = useIntl();
   const [transactionReference, setTransactionReference] = React.useState("");
