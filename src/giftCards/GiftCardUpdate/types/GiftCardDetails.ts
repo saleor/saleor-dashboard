@@ -59,11 +59,17 @@ export interface GiftCardDetails_giftCard_currentBalance {
   currency: string;
 }
 
+export interface GiftCardDetails_giftCard_tags {
+  __typename: "GiftCardTag";
+  name: string;
+}
+
 export interface GiftCardDetails_giftCard_events_user {
   __typename: "User";
   id: string;
   firstName: string;
   lastName: string;
+  email: string;
 }
 
 export interface GiftCardDetails_giftCard_events_app {
@@ -114,11 +120,10 @@ export interface GiftCardDetails_giftCard_events {
   user: GiftCardDetails_giftCard_events_user | null;
   app: GiftCardDetails_giftCard_events_app | null;
   message: string | null;
-  email: string | null;
   orderId: string | null;
   orderNumber: string | null;
-  tag: string | null;
-  oldTag: string | null;
+  tags: string[] | null;
+  oldTags: string[] | null;
   balance: GiftCardDetails_giftCard_events_balance | null;
 }
 
@@ -126,7 +131,7 @@ export interface GiftCardDetails_giftCard {
   __typename: "GiftCard";
   metadata: (GiftCardDetails_giftCard_metadata | null)[];
   privateMetadata: (GiftCardDetails_giftCard_privateMetadata | null)[];
-  displayCode: string;
+  last4CodeChars: string;
   boughtInChannel: string | null;
   createdBy: GiftCardDetails_giftCard_createdBy | null;
   product: GiftCardDetails_giftCard_product | null;
@@ -141,7 +146,7 @@ export interface GiftCardDetails_giftCard {
   initialBalance: GiftCardDetails_giftCard_initialBalance | null;
   currentBalance: GiftCardDetails_giftCard_currentBalance | null;
   id: string;
-  tag: string | null;
+  tags: GiftCardDetails_giftCard_tags[] | null;
   events: GiftCardDetails_giftCard_events[];
 }
 

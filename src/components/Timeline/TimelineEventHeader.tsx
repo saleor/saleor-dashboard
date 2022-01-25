@@ -43,7 +43,7 @@ export interface TitleElement {
 }
 
 export interface TimelineEventHeaderProps {
-  title?: string;
+  title?: React.ReactNode;
   date: string;
   titleElements?: TitleElement[];
   secondaryTitle?: string;

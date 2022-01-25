@@ -4,7 +4,6 @@ import CardSpacer from "@saleor/components/CardSpacer";
 import Link from "@saleor/components/Link";
 import { customerUrl } from "@saleor/customers/urls";
 import useDateLocalize from "@saleor/hooks/useDateLocalize";
-import useNavigator from "@saleor/hooks/useNavigator";
 import { getFullName, getStringOrPlaceholder } from "@saleor/misc";
 import Label from "@saleor/orders/components/OrderHistory/Label";
 import { getOrderNumberLinkObject } from "@saleor/orders/components/OrderHistory/utils";
@@ -22,7 +21,6 @@ import { giftCardUpdateInfoCardMessages as messages } from "./messages";
 const GiftCardUpdateInfoCardContent: React.FC = () => {
   const intl = useIntl();
   const localizeDate = useDateLocalize();
-  const navigate = useNavigator();
 
   const { giftCard } = useGiftCardDetails();
 
@@ -122,7 +120,7 @@ const GiftCardUpdateInfoCardContent: React.FC = () => {
 
       <Label text={intl.formatMessage(messages.orderNumberLabel)} />
       {orderData ? (
-        <Link onClick={() => navigate(orderData.link)}>{orderData.text}</Link>
+        <Link href={orderData.link}>{orderData.text}</Link>
       ) : (
         <Typography>{PLACEHOLDER}</Typography>
       )}
@@ -130,9 +128,7 @@ const GiftCardUpdateInfoCardContent: React.FC = () => {
 
       <Label text={intl.formatMessage(messages.productLabel)} />
       {product ? (
-        <Link onClick={() => navigate(productUrl(product?.id))}>
-          {product?.name}
-        </Link>
+        <Link href={productUrl(product?.id)}>{product?.name}</Link>
       ) : (
         <Typography>{PLACEHOLDER}</Typography>
       )}
@@ -140,7 +136,7 @@ const GiftCardUpdateInfoCardContent: React.FC = () => {
 
       <Label text={intl.formatMessage(buyerLabelMessage)} />
       {buyerUrl ? (
-        <Link onClick={() => navigate(buyerUrl)}>{buyerName}</Link>
+        <Link href={buyerUrl}>{buyerName}</Link>
       ) : (
         <Typography>{buyerName}</Typography>
       )}
@@ -148,9 +144,7 @@ const GiftCardUpdateInfoCardContent: React.FC = () => {
 
       <Label text={intl.formatMessage(messages.usedByLabel)} />
       {usedBy ? (
-        <Link onClick={() => navigate(customerUrl(usedBy.id))}>
-          {getFullName(usedBy)}
-        </Link>
+        <Link href={customerUrl(usedBy.id)}>{getFullName(usedBy)}</Link>
       ) : (
         <Typography>
           {getStringOrPlaceholder(usedByEmail, PLACEHOLDER)}

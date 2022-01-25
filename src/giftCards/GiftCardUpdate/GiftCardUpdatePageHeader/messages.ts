@@ -3,25 +3,25 @@ import { defineMessages } from "react-intl";
 export const giftCardEnableDisableSectionMessages = defineMessages({
   successfullyEnabledTitle: {
     defaultMessage: "Successfully enabled gift card",
-    description: "GiftCardEnableDisableSection enable success"
+    description: "success gift card enable message"
   },
   successfullyDisabledTitle: {
     defaultMessage: "Successfully disabled gift card",
-    description: "GiftCardEnableDisableSection disable success"
+    description: "success gift card disable message"
   }
 });
 
 export const giftCardUpdatePageHeaderMessages = defineMessages({
   resendButtonLabel: {
     defaultMessage: "Resend code",
-    description: "giftCardUpdatePageHeader resendButtonLabel"
+    description: "resend code label"
   },
   expiredStatusLabel: {
     defaultMessage: "Expired",
-    description: "giftCardUpdatePageHeader expired status label"
+    description: "expired status label"
   },
   disabledStatusLabel: {
     defaultMessage: "Disabled",
-    description: "giftCardUpdatePageHeader disabled status label"
+    description: "disabled status label"
   }
 });

@@ -18,6 +18,7 @@ interface GiftCardSendToCustomerProps {
   sendToCustomerSelected: boolean;
   selectedCustomer: GiftCardCreateFormCustomer;
   setSelectedCustomer: (customer: GiftCardCreateFormCustomer) => void;
+  disabled?: boolean;
 }
 
 const GiftCardSendToCustomer: React.FC<GiftCardSendToCustomerProps> = ({
@@ -25,7 +26,8 @@ const GiftCardSendToCustomer: React.FC<GiftCardSendToCustomerProps> = ({
   sendToCustomerSelected,
   selectedChannelSlug,
   selectedCustomer,
-  setSelectedCustomer
+  setSelectedCustomer,
+  disabled = false
 }) => {
   const { channel, availableChannels } = useAppChannel(false);
 
@@ -46,6 +48,7 @@ const GiftCardSendToCustomer: React.FC<GiftCardSendToCustomerProps> = ({
         label={intl.formatMessage(messages.sendToCustomerSelectedLabel)}
         checked={sendToCustomerSelected}
         onChange={change}
+        disabled={disabled}
       />
       {sendToCustomerSelected && (
         <>
@@ -53,6 +56,7 @@ const GiftCardSendToCustomer: React.FC<GiftCardSendToCustomerProps> = ({
           <GiftCardCustomerSelectField
             selectedCustomer={selectedCustomer}
             setSelectedCustomer={setSelectedCustomer}
+            disabled={disabled}
           />
           <VerticalSpacer />
           <Label text={intl.formatMessage(messages.customerSubtitle)} />
