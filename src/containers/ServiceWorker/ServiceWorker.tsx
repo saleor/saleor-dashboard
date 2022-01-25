@@ -2,7 +2,7 @@ import { SW_INTERVAL } from "@saleor/config";
 import useNotifier from "@saleor/hooks/useNotifier";
 import React from "react";
 import { useIntl } from "react-intl";
-import { useServiceWorker } from "src/hooks/useServiceWorker";
+import { useServiceWorker } from "@saleor/hooks/useServiceWorker";
 
 import messages from "./messages";
 

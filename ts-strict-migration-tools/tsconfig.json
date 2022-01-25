@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "downlevelIteration": true,
+  },
+  "files": [
+    "errorCounter.ts",
+    "checkExcludedFiles.ts",
+    "verify.ts",
+    "getStrictNullCheckEligibleFiles"
+  ]
+}
