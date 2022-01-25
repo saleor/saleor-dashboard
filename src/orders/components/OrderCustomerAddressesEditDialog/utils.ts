@@ -1,3 +1,4 @@
+import { SingleAutocompleteChoiceType } from "@saleor/components/SingleAutocompleteSelectField";
 import {
   CustomerAddresses_user_addresses,
   CustomerAddresses_user_defaultShippingAddress
@@ -19,7 +20,7 @@ import { OrderCustomerSearchAddressState } from "./types";
 interface AddressEditCommonProps {
   showCard: boolean;
   loading: boolean;
-  countryChoices: Array<{ label: string; value: string }>;
+  countryChoices: SingleAutocompleteChoiceType[];
   customerAddresses: CustomerAddresses_user_addresses[];
 }
 
