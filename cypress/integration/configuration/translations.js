@@ -15,7 +15,7 @@ import {
 import { deleteCategoriesStartsWith } from "../../support/api/utils/catalog/categoryUtils";
 import filterTests from "../../support/filterTests";
 
-filterTests({ definedTags: ["all"], version: "3.1.1" }, () => {
+filterTests({ definedTags: ["all"], version: "3.1.0" }, () => {
   describe("Tests for translations", () => {
     const startsWith = "Translations";
     const randomNumber = faker.datatype.number();

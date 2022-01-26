@@ -23,7 +23,7 @@ import {
 } from "../../../support/api/utils/users";
 import filterTests from "../../../support/filterTests";
 
-filterTests({ definedTags: ["stagedOnly"], version: "3.1.1" }, () => {
+filterTests({ definedTags: ["stagedOnly"], version: "3.1.0" }, () => {
   describe("Plugins", () => {
     const startsWith = "Plugins";
     const randomName = `${startsWith}${faker.datatype.number()}`;
