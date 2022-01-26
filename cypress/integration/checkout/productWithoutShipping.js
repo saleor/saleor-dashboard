@@ -105,14 +105,14 @@ filterTests({ definedTags: ["all"] }, () => {
       })
         .then(({ checkout }) => {
           expect(
-            checkout.availableShippingMethods,
+            checkout.shippingMethods,
             "expect no available shipping"
           ).to.have.length(0);
           addProductsToCheckout(checkout.id, productWithShipping, 1);
         })
         .then(({ checkout }) => {
           expect(
-            checkout.availableShippingMethods,
+            checkout.shippingMethods,
             "expect no available shipping"
           ).to.have.length(0);
           addShippingMethod(checkout.id, shippingMethod.id);
