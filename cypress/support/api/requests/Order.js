@@ -79,6 +79,7 @@ export function completeOrder(orderId) {
       order{
         id
         number
+        status
         lines{
           id
         }
@@ -131,7 +132,13 @@ export function getOrder(orderId) {
   cy.sendRequestWithQuery(query).its("body.data.order");
 }
 
-export function fulfillOrder({ orderId, warehouse, quantity, linesId }) {
+export function fulfillOrder({
+  orderId,
+  warehouse,
+  quantity,
+  linesId,
+  allowStockToBeExceeded = false
+}) {
   const lines = linesId.reduce((lines, lineId) => {
     const line = `{orderLineId:"${lineId.id}"
       stocks:{
@@ -144,6 +151,7 @@ export function fulfillOrder({ orderId, warehouse, quantity, linesId }) {
   const mutation = `mutation fulfill{
   orderFulfill(order:"${orderId}" input:{
     lines:[${lines}]
+    allowStockToBeExceeded: ${true}
   }){
     errors{
       field

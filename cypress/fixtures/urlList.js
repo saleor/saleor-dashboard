@@ -48,6 +48,8 @@ export const customerDetailsUrl = customerId =>
 
 export const menuDetailsUrl = menuId => `${urlList.navigation}${menuId}`;
 
+export const orderDetailsUrl = orderId => `${urlList.orders}${orderId}`;
+
 export const pageDetailsUrl = pageId => `${urlList.pages}${pageId}`;
 
 export const pageTypeDetailsUrl = pageTypeId =>

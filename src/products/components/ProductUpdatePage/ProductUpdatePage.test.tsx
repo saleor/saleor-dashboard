@@ -24,6 +24,17 @@ configure({ adapter: new Adapter() });
 const onSubmit = jest.fn();
 const useNavigator = jest.spyOn(_useNavigator, "default");
 
+(global as any).document.createRange = () => ({
+  // eslint-disable-next-line
+  setStart: () => {},
+  // eslint-disable-next-line
+  setEnd: () => {},
+  commonAncestorContainer: {
+    nodeName: "BODY",
+    ownerDocument: document
+  }
+});
+
 const props: ProductUpdatePageProps = {
   ...listActionsProps,
   allChannelsCount: 5,
