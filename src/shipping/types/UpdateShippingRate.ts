@@ -82,7 +82,7 @@ export interface UpdateShippingRate_shippingPriceUpdate_shippingMethod_channelLi
 }
 
 export interface UpdateShippingRate_shippingPriceUpdate_shippingMethod {
-  __typename: "ShippingMethod";
+  __typename: "ShippingMethodType";
   id: string;
   postalCodeRules: (UpdateShippingRate_shippingPriceUpdate_shippingMethod_postalCodeRules | null)[] | null;
   metadata: (UpdateShippingRate_shippingPriceUpdate_shippingMethod_metadata | null)[];

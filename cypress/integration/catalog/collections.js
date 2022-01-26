@@ -3,8 +3,10 @@
 
 import faker from "faker";
 
-import { urlList } from "../../fixtures/urlList";
+import { BUTTON_SELECTORS } from "../../elements/shared/button-selectors";
+import { collectionDetailsUrl, urlList } from "../../fixtures/urlList";
 import { createChannel } from "../../support/api/requests/Channels";
+import { createCollection as createCollectionRequest } from "../../support/api/requests/Collections";
 import { updateChannelInProduct } from "../../support/api/requests/Product";
 import { getCollection } from "../../support/api/requests/storeFront/Collections";
 import { searchInShop } from "../../support/api/requests/storeFront/Search";
@@ -20,7 +22,8 @@ import { isProductVisibleInSearchResult } from "../../support/api/utils/storeFro
 import filterTests from "../../support/filterTests";
 import {
   assignProductsToCollection,
-  createCollection
+  createCollection,
+  updateCollection
 } from "../../support/pages/catalog/collectionsPage";
 
 filterTests({ definedTags: ["all"] }, () => {
@@ -85,9 +88,12 @@ filterTests({ definedTags: ["all"] }, () => {
           assignProductsToCollection(name);
         })
         .then(() => {
-          getCollection(collection.id, defaultChannel.slug);
+          getCollection({
+            collectionId: collection.id,
+            channelSlug: defaultChannel.slug
+          });
         })
-        .then(resp => {
+        .then(({ collection: resp }) => {
           const isVisible = isCollectionVisible(resp, collection.id);
           expect(isVisible).to.equal(false);
         });
@@ -96,6 +102,7 @@ filterTests({ definedTags: ["all"] }, () => {
     it("should display collections", () => {
       const collectionName = `${startsWith}${faker.datatype.number()}`;
       let collection;
+
       cy.visit(urlList.collections);
       cy.softExpectSkeletonIsVisible();
 
@@ -103,9 +110,12 @@ filterTests({ definedTags: ["all"] }, () => {
         .then(collectionResp => {
           collection = collectionResp;
           assignProductsToCollection(name);
-          getCollection(collection.id, defaultChannel.slug);
+          getCollection({
+            collectionId: collection.id,
+            channelSlug: defaultChannel.slug
+          });
         })
-        .then(resp => {
+        .then(({ collection: resp }) => {
           const isVisible = isCollectionVisible(resp, collection.id);
           expect(isVisible).to.equal(true);
         });
@@ -129,9 +139,12 @@ filterTests({ definedTags: ["all"] }, () => {
         .then(collectionResp => {
           collection = collectionResp;
           assignProductsToCollection(name);
-          getCollection(collection.id, defaultChannel.slug);
+          getCollection({
+            collectionId: collection.id,
+            channelSlug: defaultChannel.slug
+          });
         })
-        .then(resp => {
+        .then(({ collection: resp }) => {
           const isVisible = isCollectionVisible(resp, collection.id);
           expect(isVisible).to.equal(false);
         });
@@ -162,9 +175,12 @@ filterTests({ definedTags: ["all"] }, () => {
           assignProductsToCollection(randomName);
         })
         .then(() => {
-          getCollection(collection.id, defaultChannel.slug);
+          getCollection({
+            collectionId: collection.id,
+            channelSlug: defaultChannel.slug
+          });
         })
-        .then(resp => {
+        .then(({ collection: resp }) => {
           const isVisible = isProductInCollectionVisible(
             resp,
             createdProduct.id
@@ -180,6 +196,43 @@ filterTests({ definedTags: ["all"] }, () => {
             createdProduct.name
           );
           expect(isVisible).to.equal(false);
+        });
+    });
+
+    it("should delete collection", () => {
+      const collectionName = `${startsWith}${faker.datatype.number()}`;
+
+      createCollectionRequest(collectionName).then(collectionResp => {
+        cy.visit(collectionDetailsUrl(collectionResp.id))
+          .get(BUTTON_SELECTORS.deleteButton)
+          .click()
+          .addAliasToGraphRequest("RemoveCollection")
+          .get(BUTTON_SELECTORS.submit)
+          .click()
+          .waitForRequestAndCheckIfNoErrors("@RemoveCollection");
+        getCollection({ collectionId: collectionResp.id, auth: "auth" })
+          .its("collection")
+          .should("be.null");
+      });
+    });
+
+    it("should update collection", () => {
+      const collectionName = `${startsWith}${faker.datatype.number()}`;
+      const updatedName = `${startsWith}updatedCollection`;
+
+      createCollectionRequest(collectionName)
+        .then(collectionResp => {
+          cy.visitAndWaitForProgressBarToDisappear(
+            collectionDetailsUrl(collectionResp.id)
+          );
+          updateCollection({ name: updatedName, description: updatedName });
+          getCollection({ collectionId: collectionResp.id, auth: "auth" });
+        })
+        .then(({ collection: collectionResp }) => {
+          expect(collectionResp.name).to.eq(updatedName);
+          const descriptionJson = JSON.parse(collectionResp.description);
+          const descriptionText = descriptionJson.blocks[0].data.text;
+          expect(descriptionText).to.eq(updatedName);
         });
     });
   });

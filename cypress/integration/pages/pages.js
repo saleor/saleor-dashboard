@@ -3,8 +3,14 @@
 
 import faker from "faker";
 
+import { PAGE_DETAILS } from "../../elements/pages/page-details";
+import { BUTTON_SELECTORS } from "../../elements/shared/button-selectors";
+import { pageDetailsUrl, pageTypeDetailsUrl } from "../../fixtures/urlList";
 import { createAttribute } from "../../support/api/requests/Attribute";
-import { getPage } from "../../support/api/requests/Page";
+import {
+  createPage as createPageRequest,
+  getPage
+} from "../../support/api/requests/Page";
 import { createPageType } from "../../support/api/requests/PageType";
 import { deleteAttributesStartsWith } from "../../support/api/utils/attributes/attributeUtils";
 import { deletePageTypesStartsWith } from "../../support/api/utils/pageTypeUtils";
@@ -16,6 +22,7 @@ filterTests({ definedTags: ["all"] }, () => {
     const startsWith = `Pages`;
     const name = `${startsWith}${faker.datatype.number()}`;
     let attribute;
+    let pageType;
 
     const attributeValuesOnPage = {
       NUMERIC: 1,
@@ -30,10 +37,12 @@ filterTests({ definedTags: ["all"] }, () => {
       deleteAttributesStartsWith(startsWith);
       deletePageTypesStartsWith(startsWith);
 
-      createAttribute({ name, type: "PAGE_TYPE" }).then(attributeResp => {
-        attribute = attributeResp;
-        createPageType({ name, attributeId: attribute.id });
-      });
+      createAttribute({ name, type: "PAGE_TYPE" })
+        .then(attributeResp => {
+          attribute = attributeResp;
+          createPageType({ name, attributeId: attribute.id });
+        })
+        .then(({ pageType: pageTypeResp }) => (pageType = pageTypeResp));
     });
 
     beforeEach(() => {
@@ -108,6 +117,50 @@ filterTests({ definedTags: ["all"] }, () => {
             }
           });
       });
+    });
+
+    it("should delete page", () => {
+      const randomName = `${startsWith}${faker.datatype.number()}`;
+
+      createPageRequest({
+        pageTypeId: pageType.id,
+        title: randomName
+      }).then(({ page }) => {
+        cy.visit(pageDetailsUrl(page.id))
+          .get(BUTTON_SELECTORS.deleteButton)
+          .click()
+          .addAliasToGraphRequest("PageRemove")
+          .get(BUTTON_SELECTORS.submit)
+          .click()
+          .waitForRequestAndCheckIfNoErrors("@PageRemove");
+        getPage(page.id).should("be.null");
+      });
+    });
+
+    it("should update page", () => {
+      const randomName = `${startsWith}${faker.datatype.number()}`;
+      const updatedName = `${startsWith}${faker.datatype.number()}`;
+
+      createPageRequest({
+        pageTypeId: pageType.id,
+        title: randomName
+      })
+        .then(({ page }) => {
+          cy.visit(pageDetailsUrl(page.id))
+            .get(PAGE_DETAILS.nameInput)
+            .clearAndType(updatedName)
+            .get(PAGE_DETAILS.isPublishedCheckbox)
+            .click()
+            .addAliasToGraphRequest("PageUpdate")
+            .get(BUTTON_SELECTORS.confirm)
+            .click()
+            .waitForRequestAndCheckIfNoErrors("@PageUpdate");
+          getPage(page.id);
+        })
+        .then(page => {
+          expect(page.title).to.eq(updatedName);
+          expect(page.isPublished).to.eq(true);
+        });
     });
   });
 });

@@ -524,17 +524,17 @@ export interface OrderFulfillmentApprove_orderFulfillmentApprove_order_user {
   email: string;
 }
 
-export interface OrderFulfillmentApprove_orderFulfillmentApprove_order_availableShippingMethods_price {
+export interface OrderFulfillmentApprove_orderFulfillmentApprove_order_shippingMethods_price {
   __typename: "Money";
   amount: number;
   currency: string;
 }
 
-export interface OrderFulfillmentApprove_orderFulfillmentApprove_order_availableShippingMethods {
+export interface OrderFulfillmentApprove_orderFulfillmentApprove_order_shippingMethods {
   __typename: "ShippingMethod";
   id: string;
   name: string;
-  price: OrderFulfillmentApprove_orderFulfillmentApprove_order_availableShippingMethods_price | null;
+  price: OrderFulfillmentApprove_orderFulfillmentApprove_order_shippingMethods_price;
 }
 
 export interface OrderFulfillmentApprove_orderFulfillmentApprove_order_invoices {
@@ -546,6 +546,11 @@ export interface OrderFulfillmentApprove_orderFulfillmentApprove_order_invoices 
   status: JobStatusEnum;
 }
 
+export interface OrderFulfillmentApprove_orderFulfillmentApprove_order_channel_defaultCountry {
+  __typename: "CountryDisplay";
+  code: string;
+}
+
 export interface OrderFulfillmentApprove_orderFulfillmentApprove_order_channel {
   __typename: "Channel";
   isActive: boolean;
@@ -553,6 +558,7 @@ export interface OrderFulfillmentApprove_orderFulfillmentApprove_order_channel {
   name: string;
   currencyCode: string;
   slug: string;
+  defaultCountry: OrderFulfillmentApprove_orderFulfillmentApprove_order_channel_defaultCountry;
 }
 
 export interface OrderFulfillmentApprove_orderFulfillmentApprove_order {
@@ -589,7 +595,7 @@ export interface OrderFulfillmentApprove_orderFulfillmentApprove_order {
   undiscountedTotal: OrderFulfillmentApprove_orderFulfillmentApprove_order_undiscountedTotal;
   user: OrderFulfillmentApprove_orderFulfillmentApprove_order_user | null;
   userEmail: string | null;
-  availableShippingMethods: (OrderFulfillmentApprove_orderFulfillmentApprove_order_availableShippingMethods | null)[] | null;
+  shippingMethods: (OrderFulfillmentApprove_orderFulfillmentApprove_order_shippingMethods | null)[] | null;
   invoices: (OrderFulfillmentApprove_orderFulfillmentApprove_order_invoices | null)[] | null;
   channel: OrderFulfillmentApprove_orderFulfillmentApprove_order_channel;
 }

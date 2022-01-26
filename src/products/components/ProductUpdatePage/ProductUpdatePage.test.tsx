@@ -15,10 +15,14 @@ import ProductUpdatePage, { ProductUpdatePageProps } from "./ProductUpdatePage";
 const product = productFixture(placeholderImage);
 const channels = createChannelsData(channelsList);
 
+import * as _useNavigator from "@saleor/hooks/useNavigator";
 import Adapter from "enzyme-adapter-react-16";
+import { MemoryRouter } from "react-router-dom";
+
 configure({ adapter: new Adapter() });
 
 const onSubmit = jest.fn();
+const useNavigator = jest.spyOn(_useNavigator, "default");
 
 const props: ProductUpdatePageProps = {
   ...listActionsProps,
@@ -81,11 +85,14 @@ const selectors = {
 };
 
 describe("Product details page", () => {
+  useNavigator.mockImplementation();
   it("can select empty option on attribute", () => {
     const component = mount(
-      <Wrapper>
-        <ProductUpdatePage {...props} />
-      </Wrapper>
+      <MemoryRouter>
+        <Wrapper>
+          <ProductUpdatePage {...props} />
+        </Wrapper>
+      </MemoryRouter>
     );
     expect(component.find(selectors.dropdown).exists()).toBeFalsy();
 

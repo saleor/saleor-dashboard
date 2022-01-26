@@ -163,6 +163,7 @@ export const productVariantAttributesFragment = gql`
         id
         name
         inputType
+        valueRequired
         unit
         choices(
           first: $firstValues

@@ -1966,6 +1966,10 @@
     "context": "unassign multiple attributes from item",
     "string": "{counter,plural,one{Are you sure you want to unassign this attribute from {itemTypeName}?} other{Are you sure you want to unassign {attributeQuantity} attributes from {itemTypeName}?}}"
   },
+  "src_dot_components_dot_CardMenu_dot_cardMenuItemLoading": {
+    "context": "menu item loading",
+    "string": "working..."
+  },
   "src_dot_components_dot_ChannelsAvailabilityCard_dot_3326160357": {
     "context": "section header",
     "string": "Availability"
@@ -3509,215 +3513,336 @@
     "context": "gift cards section name",
     "string": "Gift Cards"
   },
+  "src_dot_giftCards_dot_GiftCardBulkCreateDialog_dot_createdSuccessAlertDescription": {
+    "context": "bulk issue gift cards success alert description",
+    "string": "Requested {cardsAmount} were successfully issued"
+  },
+  "src_dot_giftCards_dot_GiftCardBulkCreateDialog_dot_createdSuccessAlertTitle": {
+    "context": "bulk issue gift cards success alert title",
+    "string": "Gift Cards Issued"
+  },
+  "src_dot_giftCards_dot_GiftCardBulkCreateDialog_dot_title": {
+    "context": "bulk issue gift cards dialog title",
+    "string": "Bulk Issue Gift Cards"
+  },
   "src_dot_giftCards_dot_GiftCardCreateDialog_dot_GiftCardCreateExpirySelect_dot_expiryDateLabel": {
-    "context": "GiftCarUpdateDetailsExpirySection expiry date label",
+    "context": "expiry date label",
     "string": "Exact date"
   },
   "src_dot_giftCards_dot_GiftCardCreateDialog_dot_GiftCardCreateExpirySelect_dot_expiryOnLabel": {
-    "context": "GiftCarUpdateDetailsExpirySection expiry on label",
+    "context": "expires on label",
     "string": "Will expire on:"
   },
   "src_dot_giftCards_dot_GiftCardCreateDialog_dot_GiftCardCreateExpirySelect_dot_expiryPeriodLabel": {
-    "context": "GiftCarUpdateDetailsExpirySection expiry period label",
+    "context": "expires in label",
     "string": "Expires in"
   },
   "src_dot_giftCards_dot_GiftCardCreateDialog_dot_GiftCardCreateExpirySelect_dot_expirySelectedLabel": {
-    "context": "GiftCarUpdateDetailsExpirySection expiry selected label",
+    "context": "set expiry date selected label",
     "string": "Set gift card expiry date"
   },
   "src_dot_giftCards_dot_GiftCardCreateDialog_dot_amountLabel": {
-    "context": "GiftCardCreateDialog amount label",
+    "context": "money amount input label",
     "string": "Enter amount"
   },
+  "src_dot_giftCards_dot_GiftCardCreateDialog_dot_bulkCreateExplanation": {
+    "context": "gift card bulk create modal bottom explanation",
+    "string": "After creation Saleor will create a list of gift card codes that you will be able to download. "
+  },
+  "src_dot_giftCards_dot_GiftCardCreateDialog_dot_bulkCreateIssuedAccept": {
+    "context": "gift card bulk create success dialog accept button",
+    "string": "Ok"
+  },
+  "src_dot_giftCards_dot_GiftCardCreateDialog_dot_bulkCreateIssuedExplanation": {
+    "context": "gift card bulk create success dialog content",
+    "string": "We have issued all of your requested gift cards. You can download the list of new gift cards using the button below."
+  },
+  "src_dot_giftCards_dot_GiftCardCreateDialog_dot_bulkCreateIssuedExportToEmail": {
+    "context": "gift card bulk create success dialog export button",
+    "string": "Export To Email"
+  },
+  "src_dot_giftCards_dot_GiftCardCreateDialog_dot_bulkCreateIssuedTitle": {
+    "context": "gift card bulk create success dialog title",
+    "string": "Bulk Issue Gift Cards"
+  },
   "src_dot_giftCards_dot_GiftCardCreateDialog_dot_copiedToClipboardTitle": {
-    "context": "GiftCardCreateDialog copied to clipboard title",
+    "context": "copied to clipboard alert title",
     "string": "Copied to clipboard"
   },
   "src_dot_giftCards_dot_GiftCardCreateDialog_dot_copyCodeLabel": {
-    "context": "GiftCardCreateDialog copy code label",
+    "context": "copy code button label",
     "string": "Copy code"
   },
   "src_dot_giftCards_dot_GiftCardCreateDialog_dot_createdGiftCardLabel": {
-    "context": "GiftCardCreateDialog created gift card label",
+    "context": "created gift card code label",
     "string": "This is the code of a created gift card:"
   },
   "src_dot_giftCards_dot_GiftCardCreateDialog_dot_createdSuccessAlertTitle": {
-    "context": "GiftCardCreateDialog createdSuccessAlertTitle",
+    "context": "successfully created gift card alert title",
     "string": "Successfully created gift card"
   },
   "src_dot_giftCards_dot_GiftCardCreateDialog_dot_customerLabel": {
-    "context": "GiftCardCreateDialog customer label",
+    "context": "customer input label",
     "string": "Customer"
   },
+  "src_dot_giftCards_dot_GiftCardCreateDialog_dot_giftCardsAmountLabel": {
+    "context": "issued cards amount label",
+    "string": "Cards Issued"
+  },
   "src_dot_giftCards_dot_GiftCardCreateDialog_dot_issueButtonLabel": {
-    "context": "GiftCardCreateDialog issue button label",
+    "context": "issue gift card button label",
     "string": "Issue"
   },
   "src_dot_giftCards_dot_GiftCardCreateDialog_dot_noteLabel": {
-    "context": "GiftCardCreateDialog note label",
+    "context": "note input label",
     "string": "Note"
   },
   "src_dot_giftCards_dot_GiftCardCreateDialog_dot_noteSubtitle": {
-    "context": "GiftCardCreateDialog note subtitle",
+    "context": "note input subtitle",
     "string": "Why was this gift card issued. This note will not be shown to the customer. Note will be stored in gift card history"
   },
   "src_dot_giftCards_dot_GiftCardCreateDialog_dot_requiresActivationCaption": {
-    "context": "GiftCarUpdateDetailsExpirySection requires activation caption",
+    "context": "requires activation checkbox caption",
     "string": "All issued cards require activation by staff before use."
   },
   "src_dot_giftCards_dot_GiftCardCreateDialog_dot_requiresActivationLabel": {
-    "context": "GiftCarUpdateDetailsExpirySection requires activation label",
+    "context": "requires activation checkbox label",
     "string": "Requires activation"
   },
   "src_dot_giftCards_dot_GiftCardCreateDialog_dot_title": {
-    "context": "GiftCardCreateDialog title",
+    "context": "issue gift card dialog title",
     "string": "Issue gift card"
   },
+  "src_dot_giftCards_dot_GiftCardExportDialogContent_dot_2086397658": {
+    "context": "export all items to csv file",
+    "string": "All gift cards ({number})"
+  },
+  "src_dot_giftCards_dot_GiftCardExportDialogContent_dot_701638571": {
+    "context": "export selected items to csv file",
+    "string": "Selected giftCards ({number})"
+  },
+  "src_dot_giftCards_dot_GiftCardExportDialogContent_dot_confirmButtonLabel": {
+    "context": "gift card export dialog confirm button label",
+    "string": "Export codes"
+  },
+  "src_dot_giftCards_dot_GiftCardExportDialogContent_dot_exportNote": {
+    "context": "note on export gift cards",
+    "string": "Note: Only active and not used gift cards will be expored"
+  },
+  "src_dot_giftCards_dot_GiftCardExportDialogContent_dot_exportTypeLabel": {
+    "context": "gift card export type label",
+    "string": "gift cards"
+  },
+  "src_dot_giftCards_dot_GiftCardExportDialogContent_dot_successAlertDescription": {
+    "context": "gift card export success alert description",
+    "string": "We are currently exporting your gift card codes. As soon as your file is available it will be sent to your email address"
+  },
+  "src_dot_giftCards_dot_GiftCardExportDialogContent_dot_successAlertTitle": {
+    "context": "gift card export csv success alert title",
+    "string": "Exporting CSV"
+  },
+  "src_dot_giftCards_dot_GiftCardExportDialogContent_dot_title": {
+    "context": "gift card export dialog title",
+    "string": "Export Gift Card Codes"
+  },
   "src_dot_giftCards_dot_GiftCardSettings_dot_GiftCardExpirySettingsCard_dot_expiryDateSectionDescription": {
+    "context": "expiry date selection info message",
     "string": "You can set gift cards to expire after a certain time after their purchase. Remember that in some countries, gift cards expiry is prohibited by law."
   },
   "src_dot_giftCards_dot_GiftCardSettings_dot_GiftCardExpirySettingsCard_dot_expiryDateTitle": {
-    "context": "section header",
+    "context": "expiry date section header",
     "string": "Expiry date"
   },
   "src_dot_giftCards_dot_GiftCardSettings_dot_title": {
-    "context": "header",
+    "context": "gift card settings header",
     "string": "Gift Cards Settings"
   },
+  "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardHistory_dot_giftCardActivated": {
+    "context": "gift card history message",
+    "string": "Gift card was activated by {activatedBy}"
+  },
+  "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardHistory_dot_giftCardBalanceReset": {
+    "context": "gift card history message",
+    "string": "Gift card balance was reset by {resetBy}"
+  },
+  "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardHistory_dot_giftCardBought": {
+    "context": "gift card history message",
+    "string": "Gift card was bought in order {orderNumber}"
+  },
+  "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardHistory_dot_giftCardDeactivated": {
+    "context": "gift card history message",
+    "string": "Gift card was deactivated by {deactivatedBy}"
+  },
+  "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardHistory_dot_giftCardExpiryDateUpdate": {
+    "context": "gift card history message",
+    "string": "Gift card expiry date was updated by {expiryUpdatedBy}"
+  },
+  "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardHistory_dot_giftCardIssued": {
+    "context": "dsc",
+    "string": "Gift card was issued by {issuedBy}"
+  },
+  "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardHistory_dot_giftCardResent": {
+    "context": "gift card history message",
+    "string": "Gift card was resent"
+  },
+  "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardHistory_dot_giftCardSentToCustomer": {
+    "context": "gift card history message",
+    "string": "Gift card was sent to customer"
+  },
+  "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardHistory_dot_giftCardTagsUpdated": {
+    "context": "gift card history message",
+    "string": "Gift card tags were updated"
+  },
+  "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardHistory_dot_giftCardUsedInOrder": {
+    "context": "gift card history message",
+    "string": "Gift card was used as a payment method on order {orderLink} <buyer>by</buyer>"
+  },
+  "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardHistory_dot_historyHeaderTitle": {
+    "context": "section header title",
+    "string": "Gift Card Timeline"
+  },
+  "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardHistory_dot_noteAddError": {
+    "context": "notifier message",
+    "string": "There was an error adding a note"
+  },
+  "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardHistory_dot_noteAddedSuccessfully": {
+    "context": "notifier message",
+    "string": "Note was added sucessfully"
+  },
   "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardResendCodeDialog_dot_consentCheckboxLabel": {
-    "context": "GiftCardResendCodeDialog consentCheckboxLabel",
+    "context": "consent to send gift card to different address checkbox label",
     "string": "Yes, I want to send gift card to different address"
   },
   "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardResendCodeDialog_dot_description": {
-    "context": "GiftCardResendCodeDialog description",
+    "context": "resend code to customer description",
     "string": "Gift Card Code will be resent to email provided during checkout. You can provide a different email address if you want to:"
   },
   "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardResendCodeDialog_dot_emailInputPlaceholder": {
-    "context": "GiftCardResendCodeDialog emailInputPlaceholder",
+    "context": "provided email input placeholder",
     "string": "Provided email address"
   },
   "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardResendCodeDialog_dot_sendToChannelSelectLabel": {
-    "context": "ChannelPickerSelectField sendToChannelLabel",
+    "context": "send to channel select label",
     "string": "Send to channel"
   },
   "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardResendCodeDialog_dot_submitButtonLabel": {
-    "context": "GiftCardResendCodeDialog submitButtonLabel",
+    "context": "resend button label",
     "string": "Resend"
   },
   "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardResendCodeDialog_dot_successResendAlertText": {
-    "context": "GiftCardResendCodeDialog successResendAlertText",
+    "context": "resent code success message",
     "string": "Successfully resent code to customer!"
   },
   "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardResendCodeDialog_dot_title": {
-    "context": "GiftCardResendCodeDialog title",
+    "context": "resend code to customer title",
     "string": "Resend code to customer"
   },
   "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardUpdateBalanceDialog_dot_changeButtonLabel": {
-    "context": "GiftCardUpdateDetailsCard set balance dialog change button label",
+    "context": "change button label",
     "string": "Change"
   },
   "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardUpdateBalanceDialog_dot_subtitle": {
-    "context": "GiftCardUpdateDetailsCard set balance dialog subtitle",
+    "context": "set balance dialog subtitle",
     "string": "What would you like to set cards balance to. When you change the balance both values will be changed"
   },
   "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardUpdateBalanceDialog_dot_title": {
-    "context": "GiftCardUpdateDetailsCard set balance button label",
+    "context": "set balance dialog title label",
     "string": "Set balance"
   },
   "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardUpdateBalanceDialog_dot_updatedSuccessAlertTitle": {
-    "context": "GiftCardUpdateDetailsCard update success alert title",
+    "context": "card update success alert title",
     "string": "Successfully updated card balance"
   },
   "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardUpdateDetailsCard_dot_cardBalanceLabel": {
-    "context": "GiftCardUpdateDetailsCard card balance label",
+    "context": "card balance label",
     "string": "Card Balance"
   },
   "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardUpdateDetailsCard_dot_setBalanceButtonLabel": {
-    "context": "GiftCardUpdateDetailsCard set balance button label",
+    "context": "set balance button label",
     "string": "set balance"
   },
   "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardUpdateDetailsCard_dot_tagInputLabel": {
-    "context": "GiftCardTagInput tag label",
+    "context": "tag label",
     "string": "Card Tag"
   },
   "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardUpdateDetailsCard_dot_title": {
-    "context": "GiftCardUpdateDetailsCard title",
+    "context": "details title",
     "string": "Details"
   },
   "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardUpdateExpirySelect_dot_expiredOnLabel": {
-    "context": "GiftCarUpdateDetailsExpirySection expired on label",
+    "context": "expired on label",
     "string": "Expired on {date}"
   },
   "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardUpdateExpirySelect_dot_expiryDateCheckboxLabel": {
-    "context": "GiftCarUpdateDetailsExpirySection expiry date checkbox label",
+    "context": "expiry date checkbox label",
     "string": "Gift card expires"
   },
   "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardUpdateExpirySelect_dot_expiryDateLabel": {
-    "context": "GiftCarUpdateDetailsExpirySection expiry date label",
+    "context": "expiration date label",
     "string": "Expiration date"
   },
   "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardUpdateInfoCard_dot_boughtByLabel": {
-    "context": "GiftCardUpdateInfoCard bought by label",
+    "context": "bought by label",
     "string": "Bought by"
   },
   "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardUpdateInfoCard_dot_creationLabel": {
-    "context": "GiftCardUpdateInfoCard creation label",
+    "context": "creation label",
     "string": "Creation"
   },
   "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardUpdateInfoCard_dot_issuedByAppLabel": {
-    "context": "GiftCardUpdateInfoCard issued by app label",
+    "context": "issued by app label",
     "string": "Issued by app"
   },
   "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardUpdateInfoCard_dot_issuedByLabel": {
-    "context": "GiftCardUpdateInfoCard issued by label",
+    "context": "issued by label",
     "string": "Issued by"
   },
   "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardUpdateInfoCard_dot_orderNumberLabel": {
-    "context": "GiftCardUpdateInfoCard order number label",
+    "context": "order number label",
     "string": "Order number"
   },
   "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardUpdateInfoCard_dot_productLabel": {
-    "context": "GiftCardUpdateInfoCard product label",
+    "context": "product label",
     "string": "Product bought to get gift card"
   },
   "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardUpdateInfoCard_dot_title": {
-    "context": "GiftCardUpdateInfoCard title",
+    "context": "info card title",
     "string": "Card information"
   },
   "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardUpdateInfoCard_dot_usedByLabel": {
-    "context": "GiftCardUpdateInfoCard used by label",
+    "context": "used by label",
     "string": "Used by"
   },
   "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardUpdatePageHeader_dot_disabledStatusLabel": {
-    "context": "giftCardUpdatePageHeader disabled status label",
+    "context": "disabled status label",
     "string": "Disabled"
   },
   "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardUpdatePageHeader_dot_expiredStatusLabel": {
-    "context": "giftCardUpdatePageHeader expired status label",
+    "context": "expired status label",
     "string": "Expired"
   },
   "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardUpdatePageHeader_dot_resendButtonLabel": {
-    "context": "giftCardUpdatePageHeader resendButtonLabel",
+    "context": "resend code label",
     "string": "Resend code"
   },
   "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardUpdatePageHeader_dot_successfullyDisabledTitle": {
-    "context": "GiftCardEnableDisableSection disable success",
+    "context": "success gift card disable message",
     "string": "Successfully disabled gift card"
   },
   "src_dot_giftCards_dot_GiftCardUpdate_dot_GiftCardUpdatePageHeader_dot_successfullyEnabledTitle": {
-    "context": "GiftCardEnableDisableSection enable success",
+    "context": "success gift card enable message",
     "string": "Successfully enabled gift card"
   },
   "src_dot_giftCards_dot_GiftCardUpdate_dot_notFound": {
-    "context": "giftCardErrorMessages not found",
+    "context": "gift card not found message",
     "string": "Couldn't find gift card"
   },
   "src_dot_giftCards_dot_GiftCardUpdate_dot_title": {
-    "context": "GiftCardUpdateDetailsCard title",
+    "context": "title",
     "string": "Details"
   },
   "src_dot_giftCards_dot_GiftCardsList_dot_GiftCardListSearchAndFilters_dot_balanceAmount": {
-    "context": "Filter balance amount error",
+    "context": "balance amound missing error message",
     "string": "Balance amount is missing"
   },
   "src_dot_giftCards_dot_GiftCardsList_dot_GiftCardListSearchAndFilters_dot_balanceAmountLabel": {
@@ -3725,7 +3850,7 @@
     "string": "Amount"
   },
   "src_dot_giftCards_dot_GiftCardsList_dot_GiftCardListSearchAndFilters_dot_balanceCurrency": {
-    "context": "Filter balance currency error",
+    "context": "balance curreny missing error message",
     "string": "Balance currency is missing"
   },
   "src_dot_giftCards_dot_GiftCardsList_dot_GiftCardListSearchAndFilters_dot_currencyLabel": {
@@ -3737,7 +3862,7 @@
     "string": "Current balance"
   },
   "src_dot_giftCards_dot_GiftCardsList_dot_GiftCardListSearchAndFilters_dot_defaultTabLabel": {
-    "context": "gift card default tab label",
+    "context": "all gift cards label",
     "string": "All Gift Cards"
   },
   "src_dot_giftCards_dot_GiftCardsList_dot_GiftCardListSearchAndFilters_dot_disabledOptionLabel": {
@@ -3757,7 +3882,7 @@
     "string": "Product"
   },
   "src_dot_giftCards_dot_GiftCardsList_dot_GiftCardListSearchAndFilters_dot_searchPlaceholder": {
-    "context": "gift card search placeholder",
+    "context": "search gift card placeholder",
     "string": "Search Gift Cards, e.g {exampleGiftCardCode}"
   },
   "src_dot_giftCards_dot_GiftCardsList_dot_GiftCardListSearchAndFilters_dot_statusLabel": {
@@ -3772,136 +3897,172 @@
     "context": "used by filter label",
     "string": "Used by"
   },
+  "src_dot_giftCards_dot_GiftCardsList_dot_GiftCardsListOrderInfoCard_dot_giftCardOrderInfoMessage": {
+    "context": "alert card message",
+    "string": "Gift cards will appear after their order is fullfilled. <link>View Orders with Gift Cards</link>"
+  },
+  "src_dot_giftCards_dot_GiftCardsList_dot_GiftCardsListTable_dot_GiftCardsListTableHeader_dot_deleteLabel": {
+    "context": "bulk delete label",
+    "string": "Delete"
+  },
   "src_dot_giftCards_dot_GiftCardsList_dot_GiftCardsListTable_dot_GiftCardsListTableHeader_dot_disableLabel": {
-    "context": "GiftCardEnableDisableSection enable label",
+    "context": "bulk disable label",
     "string": "Deactivate"
   },
   "src_dot_giftCards_dot_GiftCardsList_dot_GiftCardsListTable_dot_GiftCardsListTableHeader_dot_enableLabel": {
-    "context": "GiftCardEnableDisableSection enable label",
+    "context": "bulk activate label",
     "string": "Activate"
   },
   "src_dot_giftCards_dot_GiftCardsList_dot_GiftCardsListTable_dot_GiftCardsListTableHeader_dot_errorActivateAlertText": {
-    "context": "GiftCardEnableDisableSection error activate alert text",
+    "context": "error with activatation alert message",
     "string": "Error activating gift {count,plural,one{card} other{cards}}"
   },
   "src_dot_giftCards_dot_GiftCardsList_dot_GiftCardsListTable_dot_GiftCardsListTableHeader_dot_errorDeactivateAlertText": {
-    "context": "GiftCardEnableDisableSection error activate alert text",
+    "context": "error with deactivatation alert message",
     "string": "Errors deactivating gift {count,plural,one{card} other{cards}}"
   },
   "src_dot_giftCards_dot_GiftCardsList_dot_GiftCardsListTable_dot_GiftCardsListTableHeader_dot_successActivateAlertText": {
-    "context": "GiftCardEnableDisableSection success activate alert text",
+    "context": "success activate alert message",
     "string": "Successfully activated gift {count,plural,one{card} other{cards}}"
   },
   "src_dot_giftCards_dot_GiftCardsList_dot_GiftCardsListTable_dot_GiftCardsListTableHeader_dot_successDeactivateAlertText": {
-    "context": "GiftCardEnableDisableSection success activate alert text",
+    "context": "success deactivate alert message",
     "string": "Successfully deactivated gift {count,plural,one{card} other{cards}}"
   },
   "src_dot_giftCards_dot_GiftCardsList_dot_bulkIssue": {
-    "context": "GiftCardsListHeader menu item settings",
+    "context": "bulk issue menu item",
     "string": "Bulk Issue"
   },
   "src_dot_giftCards_dot_GiftCardsList_dot_codeEndingWithLabel": {
-    "context": "GiftCardsListTable code ending with label",
-    "string": "Code ending with {displayCode}"
+    "context": "code ending with label",
+    "string": "Code ending with {last4CodeChars}"
   },
   "src_dot_giftCards_dot_GiftCardsList_dot_createGiftCardProduct": {
-    "context": "GiftCardsListHeader alert",
+    "context": "create gift card product alert message",
     "string": "Create a gift card product"
   },
   "src_dot_giftCards_dot_GiftCardsList_dot_createGiftCardProductType": {
-    "context": "GiftCardsListHeader alert",
+    "context": "create gift card product type alert message",
     "string": "Create a gift card product type"
   },
   "src_dot_giftCards_dot_GiftCardsList_dot_exportCodes": {
-    "context": "GiftCardsListHeader menu item settings",
+    "context": "export card codes menu item",
     "string": "Export card codes"
   },
+  "src_dot_giftCards_dot_GiftCardsList_dot_giftCardInvalidExpiryDateContent": {
+    "context": "invalid date in expirydate field content",
+    "string": "Gift Card with past expiration date cannot be created"
+  },
+  "src_dot_giftCards_dot_GiftCardsList_dot_giftCardInvalidExpiryDateHeader": {
+    "context": "invalid date in expirydate field header",
+    "string": "Incorrect date entered"
+  },
   "src_dot_giftCards_dot_GiftCardsList_dot_giftCardProduct": {
-    "context": "GiftCardsListHeader alert",
+    "context": "gift card product message",
     "string": "gift card product"
   },
   "src_dot_giftCards_dot_GiftCardsList_dot_giftCardsTableColumnBalanceTitle": {
-    "context": "GiftCardsListTable column title balance",
+    "context": "column title balance",
     "string": "Balance"
   },
   "src_dot_giftCards_dot_GiftCardsList_dot_giftCardsTableColumnCustomerTitle": {
-    "context": "GiftCardsListTable column title customer",
+    "context": "column title used by/customer",
     "string": "Used by"
   },
   "src_dot_giftCards_dot_GiftCardsList_dot_giftCardsTableColumnGiftCardTitle": {
-    "context": "GiftCardsListTable column title gift card",
+    "context": "column title gift card",
     "string": "Gift Card"
   },
   "src_dot_giftCards_dot_GiftCardsList_dot_giftCardsTableColumnProductTitle": {
-    "context": "GiftCardsListTable column title product",
+    "context": "column title product",
     "string": "Product"
   },
   "src_dot_giftCards_dot_GiftCardsList_dot_giftCardsTableColumnTagTitle": {
-    "context": "GiftCardsListTable column title tag",
+    "context": "column title tag",
     "string": "Tag"
   },
   "src_dot_giftCards_dot_GiftCardsList_dot_issueButtonLabel": {
-    "context": "GiftCardsListHeader issue button label",
+    "context": "issue card button label",
     "string": "Issue card"
   },
   "src_dot_giftCards_dot_GiftCardsList_dot_noGiftCardsAlertTitle": {
-    "context": "GiftCardsListHeader alert",
+    "context": "no card defuned alert message",
     "string": "You haven’t defined a gift card product!"
   },
   "src_dot_giftCards_dot_GiftCardsList_dot_noGiftCardsFound": {
-    "context": "GiftCardsListTable no cards found title",
+    "context": "no cards found title message",
     "string": "No gift cards found"
   },
   "src_dot_giftCards_dot_GiftCardsList_dot_noGiftCardsProductTypes": {
-    "context": "GiftCardsListHeader alert",
+    "context": "no gift card product types alert message",
     "string": "{createGiftCardProductType} to start selling gift cards in your store."
   },
   "src_dot_giftCards_dot_GiftCardsList_dot_noGiftCardsProducts": {
-    "context": "GiftCardsListHeader alert",
+    "context": "no gift card products alert message",
     "string": "{createGiftCardProduct} to start selling gift cards in your store."
   },
   "src_dot_giftCards_dot_GiftCardsList_dot_noGiftCardsProductsAndProductTypes": {
-    "context": "GiftCardsListHeader alert",
+    "context": "no gift card products and types alert message",
     "string": "{createGiftCardProductType} and {giftCardProduct} to start selling gift cards in your store."
   },
   "src_dot_giftCards_dot_GiftCardsList_dot_settings": {
-    "context": "GiftCardsListHeader menu item settings",
+    "context": "settings menu item",
     "string": "Settings"
   },
+  "src_dot_giftCards_dot_components_dot_GiftCardCustomerCard_dot_customerGiftCardsAbsentSubtitle": {
+    "context": "customer gift cards card no cards subtitle",
+    "string": "There are no gift cards assigned to this customer"
+  },
+  "src_dot_giftCards_dot_components_dot_GiftCardCustomerCard_dot_customerGiftCardsCardTitle": {
+    "context": "customer gift cards card title",
+    "string": "Gift Cards"
+  },
+  "src_dot_giftCards_dot_components_dot_GiftCardCustomerCard_dot_customerGiftCardsIssueNewCardButton": {
+    "context": "customer gift cards card issue button",
+    "string": "Issue new card"
+  },
+  "src_dot_giftCards_dot_components_dot_GiftCardCustomerCard_dot_customerGiftCardsPresentSubtitle": {
+    "context": "customer gift cards card subtitle",
+    "string": "Only five newest gift cards are shown here"
+  },
+  "src_dot_giftCards_dot_components_dot_GiftCardCustomerCard_dot_customerGiftCardsViewAllButton": {
+    "context": "customer gift cards card view all button",
+    "string": "View All"
+  },
   "src_dot_giftCards_dot_components_dot_GiftCardDeleteDialog_dot_consentLabel": {
-    "context": "GiftCardDeleteDialog consent label",
+    "context": "consent removal of gift cards with balance button label",
     "string": "{selectedItemsCount,plural,one{I am aware that I am removing a gift card with balance} other{I am aware that I am removing gift cards with balance}}"
   },
   "src_dot_giftCards_dot_components_dot_GiftCardDeleteDialog_dot_defaultDescription": {
-    "context": "GiftCardDeleteDialog default description",
+    "context": "default gift card delete description",
     "string": "{selectedItemsCount,plural,one{Are you sure you want to delete this gift card?} other{Are you sure you want to delete {selectedItemsCount} giftCards?}}"
   },
   "src_dot_giftCards_dot_components_dot_GiftCardDeleteDialog_dot_deleteSuccessAlertText": {
-    "context": "GiftCardDeleteDialog success alert text",
+    "context": "gift card removed success alert message",
     "string": "{selectedItemsCount,plural,one{Successfully deleted gift card} other{Successfully deleted gift cards}}"
   },
   "src_dot_giftCards_dot_components_dot_GiftCardDeleteDialog_dot_title": {
-    "context": "GiftCardDeleteDialog single title",
+    "context": "single gift card title",
     "string": "{selectedItemsCount,plural,one{Delete Gift Card} other{Delete Gift Cards}}"
   },
   "src_dot_giftCards_dot_components_dot_GiftCardDeleteDialog_dot_withBalanceDescription": {
-    "context": "GiftCardDeleteDialog with balance description",
+    "context": "delete gift cards with balance description",
     "string": "{selectedItemsCount,plural,one{The gift card you are about to delete has available balance. By deleting this card you may remove balance available to your customer.} other{You are about to delete gift cards with available balance. Are you sure you want to do that?}}"
   },
   "src_dot_giftCards_dot_components_dot_GiftCardSendToCustomer_dot_channelSelectLabel": {
-    "context": "GiftCardCreateDialog channel select label",
+    "context": "channel select label",
     "string": "Channel"
   },
   "src_dot_giftCards_dot_components_dot_GiftCardSendToCustomer_dot_customerChannelSubtitle": {
-    "context": "GiftCardCreateDialog customer channel subtitle",
+    "context": "selected customer channel subtitle",
     "string": "Customer will be sent the gift card code via this channels email address"
   },
   "src_dot_giftCards_dot_components_dot_GiftCardSendToCustomer_dot_customerSubtitle": {
-    "context": "GiftCardCreateDialog customer subtitle",
+    "context": "selected customer gift card is sent to subtitle",
     "string": "Selected customer will be sent the generated gift card code. Someone else can redeem the gift card code. Gift card will be assigned to account which redeemed the code."
   },
   "src_dot_giftCards_dot_components_dot_GiftCardSendToCustomer_dot_sendToCustomerSelectedLabel": {
-    "context": "GiftCardSendToCustomer send to customer selected label",
+    "context": "send to customer selected label",
     "string": "Send gift card to customer"
   },
   "src_dot_giftCards_dot_components_dot_GiftCardSettingsExpirySelect_dot_setExpirationPeriodDescription": {
@@ -3913,23 +4074,23 @@
     "string": "Set gift card expiration period"
   },
   "src_dot_giftCards_dot_components_dot_GiftCardTagInput_dot_placeholder": {
-    "context": "GiftCardTagInput tag placeholder",
+    "context": "input placeholder tag",
     "string": "Tag"
   },
   "src_dot_giftCards_dot_components_dot_TimePeriodField_dot_dayLabel": {
-    "context": "TimePeriodTextWithSelectField day label",
+    "context": "days after label",
     "string": "days after issue"
   },
   "src_dot_giftCards_dot_components_dot_TimePeriodField_dot_monthLabel": {
-    "context": "TimePeriodTextWithSelectField month label",
+    "context": "months after label",
     "string": "months after issue"
   },
   "src_dot_giftCards_dot_components_dot_TimePeriodField_dot_weekLabel": {
-    "context": "TimePeriodTextWithSelectField day label",
+    "context": "weeks after label",
     "string": "weeks after issue"
   },
   "src_dot_giftCards_dot_components_dot_TimePeriodField_dot_yearLabel": {
-    "context": "TimePeriodTextWithSelectField year label",
+    "context": "years after label",
     "string": "years after issue"
   },
   "src_dot_home": {
@@ -4659,6 +4820,18 @@
     "context": "order",
     "string": "Customer"
   },
+  "src_dot_orders_dot_components_dot_OrderListPage_dot_giftCard": {
+    "context": "order",
+    "string": "Gift Card"
+  },
+  "src_dot_orders_dot_components_dot_OrderListPage_dot_giftCardOrdered": {
+    "context": "order",
+    "string": "Gift Card ordered"
+  },
+  "src_dot_orders_dot_components_dot_OrderListPage_dot_giftCardPaid": {
+    "context": "order",
+    "string": "Paid with Gift Card"
+  },
   "src_dot_orders_dot_components_dot_OrderListPage_dot_placed": {
     "context": "order",
     "string": "Created"
@@ -5180,11 +5353,19 @@
   "src_dot_orders_dot_views_dot_OrderDetails_dot_4085755992": {
     "string": "Invoice email sent"
   },
+  "src_dot_orders_dot_views_dot_OrderDetails_dot_4207717971": {
+    "context": "snackbar title",
+    "string": "Could not generate invoice"
+  },
   "src_dot_orders_dot_views_dot_OrderDetails_dot_55607988": {
     "string": "Invoice is Generating"
   },
   "src_dot_orders_dot_views_dot_OrderDetails_dot_617145655": {
     "string": "Shipping method successfully updated"
+  },
+  "src_dot_orders_dot_views_dot_OrderDetails_dot_811176136": {
+    "context": "error message",
+    "string": "No invoice plugin installed"
   },
   "src_dot_orders_dot_views_dot_OrderDetails_dot_927945225": {
     "string": "Fulfillment successfully cancelled"
@@ -5782,19 +5963,15 @@
   },
   "src_dot_productTypes_dot_components_dot_ProductTypeDetails_dot_optionGiftCardDescription": {
     "context": "option description",
-    "string": "This product type can be used to create voucher/gift card type products that user will be able to pay with during checkout process"
+    "string": "This product will act as a payment method"
   },
   "src_dot_productTypes_dot_components_dot_ProductTypeDetails_dot_optionGiftCardTitle": {
     "context": "option",
-    "string": "Products of this type can be used as gift card/voucher"
-  },
-  "src_dot_productTypes_dot_components_dot_ProductTypeDetails_dot_optionNormalDescription": {
-    "context": "option description",
-    "string": "This product type can be used to create shipping passes for your customers"
+    "string": "Gift card product type"
   },
   "src_dot_productTypes_dot_components_dot_ProductTypeDetails_dot_optionNormalTitle": {
     "context": "option",
-    "string": "This is a normal product"
+    "string": "Regular product type"
   },
   "src_dot_productTypes_dot_components_dot_ProductTypeDetails_dot_productTypeName": {
     "context": "label",
@@ -5977,15 +6154,15 @@
     "string": "SEO Information"
   },
   "src_dot_products_dot_components_dot_ProductExportDialog_dot_2167661409": {
-    "context": "export selected products to csv file",
+    "context": "export selected items to csv file",
     "string": "Selected products ({number})"
   },
   "src_dot_products_dot_components_dot_ProductExportDialog_dot_2318723509": {
-    "context": "export products to csv file, choice field label",
+    "context": "export items to csv file, choice field label",
     "string": "Export information for:"
   },
   "src_dot_products_dot_components_dot_ProductExportDialog_dot_2355065897": {
-    "context": "export all products to csv file",
+    "context": "export all items to csv file",
     "string": "All products ({number})"
   },
   "src_dot_products_dot_components_dot_ProductExportDialog_dot_2474350154": {
@@ -5997,16 +6174,8 @@
     "string": "Information exported"
   },
   "src_dot_products_dot_components_dot_ProductExportDialog_dot_2693217446": {
-    "context": "export products as csv or spreadsheet file",
+    "context": "export items as csv or spreadsheet file",
     "string": "Export as:"
-  },
-  "src_dot_products_dot_components_dot_ProductExportDialog_dot_2883720012": {
-    "context": "export products to csv file, button",
-    "string": "export products"
-  },
-  "src_dot_products_dot_components_dot_ProductExportDialog_dot_3012202273": {
-    "context": "export products to csv file, dialog header",
-    "string": "Export Information"
   },
   "src_dot_products_dot_components_dot_ProductExportDialog_dot_3365843236": {
     "context": "product export to csv file, header",
@@ -6017,7 +6186,7 @@
     "string": "Select All"
   },
   "src_dot_products_dot_components_dot_ProductExportDialog_dot_3518309850": {
-    "context": "export products as spreadsheet",
+    "context": "export items as spreadsheet",
     "string": "Spreadsheet for Excel, Numbers etc."
   },
   "src_dot_products_dot_components_dot_ProductExportDialog_dot_3599582104": {
@@ -6031,7 +6200,7 @@
     "string": "Inventory Information"
   },
   "src_dot_products_dot_components_dot_ProductExportDialog_dot_4118932547": {
-    "context": "export products as csv file",
+    "context": "export items as csv file",
     "string": "Plain CSV file"
   },
   "src_dot_products_dot_components_dot_ProductExportDialog_dot_472026385": {
@@ -6043,12 +6212,24 @@
     "string": "Search by attribute name"
   },
   "src_dot_products_dot_components_dot_ProductExportDialog_dot_700651641": {
-    "context": "export filtered products to csv file",
+    "context": "export filtered items to csv file",
     "string": "Current search ({number})"
   },
   "src_dot_products_dot_components_dot_ProductExportDialog_dot_734825715": {
     "context": "informations about product prices etc, header",
     "string": "Financial Information"
+  },
+  "src_dot_products_dot_components_dot_ProductExportDialog_dot_confirmButtonLabel": {
+    "context": "export products to csv file, button",
+    "string": "export products"
+  },
+  "src_dot_products_dot_components_dot_ProductExportDialog_dot_productsLabel": {
+    "context": "products export type label",
+    "string": "products"
+  },
+  "src_dot_products_dot_components_dot_ProductExportDialog_dot_title": {
+    "context": "export products to csv file, dialog header",
+    "string": "Export Information"
   },
   "src_dot_products_dot_components_dot_ProductExternalMediaDialog_dot_4146081479": {
     "context": "modal header",
@@ -6095,6 +6276,10 @@
   "src_dot_products_dot_components_dot_ProductListPage_dot_hidden": {
     "context": "product is hidden",
     "string": "Hidden"
+  },
+  "src_dot_products_dot_components_dot_ProductListPage_dot_kind": {
+    "context": "product kind",
+    "string": "Product Kind"
   },
   "src_dot_products_dot_components_dot_ProductListPage_dot_outOfStock": {
     "context": "product status",
@@ -6707,6 +6892,14 @@
   },
   "src_dot_products_dot_views_dot_ProductList_dot_44832327": {
     "string": "We are currently exporting your requested CSV. As soon as it is available it will be sent to your email address"
+  },
+  "src_dot_products_dot_views_dot_ProductList_dot_giftCardLabel": {
+    "context": "label",
+    "string": "Gift Card"
+  },
+  "src_dot_products_dot_views_dot_ProductList_dot_normalLabel": {
+    "context": "label",
+    "string": "Normal"
   },
   "src_dot_products_dot_views_dot_ProductUpdate_dot_3423943948": {
     "string": "Manage Products Channel Availability"

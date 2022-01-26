@@ -3,6 +3,7 @@ import { AVAILABLE_CHANNELS_FORM } from "../../../elements/channels/available-ch
 import { SELECT_CHANNELS_TO_ASSIGN } from "../../../elements/channels/select-channels-to-assign";
 import { ASSIGN_ELEMENTS_SELECTORS } from "../../../elements/shared/assign-elements-selectors";
 import { BUTTON_SELECTORS } from "../../../elements/shared/button-selectors";
+import { SHARED_ELEMENTS } from "../../../elements/shared/sharedElements";
 
 export function createCollection(collectionName, isPublished, channel) {
   const publishedSelector = isPublished
@@ -17,8 +18,7 @@ export function createCollection(collectionName, isPublished, channel) {
     .click()
     .get(SELECT_CHANNELS_TO_ASSIGN.allChannelsCheckbox)
     .click();
-  return cy
-    .contains(SELECT_CHANNELS_TO_ASSIGN.channelRow, channel.name)
+  cy.contains(SELECT_CHANNELS_TO_ASSIGN.channelRow, channel.name)
     .find(SELECT_CHANNELS_TO_ASSIGN.channelCheckbox)
     .click()
     .get(BUTTON_SELECTORS.submit)
@@ -26,13 +26,31 @@ export function createCollection(collectionName, isPublished, channel) {
     .get(AVAILABLE_CHANNELS_FORM.availableChannel)
     .click()
     .get(`${AVAILABLE_CHANNELS_FORM.publishedRadioButtons}${publishedSelector}`)
-    .click()
-    .addAliasToGraphRequest("CreateCollection")
+    .click();
+  return saveCollection().its("response.body.data.collectionCreate.collection");
+}
+export function saveCollection(alias = "CreateCollection") {
+  return cy
+    .addAliasToGraphRequest(alias)
     .get(COLLECTION_SELECTORS.saveButton)
     .click()
     .confirmationMessageShouldDisappear()
-    .waitForRequestAndCheckIfNoErrors("@CreateCollection")
-    .its("response.body.data.collectionCreate.collection");
+    .waitForRequestAndCheckIfNoErrors(`@${alias}`);
+}
+
+export function updateCollection({ name, description }) {
+  cy.get(COLLECTION_SELECTORS.descriptionInput)
+    .find(SHARED_ELEMENTS.contentEditable)
+    .should("be.visible")
+    .get(COLLECTION_SELECTORS.descriptionInput)
+    .click()
+    .get(COLLECTION_SELECTORS.descriptionInput)
+    .find(SHARED_ELEMENTS.contentEditable)
+    .get(COLLECTION_SELECTORS.descriptionInput)
+    .clearAndType(description)
+    .get(COLLECTION_SELECTORS.nameInput)
+    .clearAndType(name);
+  return saveCollection("CollectionUpdate");
 }
 
 export function assignProductsToCollection(productName) {

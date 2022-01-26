@@ -517,17 +517,19 @@ export interface OrderDetailsFragment_user {
   email: string;
 }
 
-export interface OrderDetailsFragment_availableShippingMethods_price {
+export interface OrderDetailsFragment_shippingMethods_price {
   __typename: "Money";
   amount: number;
   currency: string;
 }
 
-export interface OrderDetailsFragment_availableShippingMethods {
+export interface OrderDetailsFragment_shippingMethods {
   __typename: "ShippingMethod";
   id: string;
   name: string;
-  price: OrderDetailsFragment_availableShippingMethods_price | null;
+  price: OrderDetailsFragment_shippingMethods_price;
+  active: boolean;
+  message: string | null;
 }
 
 export interface OrderDetailsFragment_invoices {
@@ -539,6 +541,11 @@ export interface OrderDetailsFragment_invoices {
   status: JobStatusEnum;
 }
 
+export interface OrderDetailsFragment_channel_defaultCountry {
+  __typename: "CountryDisplay";
+  code: string;
+}
+
 export interface OrderDetailsFragment_channel {
   __typename: "Channel";
   isActive: boolean;
@@ -546,6 +553,7 @@ export interface OrderDetailsFragment_channel {
   name: string;
   currencyCode: string;
   slug: string;
+  defaultCountry: OrderDetailsFragment_channel_defaultCountry;
 }
 
 export interface OrderDetailsFragment {
@@ -582,7 +590,7 @@ export interface OrderDetailsFragment {
   undiscountedTotal: OrderDetailsFragment_undiscountedTotal;
   user: OrderDetailsFragment_user | null;
   userEmail: string | null;
-  availableShippingMethods: (OrderDetailsFragment_availableShippingMethods | null)[] | null;
+  shippingMethods: OrderDetailsFragment_shippingMethods[];
   invoices: (OrderDetailsFragment_invoices | null)[] | null;
   channel: OrderDetailsFragment_channel;
 }

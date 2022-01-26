@@ -1,5 +1,6 @@
 import { IMessageContext } from "@saleor/components/messages";
 import { APP_DEFAULT_URI, APP_MOUNT_URI, DEMO_MODE } from "@saleor/config";
+import useNavigator from "@saleor/hooks/useNavigator";
 import { commonMessages } from "@saleor/intl";
 import {
   GetExternalAccessTokenData,
@@ -13,7 +14,7 @@ import {
   saveCredentials
 } from "@saleor/utils/credentialsManagement";
 import ApolloClient from "apollo-client";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useQuery } from "react-apollo";
 import { IntlShape } from "react-intl";
 import urlJoin from "url-join";
@@ -46,8 +47,10 @@ export function useAuthProvider({
     getExternalAccessToken,
     logout
   } = useAuth();
+  const navigate = useNavigator();
   const { authenticated, authenticating, user } = useAuthState();
   const [error, setError] = useState<UserContextError>();
+  const permitCredentialsAPI = useRef(true);
 
   useEffect(() => {
     if (authenticating && error) {
@@ -56,23 +59,31 @@ export function useAuthProvider({
   }, [authenticating]);
 
   useEffect(() => {
-    if (!authenticated && !authenticating) {
+    if (authenticated) {
+      permitCredentialsAPI.current = true;
+    }
+  }, [authenticated]);
+
+  useEffect(() => {
+    if (!authenticated && !authenticating && permitCredentialsAPI.current) {
+      permitCredentialsAPI.current = false;
       loginWithCredentialsManagementAPI(handleLogin);
     }
   }, [authenticated, authenticating]);
 
   const userDetails = useQuery<UserDetails>(userDetailsQuery, {
     client: apolloClient,
-    skip: !authenticated
+    skip: !authenticated,
+    fetchPolicy: "network-only"
   });
 
   const handleLogout = async () => {
+    const path = APP_MOUNT_URI === APP_DEFAULT_URI ? "" : APP_MOUNT_URI;
+    const returnTo = urlJoin(window.location.origin, path);
+
     const result = await logout({
       input: JSON.stringify({
-        returnTo: urlJoin(
-          window.location.origin,
-          APP_MOUNT_URI === APP_DEFAULT_URI ? "" : APP_MOUNT_URI
-        )
+        returnTo
       } as RequestExternalLogoutInput)
     });
 
@@ -80,17 +91,25 @@ export function useAuthProvider({
       navigator.credentials.preventSilentAccess();
     }
 
-    if (!result) {
-      return;
+    // Forget last logged in user data.
+    // On next login, user details query will be refetched due to cache-and-network fetch policy.
+    apolloClient.clearStore();
+
+    const errors = result?.errors || [];
+
+    const externalLogoutUrl = result
+      ? JSON.parse(result.data?.externalLogout?.logoutData || null)?.logoutUrl
+      : "";
+
+    if (!errors.length) {
+      if (externalLogoutUrl) {
+        window.location.href = externalLogoutUrl;
+      } else {
+        navigate("/");
+      }
     }
 
-    const errors = result.errors || [];
-    const logoutUrl = JSON.parse(
-      result.data?.externalLogout?.logoutData || null
-    )?.logoutUrl;
-    if (!errors.length && logoutUrl) {
-      window.location.href = logoutUrl;
-    }
+    return;
   };
 
   const handleLogin = async (email: string, password: string) => {

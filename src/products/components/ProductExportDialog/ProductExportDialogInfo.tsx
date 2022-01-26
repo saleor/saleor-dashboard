@@ -98,6 +98,15 @@ const useStyles = makeStyles(
     },
     warehousesLabel: {
       marginBottom: theme.spacing(2)
+    },
+    scrollArea: {
+      maxHeight: "calc(100vh - 350px)",
+      minHeight: "auto",
+      "@media (min-height: 800px)": {
+        minHeight: 440
+      },
+      overflowY: "auto",
+      overflowX: "hidden"
     }
   }),
   {
@@ -304,303 +313,305 @@ const ProductExportDialogInfo: React.FC<ProductExportDialogInfoProps> = ({
           description="select product informations to be exported"
         />
       </Typography>
-      <Accordion
-        className={classes.accordion}
-        title={intl.formatMessage(sectionNames.channels)}
-        quickPeek={
-          selectedChannels.length > 0 && (
-            <div className={classes.quickPeekContainer}>
-              {selectedChannels.slice(0, maxChips).map(channel => (
-                <Chip
-                  className={classes.chip}
-                  label={channel.name}
-                  onClose={() => onChannelSelect(channel)}
-                  key={channel.id}
-                />
-              ))}
-              {selectedChannels.length > maxChips && (
-                <Typography className={classes.moreLabel} variant="caption">
-                  <FormattedMessage
-                    defaultMessage="and {number} more"
-                    description="there are more elements of list that are hidden"
-                    values={{
-                      number: selectedChannels.length - maxChips
-                    }}
-                  />
-                </Typography>
-              )}
-            </div>
-          )
-        }
-        data-test="channels"
-      >
-        <ChannelsAvailabilityDialogContentWrapper
-          hasAnyChannelsToDisplay={!!channels.length}
-          hasAllSelected={selectedChannels.length === channels.length}
-          query={channelsQuery}
-          onQueryChange={onChannelsQueryChange}
-          toggleAll={handleSelectAllChannels}
-        >
-          <ChannelsAvailabilityDialogChannelsList
-            channels={filteredChannels}
-            isChannelSelected={option =>
-              !!selectedChannels.find(channel => channel.id === option.id)
-            }
-            onChange={onChannelSelect}
-          />
-        </ChannelsAvailabilityDialogContentWrapper>
-      </Accordion>
-      <FieldAccordion
-        className={classes.accordion}
-        title={intl.formatMessage({
-          defaultMessage: "Product Organization",
-          description: "informations about product organization, header"
-        })}
-        data={data}
-        fields={[
-          ProductFieldEnum.CATEGORY,
-          ProductFieldEnum.COLLECTIONS,
-          ProductFieldEnum.PRODUCT_TYPE
-        ]}
-        onChange={handleFieldChange}
-        onToggleAll={handleToggleAllFields}
-        data-test="organization"
-      />
-      <Accordion
-        className={classes.accordion}
-        title={intl.formatMessage(sectionNames.attributes)}
-        quickPeek={
-          selectedAttributes.length > 0 && (
-            <div className={classes.quickPeekContainer}>
-              {selectedAttributes.slice(0, maxChips).map(attribute => (
-                <Chip
-                  className={classes.chip}
-                  label={attribute.label}
-                  onClose={() =>
-                    onAttrtibuteSelect({
-                      target: {
-                        name: attributeNamePrefix + attribute.value,
-                        value: undefined
-                      }
-                    })
-                  }
-                  key={attribute.value}
-                />
-              ))}
-              {selectedAttributes.length > maxChips && (
-                <Typography className={classes.moreLabel} variant="caption">
-                  <FormattedMessage
-                    defaultMessage="and {number} more"
-                    description="there are more elements of list that are hidden"
-                    values={{
-                      number: selectedAttributes.length - maxChips
-                    }}
-                  />
-                </Typography>
-              )}
-            </div>
-          )
-        }
-        data-test="attributes"
-      >
-        <TextField
-          name="query"
-          value={query}
-          onChange={onQueryChange}
-          label={intl.formatMessage({
-            defaultMessage: "Search Atrtibuttes"
-          })}
-          placeholder={intl.formatMessage({
-            defaultMessage: "Search by attribute name",
-            description: "input helper text, search attributes"
-          })}
-          fullWidth
-          InputProps={{
-            autoComplete: "off",
-            endAdornment: loading && <CircularProgress size={16} />
-          }}
-        />
-        <Hr className={classes.hr} />
-        {attributes.map(attribute => (
-          <Option
-            checked={data.exportInfo.attributes.includes(attribute.value)}
-            name={attributeNamePrefix + attribute.value}
-            onChange={onAttrtibuteSelect}
-            key={attribute.value}
-          >
-            {attribute.label}
-          </Option>
-        ))}
-        {(hasMore || loading) && (
-          <div className={classes.loadMoreContainer}>
-            {hasMore && !loading && (
-              <Button color="primary" onClick={onFetchMore}>
-                <FormattedMessage
-                  defaultMessage="Load More"
-                  description="button"
-                />
-              </Button>
-            )}
-            {loading && <CircularProgress size={32} />}
-          </div>
-        )}
-      </Accordion>
-      <FieldAccordion
-        className={classes.accordion}
-        title={intl.formatMessage({
-          defaultMessage: "Financial Information",
-          description: "informations about product prices etc, header"
-        })}
-        data={data}
-        fields={[ProductFieldEnum.CHARGE_TAXES]}
-        onChange={handleFieldChange}
-        onToggleAll={handleToggleAllFields}
-        data-test="financial"
-      />
-      <Accordion
-        className={classes.accordion}
-        title={intl.formatMessage({
-          defaultMessage: "Inventory Information",
-          description: "informations about product stock, header"
-        })}
-        quickPeek={
-          (data.exportInfo.warehouses.length > 0 ||
-            selectedInventoryFields.length > 0) && (
-            <div className={classes.quickPeekContainer}>
-              {selectedInventoryFields.slice(0, maxChips).map(field => (
-                <Chip
-                  className={classes.chip}
-                  label={getFieldLabel(field)}
-                  onClose={() =>
-                    onChange({
-                      target: {
-                        name: field,
-                        value: false
-                      }
-                    })
-                  }
-                />
-              ))}
-              {data.exportInfo.warehouses
-                .slice(0, maxChips - selectedInventoryFields.length)
-                .map(warehouseId => (
+      <div className={classes.scrollArea}>
+        <Accordion
+          className={classes.accordion}
+          title={intl.formatMessage(sectionNames.channels)}
+          quickPeek={
+            selectedChannels.length > 0 && (
+              <div className={classes.quickPeekContainer}>
+                {selectedChannels.slice(0, maxChips).map(channel => (
                   <Chip
                     className={classes.chip}
-                    label={
-                      warehouses.find(
-                        warehouse => warehouse.value === warehouseId
-                      ).label
-                    }
+                    label={channel.name}
+                    onClose={() => onChannelSelect(channel)}
+                    key={channel.id}
+                  />
+                ))}
+                {selectedChannels.length > maxChips && (
+                  <Typography className={classes.moreLabel} variant="caption">
+                    <FormattedMessage
+                      defaultMessage="and {number} more"
+                      description="there are more elements of list that are hidden"
+                      values={{
+                        number: selectedChannels.length - maxChips
+                      }}
+                    />
+                  </Typography>
+                )}
+              </div>
+            )
+          }
+          data-test="channels"
+        >
+          <ChannelsAvailabilityDialogContentWrapper
+            hasAnyChannelsToDisplay={!!channels.length}
+            hasAllSelected={selectedChannels.length === channels.length}
+            query={channelsQuery}
+            onQueryChange={onChannelsQueryChange}
+            toggleAll={handleSelectAllChannels}
+          >
+            <ChannelsAvailabilityDialogChannelsList
+              channels={filteredChannels}
+              isChannelSelected={option =>
+                !!selectedChannels.find(channel => channel.id === option.id)
+              }
+              onChange={onChannelSelect}
+            />
+          </ChannelsAvailabilityDialogContentWrapper>
+        </Accordion>
+        <FieldAccordion
+          className={classes.accordion}
+          title={intl.formatMessage({
+            defaultMessage: "Product Organization",
+            description: "informations about product organization, header"
+          })}
+          data={data}
+          fields={[
+            ProductFieldEnum.CATEGORY,
+            ProductFieldEnum.COLLECTIONS,
+            ProductFieldEnum.PRODUCT_TYPE
+          ]}
+          onChange={handleFieldChange}
+          onToggleAll={handleToggleAllFields}
+          data-test="organization"
+        />
+        <Accordion
+          className={classes.accordion}
+          title={intl.formatMessage(sectionNames.attributes)}
+          quickPeek={
+            selectedAttributes.length > 0 && (
+              <div className={classes.quickPeekContainer}>
+                {selectedAttributes.slice(0, maxChips).map(attribute => (
+                  <Chip
+                    className={classes.chip}
+                    label={attribute.label}
                     onClose={() =>
-                      onWarehouseSelect({
+                      onAttrtibuteSelect({
                         target: {
-                          name: warehouseNamePrefix + warehouseId,
+                          name: attributeNamePrefix + attribute.value,
                           value: undefined
+                        }
+                      })
+                    }
+                    key={attribute.value}
+                  />
+                ))}
+                {selectedAttributes.length > maxChips && (
+                  <Typography className={classes.moreLabel} variant="caption">
+                    <FormattedMessage
+                      defaultMessage="and {number} more"
+                      description="there are more elements of list that are hidden"
+                      values={{
+                        number: selectedAttributes.length - maxChips
+                      }}
+                    />
+                  </Typography>
+                )}
+              </div>
+            )
+          }
+          data-test="attributes"
+        >
+          <TextField
+            name="query"
+            value={query}
+            onChange={onQueryChange}
+            label={intl.formatMessage({
+              defaultMessage: "Search Atrtibuttes"
+            })}
+            placeholder={intl.formatMessage({
+              defaultMessage: "Search by attribute name",
+              description: "input helper text, search attributes"
+            })}
+            fullWidth
+            InputProps={{
+              autoComplete: "off",
+              endAdornment: loading && <CircularProgress size={16} />
+            }}
+          />
+          <Hr className={classes.hr} />
+          {attributes.map(attribute => (
+            <Option
+              checked={data.exportInfo.attributes.includes(attribute.value)}
+              name={attributeNamePrefix + attribute.value}
+              onChange={onAttrtibuteSelect}
+              key={attribute.value}
+            >
+              {attribute.label}
+            </Option>
+          ))}
+          {(hasMore || loading) && (
+            <div className={classes.loadMoreContainer}>
+              {hasMore && !loading && (
+                <Button color="primary" onClick={onFetchMore}>
+                  <FormattedMessage
+                    defaultMessage="Load More"
+                    description="button"
+                  />
+                </Button>
+              )}
+              {loading && <CircularProgress size={32} />}
+            </div>
+          )}
+        </Accordion>
+        <FieldAccordion
+          className={classes.accordion}
+          title={intl.formatMessage({
+            defaultMessage: "Financial Information",
+            description: "informations about product prices etc, header"
+          })}
+          data={data}
+          fields={[ProductFieldEnum.CHARGE_TAXES]}
+          onChange={handleFieldChange}
+          onToggleAll={handleToggleAllFields}
+          data-test="financial"
+        />
+        <Accordion
+          className={classes.accordion}
+          title={intl.formatMessage({
+            defaultMessage: "Inventory Information",
+            description: "informations about product stock, header"
+          })}
+          quickPeek={
+            (data.exportInfo.warehouses.length > 0 ||
+              selectedInventoryFields.length > 0) && (
+              <div className={classes.quickPeekContainer}>
+                {selectedInventoryFields.slice(0, maxChips).map(field => (
+                  <Chip
+                    className={classes.chip}
+                    label={getFieldLabel(field)}
+                    onClose={() =>
+                      onChange({
+                        target: {
+                          name: field,
+                          value: false
                         }
                       })
                     }
                   />
                 ))}
-              {data.exportInfo.warehouses.length +
-                selectedInventoryFields.length >
-                maxChips && (
-                <Typography className={classes.moreLabel} variant="caption">
-                  <FormattedMessage
-                    defaultMessage="and {number} more"
-                    description="there are more elements of list that are hidden"
-                    values={{
-                      number:
-                        data.exportInfo.warehouses.length +
-                        selectedInventoryFields.length -
-                        maxChips
-                    }}
-                  />
-                </Typography>
-              )}
-            </div>
-          )
-        }
-        data-test="inventory"
-      >
-        <div>
-          <Option
-            checked={selectedAllInventoryFields}
-            name="all"
-            onChange={() =>
-              handleToggleAllFields(
-                inventoryFields,
-                !selectedAllInventoryFields
-              )
-            }
-          >
-            <FormattedMessage
-              defaultMessage="Select All"
-              description="selectt all options"
-            />
-          </Option>
-          {inventoryFields.map(field => (
+                {data.exportInfo.warehouses
+                  .slice(0, maxChips - selectedInventoryFields.length)
+                  .map(warehouseId => (
+                    <Chip
+                      className={classes.chip}
+                      label={
+                        warehouses.find(
+                          warehouse => warehouse.value === warehouseId
+                        ).label
+                      }
+                      onClose={() =>
+                        onWarehouseSelect({
+                          target: {
+                            name: warehouseNamePrefix + warehouseId,
+                            value: undefined
+                          }
+                        })
+                      }
+                    />
+                  ))}
+                {data.exportInfo.warehouses.length +
+                  selectedInventoryFields.length >
+                  maxChips && (
+                  <Typography className={classes.moreLabel} variant="caption">
+                    <FormattedMessage
+                      defaultMessage="and {number} more"
+                      description="there are more elements of list that are hidden"
+                      values={{
+                        number:
+                          data.exportInfo.warehouses.length +
+                          selectedInventoryFields.length -
+                          maxChips
+                      }}
+                    />
+                  </Typography>
+                )}
+              </div>
+            )
+          }
+          data-test="inventory"
+        >
+          <div>
             <Option
-              checked={data.exportInfo.fields.includes(field)}
-              name={field}
-              onChange={handleFieldChange}
-              key={field}
+              checked={selectedAllInventoryFields}
+              name="all"
+              onChange={() =>
+                handleToggleAllFields(
+                  inventoryFields,
+                  !selectedAllInventoryFields
+                )
+              }
             >
-              {getFieldLabel(field)}
+              <FormattedMessage
+                defaultMessage="Select All"
+                description="selectt all options"
+              />
+            </Option>
+            {inventoryFields.map(field => (
+              <Option
+                checked={data.exportInfo.fields.includes(field)}
+                name={field}
+                onChange={handleFieldChange}
+                key={field}
+              >
+                {getFieldLabel(field)}
+              </Option>
+            ))}
+          </div>
+          <Hr className={classes.hrWarehouses} />
+          <Typography>
+            <FormattedMessage defaultMessage="Export Product Stock Quantity to CSV" />
+          </Typography>
+          <div>
+            <Option
+              checked={warehouses.every(warehouse =>
+                data.exportInfo.warehouses.includes(warehouse.value)
+              )}
+              name="all-warehouses"
+              onChange={onSelectAllWarehouses}
+            >
+              <FormattedMessage
+                defaultMessage="Export stock for all warehouses"
+                description="option"
+              />
+            </Option>
+          </div>
+          <Hr className={classes.hrWarehouses} />
+          <Typography className={classes.warehousesLabel} variant="subtitle1">
+            <FormattedMessage
+              defaultMessage="Warehouses A to Z"
+              description="list of warehouses"
+            />
+          </Typography>
+          {warehouses.map(warehouse => (
+            <Option
+              checked={data.exportInfo.warehouses.includes(warehouse.value)}
+              name={warehouseNamePrefix + warehouse.value}
+              onChange={onWarehouseSelect}
+              key={warehouse.value}
+            >
+              {warehouse.label}
             </Option>
           ))}
-        </div>
-        <Hr className={classes.hrWarehouses} />
-        <Typography>
-          <FormattedMessage defaultMessage="Export Product Stock Quantity to CSV" />
-        </Typography>
-        <div>
-          <Option
-            checked={warehouses.every(warehouse =>
-              data.exportInfo.warehouses.includes(warehouse.value)
-            )}
-            name="all-warehouses"
-            onChange={onSelectAllWarehouses}
-          >
-            <FormattedMessage
-              defaultMessage="Export stock for all warehouses"
-              description="option"
-            />
-          </Option>
-        </div>
-        <Hr className={classes.hrWarehouses} />
-        <Typography className={classes.warehousesLabel} variant="subtitle1">
-          <FormattedMessage
-            defaultMessage="Warehouses A to Z"
-            description="list of warehouses"
-          />
-        </Typography>
-        {warehouses.map(warehouse => (
-          <Option
-            checked={data.exportInfo.warehouses.includes(warehouse.value)}
-            name={warehouseNamePrefix + warehouse.value}
-            onChange={onWarehouseSelect}
-            key={warehouse.value}
-          >
-            {warehouse.label}
-          </Option>
-        ))}
-      </Accordion>
-      <FieldAccordion
-        title={intl.formatMessage({
-          defaultMessage: "SEO Information",
-          description: "informations about product seo, header"
-        })}
-        data={data}
-        fields={[
-          ProductFieldEnum.DESCRIPTION,
-          ProductFieldEnum.NAME,
-          ProductFieldEnum.PRODUCT_MEDIA,
-          ProductFieldEnum.VARIANT_MEDIA
-        ]}
-        onChange={handleFieldChange}
-        onToggleAll={handleToggleAllFields}
-        data-test="seo"
-      />
+        </Accordion>
+        <FieldAccordion
+          title={intl.formatMessage({
+            defaultMessage: "SEO Information",
+            description: "informations about product seo, header"
+          })}
+          data={data}
+          fields={[
+            ProductFieldEnum.DESCRIPTION,
+            ProductFieldEnum.NAME,
+            ProductFieldEnum.PRODUCT_MEDIA,
+            ProductFieldEnum.VARIANT_MEDIA
+          ]}
+          onChange={handleFieldChange}
+          onToggleAll={handleToggleAllFields}
+          data-test="seo"
+        />
+      </div>
     </>
   );
 };

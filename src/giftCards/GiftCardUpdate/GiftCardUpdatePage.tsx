@@ -5,6 +5,7 @@ import Metadata from "@saleor/components/Metadata";
 import Savebar from "@saleor/components/Savebar";
 import React from "react";
 
+import GiftCardHistory from "./GiftCardHistory/GiftCardHistory";
 import GiftCardUpdateDetailsCard from "./GiftCardUpdateDetailsCard";
 import GiftCardUpdateInfoCard from "./GiftCardUpdateInfoCard";
 import GiftCardUpdatePageHeader from "./GiftCardUpdatePageHeader";
@@ -38,6 +39,7 @@ const GiftCardUpdatePage: React.FC = () => {
         <div>
           <GiftCardUpdateInfoCard />
         </div>
+        <GiftCardHistory />
       </Grid>
       <Savebar
         state={status}

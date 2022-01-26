@@ -577,7 +577,7 @@ const orderShippingMethodUpdateMutation = gql`
         ...OrderErrorFragment
       }
       order {
-        availableShippingMethods {
+        shippingMethods {
           id
           name
         }

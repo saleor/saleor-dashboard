@@ -524,17 +524,19 @@ export interface OrderDraftFinalize_draftOrderComplete_order_user {
   email: string;
 }
 
-export interface OrderDraftFinalize_draftOrderComplete_order_availableShippingMethods_price {
+export interface OrderDraftFinalize_draftOrderComplete_order_shippingMethods_price {
   __typename: "Money";
   amount: number;
   currency: string;
 }
 
-export interface OrderDraftFinalize_draftOrderComplete_order_availableShippingMethods {
+export interface OrderDraftFinalize_draftOrderComplete_order_shippingMethods {
   __typename: "ShippingMethod";
   id: string;
   name: string;
-  price: OrderDraftFinalize_draftOrderComplete_order_availableShippingMethods_price | null;
+  price: OrderDraftFinalize_draftOrderComplete_order_shippingMethods_price;
+  active: boolean;
+  message: string | null;
 }
 
 export interface OrderDraftFinalize_draftOrderComplete_order_invoices {
@@ -546,6 +548,11 @@ export interface OrderDraftFinalize_draftOrderComplete_order_invoices {
   status: JobStatusEnum;
 }
 
+export interface OrderDraftFinalize_draftOrderComplete_order_channel_defaultCountry {
+  __typename: "CountryDisplay";
+  code: string;
+}
+
 export interface OrderDraftFinalize_draftOrderComplete_order_channel {
   __typename: "Channel";
   isActive: boolean;
@@ -553,6 +560,7 @@ export interface OrderDraftFinalize_draftOrderComplete_order_channel {
   name: string;
   currencyCode: string;
   slug: string;
+  defaultCountry: OrderDraftFinalize_draftOrderComplete_order_channel_defaultCountry;
 }
 
 export interface OrderDraftFinalize_draftOrderComplete_order {
@@ -589,7 +597,7 @@ export interface OrderDraftFinalize_draftOrderComplete_order {
   undiscountedTotal: OrderDraftFinalize_draftOrderComplete_order_undiscountedTotal;
   user: OrderDraftFinalize_draftOrderComplete_order_user | null;
   userEmail: string | null;
-  availableShippingMethods: (OrderDraftFinalize_draftOrderComplete_order_availableShippingMethods | null)[] | null;
+  shippingMethods: OrderDraftFinalize_draftOrderComplete_order_shippingMethods[];
   invoices: (OrderDraftFinalize_draftOrderComplete_order_invoices | null)[] | null;
   channel: OrderDraftFinalize_draftOrderComplete_order_channel;
 }

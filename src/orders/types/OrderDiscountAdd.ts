@@ -524,17 +524,19 @@ export interface OrderDiscountAdd_orderDiscountAdd_order_user {
   email: string;
 }
 
-export interface OrderDiscountAdd_orderDiscountAdd_order_availableShippingMethods_price {
+export interface OrderDiscountAdd_orderDiscountAdd_order_shippingMethods_price {
   __typename: "Money";
   amount: number;
   currency: string;
 }
 
-export interface OrderDiscountAdd_orderDiscountAdd_order_availableShippingMethods {
+export interface OrderDiscountAdd_orderDiscountAdd_order_shippingMethods {
   __typename: "ShippingMethod";
   id: string;
   name: string;
-  price: OrderDiscountAdd_orderDiscountAdd_order_availableShippingMethods_price | null;
+  price: OrderDiscountAdd_orderDiscountAdd_order_shippingMethods_price;
+  active: boolean;
+  message: string | null;
 }
 
 export interface OrderDiscountAdd_orderDiscountAdd_order_invoices {
@@ -546,6 +548,11 @@ export interface OrderDiscountAdd_orderDiscountAdd_order_invoices {
   status: JobStatusEnum;
 }
 
+export interface OrderDiscountAdd_orderDiscountAdd_order_channel_defaultCountry {
+  __typename: "CountryDisplay";
+  code: string;
+}
+
 export interface OrderDiscountAdd_orderDiscountAdd_order_channel {
   __typename: "Channel";
   isActive: boolean;
@@ -553,6 +560,7 @@ export interface OrderDiscountAdd_orderDiscountAdd_order_channel {
   name: string;
   currencyCode: string;
   slug: string;
+  defaultCountry: OrderDiscountAdd_orderDiscountAdd_order_channel_defaultCountry;
 }
 
 export interface OrderDiscountAdd_orderDiscountAdd_order {
@@ -589,7 +597,7 @@ export interface OrderDiscountAdd_orderDiscountAdd_order {
   undiscountedTotal: OrderDiscountAdd_orderDiscountAdd_order_undiscountedTotal;
   user: OrderDiscountAdd_orderDiscountAdd_order_user | null;
   userEmail: string | null;
-  availableShippingMethods: (OrderDiscountAdd_orderDiscountAdd_order_availableShippingMethods | null)[] | null;
+  shippingMethods: OrderDiscountAdd_orderDiscountAdd_order_shippingMethods[];
   invoices: (OrderDiscountAdd_orderDiscountAdd_order_invoices | null)[] | null;
   channel: OrderDiscountAdd_orderDiscountAdd_order_channel;
 }

@@ -504,7 +504,7 @@ export enum GiftCardEventsEnum {
   NOTE_ADDED = "NOTE_ADDED",
   RESENT = "RESENT",
   SENT_TO_CUSTOMER = "SENT_TO_CUSTOMER",
-  TAG_UPDATED = "TAG_UPDATED",
+  TAGS_UPDATED = "TAGS_UPDATED",
   UPDATED = "UPDATED",
   USED_IN_ORDER = "USED_IN_ORDER",
 }
@@ -520,11 +520,19 @@ export enum GiftCardSettingsExpiryTypeEnum {
   NEVER_EXPIRE = "NEVER_EXPIRE",
 }
 
+export enum GiftCardSortField {
+  CURRENT_BALANCE = "CURRENT_BALANCE",
+  PRODUCT = "PRODUCT",
+  TAG = "TAG",
+  USED_BY = "USED_BY",
+}
+
 export enum InvoiceErrorCode {
   EMAIL_NOT_SET = "EMAIL_NOT_SET",
   INVALID_STATUS = "INVALID_STATUS",
   NOT_FOUND = "NOT_FOUND",
   NOT_READY = "NOT_READY",
+  NO_INVOICE_PLUGIN = "NO_INVOICE_PLUGIN",
   NUMBER_NOT_SET = "NUMBER_NOT_SET",
   REQUIRED = "REQUIRED",
   URL_NOT_SET = "URL_NOT_SET",
@@ -1817,10 +1825,13 @@ export enum WebhookErrorCode {
   UNIQUE = "UNIQUE",
 }
 
-export enum WebhookEventTypeAsync {
+export enum WebhookEventTypeAsyncEnum {
   ANY_EVENTS = "ANY_EVENTS",
   CHECKOUT_CREATED = "CHECKOUT_CREATED",
   CHECKOUT_UPDATED = "CHECKOUT_UPDATED",
+  COLLECTION_CREATED = "COLLECTION_CREATED",
+  COLLECTION_DELETED = "COLLECTION_DELETED",
+  COLLECTION_UPDATED = "COLLECTION_UPDATED",
   CUSTOMER_CREATED = "CUSTOMER_CREATED",
   CUSTOMER_UPDATED = "CUSTOMER_UPDATED",
   DRAFT_ORDER_CREATED = "DRAFT_ORDER_CREATED",
@@ -1859,7 +1870,11 @@ export enum WebhookEventTypeAsync {
 export enum WebhookEventTypeEnum {
   ANY_EVENTS = "ANY_EVENTS",
   CHECKOUT_CREATED = "CHECKOUT_CREATED",
+  CHECKOUT_FILTER_SHIPPING_METHODS = "CHECKOUT_FILTER_SHIPPING_METHODS",
   CHECKOUT_UPDATED = "CHECKOUT_UPDATED",
+  COLLECTION_CREATED = "COLLECTION_CREATED",
+  COLLECTION_DELETED = "COLLECTION_DELETED",
+  COLLECTION_UPDATED = "COLLECTION_UPDATED",
   CUSTOMER_CREATED = "CUSTOMER_CREATED",
   CUSTOMER_UPDATED = "CUSTOMER_UPDATED",
   DRAFT_ORDER_CREATED = "DRAFT_ORDER_CREATED",
@@ -1874,6 +1889,7 @@ export enum WebhookEventTypeEnum {
   ORDER_CANCELLED = "ORDER_CANCELLED",
   ORDER_CONFIRMED = "ORDER_CONFIRMED",
   ORDER_CREATED = "ORDER_CREATED",
+  ORDER_FILTER_SHIPPING_METHODS = "ORDER_FILTER_SHIPPING_METHODS",
   ORDER_FULFILLED = "ORDER_FULFILLED",
   ORDER_FULLY_PAID = "ORDER_FULLY_PAID",
   ORDER_UPDATED = "ORDER_UPDATED",
@@ -1903,7 +1919,7 @@ export enum WebhookEventTypeEnum {
   TRANSLATION_UPDATED = "TRANSLATION_UPDATED",
 }
 
-export enum WebhookEventTypeSync {
+export enum WebhookEventTypeSyncEnum {
   PAYMENT_AUTHORIZE = "PAYMENT_AUTHORIZE",
   PAYMENT_CAPTURE = "PAYMENT_CAPTURE",
   PAYMENT_CONFIRM = "PAYMENT_CONFIRM",
@@ -2224,6 +2240,13 @@ export interface DraftOrderInput {
   redirectUrl?: string | null;
 }
 
+export interface ExportGiftCardsInput {
+  scope: ExportScope;
+  filter?: GiftCardFilterInput | null;
+  ids?: string[] | null;
+  fileType: FileTypesEnum;
+}
+
 export interface ExportInfoInput {
   attributes?: string[] | null;
   warehouses?: string[] | null;
@@ -2248,8 +2271,20 @@ export interface FulfillmentUpdateTrackingInput {
   notifyCustomer?: boolean | null;
 }
 
+export interface GiftCardAddNoteInput {
+  message: string;
+}
+
+export interface GiftCardBulkCreateInput {
+  count: number;
+  balance: PriceInput;
+  tags?: string[] | null;
+  expiryDate?: any | null;
+  isActive: boolean;
+}
+
 export interface GiftCardCreateInput {
-  tag?: string | null;
+  addTags?: string[] | null;
   expiryDate?: any | null;
   startDate?: any | null;
   endDate?: any | null;
@@ -2264,7 +2299,6 @@ export interface GiftCardCreateInput {
 export interface GiftCardFilterInput {
   isActive?: boolean | null;
   metadata?: (MetadataFilter | null)[] | null;
-  tag?: string | null;
   tags?: (string | null)[] | null;
   products?: (string | null)[] | null;
   usedBy?: (string | null)[] | null;
@@ -2285,8 +2319,14 @@ export interface GiftCardSettingsUpdateInput {
   expiryPeriod?: TimePeriodInputType | null;
 }
 
+export interface GiftCardSortingInput {
+  direction: OrderDirection;
+  field: GiftCardSortField;
+}
+
 export interface GiftCardUpdateInput {
-  tag?: string | null;
+  addTags?: string[] | null;
+  removeTags?: string[] | null;
   expiryDate?: any | null;
   startDate?: any | null;
   endDate?: any | null;
@@ -2375,6 +2415,9 @@ export interface OrderFilterInput {
   channels?: (string | null)[] | null;
   isClickAndCollect?: boolean | null;
   isPreorder?: boolean | null;
+  ids?: (string | null)[] | null;
+  giftCardUsed?: boolean | null;
+  giftCardBought?: boolean | null;
 }
 
 export interface OrderFulfillInput {
@@ -3013,8 +3056,8 @@ export interface WebhookCreateInput {
   name?: string | null;
   targetUrl?: string | null;
   events?: (WebhookEventTypeEnum | null)[] | null;
-  asyncEvents?: WebhookEventTypeAsync[] | null;
-  syncEvents?: WebhookEventTypeSync[] | null;
+  asyncEvents?: WebhookEventTypeAsyncEnum[] | null;
+  syncEvents?: WebhookEventTypeSyncEnum[] | null;
   app?: string | null;
   isActive?: boolean | null;
   secretKey?: string | null;
@@ -3024,8 +3067,8 @@ export interface WebhookUpdateInput {
   name?: string | null;
   targetUrl?: string | null;
   events?: (WebhookEventTypeEnum | null)[] | null;
-  asyncEvents?: WebhookEventTypeAsync[] | null;
-  syncEvents?: WebhookEventTypeSync[] | null;
+  asyncEvents?: WebhookEventTypeAsyncEnum[] | null;
+  syncEvents?: WebhookEventTypeSyncEnum[] | null;
   app?: string | null;
   isActive?: boolean | null;
   secretKey?: string | null;

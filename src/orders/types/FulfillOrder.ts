@@ -526,17 +526,19 @@ export interface FulfillOrder_orderFulfill_order_user {
   email: string;
 }
 
-export interface FulfillOrder_orderFulfill_order_availableShippingMethods_price {
+export interface FulfillOrder_orderFulfill_order_shippingMethods_price {
   __typename: "Money";
   amount: number;
   currency: string;
 }
 
-export interface FulfillOrder_orderFulfill_order_availableShippingMethods {
+export interface FulfillOrder_orderFulfill_order_shippingMethods {
   __typename: "ShippingMethod";
   id: string;
   name: string;
-  price: FulfillOrder_orderFulfill_order_availableShippingMethods_price | null;
+  price: FulfillOrder_orderFulfill_order_shippingMethods_price;
+  active: boolean;
+  message: string | null;
 }
 
 export interface FulfillOrder_orderFulfill_order_invoices {
@@ -548,6 +550,11 @@ export interface FulfillOrder_orderFulfill_order_invoices {
   status: JobStatusEnum;
 }
 
+export interface FulfillOrder_orderFulfill_order_channel_defaultCountry {
+  __typename: "CountryDisplay";
+  code: string;
+}
+
 export interface FulfillOrder_orderFulfill_order_channel {
   __typename: "Channel";
   isActive: boolean;
@@ -555,6 +562,7 @@ export interface FulfillOrder_orderFulfill_order_channel {
   name: string;
   currencyCode: string;
   slug: string;
+  defaultCountry: FulfillOrder_orderFulfill_order_channel_defaultCountry;
 }
 
 export interface FulfillOrder_orderFulfill_order {
@@ -591,7 +599,7 @@ export interface FulfillOrder_orderFulfill_order {
   undiscountedTotal: FulfillOrder_orderFulfill_order_undiscountedTotal;
   user: FulfillOrder_orderFulfill_order_user | null;
   userEmail: string | null;
-  availableShippingMethods: (FulfillOrder_orderFulfill_order_availableShippingMethods | null)[] | null;
+  shippingMethods: FulfillOrder_orderFulfill_order_shippingMethods[];
   invoices: (FulfillOrder_orderFulfill_order_invoices | null)[] | null;
   channel: FulfillOrder_orderFulfill_order_channel;
 }

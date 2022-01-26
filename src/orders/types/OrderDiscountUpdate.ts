@@ -524,17 +524,19 @@ export interface OrderDiscountUpdate_orderDiscountUpdate_order_user {
   email: string;
 }
 
-export interface OrderDiscountUpdate_orderDiscountUpdate_order_availableShippingMethods_price {
+export interface OrderDiscountUpdate_orderDiscountUpdate_order_shippingMethods_price {
   __typename: "Money";
   amount: number;
   currency: string;
 }
 
-export interface OrderDiscountUpdate_orderDiscountUpdate_order_availableShippingMethods {
+export interface OrderDiscountUpdate_orderDiscountUpdate_order_shippingMethods {
   __typename: "ShippingMethod";
   id: string;
   name: string;
-  price: OrderDiscountUpdate_orderDiscountUpdate_order_availableShippingMethods_price | null;
+  price: OrderDiscountUpdate_orderDiscountUpdate_order_shippingMethods_price;
+  active: boolean;
+  message: string | null;
 }
 
 export interface OrderDiscountUpdate_orderDiscountUpdate_order_invoices {
@@ -546,6 +548,11 @@ export interface OrderDiscountUpdate_orderDiscountUpdate_order_invoices {
   status: JobStatusEnum;
 }
 
+export interface OrderDiscountUpdate_orderDiscountUpdate_order_channel_defaultCountry {
+  __typename: "CountryDisplay";
+  code: string;
+}
+
 export interface OrderDiscountUpdate_orderDiscountUpdate_order_channel {
   __typename: "Channel";
   isActive: boolean;
@@ -553,6 +560,7 @@ export interface OrderDiscountUpdate_orderDiscountUpdate_order_channel {
   name: string;
   currencyCode: string;
   slug: string;
+  defaultCountry: OrderDiscountUpdate_orderDiscountUpdate_order_channel_defaultCountry;
 }
 
 export interface OrderDiscountUpdate_orderDiscountUpdate_order {
@@ -589,7 +597,7 @@ export interface OrderDiscountUpdate_orderDiscountUpdate_order {
   undiscountedTotal: OrderDiscountUpdate_orderDiscountUpdate_order_undiscountedTotal;
   user: OrderDiscountUpdate_orderDiscountUpdate_order_user | null;
   userEmail: string | null;
-  availableShippingMethods: (OrderDiscountUpdate_orderDiscountUpdate_order_availableShippingMethods | null)[] | null;
+  shippingMethods: OrderDiscountUpdate_orderDiscountUpdate_order_shippingMethods[];
   invoices: (OrderDiscountUpdate_orderDiscountUpdate_order_invoices | null)[] | null;
   channel: OrderDiscountUpdate_orderDiscountUpdate_order_channel;
 }

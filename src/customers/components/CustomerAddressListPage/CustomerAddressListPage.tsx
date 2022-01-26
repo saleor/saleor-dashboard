@@ -110,7 +110,12 @@ const CustomerAddressListPage: React.FC<CustomerAddressListPageProps> = props =>
               : intl.formatMessage(messages.noNameToShow)
           }
         >
-          <Button color="primary" variant="contained" onClick={onAdd}>
+          <Button
+            color="primary"
+            variant="contained"
+            onClick={onAdd}
+            data-test-id="add-address"
+          >
             {intl.formatMessage(messages.addAddress)}
           </Button>
         </PageHeader>

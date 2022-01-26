@@ -1,20 +1,25 @@
+import { ActionDialogProps } from "@saleor/components/ActionDialog";
 import useGiftCardListDialogs from "@saleor/giftCards/GiftCardsList/providers/GiftCardListDialogsProvider/hooks/useGiftCardListDialogs";
 import useGiftCardList from "@saleor/giftCards/GiftCardsList/providers/GiftCardListProvider/hooks/useGiftCardList";
 import useGiftCardListBulkActions from "@saleor/giftCards/GiftCardsList/providers/GiftCardListProvider/hooks/useGiftCardListBulkActions";
 import { GIFT_CARD_LIST_QUERY } from "@saleor/giftCards/GiftCardsList/types";
-import { DialogActionHandlersProps } from "@saleor/utils/handlers/dialogActionHandlers";
+import { DialogProps } from "@saleor/types";
 import React from "react";
 
 import GiftCardDeleteDialogContent, {
-  GiftCardDeleteDialogContentProps,
   SINGLE
 } from "./GiftCardDeleteDialogContent";
 import useGiftCardBulkDelete from "./useGiftCardBulkDelete";
 import useGiftCardSingleDelete from "./useGiftCardSingleDelete";
 
-const GiftCardDeleteDialog: React.FC<DialogActionHandlersProps> = ({
+interface GiftCardDeleteDialogProps extends DialogProps {
+  refetchQueries?: string[];
+}
+
+const GiftCardDeleteDialog: React.FC<GiftCardDeleteDialogProps> = ({
   open,
-  closeDialog
+  onClose,
+  refetchQueries = []
 }) => {
   const giftCardBulkActionsProps = useGiftCardListBulkActions();
   const { selectedItemsCount } = giftCardBulkActionsProps;
@@ -27,22 +32,22 @@ const GiftCardDeleteDialog: React.FC<DialogActionHandlersProps> = ({
 
   const { onDeleteGiftCard, deleteGiftCardOpts } = useGiftCardSingleDelete({
     id,
-    onClose: closeDialog,
-    refetchQueries: [GIFT_CARD_LIST_QUERY]
+    onClose,
+    refetchQueries: [GIFT_CARD_LIST_QUERY, ...refetchQueries]
   });
 
   const {
     onBulkDeleteGiftCards,
     bulkDeleteGiftCardOpts
   } = useGiftCardBulkDelete({
-    onClose: closeDialog,
-    refetchQueries: [GIFT_CARD_LIST_QUERY]
+    onClose,
+    refetchQueries: [GIFT_CARD_LIST_QUERY, ...refetchQueries]
   });
 
   const dialogProps: Pick<
-    GiftCardDeleteDialogContentProps,
+    ActionDialogProps,
     "onConfirm" | "confirmButtonState"
-  > = singleDeletion
+  > = !!id
     ? {
         onConfirm: onDeleteGiftCard,
         confirmButtonState: deleteGiftCardOpts?.status
@@ -56,7 +61,7 @@ const GiftCardDeleteDialog: React.FC<DialogActionHandlersProps> = ({
     <GiftCardDeleteDialogContent
       id={id}
       open={open}
-      onClose={closeDialog}
+      onClose={onClose}
       singleDeletion={singleDeletion}
       giftCards={giftCards}
       loading={loading}

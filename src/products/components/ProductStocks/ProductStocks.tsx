@@ -225,7 +225,6 @@ const ProductStocks: React.FC<ProductStocksProps> = ({
       <CardContent>
         <div className={classes.skuInputContainer}>
           <TextField
-            data-test-id="sku-input"
             disabled={disabled}
             error={!!formErrors.sku}
             fullWidth
@@ -528,7 +527,6 @@ const ProductStocks: React.FC<ProductStocksProps> = ({
                 defaultMessage: "Global threshold"
               })}
               name="globalThreshold"
-              required
               onChange={onThresholdChange}
               value={data.globalThreshold ?? ""}
               className={classes.thresholdInput}

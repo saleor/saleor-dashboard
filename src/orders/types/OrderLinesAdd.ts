@@ -524,17 +524,19 @@ export interface OrderLinesAdd_orderLinesCreate_order_user {
   email: string;
 }
 
-export interface OrderLinesAdd_orderLinesCreate_order_availableShippingMethods_price {
+export interface OrderLinesAdd_orderLinesCreate_order_shippingMethods_price {
   __typename: "Money";
   amount: number;
   currency: string;
 }
 
-export interface OrderLinesAdd_orderLinesCreate_order_availableShippingMethods {
+export interface OrderLinesAdd_orderLinesCreate_order_shippingMethods {
   __typename: "ShippingMethod";
   id: string;
   name: string;
-  price: OrderLinesAdd_orderLinesCreate_order_availableShippingMethods_price | null;
+  price: OrderLinesAdd_orderLinesCreate_order_shippingMethods_price;
+  active: boolean;
+  message: string | null;
 }
 
 export interface OrderLinesAdd_orderLinesCreate_order_invoices {
@@ -546,6 +548,11 @@ export interface OrderLinesAdd_orderLinesCreate_order_invoices {
   status: JobStatusEnum;
 }
 
+export interface OrderLinesAdd_orderLinesCreate_order_channel_defaultCountry {
+  __typename: "CountryDisplay";
+  code: string;
+}
+
 export interface OrderLinesAdd_orderLinesCreate_order_channel {
   __typename: "Channel";
   isActive: boolean;
@@ -553,6 +560,7 @@ export interface OrderLinesAdd_orderLinesCreate_order_channel {
   name: string;
   currencyCode: string;
   slug: string;
+  defaultCountry: OrderLinesAdd_orderLinesCreate_order_channel_defaultCountry;
 }
 
 export interface OrderLinesAdd_orderLinesCreate_order {
@@ -589,7 +597,7 @@ export interface OrderLinesAdd_orderLinesCreate_order {
   undiscountedTotal: OrderLinesAdd_orderLinesCreate_order_undiscountedTotal;
   user: OrderLinesAdd_orderLinesCreate_order_user | null;
   userEmail: string | null;
-  availableShippingMethods: (OrderLinesAdd_orderLinesCreate_order_availableShippingMethods | null)[] | null;
+  shippingMethods: OrderLinesAdd_orderLinesCreate_order_shippingMethods[];
   invoices: (OrderLinesAdd_orderLinesCreate_order_invoices | null)[] | null;
   channel: OrderLinesAdd_orderLinesCreate_order_channel;
 }
