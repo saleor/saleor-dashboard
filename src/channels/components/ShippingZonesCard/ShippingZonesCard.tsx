@@ -63,7 +63,10 @@ const ShippingZonesCard: React.FC<ShippingZonesCardProps> = props => {
         <Typography>{intl.formatMessage(messages.subtitle)}</Typography>
       </CardContent>
       <Accordion classes={expanderClasses}>
-        <ShippingZonesListHeader shippingZones={shippingZones} />
+        <ShippingZonesListHeader
+          shippingZones={shippingZones}
+          totalCount={totalCount}
+        />
         <Divider />
         {shippingZones.map(zone => (
           <ShippingZoneItem zone={zone} onDelete={removeShippingZone} />
