@@ -10,13 +10,17 @@ export interface GiftCardCreateFormCustomer {
   email: string;
 }
 
-export type GiftCardCreateFormErrors = Record<
-  "tag" | "expiryDate" | "customer" | "currency" | "amount" | "balance",
+export type GiftCardCreateCommonFormErrors = Record<
+  "tags" | "expiryDate" | "currency" | "amount" | "balance",
   GiftCardError
 >;
 
+export type GiftCardCreateFormErrors = GiftCardCreateCommonFormErrors &
+  Record<"customer", GiftCardError>;
+
 export interface GiftCardCreateFormCommonProps {
   change: FormChange;
+  toggleValue: FormChange;
   errors: GiftCardCreateFormErrors;
   data: GiftCardCreateFormData;
 }

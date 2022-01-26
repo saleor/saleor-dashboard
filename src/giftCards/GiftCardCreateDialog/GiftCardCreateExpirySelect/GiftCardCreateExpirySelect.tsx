@@ -5,12 +5,14 @@ import ControlledCheckbox from "@saleor/components/ControlledCheckbox";
 import RadioGroupField from "@saleor/components/RadioGroupField";
 import TimePeriodField from "@saleor/giftCards/components/TimePeriodField";
 import {
-  GiftCardCreateFormCommonProps,
-  GiftCardExpiryType
-} from "@saleor/giftCards/GiftCardCreateDialog/types";
+  GiftCardBulkCreateFormErrors,
+  GiftCardCreateCommonFormData
+} from "@saleor/giftCards/GiftCardBulkCreateDialog/types";
+import { GiftCardExpiryType } from "@saleor/giftCards/GiftCardCreateDialog/types";
 import { getExpiryPeriodTerminationDate } from "@saleor/giftCards/GiftCardCreateDialog/utils";
 import { getGiftCardErrorMessage } from "@saleor/giftCards/GiftCardUpdate/messages";
 import useCurrentDate from "@saleor/hooks/useCurrentDate";
+import { FormChange } from "@saleor/hooks/useForm";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 import { MessageDescriptor, useIntl } from "react-intl";
@@ -34,7 +36,20 @@ const options: UntranslatedOption[] = [
   }
 ];
 
-const GiftCardCreateExpirySelect: React.FC<GiftCardCreateFormCommonProps> = ({
+interface GiftCardCreateExpirySelectProps {
+  errors: GiftCardBulkCreateFormErrors;
+  change: FormChange;
+  data: Pick<
+    GiftCardCreateCommonFormData,
+    | "expirySelected"
+    | "expiryPeriodType"
+    | "expiryPeriodAmount"
+    | "expiryType"
+    | "expiryDate"
+  >;
+}
+
+const GiftCardCreateExpirySelect: React.FC<GiftCardCreateExpirySelectProps> = ({
   errors,
   change,
   data: {

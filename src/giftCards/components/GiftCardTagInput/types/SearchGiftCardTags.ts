@@ -8,13 +8,13 @@
 // ====================================================
 
 export interface SearchGiftCardTags_search_edges_node {
-  __typename: "GiftCard";
+  __typename: "GiftCardTag";
   id: string;
-  tag: string | null;
+  name: string;
 }
 
 export interface SearchGiftCardTags_search_edges {
-  __typename: "GiftCardCountableEdge";
+  __typename: "GiftCardTagCountableEdge";
   node: SearchGiftCardTags_search_edges_node;
 }
 
@@ -27,7 +27,7 @@ export interface SearchGiftCardTags_search_pageInfo {
 }
 
 export interface SearchGiftCardTags_search {
-  __typename: "GiftCardCountableConnection";
+  __typename: "GiftCardTagCountableConnection";
   totalCount: number | null;
   edges: SearchGiftCardTags_search_edges[];
   pageInfo: SearchGiftCardTags_search_pageInfo;

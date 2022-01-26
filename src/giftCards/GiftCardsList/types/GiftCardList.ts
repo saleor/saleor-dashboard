@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { GiftCardFilterInput } from "./../../../types/globalTypes";
+import { GiftCardFilterInput, GiftCardSortingInput } from "./../../../types/globalTypes";
 
 // ====================================================
 // GraphQL query operation: GiftCardList
@@ -12,6 +12,11 @@ import { GiftCardFilterInput } from "./../../../types/globalTypes";
 export interface GiftCardList_giftCards_edges_node_product {
   __typename: "Product";
   id: string;
+  name: string;
+}
+
+export interface GiftCardList_giftCards_edges_node_tags {
+  __typename: "GiftCardTag";
   name: string;
 }
 
@@ -32,11 +37,11 @@ export interface GiftCardList_giftCards_edges_node {
   __typename: "GiftCard";
   id: string;
   usedByEmail: string | null;
-  displayCode: string;
+  last4CodeChars: string;
   isActive: boolean;
   expiryDate: any | null;
   product: GiftCardList_giftCards_edges_node_product | null;
-  tag: string | null;
+  tags: GiftCardList_giftCards_edges_node_tags[] | null;
   usedBy: GiftCardList_giftCards_edges_node_usedBy | null;
   currentBalance: GiftCardList_giftCards_edges_node_currentBalance | null;
 }
@@ -57,6 +62,7 @@ export interface GiftCardList_giftCards_pageInfo {
 export interface GiftCardList_giftCards {
   __typename: "GiftCardCountableConnection";
   edges: GiftCardList_giftCards_edges[];
+  totalCount: number | null;
   pageInfo: GiftCardList_giftCards_pageInfo;
 }
 
@@ -70,4 +76,5 @@ export interface GiftCardListVariables {
   last?: number | null;
   before?: string | null;
   filter?: GiftCardFilterInput | null;
+  sort?: GiftCardSortingInput | null;
 }

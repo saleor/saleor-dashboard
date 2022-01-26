@@ -1,24 +1,28 @@
 import TextWithSelectField from "@saleor/components/TextWithSelectField";
-import { ChangeEvent } from "@saleor/hooks/useForm";
+import { ChangeEvent, FormChange } from "@saleor/hooks/useForm";
 import useLocalStorage from "@saleor/hooks/useLocalStorage";
 import { mapSingleValueNodeToChoice } from "@saleor/utils/maps";
 import * as React from "react";
 import { useEffect } from "react";
 import { useIntl } from "react-intl";
 
+import {
+  GiftCardBulkCreateFormErrors,
+  GiftCardCreateCommonFormData
+} from "../GiftCardBulkCreateDialog/types";
 import { getGiftCardErrorMessage } from "../GiftCardUpdate/messages";
-import { GiftCardCreateFormData } from "./GiftCardCreateDialogForm";
-import { giftCardCreateDialogMessages as messages } from "./messages";
+import { giftCardCreateMessages as messages } from "./messages";
 import { useChannelCurrencies } from "./queries";
-import { useGiftCardCreateDialogFormStyles as useStyles } from "./styles";
-import { GiftCardCreateFormCommonProps } from "./types";
+import { useGiftCardCreateFormStyles as useStyles } from "./styles";
 
-interface GiftCardCreateDialogMoneyInputProps
-  extends GiftCardCreateFormCommonProps {
-  set: (data: Partial<GiftCardCreateFormData>) => void;
+interface GiftCardCreateMoneyInputProps {
+  change: FormChange;
+  errors: GiftCardBulkCreateFormErrors;
+  data: Pick<GiftCardCreateCommonFormData, "balanceCurrency" | "balanceAmount">;
+  set: (data: Partial<GiftCardCreateCommonFormData>) => void;
 }
 
-const GiftCardCreateDialogMoneyInput: React.FC<GiftCardCreateDialogMoneyInputProps> = ({
+const GiftCardCreateMoneyInput: React.FC<GiftCardCreateMoneyInputProps> = ({
   errors,
   data: { balanceAmount, balanceCurrency },
   change,
@@ -32,7 +36,7 @@ const GiftCardCreateDialogMoneyInput: React.FC<GiftCardCreateDialogMoneyInputPro
   const { channelCurrencies } = channelCurrenciesData?.shop;
 
   const [savedCurrency, setCurrency] = useLocalStorage(
-    "giftCardCreateDialogCurrency",
+    "giftCardCreateCurrency",
     undefined
   );
 
@@ -67,7 +71,7 @@ const GiftCardCreateDialogMoneyInput: React.FC<GiftCardCreateDialogMoneyInputPro
       helperText={getGiftCardErrorMessage(errors?.balance, intl)}
       change={handleInputChange}
       choices={mapSingleValueNodeToChoice(channelCurrencies)}
-      containerClassName={classes.balanceContainer}
+      containerClassName={classes.fullWidthContainer}
       textFieldProps={{
         type: "float",
         label: intl.formatMessage(messages.amountLabel),
@@ -84,4 +88,4 @@ const GiftCardCreateDialogMoneyInput: React.FC<GiftCardCreateDialogMoneyInputPro
   );
 };
 
-export default GiftCardCreateDialogMoneyInput;
+export default GiftCardCreateMoneyInput;

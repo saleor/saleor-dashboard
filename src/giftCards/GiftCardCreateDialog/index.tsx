@@ -1,2 +1,2 @@
-export * from "./GiftCardCreateDialog";
-export { default } from "./GiftCardCreateDialog";
+export * from "./GiftCardCreateDialogContent";
+export { default } from "./GiftCardCreateDialogContent";

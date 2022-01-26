@@ -10,7 +10,7 @@ export function getGiftCardWithTag(tag, withCode = false) {
 export function getGiftCardsWithTag(first, tag, withCode = false) {
   const codeLine = getValueWithDefault(withCode, `code`);
   const query = `query{
-    giftCards(first: ${first}, filter: { tag: "${tag}"}){
+    giftCards(first: ${first}, filter: { tags: "${tag}"}){
       edges{
         node{
           ${codeLine}

@@ -13,6 +13,8 @@ import classNames from "classnames";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
+import { singleSelectFieldItemHeight } from "./consts";
+
 const useStyles = makeStyles(
   theme => ({
     formControl: {
@@ -26,6 +28,9 @@ const useStyles = makeStyles(
     },
     noLabel: {
       padding: theme.spacing(2, 1.5)
+    },
+    paper: {
+      maxHeight: `calc(${singleSelectFieldItemHeight}px * 10 + ${singleSelectFieldItemHeight}px * 0.5)`
     }
   }),
   { name: "SingleSelectField" }
@@ -111,6 +116,11 @@ export const SingleSelectField: React.FC<SingleSelectFieldProps> = props => {
           />
         }
         {...selectProps}
+        MenuProps={{
+          classes: {
+            paper: classes.paper
+          }
+        }}
       >
         {choices.length > 0 ? (
           choices.map(choice => (
