@@ -10,7 +10,7 @@ import React from "react";
 import SVG from "react-inlinesvg";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { getUserInitials, maybe } from "../../../misc";
+import { getUserInitials } from "../../../misc";
 import { StaffMemberDetails_user } from "../../types/StaffMemberDetails";
 
 const useStyles = makeStyles(
