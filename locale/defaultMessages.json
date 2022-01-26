@@ -7594,17 +7594,17 @@
     "context": "section header",
     "string": "Preferences"
   },
+  "src_dot_staff_dot_components_dot_StaffProperties_dot_1473195966": {
+    "context": "avatar change button",
+    "string": "Change"
+  },
   "src_dot_staff_dot_components_dot_StaffProperties_dot_2650522200": {
     "context": "section header",
     "string": "Staff Member Information"
   },
-  "src_dot_staff_dot_components_dot_StaffProperties_dot_2771097267": {
-    "context": "button",
-    "string": "Change photo"
-  },
-  "src_dot_staff_dot_components_dot_StaffProperties_dot_457748370": {
-    "context": "button",
-    "string": "Delete photo"
+  "src_dot_staff_dot_components_dot_StaffProperties_dot_3645414921": {
+    "context": "avatar delete button",
+    "string": "Delete"
   },
   "src_dot_staff_dot_components_dot_UserStatus_dot_userDisableInstruction": {
     "string": "If you want to disable this User please uncheck the box below."
