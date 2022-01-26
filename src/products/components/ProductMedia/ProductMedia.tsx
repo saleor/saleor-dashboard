@@ -229,7 +229,7 @@ const ProductMedia: React.FC<ProductMediaProps> = props => {
               onClick={() => setPopperOpenStatus(true)}
               variant="tertiary"
               data-test="button-upload-image"
-              ref={anchor}
+              innerRef={anchor}
             >
               {intl.formatMessage(messages.upload)}
             </Button>
