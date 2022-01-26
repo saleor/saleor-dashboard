@@ -1,5 +1,8 @@
 import { VOUCHERS_SELECTORS } from "../../../elements/discounts/vouchers";
 import { BUTTON_SELECTORS } from "../../../elements/shared/button-selectors";
+import { urlList } from "../../../fixtures/urlList";
+import { ONE_PERMISSION_USERS } from "../../../fixtures/users";
+import { createCheckoutWithVoucher } from "../../api/utils/ordersUtils";
 import { selectChannelInDetailsPages } from "../channelsPage";
 
 export const discountOptions = {
@@ -26,4 +29,27 @@ export function createVoucher({
   cy.get(BUTTON_SELECTORS.confirm)
     .click()
     .confirmationMessageShouldDisappear();
+}
+
+export function loginAndCreateCheckoutForVoucherWithDiscount({
+  discount,
+  voucherValue,
+  voucherCode,
+  channelName,
+  dataForCheckout
+}) {
+  cy.clearSessionData()
+    .loginUserViaRequest("auth", ONE_PERMISSION_USERS.discount)
+    .visit(urlList.vouchers);
+  cy.softExpectSkeletonIsVisible();
+  createVoucher({
+    voucherCode,
+    voucherValue,
+    discountOption: discount,
+    channelName
+  });
+  dataForCheckout.voucherCode = voucherCode;
+  return createCheckoutWithVoucher(dataForCheckout).its(
+    "addPromoCodeResp.checkout.totalPrice.gross.amount"
+  );
 }

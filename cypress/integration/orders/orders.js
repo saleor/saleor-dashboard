@@ -68,7 +68,7 @@ filterTests({ definedTags: ["all"] }, () => {
           );
         })
         .then(customerResp => {
-          customer = customerResp.body.data.customerCreate.user;
+          customer = customerResp.user;
           createShipping({
             channelId: defaultChannel.id,
             name: randomName,

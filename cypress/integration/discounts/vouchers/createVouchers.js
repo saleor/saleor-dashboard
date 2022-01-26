@@ -21,7 +21,8 @@ import * as productsUtils from "../../../support/api/utils/products/productsUtil
 import filterTests from "../../../support/filterTests";
 import {
   createVoucher,
-  discountOptions
+  discountOptions,
+  loginAndCreateCheckoutForVoucherWithDiscount
 } from "../../../support/pages/discounts/vouchersPage";
 
 filterTests({ definedTags: ["all"] }, () => {
@@ -80,11 +81,13 @@ filterTests({ definedTags: ["all"] }, () => {
         (productPrice * voucherValue) / 100 + shippingPrice;
       let checkout;
 
-      loginAndCreateCheckoutForVoucherWithDiscount(
-        discountOptions.PERCENTAGE,
+      loginAndCreateCheckoutForVoucherWithDiscount({
+        discount: discountOptions.PERCENTAGE,
         voucherValue,
-        voucherCode
-      )
+        voucherCode,
+        channelName: defaultChannel.name,
+        dataForCheckout
+      })
         .then(amount => {
           expect(amount).to.be.eq(expectedAmount);
           dataForCheckout.voucherCode = voucherCode;
@@ -111,11 +114,13 @@ filterTests({ definedTags: ["all"] }, () => {
       const expectedAmount = productPrice + shippingPrice - voucherValue;
       let checkout;
 
-      loginAndCreateCheckoutForVoucherWithDiscount(
-        discountOptions.FIXED,
+      loginAndCreateCheckoutForVoucherWithDiscount({
+        discount: discountOptions.FIXED,
         voucherValue,
-        voucherCode
-      )
+        voucherCode,
+        channelName: defaultChannel.name,
+        dataForCheckout
+      })
         .then(amount => {
           expect(amount).to.be.eq(expectedAmount);
           dataForCheckout.voucherCode = voucherCode;
@@ -141,11 +146,12 @@ filterTests({ definedTags: ["all"] }, () => {
       const expectedAmount = productPrice;
       let checkout;
 
-      loginAndCreateCheckoutForVoucherWithDiscount(
-        discountOptions.SHIPPING,
-        null,
-        voucherCode
-      )
+      loginAndCreateCheckoutForVoucherWithDiscount({
+        discount: discountOptions.SHIPPING,
+        voucherCode,
+        channelName: defaultChannel.name,
+        dataForCheckout
+      })
         .then(amount => {
           expect(amount).to.be.eq(expectedAmount);
           dataForCheckout.voucherCode = voucherCode;
@@ -188,69 +194,5 @@ filterTests({ definedTags: ["all"] }, () => {
         }
       );
     });
-
-    it("should delete voucher", () => {
-      const name = `${startsWith}${faker.datatype.number()}`;
-      const voucherValue = 50;
-
-      let voucher;
-
-      cy.clearSessionData().loginUserViaRequest();
-      createVoucherInChannel({
-        name,
-        productId: product.id,
-        channelId: defaultChannel.id,
-        value: voucherValue
-      })
-        .then(voucherResp => {
-          voucher = voucherResp;
-          expect(voucher.id).to.be.ok;
-          cy.visit(voucherDetailsUrl(voucher.id))
-            .addAliasToGraphRequest("VoucherDelete")
-            .get(BUTTON_SELECTORS.deleteButton)
-            .click()
-            .get(BUTTON_SELECTORS.submit)
-            .click()
-            .wait("@VoucherDelete");
-          dataForCheckout.voucherCode = voucherCode;
-          createCheckoutWithVoucher(dataForCheckout);
-        })
-        .then(({ addPromoCodeResp }) => {
-          const errorField = addPromoCodeResp.checkoutErrors[0].field;
-          expect(errorField).to.be.eq("promoCode");
-        });
-    });
-
-    function createCheckoutForCreatedVoucher(voucherCode) {
-      return createCheckoutWithVoucher({
-        channelSlug: defaultChannel.slug,
-        variantsList: variants,
-        address,
-        shippingMethodName: shippingMethod.name,
-        voucherCode,
-        auth: "token"
-      });
-    }
-
-    function loginAndCreateCheckoutForVoucherWithDiscount(
-      discount,
-      voucherValue,
-      voucherCode
-    ) {
-      cy.clearSessionData()
-        .loginUserViaRequest("auth", ONE_PERMISSION_USERS.discount)
-        .visit(urlList.vouchers);
-      cy.softExpectSkeletonIsVisible();
-      createVoucher({
-        voucherCode,
-        voucherValue,
-        discountOption: discount,
-        channelName: defaultChannel.name
-      });
-      dataForCheckout.voucherCode = voucherCode;
-      return createCheckoutWithVoucher(dataForCheckout).its(
-        "addPromoCodeResp.checkout.totalPrice.gross.amount"
-      );
-    }
   });
 });

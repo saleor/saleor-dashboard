@@ -216,7 +216,7 @@ const MultiAutocompleteSelectFieldContent: React.FC<MultiAutocompleteSelectField
                 {...getItemProps({
                   item: inputValue
                 })}
-                data-test="multiautocomplete-select-option-add"
+                data-test-id="multiautocomplete-select-option-add"
                 onClick={add.onClick}
               >
                 <AddIcon color="primary" className={classes.addIcon} />
@@ -231,7 +231,7 @@ const MultiAutocompleteSelectFieldContent: React.FC<MultiAutocompleteSelectField
                 {...getItemProps({
                   item: inputValue
                 })}
-                data-test="multiautocomplete-select-option"
+                data-test-id="multiautocomplete-select-option"
               >
                 <AddIcon className={classes.addIcon} color="primary" />
                 <FormattedMessage
@@ -255,7 +255,7 @@ const MultiAutocompleteSelectFieldContent: React.FC<MultiAutocompleteSelectField
                 {...getItemProps({
                   item: value.value
                 })}
-                data-test="multiautocomplete-select-option"
+                data-test-id="multiautocomplete-select-option"
               >
                 <Checkbox
                   className={classes.checkbox}
@@ -288,7 +288,7 @@ const MultiAutocompleteSelectFieldContent: React.FC<MultiAutocompleteSelectField
                     index: choiceIndex,
                     item: suggestion.value
                   })}
-                  data-test="multiautocomplete-select-option"
+                  data-test-id="multiautocomplete-select-option"
                 >
                   <Checkbox
                     checked={false}
