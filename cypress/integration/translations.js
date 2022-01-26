@@ -1,5 +1,5 @@
 /// <reference types="cypress"/>
-/// <reference types="../../support"/>
+/// <reference types="../support"/>
 
 import faker from "faker";
 
@@ -7,10 +7,10 @@ import {
   createCategory,
   getCategory,
   updateCategoryTranslation
-} from "../../support/api/requests/Category";
-import { deleteCategoriesStartsWith } from "../../support/api/utils/catalog/categoryUtils";
-import filterTests from "../../support/filterTests";
-import { updateTranslationToCategory } from "../../support/pages/translationsPage";
+} from "../support/api/requests/Category";
+import { deleteCategoriesStartsWith } from "../support/api/utils/catalog/categoryUtils";
+import filterTests from "../support/filterTests";
+import { updateTranslationToCategory } from "../support/pages/translationsPage";
 
 filterTests({ definedTags: ["all"], version: "3.0.0" }, () => {
   describe("As an admin I want to manage translations", () => {
