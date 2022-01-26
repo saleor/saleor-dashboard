@@ -1,53 +1,79 @@
 import { defineMessages } from "react-intl";
 
-export const giftCardCreateDialogMessages = defineMessages({
+export const giftCardCreateMessages = defineMessages({
   title: {
     defaultMessage: "Issue gift card",
-    description: "GiftCardCreateDialog title"
+    description: "issue gift card dialog title"
   },
   amountLabel: {
     defaultMessage: "Enter amount",
-    description: "GiftCardCreateDialog amount label"
+    description: "money amount input label"
   },
   issueButtonLabel: {
     defaultMessage: "Issue",
-    description: "GiftCardCreateDialog issue button label"
+    description: "issue gift card button label"
   },
   customerLabel: {
     defaultMessage: "Customer",
-    description: "GiftCardCreateDialog customer label"
+    description: "customer input label"
   },
   noteLabel: {
     defaultMessage: "Note",
-    description: "GiftCardCreateDialog note label"
+    description: "note input label"
   },
   noteSubtitle: {
     defaultMessage:
       "Why was this gift card issued. This note will not be shown to the customer. Note will be stored in gift card history",
-    description: "GiftCardCreateDialog note subtitle"
+    description: "note input subtitle"
   },
   createdGiftCardLabel: {
     defaultMessage: "This is the code of a created gift card:",
-    description: "GiftCardCreateDialog created gift card label"
+    description: "created gift card code label"
   },
   copyCodeLabel: {
     defaultMessage: "Copy code",
-    description: "GiftCardCreateDialog copy code label"
+    description: "copy code button label"
   },
   copiedToClipboardTitle: {
     defaultMessage: "Copied to clipboard",
-    description: "GiftCardCreateDialog copied to clipboard title"
+    description: "copied to clipboard alert title"
   },
   createdSuccessAlertTitle: {
     defaultMessage: "Successfully created gift card",
-    description: "GiftCardCreateDialog createdSuccessAlertTitle"
+    description: "successfully created gift card alert title"
   },
   requiresActivationLabel: {
     defaultMessage: "Requires activation",
-    description: "GiftCarUpdateDetailsExpirySection requires activation label"
+    description: "requires activation checkbox label"
   },
   requiresActivationCaption: {
     defaultMessage: "All issued cards require activation by staff before use.",
-    description: "GiftCarUpdateDetailsExpirySection requires activation caption"
+    description: "requires activation checkbox caption"
+  },
+  giftCardsAmountLabel: {
+    defaultMessage: "Cards Issued",
+    description: "issued cards amount label"
+  },
+  bulkCreateExplanation: {
+    defaultMessage:
+      "After creation Saleor will create a list of gift card codes that you will be able to download. ",
+    description: "gift card bulk create modal bottom explanation"
+  },
+  bulkCreateIssuedTitle: {
+    defaultMessage: "Bulk Issue Gift Cards",
+    description: "gift card bulk create success dialog title"
+  },
+  bulkCreateIssuedExplanation: {
+    defaultMessage:
+      "We have issued all of your requested gift cards. You can download the list of new gift cards using the button below.",
+    description: "gift card bulk create success dialog content"
+  },
+  bulkCreateIssuedAccept: {
+    defaultMessage: "Ok",
+    description: "gift card bulk create success dialog accept button"
+  },
+  bulkCreateIssuedExportToEmail: {
+    defaultMessage: "Export To Email",
+    description: "gift card bulk create success dialog export button"
   }
 });

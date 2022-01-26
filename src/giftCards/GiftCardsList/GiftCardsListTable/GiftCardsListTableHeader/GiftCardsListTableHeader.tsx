@@ -1,34 +1,52 @@
 import { TableCell } from "@material-ui/core";
 import DeleteIconButton from "@saleor/components/DeleteIconButton";
 import TableCellHeader, {
+  TableCellHeaderArrowDirection,
   TableCellHeaderProps
 } from "@saleor/components/TableCellHeader";
 import TableHead from "@saleor/components/TableHead";
 import Label, {
   LabelSizes
 } from "@saleor/orders/components/OrderHistory/Label";
+import { getArrowDirection } from "@saleor/utils/sort";
 import React from "react";
 import { MessageDescriptor, useIntl } from "react-intl";
 
 import { giftCardsListTableMessages as messages } from "../../messages";
 import useGiftCardListDialogs from "../../providers/GiftCardListDialogsProvider/hooks/useGiftCardListDialogs";
+import useGiftCardListSort from "../../providers/GiftCardListDialogsProvider/hooks/useGiftCardListSort";
 import useGiftCardList from "../../providers/GiftCardListProvider/hooks/useGiftCardList";
 import useGiftCardListBulkActions from "../../providers/GiftCardListProvider/hooks/useGiftCardListBulkActions";
+import { canBeSorted } from "../../sort";
 import { useTableStyles as useStyles } from "../../styles";
+import { GiftCardUrlSortField } from "../../types";
 import BulkEnableDisableSection from "./BulkEnableDisableSection";
 
 interface HeaderItem {
   title?: MessageDescriptor;
   options?: TableCellHeaderProps;
+  onClick?: () => void;
+  direction?: TableCellHeaderArrowDirection;
+  canBeSorted?: boolean;
 }
 
-const GiftCardsListTableHeader: React.FC = () => {
+interface GiftCardsListTableHeaderProps {
+  isCurrencySelected: boolean;
+}
+
+const GiftCardsListTableHeader: React.FC<GiftCardsListTableHeaderProps> = ({
+  isCurrencySelected
+}) => {
   const intl = useIntl();
   const classes = useStyles({});
 
   const { giftCards, numberOfColumns, loading } = useGiftCardList();
   const { toggleAll, listElements } = useGiftCardListBulkActions();
   const { openDeleteDialog } = useGiftCardListDialogs();
+  const { onSort, sort } = useGiftCardListSort();
+
+  const getDirection = (sortField: GiftCardUrlSortField) =>
+    sort.sort === sortField ? getArrowDirection(sort.asc) : undefined;
 
   const headerItems: HeaderItem[] = [
     {
@@ -42,17 +60,24 @@ const GiftCardsListTableHeader: React.FC = () => {
       title: messages.giftCardsTableColumnTagTitle
     },
     {
-      title: messages.giftCardsTableColumnProductTitle
+      title: messages.giftCardsTableColumnProductTitle,
+      onClick: () => onSort(GiftCardUrlSortField.product),
+      direction: getDirection(GiftCardUrlSortField.product)
     },
     {
-      title: messages.giftCardsTableColumnCustomerTitle
+      title: messages.giftCardsTableColumnCustomerTitle,
+      onClick: () => onSort(GiftCardUrlSortField.usedBy),
+      direction: getDirection(GiftCardUrlSortField.usedBy)
     },
     {
       title: messages.giftCardsTableColumnBalanceTitle,
       options: {
         className: classes.colBalance,
         textAlign: "right"
-      }
+      },
+      onClick: () => onSort(GiftCardUrlSortField.balance),
+      direction: getDirection(GiftCardUrlSortField.balance),
+      canBeSorted: canBeSorted(GiftCardUrlSortField.balance, isCurrencySelected)
     }
   ];
 
@@ -76,15 +101,22 @@ const GiftCardsListTableHeader: React.FC = () => {
         toolbar={
           <>
             <BulkEnableDisableSection />
-            <DeleteIconButton onClick={openDeleteDialog} />
+            <DeleteIconButton onClick={() => openDeleteDialog()} />
           </>
         }
       >
-        {headerItems.map(({ title, options }) => (
-          <TableCellHeader {...options}>
-            <Label text={intl.formatMessage(title)} size={LabelSizes.md} />
-          </TableCellHeader>
-        ))}
+        {headerItems.map(
+          ({ title, options, onClick, direction, canBeSorted = true }) => (
+            <TableCellHeader
+              {...options}
+              onClick={onClick}
+              disabled={!canBeSorted}
+              direction={direction}
+            >
+              <Label text={intl.formatMessage(title)} size={LabelSizes.md} />
+            </TableCellHeader>
+          )
+        )}
         <TableCell className={classes.colDelete} />
       </TableHead>
     </>

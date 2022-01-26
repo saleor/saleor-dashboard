@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { GiftCardUpdateInput, GiftCardErrorCode } from "./../../../types/globalTypes";
+import { GiftCardUpdateInput, GiftCardErrorCode, GiftCardEventsEnum } from "./../../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: GiftCardUpdate
@@ -65,11 +65,79 @@ export interface GiftCardUpdate_giftCardUpdate_giftCard_currentBalance {
   currency: string;
 }
 
+export interface GiftCardUpdate_giftCardUpdate_giftCard_tags {
+  __typename: "GiftCardTag";
+  name: string;
+}
+
+export interface GiftCardUpdate_giftCardUpdate_giftCard_events_user {
+  __typename: "User";
+  id: string;
+  firstName: string;
+  lastName: string;
+}
+
+export interface GiftCardUpdate_giftCardUpdate_giftCard_events_app {
+  __typename: "App";
+  id: string;
+  name: string | null;
+}
+
+export interface GiftCardUpdate_giftCardUpdate_giftCard_events_balance_initialBalance {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface GiftCardUpdate_giftCardUpdate_giftCard_events_balance_currentBalance {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface GiftCardUpdate_giftCardUpdate_giftCard_events_balance_oldInitialBalance {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface GiftCardUpdate_giftCardUpdate_giftCard_events_balance_oldCurrentBalance {
+  __typename: "Money";
+  amount: number;
+  currency: string;
+}
+
+export interface GiftCardUpdate_giftCardUpdate_giftCard_events_balance {
+  __typename: "GiftCardEventBalance";
+  initialBalance: GiftCardUpdate_giftCardUpdate_giftCard_events_balance_initialBalance | null;
+  currentBalance: GiftCardUpdate_giftCardUpdate_giftCard_events_balance_currentBalance;
+  oldInitialBalance: GiftCardUpdate_giftCardUpdate_giftCard_events_balance_oldInitialBalance | null;
+  oldCurrentBalance: GiftCardUpdate_giftCardUpdate_giftCard_events_balance_oldCurrentBalance | null;
+}
+
+export interface GiftCardUpdate_giftCardUpdate_giftCard_events {
+  __typename: "GiftCardEvent";
+  expiryDate: any | null;
+  oldExpiryDate: any | null;
+  id: string;
+  date: any | null;
+  type: GiftCardEventsEnum | null;
+  user: GiftCardUpdate_giftCardUpdate_giftCard_events_user | null;
+  app: GiftCardUpdate_giftCardUpdate_giftCard_events_app | null;
+  message: string | null;
+  email: string | null;
+  orderId: string | null;
+  orderNumber: string | null;
+  tags: string[] | null;
+  oldTags: string[] | null;
+  balance: GiftCardUpdate_giftCardUpdate_giftCard_events_balance | null;
+}
+
 export interface GiftCardUpdate_giftCardUpdate_giftCard {
   __typename: "GiftCard";
   metadata: (GiftCardUpdate_giftCardUpdate_giftCard_metadata | null)[];
   privateMetadata: (GiftCardUpdate_giftCardUpdate_giftCard_privateMetadata | null)[];
-  displayCode: string;
+  last4CodeChars: string;
   boughtInChannel: string | null;
   createdBy: GiftCardUpdate_giftCardUpdate_giftCard_createdBy | null;
   product: GiftCardUpdate_giftCardUpdate_giftCard_product | null;
@@ -84,7 +152,8 @@ export interface GiftCardUpdate_giftCardUpdate_giftCard {
   initialBalance: GiftCardUpdate_giftCardUpdate_giftCard_initialBalance | null;
   currentBalance: GiftCardUpdate_giftCardUpdate_giftCard_currentBalance | null;
   id: string;
-  tag: string | null;
+  tags: GiftCardUpdate_giftCardUpdate_giftCard_tags[] | null;
+  events: GiftCardUpdate_giftCardUpdate_giftCard_events[];
 }
 
 export interface GiftCardUpdate_giftCardUpdate {

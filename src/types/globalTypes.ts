@@ -504,7 +504,7 @@ export enum GiftCardEventsEnum {
   NOTE_ADDED = "NOTE_ADDED",
   RESENT = "RESENT",
   SENT_TO_CUSTOMER = "SENT_TO_CUSTOMER",
-  TAG_UPDATED = "TAG_UPDATED",
+  TAGS_UPDATED = "TAGS_UPDATED",
   UPDATED = "UPDATED",
   USED_IN_ORDER = "USED_IN_ORDER",
 }
@@ -518,6 +518,13 @@ export enum GiftCardSettingsErrorCode {
 export enum GiftCardSettingsExpiryTypeEnum {
   EXPIRY_PERIOD = "EXPIRY_PERIOD",
   NEVER_EXPIRE = "NEVER_EXPIRE",
+}
+
+export enum GiftCardSortField {
+  CURRENT_BALANCE = "CURRENT_BALANCE",
+  PRODUCT = "PRODUCT",
+  TAG = "TAG",
+  USED_BY = "USED_BY",
 }
 
 export enum InvoiceErrorCode {
@@ -1822,6 +1829,9 @@ export enum WebhookEventTypeAsyncEnum {
   ANY_EVENTS = "ANY_EVENTS",
   CHECKOUT_CREATED = "CHECKOUT_CREATED",
   CHECKOUT_UPDATED = "CHECKOUT_UPDATED",
+  COLLECTION_CREATED = "COLLECTION_CREATED",
+  COLLECTION_DELETED = "COLLECTION_DELETED",
+  COLLECTION_UPDATED = "COLLECTION_UPDATED",
   CUSTOMER_CREATED = "CUSTOMER_CREATED",
   CUSTOMER_UPDATED = "CUSTOMER_UPDATED",
   DRAFT_ORDER_CREATED = "DRAFT_ORDER_CREATED",
@@ -1862,6 +1872,9 @@ export enum WebhookEventTypeEnum {
   CHECKOUT_CREATED = "CHECKOUT_CREATED",
   CHECKOUT_FILTER_SHIPPING_METHODS = "CHECKOUT_FILTER_SHIPPING_METHODS",
   CHECKOUT_UPDATED = "CHECKOUT_UPDATED",
+  COLLECTION_CREATED = "COLLECTION_CREATED",
+  COLLECTION_DELETED = "COLLECTION_DELETED",
+  COLLECTION_UPDATED = "COLLECTION_UPDATED",
   CUSTOMER_CREATED = "CUSTOMER_CREATED",
   CUSTOMER_UPDATED = "CUSTOMER_UPDATED",
   DRAFT_ORDER_CREATED = "DRAFT_ORDER_CREATED",
@@ -2227,6 +2240,13 @@ export interface DraftOrderInput {
   redirectUrl?: string | null;
 }
 
+export interface ExportGiftCardsInput {
+  scope: ExportScope;
+  filter?: GiftCardFilterInput | null;
+  ids?: string[] | null;
+  fileType: FileTypesEnum;
+}
+
 export interface ExportInfoInput {
   attributes?: string[] | null;
   warehouses?: string[] | null;
@@ -2251,8 +2271,20 @@ export interface FulfillmentUpdateTrackingInput {
   notifyCustomer?: boolean | null;
 }
 
+export interface GiftCardAddNoteInput {
+  message: string;
+}
+
+export interface GiftCardBulkCreateInput {
+  count: number;
+  balance: PriceInput;
+  tags?: string[] | null;
+  expiryDate?: any | null;
+  isActive: boolean;
+}
+
 export interface GiftCardCreateInput {
-  tag?: string | null;
+  addTags?: string[] | null;
   expiryDate?: any | null;
   startDate?: any | null;
   endDate?: any | null;
@@ -2267,7 +2299,6 @@ export interface GiftCardCreateInput {
 export interface GiftCardFilterInput {
   isActive?: boolean | null;
   metadata?: (MetadataFilter | null)[] | null;
-  tag?: string | null;
   tags?: (string | null)[] | null;
   products?: (string | null)[] | null;
   usedBy?: (string | null)[] | null;
@@ -2288,8 +2319,14 @@ export interface GiftCardSettingsUpdateInput {
   expiryPeriod?: TimePeriodInputType | null;
 }
 
+export interface GiftCardSortingInput {
+  direction: OrderDirection;
+  field: GiftCardSortField;
+}
+
 export interface GiftCardUpdateInput {
-  tag?: string | null;
+  addTags?: string[] | null;
+  removeTags?: string[] | null;
   expiryDate?: any | null;
   startDate?: any | null;
   endDate?: any | null;
@@ -2379,6 +2416,8 @@ export interface OrderFilterInput {
   isClickAndCollect?: boolean | null;
   isPreorder?: boolean | null;
   ids?: (string | null)[] | null;
+  giftCardUsed?: boolean | null;
+  giftCardBought?: boolean | null;
 }
 
 export interface OrderFulfillInput {

@@ -472,6 +472,7 @@ export const product: (
         id: "isdugfhud",
         name: "Attachment",
         inputType: AttributeInputTypeEnum.DROPDOWN,
+        valueRequired: false,
         unit: null,
         choices: {
           __typename: "AttributeValueCountableConnection",
@@ -512,6 +513,7 @@ export const product: (
         id: "pta18161",
         name: "Color",
         inputType: AttributeInputTypeEnum.DROPDOWN,
+        valueRequired: false,
         unit: null,
         choices: {
           __typename: "AttributeValueCountableConnection",

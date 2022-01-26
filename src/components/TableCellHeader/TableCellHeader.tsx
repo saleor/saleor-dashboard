@@ -25,7 +25,8 @@ const useStyles = makeStyles(
     },
     label: {
       alignSelf: "center",
-      display: "inline-block"
+      display: "inline-block",
+      userSelect: "none"
     },
     labelContainer: {
       "&:hover": {
@@ -45,6 +46,9 @@ const useStyles = makeStyles(
     },
     root: {
       cursor: "pointer"
+    },
+    notSortable: {
+      cursor: "unset"
     }
   }),
   { name: "TableCellHeader" }
@@ -69,6 +73,7 @@ const TableCellHeader: React.FC<TableCellHeaderProps> = props => {
     textAlign,
     disabled = false,
     onClick,
+    title,
     ...rest
   } = props;
 
@@ -76,12 +81,15 @@ const TableCellHeader: React.FC<TableCellHeaderProps> = props => {
     <TableCell
       {...rest}
       onClick={e => {
-        if (!disabled) {
+        if (disabled || !onClick) {
+          e.preventDefault();
+        } else {
           onClick(e);
         }
       }}
       className={classNames(classes.root, className, {
-        [classes.disabled]: disabled
+        [classes.disabled]: disabled,
+        [classes.notSortable]: !onClick
       })}
     >
       <div

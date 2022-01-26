@@ -57,11 +57,16 @@ export interface GiftCardData_currentBalance {
   currency: string;
 }
 
+export interface GiftCardData_tags {
+  __typename: "GiftCardTag";
+  name: string;
+}
+
 export interface GiftCardData {
   __typename: "GiftCard";
   metadata: (GiftCardData_metadata | null)[];
   privateMetadata: (GiftCardData_privateMetadata | null)[];
-  displayCode: string;
+  last4CodeChars: string;
   boughtInChannel: string | null;
   createdBy: GiftCardData_createdBy | null;
   product: GiftCardData_product | null;
@@ -76,5 +81,5 @@ export interface GiftCardData {
   initialBalance: GiftCardData_initialBalance | null;
   currentBalance: GiftCardData_currentBalance | null;
   id: string;
-  tag: string | null;
+  tags: GiftCardData_tags[] | null;
 }

@@ -1,9 +1,11 @@
 import { ThemeType } from "@saleor/macaw-ui";
+import uniqBy from "lodash/uniqBy";
 import moment from "moment-timezone";
 import { MutationFunction, MutationResult } from "react-apollo";
 import { IntlShape } from "react-intl";
 
 import { ConfirmButtonTransitionState } from "./components/ConfirmButton";
+import { MultiAutocompleteChoiceType } from "./components/MultiAutocompleteSelectField";
 import { StatusType } from "./components/StatusChip/types";
 import { StatusLabelProps } from "./components/StatusLabel";
 import { AddressType, AddressTypeInput } from "./customers/types";
@@ -340,6 +342,10 @@ export function generateCode(charNum: number) {
   return result;
 }
 
+export function isInEnum<TEnum extends {}>(needle: string, haystack: TEnum) {
+  return Object.keys(haystack).includes(needle);
+}
+
 export function findInEnum<TEnum extends {}>(needle: string, haystack: TEnum) {
   const match = Object.keys(haystack).find(key => key === needle);
   if (!!match) {
@@ -469,3 +475,8 @@ export function PromiseQueue() {
 
   return { queue, add };
 }
+
+export const combinedMultiAutocompleteChoices = (
+  selected: MultiAutocompleteChoiceType[],
+  choices: MultiAutocompleteChoiceType[]
+) => uniqBy([...selected, ...choices], "value");

@@ -187,7 +187,7 @@ const SingleAutocompleteSelectFieldComponent: React.FC<SingleAutocompleteSelectF
               error,
               id: undefined,
               onBlur: handleBlur,
-              onClick: toggleMenu,
+              onClick: !disabled && toggleMenu,
               onFocus: () => {
                 if (fetchOnFocus) {
                   fetchChoices(inputValue);

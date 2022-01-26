@@ -15,7 +15,7 @@ const Label: React.FC<LabelProps> = ({ text, size = 12 }) => (
   <Typography
     variant="caption"
     color="textSecondary"
-    style={{ fontSize: LabelSizes[size] }}
+    style={{ fontSize: size }}
   >
     {text}
   </Typography>

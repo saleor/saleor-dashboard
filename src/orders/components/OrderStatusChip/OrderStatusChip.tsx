@@ -1,14 +1,14 @@
-import PageTitleWithStatusChip from "@saleor/components/PageTitleWithStatusChip";
+import StatusChip from "@saleor/components/StatusChip";
 import { transformOrderStatus } from "@saleor/misc";
 import { OrderDetails_order } from "@saleor/orders/types/OrderDetails";
 import React from "react";
 import { useIntl } from "react-intl";
 
-interface TitleProps {
+interface OrderStatusChipProps {
   order?: OrderDetails_order;
 }
 
-const Title: React.FC<TitleProps> = ({ order }) => {
+const OrderStatusChip: React.FC<OrderStatusChipProps> = ({ order }) => {
   const intl = useIntl();
 
   if (!order) {
@@ -17,13 +17,7 @@ const Title: React.FC<TitleProps> = ({ order }) => {
 
   const { localized, status } = transformOrderStatus(order.status, intl);
 
-  return (
-    <PageTitleWithStatusChip
-      title={order?.number}
-      statusLabel={localized}
-      statusType={status}
-    />
-  );
+  return <StatusChip size="md" status={status} label={localized} />;
 };
 
-export default Title;
+export default OrderStatusChip;
