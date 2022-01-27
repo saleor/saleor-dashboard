@@ -2,8 +2,8 @@ import StatusLabel from "@saleor/components/StatusLabel";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
-import CardDecorator from "../../CardDecorator";
-import Decorator from "../../Decorator";
+import CardDecorator from "../../storybook/CardDecorator";
+import Decorator from "../../storybook/Decorator";
 
 storiesOf("Generics / StatusLabel", module)
   .addDecorator(CardDecorator)
@@ -11,9 +11,7 @@ storiesOf("Generics / StatusLabel", module)
   .add("when success", () => (
     <StatusLabel label="Example label" status="success" />
   ))
-  .add("when neutral", () => (
-    <StatusLabel label="Example label" status="neutral" />
-  ))
+  .add("when info", () => <StatusLabel label="Example label" status="info" />)
   .add("when error", () => (
     <StatusLabel label="Example label" status="error" />
   ));

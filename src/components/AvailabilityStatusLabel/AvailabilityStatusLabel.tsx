@@ -23,7 +23,7 @@ export const AvailabilityStatusLabel = ({ channel, messages }) => {
         channel.publicationDate
           ? channel.isPublished
             ? "success"
-            : "alert"
+            : "warning"
           : "error"
       }
     />

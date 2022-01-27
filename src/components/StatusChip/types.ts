@@ -1,6 +1,6 @@
 export enum StatusType {
-  NEUTRAL = "neutral",
+  INFO = "info",
   ERROR = "error",
-  ALERT = "alert",
+  WARNING = "warning",
   SUCCESS = "success"
 }

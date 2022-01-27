@@ -70,17 +70,17 @@ const selectStatus = (status: CardTitleStatus) => {
     case FulfillmentStatus.FULFILLED:
       return StatusType.SUCCESS;
     case FulfillmentStatus.REFUNDED:
-      return StatusType.NEUTRAL;
+      return StatusType.INFO;
     case FulfillmentStatus.RETURNED:
-      return StatusType.NEUTRAL;
+      return StatusType.INFO;
     case FulfillmentStatus.REPLACED:
-      return StatusType.NEUTRAL;
+      return StatusType.INFO;
     case FulfillmentStatus.REFUNDED_AND_RETURNED:
-      return StatusType.NEUTRAL;
+      return StatusType.INFO;
     case FulfillmentStatus.CANCELED:
       return StatusType.ERROR;
     default:
-      return StatusType.ALERT;
+      return StatusType.WARNING;
   }
 };
 

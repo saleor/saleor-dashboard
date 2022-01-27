@@ -1,7 +1,7 @@
 import { Typography } from "@material-ui/core";
 import grey from "@material-ui/core/colors/grey";
 import yellow from "@material-ui/core/colors/yellow";
-import { makeStyles } from "@saleor/macaw-ui";
+import { makeStyles, Pill } from "@saleor/macaw-ui";
 import Label from "@saleor/orders/components/OrderHistory/Label";
 import classNames from "classnames";
 import React from "react";
@@ -60,7 +60,7 @@ export const useStyles = makeStyles(
 
 export interface StatusLabelProps {
   label: string | React.ReactNode;
-  status: "success" | "alert" | "neutral" | "error" | undefined;
+  status: "success" | "warning" | "info" | "error" | undefined;
   subtitle?: string;
   className?: string;
 }
@@ -73,29 +73,7 @@ const StatusLabel: React.FC<StatusLabelProps> = ({
 }) => {
   const classes = useStyles({});
 
-  return (
-    <div
-      className={classNames({
-        [classes.container]: true,
-        [classes.containerVertical]: !!subtitle
-      })}
-    >
-      <div
-        className={classNames({
-          [className]: true,
-          [classes.dotVertical]: !!subtitle,
-          [classes.successDot]: status === "success",
-          [classes.alertDot]: status === "alert",
-          [classes.neutralDot]: status === "neutral",
-          [classes.errorDot]: status === "error"
-        })}
-      ></div>
-      <div className={classes.textContainer}>
-        <Typography>{label}</Typography>
-        {subtitle && <Label text={subtitle} />}
-      </div>
-    </div>
-  );
+  return <Pill color={status} label={label} />;
 };
 
 export default StatusLabel;
