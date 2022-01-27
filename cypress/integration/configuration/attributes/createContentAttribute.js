@@ -16,7 +16,7 @@ import filterTests from "../../../support/filterTests";
 import { createAttributeWithInputType } from "../../../support/pages/attributesPage";
 
 filterTests({ definedTags: ["all"] }, () => {
-  describe("Create content attribute", () => {
+  describe("As an admin I want to create content attribute", () => {
     const startsWith = "AttrCont";
     const attributesTypes = [
       "DROPDOWN",
@@ -50,7 +50,7 @@ filterTests({ definedTags: ["all"] }, () => {
     });
 
     attributesTypes.forEach(attributeType => {
-      it(`should create ${attributeType} attribute`, () => {
+      it(`Admin should be able to create ${attributeType} attribute`, () => {
         const attributeName = `${startsWith}${faker.datatype.number()}`;
         createAttributeWithInputType({ name: attributeName, attributeType })
           .then(({ attribute }) => {
@@ -66,7 +66,7 @@ filterTests({ definedTags: ["all"] }, () => {
     });
 
     attributeReferenceType.forEach(entityType => {
-      it(`should create reference ${entityType} attribute`, () => {
+      it(`Admin should be able to create reference to ${entityType} attribute`, () => {
         const attributeType = "REFERENCE";
         const attributeName = `${startsWith}${faker.datatype.number()}`;
         createAttributeWithInputType({
@@ -88,7 +88,7 @@ filterTests({ definedTags: ["all"] }, () => {
     });
 
     attributeNumericType.forEach(numericSystemType => {
-      it(`should create numeric attribute - ${numericSystemType.unitSystem}`, () => {
+      it(`Admin should be able to create numeric ${numericSystemType.unitSystem} attribute`, () => {
         const attributeType = "NUMERIC";
         const attributeName = `${startsWith}${faker.datatype.number()}`;
         createAttributeWithInputType({
@@ -109,7 +109,7 @@ filterTests({ definedTags: ["all"] }, () => {
       });
     });
 
-    it("should create attribute without required value", () => {
+    it("Admin should be able to create attribute without require value", () => {
       const attributeType = "BOOLEAN";
       const attributeName = `${startsWith}${faker.datatype.number()}`;
       createAttributeWithInputType({
