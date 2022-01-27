@@ -12,5 +12,11 @@ export const VOUCHERS_SELECTORS = {
     usageLimitTextField: '[data-test-id="usage-limit"]',
     applyOncePerCustomerCheckbox: '[data-test-id="apply-once-per-customer"]',
     onlyForStaffCheckbox: '[data-test-id="only-for-staff"]'
+  },
+  requirements: {
+    minOrderValueCheckbox: '[name="requirementsPicker"][value="ORDER"]',
+    minAmountOfItemsCheckbox: '[name="requirementsPicker"][value="ITEM"]',
+    minCheckoutItemsQuantityInput: '[name="minCheckoutItemsQuantity"]',
+    minOrderValueInput: '[name="minSpent"]'
   }
 };

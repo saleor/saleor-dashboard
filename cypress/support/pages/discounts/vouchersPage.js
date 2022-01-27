@@ -17,7 +17,10 @@ export function createVoucher({
   discountOption,
   channelName,
   usageLimit,
-  applyOnePerCustomer
+  applyOnePerCustomer,
+  onlyStaff,
+  minOrderValue,
+  minAmountOfItems
 }) {
   cy.get(VOUCHERS_SELECTORS.createVoucherButton).click();
   selectChannelInDetailsPages(channelName);
@@ -36,6 +39,21 @@ export function createVoucher({
   if (applyOnePerCustomer) {
     cy.get(VOUCHERS_SELECTORS.limits.applyOncePerCustomerCheckbox).click();
   }
+  if (onlyStaff) {
+    cy.get(VOUCHERS_SELECTORS.limits.onlyForStaffCheckbox).click();
+  }
+  if (minOrderValue) {
+    cy.get(VOUCHERS_SELECTORS.requirements.minOrderValueCheckbox)
+      .click()
+      .get(VOUCHERS_SELECTORS.requirements.minOrderValueInput)
+      .type(minOrderValue);
+  }
+  if (minAmountOfItems) {
+    cy.get(VOUCHERS_SELECTORS.requirements.minAmountOfItemsCheckbox)
+      .click()
+      .get(VOUCHERS_SELECTORS.requirements.minCheckoutItemsQuantityInput)
+      .type(minAmountOfItems);
+  }
   cy.get(BUTTON_SELECTORS.confirm)
     .click()
     .confirmationMessageShouldDisappear();
@@ -48,7 +66,10 @@ export function loginAndCreateCheckoutForVoucherWithDiscount({
   channelName,
   dataForCheckout,
   usageLimit,
-  applyOnePerCustomer
+  applyOnePerCustomer,
+  onlyStaff,
+  minOrderValue,
+  minAmountOfItems
 }) {
   cy.clearSessionData()
     .loginUserViaRequest("auth", ONE_PERMISSION_USERS.discount)
@@ -60,7 +81,10 @@ export function loginAndCreateCheckoutForVoucherWithDiscount({
     discountOption: discount,
     channelName,
     usageLimit,
-    applyOnePerCustomer
+    applyOnePerCustomer,
+    onlyStaff,
+    minOrderValue,
+    minAmountOfItems
   });
   dataForCheckout.voucherCode = voucherCode;
   return createCheckoutWithVoucher(dataForCheckout);
