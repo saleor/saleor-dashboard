@@ -1,8 +1,8 @@
 import { Menu, MenuItem, Typography } from "@material-ui/core";
 import { CollectionList_collections_edges_node_channelListings } from "@saleor/collections/types/CollectionList";
 import Hr from "@saleor/components/Hr";
-import StatusLabel from "@saleor/components/StatusLabel";
 import useDateLocalize from "@saleor/hooks/useDateLocalize";
+import { Pill } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -40,13 +40,8 @@ export const ChannelsAvailabilityDropdown: React.FC<ChannelsAvailabilityDropdown
 
   return (
     <div onClick={e => e.stopPropagation()}>
-      <div
-        aria-controls="availability-menu"
-        aria-haspopup="true"
-        role="button"
-        onClick={handleClick}
-      >
-        <StatusLabel
+      <div aria-controls="availability-menu" aria-haspopup="true" role="button">
+        <Pill
           label={intl.formatMessage(
             {
               defaultMessage: "{count}/{allCount} channels",
@@ -57,9 +52,10 @@ export const ChannelsAvailabilityDropdown: React.FC<ChannelsAvailabilityDropdown
               count: channels.length
             }
           )}
-          status={
+          color={
             showStatus ? (activeInAllChannels ? "success" : "error") : undefined
           }
+          onClick={handleClick}
         />
       </div>
       <Menu
@@ -113,9 +109,9 @@ export const ChannelsAvailabilityDropdown: React.FC<ChannelsAvailabilityDropdown
 
           return (
             <MenuItem key={channelData.channel.id} className={classes.menuItem}>
-              <StatusLabel
+              <Pill
                 label={channelData.channel.name}
-                status={isActive(channelData) ? "success" : "error"}
+                color={isActive(channelData) ? "success" : "error"}
               />
               <div>
                 <Typography variant="caption" className={classes.caption}>

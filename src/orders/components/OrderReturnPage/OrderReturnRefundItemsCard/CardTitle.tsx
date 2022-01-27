@@ -1,8 +1,7 @@
 import { Typography } from "@material-ui/core";
 import DefaultCardTitle from "@saleor/components/CardTitle";
 import { StatusType } from "@saleor/components/StatusChip/types";
-import StatusLabel from "@saleor/components/StatusLabel";
-import { makeStyles } from "@saleor/macaw-ui";
+import { makeStyles, Pill } from "@saleor/macaw-ui";
 import { FulfillmentStatus } from "@saleor/types/globalTypes";
 import camelCase from "lodash/camelCase";
 import React from "react";
@@ -123,11 +122,7 @@ const CardTitle: React.FC<CardTitleProps> = ({
     <DefaultCardTitle
       toolbar={toolbar}
       title={
-        withStatus ? (
-          <StatusLabel label={title} status={selectStatus(status)} />
-        ) : (
-          title
-        )
+        withStatus ? <Pill label={title} color={selectStatus(status)} /> : title
       }
     />
   );

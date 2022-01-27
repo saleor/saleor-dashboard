@@ -6,7 +6,6 @@ import { IntlShape } from "react-intl";
 
 import { MultiAutocompleteChoiceType } from "./components/MultiAutocompleteSelectField";
 import { StatusType } from "./components/StatusChip/types";
-import { StatusLabelProps } from "./components/StatusLabel";
 import { AddressType, AddressTypeInput } from "./customers/types";
 import {
   commonStatusMessages,
@@ -77,7 +76,7 @@ export const removeDoubleSlashes = (url: string) =>
 export const transformPaymentStatus = (
   status: string,
   intl: IntlShape
-): { localized: string; status: StatusLabelProps["status"] } => {
+): { localized: string; status: StatusType } => {
   switch (status) {
     case PaymentChargeStatusEnum.PARTIALLY_CHARGED:
       return {

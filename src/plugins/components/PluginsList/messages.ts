@@ -54,3 +54,18 @@ export const pluginChannelConfigurationCellMessages = defineMessages({
     id: "pluginChannelConfigurationCellMessages per channel"
   }
 });
+
+export const pluginStatusMessages = defineMessages({
+  active: {
+    defaultMessage: "Active",
+    description: "status label active"
+  },
+  inactive: {
+    defaultMessage: "Inactive",
+    description: "status label inactive"
+  },
+  deactivated: {
+    defaultMessage: "Deactivated",
+    description: "status label deactivated"
+  }
+});

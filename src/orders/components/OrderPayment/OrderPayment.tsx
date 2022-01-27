@@ -3,8 +3,7 @@ import CardTitle from "@saleor/components/CardTitle";
 import { Hr } from "@saleor/components/Hr";
 import Money from "@saleor/components/Money";
 import Skeleton from "@saleor/components/Skeleton";
-import StatusLabel from "@saleor/components/StatusLabel";
-import { Button, makeStyles } from "@saleor/macaw-ui";
+import { Button, makeStyles, Pill } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -70,7 +69,7 @@ const OrderPayment: React.FC<OrderPaymentProps> = props => {
           maybe(() => order.paymentStatus) === undefined ? (
             <Skeleton />
           ) : (
-            <StatusLabel label={payment.localized} status={payment.status} />
+            <Pill label={payment.localized} color={payment.status} />
           )
         }
       />

@@ -1,9 +1,8 @@
 import { Typography } from "@material-ui/core";
 import { fade, makeStyles } from "@material-ui/core/styles";
 import InlineAlert from "@saleor/components/Alert/InlineAlert";
-import { useStyles as useDotStyles } from "@saleor/components/StatusLabel";
+// import { useStyles as useDotStyles } from "@saleor/components/StatusLabel";
 import errorTracker from "@saleor/services/errorTracking";
-import classNames from "classnames";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -43,7 +42,7 @@ const FilterErrorsList: React.FC<FilterErrorsListProps> = ({
   errorMessages
 }) => {
   const classes = useStyles({});
-  const dotClasses = useDotStyles({});
+  // const dotClasses = useDotStyles({});
   const intl = useIntl();
 
   const getErrorMessage = (code: string) => {
@@ -69,7 +68,7 @@ const FilterErrorsList: React.FC<FilterErrorsListProps> = ({
         <InlineAlert>
           {errors.map(code => (
             <div className={classes.itemContainer} key={code}>
-              <div className={classNames(classes.dot, dotClasses.dot)} />
+              {/* <div className={classNames(classes.dot, dotClasses.dot)} /> */}
               <Typography className={classes.listItemTitle}>
                 {getErrorMessage(code)}
               </Typography>

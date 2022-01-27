@@ -11,10 +11,10 @@ export interface StatusChipProps {
 }
 
 const StatusChipStyles = {
-  alert: {
+  warning: {
     background: "#FFF4E4"
   },
-  alertLabel: {
+  warningLabel: {
     color: "#FFB84E"
   },
   error: {
@@ -23,10 +23,10 @@ const StatusChipStyles = {
   errorLabel: {
     color: "#FE6E76"
   },
-  neutral: {
+  info: {
     background: "rgba(40, 35, 74, 0.1)"
   },
-  neutralLabel: {
+  infoLabel: {
     color: "#28234A"
   },
   success: {
@@ -55,7 +55,7 @@ const useStyles = makeStyles(
 );
 
 const StatusChip: React.FC<StatusChipProps> = props => {
-  const { type = StatusType.NEUTRAL, label } = props;
+  const { type = StatusType.INFO, label } = props;
   const classes = useStyles(props);
 
   if (!label) {

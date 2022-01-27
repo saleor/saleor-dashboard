@@ -1,10 +1,8 @@
 import { CardContent, Divider, Typography } from "@material-ui/core";
 import CardSpacer from "@saleor/components/CardSpacer";
 import CollectionWithDividers from "@saleor/components/CollectionWithDividers";
-import StatusLabel from "@saleor/components/StatusLabel";
-import { statusLabelMessages } from "@saleor/components/StatusLabel/messages";
 import { PluginBaseFragment } from "@saleor/fragments/types/PluginBaseFragment";
-import { makeStyles } from "@saleor/macaw-ui";
+import { makeStyles, Pill } from "@saleor/macaw-ui";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -54,15 +52,18 @@ const ChannelConfigPluginPopupBody: React.FC<ChannelConfigPluginPopupBodyProps> 
           DividerComponent={CardSpacer}
           renderItem={({ channel, active }) => (
             <div className={classes.itemContainer}>
-              <StatusLabel
+              <Pill
                 key={channel.id}
                 label={channel.name}
-                status={active ? "success" : "error"}
-                subtitle={intl.formatMessage(
-                  active
-                    ? statusLabelMessages.active
-                    : statusLabelMessages.inactive
-                )}
+                color={active ? "success" : "error"}
+
+                // @TODO what to do with subtitle?
+
+                // subtitle={intl.formatMessage(
+                //   active
+                //     ? statusLabelMessages.active
+                //     : statusLabelMessages.inactive
+                // )}
               />
             </div>
           )}

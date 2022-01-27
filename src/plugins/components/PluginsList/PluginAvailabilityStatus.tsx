@@ -1,12 +1,12 @@
 import { Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import StatusLabel from "@saleor/components/StatusLabel";
-import { statusLabelMessages } from "@saleor/components/StatusLabel/messages";
+import { Pill } from "@saleor/macaw-ui";
 import { Plugins_plugins_edges_node } from "@saleor/plugins/types/Plugins";
 import { isPluginGlobal } from "@saleor/plugins/views/utils";
 import React from "react";
 import { useIntl } from "react-intl";
 
+import { pluginStatusMessages } from "./messages";
 import { pluginAvailabilityStatusMessages as messages } from "./messages";
 import {
   getActiveChannelConfigsCount,
@@ -45,12 +45,12 @@ const PluginAvailabilityStatus: React.FC<PluginAvailabilityStatusProps> = ({
 
   const globalPluginLabel = intl.formatMessage(
     isStatusActive
-      ? statusLabelMessages.active
-      : statusLabelMessages.deactivated
+      ? pluginStatusMessages.active
+      : pluginStatusMessages.deactivated
   );
 
   return (
-    <StatusLabel
+    <Pill
       label={
         isGlobalPlugin ? (
           globalPluginLabel
@@ -64,7 +64,7 @@ const PluginAvailabilityStatus: React.FC<PluginAvailabilityStatusProps> = ({
           </div>
         )
       }
-      status={isStatusActive ? "success" : "error"}
+      color={isStatusActive ? "success" : "error"}
     />
   );
 };

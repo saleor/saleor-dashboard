@@ -1,12 +1,12 @@
 import { CardContent, Typography } from "@material-ui/core";
 import CardSpacer from "@saleor/components/CardSpacer";
-import StatusLabel from "@saleor/components/StatusLabel";
-import { statusLabelMessages } from "@saleor/components/StatusLabel/messages";
 import { PluginBaseFragment } from "@saleor/fragments/types/PluginBaseFragment";
+import { Pill } from "@saleor/macaw-ui";
 import React from "react";
 import { useIntl } from "react-intl";
 
 import { globalConfigPluginMessages as messages } from "../messages";
+import { pluginStatusMessages } from "../messages";
 
 interface GlobalConfigPluginPopupBodyProps {
   plugin: PluginBaseFragment;
@@ -28,10 +28,10 @@ const GlobalConfigPluginPopupBody: React.FC<GlobalConfigPluginPopupBodyProps> = 
           {intl.formatMessage(messages.description)}
         </Typography>
         <CardSpacer />
-        <StatusLabel
-          status={active ? "success" : "error"}
+        <Pill
+          color={active ? "success" : "error"}
           label={intl.formatMessage(
-            active ? statusLabelMessages.active : statusLabelMessages.inactive
+            active ? pluginStatusMessages.active : pluginStatusMessages.inactive
           )}
         />
       </CardContent>
