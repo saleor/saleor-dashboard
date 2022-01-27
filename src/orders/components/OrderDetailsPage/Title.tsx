@@ -1,5 +1,4 @@
-import StatusChip from "@saleor/components/StatusChip";
-import { makeStyles } from "@saleor/macaw-ui";
+import { makeStyles, Pill } from "@saleor/macaw-ui";
 import { transformOrderStatus } from "@saleor/misc";
 import { OrderDetails_order } from "@saleor/orders/types/OrderDetails";
 import React from "react";
@@ -37,7 +36,7 @@ const Title: React.FC<TitleProps> = props => {
     <div className={classes.container}>
       {`#${order.number}`}
       <div className={classes.statusContainer}>
-        <StatusChip label={localized} type={status} />
+        <Pill label={localized} color={status} />
       </div>
     </div>
   );

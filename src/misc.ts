@@ -5,7 +5,6 @@ import { MutationFunction, MutationResult } from "react-apollo";
 import { IntlShape } from "react-intl";
 
 import { MultiAutocompleteChoiceType } from "./components/MultiAutocompleteSelectField";
-import { StatusType } from "./components/StatusChip/types";
 import { AddressType, AddressTypeInput } from "./customers/types";
 import {
   commonStatusMessages,
@@ -16,6 +15,7 @@ import { OrderDetails_order_shippingAddress } from "./orders/types/OrderDetails"
 import {
   MutationResultAdditionalProps,
   PartialMutationProviderOutput,
+  StatusType,
   UserError
 } from "./types";
 import {

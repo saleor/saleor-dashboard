@@ -1,7 +1,7 @@
 import { Typography } from "@material-ui/core";
 import DefaultCardTitle from "@saleor/components/CardTitle";
-import { StatusType } from "@saleor/components/StatusChip/types";
 import { makeStyles, Pill } from "@saleor/macaw-ui";
+import { StatusType } from "@saleor/types";
 import { FulfillmentStatus } from "@saleor/types/globalTypes";
 import camelCase from "lodash/camelCase";
 import React from "react";
