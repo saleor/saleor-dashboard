@@ -1566,7 +1566,7 @@
   },
   "src_dot_channels_dot_components_dot_ShippingZonesCard_dot_subtitle": {
     "context": "card subtitle",
-    "string": "Select shipping zones that will be supplied via this channel. You can assign Shipping Zones to multiple channels."
+    "string": "Select shipping zones that will be supplied via this channel. You can assign shipping zones to multiple channels."
   },
   "src_dot_channels_dot_components_dot_ShippingZonesCard_dot_title": {
     "context": "title",
