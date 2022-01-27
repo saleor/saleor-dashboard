@@ -26,7 +26,12 @@ import FilterContentHeader from "./FilterContentHeader";
 import FilterErrorsList from "./FilterErrorsList";
 
 const useExpanderStyles = makeStyles(
-  () => ({
+  theme => ({
+    btn: {
+      border: "none",
+      marginRight: theme.spacing(1)
+    },
+
     expanded: {},
     root: {
       boxShadow: "none",
@@ -216,6 +221,12 @@ const FilterContent: React.FC<FilterContentProps> = ({
                 expanded={filter.name === openedFilter?.name}
               >
                 <AccordionSummary
+                  IconButtonProps={{
+                    classes: {
+                      root: expanderClasses.btn
+                    },
+                    disableRipple: true
+                  }}
                   expandIcon={<IconChevronDown />}
                   classes={summaryClasses}
                   onClick={() => handleFilterOpen(filter)}
