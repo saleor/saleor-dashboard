@@ -148,10 +148,7 @@ const GiftCardsListTable: React.FC = () => {
                   </TableCell>
                   <TableCell>
                     {usedBy ? (
-                      <Link
-                        href={customerUrl(usedBy?.id)}
-                        onClick={onLinkClick}
-                      >
+                      <Link href={customerUrl(usedBy?.id)}>
                         {`${usedBy?.firstName} ${usedBy?.lastName}`}
                       </Link>
                     ) : (
