@@ -3,16 +3,11 @@
 
 import faker from "faker";
 
-import { BUTTON_SELECTORS } from "../../../elements/shared/button-selectors";
-import { urlList, voucherDetailsUrl } from "../../../fixtures/urlList";
-import { ONE_PERMISSION_USERS } from "../../../fixtures/users";
+import { urlList } from "../../../fixtures/urlList";
 import { createChannel } from "../../../support/api/requests/Channels";
 import { completeCheckout } from "../../../support/api/requests/Checkout";
 import * as channelsUtils from "../../../support/api/utils/channelsUtils";
-import {
-  createVoucherInChannel,
-  deleteVouchersStartsWith
-} from "../../../support/api/utils/discounts/vouchersUtils";
+import { deleteVouchersStartsWith } from "../../../support/api/utils/discounts/vouchersUtils";
 import {
   addPayment,
   createCheckoutWithVoucher
@@ -26,7 +21,7 @@ import {
 } from "../../../support/pages/discounts/vouchersPage";
 
 filterTests({ definedTags: ["all"] }, () => {
-  describe("Vouchers discounts", () => {
+  describe("As an admin I want to create voucher", () => {
     const startsWith = "CyVou-";
     const productPrice = 100;
     const shippingPrice = 100;
@@ -35,7 +30,6 @@ filterTests({ definedTags: ["all"] }, () => {
     let createdChannel;
     let shippingMethod;
     let variants;
-    let product;
     let address;
     let dataForCheckout;
 
@@ -51,14 +45,12 @@ filterTests({ definedTags: ["all"] }, () => {
             variantsList: variantsResp,
             defaultChannel: channel,
             shippingMethod: shippingMethodResp,
-            address: addressResp,
-            product: productResp
+            address: addressResp
           }) => {
             variants = variantsResp;
             defaultChannel = channel;
             shippingMethod = shippingMethodResp;
             address = addressResp;
-            product = productResp;
             createChannel({ name });
           }
         )
@@ -74,7 +66,7 @@ filterTests({ definedTags: ["all"] }, () => {
         });
     });
 
-    it("should create percentage voucher", () => {
+    it("As an admin I should be able to create percentage voucher", () => {
       const voucherValue = 50;
       const voucherCode = `${startsWith}${faker.datatype.number()}`;
       const expectedAmount =
@@ -108,7 +100,7 @@ filterTests({ definedTags: ["all"] }, () => {
         });
     });
 
-    it("should create fixed price voucher", () => {
+    it("As an admin I should be able to create fixed price voucher", () => {
       const voucherValue = 50;
       const voucherCode = `${startsWith}${faker.datatype.number()}`;
       const expectedAmount = productPrice + shippingPrice - voucherValue;
@@ -141,7 +133,7 @@ filterTests({ definedTags: ["all"] }, () => {
         });
     });
 
-    it("should create free shipping voucher", () => {
+    it("As an admin I should be able to create free shipping voucher", () => {
       const voucherCode = `${startsWith}${faker.datatype.number()}`;
       const expectedAmount = productPrice;
       let checkout;
@@ -172,7 +164,7 @@ filterTests({ definedTags: ["all"] }, () => {
         });
     });
 
-    it("should create voucher not available for selected channel", () => {
+    it("As an admin I should be able to create voucher not available for selected channel", () => {
       const randomName = `${startsWith}${faker.datatype.number()}`;
       const voucherValue = 50;
 
@@ -193,6 +185,77 @@ filterTests({ definedTags: ["all"] }, () => {
           expect(errorField).to.be.eq("promoCode");
         }
       );
+    });
+
+    it("As an admin I should be able to create voucher with limited number of times discount can be used in total", () => {
+      const voucherCode = `${startsWith}${faker.datatype.number()}`;
+      const voucherValue = 50;
+      const usageLimit = 1;
+      let firstCheckout;
+
+      loginAndCreateCheckoutForVoucherWithDiscount({
+        discount: discountOptions.PERCENTAGE,
+        voucherValue,
+        voucherCode,
+        channelName: defaultChannel.name,
+        dataForCheckout,
+        usageLimit
+      })
+        .then(({ checkout }) => {
+          firstCheckout = checkout;
+          dataForCheckout.voucherCode = voucherCode;
+          addPayment(firstCheckout.id);
+        })
+        .then(() => {
+          completeCheckout(firstCheckout.id);
+        })
+        .then(() => {
+          createCheckoutWithVoucher(dataForCheckout);
+        })
+        .then(({ addPromoCodeResp }) => {
+          const errorField = addPromoCodeResp.checkoutErrors[0].field;
+          expect(errorField, "error in promo code should occur").to.be.eq(
+            "promoCode"
+          );
+        });
+    });
+
+    it("As an admin I should be able to create voucher with limit to one use per customer.", () => {
+      const voucherCode = `${startsWith}${faker.datatype.number()}`;
+      const voucherValue = 50;
+      let firstCheckout;
+
+      loginAndCreateCheckoutForVoucherWithDiscount({
+        discount: discountOptions.PERCENTAGE,
+        voucherValue,
+        voucherCode,
+        channelName: defaultChannel.name,
+        dataForCheckout,
+        applyOnePerCustomer: true
+      })
+        .then(({ checkout }) => {
+          dataForCheckout.voucherCode = voucherCode;
+          firstCheckout = checkout;
+          addPayment(firstCheckout.id);
+        })
+        .then(() => {
+          completeCheckout(firstCheckout.id);
+        })
+        .then(() => {
+          createCheckoutWithVoucher(dataForCheckout);
+        })
+        .then(({ addPromoCodeResp }) => {
+          const errorField = addPromoCodeResp.checkoutErrors[0].field;
+          expect(errorField, "error in promo code should occur").to.be.eq(
+            "promoCode"
+          );
+          cy.clearSessionData();
+          createCheckoutWithVoucher(dataForCheckout);
+        })
+        .then(({ addPromoCodeResp }) => {
+          const errorField = addPromoCodeResp.checkoutErrors;
+          expect(errorField, "No errors when adding promo code").to.be.empty();
+        });
     });
   });
 });

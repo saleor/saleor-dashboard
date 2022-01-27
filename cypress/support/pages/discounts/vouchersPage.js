@@ -15,7 +15,9 @@ export function createVoucher({
   voucherCode,
   voucherValue,
   discountOption,
-  channelName
+  channelName,
+  usageLimit,
+  applyOnePerCustomer
 }) {
   cy.get(VOUCHERS_SELECTORS.createVoucherButton).click();
   selectChannelInDetailsPages(channelName);
@@ -25,6 +27,14 @@ export function createVoucher({
     .click();
   if (discountOption !== discountOptions.SHIPPING) {
     cy.get(VOUCHERS_SELECTORS.discountValueInputs).type(voucherValue);
+  }
+  if (usageLimit) {
+    cy.get(VOUCHERS_SELECTORS.limits.usageLimitCheckbox)
+      .click()
+      .type(usageLimit);
+  }
+  if (applyOnePerCustomer) {
+    cy.get(VOUCHERS_SELECTORS.limits.applyOncePerCustomerCheckbox).click();
   }
   cy.get(BUTTON_SELECTORS.confirm)
     .click()
@@ -36,7 +46,9 @@ export function loginAndCreateCheckoutForVoucherWithDiscount({
   voucherValue,
   voucherCode,
   channelName,
-  dataForCheckout
+  dataForCheckout,
+  usageLimit,
+  applyOnePerCustomer
 }) {
   cy.clearSessionData()
     .loginUserViaRequest("auth", ONE_PERMISSION_USERS.discount)
@@ -46,10 +58,10 @@ export function loginAndCreateCheckoutForVoucherWithDiscount({
     voucherCode,
     voucherValue,
     discountOption: discount,
-    channelName
+    channelName,
+    usageLimit,
+    applyOnePerCustomer
   });
   dataForCheckout.voucherCode = voucherCode;
-  return createCheckoutWithVoucher(dataForCheckout).its(
-    "addPromoCodeResp.checkout.totalPrice.gross.amount"
-  );
+  return createCheckoutWithVoucher(dataForCheckout);
 }
