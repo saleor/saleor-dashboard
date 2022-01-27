@@ -150,7 +150,7 @@ const PermissionGroupList: React.FC<PermissionGroupListProps> = props => {
                   <>
                     {permissionGroup.userCanManage && (
                       <IconButton
-                        data-test-id="deleteIcon"
+                        data-test-id="delete-icon"
                         color="primary"
                         onClick={stopPropagation(() =>
                           onDelete(permissionGroup.id)

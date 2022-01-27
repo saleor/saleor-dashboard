@@ -21,7 +21,8 @@ export const SHARED_ELEMENTS = {
   filters: {
     filterGroupActivateCheckbox: '[data-test="filterGroupActive"]',
     filterRow: '[data-test="channel-availability-item"]'
-  }
+  },
+  warningDialog: '[data-test-id="warning-dialog"]'
 };
 
 export const selectorWithDataValue = value => `[data-value="${value}"]`;

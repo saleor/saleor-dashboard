@@ -92,7 +92,7 @@ function TypeDeleteWarningDialog<T extends TypeBaseData>({
 
   return (
     <Modal open={isOpen}>
-      <div className={classes.centerContainer}>
+      <div className={classes.centerContainer} data-test-id="warning-dialog">
         <Card className={classes.content}>
           <ModalTitle
             title={intl.formatMessage(baseMessages.title, {
