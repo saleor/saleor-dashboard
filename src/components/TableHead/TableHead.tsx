@@ -45,7 +45,7 @@ const useStyles = makeStyles(
     },
     root: {
       paddingLeft: 0,
-      paddingRight: 24
+      paddingRight: theme.spacing(4)
     },
     spacer: {
       flex: 1
