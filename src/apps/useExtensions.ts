@@ -42,7 +42,8 @@ const filterAndMapToTarget = (
       permissions: permissions.map(({ code }) => code),
       url,
       label,
-      open: () => openApp({ appToken: accessToken, src: url, label, openAs })
+      open: () =>
+        openApp({ id, appToken: accessToken, src: url, label, openAs })
     }));
 
 export const mapToMenuItems = (extensions: Extension[]) =>

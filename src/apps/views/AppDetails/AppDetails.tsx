@@ -125,6 +125,7 @@ export const AppDetails: React.FC<AppDetailsProps> = ({ id, params }) => {
       <AppDetailsPage
         data={data?.app}
         loading={loading}
+        navigateToApp={() => navigate(appUrl(id))}
         navigateToAppSettings={() => navigate(appSettingsUrl(id))}
         onAppActivateOpen={() => openModal("app-activate")}
         onAppDeactivateOpen={() => openModal("app-deactivate")}

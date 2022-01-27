@@ -58,5 +58,5 @@ export const useStyles = makeStyles(
       }
     }
   }),
-  { name: "AppDetailsSettingsPage" }
+  { name: "AppPage" }
 );

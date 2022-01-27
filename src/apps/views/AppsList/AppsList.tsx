@@ -31,9 +31,9 @@ import { AppDeleteFailedInstallation } from "../../types/AppDeleteFailedInstalla
 import { AppsInstallations_appsInstallations } from "../../types/AppsInstallations";
 import { AppsList_apps_edges } from "../../types/AppsList";
 import {
+  appDetailsUrl,
   AppListUrlDialog,
   AppListUrlQueryParams,
-  appSettingsUrl,
   appsListUrl,
   appUrl,
   customAppAddUrl,
@@ -313,7 +313,7 @@ export const AppsList: React.FC<AppsListProps> = ({ params }) => {
         onPreviousPage={loadPreviousPage}
         onUpdateListSettings={updateListSettings}
         onRowClick={id => () => navigate(appUrl(id))}
-        onSettingsRowClick={id => () => navigate(appSettingsUrl(id))}
+        onRowAboutClick={id => () => navigate(appDetailsUrl(id))}
         onAppInstallRetry={onAppInstallRetry}
         navigateToCustomApp={id => () => navigate(customAppUrl(id))}
         navigateToCustomAppCreate={() => navigate(customAppAddUrl)}

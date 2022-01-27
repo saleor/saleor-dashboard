@@ -24,7 +24,7 @@ export interface AppsListPageProps extends ListProps {
   onCustomAppRemove: (id: string) => void;
   onAppInProgressRemove: (id: string) => void;
   onAppInstallRetry: (id: string) => void;
-  onSettingsRowClick: (id: string) => () => void;
+  onRowAboutClick: (id: string) => () => void;
 }
 
 const AppsListPage: React.FC<AppsListPageProps> = ({
@@ -38,7 +38,7 @@ const AppsListPage: React.FC<AppsListPageProps> = ({
   onCustomAppRemove,
   onAppInProgressRemove,
   onAppInstallRetry,
-  onSettingsRowClick,
+  onRowAboutClick,
   ...listProps
 }) => {
   const intl = useIntl();
@@ -62,7 +62,7 @@ const AppsListPage: React.FC<AppsListPageProps> = ({
       <InstalledApps
         appsList={installedAppsList}
         onRemove={onInstalledAppRemove}
-        onSettingsRowClick={onSettingsRowClick}
+        onRowAboutClick={onRowAboutClick}
         {...listProps}
       />
       <CardSpacer />

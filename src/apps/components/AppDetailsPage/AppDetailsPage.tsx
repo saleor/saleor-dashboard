@@ -22,6 +22,7 @@ import DeactivatedText from "../DeactivatedText";
 export interface AppDetailsPageProps {
   loading: boolean;
   data: App_app;
+  navigateToApp: () => void;
   navigateToAppSettings: () => void;
   onAppActivateOpen: () => void;
   onAppDeactivateOpen: () => void;
@@ -31,6 +32,7 @@ export interface AppDetailsPageProps {
 export const AppDetailsPage: React.FC<AppDetailsPageProps> = ({
   data,
   loading,
+  navigateToApp,
   navigateToAppSettings,
   onAppActivateOpen,
   onAppDeactivateOpen,
@@ -51,13 +53,7 @@ export const AppDetailsPage: React.FC<AppDetailsPageProps> = ({
           </>
         }
       >
-        <Button
-          component="a"
-          href={data?.homepageUrl}
-          variant="primary"
-          data-tc="open-app"
-          target="_blank"
-        >
+        <Button onClick={navigateToApp} variant="primary" data-tc="open-app">
           <FormattedMessage defaultMessage="Open App" description="button" />
         </Button>
       </PageHeader>

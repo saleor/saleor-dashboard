@@ -1,3 +1,5 @@
+import { appDeepPath } from "@saleor/apps/urls";
+import useNavigator from "@saleor/hooks/useNavigator";
 import { AppExtensionOpenAsEnum } from "@saleor/types/globalTypes";
 import React from "react";
 
@@ -5,6 +7,7 @@ import { AppDialog } from "../AppDialog";
 import { AppFrame } from "../AppFrame";
 
 export interface AppData {
+  id: string;
   appToken: string;
   src: string;
   label: string;
@@ -41,13 +44,14 @@ export const ExternalAppProvider: React.FC = ({ children }) => {
 
 export const useExternalApp = () => {
   const { open, setOpen, setAppData } = React.useContext(ExternalAppContext);
+  const navigate = useNavigator();
 
   const openApp = (appData: AppData) => {
     if (appData.openAs === AppExtensionOpenAsEnum.POPUP) {
       setOpen(true);
       setAppData(appData);
     } else {
-      window.location.href = appData.src;
+      navigate(appDeepPath(appData.id, appData.src));
     }
   };
 
