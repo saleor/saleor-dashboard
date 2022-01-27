@@ -1,5 +1,4 @@
 import { TextField, Typography } from "@material-ui/core";
-import HorizontalSpacer from "@saleor/apps/components/HorizontalSpacer";
 import VerticalSpacer from "@saleor/apps/components/VerticalSpacer";
 import ControlledCheckbox from "@saleor/components/ControlledCheckbox";
 import RadioGroupField from "@saleor/components/RadioGroupField";
@@ -118,8 +117,7 @@ const GiftCardCreateExpirySelect: React.FC<GiftCardCreateExpirySelectProps> = ({
                 amountFieldName={"expiryPeriodAmount"}
                 typeFieldName={"expiryPeriodType"}
               />
-              <HorizontalSpacer spacing={2} />
-              <div className={classes.dateText}>
+              <div>
                 <Typography variant="caption">
                   <FormattedMessage {...messages.expiryOnLabel} />
                 </Typography>

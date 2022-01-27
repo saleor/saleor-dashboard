@@ -34,7 +34,7 @@ export const Money: React.FC<MoneyProps> = ({ money }) => {
     currency: money.currency
   }).resolvedOptions().maximumFractionDigits;
 
-  const amount = (12345.678).toLocaleString(locale, {
+  const amount = money.amount.toLocaleString(locale, {
     maximumFractionDigits: currencyFractionDigits,
     minimumFractionDigits: currencyFractionDigits
   });

@@ -1,4 +1,4 @@
-import { Card, CardActions, CardContent } from "@material-ui/core";
+import { Card, CardContent } from "@material-ui/core";
 import CardTitle from "@saleor/components/CardTitle";
 import { Hr } from "@saleor/components/Hr";
 import Money from "@saleor/components/Money";

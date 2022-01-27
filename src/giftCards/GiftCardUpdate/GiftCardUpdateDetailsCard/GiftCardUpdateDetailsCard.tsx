@@ -43,28 +43,28 @@ const GiftCardUpdateDetailsCard: React.FC = () => {
         }
       />
       <CardContent>
-        <Skeleton>
-          {!loading && (
-            <>
-              <GiftCardUpdateDetailsBalanceSection />
-              <CardSpacer />
-              <Divider />
-              <CardSpacer />
-              <Typography color="textSecondary">
-                {intl.formatMessage(messages.tagInputLabel)}
-              </Typography>
-              <VerticalSpacer />
-              <GiftCardTagInput
-                error={formErrors?.tags}
-                name="tags"
-                values={tags}
-                toggleChange={toggleValue}
-              />
-              <CardSpacer />
-              <GiftCardUpdateExpirySelect />
-            </>
-          )}
-        </Skeleton>
+        {loading ? (
+          <Skeleton />
+        ) : (
+          <>
+            <GiftCardUpdateDetailsBalanceSection />
+            <CardSpacer />
+            <Divider />
+            <CardSpacer />
+            <Typography color="textSecondary">
+              {intl.formatMessage(messages.tagInputLabel)}
+            </Typography>
+            <VerticalSpacer />
+            <GiftCardTagInput
+              error={formErrors?.tags}
+              name="tags"
+              values={tags}
+              toggleChange={toggleValue}
+            />
+            <CardSpacer />
+            <GiftCardUpdateExpirySelect />
+          </>
+        )}
       </CardContent>
     </Card>
   );

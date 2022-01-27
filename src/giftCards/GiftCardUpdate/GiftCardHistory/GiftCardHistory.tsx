@@ -63,6 +63,8 @@ const getEventMessage = (
     }
   };
 
+  return "";
+
   switch (event.type) {
     case GiftCardEventsEnum.ACTIVATED:
       return intl.formatMessage(timelineMessages.giftCardActivated, {
@@ -172,52 +174,48 @@ const GiftCardHistory: React.FC = () => {
       </Typography>
       <Hr />
       <Timeline>
-        <Skeleton>
-          {events && (
-            <>
-              <Form
-                initial={{ message: "" }}
-                onSubmit={onNoteAdd}
-                resetOnSubmit
-              >
-                {({ change, data, reset, submit }) => (
-                  <TimelineAddNote
-                    message={data.message}
-                    reset={reset}
-                    onChange={change}
-                    onSubmit={submit}
-                    disabled={loading}
-                  />
-                )}
-              </Form>
-              {events
-                .slice()
-                .reverse()
-                .map(event => {
-                  const { id, message, type, date, user } = event;
+        {events ? (
+          <>
+            <Form initial={{ message: "" }} onSubmit={onNoteAdd} resetOnSubmit>
+              {({ change, data, reset, submit }) => (
+                <TimelineAddNote
+                  message={data.message}
+                  reset={reset}
+                  onChange={change}
+                  onSubmit={submit}
+                  disabled={loading}
+                />
+              )}
+            </Form>
+            {events
+              .slice()
+              .reverse()
+              .map(event => {
+                const { id, message, type, date, user } = event;
 
-                  if (type === GiftCardEventsEnum.NOTE_ADDED) {
-                    return (
-                      <TimelineNote
-                        date={date}
-                        user={user}
-                        message={message}
-                        key={id}
-                      />
-                    );
-                  }
-
+                if (type === GiftCardEventsEnum.NOTE_ADDED) {
                   return (
-                    <TimelineEvent
-                      key={id}
+                    <TimelineNote
                       date={date}
-                      title={getEventMessage(event, intl)}
+                      user={user}
+                      message={message}
+                      key={id}
                     />
                   );
-                })}
-            </>
-          )}
-        </Skeleton>
+                }
+
+                return (
+                  <TimelineEvent
+                    key={id}
+                    date={date}
+                    title={getEventMessage(event, intl)}
+                  />
+                );
+              })}
+          </>
+        ) : (
+          <Skeleton />
+        )}
       </Timeline>
     </div>
   );

@@ -13,9 +13,6 @@ export const useGiftCardExpirySelectStyles = makeStyles(
     },
     periodField: {
       display: "flex"
-    },
-    dateText: {
-      marginTop: theme.spacing(0.5)
     }
   }),
   { name: "GiftCardUpdateDetailsExpirySection" }

@@ -18,11 +18,11 @@ const GiftCardUpdatePageHeader: React.FC = () => {
   const { giftCard } = useGiftCardDetails();
   const { navigateBack } = useGiftCardUpdateDialogs();
 
+  const { openResendCodeDialog } = useGiftCardUpdateDialogs();
+
   if (!giftCard) {
     return null;
   }
-
-  const { openResendCodeDialog } = useGiftCardUpdateDialogs();
 
   const { last4CodeChars, isExpired } = giftCard;
 

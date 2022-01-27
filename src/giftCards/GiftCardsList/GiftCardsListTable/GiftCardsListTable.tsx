@@ -17,11 +17,13 @@ import GiftCardStatusChip from "@saleor/giftCards/components/GiftCardStatusChip/
 import { PLACEHOLDER } from "@saleor/giftCards/GiftCardUpdate/types";
 import { giftCardListUrl, giftCardUrl } from "@saleor/giftCards/urls";
 import useNavigator from "@saleor/hooks/useNavigator";
+import { PillLink } from "@saleor/macaw-ui";
 import { renderCollection } from "@saleor/misc";
 import { productUrl } from "@saleor/products/urls";
 import React from "react";
 import { useEffect } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
+import { Link as RouterLink } from "react-router-dom";
 
 import GiftCardListSearchAndFilters from "../GiftCardListSearchAndFilters";
 import { giftCardsListTableMessages as messages } from "../messages";
@@ -40,7 +42,7 @@ const GiftCardsListTable: React.FC = () => {
   const classes = useStyles({});
   const navigate = useNavigator();
 
-  const { giftCards, numberOfColumns, loading, params } = useGiftCardList();
+  const { giftCards, numberOfColumns, params } = useGiftCardList();
   const { toggle, isSelected } = useGiftCardListBulkActions();
   const { openDeleteDialog } = useGiftCardListDialogs();
 
@@ -60,6 +62,10 @@ const GiftCardsListTable: React.FC = () => {
   const redirectToGiftCardUpdate = (id: string) => () =>
     navigate(giftCardUrl(id));
 
+  const onLinkClick: React.MouseEventHandler = event => {
+    event.stopPropagation();
+  };
+
   return (
     <Card>
       <GiftCardListSearchAndFilters />
@@ -70,6 +76,22 @@ const GiftCardsListTable: React.FC = () => {
           {renderCollection(
             giftCards,
             giftCard => {
+              if (!giftCard) {
+                return (
+                  <>
+                    <TableCell padding="checkbox">
+                      <Checkbox />
+                    </TableCell>
+                    <TableCell className={classes.skeleton} colSpan={5}>
+                      <Skeleton />
+                    </TableCell>
+                    <TableCell className={classes.colDelete}>
+                      <DeleteIconButton />
+                    </TableCell>
+                  </>
+                );
+              }
+
               const {
                 id,
                 last4CodeChars,
@@ -89,6 +111,7 @@ const GiftCardsListTable: React.FC = () => {
                 >
                   <TableCell padding="checkbox">
                     <Checkbox
+                      disabled={!giftCard}
                       disableClickPropagation
                       checked={isSelected(id)}
                       onChange={() => toggle(id)}
@@ -112,16 +135,23 @@ const GiftCardsListTable: React.FC = () => {
                   </TableCell>
                   <TableCell>
                     {product ? (
-                      <Link href={productUrl(product?.id)}>
+                      <PillLink
+                        component={RouterLink}
+                        to={productUrl(product?.id)}
+                        onClick={onLinkClick}
+                      >
                         {product?.name}
-                      </Link>
+                      </PillLink>
                     ) : (
                       PLACEHOLDER
                     )}
                   </TableCell>
                   <TableCell>
                     {usedBy ? (
-                      <Link href={customerUrl(usedBy?.id)}>
+                      <Link
+                        href={customerUrl(usedBy?.id)}
+                        onClick={onLinkClick}
+                      >
                         {`${usedBy?.firstName} ${usedBy?.lastName}`}
                       </Link>
                     ) : (
@@ -147,11 +177,7 @@ const GiftCardsListTable: React.FC = () => {
             () => (
               <TableRow>
                 <TableCell colSpan={numberOfColumns}>
-                  <Skeleton>
-                    {!loading && (
-                      <FormattedMessage {...messages.noGiftCardsFound} />
-                    )}
-                  </Skeleton>
+                  <FormattedMessage {...messages.noGiftCardsFound} />
                 </TableCell>
               </TableRow>
             )

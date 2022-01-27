@@ -7,10 +7,11 @@ export const useTableStyles = makeStyles(
       alignItems: "baseline"
     },
     colCardCode: {
+      paddingLeft: 0,
       width: 400
     },
     colDelete: {
-      width: 80
+      width: 88
     },
     colBalance: {
       width: 135
@@ -22,9 +23,11 @@ export const useTableStyles = makeStyles(
       cursor: "pointer",
       height: 70,
       "& td, & th": {
-        padding: "0px 20px",
         height: "auto"
       }
+    },
+    skeleton: {
+      paddingLeft: 0
     }
   },
   { name: "GiftCardsListTable" }
