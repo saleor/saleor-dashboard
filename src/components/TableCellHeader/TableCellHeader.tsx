@@ -59,57 +59,60 @@ export interface TableCellHeaderProps extends TableCellProps {
   disabled?: boolean;
 }
 
-const TableCellHeader: React.FC<TableCellHeaderProps> = props => {
-  const classes = useStyles(props);
-  const {
-    arrowPosition,
-    children,
-    className,
-    direction,
-    textAlign,
-    disabled = false,
-    onClick,
-    ...rest
-  } = props;
+const TableCellHeader = React.forwardRef<unknown, TableCellHeaderProps>(
+  (props, ref) => {
+    const classes = useStyles(props);
+    const {
+      arrowPosition,
+      children,
+      className,
+      direction,
+      textAlign,
+      disabled = false,
+      onClick,
+      ...rest
+    } = props;
 
-  return (
-    <TableCell
-      {...rest}
-      onClick={e => {
-        if (!disabled) {
-          onClick(e);
-        }
-      }}
-      className={classNames(classes.root, className, {
-        [classes.disabled]: disabled
-      })}
-    >
-      <div
-        className={classNames(classes.labelContainer, {
-          [classes.labelContainerActive]: !!direction && !!arrowPosition,
-          [classes.labelContainerCenter]: textAlign === "center",
-          [classes.labelContainerRight]: textAlign === "right"
+    return (
+      <TableCell
+        {...rest}
+        innerRef={ref}
+        onClick={e => {
+          if (!disabled) {
+            onClick(e);
+          }
+        }}
+        className={classNames(classes.root, className, {
+          [classes.disabled]: disabled
         })}
       >
-        {!!direction && arrowPosition === "left" && (
-          <ArrowSort
-            className={classNames(classes.arrow, classes.arrowLeft, {
-              [classes.arrowUp]: direction === "asc"
-            })}
-          />
-        )}
-        <div className={classes.label}>{children}</div>
-        {!!direction && arrowPosition === "right" && (
-          <ArrowSort
-            className={classNames(classes.arrow, {
-              [classes.arrowUp]: direction === "asc"
-            })}
-          />
-        )}
-      </div>
-    </TableCell>
-  );
-};
+        <div
+          className={classNames(classes.labelContainer, {
+            [classes.labelContainerActive]: !!direction && !!arrowPosition,
+            [classes.labelContainerCenter]: textAlign === "center",
+            [classes.labelContainerRight]: textAlign === "right"
+          })}
+        >
+          {!!direction && arrowPosition === "left" && (
+            <ArrowSort
+              className={classNames(classes.arrow, classes.arrowLeft, {
+                [classes.arrowUp]: direction === "asc"
+              })}
+            />
+          )}
+          <div className={classes.label}>{children}</div>
+          {!!direction && arrowPosition === "right" && (
+            <ArrowSort
+              className={classNames(classes.arrow, {
+                [classes.arrowUp]: direction === "asc"
+              })}
+            />
+          )}
+        </div>
+      </TableCell>
+    );
+  }
+);
 
 TableCellHeader.displayName = "TableCellHeader";
 TableCellHeader.defaultProps = {

@@ -1,7 +1,7 @@
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import { MutationResult } from "react-apollo";
 
-import { IFilter } from "./components/Filter";
+import { IFilter, IFilterElement } from "./components/Filter";
 import { MultiAutocompleteChoiceType } from "./components/MultiAutocompleteSelectField";
 import { User_userPermissions } from "./fragments/types/User";
 
@@ -60,6 +60,7 @@ export interface ListProps<TColumns extends string = string> {
     value: ListSettings<TColumns>[T]
   ) => void;
   onListSettingsReset?: () => void;
+  filterDependency?: IFilterElement;
 }
 
 export interface SortPage<TSortKey extends string> {
