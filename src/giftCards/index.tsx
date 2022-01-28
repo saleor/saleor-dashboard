@@ -14,7 +14,7 @@ import {
 } from "./GiftCardsList/types";
 import GiftCardUpdateComponent from "./GiftCardUpdate";
 import { GiftCardUpdatePageUrlQueryParams } from "./GiftCardUpdate/types";
-import { giftCardSettingsUrl, giftCardsListPath, giftCardUrl } from "./urls";
+import { giftCardPath, giftCardSettingsUrl, giftCardsListPath } from "./urls";
 
 const GiftCardUpdatePage: React.FC<RouteComponentProps<{ id: string }>> = ({
   match
@@ -50,7 +50,7 @@ const Component: React.FC = ({}) => {
       <Switch>
         <Route path={giftCardSettingsUrl} component={GiftCardSettings} />
         <Route exact path={giftCardsListPath} component={GiftCardList} />
-        <Route path={giftCardUrl(":id")} component={GiftCardUpdatePage} />
+        <Route path={giftCardPath(":id")} component={GiftCardUpdatePage} />
       </Switch>
     </>
   );

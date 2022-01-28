@@ -56,13 +56,13 @@ const TextWithSelectField: React.FC<TextWithSelectFieldProps> = ({
   const handleSelectChange = (event: ChangeEvent) => {
     // in case one of the fields in the form is empty
     // we need to save the other part of the field as well
-    const otherTarget = {
+    const inputTarget = {
       value: textFieldValue,
       name: textFieldName
     };
 
     change(event);
-    change({ target: otherTarget });
+    change({ target: inputTarget });
   };
 
   const handleTextChange = (event: ChangeEvent) => {
@@ -107,10 +107,14 @@ const TextWithSelectField: React.FC<TextWithSelectFieldProps> = ({
               name={selectFieldName}
               onChange={handleSelectChange}
               value={selectFieldValue}
-              className={classNames(
-                classes.autocompleteField,
-                selectFieldClassName
-              )}
+              className={selectFieldClassName}
+              InputProps={{
+                classes: {
+                  input: classes.noBackground,
+                  root: classes.input,
+                  notchedOutline: classes.noBorder
+                }
+              }}
               choices={choices}
             />
           )

@@ -1,10 +1,9 @@
-import { ThemeType } from "@saleor/macaw-ui";
+import { ConfirmButtonTransitionState, ThemeType } from "@saleor/macaw-ui";
 import uniqBy from "lodash/uniqBy";
 import moment from "moment-timezone";
 import { MutationFunction, MutationResult } from "react-apollo";
 import { IntlShape } from "react-intl";
 
-import { ConfirmButtonTransitionState } from "./components/ConfirmButton";
 import { MultiAutocompleteChoiceType } from "./components/MultiAutocompleteSelectField";
 import { StatusType } from "./components/StatusChip/types";
 import { StatusLabelProps } from "./components/StatusLabel";

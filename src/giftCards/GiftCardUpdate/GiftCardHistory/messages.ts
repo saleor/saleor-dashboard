@@ -16,45 +16,70 @@ const giftCardHistoryMessages = defineMessages({
 });
 
 const giftCardHistoryTimelineMessages = defineMessages({
-  giftCardActivated: {
+  activated: {
     defaultMessage: "Gift card was activated by {activatedBy}",
     description: "gift card history message"
   },
-  giftCardBalanceReset: {
+  activatedAnonymous: {
+    defaultMessage: "Gift card was activated",
+    description: "gift card history message"
+  },
+  balanceReset: {
     defaultMessage: "Gift card balance was reset by {resetBy}",
     description: "gift card history message"
   },
-  giftCardBought: {
+  balanceResetAnonymous: {
+    defaultMessage: "Gift card balance was reset by {resetBy}",
+    description: "gift card history message"
+  },
+  bought: {
     defaultMessage: "Gift card was bought in order {orderNumber}",
     description: "gift card history message"
   },
-  giftCardDeactivated: {
+  deactivated: {
     defaultMessage: "Gift card was deactivated by {deactivatedBy}",
     description: "gift card history message"
   },
-  giftCardExpiryDateUpdate: {
+  deactivatedAnonymous: {
+    defaultMessage: "Gift card was deactivated",
+    description: "gift card history message"
+  },
+  expiryDateUpdate: {
     defaultMessage: "Gift card expiry date was updated by {expiryUpdatedBy}",
     description: "gift card history message"
   },
-  giftCardIssued: {
-    defaultMessage: "Gift card was issued by {issuedBy}",
-    description: "dsc"
+  expiryDateUpdateAnonymous: {
+    defaultMessage: "Gift card expiry date was updated",
+    description: "gift card history message"
   },
-  giftCardResent: {
+  issued: {
+    defaultMessage: "Gift card was issued by {issuedBy}",
+    description: "gift card history message"
+  },
+  issuedAnonymous: {
+    defaultMessage: "Gift card was issued",
+    description: "gift card history message"
+  },
+  resent: {
     defaultMessage: "Gift card was resent",
     description: "gift card history message"
   },
-  giftCardSentToCustomer: {
+  sentToCustomer: {
     defaultMessage: "Gift card was sent to customer",
     description: "gift card history message"
   },
-  giftCardTagsUpdated: {
+  tagsUpdated: {
     defaultMessage: "Gift card tags were updated",
     description: "gift card history message"
   },
-  giftCardUsedInOrder: {
+  usedInOrder: {
     defaultMessage:
       "Gift card was used as a payment method on order {orderLink} <buyer>by</buyer>",
+    description: "gift card history message"
+  },
+  usedInOrderAnonymous: {
+    defaultMessage:
+      "Gift card was used as a payment method on order {orderLink}",
     description: "gift card history message"
   }
 });

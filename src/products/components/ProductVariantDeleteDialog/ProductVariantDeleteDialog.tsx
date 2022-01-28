@@ -1,16 +1,13 @@
 import {
-  Button,
   Dialog,
   DialogActions,
   DialogContent,
   DialogContentText,
   DialogTitle
 } from "@material-ui/core";
-import ConfirmButton, {
-  ConfirmButtonTransitionState
-} from "@saleor/components/ConfirmButton";
-import { buttonMessages } from "@saleor/intl";
-import { makeStyles } from "@saleor/macaw-ui";
+import BackButton from "@saleor/components/BackButton";
+import ConfirmButton from "@saleor/components/ConfirmButton";
+import { ConfirmButtonTransitionState, makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
@@ -60,13 +57,10 @@ const ProductVariantDeleteDialog: React.FC<ProductVariantDeleteDialogProps> = pr
         </DialogContentText>
       </DialogContent>
       <DialogActions>
-        <Button onClick={onClose}>
-          <FormattedMessage {...buttonMessages.back} />
-        </Button>
+        <BackButton onClick={onClose} />
         <ConfirmButton
           transitionState={confirmButtonState}
           className={classes.deleteButton}
-          variant="contained"
           onClick={onConfirm}
         >
           <FormattedMessage

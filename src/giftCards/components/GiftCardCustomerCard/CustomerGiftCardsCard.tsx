@@ -1,4 +1,4 @@
-import { Button, Card, CardActions, Dialog } from "@material-ui/core";
+import { Card, CardActions, Dialog } from "@material-ui/core";
 import VerticalSpacer from "@saleor/apps/components/VerticalSpacer";
 import CardTitle from "@saleor/components/CardTitle";
 import CollectionWithDividers from "@saleor/components/CollectionWithDividers";
@@ -8,6 +8,7 @@ import { useCustomerDetails } from "@saleor/customers/hooks/useCustomerDetails";
 import GiftCardCreateDialogContent from "@saleor/giftCards/GiftCardCreateDialog/GiftCardCreateDialogContent";
 import { getExtendedGiftCard } from "@saleor/giftCards/GiftCardUpdate/providers/GiftCardDetailsProvider/utils";
 import { giftCardListUrl } from "@saleor/giftCards/urls";
+import { Button } from "@saleor/macaw-ui";
 import { getFullName } from "@saleor/misc";
 import { mapEdgesToItems } from "@saleor/utils/maps";
 import * as React from "react";
@@ -62,8 +63,7 @@ const CustomerGiftCardsCard: React.FC = () => {
           toolbar={
             !!giftCards?.length && (
               <Button
-                variant="text"
-                color="primary"
+                variant="tertiary"
                 href={viewAllGiftCardsUrl}
                 component={Link}
               >
@@ -81,32 +81,28 @@ const CustomerGiftCardsCard: React.FC = () => {
           />
           <VerticalSpacer spacing={2} />
         </CardTitle>
-        <Skeleton>
-          {!loading && giftCards && (
-            <CollectionWithDividers
-              collection={giftCards}
-              renderItem={giftCard => (
-                <CustomerGiftCardsCardListItem
-                  giftCard={getExtendedGiftCard(giftCard)}
-                />
-              )}
-              withOuterDividers
-            />
-          )}
-        </Skeleton>
+        {!loading && giftCards ? (
+          <CollectionWithDividers
+            collection={giftCards}
+            renderItem={giftCard => (
+              <CustomerGiftCardsCardListItem
+                giftCard={getExtendedGiftCard(giftCard)}
+              />
+            )}
+            withOuterDividers
+          />
+        ) : (
+          <Skeleton />
+        )}
         <CardActions className={classes.cardActions}>
-          <Button
-            variant="text"
-            color="primary"
-            onClick={handleCreateNewCardButton}
-          >
+          <Button variant="tertiary" onClick={handleCreateNewCardButton}>
             <FormattedMessage
               {...messages.customerGiftCardsIssueNewCardButton}
             />
           </Button>
         </CardActions>
       </Card>
-      <Dialog open={openCreateDialog} maxWidth="sm">
+      <Dialog open={openCreateDialog} maxWidth="sm" onClose={closeCreateDialog}>
         <GiftCardCreateDialogContent
           onClose={closeCreateDialog}
           refetchQueries={[CUSTOMER_GIFT_CARD_LIST_QUERY]}

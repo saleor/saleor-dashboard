@@ -1,7 +1,6 @@
-import { IconButton } from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
 import Link from "@saleor/components/Link";
-import { makeStyles } from "@saleor/macaw-ui";
+import { IconButton, makeStyles } from "@saleor/macaw-ui";
 import React, { MutableRefObject } from "react";
 import { MessageDescriptor, useIntl } from "react-intl";
 
@@ -10,8 +9,6 @@ const useStyles = makeStyles(
     container: {
       paddingTop: theme.spacing(1),
       paddingBottom: theme.spacing(1),
-      paddingLeft: theme.spacing(3),
-      paddingRight: theme.spacing(2),
       display: "flex",
       flexDirection: "row",
       justifyContent: "space-between",
@@ -48,7 +45,12 @@ const CardAddItemsFooter: React.FC<CardAddItemsFooterProps> = ({
       <Link data-test-id={testIds.link} onClick={onAdd}>
         {intl.formatMessage(title)}
       </Link>
-      <IconButton data-test-id={testIds.button} color="primary" onClick={onAdd}>
+      <IconButton
+        variant="secondary"
+        data-test-id={testIds.button}
+        color="primary"
+        onClick={onAdd}
+      >
         <AddIcon />
       </IconButton>
       {children}

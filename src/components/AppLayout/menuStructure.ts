@@ -5,6 +5,7 @@ import customerIcon from "@assets/images/menu-customers-icon.svg";
 import discountsIcon from "@assets/images/menu-discounts-icon.svg";
 import homeIcon from "@assets/images/menu-home-icon.svg";
 import ordersIcon from "@assets/images/menu-orders-icon.svg";
+import pagesIcon from "@assets/images/menu-pages-icon.svg";
 import translationIcon from "@assets/images/menu-translation-icon.svg";
 import { configurationMenuUrl } from "@saleor/configuration";
 import { getConfigMenuItemsPermissions } from "@saleor/configuration/utils";
@@ -12,6 +13,7 @@ import { User } from "@saleor/fragments/types/User";
 import { giftCardListUrl } from "@saleor/giftCards/urls";
 import { commonMessages, sectionNames } from "@saleor/intl";
 import { SidebarMenuItem } from "@saleor/macaw-ui";
+import { pageListPath } from "@saleor/pages/urls";
 import { IntlShape } from "react-intl";
 
 import { appsListPath } from "../../apps/urls";
@@ -130,6 +132,14 @@ function createMenuStructure(intl: IntlShape, user: User): SidebarMenuItem[] {
       label: intl.formatMessage(commonMessages.discounts),
       permissions: [PermissionEnum.MANAGE_DISCOUNTS],
       id: "discounts"
+    },
+    {
+      ariaLabel: "pages",
+      iconSrc: pagesIcon,
+      label: intl.formatMessage(sectionNames.pages),
+      permissions: [PermissionEnum.MANAGE_PAGES],
+      id: "pages",
+      url: pageListPath
     },
     {
       ariaLabel: "apps",

@@ -1,21 +1,17 @@
 import { makeStyles } from "@saleor/macaw-ui";
 
 export const useTableStyles = makeStyles(
-  () => ({
-    moneyContainer: {
-      display: "flex",
-      alignItems: "baseline",
-      justifyContent: "flex-end"
-    },
+  theme => ({
     cardCodeContainer: {
       display: "flex",
       alignItems: "baseline"
     },
     colCardCode: {
+      paddingLeft: 0,
       width: 400
     },
     colDelete: {
-      width: 100
+      width: 88
     },
     colBalance: {
       width: 135
@@ -25,11 +21,18 @@ export const useTableStyles = makeStyles(
     },
     row: {
       cursor: "pointer",
-      height: 80,
-      "& td": {
-        padding: "0px 20px",
+      height: 70,
+      "& td, & th": {
         height: "auto"
       }
+    },
+    skeleton: {
+      paddingLeft: 0
+    },
+    toolbar: {
+      display: "flex",
+      gap: theme.spacing(),
+      marginRight: theme.spacing(-0.5)
     }
   }),
   { name: "GiftCardsListTable" }

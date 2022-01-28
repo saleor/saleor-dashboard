@@ -1,4 +1,4 @@
-import { Button, Card, CardContent, Typography } from "@material-ui/core";
+import { ButtonBase, Card, CardContent, Typography } from "@material-ui/core";
 import CardSpacer from "@saleor/components/CardSpacer";
 import CardTitle from "@saleor/components/CardTitle";
 import Container from "@saleor/components/Container";
@@ -6,8 +6,9 @@ import ExternalLink from "@saleor/components/ExternalLink";
 import PageHeader from "@saleor/components/PageHeader";
 import Skeleton from "@saleor/components/Skeleton";
 import { sectionNames } from "@saleor/intl";
-import { Backlink } from "@saleor/macaw-ui";
+import { Backlink, Button } from "@saleor/macaw-ui";
 import React from "react";
+import SVG from "react-inlinesvg";
 import { FormattedMessage, useIntl } from "react-intl";
 import ReactMarkdown from "react-markdown";
 
@@ -51,9 +52,9 @@ export const AppDetailsPage: React.FC<AppDetailsPageProps> = ({
         }
       >
         <Button
+          component="a"
           href={data?.homepageUrl}
-          color="primary"
-          variant="contained"
+          variant="primary"
           data-tc="open-app"
           target="_blank"
         >
@@ -68,32 +69,30 @@ export const AppDetailsPage: React.FC<AppDetailsPageProps> = ({
               href={data.supportUrl}
               target="_blank"
             >
-              <img src={supportIcon} alt="" />
+              <SVG src={supportIcon} />
               <FormattedMessage
                 defaultMessage="Get Support"
                 description="link"
               />
             </ExternalLink>
-            <Button
-              color="primary"
+            <ButtonBase
               className={classes.headerLinkContainer}
+              disableRipple
               onClick={navigateToAppSettings}
             >
-              <img src={settingsIcon} alt="" />
+              <SVG src={settingsIcon} />
 
               <FormattedMessage
                 defaultMessage="Edit settings"
                 description="link"
               />
-            </Button>
-            <Button
-              variant="text"
-              color="primary"
+            </ButtonBase>
+            <ButtonBase
               className={classes.headerLinkContainer}
-              disableFocusRipple
+              disableRipple
               onClick={data.isActive ? onAppDeactivateOpen : onAppActivateOpen}
             >
-              <img src={activateIcon} alt="" />
+              <SVG src={activateIcon} />
               {data?.isActive ? (
                 <FormattedMessage
                   defaultMessage="Deactivate"
@@ -105,7 +104,7 @@ export const AppDetailsPage: React.FC<AppDetailsPageProps> = ({
                   description="link"
                 />
               )}
-            </Button>
+            </ButtonBase>
           </div>
         ) : (
           <Skeleton />

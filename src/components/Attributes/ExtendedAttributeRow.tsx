@@ -1,6 +1,6 @@
-import { Button, Typography } from "@material-ui/core";
+import { Typography } from "@material-ui/core";
 import Grid from "@saleor/components/Grid";
-import { makeStyles } from "@saleor/macaw-ui";
+import { Button, makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 
 const useStyles = makeStyles(
@@ -46,8 +46,7 @@ const ExtendedAttributeRow: React.FC<ExtendedAttributeRowProps> = props => {
           <Button
             className={classes.attributeSectionButton}
             disabled={disabled}
-            variant="text"
-            color="primary"
+            variant="tertiary"
             data-test="button-attribute-selector"
             onClick={onSelect}
           >

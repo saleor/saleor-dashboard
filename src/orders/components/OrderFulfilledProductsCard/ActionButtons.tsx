@@ -1,10 +1,12 @@
-import { Button, CardActions, Typography } from "@material-ui/core";
+import { CardActions, Typography } from "@material-ui/core";
 import { buttonMessages, commonMessages } from "@saleor/intl";
+import { Button } from "@saleor/macaw-ui";
 import { FulfillmentStatus } from "@saleor/types/globalTypes";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
 import { actionButtonsMessages } from "./messages";
+import useStyles from "./styles";
 
 interface AcionButtonsProps {
   status: FulfillmentStatus;
@@ -31,6 +33,8 @@ const ActionButtons: React.FC<AcionButtonsProps> = ({
   onRefund,
   onApprove
 }) => {
+  const classes = useStyles();
+
   const hasTrackingNumber = !!trackingNumber;
 
   if (!statusesToShow.includes(status)) {
@@ -41,7 +45,7 @@ const ActionButtons: React.FC<AcionButtonsProps> = ({
     const cannotFulfill = !orderIsPaid && !fulfillmentAllowUnpaid;
 
     return (
-      <CardActions>
+      <CardActions className={classes.actions}>
         <Button color="primary" onClick={onApprove} disabled={cannotFulfill}>
           <FormattedMessage {...buttonMessages.approve} />
         </Button>
@@ -57,7 +61,7 @@ const ActionButtons: React.FC<AcionButtonsProps> = ({
   if (status === FulfillmentStatus.RETURNED) {
     return (
       <CardActions>
-        <Button color="primary" onClick={onRefund}>
+        <Button variant="primary" onClick={onRefund}>
           <FormattedMessage {...actionButtonsMessages.refund} />
         </Button>
       </CardActions>
@@ -65,14 +69,14 @@ const ActionButtons: React.FC<AcionButtonsProps> = ({
   }
 
   return hasTrackingNumber ? (
-    <CardActions>
-      <Button color="primary" onClick={onTrackingCodeAdd}>
+    <CardActions className={classes.actions}>
+      <Button variant="primary" onClick={onTrackingCodeAdd}>
         <FormattedMessage {...actionButtonsMessages.editTracking} />
       </Button>
     </CardActions>
   ) : (
-    <CardActions>
-      <Button color="primary" onClick={onTrackingCodeAdd}>
+    <CardActions className={classes.actions}>
+      <Button variant="primary" onClick={onTrackingCodeAdd}>
         <FormattedMessage {...actionButtonsMessages.addTracking} />
       </Button>
     </CardActions>
