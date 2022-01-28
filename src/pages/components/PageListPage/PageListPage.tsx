@@ -1,7 +1,7 @@
 import Container from "@saleor/components/Container";
 import PageHeader from "@saleor/components/PageHeader";
 import { sectionNames } from "@saleor/intl";
-import { Backlink, Button } from "@saleor/macaw-ui";
+import { Button } from "@saleor/macaw-ui";
 import { PageListUrlSortField } from "@saleor/pages/urls";
 import { ListActions, PageListProps, SortPage } from "@saleor/types";
 import React from "react";
@@ -15,21 +15,13 @@ export interface PageListPageProps
     ListActions,
     SortPage<PageListUrlSortField> {
   pages: PageList_pages_edges_node[];
-  onBack: () => void;
 }
 
-const PageListPage: React.FC<PageListPageProps> = ({
-  onAdd,
-  onBack,
-  ...listProps
-}) => {
+const PageListPage: React.FC<PageListPageProps> = ({ onAdd, ...listProps }) => {
   const intl = useIntl();
 
   return (
     <Container>
-      <Backlink onClick={onBack}>
-        {intl.formatMessage(sectionNames.configuration)}
-      </Backlink>
       <PageHeader title={intl.formatMessage(sectionNames.pages)}>
         <Button onClick={onAdd} variant="primary" data-test-id="createPage">
           <FormattedMessage defaultMessage="Create page" description="button" />
