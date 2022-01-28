@@ -41,7 +41,7 @@ export const PERMISSIONS = {
     parent: configurationAsParent,
     permissionSelectors: [
       CONFIGURATION_SELECTORS.pageTypes,
-      menuSelectors.LEFT_MENU_SELECTORS.pages
+      CONFIGURATION_SELECTORS.pages
     ]
   },
   plugin: {
