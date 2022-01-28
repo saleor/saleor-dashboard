@@ -102,18 +102,18 @@ const WebhookDetailsPage: React.FC<WebhookDetailsPageProps> = ({
                 />
               </div>
               <div>
+                <WebhookStatus
+                  data={data.isActive}
+                  disabled={disabled}
+                  onChange={change}
+                />
+                <FormSpacer />
                 <WebhookEvents
                   data={data}
                   syncEventsChoices={syncEventsChoices}
                   asyncEventsChoices={asyncEventsChoices}
                   onSyncEventChange={handleSyncEventsSelect}
                   onAsyncEventChange={handleAsyncEventsSelect}
-                />
-                <FormSpacer />
-                <WebhookStatus
-                  data={data.isActive}
-                  disabled={disabled}
-                  onChange={change}
                 />
               </div>
             </Grid>
