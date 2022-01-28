@@ -63,40 +63,6 @@ export interface TableCellHeaderProps extends TableCellProps {
   disabled?: boolean;
 }
 
-// const TableCellHeader: React.FC<TableCellHeaderProps> = props => {
-//   const classes = useStyles(props);
-//   const {
-//     arrowPosition,
-//     children,
-//     className,
-//     direction,
-//     textAlign,
-//     disabled = false,
-//     onClick,
-//     title,
-//     ...rest
-//   } = props;
-
-//   return (
-//     <TableCell
-//       {...rest}
-//       onClick={e => {
-//         if (disabled || !onClick) {
-//           e.preventDefault();
-//         } else {
-//           onClick(e);
-//         }
-//       }}
-//       className={classNames(classes.root, className, {
-//         [classes.disabled]: disabled,
-//         [classes.notSortable]: !onClick
-//       })}
-//     >
-//       <div
-//         className={classNames(classes.labelContainer, {
-//           [classes.labelContainerActive]: !!direction && !!arrowPosition,
-//           [classes.labelContainerCenter]: textAlign === "center",
-//           [classes.labelContainerRight]: textAlign === "right"
 const TableCellHeader = React.forwardRef<unknown, TableCellHeaderProps>(
   (props, ref) => {
     const classes = useStyles(props);
