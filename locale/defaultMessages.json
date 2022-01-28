@@ -6931,6 +6931,10 @@
     "context": "window title",
     "string": "Create Variants"
   },
+  "src_dot_products_dot_views_dot_variantCreatedSuccess": {
+    "context": "variant created success message",
+    "string": "Variant created"
+  },
   "src_dot_properties": {
     "string": "Properties"
   },
