@@ -24,7 +24,7 @@ import {
 } from "../../support/pages/catalog/categoriesPage";
 
 filterTests({ definedTags: ["all"] }, () => {
-  describe("Categories", () => {
+  describe("As an admin I want to manage categories", () => {
     const startsWith = "CyCategories";
     const name = `${startsWith}${faker.datatype.number()}`;
 
