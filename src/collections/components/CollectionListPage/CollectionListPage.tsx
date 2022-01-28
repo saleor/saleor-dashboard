@@ -1,6 +1,7 @@
 import { Card } from "@material-ui/core";
 import { CollectionListUrlSortField } from "@saleor/collections/urls";
 import { Container } from "@saleor/components/Container";
+import { getByName } from "@saleor/components/Filter/utils";
 import FilterBar from "@saleor/components/FilterBar";
 import PageHeader from "@saleor/components/PageHeader";
 import { sectionNames } from "@saleor/intl";
@@ -57,6 +58,8 @@ const CollectionListPage: React.FC<CollectionListPageProps> = ({
   const intl = useIntl();
   const filterStructure = createFilterStructure(intl, filterOpts);
 
+  const filterDependency = filterStructure.find(getByName("channel"));
+
   return (
     <Container>
       <PageHeader title={intl.formatMessage(sectionNames.collections)}>
@@ -97,6 +100,7 @@ const CollectionListPage: React.FC<CollectionListPageProps> = ({
           disabled={disabled}
           channelsCount={channelsCount}
           selectedChannelId={selectedChannelId}
+          filterDependency={filterDependency}
           {...listProps}
         />
       </Card>
