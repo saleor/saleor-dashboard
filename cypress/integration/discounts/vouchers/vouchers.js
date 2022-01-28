@@ -4,25 +4,16 @@
 import faker from "faker";
 
 import { BUTTON_SELECTORS } from "../../../elements/shared/button-selectors";
-import { urlList, voucherDetailsUrl } from "../../../fixtures/urlList";
-import { ONE_PERMISSION_USERS } from "../../../fixtures/users";
+import { voucherDetailsUrl } from "../../../fixtures/urlList";
 import { createChannel } from "../../../support/api/requests/Channels";
-import { completeCheckout } from "../../../support/api/requests/Checkout";
 import * as channelsUtils from "../../../support/api/utils/channelsUtils";
 import {
   createVoucherInChannel,
   deleteVouchersStartsWith
 } from "../../../support/api/utils/discounts/vouchersUtils";
-import {
-  addPayment,
-  createCheckoutWithVoucher
-} from "../../../support/api/utils/ordersUtils";
+import { createCheckoutWithVoucher } from "../../../support/api/utils/ordersUtils";
 import * as productsUtils from "../../../support/api/utils/products/productsUtils";
 import filterTests from "../../../support/filterTests";
-import {
-  createVoucher,
-  discountOptions
-} from "../../../support/pages/discounts/vouchersPage";
 
 filterTests({ definedTags: ["all"] }, () => {
   describe("Vouchers discounts", () => {
@@ -65,118 +56,6 @@ filterTests({ definedTags: ["all"] }, () => {
         });
     });
 
-    it("should create percentage voucher", () => {
-      const voucherValue = 50;
-      const voucherCode = `${startsWith}${faker.datatype.number()}`;
-      const expectedAmount =
-        (productPrice * voucherValue) / 100 + shippingPrice;
-      let checkout;
-
-      loginAndCreateCheckoutForVoucherWithDiscount(
-        discountOptions.PERCENTAGE,
-        voucherValue,
-        voucherCode
-      )
-        .then(amount => {
-          expect(amount).to.be.eq(expectedAmount);
-          createCheckoutForCreatedVoucher(voucherCode);
-        })
-        .then(resp => {
-          expect(resp.addPromoCodeResp.checkout.totalPrice.gross.amount).to.eq(
-            expectedAmount
-          );
-          checkout = resp.checkout;
-          addPayment(checkout.id);
-        })
-        .then(() => {
-          completeCheckout(checkout.id);
-        })
-        .then(({ order }) => {
-          expect(order.id).to.be.ok;
-        });
-    });
-
-    it("should create fixed price voucher", () => {
-      const voucherValue = 50;
-      const voucherCode = `${startsWith}${faker.datatype.number()}`;
-      const expectedAmount = productPrice + shippingPrice - voucherValue;
-      let checkout;
-
-      loginAndCreateCheckoutForVoucherWithDiscount(
-        discountOptions.FIXED,
-        voucherValue,
-        voucherCode
-      )
-        .then(amount => {
-          expect(amount).to.be.eq(expectedAmount);
-          createCheckoutForCreatedVoucher(voucherCode);
-        })
-        .then(resp => {
-          expect(resp.addPromoCodeResp.checkout.totalPrice.gross.amount).to.eq(
-            expectedAmount
-          );
-          checkout = resp.checkout;
-          addPayment(checkout.id);
-        })
-        .then(() => {
-          completeCheckout(checkout.id);
-        })
-        .then(({ order }) => {
-          expect(order.id).to.be.ok;
-        });
-    });
-
-    it("should create free shipping voucher", () => {
-      const voucherCode = `${startsWith}${faker.datatype.number()}`;
-      const expectedAmount = productPrice;
-      let checkout;
-
-      loginAndCreateCheckoutForVoucherWithDiscount(
-        discountOptions.SHIPPING,
-        null,
-        voucherCode
-      )
-        .then(amount => {
-          expect(amount).to.be.eq(expectedAmount);
-          createCheckoutForCreatedVoucher(voucherCode);
-        })
-        .then(resp => {
-          expect(resp.addPromoCodeResp.checkout.totalPrice.gross.amount).to.eq(
-            expectedAmount
-          );
-          checkout = resp.checkout;
-          addPayment(checkout.id);
-        })
-        .then(() => {
-          completeCheckout(checkout.id);
-        })
-        .then(({ order }) => {
-          expect(order.id).to.be.ok;
-        });
-    });
-
-    it("should create voucher not available for selected channel", () => {
-      const randomName = `${startsWith}${faker.datatype.number()}`;
-      const voucherValue = 50;
-
-      cy.clearSessionData()
-        .loginUserViaRequest()
-        .visit(urlList.vouchers);
-      cy.softExpectSkeletonIsVisible();
-      createVoucher({
-        voucherCode: randomName,
-        voucherValue,
-        discountOption: discountOptions.PERCENTAGE,
-        channelName: createdChannel.name
-      });
-      createCheckoutForCreatedVoucher(randomName).then(
-        ({ addPromoCodeResp }) => {
-          const errorField = addPromoCodeResp.checkoutErrors[0].field;
-          expect(errorField).to.be.eq("promoCode");
-        }
-      );
-    });
-
     it("should delete voucher", () => {
       const name = `${startsWith}${faker.datatype.number()}`;
       const voucherValue = 50;
@@ -217,26 +96,6 @@ filterTests({ definedTags: ["all"] }, () => {
         voucherCode,
         auth: "token"
       });
-    }
-
-    function loginAndCreateCheckoutForVoucherWithDiscount(
-      discount,
-      voucherValue,
-      voucherCode
-    ) {
-      cy.clearSessionData()
-        .loginUserViaRequest("auth", ONE_PERMISSION_USERS.discount)
-        .visit(urlList.vouchers);
-      cy.softExpectSkeletonIsVisible();
-      createVoucher({
-        voucherCode,
-        voucherValue,
-        discountOption: discount,
-        channelName: defaultChannel.name
-      });
-      return createCheckoutForCreatedVoucher(voucherCode).its(
-        "addPromoCodeResp.checkout.totalPrice.gross.amount"
-      );
     }
   });
 });
