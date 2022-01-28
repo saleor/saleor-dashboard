@@ -83,3 +83,29 @@ export function deleteCategory(categoryId) {
   }`;
   return cy.sendRequestWithQuery(mutation);
 }
+
+export function updateCategoryTranslation({
+  categoryTranslateId,
+  languageCode,
+  seoTitle,
+  seoDescription,
+  name,
+  description
+}) {
+  const mutation = `mutation Update_fields{
+    categoryTranslate (id:"${categoryTranslateId}",languageCode:${languageCode},input:{
+      seoTitle:"${seoTitle}",
+      seoDescription:"${seoDescription}",
+      name:"${name}"
+      description: "{\\"time\\":1642670800306,\\"blocks\\":[{\\"id\\":\\"l8oQJqyxa3\\",\\"type\\":\\"paragraph\\",\\"data\\":{\\"text\\":\\"${description}\\"}}],\\"version\\":\\"2.22.2\\"}"
+    })
+    {
+      errors{
+        field
+        message
+      }
+    }
+  }
+  `;
+  return cy.sendRequestWithQuery(mutation);
+}

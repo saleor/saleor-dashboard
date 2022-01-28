@@ -119,7 +119,7 @@ filterTests({ definedTags: ["all"] }, () => {
         })
         .then(({ errors }) => {
           expect(errors[0].field, "expect error in shipping method").to.be.eq(
-            "shippingMethod"
+            "shippingMethodId"
           );
         });
     });

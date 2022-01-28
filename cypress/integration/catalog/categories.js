@@ -73,7 +73,7 @@ filterTests({ definedTags: ["all"] }, () => {
       cy.clearSessionData().loginUserViaRequest();
     });
 
-    it("As an admin I should be able to create category", () => {
+    it("should be able to create category. TC: SALEOR_0201", () => {
       const categoryName = `${startsWith}${faker.datatype.number()}`;
 
       cy.visit(urlList.categories)
@@ -91,7 +91,7 @@ filterTests({ definedTags: ["all"] }, () => {
         });
     });
 
-    it("As an admin I should be able to create category as subcategory", () => {
+    it("should be able to create category as subcategory. TC: SALEOR_0202", () => {
       const categoryName = `${startsWith}${faker.datatype.number()}`;
 
       cy.visit(categoryDetailsUrl(category.id))
@@ -106,7 +106,7 @@ filterTests({ definedTags: ["all"] }, () => {
       });
     });
 
-    it("As an admin I should be able to add product to category", () => {
+    it("should be able to add product to category. TC: SALEOR_0203", () => {
       cy.visit(categoryDetailsUrl(category.id))
         .get(CATEGORY_DETAILS.productsTab)
         .click()
@@ -116,7 +116,7 @@ filterTests({ definedTags: ["all"] }, () => {
         .should("include", urlList.addProduct);
     });
 
-    it("As an admin I should be able to add remove to category", () => {
+    it("should be able to remove product from category. TC: SALEOR_0204", () => {
       cy.visit(categoryDetailsUrl(category.id))
         .get(CATEGORY_DETAILS.productsTab)
         .click();
@@ -137,7 +137,7 @@ filterTests({ definedTags: ["all"] }, () => {
       });
     });
 
-    it("As an admin I should be able to enter category details page", () => {
+    it("should be able to enter category details page. TC: SALEOR_0205", () => {
       cy.visit(urlList.categories)
         .get(SHARED_ELEMENTS.searchInput)
         .type(category.name);
@@ -145,7 +145,7 @@ filterTests({ definedTags: ["all"] }, () => {
       cy.contains(SHARED_ELEMENTS.header, category.name).should("be.visible");
     });
 
-    it("As an admin I should be able to delete category", () => {
+    it("should be able to delete category. TC: SALEOR_0206", () => {
       const categoryName = `${startsWith}${faker.datatype.number()}`;
 
       createCategoryRequest({ name: categoryName }).then(categoryResp => {
@@ -160,7 +160,7 @@ filterTests({ definedTags: ["all"] }, () => {
       });
     });
 
-    it("As an admin I should be able to update category", () => {
+    it("should be able to update category. TC: SALEOR_0207", () => {
       const categoryName = `${startsWith}${faker.datatype.number()}`;
       const updatedName = `${startsWith}updatedCategory`;
 
@@ -180,7 +180,7 @@ filterTests({ definedTags: ["all"] }, () => {
         });
     });
 
-    it("As an admin I should be able to delete several categories on categories list page", () => {
+    it("should be able to delete several categories on categories list page. TC: SALEOR_0209", () => {
       const firstCategoryName = `${startsWith}${faker.datatype.number()}`;
       const secondCategoryName = `${startsWith}${faker.datatype.number()}`;
       let firstCategory;
@@ -210,7 +210,7 @@ filterTests({ definedTags: ["all"] }, () => {
       });
     });
 
-    it("As an admin I should be able to remove subcategory from category", () => {
+    it("should be able to remove subcategory from category. TC: SALEOR_0208", () => {
       const subCategoryName = `${startsWith}${faker.datatype.number()}`;
       const mainCategoryName = `${startsWith}${faker.datatype.number()}`;
       let subCategory;

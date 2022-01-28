@@ -43,6 +43,10 @@ filterTests({ definedTags: ["all"] }, () => {
       });
     });
 
+    beforeEach(() => {
+      cy.clearSessionData().loginUserViaRequest();
+    });
+
     it("should use attribute as filter", () => {
       updateAttribute({
         attributeId: attribute.id,

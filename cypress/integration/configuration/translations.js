@@ -3,84 +3,87 @@
 
 import faker from "faker";
 
-import { BUTTON_SELECTORS } from "../../elements/shared/button-selectors";
-import { SHARED_ELEMENTS } from "../../elements/shared/sharedElements";
-import { ELEMENT_TRANSLATION } from "../../elements/translations/element-translation";
-import { LANGUAGES_LIST } from "../../elements/translations/languages-list";
-import { urlList } from "../../fixtures/urlList";
 import {
   createCategory,
-  getCategory
+  getCategory,
+  updateCategoryTranslation
 } from "../../support/api/requests/Category";
 import { deleteCategoriesStartsWith } from "../../support/api/utils/catalog/categoryUtils";
 import filterTests from "../../support/filterTests";
+import { updateTranslationToCategory } from "../../support/pages/translationsPage";
 
 filterTests({ definedTags: ["all"], version: "3.0.0" }, () => {
-  describe("Tests for translations", () => {
+  describe("As an admin I want to manage translations", () => {
     const startsWith = "Translations";
     const randomNumber = faker.datatype.number();
-    const name = `${startsWith}${randomNumber}`;
 
     let category;
 
     before(() => {
       cy.clearSessionData().loginUserViaRequest();
       deleteCategoriesStartsWith(startsWith);
-      createCategory({ name }).then(categoryResp => (category = categoryResp));
+      createCategory({ name: startsWith }).then(
+        categoryResp => (category = categoryResp)
+      );
     });
 
     beforeEach(() => {
       cy.clearSessionData().loginUserViaRequest();
     });
 
-    it("should create translation", () => {
-      cy.visit(urlList.translations)
-        .get(LANGUAGES_LIST.polishLanguageButton)
-        .click()
-        .findElementOnTable(category.name);
-      cy.get(ELEMENT_TRANSLATION.editNameButton)
-        .click()
-        .get(SHARED_ELEMENTS.skeleton)
-        .should("not.exist")
-        .get(ELEMENT_TRANSLATION.translationInputField)
-        .type(`TranslatedName${randomNumber}`)
-        .get(BUTTON_SELECTORS.confirm)
-        .click()
-        .confirmationMessageShouldDisappear()
-        .get(ELEMENT_TRANSLATION.editDescriptionButton)
-        .click()
-        .get(SHARED_ELEMENTS.richTextEditor.loader)
-        .should("not.exist")
-        .get(ELEMENT_TRANSLATION.translationInputField)
-        .type(`TranslatedDescription${randomNumber}`)
-        .wait(500)
-        .get(BUTTON_SELECTORS.confirm)
-        .click()
-        .confirmationMessageShouldDisappear()
-        .get(ELEMENT_TRANSLATION.editSeoTitleButton)
-        .click()
-        .get(ELEMENT_TRANSLATION.translationInputField)
-        .type(`TranslatedSeoTitle${randomNumber}`)
-        .get(BUTTON_SELECTORS.confirm)
-        .click()
-        .confirmationMessageShouldDisappear()
-        .get(ELEMENT_TRANSLATION.editSeoDescriptionButton)
-        .click()
-        .get(ELEMENT_TRANSLATION.translationInputField)
-        .type(`TranslatedSeoDescription${randomNumber}`)
-        .get(BUTTON_SELECTORS.confirm)
-        .click()
-        .confirmationMessageShouldDisappear();
-      getCategory(category.id, "PL").then(({ translation }) => {
-        expect(translation.name).to.eq(`TranslatedName${randomNumber}`);
-        expect(translation.description).to.includes(
-          `TranslatedDescription${randomNumber}`
-        );
-        expect(translation.seoTitle).to.eq(`TranslatedSeoTitle${randomNumber}`);
-        expect(translation.seoDescription).to.eq(
-          `TranslatedSeoDescription${randomNumber}`
-        );
+    it("As an admin I want to create translation", () => {
+      const translatedName = `TranslatedName${randomNumber}`;
+      const translatedDescription = `TranslatedDescription${randomNumber}`;
+      const translatedSeoTitle = `TranslatedSeoTitle${randomNumber}`;
+      const translatedSeoDescription = `TranslatedSeoDescription${randomNumber}`;
+
+      updateTranslationToCategory({
+        categoryName: category.name,
+        translatedName,
+        translatedDescription,
+        translatedSeoTitle,
+        translatedSeoDescription
       });
+      getCategory(category.id, "PL").then(({ translation }) => {
+        expect(translation.name).to.eq(translatedName);
+        expect(translation.description).to.includes(translatedDescription);
+        expect(translation.seoTitle).to.eq(translatedSeoTitle);
+        expect(translation.seoDescription).to.eq(translatedSeoDescription);
+      });
+    });
+
+    it("As an admin I want to update translation", () => {
+      const randomNumber = faker.datatype.number();
+      const startWithUpdate = `Translations_Update_${randomNumber}`;
+      const seoTitleUpdate = `${startWithUpdate}_seoTitle`;
+      const seoDescriptionUpdate = `${startWithUpdate}_seoDescription`;
+      const nameUpdate = `${startWithUpdate}_nameUpdate`;
+      const descriptionUpdate = `${startWithUpdate}_descryptionUpdate`;
+
+      updateCategoryTranslation({
+        categoryTranslateId: category.id,
+        languageCode: "PL",
+        seoTitle: "test",
+        seoDescription: "test",
+        name: "test",
+        description: "test"
+      })
+        .then(() => {
+          updateTranslationToCategory({
+            categoryName: category.name,
+            translatedName: nameUpdate,
+            translatedDescription: descriptionUpdate,
+            translatedSeoTitle: seoTitleUpdate,
+            translatedSeoDescription: seoDescriptionUpdate
+          });
+          getCategory(category.id, "PL");
+        })
+        .then(({ translation }) => {
+          expect(translation.name).to.eq(nameUpdate);
+          expect(translation.description).to.includes(descriptionUpdate);
+          expect(translation.seoTitle).to.eq(seoTitleUpdate);
+          expect(translation.seoDescription).to.includes(seoDescriptionUpdate);
+        });
     });
   });
 });
