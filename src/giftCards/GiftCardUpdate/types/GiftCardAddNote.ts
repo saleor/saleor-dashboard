@@ -90,7 +90,7 @@ export interface GiftCardAddNote_giftCardAddNote_giftCard {
   initialBalance: GiftCardAddNote_giftCardAddNote_giftCard_initialBalance | null;
   currentBalance: GiftCardAddNote_giftCardAddNote_giftCard_currentBalance | null;
   id: string;
-  tags: GiftCardAddNote_giftCardAddNote_giftCard_tags[] | null;
+  tags: GiftCardAddNote_giftCardAddNote_giftCard_tags[];
 }
 
 export interface GiftCardAddNote_giftCardAddNote_event_user {

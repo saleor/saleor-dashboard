@@ -699,7 +699,7 @@ export interface OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_o
   undiscountedTotal: OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_undiscountedTotal;
   user: OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_user | null;
   userEmail: string | null;
-  shippingMethods: OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_shippingMethods[];
+  shippingMethods: (OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_shippingMethods | null)[] | null;
   invoices: (OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_invoices | null)[] | null;
   channel: OrderFulfillmentRefundProducts_orderFulfillmentRefundProducts_order_channel;
 }

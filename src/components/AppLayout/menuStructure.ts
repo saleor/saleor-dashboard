@@ -8,6 +8,7 @@ import ordersIcon from "@assets/images/menu-orders-icon.svg";
 import pagesIcon from "@assets/images/menu-pages-icon.svg";
 import translationIcon from "@assets/images/menu-translation-icon.svg";
 import {
+  extensionMountPoints,
   mapToExtensionsItems,
   useExtensions
 } from "@saleor/apps/useExtensions";
@@ -28,11 +29,7 @@ import { saleListUrl, voucherListUrl } from "../../discounts/urls";
 import { orderDraftListUrl, orderListUrl } from "../../orders/urls";
 import { productListUrl } from "../../products/urls";
 import { languageListUrl } from "../../translations/urls";
-import {
-  AppExtensionTypeEnum,
-  AppExtensionViewEnum,
-  PermissionEnum
-} from "../../types/globalTypes";
+import { PermissionEnum } from "../../types/globalTypes";
 
 export interface FilterableMenuItem extends Omit<SidebarMenuItem, "children"> {
   children?: FilterableMenuItem[];
@@ -41,13 +38,13 @@ export interface FilterableMenuItem extends Omit<SidebarMenuItem, "children"> {
 
 function useMenuStructure(intl: IntlShape, user: User): SidebarMenuItem[] {
   const {
-    catalog,
-    orders,
-    customers,
-    discounts,
-    // pages, // waiting for macaw-ui pr to be merged
-    translations
-  } = useExtensions(AppExtensionViewEnum.ALL, AppExtensionTypeEnum.NAVIGATION);
+    NAVIGATION_CATALOG,
+    NAVIGATION_CUSTOMERS,
+    NAVIGATION_DISCOUNTS,
+    NAVIGATION_ORDERS,
+    NAVIGATION_PAGES,
+    NAVIGATION_TRANSLATIONS
+  } = useExtensions(extensionMountPoints.NAVIGATION_SIDEBAR);
 
   const extenstionHeaderItem = {
     id: "extensions",
@@ -93,7 +90,7 @@ function useMenuStructure(intl: IntlShape, user: User): SidebarMenuItem[] {
           url: giftCardListUrl(),
           permissions: [PermissionEnum.MANAGE_GIFT_CARD]
         },
-        ...mapToExtensionsItems(catalog, extenstionHeaderItem)
+        ...mapToExtensionsItems(NAVIGATION_CATALOG, extenstionHeaderItem)
       ],
       iconSrc: catalogIcon,
       label: intl.formatMessage(commonMessages.catalog),
@@ -120,7 +117,7 @@ function useMenuStructure(intl: IntlShape, user: User): SidebarMenuItem[] {
           id: "order drafts",
           url: orderDraftListUrl()
         },
-        ...mapToExtensionsItems(orders, extenstionHeaderItem)
+        ...mapToExtensionsItems(NAVIGATION_ORDERS, extenstionHeaderItem)
       ],
       iconSrc: ordersIcon,
       label: intl.formatMessage(sectionNames.orders),
@@ -129,7 +126,9 @@ function useMenuStructure(intl: IntlShape, user: User): SidebarMenuItem[] {
     },
     {
       ariaLabel: "customers",
-      children: [...mapToExtensionsItems(customers, extenstionHeaderItem)],
+      children: [
+        ...mapToExtensionsItems(NAVIGATION_CUSTOMERS, extenstionHeaderItem)
+      ],
       iconSrc: customerIcon,
       label: intl.formatMessage(sectionNames.customers),
       permissions: [PermissionEnum.MANAGE_USERS],
@@ -152,7 +151,7 @@ function useMenuStructure(intl: IntlShape, user: User): SidebarMenuItem[] {
           id: "vouchers",
           url: voucherListUrl()
         },
-        ...mapToExtensionsItems(discounts, extenstionHeaderItem)
+        ...mapToExtensionsItems(NAVIGATION_DISCOUNTS, extenstionHeaderItem)
       ],
       iconSrc: discountsIcon,
       label: intl.formatMessage(commonMessages.discounts),
@@ -161,6 +160,9 @@ function useMenuStructure(intl: IntlShape, user: User): SidebarMenuItem[] {
     },
     {
       ariaLabel: "pages",
+      children: [
+        ...mapToExtensionsItems(NAVIGATION_PAGES, extenstionHeaderItem)
+      ],
       iconSrc: pagesIcon,
       label: intl.formatMessage(sectionNames.pages),
       permissions: [PermissionEnum.MANAGE_PAGES],
@@ -177,7 +179,9 @@ function useMenuStructure(intl: IntlShape, user: User): SidebarMenuItem[] {
     },
     {
       ariaLabel: "translations",
-      children: [...mapToExtensionsItems(translations, extenstionHeaderItem)],
+      children: [
+        ...mapToExtensionsItems(NAVIGATION_TRANSLATIONS, extenstionHeaderItem)
+      ],
       iconSrc: translationIcon,
       label: intl.formatMessage(sectionNames.translations),
       permissions: [PermissionEnum.MANAGE_TRANSLATIONS],

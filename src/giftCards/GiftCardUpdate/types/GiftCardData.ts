@@ -81,5 +81,5 @@ export interface GiftCardData {
   initialBalance: GiftCardData_initialBalance | null;
   currentBalance: GiftCardData_currentBalance | null;
   id: string;
-  tags: GiftCardData_tags[] | null;
+  tags: GiftCardData_tags[];
 }

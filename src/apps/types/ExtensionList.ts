@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { AppExtensionFilterInput, AppExtensionViewEnum, AppExtensionTypeEnum, AppExtensionTargetEnum, AppExtensionOpenAsEnum, PermissionEnum } from "./../../types/globalTypes";
+import { AppExtensionFilterInput, AppExtensionMountEnum, AppExtensionTargetEnum, PermissionEnum } from "./../../types/globalTypes";
 
 // ====================================================
 // GraphQL query operation: ExtensionList
@@ -19,10 +19,8 @@ export interface ExtensionList_appExtensions_edges_node {
   id: string;
   label: string;
   url: string;
-  view: AppExtensionViewEnum;
-  type: AppExtensionTypeEnum;
+  mount: AppExtensionMountEnum;
   target: AppExtensionTargetEnum;
-  openAs: AppExtensionOpenAsEnum;
   accessToken: string | null;
   permissions: ExtensionList_appExtensions_edges_node_permissions[];
 }

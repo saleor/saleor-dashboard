@@ -81,10 +81,8 @@ export const extensionList = gql`
           id
           label
           url
-          view
-          type
+          mount
           target
-          openAs
           accessToken
           permissions {
             code

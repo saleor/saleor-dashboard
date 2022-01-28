@@ -1,5 +1,9 @@
 import { Card } from "@material-ui/core";
-import { mapToMenuItems, useExtensions } from "@saleor/apps/useExtensions";
+import {
+  extensionMountPoints,
+  mapToMenuItems,
+  useExtensions
+} from "@saleor/apps/useExtensions";
 import { ButtonWithSelect } from "@saleor/components/ButtonWithSelect";
 import CardMenu from "@saleor/components/CardMenu";
 import ColumnPicker, {
@@ -24,10 +28,6 @@ import {
   PageListProps,
   SortPage
 } from "@saleor/types";
-import {
-  AppExtensionTypeEnum,
-  AppExtensionViewEnum
-} from "@saleor/types/globalTypes";
 import { hasLimits, isLimitReached } from "@saleor/utils/limits";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -134,13 +134,13 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
   ];
 
   const limitReached = isLimitReached(limits, "productVariants");
-  const { create, moreActions } = useExtensions(
-    AppExtensionViewEnum.PRODUCT,
-    AppExtensionTypeEnum.OVERVIEW
-  );
+  const {
+    PRODUCT_OVERVIEW_CREATE,
+    PRODUCT_OVERVIEW_MORE_ACTIONS
+  } = useExtensions(extensionMountPoints.PRODUCT_LIST);
 
-  const extensionMenuItems = mapToMenuItems(moreActions);
-  const extensionCreateButtonItems = mapToMenuItems(create);
+  const extensionMenuItems = mapToMenuItems(PRODUCT_OVERVIEW_MORE_ACTIONS);
+  const extensionCreateButtonItems = mapToMenuItems(PRODUCT_OVERVIEW_CREATE);
 
   return (
     <Container>

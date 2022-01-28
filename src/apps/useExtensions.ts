@@ -1,8 +1,6 @@
 import { FilterableMenuItem } from "@saleor/components/AppLayout/menuStructure";
 import {
-  AppExtensionTargetEnum,
-  AppExtensionTypeEnum,
-  AppExtensionViewEnum,
+  AppExtensionMountEnum,
   PermissionEnum
 } from "@saleor/types/globalTypes";
 import { mapEdgesToItems } from "@saleor/utils/maps";
@@ -16,35 +14,42 @@ interface Extension {
   accessToken: string;
   permissions: PermissionEnum[];
   label: string;
+  mount: AppExtensionMountEnum;
   url: string;
   open(): void;
 }
-type Target =
-  | "create"
-  | "moreActions"
-  | "catalog"
-  | "orders"
-  | "customers"
-  | "discounts"
-  | "pages"
-  | "translations";
+export const extensionMountPoints = {
+  PRODUCT_LIST: [
+    AppExtensionMountEnum.PRODUCT_OVERVIEW_CREATE,
+    AppExtensionMountEnum.PRODUCT_OVERVIEW_MORE_ACTIONS
+  ],
+  PRODUCT_DETAILS: [AppExtensionMountEnum.PRODUCT_DETAILS_MORE_ACTIONS],
+  NAVIGATION_SIDEBAR: [
+    AppExtensionMountEnum.NAVIGATION_CATALOG,
+    AppExtensionMountEnum.NAVIGATION_CUSTOMERS,
+    AppExtensionMountEnum.NAVIGATION_DISCOUNTS,
+    AppExtensionMountEnum.NAVIGATION_ORDERS,
+    AppExtensionMountEnum.NAVIGATION_PAGES,
+    AppExtensionMountEnum.NAVIGATION_TRANSLATIONS
+  ]
+};
 
 const filterAndMapToTarget = (
   extensions: ExtensionList_appExtensions_edges_node[],
-  target: AppExtensionTargetEnum,
   openApp: (appData: AppData) => void
 ): Extension[] =>
-  extensions
-    .filter(app => app.target === target)
-    .map(({ id, accessToken, permissions, url, label, openAs }) => ({
+  extensions.map(
+    ({ id, accessToken, permissions, url, label, mount, target }) => ({
       id,
       accessToken,
       permissions: permissions.map(({ code }) => code),
       url,
       label,
+      mount,
       open: () =>
-        openApp({ id, appToken: accessToken, src: url, label, openAs })
-    }));
+        openApp({ id, appToken: accessToken, src: url, label, target })
+    })
+  );
 
 export const mapToMenuItems = (extensions: Extension[]) =>
   extensions.map(({ label, id, open }) => ({
@@ -72,71 +77,86 @@ export const mapToExtensionsItems = (
   return items;
 };
 
-export const useExtensions = (
-  view: AppExtensionViewEnum,
-  type: AppExtensionTypeEnum
-): Record<Target, Extension[]> => {
-  const { openApp } = useExternalApp();
+const useExtensionsItems = (
+  mount: AppExtensionMountEnum,
+  skip: (mount: AppExtensionMountEnum) => boolean,
+  openApp: (appData: AppData) => void
+) => {
   const { data } = useExtensionList({
     fetchPolicy: "cache-first",
     variables: {
       filter: {
-        view,
-        type
+        mount
       }
-    }
+    },
+    skip: skip(mount)
   });
   const extensions = mapEdgesToItems(data?.appExtensions) || [];
+  return filterAndMapToTarget(extensions, openApp);
+};
 
-  const targetCreate = filterAndMapToTarget(
-    extensions,
-    AppExtensionTargetEnum.CREATE,
+export const useExtensions = (
+  mountList: AppExtensionMountEnum[]
+): Record<AppExtensionMountEnum, Extension[]> => {
+  const skip = (mount: AppExtensionMountEnum) => !mountList.includes(mount);
+
+  const { openApp } = useExternalApp();
+
+  const navigationCatalog = useExtensionsItems(
+    AppExtensionMountEnum.NAVIGATION_CATALOG,
+    skip,
     openApp
   );
-  const targetMoreActions = filterAndMapToTarget(
-    extensions,
-    AppExtensionTargetEnum.MORE_ACTIONS,
+  const navigationCustomers = useExtensionsItems(
+    AppExtensionMountEnum.NAVIGATION_CUSTOMERS,
+    skip,
     openApp
   );
-  const targetCatalog = filterAndMapToTarget(
-    extensions,
-    AppExtensionTargetEnum.CATALOG,
+  const navigationDiscounts = useExtensionsItems(
+    AppExtensionMountEnum.NAVIGATION_DISCOUNTS,
+    skip,
     openApp
   );
-  const targetOrders = filterAndMapToTarget(
-    extensions,
-    AppExtensionTargetEnum.ORDERS,
+  const navigationOrders = useExtensionsItems(
+    AppExtensionMountEnum.NAVIGATION_ORDERS,
+    skip,
     openApp
   );
-  const targetCustomers = filterAndMapToTarget(
-    extensions,
-    AppExtensionTargetEnum.CUSTOMERS,
+  const navigationPages = useExtensionsItems(
+    AppExtensionMountEnum.NAVIGATION_PAGES,
+    skip,
     openApp
   );
-  const targetDiscounts = filterAndMapToTarget(
-    extensions,
-    AppExtensionTargetEnum.DISCOUNTS,
+  const navigationTranslations = useExtensionsItems(
+    AppExtensionMountEnum.NAVIGATION_TRANSLATIONS,
+    skip,
     openApp
   );
-  const targetPages = filterAndMapToTarget(
-    extensions,
-    AppExtensionTargetEnum.PAGES,
+  const productOverviewCreate = useExtensionsItems(
+    AppExtensionMountEnum.PRODUCT_OVERVIEW_CREATE,
+    skip,
     openApp
   );
-  const targetTranslations = filterAndMapToTarget(
-    extensions,
-    AppExtensionTargetEnum.TRANSLATIONS,
+  const productOverviewMoreActions = useExtensionsItems(
+    AppExtensionMountEnum.PRODUCT_OVERVIEW_MORE_ACTIONS,
+    skip,
+    openApp
+  );
+  const productDetailsMoreActions = useExtensionsItems(
+    AppExtensionMountEnum.PRODUCT_DETAILS_MORE_ACTIONS,
+    skip,
     openApp
   );
 
   return {
-    create: targetCreate,
-    moreActions: targetMoreActions,
-    catalog: targetCatalog,
-    orders: targetOrders,
-    customers: targetCustomers,
-    discounts: targetDiscounts,
-    pages: targetPages,
-    translations: targetTranslations
+    [AppExtensionMountEnum.NAVIGATION_CATALOG]: navigationCatalog,
+    [AppExtensionMountEnum.NAVIGATION_CUSTOMERS]: navigationCustomers,
+    [AppExtensionMountEnum.NAVIGATION_DISCOUNTS]: navigationDiscounts,
+    [AppExtensionMountEnum.NAVIGATION_ORDERS]: navigationOrders,
+    [AppExtensionMountEnum.NAVIGATION_PAGES]: navigationPages,
+    [AppExtensionMountEnum.NAVIGATION_TRANSLATIONS]: navigationTranslations,
+    [AppExtensionMountEnum.PRODUCT_OVERVIEW_CREATE]: productOverviewCreate,
+    [AppExtensionMountEnum.PRODUCT_OVERVIEW_MORE_ACTIONS]: productOverviewMoreActions,
+    [AppExtensionMountEnum.PRODUCT_DETAILS_MORE_ACTIONS]: productDetailsMoreActions
   };
 };

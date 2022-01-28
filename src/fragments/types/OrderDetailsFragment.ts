@@ -590,7 +590,7 @@ export interface OrderDetailsFragment {
   undiscountedTotal: OrderDetailsFragment_undiscountedTotal;
   user: OrderDetailsFragment_user | null;
   userEmail: string | null;
-  shippingMethods: OrderDetailsFragment_shippingMethods[];
+  shippingMethods: (OrderDetailsFragment_shippingMethods | null)[] | null;
   invoices: (OrderDetailsFragment_invoices | null)[] | null;
   channel: OrderDetailsFragment_channel;
 }

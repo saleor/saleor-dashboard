@@ -1,6 +1,6 @@
 import { appDeepPath } from "@saleor/apps/urls";
 import useNavigator from "@saleor/hooks/useNavigator";
-import { AppExtensionOpenAsEnum } from "@saleor/types/globalTypes";
+import { AppExtensionTargetEnum } from "@saleor/types/globalTypes";
 import React from "react";
 
 import { AppDialog } from "../AppDialog";
@@ -11,7 +11,7 @@ export interface AppData {
   appToken: string;
   src: string;
   label: string;
-  openAs: AppExtensionOpenAsEnum;
+  target: AppExtensionTargetEnum;
 }
 
 const ExternalAppContext = React.createContext<{
@@ -47,7 +47,7 @@ export const useExternalApp = () => {
   const navigate = useNavigator();
 
   const openApp = (appData: AppData) => {
-    if (appData.openAs === AppExtensionOpenAsEnum.POPUP) {
+    if (appData.target === AppExtensionTargetEnum.POPUP) {
       setOpen(true);
       setAppData(appData);
     } else {
