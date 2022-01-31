@@ -17,7 +17,6 @@ const props: PageListPageProps = {
   ...listActionsProps,
   ...pageListProps.default,
   ...sortPageProps,
-  onBack: () => undefined,
   pages: pageList,
   sort: {
     ...sortPageProps.sort,
