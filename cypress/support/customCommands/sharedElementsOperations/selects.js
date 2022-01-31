@@ -8,7 +8,11 @@ Cypress.Commands.add("createNewOption", (selectSelector, newOption) => {
   cy.get(selectSelector).type(newOption);
   cy.contains(BUTTON_SELECTORS.selectOption, newOption)
     .should("be.visible")
-    .click();
+    .click()
+    .get(selectSelector)
+    .find("input")
+    .first()
+    .click({ force: true });
 });
 
 Cypress.Commands.add("fillMultiSelect", (selectSelector, option) => {

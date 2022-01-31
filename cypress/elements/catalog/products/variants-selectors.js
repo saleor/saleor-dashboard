@@ -19,5 +19,6 @@ export const VARIANTS_SELECTORS = {
   preorderEndDateInput: "[name='preorderEndDateTime:date']",
   preorderEndTimeInput: "[name='preorderEndDateTime:time']",
   globalThresholdInput: "[name='globalThreshold']",
-  stockInput: "[data-test-id='stock-input']"
+  stockInput: "[data-test-id='stock-input']",
+  selectOption: "[data-test-id='multi-autocomplete-select-option']"
 };

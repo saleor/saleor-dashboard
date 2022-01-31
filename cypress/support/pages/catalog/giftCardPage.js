@@ -26,15 +26,13 @@ export function openAndFillUpCreateGiftCardDialog({
 
 export function saveGiftCard() {
   return cy
+    .addAliasToGraphRequest("GiftCardCreate")
     .get(BUTTON_SELECTORS.submit)
     .click()
-    .get(GIFT_CARD_DIALOG.cardCodeText)
-    .invoke("text")
-    .then(text => {
-      const giftCardCode = text;
-      cy.get(BUTTON_SELECTORS.submit).click();
-      return cy.wrap(giftCardCode);
-    });
+    .get(BUTTON_SELECTORS.submit)
+    .click()
+    .waitForRequestAndCheckIfNoErrors("@GiftCardCreate")
+    .its("response.body.data.giftCardCreate.giftCard");
 }
 
 export const expiryPeriods = {

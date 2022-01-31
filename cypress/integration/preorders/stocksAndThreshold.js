@@ -7,8 +7,12 @@ import { variantDetailsUrl } from "../../fixtures/urlList";
 import { createCheckout } from "../../support/api/requests/Checkout";
 import { fulfillOrder } from "../../support/api/requests/Order";
 import { getVariant } from "../../support/api/requests/Product";
+import { deleteCollectionsStartsWith } from "../../support/api/utils/catalog/collectionsUtils";
 import { createWaitingForCaptureOrder } from "../../support/api/utils/ordersUtils";
-import { createProductWithShipping } from "../../support/api/utils/products/productsUtils";
+import {
+  createProductWithShipping,
+  deleteProductsStartsWith
+} from "../../support/api/utils/products/productsUtils";
 import filterTests from "../../support/filterTests";
 import { saveVariant } from "../../support/pages/catalog/products/VariantsPage";
 
@@ -28,6 +32,8 @@ filterTests({ definedTags: ["all"], version: "3.1.0" }, () => {
 
     before(() => {
       cy.clearSessionData().loginUserViaRequest();
+      deleteProductsStartsWith(startsWith);
+      deleteCollectionsStartsWith(startsWith);
       createProductWithShipping({
         name: startsWith,
         attributeValues,
@@ -37,7 +43,7 @@ filterTests({ definedTags: ["all"], version: "3.1.0" }, () => {
           address: resp.address,
           channelSlug: resp.defaultChannel.slug,
           email: "example@example.com",
-          shippingMethodId: resp.shippingMethod.id,
+          shippingMethodName: resp.shippingMethod.name,
           variantsList: resp.variantsList
         };
         warehouse = resp.warehouse;

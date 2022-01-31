@@ -5,7 +5,6 @@ import { completeCheckout } from "../../support/api/requests/Checkout";
 import {
   createGiftCard,
   getGiftCardWithId,
-  getGiftCardWithTag,
   giftCardDeactivate
 } from "../../support/api/requests/GiftCard";
 import { deleteGiftCardsWithTagStartsWith } from "../../support/api/utils/catalog/giftCardUtils";
@@ -106,6 +105,10 @@ filterTests({ definedTags: ["all"], version: "3.1.0" }, () => {
         });
     });
 
+    beforeEach(() => {
+      cy.clearSessionData().loginUserViaRequest();
+    });
+
     it("should enable gift card", () => {
       giftCardData.tag = `${startsWith}${faker.datatype.number()}`;
       let giftCard;
@@ -122,7 +125,7 @@ filterTests({ definedTags: ["all"], version: "3.1.0" }, () => {
         })
         .then(({ order }) => {
           expect(order.total.gross.amount).to.eq(0);
-          getGiftCardWithTag(giftCardData.tag);
+          getGiftCardWithId(giftCard.id);
         })
         .then(giftCardResp => {
           expect(giftCardResp.initialBalance.amount).to.eq(giftCardData.amount);
