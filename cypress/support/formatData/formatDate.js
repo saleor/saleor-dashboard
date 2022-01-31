@@ -10,3 +10,10 @@ function getPeriodValue(date, option) {
   const formatter = new Intl.DateTimeFormat("en-us", option);
   return formatter.format(date);
 }
+
+export function formatTime(date) {
+  const hour = getPeriodValue(date, { hour: "2-digit", hour12: false });
+  const minute = getPeriodValue(date, { minute: "2-digit" });
+
+  return new Array(hour, minute).join(":");
+}

@@ -4,7 +4,7 @@ export const VARIANTS_SELECTORS = {
   nextButton: "[class*='MuiButton-containedPrimary']",
   warehouseCheckboxes: "[name*='warehouse:']",
   skuInput: "input[class*='MuiInputBase'][type='text']",
-  attributeSelector: "[data-test='attribute-value']",
+  attributeSelector: "[data-test-id='attribute-value']",
   attributeOption: "[data-test-type='option']",
   addWarehouseButton: "[data-test-id='add-warehouse']",
   warehouseOption: "[role='menuitem']",

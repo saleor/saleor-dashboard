@@ -320,7 +320,7 @@ const OrderDiscountCommonModal: React.FC<OrderDiscountCommonModalProps> = ({
           {existingDiscount && (
             <div className={classes.buttonWrapper}>
               <ConfirmButton
-                data-test="button-remove"
+                data-test-id="button-remove"
                 onClick={onRemove}
                 className={classes.removeButton}
                 transitionState={removeStatus}

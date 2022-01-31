@@ -293,7 +293,7 @@ const MenuItemDialog: React.FC<MenuItemDialogProps> = ({
       <DialogActions>
         <BackButton onClick={onClose} />
         <ConfirmButton
-          data-test="submit"
+          data-test-id="submit"
           transitionState={confirmButtonState}
           onClick={handleSubmit}
         >

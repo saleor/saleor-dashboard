@@ -9,5 +9,6 @@ export const VOUCHERS_SELECTORS = {
   discountValueInputs: "[name='value']",
   startDateInput: '[name="startDate"]',
   endDateInput: '[name="endDate"]',
-  hasEndDateCheckbox: '[name="hasEndDate"]'
+  hasEndDateCheckbox: '[name="hasEndDate"]',
+  endTimeInput: '[name="endTime"]'
 };

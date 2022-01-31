@@ -29,16 +29,25 @@ export function createVoucher({
     .confirmationMessageShouldDisappear();
 }
 
-export function setVoucherDate({ voucherId, startDate, endDate, date }) {
+export function setVoucherDate({
+  voucherId,
+  startDate,
+  endDate,
+  endTime,
+  hasEndDate = false
+}) {
   cy.visit(voucherDetailsUrl(voucherId)).waitForProgressBarToNotBeVisible();
   if (startDate) {
     cy.get(VOUCHERS_SELECTORS.startDate).type(startDate);
   }
   if (endDate) {
-    cy.get(VOUCHERS_SELECTORS.hasEndDateCheckbox)
-      .click()
-      .get(VOUCHERS_SELECTORS.endDateInput)
-      .type(endDate);
+    if (hasEndDate) {
+      cy.get(VOUCHERS_SELECTORS.hasEndDateCheckbox).click();
+    }
+    cy.get(VOUCHERS_SELECTORS.endDateInput)
+      .type(endDate)
+      .get(VOUCHERS_SELECTORS.endTimeInput)
+      .type(endTime);
   }
   cy.addAliasToGraphRequest("VoucherUpdate")
     .get(BUTTON_SELECTORS.confirm)

@@ -6,8 +6,6 @@ import faker from "faker";
 import { VOUCHERS_SELECTORS } from "../../../elements/discounts/vouchers";
 import { BUTTON_SELECTORS } from "../../../elements/shared/button-selectors";
 import { voucherDetailsUrl } from "../../../fixtures/urlList";
-import { createChannel } from "../../../support/api/requests/Channels";
-import * as channelsUtils from "../../../support/api/utils/channelsUtils";
 import {
   createVoucherInChannel,
   deleteVouchersStartsWith
@@ -15,11 +13,8 @@ import {
 import { createCheckoutWithVoucher } from "../../../support/api/utils/ordersUtils";
 import * as productsUtils from "../../../support/api/utils/products/productsUtils";
 import filterTests from "../../../support/filterTests";
-import { formatDate } from "../../../support/formatData/formatDate";
-import {
-  dateTypes,
-  setVoucherDate
-} from "../../../support/pages/discounts/vouchersPage";
+import { formatDate, formatTime } from "../../../support/formatData/formatDate";
+import { setVoucherDate } from "../../../support/pages/discounts/vouchersPage";
 
 filterTests({ definedTags: ["all"] }, () => {
   describe("Vouchers discounts", () => {
@@ -59,7 +54,7 @@ filterTests({ definedTags: ["all"] }, () => {
         );
     });
 
-    xit("should delete voucher", () => {
+    it("should delete voucher. TC: SALEOR_1905", () => {
       const name = `${startsWith}${faker.datatype.number()}`;
       const voucherValue = 50;
 
@@ -91,7 +86,7 @@ filterTests({ definedTags: ["all"] }, () => {
         });
     });
 
-    xit("should update voucher", () => {
+    it("should update voucher. TC: SALEOR_1906", () => {
       const name = `${startsWith}${faker.datatype.number()}`;
       const voucherValue = 50;
       const voucherUpdatedValue = 20;
@@ -130,7 +125,7 @@ filterTests({ definedTags: ["all"] }, () => {
         });
     });
 
-    xit("should set date on voucher", () => {
+    it("should set date on voucher. TC: SALEOR_1912", () => {
       const name = `${startsWith}${faker.datatype.number()}`;
       const voucherValue = 50;
       const today = new Date();
@@ -166,15 +161,13 @@ filterTests({ definedTags: ["all"] }, () => {
         });
     });
 
-    it("should set end date on voucher", () => {
+    it("should set end date on voucher. TC: SALEOR_1913", () => {
       const name = `${startsWith}${faker.datatype.number()}`;
       const voucherValue = 50;
       const today = new Date();
-      const yesterday = new Date(today);
       const todayDate = formatDate(today);
-      const yesterdayDate = formatDate(
-        yesterday.setDate(yesterday.getDate() - 1)
-      );
+      const tomorrow = new Date(today);
+      const tomorrowDate = formatDate(tomorrow.setDate(tomorrow.getDate() + 1));
 
       let voucher;
 
@@ -188,14 +181,23 @@ filterTests({ definedTags: ["all"] }, () => {
         .then(voucherResp => {
           voucher = voucherResp;
           expect(voucher.id).to.be.ok;
-          setVoucherDate({ voucherId: voucher.id, endDate: yesterdayDate });
+          setVoucherDate({
+            voucherId: voucher.id,
+            endDate: todayDate,
+            endTime: formatTime(today),
+            hasEndDate: true
+          });
           dataForCheckout.voucherCode = voucher.code;
           createCheckoutWithVoucher(dataForCheckout);
         })
         .then(({ addPromoCodeResp }) => {
           const errorField = addPromoCodeResp.checkoutErrors[0].field;
           expect(errorField).to.be.eq("promoCode");
-          setVoucherDate({ voucherId: voucher.id, endDate: todayDate });
+          setVoucherDate({
+            voucherId: voucher.id,
+            endDate: tomorrowDate,
+            endTime: formatTime(tomorrow)
+          });
           dataForCheckout.voucherCode = voucher.code;
           createCheckoutWithVoucher(dataForCheckout);
         })

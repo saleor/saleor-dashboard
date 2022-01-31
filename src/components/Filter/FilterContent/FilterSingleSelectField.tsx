@@ -22,7 +22,7 @@ export const FilterSingleSelectField: React.FC<FilterSingleSelectFieldProps> = (
   return (
     <>
       <SingleSelectField
-        data-test="filterRangeTypeChoice"
+        data-test-id="filter-range-type-choice"
         choices={getIsFilterMultipleChoices(intl)}
         value={filter.multiple ? FilterType.MULTIPLE : FilterType.SINGULAR}
         InputProps={{
