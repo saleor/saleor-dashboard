@@ -93,7 +93,6 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
           );
 
           const result = await update(data);
-          console.log({ result });
 
           if (result.length === 0) {
             notify({
