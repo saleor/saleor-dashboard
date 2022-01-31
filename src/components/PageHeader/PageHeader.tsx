@@ -46,10 +46,11 @@ interface PageHeaderProps {
   inline?: boolean;
   limitText?: string;
   title?: React.ReactNode;
+  cardMenu?: React.ReactNode;
 }
 
 const PageHeader: React.FC<PageHeaderProps> = props => {
-  const { children, className, inline, limitText, title } = props;
+  const { children, className, inline, limitText, title, cardMenu } = props;
 
   const classes = useStyles(props);
 
@@ -63,6 +64,7 @@ const PageHeader: React.FC<PageHeaderProps> = props => {
           {title !== undefined ? title : <Skeleton style={{ width: "10em" }} />}
         </Typography>
       }
+      cardMenu={cardMenu}
     >
       <div className={classes.root}>
         {limitText && (

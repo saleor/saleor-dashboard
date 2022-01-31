@@ -40,6 +40,12 @@ const useStyles = makeStyles(
     title: {
       flex: 1,
       paddingBottom: theme.spacing(2)
+    },
+    titleRow: {
+      display: "flex",
+      flex: 1,
+      alignItems: "center",
+      justifyContent: "space-between"
     }
   }),
   {
@@ -52,11 +58,12 @@ interface ExtendedPageHeaderProps {
   className?: string;
   inline?: boolean;
   title?: React.ReactNode;
+  cardMenu?: React.ReactNode;
   testId?: string;
 }
 
 const ExtendedPageHeader: React.FC<ExtendedPageHeaderProps> = props => {
-  const { children, className, inline, title, testId } = props;
+  const { children, className, inline, title, testId, cardMenu } = props;
 
   const classes = useStyles(props);
 
@@ -67,7 +74,10 @@ const ExtendedPageHeader: React.FC<ExtendedPageHeaderProps> = props => {
         [classes.block]: !inline
       })}
     >
-      {title}
+      <div className={classes.titleRow}>
+        {title}
+        {cardMenu}
+      </div>
       <div className={classes.action}>{children}</div>
     </div>
   );
