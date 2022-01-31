@@ -2,8 +2,8 @@ import { OutputData } from "@editorjs/editorjs";
 import { ChannelCollectionData } from "@saleor/channels/utils";
 import { CollectionDetails_collection } from "@saleor/collections/types/CollectionDetails";
 import { createChannelsChangeHandler } from "@saleor/collections/utils";
-import { COLLECTION_DETAILS_FORM_ID } from "@saleor/collections/views/types";
-import useExitFormDialog from "@saleor/components/Form/useExitFormDialog";
+import { COLLECTION_DETAILS_FORM_ID } from "@saleor/collections/views/consts";
+import { useExitFormDialog } from "@saleor/components/Form/useExitFormDialog";
 import { MetadataFormData } from "@saleor/components/Metadata";
 import { RichTextEditorChange } from "@saleor/components/RichTextEditor";
 import useForm, {

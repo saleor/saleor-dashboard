@@ -1,6 +1,6 @@
 import { OutputData } from "@editorjs/editorjs";
 import { CategoryDetails_category } from "@saleor/categories/types/CategoryDetails";
-import useExitFormDialog from "@saleor/components/Form/useExitFormDialog";
+import { useExitFormDialog } from "@saleor/components/Form/useExitFormDialog";
 import { MetadataFormData } from "@saleor/components/Metadata";
 import { RichTextEditorChange } from "@saleor/components/RichTextEditor";
 import useForm, {

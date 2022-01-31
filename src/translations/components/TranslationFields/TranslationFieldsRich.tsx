@@ -1,7 +1,7 @@
 import { OutputData } from "@editorjs/editorjs";
 import { Typography } from "@material-ui/core";
 import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
-import useExitFormDialog from "@saleor/components/Form/useExitFormDialog";
+import { useExitFormDialog } from "@saleor/components/Form/useExitFormDialog";
 import RichTextEditor from "@saleor/components/RichTextEditor";
 import RichTextEditorContent from "@saleor/components/RichTextEditor/RichTextEditorContent";
 import { SubmitPromise } from "@saleor/hooks/useForm";

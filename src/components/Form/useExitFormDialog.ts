@@ -21,7 +21,7 @@ export interface UseExitFormDialogProps {
   formId: symbol;
 }
 
-const useExitFormDialog = (
+export const useExitFormDialog = (
   { formId }: UseExitFormDialogProps = { formId: undefined }
 ): UseExitFormDialogResult => {
   const id = useRef(formId || Symbol()).current;
@@ -38,5 +38,3 @@ const useExitFormDialog = (
       setExitDialogSubmitRef(id, submitFn)
   };
 };
-
-export default useExitFormDialog;

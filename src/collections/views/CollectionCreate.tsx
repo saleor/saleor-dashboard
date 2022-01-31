@@ -31,7 +31,7 @@ import {
   collectionListUrl,
   collectionUrl
 } from "../urls";
-import { COLLECTION_CREATE_FORM_ID } from "./types";
+import { COLLECTION_CREATE_FORM_ID } from "./consts";
 
 interface CollectionCreateProps {
   params: CollectionCreateUrlQueryParams;

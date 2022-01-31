@@ -29,7 +29,7 @@ import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandl
 import React from "react";
 import { useIntl } from "react-intl";
 
-import { PRICE_RATES_CREATE_FORM_ID } from "./types";
+import { PRICE_RATES_CREATE_FORM_ID } from "./consts";
 
 export interface PriceRatesCreateProps {
   id: string;
