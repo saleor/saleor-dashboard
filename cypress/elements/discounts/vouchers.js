@@ -6,5 +6,8 @@ export const VOUCHERS_SELECTORS = {
     "[name='discountType'][value='VALUE_PERCENTAGE']",
   fixedDiscountRadioButton: "[name='discountType'][value='VALUE_FIXED']",
   shippingDiscountRadioButton: "[name='discountType'][value='SHIPPING']",
-  discountValueInputs: "[name='value']"
+  discountValueInputs: "[name='value']",
+  startDateInput: '[name="startDate"]',
+  endDateInput: '[name="endDate"]',
+  hasEndDateCheckbox: '[name="hasEndDate"]'
 };
