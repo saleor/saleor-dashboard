@@ -74,7 +74,9 @@ export function useAuthProvider({
   const userDetails = useQuery<UserDetails>(userDetailsQuery, {
     client: apolloClient,
     skip: !authenticated,
-    fetchPolicy: "network-only"
+    // Don't change this to 'network-only' - update of intl provider's
+    // state will cause an error
+    fetchPolicy: "cache-and-network"
   });
 
   const handleLogout = async () => {
