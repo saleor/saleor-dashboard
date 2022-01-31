@@ -249,6 +249,7 @@ const OrderCustomerAddressesEditDialog: React.FC<OrderCustomerAddressesEditDialo
       </DialogHeader>
       <OrderCustomerAddressesEditForm
         countryChoices={countryChoices}
+        countries={countries}
         defaultShippingAddress={validatedDefaultShippingAddress}
         defaultBillingAddress={validatedDefaultBillingAddress}
         defaultCloneAddress={hasCustomerChanged}

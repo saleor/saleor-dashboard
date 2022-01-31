@@ -1,3 +1,4 @@
+import { ShopInfo_shop_countries } from "@saleor/components/Shop/types/ShopInfo";
 import { SingleAutocompleteChoiceType } from "@saleor/components/SingleAutocompleteSelectField";
 import { AddressTypeInput } from "@saleor/customers/types";
 import {
@@ -53,6 +54,7 @@ interface UseOrderCustomerAddressesEditFormResult {
 
 interface UseOrderCustomerAddressesEditFormOpts {
   countryChoices: SingleAutocompleteChoiceType[];
+  countries: ShopInfo_shop_countries[];
   defaultShippingAddress: CustomerAddresses_user_defaultShippingAddress;
   defaultBillingAddress: CustomerAddresses_user_defaultBillingAddress;
   defaultCloneAddress: boolean;
@@ -66,7 +68,7 @@ export interface OrderCustomerAddressesEditFormProps
 }
 
 function useOrderCustomerAddressesEditForm(
-  initial: Partial<OrderCustomerAddressesEditFormData>,
+  providedInitialFormData: Partial<OrderCustomerAddressesEditFormData>,
   onSubmit: (data: OrderCustomerAddressesEditData) => void,
   opts: UseOrderCustomerAddressesEditFormOpts
 ): UseOrderCustomerAddressesEditFormResult {
@@ -87,19 +89,27 @@ function useOrderCustomerAddressesEditForm(
     billingAddress: emptyAddress
   };
 
-  const form = useForm({
+  const initialData = {
     ...defaultInitialFormData,
-    ...initial
+    ...providedInitialFormData
+  };
+
+  const form = useForm({
+    ...initialData
   });
 
   const [changed, setChanged] = useState(false);
   const triggerChange = () => setChanged(true);
 
   const [shippingCountryDisplayName, setShippingCountryDisplayName] = useState(
-    ""
+    opts.countries.find(
+      country => initialData.shippingAddress.country === country.code
+    )?.country
   );
   const [billingCountryDisplayName, setBillingCountryDisplayName] = useState(
-    ""
+    opts.countries.find(
+      country => initialData.billingAddress.country === country.code
+    )?.country
   );
 
   const handleChange: FormChange = (event, cb) => {
