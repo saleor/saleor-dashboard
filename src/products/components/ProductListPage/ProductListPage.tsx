@@ -173,7 +173,8 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
                 }),
                 onSelect: onExport,
                 testId: "export"
-              }
+              },
+              ...extensionMenuItems
             ]}
             data-test="menu"
           />
