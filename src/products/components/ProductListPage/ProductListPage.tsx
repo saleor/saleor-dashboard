@@ -162,22 +162,23 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
             }
           )
         }
+        cardMenu={
+          <CardMenu
+            className={classes.settings}
+            menuItems={[
+              {
+                label: intl.formatMessage({
+                  defaultMessage: "Export Products",
+                  description: "export products to csv file, button"
+                }),
+                onSelect: onExport,
+                testId: "export"
+              }
+            ]}
+            data-test="menu"
+          />
+        }
       >
-        <CardMenu
-          className={classes.settings}
-          menuItems={[
-            {
-              label: intl.formatMessage({
-                defaultMessage: "Export Products",
-                description: "export products to csv file, button"
-              }),
-              onSelect: onExport,
-              testId: "export"
-            },
-            ...extensionMenuItems
-          ]}
-          data-test="menu"
-        />
         <ColumnPicker
           className={classes.columnPicker}
           columns={columns}
