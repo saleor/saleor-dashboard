@@ -141,7 +141,7 @@ const LinkChoice: React.FC<LinkChoiceProps> = ({
                 selected={choice.value === value}
                 key={choice.value}
                 onClick={() => handleChange(choice.value)}
-                data-test="select-option"
+                data-test-id="select-option"
               >
                 {choice.label}
               </MenuItem>

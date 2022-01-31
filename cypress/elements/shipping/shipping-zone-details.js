@@ -13,5 +13,5 @@ export const SHIPPING_ZONE_DETAILS = {
   option: "[data-test-id='multi-autocomplete-select-option']",
   warehouseSelector: "[placeholder*='Warehouse']",
   channelSelector: "[placeholder*='Channel']",
-  removeWarehouseButton: "[data-test-id='warehousesRemove']"
+  removeWarehouseButton: "[data-test-id='warehouses-remove']"
 };

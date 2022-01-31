@@ -61,7 +61,7 @@ const LoginCard: React.FC<LoginCardProps> = props => {
             />
           </Typography>
           {error && (
-            <div className={classes.panel} data-test="loginErrorMessage">
+            <div className={classes.panel} data-test-id="login-error-message">
               {getErrorMessage(error, intl)}
             </div>
           )}
@@ -74,7 +74,7 @@ const LoginCard: React.FC<LoginCardProps> = props => {
             onChange={handleChange}
             value={data.email}
             inputProps={{
-              "data-test": "email"
+              "data-test-id": "email"
             }}
             disabled={disabled}
           />
@@ -91,7 +91,7 @@ const LoginCard: React.FC<LoginCardProps> = props => {
               type={showPassword ? "text" : "password"}
               value={data.password}
               inputProps={{
-                "data-test": "password"
+                "data-test-id": "password"
               }}
               disabled={disabled}
             />
@@ -124,7 +124,7 @@ const LoginCard: React.FC<LoginCardProps> = props => {
               variant="primary"
               onClick={submit}
               type="submit"
-              data-test="submit"
+              data-test-id="submit"
             >
               <FormattedMessage defaultMessage="Sign in" description="button" />
             </Button>
@@ -151,7 +151,7 @@ const LoginCard: React.FC<LoginCardProps> = props => {
                 onClick={() =>
                   onExternalAuthentication(externalAuthentication.id)
                 }
-                data-test="external-authentication"
+                data-test-id="external-authentication"
                 disabled={disabled}
               >
                 {externalAuthentication.name}

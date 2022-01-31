@@ -94,7 +94,7 @@ function createMenuStructure(intl: IntlShape, user: User): SidebarMenuItem[] {
           ariaLabel: "order drafts",
           label: intl.formatMessage(commonMessages.drafts),
           permissions: [PermissionEnum.MANAGE_ORDERS],
-          id: "order drafts",
+          id: "order-drafts",
           url: orderDraftListUrl()
         }
       ],

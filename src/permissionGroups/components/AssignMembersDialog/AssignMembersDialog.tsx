@@ -228,7 +228,7 @@ const AssignMembersDialog: React.FC<AssignMembersDialogProps> = ({
                   );
 
                   return (
-                    <TableRow key={member.id} data-test-id="userRow">
+                    <TableRow key={member.id} data-test-id="user-row">
                       <TableCell
                         padding="checkbox"
                         className={classes.checkboxCell}
@@ -302,7 +302,7 @@ const AssignMembersDialog: React.FC<AssignMembersDialogProps> = ({
       >
         <BackButton onClick={onClose} />
         <ConfirmButton
-          data-test="submit"
+          data-test-id="submit"
           type="submit"
           transitionState={confirmButtonState}
           onClick={() => {

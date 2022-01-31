@@ -23,7 +23,7 @@ const ProductVariantSetDefault: React.FC<ProductVariantSetDefaultProps> = ({
           testId: "setDefault"
         }
       ]}
-      data-test="menu"
+      data-test-id="menu"
     />
   );
 };

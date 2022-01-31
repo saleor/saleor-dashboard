@@ -1,3 +1,3 @@
 export const APPS_LIST = {
-  createLocalAppButton: '[data-test-id="createApp"]'
+  createLocalAppButton: '[data-test-id="create-app"]'
 };

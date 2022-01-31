@@ -66,7 +66,7 @@ const NewPasswordPage: React.FC<NewPasswordPageProps> = props => {
               type="password"
               value={data.password}
               inputProps={{
-                "data-test": "password"
+                "data-test-id": "password"
               }}
             />
             <FormSpacer />
@@ -89,7 +89,7 @@ const NewPasswordPage: React.FC<NewPasswordPageProps> = props => {
                 })
               }
               inputProps={{
-                "data-test": "confirm-password"
+                "data-test-id": "confirm-password"
               }}
             />
             <FormSpacer />

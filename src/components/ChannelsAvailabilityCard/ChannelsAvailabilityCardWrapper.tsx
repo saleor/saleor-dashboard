@@ -57,7 +57,7 @@ export const ChannelsAvailabilityWrapper: React.FC<ChannelsAvailabilityWrapperPr
             >
               <Button
                 onClick={openModal}
-                data-test-id="channels-availiability-manage-button"
+                data-test-id="channels-availability-manage-button"
               >
                 {intl.formatMessage({
                   defaultMessage: "Manage",

@@ -1,44 +1,43 @@
 export const PRODUCTS_LIST = {
-  productsList: "[data-test-id][data-test='id']",
-  productsNames: "[data-test='name']",
-  createProductBtn: "[data-test='add-product']",
+  productsList: "[data-test-id*='id']",
+  productsNames: "[data-test-id='name']",
+  createProductBtn: "[data-test-id='add-product']",
   searchProducts: "[placeholder='Search Products...']",
   emptyProductRow: "[data-test-id='skeleton']",
   productImage: "[class='MuiAvatar-img']",
-  tableCellAvatar: "[data-test-id='tableCellAvatar']",
+  tableCellAvatar: "[data-test-id='table-cell-avatar']",
   productRowElements: {
-    name: '[data-test="name"]',
-    type: '[data-test="product-type"]',
-    availability: '[data-test="availability"]',
-    price: '[data-test="price"]'
+    name: '[data-test-id="name"]',
+    type: '[data-test-id="product-type"]',
+    availability: '[data-test-id="availability"]',
+    price: '[data-test-id="price"]'
   },
   tableHeaders: {
-    name: "[data-test-id='colNameHeader']",
-    type: "[data-test-id='colTypeHeader']",
-    availability: "[data-test-id='colAvailabilityHeader']",
-    price: "[data-test-id='colPriceHeader']"
+    name: "[data-test-id='col-name-header']",
+    type: "[data-test-id='col-type-header']",
+    availability: "[data-test-id='col-availability-header']",
+    price: "[data-test-id='col-price-header']"
   },
   showFiltersButton: '[data-test-id="show-filters-button"]',
   filters: {
-    filterOption: '[data-test-id="filterOption"]',
-    productsOutOfStockOption: '[data-test-id="OUT_OF_STOCK"]',
+    filterOption: '[data-test-id="filter-option"]',
+    productsOutOfStockOption: '[data-test-id="filter-option-OUT_OF_STOCK"]',
     filterBy: {
-      category: '[data-test="filterGroupActive"][data-test-id="categories"]',
-      collection: '[data-test="filterGroupActive"][data-test-id="collections"]',
-      productType:
-        '[data-test="filterGroupActive"][data-test-id="productType"]',
-      stock: '[data-test="filterGroupActive"][data-test-id="stock"]',
-      channel: '[data-test="filterGroupActive"][data-test-id="channel"]'
+      category: '[data-test-id="filter-group-active-categories"]',
+      collection: '[data-test-id="filter-group-active-collections"]',
+      productType: '[data-test-id="filter-group-active-productType"]',
+      stock: '[data-test-id="filter-group-active-stock"]',
+      channel: '[data-test-id="filter-group-active-channel"]'
     },
     filterField: {
-      filterField: '[data-test="filter-field"]',
-      category: '[data-test="filter-field"][data-test-id="categories"]',
-      collection: '[data-test="filter-field"][data-test-id="collections"]',
-      productType: '[data-test="filter-field"][data-test-id="productType"]',
-      stock: '[data-test="filter-field"][data-test-id="stock"]',
-      channel: '[data-test="filter-field"][data-test-id="channel"]'
+      filterField: '[data-test-id*="filter-field"]',
+      category: '[data-test-id="filter-field-categories"]',
+      collection: '[data-test-id="filter-field-collections"]',
+      productType: '[data-test-id="filter-field-productType"]',
+      stock: '[data-test-id="filter-field-stock"]',
+      channel: '[data-test-id="filter-field-channel"]'
     },
-    filterBySearchInput: '[data-test*="filterField"][data-test*="Input"]'
+    filterBySearchInput: '[data-test-id="filter-field-autocomplete-input"]'
   },
   nextPageButton: "[data-test='button-pagination-next']",
   previousPagePagination: "[data-test='button-pagination-back']",

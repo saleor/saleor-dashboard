@@ -261,7 +261,7 @@ const MultiAutocompleteSelectFieldComponent: React.FC<MultiAutocompleteSelectFie
               <IconButton
                 hoverOutline={false}
                 variant="secondary"
-                data-test-id={testId ? `${testId}Remove` : "remove"}
+                data-test-id={testId ? `${testId}-remove` : "remove"}
                 className={classes.chipClose}
                 disabled={value.disabled}
                 onClick={() => handleSelect(value.value)}

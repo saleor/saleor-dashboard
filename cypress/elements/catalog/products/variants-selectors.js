@@ -4,9 +4,9 @@ export const VARIANTS_SELECTORS = {
   nextButton: "[class*='MuiButton-containedPrimary']",
   warehouseCheckboxes: "[name*='warehouse:']",
   skuInput: "[ name='sku']",
-  attributeSelector: "[data-test='attribute-value']",
   attributeOption:
-    "[data-test-type='option'], [data-test='multiautocomplete-select-option']",
+    "[data-test-type='option'], [data-test='multi-autocomplete-select-option']",
+  attributeSelector: "[data-test-id='attribute-value']",
   addWarehouseButton: "[data-test-id='add-warehouse']",
   warehouseOption: "[role='menuitem']",
   saveButton: "[data-test='button-bar-confirm']",

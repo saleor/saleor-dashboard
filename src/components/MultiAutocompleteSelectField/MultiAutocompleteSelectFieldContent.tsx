@@ -309,7 +309,7 @@ const MultiAutocompleteSelectFieldContent: React.FC<MultiAutocompleteSelectField
         <MenuItem
           disabled={true}
           component="div"
-          data-test="multi-autocomplete-select-no-options"
+          data-test-id="multi-autocomplete-select-no-options"
         >
           <FormattedMessage defaultMessage={"No results found"} />
         </MenuItem>
