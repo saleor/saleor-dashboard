@@ -1,29 +1,38 @@
 import {
-  Button,
+  Checkbox,
   DialogActions,
   DialogContent,
-  DialogTitle,
+  FormControlLabel,
   InputAdornment,
   TextField
 } from "@material-ui/core";
-import CardSpacer from "@saleor/components/CardSpacer";
+import VerticalSpacer from "@saleor/apps/components/VerticalSpacer";
 import { ConfirmButton } from "@saleor/components/ConfirmButton";
 import CustomerAddressChoiceCard from "@saleor/customers/components/CustomerAddressChoiceCard";
 import { CustomerAddresses_user_addresses } from "@saleor/customers/types/CustomerAddresses";
+import { FormChange } from "@saleor/hooks/useForm";
 import { buttonMessages } from "@saleor/intl";
-import { SearchIcon } from "@saleor/macaw-ui";
+import {
+  Button,
+  ConfirmButtonTransitionState,
+  SearchIcon
+} from "@saleor/macaw-ui";
 import { AddressTypeEnum } from "@saleor/types/globalTypes";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { getById } from "../OrderReturnPage/utils";
-import { addressSearchMessages as messages } from "./messages";
+import { dialogMessages as messages } from "./messages";
 import { useStyles } from "./styles";
 import { parseQuery, stringifyAddress } from "./utils";
 
 export interface OrderCustomerAddressesSearchProps {
   type: AddressTypeEnum;
-  selectedCustomerAddressId?: string;
+  cloneAddress: boolean;
+  formChange: FormChange;
+  openFromCustomerChange: boolean;
+  transitionState: ConfirmButtonTransitionState;
+  selectedCustomerAddressId: string;
   customerAddresses: CustomerAddresses_user_addresses[];
   onChangeCustomerShippingAddress: (
     customerAddress: CustomerAddresses_user_addresses
@@ -37,6 +46,10 @@ export interface OrderCustomerAddressesSearchProps {
 const OrderCustomerAddressesSearch: React.FC<OrderCustomerAddressesSearchProps> = props => {
   const {
     type,
+    cloneAddress,
+    formChange,
+    transitionState,
+    openFromCustomerChange,
     selectedCustomerAddressId,
     customerAddresses,
     onChangeCustomerShippingAddress,
@@ -63,7 +76,9 @@ const OrderCustomerAddressesSearch: React.FC<OrderCustomerAddressesSearchProps> 
     } else {
       onChangeCustomerBillingAddress(temporarySelectedAddress);
     }
-    exitSearch();
+    if (openFromCustomerChange) {
+      exitSearch();
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -78,16 +93,9 @@ const OrderCustomerAddressesSearch: React.FC<OrderCustomerAddressesSearchProps> 
 
   return (
     <>
-      <DialogTitle>
-        {type === AddressTypeEnum.SHIPPING ? (
-          <FormattedMessage {...messages.shippingTitle} />
-        ) : (
-          <FormattedMessage {...messages.billingTitle} />
-        )}
-      </DialogTitle>
       <DialogContent>
         {intl.formatMessage(messages.searchInfo)}
-        <CardSpacer />
+        <VerticalSpacer spacing={2} />
         <TextField
           value={query}
           variant="outlined"
@@ -103,7 +111,7 @@ const OrderCustomerAddressesSearch: React.FC<OrderCustomerAddressesSearchProps> 
           }}
           inputProps={{ className: classes.searchInput }}
         />
-        <CardSpacer />
+        <VerticalSpacer spacing={2} />
         <div className={classes.scrollableWrapper}>
           {filteredCustomerAddresses.length === 0
             ? intl.formatMessage(messages.noResultsFound)
@@ -114,18 +122,42 @@ const OrderCustomerAddressesSearch: React.FC<OrderCustomerAddressesSearchProps> 
                     onSelect={() => setTemporarySelectedAddress(address)}
                     address={address}
                   />
-                  <CardSpacer />
+                  <VerticalSpacer spacing={2} />
                 </React.Fragment>
               ))}
         </div>
+        {!openFromCustomerChange && filteredCustomerAddresses.length !== 0 && (
+          <FormControlLabel
+            control={
+              <Checkbox
+                checked={cloneAddress}
+                name="cloneAddress"
+                onChange={() =>
+                  formChange({
+                    target: {
+                      name: "cloneAddress",
+                      value: !cloneAddress
+                    }
+                  })
+                }
+              />
+            }
+            label={intl.formatMessage(
+              type === AddressTypeEnum.SHIPPING
+                ? messages.billingSameAsShipping
+                : messages.shippingSameAsBilling
+            )}
+          />
+        )}
       </DialogContent>
       <DialogActions>
-        <Button onClick={() => exitSearch()} color="primary">
+        <Button onClick={exitSearch} variant="secondary">
           <FormattedMessage {...buttonMessages.cancel} />
         </Button>
         <ConfirmButton
           variant="primary"
-          transitionState="default"
+          transitionState={transitionState}
+          type={openFromCustomerChange ? undefined : "submit"}
           onClick={handleSelect}
         >
           <FormattedMessage {...buttonMessages.select} />

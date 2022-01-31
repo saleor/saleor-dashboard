@@ -32,6 +32,7 @@ export interface OrderCustomerAddressEditProps {
   onChangeFormAddress: (event: React.ChangeEvent<any>) => void;
   onChangeFormAddressCountry: (event: React.ChangeEvent<any>) => void;
   onEdit?: () => void;
+  showCard?: boolean;
 }
 
 const OrderCustomerAddressEdit: React.FC<OrderCustomerAddressEditProps> = props => {
@@ -48,7 +49,8 @@ const OrderCustomerAddressEdit: React.FC<OrderCustomerAddressEditProps> = props 
     formErrors,
     onChangeFormAddress,
     onChangeFormAddressCountry,
-    onEdit
+    onEdit,
+    showCard = true
   } = props;
 
   const classes = useStyles(props);
@@ -91,17 +93,20 @@ const OrderCustomerAddressEdit: React.FC<OrderCustomerAddressEditProps> = props 
         label={intl.formatMessage(addressEditMessages.customerAddress)}
         className={classes.optionLabel}
       />
-      {addressInputOption === AddressInputOptionEnum.CUSTOMER_ADDRESS && (
-        <>
-          <CardSpacer />
-          <CustomerAddressChoiceCard
-            address={customerAddresses.find(getById(selectedCustomerAddressId))}
-            editable
-            onEditClick={onEdit}
-          />
-          <FormSpacer />
-        </>
-      )}
+      {addressInputOption === AddressInputOptionEnum.CUSTOMER_ADDRESS &&
+        showCard && (
+          <>
+            <CardSpacer />
+            <CustomerAddressChoiceCard
+              address={customerAddresses.find(
+                getById(selectedCustomerAddressId)
+              )}
+              editable
+              onEditClick={onEdit}
+            />
+            <FormSpacer />
+          </>
+        )}
       <FormControlLabel
         value={AddressInputOptionEnum.NEW_ADDRESS}
         control={
@@ -116,17 +121,14 @@ const OrderCustomerAddressEdit: React.FC<OrderCustomerAddressEditProps> = props 
         className={classes.optionLabel}
       />
       {addressInputOption === AddressInputOptionEnum.NEW_ADDRESS && (
-        <>
-          <FormSpacer />
-          <AddressEdit
-            countries={countryChoices}
-            countryDisplayValue={formAddressCountryDisplayName}
-            data={formAddress}
-            errors={formErrors}
-            onChange={onChangeFormAddress}
-            onCountryChange={onChangeFormAddressCountry}
-          />
-        </>
+        <AddressEdit
+          countries={countryChoices}
+          countryDisplayValue={formAddressCountryDisplayName}
+          data={formAddress}
+          errors={formErrors}
+          onChange={onChangeFormAddress}
+          onCountryChange={onChangeFormAddressCountry}
+        />
       )}
     </RadioGroup>
   );
