@@ -17,7 +17,7 @@ import { formatDate, formatTime } from "../../../support/formatData/formatDate";
 import { setVoucherDate } from "../../../support/pages/discounts/vouchersPage";
 
 filterTests({ definedTags: ["all"] }, () => {
-  describe("Vouchers discounts", () => {
+  describe("As an admin I want to update vouchers", () => {
     const startsWith = "CyVou-";
     const productPrice = 100;
     const shippingPrice = 100;
