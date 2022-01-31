@@ -1,5 +1,6 @@
 import { FormId } from "@saleor/components/Form/ExitFormDialogProvider";
-import useExitFormDialog, {
+import {
+  useExitFormDialog,
   UseExitFormDialogResult
 } from "@saleor/components/Form/useExitFormDialog";
 import useHandleFormSubmit from "@saleor/hooks/useHandleFormSubmit";
