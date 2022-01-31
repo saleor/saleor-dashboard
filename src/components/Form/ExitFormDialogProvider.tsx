@@ -156,7 +156,10 @@ const ExitFormDialogProvider = ({ children }) => {
       // needs to be done before the shouldBlockNav condition
       // so it doesnt trigger setting default values
       if (isOnlyQuerying(transition)) {
-        return true;
+        // ransition type requires this function to return either
+        // false | void | string where string opens up the browser prompt
+        // hence we return null
+        return null;
       }
 
       if (shouldBlockNav()) {
@@ -167,7 +170,7 @@ const ExitFormDialogProvider = ({ children }) => {
 
       setStateDefaultValues();
       setCurrentPath(transition.pathname);
-      return true;
+      return null;
     });
 
     return unblock;
