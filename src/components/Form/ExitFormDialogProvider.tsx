@@ -1,5 +1,4 @@
 import { SubmitPromise } from "@saleor/hooks/useForm";
-import flatten from "lodash-es/flatten";
 import React, { useEffect, useRef, useState } from "react";
 import { useHistory } from "react-router";
 import useRouter from "use-react-router";
@@ -63,15 +62,6 @@ const ExitFormDialogProvider = ({ children }) => {
   const enableExitDialog = useRef(defaultValues.enableExitDialog);
   const currentPath = useRef(window.location.pathname);
 
-  // Set either on generic form load or on every custom form data change
-  // but doesn't cause re-renders
-  function setSubmitRef<T extends () => SubmitPromise<any[]>>(
-    id: symbol,
-    submitFn: T
-  ) {
-    setFormData(id, { submitFn });
-  }
-
   const setIsSubmitting = (value: boolean) => {
     setEnableExitDialog(!value);
     isSubmitting.current = value;
@@ -101,6 +91,15 @@ const ExitFormDialogProvider = ({ children }) => {
       ...formsData.current,
       [id]: updatedFormData
     };
+  };
+
+  // Set either on generic form load or on every custom form data change
+  // but doesn't cause re-renders
+  const setSubmitRef = <T extends () => SubmitPromise<any[]>>(
+    id: symbol,
+    submitFn: T
+  ) => {
+    setFormData(id, { submitFn });
   };
 
   const setIsDirty = (id: symbol, value: boolean) => {
