@@ -8,8 +8,8 @@ import { messages } from "./messages";
 import { useStyles } from "./styles";
 import {
   Channels,
-  getChannelColor,
-  getChannelLabel,
+  getChannelAvailabilityColor,
+  getChannelAvailabilityLabel,
   getDropdownColor
 } from "./utils";
 
@@ -78,8 +78,10 @@ export const ChannelsAvailabilityDropdown: React.FC<ChannelsAvailabilityDropdown
               <Typography>{channelData.channel.name}</Typography>
               <HorizontalSpacer spacing={4} />
               <Pill
-                label={intl.formatMessage(getChannelLabel(channelData))}
-                color={getChannelColor(channelData)}
+                label={intl.formatMessage(
+                  getChannelAvailabilityLabel(channelData)
+                )}
+                color={getChannelAvailabilityColor(channelData)}
               />
             </div>
           ))}

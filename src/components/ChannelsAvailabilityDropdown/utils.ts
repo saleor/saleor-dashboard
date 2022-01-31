@@ -21,7 +21,7 @@ export const getDropdownColor = (channels: Channels[]) => {
   return "error";
 };
 
-export const getChannelColor = (channelData: Channels) => {
+export const getChannelAvailabilityColor = (channelData: Channels) => {
   if (isActive(channelData)) {
     return "success";
   }
@@ -31,7 +31,7 @@ export const getChannelColor = (channelData: Channels) => {
   return "error";
 };
 
-export const getChannelLabel = (channelData: Channels) => {
+export const getChannelAvailabilityLabel = (channelData: Channels) => {
   if (isActive(channelData)) {
     return channelStatusMessages.published;
   }
