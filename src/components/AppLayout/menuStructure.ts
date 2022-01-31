@@ -126,7 +126,14 @@ function useMenuStructure(intl: IntlShape, user: User): SidebarMenuItem[] {
     },
     {
       ariaLabel: "customers",
-      children: [
+      children: NAVIGATION_CUSTOMERS.length > 0 && [
+        {
+          ariaLabel: "customers",
+          label: intl.formatMessage(sectionNames.customers),
+          permissions: [PermissionEnum.MANAGE_USERS],
+          id: "customers",
+          url: customerListUrl()
+        },
         ...mapToExtensionsItems(NAVIGATION_CUSTOMERS, extenstionHeaderItem)
       ],
       iconSrc: customerIcon,
@@ -160,7 +167,14 @@ function useMenuStructure(intl: IntlShape, user: User): SidebarMenuItem[] {
     },
     {
       ariaLabel: "pages",
-      children: [
+      children: NAVIGATION_PAGES.length > 0 && [
+        {
+          ariaLabel: "pages",
+          label: intl.formatMessage(sectionNames.pages),
+          permissions: [PermissionEnum.MANAGE_PAGES],
+          id: "pages",
+          url: pageListPath
+        },
         ...mapToExtensionsItems(NAVIGATION_PAGES, extenstionHeaderItem)
       ],
       iconSrc: pagesIcon,
@@ -179,7 +193,14 @@ function useMenuStructure(intl: IntlShape, user: User): SidebarMenuItem[] {
     },
     {
       ariaLabel: "translations",
-      children: [
+      children: NAVIGATION_TRANSLATIONS.length > 0 && [
+        {
+          ariaLabel: "translations",
+          label: intl.formatMessage(sectionNames.translations),
+          permissions: [PermissionEnum.MANAGE_TRANSLATIONS],
+          id: "translations",
+          url: languageListUrl
+        },
         ...mapToExtensionsItems(NAVIGATION_TRANSLATIONS, extenstionHeaderItem)
       ],
       iconSrc: translationIcon,

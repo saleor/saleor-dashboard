@@ -1955,7 +1955,7 @@ export interface AddressInput {
 }
 
 export interface AppExtensionFilterInput {
-  mount?: AppExtensionMountEnum | null;
+  mount?: (AppExtensionMountEnum | null)[] | null;
   target?: AppExtensionTargetEnum | null;
 }
 

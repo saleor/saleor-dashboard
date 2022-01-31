@@ -1,4 +1,4 @@
-import { appDeepPath } from "@saleor/apps/urls";
+import { appDeepUrl } from "@saleor/apps/urls";
 import useNavigator from "@saleor/hooks/useNavigator";
 import { AppExtensionTargetEnum } from "@saleor/types/globalTypes";
 import React from "react";
@@ -51,7 +51,7 @@ export const useExternalApp = () => {
       setOpen(true);
       setAppData(appData);
     } else {
-      navigate(appDeepPath(appData.id, appData.src));
+      navigate(appDeepUrl(appData.id, appData.src), { resetScroll: true });
     }
   };
 

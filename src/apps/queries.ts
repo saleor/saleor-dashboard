@@ -87,6 +87,9 @@ export const extensionList = gql`
           permissions {
             code
           }
+          app {
+            id
+          }
         }
       }
     }

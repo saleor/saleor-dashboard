@@ -10,6 +10,10 @@ export function isMenuActive(location: string, menuItem: SidebarMenuItem) {
     );
   }
 
+  if (!menuItem.url) {
+    return false;
+  }
+
   const activeUrl = location.split("?")[0];
   const menuItemUrl = menuItem.url.split("?")[0];
 

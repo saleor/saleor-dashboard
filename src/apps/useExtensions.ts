@@ -8,9 +8,11 @@ import { mapEdgesToItems } from "@saleor/utils/maps";
 import { AppData, useExternalApp } from "./components/ExternalAppContext";
 import { useExtensionList } from "./queries";
 import { ExtensionList_appExtensions_edges_node } from "./types/ExtensionList";
+import { appDeepUrl } from "./urls";
 
 interface Extension {
   id: string;
+  appId: string;
   accessToken: string;
   permissions: PermissionEnum[];
   label: string;
@@ -39,15 +41,16 @@ const filterAndMapToTarget = (
   openApp: (appData: AppData) => void
 ): Extension[] =>
   extensions.map(
-    ({ id, accessToken, permissions, url, label, mount, target }) => ({
+    ({ id, accessToken, permissions, url, label, mount, target, app }) => ({
       id,
+      appId: app.id,
       accessToken,
       permissions: permissions.map(({ code }) => code),
       url,
       label,
       mount,
       open: () =>
-        openApp({ id, appToken: accessToken, src: url, label, target })
+        openApp({ id: app.id, appToken: accessToken, src: url, label, target })
     })
   );
 
@@ -63,11 +66,12 @@ export const mapToExtensionsItems = (
   header: FilterableMenuItem
 ) => {
   const items: FilterableMenuItem[] = extensions.map(
-    ({ label, id, url, permissions }) => ({
+    ({ label, id, appId, url, permissions, open }) => ({
       ariaLabel: id,
       id,
       label,
-      url,
+      url: appDeepUrl(appId, url),
+      onClick: open,
       permissions
     })
   );
@@ -86,7 +90,7 @@ const useExtensionsItems = (
     fetchPolicy: "cache-first",
     variables: {
       filter: {
-        mount
+        mount: [mount]
       }
     },
     skip: skip(mount)

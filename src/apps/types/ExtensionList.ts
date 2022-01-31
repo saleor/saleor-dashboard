@@ -14,6 +14,11 @@ export interface ExtensionList_appExtensions_edges_node_permissions {
   code: PermissionEnum;
 }
 
+export interface ExtensionList_appExtensions_edges_node_app {
+  __typename: "App";
+  id: string;
+}
+
 export interface ExtensionList_appExtensions_edges_node {
   __typename: "AppExtension";
   id: string;
@@ -23,6 +28,7 @@ export interface ExtensionList_appExtensions_edges_node {
   target: AppExtensionTargetEnum;
   accessToken: string | null;
   permissions: ExtensionList_appExtensions_edges_node_permissions[];
+  app: ExtensionList_appExtensions_edges_node_app;
 }
 
 export interface ExtensionList_appExtensions_edges {

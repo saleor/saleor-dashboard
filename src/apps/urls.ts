@@ -55,6 +55,11 @@ export const appSettingsUrl = (id: string, params?: AppDetailsUrlQueryParams) =>
 
 export const appUrl = (id: string, params?: AppDetailsUrlQueryParams) =>
   appPath(encodeURIComponent(id)) + "?" + stringifyQs(params);
+export const appDeepUrl = (
+  id: string,
+  subPath: string,
+  params?: AppDetailsUrlQueryParams
+) => appDeepPath(encodeURIComponent(id), subPath) + "?" + stringifyQs(params);
 
 export const getAppCompleteUrlFromDashboardUrl = (
   dashboardUrl: string,
@@ -64,7 +69,10 @@ export const getAppCompleteUrlFromDashboardUrl = (
   if (!appUrl || !appId) {
     return appUrl;
   }
-  const deepSubPath = dashboardUrl.replace(appPath(appId), "");
+  const deepSubPath = dashboardUrl.replace(
+    appPath(encodeURIComponent(appId)),
+    ""
+  );
   const appCompleteUrl = urlJoin(appUrl, deepSubPath);
   return appCompleteUrl;
 };
