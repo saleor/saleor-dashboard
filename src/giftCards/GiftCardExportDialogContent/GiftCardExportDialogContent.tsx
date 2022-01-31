@@ -25,6 +25,7 @@ import useGiftCardListBulkActions from "../GiftCardsList/providers/GiftCardListP
 import { useGiftCardTotalCountQuery } from "../GiftCardsList/queries";
 import { giftCardExportDialogMessages as messages } from "./messages";
 import { useGiftCardExportMutation } from "./mutations";
+import useStyles from "./styles";
 import { ExportGiftCards } from "./types/ExportGiftCards";
 import { getExportGiftCardsInput } from "./utils";
 
@@ -34,6 +35,7 @@ const GiftCardExportDialog: React.FC<Pick<DialogProps, "onClose"> & {
   const intl = useIntl();
   const notify = useNotifier();
   const { queue } = useBackgroundTask();
+  const classes = useStyles();
 
   const hasIdsToExport = !!idsToExport?.length;
 
@@ -135,7 +137,7 @@ const GiftCardExportDialog: React.FC<Pick<DialogProps, "onClose"> & {
                   all: allGiftCardsCount
                 }}
               />
-              <Typography variant="subtitle2">
+              <Typography className={classes.note} variant="body2">
                 {intl.formatMessage(messages.exportNote)}
               </Typography>
             </>
@@ -145,7 +147,7 @@ const GiftCardExportDialog: React.FC<Pick<DialogProps, "onClose"> & {
       <DialogActions>
         <ConfirmButton
           transitionState={exportGiftCardsOpts.status}
-          variant="contained"
+          variant="primary"
           type="submit"
           data-test="submit"
           onClick={submit}

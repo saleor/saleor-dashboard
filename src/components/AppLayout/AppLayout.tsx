@@ -108,7 +108,7 @@ const useStyles = makeStyles(
       }
     },
     viewContainer: {
-      minHeight: `calc(100vh + ${appLoaderHeight + 70}px - ${theme.spacing(2)})`
+      minHeight: `calc(100vh - ${appLoaderHeight + 72}px - ${theme.spacing(4)})`
     }
   }),
   {
@@ -170,7 +170,7 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
       <div className={classes.root}>
         {isMdUp && (
           <Sidebar
-            active={activeMenu}
+            activeId={activeMenu}
             menuItems={menuStructure}
             onMenuItemClick={handleMenuItemClick}
           />
@@ -226,6 +226,7 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
                     <ErrorPage
                       id={appState.error.id}
                       onBack={handleErrorBack}
+                      onRefresh={() => window.location.reload()}
                     />
                   )
                 : children}

@@ -9,6 +9,7 @@ import { WindowTitle } from "@saleor/components/WindowTitle";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@saleor/config";
 import { useFileUploadMutation } from "@saleor/files/mutations";
 import useNavigator from "@saleor/hooks/useNavigator";
+import useNotifier from "@saleor/hooks/useNotifier";
 import useShop from "@saleor/hooks/useShop";
 import usePageSearch from "@saleor/searches/usePageSearch";
 import useProductSearch from "@saleor/searches/useProductSearch";
@@ -32,6 +33,7 @@ import {
   useVariantCreateMutation
 } from "../mutations";
 import { useProductVariantCreateQuery } from "../queries";
+import { VariantCreate } from "../types/VariantCreate";
 import {
   productListUrl,
   productUrl,
@@ -39,6 +41,7 @@ import {
   ProductVariantAddUrlQueryParams,
   productVariantEditUrl
 } from "../urls";
+import { variantCreateMessages as messages } from "./messages";
 import { createVariantReorderHandler } from "./ProductUpdate/handlers";
 
 interface ProductVariantCreateProps {
@@ -51,6 +54,8 @@ export const ProductVariant: React.FC<ProductVariantCreateProps> = ({
   params
 }) => {
   const navigate = useNavigator();
+  const notify = useNotifier();
+
   const shop = useShop();
   const intl = useIntl();
   const warehouses = useWarehouseList({
@@ -72,7 +77,21 @@ export const ProductVariant: React.FC<ProductVariantCreateProps> = ({
 
   const product = data?.product;
 
-  const [variantCreate, variantCreateResult] = useVariantCreateMutation({});
+  const handleVariantCreationSuccess = (data: VariantCreate) => {
+    const variantId = data.productVariantCreate.productVariant.id;
+
+    notify({
+      status: "success",
+      text: intl.formatMessage(messages.variantCreatedSuccess)
+    });
+    navigate(productVariantEditUrl(productId, variantId), {
+      resetScroll: true
+    });
+  };
+
+  const [variantCreate, variantCreateResult] = useVariantCreateMutation({
+    onCompleted: handleVariantCreationSuccess
+  });
 
   const [updateMetadata] = useMetadataUpdate({});
   const [updatePrivateMetadata] = usePrivateMetadataUpdate({});

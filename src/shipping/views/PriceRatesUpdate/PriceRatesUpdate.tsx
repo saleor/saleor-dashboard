@@ -1,4 +1,3 @@
-import { Button } from "@material-ui/core";
 import {
   createShippingChannelsFromRate,
   createSortedShippingChannels
@@ -16,6 +15,7 @@ import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { sectionNames } from "@saleor/intl";
 import { commonMessages } from "@saleor/intl";
+import { Button } from "@saleor/macaw-ui";
 import {
   getById,
   getByUnmatchingId
@@ -386,7 +386,7 @@ export const PriceRatesUpdate: React.FC<PriceRatesUpdateProps> = ({
         onPreviousPage={loadPreviousPage}
         pageInfo={pageInfo}
         toolbar={
-          <Button color="primary" onClick={() => openModal("unassign-product")}>
+          <Button onClick={() => openModal("unassign-product")}>
             <FormattedMessage
               defaultMessage="Unassign"
               description="unassign products from shipping method, button"

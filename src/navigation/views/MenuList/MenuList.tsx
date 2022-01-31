@@ -1,4 +1,4 @@
-import { Button, DialogContentText } from "@material-ui/core";
+import { DialogContentText } from "@material-ui/core";
 import ActionDialog from "@saleor/components/ActionDialog";
 import { configurationMenuUrl } from "@saleor/configuration";
 import useBulkActions from "@saleor/hooks/useBulkActions";
@@ -10,6 +10,7 @@ import usePaginator, {
   createPaginationState
 } from "@saleor/hooks/usePaginator";
 import { buttonMessages, commonMessages } from "@saleor/intl";
+import { Button } from "@saleor/macaw-ui";
 import { getStringOrPlaceholder, maybe } from "@saleor/misc";
 import { getById } from "@saleor/orders/components/OrderReturnPage/utils";
 import { ListViews } from "@saleor/types";
@@ -163,7 +164,6 @@ const MenuList: React.FC<MenuListProps> = ({ params }) => {
                     toggleAll={toggleAll}
                     toolbar={
                       <Button
-                        color="primary"
                         onClick={() =>
                           navigate(
                             menuListUrl({

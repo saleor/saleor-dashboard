@@ -1,5 +1,4 @@
 import { TableCell, TableRow, Typography } from "@material-ui/core";
-import { makeStyles } from "@saleor/macaw-ui";
 import { getStringOrPlaceholder } from "@saleor/misc";
 import { FulfillmentStatus } from "@saleor/types/globalTypes";
 import classNames from "classnames";
@@ -9,21 +8,7 @@ import { FormattedMessage } from "react-intl";
 
 import { OrderDetails_order_fulfillments } from "../../types/OrderDetails";
 import { extraInfoMessages } from "./messages";
-
-const useStyles = makeStyles(
-  theme => ({
-    infoLabel: {
-      display: "inline-block"
-    },
-    infoLabelWithMargin: {
-      marginBottom: theme.spacing()
-    },
-    infoRow: {
-      padding: theme.spacing(2, 3)
-    }
-  }),
-  { name: "ExtraInfoLines" }
-);
+import useStyles from "./styles";
 
 const NUMBER_OF_COLUMNS = 5;
 

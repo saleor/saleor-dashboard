@@ -1,12 +1,14 @@
-import { Card, CardContent, Typography } from "@material-ui/core";
+import { Typography } from "@material-ui/core";
 import { IconProps } from "@material-ui/core/Icon";
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { User } from "@saleor/fragments/types/User";
 import { sectionNames } from "@saleor/intl";
+import { NavigationCard } from "@saleor/macaw-ui";
 import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import { useIntl } from "react-intl";
+import { Link } from "react-router-dom";
 
 import { hasAnyPermissions } from "../auth/misc";
 import Container from "../components/Container";
@@ -35,45 +37,22 @@ interface VersionInfo {
 
 const useStyles = makeStyles(
   theme => ({
-    card: {
-      "&:hover": {
-        boxShadow: "0px 5px 15px rgba(0, 0, 0, 0.15);"
-      },
-      cursor: "pointer",
-      marginBottom: theme.spacing(3),
-      transition: theme.transitions.duration.standard + "ms"
-    },
-    cardContent: {
-      // Overrides Material-UI default theme
-      "&:last-child": {
-        paddingBottom: 16
-      },
-      display: "grid",
-      gridColumnGap: theme.spacing(4),
-      gridTemplateColumns: "48px 1fr"
-    },
-    cardDisabled: {
-      "& $icon, & $sectionTitle, & $sectionDescription": {
-        color: theme.palette.text.disabled
-      },
-      marginBottom: theme.spacing(3)
-    },
     configurationCategory: {
       [theme.breakpoints.down("md")]: {
         gridTemplateColumns: "1fr"
       },
       borderTop: `solid 1px ${theme.palette.divider}`,
       display: "grid",
-      gridColumnGap: theme.spacing(4),
+      gap: theme.spacing(4),
       gridTemplateColumns: "1fr 3fr",
-      paddingTop: theme.spacing(3)
+      padding: theme.spacing(4, 0)
     },
     configurationItem: {
       [theme.breakpoints.down("md")]: {
         gridTemplateColumns: "1fr"
       },
       display: "grid",
-      gridColumnGap: theme.spacing(4),
+      gap: theme.spacing(4),
       gridTemplateColumns: "1fr 1fr"
     },
     configurationLabel: {
@@ -81,6 +60,10 @@ const useStyles = makeStyles(
     },
     header: {
       margin: 0
+    },
+    link: {
+      display: "contents",
+      marginBottom: theme.spacing(4)
     },
     icon: {
       "& path": {
@@ -101,14 +84,12 @@ export interface ConfigurationPageProps {
   menu: MenuSection[];
   user: User;
   versionInfo: VersionInfo;
-  onSectionClick: (sectionName: string) => void;
 }
 
 export const ConfigurationPage: React.FC<ConfigurationPageProps> = props => {
   const {
     menu: menus,
     user,
-    onSectionClick,
     versionInfo: { dashboardVersion, coreVersion }
   } = props;
   const classes = useStyles(props);
@@ -150,29 +131,17 @@ export const ConfigurationPage: React.FC<ConfigurationPageProps> = props => {
                   hasAnyPermissions(menuItem.permissions, user)
                 )
                 .map((item, itemIndex) => (
-                  <Card
-                    className={item.url ? classes.card : classes.cardDisabled}
-                    onClick={() => onSectionClick(item.url)}
-                    key={itemIndex}
-                    data-test="settingsSubsection"
-                    data-testid={item.title.toLowerCase()}
-                    data-test-id={item.testId}
-                  >
-                    <CardContent className={classes.cardContent}>
-                      <div className={classes.icon}>{item.icon}</div>
-                      <div>
-                        <Typography
-                          className={classes.sectionTitle}
-                          color="primary"
-                        >
-                          {item.title}
-                        </Typography>
-                        <Typography className={classes.sectionDescription}>
-                          {item.description}
-                        </Typography>
-                      </div>
-                    </CardContent>
-                  </Card>
+                  <Link className={classes.link} to={item.url}>
+                    <NavigationCard
+                      key={itemIndex}
+                      icon={item.icon}
+                      title={item.title}
+                      description={item.description}
+                      data-test="settingsSubsection"
+                      data-testid={item.title.toLowerCase()}
+                      data-test-id={item.testId}
+                    />
+                  </Link>
                 ))}
             </div>
           </div>

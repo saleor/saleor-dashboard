@@ -67,12 +67,7 @@ const OrderCustomerChangeDialog: React.FC<OrderCustomerChangeDialogProps> = prop
               </RadioGroup>
             </DialogContent>
             <DialogActions>
-              <ConfirmButton
-                transitionState="default"
-                color="primary"
-                variant="contained"
-                type="submit"
-              >
+              <ConfirmButton transitionState="default" type="submit">
                 <FormattedMessage {...buttonMessages.continue} />
               </ConfirmButton>
             </DialogActions>

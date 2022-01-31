@@ -33,17 +33,14 @@ interface SkeletonProps {
   className?: string;
   primary?: boolean;
   style?: React.CSSProperties;
-  children?: React.ReactNode;
 }
 
 const Skeleton: React.FC<SkeletonProps> = props => {
-  const { className, primary, style, children } = props;
+  const { className, primary, style } = props;
 
   const classes = useStyles(props);
 
-  return children ? (
-    <>{children}</>
-  ) : (
+  return (
     <span
       data-test-id="skeleton"
       className={classNames(classes.skeleton, className, {

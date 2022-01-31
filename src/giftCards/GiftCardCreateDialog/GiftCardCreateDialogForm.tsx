@@ -147,12 +147,7 @@ const GiftCardCreateDialogForm: React.FC<GiftCardCreateDialogFormProps> = ({
 
   return (
     <>
-      <DialogContent
-        style={{
-          overflowY: "auto",
-          overflowX: "hidden"
-        }}
-      >
+      <DialogContent className={classes.dialogContent}>
         <GiftCardCreateMoneyInput {...commonFormProps} set={set} />
         <CardSpacer />
         <GiftCardTagInput

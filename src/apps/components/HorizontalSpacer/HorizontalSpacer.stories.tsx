@@ -15,7 +15,7 @@ const HelperWrapper: React.FC<HelperWrapperProps> = ({ children }) => (
 
 const Text: React.FC = () => <Typography>{"<- The spacer is here"}</Typography>;
 
-storiesOf("Generic / Horizontal Spacer", module)
+storiesOf("Generics / Horizontal Spacer", module)
   .addDecorator(Decorator)
   .add("without", () => (
     <HelperWrapper>

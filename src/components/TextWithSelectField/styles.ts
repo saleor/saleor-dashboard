@@ -17,19 +17,25 @@ export const useStyles = makeStyles(
     },
     textFieldCentered: {
       "& input": {
-        paddingTop: 16,
+        paddingTop: 17,
         paddingBottom: 16
       }
     },
-    autocompleteField: {
-      height: 52,
-      border: "none",
-      "& *": {
-        border: "none"
-      },
-      "& *:focus": {
-        background: "none"
-      }
+
+    // It may seem lazy to set these CSS properties with !important tags, but
+    // specificity of overriden styles is really high and refer to mutliple
+    // internal classes. Instead of dealing with it and trying to create
+    // complex selectors with volatile class names, it's both easier and safer
+    // to enforce these styles with !important.
+    input: {
+      boxShadow: "none !important",
+      border: "none"
+    },
+    noBorder: {
+      borderColor: "transparent !important"
+    },
+    noBackground: {
+      backgroundColor: "transparent !important"
     }
   }),
   { name: "TextWithSelectField" }

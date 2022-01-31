@@ -112,6 +112,7 @@ const useStyles = makeStyles(
         color: theme.palette.primary.main,
         fontWeight: 700
       },
+      paddingLeft: theme.spacing(1.5),
       borderRadius: 4,
       display: "grid",
       gridColumnGap: theme.spacing(1),
@@ -128,16 +129,13 @@ const useStyles = makeStyles(
     progressContainer: {
       display: "flex",
       justifyContent: "center",
-      padding: `${theme.spacing(1)}px 0`
+      padding: theme.spacing(1, 0)
     },
     root: {
       borderBottomLeftRadius: 8,
       borderBottomRightRadius: 8,
-      left: 0,
-      marginTop: theme.spacing(),
+      margin: theme.spacing(1, 0),
       overflow: "hidden",
-      position: "absolute",
-      right: 0,
       zIndex: 22
     }
   }),
@@ -203,7 +201,7 @@ const MultiAutocompleteSelectFieldContent: React.FC<MultiAutocompleteSelectField
   const hasValuesToDisplay =
     displayValues.length > 0 || displayCustomValue || choices.length > 0;
   return (
-    <Paper className={classes.root}>
+    <Paper className={classes.root} elevation={8}>
       {hasValuesToDisplay && (
         <div
           className={classes.content}

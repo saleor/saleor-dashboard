@@ -6,7 +6,6 @@ import {
 } from "@saleor/macaw-ui";
 import React from "react";
 import { useIntl } from "react-intl";
-export { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 
 export interface ConfirmButtonProps
   extends Omit<MacawConfirmButtonProps, "labels"> {

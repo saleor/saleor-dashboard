@@ -1,6 +1,6 @@
 import { Channel } from "@saleor/channels/utils";
 import ActionDialog from "@saleor/components/ActionDialog";
-import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
+import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import React from "react";
 
 import ChannelsAvailabilityDialogChannelsList from "../ChannelsAvailabilityDialogChannelsList";
