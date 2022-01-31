@@ -209,7 +209,7 @@ const ExitFormDialogProvider = ({ children }) => {
       getDirtyFormsSubmitFn().map(submitFn => submitFn())
     );
 
-    const isError = flatten(errors).some(errors => errors);
+    const isError = errors.flat().some(errors => errors);
 
     setIsSubmitting(false);
 

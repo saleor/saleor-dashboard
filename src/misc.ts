@@ -250,17 +250,16 @@ type InferPromiseResult<T> = T extends Promise<infer V> ? V : never;
 
 export const extractMutationErrors = async <
   TData extends InferPromiseResult<TPromise>,
-  TPromise extends Promise<MutationFetchResult<TData>>
-  // TErrors extends ReturnType<typeof getMutationErrors>
+  TPromise extends Promise<MutationFetchResult<TData>>,
+  TErrors extends ReturnType<typeof getMutationErrors>
 >(
   submitPromise: TPromise
-): Promise<any[]> /* Promise<TErrors> */ => {
+): Promise<TErrors> => {
   const result = await submitPromise;
 
   const e = getMutationErrors(result);
 
-  // @ts-ignore
-  return e;
+  return e as TErrors;
 };
 
 export const getMutationErrors = <
@@ -269,16 +268,14 @@ export const getMutationErrors = <
   TErrors extends TData[keyof TData]["errors"]
 >(
   result: T
-): TErrors => {
+): TErrors[] => {
   if (!result?.data) {
-    // @ts-ignore
-    return [] as TError[];
+    return [] as TErrors;
   }
-  // @ts-ignore
   return Object.values(result.data).reduce(
     (acc: TErrors[], mut: TData) => [...acc, ...(mut.errors || [])],
     [] as TErrors[]
-  );
+  ) as TErrors;
 };
 
 export function getMutationStatus<
