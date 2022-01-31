@@ -28,7 +28,7 @@ export interface UpdateMetadata_updateMetadata_item_privateMetadata {
 }
 
 export interface UpdateMetadata_updateMetadata_item {
-  __typename: "App" | "Attribute" | "Category" | "Checkout" | "Collection" | "DigitalContent" | "Fulfillment" | "GiftCard" | "Invoice" | "Menu" | "MenuItem" | "Order" | "Page" | "PageType" | "Payment" | "Product" | "ProductType" | "ProductVariant" | "Sale" | "ShippingMethod" | "ShippingZone" | "User" | "Voucher" | "Warehouse";
+  __typename: "App" | "Attribute" | "Category" | "Checkout" | "Collection" | "DigitalContent" | "Fulfillment" | "GiftCard" | "Invoice" | "Menu" | "MenuItem" | "Order" | "Page" | "PageType" | "Payment" | "Product" | "ProductType" | "ProductVariant" | "Sale" | "ShippingMethod" | "ShippingMethodType" | "ShippingZone" | "User" | "Voucher" | "Warehouse";
   metadata: (UpdateMetadata_updateMetadata_item_metadata | null)[];
   privateMetadata: (UpdateMetadata_updateMetadata_item_privateMetadata | null)[];
   id: string;
@@ -59,7 +59,7 @@ export interface UpdateMetadata_deleteMetadata_item_privateMetadata {
 }
 
 export interface UpdateMetadata_deleteMetadata_item {
-  __typename: "App" | "Attribute" | "Category" | "Checkout" | "Collection" | "DigitalContent" | "Fulfillment" | "GiftCard" | "Invoice" | "Menu" | "MenuItem" | "Order" | "Page" | "PageType" | "Payment" | "Product" | "ProductType" | "ProductVariant" | "Sale" | "ShippingMethod" | "ShippingZone" | "User" | "Voucher" | "Warehouse";
+  __typename: "App" | "Attribute" | "Category" | "Checkout" | "Collection" | "DigitalContent" | "Fulfillment" | "GiftCard" | "Invoice" | "Menu" | "MenuItem" | "Order" | "Page" | "PageType" | "Payment" | "Product" | "ProductType" | "ProductVariant" | "Sale" | "ShippingMethod" | "ShippingMethodType" | "ShippingZone" | "User" | "Voucher" | "Warehouse";
   metadata: (UpdateMetadata_deleteMetadata_item_metadata | null)[];
   privateMetadata: (UpdateMetadata_deleteMetadata_item_privateMetadata | null)[];
   id: string;

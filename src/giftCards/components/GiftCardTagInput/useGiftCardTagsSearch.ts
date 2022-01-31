@@ -16,8 +16,8 @@ const searchGiftCardTags = gql`
     $last: Int
     $before: String
   ) {
-    search: giftCards(
-      filter: { tag: $query }
+    search: giftCardTags(
+      filter: { search: $query }
       first: $first
       after: $after
       last: $last
@@ -27,7 +27,7 @@ const searchGiftCardTags = gql`
       edges {
         node {
           id
-          tag
+          name
         }
       }
       pageInfo {

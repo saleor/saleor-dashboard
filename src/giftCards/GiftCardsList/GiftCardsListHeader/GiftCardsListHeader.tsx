@@ -1,10 +1,10 @@
-import { Button } from "@material-ui/core";
 import HorizontalSpacer from "@saleor/apps/components/HorizontalSpacer";
 import VerticalSpacer from "@saleor/apps/components/VerticalSpacer";
 import CardMenu, { CardMenuItem } from "@saleor/components/CardMenu";
 import PageHeader from "@saleor/components/PageHeader";
 import useNavigator from "@saleor/hooks/useNavigator";
 import { sectionNames } from "@saleor/intl";
+import { Button } from "@saleor/macaw-ui";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -17,7 +17,11 @@ const GiftCardsListHeader: React.FC = () => {
   const intl = useIntl();
   const navigate = useNavigator();
 
-  const { openCreateDialog } = useGiftCardListDialogs();
+  const {
+    openCreateDialog,
+    openBulkCreateDialog,
+    openExportDialog
+  } = useGiftCardListDialogs();
 
   const openSettings = () => navigate(giftCardSettingsUrl);
 
@@ -26,17 +30,17 @@ const GiftCardsListHeader: React.FC = () => {
       label: intl.formatMessage(messages.settings),
       testId: "settingsMenuItem",
       onSelect: openSettings
+    },
+    {
+      label: intl.formatMessage(messages.bulkIssue),
+      testId: "bulkIssueMenuItem",
+      onSelect: openBulkCreateDialog
+    },
+    {
+      label: intl.formatMessage(messages.exportCodes),
+      testId: "exportCodesMenuItem",
+      onSelect: openExportDialog
     }
-    //   {
-    //     label: intl.formatMessage(messages.bulkIssue),
-    //     testId: "bulkIssueMenuItem"
-    //     //   onSelect:
-    //   },
-    //   {
-    //     label: intl.formatMessage(messages.exportCodes),
-    //     testId: "exportCodesMenuItem"
-    //     //   onSelect:
-    //   }
   ];
 
   return (
@@ -45,8 +49,7 @@ const GiftCardsListHeader: React.FC = () => {
         <CardMenu menuItems={menuItems} data-test="menu" />
         <HorizontalSpacer spacing={2} />
         <Button
-          color="primary"
-          variant="contained"
+          variant="primary"
           onClick={openCreateDialog}
           data-test-id="issue-card-button"
         >

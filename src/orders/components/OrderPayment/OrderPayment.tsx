@@ -1,10 +1,10 @@
-import { Button, Card, CardActions, CardContent } from "@material-ui/core";
+import { Card, CardContent } from "@material-ui/core";
 import CardTitle from "@saleor/components/CardTitle";
 import { Hr } from "@saleor/components/Hr";
 import Money from "@saleor/components/Money";
 import Skeleton from "@saleor/components/Skeleton";
 import StatusLabel from "@saleor/components/StatusLabel";
-import { makeStyles } from "@saleor/macaw-ui";
+import { Button, makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -24,14 +24,17 @@ import {
 
 const useStyles = makeStyles(
   theme => ({
+    header: {
+      display: "flex",
+      justifyContent: "space-between"
+    },
     root: {
       ...theme.typography.body1,
       lineHeight: 1.9,
       width: "100%"
     },
     textRight: {
-      display: "flex",
-      justifyContent: "end"
+      textAlign: "right"
     },
     totalRow: {
       fontWeight: 600
@@ -98,7 +101,50 @@ const OrderPayment: React.FC<OrderPaymentProps> = props => {
           maybe(() => order.paymentStatus) === undefined ? (
             <Skeleton />
           ) : (
-            <StatusLabel label={payment.localized} status={payment.status} />
+            <div className={classes.header}>
+              <StatusLabel label={payment.localized} status={payment.status} />
+              {maybe(() => order.status) !== OrderStatus.CANCELED &&
+                (canCapture || canRefund || canVoid || canMarkAsPaid) && (
+                  <div>
+                    {canCapture && (
+                      <Button variant="tertiary" onClick={onCapture}>
+                        <FormattedMessage
+                          defaultMessage="Capture"
+                          description="capture payment, button"
+                        />
+                      </Button>
+                    )}
+                    {canRefund && (
+                      <Button
+                        variant="tertiary"
+                        onClick={onRefund}
+                        data-test-id="refund-button"
+                      >
+                        <FormattedMessage
+                          defaultMessage="Refund"
+                          description="button"
+                        />
+                      </Button>
+                    )}
+                    {canVoid && (
+                      <Button variant="tertiary" onClick={onVoid}>
+                        <FormattedMessage
+                          defaultMessage="Void"
+                          description="void payment, button"
+                        />
+                      </Button>
+                    )}
+                    {canMarkAsPaid && (
+                      <Button variant="tertiary" onClick={onMarkAsPaid}>
+                        <FormattedMessage
+                          defaultMessage="Mark as paid"
+                          description="order, button"
+                        />
+                      </Button>
+                    )}
+                  </div>
+                )}
+            </div>
           )
         }
       />
@@ -309,51 +355,6 @@ const OrderPayment: React.FC<OrderPaymentProps> = props => {
           </tbody>
         </table>
       </CardContent>
-      {maybe(() => order.status) !== OrderStatus.CANCELED &&
-        (canCapture || canRefund || canVoid || canMarkAsPaid) && (
-          <>
-            <Hr />
-            <CardActions>
-              {canCapture && (
-                <Button color="primary" variant="text" onClick={onCapture}>
-                  <FormattedMessage
-                    defaultMessage="Capture"
-                    description="capture payment, button"
-                  />
-                </Button>
-              )}
-              {canRefund && (
-                <Button
-                  color="primary"
-                  variant="text"
-                  onClick={onRefund}
-                  data-test-id="refund-button"
-                >
-                  <FormattedMessage
-                    defaultMessage="Refund"
-                    description="button"
-                  />
-                </Button>
-              )}
-              {canVoid && (
-                <Button color="primary" variant="text" onClick={onVoid}>
-                  <FormattedMessage
-                    defaultMessage="Void"
-                    description="void payment, button"
-                  />
-                </Button>
-              )}
-              {canMarkAsPaid && (
-                <Button color="primary" variant="text" onClick={onMarkAsPaid}>
-                  <FormattedMessage
-                    defaultMessage="Mark as paid"
-                    description="order, button"
-                  />
-                </Button>
-              )}
-            </CardActions>
-          </>
-        )}
     </Card>
   );
 };

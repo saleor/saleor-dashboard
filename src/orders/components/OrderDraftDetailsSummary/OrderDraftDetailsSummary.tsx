@@ -84,7 +84,7 @@ const OrderDraftDetailsSummary: React.FC<OrderDraftDetailsSummaryProps> = props 
     total,
     shippingMethod,
     shippingMethodName,
-    availableShippingMethods,
+    shippingMethods,
     shippingPrice,
     shippingAddress,
     isShippingRequired
@@ -93,8 +93,7 @@ const OrderDraftDetailsSummary: React.FC<OrderDraftDetailsSummaryProps> = props 
   const hasChosenShippingMethod =
     shippingMethod !== null && shippingMethodName !== null;
 
-  const hasAvailableShippingMethods =
-    !!availableShippingMethods?.length || isShippingRequired;
+  const hasShippingMethods = !!shippingMethods?.length || isShippingRequired;
 
   const discountTitle = orderDiscount
     ? messages.discount
@@ -194,11 +193,9 @@ const OrderDraftDetailsSummary: React.FC<OrderDraftDetailsSummaryProps> = props 
           </td>
         </tr>
         <tr>
-          {hasAvailableShippingMethods && (
-            <td>{getShippingMethodComponent()}</td>
-          )}
+          {hasShippingMethods && <td>{getShippingMethodComponent()}</td>}
 
-          {!hasAvailableShippingMethods && (
+          {!hasShippingMethods && (
             <td>{intl.formatMessage(messages.noShippingCarriers)}</td>
           )}
 

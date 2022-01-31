@@ -355,5 +355,5 @@ export function updateVariantPrice({ variantId, channelId, price }) {
   }`;
   return cy
     .sendRequestWithQuery(mutation)
-    .its("body.data.productVariantUpdate");
+    .its("body.data.productVariantChannelListingUpdate");
 }

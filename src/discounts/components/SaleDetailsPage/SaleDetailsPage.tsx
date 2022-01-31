@@ -1,7 +1,6 @@
 import { ChannelSaleData, validateSalePrice } from "@saleor/channels/utils";
 import CardSpacer from "@saleor/components/CardSpacer";
 import ChannelsAvailabilityCard from "@saleor/components/ChannelsAvailabilityCard";
-import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
 import Container from "@saleor/components/Container";
 import Form from "@saleor/components/Form";
 import Grid from "@saleor/components/Grid";
@@ -12,6 +11,7 @@ import { Tab, TabContainer } from "@saleor/components/Tab";
 import { createSaleChannelsChangeHandler } from "@saleor/discounts/handlers";
 import { DiscountErrorFragment } from "@saleor/fragments/types/DiscountErrorFragment";
 import { sectionNames } from "@saleor/intl";
+import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import { Backlink } from "@saleor/macaw-ui";
 import { mapEdgesToItems } from "@saleor/utils/maps";
 import { mapMetadataItemToInput } from "@saleor/utils/maps";
@@ -33,7 +33,6 @@ import DiscountProducts from "../DiscountProducts";
 import DiscountVariants from "../DiscountVariants";
 import SaleInfo from "../SaleInfo";
 import SaleSummary from "../SaleSummary";
-import { useStyles } from "../SaleSummary/styles";
 import SaleType from "../SaleType";
 import SaleValue from "../SaleValue";
 
@@ -141,7 +140,6 @@ const SaleDetailsPage: React.FC<SaleDetailsPageProps> = ({
   toggleAll
 }) => {
   const intl = useIntl();
-  const classes = useStyles();
   const {
     makeChangeHandler: makeMetadataChangeHandler
   } = useMetadataChangeTrigger();
@@ -177,7 +175,7 @@ const SaleDetailsPage: React.FC<SaleDetailsPageProps> = ({
             <Backlink onClick={onBack}>
               {intl.formatMessage(sectionNames.sales)}
             </Backlink>
-            <PageHeader className={classes.wrapAnywhere} title={sale?.name} />
+            <PageHeader title={sale?.name} />
             <Grid>
               <div>
                 <SaleInfo

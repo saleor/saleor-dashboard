@@ -38,7 +38,7 @@ interface LinkProps extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
   color?: "primary" | "secondary";
   underline?: boolean;
   typographyProps?: TypographyProps;
-  onClick?: () => void;
+  onClick?: React.MouseEventHandler;
   disabled?: boolean;
 }
 
@@ -70,7 +70,7 @@ const Link: React.FC<LinkProps> = props => {
       }
 
       event.preventDefault();
-      onClick();
+      onClick(event);
     },
     ...linkProps
   };

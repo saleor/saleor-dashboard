@@ -1,5 +1,4 @@
 import { CardSpacer } from "@saleor/components/CardSpacer";
-import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
 import Container from "@saleor/components/Container";
 import Form from "@saleor/components/Form";
 import Grid from "@saleor/components/Grid";
@@ -8,8 +7,10 @@ import { MetadataFormData } from "@saleor/components/Metadata/types";
 import PageHeader from "@saleor/components/PageHeader";
 import Savebar from "@saleor/components/Savebar";
 import { AccountErrorFragment } from "@saleor/fragments/types/AccountErrorFragment";
+import CustomerGiftCardsCard from "@saleor/giftCards/components/GiftCardCustomerCard/CustomerGiftCardsCard";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import { sectionNames } from "@saleor/intl";
+import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import { Backlink } from "@saleor/macaw-ui";
 import { mapEdgesToItems, mapMetadataItemToInput } from "@saleor/utils/maps";
 import useMetadataChangeTrigger from "@saleor/utils/metadata/useMetadataChangeTrigger";
@@ -117,6 +118,8 @@ const CustomerDetailsPage: React.FC<CustomerDetailsPageProps> = ({
                 />
                 <CardSpacer />
                 <CustomerStats customer={customer} />
+                <CardSpacer />
+                <CustomerGiftCardsCard />
               </div>
             </Grid>
             <Savebar

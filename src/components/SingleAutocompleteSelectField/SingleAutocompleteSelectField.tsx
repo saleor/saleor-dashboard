@@ -1,4 +1,4 @@
-import { InputBase, TextField } from "@material-ui/core";
+import { InputBase, Popper, TextField } from "@material-ui/core";
 import { InputProps } from "@material-ui/core/Input";
 import { ExtendedFormHelperTextProps } from "@saleor/channels/components/ChannelForm/types";
 import { makeStyles } from "@saleor/macaw-ui";
@@ -22,7 +22,7 @@ const useStyles = makeStyles(
       position: "relative"
     },
     nakedInput: {
-      padding: theme.spacing(2, 3)
+      padding: theme.spacing(2, 0)
     },
     adornment: {
       cursor: "pointer",
@@ -90,6 +90,7 @@ const SingleAutocompleteSelectFieldComponent: React.FC<SingleAutocompleteSelectF
     ...rest
   } = props;
   const classes = useStyles(props);
+  const anchor = React.useRef<HTMLInputElement | null>(null);
 
   const handleChange = (item: string) => {
     onChange({
@@ -187,7 +188,7 @@ const SingleAutocompleteSelectFieldComponent: React.FC<SingleAutocompleteSelectF
               error,
               id: undefined,
               onBlur: handleBlur,
-              onClick: toggleMenu,
+              onClick: !disabled && toggleMenu,
               onFocus: () => {
                 if (fetchOnFocus) {
                   fetchChoices(inputValue);
@@ -219,30 +220,38 @@ const SingleAutocompleteSelectFieldComponent: React.FC<SingleAutocompleteSelectF
                   label={label}
                   fullWidth={true}
                   onBlur={onBlur}
+                  ref={anchor}
                 />
                 {isOpen && (!!inputValue || !!choices.length) && (
-                  <SingleAutocompleteSelectFieldContent
-                    add={
-                      !!add && {
-                        ...add,
-                        onClick: () => {
-                          add.onClick();
-                          closeMenu();
+                  <Popper
+                    anchorEl={anchor.current}
+                    open={isOpen}
+                    style={{ width: anchor.current.clientWidth, zIndex: 1301 }}
+                    placement="bottom-end"
+                  >
+                    <SingleAutocompleteSelectFieldContent
+                      add={
+                        !!add && {
+                          ...add,
+                          onClick: () => {
+                            add.onClick();
+                            closeMenu();
+                          }
                         }
                       }
-                    }
-                    choices={choices}
-                    displayCustomValue={displayCustomValue}
-                    emptyOption={emptyOption}
-                    getItemProps={getItemProps}
-                    hasMore={hasMore}
-                    highlightedIndex={highlightedIndex}
-                    loading={loading}
-                    inputValue={inputValue}
-                    isCustomValueSelected={isCustomValueSelected}
-                    selectedItem={selectedItem}
-                    onFetchMore={onFetchMore}
-                  />
+                      choices={choices}
+                      displayCustomValue={displayCustomValue}
+                      emptyOption={emptyOption}
+                      getItemProps={getItemProps}
+                      hasMore={hasMore}
+                      highlightedIndex={highlightedIndex}
+                      loading={loading}
+                      inputValue={inputValue}
+                      isCustomValueSelected={isCustomValueSelected}
+                      selectedItem={selectedItem}
+                      onFetchMore={onFetchMore}
+                    />
+                  </Popper>
                 )}
               </div>
             );

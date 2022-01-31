@@ -1,7 +1,7 @@
-import { Avatar, Button, CardContent, TextField } from "@material-ui/core";
+import { Avatar, CardContent, TextField } from "@material-ui/core";
 import deepPurple from "@material-ui/core/colors/deepPurple";
 import PersonIcon from "@material-ui/icons/Person";
-import { makeStyles } from "@saleor/macaw-ui";
+import { Button, makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -65,6 +65,7 @@ interface TimelineProps {
 }
 
 interface TimelineAddNoteProps {
+  disabled?: boolean;
   message: string;
   reset: () => void;
   onChange(event: React.ChangeEvent<any>);
@@ -80,7 +81,7 @@ export const Timeline: React.FC<TimelineProps> = props => {
 };
 
 export const TimelineAddNote: React.FC<TimelineAddNoteProps> = props => {
-  const { message, onChange, onSubmit, reset } = props;
+  const { message, onChange, onSubmit, reset, disabled } = props;
   const classes = useStyles(props);
 
   const intl = useIntl();
@@ -100,6 +101,7 @@ export const TimelineAddNote: React.FC<TimelineAddNoteProps> = props => {
           <PersonIcon />
         </Avatar>
         <TextField
+          disabled={disabled}
           className={classes.input}
           placeholder={intl.formatMessage({
             defaultMessage: "Leave your note here..."
@@ -113,7 +115,7 @@ export const TimelineAddNote: React.FC<TimelineAddNoteProps> = props => {
             endAdornment: (
               <Button
                 className={classes.button}
-                color="primary"
+                disabled={disabled}
                 onClick={e => submit(e)}
               >
                 <FormattedMessage

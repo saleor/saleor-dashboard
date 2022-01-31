@@ -94,6 +94,7 @@ function selectValue(
   const updatedAttributes = add(
     {
       id: attributeId,
+      valueRequired: attribute.valueRequired,
       values
     },
     remove(attribute, prevState.attributes, (a, b) => a.id === b.id)
@@ -417,9 +418,21 @@ function deleteVariant(
   state: ProductVariantCreateFormData,
   variantIndex: number
 ): ProductVariantCreateFormData {
+  const variants = removeAtIndex(state.variants, variantIndex);
+
   return {
     ...state,
-    variants: removeAtIndex(state.variants, variantIndex)
+    variants: variants.length
+      ? variants
+      : createVariants({
+          ...state,
+          attributes: state.attributes.map(attribute => ({
+            id: attribute.id,
+            valueRequired: attribute.valueRequired,
+            values: []
+          })),
+          variants
+        })
   };
 }
 

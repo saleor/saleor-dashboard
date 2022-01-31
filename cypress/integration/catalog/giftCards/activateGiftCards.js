@@ -1,7 +1,7 @@
-// <reference types="cypress" />
+/// <reference types="cypress" />
 import faker from "faker";
 
-import { GIFT_CARD_LIST } from "../../../elements/giftCard/giftCardList";
+import { GIFT_CARD_LIST } from "../../../elements/catalog/giftCard/giftCardList";
 import { urlList } from "../../../fixtures/urlList";
 import { completeCheckout } from "../../../support/api/requests/Checkout";
 import {
@@ -119,7 +119,7 @@ filterTests({ definedTags: ["all"], version: "3.1.0" }, () => {
       cy.clearSessionData().loginUserViaRequest();
     });
 
-    it("As an admin I should be able to enable gift card and use it in checkout", () => {
+    it("should be able to enable gift card and use it in checkout. TC: SALEOR_1006", () => {
       const expectedGiftCardBalance =
         giftCardData.amount - productPrice - shippingPrice;
       giftCardData.tag = `${startsWith}${faker.datatype.number()}`;
@@ -150,7 +150,7 @@ filterTests({ definedTags: ["all"], version: "3.1.0" }, () => {
         });
     });
 
-    it("As an admin I should not be able to disable gift card and use it in checkout", () => {
+    it("should not be able to disable gift card and use it in checkout. TC: SALEOR_1006", () => {
       giftCardData.tag = `${startsWith}${faker.datatype.number()}`;
       let giftCard;
 
@@ -176,7 +176,7 @@ filterTests({ definedTags: ["all"], version: "3.1.0" }, () => {
         });
     });
 
-    it("As an admin I should not be able to disable several gift cards on gift card list page and use it in checkout", () => {
+    it("should not be able to disable several gift cards on gift card list page and use it in checkout. TC: SALEOR_1013", () => {
       const firstGiftCardName = `${startsWith}${faker.datatype.number()}`;
       const secondGiftCardName = `${startsWith}${faker.datatype.number()}`;
       const amount = 10;
@@ -227,7 +227,7 @@ filterTests({ definedTags: ["all"], version: "3.1.0" }, () => {
         });
     });
 
-    it("As an admin I should be able to enable several gift cards on gift card list page and use it in checkout", () => {
+    it("should be able to enable several gift cards on gift card list page and use it in checkout. TC: SALEOR_1012", () => {
       const firstGiftCardName = `${startsWith}${faker.datatype.number()}`;
       const secondGiftCardName = `${startsWith}${faker.datatype.number()}`;
       const amount = 10;

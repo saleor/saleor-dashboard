@@ -1,13 +1,14 @@
-import { Button, DialogContent, Typography } from "@material-ui/core";
+import { DialogActions, DialogContent, Typography } from "@material-ui/core";
 import HorizontalSpacer from "@saleor/apps/components/HorizontalSpacer";
 import VerticalSpacer from "@saleor/apps/components/VerticalSpacer";
 import useClipboard from "@saleor/hooks/useClipboard";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { buttonMessages } from "@saleor/intl";
+import { Button } from "@saleor/macaw-ui";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import { giftCardCreateDialogMessages as messages } from "./messages";
+import { giftCardCreateMessages as messages } from "./messages";
 import { useGiftCardCreateDialogCodeContentStyles as useStyles } from "./styles";
 
 interface GiftCardCreateDialogCodeContentProps {
@@ -33,30 +34,27 @@ const GiftCardCreateDialogCodeContent: React.FC<GiftCardCreateDialogCodeContentP
   };
 
   return (
-    <DialogContent>
-      <Typography>
-        {intl.formatMessage(messages.createdGiftCardLabel)}
-      </Typography>
-      <VerticalSpacer />
-      <Typography variant="h6" color="textSecondary" data-test-id="cardCode">
-        {cardCode}
-      </Typography>
-      <VerticalSpacer spacing={2} />
-      <div className={classes.buttonsContainer}>
+    <div className={classes.content}>
+      <DialogContent>
+        <Typography>
+          {intl.formatMessage(messages.createdGiftCardLabel)}
+        </Typography>
+        <VerticalSpacer />
+        <Typography variant="h6" color="textSecondary" data-test-id="cardCode">
+          {cardCode}
+        </Typography>
+        <VerticalSpacer spacing={2} />
+      </DialogContent>
+      <DialogActions>
         <Button onClick={onCopyCode}>
           {intl.formatMessage(messages.copyCodeLabel)}
         </Button>
         <HorizontalSpacer spacing={2} />
-        <Button
-          color="primary"
-          variant="contained"
-          onClick={onClose}
-          data-test="submit"
-        >
+        <Button variant="primary" onClick={onClose} data-test="submit">
           {intl.formatMessage(buttonMessages.ok)}
         </Button>
-      </div>
-    </DialogContent>
+      </DialogActions>
+    </div>
   );
 };
 

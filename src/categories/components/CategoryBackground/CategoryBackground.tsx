@@ -1,11 +1,11 @@
-import { Button, Card, CardContent, TextField } from "@material-ui/core";
+import { Card, CardContent, TextField } from "@material-ui/core";
 import CardTitle from "@saleor/components/CardTitle";
 import Hr from "@saleor/components/Hr";
 import ImageUpload from "@saleor/components/ImageUpload";
 import MediaTile from "@saleor/components/MediaTile";
 import Skeleton from "@saleor/components/Skeleton";
 import { commonMessages } from "@saleor/intl";
-import { makeStyles } from "@saleor/macaw-ui";
+import { Button, makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -64,11 +64,7 @@ const CategoryBackground: React.FC<CategoryBackgroundProps> = props => {
         })}
         toolbar={
           <>
-            <Button
-              variant="text"
-              color="primary"
-              onClick={handleImageUploadButtonClick}
-            >
+            <Button variant="tertiary" onClick={handleImageUploadButtonClick}>
               <FormattedMessage {...commonMessages.uploadImage} />
             </Button>
             <input

@@ -12,7 +12,7 @@ function getPeriodValue(date, option) {
 }
 
 export function formatTime(date) {
-  const formatter = new Intl.DateTimeFormat([], {
+  const formatter = new Intl.DateTimeFormat(["pl-Pl"], {
     hour: "numeric",
     minute: "numeric"
   });

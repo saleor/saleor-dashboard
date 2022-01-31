@@ -10,10 +10,9 @@ export const useGiftCardCreateExpirySelectStyles = makeStyles(
       width: 400
     },
     periodField: {
-      display: "flex"
-    },
-    dateText: {
-      marginTop: theme.spacing(0.5)
+      alignItems: "center",
+      display: "flex",
+      gap: theme.spacing(2)
     }
   }),
   { name: "GiftCardExpirySelect" }

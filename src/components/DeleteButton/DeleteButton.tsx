@@ -1,6 +1,5 @@
-import { Button } from "@material-ui/core";
 import { buttonMessages } from "@saleor/intl";
-import { makeStyles } from "@saleor/macaw-ui";
+import { Button, makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -33,7 +32,7 @@ const DeleteButton: React.FC<DeleteButtonProps> = ({
 
   return (
     <Button
-      variant="contained"
+      variant="primary"
       onClick={onClick}
       className={classes.button}
       data-test="button-bar-delete"

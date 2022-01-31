@@ -11,5 +11,6 @@ export const SHIPPING_RATE_DETAILS = {
   maxWeightInput: '[name*="maxValue"]',
   minWeightInput: '[name*="minValue"]',
   minDeliveryTimeInput: '[name="minDays"]',
-  maxDeliveryTimeInput: '[name="maxDays"]'
+  maxDeliveryTimeInput: '[name="maxDays"]',
+  restrictWeightLimitCheckbox: '[name="orderValueRestricted"]'
 };

@@ -1,3 +1,4 @@
+import { Typography } from "@material-ui/core";
 import DiscountedPrice from "@saleor/components/DiscountedPrice/DiscountedPrice";
 import Money from "@saleor/components/Money";
 import { SearchOrderVariant_search_edges_node_variants_pricing } from "@saleor/orders/types/SearchOrderVariant";
@@ -24,7 +25,11 @@ const OrderPriceLabel: React.FC<OrderPriceLabelProps> = ({ pricing }) => {
     );
   }
 
-  return <Money money={pricing.priceUndiscounted.gross} align="right" />;
+  return (
+    <Typography align="right">
+      <Money money={pricing.priceUndiscounted.gross} />
+    </Typography>
+  );
 };
 
 export default OrderPriceLabel;

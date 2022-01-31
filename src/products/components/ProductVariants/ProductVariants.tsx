@@ -1,5 +1,4 @@
 import {
-  Button,
   Card,
   CardContent,
   Hidden,
@@ -21,7 +20,7 @@ import {
   SortableTableRow
 } from "@saleor/components/SortableTable";
 import TableHead from "@saleor/components/TableHead";
-import { makeStyles } from "@saleor/macaw-ui";
+import { Button, makeStyles } from "@saleor/macaw-ui";
 import { isLimitReached } from "@saleor/utils/limits";
 import React from "react";
 import { FormattedMessage, IntlShape, useIntl } from "react-intl";
@@ -74,7 +73,7 @@ const useStyles = makeStyles(
   theme => ({
     [theme.breakpoints.up("lg")]: {
       colActions: {
-        width: 70
+        width: 80
       },
       colInventory: {
         width: 200
@@ -256,8 +255,7 @@ export const ProductVariants: React.FC<ProductVariantsProps> = props => {
             <Button
               disabled={limitReached}
               onClick={onVariantAdd}
-              variant="text"
-              color="primary"
+              variant="tertiary"
               data-test="button-add-variant"
             >
               <FormattedMessage
@@ -269,8 +267,7 @@ export const ProductVariants: React.FC<ProductVariantsProps> = props => {
             <Button
               disabled={limitReached}
               onClick={onVariantsAdd}
-              variant="text"
-              color="primary"
+              variant="tertiary"
               data-test="button-add-variants"
             >
               <FormattedMessage

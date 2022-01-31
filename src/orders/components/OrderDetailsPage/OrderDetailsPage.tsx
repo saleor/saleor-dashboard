@@ -1,17 +1,18 @@
 import { Typography } from "@material-ui/core";
 import CardMenu from "@saleor/components/CardMenu";
 import { CardSpacer } from "@saleor/components/CardSpacer";
-import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
 import { Container } from "@saleor/components/Container";
 import { DateTime } from "@saleor/components/Date";
 import Form from "@saleor/components/Form";
 import Grid from "@saleor/components/Grid";
 import Metadata, { MetadataFormData } from "@saleor/components/Metadata";
 import PageHeader from "@saleor/components/PageHeader";
+import PageTitleWithStatusChip from "@saleor/components/PageTitleWithStatusChip";
 import Savebar from "@saleor/components/Savebar";
 import Skeleton from "@saleor/components/Skeleton";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 import { sectionNames } from "@saleor/intl";
+import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import { Backlink } from "@saleor/macaw-ui";
 import { makeStyles } from "@saleor/macaw-ui";
 import OrderChannelSectionCard from "@saleor/orders/components/OrderChannelSectionCard";
@@ -35,8 +36,8 @@ import OrderFulfilledProductsCard from "../OrderFulfilledProductsCard";
 import OrderHistory, { FormData as HistoryFormData } from "../OrderHistory";
 import OrderInvoiceList from "../OrderInvoiceList";
 import OrderPayment from "../OrderPayment/OrderPayment";
+import OrderStatusChip from "../OrderStatusChip/OrderStatusChip";
 import OrderUnfulfilledProductsCard from "../OrderUnfulfilledProductsCard";
-import Title from "./Title";
 import { filteredConditionalItems, hasAnyItemsReplaceable } from "./utils";
 
 const useStyles = makeStyles(
@@ -223,9 +224,13 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
             <PageHeader
               className={classes.header}
               inline
-              title={<Title order={order} />}
+              title={
+                <PageTitleWithStatusChip title={order?.number}>
+                  <OrderStatusChip order={order} />
+                </PageTitleWithStatusChip>
+              }
             >
-              <CardMenu menuItems={selectCardMenuItems} />
+              <CardMenu outlined menuItems={selectCardMenuItems} />
             </PageHeader>
             <div className={classes.date}>
               {order && order.created ? (

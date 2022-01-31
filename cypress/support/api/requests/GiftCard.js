@@ -10,7 +10,7 @@ export function getGiftCardWithTag(tag, withCode = false) {
 export function getGiftCardsWithTag(first, tag, withCode = false) {
   const codeLine = getValueWithDefault(withCode, `code`);
   const query = `query{
-    giftCards(first: ${first}, filter: { tag: "${tag}"}){
+    giftCards(first: ${first}, filter: { code:"", tags: ["${tag}"]}){
       edges{
         node{
           ${codeLine}
@@ -33,18 +33,73 @@ export function getGiftCardsWithTag(first, tag, withCode = false) {
   return cy.sendRequestWithQuery(query);
 }
 
+export function getGiftCards(first) {
+  const query = `query{
+    giftCards(first: ${first}){
+      edges{
+        node{
+          displayCode
+          id
+          isActive
+          expiryDate
+          tags{
+            name
+          }
+          currentBalance{
+            currency
+            amount
+          }
+          initialBalance{
+            currency
+            amount
+          }
+        }
+      }
+    }
+  }`;
+  return cy.sendRequestWithQuery(query);
+}
+
+export function getGiftCardsWithCode(code) {
+  const query = `query{
+    giftCards(first:100, filter: { code: "${code}"}){
+      edges{
+        node{
+          code
+          displayCode
+          id
+          isActive
+          expiryDate
+          currentBalance{
+            currency
+            amount
+          }
+          initialBalance{
+            currency
+            amount
+          }
+        }
+      }
+    }
+  }`;
+  return cy.sendRequestWithQuery(query).its("body.data.giftCards.edges");
+}
+
 export function getGiftCardWithId(id) {
   const query = `query{
     giftCard(id:"${id}"){
       isActive
       expiryDate
-      tag
-      usedByEmail
+      tags{
+        id
+        name
+      }
       currentBalance{
         currency
         amount
       }
       initialBalance{
+        currency
         amount
       }
     }
@@ -55,7 +110,7 @@ export function getGiftCardWithId(id) {
 export function createGiftCard({ tag, currency, amount, isActive = true }) {
   const mutation = `mutation{
     giftCardCreate(input:{
-      tag:"${tag}"
+      addTags:"${tag}"
       isActive: ${isActive}
       balance: {
         currency: "${currency}"

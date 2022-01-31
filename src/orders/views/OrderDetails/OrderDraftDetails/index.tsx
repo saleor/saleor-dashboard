@@ -222,7 +222,7 @@ export const OrderDraftDetails: React.FC<OrderDraftDetailsProps> = ({
         }
         open={params.action === "edit-shipping"}
         shippingMethod={order?.shippingMethod?.id}
-        shippingMethods={order?.availableShippingMethods}
+        shippingMethods={order?.shippingMethods}
         onClose={closeModal}
         onSubmit={variables =>
           orderShippingMethodUpdate.mutate({

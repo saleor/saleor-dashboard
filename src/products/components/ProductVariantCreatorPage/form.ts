@@ -29,6 +29,7 @@ export interface Stock {
 }
 export interface Attribute {
   id: string;
+  valueRequired: boolean;
   values: Array<AttributeValue<Partial<AttributeValueFragment>>>;
 }
 export interface ProductVariantCreateFormData {
@@ -52,6 +53,7 @@ export const createInitialForm = (
   return {
     attributes: attributes.map(attribute => ({
       id: attribute.id,
+      valueRequired: attribute.valueRequired,
       values: []
     })),
     price: {

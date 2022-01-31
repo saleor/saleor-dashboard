@@ -65,11 +65,16 @@ export interface GiftCardActivate_giftCardActivate_giftCard_currentBalance {
   currency: string;
 }
 
+export interface GiftCardActivate_giftCardActivate_giftCard_tags {
+  __typename: "GiftCardTag";
+  name: string;
+}
+
 export interface GiftCardActivate_giftCardActivate_giftCard {
   __typename: "GiftCard";
   metadata: (GiftCardActivate_giftCardActivate_giftCard_metadata | null)[];
   privateMetadata: (GiftCardActivate_giftCardActivate_giftCard_privateMetadata | null)[];
-  displayCode: string;
+  last4CodeChars: string;
   boughtInChannel: string | null;
   createdBy: GiftCardActivate_giftCardActivate_giftCard_createdBy | null;
   product: GiftCardActivate_giftCardActivate_giftCard_product | null;
@@ -84,7 +89,7 @@ export interface GiftCardActivate_giftCardActivate_giftCard {
   initialBalance: GiftCardActivate_giftCardActivate_giftCard_initialBalance | null;
   currentBalance: GiftCardActivate_giftCardActivate_giftCard_currentBalance | null;
   id: string;
-  tag: string | null;
+  tags: GiftCardActivate_giftCardActivate_giftCard_tags[] | null;
 }
 
 export interface GiftCardActivate_giftCardActivate {

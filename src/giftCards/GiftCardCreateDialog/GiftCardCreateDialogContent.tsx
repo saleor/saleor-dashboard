@@ -1,28 +1,36 @@
-import { Dialog, DialogTitle } from "@material-ui/core";
-import { IMessage } from "@saleor/components/messages";
+import { DialogTitle } from "@material-ui/core";
 import useCurrentDate from "@saleor/hooks/useCurrentDate";
 import useNotifier from "@saleor/hooks/useNotifier";
+import { DialogProps } from "@saleor/types";
 import { GiftCardCreateInput } from "@saleor/types/globalTypes";
-import commonErrorMessages from "@saleor/utils/errors/common";
-import { DialogActionHandlersProps } from "@saleor/utils/handlers/dialogActionHandlers";
 import React, { useState } from "react";
 import { useIntl } from "react-intl";
 
-import { GIFT_CARD_LIST_QUERY } from "../GiftCardsList/types";
 import ContentWithProgress from "./ContentWithProgress";
 import GiftCardCreateDialogCodeContent from "./GiftCardCreateDialogCodeContent";
 import GiftCardCreateDialogForm, {
   GiftCardCreateFormData
 } from "./GiftCardCreateDialogForm";
-import { giftCardCreateDialogMessages as messages } from "./messages";
+import { giftCardCreateMessages as messages } from "./messages";
 import { useGiftCardCreateMutation } from "./mutations";
 import { useChannelCurrencies } from "./queries";
+import { GiftCardCreateFormCustomer } from "./types";
 import { GiftCardCreate } from "./types/GiftCardCreate";
-import { getGiftCardExpiryInputData } from "./utils";
+import {
+  getGiftCardCreateOnCompletedMessage,
+  getGiftCardExpiryInputData
+} from "./utils";
 
-const GiftCardCreateDialog: React.FC<DialogActionHandlersProps> = ({
-  closeDialog,
-  open
+interface GiftCardCreateDialogContentProps
+  extends Pick<DialogProps, "onClose"> {
+  refetchQueries: string[];
+  initialCustomer?: GiftCardCreateFormCustomer | null;
+}
+
+const GiftCardCreateDialogContent: React.FC<GiftCardCreateDialogContentProps> = ({
+  onClose,
+  refetchQueries,
+  initialCustomer
 }) => {
   const intl = useIntl();
   const notify = useNotifier();
@@ -34,17 +42,7 @@ const GiftCardCreateDialog: React.FC<DialogActionHandlersProps> = ({
   const onCompleted = (data: GiftCardCreate) => {
     const errors = data?.giftCardCreate?.errors;
 
-    const notifierData: IMessage = !!errors?.length
-      ? {
-          status: "error",
-          text: intl.formatMessage(commonErrorMessages.unknownError)
-        }
-      : {
-          status: "success",
-          text: intl.formatMessage(messages.createdSuccessAlertTitle)
-        };
-
-    notify(notifierData);
+    notify(getGiftCardCreateOnCompletedMessage(errors, intl));
 
     if (!errors?.length) {
       setCardCode(data?.giftCardCreate?.giftCard?.code);
@@ -60,7 +58,7 @@ const GiftCardCreateDialog: React.FC<DialogActionHandlersProps> = ({
       balanceAmount,
       balanceCurrency,
       note,
-      tag,
+      tags,
       sendToCustomerSelected,
       selectedCustomer,
       requiresActivation,
@@ -69,7 +67,7 @@ const GiftCardCreateDialog: React.FC<DialogActionHandlersProps> = ({
 
     return {
       note: note || null,
-      tag: tag || null,
+      addTags: tags || null,
       userEmail: (sendToCustomerSelected && selectedCustomer.email) || null,
       channel: (sendToCustomerSelected && channelSlug) || null,
       balance: {
@@ -83,7 +81,7 @@ const GiftCardCreateDialog: React.FC<DialogActionHandlersProps> = ({
 
   const [createGiftCard, createGiftCardOpts] = useGiftCardCreateMutation({
     onCompleted,
-    refetchQueries: [GIFT_CARD_LIST_QUERY]
+    refetchQueries
   });
 
   const handleSubmit = (data: GiftCardCreateFormData) => {
@@ -95,14 +93,11 @@ const GiftCardCreateDialog: React.FC<DialogActionHandlersProps> = ({
   };
 
   const handleClose = () => {
-    closeDialog();
-    // dialog closing animation runs slower than prop change
-    // and we don't want to show the form for a split second
-    setTimeout(() => setCardCode(null), 0);
+    onClose();
   };
 
   return (
-    <Dialog open={open} maxWidth="sm">
+    <>
       <DialogTitle>{intl.formatMessage(messages.title)}</DialogTitle>
       <ContentWithProgress>
         {!loadingChannelCurrencies &&
@@ -117,11 +112,12 @@ const GiftCardCreateDialog: React.FC<DialogActionHandlersProps> = ({
               onClose={handleClose}
               apiErrors={createGiftCardOpts?.data?.giftCardCreate?.errors}
               onSubmit={handleSubmit}
+              initialCustomer={initialCustomer}
             />
           ))}
       </ContentWithProgress>
-    </Dialog>
+    </>
   );
 };
 
-export default GiftCardCreateDialog;
+export default GiftCardCreateDialogContent;

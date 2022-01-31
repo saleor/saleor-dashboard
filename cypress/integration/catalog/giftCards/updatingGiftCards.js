@@ -3,7 +3,7 @@
 
 import faker from "faker";
 
-import { GIFT_CARD_UPDATE } from "../../../elements/giftCard/giftCardUpdate";
+import { GIFT_CARD_UPDATE } from "../../../elements/catalog/giftCard/giftCardUpdate";
 import { BUTTON_SELECTORS } from "../../../elements/shared/button-selectors";
 import { giftCardDetailsUrl } from "../../../fixtures/urlList";
 import {
@@ -27,7 +27,7 @@ filterTests({ definedTags: ["all"], version: "3.1.0" }, () => {
       cy.clearSessionData().loginUserViaRequest();
     });
 
-    it("As an admin I should be able to delete gift card", () => {
+    it("should be able to delete gift card. TC: SALEOR_1004", () => {
       const name = `${startsWith}${faker.datatype.number()}`;
 
       createGiftCard({
@@ -48,7 +48,7 @@ filterTests({ definedTags: ["all"], version: "3.1.0" }, () => {
       });
     });
 
-    it("As an admin I should be able to update gift card. ", () => {
+    it("should be able to update gift card. TC: SALEOR_1005", () => {
       const name = `${startsWith}${faker.datatype.number()}`;
       const updatedName = `${startsWith}${faker.datatype.number()}`;
       const date = formatDate(new Date(new Date().getFullYear() + 2, 1, 1));
@@ -65,11 +65,13 @@ filterTests({ definedTags: ["all"], version: "3.1.0" }, () => {
             .click()
             .get(GIFT_CARD_UPDATE.expireDateInput)
             .type(date)
+            .get(GIFT_CARD_UPDATE.removeTagButton)
+            .click()
             .get(GIFT_CARD_UPDATE.giftCardTagSelect)
             .find("input")
             .clear()
             .type(updatedName)
-            .get(GIFT_CARD_UPDATE.autocompleteOption)
+            .get(GIFT_CARD_UPDATE.autocompleteCustomOption)
             .click()
             .addAliasToGraphRequest("GiftCardUpdate")
             .get(BUTTON_SELECTORS.confirm)
@@ -78,7 +80,9 @@ filterTests({ definedTags: ["all"], version: "3.1.0" }, () => {
           getGiftCardWithId(giftCard.id);
         })
         .then(giftCard => {
-          expect(giftCard.tag).to.eq(updatedName);
+          expect(giftCard.tags[0].name.toLowerCase()).to.eq(
+            updatedName.toLowerCase()
+          );
           expect(giftCard.expiryDate).to.eq(date);
         });
     });

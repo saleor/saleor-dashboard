@@ -97,6 +97,7 @@ export function getProductType(productTypeId) {
     productType(id:"${productTypeId}"){
       id
       name
+      kind
       isShippingRequired
       weight{
         value

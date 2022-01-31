@@ -1,5 +1,4 @@
-import { DialogContentText, IconButton } from "@material-ui/core";
-import DeleteIcon from "@material-ui/icons/Delete";
+import { DialogContentText } from "@material-ui/core";
 import ActionDialog from "@saleor/components/ActionDialog";
 import useAppChannel from "@saleor/components/AppLayout/AppChannelContext";
 import DeleteFilterTabDialog from "@saleor/components/DeleteFilterTabDialog";
@@ -24,6 +23,7 @@ import usePaginator, {
   createPaginationState
 } from "@saleor/hooks/usePaginator";
 import { commonMessages } from "@saleor/intl";
+import { DeleteIcon, IconButton } from "@saleor/macaw-ui";
 import { maybe } from "@saleor/misc";
 import ProductExportDialog from "@saleor/products/components/ProductExportDialog";
 import {
@@ -79,6 +79,7 @@ import {
   saveFilterTab
 } from "./filters";
 import { canBeSorted, DEFAULT_SORT_KEY, getSortQueryVariables } from "./sort";
+import { getAvailableProductKinds, getProductKindOpts } from "./utils";
 
 interface ProductListProps {
   params: ProductListUrlQueryParams;
@@ -165,6 +166,7 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
     },
     skip: params.action !== "export"
   });
+  const availableProductKinds = getAvailableProductKinds();
   const { availableChannels } = useAppChannel(false);
   const limitOpts = useShopLimitsQuery({
     variables: {
@@ -280,6 +282,7 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
       })
     );
 
+  const kindOpts = getProductKindOpts(availableProductKinds, intl);
   const paginationState = createPaginationState(settings.rowNumber, params);
   const channelOpts = availableChannels
     ? mapNodeToChoice(availableChannels, channel => channel.slug)
@@ -347,6 +350,7 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
       initial: mapEdgesToItems(initialFilterProductTypes?.productTypes) || [],
       search: searchProductTypes
     },
+    kindOpts,
     channelOpts
   );
 
@@ -425,6 +429,7 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
         onAll={resetFilters}
         toolbar={
           <IconButton
+            variant="secondary"
             color="primary"
             onClick={() =>
               openModal("delete", {

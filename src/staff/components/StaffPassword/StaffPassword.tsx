@@ -1,5 +1,6 @@
-import { Button, Card, CardContent, Typography } from "@material-ui/core";
+import { Card, CardContent, Typography } from "@material-ui/core";
 import CardTitle from "@saleor/components/CardTitle";
+import { Button } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -18,7 +19,7 @@ const StaffPassword: React.FC<StaffPasswordProps> = ({ onChangePassword }) => {
           description: "header"
         })}
         toolbar={
-          <Button color="primary" onClick={onChangePassword}>
+          <Button onClick={onChangePassword}>
             <FormattedMessage
               defaultMessage="Change your password"
               description="button"

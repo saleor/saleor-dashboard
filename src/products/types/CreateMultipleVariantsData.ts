@@ -132,6 +132,7 @@ export interface CreateMultipleVariantsData_product_productType_variantAttribute
   id: string;
   name: string | null;
   inputType: AttributeInputTypeEnum | null;
+  valueRequired: boolean;
   unit: MeasurementUnitsEnum | null;
   choices: CreateMultipleVariantsData_product_productType_variantAttributes_choices | null;
 }

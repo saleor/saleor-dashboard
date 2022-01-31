@@ -69,9 +69,17 @@ const BulkEnableDisableSection: React.FC = () => {
     .filter(getByIds(ids))
     .some(({ isActive }) => isActive);
 
+  const areAllSelectedCardsActive = giftCards
+    .filter(getByIds(ids))
+    .every(({ isActive }) => isActive);
+
   const hasAnyDisabledCardsSelected = giftCards
     .filter(getByIds(ids))
     .some(({ isActive }) => !isActive);
+
+  const areAllSelectedCardsDisabled = giftCards
+    .filter(getByIds(ids))
+    .every(({ isActive }) => !isActive);
 
   const [
     activateGiftCards,
@@ -95,26 +103,31 @@ const BulkEnableDisableSection: React.FC = () => {
   const handleDeactivateGiftCards = () =>
     deactivateGiftCards({ variables: { ids } });
 
+  const isSelectionMixed =
+    hasAnyEnabledCardsSelected && hasAnyDisabledCardsSelected;
+
   return (
     <>
-      <ConfirmButton
-        disabled={hasAnyEnabledCardsSelected}
-        onClick={handleActivateGiftCards}
-        variant="text"
-        transitionState={activateGiftCardsOpts?.status}
-        data-test-id="activate-gift-cards"
-      >
-        {intl.formatMessage(messages.enableLabel)}
-      </ConfirmButton>
-      <ConfirmButton
-        disabled={hasAnyDisabledCardsSelected}
-        onClick={handleDeactivateGiftCards}
-        variant="text"
-        transitionState={deactivateGiftCardsOpts?.status}
-        data-test-id="deactivate-gift-cards"
-      >
-        {intl.formatMessage(messages.disableLabel)}
-      </ConfirmButton>
+      {(areAllSelectedCardsDisabled || isSelectionMixed) && (
+        <ConfirmButton
+          onClick={handleActivateGiftCards}
+          variant="secondary"
+          transitionState={activateGiftCardsOpts?.status}
+          data-test-id="activate-gift-cards"
+        >
+          {intl.formatMessage(messages.enableLabel)}
+        </ConfirmButton>
+      )}
+      {(areAllSelectedCardsActive || isSelectionMixed) && (
+        <ConfirmButton
+          onClick={handleDeactivateGiftCards}
+          variant="secondary"
+          transitionState={deactivateGiftCardsOpts?.status}
+          data-test-id="deactivate-gift-cards"
+        >
+          {intl.formatMessage(messages.disableLabel)}
+        </ConfirmButton>
+      )}
     </>
   );
 };

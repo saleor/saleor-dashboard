@@ -22,7 +22,7 @@ export function createCollection(name, slug = name) {
 export function getCollections(first, search) {
   const filter = search
     ? `, filter:{
-        search:""
+        search:"${search}"
       }`
     : "";
   const query = `query{

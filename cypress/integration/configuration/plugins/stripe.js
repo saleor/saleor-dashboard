@@ -8,7 +8,10 @@ import {
 } from "../../../support/api/requests/Checkout";
 import { getOrder } from "../../../support/api/requests/Order";
 import { confirmThreeDSecure } from "../../../support/api/requests/stripe";
-import { addStripePaymentAndGetConfirmationData } from "../../../support/api/utils/ordersUtils";
+import {
+  addStripePaymentAndGetConfirmationData,
+  getShippingMethodIdFromCheckout
+} from "../../../support/api/utils/ordersUtils";
 import { createProductWithShipping } from "../../../support/api/utils/products/productsUtils";
 import { deleteShippingStartsWith } from "../../../support/api/utils/shippingUtils";
 import filterTests from "../../../support/filterTests";
@@ -58,7 +61,11 @@ filterTests({ definedTags: ["stagedOnly"] }, () => {
       })
         .then(({ checkout: checkoutResp }) => {
           checkout = checkoutResp;
-          addShippingMethod(checkout.id, shippingMethod.id);
+          const shippingMethodId = getShippingMethodIdFromCheckout(
+            checkoutResp,
+            shippingMethod.name
+          );
+          addShippingMethod(checkout.id, shippingMethodId);
         })
         .then(({ checkout: checkoutResp }) => {
           checkout = checkoutResp;

@@ -14,7 +14,7 @@ export interface ShippingMethodTranslationDetails_translation_ProductTranslatabl
 }
 
 export interface ShippingMethodTranslationDetails_translation_ShippingMethodTranslatableContent_shippingMethod {
-  __typename: "ShippingMethod";
+  __typename: "ShippingMethodType";
   id: string;
 }
 

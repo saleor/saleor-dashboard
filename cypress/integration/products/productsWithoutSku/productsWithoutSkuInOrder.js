@@ -47,7 +47,7 @@ filterTests({ definedTags: ["all", "critical"] }, () => {
           }
         )
         .then(customerResp => {
-          const customer = customerResp.body.data.customerCreate.user;
+          const customer = customerResp.user;
           createReadyToFulfillOrder({
             address,
             channelId: channel.id,

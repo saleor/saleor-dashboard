@@ -1,7 +1,5 @@
-import { Button, DialogContentText, IconButton } from "@material-ui/core";
-import DeleteIcon from "@material-ui/icons/Delete";
+import { DialogContentText } from "@material-ui/core";
 import ActionDialog from "@saleor/components/ActionDialog";
-import { configurationMenuUrl } from "@saleor/configuration";
 import useBulkActions from "@saleor/hooks/useBulkActions";
 import useListSettings from "@saleor/hooks/useListSettings";
 import useNavigator from "@saleor/hooks/useNavigator";
@@ -10,6 +8,7 @@ import { usePaginationReset } from "@saleor/hooks/usePaginationReset";
 import usePaginator, {
   createPaginationState
 } from "@saleor/hooks/usePaginator";
+import { Button, DeleteIcon, IconButton } from "@saleor/macaw-ui";
 import { maybe } from "@saleor/misc";
 import { ListViews } from "@saleor/types";
 import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandlers";
@@ -120,7 +119,6 @@ export const PageList: React.FC<PageListProps> = ({ params }) => {
                 pages={mapEdgesToItems(data?.pages)}
                 pageInfo={pageInfo}
                 onAdd={() => navigate(pageCreateUrl())}
-                onBack={() => navigate(configurationMenuUrl)}
                 onNextPage={loadNextPage}
                 onPreviousPage={loadPreviousPage}
                 onUpdateListSettings={updateListSettings}
@@ -129,7 +127,6 @@ export const PageList: React.FC<PageListProps> = ({ params }) => {
                 toolbar={
                   <>
                     <Button
-                      color="primary"
                       onClick={() =>
                         openModal("unpublish", {
                           ids: listElements
@@ -142,7 +139,6 @@ export const PageList: React.FC<PageListProps> = ({ params }) => {
                       />
                     </Button>
                     <Button
-                      color="primary"
                       onClick={() =>
                         openModal("publish", {
                           ids: listElements
@@ -155,6 +151,7 @@ export const PageList: React.FC<PageListProps> = ({ params }) => {
                       />
                     </Button>
                     <IconButton
+                      variant="secondary"
                       color="primary"
                       onClick={() =>
                         openModal("remove", {

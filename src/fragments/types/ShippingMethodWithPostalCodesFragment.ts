@@ -18,7 +18,7 @@ export interface ShippingMethodWithPostalCodesFragment_postalCodeRules {
 }
 
 export interface ShippingMethodWithPostalCodesFragment {
-  __typename: "ShippingMethod";
+  __typename: "ShippingMethodType";
   id: string;
   postalCodeRules: (ShippingMethodWithPostalCodesFragment_postalCodeRules | null)[] | null;
 }

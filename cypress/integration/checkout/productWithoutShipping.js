@@ -105,21 +105,21 @@ filterTests({ definedTags: ["all"] }, () => {
       })
         .then(({ checkout }) => {
           expect(
-            checkout.availableShippingMethods,
+            checkout.shippingMethods,
             "expect no available shipping"
           ).to.have.length(0);
           addProductsToCheckout(checkout.id, productWithShipping, 1);
         })
         .then(({ checkout }) => {
           expect(
-            checkout.availableShippingMethods,
+            checkout.shippingMethods,
             "expect no available shipping"
           ).to.have.length(0);
           addShippingMethod(checkout.id, shippingMethod.id);
         })
         .then(({ errors }) => {
           expect(errors[0].field, "expect error in shipping method").to.be.eq(
-            "shippingMethod"
+            "shippingMethodId"
           );
         });
     });

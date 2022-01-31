@@ -133,7 +133,7 @@ export const OrderNormalDetails: React.FC<OrderNormalDetailsProps> = ({
               [])
           ]
         )}
-        shippingMethods={data?.order?.availableShippingMethods || []}
+        shippingMethods={data?.order?.shippingMethods || []}
         userPermissions={user?.userPermissions || []}
         onOrderCancel={() => openModal("cancel")}
         onOrderFulfill={() => navigate(orderFulfillUrl(id))}

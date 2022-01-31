@@ -83,7 +83,7 @@ const PluginInfo: React.FC<PluginInfoProps> = ({
         <ControlledCheckbox
           name={"active" as keyof PluginDetailsPageFormData}
           label={intl.formatMessage({
-            defaultMessage: "Set plugin as Active"
+            defaultMessage: "Set plugin as active"
           })}
           checked={data.active}
           onChange={onChange}

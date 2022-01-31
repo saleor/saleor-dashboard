@@ -11,7 +11,8 @@ import { getProductMetadata } from "../support/api/requests/storeFront/ProductDe
 import { getDefaultChannel } from "../support/api/utils/channelsUtils";
 import {
   createProductInChannel,
-  createTypeAttributeAndCategoryForProduct
+  createTypeAttributeAndCategoryForProduct,
+  deleteProductsStartsWith
 } from "../support/api/utils/products/productsUtils";
 import filterTests from "../support/filterTests";
 
@@ -25,6 +26,7 @@ filterTests({ definedTags: ["all"] }, () => {
 
     before(() => {
       cy.clearSessionData().loginUserViaRequest();
+      deleteProductsStartsWith(startsWith);
       getDefaultChannel()
         .then(channelResp => {
           channel = channelResp;
@@ -88,8 +90,8 @@ filterTests({ definedTags: ["all"] }, () => {
       createDraftOrder({ channelId: channel.id })
         .then(orderResp => {
           order = orderResp;
-          updateMetadata(order.id, metadata.key, metadata.value);
-          updatePrivateMetadata(order.id, metadata.key, metadata.value);
+          updateMetadata(order.token, metadata.key, metadata.value);
+          updatePrivateMetadata(order.token, metadata.key, metadata.value);
         })
         .then(() => {
           getOrder(order.id);

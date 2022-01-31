@@ -1,4 +1,4 @@
-// <reference types="cypress" />
+/// <reference types="cypress" />
 import faker from "faker";
 
 import { deleteGiftCardsWithTagStartsWith } from "../../../support/api/utils/catalog/giftCardUtils";
@@ -90,7 +90,7 @@ filterTests({ definedTags: ["all"], version: "3.1.0" }, () => {
       cy.clearSessionData().loginUserViaRequest();
     });
 
-    it("As a customer I should be able to purchase gift card as a product", () => {
+    it("should be able to purchase gift card as a product. TC: SALEOR_1008", () => {
       giftCardData.tag = `${startsWith}${faker.datatype.number()}`;
 
       createWaitingForCaptureOrder({

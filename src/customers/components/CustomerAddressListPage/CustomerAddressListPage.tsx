@@ -1,7 +1,7 @@
-import { Button, Typography } from "@material-ui/core";
+import { Typography } from "@material-ui/core";
 import Container from "@saleor/components/Container";
 import PageHeader from "@saleor/components/PageHeader";
-import { Backlink } from "@saleor/macaw-ui";
+import { Backlink, Button } from "@saleor/macaw-ui";
 import { makeStyles } from "@saleor/macaw-ui";
 import { getStringOrPlaceholder, renderCollection } from "@saleor/misc";
 import React from "react";
@@ -110,12 +110,7 @@ const CustomerAddressListPage: React.FC<CustomerAddressListPageProps> = props =>
               : intl.formatMessage(messages.noNameToShow)
           }
         >
-          <Button
-            color="primary"
-            variant="contained"
-            onClick={onAdd}
-            data-test-id="add-address"
-          >
+          <Button variant="primary" onClick={onAdd} data-test-id="add-address">
             {intl.formatMessage(messages.addAddress)}
           </Button>
         </PageHeader>
@@ -130,8 +125,7 @@ const CustomerAddressListPage: React.FC<CustomerAddressListPageProps> = props =>
           </Typography>
           <Button
             className={classes.addButton}
-            color="primary"
-            variant="contained"
+            variant="primary"
             onClick={onAdd}
           >
             {intl.formatMessage(messages.addAddress)}

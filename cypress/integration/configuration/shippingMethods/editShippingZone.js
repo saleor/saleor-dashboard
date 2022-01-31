@@ -3,7 +3,6 @@
 
 import faker from "faker";
 
-import { BUTTON_SELECTORS } from "../../../elements/shared/button-selectors";
 import { shippingZoneDetailsUrl } from "../../../fixtures/urlList";
 import {
   createShippingZone,

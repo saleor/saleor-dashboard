@@ -9,168 +9,174 @@ import HorizontalSpacer from "@saleor/apps/components/HorizontalSpacer";
 import Checkbox from "@saleor/components/Checkbox";
 import DeleteIconButton from "@saleor/components/DeleteIconButton";
 import Link from "@saleor/components/Link";
+import Money from "@saleor/components/Money";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import Skeleton from "@saleor/components/Skeleton";
-import StatusChip from "@saleor/components/StatusChip";
-import { StatusType } from "@saleor/components/StatusChip/types";
 import { customerUrl } from "@saleor/customers/urls";
+import GiftCardStatusChip from "@saleor/giftCards/components/GiftCardStatusChip/GiftCardStatusChip";
 import { PLACEHOLDER } from "@saleor/giftCards/GiftCardUpdate/types";
-import { giftCardUrl } from "@saleor/giftCards/urls";
+import { giftCardListUrl, giftCardUrl } from "@saleor/giftCards/urls";
 import useNavigator from "@saleor/hooks/useNavigator";
+import { PillLink } from "@saleor/macaw-ui";
 import { renderCollection } from "@saleor/misc";
 import { productUrl } from "@saleor/products/urls";
 import React from "react";
+import { useEffect } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
+import { Link as RouterLink } from "react-router-dom";
 
-import { giftCardUpdatePageHeaderMessages as giftCardStatusChipMessages } from "../../GiftCardUpdate/GiftCardUpdatePageHeader/messages";
 import GiftCardListSearchAndFilters from "../GiftCardListSearchAndFilters";
 import { giftCardsListTableMessages as messages } from "../messages";
 import useGiftCardListDialogs from "../providers/GiftCardListDialogsProvider/hooks/useGiftCardListDialogs";
 import useGiftCardList from "../providers/GiftCardListProvider/hooks/useGiftCardList";
 import useGiftCardListBulkActions from "../providers/GiftCardListProvider/hooks/useGiftCardListBulkActions";
+import { canBeSorted } from "../sort";
 import { useTableStyles as useStyles } from "../styles";
+import { GiftCardUrlSortField } from "../types";
 import GiftCardsListTableFooter from "./GiftCardsListTableFooter";
 import GiftCardsListTableHeader from "./GiftCardsListTableHeader";
+import { getTagCellText } from "./utils";
 
 const GiftCardsListTable: React.FC = () => {
   const intl = useIntl();
   const classes = useStyles({});
   const navigate = useNavigator();
 
-  const { giftCards, numberOfColumns, loading } = useGiftCardList();
+  const { giftCards, numberOfColumns, params } = useGiftCardList();
   const { toggle, isSelected } = useGiftCardListBulkActions();
   const { openDeleteDialog } = useGiftCardListDialogs();
+
+  const isCurrencySelected = !!params.currency;
+
+  useEffect(() => {
+    if (!canBeSorted(params.sort, isCurrencySelected)) {
+      navigate(
+        giftCardListUrl({
+          ...params,
+          sort: GiftCardUrlSortField.usedBy
+        })
+      );
+    }
+  });
 
   const redirectToGiftCardUpdate = (id: string) => () =>
     navigate(giftCardUrl(id));
 
-  const selectGiftCardStatusChip = ({
-    isActive,
-    isExpired
-  }: {
-    isActive: boolean;
-    isExpired: boolean;
-  }) => {
-    if (isExpired) {
-      return (
-        <StatusChip
-          size="md"
-          status={StatusType.NEUTRAL}
-          label={intl.formatMessage(
-            giftCardStatusChipMessages.expiredStatusLabel
-          )}
-        />
-      );
-    }
-
-    if (!isActive) {
-      return (
-        <StatusChip
-          size="md"
-          status={StatusType.ERROR}
-          label={intl.formatMessage(
-            giftCardStatusChipMessages.disabledStatusLabel
-          )}
-        />
-      );
-    }
+  const onLinkClick: React.MouseEventHandler = event => {
+    event.stopPropagation();
   };
 
   return (
     <Card>
       <GiftCardListSearchAndFilters />
       <ResponsiveTable>
-        <GiftCardsListTableHeader />
+        <GiftCardsListTableHeader isCurrencySelected={isCurrencySelected} />
         <GiftCardsListTableFooter />
         <TableBody>
           {renderCollection(
             giftCards,
-            ({
-              id,
-              displayCode,
-              usedBy,
-              usedByEmail,
-              tag,
-              isActive,
-              product,
-              currentBalance,
-              isExpired
-            }) => (
-              <TableRow
-                onClick={redirectToGiftCardUpdate(id)}
-                className={classes.row}
-                key={id}
-                data-test-id={"gift-card-row-" + id}
-              >
-                <TableCell padding="checkbox">
-                  <Checkbox
-                    data-test-id="select-gift-card-checkbox"
-                    disableClickPropagation
-                    checked={isSelected(id)}
-                    onChange={() => toggle(id)}
-                  />
-                </TableCell>
-                <TableCell className={classes.colCardCode}>
-                  <div className={classes.cardCodeContainer}>
-                    <Typography>
-                      {intl.formatMessage(messages.codeEndingWithLabel, {
-                        displayCode
-                      })}
-                    </Typography>
-                    <>
-                      <HorizontalSpacer spacing={2} />
-                      {selectGiftCardStatusChip({ isActive, isExpired })}
-                    </>
-                  </div>
-                </TableCell>
-                <TableCell>
-                  <Typography>{tag || PLACEHOLDER}</Typography>
-                </TableCell>
-                <TableCell>
-                  {product ? (
-                    <Link onClick={() => navigate(productUrl(product?.id))}>
-                      {product?.name}
-                    </Link>
-                  ) : (
-                    PLACEHOLDER
-                  )}
-                </TableCell>
-                <TableCell>
-                  {usedBy ? (
-                    <Link onClick={() => navigate(customerUrl(usedBy?.id))}>
-                      {`${usedBy?.firstName} ${usedBy?.lastName}`}
-                    </Link>
-                  ) : (
-                    <Typography noWrap>{usedByEmail || PLACEHOLDER}</Typography>
-                  )}
-                </TableCell>
-                <TableCell align="right" className={classes.colBalance}>
-                  <div className={classes.moneyContainer}>
-                    <Typography variant="caption">
-                      {currentBalance.currency}
-                    </Typography>
-                    <HorizontalSpacer spacing={0.5} />
-                    <Typography>{currentBalance.amount}</Typography>
-                  </div>
-                </TableCell>
-                <TableCell className={classes.colDelete}>
-                  <DeleteIconButton
-                    onClick={event => {
-                      event.stopPropagation();
-                      openDeleteDialog(id);
-                    }}
-                  />
-                </TableCell>
-              </TableRow>
-            ),
+            giftCard => {
+              if (!giftCard) {
+                return (
+                  <>
+                    <TableCell padding="checkbox">
+                      <Checkbox />
+                    </TableCell>
+                    <TableCell className={classes.skeleton} colSpan={5}>
+                      <Skeleton />
+                    </TableCell>
+                    <TableCell className={classes.colDelete}>
+                      <DeleteIconButton />
+                    </TableCell>
+                  </>
+                );
+              }
+
+              const {
+                id,
+                last4CodeChars,
+                usedBy,
+                usedByEmail,
+                tags,
+                product,
+                currentBalance
+              } = giftCard;
+
+              return (
+                <TableRow
+                  onClick={redirectToGiftCardUpdate(id)}
+                  className={classes.row}
+                  key={id}
+                  hover={!!giftCard}
+                  data-test-id={"gift-card-row-" + id}
+                >
+                  <TableCell padding="checkbox">
+                    <Checkbox
+                      data-test-id="select-gift-card-checkbox"
+                      disabled={!giftCard}
+                      disableClickPropagation
+                      checked={isSelected(id)}
+                      onChange={() => toggle(id)}
+                    />
+                  </TableCell>
+                  <TableCell className={classes.colCardCode}>
+                    <div className={classes.cardCodeContainer}>
+                      <Typography>
+                        {intl.formatMessage(messages.codeEndingWithLabel, {
+                          last4CodeChars
+                        })}
+                      </Typography>
+                      <>
+                        <HorizontalSpacer spacing={2} />
+                        <GiftCardStatusChip giftCard={giftCard} />
+                      </>
+                    </div>
+                  </TableCell>
+                  <TableCell>
+                    <Typography>{getTagCellText(tags)}</Typography>
+                  </TableCell>
+                  <TableCell>
+                    {product ? (
+                      <PillLink
+                        component={RouterLink}
+                        to={productUrl(product?.id)}
+                        onClick={onLinkClick}
+                      >
+                        {product?.name}
+                      </PillLink>
+                    ) : (
+                      PLACEHOLDER
+                    )}
+                  </TableCell>
+                  <TableCell>
+                    {usedBy ? (
+                      <Link href={customerUrl(usedBy?.id)}>
+                        {`${usedBy?.firstName} ${usedBy?.lastName}`}
+                      </Link>
+                    ) : (
+                      <Typography noWrap>
+                        {usedByEmail || PLACEHOLDER}
+                      </Typography>
+                    )}
+                  </TableCell>
+                  <TableCell align="right" className={classes.colBalance}>
+                    <Money money={currentBalance} />
+                  </TableCell>
+                  <TableCell className={classes.colDelete}>
+                    <DeleteIconButton
+                      onClick={event => {
+                        event.stopPropagation();
+                        openDeleteDialog(id);
+                      }}
+                    />
+                  </TableCell>
+                </TableRow>
+              );
+            },
             () => (
               <TableRow>
                 <TableCell colSpan={numberOfColumns}>
-                  <Skeleton>
-                    {!loading && (
-                      <FormattedMessage {...messages.noGiftCardsFound} />
-                    )}
-                  </Skeleton>
+                  <FormattedMessage {...messages.noGiftCardsFound} />
                 </TableCell>
               </TableRow>
             )

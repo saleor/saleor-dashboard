@@ -3,7 +3,7 @@
 
 import faker from "faker";
 
-import { getGiftCardWithTag } from "../../../support/api/requests/GiftCard";
+import { getGiftCardsWithCode } from "../../../support/api/requests/GiftCard";
 import { deleteGiftCardsWithTagStartsWith } from "../../../support/api/utils/catalog/giftCardUtils";
 import { addToDate } from "../../../support/api/utils/misc";
 import filterTests from "../../../support/filterTests";
@@ -31,9 +31,9 @@ filterTests({ definedTags: ["all"], version: "3.1.0" }, () => {
       cy.clearSessionData().loginUserViaRequest();
     });
 
-    it("As an admin I should be able to create never expire gift card", () => {
+    it("should be able to create never expire gift card. TC: SALEOR_1001", () => {
       const name = `${startsWith}${faker.datatype.number()}`;
-      let giftCardCode;
+      let giftCard;
 
       openAndFillUpCreateGiftCardDialog({
         note: name,
@@ -42,20 +42,20 @@ filterTests({ definedTags: ["all"], version: "3.1.0" }, () => {
         currency
       });
       saveGiftCard()
-        .then(createdGiftCardCode => {
-          giftCardCode = createdGiftCardCode;
-          getGiftCardWithTag(name, true);
+        .then(giftCardResp => {
+          giftCard = giftCardResp;
+          getGiftCardsWithCode(giftCard.code);
         })
-        .then(giftCard => {
-          expect(giftCard.code).to.eq(giftCardCode);
-          expect(giftCard.initialBalance.amount).to.eq(amount);
-          expect(giftCard.initialBalance.currency).to.eq(currency);
+        .then(giftCardsResp => {
+          expect(giftCardsResp[0].node.code).to.eq(giftCard.code);
+          expect(giftCardsResp[0].node.initialBalance.amount).to.eq(amount);
+          expect(giftCardsResp[0].node.initialBalance.currency).to.eq(currency);
         });
     });
 
-    it("As an admin I should be able to create gift card with two moths expiry", () => {
+    it("should be able to create gift card with two moths expiry. TC: SALEOR_1002", () => {
       const name = `${startsWith}${faker.datatype.number()}`;
-      let giftCardCode;
+      let giftCard;
       const expectedExpiryDate = addToDate(new Date(), 2, "M");
 
       openAndFillUpCreateGiftCardDialog({
@@ -66,22 +66,22 @@ filterTests({ definedTags: ["all"], version: "3.1.0" }, () => {
       });
       setExpiryPeriod(2, expiryPeriods.MONTH);
       saveGiftCard()
-        .then(createdGiftCardCode => {
-          giftCardCode = createdGiftCardCode;
-          getGiftCardWithTag(name, true);
+        .then(giftCardResp => {
+          giftCard = giftCardResp;
+          getGiftCardsWithCode(giftCard.code);
         })
-        .then(giftCard => {
-          expect(giftCard.code).to.eq(giftCardCode);
-          expect(giftCard.initialBalance.amount).to.eq(amount);
-          expect(giftCard.initialBalance.currency).to.eq(currency);
-          expect(giftCard.expiryDate).to.eq(expectedExpiryDate);
+        .then(giftCardsResp => {
+          expect(giftCardsResp[0].node.code).to.eq(giftCard.code);
+          expect(giftCardsResp[0].node.initialBalance.amount).to.eq(amount);
+          expect(giftCardsResp[0].node.initialBalance.currency).to.eq(currency);
+          expect(giftCardsResp[0].node.expiryDate).to.eq(expectedExpiryDate);
         });
     });
 
-    it("As an admin I should be able to create gift card with date expiry", () => {
+    it("should be able to create gift card with date expiry. TC: SALEOR_1003", () => {
       const name = `${startsWith}${faker.datatype.number()}`;
-      let giftCardCode;
       const date = formatDate(new Date(new Date().getFullYear() + 2, 1, 1));
+      let giftCard;
 
       openAndFillUpCreateGiftCardDialog({
         note: name,
@@ -91,15 +91,15 @@ filterTests({ definedTags: ["all"], version: "3.1.0" }, () => {
       });
       setExpiryDate(date);
       saveGiftCard()
-        .then(createdGiftCardCode => {
-          giftCardCode = createdGiftCardCode;
-          getGiftCardWithTag(name, true);
+        .then(giftCardResp => {
+          giftCard = giftCardResp;
+          getGiftCardsWithCode(giftCard.code);
         })
-        .then(giftCard => {
-          expect(giftCard.code).to.eq(giftCardCode);
-          expect(giftCard.initialBalance.amount).to.eq(amount);
-          expect(giftCard.initialBalance.currency).to.eq(currency);
-          expect(giftCard.expiryDate).to.eq(date);
+        .then(giftCardsResp => {
+          expect(giftCardsResp[0].node.code).to.eq(giftCard.code);
+          expect(giftCardsResp[0].node.initialBalance.amount).to.eq(amount);
+          expect(giftCardsResp[0].node.initialBalance.currency).to.eq(currency);
+          expect(giftCardsResp[0].node.expiryDate).to.eq(date);
         });
     });
   });

@@ -1,10 +1,10 @@
 import ActionDialog from "@saleor/components/ActionDialog";
-import { ConfirmButtonTransitionState } from "@saleor/components/ConfirmButton";
 import {
   Choices,
   SingleSelectField
 } from "@saleor/components/SingleSelectField";
 import useStateFromProps from "@saleor/hooks/useStateFromProps";
+import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import React from "react";
 import { useIntl } from "react-intl";
 

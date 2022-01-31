@@ -6,6 +6,7 @@ import { mapNodeToChoice } from "@saleor/utils/maps";
 import React, { useEffect, useRef, useState } from "react";
 import { defineMessages } from "react-intl";
 
+import useStyles from "./styles";
 import { ShippingZonesProps } from "./types";
 
 const messages = defineMessages({
@@ -24,6 +25,8 @@ const ShippingZonesCardListFooter: React.FC<ShippingZonesCardListFooterProps> = 
   addShippingZone,
   shippingZones
 }) => {
+  const classes = useStyles();
+
   const [isChoicesSelectShown, setIsChoicesSelectShown] = useState(false);
   const shippingZonesRef = useRef<ChannelShippingZones>(shippingZones);
 
@@ -49,7 +52,7 @@ const ShippingZonesCardListFooter: React.FC<ShippingZonesCardListFooterProps> = 
 
   return isChoicesSelectShown ? (
     <ClickAwayListener onClickAway={handleFooterClickAway}>
-      <div>
+      <div className={classes.root}>
         <SingleAutocompleteSelectField
           data-test-id="shippingAutoCompleteSelect"
           value=""

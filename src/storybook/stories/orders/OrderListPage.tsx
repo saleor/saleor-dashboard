@@ -1,4 +1,5 @@
 import OrderListPage, {
+  OrderFilterGiftCard,
   OrderListPageProps
 } from "@saleor/orders/components/OrderListPage";
 import { OrderListUrlSortField } from "@saleor/orders/urls";
@@ -64,6 +65,10 @@ const props: OrderListPageProps = {
         PaymentChargeStatusEnum.CANCELLED,
         PaymentChargeStatusEnum.FULLY_CHARGED
       ]
+    },
+    giftCard: {
+      active: false,
+      value: [OrderFilterGiftCard.bought, OrderFilterGiftCard.paid]
     }
   },
   limits,
