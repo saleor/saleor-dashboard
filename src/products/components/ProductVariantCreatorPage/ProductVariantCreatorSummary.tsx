@@ -1,16 +1,15 @@
-import { Card, IconButton, TextField } from "@material-ui/core";
+import { Card, TextField } from "@material-ui/core";
 import blue from "@material-ui/core/colors/blue";
 import cyan from "@material-ui/core/colors/cyan";
 import green from "@material-ui/core/colors/green";
 import purple from "@material-ui/core/colors/purple";
 import yellow from "@material-ui/core/colors/yellow";
-import DeleteIcon from "@material-ui/icons/Delete";
 import { ChannelPriceData } from "@saleor/channels/utils";
 import CardTitle from "@saleor/components/CardTitle";
 import Hr from "@saleor/components/Hr";
 import PriceField from "@saleor/components/PriceField";
 import { WarehouseFragment } from "@saleor/fragments/types/WarehouseFragment";
-import { makeStyles } from "@saleor/macaw-ui";
+import { DeleteIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
 import { ProductVariantBulkCreate_productVariantBulkCreate_errors } from "@saleor/products/types/ProductVariantBulkCreate";
 import { ProductVariantBulkCreateInput } from "@saleor/types/globalTypes";
 import { getFormErrors } from "@saleor/utils/errors";
@@ -103,7 +102,8 @@ const useStyles = makeStyles<ProductVariantCreatorSummaryProps, ClassKey>(
           props.data.variants[0].stocks
             .length}, minmax(180px, auto)) 140px 64px`,
       overflowX: "scroll",
-      rowGap: theme.spacing()
+      rowGap: theme.spacing(),
+      paddingBottom: 3
     }
   }),
   {
@@ -318,6 +318,7 @@ const ProductVariantCreatorSummary: React.FC<ProductVariantCreatorSummaryProps> 
               </div>
               <div className={classes.col}>
                 <IconButton
+                  variant="secondary"
                   className={classes.delete}
                   color="primary"
                   onClick={() => onVariantDelete(variantIndex)}

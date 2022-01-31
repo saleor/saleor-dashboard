@@ -1,11 +1,16 @@
-import { deleteGiftCard, getGiftCardsWithTag } from "../../requests/GiftCard";
+import { deleteGiftCard, getGiftCards } from "../../requests/GiftCard";
 
 export function deleteGiftCardsWithTagStartsWith(tag) {
-  getGiftCardsWithTag(100, tag).then(resp => {
+  getGiftCards(100).then(resp => {
     const giftCardArray = resp.body.data.giftCards;
     if (giftCardArray) {
       giftCardArray.edges.forEach(element => {
-        deleteGiftCard(element.node.id);
+        const includes = element.node.tags.find(element =>
+          element.name.includes(tag.toLowerCase())
+        );
+        if (includes) {
+          deleteGiftCard(element.node.id);
+        }
       });
     }
   });

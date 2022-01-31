@@ -14,8 +14,9 @@ import {
 } from "../../support/api/requests/Category";
 import { deleteCategoriesStartsWith } from "../../support/api/utils/catalog/categoryUtils";
 import filterTests from "../../support/filterTests";
+import { enterCategoryTranslation } from "../../support/pages/translationPage";
 
-filterTests({ definedTags: ["all"], version: "3.1.1" }, () => {
+filterTests({ definedTags: ["all"], version: "3.0.0" }, () => {
   describe("Tests for translations", () => {
     const startsWith = "Translations";
     const randomNumber = faker.datatype.number();
@@ -34,10 +35,11 @@ filterTests({ definedTags: ["all"], version: "3.1.1" }, () => {
     });
 
     it("should create translation", () => {
-      cy.visit(urlList.translations)
-        .get(LANGUAGES_LIST.polishLanguageButton)
-        .click()
-        .findElementOnTable(category.name, "CategoryTranslations");
+      cy.visit(urlList.translations);
+      enterCategoryTranslation(
+        LANGUAGES_LIST.polishLanguageButton,
+        category.name
+      );
       cy.get(ELEMENT_TRANSLATION.editNameButton)
         .click()
         .get(SHARED_ELEMENTS.skeleton)

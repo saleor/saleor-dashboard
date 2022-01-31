@@ -1,12 +1,9 @@
 import { Avatar as MuiAvatar } from "@material-ui/core";
-import Cached from "@material-ui/icons/Cached";
-import { makeStyles } from "@saleor/macaw-ui";
+import { ImageIcon, makeStyles } from "@saleor/macaw-ui";
 import classNames from "classnames";
 import React from "react";
 
-import Image from "../../icons/Image";
-
-export const AVATAR_MARGIN = 32;
+export const AVATAR_MARGIN = 40;
 
 const useStyles = makeStyles(
   theme => ({
@@ -46,13 +43,15 @@ export interface AvatarProps {
   alignRight?: boolean;
   avatarProps?: string;
   children?: React.ReactNode | React.ReactNodeArray;
+  badge?: React.ReactNode;
 }
 
 const Avatar: React.FC<AvatarProps> = ({
   children,
   alignRight,
   thumbnail,
-  avatarProps
+  avatarProps,
+  badge
 }) => {
   const classes = useStyles({});
 
@@ -62,13 +61,10 @@ const Avatar: React.FC<AvatarProps> = ({
         [classes.alignRight]: alignRight
       })}
     >
-      {thumbnail === undefined ? (
+      {badge}
+      {!thumbnail ? (
         <MuiAvatar className={classNames(classes.avatar, avatarProps)}>
-          <Cached color="primary" />
-        </MuiAvatar>
-      ) : thumbnail === null ? (
-        <MuiAvatar className={classNames(classes.avatar, avatarProps)}>
-          <Image color="primary" />
+          <ImageIcon color="primary" />
         </MuiAvatar>
       ) : (
         <MuiAvatar

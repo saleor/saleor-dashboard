@@ -45,7 +45,6 @@ const GiftCardUpdateExpirySelect: React.FC = () => {
         checked={cardExpiresSelected}
         onChange={event => setCardExpiresSelected(event.target.value)}
       />
-      <VerticalSpacer spacing={2} />
 
       {cardExpiresSelected && (
         <TextField
@@ -53,6 +52,7 @@ const GiftCardUpdateExpirySelect: React.FC = () => {
           helperText={getGiftCardErrorMessage(formErrors?.expiryDate, intl)}
           onChange={change}
           name={"expiryDate"}
+          fullWidth
           className={classes.dateField}
           label={intl.formatMessage(messages.expiryDateLabel)}
           value={expiryDate}

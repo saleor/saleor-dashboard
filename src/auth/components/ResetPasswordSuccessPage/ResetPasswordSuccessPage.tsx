@@ -1,19 +1,10 @@
-import { Button, Typography } from "@material-ui/core";
+import { Typography } from "@material-ui/core";
 import FormSpacer from "@saleor/components/FormSpacer";
-import { makeStyles } from "@saleor/macaw-ui";
+import { Button } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
-const useStyles = makeStyles(
-  {
-    submit: {
-      width: "100%"
-    }
-  },
-  {
-    name: "ResetPasswordSuccessPage"
-  }
-);
+import useStyles from "../styles";
 
 export interface ResetPasswordSuccessPageFormData {
   email: string;
@@ -29,14 +20,16 @@ const ResetPasswordSuccessPage: React.FC<ResetPasswordSuccessPageProps> = props 
 
   return (
     <>
+      <Typography variant="h3" className={classes.header}>
+        <FormattedMessage defaultMessage="Reset password" />
+      </Typography>
       <Typography>
         <FormattedMessage defaultMessage="Success! In a few minutes you’ll receive a message with instructions on how to reset your password." />
       </Typography>
       <FormSpacer />
       <Button
         className={classes.submit}
-        color="primary"
-        variant="contained"
+        variant="primary"
         onClick={onBack}
         type="submit"
       >

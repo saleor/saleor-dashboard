@@ -57,7 +57,7 @@ filterTests({ definedTags: ["all", "critical"], version: "3.1.0" }, () => {
           cy.fixture("addresses");
         })
         .then(fixtureAddresses => {
-          address = fixtureAddresses.plAddress;
+          address = fixtureAddresses.usAddress;
           shippingUtils.createShipping({
             channelId: defaultChannel.id,
             name,
@@ -123,7 +123,6 @@ filterTests({ definedTags: ["all", "critical"], version: "3.1.0" }, () => {
           cy.visit(`${urlList.products}${createdProduct.id}`);
           cy.waitForProgressBarToNotBeVisible();
           createFirstVariant({
-            warehouseId: warehouse.id,
             price,
             attribute: attributeValues[0]
           });

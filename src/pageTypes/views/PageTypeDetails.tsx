@@ -1,4 +1,3 @@
-import { Button } from "@material-ui/core";
 import { attributeUrl } from "@saleor/attributes/urls";
 import AssignAttributeDialog from "@saleor/components/AssignAttributeDialog";
 import AttributeUnassignDialog from "@saleor/components/AttributeUnassignDialog";
@@ -11,6 +10,7 @@ import useBulkActions from "@saleor/hooks/useBulkActions";
 import useNavigator from "@saleor/hooks/useNavigator";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { commonMessages } from "@saleor/intl";
+import { Button } from "@saleor/macaw-ui";
 import { getStringOrPlaceholder } from "@saleor/misc";
 import {
   useAssignPageAttributeMutation,
@@ -234,7 +234,6 @@ export const PageTypeDetails: React.FC<PageTypeDetailsProps> = ({
           toggleAll: attributeListActions.toggleAll,
           toolbar: (
             <Button
-              color="primary"
               onClick={() =>
                 navigate(
                   pageTypeUrl(id, {

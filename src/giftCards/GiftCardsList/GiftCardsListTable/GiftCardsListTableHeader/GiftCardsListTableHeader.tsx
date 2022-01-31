@@ -99,10 +99,10 @@ const GiftCardsListTableHeader: React.FC<GiftCardsListTableHeaderProps> = ({
         items={giftCards}
         toggleAll={toggleAll}
         toolbar={
-          <>
+          <div className={classes.toolbar}>
             <BulkEnableDisableSection />
             <DeleteIconButton onClick={() => openDeleteDialog()} />
-          </>
+          </div>
         }
       >
         {headerItems.map(

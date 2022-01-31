@@ -137,7 +137,7 @@ const GiftCardBulkCreateDialog: React.FC<DialogProps> = ({ onClose, open }) => {
 
   return (
     <>
-      <Dialog open={open} maxWidth="sm">
+      <Dialog open={open} maxWidth="sm" onClose={onClose}>
         <DialogTitle>{intl.formatMessage(messages.title)}</DialogTitle>
         <ContentWithProgress>
           {!loadingChannelCurrencies && (

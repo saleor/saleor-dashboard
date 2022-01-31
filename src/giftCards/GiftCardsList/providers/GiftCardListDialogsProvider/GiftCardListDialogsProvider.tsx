@@ -79,7 +79,12 @@ const GiftCardListDialogsProvider: React.FC<GiftCardListDialogsProviderProps> = 
   return (
     <GiftCardListDialogsContext.Provider value={providerValues}>
       {children}
-      <Dialog open={isDialogOpen(CREATE)} maxWidth="sm" onClose={onClose}>
+      <Dialog
+        open={isDialogOpen(CREATE)}
+        maxWidth="sm"
+        onClose={onClose}
+        fullWidth
+      >
         <GiftCardCreateDialogContent
           onClose={onClose}
           refetchQueries={[GIFT_CARD_LIST_QUERY]}
@@ -89,7 +94,12 @@ const GiftCardListDialogsProvider: React.FC<GiftCardListDialogsProviderProps> = 
         open={isDialogOpen(DELETE)}
         onClose={onClose}
       />
-      <Dialog open={isDialogOpen(EXPORT)} maxWidth="sm" onClose={onClose}>
+      <Dialog
+        open={isDialogOpen(EXPORT)}
+        maxWidth="sm"
+        onClose={onClose}
+        fullWidth
+      >
         <GiftCardExportDialogContent onClose={onClose} />
       </Dialog>
       <GiftCardBulkCreateDialog

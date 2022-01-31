@@ -8,8 +8,8 @@ import { BUTTON_SELECTORS } from "../../elements/shared/button-selectors";
 import { giftCardDetailsUrl } from "../../fixtures/urlList";
 import {
   createGiftCard,
-  getGiftCardWithId,
-  getGiftCardWithTag
+  getGiftCardsWithCode,
+  getGiftCardWithId
 } from "../../support/api/requests/GiftCard";
 import { deleteGiftCardsWithTagStartsWith } from "../../support/api/utils/catalog/giftCardUtils";
 import { addToDate } from "../../support/api/utils/misc";
@@ -40,7 +40,7 @@ filterTests({ definedTags: ["all"], version: "3.1.0" }, () => {
 
     it("should create never expire gift card", () => {
       const name = `${startsWith}${faker.datatype.number()}`;
-      let giftCardCode;
+      let giftCard;
 
       openAndFillUpCreateGiftCardDialog({
         note: name,
@@ -49,20 +49,20 @@ filterTests({ definedTags: ["all"], version: "3.1.0" }, () => {
         currency
       });
       saveGiftCard()
-        .then(createdGiftCardCode => {
-          giftCardCode = createdGiftCardCode;
-          getGiftCardWithTag(name, true);
+        .then(giftCardResp => {
+          giftCard = giftCardResp;
+          getGiftCardsWithCode(giftCard.code);
         })
-        .then(giftCard => {
-          expect(giftCard.code).to.eq(giftCardCode);
-          expect(giftCard.initialBalance.amount).to.eq(amount);
-          expect(giftCard.initialBalance.currency).to.eq(currency);
+        .then(giftCardsResp => {
+          expect(giftCardsResp[0].node.code).to.eq(giftCard.code);
+          expect(giftCardsResp[0].node.initialBalance.amount).to.eq(amount);
+          expect(giftCardsResp[0].node.initialBalance.currency).to.eq(currency);
         });
     });
 
     it("should create gift card with two moths expiry", () => {
       const name = `${startsWith}${faker.datatype.number()}`;
-      let giftCardCode;
+      let giftCard;
       const expectedExpiryDate = addToDate(new Date(), 2, "M");
 
       openAndFillUpCreateGiftCardDialog({
@@ -73,21 +73,21 @@ filterTests({ definedTags: ["all"], version: "3.1.0" }, () => {
       });
       setExpiryPeriod(2, expiryPeriods.MONTH);
       saveGiftCard()
-        .then(createdGiftCardCode => {
-          giftCardCode = createdGiftCardCode;
-          getGiftCardWithTag(name, true);
+        .then(giftCardResp => {
+          giftCard = giftCardResp;
+          getGiftCardsWithCode(giftCard.code);
         })
-        .then(giftCard => {
-          expect(giftCard.code).to.eq(giftCardCode);
-          expect(giftCard.initialBalance.amount).to.eq(amount);
-          expect(giftCard.initialBalance.currency).to.eq(currency);
-          expect(giftCard.expiryDate).to.eq(expectedExpiryDate);
+        .then(giftCardsResp => {
+          expect(giftCardsResp[0].node.code).to.eq(giftCard.code);
+          expect(giftCardsResp[0].node.initialBalance.amount).to.eq(amount);
+          expect(giftCardsResp[0].node.initialBalance.currency).to.eq(currency);
+          expect(giftCardsResp[0].node.expiryDate).to.eq(expectedExpiryDate);
         });
     });
 
     it("should create gift card with date expiry", () => {
       const name = `${startsWith}${faker.datatype.number()}`;
-      let giftCardCode;
+      let giftCard;
       const date = formatDate(new Date(new Date().getFullYear() + 2, 1, 1));
 
       openAndFillUpCreateGiftCardDialog({
@@ -98,15 +98,15 @@ filterTests({ definedTags: ["all"], version: "3.1.0" }, () => {
       });
       setExpiryDate(date);
       saveGiftCard()
-        .then(createdGiftCardCode => {
-          giftCardCode = createdGiftCardCode;
-          getGiftCardWithTag(name, true);
+        .then(giftCardResp => {
+          giftCard = giftCardResp;
+          getGiftCardsWithCode(giftCard.code);
         })
-        .then(giftCard => {
-          expect(giftCard.code).to.eq(giftCardCode);
-          expect(giftCard.initialBalance.amount).to.eq(amount);
-          expect(giftCard.initialBalance.currency).to.eq(currency);
-          expect(giftCard.expiryDate).to.eq(date);
+        .then(giftCardsResp => {
+          expect(giftCardsResp[0].node.code).to.eq(giftCard.code);
+          expect(giftCardsResp[0].node.initialBalance.amount).to.eq(amount);
+          expect(giftCardsResp[0].node.initialBalance.currency).to.eq(currency);
+          expect(giftCardsResp[0].node.expiryDate).to.eq(date);
         });
     });
 
@@ -148,11 +148,13 @@ filterTests({ definedTags: ["all"], version: "3.1.0" }, () => {
             .click()
             .get(GIFT_CARD_UPDATE.expireDateInput)
             .type(date)
+            .get(GIFT_CARD_UPDATE.removeTagButton)
+            .click()
             .get(GIFT_CARD_UPDATE.giftCardTagSelect)
             .find("input")
             .clear()
             .type(updatedName)
-            .get(GIFT_CARD_UPDATE.autocompleteOption)
+            .get(GIFT_CARD_UPDATE.autocompleteCustomOption)
             .click()
             .addAliasToGraphRequest("GiftCardUpdate")
             .get(BUTTON_SELECTORS.confirm)
@@ -161,7 +163,9 @@ filterTests({ definedTags: ["all"], version: "3.1.0" }, () => {
           getGiftCardWithId(giftCard.id);
         })
         .then(giftCard => {
-          expect(giftCard.tag).to.eq(updatedName);
+          expect(giftCard.tags[0].name.toLowerCase()).to.eq(
+            updatedName.toLowerCase()
+          );
           expect(giftCard.expiryDate).to.eq(date);
         });
     });

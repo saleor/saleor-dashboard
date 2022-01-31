@@ -3,7 +3,6 @@ import { PRODUCT_DETAILS } from "../../../../elements/catalog/products/product-d
 import { VARIANTS_SELECTORS } from "../../../../elements/catalog/products/variants-selectors";
 import { AVAILABLE_CHANNELS_FORM } from "../../../../elements/channels/available-channels-form";
 import { BUTTON_SELECTORS } from "../../../../elements/shared/button-selectors";
-import { SHARED_ELEMENTS } from "../../../../elements/shared/sharedElements";
 import { formatDate } from "../../../formatData/formatDate";
 import { selectChannelVariantInDetailsPage } from "../../channelsPage";
 import { fillUpPriceList } from "./priceListComponent";
@@ -23,9 +22,8 @@ export function createFirstVariant({
   cy.get(PRODUCT_DETAILS.addVariantsButton).click();
   cy.get(PRODUCT_DETAILS.addVariantsOptionDialog.optionMultiple).click();
   cy.get(BUTTON_SELECTORS.submit).click();
-  cy.get(VARIANTS_SELECTORS.valueContainer)
-    .click()
-    .contains(attribute)
+  cy.get(VARIANTS_SELECTORS.valueContainer).click();
+  cy.contains(VARIANTS_SELECTORS.selectOption, attribute)
     .click()
     .get(VARIANTS_SELECTORS.nextButton)
     .click();

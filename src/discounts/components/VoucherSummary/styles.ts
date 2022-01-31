@@ -1,10 +1,14 @@
 import { makeStyles } from "@saleor/macaw-ui";
 
-export const useStyles = makeStyles(
-  () => ({
-    wrapAnywhere: {
-      overflowWrap: "anywhere"
+const useStyles = makeStyles(
+  {
+    ellipsis: {
+      overflow: "hidden",
+      whiteSpace: "nowrap",
+      textOverflow: "ellipsis"
     }
-  }),
+  },
   { name: "VoucherSummary" }
 );
+
+export default useStyles;

@@ -1,12 +1,4 @@
-import {
-  Button,
-  Card,
-  IconButton,
-  TableCell,
-  TableRow,
-  Tooltip
-} from "@material-ui/core";
-import DeleteIcon from "@material-ui/icons/Delete";
+import { Card, TableCell, TableRow, Tooltip } from "@material-ui/core";
 import HelpOutline from "@material-ui/icons/HelpOutline";
 import CardTitle from "@saleor/components/CardTitle";
 import Checkbox from "@saleor/components/Checkbox";
@@ -17,7 +9,7 @@ import {
   SortableTableRow
 } from "@saleor/components/SortableTable";
 import TableHead from "@saleor/components/TableHead";
-import { makeStyles } from "@saleor/macaw-ui";
+import { Button, DeleteIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
 import { maybe, renderCollection, stopPropagation } from "@saleor/misc";
 import { ListActions, ReorderAction } from "@saleor/types";
 import { ProductAttributeType } from "@saleor/types/globalTypes";
@@ -146,8 +138,7 @@ const ProductTypeVariantAttributes: React.FC<ProductTypeVariantAttributesProps> 
         toolbar={
           <Button
             data-test-id={testId}
-            color="primary"
-            variant="text"
+            variant="tertiary"
             onClick={() => onAttributeAssign(ProductAttributeType[type])}
           >
             <FormattedMessage

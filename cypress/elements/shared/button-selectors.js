@@ -5,7 +5,7 @@ export const BUTTON_SELECTORS = {
   goBackButton: "[data-test-id='app-header-back-button']",
   checkbox: "[type='checkbox']",
   checked: "[class*='checked']",
-  selectOption: "[data-test*='select-option']",
+  selectOption: "[data-test-id*='select-option']",
   notSelectedOption: ":not([aria-selected])",
   deleteButton: '[data-test="button-bar-delete"]',
   expandIcon: '[data-test-id="expand-icon"]',

@@ -1,4 +1,4 @@
-import { makeStyles } from "@saleor/macaw-ui";
+import { makeStyles, SearchLargeIcon } from "@saleor/macaw-ui";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -7,18 +7,25 @@ import { QuickSearchMode } from "./types";
 const useStyles = makeStyles(
   theme => {
     const typography = {
-      color: theme.palette.text.primary,
-      fontSize: 24,
-      lineHeight: 1.33
+      ...theme.typography.body1,
+      color: theme.palette.saleor.main[1],
+      fontWeight: 500,
+      letterSpacing: "0.02rem"
     };
 
     return {
       adornment: {
         ...typography,
+        alignSelf: "center",
         color: theme.palette.text.secondary,
-        paddingRight: theme.spacing(1)
+        marginRight: theme.spacing(1),
+        textAlign: "center",
+        width: 32
       },
       input: {
+        "&::placeholder": {
+          color: theme.palette.saleor.main[3]
+        },
         ...typography,
         background: "transparent",
         border: "none",
@@ -27,9 +34,16 @@ const useStyles = makeStyles(
         width: "100%"
       },
       root: {
-        background: theme.palette.background.default,
+        background: theme.palette.background.paper,
         display: "flex",
-        padding: theme.spacing(2, 3)
+        padding: theme.spacing(2, 3),
+        height: 72
+      },
+      searchIcon: {
+        alignSelf: "center",
+        width: 32,
+        height: 32,
+        marginRight: theme.spacing(1)
       }
     };
   },
@@ -51,7 +65,7 @@ const NavigatorInput = React.forwardRef<HTMLInputElement, NavigatorInputProps>(
 
     return (
       <div className={classes.root}>
-        {mode !== "default" && (
+        {mode !== "default" ? (
           <span className={classes.adornment}>
             {mode === "orders"
               ? "#"
@@ -63,6 +77,8 @@ const NavigatorInput = React.forwardRef<HTMLInputElement, NavigatorInputProps>(
               ? "?"
               : ">"}
           </span>
+        ) : (
+          <SearchLargeIcon className={classes.searchIcon} />
         )}
         <input
           autoFocus

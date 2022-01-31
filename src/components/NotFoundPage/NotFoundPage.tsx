@@ -1,6 +1,6 @@
 import notFoundImage from "@assets/images/not-found-404.svg";
-import { Button, Typography } from "@material-ui/core";
-import { makeStyles } from "@saleor/macaw-ui";
+import { Typography } from "@material-ui/core";
+import { Button, makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import SVG from "react-inlinesvg";
 import { FormattedMessage } from "react-intl";
@@ -75,8 +75,7 @@ const NotFoundPage: React.FC<NotFoundPageProps> = props => {
           <div>
             <Button
               className={classes.button}
-              color="primary"
-              variant="contained"
+              variant="primary"
               onClick={onBack}
             >
               <FormattedMessage

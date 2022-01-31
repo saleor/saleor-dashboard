@@ -42,6 +42,6 @@ export const PRODUCTS_LIST = {
   },
   nextPageButton: "[data-test='button-pagination-next']",
   previousPagePagination: "[data-test='button-pagination-back']",
-  resultsOnPageSelect: "[data-test-id='rowNumberSelect']",
+  resultsOnPageSelect: "[data-test-id='PaginationRowNumberSelect']",
   rowNumberOption: "[data-test-id='rowNumberOption']"
 };

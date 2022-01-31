@@ -25,6 +25,11 @@ const useStyles = makeStyles(
         flexDirection: "column",
         rowGap: theme.spacing(2) + "px"
       }
+    },
+    value: {
+      "&&": {
+        overflow: "visible"
+      }
     }
   }),
   { name: "BasicAttributeRow" }
@@ -52,7 +57,7 @@ const BasicAttributeRow: React.FC<BasicAttributeRowProps> = ({
       </div>
       <div
         data-test="attribute-value"
-        className={classNames({
+        className={classNames(classes.value, {
           [classes.flex]: flexValueContainer
         })}
       >

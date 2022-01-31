@@ -1,7 +1,7 @@
-import { Avatar, Button, CardContent, TextField } from "@material-ui/core";
+import { Avatar, CardContent, TextField } from "@material-ui/core";
 import deepPurple from "@material-ui/core/colors/deepPurple";
 import PersonIcon from "@material-ui/icons/Person";
-import { makeStyles } from "@saleor/macaw-ui";
+import { Button, makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -115,9 +115,8 @@ export const TimelineAddNote: React.FC<TimelineAddNoteProps> = props => {
             endAdornment: (
               <Button
                 className={classes.button}
-                color="primary"
-                onClick={e => submit(e)}
                 disabled={disabled}
+                onClick={e => submit(e)}
               >
                 <FormattedMessage
                   defaultMessage="Send"

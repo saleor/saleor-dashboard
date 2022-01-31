@@ -8,12 +8,12 @@ export const useStyles = makeStyles(
       width: "auto"
     },
     colPrice: {
-      minWidth: 240
+      minWidth: 300
     },
     colType: {
       fontSize: 14,
       textAlign: "right",
-      width: 200
+      width: 300
     },
     table: {
       tableLayout: "fixed"

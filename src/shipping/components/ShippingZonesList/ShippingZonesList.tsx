@@ -1,13 +1,10 @@
 import {
-  Button,
   Card,
-  IconButton,
   TableBody,
   TableCell,
   TableFooter,
   TableRow
 } from "@material-ui/core";
-import DeleteIcon from "@material-ui/icons/Delete";
 import CardTitle from "@saleor/components/CardTitle";
 import Checkbox from "@saleor/components/Checkbox";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
@@ -15,10 +12,9 @@ import Skeleton from "@saleor/components/Skeleton";
 import TableHead from "@saleor/components/TableHead";
 import TablePagination from "@saleor/components/TablePagination";
 import { ShippingZoneFragment } from "@saleor/fragments/types/ShippingZoneFragment";
-import { makeStyles } from "@saleor/macaw-ui";
+import { Button, DeleteIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
 import { maybe, renderCollection } from "@saleor/misc";
 import { ListActions, ListProps } from "@saleor/types";
-import { getFooterColSpanWithBulkActions } from "@saleor/utils/tables";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -34,7 +30,7 @@ const useStyles = makeStyles(
       "&:last-child": {
         paddingRight: theme.spacing(1)
       },
-      width: 80
+      width: 92
     },
     colCountries: {
       width: 180
@@ -49,7 +45,7 @@ const useStyles = makeStyles(
   { name: "ShippingZonesList" }
 );
 
-const numberOfColumns = 3;
+const numberOfColumns = 4;
 
 const ShippingZonesList: React.FC<ShippingZonesListProps> = props => {
   const {
@@ -82,11 +78,7 @@ const ShippingZonesList: React.FC<ShippingZonesListProps> = props => {
           description: "sort shipping methods by zone, section header"
         })}
         toolbar={
-          <Button
-            color="primary"
-            onClick={onAdd}
-            data-test-id="add-shipping-zone"
-          >
+          <Button onClick={onAdd} data-test-id="add-shipping-zone">
             <FormattedMessage
               defaultMessage="Create shipping zone"
               description="button"
@@ -95,6 +87,12 @@ const ShippingZonesList: React.FC<ShippingZonesListProps> = props => {
         }
       />
       <ResponsiveTable>
+        <colgroup>
+          <col />
+          <col className={classes.colName} />
+          <col className={classes.colCountries} />
+          <col className={classes.colAction} />
+        </colgroup>
         <TableHead
           colSpan={numberOfColumns}
           selected={selected}
@@ -117,10 +115,7 @@ const ShippingZonesList: React.FC<ShippingZonesListProps> = props => {
         <TableFooter>
           <TableRow>
             <TablePagination
-              colSpan={getFooterColSpanWithBulkActions(
-                shippingZones,
-                numberOfColumns
-              )}
+              colSpan={numberOfColumns}
               settings={settings}
               hasNextPage={pageInfo && !disabled ? pageInfo.hasNextPage : false}
               onNextPage={onNextPage}
@@ -170,6 +165,7 @@ const ShippingZonesList: React.FC<ShippingZonesListProps> = props => {
                   </TableCell>
                   <TableCell className={classes.colAction}>
                     <IconButton
+                      variant="secondary"
                       color="primary"
                       disabled={disabled}
                       onClick={event => {

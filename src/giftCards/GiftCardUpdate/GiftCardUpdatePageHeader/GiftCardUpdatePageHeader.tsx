@@ -1,10 +1,9 @@
-import { Button } from "@material-ui/core";
 import HorizontalSpacer from "@saleor/apps/components/HorizontalSpacer";
 import PageHeader from "@saleor/components/PageHeader";
 import PageTitleWithStatusChip from "@saleor/components/PageTitleWithStatusChip";
 import GiftCardStatusChip from "@saleor/giftCards/components/GiftCardStatusChip/GiftCardStatusChip";
 import { sectionNames } from "@saleor/intl";
-import { Backlink } from "@saleor/macaw-ui";
+import { Backlink, Button } from "@saleor/macaw-ui";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -19,11 +18,11 @@ const GiftCardUpdatePageHeader: React.FC = () => {
   const { giftCard } = useGiftCardDetails();
   const { navigateBack } = useGiftCardUpdateDialogs();
 
+  const { openResendCodeDialog } = useGiftCardUpdateDialogs();
+
   if (!giftCard) {
     return null;
   }
-
-  const { openResendCodeDialog } = useGiftCardUpdateDialogs();
 
   const { last4CodeChars, isExpired } = giftCard;
 
@@ -47,11 +46,7 @@ const GiftCardUpdatePageHeader: React.FC = () => {
         <GiftCardEnableDisableSection />
         <HorizontalSpacer />
         {!isExpired && (
-          <Button
-            color="primary"
-            variant="contained"
-            onClick={openResendCodeDialog}
-          >
+          <Button variant="primary" onClick={openResendCodeDialog}>
             {intl.formatMessage(messages.resendButtonLabel)}
           </Button>
         )}
