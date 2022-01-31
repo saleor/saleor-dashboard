@@ -75,7 +75,7 @@ const OrderFulfilledProductsCard: React.FC<OrderFulfilledProductsCardProps> = pr
                       description: "button"
                     }),
                     onSelect: onOrderFulfillmentCancel,
-                    testId: "cancelFulfillmentButton"
+                    testId: "cancel-fulfillment-button"
                   }
                 ]}
               />

@@ -124,19 +124,18 @@ const PermissionGroupList: React.FC<PermissionGroupListProps> = props => {
               onClick={
                 permissionGroup ? onRowClick(permissionGroup.id) : undefined
               }
-              data-test="id"
-              data-test-id={maybe(() => permissionGroup.id)}
+              data-test-id={"id-" + maybe(() => permissionGroup.id)}
             >
               <TableCell className={classes.colName}>
                 {permissionGroup ? (
-                  <span data-test="name">{permissionGroup.name}</span>
+                  <span data-test-id="name">{permissionGroup.name}</span>
                 ) : (
                   <Skeleton />
                 )}
               </TableCell>
               <TableCell className={classes.colMembers}>
                 {permissionGroup ? (
-                  <span data-test="members">
+                  <span data-test-id="members">
                     {permissionGroup.users.length}
                   </span>
                 ) : (
@@ -149,7 +148,7 @@ const PermissionGroupList: React.FC<PermissionGroupListProps> = props => {
                     {permissionGroup.userCanManage && (
                       <IconButton
                         variant="secondary"
-                        data-test-id="deleteIcon"
+                        data-test-id="delete-icon"
                         color="primary"
                         onClick={stopPropagation(() =>
                           onDelete(permissionGroup.id)

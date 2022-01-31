@@ -17,28 +17,22 @@ import { orderProductsCardElementsMessages as messages } from "./messages";
 
 const useStyles = makeStyles(
   theme => ({
-    colName: {
-      width: "auto"
-    },
+    colName: {},
     colNameLabel: {
       marginLeft: AVATAR_MARGIN
     },
     colPrice: {
-      textAlign: "right",
-      width: 120
+      textAlign: "right"
     },
     colQuantity: {
-      textAlign: "center",
-      width: 120
+      textAlign: "center"
     },
     colSku: {
       textAlign: "right",
-      textOverflow: "ellipsis",
-      width: 120
+      textOverflow: "ellipsis"
     },
     colTotal: {
-      textAlign: "right",
-      width: 120
+      textAlign: "right"
     },
     infoLabel: {
       display: "inline-block"
@@ -55,9 +49,6 @@ const useStyles = makeStyles(
     },
     statusBar: {
       paddingTop: 0
-    },
-    table: {
-      tableLayout: "fixed"
     }
   }),
   { name: "TableLine" }

@@ -54,7 +54,7 @@ const MetadataCard: React.FC<MetadataCardProps> = ({
 
   return (
     <Card
-      data-test="metadataEditor"
+      data-test-id="metadata-editor"
       data-test-is-private={isPrivate}
       data-test-expanded={expanded}
     >
@@ -77,7 +77,7 @@ const MetadataCard: React.FC<MetadataCardProps> = ({
               })}
               hoverOutline={false}
               variant="secondary"
-              data-test="expand"
+              data-test-id="expand"
               onClick={() => setExpanded(!expanded)}
             >
               <ExpandIcon />
@@ -141,7 +141,7 @@ const MetadataCard: React.FC<MetadataCardProps> = ({
                   </TableHead>
                   <TableBody>
                     {data.map((field, fieldIndex) => (
-                      <TableRow data-test="field" key={fieldIndex}>
+                      <TableRow data-test-id="field" key={fieldIndex}>
                         <TableCell className={classes.colName}>
                           <TextField
                             InputProps={{
@@ -172,8 +172,7 @@ const MetadataCard: React.FC<MetadataCardProps> = ({
                         <TableCell className={classes.colAction}>
                           <IconButton
                             variant="secondary"
-                            data-test="deleteField"
-                            data-test-id={fieldIndex}
+                            data-test-id={"delete-field-" + fieldIndex}
                             onClick={() =>
                               onChange({
                                 target: {
@@ -194,7 +193,7 @@ const MetadataCard: React.FC<MetadataCardProps> = ({
               <CardActions className={classes.actions}>
                 <Button
                   variant="secondary"
-                  data-test="addField"
+                  data-test-id="add-field"
                   onClick={() =>
                     onChange({
                       target: {

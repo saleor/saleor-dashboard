@@ -83,7 +83,7 @@ const ProductTypeAttributes: React.FC<ProductTypeAttributesProps> = props => {
 
   return (
     <Card
-      data-test={
+      data-test-id={
         type === ProductAttributeType.PRODUCT
           ? "product-attributes"
           : "variant-attributes"
@@ -163,8 +163,7 @@ const ProductTypeAttributes: React.FC<ProductTypeAttributesProps> = props => {
                   }
                   key={maybe(() => attribute.id)}
                   index={attributeIndex || 0}
-                  data-test="id"
-                  data-test-id={maybe(() => attribute.id)}
+                  data-test-id={"id-" + maybe(() => attribute.id)}
                 >
                   <TableCell padding="checkbox">
                     <Checkbox
@@ -174,14 +173,14 @@ const ProductTypeAttributes: React.FC<ProductTypeAttributesProps> = props => {
                       onChange={() => toggle(attribute.id)}
                     />
                   </TableCell>
-                  <TableCell className={classes.colName} data-test="name">
+                  <TableCell className={classes.colName} data-test-id="name">
                     {maybe(() => attribute.name) ? (
                       attribute.name
                     ) : (
                       <Skeleton />
                     )}
                   </TableCell>
-                  <TableCell className={classes.colSlug} data-test="slug">
+                  <TableCell className={classes.colSlug} data-test-id="slug">
                     {maybe(() => attribute.slug) ? (
                       attribute.slug
                     ) : (
@@ -190,6 +189,7 @@ const ProductTypeAttributes: React.FC<ProductTypeAttributesProps> = props => {
                   </TableCell>
                   <TableCell className={classes.colAction}>
                     <IconButton
+                      data-test-id="delete-icon"
                       disabled={disabled}
                       variant="secondary"
                       onClick={stopPropagation(() =>

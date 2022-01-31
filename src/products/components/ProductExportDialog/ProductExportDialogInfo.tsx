@@ -334,7 +334,7 @@ const ProductExportDialogInfo: React.FC<ProductExportDialogInfoProps> = ({
             </div>
           )
         }
-        data-test="channels"
+        data-test-id="channels"
       >
         <ChannelsAvailabilityDialogContentWrapper
           hasAnyChannelsToDisplay={!!channels.length}
@@ -366,7 +366,7 @@ const ProductExportDialogInfo: React.FC<ProductExportDialogInfoProps> = ({
         ]}
         onChange={handleFieldChange}
         onToggleAll={handleToggleAllFields}
-        data-test="organization"
+        data-test-id="organization"
       />
       <Accordion
         className={classes.accordion}
@@ -403,7 +403,7 @@ const ProductExportDialogInfo: React.FC<ProductExportDialogInfoProps> = ({
             </div>
           )
         }
-        data-test="attributes"
+        data-test-id="attributes"
       >
         <TextField
           name="query"
@@ -457,7 +457,7 @@ const ProductExportDialogInfo: React.FC<ProductExportDialogInfoProps> = ({
         fields={[ProductFieldEnum.CHARGE_TAXES]}
         onChange={handleFieldChange}
         onToggleAll={handleToggleAllFields}
-        data-test="financial"
+        data-test-id="financial"
       />
       <Accordion
         className={classes.accordion}
@@ -522,7 +522,7 @@ const ProductExportDialogInfo: React.FC<ProductExportDialogInfoProps> = ({
             </div>
           )
         }
-        data-test="inventory"
+        data-test-id="inventory"
       >
         <div>
           <Option
@@ -601,7 +601,7 @@ const ProductExportDialogInfo: React.FC<ProductExportDialogInfoProps> = ({
         ]}
         onChange={handleFieldChange}
         onToggleAll={handleToggleAllFields}
-        data-test="seo"
+        data-test-id="seo"
       />
     </div>
   );

@@ -7,7 +7,7 @@ import { IntlShape } from "react-intl";
 
 import { FilterType, IFilterElement } from "../types";
 
-export const filterTestingContext = "filter-field";
+export const filterTestingContext = "filter-field-";
 
 export interface FilterFieldBaseProps<T extends string = string> {
   filter: IFilterElement<T>;

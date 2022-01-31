@@ -72,7 +72,7 @@ const ShippingZoneInfo: React.FC<ShippingZoneInfoProps> = ({
           helperText={getShippingErrorMessage(formErrors.name, intl)}
           label={intl.formatMessage(messages.name)}
           inputProps={{
-            "data-test": "name"
+            "data-test-id": "name"
           }}
           name="name"
           value={data.name}

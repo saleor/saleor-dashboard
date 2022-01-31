@@ -40,7 +40,7 @@ const CustomAppTokens: React.FC<CustomAppTokensProps> = props => {
           <Button
             variant="secondary"
             onClick={onCreate}
-            data-test-id="createToken"
+            data-test-id="create-token"
           >
             <FormattedMessage
               defaultMessage="Create Token"
