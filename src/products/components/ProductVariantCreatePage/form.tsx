@@ -9,7 +9,7 @@ import {
   createFetchReferencesHandler
 } from "@saleor/attributes/utils/handlers";
 import { AttributeInput } from "@saleor/components/Attributes";
-import useExitFormDialog from "@saleor/components/Form/useExitFormDialog";
+import { useExitFormDialog } from "@saleor/components/Form/useExitFormDialog";
 import { MetadataFormData } from "@saleor/components/Metadata";
 import useForm, {
   CommonUseFormResultWithHandlers,

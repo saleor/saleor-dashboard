@@ -50,8 +50,8 @@ import { warehouseAddPath } from "@saleor/warehouses/urls";
 import React from "react";
 import { useIntl } from "react-intl";
 
+import { PRODUCT_CREATE_FORM_ID } from "./consts";
 import { createHandler } from "./handlers";
-import { PRODUCT_CREATE_FORM_ID } from "./types";
 
 interface ProductCreateProps {
   params: ProductCreateUrlQueryParams;

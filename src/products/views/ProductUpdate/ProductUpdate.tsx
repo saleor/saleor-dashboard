@@ -79,13 +79,13 @@ import {
   productVariantEditUrl
 } from "../../urls";
 import { CHANNELS_AVAILIABILITY_MODAL_SELECTOR } from "./consts";
+import { PRODUCT_UPDATE_FORM_ID } from "./consts";
 import {
   createImageReorderHandler,
   createImageUploadHandler,
   createUpdateHandler,
   createVariantReorderHandler
 } from "./handlers";
-import { PRODUCT_UPDATE_FORM_ID } from "./types";
 import useChannelVariantListings from "./useChannelVariantListings";
 
 const messages = defineMessages({

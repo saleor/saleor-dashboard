@@ -1,5 +1,5 @@
 import { FormId } from "@saleor/components/Form/ExitFormDialogProvider";
-import useExitFormDialog from "@saleor/components/Form/useExitFormDialog";
+import { useExitFormDialog } from "@saleor/components/Form/useExitFormDialog";
 import { SubmitPromise } from "@saleor/hooks/useForm";
 
 interface UseHandleFormSubmitProps<TData, TErrors> {

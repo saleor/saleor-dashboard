@@ -32,7 +32,7 @@ import createDialogActionHandlers from "@saleor/utils/handlers/dialogActionHandl
 import React from "react";
 import { useIntl } from "react-intl";
 
-import { WEIGHT_RATES_CREATE_FORM_ID } from "./types";
+import { WEIGHT_RATES_CREATE_FORM_ID } from "./consts";
 
 export interface WeightRatesCreateProps {
   id: string;

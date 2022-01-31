@@ -29,8 +29,8 @@ import {
 import React from "react";
 import { useIntl } from "react-intl";
 
+import { SALE_CREATE_FORM_ID } from "./consts";
 import { createHandler } from "./handlers";
-import { SALE_CREATE_FORM_ID } from "./types";
 
 interface SaleCreateProps {
   params: SaleCreateUrlQueryParams;

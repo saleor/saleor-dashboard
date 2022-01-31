@@ -1,4 +1,4 @@
-import useExitFormDialog from "@saleor/components/Form/useExitFormDialog";
+import { useExitFormDialog } from "@saleor/components/Form/useExitFormDialog";
 import { SingleAutocompleteChoiceType } from "@saleor/components/SingleAutocompleteSelectField";
 import { AddressTypeInput } from "@saleor/customers/types";
 import {

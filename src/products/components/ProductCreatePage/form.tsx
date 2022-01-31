@@ -14,7 +14,7 @@ import {
   AttributeInput,
   AttributeInputData
 } from "@saleor/components/Attributes";
-import useExitFormDialog from "@saleor/components/Form/useExitFormDialog";
+import { useExitFormDialog } from "@saleor/components/Form/useExitFormDialog";
 import { MetadataFormData } from "@saleor/components/Metadata";
 import { MultiAutocompleteChoiceType } from "@saleor/components/MultiAutocompleteSelectField";
 import { RichTextEditorChange } from "@saleor/components/RichTextEditor";
@@ -45,7 +45,7 @@ import {
   validateCostPrice,
   validatePrice
 } from "@saleor/products/utils/validation";
-import { PRODUCT_CREATE_FORM_ID } from "@saleor/products/views/ProductCreate/types";
+import { PRODUCT_CREATE_FORM_ID } from "@saleor/products/views/ProductCreate/consts";
 import { SearchPages_search_edges_node } from "@saleor/searches/types/SearchPages";
 import { SearchProducts_search_edges_node } from "@saleor/searches/types/SearchProducts";
 import { SearchProductTypes_search_edges_node } from "@saleor/searches/types/SearchProductTypes";

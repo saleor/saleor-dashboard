@@ -53,7 +53,7 @@ import {
   CollectionUrlDialog,
   CollectionUrlQueryParams
 } from "../urls";
-import { COLLECTION_DETAILS_FORM_ID } from "./types";
+import { COLLECTION_DETAILS_FORM_ID } from "./consts";
 
 interface CollectionDetailsProps {
   id: string;

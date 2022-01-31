@@ -66,7 +66,7 @@ import {
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { WEIGHT_RATES_UPDATE_FORM_ID } from "./types";
+import { WEIGHT_RATES_UPDATE_FORM_ID } from "./consts";
 
 export interface WeightRatesUpdateProps {
   id: string;

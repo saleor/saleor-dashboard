@@ -1,4 +1,4 @@
-import useExitFormDialog from "@saleor/components/Form/useExitFormDialog";
+import { useExitFormDialog } from "@saleor/components/Form/useExitFormDialog";
 import useForm, {
   CommonUseFormResultWithHandlers,
   SubmitPromise
