@@ -2,12 +2,15 @@ import { PRODUCT_TYPE_DETAILS } from "../../elements/productTypes/productTypeDet
 import { PRODUCT_TYPES_LIST } from "../../elements/productTypes/productTypesList";
 import { BUTTON_SELECTORS } from "../../elements/shared/button-selectors";
 
-export function createProductType(name, shippingWeight) {
+export function createProductType({ name, shippingWeight, giftCard = false }) {
   cy.get(PRODUCT_TYPES_LIST.addProductTypeButton)
     .click()
     .waitForProgressBarToNotBeVisible()
     .get(PRODUCT_TYPE_DETAILS.nameInput)
     .type(name);
+  if (giftCard) {
+    cy.get(PRODUCT_TYPE_DETAILS.giftCardKindCheckbox).click();
+  }
   if (shippingWeight) {
     cy.get(PRODUCT_TYPE_DETAILS.isShippingRequired)
       .click()
