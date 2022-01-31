@@ -45,7 +45,7 @@ filterTests({ definedTags: ["all"] }, () => {
         .softExpectSkeletonIsVisible();
     });
 
-    it("As an admin I want to create product type without shipping required", () => {
+    it("should be able to create product type without shipping required. TC: SALEOR_1501", () => {
       const name = `${startsWith}${faker.datatype.number()}`;
 
       createProductType(name, false)
@@ -58,7 +58,7 @@ filterTests({ definedTags: ["all"] }, () => {
         });
     });
 
-    it("As an admin I want to create product type with shipping required", () => {
+    it("should be able to create product type with shipping required. TC: SALEOR_1502", () => {
       const name = `${startsWith}${faker.datatype.number()}`;
       const shippingWeight = 10;
 
@@ -73,7 +73,7 @@ filterTests({ definedTags: ["all"] }, () => {
         });
     });
 
-    it("As an admin I want to update product type with product attribute", () => {
+    it("should be able to update product type with product attribute. TC: SALEOR_1503", () => {
       const name = `${startsWith}${faker.datatype.number()}`;
 
       createTypeProduct({ name })
@@ -94,7 +94,7 @@ filterTests({ definedTags: ["all"] }, () => {
         });
     });
 
-    it("As an admin I want to update product type with variant attribute", () => {
+    it("should be able to update product type with variant attribute. TC: SALEOR_1504", () => {
       const name = `${startsWith}${faker.datatype.number()}`;
 
       createTypeProduct({ name, hasVariants: false })
@@ -117,7 +117,7 @@ filterTests({ definedTags: ["all"] }, () => {
         });
     });
 
-    it("As an admin I want to delete product type", () => {
+    it("should be able to delete product type. TC: SALEOR_1505", () => {
       const name = `${startsWith}${faker.datatype.number()}`;
 
       createTypeProduct({ name, hasVariants: false }).then(productType => {
@@ -135,7 +135,7 @@ filterTests({ definedTags: ["all"] }, () => {
       });
     });
 
-    it("As an admin I want to delete product type with assigned product", () => {
+    it("should be able to delete product type with assigned product. TC: SALEOR_1509", () => {
       const name = `${startsWith}${faker.datatype.number()}`;
       let productType;
 
@@ -172,7 +172,7 @@ filterTests({ definedTags: ["all"] }, () => {
         });
     });
 
-    it("As an admin I want to remove variant attribute from product type", () => {
+    it("should be able to remove variant attribute from product type. TC: SALEOR_1506", () => {
       const name = `${startsWith}${faker.datatype.number()}`;
       let productType;
 
@@ -198,7 +198,7 @@ filterTests({ definedTags: ["all"] }, () => {
         });
     });
 
-    it("As an admin I want to remove variant attribute from product type", () => {
+    it("should be able to remove variant attribute from product type. TC: SALEOR_1507", () => {
       const name = `${startsWith}${faker.datatype.number()}`;
       let productType;
 
