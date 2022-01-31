@@ -148,14 +148,19 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
   const handleMenuItemClick = (url: string) =>
     navigate(url, { resetScroll: true });
 
+  const reloadWindow = () => {
+    window.location.reload();
+  };
+
   const handleErrorBack = () => {
-    navigate("/");
+    navigate("/", { replace: true });
     dispatchAppState({
       payload: {
         error: null
       },
       type: "displayError"
     });
+    reloadWindow();
   };
 
   const isDark = themeType === "dark";
@@ -226,7 +231,7 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
                     <ErrorPage
                       id={appState.error.id}
                       onBack={handleErrorBack}
-                      onRefresh={() => window.location.reload()}
+                      onRefresh={reloadWindow}
                     />
                   )
                 : children}
