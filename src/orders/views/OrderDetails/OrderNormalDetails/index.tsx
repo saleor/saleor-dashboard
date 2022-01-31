@@ -120,7 +120,7 @@ export const OrderNormalDetails: React.FC<OrderNormalDetailsProps> = ({
           extractMutationErrors(
             orderAddNote.mutate({
               input: variables,
-              order: "KEK"
+              order: id
             })
           )
         }
