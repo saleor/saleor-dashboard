@@ -116,13 +116,11 @@ interface ProductListProps
   gridAttributes: GridAttributes_grid_edges_node[];
   products: ProductList_products_edges_node[];
   loading: boolean;
-  channelsCount: number;
 }
 
 export const ProductList: React.FC<ProductListProps> = props => {
   const {
     activeAttributeSortId,
-    channelsCount,
     settings,
     disabled,
     isChecked,
@@ -406,9 +404,7 @@ export const ProductList: React.FC<ProductListProps> = props => {
                           />
                         ) : (
                           <ChannelsAvailabilityDropdown
-                            allChannelsCount={channelsCount}
                             channels={product?.channelListings}
-                            showStatus
                           />
                         ))}
                     </TableCell>

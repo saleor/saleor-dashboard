@@ -98,7 +98,6 @@ const CollectionListPage: React.FC<CollectionListPageProps> = ({
         />
         <CollectionList
           disabled={disabled}
-          channelsCount={channelsCount}
           selectedChannelId={selectedChannelId}
           filterDependency={filterDependency}
           {...listProps}

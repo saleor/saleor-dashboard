@@ -2,8 +2,23 @@ import { makeStyles } from "@saleor/macaw-ui";
 
 export const useStyles = makeStyles(
   theme => ({
+    menuContainer: {
+      padding: theme.spacing(2)
+    },
+
+    row: {
+      display: "flex",
+      justifyContent: "space-between",
+
+      "&:not(:last-child)": {
+        marginBottom: theme.spacing(2)
+      }
+    },
     caption: {
-      paddingLeft: theme.spacing(2)
+      textTransform: "uppercase",
+      color: theme.palette.saleor.main[3],
+      fontWeight: 500,
+      letterSpacing: "0.1em"
     },
     hr: {
       left: theme.spacing(-1),

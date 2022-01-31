@@ -52,14 +52,12 @@ interface CollectionListProps
     SortPage<CollectionListUrlSortField>,
     ChannelProps {
   collections: CollectionList_collections_edges_node[];
-  channelsCount: number;
 }
 
 const numberOfColumns = 4;
 
 const CollectionList: React.FC<CollectionListProps> = props => {
   const {
-    channelsCount,
     collections,
     disabled,
     settings,
@@ -202,9 +200,7 @@ const CollectionList: React.FC<CollectionListProps> = props => {
                       />
                     ) : (
                       <ChannelsAvailabilityDropdown
-                        allChannelsCount={channelsCount}
                         channels={collection?.channelListings}
-                        showStatus
                       />
                     ))}
                 </TableCell>
