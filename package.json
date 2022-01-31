@@ -1,6 +1,6 @@
 {
   "name": "saleor-dashboard",
-  "version": "3.0.0-b.26",
+  "version": "3.0.0-b.29",
   "main": "src/index.tsx",
   "repository": {
     "type": "git",
@@ -28,7 +28,7 @@
     "@material-ui/icons": "^4.11.2",
     "@material-ui/lab": "^4.0.0-alpha.58",
     "@material-ui/styles": "^4.11.4",
-    "@saleor/macaw-ui": "^0.3.0",
+    "@saleor/macaw-ui": "^0.3.1-0",
     "@saleor/sdk": "^0.4.1",
     "@sentry/react": "^6.0.0",
     "@types/faker": "^5.1.6",
@@ -154,7 +154,7 @@
     "eslint-plugin-simple-import-sort": "^5.0.3",
     "file-loader": "^5.0.2",
     "fork-ts-checker-webpack-plugin": "^3.1.1",
-    "graphql-request": "^3.5.0",
+    "graphql-request": "^3.7.0",
     "html-webpack-plugin": "^3.2.0",
     "husky": "^4.3.0",
     "jest": "^24.8.0",

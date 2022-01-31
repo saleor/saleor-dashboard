@@ -134,11 +134,8 @@ const useStyles = makeStyles(
     root: {
       borderBottomLeftRadius: 8,
       borderBottomRightRadius: 8,
-      left: 0,
-      marginTop: theme.spacing(),
+      margin: theme.spacing(1, 0),
       overflow: "hidden",
-      position: "absolute",
-      right: 0,
       zIndex: 22
     }
   }),

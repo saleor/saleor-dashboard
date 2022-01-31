@@ -1,12 +1,12 @@
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
+import uniqBy from "lodash/uniqBy";
 import moment from "moment-timezone";
 import { MutationFunction, MutationResult } from "react-apollo";
 import { IntlShape } from "react-intl";
-import urlJoin from "url-join";
 
+import { MultiAutocompleteChoiceType } from "./components/MultiAutocompleteSelectField";
 import { StatusType } from "./components/StatusChip/types";
 import { StatusLabelProps } from "./components/StatusLabel";
-import { APP_MOUNT_URI } from "./config";
 import { AddressType, AddressTypeInput } from "./customers/types";
 import {
   commonStatusMessages,
@@ -291,10 +291,6 @@ export function getUserInitials(user?: User) {
     : undefined;
 }
 
-export function createHref(url: string) {
-  return urlJoin(APP_MOUNT_URI, url);
-}
-
 interface AnyEvent {
   stopPropagation: () => void;
 }
@@ -460,3 +456,8 @@ export function PromiseQueue() {
 
   return { queue, add };
 }
+
+export const combinedMultiAutocompleteChoices = (
+  selected: MultiAutocompleteChoiceType[],
+  choices: MultiAutocompleteChoiceType[]
+) => uniqBy([...selected, ...choices], "value");

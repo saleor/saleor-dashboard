@@ -13,7 +13,7 @@ import SingleAutocompleteSelectField, {
 import { ProductErrorFragment } from "@saleor/fragments/types/ProductErrorFragment";
 import { ChangeEvent } from "@saleor/hooks/useForm";
 import { makeStyles } from "@saleor/macaw-ui";
-import { createHref, maybe } from "@saleor/misc";
+import { maybe } from "@saleor/misc";
 import { productTypeUrl } from "@saleor/productTypes/urls";
 import { FetchMoreProps } from "@saleor/types";
 import { getFormErrors, getProductErrorMessage } from "@saleor/utils/errors";
@@ -133,7 +133,7 @@ const ProductOrganization: React.FC<ProductOrganizationProps> = props => {
               <FormattedMessage defaultMessage="Product Type" />
             </Typography>
             <Link
-              href={createHref(productTypeUrl(productType?.id) ?? "")}
+              href={productTypeUrl(productType?.id)}
               disabled={!productType?.id}
             >
               {productType?.name ?? "..."}

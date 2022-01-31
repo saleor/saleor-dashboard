@@ -145,14 +145,22 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
     isMenuActive(location.pathname, menuItem)
   )?.id;
 
+  const handleMenuItemClick = (url: string) =>
+    navigate(url, { resetScroll: true });
+
+  const reloadWindow = () => {
+    window.location.reload();
+  };
+
   const handleErrorBack = () => {
-    navigate("/");
+    navigate("/", { replace: true });
     dispatchAppState({
       payload: {
         error: null
       },
       type: "displayError"
     });
+    reloadWindow();
   };
 
   const isDark = themeType === "dark";
@@ -169,7 +177,7 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
           <Sidebar
             activeId={activeMenu}
             menuItems={menuStructure}
-            onMenuItemClick={navigate}
+            onMenuItemClick={handleMenuItemClick}
           />
         )}
         <div className={classes.content}>
@@ -223,7 +231,7 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
                     <ErrorPage
                       id={appState.error.id}
                       onBack={handleErrorBack}
-                      onRefresh={() => window.location.reload()}
+                      onRefresh={reloadWindow}
                     />
                   )
                 : children}

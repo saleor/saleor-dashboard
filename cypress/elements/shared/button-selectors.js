@@ -12,5 +12,6 @@ export const BUTTON_SELECTORS = {
   nextPaginationButton: '[data-test="button-pagination-next"]',
   deleteIcon: '[data-test-id="delete-icon"]',
   showMoreButton: '[data-test-id="show-more-button"]',
-  button: "button"
+  button: "button",
+  deleteAssignedItemsConsentCheckbox: '[name="delete-assigned-items-consent"]'
 };

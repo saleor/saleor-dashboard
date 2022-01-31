@@ -16,10 +16,7 @@ import {
 import * as channelsUtils from "../../../support/api/utils/channelsUtils";
 import * as shippingUtils from "../../../support/api/utils/shippingUtils";
 import filterTests from "../../../support/filterTests";
-import {
-  getCurrencyAndAmountInString,
-  getFormattedCurrencyAmount
-} from "../../../support/formatData/formatCurrencyAmount";
+import { getFormattedCurrencyAmount } from "../../../support/formatData/formatCurrencyAmount";
 import { enterHomePageChangeChannelAndReturn } from "../../../support/pages/channelsPage";
 
 filterTests({ definedTags: ["all"] }, () => {
@@ -111,8 +108,11 @@ filterTests({ definedTags: ["all"] }, () => {
               SHIPPING_ZONE_DETAILS.shippingRatePriceTableCell
             )
             .then(text => {
-              expect(text).to.includes(defaultChannelPrice);
-              expect(text).to.includes(defaultChannel.currencyCode);
+              const expectedValue = getFormattedCurrencyAmount(
+                defaultChannelPrice,
+                defaultChannel.currencyCode
+              );
+              expect(text).to.eq(expectedValue);
 
               enterHomePageChangeChannelAndReturn(createdChannel.name);
               cy.waitForProgressBarToNotBeVisible()
