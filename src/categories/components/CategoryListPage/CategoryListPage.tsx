@@ -57,7 +57,11 @@ export const CategoryListPage: React.FC<CategoryTableProps> = ({
   return (
     <Container>
       <PageHeader title={intl.formatMessage(sectionNames.categories)}>
-        <Button variant="primary" onClick={onAdd} data-test-id="createCategory">
+        <Button
+          variant="primary"
+          onClick={onAdd}
+          data-test-id="create-category"
+        >
           <FormattedMessage
             defaultMessage="Create category"
             description="button"

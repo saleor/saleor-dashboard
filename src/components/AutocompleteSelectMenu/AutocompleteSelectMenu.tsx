@@ -117,7 +117,7 @@ const AutocompleteSelectMenu: React.FC<AutocompleteSelectMenuProps> = props => {
           {({ getItemProps, isOpen, openMenu, closeMenu, selectItem }) => (
             <div
               className={classes.container}
-              data-test-id="containerAutocompleteSelect"
+              data-test-id="container-autocomplete-select"
             >
               <TextField
                 InputProps={{

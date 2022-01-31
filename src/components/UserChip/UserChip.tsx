@@ -44,19 +44,19 @@ const UserChip: React.FC<UserChipProps> = ({
     >
       <UserChipMenuItem
         onClick={onProfileClick}
-        data-test="accountSettingsButton"
+        data-test-id="account-settings-button"
       >
         <FormattedMessage
           defaultMessage="Account Settings"
           description="button"
         />
       </UserChipMenuItem>
-      <UserChipMenuItem onClick={onLogout} data-test="logOutButton">
+      <UserChipMenuItem onClick={onLogout} data-test-id="log-out-button">
         <FormattedMessage defaultMessage="Log out" description="button" />
       </UserChipMenuItem>
       <UserChipMenuItem
         leaveOpen
-        data-test="themeSwitch"
+        data-test-id="theme-switch"
         data-test-is-dark={isDarkThemeEnabled}
       >
         <FormControlLabel

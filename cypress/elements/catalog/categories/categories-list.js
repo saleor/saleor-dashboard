@@ -1,3 +1,3 @@
 export const CATEGORIES_LIST = {
-  addCategoryButton: '[data-test-id="createCategory"]'
+  addCategoryButton: '[data-test-id="create-category"]'
 };

@@ -48,7 +48,7 @@ const WebhooksList: React.FC<WebhooksListProps> = ({
             <Button
               variant="secondary"
               onClick={onCreate}
-              data-test-id="createWebhook"
+              data-test-id="create-webhook"
             >
               <FormattedMessage
                 defaultMessage="Create Webhook"

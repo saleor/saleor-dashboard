@@ -51,12 +51,12 @@ const BasicAttributeRow: React.FC<BasicAttributeRowProps> = ({
     <Grid className={classes.attributeSection} variant="uniform">
       <div
         className={classes.attributeSectionLabel}
-        data-test="attribute-label"
+        data-test-id="attribute-label"
       >
         <Typography>{label}</Typography>
       </div>
       <div
-        data-test="attribute-value"
+        data-test-id="attribute-value"
         className={classNames(classes.value, {
           [classes.flex]: flexValueContainer
         })}

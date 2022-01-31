@@ -15,7 +15,7 @@ export const DISCOUNTS_MENU_SELECTORS = {
 };
 export const ORDERS = {
   orders: "[data-test='submenu-item-label'][data-test-id='orders']",
-  draftOrders: "[data-test='submenu-item-label'][data-test-id='order drafts']"
+  draftOrders: "[data-test='submenu-item-label'][data-test-id='order-drafts']"
 };
 export const CATALOG = {
   products: "[data-test='submenu-item-label'][data-test-id='products']",

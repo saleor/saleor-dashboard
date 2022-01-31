@@ -136,7 +136,7 @@ const AccountPermissions: React.FC<AccountPermissionsProps> = props => {
             >
               <ListItemIcon>
                 <Checkbox
-                  data-test-id="fullAccess"
+                  data-test-id="full-access"
                   color="primary"
                   edge="start"
                   checked={data.hasFullAccess}

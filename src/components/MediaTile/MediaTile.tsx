@@ -73,7 +73,7 @@ const MediaTile: React.FC<MediaTileProps> = props => {
   const mediaUrl = parsedMediaOembedData?.thumbnail_url || media.url;
 
   return (
-    <div className={classes.mediaContainer} data-test="product-image">
+    <div className={classes.mediaContainer} data-test-id="product-image">
       <div
         className={classNames(classes.mediaOverlay, {
           [classes.mediaOverlayShadow]: loading
