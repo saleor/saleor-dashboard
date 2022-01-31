@@ -11,7 +11,7 @@ import { useIntl } from "react-intl";
 
 import { extractMutationErrors, getStringOrPlaceholder } from "../../misc";
 import WebhookDetailsPage from "../components/WebhookDetailsPage";
-import { WebhookUpdateFormData } from "../components/WebhooksDetailsPage/WebhooksDetailsPage";
+import { WebhookFormData } from "../components/WebhooksDetailsPage/WebhooksDetailsPage";
 import { useWebhookUpdateMutation } from "../mutations";
 import { useWebhooksDetailsQuery } from "../queries";
 
@@ -53,7 +53,7 @@ export const WebhooksDetails: React.FC<WebhooksDetailsProps> = ({ id }) => {
     return <NotFoundPage onBack={handleOnBack} />;
   }
 
-  const handleSubmit = (data: WebhookUpdateFormData) =>
+  const handleSubmit = (data: WebhookFormData) =>
     extractMutationErrors(
       webhookUpdate({
         variables: {

@@ -17,6 +17,7 @@ import FormSpacer from "@saleor/components/FormSpacer";
 import Hr from "@saleor/components/Hr";
 import ResponsiveTable from "@saleor/components/ResponsiveTable";
 import { ShopInfo_shop_countries } from "@saleor/components/Shop/types/ShopInfo";
+import { SubmitPromise } from "@saleor/hooks/useForm";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import useScrollableDialogStyle from "@saleor/styles/useScrollableDialogStyle";
 import { filter } from "fuzzaldrin";
