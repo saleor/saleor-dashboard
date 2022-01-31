@@ -2,10 +2,12 @@ import { makeStyles } from "@saleor/macaw-ui";
 
 export const useStyles = makeStyles(
   theme => ({
-    scrollableContent: {
+    dialogContent: {
       maxHeight: `calc(100vh - 250px)`,
       overflowY: "scroll",
-      overflowX: "hidden"
+      overflowX: "hidden",
+      padding: "24px",
+      margin: 0
     },
     scrollableWrapper: {
       maxHeight: 400,
@@ -16,9 +18,6 @@ export const useStyles = makeStyles(
     },
     optionLabel: {
       display: "block"
-    },
-    overflow: {
-      overflowY: "visible"
     },
     searchInput: {
       paddingTop: theme.spacing(2),

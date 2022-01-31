@@ -1,4 +1,5 @@
 import { useExitFormDialog } from "@saleor/components/Form/useExitFormDialog";
+import { ShopInfo_shop_countries } from "@saleor/components/Shop/types/ShopInfo";
 import { SingleAutocompleteChoiceType } from "@saleor/components/SingleAutocompleteSelectField";
 import { AddressTypeInput } from "@saleor/customers/types";
 import {
@@ -21,7 +22,7 @@ export enum AddressInputOptionEnum {
 }
 
 export interface OrderCustomerAddressesEditFormData {
-  billingSameAsShipping: boolean;
+  cloneAddress: boolean;
   shippingAddressInputOption: AddressInputOptionEnum;
   billingAddressInputOption: AddressInputOptionEnum;
   customerShippingAddress: CustomerAddresses_user_defaultShippingAddress;
@@ -59,42 +60,46 @@ interface UseOrderCustomerAddressesEditFormResult
 
 interface UseOrderCustomerAddressesEditFormOpts {
   countryChoices: SingleAutocompleteChoiceType[];
+  countries: ShopInfo_shop_countries[];
   defaultShippingAddress: CustomerAddresses_user_defaultShippingAddress;
   defaultBillingAddress: CustomerAddresses_user_defaultBillingAddress;
+  defaultCloneAddress: boolean;
 }
 
 export interface OrderCustomerAddressesEditFormProps
   extends UseOrderCustomerAddressesEditFormOpts {
   children: (props: UseOrderCustomerAddressesEditFormResult) => React.ReactNode;
   initial?: Partial<OrderCustomerAddressesEditFormData>;
-  onSubmit: (data: OrderCustomerAddressesEditData) => SubmitPromise<any[]>;
+  onSubmit: (data: OrderCustomerAddressesEditData) => void;
 }
 
-const initialAddress: AddressTypeInput = {
-  city: "",
-  country: "",
-  phone: "",
-  postalCode: "",
-  streetAddress1: ""
-};
-
-const getDefaultInitialFormData = (
-  opts: UseOrderCustomerAddressesEditFormOpts
-): OrderCustomerAddressesEditFormData => ({
-  billingSameAsShipping: true,
-  shippingAddressInputOption: AddressInputOptionEnum.CUSTOMER_ADDRESS,
-  billingAddressInputOption: AddressInputOptionEnum.CUSTOMER_ADDRESS,
-  customerShippingAddress: opts.defaultShippingAddress,
-  customerBillingAddress: opts.defaultBillingAddress,
-  shippingAddress: initialAddress,
-  billingAddress: initialAddress
-});
-
 function useOrderCustomerAddressesEditForm(
-  initial: Partial<OrderCustomerAddressesEditFormData>,
-  onSubmit: (data: OrderCustomerAddressesEditData) => SubmitPromise<any[]>,
+  providedInitialFormData: Partial<OrderCustomerAddressesEditFormData>,
+  onSubmit: (data: OrderCustomerAddressesEditData) => void,
   opts: UseOrderCustomerAddressesEditFormOpts
 ): UseOrderCustomerAddressesEditFormResult {
+  const emptyAddress: AddressTypeInput = {
+    city: "",
+    country: "",
+    phone: "",
+    postalCode: "",
+    streetAddress1: ""
+  };
+  const defaultInitialFormData: OrderCustomerAddressesEditFormData = {
+    cloneAddress: opts.defaultCloneAddress,
+    shippingAddressInputOption: AddressInputOptionEnum.CUSTOMER_ADDRESS,
+    billingAddressInputOption: AddressInputOptionEnum.CUSTOMER_ADDRESS,
+    customerShippingAddress: opts.defaultShippingAddress,
+    customerBillingAddress: opts.defaultBillingAddress,
+    shippingAddress: emptyAddress,
+    billingAddress: emptyAddress
+  };
+
+  const initialData = {
+    ...defaultInitialFormData,
+    ...providedInitialFormData
+  };
+
   const {
     handleChange,
     hasChanged,
@@ -102,17 +107,20 @@ function useOrderCustomerAddressesEditForm(
     data: formData,
     setChanged
   } = useForm({
-    ...initial,
-    ...getDefaultInitialFormData(opts)
+    ...initialData
   });
 
   const { setExitDialogSubmitRef } = useExitFormDialog();
 
   const [shippingCountryDisplayName, setShippingCountryDisplayName] = useState(
-    ""
+    opts.countries.find(
+      country => initialData.shippingAddress.country === country.code
+    )?.country
   );
   const [billingCountryDisplayName, setBillingCountryDisplayName] = useState(
-    ""
+    opts.countries.find(
+      country => initialData.billingAddress.country === country.code
+    )?.country
   );
 
   const handleFormAddressChange = (
