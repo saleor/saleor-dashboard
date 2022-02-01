@@ -4,7 +4,7 @@ import React from "react";
 import TableCellHeader, { TableCellHeaderProps } from "../TableCellHeader";
 
 interface TooltipTableCellHeaderProps extends TableCellHeaderProps {
-  tooltip?: string;
+  tooltip?: string | React.ReactNodeArray;
 }
 
 export const TooltipTableCellHeader: React.FC<TooltipTableCellHeaderProps> = props => {
